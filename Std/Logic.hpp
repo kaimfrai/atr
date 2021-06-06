@@ -27,6 +27,7 @@ namespace
 		}
 	;
 	
+	
 	struct
 		Always
 	{	auto constexpr
@@ -75,6 +76,69 @@ namespace
 	class
 		All
 	;
+	
+	template<typename t_tPredicate>
+	struct
+		Not
+	{
+		using NegationType = Not<t_tPredicate>;
+	};
+	
+	template<typename t_tAtomic>
+	using
+		Negate
+	= 	typename
+		Not<t_tAtomic>
+	::	NegationType
+	;
+	
+	template<typename t_tPredicate>
+	struct
+		Not<Not<t_tPredicate>>
+	{
+		using NegationType = t_tPredicate;
+	};
+	
+	template<>
+	struct
+		Not<Always>
+	{
+		using NegationType = Never;
+	};
+	
+	template<>
+	struct
+		Not<Never>
+	{
+		using NegationType = Always;
+	};
+	
+	template<ProtoClause... t_tpClause>
+	struct
+		Not<All<t_tpClause...>>
+	{
+		using NegationType = Any<Negate<t_tpClause>...>;
+	};
+	
+	template<ProtoClause... t_tpClause>
+	struct
+		Not<Any<t_tpClause...>>
+	{
+		using NegationType = All<Negate<t_tpClause>...>;
+	};
+	
+	template<typename t_tPredicate>
+	auto constexpr
+	(	operator not
+	)	(	t_tPredicate const
+			&
+		)
+	{	using NegatedType = Negate<t_tPredicate>;
+		if constexpr(std::default_initializable<NegatedType>)
+			return NegatedType{};
+		else
+			return All<NegatedType>{};
+	}
 
 	template<ProtoClause t_tClause>
 	using
@@ -112,29 +176,33 @@ namespace
 		static auto constexpr ClauseCount = sizeof...(t_tpClause);
 		static_assert(ClauseCount >= 1ul, "A All must contain at least one clause.");
 		
-
-		
-		template<ProtoAtomic... t_tpRight>
+		template<ProtoClause... t_tpRight>
 		static auto constexpr
 		(	Subsumes
 		)	(	Any<t_tpRight...>
 					i_vRight
 			)
 		->	bool
-		{	if constexpr(ClauseCount == 1ul)
-			{	if constexpr (sizeof...(t_tpRight) == 1ul)
-					return
-					(	...
-					and	(	std::is_same_v<t_tpClause, t_tpRight>
-						or	std::is_same_v<t_tpClause, Never>
-						or	std::is_same_v<Always, t_tpRight>
-						)
-					);
+		{	
+			if constexpr((... and ProtoAtomic<t_tpRight>))
+			{
+				if constexpr(ClauseCount == 1ul)
+				{	if constexpr (sizeof...(t_tpRight) == 1ul)
+						return
+						(	...
+						and	(	std::is_same_v<t_tpClause, t_tpRight>
+							or	std::is_same_v<t_tpClause, Never>
+							or	std::is_same_v<Always, t_tpRight>
+							)
+						);
+					else
+						return (... or Any<t_tpClause...>::Subsumes(All<t_tpRight>{}));
+				}
 				else
-					return (... or Any<t_tpClause...>::Subsumes(All<t_tpRight>{}));
+					return (... or AtomicToAny<t_tpClause>::Subsumes(i_vRight));
 			}
 			else
-				return (... or AtomicToAny<t_tpClause>::Subsumes(i_vRight));
+				return Negate<All>::Subsumes(not i_vRight);
 		}
 		
 		template<ProtoAtomic... t_tpRight>
@@ -208,6 +276,11 @@ namespace
 				::	Or(i_vRight)
 				;
 		}
+		
+		auto constexpr
+		(	operator not
+		)	()	const
+		{	return Negate<All>{};	}
 	};	
 	
 	template<ProtoClause... t_tpClause>
@@ -224,8 +297,6 @@ namespace
 		static auto constexpr IsFullTerm = (... or not ProtoAtomic<t_tpClause>);
 		static auto constexpr ClauseCount = sizeof...(t_tpClause);
 		static_assert(ClauseCount >= 1ul, "A Any must contain at least one clause.");
-		
-
 		
 		template<ProtoAtomic... t_tpRight>
 		static auto constexpr
@@ -324,6 +395,11 @@ namespace
 			}
 				
 		}
+		
+		auto constexpr
+		(	operator not
+		)	()	const
+		{	return Negate<Any>{};	}
 	};
 	
 	static_assert(not ProtoAtomic<All<Always>>);
@@ -414,6 +490,11 @@ namespace
 				return vLeft;
 			else if constexpr(vRight.Subsumes(vLeft))
 				return vRight;
+			else if constexpr
+				(	vLeft.Subsumes(not vRight)
+				or	vRight.Subsumes(not vLeft)
+				)
+				return Never{};
 			else
 				return vLeft.And(vRight);
 		}
@@ -451,6 +532,11 @@ namespace
 				return vRight;
 			else if constexpr(vRight.Subsumes(vLeft))
 				return vLeft;
+			else if constexpr
+				(	(not vLeft).Subsumes(vRight)
+				or	(not vRight).Subsumes(vLeft)
+				)
+				return Always{};
 			else
 				return vLeft.Or(vRight);
 		}
@@ -580,6 +666,65 @@ namespace
 		static_assert(Any<P, Q> < All<R, P, Q>);
 		static_assert(Any<P, Q> < All<R, Q, P>);
 		
+		/// Simple Negation
+		static_assert(Always == not Never);
+		static_assert(Never == not Always);
+		static_assert(P != not P);
+		static_assert((P and not P) == Never);
+		static_assert((P or not P) == Always);
+		static_assert(((P and Q) and not P) == Never);
+		static_assert(((not P and Q) and P) == Never);
+		static_assert(((P or Q) or not P) == Always);
+		static_assert(((not P or Q) or P) == Always);
+		
+// 		static_assert(((P and Q) or not P) == (Q or not P));
+// 		static_assert(((not P and Q) or P) == (Q or P));
+// 		static_assert(((P or Q) and not P) == (Q and not P));
+// 		static_assert(((not P or Q) and P) == (Q and P));
+		
+		static_assert((P and Q) != not (P and Q));
+		static_assert((P and Q) != not (Q and P));
+		static_assert((Q and P) != not (P and Q));
+		static_assert((Q and P) != not (Q and P));
+		
+		static_assert((P or Q) != not (P or Q));
+		static_assert((P or Q) != not (Q or P));
+		static_assert((Q or P) != not (P or Q));
+		static_assert((Q or P) != not (Q or P));
+		
+		static_assert((P and Q) == not (not P or not Q), "De Morgan's law violated.");
+		static_assert((P and Q) == not (not Q or not P), "De Morgan's law violated.");
+		static_assert((P and not Q) == not (not P or Q), "De Morgan's law violated.");
+		static_assert((P and not Q) == not (Q or not P), "De Morgan's law violated.");
+		static_assert((not P and Q) == not (P or not Q), "De Morgan's law violated.");
+		static_assert((not P and Q) == not (not Q or P), "De Morgan's law violated.");
+		static_assert((not P and not Q) == not (P or Q), "De Morgan's law violated.");
+		static_assert((not P and not Q) == not (Q or P), "De Morgan's law violated.");
+		
+		static_assert((P or Q) == not (not P and not Q), "De Morgan's law violated.");
+		static_assert((P or Q) == not (not Q and not P), "De Morgan's law violated.");
+		static_assert((P or not Q) == not (not P and Q), "De Morgan's law violated.");
+		static_assert((P or not Q) == not (Q and not P), "De Morgan's law violated.");
+		static_assert((not P or Q) == not (P and not Q), "De Morgan's law violated.");
+		static_assert((not P or Q) == not (not Q and P), "De Morgan's law violated.");
+		static_assert((not P or not Q) == not (P and Q), "De Morgan's law violated.");
+		static_assert((not P or not Q) == not (Q and P), "De Morgan's law violated.");
+		
+		/// Double negation
+		static_assert(Always == not not Always, "Double negation law violated.");
+		static_assert(Never == not not Never, "Double negation law violated.");
+		static_assert(P == not not P, "Double negation law violated.");
+		
+		static_assert((P and Q) == not not (P and Q), "Double negation law violated.");
+		static_assert((P and Q) == not not (Q and P), "Double negation law violated.");
+		static_assert((Q and P) == not not (P and Q), "Double negation law violated.");
+		static_assert((Q and P) == not not (Q and P), "Double negation law violated.");
+		
+		static_assert((P or Q) == not not (P or Q), "Double negation law violated.");
+		static_assert((P or Q) == not not (Q or P), "Double negation law violated.");
+		static_assert((Q or P) == not not (P or Q), "Double negation law violated.");
+		static_assert((Q or P) == not not (Q or P), "Double negation law violated.");
+		
 		
 		/// Simple Conjunction
 		static_assert((Always and Always) == Always);
@@ -620,87 +765,87 @@ namespace
 		static_assert(q.Subsumes(f));
 		static_assert((P or (Q and R)).Subsumes(((P or  Q) and (P or  R))), "Distribution law violated.");
 		
-//  		static_assert((P or (Q and R)) == ((P or  Q) and (P or  R)), "Distribution law violated.");
-// 		static_assert((P or (Q and R)) == ((P or  Q) and (R or  P)), "Distribution law violated.");
-// 		static_assert((P or (Q and R)) == ((Q or  P) and (P or  R)), "Distribution law violated.");
-// 		static_assert((P or (Q and R)) == ((Q or  P) and (R or  P)), "Distribution law violated.");
-// 		
-// 		static_assert((P or (Q and R)) == ((P or  R) and (P or  Q)), "Distribution law violated.");
-// 		static_assert((P or (Q and R)) == ((P or  R) and (Q or  P)), "Distribution law violated.");
-// 		static_assert((P or (Q and R)) == ((R or  P) and (P or  Q)), "Distribution law violated.");
-// 		static_assert((P or (Q and R)) == ((R or  P) and (Q or  P)), "Distribution law violated.");
-// 		
-// 		static_assert((P or (R and Q)) == ((P or  Q) and (P or  R)), "Distribution law violated.");
-// 		static_assert((P or (R and Q)) == ((P or  Q) and (R or  P)), "Distribution law violated.");
-// 		static_assert((P or (R and Q)) == ((Q or  P) and (P or  R)), "Distribution law violated.");
-// 		static_assert((P or (R and Q)) == ((Q or  P) and (R or  P)), "Distribution law violated.");
-// 		
-// 		static_assert((P or (R and Q)) == ((P or  R) and (P or  Q)), "Distribution law violated.");
-// 		static_assert((P or (R and Q)) == ((P or  R) and (Q or  P)), "Distribution law violated.");
-// 		static_assert((P or (R and Q)) == ((R or  P) and (P or  Q)), "Distribution law violated.");
-// 		static_assert((P or (R and Q)) == ((R or  P) and (Q or  P)), "Distribution law violated.");
-// 		
-// 		static_assert(((Q and R) or P) == ((P or  Q) and (P or  R)), "Distribution law violated.");
-// 		static_assert(((Q and R) or P) == ((P or  Q) and (R or  P)), "Distribution law violated.");
-// 		static_assert(((Q and R) or P) == ((Q or  P) and (P or  R)), "Distribution law violated.");
-// 		static_assert(((Q and R) or P) == ((Q or  P) and (R or  P)), "Distribution law violated.");
-// 		
-// 		static_assert(((Q and R) or P) == ((P or  R) and (P or  Q)), "Distribution law violated.");
-// 		static_assert(((Q and R) or P) == ((P or  R) and (Q or  P)), "Distribution law violated.");
-// 		static_assert(((Q and R) or P) == ((R or  P) and (P or  Q)), "Distribution law violated.");
-// 		static_assert(((Q and R) or P) == ((R or  P) and (Q or  P)), "Distribution law violated.");
-// 		
-// 		static_assert(((R and Q) or P) == ((P or  Q) and (P or  R)), "Distribution law violated.");
-// 		static_assert(((R and Q) or P) == ((P or  Q) and (R or  P)), "Distribution law violated.");
-// 		static_assert(((R and Q) or P) == ((Q or  P) and (P or  R)), "Distribution law violated.");
-// 		static_assert(((R and Q) or P) == ((Q or  P) and (R or  P)), "Distribution law violated.");
-// 		
-// 		static_assert(((R and Q) or P) == ((P or  R) and (P or  Q)), "Distribution law violated.");
-// 		static_assert(((R and Q) or P) == ((P or  R) and (Q or  P)), "Distribution law violated.");
-// 		static_assert(((R and Q) or P) == ((R or  P) and (P or  Q)), "Distribution law violated.");
-// 		static_assert(((R and Q) or P) == ((R or  P) and (Q or  P)), "Distribution law violated.");
+ 		static_assert((P or (Q and R)) == ((P or  Q) and (P or  R)), "Distribution law violated.");
+		static_assert((P or (Q and R)) == ((P or  Q) and (R or  P)), "Distribution law violated.");
+		static_assert((P or (Q and R)) == ((Q or  P) and (P or  R)), "Distribution law violated.");
+		static_assert((P or (Q and R)) == ((Q or  P) and (R or  P)), "Distribution law violated.");
+		
+		static_assert((P or (Q and R)) == ((P or  R) and (P or  Q)), "Distribution law violated.");
+		static_assert((P or (Q and R)) == ((P or  R) and (Q or  P)), "Distribution law violated.");
+		static_assert((P or (Q and R)) == ((R or  P) and (P or  Q)), "Distribution law violated.");
+		static_assert((P or (Q and R)) == ((R or  P) and (Q or  P)), "Distribution law violated.");
+		
+		static_assert((P or (R and Q)) == ((P or  Q) and (P or  R)), "Distribution law violated.");
+		static_assert((P or (R and Q)) == ((P or  Q) and (R or  P)), "Distribution law violated.");
+		static_assert((P or (R and Q)) == ((Q or  P) and (P or  R)), "Distribution law violated.");
+		static_assert((P or (R and Q)) == ((Q or  P) and (R or  P)), "Distribution law violated.");
+		
+		static_assert((P or (R and Q)) == ((P or  R) and (P or  Q)), "Distribution law violated.");
+		static_assert((P or (R and Q)) == ((P or  R) and (Q or  P)), "Distribution law violated.");
+		static_assert((P or (R and Q)) == ((R or  P) and (P or  Q)), "Distribution law violated.");
+		static_assert((P or (R and Q)) == ((R or  P) and (Q or  P)), "Distribution law violated.");
+		
+		static_assert(((Q and R) or P) == ((P or  Q) and (P or  R)), "Distribution law violated.");
+		static_assert(((Q and R) or P) == ((P or  Q) and (R or  P)), "Distribution law violated.");
+		static_assert(((Q and R) or P) == ((Q or  P) and (P or  R)), "Distribution law violated.");
+		static_assert(((Q and R) or P) == ((Q or  P) and (R or  P)), "Distribution law violated.");
+		
+		static_assert(((Q and R) or P) == ((P or  R) and (P or  Q)), "Distribution law violated.");
+		static_assert(((Q and R) or P) == ((P or  R) and (Q or  P)), "Distribution law violated.");
+		static_assert(((Q and R) or P) == ((R or  P) and (P or  Q)), "Distribution law violated.");
+		static_assert(((Q and R) or P) == ((R or  P) and (Q or  P)), "Distribution law violated.");
+		
+		static_assert(((R and Q) or P) == ((P or  Q) and (P or  R)), "Distribution law violated.");
+		static_assert(((R and Q) or P) == ((P or  Q) and (R or  P)), "Distribution law violated.");
+		static_assert(((R and Q) or P) == ((Q or  P) and (P or  R)), "Distribution law violated.");
+		static_assert(((R and Q) or P) == ((Q or  P) and (R or  P)), "Distribution law violated.");
+		
+		static_assert(((R and Q) or P) == ((P or  R) and (P or  Q)), "Distribution law violated.");
+		static_assert(((R and Q) or P) == ((P or  R) and (Q or  P)), "Distribution law violated.");
+		static_assert(((R and Q) or P) == ((R or  P) and (P or  Q)), "Distribution law violated.");
+		static_assert(((R and Q) or P) == ((R or  P) and (Q or  P)), "Distribution law violated.");
 		
 		
 		
-// 		static_assert((P and (Q or R)) == ((P and  Q) or (P and  R)), "Distribution law violated.");
-// 		static_assert((P and (Q or R)) == ((P and  Q) or (R and  P)), "Distribution law violated.");
-// 		static_assert((P and (Q or R)) == ((Q and  P) or (P and  R)), "Distribution law violated.");
-// 		static_assert((P and (Q or R)) == ((Q and  P) or (R and  P)), "Distribution law violated.");
-// 		
-// 		static_assert((P and (Q or R)) == ((P and  R) or (P and  Q)), "Distribution law violated.");
-// 		static_assert((P and (Q or R)) == ((P and  R) or (Q and  P)), "Distribution law violated.");
-// 		static_assert((P and (Q or R)) == ((R and  P) or (P and  Q)), "Distribution law violated.");
-// 		static_assert((P and (Q or R)) == ((R and  P) or (Q and  P)), "Distribution law violated.");
-// 		
-// 		static_assert((P and (R or Q)) == ((P and  Q) or (P and  R)), "Distribution law violated.");
-// 		static_assert((P and (R or Q)) == ((P and  Q) or (R and  P)), "Distribution law violated.");
-// 		static_assert((P and (R or Q)) == ((Q and  P) or (P and  R)), "Distribution law violated.");
-// 		static_assert((P and (R or Q)) == ((Q and  P) or (R and  P)), "Distribution law violated.");
-// 		
-// 		static_assert((P and (R or Q)) == ((P and  R) or (P and  Q)), "Distribution law violated.");
-// 		static_assert((P and (R or Q)) == ((P and  R) or (Q and  P)), "Distribution law violated.");
-// 		static_assert((P and (R or Q)) == ((R and  P) or (P and  Q)), "Distribution law violated.");
-// 		static_assert((P and (R or Q)) == ((R and  P) or (Q and  P)), "Distribution law violated.");
-// 		
-// 		static_assert(((Q or R) and P) == ((P and  Q) or (P and  R)), "Distribution law violated.");
-// 		static_assert(((Q or R) and P) == ((P and  Q) or (R and  P)), "Distribution law violated.");
-// 		static_assert(((Q or R) and P) == ((Q and  P) or (P and  R)), "Distribution law violated.");
-// 		static_assert(((Q or R) and P) == ((Q and  P) or (R and  P)), "Distribution law violated.");
-// 		
-// 		static_assert(((Q or R) and P) == ((P and  R) or (P and  Q)), "Distribution law violated.");
-// 		static_assert(((Q or R) and P) == ((P and  R) or (Q and  P)), "Distribution law violated.");
-// 		static_assert(((Q or R) and P) == ((R and  P) or (P and  Q)), "Distribution law violated.");
-// 		static_assert(((Q or R) and P) == ((R and  P) or (Q and  P)), "Distribution law violated.");
-// 		
-// 		static_assert(((R or Q) and P) == ((P and  Q) or (P and  R)), "Distribution law violated.");
-// 		static_assert(((R or Q) and P) == ((P and  Q) or (R and  P)), "Distribution law violated.");
-// 		static_assert(((R or Q) and P) == ((Q and  P) or (P and  R)), "Distribution law violated.");
-// 		static_assert(((R or Q) and P) == ((Q and  P) or (R and  P)), "Distribution law violated.");
-// 		
-// 		static_assert(((R or Q) and P) == ((P and  R) or (P and  Q)), "Distribution law violated.");
-// 		static_assert(((R or Q) and P) == ((P and  R) or (Q and  P)), "Distribution law violated.");
-// 		static_assert(((R or Q) and P) == ((R and  P) or (P and  Q)), "Distribution law violated.");
-// 		static_assert(((R or Q) and P) == ((R and  P) or (Q and  P)), "Distribution law violated.");
+		static_assert((P and (Q or R)) == ((P and  Q) or (P and  R)), "Distribution law violated.");
+		static_assert((P and (Q or R)) == ((P and  Q) or (R and  P)), "Distribution law violated.");
+		static_assert((P and (Q or R)) == ((Q and  P) or (P and  R)), "Distribution law violated.");
+		static_assert((P and (Q or R)) == ((Q and  P) or (R and  P)), "Distribution law violated.");
+		
+		static_assert((P and (Q or R)) == ((P and  R) or (P and  Q)), "Distribution law violated.");
+		static_assert((P and (Q or R)) == ((P and  R) or (Q and  P)), "Distribution law violated.");
+		static_assert((P and (Q or R)) == ((R and  P) or (P and  Q)), "Distribution law violated.");
+		static_assert((P and (Q or R)) == ((R and  P) or (Q and  P)), "Distribution law violated.");
+		
+		static_assert((P and (R or Q)) == ((P and  Q) or (P and  R)), "Distribution law violated.");
+		static_assert((P and (R or Q)) == ((P and  Q) or (R and  P)), "Distribution law violated.");
+		static_assert((P and (R or Q)) == ((Q and  P) or (P and  R)), "Distribution law violated.");
+		static_assert((P and (R or Q)) == ((Q and  P) or (R and  P)), "Distribution law violated.");
+		
+		static_assert((P and (R or Q)) == ((P and  R) or (P and  Q)), "Distribution law violated.");
+		static_assert((P and (R or Q)) == ((P and  R) or (Q and  P)), "Distribution law violated.");
+		static_assert((P and (R or Q)) == ((R and  P) or (P and  Q)), "Distribution law violated.");
+		static_assert((P and (R or Q)) == ((R and  P) or (Q and  P)), "Distribution law violated.");
+		
+		static_assert(((Q or R) and P) == ((P and  Q) or (P and  R)), "Distribution law violated.");
+		static_assert(((Q or R) and P) == ((P and  Q) or (R and  P)), "Distribution law violated.");
+		static_assert(((Q or R) and P) == ((Q and  P) or (P and  R)), "Distribution law violated.");
+		static_assert(((Q or R) and P) == ((Q and  P) or (R and  P)), "Distribution law violated.");
+		
+		static_assert(((Q or R) and P) == ((P and  R) or (P and  Q)), "Distribution law violated.");
+		static_assert(((Q or R) and P) == ((P and  R) or (Q and  P)), "Distribution law violated.");
+		static_assert(((Q or R) and P) == ((R and  P) or (P and  Q)), "Distribution law violated.");
+		static_assert(((Q or R) and P) == ((R and  P) or (Q and  P)), "Distribution law violated.");
+		
+		static_assert(((R or Q) and P) == ((P and  Q) or (P and  R)), "Distribution law violated.");
+		static_assert(((R or Q) and P) == ((P and  Q) or (R and  P)), "Distribution law violated.");
+		static_assert(((R or Q) and P) == ((Q and  P) or (P and  R)), "Distribution law violated.");
+		static_assert(((R or Q) and P) == ((Q and  P) or (R and  P)), "Distribution law violated.");
+		
+		static_assert(((R or Q) and P) == ((P and  R) or (P and  Q)), "Distribution law violated.");
+		static_assert(((R or Q) and P) == ((P and  R) or (Q and  P)), "Distribution law violated.");
+		static_assert(((R or Q) and P) == ((R and  P) or (P and  Q)), "Distribution law violated.");
+		static_assert(((R or Q) and P) == ((R and  P) or (Q and  P)), "Distribution law violated.");
 		
 		
 		
