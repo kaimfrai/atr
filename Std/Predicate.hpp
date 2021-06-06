@@ -5,7 +5,7 @@
 #include <compare>
 
 namespace
-	Z
+	_
 {	template<typename t_tProto>
 	concept ProtoAtomic
 	=	not requires { t_tProto::IsFullTerm; }
@@ -417,7 +417,9 @@ namespace
 	template<ProtoClause... t_tpClause>
 	class
 		Disjunction
-	{	constexpr
+	{	
+	public:
+		constexpr
 		(	Disjunction
 		)	()
 		=	default;
@@ -473,17 +475,17 @@ namespace
 		template<ProtoClause...>
 		friend class Disjunction;
 		
-		template<typename t_tLeft, typename t_tRight>
-		friend auto constexpr
-		(	operator or
-		)	(t_tLeft const&, t_tRight const&)
-		;
-		
-		template<typename t_tLeft, typename t_tRight>
-		friend auto constexpr
-		(	operator and
-		)	(t_tLeft const&, t_tRight const&)
-		;
+// 		template<typename t_tLeft, typename t_tRight>
+// 		friend auto constexpr
+// 		(	operator or
+// 		)	(t_tLeft const&, t_tRight const&)
+// 		;
+// 		
+// 		template<typename t_tLeft, typename t_tRight>
+// 		friend auto constexpr
+// 		(	operator and
+// 		)	(t_tLeft const&, t_tRight const&)
+// 		;
 		
 	public:
 		using StatementType = Disjunction;
@@ -556,22 +558,22 @@ namespace
 		{	return (... and (Statement<t_tpClause>.Subsumes(i_vRight)));	}
 		
 		/// Idempotent law.
-		friend auto constexpr
-		(	operator or
-		)	(	Disjunction
-			,	Disjunction
-			)
-		->	Disjunction
-		{	return {};	}
-		
-		/// Idempotent law.
-		friend auto constexpr
-		(	operator and
-		)	(	Disjunction
-			,	Disjunction
-			)
-		->	Disjunction
-		{	return {};	}
+// 		friend auto constexpr
+// 		(	operator or
+// 		)	(	Disjunction
+// 			,	Disjunction
+// 			)
+// 		->	Disjunction
+// 		{	return {};	}
+// 		
+// 		/// Idempotent law.
+// 		friend auto constexpr
+// 		(	operator and
+// 		)	(	Disjunction
+// 			,	Disjunction
+// 			)
+// 		->	Disjunction
+// 		{	return {};	}
 		
 		/// Forms the Conjunction of the negated clauses.
 		auto constexpr
@@ -600,7 +602,9 @@ namespace
 	template<ProtoClause... t_tpClause>
 	class
 		Conjunction
-	{	constexpr
+	{	
+	public:
+		constexpr
 		(	Conjunction
 		)	()
 		=	default;
@@ -656,17 +660,17 @@ namespace
 		template<ProtoClause...>
 		friend class Conjunction;
 		
-		template<typename t_tLeft, typename t_tRight>
-		friend auto constexpr
-		(	operator and
-		)	(t_tLeft const&, t_tRight const&)
-		;
-		
-		template<typename t_tLeft, typename t_tRight>
-		friend auto constexpr
-		(	operator or
-		)	(t_tLeft const&, t_tRight const&)
-		;
+// 		template<typename t_tLeft, typename t_tRight>
+// 		friend auto constexpr
+// 		(	operator and
+// 		)	(t_tLeft const&, t_tRight const&)
+// 		;
+// 		
+// 		template<typename t_tLeft, typename t_tRight>
+// 		friend auto constexpr
+// 		(	operator or
+// 		)	(t_tLeft const&, t_tRight const&)
+// 		;
 		
 	public:
 		using StatementType = Conjunction;
@@ -738,22 +742,22 @@ namespace
 		//{	return Subsumes((... bitand Statement<t_tpRightClause>));	}
 		
 		/// Idempotent law.
-		friend auto constexpr
-		(	operator and
-		)	(	Conjunction
-			,	Conjunction
-			)
-		->	Conjunction
-		{	return {};	}
-		
-		/// Idempotent law.
-		friend auto constexpr
-		(	operator or
-		)	(	Conjunction
-			,	Conjunction
-			)
-		->	Conjunction
-		{	return {};	}
+// 		friend auto constexpr
+// 		(	operator and
+// 		)	(	Conjunction
+// 			,	Conjunction
+// 			)
+// 		->	Conjunction
+// 		{	return {};	}
+// 		
+// 		/// Idempotent law.
+// 		friend auto constexpr
+// 		(	operator or
+// 		)	(	Conjunction
+// 			,	Conjunction
+// 			)
+// 		->	Conjunction
+// 		{	return {};	}
 		
 		/// Forms the Disjunction of the negated clauses.
 		auto constexpr
@@ -781,12 +785,322 @@ namespace
 	
 	/// Forms the conjunction of two clauses.
 	/// Note: Conjunctions of Disjunctions or Conjunctions are handled by different overloads.
-	template
-		<	typename
-				t_tLeft
-		,	typename
-				t_tRight
-		>
+// 	template
+// 		<	typename
+// 				t_tLeft
+// 		,	typename
+// 				t_tRight
+// 		>
+// 	auto constexpr
+// 	(	operator and
+// 	)	(	t_tLeft const
+// 			&	i_rLeft
+// 		,	t_tRight const
+// 			&	i_rRight
+// 		)
+// 	{	/// optimization using idempotent law
+// 		if constexpr(std::is_same_v<t_tLeft, t_tRight>)
+// 			return i_rLeft;
+// 		else if constexpr(ProtoAtomic<t_tLeft>)
+// 			return Atomic{i_rLeft} and i_rRight;
+// 		else if constexpr(ProtoAtomic<t_tRight>)
+// 			return i_rLeft and Atomic{i_rRight};
+// 		else
+// 		{	ProtoStatement auto constexpr vLeft = t_tLeft{};
+// 			ProtoStatement auto constexpr vRight = t_tRight{};
+// 			
+// 			if constexpr(vLeft.Subsumes(vRight))
+// 				return i_rLeft;
+// 			else if constexpr(vRight.Subsumes(vLeft))
+// 				return i_rRight;
+// 			else if constexpr(vLeft.Subsumes(not vRight) or vRight.Subsumes(not vLeft))
+// 				return False;
+// 			//	concatenate
+// 			else 
+// 			{	
+// 				using LeftStatementType = typename decltype(vLeft)::StatementType;
+// 				using RightStatementType = typename decltype(vRight)::StatementType;
+// 				/// left is a Conjunction and right an Atomic or Disjunction
+// 				if constexpr(requires{vLeft.AppendConjunctiveClause(vRight);})
+// 					return vLeft.AppendConjunctiveClause(vRight);
+// 				/// left is an Atomic or Disjunction and right is a Conjunction
+// 				else if constexpr(requires{vRight.PrependConjunctiveClause(vLeft);})
+// 					return vRight.PrependConjunctiveClause(vLeft);
+// 				else
+// 					return
+// 						Conjunction
+// 						<	LeftStatementType
+// 						,	RightStatementType 
+// 						>{}
+// 					;
+// 			}
+// 		}
+// 	}
+// 		
+// 	/// Concatenates the terms clause by clause.
+// 	template
+// 		<	ProtoClause
+// 			...	t_tpLeftClause
+// 		,	ProtoClause
+// 			...	t_tpRightClause
+// 		>
+// 	auto constexpr
+// 	(	operator and
+// 	)	(	Conjunction<t_tpLeftClause...>
+// 				i_vLeft
+// 		,	Conjunction<t_tpRightClause...>
+// 		)
+// 	{	return (i_vLeft and ... and	Statement<t_tpRightClause>);	}
+// 	
+// 	template
+// 		<	ProtoClause
+// 			...	t_tpLeftClause
+// 		,	ProtoClause
+// 			...	t_tpRightClause
+// 		>
+// 	auto constexpr
+// 	(	operator and
+// 	)	(	Disjunction<t_tpLeftClause...>
+// 				i_vLeft
+// 		,	Conjunction<t_tpRightClause...>
+// 		)
+// 	{	return (i_vLeft and ... and Statement<t_tpRightClause>);	}
+// 	
+// 	template
+// 		<	ProtoClause
+// 			...	t_tpLeftClause
+// 		,	ProtoClause
+// 			...	t_tpRightClause
+// 		>
+// 	auto constexpr
+// 	(	operator and
+// 	)	(	Conjunction<t_tpLeftClause...>
+// 		,	Disjunction<t_tpRightClause...>
+// 				i_vRight
+// 		)
+// 	{	return (Statement<t_tpLeftClause> and ... and i_vRight);	}
+// 	
+// 	/// Performs double distribution.
+// 	template
+// 		<	ProtoClause
+// 			...	t_tpLeftClause
+// 		,	ProtoClause
+// 			...	t_tpRightClause
+// 		>
+// 	auto constexpr
+// 	(	operator and
+// 	)	(	Disjunction<t_tpLeftClause...>
+// 		,	Disjunction<t_tpRightClause...>
+// 				i_vRight
+// 		)
+// 	requires
+// // 		ProtoTerm<Disjunction<t_tpLeftClause...>>
+// // 	or	ProtoTerm<Disjunction<t_tpRightClause...>>
+// 	{	return (... or (Statement<t_tpLeftClause> and i_vRight));	}
+// 	
+// 	/// Distribution of an atomic.
+// 	template
+// 		<	ProtoClause
+// 			...	t_tpLeftClause
+// 		,	ProtoAtomic
+// 				t_tRight
+// 		>
+// 	auto constexpr
+// 	(	operator and
+// 	)	(	Disjunction<t_tpLeftClause...>
+// 		,	Atomic<t_tRight>
+// 				i_vRight
+// 		)
+// 	requires
+// 		ProtoTerm<Disjunction<t_tpLeftClause...>>
+// 	{	return (... or (Statement<t_tpLeftClause> and i_vRight));	}
+// 	
+// 	/// Distribution of an atomic.
+// 	template
+// 		<	ProtoAtomic t_tLeft
+// 		,	ProtoClause
+// 			...	t_tpRightClause
+// 		>
+// 	auto constexpr
+// 	(	operator and
+// 	)	(	Atomic<t_tLeft>
+// 				i_vLeft
+// 		,	Disjunction<t_tpRightClause...>
+// 		)
+// 	requires
+// 		ProtoTerm<Disjunction<t_tpRightClause...>>
+// 	{	return (... or (i_vLeft and Statement<t_tpRightClause>));	}
+// 	
+// 	template
+// 		<	typename
+// 				t_tLeft
+// 		,	typename
+// 				t_tRight
+// 		>
+// 	auto constexpr
+// 	(	operator or
+// 	)	(	t_tLeft const
+// 			&	i_rLeft
+// 		,	t_tRight const
+// 			&	i_rRight
+// 		)
+// 	{	/// optimization using idempotent law
+// 		if constexpr(std::is_same_v<t_tLeft, t_tRight>)
+// 			return i_rLeft;
+// 		else if constexpr(ProtoAtomic<t_tLeft>)
+// 			return Atomic{i_rLeft} or i_rRight;
+// 		else if constexpr(ProtoAtomic<t_tRight>)
+// 			return i_rLeft or Atomic{i_rRight};
+// 		else
+// 		{	ProtoStatement auto constexpr vLeft = t_tLeft{};
+// 			ProtoStatement auto constexpr vRight = t_tRight{};
+// 			if constexpr(vLeft.Subsumes(vRight))
+// 				return i_rRight;
+// 			else if constexpr(vRight.Subsumes(vLeft))
+// 				return i_rLeft;
+// 			else if constexpr((not vLeft).Subsumes(vRight) or (not vRight).Subsumes(vLeft))
+// 				return True;
+// 			//	concatenate
+// 			else 
+// 			{	using LeftStatementType = typename decltype(vLeft)::StatementType;
+// 				using RightStatementType = typename decltype(vRight)::StatementType;
+// 				/// left is a Disjunction and right an Atomic or Conjunction
+// 				if constexpr(requires{vLeft.AppendDisjunctiveClause(vRight);})
+// 					return vLeft.AppendDisjunctiveClause(vRight);
+// 				/// left is an Atomic or Conjunction and right is a Disjunction
+// 				else if constexpr(requires{vRight.PrependDisjunctiveClause(vLeft);})
+// 					return vRight.PrependDisjunctiveClause(vLeft);
+// 				else
+// 					return
+// 						Disjunction
+// 						<	LeftStatementType
+// 						,	RightStatementType 
+// 						>{}
+// 					;
+// 			}
+// 		}
+// 	}
+// 		
+// 	/// Concatenates the terms clause by clause.
+// 	template
+// 		<	ProtoClause
+// 			...	t_tpLeftClause
+// 		,	ProtoClause
+// 			...	t_tpRightClause
+// 		>
+// 	auto constexpr
+// 	(	operator or
+// 	)	(	Disjunction<t_tpLeftClause...>
+// 				i_vLeft
+// 		,	Disjunction<t_tpRightClause...>
+// 		)
+// 	{	return (i_vLeft or ... or Statement<t_tpRightClause>);	}
+// 	
+// 	template
+// 		<	ProtoClause
+// 			... t_tpLeftClause
+// 		,	ProtoClause
+// 			... t_tpRightClause
+// 		>
+// 	auto constexpr
+// 	(	operator or
+// 	)	(	Conjunction<t_tpLeftClause...>
+// 				i_vLeft
+// 		,	Disjunction<t_tpRightClause...>
+// 		)
+// 	{	return (i_vLeft or ... or Statement<t_tpRightClause>);	}
+// 	
+// 	template
+// 		<	ProtoClause
+// 			... t_tpLeftClause
+// 		,	ProtoClause
+// 			... t_tpRightClause
+// 		>
+// 	auto constexpr
+// 	(	operator or
+// 	)	(	Disjunction<t_tpLeftClause...>
+// 		,	Conjunction<t_tpRightClause...>
+// 				i_vRight
+// 		)
+// 	{	return (Statement<t_tpLeftClause> or ... or i_vRight);	}
+// 		
+// 	/// Performs double distribution.
+// 	template
+// 		<	ProtoClause
+// 			... t_tpLeftClause
+// 		,	ProtoClause
+// 			... t_tpRightClause
+// 		>
+// 	auto constexpr
+// 	(	operator or 
+// 	)	(	Conjunction<t_tpLeftClause...>
+// 		,	Conjunction<t_tpRightClause...>
+// 				i_vRight
+// 		)
+// 	requires
+// // 		ProtoTerm<Conjunction<t_tpLeftClause...>>
+// // 	or	ProtoTerm<Conjunction<t_tpRightClause...>>
+// 	{	return (... and (Statement<t_tpLeftClause> or i_vRight));	}
+// 		
+// 	/// Distribution of an atomic.
+// 	template
+// 		<	ProtoClause
+// 			... t_tpLeftClause
+// 		,	 ProtoAtomic
+// 				t_tRight
+// 		>
+// 	auto constexpr
+// 	(	operator or
+// 	)	(	Conjunction<t_tpLeftClause...>
+// 		,	Atomic<t_tRight>
+// 				i_vRight
+// 		)
+// 	requires
+// 		ProtoTerm<Conjunction<t_tpLeftClause...>>
+// 	{	return (... and (Statement<t_tpLeftClause> or i_vRight));	}
+// 	
+// 	
+// 	
+// 	/// Distribution of an atomic.
+// 	template
+// 		<	ProtoAtomic
+// 				t_tLeft
+// 		,	ProtoClause
+// 			...	t_tpRightClause
+// 		>
+// 	auto constexpr
+// 	(	operator or
+// 	)	(	Atomic<t_tLeft>
+// 				i_vLeft
+// 		,	Conjunction<t_tpRightClause...>
+// 		)
+// 	requires
+// 		ProtoTerm<Conjunction<t_tpRightClause...>>
+// 	{	return (... and (i_vLeft or Statement<t_tpRightClause>));	}
+	
+	template<ProtoAtomic t_tStatement>
+	auto constexpr
+	(	operator and
+	)	(	t_tStatement const
+			&	i_rLeft
+		,	t_tStatement const
+			&
+		)
+	->	t_tStatement const&
+	{	return i_rLeft;	}
+	
+	template<ProtoAtomic t_tStatement>
+	auto constexpr
+	(	operator and
+	)	(	t_tStatement const
+			&	i_rLeft
+		,	Negation<t_tStatement> const
+			&
+		)
+	->	t_tStatement const&
+	{	return i_rLeft;	}
+	
+	template<typename t_tLeft, typename t_tRight>
 	auto constexpr
 	(	operator and
 	)	(	t_tLeft const
@@ -794,145 +1108,261 @@ namespace
 		,	t_tRight const
 			&	i_rRight
 		)
-	{	/// optimization using idempotent law
-		if constexpr(std::is_same_v<t_tLeft, t_tRight>)
-			return i_rLeft;
-		else if constexpr(ProtoAtomic<t_tLeft>)
-			return Atomic{i_rLeft} and i_rRight;
-		else if constexpr(ProtoAtomic<t_tRight>)
-			return i_rLeft and Atomic{i_rRight};
-		else
-		{	ProtoStatement auto constexpr vLeft = t_tLeft{};
-			ProtoStatement auto constexpr vRight = t_tRight{};
-			
-			if constexpr(vLeft.Subsumes(vRight))
-				return i_rLeft;
-			else if constexpr(vRight.Subsumes(vLeft))
-				return i_rRight;
-			else if constexpr(vLeft.Subsumes(not vRight) or vRight.Subsumes(not vLeft))
-				return False;
-			//	concatenate
-			else 
-			{	
-				using LeftStatementType = typename decltype(vLeft)::StatementType;
-				using RightStatementType = typename decltype(vRight)::StatementType;
-				/// left is a Conjunction and right an Atomic or Disjunction
-				if constexpr(requires{vLeft.AppendConjunctiveClause(vRight);})
-					return vLeft.AppendConjunctiveClause(vRight);
-				/// left is an Atomic or Disjunction and right is a Conjunction
-				else if constexpr(requires{vRight.PrependConjunctiveClause(vLeft);})
-					return vRight.PrependConjunctiveClause(vLeft);
-				else
-					return
-						Conjunction
-						<	LeftStatementType
-						,	RightStatementType 
-						>{}
-					;
-			}
-		}
-	}
-		
-	/// Concatenates the terms clause by clause.
-	template
-		<	ProtoClause
-			...	t_tpLeftClause
-		,	ProtoClause
-			...	t_tpRightClause
-		>
-	auto constexpr
-	(	operator and
-	)	(	Conjunction<t_tpLeftClause...>
-				i_vLeft
-		,	Conjunction<t_tpRightClause...>
-		)
-	{	return (i_vLeft and ... and	Statement<t_tpRightClause>);	}
-	
-	template
-		<	ProtoClause
-			...	t_tpLeftClause
-		,	ProtoClause
-			...	t_tpRightClause
-		>
-	auto constexpr
-	(	operator and
-	)	(	Disjunction<t_tpLeftClause...>
-				i_vLeft
-		,	Conjunction<t_tpRightClause...>
-		)
-	{	return (i_vLeft and ... and Statement<t_tpRightClause>);	}
-	
-	template
-		<	ProtoClause
-			...	t_tpLeftClause
-		,	ProtoClause
-			...	t_tpRightClause
-		>
-	auto constexpr
-	(	operator and
-	)	(	Conjunction<t_tpLeftClause...>
-		,	Disjunction<t_tpRightClause...>
-				i_vRight
-		)
-	{	return (Statement<t_tpLeftClause> and ... and i_vRight);	}
-	
-	/// Performs double distribution.
-	template
-		<	ProtoClause
-			...	t_tpLeftClause
-		,	ProtoClause
-			...	t_tpRightClause
-		>
-	auto constexpr
-	(	operator and
-	)	(	Disjunction<t_tpLeftClause...>
-		,	Disjunction<t_tpRightClause...>
-				i_vRight
-		)
+	->	decltype(auto)
 	requires
-		ProtoTerm<Disjunction<t_tpLeftClause...>>
-	or	ProtoTerm<Disjunction<t_tpRightClause...>>
-	{	return (... or (Statement<t_tpLeftClause> and i_vRight));	}
+		ProtoAtomic<t_tLeft>
+	or	ProtoAtomic<t_tRight>
+	{	if constexpr(ProtoAtomic<t_tLeft>)
+			return Atomic<t_tLeft>{} and i_rRight;
+		else
+			return i_rLeft and Atomic<t_tRight>{};
+	}
 	
-	/// Distribution of an atomic.
+	template<ProtoAtomic t_tStatement>
+	auto constexpr
+	(	operator and
+	)	(	Atomic<t_tStatement>
+		,	Atomic<t_tStatement>
+		)
+	->	Atomic<t_tStatement>
+	{	return {};	}
+	
+	template<ProtoAtomic t_tLeft, ProtoAtomic t_tRight>
+	auto constexpr
+	(	operator and
+	)	(	Atomic<t_tLeft>
+		,	Atomic<t_tRight>
+		)
+	->	Conjunction<t_tLeft, t_tRight>
+	{	return {};	}
+	
+	auto constexpr
+	(	operator and
+	)	(	Atomic<Contradiction>
+		,	auto const&
+		)
+	->	Contradiction const&
+	{	return False;	}
+	
+	auto constexpr
+	(	operator and
+	)	(	auto const&
+		,	Atomic<Contradiction>
+		)
+	->	Contradiction const&
+	{	return False;	}
+	
+	template<typename t_tRight>
+	auto constexpr
+	(	operator and
+	)	(	Atomic<Tautology>
+		,	t_tRight const
+			&	i_rRight
+		)
+	->	t_tRight
+	{	return i_rRight;	}
+	
+	template<typename t_tLeft>
+	auto constexpr
+	(	operator and
+	)	(	t_tLeft const
+			&	i_rLeft
+		,	Atomic<Tautology>
+		)
+	->	t_tLeft
+	{	return i_rLeft;	}
+	
 	template
-		<	ProtoClause
-			...	t_tpLeftClause
+		<	ProtoAtomic
+				t_tLeft
+		,	ProtoAtomic
+			...	t_tpRight
+		>
+	auto constexpr
+	(	operator and
+	)	(	Atomic<t_tLeft>
+		,	Conjunction<t_tpRight...>
+		)
+	{	if constexpr((... or std::is_same_v<t_tLeft, t_tpRight>))
+			return Conjunction<t_tpRight...>{};
+		else
+			return Conjunction<t_tLeft, t_tpRight...>{};
+	}
+	
+	template
+		<	ProtoAtomic
+			...	t_tpLeft
 		,	ProtoAtomic
 				t_tRight
 		>
 	auto constexpr
 	(	operator and
-	)	(	Disjunction<t_tpLeftClause...>
+	)	(	Conjunction<t_tpLeft...>
 		,	Atomic<t_tRight>
-				i_vRight
 		)
-	requires
-		ProtoTerm<Disjunction<t_tpLeftClause...>>
-	{	return (... or (Statement<t_tpLeftClause> and i_vRight));	}
+	{	if constexpr((... or std::is_same_v<t_tpLeft, t_tRight>))
+			return Conjunction<t_tpLeft...>{};
+		else
+			return Conjunction<t_tpLeft..., t_tRight>{};
+	}
 	
-	/// Distribution of an atomic.
 	template
-		<	ProtoAtomic t_tLeft
-		,	ProtoClause
-			...	t_tpRightClause
+		<	ProtoAtomic
+			...	t_tpAtomic
+		>
+	auto constexpr
+	(	operator and
+	)	(	Conjunction<t_tpAtomic...>
+		,	Conjunction<t_tpAtomic...>
+		)
+	->	Conjunction<t_tpAtomic...>
+	{	return {};	}
+	
+	template
+		<	ProtoAtomic
+			...	t_tpLeft
+		,	ProtoAtomic
+			...	t_tpRight
+		>
+	auto constexpr
+	(	operator and
+	)	(	Conjunction<t_tpLeft...>
+				i_vLeft
+		,	Conjunction<t_tpRight...>
+		)
+	{	return (i_vLeft and ... and Atomic<t_tpRight>{});	}
+	
+	template
+		<	ProtoAtomic
+				t_tLeft
+		,	ProtoAtomic
+			...	t_tpRight
 		>
 	auto constexpr
 	(	operator and
 	)	(	Atomic<t_tLeft>
-				i_vLeft
-		,	Disjunction<t_tpRightClause...>
+		,	Disjunction<t_tpRight...>
 		)
-	requires
-		ProtoTerm<Disjunction<t_tpRightClause...>>
-	{	return (... or (i_vLeft and Statement<t_tpRightClause>));	}
+	{	/// Absorption law
+		if constexpr((... or std::is_same_v<t_tLeft, t_tpRight>))
+			return Atomic<t_tLeft>{};
+		else
+			return Conjunction<t_tLeft, Disjunction<t_tpRight...>>{};
+	}
 	
 	template
-		<	typename
-				t_tLeft
-		,	typename
+		<	ProtoAtomic
+			...	t_tpLeft
+		,	ProtoAtomic
 				t_tRight
 		>
+	auto constexpr
+	(	operator and
+	)	(	Disjunction<t_tpLeft...>
+		,	Atomic<t_tRight>
+		)
+	{	/// Absorption law
+		if constexpr((... or std::is_same_v<t_tpLeft, t_tRight>))
+			return Atomic<t_tRight>{};
+		else
+			return Conjunction<Disjunction<t_tpLeft...>, t_tRight>{};
+	}
+	
+	template
+		<	ProtoAtomic
+			...	t_tpAtomic
+		>
+	auto constexpr
+	(	operator and
+	)	(	Disjunction<t_tpAtomic...>
+		,	Disjunction<t_tpAtomic...>
+		)
+	->	Disjunction<t_tpAtomic...>
+	{	return {};	}
+	
+	template
+		<	ProtoAtomic
+			...	t_tpLeft
+		,	ProtoAtomic
+			...	t_tpRight
+		>
+	auto constexpr
+	(	operator and
+	)	(	Disjunction<t_tpLeft...>
+		,	Disjunction<t_tpRight...>
+		)
+	{	bool constexpr bLeftSubsumesRight
+		=	(... and []<typename t_tLeft>(Atomic<t_tLeft>)
+			{return (... or std::is_same_v<t_tLeft, t_tpRight>);}
+			(Atomic<t_tpLeft>{}));
+		if constexpr(bLeftSubsumesRight)
+			return Disjunction<t_tpLeft...>{};
+		else
+		{	bool constexpr bRightSubsumesLeft
+			=	(... and []<typename t_tRight>(Atomic<t_tRight>)
+				{return (... or std::is_same_v<t_tpLeft, t_tRight>);}
+				(Atomic<t_tpRight>{}));
+			if constexpr(bRightSubsumesLeft)
+				return Disjunction<t_tpRight...>{};
+			else
+				return Conjunction<Disjunction<t_tpLeft...>, Disjunction<t_tpRight...>>{};
+		}
+	}
+	
+	template
+		<	ProtoAtomic
+			...	t_tpLeft
+		,	ProtoAtomic
+			...	t_tpRight
+		>
+	auto constexpr
+	(	operator and
+	)	(	Conjunction<t_tpLeft...>
+		,	Disjunction<t_tpRight...>
+		)
+	{	bool constexpr bLeftSubsumesRight
+		=	(... or []<typename t_tLeft>(Atomic<t_tLeft>)
+			{	return (... or std::is_same_v<t_tLeft, t_tpRight>); }
+			(Atomic<t_tpLeft>{}));
+		if constexpr(bLeftSubsumesRight)
+			return Conjunction<t_tpLeft...>{};
+		else
+			return Conjunction<t_tpLeft..., Disjunction<t_tpRight...>>{};
+	}
+	
+	template
+		<	ProtoAtomic
+			...	t_tpLeft
+		,	ProtoAtomic
+			...	t_tpRight
+		>
+	auto constexpr
+	(	operator and
+	)	(	Disjunction<t_tpLeft...>
+		,	Conjunction<t_tpRight...>
+		)
+	{	bool constexpr bRightSubsumesLeft
+		=	(... or []<typename t_tRight>(Atomic<t_tRight>)
+			{	return (... or std::is_same_v<t_tpLeft, t_tRight>); }
+			(Atomic<t_tpRight>{}));
+		if constexpr(bRightSubsumesLeft)
+			return Conjunction<t_tpRight...>{};
+		else
+			return Conjunction<Disjunction<t_tpLeft...>, t_tpRight...>{};
+	}
+	
+	template<ProtoAtomic t_tStatement>
+	auto constexpr
+	(	operator or
+	)	(	t_tStatement const
+			&	i_rLeft
+		,	t_tStatement const
+			&
+		)
+	->	t_tStatement const&
+	{	return i_rLeft;	}
+	
+	template<typename t_tLeft, typename t_tRight>
 	auto constexpr
 	(	operator or
 	)	(	t_tLeft const
@@ -940,137 +1370,248 @@ namespace
 		,	t_tRight const
 			&	i_rRight
 		)
-	{	/// optimization using idempotent law
-		if constexpr(std::is_same_v<t_tLeft, t_tRight>)
-			return i_rLeft;
-		else if constexpr(ProtoAtomic<t_tLeft>)
+	->	decltype(auto)
+	requires
+		ProtoAtomic<t_tLeft>
+	or	ProtoAtomic<t_tRight>
+	{	if constexpr(ProtoAtomic<t_tLeft>)
 			return Atomic{i_rLeft} or i_rRight;
-		else if constexpr(ProtoAtomic<t_tRight>)
+		else 
 			return i_rLeft or Atomic{i_rRight};
-		else
-		{	ProtoStatement auto constexpr vLeft = t_tLeft{};
-			ProtoStatement auto constexpr vRight = t_tRight{};
-			if constexpr(vLeft.Subsumes(vRight))
-				return i_rRight;
-			else if constexpr(vRight.Subsumes(vLeft))
-				return i_rLeft;
-			else if constexpr((not vLeft).Subsumes(vRight) or (not vRight).Subsumes(vLeft))
-				return True;
-			//	concatenate
-			else 
-			{	using LeftStatementType = typename decltype(vLeft)::StatementType;
-				using RightStatementType = typename decltype(vRight)::StatementType;
-				/// left is a Disjunction and right an Atomic or Conjunction
-				if constexpr(requires{vLeft.AppendDisjunctiveClause(vRight);})
-					return vLeft.AppendDisjunctiveClause(vRight);
-				/// left is an Atomic or Conjunction and right is a Disjunction
-				else if constexpr(requires{vRight.PrependDisjunctiveClause(vLeft);})
-					return vRight.PrependDisjunctiveClause(vLeft);
-				else
-					return
-						Disjunction
-						<	LeftStatementType
-						,	RightStatementType 
-						>{}
-					;
-			}
-		}
 	}
-		
-	/// Concatenates the terms clause by clause.
-	template
-		<	ProtoClause
-			...	t_tpLeftClause
-		,	ProtoClause
-			...	t_tpRightClause
-		>
-	auto constexpr
-	(	operator or
-	)	(	Disjunction<t_tpLeftClause...>
-				i_vLeft
-		,	Disjunction<t_tpRightClause...>
-		)
-	{	return (i_vLeft or ... or Statement<t_tpRightClause>);	}
 	
-	template
-		<	ProtoClause
-			... t_tpLeftClause
-		,	ProtoClause
-			... t_tpRightClause
-		>
+	template<typename t_tStatement>
 	auto constexpr
 	(	operator or
-	)	(	Conjunction<t_tpLeftClause...>
-				i_vLeft
-		,	Disjunction<t_tpRightClause...>
+	)	(	Atomic<t_tStatement>
+		,	Atomic<t_tStatement>
 		)
-	{	return (i_vLeft or ... or Statement<t_tpRightClause>);	}
+	->	Atomic<t_tStatement>
+	{	return {};	}
 	
-	template
-		<	ProtoClause
-			... t_tpLeftClause
-		,	ProtoClause
-			... t_tpRightClause
-		>
+	template<ProtoAtomic t_tLeft, ProtoAtomic t_tRight>
 	auto constexpr
 	(	operator or
-	)	(	Disjunction<t_tpLeftClause...>
-		,	Conjunction<t_tpRightClause...>
-				i_vRight
-		)
-	{	return (Statement<t_tpLeftClause> or ... or i_vRight);	}
-		
-	/// Performs double distribution.
-	template
-		<	ProtoClause
-			... t_tpLeftClause
-		,	ProtoClause
-			... t_tpRightClause
-		>
-	auto constexpr
-	(	operator or 
-	)	(	Conjunction<t_tpLeftClause...>
-		,	Conjunction<t_tpRightClause...>
-				i_vRight
-		)
-	requires
-		ProtoTerm<Conjunction<t_tpLeftClause...>>
-	or	ProtoTerm<Conjunction<t_tpRightClause...>>
-	{	return (... and (Statement<t_tpLeftClause> or i_vRight));	}
-		
-	/// Distribution of an atomic.
-	template
-		<	ProtoClause
-			... t_tpLeftClause
-		,	 ProtoAtomic
-				t_tRight
-		>
-	auto constexpr
-	(	operator or
-	)	(	Conjunction<t_tpLeftClause...>
+	)	(	Atomic<t_tLeft>
 		,	Atomic<t_tRight>
-				i_vRight
 		)
-	requires
-		ProtoTerm<Conjunction<t_tpLeftClause...>>
-	{	return (... and (Statement<t_tpLeftClause> or i_vRight));	}
+	->	Disjunction<t_tLeft, t_tRight>
+	{	return {};	}
 	
-	/// Distribution of an atomic.
+	auto constexpr
+	(	operator or
+	)	(	Atomic<Tautology>
+		,	auto const&
+		)
+	->	Tautology const&
+	{	return True;	}
+	
+	auto constexpr
+	(	operator or
+	)	(	auto const&
+		,	Atomic<Tautology>
+		)
+	->	Tautology const&
+	{	return True;	}
+	
+	template<typename t_tRight>
+	auto constexpr
+	(	operator or
+	)	(	Atomic<Contradiction>
+		,	t_tRight const
+			&	i_rRight
+		)
+	->	t_tRight
+	{	return i_rRight;	}
+	
+	template<typename t_tLeft>
+	auto constexpr
+	(	operator or
+	)	(	t_tLeft const
+			&	i_rLeft
+		,	Atomic<Contradiction>
+		)
+	->	t_tLeft
+	{	return i_rLeft;	}
+	
 	template
 		<	ProtoAtomic
 				t_tLeft
-		,	ProtoClause
-			...	t_tpRightClause
+		,	ProtoAtomic
+			...	t_tpRight
 		>
 	auto constexpr
 	(	operator or
 	)	(	Atomic<t_tLeft>
-				i_vLeft
-		,	Conjunction<t_tpRightClause...>
+		,	Disjunction<t_tpRight...>
 		)
-	requires
-		ProtoTerm<Conjunction<t_tpRightClause...>>
-	{	return (... and (i_vLeft or Statement<t_tpRightClause>));	}
+	{	if constexpr((... or std::is_same_v<t_tLeft, t_tpRight>))
+			return Disjunction<t_tpRight...>{};
+		else
+			return Disjunction<t_tLeft, t_tpRight...>{};
+	}
+	
+	template
+		<	ProtoAtomic
+			...	t_tpLeft
+		,	ProtoAtomic
+				t_tRight
+		>
+	auto constexpr
+	(	operator or
+	)	(	Disjunction<t_tpLeft...>
+		,	Atomic<t_tRight>
+		)
+	{	if constexpr((... or std::is_same_v<t_tpLeft, t_tRight>))
+			return Disjunction<t_tpLeft...>{};
+		else
+			return Disjunction<t_tpLeft..., t_tRight>{};
+	}
+	
+	template
+		<	ProtoAtomic
+			...	t_tpAtomic
+		>
+	auto constexpr
+	(	operator or
+	)	(	Disjunction<t_tpAtomic...>
+		,	Disjunction<t_tpAtomic...>
+		)
+	->	Disjunction<t_tpAtomic...>
+	{	return {};	}
+	
+	template
+		<	ProtoAtomic
+			...	t_tpLeft
+		,	ProtoAtomic
+			...	t_tpRight
+		>
+	auto constexpr
+	(	operator or
+	)	(	Disjunction<t_tpLeft...>
+				i_vLeft
+		,	Disjunction<t_tpRight...>
+		)
+	{	return (i_vLeft or ... or Atomic<t_tpRight>{});	}
+	
+	template
+		<	ProtoAtomic
+				t_tLeft
+		,	ProtoAtomic
+			...	t_tpRight
+		>
+	auto constexpr
+	(	operator or
+	)	(	Atomic<t_tLeft>
+		,	Conjunction<t_tpRight...>
+		)
+	{	/// Absorption law.
+		if constexpr((... or std::is_same_v<t_tLeft, t_tpRight>))
+			return Atomic<t_tLeft>{};
+		else
+			return Disjunction<t_tLeft, Conjunction<t_tpRight...>>{};
+	}
+	
+	template
+		<	ProtoAtomic
+			...	t_tpLeft
+		,	ProtoAtomic
+				t_tRight
+		>
+	auto constexpr
+	(	operator or
+	)	(	Conjunction<t_tpLeft...>
+		,	Atomic<t_tRight>
+		)
+	{	/// Absorption law
+		if constexpr((... or std::is_same_v<t_tpLeft, t_tRight>))
+			return Atomic<t_tRight>{};
+		else
+			return Disjunction<Conjunction<t_tpLeft...>, t_tRight>{};
+	}
+	
+	template
+		<	ProtoAtomic
+			...	t_tpAtomic
+		>
+	auto constexpr
+	(	operator or
+	)	(	Conjunction<t_tpAtomic...>
+		,	Conjunction<t_tpAtomic...>
+		)
+	->	Conjunction<t_tpAtomic...>
+	{	return {};	}
+	
+	template
+		<	ProtoAtomic
+			...	t_tpLeft
+		,	ProtoAtomic
+			...	t_tpRight
+		>
+	auto constexpr
+	(	operator or
+	)	(	Conjunction<t_tpLeft...>
+		,	Conjunction<t_tpRight...>
+		)
+	{	bool constexpr bLeftSubsumesRight
+		=	(... and []<typename t_tRight>(Atomic<t_tRight>)
+			{return (... or std::is_same_v<t_tpLeft, t_tRight>);}
+			(Atomic<t_tpRight>{}));
+		if constexpr(bLeftSubsumesRight)
+			return Conjunction<t_tpRight...>{};
+		else
+		{	bool constexpr bRightSubsumesLeft
+			=	(... and []<typename t_tLeft>(Atomic<t_tLeft>)
+				{return (... or std::is_same_v<t_tLeft, t_tpRight>);}
+				(Atomic<t_tpLeft>{}));
+			if constexpr(bRightSubsumesLeft)
+				return Conjunction<t_tpLeft...>{};
+			else
+				return Disjunction<Conjunction<t_tpLeft...>, Conjunction<t_tpRight...>>{};
+		}
+	}
+	
+	template
+		<	ProtoAtomic
+			...	t_tpLeft
+		,	ProtoAtomic
+			...	t_tpRight
+		>
+	auto constexpr
+	(	operator or
+	)	(	Disjunction<t_tpLeft...>
+		,	Conjunction<t_tpRight...>
+		)
+	{	bool constexpr bRightSubsumesLeft
+		=	(... or []<typename t_tRight>(Atomic<t_tRight>)
+			{	return (... or std::is_same_v<t_tpLeft, t_tRight>); }
+			(Atomic<t_tpRight>{}));
+		if constexpr(bRightSubsumesLeft)
+			return Disjunction<t_tpLeft...>{};
+		else
+			return Disjunction<t_tpLeft..., Conjunction<t_tpRight...>>{};
+	}
+	
+	template
+		<	ProtoAtomic
+			...	t_tpLeft
+		,	ProtoAtomic
+			...	t_tpRight
+		>
+	auto constexpr
+	(	operator or
+	)	(	Conjunction<t_tpLeft...>
+		,	Disjunction<t_tpRight...>
+		)
+	{	bool constexpr bLeftSubsumesRight
+		=	(... or []<typename t_tLeft>(Atomic<t_tLeft>)
+			{	return (... or std::is_same_v<t_tLeft, t_tpRight>); }
+			(Atomic<t_tpLeft>{}));
+		if constexpr(bLeftSubsumesRight)
+			return Disjunction<t_tpRight...>{};
+		else
+			return Disjunction<Conjunction<t_tpLeft...>, t_tpRight...>{};
+	}
 	
 	/// Equality
 	static_assert(True == True);
@@ -1096,151 +1637,146 @@ namespace
 	static_assert((True  or  False) == True);
 	static_assert((False or  True ) == True);
 	static_assert((False or  False) == False);
+
+	struct P {} constexpr inline p{};
+	struct Q {} constexpr inline q{};
+	struct R {} constexpr inline r{};
+	struct S {} constexpr inline s{};
 	
-// 	namespace Test
-// 	{
-		struct P {} constexpr inline p{};
-		struct Q {} constexpr inline q{};
-		struct R {} constexpr inline r{};
-		struct S {} constexpr inline s{};
-		
-		/// Result types
-		static_assert
-		(	std::is_same_v
-			<	Conjunction<P, Q, R, S>
-			,	decltype(p and q and r and s)
-			>
-		);
-		static_assert
-		(	std::is_same_v
-			<	Conjunction<P, Disjunction<Q, R, S>>
-			,	decltype(p and (q or r or s))
-			>
-		);
-		static_assert
-		(	std::is_same_v
-			<	Disjunction<P, Q, Conjunction<R, S>>
-			,	decltype((p or q) or (r and s))
-			>
-		);
-		static_assert
-		(	std::is_same_v
-			<	Conjunction<P, Q, Disjunction<R, S>>
-			,	decltype(p and (q and (r or s)))
-			>
-		);
-		
-		static_assert
-		(	std::is_same_v
-			<	Conjunction<Disjunction<P, Q>, R>
-			,	decltype((p or q) and r)
-			>
-		);
-		
-		static_assert
-		(	std::is_same_v
-			<	Disjunction<P, Q, R, S>
-			,	decltype(p or q or r or s)
-			>
-		);
-		
-		static_assert
-		(	std::is_same_v
-			<	Disjunction<P, Conjunction<Q, R>>
-			,	decltype(p or (q and r))
-			>
-		);
-		
-		static_assert
-		(	std::is_same_v
-			<	Disjunction<Conjunction<P, Q>, R>
-			,	decltype((p and q) or r)
-			>
-		);
-		
-		// TODO
-		//auto constexpr foo = ((p and q) or r) and (s and (p or q));
-		
-		/// Ordering
-		static_assert(p >= p);
-		static_assert(q >= q);
-		static_assert(r >= r);
-		static_assert((p <=> q) == std::partial_ordering::unordered);
-		static_assert((p <=> r) == std::partial_ordering::unordered);
-		static_assert((q <=> r) == std::partial_ordering::unordered);
-		
-		static_assert((p and q) > p);
-		static_assert(p < (p and q));
-		static_assert((p and q) > q);
-		static_assert(p < (p and q));
-		
-		static_assert((p and q and r) > p);
-		static_assert(p < (p and q and r));
-		static_assert((p and q and r) > q);
-		static_assert(q < (p and q and r));
-		static_assert((p and q and r) > r);
-		static_assert(r < (p and q and r));
-		
-		static_assert((p and q and r) > (p and q));
-		static_assert((p and q) < (p and q and r));
-		static_assert((p and q and r) > (p and r));
-		static_assert((p and r) < (p and q and r));
-		static_assert((p and q and r) > (q and r));
-		static_assert((q and r) < (p and q and r));
-		
-		static_assert((p or q) < p);
-		static_assert(p > (p or q));
-		static_assert((p or q) < q);
-		static_assert(p > (p or q));
-		
-		static_assert((p or q or r) < p);
-		static_assert(p > (p or q or r));
-		static_assert((p or q or r) < q);
-		static_assert(q > (p or q or r));
-		static_assert((p or q or r) < r);
-		static_assert(r > (p or q or r));
-		
-		static_assert((p or q or r) < (p or q));
-		static_assert((p or q) > (p or q or r));
-		static_assert((p or q or r) < (p or r));
-		static_assert((p or r) > (p or q or r));
-		static_assert((p or q or r) < (q or r));
-		static_assert((q or r) > (p or q or r));
-		
-		///	Identity law
-		static_assert((p and True) == p);
-		static_assert((p or False) == p);
-		/// Domination law
-		static_assert((p and False) == False);
-		static_assert((p or  True ) == True);
-		/// Idempotent law
-		static_assert((p and p) == p);
-		static_assert((p or  p) == p);
-		/// Double negation law
-		static_assert((not(not p)) == p);
-		/// Commutative law
-		static_assert((p and q) == (q and p));
-		static_assert((p or  q) == (q or  p));
-		/// Associative law
-		static_assert(((p and q) and r) == (p and (q and r)));
-		static_assert(((p or  q) or  r) == (p or  (q or  r)));
-		/// Distributive law
-		auto constexpr pqr = p or (q and r);
-		auto constexpr pqpr = (p or q) and (p or r);
-		static_assert(pqr.Subsumes(pqpr));
-		static_assert(pqpr.Subsumes(pqr));
-		static_assert((p or  (q and r)) >= ((p or  q) and (p or  r)));
-		static_assert((p and (q or  r)) <= ((p and q) or  (p and r)));
-		static_assert((p or  (q and r)) == ((p or  q) and (p or  r)));
-		static_assert((p and (q or  r)) == ((p and q) or  (p and r)));
-		/// De Morgan's law
-		static_assert((not(p and q)) == ((not p) or  (not q)));
-		static_assert((not(p or  q)) == ((not p) and (not q)));
-		/// Absorbtion laws
-		static_assert((p or  (p and q)) == p);
-		static_assert((p and (p or  q)) == p);
-		/// Negation law
-		static_assert((p and not p) == False);
-		static_assert((p or  not p) == True);
-// 	}
+	auto constexpr pandq = p and q;
+	auto constexpr f = pandq and r;
+	
+	/// Result types
+	static_assert
+	(	std::is_same_v
+		<	Conjunction<P, Q, R, S>
+		,	decltype(p and q and r and s)
+		>
+	);
+	static_assert
+	(	std::is_same_v
+		<	Conjunction<P, Disjunction<Q, R, S>>
+		,	decltype(p and (q or r or s))
+		>
+	);
+	static_assert
+	(	std::is_same_v
+		<	Disjunction<P, Q, Conjunction<R, S>>
+		,	decltype((p or q) or (r and s))
+		>
+	);
+	
+	static_assert
+	(	std::is_same_v
+		<	Conjunction<Disjunction<P, Q>, R>
+		,	decltype((p or q) and r)
+		>
+	);
+	
+	static_assert
+	(	std::is_same_v
+		<	Disjunction<P, Q, R, S>
+		,	decltype(p or q or r or s)
+		>
+	);
+	
+	static_assert
+	(	std::is_same_v
+		<	Disjunction<P, Conjunction<Q, R>>
+		,	decltype(p or (q and r))
+		>
+	);
+	
+	static_assert
+	(	std::is_same_v
+		<	Disjunction<Conjunction<P, Q>, R>
+		,	decltype((p and q) or r)
+		>
+	);
+	
+	// TODO
+	//auto constexpr foo = ((p and q) or r) and (s and (p or q));
+	
+	/// Ordering
+	static_assert(p >= p);
+	static_assert(q >= q);
+	static_assert(r >= r);
+	static_assert((p <=> q) == std::partial_ordering::unordered);
+	static_assert((p <=> r) == std::partial_ordering::unordered);
+	static_assert((q <=> r) == std::partial_ordering::unordered);
+	
+	static_assert((p and q) > p);
+	static_assert(p < (p and q));
+	static_assert((p and q) > q);
+	static_assert(p < (p and q));
+	
+	static_assert((p and q and r) > p);
+	static_assert(p < (p and q and r));
+	static_assert((p and q and r) > q);
+	static_assert(q < (p and q and r));
+	static_assert((p and q and r) > r);
+	static_assert(r < (p and q and r));
+	
+	static_assert((p and q and r) > (p and q));
+	static_assert((p and q) < (p and q and r));
+	static_assert((p and q and r) > (p and r));
+	static_assert((p and r) < (p and q and r));
+	static_assert((p and q and r) > (q and r));
+	static_assert((q and r) < (p and q and r));
+	
+	static_assert((p or q) < p);
+	static_assert(p > (p or q));
+	static_assert((p or q) < q);
+	static_assert(p > (p or q));
+	
+	static_assert((p or q or r) < p);
+	static_assert(p > (p or q or r));
+	static_assert((p or q or r) < q);
+	static_assert(q > (p or q or r));
+	static_assert((p or q or r) < r);
+	static_assert(r > (p or q or r));
+	
+	static_assert((p or q or r) < (p or q));
+	static_assert((p or q) > (p or q or r));
+	static_assert((p or q or r) < (p or r));
+	static_assert((p or r) > (p or q or r));
+	static_assert((p or q or r) < (q or r));
+	static_assert((q or r) > (p or q or r));
+	
+	///	Identity law
+	static_assert((p and True) == p);
+	static_assert((p or False) == p);
+	/// Domination law
+	static_assert((p and False) == False);
+	static_assert((p or  True ) == True);
+	/// Idempotent law
+	static_assert((p and p) == p);
+	static_assert((p or  p) == p);
+	/// Double negation law
+	static_assert((not(not p)) == p);
+	/// Commutative law
+	static_assert((p and q) == (q and p));
+	static_assert((p or  q) == (q or  p));
+	/// Associative law
+	static_assert(((p and q) and r) == (p and (q and r)));
+	static_assert(((p or  q) or  r) == (p or  (q or  r)));
+	/// De Morgan's law
+	static_assert((not(p and q)) == ((not p) or  (not q)));
+	static_assert((not(p or  q)) == ((not p) and (not q)));
+	/// Absorbtion laws
+	static_assert((p or  (p and q)) == p);
+	static_assert((p and (p or  q)) == p);
+	/// Negation law
+	static_assert((p and not p) == False);
+	static_assert((p or  not p) == True);
+	
+// 	static_assert
+// 	(	std::is_same_v
+// 		<	Conjunction<P, Q, Disjunction<R, S>>
+// 		,	decltype(p and (q and (r or s)))
+// 		>
+// 	);
+// 	/// Distributive law
+// 	static_assert((p or  (q and r)) == ((p or  q) and (p or  r)));
+// 	static_assert((p and (q or  r)) == ((p and q) or  (p and r)));
 }
