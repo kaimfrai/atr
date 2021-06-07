@@ -184,7 +184,7 @@ namespace
 			)
 		->	bool
 		{	
-			if constexpr((... and ProtoAtomic<t_tpRight>))
+			if constexpr(ProtoClause<Any<t_tpRight...>>)
 			{
 				if constexpr(ClauseCount == 1ul)
 				{	if constexpr (sizeof...(t_tpRight) == 1ul)
@@ -202,16 +202,29 @@ namespace
 					return (... or AtomicToAny<t_tpClause>::Subsumes(i_vRight));
 			}
 			else
-				return Negate<All>::Subsumes(not i_vRight);
+				//return Negate<All>::Subsumes(not i_vRight);
+				return (not All{}) or i_vRight;
+				//return (... and AtomicToAny<t_tpClause>{}).Subsumes((... or AtomicToAll<t_tpRight>{}));
 		}
 		
-		template<ProtoAtomic... t_tpRight>
+		template<ProtoClause... t_tpRight>
 		static auto constexpr
 		(	Subsumes
 		)	(	All<t_tpRight...>
+					i_vRight
 			)
 		->	bool
-		{	return (... and Subsumes(Any<t_tpRight>{}));	}
+		{	if constexpr((... and ProtoAtomic<t_tpRight>))
+				return (... and Subsumes(Any<t_tpRight>{}));
+			else if constexpr(ProtoClause<All>)
+			{	if constexpr(ClauseCount == 1ul)
+					return Any<t_tpClause...>::Subsumes(i_vRight);
+				else
+					return Any<All>::Subsumes(i_vRight);
+			}
+			else
+				return (... and AtomicToAny<t_tpClause>{}).Subsumes(i_vRight);
+		}
 		
 		template<ProtoStatement t_tStatement>
 		static bool constexpr
@@ -230,6 +243,13 @@ namespace
 				else
 					return All<t_tpClause..., Any<t_tpRight...>>{};
 			}
+			else
+				return
+				(	...
+				or	(	All{}
+					and	AtomicToAny<t_tpRight>{}
+					)
+				);
 		}
 		
 		template<ProtoClause... t_tpRight>
@@ -258,6 +278,12 @@ namespace
 				else
 					return Any<All, t_tpRight...>{};
 			}
+			else
+				return
+				(	All{}
+				or	...
+				or	AtomicToAll<t_tpRight>{}
+				);
 		}
 		
 		template<ProtoClause... t_tpRight>
@@ -275,6 +301,13 @@ namespace
 					>
 				::	Or(i_vRight)
 				;
+			else
+				return
+				(	...
+				and	(	All{}
+					or	AtomicToAny<t_tpRight>{}
+					)
+				);
 		}
 		
 		auto constexpr
@@ -298,28 +331,38 @@ namespace
 		static auto constexpr ClauseCount = sizeof...(t_tpClause);
 		static_assert(ClauseCount >= 1ul, "A Any must contain at least one clause.");
 		
-		template<ProtoAtomic... t_tpRight>
+		template<ProtoClause... t_tpRight>
 		static auto constexpr
 		(	Subsumes
 		)	(	Any<t_tpRight...>
 					i_vRight
 			)
 		->	bool
-		{	if constexpr(ClauseCount == 1ul)
-			{	/// Two atomics
-				if constexpr(sizeof...(t_tpRight) == 1ul)
-					return
-					(	...
-					and	(	std::is_same_v<t_tpClause, t_tpRight>
-						or	std::is_same_v<t_tpClause, Never>
-						or	std::is_same_v<Always, t_tpRight>
-						)
-					);
+		{	if constexpr((... and ProtoAtomic<t_tpRight>))
+			{	if constexpr(ClauseCount == 1ul)
+				{	/// Two atomics
+					if constexpr(sizeof...(t_tpRight) == 1ul)
+						return
+						(	...
+						and	(	std::is_same_v<t_tpClause, t_tpRight>
+							or	std::is_same_v<t_tpClause, Never>
+							or	std::is_same_v<Always, t_tpRight>
+							)
+						);
+					else
+						return (... or All<t_tpClause...>::Subsumes(All<t_tpRight>{}));
+				}
 				else
-					return (... or All<t_tpClause...>::Subsumes(All<t_tpRight>{}));
+					return (... and AtomicToAll<t_tpClause>::Subsumes(i_vRight));
+			}
+			else if constexpr(ProtoClause<Any>)
+			{	if constexpr(ClauseCount <= 1ul)
+					return All<t_tpClause...>::Subsumes(i_vRight);
+				else
+					return All<Any>::Subsumes(i_vRight);
 			}
 			else
-				return (... and AtomicToAll<t_tpClause>::Subsumes(i_vRight));
+				return (... or AtomicToAll<t_tpClause>{}).Subsumes(i_vRight);
 		}
 		
 		template<ProtoClause... t_tpRight>
@@ -352,6 +395,13 @@ namespace
 				::	And(i_vRight)
 				;
 			}
+			else
+				return
+				(	...
+				or	(	Any{}
+					and	AtomicToAll<t_tpRight>{}
+					)
+				);
 		}
 		
 		template<ProtoClause... t_tpRight>
@@ -365,6 +415,12 @@ namespace
 				else
 					return All<Any, t_tpRight...>{};
 			}
+			else
+				return
+				(	Any{}
+				and	...
+				and	AtomicToAny<t_tpRight>{}
+				);
 		}
 		
 		template<ProtoClause... t_tpRight>
@@ -393,7 +449,13 @@ namespace
 				else
 					return Any<t_tpClause..., All<t_tpRight...>>{};
 			}
-				
+			else
+				return
+				(	...
+				and	(	Any{}
+					or	AtomicToAny<t_tpRight>{}
+					)
+				);
 		}
 		
 		auto constexpr
@@ -677,10 +739,16 @@ namespace
 		static_assert(((P or Q) or not P) == Always);
 		static_assert(((not P or Q) or P) == Always);
 		
-// 		static_assert(((P and Q) or not P) == (Q or not P));
-// 		static_assert(((not P and Q) or P) == (Q or P));
-// 		static_assert(((P or Q) and not P) == (Q and not P));
-// 		static_assert(((not P or Q) and P) == (Q and P));
+		static auto constexpr f = ((P and Q) or not P);
+		static auto constexpr g = (Q or not P);
+		static auto constexpr gg = not All<g>;
+		static auto constexpr ff = not f;
+		static_assert(f.Subsumes(g));
+		static_assert(g.Subsumes(f));
+		static_assert(((P and Q) or not P) == (Q or not P));
+		static_assert(((not P and Q) or P) == (Q or P));
+		static_assert(((P or Q) and not P) == (Q and not P));
+		static_assert(((not P or Q) and P) == (Q and P));
 		
 		static_assert((P and Q) != not (P and Q));
 		static_assert((P and Q) != not (Q and P));
@@ -759,11 +827,6 @@ namespace
 		static_assert((P or (Q and P)) == P, "Absorption law violated.");
 		static_assert(((P and Q) or P) == P, "Absorption law violated.");
 		static_assert(((Q and P) or P) == P, "Absorption law violated.");
-		
-		static auto constexpr q = (P or (Q and R));
-		static auto constexpr f = ((P or  Q) and (P or  R));
-		static_assert(q.Subsumes(f));
-		static_assert((P or (Q and R)).Subsumes(((P or  Q) and (P or  R))), "Distribution law violated.");
 		
  		static_assert((P or (Q and R)) == ((P or  Q) and (P or  R)), "Distribution law violated.");
 		static_assert((P or (Q and R)) == ((P or  Q) and (R or  P)), "Distribution law violated.");
