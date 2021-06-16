@@ -148,7 +148,7 @@ namespace
 	};
 	
 	struct
-		Always
+		Always final
 	{	static StatementTag constexpr Statement{true};
 	};
 	
@@ -177,15 +177,11 @@ namespace
 	{	static StatementTag constexpr Statement{true};
 	};
 	
-	
-	
 	template<ProtoAtomic t_tAtomic>
 	struct
 		Not final
 	{	static StatementTag constexpr Statement{true};
 	};
-	
-
 	
 	template<ProtoClause... t_tpClause>
 	class
@@ -245,78 +241,6 @@ namespace
 			)
 		,	"Conjunction mustn't contain contradictory clauses."
 		);
-		
-		template<ProtoClause... t_tpRight>
-		static auto constexpr
-		(	And
-		)	(	Any<t_tpRight...>
-			)
-		{	if constexpr(ProtoClause<Any<t_tpRight...>>)
-			{	if constexpr(sizeof...(t_tpRight) <= 1ul)
-					return All<t_tpClause..., t_tpRight...>{};
-				else
-					return All<t_tpClause..., Any<t_tpRight...>>{};
-			}
-			else
-				return
-				(	...
-				or	(	All{}
-					and	t_tpRight{}
-					)
-				);
-		}
-		
-		template<ProtoClause... t_tpRight>
-		static auto constexpr
-		(	And
-		)	(	All<t_tpRight...>
-			)
-		{	if constexpr(sizeof...(t_tpClause) <= 1ul or sizeof...(t_tpRight) <= 1ul)
-				return All<t_tpClause..., t_tpRight...>{};
-			else
-				return
-				(	All{}
-				and	...
-				and	t_tpRight{}
-				);
-		}
-		
-		template<ProtoClause... t_tpRight>
-		static auto constexpr
-		(	Or
-		)	(	Any<t_tpRight...>
-			)
-		{	if constexpr(ProtoClause<All>)
-			{	
-					return Any<All, t_tpRight...>{};
-			}
-			else
-				return
-				(	All{}
-				or	...
-				or	t_tpRight{}
-				);
-		}
-		
-		template<ProtoClause... t_tpRight>
-		static auto constexpr
-		(	Or
-		)	(	All<t_tpRight...>
-					i_vRight
-			)
-		{	if constexpr(ProtoClause<All> and ProtoClause<All<t_tpRight...>>)
-				return
-					Any<All>
-				::	Or(i_vRight)
-				;
-			else
-				return
-				(	...
-				and	(	All{}
-					or	t_tpRight{}
-					)
-				);
-		}
 	};
 	
 	template<ProtoClause... t_tpClause>
@@ -377,57 +301,6 @@ namespace
 			)
 		,	"Disjunction mustn't contain contradictory clauses."
 		);
-		
-		template<ProtoClause... t_tpRight>
-		static auto constexpr
-		(	And
-		)	(	All<t_tpRight...>
-			)
-		{	if constexpr(ProtoClause<Any>)
-			{	
-					return All<Any, t_tpRight...>{};
-			}
-			else
-				return
-				(	Any{}
-				and	...
-				and	t_tpRight{}
-				);
-		}
-		
-		template<ProtoClause... t_tpRight>
-		static auto constexpr
-		(	Or
-		)	(	Any<t_tpRight...>
-			)
-		{	
-		
-				return
-				(	Any{}
-				or	...
-				or	t_tpRight{}
-				);
-		}
-		
-		template<ProtoClause... t_tpRight>
-		static auto constexpr
-		(	Or
-		)	(	All<t_tpRight...>
-			)
-		{	if constexpr(ProtoClause<All<t_tpRight...>>)
-			{	if constexpr(sizeof...(t_tpRight) <= 1ul)
-					return Any<t_tpClause..., t_tpRight...>{};
-				else
-					return Any<t_tpClause..., All<t_tpRight...>>{};
-			}
-			else
-				return
-				(	...
-				and	(	Any{}
-					or	t_tpRight{}
-					)
-				);
-		}
 	};
 	
 	auto constexpr
@@ -781,41 +654,39 @@ namespace
 	->	ProtoConjunction auto
 	{	return +i_vLeft;	}
 	
-	template<ProtoAtomic t_tLeftAtomic, ProtoAtomic t_tRightAtomic>
 	auto consteval
-	(	operator<=>
-	)	(	Atomic<t_tLeftAtomic>
-		,	Atomic<t_tRightAtomic>
+	(	operator ==
+	)	(	ProtoAtomicClause auto
+				i_vLeft
+		,	ProtoAtomicClause auto
+				i_vRight
 		)
-	->	std::partial_ordering
-	{	return
-			std::is_same_v<t_tLeftAtomic, t_tRightAtomic>
-		?	std::partial_ordering::equivalent
-		:	std::partial_ordering::unordered
-		;
-	}
+	->	bool
+	{	return std::is_same_v<decltype(i_vLeft), decltype(i_vRight)>;	}
 	
-	template<ProtoAtomic t_tLeftAtomic, ProtoAtomic t_tRightAtomic>
 	auto consteval
-	(	operator<=>
-	)	(	Atomic<t_tLeftAtomic>
-		,	Not<t_tRightAtomic>
+	(	operator >=
+	)	(	ProtoAtomicClause auto
+				i_vLeft
+		,	ProtoAtomicClause auto
+				i_vRight
 		)
-	->	std::partial_ordering
-	{	return std::partial_ordering::unordered;	}
+	->	bool
+	{	return i_vLeft == i_vRight;	}
 	
-	template<ProtoAtomic t_tLeftAtomic, ProtoAtomic t_tRightAtomic>
 	auto consteval
 	(	operator<=>
-	)	(	Not<t_tLeftAtomic>
-		,	Not<t_tRightAtomic>
+	)	(	ProtoAtomicClause auto
+				i_vLeft
+		,	ProtoAtomicClause auto
+				i_vRight
 		)
 	->	std::partial_ordering
-	{	return
-			std::is_same_v<t_tLeftAtomic, t_tRightAtomic>
-		?	std::partial_ordering::equivalent
-		:	std::partial_ordering::unordered
-		;
+	{
+		if	constexpr(i_vLeft == i_vRight)
+			return std::partial_ordering::equivalent;
+		else
+			return std::partial_ordering::unordered;
 	}
 	
 	template<ProtoAtomic t_tAtomic>
@@ -890,23 +761,23 @@ namespace
 	
 	template<ProtoClause... t_tpClause>
 	auto consteval
-	(	operator >
+	(	operator >=
 	)	(	ProtoAtomicClause auto
 				i_vAtomic
 		,	All<t_tpClause...>
 		)
 	->	bool
-	{	return (... and (i_vAtomic > t_tpClause{}));	}
+	{	return (... and (i_vAtomic >= t_tpClause{}));	}
 	
 	template<ProtoClause... t_tpClause>
 	auto consteval
-	(	operator >
+	(	operator >=
 	)	(	All<t_tpClause...>
 		,	ProtoAtomicClause auto
 				i_vAtomic
 		)
 	->	bool
-	{	return (... or (t_tpClause{} == i_vAtomic));	}
+	{	return (... or (t_tpClause{} >= i_vAtomic));	}
 	
 	template<ProtoClause... t_tpRightClause>
 	auto consteval
@@ -918,10 +789,10 @@ namespace
 		)
 	->	std::partial_ordering
 	{
-		if	constexpr(i_vRight > i_vLeft)
+		if	constexpr(i_vRight >= i_vLeft)
 			return std::partial_ordering::less;
 		else
-		if	constexpr(i_vLeft > i_vRight)
+		if	constexpr(i_vLeft >= i_vRight)
 			return std::partial_ordering::greater;
 		else
 			return std::partial_ordering::unordered;
@@ -929,23 +800,23 @@ namespace
 	
 	template<ProtoClause... t_tpClause>
 	auto consteval
-	(	operator >
+	(	operator >=
 	)	(	ProtoAtomicClause auto
 				i_vAtomic
 		,	Any<t_tpClause...>
 		)
 	->	bool
-	{	return (... or (i_vAtomic == t_tpClause{}));	}
+	{	return (... or (i_vAtomic >= t_tpClause{}));	}
 	
 	template<ProtoClause... t_tpClause>
 	auto consteval
-	(	operator >
+	(	operator >=
 	)	(	Any<t_tpClause...>
 		,	ProtoAtomicClause auto
 				i_vAtomic
 		)
 	->	bool
-	{	return (... and (t_tpClause{} > i_vAtomic));	}
+	{	return (... and (t_tpClause{} >= i_vAtomic));	}
 	
 	template<ProtoClause... t_tpRightClause>
 	auto consteval
@@ -957,10 +828,10 @@ namespace
 		)
 	->	std::partial_ordering
 	{
-		if	constexpr(i_vLeft > i_vRight)
+		if	constexpr(i_vLeft >= i_vRight)
 			return std::partial_ordering::greater;
 		else
-		if	constexpr(i_vRight > i_vLeft)
+		if	constexpr(i_vRight >= i_vLeft)
 			return std::partial_ordering::less;
 		else
 			return std::partial_ordering::unordered;
@@ -993,23 +864,26 @@ namespace
 	template<ProtoClause... t_tpRightClause>
 	auto consteval
 	(	operator and
-	)	(	ProtoAtomicClause auto
+	)	(	ProtoDisjunction auto
 				i_vLeft
 		,	All<t_tpRightClause...>
 				i_vRight
 		)
 	->	ProtoConjunction auto
 	{
-		if	constexpr(i_vRight > not i_vLeft)
+		if	constexpr(not ProtoConjunction<decltype(i_vLeft)>)
+			return +i_vLeft and i_vRight;
+		else
+		if	constexpr(i_vRight >= not i_vLeft)
 			return Never{};
 		else
-		if	constexpr(i_vRight > i_vLeft)
+		if	constexpr(i_vRight >= i_vLeft)
 			return (i_vLeft and ... and t_tpRightClause{});
 		else
 		if	constexpr
 			(	(	...
-				or	(	i_vLeft > t_tpRightClause{}
-					or	not i_vLeft > t_tpRightClause{}
+				or	(	i_vLeft >= t_tpRightClause{}
+					or	not i_vLeft >= t_tpRightClause{}
 					)
 				)
 			)
@@ -1017,47 +891,32 @@ namespace
 		else
 			return All<decltype(i_vLeft), t_tpRightClause...>{};
 	}
-	
-	template<ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator *
-	)	(	ProtoAtomicClause auto
-				i_vLeft
-		,	All<t_tpRightClause...>
-		)
-	->	ProtoDisjunction auto
-	{	return (i_vLeft * ... * t_tpRightClause{});	}
-	
+
 	template<ProtoClause... t_tpLeftClause>
 	auto consteval
 	(	operator and
 	)	(	All<t_tpLeftClause...>
 				i_vLeft
-		,	ProtoAtomicClause auto
+		,	ProtoDisjunction auto
 				i_vRight
 		)
 	->	ProtoConjunction auto
-	{	if	constexpr(i_vLeft > i_vRight)
+	{	if	constexpr(i_vLeft >= i_vRight)
 			return +i_vLeft;
 		else
-			return (t_tpLeftClause{} and ... and i_vRight);
+			return (t_tpLeftClause{} and ... and +i_vRight);
 	}
-	
-	template<ProtoClause... t_tpLeftClause>
+
+	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
 	auto consteval
-	(	operator *
+	(	operator and
 	)	(	All<t_tpLeftClause...>
 				i_vLeft
-		,	ProtoAtomicClause auto
-				i_vRight
+		,	All<t_tpRightClause...>
 		)
-	->	ProtoDisjunction auto
-	{	if	constexpr(ProtoDisjunction<decltype(i_vLeft)>)
-			return i_vLeft and i_vRight;
-		else
-			return (t_tpLeftClause{} * ... * i_vRight);
-	}	
-	
+	->	ProtoConjunction auto
+	{	return (i_vLeft and ... and t_tpRightClause{});	}
+
 	template<ProtoClause... t_tpRightClause>
 	auto consteval
 	(	operator and
@@ -1067,13 +926,14 @@ namespace
 				i_vRight
 		)
 	->	ProtoConjunction auto
-	{	if	constexpr(i_vLeft >= i_vRight)
+	{
+		if	constexpr(i_vLeft >= i_vRight)
 			return +i_vLeft;
 		else
 		if	constexpr(i_vRight >= i_vLeft)
 			return +i_vRight;
 		else
-		if	constexpr(i_vLeft >= not i_vRight or not i_vLeft <= i_vRight)
+		if	constexpr(i_vLeft >= not i_vRight or i_vRight >= not i_vLeft)
 			return Never{};
 		else
 		if	constexpr(ProtoClause<decltype(i_vRight)>)
@@ -1081,28 +941,7 @@ namespace
 		else
 			return (... + (i_vLeft and t_tpRightClause{}));
 	}
-	
-	template<ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator *
-	)	(	ProtoAtomicClause auto
-				i_vLeft
-		,	Any<t_tpRightClause...>
-				i_vRight
-		)
-	->	ProtoDisjunction auto
-	{	if	constexpr(i_vLeft >= i_vRight)
-			return *i_vLeft;
-		else
-		if	constexpr(i_vRight >= i_vLeft)
-			return *i_vRight;
-		else
-		if	constexpr(not i_vLeft >= i_vRight or i_vLeft <= not i_vRight)
-			return Never{};
-		else
-			return (... or (i_vLeft * t_tpRightClause{}));
-	}
-	
+
 	template<ProtoClause... t_tpLeftClause>
 	auto consteval
 	(	operator and
@@ -1112,7 +951,8 @@ namespace
 				i_vRight
 		)
 	->	ProtoConjunction auto
-	{	if	constexpr(i_vLeft >= i_vRight)
+	{
+		if	constexpr(i_vLeft >= i_vRight)
 			return +i_vLeft;
 		else
 		if	constexpr(i_vRight >= i_vLeft)
@@ -1126,48 +966,7 @@ namespace
 		else
 			return (... + (t_tpLeftClause{} and i_vRight));
 	}
-	
-	template<ProtoClause... t_tpLeftClause>
-	auto consteval
-	(	operator *
-	)	(	Any<t_tpLeftClause...>
-				i_vLeft
-		,	ProtoAtomicClause auto
-				i_vRight
-		)
-	->	ProtoDisjunction auto
-	{	if	constexpr(i_vLeft >= i_vRight)
-			return *i_vLeft;
-		else
-		if	constexpr(i_vRight >= i_vLeft)
-			return *i_vRight;
-		else
-		if	constexpr(not i_vLeft >= i_vRight or i_vLeft <= not i_vRight)
-			return Never{};
-		else
-			return (... or (t_tpLeftClause{} * i_vRight));
-	}
-	
-	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator and
-	)	(	All<t_tpLeftClause...>
-				i_vLeft
-		,	All<t_tpRightClause...>
-		)
-	->	ProtoConjunction auto
-	{	return (i_vLeft and ... and t_tpRightClause{});	}
-	
-	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator *
-	)	(	All<t_tpLeftClause...>
-				i_vLeft
-		,	All<t_tpRightClause...>
-		)
-	->	ProtoDisjunction auto
-	{	return (i_vLeft * ... * t_tpRightClause{});	}
-	
+
 	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
 	auto consteval
 	(	operator and
@@ -1177,13 +976,14 @@ namespace
 				i_vRight
 		)
 	->	ProtoConjunction auto
-	{	if	constexpr(i_vLeft >= i_vRight)
+	{
+		if	constexpr(i_vLeft >= i_vRight)
 			return +i_vLeft;
 		else
 		if	constexpr(i_vRight >= i_vLeft)
 			return +i_vRight;
 		else
-		if	constexpr(i_vLeft >= not i_vRight or not i_vLeft <= i_vRight)
+		if	constexpr(i_vLeft >= not i_vRight or i_vRight >= not i_vLeft)
 			return Never{};
 		else
 		if	constexpr
@@ -1195,6 +995,88 @@ namespace
 			return (... + (i_vLeft and t_tpRightClause{}));
 	}
 	
+	template<ProtoClause... t_tpRightClause>
+	auto consteval
+	(	operator *
+	)	(	ProtoAtomicClause auto
+				i_vLeft
+		,	All<t_tpRightClause...>
+		)
+	->	ProtoDisjunction auto
+	{	return (i_vLeft * ... * t_tpRightClause{});	}
+	
+	template<ProtoClause... t_tpLeftClause>
+	auto consteval
+	(	operator *
+	)	(	All<t_tpLeftClause...>
+				i_vLeft
+		,	ProtoAtomicClause auto
+				i_vRight
+		)
+	->	ProtoDisjunction auto
+	{
+		if	constexpr(i_vLeft >= i_vRight)
+			return *i_vLeft;
+		else
+		if	constexpr(ProtoDisjunction<decltype(i_vLeft)>)
+			return i_vLeft and i_vRight;
+		else
+			return (t_tpLeftClause{} * ... * i_vRight);
+	}
+
+	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
+	auto consteval
+	(	operator *
+	)	(	All<t_tpLeftClause...>
+				i_vLeft
+		,	All<t_tpRightClause...>
+		)
+	->	ProtoDisjunction auto
+	{	return (i_vLeft * ... * t_tpRightClause{});	}
+	
+	template<ProtoClause... t_tpRightClause>
+	auto consteval
+	(	operator *
+	)	(	ProtoConjunction auto
+				i_vLeft
+		,	Any<t_tpRightClause...>
+				i_vRight
+		)
+	->	ProtoDisjunction auto
+	{
+		if	constexpr(i_vLeft >= i_vRight)
+			return *i_vLeft;
+		else
+		if	constexpr(i_vRight >= i_vLeft)
+			return *i_vRight;
+		else
+		if	constexpr(not i_vLeft >= i_vRight or not i_vRight >= i_vLeft)
+			return Never{};
+		else
+			return (... or (i_vLeft * t_tpRightClause{}));
+	}
+	
+	template<ProtoClause... t_tpLeftClause>
+	auto consteval
+	(	operator *
+	)	(	Any<t_tpLeftClause...>
+				i_vLeft
+		,	ProtoConjunction auto
+				i_vRight
+		)
+	->	ProtoDisjunction auto
+	{	if	constexpr(i_vLeft >= i_vRight)
+			return *i_vLeft;
+		else
+		if	constexpr(i_vRight >= i_vLeft)
+			return *i_vRight;
+		else
+		if	constexpr(not i_vLeft >= i_vRight or not i_vRight >= i_vLeft)
+			return Never{};
+		else
+			return (... or (t_tpLeftClause{} * i_vRight));
+	}
+	
 	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
 	auto consteval
 	(	operator *
@@ -1210,7 +1092,7 @@ namespace
 		if	constexpr(i_vRight >= i_vLeft)
 			return *i_vRight;
 		else
-		if	constexpr(i_vLeft >= not i_vRight or not i_vLeft <= i_vRight)
+		if	constexpr(i_vLeft >= not i_vRight or i_vRight >= not i_vLeft)
 			return Never{};
 		else
 			return (... or (i_vLeft * t_tpRightClause{}));
@@ -1225,13 +1107,14 @@ namespace
 				i_vRight
 		)
 	->	ProtoDisjunction auto
-	{	if	constexpr(i_vRight >= i_vLeft)
+	{
+		if	constexpr(i_vRight >= i_vLeft)
 			return *i_vLeft;
 		else
 		if	constexpr(i_vLeft >= i_vRight)
 			return *i_vRight;
 		else
-		if	constexpr(not i_vLeft >=  i_vRight or i_vLeft <= not i_vRight)
+		if	constexpr(not i_vLeft >=  i_vRight or not i_vRight <= i_vLeft)
 			return Always{};
 		else
 		if	constexpr(ProtoClause<decltype(i_vRight)>)
@@ -1239,28 +1122,7 @@ namespace
 		else
 			return (... * (i_vLeft or t_tpRightClause{}));
 	}
-	
-	template<ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator +
-	)	(	ProtoAtomicClause auto
-				i_vLeft
-		,	All<t_tpRightClause...>
-				i_vRight
-		)
-	->	ProtoConjunction auto
-	{	if	constexpr(i_vRight >= i_vLeft)
-			return +i_vLeft;
-		else
-		if	constexpr(i_vLeft >= i_vRight)
-			return +i_vRight;
-		else
-		if	constexpr(not i_vLeft >=  i_vRight or i_vLeft <= not i_vRight)
-			return Always{};
-		else
-			return (... and (i_vLeft + t_tpRightClause{}));
-	}
-	
+
 	template<ProtoClause... t_tpLeftClause>
 	auto consteval
 	(	operator or
@@ -1270,7 +1132,8 @@ namespace
 				i_vRight
 		)
 	->	ProtoDisjunction auto
-	{	if	constexpr(i_vRight >= i_vLeft)
+	{
+		if	constexpr(i_vRight >= i_vLeft)
 			return *i_vLeft;
 		else
 		if	constexpr(i_vLeft >= i_vRight)
@@ -1284,13 +1147,97 @@ namespace
 		else
 			return (... * (t_tpLeftClause{} or i_vRight));
 	}
-	
-	template<ProtoClause... t_tpLeftClause>
+
+	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
 	auto consteval
-	(	operator +
+	(	operator or
 	)	(	All<t_tpLeftClause...>
 				i_vLeft
-		,	ProtoAtomicClause auto
+		,	All<t_tpRightClause...>
+				i_vRight
+		)
+	->	ProtoDisjunction auto
+	{
+		if	constexpr(i_vRight >= i_vLeft)
+			return *i_vLeft;
+		else
+		if	constexpr(i_vLeft >= i_vRight)
+			return *i_vRight;
+		else
+		if	constexpr(i_vLeft >= not i_vRight or i_vRight >= not i_vLeft)
+			return Always{};
+		else
+		if	constexpr
+			(	ProtoClause<decltype(i_vLeft)>
+			and	ProtoClause<decltype(i_vRight)>
+			)
+			return Any<decltype(i_vLeft), decltype(i_vRight)>{};
+		else
+			return (... * (i_vLeft or t_tpRightClause{}));
+	}
+
+	template<ProtoClause... t_tpRightClause>
+	auto consteval
+	(	operator or
+	)	(	ProtoConjunction auto
+				i_vLeft
+		,	Any<t_tpRightClause...>
+				i_vRight
+		)
+	->	ProtoDisjunction auto
+	{
+		if	constexpr(not ProtoDisjunction<decltype(i_vLeft)>)
+			return *i_vLeft or i_vRight;
+		else
+		if	constexpr(not i_vLeft >= i_vRight)
+			return Always{};
+		else
+		if	constexpr(i_vLeft >= i_vRight)
+			return (i_vLeft or ... or t_tpRightClause{});
+		else
+		if	constexpr
+			(	(	...
+				or	(	t_tpRightClause{} >= i_vLeft
+					or	t_tpRightClause{} >= not i_vLeft
+					)
+				)
+			)
+			return (... or (i_vLeft or t_tpRightClause{}));
+		else
+			return Any<decltype(i_vLeft), t_tpRightClause...>{};
+	}
+
+	template<ProtoClause... t_tpLeftClause>
+	auto consteval
+	(	operator or
+	)	(	Any<t_tpLeftClause...>
+				i_vLeft
+		,	ProtoConjunction auto
+				i_vRight
+		)
+	->	ProtoDisjunction auto
+	{	if	constexpr(i_vRight >= i_vLeft)
+			return *i_vLeft;
+		else
+			return (t_tpLeftClause{} or ... or *i_vRight);
+	}
+
+	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
+	auto consteval
+	(	operator or
+	)	(	Any<t_tpLeftClause...>
+				i_vLeft
+		,	Any<t_tpRightClause...>
+		)
+	->	ProtoDisjunction auto
+	{	return (i_vLeft or ...  or t_tpRightClause{});	}
+	
+	template<ProtoClause... t_tpRightClause>
+	auto consteval
+	(	operator +
+	)	(	ProtoDisjunction auto
+				i_vLeft
+		,	All<t_tpRightClause...>
 				i_vRight
 		)
 	->	ProtoConjunction auto
@@ -1300,38 +1247,32 @@ namespace
 		if	constexpr(i_vLeft >= i_vRight)
 			return +i_vRight;
 		else
-		if	constexpr(not i_vLeft >=  i_vRight or i_vLeft <= not i_vRight)
+		if	constexpr(not i_vLeft >=  i_vRight or not i_vRight >= i_vLeft)
+			return Always{};
+		else
+			return (... and (i_vLeft + t_tpRightClause{}));
+	}
+	
+	template<ProtoClause... t_tpLeftClause>
+	auto consteval
+	(	operator +
+	)	(	All<t_tpLeftClause...>
+				i_vLeft
+		,	ProtoDisjunction auto
+				i_vRight
+		)
+	->	ProtoConjunction auto
+	{
+		if	constexpr(i_vRight >= i_vLeft)
+			return +i_vLeft;
+		else
+		if	constexpr(i_vLeft >= i_vRight)
+			return +i_vRight;
+		else
+		if	constexpr(not i_vLeft >=  i_vRight or not i_vRight >= i_vLeft)
 			return Always{};
 		else
 			return (... and (t_tpLeftClause{} + i_vRight));
-	}
-	
-	template<ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator or
-	)	(	ProtoAtomicClause auto
-				i_vLeft
-		,	Any<t_tpRightClause...>
-				i_vRight
-		)
-	->	ProtoDisjunction auto
-	{	
-		if	constexpr(not i_vLeft > i_vRight)
-			return Always{};
-		else
-		if	constexpr(i_vLeft > i_vRight)
-			return (i_vLeft or ... or t_tpRightClause{});
-		else
-		if	constexpr
-			(	(	...
-				or	(	t_tpRightClause{} > i_vLeft
-					or t_tpRightClause{} > not i_vLeft
-					)
-				)
-			)
-			return (... or (i_vLeft or t_tpRightClause{}));
-		else
-			return Any<decltype(i_vLeft), t_tpRightClause...>{};
 	}
 	
 	template<ProtoClause... t_tpRightClause>
@@ -1343,22 +1284,7 @@ namespace
 		)
 	->	ProtoConjunction auto
 	{	return (i_vLeft + ... + t_tpRightClause{});	}
-	
-	template<ProtoClause... t_tpLeftClause>
-	auto consteval
-	(	operator or
-	)	(	Any<t_tpLeftClause...>
-				i_vLeft
-		,	ProtoAtomicClause auto
-				i_vRight
-		)
-	->	ProtoDisjunction auto
-	{	if	constexpr(i_vRight > i_vLeft)
-			return *i_vLeft;
-		else
-			return (t_tpLeftClause{} or ... or i_vRight);
-	}
-	
+
 	template<ProtoClause... t_tpLeftClause>
 	auto consteval
 	(	operator +
@@ -1368,46 +1294,14 @@ namespace
 				i_vRight
 		)
 	->	ProtoConjunction auto
-	{	if	constexpr(i_vRight >= i_vLeft)
+	{
+		if	constexpr(i_vRight >= i_vLeft)
 			return +i_vLeft;
 		else
-		if	constexpr(i_vLeft >= i_vRight)
-			return +i_vRight;
+		if	constexpr(ProtoConjunction<decltype(i_vLeft)>)
+			return i_vLeft or i_vRight;
 		else
-		if	constexpr(not i_vLeft >= i_vRight or i_vLeft <= not i_vRight)
-			return Always{};
-		else
-		if	constexpr(ProtoConjunction<Any<t_tpLeftClause...>>)
-			return Any<t_tpLeftClause..., decltype(i_vLeft)>{};
-		else
-			return (... + (t_tpLeftClause{} or i_vRight));
-	}
-	
-	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator or
-	)	(	All<t_tpLeftClause...>
-				i_vLeft
-		,	All<t_tpRightClause...>
-				i_vRight
-		)
-	->	ProtoDisjunction auto
-	{	if	constexpr(i_vRight >= i_vLeft)
-			return *i_vLeft;
-		else
-		if	constexpr(i_vLeft >= i_vRight)
-			return *i_vRight;
-		else
-		if	constexpr(i_vLeft >= not i_vRight or not i_vLeft <= i_vRight)
-			return Always{};
-		else
-		if	constexpr
-			(	ProtoClause<decltype(i_vLeft)>
-			and	ProtoClause<decltype(i_vRight)>
-			)
-			return Any<decltype(i_vLeft), decltype(i_vRight)>{};
-		else
-			return (... * (i_vLeft or t_tpRightClause{}));
+			return (t_tpLeftClause{} + ... + i_vRight);
 	}
 	
 	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
@@ -1419,28 +1313,19 @@ namespace
 				i_vRight
 		)
 	->	ProtoConjunction auto
-	{	if	constexpr(i_vRight >= i_vLeft)
+	{
+		if	constexpr(i_vRight >= i_vLeft)
 			return +i_vLeft;
 		else
 		if	constexpr(i_vLeft >= i_vRight)
 			return +i_vRight;
 		else
-		if	constexpr(i_vLeft >= not i_vRight or not i_vLeft <= i_vRight)
+		if	constexpr(i_vLeft >= not i_vRight or i_vRight >= not i_vLeft)
 			return Always{};
 		else
 			return (... and (i_vLeft + t_tpRightClause{}));
 	}
-	
-	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator or
-	)	(	Any<t_tpLeftClause...>
-				i_vLeft
-		,	Any<t_tpRightClause...>
-		)
-	->	ProtoDisjunction auto
-	{	return (i_vLeft or ...  or t_tpRightClause{});	}
-	
+
 	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
 	auto consteval
 	(	operator +
@@ -1701,70 +1586,6 @@ namespace
 			return std::partial_ordering::unordered;
 	}
 	
-// 	
-// 	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-// 	auto consteval
-// 	(	operator<=>
-// 	)	(	All<t_tpLeftClause...>
-// 				i_vLeft
-// 		,	All<t_tpRightClause...>
-// 				i_vRight
-// 		)
-// 	->	std::partial_ordering
-// 	{	bool const bLeftGreaterAllRight = (... and (i_vLeft >= t_tpRightClause{}));
-// 		bool const bRightGreaterAllLeft = (... and (i_vRight >= t_tpLeftClause{}));
-// 		if (bLeftGreaterAllRight and bRightGreaterAllLeft)
-// 			return std::partial_ordering::equivalent;
-// 		if (bLeftGreaterAllRight)
-// 			return std::partial_ordering::greater;
-// 		if (bRightGreaterAllLeft)
-// 			return std::partial_ordering::less;
-// 		else
-// 			return std::partial_ordering::unordered;
-// 	}
-// 	
-// 	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-// 	auto consteval
-// 	(	operator<=>
-// 	)	(	All<t_tpLeftClause...>
-// 				i_vLeft
-// 		,	Any<t_tpRightClause...>
-// 		)
-// 	->	std::partial_ordering
-// 	{	bool const bLeftGreaterOneRight = (... or (i_vLeft >= t_tpRightClause{}));
-// 		bool const bLeftLesserAllRight = (... and (i_vLeft <= t_tpRightClause{}));
-// 		if (bLeftGreaterOneRight and bLeftLesserAllRight)
-// 			return std::partial_ordering::equivalent;
-// 		if (bLeftGreaterOneRight)
-// 			return std::partial_ordering::greater;
-// 		if (bLeftLesserAllRight)
-// 			return std::partial_ordering::less;
-// 		else
-// 			return std::partial_ordering::unordered;
-// 	}
-// 	
-// 	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-// 	auto consteval
-// 	(	operator<=>
-// 	)	(	Any<t_tpLeftClause...>
-// 				i_vLeft
-// 		,	Any<t_tpRightClause...>
-// 				i_vRight
-// 		)
-// 	->	std::partial_ordering
-// 	{	bool const bLeftLesserAllRight = (... and (i_vLeft <= t_tpRightClause{}));
-// 		bool const bRightLesserAllLeft = (... and (i_vRight <= t_tpLeftClause{}));
-// 		if (bLeftLesserAllRight and bRightLesserAllLeft)
-// 			return std::partial_ordering::equivalent;
-// 		if (bLeftLesserAllRight)
-// 			return std::partial_ordering::less;
-// 		if (bRightLesserAllLeft)
-// 			return std::partial_ordering::greater;
-// 		else
-// 			return std::partial_ordering::unordered;
-// 	}
-	
-	
 	auto consteval
 	(	operator==
 	)	(	ProtoStatement auto
@@ -1774,501 +1595,7 @@ namespace
 		)
 	->	bool
 	{	return std::is_eq(i_vLeft <=> i_vRight);	}
-	
 
-	
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Always
-// 		,	Always
-// 		)
-// 	->	Always
-// 	{	return {};	}
-// 	
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Always
-// 		,	Never
-// 		)
-// 	->	Never
-// 	{	return {};	}
-// 	
-// 	template<ProtoAtomic t_tRightAtomic>
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Always
-// 		,	Atomic<t_tRightAtomic>
-// 		)
-// 	->	Atomic<t_tRightAtomic>
-// 	{	return {};	}
-// 	
-// 	template<ProtoAtomic t_tRightAtomic>
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Always
-// 		,	Not<t_tRightAtomic>
-// 		)
-// 	->	Not<t_tRightAtomic>
-// 	{	return {};	}
-// 	
-// 	template<ProtoClause... t_tpRightClause>
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Always
-// 		,	All<t_tpRightClause...>
-// 		)
-// 	->	All<t_tpRightClause...>
-// 	{	return {};	}
-// 	
-// 	template<ProtoClause... t_tpRightClause>
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Always
-// 		,	Any<t_tpRightClause...>
-// 		)
-// 	->	Any<t_tpRightClause...>
-// 	{	return {};	}
-// 	
-// 	template<ProtoAtomic t_tRight>
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Always
-// 		,	t_tRight const
-// 			&
-// 		)
-// 	->	Atomic<t_tRight>
-// 	{	return {};	}
-// 	
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Always
-// 		,	Always
-// 		)
-// 	->	Always
-// 	{	return {};	}
-// 	
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Always
-// 		,	Never
-// 		)
-// 	->	Always
-// 	{	return {};	}
-// 	
-// 	template<ProtoAtomic t_tRightAtomic>
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Always
-// 		,	Atomic<t_tRightAtomic>
-// 		)
-// 	->	Always
-// 	{	return {};	}
-// 	
-// 	template<ProtoAtomic t_tRightAtomic>
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Always
-// 		,	Not<t_tRightAtomic>
-// 		)
-// 	->	Always
-// 	{	return {};	}
-// 	
-// 	template<ProtoClause... t_tpRightClause>
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Always
-// 		,	All<t_tpRightClause...>
-// 		)
-// 	->	Always
-// 	{	return {};	}
-// 	
-// 	template<ProtoClause... t_tpRightClause>
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Always
-// 		,	Any<t_tpRightClause...>
-// 		)
-// 	->	Always
-// 	{	return {};	}
-// 	
-// 	template<ProtoAtomic t_tRight>
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Always
-// 		,	t_tRight const
-// 			&
-// 		)
-// 	->	Always
-// 	{	return {};	}
-// 	
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Never
-// 		,	Always
-// 		)
-// 	->	Never
-// 	{	return {};	}
-// 	
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Never
-// 		,	Never
-// 		)
-// 	->	Never
-// 	{	return {};	}
-// 	
-// 	template<ProtoAtomic t_tRightAtomic>
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Never
-// 		,	Atomic<t_tRightAtomic>
-// 		)
-// 	->	Never
-// 	{	return {};	}
-// 	
-// 	template<ProtoAtomic t_tRightAtomic>
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Never
-// 		,	Not<t_tRightAtomic>
-// 		)
-// 	->	Never
-// 	{	return {};	}
-// 	
-// 	template<ProtoClause... t_tpRightClause>
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Never
-// 		,	All<t_tpRightClause...>
-// 		)
-// 	->	Never
-// 	{	return {};	}
-// 	
-// 	template<ProtoClause... t_tpRightClause>
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Never
-// 		,	Any<t_tpRightClause...>
-// 		)
-// 	->	Never
-// 	{	return {};	}
-// 	
-// 	template<ProtoAtomic t_tRight>
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Never
-// 		,	t_tRight const
-// 			&
-// 		)
-// 	->	Never
-// 	{	return {};	}
-// 	
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Never
-// 		,	Always
-// 		)
-// 	->	Always
-// 	{	return {};	}
-// 	
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Never
-// 		,	Never
-// 		)
-// 	->	Never
-// 	{	return {};	}
-// 	
-// 	template<ProtoAtomic t_tAtomic>
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Never
-// 		,	Atomic<t_tAtomic>
-// 		)
-// 	->	Atomic<t_tAtomic>
-// 	{	return {};	}
-// 	
-// 	template<ProtoAtomic t_tAtomic>
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Never
-// 		,	Not<t_tAtomic>
-// 		)
-// 	->	Not<t_tAtomic>
-// 	{	return {};	}
-// 	
-// 	template<ProtoClause... t_tpRightClause>
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Never
-// 		,	All<t_tpRightClause...>
-// 		)
-// 	->	All<t_tpRightClause...>
-// 	{	return {};	}
-// 	
-// 	template<ProtoClause... t_tpRightClause>
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Never
-// 		,	Any<t_tpRightClause...>
-// 		)
-// 	->	Any<t_tpRightClause...>
-// 	{	return {};	}
-// 	
-// 	template<ProtoAtomic t_tRight>
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Never
-// 		,	t_tRight const
-// 			&
-// 		)
-// 	->	Atomic<t_tRight>
-// 	{	return {};	}
-// 	
-// 	template<ProtoAtomic t_tLeftAtomic>
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Atomic<t_tLeftAtomic>
-// 		,	Always
-// 		)
-// 	->	Atomic<t_tLeftAtomic>
-// 	{	return {};	}
-// 	
-// 	template<ProtoAtomic t_tLeftAtomic>
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Atomic<t_tLeftAtomic>
-// 		,	Never
-// 		)
-// 	->	Never
-// 	{	return {};	}
-// 	
-// 	template<ProtoAtomic t_tLeftAtomic, ProtoAtomic t_tRightAtomic>
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Atomic<t_tLeftAtomic>
-// 		,	Atomic<t_tRightAtomic>
-// 		)
-// 	{	if constexpr(std::is_same_v<t_tLeftAtomic, t_tRightAtomic>)
-// 			return Atomic<t_tLeftAtomic>{};
-// 		else
-// 			return All<Atomic<t_tLeftAtomic>, Atomic<t_tRightAtomic>>{};
-// 	}
-// 	
-// 	template<ProtoAtomic t_tLeftAtomic, ProtoAtomic t_tRightAtomic>
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Atomic<t_tLeftAtomic>
-// 		,	Not<t_tRightAtomic>
-// 		)
-// 	{	if constexpr(std::is_same_v<t_tLeftAtomic, t_tRightAtomic>)
-// 			return Never{};
-// 		else
-// 			return All<Atomic<t_tLeftAtomic>, Not<t_tRightAtomic>>{};
-// 	}
-// 	
-// 	template<ProtoAtomic t_tLeftAtomic, ProtoClause... t_tpRightClause>
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Atomic<t_tLeftAtomic>
-// 		,	All<t_tpRightClause...>
-// 		)
-// 	{	if constexpr(All<t_tpRightClause...>::Subsumes(Atomic<t_tLeftAtomic>{}))
-// 			return All<t_tpRightClause...>{};
-// 		else
-// 			return All<Atomic<t_tLeftAtomic>, t_tpRightClause...>{};
-// 	}
-// 	
-// 	template<ProtoAtomic t_tLeftAtomic, ProtoClause... t_tpRightClause>
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Atomic<t_tLeftAtomic>
-// 		,	Any<t_tpRightClause...>
-// 		)
-// 	{	if constexpr(Atomic<t_tLeftAtomic>::Subsumes(Any<t_tpRightClause...>{}))
-// 			return Atomic<t_tLeftAtomic>{};
-// 		else
-// 			return (... or (Atomic<t_tLeftAtomic>{} and t_tpRightClause{}));
-// 	}
-// 	
-// 	template<ProtoAtomic t_tLeftAtomic, ProtoAtomic t_tRight>
-// 	static auto constexpr
-// 	(	operator and
-// 	)	(	Atomic<t_tLeftAtomic>
-// 		,	t_tRight const
-// 			&
-// 		)
-// 	{	if constexpr(std::is_same_v<t_tLeftAtomic, t_tRight>)
-// 			return Atomic<t_tLeftAtomic>{};
-// 		else
-// 			return All<Atomic<t_tLeftAtomic>, Atomic<t_tRight>>{};
-// 	}
-// 	
-// 	template<ProtoAtomic t_tLeftAtomic>
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Atomic<t_tLeftAtomic>
-// 		,	Always
-// 		)
-// 	->	Always
-// 	{	return {};	}
-// 	
-// 	template<ProtoAtomic t_tLeftAtomic>
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Atomic<t_tLeftAtomic>
-// 		,	Never
-// 		)
-// 	->	Atomic<t_tLeftAtomic>
-// 	{	return {};	}
-// 	
-// 	template<ProtoAtomic t_tLeftAtomic, ProtoAtomic t_tRightAtomic>
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Atomic<t_tLeftAtomic>
-// 		,	Atomic<t_tRightAtomic>
-// 		)
-// 	{	if constexpr(std::is_same_v<t_tLeftAtomic, t_tRightAtomic>)
-// 			return Atomic<t_tLeftAtomic>{};
-// 		else
-// 			return Any<Atomic<t_tLeftAtomic>, Atomic<t_tRightAtomic>>{};
-// 	}
-// 	
-// 	template<ProtoAtomic t_tLeftAtomic, ProtoAtomic t_tRightAtomic>
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Atomic<t_tLeftAtomic>
-// 		,	Not<t_tRightAtomic>
-// 		)
-// 	{	if constexpr(std::is_same_v<t_tLeftAtomic, t_tRightAtomic>)
-// 			return Always{};
-// 		else
-// 			return Any<Atomic<t_tLeftAtomic>, Not<t_tRightAtomic>>{};
-// 	}
-// 	
-// 	template<ProtoAtomic t_tLeftAtomic, ProtoClause... t_tpRightClause>
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Atomic<t_tLeftAtomic>
-// 		,	All<t_tpRightClause...>
-// 		)
-// 	{	if constexpr(All<t_tpRightClause...>::Subsumes(Atomic<t_tLeftAtomic>{}))
-// 			return Atomic<t_tLeftAtomic>{};
-// 		else
-// 			return (... and (Atomic<t_tLeftAtomic>{} or t_tpRightClause{}));
-// 	}
-// 	
-// 	template<ProtoAtomic t_tLeftAtomic, ProtoClause... t_tpRightClause>
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Atomic<t_tLeftAtomic>
-// 		,	Any<t_tpRightClause...>
-// 		)
-// 	{	if constexpr(Atomic<t_tLeftAtomic>::Subsumes(Any<t_tpRightClause...>{}))
-// 			return Any<t_tpRightClause...>{};
-// 		else
-// 			return Any<Atomic<t_tLeftAtomic>, t_tpRightClause...>{};
-// 	}
-// 	
-// 	template<ProtoAtomic t_tLeftAtomic, ProtoAtomic t_tRight>
-// 	static auto constexpr
-// 	(	operator or
-// 	)	(	Atomic<t_tLeftAtomic>
-// 		,	t_tRight const
-// 			&
-// 		)
-// 	
-// 	{	if constexpr(std::is_same_v<t_tLeftAtomic, t_tRight>)
-// 			return Atomic<t_tLeftAtomic>{};
-// 		else
-// 			return Any<Atomic<t_tLeftAtomic>, Atomic<t_tRight>>{};
-// 	}
-// 	
-// 	
-// 	template<typename t_tLeft, typename t_tRight>
-// 	auto constexpr
-// 	(	operator and
-// 	)	(	t_tLeft const
-// 			&	i_rLeft
-// 		,	t_tRight const
-// 			&	i_rRight
-// 		)
-// 	->	decltype(auto)
-// 	{	if constexpr
-// 			(	std::is_same_v<t_tLeft, t_tRight>
-// 			or	std::is_same_v<t_tLeft, Never>
-// 			or	std::is_same_v<Always, t_tRight>
-// 			)
-// 			return i_rLeft;
-// 		else if constexpr
-// 			(	std::is_same_v<t_tLeft, Always>
-// 			or	std::is_same_v<Never, t_tRight>
-// 			)
-// 			return i_rRight;
-// 		else if constexpr(not ProtoStatement<t_tLeft>)
-// 			return Any<t_tLeft>{} and i_rRight;
-// 		else if constexpr(not ProtoStatement<t_tRight>)
-// 			return i_rLeft and Any<t_tRight>{};
-// 		else
-// 		{	ProtoStatement auto constexpr vLeft = t_tLeft{};
-// 			ProtoStatement auto constexpr vRight = t_tRight{};
-// 		
-// 			if constexpr(vLeft.Subsumes(vRight))
-// 				return vLeft;
-// 			else if constexpr(vRight.Subsumes(vLeft))
-// 				return vRight;
-// 			else if constexpr
-// 				(	vLeft.Subsumes(not vRight)
-// 				or	vRight.Subsumes(not vLeft)
-// 				)
-// 				return Never{};
-// 			else
-// 				return vLeft.And(vRight);
-// 		}
-// 	}
-// 	
-// 	template<typename t_tLeft, typename t_tRight>
-// 	auto constexpr
-// 	(	operator or
-// 	)	(	t_tLeft const
-// 			&	i_rLeft
-// 		,	t_tRight const
-// 			&	i_rRight
-// 		)
-// 	->	decltype(auto)
-// 	{	if constexpr
-// 			(	std::is_same_v<t_tLeft, t_tRight>
-// 			or	std::is_same_v<t_tLeft, Always>
-// 			or	std::is_same_v<Never, t_tRight>
-// 			)
-// 			return i_rLeft;
-// 		else if constexpr
-// 			(	std::is_same_v<t_tLeft, Never>
-// 			or	std::is_same_v<Always, t_tRight>
-// 			)
-// 			return i_rRight;
-// 		else if constexpr(ProtoAtomic<t_tLeft>)
-// 			return All<t_tLeft>{} or i_rRight;
-// 		else if constexpr(ProtoAtomic<t_tRight>)
-// 			return i_rLeft or All<t_tRight>{};
-// 		else
-// 		{	ProtoStatement auto constexpr vLeft = t_tLeft{};
-// 			ProtoStatement auto constexpr vRight = t_tRight{};
-// 		
-// 			if constexpr(vLeft.Subsumes(vRight))
-// 				return vRight;
-// 			else if constexpr(vRight.Subsumes(vLeft))
-// 				return vLeft;
-// 			else if constexpr
-// 				(	(not vLeft).Subsumes(vRight)
-// 				or	(not vRight).Subsumes(vLeft)
-// 				)
-// 				return Always{};
-// 			else
-// 				return vLeft.Or(vRight);
-// 		}
-// 	}
-	
 	template<ProtoStatement auto t_vStatement>
 	struct
 		StatementBase
@@ -2918,17 +2245,18 @@ namespace
 		static_assert( ExpectType<All<Any<P, Q>, R>, +((P + Q) * R)>);
 		static_assert(!ExpectType<All<Any<P, Q>, R>, *((P + Q) * R)>);
 				
-		static_assert( ExpectType<All<Any<P, Q>, Any<R, S>>,  ((P or Q) and (R or S))>);	static_assert( ExpectType<All<Any<P, Q>, Any<R, S>>, +((P or Q) and (R or S))>);
-// TODO static_assert(!ExpectType<All<Any<P, Q>, Any<R, S>>, *((P or Q) and (R or S))>);
+		static_assert( ExpectType<All<Any<P, Q>, Any<R, S>>,  ((P or Q) and (R or S))>);
+        static_assert( ExpectType<All<Any<P, Q>, Any<R, S>>, +((P or Q) and (R or S))>);
+		static_assert(!ExpectType<All<Any<P, Q>, Any<R, S>>, *((P or Q) and (R or S))>);
 		static_assert( ExpectType<All<Any<P, Q>, Any<R, S>>,  ((P + Q) and (R or S))>);
 		static_assert( ExpectType<All<Any<P, Q>, Any<R, S>>, +((P + Q) and (R or S))>);
-// TODO static_assert(!ExpectType<All<Any<P, Q>, Any<R, S>>, *((P + Q) and (R or S))>);
-// TODO static_assert(!ExpectType<All<Any<P, Q>, Any<R, S>>,  ((P or Q) * (R or S))>);
-// TODO static_assert( ExpectType<All<Any<P, Q>, Any<R, S>>, +((P or Q) * (R or S))>);
-// TODO static_assert(!ExpectType<All<Any<P, Q>, Any<R, S>>, *((P or Q) * (R or S))>);
-// TODO static_assert(!ExpectType<All<Any<P, Q>, Any<R, S>>,  ((P + Q) * (R or S))>);
-// TODO static_assert( ExpectType<All<Any<P, Q>, Any<R, S>>, +((P + Q) * (R or S))>);
-// TODO static_assert(!ExpectType<All<Any<P, Q>, Any<R, S>>, *((P + Q) * (R or S))>);
+		static_assert(!ExpectType<All<Any<P, Q>, Any<R, S>>, *((P + Q) and (R or S))>);
+		static_assert(!ExpectType<All<Any<P, Q>, Any<R, S>>,  ((P or Q) * (R or S))>);
+		static_assert( ExpectType<All<Any<P, Q>, Any<R, S>>, +((P or Q) * (R or S))>);
+		static_assert(!ExpectType<All<Any<P, Q>, Any<R, S>>, *((P or Q) * (R or S))>);
+		static_assert(!ExpectType<All<Any<P, Q>, Any<R, S>>,  ((P + Q) * (R or S))>);
+		static_assert( ExpectType<All<Any<P, Q>, Any<R, S>>, +((P + Q) * (R or S))>);
+		static_assert(!ExpectType<All<Any<P, Q>, Any<R, S>>, *((P + Q) * (R or S))>);
 		
 		static_assert( ExpectType<Any<P, Q>,  (P or Q)>);
 		static_assert( ExpectType<Any<P, Q>, +(P or Q)>);
@@ -2970,17 +2298,17 @@ namespace
 		static_assert( ExpectType<Any<All<P, Q>, R>, *((P * Q) + R)>);
 				
 		static_assert( ExpectType<Any<All<P, Q>, All<R, S>>,  ((P and Q) or (R and S))>);
-// TODO static_assert(!ExpectType<Any<All<P, Q>, All<R, S>>, +((P and Q) or (R and S))>);
+		static_assert(!ExpectType<Any<All<P, Q>, All<R, S>>, +((P and Q) or (R and S))>);
 		static_assert( ExpectType<Any<All<P, Q>, All<R, S>>, *((P and Q) or (R and S))>);
 		static_assert( ExpectType<Any<All<P, Q>, All<R, S>>,  ((P * Q) or (R and S))>);
-// TODO static_assert( ExpectType<Any<All<P, Q>, All<R, S>>, +((P * Q) or (R and S))>);
+		static_assert(!ExpectType<Any<All<P, Q>, All<R, S>>, +((P * Q) or (R and S))>);
 		static_assert( ExpectType<Any<All<P, Q>, All<R, S>>, *((P * Q) or (R and S))>);
-// TODO static_assert(!ExpectType<Any<All<P, Q>, All<R, S>>,  ((P and Q) + (R and S))>);
-// TODO static_assert(!ExpectType<Any<All<P, Q>, All<R, S>>, +((P and Q) + (R and S))>);
-// TODO static_assert( ExpectType<Any<All<P, Q>, All<R, S>>, *((P and Q) + (R and S))>);
-// TODO static_assert(!ExpectType<Any<All<P, Q>, All<R, S>>,  ((P * Q) + (R and S))>);
-// TODO static_assert(!ExpectType<Any<All<P, Q>, All<R, S>>, +((P * Q) + (R and S))>);
-// TODO static_assert( ExpectType<Any<All<P, Q>, All<R, S>>, *((P * Q) + (R and S))>);
+		static_assert(!ExpectType<Any<All<P, Q>, All<R, S>>,  ((P and Q) + (R and S))>);
+		static_assert(!ExpectType<Any<All<P, Q>, All<R, S>>, +((P and Q) + (R and S))>);
+		static_assert( ExpectType<Any<All<P, Q>, All<R, S>>, *((P and Q) + (R and S))>);
+		static_assert(!ExpectType<Any<All<P, Q>, All<R, S>>,  ((P * Q) + (R and S))>);
+		static_assert(!ExpectType<Any<All<P, Q>, All<R, S>>, +((P * Q) + (R and S))>);
+		static_assert( ExpectType<Any<All<P, Q>, All<R, S>>, *((P * Q) + (R and S))>);
 		
 		
 		
@@ -3006,7 +2334,7 @@ namespace
 		static_assert(Always < P);
 		static_assert(Always < (P and Q));
 		static_assert(Always < (P and (Q or R)));
-// 		static_assert(Always < ((P or Q) and R));
+		static_assert(Always < ((P or Q) and R));
 		static_assert(Always < (P or Q));
 		
 		static_assert((Always and Always) == Always);
@@ -3030,7 +2358,8 @@ namespace
 		static_assert(P != not P);
 		static_assert(P == not not P, "Double negation law violated.");
 		static_assert((P and Never) == Never, "Domination law violated.");
-// 		static_assert((P and (not P or Q)) == (Q and P));
+		static auto constexpr f = P and (not P or Q);
+		static_assert((P and (not P or Q)) == (Q and P));
 		static_assert((P and Always) == P, "Identity law violated.");
 		static_assert((P and P) == P, "Idemptotent law violated");
 		static_assert((P and Q) == (Q and P), "Commutative law violated.");
@@ -3038,23 +2367,23 @@ namespace
 		static_assert(((P and Q) and not P) == Never);
 		static_assert((P and (not P and Q)) == Never);
 		static_assert((P or (not P or Q)) == Always);
-// 		static_assert((P or (not P and Q)) == (Q or P));
+		static_assert((P or (not P and Q)) == (Q or P));
 		static_assert((P or Never) == P, "Identity law violated.");
 		static_assert((P or Always) == Always, "Domination law violated.");
 		static_assert((P or P) == P, "Idemptotent law violated");
 		static_assert((P or Q) == (Q or P), "Commutative law violated.");
 		
 		static_assert((not P or (P or Q)) == Always);
-// 		static_assert((not P or (P and Q)) == (Q or not P));
-// 		static_assert((not P and (P or Q)) == (Q and not P));
+		static_assert((not P or (P and Q)) == (Q or not P));
+		static_assert((not P and (P or Q)) == (Q and not P));
 		static_assert((not P and (P and Q)) == Never);
 		static_assert(((not P and Q) and P) == Never);
 		
 		/// Conjunction
-// 		static_assert(((P and Q) or not P) == (Q or not P));
+		static_assert(((P and Q) or not P) == (Q or not P));
 		static_assert((P and Q) != not (P and Q));
 		static_assert((P and Q) != not (Q and P));
-// 		static_assert(((not P and Q) or P) == (Q or P));		
+		static_assert(((not P and Q) or P) == (Q or P));
 		static_assert((P and Q) == not (not P or not Q), "De Morgan's law violated.");
 		static_assert((P and Q) == not (not Q or not P), "De Morgan's law violated.");
 		static_assert((P and not Q) == not (not P or Q), "De Morgan's law violated.");
@@ -3072,9 +2401,9 @@ namespace
 		/// Disjunction
 		static_assert((P or not P) == Always);
 		static_assert(((P or Q) or not P) == Always);
-// 		static_assert(((P or Q) and not P) == (Q and not P));
+		static_assert(((P or Q) and not P) == (Q and not P));
 		static_assert(((not P or Q) or P) == Always);
-// 		static_assert(((not P or Q) and P) == (Q and P));
+		static_assert(((not P or Q) and P) == (Q and P));
 		static_assert((P or Q) != not (P or Q));
 		static_assert((P or Q) != not (Q or P));
 		static_assert(((P or Q) or R) == (P or (Q or R)), "Associative law violated.");
