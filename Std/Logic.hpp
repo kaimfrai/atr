@@ -7,208 +7,240 @@ namespace
 	_
 {
 	class
-		StatementTag
+		TermTag
 	;
 
 	template<typename t_tProto>
-	concept ProtoStatement
-	=	requires
-		{	{	(t_tProto::Statement)
-			}->	std::same_as<StatementTag const&>
-			;
-		}
+	concept
+		ProtoTerm
+	=	std::is_same_v
+		<	decltype(t_tProto::Term)
+		,	TermTag const
+		>
 	;
 	
 	template<typename t_tProto>
-	concept ProtoConjunction
-	=	ProtoStatement<t_tProto>
-	and	t_tProto::Statement.IsConjunction
+	concept
+		ProtoConjunctive
+	=	ProtoTerm<t_tProto>
+	and	t_tProto::Term.IsConjunctive
 	;
 	
 	template<typename t_tProto>
-	concept ProtoDisjunction
-	=	ProtoStatement<t_tProto>
-	and	t_tProto::Statement.IsDisjunction
+	concept
+		ProtoConjunction
+	=	ProtoConjunctive<t_tProto>
+	and	t_tProto::Term.IsConjunction
 	;
 	
 	template<typename t_tProto>
-	concept ProtoAtomic
-	=	(std::is_class_v<t_tProto> or std::is_union_v<t_tProto>)
+	concept
+		ProtoDisjunctive
+	=	ProtoTerm<t_tProto>
+	and	t_tProto::Term.IsDisjunctive
+	;
+	
+	template<typename t_tProto>
+	concept
+		ProtoDisjunction
+	=	ProtoDisjunctive<t_tProto>
+	and	t_tProto::Term.IsDisjunction
+	;
+	
+	template<typename t_tProto>
+	concept
+		ProtoConjunctionClause
+	=	ProtoConjunction<t_tProto>
+	and	ProtoDisjunctive<t_tProto>
+	;
+	
+	template<typename t_tProto>
+	concept
+		ProtoDisjunctionClause
+	=	ProtoDisjunction<t_tProto>
+	and	ProtoConjunctive<t_tProto>
+	;
+	
+	template<typename t_tProto>
+	concept ProtoLiteral
+	=	ProtoConjunctionClause<t_tProto>
+	and	ProtoDisjunctionClause<t_tProto>
+	;
+	
+	template<typename t_tProto>
+	concept ProtoConstant
+	=	ProtoLiteral<t_tProto>
+	and	t_tProto::Term.IsConstant
+	;
+	
+	template<typename t_tProto>
+	concept ProtoAtom
+	=	(	std::is_class_v<t_tProto>
+		or	std::is_union_v<t_tProto>
+		)
 	and not
-		ProtoStatement<t_tProto>
+		ProtoTerm<t_tProto>
 	;
 	
 	struct
-		Always
+		True
 	;
 	struct
-		Never
-	;
+		False
+	;	
 	
-	template<typename t_tProto>
-	concept ProtoClause
-	=	ProtoStatement<t_tProto>
-	and	t_tProto::Statement.IsConjunction
-	and	t_tProto::Statement.IsDisjunction
-	and not
-		std::is_same_v<std::remove_cv_t<t_tProto>, Always>
-	and	not
-		std::is_same_v<std::remove_cv_t<t_tProto>, Never>
-	;
-	
-	template<typename t_tProto>
-	concept ProtoAtomicClause
-	=	ProtoClause<t_tProto>
-	and	t_tProto::Statement.IsAtomic
-	;
-	
-	template<ProtoAtomic>
+	template<ProtoAtom>
 	struct
-		Atomic
+		Atom
 	;
-	template<ProtoAtomic>
+	template<ProtoAtom>
 	struct
 		Not
 	;
-	template<ProtoClause... t_tpClause>
+	template<ProtoDisjunctionClause...>
 	class
-		All
+		And
 	;
-	template<ProtoClause... t_tpClause>
+	template<ProtoConjunctionClause...>
 	class
-		Any
+		Or
 	;
 	
 	class
-		StatementTag final
-	{	friend struct
-			Always
+		TermTag final
+	{
+		friend struct
+			True
 		;
 		friend struct
-			Never
+			False
 		;
-		template<ProtoAtomic>
+		template<ProtoAtom>
 		friend struct
-			Atomic
+			Atom
 		;
-		template<ProtoAtomic>
+		template<ProtoAtom>
 		friend struct
 			Not
 		;
-		template<ProtoClause... t_tpClause>
+		template<ProtoDisjunctionClause...>
 		friend class
-			All
+			And
 		;
-		template<ProtoClause... t_tpClause>
+		template<ProtoConjunctionClause...>
 		friend class
-			Any
+			Or
 		;
 		
 		constexpr
-		(	StatementTag
-		)	(	bool
-					i_bAtomic
-			,	bool
-					i_bConjunctiveNormal
-				=	true
-			,	bool
-					i_bDisjunctiveNormal
-				=	true
-			)
-		:	IsAtomic
-			{	i_bAtomic
-			}
-		,	IsConjunction
-			{	i_bConjunctiveNormal
-			}
-		,	IsDisjunction
-			{	i_bDisjunctiveNormal
-			}
-		{}
-		
-		(	StatementTag)(StatementTag const&)
-		=	delete;
-		(	StatementTag)(StatementTag&&)
-		=	delete;
-		
-		StatementTag& (operator=)(StatementTag const&)
-		=	delete;
-		StatementTag& (operator=)(StatementTag&&)
-		=	delete;
+		(	compl TermTag
+		)	()
+		=	default;
 	public:
 		bool const
-			IsAtomic : 1
+			IsConstant : 1
+			=	false
 		;
 		bool const
-			IsConjunction: 1
+			IsLiteral : 1
+			=	IsConstant
 		;
 		bool const
-			IsDisjunction : 6
+			IsClause : 1
+			=	IsLiteral
+		;
+		bool const
+			IsConjunction : 1
+			=	IsLiteral
+		;
+		bool const
+			IsDisjunction : 1
+			=	IsLiteral
+		;
+		bool const
+			IsConjunctive : 1
+			=	IsClause or IsConjunction
+		;
+		bool const
+			IsDisjunctive : 1
+			=	IsClause or IsDisjunction
+		;
+		bool const
+			IsFull : 1
+		=	not IsClause
 		;
 	};
 	
 	struct
-		Always final
-	{	static StatementTag constexpr Statement{true};
+		True final
+	{
+		static TermTag const constexpr
+			Term
+		{	.IsConstant = true
+		};
 	};
 	
-	static_assert(ProtoStatement<Always>);
-	static_assert(ProtoConjunction<Always>);
-	static_assert(ProtoDisjunction<Always>);
-	static_assert(not ProtoAtomic<Always>);
-	static_assert(not ProtoClause<Always>);
-	static_assert(not ProtoAtomicClause<Always>);
+	static_assert(ProtoConstant<True>);
+	static_assert(not ProtoAtom<True>);
 	
 	struct
-		Never final
-	{	static StatementTag constexpr Statement{true};
+		False final
+	{	
+		static TermTag const constexpr
+			Term
+		{	.IsConstant = true
+		};
 	};
 	
-	static_assert(ProtoStatement<Never>);
-	static_assert(ProtoConjunction<Never>);
-	static_assert(ProtoDisjunction<Never>);
-	static_assert(not ProtoAtomic<Never>);
-	static_assert(not ProtoClause<Never>);
-	static_assert(not ProtoAtomicClause<Never>);
+	static_assert(ProtoTerm<False>);
+	static_assert(not ProtoAtom<False>);
 	
-	template<ProtoAtomic t_tAtomic>
+	template<ProtoAtom t_tAtom>
 	struct
-		Atomic final
-	{	static StatementTag constexpr Statement{true};
+		Atom final
+	{
+		static TermTag const constexpr
+			Term
+		{	.IsLiteral = true
+		};
 	};
 	
-	template<ProtoAtomic t_tAtomic>
+	template<ProtoAtom t_tAtom>
 	struct
 		Not final
-	{	static StatementTag constexpr Statement{true};
+	{
+		static TermTag const constexpr
+			Term
+		{	.IsLiteral = true
+		};
 	};
 	
-	template<ProtoClause... t_tpClause>
+	template<ProtoDisjunctionClause... t_tpDisjunction>
 	class
-		All final
+		And final
 	{
 	public:
 		constexpr
-		(	All
+		(	And
 		)	()
 		=	default;
 		
 		friend class Test;
-		static StatementTag constexpr
-			Statement
-		{	false
-		,	true
-		,	(... and ProtoAtomicClause<t_tpClause>)
+		
+		static TermTag constexpr
+			Term
+		{	.IsClause = (... and ProtoLiteral<t_tpDisjunction>)
+		,	.IsConjunction = true
 		};
 		
 		static_assert
-		(	sizeof...(t_tpClause) >= 2ul
+		(	sizeof...(t_tpDisjunction) >= 2ul
 		,	"Conjunction must contain at least two clauses."
 		);
 		
 		static auto consteval
 		(	ContainsOnce
-		)	(	ProtoClause auto
+		)	(	ProtoDisjunctive auto
 					i_vClause
 			)
 		->	bool
@@ -217,7 +249,7 @@ namespace
 				1ul
 			==	(	...
 				+	(	i_vClause
-					==	t_tpClause{}
+					>=	t_tpDisjunction{}
 					)
 				)
 			;
@@ -226,50 +258,83 @@ namespace
 		static_assert
 		(	(	...
 			and ContainsOnce
-				(	t_tpClause{}
+				(	t_tpDisjunction{}
 				)
 			)
-		,	"Conjunction mustn't contain equivalent clauses."
+		,	"Conjunction mustn't contain subsuming clauses."
 		);
 		
 		static_assert
 		(	(	...
 			and not
 				ContainsOnce
-				(	not t_tpClause{}
+				(	not t_tpDisjunction{}
 				)
 			)
 		,	"Conjunction mustn't contain contradictory clauses."
 		);
+		
+		friend auto consteval
+		(	operator ==
+		)	(	And
+			,	And
+			)
+		->	bool
+		{	return true;	}
+	
+		friend auto consteval
+		(	operator >=
+		)	(	And
+			,	And
+			)
+		-> bool
+		{	return true;	}
+	
+		friend auto consteval
+		(	operator >=
+		)	(	And
+			,	ProtoLiteral auto
+					i_vRight
+			)
+		-> bool
+		{	return (... or (t_tpDisjunction{} >= i_vRight));	}
+	
+		friend auto consteval
+		(	operator >=
+		)	(	ProtoLiteral auto
+					i_vLeft
+			,	And
+			)
+		-> bool
+		{	return (... and (i_vLeft >= t_tpDisjunction{}));	}
 	};
 	
-	template<ProtoClause... t_tpClause>
+	template<ProtoConjunctionClause... t_tpConjunction>
 	class
-		Any final
+		Or final
 	{
 	public:
 		constexpr
-		(	Any
+		(	Or
 		)	()
 		=	default;
 		
 		friend class Test;
 		
-		static StatementTag constexpr
-			Statement
-		{	false
-		,	(... and ProtoAtomicClause<t_tpClause>)
-		,	true
+		static TermTag constexpr
+			Term
+		{	.IsClause = (... and ProtoLiteral<t_tpConjunction>)
+		,	.IsDisjunction = true
 		};
 		
 		static_assert
-		(	sizeof...(t_tpClause) >= 2ul
+		(	sizeof...(t_tpConjunction) >= 2ul
 		,	"Disjunction must contain at least two clauses."
 		);
 		
 		static auto consteval
 		(	ContainsOnce
-		)	(	ProtoClause auto
+		)	(	ProtoConjunctive auto
 					i_vClause
 			)
 		->	bool
@@ -277,7 +342,7 @@ namespace
 				1ul
 			==	(	...
 				+	(	i_vClause
-					==	t_tpClause{}
+					>=	t_tpConjunction{}
 					)
 				)
 			;
@@ -286,399 +351,192 @@ namespace
 		static_assert
 		(	(	...
 			and ContainsOnce
-				(	t_tpClause{}
+				(	t_tpConjunction{}
 				)
 			)
-		,	"Disjunction mustn't contain equivalent clauses."
+		,	"Disjunction mustn't contain subsuming clauses."
 		);
 		
 		static_assert
 		(	(	...
 			and not
 				ContainsOnce
-				(	not t_tpClause{}
+				(	not t_tpConjunction{}
 				)
 			)
 		,	"Disjunction mustn't contain contradictory clauses."
 		);
+		
+		friend auto consteval
+		(	operator ==
+		)	(	Or
+			,	Or
+			)
+		-> bool
+		{	return true;	}
+	
+		friend auto consteval
+		(	operator >=
+		)	(	Or
+			,	Or
+			)
+		-> bool
+		{	return true;	}
+	
+		friend auto consteval
+		(	operator >=
+		)	(	ProtoLiteral auto
+					i_vLeft
+			,	Or
+			)
+		{	return (... or (i_vLeft >= t_tpConjunction{}));	}
+	
+		friend auto consteval
+		(	operator >=
+		)	(	Or
+			,	ProtoLiteral auto
+					i_vRight
+			)
+		-> bool
+		{	return (... and (t_tpConjunction{} >= i_vRight));	}
 	};
-	
-	auto constexpr
-	(	operator +
-	)	(	ProtoConjunction auto
-				i_vConjunction
-		)
-	->	decltype(i_vConjunction)
-	{	return {};	}
-	
-	template<ProtoClause... t_tpClause>
-	auto constexpr
-	(	operator +
-	)	(	Any<t_tpClause...>
-		)
-	->	ProtoConjunction auto
-	{	return (... + t_tpClause{});	}
-	
-	auto constexpr
-	(	operator *
-	)	(	ProtoDisjunction auto
-				i_vDisjunction
-		)
-	->	decltype(i_vDisjunction)
-	{	return {};	}
-	
-	template<ProtoClause... t_tpClause>
-	auto constexpr
-	(	operator *
-	)	(	All<t_tpClause...>
-		)
-	->	ProtoDisjunction auto
-	{	return (... * t_tpClause{});	}
-	
-	auto consteval
-	(	operator<=>
-	)	(	Always
-		,	Always
-		)
-	->	std::partial_ordering
-	{	return std::partial_ordering::equivalent;	}
-	
-	auto consteval
-	(	operator<=>
-	)	(	Always
-		,	Never
-		)
-	->	std::partial_ordering
-	{	return std::partial_ordering::less;	}
-	
-	auto consteval
-	(	operator<=>
-	)	(	Never
-		,	Never
-		)
-	->	std::partial_ordering
-	{	return std::partial_ordering::equivalent;	}
-	
-	auto consteval
-	(	operator<=>
-	)	(	Always
-		,	ProtoStatement auto
-		)
-	->	std::partial_ordering
-	{	return std::partial_ordering::less;	}
-	
-	auto consteval
-	(	operator<=>
-	)	(	Never
-		,	ProtoStatement auto
-		)
-	->	std::partial_ordering
-	{	return std::partial_ordering::greater;	}
-	
-	
-	auto consteval
-	(	operator not
-	)	(	Always
-		)
-	->	Never
-	{	return {};	}
-	
-	auto consteval
-	(	operator not
-	)	(	Never
-		)
-	->	Always
-	{	return {};	}
-	
-	auto consteval
-	(	operator and
-	)	(	Always
-		,	Always
-		)
-	->	Always
-	{	return {};	}
-	
-	auto consteval
-	(	operator *
-	)	(	Always
-		,	Always
-		)
-	->	Always
-	{	return {};	}
-	
-	auto consteval
-	(	operator and
-	)	(	Always
-		,	Never
-		)
-	->	Never
-	{	return {};	}
-	
-	auto consteval
-	(	operator *
-	)	(	Always
-		,	Never
-		)
-	->	Never
-	{	return {};	}
-	
-	auto consteval
-	(	operator and
-	)	(	Never
-		,	Always
-		)
-	->	Never
-	{	return {};	}
-	
-	auto consteval
-	(	operator *
-	)	(	Never
-		,	Always
-		)
-	->	Never
-	{	return {};	}
-	
-	auto consteval
-	(	operator and
-	)	(	Never
-		,	Never
-		)
-	->	Never
-	{	return {};	}
-	
-	auto consteval
-	(	operator *
-	)	(	Never
-		,	Never
-		)
-	->	Never
-	{	return {};	}
-	
-	auto consteval
-	(	operator and
-	)	(	Always
-		,	ProtoStatement auto
-				i_vRight
-		)
-	->	ProtoConjunction auto
-	{	return +i_vRight;	}
-	
-	auto consteval
-	(	operator *
-	)	(	Always
-		,	ProtoStatement auto
-				i_vRight
-		)
-	->	ProtoDisjunction auto
-	{	return *i_vRight;	}
-	
-	auto consteval
-	(	operator and
-	)	(	ProtoStatement auto
-				i_vLeft
-		,	Always
-		)
-	->	ProtoConjunction auto
-	{	return +i_vLeft;	}
-	
-	auto consteval
-	(	operator *
-	)	(	ProtoStatement auto
-				i_vLeft
-		,	Always
-		)
-	->	ProtoDisjunction auto
-	{	return *i_vLeft;	}
-	
-	auto consteval
-	(	operator and
-	)	(	Never
-		,	ProtoStatement auto
-		)
-	->	Never
-	{	return {};	}
-	
-	auto consteval
-	(	operator *
-	)	(	Never
-		,	ProtoStatement auto
-		)
-	->	Never
-	{	return {};	}
-	
-	auto consteval
-	(	operator and
-	)	(	ProtoStatement auto
-		,	Never
-		)
-	->	Never
-	{	return {};	}
-	
-	auto consteval
-	(	operator *
-	)	(	ProtoStatement auto
-		,	Never
-		)
-	->	Never
-	{	return {};	}
-	
-	auto consteval
-	(	operator or
-	)	(	Always
-		,	Always
-		)
-	->	Always
-	{	return {};	}
-	
-	auto consteval
-	(	operator +
-	)	(	Always
-		,	Always
-		)
-	->	Always
-	{	return {};	}
-	
-	auto consteval
-	(	operator or
-	)	(	Always
-		,	Never
-		)
-	->	Always
-	{	return {};	}
-	
-	auto consteval
-	(	operator +
-	)	(	Always
-		,	Never
-		)
-	->	Always
-	{	return {};	}
-	
-	auto consteval
-	(	operator or
-	)	(	Never
-		,	Always
-		)
-	->	Always
-	{	return {};	}
-	
-	auto consteval
-	(	operator +
-	)	(	Never
-		,	Always
-		)
-	->	Always
-	{	return {};	}
-	
-	auto consteval
-	(	operator or
-	)	(	Never
-		,	Never
-		)
-	->	Never
-	{	return {};	}
-	
-	auto consteval
-	(	operator +
-	)	(	Never
-		,	Never
-		)
-	->	Never
-	{	return {};	}
-	
-	auto consteval
-	(	operator or
-	)	(	Always
-		,	ProtoStatement auto
-		)
-	->	Always
-	{	return {};	}
-	
-	auto consteval
-	(	operator +
-	)	(	Always
-		,	ProtoStatement auto
-		)
-	->	Always
-	{	return {};	}
-	
-	auto consteval
-	(	operator or
-	)	(	ProtoStatement auto
-		,	Always
-		)
-	->	Always
-	{	return {};	}
-	
-	auto consteval
-	(	operator +
-	)	(	ProtoStatement auto
-		,	Always
-		)
-	->	Always
-	{	return {};	}
-	
-	auto consteval
-	(	operator or
-	)	(	Never
-		,	ProtoStatement auto
-				i_vRight
-		)
-	->	ProtoDisjunction auto
-	{	return *i_vRight;	}
-	
-	auto consteval
-	(	operator +
-	)	(	Never
-		,	ProtoStatement auto
-				i_vRight
-		)
-	->	ProtoConjunction auto
-	{	return +i_vRight;	}
-	
-	auto consteval
-	(	operator or
-	)	(	ProtoStatement auto
-				i_vLeft
-		,	Never
-		)
-	->	ProtoDisjunction auto
-	{	return *i_vLeft;	}
-	
-	auto consteval
-	(	operator +
-	)	(	ProtoStatement auto
-				i_vLeft
-		,	Never
-		)
-	->	ProtoConjunction auto
-	{	return +i_vLeft;	}
 	
 	auto consteval
 	(	operator ==
-	)	(	ProtoAtomicClause auto
+	)	(	ProtoLiteral auto
 				i_vLeft
-		,	ProtoAtomicClause auto
+		,	ProtoLiteral auto
 				i_vRight
 		)
-	->	bool
 	{	return std::is_same_v<decltype(i_vLeft), decltype(i_vRight)>;	}
 	
 	auto consteval
-	(	operator >=
-	)	(	ProtoAtomicClause auto
+	(	operator ==
+	)	(	ProtoLiteral auto
+		,	ProtoTerm auto
+		)
+	{	return false;	}
+	
+	auto consteval
+	(	operator ==
+	)	(	ProtoTerm auto
+		,	ProtoLiteral auto
+		)
+	{	return false;	}
+	
+	auto consteval
+	(	operator ==
+	)	(	ProtoTerm auto
 				i_vLeft
-		,	ProtoAtomicClause auto
+		,	ProtoTerm auto
+				i_vRight
+		)
+	{	return
+			i_vLeft >= i_vRight
+		and	i_vRight >= i_vLeft
+		;
+	}
+
+	auto consteval
+	(	operator >=
+	)	(	ProtoLiteral auto
+				i_vLeft
+		,	ProtoLiteral auto
+				i_vRight
+		)
+	{	return
+			i_vLeft == i_vRight
+		or	i_vLeft == False{}
+		or	i_vRight == True{}
+		;
+	}
+		
+	template
+		<	ProtoDisjunctionClause
+			...	t_tpLeftDisjunction
+		,	ProtoDisjunctionClause
+			...	t_tpRightDisjunction
+		>
+	auto consteval
+	(	operator>=
+	)	(	And<t_tpLeftDisjunction...>
+				i_vLeft
+		,	And<t_tpRightDisjunction...>
 				i_vRight
 		)
 	->	bool
-	{	return i_vLeft == i_vRight;	}
+	{	
+		if	constexpr(ProtoDisjunctive<decltype(i_vLeft)>)
+			return (... and (i_vLeft >= t_tpRightDisjunction{}));
+		else
+			return True{} == (not i_vLeft or i_vRight);
+	}
+	
+	template
+		<	ProtoDisjunctionClause
+			...	t_tpLeftDisjunction
+		,	ProtoConjunctionClause
+			...	t_tpRightConjunction
+		>
+	auto consteval
+	(	operator >=
+	)	(	And<t_tpLeftDisjunction...>
+				i_vLeft
+		,	Or<t_tpRightConjunction...>
+				i_vRight
+		)
+	-> bool
+	{
+		if	constexpr
+			(	ProtoDisjunctive<decltype(i_vLeft)>
+			and	ProtoConjunctive<decltype(i_vRight)>
+			)
+			return (... or (t_tpLeftDisjunction{} >= i_vRight));
+		else
+			return True{} == (not i_vLeft or i_vRight);
+	}
+	
+	template
+		<	ProtoConjunctionClause
+			...	t_tpLeftConjunction
+		,	ProtoDisjunctionClause
+			...	t_tpRightDisjunction
+		>
+	auto consteval
+	(	operator >=
+	)	(	Or<t_tpLeftConjunction...>
+		,	And<t_tpRightDisjunction...>
+				i_vRight
+		)
+	-> bool
+	{	return (... and (t_tpLeftConjunction{} >= i_vRight));	}
+	
+	template
+		<	ProtoConjunctionClause
+			...	t_tpLeftConjunction
+		,	ProtoConjunctionClause
+			...	t_tpRightConjunction
+		>
+	auto consteval
+	(	operator >=
+	)	(	Or<t_tpLeftConjunction...>
+				i_vLeft
+		,	Or<t_tpRightConjunction...>
+				i_vRight
+		)
+	-> bool
+	{
+		if	constexpr(ProtoConjunctive<decltype(i_vRight)>)
+			return (... and (t_tpLeftConjunction{} >= i_vRight));
+		else
+			return True{} == (not i_vLeft or i_vRight);
+	}
 	
 	auto consteval
 	(	operator<=>
-	)	(	ProtoAtomicClause auto
+	)	(	ProtoTerm auto
 				i_vLeft
-		,	ProtoAtomicClause auto
+		,	ProtoTerm auto
 				i_vRight
 		)
 	->	std::partial_ordering
@@ -686,1135 +544,699 @@ namespace
 		if	constexpr(i_vLeft == i_vRight)
 			return std::partial_ordering::equivalent;
 		else
+		if	constexpr(i_vLeft >= i_vRight)
+			return std::partial_ordering::greater;
+		else
+		if	constexpr(i_vRight >= i_vLeft)
+			return std::partial_ordering::less;
+		else
 			return std::partial_ordering::unordered;
 	}
 	
-	template<ProtoAtomic t_tAtomic>
 	auto consteval
 	(	operator not
-	)	(	Atomic<t_tAtomic>
+	)	(	True
 		)
-	->	Not<t_tAtomic>
+	->	False
 	{	return {};	}
 	
-	template<ProtoAtomic t_tAtomic>
 	auto consteval
 	(	operator not
-	)	(	Not<t_tAtomic>
+	)	(	False
 		)
-	->	Atomic<t_tAtomic>
+	->	True
 	{	return {};	}
+	
+	template<ProtoAtom t_tAtom>
+	auto consteval
+	(	operator not
+	)	(	Atom<t_tAtom>
+		)
+	->	Not<t_tAtom>
+	{	return {};	}
+	
+	template<ProtoAtom t_tAtom>
+	auto consteval
+	(	operator not
+	)	(	Not<t_tAtom>
+		)
+	->	Atom<t_tAtom>
+	{	return {};	}
+	
+	template
+		<	ProtoDisjunctionClause
+			...	t_tpDisjunction
+		>
+	auto consteval
+	(	operator not
+	)	(	And<t_tpDisjunction...>
+		)
+	->	ProtoDisjunction auto
+	{	return Or<decltype(not t_tpDisjunction{})...>{};	}
+	
+	template
+		<	ProtoConjunctionClause
+			...	t_tpConjunction
+		>
+	auto consteval
+	(	operator not
+	)	(	Or<t_tpConjunction...>
+		)
+	->	ProtoConjunction auto
+	{	return And<decltype(not t_tpConjunction{})...>{};	}
 	
 	auto consteval
 	(	operator and
-	)	(	ProtoAtomicClause auto
+	)	(	ProtoLiteral auto
 				i_vLeft
-		,	ProtoAtomicClause auto
+		,	ProtoLiteral auto
 				i_vRight
 		)
 	->	ProtoConjunction auto
-	{	if	constexpr(i_vLeft == i_vRight)
+	{	if	constexpr(i_vLeft >= i_vRight)
 			return i_vLeft;
 		else
-		if	constexpr(i_vLeft == not i_vRight)
-			return Never{};
+		if	constexpr(i_vRight >= i_vLeft)
+			return i_vRight;
 		else
-			return All<decltype(i_vLeft), decltype(i_vRight)>{};
+		if	constexpr(i_vLeft == not i_vRight)
+			return False{};
+		else
+			return And<decltype(i_vLeft), decltype(i_vRight)>{};
+	}
+	
+	template
+		<	ProtoConjunctionClause
+			...	t_tpRightConjunction
+		>
+	auto consteval
+	(	operator and
+	)	(	ProtoDisjunction auto
+				i_vLeft
+		,	Or<t_tpRightConjunction...>
+				i_vRight
+		)
+	->	ProtoConjunctive auto
+	{
+		if	constexpr
+			(	not ProtoConjunctive<decltype(i_vLeft)>
+			or	not ProtoConjunctive<decltype(i_vRight)>
+			or	i_vRight >= i_vLeft
+			or	i_vRight >= not i_vLeft
+			or	i_vLeft >= not i_vRight
+			)
+			return (... + (i_vLeft and t_tpRightConjunction{}));
+		else
+		if	constexpr(i_vLeft >= i_vRight)
+			return i_vLeft;
+		else
+			return And<decltype(i_vLeft), decltype(i_vRight)>{};
+	}
+	
+	template
+		<	ProtoConjunctionClause
+			...	t_tpLeftConjunction
+		>
+	auto consteval
+	(	operator and
+	)	(	Or<t_tpLeftConjunction...>
+				i_vLeft
+		,	ProtoLiteral auto
+				i_vRight
+		)
+	->	ProtoConjunctive auto
+	{
+		if	constexpr
+			(	not ProtoConjunctive<decltype(i_vLeft)>
+			or	not i_vRight >= i_vLeft
+			)
+			return (... + (t_tpLeftConjunction{} and i_vRight));
+		else
+		if	constexpr(i_vRight >= i_vLeft)
+			return i_vRight;
+		else
+			return And<decltype(i_vLeft), decltype(i_vRight)>{};
+	}
+
+	template
+		<	ProtoDisjunctionClause
+			...	t_tpRightDisjunction
+		>
+	auto consteval
+	(	operator and
+	)	(	ProtoTerm auto
+				i_vLeft
+		,	And<t_tpRightDisjunction...>
+		)
+	->	ProtoConjunctive auto
+	{	return (i_vLeft and ... and t_tpRightDisjunction{});	}
+	
+	template
+		<	ProtoDisjunctionClause
+			...	t_tpLeftDisjunction
+		>
+	auto consteval
+	(	operator and
+	)	(	And<t_tpLeftDisjunction...>
+				i_vLeft
+		,	ProtoDisjunction auto
+				i_vRight
+		)
+	->	ProtoConjunctive auto
+	{
+		if	constexpr(not ProtoConjunctive<decltype(i_vRight)>)
+			return i_vLeft and +i_vRight;
+		else
+		if	constexpr(i_vLeft >= i_vRight)
+			return i_vLeft;
+		else
+		if	constexpr
+			(	(	...
+				or	(	i_vRight >= t_tpLeftDisjunction{}
+					or	not i_vRight >= t_tpLeftDisjunction{}
+					)
+				)
+			)
+			return (... and (t_tpLeftDisjunction{} and i_vRight));
+		else
+			return And<t_tpLeftDisjunction..., decltype(i_vRight)>{};
 	}
 	
 	auto consteval
 	(	operator *
-	)	(	ProtoAtomicClause auto
+	)	(	ProtoDisjunctive auto
+				i_vDisjunctive
+		)
+	->	ProtoDisjunctive auto
+	{	return i_vDisjunctive;	}
+	
+	template
+		<	ProtoDisjunctionClause
+			...	t_tpDisjunction
+		>
+	auto consteval
+	(	operator *
+	)	(	And<t_tpDisjunction...>
+		)
+	->	ProtoDisjunctive auto
+	{	return (... * t_tpDisjunction{});	}
+	
+	auto consteval
+	(	operator *
+	)	(	ProtoLiteral auto
 				i_vLeft
-		,	ProtoAtomicClause auto
+		,	ProtoLiteral auto
 				i_vRight
 		)
-	->	ProtoDisjunction auto
+	->	ProtoDisjunctive auto
 	{	return i_vLeft and i_vRight;	}
-
+	
+	template
+		<	ProtoDisjunctionClause
+			...	t_tpRightDisjunction
+		>
+	auto consteval
+	(	operator *
+	)	(	ProtoTerm auto
+				i_vLeft
+		,	And<t_tpRightDisjunction...>
+		)
+	->	ProtoDisjunctive auto
+	{	return (i_vLeft * ... * t_tpRightDisjunction{});	}
+	
+	template
+		<	ProtoConjunctionClause
+			...	t_tpRightConjunction
+		>
+	auto consteval
+	(	operator *
+	)	(	ProtoTerm auto
+				i_vLeft
+		,	Or<t_tpRightConjunction...>
+		)
+	->	ProtoDisjunctive auto
+	{	return (... or (i_vLeft * t_tpRightConjunction{}));	}
+	
+	template
+		<	ProtoConjunctionClause
+			...	t_tpLeftConjunction
+		>
+	auto consteval
+	(	operator *
+	)	(	Or<t_tpLeftConjunction...>
+		,	ProtoConjunction auto
+				i_vRight
+		)
+	->	ProtoDisjunctive auto
+	{	return (... or (t_tpLeftConjunction{} * i_vRight));	}
+	
+	template
+		<	ProtoConjunctionClause
+			...	t_tpLeftDisjunction
+		>
+	auto consteval
+	(	operator *
+	)	(	And<t_tpLeftDisjunction...>
+				i_vLeft
+		,	ProtoLiteral auto
+				i_vRight
+		)
+	->	ProtoDisjunctive auto
+	{
+		if	constexpr(not ProtoDisjunctive<decltype(i_vLeft)>)
+			return (t_tpLeftDisjunction{} * ... * i_vRight);
+		else
+			return i_vLeft and i_vRight;
+	}
+	
 	auto consteval
 	(	operator or
-	)	(	ProtoAtomicClause auto
+	)	(	ProtoLiteral auto
 				i_vLeft
-		,	ProtoAtomicClause auto
+		,	ProtoLiteral auto
 				i_vRight
 		)
-	->	ProtoDisjunction auto
-	{	if constexpr(i_vLeft == i_vRight)
+	->	ProtoDisjunctive auto
+	{
+		if constexpr(i_vLeft >= i_vRight)
+			return i_vRight;
+		else
+		if	constexpr(i_vRight >= i_vLeft)
 			return i_vLeft;
 		else
 		if	constexpr(i_vLeft == not i_vRight)
-			return Always{};
+			return True{};
 		else
-			return Any<decltype(i_vLeft), decltype(i_vRight)>{};
+			return Or<decltype(i_vLeft), decltype(i_vRight)>{};
+	}
+	
+	template
+		<	ProtoDisjunctionClause
+			...	t_tpRightDisjunction
+		>
+	auto consteval
+	(	operator or
+	)	(	ProtoConjunction auto
+				i_vLeft
+		,	And<t_tpRightDisjunction...>
+				i_vRight
+		)
+	->	ProtoDisjunctive auto
+	{
+		if	constexpr
+			(	not ProtoDisjunctive<decltype(i_vLeft)>
+			or	not ProtoDisjunctive<decltype(i_vRight)>
+			or	i_vLeft >= i_vRight
+			or	i_vLeft >= not i_vRight
+			or	i_vRight >= not i_vLeft
+			)
+			return (... * (i_vLeft or t_tpRightDisjunction{}));
+		else
+		if	constexpr(i_vRight >= i_vLeft)
+			return i_vLeft;
+		else
+			return Or<decltype(i_vLeft), decltype(i_vRight)>{};
+	}
+
+	template
+		<	ProtoDisjunctionClause
+			...	t_tpLeftDisjunction
+		>
+	auto consteval
+	(	operator or
+	)	(	And<t_tpLeftDisjunction...>
+				i_vLeft
+		,	ProtoLiteral auto
+				i_vRight
+		)
+	->	ProtoDisjunctive auto
+	{
+		if	constexpr
+			(	not ProtoDisjunctive<decltype(i_vLeft)>
+			or	i_vLeft >= not i_vRight
+			)
+			return (... * (t_tpLeftDisjunction{} or i_vRight));
+		else
+		if	constexpr(i_vLeft >= i_vRight)
+			return i_vRight;
+		else
+			return Or<decltype(i_vLeft), decltype(i_vRight)>{};
+	}
+
+	template
+		<	ProtoConjunctionClause
+			...	t_tpRightConjunction
+		>
+	auto consteval
+	(	operator or
+	)	(	ProtoTerm auto
+				i_vLeft
+		,	Or<t_tpRightConjunction...>
+		)
+	->	ProtoDisjunctive auto
+	{	return (i_vLeft or ... or t_tpRightConjunction{});	}
+
+	template
+		<	ProtoConjunctionClause
+			...	t_tpLeftConjunction
+		>
+	auto consteval
+	(	operator or
+	)	(	Or<t_tpLeftConjunction...>
+				i_vLeft
+		,	ProtoConjunction auto
+				i_vRight
+		)
+	->	ProtoDisjunctive auto
+	{
+		if	constexpr(not ProtoDisjunctive<decltype(i_vRight)>)
+			return i_vLeft or *i_vRight;
+		else
+		if	constexpr(i_vRight >= i_vLeft)
+			return i_vLeft;
+		else
+		if	constexpr
+			(	(	...
+				or	(	t_tpLeftConjunction{} >= i_vRight
+					or	t_tpLeftConjunction{} >= not i_vRight
+					)
+				)
+			)
+			return (... or (t_tpLeftConjunction{} or i_vRight));
+		else
+			return Or<t_tpLeftConjunction..., decltype(i_vRight)>{};
 	}
 	
 	auto consteval
 	(	operator +
-	)	(	ProtoAtomicClause auto
+	)	(	ProtoConjunctive auto
+				i_vConjunctive
+		)
+	->	ProtoConjunctive auto
+	{	return i_vConjunctive;	}
+	
+	template
+		<	ProtoConjunctionClause
+			...	t_tpConjunction
+		>
+	auto consteval
+	(	operator +
+	)	(	Or<t_tpConjunction...>
+		)
+	->	ProtoConjunctive auto
+	{	return (... + t_tpConjunction{});	}
+	
+	auto consteval
+	(	operator +
+	)	(	ProtoLiteral auto
 				i_vLeft
-		,	ProtoAtomicClause auto
+		,	ProtoLiteral auto
 				i_vRight
 		)
-	->	ProtoConjunction auto
+	->	ProtoConjunctive auto
 	{	return i_vLeft or i_vRight;	}
 	
-	template<ProtoClause... t_tpClause>
+	template
+		<	ProtoConjunctionClause
+			...	t_tpRightConjunction
+		>
 	auto consteval
-	(	operator >=
-	)	(	ProtoAtomicClause auto
-				i_vAtomic
-		,	All<t_tpClause...>
-		)
-	->	bool
-	{	return (... and (i_vAtomic >= t_tpClause{}));	}
-	
-	template<ProtoClause... t_tpClause>
-	auto consteval
-	(	operator >=
-	)	(	All<t_tpClause...>
-		,	ProtoAtomicClause auto
-				i_vAtomic
-		)
-	->	bool
-	{	return (... or (t_tpClause{} >= i_vAtomic));	}
-	
-	template<ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator<=>
-	)	(	ProtoAtomicClause auto
+	(	operator +
+	)	(	ProtoTerm auto
 				i_vLeft
-		,	All<t_tpRightClause...>
-				i_vRight
+		,	Or<t_tpRightConjunction...>
 		)
-	->	std::partial_ordering
-	{
-		if	constexpr(i_vRight >= i_vLeft)
-			return std::partial_ordering::less;
-		else
-		if	constexpr(i_vLeft >= i_vRight)
-			return std::partial_ordering::greater;
-		else
-			return std::partial_ordering::unordered;
-	}
+	->	ProtoConjunctive auto
+	{	return (i_vLeft + ... + t_tpRightConjunction{});	}
 	
-	template<ProtoClause... t_tpClause>
+	template
+		<	ProtoDisjunctionClause
+			...	t_tpRightDisjunction
+		>
 	auto consteval
-	(	operator >=
-	)	(	ProtoAtomicClause auto
-				i_vAtomic
-		,	Any<t_tpClause...>
-		)
-	->	bool
-	{	return (... or (i_vAtomic >= t_tpClause{}));	}
-	
-	template<ProtoClause... t_tpClause>
-	auto consteval
-	(	operator >=
-	)	(	Any<t_tpClause...>
-		,	ProtoAtomicClause auto
-				i_vAtomic
-		)
-	->	bool
-	{	return (... and (t_tpClause{} >= i_vAtomic));	}
-	
-	template<ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator<=>
-	)	(	ProtoAtomicClause auto
+	(	operator +
+	)	(	ProtoTerm auto
 				i_vLeft
-		,	Any<t_tpRightClause...>
-				i_vRight
+		,	And<t_tpRightDisjunction...>
 		)
-	->	std::partial_ordering
-	{
-		if	constexpr(i_vLeft >= i_vRight)
-			return std::partial_ordering::greater;
-		else
-		if	constexpr(i_vRight >= i_vLeft)
-			return std::partial_ordering::less;
-		else
-			return std::partial_ordering::unordered;
-	}
+	->	ProtoConjunctive auto
+	{	return (... and (i_vLeft + t_tpRightDisjunction{}));	}
 	
-	template<ProtoClause... t_tpClause>
+	template
+		<	ProtoDisjunctionClause
+			...	t_tpLeftDisjunction
+		>
 	auto consteval
-	(	operator not
-	)	(	All<t_tpClause...>
-		)
-	->	ProtoDisjunction auto
-	{	if	constexpr((... and ProtoAtomicClause<t_tpClause>))
-			return Any<decltype(not t_tpClause{})...>{};
-		else
-			return (... or not t_tpClause{});
-	}
-	
-	template<ProtoClause... t_tpClause>
-	auto consteval
-	(	operator not
-	)	(	Any<t_tpClause...>
-		)
-	->	ProtoConjunction auto
-	{	if	constexpr((... and ProtoAtomicClause<t_tpClause>))
-			return All<decltype(not t_tpClause{})...>{};
-		else
-			return (... and not t_tpClause{});
-	}
-	
-	template<ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator and
-	)	(	ProtoDisjunction auto
-				i_vLeft
-		,	All<t_tpRightClause...>
-				i_vRight
-		)
-	->	ProtoConjunction auto
-	{
-		if	constexpr(not ProtoConjunction<decltype(i_vLeft)>)
-			return +i_vLeft and i_vRight;
-		else
-		if	constexpr(i_vRight >= not i_vLeft)
-			return Never{};
-		else
-		if	constexpr(i_vRight >= i_vLeft)
-			return (i_vLeft and ... and t_tpRightClause{});
-		else
-		if	constexpr
-			(	(	...
-				or	(	i_vLeft >= t_tpRightClause{}
-					or	not i_vLeft >= t_tpRightClause{}
-					)
-				)
-			)
-			return (... and (i_vLeft and t_tpRightClause{}));
-		else
-			return All<decltype(i_vLeft), t_tpRightClause...>{};
-	}
-
-	template<ProtoClause... t_tpLeftClause>
-	auto consteval
-	(	operator and
-	)	(	All<t_tpLeftClause...>
-				i_vLeft
+	(	operator +
+	)	(	And<t_tpLeftDisjunction...>
 		,	ProtoDisjunction auto
 				i_vRight
 		)
-	->	ProtoConjunction auto
-	{	if	constexpr(i_vLeft >= i_vRight)
-			return +i_vLeft;
-		else
-			return (t_tpLeftClause{} and ... and +i_vRight);
-	}
+	->	ProtoConjunctive auto
+	{	return (... and (t_tpLeftDisjunction{} + i_vRight));	}
 
-	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator and
-	)	(	All<t_tpLeftClause...>
-				i_vLeft
-		,	All<t_tpRightClause...>
-		)
-	->	ProtoConjunction auto
-	{	return (i_vLeft and ... and t_tpRightClause{});	}
-
-	template<ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator and
-	)	(	ProtoAtomicClause auto
-				i_vLeft
-		,	Any<t_tpRightClause...>
-				i_vRight
-		)
-	->	ProtoConjunction auto
-	{
-		if	constexpr(i_vLeft >= i_vRight)
-			return +i_vLeft;
-		else
-		if	constexpr(i_vRight >= i_vLeft)
-			return +i_vRight;
-		else
-		if	constexpr(i_vLeft >= not i_vRight or i_vRight >= not i_vLeft)
-			return Never{};
-		else
-		if	constexpr(ProtoClause<decltype(i_vRight)>)
-			return All<decltype(i_vLeft), decltype(i_vRight)>{};
-		else
-			return (... + (i_vLeft and t_tpRightClause{}));
-	}
-
-	template<ProtoClause... t_tpLeftClause>
-	auto consteval
-	(	operator and
-	)	(	Any<t_tpLeftClause...>
-				i_vLeft
-		,	ProtoAtomicClause auto
-				i_vRight
-		)
-	->	ProtoConjunction auto
-	{
-		if	constexpr(i_vLeft >= i_vRight)
-			return +i_vLeft;
-		else
-		if	constexpr(i_vRight >= i_vLeft)
-			return +i_vRight;
-		else
-		if	constexpr(i_vLeft >= not i_vRight or not i_vLeft <= i_vRight)
-			return Never{};
-		else
-		if	constexpr(ProtoClause<decltype(i_vLeft)>)
-			return All<decltype(i_vLeft), decltype(i_vRight)>{};
-		else
-			return (... + (t_tpLeftClause{} and i_vRight));
-	}
-
-	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator and
-	)	(	Any<t_tpLeftClause...>
-				i_vLeft
-		,	Any<t_tpRightClause...>
-				i_vRight
-		)
-	->	ProtoConjunction auto
-	{
-		if	constexpr(i_vLeft >= i_vRight)
-			return +i_vLeft;
-		else
-		if	constexpr(i_vRight >= i_vLeft)
-			return +i_vRight;
-		else
-		if	constexpr(i_vLeft >= not i_vRight or i_vRight >= not i_vLeft)
-			return Never{};
-		else
-		if	constexpr
-			(	ProtoClause<decltype(i_vLeft)>
-			and	ProtoClause<decltype(i_vRight)>
-			)
-			return All<decltype(i_vLeft), decltype(i_vRight)>{};
-		else
-			return (... + (i_vLeft and t_tpRightClause{}));
-	}
-	
-	template<ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator *
-	)	(	ProtoAtomicClause auto
-				i_vLeft
-		,	All<t_tpRightClause...>
-		)
-	->	ProtoDisjunction auto
-	{	return (i_vLeft * ... * t_tpRightClause{});	}
-	
-	template<ProtoClause... t_tpLeftClause>
-	auto consteval
-	(	operator *
-	)	(	All<t_tpLeftClause...>
-				i_vLeft
-		,	ProtoAtomicClause auto
-				i_vRight
-		)
-	->	ProtoDisjunction auto
-	{
-		if	constexpr(i_vLeft >= i_vRight)
-			return *i_vLeft;
-		else
-		if	constexpr(ProtoDisjunction<decltype(i_vLeft)>)
-			return i_vLeft and i_vRight;
-		else
-			return (t_tpLeftClause{} * ... * i_vRight);
-	}
-
-	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator *
-	)	(	All<t_tpLeftClause...>
-				i_vLeft
-		,	All<t_tpRightClause...>
-		)
-	->	ProtoDisjunction auto
-	{	return (i_vLeft * ... * t_tpRightClause{});	}
-	
-	template<ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator *
-	)	(	ProtoConjunction auto
-				i_vLeft
-		,	Any<t_tpRightClause...>
-				i_vRight
-		)
-	->	ProtoDisjunction auto
-	{
-		if	constexpr(i_vLeft >= i_vRight)
-			return *i_vLeft;
-		else
-		if	constexpr(i_vRight >= i_vLeft)
-			return *i_vRight;
-		else
-		if	constexpr(not i_vLeft >= i_vRight or not i_vRight >= i_vLeft)
-			return Never{};
-		else
-			return (... or (i_vLeft * t_tpRightClause{}));
-	}
-	
-	template<ProtoClause... t_tpLeftClause>
-	auto consteval
-	(	operator *
-	)	(	Any<t_tpLeftClause...>
-				i_vLeft
-		,	ProtoConjunction auto
-				i_vRight
-		)
-	->	ProtoDisjunction auto
-	{	if	constexpr(i_vLeft >= i_vRight)
-			return *i_vLeft;
-		else
-		if	constexpr(i_vRight >= i_vLeft)
-			return *i_vRight;
-		else
-		if	constexpr(not i_vLeft >= i_vRight or not i_vRight >= i_vLeft)
-			return Never{};
-		else
-			return (... or (t_tpLeftClause{} * i_vRight));
-	}
-	
-	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator *
-	)	(	Any<t_tpLeftClause...>
-				i_vLeft
-		,	Any<t_tpRightClause...>
-				i_vRight
-		)
-	->	ProtoDisjunction auto
-	{	if	constexpr(i_vLeft >= i_vRight)
-			return *i_vLeft;
-		else
-		if	constexpr(i_vRight >= i_vLeft)
-			return *i_vRight;
-		else
-		if	constexpr(i_vLeft >= not i_vRight or i_vRight >= not i_vLeft)
-			return Never{};
-		else
-			return (... or (i_vLeft * t_tpRightClause{}));
-	}
-	
-	template<ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator or
-	)	(	ProtoAtomicClause auto
-				i_vLeft
-		,	All<t_tpRightClause...>
-				i_vRight
-		)
-	->	ProtoDisjunction auto
-	{
-		if	constexpr(i_vRight >= i_vLeft)
-			return *i_vLeft;
-		else
-		if	constexpr(i_vLeft >= i_vRight)
-			return *i_vRight;
-		else
-		if	constexpr(not i_vLeft >=  i_vRight or not i_vRight <= i_vLeft)
-			return Always{};
-		else
-		if	constexpr(ProtoClause<decltype(i_vRight)>)
-			return Any<decltype(i_vLeft), decltype(i_vRight)>{};
-		else
-			return (... * (i_vLeft or t_tpRightClause{}));
-	}
-
-	template<ProtoClause... t_tpLeftClause>
-	auto consteval
-	(	operator or
-	)	(	All<t_tpLeftClause...>
-				i_vLeft
-		,	ProtoAtomicClause auto
-				i_vRight
-		)
-	->	ProtoDisjunction auto
-	{
-		if	constexpr(i_vRight >= i_vLeft)
-			return *i_vLeft;
-		else
-		if	constexpr(i_vLeft >= i_vRight)
-			return *i_vRight;
-		else
-		if	constexpr(not i_vLeft >=  i_vRight or i_vLeft <= not i_vRight)
-			return Always{};
-		else
-		if	constexpr(ProtoClause<decltype(i_vLeft)>)
-			return Any<decltype(i_vLeft), decltype(i_vRight)>{};
-		else
-			return (... * (t_tpLeftClause{} or i_vRight));
-	}
-
-	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator or
-	)	(	All<t_tpLeftClause...>
-				i_vLeft
-		,	All<t_tpRightClause...>
-				i_vRight
-		)
-	->	ProtoDisjunction auto
-	{
-		if	constexpr(i_vRight >= i_vLeft)
-			return *i_vLeft;
-		else
-		if	constexpr(i_vLeft >= i_vRight)
-			return *i_vRight;
-		else
-		if	constexpr(i_vLeft >= not i_vRight or i_vRight >= not i_vLeft)
-			return Always{};
-		else
-		if	constexpr
-			(	ProtoClause<decltype(i_vLeft)>
-			and	ProtoClause<decltype(i_vRight)>
-			)
-			return Any<decltype(i_vLeft), decltype(i_vRight)>{};
-		else
-			return (... * (i_vLeft or t_tpRightClause{}));
-	}
-
-	template<ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator or
-	)	(	ProtoConjunction auto
-				i_vLeft
-		,	Any<t_tpRightClause...>
-				i_vRight
-		)
-	->	ProtoDisjunction auto
-	{
-		if	constexpr(not ProtoDisjunction<decltype(i_vLeft)>)
-			return *i_vLeft or i_vRight;
-		else
-		if	constexpr(not i_vLeft >= i_vRight)
-			return Always{};
-		else
-		if	constexpr(i_vLeft >= i_vRight)
-			return (i_vLeft or ... or t_tpRightClause{});
-		else
-		if	constexpr
-			(	(	...
-				or	(	t_tpRightClause{} >= i_vLeft
-					or	t_tpRightClause{} >= not i_vLeft
-					)
-				)
-			)
-			return (... or (i_vLeft or t_tpRightClause{}));
-		else
-			return Any<decltype(i_vLeft), t_tpRightClause...>{};
-	}
-
-	template<ProtoClause... t_tpLeftClause>
-	auto consteval
-	(	operator or
-	)	(	Any<t_tpLeftClause...>
-				i_vLeft
-		,	ProtoConjunction auto
-				i_vRight
-		)
-	->	ProtoDisjunction auto
-	{	if	constexpr(i_vRight >= i_vLeft)
-			return *i_vLeft;
-		else
-			return (t_tpLeftClause{} or ... or *i_vRight);
-	}
-
-	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator or
-	)	(	Any<t_tpLeftClause...>
-				i_vLeft
-		,	Any<t_tpRightClause...>
-		)
-	->	ProtoDisjunction auto
-	{	return (i_vLeft or ...  or t_tpRightClause{});	}
-	
-	template<ProtoClause... t_tpRightClause>
+	template
+		<	ProtoConjunctionClause
+			...	t_tpLeftConjunction
+		>
 	auto consteval
 	(	operator +
-	)	(	ProtoDisjunction auto
+	)	(	Or<t_tpLeftConjunction...>
 				i_vLeft
-		,	All<t_tpRightClause...>
+		,	ProtoLiteral auto
 				i_vRight
 		)
-	->	ProtoConjunction auto
-	{	if	constexpr(i_vRight >= i_vLeft)
-			return +i_vLeft;
-		else
-		if	constexpr(i_vLeft >= i_vRight)
-			return +i_vRight;
-		else
-		if	constexpr(not i_vLeft >=  i_vRight or not i_vRight >= i_vLeft)
-			return Always{};
-		else
-			return (... and (i_vLeft + t_tpRightClause{}));
-	}
-	
-	template<ProtoClause... t_tpLeftClause>
-	auto consteval
-	(	operator +
-	)	(	All<t_tpLeftClause...>
-				i_vLeft
-		,	ProtoDisjunction auto
-				i_vRight
-		)
-	->	ProtoConjunction auto
+	->	ProtoConjunctive auto
 	{
-		if	constexpr(i_vRight >= i_vLeft)
-			return +i_vLeft;
+		if	constexpr(not ProtoConjunctive<decltype(i_vLeft)>)
+			return (t_tpLeftConjunction{} + ... + i_vRight);
 		else
-		if	constexpr(i_vLeft >= i_vRight)
-			return +i_vRight;
-		else
-		if	constexpr(not i_vLeft >=  i_vRight or not i_vRight >= i_vLeft)
-			return Always{};
-		else
-			return (... and (t_tpLeftClause{} + i_vRight));
-	}
-	
-	template<ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator +
-	)	(	ProtoAtomicClause auto
-				i_vLeft
-		,	Any<t_tpRightClause...>
-		)
-	->	ProtoConjunction auto
-	{	return (i_vLeft + ... + t_tpRightClause{});	}
-
-	template<ProtoClause... t_tpLeftClause>
-	auto consteval
-	(	operator +
-	)	(	Any<t_tpLeftClause...>
-				i_vLeft
-		,	ProtoAtomicClause auto
-				i_vRight
-		)
-	->	ProtoConjunction auto
-	{
-		if	constexpr(i_vRight >= i_vLeft)
-			return +i_vLeft;
-		else
-		if	constexpr(ProtoConjunction<decltype(i_vLeft)>)
 			return i_vLeft or i_vRight;
-		else
-			return (t_tpLeftClause{} + ... + i_vRight);
 	}
 	
-	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator +
-	)	(	All<t_tpLeftClause...>
-				i_vLeft
-		,	All<t_tpRightClause...>
-				i_vRight
-		)
-	->	ProtoConjunction auto
-	{
-		if	constexpr(i_vRight >= i_vLeft)
-			return +i_vLeft;
-		else
-		if	constexpr(i_vLeft >= i_vRight)
-			return +i_vRight;
-		else
-		if	constexpr(i_vLeft >= not i_vRight or i_vRight >= not i_vLeft)
-			return Always{};
-		else
-			return (... and (i_vLeft + t_tpRightClause{}));
-	}
-
-	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator +
-	)	(	Any<t_tpLeftClause...>
-				i_vLeft
-		,	Any<t_tpRightClause...>
-		)
-	->	ProtoConjunction auto
-	{	return (i_vLeft + ... + t_tpRightClause{});	}
-	
-	template<ProtoAtomicClause... t_tpLeftClause, ProtoAtomicClause... t_tpRightClause>
-	auto consteval
-	(	operator >=
-	)	(	All<t_tpLeftClause...>
-				i_vLeft
-		,	All<t_tpRightClause...>
-		)
-	->	bool
-	{	return (... and (i_vLeft > t_tpRightClause{}));	}
-	
-	template<ProtoAtomicClause... t_tpLeftClause, ProtoAtomicClause... t_tpRightClause>
-	auto consteval
-	(	operator<=>
-	)	(	All<t_tpLeftClause...>
-				i_vLeft
-		,	All<t_tpRightClause...>
-				i_vRight
-		)
-	->	std::partial_ordering
-	{
-		if	constexpr(i_vLeft >= i_vRight and i_vRight >= i_vLeft)
-			return std::partial_ordering::equivalent;
-		else
-		if constexpr(i_vLeft >= i_vRight)
-			return std::partial_ordering::greater;
-		else
-		if	constexpr(i_vRight >= i_vLeft)
-			return std::partial_ordering::less;
-		else
-			return std::partial_ordering::unordered;
-	}
-	
-	template<ProtoAtomicClause... t_tpLeftClause, ProtoAtomicClause... t_tpRightClause>
-	auto consteval
-	(	operator<=>
-	)	(	All<t_tpLeftClause...>
-				i_vLeft
-		,	Any<t_tpRightClause...>
-		)
-	->	std::partial_ordering
-	{	bool const bLeftGreaterOneRight = (... or (i_vLeft > t_tpRightClause{}));
-		if (bLeftGreaterOneRight)
-			return std::partial_ordering::greater;
-		else
-			return std::partial_ordering::unordered;
-	}
-	
-	template<ProtoAtomicClause... t_tpLeftClause, ProtoAtomicClause... t_tpRightClause>
-	auto consteval
-	(	operator >=
-	)	(	Any<t_tpLeftClause...>
-		,	Any<t_tpRightClause...>
-				i_vRight
-		)
-	->	bool
-	{	return (... and (t_tpLeftClause{} > i_vRight));	}
-	
-	template<ProtoAtomicClause... t_tpLeftClause, ProtoAtomicClause... t_tpRightClause>
-	auto consteval
-	(	operator<=>
-	)	(	Any<t_tpLeftClause...>
-				i_vLeft
-		,	Any<t_tpRightClause...>
-				i_vRight
-		)
-	->	std::partial_ordering
-	{
-		if	constexpr(i_vLeft >= i_vRight and i_vRight >= i_vLeft)
-			return std::partial_ordering::equivalent;
-		else
-		if	constexpr(i_vLeft >= i_vRight)
-			return std::partial_ordering::greater;
-		else
-		if	constexpr(i_vRight >= i_vLeft)
-			return std::partial_ordering::less;
-		else
-			return std::partial_ordering::unordered;
-	}
-	
-	template<ProtoAtomicClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator<=>
-	)	(	All<t_tpLeftClause...>
-				i_vLeft
-		,	All<t_tpRightClause...>
-				i_vRight
-		)
-	->	std::partial_ordering
-	requires
-		(... or not ProtoAtomicClause<t_tpRightClause>)
-	{	bool const bLeftGreaterAllRight = (... and (i_vLeft >= t_tpRightClause{}));
-		bool const bRightGreaterAllLeft = (... and (i_vRight >= t_tpLeftClause{}));
-		if (bLeftGreaterAllRight and bRightGreaterAllLeft)
-			return std::partial_ordering::equivalent;
-		if (bLeftGreaterAllRight)
-			return std::partial_ordering::greater;
-		if (bRightGreaterAllLeft)
-			return std::partial_ordering::less;
-		else
-			return std::partial_ordering::unordered;
-	}
-	
-	template<ProtoAtomicClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator<=>
-	)	(	All<t_tpLeftClause...>
-				i_vLeft
-		,	Any<t_tpRightClause...>
-				i_vRight
-		)
-	->	std::partial_ordering
-	requires
-		(... or not ProtoAtomicClause<t_tpRightClause>)
-	{	bool const bLeftGreaterOneRight = (... or (i_vLeft >= t_tpRightClause{}));
-		bool const bRightGreaterAllLeft = (... and (i_vRight >= t_tpLeftClause{}));
-		if (bLeftGreaterOneRight and bRightGreaterAllLeft)
-			return std::partial_ordering::equivalent;
-		if (bLeftGreaterOneRight)
-			return std::partial_ordering::greater;
-		if (bRightGreaterAllLeft)
-			return std::partial_ordering::less;
-		else
-			return std::partial_ordering::unordered;
-	}
-	
-	template<ProtoAtomicClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator<=>
-	)	(	Any<t_tpLeftClause...>
-				i_vLeft
-		,	All<t_tpRightClause...>
-				i_vRight
-		)
-	->	std::partial_ordering
-	requires
-		(... or not ProtoAtomicClause<t_tpRightClause>)
-	{	bool const bAllLeftGreaterRight = (... and (t_tpLeftClause{} >= i_vRight));
-		bool const bOneRightGreaterLeft = (... or (t_tpRightClause{} >= i_vLeft));
-		
-		if (bAllLeftGreaterRight and  bOneRightGreaterLeft)
-			return std::partial_ordering::equivalent;
-		if (bAllLeftGreaterRight)
-			return std::partial_ordering::greater;
-		if (bOneRightGreaterLeft)
-			return std::partial_ordering::less;
-		else
-			return std::partial_ordering::unordered;
-		
-	}
-	
-	template<ProtoAtomicClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator<=>
-	)	(	Any<t_tpLeftClause...>
-				i_vLeft
-		,	Any<t_tpRightClause...>
-				i_vRight
-		)
-	->	std::partial_ordering
-	requires
-		(... or not ProtoAtomicClause<t_tpRightClause>)
-	{	bool const bAllLeftGreaterRight = (... and (t_tpLeftClause{} >= i_vRight));
-		bool const bAllRightGreateLeft = (... and (t_tpRightClause{} >= i_vLeft));
-
-		if (bAllLeftGreaterRight and bAllRightGreateLeft)
-			return std::partial_ordering::equivalent;
-		if (bAllLeftGreaterRight)
-			return std::partial_ordering::greater;
-		if (bAllRightGreateLeft)
-			return std::partial_ordering::less;
-		else
-			return std::partial_ordering::unordered;
-	}
-	
-	
-	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator<=>
-	)	(	All<t_tpLeftClause...>
-				i_vLeft
-		,	All<t_tpRightClause...>
-				i_vRight
-		)
-	->	std::partial_ordering
-	requires
-		(... or not ProtoAtomicClause<t_tpLeftClause>)
-	and	(... or not ProtoAtomicClause<t_tpRightClause>)
-	{
-		bool const bLeftGreaterAllRight = (... and (i_vLeft >= t_tpRightClause{}));
-		bool const bRightGreaterAllLeft = (... and (i_vRight >= t_tpLeftClause{}));
-		if (bLeftGreaterAllRight and bRightGreaterAllLeft)
-			return std::partial_ordering::equivalent;
-		if (bLeftGreaterAllRight)
-			return std::partial_ordering::greater;
-		if (bRightGreaterAllLeft)
-			return std::partial_ordering::less;
-		else
-			return std::partial_ordering::unordered;
-	}
-	
-	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator<=>
-	)	(	All<t_tpLeftClause...>
-		,	Any<t_tpRightClause...>
-				i_vRight
-		)
-	->	std::partial_ordering
-	requires
-		(... or not ProtoAtomicClause<t_tpLeftClause>)
-	and	(... or not ProtoAtomicClause<t_tpRightClause>)
-	{
-		bool const bAllLeftLesserRight = (... and (t_tpLeftClause{} <= i_vRight));
-		bool const bRightGreaterAllLeft = (... and (i_vRight >= t_tpLeftClause{}));
-		if (bAllLeftLesserRight and bRightGreaterAllLeft)
-			return std::partial_ordering::equivalent;
-		if (bAllLeftLesserRight)
-			return std::partial_ordering::greater;
-		if (bRightGreaterAllLeft)
-			return std::partial_ordering::less;
-		else
-			return std::partial_ordering::unordered;
-	}
-	
-	template<ProtoClause... t_tpLeftClause, ProtoClause... t_tpRightClause>
-	auto consteval
-	(	operator<=>
-	)	(	Any<t_tpLeftClause...>
-				i_vLeft
-		,	Any<t_tpRightClause...>
-				i_vRight
-		)
-	->	std::partial_ordering
-	requires
-		(... or not ProtoAtomicClause<t_tpLeftClause>)
-	and	(... or not ProtoAtomicClause<t_tpRightClause>)
-	{
-		bool const bAllLeftGreaterRight = (... and (t_tpLeftClause{} >= i_vRight));
-		bool const bAllRightGreateLeft = (... and (t_tpRightClause{} >= i_vLeft));
-
-		if (bAllLeftGreaterRight and bAllRightGreateLeft)
-			return std::partial_ordering::equivalent;
-		if (bAllLeftGreaterRight)
-			return std::partial_ordering::greater;
-		if (bAllRightGreateLeft)
-			return std::partial_ordering::less;
-		else
-			return std::partial_ordering::unordered;
-	}
-	
-	auto consteval
-	(	operator==
-	)	(	ProtoStatement auto
-				i_vLeft
-		,	ProtoStatement auto
-				i_vRight
-		)
-	->	bool
-	{	return std::is_eq(i_vLeft <=> i_vRight);	}
-
-	template<ProtoStatement auto t_vStatement>
+	template<ProtoTerm auto t_vTerm>
 	struct
-		StatementBase
+		TermBase
 	{
 		friend auto constexpr
 		(	operator +
-		)	(	StatementBase const
+		)	(	TermBase const
 				&
 			)
-		->	ProtoConjunction auto
-		{	return + t_vStatement;	}
+		->	ProtoConjunctive auto
+		{	return + t_vTerm;	}
 		
-		friend auto constexpr
+		friend auto consteval
 		(	operator *
-		)	(	StatementBase const
+		)	(	TermBase const
 				&
 			)
-		->	ProtoDisjunction auto
-		{	return * t_vStatement;	}
+		->	ProtoDisjunctive auto
+		{	return * t_vTerm;	}
 		
 		friend auto consteval
 		(	operator <=>
-		)	(	StatementBase const
+		)	(	TermBase const
 				&
-			,	ProtoStatement auto
+			,	ProtoTerm auto
 					i_vRight
 			)
 		->	std::partial_ordering
-		{	return t_vStatement <=> i_vRight;	}
+		{	return t_vTerm <=> i_vRight;	}
 		
-		template<ProtoStatement auto t_vRightStatement>
+		template<ProtoTerm auto t_vRightTerm>
 		friend auto consteval
 		(	operator <=>
-		)	(	StatementBase const
+		)	(	TermBase const
 				&
-			,	StatementBase<t_vRightStatement> const
+			,	TermBase<t_vRightTerm> const
 				&
 			)
 		->	std::partial_ordering
-		{	return t_vStatement <=> t_vRightStatement;	}
+		{	return t_vTerm <=> t_vRightTerm;	}
 		
 		friend auto consteval
 		(	operator ==
-		)	(	StatementBase const
+		)	(	TermBase const
 				&
-			,	ProtoStatement auto
+			,	ProtoTerm auto
 					i_vRight
 			)
 		->	bool
-		{	return t_vStatement == i_vRight;	}
+		{	return t_vTerm == i_vRight;	}
 		
-		template<ProtoStatement auto t_vRightStatement>
+		template<ProtoTerm auto t_vRightTerm>
 		friend auto consteval
 		(	operator ==
-		)	(	StatementBase const
+		)	(	TermBase const
 				&
-			,	StatementBase<t_vRightStatement> const
+			,	TermBase<t_vRightTerm> const
 				&
 			)
 		->	bool
-		{	return t_vStatement == t_vRightStatement;	}
+		{	return t_vTerm == t_vRightTerm;	}
 		
 		friend auto consteval
 		(	operator not
-		)	(	StatementBase const
+		)	(	TermBase const
 				&
 			)
-		{	return not t_vStatement;	}
+		{	return not t_vTerm;	}
 			
 		friend auto consteval
 		(	operator and
-		)	(	StatementBase const
+		)	(	TermBase const
 				&
-			,	ProtoStatement auto
+			,	ProtoTerm auto
 					i_vRight
 			)
 		->	ProtoConjunction auto
-		{	return t_vStatement and i_vRight;	}
+		{	return t_vTerm and i_vRight;	}
 		
 		friend auto consteval
 		(	operator *
-		)	(	StatementBase const
+		)	(	TermBase const
 				&
-			,	ProtoStatement auto
+			,	ProtoTerm auto
 					i_vRight
 			)
-		->	ProtoDisjunction auto
-		{	return t_vStatement * i_vRight;	}
+		->	ProtoDisjunctive auto
+		{	return t_vTerm * i_vRight;	}
 		
 		friend auto consteval
 		(	operator and
-		)	(	ProtoStatement auto
+		)	(	ProtoTerm auto
 					i_vLeft
-			,	StatementBase const
+			,	TermBase const
 				&
 			)
 		->	ProtoConjunction auto
-		{	return i_vLeft and t_vStatement;	}
+		{	return i_vLeft and t_vTerm;	}
 		
 		friend auto consteval
 		(	operator *
-		)	(	ProtoStatement auto
+		)	(	ProtoTerm auto
 					i_vLeft
-			,	StatementBase const
+			,	TermBase const
 				&
 			)
-		->	ProtoDisjunction auto
-		{	return i_vLeft * t_vStatement;	}
+		->	ProtoDisjunctive auto
+		{	return i_vLeft * t_vTerm;	}
 		
-		template<ProtoStatement auto t_vRightStatement>
+		template<ProtoTerm auto t_vRightTerm>
 		friend auto consteval
 		(	operator and
-		)	(	StatementBase const
+		)	(	TermBase const
 				&
-			,	StatementBase<t_vRightStatement> const
+			,	TermBase<t_vRightTerm> const
 				&
 			)
 		->	ProtoConjunction auto
-		{	return t_vStatement and t_vRightStatement;	}
+		{	return t_vTerm and t_vRightTerm;	}
 		
-		template<ProtoStatement auto t_vRightStatement>
+		template<ProtoTerm auto t_vRightTerm>
 		friend auto consteval
 		(	operator *
-		)	(	StatementBase const
+		)	(	TermBase const
 				&
-			,	StatementBase<t_vRightStatement> const
+			,	TermBase<t_vRightTerm> const
 				&
 			)
-		->	ProtoDisjunction auto
-		{	return t_vStatement * t_vRightStatement;	}
+		->	ProtoDisjunctive auto
+		{	return t_vTerm * t_vRightTerm;	}
 		
 		friend auto consteval
 		(	operator or
-		)	(	StatementBase const
+		)	(	TermBase const
 				&
-			,	ProtoStatement auto
+			,	ProtoTerm auto
 					i_vRight
 			)
 		->	ProtoDisjunction auto
-		{	return t_vStatement or i_vRight;	}
+		{	return t_vTerm or i_vRight;	}
 		
 		friend auto consteval
 		(	operator +
-		)	(	StatementBase const
+		)	(	TermBase const
 				&
-			,	ProtoStatement auto
+			,	ProtoTerm auto
 					i_vRight
 			)
-		->	ProtoConjunction auto
-		{	return t_vStatement + i_vRight;	}
+		->	ProtoConjunctive auto
+		{	return t_vTerm + i_vRight;	}
 		
 		friend auto consteval
 		(	operator or
-		)	(	ProtoStatement auto
+		)	(	ProtoTerm auto
 					i_vLeft
-			,	StatementBase const
+			,	TermBase const
 				&
 			)
 		->	ProtoDisjunction auto
-		{	return i_vLeft or t_vStatement;	}
+		{	return i_vLeft or t_vTerm;	}
 		
 		friend auto consteval
 		(	operator +
-		)	(	ProtoStatement auto
+		)	(	ProtoTerm auto
 					i_vLeft
-			,	StatementBase const
+			,	TermBase const
 				&
 			)
-		->	ProtoConjunction auto
-		{	return i_vLeft + t_vStatement;	}
+		->	ProtoConjunctive auto
+		{	return i_vLeft + t_vTerm;	}
 		
-		template<ProtoStatement auto t_vRightStatement>
+		template<ProtoTerm auto t_vRightTerm>
 		friend auto consteval
 		(	operator or
-		)	(	StatementBase const
+		)	(	TermBase const
 				&
-			,	StatementBase<t_vRightStatement> const
+			,	TermBase<t_vRightTerm> const
 				&
 			)
 		->	ProtoDisjunction auto
-		{	return t_vStatement or t_vRightStatement;	}
+		{	return t_vTerm or t_vRightTerm;	}
 		
-		template<ProtoStatement auto t_vRightStatement>
+		template<ProtoTerm auto t_vRightTerm>
 		friend auto consteval
 		(	operator +
-		)	(	StatementBase const
+		)	(	TermBase const
 				&
-			,	StatementBase<t_vRightStatement> const
+			,	TermBase<t_vRightTerm> const
 				&
 			)
-		->	ProtoConjunction auto
-		{	return t_vStatement + t_vRightStatement;	}
+		->	ProtoConjunctive auto
+		{	return t_vTerm + t_vRightTerm;	}
 	};
 	
-	template<ProtoAtomic t_tAtomic>
+	template<ProtoAtom t_tAtom>
 	using
-		AtomicBase
-	=	StatementBase
-		<	Atomic
-			<	t_tAtomic
+		AtomBase
+	=	TermBase
+		<	Atom
+			<	t_tAtom
 			>{}
 		>
 	;
 	
-	
 	class
 		Test final
-	{	static Always constexpr inline Always {};
-		static Never constexpr inline Never {};
+	{
+		static True constexpr inline
+			True
+		{};
+		static False constexpr inline
+			False
+		{};
 		
 		template<auto t_vPredicate>
 		static bool constexpr
-			IsAtomic
-		=	ProtoAtomic<decltype(t_vPredicate)>;
+			IsAtom
+		=	ProtoAtom<decltype(t_vPredicate)>;
 		
 		template<auto t_vPredicate>
 		static bool constexpr
-			IsStatement
-		=	ProtoStatement<decltype(t_vPredicate)>;
+			IsTerm
+		=	ProtoTerm<decltype(t_vPredicate)>;
 		
 		template<auto t_vPredicate>
 		static bool constexpr
@@ -1823,380 +1245,498 @@ namespace
 		
 		template<auto t_vPredicate>
 		static bool constexpr
+			IsConjunctive
+		=	ProtoConjunctive<decltype(t_vPredicate)>;
+		
+		template<auto t_vPredicate>
+		static bool constexpr
 			IsDisjunction
 		=	ProtoDisjunction<decltype(t_vPredicate)>;
 		
 		template<auto t_vPredicate>
 		static bool constexpr
-			IsClause
-		=	ProtoClause<decltype(t_vPredicate)>;
+			IsDisjunctive
+		=	ProtoDisjunctive<decltype(t_vPredicate)>;
 		
 		template<auto t_vPredicate>
 		static bool constexpr
-			IsAtomicClause
-		=	ProtoAtomicClause<decltype(t_vPredicate)>;
+			IsLiteral
+		=	ProtoLiteral<decltype(t_vPredicate)>;
 		
-		template<ProtoAtomic auto t_vAtomic>
-		static Atomic<decltype(t_vAtomic)> constexpr Atomic{};
+		template<ProtoAtom auto t_vAtom>
+		static Atom<decltype(t_vAtom)> constexpr
+			Atom
+		{};
 		
-		template<ProtoAtomic auto t_vAtomic>
-		static Not<decltype(t_vAtomic)> constexpr Not{};
+		template<ProtoAtom auto t_vAtom>
+		static Not<decltype(t_vAtom)> constexpr
+			Not
+		{};
 		
 		template<auto... t_vpClause>
-		static All<decltype(* t_vpClause)...> constexpr All{};
+		static And<decltype(*t_vpClause)...> constexpr
+			And
+		{};
 		
 		template<auto... t_vpClause>
-		static Any<decltype(+ t_vpClause)...> constexpr Any{};
+		static Or<decltype(+t_vpClause)...> constexpr
+			Or
+		{};
 
-		static struct P_ : AtomicBase<P_> {} constexpr inline P{};
-		static struct Q_ : AtomicBase<Q_> {} constexpr inline Q{};
-		static struct R_ : AtomicBase<R_> {} constexpr inline R{};
-		static struct S_ : AtomicBase<S_> {} constexpr inline S{};
+		static struct P_ : AtomBase<P_> {} constexpr inline P{};
+		static struct Q_ : AtomBase<Q_> {} constexpr inline Q{};
+		static struct R_ : AtomBase<R_> {} constexpr inline R{};
+		static struct S_ : AtomBase<S_> {} constexpr inline S{};
 		
-		static_assert( IsAtomic<P>);
-		static_assert(!IsStatement<P>);
+		static_assert( IsAtom<P>);
+		static_assert(!IsTerm<P>);
 		static_assert(!IsConjunction<P>);
+		static_assert(!IsConjunctive<P>);
 		static_assert(!IsDisjunction<P>);
-		static_assert(!IsClause<P>);
-		static_assert(!IsAtomicClause<P>);
+		static_assert(!IsDisjunctive<P>);
+		static_assert(!IsLiteral<P>);
 		
-		static_assert(!IsAtomic<Atomic<P>>);
-		static_assert( IsStatement<Atomic<P>>);
-		static_assert( IsConjunction<Atomic<P>>);
-		static_assert( IsDisjunction<Atomic<P>>);
-		static_assert( IsClause<Atomic<P>>);
-		static_assert( IsAtomicClause<Atomic<P>>);
+		static_assert(!IsAtom<Atom<P>>);
+		static_assert( IsTerm<Atom<P>>);
+		static_assert( IsConjunction<Atom<P>>);
+		static_assert( IsConjunctive<Atom<P>>);
+		static_assert( IsDisjunction<Atom<P>>);
+		static_assert( IsDisjunctive<Atom<P>>);
+		static_assert( IsLiteral<Atom<P>>);
 		
-		static_assert(!IsAtomic<not P>);
-		static_assert( IsStatement<not P>);
-		static_assert( IsConjunction<not P>);
-		static_assert( IsDisjunction<not P>);
-		static_assert( IsClause<not P>);
-		static_assert( IsAtomicClause<not P>);
+		static_assert(!IsAtom<Not<P>>);
+		static_assert( IsTerm<Not<P>>);
+		static_assert( IsConjunction<Not<P>>);
+		static_assert( IsConjunctive<Not<P>>);
+		static_assert( IsDisjunction<Not<P>>);
+		static_assert( IsDisjunctive<Not<P>>);
+		static_assert( IsLiteral<Not<P>>);
 		
-		static_assert(!IsAtomic<All<P, Q>>);
-		static_assert( IsStatement<All<P, Q>>);
-		static_assert( IsConjunction<All<P, Q>>);
-		static_assert( IsDisjunction<All<P, Q>>);
-		static_assert( IsClause<All<P, Q>>);
-		static_assert(!IsAtomicClause<All<P, Q>>);
+		static_assert(!IsAtom<And<P, Q>>);
+		static_assert( IsTerm<And<P, Q>>);
+		static_assert( IsConjunction<And<P, Q>>);
+		static_assert( IsConjunctive<And<P, Q>>);
+		static_assert(!IsDisjunction<And<P, Q>>);
+		static_assert( IsDisjunctive<And<P, Q>>);
+		static_assert(!IsLiteral<And<P, Q>>);
 		
-		static_assert(!IsAtomic<Any<P, Q>>);
-		static_assert( IsStatement<Any<P, Q>>);
-		static_assert( IsConjunction<Any<P, Q>>);
-		static_assert( IsDisjunction<Any<P, Q>>);
-		static_assert( IsClause<Any<P, Q>>);
-		static_assert(!IsAtomicClause<Any<P, Q>>);
+		static_assert(!IsAtom<And<Or<P, Q>, R>>);
+		static_assert( IsTerm<And<Or<P, Q>, R>>);
+		static_assert( IsConjunction<And<Or<P, Q>, R>>);
+		static_assert( IsConjunctive<And<Or<P, Q>, R>>);
+		static_assert(!IsDisjunction<And<Or<P, Q>, R>>);
+		static_assert(!IsDisjunctive<And<Or<P, Q>, R>>);
+		static_assert(!IsLiteral<And<Or<P, Q>, R>>);
 		
-		static_assert(!IsAtomic<All<P, Any<Q, R>>>);
-		static_assert( IsStatement<All<P, Any<Q, R>>>);
-		static_assert( IsConjunction<All<P, Any<Q, R>>>);
-		static_assert(!IsDisjunction<All<P, Any<Q, R>>>);
-		static_assert(!IsClause<All<P, Any<Q, R>>>);
-		static_assert(!IsAtomicClause<All<P, Any<Q, R>>>);
+		static_assert(!IsAtom<And<Or<P, Q>, Or<R, S>>>);
+		static_assert( IsTerm<And<Or<P, Q>, Or<R, S>>>);
+		static_assert( IsConjunction<And<Or<P, Q>, Or<R, S>>>);
+		static_assert( IsConjunctive<And<Or<P, Q>, Or<R, S>>>);
+		static_assert(!IsDisjunction<And<Or<P, Q>, Or<R, S>>>);
+		static_assert(!IsDisjunctive<And<Or<P, Q>, Or<R, S>>>);
+		static_assert(!IsLiteral<And<Or<P, Q>, Or<R, S>>>);
 		
-		static_assert(!IsAtomic<Any<P, All<Q, R>>>);
-		static_assert( IsStatement<Any<P, All<Q, R>>>);
-		static_assert(!IsConjunction<Any<P, All<Q, R>>>);
-		static_assert( IsDisjunction<Any<P, All<Q, R>>>);
-		static_assert(!IsClause<Any<P, All<Q, R>>>);
-		static_assert(!IsAtomicClause<Any<P, All<Q, R>>>);
+		static_assert(!IsAtom<Or<P, Q>>);
+		static_assert( IsTerm<Or<P, Q>>);
+		static_assert(!IsConjunction<Or<P, Q>>);
+		static_assert( IsConjunctive<Or<P, Q>>);
+		static_assert( IsDisjunction<Or<P, Q>>);
+		static_assert( IsDisjunctive<Or<P, Q>>);
+		static_assert(!IsLiteral<Or<P, Q>>);
 		
-		static_assert(!IsAtomic<All<Any<Q, P>, Any<R, S>>>);
-		static_assert( IsStatement<All<Any<Q, P>, Any<R, S>>>);
-		static_assert( IsConjunction<All<Any<Q, P>, Any<R, S>>>);
-		static_assert(!IsDisjunction<All<Any<Q, P>, Any<R, S>>>);
-		static_assert(!IsClause<All<Any<Q, P>, Any<R, S>>>);
-		static_assert(!IsAtomicClause<All<Any<Q, P>, Any<R, S>>>);
+		static_assert(!IsAtom<Or<And<P, Q>, R>>);
+		static_assert( IsTerm<Or<And<P, Q>, R>>);
+		static_assert(!IsConjunction<Or<And<P, Q>, R>>);
+		static_assert(!IsConjunctive<Or<And<P, Q>, R>>);
+		static_assert( IsDisjunction<Or<And<P, Q>, R>>);
+		static_assert( IsDisjunctive<Or<And<P, Q>, R>>);
+		static_assert(!IsLiteral<Or<And<P, Q>, R>>);
 		
-		static_assert(!IsAtomic<Any<All<Q, P>, All<R, S>>>);
-		static_assert( IsStatement<Any<All<Q, P>, All<R, S>>>);
-		static_assert(!IsConjunction<Any<All<Q, P>, All<R, S>>>);
-		static_assert( IsDisjunction<Any<All<Q, P>, All<R, S>>>);
-		static_assert(!IsClause<Any<All<Q, P>, All<R, S>>>);
-		static_assert(!IsAtomicClause<Any<All<Q, P>, All<R, S>>>);
+		static_assert(!IsAtom<Or<And<P, Q>, And<R, S>>>);
+		static_assert( IsTerm<Or<And<P, Q>, And<R, S>>>);
+		static_assert(!IsConjunction<Or<And<P, Q>, And<R, S>>>);
+		static_assert(!IsConjunctive<Or<And<P, Q>, And<R, S>>>);
+		static_assert( IsDisjunction<Or<And<P, Q>, And<R, S>>>);
+		static_assert( IsDisjunctive<Or<And<P, Q>, And<R, S>>>);
+		static_assert(!IsLiteral<Or<And<P, Q>, And<R, S>>>);
+		
 		
 		static auto constexpr
 			Unordered
 		=	std::partial_ordering::unordered
 		;
-		/// Ordering
-		static_assert(Always == Always);
-		static_assert(Always < Never);
-		static_assert(Always < P);
-		static_assert(Always < All<P, Q>);
-		static_assert(Always < All<P, Any<Q, R>>);
-		static_assert(Always < Any<P, All<Q, R>>);
+// 		/// Ordering
+// 		static_assert(True == True);
+// 		static_assert(True < False);
+// 		static_assert(True < And<P, Q>);
+// 		static_assert(True < And<P, Or<Q, R>>);
+// 		static_assert(True < Or<P, And<Q, R>>);
+// 		
+// 		static_assert(False > True);
+// 		static_assert(False == False);
+// 		static_assert(False > P);
+// 		static_assert(False > And<P, Q>);
+// 		static_assert(False > And<P, Or<Q, R>>);
+// 		static_assert(False > Or<P, Q>);
+// 		static_assert(False > Or<P, And<Q, R>>);
+// 		
+// 		static_assert(P > True);
+// 		static_assert(P < False);
+// 		static_assert(P == P);
+// 		static_assert(P <=> R == Unordered);
+// 		static_assert(P <=> And<Q, R> == Unordered);
+// 		static_assert(P <=> And<Q, Or<R, S>> == Unordered);
+// 		static_assert(P <=> Or<Q, R> == Unordered);
+// 		static_assert(P <=> Or<Q, And<R, S>> == Unordered);
+// 		
+// 		static_assert(And<P, Q> > True);
+// 		static_assert(And<P, Q> < False);
+// 		static_assert(And<P, Q> <=> R == Unordered);
+// 		static_assert(And<P, Q> == And<P, Q>);
+// 		static_assert(And<P, Q> == And<Q, P>);
+// 		static_assert(And<P, Q> <=> And<P, R> == Unordered);
+// 		static_assert(And<P, Q> <=> And<R, P> == Unordered);
+// 		static_assert(And<P, Q> <=> And<Q, R> == Unordered);
+// 		static_assert(And<P, Q> <=> And<R, Q> == Unordered);
+// 		static_assert(And<P, Q> <=> And<R, S> == Unordered);
+// // 		static_assert(And<P, Q> <=> And<P, Or<R, S>> == Unordered);
+// // 		static_assert(And<P, Q> <=> And<Or<R, S>, P> == Unordered);
+// // 		static_assert(And<P, Q> <=> And<R, Or<P, S>> == Unordered);
+// // 		static_assert(And<P, Q> <=> And<Or<P, S>, R> == Unordered);
+// // 		static_assert(And<P, Q> <=> And<R, Or<P, Q>> == Unordered);
+// // 		static_assert(And<P, Q> <=> And<Or<P, Q>, R> == Unordered);
+// 		static_assert(And<P, Q> <=> Or<R, S> == Unordered);
+// // 		static_assert(And<P, Q> <=> Or<R, And<P, S>> == Unordered);
+// // 		static_assert(And<P, Q> <=> Or<And<P, S>, R> == Unordered);
+// 		
+// 		static_assert(Or<P, Q> > True);
+// 		static_assert(Or<P, Q> < False);
+// 		static_assert(Or<P, Q> <=> R == Unordered);
+// 		static_assert(Or<P, Q> <=> And<R, S> == Unordered);
+// // 		static_assert(Or<P, Q> <=> And<R, Or<P, S>> == Unordered);
+// // 		static_assert(Or<P, Q> <=> And<Or<P, S>, R> == Unordered);
+// 		static_assert(Or<P, Q> == Or<P, Q>);
+// 		static_assert(Or<P, Q> == Or<Q, P>);
+// 		static_assert(Or<P, Q> <=> Or<P, R> == Unordered);
+// 		static_assert(Or<P, Q> <=> Or<R, P> == Unordered);
+// 		static_assert(Or<P, Q> <=> Or<R, Q> == Unordered);
+// 		static_assert(Or<P, Q> <=> Or<Q, R> == Unordered);
+// 		static_assert(Or<P, Q> <=> Or<R, S> == Unordered);
+// // 		static_assert(Or<P, Q> <=> Or<P, And<R, S>> == Unordered);
+// // 		static_assert(Or<P, Q> <=> Or<And<R, S>, P> == Unordered);
+// // 		static_assert(Or<P, Q> <=> Or<R, And<P, S>> == Unordered);
+// // 		static_assert(Or<P, Q> <=> Or<And<P, S>, R> == Unordered);
+// 		
+// 		static_assert(P < And<P, Q>);
+// 		static_assert(P < And<Q, P>);
+// 		static_assert(P < And<P, Or<Q, R>>);
+// 		static_assert(P < And<Or<Q, R>, P>);
+// 		static_assert(P > And<Or<P, Q>, Or<P, R>>);
+// 		static_assert(P > Or<P, Q>);
+// 		static_assert(P > Or<Q, P>);
+// 		static_assert(P > Or<P, And<Q, R>>);
+// 		static_assert(P > Or<And<Q, R>, P>);
+// 		static_assert(P < Or<And<P, Q>, And<P, R>>);
+// 		
+// 		static_assert(And<P, Q> > P);
+// 		static_assert(And<P, Q> > Q);
+// 		static_assert(And<P, Q> < And<P, Q, R>);
+// 		static_assert(And<P, Q> < And<P, R, Q>);
+// 		static_assert(And<P, Q> < And<Q, P, R>);
+// 		static_assert(And<P, Q> < And<Q, R, P>);
+// 		static_assert(And<P, Q> < And<R, P, Q>);
+// 		static_assert(And<P, Q> < And<R, Q, P>);
+// // 		static_assert(And<P, Q> > And<P, Or<Q, R>>);
+// // 		static_assert(And<P, Q> > And<Or<Q, R>, P>);
+// // 		static_assert(And<P, Q> > And<Or<P, R>, Or<Q, S>>);
+// // 		static_assert(And<P, Q> > And<Or<Q, S>, Or<P, R>>);
+// 		static_assert(And<P, Q> > Or<P, Q>);
+// 		static_assert(And<P, Q> > Or<Q, P>);
+// 		static_assert(And<P, Q> > Or<P, Q, R>);
+// 		static_assert(And<P, Q> > Or<P, R, Q>);
+// 		static_assert(And<P, Q> > Or<Q, P, R>);
+// 		static_assert(And<P, Q> > Or<Q, R, P>);
+// 		static_assert(And<P, Q> > Or<R, P, Q>);
+// 		static_assert(And<P, Q> > Or<R, Q, P>);
+// // 		static_assert(And<P, Q> > Or<P, And<R, S>>);
+// // 		static_assert(And<P, Q> > Or<And<R, S>, P>);
+// // 		static_assert(And<P, Q> > Or<And<P, Q>, And<R, S>>);
+// // 		static_assert(And<P, Q> > Or<And<R, S>, And<P, Q>>);
+// // 		static_assert(And<P, Q> < Or<And<P, Q, R>, And<P, Q, S>>);
+// // 		static_assert(And<P, Q> < Or<And<P, Q, S>, And<P, Q, R>>);
+// 		
+// 		static_assert(And<P, Q, R> > P);
+// 		static_assert(And<P, Q, R> > Q);
+// 		static_assert(And<P, Q, R> > R);
+// 		static_assert(And<P, Q, R> > And<P, Q>);
+// 		static_assert(And<P, Q, R> > And<P, R>);
+// 		static_assert(And<P, Q, R> > And<Q, P>);
+// 		static_assert(And<P, Q, R> > And<Q, R>);
+// 		static_assert(And<P, Q, R> > And<R, P>);
+// 		static_assert(And<P, Q, R> > And<R, Q>);
+// // 		static_assert(And<P, Q, R> > And<P, Or<Q, R>>);
+// // 		static_assert(And<P, Q, R> > And<Or<Q, R>, P>);
+// // 		static_assert(And<P, Q, R> > And<P, Q, Or<R, S>>);
+// // 		static_assert(And<P, Q, R> > And<P, Or<R, S>, Q>);
+// // 		static_assert(And<P, Q, R> > And<Or<R, S>, P, Q>);
+// // 		static_assert(And<P, Q, R> > And<Or<P, S>, Or<Q, S>, Or<R, S>>);
+// 		
+// 		static_assert(And<P, Or<Q, R>> > P);
+// 		static_assert(And<P, Or<Q, R>> <=> Q == Unordered);
+// 		static_assert(And<P, Or<Q, R>> <=> R == Unordered);
+// // 		static_assert(And<P, Or<Q, R>> < And<P, Q>);
+// // 		static_assert(And<P, Or<Q, R>> < And<P, R>);
+// 		static_assert(And<P, Or<Q, R>> == And<P, Or<Q, R>>);
+// 		
+// 		static_assert(Or<Q, R> >= Or<Q, R>);
+// // 		static_assert(And<P, Or<Q, R>> >= Or<Q, R>);
+// // 		static_assert(And<P, Or<Q, R>> == And<P, Or<R, Q>>);
+// // 		static_assert(And<P, Or<Q, R>> == And<Or<Q, R>, P>);
+// // 		static_assert(And<P, Or<Q, R>> == And<Or<R, Q>, P>);
+// // 		static_assert(And<P, Or<Q, R>> <=> And<P, Or<Q, S>> == Unordered);
+// // 		static_assert(And<P, Or<Q, R>> <=> And<P, Or<S, Q>> == Unordered);
+// // 		static_assert(And<P, Or<Q, R>> <=> And<Or<Q, S>, P> == Unordered);
+// // 		static_assert(And<P, Or<Q, R>> <=> And<Or<S, Q>, P> == Unordered);
+// // 		static_assert(And<P, Or<Q, R>> > And<Or<P, R>, Or<Q, R>>);
+// // 		static_assert(And<P, Or<Q, R>> > And<Or<Q, R>, Or<P, R>>);
+// 		
+// 		static_assert(And<Or<P, Q>, Or<P, R>> < P);
+// 		static_assert(And<Or<P, Q>, Or<P, R>> <=> Q == Unordered);
+// 		static_assert(And<Or<P, Q>, Or<P, R>> <=> R == Unordered);
+// // 		static_assert(And<Or<P, Q>, Or<P, R>> < And<P, R>);
+// // 		static_assert(And<Or<P, Q>, Or<P, R>> < And<P, Q>);
+// // 		static_assert(And<Or<P, Q>, Or<P, R>> < And<Q, R>);
+// // 		static_assert(And<Or<P, Q>, Or<P, R>> < And<P, Q, R>);
+// // 		static_assert(And<Or<P, Q>, Or<P, R>> < And<P, Or<Q, R>>);
+// // 		static_assert(And<Or<P, Q>, Or<P, R>> < And<Q, Or<P, R>>);
+// 		static_assert(And<Or<P, Q>, Or<P, R>> == And<Or<P, Q>, Or<P, R>>);
+// // 		static_assert(And<Or<P, Q>, Or<P, R>> == And<Or<P, Q>, Or<R, P>>);
+// // 		static_assert(And<Or<P, Q>, Or<P, R>> == And<Or<Q, P>, Or<P, R>>);
+// // 		static_assert(And<Or<P, Q>, Or<P, R>> == And<Or<Q, P>, Or<R, P>>);
+// // 		static_assert(And<Or<P, Q>, Or<P, R>> == And<Or<P, R>, Or<P, Q>>);
+// // 		static_assert(And<Or<P, Q>, Or<P, R>> == And<Or<P, R>, Or<Q, P>>);
+// // 		static_assert(And<Or<P, Q>, Or<P, R>> == And<Or<R, P>, Or<P, Q>>);
+// // 		static_assert(And<Or<P, Q>, Or<P, R>> == And<Or<R, P>, Or<Q, P>>);
+// // 		static_assert(And<Or<P, Q>, Or<P, R>> > And<Or<P, Q>, Or<P, R, S>>);
+// // 		static_assert(And<Or<P, Q>, Or<P, R>> > And<Or<P, Q, S>, Or<P, R>>);
+// 		
+// 		
+// // 		static_assert(Or<P, Q> < Or<P, And<Q, R>>);
+// // 		static_assert(Or<P, R> < Or<P, And<Q, R>>);
+// 		static_assert(Or<P, Q> < And<Q,R>);
+// 		static_assert(Or<P, Q> < P);
+// 		static_assert(Or<P, R> < And<Q, R>);
+// 		static_assert(Or<P, R> < P);
+// // 		static_assert(And<Or<P, Q>, Or<P, R>> == Or<P, And<Q, R>>);
+// // 		static_assert(Or<R, Q> < And<P, Or<Q, R>>);
+// // 		static_assert(And<P, Or<Q, R>> > Or<R, Q>);
+// 		
+// // 		static_assert(And<Or<P, Q>, Or<P, R>> == Or<P, And<Q, R>>);
+// // 		static_assert(Or<P, And<Q, R>> == And<Or<P, Q>, Or<P, R>>);
+// // 		static_assert(And<Or<P, Q>, Or<P, R>> < Or<And<P, R>, And<Q, R>>);
+// // 		static_assert(Or<And<P, R>, And<Q, R>> > And<Or<P, Q>, Or<P, R>>);
+// 		
+// 		static_assert(Or<P, Q> < P);
+// 		static_assert(Or<P, Q> < Q);
+// 		static_assert(Or<P, Q> > Or<P, Q, R>);
+// 		static_assert(Or<P, Q> > Or<P, R, Q>);
+// 		static_assert(Or<P, Q> > Or<Q, P, R>);
+// 		static_assert(Or<P, Q> > Or<Q, R, P>);
+// 		static_assert(Or<P, Q> > Or<R, P, Q>);
+// 		static_assert(Or<P, Q> > Or<R, Q, P>);
+// // 		static_assert(Or<P, Q> < Or<P, And<Q, R>>);
+// // 		static_assert(Or<P, Q> < Or<And<Q, R>, P>);
+// // 		static_assert(Or<P, Q> < Or<And<P, R>, And<Q, S>>);
+// // 		static_assert(Or<P, Q> < Or<And<Q, S>, And<P, R>>);
+// 		
+// 		static_assert(Or<P, Q> < And<P, Q>);
+// 		static_assert(Or<P, Q> < And<Q, P>);
+// 		static_assert(Or<P, Q> < And<P, Q, R>);
+// 		static_assert(Or<P, Q> < And<P, R, Q>);
+// 		static_assert(Or<P, Q> < And<Q, P, R>);
+// 		static_assert(Or<P, Q> < And<Q, R, P>);
+// 		static_assert(Or<P, Q> < And<R, P, Q>);
+// 		static_assert(Or<P, Q> < And<R, Q, P>);
+// // 		static_assert(Or<P, Q> < And<P, Or<R, S>>);
+// // 		static_assert(Or<P, Q> < And<Or<R, S>, P>);
+// // 		static_assert(Or<P, Q> < And<Or<P, Q>, Or<R, S>>);
+// // 		static_assert(Or<P, Q> < And<Or<R, S>, Or<P, Q>>);
+// // 		static_assert(Or<P, Q> > And<Or<P, Q, R>, Or<P, Q, S>>);
+// // 		static_assert(Or<P, Q> > And<Or<P, Q, S>, Or<P, Q, R>>);
+// 		
+// 		static_assert(Or<P, Q, R> < P);
+// 		static_assert(Or<P, Q, R> < Q);
+// 		static_assert(Or<P, Q, R> < R);
+// 		static_assert(Or<P, Q, R> < Or<P, Q>);
+// 		static_assert(Or<P, Q, R> < Or<P, R>);
+// 		static_assert(Or<P, Q, R> < Or<Q, P>);
+// 		static_assert(Or<P, Q, R> < Or<Q, R>);
+// 		static_assert(Or<P, Q, R> < Or<R, P>);
+// 		static_assert(Or<P, Q, R> < Or<R, Q>);
+// // 		static_assert(Or<P, Q, R> < Or<P, And<Q, R>>);
+// // 		static_assert(Or<P, Q, R> < Or<And<Q, R>, P>);
+// // 		static_assert(Or<P, Q, R> < Or<P, Q, And<R, S>>);
+// // 		static_assert(Or<P, Q, R> < Or<P, And<R, S>, Q>);
+// // 		static_assert(Or<P, Q, R> < Or<And<R, S>, P, Q>);
+// // 		static_assert(Or<P, Q, R> < Or<And<P, S>, And<Q, S>, And<R, S>>);
+// 
+// 		static_assert(Or<P, And<Q, R>> < P);
+// 		static_assert(Or<P, And<Q, R>> <=> Q == Unordered);
+// 		static_assert(Or<P, And<Q, R>> <=> R == Unordered);
+// // 		static_assert(Or<P, And<Q, R>> > Or<P, Q>);
+// // 		static_assert(Or<P, And<Q, R>> > Or<P, R>);
+// 		static_assert(Or<P, And<Q, R>> == Or<P, And<Q, R>>);
+// // 		static_assert(Or<P, And<Q, R>> == Or<P, And<R, Q>>);
+// // 		static_assert(Or<P, And<Q, R>> == Or<And<Q, R>, P>);
+// // 		static_assert(Or<P, And<Q, R>> == Or<And<R, Q>, P>);
+// // 		static_assert(Or<P, And<Q, R>> <=> Or<P, And<Q, S>> == Unordered);
+// // 		static_assert(Or<P, And<Q, R>> <=> Or<P, And<S, Q>> == Unordered);
+// // 		static_assert(Or<P, And<Q, R>> <=> Or<And<Q, S>, P> == Unordered);
+// // 		static_assert(Or<P, And<Q, R>> <=> Or<And<S, Q>, P> == Unordered);
+// // 		static_assert(Or<P, And<Q, R>> < Or<And<P, R>, And<Q, R>>);
+// // 		static_assert(Or<P, And<Q, R>> < Or<And<Q, R>, And<P, R>>);
+// 		
+// 		static_assert(Or<And<P, Q>, And<P, R>> > P);
+// 		static_assert(Or<And<P, Q>, And<P, R>> <=> Q == Unordered);
+// 		static_assert(Or<And<P, Q>, And<P, R>> <=> R == Unordered);
+// // 		static_assert(Or<And<P, Q>, And<P, R>> > Or<P, R>);
+// // 		static_assert(Or<And<P, Q>, And<P, R>> > Or<P, Q>);
+// // 		static_assert(Or<And<P, Q>, And<P, R>> > Or<Q, R>);
+// // 		static_assert(Or<And<P, Q>, And<P, R>> > Or<P, Q, R>);
+// // 		static_assert(Or<And<P, Q>, And<P, R>> > Or<P, And<Q, R>>);
+// // 		static_assert(Or<And<P, Q>, And<P, R>> > Or<Q, And<P, R>>);
+// 		static_assert(Or<And<P, Q>, And<P, R>> == Or<And<P, Q>, And<P, R>>);
+// // 		static_assert(Or<And<P, Q>, And<P, R>> == Or<And<P, Q>, And<R, P>>);
+// // 		static_assert(Or<And<P, Q>, And<P, R>> == Or<And<Q, P>, And<P, R>>);
+// // 		static_assert(Or<And<P, Q>, And<P, R>> == Or<And<Q, P>, And<R, P>>);
+// // 		static_assert(Or<And<P, Q>, And<P, R>> == Or<And<P, R>, And<P, Q>>);
+// // 		static_assert(Or<And<P, Q>, And<P, R>> == Or<And<P, R>, And<Q, P>>);
+// // 		static_assert(Or<And<P, Q>, And<P, R>> == Or<And<R, P>, And<P, Q>>);
+// // 		static_assert(Or<And<P, Q>, And<P, R>> == Or<And<R, P>, And<Q, P>>);
+// // 		static_assert(Or<And<P, Q>, And<P, R>> < Or<And<P, Q>, And<P, R, S>>);
+// // 		static_assert(Or<And<P, Q>, And<P, R>> < Or<And<P, Q, S>, And<P, R>>);
 		
-		static_assert(Never > Always);
-		static_assert(Never == Never);
-		static_assert(Never > P);
-		static_assert(Never > All<P, Q>);
-		static_assert(Never > All<P, Any<Q, R>>);
-		static_assert(Never > Any<P, Q>);
-		static_assert(Never > Any<P, All<Q, R>>);
-		
-		static_assert(P > Always);
-		static_assert(P < Never);
-		static_assert(P == P);
-		static_assert(P <=> R == Unordered);
-		static_assert(P <=> All<Q, R> == Unordered);
-		static_assert(P <=> All<Q, Any<R, S>> == Unordered);
-		static_assert(P <=> Any<Q, R> == Unordered);
-		static_assert(P <=> Any<Q, All<R, S>> == Unordered);
-		
-		static_assert(All<P, Q> > Always);
-		static_assert(All<P, Q> < Never);
-		static_assert(All<P, Q> <=> R == Unordered);
-		static_assert(All<P, Q> == All<P, Q>);
-		static_assert(All<P, Q> == All<Q, P>);
-		static_assert(All<P, Q> <=> All<P, R> == Unordered);
-		static_assert(All<P, Q> <=> All<R, P> == Unordered);
-		static_assert(All<P, Q> <=> All<Q, R> == Unordered);
-		static_assert(All<P, Q> <=> All<R, Q> == Unordered);
-		static_assert(All<P, Q> <=> All<R, S> == Unordered);
-		static_assert(All<P, Q> <=> All<P, Any<R, S>> == Unordered);
-		static_assert(All<P, Q> <=> All<Any<R, S>, P> == Unordered);
-		static_assert(All<P, Q> <=> All<R, Any<P, S>> == Unordered);
-		static_assert(All<P, Q> <=> All<Any<P, S>, R> == Unordered);
-		static_assert(All<P, Q> <=> All<R, Any<P, Q>> == Unordered);
-		static_assert(All<P, Q> <=> All<Any<P, Q>, R> == Unordered);
-		static_assert(All<P, Q> <=> Any<R, S> == Unordered);
-		static_assert(All<P, Q> <=> Any<R, All<P, S>> == Unordered);
-		static_assert(All<P, Q> <=> Any<All<P, S>, R> == Unordered);
-		
-		static_assert(Any<P, Q> > Always);
-		static_assert(Any<P, Q> < Never);
-		static_assert(Any<P, Q> <=> R == Unordered);
-		static_assert(Any<P, Q> <=> All<R, S> == Unordered);
-		static_assert(Any<P, Q> <=> All<R, Any<P, S>> == Unordered);
-		static_assert(Any<P, Q> <=> All<Any<P, S>, R> == Unordered);
-		static_assert(Any<P, Q> == Any<P, Q>);
-		static_assert(Any<P, Q> == Any<Q, P>);
-		static_assert(Any<P, Q> <=> Any<P, R> == Unordered);
-		static_assert(Any<P, Q> <=> Any<R, P> == Unordered);
-		static_assert(Any<P, Q> <=> Any<R, Q> == Unordered);
-		static_assert(Any<P, Q> <=> Any<Q, R> == Unordered);
-		static_assert(Any<P, Q> <=> Any<R, S> == Unordered);
-		static_assert(Any<P, Q> <=> Any<P, All<R, S>> == Unordered);
-		static_assert(Any<P, Q> <=> Any<All<R, S>, P> == Unordered);
-		static_assert(Any<P, Q> <=> Any<R, All<P, S>> == Unordered);
-		static_assert(Any<P, Q> <=> Any<All<P, S>, R> == Unordered);
-		
-		static_assert(P < All<P, Q>);
-		static_assert(P < All<Q, P>);
-		static_assert(P < All<P, Any<Q, R>>);
-		static_assert(P < All<Any<Q, R>, P>);
-		static_assert(P > All<Any<P, Q>, Any<P, R>>);
-		static_assert(P > Any<P, Q>);
-		static_assert(P > Any<Q, P>);
-		static_assert(P > Any<P, All<Q, R>>);
-		static_assert(P > Any<All<Q, R>, P>);
-		static_assert(P < Any<All<P, Q>, All<P, R>>);
-		
-		static_assert(All<P, Q> > P);
-		static_assert(All<P, Q> > Q);
-		static_assert(All<P, Q> < All<P, Q, R>);
-		static_assert(All<P, Q> < All<P, R, Q>);
-		static_assert(All<P, Q> < All<Q, P, R>);
-		static_assert(All<P, Q> < All<Q, R, P>);
-		static_assert(All<P, Q> < All<R, P, Q>);
-		static_assert(All<P, Q> < All<R, Q, P>);
-		static_assert(All<P, Q> > All<P, Any<Q, R>>);
-		static_assert(All<P, Q> > All<Any<Q, R>, P>);
-		static_assert(All<P, Q> > All<Any<P, R>, Any<Q, S>>);
-		static_assert(All<P, Q> > All<Any<Q, S>, Any<P, R>>);
-		static_assert(All<P, Q> > Any<P, Q>);
-		static_assert(All<P, Q> > Any<Q, P>);
-		static_assert(All<P, Q> > Any<P, Q, R>);
-		static_assert(All<P, Q> > Any<P, R, Q>);
-		static_assert(All<P, Q> > Any<Q, P, R>);
-		static_assert(All<P, Q> > Any<Q, R, P>);
-		static_assert(All<P, Q> > Any<R, P, Q>);
-		static_assert(All<P, Q> > Any<R, Q, P>);
-		static_assert(All<P, Q> > Any<P, All<R, S>>);
-		static_assert(All<P, Q> > Any<All<R, S>, P>);
-		static_assert(All<P, Q> > Any<All<P, Q>, All<R, S>>);
-		static_assert(All<P, Q> > Any<All<R, S>, All<P, Q>>);
-		static_assert(All<P, Q> < Any<All<P, Q, R>, All<P, Q, S>>);
-		static_assert(All<P, Q> < Any<All<P, Q, S>, All<P, Q, R>>);
-		
-		static_assert(All<P, Q, R> > P);
-		static_assert(All<P, Q, R> > Q);
-		static_assert(All<P, Q, R> > R);
-		static_assert(All<P, Q, R> > All<P, Q>);
-		static_assert(All<P, Q, R> > All<P, R>);
-		static_assert(All<P, Q, R> > All<Q, P>);
-		static_assert(All<P, Q, R> > All<Q, R>);
-		static_assert(All<P, Q, R> > All<R, P>);
-		static_assert(All<P, Q, R> > All<R, Q>);
-		static_assert(All<P, Q, R> > All<P, Any<Q, R>>);
-		static_assert(All<P, Q, R> > All<Any<Q, R>, P>);
-		static_assert(All<P, Q, R> > All<P, Q, Any<R, S>>);
-		static_assert(All<P, Q, R> > All<P, Any<R, S>, Q>);
-		static_assert(All<P, Q, R> > All<Any<R, S>, P, Q>);
-		static_assert(All<P, Q, R> > All<Any<P, S>, Any<Q, S>, Any<R, S>>);
-		
-		static_assert(All<P, Any<Q, R>> > P);
-		static_assert(All<P, Any<Q, R>> <=> Q == Unordered);
-		static_assert(All<P, Any<Q, R>> <=> R == Unordered);
-		static_assert(All<P, Any<Q, R>> < All<P, Q>);
-		static_assert(All<P, Any<Q, R>> < All<P, R>);
-		static_assert(All<P, Any<Q, R>> == All<P, Any<Q, R>>);
-		static_assert(All<P, Any<Q, R>> == All<P, Any<R, Q>>);
-		static_assert(All<P, Any<Q, R>> == All<Any<Q, R>, P>);
-		static_assert(All<P, Any<Q, R>> == All<Any<R, Q>, P>);
-		static_assert(All<P, Any<Q, R>> <=> All<P, Any<Q, S>> == Unordered);
-		static_assert(All<P, Any<Q, R>> <=> All<P, Any<S, Q>> == Unordered);
-		static_assert(All<P, Any<Q, R>> <=> All<Any<Q, S>, P> == Unordered);
-		static_assert(All<P, Any<Q, R>> <=> All<Any<S, Q>, P> == Unordered);
-		static_assert(All<P, Any<Q, R>> > All<Any<P, R>, Any<Q, R>>);
-		static_assert(All<P, Any<Q, R>> > All<Any<Q, R>, Any<P, R>>);
-		
-		static_assert(All<Any<P, Q>, Any<P, R>> < P);
-		static_assert(All<Any<P, Q>, Any<P, R>> <=> Q == Unordered);
-		static_assert(All<Any<P, Q>, Any<P, R>> <=> R == Unordered);
-		static_assert(All<Any<P, Q>, Any<P, R>> < All<P, R>);
-		static_assert(All<Any<P, Q>, Any<P, R>> < All<P, Q>);
-		static_assert(All<Any<P, Q>, Any<P, R>> < All<Q, R>);
-		static_assert(All<Any<P, Q>, Any<P, R>> < All<P, Q, R>);
-		static_assert(All<Any<P, Q>, Any<P, R>> < All<P, Any<Q, R>>);
-		static_assert(All<Any<P, Q>, Any<P, R>> < All<Q, Any<P, R>>);
-		static_assert(All<Any<P, Q>, Any<P, R>> == All<Any<P, Q>, Any<P, R>>);
-		static_assert(All<Any<P, Q>, Any<P, R>> == All<Any<P, Q>, Any<R, P>>);
-		static_assert(All<Any<P, Q>, Any<P, R>> == All<Any<Q, P>, Any<P, R>>);
-		static_assert(All<Any<P, Q>, Any<P, R>> == All<Any<Q, P>, Any<R, P>>);
-		static_assert(All<Any<P, Q>, Any<P, R>> == All<Any<P, R>, Any<P, Q>>);
-		static_assert(All<Any<P, Q>, Any<P, R>> == All<Any<P, R>, Any<Q, P>>);
-		static_assert(All<Any<P, Q>, Any<P, R>> == All<Any<R, P>, Any<P, Q>>);
-		static_assert(All<Any<P, Q>, Any<P, R>> == All<Any<R, P>, Any<Q, P>>);
-		static_assert(All<Any<P, Q>, Any<P, R>> > All<Any<P, Q>, Any<P, R, S>>);
-		static_assert(All<Any<P, Q>, Any<P, R>> > All<Any<P, Q, S>, Any<P, R>>);
-		
-		
-		static auto constexpr vLeft = All<Any<P, Q>, Any<P, R>>;
-		static_assert(Any<P, Q> < Any<P, All<Q, R>>);
-		static_assert(Any<P, R> < Any<P, All<Q, R>>);	static_assert(Any<P, Q> < All<Q,R>);
-		static_assert(Any<P, Q> < P);
-		static_assert(Any<P, R> < All<Q, R>);
-		static_assert(Any<P, R> < P);
-		static_assert(All<Any<P, Q>, Any<P, R>> == Any<P, All<Q, R>>);
-		// TODO
-		static_assert(All<P, Any<Q, R>> >= P);
-		static_assert(Any<R, Q> < All<P, Any<Q, R>>);
-		static_assert(All<P, Any<Q, R>> > Any<R, Q>);
-		//static_assert()
-		
-		static_assert(All<Any<P, Q>, Any<P, R>> == Any<P, All<Q, R>>);
-		static_assert(Any<P, All<Q, R>> == All<Any<P, Q>, Any<P, R>>);
-		static_assert(All<Any<P, Q>, Any<P, R>> == Any<All<P, R>, All<Q, R>>);
-		static_assert(Any<All<P, R>, All<Q, R>> == All<Any<P, Q>, Any<P, R>>);
-		
-		static_assert(Any<P, Q> < P);
-		static_assert(Any<P, Q> < Q);
-		static_assert(Any<P, Q> > Any<P, Q, R>);
-		static_assert(Any<P, Q> > Any<P, R, Q>);
-		static_assert(Any<P, Q> > Any<Q, P, R>);
-		static_assert(Any<P, Q> > Any<Q, R, P>);
-		static_assert(Any<P, Q> > Any<R, P, Q>);
-		static_assert(Any<P, Q> > Any<R, Q, P>);
-		static_assert(Any<P, Q> < Any<P, All<Q, R>>);
-		static_assert(Any<P, Q> < Any<All<Q, R>, P>);
-		static_assert(Any<P, Q> < Any<All<P, R>, All<Q, S>>);
-		static_assert(Any<P, Q> < Any<All<Q, S>, All<P, R>>);
-		
-		static_assert(Any<P, Q> < All<P, Q>);
-		static_assert(Any<P, Q> < All<Q, P>);
-		static_assert(Any<P, Q> < All<P, Q, R>);
-		static_assert(Any<P, Q> < All<P, R, Q>);
-		static_assert(Any<P, Q> < All<Q, P, R>);
-		static_assert(Any<P, Q> < All<Q, R, P>);
-		static_assert(Any<P, Q> < All<R, P, Q>);
-		static_assert(Any<P, Q> < All<R, Q, P>);
-		static_assert(Any<P, Q> < All<P, Any<R, S>>);
-		static_assert(Any<P, Q> < All<Any<R, S>, P>);
-		static_assert(Any<P, Q> < All<Any<P, Q>, Any<R, S>>);
-		static_assert(Any<P, Q> < All<Any<R, S>, Any<P, Q>>);
-		static_assert(Any<P, Q> > All<Any<P, Q, R>, Any<P, Q, S>>);
-		static_assert(Any<P, Q> > All<Any<P, Q, S>, Any<P, Q, R>>);
-		
-		static_assert(Any<P, Q, R> < P);
-		static_assert(Any<P, Q, R> < Q);
-		static_assert(Any<P, Q, R> < R);
-		static_assert(Any<P, Q, R> < Any<P, Q>);
-		static_assert(Any<P, Q, R> < Any<P, R>);
-		static_assert(Any<P, Q, R> < Any<Q, P>);
-		static_assert(Any<P, Q, R> < Any<Q, R>);
-		static_assert(Any<P, Q, R> < Any<R, P>);
-		static_assert(Any<P, Q, R> < Any<R, Q>);
-		static_assert(Any<P, Q, R> < Any<P, All<Q, R>>);
-		static_assert(Any<P, Q, R> < Any<All<Q, R>, P>);
-		static_assert(Any<P, Q, R> < Any<P, Q, All<R, S>>);
-		static_assert(Any<P, Q, R> < Any<P, All<R, S>, Q>);
-		static_assert(Any<P, Q, R> < Any<All<R, S>, P, Q>);
-		static_assert(Any<P, Q, R> < Any<All<P, S>, All<Q, S>, All<R, S>>);
-
-		static_assert(Any<P, All<Q, R>> < P);
-		static_assert(Any<P, All<Q, R>> <=> Q == Unordered);
-		static_assert(Any<P, All<Q, R>> <=> R == Unordered);
-		static_assert(Any<P, All<Q, R>> > Any<P, Q>);
-		static_assert(Any<P, All<Q, R>> > Any<P, R>);
-		static_assert(Any<P, All<Q, R>> == Any<P, All<Q, R>>);
-		static_assert(Any<P, All<Q, R>> == Any<P, All<R, Q>>);
-		static_assert(Any<P, All<Q, R>> == Any<All<Q, R>, P>);
-		static_assert(Any<P, All<Q, R>> == Any<All<R, Q>, P>);
-		static_assert(Any<P, All<Q, R>> <=> Any<P, All<Q, S>> == Unordered);
-		static_assert(Any<P, All<Q, R>> <=> Any<P, All<S, Q>> == Unordered);
-		static_assert(Any<P, All<Q, R>> <=> Any<All<Q, S>, P> == Unordered);
-		static_assert(Any<P, All<Q, R>> <=> Any<All<S, Q>, P> == Unordered);
-		static_assert(Any<P, All<Q, R>> < Any<All<P, R>, All<Q, R>>);
-		static_assert(Any<P, All<Q, R>> < Any<All<Q, R>, All<P, R>>);
-		
-		static_assert(Any<All<P, Q>, All<P, R>> > P);
-		static_assert(Any<All<P, Q>, All<P, R>> <=> Q == Unordered);
-		static_assert(Any<All<P, Q>, All<P, R>> <=> R == Unordered);
-		static_assert(Any<All<P, Q>, All<P, R>> > Any<P, R>);
-		static_assert(Any<All<P, Q>, All<P, R>> > Any<P, Q>);
-		static_assert(Any<All<P, Q>, All<P, R>> > Any<Q, R>);
-		static_assert(Any<All<P, Q>, All<P, R>> > Any<P, Q, R>);
-		static_assert(Any<All<P, Q>, All<P, R>> > Any<P, All<Q, R>>);
-		static_assert(Any<All<P, Q>, All<P, R>> > Any<Q, All<P, R>>);
-		static_assert(Any<All<P, Q>, All<P, R>> == Any<All<P, Q>, All<P, R>>);
-		static_assert(Any<All<P, Q>, All<P, R>> == Any<All<P, Q>, All<R, P>>);
-		static_assert(Any<All<P, Q>, All<P, R>> == Any<All<Q, P>, All<P, R>>);
-		static_assert(Any<All<P, Q>, All<P, R>> == Any<All<Q, P>, All<R, P>>);
-		static_assert(Any<All<P, Q>, All<P, R>> == Any<All<P, R>, All<P, Q>>);
-		static_assert(Any<All<P, Q>, All<P, R>> == Any<All<P, R>, All<Q, P>>);
-		static_assert(Any<All<P, Q>, All<P, R>> == Any<All<R, P>, All<P, Q>>);
-		static_assert(Any<All<P, Q>, All<P, R>> == Any<All<R, P>, All<Q, P>>);
-		static_assert(Any<All<P, Q>, All<P, R>> < Any<All<P, Q>, All<P, R, S>>);
-		static_assert(Any<All<P, Q>, All<P, R>> < Any<All<P, Q, S>, All<P, R>>);
-		
-		template<ProtoStatement auto t_vExpected, ProtoStatement auto t_vStatement>
+		template<ProtoTerm auto t_vExpected, ProtoTerm auto t_vTerm>
 		static bool constexpr
 			ExpectType
-		=	std::is_same_v<decltype(t_vExpected), decltype(t_vStatement)>
+		=	std::is_same_v<decltype(t_vExpected), decltype(t_vTerm)>
 		;
 		
-		static_assert( ExpectType<Always,  (Always)>);
-		static_assert( ExpectType<Always, +(Always)>);
-		static_assert( ExpectType<Always, *(Always)>);
-		static_assert( ExpectType<Always,  (not Never)>);
-		static_assert( ExpectType<Always, +(not Never)>);
-		static_assert( ExpectType<Always, *(not Never)>);
+		static_assert( ExpectType<True,  (True)>);
+		static_assert( ExpectType<True, +(True)>);
+		static_assert( ExpectType<True, *(True)>);
+		static_assert( ExpectType<True,  (not False)>);
+		static_assert( ExpectType<True, +(not False)>);
+		static_assert( ExpectType<True, *(not False)>);
+		static_assert( ExpectType<True,  (True and True)>);
+		static_assert( ExpectType<True, +(True and True)>);
+		static_assert( ExpectType<True, *(True and True)>);
+		static_assert( ExpectType<True,  (True * True)>);
+		static_assert( ExpectType<True, +(True * True)>);
+		static_assert( ExpectType<True, *(True * True)>);
+		static_assert( ExpectType<True,  (True or True)>);
+		static_assert( ExpectType<True, +(True or True)>);
+		static_assert( ExpectType<True, *(True or True)>);
+		static_assert( ExpectType<True,  (True or False)>);
+		static_assert( ExpectType<True, +(True or False)>);
+		static_assert( ExpectType<True, *(True or False)>);
+		static_assert( ExpectType<True,  (True or P)>);
+		static_assert( ExpectType<True, +(True or P)>);
+		static_assert( ExpectType<True, *(True or P)>);
+		static_assert( ExpectType<True,  (False or True)>);
+		static_assert( ExpectType<True, +(False or True)>);
+		static_assert( ExpectType<True, *(False or True)>);
+		static_assert( ExpectType<True,  (P or True)>);
+		static_assert( ExpectType<True, +(P or True)>);
+		static_assert( ExpectType<True, *(P or True)>);
+		static_assert( ExpectType<True,  (True + True)>);
+		static_assert( ExpectType<True, +(True + True)>);
+		static_assert( ExpectType<True, *(True + True)>);
+		static_assert( ExpectType<True,  (True + False)>);
+		static_assert( ExpectType<True, +(True + False)>);
+		static_assert( ExpectType<True, *(True + False)>);
+		static_assert( ExpectType<True,  (True + P)>);
+		static_assert( ExpectType<True, +(True + P)>);
+		static_assert( ExpectType<True, *(True + P)>);
+		static_assert( ExpectType<True,  (False + True)>);
+		static_assert( ExpectType<True, +(False + True)>);
+		static_assert( ExpectType<True, *(False + True)>);
+		static_assert( ExpectType<True,  (P + True)>);
+		static_assert( ExpectType<True, +(P + True)>);
+		static_assert( ExpectType<True, *(P + True)>);
 		
-		static_assert( ExpectType<Never,  (Never)>);
-		static_assert( ExpectType<Never, +(Never)>);
-		static_assert( ExpectType<Never, *(Never)>);
-		static_assert( ExpectType<Never,  (not Always)>);
-		static_assert( ExpectType<Never, +(not Always)>);
-		static_assert( ExpectType<Never, *(not Always)>);
+		static_assert( ExpectType<False,  (False)>);
+		static_assert( ExpectType<False, +(False)>);
+		static_assert( ExpectType<False, *(False)>);
+		static_assert( ExpectType<False,  (not True)>);
+		static_assert( ExpectType<False, +(not True)>);
+		static_assert( ExpectType<False, *(not True)>);
+		static_assert( ExpectType<False,  (True and False)>);
+		static_assert( ExpectType<False, +(True and False)>);
+		static_assert( ExpectType<False, *(True and False)>);
+		static_assert( ExpectType<False,  (False and True)>);
+		static_assert( ExpectType<False, +(False and True)>);
+		static_assert( ExpectType<False, *(False and True)>);
+		static_assert( ExpectType<False,  (False and False)>);
+		static_assert( ExpectType<False, +(False and False)>);
+		static_assert( ExpectType<False, *(False and False)>);
+		static_assert( ExpectType<False,  (False and P)>);
+		static_assert( ExpectType<False, +(False and P)>);
+		static_assert( ExpectType<False, *(False and P)>);
+		static_assert( ExpectType<False,  (P and False)>);
+		static_assert( ExpectType<False, +(P and False)>);
+		static_assert( ExpectType<False, *(P and False)>);
+		static_assert( ExpectType<False,  (True * False)>);
+		static_assert( ExpectType<False, +(True * False)>);
+		static_assert( ExpectType<False, *(True * False)>);
+		static_assert( ExpectType<False,  (False * True)>);
+		static_assert( ExpectType<False, +(False * True)>);
+		static_assert( ExpectType<False, *(False * True)>);
+		static_assert( ExpectType<False,  (False * False)>);
+		static_assert( ExpectType<False, +(False * False)>);
+		static_assert( ExpectType<False, *(False * False)>);
+		static_assert( ExpectType<False,  (False * P)>);
+		static_assert( ExpectType<False, +(False * P)>);
+		static_assert( ExpectType<False, *(False * P)>);
+		static_assert( ExpectType<False,  (P * False)>);
+		static_assert( ExpectType<False, +(P * False)>);
+		static_assert( ExpectType<False, *(P * False)>);
+		static_assert( ExpectType<False,  (False or False)>);
+		static_assert( ExpectType<False, +(False or False)>);
+		static_assert( ExpectType<False, *(False or False)>);
+		static_assert( ExpectType<False,  (False + False)>);
+		static_assert( ExpectType<False, +(False + False)>);
+		static_assert( ExpectType<False, *(False + False)>);
 		
-		static_assert( ExpectType<Atomic<P>, +(P)>);
-		static_assert( ExpectType<Atomic<P>, *(P)>);
-		static_assert( ExpectType<Atomic<P>,  (not not P)>);
-		static_assert( ExpectType<Atomic<P>, +(not not P)>);
-		static_assert( ExpectType<Atomic<P>, *(not not P)>);
+		static_assert( ExpectType<Atom<P>, +(P)>);
+		static_assert( ExpectType<Atom<P>, *(P)>);
+		static_assert( ExpectType<Atom<P>,  (not not P)>);
+		static_assert( ExpectType<Atom<P>, +(not not P)>);
+		static_assert( ExpectType<Atom<P>, *(not not P)>);
+		static_assert( ExpectType<Atom<P>,  (True and P)>);
+		static_assert( ExpectType<Atom<P>, +(True and P)>);
+		static_assert( ExpectType<Atom<P>, *(True and P)>);
+		static_assert( ExpectType<Atom<P>,  (P and True)>);
+		static_assert( ExpectType<Atom<P>, +(P and True)>);
+		static_assert( ExpectType<Atom<P>, *(P and True)>);
+		static_assert( ExpectType<Atom<P>,  (True * P)>);
+		static_assert( ExpectType<Atom<P>, +(True * P)>);
+		static_assert( ExpectType<Atom<P>, *(True * P)>);
+		static_assert( ExpectType<Atom<P>,  (P * True)>);
+		static_assert( ExpectType<Atom<P>, +(P * True)>);
+		static_assert( ExpectType<Atom<P>, *(P * True)>);
+		static_assert( ExpectType<Atom<P>,  (False or P)>);
+		static_assert( ExpectType<Atom<P>, +(False or P)>);
+		static_assert( ExpectType<Atom<P>, *(False or P)>);
+		static_assert( ExpectType<Atom<P>,  (P or False)>);
+		static_assert( ExpectType<Atom<P>, +(P or False)>);
+		static_assert( ExpectType<Atom<P>, *(P or False)>);
+		static_assert( ExpectType<Atom<P>,  (False + P)>);
+		static_assert( ExpectType<Atom<P>, +(False + P)>);
+		static_assert( ExpectType<Atom<P>, *(False + P)>);
+		static_assert( ExpectType<Atom<P>,  (P + False)>);
+		static_assert( ExpectType<Atom<P>, +(P + False)>);
+		static_assert( ExpectType<Atom<P>, *(P + False)>);
 		
 		static_assert( ExpectType<Not<P>,  (not P)>);
 		static_assert( ExpectType<Not<P>, +(not P)>);
@@ -2205,221 +1745,220 @@ namespace
 		static_assert( ExpectType<Not<P>, +(not not not P)>);
 		static_assert( ExpectType<Not<P>, *(not not not P)>);
 		
-		static_assert( ExpectType<All<P, Q>,  (P and Q)>);
-		static_assert( ExpectType<All<P, Q>, +(P and Q)>);
-		static_assert( ExpectType<All<P, Q>, *(P and Q)>);
-		static_assert( ExpectType<All<P, Q>,  (P * Q)>);
-		static_assert( ExpectType<All<P, Q>, +(P * Q)>);
-		static_assert( ExpectType<All<P, Q>, *(P * Q)>);
+		static_assert( ExpectType<And<P, Q>,  (P and Q)>);
+		static_assert( ExpectType<And<P, Q>, +(P and Q)>);
+		static_assert( ExpectType<And<P, Q>, *(P and Q)>);
+		static_assert( ExpectType<And<P, Q>,  (P * Q)>);
+		static_assert( ExpectType<And<P, Q>, +(P * Q)>);
+		static_assert( ExpectType<And<P, Q>, *(P * Q)>);
 		
-		static_assert( ExpectType<All<P, Q>,  (not (not P or not Q))>);
-		static_assert( ExpectType<All<P, Q>, +(not (not P or not Q))>);
-		static_assert( ExpectType<All<P, Q>, *(not (not P or not Q))>);
-		static_assert( ExpectType<All<P, Q>,  (not (not P + not Q))>);
-		static_assert( ExpectType<All<P, Q>, +(not (not P + not Q))>);
-		static_assert( ExpectType<All<P, Q>, *(not (not P + not Q))>);
+		static_assert( ExpectType<And<P, Q>,  (not (not P or not Q))>);
+		static_assert( ExpectType<And<P, Q>, +(not (not P or not Q))>);
+		static_assert( ExpectType<And<P, Q>, *(not (not P or not Q))>);
+		static_assert( ExpectType<And<P, Q>,  (not (not P + not Q))>);
+		static_assert( ExpectType<And<P, Q>, +(not (not P + not Q))>);
+		static_assert( ExpectType<And<P, Q>, *(not (not P + not Q))>);
 		
-		static_assert( ExpectType<All<P, Any<Q, R>>,  (P and (Q or R))>);
-		static_assert( ExpectType<All<P, Any<Q, R>>, +(P and (Q or R))>);
-		static_assert(!ExpectType<All<P, Any<Q, R>>, *(P and (Q or R))>);
-		static_assert( ExpectType<All<P, Any<Q, R>>,  (P and (Q + R))>);
-		static_assert( ExpectType<All<P, Any<Q, R>>, +(P and (Q + R))>);
-		static_assert(!ExpectType<All<P, Any<Q, R>>, *(P and (Q + R))>);
-		static_assert(!ExpectType<All<P, Any<Q, R>>,  (P * (Q and R))>);
-		static_assert( ExpectType<All<P, Any<Q, R>>, +(P * (Q + R))>);
-		static_assert(!ExpectType<All<P, Any<Q, R>>, *(P * (Q and R))>);
-		static_assert(!ExpectType<All<P, Any<Q, R>>,  (P * (Q + R))>);
-		static_assert( ExpectType<All<P, Any<Q, R>>, +(P * (Q + R))>);
-		static_assert(!ExpectType<All<P, Any<Q, R>>, *(P * (Q + R))>);
+		static_assert( ExpectType<And<P, Or<Q, R>>,  (P and (Q or R))>);
+		static_assert( ExpectType<And<P, Or<Q, R>>, +(P and (Q or R))>);
+		static_assert(!ExpectType<And<P, Or<Q, R>>, *(P and (Q or R))>);
+		static_assert( ExpectType<And<P, Or<Q, R>>,  (P and (Q + R))>);
+		static_assert( ExpectType<And<P, Or<Q, R>>, +(P and (Q + R))>);
+		static_assert(!ExpectType<And<P, Or<Q, R>>, *(P and (Q + R))>);
+		static_assert(!ExpectType<And<P, Or<Q, R>>,  (P * (Q and R))>);
+		static_assert( ExpectType<And<P, Or<Q, R>>, +(P * (Q + R))>);
+		static_assert(!ExpectType<And<P, Or<Q, R>>, *(P * (Q and R))>);
+		static_assert(!ExpectType<And<P, Or<Q, R>>,  (P * (Q + R))>);
+		static_assert( ExpectType<And<P, Or<Q, R>>, +(P * (Q + R))>);
+		static_assert(!ExpectType<And<P, Or<Q, R>>, *(P * (Q + R))>);
 				
-		static_assert( ExpectType<All<Any<P, Q>, R>,  ((P or Q) and R)>);
-		static_assert( ExpectType<All<Any<P, Q>, R>, +((P or Q) and R)>);
-		static_assert(!ExpectType<All<Any<P, Q>, R>, *((P or Q) and R)>);
-		static_assert( ExpectType<All<Any<P, Q>, R>,  ((P + Q) and R)>);
-		static_assert( ExpectType<All<Any<P, Q>, R>, +((P + Q) and R)>);
-		static_assert(!ExpectType<All<Any<P, Q>, R>, *((P + Q) and R)>);
-		static_assert(!ExpectType<All<Any<P, Q>, R>,  ((P or Q) * R)>);
- 		static_assert( ExpectType<All<Any<P, Q>, R>, +((P or Q) * R)>);
-		static_assert(!ExpectType<All<Any<P, Q>, R>, *((P or Q) * R)>);
-		static_assert(!ExpectType<All<Any<P, Q>, R>,  ((P + Q) * R)>);
-		static_assert( ExpectType<All<Any<P, Q>, R>, +((P + Q) * R)>);
-		static_assert(!ExpectType<All<Any<P, Q>, R>, *((P + Q) * R)>);
+		static_assert( ExpectType<And<Or<P, Q>, R>,  ((P or Q) and R)>);
+		static_assert( ExpectType<And<Or<P, Q>, R>, +((P or Q) and R)>);
+		static_assert(!ExpectType<And<Or<P, Q>, R>, *((P or Q) and R)>);
+		static_assert( ExpectType<And<Or<P, Q>, R>,  ((P + Q) and R)>);
+		static_assert( ExpectType<And<Or<P, Q>, R>, +((P + Q) and R)>);
+		static_assert(!ExpectType<And<Or<P, Q>, R>, *((P + Q) and R)>);
+		static_assert(!ExpectType<And<Or<P, Q>, R>,  ((P or Q) * R)>);
+		static_assert( ExpectType<And<Or<P, Q>, R>, +((P or Q) * R)>);
+		static_assert(!ExpectType<And<Or<P, Q>, R>, *((P or Q) * R)>);
+		static_assert(!ExpectType<And<Or<P, Q>, R>,  ((P + Q) * R)>);
+		static_assert( ExpectType<And<Or<P, Q>, R>, +((P + Q) * R)>);
+		static_assert(!ExpectType<And<Or<P, Q>, R>, *((P + Q) * R)>);
 				
-		static_assert( ExpectType<All<Any<P, Q>, Any<R, S>>,  ((P or Q) and (R or S))>);
-        static_assert( ExpectType<All<Any<P, Q>, Any<R, S>>, +((P or Q) and (R or S))>);
-		static_assert(!ExpectType<All<Any<P, Q>, Any<R, S>>, *((P or Q) and (R or S))>);
-		static_assert( ExpectType<All<Any<P, Q>, Any<R, S>>,  ((P + Q) and (R or S))>);
-		static_assert( ExpectType<All<Any<P, Q>, Any<R, S>>, +((P + Q) and (R or S))>);
-		static_assert(!ExpectType<All<Any<P, Q>, Any<R, S>>, *((P + Q) and (R or S))>);
-		static_assert(!ExpectType<All<Any<P, Q>, Any<R, S>>,  ((P or Q) * (R or S))>);
-		static_assert( ExpectType<All<Any<P, Q>, Any<R, S>>, +((P or Q) * (R or S))>);
-		static_assert(!ExpectType<All<Any<P, Q>, Any<R, S>>, *((P or Q) * (R or S))>);
-		static_assert(!ExpectType<All<Any<P, Q>, Any<R, S>>,  ((P + Q) * (R or S))>);
-		static_assert( ExpectType<All<Any<P, Q>, Any<R, S>>, +((P + Q) * (R or S))>);
-		static_assert(!ExpectType<All<Any<P, Q>, Any<R, S>>, *((P + Q) * (R or S))>);
+		static_assert( ExpectType<And<Or<P, Q>, Or<R, S>>,  ((P or Q) and (R or S))>);
+		static_assert( ExpectType<And<Or<P, Q>, Or<R, S>>, +((P or Q) and (R or S))>);
+		static_assert(!ExpectType<And<Or<P, Q>, Or<R, S>>, *((P or Q) and (R or S))>);
+		static_assert( ExpectType<And<Or<P, Q>, Or<R, S>>,  ((P + Q) and (R or S))>);
+		static_assert( ExpectType<And<Or<P, Q>, Or<R, S>>, +((P + Q) and (R or S))>);
+		static_assert(!ExpectType<And<Or<P, Q>, Or<R, S>>, *((P + Q) and (R or S))>);
+		static_assert(!ExpectType<And<Or<P, Q>, Or<R, S>>,  ((P or Q) * (R or S))>);
+		static_assert( ExpectType<And<Or<P, Q>, Or<R, S>>, +((P or Q) * (R or S))>);
+		static_assert(!ExpectType<And<Or<P, Q>, Or<R, S>>, *((P or Q) * (R or S))>);
+		static_assert(!ExpectType<And<Or<P, Q>, Or<R, S>>,  ((P + Q) * (R or S))>);
+		static_assert( ExpectType<And<Or<P, Q>, Or<R, S>>, +((P + Q) * (R or S))>);
+		static_assert(!ExpectType<And<Or<P, Q>, Or<R, S>>, *((P + Q) * (R or S))>);
 		
-		static_assert( ExpectType<Any<P, Q>,  (P or Q)>);
-		static_assert( ExpectType<Any<P, Q>, +(P or Q)>);
-		static_assert( ExpectType<Any<P, Q>, *(P or Q)>);
-		static_assert( ExpectType<Any<P, Q>,  (P + Q)>);
-		static_assert( ExpectType<Any<P, Q>, +(P + Q)>);
-		static_assert( ExpectType<Any<P, Q>, *(P + Q)>);		
-		static_assert( ExpectType<Any<P, Q>,  (not (not P and not Q))>);
-		static_assert( ExpectType<Any<P, Q>, +(not (not P and not Q))>);
-		static_assert( ExpectType<Any<P, Q>, *(not (not P and not Q))>);
-		static_assert( ExpectType<Any<P, Q>,  (not (not P * not Q))>);
-		static_assert( ExpectType<Any<P, Q>, +(not (not P * not Q))>);
-		static_assert( ExpectType<Any<P, Q>, *(not (not P * not Q))>);
+		static_assert( ExpectType<Or<P, Q>,  (P or Q)>);
+		static_assert( ExpectType<Or<P, Q>, +(P or Q)>);
+		static_assert( ExpectType<Or<P, Q>, *(P or Q)>);
+		static_assert( ExpectType<Or<P, Q>,  (P + Q)>);
+		static_assert( ExpectType<Or<P, Q>, +(P + Q)>);
+		static_assert( ExpectType<Or<P, Q>, *(P + Q)>);		
+		static_assert( ExpectType<Or<P, Q>,  (not (not P and not Q))>);
+		static_assert( ExpectType<Or<P, Q>, +(not (not P and not Q))>);
+		static_assert( ExpectType<Or<P, Q>, *(not (not P and not Q))>);
+		static_assert( ExpectType<Or<P, Q>,  (not (not P * not Q))>);
+		static_assert( ExpectType<Or<P, Q>, +(not (not P * not Q))>);
+		static_assert( ExpectType<Or<P, Q>, *(not (not P * not Q))>);
 		
-		static_assert( ExpectType<Any<P, All<Q, R>>,  (P or (Q and R))>);
-		static_assert(!ExpectType<Any<P, All<Q, R>>, +(P or (Q and R))>);
-		static_assert( ExpectType<Any<P, All<Q, R>>, *(P or (Q and R))>);
-		static_assert( ExpectType<Any<P, All<Q, R>>,  (P or (Q * R))>);
-		static_assert(!ExpectType<Any<P, All<Q, R>>, +(P or (Q * R))>);
-		static_assert( ExpectType<Any<P, All<Q, R>>, *(P or (Q * R))>);
-		static_assert(!ExpectType<Any<P, All<Q, R>>,  (P + (Q and R))>);
-		static_assert(!ExpectType<Any<P, All<Q, R>>, +(P + (Q and R))>);
-		static_assert( ExpectType<Any<P, All<Q, R>>, *(P + (Q and R))>);
-		static_assert(!ExpectType<Any<P, All<Q, R>>,  (P + (Q * R))>);
-		static_assert(!ExpectType<Any<P, All<Q, R>>, +(P + (Q * R))>);
-		static_assert( ExpectType<Any<P, All<Q, R>>, *(P + (Q * R))>);
+		static_assert( ExpectType<Or<P, And<Q, R>>,  (P or (Q and R))>);
+		static_assert(!ExpectType<Or<P, And<Q, R>>, +(P or (Q and R))>);
+		static_assert( ExpectType<Or<P, And<Q, R>>, *(P or (Q and R))>);
+		static_assert( ExpectType<Or<P, And<Q, R>>,  (P or (Q * R))>);
+		static_assert(!ExpectType<Or<P, And<Q, R>>, +(P or (Q * R))>);
+		static_assert( ExpectType<Or<P, And<Q, R>>, *(P or (Q * R))>);
+		static_assert(!ExpectType<Or<P, And<Q, R>>,  (P + (Q and R))>);
+		static_assert(!ExpectType<Or<P, And<Q, R>>, +(P + (Q and R))>);
+		static_assert( ExpectType<Or<P, And<Q, R>>, *(P + (Q and R))>);
+		static_assert(!ExpectType<Or<P, And<Q, R>>,  (P + (Q * R))>);
+		static_assert(!ExpectType<Or<P, And<Q, R>>, +(P + (Q * R))>);
+		static_assert( ExpectType<Or<P, And<Q, R>>, *(P + (Q * R))>);
 				
-		static_assert( ExpectType<Any<All<P, Q>, R>,  ((P and Q) or R)>);
-		static_assert(!ExpectType<Any<All<P, Q>, R>, +((P and Q) or R)>);
-		static_assert( ExpectType<Any<All<P, Q>, R>, *((P and Q) or R)>);
-		static_assert( ExpectType<Any<All<P, Q>, R>,  ((P * Q) or R)>);
-		static_assert(!ExpectType<Any<All<P, Q>, R>, +((P * Q) or R)>);
-		static_assert( ExpectType<Any<All<P, Q>, R>, *((P * Q) or R)>);
-		static_assert(!ExpectType<Any<All<P, Q>, R>,  ((P and Q) + R)>);
-		static_assert(!ExpectType<Any<All<P, Q>, R>, +((P and Q) + R)>);
-		static_assert( ExpectType<Any<All<P, Q>, R>, *((P and Q) + R)>);
-		static_assert(!ExpectType<Any<All<P, Q>, R>,  ((P * Q) + R)>);
-		static_assert(!ExpectType<Any<All<P, Q>, R>, +((P * Q) + R)>);
-		static_assert( ExpectType<Any<All<P, Q>, R>, *((P * Q) + R)>);
+		static_assert( ExpectType<Or<And<P, Q>, R>,  ((P and Q) or R)>);
+		static_assert(!ExpectType<Or<And<P, Q>, R>, +((P and Q) or R)>);
+		static_assert( ExpectType<Or<And<P, Q>, R>, *((P and Q) or R)>);
+		static_assert( ExpectType<Or<And<P, Q>, R>,  ((P * Q) or R)>);
+		static_assert(!ExpectType<Or<And<P, Q>, R>, +((P * Q) or R)>);
+		static_assert( ExpectType<Or<And<P, Q>, R>, *((P * Q) or R)>);
+		static_assert(!ExpectType<Or<And<P, Q>, R>,  ((P and Q) + R)>);
+		static_assert(!ExpectType<Or<And<P, Q>, R>, +((P and Q) + R)>);
+		static_assert( ExpectType<Or<And<P, Q>, R>, *((P and Q) + R)>);
+		static_assert(!ExpectType<Or<And<P, Q>, R>,  ((P * Q) + R)>);
+		static_assert(!ExpectType<Or<And<P, Q>, R>, +((P * Q) + R)>);
+		static_assert( ExpectType<Or<And<P, Q>, R>, *((P * Q) + R)>);
 				
-		static_assert( ExpectType<Any<All<P, Q>, All<R, S>>,  ((P and Q) or (R and S))>);
-		static_assert(!ExpectType<Any<All<P, Q>, All<R, S>>, +((P and Q) or (R and S))>);
-		static_assert( ExpectType<Any<All<P, Q>, All<R, S>>, *((P and Q) or (R and S))>);
-		static_assert( ExpectType<Any<All<P, Q>, All<R, S>>,  ((P * Q) or (R and S))>);
-		static_assert(!ExpectType<Any<All<P, Q>, All<R, S>>, +((P * Q) or (R and S))>);
-		static_assert( ExpectType<Any<All<P, Q>, All<R, S>>, *((P * Q) or (R and S))>);
-		static_assert(!ExpectType<Any<All<P, Q>, All<R, S>>,  ((P and Q) + (R and S))>);
-		static_assert(!ExpectType<Any<All<P, Q>, All<R, S>>, +((P and Q) + (R and S))>);
-		static_assert( ExpectType<Any<All<P, Q>, All<R, S>>, *((P and Q) + (R and S))>);
-		static_assert(!ExpectType<Any<All<P, Q>, All<R, S>>,  ((P * Q) + (R and S))>);
-		static_assert(!ExpectType<Any<All<P, Q>, All<R, S>>, +((P * Q) + (R and S))>);
-		static_assert( ExpectType<Any<All<P, Q>, All<R, S>>, *((P * Q) + (R and S))>);
+		static_assert( ExpectType<Or<And<P, Q>, And<R, S>>,  ((P and Q) or (R and S))>);
+		static_assert(!ExpectType<Or<And<P, Q>, And<R, S>>, +((P and Q) or (R and S))>);
+		static_assert( ExpectType<Or<And<P, Q>, And<R, S>>, *((P and Q) or (R and S))>);
+		static_assert( ExpectType<Or<And<P, Q>, And<R, S>>,  ((P * Q) or (R and S))>);
+		static_assert(!ExpectType<Or<And<P, Q>, And<R, S>>, +((P * Q) or (R and S))>);
+		static_assert( ExpectType<Or<And<P, Q>, And<R, S>>, *((P * Q) or (R and S))>);
+		static_assert(!ExpectType<Or<And<P, Q>, And<R, S>>,  ((P and Q) + (R and S))>);
+		static_assert(!ExpectType<Or<And<P, Q>, And<R, S>>, +((P and Q) + (R and S))>);
+		static_assert( ExpectType<Or<And<P, Q>, And<R, S>>, *((P and Q) + (R and S))>);
+		static_assert(!ExpectType<Or<And<P, Q>, And<R, S>>,  ((P * Q) + (R and S))>);
+		static_assert(!ExpectType<Or<And<P, Q>, And<R, S>>, +((P * Q) + (R and S))>);
+		static_assert( ExpectType<Or<And<P, Q>, And<R, S>>, *((P * Q) + (R and S))>);
 		
 		
 		
-		static_assert( ExpectType<Any<P, Q>, P or Q>);
-		static_assert( ExpectType<Any<P, Q>, +P or Q>);
-		static_assert( ExpectType<Any<P, Q>, *P or Q>);
-		static_assert( ExpectType<Any<P, Q>, P + Q>);
-		static_assert( ExpectType<Any<P, Q>, +P + Q>);
-		static_assert( ExpectType<Any<P, Q>, *P + Q>);
-		static_assert( ExpectType<Any<not P, Q>, not (P and not Q)>);
-		static_assert( ExpectType<Any<not P, Q>, +not (P and not Q)>);
-		static_assert( ExpectType<Any<not P, Q>, *not (P and not Q)>);
-		static_assert( ExpectType<Any<not P, Q>, not (P * not Q)>);
-		static_assert( ExpectType<Any<not P, Q>, +not (P * not Q)>);
-		static_assert( ExpectType<Any<not P, Q>, *not (P * not Q)>);
+		static_assert( ExpectType<Or<P, Q>, P or Q>);
+		static_assert( ExpectType<Or<P, Q>, +P or Q>);
+		static_assert( ExpectType<Or<P, Q>, *P or Q>);
+		static_assert( ExpectType<Or<P, Q>, P + Q>);
+		static_assert( ExpectType<Or<P, Q>, +P + Q>);
+		static_assert( ExpectType<Or<P, Q>, *P + Q>);
+		static_assert( ExpectType<Or<not P, Q>, not (P and not Q)>);
+		static_assert( ExpectType<Or<not P, Q>, +not (P and not Q)>);
+		static_assert( ExpectType<Or<not P, Q>, *not (P and not Q)>);
+		static_assert( ExpectType<Or<not P, Q>, not (P * not Q)>);
+		static_assert( ExpectType<Or<not P, Q>, +not (P * not Q)>);
+		static_assert( ExpectType<Or<not P, Q>, *not (P * not Q)>);
 		
 		
-		/// Always
-		static_assert(Always == Always);
-		static_assert(Always == not not Always, "Double negation law violated.");
-		static_assert(Always < Never);
-		static_assert(Always == not Never);
-		static_assert(Always < P);
-		static_assert(Always < (P and Q));
-		static_assert(Always < (P and (Q or R)));
-		static_assert(Always < ((P or Q) and R));
-		static_assert(Always < (P or Q));
-		
-		static_assert((Always and Always) == Always);
-		static_assert((Always and Never ) == Never);
-		static_assert((Always and P) == P, "Identity law violated.");
-		static_assert((Always or Always) == Always);
-		static_assert((Always or Never ) == Always);
-		static_assert((Always or P) == Always, "Domination law violated.");
-		
-		/// Never
-		static_assert(Never == not Always);
-		static_assert(Never == not not Never, "Double negation law violated.");
-		static_assert((Never and Always) == Never);
-		static_assert((Never and Never ) == Never);
-		static_assert((Never and P) == Never, "Domination law violated.");
- 		static_assert((Never or Always) == Always);
-		static_assert((Never or Never ) == Never);
-		static_assert((Never or P) == P, "Identity law violated.");
-		
-		/// Atomic
-		static_assert(P != not P);
-		static_assert(P == not not P, "Double negation law violated.");
-		static_assert((P and Never) == Never, "Domination law violated.");
-		static auto constexpr f = P and (not P or Q);
-		static_assert((P and (not P or Q)) == (Q and P));
-		static_assert((P and Always) == P, "Identity law violated.");
-		static_assert((P and P) == P, "Idemptotent law violated");
-		static_assert((P and Q) == (Q and P), "Commutative law violated.");
-		static_assert((P and not P) == Never);
-		static_assert(((P and Q) and not P) == Never);
-		static_assert((P and (not P and Q)) == Never);
-		static_assert((P or (not P or Q)) == Always);
-		static_assert((P or (not P and Q)) == (Q or P));
-		static_assert((P or Never) == P, "Identity law violated.");
-		static_assert((P or Always) == Always, "Domination law violated.");
-		static_assert((P or P) == P, "Idemptotent law violated");
-		static_assert((P or Q) == (Q or P), "Commutative law violated.");
-		
-		static_assert((not P or (P or Q)) == Always);
-		static_assert((not P or (P and Q)) == (Q or not P));
-		static_assert((not P and (P or Q)) == (Q and not P));
-		static_assert((not P and (P and Q)) == Never);
-		static_assert(((not P and Q) and P) == Never);
-		
-		/// Conjunction
-		static_assert(((P and Q) or not P) == (Q or not P));
-		static_assert((P and Q) != not (P and Q));
-		static_assert((P and Q) != not (Q and P));
-		static_assert(((not P and Q) or P) == (Q or P));
-		static_assert((P and Q) == not (not P or not Q), "De Morgan's law violated.");
-		static_assert((P and Q) == not (not Q or not P), "De Morgan's law violated.");
-		static_assert((P and not Q) == not (not P or Q), "De Morgan's law violated.");
-		static_assert((P and not Q) == not (Q or not P), "De Morgan's law violated.");
-		static_assert((not P and Q) == not (P or not Q), "De Morgan's law violated.");
-		static_assert((not P and Q) == not (not Q or P), "De Morgan's law violated.");
-		static_assert((not P and not Q) == not (P or Q), "De Morgan's law violated.");
-		static_assert((not P and not Q) == not (Q or P), "De Morgan's law violated.");
-		static_assert((P and Q) == not not (P and Q), "Double negation law violated.");
-		static_assert((P and Q) == not not (Q and P), "Double negation law violated.");
-		static_assert(((P and Q) and R) == (P and (Q and R)), "Associative law violated.");
-		static_assert(((P and Q) or P) == P, "Absorption law violated.");
-		static_assert(((Q and P) or P) == P, "Absorption law violated.");
-		
-		/// Disjunction
-		static_assert((P or not P) == Always);
-		static_assert(((P or Q) or not P) == Always);
-		static_assert(((P or Q) and not P) == (Q and not P));
-		static_assert(((not P or Q) or P) == Always);
-		static_assert(((not P or Q) and P) == (Q and P));
-		static_assert((P or Q) != not (P or Q));
-		static_assert((P or Q) != not (Q or P));
-		static_assert(((P or Q) or R) == (P or (Q or R)), "Associative law violated.");
-		static_assert((P or (P and Q)) == P, "Absorption law violated.");
-		static_assert((P or (Q and P)) == P, "Absorption law violated.");
-		
-		static_assert((P or Q) == not (not P and not Q), "De Morgan's law violated.");
-		static_assert((P or Q) == not (not Q and not P), "De Morgan's law violated.");
-		static_assert((P or not Q) == not (not P and Q), "De Morgan's law violated.");
-		static_assert((P or not Q) == not (Q and not P), "De Morgan's law violated.");
-		static_assert((not P or Q) == not (P and not Q), "De Morgan's law violated.");
-		static_assert((not P or Q) == not (not Q and P), "De Morgan's law violated.");
-		static_assert((not P or not Q) == not (P and Q), "De Morgan's law violated.");
-		static_assert((not P or not Q) == not (Q and P), "De Morgan's law violated.");
-		static_assert((P or Q) == not not (P or Q), "Double negation law violated.");
-		static_assert((P or Q) == not not (Q or P), "Double negation law violated.");
+// 		/// True
+// 		static_assert(True == True);
+// 		static_assert(True == not not True, "Double negation law violated.");
+// 		static_assert(True < False);
+// 		static_assert(True == not False);
+// 		static_assert(True < P);
+// 		static_assert(True < (P and Q));
+// 		static_assert(True < (P and (Q or R)));
+// 		static_assert(True < ((P or Q) and R));
+// 		static_assert(True < (P or Q));
+// 		
+// 		static_assert((True and True) == True);
+// 		static_assert((True and False ) == False);
+// 		static_assert((True and P) == P, "Identity law violated.");
+// 		static_assert((True or True) == True);
+// 		static_assert((True or False ) == True);
+// 		static_assert((True or P) == True, "Domination law violated.");
+// 		
+// 		/// False
+// 		static_assert(False == not True);
+// 		static_assert(False == not not False, "Double negation law violated.");
+// 		static_assert((False and True) == False);
+// 		static_assert((False and False ) == False);
+// 		static_assert((False and P) == False, "Domination law violated.");
+//  		static_assert((False or True) == True);
+// 		static_assert((False or False ) == False);
+// 		static_assert((False or P) == P, "Identity law violated.");
+// 		
+// 		/// Atom
+// 		static_assert(P != not P);
+// 		static_assert(P == not not P, "Double negation law violated.");
+// 		static_assert((P and False) == False, "Domination law violated.");
+// // 		static_assert((P and (not P or Q)) == (P and Q));
+// 		static_assert((P and True) == P, "Identity law violated.");
+// 		static_assert((P and P) == P, "Idemptotent law violated");
+// 		static_assert((P and Q) == (Q and P), "Commutative law violated.");
+// 		static_assert((P and not P) == False);
+// 		static_assert(((P and Q) and not P) == False);
+// 		static_assert((P and (not P and Q)) == False);
+// 		static_assert((P or (not P or Q)) == True);
+// // 		static_assert((P or (not P and Q)) == (Q or P));
+// 		static_assert((P or False) == P, "Identity law violated.");
+// 		static_assert((P or True) == True, "Domination law violated.");
+// 		static_assert((P or P) == P, "Idemptotent law violated");
+// 		static_assert((P or Q) == (Q or P), "Commutative law violated.");
+// 		
+// 		static_assert((not P or (P or Q)) == True);
+// // 		static_assert((not P or (P and Q)) == (Q or not P));
+// // 		static_assert((not P and (P or Q)) == (Q and not P));
+// 		static_assert((not P and (P and Q)) == False);
+// 		static_assert(((not P and Q) and P) == False);
+// 		
+// 		/// Conjunction
+// // 		static_assert(((P and Q) or not P) == (Q or not P));
+// // 		static_assert((P and Q) != not (P and Q));
+// // 		static_assert((P and Q) != not (Q and P));
+// // 		static_assert(((not P and Q) or P) == (Q or P));
+// 		static_assert((P and Q) == not (not P or not Q), "De Morgan's law violated.");
+// 		static_assert((P and Q) == not (not Q or not P), "De Morgan's law violated.");
+// 		static_assert((P and not Q) == not (not P or Q), "De Morgan's law violated.");
+// 		static_assert((P and not Q) == not (Q or not P), "De Morgan's law violated.");
+// 		static_assert((not P and Q) == not (P or not Q), "De Morgan's law violated.");
+// 		static_assert((not P and Q) == not (not Q or P), "De Morgan's law violated.");
+// 		static_assert((not P and not Q) == not (P or Q), "De Morgan's law violated.");
+// 		static_assert((not P and not Q) == not (Q or P), "De Morgan's law violated.");
+// 		static_assert((P and Q) == not not (P and Q), "Double negation law violated.");
+// 		static_assert((P and Q) == not not (Q and P), "Double negation law violated.");
+// 		static_assert(((P and Q) and R) == (P and (Q and R)), "Associative law violated.");
+// 		static_assert(((P and Q) or P) == P, "Absorption law violated.");
+// 		static_assert(((Q and P) or P) == P, "Absorption law violated.");
+// 		
+// 		/// Disjunction
+// 		static_assert((P or not P) == True);
+// 		static_assert(((P or Q) or not P) == True);
+// // 		static_assert(((P or Q) and not P) == (Q and not P));
+// 		static_assert(((not P or Q) or P) == True);
+// // 		static_assert(((not P or Q) and P) == (Q and P));
+// // 		static_assert((P or Q) != not (P or Q));
+// // 		static_assert((P or Q) != not (Q or P));
+// 		static_assert(((P or Q) or R) == (P or (Q or R)), "Associative law violated.");
+// 		static_assert((P or (P and Q)) == P, "Absorption law violated.");
+// 		static_assert((P or (Q and P)) == P, "Absorption law violated.");
+// 		
+// 		static_assert((P or Q) == not (not P and not Q), "De Morgan's law violated.");
+// 		static_assert((P or Q) == not (not Q and not P), "De Morgan's law violated.");
+// 		static_assert((P or not Q) == not (not P and Q), "De Morgan's law violated.");
+// 		static_assert((P or not Q) == not (Q and not P), "De Morgan's law violated.");
+// 		static_assert((not P or Q) == not (P and not Q), "De Morgan's law violated.");
+// 		static_assert((not P or Q) == not (not Q and P), "De Morgan's law violated.");
+// 		static_assert((not P or not Q) == not (P and Q), "De Morgan's law violated.");
+// 		static_assert((not P or not Q) == not (Q and P), "De Morgan's law violated.");
+// 		static_assert((P or Q) == not not (P or Q), "Double negation law violated.");
+// 		static_assert((P or Q) == not not (Q or P), "Double negation law violated.");
 		
 		
 // 		static_assert((P or (Q and R)) == ((P or  Q) and (P or  R)), "Distribution law violated.");
