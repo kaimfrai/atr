@@ -10,7 +10,10 @@ namespace
 		TermTag
 	;
 
-	template<typename t_tProto>
+	template
+		<	typename
+				t_tProto
+		>
 	concept
 		ProtoTerm
 	=	std::is_same_v
@@ -19,61 +22,88 @@ namespace
 		>
 	;
 	
-	template<typename t_tProto>
+	template
+		<	typename
+				t_tProto
+		>
 	concept
 		ProtoConjunctive
 	=	ProtoTerm<t_tProto>
 	and	t_tProto::Term.IsConjunctive
 	;
 	
-	template<typename t_tProto>
+	template
+		<	typename
+				t_tProto
+		>
 	concept
 		ProtoConjunction
 	=	ProtoConjunctive<t_tProto>
 	and	t_tProto::Term.IsConjunction
 	;
 	
-	template<typename t_tProto>
+	template
+		<	typename
+				t_tProto
+		>
 	concept
 		ProtoDisjunctive
 	=	ProtoTerm<t_tProto>
 	and	t_tProto::Term.IsDisjunctive
 	;
 	
-	template<typename t_tProto>
+	template
+		<	typename
+				t_tProto
+		>
 	concept
 		ProtoDisjunction
 	=	ProtoDisjunctive<t_tProto>
 	and	t_tProto::Term.IsDisjunction
 	;
 	
-	template<typename t_tProto>
+	template
+		<	typename
+				t_tProto
+		>
 	concept
 		ProtoConjunctionClause
 	=	ProtoConjunction<t_tProto>
 	and	ProtoDisjunctive<t_tProto>
 	;
 	
-	template<typename t_tProto>
+	template
+		<	typename
+				t_tProto
+		>
 	concept
 		ProtoDisjunctionClause
 	=	ProtoDisjunction<t_tProto>
 	and	ProtoConjunctive<t_tProto>
 	;
 	
-	template<typename t_tProto>
+	template
+		<	typename
+				t_tProto
+		>
 	concept ProtoLiteral
 	=	ProtoConjunctionClause<t_tProto>
 	and	ProtoDisjunctionClause<t_tProto>
 	;
 	
-	template<typename t_tProto>
+	template
+		<	typename
+				t_tProto
+		>
 	concept ProtoConstant
 	=	ProtoLiteral<t_tProto>
 	and	t_tProto::Term.IsConstant
 	;
 	
-	template<typename t_tProto>
+	template
+		<	typename
+				t_tProto
+		>
 	concept ProtoAtom
 	=	(	std::is_class_v<t_tProto>
 		or	std::is_union_v<t_tProto>
@@ -82,26 +112,37 @@ namespace
 		ProtoTerm<t_tProto>
 	;
 	
+	template
+		<	bool
+		>
 	struct
-		True
+		Constant
 	;
-	struct
-		False
-	;	
 	
-	template<ProtoAtom>
+	template
+		<	ProtoAtom
+		>
 	struct
 		Atom
 	;
-	template<ProtoAtom>
+	
+	template
+		<	ProtoAtom
+		>
 	struct
 		Not
 	;
-	template<ProtoDisjunctionClause...>
+	template
+		<	ProtoDisjunctionClause
+			...
+		>
 	class
 		And
 	;
-	template<ProtoConjunctionClause...>
+	template
+		<	ProtoConjunctionClause
+			...
+		>
 	class
 		Or
 	;
@@ -109,11 +150,11 @@ namespace
 	class
 		TermTag final
 	{
+		template
+			<	bool
+			>
 		friend struct
-			True
-		;
-		friend struct
-			False
+			Constant
 		;
 		template<ProtoAtom>
 		friend struct
@@ -171,26 +212,31 @@ namespace
 		;
 	};
 	
+	template
+		<	bool
+				t_bConstant
+		>
 	struct
-		True final
+		Constant final
 	{
 		static TermTag const constexpr
 			Term
 		{	.IsConstant = true
 		};
+	
+		friend auto consteval
+		(	operator not
+		)	(	Constant
+			)
+		->	Constant<not t_bConstant>
+		{	return {};	}
 	};
+	
+	using True = Constant<true>;
+	using False = Constant<false>;
 	
 	static_assert(ProtoConstant<True>);
 	static_assert(not ProtoAtom<True>);
-	
-	struct
-		False final
-	{	
-		static TermTag const constexpr
-			Term
-		{	.IsConstant = true
-		};
-	};
 	
 	static_assert(ProtoTerm<False>);
 	static_assert(not ProtoAtom<False>);
@@ -203,9 +249,19 @@ namespace
 			Term
 		{	.IsLiteral = true
 		};
+		
+		friend auto consteval
+		(	operator not
+		)	(	Atom
+			)
+		->	Not<t_tAtom>
+		{	return {};	}
 	};
 	
-	template<ProtoAtom t_tAtom>
+	template
+		<	ProtoAtom
+				t_tAtom
+		>
 	struct
 		Not final
 	{
@@ -213,9 +269,19 @@ namespace
 			Term
 		{	.IsLiteral = true
 		};
+		
+		friend auto consteval
+		(	operator not
+		)	(	Not
+			)
+		->	Atom<t_tAtom>
+		{	return {};	}
 	};
 	
-	template<ProtoDisjunctionClause... t_tpDisjunction>
+	template
+		<	ProtoDisjunctionClause
+			...	t_tpDisjunction
+		>
 	class
 		And final
 	{
@@ -275,6 +341,13 @@ namespace
 		);
 		
 		friend auto consteval
+		(	operator not
+		)	(	And
+			)
+		->	Or<decltype(not t_tpDisjunction{})...>
+		{	return {};	}
+		
+		friend auto consteval
 		(	operator ==
 		)	(	And
 			,	And
@@ -289,27 +362,47 @@ namespace
 			)
 		->	bool
 		{	return true;	}
-	
+		
 		friend auto consteval
-		(	operator >=
-		)	(	And
-			,	ProtoLiteral auto
+		(	operator>=
+		)	(	ProtoConjunction auto
+					i_vLeft
+			,	And
 					i_vRight
 			)
 		->	bool
-		{	return (... or (t_tpDisjunction{} >= i_vRight));	}
-	
+		{	
+			if	constexpr(ProtoDisjunctive<decltype(i_vLeft)>)
+				return (... and (i_vLeft >= t_tpDisjunction{}));
+			else
+				return *i_vLeft >= i_vRight;
+		}
+		
 		friend auto consteval
 		(	operator >=
-		)	(	ProtoLiteral auto
+		)	(	And
 					i_vLeft
-			,	And
+			,	ProtoDisjunction auto
+					i_vRight
 			)
 		->	bool
-		{	return (... and (i_vLeft >= t_tpDisjunction{}));	}
+		{
+			if	constexpr
+				(	ProtoLiteral<decltype(i_vRight)>
+				or	(	ProtoDisjunctive<decltype(i_vLeft)>
+					and	ProtoConjunctive<decltype(i_vRight)>
+					)
+				)
+				return (... or (t_tpDisjunction{} >= i_vRight));
+			else
+				return *i_vLeft >= +i_vRight;
+		}
 	};
 	
-	template<ProtoConjunctionClause... t_tpConjunction>
+	template
+		<	ProtoConjunctionClause
+			...	t_tpConjunction
+		>
 	class
 		Or final
 	{
@@ -366,6 +459,13 @@ namespace
 			)
 		,	"Disjunction mustn't contain contradictory clauses."
 		);
+
+		friend auto consteval
+		(	operator not
+		)	(	Or
+			)
+		->	And<decltype(not t_tpConjunction{})...>
+		{	return {};	}
 		
 		friend auto consteval
 		(	operator ==
@@ -395,51 +495,43 @@ namespace
 		friend auto consteval
 		(	operator >=
 		)	(	Or
-			,	ProtoLiteral auto
+					i_vLeft
+			,	ProtoTerm auto
 					i_vRight
 			)
 		->	bool
-		{	return (... and (t_tpConjunction{} >= i_vRight));	}
+		{
+			if	constexpr(ProtoConjunctive<decltype(i_vRight)>)
+				return (... and (t_tpConjunction{} >= i_vRight));
+			else
+				return i_vLeft >= +i_vRight;
+		}
 	};
 	
 	auto consteval
 	(	operator ==
-	)	(	ProtoLiteral auto
-				i_vLeft
-		,	ProtoLiteral auto
-				i_vRight
-		)
-	->	bool
-	{	return std::is_same_v<decltype(i_vLeft), decltype(i_vRight)>;	}
-	
-	auto consteval
-	(	operator ==
-	)	(	ProtoLiteral auto
-		,	ProtoTerm auto
-		)
-	->	bool
-	{	return false;	}
-	
-	auto consteval
-	(	operator ==
-	)	(	ProtoTerm auto
-		,	ProtoLiteral auto
-		)
-	->	bool
-	{	return false;	}
-	
-	auto consteval
-	(	operator ==
 	)	(	ProtoTerm auto
 				i_vLeft
 		,	ProtoTerm auto
 				i_vRight
 		)
 	->	bool
-	{	return
-			i_vLeft >= i_vRight
-		and	i_vRight >= i_vLeft
-		;
+	{
+		if	constexpr
+			(	ProtoLiteral<decltype(i_vLeft)>
+			or	ProtoLiteral<decltype(i_vRight)>
+			)
+			return
+				std::is_same_v
+				<	decltype(i_vLeft)
+				,	decltype(i_vRight)
+				>
+			;
+		else
+			return
+				i_vLeft >= i_vRight
+			and	i_vRight >= i_vLeft
+			;
 	}
 
 	auto consteval
@@ -455,87 +547,6 @@ namespace
 		or	i_vLeft == False{}
 		or	i_vRight == True{}
 		;
-	}
-		
-	template
-		<	ProtoDisjunctionClause
-			...	t_tpLeftDisjunction
-		,	ProtoDisjunctionClause
-			...	t_tpRightDisjunction
-		>
-	auto consteval
-	(	operator>=
-	)	(	And<t_tpLeftDisjunction...>
-				i_vLeft
-		,	And<t_tpRightDisjunction...>
-				i_vRight
-		)
-	->	bool
-	{	
-		if	constexpr(ProtoDisjunctive<decltype(i_vLeft)>)
-			return (... and (i_vLeft >= t_tpRightDisjunction{}));
-		else
-			return *i_vLeft >= i_vRight;
-	}
-	
-	template
-		<	ProtoDisjunctionClause
-			...	t_tpLeftDisjunction
-		,	ProtoConjunctionClause
-			...	t_tpRightConjunction
-		>
-	auto consteval
-	(	operator >=
-	)	(	And<t_tpLeftDisjunction...>
-				i_vLeft
-		,	Or<t_tpRightConjunction...>
-				i_vRight
-		)
-	->	bool
-	{
-		if	constexpr
-			(	ProtoDisjunctive<decltype(i_vLeft)>
-			and	ProtoConjunctive<decltype(i_vRight)>
-			)
-			return (... or (t_tpLeftDisjunction{} >= i_vRight));
-		else
-			return *i_vLeft >= +i_vRight;
-	}
-	
-	template
-		<	ProtoConjunctionClause
-			...	t_tpLeftConjunction
-		,	ProtoDisjunctionClause
-			...	t_tpRightDisjunction
-		>
-	auto consteval
-	(	operator >=
-	)	(	Or<t_tpLeftConjunction...>
-		,	And<t_tpRightDisjunction...>
-				i_vRight
-		)
-	->	bool
-	{	return (... and (t_tpLeftConjunction{} >= i_vRight));	}
-	
-	template
-		<	ProtoConjunctionClause
-			...	t_tpLeftConjunction
-		,	ProtoConjunctionClause
-			...	t_tpRightConjunction
-		>
-	auto consteval
-	(	operator >=
-	)	(	Or<t_tpLeftConjunction...>
-				i_vLeft
-		,	Or<t_tpRightConjunction...>
-				i_vRight
-		)
-	->	bool
-	{
-		if	constexpr(ProtoConjunctive<decltype(i_vRight)>)
-			return (... and (t_tpLeftConjunction{} >= i_vRight));
-		else
-			return i_vLeft >= +i_vRight;
 	}
 	
 	auto consteval
@@ -558,58 +569,6 @@ namespace
 		else
 			return std::partial_ordering::unordered;
 	}
-	
-	auto consteval
-	(	operator not
-	)	(	True
-		)
-	->	False
-	{	return {};	}
-	
-	auto consteval
-	(	operator not
-	)	(	False
-		)
-	->	True
-	{	return {};	}
-	
-	template<ProtoAtom t_tAtom>
-	auto consteval
-	(	operator not
-	)	(	Atom<t_tAtom>
-		)
-	->	Not<t_tAtom>
-	{	return {};	}
-	
-	template<ProtoAtom t_tAtom>
-	auto consteval
-	(	operator not
-	)	(	Not<t_tAtom>
-		)
-	->	Atom<t_tAtom>
-	{	return {};	}
-	
-	template
-		<	ProtoDisjunctionClause
-			...	t_tpDisjunction
-		>
-	auto consteval
-	(	operator not
-	)	(	And<t_tpDisjunction...>
-		)
-	->	ProtoDisjunction auto
-	{	return Or<decltype(not t_tpDisjunction{})...>{};	}
-	
-	template
-		<	ProtoConjunctionClause
-			...	t_tpConjunction
-		>
-	auto consteval
-	(	operator not
-	)	(	Or<t_tpConjunction...>
-		)
-	->	ProtoConjunction auto
-	{	return And<decltype(not t_tpConjunction{})...>{};	}
 	
 	auto consteval
 	(	operator and
