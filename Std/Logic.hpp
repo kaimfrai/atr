@@ -306,8 +306,8 @@ namespace
 		(	operator not
 		)	(	Constant
 			)
-		->	Constant<not t_bConstant>
-		{	return {};	}
+		->	ProtoConstant auto
+		{	return Constant<not t_bConstant>{};	}
 	
 		friend auto consteval
 		(	operator compl
@@ -344,8 +344,8 @@ namespace
 		(	operator not
 		)	(	Atom
 			)
-		->	Not<t_tAtom>
-		{	return {};	}
+		->	ProtoLiteral auto
+		{	return Not<t_tAtom>{};	}
 		
 		friend auto consteval
 		(	operator compl
@@ -373,8 +373,8 @@ namespace
 		(	operator not
 		)	(	Not
 			)
-		->	Atom<t_tAtom>
-		{	return {};	}
+		->	ProtoLiteral auto
+		{	return Atom<t_tAtom>{};	}
 		
 		friend auto consteval
 		(	operator compl
@@ -1199,6 +1199,7 @@ namespace
 		)	(	TermBase const
 				&
 			)
+		->	ProtoTerm auto
 		{	return not t_vTerm;	}
 		
 		friend auto consteval
@@ -1206,6 +1207,7 @@ namespace
 		)	(	TermBase const
 				&
 			)
+		->	ProtoTerm auto
 		{	return compl t_vTerm;	}
 			
 		friend auto consteval
