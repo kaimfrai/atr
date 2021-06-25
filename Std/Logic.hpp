@@ -308,6 +308,13 @@ namespace
 			)
 		->	Constant<not t_bConstant>
 		{	return {};	}
+	
+		friend auto consteval
+		(	operator compl
+		)	(	Constant
+			)
+		->	ProtoConstant auto
+		{	return Constant<not t_bConstant>{};	}
 	};
 	
 	using True = Constant<true>;
@@ -339,6 +346,13 @@ namespace
 			)
 		->	Not<t_tAtom>
 		{	return {};	}
+		
+		friend auto consteval
+		(	operator compl
+		)	(	Atom
+			)
+		->	ProtoLiteral auto
+		{	return Not<t_tAtom>{};	}
 	};
 	
 	template
@@ -361,6 +375,13 @@ namespace
 			)
 		->	Atom<t_tAtom>
 		{	return {};	}
+		
+		friend auto consteval
+		(	operator compl
+		)	(	Not
+			)
+		->	ProtoLiteral auto
+		{	return Atom<t_tAtom>{};	}
 	};
 	
 	template
@@ -437,8 +458,15 @@ namespace
 		(	operator not
 		)	(	And
 			)
-		->	Or<decltype(not t_tpDisjunction{})...>
-		{	return {};	}
+		->	ProtoDisjunction auto
+		{	return Or<decltype(not t_tpDisjunction{})...>{};	}
+		
+		friend auto consteval
+		(	operator compl
+		)	(	And
+			)
+		->	ProtoConjunction auto
+		{	return And<decltype(compl t_tpDisjunction{})...>{};	}
 		
 		friend auto consteval
 		(	operator ==
@@ -532,9 +560,9 @@ namespace
 			return
 				1ul
 			==	(	...
-				+	(	i_vClause
-					>=	t_tpConjunction
+				+	(	t_tpConjunction
 						{}
+					>=	i_vClause
 					)
 				)
 			;
@@ -566,8 +594,15 @@ namespace
 		(	operator not
 		)	(	Or
 			)
-		->	And<decltype(not t_tpConjunction{})...>
-		{	return {};	}
+		->	ProtoConjunction auto
+		{	return And<decltype(not t_tpConjunction{})...>{};	}
+
+		friend auto consteval
+		(	operator compl
+		)	(	Or
+			)
+		->	ProtoDisjunction auto
+		{	return Or<decltype(compl t_tpConjunction{})...>{};	}
 		
 		friend auto consteval
 		(	operator ==
@@ -707,19 +742,24 @@ namespace
 		)
 	->	ProtoConjunctive auto
 	{
-		if	constexpr
-			(	not ProtoConjunctive<decltype(i_vLeft)>
-			or	not ProtoConjunctive<decltype(i_vRight)>
-			or	not i_vLeft >= i_vRight
-			or	i_vRight >= i_vLeft
-			or	not i_vRight >= i_vLeft
-			)
-			return (... + (i_vLeft and t_tpRightConjunction{}));
-		else
 		if	constexpr(i_vLeft >= i_vRight)
 			return i_vLeft;
 		else
+		if	constexpr
+			(	ProtoConjunctive<decltype(i_vLeft)>
+			and	ProtoConjunctive<decltype(i_vRight)>
+			and not (i_vRight >= i_vLeft)
+			and	(	(	not (not i_vLeft >= i_vRight)
+					and not (not i_vRight >= i_vLeft)
+					)
+				or	(	i_vLeft
+					==	compl i_vRight
+					)
+				)
+			)
 			return And<decltype(i_vLeft), decltype(i_vRight)>{};
+		else
+			return (... + (i_vLeft and t_tpRightConjunction{}));
 	}
 	
 	template
@@ -786,12 +826,7 @@ namespace
 					)
 				)
 			)
-		{
-			if	constexpr(ProtoLiteral<decltype(i_vRight)>)
-				return (... and (t_tpLeftDisjunction{} and i_vRight));
-			else
-				return +(i_vLeft * i_vRight);
-		}
+			return (... and (t_tpLeftDisjunction{} and i_vRight));
 		else
 			return And<t_tpLeftDisjunction..., decltype(i_vRight)>{};
 	}
@@ -996,13 +1031,7 @@ namespace
 					)
 				)
 			)
-		{
-			if	constexpr(ProtoLiteral<decltype(i_vRight)>)
-				return (... or (t_tpLeftConjunction{} or i_vRight));
-			else
-				return *(i_vLeft + i_vRight);
-		}
-			
+			return (... or (t_tpLeftConjunction{} or i_vRight));
 		else
 			return Or<t_tpLeftConjunction..., decltype(i_vRight)>{};
 	}
@@ -1171,6 +1200,13 @@ namespace
 				&
 			)
 		{	return not t_vTerm;	}
+		
+		friend auto consteval
+		(	operator compl
+		)	(	TermBase const
+				&
+			)
+		{	return compl t_vTerm;	}
 			
 		friend auto consteval
 		(	operator and
@@ -1443,18 +1479,22 @@ namespace
 		static_assert(ExpectType<* T, True>);
 		static_assert(ExpectType<+ T, True>);
 		static_assert(ExpectType<! T, False>);
+		static_assert(ExpectType<~ T, False>);
 		
 		static_assert(ExpectType<* F, False>);
 		static_assert(ExpectType<+ F, False>);
 		static_assert(ExpectType<! F, True>);
+		static_assert(ExpectType<~ F, True>);
 		
 		static_assert(ExpectType<* p, aP>);
 		static_assert(ExpectType<+ p, aP>);
 		static_assert(ExpectType<! p, nP>);
+		static_assert(ExpectType<~ p, nP>);
 		
 		static_assert(ExpectType<* not p, nP>);
 		static_assert(ExpectType<+ not p, nP>);
 		static_assert(ExpectType<! not p, aP>);
+		static_assert(ExpectType<~ not p, aP>);
 		
 		//	Atom x Atom
 		static_assert(ExpectType<T and T, True>);
@@ -1518,10 +1558,12 @@ namespace
 		static_assert(ExpectType<+(p and q), And<aP, aQ>>);
 		static_assert(ExpectType<*(p and q), And<aP, aQ>>);
 		static_assert(ExpectType<!(p and q), Or<nP, nQ>>);
+		static_assert(ExpectType<~(p and q), And<nP, nQ>>);
 		
 		static_assert(ExpectType<+(p or q), Or<aP, aQ>>);
 		static_assert(ExpectType<*(p or q), Or<aP, aQ>>);
 		static_assert(ExpectType<!(p or q), And<nP, nQ>>);
+		static_assert(ExpectType<~(p or q), Or<nP, nQ>>);
 
 		//	Atom x Clause
 		static_assert(ExpectType<p and (p and q), And<aP, aQ>>);
@@ -1600,7 +1642,7 @@ namespace
 		static_assert(ExpectType<(p and q) and (p or q), And<aP, aQ>>);
 		static_assert(ExpectType<(p and q) and (not p or q), And<aP, aQ>>);
 		static_assert(ExpectType<(p and q) and (not p or not q), False>);
-		static_assert(ExpectType<(p and q) and (not p or r), And<aP, aQ, aR>>);
+		static_assert(ExpectType<(p and q) and (not p or r), And<aP, aR, aQ>>);
 		static_assert(ExpectType<(p and q) and (p or r), And<aP, aQ>>);
 		static_assert(ExpectType<(p and q) and (r or s), And<aP, aQ, Or<aR, aS>>>);
 		
@@ -1613,7 +1655,7 @@ namespace
 		
 		static_assert(ExpectType<(p or q) and (p or q), Or<aP, aQ>>);
 		static_assert(ExpectType<(p or q) and (not p or q), aQ>);
-// 		static_assert(ExpectType<(p or q) and (not p or not q), False>);
+// 		static_assert(ExpectType<(p or q) and (not p or not q), And<Or<aP, aQ>, Or<nP, nQ>>>);
 // 		static_assert(ExpectType<(p or q) and (not p or r), aQ>);
 		static_assert(ExpectType<(p or q) and (p or r), And<Or<aP, aQ>, Or<aP, aR>>>);
 		static_assert(ExpectType<(p or q) and (r or s), And<Or<aP, aQ>, Or<aR, aS>>>);
@@ -1663,7 +1705,7 @@ namespace
 		static_assert(ExpectType<(p or q) or (p and q), Or<aP, aQ>>);
 		static_assert(ExpectType<(p or q) or (not p and q), Or<aP, aQ>>);
 		static_assert(ExpectType<(p or q) or (not p and not q), True>);
-		static_assert(ExpectType<(p or q) or (not p and r), Or<aP, aQ, aR>>);
+		static_assert(ExpectType<(p or q) or (not p and r), Or<aP, aR, aQ>>);
 		static_assert(ExpectType<(p or q) or (p and r), Or<aP, aQ>>);
 		static_assert(ExpectType<(p or q) or (r and s), Or<aP, aQ, And<aR, aS>>>);
 		
@@ -1706,34 +1748,42 @@ namespace
 		static_assert(ExpectType<*(p and (q or r)), Or<And<aP, aQ>, And<aP, aR>>>);
 		static_assert(ExpectType<+(p and (q or r)), And<aP, Or<aQ, aR>>>);
 		static_assert(ExpectType<!(p and (q or r)), Or<nP, And<nQ, nR>>>);
+		static_assert(ExpectType<~(p and (q or r)), And<nP, Or<nQ, nR>>>);
 		
 		static_assert(ExpectType<*(p or (q and r)), Or<aP, And<aQ, aR>>>);
 		static_assert(ExpectType<+(p or (q and r)), And<Or<aP, aQ>, Or<aP, aR>>>);
 		static_assert(ExpectType<!(p or (q and r)), And<nP, Or<nQ, nR>>>);
+		static_assert(ExpectType<~(p or (q and r)), Or<nP, And<nQ, nR>>>);
 		
 		static_assert(ExpectType<*((p or q) and r), Or<And<aP, aR>, And<aQ, aR>>>);
 		static_assert(ExpectType<+((p or q) and r), And<Or<aP, aQ>, aR>>);
 		static_assert(ExpectType<!((p or q) and r), Or<And<nP, nQ>, nR>>);
+		static_assert(ExpectType<~((p or q) and r), And<Or<nP, nQ>, nR>>);
 		
 		static_assert(ExpectType<*((p or q) and (p or r)), Or<aP, And<aQ, aR>>>);
 		static_assert(ExpectType<+((p or q) and (p or r)), And<Or<aP, aQ>, Or<aP, aR>>>);
 		static_assert(ExpectType<!((p or q) and (p or r)), Or<And<nP, nQ>, And<nP, nR>>>);
+		static_assert(ExpectType<~((p or q) and (p or r)), And<Or<nP, nQ>, Or<nP, nR>>>);
 		
 		static_assert(ExpectType<*((p or q) and (r or s)), Or<And<aP, aR>, And<aQ, aR>, And<aP, aS>, And<aQ, aS>>>);
 		static_assert(ExpectType<+((p or q) and (r or s)), And<Or<aP, aQ>, Or<aR, aS>>>);
 		static_assert(ExpectType<!((p or q) and (r or s)), Or<And<nP, nQ>, And<nR, nS>>>);
+		static_assert(ExpectType<~((p or q) and (r or s)), And<Or<nP, nQ>, Or<nR, nS>>>);
 		
 		static_assert(ExpectType<*((p and q) or r), Or<And<aP, aQ>, aR>>);
 		static_assert(ExpectType<+((p and q) or r), And<Or<aP, aR>, Or<aQ, aR>>>);
 		static_assert(ExpectType<!((p and q) or r), And<Or<nP, nQ>, nR>>);
+		static_assert(ExpectType<~((p and q) or r), Or<And<nP, nQ>, nR>>);
 		
 		static_assert(ExpectType<*((p and q) or (p and r)), Or<And<aP, aQ>, And<aP, aR>>>);
 		static_assert(ExpectType<+((p and q) or (p and r)), And<aP, Or<aQ, aR>>>);
 		static_assert(ExpectType<!((p and q) or (p and r)), And<Or<nP, nQ>, Or<nP, nR>>>);
+		static_assert(ExpectType<~((p and q) or (p and r)), Or<And<nP, nQ>, And<nP, nR>>>);
 		
 		static_assert(ExpectType<*((p and q) or (r and s)), Or<And<aP, aQ>, And<aR, aS>>>);
 		static_assert(ExpectType<+((p and q) or (r and s)), And<Or<aP, aR>, Or<aQ, aR>, Or<aP, aS>, Or<aQ, aS>>>);
 		static_assert(ExpectType<!((p and q) or (r and s)), And<Or<nP, nQ>, Or<nR, nS>>>);
+		static_assert(ExpectType<~((p and q) or (r and s)), Or<And<nP, nQ>, And<nR, nS>>>);
 	};
 	
 	class
@@ -2034,248 +2084,248 @@ namespace
 		=	std::is_same_v<decltype(t_vExpected), decltype(t_vTerm)>
 		;
 		
-// 		static_assert( ExpectType<True,  (True)>);
-// 		static_assert( ExpectType<True, +(True)>);
-// 		static_assert( ExpectType<True, *(True)>);
-// 		static_assert( ExpectType<True,  (not False)>);
-// 		static_assert( ExpectType<True, +(not False)>);
-// 		static_assert( ExpectType<True, *(not False)>);
-// 		static_assert( ExpectType<True,  (True and True)>);
-// 		static_assert( ExpectType<True, +(True and True)>);
-// 		static_assert( ExpectType<True, *(True and True)>);
-// 		static_assert( ExpectType<True,  (True * True)>);
-// 		static_assert( ExpectType<True, +(True * True)>);
-// 		static_assert( ExpectType<True, *(True * True)>);
-// 		static_assert( ExpectType<True,  (True or True)>);
-// 		static_assert( ExpectType<True, +(True or True)>);
-// 		static_assert( ExpectType<True, *(True or True)>);
-// 		static_assert( ExpectType<True,  (True or False)>);
-// 		static_assert( ExpectType<True, +(True or False)>);
-// 		static_assert( ExpectType<True, *(True or False)>);
-// 		static_assert( ExpectType<True,  (True or P)>);
-// 		static_assert( ExpectType<True, +(True or P)>);
-// 		static_assert( ExpectType<True, *(True or P)>);
-// 		static_assert( ExpectType<True,  (False or True)>);
-// 		static_assert( ExpectType<True, +(False or True)>);
-// 		static_assert( ExpectType<True, *(False or True)>);
-// 		static_assert( ExpectType<True,  (P or True)>);
-// 		static_assert( ExpectType<True, +(P or True)>);
-// 		static_assert( ExpectType<True, *(P or True)>);
-// 		static_assert( ExpectType<True,  (True + True)>);
-// 		static_assert( ExpectType<True, +(True + True)>);
-// 		static_assert( ExpectType<True, *(True + True)>);
-// 		static_assert( ExpectType<True,  (True + False)>);
-// 		static_assert( ExpectType<True, +(True + False)>);
-// 		static_assert( ExpectType<True, *(True + False)>);
-// 		static_assert( ExpectType<True,  (True + P)>);
-// 		static_assert( ExpectType<True, +(True + P)>);
-// 		static_assert( ExpectType<True, *(True + P)>);
-// 		static_assert( ExpectType<True,  (False + True)>);
-// 		static_assert( ExpectType<True, +(False + True)>);
-// 		static_assert( ExpectType<True, *(False + True)>);
-// 		static_assert( ExpectType<True,  (P + True)>);
-// 		static_assert( ExpectType<True, +(P + True)>);
-// 		static_assert( ExpectType<True, *(P + True)>);
-// 		
-// 		static_assert( ExpectType<False,  (False)>);
-// 		static_assert( ExpectType<False, +(False)>);
-// 		static_assert( ExpectType<False, *(False)>);
-// 		static_assert( ExpectType<False,  (not True)>);
-// 		static_assert( ExpectType<False, +(not True)>);
-// 		static_assert( ExpectType<False, *(not True)>);
-// 		static_assert( ExpectType<False,  (True and False)>);
-// 		static_assert( ExpectType<False, +(True and False)>);
-// 		static_assert( ExpectType<False, *(True and False)>);
-// 		static_assert( ExpectType<False,  (False and True)>);
-// 		static_assert( ExpectType<False, +(False and True)>);
-// 		static_assert( ExpectType<False, *(False and True)>);
-// 		static_assert( ExpectType<False,  (False and False)>);
-// 		static_assert( ExpectType<False, +(False and False)>);
-// 		static_assert( ExpectType<False, *(False and False)>);
-// 		static_assert( ExpectType<False,  (False and P)>);
-// 		static_assert( ExpectType<False, +(False and P)>);
-// 		static_assert( ExpectType<False, *(False and P)>);
-// 		static_assert( ExpectType<False,  (P and False)>);
-// 		static_assert( ExpectType<False, +(P and False)>);
-// 		static_assert( ExpectType<False, *(P and False)>);
-// 		static_assert( ExpectType<False,  (True * False)>);
-// 		static_assert( ExpectType<False, +(True * False)>);
-// 		static_assert( ExpectType<False, *(True * False)>);
-// 		static_assert( ExpectType<False,  (False * True)>);
-// 		static_assert( ExpectType<False, +(False * True)>);
-// 		static_assert( ExpectType<False, *(False * True)>);
-// 		static_assert( ExpectType<False,  (False * False)>);
-// 		static_assert( ExpectType<False, +(False * False)>);
-// 		static_assert( ExpectType<False, *(False * False)>);
-// 		static_assert( ExpectType<False,  (False * P)>);
-// 		static_assert( ExpectType<False, +(False * P)>);
-// 		static_assert( ExpectType<False, *(False * P)>);
-// 		static_assert( ExpectType<False,  (P * False)>);
-// 		static_assert( ExpectType<False, +(P * False)>);
-// 		static_assert( ExpectType<False, *(P * False)>);
-// 		static_assert( ExpectType<False,  (False or False)>);
-// 		static_assert( ExpectType<False, +(False or False)>);
-// 		static_assert( ExpectType<False, *(False or False)>);
-// 		static_assert( ExpectType<False,  (False + False)>);
-// 		static_assert( ExpectType<False, +(False + False)>);
-// 		static_assert( ExpectType<False, *(False + False)>);
-// 		
-// 		static_assert( ExpectType<Atom<P>, +(P)>);
-// 		static_assert( ExpectType<Atom<P>, *(P)>);
-// 		static_assert( ExpectType<Atom<P>,  (not not P)>);
-// 		static_assert( ExpectType<Atom<P>, +(not not P)>);
-// 		static_assert( ExpectType<Atom<P>, *(not not P)>);
-// 		static_assert( ExpectType<Atom<P>,  (True and P)>);
-// 		static_assert( ExpectType<Atom<P>, +(True and P)>);
-// 		static_assert( ExpectType<Atom<P>, *(True and P)>);
-// 		static_assert( ExpectType<Atom<P>,  (P and True)>);
-// 		static_assert( ExpectType<Atom<P>, +(P and True)>);
-// 		static_assert( ExpectType<Atom<P>, *(P and True)>);
-// 		static_assert( ExpectType<Atom<P>,  (True * P)>);
-// 		static_assert( ExpectType<Atom<P>, +(True * P)>);
-// 		static_assert( ExpectType<Atom<P>, *(True * P)>);
-// 		static_assert( ExpectType<Atom<P>,  (P * True)>);
-// 		static_assert( ExpectType<Atom<P>, +(P * True)>);
-// 		static_assert( ExpectType<Atom<P>, *(P * True)>);
-// 		static_assert( ExpectType<Atom<P>,  (False or P)>);
-// 		static_assert( ExpectType<Atom<P>, +(False or P)>);
-// 		static_assert( ExpectType<Atom<P>, *(False or P)>);
-// 		static_assert( ExpectType<Atom<P>,  (P or False)>);
-// 		static_assert( ExpectType<Atom<P>, +(P or False)>);
-// 		static_assert( ExpectType<Atom<P>, *(P or False)>);
-// 		static_assert( ExpectType<Atom<P>,  (False + P)>);
-// 		static_assert( ExpectType<Atom<P>, +(False + P)>);
-// 		static_assert( ExpectType<Atom<P>, *(False + P)>);
-// 		static_assert( ExpectType<Atom<P>,  (P + False)>);
-// 		static_assert( ExpectType<Atom<P>, +(P + False)>);
-// 		static_assert( ExpectType<Atom<P>, *(P + False)>);
-// 		
-// 		static_assert( ExpectType<Not<P>,  (not P)>);
-// 		static_assert( ExpectType<Not<P>, +(not P)>);
-// 		static_assert( ExpectType<Not<P>, *(not P)>);
-// 		static_assert( ExpectType<Not<P>,  (not not not P)>);
-// 		static_assert( ExpectType<Not<P>, +(not not not P)>);
-// 		static_assert( ExpectType<Not<P>, *(not not not P)>);
-// 		
-// 		static_assert( ExpectType<And<P, Q>,  (P and Q)>);
-// 		static_assert( ExpectType<And<P, Q>, +(P and Q)>);
-// 		static_assert( ExpectType<And<P, Q>, *(P and Q)>);
-// 		static_assert( ExpectType<And<P, Q>,  (P * Q)>);
-// 		static_assert( ExpectType<And<P, Q>, +(P * Q)>);
-// 		static_assert( ExpectType<And<P, Q>, *(P * Q)>);
-// 		
-// 		static_assert( ExpectType<And<P, Q>,  (not (not P or not Q))>);
-// 		static_assert( ExpectType<And<P, Q>, +(not (not P or not Q))>);
-// 		static_assert( ExpectType<And<P, Q>, *(not (not P or not Q))>);
-// 		static_assert( ExpectType<And<P, Q>,  (not (not P + not Q))>);
-// 		static_assert( ExpectType<And<P, Q>, +(not (not P + not Q))>);
-// 		static_assert( ExpectType<And<P, Q>, *(not (not P + not Q))>);
-// 		
-// 		static_assert( ExpectType<And<P, Or<Q, R>>,  (P and (Q or R))>);
-// 		static_assert( ExpectType<And<P, Or<Q, R>>, +(P and (Q or R))>);
-// 		static_assert(!ExpectType<And<P, Or<Q, R>>, *(P and (Q or R))>);
-// 		static_assert( ExpectType<And<P, Or<Q, R>>,  (P and (Q + R))>);
-// 		static_assert( ExpectType<And<P, Or<Q, R>>, +(P and (Q + R))>);
-// 		static_assert(!ExpectType<And<P, Or<Q, R>>, *(P and (Q + R))>);
-// 		static_assert(!ExpectType<And<P, Or<Q, R>>,  (P * (Q and R))>);
-// 		static_assert( ExpectType<And<P, Or<Q, R>>, +(P * (Q + R))>);
-// 		static_assert(!ExpectType<And<P, Or<Q, R>>, *(P * (Q and R))>);
-// 		static_assert(!ExpectType<And<P, Or<Q, R>>,  (P * (Q + R))>);
-// 		static_assert( ExpectType<And<P, Or<Q, R>>, +(P * (Q + R))>);
-// 		static_assert(!ExpectType<And<P, Or<Q, R>>, *(P * (Q + R))>);
-// 				
-// 		static_assert( ExpectType<And<Or<P, Q>, R>,  ((P or Q) and R)>);
-// 		static_assert( ExpectType<And<Or<P, Q>, R>, +((P or Q) and R)>);
-// 		static_assert(!ExpectType<And<Or<P, Q>, R>, *((P or Q) and R)>);
-// 		static_assert( ExpectType<And<Or<P, Q>, R>,  ((P + Q) and R)>);
-// 		static_assert( ExpectType<And<Or<P, Q>, R>, +((P + Q) and R)>);
-// 		static_assert(!ExpectType<And<Or<P, Q>, R>, *((P + Q) and R)>);
-// 		static_assert(!ExpectType<And<Or<P, Q>, R>,  ((P or Q) * R)>);
-// 		static_assert( ExpectType<And<Or<P, Q>, R>, +((P or Q) * R)>);
-// 		static_assert(!ExpectType<And<Or<P, Q>, R>, *((P or Q) * R)>);
-// 		static_assert(!ExpectType<And<Or<P, Q>, R>,  ((P + Q) * R)>);
-// 		static_assert( ExpectType<And<Or<P, Q>, R>, +((P + Q) * R)>);
-// 		static_assert(!ExpectType<And<Or<P, Q>, R>, *((P + Q) * R)>);
-// 				
-// 		static_assert( ExpectType<And<Or<P, Q>, Or<R, S>>,  ((P or Q) and (R or S))>);
-// 		static_assert( ExpectType<And<Or<P, Q>, Or<R, S>>, +((P or Q) and (R or S))>);
-// 		static_assert(!ExpectType<And<Or<P, Q>, Or<R, S>>, *((P or Q) and (R or S))>);
-// 		static_assert( ExpectType<And<Or<P, Q>, Or<R, S>>,  ((P + Q) and (R or S))>);
-// 		static_assert( ExpectType<And<Or<P, Q>, Or<R, S>>, +((P + Q) and (R or S))>);
-// 		static_assert(!ExpectType<And<Or<P, Q>, Or<R, S>>, *((P + Q) and (R or S))>);
-// 		static_assert(!ExpectType<And<Or<P, Q>, Or<R, S>>,  ((P or Q) * (R or S))>);
-// 		static_assert( ExpectType<And<Or<P, Q>, Or<R, S>>, +((P or Q) * (R or S))>);
-// 		static_assert(!ExpectType<And<Or<P, Q>, Or<R, S>>, *((P or Q) * (R or S))>);
-// 		static_assert(!ExpectType<And<Or<P, Q>, Or<R, S>>,  ((P + Q) * (R or S))>);
-// 		static_assert( ExpectType<And<Or<P, Q>, Or<R, S>>, +((P + Q) * (R or S))>);
-// 		static_assert(!ExpectType<And<Or<P, Q>, Or<R, S>>, *((P + Q) * (R or S))>);
-// 		
-// 		static_assert( ExpectType<Or<P, Q>,  (P or Q)>);
-// 		static_assert( ExpectType<Or<P, Q>, +(P or Q)>);
-// 		static_assert( ExpectType<Or<P, Q>, *(P or Q)>);
-// 		static_assert( ExpectType<Or<P, Q>,  (P + Q)>);
-// 		static_assert( ExpectType<Or<P, Q>, +(P + Q)>);
-// 		static_assert( ExpectType<Or<P, Q>, *(P + Q)>);		
-// 		static_assert( ExpectType<Or<P, Q>,  (not (not P and not Q))>);
-// 		static_assert( ExpectType<Or<P, Q>, +(not (not P and not Q))>);
-// 		static_assert( ExpectType<Or<P, Q>, *(not (not P and not Q))>);
-// 		static_assert( ExpectType<Or<P, Q>,  (not (not P * not Q))>);
-// 		static_assert( ExpectType<Or<P, Q>, +(not (not P * not Q))>);
-// 		static_assert( ExpectType<Or<P, Q>, *(not (not P * not Q))>);
-// 		
-// 		static_assert( ExpectType<Or<P, And<Q, R>>,  (P or (Q and R))>);
-// 		static_assert(!ExpectType<Or<P, And<Q, R>>, +(P or (Q and R))>);
-// 		static_assert( ExpectType<Or<P, And<Q, R>>, *(P or (Q and R))>);
-// 		static_assert( ExpectType<Or<P, And<Q, R>>,  (P or (Q * R))>);
-// 		static_assert(!ExpectType<Or<P, And<Q, R>>, +(P or (Q * R))>);
-// 		static_assert( ExpectType<Or<P, And<Q, R>>, *(P or (Q * R))>);
-// 		static_assert(!ExpectType<Or<P, And<Q, R>>,  (P + (Q and R))>);
-// 		static_assert(!ExpectType<Or<P, And<Q, R>>, +(P + (Q and R))>);
-// 		static_assert( ExpectType<Or<P, And<Q, R>>, *(P + (Q and R))>);
-// 		static_assert(!ExpectType<Or<P, And<Q, R>>,  (P + (Q * R))>);
-// 		static_assert(!ExpectType<Or<P, And<Q, R>>, +(P + (Q * R))>);
-// 		static_assert( ExpectType<Or<P, And<Q, R>>, *(P + (Q * R))>);
-// 				
-// 		static_assert( ExpectType<Or<And<P, Q>, R>,  ((P and Q) or R)>);
-// 		static_assert(!ExpectType<Or<And<P, Q>, R>, +((P and Q) or R)>);
-// 		static_assert( ExpectType<Or<And<P, Q>, R>, *((P and Q) or R)>);
-// 		static_assert( ExpectType<Or<And<P, Q>, R>,  ((P * Q) or R)>);
-// 		static_assert(!ExpectType<Or<And<P, Q>, R>, +((P * Q) or R)>);
-// 		static_assert( ExpectType<Or<And<P, Q>, R>, *((P * Q) or R)>);
-// 		static_assert(!ExpectType<Or<And<P, Q>, R>,  ((P and Q) + R)>);
-// 		static_assert(!ExpectType<Or<And<P, Q>, R>, +((P and Q) + R)>);
-// 		static_assert( ExpectType<Or<And<P, Q>, R>, *((P and Q) + R)>);
-// 		static_assert(!ExpectType<Or<And<P, Q>, R>,  ((P * Q) + R)>);
-// 		static_assert(!ExpectType<Or<And<P, Q>, R>, +((P * Q) + R)>);
-// 		static_assert( ExpectType<Or<And<P, Q>, R>, *((P * Q) + R)>);
-// 				
-// 		static_assert( ExpectType<Or<And<P, Q>, And<R, S>>,  ((P and Q) or (R and S))>);
-// 		static_assert(!ExpectType<Or<And<P, Q>, And<R, S>>, +((P and Q) or (R and S))>);
-// 		static_assert( ExpectType<Or<And<P, Q>, And<R, S>>, *((P and Q) or (R and S))>);
-// 		static_assert( ExpectType<Or<And<P, Q>, And<R, S>>,  ((P * Q) or (R and S))>);
-// 		static_assert(!ExpectType<Or<And<P, Q>, And<R, S>>, +((P * Q) or (R and S))>);
-// 		static_assert( ExpectType<Or<And<P, Q>, And<R, S>>, *((P * Q) or (R and S))>);
-// 		static_assert(!ExpectType<Or<And<P, Q>, And<R, S>>,  ((P and Q) + (R and S))>);
-// 		static_assert(!ExpectType<Or<And<P, Q>, And<R, S>>, +((P and Q) + (R and S))>);
-// 		static_assert( ExpectType<Or<And<P, Q>, And<R, S>>, *((P and Q) + (R and S))>);
-// 		static_assert(!ExpectType<Or<And<P, Q>, And<R, S>>,  ((P * Q) + (R and S))>);
-// 		static_assert(!ExpectType<Or<And<P, Q>, And<R, S>>, +((P * Q) + (R and S))>);
-// 		static_assert( ExpectType<Or<And<P, Q>, And<R, S>>, *((P * Q) + (R and S))>);
-// 		
-// 		
-// 		
-// 		static_assert( ExpectType<Or<P, Q>, P or Q>);
-// 		static_assert( ExpectType<Or<P, Q>, +P or Q>);
-// 		static_assert( ExpectType<Or<P, Q>, *P or Q>);
-// 		static_assert( ExpectType<Or<P, Q>, P + Q>);
-// 		static_assert( ExpectType<Or<P, Q>, +P + Q>);
-// 		static_assert( ExpectType<Or<P, Q>, *P + Q>);
-// 		static_assert( ExpectType<Or<not P, Q>, not (P and not Q)>);
-// 		static_assert( ExpectType<Or<not P, Q>, +not (P and not Q)>);
-// 		static_assert( ExpectType<Or<not P, Q>, *not (P and not Q)>);
-// 		static_assert( ExpectType<Or<not P, Q>, not (P * not Q)>);
-// 		static_assert( ExpectType<Or<not P, Q>, +not (P * not Q)>);
-// 		static_assert( ExpectType<Or<not P, Q>, *not (P * not Q)>);
+		static_assert( ExpectType<True,  (True)>);
+		static_assert( ExpectType<True, +(True)>);
+		static_assert( ExpectType<True, *(True)>);
+		static_assert( ExpectType<True,  (not False)>);
+		static_assert( ExpectType<True, +(not False)>);
+		static_assert( ExpectType<True, *(not False)>);
+		static_assert( ExpectType<True,  (True and True)>);
+		static_assert( ExpectType<True, +(True and True)>);
+		static_assert( ExpectType<True, *(True and True)>);
+		static_assert( ExpectType<True,  (True * True)>);
+		static_assert( ExpectType<True, +(True * True)>);
+		static_assert( ExpectType<True, *(True * True)>);
+		static_assert( ExpectType<True,  (True or True)>);
+		static_assert( ExpectType<True, +(True or True)>);
+		static_assert( ExpectType<True, *(True or True)>);
+		static_assert( ExpectType<True,  (True or False)>);
+		static_assert( ExpectType<True, +(True or False)>);
+		static_assert( ExpectType<True, *(True or False)>);
+		static_assert( ExpectType<True,  (True or P)>);
+		static_assert( ExpectType<True, +(True or P)>);
+		static_assert( ExpectType<True, *(True or P)>);
+		static_assert( ExpectType<True,  (False or True)>);
+		static_assert( ExpectType<True, +(False or True)>);
+		static_assert( ExpectType<True, *(False or True)>);
+		static_assert( ExpectType<True,  (P or True)>);
+		static_assert( ExpectType<True, +(P or True)>);
+		static_assert( ExpectType<True, *(P or True)>);
+		static_assert( ExpectType<True,  (True + True)>);
+		static_assert( ExpectType<True, +(True + True)>);
+		static_assert( ExpectType<True, *(True + True)>);
+		static_assert( ExpectType<True,  (True + False)>);
+		static_assert( ExpectType<True, +(True + False)>);
+		static_assert( ExpectType<True, *(True + False)>);
+		static_assert( ExpectType<True,  (True + P)>);
+		static_assert( ExpectType<True, +(True + P)>);
+		static_assert( ExpectType<True, *(True + P)>);
+		static_assert( ExpectType<True,  (False + True)>);
+		static_assert( ExpectType<True, +(False + True)>);
+		static_assert( ExpectType<True, *(False + True)>);
+		static_assert( ExpectType<True,  (P + True)>);
+		static_assert( ExpectType<True, +(P + True)>);
+		static_assert( ExpectType<True, *(P + True)>);
+		
+		static_assert( ExpectType<False,  (False)>);
+		static_assert( ExpectType<False, +(False)>);
+		static_assert( ExpectType<False, *(False)>);
+		static_assert( ExpectType<False,  (not True)>);
+		static_assert( ExpectType<False, +(not True)>);
+		static_assert( ExpectType<False, *(not True)>);
+		static_assert( ExpectType<False,  (True and False)>);
+		static_assert( ExpectType<False, +(True and False)>);
+		static_assert( ExpectType<False, *(True and False)>);
+		static_assert( ExpectType<False,  (False and True)>);
+		static_assert( ExpectType<False, +(False and True)>);
+		static_assert( ExpectType<False, *(False and True)>);
+		static_assert( ExpectType<False,  (False and False)>);
+		static_assert( ExpectType<False, +(False and False)>);
+		static_assert( ExpectType<False, *(False and False)>);
+		static_assert( ExpectType<False,  (False and P)>);
+		static_assert( ExpectType<False, +(False and P)>);
+		static_assert( ExpectType<False, *(False and P)>);
+		static_assert( ExpectType<False,  (P and False)>);
+		static_assert( ExpectType<False, +(P and False)>);
+		static_assert( ExpectType<False, *(P and False)>);
+		static_assert( ExpectType<False,  (True * False)>);
+		static_assert( ExpectType<False, +(True * False)>);
+		static_assert( ExpectType<False, *(True * False)>);
+		static_assert( ExpectType<False,  (False * True)>);
+		static_assert( ExpectType<False, +(False * True)>);
+		static_assert( ExpectType<False, *(False * True)>);
+		static_assert( ExpectType<False,  (False * False)>);
+		static_assert( ExpectType<False, +(False * False)>);
+		static_assert( ExpectType<False, *(False * False)>);
+		static_assert( ExpectType<False,  (False * P)>);
+		static_assert( ExpectType<False, +(False * P)>);
+		static_assert( ExpectType<False, *(False * P)>);
+		static_assert( ExpectType<False,  (P * False)>);
+		static_assert( ExpectType<False, +(P * False)>);
+		static_assert( ExpectType<False, *(P * False)>);
+		static_assert( ExpectType<False,  (False or False)>);
+		static_assert( ExpectType<False, +(False or False)>);
+		static_assert( ExpectType<False, *(False or False)>);
+		static_assert( ExpectType<False,  (False + False)>);
+		static_assert( ExpectType<False, +(False + False)>);
+		static_assert( ExpectType<False, *(False + False)>);
+		
+		static_assert( ExpectType<Atom<P>, +(P)>);
+		static_assert( ExpectType<Atom<P>, *(P)>);
+		static_assert( ExpectType<Atom<P>,  (not not P)>);
+		static_assert( ExpectType<Atom<P>, +(not not P)>);
+		static_assert( ExpectType<Atom<P>, *(not not P)>);
+		static_assert( ExpectType<Atom<P>,  (True and P)>);
+		static_assert( ExpectType<Atom<P>, +(True and P)>);
+		static_assert( ExpectType<Atom<P>, *(True and P)>);
+		static_assert( ExpectType<Atom<P>,  (P and True)>);
+		static_assert( ExpectType<Atom<P>, +(P and True)>);
+		static_assert( ExpectType<Atom<P>, *(P and True)>);
+		static_assert( ExpectType<Atom<P>,  (True * P)>);
+		static_assert( ExpectType<Atom<P>, +(True * P)>);
+		static_assert( ExpectType<Atom<P>, *(True * P)>);
+		static_assert( ExpectType<Atom<P>,  (P * True)>);
+		static_assert( ExpectType<Atom<P>, +(P * True)>);
+		static_assert( ExpectType<Atom<P>, *(P * True)>);
+		static_assert( ExpectType<Atom<P>,  (False or P)>);
+		static_assert( ExpectType<Atom<P>, +(False or P)>);
+		static_assert( ExpectType<Atom<P>, *(False or P)>);
+		static_assert( ExpectType<Atom<P>,  (P or False)>);
+		static_assert( ExpectType<Atom<P>, +(P or False)>);
+		static_assert( ExpectType<Atom<P>, *(P or False)>);
+		static_assert( ExpectType<Atom<P>,  (False + P)>);
+		static_assert( ExpectType<Atom<P>, +(False + P)>);
+		static_assert( ExpectType<Atom<P>, *(False + P)>);
+		static_assert( ExpectType<Atom<P>,  (P + False)>);
+		static_assert( ExpectType<Atom<P>, +(P + False)>);
+		static_assert( ExpectType<Atom<P>, *(P + False)>);
+		
+		static_assert( ExpectType<Not<P>,  (not P)>);
+		static_assert( ExpectType<Not<P>, +(not P)>);
+		static_assert( ExpectType<Not<P>, *(not P)>);
+		static_assert( ExpectType<Not<P>,  (not not not P)>);
+		static_assert( ExpectType<Not<P>, +(not not not P)>);
+		static_assert( ExpectType<Not<P>, *(not not not P)>);
+		
+		static_assert( ExpectType<And<P, Q>,  (P and Q)>);
+		static_assert( ExpectType<And<P, Q>, +(P and Q)>);
+		static_assert( ExpectType<And<P, Q>, *(P and Q)>);
+		static_assert( ExpectType<And<P, Q>,  (P * Q)>);
+		static_assert( ExpectType<And<P, Q>, +(P * Q)>);
+		static_assert( ExpectType<And<P, Q>, *(P * Q)>);
+		
+		static_assert( ExpectType<And<P, Q>,  (not (not P or not Q))>);
+		static_assert( ExpectType<And<P, Q>, +(not (not P or not Q))>);
+		static_assert( ExpectType<And<P, Q>, *(not (not P or not Q))>);
+		static_assert( ExpectType<And<P, Q>,  (not (not P + not Q))>);
+		static_assert( ExpectType<And<P, Q>, +(not (not P + not Q))>);
+		static_assert( ExpectType<And<P, Q>, *(not (not P + not Q))>);
+		
+		static_assert( ExpectType<And<P, Or<Q, R>>,  (P and (Q or R))>);
+		static_assert( ExpectType<And<P, Or<Q, R>>, +(P and (Q or R))>);
+		static_assert(!ExpectType<And<P, Or<Q, R>>, *(P and (Q or R))>);
+		static_assert( ExpectType<And<P, Or<Q, R>>,  (P and (Q + R))>);
+		static_assert( ExpectType<And<P, Or<Q, R>>, +(P and (Q + R))>);
+		static_assert(!ExpectType<And<P, Or<Q, R>>, *(P and (Q + R))>);
+		static_assert(!ExpectType<And<P, Or<Q, R>>,  (P * (Q and R))>);
+		static_assert( ExpectType<And<P, Or<Q, R>>, +(P * (Q + R))>);
+		static_assert(!ExpectType<And<P, Or<Q, R>>, *(P * (Q and R))>);
+		static_assert(!ExpectType<And<P, Or<Q, R>>,  (P * (Q + R))>);
+		static_assert( ExpectType<And<P, Or<Q, R>>, +(P * (Q + R))>);
+		static_assert(!ExpectType<And<P, Or<Q, R>>, *(P * (Q + R))>);
+				
+		static_assert( ExpectType<And<Or<P, Q>, R>,  ((P or Q) and R)>);
+		static_assert( ExpectType<And<Or<P, Q>, R>, +((P or Q) and R)>);
+		static_assert(!ExpectType<And<Or<P, Q>, R>, *((P or Q) and R)>);
+		static_assert( ExpectType<And<Or<P, Q>, R>,  ((P + Q) and R)>);
+		static_assert( ExpectType<And<Or<P, Q>, R>, +((P + Q) and R)>);
+		static_assert(!ExpectType<And<Or<P, Q>, R>, *((P + Q) and R)>);
+		static_assert(!ExpectType<And<Or<P, Q>, R>,  ((P or Q) * R)>);
+		static_assert( ExpectType<And<Or<P, Q>, R>, +((P or Q) * R)>);
+		static_assert(!ExpectType<And<Or<P, Q>, R>, *((P or Q) * R)>);
+		static_assert(!ExpectType<And<Or<P, Q>, R>,  ((P + Q) * R)>);
+		static_assert( ExpectType<And<Or<P, Q>, R>, +((P + Q) * R)>);
+		static_assert(!ExpectType<And<Or<P, Q>, R>, *((P + Q) * R)>);
+				
+		static_assert( ExpectType<And<Or<P, Q>, Or<R, S>>,  ((P or Q) and (R or S))>);
+		static_assert( ExpectType<And<Or<P, Q>, Or<R, S>>, +((P or Q) and (R or S))>);
+		static_assert(!ExpectType<And<Or<P, Q>, Or<R, S>>, *((P or Q) and (R or S))>);
+		static_assert( ExpectType<And<Or<P, Q>, Or<R, S>>,  ((P + Q) and (R or S))>);
+		static_assert( ExpectType<And<Or<P, Q>, Or<R, S>>, +((P + Q) and (R or S))>);
+		static_assert(!ExpectType<And<Or<P, Q>, Or<R, S>>, *((P + Q) and (R or S))>);
+		static_assert(!ExpectType<And<Or<P, Q>, Or<R, S>>,  ((P or Q) * (R or S))>);
+		static_assert( ExpectType<And<Or<P, Q>, Or<R, S>>, +((P or Q) * (R or S))>);
+		static_assert(!ExpectType<And<Or<P, Q>, Or<R, S>>, *((P or Q) * (R or S))>);
+		static_assert(!ExpectType<And<Or<P, Q>, Or<R, S>>,  ((P + Q) * (R or S))>);
+		static_assert( ExpectType<And<Or<P, Q>, Or<R, S>>, +((P + Q) * (R or S))>);
+		static_assert(!ExpectType<And<Or<P, Q>, Or<R, S>>, *((P + Q) * (R or S))>);
+		
+		static_assert( ExpectType<Or<P, Q>,  (P or Q)>);
+		static_assert( ExpectType<Or<P, Q>, +(P or Q)>);
+		static_assert( ExpectType<Or<P, Q>, *(P or Q)>);
+		static_assert( ExpectType<Or<P, Q>,  (P + Q)>);
+		static_assert( ExpectType<Or<P, Q>, +(P + Q)>);
+		static_assert( ExpectType<Or<P, Q>, *(P + Q)>);		
+		static_assert( ExpectType<Or<P, Q>,  (not (not P and not Q))>);
+		static_assert( ExpectType<Or<P, Q>, +(not (not P and not Q))>);
+		static_assert( ExpectType<Or<P, Q>, *(not (not P and not Q))>);
+		static_assert( ExpectType<Or<P, Q>,  (not (not P * not Q))>);
+		static_assert( ExpectType<Or<P, Q>, +(not (not P * not Q))>);
+		static_assert( ExpectType<Or<P, Q>, *(not (not P * not Q))>);
+		
+		static_assert( ExpectType<Or<P, And<Q, R>>,  (P or (Q and R))>);
+		static_assert(!ExpectType<Or<P, And<Q, R>>, +(P or (Q and R))>);
+		static_assert( ExpectType<Or<P, And<Q, R>>, *(P or (Q and R))>);
+		static_assert( ExpectType<Or<P, And<Q, R>>,  (P or (Q * R))>);
+		static_assert(!ExpectType<Or<P, And<Q, R>>, +(P or (Q * R))>);
+		static_assert( ExpectType<Or<P, And<Q, R>>, *(P or (Q * R))>);
+		static_assert(!ExpectType<Or<P, And<Q, R>>,  (P + (Q and R))>);
+		static_assert(!ExpectType<Or<P, And<Q, R>>, +(P + (Q and R))>);
+		static_assert( ExpectType<Or<P, And<Q, R>>, *(P + (Q and R))>);
+		static_assert(!ExpectType<Or<P, And<Q, R>>,  (P + (Q * R))>);
+		static_assert(!ExpectType<Or<P, And<Q, R>>, +(P + (Q * R))>);
+		static_assert( ExpectType<Or<P, And<Q, R>>, *(P + (Q * R))>);
+				
+		static_assert( ExpectType<Or<And<P, Q>, R>,  ((P and Q) or R)>);
+		static_assert(!ExpectType<Or<And<P, Q>, R>, +((P and Q) or R)>);
+		static_assert( ExpectType<Or<And<P, Q>, R>, *((P and Q) or R)>);
+		static_assert( ExpectType<Or<And<P, Q>, R>,  ((P * Q) or R)>);
+		static_assert(!ExpectType<Or<And<P, Q>, R>, +((P * Q) or R)>);
+		static_assert( ExpectType<Or<And<P, Q>, R>, *((P * Q) or R)>);
+		static_assert(!ExpectType<Or<And<P, Q>, R>,  ((P and Q) + R)>);
+		static_assert(!ExpectType<Or<And<P, Q>, R>, +((P and Q) + R)>);
+		static_assert( ExpectType<Or<And<P, Q>, R>, *((P and Q) + R)>);
+		static_assert(!ExpectType<Or<And<P, Q>, R>,  ((P * Q) + R)>);
+		static_assert(!ExpectType<Or<And<P, Q>, R>, +((P * Q) + R)>);
+		static_assert( ExpectType<Or<And<P, Q>, R>, *((P * Q) + R)>);
+				
+		static_assert( ExpectType<Or<And<P, Q>, And<R, S>>,  ((P and Q) or (R and S))>);
+		static_assert(!ExpectType<Or<And<P, Q>, And<R, S>>, +((P and Q) or (R and S))>);
+		static_assert( ExpectType<Or<And<P, Q>, And<R, S>>, *((P and Q) or (R and S))>);
+		static_assert( ExpectType<Or<And<P, Q>, And<R, S>>,  ((P * Q) or (R and S))>);
+		static_assert(!ExpectType<Or<And<P, Q>, And<R, S>>, +((P * Q) or (R and S))>);
+		static_assert( ExpectType<Or<And<P, Q>, And<R, S>>, *((P * Q) or (R and S))>);
+		static_assert(!ExpectType<Or<And<P, Q>, And<R, S>>,  ((P and Q) + (R and S))>);
+		static_assert(!ExpectType<Or<And<P, Q>, And<R, S>>, +((P and Q) + (R and S))>);
+		static_assert( ExpectType<Or<And<P, Q>, And<R, S>>, *((P and Q) + (R and S))>);
+		static_assert(!ExpectType<Or<And<P, Q>, And<R, S>>,  ((P * Q) + (R and S))>);
+		static_assert(!ExpectType<Or<And<P, Q>, And<R, S>>, +((P * Q) + (R and S))>);
+		static_assert( ExpectType<Or<And<P, Q>, And<R, S>>, *((P * Q) + (R and S))>);
+		
+		
+		
+		static_assert( ExpectType<Or<P, Q>, P or Q>);
+		static_assert( ExpectType<Or<P, Q>, +P or Q>);
+		static_assert( ExpectType<Or<P, Q>, *P or Q>);
+		static_assert( ExpectType<Or<P, Q>, P + Q>);
+		static_assert( ExpectType<Or<P, Q>, +P + Q>);
+		static_assert( ExpectType<Or<P, Q>, *P + Q>);
+		static_assert( ExpectType<Or<not P, Q>, not (P and not Q)>);
+		static_assert( ExpectType<Or<not P, Q>, +not (P and not Q)>);
+		static_assert( ExpectType<Or<not P, Q>, *not (P and not Q)>);
+		static_assert( ExpectType<Or<not P, Q>, not (P * not Q)>);
+		static_assert( ExpectType<Or<not P, Q>, +not (P * not Q)>);
+		static_assert( ExpectType<Or<not P, Q>, *not (P * not Q)>);
 // 		
 		
 		/// True
