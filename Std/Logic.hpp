@@ -748,9 +748,9 @@ namespace
 			return
 				1ul
 			==	(	...
-				+	(	i_vClause
-					>=	t_tpDisjunction
+				+	(	t_tpDisjunction
 						{}
+					>=	i_vClause
 					)
 				)
 			;
@@ -770,7 +770,7 @@ namespace
 		(	(	...
 			and not
 				ContainsOnce
-				(	compl
+				(	not
 					t_tpDisjunction
 					{}
 				)
@@ -965,6 +965,30 @@ namespace
 			else
 				return i_vLeft and i_vRight;
 		}
+		
+		friend auto consteval
+		(	operator or
+		)	(	ProtoLiteral auto
+					i_vLeft
+			,	And
+					i_vRight
+			)
+		->	ProtoDisjunctive auto
+		{
+			if	constexpr(i_vRight >= i_vLeft)
+				return i_vLeft;
+			else
+			if	constexpr
+				((	not ProtoDisjunctive<decltype(i_vRight)>
+				or	...
+				or	(	i_vLeft >= t_tpDisjunction{}
+					or	i_vLeft >= compl t_tpDisjunction{}
+					)
+				))
+				return (... * (i_vLeft or t_tpDisjunction{}));
+			else
+				return Or<decltype(i_vLeft), decltype(i_vRight)>{};
+		}
 	
 		friend auto consteval
 		(	operator or
@@ -978,11 +1002,9 @@ namespace
 			if	constexpr
 				(	not ProtoDisjunctive<decltype(i_vLeft)>
 				or	not ProtoDisjunctive<decltype(i_vRight)>
-				or	i_vRight >= compl i_vLeft
-				or	(	...
-					and	(	i_vLeft >= t_tpDisjunction{}
-						or	i_vLeft >= compl t_tpDisjunction{}
-						)
+				or	i_vLeft >= i_vRight
+				or	(	(... or (i_vLeft >= t_tpDisjunction{}))
+					and	(... or (i_vLeft >= compl t_tpDisjunction{}))
 					)
 				)
 				return (... * (i_vLeft or t_tpDisjunction{}));
@@ -1073,9 +1095,9 @@ namespace
 			return
 				1ul
 			==	(	...
-				+	(	t_tpConjunction
+				+	(	i_vClause
+					>=	t_tpConjunction
 						{}
-					>=	i_vClause
 					)
 				)
 			;
@@ -1095,7 +1117,7 @@ namespace
 		(	(	...
 			and not
 				ContainsOnce
-				(	compl
+				(	not
 					t_tpConjunction
 					{}
 				)
@@ -1222,6 +1244,30 @@ namespace
 		
 		friend auto consteval
 		(	operator and
+		)	(	ProtoLiteral auto
+					i_vLeft
+			,	Or
+					i_vRight
+			)
+		->	ProtoConjunctive auto
+		{
+			if	constexpr(i_vLeft >= i_vRight)
+				return i_vLeft;
+			else
+			if	constexpr
+				((	not ProtoConjunctive<decltype(i_vRight)>
+				or	...
+				or	(	t_tpConjunction{} >= i_vLeft
+					or	compl t_tpConjunction{} >= i_vLeft
+					)
+				))
+				return (... + (i_vLeft and t_tpConjunction{}));
+			else
+				return And<decltype(i_vLeft), decltype(i_vRight)>{};
+		}
+		
+		friend auto consteval
+		(	operator and
 		)	(	ProtoDisjunction auto
 					i_vLeft
 			,	Or
@@ -1232,11 +1278,9 @@ namespace
 			if	constexpr
 				(	not ProtoConjunctive<decltype(i_vLeft)>
 				or	not ProtoConjunctive<decltype(i_vRight)>
-				or	compl i_vLeft >= i_vRight
-				or	(	...
-					and	(	t_tpConjunction{} >= i_vLeft
-						or	compl t_tpConjunction{} >= i_vLeft
-						)
+				or	i_vRight >= i_vLeft
+				or	(	(... or (t_tpConjunction{} >= i_vLeft))
+					and	(... or (not t_tpConjunction{} >= i_vLeft))
 					)
 				)
 				return (... + (i_vLeft and t_tpConjunction{}));
@@ -1885,8 +1929,8 @@ namespace
 		static_assert(ExpectType<(p or q) and (p or q), Or<aP, aQ>>);
 		static_assert(ExpectType<(p or q) and (not p or q), aQ>);
 		static_assert(ExpectType<(p or q) and (not p or r), And<Or<aP, aQ>, Or<nP, aR>>>);
-// 		static_assert(ExpectType<(p or q) and (not p or not q), And<Or<aP, aQ>, Or<nP, nQ>>>);
-// 		static_assert(ExpectType<(p or q) and (not p or not q or r), And<Or<aP, aQ>, Or<nP, nQ>>>);
+		static_assert(ExpectType<(p or q) and (not p or not q), And<Or<aP, aQ>, Or<nP, nQ>>>);
+		static_assert(ExpectType<(p or q) and (not p or not q or r), And<Or<aP, aQ>, Or<nP, nQ, aR>>>);
 		static_assert(ExpectType<(p or q) and (p or r), And<Or<aP, aQ>, Or<aP, aR>>>);
 		static_assert(ExpectType<(p or q) and (r or s), And<Or<aP, aQ>, Or<aR, aS>>>);
 		
@@ -1917,7 +1961,7 @@ namespace
 		static_assert(ExpectType<(p or q) * (p or q), Or<aP, aQ>>);
 		static_assert(ExpectType<(p or q) * (not p or q), aQ>);
 // 		static_assert(ExpectType<(p or q) * (not p or r), True>);
-// 		static_assert(ExpectType<(p or q) * (not p or not q), True>);
+		static_assert(ExpectType<(p or q) * (not p or not q), Or<And<aQ, nP>,And<aP, nQ>>>);
 // 		static_assert(ExpectType<(p or q) * (not p or not q or r), True>);
 		static_assert(ExpectType<(p or q) * (p or r), Or<aP, And<aQ, aR>>>);
 		static_assert(ExpectType<(p or q) * (r or s), Or<And<aP, aR>, And<aQ, aR>, And<aP, aS>, And<aQ, aS>>>);
@@ -1925,8 +1969,8 @@ namespace
 		static_assert(ExpectType<(p and q) or (p and q), And<aP, aQ>>);
 		static_assert(ExpectType<(p and q) or (not p and q), aQ>);
 		static_assert(ExpectType<(p and q) or (not p and r), Or<And<aP, aQ>, And<nP, aR>>>);
-// 		static_assert(ExpectType<(p and q) or (not p and not q), True>);
-// 		static_assert(ExpectType<(p and q) or (not p and not q or r), True>);
+		static_assert(ExpectType<(p and q) or (not p and not q), Or<And<aP, aQ>, And<nP, nQ>>>);
+		static_assert(ExpectType<(p and q) or (not p and not q and r), Or<And<aP, aQ>, And<nP, nQ, aR>>>);
 		static_assert(ExpectType<(p and q) or (p and r), Or<And<aP, aQ>, And<aP, aR>>>);
 		static_assert(ExpectType<(p and q) or (r and s), Or<And<aP, aQ>, And<aR, aS>>>);
 		
@@ -1957,7 +2001,7 @@ namespace
 		static_assert(ExpectType<(p and q) + (p and q), And<aP, aQ>>);
 		static_assert(ExpectType<(p and q) + (not p and q), aQ>);
 // 		static_assert(ExpectType<(p and q) + (not p and r), Or<aP, aQ, aR>>);
-// 		static_assert(ExpectType<(p and q) + (not p and not q), True>);
+		static_assert(ExpectType<(p and q) + (not p and not q), And<Or<aQ, nP>, Or<aP, nQ>>>);
 // 		static_assert(ExpectType<(p and q) + (not p and not q and r), True>);
 		static_assert(ExpectType<(p and q) + (p and r), And<aP, Or<aQ, aR>>>);
 		static_assert(ExpectType<(p and q) + (r and s), And<Or<aP, aR>, Or<aQ, aR>, Or<aP, aS>, Or<aQ, aS>>>);
