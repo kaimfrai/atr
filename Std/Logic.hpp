@@ -784,7 +784,7 @@ namespace
 			)
 		->	ProtoDisjunctive auto
 		{
-			if	constexpr(Term.IsDisjunctive)
+			if	constexpr(ProtoDisjunctive<And>)
 				return And{};
 			else
 				return (... * t_tpDisjunction{});
@@ -874,13 +874,14 @@ namespace
 			)
 		->	bool
 		{
-			if	constexpr
-				(	ProtoLiteral<decltype(i_vRight)>
-				or	(	ProtoDisjunctive<decltype(i_vLeft)>
-					and	ProtoConjunctive<decltype(i_vRight)>
-					)
-				)
+			if	constexpr(ProtoLiteral<decltype(i_vRight)>)
 				return (... or (t_tpDisjunction{} >= i_vRight));
+			else
+			if	constexpr
+				(	ProtoDisjunctive<decltype(i_vLeft)>
+				or	ProtoConjunctive<decltype(i_vRight)>
+				)
+				return True{} == (not i_vLeft or i_vRight);
 			else
 				return *i_vLeft >= +i_vRight;
 		}
@@ -1138,7 +1139,7 @@ namespace
 			)
 		->	ProtoConjunctive auto
 		{
-			if	constexpr(Term.IsConjunctive)
+			if	constexpr(ProtoConjunctive<Or>)
 				return Or{};
 			else
 				return (... + t_tpConjunction{});
@@ -1960,9 +1961,9 @@ namespace
 		
 		static_assert(ExpectType<(p or q) * (p or q), Or<aP, aQ>>);
 		static_assert(ExpectType<(p or q) * (not p or q), aQ>);
-// 		static_assert(ExpectType<(p or q) * (not p or r), True>);
-		static_assert(ExpectType<(p or q) * (not p or not q), Or<And<aQ, nP>,And<aP, nQ>>>);
-// 		static_assert(ExpectType<(p or q) * (not p or not q or r), True>);
+		static_assert(ExpectType<(p or q) * (not p or r), Or<And<aQ, nP>, And<aP, aR>>>);
+		static_assert(ExpectType<(p or q) * (not p or not q), Or<And<aQ, nP>, And<aP, nQ>>>);
+// 		static_assert(ExpectType<(p or q) * (not p or not q or r), Or<And<aQ, nP>, And<aP, nQ>>>);
 		static_assert(ExpectType<(p or q) * (p or r), Or<aP, And<aQ, aR>>>);
 		static_assert(ExpectType<(p or q) * (r or s), Or<And<aP, aR>, And<aQ, aR>, And<aP, aS>, And<aQ, aS>>>);
 		
@@ -2000,7 +2001,7 @@ namespace
 		
 		static_assert(ExpectType<(p and q) + (p and q), And<aP, aQ>>);
 		static_assert(ExpectType<(p and q) + (not p and q), aQ>);
-// 		static_assert(ExpectType<(p and q) + (not p and r), Or<aP, aQ, aR>>);
+		static_assert(ExpectType<(p and q) + (not p and r), And<Or<aQ, nP>, Or<aP, aR>>>);
 		static_assert(ExpectType<(p and q) + (not p and not q), And<Or<aQ, nP>, Or<aP, nQ>>>);
 // 		static_assert(ExpectType<(p and q) + (not p and not q and r), True>);
 		static_assert(ExpectType<(p and q) + (p and r), And<aP, Or<aQ, aR>>>);
