@@ -923,22 +923,40 @@ namespace
 		(	operator and
 		)	(	And
 					i_vLeft
+			,	ProtoLiteral auto
+					i_vRight
+			)
+		->	ProtoConjunctive auto
+		{
+			if	constexpr(i_vLeft >= i_vRight)
+				return i_vLeft;
+			else
+			if	constexpr
+				(	(... or (i_vRight >= t_tpDisjunction{}))
+				or	(... or (not i_vRight >= t_tpDisjunction{}))
+				)
+				return (... and (t_tpDisjunction{} and i_vRight));
+			else
+				return _::And{t_tpDisjunction{}..., i_vRight};
+		}
+		
+		friend auto consteval
+		(	operator and
+		)	(	And
+					i_vLeft
 			,	ProtoDisjunction auto
 					i_vRight
 			)
 		->	ProtoConjunctive auto
 		{
-			if	constexpr(i_vRight.Term.IsNested)
-				return i_vLeft and +i_vRight;
-			else
 			if	constexpr(i_vLeft >= i_vRight)
 				return i_vLeft;
 			else
 			if	constexpr
-				(	(	...
-					or	(	i_vRight >= t_tpDisjunction{}
-						or	not i_vRight >= t_tpDisjunction{}
-						)
+				(	i_vRight.Term.IsNested
+				or	i_vRight >= i_vLeft
+				or	(	(... or (i_vRight >= t_tpDisjunction{}))
+					or	(... or (not i_vRight >= t_tpDisjunction{}))
 					)
 				)
 				return (... and (t_tpDisjunction{} and i_vRight));
@@ -1363,6 +1381,27 @@ namespace
 			)
 		->	ProtoDisjunctive auto
 		{	return (i_vLeft or ... or t_tpConjunction{});	}
+				
+		friend auto consteval
+		(	operator or
+		)	(	Or
+					i_vLeft
+			,	ProtoLiteral auto
+					i_vRight
+			)
+		->	ProtoDisjunctive auto
+		{
+			if	constexpr(i_vRight >= i_vLeft)
+				return i_vLeft;
+			else
+			if	constexpr
+				(	(... or (t_tpConjunction{} >= i_vRight))
+				or	(... or (t_tpConjunction{} >= not i_vRight))
+				)
+				return (... or (t_tpConjunction{} or i_vRight));
+			else
+				return _::Or{t_tpConjunction{}..., i_vRight};
+		}
 		
 		friend auto consteval
 		(	operator or
@@ -1373,17 +1412,14 @@ namespace
 			)
 		->	ProtoDisjunctive auto
 		{
-			if	constexpr(i_vRight.Term.IsNested)
-				return i_vLeft or *i_vRight;
-			else
 			if	constexpr(i_vRight >= i_vLeft)
 				return i_vLeft;
 			else
 			if	constexpr
-				(	(	...
-					or	(	t_tpConjunction{} >= i_vRight
-						or	t_tpConjunction{} >= not i_vRight
-						)
+				(	i_vRight.Term.IsNested
+				or	i_vLeft >= i_vRight
+				or	(	(... or (t_tpConjunction{} >= i_vRight))
+					or	(... or (t_tpConjunction{} >= not i_vRight))
 					)
 				)
 				return (... or (t_tpConjunction{} or i_vRight));
@@ -2655,7 +2691,6 @@ namespace
 		static_assert( ExpectType<Or<not P, Q>, not (P * not Q)>);
 		static_assert( ExpectType<Or<not P, Q>, +not (P * not Q)>);
 		static_assert( ExpectType<Or<not P, Q>, *not (P * not Q)>);
-// 		
 		
 		/// True
 		static_assert(True == True);
