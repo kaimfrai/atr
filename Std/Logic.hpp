@@ -161,21 +161,6 @@ namespace
 	;
 	
 	template
-		<	bool
-		>
-	struct
-		Constant
-	;
-	
-	template
-		<	ProtoAtom
-		,	bool
-		>
-	struct
-		Atom
-	;
-	
-	template
 		<	ProtoDisjunctionClause
 			...
 		>
@@ -207,7 +192,7 @@ namespace
 			,	bool
 			>
 		friend struct
-			Atom
+			Literal
 		;
 		
 		template
@@ -270,7 +255,7 @@ namespace
 			or	IsDisjunction
 		;
 		bool const
-			IsFull
+			IsNested
 			: 1
 		=	not
 			IsClause
@@ -461,11 +446,10 @@ namespace
 		<	ProtoAtom
 				t_tAtom
 		,	bool
-				t_bState
-			=	true
+				t_bPolarity
 		>
 	struct
-		Atom
+		Literal
 		final
 	{
 		static TermTag const constexpr
@@ -476,7 +460,7 @@ namespace
 		
 		friend auto consteval
 		(	operator >=
-		)	(	Atom
+		)	(	Literal
 			,	ProtoLiteral auto
 			)
 		->	bool
@@ -484,28 +468,28 @@ namespace
 		
 		friend auto consteval
 		(	operator *
-		)	(	Atom
+		)	(	Literal
 			)
 		->	ProtoDisjunctive auto
-		{	return Atom{};	}
+		{	return Literal{};	}
 		
 		friend auto consteval
 		(	operator +
-		)	(	Atom
+		)	(	Literal
 			)
 		->	ProtoConjunctive auto
-		{	return Atom{};	}
+		{	return Literal{};	}
 		
 		friend auto consteval
 		(	operator not
-		)	(	Atom
+		)	(	Literal
 			)
 		->	ProtoLiteral auto
-		{	return Atom<t_tAtom, not t_bState>{};	}
+		{	return Literal<t_tAtom, not t_bPolarity>{};	}
 		
 		friend auto consteval
 		(	operator compl
-		)	(	Atom
+		)	(	Literal
 					i_vAtom
 			)
 		->	ProtoLiteral auto
@@ -513,15 +497,15 @@ namespace
 		
 		friend auto consteval
 		(	operator ==
-		)	(	Atom
-			,	Atom
+		)	(	Literal
+			,	Literal
 			)
 		->	bool
 		{	return true;	}
 		
 		friend auto consteval
 		(	operator ==
-		)	(	Atom
+		)	(	Literal
 			,	ProtoTerm auto
 			)
 		->	bool
@@ -529,15 +513,15 @@ namespace
 		
 		friend auto consteval
 		(	operator >=
-		)	(	Atom
-			,	Atom
+		)	(	Literal
+			,	Literal
 			)
 		->	bool
 		{	return true;	}
 		
 		friend auto consteval
 		(	operator >=
-		)	(	Atom
+		)	(	Literal
 			,	ProtoConstant auto
 					i_vRight
 			)
@@ -546,7 +530,7 @@ namespace
 	
 		friend auto consteval
 		(	operator<=>
-		)	(	Atom
+		)	(	Literal
 					i_vLeft
 			,	ProtoTerm auto
 					i_vRight
@@ -569,7 +553,7 @@ namespace
 		(	operator and
 		)	(	ProtoConstant auto
 					i_vLeft
-			,	Atom
+			,	Literal
 					i_vRight
 			)
 		{
@@ -581,7 +565,7 @@ namespace
 		
 		friend auto consteval
 		(	operator and
-		)	(	Atom
+		)	(	Literal
 					i_vLeft
 			,	ProtoConstant auto
 					i_vRight
@@ -595,34 +579,34 @@ namespace
 		
 		friend auto consteval
 		(	operator and
-		)	(	Atom
+		)	(	Literal
 					i_vLeft
-			,	Atom
+			,	Literal
 			)
 		->	ProtoConjunctive auto
 		{	return i_vLeft;	}
 		
 		friend auto consteval
 		(	operator and
-		)	(	Atom
-			,	Atom<t_tAtom, not t_bState>
+		)	(	Literal
+			,	Literal<t_tAtom, not t_bPolarity>
 			)
 		->	ProtoConjunctive auto
 		{	return False{};	}
 		
 		friend auto consteval
 		(	operator and
-		)	(	Atom
+		)	(	Literal
 					i_vLeft
 			,	ProtoLiteral auto
 					i_vRight
 			)
 		->	ProtoConjunctive auto
-		{	return And<decltype(i_vLeft), decltype(i_vRight)>{};	}
+		{	return And{i_vLeft, i_vRight};	}
 	
 		friend auto consteval
 		(	operator *
-		)	(	Atom
+		)	(	Literal
 					i_vLeft
 			,	ProtoLiteral auto
 					i_vRight
@@ -634,7 +618,7 @@ namespace
 		(	operator or
 		)	(	ProtoConstant auto
 					i_vLeft
-			,	Atom
+			,	Literal
 					i_vRight
 			)
 		{
@@ -646,7 +630,7 @@ namespace
 		
 		friend auto consteval
 		(	operator or
-		)	(	Atom
+		)	(	Literal
 					i_vLeft
 			,	ProtoConstant auto
 					i_vRight
@@ -660,34 +644,34 @@ namespace
 		
 		friend auto consteval
 		(	operator or
-		)	(	Atom
+		)	(	Literal
 					i_vLeft
-			,	Atom
+			,	Literal
 			)
 		->	ProtoConjunctive auto
 		{	return i_vLeft;	}
 		
 		friend auto consteval
 		(	operator or
-		)	(	Atom
-			,	Atom<t_tAtom, not t_bState>
+		)	(	Literal
+			,	Literal<t_tAtom, not t_bPolarity>
 			)
 		->	ProtoConjunctive auto
 		{	return True{};	}
 		
 		friend auto consteval
 		(	operator or
-		)	(	Atom
+		)	(	Literal
 					i_vLeft
 			,	ProtoLiteral auto
 					i_vRight
 			)
 		->	ProtoConjunctive auto
-		{	return Or<decltype(i_vLeft), decltype(i_vRight)>{};	}
+		{	return Or{i_vLeft, i_vRight};	}
 	
 		friend auto consteval
 		(	operator +
-		)	(	Atom
+		)	(	Literal
 					i_vLeft
 			,	ProtoLiteral auto
 					i_vRight
@@ -701,8 +685,20 @@ namespace
 				t_tAtom
 		>
 	using
+		Atom
+	=	Literal
+		<	t_tAtom
+		,	true
+		>
+	;
+	
+	template
+		<	ProtoAtom
+				t_tAtom
+		>
+	using
 		Not
-	=	Atom
+	=	Literal
 		<	t_tAtom
 		,	false
 		>
@@ -721,6 +717,13 @@ namespace
 		(	And
 		)	()
 		=	default;
+		
+		explicit constexpr
+		(	And
+		)	(	t_tpDisjunction
+				...
+			)
+		{}
 		
 		friend class Test;
 		
@@ -784,7 +787,7 @@ namespace
 			)
 		->	ProtoDisjunctive auto
 		{
-			if	constexpr(ProtoDisjunctive<And>)
+			if	constexpr(Term.IsClause)
 				return And{};
 			else
 				return (... * t_tpDisjunction{});
@@ -802,14 +805,14 @@ namespace
 		)	(	And
 			)
 		->	ProtoDisjunction auto
-		{	return Or<decltype(not t_tpDisjunction{})...>{};	}
+		{	return Or{not t_tpDisjunction{}...};	}
 		
 		friend auto consteval
 		(	operator compl
 		)	(	And
 			)
 		->	ProtoConjunction auto
-		{	return And<decltype(compl t_tpDisjunction{})...>{};	}
+		{	return _::And{compl t_tpDisjunction{}...};	}
 		
 		friend auto consteval
 		(	operator ==
@@ -859,7 +862,7 @@ namespace
 			)
 		->	bool
 		{	
-			if	constexpr(ProtoDisjunctive<decltype(i_vLeft)>)
+			if	constexpr(i_vLeft.Term.IsDisjunctive)
 				return (... and (i_vLeft >= t_tpDisjunction{}));
 			else
 				return *i_vLeft >= i_vRight;
@@ -874,12 +877,12 @@ namespace
 			)
 		->	bool
 		{
-			if	constexpr(ProtoLiteral<decltype(i_vRight)>)
+			if	constexpr(i_vRight.Term.IsLiteral)
 				return (... or (t_tpDisjunction{} >= i_vRight));
 			else
 			if	constexpr
-				(	ProtoDisjunctive<decltype(i_vLeft)>
-				or	ProtoConjunctive<decltype(i_vRight)>
+				(	i_vLeft.Term.IsClause
+				or	i_vRight.Term.IsClause
 				)
 				return True{} == (not i_vLeft or i_vRight);
 			else
@@ -925,7 +928,7 @@ namespace
 			)
 		->	ProtoConjunctive auto
 		{
-			if	constexpr(not ProtoConjunctive<decltype(i_vRight)>)
+			if	constexpr(i_vRight.Term.IsNested)
 				return i_vLeft and +i_vRight;
 			else
 			if	constexpr(i_vLeft >= i_vRight)
@@ -940,7 +943,7 @@ namespace
 				)
 				return (... and (t_tpDisjunction{} and i_vRight));
 			else
-				return And<t_tpDisjunction..., decltype(i_vRight)>{};
+				return _::And{t_tpDisjunction{}..., i_vRight};
 		}
 	
 		friend auto consteval
@@ -961,7 +964,7 @@ namespace
 			)
 		->	ProtoDisjunctive auto
 		{
-			if	constexpr(not ProtoDisjunctive<decltype(i_vLeft)>)
+			if	constexpr(i_vLeft.Term.IsNested)
 				return (t_tpDisjunction{} * ... * i_vRight);
 			else
 				return i_vLeft and i_vRight;
@@ -980,7 +983,7 @@ namespace
 				return i_vLeft;
 			else
 			if	constexpr
-				((	not ProtoDisjunctive<decltype(i_vRight)>
+				((	i_vRight.Term.IsNested
 				or	...
 				or	(	i_vLeft >= t_tpDisjunction{}
 					or	i_vLeft >= compl t_tpDisjunction{}
@@ -988,7 +991,7 @@ namespace
 				))
 				return (... * (i_vLeft or t_tpDisjunction{}));
 			else
-				return Or<decltype(i_vLeft), decltype(i_vRight)>{};
+				return Or{i_vLeft, i_vRight};
 		}
 	
 		friend auto consteval
@@ -1001,8 +1004,8 @@ namespace
 		->	ProtoDisjunctive auto
 		{
 			if	constexpr
-				(	not ProtoDisjunctive<decltype(i_vLeft)>
-				or	not ProtoDisjunctive<decltype(i_vRight)>
+				(	i_vLeft.Term.IsNested
+				or	i_vRight.Term.IsNested
 				or	i_vLeft >= i_vRight
 				or	(	(... or (i_vLeft >= t_tpDisjunction{}))
 					and	(... or (i_vLeft >= compl t_tpDisjunction{}))
@@ -1013,7 +1016,7 @@ namespace
 			if	constexpr(i_vRight >= i_vLeft)
 				return i_vLeft;
 			else
-				return Or<decltype(i_vLeft), decltype(i_vRight)>{};
+				return Or{i_vLeft, i_vRight};
 		}
 
 		friend auto consteval
@@ -1026,7 +1029,7 @@ namespace
 		->	ProtoDisjunctive auto
 		{
 			if	constexpr
-				(	not ProtoDisjunctive<decltype(i_vLeft)>
+				(	i_vLeft.Term.IsNested
 				or	i_vLeft >= not i_vRight
 				)
 				return (... * (t_tpDisjunction{} or i_vRight));
@@ -1034,7 +1037,7 @@ namespace
 			if	constexpr(i_vLeft >= i_vRight)
 				return i_vRight;
 			else
-				return Or<decltype(i_vLeft), decltype(i_vRight)>{};
+				return Or{i_vLeft, i_vRight};
 		}
 		
 		friend auto consteval
@@ -1057,6 +1060,20 @@ namespace
 	};
 	
 	template
+		<	ProtoDisjunctionClause
+			...	t_tpDisjunction
+		>
+	(	And
+	)	(	t_tpDisjunction
+			...
+		)
+	->	And
+		<	t_tpDisjunction
+			...
+		>
+	;
+	
+	template
 		<	ProtoConjunctionClause
 			...	t_tpConjunction
 		>
@@ -1069,6 +1086,13 @@ namespace
 		(	Or
 		)	()
 		=	default;
+		
+		explicit constexpr
+		(	Or
+		)	(	t_tpConjunction
+				...
+			)
+		{}
 		
 		friend class Test;
 		
@@ -1139,7 +1163,7 @@ namespace
 			)
 		->	ProtoConjunctive auto
 		{
-			if	constexpr(ProtoConjunctive<Or>)
+			if	constexpr(Term.IsClause)
 				return Or{};
 			else
 				return (... + t_tpConjunction{});
@@ -1150,14 +1174,14 @@ namespace
 		)	(	Or
 			)
 		->	ProtoConjunction auto
-		{	return And<decltype(not t_tpConjunction{})...>{};	}
+		{	return And{not t_tpConjunction{}...};	}
 
 		friend auto consteval
 		(	operator compl
 		)	(	Or
 			)
 		->	ProtoDisjunction auto
-		{	return Or<decltype(compl t_tpConjunction{})...>{};	}
+		{	return _::Or{compl t_tpConjunction{}...};	}
 		
 		friend auto consteval
 		(	operator ==
@@ -1216,7 +1240,7 @@ namespace
 			)
 		->	bool
 		{
-			if	constexpr(ProtoConjunctive<decltype(i_vRight)>)
+			if	constexpr(i_vRight.Term.IsConjunctive)
 				return (... and (t_tpConjunction{} >= i_vRight));
 			else
 				return i_vLeft >= +i_vRight;
@@ -1256,7 +1280,7 @@ namespace
 				return i_vLeft;
 			else
 			if	constexpr
-				((	not ProtoConjunctive<decltype(i_vRight)>
+				((	i_vRight.Term.IsNested
 				or	...
 				or	(	t_tpConjunction{} >= i_vLeft
 					or	compl t_tpConjunction{} >= i_vLeft
@@ -1264,7 +1288,7 @@ namespace
 				))
 				return (... + (i_vLeft and t_tpConjunction{}));
 			else
-				return And<decltype(i_vLeft), decltype(i_vRight)>{};
+				return And{i_vLeft, i_vRight};
 		}
 		
 		friend auto consteval
@@ -1277,8 +1301,8 @@ namespace
 		->	ProtoConjunctive auto
 		{
 			if	constexpr
-				(	not ProtoConjunctive<decltype(i_vLeft)>
-				or	not ProtoConjunctive<decltype(i_vRight)>
+				(	i_vLeft.Term.IsNested
+				or	i_vRight.Term.IsNested
 				or	i_vRight >= i_vLeft
 				or	(	(... or (t_tpConjunction{} >= i_vLeft))
 					and	(... or (not t_tpConjunction{} >= i_vLeft))
@@ -1289,7 +1313,7 @@ namespace
 			if	constexpr(i_vLeft >= i_vRight)
 				return i_vLeft;
 			else
-				return And<decltype(i_vLeft), decltype(i_vRight)>{};
+				return And{i_vLeft, i_vRight};
 		}
 	
 		friend auto consteval
@@ -1302,7 +1326,7 @@ namespace
 		->	ProtoConjunctive auto
 		{
 			if	constexpr
-				(	not ProtoConjunctive<decltype(i_vLeft)>
+				(	i_vLeft.Term.IsNested
 				or	not i_vRight >= i_vLeft
 				)
 				return (... + (t_tpConjunction{} and i_vRight));
@@ -1310,7 +1334,7 @@ namespace
 			if	constexpr(i_vRight >= i_vLeft)
 				return i_vRight;
 			else
-				return And<decltype(i_vLeft), decltype(i_vRight)>{};
+				return And{i_vLeft, i_vRight};
 		}
 		
 		friend auto consteval
@@ -1349,7 +1373,7 @@ namespace
 			)
 		->	ProtoDisjunctive auto
 		{
-			if	constexpr(not ProtoDisjunctive<decltype(i_vRight)>)
+			if	constexpr(i_vRight.Term.IsNested)
 				return i_vLeft or *i_vRight;
 			else
 			if	constexpr(i_vRight >= i_vLeft)
@@ -1364,7 +1388,7 @@ namespace
 				)
 				return (... or (t_tpConjunction{} or i_vRight));
 			else
-				return Or<t_tpConjunction..., decltype(i_vRight)>{};
+				return _::Or{t_tpConjunction{}..., i_vRight};
 		}
 		
 		friend auto consteval
@@ -1385,12 +1409,26 @@ namespace
 			)
 		->	ProtoConjunctive auto
 		{
-			if	constexpr(not ProtoConjunctive<decltype(i_vLeft)>)
+			if	constexpr(i_vLeft.Term.IsNested)
 				return (t_tpConjunction{} + ... + i_vRight);
 			else
 				return i_vLeft or i_vRight;
 		}
 	};
+	
+	template
+		<	ProtoConjunctionClause
+			...	t_tpConjunction
+		>
+	(	Or
+	)	(	t_tpConjunction
+			...
+		)
+	->	Or
+		<	t_tpConjunction
+			...
+		>
+	;
 	
 	template
 		<	ProtoTerm auto
@@ -2095,14 +2133,18 @@ namespace
 		{};
 		
 		template<auto... t_vpClause>
-		static And<decltype(*t_vpClause)...> constexpr
+		static And constexpr
 			And
-		{};
+		{	*t_vpClause
+			...
+		};
 		
 		template<auto... t_vpClause>
-		static Or<decltype(+t_vpClause)...> constexpr
+		static Or constexpr
 			Or
-		{};
+		{	+t_vpClause
+			...
+		};
 
 		static struct P_ : AtomBase<P_> {} constexpr inline P{};
 		static struct Q_ : AtomBase<Q_> {} constexpr inline Q{};
