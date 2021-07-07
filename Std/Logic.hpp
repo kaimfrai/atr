@@ -288,6 +288,20 @@ namespace
 		->	bool
 		{	return t_bConstant;	}
 		
+		static auto consteval
+		(	SharesLiteralWith
+		)	(	Constant
+			)
+		->	bool
+		{	return true;	}
+		
+		static auto consteval
+		(	SharesLiteralWith
+		)	(	ProtoTerm auto
+			)
+		->	bool
+		{	return false;	}
+		
 		friend auto consteval
 		(	operator *
 		)	(	Constant
@@ -457,6 +471,47 @@ namespace
 		{	.	IsLiteral
 			=	true
 		};
+		
+		static auto consteval
+		(	SharesLiteralWith
+		)	(	Literal
+			)
+		->	bool
+		{	return true;	}
+		
+		static auto consteval
+		(	SharesLiteralWith
+		)	(	ProtoConstant auto
+			)
+		->	bool
+		{	return false;	}
+		
+		static auto consteval
+		(	SharesLiteralWith
+		)	(	ProtoLiteral auto
+			)
+		->	bool
+		{	return false;	}
+		
+		template
+			<	ProtoDisjunctionClause
+				...	t_tpDisjunction
+			>
+		static auto consteval
+		(	SharesLiteralWith
+		)	(	And<t_tpDisjunction...>
+			)
+		{	return (... or SharesLiteralWith(t_tpDisjunction{}));	}
+		
+		template
+			<	ProtoConjunctionClause
+				...	t_tpConjunction
+			>
+		static auto consteval
+		(	SharesLiteralWith
+		)	(	Or<t_tpConjunction...>
+			)
+		{	return (... or SharesLiteralWith(t_tpConjunction{}));	}
 		
 		friend auto consteval
 		(	operator >=
@@ -725,6 +780,59 @@ namespace
 			)
 		{}
 		
+		static auto consteval
+		(	SharesLiteralWith
+		)	(	And
+			)
+		->	bool
+		{	return true;	}
+		
+		static auto consteval
+		(	SharesLiteralWith
+		)	(	ProtoConstant auto
+			)
+		->	bool
+		{	return false;	}
+		
+		static auto consteval
+		(	SharesLiteralWith
+		)	(	ProtoTerm auto
+					i_vTerm
+			)
+		->	bool
+		{	return (... or t_tpDisjunction::SharesLiteralWith(i_vTerm));	}
+		
+		template
+			<	ProtoDisjunctionClause
+					t_tInsert
+			>
+		static auto consteval
+		(	Insert
+		)	(	t_tInsert
+					i_vInsert
+			)
+		->	ProtoConjunction auto
+		{
+			if	constexpr((... or (t_tpDisjunction{} >= i_vInsert)))
+				return And<t_tpDisjunction...>{};
+			else
+			if	constexpr
+				(	(... or (i_vInsert >= t_tpDisjunction{}))
+				)
+				return
+				(	...
+				and	(	t_tpDisjunction{}
+					and	std::conditional_t
+						<	i_vInsert >= t_tpDisjunction{}
+						,	t_tInsert
+						,	True
+						>{}
+					)
+				);
+			else
+				return And<t_tpDisjunction..., t_tInsert>{};
+		}
+		
 		friend class Test;
 		
 		static TermTag constexpr
@@ -937,31 +1045,7 @@ namespace
 				)
 				return (... and (t_tpDisjunction{} and i_vRight));
 			else
-				return _::And{t_tpDisjunction{}..., i_vRight};
-		}
-		
-		friend auto consteval
-		(	operator and
-		)	(	And
-					i_vLeft
-			,	ProtoDisjunction auto
-					i_vRight
-			)
-		->	ProtoConjunctive auto
-		{
-			if	constexpr(i_vLeft >= i_vRight)
-				return i_vLeft;
-			else
-			if	constexpr
-				(	i_vRight.Term.IsNested
-				or	i_vRight >= i_vLeft
-				or	(	(... or (i_vRight >= t_tpDisjunction{}))
-					or	(... or (not i_vRight >= t_tpDisjunction{}))
-					)
-				)
-				return (... and (t_tpDisjunction{} and i_vRight));
-			else
-				return _::And{t_tpDisjunction{}..., i_vRight};
+				return i_vLeft.Insert(i_vRight);
 		}
 	
 		friend auto consteval
@@ -1021,7 +1105,10 @@ namespace
 			)
 		->	ProtoDisjunctive auto
 		{
-			if	constexpr
+			if	constexpr(i_vRight >= i_vLeft)
+				return i_vLeft;
+			else
+				if	constexpr
 				(	i_vLeft.Term.IsNested
 				or	i_vRight.Term.IsNested
 				or	i_vLeft >= i_vRight
@@ -1031,10 +1118,29 @@ namespace
 				)
 				return (... * (i_vLeft or t_tpDisjunction{}));
 			else
+				return Or{i_vLeft, i_vRight};
+		}
+		
+		friend auto consteval
+		(	operator or
+		)	(	ProtoDisjunction auto
+					i_vLeft
+			,	And
+					i_vRight
+			)
+		->	ProtoDisjunctive auto
+		{
 			if	constexpr(i_vRight >= i_vLeft)
 				return i_vLeft;
 			else
-				return Or{i_vLeft, i_vRight};
+			if	constexpr
+				(	i_vRight.Term.IsNested
+				or	(... or (not t_tpDisjunction{} >= i_vLeft))
+				or	(... or (not t_tpDisjunction{} >= compl i_vLeft))
+				)
+				return (... * (i_vLeft or t_tpDisjunction{}));
+			else
+				return i_vLeft.Insert(i_vRight);
 		}
 
 		friend auto consteval
@@ -1111,6 +1217,59 @@ namespace
 				...
 			)
 		{}
+		
+		static auto consteval
+		(	SharesLiteralWith
+		)	(	Or
+			)
+		->	bool
+		{	return true;	}
+		
+		static auto consteval
+		(	SharesLiteralWith
+		)	(	ProtoConstant auto
+			)
+		->	bool
+		{	return false;	}
+		
+		static auto consteval
+		(	SharesLiteralWith
+		)	(	ProtoTerm auto
+					i_vTerm
+			)
+		->	bool
+		{	return (... or t_tpConjunction::SharesLiteralWith(i_vTerm));	}
+		
+		template
+			<	ProtoConjunctionClause
+					t_tInsert
+			>
+		static auto consteval
+		(	Insert
+		)	(	t_tInsert
+					i_vInsert
+			)
+		->	ProtoDisjunction auto
+		{
+			if	constexpr((... or (i_vInsert >= t_tpConjunction{})))
+				return Or<t_tpConjunction...>{};
+			else
+			if	constexpr
+				(	(... or ( t_tpConjunction{} >= i_vInsert))
+				)
+				return
+				(	...
+				or	(	t_tpConjunction{}
+					or	std::conditional_t
+						<	t_tpConjunction{} >= i_vInsert
+						,	t_tInsert
+						,	False
+						>{}
+					)
+				);
+			else
+				return Or<t_tpConjunction..., t_tInsert>{};
+		}
 		
 		friend class Test;
 		
@@ -1287,6 +1446,15 @@ namespace
 		
 		friend auto consteval
 		(	operator and
+		)	(	True
+			,	Or
+					i_vRight
+			)
+		->	ProtoConjunctive auto
+		{	return i_vRight;	}
+		
+		friend auto consteval
+		(	operator and
 		)	(	ProtoLiteral auto
 					i_vLeft
 			,	Or
@@ -1298,15 +1466,37 @@ namespace
 				return i_vLeft;
 			else
 			if	constexpr
-				((	i_vRight.Term.IsNested
-				or	...
-				or	(	t_tpConjunction{} >= i_vLeft
-					or	compl t_tpConjunction{} >= i_vLeft
-					)
-				))
+				(	not i_vLeft.Term.IsConjunctive
+				or	i_vRight.Term.IsNested
+				or	i_vLeft.SharesLiteralWith(i_vRight)
+				or	i_vLeft.SharesLiteralWith(compl i_vRight)
+				)
 				return (... + (i_vLeft and t_tpConjunction{}));
 			else
 				return And{i_vLeft, i_vRight};
+		}
+		
+		friend auto consteval
+		(	operator and
+		)	(	ProtoConjunction auto
+					i_vLeft
+			,	Or
+					i_vRight
+			)
+		->	ProtoConjunctive auto
+		{
+			if	constexpr(i_vLeft >= i_vRight)
+				return i_vLeft;
+			else
+			if	constexpr
+				(	not i_vLeft.Term.IsConjunctive
+				or	i_vRight.Term.IsNested
+				or	(... or (t_tpConjunction{} >= not i_vLeft))
+				or	(... or (compl t_tpConjunction{} >= not i_vLeft))
+				)
+				return (... + (i_vLeft and t_tpConjunction{}));
+			else
+				return i_vLeft.Insert(i_vRight);
 		}
 		
 		friend auto consteval
@@ -1318,18 +1508,18 @@ namespace
 			)
 		->	ProtoConjunctive auto
 		{
+			if	constexpr(i_vLeft >= i_vRight)
+				return i_vLeft;
+			else
 			if	constexpr
-				(	i_vLeft.Term.IsNested
+				(	not i_vLeft.Term.IsConjunctive
 				or	i_vRight.Term.IsNested
 				or	i_vRight >= i_vLeft
 				or	(	(... or (t_tpConjunction{} >= i_vLeft))
-					and	(... or (not t_tpConjunction{} >= i_vLeft))
+					and	(... or (compl t_tpConjunction{} >= i_vLeft))
 					)
 				)
 				return (... + (i_vLeft and t_tpConjunction{}));
-			else
-			if	constexpr(i_vLeft >= i_vRight)
-				return i_vLeft;
 			else
 				return And{i_vLeft, i_vRight};
 		}
@@ -1397,30 +1587,6 @@ namespace
 			if	constexpr
 				(	(... or (t_tpConjunction{} >= i_vRight))
 				or	(... or (t_tpConjunction{} >= not i_vRight))
-				)
-				return (... or (t_tpConjunction{} or i_vRight));
-			else
-				return _::Or{t_tpConjunction{}..., i_vRight};
-		}
-		
-		friend auto consteval
-		(	operator or
-		)	(	Or
-					i_vLeft
-			,	ProtoConjunction auto
-					i_vRight
-			)
-		->	ProtoDisjunctive auto
-		{
-			if	constexpr(i_vRight >= i_vLeft)
-				return i_vLeft;
-			else
-			if	constexpr
-				(	i_vRight.Term.IsNested
-				or	i_vLeft >= i_vRight
-				or	(	(... or (t_tpConjunction{} >= i_vRight))
-					or	(... or (t_tpConjunction{} >= not i_vRight))
-					)
 				)
 				return (... or (t_tpConjunction{} or i_vRight));
 			else
@@ -1987,7 +2153,7 @@ namespace
 		
 		static_assert(ExpectType<(p and q) and (p or q), And<aP, aQ>>);
 		static_assert(ExpectType<(p and q) and (not p or q), And<aP, aQ>>);
-		static_assert(ExpectType<(p and q) and (not p or r), And<aP, aR, aQ>>);
+		static_assert(ExpectType<(p and q) and (not p or r), And<aP, aQ, aR>>);
 		static_assert(ExpectType<(p and q) and (not p or not q), False>);
 		static_assert(ExpectType<(p and q) and (not p or not q or r), And<aP, aQ, aR>>);
 		static_assert(ExpectType<(p and q) and (p or r), And<aP, aQ>>);
@@ -2037,7 +2203,7 @@ namespace
 		static_assert(ExpectType<(p or q) * (not p or q), aQ>);
 		static_assert(ExpectType<(p or q) * (not p or r), Or<And<aQ, nP>, And<aP, aR>>>);
 		static_assert(ExpectType<(p or q) * (not p or not q), Or<And<aQ, nP>, And<aP, nQ>>>);
-// 		static_assert(ExpectType<(p or q) * (not p or not q or r), Or<And<aQ, nP>, And<aP, nQ>>>);
+		static_assert(ExpectType<(p or q) * (not p or not q or r), Or<And<aQ, nP>, And<aP, nQ>, And<aP, aR>>>);
 		static_assert(ExpectType<(p or q) * (p or r), Or<aP, And<aQ, aR>>>);
 		static_assert(ExpectType<(p or q) * (r or s), Or<And<aP, aR>, And<aQ, aR>, And<aP, aS>, And<aQ, aS>>>);
 		
@@ -2059,7 +2225,7 @@ namespace
 		
 		static_assert(ExpectType<(p or q) or (p and q), Or<aP, aQ>>);
 		static_assert(ExpectType<(p or q) or (not p and q), Or<aP, aQ>>);
-		static_assert(ExpectType<(p or q) or (not p and r), Or<aP, aR, aQ>>);
+		static_assert(ExpectType<(p or q) or (not p and r), Or<aP, aQ, aR>>);
 		static_assert(ExpectType<(p or q) or (not p and not q), True>);
 		static_assert(ExpectType<(p or q) or (not p and not q and r), Or<aP, aQ, aR>>);
 		static_assert(ExpectType<(p or q) or (p and r), Or<aP, aQ>>);
@@ -2077,7 +2243,7 @@ namespace
 		static_assert(ExpectType<(p and q) + (not p and q), aQ>);
 		static_assert(ExpectType<(p and q) + (not p and r), And<Or<aQ, nP>, Or<aP, aR>>>);
 		static_assert(ExpectType<(p and q) + (not p and not q), And<Or<aQ, nP>, Or<aP, nQ>>>);
-// 		static_assert(ExpectType<(p and q) + (not p and not q and r), True>);
+		static_assert(ExpectType<(p and q) + (not p and not q and r), And<Or<aQ, nP>, Or<aP, nQ>, Or<aP, aR>>>);
 		static_assert(ExpectType<(p and q) + (p and r), And<aP, Or<aQ, aR>>>);
 		static_assert(ExpectType<(p and q) + (r and s), And<Or<aP, aR>, Or<aQ, aR>, Or<aP, aS>, Or<aQ, aS>>>);
 		
