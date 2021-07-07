@@ -1977,7 +1977,7 @@ namespace
 		;
 
 		class
-			Atom
+			Literal
 		{
 			static_assert(ExpectType<
 				*	T
@@ -2049,7 +2049,7 @@ namespace
 		};
 
 		class
-			Atom_X_Atom
+			Literal_X_Literal
 		{
 			static_assert(ExpectType<
 				T	and	T
@@ -2241,7 +2241,7 @@ namespace
 		};
 
 		class
-			Clause2
+			Clause
 		{
 			static_assert(ExpectType<
 				+	(p	and	q)
@@ -2279,7 +2279,7 @@ namespace
 		};
 
 		class
-			Atom_X_Clause2
+			Literal_X_Clause
 		{
 			static_assert(ExpectType<
 				T	and	(p	and	q)
@@ -2449,7 +2449,7 @@ namespace
 		};
 
 		class
-			Clause2_X_Atom
+			Clause_X_Literal
 		{
 			static_assert(ExpectType<
 				(p and	q)	and	T
@@ -2619,7 +2619,7 @@ namespace
 		};
 
 		class
-			Clause2_X_Clause2
+			Clause_X_Clause
 		{
 			static_assert(ExpectType<
 				(p	and	q)	and	(p	and	q)
@@ -3069,6 +3069,7 @@ namespace
 			,	And<Or <nP, nQ>, nR>
 			>);
 		};
+
 		class
 			Term_2x1
 		{
@@ -3246,6 +3247,78 @@ namespace
 				(p	or	q)	+	(!p	or	!q	or	r)
 			,	True
 			>);
+		};
+
+		class
+			Literal_X_Term_1x2
+		{
+
+		};
+
+		class
+			Term_1x2_X_Literal
+		{
+
+		};
+
+		class
+			Clause_X_Term_1x2
+		{
+
+		};
+
+		class
+			Term_1x2_X_Clause
+		{
+
+		};
+
+		class
+			Term_1x2_X_Term_1x2
+		{
+
+		};
+
+		class
+			Literal_X_Term_2x2
+		{
+
+		};
+
+		class
+			Term_2x2_X_Literal
+		{
+
+		};
+
+		class
+			Clause_X_Term_2x2
+		{
+
+		};
+
+		class
+			Term_2x2_X_Clause
+		{
+
+		};
+
+		class
+			Term_1x2_Term_2x2
+		{
+
+		};
+
+		class
+			Term_2x2_X_Term_1x2
+		{
+
+		};
+
+		class
+			Term_2x2_X_Term_2x2
+		{
+
 		};
 	};
 
