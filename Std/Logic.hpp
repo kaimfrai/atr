@@ -177,8 +177,7 @@ namespace
 	;
 
 	class
-		TermTag
-		final
+		TermTag final
 	{
 		template
 			<	bool
@@ -463,8 +462,7 @@ namespace
 				t_bPolarity
 		>
 	struct
-		Literal
-		final
+		Literal final
 	{
 		static TermTag const constexpr
 			Term
@@ -764,8 +762,7 @@ namespace
 			...	t_tpDisjunction
 		>
 	class
-		And
-		final
+		And final
 	{
 	public:
 		constexpr
@@ -1196,8 +1193,7 @@ namespace
 			...	t_tpConjunction
 		>
 	class
-		Or
-		final
+		Or final
 	{
 	public:
 		constexpr
@@ -2193,7 +2189,7 @@ namespace
 			>);
 			static_assert(ExpectType<
 				p	or	q
-			,	Or<aP, aQ>
+			,	Or <aP, aQ>
 			>);
 
 			static_assert(ExpectType<
@@ -2245,7 +2241,7 @@ namespace
 		};
 
 		class
-			Clause
+			Clause2
 		{
 			static_assert(ExpectType<
 				+	(p	and	q)
@@ -2283,7 +2279,7 @@ namespace
 		};
 
 		class
-			AtomXClause
+			Atom_X_Clause2
 		{
 			static_assert(ExpectType<
 				T	and	(p	and	q)
@@ -2453,7 +2449,7 @@ namespace
 		};
 
 		class
-			Clause2_X_Atomic
+			Clause2_X_Atom
 		{
 			static_assert(ExpectType<
 				(p and	q)	and	T
@@ -3020,6 +3016,170 @@ namespace
 		};
 
 		class
+			Term_1x2
+		{
+			static_assert(ExpectType<
+				*	(p	and	(q	or	r))
+			,	Or <And<aP, aQ>, And<aP, aR>>
+			>);
+			static_assert(ExpectType<
+				+	(p	and	(q	or	r))
+			,	And<aP, Or <aQ, aR>>
+			>);
+			static_assert(ExpectType<
+				!	(p	and	(q	or	r))
+			,	Or <nP, And<nQ, nR>>
+			>);
+			static_assert(ExpectType<
+				~	(p	and	(q	or	r))
+			,	And<nP, Or <nQ, nR>>
+			>);
+
+			static_assert(ExpectType<
+				*	(p	or	(q	and	r))
+			,	Or <aP, And<aQ, aR>>
+			>);
+			static_assert(ExpectType<
+				+	(p	or	(q	and	r))
+			,	And<Or <aP, aQ>, Or <aP, aR>>
+			>);
+			static_assert(ExpectType<
+				!	(p	or	(q	and	r))
+			,	And<nP, Or <nQ, nR>>
+			>);
+			static_assert(ExpectType<
+				~	(p	or	(q	and	r))
+			,	Or <nP, And<nQ, nR>>
+			>);
+
+			static_assert(ExpectType<
+				*	((p	or	q)	and	r)
+			,	Or <And<aP, aR>, And<aQ, aR>>
+			>);
+			static_assert(ExpectType<
+				+	((p	or	q)	and	r)
+			,	And<Or <aP, aQ>, aR>
+			>);
+			static_assert(ExpectType<
+				!	((p	or	q)	and	r)
+			,	Or <And<nP, nQ>, nR>
+			>);
+			static_assert(ExpectType<
+				~	((p	or	q)	and	r)
+			,	And<Or <nP, nQ>, nR>
+			>);
+		};
+		class
+			Term_2x1
+		{
+			static_assert(ExpectType<
+				*	((p	and	q)	or	r)
+			,	Or <And<aP, aQ>, aR>
+			>);
+			static_assert(ExpectType<
+				+	((p	and	q)	or	r)
+			,	And<Or <aP, aR>, Or <aQ, aR>>
+			>);
+			static_assert(ExpectType<
+				!	((p	and	q)	or	r)
+			,	And<Or <nP, nQ>, nR>
+			>);
+			static_assert(ExpectType<
+				~	((p	and	q)	or	r)
+			,	Or <And<nP, nQ>, nR>
+			>);
+
+			static_assert(ExpectType<
+				*	((p	or	q)	and	r)
+			,	Or<And <aP, aR>, And <aQ, aR>>
+			>);
+			static_assert(ExpectType<
+				+	((p	or	q)	and	r)
+			,	And<Or <aP, aQ>, aR>
+			>);
+			static_assert(ExpectType<
+				!	((p	or	q)	and	r)
+			,	Or <And<nP, nQ>, nR>
+			>);
+			static_assert(ExpectType<
+				~	((p	or	q)	and	r)
+			,	And<Or<nP, nQ>, nR>
+			>);
+		};
+
+		class
+			Term_2x2
+		{
+			static_assert(ExpectType<
+				*	((p	or	q)	and	(p	or	r))
+			,	Or <aP, And<aQ, aR>>
+			>);
+			static_assert(ExpectType<
+				+	((p	or	q)	and	(p	or	r))
+			,	And<Or <aP, aQ>, Or <aP, aR>>
+			>);
+			static_assert(ExpectType<
+				!	((p	or	q)	and	(p	or	r))
+			,	Or <And<nP, nQ>, And<nP, nR>>
+			>);
+			static_assert(ExpectType<
+				~	((p	or	q)	and	(p	or	r))
+			,	And<Or <nP, nQ>, Or <nP, nR>>
+			>);
+
+			static_assert(ExpectType<
+				*	((p	or	q)	and	(r	or	s))
+			,	Or <And<aP, aR>, And<aQ, aR>, And<aP, aS>, And<aQ, aS>>
+			>);
+			static_assert(ExpectType<
+				+	((p	or	q)	and	(r	or	s))
+			,	And<Or <aP, aQ>, Or <aR, aS>>
+			>);
+			static_assert(ExpectType<
+				!	((p	or	q)	and	(r	or	s))
+			,	Or <And<nP, nQ>, And<nR, nS>>
+			>);
+			static_assert(ExpectType<
+				~	((p	or	q)	and	(r	or	s))
+			,	And<Or <nP, nQ>, Or <nR, nS>>
+			>);
+
+			static_assert(ExpectType<
+				*	((p	and	q)	or	(p	and	r))
+			,	Or <And<aP, aQ>, And<aP, aR>>
+			>);
+			static_assert(ExpectType<
+				+	((p	and	q)	or	(p	and	r))
+			,	And<aP, Or <aQ, aR>>
+			>);
+			static_assert(ExpectType<
+				!	((p	and	q)	or	(p	and	r))
+			,	And<Or <nP, nQ>, Or <nP, nR>>
+			>);
+			static_assert(ExpectType<
+				~	((p	and	q)	or	(p	and	r))
+			,	Or <And<nP, nQ>, And<nP, nR>>
+			>);
+
+			static_assert(ExpectType<
+				*	((p	and	q)	or	(r	and	s))
+			,	Or <And<aP, aQ> , And<aR, aS>>
+			>);
+			static_assert(ExpectType<
+				+	((p	and	q)	or	(r	and	s))
+			,	And<Or <aP, aR>, Or <aQ, aR>, Or <aP, aS>, Or <aQ, aS>>
+			>);
+			static_assert(ExpectType<
+				!	((p	and	q)	or	(r	and	s))
+			,	And<Or <nP, nQ>, Or <nR, nS>>
+			>);
+			static_assert(ExpectType<
+				~	((p	and	q)	or	(r	and	s))
+			,	Or <And<nP, nQ>, And<nR, nS>>
+			>);
+		};
+
+		class
 			Clause2_X_Clause3
 		{
 			static_assert(ExpectType<
@@ -3085,150 +3245,6 @@ namespace
 			static_assert(ExpectType<
 				(p	or	q)	+	(!p	or	!q	or	r)
 			,	True
-			>);
-		};
-
-		class
-			Term_1x2
-		{
-			static_assert(ExpectType<
-				*	(p	and	(q	or	r))
-			,	Or <And<aP, aQ>, And<aP, aR>>
-			>);
-			static_assert(ExpectType<
-				+	(p	and	(q	or	r))
-			,	And<aP, Or <aQ, aR>>
-			>);
-			static_assert(ExpectType<
-				!	(p	and	(q	or	r))
-			,	Or <nP, And<nQ, nR>>
-			>);
-			static_assert(ExpectType<
-				~	(p	and	(q	or	r))
-			,	And<nP, Or <nQ, nR>>
-			>);
-
-			static_assert(ExpectType<
-				*	(p	or	(q	and	r))
-			,	Or <aP, And<aQ, aR>>
-			>);
-			static_assert(ExpectType<
-				+	(p	or	(q	and	r))
-			,	And<Or <aP, aQ>, Or <aP, aR>>
-			>);
-			static_assert(ExpectType<
-				!	(p	or	(q	and	r))
-			,	And<nP, Or <nQ, nR>>
-			>);
-			static_assert(ExpectType<
-				~	(p	or	(q	and	r))
-			,	Or <nP, And<nQ, nR>>
-			>);
-
-			static_assert(ExpectType<
-				*	((p	or	q)	and	r)
-			,	Or <And<aP, aR>, And<aQ, aR>>
-			>);
-			static_assert(ExpectType<
-				+	((p	or	q)	and	r)
-			,	And<Or <aP, aQ>, aR>
-			>);
-			static_assert(ExpectType<
-				!	((p	or	q)	and	r)
-			,	Or <And<nP, nQ>, nR>
-			>);
-			static_assert(ExpectType<
-				~	((p	or	q)	and	r)
-			,	And<Or <nP, nQ>, nR>
-			>);
-		};
-
-		class
-			Term_2x2
-		{
-			static_assert(ExpectType<
-				*	((p	or	q)	and	(p	or	r))
-			,	Or <aP, And<aQ, aR>>
-			>);
-			static_assert(ExpectType<
-				+	((p	or	q)	and	(p	or	r))
-			,	And<Or <aP, aQ>, Or <aP, aR>>
-			>);
-			static_assert(ExpectType<
-				!	((p	or	q)	and	(p	or	r))
-			,	Or <And<nP, nQ>, And<nP, nR>>
-			>);
-			static_assert(ExpectType<
-				~	((p	or	q)	and	(p	or	r))
-			,	And<Or <nP, nQ>, Or <nP, nR>>
-			>);
-
-			static_assert(ExpectType<
-				*	((p	or	q)	and	(r	or	s))
-			,	Or <And<aP, aR>, And<aQ, aR>, And<aP, aS>, And<aQ, aS>>
-			>);
-			static_assert(ExpectType<
-				+	((p	or	q)	and	(r	or	s))
-			,	And<Or <aP, aQ>, Or <aR, aS>>
-			>);
-			static_assert(ExpectType<
-				!	((p	or	q)	and	(r	or	s))
-			,	Or <And<nP, nQ>, And<nR, nS>>
-			>);
-			static_assert(ExpectType<
-				~	((p	or	q)	and	(r	or	s))
-			,	And<Or <nP, nQ>, Or <nR, nS>>
-			>);
-
-			static_assert(ExpectType<
-				*	((p	and	q)	or	r)
-			,	Or <And<aP, aQ>, aR>
-			>);
-			static_assert(ExpectType<
-				+	((p	and	q)	or	r)
-			,	And<Or <aP, aR>, Or <aQ, aR>>
-			>);
-			static_assert(ExpectType<
-				!	((p	and	q)	or	r)
-			,	And<Or <nP, nQ>, nR>
-			>);
-			static_assert(ExpectType<
-				~	((p	and	q)	or	r)
-			,	Or <And<nP, nQ>, nR>
-			>);
-
-			static_assert(ExpectType<
-				*	((p	and	q)	or	(p	and	r))
-			,	Or <And<aP, aQ>, And<aP, aR>>
-			>);
-			static_assert(ExpectType<
-				+	((p	and	q)	or	(p	and	r))
-			,	And<aP, Or <aQ, aR>>
-			>);
-			static_assert(ExpectType<
-				!	((p	and	q)	or	(p	and	r))
-			,	And<Or <nP, nQ>, Or <nP, nR>>
-			>);
-			static_assert(ExpectType<
-				~	((p	and	q)	or	(p	and	r))
-			,	Or <And<nP, nQ>, And<nP, nR>>
-			>);
-
-			static_assert(ExpectType<
-				*	((p	and	q)	or	(r	and	s))
-			,	Or <And<aP, aQ> , And<aR, aS>>
-			>);
-			static_assert(ExpectType<
-				+	((p	and	q)	or	(r	and	s))
-			,	And<Or <aP, aR>, Or <aQ, aR>, Or <aP, aS>, Or <aQ, aS>>
-			>);
-			static_assert(ExpectType<
-				!	((p	and	q)	or	(r	and	s))
-			,	And<Or <nP, nQ>, Or <nR, nS>>
-			>);
-			static_assert(ExpectType<
-				~	((p	and	q)	or	(r	and	s))
-			,	Or <And<nP, nQ>, And<nR, nS>>
 			>);
 		};
 	};
