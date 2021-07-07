@@ -973,7 +973,7 @@ namespace
 			if	constexpr(i_vLeft.Term.IsDisjunctive)
 				return (... and (i_vLeft >= t_tpDisjunction{}));
 			else
-				return *i_vLeft >= i_vRight;
+				return True{} == (not i_vLeft or i_vRight);
 		}
 		
 		friend auto consteval
@@ -985,16 +985,10 @@ namespace
 			)
 		->	bool
 		{
-			if	constexpr(i_vRight.Term.IsLiteral)
+			if	constexpr(i_vLeft.Term.IsDisjunctive and i_vRight.Term.IsConjunctive)
 				return (... or (t_tpDisjunction{} >= i_vRight));
 			else
-			if	constexpr
-				(	i_vLeft.Term.IsClause
-				or	i_vRight.Term.IsClause
-				)
 				return True{} == (not i_vLeft or i_vRight);
-			else
-				return *i_vLeft >= +i_vRight;
 		}
 	
 		friend auto consteval
@@ -1420,7 +1414,7 @@ namespace
 			if	constexpr(i_vRight.Term.IsConjunctive)
 				return (... and (t_tpConjunction{} >= i_vRight));
 			else
-				return i_vLeft >= +i_vRight;
+				return True{} == (not i_vLeft or i_vRight);
 		}
 	
 		friend auto consteval
