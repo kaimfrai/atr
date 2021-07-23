@@ -182,7 +182,7 @@ class
 	template
 		<	bool
 		>
-	friend struct
+	friend class
 		Constant
 	;
 
@@ -190,7 +190,7 @@ class
 		<	ProtoAtom
 		,	bool
 		>
-	friend struct
+	friend class
 		Literal
 	;
 
@@ -265,9 +265,10 @@ template
 	<	bool
 			t_bConstant
 	>
-struct
-	Constant final
+class
+	Constant
 {
+public:
 	static TermTag const constexpr
 		Term
 	{	.	IsConstant
@@ -460,21 +461,16 @@ struct
 using True = Constant<true>;
 using False = Constant<false>;
 
-static_assert(ProtoConstant<True>);
-static_assert(not ProtoAtom<True>);
-
-static_assert(ProtoTerm<False>);
-static_assert(not ProtoAtom<False>);
-
 template
 	<	ProtoAtom
 			t_tAtom
 	,	bool
 			t_bPolarity
 	>
-struct
+class
 	Literal final
 {
+public:
 	static TermTag const constexpr
 		Term
 	{	.	IsLiteral
@@ -983,11 +979,12 @@ public:
 	auto constexpr
 	(	operator *
 	)	(	And
+				i_vConjunction
 		)
 	->	ProtoDisjunctive auto
 	{
 		if	constexpr(Term.IsClause)
-			return And{};
+			return i_vConjunction;
 		else
 			return (... * t_tpDisjunction{});
 	}
@@ -996,9 +993,10 @@ public:
 	auto constexpr
 	(	operator +
 	)	(	And
+				i_vConjunction
 		)
 	->	ProtoConjunctive auto
-	{	return And{};	}
+	{	return i_vConjunction;	}
 
 	friend
 	auto constexpr
@@ -1522,19 +1520,21 @@ public:
 	auto constexpr
 	(	operator *
 	)	(	Or
+				i_vDisjunction
 		)
 	->	ProtoDisjunctive auto
-	{	return Or{};	}
+	{	return i_vDisjunction;	}
 
 	friend
 	auto constexpr
 	(	operator +
 	)	(	Or
+				i_vDisjunction
 		)
 	->	ProtoConjunctive auto
 	{
 		if	constexpr(Term.IsClause)
-			return Or{};
+			return i_vDisjunction;
 		else
 			return (... + t_tpConjunction{});
 	}
@@ -1791,6 +1791,7 @@ public:
 	)	(	ProtoTerm auto
 				i_vLeft
 		,	Or
+				i_vRight
 		)
 	->	ProtoDisjunctive auto
 	{	return (i_vLeft or ... or t_tpConjunction{});	}
