@@ -4,26 +4,6 @@
 namespace
 	Literal_X_Literal
 {
-	static_assert
-	(	(p	and	T)
-	==	(p)
-	);
-	static_assert
-	(	(p	and	F)
-	==	(F)
-	);
-	static_assert
-	(	(p	and	p)
-	==	(p)
-	);
-	static_assert
-	(	(p	and	!p)
-	==	(F)
-	);
-	static_assert
-	(	(p	and	q)
-	==	(p	and	q)
-	);
 
 	static_assert
 	(	(p	*	T)
@@ -92,10 +72,7 @@ namespace
 namespace
 	Literal_X_Clause
 {
-	static_assert
-	(	(p	and	(p	and	q))
-	==	(p	and	q)
-	);
+
 	static_assert
 	(	(p	and	(!p	and	q))
 	==	(F)

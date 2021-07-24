@@ -12,63 +12,72 @@ static_assert
 (	(p	*	p)
 ==	(p)
 );
+static_assert
+(	(p	*	!p)
+==	(F)
+);
+static_assert
+(	(p	*	q)
+==	(p	and	q)
+);
 
 static_assert
 (	(p	*	(p	and	q))
-==	(p)
+==	(p	and	q)
 );
 static_assert
 (	(p	*	(p	and	(q	or	r)))
-==	(p)
+==	(p	and	(q	or	r))
 );
 static_assert
 (	(p	*	((p	and	q)	or	r))
-==	(p)
+==	(p	and	(q	or	r))
 );
 static_assert
 (	(p	*	((p	and	q)	or	(p	and	r)))
-==	(p)
+==	(p	and	(q	or	r))
 );
 static_assert
 (	(p	*	((p	and	q)	or	(!p	and	!q)))
-==	(p)
+==	(p	and	q)
 );
 static_assert
 (	(p	*	((p	and	q)	or	(!p	and	r)))
-==	(p)
+==	(p	and	q)
 );
 static_assert
 (	(p	*	((p	and	q)	or	(q	and	r)))
-==	(p)
+==	(p	and	q)
 );
 static_assert
 (	(p	*	((p	and	q)	or	(!q	and	!p)))
-==	(p)
+==	(p	and	q)
 );
 static_assert
 (	(p	*	((p	and	q)	or	(!q	and	r)))
-==	(p)
+==	(p	and	(q	or	r))
 );
 static_assert
 (	(p	*	((p	and	q)	or	(r	and	p)))
-==	(p)
+==	(p	and	(q	or	r))
 );
 static_assert
 (	(p	*	((p	and	q)	or	(r	and	!p)))
-==	(p)
+==	(p	and	q)
 );
 static_assert
 (	(p	*	((p	and	q)	or	(r	and	q)))
-==	(p)
+==	(p	and	q)
 );
 static_assert
 (	(p	*	((p	and	q)	or	(r	and	!q)))
-==	(p)
+==	(p	and	(q	or	r))
 );
 static_assert
 (	(p	*	((p	and	q)	or	(r	and	s)))
-==	(p)
+==	(p	and	(q	or	r)	and	(q	or	s))
 );
+
 
 static_assert
 (	(p	*	(p	or	q))
@@ -80,7 +89,7 @@ static_assert
 );
 static_assert
 (	(p	*	((p	or	q)	and	r))
-==	(p)
+==	(p	and	r)
 );
 static_assert
 (	(p	*	((p	or	q)	and	(p	or	r)))
@@ -88,23 +97,23 @@ static_assert
 );
 static_assert
 (	(p	*	((p	or	q)	and	(!p	or	!q)))
-==	(p)
+==	(p	and	!q)
 );
 static_assert
 (	(p	*	((p	or	q)	and	(!p	or	r)))
-==	(p)
+==	(p	and	r)
 );
 static_assert
 (	(p	*	((p	or	q)	and	(q	or	r)))
-==	(p)
+==	(p	and	(q	or	r))
 );
 static_assert
 (	(p	*	((p	or	q)	and	(!q	or	!p)))
-==	(p)
+==	(p	and	!q)
 );
 static_assert
 (	(p	*	((p	or	q)	and	(!q	or	r)))
-==	(p)
+==	(p	and	(!q	or	r))
 );
 static_assert
 (	(p	*	((p	or	q)	and	(r	or	p)))
@@ -112,17 +121,17 @@ static_assert
 );
 static_assert
 (	(p	*	((p	or	q)	and	(r	or	!p)))
-==	(p)
+==	(p	and	r)
 );
 static_assert
 (	(p	*	((p	or	q)	and	(r	or	q)))
-==	(p)
+==	(p	and	(q	or	r))
 );
 static_assert
 (	(p	*	((p	or	q)	and	(r	or	!q)))
-==	(p)
+==	(p	and	(!q	or	r))
 );
 static_assert
 (	(p	*	((p	or	q)	and	(r	or	s)))
-==	(p)
+==	(p	and	(r	or	s))
 );

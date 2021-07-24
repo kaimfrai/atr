@@ -43,7 +43,7 @@ static_assert
 );
 static_assert
 (	(F	or	((p	and	q)	or	(!q	and	!p)))
-==	((p	and	q)	or	(!q	and	!p))
+==	((p	and	q)	or	(!p	and	!q))
 );
 static_assert
 (	(F	or	((p	and	q)	or	(!q	and	r)))
@@ -55,11 +55,11 @@ static_assert
 );
 static_assert
 (	(F	or	((p	and	q)	or	(r	and	!p)))
-==	((p	and	q)	or	(r	and	!p))
+==	((p	and	q)	or	(!p	and	r))
 );
 static_assert
 (	(F	or	((p	and	q)	or	(r	and	q)))
-==	((p	and	q)	or	(r	and	q))
+==	((p	and	q)	or	(q	and	r))
 );
 static_assert
 (	(F	or	((p	and	q)	or	(r	and	!q)))

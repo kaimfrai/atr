@@ -1242,12 +1242,14 @@ public:
 		)
 	->	ProtoDisjunctive auto
 	{
-		if	constexpr(i_vRight >= i_vLeft)
+		if	constexpr(i_vRight.Term.IsNested)
+			return i_vLeft or *i_vRight;
+		else
+			if	constexpr(i_vRight >= i_vLeft)
 			return i_vLeft;
 		else
 		if	constexpr
-			(	i_vRight.Term.IsNested
-			or	(i_vLeft >= not i_vRight)
+			(	(i_vLeft >= not i_vRight)
 			or	(... or (t_tpDisjunction{} >= i_vLeft))
 			or	(... or (t_tpDisjunction{} >= compl i_vLeft))
 			or	(... and (t_tpDisjunction::SharesLiteralWith(compl i_vLeft)))
@@ -1698,8 +1700,7 @@ public:
 			return i_vLeft;
 		else
 		if	constexpr
-			(	not i_vLeft.Term.IsConjunctive
-			or	i_vRight.Term.IsNested
+			(	i_vRight.Term.IsNested
 			or	(not i_vRight >= i_vLeft)
 			or	(... or (t_tpConjunction{} >= not i_vLeft))
 			or	(... or (compl t_tpConjunction{} >= not i_vLeft))
@@ -1799,7 +1800,6 @@ public:
 	)	(	ProtoTerm auto
 				i_vLeft
 		,	Or
-				i_vRight
 		)
 	->	ProtoDisjunctive auto
 	{	return (i_vLeft or ... or t_tpConjunction{});	}
