@@ -470,6 +470,100 @@ namespace
 	(	(T	*	((p	or	q)	and	(r	or	s)))
 	==	((p	or	q)	and	(r	or	s))
 	);
+
+	static_assert
+	(	(T	or	T)
+	==	(T)
+	);
+	static_assert
+	(	(T	or	F)
+	==	(T)
+	);
+	static_assert
+	(	(T	or	p)
+	==	(T)
+	);
+
+	static_assert
+	(	(T	or	(p	and	q))
+	==	(T)
+	);
+	static_assert
+	(	(T	or	(p	and	(q	or	r)))
+	==	(T)
+	);
+	static_assert
+	(	(T	or	((p	and	q)	or	r))
+	==	(T)
+	);
+	static_assert
+	(	(T	or	((p	and	q)	or	(r	and	s)))
+	==	(T)
+	);
+
+	static_assert
+	(	(T	or	(p	or	q))
+	==	(T)
+	);
+	static_assert
+	(	(T	or	(p	or	(q	and	r)))
+	==	(T)
+	);
+	static_assert
+	(	(T	or	((p	or	q)	and	r))
+	==	(T)
+	);
+	static_assert
+	(	(T	or	((p	or	q)	and	(r	or	s)))
+	==	(T)
+	);
+
+	static_assert
+	(	(T	+	T)
+	==	(T)
+	);
+	static_assert
+	(	(T	+	F)
+	==	(T)
+	);
+	static_assert
+	(	(T	+	p)
+	==	(T)
+	);
+
+	static_assert
+	(	(T	+	(p	and	q))
+	==	(T)
+	);
+	static_assert
+	(	(T	+	(p	and	(q	or	r)))
+	==	(T)
+	);
+	static_assert
+	(	(T	+	((p	and	q)	or	r))
+	==	(T)
+	);
+	static_assert
+	(	(T	+	((p	and	q)	or	(r	and	s)))
+	==	(T)
+	);
+
+	static_assert
+	(	(T	+	(p	or	q))
+	==	(T)
+	);
+	static_assert
+	(	(T	+	(p	or	(q	and	r)))
+	==	(T)
+	);
+	static_assert
+	(	(T	+	((p	or	q)	and	r))
+	==	(T)
+	);
+	static_assert
+	(	(T	+	((p	or	q)	and	(r	or	s)))
+	==	(T)
+	);
 }
 
 namespace
