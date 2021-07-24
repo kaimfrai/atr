@@ -567,6 +567,198 @@ namespace
 }
 
 namespace
+	// False Operand Test
+{
+	static_assert
+	(	(F	and	T)
+	==	(F)
+	);
+	static_assert
+	(	(F	and	F)
+	==	(F)
+	);
+	static_assert
+	(	(F	and	p)
+	==	(F)
+	);
+
+	static_assert
+	(	(F	and	(p	and	q))
+	==	(F)
+	);
+	static_assert
+	(	(F	and	(p	and	(q	or	r)))
+	==	(F)
+	);
+	static_assert
+	(	(F	and	((p	and	q)	or	r))
+	==	(F)
+	);
+	static_assert
+	(	(F	and	((p	and	q)	or	(r	and	s)))
+	==	(F)
+	);
+
+	static_assert
+	(	(F	and	(p	or	q))
+	==	(F)
+	);
+	static_assert
+	(	(F	and	(p	or	(q	and	r)))
+	==	(F)
+	);
+	static_assert
+	(	(F	and	((p	or	q)	and	r))
+	==	(F)
+	);
+	static_assert
+	(	(F	and	((p	or	q)	and	(r	or	s)))
+	==	(F)
+	);
+
+	static_assert
+	(	(F	*	T)
+	==	(F)
+	);
+	static_assert
+	(	(F	*	F)
+	==	(F)
+	);
+	static_assert
+	(	(F	*	p)
+	==	(F)
+	);
+
+	static_assert
+	(	(F	*	(p	and	q))
+	==	(F)
+	);
+	static_assert
+	(	(F	*	(p	and	(q	or	r)))
+	==	(F)
+	);
+	static_assert
+	(	(F	*	((p	and	q)	or	r))
+	==	(F)
+	);
+	static_assert
+	(	(F	*	((p	and	q)	or	(r	and	s)))
+	==	(F)
+	);
+
+	static_assert
+	(	(F	*	(p	or	q))
+	==	(F)
+	);
+	static_assert
+	(	(F	*	(p	or	(q	and	r)))
+	==	(F)
+	);
+	static_assert
+	(	(F	*	((p	or	q)	and	r))
+	==	(F)
+	);
+	static_assert
+	(	(F	*	((p	or	q)	and	(r	or	s)))
+	==	(F)
+	);
+
+	static_assert
+	(	(F	or	T)
+	==	(T)
+	);
+	static_assert
+	(	(F	or	F)
+	==	(F)
+	);
+	static_assert
+	(	(F	or	p)
+	==	(p)
+	);
+
+	static_assert
+	(	(F	or	(p	and	q))
+	==	(p	and	q)
+	);
+	static_assert
+	(	(F	or	(p	and	(q	or	r)))
+	==	(p	and	(q	or	r))
+	);
+	static_assert
+	(	(F	or	((p	and	q)	or	r))
+	==	((p	and	q)	or	r)
+	);
+	static_assert
+	(	(F	or	((p	and	q)	or	(r	and	s)))
+	==	((p	and	q)	or	(r	and	s))
+	);
+
+	static_assert
+	(	(F	or	(p	or	q))
+	==	(p	or	q)
+	);
+	static_assert
+	(	(F	or	(p	or	(q	and	r)))
+	==	(p	or	(q	and	r))
+	);
+	static_assert
+	(	(F	or	((p	or	q)	and	r))
+	==	((p	or	q)	and	r)
+	);
+	static_assert
+	(	(F	or	((p	or	q)	and	(r	or	s)))
+	==	((p	or	q)	and	(r	or	s))
+	);
+
+	static_assert
+	(	(F	+	T)
+	==	(T)
+	);
+	static_assert
+	(	(F	+	F)
+	==	(F)
+	);
+	static_assert
+	(	(F	+	p)
+	==	(p)
+	);
+
+	static_assert
+	(	(F	+	(p	and	q))
+	==	(p	and	q)
+	);
+	static_assert
+	(	(F	+	(p	and	(q	or	r)))
+	==	(p	and	(q	or	r))
+	);
+	static_assert
+	(	(F	+	((p	and	q)	or	r))
+	==	((p	and	q)	or	r)
+	);
+	static_assert
+	(	(F	+	((p	and	q)	or	(r	and	s)))
+	==	((p	and	q)	or	(r	and	s))
+	);
+
+	static_assert
+	(	(F	+	(p	or	q))
+	==	(p	or	q)
+	);
+	static_assert
+	(	(F	+	(p	or	(q	and	r)))
+	==	(p	or	(q	and	r))
+	);
+	static_assert
+	(	(F	+	((p	or	q)	and	r))
+	==	((p	or	q)	and	r)
+	);
+	static_assert
+	(	(F	+	((p	or	q)	and	(r	or	s)))
+	==	((p	or	q)	and	(r	or	s))
+	);
+}
+
+namespace
 	Literal_X_Literal
 {
 
