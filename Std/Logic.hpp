@@ -1627,7 +1627,7 @@ public:
 		if	constexpr(i_vRight.Term.IsConjunctive)
 			return (... and (t_tpConjunction{} >= i_vRight));
 		else
-			return True{} == (not i_vLeft or i_vRight);
+			return True{} == (*not i_vLeft or i_vRight);
 	}
 
 	friend

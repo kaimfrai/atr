@@ -59,11 +59,11 @@ static_assert
 );
 static_assert
 (	(p	+	((p	and	q)	or	(r	and	q)))
-==	(p	or	(r	and	q))
+==	(p	or	(q	and	r))
 );
 static_assert
 (	(p	+	((p	and	q)	or	(r	and	!q)))
-==	(p	or	(r	and	!q))
+==	(p	or	(!q	and	r))
 );
 static_assert
 (	(p	+	((p	and	q)	or	(r	and	s)))
