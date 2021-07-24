@@ -44,20 +44,20 @@ static_assert(ExpectType<
 >);
 static_assert(ExpectType<
 	!	p
-,	Not<P>
+,	Not <P>
 >);
 static_assert(ExpectType<
 	~	p
-,	Not<P>
+,	Not <P>
 >);
 
 static_assert(ExpectType<
 	*	!p
-,	Not<P>
+,	Not <P>
 >);
 static_assert(ExpectType<
 	+	!p
-,	Not<P>
+,	Not <P>
 >);
 static_assert(ExpectType<
 	!	!p
