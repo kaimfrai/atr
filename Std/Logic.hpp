@@ -929,11 +929,11 @@ public:
 		=	true
 	};
 
-	static_assert
-	(	sizeof...(t_tpDisjunction)
-	>=	2ul
-	,	"Conjunction must contain at least two clauses."
-	);
+// 	static_assert
+// 	(	sizeof...(t_tpDisjunction)
+// 	>=	2ul
+// 	,	"Conjunction must contain at least two clauses."
+// 	);
 
 	static auto constexpr
 	(	ContainsOnce
@@ -953,27 +953,27 @@ public:
 		;
 	}
 
-	static_assert
-	(	(	...
-		and ContainsOnce
-			(	t_tpDisjunction
-				{}
-			)
-		)
-	,	"Conjunction mustn't contain subsuming clauses."
-	);
-
-	static_assert
-	(	(	...
-		and not
-			ContainsOnce
-			(	not
-				t_tpDisjunction
-				{}
-			)
-		)
-	,	"Conjunction mustn't contain contradictory clauses."
-	);
+// 	static_assert
+// 	(	(	...
+// 		and ContainsOnce
+// 			(	t_tpDisjunction
+// 				{}
+// 			)
+// 		)
+// 	,	"Conjunction mustn't contain subsuming clauses."
+// 	);
+//
+// 	static_assert
+// 	(	(	...
+// 		and not
+// 			ContainsOnce
+// 			(	not
+// 				t_tpDisjunction
+// 				{}
+// 			)
+// 		)
+// 	,	"Conjunction mustn't contain contradictory clauses."
+// 	);
 
 	friend
 	auto constexpr
@@ -1220,8 +1220,11 @@ public:
 			(	i_vLeft.Term.IsNested
 			or	i_vRight.Term.IsNested
 			or	i_vLeft >= i_vRight
-			or	(	(... or (i_vLeft >= t_tpDisjunction{}))
-				and	(... or (i_vLeft >= compl t_tpDisjunction{}))
+			or	(	(i_vLeft != compl i_vRight)
+				and	...
+				and	(	(i_vLeft >= t_tpDisjunction{})
+					or	(i_vLeft >= not t_tpDisjunction{})
+					)
 				)
 			)
 			return (... * (i_vLeft or t_tpDisjunction{}));
@@ -1494,27 +1497,27 @@ public:
 		;
 	}
 
-	static_assert
-	(	(	...
-		and ContainsOnce
-			(	t_tpConjunction
-				{}
-			)
-		)
-	,	"Disjunction mustn't contain subsuming clauses."
-	);
-
-	static_assert
-	(	(	...
-		and not
-			ContainsOnce
-			(	not
-				t_tpConjunction
-				{}
-			)
-		)
-	,	"Disjunction mustn't contain contradictory clauses."
-	);
+// 	static_assert
+// 	(	(	...
+// 		and ContainsOnce
+// 			(	t_tpConjunction
+// 				{}
+// 			)
+// 		)
+// 	,	"Disjunction mustn't contain subsuming clauses."
+// 	);
+//
+// 	static_assert
+// 	(	(	...
+// 		and not
+// 			ContainsOnce
+// 			(	not
+// 				t_tpConjunction
+// 				{}
+// 			)
+// 		)
+// 	,	"Disjunction mustn't contain contradictory clauses."
+// 	);
 
 	friend
 	auto constexpr
@@ -1722,8 +1725,11 @@ public:
 			(	not i_vLeft.Term.IsConjunctive
 			or	i_vRight.Term.IsNested
 			or	i_vRight >= i_vLeft
-			or	(	(... or (t_tpConjunction{} >= i_vLeft))
-				and	(... or (compl t_tpConjunction{} >= i_vLeft))
+			or	(	(i_vLeft != compl i_vRight)
+				and	...
+				and (	(t_tpConjunction{} >= i_vLeft)
+					or	(not t_tpConjunction{} >= i_vLeft)
+					)
 				)
 			)
 			return (... + (i_vLeft and t_tpConjunction{}));
