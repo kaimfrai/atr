@@ -472,22 +472,6 @@ namespace
 	);
 }
 
-auto static constexpr f = (T	*	((p	or	q)	and	(r	or	s)));
-auto static constexpr g = ((p	or	q)	and	(r	or	s));
-auto static constexpr h = not g or f;
-static auto constexpr j
-	=  (!p and !q)
-	or (!r and !s)
-	or p//(p and r)
-// 			or (q and r)
-// 			or (p and s)
-// 			 or (q and s)
-;
-static auto constexpr k = (j * !s);
-static auto constexpr l = (!r and !s and !p and q) or k;
-// static_assert(g >= f);
-
-
 namespace
 	Literal_X_Literal
 {

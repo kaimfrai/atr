@@ -1248,8 +1248,9 @@ public:
 		if	constexpr
 			(	i_vRight.Term.IsNested
 			or	(i_vLeft >= not i_vRight)
-			or	(... or (not t_tpDisjunction{} >= i_vLeft))
-			or	(... or (not t_tpDisjunction{} >= compl i_vLeft))
+			or	(... or (t_tpDisjunction{} >= i_vLeft))
+			or	(... or (t_tpDisjunction{} >= compl i_vLeft))
+			or	(... and (t_tpDisjunction::SharesLiteralWith(compl i_vLeft)))
 			)
 			return (... * (i_vLeft or t_tpDisjunction{}));
 		else
@@ -1702,6 +1703,7 @@ public:
 			or	(not i_vRight >= i_vLeft)
 			or	(... or (t_tpConjunction{} >= not i_vLeft))
 			or	(... or (compl t_tpConjunction{} >= not i_vLeft))
+			or	(... and (t_tpConjunction::SharesLiteralWith(compl i_vLeft)))
 			)
 			return (... + (i_vLeft and t_tpConjunction{}));
 		else
