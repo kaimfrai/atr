@@ -1256,7 +1256,10 @@ public:
 			(	(i_vLeft >= not i_vRight)
 			or	(... or (t_tpDisjunction{} >= i_vLeft))
 			or	(... or (t_tpDisjunction{} >= compl i_vLeft))
-			or	(... and (t_tpDisjunction::SharesLiteralWith(compl i_vLeft)))
+			or	(	(not(compl i_vRight >= i_vLeft))
+				and	...
+				and (t_tpDisjunction::SharesLiteralWith(compl i_vLeft))
+				)
 			)
 			return (... * (i_vLeft or t_tpDisjunction{}));
 		else
@@ -1736,7 +1739,11 @@ public:
 			(	not i_vLeft.Term.IsConjunctive
 			or	i_vRight.Term.IsNested
 			or	i_vRight >= i_vLeft
-			or	(	(i_vLeft != compl i_vRight)
+			or	(	(	(	...
+						+	(not t_tpConjunction{} >= i_vLeft)
+						)
+					<=	1ul
+					)
 				and	...
 				and (	(t_tpConjunction{} >= i_vLeft)
 					or	(not t_tpConjunction{} >= i_vLeft)

@@ -1,5 +1,13 @@
 #include "Shared.hpp"
 
+///	Literal
+static_assert
+(	(!p	or	p)	==	(T)
+);
+static_assert
+(	(!p	or	!p)	==	(!p)
+);
+
 ///	Conjunction 1 x 1
 static_assert
 (	(!p	or	(p	and	q))	==	(!p	or	q)
@@ -52,14 +60,6 @@ static_assert
 ///	4 Literal Conjunction 2 x 2
 static_assert
 (	(!p	or	((p	or	q)	and	(r	or	s)))	==	(!p	or	r	or	s)
-);
-
-///	Literal
-static_assert
-(	(!p	or	p)	==	(T)
-);
-static_assert
-(	(!p	or	!p)	==	(!p)
 );
 
 ///	Disjunction 1 x 1
