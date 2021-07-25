@@ -1070,7 +1070,7 @@ public:
 		if	constexpr(i_vLeft.Term.IsDisjunctive)
 			return (... and (i_vLeft >= t_tpDisjunction{}));
 		else
-			return True{} == (not i_vLeft or i_vRight);
+			return *i_vLeft >= i_vRight;
 	}
 
 	friend
@@ -1220,7 +1220,11 @@ public:
 			(	i_vLeft.Term.IsNested
 			or	i_vRight.Term.IsNested
 			or	i_vLeft >= i_vRight
-			or	(	(i_vLeft != compl i_vRight)
+			or	(	(	(	...
+						+	(i_vLeft >= not t_tpDisjunction{})
+						)
+					<=	1ul
+					)
 				and	...
 				and	(	(i_vLeft >= t_tpDisjunction{})
 					or	(i_vLeft >= not t_tpDisjunction{})
@@ -1627,7 +1631,7 @@ public:
 		if	constexpr(i_vRight.Term.IsConjunctive)
 			return (... and (t_tpConjunction{} >= i_vRight));
 		else
-			return True{} == (*not i_vLeft or i_vRight);
+			return i_vLeft >= +i_vRight;
 	}
 
 	friend
@@ -1672,13 +1676,14 @@ public:
 		)
 	->	ProtoConjunctive auto
 	{
+		if	constexpr(i_vRight.Term.IsNested)
+			return i_vLeft and +i_vRight;
+		else
 		if	constexpr(i_vLeft >= i_vRight)
 			return i_vLeft;
 		else
 		if	constexpr
-			(	not i_vLeft.Term.IsConjunctive
-			or	i_vRight.Term.IsNested
-			or	i_vLeft.SharesLiteralWith(i_vRight)
+			(	i_vLeft.SharesLiteralWith(i_vRight)
 			or	i_vLeft.SharesLiteralWith(compl i_vRight)
 			)
 			return (... + (i_vLeft and t_tpConjunction{}));
@@ -1703,8 +1708,11 @@ public:
 			(	i_vRight.Term.IsNested
 			or	(not i_vRight >= i_vLeft)
 			or	(... or (t_tpConjunction{} >= not i_vLeft))
-			or	(... or (compl t_tpConjunction{} >= not i_vLeft))
-			or	(... and (t_tpConjunction::SharesLiteralWith(compl i_vLeft)))
+			or	(... or (not t_tpConjunction{} >= not i_vLeft))
+			or	(	(not(i_vLeft >= compl i_vRight))
+				and	...
+				and	(t_tpConjunction::SharesLiteralWith(compl i_vLeft))
+				)
 			)
 			return (... + (i_vLeft and t_tpConjunction{}));
 		else

@@ -10,7 +10,6 @@ False constexpr inline F{};
 struct P : AtomBase<P> {} constexpr inline p{};
 struct Q : AtomBase<Q> {} constexpr inline q{};
 struct R : AtomBase<R> {} constexpr inline r{};
-
 struct S : AtomBase<S> {} constexpr inline s{};
 
 template
