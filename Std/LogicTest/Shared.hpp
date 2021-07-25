@@ -7,6 +7,13 @@
 True constexpr inline T{};
 False constexpr inline F{};
 
+/// Literals to be used only on the left side
+struct A : AtomBase<A> {} constexpr inline a{};
+struct B : AtomBase<B> {} constexpr inline b{};
+struct C : AtomBase<C> {} constexpr inline c{};
+struct D : AtomBase<D> {} constexpr inline d{};
+
+/// Literals to be used on either side
 struct P : AtomBase<P> {} constexpr inline p{};
 struct Q : AtomBase<Q> {} constexpr inline q{};
 struct R : AtomBase<R> {} constexpr inline r{};
