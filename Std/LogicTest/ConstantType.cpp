@@ -1,37 +1,37 @@
 #include "Shared.hpp"
 
-///	Positive
+///	True
 static_assert(ExpectType<
-	*	p
-,	Atom<P>
+	*	T
+,	True
 >);
 static_assert(ExpectType<
-	+	p
-,	Atom<P>
+	+	T
+,	True
 >);
 static_assert(ExpectType<
-	!	p
-,	Not <P>
+	!	T
+,	False
 >);
 static_assert(ExpectType<
-	~	p
-,	Not <P>
+	~	T
+,	False
 >);
 
-///	Negative
+///	False
 static_assert(ExpectType<
-	*	!p
-,	Not <P>
+	*	F
+,	False
 >);
 static_assert(ExpectType<
-	+	!p
-,	Not <P>
+	+	F
+,	False
 >);
 static_assert(ExpectType<
-	!	!p
-,	Atom<P>
+	!	F
+,	True
 >);
 static_assert(ExpectType<
-	~	!p
-,	Atom<P>
+	~	F
+,	True
 >);
