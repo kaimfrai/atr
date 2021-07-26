@@ -12,9 +12,6 @@ static_assert
 static_assert
 (	(a	or	p)	==	(a	or	p)
 );
-static_assert
-(	(a	or	!p)	==	(a	or	!p)
-);
 
 ///	Conjunction 1 x 1
 static_assert

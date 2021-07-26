@@ -4,9 +4,6 @@
 static_assert
 (	(!p	and	p)	==	(F)
 );
-static_assert
-(	(!p	and	!p)	==	(!p)
-);
 
 ///	Conjunction 1 x 1
 static_assert

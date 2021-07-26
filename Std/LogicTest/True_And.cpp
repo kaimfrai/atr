@@ -12,9 +12,6 @@ static_assert
 static_assert
 (	(T	and	p)	==	(p)
 );
-static_assert
-(	(T	and	!p)	==	(!p)
-);
 
 ///	Conjunction 1 x 1
 static_assert
