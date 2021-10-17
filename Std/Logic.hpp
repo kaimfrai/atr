@@ -929,11 +929,11 @@ public:
 		=	true
 	};
 
-// 	static_assert
-// 	(	sizeof...(t_tpDisjunction)
-// 	>=	2ul
-// 	,	"Conjunction must contain at least two clauses."
-// 	);
+	static_assert
+	(	sizeof...(t_tpDisjunction)
+	>=	2ul
+	,	"Conjunction must contain at least two clauses."
+	);
 
 	static auto constexpr
 	(	ContainsOnce
@@ -953,27 +953,27 @@ public:
 		;
 	}
 
-// 	static_assert
-// 	(	(	...
-// 		and ContainsOnce
-// 			(	t_tpDisjunction
-// 				{}
-// 			)
-// 		)
-// 	,	"Conjunction mustn't contain subsuming clauses."
-// 	);
-//
-// 	static_assert
-// 	(	(	...
-// 		and not
-// 			ContainsOnce
-// 			(	not
-// 				t_tpDisjunction
-// 				{}
-// 			)
-// 		)
-// 	,	"Conjunction mustn't contain contradictory clauses."
-// 	);
+	static_assert
+	(	(	...
+		and ContainsOnce
+			(	t_tpDisjunction
+				{}
+			)
+		)
+	,	"Conjunction mustn't contain subsuming clauses."
+	);
+
+	static_assert
+	(	(	...
+		and not
+			ContainsOnce
+			(	not
+				t_tpDisjunction
+				{}
+			)
+		)
+	,	"Conjunction mustn't contain contradictory clauses."
+	);
 
 	friend
 	auto constexpr
@@ -1507,27 +1507,27 @@ public:
 		;
 	}
 
-// 	static_assert
-// 	(	(	...
-// 		and ContainsOnce
-// 			(	t_tpConjunction
-// 				{}
-// 			)
-// 		)
-// 	,	"Disjunction mustn't contain subsuming clauses."
-// 	);
-//
-// 	static_assert
-// 	(	(	...
-// 		and not
-// 			ContainsOnce
-// 			(	not
-// 				t_tpConjunction
-// 				{}
-// 			)
-// 		)
-// 	,	"Disjunction mustn't contain contradictory clauses."
-// 	);
+	static_assert
+	(	(	...
+		and ContainsOnce
+			(	t_tpConjunction
+				{}
+			)
+		)
+	,	"Disjunction mustn't contain subsuming clauses."
+	);
+
+	static_assert
+	(	(	...
+		and not
+			ContainsOnce
+			(	not
+				t_tpConjunction
+				{}
+			)
+		)
+	,	"Disjunction mustn't contain contradictory clauses."
+	);
 
 	friend
 	auto constexpr

@@ -9,9 +9,6 @@ static_assert
 static_assert
 (	(p	or	(p	and	q))	==	(p)
 );
-static_assert
-(	(!p	or	(p	and	q))	==	(!p	or	q)
-);
 
 ///	Conjunction 1 x 2
 static_assert
