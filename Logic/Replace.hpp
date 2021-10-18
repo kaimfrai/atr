@@ -1,37 +1,65 @@
 #pragma once
 
-#include "MakeTerm.hpp"
 #include "Types.hpp"
 #include "Concepts.hpp"
+
+template
+	<	ProtoTerm
+			t_tSubTerm
+	,	ProtoTerm
+			t_tReplacement
+	>
+struct
+	ReplaceItem
+{
+	auto consteval
+	(	operator()
+	)	(	t_tSubTerm
+		)	const
+	->	t_tReplacement
+	{	return{};	}
+};
 
 /// Replaces all instances of a given sub-Term within a Term and returns the
 /// modified term.
 template
 	<	ProtoTerm
-			t_tSubTerm
+		...	t_tpSubTerm
 	>
 struct
 	Replace
 {
 	consteval
 	(	Replace
-	)	(	t_tSubTerm
+	)	(	t_tpSubTerm
+			...
 		)
 	{}
 
 	template
 		<	ProtoTerm
-				t_tReplacement
+			...	t_tpReplacement
 		>
+	requires
+		(	sizeof...(t_tpSubTerm)
+		==	sizeof...(t_tpReplacement)
+		)
 	struct
 		Replacement
+	:	ReplaceItem
+		<	t_tpSubTerm
+		,	t_tpReplacement
+		>
+		...
 	{
-		auto consteval
-		(	operator()
-		)	(	t_tSubTerm
-			)	const
-		->	t_tReplacement
-		{	return{};	}
+		using
+			ReplaceItem
+			<	t_tpSubTerm
+			,	t_tpReplacement
+			>
+		::	operator()
+			...
+		;
 
 		auto consteval
 		(	operator()
@@ -49,13 +77,13 @@ struct
 		->	ProtoConjunctive auto
 		{
 			return
-				MakeConjunction
-				(	operator()
-					(	t_tpDisjunction()
-					)
-					...
+			(	operator()
+				(	t_tpDisjunction
+					()
 				)
-			;
+			bitand
+				...
+			);
 		}
 
 		template<ProtoConjunctionClause... t_tpConjunction>
@@ -66,36 +94,119 @@ struct
 		->	ProtoDisjunctive auto
 		{
 			return
-				MakeDisjunction
-				(	operator()
-					(	t_tpConjunction()
-					)
-					...
+			(	operator()
+				(	t_tpConjunction
+					()
 				)
-			;
+			bitor
+				...
+			);
 		}
 	};
 
 	template
 		<	ProtoTerm
-				t_tReplacement
+			...	t_tpReplacement
 		>
 	auto consteval
-	(	By
-	)	(	t_tReplacement
+	(	operator()
+	)	(	t_tpReplacement
+			...
 		)	const
-	->	Replacement<t_tReplacement>
+	->	Replacement<t_tpReplacement...>
+	{	return {};	}
+};
+
+template
+	<>
+struct
+	Replace
+	<>
+{
+	struct
+		Replacement
+	{
+		auto consteval
+		(	operator()
+		)	(	ProtoTerm auto
+					i_vTerm
+			)
+		->	ProtoTerm auto
+		{	return i_vTerm;	}
+	};
+
+	auto consteval
+	(	operator()
+	)	()	const
+	->	Replacement
 	{	return {};	}
 };
 
 template
 	<	ProtoTerm
-			t_tSubTerm
+		...	t_tpSubTerm
 	>
 (	Replace
-)	(	t_tSubTerm
+)	(	t_tpSubTerm
+		...
 	)
 ->	Replace
-	<	t_tSubTerm
+	<	t_tpSubTerm
+		...
 	>
 ;
+
+auto consteval
+(	SetTrue
+)	(	ProtoTerm auto
+		...	i_vpSubTerm
+	)
+{
+	return
+		Replace
+		(	i_vpSubTerm
+			...
+		)(	(	(void)i_vpSubTerm
+			,	True
+				()
+			)
+			...
+		)
+	;
+}
+
+auto consteval
+(	SetFalse
+)	(	ProtoTerm auto
+		...	i_vpSubTerm
+	)
+{
+	return
+		Replace
+		(	i_vpSubTerm
+			...
+		)(	(	(void)i_vpSubTerm
+			,	False
+				()
+			)
+			...
+		)
+	;
+}
+
+auto consteval
+(	SetNegated
+)	(	ProtoTerm auto
+		...	i_vpSubTerm
+	)
+{
+	return
+		Replace
+		(	i_vpSubTerm
+			...
+		)(	not
+			i_vpSubTerm
+			...
+		)
+	;
+}

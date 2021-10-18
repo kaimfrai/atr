@@ -40,21 +40,18 @@ struct
 	->	ProtoLiteral auto
 	{
 		auto constexpr
-		(	vReplaceByNegation
-		)=	Replace
+		(	fReplaceByNegation
+		)=	SetNegated
 			(	t_tFilterLiteral
-				()
-			)
-		.	By(	not
-				t_tFilterLiteral
 				()
 			)
 		;
 
 		ProtoConjunctionClause auto constexpr
 		(	vReplacedConjunction
-		)=	(	vReplaceByNegation
-				(	t_tpClauseLiteral()
+		)=	(	fReplaceByNegation
+				(	t_tpClauseLiteral
+					()
 				)
 			bitand
 				...
@@ -70,10 +67,16 @@ struct
 			//	cancel this literal if it is not present
 			//	or negation is present
 			//	or True is present
-			return True();
+			return
+				True
+				()
+			;
 		else
 			//	retain this literal
-			return t_tFilterLiteral();
+			return
+				t_tFilterLiteral
+				()
+			;
 	}
 };
 
@@ -121,6 +124,58 @@ struct
 		)
 	{}
 
+	static auto consteval
+	(	IsFalse
+	)	()
+	->	bool
+	{
+		ProtoConjunctionClause auto constexpr
+			vSimplified
+		=(	t_tpLiteral
+			()
+		bitand
+			...
+		);
+
+		return
+			vSimplified
+		==	False
+			()
+		;
+	}
+
+	static auto consteval
+	(	AssumeTrue
+	)	(	ProtoConjunctionClause auto
+			...	i_vpClause
+		)
+	->	bool
+	{
+		auto constexpr
+			fAssumeLiteralsTrue
+		=	SetTrue
+			(	t_tpLiteral
+				()
+				...
+			)
+		;
+
+		ProtoDisjunctive auto constexpr
+			vSimplifiedDisjunction
+		=(	fAssumeLiteralsTrue
+			(	i_vpClause
+			)
+		bitor
+			...
+		);
+
+		return
+			vSimplifiedDisjunction
+		==	True
+			()
+		;
+	}
+
 	auto consteval
 	(	operator()
 	)	(	ProtoConjunctionClause auto
@@ -128,9 +183,25 @@ struct
 		)	const
 	->	ProtoConjunctionClause auto
 	{
-		auto constexpr
-			vContextSimplified
-		=	(	LiteralFilter
+		if	constexpr
+			(	//	False => AnyTerm
+				IsFalse
+				()
+			or	//	True => True
+				AssumeTrue
+				(	i_vpClause
+					...
+				)
+			)
+			//	cancel this clause
+			return
+				False
+				()
+			;
+		else
+			//	filter literals within this clause
+			return
+			(	LiteralFilter
 				(	t_tpLiteral()
 				,	t_tpLiteral()
 					...
@@ -139,22 +210,7 @@ struct
 				)
 			bitand
 				...
-			)
-		;
-
-		auto constexpr
-			vDisjunction
-		=	(	i_vpClause
-			bitor
-				...
-			)
-		;
-		if	constexpr(vContextSimplified >= vDisjunction)
-			//	cancel this clause
-			return False();
-		else
-			//	retain this clause
-			return vContextSimplified;
+			);
 	}
 };
 
@@ -207,12 +263,8 @@ struct
 	{
 		auto constexpr
 			fReplace
-		=	Replace
+		=	SetFalse
 			(	t_tFilterClause
-				()
-			)
-		.	By
-			(	False
 				()
 			)
 		;
@@ -364,7 +416,7 @@ auto consteval
 	)
 ->	ProtoDisjunctive auto
 {
-	auto constexpr
+	ProtoConjunctionClause auto constexpr
 		vSimplified
 	=	LiteralClauseFilter
 		(	i_vNewClause
@@ -372,6 +424,7 @@ auto consteval
 			...
 		)
 	;
+
 	if	constexpr
 		(	vSimplified
 		==	i_vNewClause
