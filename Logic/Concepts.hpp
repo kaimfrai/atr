@@ -145,4 +145,8 @@ concept
 =	std::is_class_v
 	<	t_tProto
 	>
+and	not
+	ProtoTerm
+	<	t_tProto
+	>
 ;

@@ -51,165 +51,238 @@ auto consteval
 export namespace
 	Logic
 {
-
+	///	Wraps around a logical term which will be as simplified as possible.
+	//	Wrapping ensures that the invariant of the template can never be
+	///	violated from outside the module by means of specialization or
+	///	type deduction, which is not possible without access to the template
+	///	and type definitions.
 	template
-		<	ProtoTerm auto
-				t_vTerm
+		<	ProtoTerm
+				t_tTerm
 		>
 	struct
-		TermBase
+		Term
 	{
-		friend auto consteval
-		(	operator >=
-		)	(	TermBase const
-				&
-			,	ProtoTerm auto
-					i_vRight
-			)
-		->	bool
-		{	return t_vTerm >= i_vRight;	}
+		consteval
+		(	Term
+		)	()
+		=	default
+		;
 
-		friend auto consteval
-		(	operator >=
-		)	(	ProtoTerm auto
-					i_vLeft
-			,	TermBase const
-				&
+		explicit consteval
+		(	Term
+		)	(	t_tTerm
 			)
-		->	bool
-		{	return i_vLeft >= t_vTerm;	}
-
-		template<ProtoTerm auto t_vRightTerm>
-		friend auto consteval
-		(	operator >=
-		)	(	TermBase const
-				&
-			,	TermBase<t_vRightTerm> const
-				&
-			)
-		->	bool
-		{	return t_vTerm >= t_vRightTerm;	}
-
-		friend auto consteval
-		(	operator ==
-		)	(	TermBase const
-				&
-			,	ProtoTerm auto
-					i_vRight
-			)
-		->	bool
-		{	return t_vTerm == i_vRight;	}
-
-		template<ProtoTerm auto t_vRightTerm>
-		friend auto consteval
-		(	operator ==
-		)	(	ProtoTerm auto
-					i_vLeft
-			,	TermBase const
-				&
-			)
-		->	bool
-		{	return i_vLeft == t_vTerm;	}
-
-		template<ProtoTerm auto t_vRightTerm>
-		friend auto consteval
-		(	operator ==
-		)	(	TermBase const
-				&
-			,	TermBase<t_vRightTerm> const
-				&
-			)
-		->	bool
-		{	return t_vTerm == t_vRightTerm;	}
-
-		friend auto consteval
-		(	operator not
-		)	(	TermBase const
-				&
-			)
-		->	ProtoTerm auto
-		{	return not t_vTerm;	}
-
-		friend auto consteval
-		(	operator and
-		)	(	TermBase const
-				&
-			,	ProtoTerm auto
-					i_vRight
-			)
-		->	ProtoConjunctive auto
-		{	return t_vTerm and i_vRight;	}
-
-
-		friend auto consteval
-		(	operator and
-		)	(	ProtoTerm auto
-					i_vLeft
-			,	TermBase const
-				&
-			)
-		->	ProtoConjunctive auto
-		{	return i_vLeft and t_vTerm;	}
-
-		template
-			<	ProtoTerm auto
-					t_vRightTerm
-			>
-		friend auto consteval
-		(	operator and
-		)	(	TermBase const
-				&
-			,	TermBase<t_vRightTerm> const
-				&
-			)
-		->	ProtoConjunctive auto
-		{	return t_vTerm and t_vRightTerm;	}
-
-		friend auto consteval
-		(	operator or
-		)	(	TermBase const
-				&
-			,	ProtoTerm auto
-					i_vRight
-			)
-		->	ProtoDisjunctive auto
-		{	return t_vTerm or i_vRight;	}
-
-		friend auto consteval
-		(	operator or
-		)	(	ProtoTerm auto
-					i_vLeft
-			,	TermBase const
-				&
-			)
-		->	ProtoDisjunctive auto
-		{	return i_vLeft or t_vTerm;	}
-
-		template
-			<	ProtoTerm auto
-					t_vRightTerm
-			>
-		friend auto consteval
-		(	operator or
-		)	(	TermBase const
-				&
-			,	TermBase<t_vRightTerm> const
-				&
-			)
-		->	ProtoDisjunctive auto
-		{	return t_vTerm or t_vRightTerm;	}
+		{}
 	};
 
+	///	Deduce type from argument.
+	template
+		<	ProtoTerm
+				t_tTerm
+		>
+	(	Term
+	)	(	t_tTerm
+		)
+	->	Term
+		<	t_tTerm
+		>
+	;
+
+	///	Checks if the left term implies the right term.
+	template
+		<	ProtoTerm
+				t_tLeftTerm
+		,	ProtoTerm
+				t_tRightTerm
+		>
+	auto consteval
+	(	operator >=
+	)	(	Term<t_tLeftTerm>
+		,	Term<t_tRightTerm>
+		)
+	->	bool
+	{	return
+		(	t_tLeftTerm{}
+		>=	t_tRightTerm{}
+		);
+	}
+
+	///	Checks if the left term is implied by the right term.
+	template
+		<	ProtoTerm
+				t_tLeftTerm
+		,	ProtoTerm
+				t_tRightTerm
+		>
+	auto consteval
+	(	operator <=
+	)	(	Term<t_tLeftTerm>
+		,	Term<t_tRightTerm>
+		)
+	->	bool
+	{	return
+		(	t_tLeftTerm{}
+		<=	t_tRightTerm{}
+		);
+	}
+
+	///	Checks the two given terms for equivalence.
+	///	Note that identical terms are always equivalent.
+	template
+		<	ProtoTerm
+				t_tLeftTerm
+		,	ProtoTerm
+				t_tRightTerm
+		>
+	auto consteval
+	(	operator <=>
+	)	(	Term<t_tLeftTerm>
+		,	Term<t_tRightTerm>
+		)
+	->	bool
+	{	return
+		(	t_tLeftTerm{}
+		<=>	t_tRightTerm{}
+		);
+	}
+
+	///	Checks the two given terms for identity.
+	///	Note that this is not the same as equivalence.
+	template
+		<	ProtoTerm
+				t_tLeftTerm
+		,	ProtoTerm
+				t_tRightTerm
+		>
+	auto consteval
+	(	operator ==
+	)	(	Term<t_tLeftTerm>
+		,	Term<t_tRightTerm>
+		)
+	->	bool
+	{	return
+		(	t_tLeftTerm{}
+		==	t_tRightTerm{}
+		);
+	}
+
+	///	Forms the negation of the given term.
+	template
+		<	ProtoTerm
+				t_tTerm
+		>
+	auto consteval
+	(	operator not
+	)	(	Term<t_tTerm>
+		)
+	{
+		return
+		Term
+		{	not
+			t_tTerm
+			{}
+		};
+	}
+
+	///	Forms the Conjunction of the two given terms.
+	template
+		<	ProtoTerm
+				t_tLeftTerm
+		,	ProtoTerm
+				t_tRightTerm
+		>
+	auto consteval
+	(	operator and
+	)	(	Term<t_tLeftTerm>
+		,	Term<t_tRightTerm>
+		)
+	{	return
+		Term
+		{	t_tLeftTerm{}
+		and t_tRightTerm{}
+		};
+	}
+
+	///	Forms the Disjunction of the two given terms.
+	template
+		<	ProtoTerm
+				t_tLeftTerm
+		,	ProtoTerm
+				t_tRightTerm
+		>
+	auto consteval
+	(	operator or
+	)	(	Term<t_tLeftTerm>
+		,	Term<t_tRightTerm>
+		)
+	{	return
+		Term
+		{	t_tLeftTerm{}
+		or	t_tRightTerm{}
+		};
+	}
+
+	///	Convenience alias to create a term for an atomic predicate.
+	///	Intended for CRTP use.
+	///	Note that being default constructible and callable is a requirement,
+	///	which cannot be checked as the type will be incomplete at this point.
 	template
 		<	ProtoAtom
 				t_tAtom
 		>
 	using
-		AtomBase
-	=	TermBase
+		AtomTerm
+	=	Term
 		<	Atom
 			<	t_tAtom
-			>{}
+			>
+		>
+	;
+
+	///	Convenience alias to create a term for a conjunction of an atomic
+	///	predicate and an existing term.
+	///	Intended for CRTP use.
+	///	Note that being default constructible and callable is a requirement,
+	///	which cannot be checked as the type will be incomplete at this point.
+	template
+		<	ProtoAtom
+				t_tAtom
+		,	Term
+				i_vTerm
+		>
+	using
+		Conjunction
+	=	Term
+		<	decltype
+			(	AtomTerm
+				<	t_tAtom
+				>{}
+			and	i_vTerm
+			)
+		>
+	;
+
+	///	Convenience alias to create a term for a disjunction of an atomic
+	///	predicate and an existing term.
+	///	Intended for CRTP use.
+	///	Note that being default constructible and callable is a requirement,
+	///	which cannot be checked as the type will be incomplete at this point.
+	template
+		<	ProtoAtom
+				t_tAtom
+		,	Term
+				i_vTerm
+		>
+	using
+		Disjunction
+	=	Term
+		<	decltype
+			(	AtomTerm
+				<	t_tAtom
+				>{}
+			or	i_vTerm
+			)
 		>
 	;
 }
@@ -219,20 +292,20 @@ module
 ;
 
 using namespace Logic;
-True constexpr inline T{};
-False constexpr inline F{};
+Term<True> constexpr inline T{};
+Term<False> constexpr inline F{};
 
 /// Literals to be used only on the left side
-struct A : AtomBase<A> {} constexpr inline a{};
-struct B : AtomBase<B> {} constexpr inline b{};
-struct C : AtomBase<C> {} constexpr inline c{};
-struct D : AtomBase<D> {} constexpr inline d{};
+struct A : AtomTerm<A> {} constexpr inline a{};
+struct B : AtomTerm<B> {} constexpr inline b{};
+struct C : AtomTerm<C> {} constexpr inline c{};
+struct D : AtomTerm<D> {} constexpr inline d{};
 
 /// Literals to be used on either side
-struct P : AtomBase<P> {} constexpr inline p{};
-struct Q : AtomBase<Q> {} constexpr inline q{};
-struct R : AtomBase<R> {} constexpr inline r{};
-struct S : AtomBase<S> {} constexpr inline s{};
+struct P : AtomTerm<P> {} constexpr inline p{};
+struct Q : AtomTerm<Q> {} constexpr inline q{};
+struct R : AtomTerm<R> {} constexpr inline r{};
+struct S : AtomTerm<S> {} constexpr inline s{};
 
 /// ****************************************************************************
 ///	Tests for Concepts
@@ -442,8 +515,6 @@ static_assert
 static_assert
 (	(p	or	((p	and	q)	or	(r	and	s)))	==	(p	or	(r	and	s))
 );
-
-
 
 
 
