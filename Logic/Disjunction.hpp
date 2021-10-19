@@ -6,7 +6,7 @@
 
 auto consteval
 (	operator or
-)	(	ProtoClause auto
+)	(	ProtoTerm auto
 			i_vLeft
 	,	ProtoClause auto
 			i_vRight
@@ -15,8 +15,8 @@ auto consteval
 {
 	return
 	DisjunctionSimplifier
-	{	i_vRight
-	}(	i_vLeft
+	{	i_vLeft
+	}(	i_vRight
 	);
 }
 
@@ -26,35 +26,15 @@ template
 	>
 auto consteval
 (	operator or
-)	(	ProtoClause auto
+)	(	ProtoTerm auto
 			i_vLeft
 	,	Or<t_tpRightClause...>
-			i_vRight
 	)
 ->	ProtoTerm auto
 {
 	return
-	DisjunctionSimplifier
-	{	i_vRight
-	}(	i_vLeft
-	);
-}
-
-template
-	<	ProtoClause
-		...	t_tpLeftClause
-	>
-auto consteval
-(	operator or
-)	(	Or<t_tpLeftClause...>
-	,	ProtoTerm auto
-			i_vRight
-	)
-->	ProtoTerm auto
-{
-	return
-	(	t_tpLeftClause{}
+	(	i_vLeft
 	or	...
-	or	i_vRight
+	or	t_tpRightClause{}
 	);
 }

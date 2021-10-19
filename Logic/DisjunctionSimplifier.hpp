@@ -61,13 +61,13 @@ struct
 		;
 		ProtoTerm auto constexpr
 			vSimplified
-		=(	SelfIgnoringRedundantClauseFilter
+		=(	...
+		or	SelfIgnoringRedundantClauseFilter
 			{	t_tpOldClause{}
-			}(	i_vNewClause
-			,	t_tpOldClause{}
+			}(	t_tpOldClause{}
 				...
+			,	i_vNewClause
 			)
-		or	...
 		);
 
 		if	constexpr
@@ -76,17 +76,16 @@ struct
 			)
 			return
 			Disjunction
-			(	i_vNewClause
-			,	t_tpOldClause{}
+			(	t_tpOldClause{}
 				...
+			,	i_vNewClause
 			);
 		else
 			return
-				i_vNewClause
-			or	vSimplified
-			;
+			(	vSimplified
+			or	i_vNewClause
+			);
 	}
-
 
 	auto consteval
 	(	operator()
@@ -118,8 +117,6 @@ struct
 			(	vSimplified
 			);
 	}
-
-
 };
 
 template

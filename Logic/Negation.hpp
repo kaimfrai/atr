@@ -86,8 +86,8 @@ auto consteval
 		);
 	else
 		return
-		(	not
+		(	...
+		and	not
 			t_tpClause{}
-		and	...
 		);
 }

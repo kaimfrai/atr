@@ -19,7 +19,8 @@ struct
 	auto consteval
 	(	operator()
 	)	(	auto
-			&&
+				&&
+			...
 		)	const
 	->	bool
 	{	return t_bConstant;	}

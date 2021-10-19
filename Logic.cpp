@@ -216,19 +216,19 @@ export namespace
 	///	Note that being default constructible and callable is a requirement,
 	///	which cannot be checked as the type will be incomplete at this point.
 	template
-		<	ProtoAtom
-				t_tAtom
-		,	Term
+		<	Term
 				i_vTerm
+		,	ProtoAtom
+				t_tAtom
 		>
 	using
 		Conjunction
 	=	Term
 		<	decltype
-			(	AtomTerm
+			(	i_vTerm
+			and	AtomTerm
 				<	t_tAtom
 				>{}
-			and	i_vTerm
 			)
 		>
 	;
@@ -239,19 +239,19 @@ export namespace
 	///	Note that being default constructible and callable is a requirement,
 	///	which cannot be checked as the type will be incomplete at this point.
 	template
-		<	ProtoAtom
-				t_tAtom
-		,	Term
+		<	Term
 				i_vTerm
+		,	ProtoAtom
+				t_tAtom
 		>
 	using
 		Disjunction
 	=	Term
 		<	decltype
-			(	AtomTerm
+			(	i_vTerm
+			or	AtomTerm
 				<	t_tAtom
 				>{}
-			or	i_vTerm
 			)
 		>
 	;
@@ -384,6 +384,8 @@ static_assert(not
 /// ****************************************************************************
 
 ///	Literal
+
+auto constexpr inline f = p or p;
 static_assert
 (	(p	or	p)	==	(p)
 );
@@ -534,7 +536,7 @@ static_assert
 (	(!p	or	((p	or	q)	and	(!p	or	r)))	==	(!p	or	r)
 );
 static_assert
-(	(!p	or	((p	or	q)	and	(q	or	r)))	==	(!p	or	r	or	q)
+(	(!p	or	((p	or	q)	and	(q	or	r)))	<=>	(!p	or	r	or	q)
 );
 static_assert
 (	(!p	or	((p	or	q)	and	(!q	or	r)))	==	(!p	or	!q	or	r)
@@ -549,7 +551,7 @@ static_assert
 (	(!p	or	((p	or	q)	and	(r	or	q)))	==	(!p	or	r	or	q)
 );
 static_assert
-(	(!p	or	((p	or	q)	and	(r	or	!q)))	==	(!p	or	!q	or	r)
+(	(!p	or	((p	or	q)	and	(r	or	!q)))	<=>	(!p	or	!q	or	r)
 );
 
 ///	4 Literal Conjunction 2 x 2
@@ -651,10 +653,10 @@ static_assert
 (	(p	and	((p	or	q)	and	(!p	or	r)))	==	(p	and	r)
 );
 static_assert
-(	(p	and	((p	or	q)	and	(q	or	r)))	==	(p	and	(r	or	q))
+(	(p	and	((p	or	q)	and	(q	or	r)))	<=>	(p	and	(r	or	q))
 );
 static_assert
-(	(p	and	((p	or	q)	and	(!q	or	r)))	==	(p	and	(!q	or	r))
+(	(p	and	((p	or	q)	and	(!q	or	r)))	<=>	(p	and	(!q	or	r))
 );
 static_assert
 (	(p	and	((p	or	q)	and	(r	or	p)))	==	(p)
@@ -666,7 +668,7 @@ static_assert
 (	(p	and	((p	or	q)	and	(r	or	q)))	==	(p	and	(r	or	q))
 );
 static_assert
-(	(p	and	((p	or	q)	and	(r	or	!q)))	==	(p	and	(!q	or	r))
+(	(p	and	((p	or	q)	and	(r	or	!q)))	<=>	(p	and	(!q	or	r))
 );
 
 ///	4 Literal Conjunction 2 x 2
@@ -756,18 +758,18 @@ static_assert
 
 ///	2 Literal Conjunction 2 x 2
 static_assert
-(	(!p	and	((p	or	q)	and	(!p	or	!q)))	==	(q	and	!p)
+(	(!p	and	((p	or	q)	and	(!p	or	!q)))	<=>	(q	and	!p)
 );
 static_assert
-(	(!p	and	((p	or	q)	and	(!q	or	!p)))	==	(q	and	!p)
+(	(!p	and	((p	or	q)	and	(!q	or	!p)))	<=>	(q	and	!p)
 );
 
 ///	3 Literal Conjunction 2 x 2
 static_assert
-(	(!p	and	((p	or	q)	and	(p	or	r)))	==	(!p	and	q	and	r)
+(	(!p	and	((p	or	q)	and	(p	or	r)))	<=>	(!p	and	q	and	r)
 );
 static_assert
-(	(!p	and	((p	or	q)	and	(!p	or	r)))	==	(q	and	!p)
+(	(!p	and	((p	or	q)	and	(!p	or	r)))	<=>	(q	and	!p)
 );
 static_assert
 (	(!p	and	((p	or	q)	and	(q	or	r)))	==	(!p	and	q)
@@ -779,7 +781,7 @@ static_assert
 (	(!p	and	((p	or	q)	and	(r	or	p)))	==	(!p	and	q	and	r)
 );
 static_assert
-(	(!p	and	((p	or	q)	and	(r	or	!p)))	==	(q	and	!p)
+(	(!p	and	((p	or	q)	and	(r	or	!p)))	<=>	(q	and	!p)
 );
 static_assert
 (	(!p	and	((p	or	q)	and	(r	or	q)))	==	(!p	and	q)

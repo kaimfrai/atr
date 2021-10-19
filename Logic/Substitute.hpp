@@ -80,10 +80,10 @@ struct
 		->	ProtoTerm auto
 		{
 			return
-			(	operator()
+			(	...
+			and	operator()
 				(	t_tpLiteral{}
 				)
-			and	...
 			);
 		}
 
@@ -98,10 +98,10 @@ struct
 		->	ProtoTerm auto
 		{
 			return
-			(	operator()
+			(	...
+			or	operator()
 				(	t_tpClause{}
 				)
-			or	...
 			);
 		}
 	};

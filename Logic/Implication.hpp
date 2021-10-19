@@ -66,7 +66,6 @@ template
 auto consteval
 (	operator >=
 )	(	Or<t_tpLeftClause...>
-			i_vLeft
 	,	ProtoTerm auto
 			i_vRight
 	)

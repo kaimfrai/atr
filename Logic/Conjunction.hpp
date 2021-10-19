@@ -7,9 +7,9 @@
 
 auto consteval
 (	operator and
-)	(	ProtoLiteral auto
+)	(	ProtoClause auto
 			i_vLeft
-	,	ProtoClause auto
+	,	ProtoLiteral auto
 			i_vRight
 	)
 ->	ProtoClause auto
@@ -25,20 +25,20 @@ auto consteval
 
 template
 	<	ProtoLiteral
-		...	t_tpLeftLiteral
+		...	t_tpRightLiteral
 	>
 auto consteval
 (	operator and
-)	(	And<t_tpLeftLiteral...>
-	,	ProtoTerm auto
-			i_vRight
+)	(	ProtoTerm auto
+			i_vLeft
+	,	And<t_tpRightLiteral...>
 	)
 ->	ProtoTerm auto
 {
 	return
-	(	t_tpLeftLiteral{}
+	(	i_vLeft
 	and	...
-	and	i_vRight
+	and	t_tpRightLiteral{}
 	);
 }
 
@@ -48,17 +48,17 @@ template
 	>
 auto consteval
 (	operator and
-)	(	ProtoLiteral auto
+)	(	ProtoTerm auto
 			i_vLeft
 	,	Or<t_tpRightClause...>
 	)
 ->	ProtoTerm auto
 {
 	return
-	(	(	i_vLeft
+	(	...
+	or	(	i_vLeft
 		and	t_tpRightClause{}
 		)
-	or	...
 	);
 }
 
@@ -69,15 +69,15 @@ template
 auto consteval
 (	operator and
 )	(	Or<t_tpLeftClause...>
-	,	ProtoTerm auto
+	,	ProtoLiteral auto
 			i_vRight
 	)
 ->	ProtoTerm auto
 {
 	return
-	(	(	t_tpLeftClause{}
+	(	...
+	or	(	t_tpLeftClause{}
 		and	i_vRight
 		)
-	or	...
 	);
 }

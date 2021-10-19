@@ -48,10 +48,10 @@ struct
 
 		ProtoClause auto constexpr
 		(	vReplacedConjunction
-		)=	(	fReplaceByNegation
+		)=	(	...
+			and	fReplaceByNegation
 				(	t_tpClauseLiteral{}
 				)
-			and	...
 			)
 		;
 

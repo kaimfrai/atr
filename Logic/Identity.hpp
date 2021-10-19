@@ -80,8 +80,8 @@ auto consteval
 		;
 	else
 		return
-		(	(	t_tpClause{}
-			or	...
+		(	(	...
+			or	t_tpClause{}
 			)
 		==	True{}
 		);
@@ -122,8 +122,8 @@ auto consteval
 		;
 	else
 		return
-		(	(	t_tpLiteral{}
-			and	...
+		(	(	...
+			and	t_tpLiteral{}
 			)
 		==	False{}
 		);
@@ -136,13 +136,12 @@ template
 auto consteval
 (	IsFalse
 )	(	Or<t_tpClause...>
-			i_vTerm
 	)
 ->	bool
 {	return
-	(	IsFalse
+	(	...
+	and	IsFalse
 		(	t_tpClause{}
 		)
-	and	...
 	);
 }

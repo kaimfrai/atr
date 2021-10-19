@@ -39,8 +39,8 @@ struct
 	{
 		return
 		IsFalse
-		((	t_tpLiteral{}
-		and	...
+		((	...
+		and	t_tpLiteral{}
 		));
 	}
 
@@ -60,10 +60,10 @@ struct
 		;
 		return
 		IsTrue
-		((	fAssumeLiteralsTrue
+		((	...
+		or	fAssumeLiteralsTrue
 			(	i_vpClause
 			)
-		or	...
 		));
 	}
 
@@ -90,14 +90,14 @@ struct
 		else
 			//	filter literals within this clause
 			return
-			(	RedundantLiteralFilter
+			(	...
+			and	RedundantLiteralFilter
 				{	t_tpLiteral{}
 				,	t_tpLiteral{}
 					...
 				}(	i_vpClause
 					...
 				)
-			and	...
 			);
 	}
 };
