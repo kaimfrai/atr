@@ -7,30 +7,30 @@ template
 	<	ProtoTerm
 			t_tSubTerm
 	,	ProtoTerm
-			t_tReplacement
+			t_tSubstitute
 	>
 struct
-	ReplaceItem
+	SubstitutionItem
 {
 	auto consteval
 	(	operator()
 	)	(	t_tSubTerm
 		)	const
-	->	t_tReplacement
+	->	t_tSubstitute
 	{	return{};	}
 };
 
-/// Replaces all instances of a given sub-Term within a Term and returns the
+/// Substitutes all instances of a given sub-Term within a Term and returns the
 /// modified term.
 template
 	<	ProtoTerm
 		...	t_tpSubTerm
 	>
 struct
-	Replace
+	Substitute
 {
 	consteval
-	(	Replace
+	(	Substitute
 	)	(	t_tpSubTerm
 			...
 		)
@@ -38,24 +38,24 @@ struct
 
 	template
 		<	ProtoTerm
-			...	t_tpReplacement
+			...	t_tpSubstitute
 		>
 	requires
 		(	sizeof...(t_tpSubTerm)
-		==	sizeof...(t_tpReplacement)
+		==	sizeof...(t_tpSubstitute)
 		)
 	struct
-		Replacement
-	:	ReplaceItem
+		Substitution
+	:	SubstitutionItem
 		<	t_tpSubTerm
-		,	t_tpReplacement
+		,	t_tpSubstitute
 		>
 		...
 	{
 		using
-			ReplaceItem
+			SubstitutionItem
 			<	t_tpSubTerm
-			,	t_tpReplacement
+			,	t_tpSubstitute
 			>
 		::	operator()
 			...
@@ -64,12 +64,15 @@ struct
 		auto consteval
 		(	operator()
 		)	(	ProtoLiteral auto
-					i_vOther
+					i_vLiteral
 			)	const
 		->	ProtoLiteral auto
-		{	return i_vOther;	}
+		{	return i_vLiteral;	}
 
-		template<ProtoLiteral... t_tpLiteral>
+		template
+			<	ProtoLiteral
+				...	t_tpLiteral
+			>
 		auto consteval
 		(	operator()
 		)	(	And<t_tpLiteral...>
@@ -78,14 +81,16 @@ struct
 		{
 			return
 			(	operator()
-				(	t_tpLiteral
-					()
+				(	t_tpLiteral{}
 				)
 			and	...
 			);
 		}
 
-		template<ProtoClause... t_tpClause>
+		template
+			<	ProtoClause
+				...	t_tpClause
+			>
 		auto consteval
 		(	operator()
 		)	(	Or<t_tpClause...>
@@ -94,8 +99,7 @@ struct
 		{
 			return
 			(	operator()
-				(	t_tpClause
-					()
+				(	t_tpClause{}
 				)
 			or	...
 			);
@@ -104,39 +108,14 @@ struct
 
 	template
 		<	ProtoTerm
-			...	t_tpReplacement
+			...	t_tpSubstitute
 		>
 	auto consteval
 	(	operator()
-	)	(	t_tpReplacement
+	)	(	t_tpSubstitute
 			...
 		)	const
-	->	Replacement<t_tpReplacement...>
-	{	return {};	}
-};
-
-template
-	<>
-struct
-	Replace
-	<>
-{
-	struct
-		Replacement
-	{
-		auto consteval
-		(	operator()
-		)	(	ProtoTerm auto
-					i_vTerm
-			)
-		->	ProtoTerm auto
-		{	return i_vTerm;	}
-	};
-
-	auto consteval
-	(	operator()
-	)	()	const
-	->	Replacement
+	->	Substitution<t_tpSubstitute...>
 	{	return {};	}
 };
 
@@ -144,29 +123,28 @@ template
 	<	ProtoTerm
 		...	t_tpSubTerm
 	>
-(	Replace
+(	Substitute
 )	(	t_tpSubTerm
 		...
 	)
-->	Replace
+->	Substitute
 	<	t_tpSubTerm
 		...
 	>
 ;
 
 auto consteval
-(	SetTrue
+(	SubstituteTrue
 )	(	ProtoTerm auto
 		...	i_vpSubTerm
 	)
 {
 	return
-		Replace
+		Substitute
 		(	i_vpSubTerm
 			...
 		)(	(	(void)i_vpSubTerm
-			,	True
-				()
+			,	True{}
 			)
 			...
 		)
@@ -174,18 +152,17 @@ auto consteval
 }
 
 auto consteval
-(	SetFalse
+(	SubstituteFalse
 )	(	ProtoTerm auto
 		...	i_vpSubTerm
 	)
 {
 	return
-		Replace
+		Substitute
 		(	i_vpSubTerm
 			...
 		)(	(	(void)i_vpSubTerm
-			,	False
-				()
+			,	False{}
 			)
 			...
 		)
@@ -193,13 +170,13 @@ auto consteval
 }
 
 auto consteval
-(	SetNegated
+(	SubstituteNegation
 )	(	ProtoTerm auto
 		...	i_vpSubTerm
 	)
 {
 	return
-		Replace
+		Substitute
 		(	i_vpSubTerm
 			...
 		)(	not

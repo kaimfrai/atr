@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Types.hpp"
 #include "Concepts.hpp"
 
 /// ****************************************************************************
@@ -26,3 +27,122 @@ auto consteval
 	)
 ->	bool
 {	return false;	}
+
+auto consteval
+(	IsTrue
+)	(	True
+	)
+->	bool
+{	return true;	}
+
+auto consteval
+(	IsTrue
+)	(	ProtoLiteral auto
+	)
+->	bool
+{	return false;	}
+
+template
+	<	ProtoLiteral
+		...	t_tpLiteral
+	>
+auto consteval
+(	IsTrue
+)	(	And<t_tpLiteral...>
+	)
+->	bool
+{	return
+	(	...
+	and	IsTrue
+		(	t_tpLiteral{}
+		)
+	);
+}
+
+template
+	<	ProtoClause
+		...	t_tpClause
+	>
+auto consteval
+(	IsTrue
+)	(	Or<t_tpClause...>
+	)
+->	bool
+{
+	if	constexpr
+		((	...
+		or	IsTrue
+			(	t_tpClause{}
+			)
+		))
+		return
+			true
+		;
+	else
+		return
+		(	(	t_tpClause{}
+			or	...
+			)
+		==	True{}
+		);
+}
+
+auto consteval
+(	IsFalse
+)	(	False
+	)
+->	bool
+{	return true;	}
+
+auto consteval
+(	IsFalse
+)	(	ProtoLiteral auto
+	)
+->	bool
+{	return false;	}
+
+template
+	<	ProtoLiteral
+		...	t_tpLiteral
+	>
+auto consteval
+(	IsFalse
+)	(	And<t_tpLiteral...>
+	)
+->	bool
+{
+	if	constexpr
+		((	...
+		or	IsFalse
+			(	t_tpLiteral{}
+			)
+		))
+		return
+			true
+		;
+	else
+		return
+		(	(	t_tpLiteral{}
+			and	...
+			)
+		==	False{}
+		);
+}
+
+template
+	<	ProtoClause
+		...	t_tpClause
+	>
+auto consteval
+(	IsFalse
+)	(	Or<t_tpClause...>
+			i_vTerm
+	)
+->	bool
+{	return
+	(	IsFalse
+		(	t_tpClause{}
+		)
+	and	...
+	);
+}

@@ -280,42 +280,104 @@ struct S : AtomTerm<S> {} constexpr inline s{};
 /// ****************************************************************************
 ///	Tests for Concepts
 /// ****************************************************************************
-static_assert( ProtoAtom<			P	>);
-static_assert(!ProtoTerm<			P	>);
-static_assert(!ProtoLiteral<		P	>);
-static_assert(!ProtoConstant<		P	>);
+static_assert(
+	ProtoAtom<		P	>);
+static_assert(not
+	ProtoTerm<		P	>);
+static_assert(not
+	ProtoClause<	P	>);
+static_assert(not
+	ProtoLiteral<	P	>);
+static_assert(not
+	ProtoConstant<	P	>);
 
-static_assert( ProtoTerm<			True	>);
-static_assert( ProtoLiteral<		True	>);
-static_assert( ProtoConstant<		True	>);
+static_assert(not
+	ProtoAtom<		True	>);
+static_assert(
+	ProtoTerm<		True	>);
+static_assert(
+	ProtoClause<	True	>);
+static_assert(
+	ProtoLiteral<	True	>);
+static_assert(
+	ProtoConstant<	True	>);
 
-static_assert( ProtoTerm<			False	>);
-static_assert( ProtoLiteral<		False	>);
-static_assert( ProtoConstant<		False	>);
+static_assert(not
+	ProtoAtom<		False	>);
+static_assert(
+	ProtoTerm<		False	>);
+static_assert(
+	ProtoClause<	False	>);
+static_assert(
+	ProtoLiteral<	False	>);
+static_assert(
+	ProtoConstant<	False	>);
 
-static_assert( ProtoTerm<			Atom<P>	>);
-static_assert( ProtoLiteral<		Atom<P>	>);
-static_assert(!ProtoConstant<		Atom<P>	>);
+static_assert(
+	!ProtoAtom<		Atom<P>	>);
+static_assert(
+	ProtoTerm<		Atom<P>	>);
+static_assert(
+	ProtoClause<	Atom<P>	>);
+static_assert(
+	ProtoLiteral<	Atom<P>	>);
+static_assert(not
+	ProtoConstant<	Atom<P>	>);
 
-static_assert( ProtoTerm<			Not<P>	>);
-static_assert( ProtoLiteral<		Not<P>	>);
-static_assert(!ProtoConstant<		Not<P>	>);
+static_assert(not
+	ProtoAtom<		Not<P>	>);
+static_assert(
+	ProtoTerm<		Not<P>	>);
+static_assert(
+	ProtoClause<	Not<P>	>);
+static_assert(
+	ProtoLiteral<	Not<P>	>);
+static_assert(not
+	ProtoConstant<	Not<P>	>);
 
-static_assert( ProtoTerm<			And<Atom<P>, Atom<Q>>	>);
-static_assert(!ProtoLiteral<		And<Atom<P>, Atom<Q>>	>);
-static_assert(!ProtoConstant<		And<Atom<P>, Atom<Q>>	>);
+static_assert(not
+	ProtoAtom<		And<Atom<P>, Atom<Q>>	>);
+static_assert(
+	ProtoTerm<		And<Atom<P>, Atom<Q>>	>);
+static_assert(
+	ProtoClause<	And<Atom<P>, Atom<Q>>	>);
+static_assert(not
+	ProtoLiteral<	And<Atom<P>, Atom<Q>>	>);
+static_assert(not
+	ProtoConstant<	And<Atom<P>, Atom<Q>>	>);
 
-static_assert( ProtoTerm<			Or<Atom<P>, Atom<Q>>	>);
-static_assert(!ProtoLiteral<		Or<Atom<P>, Atom<Q>>	>);
-static_assert(!ProtoConstant<		Or<Atom<P>, Atom<Q>>	>);
+static_assert(not
+	ProtoAtom<		Or<Atom<P>, Atom<Q>>	>);
+static_assert(
+	ProtoTerm<		Or<Atom<P>, Atom<Q>>	>);
+static_assert(not
+	ProtoClause<	Or<Atom<P>, Atom<Q>>	>);
+static_assert(not
+	ProtoLiteral<	Or<Atom<P>, Atom<Q>>	>);
+static_assert(not
+	ProtoConstant<	Or<Atom<P>, Atom<Q>>	>);
 
-static_assert( ProtoTerm<			Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
-static_assert(!ProtoLiteral<		Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
-static_assert(!ProtoConstant<		Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
+static_assert(not
+	ProtoAtom<		Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
+static_assert(
+	ProtoTerm<		Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
+static_assert(not
+	ProtoClause<	Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
+static_assert(not
+	ProtoLiteral<	Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
+static_assert(not
+	ProtoConstant<	Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
 
-static_assert( ProtoTerm<			Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
-static_assert(!ProtoLiteral<		Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
-static_assert(!ProtoConstant<		Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
+static_assert(not
+	ProtoAtom<		Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
+static_assert(
+	ProtoTerm<		Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
+static_assert(not
+	ProtoClause<	Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
+static_assert(not
+	ProtoLiteral<	Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
+static_assert(not
+	ProtoConstant<	Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
 
 /// ****************************************************************************
 ///	Literal P

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "TermTag.hpp"
+#include <concepts>
 #include <type_traits>
 
 template
@@ -9,12 +10,9 @@ template
 	>
 concept
 	ProtoTerm
-=	std::is_same_v
-	<	decltype
-		(	t_tProto
-		::	Term
-		)
-	,	TermTag const
+=	std::derived_from
+	<	t_tProto
+	,	TermTag
 	>
 ;
 
@@ -27,10 +25,10 @@ concept
 =	ProtoTerm
 	<	t_tProto
 	>
-and	(	t_tProto
-	::	Term
-	.	IsClause
-	)
+and	std::derived_from
+	<	t_tProto
+	,	ClauseTag
+	>
 ;
 
 template
@@ -42,10 +40,10 @@ concept
 =	ProtoClause
 	<	t_tProto
 	>
-and	(	t_tProto
-	::	Term
-	.	IsLiteral
-	)
+and	std::derived_from
+	<	t_tProto
+	,	LiteralTag
+	>
 ;
 
 template
@@ -57,10 +55,10 @@ concept
 =	ProtoLiteral
 	<	t_tProto
 	>
-and	(	t_tProto
-	::	Term
-	.	IsConstant
-	)
+and	std::derived_from
+	<	t_tProto
+	,	ConstantTag
+	>
 ;
 
 template

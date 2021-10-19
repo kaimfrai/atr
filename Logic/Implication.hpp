@@ -1,7 +1,7 @@
 #pragma once
 
+#include "Substitute.hpp"
 #include "Identity.hpp"
-#include "Replace.hpp"
 #include "Types.hpp"
 #include "Concepts.hpp"
 
@@ -12,120 +12,6 @@
 
 auto consteval
 (	operator >=
-)	(	True
-	,	True
-	)
-->	bool
-{	return true;	}
-
-auto consteval
-(	operator >=
-)	(	False
-	,	False
-	)
-->	bool
-{	return true;	}
-
-template<ProtoAtom t_tAtom>
-auto consteval
-(	operator >=
-)	(	Atom<t_tAtom>
-	,	Atom<t_tAtom>
-	)
-->	bool
-{	return true;	}
-
-template<ProtoAtom t_tAtom>
-auto consteval
-(	operator >=
-)	(	Not<t_tAtom>
-	,	Not<t_tAtom>
-	)
-->	bool
-{	return true;	}
-
-template<ProtoLiteral... t_tpLiteral>
-auto consteval
-(	operator >=
-)	(	And<t_tpLiteral...>
-	,	And<t_tpLiteral...>
-	)
-->	bool
-{	return true;	}
-
-template<ProtoClause... t_tpClause>
-auto consteval
-(	operator >=
-)	(	Or<t_tpClause...>
-	,	Or<t_tpClause...>
-	)
-->	bool
-{	return true;	}
-
-auto consteval
-(	operator >=
-)	(	True
-	,	False
-	)
-->	bool
-{	return false;	}
-
-auto consteval
-(	operator >=
-)	(	False
-	,	True
-	)
-->	bool
-{	return true;	}
-
-auto consteval
-(	operator >=
-)	(	False
-	,	ProtoLiteral auto
-	)
-->	bool
-{	return true;	}
-
-auto consteval
-(	operator >=
-)	(	ProtoLiteral auto
-	,	True
-	)
-->	bool
-{	return true;	}
-
-
-auto consteval
-(	operator >=
-)	(	ProtoLiteral auto
-	,	ProtoLiteral auto
-	)
-->	bool
-{	return false;	}
-
-auto consteval
-(	TautologyByLiterals
-)	(	ProtoTerm auto
-			i_vTerm
-	,	ProtoLiteral auto
-		...	i_vpAssumeTrue
-	)
-->	bool
-{
-	return
-		SetTrue
-		(	i_vpAssumeTrue
-			...
-		)(	i_vTerm
-		)
-	==	True
-		()
-	;
-}
-
-
-auto consteval
-(	operator >=
 )	(	ProtoLiteral auto
 			i_vLeft
 	,	ProtoTerm auto
@@ -134,14 +20,22 @@ auto consteval
 ->	bool
 {
 	return
-		TautologyByLiterals
-		(	i_vRight
-		,	i_vLeft
+	(	IsFalse
+		(	i_vLeft
 		)
-	;
+	or	IsTrue
+		(	SubstituteTrue
+			(	i_vLeft
+			)(	i_vRight
+			)
+		)
+	);
 }
 
-template<ProtoLiteral... t_tpLeftLiteral>
+template
+	<	ProtoLiteral
+		...	t_tpLeftLiteral
+	>
 auto consteval
 (	operator >=
 )	(	And<t_tpLeftLiteral...>
@@ -151,33 +45,24 @@ auto consteval
 	)
 ->	bool
 {
-	ProtoClause auto constexpr
-		vSimplifiedLeft
-	=(	t_tpLeftLiteral
-		()
-	and	...
-	);
-
-	if	constexpr
+	return
+	(	IsFalse
 		(	i_vLeft
-		==	vSimplifiedLeft
 		)
-		return
-			TautologyByLiterals
-			(	i_vRight
-			,	t_tpLeftLiteral
-				{}
+	or	IsTrue
+		(	SubstituteTrue
+			(	t_tpLeftLiteral{}
 				...
+			)(	i_vRight
 			)
-		;
-	else
-		return
-			vSimplifiedLeft
-		>=	i_vRight
-		;
+		)
+	);
 }
 
-template<ProtoClause... t_tpLeftClause>
+template
+	<	ProtoClause
+		...	t_tpLeftClause
+	>
 auto consteval
 (	operator >=
 )	(	Or<t_tpLeftClause...>
@@ -187,29 +72,12 @@ auto consteval
 	)
 ->	bool
 {
-	auto constexpr
-		vSimplifiedLeft
-	=(	t_tpLeftClause
-		{}
-	or	...
-	);
-
-	if	constexpr
-		(	i_vLeft
-		==	vSimplifiedLeft
-		)
-		return
-		(	(	t_tpLeftClause
-				{}
-			>=	i_vRight
-			)
-		and	...
-		);
-	else
-		return
-			vSimplifiedLeft
+	return
+	(	...
+	and	(	t_tpLeftClause{}
 		>=	i_vRight
-		;
+		)
+	);
 }
 
 auto consteval
@@ -220,4 +88,8 @@ auto consteval
 			i_vRight
 	)
 ->	bool
-{	return i_vRight >= i_vLeft;	}
+{	return
+	(	i_vRight
+	>=	i_vLeft
+	);
+}

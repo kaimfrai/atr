@@ -21,7 +21,10 @@ auto consteval
 ->	True
 {	return {};	}
 
-template<ProtoAtom t_tAtom>
+template
+	<	ProtoAtom
+			t_tAtom
+	>
 auto consteval
 (	operator not
 )	(	Atom<t_tAtom>
@@ -29,7 +32,10 @@ auto consteval
 ->	Not<t_tAtom>
 {	return {};	}
 
-template<ProtoAtom t_tAtom>
+template
+	<	ProtoAtom
+			t_tAtom
+	>
 auto consteval
 (	operator not
 )	(	Not<t_tAtom>
@@ -37,14 +43,18 @@ auto consteval
 ->	Atom<t_tAtom>
 {	return {};	}
 
-template<ProtoLiteral... t_tpLiteral>
+template
+	<	ProtoLiteral
+		...	t_tpLiteral
+	>
 auto consteval
 (	operator not
 )	(	And<t_tpLiteral...>
 	)
+->	ProtoTerm auto
 {
 	return
-	Disjunct
+	Disjunction
 	(	not
 		t_tpLiteral
 		{}
@@ -52,11 +62,15 @@ auto consteval
 	);
 }
 
-template<ProtoClause... t_tpClause>
+template
+	<	ProtoClause
+		...	t_tpClause
+	>
 auto consteval
 (	operator not
 )	(	Or<t_tpClause...>
 	)
+->	ProtoTerm auto
 {
 	if	constexpr
 		((	...
@@ -65,17 +79,15 @@ auto consteval
 			>
 		))
 		return
-		Conjunct
+		Conjunction
 		(	not
-			t_tpClause
-			{}
+			t_tpClause{}
 			...
 		);
 	else
 		return
 		(	not
-			t_tpClause
-			{}
+			t_tpClause{}
 		and	...
 		);
 }

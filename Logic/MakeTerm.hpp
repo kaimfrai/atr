@@ -4,7 +4,7 @@
 #include "Concepts.hpp"
 
 auto consteval
-(	Disjunct
+(	Disjunction
 )	(	ProtoClause auto
 			i_vClause
 	)
@@ -16,7 +16,7 @@ auto consteval
 }
 
 auto consteval
-(	Disjunct
+(	Disjunction
 )	(	ProtoClause auto
 			i_vFirst
 	,	ProtoClause auto
@@ -36,7 +36,7 @@ auto consteval
 }
 
 auto consteval
-(	Conjunct
+(	Conjunction
 )	(	ProtoLiteral auto
 			i_vLiteral
 	)
@@ -48,7 +48,7 @@ auto consteval
 }
 
 auto consteval
-(	Conjunct
+(	Conjunction
 )	(	ProtoLiteral auto
 			i_vFirst
 	,	ProtoLiteral auto

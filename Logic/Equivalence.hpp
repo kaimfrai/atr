@@ -18,17 +18,20 @@ auto consteval
 	)
 ->	bool
 {
-	if	(	i_vLeft
+	if	constexpr
+		(	i_vLeft
 		==	i_vRight
 		)
-		return true;
+		return
+			true
+		;
 	else
 		return
-			(	i_vLeft
+		(	(	i_vLeft
 			>=	i_vRight
 			)
-		and	(	i_vRight
-			>=	i_vLeft
+		and	(	i_vLeft
+			<=	i_vRight
 			)
-		;
+		);
 }

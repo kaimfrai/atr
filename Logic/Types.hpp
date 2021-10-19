@@ -9,15 +9,8 @@ template
 	>
 struct
 	Constant
+:	ConstantTag
 {
-	static auto constexpr
-	(	Term
-	)=	TermTag
-		{	.	IsConstant
-			=	true
-		}
-	;
-
 	explicit consteval
 	(	operator bool
 	)	()	const
@@ -36,7 +29,6 @@ struct
 	True final
 :	Constant<true>
 {
-	using Constant<true>::Term;
 	using Constant<true>::operator bool;
 	using Constant<true>::operator();
 };
@@ -45,7 +37,6 @@ struct
 	False final
 :	Constant<false>
 {
-	using Constant<false>::Term;
 	using Constant<false>::operator bool;
 	using Constant<false>::operator();
 };
@@ -58,15 +49,8 @@ template
 	>
 struct
 	Literal
-{
-	static auto constexpr
-	(	Term
-	)=	TermTag
-		{	.IsLiteral
-			=	true
-		}
-	;
-};
+:	LiteralTag
+{};
 
 template
 	<	ProtoAtom
@@ -78,9 +62,7 @@ struct
 	<	t_tAtom
 	,	true
 	>
-{
-	using Literal<t_tAtom, true>::Term;
-};
+{};
 
 template
 	<	ProtoAtom
@@ -92,9 +74,7 @@ struct
 	<	t_tAtom
 	,	false
 	>
-{
-	using Literal<t_tAtom, false>::Term;
-};
+{};
 
 template
 	<	ProtoLiteral
@@ -102,15 +82,8 @@ template
 	>
 struct
 	And final
+:	ClauseTag
 {
-	static auto constexpr
-	(	Term
-	)=	TermTag
-		{	.	IsClause
-			=	true
-		}
-	;
-
 	consteval
 	(	And
 	)	()
@@ -144,13 +117,8 @@ template
 	>
 struct
 	Or final
+:	TermTag
 {
-	static auto constexpr
-	(	Term
-	)=	TermTag
-		{}
-	;
-
 	consteval
 	(	Or
 	)	()

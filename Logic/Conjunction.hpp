@@ -1,9 +1,6 @@
 #pragma once
 
 #include "Disjunction.hpp"
-#include "Implication.hpp"
-#include "Identity.hpp"
-#include "MakeTerm.hpp"
 #include "Negation.hpp"
 #include "Types.hpp"
 #include "Concepts.hpp"
@@ -12,23 +9,24 @@ auto consteval
 (	operator and
 )	(	ProtoLiteral auto
 			i_vLeft
-	,	ProtoLiteral auto
+	,	ProtoClause auto
 			i_vRight
 	)
 ->	ProtoClause auto
 {
 	return
-		not
-		SimplifyNewClause
-		(	not
-			i_vLeft
-		,	not
-			i_vRight
-		)
-	;
+	not
+	(	not
+		i_vLeft
+	or	not
+		i_vRight
+	);
 }
 
-template<ProtoLiteral... t_tpLeftLiteral>
+template
+	<	ProtoLiteral
+		...	t_tpLeftLiteral
+	>
 auto consteval
 (	operator and
 )	(	And<t_tpLeftLiteral...>
@@ -38,35 +36,16 @@ auto consteval
 ->	ProtoTerm auto
 {
 	return
-	(	t_tpLeftLiteral()
+	(	t_tpLeftLiteral{}
 	and	...
 	and	i_vRight
 	);
 }
 
-template<ProtoLiteral... t_tpRightLiteral>
-auto consteval
-(	operator and
-)	(	ProtoLiteral auto
-			i_vLeft
-	,	And<t_tpRightLiteral...>
-	)
-->	ProtoTerm auto
-{
-	return
-		not
-		SimplifyNewClause
-		(	not
-			i_vLeft
-		,	not
-			t_tpRightLiteral
-			()
-			...
-		)
-	;
-}
-
-template<ProtoClause... t_tpRightClause>
+template
+	<	ProtoClause
+		...	t_tpRightClause
+	>
 auto consteval
 (	operator and
 )	(	ProtoLiteral auto
@@ -77,14 +56,16 @@ auto consteval
 {
 	return
 	(	(	i_vLeft
-		and	t_tpRightClause
-			{}
+		and	t_tpRightClause{}
 		)
 	or	...
 	);
 }
 
-template<ProtoClause... t_tpLeftClause>
+template
+	<	ProtoClause
+		...	t_tpLeftClause
+	>
 auto consteval
 (	operator and
 )	(	Or<t_tpLeftClause...>
@@ -94,8 +75,7 @@ auto consteval
 ->	ProtoTerm auto
 {
 	return
-	(	(	t_tpLeftClause
-			{}
+	(	(	t_tpLeftClause{}
 		and	i_vRight
 		)
 	or	...
