@@ -1,7 +1,7 @@
 #pragma once
 
+#include "MakeTerm.hpp"
 #include "Types.hpp"
-#include <utility>
 
 /// ****************************************************************************
 ///	operator not
@@ -37,21 +37,45 @@ auto consteval
 ->	Atom<t_tAtom>
 {	return {};	}
 
-template<ProtoTerm t_tTerm>
-using Negate = decltype(not std::declval<t_tTerm>());
-
-template<ProtoDisjunctionClause... t_tpDisjunction>
+template<ProtoLiteral... t_tpLiteral>
 auto consteval
 (	operator not
-)	(	And<t_tpDisjunction...>
+)	(	And<t_tpLiteral...>
 	)
-->	Or<Negate<t_tpDisjunction>...>
-{	return {};	}
+{
+	return
+	Disjunct
+	(	not
+		t_tpLiteral
+		{}
+		...
+	);
+}
 
-template<ProtoConjunctionClause... t_tpConjunction>
+template<ProtoClause... t_tpClause>
 auto consteval
 (	operator not
-)	(	Or<t_tpConjunction...>
+)	(	Or<t_tpClause...>
 	)
-->	And<Negate<t_tpConjunction>...>
-{	return {};	}
+{
+	if	constexpr
+		((	...
+		and	ProtoLiteral
+			<	t_tpClause
+			>
+		))
+		return
+		Conjunct
+		(	not
+			t_tpClause
+			{}
+			...
+		);
+	else
+		return
+		(	not
+			t_tpClause
+			{}
+		and	...
+		);
+}

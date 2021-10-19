@@ -1,52 +1,22 @@
 module;
 
-#include "Logic/Simplify.hpp"
-#include "Logic/Conversion.hpp"
+#include "Logic/Conjunction.hpp"
 #include "Logic/Disjunction.hpp"
+#include "Logic/Equivalence.hpp"
+#include "Logic/Implication.hpp"
 #include "Logic/Negation.hpp"
 #include "Logic/Identity.hpp"
 #include "Logic/Types.hpp"
+#include "Logic/Concepts.hpp"
 
 export module
 	Logic
 ;
 
-auto consteval
-(	operator or
-)	(	ProtoTerm auto
-			i_vLeft
-	,	ProtoTerm auto
-			i_vRight
-	)
-->	ProtoDisjunctive auto
-{
-	return
-		AsDisjunctive(i_vLeft)
-	bitor
-		AsDisjunctive(i_vRight)
-	;
-}
-
-auto consteval
-(	operator and
-)	(	ProtoTerm auto
-			i_vLeft
-	,	ProtoTerm auto
-			i_vRight
-	)
-->	ProtoConjunctive auto
-{
-	return
-		not
-		(	not
-			i_vLeft
-		or	not
-			i_vRight
-		)
-	;
-}
 /// ****************************************************************************
 ///	export namespace
+///	Performs logical computations and simplifications on terms of predicates
+///	using their disjunctive normal form.
 /// ****************************************************************************
 export namespace
 	Logic
@@ -312,90 +282,38 @@ struct S : AtomTerm<S> {} constexpr inline s{};
 /// ****************************************************************************
 static_assert( ProtoAtom<			P	>);
 static_assert(!ProtoTerm<			P	>);
-static_assert(!ProtoConjunction<	P	>);
-static_assert(!ProtoConjunctive<	P	>);
-static_assert(!ProtoDisjunction<	P	>);
-static_assert(!ProtoDisjunctive<	P	>);
 static_assert(!ProtoLiteral<		P	>);
 static_assert(!ProtoConstant<		P	>);
 
 static_assert( ProtoTerm<			True	>);
-static_assert( ProtoConjunction<	True	>);
-static_assert( ProtoConjunctive<	True	>);
-static_assert( ProtoDisjunction<	True	>);
-static_assert( ProtoDisjunctive<	True	>);
 static_assert( ProtoLiteral<		True	>);
 static_assert( ProtoConstant<		True	>);
 
 static_assert( ProtoTerm<			False	>);
-static_assert( ProtoConjunction<	False	>);
-static_assert( ProtoConjunctive<	False	>);
-static_assert( ProtoDisjunction<	False	>);
-static_assert( ProtoDisjunctive<	False	>);
 static_assert( ProtoLiteral<		False	>);
 static_assert( ProtoConstant<		False	>);
 
 static_assert( ProtoTerm<			Atom<P>	>);
-static_assert( ProtoConjunction<	Atom<P>	>);
-static_assert( ProtoConjunctive<	Atom<P>	>);
-static_assert( ProtoDisjunction<	Atom<P>	>);
-static_assert( ProtoDisjunctive<	Atom<P>	>);
 static_assert( ProtoLiteral<		Atom<P>	>);
 static_assert(!ProtoConstant<		Atom<P>	>);
 
 static_assert( ProtoTerm<			Not<P>	>);
-static_assert( ProtoConjunction<	Not<P>	>);
-static_assert( ProtoConjunctive<	Not<P>	>);
-static_assert( ProtoDisjunction<	Not<P>	>);
-static_assert( ProtoDisjunctive<	Not<P>	>);
 static_assert( ProtoLiteral<		Not<P>	>);
 static_assert(!ProtoConstant<		Not<P>	>);
 
 static_assert( ProtoTerm<			And<Atom<P>, Atom<Q>>	>);
-static_assert( ProtoConjunction<	And<Atom<P>, Atom<Q>>	>);
-static_assert( ProtoConjunctive<	And<Atom<P>, Atom<Q>>	>);
-static_assert(!ProtoDisjunction<	And<Atom<P>, Atom<Q>>	>);
-static_assert( ProtoDisjunctive<	And<Atom<P>, Atom<Q>>	>);
 static_assert(!ProtoLiteral<		And<Atom<P>, Atom<Q>>	>);
 static_assert(!ProtoConstant<		And<Atom<P>, Atom<Q>>	>);
 
-static_assert( ProtoTerm<			And<Or<Atom<P>, Atom<Q>>, Atom<R>>	>);
-static_assert( ProtoConjunction<	And<Or<Atom<P>, Atom<Q>>, Atom<R>>	>);
-static_assert( ProtoConjunctive<	And<Or<Atom<P>, Atom<Q>>, Atom<R>>	>);
-static_assert(!ProtoDisjunction<	And<Or<Atom<P>, Atom<Q>>, Atom<R>>	>);
-static_assert(!ProtoDisjunctive<	And<Or<Atom<P>, Atom<Q>>, Atom<R>>	>);
-static_assert(!ProtoLiteral<		And<Or<Atom<P>, Atom<Q>>, Atom<R>>	>);
-static_assert(!ProtoConstant<		And<Or<Atom<P>, Atom<Q>>, Atom<R>>	>);
-
-static_assert( ProtoTerm<			And<Or<Atom<P>, Atom<Q>>, Or<Atom<R>, Atom<S>>>	>);
-static_assert( ProtoConjunction<	And<Or<Atom<P>, Atom<Q>>, Or<Atom<R>, Atom<S>>>	>);
-static_assert( ProtoConjunctive<	And<Or<Atom<P>, Atom<Q>>, Or<Atom<R>, Atom<S>>>	>);
-static_assert(!ProtoDisjunction<	And<Or<Atom<P>, Atom<Q>>, Or<Atom<R>, Atom<S>>>	>);
-static_assert(!ProtoDisjunctive<	And<Or<Atom<P>, Atom<Q>>, Or<Atom<R>, Atom<S>>>	>);
-static_assert(!ProtoLiteral<		And<Or<Atom<P>, Atom<Q>>, Or<Atom<R>, Atom<S>>>	>);
-static_assert(!ProtoConstant<		And<Or<Atom<P>, Atom<Q>>, Or<Atom<R>, Atom<S>>>	>);
-
 static_assert( ProtoTerm<			Or<Atom<P>, Atom<Q>>	>);
-static_assert(!ProtoConjunction<	Or<Atom<P>, Atom<Q>>	>);
-static_assert( ProtoConjunctive<	Or<Atom<P>, Atom<Q>>	>);
-static_assert( ProtoDisjunction<	Or<Atom<P>, Atom<Q>>	>);
-static_assert( ProtoDisjunctive<	Or<Atom<P>, Atom<Q>>	>);
 static_assert(!ProtoLiteral<		Or<Atom<P>, Atom<Q>>	>);
 static_assert(!ProtoConstant<		Or<Atom<P>, Atom<Q>>	>);
 
 static_assert( ProtoTerm<			Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
-static_assert(!ProtoConjunction<	Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
-static_assert(!ProtoConjunctive<	Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
-static_assert( ProtoDisjunction<	Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
-static_assert( ProtoDisjunctive<	Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
 static_assert(!ProtoLiteral<		Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
 static_assert(!ProtoConstant<		Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
 
 static_assert( ProtoTerm<			Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
-static_assert(!ProtoConjunction<	Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
-static_assert(!ProtoConjunctive<	Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
-static_assert( ProtoDisjunction<	Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
-static_assert( ProtoDisjunctive<	Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
 static_assert(!ProtoLiteral<		Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
 static_assert(!ProtoConstant<		Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
 
@@ -671,7 +589,7 @@ static_assert
 (	(p	and	((p	or	q)	and	(!p	or	r)))	==	(p	and	r)
 );
 static_assert
-(	(p	and	((p	or	q)	and	(q	or	r)))	==	(p	and	(q	or	r))
+(	(p	and	((p	or	q)	and	(q	or	r)))	==	(p	and	(r	or	q))
 );
 static_assert
 (	(p	and	((p	or	q)	and	(!q	or	r)))	==	(p	and	(!q	or	r))
@@ -686,7 +604,7 @@ static_assert
 (	(p	and	((p	or	q)	and	(r	or	q)))	==	(p	and	(r	or	q))
 );
 static_assert
-(	(p	and	((p	or	q)	and	(r	or	!q)))	==	(p	and	(r	or	!q))
+(	(p	and	((p	or	q)	and	(r	or	!q)))	==	(p	and	(!q	or	r))
 );
 
 ///	4 Literal Conjunction 2 x 2
@@ -734,7 +652,7 @@ static_assert
 (	(p	and	((p	and	q)	or	(!q	and	r)))	==	(p	and	(q	or	r))
 );
 static_assert
-(	(p	and	((p	and	q)	or	(r	and	p)))	==	(p	and	(q	or	r))
+(	(p	and	((p	and	q)	or	(r	and	p)))	<=>	((r	or	q) and	p)
 );
 static_assert
 (	(p	and	((p	and	q)	or	(r	and	!p)))	==	(p	and	q)
@@ -776,10 +694,10 @@ static_assert
 
 ///	2 Literal Conjunction 2 x 2
 static_assert
-(	(!p	and	((p	or	q)	and	(!p	or	!q)))	==	(!p	and	q)
+(	(!p	and	((p	or	q)	and	(!p	or	!q)))	==	(q	and	!p)
 );
 static_assert
-(	(!p	and	((p	or	q)	and	(!q	or	!p)))	==	(!p	and	q)
+(	(!p	and	((p	or	q)	and	(!q	or	!p)))	==	(q	and	!p)
 );
 
 ///	3 Literal Conjunction 2 x 2
@@ -787,7 +705,7 @@ static_assert
 (	(!p	and	((p	or	q)	and	(p	or	r)))	==	(!p	and	q	and	r)
 );
 static_assert
-(	(!p	and	((p	or	q)	and	(!p	or	r)))	==	(!p	and	q)
+(	(!p	and	((p	or	q)	and	(!p	or	r)))	==	(q	and	!p)
 );
 static_assert
 (	(!p	and	((p	or	q)	and	(q	or	r)))	==	(!p	and	q)
@@ -799,7 +717,7 @@ static_assert
 (	(!p	and	((p	or	q)	and	(r	or	p)))	==	(!p	and	q	and	r)
 );
 static_assert
-(	(!p	and	((p	or	q)	and	(r	or	!p)))	==	(!p	and	q)
+(	(!p	and	((p	or	q)	and	(r	or	!p)))	==	(q	and	!p)
 );
 static_assert
 (	(!p	and	((p	or	q)	and	(r	or	q)))	==	(!p	and	q)
@@ -833,7 +751,7 @@ static_assert
 (	(!p	and	((p	and	q)	or	(!p	and	!q)))	==	(!p	and	!q)
 );
 static_assert
-(	(!p	and	((p	and	q)	or	(!q	and	!p)))	==	(!p	and	!q)
+(	(!p	and	((p	and	q)	or	(!q	and	!p)))	<=>	(!p	and	!q)
 );
 
 ///	3 Literal Disjunction 2 x 2
@@ -844,7 +762,7 @@ static_assert
 (	(!p	and	((p	and	q)	or	(!p	and	r)))	==	(!p	and	r)
 );
 static_assert
-(	(!p	and	((p	and	q)	or	(q	and	r)))	==	(!p	and	r	and	q)
+(	(!p	and	((p	and	q)	or	(q	and	r)))	<=>	(!p	and	r	and	q)
 );
 static_assert
 (	(!p	and	((p	and	q)	or	(!q	and	r)))	==	(!p	and	!q	and	r)
@@ -853,13 +771,13 @@ static_assert
 (	(!p	and	((p	and	q)	or	(r	and	p)))	==	(F)
 );
 static_assert
-(	(!p	and	((p	and	q)	or	(r	and	!p)))	==	(!p	and	r)
+(	(!p	and	((p	and	q)	or	(r	and	!p)))	<=>	(!p	and	r)
 );
 static_assert
 (	(!p	and	((p	and	q)	or	(r	and	q)))	==	(!p	and	r	and	q)
 );
 static_assert
-(	(!p	and	((p	and	q)	or	(r	and	!q)))	==	(!p	and	!q	and	r)
+(	(!p	and	((p	and	q)	or	(r	and	!q)))	<=>	(!p	and	!q	and	r)
 );
 
 ///	4 Literal Disjunction 2 x 2

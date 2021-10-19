@@ -69,37 +69,35 @@ struct
 		->	ProtoLiteral auto
 		{	return i_vOther;	}
 
-		template<ProtoDisjunctionClause... t_tpDisjunction>
+		template<ProtoLiteral... t_tpLiteral>
 		auto consteval
 		(	operator()
-		)	(	And<t_tpDisjunction...>
+		)	(	And<t_tpLiteral...>
 			)	const
-		->	ProtoConjunctive auto
+		->	ProtoTerm auto
 		{
 			return
 			(	operator()
-				(	t_tpDisjunction
+				(	t_tpLiteral
 					()
 				)
-			bitand
-				...
+			and	...
 			);
 		}
 
-		template<ProtoConjunctionClause... t_tpConjunction>
+		template<ProtoClause... t_tpClause>
 		auto consteval
 		(	operator()
-		)	(	Or<t_tpConjunction...>
+		)	(	Or<t_tpClause...>
 			)	const
-		->	ProtoDisjunctive auto
+		->	ProtoTerm auto
 		{
 			return
 			(	operator()
-				(	t_tpConjunction
+				(	t_tpClause
 					()
 				)
-			bitor
-				...
+			or	...
 			);
 		}
 	};

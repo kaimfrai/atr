@@ -9,13 +9,13 @@
 #include "Concepts.hpp"
 
 auto consteval
-(	operator bitand
+(	operator and
 )	(	ProtoLiteral auto
 			i_vLeft
 	,	ProtoLiteral auto
 			i_vRight
 	)
-->	ProtoDisjunctive auto
+->	ProtoClause auto
 {
 	return
 		not
@@ -30,30 +30,28 @@ auto consteval
 
 template<ProtoLiteral... t_tpLeftLiteral>
 auto consteval
-(	operator bitand
+(	operator and
 )	(	And<t_tpLeftLiteral...>
-	,	ProtoDisjunction auto
+	,	ProtoTerm auto
 			i_vRight
 	)
-->	ProtoDisjunctive auto
+->	ProtoTerm auto
 {
 	return
 	(	t_tpLeftLiteral()
-	bitand
-		...
-	bitand
-		i_vRight
+	and	...
+	and	i_vRight
 	);
 }
 
 template<ProtoLiteral... t_tpRightLiteral>
 auto consteval
-(	operator bitand
+(	operator and
 )	(	ProtoLiteral auto
 			i_vLeft
 	,	And<t_tpRightLiteral...>
 	)
-->	ProtoDisjunctive auto
+->	ProtoTerm auto
 {
 	return
 		not
@@ -68,40 +66,38 @@ auto consteval
 	;
 }
 
-template<ProtoConjunctionClause... t_tpRightConjunction>
+template<ProtoClause... t_tpRightClause>
 auto consteval
-(	operator bitand
+(	operator and
 )	(	ProtoLiteral auto
 			i_vLeft
-	,	Or<t_tpRightConjunction...>
+	,	Or<t_tpRightClause...>
 	)
-->	ProtoDisjunctive auto
+->	ProtoTerm auto
 {
 	return
 	(	(	i_vLeft
-		bitand
-			t_tpRightConjunction()
+		and	t_tpRightClause
+			{}
 		)
-	bitor
-		...
+	or	...
 	);
 }
 
-template<ProtoConjunctionClause... t_tpLeftConjunction>
+template<ProtoClause... t_tpLeftClause>
 auto consteval
-(	operator bitand
-)	(	Or<t_tpLeftConjunction...>
-	,	ProtoDisjunction auto
+(	operator and
+)	(	Or<t_tpLeftClause...>
+	,	ProtoTerm auto
 			i_vRight
 	)
-->	ProtoDisjunctive auto
+->	ProtoTerm auto
 {
 	return
-	(	(	t_tpLeftConjunction()
-		bitand
-			i_vRight
+	(	(	t_tpLeftClause
+			{}
+		and	i_vRight
 		)
-	bitor
-		...
+	or	...
 	);
 }

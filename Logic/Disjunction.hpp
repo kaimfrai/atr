@@ -1,18 +1,19 @@
 #pragma once
 
+#include "LiteralFilter.hpp"
 #include "Identity.hpp"
 #include "Implication.hpp"
 #include "Types.hpp"
 #include "Concepts.hpp"
 
 auto consteval
-(	operator bitor
-)	(	ProtoConjunctionClause auto
+(	operator or
+)	(	ProtoClause auto
 			i_vLeft
-	,	ProtoConjunctionClause auto
+	,	ProtoClause auto
 			i_vRight
 	)
-->	ProtoDisjunctive auto
+->	ProtoTerm auto
 {
 	return
 		SimplifyNewClause
@@ -22,40 +23,38 @@ auto consteval
 	;
 }
 
-template<ProtoConjunctionClause... t_tpRightConjunction>
+template<ProtoClause... t_tpRightClause>
 auto consteval
-(	operator bitor
-)	(	ProtoConjunctionClause auto
+(	operator or
+)	(	ProtoClause auto
 			i_vLeft
-	,	Or<t_tpRightConjunction...>
+	,	Or<t_tpRightClause...>
 	)
-->	ProtoDisjunctive auto
+->	ProtoTerm auto
 {
 	return
 		SimplifyNewClause
 		(	i_vLeft
-		,	t_tpRightConjunction
-			()
+		,	t_tpRightClause
+			{}
 			...
 		)
 	;
 }
 
-template<ProtoConjunctionClause... t_tpLeftConjunction>
+template<ProtoClause... t_tpLeftClause>
 auto consteval
-(	operator bitor
-)	(	Or<t_tpLeftConjunction...>
-	,	ProtoDisjunctive auto
+(	operator or
+)	(	Or<t_tpLeftClause...>
+	,	ProtoTerm auto
 			i_vRight
 	)
-->	ProtoDisjunctive auto
+->	ProtoTerm auto
 {
 	return
-	(	t_tpLeftConjunction
-		()
-	bitor
-		...
-	bitor
-		i_vRight
+	(	t_tpLeftClause
+		{}
+	or	...
+	or	i_vRight
 	);
 }

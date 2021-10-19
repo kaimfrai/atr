@@ -34,7 +34,7 @@ struct
 
 	auto consteval
 	(	operator()
-	)	(	ProtoConjunctionClause auto
+	)	(	ProtoClause auto
 			...	i_vpClause
 		)
 	->	ProtoLiteral auto
@@ -47,14 +47,13 @@ struct
 			)
 		;
 
-		ProtoConjunctionClause auto constexpr
+		ProtoClause auto constexpr
 		(	vReplacedConjunction
 		)=	(	fReplaceByNegation
 				(	t_tpClauseLiteral
 					()
 				)
-			bitand
-				...
+			and	...
 			)
 		;
 
@@ -129,12 +128,11 @@ struct
 	)	()
 	->	bool
 	{
-		ProtoConjunctionClause auto constexpr
+		ProtoClause auto constexpr
 			vSimplified
 		=(	t_tpLiteral
 			()
-		bitand
-			...
+		and	...
 		);
 
 		return
@@ -146,7 +144,7 @@ struct
 
 	static auto consteval
 	(	AssumeTrue
-	)	(	ProtoConjunctionClause auto
+	)	(	ProtoClause auto
 			...	i_vpClause
 		)
 	->	bool
@@ -160,13 +158,12 @@ struct
 			)
 		;
 
-		ProtoDisjunctive auto constexpr
+		ProtoTerm auto constexpr
 			vSimplifiedDisjunction
 		=(	fAssumeLiteralsTrue
 			(	i_vpClause
 			)
-		bitor
-			...
+		or	...
 		);
 
 		return
@@ -178,10 +175,10 @@ struct
 
 	auto consteval
 	(	operator()
-	)	(	ProtoConjunctionClause auto
+	)	(	ProtoClause auto
 			...	i_vpClause
 		)	const
-	->	ProtoConjunctionClause auto
+	->	ProtoClause auto
 	{
 		if	constexpr
 			(	//	False => AnyTerm
@@ -208,8 +205,7 @@ struct
 				)(	i_vpClause
 					...
 				)
-			bitand
-				...
+			and	...
 			);
 	}
 };
@@ -242,7 +238,7 @@ template
 ;
 
 template
-	<	ProtoConjunctive
+	<	ProtoClause
 			t_tFilterClause
 	>
 struct
@@ -256,10 +252,10 @@ struct
 
 	auto consteval
 	(	operator()
-	)	(	ProtoConjunctionClause auto
+	)	(	ProtoClause auto
 			...	i_vpClause
 		)	const
-	->	ProtoConjunctionClause auto
+	->	ProtoClause auto
 	{
 		auto constexpr
 			fReplace
@@ -282,7 +278,7 @@ struct
 };
 
 template
-	<	ProtoConjunctive
+	<	ProtoClause
 			t_tFilterClause
 	>
 (	ReplaceClauseFilter
@@ -295,12 +291,12 @@ template
 
 auto consteval
 (	FilterOldClause
-)	(	ProtoConjunctionClause auto
+)	(	ProtoClause auto
 			i_vNewClause
-	,	ProtoConjunctionClause auto
+	,	ProtoClause auto
 		...	i_vpOldClause
 	)
-->	ProtoDisjunctive auto
+->	ProtoTerm auto
 {
 	auto constexpr
 		vUnsimplified
@@ -317,8 +313,7 @@ auto consteval
 		,	i_vpOldClause
 			...
 		)
-	bitor
-		...
+	or	...
 	);
 
 	if	constexpr
@@ -335,8 +330,7 @@ auto consteval
 	else
 		return
 			i_vNewClause
-		bitor
-			vSimplified
+		or	vSimplified
 		;
 }
 
@@ -375,7 +369,7 @@ auto consteval
 auto consteval
 (	SimplifyNewClause
 )	(	True
-	,	ProtoConjunctionClause auto
+	,	ProtoClause auto
 		...
 	)
 ->	True
@@ -383,7 +377,7 @@ auto consteval
 
 auto consteval
 (	SimplifyNewClause
-)	(	ProtoConjunctionClause auto
+)	(	ProtoClause auto
 	,	True
 	)
 ->	True
@@ -392,31 +386,31 @@ auto consteval
 auto consteval
 (	SimplifyNewClause
 )	(	False
-	,	ProtoConjunctionClause auto
+	,	ProtoClause auto
 		...	i_vpOldClause
 	)
-->	ProtoDisjunctive auto
+->	ProtoTerm auto
 {	return	Disjunct(i_vpOldClause...);	}
 
 auto consteval
 (	SimplifyNewClause
-)	(	ProtoConjunctionClause auto
+)	(	ProtoClause auto
 			i_vNewClause
 	,	False
 	)
-->	ProtoConjunctionClause auto
+->	ProtoClause auto
 {	return	i_vNewClause;	}
 
 auto consteval
 (	SimplifyNewClause
-)	(	ProtoConjunctionClause auto
+)	(	ProtoClause auto
 			i_vNewClause
-	,	ProtoConjunctionClause auto
+	,	ProtoClause auto
 		...	i_vpOldClause
 	)
-->	ProtoDisjunctive auto
+->	ProtoTerm auto
 {
-	ProtoConjunctionClause auto constexpr
+	ProtoClause auto constexpr
 		vSimplified
 	=	LiteralClauseFilter
 		(	i_vNewClause

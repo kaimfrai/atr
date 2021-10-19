@@ -44,20 +44,20 @@ auto consteval
 ->	bool
 {	return true;	}
 
-template<ProtoDisjunctionClause... t_tpDisjunction>
+template<ProtoLiteral... t_tpLiteral>
 auto consteval
 (	operator >=
-)	(	And<t_tpDisjunction...>
-	,	And<t_tpDisjunction...>
+)	(	And<t_tpLiteral...>
+	,	And<t_tpLiteral...>
 	)
 ->	bool
 {	return true;	}
 
-template<ProtoConjunctionClause... t_tpConjunction>
+template<ProtoClause... t_tpClause>
 auto consteval
 (	operator >=
-)	(	Or<t_tpConjunction...>
-	,	Or<t_tpConjunction...>
+)	(	Or<t_tpClause...>
+	,	Or<t_tpClause...>
 	)
 ->	bool
 {	return true;	}
@@ -141,22 +141,21 @@ auto consteval
 	;
 }
 
-template<ProtoDisjunctionClause... t_tpLeftDisjunction>
+template<ProtoLiteral... t_tpLeftLiteral>
 auto consteval
 (	operator >=
-)	(	And<t_tpLeftDisjunction...>
+)	(	And<t_tpLeftLiteral...>
 			i_vLeft
 	,	ProtoTerm auto
 			i_vRight
 	)
 ->	bool
 {
-	ProtoDisjunctive auto constexpr
+	ProtoClause auto constexpr
 		vSimplifiedLeft
-	=(	t_tpLeftDisjunction
+	=(	t_tpLeftLiteral
 		()
-	bitand
-		...
+	and	...
 	);
 
 	if	constexpr
@@ -166,8 +165,8 @@ auto consteval
 		return
 			TautologyByLiterals
 			(	i_vRight
-			,	t_tpLeftDisjunction
-				()
+			,	t_tpLeftLiteral
+				{}
 				...
 			)
 		;
@@ -178,10 +177,10 @@ auto consteval
 		;
 }
 
-template<ProtoConjunctionClause... t_tpLeftConjunction>
+template<ProtoClause... t_tpLeftClause>
 auto consteval
 (	operator >=
-)	(	Or<t_tpLeftConjunction...>
+)	(	Or<t_tpLeftClause...>
 			i_vLeft
 	,	ProtoTerm auto
 			i_vRight
@@ -190,10 +189,9 @@ auto consteval
 {
 	auto constexpr
 		vSimplifiedLeft
-	=(	t_tpLeftConjunction
-		()
-	bitor
-		...
+	=(	t_tpLeftClause
+		{}
+	or	...
 	);
 
 	if	constexpr
@@ -201,8 +199,8 @@ auto consteval
 		==	vSimplifiedLeft
 		)
 		return
-		(	(	t_tpLeftConjunction
-				()
+		(	(	t_tpLeftClause
+				{}
 			>=	i_vRight
 			)
 		and	...
@@ -213,106 +211,6 @@ auto consteval
 		>=	i_vRight
 		;
 }
-
-// template<ProtoDisjunctionClause... t_tpRightDisjunction>
-// auto consteval
-// (	operator>=
-// )	(	ProtoConjunction auto
-// 			i_vLeft
-// 	,	And<t_tpRightDisjunction...>
-// 	)
-// ->	bool
-// {
-// 	return
-// 	(	...
-// 	and	(	AsDisjunctive(i_vLeft)
-// 		>=	t_tpRightDisjunction()
-// 		)
-// 	);
-// }
-//
-// template<ProtoLiteral... t_tpRightLiteral>
-// auto consteval
-// (	operator >=
-// )	(	ProtoLiteral auto
-// 			i_vLeft
-// 	,	Or<t_tpRightLiteral...>
-// 	)
-// ->	bool
-// {
-// 	return
-// 	(	...
-// 	or	(	i_vLeft
-// 		>=	t_tpRightLiteral()
-// 		)
-// 	);
-// }
-//
-// template<ProtoLiteral... t_tpLeftLiteral>
-// auto consteval
-// (	operator >=
-// )	(	And<t_tpLeftLiteral...>
-// 	,	ProtoDisjunction auto
-// 			i_vRight
-// 	)
-// ->	bool
-// {
-// // 	if	constexpr
-// // 		(	ProtoConjunctive
-// // 			<	decltype(i_vRight)
-// // 			>
-// // 		)
-// 		return
-// 		(	...
-// 		or	(	t_tpLeftLiteral()
-// 			>=	AsConjunctive(i_vRight)
-// 			)
-// 		);
-// // 	else
-// // 		// Folding the other way around does not work
-// // 		return
-// // 			True()
-// // 		==	(	not
-// // 				t_tpLeftLiteral()
-// // 			bitor
-// // 				...
-// // 			bitor
-// // 				i_vRight
-// // 			)
-// // 		;
-// }
-//
-// template<ProtoConjunctionClause... t_tpLeftConjunction>
-// auto consteval
-// (	operator >=
-// )	(	Or<t_tpLeftConjunction...>
-// 	,	ProtoConjunctive auto
-// 			i_vRight
-// 	)
-// ->	bool
-// {
-// 	return
-// 	(	...
-// 	and	(	t_tpLeftConjunction()
-// 		>=	i_vRight
-// 		)
-// 	);
-// }
-//
-// auto consteval
-// (	operator >=
-// )	(	ProtoTerm auto
-// 			i_vLeft
-// 	,	ProtoTerm auto
-// 			i_vRight
-// 	)
-// ->	bool
-// {
-// 	return
-// 	(	AsDisjunctive(i_vLeft)
-// 	>=	AsConjunctive(i_vRight)
-// 	);
-// }
 
 auto consteval
 (	operator <=

@@ -97,8 +97,8 @@ struct
 };
 
 template
-	<	ProtoDisjunctionClause
-		...	t_tpDisjunction
+	<	ProtoLiteral
+		...	t_tpLiteral
 	>
 struct
 	And final
@@ -107,12 +107,6 @@ struct
 	(	Term
 	)=	TermTag
 		{	.	IsClause
-			=	(	...
-				and	ProtoLiteral
-					<	t_tpDisjunction
-					>
-				)
-		,	.	IsConjunction
 			=	true
 		}
 	;
@@ -124,29 +118,29 @@ struct
 
 	explicit consteval
 	(	And
-	)	(	t_tpDisjunction
+	)	(	t_tpLiteral
 			...
 		)
 	{}
 };
 
 template
-	<	ProtoDisjunctionClause
-		...	t_tpDisjunction
+	<	ProtoLiteral
+		...	t_tpLiteral
 	>
 (	And
-)	(	t_tpDisjunction
+)	(	t_tpLiteral
 		...
 	)
 ->	And
-	<	t_tpDisjunction
+	<	t_tpLiteral
 		...
 	>
 ;
 
 template
-	<	ProtoConjunctionClause
-		...	t_tpConjunction
+	<	ProtoClause
+		...	t_tpClause
 	>
 struct
 	Or final
@@ -154,15 +148,7 @@ struct
 	static auto constexpr
 	(	Term
 	)=	TermTag
-		{	.	IsClause
-			=	(	...
-				and	ProtoLiteral
-					<	t_tpConjunction
-					>
-				)
-		,	.	IsDisjunction
-			=	true
-		}
+		{}
 	;
 
 	consteval
@@ -172,22 +158,22 @@ struct
 
 	explicit consteval
 	(	Or
-	)	(	t_tpConjunction
+	)	(	t_tpClause
 			...
 		)
 	{}
 };
 
 template
-	<	ProtoConjunctionClause
-		...	t_tpConjunction
+	<	ProtoClause
+		...	t_tpClause
 	>
 (	Or
-)	(	t_tpConjunction
+)	(	t_tpClause
 		...
 	)
 ->	Or
-	<	t_tpConjunction
+	<	t_tpClause
 		...
 	>
 ;

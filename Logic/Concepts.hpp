@@ -23,87 +23,14 @@ template
 			t_tProto
 	>
 concept
-	ProtoConjunctive
+	ProtoClause
 =	ProtoTerm
 	<	t_tProto
 	>
 and	(	t_tProto
 	::	Term
-	.	IsConjunctive
+	.	IsClause
 	)
-;
-
-template
-	<	typename
-			t_tProto
-	>
-concept
-	ProtoConjunction
-=	ProtoConjunctive
-	<	t_tProto
-	>
-and	(	t_tProto
-	::	Term
-	.	IsConjunction
-	)
-;
-
-template
-	<	typename
-			t_tProto
-	>
-concept
-	ProtoDisjunctive
-=	ProtoTerm
-	<	t_tProto
-	>
-and	(	t_tProto
-	::	Term
-	.	IsDisjunctive
-	)
-;
-
-template
-	<	typename
-			t_tProto
-	>
-concept
-	ProtoDisjunction
-=	ProtoDisjunctive
-	<	t_tProto
-	>
-and	(	t_tProto
-	::	Term
-	.	IsDisjunction
-	)
-;
-
-template
-	<	typename
-			t_tProto
-	>
-concept
-	ProtoConjunctionClause
-=	ProtoConjunction
-	<	t_tProto
-	>
-and	ProtoDisjunctive
-	<	t_tProto
-	>
-;
-
-template
-	<	typename
-			t_tProto
-	>
-concept
-	ProtoDisjunctionClause
-=	ProtoDisjunction
-	<	t_tProto
-	>
-and	ProtoConjunctive
-	<	t_tProto
-	>
 ;
 
 template
@@ -112,12 +39,13 @@ template
 	>
 concept
 	ProtoLiteral
-=	ProtoConjunctionClause
+=	ProtoClause
 	<	t_tProto
 	>
-and	ProtoDisjunctionClause
-	<	t_tProto
-	>
+and	(	t_tProto
+	::	Term
+	.	IsLiteral
+	)
 ;
 
 template

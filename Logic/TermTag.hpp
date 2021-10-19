@@ -15,35 +15,7 @@ struct
 	;
 	bool const
 		IsClause
-	:	1
+	:	6
 		=	IsLiteral
-	;
-	bool const
-		IsConjunction
-	:	1
-		=	IsLiteral
-	;
-	bool const
-		IsDisjunction
-	:	1
-		=	IsLiteral
-	;
-	bool const
-		IsConjunctive
-	:	1
-		=	IsClause
-		or	IsConjunction
-	;
-	bool const
-		IsDisjunctive
-	:	1
-		=	IsClause
-		or	IsDisjunction
-	;
-	bool const
-		IsNested
-	:	1
-		=	not
-			IsClause
 	;
 };

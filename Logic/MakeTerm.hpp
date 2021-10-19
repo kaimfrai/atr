@@ -1,105 +1,68 @@
 #pragma once
 
-#include "Negation.hpp"
-#include "Disjunction.hpp"
 #include "Types.hpp"
 #include "Concepts.hpp"
 
 auto consteval
-(	MakeDisjunction
-)	(	ProtoDisjunctive auto
-		...	i_vpClause
+(	Disjunct
+)	(	ProtoClause auto
+			i_vClause
 	)
-->	ProtoDisjunctive auto
+->	ProtoClause auto
 {
 	return
-	(	False()
-	bitor
+		i_vClause
+	;
+}
+
+auto consteval
+(	Disjunct
+)	(	ProtoClause auto
+			i_vFirst
+	,	ProtoClause auto
+			i_vSecond
+	,	ProtoClause auto
+		...	i_vpRemaining
+	)
+->	ProtoTerm auto
+{
+	return
+	Or
+	{	i_vFirst
+	,	i_vSecond
+	,	i_vpRemaining
 		...
-	bitor
-		i_vpClause
-	);
+	};
 }
 
 auto consteval
-(	MakeConjunction
-)	(	ProtoConjunctive auto
-		...	i_vpClause
+(	Conjunct
+)	(	ProtoLiteral auto
+			i_vLiteral
 	)
-->	ProtoConjunctive auto
+->	ProtoLiteral auto
 {
 	return
-		not
-		MakeDisjunction
-		(	not
-			i_vpClause
-			...
-		)
-	;
-}
-
-auto consteval
-(	Disjunct
-)	(	ProtoConjunctionClause auto
-			i_vClause
-	)
-->	ProtoDisjunctive auto
-{
-	return
-		i_vClause
-	;
-}
-
-auto consteval
-(	Disjunct
-)	(	ProtoConjunctionClause auto
-			i_vFirst
-	,	ProtoConjunctionClause auto
-			i_vSecond
-	,	ProtoConjunctionClause auto
-		...	i_vpRemaining
-	)
-->	ProtoDisjunctive auto
-{
-	return
-		Or
-		(	i_vFirst
-		,	i_vSecond
-		,	i_vpRemaining
-			...
-		)
+		i_vLiteral
 	;
 }
 
 auto consteval
 (	Conjunct
-)	(	ProtoDisjunctionClause auto
-			i_vClause
-	)
-->	ProtoConjunctive auto
-{
-	return
-		i_vClause
-	;
-}
-
-auto consteval
-(	Conjunct
-)	(	ProtoDisjunctionClause auto
+)	(	ProtoLiteral auto
 			i_vFirst
-	,	ProtoDisjunctionClause auto
+	,	ProtoLiteral auto
 			i_vSecond
-	,	ProtoDisjunctionClause auto
+	,	ProtoLiteral auto
 		...	i_vpRemaining
 	)
-->	ProtoConjunctive auto
+->	ProtoClause auto
 {
 	return
-		And
-		(	i_vFirst
-		,	i_vSecond
-		,	i_vpRemaining
-			...
-		)
-	;
+	And
+	{	i_vFirst
+	,	i_vSecond
+	,	i_vpRemaining
+		...
+	};
 }
