@@ -1,13 +1,13 @@
 module;
 
-#include "Logic/Conjunction.hpp"
-#include "Logic/Disjunction.hpp"
-#include "Logic/Equivalence.hpp"
-#include "Logic/Implication.hpp"
-#include "Logic/Negation.hpp"
-#include "Logic/Identity.hpp"
-#include "Logic/Types.hpp"
-#include "Logic/Concepts.hpp"
+#include "Conjunction.hpp"
+#include "Disjunction.hpp"
+#include "Equivalence.hpp"
+#include "Implication.hpp"
+#include "Negation.hpp"
+#include "Identity.hpp"
+#include "Types.hpp"
+#include "Concepts.hpp"
 
 export module
 	Logic
@@ -193,6 +193,20 @@ export namespace
 		};
 	}
 
+	using
+		True
+	=	Term
+		<	::True
+		>
+	;
+
+	using
+		False
+	=	Term
+		<	::False
+		>
+	;
+
 	///	Convenience alias to create a term for an atomic predicate.
 	///	Intended for CRTP use.
 	///	Note that being default constructible and callable is a requirement,
@@ -202,9 +216,9 @@ export namespace
 				t_tAtom
 		>
 	using
-		AtomTerm
+		Atom
 	=	Term
-		<	Atom
+		<	::Atom
 			<	t_tAtom
 			>
 		>
@@ -226,7 +240,7 @@ export namespace
 	=	Term
 		<	decltype
 			(	i_vTerm
-			and	AtomTerm
+			and	Atom
 				<	t_tAtom
 				>{}
 			)
@@ -249,7 +263,7 @@ export namespace
 	=	Term
 		<	decltype
 			(	i_vTerm
-			or	AtomTerm
+			or	Atom
 				<	t_tAtom
 				>{}
 			)
@@ -261,21 +275,20 @@ module
 	:private
 ;
 
-using namespace Logic;
-Term<True> constexpr inline T{};
-Term<False> constexpr inline F{};
+Logic::True constexpr inline T{};
+Logic::False constexpr inline F{};
 
 /// Literals to be used only on the left side
-struct A : AtomTerm<A> {} constexpr inline a{};
-struct B : AtomTerm<B> {} constexpr inline b{};
-struct C : AtomTerm<C> {} constexpr inline c{};
-struct D : AtomTerm<D> {} constexpr inline d{};
+struct A : Logic::Atom<A> {} constexpr inline a{};
+struct B : Logic::Atom<B> {} constexpr inline b{};
+struct C : Logic::Atom<C> {} constexpr inline c{};
+struct D : Logic::Atom<D> {} constexpr inline d{};
 
 /// Literals to be used on either side
-struct P : AtomTerm<P> {} constexpr inline p{};
-struct Q : AtomTerm<Q> {} constexpr inline q{};
-struct R : AtomTerm<R> {} constexpr inline r{};
-struct S : AtomTerm<S> {} constexpr inline s{};
+struct P : Logic::Atom<P> {} constexpr inline p{};
+struct Q : Logic::Atom<Q> {} constexpr inline q{};
+struct R : Logic::Atom<R> {} constexpr inline r{};
+struct S : Logic::Atom<S> {} constexpr inline s{};
 
 /// ****************************************************************************
 ///	Tests for Concepts
