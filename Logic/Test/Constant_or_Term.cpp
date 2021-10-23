@@ -21,21 +21,21 @@ static_assert
 );
 
 /// ****************************************************************************
-///	(p	or	(q	and	r))
+///	(p	or	q	and	r)
 /// ****************************************************************************
 static_assert
-(	(T	or	(p	or	(q	and	r)))	==	(T)
+(	(T	or	(p	or	q	and	r))	==	(T)
 );
 static_assert
-(	(F	or	(p	or	(q	and	r)))	==	(p	or	(q	and	r))
+(	(F	or	(p	or	q	and	r))	==	(p	or	q	and	r)
 );
 
 /// ****************************************************************************
-///	((p	and	q)	or	(p	and	r))
+///	(p	and	q	or	p	and	r)
 /// ****************************************************************************
 static_assert
-(	(T	or	((p	and	q)	or	(p	and	r)))	==	(T)
+(	(T	or	(p	and	q	or	p	and	r))	==	(T)
 );
 static_assert
-(	(F	or	((p	and	q)	or	(p	and	r)))	==	((p	and	q)	or	(p	and	r))
+(	(F	or	(p	and	q	or	p	and	r))	==	(p	and	q	or	p	and	r)
 );
