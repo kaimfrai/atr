@@ -19,6 +19,9 @@ add_library(LogicTest
 	Literal_or_Clause.cpp
 	Literal_and_Term.cpp
 	Literal_or_Term.cpp
+
+	Clause_and_Constant.cpp
+	Clause_or_Constant.cpp
 )
 
 add_dependencies(LogicTest Logic)
