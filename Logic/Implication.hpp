@@ -5,11 +5,6 @@
 #include "Types.hpp"
 #include "Concepts.hpp"
 
-/// ****************************************************************************
-///	operator >=
-///	Read A >= B as A implies B
-/// ****************************************************************************
-
 auto consteval
 (	operator >=
 )	(	ProtoClause auto

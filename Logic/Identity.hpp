@@ -3,11 +3,6 @@
 #include "Types.hpp"
 #include "Concepts.hpp"
 
-/// ****************************************************************************
-///	operator ==
-///	Read A == B as A has the exact same type as B
-/// ****************************************************************************
-
 template
 	<	ProtoTerm
 			t_tTerm

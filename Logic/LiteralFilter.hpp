@@ -24,7 +24,7 @@ template
 struct
 	LiteralFilter
 {
-	consteval
+	explicit consteval
 	(	LiteralFilter
 	)	(	t_tFilterLiteral
 		,	t_tpClauseLiteral
@@ -40,15 +40,15 @@ struct
 	->	ProtoLiteral auto
 	{
 		auto constexpr
-		(	fReplaceByNegation
-		)=	SubstituteNegation
+			fReplaceByNegation
+		=	SubstituteNegation
 			(	t_tFilterLiteral{}
 			)
 		;
 
 		ProtoClause auto constexpr
-		(	vReplacedConjunction
-		)=	(	...
+			vReplacedConjunction
+		=	(	...
 			and	fReplaceByNegation
 				(	t_tpClauseLiteral{}
 				)
@@ -63,7 +63,6 @@ struct
 			))
 			//	cancel this literal if it is not present
 			//	or negation is present
-			//	or True is present
 			return
 			True
 			{};

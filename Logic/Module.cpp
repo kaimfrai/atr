@@ -1,6 +1,5 @@
 module;
 
-#include <concepts>
 #include <type_traits>
 
 export module
@@ -228,8 +227,8 @@ export namespace
 		>
 	;
 
-	///	Convenience alias to create a term for a conjunction of an atomic
-	///	predicate and an existing term.
+	///	Convenience alias to create a term for a conjunction of an existing term
+	///	and a new atomic predicate.
 	///	Intended for CRTP use.
 	///	Note that being default constructible and callable is a requirement,
 	///	which cannot be checked as the type will be incomplete at this point.
@@ -251,8 +250,8 @@ export namespace
 		>
 	;
 
-	///	Convenience alias to create a term for a disjunction of an atomic
-	///	predicate and an existing term.
+	///	Convenience alias to create a term for a disjunction of an existing term
+	///	and a new atomic predicate.
 	///	Intended for CRTP use.
 	///	Note that being default constructible and callable is a requirement,
 	///	which cannot be checked as the type will be incomplete at this point.

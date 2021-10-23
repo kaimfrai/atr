@@ -63,7 +63,6 @@ struct
 			==	i_vNewClause
 			)
 		{
-
 			ProtoTerm auto constexpr
 				vOldTerm
 			=(	...

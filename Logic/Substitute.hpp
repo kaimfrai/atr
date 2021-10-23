@@ -198,12 +198,12 @@ auto consteval
 	,	not
 		i_vpLiteral
 		...
-	)(	/// first half literals substituted by true
+	)(	//	first half literals substituted by true
 		(	(void)i_vpLiteral
 		,	True{}
 		)
 		...
-	,	/// second half negations substituted by false
+	,	//	second half negations substituted by false
 		(	(void)i_vpLiteral
 		,	False{}
 		)

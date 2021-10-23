@@ -4,11 +4,6 @@
 #include "Implication.hpp"
 #include "Concepts.hpp"
 
-/// ****************************************************************************
-///	operator <=>
-///	Read A <=> B as A is equivalent to B
-/// ****************************************************************************
-
 auto consteval
 (	operator <=>
 )	(	ProtoTerm auto

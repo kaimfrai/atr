@@ -52,8 +52,7 @@ struct
 		or	fAssumeLiteralsTrue
 			(	i_vpClause
 			)
-		)
-		;
+		);
 
 		if	constexpr
 			(	IsTrue
@@ -113,7 +112,7 @@ template
 struct
 	SelfIgnoringClauseFilter
 {
-	consteval
+	explicit consteval
 	(	SelfIgnoringClauseFilter
 	)	(	t_tFilterClause
 		)
