@@ -1,7 +1,7 @@
 #pragma once
 
-#include "MakeTerm.hpp"
 #include "Types.hpp"
+#include "Concepts.hpp"
 
 /// ****************************************************************************
 ///	operator not
@@ -54,12 +54,12 @@ auto consteval
 ->	ProtoTerm auto
 {
 	return
-	Disjunction
-	(	not
+	Or
+	{	not
 		t_tpLiteral
 		{}
 		...
-	);
+	};
 }
 
 template
@@ -79,11 +79,11 @@ auto consteval
 			>
 		))
 		return
-		Conjunction
-		(	not
+		And
+		{	not
 			t_tpClause{}
 			...
-		);
+		};
 	else
 		return
 		(	...

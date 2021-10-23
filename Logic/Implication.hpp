@@ -12,7 +12,7 @@
 
 auto consteval
 (	operator >=
-)	(	ProtoLiteral auto
+)	(	ProtoClause auto
 			i_vLeft
 	,	ProtoTerm auto
 			i_vRight
@@ -24,35 +24,8 @@ auto consteval
 		(	i_vLeft
 		)
 	or	IsTrue
-		(	SubstituteTrue
+		(	AssumeLiteralsTrue
 			(	i_vLeft
-			)(	i_vRight
-			)
-		)
-	);
-}
-
-template
-	<	ProtoLiteral
-		...	t_tpLeftLiteral
-	>
-auto consteval
-(	operator >=
-)	(	And<t_tpLeftLiteral...>
-			i_vLeft
-	,	ProtoTerm auto
-			i_vRight
-	)
-->	bool
-{
-	return
-	(	IsFalse
-		(	i_vLeft
-		)
-	or	IsTrue
-		(	SubstituteTrue
-			(	t_tpLeftLiteral{}
-				...
 			)(	i_vRight
 			)
 		)

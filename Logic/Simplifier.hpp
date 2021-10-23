@@ -1,7 +1,6 @@
 #pragma once
 
-#include "RedundantClauseFilter.hpp"
-#include "MakeTerm.hpp"
+#include "ClauseFilter.hpp"
 #include "Identity.hpp"
 #include "Types.hpp"
 #include "Concepts.hpp"
@@ -11,17 +10,17 @@ template
 		...	t_tpOldClause
 	>
 struct
-	DisjunctionSimplifier
+	Simplifier
 {
 	explicit consteval
-	(	DisjunctionSimplifier
+	(	Simplifier
 	)	(	t_tpOldClause
 			...
 		)
 	{}
 
 	explicit consteval
-	(	DisjunctionSimplifier
+	(	Simplifier
 	)	(	Or<t_tpOldClause...>
 		)
 	{}
@@ -39,54 +38,10 @@ struct
 		)	const
 	->	ProtoTerm auto
 	{	return
-		Disjunction
-		(	t_tpOldClause{}
-			...
+		(	...
+		or	t_tpOldClause{}
 		);
 	}
-
-	static auto consteval
-	(	FilterOldClauses
-	)	(	ProtoClause auto
-				i_vNewClause
-		)
-	->	ProtoTerm auto
-	{
-		ProtoTerm auto constexpr
-			vUnsimplified
-		=	Disjunction
-			(	t_tpOldClause{}
-				...
-			)
-		;
-		ProtoTerm auto constexpr
-			vSimplified
-		=(	...
-		or	SelfIgnoringRedundantClauseFilter
-			{	t_tpOldClause{}
-			}(	t_tpOldClause{}
-				...
-			,	i_vNewClause
-			)
-		);
-
-		if	constexpr
-			(	vSimplified
-			==	vUnsimplified
-			)
-			return
-			Disjunction
-			(	t_tpOldClause{}
-				...
-			,	i_vNewClause
-			);
-		else
-			return
-			(	vSimplified
-			or	i_vNewClause
-			);
-	}
-
 	auto consteval
 	(	operator()
 	)	(	ProtoClause auto
@@ -95,8 +50,8 @@ struct
 	->	ProtoTerm auto
 	{
 		ProtoClause auto constexpr
-			vSimplified
-		=	RedundantClauseFilter
+			vSimplifiedNewClause
+		=	ClauseFilter
 			{	i_vNewClause
 			}(	t_tpOldClause{}
 				...
@@ -104,17 +59,48 @@ struct
 		;
 
 		if	constexpr
-			(	vSimplified
+			(	vSimplifiedNewClause
 			==	i_vNewClause
 			)
-			return
-			FilterOldClauses
-			(	i_vNewClause
+		{
+
+			ProtoTerm auto constexpr
+				vOldTerm
+			=(	...
+			or	t_tpOldClause{}
 			);
+
+			ProtoTerm auto constexpr
+				vSimplifiedOldTerm
+			=(	...
+			or	SelfIgnoringClauseFilter
+				{	t_tpOldClause{}
+				}(	t_tpOldClause{}
+					...
+				,	i_vNewClause
+				)
+			);
+
+			if	constexpr
+				(	vSimplifiedOldTerm
+				==	vOldTerm
+				)
+				return
+				Or
+				{	t_tpOldClause{}
+					...
+				,	i_vNewClause
+				};
+			else
+				return
+				(	vSimplifiedOldTerm
+				or	i_vNewClause
+				);
+		}
 		else
 			return
 			operator()
-			(	vSimplified
+			(	vSimplifiedNewClause
 			);
 	}
 };
@@ -122,12 +108,12 @@ struct
 template
 	<>
 struct
-	DisjunctionSimplifier
+	Simplifier
 	<	True
 	>
 {
 	explicit consteval
-	(	DisjunctionSimplifier
+	(	Simplifier
 	)	(	True
 		)
 	{}
@@ -143,12 +129,12 @@ struct
 template
 	<>
 struct
-	DisjunctionSimplifier
+	Simplifier
 	<	False
 	>
 {
 	explicit consteval
-	(	DisjunctionSimplifier
+	(	Simplifier
 	)	(	False
 		)
 	{}
@@ -169,11 +155,11 @@ template
 	<	ProtoClause
 		...	t_tpOldClause
 	>
-(	DisjunctionSimplifier
+(	Simplifier
 )	(	t_tpOldClause
 		...
 	)
-->	DisjunctionSimplifier
+->	Simplifier
 	<	t_tpOldClause
 		...
 	>
@@ -183,10 +169,10 @@ template
 	<	ProtoClause
 		...	t_tpOldClause
 	>
-(	DisjunctionSimplifier
+(	Simplifier
 )	(	Or<t_tpOldClause...>
 	)
-->	DisjunctionSimplifier
+->	Simplifier
 	<	t_tpOldClause
 		...
 	>

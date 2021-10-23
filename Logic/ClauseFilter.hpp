@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RedundantLiteralFilter.hpp"
+#include "LiteralFilter.hpp"
 #include "Substitute.hpp"
 #include "Identity.hpp"
 #include "Types.hpp"
@@ -17,55 +17,20 @@ template
 		...	t_tpLiteral
 	>
 struct
-	RedundantClauseFilter
+	ClauseFilter
 {
 	explicit consteval
-	(	RedundantClauseFilter
+	(	ClauseFilter
 	)	(	t_tpLiteral
 			...
 		)
 	{}
 
 	explicit consteval
-	(	RedundantClauseFilter
+	(	ClauseFilter
 	)	(	And<t_tpLiteral...>
 		)
 	{}
-
-	static auto consteval
-	(	IsClauseFalse
-	)	()
-	->	bool
-	{
-		return
-		IsFalse
-		((	...
-		and	t_tpLiteral{}
-		));
-	}
-
-	static auto consteval
-	(	AssumeClauseTrue
-	)	(	ProtoClause auto
-			...	i_vpClause
-		)
-	->	bool
-	{
-		auto constexpr
-			fAssumeLiteralsTrue
-		=	SubstituteTrue
-			(	t_tpLiteral{}
-				...
-			)
-		;
-		return
-		IsTrue
-		((	...
-		or	fAssumeLiteralsTrue
-			(	i_vpClause
-			)
-		));
-	}
 
 	auto consteval
 	(	operator()
@@ -74,13 +39,25 @@ struct
 		)	const
 	->	ProtoClause auto
 	{
+		auto constexpr
+			fAssumeLiteralsTrue
+		=	AssumeLiteralsTrue
+			(	t_tpLiteral{}
+				...
+			)
+		;
+		ProtoTerm auto constexpr
+			vDisjunction
+		=(	...
+		or	fAssumeLiteralsTrue
+			(	i_vpClause
+			)
+		)
+		;
+
 		if	constexpr
-			(	//	False => AnyTerm
-				IsClauseFalse()
-			or	//	True => True
-				AssumeClauseTrue
-				(	i_vpClause
-					...
+			(	IsTrue
+				(	vDisjunction
 				)
 			)
 			//	cancel this clause
@@ -91,7 +68,7 @@ struct
 			//	filter literals within this clause
 			return
 			(	...
-			and	RedundantLiteralFilter
+			and	LiteralFilter
 				{	t_tpLiteral{}
 				,	t_tpLiteral{}
 					...
@@ -106,11 +83,11 @@ template
 	<	ProtoLiteral
 		...	t_tpLiteral
 	>
-(	RedundantClauseFilter
+(	ClauseFilter
 )	(	t_tpLiteral
 		...
 	)
-->	RedundantClauseFilter
+->	ClauseFilter
 	<	t_tpLiteral
 		...
 	>
@@ -120,10 +97,10 @@ template
 	<	ProtoLiteral
 		...	t_tpLiteral
 	>
-(	RedundantClauseFilter
+(	ClauseFilter
 )	(	And<t_tpLiteral...>
 	)
-->	RedundantClauseFilter
+->	ClauseFilter
 	<	t_tpLiteral
 		...
 	>
@@ -134,10 +111,10 @@ template
 			t_tFilterClause
 	>
 struct
-	SelfIgnoringRedundantClauseFilter
+	SelfIgnoringClauseFilter
 {
 	consteval
-	(	SelfIgnoringRedundantClauseFilter
+	(	SelfIgnoringClauseFilter
 	)	(	t_tFilterClause
 		)
 	{}
@@ -157,7 +134,7 @@ struct
 		;
 
 		return
-		RedundantClauseFilter
+		ClauseFilter
 		{	t_tFilterClause{}
 		}(	fRemoveFilterClause
 			(	i_vpClause
@@ -171,10 +148,10 @@ template
 	<	ProtoClause
 			t_tFilterClause
 	>
-(	SelfIgnoringRedundantClauseFilter
+(	SelfIgnoringClauseFilter
 )	(	t_tFilterClause
 	)
-->	SelfIgnoringRedundantClauseFilter
+->	SelfIgnoringClauseFilter
 	<	t_tFilterClause
 	>
 ;

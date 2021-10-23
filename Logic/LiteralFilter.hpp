@@ -22,10 +22,10 @@ template
 		...	t_tpClauseLiteral
 	>
 struct
-	RedundantLiteralFilter
+	LiteralFilter
 {
 	consteval
-	(	RedundantLiteralFilter
+	(	LiteralFilter
 	)	(	t_tFilterLiteral
 		,	t_tpClauseLiteral
 			...
@@ -81,12 +81,12 @@ template
 	,	ProtoLiteral
 		...	t_tpClauseLiteral
 	>
-(	RedundantLiteralFilter
+(	LiteralFilter
 )	(	t_tFilterLiteral
 	,	t_tpClauseLiteral
 		...
 	)
-->	RedundantLiteralFilter
+->	LiteralFilter
 	<	t_tFilterLiteral
 	,	t_tpClauseLiteral
 		...

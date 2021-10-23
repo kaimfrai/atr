@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DisjunctionSimplifier.hpp"
+#include "Simplifier.hpp"
 #include "Types.hpp"
 #include "Concepts.hpp"
 
@@ -14,7 +14,7 @@ auto consteval
 ->	ProtoTerm auto
 {
 	return
-	DisjunctionSimplifier
+	Simplifier
 	{	i_vLeft
 	}(	i_vRight
 	);

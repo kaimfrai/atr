@@ -185,3 +185,43 @@ auto consteval
 		)
 	;
 }
+
+auto consteval
+(	AssumeLiteralsTrue
+)	(	ProtoLiteral auto
+		...	i_vpLiteral
+	)
+{	return
+	Substitute
+	(	i_vpLiteral
+		...
+	,	not
+		i_vpLiteral
+		...
+	)(	/// first half literals substituted by true
+		(	(void)i_vpLiteral
+		,	True{}
+		)
+		...
+	,	/// second half negations substituted by false
+		(	(void)i_vpLiteral
+		,	False{}
+		)
+		...
+	);
+}
+
+template
+	<	ProtoLiteral
+		...	t_tpLiteral
+	>
+auto consteval
+(	AssumeLiteralsTrue
+)	(	And<t_tpLiteral...>
+	)
+{	return
+	AssumeLiteralsTrue
+	(	t_tpLiteral{}
+		...
+	);
+}

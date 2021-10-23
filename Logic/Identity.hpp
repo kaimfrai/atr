@@ -37,55 +37,10 @@ auto consteval
 
 auto consteval
 (	IsTrue
-)	(	ProtoLiteral auto
+)	(	ProtoTerm auto
 	)
 ->	bool
 {	return false;	}
-
-template
-	<	ProtoLiteral
-		...	t_tpLiteral
-	>
-auto consteval
-(	IsTrue
-)	(	And<t_tpLiteral...>
-	)
-->	bool
-{	return
-	(	...
-	and	IsTrue
-		(	t_tpLiteral{}
-		)
-	);
-}
-
-template
-	<	ProtoClause
-		...	t_tpClause
-	>
-auto consteval
-(	IsTrue
-)	(	Or<t_tpClause...>
-	)
-->	bool
-{
-	if	constexpr
-		((	...
-		or	IsTrue
-			(	t_tpClause{}
-			)
-		))
-		return
-			true
-		;
-	else
-		return
-		(	(	...
-			or	t_tpClause{}
-			)
-		==	True{}
-		);
-}
 
 auto consteval
 (	IsFalse
@@ -96,52 +51,8 @@ auto consteval
 
 auto consteval
 (	IsFalse
-)	(	ProtoLiteral auto
+)	(	ProtoTerm auto
 	)
 ->	bool
 {	return false;	}
 
-template
-	<	ProtoLiteral
-		...	t_tpLiteral
-	>
-auto consteval
-(	IsFalse
-)	(	And<t_tpLiteral...>
-	)
-->	bool
-{
-	if	constexpr
-		((	...
-		or	IsFalse
-			(	t_tpLiteral{}
-			)
-		))
-		return
-			true
-		;
-	else
-		return
-		(	(	...
-			and	t_tpLiteral{}
-			)
-		==	False{}
-		);
-}
-
-template
-	<	ProtoClause
-		...	t_tpClause
-	>
-auto consteval
-(	IsFalse
-)	(	Or<t_tpClause...>
-	)
-->	bool
-{	return
-	(	...
-	and	IsFalse
-		(	t_tpClause{}
-		)
-	);
-}

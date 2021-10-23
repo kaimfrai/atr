@@ -12,4 +12,4 @@ COMMENT
 	"Generating precompiled module Logic"
 )
 
-#add_subdirectory(Test)
+add_subdirectory(Test)

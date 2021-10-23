@@ -1,5 +1,13 @@
 module;
 
+#include <concepts>
+#include <type_traits>
+
+export module
+	Logic
+;
+
+//	TODO: These should be module partitions but clang doesn't support those yet.
 #include "Conjunction.hpp"
 #include "Disjunction.hpp"
 #include "Equivalence.hpp"
@@ -8,10 +16,6 @@ module;
 #include "Identity.hpp"
 #include "Types.hpp"
 #include "Concepts.hpp"
-
-export module
-	Logic
-;
 
 /// ****************************************************************************
 ///	export namespace
@@ -397,8 +401,6 @@ static_assert(not
 /// ****************************************************************************
 
 ///	Literal
-
-auto constexpr inline f = p or p;
 static_assert
 (	(p	or	p)	==	(p)
 );
