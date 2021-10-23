@@ -48,7 +48,7 @@ template
 	>
 auto consteval
 (	operator and
-)	(	ProtoTerm auto
+)	(	ProtoClause auto
 			i_vLeft
 	,	Or<t_tpRightClause...>
 	)
@@ -69,7 +69,7 @@ template
 auto consteval
 (	operator and
 )	(	Or<t_tpLeftClause...>
-	,	ProtoLiteral auto
+	,	ProtoTerm auto
 			i_vRight
 	)
 ->	ProtoTerm auto

@@ -550,7 +550,7 @@ static_assert
 (	(!p	or	((p	or	q)	and	(!p	or	r)))	==	(!p	or	r)
 );
 static_assert
-(	(!p	or	((p	or	q)	and	(q	or	r)))	==	(!p	or	q	or	r)
+(	(!p	or	((p	or	q)	and	(q	or	r)))	<=>	(!p	or	q	or	r)
 );
 static_assert
 (	(!p	or	((p	or	q)	and	(!q	or	r)))	==	(!p	or	!q	or	r)
@@ -565,7 +565,7 @@ static_assert
 (	(!p	or	((p	or	q)	and	(r	or	q)))	==	(!p	or	r	or	q)
 );
 static_assert
-(	(!p	or	((p	or	q)	and	(r	or	!q)))	==	(!p	or	r	or	!q)
+(	(!p	or	((p	or	q)	and	(r	or	!q)))	<=>	(!p	or	r	or	!q)
 );
 
 ///	4 Literal Conjunction 2 x 2
@@ -667,7 +667,7 @@ static_assert
 (	(p	and	((p	or	q)	and	(!p	or	r)))	==	(p	and	r)
 );
 static_assert
-(	(p	and	((p	or	q)	and	(q	or	r)))	==	(p	and	(q	or	r))
+(	(p	and	((p	or	q)	and	(q	or	r)))	<=>	(p	and	(q	or	r))
 );
 static_assert
 (	(p	and	((p	or	q)	and	(!q	or	r)))	==	(p	and	(!q	or	r))
@@ -682,7 +682,7 @@ static_assert
 (	(p	and	((p	or	q)	and	(r	or	q)))	==	(p	and	(r	or	q))
 );
 static_assert
-(	(p	and	((p	or	q)	and	(r	or	!q)))	==	(p	and	(r	or	!q))
+(	(p	and	((p	or	q)	and	(r	or	!q)))	<=>	(p	and	(r	or	!q))
 );
 
 ///	4 Literal Conjunction 2 x 2
@@ -744,7 +744,7 @@ static_assert
 
 ///	4 Literal Disjunction 2 x 2
 static_assert
-(	(p	and	((p	and	q)	or	(r	and	s)))	==	(p	and	(q	or	r)	and	(q	or	s))
+(	(p	and	((p	and	q)	or	(r	and	s)))	<=>	(p	and	(q	or	r)	and	(q	or	s))
 );
 
 

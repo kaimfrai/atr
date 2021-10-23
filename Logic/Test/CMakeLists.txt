@@ -1,5 +1,6 @@
 add_library(LogicTest
 	Equivalence.cpp
+	Negation.cpp
 
 	Constant_and_Constant.cpp
 	Constant_or_Constant.cpp

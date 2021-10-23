@@ -19,7 +19,7 @@ set(WARNING_FLAGS
 	-Weverything
 	-Wno-c++98-compat-pedantic						# we're using c++23
 	-Wno-c++20-compat-pedantic
-	-Wno-redundant-parens							# redundant parenthesis help understanding
+	#-Wno-redundant-parens							# redundant parenthesis help understanding
 )
 set(MODULE_FLAGS
 	-fmodules
