@@ -1,7 +1,6 @@
 #pragma once
 
 #include "TermTag.hpp"
-#include <concepts>
 #include <type_traits>
 
 template
@@ -10,9 +9,9 @@ template
 	>
 concept
 	ProtoTerm
-=	std::derived_from
-	<	t_tProto
-	,	TermTag
+=	std::is_base_of_v
+	<	TermTag
+	,	t_tProto
 	>
 ;
 
@@ -25,9 +24,9 @@ concept
 =	ProtoTerm
 	<	t_tProto
 	>
-and	std::derived_from
-	<	t_tProto
-	,	ClauseTag
+and	std::is_base_of_v
+	<	ClauseTag
+	,	t_tProto
 	>
 ;
 
@@ -40,9 +39,9 @@ concept
 =	ProtoClause
 	<	t_tProto
 	>
-and	std::derived_from
-	<	t_tProto
-	,	LiteralTag
+and	std::is_base_of_v
+	<	LiteralTag
+	,	t_tProto
 	>
 ;
 
@@ -55,15 +54,14 @@ concept
 =	ProtoLiteral
 	<	t_tProto
 	>
-and	std::derived_from
-	<	t_tProto
-	,	ConstantTag
+and	std::is_base_of_v
+	<	ConstantTag
+	,	t_tProto
 	>
 ;
 
 template
 	<	typename
-		//	may be incomplete class context
 			t_tProto
 	>
 concept
@@ -71,8 +69,15 @@ concept
 =	std::is_class_v
 	<	t_tProto
 	>
-and	not
-	ProtoTerm
-	<	t_tProto
-	>
+and	(	//	may be incomplete class context
+		not
+		requires
+		{	sizeof(t_tProto);
+		}
+	or	not
+		std::is_base_of_v
+		<	TermTag
+		,	t_tProto
+		>
+	)
 ;
