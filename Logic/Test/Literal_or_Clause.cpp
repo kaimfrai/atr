@@ -1,51 +1,46 @@
 #include "Shared.hpp"
 
+/// ****************************************************************************
+///	(p	and	q)
+/// ****************************************************************************
 static_assert
-(	(p	or	(p	or	q))	==	(p	or	q)
+(	(p	or	(p	and	q))	==	(p)
 );
 static_assert
-(	(!p	or	(p	or	q))	==	(T)
-);
-
-static_assert
-(	(q	or	(p	or	q))	==	(q	or	p)
-);
-static_assert
-(	(!q	or	(p	or	q))	==	(T)
+(	(!p	or	(p	and	q))	==	(!p	or	q)
 );
 
 static_assert
-(	(r	or	(p	or	q))	==	(r	or	p	or	q)
-);
-
-//	New term: (p	or	q	or	r)
-static_assert
-(	(p	or	q	or	r)	<=>	(p	or	r	or	q)
+(	(q	or	(p	and	q))	==	(q)
 );
 static_assert
-(	(p	or	q	or	r)	<=>	(q	or	p	or	r)
-);
-static_assert
-(	(p	or	q	or	r)	<=>	(q	or	r	or	p)
+(	(!q	or	(p	and	q))	==	(!q	or	p)
 );
 
 static_assert
-(	(p	or	(p	or	q	or	r))	==	(p	or	q	or	r)
+(	(r	or	(p	and	q))	==	(r	or	(p	and	q))
+);
+
+/// ****************************************************************************
+///	(p	and	q	and	r)
+/// ****************************************************************************
+static_assert
+(	(p	or	(p	and	q	and	r))	==	(p)
 );
 static_assert
-(	(!p	or	(p	or	q	or	r))	==	(T)
+(	(!p	or	(p	and	q	and	r))	==	(!p	or	(q	and	r))
 );
 
 static_assert
-(	(q	or	(p	or	q	or	r))	==	(q	or	p	or	r)
+(	(q	or	(p	and	q	and	r))	==	(q)
 );
 static_assert
-(	(!q	or	(p	or	q	or	r))	==	(T)
+(	(!q	or	(p	and	q	and	r))	==	(!q	or	(p	and	r))
 );
 
 static_assert
-(	(r	or	(p	or	q	or	r))	==	(r	or	p	or	q)
+(	(r	or	(p	and	q	and	r))	==	(r)
 );
 static_assert
-(	(!r	or	(p	or	q	or	r))	==	(T)
+(	(!r	or	(p	and	q	and	r))	==	(!r	or	(p	and	q))
 );

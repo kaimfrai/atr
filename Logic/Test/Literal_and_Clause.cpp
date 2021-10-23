@@ -1,5 +1,8 @@
 #include "Shared.hpp"
 
+/// ****************************************************************************
+///	(p	and	q)
+/// ****************************************************************************
 static_assert
 (	(p	and	(p	and	q))	==	(p	and	q)
 );
@@ -18,17 +21,9 @@ static_assert
 (	(r	and	(p	and	q))	==	(r	and	p	and	q)
 );
 
-//	New clause: (p	and	q	and	r)
-static_assert
-(	(p	and	q	and	r)	<=>	(p	and	r	and	q)
-);
-static_assert
-(	(p	and	q	and	r)	<=>	(q	and	p	and	r)
-);
-static_assert
-(	(p	and	q	and	r)	<=>	(q	and	r	and	p)
-);
-
+/// ****************************************************************************
+///	(p	and	q	and	r)
+/// ****************************************************************************
 static_assert
 (	(p	and	(p	and	q	and	r))	==	(p	and	q	and	r)
 );
