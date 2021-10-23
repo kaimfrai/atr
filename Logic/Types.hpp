@@ -11,11 +11,6 @@ struct
 	Constant
 :	ConstantTag
 {
-	explicit consteval
-	(	operator bool
-	)	()	const
-	{	return t_bConstant;	}
-
 	auto consteval
 	(	operator()
 	)	(	auto
@@ -30,16 +25,24 @@ struct
 	True final
 :	Constant<true>
 {
-	using Constant<true>::operator bool;
-	using Constant<true>::operator();
+	using
+		Constant
+		<	true
+		>
+	::	operator()
+	;
 };
 
 struct
 	False final
 :	Constant<false>
 {
-	using Constant<false>::operator bool;
-	using Constant<false>::operator();
+	using
+		Constant
+		<	false
+		>
+	::	operator()
+	;
 };
 
 template
@@ -51,7 +54,27 @@ template
 struct
 	Literal
 :	LiteralTag
-{};
+{
+	auto consteval
+	(	operator()
+	)	(	auto
+				&&
+			...	i_rpArgument
+		)	const
+	->	bool
+	{	return
+		(	t_bPolarity
+		==	t_tAtom
+			{}(	// do not include std::forward just for this
+				static_cast
+				<	decltype(i_rpArgument)
+						&&
+				>(	i_rpArgument
+				)...
+			)
+		);
+	}
+};
 
 template
 	<	ProtoAtom
@@ -63,7 +86,15 @@ struct
 	<	t_tAtom
 	,	true
 	>
-{};
+{
+	using
+		Literal
+		<	t_tAtom
+		,	true
+		>
+	::	operator()
+	;
+};
 
 template
 	<	ProtoAtom
@@ -75,7 +106,15 @@ struct
 	<	t_tAtom
 	,	false
 	>
-{};
+{
+	using
+		Literal
+		<	t_tAtom
+		,	false
+		>
+	::	operator()
+	;
+};
 
 template
 	<	ProtoLiteral
@@ -96,6 +135,30 @@ struct
 			...
 		)
 	{}
+
+	auto consteval
+	(	operator()
+	)	(	auto
+				&&
+			...	i_rpArgument
+		)	const
+	->	bool
+	{	return
+		(	//	literals are inserted left to right
+			//	more specialized literals are therefore to the right
+			//	evaluate them first to get faster short circuiting
+			t_tpLiteral{}
+			(	// do not include std::forward just for this
+				static_cast
+				<	decltype(i_rpArgument)
+						&&
+				>(	i_rpArgument
+				)...
+
+			)
+		and	...
+		);
+	}
 };
 
 template
@@ -131,6 +194,30 @@ struct
 			...
 		)
 	{}
+
+	auto consteval
+	(	operator()
+	)	(	auto
+				&&
+			...	i_rpArgument
+		)	const
+	->	bool
+	{	return
+		(	//	literals are inserted left to right
+			//	more specialized literals are therefore to the right
+			//	evaluate them first to get faster short circuiting
+			t_tpClause{}
+			(	// do not include std::forward just for this
+				static_cast
+				<	decltype(i_rpArgument)
+						&&
+				>(	i_rpArgument
+				)...
+
+			)
+		or	...
+		);
+	}
 };
 
 template
