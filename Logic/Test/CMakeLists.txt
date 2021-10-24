@@ -1,4 +1,6 @@
-add_library(LogicTest
+add_library(
+	LogicTest
+OBJECT
 	Equivalence.cpp
 	Negation.cpp
 
