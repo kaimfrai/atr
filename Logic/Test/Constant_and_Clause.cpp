@@ -4,18 +4,30 @@
 ///	(p	and	q)
 /// ****************************************************************************
 static_assert
-(	(T	and	(p	and	q))	==	(p	and	q)
+(	(	(T)
+	and	(p	and	q)
+	)
+==	(p	and	q)
 );
 static_assert
-(	(F	and	(p	and	q))	==	(F)
+(	(	(F)
+	and	(p	and	q)
+	)
+==	(F)
 );
 
 /// ****************************************************************************
 ///	(p	and	q	and	r)
 /// ****************************************************************************
 static_assert
-(	(T	and	(p	and	q	and	r))	==	(p	and	q	and	r)
+(	(	(T)
+	and	(p	and	q	and	r)
+	)
+==	(p	and	q	and	r)
 );
 static_assert
-(	(F	and	(p	and	q	and	r))	==	(F)
+(	(	(F)
+	and	(p	and	q	and	r)
+	)
+==	(F)
 );
