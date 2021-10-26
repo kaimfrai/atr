@@ -28,6 +28,7 @@ OBJECT
 	Clause_or_Literal.cpp
 	Clause_and_Clause.cpp
 	Clause_or_Clause.cpp
+	Clause_and_Term.cpp
 )
 
 add_dependencies(LogicTest Logic)
