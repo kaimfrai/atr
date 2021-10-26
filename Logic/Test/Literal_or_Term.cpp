@@ -451,43 +451,43 @@ static_assert
 );
 
 /// ****************************************************************************
-///	(p	and	q	or	p	and	r or	!p	and	!q	or	!p	and	!r)
+///	(p	and	q	or	p	and	r	or	!p	and	!q	or	!p	and	!r)
 /// ****************************************************************************
 static_assert
 (	(	(p)
-	or	(p	and	q	or	p	and	r or	!p	and	!q	or	!p	and	!r)
+	or	(p	and	q	or	p	and	r	or	!p	and	!q	or	!p	and	!r)
 	)
 ==	(p	or	!q	or	!r)
 );
 static_assert
 (	(	(!p)
-	or	(p	and	q	or	p	and	r or	!p	and	!q	or	!p	and	!r)
+	or	(p	and	q	or	p	and	r	or	!p	and	!q	or	!p	and	!r)
 	)
 ==	(!p	or	q	or	r)
 );
 
 static_assert
 (	(	(q)
-	or	(p	and	q	or	p	and	r or	!p	and	!q	or	!p	and	!r)
+	or	(p	and	q	or	p	and	r	or	!p	and	!q	or	!p	and	!r)
 	)
 ==	(q	or	r	or	!p)
 );
 static_assert
 (	(	(!q)
-	or	(p	and	q	or	p	and	r or	!p	and	!q	or	!p	and	!r)
+	or	(p	and	q	or	p	and	r	or	!p	and	!q	or	!p	and	!r)
 	)
 ==	(!q	or	p	or	!r)
 );
 
 static_assert
 (	(	(r)
-	or	(p	and	q	or	p	and	r or	!p	and	!q	or	!p	and	!r)
+	or	(p	and	q	or	p	and	r	or	!p	and	!q	or	!p	and	!r)
 	)
 ==	(r	or	q	or	!p)
 );
 static_assert
 (	(	(!r)
-	or	(p	and	q	or	p	and	r or	!p	and	!q	or	!p	and	!r)
+	or	(p	and	q	or	p	and	r	or	!p	and	!q	or	!p	and	!r)
 	)
 ==	(!r	or	p	or	!q)
 );
