@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Substitute.hpp"
+#include "Identity.hpp"
 #include "Types.hpp"
 #include "Concepts.hpp"
 
@@ -46,23 +47,30 @@ struct
 			)
 		;
 
-		ProtoClause auto constexpr
-			vReplacedConjunction
-		=	(	...
-			and	fReplaceByNegation
+		auto constexpr
+			fAssumeNegationAndLiteralsTrue
+		=	AssumeLiteralsTrue
+			(	fReplaceByNegation
 				(	t_tpClauseLiteral{}
 				)
+				...
 			)
 		;
 
+		ProtoTerm auto constexpr
+			vDisjunction
+		=(	...
+		or	fAssumeNegationAndLiteralsTrue
+			(	i_vpClause
+			)
+		);
+
 		if	constexpr
-			((	...
-			or	(	vReplacedConjunction
-				>=	i_vpClause
+			(	IsTrue
+				(	vDisjunction
 				)
-			))
-			//	cancel this literal if it is not present
-			//	or negation is present
+			)
+			//	cancel this literal
 			return
 			True
 			{};
