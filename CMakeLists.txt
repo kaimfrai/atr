@@ -18,6 +18,7 @@ set(WARNING_FLAGS
 	#-Werror
 	-Weverything
 	-Wno-c++98-compat-pedantic						# we're using c++23
+	-Wno-pre-c++17-compat-pedantic
 	-Wno-c++20-compat-pedantic
 	#-Wno-redundant-parens							# redundant parenthesis help understanding
 )

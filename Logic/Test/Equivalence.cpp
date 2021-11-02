@@ -243,6 +243,14 @@ static_assert
 /// ****************************************************************************
 ///	(p	and	q	or	p	and	r	or	!p	and	!q	or	!p	and	!r)
 /// ****************************************************************************
+auto constexpr inline f =
+	(p and q or p	and	r	or	!p and !q) or q and !r;
+
+static_assert
+(	(p	and	q	or	p	and	r	or	!p	and	!q	or	!p	and	!r)
+<=>	(q	and	!r	or	p	and	r	or	!p	and	!q)
+);
+
 static_assert
 (	(p	and	q	or	p	and	r	or	!p	and	!q	or	!p	and	!r)
 <=>	(p	and	q	or	p	and	r	or	!p	and	!q	or	!p	and	!r)

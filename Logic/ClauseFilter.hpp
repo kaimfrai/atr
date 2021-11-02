@@ -1,8 +1,7 @@
 #pragma once
 
 #include "LiteralFilter.hpp"
-#include "Substitute.hpp"
-#include "Identity.hpp"
+#include "ClauseRedundancy.hpp"
 #include "Types.hpp"
 #include "Concepts.hpp"
 
@@ -37,26 +36,14 @@ struct
 	)	(	ProtoClause auto
 			...	i_vpClause
 		)	const
-	->	ProtoClause auto
+	->	ProtoTerm auto
 	{
-		auto constexpr
-			fAssumeLiteralsTrue
-		=	AssumeLiteralsTrue
-			(	t_tpLiteral{}
-				...
-			)
-		;
-		ProtoTerm auto constexpr
-			vDisjunction
-		=(	...
-		or	fAssumeLiteralsTrue
-			(	i_vpClause
-			)
-		);
-
 		if	constexpr
-			(	IsTrue
-				(	vDisjunction
+			(	ClauseRedundancy
+				{	t_tpLiteral{}
+					...
+				}(	i_vpClause
+					...
 				)
 			)
 			//	cancel this clause
@@ -64,10 +51,13 @@ struct
 			False
 			{};
 		else
+		{
 			//	filter literals within this clause
-			return
-			(	...
-			and	LiteralFilter
+			//	this may result in multiple clauses with a filtered literal each
+			ProtoTerm auto constexpr
+				vFilteredLiteralTerm
+			=(	...
+			or	LiteralFilter
 				{	t_tpLiteral{}
 				,	t_tpLiteral{}
 					...
@@ -75,6 +65,22 @@ struct
 					...
 				)
 			);
+			if	constexpr
+				(	//	no literal was filtered
+					IsFalse
+					(	vFilteredLiteralTerm
+					)
+				)
+				return
+				Conjunction
+				(	t_tpLiteral{}
+					...
+				);
+			else
+				return
+					vFilteredLiteralTerm
+				;
+		}
 	}
 };
 
@@ -102,55 +108,5 @@ template
 ->	ClauseFilter
 	<	t_tpLiteral
 		...
-	>
-;
-
-template
-	<	ProtoClause
-			t_tFilterClause
-	>
-struct
-	SelfIgnoringClauseFilter
-{
-	explicit consteval
-	(	SelfIgnoringClauseFilter
-	)	(	t_tFilterClause
-		)
-	{}
-
-	auto consteval
-	(	operator()
-	)	(	ProtoClause auto
-			...	i_vpClause
-		)	const
-	->	ProtoClause auto
-	{
-		auto constexpr
-			fRemoveFilterClause
-		=	SubstituteFalse
-			(	t_tFilterClause{}
-			)
-		;
-
-		return
-		ClauseFilter
-		{	t_tFilterClause{}
-		}(	fRemoveFilterClause
-			(	i_vpClause
-			)
-			...
-		);
-	}
-};
-
-template
-	<	ProtoClause
-			t_tFilterClause
-	>
-(	SelfIgnoringClauseFilter
-)	(	t_tFilterClause
-	)
-->	SelfIgnoringClauseFilter
-	<	t_tFilterClause
 	>
 ;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ClauseRedundancy.hpp"
 #include "Substitute.hpp"
 #include "Identity.hpp"
 #include "Types.hpp"
@@ -33,12 +34,26 @@ struct
 		)
 	{}
 
+	static ProtoClause auto constexpr
+		ThisClause
+	=	Conjunction
+		(	t_tpClauseLiteral{}
+			...
+		)
+	;
+	static auto constexpr
+		IgnoreThisClause
+	=	SubstituteFalse
+		(	ThisClause
+		)
+	;
+
 	auto consteval
 	(	operator()
 	)	(	ProtoClause auto
 			...	i_vpClause
 		)
-	->	ProtoLiteral auto
+	->	ProtoClause auto
 	{
 		auto constexpr
 			fReplaceByNegation
@@ -58,26 +73,85 @@ struct
 		;
 
 		ProtoTerm auto constexpr
-			vDisjunction
+			vRedundancyCondition
 		=(	...
 		or	fAssumeNegationAndLiteralsTrue
-			(	i_vpClause
+			(	IgnoreThisClause
+				(	i_vpClause
+				)
 			)
 		);
 
 		if	constexpr
-			(	IsTrue
-				(	vDisjunction
+			(	ClauseRedundancy
+				{	ThisClause
+				}(	i_vpClause
+					...
+				,	vRedundancyCondition
 				)
 			)
-			//	cancel this literal
-			return
-			True
-			{};
+		{
+			ProtoTerm auto
+				vSynthesizedTerm
+			=(	...
+			and	Substitute
+				{	t_tFilterLiteral{}
+				}(	vRedundancyCondition
+				)(	t_tpClauseLiteral{}
+				)
+			);
+
+			auto constexpr
+				vNewRedundantClauseCount
+			=(	0ul
+			+	...
+			+	ClauseRedundancy
+				{	i_vpClause
+				}(	i_vpClause
+					...
+				,	vSynthesizedTerm
+				)
+			);
+			auto constexpr
+				vOldRedundantClauseCount
+			=(	0ul
+			+	...
+			+	ClauseRedundancy
+				{	i_vpClause
+				}(	i_vpClause
+					...
+				)
+			);
+
+			if	constexpr
+				(	//	by using the synthesized term instead of this clause
+					//	more clauses are made redundant than are added
+					(	vNewRedundantClauseCount
+					-	vOldRedundantClauseCount
+					)
+				>	ClauseCount
+					(	vSynthesizedTerm
+					)
+				or	//	by using the synthesied term instead of this clause
+					//	more literals are made redundant than are added
+					LiteralCount
+					(	ThisClause
+					)
+				>	LiteralCount
+					(	vSynthesizedTerm
+					)
+				)
+				return
+					vSynthesizedTerm
+				;
+			else
+				return
+				False
+				{};
+		}
 		else
-			//	retain this literal
 			return
-			t_tFilterLiteral
+			False
 			{};
 	}
 };

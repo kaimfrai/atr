@@ -140,15 +140,14 @@ auto consteval
 	)
 {
 	return
-		Substitute
-		(	i_vpSubTerm
-			...
-		)(	(	(void)i_vpSubTerm
-			,	True{}
-			)
-			...
+	Substitute
+	{	i_vpSubTerm
+		...
+	}(	(	(void)i_vpSubTerm
+		,	True{}
 		)
-	;
+		...
+	);
 }
 
 auto consteval
@@ -156,17 +155,15 @@ auto consteval
 )	(	ProtoTerm auto
 		...	i_vpSubTerm
 	)
-{
-	return
-		Substitute
-		(	i_vpSubTerm
-			...
-		)(	(	(void)i_vpSubTerm
-			,	False{}
-			)
-			...
+{	return
+	Substitute
+	{	i_vpSubTerm
+		...
+	}(	(	(void)i_vpSubTerm
+		,	False{}
 		)
-	;
+		...
+	);
 }
 
 auto consteval
@@ -174,16 +171,14 @@ auto consteval
 )	(	ProtoTerm auto
 		...	i_vpSubTerm
 	)
-{
-	return
-		Substitute
-		(	i_vpSubTerm
-			...
-		)(	not
-			i_vpSubTerm
-			...
-		)
-	;
+{	return
+	Substitute
+	{	i_vpSubTerm
+		...
+	}(	not
+		i_vpSubTerm
+		...
+	);
 }
 
 auto consteval
@@ -193,12 +188,12 @@ auto consteval
 	)
 {	return
 	Substitute
-	(	i_vpLiteral
+	{	i_vpLiteral
 		...
 	,	not
 		i_vpLiteral
 		...
-	)(	//	first half literals substituted by true
+	}(	//	first half literals substituted by true
 		(	(void)i_vpLiteral
 		,	True{}
 		)
@@ -225,3 +220,131 @@ auto consteval
 		...
 	);
 }
+
+template
+	<	ProtoLiteral
+		...	t_tpAssumed
+	>
+struct
+	Assumption
+{
+	explicit consteval
+	(	Assumption
+	)	(	t_tpAssumed
+			...
+		)
+	{}
+
+	explicit consteval
+	(	Assumption
+	)	(	And<t_tpAssumed...>
+		)
+	{}
+
+	auto consteval
+	(	operator()
+	)	(	ProtoTerm auto
+				i_vTerm
+		)	const
+	->	ProtoTerm auto
+	{
+		auto constexpr
+			vSubstitution
+		=	Substitute
+			{	t_tpAssumed{}
+				...
+			,	not
+				t_tpAssumed{}
+				...
+			}(	//	first half literals substituted by true
+				Tautology
+				(	t_tpAssumed{}
+				)
+				...
+			,	//	second half negations substituted by false
+				Contradiction
+				(	t_tpAssumed{}
+				)
+				...
+			)
+		;
+		return
+		vSubstitution
+		(	i_vTerm
+		);
+	}
+};
+
+template
+	<	ProtoLiteral
+		...	t_tpAssumed
+	>
+(	Assumption
+)	(	t_tpAssumed
+		...
+	)
+->	Assumption
+	<	t_tpAssumed
+		...
+	>
+;
+
+template
+	<	ProtoLiteral
+		...	t_tpAssumed
+	>
+(	Assumption
+)	(	And<t_tpAssumed...>
+	)
+->	Assumption
+	<	t_tpAssumed
+		...
+	>
+;
+
+template
+	<	ProtoClause
+			t_tSelf
+	>
+struct
+	SelfIgnoringAssumption
+{
+	explicit consteval
+	(	SelfIgnoringAssumption
+	)	(	t_tSelf
+		)
+	{}
+
+	auto consteval
+	(	operator()
+	)	(	t_tSelf
+		)	const
+	->	False
+	{	return {};	}
+
+	auto consteval
+	(	operator()
+	)	(	ProtoTerm auto
+				i_vTerm
+		)	const
+	->	ProtoTerm auto
+	{
+		return
+		Assumption
+		{	t_tSelf{}
+		}(	i_vTerm
+		);
+	}
+};
+
+template
+	<	ProtoClause
+			t_tSelf
+	>
+(	SelfIgnoringAssumption
+)	(	t_tSelf
+	)
+->	SelfIgnoringAssumption
+	<	t_tSelf
+	>
+;

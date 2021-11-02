@@ -49,14 +49,21 @@ struct
 		)	const
 	->	ProtoTerm auto
 	{
-		ProtoClause auto constexpr
+		ProtoTerm auto constexpr
 			vSimplifiedNewClause
 		=	ClauseFilter
 			{	i_vNewClause
 			}(	t_tpOldClause{}
 				...
+			,	i_vNewClause
 			)
 		;
+
+		ProtoTerm auto constexpr
+			vOldTerm
+		=(	...
+		or	t_tpOldClause{}
+		);
 
 		if	constexpr
 			(	vSimplifiedNewClause
@@ -64,15 +71,9 @@ struct
 			)
 		{
 			ProtoTerm auto constexpr
-				vOldTerm
-			=(	...
-			or	t_tpOldClause{}
-			);
-
-			ProtoTerm auto constexpr
 				vSimplifiedOldTerm
 			=(	...
-			or	SelfIgnoringClauseFilter
+			or	ClauseFilter
 				{	t_tpOldClause{}
 				}(	t_tpOldClause{}
 					...
@@ -98,8 +99,8 @@ struct
 		}
 		else
 			return
-			operator()
-			(	vSimplifiedNewClause
+			(	vOldTerm
+			or	vSimplifiedNewClause
 			);
 	}
 };

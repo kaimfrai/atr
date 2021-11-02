@@ -22,6 +22,7 @@ DEPENDS
 	Equivalence.hpp
 
 	Substitute.hpp
+	ClauseRedundancy.hpp
 	LiteralFilter.hpp
 	ClauseFilter.hpp
 	Simplifier.hpp

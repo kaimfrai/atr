@@ -281,17 +281,32 @@ module
 Logic::True constexpr inline T{};
 Logic::False constexpr inline F{};
 
-/// Literals to be used only on the left side
-struct A : Logic::Atom<A> {} constexpr inline a{};
-struct B : Logic::Atom<B> {} constexpr inline b{};
-struct C : Logic::Atom<C> {} constexpr inline c{};
-struct D : Logic::Atom<D> {} constexpr inline d{};
 
 /// Literals to be used on either side
 struct P : Logic::Atom<P> {} constexpr inline p{};
 struct Q : Logic::Atom<Q> {} constexpr inline q{};
 struct R : Logic::Atom<R> {} constexpr inline r{};
 struct S : Logic::Atom<S> {} constexpr inline s{};
+
+/// Literals to be used only on the left side
+struct A {};
+Atom<A> constexpr inline a{};
+struct B{}; Atom<B> constexpr inline b{};
+struct C{}; Atom<C> constexpr inline c{};
+
+auto constexpr inline C1 = a and b;
+auto constexpr inline C2 = a and c;
+auto constexpr inline C3 = !a and !b;
+auto constexpr inline C4 = !a and !c;
+auto constexpr inline g1 = ClauseFilter(C4)(C1, C2, C3, C4);
+auto constexpr inline g11 = ClauseFilter(g1)(C1, C2, C3, g1);
+auto constexpr inline g2 = ClauseFilter(C1)(C1, C2, C3, g1);
+auto constexpr inline g3 = ClauseFilter(C2)(C1,	C2, C3, g1);
+auto constexpr inline g4 = ClauseFilter(C3)(C1,	C2, C3, g1);
+auto constexpr inline h1 = g2 or g3;
+auto constexpr inline h2 = h1 or g4;
+auto constexpr inline h3 = h2 or g1;
+// auto constexpr inline g = Simplifier(f)(!a and !b);
 
 /// ****************************************************************************
 ///	Tests for Concepts
@@ -421,10 +436,10 @@ static_assert
 
 ///	2 Literal Conjunction 2 x 2
 static_assert
-(	(p	or	((p	or	q)	and	(!p	or	!q)))	==	(p	or	q)
+(	(p	or	((p	or	q)	and	(!p	or	!q)))	<=>	(p	or	q)
 );
 static_assert
-(	(p	or	((p	or	q)	and	(!q	or	!p)))	==	(p	or	q)
+(	(p	or	((p	or	q)	and	(!q	or	!p)))	<=>	(p	or	q)
 );
 
 ///	3 Literal Conjunction 2 x 2
@@ -432,7 +447,7 @@ static_assert
 (	(p	or	((p	or	q)	and	(p	or	r)))	==	(p	or	(q	and	r))
 );
 static_assert
-(	(p	or	((p	or	q)	and	(!p	or	r)))	==	(p	or	q)
+(	(p	or	((p	or	q)	and	(!p	or	r)))	<=>	(p	or	q)
 );
 static_assert
 (	(p	or	((p	or	q)	and	(q	or	r)))	==	(p	or	q)
@@ -444,7 +459,7 @@ static_assert
 (	(p	or	((p	or	q)	and	(r	or	p)))	==	(p	or	(q	and	r))
 );
 static_assert
-(	(p	or	((p	or	q)	and	(r	or	!p)))	==	(p	or	q)
+(	(p	or	((p	or	q)	and	(r	or	!p)))	<=>	(p	or	q)
 );
 static_assert
 (	(p	or	((p	or	q)	and	(r	or	q)))	==	(p	or	q)
@@ -475,10 +490,10 @@ static_assert
 
 ///	2 Literal Disjunction 2 x 2
 static_assert
-(	(p	or	((p	and	q)	or	(!p	and	!q)))	==	(p	or	!q)
+(	(p	or	((p	and	q)	or	(!p	and	!q)))	<=>	(p	or	!q)
 );
 static_assert
-(	(p	or	((p	and	q)	or	(!q	and	!p)))	==	(p	or	!q)
+(	(p	or	((p	and	q)	or	(!q	and	!p)))	<=>	(p	or	!q)
 );
 
 ///	3 Literal Disjunction 2 x 2
@@ -486,7 +501,7 @@ static_assert
 (	(p	or	((p	and	q)	or	(p	and	r)))	==	(p)
 );
 static_assert
-(	(p	or	((p	and	q)	or	(!p	and	r)))	==	(p	or	r)
+(	(p	or	((p	and	q)	or	(!p	and	r)))	<=>	(p	or	r)
 );
 static_assert
 (	(p	or	((p	and	q)	or	(q	and	r)))	==	(p	or	(q	and	r))
@@ -498,7 +513,7 @@ static_assert
 (	(p	or	((p	and	q)	or	(r	and	p)))	==	(p)
 );
 static_assert
-(	(p	or	((p	and	q)	or	(r	and	!p)))	==	(p	or	r)
+(	(p	or	((p	and	q)	or	(r	and	!p)))	<=>	(p	or	r)
 );
 static_assert
 (	(p	or	((p	and	q)	or	(r	and	q)))	==	(p	or	(r	and	q))
@@ -521,25 +536,25 @@ static_assert
 
 ///	Conjunction 1 x 1
 static_assert
-(	(!p	or	(p	and	q))	==	(!p	or	q)
+(	(!p	or	(p	and	q))	<=>	(!p	or	q)
 );
 
 ///	Conjunction 1 x 2
 static_assert
-(	(!p	or	(p	and	(q	or	r)))	==	(!p	or	q	or	r)
+(	(!p	or	(p	and	(q	or	r)))	<=>	(!p	or	q	or	r)
 );
 
 ///	Conjunction 2 x 1
 static_assert
-(	(!p	or	((p	or	q)	and	r))	==	(!p	or	r)
+(	(!p	or	((p	or	q)	and	r))	<=>	(!p	or	r)
 );
 
 ///	2 Literal Conjunction 2 x 2
 static_assert
-(	(!p	or	((p	or	q)	and	(!p	or	!q)))	==	(!p	or	!q)
+(	(!p	or	((p	or	q)	and	(!p	or	!q)))	<=>	(!p	or	!q)
 );
 static_assert
-(	(!p	or	((p	or	q)	and	(!q	or	!p)))	==	(!p	or	!q)
+(	(!p	or	((p	or	q)	and	(!q	or	!p)))	<=>	(!p	or	!q)
 );
 
 ///	3 Literal Conjunction 2 x 2
@@ -547,22 +562,22 @@ static_assert
 (	(!p	or	((p	or	q)	and	(p	or	r)))	==	(T)
 );
 static_assert
-(	(!p	or	((p	or	q)	and	(!p	or	r)))	==	(!p	or	r)
+(	(!p	or	((p	or	q)	and	(!p	or	r)))	<=>	(!p	or	r)
 );
 static_assert
 (	(!p	or	((p	or	q)	and	(q	or	r)))	<=>	(!p	or	q	or	r)
 );
 static_assert
-(	(!p	or	((p	or	q)	and	(!q	or	r)))	==	(!p	or	!q	or	r)
+(	(!p	or	((p	or	q)	and	(!q	or	r)))	<=>	(!p	or	!q	or	r)
 );
 static_assert
 (	(!p	or	((p	or	q)	and	(r	or	p)))	==	(T)
 );
 static_assert
-(	(!p	or	((p	or	q)	and	(r	or	!p)))	==	(!p	or	r)
+(	(!p	or	((p	or	q)	and	(r	or	!p)))	<=>	(!p	or	r)
 );
 static_assert
-(	(!p	or	((p	or	q)	and	(r	or	q)))	==	(!p	or	r	or	q)
+(	(!p	or	((p	or	q)	and	(r	or	q)))	<=>	(!p	or	r	or	q)
 );
 static_assert
 (	(!p	or	((p	or	q)	and	(r	or	!q)))	<=>	(!p	or	r	or	!q)
@@ -570,7 +585,7 @@ static_assert
 
 ///	4 Literal Conjunction 2 x 2
 static_assert
-(	(!p	or	((p	or	q)	and	(r	or	s)))	==	(!p	or	r	or	s)
+(	(!p	or	((p	or	q)	and	(r	or	s)))	<=>	(!p	or	r	or	s)
 );
 
 ///	Disjunction 1 x 1
@@ -585,46 +600,46 @@ static_assert
 
 ///	Disjunction 2 x 1
 static_assert
-(	(!p	or	((p	and	q)	or	r))	==	(!p	or	q	or	r)
+(	(!p	or	((p	and	q)	or	r))	<=>	(!p	or	q	or	r)
 );
 
 ///	2 Literal Disjunction 2 x 2
 static_assert
-(	(!p	or	((p	and	q)	or	(!p	and	!q)))	==	(!p	or	q)
+(	(!p	or	((p	and	q)	or	(!p	and	!q)))	<=>	(!p	or	q)
 );
 static_assert
-(	(!p	or	((p	and	q)	or	(!q	and	!p)))	==	(!p	or	q)
+(	(!p	or	((p	and	q)	or	(!q	and	!p)))	<=>	(!p	or	q)
 );
 
 ///	3 Literal Disjunction 2 x 2
 static_assert
-(	(!p	or	((p	and	q)	or	(p	and	r)))	==	(!p	or	q	or	r)
+(	(!p	or	((p	and	q)	or	(p	and	r)))	<=>	(!p	or	q	or	r)
 );
 static_assert
-(	(!p	or	((p	and	q)	or	(!p	and	r)))	==	(!p	or	q)
+(	(!p	or	((p	and	q)	or	(!p	and	r)))	<=>	(!p	or	q)
 );
 static_assert
-(	(!p	or	((p	and	q)	or	(q	and	r)))	==	(!p	or	q)
+(	(!p	or	((p	and	q)	or	(q	and	r)))	<=>	(!p	or	q)
 );
 static_assert
-(	(!p	or	((p	and	q)	or	(!q	and	r)))	==	(!p	or	q	or	r)
+(	(!p	or	((p	and	q)	or	(!q	and	r)))	<=>	(!p	or	q	or	r)
 );
 static_assert
-(	(!p	or	((p	and	q)	or	(r	and	p)))	==	(!p	or	q	or	r)
+(	(!p	or	((p	and	q)	or	(r	and	p)))	<=>	(!p	or	q	or	r)
 );
 static_assert
-(	(!p	or	((p	and	q)	or	(r	and	!p)))	==	(!p	or	q)
+(	(!p	or	((p	and	q)	or	(r	and	!p)))	<=>	(!p	or	q)
 );
 static_assert
-(	(!p	or	((p	and	q)	or	(r	and	q)))	==	(!p	or	q)
+(	(!p	or	((p	and	q)	or	(r	and	q)))	<=>	(!p	or	q)
 );
 static_assert
-(	(!p	or	((p	and	q)	or	(r	and	!q)))	==	(!p	or	q	or	r)
+(	(!p	or	((p	and	q)	or	(r	and	!q)))	<=>	(!p	or	q	or	r)
 );
 
 ///	4 Literal Disjunction 2 x 2
 static_assert
-(	(!p	or	((p	and	q)	or	(r	and	s)))	==	(!p	or	q	or	(r	and	s))
+(	(!p	or	((p	and	q)	or	(r	and	s)))	<=>	(!p	or	q	or	(r	and	s))
 );
 
 
@@ -670,7 +685,7 @@ static_assert
 (	(p	and	((p	or	q)	and	(q	or	r)))	<=>	(p	and	(q	or	r))
 );
 static_assert
-(	(p	and	((p	or	q)	and	(!q	or	r)))	==	(p	and	(!q	or	r))
+(	(p	and	((p	or	q)	and	(!q	or	r)))	<=>	(p	and	(!q	or	r))
 );
 static_assert
 (	(p	and	((p	or	q)	and	(r	or	p)))	==	(p)
@@ -727,7 +742,7 @@ static_assert
 (	(p	and	((p	and	q)	or	(q	and	r)))	==	(p	and	q)
 );
 static_assert
-(	(p	and	((p	and	q)	or	(!q	and	r)))	==	(p	and	(q	or	r))
+(	(p	and	((p	and	q)	or	(!q	and	r)))	<=>	(p	and	(q	or	r))
 );
 static_assert
 (	(p	and	((p	and	q)	or	(r	and	p)))	==	(p	and	(q	or	r))
@@ -739,7 +754,7 @@ static_assert
 (	(p	and	((p	and	q)	or	(r	and	q)))	==	(p	and	q)
 );
 static_assert
-(	(p	and	((p	and	q)	or	(r	and	!q)))	==	(p	and	(q	or	r))
+(	(p	and	((p	and	q)	or	(r	and	!q)))	<=>	(p	and	(q	or	r))
 );
 
 ///	4 Literal Disjunction 2 x 2

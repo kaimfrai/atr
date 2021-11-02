@@ -233,3 +233,131 @@ template
 		...
 	>
 ;
+
+auto consteval
+(	Tautology
+)	(	ProtoTerm auto
+	,	ProtoTerm auto
+		...
+	)
+->	True
+{	return True{};	}
+
+auto consteval
+(	Constradiction
+)	(	ProtoTerm auto
+	,	ProtoTerm auto
+		...
+	)
+->	False
+{	return {};	}
+
+auto consteval
+(	Conjunction
+)	(	ProtoLiteral auto
+			i_vLiteral
+	)
+->	ProtoLiteral auto
+{	return	i_vLiteral;	}
+
+auto consteval
+(	Conjunction
+)	(	ProtoLiteral auto
+			i_vFirstLiteral
+	,	ProtoLiteral auto
+			i_vSecondLiteral
+	,	ProtoLiteral auto
+		...	i_vpRemainingLiteral
+	)
+->	ProtoClause auto
+{
+	return
+	And
+	{	i_vFirstLiteral
+	,	i_vSecondLiteral
+	,	i_vpRemainingLiteral
+		...
+	};
+}
+
+auto consteval
+(	Disjunction
+)	(	ProtoClause auto
+			i_vClause
+	)
+->	ProtoLiteral auto
+{	return	i_vClause;	}
+
+auto consteval
+(	Disjunction
+)	(	ProtoClause auto
+			i_vFirstClause
+	,	ProtoClause auto
+			i_vSecondClause
+	,	ProtoClause auto
+		...	i_vpRemainingClause
+	)
+->	ProtoTerm auto
+{
+	return
+	Or
+	{	i_vFirstClause
+	,	i_vSecondClause
+	,	i_vpRemainingClause
+		...
+	};
+}
+
+auto consteval
+(	LiteralCoutn
+)	(	ProtoConstant auto
+	)
+{	return 0ul;	}
+
+auto consteval
+(	LiteralCount
+)	(	ProtoLiteral auto
+	)
+{	return 1ul;	}
+
+template
+	<	ProtoLiteral
+		...	t_tpLiteral
+	>
+auto consteval
+(	LiteralCount
+)	(	And<t_tpLiteral...>
+	)
+{	return sizeof...(t_tpLiteral);	}
+
+template
+	<	ProtoClause
+		...	t_tpClause
+	>
+auto consteval
+(	LiteralCount
+)	(	Or<t_tpClause...>
+	)
+{	return
+	(	...
+	+	LiteralCount
+		(	t_tpClause{}
+		)
+	);
+}
+
+auto consteval
+(	ClauseCount
+)	(	ProtoClause auto
+	)
+{	return 1ul;	}
+
+template
+	<	ProtoClause
+		...	t_tpClause
+	>
+auto consteval
+(	ClauseCount
+)	(	Or<t_tpClause...>
+	)
+{	return sizeof...(t_tpClause);	}
