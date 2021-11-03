@@ -7,13 +7,13 @@ static_assert
 (	(	(T)
 	and	(p	and	q)
 	)
-==	(p	and	q)
+<=>	(p	and	q)
 );
 static_assert
 (	(	(F)
 	and	(p	and	q)
 	)
-==	(F)
+<=>	(F)
 );
 
 /// ****************************************************************************
@@ -23,11 +23,11 @@ static_assert
 (	(	(T)
 	and	(p	and	q	and	r)
 	)
-==	(p	and	q	and	r)
+<=>	(p	and	q	and	r)
 );
 static_assert
 (	(	(F)
 	and	(p	and	q	and	r)
 	)
-==	(F)
+<=>	(F)
 );
