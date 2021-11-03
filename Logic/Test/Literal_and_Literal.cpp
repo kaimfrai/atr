@@ -20,14 +20,14 @@ static_assert
 (	(	(q)
 	and	(p)
 	)
-<=>	(q	and	p)
+<=>	(p	and	q)
 );
 
 static_assert
 (	(	(!q)
 	and	(p)
 	)
-<=>	(!q	and	p)
+<=>	(p	and	!q)
 );
 
 /// ****************************************************************************
@@ -50,11 +50,11 @@ static_assert
 (	(	(q)
 	and	(!p)
 	)
-<=>	(q	and	!p)
+<=>	(!p	and	q)
 );
 static_assert
 (	(	(!q)
 	and	(!p)
 	)
-<=>	(!q	and	!p)
+<=>	(!p	and	!q)
 );
