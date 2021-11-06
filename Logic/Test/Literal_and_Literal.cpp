@@ -7,27 +7,27 @@ static_assert
 (	(	(p)
 	and	(p)
 	)
-<=>	(p)
+==	(p)
 );
 static_assert
 (	(	(!p)
 	and	(p)
 	)
-<=>	(F)
+==	(F)
 );
 
 static_assert
 (	(	(q)
 	and	(p)
 	)
-<=>	(p	and	q)
+==	(p	and	q)
 );
 
 static_assert
 (	(	(!q)
 	and	(p)
 	)
-<=>	(p	and	!q)
+==	(p	and	!q)
 );
 
 /// ****************************************************************************
@@ -37,24 +37,24 @@ static_assert
 (	(	(!p)
 	and	(!p)
 	)
-<=>	(!p)
+==	(!p)
 );
 static_assert
 (	(	(p)
 	and	(!p)
 	)
-<=>	(F)
+==	(F)
 );
 
 static_assert
 (	(	(q)
 	and	(!p)
 	)
-<=>	(!p	and	q)
+==	(!p	and	q)
 );
 static_assert
 (	(	(!q)
 	and	(!p)
 	)
-<=>	(!p	and	!q)
+==	(!p	and	!q)
 );
