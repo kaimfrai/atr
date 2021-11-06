@@ -1,3 +1,4 @@
 [Project]
-Name=Archetype
+CreatedFrom=CMakeLists.txt
 Manager=KDevCMakeManager
+Name=Archetype
