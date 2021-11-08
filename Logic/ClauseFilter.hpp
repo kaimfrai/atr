@@ -51,6 +51,25 @@ struct
 			False
 			{};
 		else
+		if	constexpr
+			(	//	another clause is redundant
+				//	wait with further simplification
+				(	0ul
+				+	...
+				+	ClauseRedundancy
+					{	i_vpClause
+					}(	i_vpClause
+						...
+					)
+				)
+			>	0ul
+			)
+			return
+			Conjunction
+			(	t_tpLiteral{}
+				...
+			);
+		else
 		{
 			//	filter literals within this clause
 			//	this may result in multiple clauses with a filtered literal each

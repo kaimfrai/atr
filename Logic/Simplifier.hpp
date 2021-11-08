@@ -66,8 +66,8 @@ struct
 		);
 
 		if	constexpr
-			(	vSimplifiedNewClause
-			==	i_vNewClause
+			(	i_vNewClause
+			==	vSimplifiedNewClause
 			)
 		{
 			ProtoTerm auto constexpr
