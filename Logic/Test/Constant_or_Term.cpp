@@ -193,6 +193,38 @@ static_assert
 );
 
 /// ****************************************************************************
+///	(	p	and	q	and	r
+///	or	p	and	!q	and	!r
+///	or	!p	and	q	and	!r
+///	or	!p	and	!q	and	r
+///	)
+/// ****************************************************************************
+static_assert
+(	(	(T)
+	or	(	p	and	q	and	r
+		or	p	and	!q	and	!r
+		or	!p	and	q	and	!r
+		or	!p	and	!q	and	r
+		)
+	)
+==	(T)
+);
+static_assert
+(	(	(F)
+	or	(	p	and	q	and	r
+		or	p	and	!q	and	!r
+		or	!p	and	q	and	!r
+		or	!p	and	!q	and	r
+		)
+	)
+==	(	p	and	q	and	r
+	or	p	and	!q	and	!r
+	or	!p	and	q	and	!r
+	or	!p	and	!q	and	r
+	)
+);
+
+/// ****************************************************************************
 ///	(p	and	q	and	r	or	!p	and	!q)
 /// ****************************************************************************
 static_assert
