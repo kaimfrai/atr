@@ -19,8 +19,6 @@ DEPENDS
 	Types.hpp
 
 	Identity.hpp
-	Implication.hpp
-	Equivalence.hpp
 
 	Substitute.hpp
 	ClauseRedundancy.hpp

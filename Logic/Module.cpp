@@ -9,8 +9,6 @@ export module
 //	TODO: These should be module partitions but clang doesn't support those yet.
 #include "Conjunction.hpp"
 #include "Disjunction.hpp"
-#include "Equivalence.hpp"
-#include "Implication.hpp"
 #include "Negation.hpp"
 #include "Identity.hpp"
 #include "Types.hpp"
@@ -61,64 +59,6 @@ export namespace
 		<	t_tTerm
 		>
 	;
-
-	///	Checks if the left term implies the right term.
-	template
-		<	ProtoTerm
-				t_tLeftTerm
-		,	ProtoTerm
-				t_tRightTerm
-		>
-	auto consteval
-	(	operator >=
-	)	(	Term<t_tLeftTerm>
-		,	Term<t_tRightTerm>
-		)
-	->	bool
-	{	return
-		(	t_tLeftTerm{}
-		>=	t_tRightTerm{}
-		);
-	}
-
-	///	Checks if the left term is implied by the right term.
-	template
-		<	ProtoTerm
-				t_tLeftTerm
-		,	ProtoTerm
-				t_tRightTerm
-		>
-	auto consteval
-	(	operator <=
-	)	(	Term<t_tLeftTerm>
-		,	Term<t_tRightTerm>
-		)
-	->	bool
-	{	return
-		(	t_tLeftTerm{}
-		<=	t_tRightTerm{}
-		);
-	}
-
-	///	Checks the two given terms for equivalence.
-	///	Note that identical terms are always equivalent.
-	template
-		<	ProtoTerm
-				t_tLeftTerm
-		,	ProtoTerm
-				t_tRightTerm
-		>
-	auto consteval
-	(	operator <=>
-	)	(	Term<t_tLeftTerm>
-		,	Term<t_tRightTerm>
-		)
-	->	bool
-	{	return
-		(	t_tLeftTerm{}
-		<=>	t_tRightTerm{}
-		);
-	}
 
 	///	Checks the two given terms for identity.
 	///	Note that this is not the same as equivalence.
