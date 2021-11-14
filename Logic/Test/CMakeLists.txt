@@ -32,4 +32,7 @@ OBJECT
 	Clause_or_Term.cpp
 )
 
-add_dependencies(LogicTest Logic)
+add_dependencies(
+	LogicTest
+		Logic
+)

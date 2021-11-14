@@ -4,6 +4,7 @@ OUTPUT
 COMMAND
 	${CMAKE_CXX_COMPILER}
 	-std=c++20
+	-stdlib=libc++
 	${WARNING_FLAGS}
 	${MODULE_FLAGS}
 	-c ${CMAKE_CURRENT_SOURCE_DIR}/Module.cpp
@@ -40,4 +41,6 @@ DEPENDS
 	${PREBUILT_MODULE_PATH}/Logic.pcm
 )
 
-add_subdirectory(Test)
+add_subdirectory(
+	Test
+)
