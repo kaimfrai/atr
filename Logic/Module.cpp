@@ -214,11 +214,7 @@ export namespace
 	;
 }
 
-module
-	:private
-;
-
-Logic::True constexpr inline T{};
+module :private;
 
 /// ****************************************************************************
 ///	Tests for Concepts

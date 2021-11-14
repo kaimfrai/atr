@@ -309,7 +309,7 @@ auto consteval
 }
 
 auto consteval
-(	LiteralCoutn
+(	LiteralCount
 )	(	ProtoConstant auto
 	)
 {	return 0ul;	}
