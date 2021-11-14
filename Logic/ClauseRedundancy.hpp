@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Identity.hpp"
+#include "Equivalence.hpp"
 #include "Substitute.hpp"
 #include "Types.hpp"
 #include "Concepts.hpp"

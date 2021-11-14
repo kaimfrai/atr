@@ -173,4 +173,3 @@ auto consteval
 	)
 ->	bool
 {	return false;	}
-

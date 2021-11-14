@@ -10,7 +10,7 @@ export module
 #include "Conjunction.hpp"
 #include "Disjunction.hpp"
 #include "Negation.hpp"
-#include "Identity.hpp"
+#include "Equivalence.hpp"
 #include "Types.hpp"
 #include "Concepts.hpp"
 

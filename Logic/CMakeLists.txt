@@ -18,7 +18,7 @@ DEPENDS
 	Concepts.hpp
 	Types.hpp
 
-	Identity.hpp
+	Equivalence.hpp
 
 	Substitute.hpp
 	ClauseRedundancy.hpp

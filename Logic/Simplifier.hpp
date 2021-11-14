@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ClauseFilter.hpp"
-#include "Identity.hpp"
+#include "Equivalence.hpp"
 #include "Types.hpp"
 #include "Concepts.hpp"
 
