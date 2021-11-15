@@ -48,8 +48,7 @@ auto consteval
 )	(	And<t_tpLiteral...>
 	)
 ->	ProtoTerm auto
-{
-	return
+{	return
 	Or
 	{	not
 		t_tpLiteral

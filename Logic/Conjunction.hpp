@@ -13,8 +13,7 @@ auto consteval
 			i_vRight
 	)
 ->	ProtoClause auto
-{
-	return
+{	return
 	not
 	(	not
 		i_vLeft
@@ -34,8 +33,7 @@ auto consteval
 	,	And<t_tpRightLiteral...>
 	)
 ->	ProtoTerm auto
-{
-	return
+{	return
 	(	i_vLeft
 	and	...
 	and	t_tpRightLiteral{}
@@ -53,8 +51,7 @@ auto consteval
 	,	Or<t_tpRightClause...>
 	)
 ->	ProtoTerm auto
-{
-	return
+{	return
 	(	...
 	or	(	i_vLeft
 		and	t_tpRightClause{}
@@ -73,8 +70,7 @@ auto consteval
 			i_vRight
 	)
 ->	ProtoTerm auto
-{
-	return
+{	return
 	(	...
 	or	(	t_tpLeftClause{}
 		and	i_vRight

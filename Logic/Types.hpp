@@ -11,6 +11,11 @@ struct
 	Constant
 :	ConstantTag
 {
+	explicit consteval
+	(	operator bool
+	)	()	const
+	{	return t_bConstant;	}
+
 	auto consteval
 	(	operator()
 	)	(	auto
@@ -26,9 +31,11 @@ struct
 :	Constant<true>
 {
 	using
-		Constant
-		<	true
-		>
+		Constant<true>
+	::	operator bool
+	;
+	using
+		Constant<true>
 	::	operator()
 	;
 };
@@ -38,9 +45,11 @@ struct
 :	Constant<false>
 {
 	using
-		Constant
-		<	false
-		>
+		Constant<false>
+	::	operator bool
+	;
+	using
+		Constant<false>
 	::	operator()
 	;
 };
@@ -88,10 +97,7 @@ struct
 	>
 {
 	using
-		Literal
-		<	t_tAtom
-		,	true
-		>
+		Literal<t_tAtom, true>
 	::	operator()
 	;
 };
@@ -108,10 +114,7 @@ struct
 	>
 {
 	using
-		Literal
-		<	t_tAtom
-		,	false
-		>
+		Literal<t_tAtom, false>
 	::	operator()
 	;
 };
@@ -144,19 +147,15 @@ struct
 		)	const
 	->	bool
 	{	return
-		(	//	literals are inserted left to right
-			//	more specialized literals are therefore to the right
-			//	evaluate them first to get faster short circuiting
-			t_tpLiteral{}
+		(	...
+		and	t_tpLiteral{}
 			(	// do not include std::forward just for this
 				static_cast
 				<	decltype(i_rpArgument)
 						&&
 				>(	i_rpArgument
 				)...
-
 			)
-		and	...
 		);
 	}
 };
@@ -203,10 +202,8 @@ struct
 		)	const
 	->	bool
 	{	return
-		(	//	literals are inserted left to right
-			//	more specialized literals are therefore to the right
-			//	evaluate them first to get faster short circuiting
-			t_tpClause{}
+		(	...
+		or	t_tpClause{}
 			(	// do not include std::forward just for this
 				static_cast
 				<	decltype(i_rpArgument)
@@ -215,7 +212,6 @@ struct
 				)...
 
 			)
-		or	...
 		);
 	}
 };
@@ -270,8 +266,7 @@ auto consteval
 		...	i_vpRemainingLiteral
 	)
 ->	ProtoClause auto
-{
-	return
+{	return
 	And
 	{	i_vFirstLiteral
 	,	i_vSecondLiteral
@@ -298,8 +293,7 @@ auto consteval
 		...	i_vpRemainingClause
 	)
 ->	ProtoTerm auto
-{
-	return
+{	return
 	Or
 	{	i_vFirstClause
 	,	i_vSecondClause

@@ -167,48 +167,48 @@ export namespace
 		>
 	;
 
-	///	Convenience alias to create a term for a conjunction of an existing term
-	///	and a new atomic predicate.
+	///	Convenience alias to create a term for a conjunction of a new atomic predicate
+	///	and an existing term.
 	///	Intended for CRTP use.
 	///	Note that being default constructible and callable is a requirement,
 	///	which cannot be checked as the type will be incomplete at this point.
 	template
-		<	Term
-				i_vTerm
-		,	ProtoAtom
+		<	ProtoAtom
 				t_tAtom
+		,	Term
+				i_vTerm
 		>
 	using
 		Conjunction
 	=	Term
 		<	decltype
-			(	i_vTerm
-			and	Atom
+			(	Atom
 				<	t_tAtom
 				>{}
+			and	i_vTerm
 			)
 		>
 	;
 
-	///	Convenience alias to create a term for a disjunction of an existing term
-	///	and a new atomic predicate.
+	///	Convenience alias to create a term for a disjunction of a new atomic predicate
+	///	and an existing term.
 	///	Intended for CRTP use.
 	///	Note that being default constructible and callable is a requirement,
 	///	which cannot be checked as the type will be incomplete at this point.
 	template
-		<	Term
-				i_vTerm
-		,	ProtoAtom
+		<	ProtoAtom
 				t_tAtom
+		,	Term
+				i_vTerm
 		>
 	using
 		Disjunction
 	=	Term
 		<	decltype
-			(	i_vTerm
-			or	Atom
+			(	Atom
 				<	t_tAtom
 				>{}
+			or	i_vTerm
 			)
 		>
 	;

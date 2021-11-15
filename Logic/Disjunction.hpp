@@ -12,8 +12,7 @@ auto consteval
 			i_vRight
 	)
 ->	ProtoTerm auto
-{
-	return
+{	return
 	Simplifier
 	{	i_vLeft
 	}(	i_vRight
@@ -31,8 +30,7 @@ auto consteval
 	,	Or<t_tpRightClause...>
 	)
 ->	ProtoTerm auto
-{
-	return
+{	return
 	(	i_vLeft
 	or	...
 	or	t_tpRightClause{}
