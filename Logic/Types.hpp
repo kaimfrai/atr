@@ -348,6 +348,12 @@ auto consteval
 
 auto consteval
 (	ClauseCount
+)	(	ProtoConstant auto
+	)
+{	return 0ul;	}
+
+auto consteval
+(	ClauseCount
 )	(	ProtoClause auto
 	)
 {	return 1ul;	}

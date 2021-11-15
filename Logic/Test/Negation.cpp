@@ -672,12 +672,12 @@ static_assert
 ///	(p	and	q	and	r	or	!p	and	!q	and	!r)
 /// ************************************************************************************************
 static_assert
-(	decltype(not
-	(p	and	q	and	r	or	!p	and	!q	and	!r)){}
+(	not
+	(p	and	q	and	r	or	!p	and	!q	and	!r)
 ==	(p	and	!q	or	!p	and	r	or	q	and	!r)
 );
 static_assert
 (	not
 	(!p	and	!q	and	!r	or	p	and	q	and	r)
-==	(p	and	!r	or	!p	and	q	or	!q	and	r)
+==	(p	and	!q	or	!p	and	r	or	q	and	!r)
 );
