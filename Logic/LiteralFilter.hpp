@@ -138,18 +138,17 @@ struct
 				)
 			);
 
-			//	at least 1 at this point (can't be True)
+			//	at least 1 at this point (can neither be True nor False)
 			auto constexpr
 				vAddedClauseCount
 			=	ClauseCount
 				(	vSynthesizedTerm
 				)
 			;
-
+			//	using the synthesized term instead of this clause makes more clauses redundant than
+			//	it introduces
 			if	constexpr
-				(	//	by using the synthesized term instead of this clause more clauses are made
-					//	redundant than are added
-					vNewRedundantClauseCount
+				(	vNewRedundantClauseCount
 				>	vAddedClauseCount
 				)
 				return

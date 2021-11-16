@@ -68,8 +68,13 @@ struct
 
 		if	constexpr
 			(	i_vNewSubTerm
-			==	vSimplifiedNewSubTerm
+			!=	vSimplifiedNewSubTerm
 			)
+			return
+			(	ThisTerm
+			or	vSimplifiedNewSubTerm
+			);
+		else
 		{
 			ProtoTerm auto constexpr
 				vSimplifiedOldTerm
@@ -84,25 +89,20 @@ struct
 
 			if	constexpr
 				(	vSimplifiedOldTerm
-				==	ThisTerm
+				!=	ThisTerm
 				)
+				return
+				(	vSimplifiedOldTerm
+				or	i_vNewSubTerm
+				);
+			else
 				return
 				Disjunction
 				(	t_tpSubTerm{}
 					...
 				,	i_vNewSubTerm
 				);
-			else
-				return
-				(	vSimplifiedOldTerm
-				or	i_vNewSubTerm
-				);
 		}
-		else
-			return
-			(	ThisTerm
-			or	vSimplifiedNewSubTerm
-			);
 	}
 };
 

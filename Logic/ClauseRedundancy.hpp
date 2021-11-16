@@ -69,7 +69,7 @@ struct
 				)
 			;
 			auto constexpr
-				fIgnoreSelf
+				fIgnoreThisClause
 			=	SubstituteFalse
 				(	ThisClause
 				)
@@ -77,7 +77,7 @@ struct
 			return
 			(	...
 			or	fAssumeLiteralsTrue
-				(	fIgnoreSelf
+				(	fIgnoreThisClause
 					(	i_vpSubTerm
 					)
 				)
