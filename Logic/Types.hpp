@@ -280,7 +280,7 @@ auto consteval
 )	(	ProtoClause auto
 			i_vClause
 	)
-->	ProtoLiteral auto
+->	ProtoClause auto
 {	return	i_vClause;	}
 
 auto consteval

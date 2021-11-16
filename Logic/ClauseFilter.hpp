@@ -31,19 +31,29 @@ struct
 		)
 	{}
 
+	static ProtoClause auto constexpr
+		ThisClause
+	=	Conjunction
+		(	t_tpLiteral{}
+			...
+		)
+	;
+
 	auto consteval
 	(	operator()
 	)	(	ProtoClause auto
-			...	i_vpClause
+			...	i_vpSubTerm
 		)	const
 	->	ProtoTerm auto
 	{
+		//	this clause is simply redundant, replace it by false
 		if	constexpr
-			(	ClauseRedundancy
-				{	t_tpLiteral{}
-					...
-				}(	i_vpClause
-					...
+			(	IsTrue
+				(	ClauseRedundancy
+					{	ThisClause
+					}(	i_vpSubTerm
+						...
+					)
 				)
 			)
 			//	cancel this clause
@@ -51,24 +61,24 @@ struct
 			False
 			{};
 		else
+		//	another clause is redundant
+		//	delay further simplification
 		if	constexpr
-			(	//	another clause is redundant
-				//	wait with further simplification
-				(	0ul
+			(	(	0ul
 				+	...
-				+	ClauseRedundancy
-					{	i_vpClause
-					}(	i_vpClause
-						...
+				+	IsTrue
+					(	ClauseRedundancy
+						{	i_vpSubTerm
+						}(	i_vpSubTerm
+							...
+						)
 					)
 				)
 			>	0ul
 			)
 			return
-			Conjunction
-			(	t_tpLiteral{}
-				...
-			);
+				ThisClause
+			;
 		else
 		{
 			//	filter literals within this clause
@@ -78,23 +88,20 @@ struct
 			=(	...
 			or	LiteralFilter
 				{	t_tpLiteral{}
-				,	t_tpLiteral{}
-					...
-				}(	i_vpClause
+				,	ThisClause
+				}(	i_vpSubTerm
 					...
 				)
 			);
+			//	no literal was filtered
 			if	constexpr
-				(	//	no literal was filtered
-					IsFalse
+				(	IsFalse
 					(	vFilteredLiteralTerm
 					)
 				)
 				return
-				Conjunction
-				(	t_tpLiteral{}
-					...
-				);
+					ThisClause
+				;
 			else
 				return
 					vFilteredLiteralTerm

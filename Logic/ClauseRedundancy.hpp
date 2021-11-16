@@ -36,16 +36,16 @@ struct
 	auto consteval
 	(	operator()
 	)	(	ProtoTerm auto
-			...	i_vpClause
+			...	i_vpSubTerm
 		)	const
-	->	bool
+	->	ProtoTerm auto
 	{
 		auto constexpr
 			nContainedCount
 		=(	0ul
 		+	...
 		+	(	ThisClause
-			==	i_vpClause
+			==	i_vpSubTerm
 			)
 		);
 		static_assert
@@ -58,8 +58,8 @@ struct
 			>	1ul
 			)
 			return
-				true
-			;
+			True
+			{};
 		else
 		{
 			auto constexpr
@@ -74,19 +74,13 @@ struct
 				(	ThisClause
 				)
 			;
-			ProtoTerm auto constexpr
-				vDisjunction
-			=(	...
+			return
+			(	...
 			or	fAssumeLiteralsTrue
 				(	fIgnoreSelf
-					(	i_vpClause
+					(	i_vpSubTerm
 					)
 				)
-			);
-
-			return
-			IsTrue
-			(	vDisjunction
 			);
 		}
 	}

@@ -1,13 +1,14 @@
 #pragma once
 
+#include "LiteralRedundancy.hpp"
 #include "ClauseRedundancy.hpp"
 #include "Substitute.hpp"
 #include "Equivalence.hpp"
 #include "Types.hpp"
 #include "Concepts.hpp"
 
-///	Filter Literals within clauses for which there exists a clause with the
-///	negated Literal or without it that shares all other literals.
+///	Filters Literals within clauses for which there exists a clause with the negated Literal or
+//	without it that shares all other literals.
 ///	For example:
 ///		(A and B and C)	or	(not A and B)
 /// =>	(B and C)		or	(not A and B)
@@ -17,6 +18,12 @@
 ///	=>	(B)			or	(not A)
 ///		(A)		or	(not A)
 ///	=>	(True)	or	(True)
+///	Additionally synthesizes a new sub term from the clause without the literal if it makes more
+///	clauses redundant than it introduces.
+///	For example:
+///		(A and B)	or	(not A and not B)	or	(A and C)	or	(not A and not C)
+///	=>	(A and B)	or	(not A and not B)	or	(A and C)	or	(    B and not C)
+///	=>	(False)		or	(not A and not B)	or	(A	and	C)	or	(    B and not C)
 template
 	<	ProtoLiteral
 			t_tFilterLiteral
@@ -34,6 +41,13 @@ struct
 		)
 	{}
 
+	explicit consteval
+	(	LiteralFilter
+	)	(	t_tFilterLiteral
+		,	And<t_tpClauseLiteral...>
+		)
+	{}
+
 	static ProtoClause auto constexpr
 		ThisClause
 	=	Conjunction
@@ -41,57 +55,65 @@ struct
 			...
 		)
 	;
-	static auto constexpr
-		IgnoreThisClause
-	=	SubstituteFalse
-		(	ThisClause
-		)
-	;
 
 	auto consteval
 	(	operator()
 	)	(	ProtoClause auto
-			...	i_vpClause
-		)
+			...	i_vpSubTerm
+		)	const
 	->	ProtoClause auto
 	{
-		auto constexpr
-			fReplaceByNegation
-		=	SubstituteNegation
-			(	t_tFilterLiteral{}
-			)
-		;
-
-		auto constexpr
-			fAssumeNegationAndLiteralsTrue
-		=	AssumeLiteralsTrue
-			(	fReplaceByNegation
-				(	t_tpClauseLiteral{}
-				)
+		ProtoTerm auto constexpr
+			vRedundancyCondition
+		=	LiteralRedundancy
+			{	t_tFilterLiteral{}
+			,	ThisClause
+			}(	i_vpSubTerm
 				...
 			)
 		;
 
-		ProtoTerm auto constexpr
-			vRedundancyCondition
-		=(	...
-		or	fAssumeNegationAndLiteralsTrue
-			(	IgnoreThisClause
-				(	i_vpClause
-				)
-			)
-		);
-
+		//	this literal is always redundant
 		if	constexpr
-			(	ClauseRedundancy
-				{	ThisClause
-				}(	i_vpClause
-					...
-				,	vRedundancyCondition
+			(	IsTrue
+				(	vRedundancyCondition
 				)
 			)
 		{
-			ProtoTerm auto
+			auto constexpr
+				fSubstituteTrue
+			=	SubstituteTrue
+				(	t_tFilterLiteral{}
+				)
+			;
+			//	new clause without the literal
+			return
+			(	...
+			and	fSubstituteTrue
+				(	t_tpClauseLiteral{}
+				)
+			);
+		}
+		else
+		//	before replacing this clause can be considered it must be redundant
+		if	constexpr
+			(	IsFalse
+				(	ClauseRedundancy
+					{	ThisClause
+					}(	i_vpSubTerm
+						...
+					,	//	no need to create a synthesized term just yet
+						//	the other literals are assumed true anyways
+						vRedundancyCondition
+					)
+				)
+			)
+			return
+			False
+			{};
+		else
+		{
+			ProtoTerm auto constexpr
 				vSynthesizedTerm
 			=(	...
 			and	Substitute
@@ -101,45 +123,34 @@ struct
 				)
 			);
 
+			//	at least 1 at this point (ThisClause)
 			auto constexpr
 				vNewRedundantClauseCount
 			=(	0ul
 			+	...
-			+	ClauseRedundancy
-				{	i_vpClause
-				}(	i_vpClause
-					...
-				,	vSynthesizedTerm
-				)
-			);
-			auto constexpr
-				vOldRedundantClauseCount
-			=(	0ul
-			+	...
-			+	ClauseRedundancy
-				{	i_vpClause
-				}(	i_vpClause
-					...
+			+	IsTrue
+				(	ClauseRedundancy
+					{	i_vpSubTerm
+					}(	i_vpSubTerm
+						...
+					,	vSynthesizedTerm
+					)
 				)
 			);
 
+			//	at least 1 at this point (can't be True)
+			auto constexpr
+				vAddedClauseCount
+			=	ClauseCount
+				(	vSynthesizedTerm
+				)
+			;
+
 			if	constexpr
-				(	//	by using the synthesized term instead of this clause
-					//	more clauses are made redundant than are added
-					(	vNewRedundantClauseCount
-					-	vOldRedundantClauseCount
-					)
-				>	ClauseCount
-					(	vSynthesizedTerm
-					)
-				or	//	by using the synthesied term instead of this clause
-					//	more literals are made redundant than are added
-					LiteralCount
-					(	ThisClause
-					)
-				>	LiteralCount
-					(	vSynthesizedTerm
-					)
+				(	//	by using the synthesized term instead of this clause more clauses are made
+					//	redundant than are added
+					vNewRedundantClauseCount
+				>	vAddedClauseCount
 				)
 				return
 					vSynthesizedTerm
@@ -149,10 +160,6 @@ struct
 				False
 				{};
 		}
-		else
-			return
-			False
-			{};
 	}
 };
 
@@ -166,6 +173,23 @@ template
 )	(	t_tFilterLiteral
 	,	t_tpClauseLiteral
 		...
+	)
+->	LiteralFilter
+	<	t_tFilterLiteral
+	,	t_tpClauseLiteral
+		...
+	>
+;
+
+template
+	<	ProtoLiteral
+			t_tFilterLiteral
+	,	ProtoLiteral
+		...	t_tpClauseLiteral
+	>
+(	LiteralFilter
+)	(	t_tFilterLiteral
+	,	And<t_tpClauseLiteral...>
 	)
 ->	LiteralFilter
 	<	t_tFilterLiteral

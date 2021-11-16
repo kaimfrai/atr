@@ -7,23 +7,31 @@
 
 template
 	<	ProtoClause
-		...	t_tpOldClause
+		...	t_tpSubTerm
 	>
 struct
 	Simplifier
 {
 	explicit consteval
 	(	Simplifier
-	)	(	t_tpOldClause
+	)	(	t_tpSubTerm
 			...
 		)
 	{}
 
 	explicit consteval
 	(	Simplifier
-	)	(	Or<t_tpOldClause...>
+	)	(	Or<t_tpSubTerm...>
 		)
 	{}
+
+	static ProtoTerm auto constexpr
+		ThisTerm
+	=	Disjunction
+		(	t_tpSubTerm{}
+			...
+		)
+	;
 
 	auto consteval
 	(	operator()
@@ -38,69 +46,62 @@ struct
 		)	const
 	->	ProtoTerm auto
 	{	return
-		(	...
-		or	t_tpOldClause{}
-		);
+			ThisTerm
+		;
 	}
 	auto consteval
 	(	operator()
 	)	(	ProtoClause auto
-				i_vNewClause
+				i_vNewSubTerm
 		)	const
 	->	ProtoTerm auto
 	{
 		ProtoTerm auto constexpr
-			vSimplifiedNewClause
+			vSimplifiedNewSubTerm
 		=	ClauseFilter
-			{	i_vNewClause
-			}(	t_tpOldClause{}
+			{	i_vNewSubTerm
+			}(	t_tpSubTerm{}
 				...
-			,	i_vNewClause
+			,	i_vNewSubTerm
 			)
 		;
 
-		ProtoTerm auto constexpr
-			vOldTerm
-		=(	...
-		or	t_tpOldClause{}
-		);
-
 		if	constexpr
-			(	i_vNewClause
-			==	vSimplifiedNewClause
+			(	i_vNewSubTerm
+			==	vSimplifiedNewSubTerm
 			)
 		{
 			ProtoTerm auto constexpr
 				vSimplifiedOldTerm
 			=(	...
 			or	ClauseFilter
-				{	t_tpOldClause{}
-				}(	t_tpOldClause{}
+				{	t_tpSubTerm{}
+				}(	t_tpSubTerm{}
 					...
-				,	i_vNewClause
+				,	i_vNewSubTerm
 				)
 			);
 
 			if	constexpr
 				(	vSimplifiedOldTerm
-				==	vOldTerm
+				==	ThisTerm
 				)
 				return
-				Or
-				{	t_tpOldClause{}
+				Disjunction
+				(	t_tpSubTerm{}
 					...
-				,	i_vNewClause
-				};
+				,	i_vNewSubTerm
+				);
 			else
 				return
 				(	vSimplifiedOldTerm
-				or	i_vNewClause
+				or	i_vNewSubTerm
 				);
 		}
 		else
 			return
-			(	vOldTerm
-			or	vSimplifiedNewClause
+			(	ThisTerm
+			or	vSimplifiedNewSubTerm
 			);
 	}
 };
@@ -142,38 +143,38 @@ struct
 	auto consteval
 	(	operator()
 	)	(	ProtoClause auto
-				i_vNewClause
+				i_vNewSubTerm
 		)	const
 	->	ProtoClause auto
 	{	return
-			i_vNewClause
+			i_vNewSubTerm
 		;
 	}
 };
 
 template
 	<	ProtoClause
-		...	t_tpOldClause
+		...	t_tpSubTerm
 	>
 (	Simplifier
-)	(	t_tpOldClause
+)	(	t_tpSubTerm
 		...
 	)
 ->	Simplifier
-	<	t_tpOldClause
+	<	t_tpSubTerm
 		...
 	>
 ;
 
 template
 	<	ProtoClause
-		...	t_tpOldClause
+		...	t_tpSubTerm
 	>
 (	Simplifier
-)	(	Or<t_tpOldClause...>
+)	(	Or<t_tpSubTerm...>
 	)
 ->	Simplifier
-	<	t_tpOldClause
+	<	t_tpSubTerm
 		...
 	>
 ;

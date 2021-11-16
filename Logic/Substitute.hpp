@@ -3,6 +3,18 @@
 #include "Types.hpp"
 #include "Concepts.hpp"
 
+struct
+	SubstitutionBase
+{
+	auto consteval
+	(	operator()
+	)	(	ProtoLiteral auto
+				i_vLiteral
+		)	const
+	->	ProtoLiteral auto
+	{	return i_vLiteral;	}
+};
+
 template
 	<	ProtoTerm
 			t_tSubTerm
@@ -46,12 +58,18 @@ struct
 		)
 	struct
 		Substitution
-	:	SubstitutionItem
+	:	SubstitutionBase
+	,	SubstitutionItem
 		<	t_tpSubTerm
 		,	t_tpSubstitute
 		>
 		...
 	{
+		using
+			SubstitutionBase
+		::	operator()
+		;
+
 		using
 			SubstitutionItem
 			<	t_tpSubTerm
@@ -60,14 +78,6 @@ struct
 		::	operator()
 			...
 		;
-
-		auto consteval
-		(	operator()
-		)	(	ProtoLiteral auto
-					i_vLiteral
-			)	const
-		->	ProtoLiteral auto
-		{	return i_vLiteral;	}
 
 		template
 			<	ProtoLiteral
@@ -138,8 +148,7 @@ auto consteval
 )	(	ProtoTerm auto
 		...	i_vpSubTerm
 	)
-{
-	return
+{	return
 	Substitute
 	{	i_vpSubTerm
 		...
