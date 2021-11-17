@@ -75,6 +75,17 @@ static_assert
 ==	(!p	or	!q	or	!r)
 );
 
+static_assert
+(	not
+	(r	and	p	and	q)
+==	(!p	or	!q	or	!r)
+);
+static_assert
+(	not
+	(r	and	q	and	p)
+==	(!p	or	!q	or	!r)
+);
+
 /// ************************************************************************************************
 ///	(p	or	q)
 /// ************************************************************************************************
@@ -111,6 +122,17 @@ static_assert
 static_assert
 (	not
 	(q	or	r	or	p)
+==	(!p	and	!q	and	!r)
+);
+
+static_assert
+(	not
+	(r	or	p	or	q)
+==	(!p	and	!q	and	!r)
+);
+static_assert
+(	not
+	(r	or	q	or	p)
 ==	(!p	and	!q	and	!r)
 );
 
@@ -389,18 +411,18 @@ static_assert
 );
 static_assert
 (	not
-	(p	and	q	and	r	or	!p	and	!q	and	r	or	!p	and	q	and	!r	or	p	and	!q	and	!r)
+	(p	and	q	and	r	or	!p	and	!q	and	r	or	p	and	!q	and	!r	or	!p	and	q	and	!r)
 ==	(p	and	q	and	!r	or	p	and	!q	and	r	or	!p	and	q	and	r	or	!p	and	!q	and	!r)
 );
 static_assert
 (	not
-	(p	and	q	and	r	or	!p	and	!q	and	r	or	p	and	!q	and	!r	or	!p	and	q	and	!r)
+	(p	and	q	and	r	or	!p	and	!q	and	r	or	!p	and	q	and	!r	or	p	and	!q	and	!r)
 ==	(p	and	q	and	!r	or	p	and	!q	and	r	or	!p	and	q	and	r	or	!p	and	!q	and	!r)
 );
 
 static_assert
 (	not
-	(p	and	!q	and	!r	or	p	and	q	and	r	or	!p	and	!q	and	r	or	!p	and	q	and	!r)
+	(p	and	!q	and	!r	or	p	and	q	and	r	or	!p	and	q	and	!r	or	!p	and	!q	and	r)
 ==	(p	and	q	and	!r	or	p	and	!q	and	r	or	!p	and	q	and	r	or	!p	and	!q	and	!r)
 );
 static_assert
@@ -566,18 +588,18 @@ static_assert
 );
 static_assert
 (	not
-	(p	and	q	and	r	or	!q	and	!r	or	!p	and	!r	or	!p	and	!q)
+	(p	and	q	and	r	or	!q	and	!r	or	!p	and	!q	or	!p	and	!r)
 ==	(p	and	q	and	!r	or	p	and	!q	and	r	or	!p	and	q	and	r)
 );
 static_assert
 (	not
-	(p	and	q	and	r	or	!q	and	!r	or	!p	and	!q	or	!p	and	!r)
+	(p	and	q	and	r	or	!q	and	!r	or	!p	and	!r	or	!p	and	!q)
 ==	(p	and	q	and	!r	or	p	and	!q	and	r	or	!p	and	q	and	r)
 );
 
 static_assert
 (	not
-	(!p	and	!q	or	p	and	q	and	r	or	!q	and	!r	or	!p	and	!r)
+	(!p	and	!q	or	p	and	q	and	r	or	!p	and	!r	or	!q	and	!r)
 ==	(p	and	q	and	!r	or	p	and	!q	and	r	or	!p	and	q	and	r)
 );
 static_assert
