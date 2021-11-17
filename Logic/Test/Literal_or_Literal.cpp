@@ -40,7 +40,7 @@ static_assert
 );
 static_assert
 (	(	(!p)
-	or	!p
+	or	(!p)
 	)
 ==	(!p)
 );

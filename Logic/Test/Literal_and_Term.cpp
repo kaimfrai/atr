@@ -320,7 +320,7 @@ static_assert
 (	(	(!q)
 	and	(p	and	q	or	!p	and	r)
 	)
-==	(r	and	!p	and	!q)
+==	(!p	and	!q	and	r)
 );
 
 static_assert
@@ -369,7 +369,7 @@ static_assert
 (	(	(r)
 	and	(p	and	q	or	!p	and	r	or	!q	and	!r)
 	)
-==	(q	and	r	or	!p	and	r)
+==	(!p	and	r	or	q	and	r)
 );
 static_assert
 (	(	(!r)
