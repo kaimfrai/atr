@@ -133,7 +133,7 @@ static_assert
 /// ************************************************************************************************
 static_assert
 (	(	(T)
-	or	(p	and	q	or	!p	and	r)
+	or	(p	and	q	or	!p	and	r	or	!q	and	!r)
 	)
 ==	(T)
 );

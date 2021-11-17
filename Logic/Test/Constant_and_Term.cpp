@@ -139,7 +139,7 @@ static_assert
 );
 static_assert
 (	(	(F)
-	and	(p	and	q	or	!p	and	r)
+	and	(p	and	q	or	!p	and	r	or	!q	and	!r)
 	)
 ==	(F)
 );
