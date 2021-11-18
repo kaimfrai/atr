@@ -50,6 +50,7 @@ static_assert
 
 /// ************************************************************************************************
 ///	(p	and	q	or	p	and	r	or	!p	and	!q)
+///	(p	and	q	or	!p	and	!q	or	!q	and	r)
 /// ************************************************************************************************
 static_assert
 (	(	(T)
@@ -60,6 +61,20 @@ static_assert
 static_assert
 (	(	(F)
 	or	(p	and	q	or	p	and	r	or	!p	and	!q)
+	)
+==	(p	and	q	or	p	and	r	or	!p	and	!q)
+);
+
+///	Alternative representation
+static_assert
+(	(	(T)
+	or	(p	and	q	or	!p	and	!q	or	!q	and	r)
+	)
+==	(T)
+);
+static_assert
+(	(	(F)
+	or	(p	and	q	or	!p	and	!q	or	!q	and	r)
 	)
 ==	(p	and	q	or	p	and	r	or	!p	and	!q)
 );
@@ -130,6 +145,7 @@ static_assert
 
 /// ************************************************************************************************
 ///	(p	and	q	or	!p	and	r	or	!q	and	!r)
+///	(p	and	!r	or	!p	and	!q	or	q	and	r)
 /// ************************************************************************************************
 static_assert
 (	(	(T)
@@ -140,6 +156,20 @@ static_assert
 static_assert
 (	(	(F)
 	or	(p	and	q	or	!p	and	r	or	!q	and	!r)
+	)
+==	(p	and	q	or	!p	and	r	or	!q	and	!r)
+);
+
+///	Alternative representation
+static_assert
+(	(	(T)
+	or	(p	and	!r	or	!p	and	!q	or	q	and	r)
+	)
+==	(T)
+);
+static_assert
+(	(	(F)
+	or	(p	and	!r	or	!p	and	!q	or	q	and	r)
 	)
 ==	(p	and	q	or	!p	and	r	or	!q	and	!r)
 );
