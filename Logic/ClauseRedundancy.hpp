@@ -42,7 +42,7 @@ struct
 	{
 		auto constexpr
 			nContainedCount
-		=(	0ul
+		=(	0uz
 		+	...
 		+	(	ThisClause
 			==	i_vpSubTerm
@@ -55,7 +55,7 @@ struct
 		);
 		if	constexpr
 			(	nContainedCount
-			>	1ul
+			>	1uz
 			)
 			return
 			True

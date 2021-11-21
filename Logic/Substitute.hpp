@@ -88,8 +88,7 @@ struct
 		)	(	And<t_tpLiteral...>
 			)	const
 		->	ProtoTerm auto
-		{
-			return
+		{	return
 			(	...
 			and	operator()
 				(	t_tpLiteral{}
@@ -106,8 +105,7 @@ struct
 		)	(	Or<t_tpClause...>
 			)	const
 		->	ProtoTerm auto
-		{
-			return
+		{	return
 			(	...
 			or	operator()
 				(	t_tpClause{}

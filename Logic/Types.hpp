@@ -75,10 +75,8 @@ struct
 		(	t_bPolarity
 		==	t_tAtom
 			{}(	// do not include std::forward just for this
-				static_cast
-				<	decltype(i_rpArgument)
-						&&
-				>(	i_rpArgument
+				static_cast<decltype(i_rpArgument)>
+				(	i_rpArgument
 				)...
 			)
 		);
@@ -150,10 +148,8 @@ struct
 		(	...
 		and	t_tpLiteral{}
 			(	// do not include std::forward just for this
-				static_cast
-				<	decltype(i_rpArgument)
-						&&
-				>(	i_rpArgument
+				static_cast<decltype(i_rpArgument)>
+				(	i_rpArgument
 				)...
 			)
 		);
@@ -205,12 +201,9 @@ struct
 		(	...
 		or	t_tpClause{}
 			(	// do not include std::forward just for this
-				static_cast
-				<	decltype(i_rpArgument)
-						&&
-				>(	i_rpArgument
+				static_cast<decltype(i_rpArgument)>
+				(	i_rpArgument
 				)...
-
 			)
 		);
 	}
@@ -306,13 +299,13 @@ auto consteval
 (	LiteralCount
 )	(	ProtoConstant auto
 	)
-{	return 0ul;	}
+{	return 0uz;	}
 
 auto consteval
 (	LiteralCount
 )	(	ProtoLiteral auto
 	)
-{	return 1ul;	}
+{	return 1uz;	}
 
 template
 	<	ProtoLiteral
@@ -344,13 +337,13 @@ auto consteval
 (	ClauseCount
 )	(	ProtoConstant auto
 	)
-{	return 0ul;	}
+{	return 0uz;	}
 
 auto consteval
 (	ClauseCount
 )	(	ProtoClause auto
 	)
-{	return 1ul;	}
+{	return 1uz;	}
 
 template
 	<	ProtoClause

@@ -64,7 +64,7 @@ struct
 		//	another clause is redundant
 		//	delay further simplification
 		if	constexpr
-			(	(	0ul
+			(	(	0uz
 				+	...
 				+	IsTrue
 					(	ClauseRedundancy
@@ -74,7 +74,7 @@ struct
 						)
 					)
 				)
-			>	0ul
+			>	0uz
 			)
 			return
 				ThisClause

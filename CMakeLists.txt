@@ -1,6 +1,7 @@
 cmake_minimum_required(
 VERSION
-	3.18
+	3.20
+	#required for CXX_STANDARD 23
 )
 
 project(
@@ -10,13 +11,19 @@ LANGUAGES
 )
 
 set(CMAKE_CXX_STANDARD
-	20
+	23
 )
 set(CMAKE_CXX_STANDARD_REQUIRED
 	TRUE
 )
 set(CMAKE_CXX_EXTENSIONS
 	OFF
+)
+set(CXX_STANDARD_VERSION_FLAG
+	-std=c++2b
+)
+set(CXX_STANDARD_LIBRARY_FLAG
+	-stdlib=libc++
 )
 
 set(PREBUILT_MODULE_PATH
@@ -34,24 +41,23 @@ set(WARNING_FLAGS
 	-Wmissing-variable-declarations
 	-Wcomma
 	-Wpadded
-	#-Werror
+	-Werror
 	-Weverything
-	-Wno-c++98-compat-pedantic						# we're using c++23
-	-Wno-pre-c++17-compat-pedantic
-	-Wno-c++20-compat-pedantic
-	#-Wno-redundant-parens							# redundant parenthesis help understanding
+	-Wno-c++98-compat-pedantic		#using c++23
+	-Wno-pre-c++17-compat-pedantic	#using c++23
+	-Wno-c++20-compat-pedantic		#using c++23
 )
 set(MODULE_FLAGS
 	-fmodules-ts
 	-fprebuilt-module-path=${PREBUILT_MODULE_PATH}
 )
 add_compile_options(
-	-stdlib=libc++
+	${CXX_STANDARD_LIBRARY_FLAG}
 	${WARNING_FLAGS}
 	${MODULE_FLAGS}
 )
 add_link_options(
-	-stdlib=libc++
+	${CXX_STANDARD_LIBRARY_FLAG}
 )
 
 add_subdirectory(

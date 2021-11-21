@@ -74,11 +74,11 @@ auto consteval
 			>
 		))
 		return
-		And
-		{	not
+		Conjunction
+		(	not
 			t_tpClause{}
 			...
-		};
+		);
 	else
 		return
 		(	...

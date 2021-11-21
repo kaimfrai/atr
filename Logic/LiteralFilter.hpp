@@ -126,7 +126,7 @@ struct
 			//	at least 1 at this point (ThisClause)
 			auto constexpr
 				vNewRedundantClauseCount
-			=(	0ul
+			=(	0uz
 			+	...
 			+	IsTrue
 				(	ClauseRedundancy
