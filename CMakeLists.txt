@@ -60,8 +60,45 @@ add_link_options(
 	${CXX_STANDARD_LIBRARY_FLAG}
 )
 
+function(add_module
+	module_name
+)
+	add_custom_command(
+	OUTPUT
+		${PREBUILT_MODULE_PATH}/${module_name}.pcm
+	COMMAND
+		${CMAKE_CXX_COMPILER}
+		${CXX_STANDARD_VERSION_FLAG}
+		${CXX_STANDARD_LIBRARY_FLAG}
+		${WARNING_FLAGS}
+		${MODULE_FLAGS}
+		-c ${CMAKE_CURRENT_SOURCE_DIR}/Module.cpp
+		-Xclang -emit-module-interface
+		-o ${PREBUILT_MODULE_PATH}/${module_name}.pcm
+	VERBATIM
+	MAIN_DEPENDENCY
+		Module.cpp
+	DEPENDS
+		${ARGN}
+	COMMENT
+		"Generating precompiled module ${module_name}"
+	)
+
+	add_custom_target(
+		${module_name}
+	DEPENDS
+		${PREBUILT_MODULE_PATH}/${module_name}.pcm
+	)
+endfunction()
+
+add_subdirectory(
+	Pack
+)
 add_subdirectory(
 	Logic
+)
+add_subdirectory(
+	TypeTraits
 )
 
 add_executable(
@@ -69,7 +106,7 @@ add_executable(
 )
 add_dependencies(
 	${PROJECT_NAME}
-		Logic
+		TypeTraits
 )
 
 install(

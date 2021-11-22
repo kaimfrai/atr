@@ -1,19 +1,5 @@
-add_custom_command(
-OUTPUT
-	${PREBUILT_MODULE_PATH}/Logic.pcm
-COMMAND
-	${CMAKE_CXX_COMPILER}
-	${CXX_STANDARD_VERSION_FLAG}
-	${CXX_STANDARD_LIBRARY_FLAG}
-	${WARNING_FLAGS}
-	${MODULE_FLAGS}
-	-c ${CMAKE_CURRENT_SOURCE_DIR}/Module.cpp
-	-Xclang -emit-module-interface
-	-o ${PREBUILT_MODULE_PATH}/Logic.pcm
-VERBATIM
-MAIN_DEPENDENCY
-	Module.cpp
-DEPENDS
+add_module(Logic
+
 	TermTag.hpp
 	Concepts.hpp
 	Types.hpp
@@ -30,14 +16,11 @@ DEPENDS
 	Negation.hpp
 	Disjunction.hpp
 	Conjunction.hpp
-COMMENT
-	"Generating precompiled module Logic"
 )
 
-add_custom_target(
+add_dependencies(
 	Logic
-DEPENDS
-	${PREBUILT_MODULE_PATH}/Logic.pcm
+		Pack
 )
 
 add_subdirectory(

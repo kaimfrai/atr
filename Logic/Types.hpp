@@ -3,6 +3,16 @@
 #include "Concepts.hpp"
 #include "TermTag.hpp"
 
+auto constexpr inline
+	MaxLiteralsPerClause
+=	6uz
+;
+
+auto constexpr inline
+	MaxClausesPerTerm
+=	6uz
+;
+
 template
 	<	bool
 			t_bConstant
@@ -125,6 +135,13 @@ struct
 	And final
 :	ClauseTag
 {
+	static_assert
+	(	sizeof...(t_tpLiteral)
+	<=	MaxLiteralsPerClause
+	,	"Maximum amount of Literals per Clause exceeded."
+		" Please adjust Logic::ProtoClauseConstraint to reflect the amount of Literals."
+	);
+
 	consteval
 	(	And
 	)	()
@@ -178,6 +195,12 @@ struct
 	Or final
 :	TermTag
 {
+	static_assert
+	(	sizeof...(t_tpClause)
+	<=	MaxClausesPerTerm
+	,	"Maximum amount of Clauses per Term exceeded."
+		" Please adjust Logic::ProtoConstraint to reflect the amount of Clauses."
+	);
 	consteval
 	(	Or
 	)	()
