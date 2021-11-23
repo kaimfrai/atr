@@ -72,12 +72,12 @@ function(add_module
 		${CXX_STANDARD_LIBRARY_FLAG}
 		${WARNING_FLAGS}
 		${MODULE_FLAGS}
-		-c ${CMAKE_CURRENT_SOURCE_DIR}/Module.cpp
+		-c ${CMAKE_CURRENT_SOURCE_DIR}/${module_name}.cpp
 		-Xclang -emit-module-interface
 		-o ${PREBUILT_MODULE_PATH}/${module_name}.pcm
 	VERBATIM
 	MAIN_DEPENDENCY
-		Module.cpp
+		${module_name}.cpp
 	DEPENDS
 		${ARGN}
 	COMMENT
