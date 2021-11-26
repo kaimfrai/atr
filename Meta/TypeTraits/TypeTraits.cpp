@@ -85,27 +85,12 @@ export namespace
 		>
 	{};
 
-	Term constexpr inline
-		IsFundamental
-	=	Atom<Fundamental>
-	;
-
-	Term constexpr inline
-		IsCompound
-	=	Atom<Compound>
-	;
-
 	struct
 		Object
 	:	StandardTrait
 		<	std::is_object
 		>
 	{};
-
-	Term constexpr inline
-		IsObject
-	=	Atom<Object>
-	;
 
 	struct
 		Reference
@@ -114,12 +99,6 @@ export namespace
 		>
 	{};
 
-	Term constexpr inline
-		IsReference
-	=	IsCompound
-	and	Atom<Reference>
-	;
-
 	struct
 		LValueReference
 	:	StandardTrait
@@ -127,11 +106,6 @@ export namespace
 		>
 	{};
 
-	Term constexpr inline
-		IsLValueReference
-	=	IsReference
-	and	Atom<LValueReference>
-	;
 
 	struct
 		RValueReference
@@ -139,25 +113,12 @@ export namespace
 		<	std::is_rvalue_reference
 		>
 	{};
-
-	Term constexpr inline
-		IsRValueReference
-	=	IsReference
-	and	Atom<RValueReference>
-	;
-
 	struct
 		Scalar
 	:	StandardTrait
 		<	std::is_scalar
 		>
 	{};
-
-	Term constexpr inline
-		IsScalar
-	=	IsObject
-	and	Atom<Scalar>
-	;
 
 	struct
 		Void
@@ -166,25 +127,12 @@ export namespace
 		>
 	{};
 
-	Term constexpr inline
-		IsVoid
-	=	IsFundamental
-	and	Atom<Void>
-	;
-
 	struct
 		NullPointer
 	:	StandardTrait
 		<	std::is_null_pointer
 		>
 	{};
-
-	Term constexpr inline
-		IsNullPointer
-	=	IsFundamental
-	and	IsScalar
-	and	Atom<NullPointer>
-	;
 
 	struct
 		Arithmetic
@@ -193,25 +141,12 @@ export namespace
 		>
 	{};
 
-	Term constexpr inline
-		IsArithmetic
-	=	IsFundamental
-	and	IsScalar
-	and	Atom<Arithmetic>
-	;
-
 	struct
 		Integral
 	:	StandardTrait
 		<	std::is_integral
 		>
 	{};
-
-	Term constexpr inline
-		IsIntegral
-	=	IsArithmetic
-	and	Atom<Integral>
-	;
 
 	struct
 		FloatingPoint
@@ -220,25 +155,12 @@ export namespace
 		>
 	{};
 
-	Term constexpr inline
-		IsFloatingPoint
-	=	IsArithmetic
-	and	Atom<FloatingPoint>
-	;
-
 	struct
 		Array
 	:	StandardTrait
 		<	std::is_array
 		>
 	{};
-
-	Term constexpr inline
-		IsArray
-	=	IsCompound
-	and	IsObject
-	and	Atom<Array>
-	;
 
 	struct
 		Enum
@@ -247,13 +169,6 @@ export namespace
 		>
 	{};
 
-	Term constexpr inline
-		IsEnum
-	=	IsCompound
-	and	IsScalar
-	and	Atom<Enum>
-	;
-
 	struct
 		Union
 	:	StandardTrait
@@ -261,39 +176,18 @@ export namespace
 		>
 	{};
 
-	Term constexpr inline
-		IsUnion
-	=	IsCompound
-	and	IsObject
-	and	Atom<Union>
-	;
-
 	struct
 		Class
 	:	StandardTrait
 		<	std::is_class
 		>
 	{};
-
-	Term constexpr inline
-		IsClass
-	=	IsCompound
-	and	IsObject
-	and	Atom<Class>
-	;
-
 	struct
 		Function
 	:	StandardTrait
 		<	std::is_function
 		>
 	{};
-
-	Term constexpr inline
-		IsFunction
-	=	IsCompound
-	and	Atom<Function>
-	;
 
 	struct
 		Pointer
@@ -302,30 +196,12 @@ export namespace
 		>
 	{};
 
-	template
-		<	Term
-		=	IsObject or IsFunction
-		>
-	Term constexpr inline
-		IsPointer
-	=	IsCompound
-	and	IsScalar
-	and	Atom<Pointer>
-	;
-
 	struct
 		MemberPointer
 	:	StandardTrait
 		<	std::is_member_pointer
 		>
 	{};
-
-	Term constexpr inline
-		IsMemberPointer
-	=	IsCompound
-	and	IsScalar
-	and	Atom<MemberPointer>
-	;
 
 	struct
 		MemberObjectPointer
@@ -334,23 +210,11 @@ export namespace
 		>
 	{};
 
-	Term constexpr inline
-		IsMemberObjectPointer
-	=	IsMemberPointer
-	and	Atom<MemberObjectPointer>
-	;
-
 	struct
 		MemberFunctionPointer
 	:	StandardTrait
 		<	std::is_member_function_pointer
 		>
 	{};
-
-	Term constexpr inline
-		IsMemberFunctionPointer
-	=	IsMemberPointer
-	and	Atom<MemberFunctionPointer>
-	;
 }
 
