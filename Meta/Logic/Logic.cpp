@@ -7,6 +7,7 @@ export module
 	Meta.Logic
 ;
 export import Meta.Pack;
+export import Meta.TypeTraits;
 
 //	TODO: These should be module partitions but clang doesn't support those yet.
 #include "Conjunction.hpp"
@@ -222,7 +223,7 @@ export namespace
 	;
 
 	template
-		<	RingIndexType
+		<	SSize
 				t_nIndex
 		>
 	struct
@@ -258,7 +259,7 @@ export namespace
 	};
 
 	template
-		<	RingIndexType
+		<	SSize
 				t_nIndex
 		>
 	auto constexpr inline
@@ -268,7 +269,7 @@ export namespace
 	;
 
 	template
-		<	RingIndexType
+		<	SSize
 				t_nIndex
 		>
 	struct
@@ -304,7 +305,7 @@ export namespace
 	};
 
 	template
-		<	RingIndexType
+		<	SSize
 				t_nIndex
 		>
 	auto constexpr inline

@@ -3,6 +3,7 @@ module;
 #include <utility>
 
 export module Meta.Pack;
+export import Meta.Common;
 
 struct
 	Ignore
@@ -131,17 +132,8 @@ auto constexpr inline
 export namespace
 	Meta
 {
-	using
-		IndexType
-	=	decltype(0uz)
-	;
-	using
-		RingIndexType
-	=	decltype(0z)
-	;
-
 	template
-		<	IndexType
+		<	USize
 				t_nSelectIndex
 		>
 	struct
@@ -174,7 +166,7 @@ export namespace
 	};
 
 	template
-		<	IndexType
+		<	USize
 				t_nSelectIndex
 		>
 	auto constexpr inline
@@ -184,7 +176,7 @@ export namespace
 	;
 
 	template
-		<	RingIndexType
+		<	SSize
 				t_nRingSelectIndex
 		>
 	struct
@@ -208,10 +200,10 @@ export namespace
 				)
 			;
 
-			IndexType constexpr
+			USize constexpr
 				nPositiveIndex
 			=	(	bNegative
-				?	(	static_cast<IndexType>
+				?	(	static_cast<USize>
 						(	-
 							(	t_nRingSelectIndex
 							+	1z
@@ -219,19 +211,19 @@ export namespace
 						)
 					+	1uz
 					)
-				:	static_cast<IndexType>
+				:	static_cast<USize>
 					(	t_nRingSelectIndex
 					)
 				)
 			;
-			IndexType constexpr
+			USize constexpr
 				nRemainder
 			=	(	nPositiveIndex
 				%	sizeof...(t_tpArgument)
 				)
 			;
 
-			IndexType constexpr
+			USize constexpr
 				nTrueIndex
 			=	(	(	bNegative
 					and (	nRemainder
@@ -258,7 +250,7 @@ export namespace
 	};
 
 	template
-		<	RingIndexType
+		<	SSize
 				t_nRingSelectIndex
 		>
 	auto constexpr inline
@@ -266,13 +258,5 @@ export namespace
 	=	RingSelector<t_nRingSelectIndex>
 		{}
 	;
-
-	template
-		<	typename
-				t_tType
-		>
-	struct
-		Type
-	{};
 }
 

@@ -21,6 +21,7 @@ add_module(Meta.Logic
 
 add_dependencies(Meta.Logic
 	Meta.Pack
+	Meta.TypeTraits
 )
 
 add_subdirectory(

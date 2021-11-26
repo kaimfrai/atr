@@ -1,4 +1,10 @@
 add_subdirectory(
+	Common
+)
+add_subdirectory(
+	Type
+)
+add_subdirectory(
 	Pack
 )
 add_subdirectory(
@@ -16,6 +22,8 @@ add_module(Meta
 )
 
 add_dependencies(Meta
+	Meta.Common
+	Meta.Type
 	Meta.Pack
 	Meta.Logic
 	Meta.TypeTraits

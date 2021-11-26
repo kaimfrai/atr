@@ -5,7 +5,7 @@ module;
 export module
 	Meta.TypeTraits
 ;
-export import Meta.Logic;
+export import Meta.Type;
 
 export namespace
 	Meta
@@ -43,34 +43,6 @@ export namespace
 		}
 	};
 
-	template
-		<	auto
-				t_fTransform
-		,	Term
-				t_vTrait
-		>
-	struct
-		TransformTrait
-	{
-		template
-			<	typename
-					t_tType
-			>
-		auto constexpr
-		(	operator()
-		)	(	Type<t_tType>
-					i_vType
-			)
-		->	bool
-		{	return
-			t_vTrait
-			(	t_fTransform
-				(	i_vType
-				)
-			);
-		}
-	};
-
 	struct
 		Fundamental
 	:	StandardTrait
@@ -105,7 +77,6 @@ export namespace
 		<	std::is_lvalue_reference
 		>
 	{};
-
 
 	struct
 		RValueReference
