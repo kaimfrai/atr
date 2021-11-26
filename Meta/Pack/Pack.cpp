@@ -1,9 +1,9 @@
 module;
 
-#include <utility>
-
 export module Meta.Pack;
 export import Meta.Common;
+
+using namespace Meta;
 
 struct
 	Ignore
@@ -16,7 +16,7 @@ struct
 };
 
 template
-	<	std::size_t
+	<	USize
 	>
 using
 	IgnoreByIndex
@@ -24,7 +24,7 @@ using
 ;
 
 template
-	<	std::size_t
+	<	USize
 		...	t_tpIgnoreFrontIndex
 	>
 struct
@@ -32,7 +32,7 @@ struct
 {
 	constexpr
 	(	IgnoreFront
-	)	(	std::index_sequence
+	)	(	IndexSequence
 			<	t_tpIgnoreFrontIndex
 				...
 			>
@@ -40,7 +40,7 @@ struct
 	{}
 
 	template
-		<	std::size_t
+		<	USize
 			...	t_tpIngoreBackIndex
 		>
 	struct
@@ -68,12 +68,12 @@ struct
 	};
 
 	template
-		<	std::size_t
+		<	USize
 			...	t_tpIgnoreBackIndex
 		>
 	auto constexpr
 	(	operator()
-	)	(	std::index_sequence
+	)	(	IndexSequence
 			<	t_tpIgnoreBackIndex
 				...
 			>
@@ -83,11 +83,11 @@ struct
 };
 
 template
-	<	std::size_t
+	<	USize
 		...	t_tpIgnoreFrontIndex
 	>
 (	IgnoreFront
-)	(	std::index_sequence
+)	(	IndexSequence
 		<	t_tpIgnoreFrontIndex
 			...
 		>
@@ -99,33 +99,33 @@ template
 ;
 
 template
-	<	std::size_t
+	<	USize
 			t_nFrontIndexCount
 	>
 auto constexpr inline
 	IngoreFrontIndices
 =	IgnoreFront
-	{	std::make_index_sequence
+	{	MakeIndexSequence
 		<	t_nFrontIndexCount
-		>{}
+		>()
 	}
 ;
 
 template
-	<	std::size_t
+	<	USize
 			t_nFrontIndexCount
-	,	std::size_t
+	,	USize
 			t_nTotalIndexCount
 	>
 auto constexpr inline
 	IgnoreIndices
 =	IngoreFrontIndices
 	<	t_nFrontIndexCount
-	>(	std::make_index_sequence
+	>(	MakeIndexSequence
 		<	t_nTotalIndexCount
 		-	t_nFrontIndexCount
 		-	1uz
-		>{}
+		>()
 	)
 ;
 
@@ -157,7 +157,7 @@ export namespace
 			IgnoreIndices
 			<	t_nSelectIndex
 			,	sizeof...(i_rpArgument)
-			>(	std::forward<t_tpArgument>
+			>(	static_cast<decltype(i_rpArgument)>
 				(	i_rpArgument
 				)
 				...
@@ -240,8 +240,8 @@ export namespace
 			IgnoreIndices
 			<	nTrueIndex
 			,	sizeof...(i_rpArgument)
-			>(	std::forward
-				<	t_tpArgument
+			>(	static_cast
+				<	decltype(i_rpArgument)
 				>(	i_rpArgument
 				)
 				...
