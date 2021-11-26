@@ -3,9 +3,9 @@ module;
 #include <type_traits>
 
 export module
-	TypeTraits
+	Meta.TypeTraits
 ;
-export import Logic;
+export import Meta.Logic;
 
 export namespace
 	TypeTraits
@@ -47,6 +47,34 @@ export namespace
 		}
 	};
 
+	template
+		<	auto
+				t_fTransform
+		,	Term
+				t_vTrait
+		>
+	struct
+		TransformTrait
+	{
+		template
+			<	typename
+					t_tType
+			>
+		auto constexpr
+		(	operator()
+		)	(	Type<t_tType>
+					i_vType
+			)
+		->	bool
+		{	return
+			t_vTrait
+			(	t_fTransform
+				(	i_vType
+				)
+			);
+		}
+	};
+
 	struct
 		Fundamental
 	:	StandardTrait
@@ -64,15 +92,11 @@ export namespace
 	Term constexpr inline
 		IsFundamental
 	=	Atom<Fundamental>
-	and	not
-		Atom<Compound>
 	;
 
 	Term constexpr inline
 		IsCompound
 	=	Atom<Compound>
-	and not
-		Atom<Fundamental>
 	;
 
 	struct
@@ -176,8 +200,8 @@ export namespace
 	Term constexpr inline
 		IsArithmetic
 	=	IsFundamental
-	and	/*IsScalar
-	and*/	Atom<Arithmetic>
+	and	IsScalar
+	and	Atom<Arithmetic>
 	;
 
 	struct
@@ -282,6 +306,10 @@ export namespace
 		>
 	{};
 
+	template
+		<	Term
+		=	IsObject or IsFunction
+		>
 	Term constexpr inline
 		IsPointer
 	=	IsCompound

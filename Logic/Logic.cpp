@@ -4,9 +4,9 @@ module;
 #include <tuple>
 
 export module
-	Logic
+	Meta.Logic
 ;
-export import Pack;
+export import Meta.Pack;
 
 //	TODO: These should be module partitions but clang doesn't support those yet.
 #include "Conjunction.hpp"
@@ -16,11 +16,11 @@ export import Pack;
 #include "Types.hpp"
 #include "Concepts.hpp"
 
-/// ****************************************************************************
+/// ************************************************************************************************
 ///	export namespace
-///	Performs logical computations and simplifications on terms of predicates
-///	using their disjunctive normal form.
-/// ****************************************************************************
+///	Performs logical computations and simplifications on terms of predicates using their disjunctive
+///	normal form.
+/// ************************************************************************************************
 export namespace
 	Logic
 {
@@ -97,6 +97,25 @@ export namespace
 		>
 	;
 
+	template
+		<	ProtoTerm
+				t_tTerm
+		>
+	auto consteval
+	(	Transform
+	)	(	auto
+				i_fTransform
+		,	Term<t_tTerm>
+		)
+	{	return
+		Term
+		{	Transform
+			(	i_fTransform
+			,	t_tTerm{}
+			)
+		};
+	}
+
 	///	Checks the two given terms for identity.
 	///	Note that this is not the same as equivalence.
 	template
@@ -126,8 +145,7 @@ export namespace
 	(	operator not
 	)	(	Term<t_tTerm>
 		)
-	{
-		return
+	{	return
 		Term
 		{	not
 			t_tTerm
@@ -202,7 +220,6 @@ export namespace
 			>
 		>{}
 	;
-
 
 	template
 		<	Pack::RingIndexType

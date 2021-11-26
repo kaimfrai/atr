@@ -2,7 +2,7 @@
 
 #include <type_traits>
 
-import Logic;
+import Meta.Logic;
 
 ///	Constants
 auto constexpr inline T = Logic::True;

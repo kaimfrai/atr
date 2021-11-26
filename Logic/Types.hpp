@@ -377,3 +377,94 @@ auto consteval
 )	(	Or<t_tpClause...>
 	)
 {	return sizeof...(t_tpClause);	}
+
+auto consteval
+(	Transform
+)	(	auto
+	,	ProtoConstant auto
+			i_vConstant
+	)
+->	ProtoConstant auto
+{	return i_vConstant;	}
+
+template
+	<	ProtoAtom
+			t_tAtom
+	>
+auto consteval
+(	Transform
+)	(	auto
+			i_fTransform
+	,	Atom<t_tAtom>
+			i_vLiteral
+	)
+->	ProtoLiteral auto
+{	return
+	Atom
+	{	i_fTransform
+		(	i_vLiteral
+		)
+	};
+}
+
+template
+	<	ProtoAtom
+			t_tAtom
+	>
+auto consteval
+(	Transform
+)	(	auto
+			i_fTransform
+	,	Not<t_tAtom>
+			i_vLiteral
+	)
+->	ProtoLiteral auto
+{	return
+	Not
+	{	i_fTransform
+		(	i_vLiteral
+		)
+	};
+}
+
+template
+	<	ProtoLiteral
+		...	t_tpLiteral
+	>
+auto consteval
+(	Transform
+)	(	auto
+			i_fTransform
+	,	And<t_tpLiteral...>
+	)
+->	ProtoClause auto
+{	return
+	Conjunction
+	(	Transform
+		(	i_fTransform
+		,	t_tpLiteral{}
+		)
+		...
+	);
+}
+
+template
+	<	ProtoClause
+		...	t_tpClause
+	>
+auto consteval
+(	Transform
+)	(	auto
+			i_fTransform
+	,	Or<t_tpClause...>
+	)
+->	ProtoTerm auto
+{	return
+	Disjunction
+	(	Transform
+		(	i_fTransform
+		,	t_tpClause{}
+		)
+		...
+	);
+}

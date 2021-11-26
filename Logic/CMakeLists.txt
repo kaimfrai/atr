@@ -1,4 +1,5 @@
-add_module(Logic
+add_module(Meta.Logic
+	Logic.cpp
 
 	TermTag.hpp
 	Concepts.hpp
@@ -18,9 +19,8 @@ add_module(Logic
 	Conjunction.hpp
 )
 
-add_dependencies(
-	Logic
-		Pack
+add_dependencies(Meta.Logic
+	Meta.Pack
 )
 
 add_subdirectory(

@@ -1,6 +1,6 @@
 #include <iostream>
 
-import TypeTraits;
+import Meta.TypeTraits;
 /*
 auto constexpr
 	Foo(Logic::ProtoConstraint<TypeTraits::IsFloatingPoint> auto)

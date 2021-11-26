@@ -2,7 +2,7 @@ module;
 
 #include <utility>
 
-export module Pack;
+export module Meta.Pack;
 
 struct
 	Ignore

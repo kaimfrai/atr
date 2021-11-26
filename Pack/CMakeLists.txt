@@ -1,1 +1,3 @@
-add_module(Pack)
+add_module(Meta.Pack
+	Pack.cpp
+)

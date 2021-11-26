@@ -62,6 +62,7 @@ add_link_options(
 
 function(add_module
 	module_name
+	module_interface_file
 )
 	add_custom_command(
 	OUTPUT
@@ -72,12 +73,12 @@ function(add_module
 		${CXX_STANDARD_LIBRARY_FLAG}
 		${WARNING_FLAGS}
 		${MODULE_FLAGS}
-		-c ${CMAKE_CURRENT_SOURCE_DIR}/${module_name}.cpp
+		-c ${CMAKE_CURRENT_SOURCE_DIR}/${module_interface_file}
 		-Xclang -emit-module-interface
 		-o ${PREBUILT_MODULE_PATH}/${module_name}.pcm
 	VERBATIM
 	MAIN_DEPENDENCY
-		${module_name}.cpp
+		${module_interface_file}
 	DEPENDS
 		${ARGN}
 	COMMENT
@@ -106,7 +107,7 @@ add_executable(
 )
 add_dependencies(
 	${PROJECT_NAME}
-		TypeTraits
+		Meta.TypeTraits
 )
 
 install(

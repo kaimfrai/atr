@@ -1,5 +1,5 @@
 add_library(
-	LogicTest
+	Meta.Logic.Test
 OBJECT
 	Equivalence.cpp
 	Negation.cpp
@@ -32,7 +32,6 @@ OBJECT
 	Clause_or_Term.cpp
 )
 
-add_dependencies(
-	LogicTest
-		Logic
+add_dependencies(Meta.Logic.Test
+	Meta.Logic
 )
