@@ -93,13 +93,7 @@ function(add_module
 endfunction()
 
 add_subdirectory(
-	Pack
-)
-add_subdirectory(
-	Logic
-)
-add_subdirectory(
-	TypeTraits
+	Meta
 )
 
 add_executable(
