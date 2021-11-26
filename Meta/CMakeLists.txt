@@ -7,3 +7,7 @@ add_subdirectory(
 add_subdirectory(
 	TypeTraits
 )
+
+add_module(Meta
+	Meta.cpp
+)

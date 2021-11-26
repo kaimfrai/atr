@@ -1,6 +1,6 @@
 #include <iostream>
 
-import Meta.TypeTraits;
+import Meta;
 /*
 auto constexpr
 	Foo(Logic::ProtoConstraint<TypeTraits::IsFloatingPoint> auto)
@@ -14,12 +14,12 @@ auto constexpr
 }*/
 
 auto constexpr
-	Foo(Logic::ProtoConstraint<TypeTraits::IsIntegral or TypeTraits::IsFloatingPoint> auto)
+	Foo(Meta::ProtoConstraint<Meta::IsIntegral or Meta::IsFloatingPoint> auto)
 {
 	return 3;
 }
 auto constexpr
-	Foo(Logic::ProtoConstraint<TypeTraits::IsArithmetic> auto)
+	Foo(Meta::ProtoConstraint<Meta::IsArithmetic> auto)
 {
 	return 2;
 }

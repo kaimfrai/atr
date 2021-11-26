@@ -101,7 +101,7 @@ add_executable(
 )
 add_dependencies(
 	${PROJECT_NAME}
-		Meta.TypeTraits
+		Meta
 )
 
 install(
