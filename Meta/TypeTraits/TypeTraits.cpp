@@ -8,12 +8,8 @@ export module
 export import Meta.Logic;
 
 export namespace
-	TypeTraits
+	Meta
 {
-	using Pack::Type;
-	using Logic::Term;
-	using Logic::Atom;
-
 	template
 		<	template
 				<	typename

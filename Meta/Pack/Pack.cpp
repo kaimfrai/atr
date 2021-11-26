@@ -129,7 +129,7 @@ auto constexpr inline
 ;
 
 export namespace
-	Pack
+	Meta
 {
 	using
 		IndexType

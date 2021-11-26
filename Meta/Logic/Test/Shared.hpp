@@ -5,13 +5,13 @@
 import Meta.Logic;
 
 ///	Constants
-auto constexpr inline T = Logic::True;
-auto constexpr inline F = Logic::False;
+auto constexpr inline T = Meta::True;
+auto constexpr inline F = Meta::False;
 
 /// Literals
 struct P {};
-Logic::Term constexpr inline p = Logic::Atom<P>;
+Meta::Term constexpr inline p = Meta::Atom<P>;
 struct Q {};
-Logic::Term constexpr inline q = Logic::Atom<P>;
+Meta::Term constexpr inline q = Meta::Atom<P>;
 struct R {};
-Logic::Term constexpr inline r = Logic::Atom<P>;
+Meta::Term constexpr inline r = Meta::Atom<P>;

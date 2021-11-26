@@ -22,7 +22,7 @@ export import Meta.Pack;
 ///	normal form.
 /// ************************************************************************************************
 export namespace
-	Logic
+	Meta
 {
 	///	Wraps around a logical term which will be as simplified as possible.
 	//	Wrapping ensures that the invariant of the template can never be
@@ -222,7 +222,7 @@ export namespace
 	;
 
 	template
-		<	Pack::RingIndexType
+		<	RingIndexType
 				t_nIndex
 		>
 	struct
@@ -238,7 +238,7 @@ export namespace
 			)	const
 		{	return
 			Term
-			{	Pack::RingSelect<t_nIndex>
+			{	RingSelect<t_nIndex>
 				(	t_tpClause{}
 					...
 				)
@@ -258,7 +258,7 @@ export namespace
 	};
 
 	template
-		<	Pack::RingIndexType
+		<	RingIndexType
 				t_nIndex
 		>
 	auto constexpr inline
@@ -268,7 +268,7 @@ export namespace
 	;
 
 	template
-		<	Pack::RingIndexType
+		<	RingIndexType
 				t_nIndex
 		>
 	struct
@@ -284,7 +284,7 @@ export namespace
 			)	const
 		{	return
 			Term
-			{	Pack::RingSelect<t_nIndex>
+			{	RingSelect<t_nIndex>
 				(	t_tpLiteral{}
 					...
 				)
@@ -304,7 +304,7 @@ export namespace
 	};
 
 	template
-		<	Pack::RingIndexType
+		<	RingIndexType
 				t_nIndex
 		>
 	auto constexpr inline
@@ -322,7 +322,7 @@ export namespace
 	concept
 		ProtoLiteralConstraint
 	=	t_vLiteral
-		(	Pack::Type<t_tProto>{}
+		(	Type<t_tProto>{}
 		)
 	;
 
