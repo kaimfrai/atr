@@ -1,17 +1,18 @@
 #include <iostream>
+// #include <utility>
 
 import Meta;
-/*
-auto constexpr
-	Foo(Logic::ProtoConstraint<TypeTraits::IsFloatingPoint> auto)
-{
-	return 5;
-}
-auto constexpr
-	Foo(Logic::ProtoConstraint<TypeTraits::IsIntegral> auto)
-{
-	return 4;
-}*/
+
+// auto constexpr
+// 	Foo(Meta::ProtoConstraint<Meta::IsFloatingPoint> auto)
+// {
+// 	return 5;
+// }
+// auto constexpr
+// 	Foo(Meta::ProtoConstraint<Meta::IsIntegral> auto)
+// {
+// 	return 4;
+// }
 
 auto constexpr
 	Foo(Meta::ProtoConstraint<Meta::IsIntegral or Meta::IsFloatingPoint> auto)
@@ -25,7 +26,7 @@ auto constexpr
 }
 
 static_assert(Foo(1) == 3);
-static_assert(Foo(2.0) == 3);
+static_assert(Foo(2.0) ==3 );
 
 int main(int, char **) {
     std::cout << "Hello, world!" << std::endl;

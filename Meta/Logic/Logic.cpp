@@ -1,11 +1,9 @@
 module;
 
 #include <type_traits>
-#include <tuple>
 
-export module
-	Meta.Logic
-;
+export module Meta.Logic;
+
 export import Meta.Pack;
 export import Meta.TypeTraits;
 
@@ -322,9 +320,13 @@ export namespace
 		>
 	concept
 		ProtoLiteralConstraint
-	=	t_vLiteral
+	=	ProtoPredicate
+		<	t_tProto
+		,	t_vLiteral
+		>
+		/*t_vLiteral
 		(	Type<t_tProto>{}
-		)
+		)*/
 	;
 
 	template

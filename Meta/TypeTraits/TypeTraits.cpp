@@ -2,9 +2,8 @@ module;
 
 #include <type_traits>
 
-export module
-	Meta.TypeTraits
-;
+export module Meta.TypeTraits;
+
 export import Meta.Type;
 
 export namespace
@@ -30,7 +29,7 @@ export namespace
 		auto constexpr
 		(	operator()
 		)	(	Type<t_tType>
-			)
+			)	const
 		->	bool
 		{	return
 				t_t1Trait
@@ -187,5 +186,43 @@ export namespace
 		<	std::is_member_function_pointer
 		>
 	{};
+
+	template
+		<	typename
+				t_tBase
+		>
+	struct
+		DerivedFrom
+	{
+		template
+			<	typename
+					t_tType
+			>
+		auto constexpr
+		(	operator()
+		)	(	Type<t_tType>
+			)	const
+		->	bool
+		{	return
+			std::is_base_of
+			<	t_tBase
+			,	t_tType
+			>
+			::	value;
+		}
+	};
+
+	template
+		<	typename
+				t_tProto
+		,	auto
+				t_fPredicate
+		>
+	concept
+		ProtoPredicate
+	=	t_fPredicate
+		(	Type<t_tProto>{}
+		)
+	;
 }
 

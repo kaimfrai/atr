@@ -1,6 +1,7 @@
 module;
 
 export module Meta.Pack;
+
 export import Meta.Common;
 
 using namespace Meta;
@@ -119,7 +120,7 @@ template
 	>
 auto constexpr inline
 	IgnoreIndices
-=	IngoreFrontIndices
+=	IgnoreFrontIndices
 	<	t_nFrontIndexCount
 	>(	MakeIndexSequence
 		<	t_nTotalIndexCount
