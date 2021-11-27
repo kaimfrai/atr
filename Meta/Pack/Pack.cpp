@@ -41,7 +41,7 @@ struct
 
 	template
 		<	USize
-			...	t_tpIngoreBackIndex
+			...	t_tpIgnoreBackIndex
 		>
 	struct
 		IgnoreBack
@@ -59,7 +59,7 @@ struct
 			,	t_tSelected&&
 					i_rSelected
 			,	IgnoreByIndex
-				<	t_tpIngoreBackIndex
+				<	t_tpIgnoreBackIndex
 				>
 				...
 			)	const
@@ -103,7 +103,7 @@ template
 			t_nFrontIndexCount
 	>
 auto constexpr inline
-	IngoreFrontIndices
+	IgnoreFrontIndices
 =	IgnoreFront
 	{	MakeIndexSequence
 		<	t_nFrontIndexCount
