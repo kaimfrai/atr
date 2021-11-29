@@ -1,8 +1,5 @@
 add_module(Meta.Concepts
 	Concepts.cpp
-)
-
-add_dependencies(Meta.Concepts
-	Meta.TypeTraits
-	Meta.Logic
+	${PREBUILT_MODULE_PATH}/Meta.TypeTraits.pcm
+	${PREBUILT_MODULE_PATH}/Meta.Logic.pcm
 )

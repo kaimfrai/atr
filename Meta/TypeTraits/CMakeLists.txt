@@ -1,7 +1,6 @@
 add_module(Meta.TypeTraits
 	TypeTraits.cpp
-)
-add_dependencies(Meta.TypeTraits
-	Std
-	Meta.Type
+
+	${PREBUILT_MODULE_PATH}/Std.TypeTraits.pcm
+	${PREBUILT_MODULE_PATH}/Meta.Type.pcm
 )

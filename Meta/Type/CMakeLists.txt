@@ -1,7 +1,5 @@
 add_module(Meta.Type
 	Type.cpp
-)
 
-add_dependencies(Meta.Type
-	Meta.Common
+	${PREBUILT_MODULE_PATH}/Meta.Common.pcm
 )

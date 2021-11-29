@@ -7,8 +7,7 @@ add_module(Std.Utility
 
 add_module(Std
 	Std.cpp
-)
-add_dependencies(Std
-	Std.TypeTraits
-	Std.Utility
+
+	${PREBUILT_MODULE_PATH}/Std.TypeTraits.pcm
+	${PREBUILT_MODULE_PATH}/Std.Utility.pcm
 )

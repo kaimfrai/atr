@@ -1,6 +1,9 @@
 add_module(Meta.Logic
 	Logic.cpp
 
+	${PREBUILT_MODULE_PATH}/Meta.Pack.pcm
+	${PREBUILT_MODULE_PATH}/Meta.TypeTraits.pcm
+
 	TermTag.hpp
 	Concepts.hpp
 	Types.hpp
@@ -17,11 +20,6 @@ add_module(Meta.Logic
 	Negation.hpp
 	Disjunction.hpp
 	Conjunction.hpp
-)
-
-add_dependencies(Meta.Logic
-	Meta.Pack
-	Meta.TypeTraits
 )
 
 add_subdirectory(
