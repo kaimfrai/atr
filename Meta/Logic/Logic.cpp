@@ -19,6 +19,22 @@ export import Meta.TypeTraits;
 export namespace
 	Meta
 {
+	template
+		<	SSize
+				t_nIndex
+		>
+	struct
+		ClauseIndex
+	{};
+
+	template
+		<	SSize
+				t_nIndex
+		>
+	struct
+		LiteralIndex
+	{};
+
 	///	Wraps around a logical term which will be as simplified as possible.
 	//	Wrapping ensures that the invariant of the template can never be
 	///	violated from outside the module by means of specialization or
@@ -64,6 +80,68 @@ export namespace
 			);
 		}
 	};
+
+	template
+		<	SSize
+				t_nLiteralIndex
+		,	ProtoClause
+				t_tTerm
+		>
+	auto consteval
+	(	SelectLiteral
+	)	(	Term<t_tTerm>
+				i_vTerm
+		)
+	{
+		if	constexpr
+			(	ProtoLiteral
+				<	t_tTerm
+				>
+			)
+			return
+			i_vTerm
+			;
+		else
+			return
+			Term
+			{	t_tTerm{}
+				[	RingIndex
+					<	t_nLiteralIndex
+					>{}
+				]
+			};
+	}
+
+	template
+		<	SSize
+				t_nClauseIndex
+		,	ProtoTerm
+				t_tTerm
+		>
+	auto consteval
+	(	SelectClause
+	)	(	Term<t_tTerm>
+				i_vTerm
+		)
+	{
+		if	constexpr
+			(	ProtoClause
+				<	t_tTerm
+				>
+			)
+			return
+			i_vTerm
+			;
+		else
+			return
+			Term
+			{	t_tTerm{}
+				[	RingIndex
+					<	t_nClauseIndex
+					>{}
+				]
+			};
+	}
 
 	///	Deduce type from argument.
 	template
@@ -217,98 +295,6 @@ export namespace
 	;
 
 	template
-		<	SSize
-				t_nIndex
-		>
-	struct
-		ClauseSelector
-	{
-		template
-			<	ProtoClause
-				...	t_tpClause
-			>
-		auto constexpr
-		(	operator()
-		)	(	Term<Or<t_tpClause...>>
-			)	const
-		{	return
-			Term
-			{	RingSelect<t_nIndex>
-				(	t_tpClause{}
-					...
-				)
-			};
-		}
-
-		template
-			<	ProtoClause
-					t_tClause
-			>
-		auto constexpr
-		(	operator()
-		)	(	Term<t_tClause>
-			)	const
-		->	Term<t_tClause>
-		{	return {};	}
-	};
-
-	template
-		<	SSize
-				t_nIndex
-		>
-	auto constexpr inline
-		SelectClause
-	=	ClauseSelector<t_nIndex>
-		{}
-	;
-
-	template
-		<	SSize
-				t_nIndex
-		>
-	struct
-		LiteralSelector
-	{
-		template
-			<	ProtoLiteral
-				...	t_tpLiteral
-			>
-		auto constexpr
-		(	operator()
-		)	(	Term<And<t_tpLiteral...>>
-			)	const
-		{	return
-			Term
-			{	RingSelect<t_nIndex>
-				(	t_tpLiteral{}
-					...
-				)
-			};
-		}
-
-		template
-			<	ProtoLiteral
-					t_tLiteral
-			>
-		auto constexpr
-		(	operator()
-		)	(	Term<t_tLiteral>
-			)	const
-		->	Term<t_tLiteral>
-		{	return {};	}
-	};
-
-	template
-		<	SSize
-				t_nIndex
-		>
-	auto constexpr inline
-		SelectLiteral
-	=	LiteralSelector<t_nIndex>
-		{}
-	;
-
-	template
 		<	typename
 				t_tProto
 		,	Term
@@ -320,9 +306,6 @@ export namespace
 		<	t_tProto
 		,	t_vLiteral
 		>
-		/*t_vLiteral
-		(	Type<t_tProto>{}
-		)*/
 	;
 
 	template

@@ -4,4 +4,5 @@ add_module(Meta.Pack
 
 add_dependencies(Meta.Pack
 	Meta.Common
+	Meta.TypeTraits
 )

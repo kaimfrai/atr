@@ -134,6 +134,10 @@ template
 struct
 	And final
 :	ClauseTag
+,	Meta::Tuple
+	<	t_tpLiteral
+		...
+	>
 {
 	static_assert
 	(	sizeof...(t_tpLiteral)
@@ -141,6 +145,8 @@ struct
 	,	"Maximum amount of Literals per Clause exceeded."
 		" Please adjust Logic::ProtoClauseConstraint to reflect the amount of Literals."
 	);
+
+	using Meta::Tuple<t_tpLiteral...>::operator[];
 
 	consteval
 	(	And
@@ -194,6 +200,10 @@ template
 struct
 	Or final
 :	TermTag
+,	Meta::Tuple
+	<	t_tpClause
+		...
+	>
 {
 	static_assert
 	(	sizeof...(t_tpClause)
@@ -201,6 +211,9 @@ struct
 	,	"Maximum amount of Clauses per Term exceeded."
 		" Please adjust Logic::ProtoConstraint to reflect the amount of Clauses."
 	);
+
+	using Meta::Tuple<t_tpClause...>::operator[];
+
 	consteval
 	(	Or
 	)	()

@@ -1,200 +1,52 @@
 export module Meta.Pack;
 
 export import Meta.Common;
-
-using namespace Meta;
-
-struct
-	Ignore
-{
-	constexpr
-	(	Ignore
-	)	(	auto&&
-		)
-	{}
-};
-
-template
-	<	USize
-	>
-using
-	IgnoreByIndex
-=	Ignore
-;
-
-template
-	<	USize
-		...	t_tpIgnoreFrontIndex
-	>
-struct
-	IgnoreFront
-{
-	constexpr
-	(	IgnoreFront
-	)	(	IndexSequence
-			<	t_tpIgnoreFrontIndex
-				...
-			>
-		)
-	{}
-
-	template
-		<	USize
-			...	t_tpIgnoreBackIndex
-		>
-	struct
-		IgnoreBack
-	{
-		template
-			<	typename
-					t_tSelected
-			>
-		auto constexpr
-		(	operator()
-		)	(	IgnoreByIndex
-				<	t_tpIgnoreFrontIndex
-				>
-				...
-			,	t_tSelected&&
-					i_rSelected
-			,	IgnoreByIndex
-				<	t_tpIgnoreBackIndex
-				>
-				...
-			)	const
-		->	t_tSelected
-		{	return i_rSelected;	}
-	};
-
-	template
-		<	USize
-			...	t_tpIgnoreBackIndex
-		>
-	auto constexpr
-	(	operator()
-	)	(	IndexSequence
-			<	t_tpIgnoreBackIndex
-				...
-			>
-		)	const
-	->	IgnoreBack<t_tpIgnoreBackIndex...>
-	{	return {};	}
-};
-
-template
-	<	USize
-		...	t_tpIgnoreFrontIndex
-	>
-(	IgnoreFront
-)	(	IndexSequence
-		<	t_tpIgnoreFrontIndex
-			...
-		>
-	)
-->	IgnoreFront
-	<	t_tpIgnoreFrontIndex
-		...
-	>
-;
-
-template
-	<	USize
-			t_nFrontIndexCount
-	>
-auto constexpr inline
-	IgnoreFrontIndices
-=	IgnoreFront
-	{	MakeIndexSequence
-		<	t_nFrontIndexCount
-		>()
-	}
-;
-
-template
-	<	USize
-			t_nFrontIndexCount
-	,	USize
-			t_nTotalIndexCount
-	>
-auto constexpr inline
-	IgnoreIndices
-=	IgnoreFrontIndices
-	<	t_nFrontIndexCount
-	>(	MakeIndexSequence
-		<	t_nTotalIndexCount
-		-	t_nFrontIndexCount
-		-	1uz
-		>()
-	)
-;
+export import Meta.TypeTraits;
 
 export namespace
 	Meta
 {
 	template
 		<	USize
-				t_nSelectIndex
+				t_nIndex
 		>
 	struct
-		Selector
-	{
-		template
-			<	typename
-				...	t_tpArgument
-			>
-		requires
-		(	sizeof...(t_tpArgument)
-		>	t_nSelectIndex
-		)
-		auto constexpr
-		(	operator()
-		)	(	t_tpArgument&&
-				...	i_rpArgument
-			)	const
-		->	decltype(auto)
-		{	return
-			IgnoreIndices
-			<	t_nSelectIndex
-			,	sizeof...(i_rpArgument)
-			>(	static_cast<decltype(i_rpArgument)>
-				(	i_rpArgument
-				)
-				...
-			);
-		}
-	};
+		Index
+	{};
 
 	template
-		<	USize
-				t_nSelectIndex
+		<	typename
+				t_tProto
 		>
-	auto constexpr inline
-		Select
-	=	Selector<t_nSelectIndex>
-		{}
+	concept
+		ProtoIndex
+	=	ProtoValuePack
+		<	t_tProto
+		,	Index
+		>
 	;
 
 	template
 		<	SSize
-				t_nRingSelectIndex
+				t_nRingIndex
 		>
 	struct
-		RingSelector
+		RingIndex
 	{
 		template
-			<	typename
-				...	t_tpArgument
+			<	USize
+					t_nIndex
 			>
-		auto constexpr
-		(	operator()
-		)	(	t_tpArgument&&
-				...	i_rpArgument
-			)	const
-		->	decltype(auto)
+		friend auto constexpr
+		(	operator %
+		)	(	RingIndex
+			,	Index<t_nIndex>
+			)
+		->	ProtoIndex auto
 		{
 			bool constexpr
 				bNegative
-			=	(	t_nRingSelectIndex
+			=	(	t_nRingIndex
 				<	0z
 				)
 			;
@@ -204,21 +56,21 @@ export namespace
 			=	(	bNegative
 				?	(	static_cast<USize>
 						(	-
-							(	t_nRingSelectIndex
+							(	t_nRingIndex
 							+	1z
 							)
 						)
 					+	1uz
 					)
 				:	static_cast<USize>
-					(	t_nRingSelectIndex
+					(	t_nRingIndex
 					)
 				)
 			;
 			USize constexpr
 				nRemainder
 			=	(	nPositiveIndex
-				%	sizeof...(t_tpArgument)
+				%	t_nIndex
 				)
 			;
 
@@ -229,33 +81,191 @@ export namespace
 						!=	0uz
 						)
 					)
-				?	(	sizeof...(t_tpArgument)
+				?	(	t_nRingIndex
 					-	nRemainder
 					)
 				:	nRemainder
 				)
 			;
 			return
-			IgnoreIndices
-			<	nTrueIndex
-			,	sizeof...(i_rpArgument)
-			>(	static_cast
-				<	decltype(i_rpArgument)
-				>(	i_rpArgument
-				)
-				...
-			);
+			Index<nTrueIndex>
+			{};
 		}
 	};
 
 	template
-		<	SSize
-				t_nRingSelectIndex
+		<	typename
+				t_tProto
 		>
-	auto constexpr inline
-		RingSelect
-	=	RingSelector<t_nRingSelectIndex>
-		{}
+	concept
+		ProtoRingIndex
+	=	ProtoValuePack
+		<	t_tProto
+		,	RingIndex
+		>
 	;
+
+	template
+		<	USize
+				t_nIndex
+		,	typename
+				t_tItem
+		>
+	struct
+		IndexedItem
+	{
+		t_tItem
+			m_vItem
+		;
+
+		auto constexpr
+		(	operator[]
+		)	(	Index<t_nIndex>
+			)	&
+		->	t_tItem&
+		{	return m_vItem;	}
+
+		auto constexpr
+		(	operator[]
+		)	(	Index<t_nIndex>
+			)	const&
+		->	t_tItem const&
+		{	return m_vItem;	}
+
+		auto constexpr
+		(	operator[]
+		)	(	Index<t_nIndex>
+			)	&&
+		->	t_tItem
+		{	return std::move(m_vItem);	}
+	};
+
+	template
+		<	USize
+				t_nIndex
+		,	ProtoVoid
+				t_tItem
+		>
+	struct
+		IndexedItem
+		<	t_nIndex
+		,	t_tItem
+		>
+	{
+		auto constexpr
+		(	operator[]
+		)	(	Index<t_nIndex>
+			)	const
+		->	void
+		{}
+	};
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoIndexedItem
+	=	ProtoValueTypePair
+		<	t_tProto
+		,	IndexedItem
+		>
+	;
+
+	template
+		<	ProtoIndexedItem
+			...	t_tpIndexedItem
+		>
+	struct
+		IndexedTuple
+	:	t_tpIndexedItem
+		...
+	{
+		using t_tpIndexedItem::operator[]...;
+
+		auto constexpr
+		(	operator[]
+		)	(	ProtoRingIndex auto
+					i_vRingIndex
+			)	const
+		->	decltype(auto)
+		{	return
+			operator[]
+			(	i_vRingIndex
+			%	Index<sizeof...(t_tpIndexedItem)>{}
+			);
+		}
+	};
+}
+
+///	TODO: Ideally, this helper should be an immediately invoked lambda. However, upon instantiation
+///	this crashes clang-14 as of now.
+template
+	<	std::size_t
+		...	t_tpIndex
+	,	typename
+		...	t_tpItem
+	>
+auto constexpr
+(	DeduceIndexedTuple
+)	(	std::index_sequence
+		<	t_tpIndex
+			...
+		>
+	,	t_tpItem&&
+		...
+	)
+->	Meta::IndexedTuple
+	<	Meta::IndexedItem
+		<	t_tpIndex
+		,	t_tpItem
+		>
+		...
+	>
+{	return
+	std::declval
+	<	Meta::IndexedTuple
+		<	Meta::IndexedItem
+			<	t_tpIndex
+			,	t_tpItem
+			>
+			...
+		>
+	>();
+}
+
+template
+	<	typename
+		...	t_tpItem
+	>
+using
+	MakeIndexedTuple
+=	decltype
+	(	DeduceIndexedTuple
+		(	std::make_index_sequence
+			<	sizeof...(t_tpItem)
+			>{}
+		,	std::declval<t_tpItem>()
+			...
+		)
+	)
+;
+
+export namespace
+	Meta
+{
+	template
+		<	typename
+			...	t_tpItem
+		>
+	struct
+		Tuple
+	:	MakeIndexedTuple
+		<	t_tpItem
+			...
+		>
+	{
+		using MakeIndexedTuple<t_tpItem...>::operator[];
+	};
 }
 

@@ -7,108 +7,108 @@ export namespace
 {
 	Term constexpr inline
 		IsFundamental
-	=	Atom<Fundamental>
+	=	Atom<FundamentalTrait>
 	;
 
 	Term constexpr inline
 		IsCompound
-	=	Atom<Compound>
+	=	Atom<CompoundTrait>
 	;
 
 	Term constexpr inline
 		IsObject
-	=	Atom<Object>
+	=	Atom<ObjectTrait>
 	;
 
 	Term constexpr inline
 		IsReference
 	=	IsCompound
-	and	Atom<Reference>
+	and	Atom<ReferenceTrait>
 	;
 	Term constexpr inline
 		IsLValueReference
 	=	IsReference
-	and	Atom<LValueReference>
+	and	Atom<LValueReferenceTrait>
 	;
 
 	Term constexpr inline
 		IsRValueReference
 	=	IsReference
-	and	Atom<RValueReference>
+	and	Atom<RValueReferenceTrait>
 	;
 
 	Term constexpr inline
 		IsScalar
 	=	IsObject
-	and	Atom<Scalar>
+	and	Atom<ScalarTrait>
 	;
 
 	Term constexpr inline
 		IsVoid
 	=	IsFundamental
-	and	Atom<Void>
+	and	Atom<VoidTrait>
 	;
 
 	Term constexpr inline
 		IsNullPointer
 	=	IsFundamental
 	and	IsScalar
-	and	Atom<NullPointer>
+	and	Atom<NullPointerTrait>
 	;
 
 	Term constexpr inline
 		IsArithmetic
 	=	IsFundamental
 	and	IsScalar
-	and	Atom<Arithmetic>
+	and	Atom<ArithmeticTrait>
 	;
 
 	Term constexpr inline
 		IsIntegral
 	=	IsArithmetic
-	and	Atom<Integral>
+	and	Atom<IntegralTrait>
 	;
 
 
 	Term constexpr inline
 		IsFloatingPoint
 	=	IsArithmetic
-	and	Atom<FloatingPoint>
+	and	Atom<FloatingPointTrait>
 	;
 
 	Term constexpr inline
 		IsArray
 	=	IsCompound
 	and	IsObject
-	and	Atom<Array>
+	and	Atom<ArrayTrait>
 	;
 
 	Term constexpr inline
 		IsEnum
 	=	IsCompound
 	and	IsScalar
-	and	Atom<Enum>
+	and	Atom<EnumTrait>
 	;
 
 	Term constexpr inline
 		IsUnion
 	=	IsCompound
 	and	IsObject
-	and	Atom<Union>
+	and	Atom<UnionTrait>
 	;
 
 	Term constexpr inline
 		IsClass
 	=	IsCompound
 	and	IsObject
-	and	Atom<Class>
+	and	Atom<ClassTrait>
 	;
 
 
 	Term constexpr inline
 		IsFunction
 	=	IsCompound
-	and	Atom<Function>
+	and	Atom<FunctionTrait>
 	;
 
 	template
@@ -119,26 +119,26 @@ export namespace
 		IsPointer
 	=	IsCompound
 	and	IsScalar
-	and	Atom<Pointer>
+	and	Atom<PointerTrait>
 	;
 
 	Term constexpr inline
 		IsMemberPointer
 	=	IsCompound
 	and	IsScalar
-	and	Atom<MemberPointer>
+	and	Atom<MemberPointerTrait>
 	;
 
 
 	Term constexpr inline
 		IsMemberObjectPointer
 	=	IsMemberPointer
-	and	Atom<MemberObjectPointer>
+	and	Atom<MemberObjectPointerTrait>
 	;
 
 	Term constexpr inline
 		IsMemberFunctionPointer
 	=	IsMemberPointer
-	and	Atom<MemberFunctionPointer>
+	and	Atom<MemberFunctionPointerTrait>
 	;
 }

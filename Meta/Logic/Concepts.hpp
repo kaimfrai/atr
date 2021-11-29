@@ -8,9 +8,9 @@ template
 	>
 concept
 	ProtoTerm
-=	Meta::ProtoPredicate
+=	Meta::ProtoDerivedFrom
 	<	t_tProto
-	,	Meta::DerivedFrom<TermTag>{}
+	,	TermTag
 	>
 ;
 
@@ -23,9 +23,9 @@ concept
 =	ProtoTerm
 	<	t_tProto
 	>
-and	Meta::ProtoPredicate
+and	Meta::ProtoDerivedFrom
 	<	t_tProto
-	,	Meta::DerivedFrom<ClauseTag>{}
+	,	ClauseTag
 	>
 ;
 
@@ -38,9 +38,9 @@ concept
 =	ProtoClause
 	<	t_tProto
 	>
-and	Meta::ProtoPredicate
+and	Meta::ProtoDerivedFrom
 	<	t_tProto
-	,	Meta::DerivedFrom<LiteralTag>{}
+	,	LiteralTag
 	>
 ;
 
@@ -53,9 +53,9 @@ concept
 =	ProtoLiteral
 	<	t_tProto
 	>
-and	Meta::ProtoPredicate
+and	Meta::ProtoDerivedFrom
 	<	t_tProto
-	,	Meta::DerivedFrom<ConstantTag>{}
+	,	ConstantTag
 	>
 ;
 
@@ -65,9 +65,8 @@ template
 	>
 concept
 	ProtoAtom
-=	Meta::ProtoPredicate
+=	Meta::ProtoClass
 	<	t_tProto
-	,	Meta::Class{}
 	>
 and	not
 	ProtoTerm

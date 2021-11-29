@@ -5,6 +5,21 @@ export import Meta.Type;
 export namespace
 	Meta
 {
+	struct
+		NeverTrait
+	{
+		template
+			<	typename
+					t_tType
+			>
+		auto constexpr
+		(	operator()
+		)	(	Type<t_tType>
+			)	const
+		->	bool
+		{	return false;	}
+	};
+
 	template
 		<	template
 				<	typename
@@ -68,145 +83,146 @@ export namespace
 	};
 
 	struct
-		Fundamental
+		FundamentalTrait
 	:	StandardTrait
 		<	std::is_fundamental
 		>
 	{};
 
 	struct
-		Compound
+		CompoundTrait
 	:	StandardTrait
 		<	std::is_compound
 		>
 	{};
 
 	struct
-		Object
+		ObjectTrait
 	:	StandardTrait
 		<	std::is_object
 		>
 	{};
 
 	struct
-		Reference
+		ReferenceTrait
 	:	StandardTrait
 		<	std::is_reference
 		>
 	{};
 
 	struct
-		LValueReference
+		LValueReferenceTrait
 	:	StandardTrait
 		<	std::is_lvalue_reference
 		>
 	{};
 
 	struct
-		RValueReference
+		RValueReferenceTrait
 	:	StandardTrait
 		<	std::is_rvalue_reference
 		>
 	{};
+
 	struct
-		Scalar
+		ScalarTrait
 	:	StandardTrait
 		<	std::is_scalar
 		>
 	{};
 
 	struct
-		Void
+		VoidTrait
 	:	StandardTrait
 		<	std::is_void
 		>
 	{};
 
 	struct
-		NullPointer
+		NullPointerTrait
 	:	StandardTrait
 		<	std::is_null_pointer
 		>
 	{};
 
 	struct
-		Arithmetic
+		ArithmeticTrait
 	:	StandardTrait
 		<	std::is_arithmetic
 		>
 	{};
 
 	struct
-		Integral
+		IntegralTrait
 	:	StandardTrait
 		<	std::is_integral
 		>
 	{};
 
 	struct
-		FloatingPoint
+		FloatingPointTrait
 	:	StandardTrait
 		<	std::is_floating_point
 		>
 	{};
 
 	struct
-		Array
+		ArrayTrait
 	:	StandardTrait
 		<	std::is_array
 		>
 	{};
 
 	struct
-		Enum
+		EnumTrait
 	:	StandardTrait
 		<	std::is_enum
 		>
 	{};
 
 	struct
-		Union
+		UnionTrait
 	:	StandardTrait
 		<	std::is_union
 		>
 	{};
 
 	struct
-		Class
+		ClassTrait
 	:	StandardTrait
 		<	std::is_class
 		>
 	{};
 	struct
-		Function
+		FunctionTrait
 	:	StandardTrait
 		<	std::is_function
 		>
 	{};
 
 	struct
-		Pointer
+		PointerTrait
 	:	StandardTrait
 		<	std::is_pointer
 		>
 	{};
 
 	struct
-		MemberPointer
+		MemberPointerTrait
 	:	StandardTrait
 		<	std::is_member_pointer
 		>
 	{};
 
 	struct
-		MemberObjectPointer
+		MemberObjectPointerTrait
 	:	StandardTrait
 		<	std::is_member_object_pointer
 		>
 	{};
 
 	struct
-		MemberFunctionPointer
+		MemberFunctionPointerTrait
 	:	StandardTrait
 		<	std::is_member_function_pointer
 		>
@@ -217,12 +233,107 @@ export namespace
 				t_tBase
 		>
 	struct
-		DerivedFrom
+		DerivedFromTrait
 	:	ReverseStandardTrait
 		<	std::is_base_of
 		,	t_tBase
 		>
 	{};
+
+	template
+		<	template
+				<	typename
+					...
+				>
+			typename
+				t_t1Pack
+		>
+	struct
+		TypePackTrait
+	:	NeverTrait
+	{
+		using NeverTrait::operator();
+
+		template
+			<	typename
+				...	t_tpArgument
+			>
+		auto constexpr
+		(	operator()
+		)	(	Type
+				<	t_t1Pack
+					<	t_tpArgument
+						...
+					>
+				>
+			)	const
+		->	bool
+		{	return true;	}
+	};
+
+	template
+		<	template
+				<	auto
+					...
+				>
+			typename
+				t_t1Pack
+		>
+	struct
+		ValuePackTrait
+	:	NeverTrait
+	{
+		using NeverTrait::operator();
+
+		template
+			<	auto
+				...	t_vpArgument
+			>
+		auto constexpr
+		(	operator()
+		)	(	Type
+				<	t_t1Pack
+					<	t_vpArgument
+						...
+					>
+				>
+			)	const
+		->	bool
+		{	return true;	}
+	};
+
+	template
+		<	template
+				<	auto
+				,	typename
+				>
+			typename
+				t_t1Pair
+		>
+	struct
+		ValueTypePairTrait
+	:	NeverTrait
+	{
+		using NeverTrait::operator();
+
+		template
+			<	auto
+					t_vFirst
+			,	typename
+					t_tSecond
+			>
+		auto constexpr
+		(	operator()
+		)	(	Type
+				<	t_t1Pair
+					<	t_vFirst
+					,	t_tSecond
+					>
+				>
+			)	const
+		->	bool
+		{	return true;	}
+	};
 
 	template
 		<	typename
@@ -235,6 +346,87 @@ export namespace
 	=	t_fPredicate
 		(	Type<t_tProto>{}
 		)
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoVoid
+	=	ProtoPredicate
+		<	t_tProto
+		,	VoidTrait{}
+		>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoClass
+	=	ProtoPredicate
+		<	t_tProto
+		,	ClassTrait{}
+		>
+	;
+
+	template
+		<	typename
+				t_tProto
+		,	typename
+				t_tBase
+		>
+	concept
+		ProtoDerivedFrom
+	=	ProtoClass
+		<	t_tProto
+		>
+	and	ProtoPredicate
+		<	t_tProto
+		,	DerivedFromTrait<t_tBase>{}
+		>
+	;
+
+	template
+		<	typename
+				t_tProto
+		,	template
+				<	auto
+					...
+				>
+			typename
+				t_t1Pack
+		>
+	concept
+		ProtoValuePack
+	=	ProtoPredicate
+		<	t_tProto
+		,	ValuePackTrait
+			<	t_t1Pack
+			>{}
+		>
+	;
+
+	template
+		<	typename
+				t_tProto
+		,	template
+				<	auto
+				,	typename
+				>
+			typename
+				t_t1Pair
+		>
+	concept
+		ProtoValueTypePair
+	=	ProtoPredicate
+		<	t_tProto
+		,	ValueTypePairTrait
+			<	t_t1Pair
+			>{}
+		>
 	;
 }
 
