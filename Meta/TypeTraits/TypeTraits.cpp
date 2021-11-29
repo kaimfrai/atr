@@ -1,9 +1,5 @@
-module;
-
-#include <type_traits>
-
 export module Meta.TypeTraits;
-
+export import Std.TypeTraits;
 export import Meta.Type;
 
 export namespace
@@ -32,13 +28,42 @@ export namespace
 			)	const
 		->	bool
 		{	return
-				t_t1Trait
-				<	t_tType
-				,	t_tpArgument
+			t_t1Trait
+			<	t_tType
+			,	t_tpArgument
+				...
+			>{};
+		}
+	};
+
+	template
+		<	template
+				<	typename
 					...
 				>
-			::	value
-			;
+			typename
+				t_t1Trait
+		,	typename
+			...	t_tpArgument
+		>
+	struct
+		ReverseStandardTrait
+	{
+		template
+			<	typename
+					t_tType
+			>
+		auto constexpr
+		(	operator()
+		)	(	Type<t_tType>
+			)	const
+		->	bool
+		{	return
+			t_t1Trait
+			<	t_tpArgument
+				...
+			,	t_tType
+			>{};
 		}
 	};
 
@@ -193,24 +218,11 @@ export namespace
 		>
 	struct
 		DerivedFrom
-	{
-		template
-			<	typename
-					t_tType
-			>
-		auto constexpr
-		(	operator()
-		)	(	Type<t_tType>
-			)	const
-		->	bool
-		{	return
-			std::is_base_of
-			<	t_tBase
-			,	t_tType
-			>
-			::	value;
-		}
-	};
+	:	ReverseStandardTrait
+		<	std::is_base_of
+		,	t_tBase
+		>
+	{};
 
 	template
 		<	typename

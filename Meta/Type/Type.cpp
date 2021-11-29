@@ -1,5 +1,3 @@
-module;
-
 export module Meta.Type;
 
 export import Meta.Common;

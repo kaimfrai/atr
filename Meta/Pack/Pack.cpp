@@ -1,5 +1,3 @@
-module;
-
 export module Meta.Pack;
 
 export import Meta.Common;

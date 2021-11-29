@@ -48,8 +48,9 @@ set(WARNING_FLAGS
 	-Wno-c++20-compat-pedantic		#using c++23
 )
 set(MODULE_FLAGS
-	-fmodules-ts
+	-fmodules
 	-fprebuilt-module-path=${PREBUILT_MODULE_PATH}
+	-fbuiltin-module-map
 )
 add_compile_options(
 	${CXX_STANDARD_LIBRARY_FLAG}
@@ -93,15 +94,18 @@ function(add_module
 endfunction()
 
 add_subdirectory(
+	Std
+)
+
+add_subdirectory(
 	Meta
 )
 
 add_executable(
 	${PROJECT_NAME} main.cpp
 )
-add_dependencies(
-	${PROJECT_NAME}
-		Meta
+add_dependencies(${PROJECT_NAME}
+	Meta
 )
 
 install(

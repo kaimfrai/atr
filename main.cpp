@@ -1,4 +1,3 @@
-#include <iostream>
 // #include <utility>
 
 import Meta;
@@ -29,6 +28,5 @@ static_assert(Foo(1) == 3);
 static_assert(Foo(2.0) ==3 );
 
 int main(int, char **) {
-    std::cout << "Hello, world!" << std::endl;
     return 0;
 }

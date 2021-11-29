@@ -1,8 +1,5 @@
-module;
-
-#include <utility>
-
 export module Meta.Common;
+export import Std.Utility;
 
 export namespace
 	Meta

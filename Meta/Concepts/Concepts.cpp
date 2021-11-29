@@ -1,9 +1,4 @@
-module;
-
-#include <type_traits>
-
 export module Meta.Concepts;
-
 import Meta.TypeTraits;
 import Meta.Logic;
 

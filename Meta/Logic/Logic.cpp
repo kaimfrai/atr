@@ -1,7 +1,3 @@
-module;
-
-#include <type_traits>
-
 export module Meta.Logic;
 
 export import Meta.Pack;
