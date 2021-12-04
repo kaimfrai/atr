@@ -16,6 +16,9 @@ add_subdirectory(
 add_subdirectory(
 	Concepts
 )
+add_subdirectory(
+	Literals
+)
 
 add_module(Meta
 	Meta.cpp
@@ -28,4 +31,5 @@ add_dependencies(Meta
 	Meta.Logic
 	Meta.TypeTraits
 	Meta.Concepts
+	Meta.Literals
 )
