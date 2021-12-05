@@ -1,5 +1,4 @@
-add_module(Meta.Type
+add_module(
 	Type.cpp
-
-	${PREBUILT_MODULE_PATH}/Meta.Common.pcm
 )
+

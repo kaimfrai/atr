@@ -1,3 +1,7 @@
+add_module(
+	Data.cpp
+)
+
 add_library(
 	Meta.Logic.Test
 OBJECT
@@ -32,6 +36,6 @@ OBJECT
 	Clause_or_Term.cpp
 )
 
-add_dependencies(Meta.Logic.Test
-	Meta.Logic
+add_module_dependencies(
+	Meta.Logic.Test
 )

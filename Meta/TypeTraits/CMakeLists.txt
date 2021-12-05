@@ -1,6 +1,3 @@
-add_module(Meta.TypeTraits
+add_module(
 	TypeTraits.cpp
-
-	${PREBUILT_MODULE_PATH}/Std.TypeTraits.pcm
-	${PREBUILT_MODULE_PATH}/Meta.Type.pcm
 )

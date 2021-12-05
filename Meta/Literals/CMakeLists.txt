@@ -1,4 +1,4 @@
-add_module(Meta.Literals
+add_module(
 	Literals.cpp
 )
 

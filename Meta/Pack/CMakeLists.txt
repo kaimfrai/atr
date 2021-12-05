@@ -1,7 +1,3 @@
-add_module(Meta.Pack
+add_module(
 	Pack.cpp
-
-	${PREBUILT_MODULE_PATH}/Meta.Common.pcm
-	${PREBUILT_MODULE_PATH}/Meta.TypeTraits.pcm
 )
-

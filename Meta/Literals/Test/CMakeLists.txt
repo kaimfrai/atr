@@ -1,3 +1,7 @@
+add_module(
+	Data.cpp
+)
+
 add_library(
 	Meta.Literals.Test
 OBJECT
@@ -5,8 +9,6 @@ OBJECT
 	FloatingPoint.cpp
 )
 
-add_dependencies(Meta.Literals.Test
-	Meta.Literals
-	Std.Algorithm
-	Std.Limits
+add_module_dependencies(
+	Meta.Literals.Test
 )

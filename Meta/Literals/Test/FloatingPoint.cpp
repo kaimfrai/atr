@@ -1,4 +1,4 @@
-#include "Shared.hpp"
+import Meta.Literals.Test.Data;
 
 static_assert
 (	Approximate

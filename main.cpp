@@ -1,4 +1,5 @@
 import Meta;
+import Std;
 
 auto constexpr
 	Foo(Meta::ProtoConstraint<Meta::IsFloatingPoint> auto)

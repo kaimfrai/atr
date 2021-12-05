@@ -193,6 +193,7 @@ export namespace
 		<	std::is_class
 		>
 	{};
+
 	struct
 		FunctionTrait
 	:	StandardTrait

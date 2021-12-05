@@ -1,23 +1,17 @@
-add_module(Std.Algorithm
+add_module(
 	Algorithm.cpp
 )
-
-add_module(Std.Limits
+add_module(
 	Limits.cpp
 )
-
-add_module(Std.TypeTraits
+add_module(
 	TypeTraits.cpp
 )
-add_module(Std.Utility
+add_module(
 	Utility.cpp
 )
 
-add_module(Std
+add_module(
 	Std.cpp
-
-	${PREBUILT_MODULE_PATH}/Std.Algorithm.pcm
-	${PREBUILT_MODULE_PATH}/Std.Limits.pcm
-	${PREBUILT_MODULE_PATH}/Std.TypeTraits.pcm
-	${PREBUILT_MODULE_PATH}/Std.Utility.pcm
 )
+

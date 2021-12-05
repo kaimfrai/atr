@@ -268,4 +268,3 @@ export namespace
 		using MakeIndexedTuple<t_tpItem...>::operator[];
 	};
 }
-

@@ -1,4 +1,4 @@
-add_module(Meta.Common
+add_module(
 	Common.cpp
-	${PREBUILT_MODULE_PATH}/Std.pcm
 )
+

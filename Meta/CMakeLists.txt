@@ -20,16 +20,6 @@ add_subdirectory(
 	Literals
 )
 
-add_module(Meta
+add_module(
 	Meta.cpp
-)
-
-add_dependencies(Meta
-	Meta.Common
-	Meta.Type
-	Meta.Pack
-	Meta.Logic
-	Meta.TypeTraits
-	Meta.Concepts
-	Meta.Literals
 )

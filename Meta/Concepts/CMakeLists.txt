@@ -1,6 +1,3 @@
-add_module(Meta.Concepts
+add_module(
 	Concepts.cpp
-
-	${PREBUILT_MODULE_PATH}/Meta.TypeTraits.pcm
-	${PREBUILT_MODULE_PATH}/Meta.Logic.pcm
 )

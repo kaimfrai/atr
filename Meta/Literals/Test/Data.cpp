@@ -1,8 +1,8 @@
-#pragma once
+export module Meta.Literals.Test.Data;
 
-import Meta.Literals;
-import Std.Algorithm;
-import Std.Limits;
+export import Meta.Literals;
+export import Std.Algorithm;
+export import Std.Limits;
 
 auto constexpr
 (	Abs
@@ -16,7 +16,7 @@ auto constexpr
 		return i_nValue;
 }
 
-auto constexpr
+export auto constexpr
 (	Approximate
 )	(	long double
 			i_nLeft
@@ -57,7 +57,7 @@ auto constexpr
 	;
 }
 
-template
+export template
 	<	char
 		...	t_npNumeric
 	>
