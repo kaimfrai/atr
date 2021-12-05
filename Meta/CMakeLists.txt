@@ -1,25 +1,29 @@
-add_subdirectory(
-	Common
+add_module(
+	Common.cpp
 )
-add_subdirectory(
-	Type
+add_module(
+	Type.cpp
 )
-add_subdirectory(
-	Pack
+add_module(
+	Pack.cpp
 )
-add_subdirectory(
-	Logic
+add_module(
+	Logic.cpp
 )
-add_subdirectory(
-	TypeTraits
+add_module(
+	TypeTraits.cpp
 )
-add_subdirectory(
-	Concepts
+add_module(
+	Concepts.cpp
 )
-add_subdirectory(
-	Literals
+add_module(
+	Literals.cpp
 )
 
 add_module(
 	Meta.cpp
+)
+
+add_subdirectory(
+	Test
 )
