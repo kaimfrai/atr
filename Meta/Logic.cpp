@@ -103,18 +103,14 @@ and	not
 /// ************************************************************************************************
 ///	Types and templates to express term types.
 /// ************************************************************************************************
-template
-	<	bool
-			t_bConstant
-	>
 struct
-	Constant
+	True final
 :	ConstantTag
 {
 	explicit consteval
 	(	operator bool
 	)	()	const
-	{	return t_bConstant;	}
+	{	return true;	}
 
 	auto consteval
 	(	operator()
@@ -123,45 +119,67 @@ struct
 			...
 		)	const
 	->	bool
-	{	return t_bConstant;	}
-};
+	{	return true;	}
 
-struct
-	True final
-:	Constant<true>
-{
-	using
-		Constant<true>
-	::	operator bool
-	;
-	using
-		Constant<true>
-	::	operator()
-	;
+	friend auto consteval
+	(	operator and
+	)	(	True
+		,	True
+		)
+	->	True
+	{	return{};	}
 };
 
 struct
 	False final
-:	Constant<false>
+:	ConstantTag
 {
-	using
-		Constant<false>
-	::	operator bool
-	;
-	using
-		Constant<false>
-	::	operator()
-	;
+	explicit consteval
+	(	operator bool
+	)	()	const
+	{	return false;	}
+
+	auto consteval
+	(	operator()
+	)	(	auto
+				&&
+			...
+		)	const
+	->	bool
+	{	return false;	}
+
+	friend auto consteval
+	(	operator and
+	)	(	False
+		,	True
+		)
+	->	False
+	{	return{};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	False
+		,	False
+		)
+	->	False
+	{	return{};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	True
+		,	False
+		)
+	->	False
+	{	return{};	}
 };
+
 
 template
 	<	ProtoAtom
 			t_tAtom
-	,	bool
-			t_bPolarity
 	>
 struct
-	Literal
+	Atom final
 :	LiteralTag
 {
 	auto consteval
@@ -172,32 +190,64 @@ struct
 		)	const
 	->	bool
 	{	return
-		(	t_bPolarity
-		==	t_tAtom
-			{}(	// do not include std::forward just for this
-				static_cast<decltype(i_rpArgument)>
-				(	i_rpArgument
-				)...
-			)
-		);
+		t_tAtom
+		{}(	// do not include std::forward just for this
+			static_cast<decltype(i_rpArgument)>
+			(	i_rpArgument
+			)...
+		)
+		;
 	}
-};
 
-template
-	<	ProtoAtom
-			t_tAtom
-	>
-struct
-	Atom final
-:	Literal
-	<	t_tAtom
-	,	true
-	>
-{
-	using
-		Literal<t_tAtom, true>
-	::	operator()
-	;
+	friend auto consteval
+	(	operator and
+	)	(	Atom
+		,	True
+		)
+	->	Atom
+	{	return{};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	Atom
+		,	False
+		)
+	->	False
+	{	return{};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	Atom
+		,	Atom
+		)
+	->	Atom
+	{	return{};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	Atom
+				i_vLeft
+		,	ProtoLiteral auto
+				i_vRight
+		)
+	->	ProtoClause auto
+	{	return Conjunction(i_vLeft, i_vRight);	}
+
+	friend auto consteval
+	(	operator and
+	)	(	True
+		,	Atom
+		)
+	->	Atom
+	{	return{};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	False
+		,	Atom
+		)
+	->	False
+	{	return{};	}
 };
 
 template
@@ -206,15 +256,90 @@ template
 	>
 struct
 	Not final
-:	Literal
-	<	t_tAtom
-	,	false
-	>
+:	LiteralTag
 {
-	using
-		Literal<t_tAtom, false>
-	::	operator()
-	;
+	auto consteval
+	(	operator()
+	)	(	auto
+				&&
+			...	i_rpArgument
+		)	const
+	->	bool
+	{	return
+		not
+		t_tAtom
+		{}(	// do not include std::forward just for this
+			static_cast<decltype(i_rpArgument)>
+			(	i_rpArgument
+			)...
+		);
+	}
+
+	friend auto consteval
+	(	operator and
+	)	(	Not
+		,	True
+		)
+	->	Not
+	{	return{};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	Not
+		,	False
+		)
+	->	False
+	{	return{};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	Not
+		,	Atom<t_tAtom>
+		)
+	->	False
+	{	return{};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	Not
+		,	Not
+		)
+	->	Not
+	{	return{};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	Not
+				i_vLeft
+		,	ProtoLiteral auto
+				i_vRight
+		)
+	->	ProtoClause auto
+	{	return Conjunction(i_vLeft, i_vRight);	}
+
+	friend auto consteval
+	(	operator and
+	)	(	True
+		,	Not
+		)
+	->	Not
+	{	return{};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	False
+		,	Not
+		)
+	->	False
+	{	return{};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	Atom<t_tAtom>
+		,	Not
+		)
+	->	False
+	{	return{};	}
 };
 
 template
@@ -226,11 +351,26 @@ struct
 {
 	static_assert
 	(	t_nSubtermCount
-	<=	6uz
+	<=	16uz
 	,	"Maximum amount of subterms per term exceeded."
 		" Please adjust Logic::ProtoClauseConstraint and Logic::ProtoConstraint to reflect"
 		" a higher amount of subterms."
 	);
+};
+
+template
+	<	ProtoLiteral
+			t_tLiteral
+	>
+struct
+	ContainsLiteralItem
+{
+	auto consteval
+	(	Contains
+	)	(	t_tLiteral
+		)	const
+	->	bool
+	{	return true;	}
 };
 
 template
@@ -245,8 +385,20 @@ struct
 	<	t_tpLiteral
 		...
 	>
+,	ContainsLiteralItem
+	<	t_tpLiteral
+	>
+	...
 {
 	using Meta::Tuple<t_tpLiteral...>::operator[];
+	using ContainsLiteralItem<t_tpLiteral>::Contains...;
+
+	auto consteval
+	(	Contains
+	)	(	ProtoLiteral auto
+		)	const
+	->	bool
+	{	return false;	}
 
 	consteval
 	(	And
@@ -275,6 +427,69 @@ struct
 				(	i_rpArgument
 				)...
 			)
+		);
+	}
+
+	friend auto consteval
+	(	operator and
+	)	(	And<t_tpLiteral...>
+		,	True
+		)
+	->	And<t_tpLiteral...>
+	{	return {};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	And<t_tpLiteral...>
+		,	False
+		)
+	->	False
+	{	return {};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	And<t_tpLiteral...>
+				i_vLeft
+		,	ProtoLiteral auto
+				i_vRight
+		)
+	->	ProtoClause auto
+	{	if	constexpr(i_vLeft.Contains(i_vRight))
+			return i_vLeft;
+		else
+		if	constexpr(i_vLeft.Contains(not i_vRight))
+			return ::False{};
+		else
+			return Conjunction(t_tpLiteral{}..., i_vRight);
+	}
+
+	friend auto consteval
+	(	operator and
+	)	(	True
+		,	And
+		)
+	->	And
+	{	return {};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	False
+		,	And
+		)
+	->	False
+	{	return {};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	ProtoTerm auto
+				i_vLeft
+		,	And
+		)
+	->	ProtoTerm auto
+	{	return
+		(	i_vLeft
+		and	...
+		and	t_tpLiteral{}
 		);
 	}
 };
@@ -337,6 +552,68 @@ struct
 			)
 		);
 	}
+
+	friend auto consteval
+	(	operator and
+	)	(	Or
+		,	True
+		)
+	->	Or
+	{	return {};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	Or
+		,	False
+		)
+	->	False
+	{	return {};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	Or
+		,	ProtoTerm auto
+				i_vRight
+		)
+	->	ProtoTerm auto
+	{	return
+		(	...
+		or	(	t_tpClause{}
+			and	i_vRight
+			)
+		);
+	}
+
+	friend auto consteval
+	(	operator and
+	)	(	True
+		,	Or
+		)
+	->	Or
+	{	return {};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	False
+		,	Or
+		)
+	->	False
+	{	return {};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	ProtoClause auto
+				i_vLeft
+		,	Or
+		)
+	->	ProtoTerm auto
+	{	return
+		(	...
+		or	(	i_vLeft
+			and	t_tpClause{}
+			)
+		);
+	}
 };
 
 template
@@ -359,74 +636,86 @@ template
 auto consteval
 (	Tautology
 )	(	ProtoTerm auto
-	,	ProtoTerm auto
 		...
 	)
-->	True
-{	return True{};	}
+->	::True
+{	return {};	}
 
 auto consteval
 (	Constradiction
 )	(	ProtoTerm auto
-	,	ProtoTerm auto
 		...
 	)
-->	False
+->	::False
 {	return {};	}
 
+template
+	<	ProtoLiteral
+			t_tLiteral
+	>
 auto consteval
 (	Conjunction
-)	(	ProtoLiteral auto
-			i_vLiteral
+)	(	t_tLiteral
 	)
-->	ProtoLiteral auto
-{	return	i_vLiteral;	}
+->	t_tLiteral
+{	return	{};	}
 
+template
+	<	ProtoLiteral
+			t_tFirstLiteral
+	,	ProtoLiteral
+			t_tSecondLiteral
+	,	ProtoLiteral
+		...	t_tpRemainingLiteral
+	>
 auto consteval
 (	Conjunction
-)	(	ProtoLiteral auto
-			i_vFirstLiteral
-	,	ProtoLiteral auto
-			i_vSecondLiteral
-	,	ProtoLiteral auto
-		...	i_vpRemainingLiteral
-	)
-->	ProtoClause auto
-{	return
-	And
-	{	i_vFirstLiteral
-	,	i_vSecondLiteral
-	,	i_vpRemainingLiteral
+)	(	t_tFirstLiteral
+	,	t_tSecondLiteral
+	,	t_tpRemainingLiteral
 		...
-	};
-}
+	)
+->	::And
+	<	t_tFirstLiteral
+	,	t_tSecondLiteral
+	,	t_tpRemainingLiteral
+		...
+	>
+{	return {};	}
 
+template
+	<	ProtoClause
+			t_tClause
+	>
 auto consteval
 (	Disjunction
-)	(	ProtoClause auto
-			i_vClause
+)	(	t_tClause
 	)
-->	ProtoClause auto
-{	return	i_vClause;	}
+->	t_tClause
+{	return {};	}
 
+template
+	<	ProtoClause
+			t_tFirstClause
+	,	ProtoClause
+			t_tSecondClause
+	,	ProtoClause
+		...	t_tpRemainingClause
+	>
 auto consteval
 (	Disjunction
-)	(	ProtoClause auto
-			i_vFirstClause
-	,	ProtoClause auto
-			i_vSecondClause
-	,	ProtoClause auto
-		...	i_vpRemainingClause
-	)
-->	ProtoTerm auto
-{	return
-	Or
-	{	i_vFirstClause
-	,	i_vSecondClause
-	,	i_vpRemainingClause
+)	(	t_tFirstClause
+	,	t_tSecondClause
+	,	t_tpRemainingClause
 		...
-	};
-}
+	)
+->	::Or
+	<	t_tFirstClause
+	,	t_tSecondClause
+	,	t_tpRemainingClause
+		...
+	>
+{	return {};	}
 
 /// ************************************************************************************************
 ///	Properties of term types.
@@ -1839,82 +2128,6 @@ auto consteval
 }
 
 /// ************************************************************************************************
-///	Form the conjunction of two terms.
-/// ************************************************************************************************
-auto consteval
-(	operator and
-)	(	ProtoClause auto
-			i_vLeft
-	,	ProtoLiteral auto
-			i_vRight
-	)
-->	ProtoClause auto
-{	return
-	not
-	(	not
-		i_vLeft
-	or	not
-		i_vRight
-	);
-}
-
-template
-	<	ProtoLiteral
-		...	t_tpRightLiteral
-	>
-auto consteval
-(	operator and
-)	(	ProtoTerm auto
-			i_vLeft
-	,	And<t_tpRightLiteral...>
-	)
-->	ProtoTerm auto
-{	return
-	(	i_vLeft
-	and	...
-	and	t_tpRightLiteral{}
-	);
-}
-
-template
-	<	ProtoClause
-		...	t_tpRightClause
-	>
-auto consteval
-(	operator and
-)	(	ProtoClause auto
-			i_vLeft
-	,	Or<t_tpRightClause...>
-	)
-->	ProtoTerm auto
-{	return
-	(	...
-	or	(	i_vLeft
-		and	t_tpRightClause{}
-		)
-	);
-}
-
-template
-	<	ProtoClause
-		...	t_tpLeftClause
-	>
-auto consteval
-(	operator and
-)	(	Or<t_tpLeftClause...>
-	,	ProtoTerm auto
-			i_vRight
-	)
-->	ProtoTerm auto
-{	return
-	(	...
-	or	(	t_tpLeftClause{}
-		and	i_vRight
-		)
-	);
-}
-
-/// ************************************************************************************************
 ///	export namespace
 ///	Performs logical computations and simplifications on terms of predicates using their disjunctive
 ///	normal form.
@@ -1945,13 +2158,6 @@ export namespace
 			)
 		{}
 
-		consteval
-		(	Term
-		)	(	Term<t_tTerm> const
-					&
-			)
-		=	default;
-
 		auto consteval
 		(	operator()
 		)	(	auto&&
@@ -1965,7 +2171,106 @@ export namespace
 				...
 			);
 		}
+
+		///	Checks the two given terms for equivalence.
+		template
+			<	ProtoTerm
+					t_tRightTerm
+			>
+		friend auto consteval
+		(	operator ==
+		)	(	Term
+			,	Term<t_tRightTerm>
+			)
+		->	bool
+		{	return
+			(	t_tTerm{}
+			==	t_tRightTerm{}
+			);
+		}
+
+		///	Forms the negation of the given term.
+		friend auto consteval
+		(	operator not
+		)	(	Term
+			)
+		{	return
+			::Meta::Term
+			{	not
+				t_tTerm
+				{}
+			};
+		}
+
+		///	Forms the Conjunction of the two given terms.
+		template
+			<	ProtoTerm
+					t_tRightTerm
+			>
+		friend auto consteval
+		(	operator and
+		)	(	Term
+			,	Term<t_tRightTerm>
+			)
+		{	return
+			::Meta::Term
+			{	t_tTerm{}
+			and t_tRightTerm{}
+			};
+		}
+
+		///	Forms the Disjunction of the two given terms.
+		template
+			<	ProtoTerm
+					t_tRightTerm
+			>
+		friend auto consteval
+		(	operator or
+		)	(	Term
+			,	Term<t_tRightTerm>
+			)
+		{	return
+			::Meta::Term
+			{	t_tTerm{}
+			or	t_tRightTerm{}
+			};
+		}
 	};
+
+	///	Deduce type from argument.
+	template
+		<	ProtoTerm
+				t_tTerm
+		>
+	(	Term
+	)	(	t_tTerm
+		)
+	->	Term
+		<	t_tTerm
+		>
+	;
+
+	template
+		<	ProtoAtom
+				t_tAtom
+		>
+	auto consteval
+	(	SelectAtom
+	)	(	Term<::Atom<t_tAtom>>
+		)
+	->	t_tAtom
+	{	return{};	}
+
+	template
+		<	ProtoAtom
+				t_tAtom
+		>
+	auto consteval
+	(	SelectAtom
+	)	(	Term<::Not<t_tAtom>>
+		)
+	->	Term<::Not<t_tAtom>>
+	{	return{};	}
 
 	template
 		<	SSize
@@ -2029,33 +2334,6 @@ export namespace
 			};
 	}
 
-	///	Deduce type from argument.
-	template
-		<	ProtoTerm
-				t_tTerm
-		>
-	(	Term
-	)	(	t_tTerm
-		)
-	->	Term
-		<	t_tTerm
-		>
-	;
-
-	///	Deduce type from argument.
-	template
-		<	ProtoTerm
-				t_tTerm
-		>
-	(	Term
-	)	(	Term<t_tTerm> const
-				&
-		)
-	->	Term
-		<	t_tTerm
-		>
-	;
-
 	template
 		<	ProtoTerm
 				t_tTerm
@@ -2072,80 +2350,6 @@ export namespace
 			(	i_fTransform
 			,	t_tTerm{}
 			)
-		};
-	}
-
-	///	Checks the two given terms for equivalence.
-	template
-		<	ProtoTerm
-				t_tLeftTerm
-		,	ProtoTerm
-				t_tRightTerm
-		>
-	auto consteval
-	(	operator ==
-	)	(	Term<t_tLeftTerm>
-		,	Term<t_tRightTerm>
-		)
-	->	bool
-	{	return
-		(	t_tLeftTerm{}
-		==	t_tRightTerm{}
-		);
-	}
-
-	///	Forms the negation of the given term.
-	template
-		<	ProtoTerm
-				t_tTerm
-		>
-	auto consteval
-	(	operator not
-	)	(	Term<t_tTerm>
-		)
-	{	return
-		Term
-		{	not
-			t_tTerm
-			{}
-		};
-	}
-
-	///	Forms the Conjunction of the two given terms.
-	template
-		<	ProtoTerm
-				t_tLeftTerm
-		,	ProtoTerm
-				t_tRightTerm
-		>
-	auto consteval
-	(	operator and
-	)	(	Term<t_tLeftTerm>
-		,	Term<t_tRightTerm>
-		)
-	{	return
-		Term
-		{	t_tLeftTerm{}
-		and t_tRightTerm{}
-		};
-	}
-
-	///	Forms the Disjunction of the two given terms.
-	template
-		<	ProtoTerm
-				t_tLeftTerm
-		,	ProtoTerm
-				t_tRightTerm
-		>
-	auto consteval
-	(	operator or
-	)	(	Term<t_tLeftTerm>
-		,	Term<t_tRightTerm>
-		)
-	{	return
-		Term
-		{	t_tLeftTerm{}
-		or	t_tRightTerm{}
 		};
 	}
 
@@ -2185,9 +2389,9 @@ export namespace
 		>
 	concept
 		ProtoLiteralConstraint
-	=	ProtoPredicate
+	=	ProtoTrait
 		<	t_tProto
-		,	t_vLiteral
+		,	SelectAtom(t_vLiteral)
 		>
 	;
 
@@ -2223,6 +2427,46 @@ export namespace
 		<	t_tProto
 		,	SelectLiteral<5z>(t_vClause)
 		>
+	and	ProtoLiteralConstraint
+		<	t_tProto
+		,	SelectLiteral<6z>(t_vClause)
+		>
+	and	ProtoLiteralConstraint
+		<	t_tProto
+		,	SelectLiteral<7z>(t_vClause)
+		>
+	and	ProtoLiteralConstraint
+		<	t_tProto
+		,	SelectLiteral<8z>(t_vClause)
+		>
+	and	ProtoLiteralConstraint
+		<	t_tProto
+		,	SelectLiteral<9z>(t_vClause)
+		>
+	and	ProtoLiteralConstraint
+		<	t_tProto
+		,	SelectLiteral<10z>(t_vClause)
+		>
+	and	ProtoLiteralConstraint
+		<	t_tProto
+		,	SelectLiteral<11z>(t_vClause)
+		>
+	and	ProtoLiteralConstraint
+		<	t_tProto
+		,	SelectLiteral<12z>(t_vClause)
+		>
+	and	ProtoLiteralConstraint
+		<	t_tProto
+		,	SelectLiteral<13z>(t_vClause)
+		>
+	and	ProtoLiteralConstraint
+		<	t_tProto
+		,	SelectLiteral<14z>(t_vClause)
+		>
+	and	ProtoLiteralConstraint
+		<	t_tProto
+		,	SelectLiteral<15z>(t_vClause)
+		>
 	;
 
 	template
@@ -2256,6 +2500,46 @@ export namespace
 	or	ProtoClauseConstraint
 		<	t_tProto
 		,	SelectClause<5z>(t_vTerm)
+		>
+	or	ProtoClauseConstraint
+		<	t_tProto
+		,	SelectClause<6z>(t_vTerm)
+		>
+	or	ProtoClauseConstraint
+		<	t_tProto
+		,	SelectClause<7z>(t_vTerm)
+		>
+	or	ProtoClauseConstraint
+		<	t_tProto
+		,	SelectClause<8z>(t_vTerm)
+		>
+	or	ProtoClauseConstraint
+		<	t_tProto
+		,	SelectClause<9z>(t_vTerm)
+		>
+	or	ProtoClauseConstraint
+		<	t_tProto
+		,	SelectClause<10z>(t_vTerm)
+		>
+	or	ProtoClauseConstraint
+		<	t_tProto
+		,	SelectClause<11z>(t_vTerm)
+		>
+	or	ProtoClauseConstraint
+		<	t_tProto
+		,	SelectClause<12z>(t_vTerm)
+		>
+	or	ProtoClauseConstraint
+		<	t_tProto
+		,	SelectClause<13z>(t_vTerm)
+		>
+	or	ProtoClauseConstraint
+		<	t_tProto
+		,	SelectClause<14z>(t_vTerm)
+		>
+	or	ProtoClauseConstraint
+		<	t_tProto
+		,	SelectClause<15z>(t_vTerm)
 		>
 	;
 }
