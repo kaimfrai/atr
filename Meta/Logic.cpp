@@ -103,103 +103,29 @@ and	not
 /// ************************************************************************************************
 ///	Types and templates to express term types.
 /// ************************************************************************************************
+template
+	<	bool
+			t_bPolarity
+	>
 struct
-	True final
-:	::ConstantTag
-{
-	explicit consteval
-	(	operator bool
-	)	()	const
-	{	return true;	}
+	Constant
+;
 
-	auto consteval
-	(	operator()
-	)	(	auto
-				&&
-			...
-		)	const
-	->	bool
-	{	return true;	}
-
-	friend auto consteval
-	(	operator and
-	)	(	::True
-		,	::True
-		)
-	->	::True
-	{	return{};	}
-
-	friend auto consteval
-	(	LiteralCount
-	)	(	::True
-		)
-	->	::Meta::USize
-	{	return 0uz;	}
-
-	friend auto consteval
-	(	ClauseCount
-	)	(	::True
-		)
-	->	::Meta::USize
-	{	return 0uz;	}
-};
-
+template
+	<	::ProtoAtom
+			t_tAtom
+	>
 struct
-	False final
-:	::ConstantTag
-{
-	explicit consteval
-	(	operator bool
-	)	()	const
-	{	return false;	}
+	Atom
+;
 
-	auto consteval
-	(	operator()
-	)	(	auto
-				&&
-			...
-		)	const
-	->	bool
-	{	return false;	}
-
-	friend auto consteval
-	(	operator and
-	)	(	::False
-		,	::True
-		)
-	->	::False
-	{	return{};	}
-
-	friend auto consteval
-	(	operator and
-	)	(	::False
-		,	::False
-		)
-	->	::False
-	{	return{};	}
-
-	friend auto consteval
-	(	operator and
-	)	(	::True
-		,	::False
-		)
-	->	::False
-	{	return{};	}
-
-	friend auto consteval
-	(	LiteralCount
-	)	(	::False
-		)
-	->	::Meta::USize
-	{	return 0uz;	}
-
-	friend auto consteval
-	(	ClauseCount
-	)	(	::False
-		)
-	->	::Meta::USize
-	{	return 0uz;	}
-};
+template
+	<	::ProtoAtom
+			t_tAtom
+	>
+struct
+	Not
+;
 
 template
 	<	::ProtoLiteral
@@ -207,6 +133,104 @@ template
 	>
 struct
 	And
+;
+
+template
+	<	::ProtoClause
+		...	t_tpClause
+	>
+struct
+	Or
+;
+
+template
+	<	bool
+			t_bPolarity
+	>
+struct
+	Constant final
+:	::ConstantTag
+{
+	explicit consteval
+	(	operator bool
+	)	()	const
+	{	return t_bPolarity;	}
+
+	auto consteval
+	(	operator()
+	)	(	auto
+				&&
+			...
+		)	const
+	->	bool
+	{	return t_bPolarity;	}
+
+	friend auto consteval
+	(	operator not
+	)	(	::Constant<t_bPolarity>
+		)
+	->	::Constant<not t_bPolarity>
+	{	return {};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	::Constant<t_bPolarity>
+		,	::Constant<t_bPolarity>
+		)
+	->	::Constant<t_bPolarity>
+	{	return {};	}
+
+	friend auto consteval
+	(	operator and
+	)	(	::Constant<t_bPolarity>
+		,	::Constant<not t_bPolarity>
+		)
+	->	::Constant<false>
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::Constant<t_bPolarity>
+		,	::Constant<t_bPolarity>
+		)
+	->	::Constant<t_bPolarity>
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::Constant<t_bPolarity>
+		,	::Constant<not t_bPolarity>
+		)
+	->	::Constant<true>
+	{	return {};	}
+
+	friend auto consteval
+	(	LiteralCount
+	)	(	::Constant<t_bPolarity>
+		)
+	->	::Meta::USize
+	{	return 0uz;	}
+
+	friend auto consteval
+	(	ClauseCount
+	)	(	::Constant<t_bPolarity>
+		)
+	->	::Meta::USize
+	{	return 0uz;	}
+};
+
+using
+	True
+=	::Constant
+	<	true
+	>
+;
+
+using
+	False
+=	::Constant
+	<	false
+	>
 ;
 
 template
@@ -235,12 +259,19 @@ struct
 	}
 
 	friend auto consteval
+	(	operator not
+	)	(	::Atom<t_tAtom>
+		)
+	->	::Not<t_tAtom>
+	{	return {};	}
+
+	friend auto consteval
 	(	operator and
 	)	(	::Atom<t_tAtom>
 		,	::True
 		)
 	->	::Atom<t_tAtom>
-	{	return{};	}
+	{	return {};	}
 
 	friend auto consteval
 	(	operator and
@@ -248,7 +279,7 @@ struct
 		,	::False
 		)
 	->	::False
-	{	return{};	}
+	{	return {};	}
 
 	friend auto consteval
 	(	operator and
@@ -256,7 +287,7 @@ struct
 		,	::Atom<t_tAtom>
 		)
 	->	::Atom<t_tAtom>
-	{	return{};	}
+	{	return {};	}
 
 	template
 		<	::ProtoLiteral
@@ -267,7 +298,7 @@ struct
 	)	(	::Atom<t_tAtom>
 		,	t_tRightLiteral
 		)
-	->	::And<Atom, t_tRightLiteral>
+	->	::And<::Atom<t_tAtom>, t_tRightLiteral>
 	{	return {};	}
 
 	friend auto consteval
@@ -276,7 +307,7 @@ struct
 		,	::Atom<t_tAtom>
 		)
 	->	::Atom<t_tAtom>
-	{	return{};	}
+	{	return {};	}
 
 	friend auto consteval
 	(	operator and
@@ -284,7 +315,59 @@ struct
 		,	::Atom<t_tAtom>
 		)
 	->	::False
-	{	return{};	}
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::Atom<t_tAtom>
+		,	::True
+		)
+	->	::True
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::Atom<t_tAtom>
+		,	::False
+		)
+	->	::Atom<t_tAtom>
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::Atom<t_tAtom>
+		,	::Atom<t_tAtom>
+		)
+	->	::Atom<t_tAtom>
+	{	return {};	}
+
+	template
+		<	::ProtoLiteral
+				t_tRightLiteral
+		>
+	friend auto consteval
+	(	operator or
+	)	(	Atom<t_tAtom>
+		,	t_tRightLiteral
+		)
+	->	::Or<::Atom<t_tAtom>, t_tRightLiteral>
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::True
+		,	::Atom<t_tAtom>
+		)
+	->	::True
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::False
+		,	::Atom<t_tAtom>
+		)
+	->	::Atom<t_tAtom>
+	{	return {};	}
 
 	friend auto consteval
 	(	LiteralCount
@@ -327,12 +410,19 @@ struct
 	}
 
 	friend auto consteval
+	(	operator not
+	)	(	::Not<t_tAtom>
+		)
+	->	::Atom<t_tAtom>
+	{	return {};	}
+
+	friend auto consteval
 	(	operator and
 	)	(	::Not<t_tAtom>
 		,	::True
 		)
 	->	::Not<t_tAtom>
-	{	return{};	}
+	{	return {};	}
 
 	friend auto consteval
 	(	operator and
@@ -340,7 +430,7 @@ struct
 		,	::False
 		)
 	->	::False
-	{	return{};	}
+	{	return {};	}
 
 	friend auto consteval
 	(	operator and
@@ -348,7 +438,7 @@ struct
 		,	::Atom<t_tAtom>
 		)
 	->	::False
-	{	return{};	}
+	{	return {};	}
 
 	friend auto consteval
 	(	operator and
@@ -356,7 +446,7 @@ struct
 		,	::Not<t_tAtom>
 		)
 	->	::Not<t_tAtom>
-	{	return{};	}
+	{	return {};	}
 
 	template
 		<	::ProtoLiteral
@@ -367,7 +457,7 @@ struct
 	)	(	Not<t_tAtom>
 		,	t_tRightLiteral
 		)
-	->	::And<Not, t_tRightLiteral>
+	->	::And<::Not<t_tAtom>, t_tRightLiteral>
 	{	return {};	}
 
 	friend auto consteval
@@ -376,7 +466,7 @@ struct
 		,	::Not<t_tAtom>
 		)
 	->	::Not<t_tAtom>
-	{	return{};	}
+	{	return {};	}
 
 	friend auto consteval
 	(	operator and
@@ -384,7 +474,7 @@ struct
 		,	::Not<t_tAtom>
 		)
 	->	::False
-	{	return{};	}
+	{	return {};	}
 
 	friend auto consteval
 	(	operator and
@@ -392,7 +482,75 @@ struct
 		,	::Not<t_tAtom>
 		)
 	->	::False
-	{	return{};	}
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::Not<t_tAtom>
+		,	::True
+		)
+	->	::True
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::Not<t_tAtom>
+		,	::False
+		)
+	->	::Not<t_tAtom>
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::Not<t_tAtom>
+		,	::Atom<t_tAtom>
+		)
+	->	::True
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::Not<t_tAtom>
+		,	::Not<t_tAtom>
+		)
+	->	::Not<t_tAtom>
+	{	return {};	}
+
+	template
+		<	::ProtoLiteral
+				t_tRightLiteral
+		>
+	friend auto consteval
+	(	operator or
+	)	(	Not<t_tAtom>
+		,	t_tRightLiteral
+		)
+	->	::Or<::Not<t_tAtom>, t_tRightLiteral>
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::True
+		,	::Not<t_tAtom>
+		)
+	->	::True
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::False
+		,	::Not<t_tAtom>
+		)
+	->	::Not<t_tAtom>
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::Atom<t_tAtom>
+		,	::Not<t_tAtom>
+		)
+	->	::True
+	{	return {};	}
 
 	friend auto consteval
 	(	LiteralCount
@@ -486,6 +644,13 @@ struct
 	}
 
 	friend auto consteval
+	(	operator not
+	)	(	::And<t_tpLiteral...>
+		)
+	->	::Or<decltype(not t_tpLiteral{})...>
+	{	return {};	}
+
+	friend auto consteval
 	(	operator and
 	)	(	::And<t_tpLiteral...>
 		,	::True
@@ -553,6 +718,38 @@ struct
 	}
 
 	friend auto consteval
+	(	operator or
+	)	(	::And<t_tpLiteral...>
+		,	::True
+		)
+	->	::True
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::And<t_tpLiteral...>
+		,	::False
+		)
+	->	::And<t_tpLiteral...>
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::True
+		,	::And<t_tpLiteral...>
+		)
+	->	::True
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::False
+		,	::And<t_tpLiteral...>
+		)
+	->	::And<t_tpLiteral...>
+	{	return {};	}
+
+	friend auto consteval
 	(	LiteralCount
 	)	(	::And<t_tpLiteral...>
 		)
@@ -598,6 +795,34 @@ struct
 				)...
 			)
 		);
+	}
+
+	friend auto consteval
+	(	operator not
+	)	(	::Or<t_tpClause...>
+		)
+	->	::ProtoTerm auto
+	{
+		if	constexpr
+			((	...
+			and	::ProtoLiteral
+				<	t_tpClause
+				>
+			))
+			return
+			::And
+			<	decltype
+				(	not
+					t_tpClause{}
+				)
+				...
+			>{};
+		else
+			return
+			(	...
+			and	not
+				t_tpClause{}
+			);
 	}
 
 	friend auto consteval
@@ -663,6 +888,52 @@ struct
 	}
 
 	friend auto consteval
+	(	operator or
+	)	(	::Or<t_tpClause...>
+		,	::True
+		)
+	->	::True
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::Or<t_tpClause...>
+		,	::False
+		)
+	->	::Or<t_tpClause...>
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::True
+		,	::Or<t_tpClause...>
+		)
+	->	::True
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::False
+		,	::Or<t_tpClause...>
+		)
+	->	::Or<t_tpClause...>
+	{	return {};	}
+
+	friend auto consteval
+	(	operator or
+	)	(	::ProtoTerm auto
+				i_vLeft
+		,	::Or<t_tpClause...>
+		)
+	->	::ProtoTerm auto
+	{	return
+		(	i_vLeft
+		or	...
+		or	t_tpClause{}
+		);
+	}
+
+	friend auto consteval
 	(	LiteralCount
 	)	(	::Or<t_tpClause...>
 		)
@@ -711,7 +982,7 @@ auto consteval
 )	(	t_tLiteral
 	)
 ->	t_tLiteral
-{	return	{};	}
+{	return {};	}
 
 template
 	<	::ProtoLiteral
@@ -799,7 +1070,7 @@ struct
 	)	(	t_tSubTerm
 		)	const
 	->	t_tSubstitute
-	{	return{};	}
+	{	return {};	}
 };
 
 template
@@ -1756,22 +2027,6 @@ struct
 
 	auto consteval
 	(	operator()
-	)	(	True
-		)	const
-	->	True
-	{	return {};	}
-
-	auto consteval
-	(	operator()
-	)	(	False
-		)	const
-	->	::ProtoTerm auto
-	{	return
-			ThisTerm
-		;
-	}
-	auto consteval
-	(	operator()
 	)	(	::ProtoClause auto
 				i_vNewSubTerm
 		)	const
@@ -1828,52 +2083,6 @@ struct
 };
 
 template
-	<>
-struct
-	Simplifier
-	<	True
-	>
-{
-	explicit consteval
-	(	Simplifier
-	)	(	True
-		)
-	{}
-
-	auto consteval
-	(	operator()
-	)	(	::ProtoClause auto
-		)	const
-	->	True
-	{	return {};	}
-};
-
-template
-	<>
-struct
-	Simplifier
-	<	False
-	>
-{
-	explicit consteval
-	(	Simplifier
-	)	(	False
-		)
-	{}
-
-	auto consteval
-	(	operator()
-	)	(	::ProtoClause auto
-				i_vNewSubTerm
-		)	const
-	->	::ProtoClause auto
-	{	return
-			i_vNewSubTerm
-		;
-	}
-};
-
-template
 	<	::ProtoClause
 		...	t_tpSubTerm
 	>
@@ -1901,86 +2110,6 @@ template
 ;
 
 /// ************************************************************************************************
-///	Form the negation of a term.
-/// ************************************************************************************************
-auto consteval
-(	operator not
-)	(	True
-	)
-->	False
-{	return {};	}
-
-auto consteval
-(	operator not
-)	(	False
-	)
-->	True
-{	return {};	}
-
-template
-	<	::ProtoAtom
-			t_tAtom
-	>
-auto consteval
-(	operator not
-)	(	Atom<t_tAtom>
-	)
-->	Not<t_tAtom>
-{	return {};	}
-
-template
-	<	::ProtoAtom
-			t_tAtom
-	>
-auto consteval
-(	operator not
-)	(	Not<t_tAtom>
-	)
-->	Atom<t_tAtom>
-{	return {};	}
-
-template
-	<	::ProtoLiteral
-		...	t_tpLiteral
-	>
-auto consteval
-(	operator not
-)	(	::And<t_tpLiteral...>
-	)
-->	::Or<decltype(not t_tpLiteral{})...>
-{	return	{};	}
-
-template
-	<	::ProtoClause
-		...	t_tpClause
-	>
-auto consteval
-(	operator not
-)	(	Or<t_tpClause...>
-	)
-->	::ProtoTerm auto
-{
-	if	constexpr
-		((	...
-		and	::ProtoLiteral
-			<	t_tpClause
-			>
-		))
-		return
-		Conjunction
-		(	not
-			t_tpClause{}
-			...
-		);
-	else
-		return
-		(	...
-		and	not
-			t_tpClause{}
-		);
-}
-
-/// ************************************************************************************************
 ///	Form the disjunction of two terms.
 /// ************************************************************************************************
 auto consteval
@@ -1995,24 +2124,6 @@ auto consteval
 	Simplifier
 	{	i_vLeft
 	}(	i_vRight
-	);
-}
-
-template
-	<	::ProtoClause
-		...	t_tpRightClause
-	>
-auto consteval
-(	operator or
-)	(	::ProtoTerm auto
-			i_vLeft
-	,	Or<t_tpRightClause...>
-	)
-->	::ProtoTerm auto
-{	return
-	(	i_vLeft
-	or	...
-	or	t_tpRightClause{}
 	);
 }
 
@@ -2148,7 +2259,7 @@ export namespace
 	)	(	Term<::Atom<t_tAtom>>
 		)
 	->	t_tAtom
-	{	return{};	}
+	{	return {};	}
 
 	template
 		<	::ProtoAtom
@@ -2159,7 +2270,7 @@ export namespace
 	)	(	Term<::Not<t_tAtom>>
 		)
 	->	Term<::Not<t_tAtom>>
-	{	return{};	}
+	{	return {};	}
 
 	template
 		<	SSize
@@ -2433,112 +2544,112 @@ export namespace
 	;
 }
 
-module :private;
+// module :private;
 
 /// ****************************************************************************
 ///	Tests for Concepts
 /// ****************************************************************************
 
-struct P {};
-struct Q {};
-struct R {};
-struct S {};
+// struct P {};
+// struct Q {};
+// struct R {};
+// struct S {};
+//
+// static_assert(
+// 	::ProtoAtom<		P	>);
+// static_assert(not
+// 	::ProtoTerm<		P	>);
+// static_assert(not
+// 	::ProtoClause<	P	>);
+// static_assert(not
+// 	::ProtoLiteral<	P	>);
+// static_assert(not
+// 	::ProtoConstant<	P	>);
 
-static_assert(
-	::ProtoAtom<		P	>);
-static_assert(not
-	::ProtoTerm<		P	>);
-static_assert(not
-	::ProtoClause<	P	>);
-static_assert(not
-	::ProtoLiteral<	P	>);
-static_assert(not
-	::ProtoConstant<	P	>);
-
-static_assert(not
-	::ProtoAtom<		True	>);
-static_assert(
-	::ProtoTerm<		True	>);
-static_assert(
-	::ProtoClause<	True	>);
-static_assert(
-	::ProtoLiteral<	True	>);
-static_assert(
-	::ProtoConstant<	True	>);
-
-static_assert(not
-	::ProtoAtom<		False	>);
-static_assert(
-	::ProtoTerm<		False	>);
-static_assert(
-	::ProtoClause<	False	>);
-static_assert(
-	::ProtoLiteral<	False	>);
-static_assert(
-	::ProtoConstant<	False	>);
-
-static_assert(
-	!::ProtoAtom<		Atom<P>	>);
-static_assert(
-	::ProtoTerm<		Atom<P>	>);
-static_assert(
-	::ProtoClause<	Atom<P>	>);
-static_assert(
-	::ProtoLiteral<	Atom<P>	>);
-static_assert(not
-	::ProtoConstant<	Atom<P>	>);
-
-static_assert(not
-	::ProtoAtom<		Not<P>	>);
-static_assert(
-	::ProtoTerm<		Not<P>	>);
-static_assert(
-	::ProtoClause<	Not<P>	>);
-static_assert(
-	::ProtoLiteral<	Not<P>	>);
-static_assert(not
-	::ProtoConstant<	Not<P>	>);
-
-static_assert(not
-	::ProtoAtom<		And<Atom<P>, Atom<Q>>	>);
-static_assert(
-	::ProtoTerm<		And<Atom<P>, Atom<Q>>	>);
-static_assert(
-	::ProtoClause<	And<Atom<P>, Atom<Q>>	>);
-static_assert(not
-	::ProtoLiteral<	And<Atom<P>, Atom<Q>>	>);
-static_assert(not
-	::ProtoConstant<	And<Atom<P>, Atom<Q>>	>);
-
-static_assert(not
-	::ProtoAtom<		Or<Atom<P>, Atom<Q>>	>);
-static_assert(
-	::ProtoTerm<		Or<Atom<P>, Atom<Q>>	>);
-static_assert(not
-	::ProtoClause<	Or<Atom<P>, Atom<Q>>	>);
-static_assert(not
-	::ProtoLiteral<	Or<Atom<P>, Atom<Q>>	>);
-static_assert(not
-	::ProtoConstant<	Or<Atom<P>, Atom<Q>>	>);
-
-static_assert(not
-	::ProtoAtom<		Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
-static_assert(
-	::ProtoTerm<		Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
-static_assert(not
-	::ProtoClause<	Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
-static_assert(not
-	::ProtoLiteral<	Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
-static_assert(not
-	::ProtoConstant<	Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
-
-static_assert(not
-	::ProtoAtom<		Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
-static_assert(
-	::ProtoTerm<		Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
-static_assert(not
-	::ProtoClause<	Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
-static_assert(not
-	::ProtoLiteral<	Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
-static_assert(not
-	::ProtoConstant<	Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
+// static_assert(not
+// 	::ProtoAtom<		True	>);
+// static_assert(
+// 	::ProtoTerm<		True	>);
+// static_assert(
+// 	::ProtoClause<	True	>);
+// static_assert(
+// 	::ProtoLiteral<	True	>);
+// static_assert(
+// 	::ProtoConstant<	True	>);
+//
+// static_assert(not
+// 	::ProtoAtom<		False	>);
+// static_assert(
+// 	::ProtoTerm<		False	>);
+// static_assert(
+// 	::ProtoClause<	False	>);
+// static_assert(
+// 	::ProtoLiteral<	False	>);
+// static_assert(
+// 	::ProtoConstant<	False	>);
+//
+// static_assert(
+// 	!::ProtoAtom<		Atom<P>	>);
+// static_assert(
+// 	::ProtoTerm<		Atom<P>	>);
+// static_assert(
+// 	::ProtoClause<	Atom<P>	>);
+// static_assert(
+// 	::ProtoLiteral<	Atom<P>	>);
+// static_assert(not
+// 	::ProtoConstant<	Atom<P>	>);
+//
+// static_assert(not
+// 	::ProtoAtom<		Not<P>	>);
+// static_assert(
+// 	::ProtoTerm<		Not<P>	>);
+// static_assert(
+// 	::ProtoClause<	Not<P>	>);
+// static_assert(
+// 	::ProtoLiteral<	Not<P>	>);
+// static_assert(not
+// 	::ProtoConstant<	Not<P>	>);
+//
+// static_assert(not
+// 	::ProtoAtom<		And<Atom<P>, Atom<Q>>	>);
+// static_assert(
+// 	::ProtoTerm<		And<Atom<P>, Atom<Q>>	>);
+// static_assert(
+// 	::ProtoClause<	And<Atom<P>, Atom<Q>>	>);
+// static_assert(not
+// 	::ProtoLiteral<	And<Atom<P>, Atom<Q>>	>);
+// static_assert(not
+// 	::ProtoConstant<	And<Atom<P>, Atom<Q>>	>);
+//
+// static_assert(not
+// 	::ProtoAtom<		Or<Atom<P>, Atom<Q>>	>);
+// static_assert(
+// 	::ProtoTerm<		Or<Atom<P>, Atom<Q>>	>);
+// static_assert(not
+// 	::ProtoClause<	Or<Atom<P>, Atom<Q>>	>);
+// static_assert(not
+// 	::ProtoLiteral<	Or<Atom<P>, Atom<Q>>	>);
+// static_assert(not
+// 	::ProtoConstant<	Or<Atom<P>, Atom<Q>>	>);
+//
+// static_assert(not
+// 	::ProtoAtom<		Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
+// static_assert(
+// 	::ProtoTerm<		Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
+// static_assert(not
+// 	::ProtoClause<	Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
+// static_assert(not
+// 	::ProtoLiteral<	Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
+// static_assert(not
+// 	::ProtoConstant<	Or<And<Atom<P>, Atom<Q>>, Atom<R>>	>);
+//
+// static_assert(not
+// 	::ProtoAtom<		Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
+// static_assert(
+// 	::ProtoTerm<		Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
+// static_assert(not
+// 	::ProtoClause<	Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
+// static_assert(not
+// 	::ProtoLiteral<	Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
+// static_assert(not
+// 	::ProtoConstant<	Or<And<Atom<P>, Atom<Q>>, And<Atom<R>, Atom<S>>>	>);
