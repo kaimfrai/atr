@@ -6,65 +6,34 @@ export namespace
 	Meta::Trait
 {
 	struct
-		Never
-	{
-		template
-			<	typename
-					t_tType
-			>
-		auto consteval
-		(	operator()
-		)	(	TypeToken<t_tType>
-			)	const
-		->	bool
-		{	return false;	}
-	};
-
-	template
-		<	template
-				<	typename
-					...
-				>
-			typename
-				t_t1Trait
-		,	typename
-			...	t_tpArgument
-		>
-	struct
-		Standard
-	{
-		template
-			<	typename
-					t_tType
-			>
-		auto consteval
-		(	operator()
-		)	(	TypeToken<t_tType>
-			)	const
-		->	bool
-		{	return
-			t_t1Trait
-			<	t_tType
-			,	t_tpArgument
-				...
-			>{};
-		}
-	};
-
-	struct
 		Void final
-	:	Standard
-		<	std::is_void
-		>
-	{};
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_void_v<t_tEntity>;	}
+	};
 
 	struct
 		NullPointer final
-	:	Standard
-		<	std::is_null_pointer
-		>
-	{};
-
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_null_pointer_v<t_tEntity>;	}
+	};
 
 	struct
 		UnsignedIntegral final
@@ -106,10 +75,18 @@ export namespace
 
 	struct
 		FloatingPoint final
-	:	Standard
-		<	std::is_floating_point
-		>
-	{};
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_floating_point_v<t_tEntity>;	}
+	};
 
 	struct
 		UnscopedEnum final
@@ -132,38 +109,78 @@ export namespace
 
 	struct
 		ScopedEnum final
-	:	Standard
-		<	std::is_scoped_enum
-		>
-	{};
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_scoped_enum_v<t_tEntity>;	}
+	};
 
 	struct
 		Pointer final
-	:	Standard
-		<	std::is_pointer
-		>
-	{};
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_pointer_v<t_tEntity>;	}
+	};
 
 	struct
 		MemberPointer final
-	:	Standard
-		<	std::is_member_pointer
-		>
-	{};
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_member_pointer_v<t_tEntity>;	}
+	};
 
 	struct
 		LValueReference final
-	:	Standard
-		<	std::is_lvalue_reference
-		>
-	{};
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_lvalue_reference_v<t_tEntity>;	}
+	};
 
 	struct
 		RValueReference final
-	:	Standard
-		<	std::is_rvalue_reference
-		>
-	{};
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_rvalue_reference_v<t_tEntity>;	}
+	};
 
 	struct
 		UnqualifiedFunction final
@@ -207,31 +224,63 @@ export namespace
 
 	struct
 		UnboundedArray final
-	:	Standard
-		<	std::is_unbounded_array
-		>
-	{};
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_unbounded_array_v<t_tEntity>;	}
+	};
 
 	struct
 		BoundedArray final
-	:	Standard
-		<	std::is_bounded_array
-		>
-	{};
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_bounded_array_v<t_tEntity>;	}
+	};
 
 	struct
 		Class final
-	:	Standard
-		<	std::is_class
-		>
-	{};
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_class_v<t_tEntity>;	}
+	};
 
 	struct
 		Union final
-	:	Standard
-		<	std::is_union
-		>
-	{};
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_union_v<t_tEntity>;	}
+	};
 
 	template
 		<	typename
@@ -261,10 +310,18 @@ export namespace
 				t_t1Pack
 		>
 	struct
-		TypePack
-	:	Never
+		TypePack final
 	{
-		using Never::operator();
+		template
+			<	typename
+					t_tType
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tType>
+			)	const
+		->	bool
+		{	return false;	}
 
 		template
 			<	typename
@@ -340,10 +397,18 @@ export namespace
 				t_t1Pack
 		>
 	struct
-		ValuePack
-	:	Never
+		ValuePack final
 	{
-		using Never::operator();
+		template
+			<	typename
+					t_tType
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tType>
+			)	const
+		->	bool
+		{	return false;	}
 
 		template
 			<	auto
@@ -420,9 +485,17 @@ export namespace
 		>
 	struct
 		ValueTypePair
-	:	Never
 	{
-		using Never::operator();
+		template
+			<	typename
+					t_tType
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tType>
+			)	const
+		->	bool
+		{	return false;	}
 
 		template
 			<	auto
