@@ -584,19 +584,41 @@ struct
 };
 
 template
-	<	::ProtoLiteral
-			t_tLiteral
+	<	::ProtoClause
+			t_tClause
 	>
 struct
-	ContainsLiteralItem
+	TermContainerItem
 {
-	auto consteval
+	static auto consteval
 	(	Contains
-	)	(	t_tLiteral
-		)	const
+	)	(	t_tClause
+		)
 	->	bool
 	{	return true;	}
 };
+
+template
+	<	::ProtoClause
+		...	t_tpClause
+	>
+struct
+	TermContainer
+:	::TermContainerItem
+	<	t_tpClause
+	>
+	...
+{
+	using TermContainerItem<t_tpClause>::Contains...;
+
+	static auto consteval
+	(	Contains
+	)	(	::ProtoClause auto
+		)
+	->	bool
+	{	return false;	}
+};
+
 
 template
 	<	::ProtoLiteral
@@ -610,20 +632,8 @@ struct
 	<	t_tpLiteral
 		...
 	>
-,	::ContainsLiteralItem
-	<	t_tpLiteral
-	>
-	...
 {
 	using ::Meta::Tuple<t_tpLiteral...>::operator[];
-	using ::ContainsLiteralItem<t_tpLiteral>::Contains...;
-
-	auto consteval
-	(	Contains
-	)	(	::ProtoLiteral auto
-		)	const
-	->	bool
-	{	return false;	}
 
 	auto consteval
 	(	operator()
@@ -678,13 +688,16 @@ struct
 				i_vRight
 		)
 	->	::ProtoClause auto
-	{	if	constexpr(i_vLeft.Contains(i_vRight))
+	{
+		using Container = ::TermContainer<t_tpLiteral...>;
+
+		if	constexpr(Container::Contains(i_vRight))
 			return i_vLeft;
 		else
-		if	constexpr(i_vLeft.Contains(not i_vRight))
+		if	constexpr(Container::Contains(not i_vRight))
 			return ::False{};
 		else
-			return And<t_tpLiteral..., t_tRightLiteral>{};
+			return ::And<t_tpLiteral..., t_tRightLiteral>{};
 	}
 
 	friend auto consteval
@@ -931,6 +944,39 @@ struct
 		or	...
 		or	t_tpClause{}
 		);
+	}
+
+	template
+		<	::ProtoClause
+				t_tRightClause
+		>
+	friend auto consteval
+	(	operator or
+	)	(	::Or<t_tpClause...>
+				i_vLeft
+		,	t_tRightClause
+				i_vRight
+		)
+	->	::ProtoTerm auto
+	{
+		using Container = ::TermContainer<t_tpClause...>;
+		if	constexpr(Container::Contains(i_vRight))
+			return i_vLeft;
+		else
+		if	constexpr((ProtoLiteral<t_tpClause> and ... and ProtoLiteral<t_tRightClause>))
+		{
+			if	constexpr(Container::Contains(not i_vRight))
+				return ::True{};
+			else
+				return ::Or<t_tpClause..., t_tRightClause>{};
+		}
+		else
+			return
+				SimplifyDisjunction
+				(	i_vLeft
+				,	i_vRight
+				)
+			;
 	}
 
 	friend auto consteval
@@ -2112,6 +2158,21 @@ template
 /// ************************************************************************************************
 ///	Form the disjunction of two terms.
 /// ************************************************************************************************
+auto consteval
+(	SimplifyDisjunction
+)	(	::ProtoTerm auto
+			i_vLeft
+	,	::ProtoClause auto
+			i_vRight
+	)
+->	::ProtoTerm auto
+{	return
+	Simplifier
+	{	i_vLeft
+	}(	i_vRight
+	);
+}
+
 auto consteval
 (	operator or
 )	(	::ProtoTerm auto

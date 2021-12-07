@@ -17,6 +17,7 @@ function(read_module_dependencies
 	out_module_dependency_files
 )
 	file(STRINGS ${file_name} module_dependencies REGEX "import [^\<]")
+	list(FILTER module_dependencies EXCLUDE REGEX "^/")
 	list(TRANSFORM module_dependencies REPLACE "export " "")
 	list(TRANSFORM module_dependencies REPLACE "import " "")
 	list(TRANSFORM module_dependencies STRIP)
