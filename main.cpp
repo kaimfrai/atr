@@ -12,16 +12,16 @@ auto constexpr
 	return 4;
 }
 
-auto constexpr
-	Foo(Meta::ProtoConstraint<Meta::IsIntegral or Meta::IsFloatingPoint> auto)
-{
-	return 3;
-}
-auto constexpr
-	Foo(Meta::ProtoConstraint<Meta::IsArithmetic> auto)
-{
-	return 2;
-}
+// auto constexpr
+// 	Foo(Meta::ProtoConstraint<Meta::IsIntegral or Meta::IsFloatingPoint> auto)
+// {
+// 	return 3;
+// }
+// auto constexpr
+// 	Foo(Meta::ProtoConstraint<Meta::IsArithmetic> auto)
+// {
+// 	return 2;
+// }
 
 static_assert(Foo(1) == 4);
 static_assert(Foo(2.0) == 5);
