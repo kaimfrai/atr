@@ -64,4 +64,4 @@ export template
 auto consteval
 (	operator""_Test
 )	()
-{	return Meta::EvaluateNumericLiteral<t_npNumeric...>();	}
+{	return Meta::Literals::EvaluateNumericLiteral<t_npNumeric...>();	}

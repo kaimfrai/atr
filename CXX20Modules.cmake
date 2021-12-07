@@ -1,5 +1,3 @@
-
-
 function(read_module_name
 	file_name
 	out_module_name

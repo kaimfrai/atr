@@ -3,18 +3,18 @@ export import Std.TypeTraits;
 export import Meta.Type;
 
 export namespace
-	Meta
+	Meta::Trait
 {
 	struct
-		NeverTrait
+		Never
 	{
 		template
 			<	typename
 					t_tType
 			>
-		auto constexpr
+		auto consteval
 		(	operator()
-		)	(	Type<t_tType>
+		)	(	TypeToken<t_tType>
 			)	const
 		->	bool
 		{	return false;	}
@@ -31,15 +31,15 @@ export namespace
 			...	t_tpArgument
 		>
 	struct
-		StandardTrait
+		Standard
 	{
 		template
 			<	typename
 					t_tType
 			>
-		auto constexpr
+		auto consteval
 		(	operator()
-		)	(	Type<t_tType>
+		)	(	TypeToken<t_tType>
 			)	const
 		->	bool
 		{	return
@@ -51,181 +51,185 @@ export namespace
 		}
 	};
 
-	template
-		<	template
-				<	typename
-					...
-				>
-			typename
-				t_t1Trait
-		,	typename
-			...	t_tpArgument
-		>
 	struct
-		ReverseStandardTrait
-	{
-		template
-			<	typename
-					t_tType
-			>
-		auto constexpr
-		(	operator()
-		)	(	Type<t_tType>
-			)	const
-		->	bool
-		{	return
-			t_t1Trait
-			<	t_tpArgument
-				...
-			,	t_tType
-			>{};
-		}
-	};
-
-	struct
-		FundamentalTrait
-	:	StandardTrait
-		<	std::is_fundamental
-		>
-	{};
-
-	struct
-		CompoundTrait
-	:	StandardTrait
-		<	std::is_compound
-		>
-	{};
-
-	struct
-		ObjectTrait
-	:	StandardTrait
-		<	std::is_object
-		>
-	{};
-
-	struct
-		ReferenceTrait
-	:	StandardTrait
-		<	std::is_reference
-		>
-	{};
-
-	struct
-		LValueReferenceTrait
-	:	StandardTrait
-		<	std::is_lvalue_reference
-		>
-	{};
-
-	struct
-		RValueReferenceTrait
-	:	StandardTrait
-		<	std::is_rvalue_reference
-		>
-	{};
-
-	struct
-		ScalarTrait
-	:	StandardTrait
-		<	std::is_scalar
-		>
-	{};
-
-	struct
-		VoidTrait
-	:	StandardTrait
+		Void final
+	:	Standard
 		<	std::is_void
 		>
 	{};
 
 	struct
-		NullPointerTrait
-	:	StandardTrait
+		NullPointer final
+	:	Standard
 		<	std::is_null_pointer
 		>
 	{};
 
-	struct
-		ArithmeticTrait
-	:	StandardTrait
-		<	std::is_arithmetic
-		>
-	{};
 
 	struct
-		IntegralTrait
-	:	StandardTrait
-		<	std::is_integral
-		>
-	{};
+		UnsignedIntegral final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	if	constexpr(not std::is_integral_v<t_tEntity>)
+				return false;
+			else
+				return std::is_unsigned_v<t_tEntity>;
+		}
+	};
 
 	struct
-		FloatingPointTrait
-	:	StandardTrait
+		SignedIntegral final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	if	constexpr(not std::is_integral_v<t_tEntity>)
+				return false;
+			else
+				return std::is_signed_v<t_tEntity>;
+		}
+	};
+
+	struct
+		FloatingPoint final
+	:	Standard
 		<	std::is_floating_point
 		>
 	{};
 
 	struct
-		ArrayTrait
-	:	StandardTrait
-		<	std::is_array
+		UnscopedEnum final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	if	constexpr(not std::is_enum_v<t_tEntity>)
+				return false;
+			else
+				return not std::is_scoped_enum_v<t_tEntity>;
+		}
+	};
+
+	struct
+		ScopedEnum final
+	:	Standard
+		<	std::is_scoped_enum
 		>
 	{};
 
 	struct
-		EnumTrait
-	:	StandardTrait
-		<	std::is_enum
-		>
-	{};
-
-	struct
-		UnionTrait
-	:	StandardTrait
-		<	std::is_union
-		>
-	{};
-
-	struct
-		ClassTrait
-	:	StandardTrait
-		<	std::is_class
-		>
-	{};
-
-	struct
-		FunctionTrait
-	:	StandardTrait
-		<	std::is_function
-		>
-	{};
-
-	struct
-		PointerTrait
-	:	StandardTrait
+		Pointer final
+	:	Standard
 		<	std::is_pointer
 		>
 	{};
 
 	struct
-		MemberPointerTrait
-	:	StandardTrait
+		MemberPointer final
+	:	Standard
 		<	std::is_member_pointer
 		>
 	{};
 
 	struct
-		MemberObjectPointerTrait
-	:	StandardTrait
-		<	std::is_member_object_pointer
+		LValueReference final
+	:	Standard
+		<	std::is_lvalue_reference
 		>
 	{};
 
 	struct
-		MemberFunctionPointerTrait
-	:	StandardTrait
-		<	std::is_member_function_pointer
+		RValueReference final
+	:	Standard
+		<	std::is_rvalue_reference
+		>
+	{};
+
+	struct
+		UnqualifiedFunction final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+					i_vType
+			)	const
+		{	if	constexpr(not std::is_function_v<t_tEntity>)
+				return false;
+			else
+				///	AddPointer only works for unqualified functions
+				return i_vType != AddPointer(i_vType);
+		}
+	};
+
+	struct
+		QualifiedFunction final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+					i_vType
+			)	const
+		{	if	constexpr(not std::is_function_v<t_tEntity>)
+				return false;
+			else
+				///	AddPointer only works for unqualified functions
+				return i_vType == AddPointer(i_vType);
+		}
+	};
+
+	struct
+		UnboundedArray final
+	:	Standard
+		<	std::is_unbounded_array
+		>
+	{};
+
+	struct
+		BoundedArray final
+	:	Standard
+		<	std::is_bounded_array
+		>
+	{};
+
+	struct
+		Class final
+	:	Standard
+		<	std::is_class
+		>
+	{};
+
+	struct
+		Union final
+	:	Standard
+		<	std::is_union
 		>
 	{};
 
@@ -234,12 +238,19 @@ export namespace
 				t_tBase
 		>
 	struct
-		DerivedFromTrait
-	:	ReverseStandardTrait
-		<	std::is_base_of
-		,	t_tBase
-		>
-	{};
+		DerivedFrom final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto consteval
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_base_of_v<t_tBase, t_tEntity>;	}
+	};
 
 	template
 		<	template
@@ -250,10 +261,10 @@ export namespace
 				t_t1Pack
 		>
 	struct
-		TypePackTrait
-	:	NeverTrait
+		TypePack
+	:	Never
 	{
-		using NeverTrait::operator();
+		using Never::operator();
 
 		template
 			<	typename
@@ -261,11 +272,59 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	Type
+		)	(	TypeToken
 				<	t_t1Pack
 					<	t_tpArgument
 						...
 					>
+				>
+			)	const
+		->	bool
+		{	return true;	}
+
+		template
+			<	typename
+				...	t_tpArgument
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken
+				<	t_t1Pack
+					<	t_tpArgument
+						...
+					>	const
+				>
+			)	const
+		->	bool
+		{	return true;	}
+
+		template
+			<	typename
+				...	t_tpArgument
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken
+				<	t_t1Pack
+					<	t_tpArgument
+						...
+					>	volatile
+				>
+			)	const
+		->	bool
+		{	return true;	}
+
+		template
+			<	typename
+				...	t_tpArgument
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken
+				<	t_t1Pack
+					<	t_tpArgument
+						...
+					>	const volatile
 				>
 			)	const
 		->	bool
@@ -281,10 +340,10 @@ export namespace
 				t_t1Pack
 		>
 	struct
-		ValuePackTrait
-	:	NeverTrait
+		ValuePack
+	:	Never
 	{
-		using NeverTrait::operator();
+		using Never::operator();
 
 		template
 			<	auto
@@ -292,11 +351,59 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	Type
+		)	(	TypeToken
 				<	t_t1Pack
 					<	t_vpArgument
 						...
 					>
+				>
+			)	const
+		->	bool
+		{	return true;	}
+
+		template
+			<	auto
+				...	t_vpArgument
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken
+				<	t_t1Pack
+					<	t_vpArgument
+						...
+					>	const
+				>
+			)	const
+		->	bool
+		{	return true;	}
+
+		template
+			<	auto
+				...	t_vpArgument
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken
+				<	t_t1Pack
+					<	t_vpArgument
+						...
+					>	volatile
+				>
+			)	const
+		->	bool
+		{	return true;	}
+
+		template
+			<	auto
+				...	t_vpArgument
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken
+				<	t_t1Pack
+					<	t_vpArgument
+						...
+					>	const volatile
 				>
 			)	const
 		->	bool
@@ -312,10 +419,10 @@ export namespace
 				t_t1Pair
 		>
 	struct
-		ValueTypePairTrait
-	:	NeverTrait
+		ValueTypePair
+	:	Never
 	{
-		using NeverTrait::operator();
+		using Never::operator();
 
 		template
 			<	auto
@@ -325,7 +432,7 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	Type
+		)	(	TypeToken
 				<	t_t1Pair
 					<	t_vFirst
 					,	t_tSecond
@@ -334,100 +441,60 @@ export namespace
 			)	const
 		->	bool
 		{	return true;	}
+
+		template
+			<	auto
+					t_vFirst
+			,	typename
+					t_tSecond
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken
+				<	t_t1Pair
+					<	t_vFirst
+					,	t_tSecond
+					>	const
+				>
+			)	const
+		->	bool
+		{	return true;	}
+
+		template
+			<	auto
+					t_vFirst
+			,	typename
+					t_tSecond
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken
+				<	t_t1Pair
+					<	t_vFirst
+					,	t_tSecond
+					>	volatile
+				>
+			)	const
+		->	bool
+		{	return true;	}
+
+		template
+			<	auto
+					t_vFirst
+			,	typename
+					t_tSecond
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken
+				<	t_t1Pair
+					<	t_vFirst
+					,	t_tSecond
+					>	const volatile
+				>
+			)	const
+		->	bool
+		{	return true;	}
 	};
-
-	template
-		<	typename
-				t_tProto
-		,	auto
-				t_fPredicate
-		>
-	concept
-		ProtoPredicate
-	=	t_fPredicate
-		(	Type<t_tProto>{}
-		)
-	;
-
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoVoid
-	=	ProtoPredicate
-		<	t_tProto
-		,	VoidTrait{}
-		>
-	;
-
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoClass
-	=	ProtoPredicate
-		<	t_tProto
-		,	ClassTrait{}
-		>
-	;
-
-	template
-		<	typename
-				t_tProto
-		,	typename
-				t_tBase
-		>
-	concept
-		ProtoDerivedFrom
-	=	ProtoClass
-		<	t_tProto
-		>
-	and	ProtoPredicate
-		<	t_tProto
-		,	DerivedFromTrait<t_tBase>{}
-		>
-	;
-
-	template
-		<	typename
-				t_tProto
-		,	template
-				<	auto
-					...
-				>
-			typename
-				t_t1Pack
-		>
-	concept
-		ProtoValuePack
-	=	ProtoPredicate
-		<	t_tProto
-		,	ValuePackTrait
-			<	t_t1Pack
-			>{}
-		>
-	;
-
-	template
-		<	typename
-				t_tProto
-		,	template
-				<	auto
-				,	typename
-				>
-			typename
-				t_t1Pair
-		>
-	concept
-		ProtoValueTypePair
-	=	ProtoPredicate
-		<	t_tProto
-		,	ValueTypePairTrait
-			<	t_t1Pair
-			>{}
-		>
-	;
 }
 

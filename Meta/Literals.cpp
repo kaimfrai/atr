@@ -487,11 +487,11 @@ auto constexpr inline
 
 template
 	<	char
-		...	t_npNumeric
+		...	t_npBasicCharacter
 	>
 auto consteval
 (	ParseNumericLiteral
-)	(	BasicCharacter<t_npNumeric>
+)	(	BasicCharacter<t_npBasicCharacter>
 		...	i_vpNumeric
 	)
 {	return
@@ -503,20 +503,20 @@ auto consteval
 
 template
 	<	char
-		...	t_npNumeric
+		...	t_npBasicCharacter
 	>
 auto consteval
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
-	,	BasicCharacter<t_npNumeric>
+	,	BasicCharacter<t_npBasicCharacter>
 		...	i_vpNumeric
 	)
 /// leading 0 indicates octal integral unless there is a separator or exponent
 requires
 	(	...
-	and	(	t_npNumeric != '.'
-		and	t_npNumeric != 'e'
-		and	t_npNumeric != 'E'
+	and	(	t_npBasicCharacter != '.'
+		and	t_npBasicCharacter != 'e'
+		and	t_npBasicCharacter != 'E'
 		)
 	)
 {	return
@@ -528,13 +528,13 @@ requires
 
 template
 	<	char
-		...	t_npNumeric
+		...	t_npBasicCharacter
 	>
 auto consteval
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
 	,	BasicCharacter<'X'>
-	,	BasicCharacter<t_npNumeric>
+	,	BasicCharacter<t_npBasicCharacter>
 		...	i_vpNumeric
 	)
 {	return
@@ -546,13 +546,13 @@ auto consteval
 
 template
 	<	char
-		...	t_npNumeric
+		...	t_npBasicCharacter
 	>
 auto consteval
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
 	,	BasicCharacter<'x'>
-	,	BasicCharacter<t_npNumeric>
+	,	BasicCharacter<t_npBasicCharacter>
 		...	i_vpNumeric
 	)
 {	return
@@ -564,13 +564,13 @@ auto consteval
 
 template
 	<	char
-		...	t_npNumeric
+		...	t_npBasicCharacter
 	>
 auto consteval
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
 	,	BasicCharacter<'B'>
-	,	BasicCharacter<t_npNumeric>
+	,	BasicCharacter<t_npBasicCharacter>
 		...	i_vpNumeric
 	)
 {	return
@@ -582,13 +582,13 @@ auto consteval
 
 template
 	<	char
-		...	t_npNumeric
+		...	t_npBasicCharacter
 	>
 auto consteval
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
 	,	BasicCharacter<'b'>
-	,	BasicCharacter<t_npNumeric>
+	,	BasicCharacter<t_npBasicCharacter>
 		...	i_vpNumeric
 	)
 {	return
@@ -599,11 +599,11 @@ auto consteval
 }
 
 export namespace
-	Meta
+	Meta::Literals
 {
 	template
 		<	char
-			...	t_npNumeric
+			...	t_npBasicCharacter
 		>
 	auto consteval
 	(	EvaluateNumericLiteral
@@ -611,7 +611,7 @@ export namespace
 	{	return
 		Evaluate
 		(	::ParseNumericLiteral
-			(	::BasicCharacter<t_npNumeric>
+			(	::BasicCharacter<t_npBasicCharacter>
 				{}
 				...
 			)

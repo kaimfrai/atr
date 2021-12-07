@@ -1,7 +1,7 @@
 export module Meta.Pack;
 
 export import Meta.Common;
-export import Meta.TypeTraits;
+export import Meta.Concepts;
 
 export namespace
 	Meta

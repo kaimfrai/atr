@@ -2,13 +2,10 @@ add_module(
 	Common.cpp
 )
 add_module(
+	Literals.cpp
+)
+add_module(
 	Type.cpp
-)
-add_module(
-	Pack.cpp
-)
-add_module(
-	Logic.cpp
 )
 add_module(
 	TypeTraits.cpp
@@ -17,7 +14,13 @@ add_module(
 	Concepts.cpp
 )
 add_module(
-	Literals.cpp
+	Pack.cpp
+)
+add_module(
+	Logic.cpp
+)
+add_module(
+	Predicate.cpp
 )
 
 add_module(
