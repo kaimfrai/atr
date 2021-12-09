@@ -1,17 +1,12 @@
-add_module(
-	Algorithm.cpp
-)
-add_module(
-	Limits.cpp
-)
-add_module(
-	TypeTraits.cpp
-)
-add_module(
-	Utility.cpp
-)
+add_module(Algorithm.cpp)
+add_module(CStdInt.cpp)
+add_module(Compare.cpp)
+add_module(Functional.cpp)
+add_module(InitializerList.cpp)
+add_module(Iterator.cpp)
+add_module(Limits.cpp)
+add_module(Numeric.cpp)
+add_module(TypeTraits.cpp)
+add_module(Utility.cpp)
 
-add_module(
-	Std.cpp
-)
-
+add_module(Std.cpp)

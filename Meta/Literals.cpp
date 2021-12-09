@@ -68,7 +68,7 @@ struct
 	,	t_nParsed
 	>
 {
-	friend auto consteval
+	friend auto constexpr
 	(	operator<<
 	)	(	t_t1DerivedParser<t_nRadix,	t_vpDerivedParserArgument...>
 				i_vParser
@@ -106,7 +106,7 @@ struct
 ,	ParseItem<t_tDerivedParser, 'F', 0xFull>
 ,	ParseItem<t_tDerivedParser, 'f', 0xFull>
 {
-	friend auto consteval
+	friend auto constexpr
 	(	operator<<
 	)	(	t_tDerivedParser
 				i_vParser
@@ -190,7 +190,7 @@ struct
 	=	0ull
 	;
 
-	auto consteval
+	auto constexpr
 	(	Append
 	)	(	unsigned long long
 				i_nParsed
@@ -203,7 +203,7 @@ struct
 		};
 	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator<<
 	)	(	ExponentParser
 				i_vParser
@@ -212,7 +212,7 @@ struct
 	->	ExponentParser
 	{	return i_vParser;	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator<<
 	)	(	ExponentParser
 				i_vParser
@@ -231,7 +231,7 @@ struct
 		};
 	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	Evaluate
 	)	(	ExponentParser
 				i_vParser
@@ -278,7 +278,7 @@ struct
 	<	t_tDerivedParser
 	>
 {
-	friend auto consteval
+	friend auto constexpr
 	(	operator<<
 	)	(	t_tDerivedParser
 				i_vParser
@@ -291,7 +291,7 @@ struct
 		};
 	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator<<
 	)	(	t_tDerivedParser
 				i_vParser
@@ -324,7 +324,7 @@ struct
 		>
 	>
 {
-	friend auto consteval
+	friend auto constexpr
 	(	operator<<
 	)	(	t_t1DerivedParser<Hexadecimal>
 				i_vParser
@@ -339,7 +339,7 @@ struct
 		};
 	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator<<
 	)	(	t_t1DerivedParser<Hexadecimal>
 				i_vParser
@@ -374,7 +374,7 @@ struct
 		Denominator
 	;
 
-	auto consteval
+	auto constexpr
 	(	Append
 	)	(	unsigned long long
 				i_nParsed
@@ -386,7 +386,7 @@ struct
 		};
 	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	Evaluate
 	)	(	FloatParser
 				i_vParser
@@ -424,7 +424,7 @@ struct
 	=	1ull
 	;
 
-	auto consteval
+	auto constexpr
 	(	Append
 	)	(	unsigned long long
 				i_nParsed
@@ -435,7 +435,7 @@ struct
 		};
 	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator<<
 	)	(	IntegerParser
 				i_vParser
@@ -448,7 +448,7 @@ struct
 		};
 	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	Evaluate
 	)	(	IntegerParser
 				i_vParser
@@ -489,7 +489,7 @@ template
 	<	char
 		...	t_npBasicCharacter
 	>
-auto consteval
+auto constexpr
 (	ParseNumericLiteral
 )	(	BasicCharacter<t_npBasicCharacter>
 		...	i_vpNumeric
@@ -505,7 +505,7 @@ template
 	<	char
 		...	t_npBasicCharacter
 	>
-auto consteval
+auto constexpr
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
 	,	BasicCharacter<t_npBasicCharacter>
@@ -530,7 +530,7 @@ template
 	<	char
 		...	t_npBasicCharacter
 	>
-auto consteval
+auto constexpr
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
 	,	BasicCharacter<'X'>
@@ -548,7 +548,7 @@ template
 	<	char
 		...	t_npBasicCharacter
 	>
-auto consteval
+auto constexpr
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
 	,	BasicCharacter<'x'>
@@ -566,7 +566,7 @@ template
 	<	char
 		...	t_npBasicCharacter
 	>
-auto consteval
+auto constexpr
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
 	,	BasicCharacter<'B'>
@@ -584,7 +584,7 @@ template
 	<	char
 		...	t_npBasicCharacter
 	>
-auto consteval
+auto constexpr
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
 	,	BasicCharacter<'b'>
@@ -605,7 +605,7 @@ export namespace
 		<	char
 			...	t_npBasicCharacter
 		>
-	auto consteval
+	auto constexpr
 	(	EvaluateNumericLiteral
 	)	()
 	{	return

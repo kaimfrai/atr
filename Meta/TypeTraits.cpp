@@ -12,7 +12,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -27,7 +27,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -42,7 +42,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -61,7 +61,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -80,7 +80,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -95,7 +95,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -114,7 +114,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -129,7 +129,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -144,7 +144,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -159,7 +159,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -174,7 +174,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -189,7 +189,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 					i_vType
@@ -209,7 +209,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 					i_vType
@@ -229,7 +229,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -244,7 +244,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -259,7 +259,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -274,7 +274,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -293,7 +293,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -316,7 +316,7 @@ export namespace
 			<	typename
 					t_tType
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tType>
 			)	const
@@ -403,7 +403,7 @@ export namespace
 			<	typename
 					t_tType
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tType>
 			)	const
@@ -490,7 +490,7 @@ export namespace
 			<	typename
 					t_tType
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tType>
 			)	const

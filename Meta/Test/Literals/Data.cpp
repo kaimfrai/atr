@@ -61,7 +61,7 @@ export template
 	<	char
 		...	t_npNumeric
 	>
-auto consteval
+auto constexpr
 (	operator""_Test
 )	()
 {	return Meta::Literals::EvaluateNumericLiteral<t_npNumeric...>();	}

@@ -151,12 +151,12 @@ struct
 	Constant final
 :	::ConstantTag
 {
-	explicit consteval
+	explicit constexpr
 	(	operator bool
 	)	()	const
 	{	return t_bPolarity;	}
 
-	auto consteval
+	auto constexpr
 	(	operator()
 	)	(	auto
 				&&
@@ -165,14 +165,14 @@ struct
 	->	bool
 	{	return t_bPolarity;	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator not
 	)	(	::Constant<t_bPolarity>
 		)
 	->	::Constant<not t_bPolarity>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::Constant<t_bPolarity>
 		,	::Constant<t_bPolarity>
@@ -180,7 +180,7 @@ struct
 	->	::Constant<t_bPolarity>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::Constant<t_bPolarity>
 		,	::Constant<not t_bPolarity>
@@ -188,7 +188,7 @@ struct
 	->	::Constant<false>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::Constant<t_bPolarity>
 		,	::Constant<t_bPolarity>
@@ -196,7 +196,7 @@ struct
 	->	::Constant<t_bPolarity>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::Constant<t_bPolarity>
 		,	::Constant<not t_bPolarity>
@@ -204,14 +204,14 @@ struct
 	->	::Constant<true>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	LiteralCount
 	)	(	::Constant<t_bPolarity>
 		)
 	->	::Meta::USize
 	{	return 0uz;	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	ClauseCount
 	)	(	::Constant<t_bPolarity>
 		)
@@ -241,7 +241,7 @@ struct
 	Atom final
 :	::LiteralTag
 {
-	auto consteval
+	auto constexpr
 	(	operator()
 	)	(	auto
 				&&
@@ -258,14 +258,14 @@ struct
 		;
 	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator not
 	)	(	::Atom<t_tAtom>
 		)
 	->	::Not<t_tAtom>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::Atom<t_tAtom>
 		,	::True
@@ -273,7 +273,7 @@ struct
 	->	::Atom<t_tAtom>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::Atom<t_tAtom>
 		,	::False
@@ -281,7 +281,7 @@ struct
 	->	::False
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::Atom<t_tAtom>
 		,	::Atom<t_tAtom>
@@ -293,7 +293,7 @@ struct
 		<	::ProtoLiteral
 				t_tRightLiteral
 		>
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::Atom<t_tAtom>
 		,	t_tRightLiteral
@@ -301,7 +301,7 @@ struct
 	->	::And<::Atom<t_tAtom>, t_tRightLiteral>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::True
 		,	::Atom<t_tAtom>
@@ -309,7 +309,7 @@ struct
 	->	::Atom<t_tAtom>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::False
 		,	::Atom<t_tAtom>
@@ -317,7 +317,7 @@ struct
 	->	::False
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::Atom<t_tAtom>
 		,	::True
@@ -325,7 +325,7 @@ struct
 	->	::True
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::Atom<t_tAtom>
 		,	::False
@@ -333,7 +333,7 @@ struct
 	->	::Atom<t_tAtom>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::Atom<t_tAtom>
 		,	::Atom<t_tAtom>
@@ -345,7 +345,7 @@ struct
 		<	::ProtoLiteral
 				t_tRightLiteral
 		>
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	Atom<t_tAtom>
 		,	t_tRightLiteral
@@ -353,7 +353,7 @@ struct
 	->	::Or<::Atom<t_tAtom>, t_tRightLiteral>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::True
 		,	::Atom<t_tAtom>
@@ -361,7 +361,7 @@ struct
 	->	::True
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::False
 		,	::Atom<t_tAtom>
@@ -369,14 +369,14 @@ struct
 	->	::Atom<t_tAtom>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	LiteralCount
 	)	(	::Atom<t_tAtom>
 		)
 	->	::Meta::USize
 	{	return 1uz;	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	ClauseCount
 	)	(	::Atom<t_tAtom>
 		)
@@ -392,7 +392,7 @@ struct
 	Not final
 :	::LiteralTag
 {
-	auto consteval
+	auto constexpr
 	(	operator()
 	)	(	auto
 				&&
@@ -409,14 +409,14 @@ struct
 		);
 	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator not
 	)	(	::Not<t_tAtom>
 		)
 	->	::Atom<t_tAtom>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::Not<t_tAtom>
 		,	::True
@@ -424,7 +424,7 @@ struct
 	->	::Not<t_tAtom>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::Not<t_tAtom>
 		,	::False
@@ -432,7 +432,7 @@ struct
 	->	::False
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::Not<t_tAtom>
 		,	::Atom<t_tAtom>
@@ -440,7 +440,7 @@ struct
 	->	::False
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::Not<t_tAtom>
 		,	::Not<t_tAtom>
@@ -452,7 +452,7 @@ struct
 		<	::ProtoLiteral
 				t_tRightLiteral
 		>
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	Not<t_tAtom>
 		,	t_tRightLiteral
@@ -460,7 +460,7 @@ struct
 	->	::And<::Not<t_tAtom>, t_tRightLiteral>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::True
 		,	::Not<t_tAtom>
@@ -468,7 +468,7 @@ struct
 	->	::Not<t_tAtom>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::False
 		,	::Not<t_tAtom>
@@ -476,7 +476,7 @@ struct
 	->	::False
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::Atom<t_tAtom>
 		,	::Not<t_tAtom>
@@ -484,7 +484,7 @@ struct
 	->	::False
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::Not<t_tAtom>
 		,	::True
@@ -492,7 +492,7 @@ struct
 	->	::True
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::Not<t_tAtom>
 		,	::False
@@ -500,7 +500,7 @@ struct
 	->	::Not<t_tAtom>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::Not<t_tAtom>
 		,	::Atom<t_tAtom>
@@ -508,7 +508,7 @@ struct
 	->	::True
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::Not<t_tAtom>
 		,	::Not<t_tAtom>
@@ -520,7 +520,7 @@ struct
 		<	::ProtoLiteral
 				t_tRightLiteral
 		>
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	Not<t_tAtom>
 		,	t_tRightLiteral
@@ -528,7 +528,7 @@ struct
 	->	::Or<::Not<t_tAtom>, t_tRightLiteral>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::True
 		,	::Not<t_tAtom>
@@ -536,7 +536,7 @@ struct
 	->	::True
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::False
 		,	::Not<t_tAtom>
@@ -544,7 +544,7 @@ struct
 	->	::Not<t_tAtom>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::Atom<t_tAtom>
 		,	::Not<t_tAtom>
@@ -552,14 +552,14 @@ struct
 	->	::True
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	LiteralCount
 	)	(	::Not<t_tAtom>
 		)
 	->	::Meta::USize
 	{	return 1uz;	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	ClauseCount
 	)	(	::Not<t_tAtom>
 		)
@@ -590,7 +590,7 @@ template
 struct
 	TermContainerItem
 {
-	static auto consteval
+	static auto constexpr
 	(	Contains
 	)	(	t_tClause
 		)
@@ -611,7 +611,7 @@ struct
 {
 	using TermContainerItem<t_tpClause>::Contains...;
 
-	static auto consteval
+	static auto constexpr
 	(	Contains
 	)	(	::ProtoClause auto
 		)
@@ -635,7 +635,7 @@ struct
 {
 	using ::Meta::Tuple<t_tpLiteral...>::operator[];
 
-	auto consteval
+	auto constexpr
 	(	operator()
 	)	(	auto
 				&&
@@ -653,14 +653,14 @@ struct
 		);
 	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator not
 	)	(	::And<t_tpLiteral...>
 		)
 	->	::Or<decltype(not t_tpLiteral{})...>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::And<t_tpLiteral...>
 		,	::True
@@ -668,7 +668,7 @@ struct
 	->	::And<t_tpLiteral...>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::And<t_tpLiteral...>
 		,	::False
@@ -680,7 +680,7 @@ struct
 		<	::ProtoLiteral
 				t_tRightLiteral
 		>
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::And<t_tpLiteral...>
 				i_vLeft
@@ -700,7 +700,7 @@ struct
 			return ::And<t_tpLiteral..., t_tRightLiteral>{};
 	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::True
 		,	::And<t_tpLiteral...>
@@ -708,7 +708,7 @@ struct
 	->	::And<t_tpLiteral...>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::False
 		,	::And<t_tpLiteral...>
@@ -716,7 +716,7 @@ struct
 	->	::False
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::ProtoTerm auto
 				i_vLeft
@@ -730,7 +730,7 @@ struct
 		);
 	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::And<t_tpLiteral...>
 		,	::True
@@ -738,7 +738,7 @@ struct
 	->	::True
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::And<t_tpLiteral...>
 		,	::False
@@ -746,7 +746,7 @@ struct
 	->	::And<t_tpLiteral...>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::True
 		,	::And<t_tpLiteral...>
@@ -754,7 +754,7 @@ struct
 	->	::True
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::False
 		,	::And<t_tpLiteral...>
@@ -762,14 +762,14 @@ struct
 	->	::And<t_tpLiteral...>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	LiteralCount
 	)	(	::And<t_tpLiteral...>
 		)
 	->	::Meta::USize
 	{	return sizeof...(t_tpLiteral);	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	ClauseCount
 	)	(	::And<t_tpLiteral...>
 		)
@@ -792,7 +792,7 @@ struct
 {
 	using ::Meta::Tuple<t_tpClause...>::operator[];
 
-	auto consteval
+	auto constexpr
 	(	operator()
 	)	(	auto
 				&&
@@ -810,7 +810,7 @@ struct
 		);
 	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator not
 	)	(	::Or<t_tpClause...>
 		)
@@ -838,7 +838,7 @@ struct
 			);
 	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::Or<t_tpClause...>
 		,	::True
@@ -846,7 +846,7 @@ struct
 	->	::Or<t_tpClause...>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::Or<t_tpClause...>
 		,	::False
@@ -854,7 +854,7 @@ struct
 	->	::False
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::Or<t_tpClause...>
 		,	::ProtoTerm auto
@@ -869,7 +869,7 @@ struct
 		);
 	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::True
 		,	::Or<t_tpClause...>
@@ -877,7 +877,7 @@ struct
 	->	::Or<t_tpClause...>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::False
 		,	::Or<t_tpClause...>
@@ -885,7 +885,7 @@ struct
 	->	::False
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator and
 	)	(	::ProtoClause auto
 				i_vLeft
@@ -900,7 +900,7 @@ struct
 		);
 	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::Or<t_tpClause...>
 		,	::True
@@ -908,7 +908,7 @@ struct
 	->	::True
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::Or<t_tpClause...>
 		,	::False
@@ -916,7 +916,7 @@ struct
 	->	::Or<t_tpClause...>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::True
 		,	::Or<t_tpClause...>
@@ -924,7 +924,7 @@ struct
 	->	::True
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::False
 		,	::Or<t_tpClause...>
@@ -932,7 +932,7 @@ struct
 	->	::Or<t_tpClause...>
 	{	return {};	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::ProtoTerm auto
 				i_vLeft
@@ -950,7 +950,7 @@ struct
 		<	::ProtoClause
 				t_tRightClause
 		>
-	friend auto consteval
+	friend auto constexpr
 	(	operator or
 	)	(	::Or<t_tpClause...>
 				i_vLeft
@@ -979,7 +979,7 @@ struct
 			;
 	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	LiteralCount
 	)	(	::Or<t_tpClause...>
 		)
@@ -992,7 +992,7 @@ struct
 		);
 	}
 
-	friend auto consteval
+	friend auto constexpr
 	(	ClauseCount
 	)	(	::Or<t_tpClause...>
 		)
@@ -1003,7 +1003,7 @@ struct
 /// ************************************************************************************************
 ///	Factory functions to deduce the correct term template.
 /// ************************************************************************************************
-auto consteval
+auto constexpr
 (	Tautology
 )	(	::ProtoTerm auto
 		...
@@ -1011,7 +1011,7 @@ auto consteval
 ->	::True
 {	return {};	}
 
-auto consteval
+auto constexpr
 (	Constradiction
 )	(	::ProtoTerm auto
 		...
@@ -1023,7 +1023,7 @@ template
 	<	::ProtoLiteral
 			t_tLiteral
 	>
-auto consteval
+auto constexpr
 (	Conjunction
 )	(	t_tLiteral
 	)
@@ -1038,7 +1038,7 @@ template
 	,	::ProtoLiteral
 		...	t_tpRemainingLiteral
 	>
-auto consteval
+auto constexpr
 (	Conjunction
 )	(	t_tFirstLiteral
 	,	t_tSecondLiteral
@@ -1057,7 +1057,7 @@ template
 	<	::ProtoClause
 			t_tClause
 	>
-auto consteval
+auto constexpr
 (	Disjunction
 )	(	t_tClause
 	)
@@ -1072,7 +1072,7 @@ template
 	,	::ProtoClause
 		...	t_tpRemainingClause
 	>
-auto consteval
+auto constexpr
 (	Disjunction
 )	(	t_tFirstClause
 	,	t_tSecondClause
@@ -1093,7 +1093,7 @@ auto consteval
 struct
 	SubstitutionBase
 {
-	auto consteval
+	auto constexpr
 	(	operator()
 	)	(	::ProtoLiteral auto
 				i_vLiteral
@@ -1111,7 +1111,7 @@ template
 struct
 	SubstitutionItem
 {
-	auto consteval
+	auto constexpr
 	(	operator()
 	)	(	t_tSubTerm
 		)	const
@@ -1162,7 +1162,7 @@ template
 struct
 	Substitute
 {
-	consteval
+	constexpr
 	(	Substitute
 	)	(	t_tpSubTerm
 			...
@@ -1204,7 +1204,7 @@ struct
 			<	::ProtoLiteral
 				...	t_tpLiteral
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	And<t_tpLiteral...>
 			)	const
@@ -1221,7 +1221,7 @@ struct
 			<	::ProtoClause
 				...	t_tpClause
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	Or<t_tpClause...>
 			)	const
@@ -1239,7 +1239,7 @@ struct
 		<	::ProtoTerm
 			...	t_tpSubstitute
 		>
-	auto consteval
+	auto constexpr
 	(	operator()
 	)	(	t_tpSubstitute
 			...
@@ -1262,7 +1262,7 @@ template
 	>
 ;
 
-auto consteval
+auto constexpr
 (	SubstituteTrue
 )	(	::ProtoTerm auto
 		...	i_vpSubTerm
@@ -1278,7 +1278,7 @@ auto consteval
 	);
 }
 
-auto consteval
+auto constexpr
 (	SubstituteFalse
 )	(	::ProtoTerm auto
 		...	i_vpSubTerm
@@ -1294,7 +1294,7 @@ auto consteval
 	);
 }
 
-auto consteval
+auto constexpr
 (	SubstituteNegation
 )	(	::ProtoTerm auto
 		...	i_vpSubTerm
@@ -1309,7 +1309,7 @@ auto consteval
 	);
 }
 
-auto consteval
+auto constexpr
 (	AssumeLiteralsTrue
 )	(	::ProtoLiteral auto
 		...	i_vpLiteral
@@ -1338,7 +1338,7 @@ template
 	<	::ProtoLiteral
 		...	t_tpLiteral
 	>
-auto consteval
+auto constexpr
 (	AssumeLiteralsTrue
 )	(	And<t_tpLiteral...>
 	)
@@ -1352,35 +1352,35 @@ auto consteval
 /// ************************************************************************************************
 ///	Equivalence functions on term types..
 /// ************************************************************************************************
-auto consteval
+auto constexpr
 (	IsTrue
 )	(	True
 	)
 ->	bool
 {	return true;	}
 
-auto consteval
+auto constexpr
 (	IsTrue
 )	(	::ProtoTerm auto
 	)
 ->	bool
 {	return false;	}
 
-auto consteval
+auto constexpr
 (	IsFalse
 )	(	False
 	)
 ->	bool
 {	return true;	}
 
-auto consteval
+auto constexpr
 (	IsFalse
 )	(	::ProtoTerm auto
 	)
 ->	bool
 {	return false;	}
 
-auto consteval
+auto constexpr
 (	Implies
 )	(	::ProtoClause auto
 			i_vAssumedTrue
@@ -1411,7 +1411,7 @@ template
 	<	::ProtoClause
 		...	t_tpAssumedTrue
 	>
-auto consteval
+auto constexpr
 (	Implies
 )	(	Or<t_tpAssumedTrue...>
 	,	::ProtoTerm auto
@@ -1431,7 +1431,7 @@ template
 	<	::ProtoTerm
 			t_tTerm
 	>
-auto consteval
+auto constexpr
 (	operator ==
 )	(	t_tTerm
 	,	t_tTerm
@@ -1439,7 +1439,7 @@ auto consteval
 ->	bool
 {	return true;	}
 
-auto consteval
+auto constexpr
 (	operator ==
 )	(	::ProtoTerm auto
 			i_vLeftTerm
@@ -1504,7 +1504,7 @@ template
 struct
 	LiteralRedundancy
 {
-	explicit consteval
+	explicit constexpr
 	(	LiteralRedundancy
 	)	(	t_tFilterLiteral
 		,	t_tpClauseLiteral
@@ -1512,7 +1512,7 @@ struct
 		)
 	{}
 
-	explicit consteval
+	explicit constexpr
 	(	LiteralRedundancy
 	)	(	t_tFilterLiteral
 		,	And<t_tpClauseLiteral...>
@@ -1527,7 +1527,7 @@ struct
 		)
 	;
 
-	auto consteval
+	auto constexpr
 	(	operator()
 	)	(	::ProtoClause auto
 			...	i_vpSubTerm
@@ -1613,14 +1613,14 @@ template
 struct
 	ClauseRedundancy
 {
-	explicit consteval
+	explicit constexpr
 	(	ClauseRedundancy
 	)	(	t_tpLiteral
 			...
 		)
 	{}
 
-	explicit consteval
+	explicit constexpr
 	(	ClauseRedundancy
 	)	(	And<t_tpLiteral...>
 		)
@@ -1634,7 +1634,7 @@ struct
 		)
 	;
 
-	auto consteval
+	auto constexpr
 	(	operator()
 	)	(	::ProtoTerm auto
 			...	i_vpSubTerm
@@ -1742,7 +1742,7 @@ template
 struct
 	LiteralFilter
 {
-	explicit consteval
+	explicit constexpr
 	(	LiteralFilter
 	)	(	t_tFilterLiteral
 		,	t_tpClauseLiteral
@@ -1750,7 +1750,7 @@ struct
 		)
 	{}
 
-	explicit consteval
+	explicit constexpr
 	(	LiteralFilter
 	)	(	t_tFilterLiteral
 		,	And<t_tpClauseLiteral...>
@@ -1765,7 +1765,7 @@ struct
 		)
 	;
 
-	auto consteval
+	auto constexpr
 	(	operator()
 	)	(	::ProtoClause auto
 			...	i_vpSubTerm
@@ -1921,14 +1921,14 @@ template
 struct
 	ClauseFilter
 {
-	explicit consteval
+	explicit constexpr
 	(	ClauseFilter
 	)	(	t_tpLiteral
 			...
 		)
 	{}
 
-	explicit consteval
+	explicit constexpr
 	(	ClauseFilter
 	)	(	And<t_tpLiteral...>
 		)
@@ -1942,7 +1942,7 @@ struct
 		)
 	;
 
-	auto consteval
+	auto constexpr
 	(	operator()
 	)	(	::ProtoClause auto
 			...	i_vpSubTerm
@@ -2050,14 +2050,14 @@ template
 struct
 	Simplifier
 {
-	explicit consteval
+	explicit constexpr
 	(	Simplifier
 	)	(	t_tpSubTerm
 			...
 		)
 	{}
 
-	explicit consteval
+	explicit constexpr
 	(	Simplifier
 	)	(	Or<t_tpSubTerm...>
 		)
@@ -2071,7 +2071,7 @@ struct
 		)
 	;
 
-	auto consteval
+	auto constexpr
 	(	operator()
 	)	(	::ProtoClause auto
 				i_vNewSubTerm
@@ -2158,7 +2158,7 @@ template
 /// ************************************************************************************************
 ///	Form the disjunction of two terms.
 /// ************************************************************************************************
-auto consteval
+auto constexpr
 (	SimplifyDisjunction
 )	(	::ProtoTerm auto
 			i_vLeft
@@ -2173,7 +2173,7 @@ auto consteval
 	);
 }
 
-auto consteval
+auto constexpr
 (	operator or
 )	(	::ProtoTerm auto
 			i_vLeft
@@ -2208,18 +2208,18 @@ export namespace
 	struct
 		Term
 	{
-		consteval
+		constexpr
 		(	Term
 		)	()
 		=	default;
 
-		explicit consteval
+		explicit constexpr
 		(	Term
 		)	(	t_tTerm
 			)
 		{}
 
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	auto&&
 				...	i_rpArgument
@@ -2238,7 +2238,7 @@ export namespace
 			<	::ProtoTerm
 					t_tRightTerm
 			>
-		friend auto consteval
+		friend auto constexpr
 		(	operator ==
 		)	(	Term
 			,	Term<t_tRightTerm>
@@ -2251,7 +2251,7 @@ export namespace
 		}
 
 		///	Forms the negation of the given term.
-		friend auto consteval
+		friend auto constexpr
 		(	operator not
 		)	(	Term
 			)
@@ -2268,7 +2268,7 @@ export namespace
 			<	::ProtoTerm
 					t_tRightTerm
 			>
-		friend auto consteval
+		friend auto constexpr
 		(	operator and
 		)	(	Term
 			,	Term<t_tRightTerm>
@@ -2285,7 +2285,7 @@ export namespace
 			<	::ProtoTerm
 					t_tRightTerm
 			>
-		friend auto consteval
+		friend auto constexpr
 		(	operator or
 		)	(	Term
 			,	Term<t_tRightTerm>
@@ -2315,7 +2315,7 @@ export namespace
 		<	::ProtoAtom
 				t_tAtom
 		>
-	auto consteval
+	auto constexpr
 	(	SelectAtom
 	)	(	Term<::Atom<t_tAtom>>
 		)
@@ -2326,7 +2326,7 @@ export namespace
 		<	::ProtoAtom
 				t_tAtom
 		>
-	auto consteval
+	auto constexpr
 	(	SelectAtom
 	)	(	Term<::Not<t_tAtom>>
 		)
@@ -2339,7 +2339,7 @@ export namespace
 		,	::ProtoClause
 				t_tTerm
 		>
-	auto consteval
+	auto constexpr
 	(	SelectLiteral
 	)	(	Term<t_tTerm>
 				i_vTerm
@@ -2370,7 +2370,7 @@ export namespace
 		,	::ProtoTerm
 				t_tTerm
 		>
-	auto consteval
+	auto constexpr
 	(	SelectClause
 	)	(	Term<t_tTerm>
 				i_vTerm
@@ -2399,7 +2399,7 @@ export namespace
 		<	::ProtoTerm
 				t_tTerm
 		>
-	auto consteval
+	auto constexpr
 	(	Transform
 	)	(	auto
 				i_fTransform

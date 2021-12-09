@@ -45,7 +45,7 @@ export namespace
 			<	typename
 				...	t_tpArgument
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tpArgument>
 				...
@@ -64,7 +64,7 @@ export namespace
 			<	USize
 					t_nIndex
 			>
-		auto consteval
+		auto constexpr
 		(	operator[]
 		)	(	ExtentToken<t_nIndex>
 			)	const
@@ -86,7 +86,7 @@ export namespace
 				>{};
 		}
 
-		friend auto consteval
+		friend auto constexpr
 		(	operator==
 		)	(	TypeToken
 			,	TypeToken
@@ -98,7 +98,7 @@ export namespace
 			<	typename
 					t_tOther
 			>
-		friend auto consteval
+		friend auto constexpr
 		(	operator==
 		)	(	TypeToken
 			,	TypeToken<t_tOther>
@@ -131,7 +131,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -152,7 +152,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto consteval
+		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -238,7 +238,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		friend auto consteval
+		friend auto constexpr
 		(	operator+
 		)	(	TypeToken<t_tEntity>
 					i_vType
@@ -251,7 +251,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		friend auto consteval
+		friend auto constexpr
 		(	operator-
 		)	(	TypeToken<t_tEntity>
 					i_vType
@@ -274,7 +274,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		friend auto consteval
+		friend auto constexpr
 		(	operator-
 		)	(	TypeToken<t_tEntity>
 					i_vType
@@ -297,7 +297,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		friend auto consteval
+		friend auto constexpr
 		(	operator+
 		)	(	TypeToken<t_tEntity>
 					i_vType
