@@ -1806,7 +1806,8 @@ struct
 		else
 		//	before replacing this clause can be considered it must be redundant
 		if	constexpr
-			(	IsFalse
+			(	not
+				IsTrue
 				(	ClauseRedundancy
 					{	ThisClause
 					}(	i_vpSubTerm

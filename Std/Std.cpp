@@ -1,6 +1,8 @@
 export module Std;
 
 export import Std.Algorithm;
+export import Std.Array;
+export import Std.Bit;
 export import Std.CStdInt;
 export import Std.Compare;
 export import Std.Functional;

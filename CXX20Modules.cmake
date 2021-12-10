@@ -112,3 +112,18 @@ function(add_module_dependencies
 
 	endforeach()
 endfunction()
+
+function(add_module_object_library
+	target_name
+)
+	add_library(
+		${target_name}
+	OBJECT
+		${ARGN}
+	)
+
+	add_module_dependencies(
+		${target_name}
+	)
+
+endfunction()

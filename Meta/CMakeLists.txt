@@ -17,6 +17,7 @@ add_module(
 	Pack.cpp
 )
 add_module(Logic.cpp)
+add_module(Logic2.cpp)
 add_subdirectory(Predicate)
 add_module(Predicate.cpp)
 

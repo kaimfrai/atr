@@ -1,4 +1,6 @@
 add_module(Algorithm.cpp)
+add_module(Array.cpp)
+add_module(Bit.cpp)
 add_module(CStdInt.cpp)
 add_module(Compare.cpp)
 add_module(Functional.cpp)

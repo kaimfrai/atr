@@ -40,9 +40,11 @@ set(WARNING_FLAGS
 	-Wpedantic
 	-Wmissing-variable-declarations
 	-Wcomma
-	-Wpadded
 	-Werror
 	-Weverything
+	-Wno-padded
+	#triggered when using std::sort with defaulted comparison
+	-Wno-zero-as-null-pointer-constant
 	-Wno-c++98-compat-pedantic		#using c++23
 	-Wno-pre-c++17-compat-pedantic	#using c++23
 	-Wno-c++20-compat-pedantic		#using c++23
