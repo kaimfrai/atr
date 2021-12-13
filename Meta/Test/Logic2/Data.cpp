@@ -3,10 +3,10 @@ export module Meta.Logic2.Test.Data;
 export import Meta.Logic2;
 
 ///	Constants
-export auto constexpr inline T = ::True;
-export auto constexpr inline F = ::False;
+export ::BitTerm constexpr inline T = ::BitClause{};
+export ::BitTerm constexpr inline F = ::BitTerm{};
 
 /// Literals
-export ::BitLiteral constexpr inline p = ::BitLiteral{0u, true};
-export ::BitLiteral constexpr inline q = ::BitLiteral{1u, true};
-export ::BitLiteral constexpr inline r = ::BitLiteral{2u, true};
+export ::BitTerm constexpr inline p = ::BitClause{1u << 0u};
+export ::BitTerm constexpr inline q = ::BitClause{1u << 1u};
+export ::BitTerm constexpr inline r = ::BitClause{1u << 2u};

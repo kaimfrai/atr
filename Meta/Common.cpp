@@ -1,5 +1,7 @@
 export module Meta.Common;
+
 export import Std.Utility;
+export import Std.CStdInt;
 
 export namespace
 	Meta
@@ -12,6 +14,106 @@ export namespace
 	using
 		SSize
 	=	decltype(0z)
+	;
+}
+
+template
+	<	::Meta::USize
+	>
+struct
+	Integer
+{};
+
+template
+	<	::Meta::USize
+			t_nBitCount
+	>
+requires
+	(t_nBitCount <= 8uz)
+struct
+	Integer
+	<	t_nBitCount
+	>
+{
+	using UnsignedType = ::std::uint8_t;
+	using SignedType = ::std::int8_t;
+};
+
+template
+	<	::Meta::USize
+			t_nBitCount
+	>
+requires
+	(t_nBitCount > 8uz)
+and	(t_nBitCount <= 16uz)
+struct
+	Integer
+	<	t_nBitCount
+	>
+{
+	using UnsignedType = ::std::uint16_t;
+	using SignedType = ::std::int16_t;
+};
+
+template
+	<	::Meta::USize
+			t_nBitCount
+	>
+requires
+	(t_nBitCount > 16uz)
+and	(t_nBitCount <= 32uz)
+struct
+	Integer
+	<	t_nBitCount
+	>
+{
+	using UnsignedType = ::std::uint32_t;
+	using SignedType = ::std::int32_t;
+};
+
+template
+	<	::Meta::USize
+			t_nBitCount
+	>
+requires
+	(t_nBitCount > 32uz)
+and	(t_nBitCount <= 64uz)
+struct
+	Integer
+	<	t_nBitCount
+	>
+{
+	using UnsignedType = ::std::uint64_t;
+	using SignedType = ::std::int64_t;
+};
+
+export namespace
+	Meta
+{
+	template
+		<	::Meta::USize
+				t_nBitCount
+		>
+	using
+		UInt
+	=	typename
+		::Integer
+		<	t_nBitCount
+		>
+	::	UnsignedType
+	;
+
+	template
+		<	::Meta::USize
+				t_nBitCount
+		>
+	using
+		SInt
+	=	typename
+		::Integer
+		<	t_nBitCount
+		>
+	::	SignedType
 	;
 
 	template

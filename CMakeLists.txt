@@ -58,6 +58,7 @@ add_compile_options(
 	${CXX_STANDARD_LIBRARY_FLAG}
 	${WARNING_FLAGS}
 	${MODULE_FLAGS}
+	-fconstexpr-backtrace-limit=0
 )
 add_link_options(
 	${CXX_STANDARD_LIBRARY_FLAG}

@@ -11,17 +11,17 @@ export import Std.InitializerList;
 export import Std.Functional;
 export import Std.Iterator;
 export import Std.TypeTraits;
+export import Meta.Common;
 
 export
 {
 
-
-using FieldType = ::std::uint8_t;
-using IndexType = ::std::uint8_t;
+using FieldType = ::Meta::UInt<8uz>;
+using IndexType = ::Meta::UInt<8uz>;
 
 IndexType constexpr inline
 	SubtermLimit
-=	4u
+=	4uz
 ;
 
 auto constexpr
@@ -38,183 +38,46 @@ auto constexpr
 }
 
 struct
-	BitLiteral
-{
-	IndexType m_nBitIndex : 6;
-	bool m_bPolarity : 1;
-	bool m_bConstant : 1;
-
-	constexpr
-	(	BitLiteral
-	)	(	bool
-				i_bPolarity
-		)
-	:	m_nBitIndex
-		{}
-	,	m_bPolarity
-		{	i_bPolarity
-		}
-	,	m_bConstant
-		{	true
-		}
-	{}
-
-	constexpr
-	(	BitLiteral
-	)	(	IndexType
-				i_nBitIndex
-		,	bool
-				i_bPolarity
-		)
-	:	m_nBitIndex
-		{	i_nBitIndex
-		}
-	,	m_bPolarity
-		{	i_bPolarity
-		}
-	,	m_bConstant
-		{	false
-		}
-	{}
-
-	friend auto constexpr
-	(	operator ==
-	)	(	BitLiteral
-		,	BitLiteral
-		)
-	->	bool
-	=	default;
-
-	friend auto constexpr
-	(	IsTrue
-	)	(	BitLiteral
-				i_vLiteral
-		)
-	->	bool
-	{	return i_vLiteral.m_bConstant and i_vLiteral.m_bPolarity;	}
-
-	friend auto constexpr
-	(	IsFalse
-	)	(	BitLiteral
-				i_vLiteral
-		)
-	->	bool
-	{	return i_vLiteral.m_bConstant and not i_vLiteral.m_bPolarity;	}
-
-	auto constexpr
-	(	ToAtomField
-	)	()	const
-	->	FieldType
-	{
-		if	(m_bPolarity == m_bConstant)
-			return static_cast<FieldType>(0);
-		if	(m_bConstant)
-			return static_cast<FieldType>(-1);
-
-		return BitIndexToField(m_nBitIndex);
-	}
-
-	auto constexpr
-	(	ToNotField
-	)	()	const
-	->	FieldType
-	{
-		if	(m_bPolarity)
-			return static_cast<FieldType>(0);
-		if	(m_bConstant)
-			return static_cast<FieldType>(-1);
-
-		return BitIndexToField(m_nBitIndex);
-	}
-
-	friend auto constexpr
-	(	LiteralCount
-	)	(	BitLiteral
-				i_vLiteral
-		)
-	->	IndexType
-	{	return
-			i_vLiteral.m_bConstant
-		?	0u
-		:	1u
-		;
-	}
-
-	friend auto constexpr
-	(	ClauseCount
-	)	(	BitLiteral
-				i_vLiteral
-		)
-	->	IndexType
-	{	return
-			i_vLiteral.m_bConstant
-		?	0u
-		:	1u
-		;
-	}
-};
-
-auto constexpr
-(	operator not
-)	(	BitLiteral
-			i_vLiteral
-	)
-->	BitLiteral
-{
-	(	i_vLiteral.m_bPolarity
-	=	not
-		i_vLiteral.m_bPolarity
-	);
-	return i_vLiteral;
-}
-
-
-BitLiteral constexpr inline
-	False
-=	false
-;
-
-BitLiteral constexpr inline
-	True
-=	true
-;
-
-struct
 	BitClause
 {
-	FieldType m_nAtomField : SubtermLimit {};
-	FieldType m_nNotField : SubtermLimit {};
+	FieldType Field;
+	static_assert
+	(	8uz	* sizeof(FieldType)
+	==	2uz * SubtermLimit
+	);
+
+	static FieldType constexpr
+		Null
+	=	0u
+	;
+
+	static FieldType constexpr
+		Neutral
+	=	static_cast<FieldType>
+		(	compl Null
+		)
+	;
+
+	constexpr
+	(	BitClause
+	)	()
+	:	Field
+		{	Null
+		}
+	{}
 
 	explicit constexpr
 	(	BitClause
 	)	(	FieldType
-				i_nAtomField
-		,	FieldType
-				i_nNotField
+				i_nField
 		)
-	:	m_nAtomField
-		{	i_nAtomField bitand i_nNotField
-		?	False.ToAtomField()
-		:	i_nAtomField
-		}
-	,	m_nNotField
-		{	i_nAtomField bitand i_nNotField
-		?	False.ToNotField()
-		:	i_nNotField
-		}
-	{}
-
-	constexpr
-	(	BitClause
-	)	(	BitLiteral
-				i_vLiteral
-			=	False
-		)
-	:	m_nAtomField
-		{	i_vLiteral.ToAtomField()
-		}
-	,	m_nNotField
-		{	i_vLiteral.ToNotField()
+	:	Field
+		{	(	i_nField
+			bitand
+				::std::rotl(i_nField, SubtermLimit)
+			)
+		?	Neutral
+		:	i_nField
 		}
 	{}
 
@@ -224,7 +87,7 @@ struct
 				i_vClause
 		)
 	->	bool
-	{	return 0x0 == (i_vClause.m_nAtomField bitor i_vClause.m_nNotField);	}
+	{	return Null == i_vClause.Field;	}
 
 	friend auto constexpr
 	(	IsFalse
@@ -232,7 +95,7 @@ struct
 				i_vClause
 		)
 	->	bool
-	{	return 0x0 != (i_vClause.m_nAtomField bitand i_vClause.m_nNotField);	}
+	{	return Neutral == i_vClause.Field;	}
 
 	friend auto constexpr
 	(	LiteralCount
@@ -245,80 +108,116 @@ struct
 			return 0u;
 
 		return
-			static_cast<IndexType>
-			(	::std::popcount(i_vClause.m_nAtomField)
-			)
-		+	static_cast<IndexType>
-			(	::std::popcount(i_vClause.m_nNotField)
-			)
-		;
+		static_cast<IndexType>
+		(	::std::popcount(i_vClause.Field)
+		);
 	}
 
-	auto constexpr
-	(	Replace[[nodiscard]]
-	)	(	BitLiteral
-				i_vOldLiteral
-		,	BitLiteral
-				i_vNewLiteral
-		)	const&
+	friend auto constexpr
+	(	operator compl
+	)	(	BitClause
+				i_vClause
+		)
 	->	BitClause
 	{
-		if	(i_vOldLiteral == i_vNewLiteral)
-			return *this;
-		if	(IsFalse(i_vNewLiteral))
-			return False;
-
-		FieldType const
-			nAtomField
-		=	(	(	m_nAtomField
-				bitand compl
-					i_vOldLiteral.ToAtomField()
-				)
-			bitor
-				i_vNewLiteral.ToAtomField()
+		if	(	i_vClause.Field == Null
+			or	i_vClause.Field == Neutral
 			)
-		;
-		FieldType const
-			nNotField
-		=	(	(	m_nNotField
-				bitand compl
-					i_vOldLiteral.ToNotField()
+			return
+			BitClause
+			{	static_cast<FieldType>
+				(	compl
+					i_vClause.Field
 				)
-			bitor
-				i_vNewLiteral.ToNotField()
-			)
-		;
+			};
 
 		return
 		BitClause
-		{	nAtomField
-		,	nNotField
+		{	::std::rotl
+			(	i_vClause.Field
+			,	SubtermLimit
+			)
+		};
+	}
+
+	friend auto constexpr
+	(	operator bitand
+	)	(	BitClause
+				i_vLeft
+		,	BitClause
+				i_vRight
+		)
+	->	BitClause
+	{	return
+		BitClause
+		{	static_cast<FieldType>
+			(	i_vLeft.Field
+			bitand
+				i_vRight.Field
+			)
+		};
+	}
+
+	friend auto constexpr
+	(	operator bitor
+	)	(	BitClause
+				i_vLeft
+		,	BitClause
+				i_vRight
+		)
+	->	BitClause
+	{	return
+		BitClause
+		{	static_cast<FieldType>
+			(	i_vLeft.Field
+			bitor
+				i_vRight.Field
+			)
 		};
 	}
 
 	auto constexpr
-	(	Insert[[nodiscard]]
-	)	(	BitLiteral
-				i_vInsertLiteral
+	(	Replace[[nodiscard]]
+	)	(	BitClause
+				i_vOld
+		,	BitClause
+				i_vNew
 		)	const&
 	->	BitClause
-	{	return Replace(True, i_vInsertLiteral);	}
+	{
+		if	(i_vOld == i_vNew)
+			return *this;
+		if	(IsFalse(i_vNew))
+			return i_vNew;
+
+		return
+			BitClause
+			{	static_cast<FieldType>
+				(	Field
+				bitand compl
+					i_vOld.Field
+				)
+			}
+		bitor
+			i_vNew
+		;
+	}
+
+	auto constexpr
+	(	Insert[[nodiscard]]
+	)	(	BitClause
+				i_vInsert
+		)	const&
+	->	BitClause
+	{	return Replace(BitClause{Null}, i_vInsert);	}
 
 	auto constexpr
 	(	Erase[[nodiscard]]
-	)	(	BitLiteral
-				i_vEraseLiteral
+	)	(	BitClause
+				i_vErase
 		)	const&
 	->	BitClause
-	{	return Replace(i_vEraseLiteral, True);	}
-
-	auto constexpr
-	(	Flip[[nodiscard]]
-	)	(	BitLiteral
-				i_vLiteral
-		)	const&
-	->	BitClause
-	{	return Replace(i_vLiteral, not i_vLiteral);	}
+	{	return Replace(i_vErase, BitClause{Null});	}
 
 	auto constexpr
 	(	AssumeTrue[[nodiscard]]
@@ -327,57 +226,36 @@ struct
 		)	const&
 	->	BitClause
 	{
-		if	(	m_nAtomField bitand i_vClause.m_nNotField
-			or	m_nNotField bitand i_vClause.m_nAtomField
-			)
-			return False;
+		if	((*this bitand compl i_vClause) != BitClause{Null})
+			return BitClause{Neutral};
 
-		FieldType const
-			nAtomField
-		=	m_nAtomField
-		bitand compl
-			i_vClause.m_nAtomField
-		;
-
-		FieldType const
-			nNotField
-		=	m_nNotField
-		bitand compl
-			i_vClause.m_nNotField
-		;
-		return
-		BitClause
-		{	nAtomField
-		,	nNotField
-		};
+		return Erase(i_vClause);
 	}
-
 
 	auto constexpr
 	(	operator[]
 	)	(	::IndexType
 				i_nIndex
 		)	const
-	->	BitLiteral
+	->	BitClause
 	{
 		if	(i_nIndex >= SubtermLimit)
-			return True;
+			return BitClause{};
 
 		if	(IsFalse(*this))
-			return i_nIndex == 0u ? False : True;
+			return i_nIndex == 0u ? *this : BitClause{};
 
-		auto const
-			nFieldIndex
-		=	BitIndexToField(i_nIndex)
+		return
+			(	*this
+			bitand
+				BitClause{BitIndexToField(i_nIndex)}
+			)
+		bitor
+			(	*this
+			bitand
+				BitClause{BitIndexToField(i_nIndex + SubtermLimit)}
+			)
 		;
-
-		if	(m_nAtomField bitand nFieldIndex)
-			return BitLiteral{i_nIndex, true};
-
-		if	(m_nNotField bitand nFieldIndex)
-			return BitLiteral{i_nIndex, false};
-
-		return True;
 	}
 
 	friend auto constexpr
@@ -439,9 +317,9 @@ class
 	;
 public:
 	using difference_type = ::std::make_signed_t<IndexType>;
-	using value_type = BitLiteral;
-	using pointer = BitLiteral const*;
-	using reference = BitLiteral const&;
+	using value_type = BitClause;
+	using pointer = BitClause const*;
+	using reference = BitClause const&;
 	using iterator_category = ::std::input_iterator_tag;
 
 	explicit constexpr
@@ -467,7 +345,7 @@ public:
 	auto constexpr
 	(	operator *
 	)	()	const&
-	->	BitLiteral
+	->	BitClause
 	{	return
 		m_vClause
 		[	m_nLiteralIndex
@@ -543,6 +421,23 @@ struct
 		m_vClauses
 	;
 
+	constexpr
+	(	BitTerm
+	)	(	BitClause
+				i_vClause
+			=	BitClause{BitClause::Neutral}
+		)
+	:	m_vClauses
+		{	[	i_vClause
+			]{
+				BitClauseStorageType vClauses{};
+				vClauses.fill(BitClause{BitClause::Neutral});
+				vClauses[0u] = i_vClause;
+				return vClauses;
+			}()
+		}
+	{}
+
 	explicit constexpr
 	(	BitTerm
 	)	(	BitClauseStorageType
@@ -558,26 +453,6 @@ struct
 		}
 	{}
 
-	constexpr
-	(	BitTerm
-	)	(	BitLiteral
-				i_vLiteral
-		)
-	:	m_vClauses
-		{	i_vLiteral
-		}
-	{}
-
-	constexpr
-	(	BitTerm
-	)	(	BitClause
-				i_vClause
-		)
-	:	m_vClauses
-		{	i_vClause
-		}
-	{}
-
 	auto constexpr
 	(	Replace[[nodiscard]]
 	)	(	BitClause
@@ -590,7 +465,7 @@ struct
 		if	(i_vOldClause == i_vNewClause)
 			return *this;
 		if	(IsTrue(i_vNewClause))
-			return True;
+			return i_vNewClause;
 
 		BitClauseStorageType vClauseStorage = m_vClauses;
 		BitClause* const aBegin = begin(vClauseStorage);
@@ -619,7 +494,7 @@ struct
 				i_vNewClause
 		)	const&
 	->	BitTerm
-	{	return Replace(False, i_vNewClause);	}
+	{	return Replace(BitClause{BitClause::Neutral}, i_vNewClause);	}
 
 	auto constexpr
 	(	Erase[[nodiscard]]
@@ -627,7 +502,7 @@ struct
 				i_vEraseClause
 		)	const&
 	->	BitTerm
-	{	return Replace(i_vEraseClause, False);	}
+	{	return Replace(i_vEraseClause, BitClause{BitClause::Neutral});	}
 
 	friend auto constexpr
 	(	IsTrue
@@ -653,10 +528,10 @@ struct
 	->	BitClause
 	{
 		if	(IsTrue(*this))
-			return True;
+			return m_vClauses[0u];
 
 		if	(i_nIndex >= ClauseCount(*this))
-			return False;
+			return BitClause{BitClause::Neutral};
 
 		return m_vClauses[i_nIndex];
 	}
@@ -670,10 +545,12 @@ struct
 	{
 		if	(IsFalse(*this) or IsTrue(i_rImpliedTerm))
 			return true;
+		if	(IsTrue(*this) or IsFalse(i_rImpliedTerm))
+			return false;
 
 		for	(BitClause vClause : *this)
 		{
-			BitTerm vReplacedTerm = False;
+			BitTerm vReplacedTerm{};
 			for	(BitClause vImpliedClause : i_rImpliedTerm)
 			{
 				BitTerm const vReplacedClause = vImpliedClause.AssumeTrue(vClause);
@@ -682,7 +559,7 @@ struct
 					continue;
 				if	(IsTrue(vReplacedClause))
 				{
-					vReplacedTerm = True;
+					vReplacedTerm = vReplacedClause;
 					break;
 				}
 
@@ -702,20 +579,14 @@ struct
 			&	i_rRightTerm
 		)
 	->	bool
-	{
-		if	(i_rLeftTerm.m_vClauses == i_rRightTerm.m_vClauses)
-			return true;
-		if	(	ClauseCount(i_rLeftTerm)
-			!=	ClauseCount(i_rRightTerm)
+	{	return
+		(	i_rLeftTerm.m_vClauses == i_rRightTerm.m_vClauses
+		or	(	ClauseCount(i_rLeftTerm) == ClauseCount(i_rRightTerm)
+			and	LiteralCount(i_rLeftTerm) == LiteralCount(i_rRightTerm)
+			and	i_rLeftTerm.Implies(i_rRightTerm)
+			and	i_rRightTerm.Implies(i_rLeftTerm)
 			)
-			return false;
-		if	(	LiteralCount(i_rLeftTerm)
-			!=	LiteralCount(i_rRightTerm)
-			)
-			return false;
-		if	(not i_rLeftTerm.Implies(i_rRightTerm))
-			return false;
-		return	i_rRightTerm.Implies(i_rLeftTerm);
+		);
 	}
 
 	friend auto constexpr
@@ -736,7 +607,7 @@ struct
 		::std::lower_bound
 		(	begin(i_rTerm.m_vClauses)
 		,	end(i_rTerm.m_vClauses)
-		,	False
+		,	BitClause{BitClause::Neutral}
 		);
 	}
 
@@ -793,6 +664,14 @@ struct
 			&	i_rRightTerm
 		)
 	->	BitTerm;
+
+	friend auto constexpr
+	(	operator not
+	)	(	BitTerm const
+			&	i_rTerm
+		)
+	->	BitTerm
+	;
 };
 
 auto constexpr
@@ -816,12 +695,12 @@ auto constexpr
 	)
 ->	BitTerm
 {
-	BitTerm vResult = False;
+	BitTerm vResult{};
 	for	(BitClause vOldClause : i_rOldTerm)
 	{
 		BitTerm const vReplacedClause = AssumeLiteralsTrue(i_vNewClause, vOldClause);
 		if	(IsTrue(vReplacedClause))
-			return True;
+			return vReplacedClause;
 		if	(IsFalse(vReplacedClause))
 			continue;
 
@@ -832,7 +711,7 @@ auto constexpr
 
 auto constexpr
 (	LiteralRedundancy
-)	(	BitLiteral
+)	(	BitClause
 			i_vNewLiteral
 	,	BitClause
 			i_vNewClause
@@ -840,11 +719,19 @@ auto constexpr
 		&	i_rOldTerm
 	)
 ->	BitTerm
-{	return ClauseRedundancy(i_vNewClause.Flip(i_vNewLiteral), i_rOldTerm);	}
+{	return
+	ClauseRedundancy
+	(	i_vNewClause.Replace
+		(	i_vNewLiteral
+		,	compl i_vNewLiteral
+		)
+	,	i_rOldTerm
+	);
+}
 
 auto constexpr
 (	LiteralFilter
-)	(	BitLiteral
+)	(	BitClause
 			i_vNewLiteral
 	,	BitClause
 			i_vNewClause
@@ -870,14 +757,14 @@ auto constexpr
 				)
 			)
 		)
-		return False;
+		return {};
 	else
 	{
 		BitTerm
 			vSynthesizedTerm
-		=	True
+		=	BitClause{}
 		;
-		for	(BitLiteral vLiteral : i_vNewClause)
+		for	(BitClause vLiteral : i_vNewClause)
 		{
 			if	(vLiteral == i_vNewLiteral)
 				vSynthesizedTerm = vSynthesizedTerm and vRedundancyCondition;
@@ -915,7 +802,7 @@ auto constexpr
 		if	(nNewRedundantClauseCount > vAddedClauseCount)
 			return vSynthesizedTerm;
 		else
-			return False;
+			return {};
 	}
 }
 
@@ -930,22 +817,34 @@ auto constexpr
 {
 	//	this clause is simply redundant, replace it by false
 	if	(IsTrue(ClauseRedundancy(i_vNewClause, i_rOldTerm)))
-		return False;
+		return {};
 
 	//	another clause is redundant
 	for	(BitClause vOldClause : i_rOldTerm)
 	{
 		//	delay further simplification
-		if	(IsTrue(ClauseRedundancy(vOldClause, i_rOldTerm.Replace(vOldClause, i_vNewClause))))
+		if	(	IsTrue
+				(	ClauseRedundancy
+					(	vOldClause
+					,	i_rOldTerm.Replace
+						(	vOldClause
+						,	i_vNewClause
+						)
+					)
+				)
+			)
 			return i_vNewClause;
 	}
 
 	//	filter literals within this clause
 	//	this may result in multiple clauses with a filtered literal each
-	BitTerm vFilteredLiteralTerm = False;
-	for	(BitLiteral i_vNewLiteral : i_vNewClause)
+	BitTerm vFilteredLiteralTerm{};
+	for	(BitClause i_vNewLiteral : i_vNewClause)
 	{
-		vFilteredLiteralTerm = vFilteredLiteralTerm or LiteralFilter(i_vNewLiteral, i_vNewClause, i_rOldTerm);
+		vFilteredLiteralTerm
+		=	vFilteredLiteralTerm
+		or	LiteralFilter(i_vNewLiteral, i_vNewClause, i_rOldTerm)
+		;
 	}
 
 	//	no literal was filtered
@@ -972,7 +871,7 @@ auto constexpr
 	if	(i_vNewClause != vSimplifiedNewSubterm)
 		return i_rOldTerm or vSimplifiedNewSubterm;
 
-	BitTerm vSimplifiedOldTerm = False;
+	BitTerm vSimplifiedOldTerm{};
 	for	(BitClause vOldClause : i_rOldTerm)
 	{
 		vSimplifiedOldTerm = vSimplifiedOldTerm
@@ -995,7 +894,7 @@ auto constexpr
 ->	BitTerm
 {
 	if	(IsTrue(i_rLeftTerm) or IsTrue(i_rRightTerm))
-		return True;
+		return BitClause{};
 
 	if	(IsFalse(i_rLeftTerm))
 		return i_rRightTerm;
@@ -1025,9 +924,8 @@ auto constexpr
 	)
 ->	BitTerm
 {
-
 	if	(IsFalse(i_rLeftTerm) or IsFalse(i_rRightTerm))
-		return False;
+		return {};
 
 	if	(IsTrue(i_rLeftTerm))
 		return i_rRightTerm;
@@ -1037,107 +935,105 @@ auto constexpr
 	if	(	ClauseCount(i_rLeftTerm) <= 1u
 		and	ClauseCount(i_rRightTerm) <= 1u
 		)
-	{
-		FieldType const
-			nAtomField
-		=	i_rLeftTerm[0u].m_nAtomField
-		bitor
-			i_rRightTerm[0u].m_nAtomField
-		;
-		FieldType const
-			nNotField
-		=	i_rLeftTerm[0u].m_nNotField
-		bitor
-			i_rRightTerm[0u].m_nNotField
-		;
-
 		return
-		BitClause
-		{	nAtomField
-		,	nNotField
-		};
-	}
+			i_rLeftTerm[0u]
+		bitor
+			i_rRightTerm[0u]
+		;
 
-	BitTerm vResult = False;
+	BitTerm vResult{};
 	for	(BitClause i_vLeftClause : i_rLeftTerm)
 		for	(BitClause i_vRightClause : i_rRightTerm)
 			vResult = vResult or (i_vLeftClause and i_vRightClause);
 
 	return vResult;
 }
+}
 
-auto constexpr
+template
+	<	::std::size_t
+		...	t_npIndex
+	>
+struct
+	TermIndices
+{
+	explicit constexpr
+	(	TermIndices
+	)	(	::std::index_sequence
+			<	t_npIndex
+				...
+			>
+		)
+	{}
+
+	static auto constexpr
+	(	Negate
+	)	(	BitTerm const
+			&	i_rTerm
+		)
+	->	BitTerm
+	{
+		if	(IsTrue(i_rTerm))
+			return {};
+
+		if	(IsFalse(i_rTerm))
+			return BitClause{};
+
+		if	(ClauseCount(i_rTerm) == 1u)
+			return
+			BitTerm
+			{{	compl
+				i_rTerm[0u][t_npIndex]
+				...
+			}};
+		if	(ClauseCount(i_rTerm) == LiteralCount(i_rTerm))
+			return
+			BitClause
+			{	(	...
+				bitor
+					compl i_rTerm[t_npIndex]
+				)
+			};
+
+		return
+		(	...
+		and	(not BitTerm{i_rTerm[t_npIndex]})
+		);
+	}
+};
+
+template
+	<	::std::size_t
+		...	t_npIndex
+	>
+(	TermIndices
+)	(	::std::index_sequence
+		<	t_npIndex
+			...
+		>
+	)
+->	TermIndices
+	<	t_npIndex
+		...
+	>
+;
+
+auto constexpr inline
+	TermIndex
+=	TermIndices
+	{	::std::make_index_sequence
+		<	SubtermLimit
+		>{}
+	}
+;
+
+
+export auto constexpr
 (	operator not
 )	(	BitTerm const
 		&	i_rTerm
 	)
 ->	BitTerm
 {
-	if	(IsTrue(i_rTerm))
-		return False;
-
-	if	(IsFalse(i_rTerm))
-		return True;
-
-	if	(ClauseCount(i_rTerm) == 1u)
-		return
-		[	vClause
-			=	i_rTerm[0]
-		]	<	::std::size_t
-				...	t_npIndex
-			>(	::std::index_sequence
-				<	t_npIndex
-					...
-				>
-			)
-		{	return
-			BitTerm
-			{{	not
-				vClause[t_npIndex]
-				...
-			}};
-		}(	::std::make_index_sequence<SubtermLimit>{}
-		);
-
-	if	(ClauseCount(i_rTerm) == LiteralCount(i_rTerm))
-		return
-		[&]	<	::std::size_t
-				...	t_npIndex
-			>(	::std::index_sequence
-				<	t_npIndex
-					...
-				>
-			)
-		{	return
-			BitClause
-			{	static_cast<FieldType>
-				((	...
-				bitor
-					(not i_rTerm[t_npIndex])[0u].m_nAtomField
-				))
-			,	static_cast<FieldType>
-				((	...
-				bitor
-					(not i_rTerm[t_npIndex])[0u].m_nNotField
-				))
-			};
-		}(	::std::make_index_sequence<SubtermLimit>{}
-		);
-
-	return
-	[&]	<	::std::size_t
-			...	t_npIndex
-		>(	::std::index_sequence
-			<	t_npIndex
-				...
-			>
-		)
-	{	return
-		(	...
-		and	not i_rTerm[t_npIndex]
-		);
-	}(	::std::make_index_sequence<SubtermLimit>{}
-	);
-}
-
+	return TermIndex.Negate(i_rTerm);
 }
