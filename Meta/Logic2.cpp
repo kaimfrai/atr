@@ -287,125 +287,6 @@ struct
 	{	return	IsFalse(i_vClause) or IsTrue(i_vClause) ? 0u : 1u;	}
 };
 
-class
-	BitClauseIterator
-{
-	static auto constexpr
-	(	NextIndex
-	)	(	BitClause
-				i_vClause
-		,	IndexType
-				i_nLiteralIndex
-		)
-	->	IndexType
-	{
-		if	(IsFalse(i_vClause))
-			return SubtermLimit;
-
-		while(	i_nLiteralIndex < SubtermLimit
-			and	IsTrue(i_vClause[i_nLiteralIndex])
-			)
-			++i_nLiteralIndex;
-		return i_nLiteralIndex;
-	}
-
-	BitClause
-		m_vClause
-	;
-	IndexType
-		m_nLiteralIndex
-	;
-public:
-	using difference_type = ::std::make_signed_t<IndexType>;
-	using value_type = BitClause;
-	using pointer = BitClause const*;
-	using reference = BitClause const&;
-	using iterator_category = ::std::input_iterator_tag;
-
-	explicit constexpr
-	(	BitClauseIterator
-	)	(	BitClause
-				i_vClause
-		,	IndexType
-				i_nLiteralIndex
-		)
-	:	m_vClause
-		{	i_vClause
-		}
-	,	m_nLiteralIndex
-		{	IsTrue(i_vClause[i_nLiteralIndex])
-		?	NextIndex
-			(	i_vClause
-			,	i_nLiteralIndex
-			)
-		:	i_nLiteralIndex
-		}
-	{}
-
-	auto constexpr
-	(	operator *
-	)	()	const&
-	->	BitClause
-	{	return
-		m_vClause
-		[	m_nLiteralIndex
-		];
-	}
-
-	auto constexpr
-	(	operator ++
-	)	()	&
-	->	BitClauseIterator&
-	{
-		(	m_nLiteralIndex
-		=	NextIndex
-			(	m_vClause
-			,	m_nLiteralIndex
-			+	1u
-			)
-		);
-		return *this;
-	}
-
-	auto constexpr
-	(	operator ++
-	)	(int)	&
-	->	BitClauseIterator
-	{
-		auto const
-			vCopy
-		=	*this
-		;
-		operator++();
-		return vCopy;
-	}
-
-	friend auto constexpr
-	(	operator ==
-	)	(	BitClauseIterator
-		,	BitClauseIterator
-		)
-	->	bool
-	=	default;
-};
-
-auto constexpr
-(	begin
-)	(	BitClause
-			i_vClause
-	)
-->	BitClauseIterator
-{	return BitClauseIterator{i_vClause, 0u};	}
-
-auto constexpr
-(	end
-)	(	BitClause
-			i_vClause
-	)
-->	BitClauseIterator
-{	return BitClauseIterator{i_vClause, SubtermLimit};	}
-
-
 struct
 	BitTerm
 {
@@ -762,15 +643,7 @@ auto constexpr
 	{
 		BitTerm
 			vSynthesizedTerm
-		=	BitClause{}
-		;
-		for	(BitClause vLiteral : i_vNewClause)
-		{
-			if	(vLiteral == i_vNewLiteral)
-				vSynthesizedTerm = vSynthesizedTerm and vRedundancyCondition;
-			else
-				vSynthesizedTerm = vSynthesizedTerm and vLiteral;
-		}
+		=	i_vNewClause.Erase(i_vNewLiteral) and vRedundancyCondition;
 
 		//	at least 1 at this point (i_vNewClause)
 		auto nNewRedundantClauseCount = 1uz;
@@ -839,11 +712,15 @@ auto constexpr
 	//	filter literals within this clause
 	//	this may result in multiple clauses with a filtered literal each
 	BitTerm vFilteredLiteralTerm{};
-	for	(BitClause i_vNewLiteral : i_vNewClause)
+	for	(IndexType nIndex = 0u; nIndex < SubtermLimit; ++nIndex)
 	{
+		BitClause const vLiteral = i_vNewClause[nIndex];
+		if	(IsTrue(vLiteral))
+			continue;
+
 		vFilteredLiteralTerm
 		=	vFilteredLiteralTerm
-		or	LiteralFilter(i_vNewLiteral, i_vNewClause, i_rOldTerm)
+		or	LiteralFilter(vLiteral, i_vNewClause, i_rOldTerm)
 		;
 	}
 
@@ -944,89 +821,11 @@ auto constexpr
 	BitTerm vResult{};
 	for	(BitClause i_vLeftClause : i_rLeftTerm)
 		for	(BitClause i_vRightClause : i_rRightTerm)
-			vResult = vResult or (i_vLeftClause and i_vRightClause);
+			vResult = vResult or (i_vLeftClause bitor i_vRightClause);
 
 	return vResult;
 }
 }
-
-template
-	<	::std::size_t
-		...	t_npIndex
-	>
-struct
-	TermIndices
-{
-	explicit constexpr
-	(	TermIndices
-	)	(	::std::index_sequence
-			<	t_npIndex
-				...
-			>
-		)
-	{}
-
-	static auto constexpr
-	(	Negate
-	)	(	BitTerm const
-			&	i_rTerm
-		)
-	->	BitTerm
-	{
-		if	(IsTrue(i_rTerm))
-			return {};
-
-		if	(IsFalse(i_rTerm))
-			return BitClause{};
-
-		if	(ClauseCount(i_rTerm) == 1u)
-			return
-			BitTerm
-			{{	compl
-				i_rTerm[0u][t_npIndex]
-				...
-			}};
-		if	(ClauseCount(i_rTerm) == LiteralCount(i_rTerm))
-			return
-			BitClause
-			{	(	...
-				bitor
-					compl i_rTerm[t_npIndex]
-				)
-			};
-
-		return
-		(	...
-		and	(not BitTerm{i_rTerm[t_npIndex]})
-		);
-	}
-};
-
-template
-	<	::std::size_t
-		...	t_npIndex
-	>
-(	TermIndices
-)	(	::std::index_sequence
-		<	t_npIndex
-			...
-		>
-	)
-->	TermIndices
-	<	t_npIndex
-		...
-	>
-;
-
-auto constexpr inline
-	TermIndex
-=	TermIndices
-	{	::std::make_index_sequence
-		<	SubtermLimit
-		>{}
-	}
-;
-
 
 export auto constexpr
 (	operator not
@@ -1035,5 +834,39 @@ export auto constexpr
 	)
 ->	BitTerm
 {
-	return TermIndex.Negate(i_rTerm);
+	if	(IsTrue(i_rTerm))
+		return {};
+
+	if	(IsFalse(i_rTerm))
+		return BitClause{};
+
+	if	(ClauseCount(i_rTerm) == 1u)
+	{
+		BitTerm::BitClauseStorageType vClauses{};
+		for	(	IndexType nIndex = 0u
+			;	nIndex < SubtermLimit
+			;	++nIndex
+			)
+			(	vClauses[nIndex]
+			=	compl
+				i_rTerm[0u]
+				[nIndex]
+			);
+		return
+		BitTerm
+		{	vClauses
+		};
+	}
+	if	(ClauseCount(i_rTerm) == LiteralCount(i_rTerm))
+	{
+		BitClause vResult{};
+		for (BitClause vClause : i_rTerm)
+			vResult = vResult | compl vClause;
+		return vResult;
+	}
+
+	BitTerm vResult{BitClause{}};
+	for	(BitClause vClause : i_rTerm)
+		vResult = vResult and not vClause;
+	return vResult;
 }
