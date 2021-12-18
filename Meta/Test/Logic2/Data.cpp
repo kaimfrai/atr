@@ -3,8 +3,8 @@ export module Meta.Logic2.Test.Data;
 export import Meta.Logic.BitTerm;
 
 ///	Constants
-export ::Meta::Logic::BitTerm constexpr inline T = ::Meta::Logic::AbsorbingClause;
-export ::Meta::Logic::BitTerm constexpr inline F = ::Meta::Logic::IdentityClause;
+export ::Meta::Logic::BitTerm constexpr inline T = ::Meta::Logic::BitClause::Absorbing();
+export ::Meta::Logic::BitTerm constexpr inline F = ::Meta::Logic::BitClause::Identity();
 
 /// Literals
 export ::Meta::Logic::BitTerm constexpr inline p = ::Meta::Logic::BitClause{1u << 0u, 0u};

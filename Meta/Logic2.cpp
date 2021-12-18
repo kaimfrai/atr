@@ -13,7 +13,7 @@ namespace
 	struct
 		MapToIndex
 	{
-		IndexType
+		USize
 			Index
 		;
 
@@ -21,7 +21,7 @@ namespace
 		(	operator()
 		)	(	MapToIndex
 			)	const
-		->	IndexType
+		->	USize
 		{	return Index;	}
 	};
 

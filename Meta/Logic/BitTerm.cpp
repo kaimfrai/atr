@@ -21,142 +21,78 @@ namespace
 		constexpr
 		(	BitTerm
 		)	(	BitClause
-					i_vClause
-				=	IdentityClause
+				=	BitClause::Identity()
 			)
-		:	Clauses
-			{	i_vClause
-			}
-		{}
+		;
 
 		auto constexpr
 		(	Permutate
-		)	(	::std::span<IndexType const>
-					i_vPermutation
+		)	(	::std::span<USize const>
 			)	const
 		->	BitTerm
-		{
-			BitTerm
-				vCopy
-			=	*this
-			;
-
-			for	(	BitClause
-					&	rClause
-				:	vCopy
-				)
-				(	rClause
-				=	rClause.Permutate(i_vPermutation)
-				);
-
-			return vCopy;
-		}
+		;
 
 		auto constexpr
 		(	IsAbsorbing
 		)	()	const
 		->	bool
-		{	return Clauses[0u].IsAbsorbing();	}
+		;
 
 		auto constexpr
 		(	IsIdentity
 		)	()	const
 		->	bool
-		{	return Clauses[0u].IsIdentity();	}
+		;
 
 		auto constexpr
 		(	operator []
-		)	(	IndexType
-					i_nIndex
+		)	(	USize
 			)	const&
 		->	BitClause
-		{
-			if	(IsAbsorbing())
-				return Clauses[0u];
-
-			if	(i_nIndex >= ClauseCount(*this))
-				return IdentityClause;
-
-			return Clauses[i_nIndex];
-		}
+		;
 
 		friend auto constexpr
 		(	operator ==
-		)	(	BitTerm const
-				&	i_rLeftTerm
-			,	BitTerm const
-				&	i_rRightTerm
+		)	(	BitTerm const&
+			,	BitTerm const&
 			)
 		->	bool
-		{	return
-			::std::equal
-			(	begin(i_rLeftTerm)
-			,	end(i_rLeftTerm)
-			,	begin(i_rRightTerm)
-			,	end(i_rRightTerm)
-			);
-		}
+		;
 
 		friend auto constexpr
 		(	begin
-		)	(	BitTerm
-				&	i_rTerm
+		)	(	BitTerm&
 			)
 		->	BitClause*
-		{	return i_rTerm.Clauses;	}
+		;
 
 		friend auto constexpr
 		(	begin
-		)	(	BitTerm const
-				&	i_rTerm
+		)	(	BitTerm const&
 			)
 		->	BitClause const*
-		{	return i_rTerm.Clauses;	}
+		;
 
 		friend auto constexpr
 		(	end
-		)	(	BitTerm
-				&	i_rTerm
+		)	(	BitTerm&
 			)
 		->	BitClause*
-		{	return
-			::std::lower_bound
-			(	i_rTerm.Clauses
-			,	i_rTerm.Clauses + SubtermLimit
-			,	IdentityClause
-			);
-		}
+		;
 
 		friend auto constexpr
 		(	end
-		)	(	BitTerm const
-				&	i_rTerm
+		)	(	BitTerm const&
 			)
 		->	BitClause const*
-		{	return
-			::std::lower_bound
-			(	i_rTerm.Clauses
-			,	i_rTerm.Clauses + SubtermLimit
-			,	IdentityClause
-			);
-		}
+		;
 
 		friend auto constexpr
 		(	ClauseCount
-		)	(	BitTerm const
-				&	i_rTerm
+		)	(	BitTerm const&
 			)
 		->	::std::size_t
-		{
-			if	(i_rTerm.IsAbsorbing())
-				return 0uz;
-
-			return
-			static_cast<::std::size_t>
-			(	end(i_rTerm)
-			-	begin(i_rTerm)
-			);
-		}
+		;
 
 		friend auto constexpr
 		(	operator or
@@ -181,6 +117,150 @@ namespace
 		;
 	};
 
+	constexpr
+	(	BitTerm
+		::BitTerm
+	)	(	BitClause
+				i_vClause
+		)
+	:	Clauses
+		{	i_vClause
+		}
+	{}
+
+	auto constexpr
+	(	BitTerm
+		::Permutate
+	)	(	::std::span<USize const>
+				i_vPermutation
+		)	const
+	->	BitTerm
+	{
+		BitTerm
+			vCopy
+		=	*this
+		;
+
+		for	(	BitClause
+				&	rClause
+			:	vCopy
+			)
+			(	rClause
+			=	rClause.Permutate(i_vPermutation)
+			);
+
+		return vCopy;
+	}
+
+	auto constexpr
+	(	BitTerm
+		::IsAbsorbing
+	)	()	const
+	->	bool
+	{	return Clauses[0uz].IsAbsorbing();	}
+
+	auto constexpr
+	(	BitTerm
+		::IsIdentity
+	)	()	const
+	->	bool
+	{	return Clauses[0uz].IsIdentity();	}
+
+	auto constexpr
+	(	BitTerm
+		::operator []
+	)	(	USize
+				i_nIndex
+		)	const&
+	->	BitClause
+	{
+		if	(IsAbsorbing())
+			return Clauses[0uz];
+
+		if	(i_nIndex >= ClauseCount(*this))
+			return BitClause::Identity();
+
+		return Clauses[i_nIndex];
+	}
+
+	auto constexpr
+	(	operator ==
+	)	(	BitTerm const
+			&	i_rLeftTerm
+		,	BitTerm const
+			&	i_rRightTerm
+		)
+	->	bool
+	{	return
+		::std::equal
+		(	begin(i_rLeftTerm)
+		,	end(i_rLeftTerm)
+		,	begin(i_rRightTerm)
+		,	end(i_rRightTerm)
+		);
+	}
+
+	auto constexpr
+	(	begin
+	)	(	BitTerm
+			&	i_rTerm
+		)
+	->	BitClause*
+	{	return i_rTerm.Clauses;	}
+
+	auto constexpr
+	(	begin
+	)	(	BitTerm const
+			&	i_rTerm
+		)
+	->	BitClause const*
+	{	return i_rTerm.Clauses;	}
+
+	auto constexpr
+	(	end
+	)	(	BitTerm
+			&	i_rTerm
+		)
+	->	BitClause*
+	{	return
+		::std::lower_bound
+		(	i_rTerm.Clauses
+		,	i_rTerm.Clauses + SubtermLimit
+		,	BitClause::Identity()
+		);
+	}
+
+	auto constexpr
+	(	end
+	)	(	BitTerm const
+			&	i_rTerm
+		)
+	->	BitClause const*
+	{	return
+		::std::lower_bound
+		(	i_rTerm.Clauses
+		,	i_rTerm.Clauses + SubtermLimit
+		,	BitClause::Identity()
+		);
+	}
+
+	auto constexpr
+	(	ClauseCount
+	)	(	BitTerm const
+			&	i_rTerm
+		)
+	->	::std::size_t
+	{
+		if	(i_rTerm.IsAbsorbing())
+			return 0uz;
+
+		return
+		static_cast<::std::size_t>
+		(	end(i_rTerm)
+		-	begin(i_rTerm)
+		);
+	}
+
 	auto constexpr
 	(	operator or [[nodiscard]]
 	)	(	BitTerm const
@@ -191,7 +271,7 @@ namespace
 	->	BitTerm
 	{
 		if	(i_rLeftTerm.IsAbsorbing() or i_rRightTerm.IsAbsorbing())
-			return AbsorbingClause;
+			return BitClause::Absorbing();
 
 		if	(i_rLeftTerm.IsIdentity())
 			return i_rRightTerm;
@@ -250,7 +330,7 @@ namespace
 	->	BitTerm
 	{
 		if	(i_rLeftTerm.IsIdentity() or i_rRightTerm.IsIdentity())
-			return IdentityClause;
+			return BitClause::Identity();
 
 		if	(i_rLeftTerm.IsAbsorbing())
 			return i_rRightTerm;
@@ -303,19 +383,19 @@ namespace
 	->	BitTerm
 	{
 		if	(i_rTerm.IsAbsorbing())
-			return IdentityClause;
+			return BitClause::Identity();
 
 		if	(i_rTerm.IsIdentity())
-			return AbsorbingClause;
+			return BitClause::Absorbing();
 
 		if	(ClauseCount(i_rTerm) == 1uz)
 		{
 			BitTerm vResult{};
-			for	(	IndexType
+			for	(	USize
 						nLiteralIndex
-					=	0u
+					=	0uz
 					,	nLiteralCount
-					=	0u
+					=	0uz
 				;	(	(	nLiteralIndex
 						<	SubtermLimit
 						)
@@ -332,7 +412,7 @@ namespace
 					[	nLiteralIndex
 					]
 				;
-				if	(vLiteral == AbsorbingClause)
+				if	(vLiteral.IsAbsorbing())
 					continue;
 
 				(	vResult.Clauses[nLiteralCount]
@@ -368,7 +448,7 @@ namespace
 			::std::transform_reduce
 			(	begin(i_rTerm)
 			,	end(i_rTerm)
-			,	AbsorbingClause
+			,	BitClause::Absorbing()
 			,	::std::bit_or<>{}
 			,	::std::bit_not<>{}
 			);
@@ -378,7 +458,7 @@ namespace
 		::std::transform_reduce
 		(	begin(i_rTerm)
 		,	end(i_rTerm)
-		,	BitTerm{AbsorbingClause}
+		,	BitTerm{BitClause::Absorbing()}
 		,	::std::logical_and<>{}
 		,	::std::logical_not<>{}
 		);
