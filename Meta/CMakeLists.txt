@@ -1,30 +1,15 @@
-add_module(
-	Common.cpp
-)
-add_module(
-	Literals.cpp
-)
-add_module(
-	Type.cpp
-)
-add_module(
-	TypeTraits.cpp
-)
-add_module(
-	Concepts.cpp
-)
-add_module(
-	Pack.cpp
-)
+add_module(Common.cpp)
+add_module(Literals.cpp)
+add_module(Type.cpp)
+add_module(TypeTraits.cpp)
+add_module(Concepts.cpp)
+add_module(Pack.cpp)
 add_module(Logic.cpp)
+add_subdirectory(Logic)
 add_module(Logic2.cpp)
 add_subdirectory(Predicate)
 add_module(Predicate.cpp)
 
-add_module(
-	Meta.cpp
-)
+add_module(Meta.cpp)
 
-add_subdirectory(
-	Test
-)
+add_subdirectory(Test)
