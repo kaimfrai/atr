@@ -823,10 +823,11 @@ struct
 				if	(vLiteral == AbsorbingClause)
 					continue;
 
-				if	(	LiteralRedundancyCondition
+				if	(		i_rRedundancyBuffer
+						.	ComputeLiteralRedundancy
 						(	vLiteral
 						,	rClause
-						,	i_rRedundancyBuffer
+						,	*this
 						)
 					)
 				{
@@ -851,15 +852,15 @@ struct
 	}
 
 	auto constexpr
-	(	ClauseRedundancyCondition
+	(	ComputeClauseRedundancy
 	)	(	BitClause const
 			&	i_rCurrentClause
-		,	Optimizer
-			&	i_rRedundancyCondition
+		,	Optimizer const
+			&	i_rTerm
 		)
 	->	bool
 	{
-		return LiteralRedundancyCondition(IdentityClause, i_rCurrentClause, i_rRedundancyCondition);
+		return ComputeLiteralRedundancy(IdentityClause, i_rCurrentClause, i_rTerm);
 	}
 
 	auto constexpr
@@ -876,9 +877,10 @@ struct
 			:	ReverseView()
 			)
 		{
-			if	(	ClauseRedundancyCondition
+			if	(	i_rRedundancyBuffer
+					.ComputeClauseRedundancy
 					(	rClause
-					,	i_rRedundancyBuffer
+					,	*this
 					)
 				)
 			{
@@ -903,21 +905,21 @@ struct
 	}
 
 	auto constexpr
-	(	LiteralRedundancyCondition
+	(	ComputeLiteralRedundancy
 	)	(	BitClause
 				i_vLiteral
 		,	BitClause const
 			&	i_rCurrentClause
-		,	Optimizer
-			&	i_rRedundancyCondition
-		)	const
+		,	Optimizer const
+			&	i_rTerm
+		)
 	->	bool
 	{
-		i_rRedundancyCondition.clear();
+		clear();
 
 		for	(	BitClause const
 				&	rRedundancyClause
-			:	*this
+			:	i_rTerm
 			)
 		{
 			//	skip containing clause
@@ -926,7 +928,7 @@ struct
 
 			if	(i_rCurrentClause.Includes(rRedundancyClause))
 			{
-				i_rRedundancyCondition.insert(AbsorbingClause);
+				insert(AbsorbingClause);
 				return true;
 			}
 
@@ -945,13 +947,13 @@ struct
 
 			vRedundancyClause.Erase(i_rCurrentClause);
 
-			i_rRedundancyCondition.insert(vRedundancyClause);
-			if	(i_rRedundancyCondition.IsAbsorbing())
+			insert(vRedundancyClause);
+			if	(IsAbsorbing())
 				return true;
 		}
 
-		i_rRedundancyCondition.Optimize(false);
-		return i_rRedundancyCondition.IsAbsorbing();
+		Optimize(false);
+		return IsAbsorbing();
 	}
 
 	auto constexpr
@@ -983,10 +985,10 @@ struct
 				if	(vLiteral == AbsorbingClause)
 					continue;
 
-				LiteralRedundancyCondition
+				i_rRedundancyBuffer.ComputeLiteralRedundancy
 				(	vLiteral
 				,	rClause
-				,	i_rRedundancyBuffer
+				,	*this
 				);
 
 				if	(i_rRedundancyBuffer.IsIdentity())
