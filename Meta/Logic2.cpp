@@ -10,6 +10,7 @@ export import Std.Numeric;
 export import Std.InitializerList;
 export import Std.Functional;
 export import Std.Iterator;
+export import Std.Ranges;
 export import Std.Span;
 export import Std.TypeTraits;
 export import Meta.Common;
@@ -40,8 +41,8 @@ export
 	struct
 		BitClause
 	{
-		FieldType PositiveField : SubtermLimit;
-		FieldType NegativeField : SubtermLimit;
+		FieldType Positive : SubtermLimit;
+		FieldType Negative : SubtermLimit;
 
 		static auto constexpr
 		(	AbsorbingField
@@ -73,10 +74,10 @@ export
 		constexpr
 		(	BitClause
 		)	()
-		:	PositiveField
+		:	Positive
 			{	IdentityField()
 			}
-		,	NegativeField
+		,	Negative
 			{	IdentityField()
 			}
 		{}
@@ -88,7 +89,7 @@ export
 			,	FieldType
 					i_nNegative
 			)
-		:	PositiveField
+		:	Positive
 			{	(	i_nPositive
 				bitand
 					i_nNegative
@@ -96,7 +97,7 @@ export
 			?	IdentityField()
 			:	i_nPositive
 			}
-		,	NegativeField
+		,	Negative
 			{	(	i_nPositive
 				bitand
 					i_nNegative
@@ -107,61 +108,61 @@ export
 		{}
 
 		auto constexpr
-		(	Permutate
+		(	Permutate[[nodiscard]]
 		)	(	::std::span<IndexType const>
 					i_vPermutation
 			)	const
 		->	BitClause
 		{
-			if	(IsIdentity(*this) or IsAbsorbing(*this))
+			if	(Positive == Negative)
 				return *this;
 
-			FieldType
-				vPositiveField
+			BitClause
+				vResult
+			{};
+				vResult.Positive
 			=	AbsorbingField()
 			;
-			FieldType
-				vNegativeField
+				vResult.Negative
 			=	AbsorbingField()
 			;
-			for	(	IndexType nIndex = 0u
-				;	nIndex < SubtermLimit
-				;	++nIndex
+			for	(	IndexType
+						nIndex
+					=	0uz
+				;		nIndex
+					<	SubtermLimit
+				;	++	nIndex
 				)
 			{
-				if	(PositiveField bitand BitIndexToField(nIndex))
-					vPositiveField |= BitIndexToField(i_vPermutation[nIndex]);
+				if	(Positive bitand BitIndexToField(nIndex))
+					vResult.Positive |= BitIndexToField(i_vPermutation[nIndex]);
 				else
-				if	(NegativeField bitand BitIndexToField(nIndex))
-					vNegativeField |= BitIndexToField(i_vPermutation[nIndex]);
+				if	(Negative bitand BitIndexToField(nIndex))
+					vResult.Negative |= BitIndexToField(i_vPermutation[nIndex]);
 			}
-			return BitClause{vPositiveField, vNegativeField};
+			return vResult;
 		}
 
-		friend auto constexpr
+		auto constexpr
 		(	IsAbsorbing
-		)	(	BitClause
-					i_vClause
-			)
+		)	()	const
 		->	bool
 		{	return
 			not
-			(	i_vClause.PositiveField
+			(	Positive
 			bitor
-				i_vClause.NegativeField
+				Negative
 			);
 		}
 
-		friend auto constexpr
+		auto constexpr
 		(	IsIdentity
-		)	(	BitClause
-					i_vClause
-			)
+		)	()	const
 		->	bool
 		{	return
-			(	i_vClause.PositiveField
+			(	Positive
 			bitand
-				i_vClause.NegativeField
+				Negative
 			);
 		}
 
@@ -172,150 +173,137 @@ export
 			)
 		->	IndexType
 		{
-			if	(IsIdentity(i_vClause))
+			if	(	i_vClause.Positive
+				==	i_vClause.Negative
+				)
 				return 0u;
 
 			return
 			static_cast<IndexType>
-			(	::std::popcount(i_vClause.PositiveField)
-			+	::std::popcount(i_vClause.NegativeField)
+			(	::std::popcount(i_vClause.Positive)
+			+	::std::popcount(i_vClause.Negative)
 			);
 		}
 
 		friend auto constexpr
-		(	operator compl
+		(	operator compl [[nodiscard]]
 		)	(	BitClause
 					i_vClause
 			)
 		->	BitClause
 		{
-			if	(	IsAbsorbing(i_vClause)
-				or	IsIdentity(i_vClause)
+			if	(	i_vClause.Positive
+				==	i_vClause.Negative
 				)
-				return
-				BitClause
-				{	static_cast<FieldType>
-					(	compl
-						i_vClause.PositiveField
-					)
-				,	static_cast<FieldType>
-					(	compl
-						i_vClause.NegativeField
-					)
-				};
+			{
+				(	i_vClause.Positive
+				=	//	correct result even for invalid fields
+					i_vClause.Positive == AbsorbingField()
+				?	IdentityField()
+				:	AbsorbingField()
+				);
+				i_vClause.Negative = i_vClause.Positive;
+				return i_vClause;
+			}
 
-			return
-			BitClause
-			{	i_vClause.NegativeField
-			,	i_vClause.PositiveField
-			};
-		}
-
-		friend auto constexpr
-		(	operator bitand
-		)	(	BitClause
-					i_vLeft
-			,	BitClause
-					i_vRight
-			)
-		->	BitClause
-		{	return
-			BitClause
-			{	static_cast<FieldType>
-				(	i_vLeft.PositiveField
-				bitand
-					i_vRight.PositiveField
-				)
-			,	static_cast<FieldType>
-				(	i_vLeft.NegativeField
-				bitand
-					i_vRight.NegativeField
-				)
-			};
-		}
-
-		friend auto constexpr
-		(	operator bitor
-		)	(	BitClause
-					i_vLeft
-			,	BitClause
-					i_vRight
-			)
-		->	BitClause
-		{	return
-			BitClause
-			{	static_cast<FieldType>
-				(	i_vLeft.PositiveField
-				bitor
-					i_vRight.PositiveField
-				)
-			,	static_cast<FieldType>
-				(	i_vLeft.NegativeField
-				bitor
-					i_vRight.NegativeField
-				)
-			};
-		}
-
-		auto constexpr
-		(	Replace[[nodiscard]]
-		)	(	BitClause
-					i_vOld
-			,	BitClause
-					i_vNew
-			)	const&
-		->	BitClause
-		{
-			if	(i_vOld == i_vNew)
-				return *this;
-			if	(IsIdentity(i_vNew))
-				return i_vNew;
-
-			return
-				BitClause
-				{	static_cast<FieldType>
-					(	PositiveField
-					bitand compl
-						i_vOld.PositiveField
-					)
-				,	static_cast<FieldType>
-					(	NegativeField
-					bitand compl
-						i_vOld.NegativeField
-					)
-				}
-			bitor
-				i_vNew
+			//	cannot use std::swap for bitfields
+			FieldType const
+				vOldPositive
+			=	i_vClause.Positive
 			;
+			(	i_vClause.Positive
+			=	i_vClause.Negative
+			);
+			(	i_vClause.Negative
+			=	vOldPositive
+			);
+			return i_vClause;
+		}
+
+		friend auto constexpr
+		(	operator bitand [[nodiscard]]
+		)	(	BitClause
+					i_vLeft
+			,	BitClause
+					i_vRight
+			)
+		->	BitClause
+		{
+			(	i_vLeft.Positive
+			&=	i_vRight.Positive
+			);
+			(	i_vLeft.Negative
+			&=	i_vRight.Negative
+			);
+			return i_vLeft;
 		}
 
 		auto constexpr
-		(	Insert[[nodiscard]]
+		(	Insert
 		)	(	BitClause
-					i_vInsert
-			)	const&
-		->	BitClause
-		{	return Replace(BitClause{AbsorbingField(), AbsorbingField()}, i_vInsert);	}
-
-		auto constexpr
-		(	Erase[[nodiscard]]
-		)	(	BitClause
-					i_vErase
-			)	const&
-		->	BitClause
-		{	return Replace(i_vErase, BitClause{AbsorbingField(), AbsorbingField()});	}
-
-		auto constexpr
-		(	AssumeTrue[[nodiscard]]
-		)	(	BitClause
-					i_vClause
-			)	const&
-		->	BitClause
+					i_vInsertClause
+			)	&
+		->	BitClause&
 		{
-			if	((*this bitand compl i_vClause) != BitClause{AbsorbingField(), AbsorbingField()})
-				return BitClause{IdentityField(), IdentityField()};
+			(	Positive
+			|=	i_vInsertClause.Positive
+			);
 
-			return Erase(i_vClause);
+			(	Negative
+			|=	i_vInsertClause.Negative
+			);
+
+			if	(Positive bitand Negative)
+			{
+				Positive = IdentityField();
+				Negative = IdentityField();
+			}
+
+			return *this;
+		}
+
+		friend auto constexpr
+		(	operator bitor [[nodiscard]]
+		)	(	BitClause
+					i_vLeft
+			,	BitClause
+					i_vRight
+			)
+		->	BitClause
+		{	return i_vLeft.Insert(i_vRight);	}
+
+		auto constexpr
+		(	Erase
+		)	(	BitClause
+					i_vEraseClause
+			)	&
+		->	BitClause&
+		{
+			(	Positive
+			&=	compl
+				i_vEraseClause.Positive
+			);
+
+			(	Negative
+			&=	compl
+				i_vEraseClause.Negative
+			);
+
+			return *this;
+		}
+
+		auto constexpr
+		(	Replace
+		)	(	BitClause
+					i_vOldClause
+			,	BitClause
+					i_vNewClause
+			)	&
+		->	BitClause&
+		{	return
+				Erase(i_vOldClause)
+			.	Insert(i_vNewClause)
+			;
 		}
 
 		auto constexpr
@@ -328,7 +316,7 @@ export
 			if	(i_nIndex >= SubtermLimit)
 				return BitClause{AbsorbingField(), AbsorbingField()};
 
-			if	(IsIdentity(*this))
+			if	(IsIdentity())
 				return i_nIndex == 0u ? *this : BitClause{AbsorbingField(), AbsorbingField()};
 
 			return
@@ -347,9 +335,7 @@ export
 		friend auto constexpr
 		(	operator ==
 		)	(	BitClause
-					i_vLeftClause
 			,	BitClause
-					i_vRightClause
 			)
 		->	bool
 		=	default;
@@ -357,32 +343,37 @@ export
 		friend auto constexpr
 		(	operator<=>
 		)	(	BitClause
-					i_vLeftClause
 			,	BitClause
-					i_vRightClause
 			)
 		->	::std::strong_ordering
 		=	default;
 
 		auto constexpr
-		(	Contains
+		(	Includes
 		)	(	BitClause
 					i_vContained
-			)	const&
+			)	const
 		->	bool
 		{	return
-			(	(	AbsorbingField()
-				==	(	i_vContained.PositiveField
-					bitand compl
-						PositiveField
-					)
+			(	i_vContained
+			.	Erase(*this)
+			.	IsAbsorbing()
+			);
+		}
+
+		auto constexpr
+		(	Intersects
+		)	(	BitClause
+					i_vIntersection
+			)	const
+		->	bool
+		{	return
+			not
+			(	(	*this
+				bitand
+					i_vIntersection
 				)
-			and	(	AbsorbingField()
-				==	(	i_vContained.NegativeField
-					bitand compl
-						NegativeField
-					)
-				)
+			.	IsAbsorbing()
 			);
 		}
 	};
@@ -406,17 +397,10 @@ export
 	struct
 		BitTerm
 	{
-		using
-			BitClauseStorageType
-		=	::std::array
-			<	BitClause
-			,	SubtermLimit
-			>
-		;
-
-		BitClauseStorageType
-			m_vClauses
-		{};
+		BitClause
+			Clauses
+		[	SubtermLimit
+		]{};
 
 		constexpr
 		(	BitTerm
@@ -424,31 +408,10 @@ export
 					i_vClause
 				=	IdentityClause
 			)
-		:	m_vClauses
+		:	Clauses
 			{	i_vClause
 			}
 		{}
-
-		explicit constexpr
-		(	BitTerm
-		)	(	BitClauseStorageType
-					i_vClauseStorage
-			)
-		:	m_vClauses
-			{	(	(void)::std::sort
-					(	begin(i_vClauseStorage)
-					,	end(i_vClauseStorage)
-					)
-				,	i_vClauseStorage
-				)
-			}
-		{}
-
-		constexpr
-		(	operator
-			::std::span<BitClause const>
-		)	()	const&
-		{	return {begin(*this), end(*this)};	}
 
 		auto constexpr
 		(	Permutate
@@ -457,35 +420,33 @@ export
 			)	const
 		->	BitTerm
 		{
-			BitClauseStorageType
-				vPermutated
-			=	m_vClauses
-			;
-			BitClause* aBegin = begin(vPermutated);
-			BitClause* const aEnd = aBegin + ClauseCount(*this);
-			for (; aBegin != aEnd; ++aBegin)
-				*aBegin = aBegin->Permutate(i_vPermutation);
-			return
 			BitTerm
-			{	vPermutated
-			};
+				vCopy
+			=	*this
+			;
+
+			for	(	BitClause
+					&	rClause
+				:	vCopy
+				)
+				(	rClause
+				=	rClause.Permutate(i_vPermutation)
+				);
+
+			return vCopy;
 		}
 
-		friend auto constexpr
+		auto constexpr
 		(	IsAbsorbing
-		)	(	BitTerm const
-				&	i_rTerm
-			)
+		)	()	const
 		->	bool
-		{	return IsAbsorbing(i_rTerm.m_vClauses[0u]);	}
+		{	return Clauses[0u].IsAbsorbing();	}
 
-		friend auto constexpr
+		auto constexpr
 		(	IsIdentity
-		)	(	BitTerm const
-				&	i_rTerm
-			)
+		)	()	const
 		->	bool
-		{	return IsIdentity(i_rTerm.m_vClauses[0u]);	}
+		{	return Clauses[0u].IsIdentity();	}
 
 		auto constexpr
 		(	operator []
@@ -494,13 +455,13 @@ export
 			)	const&
 		->	BitClause
 		{
-			if	(IsAbsorbing(*this))
-				return m_vClauses[0u];
+			if	(IsAbsorbing())
+				return Clauses[0u];
 
 			if	(i_nIndex >= ClauseCount(*this))
 				return IdentityClause;
 
-			return m_vClauses[i_nIndex];
+			return Clauses[i_nIndex];
 		}
 
 		friend auto constexpr
@@ -520,14 +481,13 @@ export
 			);
 		}
 
-
 		friend auto constexpr
 		(	begin
 		)	(	BitTerm
 				&	i_rTerm
 			)
 		->	BitClause*
-		{	return begin(i_rTerm.m_vClauses);	}
+		{	return i_rTerm.Clauses;	}
 
 		friend auto constexpr
 		(	begin
@@ -535,7 +495,7 @@ export
 				&	i_rTerm
 			)
 		->	BitClause const*
-		{	return begin(i_rTerm.m_vClauses);	}
+		{	return i_rTerm.Clauses;	}
 
 		friend auto constexpr
 		(	end
@@ -545,8 +505,8 @@ export
 		->	BitClause*
 		{	return
 			::std::lower_bound
-			(	begin(i_rTerm.m_vClauses)
-			,	end(i_rTerm.m_vClauses)
+			(	i_rTerm.Clauses
+			,	i_rTerm.Clauses + SubtermLimit
 			,	IdentityClause
 			);
 		}
@@ -559,8 +519,8 @@ export
 		->	BitClause const*
 		{	return
 			::std::lower_bound
-			(	begin(i_rTerm.m_vClauses)
-			,	end(i_rTerm.m_vClauses)
+			(	i_rTerm.Clauses
+			,	i_rTerm.Clauses + SubtermLimit
 			,	IdentityClause
 			);
 		}
@@ -572,7 +532,7 @@ export
 			)
 		->	::std::size_t
 		{
-			if	(IsAbsorbing(i_rTerm))
+			if	(i_rTerm.IsAbsorbing())
 				return 0uz;
 
 			return
@@ -592,871 +552,693 @@ export
 
 		friend auto constexpr
 		(	operator and
-		)	(	BitTerm const
-				&	i_rLeftTerm
-			,	BitTerm const
-				&	i_rRightTerm
+		)	(	BitTerm const&
+			,	BitTerm const&
 			)
 		->	BitTerm;
 
 		friend auto constexpr
 		(	operator not
-		)	(	BitTerm const
-				&	i_rTerm
+		)	(	BitTerm const&
 			)
 		->	BitTerm
 		;
 	};
 }
 
-auto constexpr
-(	InsertClause
-)	(	BitClause
-		*	i_aTermBegin
-	,	BitClause
-		*	i_aTermEnd
-	,	BitClause
-			i_vInsertClause
-	)
-->	BitClause*
+struct
+	Optimizer
 {
-	bool bInserted = false;
-	for	(	BitClause
-			*	aPosition
-			=	i_aTermEnd
-		;		aPosition
-			!=	i_aTermBegin
-		;
-		)
-	{
-		--aPosition;
-		//	insert clause is redundant
-		if	(i_vInsertClause.Contains(*aPosition))
-			return i_aTermEnd;
-
-		//	overwrite redundant clause
-		if	(aPosition->Contains(i_vInsertClause))
-		{
-			if	(not bInserted)
-			{
-				*aPosition = i_vInsertClause;
-				bInserted = true;
-			}
-			else
-			{
-				::std::move(aPosition + 1z, i_aTermEnd, aPosition);
-				--i_aTermEnd;
-			}
-		}
-	}
-	if	(not bInserted)
-		*(i_aTermEnd++) = i_vInsertClause;
-
-	return i_aTermEnd;
-}
-
-auto constexpr
-(	Optimize
-)	(	BitClause
-		*	i_aTermBegin
-	,	BitClause
-		*	i_aTermEnd
-	,	bool
-			i_bOptimizeAlternatives
-	)
-->	BitClause*
-;
-
-auto constexpr
-(	IsLiteralRedundant
-)	(	BitClause
-			i_vLiteral
-	,	BitClause
-		*	i_aTermBegin
-	,	BitClause
-		*	i_aCurrentClause
-	,	BitClause
-		*	i_aTermEnd
-	,	BitClause
-		*	i_aRedundancyCondition
-	)
-->	bool
-{
-	BitClause
-	*	aRedundancyConditionEnd
-	=	i_aRedundancyCondition
-	;
-	for	(	BitClause
-			*	aTransformClause
-			=	i_aTermBegin
-		;		aTransformClause
-			!=	i_aTermEnd
-		;	++	aTransformClause
-		)
-	{
-		//	skip containing clause
-		if	(aTransformClause == i_aCurrentClause)
-			continue;
-
-		//	free literal contained in term
-		if	(	*aTransformClause
-			==	i_vLiteral
-			)
-			return true;
-
-		//	contains the literal => Identity
-		if	(	(	aTransformClause->PositiveField
-				bitand
-					i_vLiteral.PositiveField
-				)
-			or	(	aTransformClause->NegativeField
-				bitand
-					i_vLiteral.NegativeField
-				)
-			)
-			continue;
-
-		//	erase negation of literal from clause
-		BitClause
-			vRedundancyClause
-		=	*aTransformClause
-		;
-		(	vRedundancyClause.PositiveField
-		&=	compl
-			i_vLiteral.NegativeField
-		);
-		(	vRedundancyClause.NegativeField
-		&=	compl
-			i_vLiteral.PositiveField
-		);
-
-		//	contains negation of literal in current clause
-		//	=>	Identity
-		if	(	(	vRedundancyClause.PositiveField
-				bitand
-					i_aCurrentClause->NegativeField
-				)
-			or	(	vRedundancyClause.NegativeField
-				bitand
-					i_aCurrentClause->PositiveField
-				)
-			)
-			continue;
-
-		(	vRedundancyClause.PositiveField
-		&=	compl
-			i_aCurrentClause->PositiveField
-		);
-		(	vRedundancyClause.NegativeField
-		&=	compl
-			i_aCurrentClause->NegativeField
-		);
-
-		if	(IsAbsorbing(vRedundancyClause))
-			return true;
-
-		*(aRedundancyConditionEnd++) = vRedundancyClause;
-	}
-
-	(	aRedundancyConditionEnd
-	=	Optimize
-		(	i_aRedundancyCondition
-		,	aRedundancyConditionEnd
-		,	false
-		)
-	);
-
-	return
-		(	i_aRedundancyCondition + 1z
-		==	aRedundancyConditionEnd
-		)
-	and	IsAbsorbing(*i_aRedundancyCondition)
-	;
-}
-
-auto constexpr
-(	OptimizeLength
-)	(	BitClause
-		*	i_aTermBegin
-	,	BitClause
-		*	i_aTermEnd
-	,	BitClause
-		*	i_aRedundancyBuffer
-	)
-->	BitClause*
-;
-
-auto constexpr
-(	OptimizeLiterals
-)	(	BitClause
-		*	i_aTermBegin
-	,	BitClause
-		*	i_aTermEnd
-	,	BitClause
-		*	i_aRedundancyBuffer
-	)
-->	BitClause*
-{
-	for	(	BitClause
-			*	aCurrentClause
-			=	i_aTermBegin
-		;		aCurrentClause
-			!=	i_aTermEnd
-		;	++	aCurrentClause
-		)
-	{
-		BitClause
-		&	rClause
-		=	*aCurrentClause
-		;
-		for	(	IndexType
-					nIndex
-				{}
-			;		nIndex
-				<	SubtermLimit
-			;	++	nIndex
-			)
-		{
-			BitClause const
-				vLiteral
-			=	rClause
-				[	nIndex
-				]
-			;
-			if	(IsAbsorbing(vLiteral))
-				continue;
-
-			if	(	IsLiteralRedundant
-					(	vLiteral
-					,	i_aTermBegin
-					,	aCurrentClause
-					,	i_aTermEnd
-					,	i_aRedundancyBuffer
-					)
-				)
-			{
-				if	(vLiteral == rClause)
-				{
-					//	only literal gets erased
-					//	resulting term is always absorbing
-					*i_aTermBegin = AbsorbingClause;
-					return i_aTermBegin + 1z;
-				}
-
-				//	erase the literal
-				rClause.PositiveField &= compl vLiteral.PositiveField;
-				rClause.NegativeField &= compl vLiteral.NegativeField;
-				return OptimizeLength(i_aTermBegin, i_aTermEnd, i_aRedundancyBuffer);
-			}
-		}
-	}
-	return i_aTermEnd;
-}
-
-auto constexpr
-(	IsClauseRedundant
-)	(	BitClause
-		*	i_aTermBegin
-	,	BitClause
-		*	i_aCurrentClause
-	,	BitClause
-		*	i_aTermEnd
-	,	BitClause
-		*	i_aRedundancyCondition
-	)
-->	bool
-{
-	BitClause
-	*	aRedundancyConditionEnd
-	=	i_aRedundancyCondition
-	;
-	for	(	BitClause
-			*	aTransformClause
-			=	i_aTermBegin
-		;		aTransformClause
-			!=	i_aTermEnd
-		;	++	aTransformClause
-		)
-	{
-		//	skip containing clause
-		if	(aTransformClause == i_aCurrentClause)
-			continue;
-
-		BitClause
-			vRedundancyClause
-		=	*aTransformClause
-		;
-
-		//	contains negation of literal in current clause
-		//	=>	Identity
-		if	(	(	vRedundancyClause.PositiveField
-				bitand
-					i_aCurrentClause->NegativeField
-				)
-			or	(	vRedundancyClause.NegativeField
-				bitand
-					i_aCurrentClause->PositiveField
-				)
-			)
-			continue;
-
-		(	vRedundancyClause.PositiveField
-		&=	compl
-			i_aCurrentClause->PositiveField
-		);
-		(	vRedundancyClause.NegativeField
-		&=	compl
-			i_aCurrentClause->NegativeField
-		);
-
-		if	(IsAbsorbing(vRedundancyClause))
-			return true;
-
-		*(aRedundancyConditionEnd++) = vRedundancyClause;
-	}
-
-	(	aRedundancyConditionEnd
-	=	Optimize
-		(	i_aRedundancyCondition
-		,	aRedundancyConditionEnd
-		,	false
-		)
-	);
-
-	return
-		(	i_aRedundancyCondition + 1z
-		==	aRedundancyConditionEnd
-		)
-	and	IsAbsorbing(*i_aRedundancyCondition)
-	;
-}
-
-auto constexpr
-(	OptimizeClauses
-)	(	BitClause
-		*	i_aTermBegin
-	,	BitClause
-		*	i_aTermEnd
-	,	BitClause
-		*	i_aRedundancyBuffer
-	)
-->	BitClause*
-{
-	::std::sort(i_aTermBegin, i_aTermEnd);
-	for	(	BitClause
-			*	aClause
-			=	i_aTermEnd
-		;		aClause
-			!=	i_aTermBegin
-		;
-		)
-	{
-		--aClause;
-		if	(	IsClauseRedundant
-				(	i_aTermBegin
-				,	aClause
-				,	i_aTermEnd
-				,	i_aRedundancyBuffer
-				)
-			)
-		{
-			::std::move(aClause + 1z, i_aTermEnd, aClause);
-			--i_aTermEnd;
-		}
-	}
-	return i_aTermEnd;
-}
-
-auto constexpr
-(	OptimizeLength
-)	(	BitClause
-		*	i_aTermBegin
-	,	BitClause
-		*	i_aTermEnd
-	,	BitClause
-		*	i_aRedundancyBuffer
-	)
-->	BitClause*
-{
-	i_aTermEnd = OptimizeClauses(i_aTermBegin, i_aTermEnd, i_aRedundancyBuffer);
-	return OptimizeLiterals(i_aTermBegin, i_aTermEnd, i_aRedundancyBuffer);
-}
-
-auto constexpr
-(	LiteralRedundancyCondition
-)	(	BitClause
-			i_vLiteral
-	,	BitClause
-		*	i_aTermBegin
-	,	BitClause
-		*	i_aCurrentClause
-	,	BitClause
-		*	i_aTermEnd
-	,	BitClause
-		*	i_aRedundancyCondition
-	)
-->	BitClause*
-{
-	BitClause
-	*	aRedundancyConditionEnd
-	=	i_aRedundancyCondition
-	;
-	for	(	BitClause
-			*	aRedundancyClause
-			=	i_aTermBegin
-		;		aRedundancyClause
-			!=	i_aTermEnd
-		;	++	aRedundancyClause
-		)
-	{
-		//	skip containing clause
-		if	(aRedundancyClause == i_aCurrentClause)
-			continue;
-
-		//	free literal contained in term
-		if	(	*aRedundancyClause
-			==	i_vLiteral
-			)
-		{
-			*i_aRedundancyCondition = AbsorbingClause;
-			return i_aRedundancyCondition + 1z;
-		}
-
-		//	contains the literal => Identity
-		if	(	(	aRedundancyClause->PositiveField
-				bitand
-					i_vLiteral.PositiveField
-				)
-			or	(	aRedundancyClause->NegativeField
-				bitand
-					i_vLiteral.NegativeField
-				)
-			)
-			continue;
-
-		//	erase negation of literal from clause
-		BitClause
-			vRedundancyClause
-		=	*aRedundancyClause
-		;
-		(	vRedundancyClause.PositiveField
-		&=	compl
-			i_vLiteral.NegativeField
-		);
-		(	vRedundancyClause.NegativeField
-		&=	compl
-			i_vLiteral.PositiveField
-		);
-
-		//	contains negation of literal in current clause
-		//	=>	Identity
-		if	(	(	vRedundancyClause.PositiveField
-				bitand
-					i_aCurrentClause->NegativeField
-				)
-			or	(	vRedundancyClause.NegativeField
-				bitand
-					i_aCurrentClause->PositiveField
-				)
-			)
-			continue;
-
-		(	vRedundancyClause.PositiveField
-		&=	compl
-			i_aCurrentClause->PositiveField
-		);
-		(	vRedundancyClause.NegativeField
-		&=	compl
-			i_aCurrentClause->NegativeField
-		);
-
-		if	(IsAbsorbing(vRedundancyClause))
-		{
-			*i_aRedundancyCondition = AbsorbingClause;
-			return i_aRedundancyCondition + 1z;
-		}
-
-		*(aRedundancyConditionEnd++) = vRedundancyClause;
-	}
-
-	return
-	Optimize
-	(	i_aRedundancyCondition
-	,	aRedundancyConditionEnd
-	,	false
-	);
-}
-
-
-auto constexpr
-(	OptimizeAlternatives
-)	(	BitClause
-		*	i_aTermBegin
-	,	BitClause
-		*	i_aTermEnd
-	,	BitClause
-		*	i_aRedundancyCondition
-	)
-->	BitClause*
-{
-	for	(	BitClause
-			*	aCurrentClause
-			=	i_aTermBegin
-		;		aCurrentClause
-			!=	i_aTermEnd
-		;	++	aCurrentClause
-		)
-	{
-		BitClause
-		&	rClause
-		=	*aCurrentClause
-		;
-		for	(	IndexType
-					nIndex
-				{}
-			;		nIndex
-				<	SubtermLimit
-			;	++	nIndex
-			)
-		{
-			BitClause const
-				vLiteral
-			=	rClause
-				[	nIndex
-				]
-			;
-			if	(IsAbsorbing(vLiteral))
-				continue;
-
-			BitClause
-			*	aRedundancyConditionEnd
-			=	LiteralRedundancyCondition
-				(	vLiteral
-				,	i_aTermBegin
-				,	aCurrentClause
-				,	i_aTermEnd
-				,	i_aRedundancyCondition
-				)
-			;
-
-			if	(IsIdentity(*i_aRedundancyCondition))
-				continue;
-
-			BitClause
-				vWithoutLiteral
-			=	rClause
-			;
-			vWithoutLiteral.PositiveField &= compl vLiteral.PositiveField;
-			vWithoutLiteral.NegativeField &= compl vLiteral.NegativeField;
-
-			for	(	BitClause
-					*	aRedundancyClause
-					=	i_aRedundancyCondition
-				;		aRedundancyClause
-					!=	aRedundancyConditionEnd
-				;	++	aRedundancyClause
-				)
-			{
-				aRedundancyClause->PositiveField |= vWithoutLiteral.PositiveField;
-				aRedundancyClause->NegativeField |= vWithoutLiteral.NegativeField;
-
-				i_aTermEnd = InsertClause(i_aTermBegin, i_aTermEnd, *aRedundancyClause);
-			}
-		}
-	}
-
-	return OptimizeClauses(i_aTermBegin, i_aTermEnd, i_aRedundancyCondition);
-}
-
-
-auto constexpr
-(	Optimize
-)	(	BitClause
-		*	i_aTermBegin
-	,	BitClause
-		*	i_aTermEnd
-	,	bool
-			i_bOptimizeAlternatives
-	)
-->	BitClause*
-{
-	auto const
-		nClauseCount
-	=	(	i_aTermEnd
-		-	i_aTermBegin
-		)
-	;
-	if	(nClauseCount <= 1z)
-		return i_aTermEnd;
-
-	auto const
-		nRedundancyClauseCount
-	=	(	//	#ClauseCount - 1 are needed to evaluate Redundancy of a Clause or Literal
-			nClauseCount
-		-	1z
-		+	//	an additional #ClauseCount are needed to evaluate Terms with alternative Clauses
-			i_bOptimizeAlternatives
-		*	nClauseCount
-		)
-	;
-
-	BitClause
-	*	aRedundancyBuffer
-	=	new BitClause
-		[	static_cast<::std::size_t>
-			(	nRedundancyClauseCount
-			)
-		]{}
-	;
-	i_aTermEnd = OptimizeLength(i_aTermBegin, i_aTermEnd, aRedundancyBuffer);
-	if	(i_bOptimizeAlternatives)
-	{
-		i_aTermEnd = OptimizeAlternatives(i_aTermBegin, i_aTermEnd, aRedundancyBuffer);
-	}
-
-	delete[]
-		aRedundancyBuffer
-	;
-	return i_aTermEnd;
-}
-
-export
-{
-auto constexpr
-(	operator or
-)	(	BitTerm const
-		&	i_rLeftTerm
-	,	BitTerm const
-		&	i_rRightTerm
-	)
-->	BitTerm
-{
-	if	(IsAbsorbing(i_rLeftTerm) or IsAbsorbing(i_rRightTerm))
-		return AbsorbingClause;
-
-	if	(IsIdentity(i_rLeftTerm))
-		return i_rRightTerm;
-	if	(IsIdentity(i_rRightTerm))
-		return i_rLeftTerm;
-
-	if	(i_rLeftTerm.m_vClauses == i_rRightTerm.m_vClauses)
-		return i_rLeftTerm;
-
-	auto const
-		nMaxClauseCount
-	=	//	while creating alternative clauses up to twice the amount of clauses are needed
-		2uz
-	*	(	ClauseCount(i_rLeftTerm)
-		+	ClauseCount(i_rRightTerm)
-		)
-	;
-
-	BitTerm
-		vResultTerm
-	{};
-
-	bool const
-		bDynamicBuffer
-	=	nMaxClauseCount
-	>	SubtermLimit
-	;
-
 	BitClause
 	*	const
-		aClauseBuffer
-	=	bDynamicBuffer
-	?	new BitClause
-		[	nMaxClauseCount
-		]{}
-	:	vResultTerm.m_vClauses.data()
+		m_aTermBegin
 	;
-
 	BitClause
-	*	aClauseBufferEnd
-	=	::std::set_union
-		(	begin(i_rLeftTerm)
-		,	end(i_rLeftTerm)
-		,	begin(i_rRightTerm)
-		,	end(i_rRightTerm)
-		,	aClauseBuffer
+	*	m_aTermEnd
+	;
+
+	friend auto constexpr
+	(	begin
+	)	(	Optimizer const
+			&	i_rOptimizer
 		)
-	;
+	->	BitClause*
+	{	return i_rOptimizer.m_aTermBegin;	}
 
-	(	aClauseBufferEnd
-	=	Optimize
-		(	aClauseBuffer
-		,	aClauseBufferEnd
-		,	true
+	friend auto constexpr
+	(	end
+	)	(	Optimizer const
+			&	i_rOptimizer
 		)
-	);
+	->	BitClause*
+	{	return i_rOptimizer.m_aTermEnd;	}
 
-	if	(bDynamicBuffer)
-	{
-		::std::copy
-		(	aClauseBuffer
-		,	aClauseBufferEnd
-		,	begin(vResultTerm.m_vClauses)
-		);
-
-		delete[]
-			aClauseBuffer
-		;
-	}
-	else
-	{
-		::std::fill(aClauseBufferEnd, aClauseBuffer + SubtermLimit, IdentityClause);
-	}
-	return vResultTerm;
-}
-
-auto constexpr
-(	operator and
-)	(	BitTerm const
-		&	i_rLeftTerm
-	,	BitTerm const
-		&	i_rRightTerm
-	)
-->	BitTerm
-{
-	if	(IsIdentity(i_rLeftTerm) or IsIdentity(i_rRightTerm))
-		return IdentityClause;
-
-	if	(IsAbsorbing(i_rLeftTerm))
-		return i_rRightTerm;
-	if	(IsAbsorbing(i_rRightTerm))
-		return i_rLeftTerm;
-
-	if	(i_rLeftTerm.m_vClauses == i_rRightTerm.m_vClauses)
-		return i_rLeftTerm;
-
-	auto const
-		nMaxClauseCount
-	=	//	while creating alternative clauses up to twice the amount of clauses are needed
-		2uz
-	*	ClauseCount(i_rLeftTerm)
-	*	ClauseCount(i_rRightTerm)
-	;
-
-	BitTerm
-		vResultTerm
-	{};
-
-	bool const
-		bDynamicBuffer
-	=	nMaxClauseCount
-	>	SubtermLimit
-	;
-
-	BitClause
-	*	const
-		aClauseBuffer
-	=	bDynamicBuffer
-	?	new BitClause
-		[	nMaxClauseCount
-		]{}
-	:	vResultTerm.m_vClauses.data()
-	;
-
-	BitClause
-	*	aClauseBufferEnd
-	=	aClauseBuffer
-	;
-
-	for	(	BitClause
-				i_vLeftClause
-		:	i_rLeftTerm
+	explicit constexpr
+	(	Optimizer
+	)	(	::std::size_t
+				i_nClauseCount
 		)
-	{
-		for	(	BitClause
-					i_vRightClause
-			:	i_rRightTerm
-			)
-		{
-			BitClause const
-				vMergedClause
-			=	i_vLeftClause
-			bitor
-				i_vRightClause
-			;
-			if	(vMergedClause == IdentityClause)
-				continue;
-
-			*(aClauseBufferEnd++) = vMergedClause;
+	:	m_aTermBegin
+		{	new	BitClause
+			[	i_nClauseCount
+			]
 		}
-	}
+	,	m_aTermEnd
+		{	m_aTermBegin
+		}
+	{}
 
-	(	aClauseBufferEnd
-	=	Optimize
-		(	aClauseBuffer
-		,	aClauseBufferEnd
-		,	true
-		)
-	);
-
-	if	(bDynamicBuffer)
+	auto constexpr
+	(	ToBitTerm
+	)	()	const
 	{
-		::std::copy
-		(	aClauseBuffer
-		,	aClauseBufferEnd
-		,	begin(vResultTerm.m_vClauses)
-		);
-
-		delete[]
-			aClauseBuffer
-		;
-	}
-	else
-	{
-		::std::fill(aClauseBufferEnd, aClauseBuffer + SubtermLimit, IdentityClause);
-	}
-	return vResultTerm;
-}
-
-auto constexpr
-(	operator not
-)	(	BitTerm const
-		&	i_rTerm
-	)
-->	BitTerm
-{
-	if	(IsAbsorbing(i_rTerm))
-		return {};
-
-	if	(IsIdentity(i_rTerm))
-		return AbsorbingClause;
-
-	if	(ClauseCount(i_rTerm) == 1u)
-	{
-		BitTerm::BitClauseStorageType vClauses{};
-		for	(	IndexType nIndex = 0u
-			;	nIndex < SubtermLimit
-			;	++nIndex
-			)
-			(	vClauses[nIndex]
-			=	compl
-				i_rTerm[0u]
-				[nIndex]
-			);
-		return
 		BitTerm
-		{	vClauses
-		};
-	}
-	if	(	ClauseCount(i_rTerm) == 1u
-		and	LiteralCount(i_rTerm[0u]) == 1u
-		)
-	{
-		BitClause vResult = AbsorbingClause;
-		for (BitClause vClause : i_rTerm)
-			vResult = vResult | compl vClause;
+			vResult
+		{};
+
+		::std::copy
+		(	m_aTermBegin
+		,	m_aTermEnd
+		,	vResult.Clauses
+		);
 		return vResult;
 	}
 
-	BitTerm vResult{AbsorbingClause};
-	for	(BitClause vClause : i_rTerm)
-		vResult = vResult and not vClause;
-	return vResult;
-}
+	constexpr
+	(	compl Optimizer
+	)	()
+	{
+		delete[]
+			m_aTermBegin
+		;
+	}
+
+	auto constexpr
+	(	clear
+	)	()
+	->	void
+	{	m_aTermEnd = m_aTermBegin;	}
+
+	auto constexpr
+	(	size
+	)	()	const
+	->	::std::size_t
+	{	return
+		static_cast<::std::size_t>
+		(	m_aTermEnd
+		-	m_aTermBegin
+		);
+	}
+
+	auto constexpr
+	(	operator[]
+	)	(	::std::size_t
+				i_nIndex
+		)	&
+	->	BitClause&
+	{	return m_aTermBegin[i_nIndex];	}
+
+	auto constexpr
+	(	operator[]
+	)	(	::std::size_t
+				i_nIndex
+		)	const&
+	->	BitClause const&
+	{	return m_aTermBegin[i_nIndex];	}
+
+	auto constexpr
+	(	IsAbsorbing
+	)	()	const
+	{	return
+			size() == 1uz
+		and	(	m_aTermBegin[0uz]
+			==	AbsorbingClause
+			)
+		;
+	}
+
+	auto constexpr
+	(	IsIdentity
+	)	()	const
+	{	return
+			size()
+		==	0uz
+		;
+	}
+
+	auto constexpr
+	(	ReverseView
+	)	()	const
+	{
+		struct
+		{
+			BitClause
+			*	m_aTermBegin
+			;
+			BitClause
+			*	m_aTermEnd
+			;
+
+			auto constexpr
+			(	begin
+			)	()	const
+			{	return
+				::std::make_reverse_iterator
+				(	m_aTermEnd
+				);
+			}
+
+			auto constexpr
+			(	end
+			)	()	const
+			{	return
+				::std::make_reverse_iterator
+				(	m_aTermBegin
+				);
+			}
+		}	vReverseView
+		{	m_aTermBegin
+		,	m_aTermEnd
+		};
+		return vReverseView;
+	}
+
+	auto constexpr
+	(	insert
+	)	(	BitClause
+				i_vInsertClause
+		)
+	->	bool
+	{
+		if	(	IsAbsorbing()
+			or	i_vInsertClause.IsIdentity()
+			)
+			return false;
+
+		if	(	IsIdentity()
+			or	i_vInsertClause.IsAbsorbing()
+			)
+		{
+			*m_aTermBegin = i_vInsertClause;
+			m_aTermEnd = m_aTermBegin + 1z;
+			return true;
+		}
+
+		bool bInserted = false;
+		for	(	BitClause
+				&	rClause
+			:	ReverseView()
+			)
+		{
+			//	insert clause is redundant
+			if	(i_vInsertClause.Includes(rClause))
+				return false;
+
+			//	overwrite redundant clause
+			if	(rClause.Includes(i_vInsertClause))
+			{
+				if	(not bInserted)
+				{
+					rClause = i_vInsertClause;
+					bInserted = true;
+				}
+				else
+				{
+					m_aTermEnd = ::std::remove(&rClause, m_aTermEnd, rClause);
+				}
+			}
+		}
+
+		if	(not bInserted)
+			*(m_aTermEnd++) = i_vInsertClause;
+		return true;
+	}
+
+	auto constexpr
+	(	insert
+	)	(	BitTerm const
+			&	i_rInsertTerm
+		)
+	->	bool
+	{	return
+		::std::transform_reduce
+		(	begin(i_rInsertTerm)
+		,	end(i_rInsertTerm)
+		,	false
+		,	::std::logical_or<>{}
+		,	[	this
+			]	(	BitClause
+						i_vInsertClause
+				)
+			{	return insert(i_vInsertClause);	}
+		);
+	}
+
+	auto constexpr
+	(	OptimizeLiterals
+	)	(	Optimizer
+			&	i_rRedundancyBuffer
+		)
+	->	bool
+	{
+		for	(	BitClause
+				&	rClause
+			:	*this
+			)
+		{
+			for	(	IndexType
+						nIndex
+					{}
+				;		nIndex
+					<	SubtermLimit
+				;	++	nIndex
+				)
+			{
+				BitClause const
+					vLiteral
+				=	rClause
+					[	nIndex
+					]
+				;
+				if	(vLiteral == AbsorbingClause)
+					continue;
+
+				if	(	LiteralRedundancyCondition
+						(	vLiteral
+						,	rClause
+						,	i_rRedundancyBuffer
+						)
+					)
+				{
+					if	(vLiteral == rClause)
+					{
+						//	only literal gets erased
+						//	resulting term is always absorbing
+						insert(AbsorbingClause);
+					}
+					else
+					{
+						//	erase the literal
+						rClause.Erase(vLiteral);
+						OptimizeLength(i_rRedundancyBuffer);
+					}
+
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	auto constexpr
+	(	ClauseRedundancyCondition
+	)	(	BitClause const
+			&	i_rCurrentClause
+		,	Optimizer
+			&	i_rRedundancyCondition
+		)
+	->	bool
+	{
+		return LiteralRedundancyCondition(IdentityClause, i_rCurrentClause, i_rRedundancyCondition);
+	}
+
+	auto constexpr
+	(	OptimizeClauses
+	)	(	Optimizer
+			&	i_rRedundancyBuffer
+		)
+	->	bool
+	{
+		::std::sort(m_aTermBegin, m_aTermEnd);
+		bool bWasOptimized = false;
+		for	(	BitClause
+				&	rClause
+			:	ReverseView()
+			)
+		{
+			if	(	ClauseRedundancyCondition
+					(	rClause
+					,	i_rRedundancyBuffer
+					)
+				)
+			{
+				m_aTermEnd = ::std::remove(&rClause, m_aTermEnd, rClause);
+				bWasOptimized = true;
+			}
+		}
+		return bWasOptimized;
+	}
+
+
+	auto constexpr
+	(	OptimizeLength
+	)	(	Optimizer
+			&	i_rRedundancyBuffer
+		)
+	->	bool
+	{
+		bool bWasOptimized = OptimizeClauses(i_rRedundancyBuffer);
+		bWasOptimized |= OptimizeLiterals(i_rRedundancyBuffer);
+		return bWasOptimized;
+	}
+
+	auto constexpr
+	(	LiteralRedundancyCondition
+	)	(	BitClause
+				i_vLiteral
+		,	BitClause const
+			&	i_rCurrentClause
+		,	Optimizer
+			&	i_rRedundancyCondition
+		)	const
+	->	bool
+	{
+		i_rRedundancyCondition.clear();
+
+		for	(	BitClause const
+				&	rRedundancyClause
+			:	*this
+			)
+		{
+			//	skip containing clause
+			if	(&rRedundancyClause == &i_rCurrentClause)
+				continue;
+
+			if	(i_rCurrentClause.Includes(rRedundancyClause))
+			{
+				i_rRedundancyCondition.insert(AbsorbingClause);
+				return true;
+			}
+
+			if	(rRedundancyClause.Includes(i_vLiteral))
+				continue;
+
+			BitClause
+				vRedundancyClause
+			=	rRedundancyClause
+			;
+			vRedundancyClause.Erase(compl i_vLiteral);
+
+
+			if	(vRedundancyClause.Intersects(compl i_rCurrentClause))
+				continue;
+
+			vRedundancyClause.Erase(i_rCurrentClause);
+
+			i_rRedundancyCondition.insert(vRedundancyClause);
+			if	(i_rRedundancyCondition.IsAbsorbing())
+				return true;
+		}
+
+		i_rRedundancyCondition.Optimize(false);
+		return i_rRedundancyCondition.IsAbsorbing();
+	}
+
+	auto constexpr
+	(	OptimizeAlternatives
+	)	(	Optimizer
+			&	i_rRedundancyBuffer
+		)
+	->	bool
+	{
+		for	(	BitClause
+				&	rClause
+			:	*this
+			)
+		{
+			for	(	IndexType
+						nIndex
+					{}
+				;		nIndex
+					<	SubtermLimit
+				;	++	nIndex
+				)
+			{
+				BitClause const
+					vLiteral
+				=	rClause
+					[	nIndex
+					]
+				;
+				if	(vLiteral == AbsorbingClause)
+					continue;
+
+				LiteralRedundancyCondition
+				(	vLiteral
+				,	rClause
+				,	i_rRedundancyBuffer
+				);
+
+				if	(i_rRedundancyBuffer.IsIdentity())
+					continue;
+
+				BitClause
+					vWithoutLiteral
+				=	rClause
+				;
+				vWithoutLiteral.Erase(vLiteral);
+
+				for	(	BitClause
+							vRedundancyClause
+					:	i_rRedundancyBuffer
+					)
+				{
+					insert(vRedundancyClause.Insert(vWithoutLiteral));
+				}
+			}
+		}
+
+		return OptimizeClauses(i_rRedundancyBuffer);
+	}
+
+	auto constexpr
+	(	Optimize
+	)	(	bool
+				i_bOptimizeAlternatives
+		)
+	->	bool
+	{
+		auto const
+			nClauseCount
+		=	(	m_aTermEnd
+			-	m_aTermBegin
+			)
+		;
+		if	(nClauseCount <= 1z)
+			return false;
+
+		auto const
+			nRedundancyClauseCount
+		=	(	//	#ClauseCount - 1 are needed to evaluate Redundancy of a Clause or Literal
+				nClauseCount
+			-	1z
+			+	//	an additional #ClauseCount are needed to evaluate Terms with alternative Clauses
+				i_bOptimizeAlternatives
+			*	nClauseCount
+			)
+		;
+
+		Optimizer
+			vRedundancyBuffer
+		{	static_cast<::std::size_t>
+			(	nRedundancyClauseCount
+			)
+		};
+
+		bool bWasOptimized = OptimizeLength(vRedundancyBuffer);
+		if	(i_bOptimizeAlternatives)
+		{
+			bWasOptimized |= OptimizeAlternatives(vRedundancyBuffer);
+		}
+		return bWasOptimized;
+	}
+};
+
+
+export
+{
+	auto constexpr
+	(	operator or [[nodiscard]]
+	)	(	BitTerm const
+			&	i_rLeftTerm
+		,	BitTerm const
+			&	i_rRightTerm
+		)
+	->	BitTerm
+	{
+		if	(i_rLeftTerm.IsAbsorbing() or i_rRightTerm.IsAbsorbing())
+			return AbsorbingClause;
+
+		if	(i_rLeftTerm.IsIdentity())
+			return i_rRightTerm;
+		if	(i_rRightTerm.IsIdentity())
+			return i_rLeftTerm;
+
+		if	(i_rLeftTerm == i_rRightTerm)
+			return i_rLeftTerm;
+
+		auto const
+			nMaxClauseCount
+		=	//	while creating alternative clauses up to twice the amount of clauses are needed
+			2uz
+		*	(	ClauseCount(i_rLeftTerm)
+			+	ClauseCount(i_rRightTerm)
+			)
+		;
+
+		Optimizer
+			vOptimizer
+		{	nMaxClauseCount
+		};
+
+		vOptimizer.insert(i_rLeftTerm);
+		vOptimizer.insert(i_rRightTerm);
+
+		vOptimizer.Optimize
+		(	true
+		);
+		return vOptimizer.ToBitTerm();
+	}
+
+	auto constexpr
+	(	operator and [[nodiscard]]
+	)	(	BitTerm const
+			&	i_rLeftTerm
+		,	BitTerm const
+			&	i_rRightTerm
+		)
+	->	BitTerm
+	{
+		if	(i_rLeftTerm.IsIdentity() or i_rRightTerm.IsIdentity())
+			return IdentityClause;
+
+		if	(i_rLeftTerm.IsAbsorbing())
+			return i_rRightTerm;
+		if	(i_rRightTerm.IsAbsorbing())
+			return i_rLeftTerm;
+
+		if	(i_rLeftTerm == i_rRightTerm)
+			return i_rLeftTerm;
+
+		auto const
+			nMaxClauseCount
+		=	//	while creating alternative clauses up to twice the amount of clauses are needed
+			2uz
+		*	ClauseCount(i_rLeftTerm)
+		*	ClauseCount(i_rRightTerm)
+		;
+
+		Optimizer
+			vOptimizer
+		{	nMaxClauseCount
+		};
+
+		for	(	BitClause
+					i_vLeftClause
+			:	i_rLeftTerm
+			)
+		{
+			for	(	BitClause
+						i_vRightClause
+				:	i_rRightTerm
+				)
+			{
+				vOptimizer.insert(i_vLeftClause bitor i_vRightClause);
+			}
+		}
+		vOptimizer.Optimize(true);
+
+		return vOptimizer.ToBitTerm();
+	}
+
+	auto constexpr
+	(	operator not [[nodiscard]]
+	)	(	BitTerm const
+			&	i_rTerm
+		)
+	->	BitTerm
+	{
+		if	(i_rTerm.IsAbsorbing())
+			return IdentityClause;
+
+		if	(i_rTerm.IsIdentity())
+			return AbsorbingClause;
+
+		if	(ClauseCount(i_rTerm) == 1uz)
+		{
+			BitTerm vResult{};
+			for	(	IndexType
+						nLiteralIndex
+					=	0u
+					,	nLiteralCount
+					=	0u
+				;	(	(	nLiteralIndex
+						<	SubtermLimit
+						)
+					and	(	nLiteralCount
+						<	LiteralCount(i_rTerm[0uz])
+						)
+					)
+				;	++	nLiteralIndex
+				)
+			{
+				BitClause const
+					vLiteral
+				=	i_rTerm[0uz]
+					[	nLiteralIndex
+					]
+				;
+				if	(vLiteral == AbsorbingClause)
+					continue;
+
+				(	vResult.Clauses[nLiteralCount]
+				=	compl
+					vLiteral
+				);
+				++nLiteralCount;
+			}
+
+			return
+				vResult
+			;
+		}
+
+		if	(	::std::all_of
+				(	begin(i_rTerm)
+				,	end(i_rTerm)
+				,	[]	(	BitClause
+								i_vClause
+						)
+					->	bool
+					{	return
+							LiteralCount
+							(	i_vClause
+							)
+						==	1uz
+						;
+					}
+				)
+			)
+		{
+			return
+			::std::transform_reduce
+			(	begin(i_rTerm)
+			,	end(i_rTerm)
+			,	AbsorbingClause
+			,	::std::bit_or<>{}
+			,	::std::bit_not<>{}
+			);
+		}
+
+		return
+		::std::transform_reduce
+		(	begin(i_rTerm)
+		,	end(i_rTerm)
+		,	BitTerm{AbsorbingClause}
+		,	::std::logical_and<>{}
+		,	::std::logical_not<>{}
+		);
+	}
 
 }
 
