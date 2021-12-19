@@ -78,51 +78,6 @@ namespace
 		->	USize
 		;
 
-		friend auto constexpr
-		(	operator compl
-		)	(	BitClause
-			)
-		->	BitClause
-		;
-
-		friend auto constexpr
-		(	operator bitand
-		)	(	BitClause
-			,	BitClause
-			)
-		->	BitClause
-		;
-
-		auto constexpr
-		(	Insert
-		)	(	BitClause
-			)	&
-		->	BitClause&
-		;
-
-		friend auto constexpr
-		(	operator bitor
-		)	(	BitClause
-			,	BitClause
-			)
-		->	BitClause
-		;
-
-		auto constexpr
-		(	Erase
-		)	(	BitClause
-			)	&
-		->	BitClause&
-		;
-
-		auto constexpr
-		(	Replace
-		)	(	BitClause
-			,	BitClause
-			)	&
-		->	BitClause&
-		;
-
 		auto constexpr
 		(	operator[]
 		)	(	USize
@@ -161,6 +116,37 @@ namespace
 		;
 	};
 
+	export auto constexpr
+	(	Inverse
+	)	(	BitClause
+		)
+	->	BitClause
+	;
+
+	export auto constexpr
+	(	Union
+	)	(	BitClause
+		,	BitClause
+		)
+	->	BitClause
+	;
+
+	export auto constexpr
+	(	Difference
+	)	(	BitClause
+		,	BitClause
+		)
+	->	BitClause
+	;
+
+	export auto constexpr
+	(	Intersection
+	)	(	BitClause
+		,	BitClause
+		)
+	->	BitClause
+	;
+
 	auto constexpr
 	(	BitClause
 		::BitIndexToField
@@ -180,7 +166,7 @@ namespace
 		::Absorbing
 	)	()
 	->	BitClause
-	{	return compl Identity();	}
+	{	return Inverse(Identity());	}
 
 
 	auto constexpr
@@ -327,7 +313,8 @@ namespace
 	}
 
 	auto constexpr
-	(	operator compl [[nodiscard]]
+	(	Inverse
+		[[nodiscard]]
 	)	(	BitClause
 				i_vClause
 		)
@@ -357,7 +344,8 @@ namespace
 	}
 
 	auto constexpr
-	(	operator bitand [[nodiscard]]
+	(	Intersection
+		[[nodiscard]]
 	)	(	BitClause
 				i_vLeft
 		,	BitClause
@@ -375,73 +363,52 @@ namespace
 	}
 
 	auto constexpr
-	(	BitClause
-		::Insert
-	)	(	BitClause
-				i_vInsertClause
-		)	&
-	->	BitClause&
-	{
-		(	Positive
-		|=	i_vInsertClause.Positive
-		);
-
-		(	Negative
-		|=	i_vInsertClause.Negative
-		);
-
-		if	(Positive bitand Negative)
-		{
-			*this = Identity();
-		}
-
-		return *this;
-	}
-
-	auto constexpr
-	(	operator bitor [[nodiscard]]
+	(	Union
+		[[nodiscard]]
 	)	(	BitClause
 				i_vLeft
 		,	BitClause
 				i_vRight
 		)
 	->	BitClause
-	{	return i_vLeft.Insert(i_vRight);	}
-
-	auto constexpr
-	(	BitClause
-		::Erase
-	)	(	BitClause
-				i_vEraseClause
-		)	&
-	->	BitClause&
 	{
-		(	Positive
-		&=	compl
-			i_vEraseClause.Positive
+		(	i_vLeft.Positive
+		|=	i_vRight.Positive
 		);
 
-		(	Negative
-		&=	compl
-			i_vEraseClause.Negative
+		(	i_vLeft.Negative
+		|=	i_vRight.Negative
 		);
 
-		return *this;
+		if	(i_vLeft.Positive bitand i_vLeft.Negative)
+		{
+			return BitClause::Identity();
+		}
+
+		return i_vLeft;
 	}
 
 	auto constexpr
-	(	BitClause
-		::Replace
+	(	Difference
+		[[nodiscard]]
 	)	(	BitClause
-				i_vOldClause
+				i_vLeft
 		,	BitClause
-				i_vNewClause
-		)	&
-	->	BitClause&
-	{	return
-			Erase(i_vOldClause)
-		.	Insert(i_vNewClause)
-		;
+				i_vRight
+		)
+	->	BitClause
+	{
+		(	i_vLeft.Positive
+		&=	compl
+			i_vRight.Positive
+		);
+
+		(	i_vLeft.Negative
+		&=	compl
+			i_vRight.Negative
+		);
+
+		return i_vLeft;
 	}
 
 	auto constexpr
@@ -493,8 +460,10 @@ namespace
 		)	const
 	->	bool
 	{	return
-		(	i_vContained
-		.	Erase(*this)
+		(	Difference
+			(	i_vContained
+			,	*this
+			)
 		.	IsAbsorbing()
 		);
 	}
@@ -508,9 +477,9 @@ namespace
 	->	bool
 	{	return
 		not
-		(	(	*this
-			bitand
-				i_vIntersection
+		(	Intersection
+			(	*this
+			,	i_vIntersection
 			)
 		.	IsAbsorbing()
 		);

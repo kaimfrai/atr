@@ -363,7 +363,7 @@ namespace
 				:	i_rRightTerm
 				)
 			{
-				vOptimizer.insert(i_vLeftClause bitor i_vRightClause);
+				vOptimizer.insert(Union(i_vLeftClause, i_vRightClause));
 			}
 		}
 		vOptimizer.Optimize(true);
@@ -416,8 +416,9 @@ namespace
 					continue;
 
 				(	vResult.Clauses[nLiteralCount]
-				=	compl
-					vLiteral
+				=	Inverse
+					(	vLiteral
+					)
 				);
 				++nLiteralCount;
 			}
@@ -449,8 +450,8 @@ namespace
 			(	begin(i_rTerm)
 			,	end(i_rTerm)
 			,	BitClause::Absorbing()
-			,	::std::bit_or<>{}
-			,	::std::bit_not<>{}
+			,	Union
+			,	Inverse
 			);
 		}
 

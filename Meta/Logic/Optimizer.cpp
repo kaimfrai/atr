@@ -35,7 +35,6 @@ namespace
 		)	(	Optimizer const
 				&	i_rOptimizer
 			)
-		->	BitClause*
 		;
 
 		explicit constexpr
@@ -69,20 +68,6 @@ namespace
 		;
 
 		auto constexpr
-		(	operator[]
-		)	(	USize
-			)	&
-		->	BitClause&
-		;
-
-		auto constexpr
-		(	operator[]
-		)	(	USize
-			)	const&
-		->	BitClause const&
-		;
-
-		auto constexpr
 		(	IsAbsorbing
 		)	()	const
 		->	bool
@@ -100,22 +85,32 @@ namespace
 		;
 
 		auto constexpr
+		(	erase
+		)	(	BitClause
+				*	i_aErasePosition
+			)
+		->	BitClause*
+		;
+
+		auto constexpr
 		(	insert
 		)	(	BitClause
 			)
-		->	bool
+		->	BitClause*
 		;
 
 		auto constexpr
 		(	insert
 		)	(	::std::span<BitClause const>
 			)
-		->	bool
+		->	void
 		;
 
 		auto constexpr
-		(	OptimizeLiterals
-		)	(	Optimizer&
+		(	ComputeLiteralRedundancy
+		)	(	BitClause
+			,	BitClause const&
+			,	Optimizer const&
 			)
 		->	bool
 		;
@@ -133,37 +128,22 @@ namespace
 		)	(	Optimizer
 				&
 			)
-		->	bool
-		;
-
-		auto constexpr
-		(	OptimizeLength
-		)	(	Optimizer&
-			)
-		->	bool
-		;
-
-		auto constexpr
-		(	ComputeLiteralRedundancy
-		)	(	BitClause
-			,	BitClause const&
-			,	Optimizer const&
-			)
-		->	bool
+		->	void
 		;
 
 		auto constexpr
 		(	OptimizeAlternatives
 		)	(	Optimizer&
+			,	bool
 			)
-		->	bool
+		->	void
 		;
 
 		auto constexpr
 		(	Optimize
 		)	(	bool
 			)
-		->	bool
+		->	void
 		;
 	};
 
@@ -180,8 +160,27 @@ namespace
 	)	(	Optimizer const
 			&	i_rOptimizer
 		)
-	->	BitClause*
-	{	return i_rOptimizer.m_aTermEnd;	}
+	{	//	does not get invalidated when the size changes
+		struct
+		{
+			BitClause
+			*	const
+			&	m_rTermEnd
+			;
+			auto constexpr
+			(	operator ==
+			)	(	BitClause
+					*	i_aClause
+				)	const
+			->	bool
+			{
+				return i_aClause == m_rTermEnd;
+			}
+		}	vSentinel
+		{	i_rOptimizer.m_aTermEnd
+		};
+		return vSentinel;
+	}
 
 	constexpr
 	(	Optimizer
@@ -248,29 +247,11 @@ namespace
 
 	auto constexpr
 	(	Optimizer
-		::operator[]
-	)	(	USize
-				i_nIndex
-		)	&
-	->	BitClause&
-	{	return m_aTermBegin[i_nIndex];	}
-
-	auto constexpr
-	(	Optimizer
-		::operator[]
-	)	(	USize
-				i_nIndex
-		)	const&
-	->	BitClause const&
-	{	return m_aTermBegin[i_nIndex];	}
-
-	auto constexpr
-	(	Optimizer
 		::IsAbsorbing
 	)	()	const
 	->	bool
 	{	return
-			size() == 1uz
+			size() >= 1uz
 		and	m_aTermBegin[0uz].IsAbsorbing()
 		;
 	}
@@ -326,27 +307,61 @@ namespace
 
 	auto constexpr
 	(	Optimizer
+		::erase
+	)	(	BitClause
+			*	i_aEraseClause
+		)
+	->	BitClause*
+	{
+		if	(	not
+				(	i_aEraseClause >= m_aTermBegin
+				and	i_aEraseClause < m_aTermEnd
+				)
+			)
+			return m_aTermEnd;
+
+		BitClause
+		*	aNext
+		=	::std::next
+			(	i_aEraseClause
+			)
+		;
+		(	m_aTermEnd
+		=	::std::move
+			(	aNext
+			,	m_aTermEnd
+			,	i_aEraseClause
+			)
+		);
+		return aNext;
+	}
+
+	auto constexpr
+	(	Optimizer
 		::insert
 	)	(	BitClause
 				i_vInsertClause
 		)
-	->	bool
+	->	BitClause*
 	{
 		if	(	IsAbsorbing()
 			or	i_vInsertClause.IsIdentity()
 			)
-			return false;
+			return m_aTermEnd;
 
 		if	(	IsIdentity()
 			or	i_vInsertClause.IsAbsorbing()
 			)
 		{
 			*m_aTermBegin = i_vInsertClause;
-			m_aTermEnd = m_aTermBegin + 1z;
-			return true;
+			m_aTermEnd = ::std::next(m_aTermBegin);
+			return m_aTermBegin;
 		}
 
-		bool bInserted = false;
+		BitClause
+		*	aInsertPosition
+		=	m_aTermEnd
+		;
 		for	(	BitClause
 				&	rClause
 			:	ReverseView()
@@ -354,26 +369,20 @@ namespace
 		{
 			//	insert clause is redundant
 			if	(i_vInsertClause.Includes(rClause))
-				return false;
+				return m_aTermEnd;
 
 			//	overwrite redundant clause
 			if	(rClause.Includes(i_vInsertClause))
 			{
-				if	(not bInserted)
-				{
-					rClause = i_vInsertClause;
-					bInserted = true;
-				}
-				else
-				{
-					m_aTermEnd = ::std::remove(&rClause, m_aTermEnd, rClause);
-				}
+				rClause = i_vInsertClause;
+				erase(aInsertPosition);
+				aInsertPosition = &rClause;
 			}
 		}
 
-		if	(not bInserted)
+		if	(aInsertPosition == m_aTermEnd)
 			*(m_aTermEnd++) = i_vInsertClause;
-		return true;
+		return aInsertPosition;
 	}
 
 	auto constexpr
@@ -382,133 +391,13 @@ namespace
 	)	(	::std::span<BitClause const>
 				i_vInsertTerm
 		)
-	->	bool
-	{	return
-		::std::transform_reduce
-		(	begin(i_vInsertTerm)
-		,	end(i_vInsertTerm)
-		,	false
-		,	::std::logical_or<>{}
-		,	[	this
-			]	(	BitClause
-						i_vInsertClause
-				)
-			{	return insert(i_vInsertClause);	}
-		);
-	}
-
-	auto constexpr
-	(	Optimizer
-		::OptimizeLiterals
-	)	(	Optimizer
-			&	i_rRedundancyBuffer
-		)
-	->	bool
+	->	void
 	{
 		for	(	BitClause
-				&	rClause
-			:	*this
+					vInsertClause
+			:	i_vInsertTerm
 			)
-		{
-			for	(	USize
-						nIndex
-					=	0uz
-				;		nIndex
-					<	SubtermLimit
-				;	++	nIndex
-				)
-			{
-				BitClause const
-					vLiteral
-				=	rClause
-					[	nIndex
-					]
-				;
-				if	(vLiteral.IsAbsorbing())
-					continue;
-
-				if	(		i_rRedundancyBuffer
-						.	ComputeLiteralRedundancy
-						(	vLiteral
-						,	rClause
-						,	*this
-						)
-					)
-				{
-					if	(vLiteral == rClause)
-					{
-						//	only literal gets erased
-						//	resulting term is always absorbing
-						insert(BitClause::Absorbing());
-					}
-					else
-					{
-						//	erase the literal
-						rClause.Erase(vLiteral);
-						OptimizeLength(i_rRedundancyBuffer);
-					}
-
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	auto constexpr
-	(	Optimizer
-		::ComputeClauseRedundancy
-	)	(	BitClause const
-			&	i_rCurrentClause
-		,	Optimizer const
-			&	i_rTerm
-		)
-	->	bool
-	{
-		return ComputeLiteralRedundancy(BitClause::Identity(), i_rCurrentClause, i_rTerm);
-	}
-
-	auto constexpr
-	(	Optimizer
-		::OptimizeClauses
-	)	(	Optimizer
-			&	i_rRedundancyBuffer
-		)
-	->	bool
-	{
-		::std::sort(m_aTermBegin, m_aTermEnd);
-		bool bWasOptimized = false;
-		for	(	BitClause
-				&	rClause
-			:	ReverseView()
-			)
-		{
-			if	(	i_rRedundancyBuffer
-					.ComputeClauseRedundancy
-					(	rClause
-					,	*this
-					)
-				)
-			{
-				m_aTermEnd = ::std::remove(&rClause, m_aTermEnd, rClause);
-				bWasOptimized = true;
-			}
-		}
-		return bWasOptimized;
-	}
-
-
-	auto constexpr
-	(	Optimizer
-		::OptimizeLength
-	)	(	Optimizer
-			&	i_rRedundancyBuffer
-		)
-	->	bool
-	{
-		bool bWasOptimized = OptimizeClauses(i_rRedundancyBuffer);
-		bWasOptimized |= OptimizeLiterals(i_rRedundancyBuffer);
-		return bWasOptimized;
+			insert(vInsertClause);
 	}
 
 	auto constexpr
@@ -543,19 +432,24 @@ namespace
 			if	(rRedundancyClause.Includes(i_vLiteral))
 				continue;
 
-			BitClause
-				vRedundancyClause
-			=	rRedundancyClause
+			BitClause const
+				vSynthesizedClause
+			=	Difference
+				(	rRedundancyClause
+				,	Inverse(i_vLiteral)
+				)
 			;
-			vRedundancyClause.Erase(compl i_vLiteral);
 
-
-			if	(vRedundancyClause.Intersects(compl i_rCurrentClause))
+			if	(vSynthesizedClause.Intersects(Inverse(i_rCurrentClause)))
 				continue;
 
-			vRedundancyClause.Erase(i_rCurrentClause);
+			insert
+			(	Difference
+				(	vSynthesizedClause
+				,	i_rCurrentClause
+				)
+			);
 
-			insert(vRedundancyClause);
 			if	(IsAbsorbing())
 				return true;
 		}
@@ -566,13 +460,58 @@ namespace
 
 	auto constexpr
 	(	Optimizer
-		::OptimizeAlternatives
+		::ComputeClauseRedundancy
+	)	(	BitClause const
+			&	i_rCurrentClause
+		,	Optimizer const
+			&	i_rTerm
+		)
+	->	bool
+	{	return
+		ComputeLiteralRedundancy
+		(	BitClause::Identity()
+		,	i_rCurrentClause
+		,	i_rTerm
+		);
+	}
+
+	auto constexpr
+	(	Optimizer
+		::OptimizeClauses
 	)	(	Optimizer
 			&	i_rRedundancyBuffer
 		)
-	->	bool
+	->	void
 	{
+		::std::sort(m_aTermBegin, m_aTermEnd);
 		for	(	BitClause
+				&	rClause
+			:	ReverseView()
+			)
+		{
+			if	(	(	i_rRedundancyBuffer
+					.	ComputeClauseRedundancy
+					)(	rClause
+					,	*this
+					)
+				)
+			{
+				erase(&rClause);
+			}
+		}
+	}
+
+	auto constexpr
+	(	Optimizer
+		::OptimizeAlternatives
+	)	(	Optimizer
+			&	i_rRedundancyBuffer
+		,	bool
+				i_bConsiderAlternatives
+		)
+	->	void
+	{
+		for	(	BitClause const
 				&	rClause
 			:	*this
 			)
@@ -594,74 +533,70 @@ namespace
 				if	(vLiteral.IsAbsorbing())
 					continue;
 
-				i_rRedundancyBuffer.ComputeLiteralRedundancy
-				(	vLiteral
-				,	rClause
-				,	*this
-				);
-
-				if	(i_rRedundancyBuffer.IsIdentity())
-					continue;
-
-				BitClause
-					vWithoutLiteral
-				=	rClause
-				;
-				vWithoutLiteral.Erase(vLiteral);
-
-				for	(	BitClause
-							vRedundancyClause
-					:	i_rRedundancyBuffer
+				if	(	(	i_rRedundancyBuffer
+						.	ComputeLiteralRedundancy
+						)(	vLiteral
+						,	rClause
+						,	*this
+						)
+					or	i_bConsiderAlternatives
 					)
 				{
-					insert(vRedundancyClause.Insert(vWithoutLiteral));
+					BitClause const
+						vSynthesizedClause
+					=	Difference
+						(	rClause
+						,	vLiteral
+						)
+					;
+
+					for	(	BitClause
+								vRedundancyClause
+						:	i_rRedundancyBuffer
+						)
+					{
+						insert
+						(	Union
+							(	vRedundancyClause
+							,	vSynthesizedClause
+							)
+						);
+					}
 				}
 			}
 		}
 
-		return OptimizeClauses(i_rRedundancyBuffer);
+		if	(i_bConsiderAlternatives)
+			OptimizeClauses(i_rRedundancyBuffer);
 	}
 
 	auto constexpr
 	(	Optimizer
 		::Optimize
 	)	(	bool
-				i_bOptimizeAlternatives
+				i_bConsiderAlternatives
 		)
-	->	bool
+	->	void
 	{
 		auto const
 			nClauseCount
-		=	(	m_aTermEnd
-			-	m_aTermBegin
-			)
+		=	size()
 		;
-		if	(nClauseCount <= 1z)
-			return false;
-
-		auto const
-			nRedundancyClauseCount
-		=	(	//	#ClauseCount - 1 are needed to evaluate Redundancy of a Clause or Literal
-				nClauseCount
-			-	1z
-			+	//	an additional #ClauseCount are needed to evaluate Terms with alternative Clauses
-				i_bOptimizeAlternatives
-			*	nClauseCount
-			)
-		;
+		if	(nClauseCount <= 1uz)
+			return;
 
 		Optimizer
 			vRedundancyBuffer
-		{	static_cast<USize>
-			(	nRedundancyClauseCount
-			)
+		{	//	#ClauseCount - 1 are needed to evaluate redundancy of a clause or literal
+			nClauseCount -	1uz
+		+	//	an additional #ClauseCount are needed to evaluate terms with alternative clauses
+			i_bConsiderAlternatives
+		*	nClauseCount
 		};
 
-		bool bWasOptimized = OptimizeLength(vRedundancyBuffer);
-		if	(i_bOptimizeAlternatives)
-		{
-			bWasOptimized |= OptimizeAlternatives(vRedundancyBuffer);
-		}
-		return bWasOptimized;
+		OptimizeAlternatives
+		(	vRedundancyBuffer
+		,	i_bConsiderAlternatives
+		);
 	}
 }
