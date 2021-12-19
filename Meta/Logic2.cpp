@@ -1,7 +1,7 @@
 export module Meta.Logic2;
 
 import Std.Array;
-import Meta.Logic.BitTerm;
+import Meta.Logic.Disjunction;
 
 namespace
 	Meta::Logic
@@ -102,7 +102,7 @@ export namespace
 	Meta
 {
 	template
-		<	Logic::BitTerm
+		<	Logic::Disjunction
 				t_vTerm
 		,	typename
 			...	t_tpPredicate
@@ -161,7 +161,7 @@ export namespace
 		{	return i_vLeft;	}
 
 		template
-			<	Logic::BitTerm
+			<	Logic::Disjunction
 					t_vRightTerm
 			>
 		friend auto constexpr
@@ -176,7 +176,7 @@ export namespace
 		{	return	{};	}
 
 		template
-			<	Logic::BitTerm
+			<	Logic::Disjunction
 					t_vRightTerm
 			>
 		friend auto constexpr
@@ -191,7 +191,7 @@ export namespace
 		{	return	{};	}
 
 		template
-			<	Logic::BitTerm
+			<	Logic::Disjunction
 					t_vRightTerm
 			,	typename
 				...	t_tpRightPredicate
@@ -218,7 +218,7 @@ export namespace
 
 			auto constexpr
 				t_vPermutatedTerm
-			=	t_vRightTerm.Permutate(vMapArray)
+			=	t_vRightTerm.Permutation(vMapArray)
 			;
 			auto constexpr
 				vResultTerm
@@ -230,7 +230,7 @@ export namespace
 		}
 
 		template
-			<	Logic::BitTerm
+			<	Logic::Disjunction
 					t_vRightTerm
 			,	typename
 				...	t_tpRightPredicate
@@ -257,7 +257,7 @@ export namespace
 
 			auto constexpr
 				t_vPermutatedTerm
-			=	t_vRightTerm.Permutate(vMapArray)
+			=	t_vRightTerm.Permutation(vMapArray)
 			;
 			auto constexpr
 				vResultTerm
@@ -276,7 +276,7 @@ export namespace
 	using
 		Atom
 	=	Term
-		<	::Meta::Logic::BitTerm{::Meta::Logic::BitClause{1u, 0u}}
+		<	Logic::Disjunction::Literal(1uz)
 		,	t_tPredicate
 		>
 	;

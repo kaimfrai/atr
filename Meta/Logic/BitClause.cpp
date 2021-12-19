@@ -15,7 +15,7 @@ namespace
 	;
 
 	export struct
-		BitClause
+		BitClause final
 	{
 		using FieldType = ::Meta::UInt<8uz>;
 
@@ -53,7 +53,7 @@ namespace
 		;
 
 		auto constexpr
-		(	Permutate
+		(	Permutation
 		)	(	::std::span<USize const>
 			)	const
 		->	BitClause
@@ -163,7 +163,7 @@ namespace
 
 	auto constexpr
 	(	BitClause
-		::BitIndexToField
+	::	BitIndexToField
 	)	(	USize
 				i_nIndex
 		)
@@ -180,36 +180,36 @@ namespace
 
 	auto constexpr
 	(	BitClause
-		::Absorbing
+	::	Absorbing
 	)	()
 	->	BitClause
 	{	return Inverse(Identity());	}
 
 	auto constexpr
 	(	BitClause
-		::Identity
+	::	Identity
 	)	()
 	->	BitClause
 	{	return BitClause{};	}
 
 	constexpr
 	(	BitClause
-		::BitClause
+	::	BitClause
 	)	()
 	:	Positive
 		{	static_cast<FieldType>
-			(	//	generate a sequence of SubtermLimit 1s
+			(	//	generate a sequence of #SubtermLimit 1s
 				//	does not cause overflows or bitfield conversion warnings
-				(	(	(	1u
+				(	(	(	1uz
 						<<	(	SubtermLimit
-							-	1u
+							-	1uz
 							)
 						)
-						-	1u
+						-	1uz
 					)
-				<<	1u
+				<<	1uz
 				)
-			+	1u
+			+	1uz
 			)
 		}
 	,	Negative
@@ -219,7 +219,7 @@ namespace
 
 	constexpr
 	(	BitClause
-		::BitClause
+	::	BitClause
 	)	(	USize
 				i_nPositive
 		)
@@ -235,7 +235,8 @@ namespace
 
 	auto constexpr
 	(	BitClause
-		::Permutate[[nodiscard]]
+	::	Permutation
+		[[nodiscard]]
 	)	(	::std::span<USize const>
 				i_vPermutation
 		)	const
@@ -253,7 +254,7 @@ namespace
 					nIndex
 				=	0uz
 			;		nIndex
-				<	SubtermLimit
+				<	i_vPermutation.size()
 			;	++	nIndex
 			)
 		{
@@ -276,7 +277,7 @@ namespace
 
 	auto constexpr
 	(	BitClause
-		::IsAbsorbing
+	::	IsAbsorbing
 	)	()	const
 	->	bool
 	{	return
@@ -289,7 +290,7 @@ namespace
 
 	auto constexpr
 	(	BitClause
-		::IsIdentity
+	::	IsIdentity
 	)	()	const
 	->	bool
 	{	return
@@ -404,6 +405,9 @@ namespace
 		)
 	->	BitClause
 	{
+		if	(i_vLeft.IsIdentity())
+			return Inverse(i_vRight);
+
 		(	i_vLeft.Positive
 		&=	compl
 			i_vRight.Positive
@@ -419,7 +423,7 @@ namespace
 
 	auto constexpr
 	(	BitClause
-		::operator[]
+	::	operator[]
 	)	(	USize
 				i_nIndex
 		)	const
@@ -429,7 +433,7 @@ namespace
 			throw "Index beyond Subtermlimit!";
 
 		if	(IsIdentity())
-			return i_nIndex == 0u ? *this : Absorbing();
+			return i_nIndex == 0uz ? *this : Absorbing();
 
 		auto const
 			nIndexField
@@ -460,7 +464,7 @@ namespace
 
 	auto constexpr
 	(	BitClause
-		::Includes
+	::	Includes
 	)	(	BitClause
 				i_vContained
 		)	const
@@ -476,7 +480,7 @@ namespace
 
 	auto constexpr
 	(	BitClause
-		::Intersects
+	::	Intersects
 	)	(	BitClause
 				i_vIntersection
 		)	const
@@ -493,7 +497,7 @@ namespace
 
 	auto constexpr
 	(	BitClause
-		::FirstLiteral
+	::	FirstLiteral
 	)	()	const
 	->	BitClause
 	{

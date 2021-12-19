@@ -13,35 +13,64 @@ namespace
 	Meta::Logic
 {
 	export struct
-		BitTerm
+		BitTerm final
 	{
-		using ClauseArrayType = ::std::array<BitClause, SubtermLimit>;
-		ClauseArrayType const
+		BitClause const
 			Clauses
+		[	SubtermLimit
+		]
 		{};
 
 		constexpr
 		(	BitTerm
+		)	()
+		=	default;
+
+		constexpr
+		(	BitTerm
 		)	(	BitClause
-				=	BitClause::Identity()
 			)
 		;
 
 	private:
+		template
+			<	::std::size_t
+				...	t_npIndex
+			>
+		explicit constexpr
+		(	BitTerm
+		)	(	BitClause const*
+			,	::std::index_sequence
+				<	t_npIndex
+					...
+				>
+			)
+		;
+
 		constexpr
 		(	BitTerm
-		)	(	ClauseArrayType const
-				&	i_rClauses
+		)	(	BitClause const
+				(&
+				)[	SubtermLimit
+				]
 			)
-		:	Clauses
-			{	i_rClauses
-			}
-		{}
+		;
+
+		constexpr
+		(	BitTerm
+		)	(	BitClauseArray const&
+			)
+		;
 
 	public:
+		constexpr
+		(	operator
+			::std::span<BitClause const>
+		)	()	const
+		;
 
 		auto constexpr
-		(	Permutate
+		(	Permutation
 		)	(	::std::span<USize const>
 			)	const
 		->	BitTerm
@@ -96,7 +125,7 @@ namespace
 		;
 
 		friend auto constexpr
-		(	operator or
+		(	Intersection
 		)	(	BitTerm const&
 			,	BitTerm const&
 			)
@@ -104,14 +133,14 @@ namespace
 		;
 
 		friend auto constexpr
-		(	operator and
+		(	Union
 		)	(	BitTerm const&
 			,	BitTerm const&
 			)
 		->	BitTerm;
 
 		friend auto constexpr
-		(	operator not
+		(	Negation
 		)	(	BitTerm const&
 			)
 		->	BitTerm
@@ -120,7 +149,7 @@ namespace
 
 	constexpr
 	(	BitTerm
-		::BitTerm
+	::	BitTerm
 	)	(	BitClause
 				i_vClause
 		)
@@ -129,57 +158,112 @@ namespace
 		}
 	{}
 
+	template
+		<	::std::size_t
+			...	t_npIndex
+		>
+	constexpr
+	(	BitTerm
+	::	BitTerm
+	)	(	BitClause const
+			*	i_aClauses
+		,	::std::index_sequence
+			<	t_npIndex
+				...
+			>
+		)
+	:	Clauses
+		{	i_aClauses
+			[	t_npIndex
+			]
+			...
+		}
+	{}
+
+	constexpr
+	(	BitTerm
+	::	BitTerm
+	)	(	BitClause const
+			(&	i_rClauses
+			)[	SubtermLimit
+			]
+		)
+	:	BitTerm
+		{	+i_rClauses
+		,	::std::make_index_sequence<SubtermLimit>{}
+		}
+	{}
+
+	constexpr
+	(	BitTerm
+	::	BitTerm
+	)	(	BitClauseArray const
+			&	i_rClauses
+		)
+	:	BitTerm
+		{	i_rClauses.data()
+		,	::std::make_index_sequence<SubtermLimit>{}
+		}
+	{}
+
+	constexpr
+	(	BitTerm
+	::	operator
+		::std::span<BitClause const>
+	)	()	const
+	{	return {begin(*this), end(*this)};	}
+
 	auto constexpr
 	(	BitTerm
-		::Permutate
+	::	Permutation
 	)	(	::std::span<USize const>
 				i_vPermutation
 		)	const
 	->	BitTerm
 	{
-		ClauseArrayType
-			vCopy
-		=	Clauses
-		;
+		BitClauseArray
+			vPermutationResult
+		{};
 
-		for	(	BitClause
-				&	rClause
-			:	vCopy
-			)
-			(	rClause
-			=	rClause.Permutate(i_vPermutation)
-			);
+		::std::transform
+		(	begin(*this)
+		,	end(*this)
+		,	begin(vPermutationResult)
+		,	[	i_vPermutation
+			]	(	BitClause
+						i_vClause
+				)
+			->	BitClause
+			{	return i_vClause.Permutation(i_vPermutation);	}
+		);
 
-		return {vCopy};
+		return {vPermutationResult};
 	}
 
 	auto constexpr
 	(	BitTerm
-		::IsAbsorbing
+	::	IsAbsorbing
 	)	()	const
 	->	bool
 	{	return Clauses[0uz].IsAbsorbing();	}
 
 	auto constexpr
 	(	BitTerm
-		::IsIdentity
+	::	IsIdentity
 	)	()	const
 	->	bool
 	{	return Clauses[0uz].IsIdentity();	}
 
 	auto constexpr
 	(	BitTerm
-		::operator []
+	::	operator []
 	)	(	USize
 				i_nIndex
 		)	const&
 	->	BitClause
 	{
-		if	(IsAbsorbing())
-			return Clauses[0uz];
-
-		if	(i_nIndex >= ClauseCount(*this))
-			return BitClause::Identity();
+		if	(i_nIndex >= SubtermLimit)
+			throw "Index beyond Subtermlimit!";
 
 		return Clauses[i_nIndex];
 	}
@@ -207,7 +291,7 @@ namespace
 			&	i_rTerm
 		)
 	->	BitClause const*
-	{	return i_rTerm.Clauses.data();	}
+	{	return i_rTerm.Clauses;	}
 
 	auto constexpr
 	(	end
@@ -217,8 +301,8 @@ namespace
 	->	BitClause const*
 	{	return
 		::std::lower_bound
-		(	i_rTerm.Clauses.data()
-		,	i_rTerm.Clauses.data() + SubtermLimit
+		(	i_rTerm.Clauses
+		,	i_rTerm.Clauses + SubtermLimit
 		,	BitClause::Identity()
 		);
 	}
@@ -241,7 +325,8 @@ namespace
 	}
 
 	auto constexpr
-	(	operator or [[nodiscard]]
+	(	Intersection
+		[[nodiscard]]
 	)	(	BitTerm const
 			&	i_rLeftTerm
 		,	BitTerm const
@@ -284,14 +369,15 @@ namespace
 		{	nMaxClauseCount
 		};
 
-		vOptimizer.insert({i_rLeftTerm.Clauses.data(), nLeftClauseCount});
-		vOptimizer.insert({i_rRightTerm.Clauses.data(), nRightClauseCount});
+		vOptimizer.insert(i_rLeftTerm);
+		vOptimizer.insert(i_rRightTerm);
 
 		return {::std::move(vOptimizer)};
 	}
 
 	auto constexpr
-	(	operator and [[nodiscard]]
+	(	Union
+		[[nodiscard]]
 	)	(	BitTerm const
 			&	i_rLeftTerm
 		,	BitTerm const
@@ -341,7 +427,8 @@ namespace
 	}
 
 	auto constexpr
-	(	operator not [[nodiscard]]
+	(	Negation
+		[[nodiscard]]
 	)	(	BitTerm const
 			&	i_rTerm
 		)

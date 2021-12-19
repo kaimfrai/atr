@@ -1,12 +1,19 @@
 export module Meta.Logic2.Test.Data;
 
-export import Meta.Logic.BitTerm;
+// export import Meta.Logic.Conjunction;
+//
+// using Term = Meta::Logic::Conjunction;
+
+export import Meta.Logic.Disjunction;
+
+using Term = Meta::Logic::Disjunction;
 
 ///	Constants
-export ::Meta::Logic::BitTerm constexpr inline T = ::Meta::Logic::BitClause::Absorbing();
-export ::Meta::Logic::BitTerm constexpr inline F = ::Meta::Logic::BitClause::Identity();
+export Term constexpr inline T = Term::True();
+export Term constexpr inline F = Term::False();
 
 /// Literals
-export ::Meta::Logic::BitTerm constexpr inline p = ::Meta::Logic::BitClause{0uz};
-export ::Meta::Logic::BitTerm constexpr inline q = ::Meta::Logic::BitClause{1uz};
-export ::Meta::Logic::BitTerm constexpr inline r = ::Meta::Logic::BitClause{2uz};
+export Term constexpr inline p = Term::Literal(0uz);
+export Term constexpr inline q = Term::Literal(1uz);
+export Term constexpr inline r = Term::Literal(2uz);
+

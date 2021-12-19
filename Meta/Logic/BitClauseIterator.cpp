@@ -7,7 +7,7 @@ namespace
 	Meta::Logic
 {
 	export class
-		BitClauseIterator
+		BitClauseIterator final
 	{
 		BitClause
 			m_vClause
