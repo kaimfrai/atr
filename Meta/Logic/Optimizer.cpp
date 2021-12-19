@@ -5,6 +5,8 @@ import Std.Numeric;
 import Std.Iterator;
 import Std.Span;
 
+import Meta.Logic.BitClauseIterator;
+
 export import Meta.Logic.BitClause;
 
 namespace
@@ -14,96 +16,15 @@ namespace
 		Optimizer
 	{
 		BitClause
-		*	const
-			m_aTermBegin
+		*	m_aTermBegin
 		;
 		BitClause
 		*	m_aTermEnd
 		;
 
-	public:
-		friend auto constexpr
-		(	begin
-		)	(	Optimizer const
-				&	i_rOptimizer
-			)
-		->	BitClause*
-		;
-
-		friend auto constexpr
-		(	end
-		)	(	Optimizer const
-				&	i_rOptimizer
-			)
-		;
-
-		explicit constexpr
-		(	Optimizer
-		)	(	USize
-			)
-		;
-
-		constexpr
-		(	compl Optimizer
-		)	()
-		;
-
-		auto constexpr
-		(	CopyInto
-		)	(	::std::span<BitClause>
-			)	const
-		->	void
-		;
-
-		auto constexpr
-		(	clear
-		)	()
-		->	void
-		;
-
-		auto constexpr
-		(	size
-		)	()	const
-		->	USize
-		;
-
-		auto constexpr
-		(	IsAbsorbing
-		)	()	const
-		->	bool
-		;
-
-		auto constexpr
-		(	IsIdentity
-		)	()	const
-		->	bool
-		;
-
 		auto constexpr
 		(	ReverseView
 		)	()	const
-		;
-
-		auto constexpr
-		(	erase
-		)	(	BitClause
-				*	i_aErasePosition
-			)
-		->	BitClause*
-		;
-
-		auto constexpr
-		(	insert
-		)	(	BitClause
-			)
-		->	BitClause*
-		;
-
-		auto constexpr
-		(	insert
-		)	(	::std::span<BitClause const>
-			)
-		->	void
 		;
 
 		auto constexpr
@@ -145,28 +66,52 @@ namespace
 			)
 		->	void
 		;
-	};
 
-	auto constexpr
-	(	begin
-	)	(	Optimizer const
-			&	i_rOptimizer
-		)
-	->	BitClause*
-	{	return i_rOptimizer.m_aTermBegin;	}
+	public:
+		friend auto constexpr
+		(	swap
+		)	(	Optimizer&
+			,	Optimizer&
+			)
+		->	void
+		;
 
-	auto constexpr
-	(	end
-	)	(	Optimizer const
-			&	i_rOptimizer
-		)
-	{	//	does not get invalidated when the size changes
-		struct
+		friend auto constexpr
+		(	begin
+		)	(	Optimizer const
+				&	i_rOptimizer
+			)
+		->	BitClause*
+		;
+
+		class
+			Sentinel final
 		{
 			BitClause
 			*	const
 			&	m_rTermEnd
 			;
+
+			constexpr
+			(	Sentinel
+			)	(	BitClause
+					*	const
+					&	i_rTermEnd
+				)
+			:	m_rTermEnd
+				{	i_rTermEnd
+				}
+			{}
+
+			friend auto constexpr
+			(	end
+			)	(	Optimizer const
+					&
+				)
+			->	Sentinel
+			;
+
+		public:
 			auto constexpr
 			(	operator ==
 			)	(	BitClause
@@ -176,96 +121,94 @@ namespace
 			{
 				return i_aClause == m_rTermEnd;
 			}
-		}	vSentinel
-		{	i_rOptimizer.m_aTermEnd
 		};
-		return vSentinel;
-	}
 
-	constexpr
-	(	Optimizer
-		::Optimizer
-	)	(	USize
-				i_nClauseCount
-		)
-	:	m_aTermBegin
-		{	new	BitClause
-			[	i_nClauseCount
-			]
+		friend auto constexpr
+		(	end
+		)	(	Optimizer const
+				&	i_rOptimizer
+			)
+		->	Sentinel
+		;
+
+		explicit constexpr
+		(	Optimizer
+		)	(	USize
+			)
+		;
+
+		constexpr
+		(	compl Optimizer
+		)	()
+		;
+
+		constexpr
+		(	operator
+			BitClauseArray
+		)	()	&&
+		{
+			Optimize(true);
+			if	(SubtermLimit < size())
+				throw "Optimized term contains to many clauses to copy!";
+
+			BitClauseArray
+				vArray
+			{};
+
+			::std::copy
+			(	m_aTermBegin
+			,	m_aTermEnd
+			,	begin(vArray)
+			);
+			return vArray;
 		}
-	,	m_aTermEnd
-		{	m_aTermBegin
-		}
-	{}
 
-	constexpr
-	(	Optimizer
-		::compl Optimizer
-	)	()
-	{
-		delete[]
-			m_aTermBegin
+		auto constexpr
+		(	clear
+		)	()
+		->	void
 		;
-	}
 
-	auto constexpr
-	(	Optimizer
-		::CopyInto
-	)	(	::std::span<BitClause>
-				i_vOutTerm
-		)	const
-	->	void
-	{
-		if	(i_vOutTerm.size() < size())
-			throw "Optimized term contains to many clauses to copy!";
-
-		::std::copy
-		(	m_aTermBegin
-		,	m_aTermEnd
-		,	begin(i_vOutTerm)
-		);
-	}
-
-	auto constexpr
-	(	Optimizer
-		::clear
-	)	()
-	->	void
-	{	m_aTermEnd = m_aTermBegin;	}
-
-	auto constexpr
-	(	Optimizer
-		::size
-	)	()	const
-	->	USize
-	{	return
-		static_cast<USize>
-		(	m_aTermEnd
-		-	m_aTermBegin
-		);
-	}
-
-	auto constexpr
-	(	Optimizer
-		::IsAbsorbing
-	)	()	const
-	->	bool
-	{	return
-			size() >= 1uz
-		and	m_aTermBegin[0uz].IsAbsorbing()
+		auto constexpr
+		(	size
+		)	()	const
+		->	USize
 		;
-	}
 
-	auto constexpr
-	(	Optimizer
-		::IsIdentity
-	)	()	const
-	->	bool
-	{	return
-			size()
-		==	0uz
+		auto constexpr
+		(	IsAbsorbing
+		)	()	const
+		->	bool
 		;
-	}
+
+		auto constexpr
+		(	IsIdentity
+		)	()	const
+		->	bool
+		;
+
+		auto constexpr
+		(	erase
+		)	(	BitClause
+				*	i_aErasePosition
+			)
+		->	BitClause*
+		;
+
+		auto constexpr
+		(	insert
+		)	(	BitClause
+			)
+		->	BitClause*
+		;
+
+		auto constexpr
+		(	insert
+		)	(	::std::span<BitClause const>
+			)
+		->	void
+		;
+	};
 
 	auto constexpr
 	(	Optimizer
@@ -303,101 +246,6 @@ namespace
 		,	m_aTermEnd
 		};
 		return vReverseView;
-	}
-
-	auto constexpr
-	(	Optimizer
-		::erase
-	)	(	BitClause
-			*	i_aEraseClause
-		)
-	->	BitClause*
-	{
-		if	(	not
-				(	i_aEraseClause >= m_aTermBegin
-				and	i_aEraseClause < m_aTermEnd
-				)
-			)
-			return m_aTermEnd;
-
-		BitClause
-		*	aNext
-		=	::std::next
-			(	i_aEraseClause
-			)
-		;
-		(	m_aTermEnd
-		=	::std::move
-			(	aNext
-			,	m_aTermEnd
-			,	i_aEraseClause
-			)
-		);
-		return aNext;
-	}
-
-	auto constexpr
-	(	Optimizer
-		::insert
-	)	(	BitClause
-				i_vInsertClause
-		)
-	->	BitClause*
-	{
-		if	(	IsAbsorbing()
-			or	i_vInsertClause.IsIdentity()
-			)
-			return m_aTermEnd;
-
-		if	(	IsIdentity()
-			or	i_vInsertClause.IsAbsorbing()
-			)
-		{
-			*m_aTermBegin = i_vInsertClause;
-			m_aTermEnd = ::std::next(m_aTermBegin);
-			return m_aTermBegin;
-		}
-
-		BitClause
-		*	aInsertPosition
-		=	m_aTermEnd
-		;
-		for	(	BitClause
-				&	rClause
-			:	ReverseView()
-			)
-		{
-			//	insert clause is redundant
-			if	(i_vInsertClause.Includes(rClause))
-				return m_aTermEnd;
-
-			//	overwrite redundant clause
-			if	(rClause.Includes(i_vInsertClause))
-			{
-				rClause = i_vInsertClause;
-				erase(aInsertPosition);
-				aInsertPosition = &rClause;
-			}
-		}
-
-		if	(aInsertPosition == m_aTermEnd)
-			*(m_aTermEnd++) = i_vInsertClause;
-		return aInsertPosition;
-	}
-
-	auto constexpr
-	(	Optimizer
-		::insert
-	)	(	::std::span<BitClause const>
-				i_vInsertTerm
-		)
-	->	void
-	{
-		for	(	BitClause
-					vInsertClause
-			:	i_vInsertTerm
-			)
-			insert(vInsertClause);
 	}
 
 	auto constexpr
@@ -516,23 +364,11 @@ namespace
 			:	*this
 			)
 		{
-			for	(	USize
-						nIndex
-					=	0uz
-				;		nIndex
-					<	SubtermLimit
-				;	++	nIndex
+			for	(	BitClause const
+						vLiteral
+				:	rClause
 				)
 			{
-				BitClause const
-					vLiteral
-				=	rClause
-					[	nIndex
-					]
-				;
-				if	(vLiteral.IsAbsorbing())
-					continue;
-
 				if	(	(	i_rRedundancyBuffer
 						.	ComputeLiteralRedundancy
 						)(	vLiteral
@@ -598,5 +434,204 @@ namespace
 		(	vRedundancyBuffer
 		,	i_bConsiderAlternatives
 		);
+	}
+
+	auto constexpr
+	(	swap
+	)	(	Optimizer
+			&	i_rLeft
+		,	Optimizer
+			&	i_rRight
+		)
+	->	void
+	{
+		::std::swap
+		(	i_rLeft.m_aTermBegin
+		,	i_rRight.m_aTermBegin
+		);
+		::std::swap
+		(	i_rLeft.m_aTermEnd
+		,	i_rRight.m_aTermEnd
+		);
+	}
+
+	auto constexpr
+	(	begin
+	)	(	Optimizer const
+			&	i_rOptimizer
+		)
+	->	BitClause*
+	{	return i_rOptimizer.m_aTermBegin;	}
+
+	auto constexpr
+	(	end
+	)	(	Optimizer const
+			&	i_rOptimizer
+		)
+	->	Optimizer::Sentinel
+	{	//	does not get invalidated when the size changes
+		return {i_rOptimizer.m_aTermEnd};
+	}
+
+	constexpr
+	(	Optimizer
+		::Optimizer
+	)	(	USize
+				i_nClauseCount
+		)
+	:	m_aTermBegin
+		{	new	BitClause
+			[	i_nClauseCount
+			]
+		}
+	,	m_aTermEnd
+		{	m_aTermBegin
+		}
+	{}
+
+	constexpr
+	(	Optimizer
+		::compl Optimizer
+	)	()
+	{
+		delete[]
+			m_aTermBegin
+		;
+	}
+
+	auto constexpr
+	(	Optimizer
+		::clear
+	)	()
+	->	void
+	{	m_aTermEnd = m_aTermBegin;	}
+
+	auto constexpr
+	(	Optimizer
+		::size
+	)	()	const
+	->	USize
+	{	return
+		static_cast<USize>
+		(	m_aTermEnd
+		-	m_aTermBegin
+		);
+	}
+
+	auto constexpr
+	(	Optimizer
+		::IsAbsorbing
+	)	()	const
+	->	bool
+	{	return
+			size() >= 1uz
+		and	m_aTermBegin[0uz].IsAbsorbing()
+		;
+	}
+
+	auto constexpr
+	(	Optimizer
+		::IsIdentity
+	)	()	const
+	->	bool
+	{	return
+			size()
+		==	0uz
+		;
+	}
+
+	auto constexpr
+	(	Optimizer
+		::erase
+	)	(	BitClause
+			*	i_aEraseClause
+		)
+	->	BitClause*
+	{
+		if	(	not
+				(	i_aEraseClause >= m_aTermBegin
+				and	i_aEraseClause < m_aTermEnd
+				)
+			)
+			return m_aTermEnd;
+
+		BitClause
+		*	aNext
+		=	::std::next
+			(	i_aEraseClause
+			)
+		;
+		(	m_aTermEnd
+		=	::std::move
+			(	aNext
+			,	m_aTermEnd
+			,	i_aEraseClause
+			)
+		);
+		return aNext;
+	}
+
+	auto constexpr
+	(	Optimizer
+		::insert
+	)	(	BitClause
+				i_vInsertClause
+		)
+	->	BitClause*
+	{
+		if	(	IsAbsorbing()
+			or	i_vInsertClause.IsIdentity()
+			)
+			return m_aTermEnd;
+
+		if	(	IsIdentity()
+			or	i_vInsertClause.IsAbsorbing()
+			)
+		{
+			*m_aTermBegin = i_vInsertClause;
+			m_aTermEnd = ::std::next(m_aTermBegin);
+			return m_aTermBegin;
+		}
+
+		BitClause
+		*	aInsertPosition
+		=	m_aTermEnd
+		;
+		for	(	BitClause
+				&	rClause
+			:	ReverseView()
+			)
+		{
+			//	insert clause is redundant
+			if	(i_vInsertClause.Includes(rClause))
+				return m_aTermEnd;
+
+			//	overwrite redundant clause
+			if	(rClause.Includes(i_vInsertClause))
+			{
+				rClause = i_vInsertClause;
+				erase(aInsertPosition);
+				aInsertPosition = &rClause;
+			}
+		}
+
+		if	(aInsertPosition == m_aTermEnd)
+			*(m_aTermEnd++) = i_vInsertClause;
+		return aInsertPosition;
+	}
+
+	auto constexpr
+	(	Optimizer
+		::insert
+	)	(	::std::span<BitClause const>
+				i_vInsertTerm
+		)
+	->	void
+	{
+		for	(	BitClause
+					vInsertClause
+			:	i_vInsertTerm
+			)
+			insert(vInsertClause);
 	}
 }

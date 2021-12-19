@@ -1,8 +1,10 @@
 export module Meta.Logic.BitClause;
 
-export import Meta.Common;
+export import Std.Array;
 export import Std.Bit;
 export import Std.Span;
+
+export import Meta.Common;
 
 namespace
 	Meta::Logic
@@ -33,7 +35,6 @@ namespace
 		->	BitClause
 		;
 
-
 		static auto constexpr
 		(	Identity
 		)	()
@@ -47,8 +48,7 @@ namespace
 
 		explicit constexpr
 		(	BitClause
-		)	(	FieldType
-			,	FieldType
+		)	(	USize
 			)
 		;
 
@@ -69,13 +69,6 @@ namespace
 		(	IsIdentity
 		)	()	const
 		->	bool
-		;
-
-		friend auto constexpr
-		(	LiteralCount
-		)	(	BitClause
-			)
-		->	USize
 		;
 
 		auto constexpr
@@ -114,7 +107,28 @@ namespace
 			)	const
 		->	bool
 		;
+
+		auto constexpr
+		(	FirstLiteral
+		)	()	const
+		->	BitClause
+		;
 	};
+
+	export using
+		BitClauseArray
+	=	::std::array
+		<	BitClause
+		,	SubtermLimit
+		>
+	;
+
+	export auto constexpr
+	(	LiteralCount
+	)	(	BitClause
+		)
+	->	USize
+	;
 
 	export auto constexpr
 	(	Inverse
@@ -151,13 +165,16 @@ namespace
 	(	BitClause
 		::BitIndexToField
 	)	(	USize
-				i_vIndex
+				i_nIndex
 		)
 	->	FieldType
-	{	return
+	{
+		if	(i_nIndex >= SubtermLimit)
+			throw "Index to large to convert to a bit field!";
+		return
 		static_cast<FieldType>
 		(	1uz
-		<<	i_vIndex
+		<<	i_nIndex
 		);
 	}
 
@@ -167,7 +184,6 @@ namespace
 	)	()
 	->	BitClause
 	{	return Inverse(Identity());	}
-
 
 	auto constexpr
 	(	BitClause
@@ -204,26 +220,16 @@ namespace
 	constexpr
 	(	BitClause
 		::BitClause
-	)	(	FieldType
+	)	(	USize
 				i_nPositive
-		,	FieldType
-				i_nNegative
 		)
 	:	Positive
-		{	(	i_nPositive
-			bitand
-				i_nNegative
+		{	BitIndexToField
+			(	i_nPositive
 			)
-		?	Identity().Positive
-		:	i_nPositive
 		}
 	,	Negative
-		{	(	i_nPositive
-			bitand
-				i_nNegative
-			)
-		?	Identity().Negative
-		:	i_nNegative
+		{	Absorbing().Negative
 		}
 	{}
 
@@ -303,7 +309,7 @@ namespace
 		if	(	i_vClause.Positive
 			==	i_vClause.Negative
 			)
-			return 0u;
+			return 0uz;
 
 		return
 		static_cast<USize>
@@ -420,7 +426,7 @@ namespace
 	->	BitClause
 	{
 		if	(i_nIndex >= SubtermLimit)
-			return Absorbing();
+			throw "Index beyond Subtermlimit!";
 
 		if	(IsIdentity())
 			return i_nIndex == 0u ? *this : Absorbing();
@@ -483,5 +489,44 @@ namespace
 			)
 		.	IsAbsorbing()
 		);
+	}
+
+	auto constexpr
+	(	BitClause
+		::FirstLiteral
+	)	()	const
+	->	BitClause
+	{
+		USize const
+			nFirstPositiveIndex
+		=	static_cast
+			<	USize
+			>(	::std::countr_zero
+				(	Positive
+				)
+			)
+		;
+		USize const
+			nFirstNegativeIndex
+		=	static_cast
+			<	USize
+			>(	::std::countr_zero
+				(	Negative
+				)
+			)
+		;
+
+		BitClause
+			vResult
+		=	Absorbing()
+		;
+		if	(nFirstPositiveIndex < nFirstNegativeIndex)
+			vResult.Positive = BitIndexToField(nFirstPositiveIndex);
+		else
+		if	(nFirstPositiveIndex > nFirstNegativeIndex)
+			vResult.Negative = BitIndexToField(nFirstNegativeIndex);
+		else
+			return Identity();
+		return vResult;
 	}
 }

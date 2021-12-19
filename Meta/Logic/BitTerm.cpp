@@ -5,7 +5,9 @@ import Std.Numeric;
 import Meta.Logic.Optimizer;
 
 export import Meta.Logic.BitClause;
+export import Meta.Logic.BitClauseIterator;
 export import Std.Span;
+export import Std.Array;
 
 namespace
 	Meta::Logic
@@ -13,10 +15,10 @@ namespace
 	export struct
 		BitTerm
 	{
-		BitClause
+		using ClauseArrayType = ::std::array<BitClause, SubtermLimit>;
+		ClauseArrayType const
 			Clauses
-		[	SubtermLimit
-		]{};
+		{};
 
 		constexpr
 		(	BitTerm
@@ -24,6 +26,19 @@ namespace
 				=	BitClause::Identity()
 			)
 		;
+
+	private:
+		constexpr
+		(	BitTerm
+		)	(	ClauseArrayType const
+				&	i_rClauses
+			)
+		:	Clauses
+			{	i_rClauses
+			}
+		{}
+
+	public:
 
 		auto constexpr
 		(	Permutate
@@ -61,23 +76,9 @@ namespace
 
 		friend auto constexpr
 		(	begin
-		)	(	BitTerm&
-			)
-		->	BitClause*
-		;
-
-		friend auto constexpr
-		(	begin
 		)	(	BitTerm const&
 			)
 		->	BitClause const*
-		;
-
-		friend auto constexpr
-		(	end
-		)	(	BitTerm&
-			)
-		->	BitClause*
 		;
 
 		friend auto constexpr
@@ -136,9 +137,9 @@ namespace
 		)	const
 	->	BitTerm
 	{
-		BitTerm
+		ClauseArrayType
 			vCopy
-		=	*this
+		=	Clauses
 		;
 
 		for	(	BitClause
@@ -149,7 +150,7 @@ namespace
 			=	rClause.Permutate(i_vPermutation)
 			);
 
-		return vCopy;
+		return {vCopy};
 	}
 
 	auto constexpr
@@ -202,33 +203,11 @@ namespace
 
 	auto constexpr
 	(	begin
-	)	(	BitTerm
-			&	i_rTerm
-		)
-	->	BitClause*
-	{	return i_rTerm.Clauses;	}
-
-	auto constexpr
-	(	begin
 	)	(	BitTerm const
 			&	i_rTerm
 		)
 	->	BitClause const*
-	{	return i_rTerm.Clauses;	}
-
-	auto constexpr
-	(	end
-	)	(	BitTerm
-			&	i_rTerm
-		)
-	->	BitClause*
-	{	return
-		::std::lower_bound
-		(	i_rTerm.Clauses
-		,	i_rTerm.Clauses + SubtermLimit
-		,	BitClause::Identity()
-		);
-	}
+	{	return i_rTerm.Clauses.data();	}
 
 	auto constexpr
 	(	end
@@ -238,8 +217,8 @@ namespace
 	->	BitClause const*
 	{	return
 		::std::lower_bound
-		(	i_rTerm.Clauses
-		,	i_rTerm.Clauses + SubtermLimit
+		(	i_rTerm.Clauses.data()
+		,	i_rTerm.Clauses.data() + SubtermLimit
 		,	BitClause::Identity()
 		);
 	}
@@ -305,19 +284,10 @@ namespace
 		{	nMaxClauseCount
 		};
 
-		vOptimizer.insert({i_rLeftTerm.Clauses, nLeftClauseCount});
-		vOptimizer.insert({i_rRightTerm.Clauses, nRightClauseCount});
+		vOptimizer.insert({i_rLeftTerm.Clauses.data(), nLeftClauseCount});
+		vOptimizer.insert({i_rRightTerm.Clauses.data(), nRightClauseCount});
 
-		vOptimizer.Optimize
-		(	true
-		);
-		BitTerm
-			vResult
-		{};
-
-		vOptimizer.CopyInto(vResult.Clauses);
-
-		return vResult;
+		return {::std::move(vOptimizer)};
 	}
 
 	auto constexpr
@@ -366,13 +336,8 @@ namespace
 				vOptimizer.insert(Union(i_vLeftClause, i_vRightClause));
 			}
 		}
-		vOptimizer.Optimize(true);
 
-		BitTerm
-			vResult
-		{};
-		vOptimizer.CopyInto(vResult.Clauses);
-		return vResult;
+		return {::std::move(vOptimizer)};
 	}
 
 	auto constexpr
@@ -388,80 +353,59 @@ namespace
 		if	(i_rTerm.IsIdentity())
 			return BitClause::Absorbing();
 
-		if	(ClauseCount(i_rTerm) == 1uz)
+		USize const
+			nMaxClauseCount
+		=	::std::transform_reduce
+			(	begin(i_rTerm)
+			,	end(i_rTerm)
+			,	1uz
+			,	::std::multiplies<USize>{}
+			,	LiteralCount
+			)
+		;
+
+		Optimizer
+			vOptimizer
+		{	nMaxClauseCount
+		};
+		vOptimizer.insert(BitClause::Absorbing());
+
+		Optimizer
+			vResultBuffer
+		{	nMaxClauseCount
+		};
+
+		for	(	BitClause const
+					vClause
+			:	i_rTerm
+			)
 		{
-			BitTerm vResult{};
-			for	(	USize
-						nLiteralIndex
-					=	0uz
-					,	nLiteralCount
-					=	0uz
-				;	(	(	nLiteralIndex
-						<	SubtermLimit
-						)
-					and	(	nLiteralCount
-						<	LiteralCount(i_rTerm[0uz])
-						)
-					)
-				;	++	nLiteralIndex
+			for	(	BitClause const
+						vLiteral
+				:	vClause
 				)
 			{
 				BitClause const
-					vLiteral
-				=	i_rTerm[0uz]
-					[	nLiteralIndex
-					]
+					vNegatedLiteral
+				=	Inverse(vLiteral)
 				;
-				if	(vLiteral.IsAbsorbing())
-					continue;
-
-				(	vResult.Clauses[nLiteralCount]
-				=	Inverse
-					(	vLiteral
+				for	(	BitClause const
+							vCurrentClause
+					:	vOptimizer
 					)
-				);
-				++nLiteralCount;
-			}
-
-			return
-				vResult
-			;
-		}
-
-		if	(	::std::all_of
-				(	begin(i_rTerm)
-				,	end(i_rTerm)
-				,	[]	(	BitClause
-								i_vClause
+				{
+					vResultBuffer.insert
+					(	Union
+						(	vNegatedLiteral
+						,	vCurrentClause
 						)
-					->	bool
-					{	return
-							LiteralCount
-							(	i_vClause
-							)
-						==	1uz
-						;
-					}
-				)
-			)
-		{
-			return
-			::std::transform_reduce
-			(	begin(i_rTerm)
-			,	end(i_rTerm)
-			,	BitClause::Absorbing()
-			,	Union
-			,	Inverse
-			);
+					);
+				}
+			}
+			vOptimizer.clear();
+			swap(vResultBuffer, vOptimizer);
 		}
 
-		return
-		::std::transform_reduce
-		(	begin(i_rTerm)
-		,	end(i_rTerm)
-		,	BitTerm{BitClause::Absorbing()}
-		,	::std::logical_and<>{}
-		,	::std::logical_not<>{}
-		);
+		return {::std::move(vOptimizer)};
 	}
 }
