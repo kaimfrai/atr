@@ -1,26 +1,41 @@
-function(read_module_name
+function(invoke_preprocessor
 	file_name
+	out_preprocessed_file
+)
+	execute_process(
+	COMMAND
+		${CMAKE_CXX_COMPILER}
+		#${CXX_STANDARD_VERSION_FLAG}
+		${CXX_STANDARD_LIBRARY_FLAG}
+		${WARNING_FLAGS}
+		${ADDITIONAL_COMPILE_OPTIIONS}
+		--preprocess --no-line-commands
+		${CMAKE_CURRENT_SOURCE_DIR}/${file_name}
+	OUTPUT_VARIABLE
+		preprocessed_file
+	)
+	set(${out_preprocessed_file} ${preprocessed_file} PARENT_SCOPE)
+endfunction()
+
+function(read_module_name
+	preprocessed_file
 	out_module_name
 	out_module_file
 )
-	file(STRINGS ${file_name} module_name REGEX "export module ")
-	list(TRANSFORM module_name REPLACE "export module " "")
-	string(STRIP ${module_name} module_name)
+	string(REGEX MATCH "export[ \t\r\n]+module[ \t\r\n]+[a-zA-Z_][a-zA-Z0-9_.]*" module_name "${preprocessed_file}")
+	list(TRANSFORM module_name REPLACE "export[ \t\r\n]+module[ \t\r\n]+" "")
 
 	set(${out_module_name} ${module_name} PARENT_SCOPE)
 	set(${out_module_file} ${PREBUILT_MODULE_PATH}/${module_name}.pcm PARENT_SCOPE)
 endfunction()
 
 function(read_module_dependencies
-	file_name
+	preprocessed_file
 	out_module_dependencies
 	out_module_dependency_files
 )
-	file(STRINGS ${file_name} module_dependencies REGEX "import [^\<]")
-	list(FILTER module_dependencies EXCLUDE REGEX "^/")
-	list(TRANSFORM module_dependencies REPLACE "export " "")
-	list(TRANSFORM module_dependencies REPLACE "import " "")
-	list(TRANSFORM module_dependencies STRIP)
+	string(REGEX MATCHALL "import[ \t\r\n]+[a-zA-Z_][a-zA-Z0-9_.]*" module_dependencies "${preprocessed_file}")
+	list(TRANSFORM module_dependencies REPLACE "import[ \t\r\n]+" "")
 
 	set(${out_module_dependencies} ${module_dependencies} PARENT_SCOPE)
 
@@ -55,8 +70,9 @@ endfunction()
 function(add_module
 	module_interface_file
 )
-	read_module_name(${module_interface_file} module_name module_file)
-	read_module_dependencies(${module_interface_file} module_dependencies module_dependency_files)
+	invoke_preprocessor(${module_interface_file} preprocessed_module_file)
+	read_module_name("${preprocessed_module_file}" module_name module_file)
+	read_module_dependencies("${preprocessed_module_file}" module_dependencies module_dependency_files)
 
 	add_custom_command(
 	OUTPUT
@@ -67,7 +83,8 @@ function(add_module
 		${CXX_STANDARD_LIBRARY_FLAG}
 		${WARNING_FLAGS}
 		${MODULE_FLAGS}
-		-c ${CMAKE_CURRENT_SOURCE_DIR}/${module_interface_file}
+		${ADDITIONAL_COMPILE_OPTIIONS}
+		--compile ${CMAKE_CURRENT_SOURCE_DIR}/${module_interface_file}
 		-Xclang -emit-module-interface
 		-o ${module_file}
 	VERBATIM
@@ -102,7 +119,9 @@ function(add_module_dependencies
 	)
 
 	foreach(source_file IN LISTS target_source_files)
-		read_module_dependencies(${source_file} module_dependencies module_dependency_files)
+
+		invoke_preprocessor(${source_file} preprocessed_module_file)
+		read_module_dependencies("${preprocessed_module_file}" module_dependencies module_dependency_files)
 		add_module_source_dependencies(
 			${target_name}
 			${source_file}

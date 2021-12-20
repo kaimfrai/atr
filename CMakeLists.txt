@@ -56,11 +56,16 @@ set(MODULE_FLAGS
 	-fmodules-cache-path=${PREBUILT_MODULE_PATH}
 	-Xclang -fdisable-module-hash
 )
+set(ADDITIONAL_COMPILE_OPTIONS
+	-fconstexpr-backtrace-limit=0
+	-frelaxed-template-template-args
+)
+
 add_compile_options(
 	${CXX_STANDARD_LIBRARY_FLAG}
 	${WARNING_FLAGS}
 	${MODULE_FLAGS}
-	-fconstexpr-backtrace-limit=0
+	${ADDITIONAL_COMPILE_OPTIIONS}
 )
 add_link_options(
 	${CXX_STANDARD_LIBRARY_FLAG}
@@ -84,6 +89,8 @@ add_module_dependencies(${PROJECT_NAME}
 	Std
 	Meta
 )
+
+
 
 install(
 TARGETS
