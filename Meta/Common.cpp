@@ -15,6 +15,28 @@ export namespace
 		SSize
 	=	decltype(0z)
 	;
+
+	auto constexpr
+	(	SetBits
+	)	(	USize
+				i_nBitCount
+		)
+	->	USize
+	{
+		auto constexpr
+			nMaxBits
+		=	8uz * sizeof(USize)
+		;
+		if	(i_nBitCount > nMaxBits)
+			throw "Attempted to set more bits than exist in USize!";
+
+		return
+			compl 0uz
+		>>	(	nMaxBits
+			-	i_nBitCount
+			)
+		;
+	}
 }
 
 template

@@ -3,6 +3,8 @@ export module Meta.Logic2;
 import Std.Array;
 import Meta.Logic.Disjunction;
 
+export import Meta.Pack;
+
 namespace
 	Meta::Logic
 {
@@ -98,10 +100,119 @@ namespace
 	};
 }
 
-export namespace
+namespace
 	Meta
 {
 	template
+		<	Logic::BitClause
+				t_vLiteral
+		,	typename
+			...	t_tpPredicate
+		,	typename
+			...	t_tpArgument
+		>
+	auto constexpr
+	(	EvaluateLiteral
+	)	(	Tuple<t_tpPredicate...> const
+			&	i_rPredicates
+		,	t_tpArgument
+			&&
+			...	i_rpArgument
+		)
+	->	bool
+	{
+		if	constexpr(t_vLiteral.Positive)
+		{
+			auto constexpr nIndex = ::std::countr_zero(t_vLiteral.Positive);
+			return i_rPredicates[Index<nIndex>{}](::std::forward<t_tpArgument>(i_rpArgument)...);
+		}
+		else
+		{
+			auto constexpr nIndex = ::std::countr_zero(t_vLiteral.Negative);
+			return not i_rPredicates[Index<nIndex>{}](::std::forward<t_tpArgument>(i_rpArgument)...);
+		}
+	}
+
+	template
+		<	Logic::BitClause
+				t_vClause
+		,	::std::size_t
+			...	t_npLiteralIndex
+		,	typename
+			...	t_tpPredicate
+		,	typename
+			...	t_tpArgument
+		>
+	auto constexpr
+	(	EvaluateClause
+	)	(	::std::index_sequence
+			<	t_npLiteralIndex
+				...
+			>
+		,	Tuple<t_tpPredicate...> const
+			&	i_rPredicates
+		,	t_tpArgument
+			&&
+			...	i_rpArgument
+		)
+	->	bool
+	{	return
+		(	...
+		and	EvaluateLiteral<t_vClause[t_npLiteralIndex]>
+			(	i_rPredicates
+			,	::std::forward
+				<	t_tpArgument
+				>(	i_rpArgument
+				)
+				...
+			)
+		);
+	}
+
+	template
+		<	Logic::Disjunction
+				t_vTerm
+		,	::std::size_t
+			...	t_npClauseIndex
+		,	typename
+			...	t_tpPredicate
+		,	typename
+			...	t_tpArgument
+		>
+	auto constexpr
+	(	EvaluateTerm
+	)	(	::std::index_sequence
+			<	t_npClauseIndex
+				...
+			>
+		,	Tuple<t_tpPredicate...> const
+			&	i_rPredicates
+		,	t_tpArgument
+			&&
+			...	i_rpArgument
+		)
+	->	bool
+	{
+		return
+		(	...
+		or	EvaluateClause<t_vTerm.Term[t_npClauseIndex]>
+			(	::std::make_index_sequence
+				<	t_vTerm.Term[t_npClauseIndex]
+				.	LiteralCount()
+				>{}
+			,	i_rPredicates
+			,	::std::forward
+				<	t_tpArgument
+				>(	i_rpArgument
+				)
+				...
+			)
+		);
+	}
+
+
+
+	export template
 		<	Logic::Disjunction
 				t_vTerm
 		,	typename
@@ -110,6 +221,10 @@ export namespace
 	struct
 		Term
 	{
+		Tuple<t_tpPredicate...> const
+			Predicates
+		;
+
 		template
 			<	typename
 				...	t_tpNewPredicate
@@ -267,6 +382,32 @@ export namespace
 			return
 				Term<vResultTerm>::SetPredicates(vIndexMap);
 		}
+
+		template
+			<	typename
+				...	t_tpArgument
+			>
+		auto constexpr
+		(	operator ()
+		)	(	t_tpArgument
+				&&
+				...	i_rpArgument
+			)
+		->	bool
+		{	return
+			EvaluateTerm
+			<	t_vTerm
+			>(	::std::make_index_sequence
+				<	t_vTerm.ClauseCount()
+				>{}
+			,	Predicates
+			,	::std::forward
+				<	t_tpArgument
+				>(	i_rpArgument
+				)
+				...
+			);
+		}
 	};
 
 	template
@@ -276,14 +417,14 @@ export namespace
 	using
 		Atom
 	=	Term
-		<	Logic::Disjunction::Literal(1uz)
+		<	Logic::Disjunction::Literal(0uz)
 		,	t_tPredicate
 		>
 	;
 }
 
 ::Meta::Atom<int> constexpr inline f = {};
-::Meta::Atom<void> constexpr inline g = {};
+::Meta::Atom<double> constexpr inline g = {};
 auto constexpr inline h = f and g;
 auto constexpr inline i = g and f;
 auto constexpr inline j = h and i;

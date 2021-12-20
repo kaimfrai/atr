@@ -173,7 +173,7 @@ export namespace
 	;
 
 	template
-		<	ProtoIndexedItem
+		<	typename
 			...	t_tpIndexedItem
 		>
 	struct
@@ -201,23 +201,21 @@ export namespace
 ///	TODO: Ideally, this helper should be an immediately invoked lambda. However, upon instantiation
 ///	this crashes clang-14 as of now.
 template
-	<	std::size_t
-		...	t_tpIndex
-	,	typename
+	<	typename
 		...	t_tpItem
+	,	std::size_t
+		...	t_npIndex
 	>
 auto constexpr
 (	DeduceIndexedTuple
 )	(	std::index_sequence
-		<	t_tpIndex
+		<	t_npIndex
 			...
 		>
-	,	t_tpItem&&
-		...
 	)
 ->	Meta::IndexedTuple
 	<	Meta::IndexedItem
-		<	t_tpIndex
+		<	t_npIndex
 		,	t_tpItem
 		>
 		...
@@ -226,7 +224,7 @@ auto constexpr
 	std::declval
 	<	Meta::IndexedTuple
 		<	Meta::IndexedItem
-			<	t_tpIndex
+			<	t_npIndex
 			,	t_tpItem
 			>
 			...
@@ -241,12 +239,10 @@ template
 using
 	MakeIndexedTuple
 =	decltype
-	(	DeduceIndexedTuple
+	(	DeduceIndexedTuple<t_tpItem...>
 		(	std::make_index_sequence
 			<	sizeof...(t_tpItem)
 			>{}
-		,	std::declval<t_tpItem>()
-			...
 		)
 	)
 ;

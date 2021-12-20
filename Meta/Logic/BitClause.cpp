@@ -72,6 +72,12 @@ namespace
 		;
 
 		auto constexpr
+		(	LiteralCount
+		)	()	const
+		->	USize
+		;
+
+		auto constexpr
 		(	operator[]
 		)	(	USize
 			)	const
@@ -121,13 +127,6 @@ namespace
 		<	BitClause
 		,	SubtermLimit
 		>
-	;
-
-	export auto constexpr
-	(	LiteralCount
-	)	(	BitClause
-		)
-	->	USize
 	;
 
 	export auto constexpr
@@ -197,20 +196,7 @@ namespace
 	::	BitClause
 	)	()
 	:	Positive
-		{	static_cast<FieldType>
-			(	//	generate a sequence of #SubtermLimit 1s
-				//	does not cause overflows or bitfield conversion warnings
-				(	(	(	1uz
-						<<	(	SubtermLimit
-							-	1uz
-							)
-						)
-						-	1uz
-					)
-				<<	1uz
-				)
-			+	1uz
-			)
+		{	SetBits(SubtermLimit)
 		}
 	,	Negative
 		{	Positive
@@ -301,21 +287,21 @@ namespace
 	}
 
 	auto constexpr
-	(	LiteralCount
-	)	(	BitClause
-				i_vClause
-		)
+	(	BitClause
+	::	LiteralCount
+	)	()	const
 	->	USize
 	{
-		if	(	i_vClause.Positive
-			==	i_vClause.Negative
+		if	(	Positive
+			bitand
+				Negative
 			)
-			return 0uz;
+			return 1uz;
 
 		return
 		static_cast<USize>
-		(	::std::popcount(i_vClause.Positive)
-		+	::std::popcount(i_vClause.Negative)
+		(	::std::popcount(Positive)
+		+	::std::popcount(Negative)
 		);
 	}
 
@@ -429,16 +415,56 @@ namespace
 		)	const
 	->	BitClause
 	{
-		if	(i_nIndex >= SubtermLimit)
-			throw "Index beyond Subtermlimit!";
+		if	(i_nIndex >= LiteralCount())
+			throw "Index beyond LiteralCount!";
 
 		if	(IsIdentity())
-			return i_nIndex == 0uz ? *this : Absorbing();
+			return *this;
+
+		USize
+			nFieldIndex
+		=	0uz
+		;
+		for	(	USize
+					nMiddle
+				=	SubtermLimit
+				/	2uz
+			,		nBitField
+				=	Positive
+				bitor
+					Negative
+			;	nMiddle
+			;		nMiddle
+				/=	2uz
+			)
+		{
+			USize const
+				nLowerBits
+			=	nBitField
+			bitand
+				SetBits(nMiddle)
+			;
+			USize const
+				nLowerBitCount
+			=	static_cast<USize>
+				(	::std::popcount(nLowerBits)
+				)
+			;
+
+			if	(i_nIndex >= nLowerBitCount)
+			{
+				nBitField >>= nMiddle;
+				i_nIndex -= nLowerBitCount;
+				nFieldIndex += nMiddle;
+			}
+			else
+				nBitField = nLowerBits;
+		}
 
 		auto const
 			nIndexField
 		=	BitIndexToField
-			(	i_nIndex
+			(	nFieldIndex
 			)
 		;
 

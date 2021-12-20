@@ -89,6 +89,12 @@ namespace
 		;
 
 		auto constexpr
+		(	ClauseCount
+		)	()	const
+		->	USize
+		;
+
+		auto constexpr
 		(	operator []
 		)	(	USize
 			)	const&
@@ -118,13 +124,6 @@ namespace
 		;
 
 		friend auto constexpr
-		(	ClauseCount
-		)	(	BitTerm const&
-			)
-		->	::std::size_t
-		;
-
-		friend auto constexpr
 		(	Intersection
 		)	(	BitTerm const&
 			,	BitTerm const&
@@ -137,7 +136,8 @@ namespace
 		)	(	BitTerm const&
 			,	BitTerm const&
 			)
-		->	BitTerm;
+		->	BitTerm
+		;
 
 		friend auto constexpr
 		(	Negation
@@ -256,6 +256,18 @@ namespace
 
 	auto constexpr
 	(	BitTerm
+	::	ClauseCount
+	)	()	const
+	->	USize
+	{	return
+		static_cast<USize>
+		(	end(*this)
+		-	begin(*this)
+		);
+	}
+
+	auto constexpr
+	(	BitTerm
 	::	operator []
 	)	(	USize
 				i_nIndex
@@ -308,23 +320,6 @@ namespace
 	}
 
 	auto constexpr
-	(	ClauseCount
-	)	(	BitTerm const
-			&	i_rTerm
-		)
-	->	::std::size_t
-	{
-		if	(i_rTerm.IsAbsorbing())
-			return 0uz;
-
-		return
-		static_cast<::std::size_t>
-		(	end(i_rTerm)
-		-	begin(i_rTerm)
-		);
-	}
-
-	auto constexpr
 	(	Intersection
 		[[nodiscard]]
 	)	(	BitTerm const
@@ -347,12 +342,12 @@ namespace
 
 		auto const
 			nLeftClauseCount
-		=	ClauseCount(i_rLeftTerm)
+		=	i_rLeftTerm.ClauseCount()
 		;
 
 		auto const
 			nRightClauseCount
-		=	ClauseCount(i_rRightTerm)
+		=	i_rRightTerm.ClauseCount()
 		;
 
 		auto const
@@ -400,8 +395,8 @@ namespace
 			nMaxClauseCount
 		=	//	while creating alternative clauses up to twice the amount of clauses are needed
 			2uz
-		*	ClauseCount(i_rLeftTerm)
-		*	ClauseCount(i_rRightTerm)
+		*	i_rLeftTerm.ClauseCount()
+		*	i_rRightTerm.ClauseCount()
 		;
 
 		Optimizer
@@ -447,7 +442,7 @@ namespace
 			,	end(i_rTerm)
 			,	1uz
 			,	::std::multiplies<USize>{}
-			,	LiteralCount
+			,	::std::mem_fn(&BitClause::LiteralCount)
 			)
 		;
 

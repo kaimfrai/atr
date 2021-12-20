@@ -32,6 +32,24 @@ namespace
 		;
 
 		auto constexpr
+		(	IsTrue
+		)	()	const
+		->	bool
+		;
+
+		auto constexpr
+		(	IsFalse
+		)	()	const
+		->	bool
+		;
+
+		auto constexpr
+		(	ClauseCount
+		)	()	const
+		->	USize
+		;
+
+		auto constexpr
 		(	Permutation
 		)	(	::std::span<USize const>
 			)	const
@@ -92,6 +110,27 @@ namespace
 		)
 	->	Conjunction
 	{	return { BitClause{i_nLiteralIndex}};	}
+
+	auto constexpr
+	(	Conjunction
+	::	IsTrue
+	)	()	const
+	->	bool
+	{	return Term.IsIdentity();	}
+
+	auto constexpr
+	(	Conjunction
+	::	IsFalse
+	)	()	const
+	->	bool
+	{	return Term.IsAbsorbing();	}
+
+	auto constexpr
+	(	Conjunction
+	::	ClauseCount
+	)	()	const
+	->	USize
+	{	return Term.ClauseCount();	}
 
 	auto constexpr
 	(	Conjunction
