@@ -53,6 +53,8 @@ set(MODULE_FLAGS
 	-fmodules
 	-fprebuilt-module-path=${PREBUILT_MODULE_PATH}
 	-fbuiltin-module-map
+	-fmodules-cache-path=${PREBUILT_MODULE_PATH}
+	-Xclang -fdisable-module-hash
 )
 add_compile_options(
 	${CXX_STANDARD_LIBRARY_FLAG}
