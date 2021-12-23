@@ -10,5 +10,3 @@ add_subdirectory(Predicate)
 add_module(Predicate.cpp)
 
 add_module(Meta.cpp)
-
-add_subdirectory(Test)

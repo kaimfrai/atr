@@ -75,6 +75,7 @@ include(CXX20Modules.cmake)
 
 add_subdirectory(Std)
 add_subdirectory(Meta)
+add_subdirectory(Test)
 add_subdirectory(Legacy)
 
 add_executable(
