@@ -221,23 +221,19 @@ namespace
 		)	const
 	->	BitTerm
 	{
-		BitClauseArray
+		Optimizer
 			vPermutationResult
-		{};
+		{	2uz
+		*	ClauseCount()
+		};
 
-		::std::transform
-		(	begin(*this)
-		,	end(*this)
-		,	begin(vPermutationResult)
-		,	[	i_vPermutation
-			]	(	BitClause
-						i_vClause
-				)
-			->	BitClause
-			{	return i_vClause.Permutation(i_vPermutation);	}
-		);
+		for	(	BitClause
+				vClause
+			:	*this
+			)
+			vPermutationResult.insert(vClause.Permutation(i_vPermutation));
 
-		return {vPermutationResult};
+		return { ::std::move(vPermutationResult) };
 	}
 
 	auto constexpr

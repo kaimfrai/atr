@@ -8,7 +8,7 @@ function(invoke_preprocessor
 	)
 	#pseudo-preprocessor which only ignores comments
 	string(REGEX REPLACE
-		"(//.*\n)|(/[*].*[*]/)"
+		"(//[^\n]*\n)|(/[*].*[*]/)"
 		""
 		file_content
 		${file_content}
@@ -78,6 +78,7 @@ function(add_module
 	invoke_preprocessor(${module_interface_file} preprocessed_module_file)
 	read_module_name("${preprocessed_module_file}" module_name module_file)
 	read_module_dependencies("${preprocessed_module_file}" module_dependencies module_dependency_files)
+	message("module ${module_name} depends on ${module_dependencies}")
 
 	add_custom_command(
 	OUTPUT
