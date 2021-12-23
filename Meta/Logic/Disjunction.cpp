@@ -31,35 +31,6 @@ namespace
 		->	Disjunction
 		;
 
-		constexpr
-		(	Disjunction
-		)	()
-		=	default;
-
-		constexpr
-		(	Disjunction
-		)	(	BitTerm const
-				&	i_rTerm
-			)
-		:	Term{i_rTerm}
-		{}
-
-		constexpr
-		(	Disjunction
-		)	(	BitClause
-					i_vClause
-			)
-		:	Term{i_vClause}
-		{}
-
-		constexpr
-		(	Disjunction
-		)	(	USize
-					i_nLiteral
-			)
-		:	Term{BitClause{i_nLiteral}}
-		{}
-
 		auto constexpr
 		(	IsTrue
 		)	()	const

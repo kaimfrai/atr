@@ -438,7 +438,7 @@ namespace
 	auto constexpr inline
 		Atom
 	=	Term
-		<	0uz
+		<	Logic::Disjunction::Literal(0uz)
 		,	t_tPredicate
 		>{}
 	;
