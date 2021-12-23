@@ -78,7 +78,6 @@ function(add_module
 	invoke_preprocessor(${module_interface_file} preprocessed_module_file)
 	read_module_name("${preprocessed_module_file}" module_name module_file)
 	read_module_dependencies("${preprocessed_module_file}" module_dependencies module_dependency_files)
-	message("module ${module_name} depends on ${module_dependencies}")
 
 	add_custom_command(
 	OUTPUT
@@ -92,7 +91,7 @@ function(add_module
 		${ADDITIONAL_COMPILE_OPTIIONS}
 		--compile ${CMAKE_CURRENT_SOURCE_DIR}/${module_interface_file}
 		-Xclang -emit-module-interface
-		-o ${module_file}
+		--output ${module_file}
 	VERBATIM
 	MAIN_DEPENDENCY
 		${module_interface_file}

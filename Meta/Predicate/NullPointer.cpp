@@ -3,10 +3,10 @@ export module Meta.Predicate.NullPointer;
 export import Meta.TypeTraits;
 export import Meta.Logic;
 
-export namespace
+namespace
 	Meta
 {
-	Term constexpr inline
+	export auto constexpr inline
 		IsNullPointer
 	=	Atom<Trait::NullPointer>
 	;

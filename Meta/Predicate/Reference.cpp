@@ -3,10 +3,10 @@ export module Meta.Predicate.Reference;
 export import Meta.Predicate.LValueReference;
 export import Meta.Predicate.RValueReference;
 
-export namespace
+namespace
 	Meta
 {
-	Term constexpr inline
+	export auto constexpr inline
 		IsReference
 	=	IsLValueReference
 	or	IsRValueReference

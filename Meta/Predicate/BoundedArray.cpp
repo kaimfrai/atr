@@ -3,10 +3,10 @@ export module Meta.Predicate.BoundedArray;
 export import Meta.TypeTraits;
 export import Meta.Logic;
 
-export namespace
+namespace
 	Meta
 {
-	Term constexpr inline
+	export auto constexpr inline
 		IsBoundedArray
 	=	Atom<Trait::BoundedArray>
 	;

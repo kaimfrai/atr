@@ -1,41 +1,38 @@
 add_module(
 	Data.cpp
 )
-
-add_library(
-	Meta.Logic.Test
-OBJECT
-	Equivalence.cpp
-	Negation.cpp
-
-	Constant_and_Constant.cpp
-	Constant_or_Constant.cpp
-	Constant_and_Literal.cpp
-	Constant_or_Literal.cpp
-	Constant_and_Clause.cpp
-	Constant_or_Clause.cpp
-	Constant_and_Term.cpp
-	Constant_or_Term.cpp
-
-	Literal_and_Constant.cpp
-	Literal_or_Constant.cpp
-	Literal_and_Literal.cpp
-	Literal_or_Literal.cpp
-	Literal_and_Clause.cpp
-	Literal_or_Clause.cpp
-	Literal_and_Term.cpp
-	Literal_or_Term.cpp
-
-	Clause_and_Constant.cpp
-	Clause_or_Constant.cpp
-	Clause_and_Literal.cpp
-	Clause_or_Literal.cpp
-	Clause_and_Clause.cpp
-	Clause_or_Clause.cpp
-	Clause_and_Term.cpp
-	Clause_or_Term.cpp
+function(add_logic_test
+	test_name
 )
+	add_module_object_library("Meta.Logic.Test.${test_name}" "${test_name}.cpp")
+endfunction()
 
-add_module_dependencies(
-	Meta.Logic.Test
-)
+add_logic_test(Equivalence)
+add_logic_test(Negation)
+
+add_logic_test(Constant_and_Constant)
+add_logic_test(Constant_or_Constant)
+add_logic_test(Constant_and_Literal)
+add_logic_test(Constant_or_Literal)
+add_logic_test(Constant_and_Clause)
+add_logic_test(Constant_or_Clause)
+add_logic_test(Constant_and_Term)
+add_logic_test(Constant_or_Term)
+
+add_logic_test(Literal_and_Constant)
+add_logic_test(Literal_or_Constant)
+add_logic_test(Literal_and_Literal)
+add_logic_test(Literal_or_Literal)
+add_logic_test(Literal_and_Clause)
+add_logic_test(Literal_or_Clause)
+add_logic_test(Literal_and_Term)
+add_logic_test(Literal_or_Term)
+
+add_logic_test(Clause_and_Constant)
+add_logic_test(Clause_or_Constant)
+add_logic_test(Clause_and_Literal)
+add_logic_test(Clause_or_Literal)
+add_logic_test(Clause_and_Clause)
+add_logic_test(Clause_or_Clause)
+add_logic_test(Clause_and_Term)
+add_logic_test(Clause_or_Term)

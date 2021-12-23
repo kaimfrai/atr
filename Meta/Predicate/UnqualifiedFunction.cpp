@@ -3,10 +3,10 @@ export module Meta.Predicate.UnqualifiedFunction;
 export import Meta.TypeTraits;
 export import Meta.Logic;
 
-export namespace
+namespace
 	Meta
 {
-	Term constexpr inline
+	export auto constexpr inline
 		IsUnqualifiedFunction
 	=	Atom<Trait::UnqualifiedFunction>
 	;

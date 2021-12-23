@@ -3,10 +3,10 @@ export module Meta.Predicate.Integral;
 export import Meta.Predicate.UnsignedIntegral;
 export import Meta.Predicate.SignedIntegral;
 
-export namespace
+namespace
 	Meta
 {
-	Term constexpr inline
+	export auto constexpr inline
 		IsIntegral
 	=	IsUnsignedIntegral
 	or	IsSignedIntegral
