@@ -2,6 +2,7 @@ export module Meta.Common;
 
 export import Std.Utility;
 export import Std.CStdInt;
+export import Std.Limits;
 
 export namespace
 	Meta
@@ -25,7 +26,7 @@ export namespace
 	{
 		auto constexpr
 			nMaxBits
-		=	8uz * sizeof(USize)
+		=	CHAR_BIT * sizeof(USize)
 		;
 		if	(i_nBitCount > nMaxBits)
 			throw "Attempted to set more bits than exist in USize!";

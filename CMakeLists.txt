@@ -89,13 +89,3 @@ add_module_dependencies(${PROJECT_NAME}
 	Std
 	Meta
 )
-
-
-
-install(
-TARGETS
-	${PROJECT_NAME}
-RUNTIME
-DESTINATION
-	bin
-)

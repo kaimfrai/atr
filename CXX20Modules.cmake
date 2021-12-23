@@ -2,19 +2,24 @@ function(invoke_preprocessor
 	file_name
 	out_preprocessed_file
 )
-	execute_process(
-	COMMAND
-		${CMAKE_CXX_COMPILER}
-		#${CXX_STANDARD_VERSION_FLAG}
-		${CXX_STANDARD_LIBRARY_FLAG}
-		${WARNING_FLAGS}
-		${ADDITIONAL_COMPILE_OPTIIONS}
-		--preprocess --no-line-commands
+	file(READ
 		${CMAKE_CURRENT_SOURCE_DIR}/${file_name}
-	OUTPUT_VARIABLE
-		preprocessed_file
+		file_content
 	)
-	set(${out_preprocessed_file} ${preprocessed_file} PARENT_SCOPE)
+	#pseudo-preprocessor which only ignores comments
+	string(REGEX REPLACE
+		"(//.*\n)|(/[*].*[*]/)"
+		""
+		file_content
+		${file_content}
+	)
+	#module declarations and imports
+	string(REGEX MATCHALL
+		"(^|[ \n\r\n;])(import|export[ \t\r\n]+module)[ \t\r\n]+[a-zA-Z_][a-zA-Z0-9_.]*"
+		file_content
+		${file_content}
+	)
+	set(${out_preprocessed_file} "${file_content}" PARENT_SCOPE)
 endfunction()
 
 function(read_module_name
