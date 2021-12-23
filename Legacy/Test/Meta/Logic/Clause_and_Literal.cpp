@@ -1,4 +1,4 @@
-import Legacy.Meta.Logic.Test.Data;
+import Legacy.Test.Meta.Logic.Data;
 
 /// ************************************************************************************************
 ///	(p)

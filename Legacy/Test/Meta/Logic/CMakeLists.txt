@@ -1,7 +1,6 @@
 add_module(
 	Data.cpp
 )
-set_target_properties(Legacy.Meta.Logic.Test.Data PROPERTIES EXCLUDE_FROM_ALL TRUE)
 
 add_library(
 	Legacy.Meta.Logic.Test
@@ -40,4 +39,3 @@ OBJECT
 add_module_dependencies(
 	Legacy.Meta.Logic.Test
 )
-set_target_properties(Legacy.Meta.Logic.Test PROPERTIES EXCLUDE_FROM_ALL TRUE)

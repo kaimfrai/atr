@@ -1,60 +1,85 @@
-import Legacy.Meta.Logic.Test.Data;
+import Legacy.Test.Meta.Logic.Data;
 
 /// ************************************************************************************************
-///	(p)
+///	(p	and	q)
 /// ************************************************************************************************
 static_assert
 (	(	(p)
-	and	(p)
+	or	(p	and	q)
 	)
 ==	(p)
 );
 static_assert
 (	(	(!p)
-	and	(p)
+	or	(p	and	q)
 	)
-==	(F)
+==	(!p	or	q)
 );
 
 static_assert
 (	(	(q)
-	and	(p)
+	or	(p	and	q)
 	)
-==	(p	and	q)
+==	(q)
+);
+static_assert
+(	(	(!q)
+	or	(p	and	q)
+	)
+==	(p	or	!q)
 );
 
 static_assert
-(	(	(!q)
-	and	(p)
+(	(	(r)
+	or	(p	and	q)
 	)
-==	(p	and	!q)
+==	(p	and	q	or	r)
+);
+static_assert
+(	(	(!r)
+	or	(p	and	q)
+	)
+==	(p	and	q	or	!r)
 );
 
 /// ************************************************************************************************
-///	(!p)
+///	(p	and	q	and	r)
 /// ************************************************************************************************
 static_assert
 (	(	(p)
-	and	(!p)
+	or	(p	and	q	and	r)
 	)
-==	(F)
+==	(p)
 );
 static_assert
 (	(	(!p)
-	and	(!p)
+	or	(p	and	q	and	r)
 	)
-==	(!p)
+==	(!p	or	q	and	r)
 );
 
 static_assert
 (	(	(q)
-	and	(!p)
+	or	(p	and	q	and	r)
 	)
-==	(!p	and	q)
+==	(q)
 );
 static_assert
 (	(	(!q)
-	and	(!p)
+	or	(p	and	q	and	r)
 	)
-==	(!p	and	!q)
+==	(p	and	r	or	!q)
+);
+
+static_assert
+(	(	(r)
+	or	(p	and	q	and	r)
+	)
+==	(r)
+);
+static_assert
+(	(	(!r)
+	or	(p	and	q	and	r)
+	)
+==	(p	and	q	or	!r)
 );

@@ -1,4 +1,4 @@
-export module Legacy.Meta.Logic.Test.Data;
+export module Legacy.Test.Meta.Logic.Data;
 
 export import Legacy.Meta.Logic;
 
