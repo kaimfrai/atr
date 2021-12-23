@@ -1,4 +1,4 @@
-export module Meta.Logic2.Test.Data;
+export module Meta.Logic.Test.Data;
 
 // export import Meta.Logic.Conjunction;
 //
