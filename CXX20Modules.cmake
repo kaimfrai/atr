@@ -88,7 +88,7 @@ function(add_module
 		${CXX_STANDARD_LIBRARY_FLAG}
 		${WARNING_FLAGS}
 		${MODULE_FLAGS}
-		${ADDITIONAL_COMPILE_OPTIIONS}
+		${ADDITIONAL_COMPILE_OPTIONS}
 		--compile ${CMAKE_CURRENT_SOURCE_DIR}/${module_interface_file}
 		-Xclang -emit-module-interface
 		--output ${module_file}

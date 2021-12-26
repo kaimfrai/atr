@@ -1,31 +1,11 @@
 export module Meta.Pack;
 
-export import Meta.Common;
+export import Meta.Index;
 export import Meta.Concepts;
 
-export namespace
+namespace
 	Meta
 {
-	template
-		<	USize
-				t_nIndex
-		>
-	struct
-		Index
-	{};
-
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoIndex
-	=	ProtoValuePack
-		<	t_tProto
-		,	Index
-		>
-	;
-
 	template
 		<	SSize
 				t_nRingIndex
@@ -40,56 +20,13 @@ export namespace
 		friend auto constexpr
 		(	operator %
 		)	(	RingIndex
-			,	Index<t_nIndex>
+			,	IndexToken<t_nIndex>
 			)
 		->	ProtoIndex auto
 		{
-			bool constexpr
-				bNegative
-			=	(	t_nRingIndex
-				<	0z
-				)
-			;
-
-			USize constexpr
-				nPositiveIndex
-			=	(	bNegative
-				?	(	static_cast<USize>
-						(	-
-							(	t_nRingIndex
-							+	1z
-							)
-						)
-					+	1uz
-					)
-				:	static_cast<USize>
-					(	t_nRingIndex
-					)
-				)
-			;
-			USize constexpr
-				nRemainder
-			=	(	nPositiveIndex
-				%	t_nIndex
-				)
-			;
-
-			USize constexpr
-				nTrueIndex
-			=	(	(	bNegative
-					and (	nRemainder
-						!=	0uz
-						)
-					)
-				?	(	t_nRingIndex
-					-	nRemainder
-					)
-				:	nRemainder
-				)
-			;
 			return
-			Index<nTrueIndex>
-			{};
+			Index<CongruentInteger(t_nRingIndex, t_nIndex)>
+			;
 		}
 	};
 
@@ -105,7 +42,7 @@ export namespace
 		>
 	;
 
-	template
+	export template
 		<	USize
 				t_nIndex
 		,	typename
@@ -120,24 +57,24 @@ export namespace
 
 		auto constexpr
 		(	operator[]
-		)	(	Index<t_nIndex>
+		)	(	IndexToken<t_nIndex>
 			)	&
 		->	t_tItem&
 		{	return m_vItem;	}
 
 		auto constexpr
 		(	operator[]
-		)	(	Index<t_nIndex>
+		)	(	IndexToken<t_nIndex>
 			)	const&
 		->	t_tItem const&
 		{	return m_vItem;	}
 
 		auto constexpr
 		(	operator[]
-		)	(	Index<t_nIndex>
+		)	(	IndexToken<t_nIndex>
 			)	&&
 		->	t_tItem
-		{	return std::move(m_vItem);	}
+		{	return static_cast<t_tItem&&>(m_vItem);	}
 	};
 
 	template
@@ -154,7 +91,7 @@ export namespace
 	{
 		auto constexpr
 		(	operator[]
-		)	(	Index<t_nIndex>
+		)	(	IndexToken<t_nIndex>
 			)	const
 		->	void
 		{}
@@ -172,8 +109,8 @@ export namespace
 		>
 	;
 
-	template
-		<	typename
+	export template
+		<	ProtoIndexedItem
 			...	t_tpIndexedItem
 		>
 	struct
@@ -192,65 +129,61 @@ export namespace
 		{	return
 			operator[]
 			(	i_vRingIndex
-			%	Index<sizeof...(t_tpIndexedItem)>{}
+			%	Index<sizeof...(t_tpIndexedItem)>
 			);
 		}
 	};
-}
 
-///	TODO: Ideally, this helper should be an immediately invoked lambda. However, upon instantiation
-///	this crashes clang-14 as of now.
-template
-	<	typename
-		...	t_tpItem
-	,	std::size_t
-		...	t_npIndex
-	>
-auto constexpr
-(	DeduceIndexedTuple
-)	(	std::index_sequence
-		<	t_npIndex
-			...
+	///	TODO: Ideally, this helper should be an immediately invoked lambda. However, upon instantiation
+	///	this crashes clang as of now.
+	template
+		<	typename
+			...	t_tpItem
+		,	USize
+			...	t_npIndex
 		>
-	)
-->	Meta::IndexedTuple
-	<	Meta::IndexedItem
-		<	t_npIndex
-		,	t_tpItem
-		>
-		...
-	>
-{	return
-	std::declval
-	<	Meta::IndexedTuple
-		<	Meta::IndexedItem
+	auto constexpr
+	(	DeduceIndexedTuple
+	)	(	IndexToken
+			<	t_npIndex
+				...
+			>
+		)
+	->	IndexedTuple
+		<	IndexedItem
 			<	t_npIndex
 			,	t_tpItem
 			>
 			...
 		>
-	>();
-}
+	{	return
+		::std::declval
+		<	IndexedTuple
+			<	IndexedItem
+				<	t_npIndex
+				,	t_tpItem
+				>
+				...
+			>
+		>();
+	}
 
-template
-	<	typename
-		...	t_tpItem
-	>
-using
-	MakeIndexedTuple
-=	decltype
-	(	DeduceIndexedTuple<t_tpItem...>
-		(	std::make_index_sequence
-			<	sizeof...(t_tpItem)
-			>{}
-		)
-	)
-;
-
-export namespace
-	Meta
-{
 	template
+		<	typename
+			...	t_tpItem
+		>
+	using
+		MakeIndexedTuple
+	=	decltype
+		(	DeduceIndexedTuple<t_tpItem...>
+			(	Sequence
+				<	sizeof...(t_tpItem)
+				>()
+			)
+		)
+	;
+
+	export template
 		<	typename
 			...	t_tpItem
 		>

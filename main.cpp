@@ -1,4 +1,4 @@
-// import Meta;
+import Meta.Logic.Disjunction;
 // import Std;
 
 // auto constexpr
@@ -29,6 +29,20 @@
 
 int main(int, char **) {
 
+	using namespace Meta::Logic;
+	Disjunction A = Disjunction::Literal(0);
+	Disjunction B = Disjunction::Literal(1);
+	Disjunction C = Disjunction::Literal(2);
+	Disjunction D = Disjunction::Literal(3);
+	Disjunction E = Disjunction::Literal(4);
+	Disjunction F = Disjunction::Literal(5);
+	Disjunction G = Disjunction::Literal(6);
+	Disjunction H = Disjunction::Literal(7);
 
+	Disjunction six = A or B or C or D or E or F;
+	Disjunction two = G or H;
+	Disjunction result [[maybe_unused]]
+		= six or two
+	;
 	return 0;
 }

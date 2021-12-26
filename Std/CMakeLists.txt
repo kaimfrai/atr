@@ -10,6 +10,7 @@ add_module(Limits.cpp)
 add_module(Numeric.cpp)
 add_module(Ranges.cpp)
 add_module(Span.cpp)
+add_module(Tuple.cpp)
 add_module(TypeTraits.cpp)
 add_module(Utility.cpp)
 

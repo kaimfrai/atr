@@ -1,19 +1,18 @@
 export module Meta.Logic.Test.Data;
 
-// export import Meta.Logic.Conjunction;
-//
-// using Term = Meta::Logic::Conjunction;
+export import Meta.Logic;
 
-export import Meta.Logic.Disjunction;
+export
+{
+	///	Constants
+	auto constexpr inline T = Meta::True;
+	auto constexpr inline F = Meta::False;
 
-using Term = Meta::Logic::Disjunction;
-
-///	Constants
-export Term constexpr inline T = Term::True();
-export Term constexpr inline F = Term::False();
-
-/// Literals
-export Term constexpr inline p = Term::Literal(0uz);
-export Term constexpr inline q = Term::Literal(1uz);
-export Term constexpr inline r = Term::Literal(2uz);
-
+	/// Literals
+	struct P{};
+	auto constexpr inline p = Meta::Atom<P>;
+	struct Q{};
+	auto constexpr inline q = Meta::Atom<Q>;
+	struct R{};
+	auto constexpr inline r = Meta::Atom<R>;
+}

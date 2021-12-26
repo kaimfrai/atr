@@ -1,17 +1,26 @@
 export module Meta.Logic.Optimizer;
 
-import Std.Algorithm;
-import Std.Numeric;
-import Std.Iterator;
-import Std.Span;
-
-import Meta.Logic.BitClauseIterator;
+export import Std.Array;
+export import Std.Span;
+export import Std.Iterator;
 
 export import Meta.Logic.BitClause;
+
+import Std.Algorithm;
+
+import Meta.Logic.BitClauseIterator;
 
 namespace
 	Meta::Logic
 {
+	export using
+		BitClauseArray
+	=	::std::array
+		<	BitClause
+		,	SubtermLimit
+		>
+	;
+
 	export class
 		Optimizer final
 	{
@@ -307,6 +316,25 @@ namespace
 	->	bool
 	{
 		clear();
+
+		//	literals are only redundant if there exists its negation within the term
+		if	(i_rLiteralClause.LiteralCount() <= 1uz)
+		{
+			bool const
+				bNegationContained
+			=(	i_rTerm.m_aTermEnd
+			!=	::std::find
+				(	i_rTerm.m_aTermBegin
+				,	i_rTerm.m_aTermEnd
+				,	Inverse(i_rLiteralClause)
+				)
+			);
+
+			if	(bNegationContained)
+				insert(BitClause::Absorbing());
+
+			return bNegationContained;
+		}
 
 		for	(	BitClause const
 				&	rRedundancyClause

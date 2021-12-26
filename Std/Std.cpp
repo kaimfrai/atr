@@ -12,5 +12,6 @@ export import Std.Limits;
 export import Std.Numeric;
 export import Std.Ranges;
 export import Std.Span;
+export import Std.Tuple;
 export import Std.TypeTraits;
 export import Std.Utility;

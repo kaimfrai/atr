@@ -1,104 +1,10 @@
 export module Meta.Logic;
 
-import Std.Array;
 export import Meta.Logic.Disjunction;
 
-export import Meta.Pack;
+export import Meta.TupleSet;
 
-namespace
-	Meta::Logic
-{
-	template
-		<	typename
-				t_tPredicate
-		>
-	struct
-		MapToIndex
-	{
-		USize
-			Index
-		;
-
-		auto constexpr
-		(	operator()
-		)	(	MapToIndex
-			)	const
-		->	USize
-		{	return Index;	}
-	};
-
-
-	template
-		<	typename
-			...	t_tpPredicate
-		>
-	struct
-		IndexMap
-	:	MapToIndex
-		<	t_tpPredicate
-		>
-		...
-	{
-		using MapToIndex<t_tpPredicate>::operator()...;
-
-		template
-			<	::std::size_t
-				...	t_npIndex
-			>
-		constexpr
-		(	IndexMap
-		)	(	::std::index_sequence
-				<	t_npIndex
-					...
-				>
-			)
-		:	MapToIndex
-			<	t_tpPredicate
-			>{	t_npIndex
-			}
-			...
-		{}
-
-		constexpr
-		(	IndexMap
-		)	()
-		:	IndexMap
-			{	::std::make_index_sequence
-				<	sizeof...(t_tpPredicate)
-				>{}
-			}
-		{}
-
-		template
-			<	typename
-					t_tNewPredicate
-			>
-		friend auto constexpr
-		(	operator +
-		)	(	IndexMap const
-				&	i_rIndexMap
-			,	MapToIndex<t_tNewPredicate>
-			)
-		{
-			if	constexpr
-				(	requires
-					{	static_cast
-						<	MapToIndex<t_tNewPredicate> const *
-						>(	&i_rIndexMap
-						);
-					}
-				)
-				return i_rIndexMap;
-			else
-				return
-				IndexMap
-				<	t_tpPredicate
-					...
-				,	t_tNewPredicate
-				>{};
-		}
-	};
-}
+import Std.Array;
 
 namespace
 	Meta
@@ -113,7 +19,7 @@ namespace
 		>
 	auto constexpr
 	(	EvaluateLiteral
-	)	(	Tuple<t_tpPredicate...> const
+	)	(	TupleSet<t_tpPredicate...> const
 			&	i_rPredicates
 		,	t_tpArgument
 			&&
@@ -123,20 +29,29 @@ namespace
 	{
 		if	constexpr(t_vLiteral.Positive)
 		{
-			auto constexpr nIndex = ::std::countr_zero(t_vLiteral.Positive);
-			return i_rPredicates[Index<nIndex>{}](::std::forward<t_tpArgument>(i_rpArgument)...);
+			auto constexpr nIndex = CountLowerZeroBits(t_vLiteral.Positive);
+			return
+			i_rPredicates[Index<nIndex>]
+			(	::std::forward<t_tpArgument>(i_rpArgument)
+				...
+			);
 		}
 		else
 		{
-			auto constexpr nIndex = ::std::countr_zero(t_vLiteral.Negative);
-			return not i_rPredicates[Index<nIndex>{}](::std::forward<t_tpArgument>(i_rpArgument)...);
+			auto constexpr nIndex = CountLowerZeroBits(t_vLiteral.Negative);
+			return
+			not
+			i_rPredicates[Index<nIndex>]
+			(	::std::forward<t_tpArgument>(i_rpArgument)
+				...
+			);
 		}
 	}
 
 	template
 		<	Logic::BitClause
 				t_vClause
-		,	::std::size_t
+		,	USize
 			...	t_npLiteralIndex
 		,	typename
 			...	t_tpPredicate
@@ -145,11 +60,11 @@ namespace
 		>
 	auto constexpr
 	(	EvaluateClause
-	)	(	::std::index_sequence
+	)	(	IndexToken
 			<	t_npLiteralIndex
 				...
 			>
-		,	Tuple<t_tpPredicate...> const
+		,	TupleSet<t_tpPredicate...> const
 			&	i_rPredicates
 		,	t_tpArgument
 			&&
@@ -172,7 +87,7 @@ namespace
 	template
 		<	Logic::Disjunction
 				t_vTerm
-		,	::std::size_t
+		,	USize
 			...	t_npClauseIndex
 		,	typename
 			...	t_tpPredicate
@@ -181,11 +96,11 @@ namespace
 		>
 	auto constexpr
 	(	EvaluateTerm
-	)	(	::std::index_sequence
+	)	(	IndexToken
 			<	t_npClauseIndex
 				...
 			>
-		,	Tuple<t_tpPredicate...> const
+		,	TupleSet<t_tpPredicate...> const
 			&	i_rPredicates
 		,	t_tpArgument
 			&&
@@ -196,10 +111,10 @@ namespace
 		return
 		(	...
 		or	EvaluateClause<t_vTerm.Term[t_npClauseIndex]>
-			(	::std::make_index_sequence
+			(	Sequence
 				<	t_vTerm.Term[t_npClauseIndex]
 				.	LiteralCount()
-				>{}
+				>()
 			,	i_rPredicates
 			,	::std::forward
 				<	t_tpArgument
@@ -209,8 +124,12 @@ namespace
 			)
 		);
 	}
+}
 
-	export template
+export namespace
+	Meta
+{
+	template
 		<	Logic::Disjunction
 				t_vTerm
 		,	typename
@@ -219,14 +138,31 @@ namespace
 	struct
 		Term
 	{
-		Tuple<t_tpPredicate...> const
+		TupleSet<t_tpPredicate...> const
 			Predicates
-		{};
+		;
 
-		constexpr
+		explicit constexpr
 		(	Term
-		)	()
-		=	default;
+		)	(	t_tpPredicate const
+				&
+				...	i_rpPredicate
+			)
+		:	Predicates
+			{	i_rpPredicate
+				...
+			}
+		{}
+
+		explicit constexpr
+		(	Term
+		)	(	TupleSet<t_tpPredicate...> const
+				&	i_rPredicates
+			)
+		:	Predicates
+			{	i_rPredicates
+			}
+		{}
 
 		constexpr
 		(	Term
@@ -240,79 +176,61 @@ namespace
 			>
 		static auto constexpr
 		(	SetPredicates
-		)	(	Logic::IndexMap
+		)	(	TupleSet
 				<	t_tpNewPredicate
 					...
-				>
+				>	const
+				&	i_rPredicates
 			)
 		->	Term
 			<	t_vTerm
 			,	t_tpNewPredicate
 				...
 			>
-		{	return {};	}
+		{	return
+			Term
+			<	t_vTerm
+			,	t_tpNewPredicate
+				...
+			>{	i_rPredicates
+			};
+		}
 
-
-		friend auto constexpr
+		auto constexpr
 		(	operator not
-		)	(	Term
-			)
-		->	Term
+		)	()	const
+		{	return
+			Term
 			<	not
 				t_vTerm
 			,	t_tpPredicate
 				...
-			>
-		{	return {};	}
+			>{	Predicates
+			};
+		}
 
-
-		friend auto constexpr
+		auto constexpr
 		(	operator and
-		)	(	Term
-					i_vLeft
-			,	Term
-			)
+		)	(	Term const
+				&
+			)	const
 		->	Term
-		{	return i_vLeft;	}
+		{	return *this;	}
 
-		friend auto constexpr
+		auto constexpr
 		(	operator or
-		)	(	Term
-					i_vLeft
-			,	Term
-			)
+		)	(	Term const
+				&
+			)	const
 		->	Term
-		{	return i_vLeft;	}
+		{	return *this;	}
 
-		template
-			<	Logic::Disjunction
-					t_vRightTerm
-			>
-		friend auto constexpr
-		(	operator and
-		)	(	Term
-			,	Term<t_vRightTerm, t_tpPredicate...>
-			)
-		->	Term
-			<	t_vTerm and t_vRightTerm
-			,	t_tpPredicate...
-			>
-		{	return	{};	}
-
-		template
-			<	Logic::Disjunction
-					t_vRightTerm
-			>
-		friend auto constexpr
-		(	operator or
-		)	(	Term
-			,	Term<t_vRightTerm, t_tpPredicate...>
-			)
-		->	Term
-			<	t_vTerm or t_vRightTerm
-			,	t_tpPredicate...
-			>
-		{	return	{};	}
+		auto constexpr
+		(	operator ==
+		)	(	Term const&
+			)	const
+		->	bool
+		{	return true;	}
 
 		template
 			<	Logic::Disjunction
@@ -320,37 +238,142 @@ namespace
 			,	typename
 				...	t_tpRightPredicate
 			>
-		friend auto constexpr
+		auto constexpr
 		(	operator and
-		)	(	Term
-			,	Term<t_vRightTerm, t_tpRightPredicate...>
-			)
-		{	auto constexpr
-				vIndexMap
-			=(	Logic::IndexMap<t_tpPredicate...>{}
-			+	...
-			+	Logic::MapToIndex<t_tpRightPredicate>{}
-			);
+		)	(	Term<t_vRightTerm, t_tpRightPredicate...> const
+				&	i_rRight
+			)	const
+		{
+			auto const
+				vPredicateUnion
+			=	Predicates
+			.	Union
+				(	i_rRight.Predicates
+				)
+			;
 
-			::std::array constexpr
-				vMapArray
-			={	vIndexMap
-				(	Logic::MapToIndex<t_tpRightPredicate>{}
+			using
+				tPredicateUnion
+			=	decltype
+				(	vPredicateUnion
+				)
+			;
+
+			::std::array<USize, sizeof...(t_tpRightPredicate)> constexpr
+				vPermutationArray
+			={	(	tPredicateUnion
+				::	IndexOf(Type<t_tpRightPredicate>)
 				)
 				...
 			};
 
 			auto constexpr
 				t_vPermutatedTerm
-			=	t_vRightTerm.Permutation(vMapArray)
+			=	t_vRightTerm.Permutation(vPermutationArray)
 			;
+
 			auto constexpr
 				vResultTerm
 			=	t_vTerm
 			and	t_vPermutatedTerm
 			;
-			return
-				Term<vResultTerm>::SetPredicates(vIndexMap);
+
+			auto constexpr
+				vPredicateField
+			=	vResultTerm
+			.	PredicateField
+				()
+			;
+
+			auto constexpr
+				nRequiredPredicateCount
+			=	CountOneBits(vPredicateField)
+			;
+
+			auto constexpr
+				nUnionPredicateCount
+			=	tPredicateUnion::size()
+			;
+
+			if	constexpr
+				(	nRequiredPredicateCount
+				==	nUnionPredicateCount
+				)
+			{
+				return
+				Term<vResultTerm>::SetPredicates
+				(	vPredicateUnion
+				);
+			}
+			else
+			if	constexpr
+				(	nRequiredPredicateCount
+				==	0uz
+				)
+				return Term<vResultTerm>{};
+			else
+			{
+				::std::array constexpr
+					vTrimPredicatePermutation
+				=[]	<	USize
+						...	t_npIndex
+					>(	IndexToken<t_npIndex...>
+					)
+				{
+					::std::array<USize, sizeof...(t_npIndex)>
+						vPermutationBuffer
+					{};
+					USize
+						nNewIndex
+					=	0uz
+					;
+					(void)
+					(	...
+					,	(	vPermutationBuffer[t_npIndex] = nNewIndex
+						,	nNewIndex += TestBit(vPredicateField, t_npIndex)
+						)
+					);
+
+					return vPermutationBuffer;
+				}(	Sequence<nUnionPredicateCount>()
+				);
+
+				auto constexpr
+					vAdjustedResultTerm
+				=	vResultTerm.Permutation
+					(	vTrimPredicatePermutation
+					)
+				;
+
+				auto const
+					vTrimmedPredicates
+				=[	&
+				]	<	USize
+						...	t_npIndex
+					>(	IndexToken<t_npIndex...>
+					)
+				{	return
+					TupleSet
+					{	vPredicateUnion
+						[	Index
+							<	GetIndexOfNthOneBit
+								(	vPredicateField
+								,	t_npIndex
+								)
+							>
+						]
+						...
+					};
+				}(	Sequence<nRequiredPredicateCount>()
+				);
+
+				return
+					Term<vAdjustedResultTerm>
+				::	SetPredicates
+					(	vTrimmedPredicates
+					)
+				;
+			}
 		}
 
 		template
@@ -359,38 +382,182 @@ namespace
 			,	typename
 				...	t_tpRightPredicate
 			>
-		friend auto constexpr
+		auto constexpr
 		(	operator or
-		)	(	Term
-			,	Term<t_vRightTerm, t_tpRightPredicate...>
-			)
-		{	auto constexpr
-				vIndexMap
-			=(	Logic::IndexMap<t_tpPredicate...>{}
-			+	...
-			+	Logic::MapToIndex<t_tpRightPredicate>{}
-			);
+		)	(	Term<t_vRightTerm, t_tpRightPredicate...> const
+				&	i_rRight
+			)	const
+		{
+			auto const
+				vPredicateUnion
+			=	Predicates
+			.	Union
+				(	i_rRight.Predicates
+				)
+			;
 
-			::std::array constexpr
-				vMapArray
-			={	vIndexMap
-				(	Logic::MapToIndex<t_tpRightPredicate>{}
+			using
+				tPredicateUnion
+			=	decltype
+				(	vPredicateUnion
+				)
+			;
+
+			::std::array<USize, sizeof...(t_tpRightPredicate)> constexpr
+				vPermutationArray
+			={	(	tPredicateUnion
+				::	IndexOf(Type<t_tpRightPredicate>)
 				)
 				...
 			};
 
 			auto constexpr
 				t_vPermutatedTerm
-			=	t_vRightTerm.Permutation(vMapArray)
+			=	t_vRightTerm.Permutation(vPermutationArray)
 			;
+
 			auto constexpr
 				vResultTerm
 			=	t_vTerm
 			or	t_vPermutatedTerm
 			;
-			return
-				Term<vResultTerm>::SetPredicates(vIndexMap);
+
+			auto constexpr
+				vPredicateField
+			=	vResultTerm
+			.	PredicateField
+				()
+			;
+
+			auto constexpr
+				nRequiredPredicateCount
+			=	CountOneBits(vPredicateField)
+			;
+
+			auto constexpr
+				nUnionPredicateCount
+			=	tPredicateUnion::size()
+			;
+
+			if	constexpr
+				(	nRequiredPredicateCount
+				==	nUnionPredicateCount
+				)
+			{
+				return
+				Term<vResultTerm>::SetPredicates
+				(	vPredicateUnion
+				);
+			}
+			else
+			if	constexpr
+				(	nRequiredPredicateCount
+				==	0uz
+				)
+				return Term<vResultTerm>{};
+			else
+			{
+				::std::array constexpr
+					vTrimPredicatePermutation
+				=[]	<	USize
+						...	t_npIndex
+					>(	IndexToken<t_npIndex...>
+					)
+				{
+					::std::array<USize, sizeof...(t_npIndex)>
+						vPermutationBuffer
+					{};
+					USize
+						nNewIndex
+					=	0uz
+					;
+					(void)
+					(	...
+					,	(	vPermutationBuffer[t_npIndex] = nNewIndex
+						,	nNewIndex += TestBit(vPredicateField, t_npIndex)
+						)
+					);
+
+					return vPermutationBuffer;
+				}(	Sequence<nUnionPredicateCount>()
+				);
+
+				auto constexpr
+					vAdjustedResultTerm
+				=	vResultTerm.Permutation
+					(	vTrimPredicatePermutation
+					)
+				;
+
+				auto const
+					vTrimmedPredicates
+				=[	&
+				]	<	USize
+						...	t_npIndex
+					>(	IndexToken<t_npIndex...>
+					)
+				{	return
+					TupleSet
+					{	vPredicateUnion
+						[	Index
+							<	GetIndexOfNthOneBit
+								(	vPredicateField
+								,	t_npIndex
+								)
+							>
+						]
+						...
+					};
+				}(	Sequence<nRequiredPredicateCount>()
+				);
+
+				return
+					Term<vAdjustedResultTerm>
+				::	SetPredicates
+					(	vTrimmedPredicates
+					)
+				;
+			}
 		}
+
+		template
+			<	Logic::Disjunction
+					t_vRightTerm
+			,	typename
+				...	t_tpRightPredicate
+			>
+		auto constexpr
+		(	operator ==
+		)	(	Term<t_vRightTerm, t_tpRightPredicate...> const
+				&	i_rRight
+			)	const
+		{
+			using
+				tPredicateUnion
+			=	decltype
+				(	Predicates
+				.	Union
+					(	i_rRight.Predicates
+					)
+				)
+			;
+
+			::std::array<USize, sizeof...(t_tpRightPredicate)> constexpr
+				vPermutationArray
+			={	(	tPredicateUnion
+				::	IndexOf(Type<t_tpRightPredicate>)
+				)
+				...
+			};
+
+			auto constexpr
+				vPermutatedTerm
+			=	t_vRightTerm.Permutation(vPermutationArray)
+			;
+
+			return t_vTerm == vPermutatedTerm;
+		}
+
 
 		template
 			<	typename
@@ -406,9 +573,9 @@ namespace
 		{	return
 			EvaluateTerm
 			<	t_vTerm
-			>(	::std::make_index_sequence
+			>(	Sequence
 				<	t_vTerm.ClauseCount()
-				>{}
+				>()
 			,	Predicates
 			,	::std::forward
 				<	t_tpArgument
@@ -431,7 +598,19 @@ namespace
 	->	Term<t_vTerm, t_tpPredicate...>
 	;
 
-	export template
+	auto constexpr inline
+		True
+	=	Term<Logic::Disjunction::True()>
+		{}
+	;
+
+	auto constexpr inline
+		False
+	=	Term<Logic::Disjunction::False()>
+		{}
+	;
+
+	template
 		<	typename
 				t_tPredicate
 		>
@@ -440,13 +619,92 @@ namespace
 	=	Term
 		<	Logic::Disjunction::Literal(0uz)
 		,	t_tPredicate
-		>{}
+		>{	t_tPredicate
+			{}
+		}
 	;
 }
 
-auto constexpr inline f = ::Meta::Atom<int>;
-auto constexpr inline g = ::Meta::Atom<double> ;
-auto constexpr inline h = f and g;
-auto constexpr inline i = g and f;
-auto constexpr inline j = h and i;
-auto constexpr inline j2 = i and h;
+// namespace Meta2
+// {
+// 	using Meta::TupleSet;
+// 	using Meta::Logic::Disjunction;
+// 	export template
+// 		<	typename
+// 			...	t_tpPredicate
+// 		>
+// 	struct
+// 		Term
+// 	{
+// 		TupleSet<t_tpPredicate...> const
+// 			Predicates
+// 		{};
+//
+// 		template
+// 			<	typename
+// 				...	t_tpRightPredicate
+// 			>
+// 		auto constexpr
+// 		(	operator and
+// 		)	(Term<t_tpRightPredicate...> const
+// 				&	i_rRight
+// 			)	const&
+// 		{
+// 			return sizeof...(t_tpRightPredicate);
+// 		}
+// 	};
+//
+// 	template
+// 		<	typename
+// 			...	t_tpPredicate
+// 		,	typename
+// 			...	t_tpRightPredicate
+// 		>
+// 	auto constexpr
+// 	(	operator and
+// 	)	(	Term<t_tpPredicate...> const
+// 			&	i_rLeft
+// 		,	Term<t_tpRightPredicate...> const
+// 			&	i_rRight
+// 		)
+// 	{
+// 		return sizeof...(t_tpRightPredicate);
+// 	}
+//
+// 	export template
+// 		<	typename
+// 				t_tPredicate
+// 		>
+// 	auto constexpr inline
+// 		Atom
+// 	=	Term
+// 		<	t_tPredicate
+// 		>{	TupleSet<t_tPredicate>
+// 			{	t_tPredicate
+// 				{}
+// 			}
+// 		}
+// 	;
+// 	export auto constexpr inline True = Term<>{};
+// 	export auto constexpr inline False = Term<>{};
+// }
+// using namespace Meta2;
+// auto constexpr inline T = True;
+// auto constexpr inline F = False;
+//
+// /// Literals
+// struct P{};
+// auto constexpr inline p = Atom<P>;
+// struct Q{};
+// auto constexpr inline q = Atom<Q>;
+// struct R{};
+// auto constexpr inline r = Atom<R>;
+//
+// auto constexpr inline f = p and q;
+//
+//
+//
+//
+//
+//
+// static_assert(std::is_same_v<decltype(f), int>);

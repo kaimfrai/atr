@@ -44,6 +44,7 @@ set(WARNING_FLAGS
 	-Weverything
 	-Wno-padded
 	#triggered when using std::sort with defaulted comparison
+	-Wno-logical-op-parentheses
 	-Wno-zero-as-null-pointer-constant
 	-Wno-c++98-compat-pedantic		#using c++23
 	-Wno-pre-c++17-compat-pedantic	#using c++23
@@ -59,13 +60,14 @@ set(MODULE_FLAGS
 set(ADDITIONAL_COMPILE_OPTIONS
 	-fconstexpr-backtrace-limit=0
 	-frelaxed-template-template-args
+	-fconstexpr-steps=4294967295
 )
 
 add_compile_options(
 	${CXX_STANDARD_LIBRARY_FLAG}
 	${WARNING_FLAGS}
 	${MODULE_FLAGS}
-	${ADDITIONAL_COMPILE_OPTIIONS}
+	${ADDITIONAL_COMPILE_OPTIONS}
 )
 add_link_options(
 	${CXX_STANDARD_LIBRARY_FLAG}

@@ -1,23 +1,24 @@
 export module Meta.Logic.BitClause;
 
 export import Std.Array;
-export import Std.Bit;
+export import Std.Compare;
 export import Std.Span;
 
-export import Meta.Common;
+export import Meta.Integer;
+export import Meta.Bit;
 
 namespace
 	Meta::Logic
 {
 	export USize constexpr inline
 		SubtermLimit
-	=	4uz
+	=	16uz
 	;
 
 	export struct
 		BitClause final
 	{
-		using FieldType = ::Meta::UInt<8uz>;
+		using FieldType = UInt<SubtermLimit>;
 
 		static auto constexpr
 		(	BitIndexToField
@@ -50,6 +51,12 @@ namespace
 		(	BitClause
 		)	(	USize
 			)
+		;
+
+		auto constexpr
+		(	PredicateField
+		)	()	const
+		->	USize
 		;
 
 		auto constexpr
@@ -121,14 +128,6 @@ namespace
 		;
 	};
 
-	export using
-		BitClauseArray
-	=	::std::array
-		<	BitClause
-		,	SubtermLimit
-		>
-	;
-
 	export auto constexpr
 	(	Inverse
 	)	(	BitClause
@@ -196,7 +195,7 @@ namespace
 	::	BitClause
 	)	()
 	:	Positive
-		{	SetBits(SubtermLimit)
+		{	SetOneBits(SubtermLimit)
 		}
 	,	Negative
 		{	Positive
@@ -218,6 +217,24 @@ namespace
 		{	Absorbing().Negative
 		}
 	{}
+
+	auto constexpr
+	(	BitClause
+	::	PredicateField
+	)	()	const
+	->	USize
+	{
+		if	(IsIdentity())
+			return 0uz;
+
+		return
+			0uz
+		bitor
+			Positive
+		bitor
+			Negative
+		;
+	}
 
 	auto constexpr
 	(	BitClause
@@ -255,7 +272,7 @@ namespace
 			else
 			if	(Negative bitand nIndexField)
 				(	vResult.Negative
-				|= BitIndexToField(i_vPermutation[nIndex])
+				|=	BitIndexToField(i_vPermutation[nIndex])
 				);
 		}
 		return vResult;
@@ -292,16 +309,12 @@ namespace
 	)	()	const
 	->	USize
 	{
-		if	(	Positive
-			bitand
-				Negative
-			)
+		if	(IsIdentity())
 			return 1uz;
 
 		return
-		static_cast<USize>
-		(	::std::popcount(Positive)
-		+	::std::popcount(Negative)
+		CountOneBits
+		(	PredicateField()
 		);
 	}
 
@@ -421,50 +434,13 @@ namespace
 		if	(IsIdentity())
 			return *this;
 
-		USize
-			nFieldIndex
-		=	0uz
-		;
-		for	(	USize
-					nMiddle
-				=	SubtermLimit
-				/	2uz
-			,		nBitField
-				=	Positive
-				bitor
-					Negative
-			;	nMiddle
-			;		nMiddle
-				/=	2uz
-			)
-		{
-			USize const
-				nLowerBits
-			=	nBitField
-			bitand
-				SetBits(nMiddle)
-			;
-			USize const
-				nLowerBitCount
-			=	static_cast<USize>
-				(	::std::popcount(nLowerBits)
-				)
-			;
-
-			if	(i_nIndex >= nLowerBitCount)
-			{
-				nBitField >>= nMiddle;
-				i_nIndex -= nLowerBitCount;
-				nFieldIndex += nMiddle;
-			}
-			else
-				nBitField = nLowerBits;
-		}
-
 		auto const
 			nIndexField
 		=	BitIndexToField
-			(	nFieldIndex
+			(	GetIndexOfNthOneBit
+				(	PredicateField()
+				,	i_nIndex
+				)
 			)
 		;
 
@@ -529,20 +505,14 @@ namespace
 	{
 		USize const
 			nFirstPositiveIndex
-		=	static_cast
-			<	USize
-			>(	::std::countr_zero
-				(	Positive
-				)
+		=	CountLowerZeroBits
+			(	Positive
 			)
 		;
 		USize const
 			nFirstNegativeIndex
-		=	static_cast
-			<	USize
-			>(	::std::countr_zero
-				(	Negative
-				)
+		=	CountLowerZeroBits
+			(	Negative
 			)
 		;
 

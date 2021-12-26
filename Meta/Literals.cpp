@@ -1,5 +1,7 @@
 export module Meta.Literals;
 
+import Meta.Integer;
+
 template
 	<	char
 	>
@@ -115,50 +117,6 @@ struct
 	{	return i_vParser;	}
 };
 
-auto constexpr
-(	Power
-)	(	unsigned long long
-			i_nBase
-	,	unsigned long long
-			i_nExponent
-	)
-->	unsigned long long
-{
-	if	(	i_nExponent
-		==	0ull
-		)
-		return 1ull;
-	else
-	if	(	i_nExponent
-		==	1ul
-		)
-		return
-			i_nBase
-		;
-	else
-	{
-		auto const
-			nUnevenPower
-		=	Power
-			(	i_nBase
-			,	i_nExponent % 2ull
-			)
-		;
-		auto const
-			nHalfPower
-		=	Power
-			(	i_nBase
-			,	i_nExponent / 2ull
-			)
-		;
-		return
-			nUnevenPower
-		*	nHalfPower
-		*	nHalfPower
-		;
-	}
-}
-
 template
 	<	unsigned long long
 			t_nRadix
@@ -240,7 +198,7 @@ struct
 	{
 		unsigned long long const
 			nExponent
-		=	Power
+		=	Meta::Power
 			(	t_nBase
 			,	i_vParser.Exponent
 			)
@@ -428,7 +386,7 @@ struct
 	(	Append
 	)	(	unsigned long long
 				i_nParsed
-		)
+		)	const
 	->	IntegerParser
 	{	return
 		{	.Numerator = Numerator * t_nRadix + i_nParsed
@@ -598,10 +556,10 @@ auto constexpr
 	);
 }
 
-export namespace
+namespace
 	Meta::Literals
 {
-	template
+	export template
 		<	char
 			...	t_npBasicCharacter
 		>

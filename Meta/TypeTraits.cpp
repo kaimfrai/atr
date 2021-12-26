@@ -1,10 +1,43 @@
 export module Meta.TypeTraits;
+
 export import Std.TypeTraits;
+
 export import Meta.Type;
 
 export namespace
 	Meta::Trait
 {
+	struct
+		Const final
+	{
+	template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_const_v<t_tEntity>;	}
+	};
+
+	struct
+		Volatile final
+	{
+	template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_volatile_v<t_tEntity>;	}
+	};
+
+
 	struct
 		Void final
 	{
@@ -314,14 +347,24 @@ export namespace
 	{
 		template
 			<	typename
-					t_tType
+					t_tEntity
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<t_tType>
+		)	(	TypeToken<t_tEntity>
+					i_vToken
 			)	const
 		->	bool
-		{	return false;	}
+		{
+			auto constexpr
+				vMutableToken
+			=	RemoveCV(i_vToken)
+			;
+			if	constexpr(i_vToken == vMutableToken)
+				return false;
+			else
+				return operator()(vMutableToken);
+		}
 
 		template
 			<	typename
@@ -334,54 +377,6 @@ export namespace
 					<	t_tpArgument
 						...
 					>
-				>
-			)	const
-		->	bool
-		{	return true;	}
-
-		template
-			<	typename
-				...	t_tpArgument
-			>
-		auto constexpr
-		(	operator()
-		)	(	TypeToken
-				<	t_t1Pack
-					<	t_tpArgument
-						...
-					>	const
-				>
-			)	const
-		->	bool
-		{	return true;	}
-
-		template
-			<	typename
-				...	t_tpArgument
-			>
-		auto constexpr
-		(	operator()
-		)	(	TypeToken
-				<	t_t1Pack
-					<	t_tpArgument
-						...
-					>	volatile
-				>
-			)	const
-		->	bool
-		{	return true;	}
-
-		template
-			<	typename
-				...	t_tpArgument
-			>
-		auto constexpr
-		(	operator()
-		)	(	TypeToken
-				<	t_t1Pack
-					<	t_tpArgument
-						...
-					>	const volatile
 				>
 			)	const
 		->	bool
@@ -401,14 +396,24 @@ export namespace
 	{
 		template
 			<	typename
-					t_tType
+					t_tEntity
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<t_tType>
+		)	(	TypeToken<t_tEntity>
+					i_vToken
 			)	const
 		->	bool
-		{	return false;	}
+		{
+			auto constexpr
+				vMutableToken
+			=	RemoveCV(i_vToken)
+			;
+			if	constexpr(i_vToken == vMutableToken)
+				return false;
+			else
+				return operator()(vMutableToken);
+		}
 
 		template
 			<	auto
@@ -421,54 +426,6 @@ export namespace
 					<	t_vpArgument
 						...
 					>
-				>
-			)	const
-		->	bool
-		{	return true;	}
-
-		template
-			<	auto
-				...	t_vpArgument
-			>
-		auto constexpr
-		(	operator()
-		)	(	TypeToken
-				<	t_t1Pack
-					<	t_vpArgument
-						...
-					>	const
-				>
-			)	const
-		->	bool
-		{	return true;	}
-
-		template
-			<	auto
-				...	t_vpArgument
-			>
-		auto constexpr
-		(	operator()
-		)	(	TypeToken
-				<	t_t1Pack
-					<	t_vpArgument
-						...
-					>	volatile
-				>
-			)	const
-		->	bool
-		{	return true;	}
-
-		template
-			<	auto
-				...	t_vpArgument
-			>
-		auto constexpr
-		(	operator()
-		)	(	TypeToken
-				<	t_t1Pack
-					<	t_vpArgument
-						...
-					>	const volatile
 				>
 			)	const
 		->	bool
@@ -488,14 +445,24 @@ export namespace
 	{
 		template
 			<	typename
-					t_tType
+					t_tEntity
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<t_tType>
+		)	(	TypeToken<t_tEntity>
+					i_vToken
 			)	const
 		->	bool
-		{	return false;	}
+		{
+			auto constexpr
+				vMutableToken
+			=	RemoveCV(i_vToken)
+			;
+			if	constexpr(i_vToken == vMutableToken)
+				return false;
+			else
+				return operator()(vMutableToken);
+		}
 
 		template
 			<	auto
@@ -514,60 +481,5 @@ export namespace
 			)	const
 		->	bool
 		{	return true;	}
-
-		template
-			<	auto
-					t_vFirst
-			,	typename
-					t_tSecond
-			>
-		auto constexpr
-		(	operator()
-		)	(	TypeToken
-				<	t_t1Pair
-					<	t_vFirst
-					,	t_tSecond
-					>	const
-				>
-			)	const
-		->	bool
-		{	return true;	}
-
-		template
-			<	auto
-					t_vFirst
-			,	typename
-					t_tSecond
-			>
-		auto constexpr
-		(	operator()
-		)	(	TypeToken
-				<	t_t1Pair
-					<	t_vFirst
-					,	t_tSecond
-					>	volatile
-				>
-			)	const
-		->	bool
-		{	return true;	}
-
-		template
-			<	auto
-					t_vFirst
-			,	typename
-					t_tSecond
-			>
-		auto constexpr
-		(	operator()
-		)	(	TypeToken
-				<	t_t1Pair
-					<	t_vFirst
-					,	t_tSecond
-					>	const volatile
-				>
-			)	const
-		->	bool
-		{	return true;	}
 	};
 }
-

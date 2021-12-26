@@ -1,13 +1,16 @@
 export module Meta.Logic.BitTerm;
 
-import Std.Algorithm;
-import Std.Numeric;
-import Meta.Logic.Optimizer;
-
 export import Meta.Logic.BitClause;
 export import Meta.Logic.BitClauseIterator;
-export import Std.Span;
+
 export import Std.Array;
+export import Std.Span;
+
+import Std.Algorithm;
+import Std.Functional;
+import Std.Numeric;
+
+import Meta.Logic.Optimizer;
 
 namespace
 	Meta::Logic
@@ -18,8 +21,7 @@ namespace
 		BitClause const
 			Clauses
 		[	SubtermLimit
-		]
-		{};
+		]{};
 
 		constexpr
 		(	BitTerm
@@ -67,6 +69,12 @@ namespace
 		(	operator
 			::std::span<BitClause const>
 		)	()	const
+		;
+
+		auto constexpr
+		(	PredicateField
+		)	()	const
+		->	USize
 		;
 
 		auto constexpr
@@ -212,6 +220,21 @@ namespace
 		::std::span<BitClause const>
 	)	()	const
 	{	return {begin(*this), end(*this)};	}
+
+	auto constexpr
+	(	BitTerm
+	::	PredicateField
+	)	()	const
+	->	USize
+	{	return
+		::std::transform_reduce
+		(	begin(*this)
+		,	end(*this)
+		,	0uz
+		,	::std::bit_or<USize>{}
+		,	::std::mem_fn(&BitClause::PredicateField)
+		);
+	}
 
 	auto constexpr
 	(	BitTerm

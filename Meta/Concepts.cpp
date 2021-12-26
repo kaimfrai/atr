@@ -1,5 +1,6 @@
 export module Meta.Concepts;
-import Meta.TypeTraits;
+
+export import Meta.TypeTraits;
 
 export namespace
 	Meta

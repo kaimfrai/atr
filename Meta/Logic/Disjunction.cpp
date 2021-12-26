@@ -50,6 +50,12 @@ namespace
 		;
 
 		auto constexpr
+		(	PredicateField
+		)	()	const
+		->	USize
+		;
+
+		auto constexpr
 		(	Permutation
 		)	(	::std::span<USize const>
 			)	const
@@ -131,6 +137,13 @@ namespace
 	)	()	const
 	->	USize
 	{	return Term.ClauseCount();	}
+
+	auto constexpr
+	(	Disjunction
+	::	PredicateField
+	)	()	const
+	->	USize
+	{	return Term.PredicateField();	}
 
 	auto constexpr
 	(	Disjunction
