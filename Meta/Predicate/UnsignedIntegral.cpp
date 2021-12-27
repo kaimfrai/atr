@@ -1,14 +1,15 @@
 export module Meta.Predicate.UnsignedIntegral;
 
-export import Meta.TypeTraits;
-export import Meta.Logic;
+export import Meta.Predicate.Integral;
+export import Meta.Predicate.Unsigned;
 
 namespace
 	Meta
 {
 	export auto constexpr inline
 		IsUnsignedIntegral
-	=	Atom<Trait::UnsignedIntegral>
+	=	IsIntegral
+	and	IsUnsigned
 	;
 }
 

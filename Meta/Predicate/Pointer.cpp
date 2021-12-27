@@ -1,14 +1,18 @@
 export module Meta.Predicate.Pointer;
 
-export import Meta.TypeTraits;
-export import Meta.Logic;
+export import Meta.Predicate.CompoundScalar;
 
 namespace
 	Meta
 {
-	export auto constexpr inline
+	export Term constexpr inline
 		IsPointer
-	=	Atom<Trait::Pointer>
+	=	IsCompoundScalar
+	and	not
+		Term{Trait::Enum{}}
+	and	not
+		Term{Trait::MemberPointer{}}
+	and	Term{Trait::Pointer{}}
 	;
 }
 

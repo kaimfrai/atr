@@ -1,4 +1,4 @@
-export module Meta.Predicate.Void;
+export module Meta.Predicate.FundamentalScalar;
 
 export import Meta.Predicate.Fundamental;
 export import Meta.Predicate.Scalar;
@@ -7,10 +7,10 @@ namespace
 	Meta
 {
 	export Term constexpr inline
-		IsVoid
+		IsFundamentalScalar
 	=	IsFundamental
+	and	IsScalar
 	and	not
-		IsScalar
-	and	Term{Trait::Void{}}
+		Term{Trait::Void()}
 	;
 }

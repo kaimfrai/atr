@@ -2,10 +2,10 @@ export module Meta.Predicate.ValueTypePair;
 
 export import Meta.Predicate.UserDefined;
 
-export namespace
+namespace
 	Meta
 {
-	template
+	export template
 		<	template
 				<	auto
 				,	typename
@@ -16,10 +16,10 @@ export namespace
 	Term constexpr inline
 		IsValueTypePair
 	=	IsUserDefined
-	and	Atom
-		<	Trait::ValueTypePair
+	and	Term
+		{	Trait::ValueTypePair
 			<	t_t1Pair
-			>
-		>
+			>{}
+		}
 	;
 }

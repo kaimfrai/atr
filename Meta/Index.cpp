@@ -4,7 +4,6 @@ export import Std.Utility;
 
 export import Meta.Integer;
 export import Meta.Literals;
-export import Meta.Concepts;
 
 namespace
 	Meta
@@ -59,18 +58,6 @@ namespace
 			>
 		{	return	{};	}
 	};
-
-	export template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoIndex
-	=	ProtoValuePack
-		<	t_tProto
-		,	IndexToken
-		>
-	;
 
 	export template
 		<	USize

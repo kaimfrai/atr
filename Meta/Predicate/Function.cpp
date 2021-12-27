@@ -1,14 +1,18 @@
 export module Meta.Predicate.Function;
 
-export import Meta.Predicate.UnqualifiedFunction;
-export import Meta.Predicate.QualifiedFunction;
+export import Meta.Predicate.Compound;
+export import Meta.Predicate.Object;
 
-export namespace
+namespace
 	Meta
 {
-	Term constexpr inline
+	export Term constexpr inline
 		IsFunction
-	=	IsUnqualifiedFunction
-	or	IsQualifiedFunction
+	=	IsCompound
+	and	not
+		IsObject
+	and	Term{Trait::Function{}}
+	and	not
+		Term{Trait::Reference{}}
 	;
 }

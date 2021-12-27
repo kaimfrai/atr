@@ -114,9 +114,13 @@ export namespace
 			...
 		{}
 
+		template
+			<	USize
+					t_nIndex
+			>
 		auto constexpr
 		(	operator []
-		)	(	ProtoIndex auto
+		)	(	IndexToken<t_nIndex>
 					i_vIndex
 			)	&
 		->	auto&
@@ -142,9 +146,13 @@ export namespace
 			;
 		}
 
+		template
+			<	USize
+					t_nIndex
+			>
 		auto constexpr
 		(	operator []
-		)	(	ProtoIndex auto
+		)	(	IndexToken<t_nIndex>
 					i_vIndex
 			)	const&
 		->	auto const&

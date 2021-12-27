@@ -22,7 +22,6 @@ namespace
 		)	(	RingIndex
 			,	IndexToken<t_nIndex>
 			)
-		->	ProtoIndex auto
 		{
 			return
 			Index<CongruentInteger(t_nRingIndex, t_nIndex)>

@@ -53,39 +53,39 @@ export namespace
 		>
 	;
 
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoUnsignedIntegral
-	=	ProtoTrait
-		<	t_tProto
-		,	Trait::UnsignedIntegral{}
-		>
-	;
+// 	template
+// 		<	typename
+// 				t_tProto
+// 		>
+// 	concept
+// 		ProtoUnsignedIntegral
+// 	=	ProtoTrait
+// 		<	t_tProto
+// 		,	Trait::UnsignedIntegral{}
+// 		>
+// 	;
 
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoSignedIntegral
-	=	ProtoTrait
-		<	t_tProto
-		,	Trait::SignedIntegral{}
-		>
-	;
+// 	template
+// 		<	typename
+// 				t_tProto
+// 		>
+// 	concept
+// 		ProtoSignedIntegral
+// 	=	ProtoTrait
+// 		<	t_tProto
+// 		,	Trait::SignedIntegral{}
+// 		>
+// 	;
 
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoIntegral
-	=	ProtoUnsignedIntegral<t_tProto>
-	or	ProtoSignedIntegral<t_tProto>
-	;
+// 	template
+// 		<	typename
+// 				t_tProto
+// 		>
+// 	concept
+// 		ProtoIntegral
+// 	=	ProtoUnsignedIntegral<t_tProto>
+// 	or	ProtoSignedIntegral<t_tProto>
+// 	;
 
 	template
 		<	typename
@@ -99,38 +99,38 @@ export namespace
 		>
 	;
 
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoArithmetic
-	=	ProtoIntegral<t_tProto>
-	or	ProtoFloatingPoint<t_tProto>
-	;
+// 	template
+// 		<	typename
+// 				t_tProto
+// 		>
+// 	concept
+// 		ProtoArithmetic
+// 	=	ProtoIntegral<t_tProto>
+// 	or	ProtoFloatingPoint<t_tProto>
+// 	;
 
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoFundamental
-	=	ProtoVoid<t_tProto>
-	or	ProtoNullPointer<t_tProto>
-	or	ProtoArithmetic<t_tProto>
-	;
+// 	template
+// 		<	typename
+// 				t_tProto
+// 		>
+// 	concept
+// 		ProtoFundamental
+// 	=	ProtoVoid<t_tProto>
+// 	or	ProtoNullPointer<t_tProto>
+// 	or	ProtoArithmetic<t_tProto>
+// 	;
 
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoUnscopedEnum
-	=	ProtoTrait
-		<	t_tProto
-		,	Trait::UnscopedEnum{}
-		>
-	;
+// 	template
+// 		<	typename
+// 				t_tProto
+// 		>
+// 	concept
+// 		ProtoUnscopedEnum
+// 	=	ProtoTrait
+// 		<	t_tProto
+// 		,	Trait::UnscopedEnum{}
+// 		>
+// 	;
 
 	template
 		<	typename
@@ -143,7 +143,7 @@ export namespace
 		,	Trait::ScopedEnum{}
 		>
 	;
-
+/*
 	template
 		<	typename
 				t_tProto
@@ -152,7 +152,7 @@ export namespace
 		ProtoEnum
 	=	ProtoUnscopedEnum<t_tProto>
 	or	ProtoScopedEnum<t_tProto>
-	;
+	;*/
 
 	template
 		<	typename
@@ -178,18 +178,18 @@ export namespace
 		>
 	;
 
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoScalar
-	=	ProtoNullPointer<t_tProto>
-	or	ProtoArithmetic<t_tProto>
-	or	ProtoEnum<t_tProto>
-	or	ProtoPointer<t_tProto>
-	or	ProtoMemberPointer<t_tProto>
-	;
+// 	template
+// 		<	typename
+// 				t_tProto
+// 		>
+// 	concept
+// 		ProtoScalar
+// 	=	ProtoNullPointer<t_tProto>
+// 	or	ProtoArithmetic<t_tProto>
+// 	or	ProtoEnum<t_tProto>
+// 	or	ProtoPointer<t_tProto>
+// 	or	ProtoMemberPointer<t_tProto>
+// 	;
 
 
 	template
@@ -226,39 +226,39 @@ export namespace
 	or	ProtoRValueReference<t_tProto>
 	;
 
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoUnqualifiedFunction
-	=	ProtoTrait
-		<	t_tProto
-		,	Trait::UnqualifiedFunction{}
-		>
-	;
+// 	template
+// 		<	typename
+// 				t_tProto
+// 		>
+// 	concept
+// 		ProtoUnqualifiedFunction
+// 	=	ProtoTrait
+// 		<	t_tProto
+// 		,	Trait::UnqualifiedFunction{}
+// 		>
+// 	;
 
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoQualifiedFunction
-	=	ProtoTrait
-		<	t_tProto
-		,	Trait::QualifiedFunction{}
-		>
-	;
-
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoFunction
-	=	ProtoUnqualifiedFunction<t_tProto>
-	or	ProtoQualifiedFunction<t_tProto>
-	;
+// 	template
+// 		<	typename
+// 				t_tProto
+// 		>
+// 	concept
+// 		ProtoQualifiedFunction
+// 	=	ProtoTrait
+// 		<	t_tProto
+// 		,	Trait::QualifiedFunction{}
+// 		>
+// 	;
+//
+// 	template
+// 		<	typename
+// 				t_tProto
+// 		>
+// 	concept
+// 		ProtoFunction
+// 	=	ProtoUnqualifiedFunction<t_tProto>
+// 	or	ProtoQualifiedFunction<t_tProto>
+// 	;
 
 	template
 		<	typename
@@ -338,15 +338,15 @@ export namespace
 	or	ProtoUserDefined<t_tProto>
 	;
 
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoObject
-	=	ProtoScalar<t_tProto>
-	or	ProtoCompoundObject<t_tProto>
-	;
+// 	template
+// 		<	typename
+// 				t_tProto
+// 		>
+// 	concept
+// 		ProtoObject
+// 	=	ProtoScalar<t_tProto>
+// 	or	ProtoCompoundObject<t_tProto>
+// 	;
 
 	template
 		<	typename
@@ -354,10 +354,10 @@ export namespace
 		>
 	concept
 		ProtoCompound
-	=	ProtoEnum<t_tProto>
-	or	ProtoPointer<t_tProto>
+	=	/*ProtoEnum<t_tProto>
+	or	*/ProtoPointer<t_tProto>
 	or	ProtoMemberPointer<t_tProto>
-	or	ProtoFunction<t_tProto>
+// 	or	ProtoFunction<t_tProto>
 	or	ProtoReference<t_tProto>
 	or	ProtoCompoundObject<t_tProto>
 	;

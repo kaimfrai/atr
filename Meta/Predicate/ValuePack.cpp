@@ -2,10 +2,10 @@ export module Meta.Predicate.ValuePack;
 
 export import Meta.Predicate.UserDefined;
 
-export namespace
+namespace
 	Meta
 {
-	template
+	export template
 		<	template
 				<	auto
 					...
@@ -16,11 +16,11 @@ export namespace
 	Term constexpr inline
 		IsValuePack
 	=	IsUserDefined
-	and	Atom
-		<	Trait::ValuePack
+	and	Term
+		{	Trait::ValuePack
 			<	t_t1Pack
-			>
-		>
+			>{}
+		}
 	;
 }
 

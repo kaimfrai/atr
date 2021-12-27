@@ -520,6 +520,19 @@ export namespace
 	};
 
 	template
+		<	typename
+				t_tPredicate
+		>
+	(	Term
+	)	(	t_tPredicate const&
+		)
+	->	Term
+		<	Logic::BitClause{0uz}
+		,	t_tPredicate
+		>
+	;
+
+	template
 		<	Logic::BitTerm
 				t_vTerm
 		,	typename
@@ -541,19 +554,5 @@ export namespace
 		False
 	=	Term<Logic::BitClause::Identity()>
 		{}
-	;
-
-	template
-		<	typename
-				t_tPredicate
-		>
-	Term constexpr inline
-		Atom
-	=	Term
-		<	Logic::BitClause{0uz}
-		,	t_tPredicate
-		>{	t_tPredicate
-			{}
-		}
 	;
 }

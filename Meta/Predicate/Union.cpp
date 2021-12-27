@@ -1,14 +1,16 @@
 export module Meta.Predicate.Union;
 
-export import Meta.TypeTraits;
-export import Meta.Logic;
+export import Meta.Predicate.UserDefined;
 
 namespace
 	Meta
 {
-	export auto constexpr inline
+	export Term constexpr inline
 		IsUnion
-	=	Atom<Trait::Union>
+	=	IsUserDefined
+	and	not
+		Term{Trait::Class{}}
+	and	Term{Trait::Union{}}
 	;
 }
 

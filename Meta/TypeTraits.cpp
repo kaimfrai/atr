@@ -25,7 +25,7 @@ export namespace
 	struct
 		Volatile final
 	{
-	template
+		template
 			<	typename
 					t_tEntity
 			>
@@ -37,6 +37,66 @@ export namespace
 		{	return std::is_volatile_v<t_tEntity>;	}
 	};
 
+	struct
+		Pointable final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+					i_vType
+			)	const
+		->	bool
+		{	return i_vType != AddPointer(i_vType);	}
+	};
+
+	struct
+		Fundamental final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_fundamental_v<t_tEntity>;	}
+	};
+
+	struct
+		Object final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_object_v<t_tEntity>;	}
+	};
+
+	struct
+		Scalar final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_scalar_v<t_tEntity>;	}
+	};
 
 	struct
 		Void final
@@ -69,7 +129,7 @@ export namespace
 	};
 
 	struct
-		UnsignedIntegral final
+		Arithmetic final
 	{
 		template
 			<	typename
@@ -80,15 +140,11 @@ export namespace
 		)	(	TypeToken<t_tEntity>
 			)	const
 		->	bool
-		{	if	constexpr(not std::is_integral_v<t_tEntity>)
-				return false;
-			else
-				return std::is_unsigned_v<t_tEntity>;
-		}
+		{	return std::is_arithmetic_v<t_tEntity>;	}
 	};
 
 	struct
-		SignedIntegral final
+		Unsigned final
 	{
 		template
 			<	typename
@@ -99,11 +155,22 @@ export namespace
 		)	(	TypeToken<t_tEntity>
 			)	const
 		->	bool
-		{	if	constexpr(not std::is_integral_v<t_tEntity>)
-				return false;
-			else
-				return std::is_signed_v<t_tEntity>;
-		}
+		{	return std::is_unsigned_v<t_tEntity>;	}
+	};
+
+	struct
+		Signed final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_signed_v<t_tEntity>;	}
 	};
 
 	struct
@@ -122,7 +189,7 @@ export namespace
 	};
 
 	struct
-		UnscopedEnum final
+		Integral final
 	{
 		template
 			<	typename
@@ -133,11 +200,22 @@ export namespace
 		)	(	TypeToken<t_tEntity>
 			)	const
 		->	bool
-		{	if	constexpr(not std::is_enum_v<t_tEntity>)
-				return false;
-			else
-				return not std::is_scoped_enum_v<t_tEntity>;
-		}
+		{	return std::is_integral_v<t_tEntity>;	}
+	};
+
+	struct
+		Enum final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_enum_v<t_tEntity>;	}
 	};
 
 	struct
@@ -186,6 +264,21 @@ export namespace
 	};
 
 	struct
+		Reference final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_reference_v<t_tEntity>;	}
+	};
+
+	struct
 		LValueReference final
 	{
 		template
@@ -216,7 +309,7 @@ export namespace
 	};
 
 	struct
-		UnqualifiedFunction final
+		Function final
 	{
 		template
 			<	typename
@@ -225,18 +318,13 @@ export namespace
 		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
-					i_vType
 			)	const
-		{	if	constexpr(not std::is_function_v<t_tEntity>)
-				return false;
-			else
-				///	AddPointer only works for unqualified functions
-				return i_vType != AddPointer(i_vType);
-		}
+		->	bool
+		{	return std::is_function_v<t_tEntity>;	}
 	};
 
 	struct
-		QualifiedFunction final
+		Array final
 	{
 		template
 			<	typename
@@ -245,14 +333,9 @@ export namespace
 		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
-					i_vType
 			)	const
-		{	if	constexpr(not std::is_function_v<t_tEntity>)
-				return false;
-			else
-				///	AddPointer only works for unqualified functions
-				return i_vType == AddPointer(i_vType);
-		}
+		->	bool
+		{	return std::is_array_v<t_tEntity>;	}
 	};
 
 	struct
@@ -283,6 +366,25 @@ export namespace
 			)	const
 		->	bool
 		{	return std::is_bounded_array_v<t_tEntity>;	}
+	};
+
+	struct
+		UserDefined final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return
+				::std::is_class_v<t_tEntity>
+			or	::std::is_union_v<t_tEntity>
+			;
+		}
 	};
 
 	struct

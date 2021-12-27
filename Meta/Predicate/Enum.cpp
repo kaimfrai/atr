@@ -1,14 +1,17 @@
 export module Meta.Predicate.Enum;
 
-export import Meta.Predicate.UnscopedEnum;
-export import Meta.Predicate.ScopedEnum;
+export import Meta.Predicate.CompoundScalar;
 
-export namespace
+namespace
 	Meta
 {
-	Term constexpr inline
+	export Term constexpr inline
 		IsEnum
-	=	IsUnscopedEnum
-	or	IsScopedEnum
+	=	IsCompoundScalar
+	and	Term{Trait::Enum{}}
+	and	not
+		Term{Trait::MemberPointer{}}
+	and	not
+		Term{Trait::Pointer{}}
 	;
 }

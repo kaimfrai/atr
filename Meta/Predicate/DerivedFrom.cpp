@@ -2,16 +2,20 @@ export module Meta.Predicate.DerivedFrom;
 
 export import Meta.Predicate.Class;
 
-export namespace
+ namespace
 	Meta
 {
-	template
+	export template
 		<	ProtoClass
 				t_tBase
 		>
 	Term constexpr inline
 		IsDerivedFrom
 	=	IsClass
-	and	Atom<Trait::DerivedFrom<t_tBase>>
+	and	Term
+		{	Trait::DerivedFrom
+			<	t_tBase
+			>{}
+		}
 	;
 }

@@ -1,15 +1,14 @@
 export module Meta.Predicate.Object;
 
-export import Meta.Predicate.Scalar;
-export import Meta.Predicate.CompoundObject;
+export import Meta.Predicate.Pointable;
 
-export namespace
+namespace
 	Meta
 {
-	Term constexpr inline
+	export Term constexpr inline
 		IsObject
-	=	IsScalar
-	or	IsCompoundObject
+	=	IsPointable
+	and	Term{Trait::Object{}}
 	;
 }
 

@@ -1,15 +1,19 @@
 export module Meta.Predicate.Reference;
 
-export import Meta.Predicate.LValueReference;
-export import Meta.Predicate.RValueReference;
+export import Meta.Predicate.Compound;
+export import Meta.Predicate.Object;
 
 namespace
 	Meta
 {
-	export auto constexpr inline
+	export Term constexpr inline
 		IsReference
-	=	IsLValueReference
-	or	IsRValueReference
+	=	IsCompound
+	and	not
+		IsObject
+	and	not
+		Term{Trait::Function{}}
+	and	Term{Trait::Reference{}}
 	;
 }
 

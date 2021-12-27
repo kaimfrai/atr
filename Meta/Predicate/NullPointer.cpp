@@ -1,13 +1,15 @@
 export module Meta.Predicate.NullPointer;
 
-export import Meta.TypeTraits;
-export import Meta.Logic;
+export import Meta.Predicate.FundamentalScalar;
 
 namespace
 	Meta
 {
-	export auto constexpr inline
+	export Term constexpr inline
 		IsNullPointer
-	=	Atom<Trait::NullPointer>
+	=	IsFundamentalScalar
+	and	not
+		Term{Trait::Arithmetic{}}
+	and	Term{Trait::NullPointer{}}
 	;
 }

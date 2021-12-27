@@ -1,10 +1,9 @@
 export module Meta.Bit;
 
 export import Std.Bit;
+export import Std.Limits;
 
 export import Meta.Integer;
-
-export import Std.Limits;
 
 namespace
 	Meta

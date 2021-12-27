@@ -5,19 +5,19 @@ export import Meta.Logic;
 export
 {
 	///	Constants
-	auto constexpr inline T
-	=	Meta::True;
-	auto constexpr inline F
-	=	Meta::False;
+	::Meta::Term constexpr inline T
+	=	::Meta::True;
+	::Meta::Term constexpr inline F
+	=	::Meta::False;
 
 	/// Literals
 	struct P{};
-	auto constexpr inline p
-	=	Meta::Atom<P>;
+	::Meta::Term constexpr inline p
+	=	::Meta::Term{P{}};
 	struct Q{};
-	auto constexpr inline q
-	=	Meta::Atom<Q>;
+	::Meta::Term constexpr inline q
+	=	::Meta::Term{Q{}};
 	struct R{};
-	auto constexpr inline r
-	=	Meta::Atom<R>;
+	::Meta::Term constexpr inline r
+	=	::Meta::Term{R{}};
 }

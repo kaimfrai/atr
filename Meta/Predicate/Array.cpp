@@ -1,14 +1,18 @@
 export module Meta.Predicate.Array;
 
-export import Meta.Predicate.UnboundedArray;
-export import Meta.Predicate.BoundedArray;
+export import Meta.Predicate.CompoundObject;
+export import Meta.Predicate.Scalar;
 
 export namespace
 	Meta
 {
 	Term constexpr inline
 		IsArray
-	=	IsUnboundedArray
-	or	IsBoundedArray
+	=	IsCompoundObject
+	and	not
+		IsScalar
+	and	not
+		Term{Trait::Array{}}
+	and	Term{Trait::UserDefined{}}
 	;
 }

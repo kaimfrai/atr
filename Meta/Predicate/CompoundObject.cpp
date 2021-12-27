@@ -1,14 +1,18 @@
 export module Meta.Predicate.CompoundObject;
 
-export import Meta.Predicate.Array;
-export import Meta.Predicate.UserDefined;
+export import Meta.Predicate.Compound;
+export import Meta.Predicate.Object;
 
-export namespace
+ namespace
 	Meta
 {
-	Term constexpr inline
+	export Term constexpr inline
 		IsCompoundObject
-	=	IsArray
-	or	IsUserDefined
+	=	IsCompound
+	and	IsObject
+	and	not
+		Term{Trait::Function{}}
+	and	not
+		Term{Trait::Reference{}}
 	;
 }

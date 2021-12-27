@@ -1,14 +1,16 @@
 export module Meta.Predicate.RValueReference;
 
-export import Meta.TypeTraits;
-export import Meta.Logic;
+export import Meta.Predicate.Reference;
 
 namespace
 	Meta
 {
-	export auto constexpr inline
+	export Term constexpr inline
 		IsRValueReference
-	=	Atom<Trait::RValueReference>
+	=	IsReference
+	and	not
+		Term{Trait::LValueReference{}}
+	and	Term{Trait::RValueReference{}}
 	;
 }
 

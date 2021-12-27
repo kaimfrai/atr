@@ -1,14 +1,15 @@
 export module Meta.Predicate.UnscopedEnum;
 
-export import Meta.TypeTraits;
-export import Meta.Logic;
+export import Meta.Predicate.Enum;
 
 namespace
 	Meta
 {
-	export auto constexpr inline
-		IsUnscopedEnum
-	=	Atom<Trait::UnscopedEnum>
+	export Term constexpr inline
+		IsScopedEnum
+	=	IsEnum
+	and	not
+		Term{Trait::ScopedEnum{}}
 	;
 }
 

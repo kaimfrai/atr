@@ -1,14 +1,16 @@
 export module Meta.Predicate.UnboundedArray;
 
-export import Meta.TypeTraits;
-export import Meta.Logic;
+export import Meta.Predicate.Array;
 
 namespace
 	Meta
 {
 	export auto constexpr inline
 		IsUnboundedArray
-	=	Atom<Trait::UnboundedArray>
+	=	IsArray
+	and	Term{Trait::BoundedArray{}}
+	and	not
+		Term{Trait::UnboundedArray{}}
 	;
 }
 

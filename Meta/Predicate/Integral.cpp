@@ -1,14 +1,15 @@
 export module Meta.Predicate.Integral;
 
-export import Meta.Predicate.UnsignedIntegral;
-export import Meta.Predicate.SignedIntegral;
+export import Meta.Predicate.Arithmetic;
 
 namespace
 	Meta
 {
 	export auto constexpr inline
 		IsIntegral
-	=	IsUnsignedIntegral
-	or	IsSignedIntegral
+	=	IsArithmetic
+	and	not
+		Term{Trait::FloatingPoint{}}
+	and	Term{Trait::Integral{}}
 	;
 }

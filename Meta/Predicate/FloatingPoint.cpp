@@ -1,13 +1,15 @@
 export module Meta.Predicate.FloatingPoint;
 
-export import Meta.TypeTraits;
-export import Meta.Logic;
+export import Meta.Predicate.Signed;
 
 namespace
 	Meta
 {
-	export auto constexpr inline
+	export Term constexpr inline
 		IsFloatingPoint
-	=	Atom<Trait::FloatingPoint>
+	=	IsSigned
+	and	Term{Trait::FloatingPoint{}}
+	and	not
+		Term{Trait::Integral{}}
 	;
 }

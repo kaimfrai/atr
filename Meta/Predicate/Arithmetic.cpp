@@ -1,14 +1,15 @@
 export module Meta.Predicate.Arithmetic;
 
-export import Meta.Predicate.Integral;
-export import Meta.Predicate.FloatingPoint;
+export import Meta.Predicate.FundamentalScalar;
 
-export namespace
+namespace
 	Meta
 {
-	Term constexpr inline
+	export Term constexpr inline
 		IsArithmetic
-	=	IsIntegral
-	or	IsFloatingPoint
+	=	IsFundamentalScalar
+	and	Term{Trait::Arithmetic{}}
+	and	not
+		Term{Trait::NullPointer{}}
 	;
 }
