@@ -4,7 +4,7 @@ add_module(
 function(add_logic_test
 	test_name
 )
-	add_module_object_library("Meta.Logic.Test.${test_name}" "${test_name}.cpp")
+	add_module_object_library("Test.Meta.Logic.${test_name}" "${test_name}.cpp")
 endfunction()
 
 add_logic_test(Equivalence)
