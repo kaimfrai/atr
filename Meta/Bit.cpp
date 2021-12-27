@@ -114,8 +114,7 @@ namespace
 		USize const
 			nLastOneBitIndex
 		=	::std::bit_ceil
-			(	BitSize_Of<USize>
-			-	CountUpperZeroBits
+			(	::std::bit_width
 				(	i_nBitField
 				)
 			)

@@ -85,6 +85,11 @@ namespace
 		;
 
 		auto constexpr
+		(	TrimPredicates
+		)	()	const
+		;
+
+		auto constexpr
 		(	IsAbsorbing
 		)	()	const
 		->	bool
@@ -154,6 +159,30 @@ namespace
 		->	BitTerm
 		;
 	};
+
+	export auto constexpr
+	(	Union
+	)	(	BitTerm const&
+		,	BitTerm const&
+		)
+	->	BitTerm
+	;
+
+	export auto constexpr
+	(	Intersection
+	)	(	BitTerm const&
+		,	BitTerm const&
+		)
+	->	BitTerm
+	;
+
+	export auto constexpr
+	(	operator ==
+	)	(	BitTerm const&
+		,	BitTerm const&
+		)
+	->	bool
+	;
 
 	constexpr
 	(	BitTerm
@@ -257,6 +286,71 @@ namespace
 			vPermutationResult.insert(vClause.Permutation(i_vPermutation));
 
 		return { ::std::move(vPermutationResult) };
+	}
+
+	auto constexpr
+	(	BitTerm
+	::	TrimPredicates
+	)	()	const
+	{
+		auto const
+			vPredicateField
+		=	PredicateField
+			()
+		;
+		auto const
+			nRequiredPredicateCount
+		=	CountOneBits(vPredicateField)
+		;
+
+		auto const
+			nPredicateCount
+		=	::std::bit_width
+			(	vPredicateField
+			)
+		;
+
+		if	(	nRequiredPredicateCount
+			==	nPredicateCount
+			)
+			return *this;
+		else
+		{
+			USize
+			*	aTrimPredicatePermutation
+			=	new USize
+				[	nPredicateCount
+				]{}
+			;
+
+			for	(	USize
+						nIndex
+					=	0uz
+				,		nPermutation
+					=	0uz
+				;		nIndex
+					<	nPredicateCount
+				;	++	nIndex
+				)
+			{
+				aTrimPredicatePermutation
+				[	nIndex
+				]=	nPermutation
+				;
+				nPermutation += TestBit(vPredicateField, nIndex);
+			}
+
+			auto const
+				vTrimmedTerm
+			=	Permutation
+				(	{	aTrimPredicatePermutation
+					,	nPredicateCount
+					}
+				)
+			;
+			delete[] aTrimPredicatePermutation;
+			return vTrimmedTerm;
+		}
 	}
 
 	auto constexpr

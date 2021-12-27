@@ -1,10 +1,11 @@
 export module Meta.Logic;
 
-export import Meta.Logic.Disjunction;
+export import Meta.Logic.BitTerm;
 
 export import Meta.TupleSet;
 
 import Std.Array;
+import Std.Bit;
 
 namespace
 	Meta
@@ -85,7 +86,7 @@ namespace
 	}
 
 	template
-		<	Logic::Disjunction
+		<	Logic::BitTerm
 				t_vTerm
 		,	USize
 			...	t_npClauseIndex
@@ -110,9 +111,9 @@ namespace
 	{
 		return
 		(	...
-		or	EvaluateClause<t_vTerm.Term[t_npClauseIndex]>
+		or	EvaluateClause<t_vTerm[t_npClauseIndex]>
 			(	Sequence
-				<	t_vTerm.Term[t_npClauseIndex]
+				<	t_vTerm[t_npClauseIndex]
 				.	LiteralCount()
 				>()
 			,	i_rPredicates
@@ -124,35 +125,159 @@ namespace
 			)
 		);
 	}
+
+	template
+		<	typename
+				t_tResult
+		>
+	using
+		BinaryTermFunction
+	=	auto
+		(*)	(	Logic::BitTerm const&
+			,	Logic::BitTerm const&
+			)
+		->	t_tResult
+	;
+
+	BinaryTermFunction<Logic::BitTerm> constexpr inline
+		ComputeDisjunction
+	=	&Logic::Intersection
+	;
+	BinaryTermFunction<Logic::BitTerm>  constexpr inline
+		ComputeConjunction
+	=	&Logic::Union
+	;
+	BinaryTermFunction<bool>  constexpr inline
+		ComputeEquivalence
+	=	&Logic::operator==
+	;
+
+	template
+		<	typename
+			...	t_tpPredicate
+		>
+	auto constexpr inline
+		DeduceTupleSet
+	=	static_cast
+		<	TupleSet
+			<	t_tpPredicate
+				...
+			>	const
+			*
+		>(	nullptr
+		)
+	;
+
+	template
+		<	typename
+				t_tResult
+		,	typename
+			...	t_tpLeftPredicate
+		,	typename
+			...	t_tpRightPredicate
+		>
+	static auto constexpr
+	(	Compute
+	)	(	BinaryTermFunction<t_tResult>
+				i_fCompute
+		,	Logic::BitTerm const
+			&	i_rLeftTerm
+		,	TupleSet<t_tpLeftPredicate...> const
+			*	i_aDeduceLeftPredicates
+		,	Logic::BitTerm const
+			&	i_rRightTerm
+		,	TupleSet<t_tpRightPredicate...> const
+			*	i_aDeduceRightPredicates
+		)
+	->	t_tResult
+	{
+		using
+			tPredicateUnion
+		=	decltype
+			(	i_aDeduceLeftPredicates
+			->	Union
+				(	*i_aDeduceRightPredicates
+				)
+			)
+		;
+
+		::std::array<USize, sizeof...(t_tpRightPredicate)> constexpr
+			vPermutationArray
+		={	(	tPredicateUnion
+			::	IndexOf(Type<t_tpRightPredicate>)
+			)
+			...
+		};
+
+		return
+		i_fCompute
+		(	i_rLeftTerm
+		,		i_rRightTerm
+			.	Permutation
+				(	vPermutationArray
+				)
+		);
+	}
+
+	template
+		<	USize
+				t_vPredicateField
+		,	typename
+			...	t_tpPredicate
+		>
+	auto constexpr
+	(	TrimPredicates
+	)	(	TupleSet<t_tpPredicate...> const
+			&	i_rPredicates
+		)
+	{
+		auto constexpr
+			nRequiredPredicateCount
+		=	CountOneBits(t_vPredicateField)
+		;
+		if	constexpr
+			(	nRequiredPredicateCount
+			==	sizeof...(t_tpPredicate)
+			)
+			return i_rPredicates;
+		else
+			return
+			[	&i_rPredicates
+			]	<	USize
+					...	t_npIndex
+				>(	IndexToken<t_npIndex...>
+				)
+			{	return
+				TupleSet
+				{	i_rPredicates
+					[	Index
+						<	GetIndexOfNthOneBit
+							(	t_vPredicateField
+							,	t_npIndex
+							)
+						>
+					]
+					...
+				};
+			}(	Sequence<nRequiredPredicateCount>()
+			);
+	}
 }
 
 export namespace
 	Meta
 {
 	template
-		<	Logic::Disjunction
+		<	Logic::BitTerm
 				t_vTerm
 		,	typename
 			...	t_tpPredicate
 		>
-	struct
+	class
 		Term
 	{
-		TupleSet<t_tpPredicate...> const
-			Predicates
-		;
-
-		explicit constexpr
-		(	Term
-		)	(	t_tpPredicate const
-				&
-				...	i_rpPredicate
-			)
-		:	Predicates
-			{	i_rpPredicate
-				...
-			}
-		{}
+		template<Logic::BitTerm, typename...>
+		friend class Term;
 
 		explicit constexpr
 		(	Term
@@ -163,12 +288,6 @@ export namespace
 			{	i_rPredicates
 			}
 		{}
-
-		constexpr
-		(	Term
-		)	(	Term const&
-			)
-		=	default;
 
 		template
 			<	typename
@@ -196,13 +315,108 @@ export namespace
 			};
 		}
 
+		template
+			<	BinaryTermFunction<Logic::BitTerm>
+					i_fCompute
+			,	Logic::BitTerm
+					t_vRightTerm
+			,	typename
+				...	t_tpRightPredicate
+			>
+		auto constexpr
+		(	ComputeTerm
+		)	(	Term<t_vRightTerm, t_tpRightPredicate...> const
+				&	i_rRight
+			)	const
+		{
+			auto constexpr
+				vResultTerm
+			=	Compute
+				(	i_fCompute
+				,	t_vTerm
+				,	DeduceTupleSet<t_tpPredicate...>
+				,	t_vRightTerm
+				,	DeduceTupleSet<t_tpRightPredicate...>
+				)
+			;
+
+			auto constexpr
+				vResultPredicateField
+			=	vResultTerm.PredicateField()
+			;
+
+			if	constexpr
+				(	vResultPredicateField
+				==	0uz
+				)
+				return Term<vResultTerm>{};
+			else
+				return
+					Term
+					<	vResultTerm.TrimPredicates()
+					>
+				::	SetPredicates
+					(	TrimPredicates
+						<	vResultPredicateField
+						>(	Predicates.Union
+							(	i_rRight.Predicates
+							)
+						)
+					)
+				;
+		}
+
+	public:
+		TupleSet<t_tpPredicate...> const
+			Predicates
+		;
+
+		constexpr
+		(	Term
+		)	()
+		requires
+			(	sizeof...(t_tpPredicate)
+			==	0uz
+			)
+		and	(	t_vTerm.IsAbsorbing()
+			or	t_vTerm.IsIdentity()
+			)
+		{}
+
+		explicit constexpr
+		(	Term
+		)	(	t_tpPredicate const
+				&
+				...	i_rpPredicate
+			)
+		requires
+			(	sizeof...(t_tpPredicate)
+			==	1uz
+			)
+		and	(	t_vTerm.ClauseCount()
+			==	1uz
+			)
+		and	(	t_vTerm[0uz].LiteralCount()
+			==	1uz
+			)
+		:	Predicates
+			{	i_rpPredicate
+				...
+			}
+		{}
+
+		constexpr
+		(	Term
+		)	(	Term const&
+			)
+		=	default;
+
 		auto constexpr
 		(	operator not
 		)	()	const
 		{	return
 			Term
-			<	not
-				t_vTerm
+			<	Negation(t_vTerm)
 			,	t_tpPredicate
 				...
 			>{	Predicates
@@ -233,7 +447,7 @@ export namespace
 		{	return true;	}
 
 		template
-			<	Logic::Disjunction
+			<	Logic::BitTerm
 					t_vRightTerm
 			,	typename
 				...	t_tpRightPredicate
@@ -243,141 +457,10 @@ export namespace
 		)	(	Term<t_vRightTerm, t_tpRightPredicate...> const
 				&	i_rRight
 			)	const
-		{
-			auto const
-				vPredicateUnion
-			=	Predicates
-			.	Union
-				(	i_rRight.Predicates
-				)
-			;
-
-			using
-				tPredicateUnion
-			=	decltype
-				(	vPredicateUnion
-				)
-			;
-
-			::std::array<USize, sizeof...(t_tpRightPredicate)> constexpr
-				vPermutationArray
-			={	(	tPredicateUnion
-				::	IndexOf(Type<t_tpRightPredicate>)
-				)
-				...
-			};
-
-			auto constexpr
-				t_vPermutatedTerm
-			=	t_vRightTerm.Permutation(vPermutationArray)
-			;
-
-			auto constexpr
-				vResultTerm
-			=	t_vTerm
-			and	t_vPermutatedTerm
-			;
-
-			auto constexpr
-				vPredicateField
-			=	vResultTerm
-			.	PredicateField
-				()
-			;
-
-			auto constexpr
-				nRequiredPredicateCount
-			=	CountOneBits(vPredicateField)
-			;
-
-			auto constexpr
-				nUnionPredicateCount
-			=	tPredicateUnion::size()
-			;
-
-			if	constexpr
-				(	nRequiredPredicateCount
-				==	nUnionPredicateCount
-				)
-			{
-				return
-				Term<vResultTerm>::SetPredicates
-				(	vPredicateUnion
-				);
-			}
-			else
-			if	constexpr
-				(	nRequiredPredicateCount
-				==	0uz
-				)
-				return Term<vResultTerm>{};
-			else
-			{
-				::std::array constexpr
-					vTrimPredicatePermutation
-				=[]	<	USize
-						...	t_npIndex
-					>(	IndexToken<t_npIndex...>
-					)
-				{
-					::std::array<USize, sizeof...(t_npIndex)>
-						vPermutationBuffer
-					{};
-					USize
-						nNewIndex
-					=	0uz
-					;
-					(void)
-					(	...
-					,	(	vPermutationBuffer[t_npIndex] = nNewIndex
-						,	nNewIndex += TestBit(vPredicateField, t_npIndex)
-						)
-					);
-
-					return vPermutationBuffer;
-				}(	Sequence<nUnionPredicateCount>()
-				);
-
-				auto constexpr
-					vAdjustedResultTerm
-				=	vResultTerm.Permutation
-					(	vTrimPredicatePermutation
-					)
-				;
-
-				auto const
-					vTrimmedPredicates
-				=[	&
-				]	<	USize
-						...	t_npIndex
-					>(	IndexToken<t_npIndex...>
-					)
-				{	return
-					TupleSet
-					{	vPredicateUnion
-						[	Index
-							<	GetIndexOfNthOneBit
-								(	vPredicateField
-								,	t_npIndex
-								)
-							>
-						]
-						...
-					};
-				}(	Sequence<nRequiredPredicateCount>()
-				);
-
-				return
-					Term<vAdjustedResultTerm>
-				::	SetPredicates
-					(	vTrimmedPredicates
-					)
-				;
-			}
-		}
+		{	return ComputeTerm<ComputeConjunction>(i_rRight);	}
 
 		template
-			<	Logic::Disjunction
+			<	Logic::BitTerm
 					t_vRightTerm
 			,	typename
 				...	t_tpRightPredicate
@@ -387,177 +470,27 @@ export namespace
 		)	(	Term<t_vRightTerm, t_tpRightPredicate...> const
 				&	i_rRight
 			)	const
-		{
-			auto const
-				vPredicateUnion
-			=	Predicates
-			.	Union
-				(	i_rRight.Predicates
-				)
-			;
-
-			using
-				tPredicateUnion
-			=	decltype
-				(	vPredicateUnion
-				)
-			;
-
-			::std::array<USize, sizeof...(t_tpRightPredicate)> constexpr
-				vPermutationArray
-			={	(	tPredicateUnion
-				::	IndexOf(Type<t_tpRightPredicate>)
-				)
-				...
-			};
-
-			auto constexpr
-				t_vPermutatedTerm
-			=	t_vRightTerm.Permutation(vPermutationArray)
-			;
-
-			auto constexpr
-				vResultTerm
-			=	t_vTerm
-			or	t_vPermutatedTerm
-			;
-
-			auto constexpr
-				vPredicateField
-			=	vResultTerm
-			.	PredicateField
-				()
-			;
-
-			auto constexpr
-				nRequiredPredicateCount
-			=	CountOneBits(vPredicateField)
-			;
-
-			auto constexpr
-				nUnionPredicateCount
-			=	tPredicateUnion::size()
-			;
-
-			if	constexpr
-				(	nRequiredPredicateCount
-				==	nUnionPredicateCount
-				)
-			{
-				return
-				Term<vResultTerm>::SetPredicates
-				(	vPredicateUnion
-				);
-			}
-			else
-			if	constexpr
-				(	nRequiredPredicateCount
-				==	0uz
-				)
-				return Term<vResultTerm>{};
-			else
-			{
-				::std::array constexpr
-					vTrimPredicatePermutation
-				=[]	<	USize
-						...	t_npIndex
-					>(	IndexToken<t_npIndex...>
-					)
-				{
-					::std::array<USize, sizeof...(t_npIndex)>
-						vPermutationBuffer
-					{};
-					USize
-						nNewIndex
-					=	0uz
-					;
-					(void)
-					(	...
-					,	(	vPermutationBuffer[t_npIndex] = nNewIndex
-						,	nNewIndex += TestBit(vPredicateField, t_npIndex)
-						)
-					);
-
-					return vPermutationBuffer;
-				}(	Sequence<nUnionPredicateCount>()
-				);
-
-				auto constexpr
-					vAdjustedResultTerm
-				=	vResultTerm.Permutation
-					(	vTrimPredicatePermutation
-					)
-				;
-
-				auto const
-					vTrimmedPredicates
-				=[	&
-				]	<	USize
-						...	t_npIndex
-					>(	IndexToken<t_npIndex...>
-					)
-				{	return
-					TupleSet
-					{	vPredicateUnion
-						[	Index
-							<	GetIndexOfNthOneBit
-								(	vPredicateField
-								,	t_npIndex
-								)
-							>
-						]
-						...
-					};
-				}(	Sequence<nRequiredPredicateCount>()
-				);
-
-				return
-					Term<vAdjustedResultTerm>
-				::	SetPredicates
-					(	vTrimmedPredicates
-					)
-				;
-			}
-		}
+		{	return ComputeTerm<ComputeDisjunction>(i_rRight);	}
 
 		template
-			<	Logic::Disjunction
+			<	Logic::BitTerm
 					t_vRightTerm
 			,	typename
 				...	t_tpRightPredicate
 			>
 		auto constexpr
 		(	operator ==
-		)	(	Term<t_vRightTerm, t_tpRightPredicate...> const
-				&	i_rRight
+		)	(	Term<t_vRightTerm, t_tpRightPredicate...> const&
 			)	const
-		{
-			using
-				tPredicateUnion
-			=	decltype
-				(	Predicates
-				.	Union
-					(	i_rRight.Predicates
-					)
-				)
-			;
-
-			::std::array<USize, sizeof...(t_tpRightPredicate)> constexpr
-				vPermutationArray
-			={	(	tPredicateUnion
-				::	IndexOf(Type<t_tpRightPredicate>)
-				)
-				...
-			};
-
-			auto constexpr
-				vPermutatedTerm
-			=	t_vRightTerm.Permutation(vPermutationArray)
-			;
-
-			return t_vTerm == vPermutatedTerm;
+		{	return
+			Compute
+			(	ComputeEquivalence
+			,	t_vTerm
+			,	DeduceTupleSet<t_tpPredicate...>
+			,	t_vRightTerm
+			,	DeduceTupleSet<t_tpRightPredicate...>
+			);
 		}
-
 
 		template
 			<	typename
@@ -568,7 +501,7 @@ export namespace
 		)	(	t_tpArgument
 				&&
 				...	i_rpArgument
-			)
+			)	const
 		->	bool
 		{	return
 			EvaluateTerm
@@ -587,7 +520,7 @@ export namespace
 	};
 
 	template
-		<	Logic::Disjunction
+		<	Logic::BitTerm
 				t_vTerm
 		,	typename
 			...	t_tpPredicate
@@ -598,15 +531,15 @@ export namespace
 	->	Term<t_vTerm, t_tpPredicate...>
 	;
 
-	auto constexpr inline
+	Term constexpr inline
 		True
-	=	Term<Logic::Disjunction::True()>
+	=	Term<Logic::BitClause::Absorbing()>
 		{}
 	;
 
-	auto constexpr inline
+	Term constexpr inline
 		False
-	=	Term<Logic::Disjunction::False()>
+	=	Term<Logic::BitClause::Identity()>
 		{}
 	;
 
@@ -614,97 +547,13 @@ export namespace
 		<	typename
 				t_tPredicate
 		>
-	auto constexpr inline
+	Term constexpr inline
 		Atom
 	=	Term
-		<	Logic::Disjunction::Literal(0uz)
+		<	Logic::BitClause{0uz}
 		,	t_tPredicate
 		>{	t_tPredicate
 			{}
 		}
 	;
 }
-
-// namespace Meta2
-// {
-// 	using Meta::TupleSet;
-// 	using Meta::Logic::Disjunction;
-// 	export template
-// 		<	typename
-// 			...	t_tpPredicate
-// 		>
-// 	struct
-// 		Term
-// 	{
-// 		TupleSet<t_tpPredicate...> const
-// 			Predicates
-// 		{};
-//
-// 		template
-// 			<	typename
-// 				...	t_tpRightPredicate
-// 			>
-// 		auto constexpr
-// 		(	operator and
-// 		)	(Term<t_tpRightPredicate...> const
-// 				&	i_rRight
-// 			)	const&
-// 		{
-// 			return sizeof...(t_tpRightPredicate);
-// 		}
-// 	};
-//
-// 	template
-// 		<	typename
-// 			...	t_tpPredicate
-// 		,	typename
-// 			...	t_tpRightPredicate
-// 		>
-// 	auto constexpr
-// 	(	operator and
-// 	)	(	Term<t_tpPredicate...> const
-// 			&	i_rLeft
-// 		,	Term<t_tpRightPredicate...> const
-// 			&	i_rRight
-// 		)
-// 	{
-// 		return sizeof...(t_tpRightPredicate);
-// 	}
-//
-// 	export template
-// 		<	typename
-// 				t_tPredicate
-// 		>
-// 	auto constexpr inline
-// 		Atom
-// 	=	Term
-// 		<	t_tPredicate
-// 		>{	TupleSet<t_tPredicate>
-// 			{	t_tPredicate
-// 				{}
-// 			}
-// 		}
-// 	;
-// 	export auto constexpr inline True = Term<>{};
-// 	export auto constexpr inline False = Term<>{};
-// }
-// using namespace Meta2;
-// auto constexpr inline T = True;
-// auto constexpr inline F = False;
-//
-// /// Literals
-// struct P{};
-// auto constexpr inline p = Atom<P>;
-// struct Q{};
-// auto constexpr inline q = Atom<Q>;
-// struct R{};
-// auto constexpr inline r = Atom<R>;
-//
-// auto constexpr inline f = p and q;
-//
-//
-//
-//
-//
-//
-// static_assert(std::is_same_v<decltype(f), int>);
