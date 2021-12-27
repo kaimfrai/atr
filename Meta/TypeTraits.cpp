@@ -69,6 +69,21 @@ export namespace
 	};
 
 	struct
+		Compound final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return std::is_compound_v<t_tEntity>;	}
+	};
+
+	struct
 		Object final
 	{
 		template

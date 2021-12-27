@@ -1,13 +1,14 @@
 export module Meta.Predicate.Pointable;
 
-export import Meta.TypeTraits;
-export import Meta.Logic;
+export import Meta.Predicate.Fundamental;
+export import Meta.Predicate.CompoundObject;
 
 namespace
 	Meta
 {
 	export Term constexpr inline
 		IsPointable
-	=	Term{Trait::Pointable{}}
+	=	IsFundamental
+	or	IsCompoundObject
 	;
 }

@@ -9,10 +9,6 @@ export namespace
 	Term constexpr inline
 		IsArray
 	=	IsCompoundObject
-	and	not
-		IsScalar
-	and	not
-		Term{Trait::Array{}}
-	and	Term{Trait::UserDefined{}}
+	and	Term{Trait::Array{}}
 	;
 }

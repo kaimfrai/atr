@@ -1,15 +1,13 @@
 export module Meta.Predicate.Unsigned;
 
-export import Meta.Predicate.Arithmetic;
+export import Meta.Predicate.Integral;
 
 namespace
 	Meta
 {
 	export Term constexpr inline
 		IsUnsigned
-	=	IsArithmetic
-	and	not
-		Term{Trait::Signed{}}
+	=	IsIntegral
 	and	Term{Trait::Unsigned{}}
 	;
 }

@@ -9,9 +9,5 @@ namespace
 		IsEnum
 	=	IsCompoundScalar
 	and	Term{Trait::Enum{}}
-	and	not
-		Term{Trait::MemberPointer{}}
-	and	not
-		Term{Trait::Pointer{}}
 	;
 }

@@ -1,15 +1,13 @@
 export module Meta.Predicate.FloatingPoint;
 
-export import Meta.Predicate.Signed;
+export import Meta.Predicate.Arithmetic;
 
 namespace
 	Meta
 {
 	export Term constexpr inline
 		IsFloatingPoint
-	=	IsSigned
+	=	IsArithmetic
 	and	Term{Trait::FloatingPoint{}}
-	and	not
-		Term{Trait::Integral{}}
 	;
 }

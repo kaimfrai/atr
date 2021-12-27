@@ -1,6 +1,6 @@
 export module Meta.Predicate.RValueReference;
 
-export import Meta.Predicate.Reference;
+export import Meta.Predicate.LValueReference;
 
 namespace
 	Meta
@@ -10,7 +10,6 @@ namespace
 	=	IsReference
 	and	not
 		Term{Trait::LValueReference{}}
-	and	Term{Trait::RValueReference{}}
 	;
 }
 

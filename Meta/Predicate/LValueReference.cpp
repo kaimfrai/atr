@@ -9,7 +9,5 @@ namespace
 		IsLValueReference
 	=	IsReference
 	and	Term{Trait::LValueReference{}}
-	and	not
-		Term{Trait::RValueReference{}}
 	;
 }

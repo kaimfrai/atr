@@ -12,7 +12,6 @@ namespace
 		Term{Trait::Enum{}}
 	and	not
 		Term{Trait::MemberPointer{}}
-	and	Term{Trait::Pointer{}}
 	;
 }
 

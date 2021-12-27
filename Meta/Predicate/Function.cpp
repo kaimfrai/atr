@@ -9,10 +9,6 @@ namespace
 	export Term constexpr inline
 		IsFunction
 	=	IsCompound
-	and	not
-		IsObject
 	and	Term{Trait::Function{}}
-	and	not
-		Term{Trait::Reference{}}
 	;
 }

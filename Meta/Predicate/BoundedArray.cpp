@@ -9,7 +9,5 @@ namespace
 		IsBoundedArray
 	=	IsArray
 	and	Term{Trait::BoundedArray{}}
-	and	not
-		Term{Trait::UnboundedArray{}}
 	;
 }

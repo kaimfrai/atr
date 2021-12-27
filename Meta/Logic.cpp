@@ -200,6 +200,13 @@ namespace
 				)
 			)
 		;
+		static_assert
+		(	(	tPredicateUnion
+			::	size()
+			<=	Logic::SubtermLimit
+			)
+		,	"Exceeded maximum amount of predicates per term!"
+		);
 
 		::std::array<USize, sizeof...(t_tpRightPredicate)> constexpr
 			vPermutationArray

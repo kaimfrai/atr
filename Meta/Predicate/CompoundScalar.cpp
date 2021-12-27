@@ -1,7 +1,6 @@
 export module Meta.Predicate.CompoundScalar;
 
 export import Meta.Predicate.CompoundObject;
-export import Meta.Predicate.Scalar;
 
 namespace
 	Meta
@@ -9,7 +8,6 @@ namespace
 	export Term constexpr inline
 		IsCompoundScalar
 	=	IsCompoundObject
-	and	IsScalar
 	and	not
 		Term{Trait::Array{}}
 	and	not

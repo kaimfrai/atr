@@ -10,6 +10,5 @@ namespace
 	=	IsArithmetic
 	and	not
 		Term{Trait::FloatingPoint{}}
-	and	Term{Trait::Integral{}}
 	;
 }

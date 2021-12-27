@@ -8,8 +8,6 @@ namespace
 	export Term constexpr inline
 		IsNullPointer
 	=	IsFundamentalScalar
-	and	not
-		Term{Trait::Arithmetic{}}
 	and	Term{Trait::NullPointer{}}
 	;
 }

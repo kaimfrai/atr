@@ -6,7 +6,7 @@ namespace
 	Meta
 {
 	export Term constexpr inline
-		IsScopedEnum
+		IsUnscopedEnum
 	=	IsEnum
 	and	not
 		Term{Trait::ScopedEnum{}}

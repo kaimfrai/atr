@@ -8,8 +8,6 @@ namespace
 	export Term constexpr inline
 		IsUnion
 	=	IsUserDefined
-	and	not
-		Term{Trait::Class{}}
 	and	Term{Trait::Union{}}
 	;
 }

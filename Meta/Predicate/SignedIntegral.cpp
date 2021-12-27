@@ -1,7 +1,6 @@
 export module Meta.Predicate.SignedIntegral;
 
 export import Meta.Predicate.Integral;
-export import Meta.Predicate.Signed;
 
 namespace
 	Meta
@@ -9,7 +8,8 @@ namespace
 	export auto constexpr inline
 		IsSignedIntegral
 	=	IsIntegral
-	and	IsSigned
+	and	not
+		Term{Trait::Unsigned{}}
 	;
 }
 
