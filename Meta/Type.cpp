@@ -141,6 +141,31 @@ namespace
 	;
 
 	export struct
+		RemoveExtentTransform final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	TypeToken
+			<	::std::remove_extent_t
+				<	t_tEntity
+				>
+			>
+		{	return {};	}
+	};
+
+	export auto constexpr inline
+		RemoveExtent
+	=	RemoveExtentTransform
+		{}
+	;
+
+	export struct
 		AddConstTransform final
 	{
 		template
@@ -582,7 +607,7 @@ namespace
 					i_vType
 			,	RValueReferenceToken
 			)
-		->	decltype(AddRValueRefernece(i_vType))
+		->	decltype(AddRValueReference(i_vType))
 		{	return{};	}
 	};
 

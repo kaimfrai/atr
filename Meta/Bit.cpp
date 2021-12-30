@@ -102,7 +102,7 @@ namespace
 	)	(	USize
 				i_nBitField
 		,	USize
-				i_nIndex
+				i_nOneBitIndex
 		)
 	->	USize
 	{
@@ -134,16 +134,16 @@ namespace
 				SetOneBits(nMiddle)
 			;
 			USize const
-				nLowerBitCount
+				nLowerOneBitCount
 			=	CountOneBits
 				(	nLowerBits
 				)
 			;
 
-			if	(i_nIndex >= nLowerBitCount)
+			if	(i_nOneBitIndex >= nLowerOneBitCount)
 			{
 				i_nBitField >>= nMiddle;
-				i_nIndex -= nLowerBitCount;
+				i_nOneBitIndex -= nLowerOneBitCount;
 				nIndexedOneBit += nMiddle;
 			}
 			else

@@ -12,7 +12,7 @@ namespace
 {
 	export USize constexpr inline
 		SubtermLimit
-	=	16uz
+	=	8uz
 	;
 
 	export struct
@@ -126,6 +126,20 @@ namespace
 		)	()	const
 		->	BitClause
 		;
+
+		auto constexpr
+		(	TestPositive
+		)	(	USize
+			)	const
+		->	bool
+		;
+
+		auto constexpr
+		(	TestNegative
+		)	(	USize
+			)	const
+		->	bool
+		;
 	};
 
 	export auto constexpr
@@ -163,16 +177,16 @@ namespace
 	(	BitClause
 	::	BitIndexToField
 	)	(	USize
-				i_nIndex
+				i_nAbsoluteIndex
 		)
 	->	FieldType
 	{
-		if	(i_nIndex >= SubtermLimit)
+		if	(i_nAbsoluteIndex >= SubtermLimit)
 			throw "Index to large to convert to a bit field!";
 		return
 		static_cast<FieldType>
 		(	1uz
-		<<	i_nIndex
+		<<	i_nAbsoluteIndex
 		);
 	}
 
@@ -254,25 +268,25 @@ namespace
 		;
 
 		for	(	USize
-					nIndex
+					nAbsoluteIndex
 				=	0uz
-			;		nIndex
+			;		nAbsoluteIndex
 				<	i_vPermutation.size()
-			;	++	nIndex
+			;	++	nAbsoluteIndex
 			)
 		{
-			auto const
-				nIndexField
-			=	BitIndexToField(nIndex)
-			;
-			if	(Positive bitand nIndexField)
+			if	(TestPositive(nAbsoluteIndex))
 				(	vResult.Positive
-				|=	BitIndexToField(i_vPermutation[nIndex])
+				|=	BitIndexToField
+					(	i_vPermutation[nAbsoluteIndex]
+					)
 				);
 			else
-			if	(Negative bitand nIndexField)
+			if	(TestNegative(nAbsoluteIndex))
 				(	vResult.Negative
-				|=	BitIndexToField(i_vPermutation[nIndex])
+				|=	BitIndexToField
+					(	i_vPermutation[nAbsoluteIndex]
+					)
 				);
 		}
 		return vResult;
@@ -310,7 +324,7 @@ namespace
 	->	USize
 	{
 		if	(IsIdentity())
-			return 1uz;
+			return 0uz;
 
 		return
 		CountOneBits
@@ -424,11 +438,11 @@ namespace
 	(	BitClause
 	::	operator[]
 	)	(	USize
-				i_nIndex
+				i_nRelativeIndex
 		)	const
 	->	BitClause
 	{
-		if	(i_nIndex >= LiteralCount())
+		if	(i_nRelativeIndex >= LiteralCount())
 			throw "Index beyond LiteralCount!";
 
 		if	(IsIdentity())
@@ -439,7 +453,7 @@ namespace
 		=	BitIndexToField
 			(	GetIndexOfNthOneBit
 				(	PredicateField()
-				,	i_nIndex
+				,	i_nRelativeIndex
 				)
 			)
 		;
@@ -528,5 +542,33 @@ namespace
 		else
 			return Identity();
 		return vResult;
+	}
+
+	auto constexpr
+	(	BitClause
+	::	TestPositive
+	)	(	USize
+				i_nAbsoluteIndex
+		)	const
+	->	bool
+	{	return
+		(	Positive
+		bitand
+			BitIndexToField(i_nAbsoluteIndex)
+		);
+	}
+
+	auto constexpr
+	(	BitClause
+	::	TestNegative
+	)	(	USize
+				i_nAbsoluteIndex
+		)	const
+	->	bool
+	{	return
+		(	Negative
+		bitand
+			BitIndexToField(i_nAbsoluteIndex)
+		);
 	}
 }

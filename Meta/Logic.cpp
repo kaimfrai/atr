@@ -2,6 +2,7 @@ export module Meta.Logic;
 
 export import Meta.Logic.BitTerm;
 
+export import Meta.Concepts;
 export import Meta.TupleSet;
 
 import Std.Array;
@@ -523,6 +524,54 @@ export namespace
 				)
 				...
 			);
+		}
+
+		template
+			<	USize
+					t_nClauseIndex
+			,	USize
+					t_nLiteralIndex
+			>
+		friend auto constexpr
+		(	GetClauseLiteral
+		)	(	Term const
+				&	i_rTerm
+			)
+		{
+			auto constexpr
+				vClause
+			=	t_vTerm
+				[	t_nClauseIndex
+				]
+			;
+			if	constexpr(vClause.IsIdentity())
+				return Trait::Contradiction{};
+			else
+			if	constexpr
+				(	vClause.TestPositive
+					(	t_nLiteralIndex
+					)
+				)
+				return
+				i_rTerm.Predicates
+				[	Index<t_nLiteralIndex>
+				];
+			else
+			if	constexpr
+				(	vClause.TestNegative
+					(	t_nLiteralIndex
+					)
+				)
+				return
+				Trait::Not
+				{	i_rTerm.Predicates
+					[	Index<t_nLiteralIndex>
+					]
+				};
+			else
+				return
+				Trait::Tautology
+				{};
 		}
 	};
 

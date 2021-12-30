@@ -1,0 +1,15 @@
+export module Meta.Predicate.Reference;
+
+export import Meta.Predicate.Compound;
+export import Meta.Predicate.Object;
+
+namespace
+	Meta
+{
+	export Term constexpr inline
+		IsReference
+	=	IsCompound
+	and	Term{Trait::Reference{}}
+	;
+}
+

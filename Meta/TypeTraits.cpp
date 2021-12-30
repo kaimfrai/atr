@@ -10,7 +10,7 @@ export namespace
 	struct
 		Const final
 	{
-	template
+		template
 			<	typename
 					t_tEntity
 			>

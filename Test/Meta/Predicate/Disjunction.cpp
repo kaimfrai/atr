@@ -30,26 +30,13 @@ static_assert
 ==	IsArithmetic
 );
 
-static_assert
-(	(	IsArithmetic
-	or	IsNullPointer
-	)
-==	IsFundamentalScalar
-);
-
-static_assert
-(	(	IsFundamentalScalar
-	or	IsVoid
-	)
-==	IsFundamental
-);
-
-static_assert
-(	(	IsClass
-	or	IsUnion
-	)
-==	IsUserDefined
-);
+// static_assert
+// (	(	IsArithmetic
+// 	or	IsNullPointer
+// 	or	IsVoid
+// 	)
+// ==	IsFundamental
+// );
 
 static_assert
 (	(	IsBoundedArray
@@ -59,26 +46,10 @@ static_assert
 );
 
 static_assert
-(	(	IsScopedEnum
-	or	IsUnscopedEnum
+(	(	IsQualifiedFunction
+	or	IsUnqualifiedFunction
 	)
-==	IsEnum
-);
-
-static_assert
-(	(	IsEnum
-	or	IsPointer
-	or	IsMemberPointer
-	)
-==	IsCompoundScalar
-);
-
-static_assert
-(	(	IsUserDefined
-	or	IsArray
-	or	IsCompoundScalar
-	)
-==	IsCompoundObject
+==	IsFunction
 );
 
 static_assert
@@ -89,18 +60,30 @@ static_assert
 );
 
 static_assert
-(	(	IsReference
-	or	IsFunction
-	or	IsCompoundObject
+(	(	IsClass
+	or	IsUnion
 	)
-==	IsCompound
+==	IsUserDefined
 );
 
 static_assert
-(	not
-	IsCompound
-==	IsFundamental
+(	(	IsScopedEnum
+	or	IsUnscopedEnum
+	)
+==	IsEnum
 );
+
+// static_assert
+// (	(	IsArray
+// 	or	IsFunction
+// 	or	IsPointer
+// 	or	IsMemberPointer
+// 	or	IsReference
+// 	or	IsUserDefined
+// 	or	IsEnum
+// 	)
+// ==	IsCompound
+// );
 
 static_assert
 (	(	IsArithmetic
@@ -113,12 +96,16 @@ static_assert
 );
 
 static_assert
-(	(	not
-		IsFunction
-	and	not
-		IsReference
-	and	not
-		IsVoid
+(	(	IsUserDefined
+	or	IsArray
+	or	IsScalar
 	)
 ==	IsObject
 );
+
+// static_assert
+// (	(	IsFundamental
+// 	or	IsCompound
+// 	)
+// ==	True
+// );

@@ -454,22 +454,19 @@ namespace
 			return i_rLeftTerm;
 
 		auto const
-			nLeftClauseCount
-		=	i_rLeftTerm.ClauseCount()
+			nCombinedPredicateCount
+		=	CountOneBits
+			(	i_rLeftTerm.PredicateField()
+			bitor
+				i_rRightTerm.PredicateField()
+			)
 		;
 
-		auto const
-			nRightClauseCount
-		=	i_rRightTerm.ClauseCount()
-		;
-
+		//	at most 2^PredicateCount clauses are possible
 		auto const
 			nMaxClauseCount
-		=	//	while creating alternative clauses up to twice the amount of clauses are needed
-			2uz
-		*	(	nLeftClauseCount
-			+	nRightClauseCount
-			)
+		=	1uz
+		<<	nCombinedPredicateCount
 		;
 
 		Optimizer
@@ -505,11 +502,19 @@ namespace
 			return i_rLeftTerm;
 
 		auto const
+			nCombinedPredicateCount
+		=	CountOneBits
+			(	i_rLeftTerm.PredicateField()
+			bitor
+				i_rRightTerm.PredicateField()
+			)
+		;
+
+		//	at most 2^PredicateCount clauses are possible
+		auto const
 			nMaxClauseCount
-		=	//	while creating alternative clauses up to twice the amount of clauses are needed
-			2uz
-		*	i_rLeftTerm.ClauseCount()
-		*	i_rRightTerm.ClauseCount()
+		=	1uz
+		<<	nCombinedPredicateCount
 		;
 
 		Optimizer
