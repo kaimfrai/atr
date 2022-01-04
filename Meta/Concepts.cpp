@@ -3,6 +3,7 @@ export module Meta.Concepts;
 export import Std.Utility;
 
 export import Meta.Type;
+export import Meta.Function;
 
 export namespace
 	Meta
@@ -10,6 +11,56 @@ export namespace
 	namespace
 		Trait
 	{
+		template
+			<	auto
+					t_fTrait
+			,	//	this improves readability of errors
+				typename
+				=	decltype(t_fTrait)
+			>
+		struct
+			Static
+		{
+			template
+				<	USize
+						t_nClauseIndex
+				>
+			using
+				Clause
+			=	Static
+				<	GetClause
+					<	t_nClauseIndex
+					>(	t_fTrait
+					)
+				>
+			;
+
+			template
+				<	USize
+						t_nClauseIndex
+				>
+			using
+				Literal
+			=	Static
+				<	GetLiteral
+					<	t_nClauseIndex
+					>(	t_fTrait
+					)
+				>
+			;
+
+			template
+				<	typename
+						t_tProto
+				>
+			static bool constexpr
+				Evaluate
+			=	t_fTrait
+				(	Type<t_tProto>
+				)
+			;
+		};
+
 		template
 			<	typename
 					t_tPredicate
@@ -54,6 +105,18 @@ export namespace
 		->	Not<t_tPredicate>
 		;
 
+		template
+			<	typename
+					t_tPredicate
+			>
+		auto constexpr
+		(	operator not
+		)	(	t_tPredicate const
+				&	i_rPredicate
+			)
+		->	Not<t_tPredicate>
+		{	return { i_rPredicate };	}
+
 		struct
 			Tautology final
 		{
@@ -73,30 +136,404 @@ export namespace
 		=	Not<Tautology>
 		;
 
+		///	Types for which the size of their values does exceed the given template argument.
+		///	This excludes sizeless types, in particluar unbound arrays which are otherwise
+		///	objects and references for which sizeof yield the size of the referred type.
+		///	This has a real semantic meaning, in particular for types used as members in a class.
+		///	In combination with the following traits, all types categories are distinguished with
+		///	as few traits as possible.
+		template
+			<	USize
+					t_nObjectSize
+			=	0uz
+			>
+		struct
+			SizeGreater final
+		{
+			template
+				<	typename
+						t_tEntity
+				>
+			auto constexpr
+			(	operator()
+			)	(	TypeToken<t_tEntity>
+				)	const
+			->	bool
+			{
+				//	only object types which aren't unbound arrays
+				if	constexpr
+					(	not
+						::std::is_object_v<t_tEntity>
+					or	::std::is_unbounded_array_v<t_tEntity>
+					)
+					return false;
+				else
+				//	this is false for incomplete types
+				if	constexpr(requires{ sizeof(t_tEntity); })
+				{
+					return sizeof(t_tEntity) > t_nObjectSize;
+				}
+				else
+				{
+					//	size will always be at least 1 byte for incomplete object types
+					static_assert
+					(	t_nObjectSize
+					==	0uz
+					,	"Attempted to check size of incomplete type!"
+					);
+					return true;
+				}
+			}
+		};
+
+		///	Types which require a definition by the programmer.
+		///	functions vs. sizeless non-functions
+		///	classes, unions, enums vs. other objects
+		///	Note that this has no real semantic value and only serves to distinguish types with as
+		///	few traits as possible.
+		struct
+			Defined final
+		{
+			template
+				<	typename
+						t_tEntity
+				>
+			auto constexpr
+			(	operator()
+			)	(	TypeToken<t_tEntity>
+				)	const
+			->	bool
+			{	return
+				(	::std::is_class_v<t_tEntity>
+				or	::std::is_union_v<t_tEntity>
+				or	::std::is_enum_v<t_tEntity>
+				or	::std::is_function_v<t_tEntity>
+				);
+			}
+		};
+
+		///	Types which cannot be used in the same way as an otherwise similar type. These are:
+		///	scoped enums vs. unscoped enums (implicit conversion)
+		///	unsigned integers vs. signed integers (negative numbers)
+		///	rvalue references vs. lvalue references (address)
+		///	member pointers vs. pointers
+		///	arrays vs. null pointers/void
+		///	noexcept functions vs. non-noexcept functions
+		///	Note that this has no real semantic value and only serves to distinguish types with as
+		///	few traits as possible.
+		struct
+			Restricted final
+		{
+			template
+				<	typename
+						t_tEntity
+				>
+			auto constexpr
+			(	operator()
+			)	(	TypeToken<t_tEntity>
+				)	const
+			->	bool
+			{	return
+				(	::std::is_scoped_enum_v<t_tEntity>
+				or	::std::is_unsigned_v<t_tEntity>
+				or	::std::is_rvalue_reference_v<t_tEntity>
+				or	::std::is_member_pointer_v<t_tEntity>
+				or	::std::is_array_v<t_tEntity>
+				or	FunctionType<t_tEntity>(Noexcept)
+				);
+			}
+		};
+
+		///	Types for which there exists implicitly another type that can be converted into it.
+		///	non-final classes vs. final classes and unions (derived classes)
+		///	pointers vs. nullpointers (arrays, nullpointer)
+		///	integrals vs. floating points (unscoped enums)
+		///	member pointers vs. bounded arrays (member pointers of base)
+		///	references vs. sizeless non-references (value types)
+		///	qualified functions vs. non-qualified functions (qualification of owner)
+		///	Note that this has no real semantic value and only serves to distinguish types with as
+		///	few traits as possible.
+		struct
+			ConversionTarget final
+		{
+			template
+				<	typename
+						t_tEntity
+				>
+			auto constexpr
+			(	operator()
+			)	(	TypeToken<t_tEntity>
+				)	const
+			->	bool
+			{	return
+				(	(	::std::is_class_v<t_tEntity>
+					and	not
+						::std::is_final_v<t_tEntity>
+					)
+				or	::std::is_pointer_v<t_tEntity>
+				or	::std::is_integral_v<t_tEntity>
+				or	::std::is_member_pointer_v<t_tEntity>
+				or	not
+					requires{ Type<t_tEntity*>;	}
+				);
+			}
+		};
+
+		///	Types which behave like a number.
+		///	These are enums, integrals and floating points.
+		///	Note that this has no real semantic value and only serves to distinguish types with as
+		///	few traits as possible.
+		struct
+			Numeric final
+		{
+			template
+				<	typename
+						t_tEntity
+				>
+			auto constexpr
+			(	operator()
+			)	(	TypeToken<t_tEntity>
+				)	const
+			->	bool
+			{	return
+				(	::std::is_arithmetic_v<t_tEntity>
+				or	::std::is_enum_v<t_tEntity>
+				);
+			}
+		};
+	}
+
+	namespace
+		Proto
+	{
 		template
 			<	typename
-					t_tPredicate
+					t_tProto
+			,	typename
+					t_tTrait
 			>
-		auto constexpr
-		(	operator not
-		)	(	t_tPredicate const
-				&	i_rPredicate
-			)
-		->	Not<t_tPredicate>
-		{	return { i_rPredicate };	}
+		concept
+			Literal
+		=		t_tTrait
+			::	template
+				Evaluate
+				<	t_tProto
+				>
+		;
+
+		template
+			<	typename
+					t_tProto
+			>
+		concept
+			All
+		=	Literal
+			<	t_tProto
+			,	Trait::Static
+				<	Trait::Tautology{}
+				>
+			>
+		;
+
+		template
+			<	typename
+					t_tProto
+			>
+		concept
+			None
+		=	Literal
+			<	t_tProto
+			,	Trait::Static
+				<	Trait::Contradiction{}
+				>
+			>
+		;
+
+		template
+			<	typename
+					t_tProto
+			,	typename
+					t_tTrait
+			,	USize
+					t_nLiteralIndex
+			>
+		concept
+			Clause_0x01
+		=	Literal
+			<	t_tProto
+			,	typename
+				t_tTrait
+			::	template
+				Literal
+				<	t_nLiteralIndex
+				>
+			>
+		;
+
+		template
+			<	typename
+					t_tProto
+			,	typename
+					t_tTrait
+			,	USize
+					t_nLiteralIndex
+			>
+		concept
+			Clause_0x02
+		=	Clause_0x01<t_tProto, t_tTrait, t_nLiteralIndex>
+		and	Clause_0x01<t_tProto, t_tTrait, t_nLiteralIndex + 0x01>
+		;
+
+		template
+			<	typename
+					t_tProto
+			,	typename
+					t_tTrait
+			,	USize
+					t_nLiteralIndex
+			>
+		concept
+			Clause_0x04
+		=	Clause_0x02<t_tProto, t_tTrait, t_nLiteralIndex>
+		and	Clause_0x02<t_tProto, t_tTrait, t_nLiteralIndex + 0x02>
+		;
+
+		template
+			<	typename
+					t_tProto
+			,	typename
+					t_tTrait
+			,	USize
+					t_nLiteralIndex
+			>
+		concept
+			Clause_0x08
+		=	Clause_0x04<t_tProto, t_tTrait, t_nLiteralIndex>
+		and	Clause_0x04<t_tProto, t_tTrait, t_nLiteralIndex + 0x04>
+		;
+
+
+		template
+			<	typename
+					t_tProto
+			,	typename
+					t_tTrait
+			>
+		concept
+			Clause
+		=	Clause_0x08<t_tProto, t_tTrait, 0x00>
+		and	All<t_tProto>
+		;
+
+		template
+			<	typename
+					t_tProto
+			,	typename
+					t_tTrait
+			,	USize
+					t_nClauseIndex
+			>
+		concept
+			Term_0x01
+		=	Clause
+			<	t_tProto
+			,	typename
+				t_tTrait
+			::	template
+				Clause
+				<	t_nClauseIndex
+				>
+			>
+		;
+
+		template
+			<	typename
+					t_tProto
+			,	typename
+					t_tTrait
+			,	USize
+					t_nClauseIndex
+			>
+		concept
+			Term_0x02
+		=	Term_0x01<t_tProto, t_tTrait, t_nClauseIndex>
+		or	Term_0x01<t_tProto, t_tTrait, t_nClauseIndex + 0x01>
+		;
+
+		template
+			<	typename
+					t_tProto
+			,	typename
+					t_tTrait
+			,	USize
+					t_nClauseIndex
+			>
+		concept
+			Term_0x04
+		=	Term_0x02<t_tProto, t_tTrait, t_nClauseIndex>
+		or	Term_0x02<t_tProto, t_tTrait, t_nClauseIndex + 0x02>
+		;
+
+		template
+			<	typename
+					t_tProto
+			,	typename
+					t_tTrait
+			,	USize
+					t_nClauseIndex
+			>
+		concept
+			Term_0x08
+		=	Term_0x04<t_tProto, t_tTrait, t_nClauseIndex>
+		or	Term_0x04<t_tProto, t_tTrait, t_nClauseIndex + 0x04>
+		;
+
+		template
+			<	typename
+					t_tProto
+			,	typename
+					t_tTrait
+			>
+		concept
+			Term
+		=	Term_0x08<t_tProto, t_tTrait, 0x00>
+		or	None<t_tProto>
+		;
+
+		template
+			<	typename
+					t_tProto
+			,	typename
+					t_tStaticTrait
+			>
+		concept
+			LiteralClause
+		=	Literal<t_tProto, t_tStaticTrait>
+		and	All<t_tProto>
+		;
+
+		template
+			<	typename
+					t_tProto
+			,	typename
+					t_tStaticTrait
+			>
+		concept
+			LiteralTerm
+		=	LiteralClause<t_tProto,	t_tStaticTrait>
+		or	None<t_tProto>
+		;
 	}
 
 	template
 		<	typename
 				t_tProto
-		,	auto
-				t_fTrait
 		>
 	concept
-		ProtoTrait
-	=	t_fTrait
-		(	Type<t_tProto>
-		)
+		ProtoNone
+	=	Proto::None
+		<	t_tProto
+		>
 	;
 
 	template
@@ -105,325 +542,13 @@ export namespace
 		>
 	concept
 		ProtoAll
-	=	ProtoTrait
+	=	ProtoNone
 		<	t_tProto
-		,	Trait::Tautology{}
+		>
+	or	Proto::All
+		<	t_tProto
 		>
 	;
-
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoNone
-	=	ProtoTrait
-		<	t_tProto
-		,	Trait::Contradiction{}
-		>
-	;
-
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		,	auto
-// 				t_fTrait
-// 		,	USize
-// 				t_nClauseIndex
-// 		,	USize
-// 				t_nLiteralIndex
-// 		>
-// 	concept
-// 		ProtoLiteralTrait_0x01
-// 	=	ProtoTrait
-// 		<	t_tProto
-// 		,	GetClauseLiteral
-// 			<	t_nClauseIndex
-// 			,	t_nLiteralIndex
-// 			>(	t_fTrait
-// 			)
-// 		>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		,	auto
-// 				t_fTrait
-// 		,	USize
-// 				t_nClauseIndex
-// 		,	USize
-// 				t_nLiteralOffset
-// 		>
-// 	concept
-// 		ProtoLiteralTrait_0x02
-// 	=	ProtoLiteralTrait_0x01
-// 		<	t_tProto
-// 		,	t_fTrait
-// 		,	t_nClauseIndex
-// 		,	t_nLiteralOffset
-// 		>
-// 	and	ProtoLiteralTrait_0x01
-// 		<	t_tProto
-// 		,	t_fTrait
-// 		,	t_nClauseIndex
-// 		,	t_nLiteralOffset
-// 		+	0x01uz
-// 		>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		,	auto
-// 				t_fTrait
-// 		,	USize
-// 				t_nClauseIndex
-// 		,	USize
-// 				t_nLiteralOffset
-// 		>
-// 	concept
-// 		ProtoLiteralTrait_0x04
-// 	=	ProtoLiteralTrait_0x02
-// 		<	t_tProto
-// 		,	t_fTrait
-// 		,	t_nClauseIndex
-// 		,	t_nLiteralOffset
-// 		>
-// 	and	ProtoLiteralTrait_0x02
-// 		<	t_tProto
-// 		,	t_fTrait
-// 		,	t_nClauseIndex
-// 		,	t_nLiteralOffset
-// 		+	0x02uz
-// 		>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		,	auto
-// 				t_fTrait
-// 		,	USize
-// 				t_nClauseIndex
-// 		,	USize
-// 				t_nLiteralOffset
-// 		>
-// 	concept
-// 		ProtoLiteralTrait_0x08
-// 	=	ProtoLiteralTrait_0x04
-// 		<	t_tProto
-// 		,	t_fTrait
-// 		,	t_nClauseIndex
-// 		,	t_nLiteralOffset
-// 		>
-// 	and	ProtoLiteralTrait_0x04
-// 		<	t_tProto
-// 		,	t_fTrait
-// 		,	t_nClauseIndex
-// 		,	t_nLiteralOffset
-// 		+	0x04
-// 		>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		,	auto
-// 				t_fTrait
-// 		,	USize
-// 				t_nClauseIndex
-// 		,	USize
-// 				t_nLiteralOffset
-// 		>
-// 	concept
-// 		ProtoLiteralTrait_0x10
-// 	=	ProtoLiteralTrait_0x08
-// 		<	t_tProto
-// 		,	t_fTrait
-// 		,	t_nClauseIndex
-// 		,	t_nLiteralOffset
-// 		>
-// 	and	ProtoLiteralTrait_0x08
-// 		<	t_tProto
-// 		,	t_fTrait
-// 		,	t_nClauseIndex
-// 		,	t_nLiteralOffset
-// 		+	0x08
-// 		>
-// 	;
-
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		,	auto
-// 				t_fTrait
-// 		,	USize
-// 				t_nClauseIndex
-// 		>
-// 	concept
-// 		ProtoClauseTrait
-// 	=	ProtoTrait
-// 		<	t_tProto
-// 		,	GetClauseLiteral
-// 			<	t_nClauseIndex
-// 			,	0x00
-// 			>(	t_fTrait
-// 			)
-// 		>
-// 	and	ProtoTrait
-// 		<	t_tProto
-// 		,	GetClauseLiteral
-// 			<	t_nClauseIndex
-// 			,	0x01
-// 			>(	t_fTrait
-// 			)
-// 		>
-// 	and	ProtoTrait
-// 		<	t_tProto
-// 		,	GetClauseLiteral
-// 			<	t_nClauseIndex
-// 			,	0x02
-// 			>(	t_fTrait
-// 			)
-// 		>
-// 	and	ProtoTrait
-// 		<	t_tProto
-// 		,	GetClauseLiteral
-// 			<	t_nClauseIndex
-// 			,	0x03
-// 			>(	t_fTrait
-// 			)
-// 		>
-// 	and	ProtoTrait
-// 		<	t_tProto
-// 		,	GetClauseLiteral
-// 			<	t_nClauseIndex
-// 			,	0x04
-// 			>(	t_fTrait
-// 			)
-// 		>
-// 	and	ProtoTrait
-// 		<	t_tProto
-// 		,	GetClauseLiteral
-// 			<	t_nClauseIndex
-// 			,	0x05
-// 			>(	t_fTrait
-// 			)
-// 		>
-// 	and	ProtoTrait
-// 		<	t_tProto
-// 		,	GetClauseLiteral
-// 			<	t_nClauseIndex
-// 			,	0x06
-// 			>(	t_fTrait
-// 			)
-// 		>
-// 	and	ProtoTrait
-// 		<	t_tProto
-// 		,	GetClauseLiteral
-// 			<	t_nClauseIndex
-// 			,	0x07
-// 			>(	t_fTrait
-// 			)
-// 		>
-// 	and	ProtoTrait
-// 		<	t_tProto
-// 		,	Trait::Tautology{}
-// 		>
-// 	;
-
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		,	auto
-// 				t_fTrait
-// 		,	USize
-// 				t_nClauseIndex
-// 		>
-// 	concept
-// 		ProtoClauseTrait_0x02
-// 	=	ProtoClauseTrait_0x01
-// 		<	t_tProto
-// 		,	t_fTrait
-// 		,	t_nClauseIndex
-// 		>
-// 	or	ProtoClauseTrait_0x01
-// 		<	t_tProto
-// 		,	t_fTrait
-// 		,	t_nClauseIndex
-// 		+	0x01uz
-// 		>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		,	auto
-// 				t_fTrait
-// 		,	USize
-// 				t_nClauseIndex
-// 		>
-// 	concept
-// 		ProtoClauseTrait_0x04
-// 	=	ProtoClauseTrait_0x02
-// 		<	t_tProto
-// 		,	t_fTrait
-// 		,	t_nClauseIndex
-// 		>
-// 	or	ProtoClauseTrait_0x02
-// 		<	t_tProto
-// 		,	t_fTrait
-// 		,	t_nClauseIndex
-// 		+	0x02uz
-// 		>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		,	auto
-// 				t_fTrait
-// 		,	USize
-// 				t_nClauseIndex
-// 		>
-// 	concept
-// 		ProtoClauseTrait_0x08
-// 	=	ProtoClauseTrait_0x04
-// 		<	t_tProto
-// 		,	t_fTrait
-// 		,	t_nClauseIndex
-// 		>
-// 	or	ProtoClauseTrait_0x04
-// 		<	t_tProto
-// 		,	t_fTrait
-// 		,	t_nClauseIndex
-// 		+	0x04
-// 		>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		,	auto
-// 				t_fTrait
-// 		,	USize
-// 				t_nClauseIndex
-// 		>
-// 	concept
-// 		ProtoClauseTrait_0x10
-// 	=	ProtoClauseTrait_0x08
-// 		<	t_tProto
-// 		,	t_fTrait
-// 		,	t_nClauseIndex
-// 		>
-// 	or	ProtoClauseTrait_0x08
-// 		<	t_tProto
-// 		,	t_fTrait
-// 		,	t_nClauseIndex
-// 		+	0x08
-// 		>
-// 	;
 
 	template
 		<	typename
@@ -433,491 +558,69 @@ export namespace
 		>
 	concept
 		ProtoConstraint
-	=		ProtoTrait<t_tProto, GetClauseLiteral<0x00	,	0x00>(t_fTrait)>
-		and	ProtoTrait<t_tProto, GetClauseLiteral<0x00	,	0x01>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x00	,	0x02>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x00	,	0x03>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x00	,	0x04>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x00	,	0x05>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x00	,	0x06>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x00	,	0x07>(t_fTrait)>
-		and	ProtoAll<t_tProto>
-// 	or		ProtoTrait<t_tProto, GetClauseLiteral<0x01	,	0x00>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x01	,	0x01>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x01	,	0x02>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x01	,	0x03>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x01	,	0x04>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x01	,	0x05>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x01	,	0x06>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x01	,	0x07>(t_fTrait)>
-// 		and	ProtoAll<t_tProto>
-// 	or		ProtoTrait<t_tProto, GetClauseLiteral<0x02	,	0x00>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x02	,	0x01>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x02	,	0x02>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x02	,	0x03>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x02	,	0x04>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x02	,	0x05>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x02	,	0x06>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x02	,	0x07>(t_fTrait)>
-// 		and	ProtoAll<t_tProto>
-// 	or		ProtoTrait<t_tProto, GetClauseLiteral<0x03	,	0x00>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x03	,	0x01>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x03	,	0x02>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x03	,	0x03>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x03	,	0x04>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x03	,	0x05>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x03	,	0x06>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x03	,	0x07>(t_fTrait)>
-// 		and	ProtoAll<t_tProto>
-// 	or		ProtoTrait<t_tProto, GetClauseLiteral<0x04	,	0x00>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x04	,	0x01>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x04	,	0x02>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x04	,	0x03>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x04	,	0x04>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x04	,	0x05>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x04	,	0x06>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x04	,	0x07>(t_fTrait)>
-// 		and	ProtoAll<t_tProto>
-// 	or		ProtoTrait<t_tProto, GetClauseLiteral<0x05	,	0x00>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x05	,	0x01>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x05	,	0x02>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x05	,	0x03>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x05	,	0x04>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x05	,	0x05>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x05	,	0x06>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x05	,	0x07>(t_fTrait)>
-// 		and	ProtoAll<t_tProto>
-// 	or		ProtoTrait<t_tProto, GetClauseLiteral<0x06	,	0x00>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x06	,	0x01>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x06	,	0x02>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x06	,	0x03>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x06	,	0x04>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x06	,	0x05>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x06	,	0x06>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x06	,	0x07>(t_fTrait)>
-// 		and	ProtoAll<t_tProto>
-// 	or		ProtoTrait<t_tProto, GetClauseLiteral<0x07	,	0x00>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x07	,	0x01>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x07	,	0x02>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x07	,	0x03>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x07	,	0x04>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x07	,	0x05>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x07	,	0x06>(t_fTrait)>
-// 		and	ProtoTrait<t_tProto, GetClauseLiteral<0x07	,	0x07>(t_fTrait)>
-// 		and	ProtoAll<t_tProto>
-// 	or	ProtoNone<t_tProto>
+	=	Proto::Term
+		<	t_tProto
+		,	Trait::Static
+			<	t_fTrait
+			>
+		>
 	;
 
+	///	Types that have a size.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoSizedObject
+	=	Proto::LiteralTerm
+		<	t_tProto
+		,	Trait::Static
+			<	Trait::SizeGreater<>{}
+			>
+		>
+	;
 
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		>
-// 	concept
-// 		ProtoVoid
-// 	=	ProtoTrait
-// 		<	t_tProto
-// 		,	Trait::Void{}
-// 		>
-// 	;
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		>
-// 	concept
-// 		ProtoNullPointer
-// 	=	ProtoTrait
-// 		<	t_tProto
-// 		,	Trait::NullPointer{}
-// 		>
-// 	;
-//
-// // 	template
-// // 		<	typename
-// // 				t_tProto
-// // 		>
-// // 	concept
-// // 		ProtoUnsignedIntegral
-// // 	=	ProtoTrait
-// // 		<	t_tProto
-// // 		,	Trait::UnsignedIntegral{}
-// // 		>
-// // 	;
-//
-// // 	template
-// // 		<	typename
-// // 				t_tProto
-// // 		>
-// // 	concept
-// // 		ProtoSignedIntegral
-// // 	=	ProtoTrait
-// // 		<	t_tProto
-// // 		,	Trait::SignedIntegral{}
-// // 		>
-// // 	;
-//
-// // 	template
-// // 		<	typename
-// // 				t_tProto
-// // 		>
-// // 	concept
-// // 		ProtoIntegral
-// // 	=	ProtoUnsignedIntegral<t_tProto>
-// // 	or	ProtoSignedIntegral<t_tProto>
-// // 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		>
-// 	concept
-// 		ProtoFloatingPoint
-// 	=	ProtoTrait
-// 		<	t_tProto
-// 		,	Trait::FloatingPoint{}
-// 		>
-// 	;
-//
-// // 	template
-// // 		<	typename
-// // 				t_tProto
-// // 		>
-// // 	concept
-// // 		ProtoArithmetic
-// // 	=	ProtoIntegral<t_tProto>
-// // 	or	ProtoFloatingPoint<t_tProto>
-// // 	;
-//
-// // 	template
-// // 		<	typename
-// // 				t_tProto
-// // 		>
-// // 	concept
-// // 		ProtoFundamental
-// // 	=	ProtoVoid<t_tProto>
-// // 	or	ProtoNullPointer<t_tProto>
-// // 	or	ProtoArithmetic<t_tProto>
-// // 	;
-//
-// // 	template
-// // 		<	typename
-// // 				t_tProto
-// // 		>
-// // 	concept
-// // 		ProtoUnscopedEnum
-// // 	=	ProtoTrait
-// // 		<	t_tProto
-// // 		,	Trait::UnscopedEnum{}
-// // 		>
-// // 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		>
-// 	concept
-// 		ProtoScopedEnum
-// 	=	ProtoTrait
-// 		<	t_tProto
-// 		,	Trait::ScopedEnum{}
-// 		>
-// 	;
-// /*
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		>
-// 	concept
-// 		ProtoEnum
-// 	=	ProtoUnscopedEnum<t_tProto>
-// 	or	ProtoScopedEnum<t_tProto>
-// 	;*/
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		>
-// 	concept
-// 		ProtoPointer
-// 	=	ProtoTrait
-// 		<	t_tProto
-// 		,	Trait::Pointer{}
-// 		>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		>
-// 	concept
-// 		ProtoMemberPointer
-// 	=	ProtoTrait
-// 		<	t_tProto
-// 		,	Trait::MemberPointer{}
-// 		>
-// 	;
-//
-// // 	template
-// // 		<	typename
-// // 				t_tProto
-// // 		>
-// // 	concept
-// // 		ProtoScalar
-// // 	=	ProtoNullPointer<t_tProto>
-// // 	or	ProtoArithmetic<t_tProto>
-// // 	or	ProtoEnum<t_tProto>
-// // 	or	ProtoPointer<t_tProto>
-// // 	or	ProtoMemberPointer<t_tProto>
-// // 	;
-//
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		>
-// 	concept
-// 		ProtoLValueReference
-// 	=	ProtoTrait
-// 		<	t_tProto
-// 		,	Trait::LValueReference{}
-// 		>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		>
-// 	concept
-// 		ProtoRValueReference
-// 	=	ProtoTrait
-// 		<	t_tProto
-// 		,	Trait::RValueReference{}
-// 		>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		>
-// 	concept
-// 		ProtoReference
-// 	=	ProtoLValueReference<t_tProto>
-// 	or	ProtoRValueReference<t_tProto>
-// 	;
-//
-// // 	template
-// // 		<	typename
-// // 				t_tProto
-// // 		>
-// // 	concept
-// // 		ProtoUnqualifiedFunction
-// // 	=	ProtoTrait
-// // 		<	t_tProto
-// // 		,	Trait::UnqualifiedFunction{}
-// // 		>
-// // 	;
-//
-// // 	template
-// // 		<	typename
-// // 				t_tProto
-// // 		>
-// // 	concept
-// // 		ProtoQualifiedFunction
-// // 	=	ProtoTrait
-// // 		<	t_tProto
-// // 		,	Trait::QualifiedFunction{}
-// // 		>
-// // 	;
-// //
-// // 	template
-// // 		<	typename
-// // 				t_tProto
-// // 		>
-// // 	concept
-// // 		ProtoFunction
-// // 	=	ProtoUnqualifiedFunction<t_tProto>
-// // 	or	ProtoQualifiedFunction<t_tProto>
-// // 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		>
-// 	concept
-// 		ProtoUnboundedArray
-// 	=	ProtoTrait
-// 		<	t_tProto
-// 		,	Trait::UnboundedArray{}
-// 		>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		>
-// 	concept
-// 		ProtoBoundedArray
-// 	=	ProtoTrait
-// 		<	t_tProto
-// 		,	Trait::BoundedArray{}
-// 		>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		>
-// 	concept
-// 		ProtoArray
-// 	=	ProtoUnboundedArray<t_tProto>
-// 	or	ProtoBoundedArray<t_tProto>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		>
-// 	concept
-// 		ProtoClass
-// 	=	ProtoTrait
-// 		<	t_tProto
-// 		,	Trait::Class{}
-// 		>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		>
-// 	concept
-// 		ProtoUnion
-// 	=	ProtoTrait
-// 		<	t_tProto
-// 		,	Trait::Union{}
-// 		>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		>
-// 	concept
-// 		ProtoUserDefined
-// 	=	ProtoClass<t_tProto>
-// 	or	ProtoUnion<t_tProto>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		>
-// 	concept
-// 		ProtoCompoundObject
-// 	=	ProtoArray<t_tProto>
-// 	or	ProtoUserDefined<t_tProto>
-// 	;
-//
-// // 	template
-// // 		<	typename
-// // 				t_tProto
-// // 		>
-// // 	concept
-// // 		ProtoObject
-// // 	=	ProtoScalar<t_tProto>
-// // 	or	ProtoCompoundObject<t_tProto>
-// // 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		>
-// 	concept
-// 		ProtoCompound
-// 	=	/*ProtoEnum<t_tProto>
-// 	or	*/ProtoPointer<t_tProto>
-// 	or	ProtoMemberPointer<t_tProto>
-// // 	or	ProtoFunction<t_tProto>
-// 	or	ProtoReference<t_tProto>
-// 	or	ProtoCompoundObject<t_tProto>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		,	typename
-// 				t_tBase
-// 		>
-// 	concept
-// 		ProtoDerivedFrom
-// 	=	ProtoClass<t_tProto>
-// 	and	ProtoTrait
-// 		<	t_tProto
-// 		,	Trait::DerivedFrom
-// 			<	t_tBase
-// 			>{}
-// 		>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		,	template
-// 				<	typename
-// 					...
-// 				>
-// 			typename
-// 				t_t1Pack
-// 		>
-// 	concept
-// 		ProtoTypePack
-// 	=	ProtoUserDefined<t_tProto>
-// 	and	ProtoTrait
-// 		<	t_tProto
-// 		,	Trait::TypePack
-// 			<	t_t1Pack
-// 			>{}
-// 		>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		,	template
-// 				<	auto
-// 					...
-// 				>
-// 			typename
-// 				t_t1Pack
-// 		>
-// 	concept
-// 		ProtoValuePack
-// 	=	ProtoUserDefined<t_tProto>
-// 	and	ProtoTrait
-// 		<	t_tProto
-// 		,	Trait::ValuePack
-// 			<	t_t1Pack
-// 			>{}
-// 		>
-// 	;
-//
-// 	template
-// 		<	typename
-// 				t_tProto
-// 		,	template
-// 				<	auto
-// 				,	typename
-// 				>
-// 			typename
-// 				t_t1Pair
-// 		>
-// 	concept
-// 		ProtoValueTypePair
-// 	=	ProtoUserDefined<t_tProto>
-// 	and	ProtoTrait
-// 		<	t_tProto
-// 		,	Trait::ValueTypePair
-// 			<	t_t1Pair
-// 			>{}
-// 		>
-// 	;
+	///	Types that may have members.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoCustom
+	=	ProtoSizedObject
+		<	t_tProto
+		>
+	and	Proto::LiteralTerm
+		<	t_tProto
+		,	Trait::Static
+			<	Trait::Defined{}
+			>
+		>
+	and	Proto::LiteralTerm
+		<	t_tProto
+		,	Trait::Static
+			<	not
+				Trait::Numeric{}
+			>
+		>
+	;
+
+	///	Class types that may be derived from.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoBase
+	=	ProtoCustom
+		<	t_tProto
+		>
+	and	Proto::LiteralTerm
+		<	t_tProto
+		,	Trait::Static
+			<	Trait::ConversionTarget{}
+			>
+		>
+	;
 }

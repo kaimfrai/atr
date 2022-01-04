@@ -31,7 +31,7 @@ static_assert
 	and	not
 		IsArray
 	and	not
-		IsUserDefined
+		IsCustom
 	)
 ==	IsScalar
 );
@@ -47,17 +47,17 @@ static_assert
 ==	IsObject
 );
 
-// static_assert
-// (	not
-// 	IsFundamental
-// ==	IsCompound
-// );
+static_assert
+(	not
+	IsFundamental
+==	IsCompound
+);
 
-// static_assert
-// (	(	not
-// 		IsFundamental
-// 	and	not
-// 		IsCompound
-// 	)
-// ==	False
-// );
+static_assert
+(	(	not
+		IsFundamental
+	and	not
+		IsCompound
+	)
+==	False
+);

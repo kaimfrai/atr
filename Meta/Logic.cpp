@@ -413,6 +413,13 @@ export namespace
 			}
 		{}
 
+		explicit constexpr
+		(	Term
+		)	(	Trait::Not<t_tpPredicate> const
+				&...
+			)
+		=	delete;
+
 		constexpr
 		(	Term
 		)	(	Term const&
@@ -529,14 +536,14 @@ export namespace
 		template
 			<	USize
 					t_nClauseIndex
-			,	USize
-					t_nLiteralIndex
 			>
 		friend auto constexpr
-		(	GetClauseLiteral
+		(	GetClause
 		)	(	Term const
 				&	i_rTerm
 			)
+		requires
+			(t_nClauseIndex < Logic::SubtermLimit)
 		{
 			auto constexpr
 				vClause
@@ -544,8 +551,60 @@ export namespace
 				[	t_nClauseIndex
 				]
 			;
+
+			auto constexpr
+				vClausePredicateField
+			=	vClause.PredicateField()
+			;
+			auto constexpr
+				vClauseTerm
+			=	Logic::BitTerm
+				{	vClause
+				}
+			;
+
+			if	constexpr
+				(	vClausePredicateField
+				==	0uz
+				)
+				return Term<vClauseTerm>{};
+			else
+				return
+					Term
+					<	vClauseTerm.TrimPredicates()
+					>
+				::	SetPredicates
+					(	TrimPredicates
+						<	vClausePredicateField
+						>(	i_rTerm.Predicates
+						)
+					)
+				;
+		}
+
+		template
+			<	USize
+					t_nLiteralIndex
+			>
+		friend auto constexpr
+		(	GetLiteral
+		)	(	Term const
+				&	i_rTerm
+			)
+		requires
+			(t_nLiteralIndex < Logic::SubtermLimit)
+		and	(t_vTerm.ClauseCount() <= 1uz)
+		{
+			auto constexpr
+				vClause
+			=	t_vTerm
+				[	0uz
+				]
+			;
 			if	constexpr(vClause.IsIdentity())
-				return Trait::Contradiction{};
+				return
+				Trait::Contradiction
+				{};
 			else
 			if	constexpr
 				(	vClause.TestPositive
@@ -563,11 +622,10 @@ export namespace
 					)
 				)
 				return
-				Trait::Not
-				{	i_rTerm.Predicates
-					[	Index<t_nLiteralIndex>
-					]
-				};
+				not
+				i_rTerm.Predicates
+				[	Index<t_nLiteralIndex>
+				];
 			else
 				return
 				Trait::Tautology
