@@ -1,8 +1,7 @@
-export module Meta.Literals.Test.Data;
+export module Test.Meta.Literals.Data;
 
+export import Std;
 export import Meta.Literals;
-export import Std.Algorithm;
-export import Std.Limits;
 
 auto constexpr
 (	Abs

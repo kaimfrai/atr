@@ -1,6 +1,6 @@
 export module Meta.Index;
 
-export import Std.Utility;
+export import Std;
 
 export import Meta.Integer;
 export import Meta.Literals;

@@ -1,6 +1,6 @@
 export module Meta.Concepts;
 
-export import Std.Utility;
+export import Std;
 
 export import Meta.Type;
 export import Meta.Function;

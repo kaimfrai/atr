@@ -1,6 +1,6 @@
 export module Meta.TupleSet;
 
-export import Std.Array;
+export import Std;
 
 export import Meta.Index;
 export import Meta.Type;

@@ -5,8 +5,7 @@ export import Meta.Logic.BitTerm;
 export import Meta.Concepts;
 export import Meta.TupleSet;
 
-import Std.Array;
-import Std.Bit;
+import Std;
 
 namespace
 	Meta

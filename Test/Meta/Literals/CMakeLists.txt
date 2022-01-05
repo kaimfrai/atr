@@ -3,12 +3,12 @@ add_module(
 )
 
 add_library(
-	Meta.Literals.Test
+	Test.Meta.Literals
 OBJECT
 	Integral.cpp
 	FloatingPoint.cpp
 )
 
 add_module_dependencies(
-	Meta.Literals.Test
+	Test.Meta.Literals
 )

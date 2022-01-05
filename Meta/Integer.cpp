@@ -1,6 +1,6 @@
 export module Meta.Integer;
 
-import Std.CStdInt;
+import Std;
 
 namespace
 	Meta

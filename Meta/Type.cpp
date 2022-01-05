@@ -1,6 +1,6 @@
 export module Meta.Type;
 
-export import Std.TypeTraits;
+export import Std;
 
 export import Meta.Integer;
 export import Meta.Literals;

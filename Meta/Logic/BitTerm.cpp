@@ -1,14 +1,9 @@
 export module Meta.Logic.BitTerm;
 
-export import Std.Array;
-export import Std.Span;
+export import Std;
 
 export import Meta.Logic.BitClause;
 export import Meta.Logic.BitClauseIterator;
-
-import Std.Algorithm;
-import Std.Functional;
-import Std.Numeric;
 
 import Meta.Logic.Optimizer;
 

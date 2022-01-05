@@ -1,6 +1,6 @@
 export module Meta.Logic.BitClauseIterator;
 
-export import Std.Iterator;
+export import Std;
 
 export import Meta.Logic.BitClause;
 

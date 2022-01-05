@@ -1,4 +1,4 @@
-import Meta.Literals.Test.Data;
+import Test.Meta.Literals.Data;
 
 static_assert
 (	0x0_Test

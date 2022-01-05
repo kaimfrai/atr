@@ -1,12 +1,8 @@
 export module Meta.Logic.Optimizer;
 
-export import Std.Array;
-export import Std.Span;
-export import Std.Iterator;
+export import Std;
 
 export import Meta.Logic.BitClause;
-
-import Std.Algorithm;
 
 import Meta.Logic.BitClauseIterator;
 

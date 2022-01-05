@@ -1,8 +1,6 @@
 export module Meta.Logic.BitClause;
 
-export import Std.Array;
-export import Std.Compare;
-export import Std.Span;
+export import Std;
 
 export import Meta.Integer;
 export import Meta.Bit;
