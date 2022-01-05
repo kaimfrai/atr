@@ -11,14 +11,18 @@ namespace
 	Meta::Logic
 {
 	export USize constexpr inline
-		SubtermLimit
+		LiteralLimit
 	=	8uz
+	;
+	export USize constexpr inline
+		ClauseLimit
+	=	6uz
 	;
 
 	export struct
 		BitClause final
 	{
-		using FieldType = UInt<SubtermLimit>;
+		using FieldType = UInt<LiteralLimit>;
 
 		static auto constexpr
 		(	BitIndexToField
@@ -27,8 +31,8 @@ namespace
 		->	FieldType
 		;
 
-		FieldType Positive : SubtermLimit;
-		FieldType Negative : SubtermLimit;
+		FieldType Positive : LiteralLimit;
+		FieldType Negative : LiteralLimit;
 
 		static auto constexpr
 		(	Absorbing
@@ -54,7 +58,7 @@ namespace
 		;
 
 		auto constexpr
-		(	PredicateField
+		(	LiteralField
 		)	()	const
 		->	USize
 		;
@@ -140,6 +144,12 @@ namespace
 			)	const
 		->	bool
 		;
+
+		auto constexpr
+		(	TrimLiterals
+		)	()	const
+		->	BitClause
+		;
 	};
 
 	export auto constexpr
@@ -181,7 +191,7 @@ namespace
 		)
 	->	FieldType
 	{
-		if	(i_nAbsoluteIndex >= SubtermLimit)
+		if	(i_nAbsoluteIndex >= LiteralLimit)
 			throw "Index to large to convert to a bit field!";
 		return
 		static_cast<FieldType>
@@ -209,7 +219,7 @@ namespace
 	::	BitClause
 	)	()
 	:	Positive
-		{	SetOneBits(SubtermLimit)
+		{	SetOneBits(LiteralLimit)
 		}
 	,	Negative
 		{	Positive
@@ -234,7 +244,7 @@ namespace
 
 	auto constexpr
 	(	BitClause
-	::	PredicateField
+	::	LiteralField
 	)	()	const
 	->	USize
 	{
@@ -242,12 +252,12 @@ namespace
 			return 0uz;
 
 		return
-			0uz
+		(	0uz
 		bitor
 			Positive
 		bitor
 			Negative
-		;
+		);
 	}
 
 	auto constexpr
@@ -328,7 +338,7 @@ namespace
 
 		return
 		CountOneBits
-		(	PredicateField()
+		(	LiteralField()
 		);
 	}
 
@@ -452,7 +462,7 @@ namespace
 			nIndexField
 		=	BitIndexToField
 			(	GetIndexOfNthOneBit
-				(	PredicateField()
+				(	LiteralField()
 				,	i_nRelativeIndex
 				)
 			)
@@ -570,5 +580,70 @@ namespace
 		bitand
 			BitIndexToField(i_nAbsoluteIndex)
 		);
+	}
+
+	auto constexpr
+	(	BitClause
+	::	TrimLiterals
+	)	()	const
+	->	BitClause
+	{
+		USize const
+			vLiteralField
+		=	LiteralField()
+		;
+
+		USize const
+			nRequiredLiteralCount
+		=	CountOneBits(vLiteralField)
+		;
+
+		USize const
+			nMaxLiteralCount
+		=	::std::bit_width
+			(	vLiteralField
+			)
+		;
+
+		if	(	nRequiredLiteralCount
+			==	nMaxLiteralCount
+			)
+			return *this;
+		else
+		{
+			BitClause
+				vResult
+			=	Absorbing()
+			;
+
+			for	(	USize
+						nAbsoluteIndex
+					=	0uz
+				,		nPermutation
+					=	0uz
+				;		nAbsoluteIndex
+					<	nMaxLiteralCount
+				;	++	nAbsoluteIndex
+				)
+			{
+				if	(TestPositive(nAbsoluteIndex))
+					(	vResult.Positive
+					|=	BitIndexToField
+						(	nPermutation++
+						)
+					);
+				else
+				if	(TestNegative(nAbsoluteIndex))
+					(	vResult.Negative
+					|=	BitIndexToField
+						(	nPermutation++
+						)
+					);
+			}
+
+			return
+				vResult
+			;
+		}
 	}
 }

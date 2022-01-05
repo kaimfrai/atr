@@ -15,14 +15,14 @@ namespace
 		<	Logic::BitClause
 				t_vLiteral
 		,	typename
-			...	t_tpPredicate
+			...	t_tpLiteral
 		,	typename
 			...	t_tpArgument
 		>
 	auto constexpr
 	(	EvaluateLiteral
-	)	(	TupleSet<t_tpPredicate...> const
-			&	i_rPredicates
+	)	(	TupleSet<t_tpLiteral...> const
+			&	i_rLiterals
 		,	t_tpArgument
 			&&
 			...	i_rpArgument
@@ -33,7 +33,7 @@ namespace
 		{
 			auto constexpr nIndex = CountLowerZeroBits(t_vLiteral.Positive);
 			return
-			i_rPredicates[Index<nIndex>]
+			i_rLiterals[Index<nIndex>]
 			(	::std::forward<t_tpArgument>(i_rpArgument)
 				...
 			);
@@ -43,7 +43,7 @@ namespace
 			auto constexpr nIndex = CountLowerZeroBits(t_vLiteral.Negative);
 			return
 			not
-			i_rPredicates[Index<nIndex>]
+			i_rLiterals[Index<nIndex>]
 			(	::std::forward<t_tpArgument>(i_rpArgument)
 				...
 			);
@@ -56,7 +56,7 @@ namespace
 		,	USize
 			...	t_npLiteralIndex
 		,	typename
-			...	t_tpPredicate
+			...	t_tpLiteral
 		,	typename
 			...	t_tpArgument
 		>
@@ -66,8 +66,8 @@ namespace
 			<	t_npLiteralIndex
 				...
 			>
-		,	TupleSet<t_tpPredicate...> const
-			&	i_rPredicates
+		,	TupleSet<t_tpLiteral...> const
+			&	i_rLiterals
 		,	t_tpArgument
 			&&
 			...	i_rpArgument
@@ -76,7 +76,7 @@ namespace
 	{	return
 		(	...
 		and	EvaluateLiteral<t_vClause[t_npLiteralIndex]>
-			(	i_rPredicates
+			(	i_rLiterals
 			,	::std::forward
 				<	t_tpArgument
 				>(	i_rpArgument
@@ -92,7 +92,7 @@ namespace
 		,	USize
 			...	t_npClauseIndex
 		,	typename
-			...	t_tpPredicate
+			...	t_tpLiteral
 		,	typename
 			...	t_tpArgument
 		>
@@ -102,8 +102,8 @@ namespace
 			<	t_npClauseIndex
 				...
 			>
-		,	TupleSet<t_tpPredicate...> const
-			&	i_rPredicates
+		,	TupleSet<t_tpLiteral...> const
+			&	i_rLiterals
 		,	t_tpArgument
 			&&
 			...	i_rpArgument
@@ -117,7 +117,7 @@ namespace
 				<	t_vTerm[t_npClauseIndex]
 				.	LiteralCount()
 				>()
-			,	i_rPredicates
+			,	i_rLiterals
 			,	::std::forward
 				<	t_tpArgument
 				>(	i_rpArgument
@@ -155,13 +155,13 @@ namespace
 
 	template
 		<	typename
-			...	t_tpPredicate
+			...	t_tpLiteral
 		>
 	auto constexpr inline
 		DeduceTupleSet
 	=	static_cast
 		<	TupleSet
-			<	t_tpPredicate
+			<	t_tpLiteral
 				...
 			>	const
 			*
@@ -173,9 +173,9 @@ namespace
 		<	typename
 				t_tResult
 		,	typename
-			...	t_tpLeftPredicate
+			...	t_tpLeftLiteral
 		,	typename
-			...	t_tpRightPredicate
+			...	t_tpRightLiteral
 		>
 	static auto constexpr
 	(	Compute
@@ -183,36 +183,36 @@ namespace
 				i_fCompute
 		,	Logic::BitTerm const
 			&	i_rLeftTerm
-		,	TupleSet<t_tpLeftPredicate...> const
-			*	i_aDeduceLeftPredicates
+		,	TupleSet<t_tpLeftLiteral...> const
+			*	i_aDeduceLeftLiterals
 		,	Logic::BitTerm const
 			&	i_rRightTerm
-		,	TupleSet<t_tpRightPredicate...> const
-			*	i_aDeduceRightPredicates
+		,	TupleSet<t_tpRightLiteral...> const
+			*	i_aDeduceRightLiterals
 		)
 	->	t_tResult
 	{
 		using
-			tPredicateUnion
+			tLiteralUnion
 		=	decltype
-			(	i_aDeduceLeftPredicates
+			(	i_aDeduceLeftLiterals
 			->	Union
-				(	*i_aDeduceRightPredicates
+				(	*i_aDeduceRightLiterals
 				)
 			)
 		;
 		static_assert
-		(	(	tPredicateUnion
+		(	(	tLiteralUnion
 			::	size()
-			<=	Logic::SubtermLimit
+			<=	Logic::LiteralLimit
 			)
 		,	"Exceeded maximum amount of predicates per term!"
 		);
 
-		::std::array<USize, sizeof...(t_tpRightPredicate)> constexpr
+		::std::array<USize, sizeof...(t_tpRightLiteral)> constexpr
 			vPermutationArray
-		={	(	tPredicateUnion
-			::	IndexOf(Type<t_tpRightPredicate>)
+		={	(	tLiteralUnion
+			::	IndexOf(Type<t_tpRightLiteral>)
 			)
 			...
 		};
@@ -229,45 +229,45 @@ namespace
 
 	template
 		<	USize
-				t_vPredicateField
+				t_vLiteralField
 		,	typename
-			...	t_tpPredicate
+			...	t_tpLiteral
 		>
 	auto constexpr
-	(	TrimPredicates
-	)	(	TupleSet<t_tpPredicate...> const
-			&	i_rPredicates
+	(	TrimLiterals
+	)	(	TupleSet<t_tpLiteral...> const
+			&	i_rLiterals
 		)
 	{
 		auto constexpr
-			nRequiredPredicateCount
-		=	CountOneBits(t_vPredicateField)
+			nRequiredLiteralCount
+		=	CountOneBits(t_vLiteralField)
 		;
 		if	constexpr
-			(	nRequiredPredicateCount
-			==	sizeof...(t_tpPredicate)
+			(	nRequiredLiteralCount
+			==	sizeof...(t_tpLiteral)
 			)
-			return i_rPredicates;
+			return i_rLiterals;
 		else
 			return
-			[	&i_rPredicates
+			[	&i_rLiterals
 			]	<	USize
 					...	t_npIndex
 				>(	IndexToken<t_npIndex...>
 				)
 			{	return
 				TupleSet
-				{	i_rPredicates
+				{	i_rLiterals
 					[	Index
 						<	GetIndexOfNthOneBit
-							(	t_vPredicateField
+							(	t_vLiteralField
 							,	t_npIndex
 							)
 						>
 					]
 					...
 				};
-			}(	Sequence<nRequiredPredicateCount>()
+			}(	Sequence<nRequiredLiteralCount>()
 			);
 	}
 }
@@ -279,7 +279,7 @@ export namespace
 		<	Logic::BitTerm
 				t_vTerm
 		,	typename
-			...	t_tpPredicate
+			...	t_tpLiteral
 		>
 	class
 		Term
@@ -289,37 +289,37 @@ export namespace
 
 		explicit constexpr
 		(	Term
-		)	(	TupleSet<t_tpPredicate...> const
-				&	i_rPredicates
+		)	(	TupleSet<t_tpLiteral...> const
+				&	i_rLiterals
 			)
-		:	Predicates
-			{	i_rPredicates
+		:	Literals
+			{	i_rLiterals
 			}
 		{}
 
 		template
 			<	typename
-				...	t_tpNewPredicate
+				...	t_tpNewLiteral
 			>
 		static auto constexpr
-		(	SetPredicates
+		(	SetLiterals
 		)	(	TupleSet
-				<	t_tpNewPredicate
+				<	t_tpNewLiteral
 					...
 				>	const
-				&	i_rPredicates
+				&	i_rLiterals
 			)
 		->	Term
 			<	t_vTerm
-			,	t_tpNewPredicate
+			,	t_tpNewLiteral
 				...
 			>
 		{	return
 			Term
 			<	t_vTerm
-			,	t_tpNewPredicate
+			,	t_tpNewLiteral
 				...
-			>{	i_rPredicates
+			>{	i_rLiterals
 			};
 		}
 
@@ -329,11 +329,11 @@ export namespace
 			,	Logic::BitTerm
 					t_vRightTerm
 			,	typename
-				...	t_tpRightPredicate
+				...	t_tpRightLiteral
 			>
 		auto constexpr
 		(	ComputeTerm
-		)	(	Term<t_vRightTerm, t_tpRightPredicate...> const
+		)	(	Term<t_vRightTerm, t_tpRightLiteral...> const
 				&	i_rRight
 			)	const
 		{
@@ -342,32 +342,32 @@ export namespace
 			=	Compute
 				(	i_fCompute
 				,	t_vTerm
-				,	DeduceTupleSet<t_tpPredicate...>
+				,	DeduceTupleSet<t_tpLiteral...>
 				,	t_vRightTerm
-				,	DeduceTupleSet<t_tpRightPredicate...>
+				,	DeduceTupleSet<t_tpRightLiteral...>
 				)
 			;
 
 			auto constexpr
-				vResultPredicateField
-			=	vResultTerm.PredicateField()
+				vResultLiteralField
+			=	vResultTerm.LiteralField()
 			;
 
 			if	constexpr
-				(	vResultPredicateField
+				(	vResultLiteralField
 				==	0uz
 				)
 				return Term<vResultTerm>{};
 			else
 				return
 					Term
-					<	vResultTerm.TrimPredicates()
+					<	vResultTerm.TrimLiterals()
 					>
-				::	SetPredicates
-					(	TrimPredicates
-						<	vResultPredicateField
-						>(	Predicates.Union
-							(	i_rRight.Predicates
+				::	SetLiterals
+					(	TrimLiterals
+						<	vResultLiteralField
+						>(	Literals.Union
+							(	i_rRight.Literals
 							)
 						)
 					)
@@ -375,15 +375,30 @@ export namespace
 		}
 
 	public:
-		TupleSet<t_tpPredicate...> const
-			Predicates
+		static Logic::BitTerm constexpr
+			BitTerm
+		=	t_vTerm
+		;
+
+		TupleSet<t_tpLiteral...> const
+			Literals
+		;
+
+		static USize constexpr
+			LiteralCount
+		=	sizeof...(t_tpLiteral)
+		;
+
+		static USize constexpr
+			ClauseCount
+		=	t_vTerm.ClauseCount()
 		;
 
 		constexpr
 		(	Term
 		)	()
 		requires
-			(	sizeof...(t_tpPredicate)
+			(	LiteralCount
 			==	0uz
 			)
 		and	(	t_vTerm.IsAbsorbing()
@@ -393,29 +408,29 @@ export namespace
 
 		explicit constexpr
 		(	Term
-		)	(	t_tpPredicate const
+		)	(	t_tpLiteral const
 				&
-				...	i_rpPredicate
+				...	i_rpLiteral
 			)
 		requires
-			(	sizeof...(t_tpPredicate)
+			(	LiteralCount
 			==	1uz
 			)
-		and	(	t_vTerm.ClauseCount()
+		and	(	ClauseCount
 			==	1uz
 			)
 		and	(	t_vTerm[0uz].LiteralCount()
 			==	1uz
 			)
-		:	Predicates
-			{	i_rpPredicate
+		:	Literals
+			{	i_rpLiteral
 				...
 			}
 		{}
 
 		explicit constexpr
 		(	Term
-		)	(	Trait::Not<t_tpPredicate> const
+		)	(	Trait::Not<t_tpLiteral> const
 				&...
 			)
 		=	delete;
@@ -432,9 +447,9 @@ export namespace
 		{	return
 			Term
 			<	Negation(t_vTerm)
-			,	t_tpPredicate
+			,	t_tpLiteral
 				...
-			>{	Predicates
+			>{	Literals
 			};
 		}
 
@@ -465,11 +480,11 @@ export namespace
 			<	Logic::BitTerm
 					t_vRightTerm
 			,	typename
-				...	t_tpRightPredicate
+				...	t_tpRightLiteral
 			>
 		auto constexpr
 		(	operator and
-		)	(	Term<t_vRightTerm, t_tpRightPredicate...> const
+		)	(	Term<t_vRightTerm, t_tpRightLiteral...> const
 				&	i_rRight
 			)	const
 		{	return ComputeTerm<ComputeConjunction>(i_rRight);	}
@@ -478,11 +493,11 @@ export namespace
 			<	Logic::BitTerm
 					t_vRightTerm
 			,	typename
-				...	t_tpRightPredicate
+				...	t_tpRightLiteral
 			>
 		auto constexpr
 		(	operator or
-		)	(	Term<t_vRightTerm, t_tpRightPredicate...> const
+		)	(	Term<t_vRightTerm, t_tpRightLiteral...> const
 				&	i_rRight
 			)	const
 		{	return ComputeTerm<ComputeDisjunction>(i_rRight);	}
@@ -491,19 +506,19 @@ export namespace
 			<	Logic::BitTerm
 					t_vRightTerm
 			,	typename
-				...	t_tpRightPredicate
+				...	t_tpRightLiteral
 			>
 		auto constexpr
 		(	operator ==
-		)	(	Term<t_vRightTerm, t_tpRightPredicate...> const&
+		)	(	Term<t_vRightTerm, t_tpRightLiteral...> const&
 			)	const
 		{	return
 			Compute
 			(	ComputeEquivalence
 			,	t_vTerm
-			,	DeduceTupleSet<t_tpPredicate...>
+			,	DeduceTupleSet<t_tpLiteral...>
 			,	t_vRightTerm
-			,	DeduceTupleSet<t_tpRightPredicate...>
+			,	DeduceTupleSet<t_tpRightLiteral...>
 			);
 		}
 
@@ -524,7 +539,7 @@ export namespace
 			>(	Sequence
 				<	t_vTerm.ClauseCount()
 				>()
-			,	Predicates
+			,	Literals
 			,	::std::forward
 				<	t_tpArgument
 				>(	i_rpArgument
@@ -543,7 +558,7 @@ export namespace
 				&	i_rTerm
 			)
 		requires
-			(t_nClauseIndex < Logic::SubtermLimit)
+			(t_nClauseIndex < Logic::ClauseLimit)
 		{
 			auto constexpr
 				vClause
@@ -553,8 +568,8 @@ export namespace
 			;
 
 			auto constexpr
-				vClausePredicateField
-			=	vClause.PredicateField()
+				vClauseLiteralField
+			=	vClause.LiteralField()
 			;
 			auto constexpr
 				vClauseTerm
@@ -564,85 +579,35 @@ export namespace
 			;
 
 			if	constexpr
-				(	vClausePredicateField
+				(	vClauseLiteralField
 				==	0uz
 				)
 				return Term<vClauseTerm>{};
 			else
 				return
 					Term
-					<	vClauseTerm.TrimPredicates()
+					<	vClauseTerm.TrimLiterals()
 					>
-				::	SetPredicates
-					(	TrimPredicates
-						<	vClausePredicateField
-						>(	i_rTerm.Predicates
+				::	SetLiterals
+					(	TrimLiterals
+						<	vClauseLiteralField
+						>(	i_rTerm.Literals
 						)
 					)
 				;
-		}
-
-		template
-			<	USize
-					t_nLiteralIndex
-			>
-		friend auto constexpr
-		(	GetLiteral
-		)	(	Term const
-				&	i_rTerm
-			)
-		requires
-			(t_nLiteralIndex < Logic::SubtermLimit)
-		and	(t_vTerm.ClauseCount() <= 1uz)
-		{
-			auto constexpr
-				vClause
-			=	t_vTerm
-				[	0uz
-				]
-			;
-			if	constexpr(vClause.IsIdentity())
-				return
-				Trait::Contradiction
-				{};
-			else
-			if	constexpr
-				(	vClause.TestPositive
-					(	t_nLiteralIndex
-					)
-				)
-				return
-				i_rTerm.Predicates
-				[	Index<t_nLiteralIndex>
-				];
-			else
-			if	constexpr
-				(	vClause.TestNegative
-					(	t_nLiteralIndex
-					)
-				)
-				return
-				not
-				i_rTerm.Predicates
-				[	Index<t_nLiteralIndex>
-				];
-			else
-				return
-				Trait::Tautology
-				{};
 		}
 	};
 
 	template
 		<	typename
-				t_tPredicate
+				t_tLiteral
 		>
 	(	Term
-	)	(	t_tPredicate const&
+	)	(	t_tLiteral const&
 		)
 	->	Term
 		<	Logic::BitClause{0uz}
-		,	t_tPredicate
+		,	t_tLiteral
 		>
 	;
 
@@ -650,12 +615,12 @@ export namespace
 		<	Logic::BitTerm
 				t_vTerm
 		,	typename
-			...	t_tpPredicate
+			...	t_tpLiteral
 		>
 	(	Term
-	)	(	Term<t_vTerm, t_tpPredicate...> const&
+	)	(	Term<t_vTerm, t_tpLiteral...> const&
 		)
-	->	Term<t_vTerm, t_tpPredicate...>
+	->	Term<t_vTerm, t_tpLiteral...>
 	;
 
 	Term constexpr inline
@@ -668,5 +633,137 @@ export namespace
 		False
 	=	Term<Logic::BitClause::Identity()>
 		{}
+	;
+
+	namespace
+		Trait
+	{
+		USize constexpr inline
+			ConstraintLiteralLimit
+		=	8uz
+		;
+
+		USize constexpr inline
+			ConstraintClauseLimit
+		=	4uz
+		;
+
+		template
+			<	Logic::BitClause
+					t_vClause
+			,	TupleSet
+					t_vLiterals
+			>
+		struct
+			ConstraintClause
+		{
+			static_assert
+			(	t_vClause.LiteralCount()
+			<=	ConstraintLiteralLimit
+			,	"Too many predicates to be used in a constraint clause!"
+			);
+
+			template
+				<	USize
+						t_nLiteralIndex
+				>
+			static auto constexpr
+			(	GetLiteral
+			)	()
+			{
+				if	constexpr(t_vClause.IsIdentity())
+					return
+					Trait::Contradiction
+					{};
+				else
+				if	constexpr
+					(	t_vClause.TestPositive
+						(	t_nLiteralIndex
+						)
+					)
+					return
+					t_vLiterals
+					[	Index<t_nLiteralIndex>
+					];
+				else
+				if	constexpr
+					(	t_vClause.TestNegative
+						(	t_nLiteralIndex
+						)
+					)
+					return
+					not
+					t_vLiterals
+					[	Index<t_nLiteralIndex>
+					];
+				else
+					return
+					Trait::Tautology
+					{};
+			}
+
+			template
+				<	USize
+						t_nLiteralIndex
+				>
+			requires
+				(t_nLiteralIndex < ConstraintLiteralLimit)
+			using
+				Literal
+			=	ConstraintLiteral
+				<	decltype(GetLiteral<t_nLiteralIndex>())
+				,	GetLiteral<t_nLiteralIndex>()
+				>
+			;
+		};
+
+		template
+			<	Logic::BitTerm
+					t_vTerm
+			,	TupleSet
+					t_vLiterals
+			>
+		struct
+			ConstraintTerm
+		{
+			static_assert
+			(	t_vTerm.ClauseCount()
+			<=	ConstraintClauseLimit
+			,	"Too many clauses to be used in a constraint term!"
+			);
+
+			template
+				<	USize
+						t_nClauseIndex
+				>
+			requires
+				(t_nClauseIndex < ConstraintClauseLimit)
+			using
+				Clause
+			=	ConstraintClause
+				<	t_vTerm[t_nClauseIndex].TrimLiterals()
+				,	TrimLiterals<t_vTerm[t_nClauseIndex].LiteralField()>
+					(	t_vLiterals
+					)
+				>
+			;
+		};
+	}
+
+	template
+		<	typename
+				t_tProto
+		,	Term
+				t_fTrait
+		>
+	concept
+		ProtoConstraint
+	=	Proto::Term
+		<	t_tProto
+		,	Trait::ConstraintTerm
+			<	t_fTrait.BitTerm
+			,	t_fTrait.Literals
+			>
+		>
 	;
 }

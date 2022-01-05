@@ -12,43 +12,15 @@ export namespace
 		Trait
 	{
 		template
-			<	auto
+			<	typename
+					t_tTrait
+			,	t_tTrait
 					t_fTrait
-			,	//	this improves readability of errors
-				typename
-				=	decltype(t_fTrait)
+				=	t_tTrait{}
 			>
 		struct
-			Static
+			ConstraintLiteral
 		{
-			template
-				<	USize
-						t_nClauseIndex
-				>
-			using
-				Clause
-			=	Static
-				<	GetClause
-					<	t_nClauseIndex
-					>(	t_fTrait
-					)
-				>
-			;
-
-			template
-				<	USize
-						t_nClauseIndex
-				>
-			using
-				Literal
-			=	Static
-				<	GetLiteral
-					<	t_nClauseIndex
-					>(	t_fTrait
-					)
-				>
-			;
-
 			template
 				<	typename
 						t_tProto
@@ -329,8 +301,8 @@ export namespace
 			All
 		=	Literal
 			<	t_tProto
-			,	Trait::Static
-				<	Trait::Tautology{}
+			,	Trait::ConstraintLiteral
+				<	Trait::Tautology
 				>
 			>
 		;
@@ -343,75 +315,11 @@ export namespace
 			None
 		=	Literal
 			<	t_tProto
-			,	Trait::Static
-				<	Trait::Contradiction{}
+			,	Trait::ConstraintLiteral
+				<	Trait::Contradiction
 				>
 			>
 		;
-
-		template
-			<	typename
-					t_tProto
-			,	typename
-					t_tTrait
-			,	USize
-					t_nLiteralIndex
-			>
-		concept
-			Clause_0x01
-		=	Literal
-			<	t_tProto
-			,	typename
-				t_tTrait
-			::	template
-				Literal
-				<	t_nLiteralIndex
-				>
-			>
-		;
-
-		template
-			<	typename
-					t_tProto
-			,	typename
-					t_tTrait
-			,	USize
-					t_nLiteralIndex
-			>
-		concept
-			Clause_0x02
-		=	Clause_0x01<t_tProto, t_tTrait, t_nLiteralIndex>
-		and	Clause_0x01<t_tProto, t_tTrait, t_nLiteralIndex + 0x01>
-		;
-
-		template
-			<	typename
-					t_tProto
-			,	typename
-					t_tTrait
-			,	USize
-					t_nLiteralIndex
-			>
-		concept
-			Clause_0x04
-		=	Clause_0x02<t_tProto, t_tTrait, t_nLiteralIndex>
-		and	Clause_0x02<t_tProto, t_tTrait, t_nLiteralIndex + 0x02>
-		;
-
-		template
-			<	typename
-					t_tProto
-			,	typename
-					t_tTrait
-			,	USize
-					t_nLiteralIndex
-			>
-		concept
-			Clause_0x08
-		=	Clause_0x04<t_tProto, t_tTrait, t_nLiteralIndex>
-		and	Clause_0x04<t_tProto, t_tTrait, t_nLiteralIndex + 0x04>
-		;
-
 
 		template
 			<	typename
@@ -421,71 +329,15 @@ export namespace
 			>
 		concept
 			Clause
-		=	Clause_0x08<t_tProto, t_tTrait, 0x00>
+		=	Literal<t_tProto, typename t_tTrait::template Literal<0x00>>
+		and	Literal<t_tProto, typename t_tTrait::template Literal<0x01>>
+		and	Literal<t_tProto, typename t_tTrait::template Literal<0x02>>
+		and	Literal<t_tProto, typename t_tTrait::template Literal<0x03>>
+		and	Literal<t_tProto, typename t_tTrait::template Literal<0x04>>
+		and	Literal<t_tProto, typename t_tTrait::template Literal<0x05>>
+		and	Literal<t_tProto, typename t_tTrait::template Literal<0x06>>
+		and	Literal<t_tProto, typename t_tTrait::template Literal<0x07>>
 		and	All<t_tProto>
-		;
-
-		template
-			<	typename
-					t_tProto
-			,	typename
-					t_tTrait
-			,	USize
-					t_nClauseIndex
-			>
-		concept
-			Term_0x01
-		=	Clause
-			<	t_tProto
-			,	typename
-				t_tTrait
-			::	template
-				Clause
-				<	t_nClauseIndex
-				>
-			>
-		;
-
-		template
-			<	typename
-					t_tProto
-			,	typename
-					t_tTrait
-			,	USize
-					t_nClauseIndex
-			>
-		concept
-			Term_0x02
-		=	Term_0x01<t_tProto, t_tTrait, t_nClauseIndex>
-		or	Term_0x01<t_tProto, t_tTrait, t_nClauseIndex + 0x01>
-		;
-
-		template
-			<	typename
-					t_tProto
-			,	typename
-					t_tTrait
-			,	USize
-					t_nClauseIndex
-			>
-		concept
-			Term_0x04
-		=	Term_0x02<t_tProto, t_tTrait, t_nClauseIndex>
-		or	Term_0x02<t_tProto, t_tTrait, t_nClauseIndex + 0x02>
-		;
-
-		template
-			<	typename
-					t_tProto
-			,	typename
-					t_tTrait
-			,	USize
-					t_nClauseIndex
-			>
-		concept
-			Term_0x08
-		=	Term_0x04<t_tProto, t_tTrait, t_nClauseIndex>
-		or	Term_0x04<t_tProto, t_tTrait, t_nClauseIndex + 0x04>
 		;
 
 		template
@@ -496,7 +348,10 @@ export namespace
 			>
 		concept
 			Term
-		=	Term_0x08<t_tProto, t_tTrait, 0x00>
+		=	Clause<t_tProto, typename t_tTrait::template Clause<0x00>>
+		or	Clause<t_tProto, typename t_tTrait::template Clause<0x01>>
+		or	Clause<t_tProto, typename t_tTrait::template Clause<0x02>>
+		or	Clause<t_tProto, typename t_tTrait::template Clause<0x03>>
 		or	None<t_tProto>
 		;
 
@@ -550,22 +405,6 @@ export namespace
 		>
 	;
 
-	template
-		<	typename
-				t_tProto
-		,	auto
-				t_fTrait
-		>
-	concept
-		ProtoConstraint
-	=	Proto::Term
-		<	t_tProto
-		,	Trait::Static
-			<	t_fTrait
-			>
-		>
-	;
-
 	///	Types that have a size.
 	template
 		<	typename
@@ -575,8 +414,8 @@ export namespace
 		ProtoSizedObject
 	=	Proto::LiteralTerm
 		<	t_tProto
-		,	Trait::Static
-			<	Trait::SizeGreater<>{}
+		,	Trait::ConstraintLiteral
+			<	Trait::SizeGreater<>
 			>
 		>
 	;
@@ -593,15 +432,14 @@ export namespace
 		>
 	and	Proto::LiteralTerm
 		<	t_tProto
-		,	Trait::Static
-			<	Trait::Defined{}
+		,	Trait::ConstraintLiteral
+			<	Trait::Defined
 			>
 		>
 	and	Proto::LiteralTerm
 		<	t_tProto
-		,	Trait::Static
-			<	not
-				Trait::Numeric{}
+		,	Trait::ConstraintLiteral
+			<	Trait::Not<Trait::Numeric>
 			>
 		>
 	;
@@ -618,8 +456,8 @@ export namespace
 		>
 	and	Proto::LiteralTerm
 		<	t_tProto
-		,	Trait::Static
-			<	Trait::ConversionTarget{}
+		,	Trait::ConstraintLiteral
+			<	Trait::ConversionTarget
 			>
 		>
 	;

@@ -17,7 +17,7 @@ namespace
 		BitClauseArray
 	=	::std::array
 		<	BitClause
-		,	SubtermLimit
+		,	ClauseLimit
 		>
 	;
 
@@ -583,7 +583,7 @@ namespace
 	{
 		Optimize(true);
 
-		if	(SubtermLimit < size())
+		if	(ClauseLimit < size())
 			throw "Optimized term contains to many clauses to copy!";
 
 		BitClauseArray

@@ -50,7 +50,7 @@ namespace
 		;
 
 		auto constexpr
-		(	PredicateField
+		(	LiteralField
 		)	()	const
 		->	USize
 		;
@@ -140,10 +140,10 @@ namespace
 
 	auto constexpr
 	(	Disjunction
-	::	PredicateField
+	::	LiteralField
 	)	()	const
 	->	USize
-	{	return Term.PredicateField();	}
+	{	return Term.LiteralField();	}
 
 	auto constexpr
 	(	Disjunction

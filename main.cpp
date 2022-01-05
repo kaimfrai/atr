@@ -1,32 +1,14 @@
 import Meta;
 
-
-template
-	<	typename
-			t_tProto
-	>
-concept
-	Arithmetic
-=	::Meta::ProtoConstraint<t_tProto, Meta::IsArithmetic>
-;
-
-auto constexpr
-	Foo(Arithmetic auto )
+auto constexpr inline
+	Foo(::Meta::ProtoConstraint<::Meta::IsArithmetic> auto )
 {
 	return 3;
 }
 
-template
-	<	typename
-			t_tProto
-	>
-concept
-	Integral
-=	::Meta::ProtoConstraint<t_tProto, Meta::IsIntegral>
-;
 
-auto constexpr
-	Foo(Integral auto)
+auto constexpr inline
+	Foo(::Meta::ProtoConstraint<::Meta::IsIntegral> auto)
 {
 	return 2;
 }

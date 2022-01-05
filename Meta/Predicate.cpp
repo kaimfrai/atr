@@ -346,3 +346,6 @@ export namespace
 		>
 	;
 }
+
+auto constexpr inline f = Meta::IsCompound;
+auto constexpr inline g = Meta::IsPassable;

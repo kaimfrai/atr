@@ -20,7 +20,7 @@ namespace
 	{
 		BitClause const
 			Clauses
-		[	SubtermLimit
+		[	ClauseLimit
 		]{};
 
 		constexpr
@@ -53,7 +53,7 @@ namespace
 		(	BitTerm
 		)	(	BitClause const
 				(&
-				)[	SubtermLimit
+				)[	ClauseLimit
 				]
 			)
 		;
@@ -72,7 +72,7 @@ namespace
 		;
 
 		auto constexpr
-		(	PredicateField
+		(	LiteralField
 		)	()	const
 		->	USize
 		;
@@ -85,7 +85,7 @@ namespace
 		;
 
 		auto constexpr
-		(	TrimPredicates
+		(	TrimLiterals
 		)	()	const
 		;
 
@@ -222,12 +222,12 @@ namespace
 	::	BitTerm
 	)	(	BitClause const
 			(&	i_rClauses
-			)[	SubtermLimit
+			)[	ClauseLimit
 			]
 		)
 	:	BitTerm
 		{	+i_rClauses
-		,	::std::make_index_sequence<SubtermLimit>{}
+		,	::std::make_index_sequence<ClauseLimit>{}
 		}
 	{}
 
@@ -239,7 +239,7 @@ namespace
 		)
 	:	BitTerm
 		{	i_rClauses.data()
-		,	::std::make_index_sequence<SubtermLimit>{}
+		,	::std::make_index_sequence<ClauseLimit>{}
 		}
 	{}
 
@@ -252,7 +252,7 @@ namespace
 
 	auto constexpr
 	(	BitTerm
-	::	PredicateField
+	::	LiteralField
 	)	()	const
 	->	USize
 	{	return
@@ -261,7 +261,7 @@ namespace
 		,	end(*this)
 		,	0uz
 		,	::std::bit_or<USize>{}
-		,	::std::mem_fn(&BitClause::PredicateField)
+		,	::std::mem_fn(&BitClause::LiteralField)
 		);
 	}
 
@@ -290,38 +290,36 @@ namespace
 
 	auto constexpr
 	(	BitTerm
-	::	TrimPredicates
+	::	TrimLiterals
 	)	()	const
 	{
 		auto const
-			vPredicateField
-		=	PredicateField
+			vLiteralField
+		=	LiteralField
 			()
 		;
 		auto const
-			nRequiredPredicateCount
-		=	CountOneBits(vPredicateField)
+			nRequiredLiteralCount
+		=	CountOneBits(vLiteralField)
 		;
 
 		auto const
-			nPredicateCount
+			nMaxLiteralCount
 		=	::std::bit_width
-			(	vPredicateField
+			(	vLiteralField
 			)
 		;
 
-		if	(	nRequiredPredicateCount
-			==	nPredicateCount
+		if	(	nRequiredLiteralCount
+			==	nMaxLiteralCount
 			)
 			return *this;
 		else
 		{
 			USize
-			*	aTrimPredicatePermutation
-			=	new USize
-				[	nPredicateCount
-				]{}
-			;
+				vTrimLiteralPermutation
+			[	LiteralLimit
+			]{};
 
 			for	(	USize
 						nIndex
@@ -329,27 +327,23 @@ namespace
 				,		nPermutation
 					=	0uz
 				;		nIndex
-					<	nPredicateCount
+					<	nMaxLiteralCount
 				;	++	nIndex
 				)
 			{
-				aTrimPredicatePermutation
+				vTrimLiteralPermutation
 				[	nIndex
 				]=	nPermutation
 				;
-				nPermutation += TestBit(vPredicateField, nIndex);
+				nPermutation += TestBit(vLiteralField, nIndex);
 			}
 
-			auto const
-				vTrimmedTerm
-			=	Permutation
-				(	{	aTrimPredicatePermutation
-					,	nPredicateCount
-					}
-				)
-			;
-			delete[] aTrimPredicatePermutation;
-			return vTrimmedTerm;
+			return
+			Permutation
+			(	{	+vTrimLiteralPermutation
+				,	nMaxLiteralCount
+				}
+			);
 		}
 	}
 
@@ -387,8 +381,8 @@ namespace
 		)	const&
 	->	BitClause
 	{
-		if	(i_nIndex >= SubtermLimit)
-			throw "Index beyond Subtermlimit!";
+		if	(i_nIndex >= ClauseLimit)
+			throw "Index beyond ClauseLimit!";
 
 		return Clauses[i_nIndex];
 	}
@@ -427,7 +421,7 @@ namespace
 	{	return
 		::std::lower_bound
 		(	i_rTerm.Clauses
-		,	i_rTerm.Clauses + SubtermLimit
+		,	i_rTerm.Clauses + ClauseLimit
 		,	BitClause::Identity()
 		);
 	}
@@ -454,19 +448,19 @@ namespace
 			return i_rLeftTerm;
 
 		auto const
-			nCombinedPredicateCount
+			nCombinedLiteralCount
 		=	CountOneBits
-			(	i_rLeftTerm.PredicateField()
+			(	i_rLeftTerm.LiteralField()
 			bitor
-				i_rRightTerm.PredicateField()
+				i_rRightTerm.LiteralField()
 			)
 		;
 
-		//	at most 2^PredicateCount clauses are possible
+		//	at most 2^LiteralCount clauses are possible
 		auto const
 			nMaxClauseCount
 		=	1uz
-		<<	nCombinedPredicateCount
+		<<	nCombinedLiteralCount
 		;
 
 		Optimizer
@@ -502,19 +496,19 @@ namespace
 			return i_rLeftTerm;
 
 		auto const
-			nCombinedPredicateCount
+			nCombinedLiteralCount
 		=	CountOneBits
-			(	i_rLeftTerm.PredicateField()
+			(	i_rLeftTerm.LiteralField()
 			bitor
-				i_rRightTerm.PredicateField()
+				i_rRightTerm.LiteralField()
 			)
 		;
 
-		//	at most 2^PredicateCount clauses are possible
+		//	at most 2^LiteralCount clauses are possible
 		auto const
 			nMaxClauseCount
 		=	1uz
-		<<	nCombinedPredicateCount
+		<<	nCombinedLiteralCount
 		;
 
 		Optimizer
