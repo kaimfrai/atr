@@ -79,19 +79,12 @@ function(add_module
 	read_module_name("${preprocessed_module_file}" module_name module_file)
 	read_module_dependencies("${preprocessed_module_file}" module_dependencies module_dependency_files)
 
+	get_compile_module_interface_command(${module_interface_file} ${module_file} compile_module_interface_command)
 	add_custom_command(
 	OUTPUT
 		${module_file}
 	COMMAND
-		${CMAKE_CXX_COMPILER}
-		${CXX_STANDARD_VERSION_FLAG}
-		${CXX_STANDARD_LIBRARY_FLAG}
-		${WARNING_FLAGS}
-		${MODULE_FLAGS}
-		${ADDITIONAL_COMPILE_OPTIONS}
-		--compile ${CMAKE_CURRENT_SOURCE_DIR}/${module_interface_file}
-		-Xclang -emit-module-interface
-		--output ${module_file}
+		${compile_module_interface_command}
 	VERBATIM
 	MAIN_DEPENDENCY
 		${module_interface_file}
