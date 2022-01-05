@@ -583,6 +583,7 @@ namespace
 	auto constexpr
 	(	BitClause
 	::	TrimLiterals
+		[[nodiscard]]
 	)	()	const
 	->	BitClause
 	{

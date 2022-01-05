@@ -18,6 +18,10 @@ MAKE_DIRECTORY
 	${PREBUILT_MODULE_PATH}
 )
 
+set(MODULE_INTERFACE_EXTENSION
+	.pcm
+)
+
 set(WARNING_FLAGS
 	-Wall
 	-Wextra
@@ -46,6 +50,15 @@ set(ADDITIONAL_COMPILE_OPTIONS
 	-frelaxed-template-template-args
 	-fconstexpr-steps=4294967295
 )
+
+function(
+	add_module_source_header_units
+	target_name
+	source_file
+	module_header_units
+)
+	# handled implicitly
+endfunction()
 
 function(
 	get_compile_module_interface_command

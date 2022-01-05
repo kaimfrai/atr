@@ -15,7 +15,7 @@ function(invoke_preprocessor
 	)
 	#module declarations and imports
 	string(REGEX MATCHALL
-		"(^|[ \n\r\n;])(import|export[ \t\r\n]+module)[ \t\r\n]+[a-zA-Z_][a-zA-Z0-9_.]*"
+		"(^|[ \n\r\n;])(import|export[ \t\r\n]+module)[ \t\r\n]+(<|\")?[a-zA-Z_][a-zA-Z0-9_.]*(>|\")?"
 		file_content
 		${file_content}
 	)
@@ -31,7 +31,19 @@ function(read_module_name
 	list(TRANSFORM module_name REPLACE "export[ \t\r\n]+module[ \t\r\n]+" "")
 
 	set(${out_module_name} ${module_name} PARENT_SCOPE)
-	set(${out_module_file} ${PREBUILT_MODULE_PATH}/${module_name}.pcm PARENT_SCOPE)
+	set(${out_module_file} ${PREBUILT_MODULE_PATH}/${module_name}${MODULE_INTERFACE_EXTENSION} PARENT_SCOPE)
+endfunction()
+
+function(read_module_headerunits
+	preprocessed_file
+	out_module_headerunits
+)
+	string(REGEX MATCHALL "import[ \t\r\n]+(<|\")[a-zA-Z_][a-zA-Z0-9_.]*(>|\")" module_dependencies "${preprocessed_file}")
+	list(TRANSFORM module_dependencies REPLACE "import[ \t\r\n]+(<|\")" "")
+	list(TRANSFORM module_dependencies REPLACE "(>|\")" "")
+
+	set(${out_module_headerunits} ${module_dependencies} PARENT_SCOPE)
+
 endfunction()
 
 function(read_module_dependencies
@@ -46,7 +58,7 @@ function(read_module_dependencies
 
 	set(module_dependency_files ${module_dependencies})
 	list(TRANSFORM module_dependency_files PREPEND ${PREBUILT_MODULE_PATH}/)
-	list(TRANSFORM module_dependency_files APPEND .pcm)
+	list(TRANSFORM module_dependency_files APPEND ${MODULE_INTERFACE_EXTENSION})
 	set(${out_module_dependency_files} ${module_dependency_files} PARENT_SCOPE)
 
 endfunction()
@@ -78,8 +90,13 @@ function(add_module
 	invoke_preprocessor(${module_interface_file} preprocessed_module_file)
 	read_module_name("${preprocessed_module_file}" module_name module_file)
 	read_module_dependencies("${preprocessed_module_file}" module_dependencies module_dependency_files)
+	read_module_headerunits("${preprocessed_module_file}" module_header_units)
 
-	get_compile_module_interface_command(${module_interface_file} ${module_file} compile_module_interface_command)
+	get_compile_module_interface_command(
+		${module_interface_file}
+		${module_file}
+		compile_module_interface_command
+	)
 	add_custom_command(
 	OUTPUT
 		${module_file}
@@ -98,6 +115,12 @@ function(add_module
 		${module_name}
 	INTERFACE
 		${module_interface_file}
+	)
+
+	add_module_source_header_units(
+		${module_name}
+		${module_interface_file}
+		"${module_header_units}"
 	)
 
 	add_module_source_dependencies(

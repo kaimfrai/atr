@@ -208,7 +208,7 @@ namespace
 		,	"Exceeded maximum amount of predicates per term!"
 		);
 
-		::std::array<USize, sizeof...(t_tpRightLiteral)> constexpr
+		::std::array<USize const, sizeof...(t_tpRightLiteral)> constexpr
 			vPermutationArray
 		={	(	tLiteralUnion
 			::	IndexOf(Type<t_tpRightLiteral>)

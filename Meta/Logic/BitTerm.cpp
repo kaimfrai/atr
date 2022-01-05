@@ -335,7 +335,8 @@ namespace
 
 			return
 			Permutation
-			(	{	+vTrimLiteralPermutation
+			(	::std::span<USize const>
+				{	+vTrimLiteralPermutation
 				,	nMaxLiteralCount
 				}
 			);
