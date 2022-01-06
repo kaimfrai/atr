@@ -10,7 +10,7 @@ namespace
 {
 	export USize constexpr inline
 		LiteralLimit
-	=	8uz
+	=	16uz
 	;
 	export USize constexpr inline
 		ClauseLimit

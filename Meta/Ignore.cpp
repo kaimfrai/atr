@@ -1,9 +1,9 @@
 export module Meta.Ignore;
 
-namespace
+export namespace
 	Meta
 {
-	export template
+	template
 		<	auto
 		,	typename
 				t_tType
@@ -13,7 +13,7 @@ namespace
 	=	t_tType
 	;
 
-	export struct
+	struct
 		Ignore
 	{
 		constexpr

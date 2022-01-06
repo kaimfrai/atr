@@ -270,6 +270,12 @@ export namespace
 	or	IsVoid
 	;
 
+	Term constexpr inline
+		IsCVQualifiable
+	=	IsObject
+	or	IsVoid
+	;
+
 	template
 		<	USize
 				t_nObjectSize

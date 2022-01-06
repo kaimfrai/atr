@@ -5,6 +5,7 @@ export import Std;
 export import Meta.Index;
 export import Meta.Bit;
 export import Meta.Type;
+export import Meta.Concepts;
 
 import Meta.Ignore;
 
@@ -55,7 +56,7 @@ export namespace
 	Meta
 {
 	template
-		<	typename
+		<	ProtoSizedObject
 				t_tItem
 		>
 	struct
@@ -63,6 +64,7 @@ export namespace
 	{
 		t_tItem
 			m_vItem
+			[[no_unique_address]]
 		;
 
 		static auto constexpr
@@ -74,7 +76,7 @@ export namespace
 	};
 
 	template
-		<	typename
+		<	ProtoSizedObject
 			...	t_tpItem
 		>
 	struct
@@ -93,7 +95,7 @@ export namespace
 		{	return sizeof...(t_tpItem);	}
 
 		template
-			<	typename
+			<	ProtoSizedObject
 					t_tEntity
 			>
 		static auto constexpr
@@ -129,7 +131,7 @@ export namespace
 			auto constexpr
 				fIgnoreOther
 			=	SelectByIndex
-				(	Sequence
+				(	ValueSequence
 					(	i_vIndex
 					)
 				)
@@ -161,7 +163,7 @@ export namespace
 			auto constexpr
 				fIgnoreOther
 			=	SelectByIndex
-				(	Sequence
+				(	ValueSequence
 					(	i_vIndex
 					)
 				)
@@ -200,7 +202,7 @@ export namespace
 		{	return operator[](Index<t_nIndex>);	}
 
 		template
-			<	typename
+			<	ProtoSizedObject
 					t_tEntity
 			>
 		static auto constexpr
@@ -232,7 +234,7 @@ export namespace
 		}
 
 		template
-			<	typename
+			<	ProtoSizedObject
 				...	t_tpMergeItem
 			>
 		auto constexpr
@@ -354,7 +356,7 @@ export namespace
 	};
 
 	template
-		<	typename
+		<	ProtoSizedObject
 			...	t_tpItem
 		>
 	(	TupleSet
@@ -370,7 +372,7 @@ namespace
 	std
 {
 	template
-		<	typename
+		<	::Meta::ProtoSizedObject
 			...	t_tpItem
 		>
 	struct
@@ -389,7 +391,7 @@ namespace
 	template
 		<	::std::size_t
 				t_nIndex
-		,	typename
+		,	::Meta::ProtoSizedObject
 			...	t_tpItem
 		>
 	struct
@@ -403,9 +405,8 @@ namespace
 	:	::std::remove_pointer
 		<	decltype
 			(	::Meta::SelectByIndex
-				(	::Meta::Sequence<t_nIndex>()
-				=	::Meta::Index<0uz>
-				)(	::std::declval
+				{	::Meta::ValueSequence<t_nIndex>()
+				}(	::std::declval
 					<	t_tpItem*
 					>()
 					...

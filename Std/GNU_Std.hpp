@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <climits>
 #include <compare>
+#include <concepts>
 #include <functional>
 #include <initializer_list>
 #include <iterator>

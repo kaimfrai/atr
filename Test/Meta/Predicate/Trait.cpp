@@ -1301,3 +1301,44 @@ static_assert(not
 	IsReturnable(Type<QFunc>));
 static_assert(not
 	IsReturnable(Type<QNxFunc>));
+
+static_assert(
+	IsCVQualifiable(Type<Void>));
+static_assert(
+	IsCVQualifiable(Type<Unsigned>));
+static_assert(
+	IsCVQualifiable(Type<Signed>));
+static_assert(
+	IsCVQualifiable(Type<Float>));
+static_assert(
+	IsCVQualifiable(Type<Nullptr>));
+static_assert(
+	IsCVQualifiable(Type<Ptr>));
+static_assert(not
+	IsCVQualifiable(Type<LRef>));
+static_assert(not
+	IsCVQualifiable(Type<RRef>));
+static_assert(
+	IsCVQualifiable(Type<BArr>));
+static_assert(
+	IsCVQualifiable(Type<UArr>));
+static_assert(
+	IsCVQualifiable(Type<UEnum>));
+static_assert(
+	IsCVQualifiable(Type<SEnum>));
+static_assert(
+	IsCVQualifiable(Type<Base>));
+static_assert(
+	IsCVQualifiable(Type<Final>));
+static_assert(
+	IsCVQualifiable(Type<Union>));
+static_assert(
+	IsCVQualifiable(Type<MPtr>));
+static_assert(not
+	IsCVQualifiable(Type<Func>));
+static_assert(not
+	IsCVQualifiable(Type<NxFunc>));
+static_assert(not
+	IsCVQualifiable(Type<QFunc>));
+static_assert(not
+	IsCVQualifiable(Type<QNxFunc>));

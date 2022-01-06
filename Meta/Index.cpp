@@ -5,15 +5,15 @@ export import Std;
 export import Meta.Integer;
 export import Meta.Literals;
 
-namespace
-	Meta
+export namespace
+	Meta::Token
 {
-	export template
+	template
 		<	USize
 			...	t_npIndex
 		>
 	struct
-		IndexToken
+		Index
 	{
 		template
 			<	USize
@@ -21,9 +21,9 @@ namespace
 			>
 		auto constexpr
 		(	operator =
-		)	(	IndexToken<t_nAssign>
+		)	(	Index<t_nAssign>
 			)	const
-		->	IndexToken
+		->	Index
 			<	(	(void)t_npIndex
 				,	t_nAssign
 				)
@@ -37,9 +37,9 @@ namespace
 			>
 		auto constexpr
 		(	operator +=
-		)	(	IndexToken<t_nAdd>
+		)	(	Index<t_nAdd>
 			)	const
-		->	IndexToken
+		->	Index
 			<	(	t_npIndex
 				+	t_nAdd
 				)
@@ -50,7 +50,7 @@ namespace
 		auto constexpr
 		(	operator ++
 		)	()	const
-		->	IndexToken
+		->	Index
 			<	(	t_npIndex
 				+	1uz
 				)
@@ -58,8 +58,24 @@ namespace
 			>
 		{	return	{};	}
 	};
+}
 
-	export template
+export namespace
+	Meta
+{
+	template
+		<	USize
+			...	t_npIndex
+		>
+	using
+		IndexToken
+	=	Token::Index
+		<	t_npIndex
+			...
+		>
+	;
+
+	template
 		<	USize
 			...	t_npIndex
 		>
@@ -71,26 +87,7 @@ namespace
 		>{}
 	;
 
-	namespace
-		Literals
-	{
-		export template
-			<	char
-				...	t_nNumeric
-			>
-		auto constexpr
-		(	operator""_idx
-		)	()
-		->	IndexToken
-			<	EvaluateNumericLiteral
-				<	t_nNumeric
-					...
-				>()
-			>
-		{	return {};	}
-	}
-
-	export template
+	template
 		<	USize
 				t_nLength
 		>
@@ -119,4 +116,47 @@ namespace
 			>{}
 		);
 	}
+
+	template
+		<	USize
+				t_nLength
+		,	USize
+				t_nValue
+			=	0uz
+		>
+	auto constexpr inline
+	(	ValueSequence
+	)	(	IndexToken
+			<	t_nLength
+			>	i_vLength
+			=	{}
+		,	IndexToken
+			<	t_nValue
+			>	i_vValue
+			=	{}
+		)
+	{	return
+			Sequence(i_vLength)
+		=	i_vValue
+		;
+	}
+}
+
+export namespace
+	Meta::Literals
+{
+	template
+		<	char
+			...	t_nNumeric
+		>
+	auto constexpr
+	(	operator""_idx
+	)	()
+	->	IndexToken
+		<	EvaluateNumericLiteral
+			<	t_nNumeric
+				...
+			>()
+		>
+	{	return {};	}
 }

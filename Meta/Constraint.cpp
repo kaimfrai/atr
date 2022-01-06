@@ -22,6 +22,14 @@ export namespace
 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x05>>
 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x06>>
 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x07>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x08>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x09>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x0A>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x0B>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x0C>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x0D>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x0E>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x0F>>
 	and	All<t_tProto>
 	;
 
@@ -48,7 +56,7 @@ export namespace
 	///	Corresponds to the amount of Literals listed in Meta::Proto::Clause
 	USize constexpr inline
 		ConstraintLiteralLimit
-	=	8uz
+	=	16uz
 	;
 
 	///	Corresponds to the amount of Clauses listed in Meta::Proto::Term

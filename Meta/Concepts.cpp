@@ -321,25 +321,91 @@ export namespace
 	template
 		<	typename
 				t_tProto
-		,	typename
-				t_tTrait
+		,	bool
+				t_bPolarity
 		>
 	concept
-		LiteralClause
-	=	Literal<t_tProto, t_tTrait>
-	and	All<t_tProto>
+		SizeGreater
+	=	Literal
+		<	t_tProto
+		,	Trait::StaticConstraint
+			<	Trait::SizeGreater<>
+				{	t_bPolarity
+				}
+			>
+		>
 	;
 
 	template
 		<	typename
 				t_tProto
-		,	typename
-				t_tTrait
+		,	bool
+				t_bPolarity
 		>
 	concept
-		LiteralTerm
-	=	LiteralClause<t_tProto,	t_tTrait>
-	or	None<t_tProto>
+		Defined
+	=	Literal
+		<	t_tProto
+		,	Trait::StaticConstraint
+			<	Trait::Defined
+				{	t_bPolarity
+				}
+			>
+		>
+	;
+
+	template
+		<	typename
+				t_tProto
+		,	bool
+				t_bPolarity
+		>
+	concept
+		Restricted
+	=	Literal
+		<	t_tProto
+		,	Trait::StaticConstraint
+			<	Trait::Restricted
+				{	t_bPolarity
+				}
+			>
+		>
+	;
+
+	template
+		<	typename
+				t_tProto
+		,	bool
+				t_bPolarity
+		>
+	concept
+		ConversionTarget
+	=	Literal
+		<	t_tProto
+		,	Trait::StaticConstraint
+			<	Trait::ConversionTarget
+				{	t_bPolarity
+				}
+			>
+		>
+	;
+
+	template
+		<	typename
+				t_tProto
+		,	bool
+				t_bPolarity
+		>
+	concept
+		Numeric
+	=	Literal
+		<	t_tProto
+		,	Trait::StaticConstraint
+			<	Trait::ConversionTarget
+				{	t_bPolarity
+				}
+			>
+		>
 	;
 }
 
@@ -352,9 +418,7 @@ export namespace
 		>
 	concept
 		ProtoNone
-	=	Proto::None
-		<	t_tProto
-		>
+	=	Proto::None<t_tProto>
 	;
 
 	template
@@ -363,12 +427,8 @@ export namespace
 		>
 	concept
 		ProtoAll
-	=	ProtoNone
-		<	t_tProto
-		>
-	or	Proto::All
-		<	t_tProto
-		>
+	=	Proto::All<t_tProto>
+	or	Proto::None<t_tProto>
 	;
 
 	///	Types that have a size.
@@ -378,12 +438,173 @@ export namespace
 		>
 	concept
 		ProtoSizedObject
-	=	Proto::LiteralTerm
-		<	t_tProto
-		,	Trait::StaticConstraint
-			<	Trait::SizeGreater<>{true}
-			>
+	=		Proto::SizeGreater<t_tProto, true>
+		and	Proto::All<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	///	Types that are functions.
+	template
+		<	typename
+				t_tProto
 		>
+	concept
+		ProtoFunction
+	=		Proto::SizeGreater<t_tProto, false>
+		and	Proto::All<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	///	Types that are void.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoVoid
+	=		Proto::SizeGreater<t_tProto, false>
+		and	Proto::Defined<t_tProto, false>
+		and	Proto::Restricted<t_tProto, false>
+		and	Proto::ConversionTarget<t_tProto, false>
+		and	Proto::All<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	///	Types that are unbounded arrays.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoUnboundedArray
+	=		Proto::SizeGreater<t_tProto, false>
+		and	Proto::Defined<t_tProto, false>
+		and	Proto::Restricted<t_tProto, true>
+		and	Proto::ConversionTarget<t_tProto, false>
+		and	Proto::All<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	///	Types that are references.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoReference
+	=		Proto::SizeGreater<t_tProto, false>
+		and	Proto::Defined<t_tProto, false>
+		and	Proto::ConversionTarget<t_tProto, true>
+		and	Proto::All<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	///	Types that are floating points.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoFloatingPoint
+	=		Proto::SizeGreater<t_tProto, true>
+		and	Proto::Defined<t_tProto, false>
+		and	Proto::ConversionTarget<t_tProto, false>
+		and	Proto::Numeric<t_tProto, true>
+		and	Proto::All<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	///	Types that are integrals.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoIntegral
+	=		Proto::SizeGreater<t_tProto, true>
+		and	Proto::Defined<t_tProto, false>
+		and	Proto::ConversionTarget<t_tProto, true>
+		and	Proto::Numeric<t_tProto, true>
+		and	Proto::All<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	///	Types that are pointers.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoPointer
+	=		Proto::SizeGreater<t_tProto, true>
+		and	Proto::Defined<t_tProto, false>
+		and	Proto::Restricted<t_tProto, false>
+		and	Proto::ConversionTarget<t_tProto, true>
+		and	Proto::Numeric<t_tProto, false>
+		and	Proto::All<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	///	Types that are null pointers.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoNullPointer
+	=		Proto::SizeGreater<t_tProto, true>
+		and	Proto::Defined<t_tProto, false>
+		and	Proto::Restricted<t_tProto, false>
+		and	Proto::ConversionTarget<t_tProto, false>
+		and	Proto::Numeric<t_tProto, false>
+		and	Proto::All<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	///	Types that are member pointers.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoMemberPointer
+	=		Proto::SizeGreater<t_tProto, true>
+		and	Proto::Defined<t_tProto, false>
+		and	Proto::Restricted<t_tProto, true>
+		and	Proto::ConversionTarget<t_tProto, true>
+		and	Proto::Numeric<t_tProto, false>
+		and	Proto::All<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	///	Types that are bounded arrays.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoBoundedArray
+	=		Proto::SizeGreater<t_tProto, true>
+		and	Proto::Defined<t_tProto, false>
+		and	Proto::Restricted<t_tProto, true>
+		and	Proto::ConversionTarget<t_tProto, false>
+		and	Proto::Numeric<t_tProto, false>
+		and	Proto::All<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	///	Types that are member pointers.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoEnum
+	=		Proto::SizeGreater<t_tProto, true>
+		and	Proto::Defined<t_tProto, true>
+		and	Proto::Numeric<t_tProto, true>
+		and	Proto::All<t_tProto>
+	or	Proto::None<t_tProto>
 	;
 
 	///	Types that may have members.
@@ -393,21 +614,11 @@ export namespace
 		>
 	concept
 		ProtoCustom
-	=	ProtoSizedObject
-		<	t_tProto
-		>
-	and	Proto::LiteralTerm
-		<	t_tProto
-		,	Trait::StaticConstraint
-			<	Trait::Defined{true}
-			>
-		>
-	and	Proto::LiteralTerm
-		<	t_tProto
-		,	Trait::StaticConstraint
-			<	Trait::Numeric{false}
-			>
-		>
+	=		Proto::SizeGreater<t_tProto, true>
+		and	Proto::Defined<t_tProto, true>
+		and	Proto::Numeric<t_tProto, false>
+		and	Proto::All<t_tProto>
+	or	Proto::None<t_tProto>
 	;
 
 	///	Class types that may be derived from.
@@ -417,14 +628,11 @@ export namespace
 		>
 	concept
 		ProtoBase
-	=	ProtoCustom
-		<	t_tProto
-		>
-	and	Proto::LiteralTerm
-		<	t_tProto
-		,	Trait::StaticConstraint
-			<	Trait::ConversionTarget{true}
-			>
-		>
+	=		Proto::SizeGreater<t_tProto, true>
+		and	Proto::Defined<t_tProto, true>
+		and	Proto::ConversionTarget<t_tProto, true>
+		and	Proto::Numeric<t_tProto, false>
+		and	Proto::All<t_tProto>
+	or	Proto::None<t_tProto>
 	;
 }

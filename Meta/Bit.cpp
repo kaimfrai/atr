@@ -3,12 +3,13 @@ export module Meta.Bit;
 export import Std;
 
 export import Meta.Integer;
+export import Meta.Concepts;
 
-namespace
+export namespace
 	Meta
 {
-	export template
-		<	typename
+	template
+		<	ProtoSizedObject
 				t_tAny
 		>
 	USize constexpr inline
@@ -17,7 +18,7 @@ namespace
 	*	sizeof(t_tAny)
 	;
 
-	export auto constexpr
+	auto constexpr
 	(	TestBit
 	)	(	USize
 				i_nBitField
@@ -32,7 +33,7 @@ namespace
 		return i_nBitField bitand (1uz << i_nIndex);
 	}
 
-	export auto constexpr
+	auto constexpr
 	(	SetOneBits
 	)	(	USize
 				i_nBitCount
@@ -54,7 +55,7 @@ namespace
 		;
 	}
 
-	export auto constexpr
+	auto constexpr
 	(	CountOneBits
 	)	(	USize
 				i_nBitField
@@ -68,7 +69,7 @@ namespace
 		);
 	}
 
-	export auto constexpr
+	auto constexpr
 	(	CountLowerZeroBits
 	)	(	USize
 				i_nBitField
@@ -82,7 +83,7 @@ namespace
 		);
 	}
 
-	export auto constexpr
+	auto constexpr
 	(	CountUpperZeroBits
 	)	(	USize
 				i_nBitField
@@ -96,7 +97,7 @@ namespace
 		);
 	}
 
-	export auto constexpr
+	auto constexpr
 	(	GetIndexOfNthOneBit
 	)	(	USize
 				i_nBitField

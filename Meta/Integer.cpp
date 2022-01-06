@@ -2,19 +2,23 @@ export module Meta.Integer;
 
 import Std;
 
-namespace
+export namespace
 	Meta
 {
-	export using
+	using
 		USize
 	=	decltype(0uz)
 	;
 
-	export using
+	using
 		SSize
 	=	decltype(0z)
 	;
+}
 
+namespace
+	Meta
+{
 	template
 		<	USize
 		>
@@ -84,8 +88,12 @@ namespace
 		using UnsignedType = ::std::uint_least64_t;
 		using SignedType = ::std::int_least64_t;
 	};
+}
 
-	export template
+export namespace
+	Meta
+{
+	template
 		<	USize
 				t_nBitCount
 		>
@@ -98,7 +106,7 @@ namespace
 	::	UnsignedType
 	;
 
-	export template
+	template
 		<	USize
 				t_nBitCount
 		>
@@ -111,14 +119,14 @@ namespace
 	::	SignedType
 	;
 
-	export auto constexpr
+	auto constexpr
 	(	Power
-	)	(	UInt<64uz>
+	)	(	USize
 				i_nBase
-		,	UInt<64uz>
+		,	USize
 				i_nExponent
 		)
-	->	UInt<64uz>
+	->	USize
 	{
 		if	(	i_nExponent
 			==	0ull
@@ -155,7 +163,7 @@ namespace
 		}
 	}
 
-	export auto constexpr
+	auto constexpr
 	(	CongruentInteger
 	)	(	SSize
 				i_nNumerator
