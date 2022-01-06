@@ -3,6 +3,7 @@ export module Meta.TupleSet;
 export import Std;
 
 export import Meta.Index;
+export import Meta.Bit;
 export import Meta.Type;
 
 import Meta.Ignore;
@@ -157,14 +158,12 @@ export namespace
 			)	const&
 		->	auto const&
 		{
-			using namespace Literals;
 			auto constexpr
 				fIgnoreOther
 			=	SelectByIndex
 				(	Sequence
 					(	i_vIndex
 					)
-				=	0_idx
 				)
 			;
 			return
@@ -308,6 +307,49 @@ export namespace
 				}(	Sequence(Index<nNotContainedCount>)
 				);
 			}
+		}
+
+		template
+			<	USize
+					t_nFilterField
+			>
+		requires
+			(	::std::bit_width(t_nFilterField)
+			<=	size()
+			)
+		auto constexpr
+		(	Filter
+		)	(	IndexToken<t_nFilterField>
+			)	const
+		{
+			auto constexpr
+				nRequiredItemCount
+			=	CountOneBits(t_nFilterField)
+			;
+			if	constexpr
+				(	nRequiredItemCount
+				==	sizeof...(t_tpItem)
+				)
+				return *this;
+			else
+				return
+				[	&
+				]	<	USize
+						...	t_npIndex
+					>(	IndexToken<t_npIndex...>
+					)
+				{	return
+					::Meta::TupleSet
+					{	get
+						<	GetIndexOfNthOneBit
+							(	t_nFilterField
+							,	t_npIndex
+							)
+						>()
+						...
+					};
+				}(	Sequence<nRequiredItemCount>()
+				);
 		}
 	};
 

@@ -6,3 +6,4 @@ export import Meta.Logic;
 export import Meta.Concepts;
 export import Meta.Literals;
 export import Meta.Predicate;
+export import Meta.Constraint;

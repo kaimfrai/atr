@@ -18,7 +18,7 @@ namespace
 		,	typename
 			...	t_tpArgument
 		>
-	auto constexpr
+	static auto constexpr
 	(	EvaluateLiteral
 	)	(	TupleSet<t_tpLiteral...> const
 			&	i_rLiterals
@@ -59,7 +59,7 @@ namespace
 		,	typename
 			...	t_tpArgument
 		>
-	auto constexpr
+	static auto constexpr
 	(	EvaluateClause
 	)	(	IndexToken
 			<	t_npLiteralIndex
@@ -95,7 +95,7 @@ namespace
 		,	typename
 			...	t_tpArgument
 		>
-	auto constexpr
+	static auto constexpr
 	(	EvaluateTerm
 	)	(	IndexToken
 			<	t_npClauseIndex
@@ -156,7 +156,7 @@ namespace
 		<	typename
 			...	t_tpLiteral
 		>
-	auto constexpr inline
+	static auto constexpr inline
 		DeduceTupleSet
 	=	static_cast
 		<	TupleSet
@@ -224,50 +224,6 @@ namespace
 				(	vPermutationArray
 				)
 		);
-	}
-
-	template
-		<	USize
-				t_vLiteralField
-		,	typename
-			...	t_tpLiteral
-		>
-	auto constexpr
-	(	TrimLiterals
-	)	(	TupleSet<t_tpLiteral...> const
-			&	i_rLiterals
-		)
-	{
-		auto constexpr
-			nRequiredLiteralCount
-		=	CountOneBits(t_vLiteralField)
-		;
-		if	constexpr
-			(	nRequiredLiteralCount
-			==	sizeof...(t_tpLiteral)
-			)
-			return i_rLiterals;
-		else
-			return
-			[	&i_rLiterals
-			]	<	USize
-					...	t_npIndex
-				>(	IndexToken<t_npIndex...>
-				)
-			{	return
-				TupleSet
-				{	i_rLiterals
-					[	Index
-						<	GetIndexOfNthOneBit
-							(	t_vLiteralField
-							,	t_npIndex
-							)
-						>
-					]
-					...
-				};
-			}(	Sequence<nRequiredLiteralCount>()
-			);
 	}
 }
 
@@ -363,11 +319,11 @@ export namespace
 					<	vResultTerm.TrimLiterals()
 					>
 				::	SetLiterals
-					(	TrimLiterals
-						<	vResultLiteralField
-						>(	Literals.Union
-							(	i_rRight.Literals
-							)
+					(	Literals.Union
+						(	i_rRight.Literals
+						)
+					.	Filter
+						(	Index<vResultLiteralField>
 						)
 					)
 				;
@@ -405,6 +361,12 @@ export namespace
 			)
 		{}
 
+		constexpr
+		(	Term
+		)	(	Trait::Constant
+			)
+		=	delete;
+
 		explicit constexpr
 		(	Term
 		)	(	t_tpLiteral const
@@ -426,13 +388,6 @@ export namespace
 				...
 			}
 		{}
-
-		explicit constexpr
-		(	Term
-		)	(	Trait::Not<t_tpLiteral> const
-				&...
-			)
-		=	delete;
 
 		constexpr
 		(	Term
@@ -546,55 +501,6 @@ export namespace
 				...
 			);
 		}
-
-		template
-			<	USize
-					t_nClauseIndex
-			>
-		friend auto constexpr
-		(	GetClause
-		)	(	Term const
-				&	i_rTerm
-			)
-		requires
-			(t_nClauseIndex < Logic::ClauseLimit)
-		{
-			auto constexpr
-				vClause
-			=	t_vTerm
-				[	t_nClauseIndex
-				]
-			;
-
-			auto constexpr
-				vClauseLiteralField
-			=	vClause.LiteralField()
-			;
-			auto constexpr
-				vClauseTerm
-			=	Logic::BitTerm
-				{	vClause
-				}
-			;
-
-			if	constexpr
-				(	vClauseLiteralField
-				==	0uz
-				)
-				return Term<vClauseTerm>{};
-			else
-				return
-					Term
-					<	vClauseTerm.TrimLiterals()
-					>
-				::	SetLiterals
-					(	TrimLiterals
-						<	vClauseLiteralField
-						>(	i_rTerm.Literals
-						)
-					)
-				;
-		}
 	};
 
 	template
@@ -632,137 +538,5 @@ export namespace
 		False
 	=	Term<Logic::BitClause::Identity()>
 		{}
-	;
-
-	namespace
-		Trait
-	{
-		USize constexpr inline
-			ConstraintLiteralLimit
-		=	8uz
-		;
-
-		USize constexpr inline
-			ConstraintClauseLimit
-		=	4uz
-		;
-
-		template
-			<	Logic::BitClause
-					t_vClause
-			,	TupleSet
-					t_vLiterals
-			>
-		struct
-			ConstraintClause
-		{
-			static_assert
-			(	t_vClause.LiteralCount()
-			<=	ConstraintLiteralLimit
-			,	"Too many predicates to be used in a constraint clause!"
-			);
-
-			template
-				<	USize
-						t_nLiteralIndex
-				>
-			static auto constexpr
-			(	GetLiteral
-			)	()
-			{
-				if	constexpr(t_vClause.IsIdentity())
-					return
-					Trait::Contradiction
-					{};
-				else
-				if	constexpr
-					(	t_vClause.TestPositive
-						(	t_nLiteralIndex
-						)
-					)
-					return
-					t_vLiterals
-					[	Index<t_nLiteralIndex>
-					];
-				else
-				if	constexpr
-					(	t_vClause.TestNegative
-						(	t_nLiteralIndex
-						)
-					)
-					return
-					not
-					t_vLiterals
-					[	Index<t_nLiteralIndex>
-					];
-				else
-					return
-					Trait::Tautology
-					{};
-			}
-
-			template
-				<	USize
-						t_nLiteralIndex
-				>
-			requires
-				(t_nLiteralIndex < ConstraintLiteralLimit)
-			using
-				Literal
-			=	ConstraintLiteral
-				<	decltype(GetLiteral<t_nLiteralIndex>())
-				,	GetLiteral<t_nLiteralIndex>()
-				>
-			;
-		};
-
-		template
-			<	Logic::BitTerm
-					t_vTerm
-			,	TupleSet
-					t_vLiterals
-			>
-		struct
-			ConstraintTerm
-		{
-			static_assert
-			(	t_vTerm.ClauseCount()
-			<=	ConstraintClauseLimit
-			,	"Too many clauses to be used in a constraint term!"
-			);
-
-			template
-				<	USize
-						t_nClauseIndex
-				>
-			requires
-				(t_nClauseIndex < ConstraintClauseLimit)
-			using
-				Clause
-			=	ConstraintClause
-				<	t_vTerm[t_nClauseIndex].TrimLiterals()
-				,	TrimLiterals<t_vTerm[t_nClauseIndex].LiteralField()>
-					(	t_vLiterals
-					)
-				>
-			;
-		};
-	}
-
-	template
-		<	typename
-				t_tProto
-		,	Term
-				t_fTrait
-		>
-	concept
-		ProtoConstraint
-	=	Proto::Term
-		<	t_tProto
-		,	Trait::ConstraintTerm
-			<	t_fTrait.BitTerm
-			,	t_fTrait.Literals
-			>
-		>
 	;
 }
