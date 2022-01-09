@@ -63,34 +63,6 @@ export namespace
 				t_tEntity
 		>
 	struct
-		Equal
-	{
-		friend auto constexpr
-		(	operator==
-		)	(	Equal
-			,	Equal
-			)
-		->	bool
-		{	return true;	}
-
-		template
-			<	typename
-					t_tRightEntity
-			>
-		friend auto constexpr
-		(	operator==
-		)	(	Equal
-			,	Equal<t_tRightEntity>
-			)
-		->	bool
-		{	return false;	}
-	};
-
-	template
-		<	typename
-				t_tEntity
-		>
-	struct
 		Sized
 	{
 		static USize constexpr
@@ -973,15 +945,28 @@ export namespace
 		>
 	{};
 
+	struct
+		EraseType final
+	{};
+
 	template
 		<	typename
 				t_tEntity
 		>
 	struct
 		Type final
-	:	Equal<t_tEntity>
-	,	Composition<t_tEntity>
-	{};
+	:	Composition<t_tEntity>
+	{
+		static EraseType constexpr
+			Erase
+		{};
+
+		constexpr
+		(	operator
+			EraseType const*
+		)	()	const
+		{	return &Erase;	}
+	};
 }
 
 export namespace
@@ -994,6 +979,11 @@ export namespace
 	using
 		TypeToken
 	=	Token::Type<t_tEntity>
+	;
+
+	using
+		EraseTypeToken
+	=	Token::EraseType const*
 	;
 
 	template

@@ -108,8 +108,7 @@ namespace
 			...	i_rpArgument
 		)
 	->	bool
-	{
-		return
+	{	return
 		(	...
 		or	EvaluateClause<t_vTerm[t_npClauseIndex]>
 			(	Sequence
@@ -237,7 +236,7 @@ export namespace
 			...	t_tpLiteral
 		>
 	class
-		Term
+		Term final
 	{
 		template<Logic::BitTerm, typename...>
 		friend class Term;

@@ -49,6 +49,7 @@ set(ADDITIONAL_COMPILE_OPTIONS
 	-fconstexpr-backtrace-limit=0
 	-frelaxed-template-template-args
 	-fconstexpr-steps=4294967295
+	-ftime-trace
 )
 
 function(

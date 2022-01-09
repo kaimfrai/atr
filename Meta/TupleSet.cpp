@@ -66,13 +66,6 @@ export namespace
 			m_vItem
 			[[no_unique_address]]
 		;
-
-		static auto constexpr
-		(	Contains
-		)	(	TypeToken<t_tItem>
-			)
-		->	bool
-		{	return true;	}
 	};
 
 	template
@@ -86,24 +79,19 @@ export namespace
 		>
 		...
 	{
-		using TupleSetItem<t_tpItem>::Contains...;
-
 		static auto constexpr
 		(	size
 		)	()
 		->	USize
 		{	return sizeof...(t_tpItem);	}
 
-		template
-			<	ProtoSizedObject
-					t_tEntity
-			>
 		static auto constexpr
 		(	Contains
-		)	(	TypeToken<t_tEntity>
+		)	(	EraseTypeToken
+					i_vType
 			)
 		->	bool
-		{	return false;	}
+		{	return (... or (i_vType == Type<t_tpItem>));	}
 
 		explicit constexpr
 		(	TupleSet
@@ -201,14 +189,10 @@ export namespace
 		->	decltype(auto)
 		{	return operator[](Index<t_nIndex>);	}
 
-		template
-			<	ProtoSizedObject
-					t_tEntity
-			>
 		static auto constexpr
 		(	IndexOf
-		)	(	TypeToken<t_tEntity>
-					i_vItem
+		)	(	EraseTypeToken
+					i_vType
 			)
 		{
 			USize
@@ -222,7 +206,7 @@ export namespace
 
 			(void)
 			(	...
-			or	(	bFound = (i_vItem == Type<t_tpItem>)
+			or	(	bFound = (i_vType == Type<t_tpItem>)
 				,	nIndex += not bFound
 				,	bFound
 				)
