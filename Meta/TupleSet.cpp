@@ -3,9 +3,9 @@ export module Meta.TupleSet;
 export import Std;
 
 export import Meta.Index;
-export import Meta.Bit;
 export import Meta.Type;
-export import Meta.Concepts;
+export import Meta.Concept;
+export import Meta.Bit;
 
 import Meta.Ignore;
 
@@ -56,7 +56,7 @@ export namespace
 	Meta
 {
 	template
-		<	ProtoSizedObject
+		<	ProtoDestructible
 				t_tItem
 		>
 	struct
@@ -69,7 +69,7 @@ export namespace
 	};
 
 	template
-		<	ProtoSizedObject
+		<	ProtoDestructible
 			...	t_tpItem
 		>
 	struct

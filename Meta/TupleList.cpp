@@ -1,12 +1,11 @@
-export module Meta.Pack;
+export module Meta.TupleList;
 
 export import Std;
 
 export import Meta.Index;
-export import Meta.Concepts;
+export import Meta.Concept;
 export import Meta.Constraint;
 export import Meta.Predicate;
-export import Meta.TypeTraits;
 
 export namespace
 	Meta

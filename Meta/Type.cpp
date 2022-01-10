@@ -94,7 +94,7 @@ export namespace
 				t_tArgument
 		>
 	struct
-		Argument
+		Parameter
 	{};
 
 	template
@@ -110,7 +110,7 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	Argument<t_tpArgument>
+		)	(	Parameter<t_tpArgument>
 				...
 			)
 		->	Type
@@ -130,7 +130,7 @@ export namespace
 		Composition
 	:	Sized<t_tEntity>
 	,	Return<::std::remove_volatile_t<t_tEntity>>
-	,	Argument<::std::remove_volatile_t<t_tEntity>>
+	,	Parameter<::std::remove_volatile_t<t_tEntity>>
 	{};
 
 	template<>
@@ -164,7 +164,7 @@ export namespace
 	struct
 		Composition<t_tEntity&>
 	:	Return<t_tEntity&>
-	,	Argument<t_tEntity&>
+	,	Parameter<t_tEntity&>
 	{};
 	template
 		<	typename
@@ -173,7 +173,7 @@ export namespace
 	struct
 		Composition<t_tEntity&&>
 	:	Return<t_tEntity&&>
-	,	Argument<t_tEntity&&>
+	,	Parameter<t_tEntity&&>
 	{};
 
 	template
@@ -192,6 +192,7 @@ export namespace
 		>
 	struct
 		Composition<t_tEntity[]>
+	:	Parameter<t_tEntity[]>
 	{};
 
 	template

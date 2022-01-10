@@ -1,4 +1,4 @@
-export module Meta.Concepts;
+export module Meta.Concept.Category;
 
 export import Std;
 
@@ -48,6 +48,13 @@ export namespace
 		=	true
 		;
 
+		auto constexpr
+		(	operator()
+		)	(	EraseTypeToken
+			)	const
+		->	bool
+		{	return not Polarity;	}
+
 		template
 			<	typename
 					t_tPolar
@@ -58,7 +65,8 @@ export namespace
 					i_vPolar
 			)
 		->	t_tPolar
-		{	i_vPolar.Polarity = not i_vPolar.Polarity;
+		{
+			i_vPolar.Polarity = not i_vPolar.Polarity;
 			return i_vPolar;
 		}
 	};
@@ -69,7 +77,7 @@ export namespace
 	{
 		auto constexpr
 		(	operator()
-		)	(	auto&&...
+		)	(	EraseTypeToken
 			)	const
 		->	bool
 		{	return Polarity;	}
@@ -170,7 +178,7 @@ export namespace
 	///	Types which cannot be used in the same way as an otherwise similar type. These are:
 	///	scoped enums vs. unscoped enums (implicit conversion)
 	///	unsigned integers vs. signed integers (negative numbers)
-	///	rvalue references vs. lvalue references (address)
+	///	lvalue references vs. rvalue references
 	///	member pointers vs. pointers
 	///	arrays vs. null pointers/void
 	///	noexcept functions vs. non-noexcept functions
@@ -193,7 +201,7 @@ export namespace
 				Polarity
 			==	(	::std::is_scoped_enum_v<t_tEntity>
 				or	::std::is_unsigned_v<t_tEntity>
-				or	::std::is_rvalue_reference_v<t_tEntity>
+				or	::std::is_lvalue_reference_v<t_tEntity>
 				or	::std::is_member_pointer_v<t_tEntity>
 				or	::std::is_array_v<t_tEntity>
 				or	requires
@@ -208,7 +216,7 @@ export namespace
 	};
 
 	///	Types for which there exists implicitly another type that can be converted into it.
-	///	non-final classes vs. final classes and unions (derived classes)
+	///	classes vs. unions (derived classes)
 	///	pointers vs. nullpointers (arrays, nullpointer)
 	///	integrals vs. floating points (unscoped enums)
 	///	member pointers vs. bounded arrays (member pointers of base)
@@ -231,10 +239,7 @@ export namespace
 		->	bool
 		{	return
 				Polarity
-			==	(	(	::std::is_class_v<t_tEntity>
-					and	not
-						::std::is_final_v<t_tEntity>
-					)
+			==	(	::std::is_class_v<t_tEntity>
 				or	::std::is_pointer_v<t_tEntity>
 				or	::std::is_integral_v<t_tEntity>
 				or	::std::is_member_pointer_v<t_tEntity>
@@ -407,6 +412,369 @@ export namespace
 			>
 		>
 	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		SizedObject
+	=	SizeGreater<t_tProto, true>
+	and	All<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Function
+	=	SizeGreater<t_tProto, false>
+	and	Defined<t_tProto, true>
+	and	All<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		NonQualifiedFunction
+	=	ConversionTarget<t_tProto, false>
+	and	Function<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Void
+	=	SizeGreater<t_tProto, false>
+	and	Defined<t_tProto, false>
+	and	Restricted<t_tProto, false>
+	and	ConversionTarget<t_tProto, false>
+	and	All<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		UnboundedArray
+	=		SizeGreater<t_tProto, false>
+	and	Defined<t_tProto, false>
+	and	Restricted<t_tProto, true>
+	and	ConversionTarget<t_tProto, false>
+	and	All<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Reference
+	=	SizeGreater<t_tProto, false>
+	and	Defined<t_tProto, false>
+	and	ConversionTarget<t_tProto, true>
+	and	All<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		LValueReference
+	=	Restricted<t_tProto, true>
+	and	Reference<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		RValueReference
+	=	Restricted<t_tProto, false>
+	and	Reference<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Arithmetic
+	=	Defined<t_tProto, false>
+	and	Numeric<t_tProto, true>
+	and	SizedObject<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		FloatingPoint
+	=	ConversionTarget<t_tProto, false>
+	and	Arithmetic<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Integral
+	=	ConversionTarget<t_tProto, true>
+	and	Arithmetic<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Pointer
+	=	Defined<t_tProto, false>
+	and	Restricted<t_tProto, false>
+	and	ConversionTarget<t_tProto, true>
+	and	Numeric<t_tProto, false>
+	and	SizedObject<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		NullPointer
+	=	Defined<t_tProto, false>
+	and	Restricted<t_tProto, false>
+	and	ConversionTarget<t_tProto, false>
+	and	Numeric<t_tProto, false>
+	and	SizedObject<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		MemberPointer
+	=	Defined<t_tProto, false>
+	and	Restricted<t_tProto, true>
+	and	ConversionTarget<t_tProto, true>
+	and	Numeric<t_tProto, false>
+	and	SizedObject<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		BoundedArray
+	=	Defined<t_tProto, false>
+	and	Restricted<t_tProto, true>
+	and	ConversionTarget<t_tProto, false>
+	and	Numeric<t_tProto, false>
+	and	SizedObject<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Custom_Enum
+	=	Defined<t_tProto, true>
+	and	SizedObject<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Enum
+	=	Numeric<t_tProto, true>
+	and	Custom_Enum<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Custom
+	=	Numeric<t_tProto, false>
+	and	Custom_Enum<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Class
+	=	ConversionTarget<t_tProto, true>
+	and	Custom<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Union
+	=	ConversionTarget<t_tProto, false>
+	and	Custom<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Enum_Int_Float
+	=	Numeric<t_tProto, true>
+	and	SizedObject<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Float_NPtr_Ptr
+	=	Defined<t_tProto, false>
+	and	Restricted<t_tProto, false>
+	and	SizedObject<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Int_MPtr_Ptr_Ref
+	=	Defined<t_tProto, false>
+	and	ConversionTarget<t_tProto, true>
+	and	All<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		UInt_MPtr_LRef
+	=	Restricted<t_tProto, true>
+	and	Int_MPtr_Ptr_Ref<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Int_MPtr_Ptr
+	=	SizeGreater<t_tProto, true>
+	and	Int_MPtr_Ptr_Ref<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Scalar
+	=	Enum_Int_Float<t_tProto>
+	or	Int_MPtr_Ptr<t_tProto>
+	or	Float_NPtr_Ptr<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Scalar_Ref
+	=	Enum_Int_Float<t_tProto>
+	or	Int_MPtr_Ptr_Ref<t_tProto>
+	or	Float_NPtr_Ptr<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Scalar_LRef
+	=	Enum_Int_Float<t_tProto>
+	or	UInt_MPtr_LRef<t_tProto>
+	or	Float_NPtr_Ptr<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		BArr_MPtr_RRef_UInt_UArr
+	=	Defined<t_tProto, false>
+	and	Restricted<t_tProto, true>
+	and	All<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Float_LRef_NPtr_Ptr_Void
+	=	Proto::Defined<t_tProto, false>
+	and	Proto::Restricted<t_tProto, false>
+	and	Proto::All<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Argument
+	=	SizedObject<t_tProto>
+	or	NonQualifiedFunction<t_tProto>
+	or	Int_MPtr_Ptr_Ref<t_tProto>
+	or	BArr_MPtr_RRef_UInt_UArr<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Returnable
+	=	Float_LRef_NPtr_Ptr_Void<t_tProto>
+	or	Int_MPtr_Ptr_Ref<t_tProto>
+	or	Custom_Enum<t_tProto>
+	or	Enum_Int_Float<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		DataMember
+	=	Int_MPtr_Ptr_Ref<t_tProto>
+	or	SizedObject<t_tProto>
+	;
 }
 
 export namespace
@@ -438,8 +806,7 @@ export namespace
 		>
 	concept
 		ProtoSizedObject
-	=		Proto::SizeGreater<t_tProto, true>
-		and	Proto::All<t_tProto>
+	=	Proto::SizedObject<t_tProto>
 	or	Proto::None<t_tProto>
 	;
 
@@ -450,8 +817,18 @@ export namespace
 		>
 	concept
 		ProtoFunction
-	=		Proto::SizeGreater<t_tProto, false>
-		and	Proto::All<t_tProto>
+	=	Proto::Function<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	//	Types that are functions and can be referenced.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoNonQualifiedFunction
+	=	Proto::NonQualifiedFunction<t_tProto>
 	or	Proto::None<t_tProto>
 	;
 
@@ -462,11 +839,7 @@ export namespace
 		>
 	concept
 		ProtoVoid
-	=		Proto::SizeGreater<t_tProto, false>
-		and	Proto::Defined<t_tProto, false>
-		and	Proto::Restricted<t_tProto, false>
-		and	Proto::ConversionTarget<t_tProto, false>
-		and	Proto::All<t_tProto>
+	=	Proto::Void<t_tProto>
 	or	Proto::None<t_tProto>
 	;
 
@@ -477,11 +850,7 @@ export namespace
 		>
 	concept
 		ProtoUnboundedArray
-	=		Proto::SizeGreater<t_tProto, false>
-		and	Proto::Defined<t_tProto, false>
-		and	Proto::Restricted<t_tProto, true>
-		and	Proto::ConversionTarget<t_tProto, false>
-		and	Proto::All<t_tProto>
+	=	Proto::UnboundedArray<t_tProto>
 	or	Proto::None<t_tProto>
 	;
 
@@ -499,6 +868,39 @@ export namespace
 	or	Proto::None<t_tProto>
 	;
 
+	///	Types that are references.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoLValueReferenceReference
+	=	Proto::LValueReference<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	///	Types that are references.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoRValueReferenceReference
+	=	Proto::RValueReference<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	///	Types that are arithmetic.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoArithmetic
+	=	Proto::Arithmetic<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
 	///	Types that are floating points.
 	template
 		<	typename
@@ -506,11 +908,7 @@ export namespace
 		>
 	concept
 		ProtoFloatingPoint
-	=		Proto::SizeGreater<t_tProto, true>
-		and	Proto::Defined<t_tProto, false>
-		and	Proto::ConversionTarget<t_tProto, false>
-		and	Proto::Numeric<t_tProto, true>
-		and	Proto::All<t_tProto>
+	=	Proto::FloatingPoint<t_tProto>
 	or	Proto::None<t_tProto>
 	;
 
@@ -521,11 +919,7 @@ export namespace
 		>
 	concept
 		ProtoIntegral
-	=		Proto::SizeGreater<t_tProto, true>
-		and	Proto::Defined<t_tProto, false>
-		and	Proto::ConversionTarget<t_tProto, true>
-		and	Proto::Numeric<t_tProto, true>
-		and	Proto::All<t_tProto>
+	=	Proto::Integral<t_tProto>
 	or	Proto::None<t_tProto>
 	;
 
@@ -536,12 +930,7 @@ export namespace
 		>
 	concept
 		ProtoPointer
-	=		Proto::SizeGreater<t_tProto, true>
-		and	Proto::Defined<t_tProto, false>
-		and	Proto::Restricted<t_tProto, false>
-		and	Proto::ConversionTarget<t_tProto, true>
-		and	Proto::Numeric<t_tProto, false>
-		and	Proto::All<t_tProto>
+	=	Proto::Pointer<t_tProto>
 	or	Proto::None<t_tProto>
 	;
 
@@ -552,12 +941,7 @@ export namespace
 		>
 	concept
 		ProtoNullPointer
-	=		Proto::SizeGreater<t_tProto, true>
-		and	Proto::Defined<t_tProto, false>
-		and	Proto::Restricted<t_tProto, false>
-		and	Proto::ConversionTarget<t_tProto, false>
-		and	Proto::Numeric<t_tProto, false>
-		and	Proto::All<t_tProto>
+	=	Proto::NullPointer<t_tProto>
 	or	Proto::None<t_tProto>
 	;
 
@@ -568,12 +952,7 @@ export namespace
 		>
 	concept
 		ProtoMemberPointer
-	=		Proto::SizeGreater<t_tProto, true>
-		and	Proto::Defined<t_tProto, false>
-		and	Proto::Restricted<t_tProto, true>
-		and	Proto::ConversionTarget<t_tProto, true>
-		and	Proto::Numeric<t_tProto, false>
-		and	Proto::All<t_tProto>
+	=	Proto::MemberPointer<t_tProto>
 	or	Proto::None<t_tProto>
 	;
 
@@ -584,12 +963,7 @@ export namespace
 		>
 	concept
 		ProtoBoundedArray
-	=		Proto::SizeGreater<t_tProto, true>
-		and	Proto::Defined<t_tProto, false>
-		and	Proto::Restricted<t_tProto, true>
-		and	Proto::ConversionTarget<t_tProto, false>
-		and	Proto::Numeric<t_tProto, false>
-		and	Proto::All<t_tProto>
+	=	Proto::BoundedArray<t_tProto>
 	or	Proto::None<t_tProto>
 	;
 
@@ -600,10 +974,7 @@ export namespace
 		>
 	concept
 		ProtoEnum
-	=		Proto::SizeGreater<t_tProto, true>
-		and	Proto::Defined<t_tProto, true>
-		and	Proto::Numeric<t_tProto, true>
-		and	Proto::All<t_tProto>
+	=	Proto::Enum<t_tProto>
 	or	Proto::None<t_tProto>
 	;
 
@@ -614,25 +985,74 @@ export namespace
 		>
 	concept
 		ProtoCustom
-	=		Proto::SizeGreater<t_tProto, true>
-		and	Proto::Defined<t_tProto, true>
-		and	Proto::Numeric<t_tProto, false>
-		and	Proto::All<t_tProto>
+	=	Proto::Custom<t_tProto>
 	or	Proto::None<t_tProto>
 	;
 
-	///	Class types that may be derived from.
+	///	Types that are classes, structs or lambdas.
 	template
 		<	typename
 				t_tProto
 		>
 	concept
-		ProtoBase
-	=		Proto::SizeGreater<t_tProto, true>
-		and	Proto::Defined<t_tProto, true>
-		and	Proto::ConversionTarget<t_tProto, true>
-		and	Proto::Numeric<t_tProto, false>
-		and	Proto::All<t_tProto>
+		ProtoClass
+	=	Proto::Class<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	///	Types that are unions.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoUnion
+	=	Proto::Union<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	///	Types that are scalar with all traits that entails.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoScalar
+	=	Proto::Scalar<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	///	Types that can be passed to a function.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoArgument
+	=	Proto::Argument<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	///	Types that can be returned from a function.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoReturnable
+	=	Proto::Returnable<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	///	Types that may be used as a datamember.
+	///	Namely these are sized objects and references.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoDataMember
+	=	Proto::DataMember<t_tProto>
 	or	Proto::None<t_tProto>
 	;
 }

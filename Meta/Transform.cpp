@@ -214,6 +214,27 @@ export namespace
 		};
 
 		struct
+			AddCopyReference final
+		{
+			template
+				<	typename
+						t_tEntity
+				>
+			auto constexpr
+			(	operator()
+			)	(	TypeToken<t_tEntity>
+				)	const
+			->	TypeToken
+				<	::std::add_lvalue_reference_t
+					<	::std::add_const_t
+						<	t_tEntity
+						>
+					>
+				>
+			{	return {};	}
+		};
+
+		struct
 			RemoveReference final
 		{
 			template
@@ -315,6 +336,12 @@ export namespace
 	auto constexpr inline
 		AddRValueReference
 	=	Transform::AddRValueReference
+		{}
+	;
+
+	auto constexpr inline
+		AddCopyReference
+	=	Transform::AddCopyReference
 		{}
 	;
 

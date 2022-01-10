@@ -1,7 +1,7 @@
 export module Legacy.Meta.Logic;
 
-export import Meta.Pack;
-export import Meta.TypeTraits;
+export import Meta.TupleList;
+export import Meta.Predicate;
 
 /// ************************************************************************************************
 ///	Tag types to distinguish different term types by inheritance.

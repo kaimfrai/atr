@@ -60,8 +60,8 @@ static_assert
 );
 
 static_assert
-(	(	IsBase
-	or	IsFinal
+(	(	IsClass
+	or	IsUnion
 	)
 ==	IsCustom
 );

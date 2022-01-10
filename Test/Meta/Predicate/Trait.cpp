@@ -15,14 +15,13 @@ using RRef = int&&;
 using BArr = int[2];
 using UArr = int[];
 
-enum UEnum{};
-enum class SEnum{};
+enum UEnum : int;
+enum class SEnum : int;
 
-class Base{};
-class Final final {};
-union Union{};
+class Class;
+union Union;
 
-using MPtr = int Base::*;
+using MPtr = int Class::*;
 
 using Func = void();
 using NxFunc = void() noexcept;
@@ -54,9 +53,7 @@ static_assert(
 static_assert(
 	IsSizedObject(Type<SEnum>));
 static_assert(
-	IsSizedObject(Type<Base>));
-static_assert(
-	IsSizedObject(Type<Final>));
+	IsSizedObject(Type<Class>));
 static_assert(
 	IsSizedObject(Type<Union>));
 static_assert(
@@ -95,9 +92,7 @@ static_assert(not
 static_assert(not
 	IsFunction(Type<SEnum>));
 static_assert(not
-	IsFunction(Type<Base>));
-static_assert(not
-	IsFunction(Type<Final>));
+	IsFunction(Type<Class>));
 static_assert(not
 	IsFunction(Type<Union>));
 static_assert(not
@@ -136,9 +131,7 @@ static_assert(not
 static_assert(not
 	IsNoexceptFunction(Type<SEnum>));
 static_assert(not
-	IsNoexceptFunction(Type<Base>));
-static_assert(not
-	IsNoexceptFunction(Type<Final>));
+	IsNoexceptFunction(Type<Class>));
 static_assert(not
 	IsNoexceptFunction(Type<Union>));
 static_assert(not
@@ -177,9 +170,7 @@ static_assert(not
 static_assert(not
 	IsVoid(Type<SEnum>));
 static_assert(not
-	IsVoid(Type<Base>));
-static_assert(not
-	IsVoid(Type<Final>));
+	IsVoid(Type<Class>));
 static_assert(not
 	IsVoid(Type<Union>));
 static_assert(not
@@ -218,9 +209,7 @@ static_assert(not
 static_assert(not
 	IsUnboundedArray(Type<SEnum>));
 static_assert(not
-	IsUnboundedArray(Type<Base>));
-static_assert(not
-	IsUnboundedArray(Type<Final>));
+	IsUnboundedArray(Type<Class>));
 static_assert(not
 	IsUnboundedArray(Type<Union>));
 static_assert(not
@@ -233,7 +222,6 @@ static_assert(not
 	IsUnboundedArray(Type<QFunc>));
 static_assert(not
 	IsUnboundedArray(Type<QNxFunc>));
-
 
 static_assert(not
 	IsReference(Type<Void>));
@@ -260,9 +248,7 @@ static_assert(not
 static_assert(not
 	IsReference(Type<SEnum>));
 static_assert(not
-	IsReference(Type<Base>));
-static_assert(not
-	IsReference(Type<Final>));
+	IsReference(Type<Class>));
 static_assert(not
 	IsReference(Type<Union>));
 static_assert(not
@@ -302,9 +288,7 @@ static_assert(not
 static_assert(not
 	IsLValueReference(Type<SEnum>));
 static_assert(not
-	IsLValueReference(Type<Base>));
-static_assert(not
-	IsLValueReference(Type<Final>));
+	IsLValueReference(Type<Class>));
 static_assert(not
 	IsLValueReference(Type<Union>));
 static_assert(not
@@ -343,9 +327,7 @@ static_assert(not
 static_assert(not
 	IsRValueReference(Type<SEnum>));
 static_assert(not
-	IsRValueReference(Type<Base>));
-static_assert(not
-	IsRValueReference(Type<Final>));
+	IsRValueReference(Type<Class>));
 static_assert(not
 	IsRValueReference(Type<Union>));
 static_assert(not
@@ -384,9 +366,7 @@ static_assert(not
 static_assert(not
 	IsArithmetic(Type<SEnum>));
 static_assert(not
-	IsArithmetic(Type<Base>));
-static_assert(not
-	IsArithmetic(Type<Final>));
+	IsArithmetic(Type<Class>));
 static_assert(not
 	IsArithmetic(Type<Union>));
 static_assert(not
@@ -425,9 +405,7 @@ static_assert(not
 static_assert(not
 	IsUnsigned(Type<SEnum>));
 static_assert(not
-	IsUnsigned(Type<Base>));
-static_assert(not
-	IsUnsigned(Type<Final>));
+	IsUnsigned(Type<Class>));
 static_assert(not
 	IsUnsigned(Type<Union>));
 static_assert(not
@@ -466,9 +444,7 @@ static_assert(not
 static_assert(not
 	IsSignedIntegral(Type<SEnum>));
 static_assert(not
-	IsSignedIntegral(Type<Base>));
-static_assert(not
-	IsSignedIntegral(Type<Final>));
+	IsSignedIntegral(Type<Class>));
 static_assert(not
 	IsSignedIntegral(Type<Union>));
 static_assert(not
@@ -507,9 +483,7 @@ static_assert(not
 static_assert(not
 	IsSigned(Type<SEnum>));
 static_assert(not
-	IsSigned(Type<Base>));
-static_assert(not
-	IsSigned(Type<Final>));
+	IsSigned(Type<Class>));
 static_assert(not
 	IsSigned(Type<Union>));
 static_assert(not
@@ -548,9 +522,7 @@ static_assert(not
 static_assert(not
 	IsPointer(Type<SEnum>));
 static_assert(not
-	IsPointer(Type<Base>));
-static_assert(not
-	IsPointer(Type<Final>));
+	IsPointer(Type<Class>));
 static_assert(not
 	IsPointer(Type<Union>));
 static_assert(not
@@ -589,9 +561,7 @@ static_assert(not
 static_assert(not
 	IsNullPointer(Type<SEnum>));
 static_assert(not
-	IsNullPointer(Type<Base>));
-static_assert(not
-	IsNullPointer(Type<Final>));
+	IsNullPointer(Type<Class>));
 static_assert(not
 	IsNullPointer(Type<Union>));
 static_assert(not
@@ -630,9 +600,7 @@ static_assert(not
 static_assert(not
 	IsMemberPointer(Type<SEnum>));
 static_assert(not
-	IsMemberPointer(Type<Base>));
-static_assert(not
-	IsMemberPointer(Type<Final>));
+	IsMemberPointer(Type<Class>));
 static_assert(not
 	IsMemberPointer(Type<Union>));
 static_assert(
@@ -671,9 +639,7 @@ static_assert(not
 static_assert(not
 	IsBoundedArray(Type<SEnum>));
 static_assert(not
-	IsBoundedArray(Type<Base>));
-static_assert(not
-	IsBoundedArray(Type<Final>));
+	IsBoundedArray(Type<Class>));
 static_assert(not
 	IsBoundedArray(Type<Union>));
 static_assert(not
@@ -712,9 +678,7 @@ static_assert(
 static_assert(
 	IsEnum(Type<SEnum>));
 static_assert(not
-	IsEnum(Type<Base>));
-static_assert(not
-	IsEnum(Type<Final>));
+	IsEnum(Type<Class>));
 static_assert(not
 	IsEnum(Type<Union>));
 static_assert(not
@@ -753,9 +717,7 @@ static_assert(not
 static_assert(
 	IsScopedEnum(Type<SEnum>));
 static_assert(not
-	IsScopedEnum(Type<Base>));
-static_assert(not
-	IsScopedEnum(Type<Final>));
+	IsScopedEnum(Type<Class>));
 static_assert(not
 	IsScopedEnum(Type<Union>));
 static_assert(not
@@ -794,9 +756,7 @@ static_assert(
 static_assert(not
 	IsUnscopedEnum(Type<SEnum>));
 static_assert(not
-	IsUnscopedEnum(Type<Base>));
-static_assert(not
-	IsUnscopedEnum(Type<Final>));
+	IsUnscopedEnum(Type<Class>));
 static_assert(not
 	IsUnscopedEnum(Type<Union>));
 static_assert(not
@@ -835,9 +795,7 @@ static_assert(not
 static_assert(not
 	IsCustom(Type<SEnum>));
 static_assert(
-	IsCustom(Type<Base>));
-static_assert(
-	IsCustom(Type<Final>));
+	IsCustom(Type<Class>));
 static_assert(
 	IsCustom(Type<Union>));
 static_assert(not
@@ -852,86 +810,121 @@ static_assert(not
 	IsCustom(Type<QNxFunc>));
 
 static_assert(not
-	IsBase(Type<Void>));
+	IsClass(Type<Void>));
 static_assert(not
-	IsBase(Type<Unsigned>));
+	IsClass(Type<Unsigned>));
 static_assert(not
-	IsBase(Type<Signed>));
+	IsClass(Type<Signed>));
 static_assert(not
-	IsBase(Type<Float>));
+	IsClass(Type<Float>));
 static_assert(not
-	IsBase(Type<Nullptr>));
+	IsClass(Type<Nullptr>));
 static_assert(not
-	IsBase(Type<Ptr>));
+	IsClass(Type<Ptr>));
 static_assert(not
-	IsBase(Type<LRef>));
+	IsClass(Type<LRef>));
 static_assert(not
-	IsBase(Type<RRef>));
+	IsClass(Type<RRef>));
 static_assert(not
-	IsBase(Type<BArr>));
+	IsClass(Type<BArr>));
 static_assert(not
-	IsBase(Type<UArr>));
+	IsClass(Type<UArr>));
 static_assert(not
-	IsBase(Type<UEnum>));
+	IsClass(Type<UEnum>));
 static_assert(not
-	IsBase(Type<SEnum>));
+	IsClass(Type<SEnum>));
 static_assert(
-	IsBase(Type<Base>));
+	IsClass(Type<Class>));
 static_assert(not
-	IsBase(Type<Final>));
+	IsClass(Type<Union>));
 static_assert(not
-	IsBase(Type<Union>));
+	IsClass(Type<MPtr>));
 static_assert(not
-	IsBase(Type<MPtr>));
+	IsClass(Type<Func>));
 static_assert(not
-	IsBase(Type<Func>));
+	IsClass(Type<NxFunc>));
 static_assert(not
-	IsBase(Type<NxFunc>));
+	IsClass(Type<QFunc>));
 static_assert(not
-	IsBase(Type<QFunc>));
-static_assert(not
-	IsBase(Type<QNxFunc>));
+	IsClass(Type<QNxFunc>));
 
 static_assert(not
-	IsFinal(Type<Void>));
+	IsUnion(Type<Void>));
 static_assert(not
-	IsFinal(Type<Unsigned>));
+	IsUnion(Type<Unsigned>));
 static_assert(not
-	IsFinal(Type<Signed>));
+	IsUnion(Type<Signed>));
 static_assert(not
-	IsFinal(Type<Float>));
+	IsUnion(Type<Float>));
 static_assert(not
-	IsFinal(Type<Nullptr>));
+	IsUnion(Type<Nullptr>));
 static_assert(not
-	IsFinal(Type<Ptr>));
+	IsUnion(Type<Ptr>));
 static_assert(not
-	IsFinal(Type<LRef>));
+	IsUnion(Type<LRef>));
 static_assert(not
-	IsFinal(Type<RRef>));
+	IsUnion(Type<RRef>));
 static_assert(not
-	IsFinal(Type<BArr>));
+	IsUnion(Type<BArr>));
 static_assert(not
-	IsFinal(Type<UArr>));
+	IsUnion(Type<UArr>));
 static_assert(not
-	IsFinal(Type<UEnum>));
+	IsUnion(Type<UEnum>));
 static_assert(not
-	IsFinal(Type<SEnum>));
+	IsUnion(Type<SEnum>));
 static_assert(not
-	IsFinal(Type<Base>));
+	IsUnion(Type<Class>));
 static_assert(
-	IsFinal(Type<Final>));
+	IsUnion(Type<Union>));
+static_assert(not
+	IsUnion(Type<MPtr>));
+static_assert(not
+	IsUnion(Type<Func>));
+static_assert(not
+	IsUnion(Type<NxFunc>));
+static_assert(not
+	IsUnion(Type<QFunc>));
+static_assert(not
+	IsUnion(Type<QNxFunc>));
+
+static_assert(not
+	IsCompoundObject(Type<Void>));
+static_assert(not
+	IsCompoundObject(Type<Unsigned>));
+static_assert(not
+	IsCompoundObject(Type<Signed>));
+static_assert(not
+	IsCompoundObject(Type<Float>));
+static_assert(not
+	IsCompoundObject(Type<Nullptr>));
+static_assert(not
+	IsCompoundObject(Type<Ptr>));
+static_assert(not
+	IsCompoundObject(Type<LRef>));
+static_assert(not
+	IsCompoundObject(Type<RRef>));
 static_assert(
-	IsFinal(Type<Union>));
+	IsCompoundObject(Type<BArr>));
 static_assert(not
-	IsFinal(Type<MPtr>));
+	IsCompoundObject(Type<UArr>));
 static_assert(not
-	IsFinal(Type<Func>));
+	IsCompoundObject(Type<UEnum>));
 static_assert(not
-	IsFinal(Type<NxFunc>));
+	IsCompoundObject(Type<SEnum>));
+static_assert(
+	IsCompoundObject(Type<Class>));
+static_assert(
+	IsCompoundObject(Type<Union>));
 static_assert(not
-	IsFinal(Type<QFunc>));
+	IsCompoundObject(Type<MPtr>));
 static_assert(not
-	IsFinal(Type<QNxFunc>));
+	IsCompoundObject(Type<Func>));
+static_assert(not
+	IsCompoundObject(Type<NxFunc>));
+static_assert(not
+	IsCompoundObject(Type<QFunc>));
+static_assert(not
+	IsCompoundObject(Type<QNxFunc>));
 
 static_assert(not
 	IsObject(Type<Void>));
@@ -958,9 +951,7 @@ static_assert(
 static_assert(
 	IsObject(Type<SEnum>));
 static_assert(
-	IsObject(Type<Base>));
-static_assert(
-	IsObject(Type<Final>));
+	IsObject(Type<Class>));
 static_assert(
 	IsObject(Type<Union>));
 static_assert(
@@ -999,9 +990,7 @@ static_assert(not
 static_assert(not
 	IsArray(Type<SEnum>));
 static_assert(not
-	IsArray(Type<Base>));
-static_assert(not
-	IsArray(Type<Final>));
+	IsArray(Type<Class>));
 static_assert(not
 	IsArray(Type<Union>));
 static_assert(not
@@ -1040,9 +1029,7 @@ static_assert(not
 static_assert(not
 	IsFundamental(Type<SEnum>));
 static_assert(not
-	IsFundamental(Type<Base>));
-static_assert(not
-	IsFundamental(Type<Final>));
+	IsFundamental(Type<Class>));
 static_assert(not
 	IsFundamental(Type<Union>));
 static_assert(not
@@ -1081,9 +1068,7 @@ static_assert(
 static_assert(
 	IsCompound(Type<SEnum>));
 static_assert(
-	IsCompound(Type<Base>));
-static_assert(
-	IsCompound(Type<Final>));
+	IsCompound(Type<Class>));
 static_assert(
 	IsCompound(Type<Union>));
 static_assert(
@@ -1122,9 +1107,7 @@ static_assert(
 static_assert(
 	IsScalar(Type<SEnum>));
 static_assert(not
-	IsScalar(Type<Base>));
-static_assert(not
-	IsScalar(Type<Final>));
+	IsScalar(Type<Class>));
 static_assert(not
 	IsScalar(Type<Union>));
 static_assert(
@@ -1163,9 +1146,7 @@ static_assert(
 static_assert(
 	IsReferable(Type<SEnum>));
 static_assert(
-	IsReferable(Type<Base>));
-static_assert(
-	IsReferable(Type<Final>));
+	IsReferable(Type<Class>));
 static_assert(
 	IsReferable(Type<Union>));
 static_assert(
@@ -1204,9 +1185,7 @@ static_assert(
 static_assert(
 	IsPointable(Type<SEnum>));
 static_assert(
-	IsPointable(Type<Base>));
-static_assert(
-	IsPointable(Type<Final>));
+	IsPointable(Type<Class>));
 static_assert(
 	IsPointable(Type<Union>));
 static_assert(
@@ -1221,45 +1200,82 @@ static_assert(not
 	IsPointable(Type<QNxFunc>));
 
 static_assert(not
-	IsPassable(Type<Void>));
+	IsArgument(Type<Void>));
 static_assert(
-	IsPassable(Type<Unsigned>));
+	IsArgument(Type<Unsigned>));
 static_assert(
-	IsPassable(Type<Signed>));
+	IsArgument(Type<Signed>));
 static_assert(
-	IsPassable(Type<Float>));
+	IsArgument(Type<Float>));
 static_assert(
-	IsPassable(Type<Nullptr>));
+	IsArgument(Type<Nullptr>));
 static_assert(
-	IsPassable(Type<Ptr>));
+	IsArgument(Type<Ptr>));
 static_assert(
-	IsPassable(Type<LRef>));
+	IsArgument(Type<LRef>));
 static_assert(
-	IsPassable(Type<RRef>));
+	IsArgument(Type<RRef>));
+static_assert(
+	IsArgument(Type<BArr>));
+static_assert(
+	IsArgument(Type<UArr>));
+static_assert(
+	IsArgument(Type<UEnum>));
+static_assert(
+	IsArgument(Type<SEnum>));
+static_assert(
+	IsArgument(Type<Class>));
+static_assert(
+	IsArgument(Type<Union>));
+static_assert(
+	IsArgument(Type<MPtr>));
+static_assert(
+	IsArgument(Type<Func>));
+static_assert(
+	IsArgument(Type<NxFunc>));
 static_assert(not
-	IsPassable(Type<BArr>));
+	IsArgument(Type<QFunc>));
 static_assert(not
-	IsPassable(Type<UArr>));
-static_assert(
-	IsPassable(Type<UEnum>));
-static_assert(
-	IsPassable(Type<SEnum>));
-static_assert(
-	IsPassable(Type<Base>));
-static_assert(
-	IsPassable(Type<Final>));
-static_assert(
-	IsPassable(Type<Union>));
-static_assert(
-	IsPassable(Type<MPtr>));
+	IsArgument(Type<QNxFunc>));
+
 static_assert(not
-	IsPassable(Type<Func>));
+	IsParameter(Type<Void>));
+static_assert(
+	IsParameter(Type<Unsigned>));
+static_assert(
+	IsParameter(Type<Signed>));
+static_assert(
+	IsParameter(Type<Float>));
+static_assert(
+	IsParameter(Type<Nullptr>));
+static_assert(
+	IsParameter(Type<Ptr>));
+static_assert(
+	IsParameter(Type<LRef>));
+static_assert(
+	IsParameter(Type<RRef>));
 static_assert(not
-	IsPassable(Type<NxFunc>));
+	IsParameter(Type<BArr>));
 static_assert(not
-	IsPassable(Type<QFunc>));
+	IsParameter(Type<UArr>));
+static_assert(
+	IsParameter(Type<UEnum>));
+static_assert(
+	IsParameter(Type<SEnum>));
+static_assert(
+	IsParameter(Type<Class>));
+static_assert(
+	IsParameter(Type<Union>));
+static_assert(
+	IsParameter(Type<MPtr>));
 static_assert(not
-	IsPassable(Type<QNxFunc>));
+	IsParameter(Type<Func>));
+static_assert(not
+	IsParameter(Type<NxFunc>));
+static_assert(not
+	IsParameter(Type<QFunc>));
+static_assert(not
+	IsParameter(Type<QNxFunc>));
 
 static_assert(
 	IsReturnable(Type<Void>));
@@ -1286,9 +1302,7 @@ static_assert(
 static_assert(
 	IsReturnable(Type<SEnum>));
 static_assert(
-	IsReturnable(Type<Base>));
-static_assert(
-	IsReturnable(Type<Final>));
+	IsReturnable(Type<Class>));
 static_assert(
 	IsReturnable(Type<Union>));
 static_assert(
@@ -1301,6 +1315,45 @@ static_assert(not
 	IsReturnable(Type<QFunc>));
 static_assert(not
 	IsReturnable(Type<QNxFunc>));
+
+static_assert(not
+	IsMember(Type<Void>));
+static_assert(
+	IsMember(Type<Unsigned>));
+static_assert(
+	IsMember(Type<Signed>));
+static_assert(
+	IsMember(Type<Float>));
+static_assert(
+	IsMember(Type<Nullptr>));
+static_assert(
+	IsMember(Type<Ptr>));
+static_assert(
+	IsMember(Type<LRef>));
+static_assert(
+	IsMember(Type<RRef>));
+static_assert(
+	IsMember(Type<BArr>));
+static_assert(not
+	IsMember(Type<UArr>));
+static_assert(
+	IsMember(Type<UEnum>));
+static_assert(
+	IsMember(Type<SEnum>));
+static_assert(
+	IsMember(Type<Class>));
+static_assert(
+	IsMember(Type<Union>));
+static_assert(
+	IsMember(Type<MPtr>));
+static_assert(not
+	IsMember(Type<Func>));
+static_assert(not
+	IsMember(Type<NxFunc>));
+static_assert(not
+	IsMember(Type<QFunc>));
+static_assert(not
+	IsMember(Type<QNxFunc>));
 
 static_assert(
 	IsCVQualifiable(Type<Void>));
@@ -1327,9 +1380,7 @@ static_assert(
 static_assert(
 	IsCVQualifiable(Type<SEnum>));
 static_assert(
-	IsCVQualifiable(Type<Base>));
-static_assert(
-	IsCVQualifiable(Type<Final>));
+	IsCVQualifiable(Type<Class>));
 static_assert(
 	IsCVQualifiable(Type<Union>));
 static_assert(

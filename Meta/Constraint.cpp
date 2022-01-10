@@ -1,6 +1,6 @@
 export module Meta.Constraint;
 
-export import Meta.Concepts;
+export import Meta.Concept;
 export import Meta.Logic;
 
 export namespace
@@ -30,6 +30,22 @@ export namespace
 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x0D>>
 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x0E>>
 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x0F>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x10>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x11>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x12>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x13>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x14>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x15>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x16>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x17>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x18>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x19>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x1A>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x1B>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x1C>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x1D>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x1E>>
+	and	Literal<t_tProto, typename t_tTrait::template Literal<0x1F>>
 	and	All<t_tProto>
 	;
 
@@ -56,7 +72,7 @@ export namespace
 	///	Corresponds to the amount of Literals listed in Meta::Proto::Clause
 	USize constexpr inline
 		ConstraintLiteralLimit
-	=	16uz
+	=	32uz
 	;
 
 	///	Corresponds to the amount of Clauses listed in Meta::Proto::Term

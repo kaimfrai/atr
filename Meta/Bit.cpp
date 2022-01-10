@@ -3,7 +3,7 @@ export module Meta.Bit;
 export import Std;
 
 export import Meta.Integer;
-export import Meta.Concepts;
+export import Meta.Concept.Category;
 
 export namespace
 	Meta
