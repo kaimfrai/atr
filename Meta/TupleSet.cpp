@@ -6,6 +6,7 @@ export import Meta.Index;
 export import Meta.Type;
 export import Meta.Concept;
 export import Meta.Bit;
+export import Meta.Value;
 
 import Meta.Ignore;
 
@@ -56,20 +57,50 @@ export namespace
 	Meta
 {
 	template
-		<	ProtoDestructible
+		<	ProtoAll
 				t_tItem
 		>
 	struct
 		TupleSetItem
 	{
-		t_tItem
+		Value<t_tItem>
 			m_vItem
 			[[no_unique_address]]
 		;
+
+		constexpr
+		(	TupleSetItem
+		)	()
+		=	default
+		;
+
+		template
+			<	ProtoArgument
+				...	t_tpArgument
+			>
+		constexpr
+		(	TupleSetItem
+		)	(	t_tpArgument
+				&&
+				...	i_rpArgument
+			)
+		requires
+			::std::constructible_from
+			<	Value<t_tItem>
+			,	t_tpArgument
+				...
+			>
+		:	m_vItem
+			{	::std::forward
+				<	t_tpArgument
+				>(	i_rpArgument
+				)...
+			}
+		{}
 	};
 
 	template
-		<	ProtoDestructible
+		<	ProtoAll
 			...	t_tpItem
 		>
 	struct
@@ -93,14 +124,23 @@ export namespace
 		->	bool
 		{	return (... or (i_vType == Type<t_tpItem>));	}
 
+		constexpr
+		(	TupleSet
+		)	()
+		=	default;
+
 		explicit constexpr
 		(	TupleSet
-		)	(	t_tpItem const
+		)	(	CopyConstructibleValue<t_tpItem> const
 				&
 				...	i_rpItem
 			)
+		requires
+			(	sizeof...(t_tpItem)
+			>	0uz
+			)
 		:	TupleSetItem<t_tpItem>
-			{	{ i_rpItem }
+			{	i_rpItem
 			}
 			...
 		{}
@@ -216,140 +256,152 @@ export namespace
 				nIndex
 			;
 		}
-
-		template
-			<	ProtoValue
-				...	t_tpMergeItem
-			>
-		auto constexpr
-		(	Union
-		)	(	TupleSet<t_tpMergeItem...> const
-				&	i_rMergeSet
-			)	const
-		{
-			USize constexpr
-				nNotContainedCount
-			=	(	0uz
-				+	...
-				+	not
-					Contains(Type<t_tpMergeItem>)
-				)
-			;
-			if	constexpr
-				(	nNotContainedCount
-				==	0uz
-				)
-				return *this;
-			else
-			{
-				auto constexpr
-					vNotContainedIndices
-				=[]
-				{	::std::array<USize, nNotContainedCount>
-						vIndexBuffer
-					{};
-
-					USize
-						nArrayIndex
-					=	0uz
-					;
-					USize
-						nElementIndex
-					=	0uz
-					;
-					(void)
-					(	...
-					,	(	Contains(Type<t_tpMergeItem>)
-						?	nElementIndex++
-						:	vIndexBuffer[nArrayIndex++] = nElementIndex++
-						)
-					);
-
-					return vIndexBuffer;
-				}();
-
-				return
-				[	&
-				]	<	USize
-						...	t_npIndex
-					>(	IndexToken<t_npIndex...>
-					)
-				{	return
-					::Meta::TupleSet
-					{		static_cast<TupleSetItem<t_tpItem> const*>
-							(	this
-							)
-						->	m_vItem
-						...
-					,	i_rMergeSet
-						[	Index
-							<	vNotContainedIndices
-								[	t_npIndex
-								]
-							>
-						]
-						...
-					};
-				}(	Sequence(Index<nNotContainedCount>)
-				);
-			}
-		}
-
-		template
-			<	USize
-					t_nFilterField
-			>
-		requires
-			(	::std::bit_width(t_nFilterField)
-			<=	size()
-			)
-		auto constexpr
-		(	Filter
-		)	(	IndexToken<t_nFilterField>
-			)	const
-		{
-			auto constexpr
-				nRequiredItemCount
-			=	CountOneBits(t_nFilterField)
-			;
-			if	constexpr
-				(	nRequiredItemCount
-				==	sizeof...(t_tpItem)
-				)
-				return *this;
-			else
-				return
-				[	&
-				]	<	USize
-						...	t_npIndex
-					>(	IndexToken<t_npIndex...>
-					)
-				{	return
-					::Meta::TupleSet
-					{	get
-						<	GetIndexOfNthOneBit
-							(	t_nFilterField
-							,	t_npIndex
-							)
-						>()
-						...
-					};
-				}(	Sequence<nRequiredItemCount>()
-				);
-		}
 	};
 
 	template
-		<	ProtoValue
+		<	ProtoAll
 			...	t_tpItem
 		>
 	(	TupleSet
-	)	(	t_tpItem const
+	)	(	Value<t_tpItem> const
 			&
 			...
 		)
 	->	TupleSet<t_tpItem...>
 	;
+
+	template
+		<	ProtoCopyConstructibleAsValue
+			...	t_tpLeft
+		,	ProtoCopyConstructibleAsValue
+			...	t_tpRight
+		>
+	auto constexpr
+	(	SetUnion
+	)	(	TupleSet<t_tpLeft...> const
+			&	i_rLeft
+		,	TupleSet<t_tpRight...> const
+			&	i_rRight
+		)
+	{
+		USize constexpr
+			nNotContainedCount
+		=	(	0uz
+			+	...
+			+	not
+				TupleSet<t_tpLeft...>
+			::	Contains(Type<t_tpRight>)
+			)
+		;
+		if	constexpr
+			(	nNotContainedCount
+			==	0uz
+			)
+			return i_rLeft;
+		else
+		{
+			auto constexpr
+				vNotContainedIndices
+			=[]
+			{	::std::array<USize, nNotContainedCount>
+					vIndexBuffer
+				{};
+
+				USize
+					nArrayIndex
+				=	0uz
+				;
+				USize
+					nElementIndex
+				=	0uz
+				;
+				(void)
+				(	...
+				,	(	TupleSet<t_tpLeft...>
+					::	Contains(Type<t_tpRight>)
+					?	nElementIndex++
+					:	vIndexBuffer[nArrayIndex++] = nElementIndex++
+					)
+				);
+
+				return vIndexBuffer;
+			}();
+
+			return
+			[	&
+			]	<	USize
+					...	t_npIndex
+				>(	IndexToken<t_npIndex...>
+				)
+			{	return
+				TupleSet
+				{	static_cast<TupleSetItem<t_tpLeft> const&>
+					(	i_rLeft
+					)
+				.	m_vItem
+					...
+				,	i_rRight
+					[	Index
+						<	vNotContainedIndices
+							[	t_npIndex
+							]
+						>
+					]
+					...
+				};
+			}(	Sequence(Index<nNotContainedCount>)
+			);
+		}
+	}
+
+	template
+		<	ProtoCopyConstructibleAsValue
+			...	t_tpItem
+		,	USize
+				t_nFilterField
+		>
+	requires
+		(	::std::bit_width(t_nFilterField)
+		<=	sizeof...(t_tpItem)
+		)
+	auto constexpr
+	(	Filter
+	)	(	TupleSet<t_tpItem...> const
+			&	i_rTuple
+		,	IndexToken<t_nFilterField>
+		)
+	{
+		auto constexpr
+			nRequiredItemCount
+		=	CountOneBits(t_nFilterField)
+		;
+		if	constexpr
+			(	nRequiredItemCount
+			==	sizeof...(t_tpItem)
+			)
+			return i_rTuple;
+		else
+			return
+			[	&
+			]	<	USize
+					...	t_npIndex
+				>(	IndexToken<t_npIndex...>
+				)
+			{	return
+				TupleSet
+				{	i_rTuple
+					[	Index
+						<	GetIndexOfNthOneBit
+							(	t_nFilterField
+							,	t_npIndex
+							)
+						>
+					]
+					...
+				};
+			}(	Sequence<nRequiredItemCount>()
+			);
+	}
 }
 
 namespace

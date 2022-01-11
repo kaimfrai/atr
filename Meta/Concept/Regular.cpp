@@ -22,6 +22,8 @@ export namespace
 		Destructible final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		template
 			<	ProtoDataMember
 					t_tEntity
@@ -48,6 +50,8 @@ export namespace
 		Constructible_From final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		explicit constexpr
 		(	Constructible_From
 		)	(	bool
@@ -69,14 +73,24 @@ export namespace
 		)	(	TypeToken<t_tEntity>
 			)	const
 		->	bool
-		{	return
-				Polarity
-			==	::std::is_constructible_v
-				<	t_tEntity
-				,	t_tpArgument
-					...
-				>
-			;
+		{
+			if	constexpr
+				(	sizeof...(t_tpArgument)
+				==	0uz
+				)
+				return
+					Polarity
+				==	::std::default_initializable<t_tEntity>
+				;
+			else
+				return
+					Polarity
+				==	::std::is_constructible_v
+					<	t_tEntity
+					,	t_tpArgument
+						...
+					>
+				;
 		}
 	};
 
@@ -96,31 +110,11 @@ export namespace
 	;
 
 	struct
-		DefaultInitializable final
-	:	LiteralBase
-	{
-		template
-			<	ProtoValue
-					t_tEntity
-			>
-		auto constexpr
-		(	operator()
-		)	(	TypeToken<t_tEntity>
-			)	const
-		->	bool
-		{	return
-				Polarity
-			==	::std::default_initializable
-				<	Member<t_tEntity>
-				>
-			;
-		}
-	};
-
-	struct
 		MoveConstructible final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		template
 			<	ProtoDataMember
 					t_tEntity
@@ -143,6 +137,8 @@ export namespace
 		CopyConstructible final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		template
 			<	ProtoDataMember
 					t_tEntity
@@ -165,6 +161,8 @@ export namespace
 		MoveAssignable final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		template
 			<	ProtoValue
 					t_tEntity
@@ -187,6 +185,8 @@ export namespace
 		CopyAssignable final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		template
 			<	ProtoValue
 					t_tEntity
@@ -209,8 +209,10 @@ export namespace
 		EqualityComparable final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		template
-			<	ProtoDataMember
+			<	ProtoArgument
 					t_tEntity
 			>
 		auto constexpr
@@ -256,14 +258,6 @@ export namespace
 	concept
 		DefaultInitializable
 	=	Literal
-		<	t_tProto
-		,	Trait::StaticConstraint
-			<	Trait::DefaultInitializable
-				{	true
-				}
-			>
-		>
-	and	Literal
 		<	t_tProto
 		,	Trait::StaticConstraint
 			<	Trait::Constructible_From
@@ -385,20 +379,8 @@ export namespace
 export namespace
 	Meta
 {
-	///	Custom types that are destructible.
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoDestructibleCustom
-	=		Proto::Destructible<t_tProto>
-		and	Proto::Custom<t_tProto>
-	or	Proto::None<t_tProto>
-	;
-
 	///	Types that are destructible.
-	///	Orders below ProtoScalar, ProtoReference and ProtoDestructibleCustom.
+	///	Orders below ProtoScalar, ProtoReference.
 	template
 		<	typename
 				t_tProto
@@ -411,21 +393,8 @@ export namespace
 	or	Proto::None<t_tProto>
 	;
 
-	///	Custom types that are default intializable.
-	///	Orders above ProtoDestructible.
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoDefaultInitializableCustom
-	=		Proto::DefaultInitializable<t_tProto>
-		and	Proto::Custom<t_tProto>
-	or	Proto::None<t_tProto>
-	;
-
 	///	Types that are default intializable.
-	///	Orders below ProtoScalar and ProtoDefaultInitializableCustom.
+	///	Orders below ProtoScalar.
 	///	Orders above ProtoDestructible.
 	template
 		<	typename
@@ -438,21 +407,8 @@ export namespace
 	or	Proto::None<t_tProto>
 	;
 
-	///	Custom types that are move constructible as a member.
-	///	Orders above ProtoDestructibleCustom.
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoMoveConstructibleCustom
-	=		Proto::MoveConstructible<t_tProto>
-		and	Proto::Custom<t_tProto>
-	or	Proto::None<t_tProto>
-	;
-
 	///	Types that are move constructible as a member.
-	///	Orders below ProtoScalar, ProtoReference and ProtoMoveConstructibleCustom.
+	///	Orders below ProtoScalar, ProtoReference.
 	///	Orders above ProtoDestructible.
 	template
 		<	typename
@@ -466,21 +422,8 @@ export namespace
 	or	Proto::None<t_tProto>
 	;
 
-	///	Custom types that are copy constructible as a member.
-	///	Orders above ProtoMoveConstructibleCustom.
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoCopyConstructibleCustom
-	=		Proto::CopyConstructible<t_tProto>
-		and	Proto::Custom<t_tProto>
-	or	Proto::None<t_tProto>
-	;
-
 	///	Types that are move constructible as a member.
-	///	Orders below ProtoScalar and ProtoLValueReference and ProtoCopyConstructibleFrom.
+	///	Orders below ProtoScalar, ProtoLValueReference.
 	///	Orders above ProtoMoveConstructible.
 	template
 		<	typename
@@ -494,21 +437,8 @@ export namespace
 	or	Proto::None<t_tProto>
 	;
 
-	///	Custom types that are movable as a member.
-	///	Orders above ProtoMoveConstructibleCustom.
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoMovableCustom
-	=		Proto::Movable<t_tProto>
-		and	Proto::Custom<t_tProto>
-	or	Proto::None<t_tProto>
-	;
-
 	///	Types that are movable as a member.
-	///	Orders below ProtoScalar and ProtoMovableCustom.
+	///	Orders below ProtoScalar.
 	///	Orders above ProtoMoveConstructible.
 	template
 		<	typename
@@ -521,22 +451,9 @@ export namespace
 	or	Proto::None<t_tProto>
 	;
 
-	///	Custom types that are copyable as a member.
-	///	Orders above ProtoMovableCustom and ProtoCopyConstructibleCustom.
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoCopyableCustom
-	=		Proto::Copyable<t_tProto>
-		and	Proto::Custom<t_tProto>
-	or	Proto::None<t_tProto>
-	;
-
 	///	Types that are copyable as a member.
-	///	Orders below ProtoScalar and ProtoCopyableCustom.
-	///	Orders above ProtoMovable and ProtoCopyConstructible.
+	///	Orders below ProtoScalar.
+	///	Orders above ProtoMovable, ProtoCopyConstructible.
 	template
 		<	typename
 				t_tProto
@@ -548,22 +465,9 @@ export namespace
 	or	Proto::None<t_tProto>
 	;
 
-	///	Custom types that are semiregular as a member
-	///	Orders above ProtoCopyableCustom and ProtoDefaultInitializableCustom.
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoSemiregularCustom
-	=		Proto::Semiregular<t_tProto>
-		and	Proto::Custom<t_tProto>
-	or	Proto::None<t_tProto>
-	;
-
 	///	Types that are semiregular as a member.
-	///	Orders below ProtoScalar and ProtoSemiregularCustom.
-	///	Orders above ProtoCopyable and ProtoDefaultInitializable.
+	///	Orders below ProtoScalar.
+	///	Orders above ProtoCopyable, ProtoDefaultInitializable.
 	template
 		<	typename
 				t_tProto
@@ -575,21 +479,8 @@ export namespace
 	or	Proto::None<t_tProto>
 	;
 
-	///	Custom types that are semiregular as a member.
-	///	Orders above ProtoSemiregularCustom.
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoRegularCustom
-	=		Proto::Regular<t_tProto>
-		and	Proto::Custom<t_tProto>
-	or	Proto::None<t_tProto>
-	;
-
 	///	Types that are regular as a member.
-	///	Orders below ProtoScalar and ProtoRegularCustom.
+	///	Orders below ProtoScalar.
 	///	Orders above ProtoSemiregular.
 	template
 		<	typename
@@ -599,6 +490,20 @@ export namespace
 		ProtoRegular
 	=	Proto::Regular<t_tProto>
 	or	Proto::Scalar<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
+	///	Types that can be compared for equality.
+	///	Orders below ProtoScalar, ProtoReference, ProtoNonQualifiedFunction, ProtoUnboundedArray.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoEqualityComparable
+	=		Proto::EqualityComparable<t_tProto>
+		and	Proto::Value<t_tProto>
+	or	Proto::Scalar_Ref_NonQ_UArr<t_tProto>
 	or	Proto::None<t_tProto>
 	;
 }

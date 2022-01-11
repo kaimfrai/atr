@@ -7,214 +7,207 @@ export namespace
 	Meta
 {
 	Term constexpr inline
-		IsValueTypeCategory
+		IsValue
 	{	Trait::SizeGreater<>{true}
 	};
 
 	Term constexpr inline
-		IsDefinedTypeCategory
-	{	Trait::Defined{true}
+		IsScalar_Ref_Void
+	{	Trait::Scalar_Ref_Void{true}
 	};
 
 	Term constexpr inline
-		IsRestrictedTypeCategory
-	{	Trait::Restricted{true}
+		IsFund_Array
+	{	Trait::Fund_Array{true}
 	};
 
 	Term constexpr inline
-		IsSubstituteTypeCategory
-	{	Trait::Substitute{true}
+		IsInt_Enum_Class_LRef_NonQ
+	{	Trait::Int_Enum_Class_LRef_NonQ{true}
 	};
 
 	Term constexpr inline
-		IsNumericTypeCategory
-	{	Trait::Numeric{true}
+		IsSigned_Scoped_Ptr_Noex
+	{	Trait::Signed_Scoped_Ptr_Noex{true}
 	};
-
-	Term constexpr inline
-		IsValue
-	=	IsValueTypeCategory
-	;
 
 	Term constexpr inline
 		IsFunction
-	=	not IsValue
-	and	IsDefinedTypeCategory
+	=	not IsFund_Array
+	and	not IsScalar_Ref_Void
+	and	not IsValue
 	;
 
 	Term constexpr inline
 		IsNoexceptFunction
-	=	IsFunction
-	and	IsRestrictedTypeCategory
+	=	IsSigned_Scoped_Ptr_Noex
+	and	IsFunction
 	;
 
 	Term constexpr inline
 		IsQualifiedFunction
-	=	IsFunction
-	and	IsSubstituteTypeCategory
+	=	not IsInt_Enum_Class_LRef_NonQ
+	and	IsFunction
 	;
 
 	Term constexpr inline
 		IsNonQualifiedFunction
-	=	IsFunction
-	and not IsSubstituteTypeCategory
+	=	IsInt_Enum_Class_LRef_NonQ
+	and	IsFunction
 	;
 
 	Term constexpr inline
 		IsVoid
-	=	not IsValue
-	and	not IsDefinedTypeCategory
-	and	not IsRestrictedTypeCategory
-	and	not IsSubstituteTypeCategory
+	=	IsFund_Array
+	and	IsScalar_Ref_Void
+	and	not IsValue
 	;
 
 	Term constexpr inline
 		IsUnboundedArray
-	=	not IsValue
-	and	not IsDefinedTypeCategory
-	and	IsRestrictedTypeCategory
-	and	not IsSubstituteTypeCategory
+	=	IsFund_Array
+	and	not IsScalar_Ref_Void
+	and	not IsValue
 	;
 
 	Term constexpr inline
 		IsReference
-	=	not IsValue
-	and	not IsDefinedTypeCategory
-	and	IsSubstituteTypeCategory
+	=	not IsFund_Array
+	and	IsScalar_Ref_Void
+	and	not IsValue
 	;
 
 	Term constexpr inline
 		IsLValueReference
-	=	IsReference
-	and	IsRestrictedTypeCategory
+	=	IsInt_Enum_Class_LRef_NonQ
+	and	IsReference
 	;
 
 	Term constexpr inline
 		IsRValueReference
-	=	IsReference
-	and	not IsRestrictedTypeCategory
+	=	not IsInt_Enum_Class_LRef_NonQ
+	and	IsReference
 	;
 
 	Term constexpr inline
-		IsNumeric
-	=	IsValue
-	and	IsNumericTypeCategory
+		IsScalar
+	=	IsScalar_Ref_Void
+	and	IsValue
 	;
 
 	Term constexpr inline
-		IsArithmetic
-	=	IsNumeric
-	and	not IsDefinedTypeCategory
+		IsFundamentalScalar
+	=	IsFund_Array
+	and	IsScalar
 	;
 
 	Term constexpr inline
 		IsFloatingPoint
-	=	IsArithmetic
-	and	not
-		IsSubstituteTypeCategory
+	=	IsSigned_Scoped_Ptr_Noex
+	and	not IsInt_Enum_Class_LRef_NonQ
+	and	IsFundamentalScalar
 	;
 
 	Term constexpr inline
 		IsIntegral
-	=	IsArithmetic
-	and	IsSubstituteTypeCategory
+	=	IsInt_Enum_Class_LRef_NonQ
+	and	IsFundamentalScalar
+	;
+
+	Term constexpr inline
+		IsArithmetic
+	=	IsIntegral
+	or	IsFloatingPoint
 	;
 
 	Term constexpr inline
 		IsUnsigned
-	=	IsIntegral
-	and	IsRestrictedTypeCategory
+	=	not IsSigned_Scoped_Ptr_Noex
+	and	IsIntegral
 	;
 
 	Term constexpr inline
 		IsSignedIntegral
-	=	IsIntegral
-	and	not IsRestrictedTypeCategory
+	=	IsSigned_Scoped_Ptr_Noex
+	and	IsIntegral
 	;
 
 	Term constexpr inline
 		IsSigned
-	=	IsFloatingPoint
-	or	IsSignedIntegral
+	=	IsSigned_Scoped_Ptr_Noex
+	and	IsFundamentalScalar
 	;
 
 	Term constexpr inline
 		IsPointer
-	=	IsValue
-	and	not IsDefinedTypeCategory
-	and	not IsRestrictedTypeCategory
-	and	IsSubstituteTypeCategory
-	and	not IsNumericTypeCategory
+	=	IsSigned_Scoped_Ptr_Noex
+	and	not IsInt_Enum_Class_LRef_NonQ
+	and	not IsFund_Array
+	and	IsScalar
 	;
 
 	Term constexpr inline
 		IsNullPointer
-	=	IsValue
-	and	not IsDefinedTypeCategory
-	and	not IsRestrictedTypeCategory
-	and	not IsSubstituteTypeCategory
-	and	not IsNumericTypeCategory
+	=	not IsSigned_Scoped_Ptr_Noex
+	and	not IsInt_Enum_Class_LRef_NonQ
+	and	IsFundamentalScalar
 	;
 
 	Term constexpr inline
 		IsMemberPointer
-	=	IsValue
-	and	not IsDefinedTypeCategory
-	and	IsRestrictedTypeCategory
-	and	IsSubstituteTypeCategory
-	and	not IsNumericTypeCategory
-	;
-
-	Term constexpr inline
-		IsBoundedArray
-	=	IsValue
-	and	not IsDefinedTypeCategory
-	and	IsRestrictedTypeCategory
-	and	not IsSubstituteTypeCategory
-	and	not IsNumericTypeCategory
-	;
-
-	Term constexpr inline
-		IsEnum
-	=	IsNumeric
-	and	IsDefinedTypeCategory
-	;
-
-	Term constexpr inline
-		IsScopedEnum
-	=	IsEnum
-	and	IsRestrictedTypeCategory
-	;
-
-	Term constexpr inline
-		IsUnscopedEnum
-	=	IsEnum
-	and	not IsRestrictedTypeCategory
-	;
-
-	Term constexpr inline
-		IsCustom
-	=	IsValue
-	and	IsDefinedTypeCategory
-	and	not IsNumericTypeCategory
-	;
-
-	Term constexpr inline
-		IsClass
-	=	IsCustom
-	and	IsSubstituteTypeCategory
-	;
-
-	Term constexpr inline
-		IsUnion
-	=	IsCustom
-	and	not IsSubstituteTypeCategory
+	=	not IsSigned_Scoped_Ptr_Noex
+	and	not IsInt_Enum_Class_LRef_NonQ
+	and	not IsFund_Array
+	and	IsScalar
 	;
 
 	Term constexpr inline
 		IsCompoundObject
-	=	IsCustom
-	or	IsBoundedArray
+	=	not IsScalar_Ref_Void
+	and	IsValue
+	;
+
+	Term constexpr inline
+		IsBoundedArray
+	=	IsFund_Array
+	and	IsCompoundObject
+	;
+
+	Term constexpr inline
+		IsEnum
+	=	IsInt_Enum_Class_LRef_NonQ
+	and	not IsFund_Array
+	and	IsScalar
+	;
+
+	Term constexpr inline
+		IsScopedEnum
+	=	IsSigned_Scoped_Ptr_Noex
+	and	IsEnum
+	;
+
+	Term constexpr inline
+		IsUnscopedEnum
+	=	not IsSigned_Scoped_Ptr_Noex
+	and	IsEnum
+	;
+
+	Term constexpr inline
+		IsCustom
+	=	not IsFund_Array
+	and	IsCompoundObject
+	;
+
+	Term constexpr inline
+		IsClass
+	=	IsInt_Enum_Class_LRef_NonQ
+	and	IsCustom
+	;
+
+	Term constexpr inline
+		IsUnion
+	=	not IsInt_Enum_Class_LRef_NonQ
+	and	IsCustom
 	;
 
 	Term constexpr inline
@@ -245,14 +238,6 @@ export namespace
 	or	IsMemberPointer
 	or	IsCustom
 	or	IsEnum
-	;
-
-	Term constexpr inline
-		IsScalar
-	=	IsNumeric
-	or	IsNullPointer
-	or	IsPointer
-	or	IsMemberPointer
 	;
 
 	Term constexpr inline
@@ -289,7 +274,7 @@ export namespace
 	;
 
 	Term constexpr inline
-		IsMember
+		IsDataMember
 	=	IsValue
 	or	IsReference
 	;

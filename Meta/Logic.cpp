@@ -61,10 +61,7 @@ namespace
 		>
 	static auto constexpr
 	(	EvaluateClause
-	)	(	IndexToken
-			<	t_npLiteralIndex
-				...
-			>
+	)	(	IndexToken<t_npLiteralIndex...>
 		,	TupleSet<t_tpLiteral...> const
 			&	i_rLiterals
 		,	t_tpArgument
@@ -97,10 +94,7 @@ namespace
 		>
 	static auto constexpr
 	(	EvaluateTerm
-	)	(	IndexToken
-			<	t_npClauseIndex
-				...
-			>
+	)	(	IndexToken<t_npClauseIndex...>
 		,	TupleSet<t_tpLiteral...> const
 			&	i_rLiterals
 		,	t_tpArgument
@@ -193,9 +187,9 @@ namespace
 		using
 			tLiteralUnion
 		=	decltype
-			(	i_aDeduceLeftLiterals
-			->	Union
-				(	*i_aDeduceRightLiterals
+			(	SetUnion
+				(	*i_aDeduceLeftLiterals
+				,	*i_aDeduceRightLiterals
 				)
 			)
 		;
@@ -232,13 +226,13 @@ export namespace
 	template
 		<	Logic::BitTerm
 				t_vTerm
-		,	typename
+		,	ProtoCopyableCustom
 			...	t_tpLiteral
 		>
 	class
 		Term final
 	{
-		template<Logic::BitTerm, typename...>
+		template<Logic::BitTerm, ProtoCopyableCustom...>
 		friend class Term;
 
 		explicit constexpr
@@ -318,11 +312,12 @@ export namespace
 					<	vResultTerm.TrimLiterals()
 					>
 				::	SetLiterals
-					(	Literals.Union
-						(	i_rRight.Literals
-						)
-					.	Filter
-						(	Index<vResultLiteralField>
+					(	Filter
+						(	SetUnion
+							(	Literals
+							,	i_rRight.Literals
+							)
+						,	Index<vResultLiteralField>
 						)
 					)
 				;
@@ -432,7 +427,7 @@ export namespace
 		template
 			<	Logic::BitTerm
 					t_vRightTerm
-			,	typename
+			,	ProtoCopyableCustom
 				...	t_tpRightLiteral
 			>
 		auto constexpr
@@ -445,7 +440,7 @@ export namespace
 		template
 			<	Logic::BitTerm
 					t_vRightTerm
-			,	typename
+			,	ProtoCopyableCustom
 				...	t_tpRightLiteral
 			>
 		auto constexpr
@@ -458,7 +453,7 @@ export namespace
 		template
 			<	Logic::BitTerm
 					t_vRightTerm
-			,	typename
+			,	ProtoCopyableCustom
 				...	t_tpRightLiteral
 			>
 		auto constexpr
@@ -476,7 +471,7 @@ export namespace
 		}
 
 		template
-			<	typename
+			<	ProtoArgument
 				...	t_tpArgument
 			>
 		auto constexpr
@@ -503,7 +498,7 @@ export namespace
 	};
 
 	template
-		<	typename
+		<	ProtoCopyableCustom
 				t_tLiteral
 		>
 	(	Term
@@ -518,7 +513,7 @@ export namespace
 	template
 		<	Logic::BitTerm
 				t_vTerm
-		,	typename
+		,	ProtoCopyableCustom
 			...	t_tpLiteral
 		>
 	(	Term

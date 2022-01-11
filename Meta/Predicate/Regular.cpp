@@ -9,8 +9,12 @@ export namespace
 {
 	Term constexpr inline
 		IsEqualityComparable
-	=	Term{Trait::EqualityComparable{true}}
-	and	IsMember
+	=		Term{Trait::EqualityComparable{true}}
+		and	IsCompoundObject
+	or	IsScalar
+	or	IsReference
+	or	IsNonQualifiedFunction
+	or	IsUnboundedArray
 	;
 
 	Term constexpr inline
@@ -35,13 +39,6 @@ export namespace
 		IsConstructible_From<>
 	=		Term{Trait::Constructible_From{true}}
 		and	IsDestructible
-	or	IsScalar
-	;
-
-	Term constexpr inline
-		IsDefaultInitializable
-	=		Term{Trait::DefaultInitializable{true}}
-		and	IsConstructible_From<>
 	or	IsScalar
 	;
 
@@ -77,7 +74,7 @@ export namespace
 	Term constexpr inline
 		IsSemiregular
 	=		IsCopyable
-		and	IsDefaultInitializable
+		and	IsConstructible_From<>
 	or	IsScalar
 	;
 

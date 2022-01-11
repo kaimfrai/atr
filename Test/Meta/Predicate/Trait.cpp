@@ -1317,43 +1317,43 @@ static_assert(not
 	IsReturnable(Type<QNxFunc>));
 
 static_assert(not
-	IsMember(Type<Void>));
+	IsDataMember(Type<Void>));
 static_assert(
-	IsMember(Type<Unsigned>));
+	IsDataMember(Type<Unsigned>));
 static_assert(
-	IsMember(Type<Signed>));
+	IsDataMember(Type<Signed>));
 static_assert(
-	IsMember(Type<Float>));
+	IsDataMember(Type<Float>));
 static_assert(
-	IsMember(Type<Nullptr>));
+	IsDataMember(Type<Nullptr>));
 static_assert(
-	IsMember(Type<Ptr>));
+	IsDataMember(Type<Ptr>));
 static_assert(
-	IsMember(Type<LRef>));
+	IsDataMember(Type<LRef>));
 static_assert(
-	IsMember(Type<RRef>));
+	IsDataMember(Type<RRef>));
 static_assert(
-	IsMember(Type<BArr>));
+	IsDataMember(Type<BArr>));
 static_assert(not
-	IsMember(Type<UArr>));
+	IsDataMember(Type<UArr>));
 static_assert(
-	IsMember(Type<UEnum>));
+	IsDataMember(Type<UEnum>));
 static_assert(
-	IsMember(Type<SEnum>));
+	IsDataMember(Type<SEnum>));
 static_assert(
-	IsMember(Type<Class>));
+	IsDataMember(Type<Class>));
 static_assert(
-	IsMember(Type<Union>));
+	IsDataMember(Type<Union>));
 static_assert(
-	IsMember(Type<MPtr>));
+	IsDataMember(Type<MPtr>));
 static_assert(not
-	IsMember(Type<Func>));
+	IsDataMember(Type<Func>));
 static_assert(not
-	IsMember(Type<NxFunc>));
+	IsDataMember(Type<NxFunc>));
 static_assert(not
-	IsMember(Type<QFunc>));
+	IsDataMember(Type<QFunc>));
 static_assert(not
-	IsMember(Type<QNxFunc>));
+	IsDataMember(Type<QNxFunc>));
 
 static_assert(
 	IsCVQualifiable(Type<Void>));

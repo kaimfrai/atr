@@ -149,13 +149,11 @@ export namespace
 		}
 	};
 
-	///	Types which require a definition by the programmer.
-	///	functions vs. sizeless non-functions
-	///	classes, unions, enums vs. other objects
-	///	Note that this has no real semantic value and only serves to distinguish types with as
-	///	few traits as possible.
+	///	Primarily serves to distinguish type categories with as few traits as possible.
+	///	Void, References vs. Functions, Unbounded Arrays.
+	///	Scalar vs. Bounded Arrays, Classes, Unions.
 	struct
-		Defined final
+		Scalar_Ref_Void final
 	:	LiteralBase
 	{
 		template
@@ -169,26 +167,21 @@ export namespace
 		->	bool
 		{	return
 				Polarity
-			==	(	::std::is_class_v<t_tEntity>
-				or	::std::is_union_v<t_tEntity>
-				or	::std::is_enum_v<t_tEntity>
-				or	::std::is_function_v<t_tEntity>
+			==	(	::std::is_scalar_v<t_tEntity>
+				or	::std::is_reference_v<t_tEntity>
+				or	::std::is_void_v<t_tEntity>
 				)
 			;
 		}
 	};
 
-	///	Types which cannot be used in the same way as an otherwise similar type. These are:
-	///	scoped enums vs. unscoped enums (implicit conversion)
-	///	unsigned integers vs. signed integers (negative numbers)
-	///	lvalue references vs. rvalue references
-	///	member pointers vs. pointers
-	///	arrays vs. null pointers/void
-	///	noexcept functions vs. non-noexcept functions
-	///	Note that this has no real semantic value and only serves to distinguish types with as
-	///	few traits as possible.
+	///	Primarily serves to distinguish type categories with as few traits as possible.
+	///	Arithmetic, Nullpointer vs. Enum, Member Pointer, Pointer.
+	///	Bounded Array vs. Class, Union.
+	///	Void vs. Reference
+	///	UnbounedArray vs. Function
 	struct
-		Restricted final
+		Fund_Array final
 	:	LiteralBase
 	{
 		template
@@ -202,78 +195,77 @@ export namespace
 		->	bool
 		{	return
 				Polarity
-			==	(	::std::is_scoped_enum_v<t_tEntity>
-				or	::std::is_unsigned_v<t_tEntity>
-				or	::std::is_lvalue_reference_v<t_tEntity>
-				or	::std::is_member_pointer_v<t_tEntity>
+			==	(	::std::is_fundamental_v<t_tEntity>
 				or	::std::is_array_v<t_tEntity>
+				)
+			;
+		}
+	};
+
+	///	Primarily serves to distinguish type categories with as few traits as possible.
+	///	Integral vs. Floating Point, Nullpointer.
+	///	Enum vs. Member Pointer, Pointer.
+	///	Class vs. Union.
+	///	LValueReference vs. RValueReference.
+	///	Non-Qualified Function vs. Qualified Function.
+	struct
+		Int_Enum_Class_LRef_NonQ final
+	:	LiteralBase
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return
+				Polarity
+			==	(	::std::is_integral_v<t_tEntity>
+				or	::std::is_enum_v<t_tEntity>
+				or	::std::is_class_v<t_tEntity>
+				or	::std::is_lvalue_reference_v<t_tEntity>
+				or	(	::std::is_function_v<t_tEntity>
+					and	requires{Type<t_tEntity*>; }
+					)
+				)
+			;
+		}
+	};
+
+	///	Primarily serves to distinguish type categories with as few traits as possible.
+	///	Signed Integral vs. Unsigned Integral.
+	///	Scoped Enum vs. Unscoped Enum.
+	///	Pointer vs. Member Pointer.
+	///	Noexcept Function vs. not Noexcept Function.
+	struct
+		Signed_Scoped_Ptr_Noex final
+	:	LiteralBase
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return
+				Polarity
+			==	(	::std::is_signed_v<t_tEntity>
+				or	::std::is_scoped_enum_v<t_tEntity>
+				or	::std::is_pointer_v<t_tEntity>
 				or	requires
 					{	requires
 							TypeToken<t_tEntity>
-						::	FunctionQualifier(EQualifier::Noexcept)
+						::	FunctionQualifier
+							(	EQualifier::Noexcept
+							)
 						;
 					}
-				)
-			;
-		}
-	};
-
-	///	Types for which there exists implicitly another type that can be substituted for it.
-	///	classes vs. unions (derived classes)
-	///	pointers vs. nullpointers (arrays, nullpointer)
-	///	integrals vs. floating points (unscoped enums)
-	///	member pointers vs. bounded arrays (member pointers of base)
-	///	references vs. sizeless non-references (value types)
-	///	qualified functions vs. non-qualified functions (qualification of owner)
-	///	Note that this has no real semantic value and only serves to distinguish types with as
-	///	few traits as possible.
-	struct
-		Substitute final
-	:	LiteralBase
-	{
-		template
-			<	typename
-					t_tEntity
-			>
-		auto constexpr
-		(	operator()
-		)	(	TypeToken<t_tEntity>
-			)	const
-		->	bool
-		{	return
-				Polarity
-			==	(	::std::is_class_v<t_tEntity>
-				or	::std::is_pointer_v<t_tEntity>
-				or	::std::is_integral_v<t_tEntity>
-				or	::std::is_member_pointer_v<t_tEntity>
-				or	not
-					requires{ Type<t_tEntity*>;	}
-				)
-			;
-		}
-	};
-
-	///	Types which behave like a number.
-	///	These are enums, integrals and floating points.
-	///	Note that this has no real semantic value and only serves to distinguish types with as
-	///	few traits as possible.
-	struct
-		Numeric final
-	:	LiteralBase
-	{
-		template
-			<	typename
-					t_tEntity
-			>
-		auto constexpr
-		(	operator()
-		)	(	TypeToken<t_tEntity>
-			)	const
-		->	bool
-		{	return
-				Polarity
-			==	(	::std::is_arithmetic_v<t_tEntity>
-				or	::std::is_enum_v<t_tEntity>
 				)
 			;
 		}
@@ -351,11 +343,11 @@ export namespace
 				t_bPolarity
 		>
 	concept
-		Defined
+		Scalar_Ref_Void
 	=	Literal
 		<	t_tProto
 		,	Trait::StaticConstraint
-			<	Trait::Defined
+			<	Trait::Scalar_Ref_Void
 				{	t_bPolarity
 				}
 			>
@@ -369,11 +361,11 @@ export namespace
 				t_bPolarity
 		>
 	concept
-		Restricted
+		Fund_Array
 	=	Literal
 		<	t_tProto
 		,	Trait::StaticConstraint
-			<	Trait::Restricted
+			<	Trait::Fund_Array
 				{	t_bPolarity
 				}
 			>
@@ -387,11 +379,11 @@ export namespace
 				t_bPolarity
 		>
 	concept
-		Substitute
+		Int_Enum_Class_LRef_NonQ
 	=	Literal
 		<	t_tProto
 		,	Trait::StaticConstraint
-			<	Trait::Substitute
+			<	Trait::Int_Enum_Class_LRef_NonQ
 				{	t_bPolarity
 				}
 			>
@@ -405,11 +397,11 @@ export namespace
 				t_bPolarity
 		>
 	concept
-		Numeric
+		Signed_Scoped_Ptr_Noex
 	=	Literal
 		<	t_tProto
 		,	Trait::StaticConstraint
-			<	Trait::Substitute
+			<	Trait::Signed_Scoped_Ptr_Noex
 				{	t_bPolarity
 				}
 			>
@@ -431,10 +423,29 @@ export namespace
 				t_tProto
 		>
 	concept
-		Function
+		Valueless
 	=	SizeGreater<t_tProto, false>
-	and	Defined<t_tProto, true>
 	and	All<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		UArr_Fun
+	=	Scalar_Ref_Void<t_tProto, false>
+	and	Valueless<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Function
+	=	Fund_Array<t_tProto, false>
+	and	UArr_Fun<t_tProto>
 	;
 
 	template
@@ -443,7 +454,7 @@ export namespace
 		>
 	concept
 		NonQualifiedFunction
-	=	Substitute<t_tProto, false>
+	=	Int_Enum_Class_LRef_NonQ<t_tProto, true>
 	and	Function<t_tProto>
 	;
 
@@ -452,12 +463,29 @@ export namespace
 				t_tProto
 		>
 	concept
+		QualifiedFunction
+	=	Int_Enum_Class_LRef_NonQ<t_tProto, false>
+	and	Function<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Void_Ref
+	=	Scalar_Ref_Void<t_tProto, true>
+	and	Valueless<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
 		Void
-	=	SizeGreater<t_tProto, false>
-	and	Defined<t_tProto, false>
-	and	Restricted<t_tProto, false>
-	and	Substitute<t_tProto, false>
-	and	All<t_tProto>
+	=	Fund_Array<t_tProto, true>
+	and	Void_Ref<t_tProto>
 	;
 
 	template
@@ -466,11 +494,8 @@ export namespace
 		>
 	concept
 		UnboundedArray
-	=		SizeGreater<t_tProto, false>
-	and	Defined<t_tProto, false>
-	and	Restricted<t_tProto, true>
-	and	Substitute<t_tProto, false>
-	and	All<t_tProto>
+	=	Fund_Array<t_tProto, true>
+	and	UArr_Fun<t_tProto>
 	;
 
 	template
@@ -479,10 +504,8 @@ export namespace
 		>
 	concept
 		Reference
-	=	SizeGreater<t_tProto, false>
-	and	Defined<t_tProto, false>
-	and	Substitute<t_tProto, true>
-	and	All<t_tProto>
+	=	Fund_Array<t_tProto, false>
+	and	Void_Ref<t_tProto>
 	;
 
 	template
@@ -491,7 +514,7 @@ export namespace
 		>
 	concept
 		LValueReference
-	=	Restricted<t_tProto, true>
+	=	Int_Enum_Class_LRef_NonQ<t_tProto, true>
 	and	Reference<t_tProto>
 	;
 
@@ -501,7 +524,7 @@ export namespace
 		>
 	concept
 		RValueReference
-	=	Restricted<t_tProto, false>
+	=	Int_Enum_Class_LRef_NonQ<t_tProto, false>
 	and	Reference<t_tProto>
 	;
 
@@ -510,10 +533,29 @@ export namespace
 				t_tProto
 		>
 	concept
-		Arithmetic
-	=	Defined<t_tProto, false>
-	and	Numeric<t_tProto, true>
+		Scalar
+	=	Scalar_Ref_Void<t_tProto, true>
 	and	Value<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		FundamentalScalar
+	=	Fund_Array<t_tProto, true>
+	and	Scalar<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Float_NPtr
+	=	Int_Enum_Class_LRef_NonQ<t_tProto, false>
+	and	FundamentalScalar<t_tProto>
 	;
 
 	template
@@ -522,31 +564,8 @@ export namespace
 		>
 	concept
 		FloatingPoint
-	=	Substitute<t_tProto, false>
-	and	Arithmetic<t_tProto>
-	;
-
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		Integral
-	=	Substitute<t_tProto, true>
-	and	Arithmetic<t_tProto>
-	;
-
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		Pointer
-	=	Defined<t_tProto, false>
-	and	Restricted<t_tProto, false>
-	and	Substitute<t_tProto, true>
-	and	Numeric<t_tProto, false>
-	and	Value<t_tProto>
+	=	Signed_Scoped_Ptr_Noex<t_tProto, true>
+	and	Float_NPtr<t_tProto>
 	;
 
 	template
@@ -555,11 +574,48 @@ export namespace
 		>
 	concept
 		NullPointer
-	=	Defined<t_tProto, false>
-	and	Restricted<t_tProto, false>
-	and	Substitute<t_tProto, false>
-	and	Numeric<t_tProto, false>
-	and	Value<t_tProto>
+	=	Signed_Scoped_Ptr_Noex<t_tProto, false>
+	and	Float_NPtr<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Integral
+	=	Int_Enum_Class_LRef_NonQ<t_tProto, true>
+	and	FundamentalScalar<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		CompoundScalar
+	=	Fund_Array<t_tProto, true>
+	and	Scalar<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Indirection
+	=	Int_Enum_Class_LRef_NonQ<t_tProto, false>
+	and	CompoundScalar<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Pointer
+	=	Signed_Scoped_Ptr_Noex<t_tProto, true>
+	and	Indirection<t_tProto>
 	;
 
 	template
@@ -568,10 +624,27 @@ export namespace
 		>
 	concept
 		MemberPointer
-	=	Defined<t_tProto, false>
-	and	Restricted<t_tProto, true>
-	and	Substitute<t_tProto, true>
-	and	Numeric<t_tProto, false>
+	=	Signed_Scoped_Ptr_Noex<t_tProto, false>
+	and	Indirection<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Enum
+	=	Int_Enum_Class_LRef_NonQ<t_tProto, true>
+	and	Scalar<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		CompoundObject
+	=	Scalar_Ref_Void<t_tProto, false>
 	and	Value<t_tProto>
 	;
 
@@ -581,11 +654,8 @@ export namespace
 		>
 	concept
 		BoundedArray
-	=	Defined<t_tProto, false>
-	and	Restricted<t_tProto, true>
-	and	Substitute<t_tProto, false>
-	and	Numeric<t_tProto, false>
-	and	Value<t_tProto>
+	=	Fund_Array<t_tProto, true>
+	and	CompoundObject<t_tProto>
 	;
 
 	template
@@ -593,19 +663,10 @@ export namespace
 				t_tProto
 		>
 	concept
-		Custom_Enum
-	=	Defined<t_tProto, true>
-	and	Value<t_tProto>
-	;
-
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		Enum
-	=	Numeric<t_tProto, true>
-	and	Custom_Enum<t_tProto>
+		Array
+	=	Fund_Array<t_tProto, true>
+	and	Scalar_Ref_Void<t_tProto, false>
+	and	All<t_tProto>
 	;
 
 	template
@@ -614,8 +675,8 @@ export namespace
 		>
 	concept
 		Custom
-	=	Numeric<t_tProto, false>
-	and	Custom_Enum<t_tProto>
+	=	Fund_Array<t_tProto, false>
+	and	CompoundObject<t_tProto>
 	;
 
 	template
@@ -624,7 +685,7 @@ export namespace
 		>
 	concept
 		Class
-	=	Substitute<t_tProto, true>
+	=	Int_Enum_Class_LRef_NonQ<t_tProto, true>
 	and	Custom<t_tProto>
 	;
 
@@ -634,7 +695,7 @@ export namespace
 		>
 	concept
 		Union
-	=	Substitute<t_tProto, false>
+	=	Int_Enum_Class_LRef_NonQ<t_tProto, false>
 	and	Custom<t_tProto>
 	;
 
@@ -643,62 +704,10 @@ export namespace
 				t_tProto
 		>
 	concept
-		Enum_Int_Float
-	=	Numeric<t_tProto, true>
-	and	Value<t_tProto>
-	;
-
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		Float_NPtr_Ptr
-	=	Defined<t_tProto, false>
-	and	Restricted<t_tProto, false>
-	and	Value<t_tProto>
-	;
-
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		Int_MPtr_Ptr_Ref
-	=	Defined<t_tProto, false>
-	and	Substitute<t_tProto, true>
+		Enum_Ptr_MPtr_Ref
+	=	Fund_Array<t_tProto, false>
+	and	Scalar_Ref_Void<t_tProto, true>
 	and	All<t_tProto>
-	;
-
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		UInt_MPtr_LRef
-	=	Restricted<t_tProto, true>
-	and	Int_MPtr_Ptr_Ref<t_tProto>
-	;
-
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		Int_MPtr_Ptr
-	=	SizeGreater<t_tProto, true>
-	and	Int_MPtr_Ptr_Ref<t_tProto>
-	;
-
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		Scalar
-	=	Enum_Int_Float<t_tProto>
-	or	Int_MPtr_Ptr<t_tProto>
-	or	Float_NPtr_Ptr<t_tProto>
 	;
 
 	template
@@ -707,9 +716,18 @@ export namespace
 		>
 	concept
 		Scalar_Ref
-	=	Enum_Int_Float<t_tProto>
-	or	Int_MPtr_Ptr_Ref<t_tProto>
-	or	Float_NPtr_Ptr<t_tProto>
+	=	Scalar<t_tProto>
+	or	Enum_Ptr_MPtr_Ref<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Enum_LRef
+	=	Int_Enum_Class_LRef_NonQ<t_tProto, true>
+	and	Enum_Ptr_MPtr_Ref<t_tProto>
 	;
 
 	template
@@ -718,9 +736,8 @@ export namespace
 		>
 	concept
 		Scalar_LRef
-	=	Enum_Int_Float<t_tProto>
-	or	UInt_MPtr_LRef<t_tProto>
-	or	Float_NPtr_Ptr<t_tProto>
+	=	Scalar<t_tProto>
+	or	Enum_LRef<t_tProto>
 	;
 
 	template
@@ -728,10 +745,13 @@ export namespace
 				t_tProto
 		>
 	concept
-		BArr_MPtr_RRef_UInt_UArr
-	=	Defined<t_tProto, false>
-	and	Restricted<t_tProto, true>
-	and	All<t_tProto>
+		UArr_NonQ
+	=	UnboundedArray<t_tProto>
+	or	//	NonQualified Fuction
+			Int_Enum_Class_LRef_NonQ<t_tProto, true>
+		and	Scalar_Ref_Void<t_tProto, false>
+		and	SizeGreater<t_tProto, false>
+		and	All<t_tProto>
 	;
 
 	template
@@ -739,10 +759,9 @@ export namespace
 				t_tProto
 		>
 	concept
-		Float_LRef_NPtr_Ptr_Void
-	=	Proto::Defined<t_tProto, false>
-	and	Proto::Restricted<t_tProto, false>
-	and	Proto::All<t_tProto>
+		Scalar_Ref_NonQ_UArr
+	=	Scalar_Ref<t_tProto>
+	or	UArr_NonQ<t_tProto>
 	;
 
 	template
@@ -752,9 +771,18 @@ export namespace
 	concept
 		Argument
 	=	Value<t_tProto>
-	or	NonQualifiedFunction<t_tProto>
-	or	Int_MPtr_Ptr_Ref<t_tProto>
-	or	BArr_MPtr_RRef_UInt_UArr<t_tProto>
+	or	Reference<t_tProto>
+	or	UArr_NonQ<t_tProto>
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		Enum_Ptr_MPtr_Custom
+	=	Fund_Array<t_tProto, false>
+	and	Value<t_tProto>
 	;
 
 	template
@@ -763,10 +791,9 @@ export namespace
 		>
 	concept
 		Returnable
-	=	Float_LRef_NPtr_Ptr_Void<t_tProto>
-	or	Int_MPtr_Ptr_Ref<t_tProto>
-	or	Custom_Enum<t_tProto>
-	or	Enum_Int_Float<t_tProto>
+	=		Scalar_Ref_Void<t_tProto, true>
+		and	All<t_tProto>
+	or	Enum_Ptr_MPtr_Custom<t_tProto>
 	;
 
 	template
@@ -775,7 +802,7 @@ export namespace
 		>
 	concept
 		DataMember
-	=	Int_MPtr_Ptr_Ref<t_tProto>
+	=	Enum_Ptr_MPtr_Ref<t_tProto>
 	or	Value<t_tProto>
 	;
 }
@@ -835,6 +862,17 @@ export namespace
 	or	Proto::None<t_tProto>
 	;
 
+	//	Types that are functions and cannot be referenced.
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoQualifiedFunction
+	=	Proto::QualifiedFunction<t_tProto>
+	or	Proto::None<t_tProto>
+	;
+
 	///	Types that are void.
 	template
 		<	typename
@@ -864,10 +902,7 @@ export namespace
 		>
 	concept
 		ProtoReference
-	=		Proto::SizeGreater<t_tProto, false>
-		and	Proto::Defined<t_tProto, false>
-		and	Proto::Substitute<t_tProto, true>
-		and	Proto::All<t_tProto>
+	=	Proto::Reference<t_tProto>
 	or	Proto::None<t_tProto>
 	;
 
@@ -900,7 +935,8 @@ export namespace
 		>
 	concept
 		ProtoArithmetic
-	=	Proto::Arithmetic<t_tProto>
+	=	Proto::Integral<t_tProto>
+	or	Proto::FloatingPoint<t_tProto>
 	or	Proto::None<t_tProto>
 	;
 

@@ -9,6 +9,8 @@ export namespace
 		TriviallyDestructible final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		template
 			<	ProtoDestructible
 					t_tEntity
@@ -35,6 +37,8 @@ export namespace
 		TriviallyConstructible_From final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		explicit constexpr
 		(	TriviallyConstructible_From
 		)	(	bool
@@ -56,14 +60,30 @@ export namespace
 		)	(	TypeToken<t_tEntity>
 			)	const
 		->	bool
-		{	return
-				Polarity
-			==	::std::is_trivially_constructible_v
-				<	t_tEntity
-				,	t_tpArgument
-					...
-				>
-			;
+		{
+			if	constexpr
+				(	sizeof...(t_tpArgument)
+				==	0uz
+				)
+				return
+					Polarity
+				==	(	::std::default_initializable
+						<	t_tEntity
+						>
+					and	::std::is_trivially_constructible_v
+						<	t_tEntity
+						>
+					)
+				;
+			else
+				return
+					Polarity
+				==	::std::is_trivially_constructible_v
+					<	t_tEntity
+					,	t_tpArgument
+						...
+					>
+				;
 		}
 	};
 
@@ -86,6 +106,8 @@ export namespace
 		TriviallyMoveConstructible final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		template
 			<	ProtoMoveConstructible
 					t_tEntity
@@ -108,6 +130,8 @@ export namespace
 		TriviallyCopyConstructible final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		template
 			<	ProtoCopyConstructible
 					t_tEntity
@@ -130,6 +154,8 @@ export namespace
 		TriviallyMoveAssignable final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		template
 			<	ProtoMovable
 					t_tEntity
@@ -152,6 +178,8 @@ export namespace
 		TriviallyCopyAssignable final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		template
 			<	ProtoCopyable
 					t_tEntity
@@ -171,40 +199,11 @@ export namespace
 	};
 
 	struct
-		DefaultEqual final
-	:	LiteralBase
-	{
-		template
-			<	ProtoRegular
-					t_tEntity
-			>
-		auto constexpr
-		(	operator()
-		)	(	TypeToken<t_tEntity>
-			)	const
-		->	bool
-		{
-			t_tEntity const
-				vLeft
-			{};
-
-			t_tEntity const
-				vRight
-			{};
-
-			return
-				Polarity
-			==	(	vLeft
-				==	vRight
-				)
-			;
-		}
-	};
-
-	struct
 		Empty final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		template
 			<	ProtoCustom
 					t_tEntity
@@ -340,23 +339,6 @@ export namespace
 				t_tProto
 		>
 	concept
-		DefaultEqual
-	=	Literal
-		<	t_tProto
-		,	Trait::StaticConstraint
-			<	Trait::DefaultEqual
-				{	true
-				}
-			>
-		>
-	and	Regular<t_tProto>
-	;
-
-	template
-		<	typename
-				t_tProto
-		>
-	concept
 		Trivial
 	=	TriviallyCopyable<t_tProto>
 	and	TriviallyDefaultInitializable<t_tProto>
@@ -396,29 +378,15 @@ export namespace
 	concept
 		Stateless
 	=	Empty<t_tProto>
-	and	DefaultEqual<t_tProto>
-	and	Trivial<t_tProto>
+	and	TrivialRegular<t_tProto>
 	;
 }
 
 export namespace
 	Meta
 {
-	///	Custom types that are trivially destructible.
-	///	Orders above ProtoDestructibleCustom.
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoTriviallyDestructibleCustom
-	=		Proto::TriviallyDestructible<t_tProto>
-		and	Proto::Custom<t_tProto>
-	or	Proto::None<t_tProto>
-	;
-
 	///	Types that are trivially destructible.
-	///	Orders below ProtoScalar, ProtoReference and ProtoTriviallyDestructibleCustom.
+	///	Orders below ProtoScalar, ProtoReference.
 	template
 		<	typename
 				t_tProto
@@ -431,22 +399,9 @@ export namespace
 	or	Proto::None<t_tProto>
 	;
 
-	///	Custom types that are trivially default intializable.
-	///	Orders above ProtoTriviallyDestructible and ProtoDefaultInitializableCustom.
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoTriviallyDefaultInitializableCustom
-	=		Proto::TriviallyDefaultInitializable<t_tProto>
-		and	Proto::Custom<t_tProto>
-	or	Proto::None<t_tProto>
-	;
-
 	///	Types that are trivially default intializable.
-	///	Orders below ProtoScalar and ProtoTriviallyDefaultInitializableCustom.
-	///	Orders above ProtoTriviallyDestructible and ProtoDefaultInitializable.
+	///	Orders below ProtoScalar.
+	///	Orders above ProtoTriviallyDestructible, ProtoDefaultInitializable.
 	template
 		<	typename
 				t_tProto
@@ -458,22 +413,9 @@ export namespace
 	or	Proto::None<t_tProto>
 	;
 
-	///	Custom types that are trivially move constructible as a member.
-	///	Orders above ProtoTriviallyDestructibleCustom and ProtoMoveConstructibleCustom.
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoTriviallyMoveConstructibleCustom
-	=		Proto::TriviallyMoveConstructible<t_tProto>
-		and	Proto::Custom<t_tProto>
-	or	Proto::None<t_tProto>
-	;
-
 	///	Types that are trivially move constructible as a member.
-	///	Orders below ProtoScalar, ProtoReference and ProtoTriviallyMoveConstructibleCustom.
-	///	Orders above ProtoTriviallyDestructible and ProtoMoveConstructible.
+	///	Orders below ProtoScalar, ProtoReference.
+	///	Orders above ProtoTriviallyDestructible, ProtoMoveConstructible.
 	template
 		<	typename
 				t_tProto
@@ -486,22 +428,9 @@ export namespace
 	or	Proto::None<t_tProto>
 	;
 
-	///	Custom types that are trivially copy constructible as a member.
-	///	Orders above ProtoTriviallyMoveConstructibleCustom and ProtoCopyConstructibleCustom.
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoTriviallyCopyConstructibleCustom
-	=		Proto::TriviallyCopyConstructible<t_tProto>
-		and	Proto::Custom<t_tProto>
-	or	Proto::None<t_tProto>
-	;
-
 	///	Types that are trivially move constructible as a member.
-	///	Orders below ProtoScalar and ProtoLValueReference and ProtoTriviallyCopyConstructibleFrom.
-	///	Orders above ProtoTriviallyMoveConstructible and ProtoCopyConstructible.
+	///	Orders below ProtoScalar, ProtoLValueReference.
+	///	Orders above ProtoTriviallyMoveConstructible, ProtoCopyConstructible.
 	template
 		<	typename
 				t_tProto
@@ -514,22 +443,9 @@ export namespace
 	or	Proto::None<t_tProto>
 	;
 
-	///	Custom types that are trivially movable as a member.
-	///	Orders above ProtoTriviallyMoveConstructibleCustom and ProtoMovableCustom.
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoTriviallyMovableCustom
-	=		Proto::TriviallyMovable<t_tProto>
-		and	Proto::Custom<t_tProto>
-	or	Proto::None<t_tProto>
-	;
-
 	///	Types that are trivially movable as a member.
-	///	Orders below ProtoScalar and ProtoTriviallyMovableCustom.
-	///	Orders above ProtoTriviallyMoveConstructible and ProtoMovable.
+	///	Orders below ProtoScalar.
+	///	Orders above ProtoTriviallyMoveConstructible, ProtoMovable.
 	template
 		<	typename
 				t_tProto
@@ -541,22 +457,9 @@ export namespace
 	or	Proto::None<t_tProto>
 	;
 
-	///	Custom types that are trivially copyable as a member.
-	///	Orders above ProtoTriviallyMovableCustom, ProtoTriviallyCopyConstructibleCustom, and ProtoCopyableCustom.
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoTriviallyCopyableCustom
-	=		Proto::TriviallyCopyable<t_tProto>
-		and	Proto::Custom<t_tProto>
-	or	Proto::None<t_tProto>
-	;
-
 	///	Types that are trivially copyable as a member.
-	///	Orders below ProtoScalar and ProtoTriviallyCopyableCustom.
-	///	Orders above ProtoTriviallyMovable, ProtoTriviallyCopyConstructible, and ProtoCopyable.
+	///	Orders below ProtoScalar.
+	///	Orders above ProtoTriviallyMovable, ProtoTriviallyCopyConstructible, ProtoCopyable.
 	template
 		<	typename
 				t_tProto
@@ -568,22 +471,9 @@ export namespace
 	or	Proto::None<t_tProto>
 	;
 
-	///	Custom types that are trivial as a member
-	///	Orders above ProtoTriviallyCopyableCustom, ProtoDefaultInitializableCustom, and ProtoSemiregularCustom.
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoTrivialCustom
-	=		Proto::Trivial<t_tProto>
-		and	Proto::Custom<t_tProto>
-	or	Proto::None<t_tProto>
-	;
-
 	///	Types that are trivial as a member.
-	///	Orders below ProtoScalar and ProtoTrivialCustom.
-	///	Orders above ProtoTriviallyCopyable, ProtoTriviallyDefaultInitializable and ProtoSemiregular.
+	///	Orders below ProtoScalar.
+	///	Orders above ProtoTriviallyCopyable, ProtoTriviallyDefaultInitializable, ProtoSemiregular.
 	template
 		<	typename
 				t_tProto
@@ -595,22 +485,9 @@ export namespace
 	or	Proto::None<t_tProto>
 	;
 
-	///	Custom types that are trivial and regular as a member.
-	///	Orders above ProtoSemiregularCustom and ProtoTrivialCustom.
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoTrivialRegularCustom
-	=		Proto::TrivialRegular<t_tProto>
-		and	Proto::Custom<t_tProto>
-	or	Proto::None<t_tProto>
-	;
-
 	///	Types that are trivial and regular as a member.
-	///	Orders below ProtoScalar and ProtoTrivialRegularCustom.
-	///	Orders above ProtoRegular and ProtoTrivial.
+	///	Orders below ProtoScalar.
+	///	Orders above ProtoRegular, ProtoTrivial.
 	template
 		<	typename
 				t_tProto

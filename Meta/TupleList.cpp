@@ -6,6 +6,7 @@ export import Meta.Index;
 export import Meta.Concept;
 export import Meta.Constraint;
 export import Meta.Predicate;
+export import Meta.Value;
 
 export namespace
 	Meta
@@ -13,13 +14,13 @@ export namespace
 	template
 		<	USize
 				t_nIndex
-		,	ProtoValue
+		,	ProtoAll
 				t_tItem
 		>
 	struct
 		TupleListItem
 	{
-		t_tItem
+		Value<t_tItem>
 			m_vItem
 			[[no_unique_address]]
 		;
@@ -28,28 +29,28 @@ export namespace
 		(	operator[]
 		)	(	IndexToken<t_nIndex>
 			)	&
-		->	t_tItem&
+		->	Value<t_tItem>&
 		{	return m_vItem;	}
 
 		auto constexpr
 		(	operator[]
 		)	(	IndexToken<t_nIndex>
 			)	const&
-		->	t_tItem const&
+		->	Value<t_tItem> const&
 		{	return m_vItem;	}
 
 		auto constexpr
 		(	operator[]
 		)	(	IndexToken<t_nIndex>
 			)	&&
-		->	t_tItem&&
+		->	Value<t_tItem>
 		{	return ::std::move(m_vItem);	}
 	};
 
 	template
 		<	USize
 				t_nIndex
-		,	ProtoConstraint<IsStateless>
+		,	ProtoStateless
 				t_tItem
 		>
 	struct
@@ -58,23 +59,12 @@ export namespace
 		,	t_tItem
 		>
 	{
-		static t_tItem constexpr
-			Item
-		{};
-
 		auto constexpr
 		(	operator[]
 		)	(	IndexToken<t_nIndex>
-			)	const&
-		->	t_tItem const&
-		{	return Item;	}
-
-		auto constexpr
-		(	operator[]
-		)	(	IndexToken<t_nIndex>
-			)	&&
-		->	t_tItem
-		{	return t_tItem{};	}
+			)	const
+		->	Value<t_tItem>
+		{	return {};	}
 	};
 
 	template

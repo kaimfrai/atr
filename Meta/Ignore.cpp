@@ -1,5 +1,7 @@
 export module Meta.Ignore;
 
+export import Meta.Concept.Category;
+
 export namespace
 	Meta
 {
@@ -26,12 +28,62 @@ export namespace
 		)	(	auto&&
 			)
 		{}
+	};
 
-		auto constexpr
-		(	operator =
-		)	(	auto&&
-			)	&
-		->	Ignore&
-		{	return *this;	}
+	template
+		<	ProtoClass
+				t_tBase
+		>
+	struct
+		HideOperators
+	:	t_tBase
+	{
+		using t_tBase::t_tBase;
+
+		void operator()() = delete;
+		void operator[](Ignore) = delete;
+		void operator+=(Ignore) = delete;
+		void operator-=(Ignore) = delete;
+		void operator*=(Ignore) = delete;
+		void operator/=(Ignore) = delete;
+		void operator%=(Ignore) = delete;
+		void operator&=(Ignore) = delete;
+		void operator|=(Ignore) = delete;
+		void operator^=(Ignore) = delete;
+		void operator<<=(Ignore) = delete;
+		void operator>>=(Ignore) = delete;
+		void operator++() = delete;
+		void operator++(int) = delete;
+		void operator--() = delete;
+		void operator--(int) = delete;
+		void operator+() = delete;
+		void operator+(Ignore) = delete;
+		void operator-() = delete;
+		void operator-(Ignore) = delete;
+		void operator*() = delete;
+		void operator*(Ignore) = delete;
+		void operator/(Ignore) = delete;
+		void operator%(Ignore) = delete;
+		void operator~() = delete;
+		void operator&() = delete;
+		void operator&(Ignore) = delete;
+		void operator|(Ignore) = delete;
+		void operator^(Ignore) = delete;
+		void operator<<(Ignore) = delete;
+		void operator>>(Ignore) = delete;
+		void operator!() = delete;
+		void operator&&(Ignore) = delete;
+		void operator||(Ignore) = delete;
+		void operator==(Ignore) = delete;
+		void operator!=(Ignore) = delete;
+		void operator<(Ignore) = delete;
+		void operator>(Ignore) = delete;
+		void operator<=(Ignore) = delete;
+		void operator>=(Ignore) = delete;
+		void operator<=>(Ignore) = delete;
+		void* operator->() = delete;
+		void operator->*(Ignore) = delete;
+		void operator,(Ignore) = delete;
+		operator auto() = delete;
 	};
 }

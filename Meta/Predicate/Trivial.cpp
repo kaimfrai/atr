@@ -35,13 +35,6 @@ export namespace
 	;
 
 	Term constexpr inline
-		IsTriviallyDefaultInitializable
-	=		IsTriviallyConstructible_From<>
-		and	IsDefaultInitializable
-	or	IsScalar
-	;
-
-	Term constexpr inline
 		IsTriviallyMoveConstructible
 	=		Term{Trait::TriviallyMoveConstructible{true}}
 		and	IsTriviallyDestructible
@@ -77,7 +70,7 @@ export namespace
 	Term constexpr inline
 		IsTrivial
 	=		IsTriviallyCopyable
-		and	IsTriviallyDefaultInitializable
+		and	IsTriviallyConstructible_From<>
 	or	IsScalar
 	;
 
@@ -95,15 +88,8 @@ export namespace
 	;
 
 	Term constexpr inline
-		IsDefaultEqual
-	=	Term{Trait::Empty{true}}
-	and	IsRegular
-	;
-
-	Term constexpr inline
 		IsStateless
 	=	IsEmpty
-	and	IsDefaultEqual
-	and	IsTrivial
+	and	IsTrivialRegular
 	;
 }

@@ -14,6 +14,8 @@ export namespace
 		Const final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		template
 			<	typename
 					t_tEntity
@@ -30,6 +32,8 @@ export namespace
 		Volatile final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		template
 			<	typename
 					t_tEntity
@@ -50,6 +54,8 @@ export namespace
 		Convertible_To final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		explicit constexpr
 		(	Convertible_To
 		)	(	bool
@@ -101,6 +107,8 @@ export namespace
 		Assignable_From final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		explicit constexpr
 		(	Assignable_From
 		)	(	bool
@@ -152,6 +160,8 @@ export namespace
 		Derived_From final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		template
 			<	ProtoClass
 					t_tEntity
@@ -183,6 +193,8 @@ export namespace
 		TypePack_Of final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		template
 			<	typename
 				...	t_tpArgument
@@ -260,6 +272,8 @@ export namespace
 		ValuePack_Of final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		template
 			<	auto
 				...	t_vpArgument
@@ -337,6 +351,8 @@ export namespace
 		ValueTypePair_Of final
 	:	LiteralBase
 	{
+		using LiteralBase::operator();
+
 		template
 			<	auto
 					t_vFirst
