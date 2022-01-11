@@ -219,7 +219,7 @@ namespace
 				...
 			>
 		>
-	:	::std::remove_pointer
+	:	::std::type_identity
 		<	decltype
 			(	::std::declval
 				<	::Meta::TupleSet
