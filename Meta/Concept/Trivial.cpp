@@ -183,10 +183,19 @@ export namespace
 		)	(	TypeToken<t_tEntity>
 			)	const
 		->	bool
-		{	return
+		{
+			t_tEntity const
+				vLeft
+			{};
+
+			t_tEntity const
+				vRight
+			{};
+
+			return
 				Polarity
-			==	(	t_tEntity{}
-				==	t_tEntity{}
+			==	(	vLeft
+				==	vRight
 				)
 			;
 		}
@@ -238,32 +247,18 @@ export namespace
 	template
 		<	typename
 				t_tProto
-		,	typename
-			...	t_tpArgument
 		>
 	concept
-		TriviallyConstructible_From
+		TriviallyDefaultInitializable
 	=	Literal
 		<	t_tProto
 		,	Trait::StaticConstraint
 			<	Trait::TriviallyConstructible_From
 				{	true
-				,	Type<t_tpArgument>
-					...
 				}
 			>
 		>
-	and	Constructible_From<t_tProto, t_tpArgument...>
 	and	TriviallyDestructible<t_tProto>
-	;
-
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		TriviallyDefaultInitializable
-	=	TriviallyConstructible_From<t_tProto>
 	and	DefaultInitializable<t_tProto>
 	;
 
@@ -431,7 +426,7 @@ export namespace
 	concept
 		ProtoTriviallyDestructible
 	=		Proto::TriviallyDestructible<t_tProto>
-		and	Proto::SizedObject<t_tProto>
+		and	Proto::Value<t_tProto>
 	or	Proto::Scalar_Ref<t_tProto>
 	or	Proto::None<t_tProto>
 	;
@@ -486,7 +481,7 @@ export namespace
 	concept
 		ProtoTriviallyMoveConstructible
 	=		Proto::TriviallyMoveConstructible<t_tProto>
-		and	Proto::SizedObject<t_tProto>
+		and	Proto::Value<t_tProto>
 	or	Proto::Scalar_Ref<t_tProto>
 	or	Proto::None<t_tProto>
 	;
@@ -514,7 +509,7 @@ export namespace
 	concept
 		ProtoTriviallyCopyConstructible
 	=		Proto::TriviallyCopyConstructible<t_tProto>
-		and	Proto::SizedObject<t_tProto>
+		and	Proto::Value<t_tProto>
 	or	Proto::Scalar_LRef<t_tProto>
 	or	Proto::None<t_tProto>
 	;

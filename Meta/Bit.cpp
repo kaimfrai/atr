@@ -9,7 +9,7 @@ export namespace
 	Meta
 {
 	template
-		<	ProtoSizedObject
+		<	ProtoValue
 				t_tAny
 		>
 	USize constexpr inline

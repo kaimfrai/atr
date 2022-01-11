@@ -7,124 +7,129 @@ export namespace
 	Meta
 {
 	Term constexpr inline
-		IsSizedObject
+		IsValueTypeCategory
 	{	Trait::SizeGreater<>{true}
 	};
 
 	Term constexpr inline
-		IsDefinedType
+		IsDefinedTypeCategory
 	{	Trait::Defined{true}
 	};
 
 	Term constexpr inline
-		IsRestrictedType
+		IsRestrictedTypeCategory
 	{	Trait::Restricted{true}
 	};
 
 	Term constexpr inline
-		IsConversionTargetType
-	{	Trait::ConversionTarget{true}
+		IsSubstituteTypeCategory
+	{	Trait::Substitute{true}
 	};
 
 	Term constexpr inline
-		IsNumericType
+		IsNumericTypeCategory
 	{	Trait::Numeric{true}
 	};
 
 	Term constexpr inline
+		IsValue
+	=	IsValueTypeCategory
+	;
+
+	Term constexpr inline
 		IsFunction
-	=	not IsSizedObject
-	and	IsDefinedType
+	=	not IsValue
+	and	IsDefinedTypeCategory
 	;
 
 	Term constexpr inline
 		IsNoexceptFunction
 	=	IsFunction
-	and	IsRestrictedType
+	and	IsRestrictedTypeCategory
 	;
 
 	Term constexpr inline
 		IsQualifiedFunction
 	=	IsFunction
-	and	IsConversionTargetType
+	and	IsSubstituteTypeCategory
 	;
 
 	Term constexpr inline
 		IsNonQualifiedFunction
 	=	IsFunction
-	and not IsConversionTargetType
+	and not IsSubstituteTypeCategory
 	;
 
 	Term constexpr inline
 		IsVoid
-	=	not IsSizedObject
-	and	not IsDefinedType
-	and	not IsRestrictedType
-	and	not IsConversionTargetType
+	=	not IsValue
+	and	not IsDefinedTypeCategory
+	and	not IsRestrictedTypeCategory
+	and	not IsSubstituteTypeCategory
 	;
 
 	Term constexpr inline
 		IsUnboundedArray
-	=	not IsSizedObject
-	and	not IsDefinedType
-	and	IsRestrictedType
-	and	not IsConversionTargetType
+	=	not IsValue
+	and	not IsDefinedTypeCategory
+	and	IsRestrictedTypeCategory
+	and	not IsSubstituteTypeCategory
 	;
 
 	Term constexpr inline
 		IsReference
-	=	not IsSizedObject
-	and	not IsDefinedType
-	and	IsConversionTargetType
+	=	not IsValue
+	and	not IsDefinedTypeCategory
+	and	IsSubstituteTypeCategory
 	;
 
 	Term constexpr inline
 		IsLValueReference
 	=	IsReference
-	and	IsRestrictedType
+	and	IsRestrictedTypeCategory
 	;
 
 	Term constexpr inline
 		IsRValueReference
 	=	IsReference
-	and	not IsRestrictedType
+	and	not IsRestrictedTypeCategory
 	;
 
 	Term constexpr inline
 		IsNumeric
-	=	IsSizedObject
-	and	IsNumericType
+	=	IsValue
+	and	IsNumericTypeCategory
 	;
 
 	Term constexpr inline
 		IsArithmetic
 	=	IsNumeric
-	and	not IsDefinedType
+	and	not IsDefinedTypeCategory
 	;
 
 	Term constexpr inline
 		IsFloatingPoint
 	=	IsArithmetic
 	and	not
-		IsConversionTargetType
+		IsSubstituteTypeCategory
 	;
 
 	Term constexpr inline
 		IsIntegral
 	=	IsArithmetic
-	and	IsConversionTargetType
+	and	IsSubstituteTypeCategory
 	;
 
 	Term constexpr inline
 		IsUnsigned
 	=	IsIntegral
-	and	IsRestrictedType
+	and	IsRestrictedTypeCategory
 	;
 
 	Term constexpr inline
 		IsSignedIntegral
 	=	IsIntegral
-	and	not IsRestrictedType
+	and	not IsRestrictedTypeCategory
 	;
 
 	Term constexpr inline
@@ -135,75 +140,75 @@ export namespace
 
 	Term constexpr inline
 		IsPointer
-	=	IsSizedObject
-	and	not IsDefinedType
-	and	not IsRestrictedType
-	and	IsConversionTargetType
-	and	not IsNumericType
+	=	IsValue
+	and	not IsDefinedTypeCategory
+	and	not IsRestrictedTypeCategory
+	and	IsSubstituteTypeCategory
+	and	not IsNumericTypeCategory
 	;
 
 	Term constexpr inline
 		IsNullPointer
-	=	IsSizedObject
-	and	not IsDefinedType
-	and	not IsRestrictedType
-	and	not IsConversionTargetType
-	and	not IsNumericType
+	=	IsValue
+	and	not IsDefinedTypeCategory
+	and	not IsRestrictedTypeCategory
+	and	not IsSubstituteTypeCategory
+	and	not IsNumericTypeCategory
 	;
 
 	Term constexpr inline
 		IsMemberPointer
-	=	IsSizedObject
-	and	not IsDefinedType
-	and	IsRestrictedType
-	and	IsConversionTargetType
-	and	not IsNumericType
+	=	IsValue
+	and	not IsDefinedTypeCategory
+	and	IsRestrictedTypeCategory
+	and	IsSubstituteTypeCategory
+	and	not IsNumericTypeCategory
 	;
 
 	Term constexpr inline
 		IsBoundedArray
-	=	IsSizedObject
-	and	not IsDefinedType
-	and	IsRestrictedType
-	and	not IsConversionTargetType
-	and	not IsNumericType
+	=	IsValue
+	and	not IsDefinedTypeCategory
+	and	IsRestrictedTypeCategory
+	and	not IsSubstituteTypeCategory
+	and	not IsNumericTypeCategory
 	;
 
 	Term constexpr inline
 		IsEnum
 	=	IsNumeric
-	and	IsDefinedType
+	and	IsDefinedTypeCategory
 	;
 
 	Term constexpr inline
 		IsScopedEnum
 	=	IsEnum
-	and	IsRestrictedType
+	and	IsRestrictedTypeCategory
 	;
 
 	Term constexpr inline
 		IsUnscopedEnum
 	=	IsEnum
-	and	not IsRestrictedType
+	and	not IsRestrictedTypeCategory
 	;
 
 	Term constexpr inline
 		IsCustom
-	=	IsSizedObject
-	and	IsDefinedType
-	and	not IsNumericType
+	=	IsValue
+	and	IsDefinedTypeCategory
+	and	not IsNumericTypeCategory
 	;
 
 	Term constexpr inline
 		IsClass
 	=	IsCustom
-	and	IsConversionTargetType
+	and	IsSubstituteTypeCategory
 	;
 
 	Term constexpr inline
 		IsUnion
 	=	IsCustom
-	and	not IsConversionTargetType
+	and	not IsSubstituteTypeCategory
 	;
 
 	Term constexpr inline
@@ -214,7 +219,7 @@ export namespace
 
 	Term constexpr inline
 		IsObject
-	=	IsSizedObject
+	=	IsValue
 	or	IsUnboundedArray
 	;
 
@@ -271,7 +276,7 @@ export namespace
 
 	Term constexpr inline
 		IsParameter
-	=	(	IsSizedObject
+	=	(	IsValue
 		and	not IsBoundedArray
 		)
 	or	IsReference
@@ -285,7 +290,7 @@ export namespace
 
 	Term constexpr inline
 		IsMember
-	=	IsSizedObject
+	=	IsValue
 	or	IsReference
 	;
 
@@ -308,7 +313,7 @@ export namespace
 	template<>
 	Term constexpr inline
 		IsObjectSizeGreater<0uz>
-	=	IsSizedObject
+	=	IsValue
 	;
 
 	template
@@ -328,7 +333,7 @@ export namespace
 		IsObjectSizeAtLeast
 		<	0uz
 		>
-	=	IsSizedObject
+	=	IsValue
 	;
 
 	template
@@ -337,7 +342,7 @@ export namespace
 		>
 	Term constexpr inline
 		IsObjectSizeAtMost
-	=	IsSizedObject
+	=	IsValue
 	and	not
 		IsObjectSizeGreater
 		<	t_nObjectSize
@@ -350,7 +355,7 @@ export namespace
 		>
 	Term constexpr inline
 		IsObjectSizeLess
-	=	IsSizedObject
+	=	IsValue
 	and	not
 		IsObjectSizeAtLeast
 		<	t_nObjectSize

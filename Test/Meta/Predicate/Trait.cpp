@@ -29,43 +29,43 @@ using QFunc= void() const&;
 using QNxFunc = void() const& noexcept;
 
 static_assert(not
-	IsSizedObject(Type<Void>));
+	IsValue(Type<Void>));
 static_assert(
-	IsSizedObject(Type<Unsigned>));
+	IsValue(Type<Unsigned>));
 static_assert(
-	IsSizedObject(Type<Signed>));
+	IsValue(Type<Signed>));
 static_assert(
-	IsSizedObject(Type<Float>));
+	IsValue(Type<Float>));
 static_assert(
-	IsSizedObject(Type<Nullptr>));
+	IsValue(Type<Nullptr>));
 static_assert(
-	IsSizedObject(Type<Ptr>));
+	IsValue(Type<Ptr>));
 static_assert(not
-	IsSizedObject(Type<LRef>));
+	IsValue(Type<LRef>));
 static_assert(not
-	IsSizedObject(Type<RRef>));
+	IsValue(Type<RRef>));
 static_assert(
-	IsSizedObject(Type<BArr>));
+	IsValue(Type<BArr>));
 static_assert(not
-	IsSizedObject(Type<UArr>));
+	IsValue(Type<UArr>));
 static_assert(
-	IsSizedObject(Type<UEnum>));
+	IsValue(Type<UEnum>));
 static_assert(
-	IsSizedObject(Type<SEnum>));
+	IsValue(Type<SEnum>));
 static_assert(
-	IsSizedObject(Type<Class>));
+	IsValue(Type<Class>));
 static_assert(
-	IsSizedObject(Type<Union>));
+	IsValue(Type<Union>));
 static_assert(
-	IsSizedObject(Type<MPtr>));
+	IsValue(Type<MPtr>));
 static_assert(not
-	IsSizedObject(Type<Func>));
+	IsValue(Type<Func>));
 static_assert(not
-	IsSizedObject(Type<NxFunc>));
+	IsValue(Type<NxFunc>));
 static_assert(not
-	IsSizedObject(Type<QFunc>));
+	IsValue(Type<QFunc>));
 static_assert(not
-	IsSizedObject(Type<QNxFunc>));
+	IsValue(Type<QNxFunc>));
 
 static_assert(not
 	IsFunction(Type<Void>));

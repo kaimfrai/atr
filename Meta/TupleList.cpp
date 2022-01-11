@@ -13,7 +13,7 @@ export namespace
 	template
 		<	USize
 				t_nIndex
-		,	ProtoSizedObject
+		,	ProtoValue
 				t_tItem
 		>
 	struct
@@ -130,7 +130,7 @@ namespace
 	///	FIXME: Ideally, this helper should be an immediately invoked lambda. However, upon instantiation
 	///	this crashes clang as of now.
 	template
-		<	ProtoSizedObject
+		<	ProtoValue
 			...	t_tpItem
 		,	USize
 			...	t_npIndex
@@ -162,7 +162,7 @@ namespace
 	}
 
 	template
-		<	ProtoSizedObject
+		<	ProtoValue
 			...	t_tpItem
 		>
 	using
@@ -181,7 +181,7 @@ export namespace
 	Meta
 {
 	template
-		<	ProtoSizedObject
+		<	ProtoValue
 			...	t_tpItem
 		>
 	struct
@@ -199,7 +199,7 @@ namespace
 	std
 {
 	template
-		<	::Meta::ProtoSizedObject
+		<	::Meta::ProtoValue
 			...	t_tpItem
 		>
 	struct
@@ -218,7 +218,7 @@ namespace
 	template
 		<	::std::size_t
 				t_nIndex
-		,	::Meta::ProtoSizedObject
+		,	::Meta::ProtoValue
 			...	t_tpItem
 		>
 	struct

@@ -16,7 +16,7 @@ export namespace
 	Term constexpr inline
 		IsDestructible
 	=		Term{Trait::Destructible{true}}
-		and	IsSizedObject
+		and	IsValue
 	or	IsScalar
 	;
 

@@ -130,9 +130,12 @@ export namespace
 			if	constexpr
 				(	requires{ sizeof(t_tEntity); }
 				)
-			{
-				return Polarity == (sizeof(t_tEntity) > t_nObjectSize);
-			}
+				return
+				(	Polarity
+				==	(	sizeof(t_tEntity)
+					>	t_nObjectSize
+					)
+				);
 			else
 			{
 				//	size will always be at least 1 byte for incomplete object types
@@ -215,7 +218,7 @@ export namespace
 		}
 	};
 
-	///	Types for which there exists implicitly another type that can be converted into it.
+	///	Types for which there exists implicitly another type that can be substituted for it.
 	///	classes vs. unions (derived classes)
 	///	pointers vs. nullpointers (arrays, nullpointer)
 	///	integrals vs. floating points (unscoped enums)
@@ -225,7 +228,7 @@ export namespace
 	///	Note that this has no real semantic value and only serves to distinguish types with as
 	///	few traits as possible.
 	struct
-		ConversionTarget final
+		Substitute final
 	:	LiteralBase
 	{
 		template
@@ -384,11 +387,11 @@ export namespace
 				t_bPolarity
 		>
 	concept
-		ConversionTarget
+		Substitute
 	=	Literal
 		<	t_tProto
 		,	Trait::StaticConstraint
-			<	Trait::ConversionTarget
+			<	Trait::Substitute
 				{	t_bPolarity
 				}
 			>
@@ -406,7 +409,7 @@ export namespace
 	=	Literal
 		<	t_tProto
 		,	Trait::StaticConstraint
-			<	Trait::ConversionTarget
+			<	Trait::Substitute
 				{	t_bPolarity
 				}
 			>
@@ -418,7 +421,7 @@ export namespace
 				t_tProto
 		>
 	concept
-		SizedObject
+		Value
 	=	SizeGreater<t_tProto, true>
 	and	All<t_tProto>
 	;
@@ -440,7 +443,7 @@ export namespace
 		>
 	concept
 		NonQualifiedFunction
-	=	ConversionTarget<t_tProto, false>
+	=	Substitute<t_tProto, false>
 	and	Function<t_tProto>
 	;
 
@@ -453,7 +456,7 @@ export namespace
 	=	SizeGreater<t_tProto, false>
 	and	Defined<t_tProto, false>
 	and	Restricted<t_tProto, false>
-	and	ConversionTarget<t_tProto, false>
+	and	Substitute<t_tProto, false>
 	and	All<t_tProto>
 	;
 
@@ -466,7 +469,7 @@ export namespace
 	=		SizeGreater<t_tProto, false>
 	and	Defined<t_tProto, false>
 	and	Restricted<t_tProto, true>
-	and	ConversionTarget<t_tProto, false>
+	and	Substitute<t_tProto, false>
 	and	All<t_tProto>
 	;
 
@@ -478,7 +481,7 @@ export namespace
 		Reference
 	=	SizeGreater<t_tProto, false>
 	and	Defined<t_tProto, false>
-	and	ConversionTarget<t_tProto, true>
+	and	Substitute<t_tProto, true>
 	and	All<t_tProto>
 	;
 
@@ -510,7 +513,7 @@ export namespace
 		Arithmetic
 	=	Defined<t_tProto, false>
 	and	Numeric<t_tProto, true>
-	and	SizedObject<t_tProto>
+	and	Value<t_tProto>
 	;
 
 	template
@@ -519,7 +522,7 @@ export namespace
 		>
 	concept
 		FloatingPoint
-	=	ConversionTarget<t_tProto, false>
+	=	Substitute<t_tProto, false>
 	and	Arithmetic<t_tProto>
 	;
 
@@ -529,7 +532,7 @@ export namespace
 		>
 	concept
 		Integral
-	=	ConversionTarget<t_tProto, true>
+	=	Substitute<t_tProto, true>
 	and	Arithmetic<t_tProto>
 	;
 
@@ -541,9 +544,9 @@ export namespace
 		Pointer
 	=	Defined<t_tProto, false>
 	and	Restricted<t_tProto, false>
-	and	ConversionTarget<t_tProto, true>
+	and	Substitute<t_tProto, true>
 	and	Numeric<t_tProto, false>
-	and	SizedObject<t_tProto>
+	and	Value<t_tProto>
 	;
 
 	template
@@ -554,9 +557,9 @@ export namespace
 		NullPointer
 	=	Defined<t_tProto, false>
 	and	Restricted<t_tProto, false>
-	and	ConversionTarget<t_tProto, false>
+	and	Substitute<t_tProto, false>
 	and	Numeric<t_tProto, false>
-	and	SizedObject<t_tProto>
+	and	Value<t_tProto>
 	;
 
 	template
@@ -567,9 +570,9 @@ export namespace
 		MemberPointer
 	=	Defined<t_tProto, false>
 	and	Restricted<t_tProto, true>
-	and	ConversionTarget<t_tProto, true>
+	and	Substitute<t_tProto, true>
 	and	Numeric<t_tProto, false>
-	and	SizedObject<t_tProto>
+	and	Value<t_tProto>
 	;
 
 	template
@@ -580,9 +583,9 @@ export namespace
 		BoundedArray
 	=	Defined<t_tProto, false>
 	and	Restricted<t_tProto, true>
-	and	ConversionTarget<t_tProto, false>
+	and	Substitute<t_tProto, false>
 	and	Numeric<t_tProto, false>
-	and	SizedObject<t_tProto>
+	and	Value<t_tProto>
 	;
 
 	template
@@ -592,7 +595,7 @@ export namespace
 	concept
 		Custom_Enum
 	=	Defined<t_tProto, true>
-	and	SizedObject<t_tProto>
+	and	Value<t_tProto>
 	;
 
 	template
@@ -621,7 +624,7 @@ export namespace
 		>
 	concept
 		Class
-	=	ConversionTarget<t_tProto, true>
+	=	Substitute<t_tProto, true>
 	and	Custom<t_tProto>
 	;
 
@@ -631,7 +634,7 @@ export namespace
 		>
 	concept
 		Union
-	=	ConversionTarget<t_tProto, false>
+	=	Substitute<t_tProto, false>
 	and	Custom<t_tProto>
 	;
 
@@ -642,7 +645,7 @@ export namespace
 	concept
 		Enum_Int_Float
 	=	Numeric<t_tProto, true>
-	and	SizedObject<t_tProto>
+	and	Value<t_tProto>
 	;
 
 	template
@@ -653,7 +656,7 @@ export namespace
 		Float_NPtr_Ptr
 	=	Defined<t_tProto, false>
 	and	Restricted<t_tProto, false>
-	and	SizedObject<t_tProto>
+	and	Value<t_tProto>
 	;
 
 	template
@@ -663,7 +666,7 @@ export namespace
 	concept
 		Int_MPtr_Ptr_Ref
 	=	Defined<t_tProto, false>
-	and	ConversionTarget<t_tProto, true>
+	and	Substitute<t_tProto, true>
 	and	All<t_tProto>
 	;
 
@@ -748,7 +751,7 @@ export namespace
 		>
 	concept
 		Argument
-	=	SizedObject<t_tProto>
+	=	Value<t_tProto>
 	or	NonQualifiedFunction<t_tProto>
 	or	Int_MPtr_Ptr_Ref<t_tProto>
 	or	BArr_MPtr_RRef_UInt_UArr<t_tProto>
@@ -773,7 +776,7 @@ export namespace
 	concept
 		DataMember
 	=	Int_MPtr_Ptr_Ref<t_tProto>
-	or	SizedObject<t_tProto>
+	or	Value<t_tProto>
 	;
 }
 
@@ -805,8 +808,8 @@ export namespace
 				t_tProto
 		>
 	concept
-		ProtoSizedObject
-	=	Proto::SizedObject<t_tProto>
+		ProtoValue
+	=	Proto::Value<t_tProto>
 	or	Proto::None<t_tProto>
 	;
 
@@ -863,7 +866,7 @@ export namespace
 		ProtoReference
 	=		Proto::SizeGreater<t_tProto, false>
 		and	Proto::Defined<t_tProto, false>
-		and	Proto::ConversionTarget<t_tProto, true>
+		and	Proto::Substitute<t_tProto, true>
 		and	Proto::All<t_tProto>
 	or	Proto::None<t_tProto>
 	;

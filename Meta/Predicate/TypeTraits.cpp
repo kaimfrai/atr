@@ -113,7 +113,7 @@ export namespace
 		{}
 
 		template
-			<	ProtoSizedObject
+			<	ProtoValue
 					t_tEntity
 			>
 		auto constexpr

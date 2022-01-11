@@ -100,7 +100,7 @@ export namespace
 	:	LiteralBase
 	{
 		template
-			<	ProtoSizedObject
+			<	ProtoValue
 					t_tEntity
 			>
 		auto constexpr
@@ -166,7 +166,7 @@ export namespace
 	:	LiteralBase
 	{
 		template
-			<	ProtoSizedObject
+			<	ProtoValue
 					t_tEntity
 			>
 		auto constexpr
@@ -188,7 +188,7 @@ export namespace
 	:	LiteralBase
 	{
 		template
-			<	ProtoSizedObject
+			<	ProtoValue
 					t_tEntity
 			>
 		auto constexpr
@@ -252,27 +252,6 @@ export namespace
 	template
 		<	typename
 				t_tProto
-		,	typename
-			...	t_tpArgument
-		>
-	concept
-		Constructible_From
-	=	Literal
-		<	t_tProto
-		,	Trait::StaticConstraint
-			<	Trait::Constructible_From
-				{	true
-				,	Type<t_tpArgument>
-					...
-				}
-			>
-		>
-	and	Destructible<t_tProto>
-	;
-
-	template
-		<	typename
-				t_tProto
 		>
 	concept
 		DefaultInitializable
@@ -284,8 +263,16 @@ export namespace
 				}
 			>
 		>
-	and	Constructible_From<t_tProto>
-	and	SizedObject<t_tProto>
+	and	Literal
+		<	t_tProto
+		,	Trait::StaticConstraint
+			<	Trait::Constructible_From
+				{	true
+				}
+			>
+		>
+	and	Destructible<t_tProto>
+	and	Value<t_tProto>
 	;
 
 	template
@@ -337,7 +324,7 @@ export namespace
 			>
 		>
 	and	MoveConstructible<t_tProto>
-	and	SizedObject<t_tProto>
+	and	Value<t_tProto>
 	;
 
 	template
@@ -419,7 +406,7 @@ export namespace
 	concept
 		ProtoDestructible
 	=		Proto::Destructible<t_tProto>
-		and	Proto::SizedObject<t_tProto>
+		and	Proto::Value<t_tProto>
 	or	Proto::Scalar_Ref<t_tProto>
 	or	Proto::None<t_tProto>
 	;
@@ -474,7 +461,7 @@ export namespace
 	concept
 		ProtoMoveConstructible
 	=		Proto::MoveConstructible<t_tProto>
-		and	Proto::SizedObject<t_tProto>
+		and	Proto::Value<t_tProto>
 	or	Proto::Scalar_Ref<t_tProto>
 	or	Proto::None<t_tProto>
 	;
@@ -502,7 +489,7 @@ export namespace
 	concept
 		ProtoCopyConstructible
 	=		Proto::CopyConstructible<t_tProto>
-		and	Proto::SizedObject<t_tProto>
+		and	Proto::Value<t_tProto>
 	or	Proto::Scalar_LRef<t_tProto>
 	or	Proto::None<t_tProto>
 	;

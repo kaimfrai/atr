@@ -218,7 +218,7 @@ export namespace
 		}
 
 		template
-			<	ProtoSizedObject
+			<	ProtoValue
 				...	t_tpMergeItem
 			>
 		auto constexpr
@@ -340,7 +340,7 @@ export namespace
 	};
 
 	template
-		<	ProtoSizedObject
+		<	ProtoValue
 			...	t_tpItem
 		>
 	(	TupleSet
@@ -356,7 +356,7 @@ namespace
 	std
 {
 	template
-		<	::Meta::ProtoSizedObject
+		<	::Meta::ProtoValue
 			...	t_tpItem
 		>
 	struct
@@ -375,7 +375,7 @@ namespace
 	template
 		<	::std::size_t
 				t_nIndex
-		,	::Meta::ProtoSizedObject
+		,	::Meta::ProtoValue
 			...	t_tpItem
 		>
 	struct
