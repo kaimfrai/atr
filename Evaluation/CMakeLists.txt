@@ -54,7 +54,6 @@ target_include_directories(
 	evaluation_dyno
 		PRIVATE
 		../
-		../../dyno/include/
 )
 target_compile_options(
 	evaluation_dyno

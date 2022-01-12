@@ -2,7 +2,7 @@
 
 #include <Evaluation/CRTPBodies.hpp>
 
-#include <dyno.hpp>
+import Dyno;
 
 #include "Shared.hpp"
 
@@ -12,7 +12,7 @@ namespace
 	using namespace
 		dyno::literals
 	;
-	
+
 	struct
 		VolumeComputer
 	:	decltype(

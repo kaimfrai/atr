@@ -35,6 +35,7 @@ include(CXX20Modules.cmake)
 add_subdirectory(Std)
 add_subdirectory(Meta)
 add_subdirectory(Test)
+add_subdirectory(ThirdParty)
 add_subdirectory(Evaluation)
 add_subdirectory(Legacy)
 

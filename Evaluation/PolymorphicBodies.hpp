@@ -1,6 +1,6 @@
 #pragma once
 
-#include <polymorphic.hpp>
+import Polymorphic;
 #include <Evaluation/CRTPBodies.hpp>
 
 #include "Shared.hpp"
@@ -11,7 +11,7 @@ namespace
 	struct
 		ComputeVolume
 	{};
-	
+
 	auto
 		poly_extend
 		(	ComputeVolume

@@ -1,0 +1,10 @@
+
+module dyno {
+	header "Dyno.hpp"
+	export *
+}
+
+module polymorphic {
+	header "Polymorphic.hpp"
+	export *
+}
