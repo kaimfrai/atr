@@ -1,0 +1,131 @@
+add_executable(
+	evaluation_archetype
+		ArchetypeMain.cpp
+)
+target_include_directories(
+	evaluation_archetype
+		PRIVATE
+		../
+)
+target_compile_options(
+	evaluation_archetype
+		PRIVATE
+		-Wno-error
+		-Wno-everything
+)
+
+add_executable(
+	evaluation_virtual
+		VirtualMain.cpp
+)
+target_include_directories(
+	evaluation_virtual
+		PRIVATE
+		../
+)
+target_compile_options(
+	evaluation_virtual
+		PRIVATE
+		-Wno-error
+		-Wno-everything
+)
+
+add_executable(
+	evaluation_replication
+		ReplicationMain.cpp
+)
+target_include_directories(
+	evaluation_replication
+		PRIVATE
+		../
+)
+target_compile_options(
+	evaluation_replication
+		PRIVATE
+		-Wno-error
+		-Wno-everything
+)
+
+add_executable(
+	evaluation_dyno
+		DynoMain.cpp
+)
+target_include_directories(
+	evaluation_dyno
+		PRIVATE
+		../
+		../../dyno/include/
+)
+target_compile_options(
+	evaluation_dyno
+		PRIVATE
+		-Wno-gnu-string-literal-operator-template
+		-Wno-error
+		-Wno-everything
+)
+
+add_executable(
+	evaluation_polymorphic
+		PolymorphicMain.cpp
+)
+target_include_directories(
+	evaluation_polymorphic
+		PRIVATE
+		../
+		../../cpp-from-the-sky-down/metaprogrammed_polymorphism/
+)
+target_compile_options(
+	evaluation_polymorphic
+		PRIVATE
+		-Wno-error
+		-Wno-everything
+)
+
+add_executable(
+	evaluation_variant
+		VariantMain.cpp
+)
+target_include_directories(
+	evaluation_variant
+		PRIVATE
+		../
+)
+target_compile_options(
+	evaluation_variant
+		PRIVATE
+		-Wno-error
+		-Wno-everything
+)
+
+
+add_executable(
+	evaluation_any
+		AnyMain.cpp
+)
+target_include_directories(
+	evaluation_any
+		PRIVATE
+		../
+)
+target_compile_options(
+	evaluation_any
+		PRIVATE
+		-Wno-error
+		-Wno-everything
+)
+
+add_executable(
+	evaluation_type_erasure
+		TypeErasureMain.cpp
+)
+target_include_directories(
+	evaluation_type_erasure
+		PRIVATE
+		../
+)
+target_compile_options(
+	evaluation_type_erasure
+		PRIVATE
+		-Wno-error
+		-Wno-everything
+)

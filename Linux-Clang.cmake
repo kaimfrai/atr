@@ -28,8 +28,10 @@ set(WARNING_FLAGS
 	-Wpedantic
 	-Wmissing-variable-declarations
 	-Wcomma
+	-Wauto-import
 	-Werror
 	-Weverything
+	-Wno-weak-vtables
 	-Wno-padded
 	#triggered when using std::sort with defaulted comparison
 	-Wno-logical-op-parentheses
