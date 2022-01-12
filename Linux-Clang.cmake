@@ -10,7 +10,7 @@ set(CXX_STANDARD_LIBRARY_FLAG
 	-stdlib=libc++
 )
 set(PREBUILT_MODULE_PATH
-	${CMAKE_BINARY_DIR}/modules
+	${CMAKE_BINARY_DIR}/modules/${CMAKE_BUILD_TYPE}/
 )
 
 file(
