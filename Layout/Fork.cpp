@@ -1,6 +1,6 @@
 export module Layout.Fork;
 
-#include <ID/Data.hpp>
+export import ID.Data;
 
 export namespace
 	Layout
@@ -28,7 +28,7 @@ export namespace
 			];
 		}
 	;
-	
+
 	template
 		<	typename
 				t_tNorthArea
@@ -41,11 +41,11 @@ export namespace
 		t_tNorthArea
 			NorthArea
 		;
-		
+
 		t_tSouthArea
 			SouthArea
 		;
-		
+
 		/// access const members of the north member area
 		[[nodiscard]]
 		constexpr
@@ -65,7 +65,7 @@ export namespace
 				]
 			;
 		}
-		
+
 		/// access non-const members of the north member area
 		[[nodiscard]]
 		constexpr
@@ -84,7 +84,7 @@ export namespace
 				]
 			;
 		}
-		
+
 		/// access const members of the south member area
 		[[nodiscard]]
 		constexpr
@@ -104,7 +104,7 @@ export namespace
 				]
 			;
 		}
-		
+
 		/// access non-const members of the south member area
 		[[nodiscard]]
 		constexpr
@@ -124,7 +124,7 @@ export namespace
 			;
 		}
 	};
-	
+
 	template
 		<	typename
 				t_tNorthArea
@@ -140,7 +140,7 @@ export namespace
 		t_tNorthArea
 			NorthArea
 		;
-		
+
 		/// access const members of the north member area
 		[[nodiscard]]
 		constexpr
@@ -160,7 +160,7 @@ export namespace
 				]
 			;
 		}
-		
+
 		/// access non-const members of the north member area
 		[[nodiscard]]
 		constexpr
@@ -179,7 +179,7 @@ export namespace
 				]
 			;
 		}
-		
+
 		/// access const members of the south member area
 		[[nodiscard]]
 		constexpr
@@ -200,7 +200,7 @@ export namespace
 			;
 		}
 	};
-	
+
 	template
 		<	Stateless::Type
 				t_tNorthArea
@@ -232,7 +232,7 @@ export namespace
 				]
 			;
 		}
-		
+
 		/// access const members of the south member area
 		[[nodiscard]]
 		constexpr

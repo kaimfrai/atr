@@ -2,8 +2,8 @@ export module Function.Body;
 
 export import Function.StaticDependency;
 export import Function.ArgumentDependency;
-#include <ID/Func.hpp>
-#include <ID/StringLiteral.hpp>
+export import ID.Func;
+export import ID.StringLiteral;
 #include <Meta/TypeInfo.hpp>
 #include <Std/Concepts.hpp>
 

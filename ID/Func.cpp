@@ -1,14 +1,14 @@
-#pragma once
+export module ID.Func;
 
-#include <ID/Concepts.hpp>
-#include <ID/Base.hpp>
-#include <ID/Make.hpp>
-#include <ID/StringLiteral.hpp>
+export import ID.Concepts;
+export import ID.Base;
+export import ID.Make;
+export import ID.StringLiteral;
 
-#include <PackTemplate/Instance.hpp>
-#include <Std/Concepts.hpp>
+export import <PackTemplate/Instance.hpp>;
+export import <Std/Concepts.hpp>;
 
-namespace
+export namespace
 	Function
 {
 	/// required for ADL of MapAddress
@@ -30,7 +30,7 @@ namespace
 	{};
 }
 
-namespace
+export namespace
 	ID
 {
 	/// objects that identify functions

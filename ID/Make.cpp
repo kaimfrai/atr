@@ -1,12 +1,12 @@
-#pragma once
+export module ID.Make;
 
-#include <ID/StringLiteral.hpp>
-#include <PackTemplate/Instance.hpp>
-#include <Pack/Instance.hpp>
+export import ID.StringLiteral;
+export import Std;
 
-#include <utility>
+export import <PackTemplate/Instance.hpp>;
+export import <Pack/Instance.hpp>;
 
-namespace
+export namespace
 	ID
 {
 	/// dispatches a string literal into its characters

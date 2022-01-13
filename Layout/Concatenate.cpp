@@ -2,8 +2,8 @@ export module Layout.Concatenate;
 
 export import Layout.DataMember;
 
-#include <ID/Modify.hpp>
-#include <ID/Base.hpp>
+export import ID.Modify;
+export import ID.Base;
 
 #include <Pack/Instance.hpp>
 #include <Pack/Transform.hpp>

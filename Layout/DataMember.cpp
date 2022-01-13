@@ -1,6 +1,7 @@
 export module Layout.DataMember;
 
 export import Layout.Initializer;
+export import ID.Data;
 export import Std;
 
 #include <Pack/Filter.hpp>
@@ -9,8 +10,6 @@ export import Std;
 #include <Meta/TypeInfo.hpp>
 #include <Meta/ValueInfo.hpp>
 #include <Std/Concepts.hpp>
-
-#include <ID/Data.hpp>
 #include <Std/Size.hpp>
 
 export namespace

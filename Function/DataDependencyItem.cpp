@@ -1,6 +1,6 @@
 export module Function.DataDependencyItem;
 
-#include <ID/Data.hpp>
+export import ID.Data;
 #include <Stateless/Map.hpp>
 #include <Stateless/Type.hpp>
 #include <Std/FunctionTraits.hpp>

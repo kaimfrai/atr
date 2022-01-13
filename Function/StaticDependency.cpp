@@ -1,8 +1,8 @@
 export module Function.StaticDependency;
 
 export import Function.Dependency;
-#include <ID/Func.hpp>
-#include <ID/Data.hpp>
+export import ID.Func;
+export import ID.Data;
 #include <Meta/Template.hpp>
 #include <Meta/TypeInfo.hpp>
 #include <PackTemplate/Instance.hpp>

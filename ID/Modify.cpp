@@ -1,12 +1,13 @@
-#pragma once
+export module ID.Modify;
 
-#include <ID/Base.hpp>
-#include <ID/Make.hpp>
-#include <ID/StringLiteral.hpp>
-#include <Pack/Reverse.hpp>
-#include <Std/Concepts.hpp>
+export import ID.Base;
+export import ID.Make;
+export import ID.StringLiteral;
 
-namespace
+export import <Pack/Reverse.hpp>;
+export import <Std/Concepts.hpp>;
+
+export namespace
 	ID
 {
 	template
@@ -52,7 +53,7 @@ namespace
 				>{}
 			;
 		}
-		
+
 		[[nodiscard]]
 		friend
 		constexpr
@@ -92,7 +93,7 @@ namespace
 		,	t_vString
 		>
 	{	return{};	}
-	
+
 	template
 		<	Std::Integral
 				t_tChar
@@ -136,7 +137,7 @@ namespace
 				>{}
 			;
 		}
-		
+
 		template
 			<	template
 					<	typename
@@ -188,29 +189,32 @@ namespace
 		,	t_vString
 		>
 	{	return{};	}
-	
-	static_assert
-		(	"ab"_extend
-		+	Meta::Pack<'c'>()
-		==	Meta::Pack<'a', 'b', 'c'>()
-		)
-	;
-	static_assert
-		(	"ab"_trim
-		-	Meta::Pack<'a', 'b', 'c'>()
-		==	Meta::Pack<'c'>()
-		)
-	;
-	static_assert
-		(	Meta::Pack<'a'>()
-		+	"bc"_extend
-		==	Meta::Pack<'a', 'b', 'c'>()
-		)
-	;
-	static_assert
-		(	Meta::Pack<'a', 'b', 'c'>()
-		-	"bc"_trim
-		==	Meta::Pack<'a'>()
-		)
-	;
 }
+
+using ID::operator""_extend;
+using ID::operator""_trim;
+
+static_assert
+	(	"ab"_extend
+	+	Meta::Pack<'c'>()
+	==	Meta::Pack<'a', 'b', 'c'>()
+	)
+;
+static_assert
+	(	"ab"_trim
+	-	Meta::Pack<'a', 'b', 'c'>()
+	==	Meta::Pack<'c'>()
+	)
+;
+static_assert
+	(	Meta::Pack<'a'>()
+	+	"bc"_extend
+	==	Meta::Pack<'a', 'b', 'c'>()
+	)
+;
+static_assert
+	(	Meta::Pack<'a', 'b', 'c'>()
+	-	"bc"_trim
+	==	Meta::Pack<'a'>()
+	)
+;

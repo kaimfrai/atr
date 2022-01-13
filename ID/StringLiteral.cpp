@@ -1,13 +1,13 @@
-#pragma once
+export module ID.StringLiteral;
 
-#include <Pack/Sequence.hpp>
+export import Std;
 
-#include <Std/Concepts.hpp>
-#include <Std/Size.hpp>
+export import <Pack/Sequence.hpp>;
 
-#include <array>
+export import <Std/Concepts.hpp>;
+export import <Std/Size.hpp>;
 
-namespace
+export namespace
 	ID
 {
 	template
@@ -35,7 +35,7 @@ namespace
 		+	t_nAddExtent
 		>
 	{	return{};	}
-	
+
 	/// converts a string literal into an object that can be dispatched into separate characters
 	template
 		<	Std::BoundedArray
@@ -56,7 +56,7 @@ namespace
 			<	t_tArray
 			>
 		;
-		
+
 		/// the length or the array including the trailing '\0'
 		static
 		constexpr
@@ -66,7 +66,7 @@ namespace
 			<	t_tArray
 			>
 		;
-		
+
 		//	the length of the string without the trailing '\0'
 		static
 		constexpr
@@ -75,22 +75,22 @@ namespace
 		=	ArrayExtent
 		-	1_uz
 		;
-		
+
 		static constexpr
 		std::make_index_sequence
 		<	CharacterCount
 		>	CharacterIndexSequence
 		{};
-		
+
 		using
 			ArrayType
 		=	t_tArray
 		;
-		
+
 		ArrayType
 			String
 		;
-		
+
 		/// construct from integral pack
 		template
 			<	Std::Integral
@@ -111,7 +111,7 @@ namespace
 				...
 			}
 		{}
-		
+
 		/// construct from raw char array
 		template
 			<	std::size_t
@@ -139,8 +139,8 @@ namespace
 			,	CharType
 				{}
 			}
-		{}	
-		
+		{}
+
 		/// construct from two char arrays
 		template
 			<	std::size_t
@@ -183,7 +183,7 @@ namespace
 				{}
 			}
 		{}
-		
+
 		/// construct from standard char array
 		constexpr
 		explicit
@@ -202,7 +202,7 @@ namespace
 			,	CharacterIndexSequence
 			}
 		{}
-		
+
 		/// construct from raw char array
 		constexpr
 			StringLiteral
@@ -218,7 +218,7 @@ namespace
 			,	CharacterIndexSequence
 			}
 		{}
-		
+
 		/// construct from sequence
 		template
 			<	CharType
@@ -242,7 +242,7 @@ namespace
 				...
 			}
 		{}
-		
+
 		/// index the underlying array
 		[[nodiscard]]
 		constexpr
@@ -258,7 +258,7 @@ namespace
 				]
 			;
 		}
-		
+
 		constexpr
 			operator ArrayType const&
 			()	const
@@ -266,7 +266,7 @@ namespace
 				String
 			;
 		}
-		
+
 		/// default comparison based on std::array
 		[[nodiscard]]
 		friend
@@ -280,7 +280,7 @@ namespace
 			)
 		=	default
 		;
-		
+
 		template
 			<	std::size_t
 				...	t_npIndex
@@ -312,7 +312,7 @@ namespace
 				)
 			;
 		}
-		
+
 		template
 			<	Std::USizeType
 					t_nPrefixExtent
@@ -338,7 +338,7 @@ namespace
 				)
 			;
 		}
-		
+
 		template
 			<	Std::USizeType
 					t_nSuffixExtent
@@ -365,7 +365,7 @@ namespace
 				)
 			;
 		}
-		
+
 		template
 			<	Std::USizeType
 					t_nPrefixExtent
@@ -408,7 +408,7 @@ namespace
 				throw;
 			}
 		}
-		
+
 		template
 			<	Std::USizeType
 					t_nSuffixExtent
@@ -449,7 +449,7 @@ namespace
 				;
 			}
 		}
-		
+
 		template
 			<	Std::USizeType
 					t_nAppendedExtent
@@ -486,7 +486,7 @@ namespace
 				}
 			;
 		}
-		
+
 		template
 			<	Std::USizeType
 					t_nArrayExtent
@@ -511,7 +511,7 @@ namespace
 			+	i_rLiteral
 			;
 		}
-		
+
 		template
 			<	Std::USizeType
 					t_nArraySize
@@ -536,7 +536,7 @@ namespace
 				}
 			;
 		}
-		
+
 		template
 			<	Std::USizeType
 					t_nArraySize
@@ -561,7 +561,7 @@ namespace
 					)
 			;
 		}
-		
+
 		template
 			<	Std::USizeType
 					t_nArraySize
@@ -587,7 +587,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// construct from array
 	template
 		<	Std::Integral
@@ -608,7 +608,7 @@ namespace
 			]
 		>
 	;
-	
+
 	/// construct from sequence
 	template
 		<	Std::Integral
@@ -631,7 +631,7 @@ namespace
 			]
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tStringLiteral
@@ -643,20 +643,7 @@ namespace
 		,	StringLiteral
 		>
 	;
-	
-	static_assert
-		(	StringLiteralInstance
-			<	StringLiteral
-				<	char[5]
-				>
-			>
-		and	not
-			StringLiteralInstance
-			<	char const(&)[5]
-			>
-		)
-	;
-	
+
 	template
 		<	typename
 				t_tStringLiteral
@@ -671,66 +658,80 @@ namespace
 		,	ID::StringLiteral
 		>
 	;
-	
-	static_assert
-		(	PseudoStringLiteral
-			<	StringLiteral
-				<	char[5]
-				>
-			>
-		and	PseudoStringLiteral
-			<	char const(&)[5]
-			>
-		)
-	;
-	
-	static_assert
-		(	StringLiteral
-			{	"ABCD"
-			}.	StartsWith
-				(	"AB"
-				)
-		)
-	;
-	static_assert
-		(	(	"AB"
-			<<	StringLiteral
-				{	"ABCD"
-				}
-			)
-		==	StringLiteral
-			{	"CD"
-			}
-		)
-	;
-	static_assert
-		(	StringLiteral
-			{	"ABCD"
-			}.	EndsWith
-				(	"CD"
-				)
-		)
-	;
-	static_assert
-		(	(	StringLiteral
-				{	"ABCD"
-				}
-			>>	"CD"
-			)
-		==	StringLiteral
-			{	"AB"
-			}
-		)
-	;
-	static_assert
-		(	StringLiteral
-			{	"AB"
-			}
-		+	"CD"
-		==	"AB"
-		+	StringLiteral
-			{	"CD"
-			}
-		)
-	;
+
 }
+
+static_assert
+	(	ID::StringLiteralInstance
+		<	ID::StringLiteral
+			<	char[5]
+			>
+		>
+	and	not
+		ID::StringLiteralInstance
+		<	char const(&)[5]
+		>
+	)
+;
+
+static_assert
+	(	ID::PseudoStringLiteral
+		<	ID::StringLiteral
+			<	char[5]
+			>
+		>
+	and	ID::PseudoStringLiteral
+		<	char const(&)[5]
+		>
+	)
+;
+
+static_assert
+	(	ID::StringLiteral
+		{	"ABCD"
+		}.	StartsWith
+			(	"AB"
+			)
+	)
+;
+static_assert
+	(	(	"AB"
+		<<	ID::StringLiteral
+			{	"ABCD"
+			}
+		)
+	==	ID::StringLiteral
+		{	"CD"
+		}
+	)
+;
+static_assert
+	(	ID::StringLiteral
+		{	"ABCD"
+		}.	EndsWith
+			(	"CD"
+			)
+	)
+;
+static_assert
+	(	(	ID::StringLiteral
+			{	"ABCD"
+			}
+		>>	"CD"
+		)
+	==	ID::StringLiteral
+		{	"AB"
+		}
+	)
+;
+static_assert
+	(	ID::StringLiteral
+		{	"AB"
+		}
+	+	"CD"
+	==	"AB"
+	+	ID::StringLiteral
+		{	"CD"
+		}
+	)
+;

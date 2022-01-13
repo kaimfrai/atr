@@ -1,6 +1,6 @@
 export module Function.FuncDependencyItem;
 
-#include <ID/Func.hpp>
+export import ID.Func;
 #include <Stateless/Map.hpp>
 #include <Stateless/Type.hpp>
 #include <Std/FunctionTraits.hpp>

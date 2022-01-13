@@ -1,13 +1,13 @@
 export module Archetype.LayoutInfo;
 
+export import ID.Type;
+export import ID.StringLiteral;
 export import Layout.Concatenate;
 export import Layout.LayoutCreator;
 export import Layout.DataMember;
 
 #include <Meta/Template.hpp>
 #include <Pack/Accumulate.hpp>
-#include <ID/Type.hpp>
-#include <ID/StringLiteral.hpp>
 #include <Meta/TypeInfo.hpp>
 #include <Std/QualifierTemplate.hpp>
 

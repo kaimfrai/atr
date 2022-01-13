@@ -2,9 +2,9 @@ export module Layout.Dublicate;
 
 export import Layout.DataMember;
 
-#include <ID/Modify.hpp>
-#include <ID/Decimal.hpp>
-#include <ID/Data.hpp>
+export import ID.Modify;
+export import ID.Decimal;
+export import ID.Data;
 #include <Pack/Fold.hpp>
 #include <Pack/MakeSequence.hpp>
 #include <Pack/Cast.hpp>

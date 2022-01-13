@@ -1,17 +1,17 @@
-#pragma once
+export module ID.Data;
 
-#include <ID/Concepts.hpp>
-#include <ID/Base.hpp>
-#include <ID/Make.hpp>
-#include <ID/StringLiteral.hpp>
+export import ID.Concepts;
+export import ID.Base;
+export import ID.Make;
+export import ID.StringLiteral;
 
-#include <PackTemplate/Instance.hpp>
-#include <Std/Concepts.hpp>
+export import <PackTemplate/Instance.hpp>;
+export import <Std/Concepts.hpp>;
 
-namespace
+export namespace
 	ID
 {
-	/// identifies types
+	/// identifies data
 	template
 		<	Std::Integral
 				t_tChar
@@ -19,25 +19,25 @@ namespace
 			...	t_vpString
 		>
 	struct
-		Type
+		Data
 	:	Base
-		<	Type
+		<	Data
 		,	t_tChar
 		,	t_vpString
 			...
 		>
 	{};
 	
-	/// objects that identify types
+	/// objects that identify data
 	template
 		<	typename
-				t_tTypeID
+				t_tDataID
 		>
 	concept
-		TypeInstance
+		DataInstance
 	=	PackTemplate::SequenceInstanceOf
-		<	t_tTypeID
-		,	Type
+		<	t_tDataID
+		,	Data
 		>
 	;
 	
@@ -47,9 +47,9 @@ namespace
 				t_vString
 		>
 	using
-		TypeT
+		DataT
 	=	MakeT
-		<	Type
+		<	Data
 		,	t_vString
 		>
 	;
@@ -60,15 +60,15 @@ namespace
 				t_vString
 		>
 	constexpr
-	TypeInstance auto
-		TypeV
+	DataInstance auto
+		DataV
 	=	MakeV
-		<	Type
+		<	Data
 		,	t_vString
 		>
 	;
 	
-	/// creates an identifier for types from a string
+	///	creates an identifier for data from a string
 	template
 		<	StringLiteral
 				t_vString
@@ -76,56 +76,56 @@ namespace
 	constexpr
 	auto
 		operator
-		""_tID
+		""_dID
 		()
-	->	TypeT<t_vString>
+	->	DataT<t_vString>
 	{	return{};	}
 	
-	/// objects that identify types and are represented by a given string
+	/// objects that identify data and are represented by a given string
 	template
 		<	typename
-				t_tTypeID
+				t_tDataID
 		,	StringLiteral
 				t_vString
 		>
 	concept
-		SameType
+		SameData
 	=	Same
-		<	t_tTypeID
+		<	t_tDataID
 		,	t_vString
-		,	Type
+		,	Data
 		>
 	;
 	
-	/// objects that identify types and start with a given string
+	/// objects that identify data and start with a given string
 	template
 		<	typename
-				t_tTypeID
+				t_tDataID
 		,	StringLiteral
 				t_vStart
 		>
 	concept
-		TypePrefix
+		DataPrefix
 	=	Prefix
-		<	t_tTypeID
+		<	t_tDataID
 		,	t_vStart
-		,	Type
+		,	Data
 		>
 	;
 	
-	/// objects that identify types and end with a given string
+	/// objects that identify data and end with a given string
 	template
 		<	typename
-				t_tTypeID
+				t_tDataID
 		,	StringLiteral
 				t_vStart
 		>
 	concept
-		TypeSuffix
+		DataSuffix
 	=	Suffix
-		<	t_tTypeID
+		<	t_tDataID
 		,	t_vStart
-		,	Type
+		,	Data
 		>
 	;
 }

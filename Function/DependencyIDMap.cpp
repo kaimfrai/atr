@@ -6,9 +6,9 @@ export import Function.StaticDependency;
 export import Archetype.LayoutInfo;
 
 export import Layout.MemberOffset;
-#include <ID/Func.hpp>
-#include <ID/Data.hpp>
-#include <ID/StringLiteral.hpp>
+export import ID.Func;
+export import ID.Data;
+export import ID.StringLiteral;
 #include <Pack/Concat.hpp>
 #include <Pack/Type.hpp>
 #include <Std/QualifierTemplate.hpp>

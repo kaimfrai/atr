@@ -10,17 +10,17 @@ import Evaluation.Archetype.Sphere;
 import Evaluation.Archetype.ComputeVolume;
 import Evaluation.Shared;
 
+import ID.Modify;
+import ID.Data;
+import ID.StringLiteral;
 import Evaluation.Archetype.ReturnMember;
 import Evaluation.Archetype.Product;
 import Function.VirtualArgument;
 import Function.Address;
 import Layout.MemberOffset;
 
-#include <ID/Modify.hpp>
 #include <Pack/Sort.hpp>
 #include <Std/QualifierTemplate.hpp>
-#include <ID/Data.hpp>
-#include <ID/StringLiteral.hpp>
 #include <Pack/Accumulate.hpp>
 
 static_assert

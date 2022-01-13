@@ -2,7 +2,7 @@ export module Function.Address;
 
 export import Function.Erase;
 export import Function.Signature;
-#include <ID/Func.hpp>
+export import ID.Func;
 #include <Std/FunctionTraits.hpp>
 #include <Std/Concepts.hpp>
 

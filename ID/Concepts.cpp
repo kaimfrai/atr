@@ -1,11 +1,11 @@
-#pragma once
+export module ID.Concepts;
 
-#include <ID/Make.hpp>
-#include <ID/StringLiteral.hpp>
+export import ID.Make;
+export import ID.StringLiteral;
 
-#include <PackTemplate/Instance.hpp>
+export import <PackTemplate/Instance.hpp>;
 
-namespace
+export namespace
 	ID
 {
 	/// checks if an identifier starts with a given string and is an instance of a given template

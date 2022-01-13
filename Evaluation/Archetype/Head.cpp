@@ -4,10 +4,12 @@ import Evaluation.Shared;
 import Evaluation.Archetype.Sphere;
 import Evaluation.Archetype.ComputeVolume;
 
+export import ID.StringLiteral;
+export import ID.Data;
+export import ID.Modify;
 export import Archetype.Instance;
 import Archetype.LayoutInfo;
 import Function.Address;
-
 export import Layout.Concatenate;
 export import Layout.LayoutCreator;
 
@@ -15,9 +17,6 @@ export import Layout.LayoutCreator;
 #include <Pack/Filter.hpp>
 #include <Pack/Sort.hpp>
 #include <Pack/Accumulate.hpp>
-#include <ID/StringLiteral.hpp>
-#include <ID/Data.hpp>
-#include <ID/Modify.hpp>
 
 export namespace
 	Archetype

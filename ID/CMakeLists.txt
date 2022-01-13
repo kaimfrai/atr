@@ -1,0 +1,11 @@
+include_directories(../)
+
+add_module(Base.cpp)
+add_module(Concepts.cpp)
+add_module(Data.cpp)
+add_module(Decimal.cpp)
+add_module(Func.cpp)
+add_module(Make.cpp)
+add_module(Modify.cpp)
+add_module(StringLiteral.cpp)
+add_module(Type.cpp)

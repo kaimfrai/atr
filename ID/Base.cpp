@@ -1,19 +1,17 @@
-#pragma once
+export module ID.Base;
 
-#include <ID/Make.hpp>
-#include <ID/StringLiteral.hpp>
+export import ID.Make;
+export import ID.StringLiteral;
+export import Std;
 
-#include <Meta/Pack.hpp>
-#include <Pack/Map.hpp>
-#include <Pack/Size.hpp>
-#include <Pack/Sequence.hpp>
-#include <Std/Concepts.hpp>
-#include <Std/Size.hpp>
+export import <Meta/Pack.hpp>;
+export import <Pack/Map.hpp>;
+export import <Pack/Size.hpp>;
+export import <Pack/Sequence.hpp>;
+export import <Std/Concepts.hpp>;
+export import <Std/Size.hpp>;
 
-#include <type_traits>
-#include <cstring>
-
-namespace
+export namespace
 	ID
 {
 	/// serves as a base class for all identifer types
@@ -54,7 +52,7 @@ namespace
 				...
 			>()
 		;
-		
+
 		static constexpr
 		StringLiteral
 		<	t_tChar
@@ -69,7 +67,7 @@ namespace
 		,	t_tChar
 			{}
 		};
-		
+
 		constexpr
 			operator
 			StringLiteral
@@ -85,7 +83,7 @@ namespace
 				AsStringLiteral
 			;
 		}
-		
+
 		/// checks if the identifer starts with the given string
 		template
 			<	StringLiteral
@@ -107,7 +105,7 @@ namespace
 				)
 			;
 		}
-		
+
 		/// checks if the identifer ends with the given string
 		template
 			<	StringLiteral
@@ -130,20 +128,22 @@ namespace
 			;
 		}
 	};
-	
-	static_assert
-		(	Base<Pack::Sequence, char, 'a', 'b', 'c'>
-			::	template
-				StartsWith<"ab">
-				()
-		)
-	;
-	static_assert
-		(	Base<Pack::Sequence, char, 'a', 'b', 'c'>
-			::	template
-				EndsWith<"bc">
-				()
-		)
-	;
+
+
 }
 
+static_assert
+	(	ID::Base<Pack::Sequence, char, 'a', 'b', 'c'>
+		::	template
+			StartsWith<"ab">
+			()
+	)
+;
+
+static_assert
+	(	ID::Base<Pack::Sequence, char, 'a', 'b', 'c'>
+		::	template
+			EndsWith<"bc">
+			()
+	)
+;

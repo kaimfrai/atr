@@ -1,7 +1,7 @@
 export module Layout.Union;
 
 export import Layout.Fork;
-#include <ID/Data.hpp>
+export import ID.Data;
 #include <Meta/TypeInfo.hpp>
 
 export namespace
@@ -19,11 +19,11 @@ export namespace
 		t_tNorthArea
 			NorthArea
 		;
-		
+
 		t_tSouthArea
 			SouthArea
 		;
-		
+
 		constexpr
 		explicit
 			Union
@@ -36,7 +36,7 @@ export namespace
 		{
 			NorthArea.Value = {};
 		}
-		
+
 		template
 			<	Meta::TypeInstance
 					t_tInitializer
@@ -56,7 +56,7 @@ export namespace
 			{	i_vInitializer
 			}
 		{}
-		
+
 		constexpr
 		explicit
 			Union
@@ -69,7 +69,7 @@ export namespace
 		{
 			SouthArea.Value = {};
 		}
-		
+
 		template
 			<	Meta::TypeInstance
 					t_tInitializer
@@ -89,7 +89,7 @@ export namespace
 			{	i_vInitializer
 			}
 		{}
-		
+
 		/// access const members of the north member area
 		[[nodiscard]]
 		constexpr
@@ -109,7 +109,7 @@ export namespace
 				]
 			;
 		}
-		
+
 		/// access non-const members of the north member area
 		[[nodiscard]]
 		constexpr
@@ -128,7 +128,7 @@ export namespace
 				]
 			;
 		}
-		
+
 		/// access const members of the south member area
 		[[nodiscard]]
 		constexpr
@@ -148,7 +148,7 @@ export namespace
 				]
 			;
 		}
-		
+
 		/// access non-const members of the south member area
 		[[nodiscard]]
 		constexpr

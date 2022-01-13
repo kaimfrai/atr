@@ -5,7 +5,7 @@ export import Layout.DataMember;
 
 export import Std;
 
-#include <ID/Data.hpp>
+export import ID.Data;
 
 #include <PackTemplate/Instance.hpp>
 #include <Pack/Instance.hpp>

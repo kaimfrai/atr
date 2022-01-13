@@ -6,18 +6,17 @@ import Evaluation.Archetype.Rectangle;
 import Evaluation.Archetype.Square;
 import Evaluation.Archetype.ComputeVolume;
 
+export import ID.StringLiteral;
+export import ID.Data;
 export import Archetype.Instance;
 import Archetype.LayoutInfo;
 import Function.Address;
-
 export import Layout.LayoutCreator;
 
 #include <Pack/SplitBest.hpp>
 #include <Pack/Filter.hpp>
 #include <Pack/Sort.hpp>
 #include <Pack/Accumulate.hpp>
-#include <ID/StringLiteral.hpp>
-#include <ID/Data.hpp>
 
 export namespace
 	Archetype

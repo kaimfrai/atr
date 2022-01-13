@@ -3,13 +3,13 @@ export module Evaluation.Archetype.BasicBody;
 import Evaluation.Shared;
 import Evaluation.Archetype.BasicShape;
 
+export import ID.StringLiteral;
+export import ID.Data;
 export import Archetype.LayoutInfo;
 export import Layout.Union;
 export import Layout.DataMember;
 
 #include <Pack/Accumulate.hpp>
-#include <ID/StringLiteral.hpp>
-#include <ID/Data.hpp>
 
 export namespace
 	Archetype

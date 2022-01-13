@@ -1,11 +1,11 @@
-#pragma once
+export module ID.Decimal;
 
-#include <Meta/Pack.hpp>
-#include <Std/Concepts.hpp>
-#include <Std/Math.hpp>
-#include <Std/Size.hpp>
+export import <Meta/Pack.hpp>;
+export import <Std/Concepts.hpp>;
+export import <Std/Math.hpp>;
+export import <Std/Size.hpp>;
 
-namespace
+export namespace
 	ID
 {
 	template
@@ -22,7 +22,7 @@ namespace
 				t_vpDecimal
 			)
 		;
-		
+
 		static constexpr
 		Std::USizeType
 			Value
@@ -32,7 +32,7 @@ namespace
 			>()
 		;
 	};
-	
+
 	template
 		<	Std::Integral auto
 				t_vNumber
@@ -52,7 +52,7 @@ namespace
 			>()
 		;
 	}
-	
+
 	template
 		<	char
 			...	t_vpDecimal
@@ -94,7 +94,7 @@ namespace
 			)
 		;
 	}
-	
+
 	template
 		<	char
 			...	t_npDigit

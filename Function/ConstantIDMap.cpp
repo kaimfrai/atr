@@ -4,9 +4,9 @@ export import Function.DependencyIDMap;
 export import Function.StaticDependency;
 export import Function.DataDependencyItem;
 
-#include <ID/Func.hpp>
-#include <ID/Data.hpp>
-#include <ID/StringLiteral.hpp>
+export import ID.Func;
+export import ID.Data;
+export import ID.StringLiteral;
 
 export namespace
 	Function
