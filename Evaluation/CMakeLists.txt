@@ -1,8 +1,4 @@
-include_directories(
-	${CMAKE_SOURCE_DIR}
-)
-
-add_module(Shared.cpp)
+add_subdirectory(Shared)
 
 add_subdirectory(Any)
 add_subdirectory(Archetype)
