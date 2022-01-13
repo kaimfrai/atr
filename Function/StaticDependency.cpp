@@ -1,6 +1,6 @@
-#pragma once
+export module Function.StaticDependency;
 
-#include <Function/Dependency.hpp>
+export import Function.Dependency;
 #include <ID/Func.hpp>
 #include <ID/Data.hpp>
 #include <Meta/Template.hpp>
@@ -8,10 +8,9 @@
 #include <PackTemplate/Instance.hpp>
 #include <Stateless/Map.hpp>
 
-#include <functional>
-#include <utility>
+export import Std;
 
-namespace
+export namespace
 	Function
 {
 	template

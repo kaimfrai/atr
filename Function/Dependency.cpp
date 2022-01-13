@@ -1,15 +1,15 @@
-#pragma once
+export module Function.Dependency;
 
-#include <Function/FuncDependencyItem.hpp>
-#include <Function/DataDependencyItem.hpp>
-#include <Function/Erase.hpp>
+export import Function.FuncDependencyItem;
+export import Function.DataDependencyItem;
+export import Function.Erase;
 #include <Pack/Sort.hpp>
 #include <Pack/Type.hpp>
 #include <Meta/Template.hpp>
 #include <Meta/TypeInfo.hpp>
 #include <Stateless/Map.hpp>
 
-namespace
+export namespace
 	Function
 {
 	/// all dependencies will be sorted by their key

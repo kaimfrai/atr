@@ -2,7 +2,12 @@ export module Evaluation.Archetype.Product;
 
 import Evaluation.Shared;
 
-import <Function/ConstantIDMap.hpp>;
+import Function.ConstantIDMap;
+
+#include <Stateless/Map.hpp>
+#include <ID/Func.hpp>
+#include <ID/StringLiteral.hpp>
+#include <PackTemplate/Type.hpp>
 
 export namespace
 	Function

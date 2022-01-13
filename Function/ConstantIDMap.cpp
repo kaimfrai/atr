@@ -1,12 +1,14 @@
-#pragma once
+export module Function.ConstantIDMap;
 
-#include <Function/DependencyIDMap.hpp>
-#include <Function/StaticDependency.hpp>
-#include <Function/DataDependencyItem.hpp>
+export import Function.DependencyIDMap;
+export import Function.StaticDependency;
+export import Function.DataDependencyItem;
+
+#include <ID/Func.hpp>
 #include <ID/Data.hpp>
 #include <ID/StringLiteral.hpp>
 
-namespace
+export namespace
 	Function
 {
 	template
@@ -21,11 +23,11 @@ namespace
 		t_tConstant
 			Constant
 		;
-		
+
 		t_tTargetIdentifier
 			TargetID
 		;
-		
+
 		constexpr
 		explicit
 			ConstantIDMap
@@ -42,7 +44,7 @@ namespace
 			}
 		{}
 	};
-	
+
 	/// intended for CRTP
 	template
 		<	typename
@@ -75,7 +77,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// creates an DataDependencyItem from a ConstantIDMap
 	template
 		<	ConstantIDMap
@@ -94,7 +96,7 @@ namespace
 				.	TargetID
 			>
 		;
-		
+
 		return
 			DataDependencyItem
 			{	TargetDataID
@@ -103,7 +105,7 @@ namespace
 			}
 		;
 	}
-	
+
 	/// creates an FuncDependencyItem from an owner and a FuncIDMap
 	template
 		<	FuncIDMap
@@ -122,7 +124,7 @@ namespace
 				.	TargetID
 			>
 		;
-		
+
 		constexpr
 		auto
 			OriginFuncID
@@ -131,7 +133,7 @@ namespace
 				.	OriginID
 			>
 		;
-		
+
 		return
 			FuncDependencyItem
 			{	TargetFuncID
@@ -143,15 +145,14 @@ namespace
 			}
 		;
 	}
-	
+
 	template
 		<	ID::StringLiteral
 				t_vFuncID
 		,	auto
 			...	t_vpIDMap
 		>
-	static constexpr
-	auto
+	auto constexpr inline
 		StaticDependencyInfo
 	=	MakeStaticDependencyInfo
 		<	t_vFuncID

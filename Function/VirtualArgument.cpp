@@ -1,11 +1,11 @@
-#pragma once
+export module Function.VirtualArgument;
 
-#include <Function/Address.hpp>
-#include <Function/Body.hpp>
+export import Function.Address;
+export import Function.Body;
 #include <ID/Func.hpp>
 #include <Meta/TypeInfo.hpp>
 
-namespace
+export namespace
 	Function
 {
 	template
@@ -61,11 +61,11 @@ namespace
 				)
 				noexcept(t_bNoexcept)
 		;
-		
+
 		FunctionType
 		*	Function
 		{};
-		
+
 		template
 			<	typename
 					t_tObject
@@ -86,7 +86,7 @@ namespace
 				>()
 			}
 		{}
-		
+
 		constexpr
 		auto
 			operator()
@@ -114,7 +114,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// helper alias. builds a function ID type and extracts raw signature and noexcept qualifier
 	template
 		<	ID::StringLiteral
@@ -138,8 +138,8 @@ namespace
 				()
 		>
 	;
-	
-	
+
+
 	template
 		<	typename
 			...	t_tpVirtualItem
@@ -154,7 +154,7 @@ namespace
 			::	operator()
 			...
 		;
-		
+
 		template
 			<	typename
 					t_tObject
@@ -172,7 +172,7 @@ namespace
 			...
 		{}
 	};
-	
+
 	template
 		<	typename
 				t_tErased
@@ -187,7 +187,7 @@ namespace
 			...
 		> VTable
 		;
-		
+
 		t_tErased
 			ErasedArgument
 		;
@@ -211,7 +211,7 @@ namespace
 				)
 			}
 		{}
-		
+
 		template
 			<	ID::FuncInstance
 					t_tFuncID
@@ -241,7 +241,7 @@ namespace
 			;
 		}
 	};
-	
+
 	template
 		<	typename
 				t_tErased
@@ -256,11 +256,11 @@ namespace
 			...
 		>	VTable
 		;
-		
+
 		t_tErased
 			ErasedElement
 		;
-		
+
 	public:
 		template
 			<	Std::TriviallyCopyable
@@ -304,7 +304,7 @@ namespace
 				...
 			};
 		}
-		
+
 		template
 			<	ID::FuncInstance
 					t_tFuncID
@@ -334,7 +334,7 @@ namespace
 				)
 			;
 		}
-		
+
 		template
 			<	ID::FuncInstance
 					t_tFuncID
@@ -365,7 +365,7 @@ namespace
 			;
 		}
 	};
-	
+
 	template
 		<	std::size_t
 				t_nMaxSize

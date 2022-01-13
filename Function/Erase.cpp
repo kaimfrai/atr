@@ -1,12 +1,12 @@
-#pragma once
+export module Function.Erase;
 
 #include <Meta/Template.hpp>
 #include <Meta/TypeInfo.hpp>
 #include <Std/Concepts.hpp>
 
-#include <memory>
+export import Std;
 
-namespace
+export namespace
 	Function
 {
 	/// erases type information from an argument

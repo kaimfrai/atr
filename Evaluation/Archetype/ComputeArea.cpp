@@ -4,8 +4,8 @@ import Evaluation.Shared;
 import Evaluation.Archetype.ReturnMember;
 import Evaluation.Archetype.Product;
 
-import <Function/VirtualArgument.hpp>;
-import <Function/ConstantIDMap.hpp>;
+import Function.VirtualArgument;
+import Function.ConstantIDMap;
 
 export namespace
 	Shapes2D

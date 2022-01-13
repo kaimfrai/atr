@@ -1,14 +1,14 @@
-#pragma once
+export module Function.Address;
 
-#include <Function/Erase.hpp>
-#include <Function/Signature.hpp>
+export import Function.Erase;
+export import Function.Signature;
 #include <ID/Func.hpp>
 #include <Std/FunctionTraits.hpp>
 #include <Std/Concepts.hpp>
 
 #include <functional>
 
-namespace
+export namespace
 	Function
 {
 	template
@@ -32,7 +32,7 @@ namespace
 				...
 			)
 		{}
-		
+
 		static constexpr
 		auto
 			Address
@@ -44,7 +44,7 @@ namespace
 			>
 		;
 	};
-	
+
 	template
 		<	typename
 				t_tStaticDependency
@@ -128,7 +128,7 @@ namespace
 			)::	Address
 		;
 	}
-	
+
 	/// stores the address to the implementation of the function
 	template
 		<	ID::FuncInstance
@@ -153,7 +153,7 @@ namespace
 			>()
 		>::	IsNoexcept()
 	;
-	
+
 	/// invokes the function specified with the given FuncID
 	template
 		<	ID::FuncInstance
@@ -200,7 +200,7 @@ namespace
 			)
 		;
 	}
-	
+
 	/// prevents recursive instantiation of Address
 	template
 		<	auto
@@ -214,7 +214,7 @@ namespace
 			()
 		=	default
 		;
-			
+
 		template
 		<	ID::FuncInstance
 				t_tFuncID
@@ -231,7 +231,7 @@ namespace
 				>
 			)
 		{}
-		
+
 		[[nodiscard]]
 		constexpr
 		auto
@@ -242,7 +242,7 @@ namespace
 			;
 		}
 	};
-	
+
 	template
 		<	ID::FuncInstance
 				t_tFuncID

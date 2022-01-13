@@ -8,7 +8,7 @@ import Evaluation.Archetype.ComputeVolume;
 
 export import Archetype.Instance;
 import <Archetype/LayoutInfo.hpp>;
-import <Function/Address.hpp>;
+import Function.Address;
 
 export namespace
 	Archetype

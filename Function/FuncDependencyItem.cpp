@@ -1,11 +1,11 @@
-#pragma once
+export module Function.FuncDependencyItem;
 
 #include <ID/Func.hpp>
 #include <Stateless/Map.hpp>
 #include <Stateless/Type.hpp>
 #include <Std/FunctionTraits.hpp>
 
-namespace
+export namespace
 	Function
 {
 	/// maps a FuncID to a function pointer

@@ -1,0 +1,41 @@
+module Std_1 {
+	module Concepts {
+		header "Concepts.hpp"
+		export *
+	}
+
+	module FunctionTraits {
+		header "FunctionTraits.hpp"
+		export *
+	}
+
+	module Math {
+		header "Math.hpp"
+		export *
+	}
+
+	module QualifierTemplate {
+		header "QualifierTemplate.hpp"
+		export *
+	}
+
+	module Size {
+		header "Size.hpp"
+		export *
+	}
+
+	module TemplateConcepts {
+		header "TemplateConcepts.hpp"
+		export *
+	}
+
+	module TemplateTraits {
+		header "TemplateTraits.hpp"
+		export *
+	}
+
+	module TypeTraits {
+		header "TypeTraits.hpp"
+		export *
+	}
+}

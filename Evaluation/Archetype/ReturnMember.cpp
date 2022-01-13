@@ -3,7 +3,7 @@ export module Evaluation.Archetype.ReturnMember;
 import Evaluation.Shared;
 
 export import Archetype.Instance;
-import <Function/ConstantIDMap.hpp>;
+import Function.ConstantIDMap;
 
 export namespace
 	Function

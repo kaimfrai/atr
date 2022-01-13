@@ -1,12 +1,12 @@
-#pragma once
+export module Function.Signature;
 
-#include <Function/Body.hpp>
-#include <Function/StaticDependency.hpp>
-#include <Function/ArgumentDependency.hpp>
+export import Function.Body;
+export import Function.StaticDependency;
+export import Function.ArgumentDependency;
 
 #include <ID/Func.hpp>
 
-namespace
+export namespace
 	Function
 {
 	/// to be instantiated and compiled in a separate .cpp file with extern template
@@ -17,7 +17,7 @@ namespace
 		,	ArgumentDependencyInstance
 			...	t_tpDependency
 		>
-	static auto
+	auto constexpr
 		Signature
 		(	typename
 			t_tpDependency

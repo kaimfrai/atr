@@ -1,6 +1,6 @@
-#pragma once
+export module Function.ArgumentDependency;
 
-#include <Function/Dependency.hpp>
+export import Function.Dependency;
 #include <ID/Func.hpp>
 #include <ID/Data.hpp>
 #include <Meta/Template.hpp>
@@ -9,10 +9,9 @@
 #include <Stateless/Map.hpp>
 #include <Std/Concepts.hpp>
 
-#include <functional>
-#include <utility>
+export import Std;
 
-namespace
+export namespace
 	Function
 {
 	/// wraps around an object and provides member access via dependency maps
@@ -33,21 +32,21 @@ namespace
 			ArgumentType
 		=	t_tArgument
 		;
-		
+
 		t_tArgument
 			Argument
 		;
-		
+
 		[[no_unique_address]]
 		t_tDataDependencyMap
 			DataDependencyMap
 		{};
-		
+
 		[[no_unique_address]]
 		t_tFuncDependencyMap
 			FuncDependencyMap
 		{};
-		
+
 		/// access data of the object
 		[[nodiscard]]
 		constexpr
@@ -67,7 +66,7 @@ namespace
 				)
 			;
 		}
-		
+
 		/// call functions of the object
 		template
 			<	typename
@@ -99,7 +98,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// instances of ArgumentDependency
 	template
 		<	typename
@@ -112,7 +111,7 @@ namespace
 		,	ArgumentDependency
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tArgument

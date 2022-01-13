@@ -1,8 +1,8 @@
-#pragma once
+export module Function.DependencyIDMap;
 
-#include <Function/Address.hpp>
-#include <Function/ArgumentDependency.hpp>
-#include <Function/StaticDependency.hpp>
+export import Function.Address;
+export import Function.ArgumentDependency;
+export import Function.StaticDependency;
 #include <Layout/MemberOffset.hpp>
 #include <ID/Func.hpp>
 #include <ID/Data.hpp>
@@ -13,7 +13,7 @@
 #include <Std/Concepts.hpp>
 #include <Archetype/LayoutInfo.hpp>
 
-namespace
+export namespace
 	Function
 {
 	/// maps one Identifier to another
@@ -339,8 +339,7 @@ namespace
 		,	auto
 			...	t_vpIDMap
 		>
-	static constexpr
-	auto
+	auto constexpr inline
 		ArgumentDependencyInfo
 	=	MakeArgumentDependencyInfo
 		<	t_tOwner

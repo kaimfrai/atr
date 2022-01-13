@@ -37,6 +37,7 @@ add_subdirectory(Meta)
 add_subdirectory(Test)
 add_subdirectory(ThirdParty)
 add_subdirectory(Archetype)
+add_subdirectory(Function)
 add_subdirectory(Evaluation)
 add_subdirectory(Legacy)
 

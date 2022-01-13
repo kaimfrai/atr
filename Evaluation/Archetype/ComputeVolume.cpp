@@ -4,8 +4,8 @@ import Evaluation.Shared;
 export import Evaluation.Archetype.ReturnMember;
 export import Evaluation.Archetype.Product;
 
-import <Function/VirtualArgument.hpp>;
-export import <Function/ConstantIDMap.hpp>;
+import Function.VirtualArgument;
+export import Function.ConstantIDMap;
 
 export namespace
 	Bodies3D

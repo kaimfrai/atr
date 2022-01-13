@@ -1,13 +1,13 @@
-#pragma once
+export module Function.Body;
 
-#include <Function/StaticDependency.hpp>
-#include <Function/ArgumentDependency.hpp>
+export import Function.StaticDependency;
+export import Function.ArgumentDependency;
 #include <ID/Func.hpp>
 #include <ID/StringLiteral.hpp>
 #include <Meta/TypeInfo.hpp>
 #include <Std/Concepts.hpp>
 
-namespace
+export namespace
 	Function
 {
 	/// the body of a function. needs to be defined separately.
@@ -20,8 +20,7 @@ namespace
 		,	ArgumentDependencyInstance
 			...	t_tpDependency
 		>
-	static inline
-	auto
+	auto inline
 		Body
 		(	t_tFuncID
 		,	t_tpDependency
@@ -61,7 +60,7 @@ namespace
 			)
 		)
 	;
-	
+
 	/// the type returned by a call to Body
 	template
 		<	StaticDependencyInstance

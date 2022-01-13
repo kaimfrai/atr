@@ -10,7 +10,7 @@ import Evaluation.Archetype.Sphere;
 import Evaluation.Archetype.ComputeVolume;
 import Evaluation.Shared;
 
-import <Function/VirtualArgument.hpp>;
+import Function.VirtualArgument;
 
 static_assert
 (	Function::Address<ID::FuncT<"ComputeVolume">, Bodies3D::Head const&>()
