@@ -1,11 +1,9 @@
-#pragma once
+export module Evaluation.ReplicationBodies;
 
-#include <Evaluation/Shared.hpp>
+export import Evaluation.Shared;
+export import Std;
 
-#include <numbers>
-#include <utility>
-
-namespace
+export namespace
 	Bodies3D
 {
 	struct
@@ -18,8 +16,8 @@ namespace
 			Color
 		;
 	};
-	
-	static auto
+
+	auto constexpr
 		ComputeVolumeCube
 		(	void const
 			*	i_aObject
@@ -37,7 +35,7 @@ namespace
 				)
 			)
 		;
-		
+
 		return
 			aCube
 			->	Width
@@ -47,7 +45,7 @@ namespace
 			->	Width
 		;
 	}
-	
+
 	struct
 		Cuboid
 	{
@@ -64,8 +62,8 @@ namespace
 			Color
 		;
 	};
-	
-	static auto
+
+	auto constexpr
 		ComputeVolumeCuboid
 		(	void const
 			*	i_aObject
@@ -83,7 +81,7 @@ namespace
 				)
 			)
 		;
-		
+
 		return
 			aCuboid
 			->	Depth
@@ -93,7 +91,7 @@ namespace
 			->	Width
 		;
 	}
-	
+
 	struct
 		Pyramid
 	{
@@ -110,8 +108,8 @@ namespace
 			Color
 		;
 	};
-	
-	static auto
+
+	auto constexpr
 		ComputeVolumePyramid
 		(	void const
 			*	i_aObject
@@ -129,7 +127,7 @@ namespace
 				)
 			)
 		;
-		
+
 		return
 			Fraction
 			<	1ll
@@ -143,7 +141,7 @@ namespace
 			->	Width
 		;
 	}
-	
+
 	struct
 		Ellipsoid
 	{
@@ -160,8 +158,8 @@ namespace
 			Color
 		;
 	};
-	
-	static auto
+
+	auto constexpr
 		ComputeVolumeEllipsoid
 		(	void const
 			*	i_aObject
@@ -179,11 +177,11 @@ namespace
 				)
 			)
 		;
-		
+
 		return
 			πFraction
-			<	1_sz
-			,	6_sz
+			<	1z
+			,	6z
 			>{}
 		*	aEllipsoid
 			->	Depth
@@ -193,7 +191,7 @@ namespace
 			->	Width
 		;
 	}
-	
+
 	struct
 		Sphere
 	{
@@ -204,8 +202,8 @@ namespace
 			Color
 		;
 	};
-	
-	static auto
+
+	auto constexpr
 		ComputeVolumeSphere
 		(	void const
 			*	i_aObject
@@ -223,11 +221,11 @@ namespace
 				)
 			)
 		;
-		
+
 		return
 			πFraction
-			<	1_sz
-			,	6_sz
+			<	1z
+			,	6z
 			>{}
 		*	aSphere
 			->	Width
@@ -237,7 +235,7 @@ namespace
 			->	Width
 		;
 	}
-	
+
 	struct
 		Cylinder
 	{
@@ -251,8 +249,8 @@ namespace
 			Color
 		;
 	};
-	
-	static auto
+
+	auto constexpr
 		ComputeVolumeCylinder
 		(	void const
 			*	i_aObject
@@ -270,11 +268,11 @@ namespace
 				)
 			)
 		;
-		
+
 		return
 			πFraction
-			<	1_sz
-			,	4_sz
+			<	1z
+			,	4z
 			>{}
 		*	aCylinder
 			->	Depth
@@ -284,7 +282,7 @@ namespace
 			->	Width
 		;
 	}
-	
+
 	struct
 		Cone
 	{
@@ -298,8 +296,8 @@ namespace
 			Color
 		;
 	};
-	
-	static auto
+
+	auto constexpr
 		ComputeVolumeCone
 		(	void const
 			*	i_aObject
@@ -317,11 +315,11 @@ namespace
 				)
 			)
 		;
-		
+
 		return
 			πFraction
-			<	1_sz
-			,	12_sz
+			<	1z
+			,	12z
 			>{}
 		*	aCone
 			->	Depth
@@ -331,7 +329,7 @@ namespace
 			->	Width
 		;
 	}
-	
+
 	struct
 		Head
 	{
@@ -354,16 +352,7 @@ namespace
 			ColorRightEye
 		;
 	};
-	
-	static_assert(SizeMinimal<Cube, 1>);
-	static_assert(SizeMinimal<Cuboid, 3>);
-	static_assert(SizeMinimal<Pyramid, 3>);
-	static_assert(SizeMinimal<Sphere, 1>);
-	static_assert(SizeMinimal<Cylinder, 2>);
-	static_assert(SizeMinimal<Cone, 2>);
-	static_assert(SizeMinimal<Ellipsoid, 3>);
-	static_assert(SizeMinimal<Head, 3, 3>);
-	
+
 	struct
 		VolumeComputer
 	{
@@ -375,7 +364,7 @@ namespace
 		noexcept
 		->	Float
 		;
-		
+
 		union
 		{	std::byte
 				m_vAny
@@ -405,7 +394,7 @@ namespace
 				m_vHead
 			;
 		};
-		
+
 		constexpr
 			VolumeComputer
 			(	std::in_place_type_t
@@ -418,7 +407,7 @@ namespace
 		,	m_vCube
 			{}
 		{}
-		
+
 		constexpr
 			VolumeComputer
 			(	std::in_place_type_t
@@ -431,7 +420,7 @@ namespace
 		,	m_vCuboid
 			{}
 		{}
-		
+
 		constexpr
 			VolumeComputer
 			(	std::in_place_type_t
@@ -444,7 +433,7 @@ namespace
 		,	m_vPyramid
 			{}
 		{}
-		
+
 		constexpr
 			VolumeComputer
 			(	std::in_place_type_t
@@ -457,7 +446,7 @@ namespace
 		,	m_vSphere
 			{}
 		{}
-		
+
 		constexpr
 			VolumeComputer
 			(	std::in_place_type_t
@@ -470,7 +459,7 @@ namespace
 		,	m_vCylinder
 			{}
 		{}
-		
+
 		constexpr
 			VolumeComputer
 			(	std::in_place_type_t
@@ -483,7 +472,7 @@ namespace
 		,	m_vCone
 			{}
 		{}
-		
+
 		constexpr
 			VolumeComputer
 			(	std::in_place_type_t
@@ -496,7 +485,7 @@ namespace
 		,	m_vEllipsoid
 			{}
 		{}
-		
+
 		constexpr
 			VolumeComputer
 			(	std::in_place_type_t
@@ -509,7 +498,7 @@ namespace
 		,	m_vHead
 			{}
 		{}
-		
+
 		auto
 			ComputeVolume
 			()	const
@@ -524,3 +513,12 @@ namespace
 		}
 	};
 }
+
+static_assert(SizeMinimal<Bodies3D::Cube, 1, 1>);
+static_assert(SizeMinimal<Bodies3D::Cuboid, 3, 1>);
+static_assert(SizeMinimal<Bodies3D::Pyramid, 3, 1>);
+static_assert(SizeMinimal<Bodies3D::Sphere, 1, 1>);
+static_assert(SizeMinimal<Bodies3D::Cylinder, 2, 1>);
+static_assert(SizeMinimal<Bodies3D::Cone, 2, 1>);
+static_assert(SizeMinimal<Bodies3D::Ellipsoid, 3, 1>);
+static_assert(SizeMinimal<Bodies3D::Head, 3, 3>);

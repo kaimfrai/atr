@@ -1,6 +1,6 @@
-#include "CRTPBodies.hpp"
+import Evaluation.CRTPBodies;
 
-#include <variant>
+import Std;
 
 auto
 	main
@@ -15,7 +15,7 @@ auto
 	using namespace
 		Bodies3D
 	;
-	
+
 	using
 		Body3D
 	=	std::variant

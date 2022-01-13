@@ -1,9 +1,8 @@
-#pragma once
+export module Evaluation.CRTPBodies;
 
-#include <Evaluation/CRTPShapes.hpp>
-#include "Shared.hpp"
+export import Evaluation.CRTPShapes;
 
-namespace
+export namespace
 	Bodies3D
 {
 	template
@@ -27,7 +26,7 @@ namespace
 				>(	this
 				)
 			;
-			
+
 			return
 				rBody
 				.	GetComputeVolumeMultiplier
@@ -44,7 +43,7 @@ namespace
 			;
 		}
 	};
-	
+
 	template
 		<	typename
 				t_tBody
@@ -60,7 +59,7 @@ namespace
 		t_tShape
 			Shapes2D
 		;
-		
+
 		auto
 			GetHeight
 			()	const
@@ -74,7 +73,7 @@ namespace
 					()
 			;
 		}
-		
+
 		auto
 			GetWidth
 			()	const
@@ -89,7 +88,7 @@ namespace
 			;
 		}
 	};
-	
+
 	template
 		<	typename
 				t_tBody
@@ -114,14 +113,14 @@ namespace
 			;
 		}
 	};
-	
+
 	struct
 		SeparateDepth
 	{
 		Float
 			Depth
 		;
-		
+
 		auto
 			GetDepth
 			()	const
@@ -134,7 +133,7 @@ namespace
 			;
 		}
 	};
-	
+
 
 	template
 		<	typename
@@ -161,7 +160,7 @@ namespace
 			;
 		}
 	};
-	
+
 	struct
 		Cube
 	:	CubicBody
@@ -172,7 +171,7 @@ namespace
 		<	Cube
 		>
 	{};
-	
+
 	struct
 		Cuboid
 	:	CubicBody
@@ -181,7 +180,7 @@ namespace
 		>
 	,	SeparateDepth
 	{};
-	
+
 	template
 		<	typename
 				t_tBody
@@ -209,7 +208,7 @@ namespace
 			;
 		}
 	};
-	
+
 	struct
 		Pyramid
 	:	PyramidicBody
@@ -218,7 +217,7 @@ namespace
 		>
 	,	SeparateDepth
 	{};
-	
+
 	template
 		<	typename
 				t_tBody
@@ -240,13 +239,13 @@ namespace
 		{
 			return
 				πFraction
-				<	1_sz
-				,	6_sz
+				<	1z
+				,	6z
 				>{}
 			;
 		}
 	};
-	
+
 	template
 		<	typename
 				t_tSphere
@@ -261,14 +260,14 @@ namespace
 		<	t_tSphere
 		>
 	{};
-	
+
 	struct
 		Sphere
 	:	BasicSphere
 		<	Sphere
 		>
 	{};
-	
+
 	struct
 		Cylinder
 	:	ExtendedShape
@@ -285,13 +284,13 @@ namespace
 		{
 			return
 				πFraction
-				<	1_sz
-				,	4_sz
+				<	1z
+				,	4z
 				>{}
 			;
 		}
 	};
-	
+
 	struct
 		Cone
 	:	ExtendedShape
@@ -308,13 +307,13 @@ namespace
 		{
 			return
 				πFraction
-				<	1_sz
-				,	12_sz
+				<	1z
+				,	12z
 				>{}
 			;
 		}
 	};
-	
+
 	struct
 		Ellipsoid
 	:	SphericBody
@@ -323,7 +322,7 @@ namespace
 		>
 	,	SeparateDepth
 	{};
-	
+
 	struct
 		Head
 	:	BasicSphere
@@ -337,22 +336,23 @@ namespace
 			RightEye
 		;
 	};
-	
-	static_assert(AdditionalSize<Cube, 1> == 4);
-	static_assert(AdditionalSize<Cuboid, 3> == 4);
-	static_assert(AdditionalSize<Pyramid, 3> == 4);
-	static_assert(AdditionalSize<Sphere, 1> == 4);
-	static_assert(AdditionalSize<Cylinder, 2> == 4);
-	static_assert(AdditionalSize<Cone, 2> == 4);
-	static_assert(AdditionalSize<Ellipsoid, 3> == 4);
-	static_assert(AdditionalSize<Head, 3, 3> == 12);
-	
-	static_assert(SizeMinimal<Cube, 1>);
-	static_assert(SizeMinimal<Cuboid, 3>);
-	static_assert(SizeMinimal<Pyramid, 3>);
-	static_assert(SizeMinimal<Sphere, 1>);
-	static_assert(SizeMinimal<Cylinder, 2>);
-	static_assert(SizeMinimal<Cone, 2>);
-	static_assert(SizeMinimal<Ellipsoid, 3>);
-	static_assert(not SizeMinimal<Head, 3, 3>);
 }
+
+
+static_assert(AdditionalSize<Bodies3D::Cube, 1, 1> == 4);
+static_assert(AdditionalSize<Bodies3D::Cuboid, 3, 1> == 4);
+static_assert(AdditionalSize<Bodies3D::Pyramid, 3, 1> == 4);
+static_assert(AdditionalSize<Bodies3D::Sphere, 1, 1> == 4);
+static_assert(AdditionalSize<Bodies3D::Cylinder, 2, 1> == 4);
+static_assert(AdditionalSize<Bodies3D::Cone, 2, 1> == 4);
+static_assert(AdditionalSize<Bodies3D::Ellipsoid, 3, 1> == 4);
+static_assert(AdditionalSize<Bodies3D::Head, 3, 3> == 12);
+
+static_assert(SizeMinimal<Bodies3D::Cube, 1, 1>);
+static_assert(SizeMinimal<Bodies3D::Cuboid, 3, 1>);
+static_assert(SizeMinimal<Bodies3D::Pyramid, 3, 1>);
+static_assert(SizeMinimal<Bodies3D::Sphere, 1, 1>);
+static_assert(SizeMinimal<Bodies3D::Cylinder, 2, 1>);
+static_assert(SizeMinimal<Bodies3D::Cone, 2, 1>);
+static_assert(SizeMinimal<Bodies3D::Ellipsoid, 3, 1>);
+static_assert(not SizeMinimal<Bodies3D::Head, 3, 3>);

@@ -1,8 +1,8 @@
-#pragma once
+export module Evaluation.VirtualBodies;
 
-#include <Evaluation/VirtualShapes.hpp>
+export import Evaluation.VirtualShapes;
 
-namespace
+export namespace
 	Bodies3D
 {
 	struct
@@ -17,7 +17,7 @@ namespace
 			&
 		=	0
 		;
-		
+
 		virtual
 		auto
 			GetHeight
@@ -27,7 +27,7 @@ namespace
 			&
 		=	0
 		;
-		
+
 		virtual
 		auto
 			GetWidth
@@ -37,7 +37,7 @@ namespace
 			&
 		=	0
 		;
-		
+
 		virtual
 		auto
 			ComputeVolume
@@ -46,7 +46,7 @@ namespace
 		->	Float
 		=	0
 		;
-		
+
 		virtual
 			compl
 			IBody
@@ -55,7 +55,7 @@ namespace
 		=	default
 		;
 	};
-	
+
 	struct
 		BasicBody
 	:	IBody
@@ -68,7 +68,7 @@ namespace
 		->	Float
 		=	0
 		;
-		
+
 		auto
 			ComputeVolume
 			()	const
@@ -88,7 +88,7 @@ namespace
 			;
 		}
 	};
-	
+
 	template
 		<	typename
 				t_tShape
@@ -100,7 +100,7 @@ namespace
 		t_tShape
 			Shapes2D
 		;
-		
+
 		auto
 			GetHeight
 			()	const
@@ -115,7 +115,7 @@ namespace
 					()
 			;
 		}
-		
+
 		auto
 			GetWidth
 			()	const
@@ -155,7 +155,7 @@ namespace
 			;
 		}
 	};
-	
+
 	struct
 		Cube
 	:	CubicBody
@@ -177,7 +177,7 @@ namespace
 			;
 		}
 	};
-	
+
 	struct
 		Cuboid
 	:	CubicBody
@@ -187,7 +187,7 @@ namespace
 		Float
 			Depth
 		;
-		
+
 		auto
 			GetDepth
 			()	const
@@ -201,7 +201,7 @@ namespace
 			;
 		}
 	};
-	
+
 	template
 		<	typename
 				t_tShape
@@ -227,7 +227,7 @@ namespace
 			;
 		}
 	};
-	
+
 	struct
 		Pyramid
 	:	PyramidicBody
@@ -237,7 +237,7 @@ namespace
 		Float
 			Depth
 		;
-		
+
 		auto
 			GetDepth
 			()	const
@@ -251,7 +251,7 @@ namespace
 			;
 		}
 	};
-	
+
 	template
 		<	typename
 				t_tShape
@@ -271,13 +271,13 @@ namespace
 		{
 			return
 				πFraction
-				<	1_sz
-				,	6_sz
+				<	1z
+				,	6z
 				>{}
 			;
 		}
 	};
-	
+
 	struct
 		Sphere
 	:	SphericBody
@@ -299,7 +299,7 @@ namespace
 			;
 		}
 	};
-	
+
 	struct
 		Cylinder
 	:	ExtendedShape
@@ -309,7 +309,7 @@ namespace
 		Float
 			Depth
 		;
-		
+
 		auto
 			GetDepth
 			()	const
@@ -322,7 +322,7 @@ namespace
 				Depth
 			;
 		}
-		
+
 		auto
 			GetComputeVolumeMultiplier
 			()	const
@@ -332,13 +332,13 @@ namespace
 		{
 			return
 				πFraction
-				<	1_sz
-				,	4_sz
+				<	1z
+				,	4z
 				>{}
 			;
 		}
 	};
-	
+
 	struct
 		Cone
 	:	ExtendedShape
@@ -348,7 +348,7 @@ namespace
 		Float
 			Depth
 		;
-		
+
 		auto
 			GetDepth
 			()	const
@@ -361,7 +361,7 @@ namespace
 				Depth
 			;
 		}
-		
+
 		auto
 			GetComputeVolumeMultiplier
 			()	const
@@ -371,13 +371,13 @@ namespace
 		{
 			return
 				πFraction
-				<	1_sz
-				,	12_sz
+				<	1z
+				,	12z
 				>{}
 			;
 		}
 	};
-	
+
 	struct
 		Ellipsoid
 	:	SphericBody
@@ -387,7 +387,7 @@ namespace
 		Float
 			Depth
 		;
-		
+
 		auto
 			GetDepth
 			()	const
@@ -401,7 +401,7 @@ namespace
 			;
 		}
 	};
-	
+
 	struct
 		Head
 	:	Sphere
@@ -413,22 +413,22 @@ namespace
 			RightEye
 		;
 	};
-	
-	static_assert(AdditionalSize<Cube, 1> == 20);
-	static_assert(AdditionalSize<Cuboid, 3> == 20);
-	static_assert(AdditionalSize<Pyramid, 3> == 20);
-	static_assert(AdditionalSize<Sphere, 1> == 20);
-	static_assert(AdditionalSize<Cylinder, 2> == 20);
-	static_assert(AdditionalSize<Cone, 2> == 20);
-	static_assert(AdditionalSize<Ellipsoid, 3> == 20);
-	static_assert(AdditionalSize<Head, 3, 3> == 60);
-	
-	static_assert(not SizeMinimal<Cube, 1>);
-	static_assert(not SizeMinimal<Cuboid, 3>);
-	static_assert(not SizeMinimal<Pyramid, 3>);
-	static_assert(not SizeMinimal<Sphere, 1>);
-	static_assert(not SizeMinimal<Cylinder, 2>);
-	static_assert(not SizeMinimal<Cone, 2>);
-	static_assert(not SizeMinimal<Ellipsoid, 3>);
-	static_assert(not SizeMinimal<Head, 3, 3>);
 }
+
+static_assert(AdditionalSize<Bodies3D::Cube, 1, 1> == 20);
+static_assert(AdditionalSize<Bodies3D::Cuboid, 3, 1> == 20);
+static_assert(AdditionalSize<Bodies3D::Pyramid, 3, 1> == 20);
+static_assert(AdditionalSize<Bodies3D::Sphere, 1, 1> == 20);
+static_assert(AdditionalSize<Bodies3D::Cylinder, 2, 1> == 20);
+static_assert(AdditionalSize<Bodies3D::Cone, 2, 1> == 20);
+static_assert(AdditionalSize<Bodies3D::Ellipsoid, 3, 1> == 20);
+static_assert(AdditionalSize<Bodies3D::Head, 3, 3> == 60);
+
+static_assert(not SizeMinimal<Bodies3D::Cube, 1, 1>);
+static_assert(not SizeMinimal<Bodies3D::Cuboid, 3, 1>);
+static_assert(not SizeMinimal<Bodies3D::Pyramid, 3, 1>);
+static_assert(not SizeMinimal<Bodies3D::Sphere, 1, 1>);
+static_assert(not SizeMinimal<Bodies3D::Cylinder, 2, 1>);
+static_assert(not SizeMinimal<Bodies3D::Cone, 2, 1>);
+static_assert(not SizeMinimal<Bodies3D::Ellipsoid, 3, 1>);
+static_assert(not SizeMinimal<Bodies3D::Head, 3, 3>);

@@ -1,8 +1,8 @@
-#pragma once
+export module Evaluation.CRTPShapes;
 
-#include "Shared.hpp"
+export import Evaluation.Shared;
 
-namespace
+export namespace
 	Shapes2D
 {
 	template
@@ -15,7 +15,7 @@ namespace
 		RGBAColor
 			Color
 		;
-		
+
 		auto
 			ComputeArea
 			()	const
@@ -43,7 +43,7 @@ namespace
 			;
 		}
 	};
-	
+
 	template
 		<	typename
 				t_tShape
@@ -67,14 +67,14 @@ namespace
 			;
 		}
 	};
-	
+
 	struct
 		SeparateWidth
 	{
 		Float
 			Width
 		;
-		
+
 		auto
 			GetWidth
 			()	const
@@ -87,14 +87,14 @@ namespace
 			;
 		}
 	};
-	
+
 	struct
 		SeparateHeight
 	{
 		Float
 			Height
 		;
-		
+
 		auto
 			GetHeight
 			()	const
@@ -107,7 +107,7 @@ namespace
 			;
 		}
 	};
-	
+
 	template
 		<	typename
 				t_tShape
@@ -141,7 +141,7 @@ namespace
 		<	Square
 		>
 	{};
-	
+
 	struct
 		Rectangle
 	:	RectangularShape
@@ -149,7 +149,7 @@ namespace
 		>
 	,	SeparateHeight
 	{};
-	
+
 	template
 		<	typename
 				t_tShape
@@ -175,7 +175,7 @@ namespace
 			;
 		}
 	};
-	
+
 	struct
 		Triangle
 	:	TriangularShape
@@ -183,7 +183,7 @@ namespace
 		>
 	,	SeparateHeight
 	{};
-	
+
 	template
 		<	typename
 				t_tShape
@@ -203,13 +203,13 @@ namespace
 		{
 			return
 				πFraction
-				<	1_sz
-				,	4_sz
+				<	1z
+				,	4z
 				>{}
 			;
 		}
 	};
-	
+
 	struct
 		Circle
 	:	CircularShape
@@ -219,7 +219,7 @@ namespace
 		<	Circle
 		>
 	{};
-	
+
 	struct
 		Ellipse
 	:	CircularShape
@@ -227,16 +227,16 @@ namespace
 		>
 	,	SeparateHeight
 	{};
-	
-	static_assert(AdditionalSize<Square, 1> == 4);
-	static_assert(AdditionalSize<Rectangle, 2> == 4);
-	static_assert(AdditionalSize<Triangle, 2> == 4);
-	static_assert(AdditionalSize<Circle, 1> == 4);
-	static_assert(AdditionalSize<Ellipse, 2> == 4);
-	
-	static_assert(SizeMinimal<Square, 1>);
-	static_assert(SizeMinimal<Rectangle, 2>);
-	static_assert(SizeMinimal<Triangle, 2>);
-	static_assert(SizeMinimal<Circle, 1>);
-	static_assert(SizeMinimal<Ellipse, 2>);
 }
+
+static_assert(AdditionalSize<Shapes2D::Square, 1, 1> == 4);
+static_assert(AdditionalSize<Shapes2D::Rectangle, 2, 1> == 4);
+static_assert(AdditionalSize<Shapes2D::Triangle, 2, 1> == 4);
+static_assert(AdditionalSize<Shapes2D::Circle, 1, 1> == 4);
+static_assert(AdditionalSize<Shapes2D::Ellipse, 2, 1> == 4);
+
+static_assert(SizeMinimal<Shapes2D::Square, 1, 1>);
+static_assert(SizeMinimal<Shapes2D::Rectangle, 2, 1>);
+static_assert(SizeMinimal<Shapes2D::Triangle, 2, 1>);
+static_assert(SizeMinimal<Shapes2D::Circle, 1, 1>);
+static_assert(SizeMinimal<Shapes2D::Ellipse, 2, 1>);

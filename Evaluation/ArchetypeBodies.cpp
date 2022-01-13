@@ -1,8 +1,12 @@
-#pragma once
+export module Evaluation.ArchetypeBodies;
 
-#include <Evaluation/ArchetypeShapes.hpp>
+export import Evaluation.ArchetypeShapes;
+export import <Function/VirtualArgument.hpp>;
+export import <Function/DependencyIDMap.hpp>;
+export import <Archetype/LayoutInfo.hpp>;
+export import <Archetype/Instance.hpp>;
 
-namespace
+export namespace
 	Archetype
 {
 	template<>
@@ -19,7 +23,7 @@ namespace
 		,	Float
 		>
 	;
-	
+
 	template<>
 	constexpr inline
 	auto
@@ -35,7 +39,7 @@ namespace
 			<>
 		>
 	;
-	
+
 	template<>
 	constexpr inline
 	auto
@@ -70,7 +74,7 @@ namespace
 			>
 		)
 	;
-	
+
 	template<>
 	constexpr inline
 	auto
@@ -88,7 +92,7 @@ namespace
 			>
 		>
 	;
-	
+
 	template<>
 	constexpr inline
 	auto
@@ -106,7 +110,7 @@ namespace
 			>
 		>
 	;
-	
+
 	template<>
 	constexpr inline
 	auto
@@ -133,7 +137,7 @@ namespace
 			>
 		)
 	;
-	
+
 	template<>
 	constexpr inline
 	auto
@@ -165,7 +169,7 @@ namespace
 			>
 		>
 	;
-	
+
 	template<>
 	constexpr inline
 	auto
@@ -197,7 +201,7 @@ namespace
 			>
 		>
 	;
-	
+
 	template<>
 	constexpr inline
 	auto
@@ -218,7 +222,7 @@ namespace
 	;
 }
 
-namespace
+export namespace
 	Bodies3D
 {
 	using
@@ -227,74 +231,56 @@ namespace
 		<	"Cube"
 		>
 	;
-	
+
 	using
 		Cuboid
 	=	Archetype::Make
 		<	"Cuboid"
 		>
 	;
-	
+
 	using
 		Pyramid
 	=	Archetype::Make
 		<	"Pyramid"
 		>
 	;
-	
+
 	using
 		Sphere
 	=	Archetype::Make
 		<	"Sphere"
 		>
 	;
-	
+
 	using
 		Cylinder
 	=	Archetype::Make
 		<	"Cylinder"
 		>
 	;
-	
+
 	using
 		Cone
 	=	Archetype::Make
 		<	"Cone"
 		>
 	;
-	
+
 	using
 		Ellipsoid
 	=	Archetype::Make
 		<	"Ellipsoid"
 		>
 	;
-	
+
 	using
 		Head
 	=	Archetype::Make
 		<	"Head"
 		>
 	;
-	
-	static_assert(AdditionalSize<Cube, 1> == 4);
-	static_assert(AdditionalSize<Cuboid, 3> == 4);
-	static_assert(AdditionalSize<Pyramid, 3> == 4);
-	static_assert(AdditionalSize<Sphere, 1> == 4);
-	static_assert(AdditionalSize<Cylinder, 2> == 4);
-	static_assert(AdditionalSize<Cone, 2> == 4);
-	static_assert(AdditionalSize<Ellipsoid, 3> == 4);
-	static_assert(AdditionalSize<Head, 3, 3> == 4);
-	
-	static_assert(SizeMinimal<Cube, 1>);
-	static_assert(SizeMinimal<Cuboid, 3>);
-	static_assert(SizeMinimal<Pyramid, 3>);
-	static_assert(SizeMinimal<Sphere, 1>);
-	static_assert(SizeMinimal<Cylinder, 2>);
-	static_assert(SizeMinimal<Cone, 2>);
-	static_assert(SizeMinimal<Ellipsoid, 3>);
-	static_assert(SizeMinimal<Head, 3, 3>);
-	
+
 	using
 		VolumeComputer
 	=	Function::VirtualArgument
@@ -312,7 +298,7 @@ namespace
 	;
 }
 
-namespace
+export namespace
 	Function
 {
 	template
@@ -340,8 +326,7 @@ namespace
 		,	t_tBody const
 			&
 		>
-	static constexpr
-	auto
+	auto constexpr
 		MapAddress
 		(	ID::FuncT<"ComputeVolume">
 		,	t_tBody const
@@ -362,6 +347,26 @@ namespace
 			>()
 		;
 	}
-	
-	static_assert(Address<ID::FuncT<"ComputeVolume">, Bodies3D::Head const&>() == Address<ID::FuncT<"ComputeVolume">, Bodies3D::Sphere const&>());
 }
+
+
+static_assert(AdditionalSize<Bodies3D::Cube, 1, 1> == 4);
+static_assert(AdditionalSize<Bodies3D::Cuboid, 3, 1> == 4);
+static_assert(AdditionalSize<Bodies3D::Pyramid, 3, 1> == 4);
+static_assert(AdditionalSize<Bodies3D::Sphere, 1, 1> == 4);
+static_assert(AdditionalSize<Bodies3D::Cylinder, 2, 1> == 4);
+static_assert(AdditionalSize<Bodies3D::Cone, 2, 1> == 4);
+static_assert(AdditionalSize<Bodies3D::Ellipsoid, 3, 1> == 4);
+static_assert(AdditionalSize<Bodies3D::Head, 3, 3> == 4);
+
+static_assert(SizeMinimal<Bodies3D::Cube, 1, 1>);
+static_assert(SizeMinimal<Bodies3D::Cuboid, 3, 1>);
+static_assert(SizeMinimal<Bodies3D::Pyramid, 3, 1>);
+static_assert(SizeMinimal<Bodies3D::Sphere, 1, 1>);
+static_assert(SizeMinimal<Bodies3D::Cylinder, 2, 1>);
+static_assert(SizeMinimal<Bodies3D::Cone, 2, 1>);
+static_assert(SizeMinimal<Bodies3D::Ellipsoid, 3, 1>);
+static_assert(SizeMinimal<Bodies3D::Head, 3, 3>);
+
+
+static_assert(Function::Address<ID::FuncT<"ComputeVolume">, Bodies3D::Head const&>() == Function::Address<ID::FuncT<"ComputeVolume">, Bodies3D::Sphere const&>());

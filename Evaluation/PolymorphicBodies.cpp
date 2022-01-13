@@ -1,11 +1,9 @@
-#pragma once
+export module Evaluation.PolymorphicBodies;
 
-import Polymorphic;
-#include <Evaluation/CRTPBodies.hpp>
+export import Evaluation.CRTPBodies;
+export import Polymorphic;
 
-#include "Shared.hpp"
-
-namespace
+export namespace
 	Bodies3D
 {
 	struct

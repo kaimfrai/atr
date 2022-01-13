@@ -1,2 +1,3 @@
-add_module(Dyno.cpp)
-add_module(Polymorphic.cpp)
+add_subdirectory(Dyno)
+add_subdirectory(Polymorphic)
+add_subdirectory(Boost)

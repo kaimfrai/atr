@@ -89,6 +89,11 @@ function(add_module
 )
 	invoke_preprocessor(${module_interface_file} preprocessed_module_file)
 	read_module_name("${preprocessed_module_file}" module_name module_file)
+
+	if	(NOT module_name)
+		message(FATAL_ERROR "File ${module_interface_file} did not specify a valid module name!")
+	endif()
+
 	read_module_dependencies("${preprocessed_module_file}" module_dependencies module_dependency_files)
 	read_module_headerunits("${preprocessed_module_file}" module_header_units)
 

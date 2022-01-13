@@ -1,0 +1,110 @@
+module Pack_1 {
+	module Empty {
+		header "Empty.hpp"
+		export *
+	}
+
+	module Instance {
+		header "Instance.hpp"
+		export *
+	}
+
+	module Normalize {
+		header "Normalize.hpp"
+		export *
+	}
+
+	module Sequence {
+		header "Sequence.hpp"
+		export *
+	}
+
+	module Size {
+		header "Size.hpp"
+		export *
+	}
+
+	module Type {
+		header "Type.hpp"
+		export *
+	}
+
+	module Value {
+		header "Value.hpp"
+		export *
+	}
+}
+
+module Pack_2 {
+	module Template {
+		header "Template.hpp"
+		export *
+	}
+}
+
+module Pack_3 {
+	module Accumulate {
+		header "Accumulate.hpp"
+		export *
+	}
+
+	module Apply {
+		header "Apply.hpp"
+		export *
+	}
+
+	module Cast {
+		header "Cast.hpp"
+		export *
+	}
+
+	module Concat {
+		header "Concat.hpp"
+		export *
+	}
+
+	module Filter {
+		header "Filter.hpp"
+		export *
+	}
+
+	module Fold {
+		header "Fold.hpp"
+		export *
+	}
+
+	module MakeSequence {
+		header "MakeSequence.hpp"
+		export *
+	}
+
+	module Map {
+		header "Map.hpp"
+		export *
+	}
+
+	module Reduce {
+		header "Reduce.hpp"
+		export *
+	}
+
+	module Reverse {
+		header "Reverse.hpp"
+		export *
+	}
+
+	module Sort {
+		header "Sort.hpp"
+		export *
+	}
+
+	module SplitBest {
+		header "SplitBest.hpp"
+		export *
+	}
+
+	module Transform {
+		header "Transform.hpp"
+		export *
+	}
+}

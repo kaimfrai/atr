@@ -1,11 +1,10 @@
-#pragma once
+export module Evaluation.AnyBodies;
 
-#include "Shared.hpp"
-#include <Evaluation/CRTPBodies.hpp>
+export import Evaluation.CRTPBodies;
 
-#include <any>
+export import Std;
 
-namespace
+export namespace
 	Bodies3D
 {
 	struct
@@ -19,7 +18,7 @@ namespace
 		->	Float
 		=	0
 		;
-		
+
 		virtual
 			compl
 			IBody
@@ -28,7 +27,7 @@ namespace
 		=	default
 		;
 	};
-	
+
 	template
 		<	typename
 				t_tBody
@@ -40,7 +39,7 @@ namespace
 		t_tBody
 			m_vBody
 		;
-		
+
 		auto
 			ComputeVolume
 			()	const
@@ -55,7 +54,7 @@ namespace
 			;
 		}
 	};
-	
+
 	struct
 		AnyBody
 	{
@@ -70,7 +69,7 @@ namespace
 		->	IBody const
 			&
 		;
-		
+
 		template
 			<	typename
 					t_tBody
@@ -106,7 +105,7 @@ namespace
 				}
 			}
 		{}
-		
+
 		auto
 			operator->
 			()	const

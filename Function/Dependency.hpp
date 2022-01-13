@@ -2,6 +2,7 @@
 
 #include <Function/FuncDependencyItem.hpp>
 #include <Function/DataDependencyItem.hpp>
+#include <Function/Erase.hpp>
 #include <Pack/Sort.hpp>
 #include <Pack/Type.hpp>
 #include <Meta/Template.hpp>
@@ -26,7 +27,7 @@ namespace
 			(	i_vUnsorted
 			)
 		;
-		
+
 		return
 			vSortedDependencyPack
 			.	ApplyTo
@@ -35,7 +36,7 @@ namespace
 				)
 		;
 	}
-	
+
 	/// creates a TypeInfo of the argument-type
 	/// the type will convert to its erased form
 	constexpr
@@ -91,7 +92,7 @@ namespace
 					}
 				)
 			;
-			
+
 			return
 				i_vDependencyTemplate
 				(	ErasedTypeInfo

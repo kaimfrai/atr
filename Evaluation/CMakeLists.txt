@@ -1,59 +1,54 @@
+include_directories(
+	${CMAKE_SOURCE_DIR}
+)
+
+add_module(Shared.cpp)
+
+add_module(CRTPShapes.cpp)
+add_module(CRTPBodies.cpp)
+add_executable(
+	evaluation_variant
+		VariantMain.cpp
+)
+target_compile_options(
+	evaluation_variant
+		PRIVATE
+		-Wno-error
+		-Wno-everything
+)
+add_module_dependencies(evaluation_variant)
+
+add_module(AnyBodies.cpp)
+add_executable(
+	evaluation_any
+		AnyMain.cpp
+)
+target_compile_options(
+	evaluation_any
+		PRIVATE
+		-Wno-error
+		-Wno-everything
+)
+add_module_dependencies(evaluation_any)
+
+add_module(ArchetypeShapes.cpp)
+add_module(ArchetypeBodies.cpp)
 add_executable(
 	evaluation_archetype
 		ArchetypeMain.cpp
 )
-target_include_directories(
-	evaluation_archetype
-		PRIVATE
-		../
-)
 target_compile_options(
 	evaluation_archetype
 		PRIVATE
 		-Wno-error
 		-Wno-everything
 )
+add_module_dependencies(evaluation_archetype)
 
-add_executable(
-	evaluation_virtual
-		VirtualMain.cpp
-)
-target_include_directories(
-	evaluation_virtual
-		PRIVATE
-		../
-)
-target_compile_options(
-	evaluation_virtual
-		PRIVATE
-		-Wno-error
-		-Wno-everything
-)
-
-add_executable(
-	evaluation_replication
-		ReplicationMain.cpp
-)
-target_include_directories(
-	evaluation_replication
-		PRIVATE
-		../
-)
-target_compile_options(
-	evaluation_replication
-		PRIVATE
-		-Wno-error
-		-Wno-everything
-)
-
+add_module(DynoBodies.cpp)
 add_executable(
 	evaluation_dyno
 		DynoMain.cpp
-)
-target_include_directories(
-	evaluation_dyno
-		PRIVATE
-		../
 )
 target_compile_options(
 	evaluation_dyno
@@ -62,69 +57,58 @@ target_compile_options(
 		-Wno-error
 		-Wno-everything
 )
+add_module_dependencies(evaluation_dyno)
 
+add_module(PolymorphicBodies.cpp)
 add_executable(
 	evaluation_polymorphic
 		PolymorphicMain.cpp
 )
-target_include_directories(
-	evaluation_polymorphic
-		PRIVATE
-		../
-		../../cpp-from-the-sky-down/metaprogrammed_polymorphism/
-)
 target_compile_options(
 	evaluation_polymorphic
 		PRIVATE
 		-Wno-error
 		-Wno-everything
 )
+add_module_dependencies(evaluation_polymorphic)
 
+
+add_module(ReplicationBodies.cpp)
 add_executable(
-	evaluation_variant
-		VariantMain.cpp
-)
-target_include_directories(
-	evaluation_variant
-		PRIVATE
-		../
+	evaluation_replication
+		ReplicationMain.cpp
 )
 target_compile_options(
-	evaluation_variant
+	evaluation_replication
 		PRIVATE
 		-Wno-error
 		-Wno-everything
 )
+add_module_dependencies(evaluation_replication)
 
-
-add_executable(
-	evaluation_any
-		AnyMain.cpp
-)
-target_include_directories(
-	evaluation_any
-		PRIVATE
-		../
-)
-target_compile_options(
-	evaluation_any
-		PRIVATE
-		-Wno-error
-		-Wno-everything
-)
-
+add_module(TypeErasureBodies.cpp)
 add_executable(
 	evaluation_type_erasure
 		TypeErasureMain.cpp
 )
-target_include_directories(
-	evaluation_type_erasure
-		PRIVATE
-		../
-)
 target_compile_options(
 	evaluation_type_erasure
 		PRIVATE
 		-Wno-error
 		-Wno-everything
 )
+add_module_dependencies(evaluation_type_erasure)
+
+add_module(VirtualBodies.cpp)
+add_module(VirtualShapes.cpp)
+add_executable(
+	evaluation_virtual
+		VirtualMain.cpp
+)
+target_compile_options(
+	evaluation_virtual
+		PRIVATE
+		-Wno-error
+		-Wno-everything
+)
+add_module_dependencies(evaluation_virtual)

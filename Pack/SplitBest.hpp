@@ -2,10 +2,12 @@
 
 #include <Stateless/Tuple.hpp>
 #include <Pack/Fold.hpp>
+#include <Pack/Concat.hpp>
 #include <Pack/Size.hpp>
 #include <Pack/Instance.hpp>
 #include <Pack/Apply.hpp>
 #include <Pack/Value.hpp>
+#include <Meta/Pack.hpp>
 
 #include <functional>
 
@@ -28,7 +30,7 @@ namespace
 			()
 		=	default
 		;
-		
+
 		///	deduce template from arguments
 		constexpr
 		explicit
@@ -36,14 +38,14 @@ namespace
 			(	t_tCompare
 			)
 		{}
-		
+
 		static
 		constexpr
 		Stateless::Type auto
 			CompareObject
 		=	Stateless::Copy<t_tCompare>
 		;
-		
+
 		/// initially returns a pair of an empty pack and the only value
 		[[nodiscard]]
 		constexpr
@@ -62,7 +64,7 @@ namespace
 				}
 			;
 		}
-		
+
 		/// selects the best from current result and argument
 		[[nodiscard]]
 		constexpr
@@ -80,7 +82,7 @@ namespace
 			,	vCurrentBest
 			]=	i_vCurrentPair
 			;
-			
+
 			//	add argument to remaining if the the current best remains the best
 			if constexpr
 				(	CompareObject
@@ -116,7 +118,7 @@ namespace
 				;
 		}
 	};
-	
+
 	/// picks one info object from the pack that compares better than all other
 	/// returns a pair of the remaining elements and that object
 	/// note that the order of the remaining elements may change
@@ -140,7 +142,7 @@ namespace
 			)
 		;
 	}
-	
+
 	///	picks the given amount of maximal elements by use of ::std::greater
 	/// returns a pair of the remaining elements and the maximal objects
 	/// note that the order of the remaining elements may change while the maximal objects will be in ascending order
@@ -160,7 +162,7 @@ namespace
 			)
 		;
 	}
-	
+
 	///	picks the minimum info object by use of ::std::less
 	[[nodiscard]]
 	constexpr
@@ -178,12 +180,12 @@ namespace
 			(	i_vPack
 			)
 		;
-		
+
 		return
 			vResult
 		;
 	}
-	
+
 	///	picks the given amount of minimal elements by use of ::std::less
 	/// returns a pair of the remaining elements and the minimal objects
 	/// note that the order of the remaining elements may change while the minimal objects will be in ascending order
@@ -203,7 +205,7 @@ namespace
 			)
 		;
 	}
-	
+
 	///	picks the minimum info object by use of ::std::less
 	[[nodiscard]]
 	constexpr
@@ -221,12 +223,12 @@ namespace
 			(	i_vPack
 			)
 		;
-		
+
 		return
 			vResult
 		;
 	}
-	
+
 	static_assert
 		(	[]{
 				Stateless::Pair auto
@@ -248,7 +250,7 @@ namespace
 			}()
 		)
 	;
-	
+
 	static_assert
 		(	[]{
 				Stateless::Pair auto

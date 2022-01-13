@@ -1,0 +1,13 @@
+module Archetype_1 {
+	module LayoutInfo {
+		header "LayoutInfo.hpp"
+		export *
+	}
+}
+
+module Archetype_2 {
+	module Instance {
+		header "Instance.hpp"
+		export *
+	}
+}

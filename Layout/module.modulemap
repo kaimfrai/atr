@@ -1,0 +1,46 @@
+module Layout {
+	module Concatenate {
+		header "Concatenate.hpp"
+		export *
+	}
+
+	module DataMember {
+		header "DataMember.hpp"
+		export *
+	}
+
+	module DataMemberLayoutSplit {
+		header "DataMemberLayoutSplit.hpp"
+		export *
+	}
+
+	module Dublicate {
+		header "Dublicate.hpp"
+		export *
+	}
+
+	module Fork {
+		header "Fork.hpp"
+		export *
+	}
+
+	module Initializer {
+		header "Initializer.hpp"
+		export *
+	}
+
+	module LayoutCreator {
+		header "LayoutCreator.hpp"
+		export *
+	}
+
+	module MemberOffset {
+		header "MemberOffset.hpp"
+		export *
+	}
+
+	module Union {
+		header "Union.hpp"
+		export *
+	}
+}

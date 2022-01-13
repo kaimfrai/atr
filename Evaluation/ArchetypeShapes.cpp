@@ -1,6 +1,4 @@
-#pragma once
-
-#include "Shared.hpp"
+module;
 
 #include <Archetype/Instance.hpp>
 #include <Archetype/LayoutInfo.hpp>
@@ -14,7 +12,11 @@
 #include <ID/Func.hpp>
 #include <ID/Data.hpp>
 
-namespace
+export module Evaluation.ArchetypeShapes;
+
+export import Evaluation.Shared;
+
+export namespace
 	Archetype
 {
 	template<>
@@ -36,7 +38,7 @@ namespace
 		,	RGBAColor
 		>
 	;
-	
+
 	template<>
 	constexpr inline
 	auto
@@ -52,7 +54,7 @@ namespace
 			<>
 		>
 	;
-	
+
 	template<>
 	constexpr inline
 	auto
@@ -71,7 +73,7 @@ namespace
 		,	"Width"
 		>
 	;
-	
+
 	template<>
 	constexpr inline
 	auto
@@ -89,7 +91,7 @@ namespace
 			>
 		>
 	;
-	
+
 	template<>
 	constexpr inline
 	auto
@@ -107,7 +109,7 @@ namespace
 			>
 		>
 	;
-	
+
 	template<>
 	constexpr inline
 	auto
@@ -136,7 +138,7 @@ namespace
 	;
 }
 
-namespace
+export namespace
 	Shapes2D
 {
 	using
@@ -145,47 +147,35 @@ namespace
 		<	"Square"
 		>
 	;
-	
+
 	using
 		Rectangle
 	=	Archetype::Make
 		<	"Rectangle"
 		>
 	;
-	
+
 	using
 		Triangle
 	=	Archetype::Make
 		<	"Triangle"
 		>
 	;
-	
+
 	using
 		Circle
 	=	Archetype::Make
 		<	"Circle"
 		>
 	;
-	
+
 	using
 		Ellipse
 	=	Archetype::Make
 		<	"Ellipse"
 		>
 	;
-	
-	static_assert(AdditionalSize<Square, 1> == 4);
-	static_assert(AdditionalSize<Rectangle, 2> == 4);
-	static_assert(AdditionalSize<Triangle, 2> == 4);
-	static_assert(AdditionalSize<Circle, 1> == 4);
-	static_assert(AdditionalSize<Ellipse, 2> == 4);
-	
-	static_assert(SizeMinimal<Square, 1>);
-	static_assert(SizeMinimal<Rectangle, 2>);
-	static_assert(SizeMinimal<Triangle, 2>);
-	static_assert(SizeMinimal<Circle, 1>);
-	static_assert(SizeMinimal<Ellipse, 2>);
-	
+
 	using
 		AreaComputer
 	=	Function::VirtualArgument
@@ -203,7 +193,7 @@ namespace
 	;
 }
 
-namespace
+export namespace
 	Function
 {
 	using
@@ -215,10 +205,9 @@ namespace
 	using
 		ID::operator""_trim
 	;
-	
+
 	/// simply returns a member
-	static inline
-	auto
+	auto inline
 		Body
 		(	FunctionName<"ReturnMember">
 		,	ArgumentDependencyInstance auto
@@ -232,7 +221,7 @@ namespace
 			]
 		;
 	}
-	
+
 	/// functions prefixed with Get return the datamember withouth get
 	template
 		<	ID::FuncPrefix<"Get">
@@ -244,8 +233,7 @@ namespace
 					{}
 				)
 		>
-	static constexpr
-	auto
+	auto constexpr
 		MapAddress
 		(	t_tGetter
 		,	Archetype::HasDataMember
@@ -264,7 +252,7 @@ namespace
 				]
 			)
 		;
-		
+
 		constexpr
 		auto
 			fResolveAlias
@@ -298,7 +286,7 @@ namespace
 			}
 		;
 	}
-	
+
 	template
 		<	typename
 			...	t_tpFuncDependency
@@ -316,14 +304,13 @@ namespace
 			>
 		>
 	;
-	
+
 	/// computes the product of all dependent members and a constant
 	template
 		<	typename
 			...	t_tpFuncDependency
 		>
-	static inline
-	auto
+	auto inline
 		Body
 		(	FunctionName<"Product">
 		,	DeduceFuncDependencies
@@ -342,7 +329,7 @@ namespace
 			)
 		;
 	}
-	
+
 	template
 		<	typename
 				t_tObject
@@ -366,7 +353,7 @@ namespace
 			}
 		;
 	}
-	
+
 	template
 		<	typename
 				t_tShape
@@ -387,8 +374,7 @@ namespace
 		,	t_tShape const
 			&
 		>
-	static constexpr
-	auto
+	auto constexpr
 		MapAddress
 		(	ID::FuncT<"ComputeArea">
 		,	t_tShape const
@@ -408,3 +394,16 @@ namespace
 		;
 	}
 }
+
+
+static_assert(AdditionalSize<Shapes2D::Square, 1, 1> == 4);
+static_assert(AdditionalSize<Shapes2D::Rectangle, 2, 1> == 4);
+static_assert(AdditionalSize<Shapes2D::Triangle, 2, 1> == 4);
+static_assert(AdditionalSize<Shapes2D::Circle, 1, 1> == 4);
+static_assert(AdditionalSize<Shapes2D::Ellipse, 2, 1> == 4);
+
+static_assert(SizeMinimal<Shapes2D::Square, 1, 1>);
+static_assert(SizeMinimal<Shapes2D::Rectangle, 2, 1>);
+static_assert(SizeMinimal<Shapes2D::Triangle, 2, 1>);
+static_assert(SizeMinimal<Shapes2D::Circle, 1, 1>);
+static_assert(SizeMinimal<Shapes2D::Ellipse, 2, 1>);

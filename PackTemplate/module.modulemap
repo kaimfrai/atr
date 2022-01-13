@@ -1,0 +1,24 @@
+module PackTemplate_1 {
+
+	module Sequence {
+		header "Sequence.hpp"
+		export *
+	}
+
+	module Type {
+		header "Type.hpp"
+		export *
+	}
+
+	module Value {
+		header "Value.hpp"
+		export *
+	}
+}
+
+module PackTemplate_2 {
+	module Instance {
+		header "Instance.hpp"
+		export *
+	}
+}

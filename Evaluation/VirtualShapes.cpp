@@ -1,8 +1,8 @@
-#pragma once
+export module Evaluation.VirtualShapes;
 
-#include "Shared.hpp"
+export import Evaluation.Shared;
 
-namespace
+export namespace
 	Shapes2D
 {
 	struct
@@ -17,7 +17,7 @@ namespace
 			&
 		=	0
 		;
-		
+
 		virtual
 		auto
 			GetWidth
@@ -27,7 +27,7 @@ namespace
 			&
 		=	0
 		;
-		
+
 		virtual
 		auto
 			ComputeArea
@@ -36,7 +36,7 @@ namespace
 		->	Float
 		=	0
 		;
-		
+
 		virtual
 			compl
 			IShape
@@ -45,7 +45,7 @@ namespace
 		=	default
 		;
 	};
-	
+
 	struct
 		BasicShape
 	:	IShape
@@ -53,7 +53,7 @@ namespace
 		RGBAColor
 			Color
 		;
-		
+
 		virtual
 		auto
 			GetComputeAreaMultiplier
@@ -62,7 +62,7 @@ namespace
 		->	Float
 		=	0
 		;
-		
+
 		auto
 			ComputeArea
 			()	const
@@ -80,7 +80,7 @@ namespace
 			;
 		}
 	};
-	
+
 	struct
 		RectangularShape
 	:	BasicShape
@@ -88,7 +88,7 @@ namespace
 		Float
 			Width
 		;
-		
+
 		auto
 			GetWidth
 			()	const
@@ -101,7 +101,7 @@ namespace
 				Width
 			;
 		}
-		
+
 		auto
 			GetComputeAreaMultiplier
 			()	const
@@ -115,7 +115,7 @@ namespace
 			;
 		}
 	};
-	
+
 	struct
 		Square
 	:	RectangularShape
@@ -133,7 +133,7 @@ namespace
 			;
 		}
 	};
-	
+
 	struct
 		Rectangle
 	:	RectangularShape
@@ -141,7 +141,7 @@ namespace
 		Float
 			Height
 		;
-		
+
 		auto
 			GetHeight
 			()	const
@@ -155,7 +155,7 @@ namespace
 			;
 		}
 	};
-	
+
 	struct
 		TriangularShape
 	:	BasicShape
@@ -163,7 +163,7 @@ namespace
 		Float
 			Width
 		;
-		
+
 		auto
 			GetWidth
 			()	const
@@ -176,7 +176,7 @@ namespace
 				Width
 			;
 		}
-		
+
 		auto
 			GetComputeAreaMultiplier
 			()	const
@@ -192,7 +192,7 @@ namespace
 			;
 		}
 	};
-	
+
 	struct
 		Triangle
 	:	TriangularShape
@@ -200,7 +200,7 @@ namespace
 		Float
 			Height
 		;
-		
+
 		auto
 			GetHeight
 			()	const
@@ -214,7 +214,7 @@ namespace
 			;
 		}
 	};
-	
+
 	struct
 		CircularShape
 	:	BasicShape
@@ -222,7 +222,7 @@ namespace
 		Float
 			Width
 		;
-		
+
 		auto
 			GetWidth
 			()	const
@@ -235,7 +235,7 @@ namespace
 				Width
 			;
 		}
-		
+
 		auto
 			GetComputeAreaMultiplier
 			()	const
@@ -245,13 +245,13 @@ namespace
 		{
 			return
 				πFraction
-				<	1_sz
-				,	4_sz
+				<	1z
+				,	4z
 				>{}
 			;
 		}
 	};
-	
+
 	struct
 		Circle
 	:	CircularShape
@@ -269,7 +269,7 @@ namespace
 			;
 		}
 	};
-	
+
 	struct
 		Ellipse
 	:	CircularShape
@@ -277,7 +277,7 @@ namespace
 		Float
 			Height
 		;
-		
+
 		auto
 			GetHeight
 			()	const
@@ -291,15 +291,15 @@ namespace
 			;
 		}
 	};
-	
-	static_assert(AdditionalSize<Square, 1> == 12);
-	static_assert(AdditionalSize<Rectangle, 2> == 12);
-	static_assert(AdditionalSize<Triangle, 2> == 12);
-	static_assert(AdditionalSize<Circle, 1> == 12);
-	static_assert(AdditionalSize<Ellipse, 2> == 12);
-	static_assert(not SizeMinimal<Square, 1>);
-	static_assert(not SizeMinimal<Rectangle, 2>);
-	static_assert(not SizeMinimal<Triangle, 2>);
-	static_assert(not SizeMinimal<Circle, 1>);
-	static_assert(not SizeMinimal<Ellipse, 2>);
 }
+
+static_assert(AdditionalSize<Shapes2D::Square, 1, 1> == 12);
+static_assert(AdditionalSize<Shapes2D::Rectangle, 2, 1> == 12);
+static_assert(AdditionalSize<Shapes2D::Triangle, 2, 1> == 12);
+static_assert(AdditionalSize<Shapes2D::Circle, 1, 1> == 12);
+static_assert(AdditionalSize<Shapes2D::Ellipse, 2, 1> == 12);
+static_assert(not SizeMinimal<Shapes2D::Square, 1, 1>);
+static_assert(not SizeMinimal<Shapes2D::Rectangle, 2, 1>);
+static_assert(not SizeMinimal<Shapes2D::Triangle, 2, 1>);
+static_assert(not SizeMinimal<Shapes2D::Circle, 1, 1>);
+static_assert(not SizeMinimal<Shapes2D::Ellipse, 2, 1>);

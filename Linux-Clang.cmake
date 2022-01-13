@@ -10,7 +10,7 @@ set(CXX_STANDARD_LIBRARY_FLAG
 	-stdlib=libc++
 )
 set(PREBUILT_MODULE_PATH
-	${CMAKE_BINARY_DIR}/modules/${CMAKE_BUILD_TYPE}/
+	${CMAKE_BINARY_DIR}/modules/${CMAKE_BUILD_TYPE}
 )
 
 file(
@@ -26,11 +26,11 @@ set(WARNING_FLAGS
 	-Wall
 	-Wextra
 	-Wpedantic
-	-Wmissing-variable-declarations
-	-Wcomma
-	-Wauto-import
-	-Werror
-	-Weverything
+	#-Wmissing-variable-declarations
+	#-Wcomma
+	#-Wauto-import
+	#-Werror
+	#-Weverything
 	-Wno-weak-vtables
 	-Wno-padded
 	#triggered when using std::sort with defaulted comparison
@@ -70,17 +70,34 @@ function(
 	module_file
 	out_command
 )
+
+
+	get_directory_property(
+		include_directories
+		INCLUDE_DIRECTORIES
+	)
+
+	if	(include_directories)
+		string(PREPEND include_directories "-I")
+	endif()
+
 	set(
-	${out_command}
+		command
 		${CMAKE_CXX_COMPILER}
 		${CXX_STANDARD_VERSION_FLAG}
 		${CXX_STANDARD_LIBRARY_FLAG}
+		${include_directories}
 		${WARNING_FLAGS}
 		${MODULE_FLAGS}
 		${ADDITIONAL_COMPILE_OPTIONS}
 		--compile ${CMAKE_CURRENT_SOURCE_DIR}/${module_interface_file}
 		-Xclang -emit-module-interface
 		--output ${module_file}
+	)
+
+	set(
+	${out_command}
+		${command}
 	PARENT_SCOPE)
 
 endfunction()

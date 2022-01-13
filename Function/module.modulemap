@@ -1,0 +1,61 @@
+module Function {
+	module Address {
+		header "Address.hpp"
+		export *
+	}
+
+	module ArgumentDependency {
+		header "ArgumentDependency.hpp"
+		export *
+	}
+
+	module Body {
+		header "Body.hpp"
+		export *
+	}
+
+	module ConstantIDMap {
+		header "ConstantIDMap.hpp"
+		export *
+	}
+
+	module DataDependencyItem {
+		header "DataDependencyItem.hpp"
+		export *
+	}
+
+	module Dependency {
+		header "Dependency.hpp"
+		export *
+	}
+
+	module DependencyIDMap {
+		header "DependencyIDMap.hpp"
+		export *
+	}
+
+	module Erase {
+		header "Erase.hpp"
+		export *
+	}
+
+	module FuncDependencyItem {
+		header "FuncDependencyItem.hpp"
+		export *
+	}
+
+	module Signature {
+		header "Signature.hpp"
+		export *
+	}
+
+	module StaticDependency {
+		header "StaticDependency.hpp"
+		export *
+	}
+
+	module VirtualArgument {
+		header "VirtualArgument.hpp"
+		export *
+	}
+}

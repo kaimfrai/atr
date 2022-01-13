@@ -1,0 +1,6 @@
+module boost {
+	module type_erasure {
+		header "TypeErasure.hpp"
+		export *
+	}
+}

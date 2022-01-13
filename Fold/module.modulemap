@@ -1,0 +1,16 @@
+module Fold {
+	module Comma {
+		header "Comma.hpp"
+		export *
+	}
+
+	module LogicalAnd {
+		header "LogicalAnd.hpp"
+		export *
+	}
+
+	module LogicalOr {
+		header "LogicalOr.hpp"
+		export *
+	}
+}

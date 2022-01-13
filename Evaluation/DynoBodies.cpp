@@ -1,10 +1,7 @@
-#pragma once
+export module Evaluation.DynoBodies;
 
-#include <Evaluation/CRTPBodies.hpp>
-
-import Dyno;
-
-#include "Shared.hpp"
+export import Evaluation.CRTPBodies;
+export import Dyno;
 
 namespace
 	Bodies3D
@@ -13,7 +10,7 @@ namespace
 		dyno::literals
 	;
 
-	struct
+	export struct
 		VolumeComputer
 	:	decltype(
 			dyno::requires_
@@ -31,7 +28,7 @@ namespace
 	{};
 }
 
-namespace
+export namespace
 	dyno
 {
 	template
