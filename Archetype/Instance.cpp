@@ -2,9 +2,10 @@ export module Archetype.Instance;
 
 export import Function.Address;
 export import Archetype.LayoutInfo;
-export import <Layout/MemberOffset.hpp>;
+export import Layout.MemberOffset;
 export import <Stateless/Type.hpp>;
 export import <Meta/TypeInfo.hpp>;
+export import <ID/Data.hpp>;
 export import <ID/Func.hpp>;
 export import <ID/Type.hpp>;
 export import <Std/TemplateConcepts.hpp>;

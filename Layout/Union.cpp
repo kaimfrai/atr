@@ -1,10 +1,10 @@
-#pragma once
+export module Layout.Union;
 
-#include <Layout/Fork.hpp>
+export import Layout.Fork;
 #include <ID/Data.hpp>
 #include <Meta/TypeInfo.hpp>
 
-namespace
+export namespace
 	Layout
 {
 	template

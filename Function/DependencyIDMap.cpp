@@ -5,7 +5,7 @@ export import Function.ArgumentDependency;
 export import Function.StaticDependency;
 export import Archetype.LayoutInfo;
 
-#include <Layout/MemberOffset.hpp>
+export import Layout.MemberOffset;
 #include <ID/Func.hpp>
 #include <ID/Data.hpp>
 #include <ID/StringLiteral.hpp>

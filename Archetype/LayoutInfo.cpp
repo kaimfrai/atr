@@ -1,8 +1,11 @@
 export module Archetype.LayoutInfo;
 
-#include <Layout/Concatenate.hpp>
-#include <Layout/LayoutCreator.hpp>
-#include <Layout/DataMember.hpp>
+export import Layout.Concatenate;
+export import Layout.LayoutCreator;
+export import Layout.DataMember;
+
+#include <Meta/Template.hpp>
+#include <Pack/Accumulate.hpp>
 #include <ID/Type.hpp>
 #include <ID/StringLiteral.hpp>
 #include <Meta/TypeInfo.hpp>

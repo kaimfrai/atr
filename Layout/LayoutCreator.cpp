@@ -1,4 +1,8 @@
-#pragma once
+export module Layout.LayoutCreator;
+
+export import Layout.DataMemberLayoutSplit;
+export import Layout.Fork;
+export import Layout.DataMember;
 
 #include <Meta/Template.hpp>
 
@@ -6,18 +10,14 @@
 #include <PackTemplate/Type.hpp>
 #include <Meta/TypeInfo.hpp>
 
-#include <Layout/DataMemberLayoutSplit.hpp>
-#include <Layout/Fork.hpp>
-#include <Layout/DataMember.hpp>
-
-namespace
+export namespace
 	Layout
 {
 	/// designates an empty layout
 	struct
 		Empty
 	{};
-	
+
 	///	simply creates an empty layout
 	[[nodiscard]]
 	constexpr
@@ -29,7 +29,7 @@ namespace
 			Meta::T<Empty>
 		;
 	}
-	
+
 	/// simply returns a single DataMember
 	[[nodiscard]]
 	constexpr
@@ -43,7 +43,7 @@ namespace
 			i_vDataMember
 		;
 	}
-	
+
 	/// function object fowarding to CreateLayout overloads
 	template
 		<	PackTemplate::TypeInstance
@@ -58,14 +58,14 @@ namespace
 			()
 		=	default
 		;
-		
+
 		constexpr
 		explicit
 			LayoutCreator
 			(	t_tSplitTemplate
 			)
 		{}
-		
+
 		constexpr
 		Meta::TypeInstance auto
 			operator()
@@ -83,7 +83,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// if the sequence contains one or more DataMemberInfoPacks, all DataMemberInfos
 	/// will be spread separately over the CreateLayout overload
 	[[nodiscard]]
@@ -107,7 +107,7 @@ namespace
 			)
 		;
 	}
-	
+
 	/// two or more DataMembers will be branched
 	[[nodiscard]]
 	constexpr
@@ -133,7 +133,7 @@ namespace
 				...
 			)
 		;
-		
+
 		return
 			i_vSplitTemplate
 			(	CreateLayout

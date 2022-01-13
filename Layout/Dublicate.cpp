@@ -1,14 +1,16 @@
-#pragma once
+export module Layout.Dublicate;
 
-#include <Layout/DataMember.hpp>
+export import Layout.DataMember;
+
 #include <ID/Modify.hpp>
 #include <ID/Decimal.hpp>
+#include <ID/Data.hpp>
 #include <Pack/Fold.hpp>
 #include <Pack/MakeSequence.hpp>
 #include <Pack/Cast.hpp>
 #include <Pack/Type.hpp>
 
-namespace
+export namespace
 	Layout
 {
 	template
@@ -67,7 +69,7 @@ namespace
 				>{}
 			;
 		}
-		
+
 		[[nodiscard]]
 		constexpr
 		auto

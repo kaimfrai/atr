@@ -14,9 +14,14 @@ import Evaluation.Archetype.ReturnMember;
 import Evaluation.Archetype.Product;
 import Function.VirtualArgument;
 import Function.Address;
+import Layout.MemberOffset;
 
 #include <ID/Modify.hpp>
 #include <Pack/Sort.hpp>
+#include <Std/QualifierTemplate.hpp>
+#include <ID/Data.hpp>
+#include <ID/StringLiteral.hpp>
+#include <Pack/Accumulate.hpp>
 
 static_assert
 (	Function::Address<ID::FuncT<"ComputeVolume">, Bodies3D::Head const&>()

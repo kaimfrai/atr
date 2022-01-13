@@ -1,7 +1,9 @@
-#pragma once
+export module Layout.MemberOffset;
 
-#include <Layout/Fork.hpp>
-#include <Layout/DataMember.hpp>
+export import Layout.Fork;
+export import Layout.DataMember;
+
+export import Std;
 
 #include <ID/Data.hpp>
 
@@ -13,9 +15,7 @@
 #include <Std/Concepts.hpp>
 #include <Std/Size.hpp>
 
-#include <type_traits>
-
-namespace
+export namespace
 	Layout
 {
 	/// function object retrieving a member from a void pointer
@@ -40,7 +40,7 @@ namespace
 			,	t_nOffset
 			>::	operator()
 		;
-		
+
 		[[nodiscard]]
 		constexpr
 		auto
@@ -72,7 +72,7 @@ namespace
 					)
 				+	t_nOffset
 				;
-				
+
 				return
 					*
 					std::launder
@@ -90,7 +90,7 @@ namespace
 			}
 		}
 	};
-	
+
 	/// specialization for const only objects
 	template
 		<	typename
@@ -136,7 +136,7 @@ namespace
 					)
 				+	t_nOffset
 				;
-				
+
 				return
 					*
 					std::launder
@@ -154,7 +154,7 @@ namespace
 			}
 		}
 	};
-	
+
 	/// increases the offset of a MemberOffset
 	template
 		<	typename
@@ -182,7 +182,7 @@ namespace
 			::	Value
 		>
 	{	return{};	}
-	
+
 	// stateless members always have offset 0
 	template
 		<	Stateless::Type
@@ -204,7 +204,7 @@ namespace
 		,	0_uz
 		>
 	{	return{};	}
-	
+
 	/// immitates syntax of pointer to member dereference
 	template
 		<	typename
@@ -237,7 +237,7 @@ namespace
 			)
 		;
 	}
-	
+
 	/// returns a MemberOffset for the given member id if it is present
 	template
 		<	template
@@ -268,7 +268,7 @@ namespace
 				)
 			)::	Type
 		;
-		
+
 		return
 			MemberOffset
 			<	t_t1Qualifier
@@ -278,7 +278,7 @@ namespace
 			>{}
 		;
 	}
-	
+
 	/// constrains data ids to those that have the Offset function overloaded in a member area
 	template
 		<	typename
@@ -308,7 +308,7 @@ namespace
 			);
 		}
 	;
-	
+
 	/// returns a MemberOffset for the given member id if it is present in the north area
 	template
 		<	template
@@ -346,7 +346,7 @@ namespace
 			)
 		;
 	}
-	
+
 	/// returns a MemberOffset for the given member id if it is present in the south area
 	template
 		<	template

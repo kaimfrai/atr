@@ -1,4 +1,6 @@
-#pragma once
+export module Layout.DataMemberLayoutSplit;
+
+export import Layout.DataMember;
 
 #include <Pack/Concat.hpp>
 #include <Pack/Transform.hpp>
@@ -9,11 +11,9 @@
 #include <Pack/Normalize.hpp>
 #include <Stateless/Binding.hpp>
 
-#include <Layout/DataMember.hpp>
+export import Std;
 
-#include <bit>
-
-namespace
+export namespace
 	Layout
 {
 	/// checks if the alignment of the given DataMemberInfo equals the parameter
@@ -35,7 +35,7 @@ namespace
 			()
 		=	default
 		;
-		
+
 		constexpr
 			HasAlignment
 			(	Meta::ValueInfo
@@ -43,7 +43,7 @@ namespace
 				>
 			)
 		{}
-		
+
 		[[nodiscard]]
 		constexpr
 		auto
@@ -60,7 +60,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// by default take all datamembers with minimal alignment and put them in the second pack
 	[[nodiscard]]
 	constexpr
@@ -78,7 +78,7 @@ namespace
 				...
 			)
 		;
-		
+
 		Pack::ValueInstance auto
 		const
 			AlignmentPack
@@ -87,7 +87,7 @@ namespace
 			,	DataMemberBitAlignment
 			)
 		;
-		
+
 		Meta::ValueInstance auto
 		const
 			MinimumAlignment
@@ -95,7 +95,7 @@ namespace
 			(	AlignmentPack
 			)
 		;
-		
+
 		return
 			Pack::Filter
 			(	Pack
@@ -106,7 +106,7 @@ namespace
 			)
 		;
 	}
-	
+
 	/// constrains subsequent DataMemberInfo arguments to have the same alignment as another DataMemberInfo
 	template
 		<	typename
@@ -133,7 +133,7 @@ namespace
 			>
 		)
 	;
-	
+
 	/// compares two datamember infos by their name
 	struct
 		CompareDataMemberInfo
@@ -158,7 +158,7 @@ namespace
 			;
 		}
 	};
-	
+
 	///	if all DataMembers have the same alignment, split by the highest bit
 	/// this makes the first part have a length that is a power of 2
 	[[nodiscard]]
@@ -186,7 +186,7 @@ namespace
 				{}
 			)
 		;
-		
+
 		Meta::SizeInfo auto
 		const
 			PackSizeInfo
@@ -194,7 +194,7 @@ namespace
 			(	Pack
 			)
 		;
-		
+
 		Meta::SizeInfo auto
 		const
 			HighestBitInfo
@@ -206,7 +206,7 @@ namespace
 				)
 			>
 		;
-		
+
 		DataMemberPackInstance auto
 		const
 			LeadingSubPack
@@ -216,7 +216,7 @@ namespace
 				,	HighestBitInfo
 				)
 		;
-		
+
 		DataMemberPackInstance auto
 		const
 			TrailingSubPack
@@ -227,7 +227,7 @@ namespace
 			-	HighestBitInfo
 			)
 		;
-		
+
 		return
 			Stateless::Tuple
 			{	LeadingSubPack

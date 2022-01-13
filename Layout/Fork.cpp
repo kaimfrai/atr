@@ -1,8 +1,8 @@
-#pragma once
+export module Layout.Fork;
 
 #include <ID/Data.hpp>
 
-namespace
+export namespace
 	Layout
 {
 	/// constrains data ids to those that have the [] operator overloaded in a member area

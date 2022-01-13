@@ -8,7 +8,14 @@ export import Archetype.Instance;
 import Archetype.LayoutInfo;
 import Function.Address;
 
-#include <Layout/LayoutCreator.hpp>
+export import Layout.LayoutCreator;
+
+#include <Pack/SplitBest.hpp>
+#include <Pack/Filter.hpp>
+#include <Pack/Sort.hpp>
+#include <Pack/Accumulate.hpp>
+#include <ID/StringLiteral.hpp>
+#include <ID/Data.hpp>
 
 export namespace
 	Archetype

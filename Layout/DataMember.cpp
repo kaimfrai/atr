@@ -1,4 +1,7 @@
-#pragma once
+export module Layout.DataMember;
+
+export import Layout.Initializer;
+export import Std;
 
 #include <Pack/Filter.hpp>
 #include <Pack/Accumulate.hpp>
@@ -7,14 +10,10 @@
 #include <Meta/ValueInfo.hpp>
 #include <Std/Concepts.hpp>
 
-#include <Layout/Initializer.hpp>
-
 #include <ID/Data.hpp>
 #include <Std/Size.hpp>
 
-#include <compare>
-
-namespace
+export namespace
 	Layout
 {
 	template
@@ -33,7 +32,7 @@ namespace
 		<	t_tBitCount
 		>
 	{};
-	
+
 	template<>
 	struct
 		BitAlignment
@@ -43,7 +42,7 @@ namespace
 		<	0_uz
 		>
 	{};
-	
+
 	template
 		<	typename
 				t_tBitAlignment
@@ -55,7 +54,7 @@ namespace
 		,	BitAlignment
 		>
 	;
-	
+
 	/// wraps around a value and provides access to it by a name token
 	template
 		<	ID::DataInstance
@@ -77,7 +76,7 @@ namespace
 		{	t_tDefaultInitializer
 			{}
 		};
-		
+
 		/// access the value const
 		[[nodiscard]]
 		constexpr
@@ -92,7 +91,7 @@ namespace
 				Value
 			;
 		}
-		
+
 		/// access the value non-const
 		[[nodiscard]]
 		constexpr
@@ -108,7 +107,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// specialization for const that stores a mutable value but does not expose the non-const [] operator
 	template
 		<	ID::DataInstance
@@ -136,7 +135,7 @@ namespace
 		{	t_tDefaultInitializer
 			::	Value
 		};
-		
+
 		/// access the value const
 		[[nodiscard]]
 		constexpr
@@ -152,7 +151,7 @@ namespace
 			;
 		}
 	};
-	
+
 	// no specialization for const AND vacuous initializer, as the value should be assigned to
 	template
 		<	ID::DataInstance
@@ -176,7 +175,7 @@ namespace
 			)
 		;
 	};
-	
+
 	/// specialization for vacuous initializer
 	template
 		<	ID::DataInstance
@@ -198,7 +197,7 @@ namespace
 		t_tValue
 			Value
 		;
-		
+
 		/// access the value const
 		[[nodiscard]]
 		constexpr
@@ -213,7 +212,7 @@ namespace
 				Value
 			;
 		}
-		
+
 		/// access the value non-const
 		[[nodiscard]]
 		constexpr
@@ -229,7 +228,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// specialization for vacuous initializer
 	template
 		<	ID::DataInstance
@@ -257,7 +256,7 @@ namespace
 			,	"Empty members should not be cv qualified!"
 			)
 		;
-		
+
 		/// access the value const
 		[[nodiscard]]
 		constexpr
@@ -283,7 +282,7 @@ namespace
 			}
 		}
 	};
-	
+
 	/// distinct TypeInfo for DataMembers
 	template
 		<	ID::DataInstance
@@ -332,14 +331,14 @@ namespace
 			BitAlignment
 		=	Stateless::Copy<t_tBitAlignment>
 		;
-		
+
 		/// default constructor
 		constexpr
 			DataMemberInfo
 			()
 		=	default
 		;
-		
+
 		/// conversion from type info
 		constexpr
 			DataMemberInfo
@@ -353,7 +352,7 @@ namespace
 				>
 			)
 		{}
-		
+
 		/// deduce template from arguments
 		constexpr
 		explicit
@@ -367,7 +366,7 @@ namespace
 			)
 		{}
 	};
-	
+
 	///	constrains types to be of template DataMember
 	template
 		<	typename
@@ -415,7 +414,7 @@ namespace
 			}
 		)
 	;
-	
+
 	/// a single info object of DataMember
 	template
 		<	typename
@@ -446,7 +445,7 @@ namespace
 		<	t_tDataMemberInfoInstance
 		>
 	;
-	
+
 	template
 		<	DataMemberInstance
 			...	t_tpDataMember
@@ -464,7 +463,7 @@ namespace
 			...
 		>
 	{};
-	
+
 	/// alias for and info type of a DataMember
 	template
 		<	ID::StringLiteral
@@ -495,23 +494,13 @@ namespace
 			>
 		>
 	;
-	
+
 	/// alias for and info type of a DataMember
 	template
 		<	ID::StringLiteral
 				t_vDataID
 		,	typename
 				t_tValue
-		,	DataMemberInitializerFor
-			<	t_tValue
-			>	auto
-				t_vDefaultInitializer
-			=	VacuousInitializer
-		,	Std::USizeType
-				t_vBitAlignment
-			=	Std::BitAlignOf
-				<	t_tValue
-				>
 		>
 	constexpr
 	DataMemberInfoInstance auto
@@ -520,12 +509,14 @@ namespace
 		<	InfoT
 			<	t_vDataID
 			,	t_tValue
-			,	t_vDefaultInitializer
-			,	t_vBitAlignment
+			,	VacuousInitializer
+			,	Std::BitAlignOf
+				<	t_tValue
+				>
 			>
 		>
 	;
-	
+
 	/// creates an member alias
 	template
 		<	ID::StringLiteral
@@ -543,7 +534,7 @@ namespace
 			>
 		>
 	;
-	
+
 	/// extracts a ID::DataInstance value from a DataMemberInfo
 	constexpr
 	Stateless::Type auto
@@ -559,7 +550,7 @@ namespace
 			;
 		}
 	;
-	
+
 	/// extracts the TypeInfo of the value type from a DataMemberInfo
 	constexpr
 	Stateless::Type auto
@@ -575,7 +566,7 @@ namespace
 			;
 		}
 	;
-	
+
 	/// extracts the DefaultInitializer from a DataMemberInfo value
 	constexpr
 	Stateless::Type auto
@@ -591,7 +582,7 @@ namespace
 			;
 		}
 	;
-	
+
 	/// extracts the BitAlignmentInfoType from a DataMemberInfo value
 	constexpr
 	Stateless::Type auto
@@ -607,7 +598,7 @@ namespace
 			;
 		}
 	;
-		
+
 	/// concatenates two configs
 	constexpr
 	Config auto
@@ -624,7 +615,7 @@ namespace
 			)
 		;
 	}
-	
+
 	///	trims the right config from the left
 	constexpr
 	Config auto

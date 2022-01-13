@@ -1,9 +1,9 @@
-#pragma once
+export module Layout.Initializer;
 
 #include <Meta/ValueInfo.hpp>
 #include <Std/Concepts.hpp>
 
-namespace
+export namespace
 	Layout
 {
 	/// initialization indicator to not use an explicit initializer

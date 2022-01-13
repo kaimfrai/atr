@@ -1,6 +1,6 @@
-#pragma once
+export module Layout.Concatenate;
 
-#include <Layout/DataMember.hpp>
+export import Layout.DataMember;
 
 #include <ID/Modify.hpp>
 #include <ID/Base.hpp>
@@ -8,7 +8,7 @@
 #include <Pack/Instance.hpp>
 #include <Pack/Transform.hpp>
 
-namespace
+export namespace
 	Layout
 {
 	/// prefixes the names of Layout::Config with a string using operator |
@@ -54,7 +54,7 @@ namespace
 				}
 			;
 		}
-		
+
 		[[nodiscard]]
 		constexpr
 		DataMemberInfoInstance auto
@@ -68,7 +68,7 @@ namespace
 			|	i_vDataMember
 			;
 		}
-		
+
 		[[nodiscard]]
 		friend
 		constexpr
@@ -88,7 +88,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// suffixes the names of Layout::Config with a string using operator |
 	template
 		<	Std::Integral
@@ -131,7 +131,7 @@ namespace
 				}
 			;
 		}
-		
+
 		[[nodiscard]]
 		constexpr
 		DataMemberInfoInstance auto
@@ -144,7 +144,7 @@ namespace
 			|	*this
 			;
 		}
-		
+
 		[[nodiscard]]
 		friend
 		constexpr
@@ -163,7 +163,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// accepts a string and converts it to a prefix type
 	template
 		<	ID::StringLiteral
@@ -176,7 +176,7 @@ namespace
 		,	t_vString
 		>
 	;
-	
+
 	/// accepts a string and converts it to a prefix value
 	template
 		<	ID::StringLiteral
@@ -203,7 +203,7 @@ namespace
 		,	t_vString
 		>
 	;
-	
+
 	/// accepts a string and converts it to a suffix value
 	template
 		<	ID::StringLiteral
@@ -217,7 +217,7 @@ namespace
 		,	t_vString
 		>
 	;
-	
+
 	/// creates a prefix that can be applied to Layout::Config using |
 	template
 		<	ID::StringLiteral
@@ -232,7 +232,7 @@ namespace
 		<	t_vString
 		>
 	{	return{};	}
-	
+
 	/// creates a suffix that can be applied to Layout::Config using |
 	template
 		<	ID::StringLiteral

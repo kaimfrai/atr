@@ -1,0 +1,11 @@
+include_directories(../)
+
+add_module(Concatenate.cpp)
+add_module(DataMember.cpp)
+add_module(DataMemberLayoutSplit.cpp)
+add_module(Dublicate.cpp)
+add_module(Fork.cpp)
+add_module(Initializer.cpp)
+add_module(LayoutCreator.cpp)
+add_module(MemberOffset.cpp)
+add_module(Union.cpp)

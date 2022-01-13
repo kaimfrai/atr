@@ -3,9 +3,12 @@ export module Evaluation.Archetype.BasicShape;
 import Evaluation.Shared;
 
 export import Archetype.LayoutInfo;
+export import Layout.Union;
+export import Layout.DataMember;
+
+#include <Pack/Accumulate.hpp>
 #include <ID/StringLiteral.hpp>
-#include <Layout/Union.hpp>
-#include <Layout/DataMember.hpp>
+#include <ID/Data.hpp>
 
 export namespace
 	Archetype
