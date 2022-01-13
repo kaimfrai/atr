@@ -1,6 +1,0 @@
-module Archetype_2 {
-	module LayoutInfo {
-		header "LayoutInfo.hpp"
-		export *
-	}
-}

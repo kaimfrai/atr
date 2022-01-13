@@ -1,4 +1,4 @@
-#pragma once
+export module Archetype.LayoutInfo;
 
 #include <Layout/Concatenate.hpp>
 #include <Layout/LayoutCreator.hpp>
@@ -8,7 +8,7 @@
 #include <Meta/TypeInfo.hpp>
 #include <Std/QualifierTemplate.hpp>
 
-namespace
+export namespace
 	Archetype
 {
 	/// maps a string literal to a Layout

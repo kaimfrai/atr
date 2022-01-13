@@ -10,7 +10,13 @@ import Evaluation.Archetype.Sphere;
 import Evaluation.Archetype.ComputeVolume;
 import Evaluation.Shared;
 
+import Evaluation.Archetype.ReturnMember;
+import Evaluation.Archetype.Product;
 import Function.VirtualArgument;
+import Function.Address;
+
+#include <ID/Modify.hpp>
+#include <Pack/Sort.hpp>
 
 static_assert
 (	Function::Address<ID::FuncT<"ComputeVolume">, Bodies3D::Head const&>()

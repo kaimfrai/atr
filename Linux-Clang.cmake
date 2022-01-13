@@ -12,6 +12,9 @@ set(CXX_STANDARD_LIBRARY_FLAG
 set(PREBUILT_MODULE_PATH
 	${CMAKE_BINARY_DIR}/modules/${CMAKE_BUILD_TYPE}
 )
+set(MODULE_CACHE_PATH
+	${CMAKE_BINARY_DIR}/modules/${CMAKE_BUILD_TYPE}
+)
 
 file(
 MAKE_DIRECTORY
@@ -44,7 +47,7 @@ set(MODULE_FLAGS
 	-fmodules
 	-fprebuilt-module-path=${PREBUILT_MODULE_PATH}
 	-fbuiltin-module-map
-	-fmodules-cache-path=${PREBUILT_MODULE_PATH}
+	-fmodules-cache-path=${MODULE_CACHE_PATH}
 	-Xclang -fdisable-module-hash
 )
 set(ADDITIONAL_COMPILE_OPTIONS

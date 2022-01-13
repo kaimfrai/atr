@@ -7,8 +7,10 @@ import Evaluation.Archetype.Ellipse;
 import Evaluation.Archetype.ComputeVolume;
 
 export import Archetype.Instance;
-import <Archetype/LayoutInfo.hpp>;
+import Archetype.LayoutInfo;
 import Function.Address;
+
+#include <Layout/LayoutCreator.hpp>
 
 export namespace
 	Archetype
@@ -56,21 +58,21 @@ export namespace
 	;
 }
 
-export namespace
-	Function
-{
-	template<>
-	auto constexpr
-	(	Invoke
-		<	ID::FuncT<"ComputeVolume">
-		,	Bodies3D::Cone const&
-		>
-	)	(	Bodies3D::Cone const&
-		)
-	noexcept
-	->	decltype(auto)
-	;
-}
+// export namespace
+// 	Function
+// {
+// 	template<>
+// 	auto constexpr
+// 	(	Invoke
+// 		<	ID::FuncT<"ComputeVolume">
+// 		,	Bodies3D::Cone const&
+// 		>
+// 	)	(	Bodies3D::Cone const&
+// 		)
+// 	noexcept
+// 	->	decltype(auto)
+// 	;
+// }
 
 static_assert(AdditionalSize<Bodies3D::Cone, 2, 1> == 4);
 static_assert(SizeMinimal<Bodies3D::Cone, 2, 1>);

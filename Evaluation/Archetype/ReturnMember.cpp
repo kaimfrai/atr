@@ -5,6 +5,9 @@ import Evaluation.Shared;
 export import Archetype.Instance;
 import Function.ConstantIDMap;
 
+#include <ID/Modify.hpp>
+#include <ID/Func.hpp>
+
 export namespace
 	Function
 {

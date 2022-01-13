@@ -7,6 +7,8 @@ import Evaluation.Archetype.Square;
 
 export import Archetype.Instance;
 
+#include <Layout/LayoutCreator.hpp>
+
 export namespace
 	Archetype
 {

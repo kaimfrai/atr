@@ -2,7 +2,10 @@ export module Evaluation.Archetype.BasicShape;
 
 import Evaluation.Shared;
 
-export import <Archetype/LayoutInfo.hpp>;
+export import Archetype.LayoutInfo;
+#include <ID/StringLiteral.hpp>
+#include <Layout/Union.hpp>
+#include <Layout/DataMember.hpp>
 
 export namespace
 	Archetype

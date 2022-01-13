@@ -5,6 +5,8 @@ import Evaluation.Archetype.Rectangle;
 
 export import Archetype.Instance;
 
+#include <Layout/LayoutCreator.hpp>
+
 export namespace
 	Archetype
 {
