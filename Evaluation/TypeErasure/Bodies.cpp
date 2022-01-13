@@ -1,6 +1,6 @@
-export module Evaluation.TypeErasureBodies;
+export module Evaluation.TypeErasure.Bodies;
 
-export import Evaluation.CRTPBodies;
+export import Evaluation.CRTP.Bodies;
 export import Boost.TypeErasure;
 
 export namespace

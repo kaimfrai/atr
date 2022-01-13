@@ -1,6 +1,6 @@
-export module Evaluation.VirtualBodies;
+export module Evaluation.Virtual.Bodies;
 
-export import Evaluation.VirtualShapes;
+export import Evaluation.Virtual.Shapes;
 
 export namespace
 	Bodies3D

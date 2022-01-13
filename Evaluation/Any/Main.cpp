@@ -1,6 +1,4 @@
-import Evaluation.VirtualBodies;
-
-import Std;
+import Evaluation.Any.Bodies;
 
 auto
 	main
@@ -17,9 +15,7 @@ auto
 	;
 	using
 		Body3D
-	=	std::unique_ptr
-		<	IBody
-		>
+	=	AnyBody
 	;
 	constexpr
 	auto
@@ -37,14 +33,14 @@ auto
 	return
 		MainTemplate
 		<	Body3D
-		,	&std::make_unique<Cube>
-		,	&std::make_unique<Cuboid>
-		,	&std::make_unique<Pyramid>
-		,	&std::make_unique<Sphere>
-		,	&std::make_unique<Cylinder>
-		,	&std::make_unique<Cone>
-		,	&std::make_unique<Ellipsoid>
-		,	&std::make_unique<Head>
+		,	&InPlaceConstruct<Cube>
+		,	&InPlaceConstruct<Cuboid>
+		,	&InPlaceConstruct<Pyramid>
+		,	&InPlaceConstruct<Sphere>
+		,	&InPlaceConstruct<Cylinder>
+		,	&InPlaceConstruct<Cone>
+		,	&InPlaceConstruct<Ellipsoid>
+		,	&InPlaceConstruct<Head>
 		,	fComputeVolume
 		>(	i_nArgCount
 		,	i_aArgValue

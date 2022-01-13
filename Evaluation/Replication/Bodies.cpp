@@ -1,4 +1,4 @@
-export module Evaluation.ReplicationBodies;
+export module Evaluation.Replication.Bodies;
 
 export import Evaluation.Shared;
 export import Std;

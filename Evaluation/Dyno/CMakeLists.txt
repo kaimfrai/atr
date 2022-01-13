@@ -1,0 +1,13 @@
+add_module(Bodies.cpp)
+add_executable(
+	evaluation_dyno
+		Main.cpp
+)
+target_compile_options(
+	evaluation_dyno
+		PRIVATE
+		-Wno-gnu-string-literal-operator-template
+		-Wno-error
+		-Wno-everything
+)
+add_module_dependencies(evaluation_dyno)

@@ -4,111 +4,12 @@ include_directories(
 
 add_module(Shared.cpp)
 
-add_module(CRTPShapes.cpp)
-add_module(CRTPBodies.cpp)
-add_executable(
-	evaluation_variant
-		VariantMain.cpp
-)
-target_compile_options(
-	evaluation_variant
-		PRIVATE
-		-Wno-error
-		-Wno-everything
-)
-add_module_dependencies(evaluation_variant)
-
-add_module(AnyBodies.cpp)
-add_executable(
-	evaluation_any
-		AnyMain.cpp
-)
-target_compile_options(
-	evaluation_any
-		PRIVATE
-		-Wno-error
-		-Wno-everything
-)
-add_module_dependencies(evaluation_any)
-
-add_module(ArchetypeShapes.cpp)
-add_module(ArchetypeBodies.cpp)
-add_executable(
-	evaluation_archetype
-		ArchetypeMain.cpp
-)
-target_compile_options(
-	evaluation_archetype
-		PRIVATE
-		-Wno-error
-		-Wno-everything
-)
-add_module_dependencies(evaluation_archetype)
-
-add_module(DynoBodies.cpp)
-add_executable(
-	evaluation_dyno
-		DynoMain.cpp
-)
-target_compile_options(
-	evaluation_dyno
-		PRIVATE
-		-Wno-gnu-string-literal-operator-template
-		-Wno-error
-		-Wno-everything
-)
-add_module_dependencies(evaluation_dyno)
-
-add_module(PolymorphicBodies.cpp)
-add_executable(
-	evaluation_polymorphic
-		PolymorphicMain.cpp
-)
-target_compile_options(
-	evaluation_polymorphic
-		PRIVATE
-		-Wno-error
-		-Wno-everything
-)
-add_module_dependencies(evaluation_polymorphic)
-
-
-add_module(ReplicationBodies.cpp)
-add_executable(
-	evaluation_replication
-		ReplicationMain.cpp
-)
-target_compile_options(
-	evaluation_replication
-		PRIVATE
-		-Wno-error
-		-Wno-everything
-)
-add_module_dependencies(evaluation_replication)
-
-add_module(TypeErasureBodies.cpp)
-add_executable(
-	evaluation_type_erasure
-		TypeErasureMain.cpp
-)
-target_compile_options(
-	evaluation_type_erasure
-		PRIVATE
-		-Wno-error
-		-Wno-everything
-)
-add_module_dependencies(evaluation_type_erasure)
-
-add_module(VirtualBodies.cpp)
-add_module(VirtualShapes.cpp)
-add_executable(
-	evaluation_virtual
-		VirtualMain.cpp
-)
-target_compile_options(
-	evaluation_virtual
-		PRIVATE
-		-Wno-error
-		-Wno-everything
-)
-add_module_dependencies(evaluation_virtual)
+add_subdirectory(Any)
+add_subdirectory(Archetype)
+add_subdirectory(CRTP)
+add_subdirectory(Dyno)
+add_subdirectory(Polymorphic)
+add_subdirectory(Replication)
+add_subdirectory(TypeErasure)
+add_subdirectory(Variant)
+add_subdirectory(Virtual)

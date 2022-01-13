@@ -1,4 +1,4 @@
-import Evaluation.ArchetypeBodies;
+import Evaluation.Archetype.Bodies;
 
 auto
 	main

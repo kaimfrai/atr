@@ -1,4 +1,4 @@
-import Evaluation.TypeErasureBodies;
+import Evaluation.Dyno.Bodies;
 
 auto
 	main
@@ -11,24 +11,17 @@ auto
 -> int
 {
 	using namespace
+		dyno::literals
+	;
+	using namespace
 		Bodies3D
 	;
 	using
 		Body3D
-	=	boost::type_erasure::any
-		<	boost::mpl::vector
-			<	has_ComputeVolume
-				<	auto()	const
-					//	noexcept
-					->	Float
-				>
-			,	boost::type_erasure::constructible
-				<	boost::type_erasure::_self
-					(	boost::type_erasure::_self
-						&&
-					)
-				>
-			,	boost::type_erasure::destructible<>
+	=	dyno::poly
+		<	VolumeComputer
+		,	dyno::local_storage
+			<	sizeof(Head)
 			>
 		>
 	;
@@ -40,8 +33,9 @@ auto
 			)
 		{	return
 				i_rBody3D
-				.	ComputeVolume
-					()
+				.	virtual_
+					(	"ComputeVolume"_s
+					)()
 			;
 		}
 	;

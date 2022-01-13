@@ -1,0 +1,13 @@
+add_module(Bodies.cpp)
+add_module(Shapes.cpp)
+add_executable(
+	evaluation_virtual
+		Main.cpp
+)
+target_compile_options(
+	evaluation_virtual
+		PRIVATE
+		-Wno-error
+		-Wno-everything
+)
+add_module_dependencies(evaluation_virtual)

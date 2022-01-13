@@ -1,0 +1,12 @@
+add_module(Bodies.cpp)
+add_executable(
+	evaluation_replication
+		Main.cpp
+)
+target_compile_options(
+	evaluation_replication
+		PRIVATE
+		-Wno-error
+		-Wno-everything
+)
+add_module_dependencies(evaluation_replication)

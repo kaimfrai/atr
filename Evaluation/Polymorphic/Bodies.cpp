@@ -1,6 +1,6 @@
-export module Evaluation.PolymorphicBodies;
+export module Evaluation.Polymorphic.Bodies;
 
-export import Evaluation.CRTPBodies;
+export import Evaluation.CRTP.Bodies;
 export import Polymorphic;
 
 export namespace

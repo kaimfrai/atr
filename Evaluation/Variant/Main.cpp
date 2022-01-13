@@ -1,4 +1,4 @@
-import Evaluation.CRTPBodies;
+import Evaluation.CRTP.Bodies;
 
 import Std;
 

@@ -1,4 +1,4 @@
-export module Evaluation.CRTPShapes;
+export module Evaluation.CRTP.Shapes;
 
 export import Evaluation.Shared;
 

@@ -1,4 +1,4 @@
-export module Evaluation.VirtualShapes;
+export module Evaluation.Virtual.Shapes;
 
 export import Evaluation.Shared;
 

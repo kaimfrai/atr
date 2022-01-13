@@ -1,6 +1,6 @@
-export module Evaluation.CRTPBodies;
+export module Evaluation.CRTP.Bodies;
 
-export import Evaluation.CRTPShapes;
+export import Evaluation.CRTP.Shapes;
 
 export namespace
 	Bodies3D

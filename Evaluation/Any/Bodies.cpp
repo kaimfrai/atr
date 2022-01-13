@@ -1,6 +1,6 @@
-export module Evaluation.AnyBodies;
+export module Evaluation.Any.Bodies;
 
-export import Evaluation.CRTPBodies;
+export import Evaluation.CRTP.Bodies;
 
 export import Std;
 

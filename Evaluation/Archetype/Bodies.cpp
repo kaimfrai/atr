@@ -1,6 +1,6 @@
-export module Evaluation.ArchetypeBodies;
+export module Evaluation.Archetype.Bodies;
 
-export import Evaluation.ArchetypeShapes;
+export import Evaluation.Archetype.Shapes;
 export import <Function/VirtualArgument.hpp>;
 export import <Function/DependencyIDMap.hpp>;
 export import <Archetype/LayoutInfo.hpp>;

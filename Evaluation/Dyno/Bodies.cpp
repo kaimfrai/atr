@@ -1,6 +1,6 @@
-export module Evaluation.DynoBodies;
+export module Evaluation.Dyno.Bodies;
 
-export import Evaluation.CRTPBodies;
+export import Evaluation.CRTP.Bodies;
 export import Dyno;
 
 namespace

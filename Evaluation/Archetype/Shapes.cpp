@@ -12,7 +12,7 @@ module;
 #include <ID/Func.hpp>
 #include <ID/Data.hpp>
 
-export module Evaluation.ArchetypeShapes;
+export module Evaluation.Archetype.Shapes;
 
 export import Evaluation.Shared;
 
