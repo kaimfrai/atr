@@ -3,7 +3,7 @@ export module Evaluation.Archetype.Square;
 import Evaluation.Shared;
 import Evaluation.Archetype.Rectangle;
 
-export import <Archetype/Instance.hpp>;
+export import Archetype.Instance;
 
 export namespace
 	Archetype

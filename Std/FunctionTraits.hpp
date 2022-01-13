@@ -1,6 +1,6 @@
 #pragma once
 
-#include <type_traits>
+import Std;
 
 namespace
 	Std
@@ -18,7 +18,7 @@ namespace
 		,	All			= Const|Volatile|Value|LRef|RRef|Noexcept
 		}
 	;
-	
+
 	constexpr
 	auto
 		operator+
@@ -34,7 +34,7 @@ namespace
 			)
 		;
 	}
-	
+
 	constexpr
 	auto
 		operator bitand
@@ -53,7 +53,7 @@ namespace
 			)
 		;
 	}
-	
+
 	constexpr
 	auto
 		operator and
@@ -72,7 +72,7 @@ namespace
 			::	None
 		;
 	}
-	
+
 	constexpr
 	auto
 		operator bitor
@@ -91,7 +91,7 @@ namespace
 			)
 		;
 	}
-	
+
 	template
 		<	typename
 			...	t_tpArgument
@@ -99,7 +99,7 @@ namespace
 	struct
 		FunctionArgumentTraits
 	{};
-	
+
 	template
 		<	typename
 				t_tSingleArgument
@@ -114,7 +114,7 @@ namespace
 		=	t_tSingleArgument
 		;
 	};
-	
+
 	/// most types do not have a function signature
 	template
 		<	typename
@@ -125,7 +125,7 @@ namespace
 	struct
 		FunctionSignature
 	{};
-	
+
 	/// function types
 	template
 		<	typename
@@ -149,7 +149,7 @@ namespace
 			Qualifier
 		=	t_eFunctionQualifier
 		;
-		
+
 		static constexpr
 		auto
 			IsNoexcept
@@ -162,7 +162,7 @@ namespace
 				::	Noexcept
 			;
 		}
-		
+
 		using
 			SignatureType
 		=	t_tResult
@@ -170,12 +170,12 @@ namespace
 					...
 				)
 		;
-		
+
 		using
 			ResultType
 		=	t_tResult
 		;
-		
+
 		using
 			ArgumentType
 		=	FunctionArgumentTraits
@@ -183,7 +183,7 @@ namespace
 				...
 			>
 		;
-		
+
 		static
 		constexpr
 		auto
@@ -193,7 +193,7 @@ namespace
 			)
 		;
 	};
-	
+
 	/// function types with const
 	template
 		<	typename
@@ -217,7 +217,7 @@ namespace
 			::	Const
 		>
 	{};
-	
+
 	/// function types with const noexcept
 	template
 		<	typename
@@ -245,7 +245,7 @@ namespace
 			::	Noexcept
 		>
 	{};
-	
+
 	/// function types with noexcept
 	template
 		<	typename
@@ -270,7 +270,7 @@ namespace
 			::	Noexcept
 		>
 	{};
-	
+
 	/// pointers to function types
 	template
 		<	typename
@@ -285,7 +285,7 @@ namespace
 		<	t_tFunctionType
 		>
 	{};
-	
+
 	/// pointers to function members types
 	template
 		<	typename
@@ -303,7 +303,7 @@ namespace
 		<	t_tFunctionType
 		>
 	{};
-	
+
 	/// objects with operator()
 	template
 		<	typename
@@ -328,7 +328,7 @@ namespace
 			)
 		>
 	{};
-	
+
 	template
 		<	auto
 				t_fFunction
@@ -341,7 +341,7 @@ namespace
 			)
 		>
 	{};
-	
+
 	/// deduces the result type of an object
 	/// assumes the () operator exists and is not overloaded
 	template

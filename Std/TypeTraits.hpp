@@ -25,7 +25,7 @@ namespace
 		<	t_tAny
 		>
 	;
-	
+
 	template
 		<>
 	constexpr inline
@@ -35,7 +35,7 @@ namespace
 		>
 	=	0_uz
 	;
-	
+
 	template
 		<	typename
 				t_tAny
@@ -48,7 +48,7 @@ namespace
 		<	t_tAny
 		>
 	;
-	
+
 	template
 		<>
 	constexpr inline
@@ -58,7 +58,7 @@ namespace
 		>
 	=	1_uz
 	;
-	
+
 	template
 		<	typename
 				t_tAny
@@ -70,7 +70,7 @@ namespace
 			t_tAny
 		)
 	;
-	
+
 	template
 		<>
 	constexpr inline
@@ -80,7 +80,7 @@ namespace
 		>
 	=	0_uz
 	;
-	
+
 	template
 		<	typename
 				t_tAny
@@ -94,7 +94,7 @@ namespace
 			>
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tAny
@@ -107,7 +107,7 @@ namespace
 		<	t_tAny
 		>
 	;
-	
+
 	template
 		<>
 	constexpr inline
@@ -117,7 +117,7 @@ namespace
 		>
 	=	1_uz
 	;
-	
+
 	template
 		<	typename
 				t_tAny
@@ -128,7 +128,7 @@ namespace
 		<	t_tAny
 		>
 	;
-	
+
 	template
 		<	auto
 				t_fInvocable
@@ -145,7 +145,7 @@ namespace
 			...
 		>
 	;
-	
+
 	template
 		<	typename
 			...	t_tpAny
@@ -157,7 +157,7 @@ namespace
 			...
 		>
 	;
-	
+
 	/// analog to VoidT but with values
 	template
 		<	auto
@@ -167,7 +167,7 @@ namespace
 		VoidV
 	=	void
 	;
-	
+
 	struct
 		LiteralTypeInitializer
 	{
@@ -185,7 +185,7 @@ namespace
 				;
 			}
 		};
-		
+
 		template
 			<	typename
 					t_tAny
@@ -202,7 +202,7 @@ namespace
 				false
 			;
 		}
-		
+
 		template
 			<	typename
 					t_tAny
@@ -229,7 +229,7 @@ namespace
 			;
 		}
 	};
-	
+
 	template
 		<	typename
 				t_tAny

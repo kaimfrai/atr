@@ -3,7 +3,6 @@
 #include <Function/Address.hpp>
 #include <Function/ArgumentDependency.hpp>
 #include <Function/StaticDependency.hpp>
-#include <Archetype/LayoutInfo.hpp>
 #include <Layout/MemberOffset.hpp>
 #include <ID/Func.hpp>
 #include <ID/Data.hpp>
@@ -12,6 +11,7 @@
 #include <Pack/Type.hpp>
 #include <Std/QualifierTemplate.hpp>
 #include <Std/Concepts.hpp>
+#include <Archetype/LayoutInfo.hpp>
 
 namespace
 	Function
@@ -29,11 +29,11 @@ namespace
 		t_tOriginIdentifier
 			OriginID
 		;
-		
+
 		t_tTargetIdentifier
 			TargetID
 		;
-		
+
 		constexpr
 		explicit
 			DataIDMap
@@ -52,7 +52,7 @@ namespace
 			}
 		{}
 	};
-	
+
 	template
 		<	ID::StringLiteralInstance
 				t_tOriginIdentifier
@@ -63,7 +63,7 @@ namespace
 		t_tOriginIdentifier
 			Identifier
 		;
-		
+
 		constexpr
 			DataIDOrigin
 			(	ID::PseudoStringLiteral auto
@@ -97,7 +97,7 @@ namespace
 			;
 		}
 	};
-	
+
 	template
 		<	ID::PseudoStringLiteral
 				t_tIdentifier
@@ -114,7 +114,7 @@ namespace
 			)
 		>
 	;
-	
+
 	constexpr
 	auto
 		MapDataID
@@ -128,7 +128,7 @@ namespace
 			}
 		;
 	}
-	
+
 	/// creates an DataDependencyItem from an owner and a DataIDMap
 	template
 		<	typename
@@ -149,7 +149,7 @@ namespace
 				.	TargetID
 			>
 		;
-		
+
 		constexpr
 		auto
 			OriginDataID
@@ -158,7 +158,7 @@ namespace
 				.	OriginID
 			>
 		;
-		
+
 		return
 			DataDependencyItem
 			{	TargetDataID
@@ -176,7 +176,7 @@ namespace
 			}
 		;
 	}
-	
+
 	/// maps one Identifier to another
 	template
 		<	ID::StringLiteralInstance
@@ -192,15 +192,15 @@ namespace
 		t_tOriginIdentifier
 			OriginID
 		;
-		
+
 		t_tTargetIdentifier
 			TargetID
 		;
-		
+
 		t_tArgumentPack
 			ArgumentPack
 		{};
-		
+
 		constexpr
 		explicit
 			FuncIDMap
@@ -233,7 +233,7 @@ namespace
 		t_tOriginIdentifier
 			Identifier
 		;
-		
+
 		/// creates the mapping
 		friend
 		constexpr
@@ -260,7 +260,7 @@ namespace
 			;
 		}
 	};
-	
+
 	template
 		<	typename
 			...	t_tpArgument
@@ -287,7 +287,7 @@ namespace
 			}
 		;
 	}
-	
+
 	/// creates an FuncDependencyItem from an owner and a FuncIDMap
 	template
 		<	typename
@@ -308,7 +308,7 @@ namespace
 				.	TargetID
 			>
 		;
-		
+
 		constexpr
 		auto
 			OriginFuncID
@@ -317,7 +317,7 @@ namespace
 				.	OriginID
 			>
 		;
-		
+
 		return
 			FuncDependencyItem
 			{	TargetFuncID
@@ -332,7 +332,7 @@ namespace
 			}
 		;
 	}
-	
+
 	template
 		<	typename
 				t_tOwner

@@ -19,7 +19,7 @@ namespace
 		<	t_tFunction
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tObject
@@ -38,7 +38,7 @@ namespace
 			>
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tObject
@@ -59,7 +59,7 @@ namespace
 		<	t_tObject
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tObject
@@ -71,7 +71,7 @@ namespace
 		,	std::remove_reference_t
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tObject
@@ -90,7 +90,7 @@ namespace
 		,	std::remove_reference_t
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tObject
@@ -109,7 +109,7 @@ namespace
 		,	std::remove_cv_t
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tIntegral
@@ -123,7 +123,7 @@ namespace
 		<	t_tIntegral
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tIntegral
@@ -137,7 +137,7 @@ namespace
 		<	t_tIntegral
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tIntegral
@@ -151,7 +151,7 @@ namespace
 		<	t_tIntegral
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tFloatingPoint
@@ -165,7 +165,7 @@ namespace
 		<	t_tFloatingPoint
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tArithmetic
@@ -179,7 +179,7 @@ namespace
 		<	t_tArithmetic
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tArray
@@ -202,7 +202,7 @@ namespace
 			>
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tArray
@@ -225,7 +225,7 @@ namespace
 			>
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tArray
@@ -248,7 +248,7 @@ namespace
 			>
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tClass
@@ -271,7 +271,7 @@ namespace
 			>
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tUnion
@@ -285,7 +285,7 @@ namespace
 		<	t_tUnion
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tPointer
@@ -299,7 +299,7 @@ namespace
 		<	t_tPointer
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tPointer
@@ -315,7 +315,7 @@ namespace
 			>
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tPointer
@@ -331,7 +331,7 @@ namespace
 			>
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tPointer
@@ -343,7 +343,7 @@ namespace
 		,	std::nullptr_t
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tPointer
@@ -357,7 +357,7 @@ namespace
 		<	t_tPointer
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tPointer
@@ -371,7 +371,7 @@ namespace
 		<	t_tPointer
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tMemberPointer
@@ -385,7 +385,7 @@ namespace
 		<	t_tMemberPointer
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tConstructible
@@ -404,7 +404,7 @@ namespace
 			...
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tAny
@@ -424,7 +424,7 @@ namespace
 			...
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tAny
@@ -435,7 +435,7 @@ namespace
 		<	t_tAny
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tAny
@@ -449,7 +449,7 @@ namespace
 		<	t_tAny
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tAny
@@ -463,7 +463,7 @@ namespace
 		,	t_tConvertTo
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tConvertible
@@ -486,7 +486,7 @@ namespace
 			};
 		}
 	;
-	
+
 	template
 		<	typename
 				t_tConvertible
@@ -509,7 +509,7 @@ namespace
 			};
 		}
 	;
-	
+
 	template
 		<	typename
 				t_tAny
@@ -533,7 +533,7 @@ namespace
 			>
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tAny
@@ -548,7 +548,7 @@ namespace
 			...
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tAny
@@ -564,7 +564,7 @@ namespace
 			>
 		)
 	;
-	
+
 	template
 		<	typename
 				t_tAny
@@ -584,7 +584,7 @@ namespace
 			...
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tAny
@@ -605,7 +605,7 @@ namespace
 			>
 		)
 	;
-	
+
 	template
 		<	typename
 				t_tAny
@@ -620,7 +620,7 @@ namespace
 			...
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tAny
@@ -642,7 +642,7 @@ namespace
 			...
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tAny
@@ -656,7 +656,7 @@ namespace
 		<	t_tAny
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tAny
@@ -679,7 +679,7 @@ namespace
 			>
 		>
 	;
-	
+
 	///	constructs a literal from the given arguments
 	/// performs checks if the type is an constructible object
 	template
@@ -702,7 +702,7 @@ namespace
 			...
 		}
 	;
-	
+
 	/// maps all types to false. useful in a static_assert
 	template
 		<	typename

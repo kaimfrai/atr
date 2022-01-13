@@ -36,6 +36,7 @@ add_subdirectory(Std)
 add_subdirectory(Meta)
 add_subdirectory(Test)
 add_subdirectory(ThirdParty)
+add_subdirectory(Archetype)
 add_subdirectory(Evaluation)
 add_subdirectory(Legacy)
 

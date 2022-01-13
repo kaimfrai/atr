@@ -5,7 +5,7 @@ import Evaluation.Archetype.Ellipse;
 import Evaluation.Archetype.Rectangle;
 import Evaluation.Archetype.Square;
 
-export import <Archetype/Instance.hpp>;
+export import Archetype.Instance;
 
 export namespace
 	Archetype

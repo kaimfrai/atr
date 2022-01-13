@@ -21,7 +21,7 @@ namespace
 	=	Layout::DataMemberPack
 		<>{}
 	;
-	
+
 	/// uses the LayoutConfig mapped to the given literal and prefixes it with that literal
 	template
 		<	ID::StringLiteral
@@ -59,7 +59,7 @@ namespace
 		<	i_vSuffix
 		>
 	;
-	
+
 	/// the type mapped to the string literal by LayoutInfo
 	template
 		<	ID::TypeInstance
@@ -80,7 +80,7 @@ namespace
 			)
 		)::	Type
 	;
-	
+
 	/// customization point for specifying layout types
 	template
 		<	typename
@@ -95,7 +95,7 @@ namespace
 			::	LayoutType
 		>
 	;
-	
+
 	template
 		<	Std::CVObject
 				t_tObject
@@ -111,7 +111,7 @@ namespace
 			>
 		>
 	;
-	
+
 	template
 		<	Std::Reference
 				t_tObject
@@ -127,7 +127,7 @@ namespace
 			>
 		>
 	;
-	
+
 	/// extracts the LayoutType from a possibly reference qualified Object
 	/// preserves cv-qualifiers but not reference qualifiers
 	template

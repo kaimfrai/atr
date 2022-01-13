@@ -6,7 +6,7 @@ import Evaluation.Archetype.Rectangle;
 import Evaluation.Archetype.Square;
 import Evaluation.Archetype.ComputeVolume;
 
-export import <Archetype/Instance.hpp>;
+export import Archetype.Instance;
 import <Archetype/LayoutInfo.hpp>;
 import <Function/Address.hpp>;
 
