@@ -1,12 +1,14 @@
 export module Evaluation.Archetype.Cone;
 
-export import Evaluation.Shared;
-export import Evaluation.Archetype.BasicBody;
-export import Evaluation.Archetype.Circle;
-export import Evaluation.Archetype.Ellipse;
+import Evaluation.Shared;
+import Evaluation.Archetype.BasicBody;
+import Evaluation.Archetype.Circle;
+import Evaluation.Archetype.Ellipse;
+import Evaluation.Archetype.ComputeVolume;
 
 export import <Archetype/Instance.hpp>;
-export import <Archetype/LayoutInfo.hpp>;
+import <Archetype/LayoutInfo.hpp>;
+import <Function/Address.hpp>;
 
 export namespace
 	Archetype
@@ -51,6 +53,22 @@ export namespace
 	=	Archetype::Make
 		<	"Cone"
 		>
+	;
+}
+
+export namespace
+	Function
+{
+	template<>
+	auto constexpr
+	(	Invoke
+		<	ID::FuncT<"ComputeVolume">
+		,	Bodies3D::Cone const&
+		>
+	)	(	Bodies3D::Cone const&
+		)
+	noexcept
+	->	decltype(auto)
 	;
 }
 

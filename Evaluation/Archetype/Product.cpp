@@ -1,8 +1,8 @@
 export module Evaluation.Archetype.Product;
 
-export import Evaluation.Shared;
+import Evaluation.Shared;
 
-export import <Function/ConstantIDMap.hpp>;
+import <Function/ConstantIDMap.hpp>;
 
 export namespace
 	Function

@@ -1,10 +1,12 @@
 export module Evaluation.Archetype.Head;
 
-export import Evaluation.Shared;
-export import Evaluation.Archetype.Sphere;
+import Evaluation.Shared;
+import Evaluation.Archetype.Sphere;
+import Evaluation.Archetype.ComputeVolume;
 
 export import <Archetype/Instance.hpp>;
-export import <Archetype/LayoutInfo.hpp>;
+import <Archetype/LayoutInfo.hpp>;
+import <Function/Address.hpp>;
 
 export namespace
 	Archetype
@@ -36,6 +38,22 @@ export namespace
 	=	Archetype::Make
 		<	"Head"
 		>
+	;
+}
+
+export namespace
+	Function
+{
+	template<>
+	auto constexpr
+	(	Invoke
+		<	ID::FuncT<"ComputeVolume">
+		,	Bodies3D::Head const&
+		>
+	)	(	Bodies3D::Head const&
+		)
+	noexcept
+	->	decltype(auto)
 	;
 }
 

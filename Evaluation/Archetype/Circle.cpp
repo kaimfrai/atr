@@ -1,9 +1,9 @@
 export module Evaluation.Archetype.Circle;
 
-export import Evaluation.Shared;
-export import Evaluation.Archetype.Ellipse;
-export import Evaluation.Archetype.Rectangle;
-export import Evaluation.Archetype.Square;
+import Evaluation.Shared;
+import Evaluation.Archetype.Ellipse;
+import Evaluation.Archetype.Rectangle;
+import Evaluation.Archetype.Square;
 
 export import <Archetype/Instance.hpp>;
 

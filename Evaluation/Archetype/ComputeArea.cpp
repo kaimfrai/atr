@@ -1,10 +1,11 @@
 export module Evaluation.Archetype.ComputeArea;
 
-export import Evaluation.Shared;
-export import Evaluation.Archetype.ReturnMember;
-export import Evaluation.Archetype.Product;
+import Evaluation.Shared;
+import Evaluation.Archetype.ReturnMember;
+import Evaluation.Archetype.Product;
 
-export import <Function/VirtualArgument.hpp>;
+import <Function/VirtualArgument.hpp>;
+import <Function/ConstantIDMap.hpp>;
 
 export namespace
 	Shapes2D

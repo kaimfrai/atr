@@ -1,10 +1,12 @@
 export module Evaluation.Archetype.Ellipsoid;
 
-export import Evaluation.Shared;
-export import Evaluation.Archetype.BasicBody;
+import Evaluation.Shared;
+import Evaluation.Archetype.BasicBody;
+import Evaluation.Archetype.ComputeVolume;
 
 export import <Archetype/Instance.hpp>;
-export import <Archetype/LayoutInfo.hpp>;
+import <Archetype/LayoutInfo.hpp>;
+import <Function/Address.hpp>;
 
 export namespace
 	Archetype
@@ -35,6 +37,22 @@ export namespace
 	=	Archetype::Make
 		<	"Ellipsoid"
 		>
+	;
+}
+
+export namespace
+	Function
+{
+	template<>
+	auto constexpr
+	(	Invoke
+		<	ID::FuncT<"ComputeVolume">
+		,	Bodies3D::Ellipsoid const&
+		>
+	)	(	Bodies3D::Ellipsoid const&
+		)
+	noexcept
+	->	decltype(auto)
 	;
 }
 

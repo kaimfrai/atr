@@ -1,12 +1,14 @@
 export module Evaluation.Archetype.Sphere;
 
-export import Evaluation.Shared;
-export import Evaluation.Archetype.Ellipsoid;
-export import Evaluation.Archetype.Cuboid;
-export import Evaluation.Archetype.Cube;
+import Evaluation.Shared;
+import Evaluation.Archetype.Ellipsoid;
+import Evaluation.Archetype.Cuboid;
+import Evaluation.Archetype.Cube;
+import Evaluation.Archetype.ComputeVolume;
 
 export import <Archetype/Instance.hpp>;
-export import <Archetype/LayoutInfo.hpp>;
+import <Archetype/LayoutInfo.hpp>;
+import <Function/Address.hpp>;
 
 export namespace
 	Archetype
@@ -46,6 +48,22 @@ export namespace
 	=	Archetype::Make
 		<	"Sphere"
 		>
+	;
+}
+
+export namespace
+	Function
+{
+	template<>
+	auto constexpr
+	(	Invoke
+		<	ID::FuncT<"ComputeVolume">
+		,	Bodies3D::Sphere const&
+		>
+	)	(	Bodies3D::Sphere const&
+		)
+	noexcept
+	->	decltype(auto)
 	;
 }
 

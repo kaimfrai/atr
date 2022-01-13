@@ -1,9 +1,10 @@
 export module Evaluation.Archetype.ReturnMember;
 
-export import Evaluation.Shared;
+import Evaluation.Shared;
 
 export import <Archetype/Instance.hpp>;
-export import <Function/ConstantIDMap.hpp>;
+import <Function/ConstantIDMap.hpp>;
+
 export namespace
 	Function
 {

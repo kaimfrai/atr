@@ -1,10 +1,11 @@
 export module Evaluation.Archetype.ComputeVolume;
 
-export import Evaluation.Shared;
+import Evaluation.Shared;
 export import Evaluation.Archetype.ReturnMember;
 export import Evaluation.Archetype.Product;
 
-export import <Function/VirtualArgument.hpp>;
+import <Function/VirtualArgument.hpp>;
+export import <Function/ConstantIDMap.hpp>;
 
 export namespace
 	Bodies3D

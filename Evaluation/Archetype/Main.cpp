@@ -8,6 +8,9 @@ import Evaluation.Archetype.Pyramid;
 import Evaluation.Archetype.Sphere;
 
 import Evaluation.Archetype.ComputeVolume;
+import Evaluation.Shared;
+
+import <Function/VirtualArgument.hpp>;
 
 static_assert
 (	Function::Address<ID::FuncT<"ComputeVolume">, Bodies3D::Head const&>()
@@ -24,12 +27,9 @@ auto
 	)
 -> int
 {
-	using
-		ID::operator""_fID
-	;
-	using namespace
-		Bodies3D
-	;
+	using ID::operator""_fID;
+	using namespace Bodies3D;
+
 	using
 		Body3D
 	=	Function::VirtualStorage
@@ -45,8 +45,8 @@ auto
 			>
 		>
 	;
-	constexpr
-	auto
+
+	auto constexpr
 		fComputeVolume
 	=	+[]	(	Body3D const
 				&	i_rBody3D

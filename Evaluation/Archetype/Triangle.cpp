@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.Triangle;
 
-export import Evaluation.Shared;
-export import Evaluation.Archetype.BasicShape;
+import Evaluation.Shared;
+import Evaluation.Archetype.BasicShape;
 
 export import <Archetype/Instance.hpp>;
 
@@ -39,4 +39,3 @@ export namespace
 
 static_assert(AdditionalSize<Shapes2D::Triangle, 2, 1> == 4);
 static_assert(SizeMinimal<Shapes2D::Triangle, 2, 1>);
-
