@@ -5,6 +5,7 @@ export import Evaluation.Shared;
 export import Evaluation.Archetype.BasicBody;
 export import Evaluation.Archetype.Ellipse;
 export import Evaluation.Archetype.Circle;
+export import Evaluation.Archetype.ComputeVolume;
 
 export namespace
 	Archetype
@@ -52,21 +53,21 @@ export namespace
 	;
 }
 
-// export namespace
-// 	Function
-// {
-// 	template<>
-// 	auto constexpr
-// 	(	Invoke
-// 		<	ID::FuncT<"ComputeVolume">
-// 		,	Bodies3D::Cylinder const&
-// 		>
-// 	)	(	Bodies3D::Cylinder const&
-// 		)
-// 	noexcept
-// 	->	decltype(auto)
-// 	;
-// }
+export namespace
+	Function
+{
+	template<>
+	auto constexpr
+	(	Invoke
+		<	ID::FuncT<"ComputeVolume">
+		,	Bodies3D::Cylinder const&
+		>
+	)	(	Bodies3D::Cylinder const&
+		)
+	noexcept
+	->	decltype(auto)
+	;
+}
 
 static_assert(AdditionalSize<Bodies3D::Cylinder, 2, 1> == 4);
 static_assert(SizeMinimal<Bodies3D::Cylinder, 2, 1>);

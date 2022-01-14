@@ -4,6 +4,7 @@ export import Archetype.Instance;
 export import Evaluation.Archetype.Cuboid;
 export import Evaluation.Archetype.Rectangle;
 export import Evaluation.Archetype.Square;
+export import Evaluation.Archetype.ComputeVolume;
 
 export namespace
 	Archetype
@@ -54,21 +55,21 @@ export namespace
 	;
 }
 
-// export namespace
-// 	Function
-// {
-// 	template<>
-// 	auto constexpr
-// 	(	Invoke
-// 		<	ID::FuncT<"ComputeVolume">
-// 		,	Bodies3D::Cube const&
-// 		>
-// 	)	(	Bodies3D::Cube const&
-// 		)
-// 	noexcept
-// 	->	decltype(auto)
-// 	;
-// }
+export namespace
+	Function
+{
+	template<>
+	auto constexpr
+	(	Invoke
+		<	ID::FuncT<"ComputeVolume">
+		,	Bodies3D::Cube const&
+		>
+	)	(	Bodies3D::Cube const&
+		)
+	noexcept
+	->	decltype(auto)
+	;
+}
 
 static_assert(AdditionalSize<Bodies3D::Cube, 1, 1> == 4);
 static_assert(SizeMinimal<Bodies3D::Cube, 1, 1>);
