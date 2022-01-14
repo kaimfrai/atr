@@ -1,4 +1,13 @@
-add_module(Bodies.cpp)
+add_module(Cone.cpp)
+add_module(Cube.cpp)
+add_module(Cuboid.cpp)
+add_module(Cylinder.cpp)
+add_module(Ellipsoid.cpp)
+add_module(Head.cpp)
+add_module(Pyramid.cpp)
+add_module(Sphere.cpp)
+add_module(VolumeComputer.cpp)
+
 add_executable(
 	evaluation_replication
 		Main.cpp
