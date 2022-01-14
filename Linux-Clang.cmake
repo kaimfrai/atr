@@ -55,7 +55,7 @@ set(ADDITIONAL_COMPILE_OPTIONS
 	-ftemplate-backtrace-limit=0
 	-frelaxed-template-template-args
 	-fconstexpr-steps=4294967295
-	#-ftime-trace
+	-ftime-trace
 )
 
 function(
@@ -73,8 +73,6 @@ function(
 	module_file
 	out_command
 )
-
-
 	get_directory_property(
 		include_directories
 		INCLUDE_DIRECTORIES
