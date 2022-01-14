@@ -1,4 +1,12 @@
 import Evaluation.Polymorphic.Bodies;
+import Evaluation.CRTP.Cube;
+import Evaluation.CRTP.Cuboid;
+import Evaluation.CRTP.Pyramid;
+import Evaluation.CRTP.Sphere;
+import Evaluation.CRTP.Cylinder;
+import Evaluation.CRTP.Cone;
+import Evaluation.CRTP.Ellipsoid;
+import Evaluation.CRTP.Head;
 
 auto
 	main

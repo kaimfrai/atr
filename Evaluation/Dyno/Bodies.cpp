@@ -1,6 +1,6 @@
 export module Evaluation.Dyno.Bodies;
 
-export import Evaluation.CRTP.Bodies;
+export import Evaluation.Shared;
 export import Dyno;
 
 namespace

@@ -1,7 +1,6 @@
 export module Evaluation.Any.Bodies;
 
-export import Evaluation.CRTP.Bodies;
-
+export import Evaluation.Shared;
 export import Std;
 
 export namespace
@@ -54,6 +53,7 @@ export namespace
 			;
 		}
 	};
+
 
 	struct
 		AnyBody

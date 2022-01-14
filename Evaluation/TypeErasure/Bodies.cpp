@@ -1,6 +1,5 @@
 export module Evaluation.TypeErasure.Bodies;
 
-export import Evaluation.CRTP.Bodies;
 export import Boost.TypeErasure;
 
 export namespace
