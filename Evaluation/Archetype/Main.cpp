@@ -8,20 +8,6 @@ import Evaluation.Archetype.Pyramid;
 import Evaluation.Archetype.Sphere;
 
 import Evaluation.Archetype.ComputeVolume;
-import Evaluation.Shared;
-
-import ID.Modify;
-import ID.Data;
-import ID.StringLiteral;
-import Evaluation.Archetype.ReturnMember;
-import Evaluation.Archetype.Product;
-import Function.VirtualArgument;
-import Function.Address;
-import Layout.MemberOffset;
-
-export import Pack.Sort;
-export import Std.QualifierTemplate;
-export import Pack.Accumulate;
 
 static_assert
 (	Function::Address<ID::FuncT<"ComputeVolume">, Bodies3D::Head const&>()

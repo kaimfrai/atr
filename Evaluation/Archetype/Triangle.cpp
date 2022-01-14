@@ -1,17 +1,7 @@
 export module Evaluation.Archetype.Triangle;
 
-import Evaluation.Shared;
-import Evaluation.Archetype.BasicShape;
-
-export import ID.StringLiteral;
-export import ID.Data;
 export import Archetype.Instance;
-export import Layout.LayoutCreator;
-
-export import Pack.SplitBest;
-export import Pack.Filter;
-export import Pack.Sort;
-export import Pack.Accumulate;
+export import Evaluation.Archetype.BasicShape;
 
 export namespace
 	Archetype

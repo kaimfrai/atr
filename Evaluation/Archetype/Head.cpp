@@ -1,22 +1,7 @@
 export module Evaluation.Archetype.Head;
 
-import Evaluation.Shared;
-import Evaluation.Archetype.Sphere;
-import Evaluation.Archetype.ComputeVolume;
-
-export import ID.StringLiteral;
-export import ID.Data;
-export import ID.Modify;
 export import Archetype.Instance;
-import Archetype.LayoutInfo;
-import Function.Address;
-export import Layout.Concatenate;
-export import Layout.LayoutCreator;
-
-export import Pack.SplitBest;
-export import Pack.Filter;
-export import Pack.Sort;
-export import Pack.Accumulate;
+export import Evaluation.Archetype.Sphere;
 
 export namespace
 	Archetype

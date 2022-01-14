@@ -1,14 +1,7 @@
 export module Evaluation.Archetype.BasicShape;
 
-import Evaluation.Shared;
-
-export import ID.StringLiteral;
-export import ID.Data;
-export import Layout.Union;
-export import Layout.DataMember;
+export import Evaluation.Shared;
 export import Archetype.LayoutInfo;
-
-export import Pack.Accumulate;
 
 export namespace
 	Archetype

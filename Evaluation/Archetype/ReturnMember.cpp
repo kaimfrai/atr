@@ -1,12 +1,8 @@
 export module Evaluation.Archetype.ReturnMember;
 
-import Evaluation.Shared;
-
+export import Evaluation.Shared;
+export import Function.ConstantIDMap;
 export import Archetype.Instance;
-import Function.ConstantIDMap;
-
-export import ID.Modify;
-export import ID.Func;
 
 export namespace
 	Function

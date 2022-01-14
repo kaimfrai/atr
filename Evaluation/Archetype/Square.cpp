@@ -1,17 +1,8 @@
 export module Evaluation.Archetype.Square;
 
-import Evaluation.Shared;
-import Evaluation.Archetype.Rectangle;
-
-export import ID.StringLiteral;
-export import ID.Data;
 export import Archetype.Instance;
-export import Layout.LayoutCreator;
-
-export import Pack.SplitBest;
-export import Pack.Filter;
-export import Pack.Sort;
-export import Pack.Accumulate;
+export import Evaluation.Shared;
+export import Evaluation.Archetype.Rectangle;
 
 export namespace
 	Archetype

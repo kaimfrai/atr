@@ -1,10 +1,9 @@
 export module Evaluation.Archetype.ComputeVolume;
 
-import Evaluation.Shared;
+export import Evaluation.Shared;
 export import Evaluation.Archetype.ReturnMember;
 export import Evaluation.Archetype.Product;
-
-import Function.VirtualArgument;
+export import Function.VirtualArgument;
 export import Function.ConstantIDMap;
 
 export namespace

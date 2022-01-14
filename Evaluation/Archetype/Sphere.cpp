@@ -1,22 +1,9 @@
 export module Evaluation.Archetype.Sphere;
 
-import Evaluation.Shared;
-import Evaluation.Archetype.Ellipsoid;
-import Evaluation.Archetype.Cuboid;
-import Evaluation.Archetype.Cube;
-import Evaluation.Archetype.ComputeVolume;
-
-export import ID.StringLiteral;
-export import ID.Data;
 export import Archetype.Instance;
-import Archetype.LayoutInfo;
-import Function.Address;
-export import Layout.LayoutCreator;
-
-export import Pack.SplitBest;
-export import Pack.Filter;
-export import Pack.Sort;
-export import Pack.Accumulate;
+export import Evaluation.Archetype.Ellipsoid;
+export import Evaluation.Archetype.Cuboid;
+export import Evaluation.Archetype.Cube;
 
 export namespace
 	Archetype

@@ -1,13 +1,7 @@
 export module Evaluation.Archetype.Product;
 
-import Evaluation.Shared;
-
-export import ID.Func;
-export import ID.StringLiteral;
-import Function.ConstantIDMap;
-
-export import Stateless.Map;
-export import PackTemplate.Type;
+export import Evaluation.Shared;
+export import Function.ConstantIDMap;
 
 export namespace
 	Function
