@@ -1,29 +1,7 @@
 export module Evaluation.Archetype.Ellipse;
 
 export import Archetype.Instance;
-export import Evaluation.Shared;
-export import Evaluation.Archetype.BasicShape;
-
-export namespace
-	Archetype
-{
-	template<>
-	auto constexpr inline
-		LayoutConfig
-		<	"Ellipse"
-		>
-	=	LayoutConfig
-		<	"BasicShape"
-		>
-	+	Layout::InfoV
-		<	"ComputeAreaMultiplier"
-		,	πFraction
-			<	1z
-			,	4z
-			>
-		>
-	;
-}
+export import Evaluation.Archetype.Ellipse.Layout;
 
 export namespace
 	Shapes2D

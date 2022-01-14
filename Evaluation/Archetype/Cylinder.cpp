@@ -1,46 +1,8 @@
 export module Evaluation.Archetype.Cylinder;
 
 export import Archetype.Instance;
-export import Evaluation.Shared;
-export import Evaluation.Archetype.BasicBody;
-export import Evaluation.Archetype.Ellipse;
-export import Evaluation.Archetype.Circle;
+export import Evaluation.Archetype.Cylinder.Layout;
 export import Evaluation.Archetype.ComputeVolume;
-
-export namespace
-	Archetype
-{
-	template<>
-	auto constexpr inline
-		LayoutConfig
-		<	"Cylinder"
-		>
-	=	LayoutConfig
-		<	"BasicBody"
-		>
-	-	(	LayoutConfig
-			<	"Ellipse"
-			>
-		-	LayoutConfig
-			<	"Circle"
-			>
-		)
-	+	(	LayoutConfig
-			<	"Circle"
-			>
-		-	LayoutConfig
-			<	"Ellipse"
-			>
-		)
-	+	Layout::InfoV
-		<	"ComputeVolumeMultiplier"
-		,	πFraction
-			<	1z
-			,	4z
-			>
-		>
-	;
-}
 
 export namespace
 	Bodies3D

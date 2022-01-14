@@ -1,30 +1,7 @@
 export module Evaluation.Archetype.Square;
 
 export import Archetype.Instance;
-export import Evaluation.Shared;
-export import Evaluation.Archetype.Rectangle;
-
-export namespace
-	Archetype
-{
-	template<>
-	auto constexpr inline
-		LayoutConfig
-		<	"Square"
-		>
-	=	LayoutConfig
-		<	"Rectangle"
-		>
-	-	Layout::InfoV
-		<	"Height"
-		,	Float
-		>
-	+	Layout::Alias
-		<	"Height"
-		,	"Width"
-		>
-	;
-}
+export import Evaluation.Archetype.Square.Layout;
 
 export namespace
 	Shapes2D

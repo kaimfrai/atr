@@ -1,28 +1,7 @@
 export module Evaluation.Archetype.Triangle;
 
 export import Archetype.Instance;
-export import Evaluation.Archetype.BasicShape;
-
-export namespace
-	Archetype
-{
-	template<>
-	auto constexpr inline
-		LayoutConfig
-		<	"Triangle"
-		>
-	=	LayoutConfig
-		<	"BasicShape"
-		>
-	+	Layout::InfoV
-		<	"ComputeAreaMultiplier"
-		,	Fraction
-			<	1z
-			,	2z
-			>
-		>
-	;
-}
+export import Evaluation.Archetype.Triangle.Layout;
 
 export namespace
 	Shapes2D

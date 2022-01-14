@@ -1,28 +1,8 @@
 export module Evaluation.Archetype.Cuboid;
 
 export import Archetype.Instance;
-export import Evaluation.Shared;
-export import Evaluation.Archetype.BasicBody;
+export import Evaluation.Archetype.Cuboid.Layout;
 export import Evaluation.Archetype.ComputeVolume;
-
-export namespace
-	Archetype
-{
-	template<>
-	auto constexpr inline
-		LayoutConfig
-		<	"Cuboid"
-		>
-	=	LayoutConfig
-		<	"BasicBody"
-		>
-	+	Layout::InfoV
-		<	"ComputeVolumeMultiplier"
-		,	Fraction
-			<>
-		>
-	;
-}
 
 export namespace
 	Bodies3D

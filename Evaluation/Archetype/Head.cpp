@@ -1,30 +1,9 @@
 export module Evaluation.Archetype.Head;
 
 export import Archetype.Instance;
-export import Evaluation.Archetype.Sphere;
+export import Evaluation.Archetype.Head.Layout;
 export import Evaluation.Archetype.ComputeVolume;
 
-export namespace
-	Archetype
-{
-	template<>
-	auto constexpr inline
-		LayoutConfig
-		<	"Head"
-		>
-	=	LayoutConfig
-		<	"Sphere"
-		>
-	+	SuffixedLayoutConfig
-		<	"Sphere"
-		,	"LeftEye"
-		>
-	+	SuffixedLayoutConfig
-		<	"Sphere"
-		,	"RightEye"
-		>
-	;
-}
 
 export namespace
 	Bodies3D

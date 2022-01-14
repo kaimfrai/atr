@@ -1,40 +1,7 @@
 export module Evaluation.Archetype.Circle;
 
 export import Archetype.Instance;
-export import Evaluation.Shared;
-export import Evaluation.Archetype.Ellipse;
-export import Evaluation.Archetype.Rectangle;
-export import Evaluation.Archetype.Square;
-
-export namespace
-	Archetype
-{
-	template<>
-	auto constexpr inline
-		LayoutConfig
-		<	"Circle"
-		>
-	=	LayoutConfig
-		<	"Ellipse"
-		>
-		//	subtract Height member
-	-	(	LayoutConfig
-			<	"Rectangle"
-			>
-		-	LayoutConfig
-			<	"Square"
-			>
-		)
-		//	add Height alias
-	+	(	LayoutConfig
-			<	"Square"
-			>
-		-	LayoutConfig
-			<	"Rectangle"
-			>
-		)
-	;
-}
+export import Evaluation.Archetype.Circle.Layout;
 
 export namespace
 	Shapes2D
