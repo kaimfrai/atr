@@ -1,9 +1,9 @@
 export module Function.FuncDependencyItem;
 
 export import ID.Func;
-export import <Stateless/Map.hpp>;
-export import <Stateless/Type.hpp>;
-export import <Std/FunctionTraits.hpp>;
+export import Stateless.Map;
+export import Stateless.Type;
+export import Std.FunctionTraits;
 
 export namespace
 	Function

@@ -10,8 +10,8 @@ export import Pack.Value;
 export import Meta.TypeInfo;
 export import Meta.ValueInfo;
 
-export import <Stateless/Tuple.hpp>;
-export import <Std/Concepts.hpp>;
+export import Stateless.Tuple;
+export import Std.Concepts;
 
 export namespace
 	Pack

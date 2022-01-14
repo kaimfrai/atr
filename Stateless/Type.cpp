@@ -1,11 +1,11 @@
-#pragma once
+export module Stateless.Type;
 
-#include <Std/Concepts.hpp>
+export import Std.Concepts;
 
-namespace
+export namespace
 	Stateless
 {
-	/// full name Stateless::Type, types that have no state and can be freely copied around
+		/// full name Stateless::Type, types that have no state and can be freely copied around
 	template
 		<	typename
 				t_tAny
@@ -14,11 +14,10 @@ namespace
 				>
 			typename
 				t_t1Transform
-				=	std::type_identity_t
 		>
 	concept
-		Type
-	=	Std::Empty
+		Type_Transform
+	=	Std::Empty_Transform
 		<	t_tAny
 		,	t_t1Transform
 		>
@@ -28,7 +27,20 @@ namespace
 			>
 		>
 	;
-	
+
+	/// full name Stateless::Type, types that have no state and can be freely copied around
+	template
+		<	typename
+				t_tAny
+		>
+	concept
+		Type
+	=	Type_Transform
+		<	t_tAny
+		,	std::type_identity_t
+		>
+	;
+
 	///	two stateless objects compare the same by default if the have the same type
 	/// return bool to sythesize operator !=
 	[[nodiscard]]
@@ -48,7 +60,7 @@ namespace
 			>
 		;
 	}
-	
+
 	///	make a default constructed copy of a stateless object type
 	///	used in combination with decltype to get from an argument back to a compile time value
 	template
@@ -62,7 +74,7 @@ namespace
 		<	t_tStateless
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tStatelessInvocable
@@ -99,7 +111,7 @@ namespace
 			;
 		}
 	;
-	
+
 	template
 		<	typename
 				t_tStatelessInvocable

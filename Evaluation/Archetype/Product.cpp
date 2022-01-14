@@ -6,7 +6,7 @@ export import ID.Func;
 export import ID.StringLiteral;
 import Function.ConstantIDMap;
 
-export import <Stateless/Map.hpp>;
+export import Stateless.Map;
 export import PackTemplate.Type;
 
 export namespace

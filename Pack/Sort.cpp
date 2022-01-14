@@ -6,11 +6,11 @@ export import Pack.Concat;
 export import Pack.Size;
 export import Pack.Instance;
 
-export import <Fold/Comma.hpp>;
-export import <Stateless/Tuple.hpp>;
-export import <Stateless/Binding.hpp>;
+export import Fold.Comma;;
+export import Stateless.Tuple;
+export import Stateless.Binding;
 
-export import <Std/Concepts.hpp>;
+export import Std.Concepts;
 
 export import Std;
 

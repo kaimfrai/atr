@@ -1,4 +1,4 @@
-#pragma once
+export module Std.TemplateTraits;
 
 /* matches types against certain template patterns
  * patterns are:
@@ -8,16 +8,15 @@
  * - ValuePackTemplate: a template of a template of values
  * - SequencePack: a template of a type followed by a pack of values of that type
  * - SequencePackTemplate: a template of a SequencePack
- * 
+ *
  * types can be checked whether they meet a certain pattern and if so, whether they match a specific template
  */
 
-#include <Std/Size.hpp>
+export import Std.Size;
 
-#include <type_traits>
-#include <algorithm>
+export import Std;
 
-namespace
+export namespace
 	Std
 {
 	template
@@ -36,7 +35,7 @@ namespace
 		IsSameTypePackTemplate
 	:	std::false_type
 	{};
-	
+
 	template
 		<	template
 				<	typename
@@ -52,7 +51,7 @@ namespace
 		>
 	:	std::true_type
 	{};
-	
+
 	template
 		<	template
 				<	template
@@ -75,7 +74,7 @@ namespace
 		IsSameTypePackTemplateTemplate
 	:	std::false_type
 	{};
-	
+
 	template
 		<	template
 				<	template
@@ -94,7 +93,7 @@ namespace
 		>
 	:	std::true_type
 	{};
-	
+
 	template
 		<	template
 				<	auto
@@ -111,7 +110,7 @@ namespace
 		IsSameValuePackTemplate
 	:	std::false_type
 	{};
-	
+
 	template
 		<	template
 				<	auto
@@ -127,7 +126,7 @@ namespace
 		>
 	:	std::true_type
 	{};
-	
+
 	template
 		<	template
 				<	template
@@ -150,7 +149,7 @@ namespace
 		IsSameValuePackTemplateTemplate
 	:	std::false_type
 	{};
-	
+
 	template
 		<	template
 				<	template
@@ -169,7 +168,7 @@ namespace
 		>
 	:	std::true_type
 	{};
-	
+
 	template
 		<	template
 				<	typename
@@ -190,7 +189,7 @@ namespace
 		IsSameSequencePackTemplate
 	:	std::false_type
 	{};
-	
+
 	template
 		<	template
 				<	typename
@@ -208,7 +207,7 @@ namespace
 		>
 	:	std::true_type
 	{};
-	
+
 	template
 		<	template
 				<	template
@@ -235,7 +234,7 @@ namespace
 		IsSameSequencePackTemplateTemplate
 	:	std::false_type
 	{};
-	
+
 	template
 		<	template
 				<	template
@@ -272,7 +271,7 @@ namespace
 	,	SizeValueType
 		<>
 	{};
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -316,7 +315,7 @@ namespace
 			>
 		{};
 	};
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -330,7 +329,7 @@ namespace
 		IsTypePackTemplateInstance
 	:	std::false_type
 	{};
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -378,7 +377,7 @@ namespace
 			>
 		{};
 	};
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -394,7 +393,7 @@ namespace
 	,	SizeValueType
 		<>
 	{};
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -438,7 +437,7 @@ namespace
 			>
 		{};
 	};
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -452,7 +451,7 @@ namespace
 		IsValuePackTemplateInstance
 	:	std::false_type
 	{};
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -500,7 +499,7 @@ namespace
 				>
 		{};
 	};
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -516,7 +515,7 @@ namespace
 	,	SizeValueType
 		<>
 	{};
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -567,7 +566,7 @@ namespace
 				>
 		{};
 	};
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -582,7 +581,7 @@ namespace
 		:	std::false_type
 		{}
 	;
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -636,7 +635,7 @@ namespace
 			>
 		{};
 	};
-	
+
 	template
 		<	typename
 				t_tInstance

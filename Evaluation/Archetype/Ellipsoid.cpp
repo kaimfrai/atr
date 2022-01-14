@@ -30,8 +30,8 @@ export namespace
 	+	Layout::InfoV
 		<	"ComputeVolumeMultiplier"
 		,	πFraction
-			<	1_sz
-			,	6_sz
+			<	1z
+			,	6z
 			>
 		>
 	;

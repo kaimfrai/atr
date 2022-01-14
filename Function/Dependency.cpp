@@ -7,7 +7,7 @@ export import Pack.Sort;
 export import Pack.Type;
 export import Meta.Template;
 export import Meta.TypeInfo;
-export import <Stateless/Map.hpp>;
+export import Stateless.Map;
 
 export namespace
 	Function
@@ -54,7 +54,7 @@ export namespace
 			(	sizeof...(
 					i_vpDependency
 				)
-			==	0_uz
+			==	0uz
 			)
 		{
 			return

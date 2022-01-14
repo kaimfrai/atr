@@ -2,7 +2,7 @@ export module Evaluation.Shared;
 
 export import Meta.TypeInfo;
 export import Std;
-export import <Std/Size.hpp>;
+export import Std.Size;
 
 export
 {

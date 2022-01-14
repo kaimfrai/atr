@@ -1,14 +1,14 @@
-#pragma once
+export module Stateless.Map;
 
-#include <Stateless/Type.hpp>
+export import Stateless.Type;
 
-#include <Std/TemplateConcepts.hpp>
-#include <Std/Concepts.hpp>
-#include <Std/FunctionTraits.hpp>
+export import Std.TemplateConcepts;
+export import Std.Concepts;
+export import Std.FunctionTraits;
 
-#include <Std/Size.hpp>
+export import Std.Size;
 
-namespace
+export namespace
 	Stateless
 {
 	/// base class for map items which provides ordering on the key
@@ -23,7 +23,7 @@ namespace
 		t_tKey
 			KeyValue
 		{};
-		
+
 		/// provide ordering according to key
 		template
 			<	Type
@@ -45,7 +45,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// maps one stateless type to a specific value
 	template
 		<	Type
@@ -72,7 +72,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// maps one stateless type to another
 	template
 		<	Type
@@ -88,7 +88,7 @@ namespace
 		,	Copy<t_tResult>
 		>
 	{};
-	
+
 	/// maps one stateless type to a specific lazily evaluated value
 	template
 		<	Type
@@ -125,7 +125,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// types that maps a stateless argument to a specific value using a single non-overloaded operator()
 	template
 		<	typename
@@ -143,7 +143,7 @@ namespace
 			::	Single
 		>
 	;
-	
+
 	///	bind several StatelessMapItem together
 	template
 		<	MapItemInstance
@@ -161,7 +161,7 @@ namespace
 			::	operator()
 			...
 		;
-		
+
 		static
 		constexpr
 		Std::USizeType
@@ -170,14 +170,14 @@ namespace
 				t_tpMapItem
 			)
 		;
-		
+
 		/// default constructor
 		constexpr
 			Map
 			()
 		=	default
 		;
-		
+
 		/// basis for deduction guides
 		constexpr
 		explicit
@@ -190,7 +190,7 @@ namespace
 				>	auto
 			)
 		{}
-		
+
 		/// basis for deduction guides
 		template
 			<	Type
@@ -212,7 +212,7 @@ namespace
 			==	MapItemCount
 			)
 		{}
-		
+
 		/// map [] operator to () operator of the items
 		[[nodiscard]]
 		constexpr
@@ -229,7 +229,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// maps every call that isn't mapped to a default value
 	template
 		<	Type
@@ -249,7 +249,7 @@ namespace
 			::	operator()
 			...
 		;
-		
+
 		static
 		constexpr
 		Std::USizeType
@@ -258,14 +258,14 @@ namespace
 					t_tpMapItem
 				)
 		;
-		
+
 		/// default constructor
 		constexpr
 			DefaultingMap
 				()
 		=	default
 		;
-		
+
 		/// deduce template from arguments
 		constexpr
 		explicit
@@ -277,7 +277,7 @@ namespace
 				>
 			)
 		{}
-		
+
 		/// fallback overload that always returns the default value
 		constexpr
 		auto
@@ -286,7 +286,7 @@ namespace
 			)	const
 		->	t_tDefault
 		{	return{};	}
-		
+
 		/// map [] operator to () operator of the items
 		[[nodiscard]]
 		constexpr

@@ -1,8 +1,8 @@
 export module Pack.Empty;
 
 export import Std;
-export import <Stateless/Tuple.hpp>;
-export import <Std/Concepts.hpp>;
+export import Stateless.Tuple;
+export import Std.Concepts;
 
 export namespace
 	Pack
@@ -27,11 +27,11 @@ export namespace
 		>
 	concept
 		PureEmptyInstance_Transform
-	=	Stateless::Type
+	=	Stateless::Type_Transform
 		<	t_tEmptyPack
 		,	t_t1Transform
 		>
-	and	Std::SameAs
+	and	Std::SameAs_Transform
 		<	t_tEmptyPack
 		,	Empty
 		,	t_t1Transform

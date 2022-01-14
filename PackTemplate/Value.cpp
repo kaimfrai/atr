@@ -2,8 +2,8 @@ export module PackTemplate.Value;
 
 export import Meta.ValueInfo;
 export import Meta.TypeInfo;
-export import <Stateless/Type.hpp>;
-export import <Std/Concepts.hpp>;
+export import Stateless.Type;
+export import Std.Concepts;
 
 export namespace
 	PackTemplate

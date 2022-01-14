@@ -2,9 +2,9 @@ export module Meta.TypeInfo;
 
 export import Std;
 
-export import <Stateless/Type.hpp>;
-export import <Std/Concepts.hpp>;
-export import <Std/TypeTraits.hpp>;
+export import Stateless.Type;
+export import Std.Concepts;
+export import Std.TypeTraits;
 
 export namespace
 	Meta

@@ -5,7 +5,7 @@ export import Function.ArgumentDependency;
 export import ID.Func;
 export import ID.StringLiteral;
 export import Meta.TypeInfo;
-export import <Std/Concepts.hpp>;
+export import Std.Concepts;
 
 export namespace
 	Function

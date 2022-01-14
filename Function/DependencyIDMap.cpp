@@ -11,8 +11,8 @@ export import ID.Data;
 export import ID.StringLiteral;
 export import Pack.Concat;
 export import Pack.Type;
-export import <Std/QualifierTemplate.hpp>;
-export import <Std/Concepts.hpp>;
+export import Std.QualifierTemplate;
+export import Std.Concepts;
 
 export namespace
 	Function

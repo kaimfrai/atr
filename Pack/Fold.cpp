@@ -2,9 +2,9 @@ export module Pack.Fold;
 
 export import PackTemplate.Instance;
 export import Meta.MetaInfo;
-export import <Stateless/Binding.hpp>;
-export import <Fold/Comma.hpp>;
-export import <Std/Concepts.hpp>;
+export import Stateless.Binding;
+export import Fold.Comma;;
+export import Std.Concepts;
 
 export namespace
 	Pack

@@ -6,9 +6,9 @@ export import Pack.Size;
 export import Pack.Instance;
 export import Pack.Sequence;
 export import Meta.ValueInfo;
-export import <Stateless/Tuple.hpp>;
-export import <Std/Concepts.hpp>;
-export import <Std/Size.hpp>;
+export import Stateless.Tuple;
+export import Std.Concepts;
+export import Std.Size;
 export import Std;
 
 export namespace

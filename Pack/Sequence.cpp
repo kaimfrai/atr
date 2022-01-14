@@ -3,8 +3,8 @@ export module Pack.Sequence;
 export import Pack.Empty;
 export import Meta.MetaInfo;
 export import Meta.ValueInfo;
-export import <Stateless/Tuple.hpp>;
-export import <Std/Concepts.hpp>;
+export import Stateless.Tuple;
+export import Std.Concepts;
 
 export import Std;
 
@@ -122,7 +122,7 @@ export namespace
 		>
 	concept
 		PureSequenceInstance_Transform
-	=	Stateless::Type
+	=	Stateless::Type_Transform
 		<	t_tSequencePack
 		,	t_t1Transform
 		>

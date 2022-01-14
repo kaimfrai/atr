@@ -27,8 +27,8 @@ export namespace
 	+	Layout::InfoV
 		<	"ComputeAreaMultiplier"
 		,	Fraction
-			<	1_sz
-			,	2_sz
+			<	1z
+			,	2z
 			>
 		>
 	;

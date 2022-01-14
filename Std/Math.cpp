@@ -1,11 +1,11 @@
-#pragma once
+export module Std.Math;
 
-#include <Std/Concepts.hpp>
-#include <Std/Size.hpp>
+export import Std.Concepts;
+export import Std.Size;
 
-#include <utility>
+export import Std;
 
-namespace
+export namespace
 	Std
 {
 	/// computes a unsigned power of the given base
@@ -44,7 +44,7 @@ namespace
 			)
 		;
 	}
-	
+
 	/// converts a sequence of digits to an integral
 	template
 		<	char
@@ -92,7 +92,7 @@ namespace
 			)
 		;
 	}
-	
+
 	/// converts an integral to a sequence of digits
 	template
 		<	std::size_t

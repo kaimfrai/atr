@@ -1,12 +1,11 @@
-#pragma once
+export module Std.Concepts;
 
-#include <Std/TemplateConcepts.hpp>
-#include <Std/TypeTraits.hpp>
+export import Std.TemplateConcepts;
+export import Std.TypeTraits;
 
-#include <concepts>
-#include <type_traits>
+export import Std;
 
-namespace
+export namespace
 	Std
 {
 	template
@@ -28,14 +27,25 @@ namespace
 				>
 			typename
 				t_t1Transform
-			=	std::type_identity_t
 		>
 	concept
-		Object
+		Object_Transform
 	=	std::is_object_v
 		<	t_t1Transform
 			<	t_tObject
 			>
+		>
+	;
+
+	template
+		<	typename
+				t_tObject
+		>
+	concept
+		Object
+	=	Object_Transform
+		<	t_tObject
+		,	std::type_identity_t
 		>
 	;
 
@@ -47,11 +57,10 @@ namespace
 				>
 			typename
 				t_t1Transform
-			=	std::type_identity_t
 		>
 	concept
-		TriviallyCopyable
-	=	Object
+		TriviallyCopyable_Transform
+	=	Object_Transform
 		<	t_tObject
 		,	t_t1Transform
 		>
@@ -65,8 +74,20 @@ namespace
 				t_tObject
 		>
 	concept
+		TriviallyCopyable
+	=	TriviallyCopyable_Transform
+		<	t_tObject
+		,	std::type_identity_t
+		>
+	;
+
+	template
+		<	typename
+				t_tObject
+		>
+	concept
 		ObjectOrReference
-	=	Object
+	=	Object_Transform
 		<	t_tObject
 		,	std::remove_reference_t
 		>
@@ -85,7 +106,7 @@ namespace
 			<	t_tObject
 			>
 		)
-	and	Object
+	and	Object_Transform
 		<	t_tObject
 		,	std::remove_reference_t
 		>
@@ -104,7 +125,7 @@ namespace
 			<	t_tObject
 			>
 		)
-	and	Object
+	and	Object_Transform
 		<	t_tObject
 		,	std::remove_cv_t
 		>
@@ -192,7 +213,7 @@ namespace
 		>
 	concept
 		Array
-	=	Object
+	=	Object_Transform
 		<	t_tArray
 		,	t_t1Transform
 		>
@@ -211,10 +232,9 @@ namespace
 				>
 			typename
 				t_t1Transform
-			=	std::type_identity_t
 		>
 	concept
-		BoundedArray
+		BoundedArray_Transform
 	=	Array
 		<	t_tArray
 		,	t_t1Transform
@@ -223,6 +243,18 @@ namespace
 		<	t_t1Transform
 			<	t_tArray
 			>
+		>
+	;
+
+	template
+		<	typename
+				t_tArray
+		>
+	concept
+		BoundedArray
+	=	BoundedArray_Transform
+		<	t_tArray
+		,	std::type_identity_t
 		>
 	;
 
@@ -257,11 +289,10 @@ namespace
 				>
 			typename
 				t_t1Transform
-			=	std::type_identity_t
 		>
 	concept
-		Class
-	=	Object
+		Class_Transform
+	=	Object_Transform
 		<	t_tClass
 		,	t_t1Transform
 		>
@@ -269,6 +300,18 @@ namespace
 		<	t_t1Transform
 			<	t_tClass
 			>
+		>
+	;
+
+	template
+		<	typename
+				t_tClass
+		>
+	concept
+		Class
+	=	Class_Transform
+		<	t_tClass
+		,	std::type_identity_t
 		>
 	;
 
@@ -520,10 +563,9 @@ namespace
 				>
 			typename
 				t_t1Transform
-			=	std::type_identity_t
 		>
 	concept
-		SameAs
+		SameAs_Transform
 	=	std::same_as
 		<	t_t1Transform
 			<	t_tAny
@@ -531,6 +573,21 @@ namespace
 		,	t_t1Transform
 			<	t_tOther
 			>
+		>
+	;
+
+	template
+		<	typename
+				t_tAny
+		,	typename
+				t_tOther
+		>
+	concept
+		SameAs
+	=	SameAs_Transform
+		<	t_tAny
+		,	t_tOther
+		,	std::type_identity_t
 		>
 	;
 
@@ -665,11 +722,10 @@ namespace
 				>
 			typename
 				t_t1Transform
-				=	std::type_identity_t
 		>
 	concept
-		Empty
-	=	Class
+		Empty_Transform
+	=	Class_Transform
 		<	t_tAny
 		,	t_t1Transform
 		>
@@ -677,6 +733,18 @@ namespace
 		<	t_t1Transform
 			<	t_tAny
 			>
+		>
+	;
+
+	template
+		<	typename
+				t_tAny
+		>
+	concept
+		Empty
+	=	Empty_Transform
+		<	t_tAny
+		,	std::type_identity_t
 		>
 	;
 

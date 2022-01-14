@@ -4,8 +4,8 @@ export import Pack.Sequence;
 export import Pack.Empty;
 export import Meta.MetaInfo;
 export import Meta.ValueInfo;
-export import <Stateless/Tuple.hpp>;
-export import <Std/Concepts.hpp>;
+export import Stateless.Tuple;
+export import Std.Concepts;
 
 export namespace
 	Pack
@@ -71,11 +71,11 @@ export namespace
 		>
 	concept
 		PureValueInstance_Transform
-	=	Stateless::Type
+	=	Stateless::Type_Transform
 		<	t_tValuePack
 		,	t_t1Transform
 		>
-	and	Std::ValuePackInstance
+	and	Std::ValuePackInstance_Transform
 		<	t_tValuePack
 		,	t_t1Transform
 		>

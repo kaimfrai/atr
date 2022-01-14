@@ -4,7 +4,7 @@ export import Pack.Type;
 export import Pack.Value;
 export import Pack.Sequence;
 export import Pack.Empty;
-export import <Stateless/Tuple.hpp>;
+export import Stateless.Tuple;
 
 export namespace
 	Pack

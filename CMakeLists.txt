@@ -38,6 +38,8 @@ add_subdirectory(Test)
 
 add_subdirectory(ThirdParty)
 
+add_subdirectory(Stateless)
+add_subdirectory(Fold)
 add_subdirectory(Pack)
 add_subdirectory(PackTemplate)
 add_subdirectory(ID)

@@ -4,8 +4,8 @@ export import Pack.Empty;
 export import Meta.MetaInfo;
 export import Meta.TypeInfo;
 
-export import <Stateless/Tuple.hpp>;
-export import <Std/Concepts.hpp>;
+export import Stateless.Tuple;
+export import Std.Concepts;
 
 export namespace
 	Pack
@@ -39,7 +39,7 @@ export namespace
 		>
 	concept
 		PureTypeInstance_Transform
-	=	Stateless::Type
+	=	Stateless::Type_Transform
 		<	t_tTypePack
 		,	t_t1Transform
 		>

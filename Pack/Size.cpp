@@ -5,9 +5,9 @@ export import Pack.Type;
 export import Pack.Value;
 export import Meta.ValueInfo;
 
-export import <Stateless/Tuple.hpp>;
-export import <Std/Size.hpp>;
-export import <Std/TemplateTraits.hpp>;
+export import Stateless.Tuple;
+export import Std.Size;
+export import Std.TemplateTraits;
 
 export import Std;
 
@@ -61,7 +61,7 @@ export namespace
 		EmptyInstance
 	=	InstanceOfSize
 		<	t_tPack
-		,	0_uz
+		,	0uz
 		>
 	;
 
@@ -74,7 +74,7 @@ export namespace
 		SingleInstance
 	=	InstanceOfSize
 		<	t_tPack
-		,	1_uz
+		,	1uz
 		>
 	;
 
@@ -103,7 +103,7 @@ export namespace
 		PairInstance
 	=	InstanceOfSize
 		<	t_tPack
-		,	2_uz
+		,	2uz
 		>
 	;
 

@@ -6,7 +6,7 @@ export import ID.Data;
 export import Meta.Template;
 export import Meta.TypeInfo;
 export import PackTemplate.Instance;
-export import <Stateless/Map.hpp>;
+export import Stateless.Map;
 
 export import Std;
 

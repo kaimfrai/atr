@@ -9,8 +9,8 @@ export import Pack.Value;
 export import PackTemplate.Type;
 export import PackTemplate.Value;
 
-export import <Stateless/Map.hpp>;
-export import <Stateless/Binding.hpp>;
+export import Stateless.Map;
+export import Stateless.Binding;
 
 export namespace
 	Pack

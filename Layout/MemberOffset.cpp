@@ -11,8 +11,8 @@ export import PackTemplate.Instance;
 export import Pack.Instance;
 export import Pack.Type;
 export import Meta.ValueInfo;
-export import <Std/Concepts.hpp>;
-export import <Std/Size.hpp>;
+export import Std.Concepts;
+export import Std.Size;
 
 export namespace
 	Layout
@@ -193,14 +193,14 @@ export namespace
 		operator+
 		(	MemberOffset
 			<	t_tMember
-			,	0_uz
+			,	0uz
 			>
 		,	Meta::SizeInfo auto
 		)
 	noexcept
 	->	MemberOffset
 		<	t_tMember
-		,	0_uz
+		,	0uz
 		>
 	{	return{};	}
 
@@ -215,7 +215,7 @@ export namespace
 	constexpr
 	auto
 		operator->*
-		(	Std::SameAs
+		(	Std::SameAs_Transform
 			<	void
 			,	std::remove_const_t
 			>	auto
@@ -273,7 +273,7 @@ export namespace
 			<	t_t1Qualifier
 				<	ValueType
 				>
-			,	0_uz
+			,	0uz
 			>{}
 		;
 	}

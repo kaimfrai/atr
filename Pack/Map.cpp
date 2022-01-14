@@ -9,8 +9,8 @@ export import Pack.Value;
 export import Pack.Sequence;
 export import Meta.TypeInfo;
 export import Meta.ValueInfo;
-export import <Stateless/Tuple.hpp>;
-export import <Std/FunctionTraits.hpp>;
+export import Stateless.Tuple;
+export import Std.FunctionTraits;
 
 export namespace
 	Stateless
@@ -525,7 +525,7 @@ export namespace
 	{	return
 			SubPack
 			(	i_vPack
-			,	Meta::V<0_uz>
+			,	Meta::V<0uz>
 			,	i_vCount
 			)
 		;

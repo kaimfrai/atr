@@ -1,17 +1,15 @@
-#pragma once
+export module Std.Size;
 
-#include <cstddef>
-#include <climits>
-#include <type_traits>
+export import Std;
 
-namespace
+export namespace
 	Std
 {
 	using
 		USizeType
 	=	std::size_t
 	;
-	
+
 	/// operator for creating objects of Type USizeType
 	/// see C++23 proposal for literal suffix UZ
 	[[nodiscard]]
@@ -28,14 +26,14 @@ namespace
 			i_nSize
 		;
 	}
-	
+
 	using
 		SSizeType
 	=	std::make_signed_t
 		<	std::size_t
 		>
 	;
-	
+
 	/// operator for creating objects of Type SSizeType
 	/// see C++23 proposal for literal suffix Z
 	[[nodiscard]]
@@ -52,14 +50,14 @@ namespace
 			i_nSize
 		;
 	}
-	
-	
+
+
 	constexpr
 	USizeType
 		BitsPerByte
 	=	CHAR_BIT
 	;
-	
+
 	constexpr
 	USizeType
 		BytesForBits
@@ -76,7 +74,7 @@ namespace
 		/	BitsPerByte
 		;
 	}
-	
+
 	/// simply provides the static constant named "Size"
 	/// intended for inheritence
 	template
@@ -94,7 +92,7 @@ namespace
 		=	t_nValue
 		;
 	};
-	
+
 	/// simply provides the static constant named "Count"
 	/// intended for inheritence
 	template

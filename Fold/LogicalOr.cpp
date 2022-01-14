@@ -1,8 +1,8 @@
-#pragma once
+export module Fold.LogicalOr;
 
-#include <Stateless/Type.hpp>
+export import Stateless.Type;
 
-namespace
+export namespace
 	Fold
 {
 	/// function-object performing a right to left fold over operator ||
@@ -27,7 +27,7 @@ namespace
 		}
 	}	RightLogicalOr
 	{};
-	
+
 	/// function-object performing a left to right fold over operator ||
 	constexpr
 	struct

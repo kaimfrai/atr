@@ -8,12 +8,12 @@ export import Meta.Pack;
 export import Pack.Map;
 export import Pack.Size;
 export import Pack.Sequence;
-export import <Std/Concepts.hpp>;
-export import <Std/Size.hpp>;
+export import Std.Concepts;
+export import Std.Size;
 
-export import <Fold/Comma.hpp>;
-export import <Stateless/Binding.hpp>;
-export import <Stateless/Tuple.hpp>;
+export import Fold.Comma;;
+export import Stateless.Binding;
+export import Stateless.Tuple;
 
 export namespace
 	ID
@@ -63,7 +63,7 @@ export namespace
 			[	sizeof...(
 					t_vpString
 				)
-			+	1_uz
+			+	1uz
 			]
 		>	AsStringLiteral
 		{	t_vpString
@@ -79,7 +79,7 @@ export namespace
 				[	sizeof...(
 						t_vpString
 					)
-				+	1_uz
+				+	1uz
 				]
 			> const&
 			()	const

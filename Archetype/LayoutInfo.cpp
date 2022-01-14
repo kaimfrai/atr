@@ -9,7 +9,7 @@ export import Layout.DataMember;
 export import Meta.Template;
 export import Pack.Accumulate;
 export import Meta.TypeInfo;
-export import <Std/QualifierTemplate.hpp>;
+export import Std.QualifierTemplate;
 
 export namespace
 	Archetype

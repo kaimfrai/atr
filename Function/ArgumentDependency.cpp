@@ -6,8 +6,8 @@ export import ID.Data;
 export import Meta.Template;
 export import Meta.TypeInfo;
 export import PackTemplate.Instance;
-export import <Stateless/Map.hpp>;
-export import <Std/Concepts.hpp>;
+export import Stateless.Map;
+export import Std.Concepts;
 
 export import Std;
 

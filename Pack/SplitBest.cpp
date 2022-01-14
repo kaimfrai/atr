@@ -10,9 +10,9 @@ export import Meta.Pack;
 
 export import Std;
 
-export import <Fold/Comma.hpp>;
-export import <Stateless/Binding.hpp>;
-export import <Stateless/Tuple.hpp>;
+export import Fold.Comma;;
+export import Stateless.Binding;
+export import Stateless.Tuple;
 
 export namespace
 	Pack

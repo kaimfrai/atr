@@ -1,8 +1,8 @@
-#pragma once
+export module Stateless.Binding;
 
-#include <Stateless/Type.hpp>
+export import Stateless.Type;
 
-namespace
+export namespace
 	Stateless
 {
 	///	wraps around a invocable at compile-time

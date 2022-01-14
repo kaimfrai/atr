@@ -4,8 +4,8 @@ export import Std;
 
 export import Pack.Sequence;
 
-export import <Std/Concepts.hpp>;
-export import <Std/Size.hpp>;
+export import Std.Concepts;
+export import Std.Size;
 
 export namespace
 	ID
@@ -13,7 +13,7 @@ export namespace
 	template
 		<	Std::SSizeType
 				t_nAddExtent
-			=	0_sz
+			=	0z
 		,	Std::BoundedArray
 				t_tArray
 		>
@@ -73,7 +73,7 @@ export namespace
 		Std::USizeType
 			CharacterCount
 		=	ArrayExtent
-		-	1_uz
+		-	1uz
 		;
 
 		static constexpr
@@ -329,7 +329,7 @@ export namespace
 		->	bool
 		{	return
 				RangeEqualsAt
-				(	0_uz
+				(	0uz
 				,	+i_rPrefix
 				,	IndexSequenceFor
 					<	-1
@@ -359,7 +359,7 @@ export namespace
 				-	t_nSuffixExtent
 				,	+i_rSuffix
 				,	IndexSequenceFor
-					<	-1_sz
+					<	-1z
 					>(	i_rSuffix
 					)
 				)
@@ -383,7 +383,7 @@ export namespace
 			<	CharType
 				[	ArrayExtent
 				-	t_nPrefixExtent
-				+	1_uz
+				+	1uz
 				]
 			>
 		{
@@ -395,7 +395,7 @@ export namespace
 				return
 					{	String
 					+	t_nPrefixExtent
-					-	1_sz
+					-	1z
 					,	IndexSequenceFor
 						<	-static_cast<Std::SSizeType>(t_nPrefixExtent)
 						>(	String
@@ -426,7 +426,7 @@ export namespace
 			<	CharType
 				[	ArrayExtent
 				-	t_nSuffixExtent
-				+	1_uz
+				+	1uz
 				]
 			>
 		{

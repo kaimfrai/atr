@@ -1,15 +1,15 @@
-#pragma once
+export module Std.TemplateConcepts;
 
 /* provides concepts based on template patterns
  */
 
-#include <Std/TemplateTraits.hpp>
+export import Std.TemplateTraits;
 
-#include <Std/Size.hpp>
+export import Std.Size;
 
-#include <type_traits>
+export import Std;
 
-namespace
+export namespace
 	Std
 {
 	template
@@ -26,7 +26,7 @@ namespace
 		==	t_nSize
 		)
 	;
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -46,7 +46,7 @@ namespace
 		>
 		::	value
 	;
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -71,7 +71,7 @@ namespace
 		,	t_nSize
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -86,10 +86,9 @@ namespace
 				>
 			typename
 				t_t1Transform
-			=	std::type_identity_t
 		>
 	concept
-		TypePackInstanceOf
+		TypePackInstanceOf_Transform
 	=	TypePackInstance
 		<	t_t1Transform
 			<	t_tInstance
@@ -105,7 +104,26 @@ namespace
 			>
 		::	value
 	;
-	
+
+	template
+		<	typename
+				t_tInstance
+		,	template
+				<	typename
+					...
+				>
+			typename
+				t_t1Match
+		>
+	concept
+		TypePackInstanceOf
+	=	TypePackInstanceOf_Transform
+		<	t_tInstance
+		,	t_t1Match
+		,	std::type_identity_t
+		>
+	;
+
 	template
 		<	typename
 				t_tInstance
@@ -114,17 +132,28 @@ namespace
 				>
 			typename
 				t_t1Transform
-			=	std::type_identity_t
 		>
 	concept
-		TypePackTemplateInstance
+		TypePackTemplateInstance_Transform
 	=	IsTypePackTemplateInstance
 		<	t_t1Transform
 			<	t_tInstance
 			>
 		>::	value
 	;
-	
+
+	template
+		<	typename
+				t_tInstance
+		>
+	concept
+		TypePackTemplateInstance
+	=	TypePackTemplateInstance_Transform
+		<	t_tInstance
+		,	std::type_identity_t
+		>
+	;
+
 	template
 		<	typename
 				t_tInstance
@@ -142,10 +171,9 @@ namespace
 				>
 			typename
 				t_t1Transform
-			=	std::type_identity_t
 		>
 	concept
-		TypePackTemplateInstanceOf
+		TypePackTemplateInstanceOf_Transform
 	=	TypePackTemplateInstance
 		<	t_t1Transform
 			<	t_tInstance
@@ -161,7 +189,29 @@ namespace
 			>
 		::	value
 	;
-	
+
+	template
+		<	typename
+				t_tInstance
+		,	template
+				<	template
+						<	typename
+							...
+						>
+					typename
+				>
+			typename
+				t_t2Match
+		>
+	concept
+		TypePackTemplateInstanceOf
+	=	TypePackTemplateInstanceOf_Transform
+		<	t_tInstance
+		,	t_t2Match
+		,	std::type_identity_t
+		>
+	;
+
 	template
 		<	typename
 				t_tInstance
@@ -170,17 +220,28 @@ namespace
 				>
 			typename
 				t_t1Transform
-			=	std::type_identity_t
 		>
 	concept
-		ValuePackInstance
+		ValuePackInstance_Transform
 	=	IsValuePackInstance
 		<	t_t1Transform
 			<	t_tInstance
 			>
 		>::	value
 	;
-	
+
+	template
+		<	typename
+				t_tInstance
+		>
+	concept
+		ValuePackInstance
+	=	ValuePackInstance_Transform
+		<	t_tInstance
+		,	std::type_identity_t
+		>
+	;
+
 	template
 		<	typename
 				t_tInstance
@@ -205,7 +266,7 @@ namespace
 		,	t_nSize
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -220,10 +281,9 @@ namespace
 				>
 			typename
 				t_t1Transform
-			=	std::type_identity_t
 		>
 	concept
-		ValuePackInstanceOf
+		ValuePackInstanceOf_Transform
 	=	ValuePackInstance
 		<	t_t1Transform
 			<	t_tInstance
@@ -239,7 +299,26 @@ namespace
 			>
 		::	value
 	;
-	
+
+	template
+		<	typename
+				t_tInstance
+		,	template
+				<	auto
+					...
+				>
+			typename
+				t_t1Match
+		>
+	concept
+		ValuePackInstanceOf
+	=	ValuePackInstanceOf_Transform
+		<	t_tInstance
+		,	t_t1Match
+		,	std::type_identity_t
+		>
+	;
+
 	template
 		<	typename
 				t_tInstance
@@ -248,17 +327,28 @@ namespace
 				>
 			typename
 				t_t1Transform
-			=	std::type_identity_t
 		>
 	concept
-		ValuePackTemplateInstance
+		ValuePackTemplateInstance_Transform
 	=	IsValuePackTemplateInstance
 		<	t_t1Transform
 			<	t_tInstance
 			>
 		>::	value
 	;
-	
+
+	template
+		<	typename
+				t_tInstance
+		>
+	concept
+		ValuePackTemplateInstance
+	=	ValuePackTemplateInstance_Transform
+		<	t_tInstance
+		,	std::type_identity_t
+		>
+	;
+
 	template
 		<	typename
 				t_tInstance
@@ -295,7 +385,7 @@ namespace
 			>
 		::	value
 	;
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -315,7 +405,7 @@ namespace
 		>
 		::	value
 	;
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -340,7 +430,7 @@ namespace
 		,	t_nSize
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -357,10 +447,9 @@ namespace
 				>
 			typename
 				t_t1Transform
-			=	std::type_identity_t
 		>
 	concept
-		SequencePackInstanceOf
+		SequencePackInstanceOf_Transform
 	=	SequencePackInstance
 		<	t_t1Transform
 			<	t_tInstance
@@ -376,7 +465,28 @@ namespace
 			>
 		::	value
 	;
-	
+
+	template
+		<	typename
+				t_tInstance
+		,	template
+				<	typename
+						t_tElement
+				,	t_tElement
+					...
+				>
+			typename
+				t_t1Match
+		>
+	concept
+		SequencePackInstanceOf
+	=	SequencePackInstanceOf_Transform
+		<	t_tInstance
+		,	t_t1Match
+		,	std::type_identity_t
+		>
+	;
+
 	template
 		<	typename
 				t_tInstance
@@ -385,10 +495,9 @@ namespace
 				>
 			typename
 				t_t1Transform
-			=	std::type_identity_t
 		>
 	concept
-		SequencePackTemplateInstance
+		SequencePackTemplateInstance_Transform
 	=	IsSequencePackTemplateInstance
 		<	t_t1Transform
 				<	t_tInstance
@@ -396,7 +505,20 @@ namespace
 		>
 		::	value
 	;
-	
+
+
+	template
+		<	typename
+				t_tInstance
+		>
+	concept
+		SequencePackTemplateInstance
+	=	SequencePackTemplateInstance_Transform
+		<	t_tInstance
+		,	std::type_identity_t
+		>
+	;
+
 	template
 		<	typename
 				t_tInstance

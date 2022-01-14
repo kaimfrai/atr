@@ -1,17 +1,13 @@
-#pragma once
+export module Stateless.Compare;
 
-#include <Stateless/IndexMap.hpp>
-#include <Stateless/Type.hpp>
+export import Stateless.IndexMap;
+export import Stateless.Type;
 
-#include <Std/Concepts.hpp>
-#include <Std/Size.hpp>
+export import Std.Concepts;
+export import Std.Size;
+export import Std;
 
-#include <compare>
-#include <utility>
-#include <algorithm>
-#include <array>
-
-namespace
+export namespace
 	Stateless
 {
 	/// type to substitute the lack of a Stateless object during comparison
@@ -30,7 +26,7 @@ namespace
 				std::strong_ordering::equal
 			;
 		}
-		
+
 		friend
 		constexpr
 		auto
@@ -42,7 +38,7 @@ namespace
 				std::strong_ordering::less
 			;
 		}
-		
+
 		friend
 		constexpr
 		auto
@@ -55,7 +51,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// types that are usually returned from the <=> operator
 	template
 		<	typename
@@ -63,7 +59,7 @@ namespace
 		>
 	concept
 		OrderingLike
-	=	Std::SameAs
+	=	Std::SameAs_Transform
 		<	decltype(
 				t_tOrdering
 				::	equivalent
@@ -72,11 +68,7 @@ namespace
 		,	std::remove_cv_t
 		>
 	;
-	
-	static_assert(OrderingLike<std::strong_ordering>);
-	static_assert(OrderingLike<std::weak_ordering>);
-	static_assert(OrderingLike<std::partial_ordering>);
-	
+
 	/// returns the first ordering result that is not equivalent or equivalent if all are
 	constexpr
 	auto
@@ -94,7 +86,7 @@ namespace
 				...
 			>
 		;
-		
+
 		std::array
 		<	CommonType
 		,	sizeof...(
@@ -105,14 +97,14 @@ namespace
 		{	i_vpOrderingResult
 			...
 		};
-		
+
 		auto const
 			vEnd
 		=	vResultList
 			.	end
 				()
 		;
-		
+
 		auto const
 			vFirstNonEquivalent
 		=	std::find_if
@@ -131,7 +123,7 @@ namespace
 				}
 			)
 		;
-		
+
 		return
 			(	vFirstNonEquivalent
 			==	vEnd
@@ -142,7 +134,7 @@ namespace
 			vFirstNonEquivalent
 		;
 	}
-	
+
 	/// compares two stateless maps lexicographically
 	template
 		<	Std::USizeType
@@ -178,7 +170,7 @@ namespace
 			)
 		;
 	}
-	
+
 	/// compares two stateless maps lexicographically
 	template
 		<	MapItemInstance
@@ -223,3 +215,8 @@ namespace
 		;
 	}
 }
+
+
+static_assert(Stateless::OrderingLike<std::strong_ordering>);
+static_assert(Stateless::OrderingLike<std::weak_ordering>);
+static_assert(Stateless::OrderingLike<std::partial_ordering>);

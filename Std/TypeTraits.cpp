@@ -1,13 +1,10 @@
-#pragma once
+export module Std.TypeTraits;
 
-#include <Std/Size.hpp>
+export import Std.Size;
 
-#include <type_traits>
-#include <cstddef>
-#include <array>
-#include <bit>
+export import Std;
 
-namespace
+export namespace
 	Std
 {
 	template

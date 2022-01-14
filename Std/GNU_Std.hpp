@@ -1,4 +1,4 @@
-#pragma once
+export module Std.;
 
 #include <algorithm>
 #include <array>

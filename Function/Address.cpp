@@ -3,8 +3,8 @@ export module Function.Address;
 export import Function.Erase;
 export import Function.Signature;
 export import ID.Func;
-export import <Std/FunctionTraits.hpp>;
-export import <Std/Concepts.hpp>;
+export import Std.FunctionTraits;
+export import Std.Concepts;
 
 export import Std;
 

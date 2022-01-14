@@ -5,8 +5,8 @@ export import Meta.ValueInfo;
 
 export import Std;
 
-export import <Stateless/Binding.hpp>;
-export import <Std/Concepts.hpp>;
+export import Stateless.Binding;
+export import Std.Concepts;
 
 export namespace
 	Meta

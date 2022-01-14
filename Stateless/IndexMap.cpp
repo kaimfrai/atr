@@ -1,17 +1,16 @@
-#pragma once
+export module Stateless.IndexMap;
 
-#include <Stateless/Map.hpp>
-#include <Stateless/Type.hpp>
+export import Stateless.Map;
+export import Stateless.Type;
 
-#include <Std/FunctionTraits.hpp>
-#include <Std/TemplateConcepts.hpp>
-#include <Std/Concepts.hpp>
-#include <Std/Size.hpp>
+export import Std.FunctionTraits;
+export import Std.TemplateConcepts;
+export import Std.Concepts;
+export import Std.Size;
 
-#include <tuple>
-#include <utility>
+export import Std;
 
-namespace
+export namespace
 	Stateless
 {
 	template
@@ -27,7 +26,7 @@ namespace
 			()
 		=	default
 		;
-		
+
 		/// deduced conversion from a single value
 		template
 			<	template
@@ -44,7 +43,7 @@ namespace
 			)
 		{}
 	};
-	
+
 	template
 		<	Std::USizeType
 				t_nIndex
@@ -58,7 +57,7 @@ namespace
 			>
 		>
 	;
-	
+
 	/// maps an index to a stateless type
 	template
 		<	Std::USizeType
@@ -75,7 +74,7 @@ namespace
 		,	t_tResult
 		>
 	{};
-	
+
 	template
 		<	Std::USizeType
 			...	t_npIndex

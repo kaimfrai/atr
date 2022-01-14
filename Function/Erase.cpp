@@ -2,7 +2,7 @@ export module Function.Erase;
 
 export import Meta.Template;
 export import Meta.TypeInfo;
-export import <Std/Concepts.hpp>;
+export import Std.Concepts;
 
 export import Std;
 

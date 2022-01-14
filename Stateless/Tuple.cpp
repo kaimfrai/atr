@@ -1,16 +1,16 @@
-#pragma once
+export module Stateless.Tuple;
 
-#include <Stateless/Compare.hpp>
-#include <Stateless/IndexMap.hpp>
-#include <Stateless/Map.hpp>
+export import Stateless.Compare;
+export import Stateless.IndexMap;
+export import Stateless.Map;
 
-#include <Std/TemplateConcepts.hpp>
-#include <Std/Concepts.hpp>
-#include <Std/Size.hpp>
+export import Std.TemplateConcepts;
+export import Std.Concepts;
+export import Std.Size;
 
-#include <tuple>
+export import Std;
 
-namespace
+export namespace
 	Stateless
 {
 	/// multiple stateless objects
@@ -26,7 +26,7 @@ namespace
 			TupleType
 		=	Tuple
 		;
-		
+
 		static
 		constexpr
 		Std::USizeType
@@ -35,7 +35,7 @@ namespace
 				t_tpStateless
 			)
 		;
-		
+
 		static
 		constexpr
 		Map
@@ -44,14 +44,14 @@ namespace
 		,	Copy<t_tpStateless>
 			...
 		};
-		
+
 		/// default constructor
 		constexpr
 			Tuple
 			()
 		=	default
 		;
-		
+
 		/// deduce template from arguments
 		constexpr
 		explicit
@@ -61,10 +61,10 @@ namespace
 			)
 		requires
 			(	ElementCount
-			>	0_uz
+			>	0uz
 			)
 		{}
-		
+
 		/// returns a stateless object of the type at the given index in a Tuple
 		template
 			<	Std::USizeType
@@ -82,7 +82,7 @@ namespace
 				]
 			;
 		}
-		
+
 		///	forwards default constructed values the stateless objects to the given object
 		[[nodiscard]]
 		constexpr
@@ -98,7 +98,7 @@ namespace
 				)
 			;
 		}
-		
+
 		/// concatenates the stateless arguments of this StatelessTuple with with the stateless arguments of another StatelessTuple
 		template
 			<	Type
@@ -120,7 +120,7 @@ namespace
 				...
 			>
 		{	return{}; }
-		
+
 		/// compares each Stateless element for equality, provided that the count is the same, false otherwise
 		template
 			<	Type
@@ -146,7 +146,7 @@ namespace
 			{
 				return
 					(	...
-					and	(	Copy<t_tpStateless>	
+					and	(	Copy<t_tpStateless>
 						==	Copy<t_tpOtherStateless>
 						)
 					)
@@ -157,7 +157,7 @@ namespace
 					false
 				;
 		}
-		
+
 		/// compares each Stateless element
 		template
 			<	Type
@@ -183,7 +183,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// constrains to instances of stateless tuple with a specified pack size
 	template
 		<	typename
@@ -201,7 +201,7 @@ namespace
 		,	t_nSize
 		>
 	;
-	
+
 	/// constrains to instances of stateless tuple
 	template
 		<	typename
@@ -216,7 +216,7 @@ namespace
 			::	ElementCount
 		>
 	;
-	
+
 	[[nodiscard]]
 	constexpr
 	Std::TypePackInstanceOf<Tuple> auto
@@ -232,7 +232,7 @@ namespace
 			>
 		;
 	}
-	
+
 	[[nodiscard]]
 	constexpr
 	auto
@@ -248,7 +248,7 @@ namespace
 		==	AsTuple(i_vRight)
 		;
 	}
-	
+
 	/// constrains to instances of stateless tuple to the ones with exactly 2 elements
 	template
 		<	typename
@@ -258,12 +258,12 @@ namespace
 		Pair
 	=	TupleOfSize
 		<	t_tStatelessTuple
-		,	2_uz
+		,	2uz
 		>
 	;
 }
 
-namespace
+export namespace
 	std
 {
 	/// decomposition for types like StatelessTuple
@@ -281,7 +281,7 @@ namespace
 			::	ElementCount
 		>
 	{};
-	
+
 	/// decomposition for types like StatelessTuple
 	template
 		<	size_t

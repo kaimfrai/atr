@@ -20,7 +20,7 @@ import Function.Address;
 import Layout.MemberOffset;
 
 export import Pack.Sort;
-export import <Std/QualifierTemplate.hpp>;
+export import Std.QualifierTemplate;
 export import Pack.Accumulate;
 
 static_assert

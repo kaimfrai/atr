@@ -2,12 +2,12 @@ export module Meta.ValueInfo;
 
 export import Meta.TypeInfo;
 
-export import <Stateless/Type.hpp>;
+export import Stateless.Type;
 
-export import <Std/FunctionTraits.hpp>;
-export import <Std/Concepts.hpp>;
+export import Std.FunctionTraits;
+export import Std.Concepts;
 
-export import <Std/Size.hpp>;
+export import Std.Size;
 
 export namespace
 	Meta

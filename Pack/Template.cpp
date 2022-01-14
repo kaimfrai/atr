@@ -9,7 +9,7 @@ export import PackTemplate.Type;
 export import PackTemplate.Value;
 export import PackTemplate.Sequence;
 
-export import <Stateless/Type.hpp>;
+export import Stateless.Type;
 
 export namespace
 	Pack

@@ -8,12 +8,12 @@ export import Pack.Instance;
 export import Pack.Sequence;
 export import Meta.MetaInfo;
 
-export import <Fold/Comma.hpp>;
-export import <Fold/LogicalAnd.hpp>;
-export import <Fold/LogicalOr.hpp>;
-export import <Stateless/Tuple.hpp>;
-export import <Stateless/Binding.hpp>;
-export import <Std/Concepts.hpp>;
+export import Fold.Comma;;
+export import Fold.LogicalAnd;;
+export import Fold.LogicalOr;;
+export import Stateless.Tuple;
+export import Stateless.Binding;
+export import Std.Concepts;
 
 export namespace
 	Pack

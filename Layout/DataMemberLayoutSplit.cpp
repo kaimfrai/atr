@@ -9,7 +9,7 @@ export import Pack.SplitBest;
 export import Pack.Map;
 export import Pack.Sort;
 export import Pack.Normalize;
-export import <Stateless/Binding.hpp>;
+export import Stateless.Binding;
 
 export import Std;
 
@@ -202,7 +202,7 @@ export namespace
 			<	std::bit_floor
 				(	decltype(PackSizeInfo)
 					::	Value
-				-	1_uz
+				-	1uz
 				)
 			>
 		;
@@ -212,7 +212,7 @@ export namespace
 			LeadingSubPack
 		=	Pack::SubPack
 				(	Pack
-				,	Meta::V<0_uz>
+				,	Meta::V<0uz>
 				,	HighestBitInfo
 				)
 		;

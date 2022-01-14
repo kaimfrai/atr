@@ -5,7 +5,7 @@ export import Pack.Value;
 export import Pack.Sequence;
 export import Pack.Empty;
 export import Std;
-export import <Std/TypeTraits.hpp>;
+export import Std.TypeTraits;
 
 export namespace
 	Pack

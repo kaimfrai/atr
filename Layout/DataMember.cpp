@@ -9,8 +9,8 @@ export import Pack.Accumulate;
 export import Pack.Type;
 export import Meta.TypeInfo;
 export import Meta.ValueInfo;
-export import <Std/Concepts.hpp>;
-export import <Std/Size.hpp>;
+export import Std.Concepts;
+export import Std.Size;
 
 export namespace
 	Layout
@@ -35,10 +35,10 @@ export namespace
 	template<>
 	struct
 		BitAlignment
-		<	0_uz
+		<	0uz
 		>
 	:	Meta::ValueInfo
-		<	0_uz
+		<	0uz
 		>
 	{};
 
@@ -240,7 +240,7 @@ export namespace
 		<	t_tName
 		,	t_tValue
 		,	VacuousInitializerTag
-		,	BitAlignment<0_uz>
+		,	BitAlignment<0uz>
 		>
 	{
 		static_assert

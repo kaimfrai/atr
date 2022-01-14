@@ -1,8 +1,8 @@
-#pragma once
+export module Std.QualifierTemplate;
 
-#include <type_traits>
+export import Std;
 
-namespace
+export namespace
 	Std
 {
 	/// Deduce a template that adds or removes all qualifiers of a type to another type
@@ -23,7 +23,7 @@ namespace
 			<	t_tUnqualified
 			>
 		;
-		
+
 		template
 			<	typename
 					t_tQualified
@@ -35,7 +35,7 @@ namespace
 			>
 		;
 	};
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -56,7 +56,7 @@ namespace
 			<	t_tUnqualified
 			>
 		;
-		
+
 		template
 			<	typename
 					t_tQualified
@@ -68,7 +68,7 @@ namespace
 			>
 		;
 	};
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -89,7 +89,7 @@ namespace
 			<	t_tUnqualified
 			>
 		;
-		
+
 		template
 			<	typename
 					t_tQualified
@@ -101,7 +101,7 @@ namespace
 			>
 		;
 	};
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -122,7 +122,7 @@ namespace
 			<	t_tUnqualified
 			>
 		;
-		
+
 		template
 			<	typename
 					t_tQualified
@@ -134,7 +134,7 @@ namespace
 			>
 		;
 	};
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -161,7 +161,7 @@ namespace
 					>
 			>
 		;
-		
+
 		template
 			<	typename
 					t_tQualified
@@ -179,7 +179,7 @@ namespace
 				>
 		;
 	};
-	
+
 	template
 		<	typename
 				t_tInstance
@@ -206,7 +206,7 @@ namespace
 						>
 				>
 		;
-		
+
 		template
 			<	typename
 					t_tQualified
@@ -224,7 +224,7 @@ namespace
 				>
 		;
 	};
-	
+
 	/// discards reference qualifiers
 	template
 		<	typename
@@ -238,7 +238,7 @@ namespace
 			>
 		>
 	;
-	
+
 	/// applies the cv qualifiers of source to destination
 	template
 		<	typename

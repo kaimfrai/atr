@@ -6,10 +6,10 @@ export import ID.Type;
 export import Function.Address;
 export import Archetype.LayoutInfo;
 export import Layout.MemberOffset;
-export import <Stateless/Type.hpp>;
+export import Stateless.Type;
 export import Meta.TypeInfo;
-export import <Std/TemplateConcepts.hpp>;
-export import <Std/QualifierTemplate.hpp>;
+export import Std.TemplateConcepts;
+export import Std.QualifierTemplate;
 
 export import Std;
 
@@ -383,7 +383,7 @@ export namespace
 
 	/// layout offsets for Archetypes
 	template
-		<	Std::TypePackInstanceOf
+		<	Std::TypePackInstanceOf_Transform
 			<	Instance
 			,	std::remove_reference_t
 			>	t_tArchetype

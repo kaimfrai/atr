@@ -1,9 +1,9 @@
 export module ID.Decimal;
 
 export import Meta.Pack;
-export import <Std/Concepts.hpp>;
-export import <Std/Math.hpp>;
-export import <Std/Size.hpp>;
+export import Std.Concepts;
+export import Std.Math;
+export import Std.Size;
 
 export namespace
 	ID

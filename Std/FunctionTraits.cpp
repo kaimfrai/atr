@@ -1,8 +1,8 @@
-#pragma once
+export module Std.FunctionTraits;
 
 import Std;
 
-namespace
+export namespace
 	Std
 {
 	enum class

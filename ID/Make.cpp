@@ -6,7 +6,7 @@ export import Std;
 export import PackTemplate.Instance;
 export import Pack.Instance;
 
-export import <Stateless/Tuple.hpp>;
+export import Stateless.Tuple;
 
 export namespace
 	ID

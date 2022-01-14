@@ -1,7 +1,7 @@
 export module Layout.Initializer;
 
 export import Meta.ValueInfo;
-export import <Std/Concepts.hpp>;
+export import Std.Concepts;
 
 export namespace
 	Layout

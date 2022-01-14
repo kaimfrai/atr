@@ -8,8 +8,8 @@ export import PackTemplate.Type;
 export import PackTemplate.Value;
 export import PackTemplate.Sequence;
 
-export import <Stateless/Tuple.hpp>;
-export import <Std/Concepts.hpp>;
+export import Stateless.Tuple;
+export import Std.Concepts;
 
 export namespace
 	PackTemplate
