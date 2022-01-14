@@ -1,0 +1,6 @@
+add_module(Binding.cpp)
+add_module(Compare.cpp)
+add_module(IndexMap.cpp)
+add_module(Map.cpp)
+add_module(Tuple.cpp)
+add_module(Type.cpp)

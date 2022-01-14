@@ -18,7 +18,6 @@ add_module(TupleList.cpp)
 
 add_module(Meta.cpp)
 
-include_directories(../)
 add_module(MetaInfo.cpp)
 add_module(Pack.cpp)
 add_module(Template.cpp)

@@ -1,5 +1,3 @@
-include_directories(../)
-
 add_module(Concatenate.cpp)
 add_module(DataMember.cpp)
 add_module(DataMemberLayoutSplit.cpp)

@@ -1,5 +1,3 @@
-include_directories(../)
-
 add_module(Address.cpp)
 add_module(ArgumentDependency.cpp)
 add_module(Body.cpp)
