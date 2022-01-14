@@ -3,10 +3,10 @@ export module Function.Address;
 export import Function.Erase;
 export import Function.Signature;
 export import ID.Func;
-#include <Std/FunctionTraits.hpp>
-#include <Std/Concepts.hpp>
+export import <Std/FunctionTraits.hpp>;
+export import <Std/Concepts.hpp>;
 
-#include <functional>
+export import Std;
 
 export namespace
 	Function

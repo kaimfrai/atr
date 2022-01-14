@@ -1,17 +1,20 @@
-#pragma once
+export module Pack.SplitBest;
 
-#include <Stateless/Tuple.hpp>
-#include <Pack/Fold.hpp>
-#include <Pack/Concat.hpp>
-#include <Pack/Size.hpp>
-#include <Pack/Instance.hpp>
-#include <Pack/Apply.hpp>
-#include <Pack/Value.hpp>
-#include <Meta/Pack.hpp>
+export import Pack.Fold;
+export import Pack.Concat;
+export import Pack.Size;
+export import Pack.Instance;
+export import Pack.Apply;
+export import Pack.Value;
+export import Meta.Pack;
 
-#include <functional>
+export import Std;
 
-namespace
+export import <Fold/Comma.hpp>;
+export import <Stateless/Binding.hpp>;
+export import <Stateless/Tuple.hpp>;
+
+export namespace
 	Pack
 {
 	/// picks the better of two info objects using a compare function object
@@ -228,50 +231,50 @@ namespace
 			vResult
 		;
 	}
-
-	static_assert
-		(	[]{
-				Stateless::Pair auto
-				const
-				[	vRemaining
-				,	vResult
-				]=	SplitMaximum
-					(	Meta::Pack<1,34,-451, 2>()
-					)
-				;
-				return
-					(	vRemaining
-					==	Meta::Pack<1, -451, 2>()
-					)
-				and	(	vResult
-					==	Meta::V<34>
-					)
-				;
-			}()
-		)
-	;
-
-	static_assert
-		(	[]{
-				Stateless::Pair auto
-				const
-				[	vRemaining
-				,	vResult
-				]=	SplitMinimum
-					(	Meta::Pack<1,34,451,2>()
-					)
-				;
-				return
-					(	vRemaining
-					==	Meta::Pack<34, 451, 2>()
-					)
-				and	(	vResult
-					==	Meta::V<1>
-					)
-				;
-			}()
-		)
-	;
-	static_assert(PickMinimum(Meta::Pack<1,34,-451, 2>()) == Meta::V<-451>);
-	static_assert(PickMaximum(Meta::Pack<1,34,451, 2>()) == Meta::V<451>);
 }
+
+static_assert
+	(	[]{
+			Stateless::Pair auto
+			const
+			[	vRemaining
+			,	vResult
+			]=	SplitMaximum
+				(	Meta::Pack<1,34,-451, 2>()
+				)
+			;
+			return
+				(	vRemaining
+				==	Meta::Pack<1, -451, 2>()
+				)
+			and	(	vResult
+				==	Meta::V<34>
+				)
+			;
+		}()
+	)
+;
+
+static_assert
+	(	[]{
+			Stateless::Pair auto
+			const
+			[	vRemaining
+			,	vResult
+			]=	SplitMinimum
+				(	Meta::Pack<1,34,451,2>()
+				)
+			;
+			return
+				(	vRemaining
+				==	Meta::Pack<34, 451, 2>()
+				)
+			and	(	vResult
+				==	Meta::V<1>
+				)
+			;
+		}()
+	)
+;
+static_assert(PickMinimum(Meta::Pack<1,34,-451, 2>()) == Meta::V<-451>);
+static_assert(PickMaximum(Meta::Pack<1,34,451, 2>()) == Meta::V<451>);

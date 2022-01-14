@@ -1,12 +1,13 @@
-#pragma once
+export module Pack.Type;
 
-#include <Pack/Empty.hpp>
-#include <Stateless/Tuple.hpp>
-#include <Meta/MetaInfo.hpp>
-#include <Meta/TypeInfo.hpp>
-#include <Std/Concepts.hpp>
+export import Pack.Empty;
+export import Meta.MetaInfo;
+export import Meta.TypeInfo;
 
-namespace
+export import <Stateless/Tuple.hpp>;
+export import <Std/Concepts.hpp>;
+
+export namespace
 	Pack
 {
 	///	wraps around a pack of types
@@ -25,7 +26,7 @@ namespace
 			...
 		>
 	{};
-	
+
 	///	stateless type pack instances
 	template
 		<	typename
@@ -35,10 +36,9 @@ namespace
 				>
 			typename
 				t_t1Transform
-			=	std::type_identity_t
 		>
 	concept
-		PureTypeInstance
+		PureTypeInstance_Transform
 	=	Stateless::Type
 		<	t_tTypePack
 		,	t_t1Transform
@@ -48,7 +48,20 @@ namespace
 		,	t_t1Transform
 		>
 	;
-	
+
+	///	stateless type pack instances
+	template
+		<	typename
+				t_tTypePack
+		>
+	concept
+		PureTypeInstance
+	=	PureTypeInstance_Transform
+		<	t_tTypePack
+		,	std::type_identity_t
+		>
+	;
+
 	///	type packs or empty packs
 	template
 		<	typename
@@ -58,17 +71,29 @@ namespace
 				>
 			typename
 				t_t1Transform
-			=	std::type_identity_t
+		>
+	concept
+		TypeInstance_Transform
+	=	PureTypeInstance_Transform
+		<	t_tTypePack
+		,	t_t1Transform
+		>
+	or	PureEmptyInstance_Transform
+		<	t_tTypePack
+		,	t_t1Transform
+		>
+	;
+
+	///	type packs or empty packs
+	template
+		<	typename
+				t_tTypePack
 		>
 	concept
 		TypeInstance
-	=	PureTypeInstance
+	=	TypeInstance_Transform
 		<	t_tTypePack
-		,	t_t1Transform
-		>
-	or	PureEmptyInstance
-		<	t_tTypePack
-		,	t_t1Transform
+		,	std::type_identity_t
 		>
 	;
 }

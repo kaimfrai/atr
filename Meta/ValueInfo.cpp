@@ -1,15 +1,15 @@
-#pragma once
+export module Meta.ValueInfo;
 
-#include <Meta/TypeInfo.hpp>
+export import Meta.TypeInfo;
 
-#include <Stateless/Type.hpp>
+export import <Stateless/Type.hpp>;
 
-#include <Std/FunctionTraits.hpp>
-#include <Std/Concepts.hpp>
+export import <Std/FunctionTraits.hpp>;
+export import <Std/Concepts.hpp>;
 
-#include <Std/Size.hpp>
+export import <Std/Size.hpp>;
 
-namespace
+export namespace
 	Meta
 {
 	///	wraps around a single compile-time value

@@ -4,8 +4,8 @@ export import Function.StaticDependency;
 export import Function.ArgumentDependency;
 export import ID.Func;
 export import ID.StringLiteral;
-#include <Meta/TypeInfo.hpp>
-#include <Std/Concepts.hpp>
+export import Meta.TypeInfo;
+export import <Std/Concepts.hpp>;
 
 export namespace
 	Function

@@ -1,18 +1,17 @@
-#pragma once
+export module Pack.MakeSequence;
 
-#include <Pack/Transform.hpp>
-#include <Pack/Normalize.hpp>
-#include <Pack/Size.hpp>
-#include <Pack/Instance.hpp>
-#include <Pack/Sequence.hpp>
-#include <Meta/ValueInfo.hpp>
-#include <Std/Concepts.hpp>
+export import Pack.Transform;
+export import Pack.Normalize;
+export import Pack.Size;
+export import Pack.Instance;
+export import Pack.Sequence;
+export import Meta.ValueInfo;
+export import <Stateless/Tuple.hpp>;
+export import <Std/Concepts.hpp>;
+export import <Std/Size.hpp>;
+export import Std;
 
-#include <Std/Size.hpp>
-
-#include <utility>
-
-namespace
+export namespace
 	Pack
 {
 	/// create a sequence of indices with the given length
@@ -35,7 +34,7 @@ namespace
 			)
 		;
 	}
-	
+
 	/// creates a copy of the initial object for every call
 	template
 		<	Meta::InfoInstance
@@ -51,7 +50,7 @@ namespace
 			()
 		=	default
 		;
-		
+
 		/// deduce template from arguments
 		constexpr
 		explicit
@@ -59,7 +58,7 @@ namespace
 			(	t_tInitial
 			)
 		{}
-		
+
 		/// every call results in a new dublicated value
 		constexpr
 		t_tInitial
@@ -71,7 +70,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// creates a pack containing length copies of the initial object
 	[[nodiscard]]
 	constexpr
@@ -93,7 +92,7 @@ namespace
 			)
 		;
 	}
-	
+
 	///	returns an IndexPack containing length indices that are offset by the given value
 	[[nodiscard]]
 	constexpr
@@ -123,7 +122,7 @@ namespace
 			)
 		;
 	}
-	
+
 	///	returns an IndexPack starting from 0 with a length corresponding to the given pack
 	[[nodiscard]]
 	constexpr

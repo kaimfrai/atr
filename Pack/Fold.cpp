@@ -1,12 +1,12 @@
-#pragma once
+export module Pack.Fold;
 
-#include <Fold/Comma.hpp>
-#include <PackTemplate/Instance.hpp>
-#include <Stateless/Binding.hpp>
-#include <Meta/MetaInfo.hpp>
-#include <Std/Concepts.hpp>
+export import PackTemplate.Instance;
+export import Meta.MetaInfo;
+export import <Stateless/Binding.hpp>;
+export import <Fold/Comma.hpp>;
+export import <Std/Concepts.hpp>;
 
-namespace
+export namespace
 	Pack
 {
 	/// wraps around an operation and stores a result

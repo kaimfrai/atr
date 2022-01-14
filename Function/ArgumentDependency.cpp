@@ -3,11 +3,11 @@ export module Function.ArgumentDependency;
 export import Function.Dependency;
 export import ID.Func;
 export import ID.Data;
-#include <Meta/Template.hpp>
-#include <Meta/TypeInfo.hpp>
-#include <PackTemplate/Instance.hpp>
-#include <Stateless/Map.hpp>
-#include <Std/Concepts.hpp>
+export import Meta.Template;
+export import Meta.TypeInfo;
+export import PackTemplate.Instance;
+export import <Stateless/Map.hpp>;
+export import <Std/Concepts.hpp>;
 
 export import Std;
 

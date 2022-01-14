@@ -2,7 +2,7 @@ export module Layout.Union;
 
 export import Layout.Fork;
 export import ID.Data;
-#include <Meta/TypeInfo.hpp>
+export import Meta.TypeInfo;
 
 export namespace
 	Layout

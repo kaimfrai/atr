@@ -1,13 +1,13 @@
-#pragma once
+export module Pack.Value;
 
-#include <Pack/Sequence.hpp>
-#include <Pack/Empty.hpp>
-#include <Meta/MetaInfo.hpp>
-#include <Meta/ValueInfo.hpp>
-#include <Stateless/Tuple.hpp>
-#include <Std/Concepts.hpp>
+export import Pack.Sequence;
+export import Pack.Empty;
+export import Meta.MetaInfo;
+export import Meta.ValueInfo;
+export import <Stateless/Tuple.hpp>;
+export import <Std/Concepts.hpp>;
 
-namespace
+export namespace
 	Pack
 {
 	///	wraps around a pack of values
@@ -26,7 +26,7 @@ namespace
 			...
 		>
 	{};
-	
+
 	/// inherits from Pack::Value. provides more useful debugging information for stateless types than Value<{}, {}, {}, ...>
 	template
 		<	Stateless::Type
@@ -48,7 +48,7 @@ namespace
 			()
 		=	default
 		;
-		
+
 		/// deduce template from argument
 		constexpr
 		explicit
@@ -58,7 +58,7 @@ namespace
 			)
 		{}
 	};
-	
+
 	///	stateless value pack instances
 	template
 		<	typename
@@ -68,10 +68,9 @@ namespace
 				>
 			typename
 				t_t1Transform
-			=	std::type_identity_t
 		>
 	concept
-		PureValueInstance
+		PureValueInstance_Transform
 	=	Stateless::Type
 		<	t_tValuePack
 		,	t_t1Transform
@@ -81,7 +80,20 @@ namespace
 		,	t_t1Transform
 		>
 	;
-	
+
+	///	stateless value pack instances
+	template
+		<	typename
+				t_tValuePack
+		>
+	concept
+		PureValueInstance
+	=	PureValueInstance_Transform
+		<	t_tValuePack
+		,	std::type_identity_t
+		>
+	;
+
 	///	pure value packs, sequence packs, or empty packs
 	template
 		<	typename
@@ -94,16 +106,16 @@ namespace
 			=	std::type_identity_t
 		>
 	concept
-		ValueInstance
-	=	PureValueInstance
+		ValueInstance_Transform
+	=	PureValueInstance_Transform
 		<	t_tValuePack
 		,	t_t1Transform
 		>
-	or	PureSequenceInstance
+	or	PureSequenceInstance_Transform
 		<	t_tValuePack
 		,	t_t1Transform
 		>
-	or	PureEmptyInstance
+	or	PureEmptyInstance_Transform
 		<	t_tValuePack
 		,	t_t1Transform
 		>
@@ -118,5 +130,18 @@ namespace
 			{	c_vValuePack
 			};
 		}
+	;
+
+	///	pure value packs, sequence packs, or empty packs
+	template
+		<	typename
+				t_tValuePack
+		>
+	concept
+		ValueInstance
+	=	ValueInstance_Transform
+		<	t_tValuePack
+		,	std::type_identity_t
+		>
 	;
 }

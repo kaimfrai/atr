@@ -5,7 +5,7 @@ export import ID.Base;
 export import ID.Make;
 export import ID.StringLiteral;
 
-export import <PackTemplate/Instance.hpp>;
+export import PackTemplate.Instance;
 export import <Std/Concepts.hpp>;
 
 export namespace
@@ -27,7 +27,7 @@ export namespace
 			...
 		>
 	{};
-	
+
 	/// objects that identify types
 	template
 		<	typename
@@ -40,7 +40,7 @@ export namespace
 		,	Type
 		>
 	;
-	
+
 	/// accepts a string and converts it to a data identifier type
 	template
 		<	StringLiteral
@@ -53,7 +53,7 @@ export namespace
 		,	t_vString
 		>
 	;
-	
+
 	/// accepts a string and converts it to a data identifier value
 	template
 		<	StringLiteral
@@ -67,7 +67,7 @@ export namespace
 		,	t_vString
 		>
 	;
-	
+
 	/// creates an identifier for types from a string
 	template
 		<	StringLiteral
@@ -80,7 +80,7 @@ export namespace
 		()
 	->	TypeT<t_vString>
 	{	return{};	}
-	
+
 	/// objects that identify types and are represented by a given string
 	template
 		<	typename
@@ -96,7 +96,7 @@ export namespace
 		,	Type
 		>
 	;
-	
+
 	/// objects that identify types and start with a given string
 	template
 		<	typename
@@ -112,7 +112,7 @@ export namespace
 		,	Type
 		>
 	;
-	
+
 	/// objects that identify types and end with a given string
 	template
 		<	typename

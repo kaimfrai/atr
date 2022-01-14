@@ -3,11 +3,11 @@ export module Function.Dependency;
 export import Function.FuncDependencyItem;
 export import Function.DataDependencyItem;
 export import Function.Erase;
-#include <Pack/Sort.hpp>
-#include <Pack/Type.hpp>
-#include <Meta/Template.hpp>
-#include <Meta/TypeInfo.hpp>
-#include <Stateless/Map.hpp>
+export import Pack.Sort;
+export import Pack.Type;
+export import Meta.Template;
+export import Meta.TypeInfo;
+export import <Stateless/Map.hpp>;
 
 export namespace
 	Function

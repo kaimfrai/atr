@@ -1,18 +1,21 @@
-#pragma once
+export module Pack.Accumulate;
 
-#include <Meta/Pack.hpp>
-#include <Fold/LogicalAnd.hpp>
-#include <Fold/LogicalOr.hpp>
-#include <Pack/Fold.hpp>
-#include <Pack/Transform.hpp>
-#include <Pack/Apply.hpp>
-#include <Pack/Instance.hpp>
-#include <Pack/Sequence.hpp>
-#include <Stateless/Binding.hpp>
-#include <Meta/MetaInfo.hpp>
-#include <Std/Concepts.hpp>
+export import Meta.Pack;
+export import Pack.Fold;
+export import Pack.Transform;
+export import Pack.Apply;
+export import Pack.Instance;
+export import Pack.Sequence;
+export import Meta.MetaInfo;
 
-namespace
+export import <Fold/Comma.hpp>;
+export import <Fold/LogicalAnd.hpp>;
+export import <Fold/LogicalOr.hpp>;
+export import <Stateless/Tuple.hpp>;
+export import <Stateless/Binding.hpp>;
+export import <Std/Concepts.hpp>;
+
+export namespace
 	Pack
 {
 	///	checks if the predicate is true for all elements in the pack
@@ -60,8 +63,6 @@ namespace
 	}	All
 	{};
 
-	static_assert(All(Meta::Pack<1,1,1>(), Stateless::BackBinding{Meta::StatelessEquals, Meta::V<1>}));
-	
 	///	checks if the predicate is true for any elements in the pack
 	constexpr
 	struct
@@ -106,9 +107,7 @@ namespace
 		}
 	}	Any
 	{};
-	
-	static_assert(Any(Meta::Pack<3,2,1>(), Stateless::BackBinding{Meta::StatelessEquals, Meta::V<1>}));
-	
+
 	///	checks if the given info object is contained within the pack
 	constexpr
 	struct
@@ -139,5 +138,8 @@ namespace
 	}	Contains
 	{};
 
-	static_assert(Contains(Meta::Pack<3,2,1>(), Meta::V<1>));
 }
+
+static_assert(Pack::All(Meta::Pack<1,1,1>(), Stateless::BackBinding{Meta::StatelessEquals, Meta::V<1>}));
+static_assert(Pack::Any(Meta::Pack<3,2,1>(), Stateless::BackBinding{Meta::StatelessEquals, Meta::V<1>}));
+static_assert(Pack::Contains(Meta::Pack<3,2,1>(), Meta::V<1>));

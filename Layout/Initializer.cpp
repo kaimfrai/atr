@@ -1,7 +1,7 @@
 export module Layout.Initializer;
 
-#include <Meta/ValueInfo.hpp>
-#include <Std/Concepts.hpp>
+export import Meta.ValueInfo;
+export import <Std/Concepts.hpp>;
 
 export namespace
 	Layout
@@ -17,7 +17,7 @@ export namespace
 		;
 	}	VacuousInitializer
 	{};
-	
+
 	/// initialization indicator to use a zero value
 	constexpr
 	struct
@@ -27,7 +27,7 @@ export namespace
 			ValueType
 		=	ZeroInitializerTag
 		;
-		
+
 		template
 			<	Std::DefaultConstructible
 					t_tObject
@@ -44,7 +44,7 @@ export namespace
 		}
 	}	ZeroInitializer
 	{};
-	
+
 	template
 		<	auto
 				t_vInitializer
@@ -55,7 +55,7 @@ export namespace
 		<	t_vInitializer
 		>
 	{};
-	
+
 	/// defines what can be used for a data member initializer of a specific type
 	template
 		<	typename
@@ -74,7 +74,7 @@ export namespace
 		,	t_tInitializer
 		>
 	;
-	
+
 	/// wraps an initializer value into a ValueInfo type
 	template
 		<	auto
@@ -88,7 +88,7 @@ export namespace
 			>
 		>
 	{};
-	
+
 	/// a VacuousInitializer does not need to be wrapped
 	template
 		<>
@@ -105,7 +105,7 @@ export namespace
 		=	VacuousInitializerTag
 		;
 	};
-	
+
 	/// a ZeroInitializer does not need to be wrapped
 	template
 		<>
@@ -117,7 +117,7 @@ export namespace
 		<	ZeroInitializerTag
 		>
 	{};
-	
+
 	/// the appropriate type for the initializer value
 	template
 		<	auto

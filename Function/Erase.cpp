@@ -1,8 +1,8 @@
 export module Function.Erase;
 
-#include <Meta/Template.hpp>
-#include <Meta/TypeInfo.hpp>
-#include <Std/Concepts.hpp>
+export import Meta.Template;
+export import Meta.TypeInfo;
+export import <Std/Concepts.hpp>;
 
 export import Std;
 
@@ -58,7 +58,7 @@ export namespace
 				i_aObject
 			;
 		}
-		
+
 		/// erases type information from a pointer to const
 		template
 			<	Std::Object
@@ -83,7 +83,7 @@ export namespace
 				i_aObject
 			;
 		}
-		
+
 		/// erases type information from a lvalue reference
 		template
 			<	Std::Object
@@ -110,7 +110,7 @@ export namespace
 				)
 			;
 		}
-		
+
 		/// erases type information from a rvalue reference to small types
 		template
 			<	Std::Object
@@ -135,7 +135,7 @@ export namespace
 				i_rObject
 			;
 		}
-		
+
 		/// erases type information from a rvalue reference to large types
 		template
 			<	Std::Object
@@ -164,7 +164,7 @@ export namespace
 		}
 	}	ForwardErased
 	{};
-	
+
 	/// uses the ForwardErased overload to deduce the argument type
 	template
 		<	Std::ObjectOrReference
@@ -186,7 +186,7 @@ export namespace
 			)
 		)
 	;
-	
+
 	/// converts a TypeInfo into a TypeInfo of the corresponding erased type
 	constexpr
 	auto

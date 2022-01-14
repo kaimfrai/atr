@@ -2,14 +2,14 @@ export module Layout.DataMemberLayoutSplit;
 
 export import Layout.DataMember;
 
-#include <Pack/Concat.hpp>
-#include <Pack/Transform.hpp>
-#include <Pack/Filter.hpp>
-#include <Pack/SplitBest.hpp>
-#include <Pack/Map.hpp>
-#include <Pack/Sort.hpp>
-#include <Pack/Normalize.hpp>
-#include <Stateless/Binding.hpp>
+export import Pack.Concat;
+export import Pack.Transform;
+export import Pack.Filter;
+export import Pack.SplitBest;
+export import Pack.Map;
+export import Pack.Sort;
+export import Pack.Normalize;
+export import <Stateless/Binding.hpp>;
 
 export import Std;
 

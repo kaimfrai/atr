@@ -1,9 +1,9 @@
 export module Function.FuncDependencyItem;
 
 export import ID.Func;
-#include <Stateless/Map.hpp>
-#include <Stateless/Type.hpp>
-#include <Std/FunctionTraits.hpp>
+export import <Stateless/Map.hpp>;
+export import <Stateless/Type.hpp>;
+export import <Std/FunctionTraits.hpp>;
 
 export namespace
 	Function
@@ -27,7 +27,7 @@ export namespace
 			()
 		=	default
 		;
-		
+
 		constexpr
 		explicit
 			FuncDependencyItem
@@ -36,7 +36,7 @@ export namespace
 			)
 		{}
 	};
-	
+
 	/// map items that take a FuncID
 	template
 		<	typename

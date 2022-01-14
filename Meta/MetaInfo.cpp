@@ -1,13 +1,14 @@
-#pragma once
+export module Meta.MetaInfo;
 
-#include <Meta/TypeInfo.hpp>
-#include <Meta/ValueInfo.hpp>
-#include <Stateless/Binding.hpp>
-#include <Std/Concepts.hpp>
+export import Meta.TypeInfo;
+export import Meta.ValueInfo;
 
-#include <functional>
+export import Std;
 
-namespace
+export import <Stateless/Binding.hpp>;
+export import <Std/Concepts.hpp>;
+
+export namespace
 	Meta
 {
 	///	forwards to the given compare type and returns a ValueInfo of the result

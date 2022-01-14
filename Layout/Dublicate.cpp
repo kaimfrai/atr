@@ -5,10 +5,10 @@ export import Layout.DataMember;
 export import ID.Modify;
 export import ID.Decimal;
 export import ID.Data;
-#include <Pack/Fold.hpp>
-#include <Pack/MakeSequence.hpp>
-#include <Pack/Cast.hpp>
-#include <Pack/Type.hpp>
+export import Pack.Fold;
+export import Pack.MakeSequence;
+export import Pack.Cast;
+export import Pack.Type;
 
 export namespace
 	Layout

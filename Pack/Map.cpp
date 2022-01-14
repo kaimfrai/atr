@@ -1,18 +1,18 @@
-#pragma once
+export module Pack.Map;
 
-#include <Pack/Concat.hpp>
-#include <Pack/MakeSequence.hpp>
-#include <Pack/Size.hpp>
-#include <Pack/Instance.hpp>
-#include <Pack/Type.hpp>
-#include <Pack/Value.hpp>
-#include <Pack/Sequence.hpp>
-#include <Meta/TypeInfo.hpp>
-#include <Meta/ValueInfo.hpp>
-#include <Stateless/Tuple.hpp>
-#include <Std/FunctionTraits.hpp>
+export import Pack.Concat;
+export import Pack.MakeSequence;
+export import Pack.Size;
+export import Pack.Instance;
+export import Pack.Type;
+export import Pack.Value;
+export import Pack.Sequence;
+export import Meta.TypeInfo;
+export import Meta.ValueInfo;
+export import <Stateless/Tuple.hpp>;
+export import <Std/FunctionTraits.hpp>;
 
-namespace
+export namespace
 	Stateless
 {
 	///	maps a TypeInfo of a key type to a TypeInfo of a resulting type
@@ -34,7 +34,7 @@ namespace
 			>
 		>
 	{};
-	
+
 	///	maps a ValueInfo of a key value to a TypeInfo of a resulting type
 	template
 		<	auto
@@ -54,7 +54,7 @@ namespace
 			>
 		>
 	{};
-	
+
 	///	maps a TypeInfo of a key type to a ValueInfo of a resulting value
 	template
 		<	typename
@@ -74,7 +74,7 @@ namespace
 			>
 		>
 	{};
-	
+
 	///	maps a ValueInfo of a key value to a ValueInfo of a resulting value
 	template
 		<	auto
@@ -94,7 +94,7 @@ namespace
 			>
 		>
 	{};
-	
+
 	template
 		<	typename
 			...	t_tpKey
@@ -119,7 +119,7 @@ namespace
 			...
 		>
 	;
-	
+
 	template
 		<	auto
 			...	t_vpKey
@@ -144,7 +144,7 @@ namespace
 			...
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tKey
@@ -172,7 +172,7 @@ namespace
 			...
 		>
 	;
-	
+
 	template
 		<	typename
 			...	t_tpKey
@@ -197,7 +197,7 @@ namespace
 			...
 		>
 	;
-	
+
 	template
 		<	typename
 			...	t_tpKey
@@ -225,7 +225,7 @@ namespace
 			...
 		>
 	;
-	
+
 	template
 		<	auto
 			...	t_vpKey
@@ -250,7 +250,7 @@ namespace
 			...
 		>
 	;
-	
+
 	template
 		<	auto
 			...	t_vpKey
@@ -278,7 +278,7 @@ namespace
 			...
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tKey
@@ -306,7 +306,7 @@ namespace
 			...
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tKey
@@ -337,7 +337,7 @@ namespace
 			...
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tMap
@@ -351,7 +351,7 @@ namespace
 	;
 }
 
-namespace
+export namespace
 	Pack
 {
 	///	creates an index based Map for the given pack
@@ -371,7 +371,7 @@ namespace
 			}
 		;
 	}
-	
+
 	/// constrains the argument to be a ValueInfo with an index value between the beginning of a pack and the end
 	///	[0...size]
 	template
@@ -434,7 +434,7 @@ namespace
 			()
 		=	default
 		;
-		
+
 		///	deduce the index from the argument
 		constexpr
 		explicit
@@ -444,7 +444,7 @@ namespace
 				>
 			)
 		{}
-		
+
 		[[nodiscard]]
 		constexpr
 		Meta::InfoInstance auto
@@ -463,7 +463,7 @@ namespace
 			;
 		}
 	};
-	
+
 	///	extracts all elements within the index range from the map
 	[[nodiscard]]
 	constexpr
@@ -487,7 +487,7 @@ namespace
 			)
 		;
 	}
-	
+
 	///	creates a new pack containing only a certain amount of elements after the start index
 	[[nodiscard]]
 	constexpr
@@ -511,7 +511,7 @@ namespace
 			)
 		;
 	}
-	
+
 	///	creates a new pack containing only a certain amount of elements after the start index
 	[[nodiscard]]
 	constexpr
@@ -530,7 +530,7 @@ namespace
 			)
 		;
 	}
-	
+
 	/// checks if the pack starts with the given other pack
 	[[nodiscard]]
 	constexpr
@@ -560,7 +560,7 @@ namespace
 			)
 		;
 	}
-	
+
 	///	creates a new pack containing only a certain amount of elements after the start index
 	[[nodiscard]]
 	constexpr
@@ -588,7 +588,7 @@ namespace
 			)
 		;
 	}
-	
+
 	/// checks if the pack ends with the given other pack
 	[[nodiscard]]
 	constexpr
@@ -618,7 +618,7 @@ namespace
 			)
 		;
 	}
-	
+
 	///	splits the pack at a specific index
 	[[nodiscard]]
 	constexpr
@@ -637,7 +637,7 @@ namespace
 			(	i_vPack
 			)
 		;
-		
+
 		return
 			Stateless::Tuple
 			{	ExtractStartPack

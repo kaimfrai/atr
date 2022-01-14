@@ -3,7 +3,7 @@ export module Function.VirtualArgument;
 export import Function.Address;
 export import Function.Body;
 export import ID.Func;
-#include <Meta/TypeInfo.hpp>
+export import Meta.TypeInfo;
 
 export namespace
 	Function

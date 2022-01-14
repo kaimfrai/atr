@@ -1,8 +1,8 @@
-#pragma once
+export module Meta.Pack;
 
-#include <Pack/Normalize.hpp>
+export import Pack.Normalize;
 
-namespace
+export namespace
 	Meta
 {
 	///	frequently used shortcut to bundle types together
@@ -26,7 +26,7 @@ namespace
 			)
 		;
 	}
-	
+
 	///	frequently used shortcut to bundle values together
 	/// at least 1 argument is required to deduce the overload
 	template
@@ -48,7 +48,7 @@ namespace
 			)
 		;
 	}
-	
+
 	///	frequently used shortcut to create an empty pack
 	[[nodiscard]]
 	constexpr

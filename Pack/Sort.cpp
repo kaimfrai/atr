@@ -1,18 +1,20 @@
-#pragma once
+export module Pack.Sort;
 
-#include <Pack/Filter.hpp>
-#include <Pack/Fold.hpp>
-#include <Pack/Concat.hpp>
-#include <Pack/Size.hpp>
-#include <Stateless/Tuple.hpp>
-#include <Stateless/Binding.hpp>
-#include <Pack/Instance.hpp>
+export import Pack.Filter;
+export import Pack.Fold;
+export import Pack.Concat;
+export import Pack.Size;
+export import Pack.Instance;
 
-#include <Std/Concepts.hpp>
+export import <Fold/Comma.hpp>;
+export import <Stateless/Tuple.hpp>;
+export import <Stateless/Binding.hpp>;
 
-#include <functional>
+export import <Std/Concepts.hpp>;
 
-namespace
+export import Std;
+
+export namespace
 	Pack
 {
 	/// inserts an argument into a sorted pack using the comparator
@@ -29,7 +31,7 @@ namespace
 			()
 		=	default
 		;
-		
+
 		///	deduce template from arguments
 		constexpr
 		explicit
@@ -37,14 +39,14 @@ namespace
 			(	t_tCompare
 			)
 		{}
-		
+
 		static
 		constexpr
 		Stateless::Type auto
 			CompareObject
 		=	Stateless::Copy<t_tCompare>
 		;
-		
+
 		/// inserts the argument at a sorted position into the sorted pack
 		[[nodiscard]]
 		constexpr
@@ -73,7 +75,7 @@ namespace
 					}
 				)
 			;
-			
+
 			return
 				Concat
 				(	vWorsePack
@@ -83,7 +85,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// sorts the pack using the give compare function object
 	[[nodiscard]]
 	constexpr
@@ -120,7 +122,7 @@ namespace
 				)
 			;
 	}
-	
+
 	/// sorts the pack using std::less to sort it from lowest to highest
 	[[nodiscard]]
 	constexpr
@@ -138,7 +140,7 @@ namespace
 			)
 		;
 	}
-	
+
 	/// sorts the pack using std::greater to sort it from highest to lowest
 	[[nodiscard]]
 	constexpr
@@ -156,9 +158,9 @@ namespace
 			)
 		;
 	}
-	
-	static_assert(SortAscending(Meta::Pack()) == Meta::Pack());
-	static_assert(SortAscending(Meta::Pack<2>()) == Meta::Pack<2>());
-	static_assert(SortAscending(Meta::Pack<2,56,3,6>()) == Meta::Pack<2,3,6,56>());
-	static_assert(SortDescending(Meta::Pack<2,56,3,6>()) == Meta::Pack<56,6,3,2>());
 }
+
+static_assert(Pack::SortAscending(Meta::Pack()) == Meta::Pack());
+static_assert(Pack::SortAscending(Meta::Pack<2>()) == Meta::Pack<2>());
+static_assert(Pack::SortAscending(Meta::Pack<2,56,3,6>()) == Meta::Pack<2,3,6,56>());
+static_assert(Pack::SortDescending(Meta::Pack<2,56,3,6>()) == Meta::Pack<56,6,3,2>());

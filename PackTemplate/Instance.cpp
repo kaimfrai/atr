@@ -1,17 +1,17 @@
-#pragma once
+export module PackTemplate.Instance;
 
-#include <Pack/Template.hpp>
-#include <Pack/Normalize.hpp>
+export import Pack.Instance;
+export import Pack.Normalize;
+export import Pack.Template;
 
-#include <PackTemplate/Type.hpp>
-#include <PackTemplate/Value.hpp>
-#include <PackTemplate/Sequence.hpp>
+export import PackTemplate.Type;
+export import PackTemplate.Value;
+export import PackTemplate.Sequence;
 
-#include <Pack/Instance.hpp>
+export import <Stateless/Tuple.hpp>;
+export import <Std/Concepts.hpp>;
 
-#include <Std/Concepts.hpp>
-
-namespace
+export namespace
 	PackTemplate
 {
 	/// defines what behaves like a pack template
@@ -57,7 +57,7 @@ namespace
 		==	Stateless::Copy<t_tPackTemplate>
 		)
 	;
-	
+
 	///	requirement for a type pack of a specific template
 	template
 		<	typename
@@ -85,7 +85,7 @@ namespace
 			>
 		>
 	;
-	
+
 	///	requirement for a value pack of a specific template
 	template
 		<	typename
@@ -113,7 +113,7 @@ namespace
 			>
 		>
 	;
-	
+
 	///	requirement for a sequence pack of a specific template
 	template
 		<	typename

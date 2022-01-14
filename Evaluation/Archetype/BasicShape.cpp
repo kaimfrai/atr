@@ -8,7 +8,7 @@ export import Layout.Union;
 export import Layout.DataMember;
 export import Archetype.LayoutInfo;
 
-#include <Pack/Accumulate.hpp>
+export import Pack.Accumulate;
 
 export namespace
 	Archetype

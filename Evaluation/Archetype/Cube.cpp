@@ -13,10 +13,10 @@ import Archetype.LayoutInfo;
 import Function.Address;
 export import Layout.LayoutCreator;
 
-#include <Pack/SplitBest.hpp>
-#include <Pack/Filter.hpp>
-#include <Pack/Sort.hpp>
-#include <Pack/Accumulate.hpp>
+export import Pack.SplitBest;
+export import Pack.Filter;
+export import Pack.Sort;
+export import Pack.Accumulate;
 
 export namespace
 	Archetype

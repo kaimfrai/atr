@@ -1,10 +1,10 @@
-#pragma once
+export module Meta.Template;
 
-#include <PackTemplate/Type.hpp>
-#include <PackTemplate/Value.hpp>
-#include <PackTemplate/Sequence.hpp>
+export import PackTemplate.Type;
+export import PackTemplate.Value;
+export import PackTemplate.Sequence;
 
-namespace
+export namespace
 	Meta
 {
 	///	frequently used shortcut to create an object of type PackTemplate::Type

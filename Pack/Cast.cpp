@@ -1,10 +1,10 @@
-#pragma once
+export module Pack.Cast;
 
-#include <Pack/Apply.hpp>
-#include <PackTemplate/Instance.hpp>
-#include <Meta/Template.hpp>
+export import Pack.Apply;
+export import PackTemplate.Instance;
+export import Meta.Template;
 
-namespace
+export namespace
 	Pack
 {
 	/// converts the pack to the specified type pack
@@ -33,7 +33,7 @@ namespace
 			)()
 		;
 	}
-	
+
 	/// converts the pack to the specified value pack
 	template
 		<	template
@@ -60,7 +60,7 @@ namespace
 			)()
 		;
 	}
-	
+
 	/// converts the pack to the specified seqeunce pack
 	template
 		<	template

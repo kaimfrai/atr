@@ -19,9 +19,9 @@ import Function.VirtualArgument;
 import Function.Address;
 import Layout.MemberOffset;
 
-#include <Pack/Sort.hpp>
-#include <Std/QualifierTemplate.hpp>
-#include <Pack/Accumulate.hpp>
+export import Pack.Sort;
+export import <Std/QualifierTemplate.hpp>;
+export import Pack.Accumulate;
 
 static_assert
 (	Function::Address<ID::FuncT<"ComputeVolume">, Bodies3D::Head const&>()

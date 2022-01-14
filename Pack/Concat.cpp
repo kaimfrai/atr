@@ -1,13 +1,15 @@
-#pragma once
+export module Pack.Concat;
 
-#include <Pack/Fold.hpp>
-#include <Pack/Normalize.hpp>
-#include <Pack/Instance.hpp>
-#include <Pack/Type.hpp>
-#include <Pack/Value.hpp>
-#include <Pack/Sequence.hpp>
+export import Pack.Fold;
+export import Pack.Normalize;
+export import Pack.Instance;
+export import Pack.Type;
+export import Pack.Value;
+export import Pack.Sequence;
 
-namespace
+export import <Stateless/Tuple.hpp>;
+
+export namespace
 	Pack
 {
 	/// takes two PackInstances and concatenates the elements into one pack
@@ -35,7 +37,7 @@ namespace
 			;
 		}
 	};
-	
+
 	///	adds all packed elements together into one pack
 	[[nodiscard]]
 	constexpr
@@ -63,7 +65,7 @@ namespace
 			)
 		;
 	}
-	
+
 	/// optimization for one pack
 	[[nodiscard]]
 	constexpr
@@ -78,7 +80,7 @@ namespace
 			)
 		;
 	}
-	
+
 	///	optimization for no packs
 	[[nodiscard]]
 	constexpr

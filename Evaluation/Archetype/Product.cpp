@@ -6,8 +6,8 @@ export import ID.Func;
 export import ID.StringLiteral;
 import Function.ConstantIDMap;
 
-#include <Stateless/Map.hpp>
-#include <PackTemplate/Type.hpp>
+export import <Stateless/Map.hpp>;
+export import PackTemplate.Type;
 
 export namespace
 	Function

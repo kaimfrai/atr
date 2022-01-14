@@ -3,7 +3,7 @@ export module ID.Concepts;
 export import ID.Make;
 export import ID.StringLiteral;
 
-export import <PackTemplate/Instance.hpp>;
+export import PackTemplate.Instance;
 
 export namespace
 	ID
@@ -33,7 +33,7 @@ export namespace
 			>
 		>
 	;
-	
+
 	/// checks if an identifier starts with a given string and is an instance of a given template
 	template
 		<	typename
@@ -61,7 +61,7 @@ export namespace
 			<	t_vStart
 			>()
 	;
-	
+
 	/// checks if an identifier end with a given string and is an instance of a given template
 	template
 		<	typename

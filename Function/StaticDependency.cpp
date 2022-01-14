@@ -3,10 +3,10 @@ export module Function.StaticDependency;
 export import Function.Dependency;
 export import ID.Func;
 export import ID.Data;
-#include <Meta/Template.hpp>
-#include <Meta/TypeInfo.hpp>
-#include <PackTemplate/Instance.hpp>
-#include <Stateless/Map.hpp>
+export import Meta.Template;
+export import Meta.TypeInfo;
+export import PackTemplate.Instance;
+export import <Stateless/Map.hpp>;
 
 export import Std;
 
@@ -30,17 +30,17 @@ export namespace
 			FunctionName
 		=	t_tFunctionName
 		;
-		
+
 		[[no_unique_address]]
 		t_tDataDependencyMap
 			DataDependencyMap
 		{};
-		
+
 		[[no_unique_address]]
 		t_tFuncDependencyMap
 			FuncDependencyMap
 		{};
-		
+
 		/// access data of the object
 		[[nodiscard]]
 		constexpr
@@ -59,7 +59,7 @@ export namespace
 				)
 			;
 		}
-		
+
 		/// call functions of the object
 		template
 			<	typename
@@ -90,7 +90,7 @@ export namespace
 			;
 		}
 	};
-	
+
 	template
 		<	ID::StringLiteral
 				t_vFunctionName
@@ -107,7 +107,7 @@ export namespace
 			<>
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tDependency
@@ -119,7 +119,7 @@ export namespace
 		,	StaticDependency
 		>
 	;
-	
+
 	template
 		<	typename
 				t_tDependency
@@ -140,7 +140,7 @@ export namespace
 			>
 		>
 	;
-	
+
 	template
 		<	ID::StringLiteral
 				t_vFunctionName

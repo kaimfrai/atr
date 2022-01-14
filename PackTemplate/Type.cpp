@@ -1,18 +1,18 @@
-#pragma once
+export module PackTemplate.Type;
 
-#include <Meta/ValueInfo.hpp>
-#include <Meta/TypeInfo.hpp>
-#include <Stateless/Type.hpp>
-#include <Std/Concepts.hpp>
+export import Meta.ValueInfo;
+export import Meta.TypeInfo;
+export import <Stateless/Type.hpp>;
+export import <Std/Concepts.hpp>;
 
-namespace
+export namespace
 	PackTemplate
 {
 	/// allow for comparison of Statless objects in this namespace
 	using
 		Stateless::operator==
 	;
-	
+
 	///	wraps around a template-id for type packs
 	///	defines value-based operations
 	template
@@ -51,7 +51,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// special case for templates with one fixed parameter. pack expansion can not be used with those
 	template
 		<	template
@@ -70,7 +70,7 @@ namespace
 			()
 		=	default
 		;
-		
+
 		///	copy constructor
 		constexpr
 			FixedType
@@ -79,7 +79,7 @@ namespace
 			)
 		=	default
 		;
-		
+
 		///	move constructor
 		constexpr
 			FixedType
@@ -88,7 +88,7 @@ namespace
 			)
 		=	default
 		;
-		
+
 		///	explicit conversion from another type pack template template
 		template
 			<	template
@@ -108,7 +108,7 @@ namespace
 				>
 			)
 		{}
-		
+
 		///	deduces template-id from an instantiated type
 		template
 			<	typename
@@ -122,7 +122,7 @@ namespace
 				>
 			)
 		{}
-		
+
 		///	instantiates the template with the given types into a TypeInfo
 		template
 			<	typename
@@ -143,7 +143,7 @@ namespace
 			>
 		{	return{};	}
 	};
-	
+
 	///	stateless type pack template instances
 	template
 		<	typename

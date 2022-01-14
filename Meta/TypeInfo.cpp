@@ -1,12 +1,12 @@
-#pragma once
+export module Meta.TypeInfo;
 
-#include <Stateless/Type.hpp>
-#include <Std/Concepts.hpp>
-#include <Std/TypeTraits.hpp>
+export import Std;
 
-#include <utility>
+export import <Stateless/Type.hpp>;
+export import <Std/Concepts.hpp>;
+export import <Std/TypeTraits.hpp>;
 
-namespace
+export namespace
 	Meta
 {
 	///	wraps around a single type

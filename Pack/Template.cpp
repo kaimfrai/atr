@@ -1,15 +1,17 @@
-#pragma once
+export module Pack.Template;
 
-#include <Pack/Normalize.hpp>
-#include <Pack/Type.hpp>
-#include <Pack/Value.hpp>
-#include <Pack/Sequence.hpp>
-#include <Pack/Empty.hpp>
-#include <PackTemplate/Type.hpp>
-#include <PackTemplate/Value.hpp>
-#include <PackTemplate/Sequence.hpp>
+export import Pack.Normalize;
+export import Pack.Type;
+export import Pack.Value;
+export import Pack.Sequence;
+export import Pack.Empty;
+export import PackTemplate.Type;
+export import PackTemplate.Value;
+export import PackTemplate.Sequence;
 
-namespace
+export import <Stateless/Type.hpp>;
+
+export namespace
 	Pack
 {
 	///	converts an EmptyPack into a type that behaves like a generic template
@@ -24,7 +26,7 @@ namespace
 			Stateless::Copy<Normalizer>
 		;
 	}
-	
+
 	///	converts a TypePackInstance into its corresponding a PackTemplate::Type
 	///	overloaded for other pack types
 	template
@@ -55,7 +57,7 @@ namespace
 			>
 		;
 	}
-	
+
 	///	converts a ValuePackInstance into its corresponding a PackTemplate::Value
 	///	overloaded for other pack types
 	template
@@ -91,7 +93,7 @@ namespace
 			>
 		;
 	}
-	
+
 	///	converts a ValuePackInstance into its corresponding a PackTemplate::Value
 	///	overloaded for other pack types
 	template

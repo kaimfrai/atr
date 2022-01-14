@@ -7,13 +7,12 @@ export import Std;
 
 export import ID.Data;
 
-#include <PackTemplate/Instance.hpp>
-#include <Pack/Instance.hpp>
-#include <Pack/Type.hpp>
-#include <Meta/ValueInfo.hpp>
-
-#include <Std/Concepts.hpp>
-#include <Std/Size.hpp>
+export import PackTemplate.Instance;
+export import Pack.Instance;
+export import Pack.Type;
+export import Meta.ValueInfo;
+export import <Std/Concepts.hpp>;
+export import <Std/Size.hpp>;
 
 export namespace
 	Layout

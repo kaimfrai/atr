@@ -3,8 +3,10 @@ export module ID.Make;
 export import ID.StringLiteral;
 export import Std;
 
-export import <PackTemplate/Instance.hpp>;
-export import <Pack/Instance.hpp>;
+export import PackTemplate.Instance;
+export import Pack.Instance;
+
+export import <Stateless/Tuple.hpp>;
 
 export namespace
 	ID
@@ -35,7 +37,7 @@ export namespace
 				t_vStringLiteral
 			)::	CharType
 		;
-		
+
 		constexpr
 		Stateless::Type auto
 			fIdentifierMaker
@@ -57,7 +59,7 @@ export namespace
 				;
 			}
 		;
-		
+
 		return
 			fIdentifierMaker
 			(	t_vStringLiteral
@@ -65,7 +67,7 @@ export namespace
 			)
 		;
 	}
-	
+
 	/// creates an identifier type
 	template
 		<	template
@@ -88,7 +90,7 @@ export namespace
 			>()
 		)
 	;
-	
+
 	/// create an identifier value
 	template
 		<	template

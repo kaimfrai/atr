@@ -1,15 +1,17 @@
-#pragma once
+export module Pack.Size;
 
-#include <Pack/Instance.hpp>
-#include <Pack/Type.hpp>
-#include <Pack/Value.hpp>
-#include <Meta/ValueInfo.hpp>
+export import Pack.Instance;
+export import Pack.Type;
+export import Pack.Value;
+export import Meta.ValueInfo;
 
-#include <Std/Size.hpp>
+export import <Stateless/Tuple.hpp>;
+export import <Std/Size.hpp>;
+export import <Std/TemplateTraits.hpp>;
 
-#include <bit>
+export import Std;
 
-namespace
+export namespace
 	Pack
 {
 	///	returns a ValueInfo of the amount of elements packed together
@@ -31,7 +33,7 @@ namespace
 			>
 		;
 	}
-	
+
 	///	constrains a pack to a certain size
 	template
 		<	typename
@@ -49,7 +51,7 @@ namespace
 		)
 	==	Meta::V<t_nSize>
 	;
-	
+
 	/// constrains to empty packs
 	template
 		<	typename
@@ -62,7 +64,7 @@ namespace
 		,	0_uz
 		>
 	;
-	
+
 	/// constrains to packs of exactly 1 element
 	template
 		<	typename
@@ -75,7 +77,7 @@ namespace
 		,	1_uz
 		>
 	;
-	
+
 	/// constrains to packs of 0 or 1 element
 	/// useful for optimization overloads
 	template
@@ -91,7 +93,7 @@ namespace
 		<	t_tPack
 		>
 	;
-	
+
 	/// constrains to packs of exactly 2 elements
 	template
 		<	typename
@@ -104,10 +106,10 @@ namespace
 		,	2_uz
 		>
 	;
-	
+
 	/// the actual value representing the size of the pack
 	template
-		<	Instance
+		<	Instance_Transform
 			<	Std::Unqualified
 			>	t_tPack
 		>
@@ -122,7 +124,7 @@ namespace
 			>
 		)
 	;
-	
+
 	///	constrains a pack to a certain size
 	template
 		<	typename

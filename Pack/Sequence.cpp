@@ -1,14 +1,14 @@
-#pragma once
+export module Pack.Sequence;
 
-#include <Pack/Empty.hpp>
-#include <Meta/MetaInfo.hpp>
-#include <Meta/ValueInfo.hpp>
-#include <Stateless/Tuple.hpp>
-#include <Std/Concepts.hpp>
+export import Pack.Empty;
+export import Meta.MetaInfo;
+export import Meta.ValueInfo;
+export import <Stateless/Tuple.hpp>;
+export import <Std/Concepts.hpp>;
 
-#include <array>
+export import Std;
 
-namespace
+export namespace
 	Pack
 {
 	///	wraps around a sequence of values of the same type
@@ -38,7 +38,7 @@ namespace
 				)
 			]
 		;
-		
+
 		static
 		constexpr
 		RawArrayType
@@ -46,7 +46,7 @@ namespace
 		{	t_vpElement
 			...
 		};
-		
+
 		using
 			StdArrayType
 		=	std::array
@@ -56,7 +56,7 @@ namespace
 				)
 			>
 		;
-		
+
 		static
 		constexpr
 		StdArrayType
@@ -64,7 +64,7 @@ namespace
 		{	t_vpElement
 			...
 		};
-		
+
 		/// converstion to raw array
 		constexpr
 			operator RawArrayType&
@@ -73,7 +73,7 @@ namespace
 				RawArray
 			;
 		}
-		
+
 		/// converstion to std::array
 		constexpr
 			operator StdArrayType const&
@@ -82,7 +82,7 @@ namespace
 				StdArray
 			;
 		}
-		
+
 		friend
 		constexpr
 		auto
@@ -95,7 +95,7 @@ namespace
 					()
 			;
 		}
-		
+
 		friend
 		constexpr
 		auto
@@ -109,7 +109,7 @@ namespace
 			;
 		}
 	};
-	
+
 	///	stateless value pack instances
 	template
 		<	typename
@@ -119,10 +119,9 @@ namespace
 				>
 			typename
 				t_t1Transform
-			=	std::type_identity_t
 		>
 	concept
-		PureSequenceInstance
+		PureSequenceInstance_Transform
 	=	Stateless::Type
 		<	t_tSequencePack
 		,	t_t1Transform
@@ -132,7 +131,20 @@ namespace
 		,	t_t1Transform
 		>
 	;
-	
+
+	///	stateless value pack instances
+	template
+		<	typename
+				t_tSequencePack
+		>
+	concept
+		PureSequenceInstance
+	=	PureSequenceInstance_Transform
+		<	t_tSequencePack
+		,	std::type_identity_t
+		>
+	;
+
 	/// sequence packs or empty packs
 	template
 		<	typename
@@ -142,17 +154,29 @@ namespace
 				>
 			typename
 				t_t1Transform
-			=	std::type_identity_t
+		>
+	concept
+		SequenceInstance_Transform
+	=	PureSequenceInstance_Transform
+		<	t_tSequencePack
+		,	t_t1Transform
+		>
+	or	PureEmptyInstance_Transform
+		<	t_tSequencePack
+		,	t_t1Transform
+		>
+	;
+
+	/// sequence packs or empty packs
+	template
+		<	typename
+				t_tSequencePack
 		>
 	concept
 		SequenceInstance
-	=	PureSequenceInstance
+	=	SequenceInstance_Transform
 		<	t_tSequencePack
-		,	t_t1Transform
-		>
-	or	PureEmptyInstance
-		<	t_tSequencePack
-		,	t_t1Transform
+		,	std::type_identity_t
 		>
 	;
 }

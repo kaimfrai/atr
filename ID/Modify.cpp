@@ -4,7 +4,7 @@ export import ID.Base;
 export import ID.Make;
 export import ID.StringLiteral;
 
-export import <Pack/Reverse.hpp>;
+export import Pack.Reverse;
 export import <Std/Concepts.hpp>;
 
 export namespace

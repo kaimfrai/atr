@@ -1,6 +1,6 @@
 export module ID.Decimal;
 
-export import <Meta/Pack.hpp>;
+export import Meta.Pack;
 export import <Std/Concepts.hpp>;
 export import <Std/Math.hpp>;
 export import <Std/Size.hpp>;

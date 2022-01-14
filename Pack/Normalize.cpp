@@ -1,12 +1,12 @@
-#pragma once
+export module Pack.Normalize;
 
-#include <Pack/Type.hpp>
-#include <Pack/Value.hpp>
-#include <Pack/Sequence.hpp>
-#include <Pack/Empty.hpp>
-#include <Stateless/Tuple.hpp>
+export import Pack.Type;
+export import Pack.Value;
+export import Pack.Sequence;
+export import Pack.Empty;
+export import <Stateless/Tuple.hpp>;
 
-namespace
+export namespace
 	Pack
 {
 	/// function object converting packs into normalized forms
@@ -23,7 +23,7 @@ namespace
 			()	const
 		->	Empty
 		{	return{};	}
-		
+
 		/// simply returns the empty pack
 		[[nodiscard]]
 		constexpr
@@ -33,7 +33,7 @@ namespace
 			)	const
 		->	Empty
 		{	return{};	}
-		
+
 		/// maps empty StatelessTuples to the EmptyPack
 		/// overloaded for other pack types
 		[[nodiscard]]
@@ -45,7 +45,7 @@ namespace
 			)	const
 		->	Empty
 		{	return{};	}
-		
+
 		///	normalizes multiple types into one pack
 		///	overloaded for other pack types
 		template
@@ -72,7 +72,7 @@ namespace
 			...
 			>
 		{	return{};	}
-		
+
 		///	normalizes multiple values into one pack
 		///	overloaded for other pack types
 		template
@@ -141,7 +141,7 @@ namespace
 					>{}
 				;
 		}
-		
+
 		///	consider all other StatelessTuples as normalized
 		/// overloaded for other pack types
 		template
@@ -184,7 +184,7 @@ namespace
 					i_vTuple
 				;
 		}
-		
+
 		///	normalizes packed types into one pack
 		///	overloaded for other pack types
 		template
@@ -223,7 +223,7 @@ namespace
 				)
 			;
 		}
-		
+
 		///	normalizes packed types into one pack
 		///	overloaded for other pack types
 		///	special case: StatelessValue treated as ValuePack
@@ -244,7 +244,7 @@ namespace
 				i_vStatelessValue
 			;
 		}
-		
+
 		///	normalizes packed values into one pack
 		///	overloaded for other pack types
 		template
@@ -283,7 +283,7 @@ namespace
 				)
 			;
 		}
-		
+
 		///	normalizes the sequence pack into a SequencePack
 		///	overloaded for other pack types
 		template

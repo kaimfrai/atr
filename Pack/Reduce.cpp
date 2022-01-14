@@ -1,16 +1,18 @@
-#pragma once
+export module Pack.Reduce;
 
-#include <Pack/Map.hpp>
-#include <Stateless/Binding.hpp>
-#include <Pack/Transform.hpp>
-#include <Pack/MakeSequence.hpp>
-#include <Pack/Instance.hpp>
-#include <Pack/Type.hpp>
-#include <Pack/Value.hpp>
-#include <PackTemplate/Type.hpp>
-#include <PackTemplate/Value.hpp>
+export import Pack.Map;
+export import Pack.Transform;
+export import Pack.MakeSequence;
+export import Pack.Instance;
+export import Pack.Type;
+export import Pack.Value;
+export import PackTemplate.Type;
+export import PackTemplate.Value;
 
-namespace
+export import <Stateless/Map.hpp>;
+export import <Stateless/Binding.hpp>;
+
+export namespace
 	Pack
 {
 	/// applies the function to the n-th element of each Map as specified by the given index
@@ -35,7 +37,7 @@ namespace
 			;
 		}
 	;
-	
+
 	///	applies the function for each n-th element of each pack
 	[[nodiscard]]
 	constexpr
@@ -59,7 +61,7 @@ namespace
 			(	i_vFirst
 			)
 		;
-		
+
 		///	binds an index Map for each pack together with the function
 		Stateless::Type auto
 		const
@@ -78,7 +80,7 @@ namespace
 				...
 			}
 		;
-		
+
 		//	applies the indices one by one resulting in a pack of the same size
 		return
 			Transform
@@ -87,7 +89,7 @@ namespace
 			)
 		;
 	}
-	
+
 	///	zips all TypePacks together into one TypePack of TypePacks
 	///	overloaded for other pack types
 	[[nodiscard]]
@@ -110,7 +112,7 @@ namespace
 			)
 		;
 	}
-	
+
 	///	zips all ValuePacks together into one TypePack of ValuePacks
 	///	overloaded for other pack types
 	[[nodiscard]]

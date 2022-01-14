@@ -1,9 +1,9 @@
 export module Function.DataDependencyItem;
 
 export import ID.Data;
-#include <Stateless/Map.hpp>
-#include <Stateless/Type.hpp>
-#include <Std/FunctionTraits.hpp>
+export import <Stateless/Map.hpp>;
+export import <Stateless/Type.hpp>;
+export import <Std/FunctionTraits.hpp>;
 
 export namespace
 	Function
@@ -29,7 +29,7 @@ export namespace
 			()
 		=	default
 		;
-		
+
 		constexpr
 		explicit
 			DataDependencyItem
@@ -38,7 +38,7 @@ export namespace
 			)
 		{}
 	};
-	
+
 	/// map items that take a DataID
 	template
 		<	typename

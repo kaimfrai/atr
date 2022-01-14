@@ -6,10 +6,10 @@ export import Layout.Concatenate;
 export import Layout.LayoutCreator;
 export import Layout.DataMember;
 
-#include <Meta/Template.hpp>
-#include <Pack/Accumulate.hpp>
-#include <Meta/TypeInfo.hpp>
-#include <Std/QualifierTemplate.hpp>
+export import Meta.Template;
+export import Pack.Accumulate;
+export import Meta.TypeInfo;
+export import <Std/QualifierTemplate.hpp>;
 
 export namespace
 	Archetype

@@ -1,17 +1,19 @@
-#pragma once
+export module Pack.Transform;
 
-#include <Pack/Apply.hpp>
-#include <Pack/Concat.hpp>
-#include <Pack/Size.hpp>
-#include <Pack/Normalize.hpp>
-#include <Pack/Instance.hpp>
-#include <Pack/Type.hpp>
-#include <Pack/Value.hpp>
-#include <Meta/TypeInfo.hpp>
-#include <Meta/ValueInfo.hpp>
-#include <Std/Concepts.hpp>
+export import Pack.Apply;
+export import Pack.Concat;
+export import Pack.Size;
+export import Pack.Normalize;
+export import Pack.Instance;
+export import Pack.Type;
+export import Pack.Value;
+export import Meta.TypeInfo;
+export import Meta.ValueInfo;
 
-namespace
+export import <Stateless/Tuple.hpp>;
+export import <Std/Concepts.hpp>;
+
+export namespace
 	Pack
 {
 	/// applies the same transformation to all info objects of a pack
@@ -28,7 +30,7 @@ namespace
 			()
 		=	default
 		;
-		
+
 		/// deduce template from argument
 		constexpr
 		explicit
@@ -36,14 +38,14 @@ namespace
 			(	t_tTransform
 			)
 		{}
-		
+
 		static
 		constexpr
 		Stateless::Type auto
 			TransformObject
 		=	Stateless::Copy<t_tTransform>
 		;
-		
+
 		/// applies the transformation to all info objects in the pack and returns a transformed pack
 		[[nodiscard]]
 		constexpr
@@ -63,7 +65,7 @@ namespace
 			;
 		}
 	};
-	
+
 	///	applies all transformations in sequence to the pack
 	[[nodiscard]]
 	constexpr

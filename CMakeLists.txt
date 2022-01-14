@@ -38,6 +38,8 @@ add_subdirectory(Test)
 
 add_subdirectory(ThirdParty)
 
+add_subdirectory(Pack)
+add_subdirectory(PackTemplate)
 add_subdirectory(ID)
 add_subdirectory(Layout)
 add_subdirectory(Function)

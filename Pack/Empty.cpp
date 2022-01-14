@@ -1,9 +1,10 @@
-#pragma once
+export module Pack.Empty;
 
-#include <Stateless/Tuple.hpp>
-#include <Std/Concepts.hpp>
+export import Std;
+export import <Stateless/Tuple.hpp>;
+export import <Std/Concepts.hpp>;
 
-namespace
+export namespace
 	Pack
 {
 	/// special pack type that contains no elements
@@ -13,7 +14,7 @@ namespace
 	:	Stateless::Tuple
 		<>
 	{};
-	
+
 	/// instances of empty pack
 	template
 		<	typename
@@ -23,10 +24,9 @@ namespace
 				>
 			typename
 				t_t1Transform
-			=	std::type_identity_t
 		>
 	concept
-		PureEmptyInstance
+		PureEmptyInstance_Transform
 	=	Stateless::Type
 		<	t_tEmptyPack
 		,	t_t1Transform
@@ -35,6 +35,19 @@ namespace
 		<	t_tEmptyPack
 		,	Empty
 		,	t_t1Transform
+		>
+	;
+
+	/// instances of empty pack
+	template
+		<	typename
+				t_tEmptyPack
+		>
+	concept
+		PureEmptyInstance
+	=	PureEmptyInstance_Transform
+		<	t_tEmptyPack
+		,	std::type_identity
 		>
 	;
 }

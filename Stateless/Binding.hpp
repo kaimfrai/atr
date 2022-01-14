@@ -21,14 +21,14 @@ namespace
 			InvokeObject
 		=	Copy<t_tInvoke>
 		;
-		
+
 		///	default constructor
 		constexpr
 			NotBinding
 			()
 		=	default
 		;
-		
+
 		///	deduce template from argument
 		constexpr
 		explicit
@@ -36,7 +36,7 @@ namespace
 			(	t_tInvoke
 			)
 		{}
-		
+
 		///	forwards the given arguments and invokes operator! on the result
 		[[nodiscard]]
 		constexpr
@@ -53,7 +53,7 @@ namespace
 				)
 			;
 		}
-		
+
 		/// two negations cancel each other out
 		[[nodiscard]]
 		friend
@@ -67,7 +67,19 @@ namespace
 			;
 		}
 	};
-	
+
+	template
+		<	Type
+				t_tInvoke
+		>
+	(	NotBinding
+	)	(	t_tInvoke
+		)
+	->	NotBinding
+		<	t_tInvoke
+		>
+	;
+
 	/// CRTP for providing operator not
 	template
 		<	typename
@@ -92,7 +104,7 @@ namespace
 			;
 		}
 	};
-	
+
 	///	wraps around an invocable at compile-time
 	///	binds stateless values to the front of the invocation
 	template
@@ -118,14 +130,14 @@ namespace
 			InvokeObject
 		=	Copy<t_tInvoke>
 		;
-		
+
 		///	default constructor
 		constexpr
 			FrontBinding
 			()
 		=	default
 		;
-		
+
 		///	deduce template from arguments
 		constexpr
 		explicit
@@ -135,7 +147,7 @@ namespace
 				...
 			)
 		{}
-		
+
 		///	forwards the given arguments after passing the bound compile-time values
 		[[nodiscard]]
 		constexpr
@@ -154,7 +166,25 @@ namespace
 			;
 		}
 	};
-	
+
+	template
+		<	Type
+				t_tInvoke
+		,	Type
+			...	t_tpFrontArgument
+		>
+	(	FrontBinding
+	)	(	t_tInvoke
+		,	t_tpFrontArgument
+			...
+		)
+	->	FrontBinding
+		<	t_tInvoke
+		,	t_tpFrontArgument
+			...
+		>
+	;
+
 	///	wraps around a invocable at compile-time
 	///	binds stateless values to the back of the invocation
 	template
@@ -165,9 +195,9 @@ namespace
 		>
 	struct
 		[[nodiscard]]
-		BackBinding	
+		BackBinding
 		:	NegatableBinding
-			<	BackBinding	
+			<	BackBinding
 				<	t_tInvoke
 				,	t_tpBackArgument
 					...
@@ -180,14 +210,14 @@ namespace
 			InvokeObject
 		=	Copy<t_tInvoke>
 		;
-		
+
 		///	default constructor
 		constexpr
 			BackBinding
 			()
 		=	default
 		;
-		
+
 		///	deduce template from arguments
 		constexpr
 		explicit
@@ -197,7 +227,7 @@ namespace
 				...
 			)
 		{}
-		
+
 		///	forwards the given arguments after passing the bound compile-time values
 		[[nodiscard]]
 		constexpr
@@ -216,4 +246,22 @@ namespace
 			;
 		}
 	};
+
+	template
+		<	Type
+				t_tInvoke
+		,	Type
+			...	t_tpBackArgument
+		>
+	(	BackBinding
+	)	(	t_tInvoke
+		,	t_tpBackArgument
+			...
+		)
+	->	BackBinding
+		<	t_tInvoke
+		,	t_tpBackArgument
+			...
+		>
+	;
 }

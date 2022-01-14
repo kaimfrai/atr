@@ -5,7 +5,7 @@ export import ID.Base;
 export import ID.Make;
 export import ID.StringLiteral;
 
-export import <PackTemplate/Instance.hpp>;
+export import PackTemplate.Instance;
 export import <Std/Concepts.hpp>;
 
 export namespace
@@ -45,7 +45,7 @@ export namespace
 		,	Function::Name
 		>
 	;
-	
+
 	/// accepts a string and converts it to a function identifier type
 	template
 		<	StringLiteral
@@ -58,7 +58,7 @@ export namespace
 		,	t_vString
 		>
 	;
-	
+
 	/// accepts a string and converts it to a data identifier value
 	template
 		<	StringLiteral
@@ -72,7 +72,7 @@ export namespace
 		,	t_vString
 		>
 	;
-	
+
 	/// creates an identifier for functions from a string
 	template
 		<	StringLiteral
@@ -85,7 +85,7 @@ export namespace
 		()
 	->	FuncT<t_vString>
 	{	return{};	}
-	
+
 	/// objects that identify functions and are represented by a given string
 	template
 		<	typename
@@ -101,7 +101,7 @@ export namespace
 		,	Function::Name
 		>
 	;
-	
+
 	/// objects that identify functions and start with a given string
 	template
 		<	typename
@@ -117,7 +117,7 @@ export namespace
 		,	Function::Name
 		>
 	;
-	
+
 	/// objects that identify functions and end with a given string
 	template
 		<	typename

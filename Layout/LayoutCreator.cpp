@@ -4,11 +4,11 @@ export import Layout.DataMemberLayoutSplit;
 export import Layout.Fork;
 export import Layout.DataMember;
 
-#include <Meta/Template.hpp>
+export import Meta.Template;
 
-#include <Pack/Map.hpp>
-#include <PackTemplate/Type.hpp>
-#include <Meta/TypeInfo.hpp>
+export import Pack.Map;
+export import PackTemplate.Type;
+export import Meta.TypeInfo;
 
 export namespace
 	Layout

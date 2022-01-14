@@ -1,11 +1,8 @@
-module;
-
-#include <Meta/TypeInfo.hpp>
-#include <Std/Size.hpp>
-
 export module Evaluation.Shared;
 
+export import Meta.TypeInfo;
 export import Std;
+export import <Std/Size.hpp>;
 
 export
 {

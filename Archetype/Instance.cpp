@@ -7,7 +7,7 @@ export import Function.Address;
 export import Archetype.LayoutInfo;
 export import Layout.MemberOffset;
 export import <Stateless/Type.hpp>;
-export import <Meta/TypeInfo.hpp>;
+export import Meta.TypeInfo;
 export import <Std/TemplateConcepts.hpp>;
 export import <Std/QualifierTemplate.hpp>;
 

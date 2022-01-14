@@ -2,7 +2,7 @@ export module ID.StringLiteral;
 
 export import Std;
 
-export import <Pack/Sequence.hpp>;
+export import Pack.Sequence;
 
 export import <Std/Concepts.hpp>;
 export import <Std/Size.hpp>;

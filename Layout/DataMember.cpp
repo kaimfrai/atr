@@ -4,13 +4,13 @@ export import Layout.Initializer;
 export import ID.Data;
 export import Std;
 
-#include <Pack/Filter.hpp>
-#include <Pack/Accumulate.hpp>
-#include <Pack/Type.hpp>
-#include <Meta/TypeInfo.hpp>
-#include <Meta/ValueInfo.hpp>
-#include <Std/Concepts.hpp>
-#include <Std/Size.hpp>
+export import Pack.Filter;
+export import Pack.Accumulate;
+export import Pack.Type;
+export import Meta.TypeInfo;
+export import Meta.ValueInfo;
+export import <Std/Concepts.hpp>;
+export import <Std/Size.hpp>;
 
 export namespace
 	Layout

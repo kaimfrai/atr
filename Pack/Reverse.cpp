@@ -1,16 +1,20 @@
-#pragma once
+export module Pack.Reverse;
 
-#include <Meta/Pack.hpp>
-#include <Pack/Template.hpp>
-#include <Pack/Fold.hpp>
-#include <Pack/Instance.hpp>
-#include <Pack/Size.hpp>
-#include <Pack/Apply.hpp>
-#include <Pack/Concat.hpp>
-#include <Meta/MetaInfo.hpp>
-#include <Std/Concepts.hpp>
+export import Meta.Pack;
+export import Pack.Template;
+export import Pack.Fold;
+export import Pack.Instance;
+export import Pack.Size;
+export import Pack.Apply;
+export import Pack.Concat;
+export import Meta.MetaInfo;
 
-namespace
+export import <Fold/Comma.hpp>;
+export import <Stateless/Binding.hpp>;
+export import <Stateless/Tuple.hpp>;
+export import <Std/Concepts.hpp>;
+
+export namespace
 	Pack
 {
 	struct
@@ -35,7 +39,7 @@ namespace
 			;
 		}
 	};
-	
+
 	///	returns a new pack with the elements in reversed order
 	[[nodiscard]]
 	constexpr
@@ -73,8 +77,8 @@ namespace
 				)()
 			;
 	}
-
-	static_assert(Reverse(Meta::Pack()) == Meta::Pack());
-	static_assert(Reverse(Meta::Pack<double>()) == Meta::Pack<double>());
-	static_assert(Reverse(Meta::Pack<double, bool, int>()) == Meta::Pack<int, bool, double>());
 }
+
+static_assert(Pack::Reverse(Meta::Pack()) == Meta::Pack());
+static_assert(Pack::Reverse(Meta::Pack<double>()) == Meta::Pack<double>());
+static_assert(Pack::Reverse(Meta::Pack<double, bool, int>()) == Meta::Pack<int, bool, double>());

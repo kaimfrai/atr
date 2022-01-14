@@ -1,16 +1,18 @@
-#pragma once
+export module Pack.Apply;
 
-#include <Pack/Fold.hpp>
-#include <Pack/Normalize.hpp>
-#include <Pack/Instance.hpp>
-#include <Pack/Type.hpp>
-#include <Pack/Value.hpp>
-#include <Meta/MetaInfo.hpp>
-#include <Meta/TypeInfo.hpp>
-#include <Meta/ValueInfo.hpp>
-#include <Std/Concepts.hpp>
+export import Pack.Fold;
+export import Pack.Normalize;
+export import Pack.Instance;
+export import Pack.Type;
+export import Pack.Value;
+export import Meta.MetaInfo;
+export import Meta.TypeInfo;
+export import Meta.ValueInfo;
 
-namespace
+export import <Stateless/Tuple.hpp>;
+export import <Std/Concepts.hpp>;
+
+export namespace
 	Pack
 {
 	/// calls the function with all elements of the pack
@@ -37,7 +39,7 @@ namespace
 			;
 		}
 	};
-	
+
 	/// forwards the individual elements of the pack to the given objects in sequence
 	[[nodiscard]]
 	constexpr
@@ -60,7 +62,7 @@ namespace
 			)
 		;
 	}
-	
+
 	/// optimization for one
 	[[nodiscard]]
 	constexpr

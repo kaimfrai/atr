@@ -5,8 +5,8 @@ export import Layout.DataMember;
 export import ID.Modify;
 export import ID.Base;
 
-#include <Pack/Instance.hpp>
-#include <Pack/Transform.hpp>
+export import Pack.Instance;
+export import Pack.Transform;
 
 export namespace
 	Layout

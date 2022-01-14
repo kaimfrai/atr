@@ -9,10 +9,10 @@ export import Layout.MemberOffset;
 export import ID.Func;
 export import ID.Data;
 export import ID.StringLiteral;
-#include <Pack/Concat.hpp>
-#include <Pack/Type.hpp>
-#include <Std/QualifierTemplate.hpp>
-#include <Std/Concepts.hpp>
+export import Pack.Concat;
+export import Pack.Type;
+export import <Std/QualifierTemplate.hpp>;
+export import <Std/Concepts.hpp>;
 
 export namespace
 	Function
