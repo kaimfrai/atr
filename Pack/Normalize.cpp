@@ -1,5 +1,6 @@
 export module Pack.Normalize;
 
+export import Meta.Type;
 export import Pack.Type;
 export import Pack.Value;
 export import Pack.Sequence;
@@ -58,10 +59,10 @@ export namespace
 		constexpr
 		auto
 			operator()
-			(	Meta::TypeInfo
+			(	Meta::TypeToken
 				<	t_tInitial
 				>
-			,	Meta::TypeInfo
+			,	Meta::TypeToken
 				<	t_tpElement
 				>
 				...
@@ -218,7 +219,7 @@ export namespace
 			)
 		{	return
 				operator()
-				(	Meta::T<t_tpElement>
+				(	Meta::Type<t_tpElement>
 					...
 				)
 			;

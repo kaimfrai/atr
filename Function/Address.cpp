@@ -23,10 +23,10 @@ export namespace
 		constexpr
 		explicit
 			DependencyAddress
-			(	Meta::TypeInfo
+			(	Meta::TypeToken
 				<	t_tStaticDependency
 				>
-			,	Meta::TypeInfo
+			,	Meta::TypeToken
 				<	t_tpArgumentDependency
 				>
 				...
@@ -52,10 +52,10 @@ export namespace
 			...	t_tpArgumentDependency
 		>
 		DependencyAddress
-		(	Meta::TypeInfo
+		(	Meta::TypeToken
 			<	t_tStaticDependency
 			>
-		,	Meta::TypeInfo
+		,	Meta::TypeToken
 			<	t_tpArgumentDependency
 			>
 			...
@@ -191,7 +191,7 @@ export namespace
 					...
 				>()
 			,	ForwardErased
-				(	Meta::T
+				(	Meta::Type
 					<	t_tpArgument
 					>
 				,	i_rpArgument

@@ -42,7 +42,7 @@ export namespace
 				...
 			)	const
 		{	return
-				Meta::T
+				Meta::Type
 				<	t_t1ValuePack
 					<	t_vpAny
 						...

@@ -325,7 +325,7 @@ export namespace
 			,	AddressProxy
 				{	OriginFuncID
 				,	Pack::Concat
-					(	Meta::T<t_tOwner>
+					(	Meta::Type<t_tOwner>
 					,	t_vFuncIDMap
 						.	ArgumentPack
 					)

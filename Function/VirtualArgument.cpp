@@ -73,7 +73,7 @@ export namespace
 		constexpr
 		explicit
 			VirtualItem
-			(	Meta::TypeInfo
+			(	Meta::TypeToken
 				<	t_tObject
 				>
 			)
@@ -162,7 +162,7 @@ export namespace
 		constexpr
 		explicit
 			VirtualTable
-			(	Meta::TypeInfo
+			(	Meta::TypeToken
 				<	t_tObject
 				>	i_vObjectType
 			)
@@ -202,11 +202,11 @@ export namespace
 				&&	i_rArgument
 			)
 		:	VTable
-			{	Meta::T<t_tObject>
+			{	Meta::Type<t_tObject>
 			}
 		,	ErasedArgument
 			{	ForwardErased
-				(	Meta::T<t_tObject>
+				(	Meta::Type<t_tObject>
 				,	i_rArgument
 				)
 			}
@@ -282,7 +282,7 @@ export namespace
 			)
 		constexpr
 			VirtualElement
-			(	Meta::TypeInfo
+			(	Meta::TypeToken
 				<	t_tObject
 				>
 			,	t_tpArgument
@@ -290,7 +290,7 @@ export namespace
 				...	i_rArgument
 			)
 		:	VTable
-			{	Meta::T<t_tObject&>
+			{	Meta::Type<t_tObject&>
 			}
 		{
 			new (	&

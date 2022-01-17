@@ -20,8 +20,8 @@ export namespace
 	{
 		return
 			Pack::Normalize
-			(	T<t_tInitial>
-			,	T<t_tpElement>
+			(	Type<t_tInitial>
+			,	Type<t_tpElement>
 				...
 			)
 		;

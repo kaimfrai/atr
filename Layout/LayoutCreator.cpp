@@ -26,7 +26,7 @@ export namespace
 		(	PackTemplate::TypeInstance auto
 		)
 	{	return
-			Meta::T<Empty>
+			Meta::Type<Empty>
 		;
 	}
 

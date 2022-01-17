@@ -38,13 +38,13 @@ namespace
 			static_cast<UInt<5>>(i_eRight)
 		);
 	}
+
+	using enum Meta::EQualifier;
 }
 
 export namespace
 	Meta::Token
 {
-	using enum Meta::EQualifier;
-
 	template
 		<	USize
 			=	0uz
@@ -89,6 +89,33 @@ export namespace
 			)
 		->	Type<t_tEntity[]>
 		{	return {};	}
+
+		template
+			<	typename
+				...	t_tpArgument
+			>
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
+		)	(	t_tpArgument
+				&&
+				...	i_rpArgument
+			)
+		requires
+			::std::is_constructible_v
+			<	t_tEntity
+			,	t_tpArgument
+				...
+			>
+		{	return
+			t_tEntity
+			{	::std::forward<t_tpArgument>
+				(	i_rpArgument
+				)
+				...
+			};
+		}
+
 	};
 
 	template
@@ -807,9 +834,11 @@ export namespace
 				t_tEntity
 		>
 	struct
-		Type final
+		Type
 	:	Composition<t_tEntity>
 	{
+		using Entity = t_tEntity;
+
 		static EraseType constexpr
 			Erase
 		{};

@@ -80,7 +80,7 @@ export namespace
 		>
 	struct
 		DataMemberInfo
-	:	Meta::TypeInfo
+	:	Meta::TypeToken
 		<	DataMember
 			<	t_tName
 			,	t_tValue
@@ -93,7 +93,7 @@ export namespace
 		;
 		static Stateless::Type auto constexpr
 			ValueType
-		=	Meta::T<t_tValue>
+		=	Meta::Type<t_tValue>
 		;
 		static Stateless::Type auto constexpr
 			BitAlignment
@@ -110,7 +110,7 @@ export namespace
 		/// conversion from type info
 		constexpr
 			DataMemberInfo
-			(	Meta::TypeInfo
+			(	Meta::TypeToken
 				<	DataMember
 					<	t_tName
 					,	t_tValue
@@ -123,7 +123,7 @@ export namespace
 		explicit constexpr
 			DataMemberInfo
 			(	t_tName
-			,	Meta::TypeInfo
+			,	Meta::TypeToken
 				<	t_tValue
 				>
 			)

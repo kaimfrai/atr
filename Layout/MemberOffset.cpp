@@ -260,12 +260,12 @@ export namespace
 	{
 		using
 			ValueType
-		=	typename
-			decltype(
-				DataMemberValueType
+		=	typename decltype
+			(	DataMemberValueType
 				(	i_vDataMemberInfo
 				)
-			)::	Type
+			)
+		::	Entity
 		;
 
 		return
@@ -302,7 +302,7 @@ export namespace
 		{
 			OffsetOf
 			<	t_t1Qualifier
-			>(	Meta::T<t_tMemberArea>
+			>(	Meta::Type<t_tMemberArea>
 			,	c_vDataID
 			);
 		}
@@ -323,7 +323,7 @@ export namespace
 	constexpr
 	auto
 		OffsetOf
-		(	Meta::TypeInfo
+		(	Meta::TypeToken
 			<	Fork
 				<	t_tNorthArea
 				,	t_tSouthArea
@@ -340,7 +340,7 @@ export namespace
 		return
 			OffsetOf
 			<	t_t1Qualifier
-			>(	Meta::T<t_tNorthArea>
+			>(	Meta::Type<t_tNorthArea>
 			,	i_vMemberID
 			)
 		;
@@ -361,7 +361,7 @@ export namespace
 	constexpr
 	auto
 		OffsetOf
-		(	Meta::TypeInfo
+		(	Meta::TypeToken
 			<	Fork
 				<	t_tNorthArea
 				,	t_tSouthArea
@@ -378,7 +378,7 @@ export namespace
 		return
 			OffsetOf
 			<	t_t1Qualifier
-			>(	Meta::T<t_tSouthArea>
+			>(	Meta::Type<t_tSouthArea>
 			,	i_vMemberID
 			)
 		+	/// offset by the size of the north area

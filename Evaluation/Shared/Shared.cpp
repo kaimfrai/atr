@@ -523,7 +523,7 @@ export
 		TypeConstruct
 		()
 	noexcept
-	->	Meta::TypeInfo
+	->	Meta::TypeToken
 		<	t_tBody
 		>
 	{	return{};	}

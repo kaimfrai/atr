@@ -53,10 +53,10 @@ export namespace
 		{
 			return
 				operator()
-				(	Meta::T
+				(	Meta::Type
 					<	t_tLeft
 					>
-				,	Meta::T
+				,	Meta::Type
 					<	t_tRight
 					>
 				)
@@ -110,6 +110,6 @@ export namespace
 	auto
 		Info
 		()
-	->	TypeInfo<t_tAny>
+	->	TypeToken<t_tAny>
 	{	return{};	}
 }

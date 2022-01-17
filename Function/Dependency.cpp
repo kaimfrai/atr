@@ -62,8 +62,8 @@ export namespace
 				(	ErasedTypeInfo
 					(	i_vArgumentInfo
 					)
-				,	Meta::T<Stateless::Map<>>
-				,	Meta::T<Stateless::Map<>>
+				,	Meta::Type<Stateless::Map<>>
+				,	Meta::Type<Stateless::Map<>>
 				)
 			;
 		}
@@ -86,7 +86,7 @@ export namespace
 							DataDependencyMapItemInstance
 							<	typename
 								t_tDependency
-								::	Type
+							::	Entity
 							>
 						;
 					}

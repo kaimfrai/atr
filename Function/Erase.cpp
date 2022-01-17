@@ -25,7 +25,7 @@ export namespace
 		constexpr
 		auto
 			operator()
-			(	Meta::TypeInfo
+			(	Meta::TypeToken
 				<	t_tObject
 				>
 			,	t_tObject
@@ -45,7 +45,7 @@ export namespace
 		constexpr
 		auto
 			operator()
-			(	Meta::TypeInfo
+			(	Meta::TypeToken
 				<	t_tObject
 					*
 				>
@@ -67,7 +67,7 @@ export namespace
 		constexpr
 		auto
 			operator()
-			(	Meta::TypeInfo
+			(	Meta::TypeToken
 				<	t_tObject
 					const
 					*
@@ -92,7 +92,7 @@ export namespace
 		constexpr
 		auto
 			operator()
-			(	Meta::TypeInfo
+			(	Meta::TypeToken
 				<	t_tObject
 					&
 				>
@@ -103,7 +103,7 @@ export namespace
 		{
 			return
 				operator()
-				(	Meta::T<t_tObject*>
+				(	Meta::Type<t_tObject*>
 				,	std::addressof
 					(	i_rObject
 					)
@@ -119,7 +119,7 @@ export namespace
 		constexpr
 		auto
 			operator()
-			(	Meta::TypeInfo
+			(	Meta::TypeToken
 				<	t_tObject
 					&&
 				>
@@ -144,7 +144,7 @@ export namespace
 		constexpr
 		auto
 			operator()
-			(	Meta::TypeInfo
+			(	Meta::TypeToken
 					<	t_tObject
 						&&
 					>
@@ -155,7 +155,7 @@ export namespace
 			*
 		{	return
 				operator()
-				(	Meta::T<t_tObject*>
+				(	Meta::Type<t_tObject*>
 				,	std::addressof
 					(	i_rObject
 					)
@@ -174,7 +174,7 @@ export namespace
 		ErasedType
 	=	decltype(
 			ForwardErased
-			(	Meta::T
+			(	Meta::Type
 				<	/// top level cv-qualifiers are ignored in the function signature
 					std::remove_cv_t
 					<	t_tObject

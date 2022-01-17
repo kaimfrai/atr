@@ -27,7 +27,7 @@ export namespace
 		constexpr
 		explicit
 			Union
-			(	Meta::TypeInfo
+			(	Meta::TypeToken
 				<	t_tNorthArea
 				>
 			)
@@ -60,7 +60,7 @@ export namespace
 		constexpr
 		explicit
 			Union
-			(	Meta::TypeInfo
+			(	Meta::TypeToken
 				<	t_tSouthArea
 				>
 			)

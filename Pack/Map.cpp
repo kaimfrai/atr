@@ -26,10 +26,10 @@ export namespace
 		[[nodiscard]]
 		TypeToTypeMap
 	:	MapToStateless
-		<	Meta::TypeInfo
+		<	Meta::TypeToken
 			<	t_tKey
 			>
-		,	Meta::TypeInfo
+		,	Meta::TypeToken
 			<	t_tResult
 			>
 		>
@@ -49,7 +49,7 @@ export namespace
 		<	Meta::ValueInfo
 			<	t_vKey
 			>
-		,	Meta::TypeInfo
+		,	Meta::TypeToken
 			<	t_tResult
 			>
 		>
@@ -66,7 +66,7 @@ export namespace
 		[[nodiscard]]
 		TypeToValueMap
 	:	MapToStateless
-		<	Meta::TypeInfo
+		<	Meta::TypeToken
 			<	t_tKey
 			>
 		,	Meta::ValueInfo

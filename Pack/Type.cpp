@@ -20,7 +20,7 @@ export namespace
 		[[nodiscard]]
 		Type
 	:	Stateless::Tuple
-		<	Meta::TypeInfo
+		<	Meta::TypeToken
 			<	t_tpElement
 			>
 			...

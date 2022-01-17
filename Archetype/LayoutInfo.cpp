@@ -69,9 +69,8 @@ export namespace
 		>
 	using
 		CreateLayoutType
-	=	typename
-		decltype(
-			Layout::CreateLayout
+	=	typename decltype
+		(	Layout::CreateLayout
 			(	Meta::Template
 				<	Layout::Fork
 				>()
@@ -80,7 +79,8 @@ export namespace
 					::	RawArray
 				>
 			)
-		)::	Type
+		)
+	::	Entity
 	;
 
 	/// customization point for specifying layout types
@@ -91,7 +91,7 @@ export namespace
 	constexpr inline
 	Meta::TypeInstance auto
 		UnderlyingLayout
-	=	Meta::T
+	=	Meta::Type
 		<	typename
 			t_tObject
 			::	LayoutType

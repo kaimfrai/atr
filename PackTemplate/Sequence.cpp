@@ -52,7 +52,7 @@ export namespace
 				...
 			)	const
 		{	return
-				Meta::T
+				Meta::Type
 				<	t_t1SequencePack
 					<	t_tElement
 					,	t_vInitialElement

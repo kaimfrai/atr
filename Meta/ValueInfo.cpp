@@ -29,7 +29,7 @@ export namespace
 				t_vAny
 			)
 		;
-		
+
 		///the wrapped value
 		static
 		constexpr
@@ -37,7 +37,7 @@ export namespace
 			Value
 		=	t_vAny
 		;
-		
+
 		/// conversion to the value
 		[[nodiscard]]
 		constexpr
@@ -48,7 +48,7 @@ export namespace
 				Value
 			;
 		}
-		
+
 		/// provides access to members of the wrapped value
 		/// note this does not forward to the -> operator of the value
 		[[nodiscard]]
@@ -63,7 +63,7 @@ export namespace
 				&Value
 			;
 		}
-		
+
 		///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 		template
 			<	auto
@@ -85,7 +85,7 @@ export namespace
 				)
 			>
 		{	return{};	}
-		
+
 		///	special case for unwrapping TypeInfo into a templated operator() of a class value
 		template
 			<	typename
@@ -97,10 +97,10 @@ export namespace
 		constexpr
 		auto
 			operator()
-			(	TypeInfo
+			(	TypeToken
 				<	t_tInitial
 				>
-			,	TypeInfo
+			,	TypeToken
 				<	t_tpArgument
 				>
 				...
@@ -121,7 +121,7 @@ export namespace
 				>{}
 			;
 		}
-		
+
 		///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 		template
 			<	auto
@@ -142,7 +142,7 @@ export namespace
 			>
 		{	return{};	}
 	};
-	
+
 	///	stateless types derived from ValueInfo
 	template
 		<	typename
@@ -159,7 +159,7 @@ export namespace
 		,	ValueInfo
 		>
 	;
-	
+
 	/// frequently used shortcut to create an object of type ValueInfo
 	template
 		<	auto
@@ -174,7 +174,7 @@ export namespace
 			>
 		>
 	;
-	
+
 	/// inherits from value info. provides more useful debugging information for stateless types than ValueInfo<{}>
 	template
 		<	Stateless::Type
@@ -195,7 +195,7 @@ export namespace
 			()
 		=	default
 		;
-		
+
 		/// deduce template from argument
 		constexpr
 		explicit
@@ -204,7 +204,7 @@ export namespace
 			)
 		{}
 	};
-	
+
 	///	deduce value from stateless object
 	///	can wrap a function object so that it operates on ValueInfo instead of raw values
 	[[nodiscard]]
@@ -220,7 +220,7 @@ export namespace
 			}
 		;
 	}
-	
+
 	///	ValueInstances for which the value is of a specific type
 	template
 		<	typename
@@ -240,7 +240,7 @@ export namespace
 		,	t_tValue
 		>
 	;
-	
+
 	///	shortcut for frequently used ValueInfo of USizeType
 	template
 		<	typename
@@ -253,7 +253,7 @@ export namespace
 		,	Std::USizeType
 		>
 	;
-	
+
 	///	shortcut for frequently used ValueInfo of bool
 	template
 		<	typename
@@ -266,7 +266,7 @@ export namespace
 		,	bool
 		>
 	;
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto
@@ -286,7 +286,7 @@ export namespace
 			)
 		>
 	{	return{};	}
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto
@@ -311,7 +311,7 @@ export namespace
 			)
 		>
 	{	return{};	}
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto
@@ -331,7 +331,7 @@ export namespace
 			)
 		>
 	{	return{};	}
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto
@@ -356,7 +356,7 @@ export namespace
 			)
 		>
 	{	return{};	}
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto
@@ -376,7 +376,7 @@ export namespace
 			)
 		>
 	{	return{};	}
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto
@@ -401,7 +401,7 @@ export namespace
 			)
 		>
 	{	return{};	}
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto
@@ -426,7 +426,7 @@ export namespace
 			)
 		>
 	{	return{};	}
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto
@@ -451,7 +451,7 @@ export namespace
 			)
 		>
 	{	return{};	}
-	
+
 	///	forwards the operator to the wrapped value
 	/// will return bool to sythesize operator !=
 	template
@@ -480,7 +480,7 @@ export namespace
 			==	t_vRight
 		;
 	}
-	
+
 	///	forwards the operator to the wrapped value
 	///	will return a comparison type to synthesize comparison operators
 	template
@@ -509,7 +509,7 @@ export namespace
 		<=>	t_vRight
 		;
 	}
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto
@@ -529,7 +529,7 @@ export namespace
 			)
 		>
 	{	return{};	}
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto
@@ -549,7 +549,7 @@ export namespace
 			)
 		>
 	{	return{};	}
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto
@@ -569,7 +569,7 @@ export namespace
 			)
 		>
 	{	return{};	}
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto
@@ -594,7 +594,7 @@ export namespace
 			)
 		>
 	{	return{};	}
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto
@@ -619,7 +619,7 @@ export namespace
 			)
 		>
 	{	return{};	}
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto
@@ -644,7 +644,7 @@ export namespace
 			)
 		>
 	{	return{};	}
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto
@@ -669,7 +669,7 @@ export namespace
 			)
 		>
 	{	return{};	}
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto
@@ -694,7 +694,7 @@ export namespace
 			)
 		>
 	{	return{};	}
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto
@@ -719,7 +719,7 @@ export namespace
 			)
 		>
 	{	return{};	}
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto
@@ -744,7 +744,7 @@ export namespace
 			)
 		>
 	{	return{};	}
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto
@@ -769,7 +769,7 @@ export namespace
 			)
 		>
 	{	return{};	}
-	
+
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template
 		<	auto

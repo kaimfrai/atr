@@ -30,7 +30,7 @@ export namespace
 			>
 		static auto constexpr
 			AppendedName
-			(	Meta::TypeInfo
+			(	Meta::TypeToken
 				<	DataMember
 					<	t_tName
 					,	t_tValue
@@ -71,7 +71,7 @@ export namespace
 				Pack::Concat
 				(	i_vNewPack
 				,	AppendedName
-					(	Meta::T
+					(	Meta::Type
 						<	t_tpDataMember
 						>
 					,	i_vIndex

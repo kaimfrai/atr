@@ -36,13 +36,13 @@ export namespace
 		constexpr
 		Meta::TypeInstance auto
 			operator()
-			(	Meta::TypeInfo
+			(	Meta::TypeToken
 				<	t_tpAny
 				>
 				...
 			)	const
 		{	return
-				Meta::T
+				Meta::Type
 				<	t_t1TypePack
 					<	t_tpAny
 						...
@@ -132,11 +132,11 @@ export namespace
 		constexpr
 		auto
 			operator()
-			(	Meta::TypeInfo
+			(	Meta::TypeToken
 				<	t_tInitial
 				>
 			)	const
-		->	Meta::TypeInfo
+		->	Meta::TypeToken
 			<	t_t1TypePack
 				<	t_tInitial
 				>
