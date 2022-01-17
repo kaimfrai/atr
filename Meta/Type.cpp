@@ -32,25 +32,17 @@ export namespace
 				return sizeof(void*);
 			else
 			if	constexpr
-				(	::std::is_empty_v<t_tEntity>
-				)
-				return 0uz;
-			else
-			if	constexpr
 				(	requires
 					{	sizeof(t_tEntity);
 					}
 				)
-				return sizeof(t_tEntity);
+				return
+					::std::is_empty_v<t_tEntity>
+				?	0uz
+				:	sizeof(t_tEntity)
+				;
 			else
-			{
-				static_assert
-				(	not
-					::std::is_object_v<t_tEntity>
-				,	"Attempted to query size of incomplete object type!"
-				);
 				return 0uz;
-			}
 		}()
 	;
 
@@ -67,25 +59,17 @@ export namespace
 				return alignof(void*);
 			else
 			if	constexpr
-				(	::std::is_empty_v<t_tEntity>
-				)
-				return 0uz;
-			else
-			if	constexpr
 				(	requires
 					{	alignof(t_tEntity);
 					}
 				)
-				return alignof(t_tEntity);
+				return
+					::std::is_empty_v<t_tEntity>
+				?	0uz
+				:	alignof(t_tEntity)
+				;
 			else
-			{
-				static_assert
-				(	not
-					::std::is_object_v<t_tEntity>
-				,	"Attempted to query alignment of incomplete object type!"
-				);
 				return 0uz;
-			}
 		}()
 	;
 }
