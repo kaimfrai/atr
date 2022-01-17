@@ -43,6 +43,8 @@ namespace
 export namespace
 	Meta::Token
 {
+	using enum Meta::EQualifier;
+
 	template
 		<	USize
 			=	0uz
@@ -198,7 +200,7 @@ export namespace
 	template
 		<	EQualifier
 				t_eQualifier
-		=	EQualifier::None
+		=	None
 		>
 	struct
 		Function
@@ -253,9 +255,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) const
 		>
-	:	Function
-		<	EQualifier::Const
-		>
+	:	Function<Const>
 	{};
 	template
 		<	typename
@@ -267,9 +267,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) volatile
 		>
-	:	Function
-		<	EQualifier::Volatile
-		>
+	:	Function<Volatile>
 	{};
 	template
 		<	typename
@@ -281,10 +279,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) const volatile
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::Volatile
-		>
+	:	Function<Const | Volatile>
 	{};
 	template
 		<	typename
@@ -296,9 +291,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) const
 		>
-	:	Function
-		<	EQualifier::Const
-		>
+	:	Function<Const>
 	{};
 	template
 		<	typename
@@ -310,9 +303,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) volatile
 		>
-	:	Function
-		<	EQualifier::Volatile
-		>
+	:	Function<Volatile>
 	{};
 	template
 		<	typename
@@ -324,10 +315,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) const volatile
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::Volatile
-		>
+	:	Function<Const | Volatile>
 	{};
 	template
 		<	typename
@@ -339,9 +327,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) &
 		>
-	:	Function
-		<	EQualifier::LRef
-		>
+	:	Function<LRef>
 	{};
 	template
 		<	typename
@@ -353,10 +339,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) const &
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::LRef
-		>
+	:	Function<Const | LRef>
 	{};
 	template
 		<	typename
@@ -368,10 +351,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) volatile &
 		>
-	:	Function
-		<	EQualifier::Volatile
-		|	EQualifier::LRef
-		>
+	:	Function<Volatile | LRef>
 	{};
 	template
 		<	typename
@@ -383,11 +363,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) const volatile &
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::Volatile
-		|	EQualifier::LRef
-		>
+	:	Function<Const | Volatile | LRef>
 	{};
 	template
 		<	typename
@@ -399,9 +375,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) &
 		>
-	:	Function
-		<	EQualifier::LRef
-		>
+	:	Function<LRef>
 	{};
 	template
 		<	typename
@@ -413,10 +387,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) const &
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::LRef
-		>
+	:	Function<Const | LRef>
 	{};
 	template
 		<	typename
@@ -428,10 +399,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) volatile &
 		>
-	:	Function
-		<	EQualifier::Volatile
-		|	EQualifier::LRef
-		>
+	:	Function<Volatile | LRef>
 	{};
 	template
 		<	typename
@@ -443,11 +411,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) const volatile &
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::Volatile
-		|	EQualifier::LRef
-		>
+	:	Function<Const | Volatile | LRef>
 	{};
 	template
 		<	typename
@@ -459,9 +423,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) &&
 		>
-	:	Function
-		<	EQualifier::RRef
-		>
+	:	Function<RRef>
 	{};
 	template
 		<	typename
@@ -473,10 +435,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) const &&
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::RRef
-		>
+	:	Function<Const | RRef>
 	{};
 	template
 		<	typename
@@ -488,10 +447,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) volatile &&
 		>
-	:	Function
-		<	EQualifier::Volatile
-		|	EQualifier::RRef
-		>
+	:	Function<Volatile | RRef>
 	{};
 	template
 		<	typename
@@ -503,11 +459,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) const volatile &&
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::Volatile
-		|	EQualifier::RRef
-		>
+	:	Function<Const | Volatile | RRef>
 	{};
 	template
 		<	typename
@@ -519,9 +471,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) &&
 		>
-	:	Function
-		<	EQualifier::RRef
-		>
+	:	Function<RRef>
 	{};
 	template
 		<	typename
@@ -533,10 +483,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) const &&
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::RRef
-		>
+	:	Function<Const | RRef>
 	{};
 	template
 		<	typename
@@ -548,10 +495,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) volatile &&
 		>
-	:	Function
-		<	EQualifier::Volatile
-		|	EQualifier::RRef
-		>
+	:	Function<Volatile | RRef>
 	{};
 	template
 		<	typename
@@ -563,11 +507,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) const volatile &&
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::Volatile
-		|	EQualifier::RRef
-		>
+	:	Function<Const | Volatile | RRef>
 	{};
 	template
 		<	typename
@@ -579,9 +519,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) noexcept
 		>
-	:	Function
-		<	EQualifier::Noexcept
-		>
+	:	Function<Noexcept>
 	{};
 	template
 		<	typename
@@ -593,9 +531,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) noexcept
 		>
-	:	Function
-		<	EQualifier::Noexcept
-		>
+	:	Function<Noexcept>
 	{};
 	template
 		<	typename
@@ -607,10 +543,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) const noexcept
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::Noexcept
-		>
+	:	Function<Const | Noexcept>
 	{};
 	template
 		<	typename
@@ -622,10 +555,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) volatile noexcept
 		>
-	:	Function
-		<	EQualifier::Volatile
-		|	EQualifier::Noexcept
-		>
+	:	Function<Volatile | Noexcept>
 	{};
 	template
 		<	typename
@@ -637,11 +567,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) const volatile noexcept
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::Volatile
-		|	EQualifier::Noexcept
-		>
+	:	Function<Const | Volatile | Noexcept>
 	{};
 	template
 		<	typename
@@ -653,10 +579,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) const noexcept
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::Noexcept
-		>
+	:	Function<Const | Noexcept>
 	{};
 	template
 		<	typename
@@ -668,10 +591,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) volatile noexcept
 		>
-	:	Function
-		<	EQualifier::Volatile
-		|	EQualifier::Noexcept
-		>
+	:	Function<Volatile | Noexcept>
 	{};
 	template
 		<	typename
@@ -683,11 +603,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) const volatile noexcept
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::Volatile
-		|	EQualifier::Noexcept
-		>
+	:	Function<Const | Volatile | Noexcept>
 	{};
 	template
 		<	typename
@@ -699,10 +615,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) & noexcept
 		>
-	:	Function
-		<	EQualifier::LRef
-		|	EQualifier::Noexcept
-		>
+	:	Function<LRef | Noexcept>
 	{};
 	template
 		<	typename
@@ -714,11 +627,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) const & noexcept
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::LRef
-		|	EQualifier::Noexcept
-		>
+	:	Function<Const | LRef | Noexcept>
 	{};
 	template
 		<	typename
@@ -730,11 +639,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) volatile & noexcept
 		>
-	:	Function
-		<	EQualifier::Volatile
-		|	EQualifier::LRef
-		|	EQualifier::Noexcept
-		>
+	:	Function<Volatile | LRef | Noexcept>
 	{};
 	template
 		<	typename
@@ -746,12 +651,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) const volatile & noexcept
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::Volatile
-		|	EQualifier::LRef
-		|	EQualifier::Noexcept
-		>
+	:	Function<Const | Volatile | LRef | Noexcept>
 	{};
 	template
 		<	typename
@@ -763,10 +663,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) & noexcept
 		>
-	:	Function
-		<	EQualifier::LRef
-		|	EQualifier::Noexcept
-		>
+	:	Function<LRef | Noexcept>
 	{};
 	template
 		<	typename
@@ -778,11 +675,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) const & noexcept
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::LRef
-		|	EQualifier::Noexcept
-		>
+	:	Function<Const | LRef | Noexcept>
 	{};
 	template
 		<	typename
@@ -794,11 +687,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) volatile & noexcept
 		>
-	:	Function
-		<	EQualifier::Volatile
-		|	EQualifier::LRef
-		|	EQualifier::Noexcept
-		>
+	:	Function<Volatile | LRef | Noexcept>
 	{};
 	template
 		<	typename
@@ -810,12 +699,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) const volatile & noexcept
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::Volatile
-		|	EQualifier::LRef
-		|	EQualifier::Noexcept
-		>
+	:	Function<Const | Volatile | LRef | Noexcept>
 	{};
 	template
 		<	typename
@@ -827,10 +711,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) && noexcept
 		>
-	:	Function
-		<	EQualifier::RRef
-		|	EQualifier::Noexcept
-		>
+	:	Function<RRef | Noexcept>
 	{};
 	template
 		<	typename
@@ -842,11 +723,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) const && noexcept
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::RRef
-		|	EQualifier::Noexcept
-		>
+	:	Function<Const | RRef | Noexcept>
 	{};
 	template
 		<	typename
@@ -858,11 +735,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) volatile && noexcept
 		>
-	:	Function
-		<	EQualifier::Volatile
-		|	EQualifier::RRef
-		|	EQualifier::Noexcept
-		>
+	:	Function<Volatile | RRef | Noexcept>
 	{};
 	template
 		<	typename
@@ -874,12 +747,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument...) const volatile && noexcept
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::Volatile
-		|	EQualifier::RRef
-		|	EQualifier::Noexcept
-		>
+	:	Function<Const | Volatile | RRef | Noexcept>
 	{};
 	template
 		<	typename
@@ -891,10 +759,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) && noexcept
 		>
-	:	Function
-		<	EQualifier::RRef
-		|	EQualifier::Noexcept
-		>
+	:	Function<RRef | Noexcept>
 	{};
 	template
 		<	typename
@@ -906,11 +771,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) const && noexcept
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::RRef
-		|	EQualifier::Noexcept
-		>
+	:	Function<Const | RRef | Noexcept>
 	{};
 	template
 		<	typename
@@ -922,11 +783,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) volatile && noexcept
 		>
-	:	Function
-		<	EQualifier::Volatile
-		|	EQualifier::RRef
-		|	EQualifier::Noexcept
-		>
+	:	Function<Volatile | RRef | Noexcept>
 	{};
 	template
 		<	typename
@@ -938,12 +795,7 @@ export namespace
 		Composition
 		<	t_tReturn(t_tpArgument..., ...) const volatile && noexcept
 		>
-	:	Function
-		<	EQualifier::Const
-		|	EQualifier::Volatile
-		|	EQualifier::RRef
-		|	EQualifier::Noexcept
-		>
+	:	Function<Const | Volatile | RRef | Noexcept>
 	{};
 
 	struct
