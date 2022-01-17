@@ -1,8 +1,6 @@
 export module Evaluation.Archetype.Cube.Layout;
 
 export import Evaluation.Archetype.Cuboid.Layout;
-export import Evaluation.Archetype.Rectangle.Layout;
-export import Evaluation.Archetype.Square.Layout;
 
 export namespace
 	Archetype
@@ -14,30 +12,14 @@ export namespace
 		>
 	=	LayoutConfig
 		<	"Cuboid"
-		>
-	-	Layout::InfoV
-		<	"Depth"
-		,	Float
-		>
-	+	Layout::Alias
-		<	"Depth"
-		,	"Width"
-		>
-		//	subtract Height member
-	-	(	LayoutConfig
-			<	"Rectangle"
+		>({	Layout::Alias
+			<	"Height"
+			,	"Width"
 			>
-		-	LayoutConfig
-			<	"Square"
+		,	Layout::Alias
+			<	"Depth"
+			,	"Width"
 			>
-		)
-		//	add Height alias
-	+	(	LayoutConfig
-			<	"Square"
-			>
-		-	LayoutConfig
-			<	"Rectangle"
-			>
-		)
+		})
 	;
 }

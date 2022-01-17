@@ -1,6 +1,5 @@
 export module Layout.LayoutCreator;
 
-export import Layout.DataMemberLayoutSplit;
 export import Layout.Fork;
 export import Layout.DataMember;
 
@@ -18,133 +17,150 @@ export namespace
 		Empty
 	{};
 
-	///	simply creates an empty layout
 	[[nodiscard]]
-	constexpr
-	Meta::TypeInstance auto
-		CreateLayout
-		(	PackTemplate::TypeInstance auto
+	auto constexpr
+	(	DataMemberLayoutSplit
+	)	(	DataMemberInfo const
+			*	i_aBegin
+		,	Meta::USize
+				i_nFirstOffset
+		,	Meta::USize
+				i_nEndOffset
 		)
-	{	return
-			Meta::Type<Empty>
-		;
-	}
-
-	/// simply returns a single DataMember
-	[[nodiscard]]
-	constexpr
-	Meta::TypeInstance auto
-		CreateLayout
-		(	PackTemplate::TypeInstance auto
-		,	DataMemberInfoInstance auto
-				i_vDataMember
-		)
-	{	return
-			i_vDataMember
-		;
-	}
-
-	/// function object fowarding to CreateLayout overloads
-	template
-		<	PackTemplate::TypeInstance
-				t_tSplitTemplate
-		>
-	struct
-		[[nodiscard]]
-		LayoutCreator
+	->	Meta::USize
 	{
-		constexpr
-			LayoutCreator
-			()
-		=	default
+		auto const
+			aFirst
+		=	i_aBegin
+		+	i_nFirstOffset
 		;
-
-		constexpr
-		explicit
-			LayoutCreator
-			(	t_tSplitTemplate
+		auto const
+			aLast
+		=	i_aBegin
+		+	i_nEndOffset
+		-	1uz
+		;
+		if	(	aFirst->Type->Alignment
+			==	aLast->Type->Alignment
 			)
-		{}
-
-		constexpr
-		Meta::TypeInstance auto
-			operator()
-			(	DataMemberInfoInstance auto
-				...	i_vpDataMember
-			)	const
-		{	return
-				CreateLayout
-				(	Stateless::Copy
-					<	t_tSplitTemplate
-					>
-				,	i_vpDataMember
-					...
+			return
+				i_nFirstOffset
+			+ 	::std::bit_floor<Meta::USize>
+				(	i_nEndOffset
+				-	i_nFirstOffset
+				-	1uz
 				)
 			;
-		}
-	};
-
-	/// if the sequence contains one or more DataMemberInfoPacks, all DataMemberInfos
-	/// will be spread separately over the CreateLayout overload
-	[[nodiscard]]
-	constexpr
-	Meta::TypeInstance auto
-		CreateLayout
-		(	PackTemplate::TypeInstance auto
-				i_vSplitTemplate
-		,	Config auto
-			...	i_vpLayoutConfig
-		)
-	{	return
-			Pack::Apply
-			(	Pack::Concat
-				(	i_vpLayoutConfig
-					...
+		else
+		{	auto const
+				aSplitPoint
+			=	::std::lower_bound
+				(	aFirst
+				,	aLast + 1z
+				,	aFirst->Type->Alignment / 2uz
+				,	[]	(	DataMemberInfo const
+							&	i_rLeft
+						,	Meta::USize
+								i_nRight
+						)
+					->	bool
+					{
+						return
+							i_rLeft.Type->Alignment
+						>	i_nRight
+						;
+					}
 				)
-			,	LayoutCreator
-				{	i_vSplitTemplate
-				}
-			)
-		;
+			;
+			return
+			static_cast<Meta::USize>
+			(	aSplitPoint
+			-	i_aBegin
+			);
+		}
 	}
 
-	/// two or more DataMembers will be branched
+	template
+		<	DataMemberConfig
+				t_vConfig
+		,	Meta::USize
+				t_nBegin
+			=	0uz
+		,	Meta::USize
+				t_nEnd
+			=	t_vConfig.size()
+		>
 	[[nodiscard]]
-	constexpr
-	Meta::TypeInstance auto
+	auto constexpr
 		CreateLayout
 		(	PackTemplate::TypeInstance auto
 				i_vSplitTemplate
-		,	DataMemberInfoInstance auto
-				i_vFirst
-		,	DataMemberInfoInstance auto
-				i_vSecond
-		,	DataMemberInfoInstance auto
-			...	i_vpOther
+		,	Meta::ValueInfo<t_vConfig>
+				i_vConfig
+		,	Meta::ValueInfo<t_nBegin>
+				i_vBegin
+			=	{}
+		,	Meta::ValueInfo<t_nEnd>
+				i_vEnd
+			=	{}
 		)
+	->	Meta::TypeInstance auto
 	{
-		Stateless::Pair auto const
-		[	vNorthSubPack
-		,	vSouthSubPack
-		]=	DataMemberLayoutSplit
-			(	i_vFirst
-			,	i_vSecond
-			,	i_vpOther
-				...
-			)
-		;
+		if	constexpr(t_nBegin == t_nEnd)
+			return Meta::Type<Empty>;
+		else
+		if	constexpr(t_nBegin + 1z == t_nEnd)
+		{
+			auto constexpr
+				aBegin
+			=	begin(t_vConfig)
+			+	t_nBegin
+			;
+			return
+			Meta::Type
+			<	Layout::DataMember
+				<	ID::DataT
+					<	ID::StringLiteral
+						<	char[aBegin->Name.size()+1uz]
+						>
+						{	aBegin->Name.data()
+						,	::std::make_index_sequence<aBegin->Name.size()>{}
+						}
+					>
+				,	Meta::RestoreTypeEntity
+					<	aBegin->Type
+					>
+				>
+			>;
+		}
+		else
+		{
+			auto constexpr
+				vSplitIndex
+			=	Meta::V
+				<	DataMemberLayoutSplit
+					(	begin(t_vConfig)
+					,	t_nBegin
+					,	t_nEnd
+					)
+				>
+			;
 
-		return
+			return
 			i_vSplitTemplate
 			(	CreateLayout
 				(	i_vSplitTemplate
-				,	vNorthSubPack
+				,	i_vConfig
+				,	i_vBegin
+				,	vSplitIndex
 				)
 			,	CreateLayout
 				(	i_vSplitTemplate
-				,	vSouthSubPack
+				,	i_vConfig
+				,	vSplitIndex
+				,	i_vEnd
 				)
-			)
-		;
+			);
+		}
 	}
 }

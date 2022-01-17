@@ -11,16 +11,11 @@ export namespace
 		LayoutConfig
 		<	"Square"
 		>
-	=	LayoutConfig
-		<	"Rectangle"
-		>
-	-	Layout::InfoV
-		<	"Height"
-		,	Float
-		>
-	+	Layout::Alias
-		<	"Height"
-		,	"Width"
-		>
+	=	LayoutConfig<"Rectangle">
+		(	Layout::Alias
+			<	"Height"
+			,	"Width"
+			>
+		)
 	;
 }

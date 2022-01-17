@@ -18,6 +18,76 @@ export namespace
 	,	RRef = LRef << 0x1
 	,	Noexcept = RRef << 0x1
 	};
+
+	template
+		<	typename
+				t_tEntity
+		>
+	USize constexpr inline
+		ByteSize_Of
+	=	[]{	if	constexpr
+				(	::std::is_reference_v<t_tEntity>
+				or	::std::is_unbounded_array_v<t_tEntity>
+				)
+				return sizeof(void*);
+			else
+			if	constexpr
+				(	::std::is_empty_v<t_tEntity>
+				)
+				return 0uz;
+			else
+			if	constexpr
+				(	requires
+					{	sizeof(t_tEntity);
+					}
+				)
+				return sizeof(t_tEntity);
+			else
+			{
+				static_assert
+				(	not
+					::std::is_object_v<t_tEntity>
+				,	"Attempted to query size of incomplete object type!"
+				);
+				return 0uz;
+			}
+		}()
+	;
+
+	template
+		<	typename
+				t_tEntity
+		>
+	USize constexpr inline
+		ByteAlign_Of
+	=	[]{	if	constexpr
+				(	::std::is_reference_v<t_tEntity>
+				or	::std::is_unbounded_array_v<t_tEntity>
+				)
+				return alignof(void*);
+			else
+			if	constexpr
+				(	::std::is_empty_v<t_tEntity>
+				)
+				return 0uz;
+			else
+			if	constexpr
+				(	requires
+					{	alignof(t_tEntity);
+					}
+				)
+				return alignof(t_tEntity);
+			else
+			{
+				static_assert
+				(	not
+					::std::is_object_v<t_tEntity>
+				,	"Attempted to query alignment of incomplete object type!"
+				);
+				return 0uz;
+			}
+		}()
+	;
 }
 
 namespace
@@ -827,7 +897,60 @@ export namespace
 
 	struct
 		EraseType final
-	{};
+	{
+		USize const Alignment;
+		USize const Size;
+
+	private:
+		template<typename> friend struct Type;
+
+		explicit constexpr
+		(	EraseType
+		)	(	USize
+					i_nAlignment
+			,	USize
+					i_nSize
+			)
+		:	Alignment{i_nAlignment}
+		,	Size{i_nSize}
+		{}
+
+		constexpr EraseType(EraseType const&) = delete;
+		constexpr EraseType(EraseType&&) = delete;
+	};
+
+	auto constexpr
+	(	operator<=>
+	)	(	EraseType const
+			&	i_rLeft
+		,	EraseType const
+			&	i_rRight
+		)
+	->	::std::strong_ordering
+	{
+		auto const
+			vCompareAlignment
+		=	i_rLeft.Alignment
+		<=>	i_rRight.Alignment
+		;
+		if	(vCompareAlignment != 0)
+			return vCompareAlignment;
+
+		return i_rLeft.Size <=> i_rRight.Size;
+	}
+
+	template
+		<	EraseType const*
+		>
+	struct
+		TypeRestore
+	{
+		friend auto constexpr
+		(	RestoreType
+		)	(	TypeRestore
+			)
+		;
+	};
 
 	template
 		<	typename
@@ -841,13 +964,27 @@ export namespace
 
 		static EraseType constexpr
 			Erase
-		{};
+		{	ByteAlign_Of<t_tEntity>
+		,	ByteSize_Of<t_tEntity>
+		};
+
+		constexpr
+		(	operator
+			EraseType const&
+		)	()	const
+		{	return Erase;	}
 
 		constexpr
 		(	operator
 			EraseType const*
 		)	()	const
 		{	return &Erase;	}
+
+		friend auto constexpr
+		(	RestoreType
+		)	(	TypeRestore<&Erase>
+			)
+		{	return Type{};	}
 	};
 }
 
@@ -876,6 +1013,45 @@ export namespace
 		Type
 	=	TypeToken<t_tEntity>
 		{}
+	;
+
+	template
+		<	Token::Type
+				t_vType
+		>
+	using
+		TypeEntity
+	=	typename decltype
+		(	t_vType
+		)
+	::	Entity
+	;
+
+
+	template
+		<	EraseTypeToken
+				t_vEraseType
+		>
+	Token::Type constexpr inline
+		RestoreTypeToken
+	=	RestoreType
+		(	Token::TypeRestore
+			<	t_vEraseType
+			>{}
+		)
+	;
+
+	template
+		<	EraseTypeToken
+				t_vEraseType
+		>
+	using
+		RestoreTypeEntity
+	=	TypeEntity
+		<	RestoreTypeToken
+			<	t_vEraseType
+			>
+		>
 	;
 }
 

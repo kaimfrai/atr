@@ -793,6 +793,226 @@ export namespace
 		<	ProtoValue
 				t_tValue
 		>
+	struct
+		Value
+		<	t_tValue
+			[
+			]
+		>
+	{
+		static TypeToken<t_tValue[]> constexpr
+			Type
+		{};
+
+		t_tValue
+		*	m_vValue
+		;
+		t_tValue
+		*	m_aEnd
+		;
+
+		constexpr
+		(	Value
+		)	()
+		=	default
+		;
+
+		constexpr
+		(	Value
+		)	(	t_tValue
+				*	i_aBegin
+			,	t_tValue
+				*	i_aEnd
+			)
+		:	m_vValue
+			{	i_aBegin
+			}
+		,	m_aEnd
+			{	i_aEnd
+			}
+		{}
+
+		constexpr
+		(	Value
+		)	(	t_tValue
+				*	i_aValue
+			,	USize
+					i_nSize
+			)
+		:	Value
+			{	i_aValue
+			,	i_aValue
+			+	i_nSize
+			}
+		{}
+
+		template
+			<	USize
+					t_nSize
+			>
+		constexpr
+		(	Value
+		)	(	t_tValue
+				(&	i_rValue
+				)[	t_nSize
+				]
+			)
+		:	Value
+			{	+i_rValue
+			,	t_nSize
+			}
+		{}
+
+
+		constexpr
+		(	Value
+		)	(	t_tValue
+				*	i_aValue
+			)
+		requires
+			ProtoRegular
+			<	t_tValue
+			>
+		:	Value
+			{	i_aValue
+			,	[=] mutable
+				{
+					while(*i_aValue != t_tValue{})
+						++i_aValue;
+					return i_aValue;
+				}()
+			}
+		{}
+
+		constexpr
+		(	Value
+		)	(	::std::nullptr_t
+			)
+		=	delete
+		;
+
+		auto constexpr
+		(	data
+		)	()	const
+		noexcept
+		->	t_tValue const*
+		{	return m_vValue;	}
+
+		auto constexpr
+		(	size
+		)	()	const
+		noexcept
+		->	USize
+		{	return
+			static_cast<USize>
+			(	m_aEnd
+			-	m_vValue
+			);
+		}
+
+		friend auto constexpr
+		(	begin
+		)	(	Value
+				&	i_rValue
+			)
+		->	t_tValue*
+		{	return i_rValue.m_vValue;	}
+
+		friend auto constexpr
+		(	begin
+		)	(	Value const
+				&	i_rValue
+			)
+		->	t_tValue const*
+		{	return i_rValue.m_vValue;	}
+
+		friend auto constexpr
+		(	end
+		)	(	Value
+				&	i_rValue
+			)
+		->	t_tValue*
+		{	return i_rValue.m_aEnd;	}
+
+		friend auto constexpr
+		(	end
+		)	(	Value const
+				&	i_rValue
+			)
+		->	t_tValue const*
+		{	return i_rValue.m_aEnd;	}
+
+		friend auto constexpr
+		(	operator==
+		)	(	Value const
+				&	i_rLeft
+			,	Value const
+				&	i_rRight
+			)
+		->	bool
+		requires
+			ProtoEqualityComparable
+			<	t_tValue
+			>
+		{	return
+			::std::equal
+			(	begin(i_rLeft)
+			,	end(i_rLeft)
+			,	begin(i_rRight)
+			);
+		}
+
+		friend auto constexpr
+		(	operator<=>
+		)	(	Value const
+				&	i_rLeft
+			,	Value const
+				&	i_rRight
+			)
+		->	decltype
+			(	::std::declval<t_tValue>()
+			<=>	::std::declval<t_tValue>()
+			)
+		{
+			auto vLeftPos = begin(i_rLeft);
+			auto const vLeftEnd = end(i_rLeft);
+			bool bLeftRemaining = (vLeftPos != vLeftEnd);
+
+			auto vRightPos = begin(i_rRight);
+			auto const vRightEnd = end(i_rRight);
+			bool bRightRemaining = (vRightPos != vRightEnd);
+
+			for	(;	(	bLeftRemaining
+					and	bRightRemaining
+					)
+				;		bLeftRemaining
+					=	(++vLeftPos != vLeftEnd)
+				,		bRightRemaining
+					=	(++vRightPos != vRightEnd)
+				)
+			{
+				auto const
+					vResult
+				=	*vLeftPos
+				<=>	*vRightPos
+				;
+				if	(vResult != 0)
+					return vResult;
+			}
+
+			if	(bLeftRemaining)
+				return ::std::strong_ordering::greater;
+			if	(bRightRemaining)
+				return ::std::strong_ordering::less;
+
+			return ::std::strong_ordering::equal;
+		}
+	};
+
+	template
+		<	ProtoValue
+				t_tValue
+		>
 	(	Value
 	)	(	t_tValue&
 		)

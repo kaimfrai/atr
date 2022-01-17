@@ -41,8 +41,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		constexpr
-		auto
+		auto constexpr
 			operator()
 			(	void
 				*	i_aObject
@@ -56,13 +55,12 @@ export namespace
 				)
 			{
 				return
-					t_tMember
-					{}
-				;
+				t_tMember
+				{};
 			}
 			else
 			{
-				auto
+				auto const
 					aMemberAsChar
 				=	static_cast
 					<	char
@@ -73,19 +71,16 @@ export namespace
 				;
 
 				return
+				*
+				static_cast
+				<	t_tMember
 					*
-					std::launder
-					(	static_cast
-						<	t_tMember
-							*
-						>(	static_cast
-							<	void
-								*
-							>(	aMemberAsChar
-							)
-						)
+				>(	static_cast
+					<	void
+						*
+					>(	aMemberAsChar
 					)
-				;
+				);
 			}
 		}
 	};
@@ -105,8 +100,7 @@ export namespace
 		>
 	{
 		[[nodiscard]]
-		constexpr
-		auto
+		auto constexpr
 			operator()
 			(	void const
 				*	i_aObject
@@ -120,13 +114,12 @@ export namespace
 				)
 			{
 				return
-					t_tMember
-					{}
-				;
+				t_tMember
+				{};
 			}
 			else
 			{
-				auto
+				auto const
 					aMemberAsChar
 				=	static_cast
 					<	char const
@@ -137,19 +130,16 @@ export namespace
 				;
 
 				return
+				*
+				static_cast
+				<	t_tMember const
 					*
-					std::launder
-					(	static_cast
-						<	t_tMember const
-							*
-						>(	static_cast
-							<	void const
-								*
-							>(	aMemberAsChar
-							)
-						)
+				>(	static_cast
+					<	void const
+						*
+					>(	aMemberAsChar
 					)
-				;
+				);
 			}
 		}
 	};
@@ -164,8 +154,7 @@ export namespace
 				t_tAdditionalOffset
 		>
 	[[nodiscard]]
-	constexpr
-	auto
+	auto constexpr
 		operator+
 		(	MemberOffset
 			<	t_tMember
@@ -188,8 +177,7 @@ export namespace
 				t_tMember
 		>
 	[[nodiscard]]
-	constexpr
-	auto
+	auto constexpr
 		operator+
 		(	MemberOffset
 			<	t_tMember
@@ -212,8 +200,7 @@ export namespace
 				t_nOffset
 		>
 	[[nodiscard]]
-	constexpr
-	auto
+	auto constexpr
 		operator->*
 		(	Std::SameAs_Transform
 			<	void
@@ -244,34 +231,21 @@ export namespace
 				>
 			typename
 				t_t1Qualifier
+		,	ID::DataInstance
+				t_tName
+		,	typename
+				t_tValue
 		>
-	constexpr
-	auto
+	auto constexpr
 		OffsetOf
-		(	DataMemberInfoInstance auto
-				i_vDataMemberInfo
-		,	decltype(
-				DataMemberName
-				(	i_vDataMemberInfo
-				)
-			)
+		(	Meta::TypeToken<DataMember<t_tName, t_tValue>>
+		,	t_tName
 		)
 	noexcept
-	{
-		using
-			ValueType
-		=	typename decltype
-			(	DataMemberValueType
-				(	i_vDataMemberInfo
-				)
-			)
-		::	Entity
-		;
-
-		return
+	{	return
 			MemberOffset
 			<	t_t1Qualifier
-				<	ValueType
+				<	t_tValue
 				>
 			,	0uz
 			>{}
@@ -320,8 +294,7 @@ export namespace
 		,	typename
 				t_tSouthArea
 		>
-	constexpr
-	auto
+	auto constexpr
 		OffsetOf
 		(	Meta::TypeToken
 			<	Fork
@@ -358,8 +331,7 @@ export namespace
 		,	typename
 				t_tSouthArea
 		>
-	constexpr
-	auto
+	auto constexpr
 		OffsetOf
 		(	Meta::TypeToken
 			<	Fork

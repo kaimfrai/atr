@@ -19,6 +19,7 @@ export import <numbers>;
 export import <random>;
 export import <ranges>;
 export import <span>;
+export import <string_view>;
 export import <tuple>;
 export import <type_traits>;
 export import <utility>;

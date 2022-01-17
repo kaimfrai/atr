@@ -2,6 +2,7 @@ export module Evaluation.Archetype.BasicShape;
 
 export import Evaluation.Shared;
 export import Archetype.LayoutInfo;
+export import Archetype.Instance;
 
 export namespace
 	Archetype

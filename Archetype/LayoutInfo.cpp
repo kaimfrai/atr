@@ -18,10 +18,10 @@ export namespace
 	template
 		<	ID::StringLiteral
 		>
-	Layout::Config auto constexpr inline
+	Layout::DataMemberConfig constexpr inline
 		LayoutConfig
-	=	Layout::DataMemberPack
-		<>{}
+	=	Layout::DataMemberConfig<0uz>
+		{}
 	;
 
 	/// uses the LayoutConfig mapped to the given literal and prefixes it with that literal
@@ -32,15 +32,13 @@ export namespace
 				i_vPrefix
 			=	i_vType
 		>
-	constexpr inline
-	Layout::Config auto
+	Layout::DataMemberConfig constexpr inline
 		PrefixedLayoutConfig
-	=	Layout::PrefixV
-		<	i_vPrefix
-		>
-	|	LayoutConfig
-		<	i_vType
-		>
+	=	Layout::InfixLayoutConfig
+		(	Meta::V<LayoutConfig<i_vType>>
+		,	ID::MakeV<ID::Extend, i_vPrefix>
+		,	ID::MakeV<ID::Extend, "">
+		)
 	;
 
 	/// uses the LayoutConfig mapped to the given literal and suffixes it with that literal
@@ -51,16 +49,41 @@ export namespace
 				i_vSuffix
 			=	i_vType
 		>
-	constexpr inline
-	Layout::Config auto
+	Layout::DataMemberConfig constexpr inline
 		SuffixedLayoutConfig
-	=	LayoutConfig
-		<	i_vType
-		>
-	|	Layout::SuffixV
-		<	i_vSuffix
-		>
+	=	Layout::InfixLayoutConfig
+		(	Meta::V<LayoutConfig<i_vType>>
+		,	ID::MakeV<ID::Extend, "">
+		,	ID::MakeV<ID::Extend, i_vSuffix>
+		)
 	;
+
+	[[nodiscard]]
+	auto constexpr
+		CreateLayout
+		(	ID::TypeInstance auto
+				i_vTypeID
+		,	PackTemplate::TypeInstance auto
+ 				i_vSplitTemplate
+		)
+	{
+		auto constexpr
+			vConfig
+		=	LayoutConfig
+			<	i_vTypeID
+			.	RawArray
+			>
+		;
+
+		return
+		Layout::CreateLayout
+		(	i_vSplitTemplate
+		,	Meta::V
+			<	vConfig
+			>
+		);
+	}
+
 
 	/// the type mapped to the string literal by LayoutInfo
 	template
@@ -69,18 +92,14 @@ export namespace
 		>
 	using
 		CreateLayoutType
-	=	typename decltype
-		(	Layout::CreateLayout
-			(	Meta::Template
+	=	Meta::TypeEntity
+		<	CreateLayout
+			(	t_tTypeID{}
+			,	Meta::Template
 				<	Layout::Fork
 				>()
-			,	LayoutConfig
-				<	t_tTypeID
-					::	RawArray
-				>
 			)
-		)
-	::	Entity
+		>
 	;
 
 	/// customization point for specifying layout types

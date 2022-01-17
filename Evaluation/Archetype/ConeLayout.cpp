@@ -2,8 +2,6 @@ export module Evaluation.Archetype.Cone.Layout;
 
 export import Evaluation.Shared;
 export import Evaluation.Archetype.BasicBody;
-export import Evaluation.Archetype.Ellipse.Layout;
-export import Evaluation.Archetype.Circle.Layout;
 
 export namespace
 	Archetype
@@ -13,21 +11,10 @@ export namespace
 		LayoutConfig
 		<	"Cone"
 		>
-	=	LayoutConfig
-		<	"BasicBody"
-		>
-	-	(	LayoutConfig
-			<	"Ellipse"
-			>
-		-	LayoutConfig
-			<	"Circle"
-			>
-		)
-	+	(	LayoutConfig
-			<	"Circle"
-			>
-		-	LayoutConfig
-			<	"Ellipse"
+	=	LayoutConfig<"BasicBody">
+		(	Layout::Alias
+			<	"Height"
+			,	"Width"
 			>
 		)
 	+	Layout::InfoV

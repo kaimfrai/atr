@@ -1,5 +1,6 @@
 export module Layout.DataMember;
 
+export import Meta.Value;
 export import Layout.Initializer;
 export import ID.Data;
 export import Std;
@@ -11,6 +12,8 @@ export import Meta.TypeInfo;
 export import Meta.ValueInfo;
 export import Std.Concepts;
 export import Std.Size;
+
+export import Std;
 
 export namespace
 	Layout
@@ -71,287 +74,520 @@ export namespace
 		{	return t_tValue{};	}
 	};
 
-	/// distinct TypeInfo for DataMembers
+	struct
+		DataMemberInfo
+	{
+		Meta::EraseTypeToken
+			Type
+		;
+
+		Meta::Value<char const[]>
+			Name
+		;
+
+		friend auto constexpr
+		(	operator<=>
+		)	(	DataMemberInfo const
+				&	i_rLeft
+			,	DataMemberInfo const
+				&	i_rRight
+			)
+		->	::std::strong_ordering
+		{
+			if	(i_rLeft.Type == i_rRight.Type)
+				return i_rLeft.Name <=> i_rRight.Name;
+			else
+				return
+					//	greater alignment means ordered earlier
+					i_rLeft.Type->Alignment < i_rRight.Type->Alignment
+				?	::std::strong_ordering::greater
+				:	::std::strong_ordering::less
+				;
+		}
+	};
+
 	template
-		<	ID::DataInstance
-				t_tName
+		<	Meta::USize
+				t_nMemberCount
+		>
+	struct
+		DataMemberConfig
+	{
+		static auto constexpr
+		(	size
+		)	()
+		->	Meta::USize
+		{	return t_nMemberCount;	}
+
+		DataMemberInfo
+			DataMembers
+		[	t_nMemberCount
+		];
+
+		auto constexpr
+		(	operator[]
+		)	(	Meta::USize
+					i_nIndex
+			)	&
+		->	DataMemberInfo&
+		{
+			if	(i_nIndex >= t_nMemberCount)
+				throw "Index out of bounds!";
+			return DataMembers[i_nIndex];
+		}
+
+		auto constexpr
+		(	operator[]
+		)	(	Meta::USize
+					i_nIndex
+			)	const&
+		->	DataMemberInfo const&
+		{
+			if	(i_nIndex >= t_nMemberCount)
+				throw "Index out of bounds!";
+			return DataMembers[i_nIndex];
+		}
+
+		auto constexpr
+		(	operator()
+		)	(	::std::initializer_list<DataMemberInfo>
+					i_vExchangeList
+			)	const
+		->	DataMemberConfig
+		{
+			DataMemberConfig
+				vCopy
+			=	*this
+			;
+
+			for	(	DataMemberInfo const
+					&	rExchange
+				:	i_vExchangeList
+				)
+			{
+				auto const
+					vExchangePosition
+				=	::std::find_if
+					(	begin(vCopy)
+					,	end(vCopy)
+					,	[	vName = rExchange.Name
+						]	(	DataMemberInfo const
+								&	i_rInfo
+						)
+						{	return i_rInfo.Name == vName;	}
+					)
+				;
+				if	(vExchangePosition == end(vCopy))
+					throw "Cannot exchange non-existing member!";
+
+				vExchangePosition->Type = rExchange.Type;
+			}
+
+			::std::sort(begin(vCopy), end(vCopy));
+
+			return vCopy;
+		}
+
+		auto constexpr
+		(	operator()
+		)	(	DataMemberInfo const
+				&	i_rExchange
+			)	const
+		->	DataMemberConfig
+		{	return operator()({i_rExchange});	}
+
+		friend auto constexpr
+		(	begin
+		)	(	DataMemberConfig
+				&	i_rConfig
+			)
+		->	DataMemberInfo*
+		{	return i_rConfig.DataMembers;	}
+
+		friend auto constexpr
+		(	begin
+		)	(	DataMemberConfig const
+				&	i_rConfig
+			)
+		->	DataMemberInfo const*
+		{	return i_rConfig.DataMembers;	}
+
+		friend auto constexpr
+		(	end
+		)	(	DataMemberConfig
+				&	i_rConfig
+			)
+		->	DataMemberInfo*
+		{	return i_rConfig.DataMembers + t_nMemberCount;	}
+
+		friend auto constexpr
+		(	end
+		)	(	DataMemberConfig const
+				&	i_rConfig
+			)
+		->	DataMemberInfo const*
+		{	return i_rConfig.DataMembers + t_nMemberCount;	}
+
+	private:
+		constexpr DataMemberConfig() = default;
+		template
+			<	Meta::USize
+					t_nLeft
+			,	Meta::USize
+					t_nRight
+			>
+		friend auto constexpr
+		(	operator +
+		)	(	DataMemberConfig<t_nLeft> const&
+			,	DataMemberConfig<t_nRight> const&
+			)
+		->	DataMemberConfig
+			<	t_nLeft
+			+	t_nRight
+			>
+		;
+
+		template
+			<	Meta::USize
+					t_nLeft
+			,	Meta::USize
+					t_nRight
+			>
+		friend auto constexpr
+		(	operator -
+		)	(	DataMemberConfig<t_nLeft> const&
+			,	DataMemberConfig<t_nRight> const&
+			)
+		->	DataMemberConfig
+			<	t_nLeft
+			-	t_nRight
+			>
+		;
+	};
+
+	template
+		<>
+	struct
+		DataMemberConfig
+		<	0uz
+		>
+	{
+		static auto constexpr
+		(	size
+		)	()
+		->	Meta::USize
+		{	return 0uz;	}
+
+		friend auto constexpr
+		(	begin
+		)	(	DataMemberConfig
+			)
+		->	DataMemberInfo const*
+		{	return nullptr;	}
+
+		friend auto constexpr
+		(	end
+		)	(	DataMemberConfig
+			)
+		->	DataMemberInfo const*
+		{	return nullptr;	}
+	};
+
+	template
+		<>
+	struct
+		DataMemberConfig
+		<	1uz
+		>
+	{
+		static auto constexpr
+		(	size
+		)	()
+		->	Meta::USize
+		{	return 1uz;	}
+
+		DataMemberInfo
+			DataMember
+		;
+
+		template
+			<	typename
+					t_tEntity
+			>
+		explicit constexpr
+		(	DataMemberConfig
+		)	(	Meta::TypeToken<t_tEntity>
+					i_vType
+			,	ID::DataInstance auto
+					i_vName
+			)
+		:	DataMember
+			{	.Type = i_vType
+			,	.Name = i_vName.RawArray
+			}
+		{}
+
+		auto constexpr
+		(	operator[]
+		)	(	Meta::USize
+					i_nIndex
+			)	&
+		->	DataMemberInfo&
+		{
+			if	(i_nIndex > 0uz)
+				throw "Index out of bounds!";
+			return DataMember;
+		}
+
+		auto constexpr
+		(	operator[]
+		)	(	Meta::USize
+					i_nIndex
+			)	const&
+		->	DataMemberInfo const&
+		{
+			if	(i_nIndex > 0uz)
+				throw "Index out of bounds!";
+			return DataMember;
+		}
+
+		auto constexpr
+		(	operator()
+		)	(	DataMemberInfo const
+				&	i_rExchange
+			)	const
+		->	DataMemberConfig
+		{
+			DataMemberConfig
+				vCopy
+			=	*this
+			;
+
+			if	(vCopy.DataMember.Name != i_rExchange.Name)
+				throw "Cannot exchange non-existing member!";
+
+			vCopy.DataMember.Type = i_rExchange.Type;
+			return vCopy;
+		}
+
+		friend auto constexpr
+		(	begin
+		)	(	DataMemberConfig
+				&	i_rConfig
+			)
+		->	DataMemberInfo*
+		{	return &i_rConfig.DataMember;	}
+
+		friend auto constexpr
+		(	begin
+		)	(	DataMemberConfig const
+				&	i_rConfig
+			)
+		->	DataMemberInfo const*
+		{	return &i_rConfig.DataMember;	}
+
+		friend auto constexpr
+		(	end
+		)	(	DataMemberConfig
+				&	i_rConfig
+			)
+		->	DataMemberInfo*
+		{	return begin(i_rConfig) + 1z;	}
+
+		friend auto constexpr
+		(	end
+		)	(	DataMemberConfig const
+				&	i_rConfig
+			)
+		->	DataMemberInfo const*
+		{	return begin(i_rConfig) + 1z;	}
+
+	private:
+		constexpr DataMemberConfig() = default;
+
+		template
+			<	Meta::USize
+					t_nLeft
+			,	Meta::USize
+					t_nRight
+			>
+		friend auto constexpr
+		(	operator +
+		)	(	DataMemberConfig<t_nLeft> const&
+			,	DataMemberConfig<t_nRight> const&
+			)
+		->	DataMemberConfig
+			<	t_nLeft
+			+	t_nRight
+			>
+		;
+
+		template
+			<	Meta::USize
+					t_nLeft
+			,	Meta::USize
+					t_nRight
+			>
+		friend auto constexpr
+		(	operator -
+		)	(	DataMemberConfig<t_nLeft> const&
+			,	DataMemberConfig<t_nRight> const&
+			)
+		->	DataMemberConfig
+			<	t_nLeft
+			-	t_nRight
+			>
+		;
+	};
+
+	template
+		<	Meta::USize
+				t_nLeft
+		,	Meta::USize
+				t_nRight
+		>
+	auto constexpr
+	(	operator +
+	)	(	DataMemberConfig<t_nLeft> const
+			&	i_rLeft
+		,	DataMemberConfig<t_nRight> const
+			&	i_rRight
+		)
+	->	DataMemberConfig
+		<	t_nLeft
+		+	t_nRight
+		>
+	{
+		if	constexpr
+			(	t_nLeft
+			==	0uz
+			)
+			return i_rRight;
+		else
+		if	constexpr
+			(	t_nRight
+			==	0uz
+			)
+			return i_rLeft;
+		else
+		{
+			DataMemberConfig
+				<	t_nLeft
+				+	t_nRight
+				>
+				vResult
+			;
+
+			auto const
+				vLast
+			=	::std::set_union
+				(	begin(i_rLeft)
+				,	end(i_rLeft)
+				,	begin(i_rRight)
+				,	end(i_rRight)
+				,	begin(vResult)
+				)
+			;
+
+			if	(vLast != end(vResult))
+				throw "Cannot merge DataMemberConfig with identical members!";
+			return vResult;
+		}
+	}
+
+	template
+		<	Meta::USize
+				t_nLeft
+		,	Meta::USize
+				t_nRight
+		>
+	auto constexpr
+	(	operator -
+	)	(	DataMemberConfig<t_nLeft> const
+			&	i_rLeft
+		,	DataMemberConfig<t_nRight> const
+			&	i_rRight
+		)
+	->	DataMemberConfig
+		<	t_nLeft
+		-	t_nRight
+		>
+	{
+		static_assert
+		(	t_nLeft
+		>=	t_nRight
+		,	"Cannot subtract more DataMemberInfos than already exist!"
+		);
+		if	constexpr
+			(	t_nRight
+			==	0uz
+			)
+			return i_rLeft;
+		else
+		if	constexpr
+			(	t_nLeft
+			==	t_nRight
+			)
+			return DataMemberConfig<0uz>{};
+		else
+		{
+			if	(	not
+					::std::includes
+					(	begin(i_rLeft)
+					,	end(i_rLeft)
+					,	begin(i_rRight)
+					,	end(i_rRight)
+					)
+				)
+				throw "Cannot subtract DataMemberInfos that are not contained!";
+
+			DataMemberConfig
+				<	t_nLeft
+				-	t_nRight
+				>
+				vResult
+			;
+
+			::std::set_difference
+			(	begin(i_rLeft)
+			,	end(i_rLeft)
+			,	begin(i_rRight)
+			,	end(i_rRight)
+			,	begin(vResult)
+			);
+			return vResult;
+		}
+	}
+
+	template
+		<	ID::StringLiteral
+				t_vName
 		,	typename
 				t_tValue
 		>
-	struct
-		DataMemberInfo
-	:	Meta::TypeToken
-		<	DataMember
-			<	t_tName
-			,	t_tValue
-			>
-		>
-	{
-		static Stateless::Type auto constexpr
-			Name
-		=	Stateless::Copy<t_tName>
-		;
-		static Stateless::Type auto constexpr
-			ValueType
-		=	Meta::Type<t_tValue>
-		;
-		static Stateless::Type auto constexpr
-			BitAlignment
-		=	Meta::V<alignof(t_tValue) * 8uz>
-		;
-
-		/// default constructor
-		constexpr
-			DataMemberInfo
-			()
-		=	default
-		;
-
-		/// conversion from type info
-		constexpr
-			DataMemberInfo
-			(	Meta::TypeToken
-				<	DataMember
-					<	t_tName
-					,	t_tValue
-					>
-				>
-			)
-		{}
-
-		/// deduce template from arguments
-		explicit constexpr
-			DataMemberInfo
-			(	t_tName
-			,	Meta::TypeToken
-				<	t_tValue
-				>
-			)
-		{}
-	};
-
-	///	constrains types to be of template DataMember
-	template
-		<	typename
-				t_tDataMemberInstance
-		>
-	concept
-		DataMemberInstance
-	=	Std::TypePackInstanceOf
-		<	t_tDataMemberInstance
-		,	DataMember
-		>
-	;
-
-	/// function object for accessing DataMemberInstance
-	auto constexpr
-		IsDataMemberInstance
-	=	[]	<	typename
-					t_tDataMember
-			>()
-		{	return
-				DataMemberInstance
-				<	t_tDataMember
-				>
-			;
+	DataMemberConfig<1uz> constexpr inline
+		InfoV
+	=	DataMemberConfig<1uz>
+		{	Meta::Type<t_tValue>
+		,	ID::DataV<t_vName>
 		}
 	;
 
-	/// a pack of DataMember
-	template
-		<	typename
-				t_tDataMemberPack
-		>
-	concept
-		DataMemberPackInstance
-	=	Pack::TypeInstance
-		<	t_tDataMemberPack
-		>
-	and	Pack::All
-		(	Stateless::Copy
-			<	t_tDataMemberPack
-			>
-		,	Meta::StatelessValueInfo
-			{	IsDataMemberInstance
-			}
-		)
-	;
-
-	/// a single info object of DataMember
-	template
-		<	typename
-				t_tDataMemberInfo
-		>
-	concept
-		DataMemberInfoInstance
-	=	//	implicitly a pack of 1
-		DataMemberPackInstance
-		<	t_tDataMemberInfo
-		>
-	and	Meta::TypeInstance
-		<	t_tDataMemberInfo
-		>
-	;
-
-	///	a single info object or a pack of DataMember
-	template
-		<	typename
-				t_tDataMemberInfoInstance
-		>
-	concept
-		Config
-	=	DataMemberInfoInstance
-		<	t_tDataMemberInfoInstance
-		>
-	or	DataMemberPackInstance
-		<	t_tDataMemberInfoInstance
-		>
-	;
-
-	template
-		<	DataMemberInstance
-			...	t_tpDataMember
-		>
-	struct
-		DataMemberPack
-	:	Stateless::Tuple
-		<	decltype(
-				DataMemberInfo
-				{	std::declval
-					<	t_tpDataMember
-					>()
-				}
-			)
-			...
-		>
-	{};
-
-	/// alias for and info type of a DataMember
-	template
-		<	ID::StringLiteral
-				t_vDataID
-		,	typename
-				t_tValue
-		>
-	using
-		InfoT
-	=	DataMemberInfo
-		<	ID::DataT<t_vDataID>
-		,	t_tValue
-		>
-	;
-
-	/// alias for and info type of a DataMember
-	template
-		<	ID::StringLiteral
-				t_vDataID
-		,	typename
-				t_tValue
-		>
-	DataMemberInfoInstance auto constexpr
-		InfoV
-	=	Stateless::Copy
-		<	InfoT
-			<	t_vDataID
-			,	t_tValue
-			>
-		>
-	;
-
-	/// creates an member alias
 	template
 		<	ID::StringLiteral
 				t_vOriginID
 		,	ID::StringLiteral
 				t_vTargetID
 		>
-	DataMemberInfoInstance auto constexpr
+	DataMemberInfo constexpr inline
 		Alias
-	=	InfoV
-		<	t_vOriginID
-		,	ID::DataT
-			<	t_vTargetID
+	=	DataMemberInfo
+		{	Meta::Type
+			<	ID::DataT
+				<	t_vTargetID
+				>
 			>
-		>
-	;
-
-	/// extracts a ID::DataInstance value from a DataMemberInfo
-	Stateless::Type auto constexpr
-		DataMemberName
-	=	[]	(	DataMemberInfoInstance auto
-					i_vDataMemberInfo
-			)
-		->	ID::DataInstance auto
-		{	return
-				DataMemberInfo
-				{	i_vDataMemberInfo
-				}.	Name
-			;
+		,	ID::DataT<t_vOriginID>::RawArray
 		}
 	;
-
-	/// extracts the TypeInfo of the value type from a DataMemberInfo
-	Stateless::Type auto constexpr
-		DataMemberValueType
-	=	[]	(	DataMemberInfoInstance auto
-					i_vDataMemberInfo
-			)
-		->	Meta::TypeInstance auto
-		{	return
-				DataMemberInfo
-				{	i_vDataMemberInfo
-				}.	ValueType
-			;
-		}
-	;
-
-	/// extracts the BitAlignmentInfoType from a DataMemberInfo value
-	Stateless::Type auto constexpr
-		DataMemberBitAlignment
-	=	[]	(	DataMemberInfoInstance auto
-					i_vDataMemberInfo
-			)
-		->	Meta::SizeInfo auto
-		{	return
-				DataMemberInfo
-				{	i_vDataMemberInfo
-				}.	BitAlignment
-			;
-		}
-	;
-
-	/// concatenates two configs
-	Config auto constexpr
-		operator+
-		(	Config auto
-				i_vLeft
-		,	Config auto
-				i_vRight
-		)
-	{	return
-			Pack::Concat
-			(	i_vLeft
-			,	i_vRight
-			)
-		;
-	}
-
-	///	trims the right config from the left
-	Config auto constexpr
-		operator-
-		(	Config auto
-				i_vLeft
-		,	Config auto
-				i_vRight
-		)
-	{	return
-			Pack::FilterNegative
-			(	i_vLeft
-			,	Stateless::FrontBinding
-				{	Pack::Contains
-				,	i_vRight
-				}
-			)
-		;
-	}
 }
