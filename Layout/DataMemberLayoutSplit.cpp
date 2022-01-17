@@ -70,8 +70,7 @@ export namespace
 			...	i_vpDataMember
 		)
 	{
-		DataMemberPackInstance auto
-		const
+		DataMemberPackInstance auto const
 			Pack
 		=	Pack::Concat
 			(	i_vpDataMember
@@ -79,8 +78,7 @@ export namespace
 			)
 		;
 
-		Pack::ValueInstance auto
-		const
+		Pack::ValueInstance auto const
 			AlignmentPack
 		=	Pack::Transform
 			(	Pack
@@ -88,8 +86,7 @@ export namespace
 			)
 		;
 
-		Meta::ValueInstance auto
-		const
+		Meta::ValueInstance auto const
 			MinimumAlignment
 		=	Pack::PickMinimum
 			(	AlignmentPack
@@ -173,8 +170,7 @@ export namespace
 			...	i_vpDataMember
 		)
 	{
-		DataMemberPackInstance auto
-		const
+		DataMemberPackInstance auto const
 			Pack
 		=	Pack::Sort
 			(	Pack::Concat
@@ -187,16 +183,14 @@ export namespace
 			)
 		;
 
-		Meta::SizeInfo auto
-		const
+		Meta::SizeInfo auto const
 			PackSizeInfo
 		=	Pack::Size
 			(	Pack
 			)
 		;
 
-		Meta::SizeInfo auto
-		const
+		Meta::SizeInfo auto const
 			HighestBitInfo
 		=	Meta::V
 			<	std::bit_floor
@@ -207,8 +201,7 @@ export namespace
 			>
 		;
 
-		DataMemberPackInstance auto
-		const
+		DataMemberPackInstance auto const
 			LeadingSubPack
 		=	Pack::SubPack
 				(	Pack
@@ -217,8 +210,7 @@ export namespace
 				)
 		;
 
-		DataMemberPackInstance auto
-		const
+		DataMemberPackInstance auto const
 			TrailingSubPack
 		=	Pack::SubPack
 			(	Pack

@@ -48,8 +48,8 @@ export namespace
 	{
 		using
 			MemberType
-		=	decltype(
-				i_rObject
+		=	decltype
+			(	i_rObject
 				[	ID::DataV
 					<	t_vDataMember
 					>
@@ -57,8 +57,7 @@ export namespace
 			)
 		;
 
-		constexpr
-		auto
+		auto constexpr
 			fResolveAlias
 		=	[]
 			{

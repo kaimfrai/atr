@@ -18,8 +18,7 @@ export namespace
 	template
 		<	ID::StringLiteral
 		>
-	constexpr inline
-	Layout::Config auto
+	Layout::Config auto constexpr inline
 		LayoutConfig
 	=	Layout::DataMemberPack
 		<>{}

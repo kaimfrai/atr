@@ -25,24 +25,15 @@ export namespace
 					t_tName
 			,	Std::Object
 					t_tValue
-			,	DataMemberInitializerFor
-				<	t_tValue
-				>	t_tDefaultInitializer
-			,	BitAlignmentType
-					t_tBitAlignmentInfo
 			,	char
 				...	t_npDigit
 			>
-		static
-		constexpr
-		auto
+		static auto constexpr
 			AppendedName
 			(	Meta::TypeInfo
 				<	DataMember
 					<	t_tName
 					,	t_tValue
-					,	t_tDefaultInitializer
-					,	t_tBitAlignmentInfo
 					>
 				>
 			,	ID::Decimal
@@ -64,15 +55,12 @@ export namespace
 						>{}
 					)
 				,	t_tValue
-				,	t_tDefaultInitializer
-				,	t_tBitAlignmentInfo
 				>{}
 			;
 		}
 
 		[[nodiscard]]
-		constexpr
-		auto
+		auto constexpr
 			operator()
 			(	Pack::TypeInstance auto
 					i_vNewPack
@@ -100,8 +88,7 @@ export namespace
 		<	char
 			...	t_npDigit
 		>
-	constexpr
-	Config auto
+	Config auto constexpr
 		operator*
 		(	Config auto
 				i_vBase

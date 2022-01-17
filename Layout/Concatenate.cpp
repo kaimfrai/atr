@@ -122,12 +122,6 @@ export namespace
 				,	DataMemberValueType
 					(	i_vDataMember
 					)
-				,	DataMemberDefaultInitializer
-					(	i_vDataMember
-					)
-				,	DataMemberBitAlignment
-					(	i_vDataMember
-					)
 				}
 			;
 		}
