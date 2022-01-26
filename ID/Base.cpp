@@ -1,26 +1,14 @@
 export module ID.Base;
 
-export import ID.Make;
+export import Pack.Value;
 export import ID.StringLiteral;
 export import Std;
-
-export import Meta.Pack;
-export import Pack.Map;
-export import Pack.Size;
-export import Pack.Sequence;
-export import Std.Concepts;
-export import Meta.Integer;
-
-export import Fold.Comma;;
-export import Stateless.Binding;
-export import Stateless.Tuple;
 
 export namespace
 	ID
 {
 	/// serves as a base class for all identifer types
 	/// provides conversions to arrays as well as begin and end functions
-	/// makes sure the sequence ends with \0
 	template
 		<	template
 				<	char
@@ -36,19 +24,8 @@ export namespace
 	:	Pack::Value
 		<	t_vpString
 			...
-		,	//	terminating null character
-			'\0'
 		>
 	{
-		/// the sequence of characters without trailing \0
-		static Pack::SequenceInstance auto constexpr
-			CharacterSequence
-		=	Meta::Pack
-			<	t_vpString
-				...
-			>()
-		;
-
 		static char constexpr
 			RawArray
 			[]
@@ -57,6 +34,11 @@ export namespace
 		,	'\0'
 		};
 
+		static ::std::string_view constexpr
+			StringView
+		=	RawArray
+		;
+
 		static StringLiteral constexpr
 			AsStringLiteral
 		{	RawArray
@@ -64,57 +46,10 @@ export namespace
 
 		constexpr
 			operator
-			StringLiteral
-			<	char
-				[	sizeof...(
-						t_vpString
-					)
-				+	1uz
-				]
-			>
+			StringLiteral<sizeof...(t_vpString) + 1uz>
 			()	const
 		{	return
 				AsStringLiteral
-			;
-		}
-
-		/// checks if the identifer starts with the given string
-		template
-			<	StringLiteral
-					t_vStartString
-			>
-		static auto constexpr
-			StartsWith
-			()
-		->	bool
-		{	return
-				Pack::StartsWith
-				(	CharacterSequence
-				,	MakeV
-					<	Pack::Value
-					,	t_vStartString
-					>
-				)
-			;
-		}
-
-		/// checks if the identifer ends with the given string
-		template
-			<	StringLiteral
-					t_vStartString
-			>
-		static auto constexpr
-			EndsWith
-				()
-		->	bool
-		{	return
-				Pack::EndsWith
-				(	CharacterSequence
-				,	MakeV
-					<	Pack::Value
-					,	t_vStartString
-					>
-				)
 			;
 		}
 	};
@@ -137,29 +72,22 @@ export namespace
 				...
 			>
 		)
-	->	StringLiteral
-		<	char
-			[	sizeof...(
-					t_tpChar
-				)
-			+	1uz
-			]
-		>
+	->	StringLiteral<sizeof...(t_tpChar) + 1uz>
 	;
 }
 
 static_assert
-	(	ID::Base<Pack::Value, 'a', 'b', 'c'>
-		::	template
-			StartsWith<"ab">
-			()
-	)
-;
+(	ID::Base<Pack::Value, 'a', 'b', 'c'>
+	::	StringView
+	.	starts_with
+		(	"ab"
+		)
+);
 
 static_assert
-	(	ID::Base<Pack::Value, 'a', 'b', 'c'>
-		::	template
-			EndsWith<"bc">
-			()
-	)
-;
+(	ID::Base<Pack::Value, 'a', 'b', 'c'>
+	::	StringView
+	.	ends_with
+		(	"bc"
+		)
+);

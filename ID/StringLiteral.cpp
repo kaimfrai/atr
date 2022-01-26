@@ -10,33 +10,21 @@ export namespace
 {
 	/// converts a string literal into an object that can be dispatched into separate characters
 	template
-		<	Std::BoundedArray
-				t_tArray
+		<	Meta::USize
+				t_nExtent
 		>
 	struct
 		StringLiteral
 	{
-		/// the length or the array including the trailing '\0'
-		static Meta::USize constexpr
-			ArrayExtent
-		=	std::extent_v
-			<	t_tArray
-			>
-		;
-
-		//	the length of the string without the trailing '\0'
-		static Meta::USize constexpr
-			CharacterCount
-		=	ArrayExtent
-		-	1uz
-		;
-
-		static std::make_index_sequence<CharacterCount> constexpr
+		static Meta::USize constexpr Extent = t_nExtent;
+		static std::make_index_sequence<t_nExtent> constexpr
 			CharacterIndexSequence
 		{};
 
-		t_tArray
+		char
 			String
+			[	t_nExtent
+			]
 		;
 
 		/// construct from raw char array
@@ -46,7 +34,7 @@ export namespace
 			>
 		requires
 			(	sizeof...(t_npIndex)
-			==	CharacterCount
+			==	t_nExtent
 			)
 		constexpr
 			StringLiteral
@@ -62,7 +50,6 @@ export namespace
 				[	t_npIndex
 				]
 				...
-			,	'\0'
 			}
 		{}
 
@@ -71,12 +58,11 @@ export namespace
 			StringLiteral
 			(	char const
 				(&	i_rString
-				)[	ArrayExtent
-				]
+				)	[	t_nExtent
+					]
 			)
 		:	StringLiteral
-			{	+
-				i_rString
+			{	+i_rString
 			,	CharacterIndexSequence
 			}
 		{}
@@ -99,22 +85,17 @@ export namespace
 
 	/// construct from array
 	template
-		<	Std::Integral
-				t_tChar
-		,	Meta::USize
+		<	Meta::USize
 				t_nExtent
 		>
 		StringLiteral
-		(	t_tChar
-			const
+		(	char const
 			(&
-			)[	t_nExtent
-			]
+			)	[	t_nExtent
+				]
 		)
 	->	StringLiteral
-		<	t_tChar
-			[	t_nExtent
-			]
+		<	t_nExtent
 		>
 	;
 
@@ -124,7 +105,7 @@ export namespace
 		>
 	concept
 		StringLiteralInstance
-	=	Std::TypePackInstanceOf
+	=	Std::ValuePackInstanceOf
 		<	t_tStringLiteral
 		,	StringLiteral
 		>
@@ -139,7 +120,7 @@ export namespace
 	=	StringLiteralInstance
 		<	t_tStringLiteral
 		>
-	or	Std::ConvertibleToTypePackInstance
+	or	Std::ConvertibleToValuePackInstance
 		<	t_tStringLiteral
 		,	ID::StringLiteral
 		>
@@ -150,7 +131,7 @@ export namespace
 static_assert
 (	ID::StringLiteralInstance
 	<	ID::StringLiteral
-		<	char[5]
+		<	5
 		>
 	>
 and	not
@@ -162,7 +143,7 @@ and	not
 static_assert
 (	ID::PseudoStringLiteral
 	<	ID::StringLiteral
-		<	char[5]
+		<	5
 		>
 	>
 and	ID::PseudoStringLiteral

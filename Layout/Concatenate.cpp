@@ -48,10 +48,10 @@ export namespace
 				=	(	i_vPrefix
 					+	ID::DataV
 						<	ID::StringLiteral
-							<	char[t_vConfig[t_npIndex].Name.size() + 1uz]
+							<	t_vConfig[t_npIndex].Name.size() + 1uz
 							>{	t_vConfig[t_npIndex].Name.data()
 							,	::std::make_index_sequence
-								<	t_vConfig[t_npIndex].Name.size()
+								<	t_vConfig[t_npIndex].Name.size() + 1uz
 								>{}
 							}
 						>

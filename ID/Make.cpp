@@ -27,32 +27,26 @@ export namespace
 		Make
 		()
 	{
-		Stateless::Type auto constexpr
-			fIdentifierMaker
-		=	[]	<	Meta::USize
-					...	t_npIndex
-				>(	std::index_sequence
-					<	t_npIndex
-						...
-					>
-				)
-			{	return
-					t_t1Destination
-					<	t_vStringLiteral
-						[	t_npIndex
-						]
-						...
-					>{}
-				;
-			}
-		;
-
 		return
-			fIdentifierMaker
-			(	t_vStringLiteral
-				.	CharacterIndexSequence
+		[]	<	Meta::USize
+				...	t_npIndex
+			>(	std::index_sequence
+				<	t_npIndex
+					...
+				>
 			)
-		;
+		{	return
+				t_t1Destination
+				<	t_vStringLiteral
+					[	t_npIndex
+					]
+					...
+				>{}
+			;
+		}(	std::make_index_sequence
+			<	t_vStringLiteral.Extent - 1uz
+			>{}
+		);
 	}
 
 	/// creates an identifier type

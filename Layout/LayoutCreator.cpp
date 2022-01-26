@@ -121,10 +121,10 @@ export namespace
 			<	Layout::DataMember
 				<	ID::DataT
 					<	ID::StringLiteral
-						<	char[aBegin->Name.size()+1uz]
+						<	aBegin->Name.size() + 1uz
 						>
 						{	aBegin->Name.data()
-						,	::std::make_index_sequence<aBegin->Name.size()>{}
+						,	::std::make_index_sequence<aBegin->Name.size() + 1uz>{}
 						}
 					>
 				,	Meta::RestoreTypeEntity
