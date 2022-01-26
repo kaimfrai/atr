@@ -43,37 +43,7 @@ export namespace
 			AsStringLiteral
 		{	RawArray
 		};
-
-		constexpr
-			operator
-			StringLiteral<sizeof...(t_vpString) + 1uz>
-			()	const
-		{	return
-				AsStringLiteral
-			;
-		}
 	};
-
-	/// construct from value pack
-	template
-		<	template
-				<	char
-					...
-				>
-			typename
-				t_t1Derived
-		,	char
-			...	t_tpChar
-		>
-		StringLiteral
-		(	Base
-			<	t_t1Derived
-			,	t_tpChar
-				...
-			>
-		)
-	->	StringLiteral<sizeof...(t_tpChar) + 1uz>
-	;
 }
 
 static_assert

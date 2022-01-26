@@ -31,11 +31,10 @@ export namespace
 				t_tGetter
 		,	ID::StringLiteral
 				t_vDataMember
-			=	ID::StringLiteral
-				{	"Get"_trim
+			=	(	"Get"_trim
 				-	t_tGetter
 					{}
-				}
+				).AsStringLiteral
 		>
 	auto constexpr
 		MapAddress
