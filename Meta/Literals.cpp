@@ -1,6 +1,6 @@
 export module Meta.Literals;
 
-import Meta.Integer;
+import Meta.Math;
 
 namespace
 	Meta::Literals
