@@ -12,7 +12,7 @@ export module Std.TemplateTraits;
  * types can be checked whether they meet a certain pattern and if so, whether they match a specific template
  */
 
-export import Std.Size;
+export import Meta.Integer;
 
 export import Std;
 
@@ -255,6 +255,22 @@ export namespace
 		>
 	:	std::true_type
 	{};
+
+	/// simply provides the static constant named "Size"
+	/// intended for inheritence
+	template
+		<	Meta::USize
+				t_nValue
+			=	0uz
+		>
+	struct
+		SizeValueType
+	{
+		static auto constexpr
+			Size
+		=	t_nValue
+		;
+	};
 
 	template
 		<	typename
@@ -640,8 +656,7 @@ export namespace
 		<	typename
 				t_tInstance
 		>
-	constexpr
-	USizeType
+	Meta::USize constexpr
 		TemplatePackSize
 	=	/// the value will be 0 if no pattern matched
 		std::max

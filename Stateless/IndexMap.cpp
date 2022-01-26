@@ -6,7 +6,7 @@ export import Stateless.Type;
 export import Std.FunctionTraits;
 export import Std.TemplateConcepts;
 export import Std.Concepts;
-export import Std.Size;
+export import Meta.Integer;
 
 export import Std;
 
@@ -14,7 +14,7 @@ export namespace
 	Stateless
 {
 	template
-		<	Std::USizeType
+		<	Meta::USize
 				t_nIndex
 		>
 	struct
@@ -45,11 +45,10 @@ export namespace
 	};
 
 	template
-		<	Std::USizeType
+		<	Meta::USize
 				t_nIndex
 		>
-	constexpr
-	Type auto
+	Type auto constexpr inline
 		Index
 	=	Copy
 		<	IndexType
@@ -60,7 +59,7 @@ export namespace
 
 	/// maps an index to a stateless type
 	template
-		<	Std::USizeType
+		<	Meta::USize
 				t_nIndex
 		,	Type
 				t_tResult
@@ -76,7 +75,7 @@ export namespace
 	{};
 
 	template
-		<	Std::USizeType
+		<	Meta::USize
 			...	t_npIndex
 		,	Type
 			...	t_tpResult

@@ -1,6 +1,7 @@
 export module Std.TypeTraits;
 
-export import Std.Size;
+export import Meta.Integer;
+export import Meta.Type;
 
 export import Std;
 
@@ -11,108 +12,14 @@ export namespace
 		<	typename
 				t_tAny
 		>
-	constexpr inline
-	auto
-		ByteAlignOf
-	=	std::is_empty_v
-		<	t_tAny
-		>
-	?	0_uz
-	:	std::alignment_of_v
-		<	t_tAny
-		>
-	;
-
-	template
-		<>
-	constexpr inline
-	auto
-		ByteAlignOf
-		<	void
-		>
-	=	0_uz
-	;
-
-	template
-		<	typename
-				t_tAny
-		>
-	constexpr inline
-	auto
-		BitAlignOf
-	=	BitsPerByte
-	*	ByteAlignOf
-		<	t_tAny
-		>
-	;
-
-	template
-		<>
-	constexpr inline
-	auto
-		BitAlignOf
-		<	bool
-		>
-	=	1_uz
-	;
-
-	template
-		<	typename
-				t_tAny
-		>
-	constexpr inline
-	auto
-		ByteSizeOf
-	=	sizeof(
-			t_tAny
-		)
-	;
-
-	template
-		<>
-	constexpr inline
-	auto
-		ByteSizeOf
-		<	void
-		>
-	=	0_uz
-	;
-
-	template
-		<	typename
-				t_tAny
-		>
 	using
 		AsByteArrayType
 	=	std::array
 		<	std::byte
-		,	ByteSizeOf
+		,	Meta::ByteSize_Of
 			<	t_tAny
 			>
 		>
-	;
-
-	template
-		<	typename
-				t_tAny
-		>
-	constexpr inline
-	auto
-		BitSizeOf
-	=	BitsPerByte
-	*	ByteSizeOf
-		<	t_tAny
-		>
-	;
-
-	template
-		<>
-	constexpr inline
-	auto
-		BitSizeOf
-		<	bool
-		>
-	=	1_uz
 	;
 
 	template

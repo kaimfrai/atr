@@ -3,21 +3,11 @@ export module Meta.Bit;
 export import Std;
 
 export import Meta.Integer;
-export import Meta.Concept.Category;
+export import Meta.Type;
 
 export namespace
 	Meta
 {
-	template
-		<	ProtoValue
-				t_tAny
-		>
-	USize constexpr inline
-		BitSize_Of
-	=	CHAR_BIT
-	*	sizeof(t_tAny)
-	;
-
 	auto constexpr
 	(	TestBit
 	)	(	USize

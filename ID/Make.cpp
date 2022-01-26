@@ -25,8 +25,7 @@ export namespace
 		,	StringLiteral
 				t_vStringLiteral
 		>
-	constexpr
-	Pack::SequenceInstance auto
+	Pack::SequenceInstance auto constexpr
 		Make
 		()
 	{
@@ -38,10 +37,9 @@ export namespace
 			)::	CharType
 		;
 
-		constexpr
-		Stateless::Type auto
+		Stateless::Type auto constexpr
 			fIdentifierMaker
-		=	[]	<	Std::USizeType
+		=	[]	<	Meta::USize
 					...	t_npIndex
 				>(	std::index_sequence
 					<	t_npIndex

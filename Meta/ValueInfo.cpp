@@ -7,7 +7,7 @@ export import Stateless.Type;
 export import Std.FunctionTraits;
 export import Std.Concepts;
 
-export import Std.Size;
+export import Meta.Integer;
 
 export namespace
 	Meta
@@ -241,7 +241,7 @@ export namespace
 		>
 	;
 
-	///	shortcut for frequently used ValueInfo of USizeType
+	///	shortcut for frequently used ValueInfo of USize
 	template
 		<	typename
 				t_tValueInfo
@@ -250,7 +250,7 @@ export namespace
 		SizeInfo
 	=	ValueInfoOf
 		<	t_tValueInfo
-		,	Std::USizeType
+		,	Meta::USize
 		>
 	;
 

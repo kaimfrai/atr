@@ -11,7 +11,7 @@ export import Pack.Type;
 export import Meta.TypeInfo;
 export import Meta.ValueInfo;
 export import Std.Concepts;
-export import Std.Size;
+export import Meta.Integer;
 
 export import Std;
 

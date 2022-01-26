@@ -24,12 +24,18 @@ export namespace
 				t_tEntity
 		>
 	USize constexpr inline
-		ByteSize_Of
+		BitSize_Of
 	=	[]{	if	constexpr
+				(	::std::is_const_v<t_tEntity>
+				or	::std::is_volatile_v<t_tEntity>
+				)
+				return BitSize_Of<::std::remove_cv_t<t_tEntity>>;
+			else
+			if	constexpr
 				(	::std::is_reference_v<t_tEntity>
 				or	::std::is_unbounded_array_v<t_tEntity>
 				)
-				return sizeof(void*);
+				return CHAR_BIT * sizeof(void*);
 			else
 			if	constexpr
 				(	requires
@@ -39,11 +45,30 @@ export namespace
 				return
 					::std::is_empty_v<t_tEntity>
 				?	0uz
-				:	sizeof(t_tEntity)
+				:	CHAR_BIT * sizeof(t_tEntity)
 				;
 			else
 				return 0uz;
 		}()
+	;
+
+	template
+		<>
+	USize constexpr inline
+		BitSize_Of<bool>
+	=	1uz
+	;
+
+	template
+		<	typename
+				t_tEntity
+		>
+	USize constexpr inline
+		ByteSize_Of
+	=	(	BitSize_Of<t_tEntity>
+		+	(CHAR_BIT - 1uz)
+		)
+	/	CHAR_BIT
 	;
 
 	template

@@ -5,13 +5,13 @@ export import Std;
 export import Pack.Sequence;
 
 export import Std.Concepts;
-export import Std.Size;
+export import Meta.Integer;
 
 export namespace
 	ID
 {
 	template
-		<	Std::SSizeType
+		<	Meta::SSize
 				t_nAddExtent
 			=	0z
 		,	Std::BoundedArray
@@ -58,9 +58,7 @@ export namespace
 		;
 
 		/// the length or the array including the trailing '\0'
-		static
-		constexpr
-		Std::USizeType
+		static Meta::USize constexpr
 			ArrayExtent
 		=	std::extent_v
 			<	t_tArray
@@ -68,18 +66,14 @@ export namespace
 		;
 
 		//	the length of the string without the trailing '\0'
-		static
-		constexpr
-		Std::USizeType
+		static Meta::USize constexpr
 			CharacterCount
 		=	ArrayExtent
 		-	1uz
 		;
 
-		static constexpr
-		std::make_index_sequence
-		<	CharacterCount
-		>	CharacterIndexSequence
+		static std::make_index_sequence<CharacterCount> constexpr
+			CharacterIndexSequence
 		{};
 
 		using
@@ -100,8 +94,7 @@ export namespace
 			(	sizeof...(t_tpChar)
 			==	ArrayExtent
 			)
-		constexpr
-		explicit
+		explicit constexpr
 			StringLiteral
 			(	t_tpChar
 				...	i_vpChar
@@ -114,7 +107,7 @@ export namespace
 
 		/// construct from raw char array
 		template
-			<	std::size_t
+			<	Meta::USize
 				...	t_npIndex
 			>
 		requires
@@ -248,7 +241,7 @@ export namespace
 		constexpr
 		auto
 			operator[]
-			(	Std::USizeType
+			(	Meta::USize
 					i_nIndex
 			)	const
 		noexcept
@@ -314,7 +307,7 @@ export namespace
 		}
 
 		template
-			<	Std::USizeType
+			<	Meta::USize
 					t_nPrefixExtent
 			>
 		constexpr
@@ -340,7 +333,7 @@ export namespace
 		}
 
 		template
-			<	Std::USizeType
+			<	Meta::USize
 					t_nSuffixExtent
 			>
 		constexpr
@@ -367,7 +360,7 @@ export namespace
 		}
 
 		template
-			<	Std::USizeType
+			<	Meta::USize
 					t_nPrefixExtent
 			>
 		constexpr
@@ -397,7 +390,7 @@ export namespace
 					+	t_nPrefixExtent
 					-	1z
 					,	IndexSequenceFor
-						<	-static_cast<Std::SSizeType>(t_nPrefixExtent)
+						<	-static_cast<Meta::SSize>(t_nPrefixExtent)
 						>(	String
 						)
 					}
@@ -410,7 +403,7 @@ export namespace
 		}
 
 		template
-			<	Std::USizeType
+			<	Meta::USize
 					t_nSuffixExtent
 			>
 		constexpr
@@ -437,7 +430,7 @@ export namespace
 			{	return
 					{	String
 					,	IndexSequenceFor
-						<	-static_cast<Std::SSizeType>(t_nSuffixExtent)
+						<	-static_cast<Meta::SSize>(t_nSuffixExtent)
 						>(	String
 						)
 					}
@@ -451,7 +444,7 @@ export namespace
 		}
 
 		template
-			<	Std::USizeType
+			<	Meta::USize
 					t_nAppendedExtent
 			>
 		friend
@@ -488,7 +481,7 @@ export namespace
 		}
 
 		template
-			<	Std::USizeType
+			<	Meta::USize
 					t_nArrayExtent
 			>
 		friend
@@ -513,7 +506,7 @@ export namespace
 		}
 
 		template
-			<	Std::USizeType
+			<	Meta::USize
 					t_nArraySize
 			>
 		friend
@@ -538,7 +531,7 @@ export namespace
 		}
 
 		template
-			<	Std::USizeType
+			<	Meta::USize
 					t_nArraySize
 			>
 		friend
@@ -563,7 +556,7 @@ export namespace
 		}
 
 		template
-			<	Std::USizeType
+			<	Meta::USize
 					t_nArraySize
 			>
 		friend
@@ -592,7 +585,7 @@ export namespace
 	template
 		<	Std::Integral
 				t_tChar
-		,	Std::USizeType
+		,	Meta::USize
 				t_nExtent
 		>
 		StringLiteral

@@ -8,7 +8,7 @@ export import Pack.Sequence;
 export import Meta.ValueInfo;
 export import Stateless.Tuple;
 export import Std.Concepts;
-export import Std.Size;
+export import Meta.Integer;
 export import Std;
 
 export namespace
@@ -16,7 +16,7 @@ export namespace
 {
 	/// create a sequence of indices with the given length
 	template
-		<	Std::USizeType
+		<	Meta::USize
 				t_nLength
 		>
 	constexpr

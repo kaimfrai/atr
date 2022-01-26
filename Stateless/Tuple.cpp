@@ -6,7 +6,7 @@ export import Stateless.Map;
 
 export import Std.TemplateConcepts;
 export import Std.Concepts;
-export import Std.Size;
+export import Meta.Integer;
 
 export import Std;
 
@@ -27,9 +27,7 @@ export namespace
 		=	Tuple
 		;
 
-		static
-		constexpr
-		Std::USizeType
+		static Meta::USize constexpr
 			ElementCount
 		=	sizeof...(
 				t_tpStateless
@@ -67,7 +65,7 @@ export namespace
 
 		/// returns a stateless object of the type at the given index in a Tuple
 		template
-			<	Std::USizeType
+			<	Meta::USize
 					t_nIndex
 			>
 		[[nodiscard]]
@@ -188,7 +186,7 @@ export namespace
 	template
 		<	typename
 				t_tStatelessTuple
-		,	Std::USizeType
+		,	Meta::USize
 				t_nSize
 		>
 	concept

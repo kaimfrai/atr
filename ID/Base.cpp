@@ -9,7 +9,7 @@ export import Pack.Map;
 export import Pack.Size;
 export import Pack.Sequence;
 export import Std.Concepts;
-export import Std.Size;
+export import Meta.Integer;
 
 export import Fold.Comma;;
 export import Stateless.Binding;

@@ -5,7 +5,7 @@ export module Std.TemplateConcepts;
 
 export import Std.TemplateTraits;
 
-export import Std.Size;
+export import Meta.Integer;
 
 export import Std;
 
@@ -15,7 +15,7 @@ export namespace
 	template
 		<	typename
 				t_tInstance
-		,	USizeType
+		,	Meta::USize
 				t_nSize
 		>
 	concept
@@ -50,7 +50,7 @@ export namespace
 	template
 		<	typename
 				t_tInstance
-		,	USizeType
+		,	Meta::USize
 				t_nSize
 		,	template
 				<	typename
@@ -245,7 +245,7 @@ export namespace
 	template
 		<	typename
 				t_tInstance
-		,	USizeType
+		,	Meta::USize
 				t_nSize
 		,	template
 				<	typename
@@ -409,7 +409,7 @@ export namespace
 	template
 		<	typename
 				t_tInstance
-		,	USizeType
+		,	Meta::USize
 				t_nSize
 		,	template
 				<	typename

@@ -6,7 +6,7 @@ export import Pack.Value;
 export import Meta.ValueInfo;
 
 export import Stateless.Tuple;
-export import Std.Size;
+export import Meta.Integer;
 export import Std.TemplateTraits;
 
 export import Std;
@@ -38,7 +38,7 @@ export namespace
 	template
 		<	typename
 				t_tPack
-		,	Std::USizeType
+		,	Meta::USize
 				t_nSize
 		>
 	concept
@@ -113,8 +113,7 @@ export namespace
 			<	Std::Unqualified
 			>	t_tPack
 		>
-	constexpr
-	Std::USizeType
+	Meta::USize constexpr
 		SizeValue
 	=	Size
 		(	Stateless::Copy

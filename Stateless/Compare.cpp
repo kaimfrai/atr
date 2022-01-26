@@ -4,7 +4,7 @@ export import Stateless.IndexMap;
 export import Stateless.Type;
 
 export import Std.Concepts;
-export import Std.Size;
+export import Meta.Integer;
 export import Std;
 
 export namespace
@@ -137,7 +137,7 @@ export namespace
 
 	/// compares two stateless maps lexicographically
 	template
-		<	Std::USizeType
+		<	Meta::USize
 			...	t_npIndex
 		>
 	[[nodiscard]]

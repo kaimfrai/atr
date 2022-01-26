@@ -422,7 +422,7 @@ export namespace
 
 	///	can be applied to a pack to get the n-th element
 	template
-		<	Std::USizeType
+		<	Meta::USize
 				t_nIndex
 		>
 	struct

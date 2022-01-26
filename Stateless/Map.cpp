@@ -6,7 +6,7 @@ export import Std.TemplateConcepts;
 export import Std.Concepts;
 export import Std.FunctionTraits;
 
-export import Std.Size;
+export import Meta.Integer;
 
 export namespace
 	Stateless
@@ -162,9 +162,7 @@ export namespace
 			...
 		;
 
-		static
-		constexpr
-		Std::USizeType
+		static Meta::USize constexpr
 			MapItemCount
 		=	sizeof...(
 				t_tpMapItem
@@ -250,13 +248,11 @@ export namespace
 			...
 		;
 
-		static
-		constexpr
-		Std::USizeType
+		static Meta::USize constexpr
 			MapItemCount
-			=	sizeof...(
-					t_tpMapItem
-				)
+		=	sizeof...(
+				t_tpMapItem
+			)
 		;
 
 		/// default constructor

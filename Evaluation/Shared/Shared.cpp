@@ -2,7 +2,7 @@ export module Evaluation.Shared;
 
 export import Meta.TypeInfo;
 export import Std;
-export import Std.Size;
+export import Meta.Integer;
 
 export
 {
@@ -104,10 +104,10 @@ export
 	;
 
 	template
-		<	Std::SSizeType
+		<	Meta::SSize
 				t_nNumerator
 			=	1z
-		,	Std::SSizeType
+		,	Meta::SSize
 				t_nDenominator
 			=	1z
 		>
@@ -139,10 +139,10 @@ export
 	};
 
 	template
-		<	Std::SSizeType
+		<	Meta::SSize
 				t_nNumerator
 			=	1z
-		,	Std::SSizeType
+		,	Meta::SSize
 				t_nDenominator
 			=	1z
 		>

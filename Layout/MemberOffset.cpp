@@ -12,7 +12,7 @@ export import Pack.Instance;
 export import Pack.Type;
 export import Meta.ValueInfo;
 export import Std.Concepts;
-export import Std.Size;
+export import Meta.Integer;
 
 export namespace
 	Layout
@@ -21,7 +21,7 @@ export namespace
 	template
 		<	typename
 				t_tMember
-		,	Std::USizeType
+		,	Meta::USize
 				t_nOffset
 		>
 	struct
@@ -89,7 +89,7 @@ export namespace
 	template
 		<	typename
 				t_tMember
-		,	Std::USizeType
+		,	Meta::USize
 				t_nOffset
 		>
 	struct
@@ -148,7 +148,7 @@ export namespace
 	template
 		<	typename
 				t_tMember
-		,	Std::USizeType
+		,	Meta::USize
 				t_nOffset
 		,	Meta::SizeInfo
 				t_tAdditionalOffset
@@ -196,7 +196,7 @@ export namespace
 	template
 		<	typename
 				t_tMember
-		,	Std::USizeType
+		,	Meta::USize
 				t_nOffset
 		>
 	[[nodiscard]]
@@ -355,7 +355,7 @@ export namespace
 			)
 		+	/// offset by the size of the north area
 			Meta::V
-			<	Std::ByteSizeOf
+			<	Meta::ByteSize_Of
 				<	t_tNorthArea
 				>
 			>
