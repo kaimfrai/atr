@@ -172,7 +172,6 @@ export namespace
 		)
 	->	USize
 	{
-
 		bool const
 			bNegative
 		=	(	i_nNumerator

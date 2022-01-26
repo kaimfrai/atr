@@ -2,6 +2,7 @@ export module Evaluation.Shared.MainTemplate;
 
 export import Evaluation.Shared.DataTypes;
 export import Evaluation.Shared.PseudoRandomSequence;
+export import Std;
 
 export
 {
