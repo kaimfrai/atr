@@ -22,9 +22,9 @@ export namespace
 	auto constexpr
 	(	InfixLayoutConfig
 	)	(	Meta::ValueInfo<t_vConfig>
-		,	ID::Extend<char, t_npPrefix...>
+		,	ID::Extend<t_npPrefix...>
 				i_vPrefix
-		,	ID::Extend<char, t_npSuffix...>
+		,	ID::Extend<t_npSuffix...>
 				i_vSuffix
 		)
 	->	decltype(t_vConfig)

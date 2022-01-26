@@ -15,9 +15,7 @@ export namespace
 		,	StringLiteral
 				t_vStart
 		,	template
-				<	typename
-						t_tNestedChar
-				,	t_tNestedChar
+				<	char
 					...
 				>
 			typename
@@ -41,9 +39,7 @@ export namespace
 		,	StringLiteral
 				t_vStart
 		,	template
-				<	typename
-						t_tNestedChar
-				,	t_tNestedChar
+				<	char
 					...
 				>
 			typename
@@ -51,7 +47,7 @@ export namespace
 		>
 	concept
 		Prefix
-	=	PackTemplate::SequenceInstanceOf
+	=	PackTemplate::ValueInstanceOf
 		<	t_tID
 		,	t_t1Sequence
 		>
@@ -69,9 +65,7 @@ export namespace
 		,	StringLiteral
 				t_vStart
 		,	template
-				<	typename
-						t_tNestedChar
-				,	t_tNestedChar
+				<	char
 					...
 				>
 			typename
@@ -79,7 +73,7 @@ export namespace
 		>
 	concept
 		Suffix
-	=	PackTemplate::SequenceInstanceOf
+	=	PackTemplate::ValueInstanceOf
 		<	t_tID
 		,	t_t1Sequence
 		>

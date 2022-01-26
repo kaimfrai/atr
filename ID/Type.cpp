@@ -13,16 +13,13 @@ export namespace
 {
 	/// identifies types
 	template
-		<	Std::Integral
-				t_tChar
-		,	t_tChar
+		<	char
 			...	t_vpString
 		>
 	struct
 		Type
 	:	Base
 		<	Type
-		,	t_tChar
 		,	t_vpString
 			...
 		>
@@ -35,7 +32,7 @@ export namespace
 		>
 	concept
 		TypeInstance
-	=	PackTemplate::SequenceInstanceOf
+	=	PackTemplate::ValueInstanceOf
 		<	t_tTypeID
 		,	Type
 		>

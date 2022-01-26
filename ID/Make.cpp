@@ -15,9 +15,7 @@ export namespace
 	///	creates an instance of the given identifer template with all dispatched characters inserted
 	template
 		<	template
-				<	typename
-						t_tChar
-				,	t_tChar
+				<	char
 					...
 				>
 			typename
@@ -25,18 +23,10 @@ export namespace
 		,	StringLiteral
 				t_vStringLiteral
 		>
-	Pack::SequenceInstance auto constexpr
+	Pack::ValueInstance auto constexpr
 		Make
 		()
 	{
-		using
-			CharType
-		=	typename
-			decltype(
-				t_vStringLiteral
-			)::	CharType
-		;
-
 		Stateless::Type auto constexpr
 			fIdentifierMaker
 		=	[]	<	Meta::USize
@@ -48,8 +38,7 @@ export namespace
 				)
 			{	return
 					t_t1Destination
-					<	CharType
-					,	t_vStringLiteral
+					<	t_vStringLiteral
 						[	t_npIndex
 						]
 						...
@@ -69,9 +58,7 @@ export namespace
 	/// creates an identifier type
 	template
 		<	template
-				<	typename
-						t_tChar
-				,	t_tChar
+				<	char
 					...
 				>
 			typename
@@ -92,9 +79,7 @@ export namespace
 	/// create an identifier value
 	template
 		<	template
-				<	typename
-						t_tChar
-				,	t_tChar
+				<	char
 					...
 				>
 			typename
@@ -103,7 +88,7 @@ export namespace
 				t_vStringLiteral
 		>
 	constexpr
-	Pack::SequenceInstance auto
+	Pack::ValueInstance auto
 		MakeV
 	=	Make
 		<	t_t1Destination

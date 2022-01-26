@@ -23,33 +23,25 @@ export namespace
 	/// makes sure the sequence ends with \0
 	template
 		<	template
-				<	typename
-						t_tNestedChar
-				,	t_tNestedChar
+				<	char
 					...
 				>
 			typename
 				t_t1Derived
-		,	Std::Integral
-				t_tChar
-		,	t_tChar
+		,	char
 			...	t_vpString
 		>
 	struct
 		Base
-	:	Pack::Sequence
-		<	t_tChar
-		,	t_vpString
+	:	Pack::Value
+		<	t_vpString
 			...
 		,	//	terminating null character
-			t_tChar
-			{}
+			'\0'
 		>
 	{
 		/// the sequence of characters without trailing \0
-		static
-		constexpr
-		Pack::SequenceInstance auto
+		static Pack::SequenceInstance auto constexpr
 			CharacterSequence
 		=	Meta::Pack
 			<	t_vpString
@@ -57,31 +49,29 @@ export namespace
 			>()
 		;
 
-		static constexpr
-		StringLiteral
-		<	t_tChar
-			[	sizeof...(
-					t_vpString
-				)
-			+	1uz
-			]
-		>	AsStringLiteral
+		static char constexpr
+			RawArray
+			[]
 		{	t_vpString
 			...
-		,	t_tChar
-			{}
+		,	'\0'
+		};
+
+		static StringLiteral constexpr
+			AsStringLiteral
+		{	RawArray
 		};
 
 		constexpr
 			operator
 			StringLiteral
-			<	t_tChar
+			<	char
 				[	sizeof...(
 						t_vpString
 					)
 				+	1uz
 				]
-			> const&
+			>
 			()	const
 		{	return
 				AsStringLiteral
@@ -93,9 +83,7 @@ export namespace
 			<	StringLiteral
 					t_vStartString
 			>
-		static
-		constexpr
-		auto
+		static auto constexpr
 			StartsWith
 			()
 		->	bool
@@ -103,7 +91,7 @@ export namespace
 				Pack::StartsWith
 				(	CharacterSequence
 				,	MakeV
-					<	Pack::Sequence
+					<	Pack::Value
 					,	t_vStartString
 					>
 				)
@@ -115,9 +103,7 @@ export namespace
 			<	StringLiteral
 					t_vStartString
 			>
-		static
-		constexpr
-		auto
+		static auto constexpr
 			EndsWith
 				()
 		->	bool
@@ -125,7 +111,7 @@ export namespace
 				Pack::EndsWith
 				(	CharacterSequence
 				,	MakeV
-					<	Pack::Sequence
+					<	Pack::Value
 					,	t_vStartString
 					>
 				)
@@ -133,11 +119,37 @@ export namespace
 		}
 	};
 
-
+	/// construct from value pack
+	template
+		<	template
+				<	char
+					...
+				>
+			typename
+				t_t1Derived
+		,	char
+			...	t_tpChar
+		>
+		StringLiteral
+		(	Base
+			<	t_t1Derived
+			,	t_tpChar
+				...
+			>
+		)
+	->	StringLiteral
+		<	char
+			[	sizeof...(
+					t_tpChar
+				)
+			+	1uz
+			]
+		>
+	;
 }
 
 static_assert
-	(	ID::Base<Pack::Sequence, char, 'a', 'b', 'c'>
+	(	ID::Base<Pack::Value, 'a', 'b', 'c'>
 		::	template
 			StartsWith<"ab">
 			()
@@ -145,7 +157,7 @@ static_assert
 ;
 
 static_assert
-	(	ID::Base<Pack::Sequence, char, 'a', 'b', 'c'>
+	(	ID::Base<Pack::Value, 'a', 'b', 'c'>
 		::	template
 			EndsWith<"bc">
 			()

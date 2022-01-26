@@ -13,16 +13,13 @@ export namespace
 {
 	/// identifies data
 	template
-		<	Std::Integral
-				t_tChar
-		,	t_tChar
+		<	char
 			...	t_vpString
 		>
 	struct
 		Data
 	:	Base
 		<	Data
-		,	t_tChar
 		,	t_vpString
 			...
 		>
@@ -35,7 +32,7 @@ export namespace
 		>
 	concept
 		DataInstance
-	=	PackTemplate::SequenceInstanceOf
+	=	PackTemplate::ValueInstanceOf
 		<	t_tDataID
 		,	Data
 		>

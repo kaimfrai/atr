@@ -430,23 +430,23 @@ export namespace
 		using iterator = pointer;
 		using const_iterator = const_pointer;
 
+		[[nodiscard]]
 		static auto constexpr
 		(	size
-			[[nodiscard]]
 		)	()
 		->	USize
 		{	return sizeof...(t_npIndex);	}
 
+		[[nodiscard]]
 		static auto constexpr
 		(	max_size
-			[[nodiscard]]
 		)	()
 		->	USize
 		{	return sizeof...(t_npIndex);	}
 
+		[[nodiscard]]
 		static auto constexpr
 		(	empty
-			[[nodiscard]]
 		)	()
 		->	bool
 		{	return size() == 0uz;	}
@@ -466,8 +466,8 @@ export namespace
 		(	IndexedArray
 		)	(	t_tValue const
 				(&	i_rValue
-				)[	size()
-				]
+				)	[	size()
+					]
 			)
 		requires
 			ProtoCopyConstructible<t_tValue>
@@ -500,8 +500,8 @@ export namespace
 		(	IndexedArray
 		)	(	t_tValue
 				(&&	i_rValue
-				)[	size()
-				]
+				)	[	size()
+					]
 			)
 		requires
 			ProtoMoveConstructible
@@ -539,8 +539,8 @@ export namespace
 		(	operator=
 		)	(	t_tValue const
 				(&	i_rValue
-				)[	size()
-				]
+				)	[	size()
+					]
 			)	&
 		->	IndexedArray&
 		requires
@@ -574,32 +574,6 @@ export namespace
 		}
 
 		auto constexpr
-		(	operator[]
-		)	(	USize
-					i_nIndex
-			)	&
-		->	Value<t_tValue>&
-		{	return m_vValue[i_nIndex];	}
-
-		auto constexpr
-		(	operator[]
-		)	(	USize
-					i_nIndex
-			)	const&
-		->	Value<t_tValue> const&
-		{	return m_vValue[i_nIndex];	}
-
-		auto constexpr
-		(	operator[]
-		)	(	USize
-					i_nIndex
-			)	&&
-		->	t_tValue
-		requires
-			ProtoMoveConstructible<t_tValue>
-		{	return ::std::move(m_vValue[i_nIndex]);	}
-
-		auto constexpr
 		(	fill
 		)	(	t_tValue const
 				&	i_rValue
@@ -613,39 +587,6 @@ export namespace
 				)
 			);
 		}
-
-		friend auto constexpr
-		(	begin
-		)	(	IndexedArray
-				&	i_rArray
-			)
-		->	t_tValue*
-		{	return begin(i_rArray.m_vValue);	}
-
-		friend auto constexpr
-		(	begin
-		)	(	IndexedArray const
-				&	i_rArray
-			)
-		->	t_tValue const*
-		{	return begin(i_rArray.m_vValue);	}
-
-		friend auto constexpr
-		(	end
-		)	(	IndexedArray
-				&	i_rArray
-			)
-		->	t_tValue*
-		{	return end(i_rArray.m_vValue);	}
-
-		friend auto constexpr
-		(	end
-		)	(	IndexedArray const
-				&	i_rArray
-			)
-		->	t_tValue const*
-		{	return end(i_rArray.m_vValue);	}
-
 
 		friend auto constexpr
 		(	swap
@@ -743,7 +684,9 @@ export namespace
 			Type
 		{};
 
-		using MakeIndexedArray<t_tValue, t_nExtent>::MakeIndexedArray;
+		using IndexedArray = MakeIndexedArray<t_tValue, t_nExtent>;
+		using IndexedArray::IndexedArray;
+		using IndexedArray::m_vValue;
 
 		constexpr
 		(	Value
@@ -755,8 +698,8 @@ export namespace
 		(	operator=
 		)	(	t_tValue const
 				(&	i_rValue
-				)[	t_nExtent
-				]
+				)	[	t_nExtent
+					]
 			)	&
 		->	Value&
 		requires
@@ -772,8 +715,8 @@ export namespace
 		(	operator=
 		)	(	t_tValue
 				(&&	i_rValue
-				)[	t_nExtent
-				]
+				)	[	t_nExtent
+					]
 			)	&
 		->	Value&
 		requires
@@ -787,6 +730,64 @@ export namespace
 
 			return *this;
 		}
+
+		auto constexpr
+		(	operator[]
+		)	(	USize
+					i_nIndex
+			)	&
+		->	Value<t_tValue>&
+		{	return m_vValue[i_nIndex];	}
+
+		auto constexpr
+		(	operator[]
+		)	(	USize
+					i_nIndex
+			)	const&
+		->	Value<t_tValue> const&
+		{	return m_vValue[i_nIndex];	}
+
+		auto constexpr
+		(	operator[]
+		)	(	USize
+					i_nIndex
+			)	&&
+		->	t_tValue
+		requires
+			ProtoMoveConstructible<t_tValue>
+		{	return ::std::move(m_vValue[i_nIndex]);	}
+
+		friend auto constexpr
+		(	begin
+		)	(	Value
+				&	i_rArray
+			)
+		->	t_tValue*
+		{	return begin(i_rArray.m_vValue);	}
+
+		friend auto constexpr
+		(	begin
+		)	(	Value const
+				&	i_rArray
+			)
+		->	t_tValue const*
+		{	return begin(i_rArray.m_vValue);	}
+
+		friend auto constexpr
+		(	end
+		)	(	Value
+				&	i_rArray
+			)
+		->	t_tValue*
+		{	return end(i_rArray.m_vValue);	}
+
+		friend auto constexpr
+		(	end
+		)	(	Value const
+				&	i_rArray
+			)
+		->	t_tValue const*
+		{	return end(i_rArray.m_vValue);	}
 	};
 
 	template
@@ -796,8 +797,7 @@ export namespace
 	struct
 		Value
 		<	t_tValue
-			[
-			]
+			[]
 		>
 	{
 		static TypeToken<t_tValue[]> constexpr

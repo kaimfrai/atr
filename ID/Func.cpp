@@ -14,16 +14,13 @@ export namespace
 	/// required for ADL of MapAddress
 	/// identifies functions
 	template
-		<	Std::Integral
-				t_tChar
-		,	t_tChar
+		<	char
 			...	t_vpString
 		>
 	struct
 		Name
 	:	ID::Base
 		<	Name
-		,	t_tChar
 		,	t_vpString
 			...
 		>
@@ -40,7 +37,7 @@ export namespace
 		>
 	concept
 		FuncInstance
-	=	PackTemplate::SequenceInstanceOf
+	=	PackTemplate::ValueInstanceOf
 		<	t_tFuncID
 		,	Function::Name
 		>
