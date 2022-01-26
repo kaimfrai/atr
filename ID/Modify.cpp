@@ -130,9 +130,7 @@ export namespace
 				...	t_vpFront
 			>
 		[[nodiscard]]
-		friend
-		constexpr
-		auto
+		friend auto constexpr
 			operator+
 			(	t_t1Identifier
 				<	t_vpFront
@@ -156,8 +154,7 @@ export namespace
 				t_vString
 		>
 	[[nodiscard]]
-	constexpr
-	auto
+	auto constexpr
 		operator
 		""_extend
 		()
@@ -167,9 +164,6 @@ export namespace
 		>
 	{	return{};	}
 }
-
-using ID::operator""_extend;
-using ID::operator""_trim;
 
 // static_assert
 // 	(	"ab"_extend
