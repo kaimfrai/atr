@@ -12,18 +12,18 @@ export namespace
 	Layout
 {
 	template
-		<	DataMemberConfig
-				t_vConfig
-		,	char
+		<	char
 			...	t_npPrefix
+		,	DataMemberConfig
+				t_vConfig
 		,	char
 			...	t_npSuffix
 		>
 	auto constexpr
 	(	InfixLayoutConfig
-	)	(	Meta::ValueInfo<t_vConfig>
-		,	ID::Extend<t_npPrefix...>
+	)	(	ID::Extend<t_npPrefix...>
 				i_vPrefix
+		,	Meta::ValueInfo<t_vConfig>
 		,	ID::Extend<t_npSuffix...>
 				i_vSuffix
 		)
@@ -50,9 +50,6 @@ export namespace
 						<	ID::StringLiteral
 							<	t_vConfig[t_npIndex].Name.size() + 1uz
 							>{	t_vConfig[t_npIndex].Name.data()
-							,	::std::make_index_sequence
-								<	t_vConfig[t_npIndex].Name.size() + 1uz
-								>{}
 							}
 						>
 					+	i_vSuffix

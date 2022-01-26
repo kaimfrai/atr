@@ -122,9 +122,7 @@ export namespace
 				<	ID::DataT
 					<	ID::StringLiteral
 						<	aBegin->Name.size() + 1uz
-						>
-						{	aBegin->Name.data()
-						,	::std::make_index_sequence<aBegin->Name.size() + 1uz>{}
+						>{	aBegin->Name.data()
 						}
 					>
 				,	Meta::RestoreTypeEntity

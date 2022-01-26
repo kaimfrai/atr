@@ -19,8 +19,7 @@ export namespace
 	struct
 		Data
 	:	Base
-		<	Data
-		,	t_vpString
+		<	t_vpString
 			...
 		>
 	{};

@@ -20,8 +20,7 @@ export namespace
 	struct
 		Name
 	:	ID::Base
-		<	Name
-		,	t_vpString
+		<	t_vpString
 			...
 		>
 	{};

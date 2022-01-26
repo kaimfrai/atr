@@ -51,7 +51,7 @@ export namespace
 		<	t_tID
 		,	t_t1Sequence
 		>
-	and	t_tID::StringView.starts_with(t_vStart.String)
+	and starts_with(t_tID{}, t_vStart)
 	;
 
 	/// checks if an identifier end with a given string and is an instance of a given template
@@ -73,6 +73,6 @@ export namespace
 		<	t_tID
 		,	t_t1Sequence
 		>
-	and	t_tID::StringView.ends_with(t_vEnd.String)
+	and	ends_with(t_tID{}, t_vEnd)
 	;
 }

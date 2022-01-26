@@ -1,6 +1,7 @@
 export module ID.StringLiteral;
 
 export import Meta.Integer;
+export import Meta.Value;
 
 export import Std;
 export import Std.Concepts;
@@ -8,96 +9,120 @@ export import Std.Concepts;
 export namespace
 	ID
 {
-	/// converts a string literal into an object that can be dispatched into separate characters
+	struct
+		StringView final
+	:	Meta::Value<Meta::Value<char> const[]>
+	{
+		using Meta::Value<Meta::Value<char> const[]>::Value;
+	};
+
 	template
 		<	Meta::USize
 				t_nExtent
 		>
+	requires
+		(	t_nExtent
+		>=	2uz
+		)
 	struct
-		StringLiteral
+		StringLiteral final
+	:	Meta::Value
+		<	char
+				[	t_nExtent
+				-	1uz
+				]
+		>
 	{
-		static Meta::USize constexpr Extent = t_nExtent;
-		static std::make_index_sequence<t_nExtent> constexpr
-			CharacterIndexSequence
-		{};
-
-		char
-			String
-			[	t_nExtent
-			]
-		;
-
-		/// construct from raw char array
-		template
-			<	Meta::USize
-				...	t_npIndex
-			>
-		requires
-			(	sizeof...(t_npIndex)
-			==	t_nExtent
-			)
 		constexpr
-			StringLiteral
-			(	char const
+		(	StringLiteral
+		)	(	char const
 				*	i_aString
-			,	std::index_sequence
-				<	t_npIndex
-					...
-				>
 			)
-		:	String
-			{	i_aString
-				[	t_npIndex
-				]
-				...
+		:	Meta::Value<char[t_nExtent - 1uz]>
+			{	+i_aString
 			}
 		{}
 
-		/// construct from raw char array
 		constexpr
-			StringLiteral
-			(	char const
-				(&	i_rString
-				)	[	t_nExtent
-					]
-			)
-		:	StringLiteral
-			{	+i_rString
-			,	CharacterIndexSequence
-			}
-		{}
-
-		/// index the underlying array
-		[[nodiscard]]
-		auto constexpr
-			operator[]
-			(	Meta::USize
-					i_nIndex
-			)	const
-		noexcept
+		(	operator auto
+		)	()	const
 		{	return
-				String
-				[	i_nIndex
-				]
-			;
+			StringView
+			{	this->m_vValue
+			,	t_nExtent - 1uz
+			};
 		}
 	};
 
-	/// construct from array
 	template
 		<	Meta::USize
 				t_nExtent
 		>
-		StringLiteral
-		(	char const
-			(&
-			)	[	t_nExtent
+	(	StringLiteral
+	)	(	char const
+			(&)	[	t_nExtent
 				]
 		)
 	->	StringLiteral
 		<	t_nExtent
 		>
 	;
+
+	///	Namespace scope allows making use of implicit conversions.
+	///	This allows for template argument erasure.
+	auto constexpr
+	(	operator<=>
+	)	(	StringView const
+			&	i_rLeft
+		,	StringView const
+			&	i_rRight
+		)
+	->	::std::strong_ordering
+	{	return
+		(	static_cast
+			<	Meta::Value<Meta::Value<char> const[]> const&
+			>(	i_rLeft
+			)
+		<=>	static_cast
+			<	Meta::Value<Meta::Value<char> const[]> const&
+			>(	i_rRight
+			)
+		);
+	}
+
+	///	Namespace scope allows making use of implicit conversions.
+	///	This allows for template argument erasure.
+	auto constexpr
+	(	starts_with
+	)	(	StringView
+				i_vLeft
+		,	StringView
+				i_vRight
+		)
+	->	bool
+	{	return
+		Meta::starts_with
+		(	i_vLeft
+		,	i_vRight
+		);
+	}
+
+	///	Namespace scope allows making use of implicit conversions.
+	///	This allows for template argument erasure.
+	auto constexpr
+	(	ends_with
+	)	(	StringView
+				i_vLeft
+		,	StringView
+				i_vRight
+		)
+	->	bool
+	{	return
+		Meta::ends_with
+		(	i_vLeft
+		,	i_vRight
+		);
+	}
 
 	template
 		<	typename
@@ -122,7 +147,7 @@ export namespace
 		>
 	or	Std::ConvertibleToValuePackInstance
 		<	t_tStringLiteral
-		,	ID::StringLiteral
+		,	StringLiteral
 		>
 	;
 

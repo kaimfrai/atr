@@ -19,8 +19,7 @@ export namespace
 	struct
 		Type
 	:	Base
-		<	Type
-		,	t_vpString
+		<	t_vpString
 			...
 		>
 	{};

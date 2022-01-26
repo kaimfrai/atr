@@ -44,7 +44,7 @@ export namespace
 				>{}
 			;
 		}(	std::make_index_sequence
-			<	t_vStringLiteral.Extent - 1uz
+			<	t_vStringLiteral.size()
 			>{}
 		);
 	}
@@ -81,8 +81,7 @@ export namespace
 		,	StringLiteral
 				t_vStringLiteral
 		>
-	constexpr
-	Pack::ValueInstance auto
+	Pack::ValueInstance auto constexpr
 		MakeV
 	=	Make
 		<	t_t1Destination

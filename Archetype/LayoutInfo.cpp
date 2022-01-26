@@ -35,9 +35,9 @@ export namespace
 	Layout::DataMemberConfig constexpr inline
 		PrefixedLayoutConfig
 	=	Layout::InfixLayoutConfig
-		(	Meta::V<LayoutConfig<i_vType>>
-		,	ID::MakeV<ID::Extend, i_vPrefix>
-		,	ID::MakeV<ID::Extend, "">
+		(	ID::MakeV<ID::Extend, i_vPrefix>
+		,	Meta::V<LayoutConfig<i_vType>>
+		,	ID::Extend<>{}
 		)
 	;
 
@@ -52,8 +52,8 @@ export namespace
 	Layout::DataMemberConfig constexpr inline
 		SuffixedLayoutConfig
 	=	Layout::InfixLayoutConfig
-		(	Meta::V<LayoutConfig<i_vType>>
-		,	ID::MakeV<ID::Extend, "">
+		(	ID::Extend<>{}
+		,	Meta::V<LayoutConfig<i_vType>>
 		,	ID::MakeV<ID::Extend, i_vSuffix>
 		)
 	;

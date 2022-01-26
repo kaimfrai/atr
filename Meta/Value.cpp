@@ -391,6 +391,11 @@ export namespace
 			}
 		{}
 
+		constexpr
+		(	operator auto
+		)	()	const
+		{	return m_vValue;	}
+
 		auto constexpr
 		(	operator=
 		)	(	t_tValue
@@ -408,7 +413,18 @@ export namespace
 			,	Value const&
 			)
 		->	bool
-		;
+		=	default;
+
+		friend auto constexpr
+		(	operator <=>
+		)	(	Value const&
+			,	Value const&
+			)
+		->	decltype
+			(	::std::declval<t_tValue>()
+			<=>	::std::declval<t_tValue>()
+			)
+		=	default;
 	};
 
 	template
@@ -420,7 +436,7 @@ export namespace
 	struct
 		IndexedArray
 	{
-		using value_type = t_tValue;
+		using value_type = Value<t_tValue>;
 		using size_type = USize;
 		using difference_type = SSize;
 		using reference = Value<t_tValue>&;
@@ -461,6 +477,49 @@ export namespace
 		)	()
 		=	default
 		;
+
+		explicit constexpr
+		(	IndexedArray
+		)	(	Value<t_tValue const[]>
+					i_vValue
+			)
+		requires
+			ProtoCopyConstructible<t_tValue>
+		:	m_vValue
+			{	i_vValue[t_npIndex]
+				...
+			}
+		{}
+
+		explicit constexpr
+		(	IndexedArray
+		)	(	t_tValue const
+				*	i_aValue
+			)
+		requires
+			ProtoCopyConstructible<t_tValue>
+		:	m_vValue
+			{	i_aValue
+				[	t_npIndex
+				]
+				...
+			}
+		{}
+
+		explicit constexpr
+		(	IndexedArray
+		)	(	Value<t_tValue> const
+				*	i_aValue
+			)
+		requires
+			ProtoCopyConstructible<t_tValue>
+		:	m_vValue
+			{	i_aValue
+				[	t_npIndex
+				]
+				...
+			}
+		{}
 
 		constexpr
 		(	IndexedArray
@@ -680,7 +739,8 @@ export namespace
 		,	t_nExtent
 		>
 	{
-		static TypeToken<t_tValue[t_nExtent]> constexpr
+		using ValueType = t_tValue[t_nExtent];
+		static TypeToken<ValueType> constexpr
 			Type
 		{};
 
@@ -693,6 +753,11 @@ export namespace
 		)	()
 		=	default
 		;
+
+		constexpr
+		(	operator Value<Value<t_tValue> const[]>
+		)	()	const&
+		{	return {m_vValue, t_nExtent};	}
 
 		auto constexpr
 		(	operator=
@@ -752,7 +817,7 @@ export namespace
 		)	(	USize
 					i_nIndex
 			)	&&
-		->	t_tValue
+		->	Value<t_tValue>
 		requires
 			ProtoMoveConstructible<t_tValue>
 		{	return ::std::move(m_vValue[i_nIndex]);	}
@@ -762,32 +827,78 @@ export namespace
 		)	(	Value
 				&	i_rArray
 			)
-		->	t_tValue*
-		{	return begin(i_rArray.m_vValue);	}
+		->	Value<t_tValue>*
+		{	return ::std::begin(i_rArray.m_vValue);	}
 
 		friend auto constexpr
 		(	begin
 		)	(	Value const
 				&	i_rArray
 			)
-		->	t_tValue const*
-		{	return begin(i_rArray.m_vValue);	}
+		->	Value<t_tValue> const*
+		{	return ::std::begin(i_rArray.m_vValue);	}
 
 		friend auto constexpr
 		(	end
 		)	(	Value
 				&	i_rArray
 			)
-		->	t_tValue*
-		{	return end(i_rArray.m_vValue);	}
+		->	Value<t_tValue>*
+		{	return ::std::end(i_rArray.m_vValue);	}
 
 		friend auto constexpr
 		(	end
 		)	(	Value const
 				&	i_rArray
 			)
-		->	t_tValue const*
-		{	return end(i_rArray.m_vValue);	}
+		->	Value<t_tValue> const*
+		{	return ::std::end(i_rArray.m_vValue);	}
+
+		[[nodiscard]]
+		auto constexpr
+		(	front
+		)	()	&
+		->	Value<t_tValue>&
+		{	return m_vValue[0uz];	}
+
+		[[nodiscard]]
+		auto constexpr
+		(	front
+		)	()	const&
+		->	Value<t_tValue> const&
+		{	return m_vValue[0uz];	}
+
+		[[nodiscard]]
+		auto constexpr
+		(	front
+		)	()	&&
+		->	Value<t_tValue>
+		requires
+			ProtoMoveConstructible<t_tValue>
+		{	return ::std::move(m_vValue[0uz]);	}
+
+		[[nodiscard]]
+		auto constexpr
+		(	back
+		)	()	&
+		->	Value<t_tValue>&
+		{	return m_vValue[t_nExtent - 1uz];	}
+
+		[[nodiscard]]
+		auto constexpr
+		(	back
+		)	()	const&
+		->	Value<t_tValue> const&
+		{	return m_vValue[t_nExtent - 1uz];	}
+
+		[[nodiscard]]
+		auto constexpr
+		(	back
+		)	()	&&
+		->	Value<t_tValue>
+		requires
+			ProtoMoveConstructible<t_tValue>
+		{	return ::std::move(m_vValue[t_nExtent - 1uz]);	}
 	};
 
 	template
@@ -854,15 +965,14 @@ export namespace
 		(	Value
 		)	(	t_tValue
 				(&	i_rValue
-				)[	t_nSize
-				]
+				)	[	t_nSize
+					]
 			)
 		:	Value
 			{	+i_rValue
 			,	t_nSize
 			}
 		{}
-
 
 		constexpr
 		(	Value
@@ -910,104 +1020,194 @@ export namespace
 			);
 		}
 
-		friend auto constexpr
-		(	begin
-		)	(	Value
-				&	i_rValue
-			)
-		->	t_tValue*
-		{	return i_rValue.m_vValue;	}
+		auto constexpr
+		(	operator[]
+		)	(	USize
+					i_nIndex
+			)	&
+		->	t_tValue&
+		{	return m_vValue[i_nIndex];	}
 
-		friend auto constexpr
-		(	begin
-		)	(	Value const
-				&	i_rValue
-			)
-		->	t_tValue const*
-		{	return i_rValue.m_vValue;	}
+		auto constexpr
+		(	operator[]
+		)	(	USize
+					i_nIndex
+			)	const&
+		->	t_tValue const&
+		{	return m_vValue[i_nIndex];	}
 
-		friend auto constexpr
-		(	end
-		)	(	Value
-				&	i_rValue
-			)
-		->	t_tValue*
-		{	return i_rValue.m_aEnd;	}
-
-		friend auto constexpr
-		(	end
-		)	(	Value const
-				&	i_rValue
-			)
-		->	t_tValue const*
-		{	return i_rValue.m_aEnd;	}
-
-		friend auto constexpr
-		(	operator==
-		)	(	Value const
-				&	i_rLeft
-			,	Value const
-				&	i_rRight
-			)
-		->	bool
+		auto constexpr
+		(	operator[]
+		)	(	USize
+					i_nIndex
+			)	&&
+		->	t_tValue
 		requires
-			ProtoEqualityComparable
-			<	t_tValue
-			>
-		{	return
-			::std::equal
-			(	begin(i_rLeft)
-			,	end(i_rLeft)
-			,	begin(i_rRight)
-			);
-		}
+			ProtoMoveConstructible<t_tValue>
+		{	return ::std::move(m_vValue[i_nIndex]);	}
 
 		friend auto constexpr
-		(	operator<=>
-		)	(	Value const
-				&	i_rLeft
-			,	Value const
-				&	i_rRight
+		(	begin
+		)	(	Value
+				&	i_rValue
 			)
-		->	decltype
-			(	::std::declval<t_tValue>()
-			<=>	::std::declval<t_tValue>()
+		->	t_tValue*
+		{	return i_rValue.m_vValue;	}
+
+		friend auto constexpr
+		(	begin
+		)	(	Value const
+				&	i_rValue
+			)
+		->	t_tValue const*
+		{	return i_rValue.m_vValue;	}
+
+		friend auto constexpr
+		(	end
+		)	(	Value
+				&	i_rValue
+			)
+		->	t_tValue*
+		{	return i_rValue.m_aEnd;	}
+
+		friend auto constexpr
+		(	end
+		)	(	Value const
+				&	i_rValue
+			)
+		->	t_tValue const*
+		{	return i_rValue.m_aEnd;	}
+	};
+
+	template
+		<	ProtoValue
+				t_tValue
+		>
+	auto constexpr
+	(	operator==
+	)	(	Value<t_tValue[]> const
+			&	i_rLeft
+		,	Value<t_tValue[]> const
+			&	i_rRight
+		)
+	->	bool
+	requires
+		ProtoEqualityComparable
+		<	t_tValue
+		>
+	{	return
+		::std::equal
+		(	begin(i_rLeft)
+		,	end(i_rLeft)
+		,	begin(i_rRight)
+		);
+	}
+
+	template
+		<	ProtoValue
+				t_tValue
+		>
+	auto constexpr
+	(	operator<=>
+	)	(	Value<t_tValue[]> const
+			&	i_rLeft
+		,	Value<t_tValue[]> const
+			&	i_rRight
+		)
+	->	decltype
+		(	::std::declval<t_tValue>()
+		<=>	::std::declval<t_tValue>()
+		)
+	{
+		auto vLeftPos = begin(i_rLeft);
+		auto const vLeftEnd = end(i_rLeft);
+		bool bLeftRemaining = (vLeftPos != vLeftEnd);
+
+		auto vRightPos = begin(i_rRight);
+		auto const vRightEnd = end(i_rRight);
+		bool bRightRemaining = (vRightPos != vRightEnd);
+
+		for	(;	(	bLeftRemaining
+				and	bRightRemaining
+				)
+			;		bLeftRemaining
+				=	(++vLeftPos != vLeftEnd)
+			,		bRightRemaining
+				=	(++vRightPos != vRightEnd)
 			)
 		{
-			auto vLeftPos = begin(i_rLeft);
-			auto const vLeftEnd = end(i_rLeft);
-			bool bLeftRemaining = (vLeftPos != vLeftEnd);
-
-			auto vRightPos = begin(i_rRight);
-			auto const vRightEnd = end(i_rRight);
-			bool bRightRemaining = (vRightPos != vRightEnd);
-
-			for	(;	(	bLeftRemaining
-					and	bRightRemaining
-					)
-				;		bLeftRemaining
-					=	(++vLeftPos != vLeftEnd)
-				,		bRightRemaining
-					=	(++vRightPos != vRightEnd)
-				)
-			{
-				auto const
-					vResult
-				=	*vLeftPos
-				<=>	*vRightPos
-				;
-				if	(vResult != 0)
-					return vResult;
-			}
-
-			if	(bLeftRemaining)
-				return ::std::strong_ordering::greater;
-			if	(bRightRemaining)
-				return ::std::strong_ordering::less;
-
-			return ::std::strong_ordering::equal;
+			auto const
+				vResult
+			=	*vLeftPos
+			<=>	*vRightPos
+			;
+			if	(vResult != 0)
+				return vResult;
 		}
-	};
+
+		if	(bLeftRemaining)
+			return ::std::strong_ordering::greater;
+		if	(bRightRemaining)
+			return ::std::strong_ordering::less;
+
+		return ::std::strong_ordering::equal;
+	}
+
+	///	Namespace scope allows making use of implicit conversions.
+	///	This allows for template argument erasure.
+	template
+		<	ProtoValue
+				t_tValue
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	starts_with
+	)	(	Value<Value<t_tValue> const[]>
+				i_vArray
+		,	Value<Value<t_tValue> const[]>
+				i_vPrefix
+		)
+	->	bool
+	{
+		if	(i_vPrefix.size() > i_vArray.size())
+			return false;
+
+		return
+		::std::equal
+		(	begin(i_vArray)
+		,	begin(i_vArray) + i_vPrefix.size()
+		,	begin(i_vPrefix)
+		,	end(i_vPrefix)
+		);
+	}
+
+	///	Namespace scope allows making use of implicit conversions.
+	///	This allows for template argument erasure.
+	template
+		<	ProtoValue
+				t_tValue
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	ends_with
+	)	(	Value<Value<t_tValue> const[]>
+				i_vArray
+		,	Value<Value<t_tValue> const[]>
+				i_vSuffix
+		)
+	->	bool
+	{
+		if	(i_vSuffix.size() > i_vArray.size())
+			return false;
+
+		return
+		::std::equal
+		(	end(i_vArray) - i_vSuffix.size()
+		,	end(i_vArray)
+		,	begin(i_vSuffix)
+		,	end(i_vSuffix)
+		);
+	}
 
 	template
 		<	ProtoValue
@@ -1035,22 +1235,27 @@ export namespace
 
 	template
 		<	ProtoValue
-				t_tValue
+			...	t_tpValue
 		>
 	(	Value
-	)	(	t_tValue&&
+	)	(	t_tpValue const&
+			...
 		)
 	->	Value
-		<	t_tValue
+		<	::std::common_type_t
+			<	t_tpValue
+				...
+			>	[	sizeof...(t_tpValue)
+				]
 		>
 	;
 
 	template
-		<	ProtoScalar
+		<	ProtoValue
 				t_tValue
 		>
 	(	Value
-	)	(	t_tValue
+	)	(	t_tValue&&
 		)
 	->	Value
 		<	t_tValue

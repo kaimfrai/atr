@@ -34,14 +34,12 @@ export namespace
 			=	(	"Get"_trim
 				-	t_tGetter
 					{}
-				).AsStringLiteral
+				).StringLiteral
 		>
 	auto constexpr
 		MapAddress
 		(	t_tGetter
-		,	Archetype::HasDataMember
-			<	t_vDataMember
-			>	auto const
+		,	Archetype::HasDataMember<t_vDataMember>	auto const
 			&	i_rObject
 		)
 	{
@@ -66,7 +64,7 @@ export namespace
 						>
 					)
 				{	return
-						MemberType::AsStringLiteral
+						MemberType::StringLiteral
 					;
 				}
 				else
