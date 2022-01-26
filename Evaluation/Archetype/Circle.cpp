@@ -1,5 +1,6 @@
 export module Evaluation.Archetype.Circle;
 
+export import Evaluation.Shared.SizeCheck;
 export import Archetype.Instance;
 export import Evaluation.Archetype.Circle.Layout;
 

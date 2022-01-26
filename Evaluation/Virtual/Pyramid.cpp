@@ -1,5 +1,6 @@
 export module Evaluation.Virtual.Pyramid;
 
+export import Evaluation.Shared.SizeCheck;
 export import Evaluation.Virtual.Triangle;
 export import Evaluation.Virtual.PyramidicBody;
 

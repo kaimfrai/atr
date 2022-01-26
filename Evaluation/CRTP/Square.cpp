@@ -1,5 +1,6 @@
 export module Evaluation.CRTP.Square;
 
+export import Evaluation.Shared.SizeCheck;
 export import Evaluation.CRTP.RectangularShape;
 export import Evaluation.CRTP.HeightIsWidth;
 

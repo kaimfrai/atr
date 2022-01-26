@@ -1,5 +1,6 @@
 export module Evaluation.CRTP.Pyramid;
 
+export import Evaluation.Shared.SizeCheck;
 export import Evaluation.CRTP.Triangle;
 export import Evaluation.CRTP.PyramidicBody;
 export import Evaluation.CRTP.SeparateDepth;

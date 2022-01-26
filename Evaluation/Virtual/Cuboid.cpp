@@ -1,5 +1,6 @@
 export module Evaluation.Virtual.Cuboid;
 
+export import Evaluation.Shared.SizeCheck;
 export import Evaluation.Virtual.Rectangle;
 export import Evaluation.Virtual.CubicBody;
 

@@ -1,5 +1,6 @@
 export module Evaluation.Virtual.Square;
 
+export import Evaluation.Shared.SizeCheck;
 export import Evaluation.Virtual.RectangularShape;
 
 export namespace

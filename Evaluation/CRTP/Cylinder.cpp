@@ -1,5 +1,7 @@
 export module Evaluation.CRTP.Cylinder;
 
+export import Evaluation.Shared.SizeCheck;
+export import Evaluation.Shared.PiFraction;
 export import Evaluation.CRTP.Circle;
 export import Evaluation.CRTP.ExtendedShape;
 export import Evaluation.CRTP.SeparateDepth;

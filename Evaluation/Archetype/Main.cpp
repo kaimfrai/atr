@@ -7,6 +7,9 @@ import Evaluation.Archetype.Head;
 import Evaluation.Archetype.Pyramid;
 import Evaluation.Archetype.Sphere;
 
+import Evaluation.Shared.TypeConstruct;
+import Evaluation.Shared.MainTemplate;
+
 static_assert
 (	Function::Address<ID::FuncT<"ComputeVolume">, Bodies3D::Head const&>()
 ==	Function::Address<ID::FuncT<"ComputeVolume">, Bodies3D::Sphere const&>()

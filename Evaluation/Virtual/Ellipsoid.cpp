@@ -1,5 +1,6 @@
 export module Evaluation.Virtual.Ellipsoid;
 
+export import Evaluation.Shared.SizeCheck;
 export import Evaluation.Virtual.Ellipse;
 export import Evaluation.Virtual.SphericBody;
 

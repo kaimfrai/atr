@@ -1,5 +1,6 @@
 export module Evaluation.CRTP.Head;
 
+export import Evaluation.Shared.SizeCheck;
 export import Evaluation.CRTP.BasicSphere;
 export import Evaluation.CRTP.Sphere;
 

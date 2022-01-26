@@ -1,5 +1,6 @@
 export module Evaluation.Archetype.Ellipse;
 
+export import Evaluation.Shared.SizeCheck;
 export import Archetype.Instance;
 export import Evaluation.Archetype.Ellipse.Layout;
 

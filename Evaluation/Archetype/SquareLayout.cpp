@@ -1,6 +1,5 @@
 export module Evaluation.Archetype.Square.Layout;
 
-export import Evaluation.Shared;
 export import Evaluation.Archetype.Rectangle.Layout;
 
 export namespace

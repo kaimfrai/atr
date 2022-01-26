@@ -1,5 +1,6 @@
 export module Evaluation.Archetype.Triangle.Layout;
 
+export import Evaluation.Shared.Fraction;
 export import Evaluation.Archetype.BasicShape;
 
 export namespace

@@ -1,5 +1,6 @@
 export module Evaluation.Virtual.TriangularShape;
 
+export import Evaluation.Shared.Fraction;
 export import Evaluation.Virtual.BasicShape;
 
 export namespace

@@ -1,5 +1,7 @@
 export module Evaluation.Virtual.Cone;
 
+export import Evaluation.Shared.SizeCheck;
+export import Evaluation.Shared.PiFraction;
 export import Evaluation.Virtual.Circle;
 export import Evaluation.Virtual.ExtendedShape;
 

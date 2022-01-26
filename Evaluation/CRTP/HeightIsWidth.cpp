@@ -1,6 +1,6 @@
 export module Evaluation.CRTP.HeightIsWidth;
 
-export import Evaluation.Shared;
+export import Evaluation.Shared.DataTypes;
 
 export namespace
 	Shapes2D

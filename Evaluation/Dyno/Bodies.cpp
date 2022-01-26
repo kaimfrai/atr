@@ -1,6 +1,6 @@
 export module Evaluation.Dyno.Bodies;
 
-export import Evaluation.Shared;
+export import Evaluation.Shared.DataTypes;
 export import Dyno;
 
 namespace

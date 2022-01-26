@@ -1,6 +1,6 @@
 export module Evaluation.Archetype.Ellipse.Layout;
 
-export import Evaluation.Shared;
+export import Evaluation.Shared.PiFraction;
 export import Evaluation.Archetype.BasicShape;
 
 export namespace

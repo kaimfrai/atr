@@ -1,5 +1,6 @@
 export module Evaluation.Archetype.Ellipsoid;
 
+export import Evaluation.Shared.SizeCheck;
 export import Archetype.Instance;
 export import Evaluation.Archetype.Ellipsoid.Layout;
 export import Evaluation.Archetype.ComputeVolume;

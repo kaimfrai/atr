@@ -1,5 +1,6 @@
 export module Evaluation.CRTP.Cube;
 
+export import Evaluation.Shared.SizeCheck;
 export import Evaluation.CRTP.Square;
 export import Evaluation.CRTP.CubicBody;
 export import Evaluation.CRTP.DepthIsWidth;

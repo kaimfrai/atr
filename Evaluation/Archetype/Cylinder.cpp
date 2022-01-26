@@ -1,5 +1,6 @@
 export module Evaluation.Archetype.Cylinder;
 
+export import Evaluation.Shared.SizeCheck;
 export import Archetype.Instance;
 export import Evaluation.Archetype.Cylinder.Layout;
 export import Evaluation.Archetype.ComputeVolume;

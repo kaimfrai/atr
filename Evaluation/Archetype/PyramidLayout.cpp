@@ -1,6 +1,6 @@
 export module Evaluation.Archetype.Pyramid.Layout;
 
-export import Evaluation.Shared;
+export import Evaluation.Shared.Fraction;
 export import Evaluation.Archetype.BasicBody;
 
 export namespace

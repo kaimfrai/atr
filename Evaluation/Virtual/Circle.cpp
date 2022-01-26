@@ -1,5 +1,6 @@
 export module Evaluation.Virtual.Circle;
 
+export import Evaluation.Shared.SizeCheck;
 export import Evaluation.Virtual.CircularShape;
 
 export namespace

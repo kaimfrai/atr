@@ -1,9 +1,9 @@
 export module Evaluation.Archetype.Head;
 
+export import Evaluation.Shared.SizeCheck;
 export import Archetype.Instance;
 export import Evaluation.Archetype.Head.Layout;
 export import Evaluation.Archetype.ComputeVolume;
-
 
 export namespace
 	Bodies3D

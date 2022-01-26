@@ -1,5 +1,6 @@
 export module Evaluation.Virtual.Sphere;
 
+export import Evaluation.Shared.SizeCheck;
 export import Evaluation.Virtual.Circle;
 export import Evaluation.Virtual.SphericBody;
 

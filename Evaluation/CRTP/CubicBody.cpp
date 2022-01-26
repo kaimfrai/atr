@@ -1,5 +1,6 @@
 export module Evaluation.CRTP.CubicBody;
 
+export import Evaluation.Shared.Fraction;
 export import Evaluation.CRTP.ExtendedShape;
 
 export namespace

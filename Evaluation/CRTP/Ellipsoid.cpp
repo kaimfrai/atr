@@ -1,5 +1,6 @@
 export module Evaluation.CRTP.Ellipsoid;
 
+export import Evaluation.Shared.SizeCheck;
 export import Evaluation.CRTP.Ellipse;
 export import Evaluation.CRTP.SphericBody;
 export import Evaluation.CRTP.SeparateDepth;

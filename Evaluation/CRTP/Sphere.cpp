@@ -1,5 +1,6 @@
 export module Evaluation.CRTP.Sphere;
 
+export import Evaluation.Shared.SizeCheck;
 export import Evaluation.CRTP.BasicSphere;
 
 export namespace

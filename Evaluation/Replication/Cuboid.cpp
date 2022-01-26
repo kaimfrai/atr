@@ -1,6 +1,7 @@
 export module Evaluation.Replication.Cuboid;
 
-export import Evaluation.Shared;
+export import Evaluation.Shared.DataTypes;
+export import Evaluation.Shared.SizeCheck;
 
 export namespace
 	Bodies3D

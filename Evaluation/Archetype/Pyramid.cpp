@@ -1,5 +1,6 @@
 export module Evaluation.Archetype.Pyramid;
 
+export import Evaluation.Shared.SizeCheck;
 export import Archetype.Instance;
 export import Evaluation.Archetype.Pyramid.Layout;
 export import Evaluation.Archetype.ComputeVolume;

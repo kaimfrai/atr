@@ -7,6 +7,8 @@ import Evaluation.Virtual.Cone;
 import Evaluation.Virtual.Ellipsoid;
 import Evaluation.Virtual.Head;
 
+import Evaluation.Shared.MainTemplate;
+
 import Std;
 
 auto

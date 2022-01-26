@@ -1,5 +1,6 @@
 export module Evaluation.CRTP.Circle;
 
+export import Evaluation.Shared.SizeCheck;
 export import Evaluation.CRTP.CircularShape;
 export import Evaluation.CRTP.HeightIsWidth;
 

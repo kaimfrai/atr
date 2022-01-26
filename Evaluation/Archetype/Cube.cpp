@@ -1,5 +1,6 @@
 export module Evaluation.Archetype.Cube;
 
+export import Evaluation.Shared.SizeCheck;
 export import Archetype.Instance;
 export import Evaluation.Archetype.Cube.Layout;
 export import Evaluation.Archetype.ComputeVolume;

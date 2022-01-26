@@ -1,6 +1,5 @@
 export module Evaluation.Archetype.ReturnMember;
 
-export import Evaluation.Shared;
 export import Function.ConstantIDMap;
 export import Archetype.Instance;
 

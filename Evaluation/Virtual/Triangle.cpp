@@ -1,5 +1,6 @@
 export module Evaluation.Virtual.Triangle;
 
+export import Evaluation.Shared.SizeCheck;
 export import Evaluation.Virtual.TriangularShape;
 
 export namespace

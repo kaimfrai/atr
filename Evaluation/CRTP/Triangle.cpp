@@ -1,5 +1,6 @@
 export module Evaluation.CRTP.Triangle;
 
+export import Evaluation.Shared.SizeCheck;
 export import Evaluation.CRTP.TriangularShape;
 export import Evaluation.CRTP.SeparateHeight;
 

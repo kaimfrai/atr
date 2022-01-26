@@ -1,5 +1,6 @@
 export module Evaluation.Virtual.Rectangle;
 
+export import Evaluation.Shared.SizeCheck;
 export import Evaluation.Virtual.RectangularShape;
 
 export namespace

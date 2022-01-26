@@ -1,7 +1,7 @@
 export module Evaluation.Replication.Head;
 
-export import Evaluation.Shared;
-export import Std;
+export import Evaluation.Shared.DataTypes;
+export import Evaluation.Shared.SizeCheck;
 
 export namespace
 	Bodies3D

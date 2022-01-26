@@ -1,6 +1,6 @@
 export module Evaluation.Archetype.Product;
 
-export import Evaluation.Shared;
+export import Evaluation.Shared.DataTypes;
 export import Function.ConstantIDMap;
 
 export namespace

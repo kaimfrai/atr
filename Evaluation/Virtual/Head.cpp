@@ -1,5 +1,6 @@
 export module Evaluation.Virtual.Head;
 
+export import Evaluation.Shared.SizeCheck;
 export import Evaluation.Virtual.Sphere;
 
 export namespace
