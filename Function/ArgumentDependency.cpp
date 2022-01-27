@@ -1,8 +1,7 @@
 export module Function.ArgumentDependency;
 
 export import Function.Dependency;
-export import ID.Func;
-export import ID.Data;
+export import ID.Make;
 export import Meta.Template;
 export import Meta.TypeInfo;
 export import PackTemplate.Instance;
@@ -52,7 +51,7 @@ export namespace
 		constexpr
 		auto
 			operator[]
-			(	ID::DataInstance auto
+			(	::ID::Instance auto
 					i_vDataID
 			)
 		noexcept
@@ -76,7 +75,7 @@ export namespace
 		constexpr
 		auto
 			operator()
-			(	ID::FuncInstance auto
+			(	::ID::Instance auto
 					i_vFuncID
 			,	t_tpArgument
 				&&

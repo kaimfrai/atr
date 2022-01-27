@@ -1,6 +1,6 @@
 export module Function.FuncDependencyItem;
 
-export import ID.Func;
+export import ID.Make;
 export import Stateless.Map;
 export import Stateless.Type;
 export import Std.FunctionTraits;
@@ -10,7 +10,7 @@ export namespace
 {
 	/// maps a FuncID to a function pointer
 	template
-		<	ID::FuncInstance
+		<	::ID::Instance
 				t_tFuncID
 		,	typename
 				t_tLazyFunction
@@ -47,14 +47,9 @@ export namespace
 	=	Stateless::MapItemInstance
 		<	t_tMapItem
 		>
-	and	ID::FuncInstance
-		<	typename
-			Std::FunctionTraits
-			<	&
-				t_tMapItem
-				::	operator()
-			>::	ArgumentType
-			::	Single
+	and	Std::TypePackInstanceOf
+		<	t_tMapItem
+		,	FuncDependencyItem
 		>
 	;
 }

@@ -119,7 +119,7 @@ export namespace
 			return
 			Meta::Type
 			<	Layout::DataMember
-				<	ID::DataT
+				<	ID::MakeT
 					<	ID::StringLiteral
 						<	aBegin->Name.size() + 1uz
 						>{	aBegin->Name.data()

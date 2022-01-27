@@ -3,11 +3,6 @@ export module ID.Make;
 export import ID.StringLiteral;
 export import Std;
 
-export import PackTemplate.Instance;
-export import Pack.Instance;
-
-export import Stateless.Tuple;
-
 char constexpr inline _0 ='0';
 char constexpr inline _1 = '1';
 char constexpr inline _2 = '2';
@@ -228,25 +223,18 @@ namespace
 }
 
 export namespace
-	ID
+	Function
 {
 	/// serves as a base class for all identifer types
 	/// provides conversions to arrays as well as begin and end functions
 	template
 		<	char const
-			&	t_rIdentifier
-		,	char const
 			&
 			...	t_rpString
 		>
 	struct
-		Base
+		ID
 	{
-		static char const constexpr
-		&	Identifier
-		=	t_rIdentifier
-		;
-
 		static char constexpr
 			RawArray
 			[	sizeof...(t_rpString)
@@ -257,12 +245,12 @@ export namespace
 		,	'\0'
 		};
 
-		static StringLiteral constexpr
+		static ::ID::StringLiteral constexpr
 			StringLiteral
 		{	RawArray
 		};
 
-		static StringView constexpr
+		static ::ID::StringView constexpr
 			StringView
 		{	StringLiteral
 		};
@@ -271,19 +259,190 @@ export namespace
 		(	operator auto
 		)	()	const
 		{	return StringView;	}
+
+		template
+			<	char const
+				&
+				...	t_rpBack
+			>
+		[[nodiscard]]
+		friend auto constexpr
+			operator-
+			(	ID
+			,	ID
+				<	t_rpString
+					...
+				,	t_rpBack
+					...
+				>
+			)
+		{	return
+				ID
+				<	t_rpBack
+					...
+				>{}
+			;
+		}
+
+		template
+			<	char const
+				&
+				...	t_rpFront
+			>
+		[[nodiscard]]
+		friend auto constexpr
+			operator-
+			(	ID<t_rpFront...>
+			,	ID
+			)
+		requires
+			(	::ID::ends_with
+				(	ID<t_rpFront...>::StringView
+				,	StringView
+				)
+			)
+		{	return
+			[]	<	Meta::USize
+					...	t_npIndex
+				>(	std::index_sequence
+					<	t_npIndex
+						...
+					>
+				)
+			{	return
+					::Function::ID
+					<	::ID::ToReference
+						(	ID<t_rpFront...>::StringLiteral
+							[	t_npIndex
+
+							]
+						)
+						...
+					>{}
+				;
+			}(	std::make_index_sequence
+				<	sizeof...(t_rpFront)
+				-	sizeof...(t_rpString)
+				>{}
+			);
+		}
+
+		template
+			<	char const
+				&
+				...	t_rpBack
+			>
+		[[nodiscard]]
+		friend auto constexpr
+			operator+
+			(	ID
+			,	ID
+				<	t_rpBack
+					...
+				>
+			)
+		{	return
+			ID
+			<	t_rpString
+				...
+			,	t_rpBack
+				...
+			>{};
+		}
 	};
+
+	template<>
+	struct
+		ID<>
+	{
+		template
+			<	char const
+				&
+				...	t_rpBack
+			>
+		[[nodiscard]]
+		friend auto constexpr
+			operator-
+			(	ID
+			,	ID
+				<	t_rpBack
+					...
+				>
+			)
+		{	return
+				ID
+				<	t_rpBack
+					...
+				>{}
+			;
+		}
+
+		template
+			<	char const
+				&
+				...	t_rpFront
+			>
+		[[nodiscard]]
+		friend auto constexpr
+			operator-
+			(	ID
+				<	t_rpFront
+					...
+				>
+			,	ID
+			)
+		{	return
+				ID
+				<	t_rpFront
+					...
+				>{}
+			;
+		}
+
+		template
+			<	char const
+				&
+				...	t_rpBack
+			>
+		[[nodiscard]]
+		friend auto constexpr
+			operator+
+			(	ID
+			,	ID
+				<	t_rpBack
+					...
+				>
+			)
+		{	return
+			ID
+			<	t_rpBack
+				...
+			>{};
+		}
+	};
+
+	using ::ID::operator<=>;
+}
+
+export namespace
+	ID
+{
+	template
+		<	typename
+				t_tID
+		>
+	concept
+		Instance
+	=	requires(t_tID c_vID)
+		{
+			::Function::ID{c_vID};
+		}
+	;
 
 	/// dispatches a string literal into its characters
 	///	creates an instance of the given identifer template with all dispatched characters inserted
 	template
-		<	template
-				<	char const
-					&
-					...
-				>
-			typename
-				t_t1Destination
-		,	StringLiteral
+		<	StringLiteral
 				t_vStringLiteral
 		>
 	auto constexpr
@@ -299,7 +458,7 @@ export namespace
 				>
 			)
 		{	return
-				t_t1Destination
+				::Function::ID
 				<	ToReference
 					(	t_vStringLiteral
 						[	t_npIndex
@@ -316,56 +475,79 @@ export namespace
 
 	/// creates an identifier type
 	template
-		<	template
-				<	char const
-					&
-					...
-				>
-			typename
-				t_t1Destination
-		,	StringLiteral
+		<	StringLiteral
 				t_vStringLiteral
 		>
 	using
 		MakeT
 	=	decltype(
 			Make
-			<	t_t1Destination
-			,	t_vStringLiteral
+			<	t_vStringLiteral
 			>()
 		)
 	;
 
 	/// create an identifier value
 	template
-		<	template
-				<	char
-					...
-				>
-			typename
-				t_t1Destination
-		,	StringLiteral
+		<	StringLiteral
 				t_vStringLiteral
 		>
 	auto constexpr
 		MakeV
 	=	Make
-		<	t_t1Destination
-		,	t_vStringLiteral
+		<	t_vStringLiteral
 		>()
 	;
+
+	template
+		<	StringLiteral
+				t_vString
+		>
+	[[nodiscard]]
+	auto constexpr
+		operator
+		""_id
+		()
+	->	MakeT
+		<	t_vString
+		>
+	{	return{};	}
 }
 
 static_assert
 (	starts_with
-	(	ID::Base<I, a, b, c>{}
+	(	Function::ID<a, b, c>{}
 	,	ID::StringLiteral{"ab"}
 	)
 );
 
 static_assert
 (	ends_with
-	(	ID::Base<I, a, b, c>{}
+	(	Function::ID<a, b, c>{}
 	,	ID::StringLiteral{"bc"}
 	)
+);
+
+using ID::operator""_id;
+using ID::operator==;
+
+static_assert
+(	"ab"_id
++	"c"_id
+==	"abc"_id
+);
+static_assert
+(	"ab"_id
+-	"abc"_id
+==	"c"_id
+);
+static_assert
+(	"a"_id
++	"bc"_id
+==	"abc"_id
+);
+static_assert
+(	"abc"_id
+-	"bc"_id
+==	"a"_id
 );

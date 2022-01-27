@@ -1,7 +1,3 @@
 add_module(Concepts.cpp)
-add_module(Data.cpp)
-add_module(Func.cpp)
 add_module(Make.cpp)
-add_module(Modify.cpp)
 add_module(StringLiteral.cpp)
-add_module(Type.cpp)

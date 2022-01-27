@@ -35,23 +35,23 @@ export namespace
 		>
 	requires
 		ValidAddress
-		<	ID::FuncT<"GetComputeAreaMultiplier">
+		<	::ID::MakeT<"GetComputeAreaMultiplier">
 		,	t_tShape const
 			&
 		>
 	and ValidAddress
-		<	ID::FuncT<"GetHeight">
+		<	::ID::MakeT<"GetHeight">
 		,	t_tShape const
 			&
 		>
 	and	ValidAddress
-		<	ID::FuncT<"GetWidth">
+		<	::ID::MakeT<"GetWidth">
 		,	t_tShape const
 			&
 		>
 	auto constexpr
 		MapAddress
-		(	ID::FuncT<"ComputeArea">
+		(	::ID::MakeT<"ComputeArea">
 		,	t_tShape const
 			&
 		)

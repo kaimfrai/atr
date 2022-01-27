@@ -1,6 +1,6 @@
 export module Layout.Fork;
 
-export import ID.Data;
+export import ID.Make;
 
 export namespace
 	Layout
@@ -14,7 +14,7 @@ export namespace
 		>
 	concept
 		MemberAccessIDOf
-	=	ID::DataInstance
+	=	ID::Instance
 		<	t_tDataID
 		>
 	and	requires

@@ -2,7 +2,7 @@ export module Layout.DataMember;
 
 export import Meta.Value;
 export import Layout.Initializer;
-export import ID.Data;
+export import ID.Make;
 export import Std;
 
 export import Pack.Filter;
@@ -20,7 +20,7 @@ export namespace
 {
 	/// wraps around a value and provides access to it by a name token
 	template
-		<	ID::DataInstance
+		<	ID::Instance
 				t_tName
 		,	typename
 				t_tValue
@@ -53,7 +53,7 @@ export namespace
 
 	/// wraps around a value and provides access to it by a name token
 	template
-		<	ID::DataInstance
+		<	ID::Instance
 				t_tName
 		,	Stateless::Type
 				t_tValue
@@ -318,7 +318,7 @@ export namespace
 		(	DataMemberConfig
 		)	(	Meta::TypeToken<t_tEntity>
 					i_vType
-			,	ID::DataInstance auto
+			,	ID::Instance auto
 					i_vName
 			)
 		:	DataMember
@@ -569,7 +569,7 @@ export namespace
 		InfoV
 	=	DataMemberConfig<1uz>
 		{	Meta::Type<t_tValue>
-		,	ID::DataV<t_vName>
+		,	ID::MakeV<t_vName>
 		}
 	;
 
@@ -583,11 +583,11 @@ export namespace
 		Alias
 	=	DataMemberInfo
 		{	Meta::Type
-			<	ID::DataT
+			<	ID::MakeT
 				<	t_vTargetID
 				>
 			>
-		,	ID::DataT<t_vOriginID>::RawArray
+		,	ID::MakeT<t_vOriginID>::RawArray
 		}
 	;
 }

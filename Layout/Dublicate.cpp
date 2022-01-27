@@ -2,9 +2,7 @@ export module Layout.Dublicate;
 
 export import Layout.DataMember;
 
-export import ID.Modify;
-export import ID.Decimal;
-export import ID.Data;
+export import ID.Make;
 export import Pack.Fold;
 export import Pack.MakeSequence;
 export import Pack.Cast;
@@ -21,7 +19,7 @@ export namespace
 		Dublicator
 	{
 		template
-			<	ID::DataInstance
+			<	ID::Instance
 					t_tName
 			,	Std::Object
 					t_tValue

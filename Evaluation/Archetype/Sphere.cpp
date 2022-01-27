@@ -22,7 +22,7 @@ export namespace
 	template<>
 	auto constexpr
 	(	Invoke
-		<	ID::FuncT<"ComputeVolume">
+		<	::ID::MakeT<"ComputeVolume">
 		,	Bodies3D::Sphere const&
 		>
 	)	(	Bodies3D::Sphere const&

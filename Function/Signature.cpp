@@ -4,7 +4,7 @@ export import Function.Body;
 export import Function.StaticDependency;
 export import Function.ArgumentDependency;
 
-export import ID.Func;
+export import ID.Make;
 
 export namespace
 	Function

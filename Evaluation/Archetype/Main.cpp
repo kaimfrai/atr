@@ -11,8 +11,8 @@ import Evaluation.Shared.TypeConstruct;
 import Evaluation.Shared.MainTemplate;
 
 static_assert
-(	Function::Address<ID::FuncT<"ComputeVolume">, Bodies3D::Head const&>()
-==	Function::Address<ID::FuncT<"ComputeVolume">, Bodies3D::Sphere const&>()
+(	Function::Address<::ID::MakeT<"ComputeVolume">, Bodies3D::Head const&>()
+==	Function::Address<::ID::MakeT<"ComputeVolume">, Bodies3D::Sphere const&>()
 );
 
 auto
@@ -25,7 +25,7 @@ auto
 	)
 -> int
 {
-	using ID::operator""_fID;
+	using ID::operator""_id;
 	using namespace Bodies3D;
 
 	using
@@ -51,7 +51,7 @@ auto
 			)
 		{	return
 				i_rBody3D
-				(	"ComputeVolume"_fID
+				(	"ComputeVolume"_id
 				)
 			;
 		}

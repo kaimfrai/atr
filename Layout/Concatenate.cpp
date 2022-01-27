@@ -2,7 +2,7 @@ export module Layout.Concatenate;
 
 export import Layout.DataMember;
 
-export import ID.Modify;
+export import ID.Make;
 
 export import Pack.Instance;
 export import Pack.Transform;
@@ -41,7 +41,7 @@ export namespace
 					]
 				.	Name
 				=	(	i_vPrefix
-					+	ID::DataV
+					+	ID::MakeV
 						<	ID::StringLiteral
 							<	t_vConfig[t_npIndex].Name.size() + 1uz
 							>{	t_vConfig[t_npIndex].Name.data()

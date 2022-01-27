@@ -35,28 +35,28 @@ export namespace
 		>
 	requires
 		ValidAddress
-		<	ID::FuncT<"GetComputeVolumeMultiplier">
+		<	::ID::MakeT<"GetComputeVolumeMultiplier">
 		,	t_tBody const
 			&
 		>
 	and ValidAddress
-		<	ID::FuncT<"GetDepth">
+		<	::ID::MakeT<"GetDepth">
 		,	t_tBody const
 			&
 		>
 	and	ValidAddress
-		<	ID::FuncT<"GetHeight">
+		<	::ID::MakeT<"GetHeight">
 		,	t_tBody const
 			&
 		>
 	and	ValidAddress
-		<	ID::FuncT<"GetWidth">
+		<	::ID::MakeT<"GetWidth">
 		,	t_tBody const
 			&
 		>
 	auto constexpr
 		MapAddress
-		(	ID::FuncT<"ComputeVolume">
+		(	::ID::MakeT<"ComputeVolume">
 		,	t_tBody const
 			&
 		)

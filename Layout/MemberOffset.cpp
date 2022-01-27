@@ -5,7 +5,7 @@ export import Layout.DataMember;
 
 export import Std;
 
-export import ID.Data;
+export import ID.Make;
 
 export import PackTemplate.Instance;
 export import Pack.Instance;
@@ -231,7 +231,7 @@ export namespace
 				>
 			typename
 				t_t1Qualifier
-		,	ID::DataInstance
+		,	ID::Instance
 				t_tName
 		,	typename
 				t_tValue
@@ -266,7 +266,7 @@ export namespace
 		>
 	concept
 		MemberOffsetIDOf
-	=	ID::DataInstance
+	=	ID::Instance
 		<	t_tDataID
 		>
 	and	requires

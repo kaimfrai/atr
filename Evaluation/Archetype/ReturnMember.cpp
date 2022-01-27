@@ -6,7 +6,7 @@ export import Archetype.Instance;
 export namespace
 	Function
 {
-	using ID::operator""_trim;
+	using ::ID::operator""_id;
 
 	/// simply returns a member
 	auto inline
@@ -17,21 +17,21 @@ export namespace
 		)
 	noexcept
 	->	decltype(auto)
-	{	using ID::operator""_dID;
+	{	using ::ID::operator""_id;
 		return
 			i_vObject
-			[	"Member"_dID
+			[	"Member"_id
 			]
 		;
 	}
 
 	/// functions prefixed with Get return the datamember withouth get
 	template
-		<	ID::FuncPrefix<"Get">
+		<	::ID::Prefix<"Get">
 				t_tGetter
-		,	ID::StringLiteral
+		,	::ID::StringLiteral
 				t_vDataMember
-			=	(	"Get"_trim
+			=	(	"Get"_id
 				-	t_tGetter
 					{}
 				).StringLiteral
@@ -47,7 +47,7 @@ export namespace
 			MemberType
 		=	decltype
 			(	i_rObject
-				[	ID::DataV
+				[	::ID::MakeV
 					<	t_vDataMember
 					>
 				]
@@ -59,9 +59,9 @@ export namespace
 		=	[]
 			{
 				if constexpr
-					(	ID::DataInstance
-						<	MemberType
-						>
+					(	requires
+						{	MemberType::StringLiteral;
+						}
 					)
 				{	return
 						MemberType::StringLiteral

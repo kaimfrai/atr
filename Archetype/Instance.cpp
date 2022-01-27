@@ -1,8 +1,6 @@
 export module Archetype.Instance;
 
-export import ID.Data;
-export import ID.Func;
-export import ID.Type;
+export import ID.Make;
 export import Function.Address;
 export import Archetype.LayoutInfo;
 export import Layout.MemberOffset;
@@ -17,7 +15,7 @@ export namespace
 	Archetype
 {
 	template
-		<	ID::TypeInstance
+		<	ID::Instance
 				t_tTypeID
 		>
 	struct
@@ -86,7 +84,7 @@ export namespace
 			>
 		requires
 			Layout::MemberAccessIDOf
-			<	ID::DataT
+			<	ID::MakeT
 				<	t_vMemberName
 				>
 			,	LayoutType
@@ -101,7 +99,7 @@ export namespace
 		->	decltype(auto)
 		{	return
 				Layout
-				[	ID::DataV
+				[	ID::MakeV
 					<	t_vMemberName
 					>
 				]
@@ -114,7 +112,7 @@ export namespace
 			>
 		requires
 			Layout::MemberAccessIDOf
-			<	ID::DataT
+			<	ID::MakeT
 				<	t_vMemberName
 				>
 			,	LayoutType
@@ -130,7 +128,7 @@ export namespace
 		{
 			return
 				Layout
-				[	ID::DataV
+				[	ID::MakeV
 					<	t_vMemberName
 					>
 				]
@@ -145,7 +143,7 @@ export namespace
 			>
 		requires
 			Layout::MemberAccessIDOf
-			<	ID::DataT
+			<	ID::MakeT
 				<	t_vMemberName
 				>
 			,	LayoutType
@@ -171,7 +169,7 @@ export namespace
 
 		/// call const member functions
 		template
-			<	ID::FuncInstance
+			<	ID::Instance
 					t_tFunctionName
 			,	typename
 				...	t_tpArgument
@@ -218,7 +216,7 @@ export namespace
 
 		/// call non-const member functions
 		template
-			<	ID::FuncInstance
+			<	ID::Instance
 					t_tFunctionName
 			,	typename
 				...	t_tpArgument
@@ -272,7 +270,7 @@ export namespace
 			>
 		requires
 			Function::ValidAddress
-			<	ID::FuncT
+			<	::ID::MakeT
 				<	t_vFuncID
 				>
 			,	Instance
@@ -290,7 +288,7 @@ export namespace
 			)	const
 			noexcept(
 				Function::AddressNoexcept
-				<	ID::FuncT
+				<	::ID::MakeT
 					<	t_vFuncID
 					>
 				,	Instance
@@ -302,7 +300,7 @@ export namespace
 		->	decltype(auto)
 		{	return
 				Function::Invoke
-				<	ID::FuncT
+				<	::ID::MakeT
 					<	t_vFuncID
 					>
 				>(	*this
@@ -324,7 +322,7 @@ export namespace
 			>
 		requires
 			Function::ValidAddress
-			<	ID::FuncT
+			<	::ID::MakeT
 				<	t_vFuncID
 				>
 			,	Instance
@@ -342,7 +340,7 @@ export namespace
 			)
 			noexcept(
 				Function::AddressNoexcept
-				<	ID::FuncT
+				<	::ID::MakeT
 					<	t_vFuncID
 					>
 				,	Instance
@@ -354,7 +352,7 @@ export namespace
 		->	decltype(auto)
 		{	return
 				Function::Invoke
-				<	ID::FuncT
+				<	::ID::MakeT
 					<	t_vFuncID
 					>
 				>(	*this
@@ -375,7 +373,7 @@ export namespace
 	using
 		Make
 	=	Instance
-		<	ID::TypeT
+		<	ID::MakeT
 			<	t_vTypeID
 			>
 		>
@@ -393,7 +391,7 @@ export namespace
 		OffsetOf
 		(	t_tArchetype
 			&&
-		,	ID::DataInstance auto
+		,	ID::Instance auto
 				i_vName
 		)
 	{	return
@@ -420,7 +418,7 @@ export namespace
 	concept
 		HasDataMember
 	=	Layout::MemberAccessIDOf
-		<	ID::DataT<t_vMemberName>
+		<	ID::MakeT<t_vMemberName>
 		,	typename
 			t_tObject
 			::	LayoutType

@@ -6,8 +6,7 @@ export import Function.StaticDependency;
 export import Archetype.LayoutInfo;
 
 export import Layout.MemberOffset;
-export import ID.Func;
-export import ID.Data;
+export import ID.Make;
 export import ID.StringLiteral;
 export import Pack.Concat;
 export import Pack.Type;
@@ -19,9 +18,9 @@ export namespace
 {
 	/// maps one Identifier to another
 	template
-		<	ID::StringLiteralInstance
+		<	::ID::StringLiteralInstance
 				t_tOriginIdentifier
-		,	ID::StringLiteralInstance
+		,	::ID::StringLiteralInstance
 				t_tTargetIdentifier
 		>
 	struct
@@ -55,7 +54,7 @@ export namespace
 	};
 
 	template
-		<	ID::StringLiteralInstance
+		<	::ID::StringLiteralInstance
 				t_tOriginIdentifier
 		>
 	struct
@@ -67,7 +66,7 @@ export namespace
 
 		constexpr
 			DataIDOrigin
-			(	ID::PseudoStringLiteral auto
+			(	::ID::PseudoStringLiteral auto
 				&&	i_rIdentifier
 			)
 		:	Identifier
@@ -83,7 +82,7 @@ export namespace
 			(	DataIDOrigin
 				const
 				&	i_rOriginID
-			,	ID::PseudoStringLiteral auto
+			,	::ID::PseudoStringLiteral auto
 				&&	i_rTargetDataID
 			)
 		{
@@ -91,7 +90,7 @@ export namespace
 				DataIDMap
 				{	i_rOriginID
 					.	Identifier
-				,	ID::StringLiteral
+				,	::ID::StringLiteral
 					{	i_rTargetDataID
 					}
 				}
@@ -100,7 +99,7 @@ export namespace
 	};
 
 	template
-		<	ID::PseudoStringLiteral
+		<	::ID::PseudoStringLiteral
 				t_tIdentifier
 		>
 		DataIDOrigin
@@ -109,7 +108,7 @@ export namespace
 		)
 	->	DataIDOrigin
 		<	decltype(
-				ID::StringLiteral
+				::ID::StringLiteral
 				{	i_rIdentifier
 				}
 			)
@@ -119,7 +118,7 @@ export namespace
 	constexpr
 	auto
 		MapDataID
-		(	ID::PseudoStringLiteral auto
+		(	::ID::PseudoStringLiteral auto
 			&&	i_rIdentifier
 		)
 	{
@@ -145,7 +144,7 @@ export namespace
 		constexpr
 		auto
 			TargetDataID
-		=	ID::DataV
+		=	::ID::MakeV
 			<	t_vDataIDMap
 				.	TargetID
 			>
@@ -154,7 +153,7 @@ export namespace
 		constexpr
 		auto
 			OriginDataID
-		=	ID::DataV
+		=	::ID::MakeV
 			<	t_vDataIDMap
 				.	OriginID
 			>
@@ -180,9 +179,9 @@ export namespace
 
 	/// maps one Identifier to another
 	template
-		<	ID::StringLiteralInstance
+		<	::ID::StringLiteralInstance
 				t_tOriginIdentifier
-		,	ID::StringLiteralInstance
+		,	::ID::StringLiteralInstance
 				t_tTargetIdentifier
 		,	Pack::TypeInstance
 				t_tArgumentPack
@@ -223,7 +222,7 @@ export namespace
 	};
 
 	template
-		<	ID::StringLiteralInstance
+		<	::ID::StringLiteralInstance
 				t_tOriginIdentifier
 		,	typename
 			...	t_tpArgument
@@ -242,7 +241,7 @@ export namespace
 			operator->*
 			(	FuncIDOrigin const
 				&	i_rOriginID
-			,	ID::PseudoStringLiteral auto
+			,	::ID::PseudoStringLiteral auto
 				&&	i_rTargetID
 			)
 		{
@@ -250,7 +249,7 @@ export namespace
 				FuncIDMap
 				{	i_rOriginID
 					.	Identifier
-				,	ID::StringLiteral
+				,	::ID::StringLiteral
 					{	i_rTargetID
 					}
 				,	Pack::Type
@@ -269,20 +268,20 @@ export namespace
 	constexpr
 	auto
 		MapFuncID
-		(	ID::PseudoStringLiteral auto
+		(	::ID::PseudoStringLiteral auto
 			&&	i_rIdentifier
 		)
 	{
 		return
 			FuncIDOrigin
 			<	decltype(
-					ID::StringLiteral
+					::ID::StringLiteral
 					{	i_rIdentifier
 					}
 				)
 			,	t_tpArgument
 				...
-			>{	ID::StringLiteral
+			>{	::ID::StringLiteral
 				{	i_rIdentifier
 				}
 			}
@@ -304,7 +303,7 @@ export namespace
 		constexpr
 		auto
 			TargetFuncID
-		=	ID::FuncV
+		=	::ID::MakeV
 			<	t_vFuncIDMap
 				.	TargetID
 			>
@@ -313,7 +312,7 @@ export namespace
 		constexpr
 		auto
 			OriginFuncID
-		=	ID::FuncV
+		=	::ID::MakeV
 			<	t_vFuncIDMap
 				.	OriginID
 			>

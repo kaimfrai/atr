@@ -4,8 +4,7 @@ export import Function.DependencyIDMap;
 export import Function.StaticDependency;
 export import Function.DataDependencyItem;
 
-export import ID.Func;
-export import ID.Data;
+export import ID.Make;
 export import ID.StringLiteral;
 
 export namespace
@@ -14,7 +13,7 @@ export namespace
 	template
 		<	typename
 				t_tConstant
-		,	ID::StringLiteralInstance
+		,	::ID::StringLiteralInstance
 				t_tTargetIdentifier
 		>
 	struct
@@ -59,7 +58,7 @@ export namespace
 			operator->*
 			(	ConstantOrigin const
 				&	i_rConstant
-			,	ID::PseudoStringLiteral auto
+			,	::ID::PseudoStringLiteral auto
 				&&	i_rTargetID
 			)
 		{
@@ -70,7 +69,7 @@ export namespace
 						&
 					>(	i_rConstant
 					)
-				,	ID::StringLiteral
+				,	::ID::StringLiteral
 					{	i_rTargetID
 					}
 				}
@@ -91,7 +90,7 @@ export namespace
 		constexpr
 		auto
 			TargetDataID
-		=	ID::DataV
+		=	::ID::MakeV
 			<	t_vConstantIDMap
 				.	TargetID
 			>
@@ -119,7 +118,7 @@ export namespace
 		constexpr
 		auto
 			TargetFuncID
-		=	ID::FuncV
+		=	::ID::MakeV
 			<	t_vFuncIDMap
 				.	TargetID
 			>
@@ -128,7 +127,7 @@ export namespace
 		constexpr
 		auto
 			OriginFuncID
-		=	ID::FuncV
+		=	::ID::MakeV
 			<	t_vFuncIDMap
 				.	OriginID
 			>
@@ -147,7 +146,7 @@ export namespace
 	}
 
 	template
-		<	ID::StringLiteral
+		<	::ID::StringLiteral
 				t_vFuncID
 		,	auto
 			...	t_vpIDMap

@@ -1,6 +1,6 @@
 export module Archetype.LayoutInfo;
 
-export import ID.Type;
+export import ID.Make;
 export import ID.StringLiteral;
 export import Layout.Concatenate;
 export import Layout.LayoutCreator;
@@ -35,9 +35,9 @@ export namespace
 	Layout::DataMemberConfig constexpr inline
 		PrefixedLayoutConfig
 	=	Layout::InfixLayoutConfig
-		(	ID::MakeV<ID::Extend, i_vPrefix>
+		(	ID::MakeV<i_vPrefix>
 		,	Meta::V<LayoutConfig<i_vType>>
-		,	ID::Extend<>{}
+		,	Function::ID<>{}
 		)
 	;
 
@@ -52,16 +52,16 @@ export namespace
 	Layout::DataMemberConfig constexpr inline
 		SuffixedLayoutConfig
 	=	Layout::InfixLayoutConfig
-		(	ID::Extend<>{}
+		(	Function::ID<>{}
 		,	Meta::V<LayoutConfig<i_vType>>
-		,	ID::MakeV<ID::Extend, i_vSuffix>
+		,	ID::MakeV<i_vSuffix>
 		)
 	;
 
 	[[nodiscard]]
 	auto constexpr
 		CreateLayout
-		(	ID::TypeInstance auto
+		(	ID::Instance auto
 				i_vTypeID
 		,	PackTemplate::TypeInstance auto
  				i_vSplitTemplate
@@ -87,7 +87,7 @@ export namespace
 
 	/// the type mapped to the string literal by LayoutInfo
 	template
-		<	ID::TypeInstance
+		<	ID::Instance
 				t_tTypeID
 		>
 	using

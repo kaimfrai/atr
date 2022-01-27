@@ -2,7 +2,7 @@ export module Function.Address;
 
 export import Function.Erase;
 export import Function.Signature;
-export import ID.Func;
+export import ID.Make;
 export import Std.FunctionTraits;
 export import Std.Concepts;
 
@@ -76,7 +76,7 @@ export namespace
 		>
 	concept
 		ValidAddress
-	=	ID::FuncInstance
+	=	::ID::Instance
 		<	t_tFunctionName
 		>
 	and	requires
@@ -99,7 +99,7 @@ export namespace
 
 	/// stores the address to the implementation of the function
 	template
-		<	ID::FuncInstance
+		<	::ID::Instance
 				t_tFuncID
 		,	typename
 			...	t_tpArgument
@@ -131,7 +131,7 @@ export namespace
 
 	/// stores the address to the implementation of the function
 	template
-		<	ID::FuncInstance
+		<	::ID::Instance
 				t_tFunctionName
 		,	typename
 			...	t_tpArgument
@@ -156,7 +156,7 @@ export namespace
 
 	/// invokes the function specified with the given FuncID
 	template
-		<	ID::FuncInstance
+		<	::ID::Instance
 				t_tFuncID
 		,	typename
 			...	t_tpArgument
@@ -216,11 +216,11 @@ export namespace
 		;
 
 		template
-		<	ID::FuncInstance
-				t_tFuncID
-		,	typename
-			...	t_tpArgument
-		>
+			<	::ID::Instance
+					t_tFuncID
+			,	typename
+				...	t_tpArgument
+			>
 		constexpr
 		explicit
 			AddressProxy
@@ -244,7 +244,7 @@ export namespace
 	};
 
 	template
-		<	ID::FuncInstance
+		<	::ID::Instance
 				t_tFuncID
 		,	typename
 			...	t_tpArgument

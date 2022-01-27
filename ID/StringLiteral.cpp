@@ -71,6 +71,28 @@ export namespace
 	///	Namespace scope allows making use of implicit conversions.
 	///	This allows for template argument erasure.
 	auto constexpr
+	(	operator==
+	)	(	StringView const
+			&	i_rLeft
+		,	StringView const
+			&	i_rRight
+		)
+	->	bool
+	{	return
+		(	static_cast
+			<	Meta::Value<Meta::Value<char> const[]> const&
+			>(	i_rLeft
+			)
+		==	static_cast
+			<	Meta::Value<Meta::Value<char> const[]> const&
+			>(	i_rRight
+			)
+		);
+	}
+
+	///	Namespace scope allows making use of implicit conversions.
+	///	This allows for template argument erasure.
+	auto constexpr
 	(	operator<=>
 	)	(	StringView const
 			&	i_rLeft
