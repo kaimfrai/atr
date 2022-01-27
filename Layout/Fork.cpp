@@ -1,6 +1,7 @@
 export module Layout.Fork;
 
 export import ID.Make;
+export import Stateless.Type;
 
 export namespace
 	Layout
