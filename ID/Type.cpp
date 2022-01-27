@@ -1,25 +1,28 @@
 export module ID.Type;
 
 export import ID.Concepts;
-export import ID.Base;
 export import ID.Make;
 export import ID.StringLiteral;
 
 export import PackTemplate.Instance;
 export import Std.Concepts;
 
+char constexpr inline Type = 'T';
+
 export namespace
 	ID
 {
 	/// identifies types
 	template
-		<	char
-			...	t_vpString
+		<	char const
+			&
+			...	t_rpString
 		>
 	struct
 		Type
 	:	Base
-		<	t_vpString
+		<	::Type
+		,	t_rpString
 			...
 		>
 	{};
@@ -31,10 +34,8 @@ export namespace
 		>
 	concept
 		TypeInstance
-	=	PackTemplate::ValueInstanceOf
-		<	t_tTypeID
-		,	Type
-		>
+	=	&t_tTypeID::Identifier
+	==	&::Type
 	;
 
 	/// accepts a string and converts it to a data identifier type

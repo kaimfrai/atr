@@ -1,25 +1,29 @@
 export module ID.Data;
 
 export import ID.Concepts;
-export import ID.Base;
 export import ID.Make;
 export import ID.StringLiteral;
 
 export import PackTemplate.Instance;
 export import Std.Concepts;
 
+char const Data = 'D';
+
 export namespace
 	ID
 {
+
 	/// identifies data
 	template
-		<	char
-			...	t_vpString
+		<	char const
+			&
+			...	t_rpString
 		>
 	struct
 		Data
 	:	Base
-		<	t_vpString
+		<	::Data
+		,	t_rpString
 			...
 		>
 	{};
@@ -31,10 +35,8 @@ export namespace
 		>
 	concept
 		DataInstance
-	=	PackTemplate::ValueInstanceOf
-		<	t_tDataID
-		,	Data
-		>
+	=	&t_tDataID::Identifier
+	==	&::Data
 	;
 
 	/// accepts a string and converts it to a data identifier type

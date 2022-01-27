@@ -3,7 +3,6 @@ export module Layout.Concatenate;
 export import Layout.DataMember;
 
 export import ID.Modify;
-export import ID.Base;
 
 export import Pack.Instance;
 export import Pack.Transform;
@@ -12,19 +11,15 @@ export namespace
 	Layout
 {
 	template
-		<	char
-			...	t_npPrefix
-		,	DataMemberConfig
+		<	DataMemberConfig
 				t_vConfig
-		,	char
-			...	t_npSuffix
 		>
 	auto constexpr
 	(	InfixLayoutConfig
-	)	(	ID::Extend<t_npPrefix...>
+	)	(	auto
 				i_vPrefix
 		,	Meta::ValueInfo<t_vConfig>
-		,	ID::Extend<t_npSuffix...>
+		,	auto
 				i_vSuffix
 		)
 	->	decltype(t_vConfig)

@@ -1,12 +1,13 @@
 export module ID.Func;
 
 export import ID.Concepts;
-export import ID.Base;
 export import ID.Make;
 export import ID.StringLiteral;
 
 export import PackTemplate.Instance;
 export import Std.Concepts;
+
+char constexpr inline Func = 'F';
 
 export namespace
 	Function
@@ -14,13 +15,15 @@ export namespace
 	/// required for ADL of MapAddress
 	/// identifies functions
 	template
-		<	char
-			...	t_vpString
+		<	char const
+			&
+			...	t_rpString
 		>
 	struct
 		Name
 	:	ID::Base
-		<	t_vpString
+		<	::Func
+		,	t_rpString
 			...
 		>
 	{};
@@ -36,10 +39,8 @@ export namespace
 		>
 	concept
 		FuncInstance
-	=	PackTemplate::ValueInstanceOf
-		<	t_tFuncID
-		,	Function::Name
-		>
+	=	&t_tFuncID::Identifier
+	==	&::Func
 	;
 
 	/// accepts a string and converts it to a function identifier type

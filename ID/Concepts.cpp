@@ -47,11 +47,11 @@ export namespace
 		>
 	concept
 		Prefix
-	=	PackTemplate::ValueInstanceOf
+	=	/*PackTemplate::ValueInstanceOf
 		<	t_tID
 		,	t_t1Sequence
 		>
-	and starts_with(t_tID{}, t_vStart)
+	and */starts_with(t_tID{}, t_vStart)
 	;
 
 	/// checks if an identifier end with a given string and is an instance of a given template
@@ -69,10 +69,10 @@ export namespace
 		>
 	concept
 		Suffix
-	=	PackTemplate::ValueInstanceOf
+	=	/*PackTemplate::ValueInstanceOf
 		<	t_tID
 		,	t_t1Sequence
 		>
-	and	ends_with(t_tID{}, t_vEnd)
+	and*/	ends_with(t_tID{}, t_vEnd)
 	;
 }

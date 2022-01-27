@@ -1,6 +1,5 @@
 export module ID.Modify;
 
-export import ID.Base;
 export import ID.Make;
 export import ID.StringLiteral;
 
@@ -11,36 +10,39 @@ export namespace
 	ID
 {
 	template
-		<	char
-			...	t_vpString
+		<	char const
+			&
+			...	t_rpString
 		>
 	struct
 		Trim
 	{
 		template
 			<	template
-					<	char
+					<	char const
+						&
 						...
 					>
 				typename
 					t_t1Identifier
-			,	char
-				...	t_vpBack
+			,	char const
+				&
+				...	t_rpBack
 			>
 		[[nodiscard]]
 		friend auto constexpr
 			operator-
 			(	Trim
 			,	t_t1Identifier
-				<	t_vpString
+				<	t_rpString
 					...
-				,	t_vpBack
+				,	t_rpBack
 					...
 				>
 			)
 		{	return
 				t_t1Identifier
-				<	t_vpBack
+				<	t_rpBack
 					...
 				>{}
 			;
@@ -84,36 +86,39 @@ export namespace
 	{	return{};	}
 
 	template
-		<	char
-			...	t_vpString
+		<	char const
+			&
+			...	t_rpString
 		>
 	struct
 		Extend
 	{
 		template
 			<	template
-					<	char
+					<	char const
+						&
 						...
 					>
 				typename
 					t_t1Identifier
-			,	char
-				...	t_vpBack
+			,	char const
+				&
+				...	t_rpBack
 			>
 		[[nodiscard]]
 		friend auto constexpr
 			operator+
 			(	Extend
 			,	t_t1Identifier
-				<	t_vpBack
+				<	t_rpBack
 					...
 				>
 			)
 		{	return
 				t_t1Identifier
-				<	t_vpString
+				<	t_rpString
 					...
-				,	t_vpBack
+				,	t_rpBack
 					...
 				>{}
 			;
@@ -121,28 +126,30 @@ export namespace
 
 		template
 			<	template
-					<	char
+					<	char const
+						&
 						...
 					>
 				typename
 					t_t1Identifier
-			,	char
-				...	t_vpFront
+			,	char const
+				&
+				...	t_rpFront
 			>
 		[[nodiscard]]
 		friend auto constexpr
 			operator+
 			(	t_t1Identifier
-				<	t_vpFront
+				<	t_rpFront
 					...
 				>
 			,	Extend
 			)
 		{	return
 				t_t1Identifier
-				<	t_vpFront
+				<	t_rpFront
 					...
-				,	t_vpString
+				,	t_rpString
 					...
 				>{}
 			;
