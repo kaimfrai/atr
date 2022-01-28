@@ -1,0 +1,16 @@
+module dyno [system] {
+	header "ThirdParty/Dyno/Dyno.hpp"
+	export *
+}
+
+module polymorphic [system] {
+	header "ThirdParty/Polymorphic/Polymorphic.hpp"
+	export *
+}
+
+module boost [system] {
+	module type_erasure {
+		header "ThirdParty/Boost/TypeErasure.hpp"
+		export *
+	}
+}

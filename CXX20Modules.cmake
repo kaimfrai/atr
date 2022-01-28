@@ -20,6 +20,7 @@ function(invoke_preprocessor
 		${file_content}
 	)
 	set(${out_preprocessed_file} "${file_content}" PARENT_SCOPE)
+
 endfunction()
 
 function(read_module_name
@@ -32,6 +33,7 @@ function(read_module_name
 
 	set(${out_module_name} ${module_name} PARENT_SCOPE)
 	set(${out_module_file} ${PREBUILT_MODULE_PATH}/${module_name}${MODULE_INTERFACE_EXTENSION} PARENT_SCOPE)
+
 endfunction()
 
 function(read_module_headerunits
@@ -102,6 +104,7 @@ function(add_module
 		${module_file}
 		compile_module_interface_command
 	)
+
 	add_custom_command(
 	OUTPUT
 		${module_file}

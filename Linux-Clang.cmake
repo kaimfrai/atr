@@ -11,18 +11,28 @@ set(CXX_STANDARD_LIBRARY_FLAG
 )
 set(PREBUILT_MODULE_PATH
 	${CMAKE_BINARY_DIR}/modules/${CMAKE_BUILD_TYPE}
+CACHE STRING
+	"The directory in which prebuild modules are stored."
 )
 set(MODULE_CACHE_PATH
-	${CMAKE_BINARY_DIR}/modules/${CMAKE_BUILD_TYPE}
+	${CMAKE_BINARY_DIR}/modules/${CMAKE_BUILD_TYPE}/cache/
+CACHE STRING
+	"The directory in which prebuild header units are stored."
 )
 
 file(
 MAKE_DIRECTORY
 	${PREBUILT_MODULE_PATH}
 )
+file(
+MAKE_DIRECTORY
+	${MODULE_CACHE_PATH}
+)
 
 set(MODULE_INTERFACE_EXTENSION
 	.pcm
+CACHE STRING
+	"The extension used for prebuild module files."
 )
 
 set(WARNING_FLAGS
@@ -43,6 +53,7 @@ set(WARNING_FLAGS
 	-Wno-pre-c++17-compat-pedantic	#using c++23
 	-Wno-c++20-compat-pedantic		#using c++23
 )
+
 set(MODULE_FLAGS
 	-fmodules
 	-fprebuilt-module-path=${PREBUILT_MODULE_PATH}
@@ -50,6 +61,19 @@ set(MODULE_FLAGS
 	-fmodules-cache-path=${MODULE_CACHE_PATH}
 	-Xclang -fdisable-module-hash
 )
+
+set(CLANG_PROJECT_MODULE_MAP
+	${CMAKE_SOURCE_DIR}/module.modulemap
+CACHE STRING
+	"A file used by clang which specifies how headers are mapped to modules."
+)
+
+if (EXISTS ${CLANG_PROJECT_MODULE_MAP})
+	string(APPEND MODULE_FLAGS -fmodule-map-file=${CLANG_PROJECT_MODULE_MAP})
+else()
+	message(WARNING "Building header units with clang requires file ${CLANG_PROJECT_MODULE_MAP}!")
+endif()
+
 set(ADDITIONAL_COMPILE_OPTIONS
 	-fconstexpr-backtrace-limit=0
 	-ftemplate-backtrace-limit=0
@@ -99,6 +123,7 @@ function(
 	set(
 	${out_command}
 		${command}
-	PARENT_SCOPE)
+	PARENT_SCOPE
+	)
 
 endfunction()

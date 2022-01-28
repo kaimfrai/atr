@@ -1,4 +1,0 @@
-module dyno {
-	header "Dyno.hpp"
-	export *
-}
