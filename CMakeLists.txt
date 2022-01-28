@@ -20,6 +20,8 @@ set(CMAKE_CXX_EXTENSIONS
 	OFF
 )
 
+include(CMake/CXX20Modules.cmake)
+
 add_compile_options(
 	${CXX_STANDARD_LIBRARY_FLAG}
 	${WARNING_FLAGS}
@@ -29,8 +31,6 @@ add_compile_options(
 add_link_options(
 	${CXX_STANDARD_LIBRARY_FLAG}
 )
-
-include(CXX20Modules.cmake)
 
 add_subdirectory(Std)
 add_subdirectory(Meta)

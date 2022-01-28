@@ -1,13 +1,3 @@
-set(CMAKE_SYSTEM_NAME Linux)
-
-set(CMAKE_C_COMPILER "gcc-11")
-set(CMAKE_CXX_COMPILER "g++-11")
-
-set(CXX_STANDARD_VERSION_FLAG
-	-std=c++2b
-)
-set(CXX_STANDARD_LIBRARY_FLAG
-)
 set(PREBUILT_MODULE_PATH
 	${CMAKE_BINARY_DIR}/gcm.cache
 )
@@ -21,16 +11,8 @@ set(MODULE_INTERFACE_EXTENSION
 	.gcm
 )
 
-set(WARNING_FLAGS
-	-Wall
-	-Wextra
-	-Wpedantic
-	-Werror
-)
 set(MODULE_FLAGS
 	-fmodules-ts
-)
-set(ADDITIONAL_COMPILE_OPTIONS
 )
 
 function(

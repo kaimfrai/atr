@@ -1,21 +1,10 @@
-set(CMAKE_SYSTEM_NAME Linux)
-
-set(CMAKE_C_COMPILER "clang-13")
-set(CMAKE_CXX_COMPILER "clang++-13")
-
-set(CXX_STANDARD_VERSION_FLAG
-	-std=c++2b
-)
-set(CXX_STANDARD_LIBRARY_FLAG
-	-stdlib=libc++
-)
 set(PREBUILT_MODULE_PATH
-	${CMAKE_BINARY_DIR}/modules/${CMAKE_BUILD_TYPE}
+	${CMAKE_BINARY_DIR}/modules
 CACHE STRING
 	"The directory in which prebuild modules are stored."
 )
 set(MODULE_CACHE_PATH
-	${CMAKE_BINARY_DIR}/modules/${CMAKE_BUILD_TYPE}/cache/
+	${CMAKE_BINARY_DIR}/modules/cache
 CACHE STRING
 	"The directory in which prebuild header units are stored."
 )
@@ -34,26 +23,6 @@ set(MODULE_INTERFACE_EXTENSION
 CACHE STRING
 	"The extension used for prebuild module files."
 )
-
-set(WARNING_FLAGS
-	-Wall
-	-Wextra
-	-Wpedantic
-	#-Wmissing-variable-declarations
-	#-Wcomma
-	#-Wauto-import
-	#-Werror
-	#-Weverything
-	-Wno-weak-vtables
-	-Wno-padded
-	#triggered when using std::sort with defaulted comparison
-	-Wno-logical-op-parentheses
-	-Wno-zero-as-null-pointer-constant
-	-Wno-c++98-compat-pedantic		#using c++23
-	-Wno-pre-c++17-compat-pedantic	#using c++23
-	-Wno-c++20-compat-pedantic		#using c++23
-)
-
 set(MODULE_FLAGS
 	-fmodules
 	-fprebuilt-module-path=${PREBUILT_MODULE_PATH}
@@ -73,14 +42,6 @@ if (EXISTS ${CLANG_PROJECT_MODULE_MAP})
 else()
 	message(WARNING "Building header units with clang requires file ${CLANG_PROJECT_MODULE_MAP}!")
 endif()
-
-set(ADDITIONAL_COMPILE_OPTIONS
-	-fconstexpr-backtrace-limit=0
-	-ftemplate-backtrace-limit=0
-	-frelaxed-template-template-args
-	-fconstexpr-steps=4294967295
-	-ftime-trace
-)
 
 function(
 	add_module_source_header_units

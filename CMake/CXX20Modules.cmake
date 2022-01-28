@@ -1,3 +1,5 @@
+include(CMake/CXX20Modules/${CMAKE_CXX_COMPILER_ID}.cmake)
+
 function(invoke_preprocessor
 	file_name
 	out_preprocessed_file
@@ -122,7 +124,7 @@ function(add_module
 	if	(${ARGC} GREATER 1)
 		add_library(
 			${module_name}
-		STATIC
+		OBJECT
 			${module_interface_file}
 			${ARGN}
 		)
