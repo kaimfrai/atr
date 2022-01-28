@@ -35,7 +35,7 @@ export namespace
 		override
 		{
 			return
-				πFraction
+				PiFraction
 				<	1z
 				,	4z
 				>{}

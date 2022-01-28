@@ -16,7 +16,7 @@ export namespace
 		>
 	+	Layout::InfoV
 		<	"ComputeAreaMultiplier"
-		,	πFraction
+		,	PiFraction
 			<	1z
 			,	4z
 			>

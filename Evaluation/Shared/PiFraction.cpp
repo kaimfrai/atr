@@ -7,7 +7,7 @@ export import Std;
 export
 {
 	Float constexpr
-		π
+		Pi
 	=	std::numbers::pi_v
 		<	Float
 		>
@@ -22,7 +22,7 @@ export
 			=	1z
 		>
 	struct
-		πFraction
+		PiFraction
 	{
 		constexpr
 		auto
@@ -31,7 +31,7 @@ export
 		->	Float
 		{
 			return
-				π
+				Pi
 			*	static_cast<Float>(t_nNumerator)
 			/	static_cast<Float>(t_nDenominator)
 			;

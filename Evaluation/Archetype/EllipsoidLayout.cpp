@@ -16,7 +16,7 @@ export namespace
 		>
 	+	Layout::InfoV
 		<	"ComputeVolumeMultiplier"
-		,	πFraction
+		,	PiFraction
 			<	1z
 			,	6z
 			>

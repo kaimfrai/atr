@@ -42,7 +42,7 @@ export namespace
 		;
 
 		return
-			πFraction
+			PiFraction
 			<	1z
 			,	6z
 			>{}

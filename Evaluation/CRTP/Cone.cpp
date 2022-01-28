@@ -24,7 +24,7 @@ export namespace
 		->	Float
 		{
 			return
-				πFraction
+				PiFraction
 				<	1z
 				,	12z
 				>{}
