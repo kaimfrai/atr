@@ -69,7 +69,7 @@ CACHE STRING
 )
 
 if (EXISTS ${CLANG_PROJECT_MODULE_MAP})
-	string(APPEND MODULE_FLAGS -fmodule-map-file=${CLANG_PROJECT_MODULE_MAP})
+	list(APPEND MODULE_FLAGS -fmodule-map-file=${CLANG_PROJECT_MODULE_MAP})
 else()
 	message(WARNING "Building header units with clang requires file ${CLANG_PROJECT_MODULE_MAP}!")
 endif()
