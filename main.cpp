@@ -1,4 +1,5 @@
 import Meta;
+import TestModule;
 
 struct Base{};
 
@@ -19,6 +20,5 @@ static_assert(Foo(1) == 2);
 
 
 int main(int, char **) {
-
-
+	return Foo() + Bar();
 }

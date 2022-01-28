@@ -1,8 +1,9 @@
 add_subdirectory(Shared)
 
+add_subdirectory(CRTP)
+
 add_subdirectory(Any)
 add_subdirectory(Archetype)
-add_subdirectory(CRTP)
 add_subdirectory(Dyno)
 add_subdirectory(Polymorphic)
 add_subdirectory(Replication)

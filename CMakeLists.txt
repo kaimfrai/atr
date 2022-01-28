@@ -50,11 +50,9 @@ add_subdirectory(Evaluation)
 
 add_subdirectory(Legacy)
 
-add_executable(
-	${PROJECT_NAME} main.cpp
-)
+add_module(TestModule.cpp Foo.cpp Bar.cpp)
 
-add_module_dependencies(${PROJECT_NAME}
-	Std
-	Meta
+add_module_executable(
+${PROJECT_NAME}
+	main.cpp
 )

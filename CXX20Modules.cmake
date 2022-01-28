@@ -119,11 +119,26 @@ function(add_module
 		"Generating precompiled module ${module_name}"
 	)
 
-	add_library(
-		${module_name}
-	INTERFACE
-		${module_interface_file}
-	)
+	if	(${ARGC} GREATER 1)
+		add_library(
+			${module_name}
+		STATIC
+			${module_interface_file}
+			${ARGN}
+		)
+
+		target_compile_options(
+			${module_name}
+		PRIVATE
+			-fmodule-file=${module_file}
+		)
+	else()
+		add_library(
+			${module_name}
+		INTERFACE
+			${module_interface_file}
+		)
+	endif()
 
 	add_module_source_header_units(
 		${module_name}
@@ -158,6 +173,20 @@ function(add_module_dependencies
 			"${module_dependency_files}"
 		)
 
+		#add a link dependency for non-interface libraries
+		foreach(dependency IN LISTS module_dependencies)
+			get_target_property(dependency_type ${dependency} TYPE)
+			if	(	${dependency_type} MATCHES "[A-Z]+_LIBRARY"
+				AND	NOT
+					${dependency_type} STREQUAL "INTERFACE_LIBRARY"
+				)
+				target_link_libraries(
+					${target_name}
+					${dependency}
+				)
+			endif()
+		endforeach()
+
 	endforeach()
 endfunction()
 
@@ -167,6 +196,20 @@ function(add_module_object_library
 	add_library(
 		${target_name}
 	OBJECT
+		${ARGN}
+	)
+
+	add_module_dependencies(
+		${target_name}
+	)
+
+endfunction()
+
+function(add_module_executable
+	target_name
+)
+	add_executable(
+		${target_name}
 		${ARGN}
 	)
 
