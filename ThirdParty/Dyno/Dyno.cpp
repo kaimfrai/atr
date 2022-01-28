@@ -1,3 +1,3 @@
 export module Dyno;
 
-export import "Dyno.hpp";
+export import <dyno.hpp>;

@@ -1,3 +1,3 @@
 export module Polymorphic;
 
-export import "Polymorphic.hpp";
+export import <polymorphic.hpp>;

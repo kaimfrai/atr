@@ -1,16 +1,21 @@
-module dyno [system] {
-	header "ThirdParty/Dyno/Dyno.hpp"
-	export *
-}
-
 module polymorphic [system] {
-	header "ThirdParty/Polymorphic/Polymorphic.hpp"
+	header "../cpp-from-the-sky-down/metaprogrammed_polymorphism/polymorphic.hpp"
 	export *
 }
 
 module boost [system] {
 	module type_erasure {
-		header "ThirdParty/Boost/TypeErasure.hpp"
+		header "/usr/include/boost/type_erasure/any.hpp"
+		header "/usr/include/boost/type_erasure/member.hpp"
 		export *
 	}
+	module mpl {
+		header "/usr/include/boost/mpl/vector.hpp"
+		export *
+	}
+}
+
+module dyno [system] {
+	header "../dyno/include/dyno.hpp"
+	export *
 }
