@@ -91,6 +91,14 @@ endfunction()
 function(add_module
 	module_interface_file
 )
+	cmake_parse_arguments(
+		MODULE
+		""
+		""
+		"IMPLEMENTATION;BYPRODUCTS;INCLUDES"
+		${ARGN}
+	)
+
 	invoke_preprocessor(${module_interface_file} preprocessed_module_file)
 	read_module_name("${preprocessed_module_file}" module_name module_file)
 
@@ -104,6 +112,7 @@ function(add_module
 	get_compile_module_interface_command(
 		${module_interface_file}
 		${module_file}
+		"${MODULE_INCLUDES}"
 		compile_module_interface_command
 	)
 
@@ -117,28 +126,31 @@ function(add_module
 		${module_interface_file}
 	DEPENDS
 		${module_dependency_files}
+	BYPRODUCTS
+		${MODULE_BYPRODUCTS}
 	COMMENT
 		"Generating precompiled module ${module_name}"
 	)
 
-	if	(${ARGC} GREATER 1)
+	if	("${MODULE_IMPLEMENTATION}" STREQUAL "")
+
+		add_library(
+			${module_name}
+		INTERFACE
+			${module_interface_file}
+		)
+	else()
 		add_library(
 			${module_name}
 		OBJECT
 			${module_interface_file}
-			${ARGN}
+			${MODULE_IMPLEMENTATION}
 		)
 
 		target_compile_options(
 			${module_name}
 		PRIVATE
 			-fmodule-file=${module_file}
-		)
-	else()
-		add_library(
-			${module_name}
-		INTERFACE
-			${module_interface_file}
 		)
 	endif()
 

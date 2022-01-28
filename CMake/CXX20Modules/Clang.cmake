@@ -56,26 +56,26 @@ function(
 	get_compile_module_interface_command
 	module_interface_file
 	module_file
+	include_directories
 	out_command
 )
-	get_directory_property(
-		include_directories
-		INCLUDE_DIRECTORIES
-	)
-
 	if	(include_directories)
-		string(PREPEND include_directories "-I")
+		set(absolute_include_dirs "")
+		foreach(include_dir IN LISTS include_directories)
+			file(REAL_PATH ${include_dir} absolute_dir)
+			list(APPEND absolute_include_dirs -I${absolute_dir})
+		endforeach()
 	endif()
 
 	set(
-		command
+	command
 		${CMAKE_CXX_COMPILER}
 		${CXX_STANDARD_VERSION_FLAG}
 		${CXX_STANDARD_LIBRARY_FLAG}
-		${include_directories}
 		${WARNING_FLAGS}
 		${MODULE_FLAGS}
 		${ADDITIONAL_COMPILE_OPTIONS}
+		${absolute_include_dirs}
 		--compile ${CMAKE_CURRENT_SOURCE_DIR}/${module_interface_file}
 		-Xclang -emit-module-interface
 		--output ${module_file}
