@@ -1,6 +1,5 @@
 export module Pack.Value;
 
-export import Pack.Sequence;
 export import Pack.Empty;
 export import Meta.MetaInfo;
 export import Meta.ValueInfo;
@@ -108,10 +107,6 @@ export namespace
 	concept
 		ValueInstance_Transform
 	=	PureValueInstance_Transform
-		<	t_tValuePack
-		,	t_t1Transform
-		>
-	or	PureSequenceInstance_Transform
 		<	t_tValuePack
 		,	t_t1Transform
 		>

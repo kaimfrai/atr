@@ -6,7 +6,6 @@ export import Pack.Size;
 export import Pack.Instance;
 export import Pack.Type;
 export import Pack.Value;
-export import Pack.Sequence;
 export import Meta.TypeInfo;
 export import Meta.ValueInfo;
 export import Stateless.Tuple;
@@ -147,34 +146,6 @@ export namespace
 
 	template
 		<	typename
-				t_tKey
-		,	t_tKey
-			...	t_vpKey
-		,	typename
-			...	t_tpResult
-		>
-		Map
-		(	Pack::Sequence
-			<	t_tKey
-			,	t_vpKey
-				...
-			>
-		,	Pack::Type
-			<	t_tpResult
-				...
-			>
-		)
-	->	Map
-		<	ValueToTypeMap
-			<	t_vpKey
-			,	t_tpResult
-			>
-			...
-		>
-	;
-
-	template
-		<	typename
 			...	t_tpKey
 		,	auto
 			...	t_vpResult
@@ -186,34 +157,6 @@ export namespace
 			>
 		,	Pack::Value
 			<	t_vpResult
-				...
-			>
-		)
-	->	Map
-		<	TypeToValueMap
-			<	t_tpKey
-			,	t_vpResult
-			>
-			...
-		>
-	;
-
-	template
-		<	typename
-			...	t_tpKey
-		,	typename
-				t_tResult
-		,	t_tResult
-			...	t_vpResult
-		>
-		Map
-		(	Pack::Type
-			<	t_tpKey
-				...
-			>
-		,	Pack::Sequence
-			<	t_tResult
-			,	t_vpResult
 				...
 			>
 		)
@@ -239,93 +182,6 @@ export namespace
 			>
 		,	Pack::Value
 			<	t_vpResult
-				...
-			>
-		)
-	->	Map
-		<	ValueToValueMap
-			<	t_vpKey
-			,	t_vpResult
-			>
-			...
-		>
-	;
-
-	template
-		<	auto
-			...	t_vpKey
-		,	typename
-				t_tResult
-		,	t_tResult
-			...	t_vpResult
-		>
-		Map
-		(	Pack::Value
-			<	t_vpKey
-				...
-			>
-		,	Pack::Sequence
-			<	t_tResult
-			,	t_vpResult
-				...
-			>
-		)
-	->	Map
-		<	ValueToValueMap
-			<	t_vpKey
-			,	t_vpResult
-			>
-			...
-		>
-	;
-
-	template
-		<	typename
-				t_tKey
-		,	t_tKey
-			...	t_vpKey
-		,	auto
-			...	t_vpResult
-		>
-		Map
-		(	Pack::Sequence
-			<	t_tKey
-			,	t_vpKey
-				...
-			>
-		,	Pack::Value
-			<	t_vpResult
-				...
-			>
-		)
-	->	Map
-		<	ValueToValueMap
-			<	t_vpKey
-			,	t_vpResult
-			>
-			...
-		>
-	;
-
-	template
-		<	typename
-				t_tKey
-		,	t_tKey
-			...	t_vpKey
-		,	typename
-				t_tResult
-		,	t_tResult
-			...	t_vpResult
-		>
-		Map
-		(	Pack::Sequence
-			<	t_tKey
-			,	t_vpKey
-				...
-			>
-		,	Pack::Sequence
-			<	t_tResult
-			,	t_vpResult
 				...
 			>
 		)

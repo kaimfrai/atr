@@ -4,11 +4,11 @@ export import Pack.Transform;
 export import Pack.Normalize;
 export import Pack.Size;
 export import Pack.Instance;
-export import Pack.Sequence;
 export import Meta.ValueInfo;
 export import Stateless.Tuple;
 export import Std.Concepts;
 export import Meta.Integer;
+export import Meta.Index;
 export import Std;
 
 export namespace
@@ -19,18 +19,18 @@ export namespace
 		<	Meta::USize
 				t_nLength
 		>
-	constexpr
-	SequenceInstance auto
+	auto constexpr
 		MakeIndexSequence
 		(	Meta::ValueInfo
 			<	t_nLength
 			>
 		)
+	->	ValueInstance auto
 	{	return
 			Normalize
-			(	std::make_index_sequence
+			(	Meta::Sequence
 				<	t_nLength
-				>{}
+				>()
 			)
 		;
 	}
@@ -95,14 +95,14 @@ export namespace
 
 	///	returns an IndexPack containing length indices that are offset by the given value
 	[[nodiscard]]
-	constexpr
-	SequenceInstance auto
+	auto constexpr
 		MakeOffsetIndexSequence
 		(	Meta::SizeInfo auto
 				i_vLength
 		,	Meta::SizeInfo auto
 				i_vOffset
 		)
+	->	ValueInstance auto
 	{	return
 			Transform
 			(	MakeIndexSequence
@@ -125,12 +125,12 @@ export namespace
 
 	///	returns an IndexPack starting from 0 with a length corresponding to the given pack
 	[[nodiscard]]
-	constexpr
-	SequenceInstance auto
+	auto constexpr
 		MakeIndexPackSequenceFor
 		(	Instance auto
 				i_vPack
 		)
+	->	ValueInstance auto
 	{	return
 			MakeIndexSequence
 			(	Size

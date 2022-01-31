@@ -2,7 +2,6 @@ export module Pack.Instance;
 
 export import Pack.Type;
 export import Pack.Value;
-export import Pack.Sequence;
 export import Pack.Empty;
 export import Std;
 export import Std.TypeTraits;
@@ -27,10 +26,6 @@ export namespace
 		,	t_t1Transform
 		>
 	or	PureValueInstance_Transform
-		<	t_tPackInstance
-		,	t_t1Transform
-		>
-	or	PureSequenceInstance_Transform
 		<	t_tPackInstance
 		,	t_t1Transform
 		>

@@ -3,7 +3,6 @@ export module Pack.Template;
 export import Pack.Normalize;
 export import Pack.Type;
 export import Pack.Value;
-export import Pack.Sequence;
 export import Pack.Empty;
 export import PackTemplate.Type;
 export import PackTemplate.Value;

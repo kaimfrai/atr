@@ -5,7 +5,6 @@ export import Pack.Normalize;
 export import Pack.Instance;
 export import Pack.Type;
 export import Pack.Value;
-export import Pack.Sequence;
 
 export import Stateless.Tuple;
 

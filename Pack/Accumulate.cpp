@@ -5,12 +5,11 @@ export import Pack.Fold;
 export import Pack.Transform;
 export import Pack.Apply;
 export import Pack.Instance;
-export import Pack.Sequence;
 export import Meta.MetaInfo;
 
-export import Fold.Comma;;
-export import Fold.LogicalAnd;;
-export import Fold.LogicalOr;;
+export import Fold.Comma;
+export import Fold.LogicalAnd;
+export import Fold.LogicalOr;
 export import Stateless.Tuple;
 export import Stateless.Binding;
 export import Std.Concepts;

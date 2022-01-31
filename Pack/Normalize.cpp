@@ -3,7 +3,6 @@ export module Pack.Normalize;
 export import Meta.Type;
 export import Pack.Type;
 export import Pack.Value;
-export import Pack.Sequence;
 export import Pack.Empty;
 export import Stateless.Tuple;
 
@@ -93,27 +92,7 @@ export namespace
 				>
 				...
 			)	const
-		{	/// sepcial case: all values are of the same type
-			if constexpr
-				(	(...
-					and	std::is_same_v
-						<	decltype(t_vInitial)
-						,	decltype(t_vpElement)
-						>
-					)
-				)
-			{	return
-					Sequence
-					<	decltype(t_vInitial)
-					,	t_vInitial
-					,	t_vpElement
-						...
-					>{}
-				;
-			}
-			///	special case: all values are stateless
-			else
-			if constexpr
+		{	if constexpr
 				(	(	Stateless::Type
 						<	decltype(t_vInitial)
 						>
@@ -272,51 +251,6 @@ export namespace
 				Meta::InfoInstance
 				<	t_t1ValuePack
 					<	t_vpElement
-						...
-					>
-				>
-			)
-		{	return
-				operator()
-				(	Meta::V<t_vpElement>
-					...
-				)
-			;
-		}
-
-		///	normalizes the sequence pack into a SequencePack
-		///	overloaded for other pack types
-		template
-			<	typename
-					t_tElement
-			,	template
-					<	typename
-							t_tInnerElement
-					,	t_tInnerElement
-						...
-					>
-				typename
-					t_t1SequencePack
-			,	t_tElement
-				...	t_vpElement
-			>
-		[[nodiscard]]
-		constexpr
-		SequenceInstance auto
-			operator()
-		(	t_t1SequencePack
-				<	t_tElement
-				,	t_vpElement
-					...
-				>
-			)	const
-		///	do not decompose InfoInstances
-		requires
-			(	not
-				Meta::InfoInstance
-				<	t_t1SequencePack
-					<	t_tElement
-					,	t_vpElement
 						...
 					>
 				>
