@@ -2,7 +2,6 @@ export module Evaluation.Archetype.ReturnMember;
 
 export import Function.ConstantIDMap;
 export import Archetype.Instance;
-export import ID.Concepts;
 
 export namespace
 	Function

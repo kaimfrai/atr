@@ -1,74 +1,97 @@
 export module ID.Make;
 
 export import ID.StringLiteral;
+export import Stateless.Type;
 export import Std;
 
-char constexpr inline _0 ='0';
-char constexpr inline _1 = '1';
-char constexpr inline _2 = '2';
-char constexpr inline _3 = '3';
-char constexpr inline _4 = '4';
-char constexpr inline _5 = '5';
-char constexpr inline _6 = '6';
-char constexpr inline _7 = '7';
-char constexpr inline _8 = '8';
-char constexpr inline _9 = '9';
+class
+	Char
+{
+	char m_nChar;
 
-char constexpr inline A = 'A';
-char constexpr inline B = 'B';
-char constexpr inline C = 'C';
-char constexpr inline D = 'D';
-char constexpr inline E = 'E';
-char constexpr inline F = 'F';
-char constexpr inline G = 'G';
-char constexpr inline H = 'H';
-char constexpr inline I = 'I';
-char constexpr inline J = 'J';
-char constexpr inline K = 'K';
-char constexpr inline L = 'L';
-char constexpr inline M = 'M';
-char constexpr inline N = 'N';
-char constexpr inline O = 'O';
-char constexpr inline P = 'P';
-char constexpr inline Q = 'Q';
-char constexpr inline R = 'R';
-char constexpr inline S = 'S';
-char constexpr inline T = 'T';
-char constexpr inline U = 'U';
-char constexpr inline V = 'V';
-char constexpr inline W = 'W';
-char constexpr inline X = 'X';
-char constexpr inline Y = 'Y';
-char constexpr inline Z = 'Z';
+public:
+	constexpr
+	(	Char
+	)	(	char
+				i_nChar
+		)
+	:	m_nChar
+		{	i_nChar
+		}
+	{}
 
-char constexpr inline _ = '_';
+	constexpr
+	(	operator char
+	)	()	const
+	{	return m_nChar;	}
+};
 
-char constexpr inline a = 'a';
-char constexpr inline b = 'b';
-char constexpr inline c = 'c';
-char constexpr inline d = 'd';
-char constexpr inline e = 'e';
-char constexpr inline f = 'f';
-char constexpr inline g = 'g';
-char constexpr inline h = 'h';
-char constexpr inline i = 'i';
-char constexpr inline j = 'j';
-char constexpr inline k = 'k';
-char constexpr inline l = 'l';
-char constexpr inline m = 'm';
-char constexpr inline n = 'n';
-char constexpr inline o = 'o';
-char constexpr inline p = 'p';
-char constexpr inline q = 'q';
-char constexpr inline r = 'r';
-char constexpr inline s = 's';
-char constexpr inline t = 't';
-char constexpr inline u = 'u';
-char constexpr inline v = 'v';
-char constexpr inline w = 'w';
-char constexpr inline x = 'x';
-char constexpr inline y = 'y';
-char constexpr inline z = 'z';
+Char constexpr inline _0 = '0';
+Char constexpr inline _1 = '1';
+Char constexpr inline _2 = '2';
+Char constexpr inline _3 = '3';
+Char constexpr inline _4 = '4';
+Char constexpr inline _5 = '5';
+Char constexpr inline _6 = '6';
+Char constexpr inline _7 = '7';
+Char constexpr inline _8 = '8';
+Char constexpr inline _9 = '9';
+
+Char constexpr inline A = 'A';
+Char constexpr inline B = 'B';
+Char constexpr inline C = 'C';
+Char constexpr inline D = 'D';
+Char constexpr inline E = 'E';
+Char constexpr inline F = 'F';
+Char constexpr inline G = 'G';
+Char constexpr inline H = 'H';
+Char constexpr inline I = 'I';
+Char constexpr inline J = 'J';
+Char constexpr inline K = 'K';
+Char constexpr inline L = 'L';
+Char constexpr inline M = 'M';
+Char constexpr inline N = 'N';
+Char constexpr inline O = 'O';
+Char constexpr inline P = 'P';
+Char constexpr inline Q = 'Q';
+Char constexpr inline R = 'R';
+Char constexpr inline S = 'S';
+Char constexpr inline T = 'T';
+Char constexpr inline U = 'U';
+Char constexpr inline V = 'V';
+Char constexpr inline W = 'W';
+Char constexpr inline X = 'X';
+Char constexpr inline Y = 'Y';
+Char constexpr inline Z = 'Z';
+
+Char constexpr inline _ = '_';
+
+Char constexpr inline a = 'a';
+Char constexpr inline b = 'b';
+Char constexpr inline c = 'c';
+Char constexpr inline d = 'd';
+Char constexpr inline e = 'e';
+Char constexpr inline f = 'f';
+Char constexpr inline g = 'g';
+Char constexpr inline h = 'h';
+Char constexpr inline i = 'i';
+Char constexpr inline j = 'j';
+Char constexpr inline k = 'k';
+Char constexpr inline l = 'l';
+Char constexpr inline m = 'm';
+Char constexpr inline n = 'n';
+Char constexpr inline o = 'o';
+Char constexpr inline p = 'p';
+Char constexpr inline q = 'q';
+Char constexpr inline r = 'r';
+Char constexpr inline s = 's';
+Char constexpr inline t = 't';
+Char constexpr inline u = 'u';
+Char constexpr inline v = 'v';
+Char constexpr inline w = 'w';
+Char constexpr inline x = 'x';
+Char constexpr inline y = 'y';
+Char constexpr inline z = 'z';
 
 namespace
 	ID
@@ -78,143 +101,143 @@ namespace
 	)	(	char
 				i_nCharacter
 		)
-	->	char const&
+	->	Char const&
 	{
 		switch(i_nCharacter)
 		{
 			//	Digits
 			case '0':
-				return _0;
+				return ::_0;
 			case '1':
-				return _1;
+				return ::_1;
 			case '2':
-				return _2;
+				return ::_2;
 			case '3':
-				return _3;
+				return ::_3;
 			case '4':
-				return _4;
+				return ::_4;
 			case '5':
-				return _5;
+				return ::_5;
 			case '6':
-				return _6;
+				return ::_6;
 			case '7':
-				return _7;
+				return ::_7;
 			case '8':
-				return _8;
+				return ::_8;
 			case '9':
-				return _9;
+				return ::_9;
 
 			//	Upper Case
 			case 'A':
-				return A;
+				return ::A;
 			case 'B':
-				return B;
+				return ::B;
 			case 'C':
-				return C;
+				return ::C;
 			case 'D':
-				return D;
+				return ::D;
 			case 'E':
-				return E;
+				return ::E;
 			case 'F':
-				return F;
+				return ::F;
 			case 'G':
-				return G;
+				return ::G;
 			case 'H':
-				return H;
+				return ::H;
 			case 'I':
-				return I;
+				return ::I;
 			case 'J':
-				return J;
+				return ::J;
 			case 'K':
-				return K;
+				return ::K;
 			case 'L':
-				return L;
+				return ::L;
 			case 'M':
-				return M;
+				return ::M;
 			case 'N':
-				return N;
+				return ::N;
 			case 'O':
-				return O;
+				return ::O;
 			case 'P':
-				return P;
+				return ::P;
 			case 'Q':
-				return Q;
+				return ::Q;
 			case 'R':
-				return R;
+				return ::R;
 			case 'S':
-				return S;
+				return ::S;
 			case 'T':
-				return T;
+				return ::T;
 			case 'U':
-				return U;
+				return ::U;
 			case 'V':
-				return V;
+				return ::V;
 			case 'W':
-				return W;
+				return ::W;
 			case 'X':
-				return X;
+				return ::X;
 			case 'Y':
-				return Y;
+				return ::Y;
 			case 'Z':
-				return Z;
+				return ::Z;
 
 			//	Underscore
 			case '_':
-				return _;
+				return ::_;
 
 			//	Lower Case
 			case 'a':
-				return a;
+				return ::a;
 			case 'b':
-				return b;
+				return ::b;
 			case 'c':
-				return c;
+				return ::c;
 			case 'd':
-				return d;
+				return ::d;
 			case 'e':
-				return e;
+				return ::e;
 			case 'f':
-				return f;
+				return ::f;
 			case 'g':
-				return g;
+				return ::g;
 			case 'h':
-				return h;
+				return ::h;
 			case 'i':
-				return i;
+				return ::i;
 			case 'j':
-				return j;
+				return ::j;
 			case 'k':
-				return k;
+				return ::k;
 			case 'l':
-				return l;
+				return ::l;
 			case 'm':
-				return m;
+				return ::m;
 			case 'n':
-				return n;
+				return ::n;
 			case 'o':
-				return o;
+				return ::o;
 			case 'p':
-				return p;
+				return ::p;
 			case 'q':
-				return q;
+				return ::q;
 			case 'r':
-				return r;
+				return ::r;
 			case 's':
-				return s;
+				return ::s;
 			case 't':
-				return t;
+				return ::t;
 			case 'u':
-				return u;
+				return ::u;
 			case 'v':
-				return v;
+				return ::v;
 			case 'w':
-				return w;
+				return ::w;
 			case 'x':
-				return x;
+				return ::x;
 			case 'y':
-				return y;
+				return ::y;
 			case 'z':
-				return z;
+				return ::z;
 
 			default:
 				throw "Invalid character in identitfier!";
@@ -228,12 +251,12 @@ export namespace
 	/// serves as a base class for all identifer types
 	/// provides conversions to arrays as well as begin and end functions
 	template
-		<	char const
+		<	::Char const
 			&
 			...	t_rpString
 		>
 	struct
-		ID
+		ID final
 	{
 		static char constexpr
 			RawArray
@@ -261,7 +284,7 @@ export namespace
 		{	return StringView;	}
 
 		template
-			<	char const
+			<	Char const
 				&
 				...	t_rpBack
 			>
@@ -285,7 +308,7 @@ export namespace
 		}
 
 		template
-			<	char const
+			<	Char const
 				&
 				...	t_rpFront
 			>
@@ -328,7 +351,7 @@ export namespace
 		}
 
 		template
-			<	char const
+			<	Char const
 				&
 				...	t_rpBack
 			>
@@ -356,7 +379,7 @@ export namespace
 		ID<>
 	{
 		template
-			<	char const
+			<	Char const
 				&
 				...	t_rpBack
 			>
@@ -378,7 +401,7 @@ export namespace
 		}
 
 		template
-			<	char const
+			<	Char const
 				&
 				...	t_rpFront
 			>
@@ -400,7 +423,7 @@ export namespace
 		}
 
 		template
-			<	char const
+			<	Char const
 				&
 				...	t_rpBack
 			>
@@ -433,10 +456,37 @@ export namespace
 		>
 	concept
 		Instance
-	=	requires(t_tID c_vID)
+	=	Stateless::Type<t_tID>
+	and	requires(t_tID c_vID)
 		{
 			::Function::ID{c_vID};
 		}
+	;
+
+	/// checks if an identifier starts with a given string and is an instance of a given template
+	template
+		<	typename
+				t_tID
+		,	StringLiteral
+				t_vStart
+		>
+	concept
+		Prefix
+	=	Instance<t_tID>
+	and	starts_with(t_tID{}, t_vStart)
+	;
+
+	/// checks if an identifier end with a given string and is an instance of a given template
+	template
+		<	typename
+				t_tID
+		,	StringLiteral
+				t_vEnd
+		>
+	concept
+		Suffix
+	=	Instance<t_tID>
+	and	ends_with(t_tID{}, t_vEnd)
 	;
 
 	/// dispatches a string literal into its characters
@@ -448,6 +498,7 @@ export namespace
 	auto constexpr
 		Make
 		()
+	->	Instance auto
 	{
 		return
 		[]	<	Meta::USize
@@ -492,7 +543,7 @@ export namespace
 		<	StringLiteral
 				t_vStringLiteral
 		>
-	auto constexpr
+	Instance auto constexpr
 		MakeV
 	=	Make
 		<	t_vStringLiteral
