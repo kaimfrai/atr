@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.Ellipse;
 
 export import Evaluation.Shared.SizeCheck;
-export import Archetype.Instance;
+export import ATR.Instance;
 export import Evaluation.Archetype.Ellipse.Layout;
 
 export namespace
@@ -9,7 +9,7 @@ export namespace
 {
 	using
 		Ellipse
-	=	Archetype::Make
+	=	ATR::Type
 		<	"Ellipse"
 		>
 	;

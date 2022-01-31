@@ -1,18 +1,18 @@
-export module Function.DataDependencyItem;
+export module ATR.DataDependencyItem;
 
-export import ID.Make;
+export import ATR.ID;
 export import Stateless.Map;
 export import Stateless.Type;
 export import Std.FunctionTraits;
 
 export namespace
-	Function
+	ATR
 {
 	/// maps a DataID to a MemberOffset
 	template
-		<	::ID::Instance
+		<	ProtoID
 				t_tDataID
-		,	// could be a Layout::MemberOffset
+		,	// could be a ATR::MemberOffset
 			// or a wrapper around a pointer to member
 			Stateless::Type
 				t_tMemberOffset

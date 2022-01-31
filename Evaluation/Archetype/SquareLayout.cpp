@@ -3,7 +3,7 @@ export module Evaluation.Archetype.Square.Layout;
 export import Evaluation.Archetype.Rectangle.Layout;
 
 export namespace
-	Archetype
+	ATR
 {
 	template<>
 	auto constexpr inline
@@ -11,7 +11,7 @@ export namespace
 		<	"Square"
 		>
 	=	LayoutConfig<"Rectangle">
-		(	Layout::Alias
+		(	Alias
 			<	"Height"
 			,	"Width"
 			>

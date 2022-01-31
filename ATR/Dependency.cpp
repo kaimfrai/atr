@@ -1,8 +1,8 @@
-export module Function.Dependency;
+export module ATR.Dependency;
 
-export import Function.FuncDependencyItem;
-export import Function.DataDependencyItem;
-export import Function.Erase;
+export import ATR.FuncDependencyItem;
+export import ATR.DataDependencyItem;
+export import ATR.Erase;
 export import Pack.Sort;
 export import Pack.Type;
 export import Meta.Template;
@@ -10,7 +10,7 @@ export import Meta.TypeInfo;
 export import Stateless.Map;
 
 export namespace
-	Function
+	ATR
 {
 	/// all dependencies will be sorted by their key
 	/// this ensures that equivalent dependencies yiels the same type

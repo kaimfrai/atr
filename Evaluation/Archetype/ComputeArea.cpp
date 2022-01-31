@@ -3,18 +3,18 @@ export module Evaluation.Archetype.ComputeArea;
 export import Evaluation.Shared.DataTypes;
 export import Evaluation.Archetype.ReturnMember;
 export import Evaluation.Archetype.Product;
-export import Function.VirtualArgument;
-export import Function.ConstantIDMap;
+export import ATR.VirtualArgument;
+export import ATR.ConstantIDMap;
 
 export namespace
 	Shapes2D
 {
 	using
 		AreaComputer
-	=	Function::VirtualArgument
+	=	ATR::VirtualArgument
 		<	void const
 			*
-		,	Function::Virtual
+		,	ATR::Virtual
 			<	"ComputeArea"
 			,	auto(	void const
 						*
@@ -27,7 +27,7 @@ export namespace
 }
 
 export namespace
-	Function
+	ATR
 {
 	template
 		<	typename
@@ -35,23 +35,23 @@ export namespace
 		>
 	requires
 		ValidAddress
-		<	::ID::MakeT<"GetComputeAreaMultiplier">
+		<	ID_T<"GetComputeAreaMultiplier">
 		,	t_tShape const
 			&
 		>
 	and ValidAddress
-		<	::ID::MakeT<"GetHeight">
+		<	ID_T<"GetHeight">
 		,	t_tShape const
 			&
 		>
 	and	ValidAddress
-		<	::ID::MakeT<"GetWidth">
+		<	ID_T<"GetWidth">
 		,	t_tShape const
 			&
 		>
 	auto constexpr
 		MapAddress
-		(	::ID::MakeT<"ComputeArea">
+		(	ID_T<"ComputeArea">
 		,	t_tShape const
 			&
 		)

@@ -1,14 +1,14 @@
-export module Function.Body;
+export module ATR.Body;
 
-export import Function.StaticDependency;
-export import Function.ArgumentDependency;
-export import ID.Make;
-export import ID.StringLiteral;
+export import ATR.StaticDependency;
+export import ATR.ArgumentDependency;
+export import ATR.ID;
+export import ATR.StringLiteral;
 export import Meta.TypeInfo;
 export import Std.Concepts;
 
 export namespace
-	Function
+	ATR
 {
 	/// the body of a function. needs to be defined separately.
 	/// the requirements are that the first template argument is the FuncID.
@@ -34,7 +34,7 @@ export namespace
 				,	t_tpDependency
 					...
 				>
-			,	"Function::Body was used but not defined."
+			,	"ATR::Body was used but not defined."
 			)
 		;
 	}

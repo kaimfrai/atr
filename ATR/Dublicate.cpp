@@ -1,15 +1,15 @@
-export module Layout.Dublicate;
+export module ATR.Dublicate;
 
-export import Layout.DataMember;
+export import ATR.DataMember;
 
-export import ID.Make;
+export import ATR.ID;
 export import Pack.Fold;
 export import Pack.MakeSequence;
 export import Pack.Cast;
 export import Pack.Type;
 
 export namespace
-	Layout
+	ATR
 {
 	template
 		<	DataMemberInstance

@@ -3,7 +3,7 @@ export module Evaluation.Archetype.Circle.Layout;
 export import Evaluation.Archetype.Ellipse.Layout;
 
 export namespace
-	Archetype
+	ATR
 {
 	template<>
 	auto constexpr inline
@@ -12,7 +12,7 @@ export namespace
 		>
 	=	LayoutConfig
 		<	"Ellipse"
-		>(	Layout::Alias
+		>(	Alias
 			<	"Height"
 			,	"Width"
 			>

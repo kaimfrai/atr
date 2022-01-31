@@ -1,4 +1,4 @@
-export module ID.StringLiteral;
+export module ATR.StringLiteral;
 
 export import Meta.Integer;
 export import Meta.Value;
@@ -7,7 +7,7 @@ export import Std;
 export import Std.Concepts;
 
 export namespace
-	ID
+	ATR
 {
 	struct
 		StringView final
@@ -176,24 +176,24 @@ export namespace
 }
 
 static_assert
-(	ID::StringLiteralInstance
-	<	ID::StringLiteral
+(	ATR::StringLiteralInstance
+	<	ATR::StringLiteral
 		<	5
 		>
 	>
 and	not
-	ID::StringLiteralInstance
+	ATR::StringLiteralInstance
 	<	char const(&)[5]
 	>
 );
 
 static_assert
-(	ID::PseudoStringLiteral
-	<	ID::StringLiteral
+(	ATR::PseudoStringLiteral
+	<	ATR::StringLiteral
 		<	5
 		>
 	>
-and	ID::PseudoStringLiteral
+and	ATR::PseudoStringLiteral
 	<	char const(&)[5]
 	>
 );

@@ -1,15 +1,15 @@
-export module Function.VirtualArgument;
+export module ATR.VirtualArgument;
 
-export import Function.Address;
-export import Function.Body;
-export import ID.Make;
+export import ATR.Address;
+export import ATR.Body;
+export import ATR.ID;
 export import Meta.TypeInfo;
 
 export namespace
-	Function
+	ATR
 {
 	template
-		<	::ID::Instance
+		<	ProtoID
 				t_tFuncID
 		,	typename
 				t_tSignature
@@ -30,7 +30,7 @@ export namespace
 	};
 
 	template
-		<	::ID::Instance
+		<	ProtoID
 				t_tFuncID
 		,	typename
 				t_tReturn
@@ -117,7 +117,7 @@ export namespace
 
 	/// helper alias. builds a function ID type and extracts raw signature and noexcept qualifier
 	template
-		<	::ID::StringLiteral
+		<	StringLiteral
 				t_vFunctionName
 		,	Std::Function
 				t_tSignature
@@ -125,7 +125,7 @@ export namespace
 	using
 		Virtual
 	=	VirtualItem
-		<	::ID::MakeT<t_vFunctionName>
+		<	ID_T<t_vFunctionName>
 		,	typename
 			Std::FunctionSignature
 				<	t_tSignature
@@ -213,7 +213,7 @@ export namespace
 		{}
 
 		template
-			<	::ID::Instance
+			<	ProtoID
 					t_tFuncID
 			,	typename
 				...	t_tpArgument
@@ -306,7 +306,7 @@ export namespace
 		}
 
 		template
-			<	::ID::Instance
+			<	ProtoID
 					t_tFuncID
 			,	typename
 				...	t_tpArgument
@@ -336,7 +336,7 @@ export namespace
 		}
 
 		template
-			<	::ID::Instance
+			<	ProtoID
 					t_tFuncID
 			,	typename
 				...	t_tpArgument

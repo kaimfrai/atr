@@ -3,7 +3,7 @@ export module Evaluation.Archetype.Head.Layout;
 export import Evaluation.Archetype.Sphere.Layout;
 
 export namespace
-	Archetype
+	ATR
 {
 	template<>
 	auto constexpr inline

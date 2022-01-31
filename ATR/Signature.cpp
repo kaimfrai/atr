@@ -1,13 +1,13 @@
-export module Function.Signature;
+export module ATR.Signature;
 
-export import Function.Body;
-export import Function.StaticDependency;
-export import Function.ArgumentDependency;
+export import ATR.Body;
+export import ATR.StaticDependency;
+export import ATR.ArgumentDependency;
 
-export import ID.Make;
+export import ATR.ID;
 
 export namespace
-	Function
+	ATR
 {
 	/// to be instantiated and compiled in a separate .cpp file with extern template
 	/// note that ideally, the body should be available to be inlined in the place of instantiation

@@ -1,15 +1,15 @@
-export module Function.Address;
+export module ATR.Address;
 
-export import Function.Erase;
-export import Function.Signature;
-export import ID.Make;
+export import ATR.Erase;
+export import ATR.Signature;
+export import ATR.ID;
 export import Std.FunctionTraits;
 export import Std.Concepts;
 
 export import Std;
 
 export namespace
-	Function
+	ATR
 {
 	template
 		<	typename
@@ -76,7 +76,7 @@ export namespace
 		>
 	concept
 		ValidAddress
-	=	::ID::Instance
+	=	ProtoID
 		<	t_tFunctionName
 		>
 	and	requires
@@ -99,7 +99,7 @@ export namespace
 
 	/// stores the address to the implementation of the function
 	template
-		<	::ID::Instance
+		<	ProtoID
 				t_tFuncID
 		,	typename
 			...	t_tpArgument
@@ -131,7 +131,7 @@ export namespace
 
 	/// stores the address to the implementation of the function
 	template
-		<	::ID::Instance
+		<	ProtoID
 				t_tFunctionName
 		,	typename
 			...	t_tpArgument
@@ -156,7 +156,7 @@ export namespace
 
 	/// invokes the function specified with the given FuncID
 	template
-		<	::ID::Instance
+		<	ProtoID
 				t_tFuncID
 		,	typename
 			...	t_tpArgument
@@ -185,7 +185,7 @@ export namespace
 	{	return
 			std::invoke
 			(	/// may be a pointer to member function, function pointer or function object
-				Function::Address
+				Address
 				<	t_tFuncID
 				,	t_tpArgument
 					...
@@ -216,7 +216,7 @@ export namespace
 		;
 
 		template
-			<	::ID::Instance
+			<	ProtoID
 					t_tFuncID
 			,	typename
 				...	t_tpArgument
@@ -244,7 +244,7 @@ export namespace
 	};
 
 	template
-		<	::ID::Instance
+		<	ProtoID
 				t_tFuncID
 		,	typename
 			...	t_tpArgument
@@ -257,7 +257,7 @@ export namespace
 			>
 		)
 	->	AddressProxy
-		<	Function::Address
+		<	Address
 			<	t_tFuncID
 			,	t_tpArgument
 				...

@@ -1,13 +1,17 @@
-export module ID.Make;
+export module ATR.ID;
 
-export import ID.StringLiteral;
+export import ATR.StringLiteral;
 export import Stateless.Type;
-export import Std;
 
+import Meta.Index;
+
+///	Unique class to prevent external specializations.
 class
 	Char
 {
-	char m_nChar;
+	char
+		m_nChar
+	;
 
 public:
 	constexpr
@@ -26,16 +30,16 @@ public:
 	{	return m_nChar;	}
 };
 
-Char constexpr inline _0 = '0';
-Char constexpr inline _1 = '1';
-Char constexpr inline _2 = '2';
-Char constexpr inline _3 = '3';
-Char constexpr inline _4 = '4';
-Char constexpr inline _5 = '5';
-Char constexpr inline _6 = '6';
-Char constexpr inline _7 = '7';
-Char constexpr inline _8 = '8';
-Char constexpr inline _9 = '9';
+Char constexpr inline i0 = '0';
+Char constexpr inline i1 = '1';
+Char constexpr inline i2 = '2';
+Char constexpr inline i3 = '3';
+Char constexpr inline i4 = '4';
+Char constexpr inline i5= '5';
+Char constexpr inline i6 = '6';
+Char constexpr inline i7 = '7';
+Char constexpr inline i8 = '8';
+Char constexpr inline i9 = '9';
 
 Char constexpr inline A = 'A';
 Char constexpr inline B = 'B';
@@ -94,7 +98,7 @@ Char constexpr inline y = 'y';
 Char constexpr inline z = 'z';
 
 namespace
-	ID
+	ATR
 {
 	static auto constexpr
 	(	ToReference
@@ -107,25 +111,25 @@ namespace
 		{
 			//	Digits
 			case '0':
-				return ::_0;
+				return ::i0;
 			case '1':
-				return ::_1;
+				return ::i1;
 			case '2':
-				return ::_2;
+				return ::i2;
 			case '3':
-				return ::_3;
+				return ::i3;
 			case '4':
-				return ::_4;
+				return ::i4;
 			case '5':
-				return ::_5;
+				return ::i5;
 			case '6':
-				return ::_6;
+				return ::i6;
 			case '7':
-				return ::_7;
+				return ::i7;
 			case '8':
-				return ::_8;
+				return ::i8;
 			case '9':
-				return ::_9;
+				return ::i9;
 
 			//	Upper Case
 			case 'A':
@@ -246,7 +250,7 @@ namespace
 }
 
 export namespace
-	Function
+	ATR
 {
 	/// serves as a base class for all identifer types
 	/// provides conversions to arrays as well as begin and end functions
@@ -268,12 +272,12 @@ export namespace
 		,	'\0'
 		};
 
-		static ::ID::StringLiteral constexpr
+		static StringLiteral constexpr
 			StringLiteral
 		{	RawArray
 		};
 
-		static ::ID::StringView constexpr
+		static StringView constexpr
 			StringView
 		{	StringLiteral
 		};
@@ -290,8 +294,8 @@ export namespace
 			>
 		[[nodiscard]]
 		friend auto constexpr
-			operator-
-			(	ID
+		(	operator-
+		)	(	ID
 			,	ID
 				<	t_rpString
 					...
@@ -314,12 +318,12 @@ export namespace
 			>
 		[[nodiscard]]
 		friend auto constexpr
-			operator-
-			(	ID<t_rpFront...>
+		(	operator-
+		)	(	ID<t_rpFront...>
 			,	ID
 			)
 		requires
-			(	::ID::ends_with
+			(	ends_with
 				(	ID<t_rpFront...>::StringView
 				,	StringView
 				)
@@ -327,15 +331,15 @@ export namespace
 		{	return
 			[]	<	Meta::USize
 					...	t_npIndex
-				>(	std::index_sequence
+				>(	Meta::IndexToken
 					<	t_npIndex
 						...
 					>
 				)
 			{	return
-					::Function::ID
-					<	::ID::ToReference
-						(	ID<t_rpFront...>::StringLiteral
+					::ATR::ID
+					<	::ATR::ToReference
+						(	::ATR::ID<t_rpFront...>::RawArray
 							[	t_npIndex
 
 							]
@@ -343,10 +347,10 @@ export namespace
 						...
 					>{}
 				;
-			}(	std::make_index_sequence
+			}(	Meta::Sequence
 				<	sizeof...(t_rpFront)
 				-	sizeof...(t_rpString)
-				>{}
+				>()
 			);
 		}
 
@@ -357,8 +361,8 @@ export namespace
 			>
 		[[nodiscard]]
 		friend auto constexpr
-			operator+
-			(	ID
+		(	operator+
+		)	(	ID
 			,	ID
 				<	t_rpBack
 					...
@@ -385,8 +389,8 @@ export namespace
 			>
 		[[nodiscard]]
 		friend auto constexpr
-			operator-
-			(	ID
+		(	operator-
+		)	(	ID
 			,	ID
 				<	t_rpBack
 					...
@@ -407,8 +411,8 @@ export namespace
 			>
 		[[nodiscard]]
 		friend auto constexpr
-			operator-
-			(	ID
+		(	operator-
+		)	(	ID
 				<	t_rpFront
 					...
 				>
@@ -429,8 +433,8 @@ export namespace
 			>
 		[[nodiscard]]
 		friend auto constexpr
-			operator+
-			(	ID
+		(	operator+
+		)	(	ID
 			,	ID
 				<	t_rpBack
 					...
@@ -444,51 +448,23 @@ export namespace
 		}
 	};
 
-	using ::ID::operator<=>;
-}
-
-export namespace
-	ID
-{
 	template
 		<	typename
 				t_tID
 		>
 	concept
-		Instance
+		ProtoID
 	=	Stateless::Type<t_tID>
 	and	requires(t_tID c_vID)
 		{
-			::Function::ID{c_vID};
+			::ATR::ID{c_vID};
 		}
 	;
+}
 
-	/// checks if an identifier starts with a given string and is an instance of a given template
-	template
-		<	typename
-				t_tID
-		,	StringLiteral
-				t_vStart
-		>
-	concept
-		Prefix
-	=	Instance<t_tID>
-	and	starts_with(t_tID{}, t_vStart)
-	;
-
-	/// checks if an identifier end with a given string and is an instance of a given template
-	template
-		<	typename
-				t_tID
-		,	StringLiteral
-				t_vEnd
-		>
-	concept
-		Suffix
-	=	Instance<t_tID>
-	and	ends_with(t_tID{}, t_vEnd)
-	;
-
+namespace
+	ATR
+{
 	/// dispatches a string literal into its characters
 	///	creates an instance of the given identifer template with all dispatched characters inserted
 	template
@@ -496,20 +472,20 @@ export namespace
 				t_vStringLiteral
 		>
 	auto constexpr
-		Make
-		()
-	->	Instance auto
+	(	Make
+	)	()
+	->	ProtoID auto
 	{
 		return
 		[]	<	Meta::USize
 				...	t_npIndex
-			>(	std::index_sequence
+			>(	Meta::IndexToken
 				<	t_npIndex
 					...
 				>
 			)
 		{	return
-				::Function::ID
+				::ATR::ID
 				<	ToReference
 					(	t_vStringLiteral
 						[	t_npIndex
@@ -518,21 +494,25 @@ export namespace
 					...
 				>{}
 			;
-		}(	std::make_index_sequence
+		}(	Meta::Sequence
 			<	t_vStringLiteral.size()
-			>{}
+			>()
 		);
 	}
+}
 
+export namespace
+	ATR
+{
 	/// creates an identifier type
 	template
 		<	StringLiteral
 				t_vStringLiteral
 		>
 	using
-		MakeT
-	=	decltype(
-			Make
+		ID_T
+	=	decltype
+		(	Make
 			<	t_vStringLiteral
 			>()
 		)
@@ -543,8 +523,8 @@ export namespace
 		<	StringLiteral
 				t_vStringLiteral
 		>
-	Instance auto constexpr
-		MakeV
+	ProtoID auto constexpr
+		ID_V
 	=	Make
 		<	t_vStringLiteral
 		>()
@@ -556,10 +536,10 @@ export namespace
 		>
 	[[nodiscard]]
 	auto constexpr
-		operator
+	(	operator
 		""_id
-		()
-	->	MakeT
+	)	()
+	->	ID_T
 		<	t_vString
 		>
 	{	return{};	}
@@ -567,20 +547,20 @@ export namespace
 
 static_assert
 (	starts_with
-	(	Function::ID<a, b, c>{}
-	,	ID::StringLiteral{"ab"}
+	(	::ATR::ID<a, b, c>{}
+	,	::ATR::StringLiteral{"ab"}
 	)
 );
 
 static_assert
 (	ends_with
-	(	Function::ID<a, b, c>{}
-	,	ID::StringLiteral{"bc"}
+	(	::ATR::ID<a, b, c>{}
+	,	::ATR::StringLiteral{"bc"}
 	)
 );
 
-using ID::operator""_id;
-using ID::operator==;
+using ATR::operator""_id;
+using ATR::operator==;
 
 static_assert
 (	"ab"_id

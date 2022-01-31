@@ -1,26 +1,26 @@
 export module Evaluation.Archetype.BasicShape;
 
 export import Evaluation.Shared.DataTypes;
-export import Archetype.LayoutInfo;
-export import Archetype.Instance;
+export import ATR.LayoutInfo;
+export import ATR.Instance;
 
 export namespace
-	Archetype
+	ATR
 {
 	template<>
 	auto constexpr inline
 		LayoutConfig
 		<	"BasicShape"
 		>
-	=	Layout::InfoV
+	=	InfoV
 		<	"Height"
 		,	Float
 		>
-	+	Layout::InfoV
+	+	InfoV
 		<	"Width"
 		,	Float
 		>
-	+	Layout::InfoV
+	+	InfoV
 		<	"Color"
 		,	RGBAColor
 		>

@@ -1,11 +1,10 @@
-export module Layout.MemberOffset;
+export module ATR.MemberOffset;
 
-export import Layout.Fork;
-export import Layout.DataMember;
+export import ATR.Fork;
+export import ATR.DataMember;
+export import ATR.ID;
 
 export import Std;
-
-export import ID.Make;
 
 export import PackTemplate.Instance;
 export import Pack.Instance;
@@ -15,7 +14,7 @@ export import Std.Concepts;
 export import Meta.Integer;
 
 export namespace
-	Layout
+	ATR
 {
 	/// function object retrieving a member from a void pointer
 	template
@@ -231,7 +230,7 @@ export namespace
 				>
 			typename
 				t_t1Qualifier
-		,	ID::Instance
+		,	ProtoID
 				t_tName
 		,	typename
 				t_tValue
@@ -266,7 +265,7 @@ export namespace
 		>
 	concept
 		MemberOffsetIDOf
-	=	ID::Instance
+	=	ProtoID
 		<	t_tDataID
 		>
 	and	requires

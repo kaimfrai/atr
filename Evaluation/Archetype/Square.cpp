@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.Square;
 
 export import Evaluation.Shared.SizeCheck;
-export import Archetype.Instance;
+export import ATR.Instance;
 export import Evaluation.Archetype.Square.Layout;
 
 export namespace
@@ -9,7 +9,7 @@ export namespace
 {
 	using
 		Square
-	=	Archetype::Make
+	=	ATR::Type
 		<	"Square"
 		>
 	;

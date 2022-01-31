@@ -3,18 +3,18 @@ export module Evaluation.Archetype.ComputeVolume;
 export import Evaluation.Shared.DataTypes;
 export import Evaluation.Archetype.ReturnMember;
 export import Evaluation.Archetype.Product;
-export import Function.VirtualArgument;
-export import Function.ConstantIDMap;
+export import ATR.VirtualArgument;
+export import ATR.ConstantIDMap;
 
 export namespace
 	Bodies3D
 {
 	using
 		VolumeComputer
-	=	Function::VirtualArgument
+	=	ATR::VirtualArgument
 		<	void const
 			*
-		,	Function::Virtual
+		,	ATR::Virtual
 			<	"ComputeVolume"
 			,	auto(	void const
 						*
@@ -27,7 +27,7 @@ export namespace
 }
 
 export namespace
-	Function
+	ATR
 {
 	template
 		<	typename
@@ -35,28 +35,28 @@ export namespace
 		>
 	requires
 		ValidAddress
-		<	::ID::MakeT<"GetComputeVolumeMultiplier">
+		<	ID_T<"GetComputeVolumeMultiplier">
 		,	t_tBody const
 			&
 		>
 	and ValidAddress
-		<	::ID::MakeT<"GetDepth">
+		<	ID_T<"GetDepth">
 		,	t_tBody const
 			&
 		>
 	and	ValidAddress
-		<	::ID::MakeT<"GetHeight">
+		<	ID_T<"GetHeight">
 		,	t_tBody const
 			&
 		>
 	and	ValidAddress
-		<	::ID::MakeT<"GetWidth">
+		<	ID_T<"GetWidth">
 		,	t_tBody const
 			&
 		>
 	auto constexpr
 		MapAddress
-		(	::ID::MakeT<"ComputeVolume">
+		(	ID_T<"ComputeVolume">
 		,	t_tBody const
 			&
 		)

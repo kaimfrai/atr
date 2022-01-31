@@ -4,7 +4,7 @@ export import Evaluation.Shared.DataTypes;
 export import Evaluation.Archetype.BasicShape;
 
 export namespace
-	Archetype
+	ATR
 {
 	template<>
 	auto constexpr inline
@@ -14,7 +14,7 @@ export namespace
 	=	LayoutConfig
 		<	"BasicShape"
 		>
-	+	Layout::InfoV
+	+	InfoV
 		<	"Depth"
 		,	Float
 		>

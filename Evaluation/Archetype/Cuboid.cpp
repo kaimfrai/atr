@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.Cuboid;
 
 export import Evaluation.Shared.SizeCheck;
-export import Archetype.Instance;
+export import ATR.Instance;
 export import Evaluation.Archetype.Cuboid.Layout;
 export import Evaluation.Archetype.ComputeVolume;
 
@@ -10,19 +10,19 @@ export namespace
 {
 	using
 		Cuboid
-	=	Archetype::Make
+	=	ATR::Type
 		<	"Cuboid"
 		>
 	;
 }
 
 export namespace
-	Function
+	ATR
 {
 	template<>
 	auto constexpr
 	(	Invoke
-		<	::ID::MakeT<"ComputeVolume">
+		<	ID_T<"ComputeVolume">
 		,	Bodies3D::Cuboid const&
 		>
 	)	(	Bodies3D::Cuboid const&

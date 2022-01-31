@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.Ellipsoid;
 
 export import Evaluation.Shared.SizeCheck;
-export import Archetype.Instance;
+export import ATR.Instance;
 export import Evaluation.Archetype.Ellipsoid.Layout;
 export import Evaluation.Archetype.ComputeVolume;
 
@@ -10,19 +10,19 @@ export namespace
 {
 	using
 		Ellipsoid
-	=	Archetype::Make
+	=	ATR::Type
 		<	"Ellipsoid"
 		>
 	;
 }
 
 export namespace
-	Function
+	ATR
 {
 	template<>
 	auto constexpr
 	(	Invoke
-		<	::ID::MakeT<"ComputeVolume">
+		<	ID_T<"ComputeVolume">
 		,	Bodies3D::Ellipsoid const&
 		>
 	)	(	Bodies3D::Ellipsoid const&

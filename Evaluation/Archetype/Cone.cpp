@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.Cone;
 
 export import Evaluation.Shared.SizeCheck;
-export import Archetype.Instance;
+export import ATR.Instance;
 export import Evaluation.Archetype.Cone.Layout;
 export import Evaluation.Archetype.ComputeVolume;
 
@@ -10,19 +10,19 @@ export namespace
 {
 	using
 		Cone
-	=	Archetype::Make
+	=	ATR::Type
 		<	"Cone"
 		>
 	;
 }
 
 export namespace
-	Function
+	ATR
 {
 	template<>
 	auto constexpr
 	(	Invoke
-		<	::ID::MakeT<"ComputeVolume">
+		<	ID_T<"ComputeVolume">
 		,	Bodies3D::Cone const&
 		>
 	)	(	Bodies3D::Cone const&

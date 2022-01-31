@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.Pyramid;
 
 export import Evaluation.Shared.SizeCheck;
-export import Archetype.Instance;
+export import ATR.Instance;
 export import Evaluation.Archetype.Pyramid.Layout;
 export import Evaluation.Archetype.ComputeVolume;
 
@@ -10,19 +10,19 @@ export namespace
 {
 	using
 		Pyramid
-	=	Archetype::Make
+	=	ATR::Type
 		<	"Pyramid"
 		>
 	;
 }
 
 export namespace
-	Function
+	ATR
 {
 	template<>
 	auto constexpr
 	(	Invoke
-		<	::ID::MakeT<"ComputeVolume">
+		<	ID_T<"ComputeVolume">
 		,	Bodies3D::Pyramid const&
 		>
 	)	(	Bodies3D::Pyramid const&

@@ -3,7 +3,7 @@ export module Evaluation.Archetype.Cube.Layout;
 export import Evaluation.Archetype.Cuboid.Layout;
 
 export namespace
-	Archetype
+	ATR
 {
 	template<>
 	auto constexpr inline
@@ -12,11 +12,11 @@ export namespace
 		>
 	=	LayoutConfig
 		<	"Cuboid"
-		>({	Layout::Alias
+		>({	Alias
 			<	"Height"
 			,	"Width"
 			>
-		,	Layout::Alias
+		,	Alias
 			<	"Depth"
 			,	"Width"
 			>

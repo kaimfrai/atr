@@ -1,16 +1,16 @@
-export module Function.FuncDependencyItem;
+export module ATR.FuncDependencyItem;
 
-export import ID.Make;
+export import ATR.ID;
 export import Stateless.Map;
 export import Stateless.Type;
 export import Std.FunctionTraits;
 
 export namespace
-	Function
+	ATR
 {
 	/// maps a FuncID to a function pointer
 	template
-		<	::ID::Instance
+		<	ProtoID
 				t_tFuncID
 		,	typename
 				t_tLazyFunction

@@ -1,7 +1,7 @@
-export module Layout.LayoutCreator;
+export module ATR.LayoutCreator;
 
-export import Layout.Fork;
-export import Layout.DataMember;
+export import ATR.Fork;
+export import ATR.DataMember;
 
 export import Meta.Template;
 
@@ -10,7 +10,7 @@ export import PackTemplate.Type;
 export import Meta.TypeInfo;
 
 export namespace
-	Layout
+	ATR
 {
 	/// designates an empty layout
 	struct
@@ -118,9 +118,9 @@ export namespace
 			;
 			return
 			Meta::Type
-			<	Layout::DataMember
-				<	ID::MakeT
-					<	ID::StringLiteral
+			<	ATR::DataMember
+				<	ID_T
+					<	StringLiteral
 						<	aBegin->Name.size() + 1uz
 						>{	aBegin->Name.data()
 						}

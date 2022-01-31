@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.Cylinder;
 
 export import Evaluation.Shared.SizeCheck;
-export import Archetype.Instance;
+export import ATR.Instance;
 export import Evaluation.Archetype.Cylinder.Layout;
 export import Evaluation.Archetype.ComputeVolume;
 
@@ -10,19 +10,19 @@ export namespace
 {
 	using
 		Cylinder
-	=	Archetype::Make
+	=	ATR::Type
 		<	"Cylinder"
 		>
 	;
 }
 
 export namespace
-	Function
+	ATR
 {
 	template<>
 	auto constexpr
 	(	Invoke
-		<	::ID::MakeT<"ComputeVolume">
+		<	ID_T<"ComputeVolume">
 		,	Bodies3D::Cylinder const&
 		>
 	)	(	Bodies3D::Cylinder const&

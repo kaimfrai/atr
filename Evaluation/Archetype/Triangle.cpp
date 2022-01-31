@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.Triangle;
 
 export import Evaluation.Shared.SizeCheck;
-export import Archetype.Instance;
+export import ATR.Instance;
 export import Evaluation.Archetype.Triangle.Layout;
 
 export namespace
@@ -9,7 +9,7 @@ export namespace
 {
 	using
 		Triangle
-	=	Archetype::Make
+	=	ATR::Type
 		<	"Triangle"
 		>
 	;

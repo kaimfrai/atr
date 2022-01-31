@@ -1,13 +1,8 @@
-export module Layout.DataMember;
+export module ATR.DataMember;
 
 export import Meta.Value;
-export import Layout.Initializer;
-export import ID.Make;
-export import Std;
+export import ATR.ID;
 
-export import Pack.Filter;
-export import Pack.Accumulate;
-export import Pack.Type;
 export import Meta.TypeInfo;
 export import Meta.ValueInfo;
 export import Std.Concepts;
@@ -16,11 +11,11 @@ export import Meta.Integer;
 export import Std;
 
 export namespace
-	Layout
+	ATR
 {
 	/// wraps around a value and provides access to it by a name token
 	template
-		<	ID::Instance
+		<	ProtoID
 				t_tName
 		,	typename
 				t_tValue
@@ -53,7 +48,7 @@ export namespace
 
 	/// wraps around a value and provides access to it by a name token
 	template
-		<	ID::Instance
+		<	ProtoID
 				t_tName
 		,	Stateless::Type
 				t_tValue
@@ -318,7 +313,7 @@ export namespace
 		(	DataMemberConfig
 		)	(	Meta::TypeToken<t_tEntity>
 					i_vType
-			,	ID::Instance auto
+			,	ProtoID auto
 					i_vName
 			)
 		:	DataMember
@@ -560,7 +555,7 @@ export namespace
 	}
 
 	template
-		<	ID::StringLiteral
+		<	StringLiteral
 				t_vName
 		,	typename
 				t_tValue
@@ -569,25 +564,23 @@ export namespace
 		InfoV
 	=	DataMemberConfig<1uz>
 		{	Meta::Type<t_tValue>
-		,	ID::MakeV<t_vName>
+		,	ID_V<t_vName>
 		}
 	;
 
 	template
-		<	ID::StringLiteral
+		<	StringLiteral
 				t_vOriginID
-		,	ID::StringLiteral
+		,	StringLiteral
 				t_vTargetID
 		>
 	DataMemberInfo constexpr inline
 		Alias
 	=	DataMemberInfo
 		{	Meta::Type
-			<	ID::MakeT
-				<	t_vTargetID
-				>
+			<	ID_T<t_vTargetID>
 			>
-		,	ID::MakeT<t_vOriginID>::RawArray
+		,	ID_T<t_vOriginID>::RawArray
 		}
 	;
 }

@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.Sphere;
 
 export import Evaluation.Shared.SizeCheck;
-export import Archetype.Instance;
+export import ATR.Instance;
 export import Evaluation.Archetype.Sphere.Layout;
 export import Evaluation.Archetype.ComputeVolume;
 
@@ -10,19 +10,19 @@ export namespace
 {
 	using
 		Sphere
-	=	Archetype::Make
+	=	ATR::Type
 		<	"Sphere"
 		>
 	;
 }
 
 export namespace
-	Function
+	ATR
 {
 	template<>
 	auto constexpr
 	(	Invoke
-		<	::ID::MakeT<"ComputeVolume">
+		<	ID_T<"ComputeVolume">
 		,	Bodies3D::Sphere const&
 		>
 	)	(	Bodies3D::Sphere const&

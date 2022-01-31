@@ -1,7 +1,7 @@
-export module Function.StaticDependency;
+export module ATR.StaticDependency;
 
-export import Function.Dependency;
-export import ID.Make;
+export import ATR.Dependency;
+export import ATR.ID;
 export import Meta.Template;
 export import Meta.TypeInfo;
 export import PackTemplate.Instance;
@@ -10,10 +10,10 @@ export import Stateless.Map;
 export import Std;
 
 export namespace
-	Function
+	ATR
 {
 	template
-		<	::ID::Instance
+		<	ProtoID
 				t_tFunctionName
 		,	PackTemplate::TypeInstanceOf
 			<	Stateless::Map
@@ -45,7 +45,7 @@ export namespace
 		constexpr
 		auto
 			operator[]
-			(	::ID::Instance auto
+			(	ProtoID auto
 					i_vDataID
 			)
 		noexcept
@@ -68,7 +68,7 @@ export namespace
 		constexpr
 		auto
 			operator()
-			(	::ID::Instance auto
+			(	ProtoID auto
 					i_vFuncID
 			,	t_tpArgument
 				&&
@@ -91,15 +91,13 @@ export namespace
 	};
 
 	template
-		<	::ID::StringLiteral
+		<	StringLiteral
 				t_vFunctionName
 		>
 	using
 		FunctionName
 	=	StaticDependency
-		<	::ID::MakeT
-			<	t_vFunctionName
-			>
+		<	ID_T<t_vFunctionName>
 		,	Stateless::Map
 			<>
 		,	Stateless::Map
@@ -122,7 +120,7 @@ export namespace
 	template
 		<	typename
 				t_tDependency
-		,	::ID::StringLiteral
+		,	StringLiteral
 				t_vFunctionName
 		>
 	concept
@@ -134,14 +132,12 @@ export namespace
 		<	typename
 			t_tDependency
 			::	FunctionName
-		,	::ID::MakeT
-			<	t_vFunctionName
-			>
+		,	ID_T<t_vFunctionName>
 		>
 	;
 
 	template
-		<	::ID::StringLiteral
+		<	StringLiteral
 				t_vFunctionName
 		>
 	constexpr
@@ -156,7 +152,7 @@ export namespace
 				<	StaticDependency
 				>()
 			,	Meta::Info
-				<	::ID::MakeT
+				<	ID_T
 					<	t_vFunctionName
 					>
 				>()

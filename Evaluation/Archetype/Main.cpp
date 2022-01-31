@@ -11,8 +11,8 @@ import Evaluation.Shared.TypeConstruct;
 import Evaluation.Shared.MainTemplate;
 
 static_assert
-(	Function::Address<::ID::MakeT<"ComputeVolume">, Bodies3D::Head const&>()
-==	Function::Address<::ID::MakeT<"ComputeVolume">, Bodies3D::Sphere const&>()
+(	ATR::Address<ATR::ID_T<"ComputeVolume">, Bodies3D::Head const&>()
+==	ATR::Address<ATR::ID_T<"ComputeVolume">, Bodies3D::Sphere const&>()
 );
 
 auto
@@ -25,15 +25,15 @@ auto
 	)
 -> int
 {
-	using ID::operator""_id;
+	using ATR::operator""_id;
 	using namespace Bodies3D;
 
 	using
 		Body3D
-	=	Function::VirtualStorage
+	=	ATR::VirtualStorage
 		<	sizeof(Head)
 		,	alignof(Float)
-		,	Function::Virtual
+		,	ATR::Virtual
 			<	"ComputeVolume"
 			,	auto(	void const
 						*

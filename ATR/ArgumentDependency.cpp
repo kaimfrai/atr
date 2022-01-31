@@ -1,7 +1,7 @@
-export module Function.ArgumentDependency;
+export module ATR.ArgumentDependency;
 
-export import Function.Dependency;
-export import ID.Make;
+export import ATR.Dependency;
+export import ATR.ID;
 export import Meta.Template;
 export import Meta.TypeInfo;
 export import PackTemplate.Instance;
@@ -11,7 +11,7 @@ export import Std.Concepts;
 export import Std;
 
 export namespace
-	Function
+	ATR
 {
 	/// wraps around an object and provides member access via dependency maps
 	template
@@ -51,7 +51,7 @@ export namespace
 		constexpr
 		auto
 			operator[]
-			(	::ID::Instance auto
+			(	ProtoID auto
 					i_vDataID
 			)
 		noexcept
@@ -75,7 +75,7 @@ export namespace
 		constexpr
 		auto
 			operator()
-			(	::ID::Instance auto
+			(	ProtoID auto
 					i_vFuncID
 			,	t_tpArgument
 				&&

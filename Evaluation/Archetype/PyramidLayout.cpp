@@ -4,7 +4,7 @@ export import Evaluation.Shared.Fraction;
 export import Evaluation.Archetype.BasicBody;
 
 export namespace
-	Archetype
+	ATR
 {
 	template<>
 	auto constexpr inline
@@ -14,7 +14,7 @@ export namespace
 	=	LayoutConfig
 		<	"BasicBody"
 		>
-	+	Layout::InfoV
+	+	InfoV
 		<	"ComputeVolumeMultiplier"
 		,	Fraction
 			<	1z

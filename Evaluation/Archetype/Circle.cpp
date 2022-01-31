@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.Circle;
 
 export import Evaluation.Shared.SizeCheck;
-export import Archetype.Instance;
+export import ATR.Instance;
 export import Evaluation.Archetype.Circle.Layout;
 
 export namespace
@@ -9,7 +9,7 @@ export namespace
 {
 	using
 		Circle
-	=	Archetype::Make
+	=	ATR::Type
 		<	"Circle"
 		>
 	;

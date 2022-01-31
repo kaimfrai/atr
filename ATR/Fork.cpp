@@ -1,10 +1,10 @@
-export module Layout.Fork;
+export module ATR.Fork;
 
-export import ID.Make;
+export import ATR.ID;
 export import Stateless.Type;
 
 export namespace
-	Layout
+	ATR
 {
 	/// constrains data ids to those that have the [] operator overloaded in a member area
 	template
@@ -15,7 +15,7 @@ export namespace
 		>
 	concept
 		MemberAccessIDOf
-	=	ID::Instance
+	=	ProtoID
 		<	t_tDataID
 		>
 	and	requires

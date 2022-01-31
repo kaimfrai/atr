@@ -1,12 +1,13 @@
 export module Evaluation.Archetype.ReturnMember;
 
-export import Function.ConstantIDMap;
-export import Archetype.Instance;
+export import ATR.ConstantIDMap;
+export import ATR.Instance;
+export import ATR.Concatenate;
 
 export namespace
-	Function
+	ATR
 {
-	using ::ID::operator""_id;
+	using ATR::operator""_id;
 
 	/// simply returns a member
 	auto inline
@@ -17,8 +18,7 @@ export namespace
 		)
 	noexcept
 	->	decltype(auto)
-	{	using ::ID::operator""_id;
-		return
+	{	return
 			i_vObject
 			[	"Member"_id
 			]
@@ -27,9 +27,9 @@ export namespace
 
 	/// functions prefixed with Get return the datamember withouth get
 	template
-		<	::ID::Prefix<"Get">
+		<	ProtoPrefixID<"Get">
 				t_tGetter
-		,	::ID::StringLiteral
+		,	StringLiteral
 				t_vDataMember
 			=	(	"Get"_id
 				-	t_tGetter
@@ -39,7 +39,7 @@ export namespace
 	auto constexpr
 		MapAddress
 		(	t_tGetter
-		,	Archetype::HasDataMember<t_vDataMember>	auto const
+		,	ATR::HasDataMember<t_vDataMember>	auto const
 			&	i_rObject
 		)
 	{
@@ -47,7 +47,7 @@ export namespace
 			MemberType
 		=	decltype
 			(	i_rObject
-				[	::ID::MakeV
+				[	ID_V
 					<	t_vDataMember
 					>
 				]

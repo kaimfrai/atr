@@ -1,4 +1,4 @@
-export module Function.Erase;
+export module ATR.Erase;
 
 export import Meta.Template;
 export import Meta.TypeInfo;
@@ -7,7 +7,7 @@ export import Std.Concepts;
 export import Std;
 
 export namespace
-	Function
+	ATR
 {
 	/// erases type information from an argument
 	/// defined as a niebloid as ADL and overloads of the same name
