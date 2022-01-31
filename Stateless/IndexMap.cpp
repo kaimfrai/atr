@@ -7,6 +7,7 @@ export import Std.FunctionTraits;
 export import Std.TemplateConcepts;
 export import Std.Concepts;
 export import Meta.Integer;
+export import Meta.Index;
 
 export import Std;
 
@@ -80,8 +81,8 @@ export namespace
 		,	Type
 			...	t_tpResult
 		>
-		Map
-		(	std::index_sequence
+	(	Map
+	)	(	Meta::IndexToken
 			<	t_npIndex
 				...
 			>

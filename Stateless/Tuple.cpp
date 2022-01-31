@@ -7,6 +7,7 @@ export import Stateless.Map;
 export import Std.TemplateConcepts;
 export import Std.Concepts;
 export import Meta.Integer;
+export import Meta.Index;
 
 export import Std;
 
@@ -38,7 +39,7 @@ export namespace
 		constexpr
 		Map
 			MapToIndex
-		{	Copy<std::make_index_sequence<ElementCount>>
+		{	Meta::Sequence<ElementCount>()
 		,	Copy<t_tpStateless>
 			...
 		};
