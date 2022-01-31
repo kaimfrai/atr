@@ -4,7 +4,7 @@ export import Stateless.Type;
 
 export import Std.TemplateConcepts;
 export import Std.Concepts;
-export import Std.FunctionTraits;
+// export import Std.FunctionTraits;
 
 export import Meta.Integer;
 
@@ -134,13 +134,17 @@ export namespace
 	concept
 		MapItemInstance
 	=	Type
-		<	typename
-			Std::FunctionTraits
-			<	&
-				t_tStatelessMapItem
-				::	operator()
-			>::	ArgumentType
-			::	Single
+		<	Meta::TypeEntity
+			<	Meta::Type
+				<	decltype
+					(	&
+						t_tStatelessMapItem
+					::	operator()
+					)
+				>
+			.	GetMember()
+			.	GetFunctionParameter(Meta::Index<0uz>)
+			>
 		>
 	;
 

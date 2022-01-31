@@ -4,19 +4,22 @@ export import Std;
 
 export import Meta.Integer;
 export import Meta.Literals;
+export import Meta.Index;
+export import Meta.SelectByIndex;
 
 export namespace
 	Meta
 {
 	enum class
-		EQualifier
-	:	UInt<5>
+		EFunctionFlag
+	:	UInt<6>
 	{	None = 0x0
 	,	Const = 0x1
 	,	Volatile = Const << 0x1
 	,	LRef = Volatile << 0x1
 	,	RRef = LRef << 0x1
 	,	Noexcept = RRef << 0x1
+	,	Variadic = Noexcept << 0x1
 	};
 
 	template
@@ -104,21 +107,21 @@ namespace
 {
 	static auto constexpr
 	(	operator |
-	)	(	EQualifier
+	)	(	EFunctionFlag
 				i_eLeft
-		,	EQualifier
+		,	EFunctionFlag
 				i_eRight
 		)
-	->	EQualifier
+	->	EFunctionFlag
 	{	return
-		static_cast<EQualifier>
-		(	static_cast<UInt<5>>(i_eLeft)
+		static_cast<EFunctionFlag>
+		(	static_cast<UInt<6>>(i_eLeft)
 		bitor
-			static_cast<UInt<5>>(i_eRight)
+			static_cast<UInt<6>>(i_eRight)
 		);
 	}
 
-	using enum Meta::EQualifier;
+	using enum Meta::EFunctionFlag;
 }
 
 export namespace
@@ -194,12 +197,10 @@ export namespace
 				...
 			};
 		}
-
 	};
 
 	template
 		<	typename
-				t_tArgument
 		>
 	struct
 		Parameter
@@ -210,20 +211,20 @@ export namespace
 				t_tEntity
 		>
 	struct
-		Return
+		Returnable
 	{
 		template
 			<	typename
-				...	t_tpArgument
+				...	t_tpParameter
 			>
 		auto constexpr
 		(	operator()
-		)	(	Parameter<t_tpArgument>
+		)	(	Parameter<t_tpParameter>
 				...
 			)
 		->	Type
 			<	t_tEntity
-				(	t_tpArgument
+				(	t_tpParameter
 					...
 				)
 			>
@@ -237,33 +238,189 @@ export namespace
 	struct
 		Composition
 	:	Sized<t_tEntity>
-	,	Return<::std::remove_volatile_t<t_tEntity>>
-	,	Parameter<::std::remove_volatile_t<t_tEntity>>
+	,	Returnable<t_tEntity>
+	,	Parameter<t_tEntity>
+	{};
+
+	template
+		<	typename
+				t_tEntity
+		>
+	struct
+		Composition<t_tEntity volatile>
+	:	Sized<t_tEntity volatile>
+	{};
+
+	template
+		<	typename
+				t_tPointed
+		>
+	struct
+		Pointed
+	{
+		static auto constexpr
+		(	GetPointed
+		)	()
+		->	Type<t_tPointed>
+		{	return{};	}
+	};
+
+	template
+		<	typename
+				t_tPointed
+		>
+	struct
+		Composition<t_tPointed*>
+	:	Returnable<t_tPointed*>
+	,	Parameter<t_tPointed*>
+	,	Pointed<t_tPointed>
+	{};
+
+	template
+		<	typename
+				t_tPointed
+		>
+	struct
+		Composition<t_tPointed* const>
+	:	Returnable<t_tPointed* const>
+	,	Parameter<t_tPointed* const>
+	,	Pointed<t_tPointed>
+	{};
+
+	template
+		<	typename
+				t_tPointed
+		>
+	struct
+		Composition<t_tPointed* volatile>
+	:	Pointed<t_tPointed>
+	{};
+
+	template
+		<	typename
+				t_tPointed
+		>
+	struct
+		Composition<t_tPointed* const volatile>
+	:	Pointed<t_tPointed>
+	{};
+
+	template
+		<	typename
+				t_tOwner
+		>
+	struct
+		Owner
+	{
+		static auto constexpr
+		(	GetOwner
+		)	()
+		->	Type<t_tOwner>
+		{	return{};	}
+	};
+
+	template
+		<	typename
+				t_tMember
+		>
+	struct
+		Member
+	{
+		static auto constexpr
+		(	GetMember
+		)	()
+		->	Type<t_tMember>
+		{	return{};	}
+	};
+
+	template
+		<	typename
+				t_tMember
+		,	typename
+				t_tOwner
+		>
+	struct
+		Composition<t_tMember t_tOwner::*>
+	:	Returnable<t_tMember t_tOwner::*>
+	,	Parameter<t_tMember t_tOwner::*>
+	,	Member<t_tMember>
+	,	Owner<t_tOwner>
+	{};
+
+	template
+		<	typename
+				t_tMember
+		,	typename
+				t_tOwner
+		>
+	struct
+		Composition<t_tMember t_tOwner::* const>
+	:	Returnable<t_tMember t_tOwner::* const>
+	,	Parameter<t_tMember t_tOwner::* const>
+	,	Member<t_tMember>
+	,	Owner<t_tOwner>
+	{};
+
+	template
+		<	typename
+				t_tMember
+		,	typename
+				t_tOwner
+		>
+	struct
+		Composition<t_tMember t_tOwner::* volatile>
+	:	Member<t_tMember>
+	,	Owner<t_tOwner>
+	{};
+
+	template
+		<	typename
+				t_tMember
+		,	typename
+				t_tOwner
+		>
+	struct
+		Composition<t_tMember t_tOwner::* const volatile>
+	:	Member<t_tMember>
+	,	Owner<t_tOwner>
 	{};
 
 	template<>
 	struct
 		Composition<void>
-	:	Return<void>
+	:	Returnable<void>
 	{};
 
 	template<>
 	struct
 		Composition<void const>
-	:	Return<void const>
+	:	Returnable<void const>
 	{};
 
 	template<>
 	struct
 		Composition<void volatile>
-	:	Return<void>
 	{};
 
 	template<>
 	struct
 		Composition<void const volatile>
-	:	Return<void const>
+	:	Returnable<void const>
 	{};
+
+	template
+		<	typename
+				t_tReferenced
+		>
+	struct
+		Referenced
+	{
+		auto constexpr
+		(	GetReferenced
+		)	()
+		->	Type<t_tReferenced>
+		{	return{};	}
+	};
 
 	template
 		<	typename
@@ -271,8 +428,9 @@ export namespace
 		>
 	struct
 		Composition<t_tEntity&>
-	:	Return<t_tEntity&>
+	:	Returnable<t_tEntity&>
 	,	Parameter<t_tEntity&>
+	,	Referenced<t_tEntity>
 	{};
 	template
 		<	typename
@@ -280,9 +438,24 @@ export namespace
 		>
 	struct
 		Composition<t_tEntity&&>
-	:	Return<t_tEntity&&>
+	:	Returnable<t_tEntity&&>
 	,	Parameter<t_tEntity&&>
+	,	Referenced<t_tEntity>
 	{};
+
+	template
+		<	typename
+				t_tElement
+		>
+	struct
+		Element
+	{
+		static auto constexpr
+		(	GetElement
+		)	()
+		->	Type<t_tElement>
+		{	return{};	}
+	};
 
 	template
 		<	typename
@@ -293,6 +466,7 @@ export namespace
 	struct
 		Composition<t_tEntity[t_nExtent]>
 	:	Sized<t_tEntity[t_nExtent]>
+	,	Element<t_tEntity>
 	{};
 	template
 		<	typename
@@ -301,607 +475,750 @@ export namespace
 	struct
 		Composition<t_tEntity[]>
 	:	Parameter<t_tEntity[]>
+	,	Element<t_tEntity>
 	{};
 
 	template
-		<	EQualifier
-				t_eQualifier
+		<	typename
+				t_tFunctionResult
+		>
+	struct
+		FunctionResult
+	{
+		static auto constexpr
+		(	GetFunctionResult
+		)	()
+		->	Type<t_tFunctionResult>
+		{	return {};	}
+	};
+
+	template
+		<	typename
+			...	t_tpParameter
+		>
+	struct
+		FunctionParameterList
+	{
+		template
+			<	Meta::USize
+					t_nIndex
+			>
+		static auto constexpr
+		(	GetFunctionParameter
+		)	(	Meta::IndexToken
+				<	t_nIndex
+				>
+			)
+		->	::std::remove_pointer_t
+			<	decltype
+				(	SelectByIndex
+					{	ValueSequence<t_nIndex>()
+					}(	static_cast
+						<	Type<t_tpParameter>*
+						>(	nullptr
+						)
+						...
+					)
+				)
+			>
+		{	return{};	}
+	};
+
+	template
+		<	EFunctionFlag
+				t_eFlagMask
 		=	None
 		>
 	struct
-		Function
+		FunctionFlag
 	{
 		static auto constexpr
-		(	FunctionQualifier
-		)	(	EQualifier
-					i_eQualifier
+		(	HasFunctionFlag
+		)	(	EFunctionFlag
+					i_eFlag
 			)
 		->	bool
 		{	return
-				(	static_cast<UInt<5>>(t_eQualifier)
+				(	static_cast<UInt<6>>(t_eFlagMask)
 				bitand
-					static_cast<UInt<5>>(i_eQualifier)
+					static_cast<UInt<6>>(i_eFlag)
 				)
-			==	static_cast<UInt<5>>(i_eQualifier)
+			==	static_cast<UInt<6>>(i_eFlag)
 			;
 		}
 	};
 
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...)
+		<	t_tResult(t_tpParameter...)
 		>
-	:	Function<>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...)
+		<	t_tResult(t_tpParameter..., ...)
 		>
-	:	Function<>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) const
+		<	t_tResult(t_tpParameter...) const
 		>
-	:	Function<Const>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) volatile
+		<	t_tResult(t_tpParameter...) volatile
 		>
-	:	Function<Volatile>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Volatile>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) const volatile
+		<	t_tResult(t_tpParameter...) const volatile
 		>
-	:	Function<Const | Volatile>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | Volatile>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) const
+		<	t_tResult(t_tpParameter..., ...) const
 		>
-	:	Function<Const>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) volatile
+		<	t_tResult(t_tpParameter..., ...) volatile
 		>
-	:	Function<Volatile>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Volatile | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) const volatile
+		<	t_tResult(t_tpParameter..., ...) const volatile
 		>
-	:	Function<Const | Volatile>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | Volatile | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) &
+		<	t_tResult(t_tpParameter...) &
 		>
-	:	Function<LRef>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<LRef>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) const &
+		<	t_tResult(t_tpParameter...) const &
 		>
-	:	Function<Const | LRef>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | LRef>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) volatile &
+		<	t_tResult(t_tpParameter...) volatile &
 		>
-	:	Function<Volatile | LRef>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Volatile | LRef>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) const volatile &
+		<	t_tResult(t_tpParameter...) const volatile &
 		>
-	:	Function<Const | Volatile | LRef>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | Volatile | LRef>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) &
+		<	t_tResult(t_tpParameter..., ...) &
 		>
-	:	Function<LRef>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<LRef | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) const &
+		<	t_tResult(t_tpParameter..., ...) const &
 		>
-	:	Function<Const | LRef>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | LRef | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) volatile &
+		<	t_tResult(t_tpParameter..., ...) volatile &
 		>
-	:	Function<Volatile | LRef>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Volatile | LRef | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) const volatile &
+		<	t_tResult(t_tpParameter..., ...) const volatile &
 		>
-	:	Function<Const | Volatile | LRef>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | Volatile | LRef | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) &&
+		<	t_tResult(t_tpParameter...) &&
 		>
-	:	Function<RRef>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<RRef>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) const &&
+		<	t_tResult(t_tpParameter...) const &&
 		>
-	:	Function<Const | RRef>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | RRef>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) volatile &&
+		<	t_tResult(t_tpParameter...) volatile &&
 		>
-	:	Function<Volatile | RRef>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Volatile | RRef>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) const volatile &&
+		<	t_tResult(t_tpParameter...) const volatile &&
 		>
-	:	Function<Const | Volatile | RRef>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | Volatile | RRef>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) &&
+		<	t_tResult(t_tpParameter..., ...) &&
 		>
-	:	Function<RRef>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<RRef | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) const &&
+		<	t_tResult(t_tpParameter..., ...) const &&
 		>
-	:	Function<Const | RRef>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | RRef | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) volatile &&
+		<	t_tResult(t_tpParameter..., ...) volatile &&
 		>
-	:	Function<Volatile | RRef>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Volatile | RRef | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) const volatile &&
+		<	t_tResult(t_tpParameter..., ...) const volatile &&
 		>
-	:	Function<Const | Volatile | RRef>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | Volatile | RRef | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) noexcept
+		<	t_tResult(t_tpParameter...) noexcept
 		>
-	:	Function<Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Noexcept>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) noexcept
+		<	t_tResult(t_tpParameter..., ...) noexcept
 		>
-	:	Function<Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Noexcept | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) const noexcept
+		<	t_tResult(t_tpParameter...) const noexcept
 		>
-	:	Function<Const | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | Noexcept>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) volatile noexcept
+		<	t_tResult(t_tpParameter...) volatile noexcept
 		>
-	:	Function<Volatile | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Volatile | Noexcept>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) const volatile noexcept
+		<	t_tResult(t_tpParameter...) const volatile noexcept
 		>
-	:	Function<Const | Volatile | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | Volatile | Noexcept>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) const noexcept
+		<	t_tResult(t_tpParameter..., ...) const noexcept
 		>
-	:	Function<Const | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | Noexcept | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) volatile noexcept
+		<	t_tResult(t_tpParameter..., ...) volatile noexcept
 		>
-	:	Function<Volatile | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Volatile | Noexcept | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) const volatile noexcept
+		<	t_tResult(t_tpParameter..., ...) const volatile noexcept
 		>
-	:	Function<Const | Volatile | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | Volatile | Noexcept | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) & noexcept
+		<	t_tResult(t_tpParameter...) & noexcept
 		>
-	:	Function<LRef | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<LRef | Noexcept>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) const & noexcept
+		<	t_tResult(t_tpParameter...) const & noexcept
 		>
-	:	Function<Const | LRef | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | LRef | Noexcept>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) volatile & noexcept
+		<	t_tResult(t_tpParameter...) volatile & noexcept
 		>
-	:	Function<Volatile | LRef | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Volatile | LRef | Noexcept>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) const volatile & noexcept
+		<	t_tResult(t_tpParameter...) const volatile & noexcept
 		>
-	:	Function<Const | Volatile | LRef | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | Volatile | LRef | Noexcept>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) & noexcept
+		<	t_tResult(t_tpParameter..., ...) & noexcept
 		>
-	:	Function<LRef | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<LRef | Noexcept | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) const & noexcept
+		<	t_tResult(t_tpParameter..., ...) const & noexcept
 		>
-	:	Function<Const | LRef | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | LRef | Noexcept | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) volatile & noexcept
+		<	t_tResult(t_tpParameter..., ...) volatile & noexcept
 		>
-	:	Function<Volatile | LRef | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Volatile | LRef | Noexcept | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) const volatile & noexcept
+		<	t_tResult(t_tpParameter..., ...) const volatile & noexcept
 		>
-	:	Function<Const | Volatile | LRef | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | Volatile | LRef | Noexcept | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) && noexcept
+		<	t_tResult(t_tpParameter...) && noexcept
 		>
-	:	Function<RRef | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<RRef | Noexcept>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) const && noexcept
+		<	t_tResult(t_tpParameter...) const && noexcept
 		>
-	:	Function<Const | RRef | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | RRef | Noexcept>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) volatile && noexcept
+		<	t_tResult(t_tpParameter...) volatile && noexcept
 		>
-	:	Function<Volatile | RRef | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Volatile | RRef | Noexcept>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument...) const volatile && noexcept
+		<	t_tResult(t_tpParameter...) const volatile && noexcept
 		>
-	:	Function<Const | Volatile | RRef | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | Volatile | RRef | Noexcept>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) && noexcept
+		<	t_tResult(t_tpParameter..., ...) && noexcept
 		>
-	:	Function<RRef | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<RRef | Noexcept | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) const && noexcept
+		<	t_tResult(t_tpParameter..., ...) const && noexcept
 		>
-	:	Function<Const | RRef | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | RRef | Noexcept | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) volatile && noexcept
+		<	t_tResult(t_tpParameter..., ...) volatile && noexcept
 		>
-	:	Function<Volatile | RRef | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Volatile | RRef | Noexcept | Variadic>
 	{};
 	template
 		<	typename
-				t_tReturn
+				t_tResult
 		,	typename
-			...	t_tpArgument
+			...	t_tpParameter
 		>
 	struct
 		Composition
-		<	t_tReturn(t_tpArgument..., ...) const volatile && noexcept
+		<	t_tResult(t_tpParameter..., ...) const volatile && noexcept
 		>
-	:	Function<Const | Volatile | RRef | Noexcept>
+	:	FunctionResult<t_tResult>
+	,	FunctionParameterList<t_tpParameter...>
+	,	FunctionFlag<Const | Volatile | RRef | Noexcept | Variadic>
 	{};
 
 	struct

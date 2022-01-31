@@ -3,7 +3,6 @@ export module ATR.Address;
 export import ATR.Erase;
 export import ATR.Signature;
 export import ATR.ID;
-export import Std.FunctionTraits;
 export import Std.Concepts;
 
 export import Std;
@@ -142,16 +141,21 @@ export namespace
 		,	t_tpArgument
 			...
 		>
-	constexpr
-	bool
+	bool constexpr inline
 		AddressNoexcept
-	=	Std::FunctionTraits
-		<	Address
-			<	t_tFunctionName
-			,	t_tpArgument
-				...
-			>()
-		>::	IsNoexcept()
+	=	Meta::Type
+		<	decltype
+			(	Address
+				<	t_tFunctionName
+				,	t_tpArgument
+					...
+				>()
+			)
+		>
+	.	GetPointed()
+	.	HasFunctionFlag
+		(	Meta::EFunctionFlag::Noexcept
+		)
 	;
 
 	/// invokes the function specified with the given FuncID

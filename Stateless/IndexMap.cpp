@@ -3,7 +3,6 @@ export module Stateless.IndexMap;
 export import Stateless.Map;
 export import Stateless.Type;
 
-export import Std.FunctionTraits;
 export import Std.TemplateConcepts;
 export import Std.Concepts;
 export import Meta.Integer;

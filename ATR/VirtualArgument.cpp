@@ -13,8 +13,6 @@ export namespace
 				t_tFuncID
 		,	typename
 				t_tSignature
-		,	bool
-				t_bNoexcept
 		>
 	struct
 		VirtualItem
@@ -38,8 +36,6 @@ export namespace
 				t_tInitial
 		,	typename
 			...	t_tpArgument
-		,	bool
-				t_bNoexcept
 		>
 	struct
 		VirtualItem
@@ -49,7 +45,6 @@ export namespace
 				,	t_tpArgument
 					...
 				)
-		,	t_bNoexcept
 		>
 	{
 		using
@@ -59,7 +54,6 @@ export namespace
 				,	t_tpArgument
 					...
 				)
-				noexcept(t_bNoexcept)
 		;
 
 		FunctionType
@@ -70,10 +64,9 @@ export namespace
 			<	typename
 					t_tObject
 			>
-		constexpr
-		explicit
-			VirtualItem
-			(	Meta::TypeToken
+		explicit constexpr
+		(	VirtualItem
+		)	(	Meta::TypeToken
 				<	t_tObject
 				>
 			)
@@ -87,8 +80,7 @@ export namespace
 			}
 		{}
 
-		constexpr
-		auto
+		auto constexpr
 			operator()
 			(	t_tFuncID
 			,	t_tInitial
@@ -97,21 +89,100 @@ export namespace
 				&&
 				...	i_rpArgument
 			)	const
-			noexcept(t_bNoexcept)
 		->	t_tReturn
 		{	return
-				Function
-				(	std::forward
-					<	t_tInitial
-					>(	i_vInitial
-					)
-				,	std::forward
-					<	t_tpArgument
-					>(	i_rpArgument
-					)
+			Function
+			(	std::forward
+				<	t_tInitial
+				>(	i_vInitial
+				)
+			,	std::forward
+				<	t_tpArgument
+				>(	i_rpArgument
+				)
+				...
+			);
+		}
+	};
+
+	template
+		<	ProtoID
+				t_tFuncID
+		,	typename
+				t_tReturn
+		,	typename
+				t_tInitial
+		,	typename
+			...	t_tpArgument
+		>
+	struct
+		VirtualItem
+		<	t_tFuncID
+		,	t_tReturn
+				(	t_tInitial
+				,	t_tpArgument
 					...
 				)
-			;
+				noexcept
+		>
+	{
+		using
+			FunctionType
+		=	t_tReturn
+				(	t_tInitial
+				,	t_tpArgument
+					...
+				)
+				noexcept
+		;
+
+		FunctionType
+		*	Function
+		{};
+
+		template
+			<	typename
+					t_tObject
+			>
+		explicit constexpr
+		(	VirtualItem
+		)	(	Meta::TypeToken
+				<	t_tObject
+				>
+			)
+		:	Function
+			{	Address
+				<	t_tFuncID
+				,	t_tObject
+				,	t_tpArgument
+					...
+				>()
+			}
+		{}
+
+		auto constexpr
+			operator()
+			(	t_tFuncID
+			,	t_tInitial
+					i_vInitial
+			,	t_tpArgument
+				&&
+				...	i_rpArgument
+			)	const
+			noexcept
+		->	t_tReturn
+		{	return
+			Function
+			(	std::forward
+				<	t_tInitial
+				>(	i_vInitial
+				)
+			,	std::forward
+				<	t_tpArgument
+				>(	i_rpArgument
+				)
+				...
+			);
 		}
 	};
 
@@ -126,16 +197,7 @@ export namespace
 		Virtual
 	=	VirtualItem
 		<	ID_T<t_vFunctionName>
-		,	typename
-			Std::FunctionSignature
-				<	t_tSignature
-				>
-			::	SignatureType
-		,	Std::FunctionSignature
-				<	t_tSignature
-				>
-			::	IsNoexcept
-				()
+		,	t_tSignature
 		>
 	;
 

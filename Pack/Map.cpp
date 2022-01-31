@@ -9,7 +9,6 @@ export import Pack.Value;
 export import Meta.TypeInfo;
 export import Meta.ValueInfo;
 export import Stateless.Tuple;
-export import Std.FunctionTraits;
 
 export namespace
 	Stateless

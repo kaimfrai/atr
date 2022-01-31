@@ -4,7 +4,6 @@ export import Meta.TypeInfo;
 
 export import Stateless.Type;
 
-export import Std.FunctionTraits;
 export import Std.Concepts;
 
 export import Meta.Integer;

@@ -3,7 +3,6 @@ export module ATR.DataDependencyItem;
 export import ATR.ID;
 export import Stateless.Map;
 export import Stateless.Type;
-export import Std.FunctionTraits;
 
 export namespace
 	ATR

@@ -1,7 +1,6 @@
 export module Meta.Concept.Category;
 
 export import Std;
-
 export import Meta.Type;
 
 export namespace
@@ -261,8 +260,8 @@ export namespace
 				or	requires
 					{	requires
 							TypeToken<t_tEntity>
-						::	FunctionQualifier
-							(	EQualifier::Noexcept
+						::	HasFunctionFlag
+							(	EFunctionFlag::Noexcept
 							)
 						;
 					}

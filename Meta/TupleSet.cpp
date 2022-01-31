@@ -8,50 +8,7 @@ export import Meta.Concept;
 export import Meta.Bit;
 export import Meta.Value;
 
-import Meta.Ignore;
-
-namespace
-	Meta
-{
-	template
-		<	USize
-			...	t_npFront
-		>
-	struct
-		SelectByIndex
-	{
-		explicit constexpr
-		(	SelectByIndex
-		)	(	IndexToken<t_npFront...>
-			)
-		{}
-
-		template
-			<	typename
-					t_tSelection
-			>
-		auto constexpr
-		(	operator()
-		)	(	ValueToType<t_npFront, void const*>
-				...
-			,	t_tSelection
-				*	i_aSeĺection
-			,	...
-			)	const
-		->	t_tSelection*
-		{	return i_aSeĺection;	}
-	};
-
-	template
-		<	USize
-			...	t_npFront
-		>
-	(	SelectByIndex
-	)	(	IndexToken<t_npFront...>
-		)
-	->	SelectByIndex<t_npFront...>
-	;
-}
+import Meta.SelectByIndex;
 
 export namespace
 	Meta
