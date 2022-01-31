@@ -19,7 +19,6 @@ export namespace
 	Pack
 {
 	///	checks if the predicate is true for all elements in the pack
-	constexpr
 	struct
 		[[nodiscard]]
 		AllFunc
@@ -60,11 +59,13 @@ export namespace
 					)
 				;
 		}
-	}	All
+	};
+
+	AllFunc constexpr inline
+		All
 	{};
 
 	///	checks if the predicate is true for any elements in the pack
-	constexpr
 	struct
 		[[nodiscard]]
 		AnyFunc
@@ -105,11 +106,13 @@ export namespace
 					)
 				;
 		}
-	}	Any
+	};
+
+	AnyFunc constexpr inline
+		Any
 	{};
 
 	///	checks if the given info object is contained within the pack
-	constexpr
 	struct
 		[[nodiscard]]
 		ContainsFunc
@@ -135,9 +138,10 @@ export namespace
 				)
 			;
 		}
-	}	Contains
-	{};
+	};
 
+	ContainsFunc constexpr inline Contains
+	{};
 }
 
 static_assert(Pack::All(Meta::Pack<1,1,1>(), Stateless::BackBinding{Meta::StatelessEquals, Meta::V<1>}));

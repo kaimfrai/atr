@@ -523,7 +523,7 @@ export namespace
 		<	StringLiteral
 				t_vStringLiteral
 		>
-	ProtoID auto constexpr
+	ProtoID auto constexpr inline
 		ID_V
 	=	Make
 		<	t_vStringLiteral

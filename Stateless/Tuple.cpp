@@ -182,6 +182,20 @@ export namespace
 		}
 	};
 
+	template
+		<	Type
+			...	t_tpStateless
+		>
+	(	Tuple
+	)	(	t_tpStateless
+			...
+		)
+	->	Tuple
+		<	t_tpStateless
+			...
+		>
+	;
+
 	/// constrains to instances of stateless tuple with a specified pack size
 	template
 		<	typename

@@ -6,7 +6,6 @@ export namespace
 	Fold
 {
 	/// function-object performing a right to left fold over operator ,
-	constexpr
 	struct
 		[[nodiscard]]
 		RightCommaFunc
@@ -24,11 +23,12 @@ export namespace
 				)
 			;
 		}
-	}	RightComma
+	};
+	RightCommaFunc constexpr inline
+		RightComma
 	{};
 
 	/// function-object performing a left to right fold over operator ,
-	constexpr
 	struct
 		[[nodiscard]]
 		LeftCommaFunc
@@ -46,6 +46,9 @@ export namespace
 				)
 			;
 		}
-	}	LeftComma
+	};
+
+	LeftCommaFunc constexpr inline
+		LeftComma
 	{};
 }

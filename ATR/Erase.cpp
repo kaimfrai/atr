@@ -12,7 +12,6 @@ export namespace
 	/// erases type information from an argument
 	/// defined as a niebloid as ADL and overloads of the same name
 	//	may yield undefined behaviour
-	constexpr
 	struct
 		[[nodiscard]]
 		ForwardErasedType
@@ -162,7 +161,10 @@ export namespace
 				)
 			;
 		}
-	}	ForwardErased
+	};
+
+	ForwardErasedType constexpr inline
+		ForwardErased
 	{};
 
 	/// uses the ForwardErased overload to deduce the argument type

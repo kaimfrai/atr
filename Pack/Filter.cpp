@@ -99,6 +99,18 @@ export namespace
 		}
 	};
 
+	template
+		<	Stateless::Type
+				t_tPredicate
+		>
+	(	FilterSplit
+	)	(	t_tPredicate
+		)
+	->	FilterSplit
+		<	t_tPredicate
+		>
+	;
+
 	///	returns a new pack containing only the elements that satisfy the predicate
 	[[nodiscard]]
 	constexpr

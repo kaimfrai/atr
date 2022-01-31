@@ -37,6 +37,22 @@ export namespace
 		{}
 	};
 
+	template
+		<	ProtoID
+				t_tFuncID
+		,	typename
+				t_tLazyFunction
+		>
+	(	FuncDependencyItem
+	)	(	t_tFuncID
+		,	t_tLazyFunction
+		)
+	->	FuncDependencyItem
+		<	t_tFuncID
+		,	t_tLazyFunction
+		>
+	;
+
 	/// map items that take a FuncID
 	template
 		<	typename

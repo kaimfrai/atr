@@ -17,11 +17,9 @@ export namespace
 	template
 		<	StringLiteral
 		>
-	ATR::DataMemberConfig constexpr inline
+	ATR::DataMemberConfig<0uz> constexpr inline
 		LayoutConfig
-	=	ATR::DataMemberConfig<0uz>
-		{}
-	;
+	{};
 
 	[[nodiscard]]
 	auto constexpr

@@ -6,7 +6,6 @@ export namespace
 	Fold
 {
 	/// function-object performing a right to left fold over operator ||
-	constexpr
 	struct
 		[[nodiscard]]
 		RightLogicalOrFunc
@@ -25,11 +24,13 @@ export namespace
 				)
 			;
 		}
-	}	RightLogicalOr
+	};
+
+	RightLogicalOrFunc constexpr inline
+		RightLogicalOr
 	{};
 
 	/// function-object performing a left to right fold over operator ||
-	constexpr
 	struct
 		[[nodiscard]]
 		LeftLogicalOrFunc
@@ -48,6 +49,9 @@ export namespace
 				)
 			;
 		}
-	}	LeftLogicalOr
+	};
+
+	LeftLogicalOrFunc constexpr inline
+		LeftLogicalOr
 	{};
 }

@@ -71,7 +71,7 @@ export
 				{	i_nSeed
 				}
 			,	m_nCurrent
-				{	(	m_vEngine
+				{	(	(void)m_vEngine
 						.	discard
 							(	i_nIterationCounter
 							)

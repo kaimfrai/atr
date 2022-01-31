@@ -67,8 +67,7 @@ export namespace
 		<	Type
 				t_tStateless
 		>
-	constexpr
-	Type auto
+	Type auto constexpr inline
 		Copy
 	=	Std::Literal
 		<	t_tStateless

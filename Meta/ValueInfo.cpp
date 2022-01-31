@@ -165,8 +165,7 @@ export namespace
 		<	auto
 				t_vAny
 		>
-	constexpr
-	ValueInstance auto
+	ValueInstance auto constexpr inline
 		V
 	=	Stateless::Copy
 		<	ValueInfo
@@ -204,6 +203,18 @@ export namespace
 			)
 		{}
 	};
+
+	template
+		<	Stateless::Type
+				t_tStateless
+		>
+	(	StatelessValueInfo
+	)	(	t_tStateless
+		)
+	->	StatelessValueInfo
+		<	t_tStateless
+		>
+	;
 
 	///	deduce value from stateless object
 	///	can wrap a function object so that it operates on ValueInfo instead of raw values

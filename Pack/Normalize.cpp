@@ -11,7 +11,6 @@ export namespace
 	Pack
 {
 	/// function object converting packs into normalized forms
-	constexpr
 	struct
 		[[nodiscard]]
 		Normalizer
@@ -329,6 +328,9 @@ export namespace
 				)
 			;
 		}
-	}	Normalize
+	};
+
+	Normalizer constexpr inline
+		Normalize
 	{};
 }

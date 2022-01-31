@@ -39,6 +39,24 @@ export namespace
 		{}
 	};
 
+	template
+		<	ProtoID
+				t_tDataID
+		,	// could be a ATR::MemberOffset
+			// or a wrapper around a pointer to member
+			Stateless::Type
+				t_tMemberOffset
+		>
+	(	DataDependencyItem
+	)	(	t_tDataID
+		,	t_tMemberOffset
+		)
+	->	DataDependencyItem
+		<	t_tDataID
+		,	t_tMemberOffset
+		>
+	;
+
 	/// map items that take a DataID
 	template
 		<	typename

@@ -201,13 +201,8 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 		operator->*
-		(	Std::SameAs_Transform
-			<	void
-			,	std::remove_const_t
-			>	auto
-			(	*
-				i_aObject
-			)
+		(	Std::SameAs_Transform<void,	std::remove_const_t> auto
+			*	i_aObject
 		,	MemberOffset
 			<	t_tMember
 			,	t_nOffset

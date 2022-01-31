@@ -14,19 +14,26 @@ set(WARNING_FLAGS
 	-Wall
 	-Wextra
 	-Wpedantic
-	#-Wmissing-variable-declarations
-	#-Wcomma
-	#-Wauto-import
-	#-Werror
-	#-Weverything
+	-Wconversion
+	-Wdeprecated
+	-Wmissing-variable-declarations
+	-Wctad-maybe-unsupported
+	-Wcomma
+	-Wauto-import
+	-Werror
+	-Weverything
+	# prohibits inline virtual classes
 	-Wno-weak-vtables
+	# not always preventable
 	-Wno-padded
-	#triggered when using std::sort with defaulted comparison
+	# necessary to define concepts in DNF
 	-Wno-logical-op-parentheses
+	# triggered when using std::sort with defaulted comparison
 	-Wno-zero-as-null-pointer-constant
-	-Wno-c++98-compat-pedantic		#using c++23
-	-Wno-pre-c++17-compat-pedantic	#using c++23
-	-Wno-c++20-compat-pedantic		#using c++23
+	# using C++23
+	-Wno-c++98-compat-pedantic
+	# using c++23
+	-Wno-c++20-compat-pedantic
 )
 
 set(ADDITIONAL_COMPILE_OPTIONS
@@ -34,5 +41,5 @@ set(ADDITIONAL_COMPILE_OPTIONS
 	-ftemplate-backtrace-limit=0
 	-frelaxed-template-template-args
 	-fconstexpr-steps=4294967295
-	-ftime-trace
+	#-ftime-trace
 )

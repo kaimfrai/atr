@@ -942,7 +942,7 @@ export namespace
 		=	i_rLeft.Alignment
 		<=>	i_rRight.Alignment
 		;
-		if	(vCompareAlignment != 0)
+		if	(vCompareAlignment != ::std::strong_ordering::equal)
 			return vCompareAlignment;
 
 		return i_rLeft.Size <=> i_rRight.Size;
@@ -995,6 +995,18 @@ export namespace
 			)
 		{	return Type{};	}
 	};
+
+	template
+		<	typename
+				t_tEntity
+		>
+	(	Type
+	)	(	Type<t_tEntity>
+		)
+	->	Type
+		<	t_tEntity
+		>
+	;
 }
 
 export namespace

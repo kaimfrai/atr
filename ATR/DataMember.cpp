@@ -437,6 +437,18 @@ export namespace
 
 	template
 		<	Meta::USize
+				t_nMemberCount
+		>
+	(	DataMemberConfig
+	)	(	DataMemberConfig<t_nMemberCount>
+		)
+	->	DataMemberConfig
+		<	t_nMemberCount
+		>
+	;
+
+	template
+		<	Meta::USize
 				t_nLeft
 		,	Meta::USize
 				t_nRight

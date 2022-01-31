@@ -762,8 +762,7 @@ export namespace
 		,	t_tpInitializer
 			...
 		>
-	constexpr
-	Object auto
+	Object auto constexpr inline
 		Literal
 	=	t_tObject
 		{	t_tpInitializer

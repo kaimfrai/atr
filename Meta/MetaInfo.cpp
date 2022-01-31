@@ -17,8 +17,7 @@ export namespace
 		<	Stateless::Type
 				t_tCompare
 		>
-	constexpr
-	Stateless::Type auto
+	Stateless::Type auto constexpr inline
 		StatelessCompare
 	=	StatelessValueInfo
 		<	t_tCompare
@@ -64,10 +63,8 @@ export namespace
 		}
 	};
 
-
 	/// shortcut for comparing for equality
-	constexpr
-	Stateless::Type auto
+	Stateless::Type auto constexpr inline
 		StatelessEquals
 	=	StatelessCompare
 		<	EqualTo

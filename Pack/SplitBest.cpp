@@ -122,6 +122,18 @@ export namespace
 		}
 	};
 
+	template
+		<	Stateless::Type
+				t_tCompare
+		>
+	(	SplitCompare
+	)	(	t_tCompare
+		)
+	->	SplitCompare
+		<	t_tCompare
+		>
+	;
+
 	/// picks one info object from the pack that compares better than all other
 	/// returns a pair of the remaining elements and that object
 	/// note that the order of the remaining elements may change

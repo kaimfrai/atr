@@ -34,14 +34,11 @@ export namespace
 			TargetID
 		;
 
-		constexpr
-		explicit
+		explicit constexpr
 			DataIDMap
-			(	t_tOriginIdentifier
-				const
+			(	t_tOriginIdentifier const
 				&	i_rOriginID
-			,	t_tTargetIdentifier
-				const
+			,	t_tTargetIdentifier const
 				&	i_rTargetID
 			)
 		:	OriginID
@@ -52,6 +49,22 @@ export namespace
 			}
 		{}
 	};
+
+	template
+		<	StringLiteralInstance
+				t_tOriginIdentifier
+		,	StringLiteralInstance
+				t_tTargetIdentifier
+		>
+	(	DataIDMap
+	)	(	t_tOriginIdentifier const&
+		,	t_tTargetIdentifier const&
+		)
+	->	DataIDMap
+		<	t_tOriginIdentifier
+		,	t_tTargetIdentifier
+		>
+	;
 
 	template
 		<	StringLiteralInstance
@@ -201,14 +214,11 @@ export namespace
 			ArgumentPack
 		{};
 
-		constexpr
-		explicit
+		explicit constexpr
 			FuncIDMap
-			(	t_tOriginIdentifier
-				const
+			(	t_tOriginIdentifier const
 				&	i_rOriginID
-			,	t_tTargetIdentifier
-				const
+			,	t_tTargetIdentifier const
 				&	i_rTargetID
 			,	t_tArgumentPack
 			)
@@ -220,6 +230,26 @@ export namespace
 			}
 		{}
 	};
+
+	template
+		<	StringLiteralInstance
+				t_tOriginIdentifier
+		,	StringLiteralInstance
+				t_tTargetIdentifier
+		,	Pack::TypeInstance
+				t_tArgumentPack
+		>
+	(	FuncIDMap
+	)	(	t_tOriginIdentifier const&
+		,	t_tTargetIdentifier const&
+		,	t_tArgumentPack
+		)
+	->	FuncIDMap
+		<	t_tOriginIdentifier
+		,	t_tTargetIdentifier
+		,	t_tArgumentPack
+		>
+	;
 
 	template
 		<	StringLiteralInstance

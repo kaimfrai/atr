@@ -254,8 +254,9 @@ export
 			);
 		}
 		return
-			TotalSum
-		;
+		static_cast<int>
+		(	TotalSum
+		);
 	}
 }
 

@@ -66,6 +66,18 @@ export namespace
 		}
 	};
 
+	template
+		<	Stateless::Type
+				t_tTransform
+		>
+	(	Transformer
+	)	(	t_tTransform
+		)
+	->	Transformer
+		<	t_tTransform
+		>
+	;
+
 	///	applies all transformations in sequence to the pack
 	[[nodiscard]]
 	constexpr

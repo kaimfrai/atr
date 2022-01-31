@@ -18,6 +18,10 @@ export namespace
 		=	0
 		;
 
+		IBody() = default;
+		IBody(IBody const&) = default;
+		IBody(IBody&&) = default;
+
 		virtual
 			compl
 			IBody

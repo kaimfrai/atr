@@ -16,8 +16,7 @@ export namespace
 	Pack
 {
 	/// applies the function to the n-th element of each Map as specified by the given index
-	constexpr
-	Stateless::Type auto
+	Stateless::Type auto constexpr inline
 		ReduceByIndex
 	=	[]	(	Meta::ValueInstance auto
 					i_vIndex

@@ -27,7 +27,7 @@ export namespace
 				()
 			=	default
 			;
-			
+
 			///	deduce template from arguments
 			constexpr
 			explicit
@@ -36,21 +36,21 @@ export namespace
 				,	t_tFoldResult
 				)
 			{}
-			
+
 			static
 			constexpr
 			Stateless::Type auto
 				FoldOperation
 			=	Stateless::Copy<t_tFoldOperation>
 			;
-			
+
 			static
 			constexpr
 			Stateless::Type auto
 				FoldResult
 			=	Stateless::Copy<t_tFoldResult>
 			;
-			
+
 			///	invoke the fold operation and update the result
 			[[nodiscard]]
 			constexpr
@@ -72,7 +72,7 @@ export namespace
 					}
 				;
 			}
-			
+
 			///	used to fold from left to right, maps to the call operator
 			[[nodiscard]]
 			friend
@@ -90,7 +90,7 @@ export namespace
 					)
 				;
 			}
-			
+
 			///	used to fold from right to left, maps to the call operator
 			[[nodiscard]]
 			friend
@@ -111,7 +111,23 @@ export namespace
 			}
 		}
 	;
-	
+
+	template
+		<	Stateless::Type
+				t_tFoldOperation
+		,	Stateless::Type
+				t_tFoldResult
+		>
+	(	FoldTag
+	)	(	t_tFoldOperation
+		,	t_tFoldResult
+		)
+	->	FoldTag
+		<	t_tFoldOperation
+		,	t_tFoldResult
+		>
+	;
+
 	///	folds all info objects from right to left
 	[[nodiscard]]
 	constexpr
@@ -141,7 +157,7 @@ export namespace
 			,	vFoldStart
 			}
 		;
-		
+
 		return
 			Normalize
 			(	i_vPack
@@ -151,11 +167,10 @@ export namespace
 			.	FoldResult
 		;
 	}
-	
+
 	///	folds all info objects from left to right
 	[[nodiscard]]
-	constexpr
-	Stateless::Type auto
+	Stateless::Type auto constexpr
 		FoldLeft
 		(	Instance auto
 				i_vPack
@@ -181,7 +196,7 @@ export namespace
 			,	vFoldStart
 			}
 		;
-		
+
 		return
 			Normalize
 			(	i_vPack

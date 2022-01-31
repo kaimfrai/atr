@@ -86,6 +86,18 @@ export namespace
 		}
 	};
 
+	template
+		<	Stateless::Type
+				t_tCompare
+		>
+	(	CompareSort
+	)	(	t_tCompare
+		)
+	->	CompareSort
+		<	t_tCompare
+		>
+	;
+
 	/// sorts the pack using the give compare function object
 	[[nodiscard]]
 	constexpr
@@ -135,7 +147,7 @@ export namespace
 		return
 			Sort
 			(	i_vPack
-			,	std::less
+			,	std::less<void>
 				{}
 			)
 		;
@@ -153,7 +165,7 @@ export namespace
 		return
 			Sort
 			(	i_vPack
-			,	std::greater
+			,	std::greater<void>
 				{}
 			)
 		;
