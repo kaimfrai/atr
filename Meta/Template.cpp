@@ -2,7 +2,6 @@ export module Meta.Template;
 
 export import PackTemplate.Type;
 export import PackTemplate.Value;
-export import PackTemplate.Sequence;
 
 export namespace
 	Meta
@@ -16,8 +15,7 @@ export namespace
 			typename
 				t_t1TypePack
 		>
-	constexpr
-	auto
+	auto constexpr
 		Template
 		()
 	->	PackTemplate::Type
@@ -25,26 +23,6 @@ export namespace
 		>
 	{	return{};	}
 
-	///	frequently used shortcut to create an object of type PackTemplate::Sequence
-	template
-		<	template
-				<	typename
-						t_tElement
-				,	t_tElement
-					...
-				>
-			typename
-				t_t1SequencePack
-		>
-	constexpr
-	auto
-		Template
-		()
-	-> PackTemplate::Sequence
-		<	t_t1SequencePack
-		>
-	{	return{};	}
-	
 	///	frequently used shortcut to create an object of type PackTemplate::Value
 	template
 		<	template
@@ -54,8 +32,7 @@ export namespace
 			typename
 				t_t1ValuePack
 		>
-	constexpr
-	auto
+	auto constexpr
 		Template
 		()
 	->	PackTemplate::Value

@@ -6,7 +6,6 @@ export import Pack.Template;
 
 export import PackTemplate.Type;
 export import PackTemplate.Value;
-export import PackTemplate.Sequence;
 
 export import Stateless.Tuple;
 export import Std.Concepts;
@@ -25,9 +24,6 @@ export namespace
 		<	t_tPackTemplate
 		>
 	or	ValueInstance
-		<	t_tPackTemplate
-		>
-	or	SequenceInstance
 		<	t_tPackTemplate
 		>
 	or	Std::SameAs
@@ -110,36 +106,6 @@ export namespace
 		<	t_tInstance
 		,	PackTemplate::Value
 			<	t_t1ValuePack
-			>
-		>
-	;
-
-	///	requirement for a sequence pack of a specific template
-	template
-		<	typename
-				t_tInstance
-		,	template
-				<	typename
-						t_tNested
-				,	t_tNested
-					...
-				>
-			typename
-				t_t1SequencePack
-		>
-	concept
-		SequenceInstanceOf
-	=	Std::SequencePackInstanceOf
-		<	t_tInstance
-		,	t_t1SequencePack
-		>
-	and	Pack::SequenceInstance
-		<	t_tInstance
-		>
-	and	InstanceOf
-		<	t_tInstance
-		,	PackTemplate::Sequence
-			<	t_t1SequencePack
 			>
 		>
 	;
