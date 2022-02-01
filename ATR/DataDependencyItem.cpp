@@ -2,7 +2,7 @@ export module ATR.DataDependencyItem;
 
 export import ATR.ID;
 export import Stateless.Map;
-export import Stateless.Type;
+export import Meta.Concept.Empty;
 
 export namespace
 	ATR
@@ -13,7 +13,7 @@ export namespace
 				t_tDataID
 		,	// could be a ATR::MemberOffset
 			// or a wrapper around a pointer to member
-			Stateless::Type
+			Meta::ProtoStateless
 				t_tMemberOffset
 		>
 	struct
@@ -43,7 +43,7 @@ export namespace
 				t_tDataID
 		,	// could be a ATR::MemberOffset
 			// or a wrapper around a pointer to member
-			Stateless::Type
+			Meta::ProtoStateless
 				t_tMemberOffset
 		>
 	(	DataDependencyItem

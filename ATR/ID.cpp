@@ -1,7 +1,6 @@
 export module ATR.ID;
 
 export import ATR.StringLiteral;
-export import Stateless.Type;
 
 import Meta.Index;
 
@@ -454,8 +453,7 @@ export namespace
 		>
 	concept
 		ProtoID
-	=	Stateless::Type<t_tID>
-	and	requires(t_tID c_vID)
+	=	requires(t_tID c_vID)
 		{
 			::ATR::ID{c_vID};
 		}

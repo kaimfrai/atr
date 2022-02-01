@@ -2,7 +2,6 @@ export module PackTemplate.Value;
 
 export import Meta.ValueInfo;
 export import Meta.TypeInfo;
-export import Stateless.Type;
 export import Std.TemplateConcepts;
 
 export namespace
@@ -28,23 +27,18 @@ export namespace
 				...	t_vpAny
 			>
 		[[nodiscard]]
-		constexpr
-		Meta::TypeInstance auto
-			operator()
-			(	Meta::ValueInfo
-				<	t_vpAny
-				>
+		auto constexpr
+		(	operator()
+		)	(	Meta::ValueInfo<t_vpAny>
 				...
 			)	const
-		{	return
-				Meta::Type
-				<	t_t1ValuePack
-					<	t_vpAny
-						...
-					>
+		->	Meta::TypeToken
+			<	t_t1ValuePack
+				<	t_vpAny
+					...
 				>
-			;
-		}
+			>
+		{	return {};	}
 
 		friend auto constexpr
 		(	operator ==
@@ -62,10 +56,7 @@ export namespace
 		>
 	concept
 		ValueInstance
-	=	Stateless::Type
-		<	t_tValueInstance
-		>
-	and	Std::ValuePackTemplateInstance
+	=	Std::ValuePackTemplateInstance
 		<	t_tValueInstance
 		>
 	;

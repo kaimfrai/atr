@@ -5,7 +5,6 @@ export import Meta.Value;
 
 export import Std;
 export import Std.TemplateConcepts;
-export import Meta.ValueInfo;
 
 export namespace
 	ATR
@@ -168,10 +167,15 @@ export namespace
 	=	StringLiteralInstance
 		<	t_tStringLiteral
 		>
-	or	Meta::ConvertibleToValuePackInstance
-		<	t_tStringLiteral
-		,	StringLiteral
-		>
+	or	requires
+			(	t_tStringLiteral
+					c_vStringLiteral
+			)
+		{
+			StringLiteral
+			{	c_vStringLiteral
+			};
+		}
 	;
 
 }

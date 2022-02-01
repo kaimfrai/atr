@@ -1,24 +1,20 @@
 export module Pack.Filter;
 
+export import Fold.Comma;
+export import Stateless.Tuple;
+export import Meta.Concept.Empty;
+export import Pack.Instance;
+export import Pack.Concat;
 export import Meta.Pack;
 export import Pack.Fold;
-export import Pack.Instance;
-export import Pack.Apply;
-export import Pack.Normalize;
 export import Pack.Size;
-export import Pack.Concat;
-export import Meta.MetaInfo;
-
-export import Fold.Comma;;
-export import Stateless.Binding;
-export import Stateless.Tuple;
 
 export namespace
 	Pack
 {
 	/// appends info objects to a pack if they satisfy a predicate
 	template
-		<	Stateless::Type
+		<	Meta::ProtoStateless
 				t_tPredicate
 		>
 	struct
@@ -31,32 +27,29 @@ export namespace
 
 		/// default constructor
 		constexpr
-			FilterSplit
-			()
-		=	default
-		;
+		(	FilterSplit
+		)	()
+		=	default;
 
 		/// deduce template from argument
-		constexpr
-		explicit
-			FilterSplit
-			(	t_tPredicate
+		explicit constexpr
+		(	FilterSplit
+		)	(	t_tPredicate
 			)
 		{}
 
 		///	appends the argument to the pack if it satisfies the predicate
 		[[nodiscard]]
-		constexpr
-		Stateless::Pair auto
-			operator()
-			(	Stateless::Pair auto
+		auto constexpr
+		(	operator()
+		)	(	Stateless::Pair auto
 					i_vCurrentResult
 			,	Pack::Instance auto
 					i_vArgument
 			)	const
+		->	Stateless::Pair auto
 		{
-			Stateless::Pair auto
-			const
+			auto const
 			[	vPositivePack
 			,	vNegativePack
 			]=	i_vCurrentResult
@@ -68,33 +61,29 @@ export namespace
 					(	i_vArgument
 					)
 				)
-			{
 				return
-					Stateless::Tuple
-					{	Concat
-						(	vPositivePack
-						,	i_vArgument
-						)
-					,	vNegativePack
-					}
-				;
-			}
+				Stateless::Tuple
+				{	Concat
+					(	vPositivePack
+					,	i_vArgument
+					)
+				,	vNegativePack
+				};
 			// put it in the negative pack otherwise
 			else
 				return
-					Stateless::Tuple
-					{	vPositivePack
-					,	Concat
-						(	vNegativePack
-						,	i_vArgument
-						)
-					}
-				;
+				Stateless::Tuple
+				{	vPositivePack
+				,	Concat
+					(	vNegativePack
+					,	i_vArgument
+					)
+				};
 		}
 	};
 
 	template
-		<	Stateless::Type
+		<	Meta::ProtoStateless
 				t_tPredicate
 		>
 	(	FilterSplit
@@ -107,14 +96,14 @@ export namespace
 
 	///	returns a new pack containing only the elements that satisfy the predicate
 	[[nodiscard]]
-	constexpr
-	Stateless::Pair auto
-		Filter
-		(	Instance auto
+	auto constexpr
+	(	Filter
+	)	(	Instance auto
 				i_vPack
-		,	Stateless::Type auto
+		,	Meta::ProtoStateless auto
 				i_fPredicate
 		)
+	->	Stateless::Pair auto
 	{	/// optimization for empty packs
 		if constexpr
 			(	EmptyInstance
@@ -125,40 +114,37 @@ export namespace
 			)
 		{
 			return
-				Stateless::Tuple
-				{	Meta::Pack()
-				,	Meta::Pack()
-				}
-			;
+			Stateless::Tuple
+			{	Meta::Pack()
+			,	Meta::Pack()
+			};
 		}
 		else
 			return
-				FoldLeft
-				(	i_vPack
-				,	FilterSplit
-					{	i_fPredicate
-					}
-				,	Stateless::Tuple
-					{	Meta::Pack()
-					,	Meta::Pack()
-					}
-				)
-			;
+			FoldLeft
+			(	i_vPack
+			,	FilterSplit
+				{	i_fPredicate
+				}
+			,	Stateless::Tuple
+				{	Meta::Pack()
+				,	Meta::Pack()
+				}
+			);
 	}
 
 	/// filters only the elements that satisfy the predicate
 	[[nodiscard]]
-	constexpr
-	Instance auto
+	auto constexpr
 		FilterPositive
 		(	Instance auto
 				i_vPack
-		,	Stateless::Type auto
+		,	Meta::ProtoStateless auto
 				i_fPredicate
 		)
+	->	Instance auto
 	{
-		Stateless::Pair auto
-		const
+		auto const
 		[	vPositivePack
 		,	vNegativePack
 		]=	Filter
@@ -174,17 +160,16 @@ export namespace
 
 	/// filters only the elements that do not satisfy the predicate
 	[[nodiscard]]
-	constexpr
-	Instance auto
+	auto constexpr
 		FilterNegative
 		(	Instance auto
 				i_vPack
-		,	Stateless::Type auto
+		,	Meta::ProtoStateless auto
 				i_fPredicate
 		)
+	->	Instance auto
 	{
-		Stateless::Pair auto
-		const
+		auto const
 		[	vPositivePack
 		,	vNegativePack
 		]=	Filter
@@ -199,4 +184,4 @@ export namespace
 	}
 }
 
-static_assert(Pack::FilterPositive(Meta::Pack<0,1,2>(), Meta::ValueInfoFor([](auto i){return i > 0;})) == Meta::Pack<1,2>());
+static_assert(Pack::FilterPositive(Meta::Pack<0,1,2>(), Meta::V<[](auto i){return i > 0;}>) == Meta::Pack<1,2>());

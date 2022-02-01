@@ -29,10 +29,7 @@ export namespace
 		>
 	concept
 		PureEmptyInstance
-	=	Stateless::Type
-		<	t_tEmptyPack
-		>
-	and	::std::same_as
+	=	::std::same_as
 		<	::std::remove_cvref_t<t_tEmptyPack>
 		,	Empty
 		>

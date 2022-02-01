@@ -7,6 +7,7 @@ export import Stateless.Map;
 export import Std.TemplateConcepts;
 export import Meta.Integer;
 export import Meta.Index;
+export import Meta.Concept.Empty;
 
 export import Std;
 
@@ -15,7 +16,7 @@ export namespace
 {
 	/// multiple stateless objects
 	template
-		<	Type
+		<	Meta::ProtoStateless
 			...	t_tpStateless
 		>
 	struct
@@ -70,7 +71,7 @@ export namespace
 			>
 		[[nodiscard]]
 		constexpr
-		Type auto
+		Meta::ProtoStateless auto
 			get
 			()	const
 		noexcept
@@ -86,7 +87,7 @@ export namespace
 		constexpr
 		auto
 			ApplyTo
-			(	Type auto
+			(	auto
 					i_fApplicable
 			)	const
 		{	return
@@ -99,7 +100,7 @@ export namespace
 
 		/// concatenates the stateless arguments of this StatelessTuple with with the stateless arguments of another StatelessTuple
 		template
-			<	Type
+			<	Meta::ProtoStateless
 				...	t_tpOtherStateless
 			>
 		[[nodiscard]]
@@ -121,7 +122,7 @@ export namespace
 
 		/// compares each Stateless element for equality, provided that the count is the same, false otherwise
 		template
-			<	Type
+			<	Meta::ProtoStateless
 				...	t_tpOtherStateless
 			>
 		[[nodiscard]]
@@ -158,7 +159,7 @@ export namespace
 
 		/// compares each Stateless element
 		template
-			<	Type
+			<	Meta::ProtoStateless
 				...	t_tpOtherStateless
 			>
 		[[nodiscard]]
@@ -183,7 +184,7 @@ export namespace
 	};
 
 	template
-		<	Type
+		<	Meta::ProtoStateless
 			...	t_tpStateless
 		>
 	(	Tuple
@@ -205,7 +206,7 @@ export namespace
 		>
 	concept
 		TupleOfSize
-	=	Type
+	=	Meta::ProtoStateless
 		<	t_tStatelessTuple
 		>
 	and	Std::PackInstanceOfSize

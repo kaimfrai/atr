@@ -7,8 +7,6 @@ export import Pack.Empty;
 export import PackTemplate.Type;
 export import PackTemplate.Value;
 
-export import Stateless.Type;
-
 export namespace
 	Pack
 {

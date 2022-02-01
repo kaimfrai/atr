@@ -46,9 +46,11 @@ export namespace
 	and	Instance
 		<	t_tPackTemplate
 		>
-	and	(	Pack::Template
-			(	t_tInstance{}
-			)
+	and	(	decltype
+			(	Pack::Template
+				(	::std::declval<t_tInstance>()
+				)
+			){}
 		==	t_tPackTemplate{}
 		)
 	;

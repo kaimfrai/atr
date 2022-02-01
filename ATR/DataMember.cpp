@@ -6,6 +6,7 @@ export import ATR.ID;
 export import Meta.TypeInfo;
 export import Meta.ValueInfo;
 export import Meta.Integer;
+export import Meta.Concept.Empty;
 
 export import Std;
 
@@ -49,7 +50,7 @@ export namespace
 	template
 		<	ProtoID
 				t_tName
-		,	Stateless::Type
+		,	Meta::ProtoStateless
 				t_tValue
 		>
 	struct

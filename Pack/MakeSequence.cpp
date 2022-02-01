@@ -5,7 +5,6 @@ export import Pack.Normalize;
 export import Pack.Size;
 export import Pack.Instance;
 export import Meta.ValueInfo;
-export import Stateless.Tuple;
 export import Meta.Integer;
 export import Meta.Index;
 export import Std;
@@ -26,66 +25,11 @@ export namespace
 		)
 	->	ValueInstance auto
 	{	return
-			Normalize
-			(	Meta::Sequence
-				<	t_nLength
-				>()
-			)
-		;
-	}
-
-	/// creates a copy of the initial object for every call
-	template
-		<	Meta::InfoInstance
-				t_tInitial
-		>
-	struct
-		[[nodiscard]]
-		DublicateGenerator
-	{
-		/// default constructor
-		constexpr
-			DublicateGenerator
-			()
-		=	default
-		;
-
-		/// deduce template from arguments
-		explicit constexpr
-			DublicateGenerator
-			(	t_tInitial
-			)
-		{}
-
-		/// every call results in a new dublicated value
-		auto constexpr
-			operator()
-			(	Stateless::Type auto
-			)	const
-		->	t_tInitial
-		{	return {};	}
-	};
-
-	/// creates a pack containing length copies of the initial object
-	[[nodiscard]]
-	constexpr
-	Instance auto
-		Dublicate
-		(	Meta::InfoInstance auto
-				i_vInitial
-		,	Meta::SizeInfo auto
-				i_vLength
-		)
-	{	return
-			Transform
-			(	MakeIndexSequence
-				(	i_vLength
-				)
-			,	DublicateGenerator
-				{	i_vInitial
-				}
-			)
-		;
+		Normalize
+		(	Meta::Sequence
+			<	t_nLength
+			>()
+		);
 	}
 
 	///	returns an IndexPack containing length indices that are offset by the given value
@@ -99,21 +43,20 @@ export namespace
 		)
 	->	ValueInstance auto
 	{	return
-			Transform
-			(	MakeIndexSequence
-				(	i_vLength
-				)
-			,	[=]	(	Meta::SizeInfo auto
-							i_vIndex
-					)
-				->	Meta::SizeInfo auto
-				{	return
-						i_vIndex
-					+	i_vOffset
-					;
-				}
+		Transform
+		(	MakeIndexSequence
+			(	i_vLength
 			)
-		;
+		,	[=]	(	Meta::SizeInfo auto
+						i_vIndex
+				)
+			->	Meta::SizeInfo auto
+			{	return
+					i_vIndex
+				+	i_vOffset
+				;
+			}
+		);
 	}
 
 	///	returns an IndexPack starting from 0 with a length corresponding to the given pack

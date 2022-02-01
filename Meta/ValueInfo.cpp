@@ -1,9 +1,6 @@
 export module Meta.ValueInfo;
 
 export import Meta.TypeInfo;
-
-export import Stateless.Type;
-
 export import Meta.Integer;
 
 export namespace
@@ -17,7 +14,7 @@ export namespace
 		>
 	struct
 		[[nodiscard]]
-		ValueInfo
+		ValueInfo final
 	{
 		///	the type of the wrapped value
 		using
@@ -140,29 +137,6 @@ export namespace
 		{	return{};	}
 	};
 
-	template
-		<	typename
-				t_tConvertible
-		,	template
-				<	auto
-					...
-				>
-			typename
-				t_t1ConvertTo
-		>
-	concept
-		ConvertibleToValuePackInstance
-	=	requires
-			(	t_tConvertible
-					c_vConvertible
-			)
-		{
-			t_t1ConvertTo
-			{	c_vConvertible
-			};
-		}
-	;
-
 	///	stateless types derived from ValueInfo
 	template
 		<	typename
@@ -170,14 +144,16 @@ export namespace
 		>
 	concept
 		ValueInstance
-	=	Stateless::Type
-		<	t_tValueInstance
-		>
-	and	/// copy constructs ValueInfo -> unambiguously derived from ValueInfo
-		ConvertibleToValuePackInstance
-		<	t_tValueInstance
-		,	ValueInfo
-		>
+	=	/// copy constructs ValueInfo -> unambiguously derived from ValueInfo
+		requires
+			(	t_tValueInstance
+					c_vValueInstance
+			)
+		{
+			ValueInfo
+			{	c_vValueInstance
+			};
+		}
 	;
 
 	/// frequently used shortcut to create an object of type ValueInfo
@@ -185,69 +161,9 @@ export namespace
 		<	auto
 				t_vAny
 		>
-	ValueInstance auto constexpr inline
+	ValueInfo<t_vAny> constexpr inline
 		V
-	=	ValueInfo
-		<	t_vAny
-		>{}
-	;
-
-	/// inherits from value info. provides more useful debugging information for stateless types than ValueInfo<{}>
-	template
-		<	Stateless::Type
-				t_tStateless
-		>
-	struct
-		[[nodiscard]]
-		StatelessValueInfo
-	:	ValueInfo
-		<	t_tStateless
-			{}
-		>
-	{
-		// default constructor
-		constexpr
-			StatelessValueInfo
-			()
-		=	default
-		;
-
-		/// deduce template from argument
-		constexpr
-		explicit
-			StatelessValueInfo
-			(	t_tStateless
-			)
-		{}
-	};
-
-	template
-		<	Stateless::Type
-				t_tStateless
-		>
-	(	StatelessValueInfo
-	)	(	t_tStateless
-		)
-	->	StatelessValueInfo
-		<	t_tStateless
-		>
-	;
-
-	///	deduce value from stateless object
-	///	can wrap a function object so that it operates on ValueInfo instead of raw values
-	[[nodiscard]]
-	constexpr
-	Stateless::Type auto
-		ValueInfoFor
-		(	Stateless::Type auto
-				i_vAny
-		)
-	{	return
-			StatelessValueInfo
-			{	i_vAny
-			}
-		;
-	}
+	{};
 
 	///	ValueInstances for which the value is of a specific type
 	template

@@ -6,6 +6,7 @@ export import Pack.Size;
 export import Pack.Instance;
 export import Pack.Type;
 export import Pack.Value;
+export import PackTemplate.Instance;
 export import Meta.TypeInfo;
 export import Meta.ValueInfo;
 export import Stateless.Tuple;

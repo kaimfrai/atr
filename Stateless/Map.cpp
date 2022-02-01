@@ -1,17 +1,15 @@
 export module Stateless.Map;
 
-export import Stateless.Type;
-
 export import Std.TemplateConcepts;
-
 export import Meta.Integer;
+export import Meta.Concept.Empty;
 
 export namespace
 	Stateless
 {
 	/// base class for map items which provides ordering on the key
 	template
-		<	Type
+		<	Meta::ProtoStateless
 				t_tKey
 		>
 	struct
@@ -24,7 +22,7 @@ export namespace
 
 		/// provide ordering according to key
 		template
-			<	Type
+			<	Meta::ProtoStateless
 					t_tRightKey
 			>
 		[[nodiscard]]
@@ -46,7 +44,7 @@ export namespace
 
 	/// maps one stateless type to a specific value
 	template
-		<	Type
+		<	Meta::ProtoStateless
 				t_tKey
 		,	auto
 				t_vResult
@@ -73,9 +71,9 @@ export namespace
 
 	/// maps one stateless type to another
 	template
-		<	Type
+		<	Meta::ProtoStateless
 				t_tKey
-		,	Type
+		,	Meta::ProtoStateless
 				t_tResult
 		>
 	struct
@@ -89,9 +87,9 @@ export namespace
 
 	/// maps one stateless type to a specific lazily evaluated value
 	template
-		<	Type
+		<	Meta::ProtoStateless
 				t_tKey
-		,	Type
+		,	Meta::ProtoStateless
 				t_tLazy
 		>
 	struct
@@ -131,7 +129,7 @@ export namespace
 		>
 	concept
 		MapItemInstance
-	=	Type
+	=	Meta::ProtoStateless
 		<	Meta::TypeEntity
 			<	Meta::Type
 				<	decltype
@@ -193,7 +191,7 @@ export namespace
 
 		/// basis for deduction guides
 		template
-			<	Type
+			<	Meta::ProtoStateless
 				...	t_tpStateless
 			>
 		constexpr
@@ -218,7 +216,7 @@ export namespace
 		constexpr
 		auto
 			operator[]
-			(	Type auto
+			(	Meta::ProtoStateless auto
 					i_vKey
 			)	const
 		->	decltype(auto)
@@ -232,7 +230,7 @@ export namespace
 
 	/// maps every call that isn't mapped to a default value
 	template
-		<	Type
+		<	Meta::ProtoStateless
 				t_tDefault
 		,	MapItemInstance
 			...	t_tpMapItem
@@ -280,7 +278,7 @@ export namespace
 		constexpr
 		auto
 			operator()
-			(	Type auto
+			(	Meta::ProtoStateless auto
 			)	const
 		->	t_tDefault
 		{	return{};	}
@@ -290,7 +288,7 @@ export namespace
 		constexpr
 		auto
 			operator[]
-			(	Type auto
+			(	Meta::ProtoStateless auto
 					i_vKey
 			)	const
 		->	decltype(auto)

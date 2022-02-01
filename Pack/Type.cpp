@@ -1,9 +1,7 @@
 export module Pack.Type;
 
 export import Pack.Empty;
-export import Meta.MetaInfo;
-export import Meta.TypeInfo;
-
+export import Meta.Type;
 export import Stateless.Tuple;
 export import Std.TemplateConcepts;
 
@@ -34,10 +32,7 @@ export namespace
 		>
 	concept
 		PureTypeInstance
-	=	Stateless::Type
-		<	t_tTypePack
-		>
-	and	Std::TypePackInstance
+	=	Std::TypePackInstance
 		<	t_tTypePack
 		>
 	;

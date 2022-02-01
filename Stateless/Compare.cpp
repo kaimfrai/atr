@@ -1,7 +1,6 @@
 export module Stateless.Compare;
 
 export import Stateless.IndexMap;
-export import Stateless.Type;
 
 export import Meta.Integer;
 export import Std;
@@ -23,14 +22,14 @@ export namespace
 		friend auto constexpr
 			operator<=>
 			(	NoType
-			,	Type auto
+			,	Meta::ProtoStateless auto
 			)
 		->	::std::strong_ordering
 		{	return ::std::strong_ordering::less;	}
 
 		friend auto constexpr
 		(	operator<=>
-		)	(	Type auto
+		)	(	Meta::ProtoStateless auto
 			,	NoType
 			)
 		->	::std::strong_ordering

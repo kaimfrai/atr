@@ -5,7 +5,7 @@ export import Meta.ValueInfo;
 
 export import Std;
 
-export import Stateless.Binding;
+export import Meta.Concept.Empty;
 
 export namespace
 	Meta
@@ -13,15 +13,12 @@ export namespace
 	///	forwards to the given compare type and returns a ValueInfo of the result
 	/// defaults to the three way comparison
 	template
-		<	Stateless::Type
+		<	Meta::ProtoStateless
 				t_tCompare
 		>
-	Stateless::Type auto constexpr inline
+	ValueInfo<t_tCompare{}> constexpr inline
 		StatelessCompare
-	=	StatelessValueInfo
-		<	t_tCompare
-		>{}
-	;
+	{};
 
 	/// extension to std::equal_to in order to compare types
 	struct
@@ -68,13 +65,9 @@ export namespace
 	};
 
 	/// shortcut for comparing for equality
-	Stateless::Type auto constexpr inline
+	ValueInfo<EqualTo{}> constexpr inline
 		StatelessEquals
-	=	StatelessCompare
-		<	EqualTo
-		>
-	;
-
+	{};
 
 	///	defines what behaves like an info object
 	template

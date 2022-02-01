@@ -2,71 +2,86 @@ export module Pack.Transform;
 
 export import Pack.Apply;
 export import Pack.Concat;
-export import Pack.Size;
-export import Pack.Normalize;
-export import Pack.Instance;
-export import Pack.Type;
-export import Pack.Value;
-export import Meta.TypeInfo;
-export import Meta.ValueInfo;
 
-export import Stateless.Tuple;
+export import Meta.Concept.Category;
 
 export namespace
 	Pack
 {
 	/// applies the same transformation to all info objects of a pack
 	template
-		<	Stateless::Type
+		<	Meta::ProtoValue
 				t_tTransform
 		>
 	struct
 		Transformer
 	{
-		/// default constructor
-		constexpr
-			Transformer
-			()
-		=	default
+		[[no_unique_address]]
+		t_tTransform
+			TransformObject
 		;
 
 		/// deduce template from argument
 		explicit constexpr
-			Transformer
-			(	t_tTransform
+		(	Transformer
+		)	(	t_tTransform const
+				&	i_rTransform
 			)
+		:	TransformObject
+			{	i_rTransform
+			}
 		{}
 
-		static t_tTransform constexpr
-			TransformObject
-		{};
+		explicit constexpr
+		(	Transformer
+		)	(	t_tTransform
+				&&	i_rTransform
+			)
+		:	TransformObject
+			{	static_cast<t_tTransform&&>
+				(	i_rTransform
+				)
+			}
+		{}
 
 		/// applies the transformation to all info objects in the pack and returns a transformed pack
 		[[nodiscard]]
-		constexpr
-		Instance auto
-			operator()
-			(	Stateless::Type auto
-				...	i_vpInfo
+		auto constexpr
+		(	operator()
+		)	(	Meta::ProtoValue auto&&
+				...	i_rpInfo
 			)	const
-		{
-			return
-				Concat
-				(	TransformObject
-					(	i_vpInfo
+		->	Instance auto
+		{	return
+			Concat
+			(	TransformObject
+				(	static_cast<decltype(i_rpInfo)>
+					(	i_rpInfo
 					)
-				...
 				)
-			;
+				...
+			);
 		}
 	};
 
 	template
-		<	Stateless::Type
+		<	Meta::ProtoValue
 				t_tTransform
 		>
 	(	Transformer
-	)	(	t_tTransform
+	)	(	t_tTransform const&
+		)
+	->	Transformer
+		<	t_tTransform
+		>
+	;
+
+	template
+		<	Meta::ProtoValue
+				t_tTransform
+		>
+	(	Transformer
+	)	(	t_tTransform&&
 		)
 	->	Transformer
 		<	t_tTransform
@@ -75,23 +90,23 @@ export namespace
 
 	///	applies all transformations in sequence to the pack
 	[[nodiscard]]
-	constexpr
-	Instance auto
-		Transform
-		(	Instance auto
+	auto constexpr
+	(	Transform
+	)	(	Instance auto
 				i_vPack
-		,	Stateless::Type auto
-			...	i_fpTransform
+		,	auto&&
+			...	i_rpTransform
 		)
-	{
-		return
-			Apply
-			(	i_vPack
-			,	Transformer
-				{	i_fpTransform
-				}
-				...
-			)
-		;
+	->	Instance auto
+	{	return
+		Apply
+		(	i_vPack
+		,	Transformer
+			{	static_cast<decltype(i_rpTransform)>
+				(	i_rpTransform
+				)
+			}
+			...
+		);
 	}
 }

@@ -3,12 +3,6 @@ export module Pack.Apply;
 export import Pack.Fold;
 export import Pack.Normalize;
 export import Pack.Instance;
-export import Pack.Type;
-export import Pack.Value;
-export import Meta.MetaInfo;
-export import Meta.TypeInfo;
-export import Meta.ValueInfo;
-
 export import Stateless.Tuple;
 
 export namespace
@@ -21,61 +15,49 @@ export namespace
 		/// applies all elements in the pack to the given function and returns the result
 		/// note that the final result may not be a pack but every intermediate result in a fold expression has to be
 		[[nodiscard]]
-		constexpr
-		Stateless::Type auto
-			operator()
-			(	Instance auto
+		auto constexpr
+		(	operator()
+		)	(	Instance auto
 					i_vPreviousResult
-			,	Stateless::Type auto
-					i_fApplicator
+			,	auto&&
+					i_rApplicable
 			)	const
 		{	return
 				Normalize
 				(	i_vPreviousResult
-				).	ApplyTo
-					(	i_fApplicator
+				)
+			.	ApplyTo
+				(	static_cast<decltype(i_rApplicable)>
+					(	i_rApplicable
 					)
+				)
 			;
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
+		)	(	Instance auto
+					i_vPack
+			,	auto&&
+				...	i_rpApplicable
+			)	const
+		{	return
+			FoldLeft
+			(	Stateless::Tuple
+				{	static_cast<decltype(i_rpApplicable)>
+					(	i_rpApplicable
+					)
+					...
+				}
+			,	*this
+			,	i_vPack
+			);
 		}
 	};
 
 	/// forwards the individual elements of the pack to the given objects in sequence
-	[[nodiscard]]
-	constexpr
-	Stateless::Type auto
+	Applicator constexpr inline
 		Apply
-		(	Instance auto
-				i_vPack
-		,	Stateless::Type auto
-			...	i_fpApplicable
-		)
-	{
-		return
-			FoldLeft
-			(	Stateless::Tuple
-				{	i_fpApplicable
-					...
-				}
-			,	Applicator{}
-			,	i_vPack
-			)
-		;
-	}
-
-	/// optimization for one
-	[[nodiscard]]
-	constexpr
-	Stateless::Type auto
-		Apply
-		(	Instance auto
-				i_vPack
-		,	Stateless::Type auto
-				i_fApplicable
-		)
-	{	return
-		Applicator{}
-		(	i_vPack
-		,	i_fApplicable
-		);
-	}
+	{};
 }

@@ -1283,7 +1283,7 @@ export namespace
 				t_tEntity
 		>
 	struct
-		Type
+		Type final
 	:	Composition<t_tEntity>
 	{
 		using Entity = t_tEntity;

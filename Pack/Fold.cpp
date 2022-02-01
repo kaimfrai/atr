@@ -1,8 +1,8 @@
 export module Pack.Fold;
 
-export import PackTemplate.Instance;
-export import Meta.MetaInfo;
-export import Stateless.Binding;
+export import Meta.Concept.Category;
+export import Pack.Instance;
+export import Pack.Normalize;
 export import Fold.Comma;
 
 export namespace
@@ -12,103 +12,84 @@ export namespace
 	/// to be invoked repeatedly within a fold expression
 	///	implicitly decays to the result
 	template
-		<	Stateless::Type
+		<	Meta::ProtoValue
 				t_tFoldOperation
-		,	Stateless::Type
+		,	Meta::ProtoValue
 				t_tFoldResult
 		>
 	struct
 		FoldTag
-		{
-			///	default constructor
-			constexpr
-				FoldTag
-				()
-			=	default
-			;
+	{
+		[[no_unique_address]]
+		t_tFoldOperation
+			FoldOperation
+		;
+		[[no_unique_address]]
+		t_tFoldResult
+			FoldResult
+		;
 
-			///	deduce template from arguments
-			constexpr
-			explicit
-				FoldTag
-				(	t_tFoldOperation
-				,	t_tFoldResult
-				)
-			{}
-
-			static t_tFoldOperation constexpr
-				FoldOperation
-			{};
-
-			static t_tFoldResult constexpr
-				FoldResult
-			{};
-
-			///	invoke the fold operation and update the result
-			[[nodiscard]]
-			constexpr
-			PackTemplate::TypeInstanceOf
-			<	FoldTag
-			>	auto
-				operator()
-				(	Stateless::Type auto
-						i_vArgument
-				)	const
-			{
-				return
-					Pack::FoldTag
-					{	FoldOperation
-					,	FoldOperation
-						(	FoldResult
-						,	i_vArgument
-						)
-					}
-				;
-			}
-
-			///	used to fold from left to right, maps to the call operator
-			[[nodiscard]]
-			friend
-			constexpr
-			Stateless::Type auto
-				operator,
-				(	FoldTag
-						i_fFoldTag
-				,	Stateless::Type auto
-						i_vArgument
-				)
-			{	return
-					i_fFoldTag
-					(	i_vArgument
+		///	invoke the fold operation and update the result
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
+		)	(	auto&&
+					i_rArgument
+			)	const
+		->	decltype(auto)
+		{	return
+			Pack::FoldTag
+			{	FoldOperation
+			,	FoldOperation
+				(	FoldResult
+				,	static_cast<decltype(i_rArgument)>
+					(	i_rArgument
 					)
-				;
-			}
-
-			///	used to fold from right to left, maps to the call operator
-			[[nodiscard]]
-			friend
-			constexpr
-			Stateless::Type auto
-				operator,
-				(	Stateless::Type auto
-						i_vArgument
-				,	FoldTag
-						i_fFoldTag
 				)
-			{
-				return
-					i_fFoldTag
-					(	i_vArgument
-					)
-				;
-			}
+			};
 		}
-	;
+
+		///	used to fold from left to right, maps to the call operator
+		[[nodiscard]]
+		friend auto constexpr
+		(	operator,
+		)	(	FoldTag const
+				&	i_rFoldTag
+			,	auto&&
+					i_rArgument
+			)
+		->	decltype(auto)
+		{	return
+			i_rFoldTag
+			(	static_cast<decltype(i_rArgument)>
+				(	i_rArgument
+				)
+			);
+		}
+
+		///	used to fold from right to left, maps to the call operator
+		[[nodiscard]]
+		friend auto constexpr
+			operator,
+			(	auto&&
+					i_rArgument
+			,	FoldTag const
+				&	i_rFoldTag
+			)
+		->	decltype(auto)
+		{	return
+			i_rFoldTag
+			(	static_cast<decltype(i_rArgument)>
+				(	i_rArgument
+				)
+			);
+		}
+	};
 
 	template
-		<	Stateless::Type
+		<	Meta::ProtoValue
 				t_tFoldOperation
-		,	Stateless::Type
+		,	Meta::ProtoValue
 				t_tFoldResult
 		>
 	(	FoldTag
@@ -123,80 +104,69 @@ export namespace
 
 	///	folds all info objects from right to left
 	[[nodiscard]]
-	constexpr
-	Stateless::Type auto
+	auto constexpr
 		FoldRight
 		(	Instance auto
 				i_vPack
-		,	Stateless::Type auto
-				t_fFoldOperation
-		,	Stateless::Type auto
-				t_fFoldInit
+		,	auto&&
+				i_rFoldOperation
+		,	auto&&
+				i_rFoldInit
 		)
+	->	decltype(auto)
 	{
-		Stateless::Type auto
-		const
-			vFoldStart
-		=	FoldTag
-			{	t_fFoldOperation
-			,	t_fFoldInit
-			}
-		;
-		Stateless::Type auto
-		const
+		auto const
 			vFolder
-		=	Stateless::BackBinding
-			{	Fold::RightComma
-			,	vFoldStart
+		=	Fold::RightCommaFunc
+			{	FoldTag
+				{	i_rFoldOperation
+				,	i_rFoldInit
+				}
 			}
 		;
 
 		return
 			Normalize
 			(	i_vPack
-			).	ApplyTo
-				(	vFolder
-				)
-			.	FoldResult
+			)
+		.	ApplyTo
+			(	vFolder
+			)
+		.	FoldResult
 		;
 	}
 
 	///	folds all info objects from left to right
 	[[nodiscard]]
-	Stateless::Type auto constexpr
+	auto constexpr
 		FoldLeft
 		(	Instance auto
 				i_vPack
-		,	Stateless::Type auto
-				t_fFoldOperation
-		,	Stateless::Type auto
-				t_fFoldInit
+		,	auto&&
+				i_rFoldOperation
+		,	auto&&
+				i_rFoldInit
 		)
+	->	decltype(auto)
 	{
-		Stateless::Type auto
-		const
-			vFoldStart
-		=	FoldTag
-			{	t_fFoldOperation
-			,	t_fFoldInit
-			}
-		;
-		Stateless::Type auto
-		const
+		auto const
 			vFolder
-		=	Stateless::FrontBinding
-			{	Fold::LeftComma
-			,	vFoldStart
+		=	Fold::LeftCommaFunc
+			{	FoldTag
+				{	i_rFoldOperation
+				,	i_rFoldInit
+				}
 			}
 		;
 
 		return
 			Normalize
 			(	i_vPack
-			).	ApplyTo
-				(	vFolder
-				)
-			.	FoldResult
+			)
+		.	ApplyTo
+			(	vFolder
+			)
+		.	FoldResult
 		;
 	}
 }

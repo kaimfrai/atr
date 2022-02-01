@@ -1,12 +1,10 @@
 export module Stateless.IndexMap;
 
 export import Stateless.Map;
-export import Stateless.Type;
-
 export import Std.TemplateConcepts;
 export import Meta.Integer;
 export import Meta.Index;
-
+export import Meta.Concept.Empty;
 export import Std;
 
 export namespace
@@ -63,7 +61,7 @@ export namespace
 	template
 		<	Meta::USize
 				t_nIndex
-		,	Type
+		,	Meta::ProtoStateless
 				t_tResult
 		>
 	struct
@@ -79,7 +77,7 @@ export namespace
 	template
 		<	Meta::USize
 			...	t_npIndex
-		,	Type
+		,	Meta::ProtoStateless
 			...	t_tpResult
 		>
 	(	Map

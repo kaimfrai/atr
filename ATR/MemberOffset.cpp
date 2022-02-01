@@ -11,6 +11,7 @@ export import Pack.Instance;
 export import Pack.Type;
 export import Meta.ValueInfo;
 export import Meta.Integer;
+export import Meta.Concept.Empty;
 
 export namespace
 	ATR
@@ -25,37 +26,25 @@ export namespace
 	struct
 		MemberOffset
 	:	MemberOffset
-		<	t_tMember
-			const
+		<	t_tMember const
 		,	t_nOffset
 		>
 	{
-		using
-			MemberOffset
-			<	t_tMember
-				const
-			,	t_nOffset
-			>::	operator()
-		;
+		using MemberOffset<t_tMember const, t_nOffset>::operator();
 
 		[[nodiscard]]
 		auto constexpr
-			operator()
-			(	void
+		(	operator()
+		)	(	void
 				*	i_aObject
 			)	const
-		noexcept
+			noexcept
+		->	decltype(auto)
 		{
-			if constexpr
-				(	Stateless::Type
-					<	t_tMember
-					>
-				)
-			{
+			if constexpr(Meta::ProtoStateless<t_tMember>)
 				return
 				t_tMember
 				{};
-			}
 			else
 			{
 				auto const
@@ -92,29 +81,23 @@ export namespace
 		>
 	struct
 		MemberOffset
-		<	t_tMember
-			const
+		<	t_tMember const
 		,	t_nOffset
 		>
 	{
 		[[nodiscard]]
 		auto constexpr
-			operator()
-			(	void const
+		(	operator()
+		)	(	void const
 				*	i_aObject
 			)	const
-		noexcept
+			noexcept
+		->	decltype(auto)
 		{
-			if constexpr
-				(	Stateless::Type
-					<	t_tMember
-					>
-				)
-			{
+			if constexpr(Meta::ProtoStateless<t_tMember const>)
 				return
 				t_tMember
 				{};
-			}
 			else
 			{
 				auto const
@@ -160,7 +143,7 @@ export namespace
 			>
 		,	t_tAdditionalOffset
 		)
-	noexcept
+		noexcept
 	->	MemberOffset
 		<	t_tMember
 		,	t_nOffset
@@ -171,7 +154,7 @@ export namespace
 
 	// stateless members always have offset 0
 	template
-		<	Stateless::Type
+		<	Meta::ProtoStateless
 				t_tMember
 		>
 	[[nodiscard]]
@@ -183,7 +166,7 @@ export namespace
 			>
 		,	Meta::SizeInfo auto
 		)
-	noexcept
+		noexcept
 	->	MemberOffset
 		<	t_tMember
 		,	0uz

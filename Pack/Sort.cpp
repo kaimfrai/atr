@@ -8,7 +8,6 @@ export import Pack.Instance;
 
 export import Fold.Comma;
 export import Stateless.Tuple;
-export import Stateless.Binding;
 
 export import Std;
 
@@ -17,7 +16,7 @@ export namespace
 {
 	/// inserts an argument into a sorted pack using the comparator
 	template
-		<	Stateless::Type
+		<	Meta::ProtoStateless
 				t_tCompare
 		>
 	struct
@@ -25,16 +24,14 @@ export namespace
 	{
 		///	default constructor
 		constexpr
-			CompareSort
-			()
-		=	default
-		;
+		(	CompareSort
+		)	()
+		=	default;
 
 		///	deduce template from arguments
-		constexpr
-		explicit
-			CompareSort
-			(	t_tCompare
+		explicit constexpr
+		(	CompareSort
+		)	(	t_tCompare
 			)
 		{}
 
@@ -44,18 +41,17 @@ export namespace
 
 		/// inserts the argument at a sorted position into the sorted pack
 		[[nodiscard]]
-		constexpr
-		Instance auto
-			operator()
-			(	/// assumed to be sorted
+		auto constexpr
+		(	operator()
+		)	(	/// assumed to be sorted
 				Instance auto
 					i_vSortedPack
-			,	Stateless::Type auto
+			,	Meta::ProtoStateless auto
 					i_vArgument
 			)	const
+		->	decltype(auto)
 		{
-			Stateless::Pair auto
-			const
+			auto const
 			[	// compare(element, argument) == true
 				// e.g. element < argument => sorted before
 				vWorsePack
@@ -64,25 +60,29 @@ export namespace
 				vBetterPack
 			]=	Filter
 				(	i_vSortedPack
-				,	Stateless::BackBinding
-					{	CompareObject
-					,	i_vArgument
+				,	[]	(	auto
+								i_vCompare
+						)
+					{	return
+						CompareObject
+						(	i_vCompare
+						,	decltype(i_vArgument){}
+						);
 					}
 				)
 			;
 
 			return
-				Concat
-				(	vWorsePack
-				,	i_vArgument
-				,	vBetterPack
-				)
-			;
+			Concat
+			(	vWorsePack
+			,	i_vArgument
+			,	vBetterPack
+			);
 		}
 	};
 
 	template
-		<	Stateless::Type
+		<	Meta::ProtoStateless
 				t_tCompare
 		>
 	(	CompareSort
@@ -95,14 +95,14 @@ export namespace
 
 	/// sorts the pack using the give compare function object
 	[[nodiscard]]
-	constexpr
-	Instance auto
-		Sort
-		(	Instance auto
+	auto constexpr
+	(	Sort
+	)	(	Instance auto
 				i_vPack
-		,	Stateless::Type auto
+		,	Meta::ProtoStateless auto
 				i_fCompare
 		)
+	->	decltype(auto)
 	{
 		if constexpr
 			(	OptionalInstance
@@ -113,57 +113,51 @@ export namespace
 			)
 		{
 			return
-				Normalize
-					(	i_vPack
-					)
-			;
+			Normalize
+			(	i_vPack
+			);
 		}
 		else
 			return
-				FoldLeft
-				(	i_vPack
-				,	CompareSort
-					{	i_fCompare
-					}
-				,	Meta::Pack()
-				)
-			;
+			FoldLeft
+			(	i_vPack
+			,	CompareSort
+				{	i_fCompare
+				}
+			,	Meta::Pack()
+			);
 	}
 
 	/// sorts the pack using std::less to sort it from lowest to highest
 	[[nodiscard]]
-	constexpr
-	Instance auto
+	auto constexpr
 		SortAscending
 		(	Instance auto
 				i_vPack
 		)
-	{
-		return
-			Sort
-			(	i_vPack
-			,	std::less<void>
-				{}
-			)
-		;
+	->	decltype(auto)
+	{	return
+		Sort
+		(	i_vPack
+		,	std::less<void>
+			{}
+		);
 	}
 
 	/// sorts the pack using std::greater to sort it from highest to lowest
 	[[nodiscard]]
-	constexpr
-	Instance auto
-		SortDescending
-		(	Instance auto
+	auto constexpr
+	(	SortDescending
+	)	(	Instance auto
 				i_vPack
 		)
-	{
-		return
-			Sort
-			(	i_vPack
-			,	std::greater<void>
-				{}
-			)
-		;
+	->	decltype(auto)
+	{	return
+		Sort
+		(	i_vPack
+		,	std::greater<void>
+			{}
+		);
 	}
 }
 

@@ -165,40 +165,30 @@ export namespace
 		ForwardErased
 	{};
 
-	/// uses the ForwardErased overload to deduce the argument type
+	/// converts a TypeInfo into a TypeInfo of the corresponding erased type
 	template
 		<	typename
-				t_tObject
+				t_tEntity
 		>
-	using
-		ErasedType
-	=	decltype
-		(	ForwardErased
-			(	Meta::Type
-				<	/// top level cv-qualifiers are ignored in the function signature
-					std::remove_cv_t
-					<	t_tObject
-					>
-				>
-			,	std::declval
-				<	t_tObject
-				>()
-			)
-		)
-	;
-
-	/// converts a TypeInfo into a TypeInfo of the corresponding erased type
 	auto constexpr
 		ErasedTypeInfo
-		(	Meta::TypeInstance auto
-				i_vTypeInfo
+		(	Meta::TypeToken<t_tEntity>
 		)
 	{	return
-			PackTemplate::Type
-			<	ErasedType
-			>()
-			(	i_vTypeInfo
+		Meta::Type
+		<	decltype
+			(	ForwardErased
+				(	Meta::Type
+					<	/// top level cv-qualifiers are ignored in the function signature
+						std::remove_cv_t
+						<	t_tEntity
+						>
+					>
+				,	::std::declval
+					<	t_tEntity
+					>()
+				)
 			)
-		;
+		>;
 	}
 }

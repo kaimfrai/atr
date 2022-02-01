@@ -1,9 +1,9 @@
 export module Pack.Value;
 
 export import Pack.Empty;
-export import Meta.MetaInfo;
 export import Meta.ValueInfo;
 export import Stateless.Tuple;
+export import Std.TemplateConcepts;
 
 export namespace
 	Pack
@@ -25,36 +25,6 @@ export namespace
 		>
 	{};
 
-	/// inherits from Pack::Value. provides more useful debugging information for stateless types than Value<{}, {}, {}, ...>
-	template
-		<	Stateless::Type
-			...	t_tpStateless
-		>
-	struct
-		[[nodiscard]]
-		StatelessValue
-	:	Value
-		<	t_tpStateless{}
-			...
-		>
-	{
-		// default constructor
-		constexpr
-			StatelessValue
-			()
-		=	default
-		;
-
-		/// deduce template from argument
-		constexpr
-		explicit
-			StatelessValue
-			(	t_tpStateless
-				...
-			)
-		{}
-	};
-
 	///	stateless value pack instances
 	template
 		<	typename
@@ -62,10 +32,7 @@ export namespace
 		>
 	concept
 		PureValueInstance
-	=	Stateless::Type
-		<	t_tValuePack
-		>
-	and	Std::ValuePackInstance
+	=	Std::ValuePackInstance
 		<	t_tValuePack
 		>
 	;
@@ -83,15 +50,5 @@ export namespace
 	or	PureEmptyInstance
 		<	t_tValuePack
 		>
-	or	requires
-			(	t_tValuePack
-					c_vValuePack
-			)
-		{
-			// copy constructs Value -> unambiguously derived from Value
-			Value
-			{	c_vValuePack
-			};
-		}
 	;
 }
