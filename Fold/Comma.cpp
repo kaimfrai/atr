@@ -1,7 +1,5 @@
 export module Fold.Comma;
 
-export import Stateless.Type;
-
 export namespace
 	Fold
 {
@@ -11,19 +9,21 @@ export namespace
 		RightCommaFunc
 	{
 		[[nodiscard]]
-		constexpr
-		Stateless::Type auto
-			operator()
-			(	Stateless::Type auto
-				...	i_vpElement
+		auto constexpr
+		(	operator()
+		)	(	auto&&
+				...	i_rpArgument
 			)	const
+		->	decltype(auto)
 		{	return
-				(	i_vpElement
-				,	...
+			(	static_cast<decltype(i_rpArgument)>
+				(	i_rpArgument
 				)
-			;
+			,	...
+			);
 		}
 	};
+
 	RightCommaFunc constexpr inline
 		RightComma
 	{};
@@ -34,17 +34,18 @@ export namespace
 		LeftCommaFunc
 	{
 		[[nodiscard]]
-		constexpr
-		Stateless::Type auto
+		auto constexpr
 			operator()
-			(	Stateless::Type auto
-				...	i_vpElement
+			(	auto&&
+				...	i_rpArgument
 			)	const
+		->	decltype(auto)
 		{	return
-				(	...
-				,	i_vpElement
+			(	...
+			,	static_cast<decltype(i_rpArgument)>
+				(	i_rpArgument
 				)
-			;
+			);
 		}
 	};
 

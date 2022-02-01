@@ -1,7 +1,5 @@
 export module Fold.LogicalOr;
 
-export import Stateless.Type;
-
 export namespace
 	Fold
 {
@@ -11,18 +9,18 @@ export namespace
 		RightLogicalOrFunc
 	{
 		[[nodiscard]]
-		constexpr
-		Stateless::Type auto
+		auto constexpr
 			operator()
-			(	Stateless::Type auto
-				...	i_rpElement
-			)
-		{
-			return
-				(	i_rpElement
-				||	...
+			(	auto&&
+				...	i_rpArgument
+			)	const
+		->	decltype(auto)
+		{	return
+			(	static_cast<decltype(i_rpArgument)>
+				(	i_rpArgument
 				)
-			;
+			or	...
+			);
 		}
 	};
 
@@ -36,18 +34,18 @@ export namespace
 		LeftLogicalOrFunc
 	{
 		[[nodiscard]]
-		constexpr
-		Stateless::Type auto
+		auto constexpr
 			operator()
-			(	Stateless::Type auto
+			(	auto&&
 				...	i_rpElement
-			)
-		{
-			return
-				(	...
-				||	i_rpElement
+			)	const
+		->	decltype(auto)
+		{	return
+			(	...
+			or	static_cast<decltype(i_rpElement)>
+				(	i_rpElement
 				)
-			;
+			);
 		}
 	};
 
