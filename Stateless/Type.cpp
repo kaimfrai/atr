@@ -1,6 +1,6 @@
 export module Stateless.Type;
 
-export import Meta.Concept;
+export import Meta.Concept.Empty;
 
 export namespace
 	Stateless

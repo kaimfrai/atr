@@ -80,17 +80,4 @@ export namespace
 	and	IsTrivial
 	or	IsScalar
 	;
-
-	Term constexpr inline
-		IsEmpty
-	=	Term{Trait::Empty{true}}
-	and	IsCustom
-	;
-
-	Term constexpr inline
-		IsStateless
-	=	IsEmpty
-	and	IsTriviallyConstructible_From<>
-	and	IsTriviallyCopyConstructible
-	;
 }
