@@ -15,12 +15,9 @@ export namespace
 		[[nodiscard]]
 		NotBinding
 	{
-		static
-		constexpr
-		Type auto
+		static t_tInvoke constexpr
 			InvokeObject
-		=	Copy<t_tInvoke>
-		;
+		{};
 
 		///	default constructor
 		constexpr
@@ -124,11 +121,9 @@ export namespace
 				>
 			>
 	{
-		static
-		constexpr
-		Type auto
+		static t_tInvoke constexpr
 			InvokeObject
-		=	Copy<t_tInvoke>
+		{}
 		;
 
 		///	default constructor
@@ -158,7 +153,7 @@ export namespace
 			)	const
 		{	return
 				InvokeObject
-				(	Copy<t_tpFrontArgument>
+				(	t_tpFrontArgument{}
 					...
 				,	i_vpBackArgument
 					...
@@ -204,12 +199,9 @@ export namespace
 				>
 			>
 	{
-		static
-		constexpr
-		Type auto
+		static t_tInvoke constexpr
 			InvokeObject
-		=	Copy<t_tInvoke>
-		;
+		{};
 
 		///	default constructor
 		constexpr
@@ -240,7 +232,7 @@ export namespace
 				InvokeObject
 				(	i_vpFrontArgument
 					...
-				,	Copy<t_tpBackArgument>
+				,	t_tpBackArgument{}
 					...
 				)
 			;

@@ -10,7 +10,6 @@ export import PackTemplate.Instance;
 export import Pack.Instance;
 export import Pack.Type;
 export import Meta.ValueInfo;
-export import Std.Concepts;
 export import Meta.Integer;
 
 export namespace
@@ -201,7 +200,34 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 		operator->*
-		(	Std::SameAs_Transform<void,	std::remove_const_t> auto
+		(	void
+			*	i_aObject
+		,	MemberOffset
+			<	t_tMember
+			,	t_nOffset
+			>	i_vMemberOffset
+		)
+	noexcept
+	->	decltype(auto)
+	{
+		return
+			i_vMemberOffset
+			(	i_aObject
+			)
+		;
+	}
+
+		/// immitates syntax of pointer to member dereference
+	template
+		<	typename
+				t_tMember
+		,	Meta::USize
+				t_nOffset
+		>
+	[[nodiscard]]
+	auto constexpr
+		operator->*
+		(	void const
 			*	i_aObject
 		,	MemberOffset
 			<	t_tMember

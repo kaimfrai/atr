@@ -47,7 +47,7 @@ export namespace
 		<	t_tPack
 		>
 	and	Size
-		(	Stateless::Copy<t_tPack>
+		(	t_tPack{}
 		)
 	==	Meta::V<t_nSize>
 	;
@@ -109,18 +109,13 @@ export namespace
 
 	/// the actual value representing the size of the pack
 	template
-		<	Instance_Transform
-			<	Std::Unqualified
-			>	t_tPack
+		<	Instance
+				t_tPack
 		>
 	Meta::USize constexpr
 		SizeValue
 	=	Size
-		(	Stateless::Copy
-			<	Std::Unqualified
-				<	t_tPack
-				>
-			>
+		(	t_tPack{}
 		)
 	;
 

@@ -5,7 +5,7 @@ export import Meta.MetaInfo;
 export import Meta.TypeInfo;
 
 export import Stateless.Tuple;
-export import Std.Concepts;
+export import Std.TemplateConcepts;
 
 export namespace
 	Pack
@@ -31,56 +31,14 @@ export namespace
 	template
 		<	typename
 				t_tTypePack
-		,	template
-				<	typename
-				>
-			typename
-				t_t1Transform
-		>
-	concept
-		PureTypeInstance_Transform
-	=	Stateless::Type_Transform
-		<	t_tTypePack
-		,	t_t1Transform
-		>
-	and	Std::TypePackInstance
-		<	t_tTypePack
-		,	t_t1Transform
-		>
-	;
-
-	///	stateless type pack instances
-	template
-		<	typename
-				t_tTypePack
 		>
 	concept
 		PureTypeInstance
-	=	PureTypeInstance_Transform
+	=	Stateless::Type
 		<	t_tTypePack
-		,	std::type_identity_t
 		>
-	;
-
-	///	type packs or empty packs
-	template
-		<	typename
-				t_tTypePack
-		,	template
-				<	typename
-				>
-			typename
-				t_t1Transform
-		>
-	concept
-		TypeInstance_Transform
-	=	PureTypeInstance_Transform
+	and	Std::TypePackInstance
 		<	t_tTypePack
-		,	t_t1Transform
-		>
-	or	PureEmptyInstance_Transform
-		<	t_tTypePack
-		,	t_t1Transform
 		>
 	;
 
@@ -91,9 +49,11 @@ export namespace
 		>
 	concept
 		TypeInstance
-	=	TypeInstance_Transform
+	=	PureTypeInstance
 		<	t_tTypePack
-		,	std::type_identity_t
+		>
+	or	PureEmptyInstance
+		<	t_tTypePack
 		>
 	;
 }

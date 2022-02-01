@@ -128,7 +128,7 @@ export namespace
 	=	StaticDependencyInstance
 		<	t_tDependency
 		>
-	and	Std::SameAs
+	and	::std::same_as
 		<	typename
 			t_tDependency
 			::	FunctionName

@@ -2,7 +2,6 @@ export module Pack.Empty;
 
 export import Std;
 export import Stateless.Tuple;
-export import Std.Concepts;
 
 export namespace
 	Pack
@@ -13,30 +12,15 @@ export namespace
 		Empty
 	:	Stateless::Tuple
 		<>
-	{};
-
-	/// instances of empty pack
-	template
-		<	typename
-				t_tEmptyPack
-		,	template
-				<	typename
-				>
-			typename
-				t_t1Transform
-		>
-	concept
-		PureEmptyInstance_Transform
-	=	Stateless::Type_Transform
-		<	t_tEmptyPack
-		,	t_t1Transform
-		>
-	and	Std::SameAs_Transform
-		<	t_tEmptyPack
-		,	Empty
-		,	t_t1Transform
-		>
-	;
+	{
+		friend auto constexpr
+		(	operator ==
+		)	(	Empty
+			,	Empty
+			)
+		->	bool
+		{	return true;	}
+	};
 
 	/// instances of empty pack
 	template
@@ -45,9 +29,12 @@ export namespace
 		>
 	concept
 		PureEmptyInstance
-	=	PureEmptyInstance_Transform
+	=	Stateless::Type
 		<	t_tEmptyPack
-		,	std::type_identity
+		>
+	and	::std::same_as
+		<	::std::remove_cvref_t<t_tEmptyPack>
+		,	Empty
 		>
 	;
 }

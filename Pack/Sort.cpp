@@ -6,11 +6,9 @@ export import Pack.Concat;
 export import Pack.Size;
 export import Pack.Instance;
 
-export import Fold.Comma;;
+export import Fold.Comma;
 export import Stateless.Tuple;
 export import Stateless.Binding;
-
-export import Std.Concepts;
 
 export import Std;
 
@@ -40,12 +38,9 @@ export namespace
 			)
 		{}
 
-		static
-		constexpr
-		Stateless::Type auto
+		static t_tCompare constexpr
 			CompareObject
-		=	Stateless::Copy<t_tCompare>
-		;
+		{};
 
 		/// inserts the argument at a sorted position into the sorted pack
 		[[nodiscard]]

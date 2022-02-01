@@ -6,7 +6,6 @@ export import Pack.Size;
 export import Pack.Instance;
 export import Meta.ValueInfo;
 export import Stateless.Tuple;
-export import Std.Concepts;
 export import Meta.Integer;
 export import Meta.Index;
 export import Std;
@@ -52,23 +51,19 @@ export namespace
 		;
 
 		/// deduce template from arguments
-		constexpr
-		explicit
+		explicit constexpr
 			DublicateGenerator
 			(	t_tInitial
 			)
 		{}
 
 		/// every call results in a new dublicated value
-		constexpr
-		t_tInitial
+		auto constexpr
 			operator()
 			(	Stateless::Type auto
 			)	const
-		{	return
-				Stateless::Copy<t_tInitial>
-			;
-		}
+		->	t_tInitial
+		{	return {};	}
 	};
 
 	/// creates a pack containing length copies of the initial object
@@ -108,15 +103,13 @@ export namespace
 			(	MakeIndexSequence
 				(	i_vLength
 				)
-			,	[]	(	Meta::SizeInfo auto
+			,	[=]	(	Meta::SizeInfo auto
 							i_vIndex
 					)
 				->	Meta::SizeInfo auto
 				{	return
 						i_vIndex
-					+	Stateless::Copy<decltype(
-							i_vOffset
-						)>
+					+	i_vOffset
 					;
 				}
 			)

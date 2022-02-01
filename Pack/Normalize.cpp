@@ -151,9 +151,7 @@ export namespace
 			{
 				return
 					operator()
-					(	Stateless::Copy
-						<	t_tpStateless
-						>
+					(	t_tpStateless{}
 						...
 					)
 				;

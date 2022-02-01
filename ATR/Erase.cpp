@@ -2,7 +2,6 @@ export module ATR.Erase;
 
 export import Meta.Template;
 export import Meta.TypeInfo;
-export import Std.Concepts;
 
 export import Std;
 
@@ -18,11 +17,10 @@ export namespace
 	{
 		/// erases type information from a value
 		template
-			<	Std::Object
+			<	Meta::ProtoValue
 					t_tObject
 			>
-		constexpr
-		auto
+		auto constexpr
 			operator()
 			(	Meta::TypeToken
 				<	t_tObject
@@ -38,7 +36,7 @@ export namespace
 		}
 		/// erases type information from a pointer to non-const
 		template
-			<	Std::Object
+			<	Meta::ProtoValue
 					t_tObject
 			>
 		constexpr
@@ -60,7 +58,7 @@ export namespace
 
 		/// erases type information from a pointer to const
 		template
-			<	Std::Object
+			<	Meta::ProtoValue
 					t_tObject
 			>
 		constexpr
@@ -85,7 +83,7 @@ export namespace
 
 		/// erases type information from a lvalue reference
 		template
-			<	Std::Object
+			<	Meta::ProtoValue
 					t_tObject
 			>
 		constexpr
@@ -112,7 +110,7 @@ export namespace
 
 		/// erases type information from a rvalue reference to small types
 		template
-			<	Std::Object
+			<	Meta::ProtoValue
 					t_tObject
 			>
 		constexpr
@@ -137,7 +135,7 @@ export namespace
 
 		/// erases type information from a rvalue reference to large types
 		template
-			<	Std::Object
+			<	Meta::ProtoValue
 					t_tObject
 			>
 		constexpr
@@ -169,13 +167,13 @@ export namespace
 
 	/// uses the ForwardErased overload to deduce the argument type
 	template
-		<	Std::ObjectOrReference
+		<	typename
 				t_tObject
 		>
 	using
 		ErasedType
-	=	decltype(
-			ForwardErased
+	=	decltype
+		(	ForwardErased
 			(	Meta::Type
 				<	/// top level cv-qualifiers are ignored in the function signature
 					std::remove_cv_t
@@ -190,8 +188,7 @@ export namespace
 	;
 
 	/// converts a TypeInfo into a TypeInfo of the corresponding erased type
-	constexpr
-	auto
+	auto constexpr
 		ErasedTypeInfo
 		(	Meta::TypeInstance auto
 				i_vTypeInfo

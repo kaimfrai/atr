@@ -3,8 +3,6 @@ export module Stateless.Map;
 export import Stateless.Type;
 
 export import Std.TemplateConcepts;
-export import Std.Concepts;
-// export import Std.FunctionTraits;
 
 export import Meta.Integer;
 
@@ -40,8 +38,8 @@ export namespace
 				>
 			)
 		{	return
-				Copy<t_tKey>
-			<=>	Copy<t_tRightKey>
+				t_tKey{}
+			<=>	t_tRightKey{}
 			;
 		}
 	};
@@ -85,7 +83,7 @@ export namespace
 		MapToStateless
 	:	MapToConstant
 		<	t_tKey
-		,	Copy<t_tResult>
+		,	t_tResult{}
 		>
 	{};
 

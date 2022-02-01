@@ -18,13 +18,11 @@ export namespace
 		VirtualItem
 	{
 		static_assert
-			(	Std::Never
-				<	t_tFuncID
-				,	t_tSignature
-				>
-			,	"Unexpected specialization failure."
-			)
-		;
+		(	Meta::ProtoNone
+			<	VirtualItem
+			>
+		,	"Unexpected specialization failure."
+		);
 	};
 
 	template
@@ -190,7 +188,7 @@ export namespace
 	template
 		<	StringLiteral
 				t_vFunctionName
-		,	Std::Function
+		,	Meta::ProtoFunction
 				t_tSignature
 		>
 	using
@@ -325,13 +323,13 @@ export namespace
 
 	public:
 		template
-			<	Std::TriviallyCopyable
+			<	Meta::ProtoTriviallyCopyable
 					t_tObject
 			,	typename
 				...	t_tpArgument
 			>
 		requires
-			Std::ConstructibleFrom
+			::std::constructible_from
 			<	t_tObject
 			,	t_tpArgument
 				...

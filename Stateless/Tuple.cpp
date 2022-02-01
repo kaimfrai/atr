@@ -5,7 +5,6 @@ export import Stateless.IndexMap;
 export import Stateless.Map;
 
 export import Std.TemplateConcepts;
-export import Std.Concepts;
 export import Meta.Integer;
 export import Meta.Index;
 
@@ -40,7 +39,7 @@ export namespace
 		Map
 			MapToIndex
 		{	Meta::Sequence<ElementCount>()
-		,	Copy<t_tpStateless>
+		,	t_tpStateless{}
 			...
 		};
 
@@ -92,7 +91,7 @@ export namespace
 			)	const
 		{	return
 				i_fApplicable
-				(	Copy<t_tpStateless>
+				(	t_tpStateless{}
 					...
 				)
 			;
@@ -145,8 +144,8 @@ export namespace
 			{
 				return
 					(	...
-					and	(	Copy<t_tpStateless>
-						==	Copy<t_tpOtherStateless>
+					and	(	t_tpStateless{}
+						==	t_tpOtherStateless{}
 						)
 					)
 				;
@@ -231,36 +230,16 @@ export namespace
 	;
 
 	[[nodiscard]]
-	constexpr
-	Std::TypePackInstanceOf<Tuple> auto
+	auto constexpr
 		AsTuple
 		(	TupleInstance auto
 				i_vTuple
 		)
-	{	return
-			Copy
-			<	typename
-				decltype(i_vTuple)
-				::	TupleType
-			>
-		;
-	}
-
-	[[nodiscard]]
-	constexpr
-	auto
-		operator==
-		(	TupleInstance auto
-				i_vLeft
-		,	TupleInstance auto
-				i_vRight
+	->	typename decltype
+		(	i_vTuple
 		)
-	->	bool
-	{	return
-			AsTuple(i_vLeft)
-		==	AsTuple(i_vRight)
-		;
-	}
+	::	TupleType
+	{	return {};	}
 
 	/// constrains to instances of stateless tuple to the ones with exactly 2 elements
 	template
@@ -309,7 +288,7 @@ export namespace
 		>
 	:	type_identity
 		<	decltype(
-				Stateless::Copy<t_tTuple>
+				::std::declval<t_tTuple>()
 				.	template
 					get
 					<	t_nIndex

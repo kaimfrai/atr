@@ -4,7 +4,8 @@ export import Meta.Integer;
 export import Meta.Value;
 
 export import Std;
-export import Std.Concepts;
+export import Std.TemplateConcepts;
+export import Meta.ValueInfo;
 
 export namespace
 	ATR
@@ -167,7 +168,7 @@ export namespace
 	=	StringLiteralInstance
 		<	t_tStringLiteral
 		>
-	or	Std::ConvertibleToValuePackInstance
+	or	Meta::ConvertibleToValuePackInstance
 		<	t_tStringLiteral
 		,	StringLiteral
 		>

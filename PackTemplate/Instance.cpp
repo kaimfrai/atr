@@ -8,7 +8,6 @@ export import PackTemplate.Type;
 export import PackTemplate.Value;
 
 export import Stateless.Tuple;
-export import Std.Concepts;
 
 export namespace
 	PackTemplate
@@ -26,7 +25,7 @@ export namespace
 	or	ValueInstance
 		<	t_tPackTemplate
 		>
-	or	Std::SameAs
+	or	::std::same_as
 		<	t_tPackTemplate
 		,	Pack::Normalizer
 		>
@@ -48,9 +47,9 @@ export namespace
 		<	t_tPackTemplate
 		>
 	and	(	Pack::Template
-			(	Stateless::Copy<t_tInstance>
+			(	t_tInstance{}
 			)
-		==	Stateless::Copy<t_tPackTemplate>
+		==	t_tPackTemplate{}
 		)
 	;
 

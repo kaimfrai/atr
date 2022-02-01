@@ -3,8 +3,7 @@ export module Pack.Fold;
 export import PackTemplate.Instance;
 export import Meta.MetaInfo;
 export import Stateless.Binding;
-export import Fold.Comma;;
-export import Std.Concepts;
+export import Fold.Comma;
 
 export namespace
 	Pack
@@ -37,19 +36,13 @@ export namespace
 				)
 			{}
 
-			static
-			constexpr
-			Stateless::Type auto
+			static t_tFoldOperation constexpr
 				FoldOperation
-			=	Stateless::Copy<t_tFoldOperation>
-			;
+			{};
 
-			static
-			constexpr
-			Stateless::Type auto
+			static t_tFoldResult constexpr
 				FoldResult
-			=	Stateless::Copy<t_tFoldResult>
-			;
+			{};
 
 			///	invoke the fold operation and update the result
 			[[nodiscard]]

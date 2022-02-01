@@ -3,7 +3,6 @@ export module Stateless.Compare;
 export import Stateless.IndexMap;
 export import Stateless.Type;
 
-export import Std.Concepts;
 export import Meta.Integer;
 export import Std;
 
@@ -14,42 +13,28 @@ export namespace
 	struct
 		NoType
 	{
-		friend
-		constexpr
-		auto
-			operator<=>
-			(	NoType
+		friend auto constexpr
+		(	operator<=>
+		)	(	NoType
 			,	NoType
 			)
-		{
-			return
-				std::strong_ordering::equal
-			;
-		}
+		{	return ::std::strong_ordering::equal;	}
 
-		friend
-		constexpr
-		auto
+		friend auto constexpr
 			operator<=>
 			(	NoType
 			,	Type auto
 			)
-		{	return
-				std::strong_ordering::less
-			;
-		}
+		->	::std::strong_ordering
+		{	return ::std::strong_ordering::less;	}
 
-		friend
-		constexpr
-		auto
-			operator<=>
-			(	Type auto
+		friend auto constexpr
+		(	operator<=>
+		)	(	Type auto
 			,	NoType
 			)
-		{	return
-				std::strong_ordering::greater
-			;
-		}
+		->	::std::strong_ordering
+		{	return ::std::strong_ordering::greater;	}
 	};
 
 	/// types that are usually returned from the <=> operator
@@ -59,19 +44,16 @@ export namespace
 		>
 	concept
 		OrderingLike
-	=	Std::SameAs_Transform
-		<	decltype(
-				t_tOrdering
-				::	equivalent
-			)
-		,	t_tOrdering
-		,	std::remove_cv_t
-		>
+	=	requires
+		{
+			t_tOrdering::equivalent;
+			t_tOrdering::less;
+			t_tOrdering::greater;
+		}
 	;
 
 	/// returns the first ordering result that is not equivalent or equivalent if all are
-	constexpr
-	auto
+	auto constexpr
 		FoldOrderingResults
 		(	OrderingLike auto
 			...	i_vpOrderingResult
@@ -204,11 +186,11 @@ export namespace
 					)
 				>{}
 			,	DefaultingMap
-				{	Copy<NoType>
+				{	NoType{}
 				,	i_vLeft
 				}
 			,	DefaultingMap
-				{	Copy<NoType>
+				{	NoType{}
 				,	i_vRight
 				}
 			)

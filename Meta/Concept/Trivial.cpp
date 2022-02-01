@@ -378,7 +378,8 @@ export namespace
 	concept
 		Stateless
 	=	Empty<t_tProto>
-	and	TrivialRegular<t_tProto>
+	and	TriviallyDefaultInitializable<t_tProto>
+	and	TriviallyCopyConstructible<t_tProto>
 	;
 }
 

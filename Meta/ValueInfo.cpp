@@ -4,8 +4,6 @@ export import Meta.TypeInfo;
 
 export import Stateless.Type;
 
-export import Std.Concepts;
-
 export import Meta.Integer;
 
 export namespace
@@ -105,7 +103,7 @@ export namespace
 				...
 			)	const
 		requires
-			Std::Class
+			ProtoClass
 			<	ValueType
 			>
 		{	return
@@ -142,6 +140,29 @@ export namespace
 		{	return{};	}
 	};
 
+	template
+		<	typename
+				t_tConvertible
+		,	template
+				<	auto
+					...
+				>
+			typename
+				t_t1ConvertTo
+		>
+	concept
+		ConvertibleToValuePackInstance
+	=	requires
+			(	t_tConvertible
+					c_vConvertible
+			)
+		{
+			t_t1ConvertTo
+			{	c_vConvertible
+			};
+		}
+	;
+
 	///	stateless types derived from ValueInfo
 	template
 		<	typename
@@ -153,7 +174,7 @@ export namespace
 		<	t_tValueInstance
 		>
 	and	/// copy constructs ValueInfo -> unambiguously derived from ValueInfo
-		Std::ConvertibleToValuePackInstance
+		ConvertibleToValuePackInstance
 		<	t_tValueInstance
 		,	ValueInfo
 		>
@@ -166,11 +187,9 @@ export namespace
 		>
 	ValueInstance auto constexpr inline
 		V
-	=	Stateless::Copy
-		<	ValueInfo
-			<	t_vAny
-			>
-		>
+	=	ValueInfo
+		<	t_vAny
+		>{}
 	;
 
 	/// inherits from value info. provides more useful debugging information for stateless types than ValueInfo<{}>
@@ -182,9 +201,8 @@ export namespace
 		[[nodiscard]]
 		StatelessValueInfo
 	:	ValueInfo
-		<	Stateless::Copy
-			<	t_tStateless
-			>
+		<	t_tStateless
+			{}
 		>
 	{
 		// default constructor
@@ -243,10 +261,10 @@ export namespace
 	=	ValueInstance
 		<	t_tValueInfo
 		>
-	and Std::SameAs
+	and ::std::same_as
 		<	typename
 			t_tValueInfo
-			::	ValueType
+		::	ValueType
 		,	t_tValue
 		>
 	;

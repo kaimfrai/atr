@@ -11,7 +11,6 @@ export import Meta.TypeInfo;
 export import Meta.ValueInfo;
 
 export import Stateless.Tuple;
-export import Std.Concepts;
 
 export namespace
 	Pack
@@ -32,19 +31,15 @@ export namespace
 		;
 
 		/// deduce template from argument
-		constexpr
-		explicit
+		explicit constexpr
 			Transformer
 			(	t_tTransform
 			)
 		{}
 
-		static
-		constexpr
-		Stateless::Type auto
+		static t_tTransform constexpr
 			TransformObject
-		=	Stateless::Copy<t_tTransform>
-		;
+		{};
 
 		/// applies the transformation to all info objects in the pack and returns a transformed pack
 		[[nodiscard]]

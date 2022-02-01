@@ -74,45 +74,15 @@ export namespace
 		UnderlyingLayout
 	=	Meta::Type
 		<	typename
-			t_tObject
+			::std::remove_cvref_t<t_tObject>
 		::	LayoutType
-		>
-	;
-
-	template
-		<	Std::CVObject
-				t_tObject
-		>
-	Meta::TypeInstance auto constexpr inline
-		UnderlyingLayout
-		<	t_tObject
-		>
-	=	UnderlyingLayout
-		<	::std::remove_cv_t
-			<	t_tObject
-			>
-		>
-	;
-
-	template
-		<	Std::Reference
-				t_tObject
-		>
-	Meta::TypeInstance auto constexpr inline
-		UnderlyingLayout
-		<	t_tObject
-		>
-	=	UnderlyingLayout
-		<	::std::remove_reference_t
-			<	t_tObject
-			>
 		>
 	;
 
 	/// extracts the LayoutType from a possibly reference qualified Object
 	/// preserves cv-qualifiers but not reference qualifiers
 	template
-		<	Std::ObjectOrReference
+		<	typename
 				t_tObject
 		>
 	using

@@ -9,10 +9,9 @@ export import Pack.Apply;
 export import Pack.Concat;
 export import Meta.MetaInfo;
 
-export import Fold.Comma;;
+export import Fold.Comma;
 export import Stateless.Binding;
 export import Stateless.Tuple;
-export import Std.Concepts;
 
 export namespace
 	Pack

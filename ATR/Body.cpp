@@ -5,7 +5,6 @@ export import ATR.ArgumentDependency;
 export import ATR.ID;
 export import ATR.StringLiteral;
 export import Meta.TypeInfo;
-export import Std.Concepts;
 
 export namespace
 	ATR
@@ -27,16 +26,15 @@ export namespace
 			...
 		)
 	noexcept
-	{
-		static_assert
-			(	Std::Never
-				<	t_tFuncID
-				,	t_tpDependency
+	{	static_assert
+		(	Meta::ProtoNone
+			<	t_tFuncID
+				(	t_tpDependency
 					...
-				>
-			,	"ATR::Body was used but not defined."
-			)
-		;
+				)
+			>
+		,	"ATR::Body was used but not defined."
+		);
 	}
 
 	/// whether a call to Body is noexcept

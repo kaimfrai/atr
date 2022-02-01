@@ -11,7 +11,6 @@ export import ATR.StringLiteral;
 export import Pack.Concat;
 export import Pack.Type;
 export import Std.QualifierTemplate;
-export import Std.Concepts;
 
 export namespace
 	ATR

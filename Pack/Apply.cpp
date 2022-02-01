@@ -10,7 +10,6 @@ export import Meta.TypeInfo;
 export import Meta.ValueInfo;
 
 export import Stateless.Tuple;
-export import Std.Concepts;
 
 export namespace
 	Pack
@@ -57,7 +56,7 @@ export namespace
 				{	i_fpApplicable
 					...
 				}
-			,	Stateless::Copy<Applicator>
+			,	Applicator{}
 			,	i_vPack
 			)
 		;
@@ -73,12 +72,10 @@ export namespace
 		,	Stateless::Type auto
 				i_fApplicable
 		)
-	{
-		return
-			Stateless::Copy<Applicator>
-			(	i_vPack
-			,	i_fApplicable
-			)
-		;
+	{	return
+		Applicator{}
+		(	i_vPack
+		,	i_fApplicable
+		);
 	}
 }

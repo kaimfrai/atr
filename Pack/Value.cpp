@@ -4,7 +4,6 @@ export import Pack.Empty;
 export import Meta.MetaInfo;
 export import Meta.ValueInfo;
 export import Stateless.Tuple;
-export import Std.Concepts;
 
 export namespace
 	Pack
@@ -35,9 +34,7 @@ export namespace
 		[[nodiscard]]
 		StatelessValue
 	:	Value
-		<	Stateless::Copy
-			<	t_tpStateless
-			>
+		<	t_tpStateless{}
 			...
 		>
 	{
@@ -62,69 +59,15 @@ export namespace
 	template
 		<	typename
 				t_tValuePack
-		,	template
-				<	typename
-				>
-			typename
-				t_t1Transform
-		>
-	concept
-		PureValueInstance_Transform
-	=	Stateless::Type_Transform
-		<	t_tValuePack
-		,	t_t1Transform
-		>
-	and	Std::ValuePackInstance_Transform
-		<	t_tValuePack
-		,	t_t1Transform
-		>
-	;
-
-	///	stateless value pack instances
-	template
-		<	typename
-				t_tValuePack
 		>
 	concept
 		PureValueInstance
-	=	PureValueInstance_Transform
+	=	Stateless::Type
 		<	t_tValuePack
-		,	std::type_identity_t
 		>
-	;
-
-	///	pure value packs, sequence packs, or empty packs
-	template
-		<	typename
-				t_tValuePack
-		,	template
-				<	typename
-				>
-			typename
-				t_t1Transform
-			=	std::type_identity_t
-		>
-	concept
-		ValueInstance_Transform
-	=	PureValueInstance_Transform
+	and	Std::ValuePackInstance
 		<	t_tValuePack
-		,	t_t1Transform
 		>
-	or	PureEmptyInstance_Transform
-		<	t_tValuePack
-		,	t_t1Transform
-		>
-	or	requires
-			(	t_t1Transform
-				<	t_tValuePack
-				>	c_vValuePack
-			)
-		{
-			// copy constructs Value -> unambiguously derived from Value
-			Value
-			{	c_vValuePack
-			};
-		}
 	;
 
 	///	pure value packs, sequence packs, or empty packs
@@ -134,9 +77,21 @@ export namespace
 		>
 	concept
 		ValueInstance
-	=	ValueInstance_Transform
+	=	PureValueInstance
 		<	t_tValuePack
-		,	std::type_identity_t
 		>
+	or	PureEmptyInstance
+		<	t_tValuePack
+		>
+	or	requires
+			(	t_tValuePack
+					c_vValuePack
+			)
+		{
+			// copy constructs Value -> unambiguously derived from Value
+			Value
+			{	c_vValuePack
+			};
+		}
 	;
 }

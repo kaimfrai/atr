@@ -3,16 +3,11 @@ export module PackTemplate.Type;
 export import Meta.ValueInfo;
 export import Meta.TypeInfo;
 export import Stateless.Type;
-export import Std.Concepts;
+export import Std.TemplateConcepts;
 
 export namespace
 	PackTemplate
 {
-	/// allow for comparison of Statless objects in this namespace
-	using
-		Stateless::operator==
-	;
-
 	///	wraps around a template-id for type packs
 	///	defines value-based operations
 	template
@@ -50,6 +45,14 @@ export namespace
 				>
 			;
 		}
+
+		friend auto constexpr
+		(	operator ==
+		)	(	Type
+			,	Type
+			)
+		->	bool
+		{	return true;	}
 	};
 
 	/// special case for templates with one fixed parameter. pack expansion can not be used with those

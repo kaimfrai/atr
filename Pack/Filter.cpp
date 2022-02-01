@@ -12,7 +12,6 @@ export import Meta.MetaInfo;
 export import Fold.Comma;;
 export import Stateless.Binding;
 export import Stateless.Tuple;
-export import Std.Concepts;
 
 export namespace
 	Pack
@@ -26,12 +25,9 @@ export namespace
 		[[nodiscard]]
 		FilterSplit
 	{
-		static
-		constexpr
-		Stateless::Type auto
+		static t_tPredicate constexpr
 			PredicateObject
-		=	Stateless::Copy<t_tPredicate>
-		;
+		{};
 
 		/// default constructor
 		constexpr
@@ -69,9 +65,7 @@ export namespace
 			//	if the predicate is met, put the argument in the positive pack
 			if constexpr
 				(	PredicateObject
-					(	Stateless::Copy<decltype(
-							i_vArgument
-						)>
+					(	i_vArgument
 					)
 				)
 			{

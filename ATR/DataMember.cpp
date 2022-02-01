@@ -5,7 +5,6 @@ export import ATR.ID;
 
 export import Meta.TypeInfo;
 export import Meta.ValueInfo;
-export import Std.Concepts;
 export import Meta.Integer;
 
 export import Std;

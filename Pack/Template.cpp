@@ -18,8 +18,8 @@ export namespace
 		Template
 		(	Empty
 		)
-	->	Stateless::Type auto
-	{	return Stateless::Copy<Normalizer>;	}
+	->	Normalizer
+	{	return {};	}
 
 	///	converts a TypePackInstance into its corresponding a PackTemplate::Type
 	///	overloaded for other pack types
@@ -42,15 +42,8 @@ export namespace
 			>
 			const&
 		)
-	->	PackTemplate::TypeInstance auto
-	{	return
-			Stateless::Copy
-			<	PackTemplate::Type
-				<	t_t1TypePack
-				>
-			>
-		;
-	}
+	->	PackTemplate::Type<t_t1TypePack>
+	{	return {};	}
 
 	///	converts a ValuePackInstance into its corresponding a PackTemplate::Value
 	///	overloaded for other pack types
@@ -73,13 +66,6 @@ export namespace
 			>
 			const&
 		)
-	->	PackTemplate::ValueInstance auto
-	{	return
-			Stateless::Copy
-			<	PackTemplate::Value
-				<	t_t1ValuePack
-				>
-			>
-		;
-	}
+	->	PackTemplate::Value<t_t1ValuePack>
+	{	return {};	}
 }

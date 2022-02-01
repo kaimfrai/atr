@@ -15,16 +15,19 @@ export import Stateless.Binding;
 export namespace
 	Pack
 {
-	/// applies the function to the n-th element of each Map as specified by the given index
-	Stateless::Type auto constexpr inline
-		ReduceByIndex
-	=	[]	(	Meta::ValueInstance auto
+	struct
+		[[nodiscard]]
+		ReduceByIndexFunc
+	{
+		auto constexpr
+		(	operator()
+		)	(	Meta::ValueInstance auto
 					i_vIndex
 			,	Stateless::Type auto
 					i_fFunction
 			,	Stateless::Type auto
 				...	i_rpMap
-			)
+			)	const
 		->	Meta::InfoInstance auto
 		{	return
 				i_fFunction
@@ -35,7 +38,12 @@ export namespace
 				)
 			;
 		}
-	;
+	};
+
+	/// applies the function to the n-th element of each Map as specified by the given index
+	ReduceByIndexFunc constexpr inline
+		ReduceByIndex
+	{};
 
 	///	applies the function for each n-th element of each pack
 	[[nodiscard]]

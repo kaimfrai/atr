@@ -6,7 +6,6 @@ export import Meta.ValueInfo;
 export import Std;
 
 export import Stateless.Binding;
-export import Std.Concepts;
 
 export namespace
 	Meta
@@ -36,6 +35,14 @@ export namespace
 			::	operator()
 		;
 
+		friend auto constexpr
+		(	operator ==
+		)	(	EqualTo
+			,	EqualTo
+			)
+		->	bool
+		{	return true;	}
+
 		template
 			<	typename
 					t_tLeft
@@ -43,23 +50,20 @@ export namespace
 					t_tRight
 			>
 		[[nodiscard]]
-		constexpr
-		auto
-			operator()
-			()	const
-		noexcept
+		auto constexpr
+		(	operator()
+		)	()	const
+			noexcept
 		->	bool
-		{
-			return
-				operator()
-				(	Meta::Type
-					<	t_tLeft
-					>
-				,	Meta::Type
-					<	t_tRight
-					>
-				)
-			;
+		{	return
+			operator()
+			(	Meta::Type
+				<	t_tLeft
+				>
+			,	Meta::Type
+				<	t_tRight
+				>
+			);
 		}
 	};
 
@@ -70,6 +74,7 @@ export namespace
 		<	EqualTo
 		>
 	;
+
 
 	///	defines what behaves like an info object
 	template

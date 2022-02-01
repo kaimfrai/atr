@@ -57,7 +57,7 @@ export namespace
 					)
 					...
 				}
-			,	Stateless::Copy<Concatenator>
+			,	Concatenator{}
 			,	Normalize
 				(	i_vInitial
 				)

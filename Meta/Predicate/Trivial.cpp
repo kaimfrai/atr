@@ -90,6 +90,7 @@ export namespace
 	Term constexpr inline
 		IsStateless
 	=	IsEmpty
-	and	IsTrivialRegular
+	and	IsTriviallyConstructible_From<>
+	and	IsTriviallyCopyConstructible
 	;
 }

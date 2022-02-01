@@ -4,7 +4,6 @@ export import Stateless.Map;
 export import Stateless.Type;
 
 export import Std.TemplateConcepts;
-export import Std.Concepts;
 export import Meta.Integer;
 export import Meta.Index;
 
@@ -42,20 +41,23 @@ export namespace
 					>
 			)
 		{}
+
+		friend auto constexpr
+		(	operator ==
+		)	(	IndexType
+			,	IndexType
+			)
+		->	bool
+		{	return true;	}
 	};
 
 	template
 		<	Meta::USize
 				t_nIndex
 		>
-	Type auto constexpr inline
+	IndexType<t_nIndex> constexpr inline
 		Index
-	=	Copy
-		<	IndexType
-			<	t_nIndex
-			>
-		>
-	;
+	{};
 
 	/// maps an index to a stateless type
 	template

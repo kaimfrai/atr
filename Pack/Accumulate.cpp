@@ -12,7 +12,6 @@ export import Fold.LogicalAnd;
 export import Fold.LogicalOr;
 export import Stateless.Tuple;
 export import Stateless.Binding;
-export import Std.Concepts;
 
 export namespace
 	Pack

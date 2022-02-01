@@ -6,7 +6,6 @@ export import Meta.Template;
 export import Meta.TypeInfo;
 export import PackTemplate.Instance;
 export import Stateless.Map;
-export import Std.Concepts;
 
 export import Std;
 
@@ -15,7 +14,7 @@ export namespace
 {
 	/// wraps around an object and provides member access via dependency maps
 	template
-		<	Std::Object
+		<	Meta::ProtoValue
 				t_tArgument
 		,	PackTemplate::TypeInstanceOf
 			<	Stateless::Map
