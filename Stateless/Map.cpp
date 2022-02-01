@@ -122,31 +122,9 @@ export namespace
 		}
 	};
 
-	/// types that maps a stateless argument to a specific value using a single non-overloaded operator()
-	template
-		<	typename
-				t_tStatelessMapItem
-		>
-	concept
-		MapItemInstance
-	=	Meta::ProtoStateless
-		<	Meta::TypeEntity
-			<	Meta::Type
-				<	decltype
-					(	&
-						t_tStatelessMapItem
-					::	operator()
-					)
-				>
-			.	GetMember()
-			.	GetFunctionParameter(Meta::Index<0uz>)
-			>
-		>
-	;
-
 	///	bind several StatelessMapItem together
 	template
-		<	MapItemInstance
+		<	Meta::ProtoClass
 			...	t_tpMapItem
 		>
 	struct
@@ -232,7 +210,7 @@ export namespace
 	template
 		<	Meta::ProtoStateless
 				t_tDefault
-		,	MapItemInstance
+		,	Meta::ProtoClass
 			...	t_tpMapItem
 		>
 	struct

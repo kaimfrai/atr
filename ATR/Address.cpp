@@ -5,6 +5,8 @@ export import ATR.Signature;
 export import ATR.ID;
 
 export import Std;
+export import Meta.Transform;
+export import Meta.Type.Function;
 
 export namespace
 	ATR
@@ -142,18 +144,18 @@ export namespace
 		>
 	bool constexpr inline
 		AddressNoexcept
-	=	Meta::Type
-		<	decltype
-			(	Address
-				<	t_tFunctionName
-				,	t_tpArgument
-					...
-				>()
+	=	IsNoexcept
+		(	Meta::RemovePointer
+			(	Meta::Type
+				<	decltype
+					(	Address
+						<	t_tFunctionName
+						,	t_tpArgument
+							...
+						>()
+					)
+				>
 			)
-		>
-	.	GetPointed()
-	.	HasFunctionFlag
-		(	Meta::EFunctionFlag::Noexcept
 		)
 	;
 

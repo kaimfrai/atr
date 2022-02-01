@@ -63,10 +63,7 @@ export namespace
 		>
 	concept
 		DataDependencyMapItemInstance
-	=	Stateless::MapItemInstance
-		<	t_tMapItem
-		>
-	and	Std::TypePackInstanceOf
+	=	Std::TypePackInstanceOf
 		<	t_tMapItem
 		,	DataDependencyItem
 		>

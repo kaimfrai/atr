@@ -46,7 +46,7 @@ export namespace
 				i_vDependencyTemplate
 		,	Meta::TypeInstance auto
 				i_vArgumentInfo
-		,	Stateless::MapItemInstance auto
+		,	Meta::ProtoClass auto
 			...	i_vpDependency
 		)
 	{

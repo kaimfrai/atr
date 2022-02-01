@@ -2,6 +2,7 @@ export module Meta.Concept.Category;
 
 export import Std;
 export import Meta.Type;
+export import Meta.Type.Function;
 
 export namespace
 	Meta::Trait
@@ -250,6 +251,7 @@ export namespace
 		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
+					i_vType
 			)	const
 		->	bool
 		{	return
@@ -257,14 +259,7 @@ export namespace
 			==	(	::std::is_signed_v<t_tEntity>
 				or	::std::is_scoped_enum_v<t_tEntity>
 				or	::std::is_pointer_v<t_tEntity>
-				or	requires
-					{	requires
-							TypeToken<t_tEntity>
-						::	HasFunctionFlag
-							(	EFunctionFlag::Noexcept
-							)
-						;
-					}
+				or	IsNoexcept(i_vType)
 				)
 			;
 		}

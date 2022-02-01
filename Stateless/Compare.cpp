@@ -154,9 +154,9 @@ export namespace
 
 	/// compares two stateless maps lexicographically
 	template
-		<	MapItemInstance
+		<	Meta::ProtoClass
 			...	t_tpLeftMapItem
-		,	MapItemInstance
+		,	Meta::ProtoClass
 			...	t_tpRightMapItem
 		>
 	[[nodiscard]]

@@ -143,7 +143,7 @@ export namespace
 	constexpr
 	Meta::TypeInstance auto
 		MakeStaticDependencyInfo
-		(	Stateless::MapItemInstance auto
+		(	Meta::ProtoClass auto
 			...	i_vpDependency
 		)
 	{	return
