@@ -1,7 +1,7 @@
 export module ATR.Fork;
 
 export import ATR.ID;
-export import Stateless.Type;
+export import Meta.Concept.Empty;
 
 export namespace
 	ATR
@@ -49,87 +49,69 @@ export namespace
 
 		/// access const members of the north member area
 		[[nodiscard]]
-		constexpr
-		auto
-			operator[]
-			(	MemberAccessIDOf
-				<	t_tNorthArea
-					const
-				>	auto
+		auto constexpr
+		(	operator[]
+		)	(	MemberAccessIDOf<t_tNorthArea const> auto
 					i_vMemberID
 			)	const
 		noexcept
 		->	decltype(auto)
 		{	return
-				NorthArea
-				[	i_vMemberID
-				]
-			;
+			NorthArea
+			[	i_vMemberID
+			];
 		}
 
 		/// access non-const members of the north member area
 		[[nodiscard]]
-		constexpr
-		auto
-			operator[]
-			(	MemberAccessIDOf
-				<	t_tNorthArea
-				>	auto
+		auto constexpr
+		(	operator[]
+		)	(	MemberAccessIDOf<t_tNorthArea> auto
 					i_vMemberID
 			)
 		noexcept
 		->	decltype(auto)
 		{	return
-				NorthArea
-				[	i_vMemberID
-				]
-			;
+			NorthArea
+			[	i_vMemberID
+			];
 		}
 
 		/// access const members of the south member area
 		[[nodiscard]]
-		constexpr
-		auto
-			operator[]
-			(	MemberAccessIDOf
-				<	t_tSouthArea
-					const
-				>	auto
+		auto constexpr
+		(	operator[]
+		)	(	MemberAccessIDOf<t_tSouthArea const> auto
 					i_vMemberID
 			)	const
 		noexcept
 		->	decltype(auto)
 		{	return
-				SouthArea
-				[	i_vMemberID
-				]
-			;
+			SouthArea
+			[	i_vMemberID
+			];
 		}
 
 		/// access non-const members of the south member area
 		[[nodiscard]]
-		constexpr
-		auto
-			operator[]
-			(	MemberAccessIDOf
-				<	t_tSouthArea
-				>	auto
+		auto constexpr
+		(	operator[]
+		)	(	MemberAccessIDOf<t_tSouthArea> auto
 					i_vMemberID
 			)
 		noexcept
 		->	decltype(auto)
 		{	return
-				SouthArea
-				[	i_vMemberID
-				]
-			;
+			SouthArea
+			[	i_vMemberID
+			];
 		}
 	};
 
 	template
 		<	typename
 				t_tNorthArea
-		,	Stateless::Type
+		,	Meta::ProtoStateless
 				t_tSouthArea
 		>
 	struct
@@ -137,75 +119,49 @@ export namespace
 		<	t_tNorthArea
 		,	t_tSouthArea
 		>
+	:	t_tSouthArea
 	{
+		using t_tSouthArea::operator[];
+
 		t_tNorthArea
 			NorthArea
 		;
 
 		/// access const members of the north member area
 		[[nodiscard]]
-		constexpr
-		auto
-			operator[]
-			(	MemberAccessIDOf
-				<	t_tNorthArea
-					const
-				>	auto
+		auto constexpr
+		(	operator[]
+		)	(	MemberAccessIDOf<t_tNorthArea const> auto
 					i_vMemberID
 			)	const
 		noexcept
 		->	decltype(auto)
 		{	return
-				NorthArea
-				[	i_vMemberID
-				]
-			;
+			NorthArea
+			[	i_vMemberID
+			];
 		}
 
 		/// access non-const members of the north member area
 		[[nodiscard]]
-		constexpr
-		auto
-			operator[]
-			(	MemberAccessIDOf
-				<	t_tNorthArea
-				>	auto
+		auto constexpr
+		(	operator[]
+		)	(	MemberAccessIDOf<t_tNorthArea> auto
 					i_vMemberID
 			)
 		noexcept
 		->	decltype(auto)
 		{	return
-				NorthArea
-				[	i_vMemberID
-				]
-			;
-		}
-
-		/// access const members of the south member area
-		[[nodiscard]]
-		constexpr
-		auto
-			operator[]
-			(	MemberAccessIDOf
-				<	t_tSouthArea
-					const
-				>	auto
-					i_vMemberID
-			)	const
-		noexcept
-		->	decltype(auto)
-		{	return
-				t_tSouthArea
-				{}[	i_vMemberID
-				]
-			;
+			NorthArea
+			[	i_vMemberID
+			];
 		}
 	};
 
 	template
-		<	Stateless::Type
+		<	Meta::ProtoStateless
 				t_tNorthArea
-		,	Stateless::Type
+		,	Meta::ProtoStateless
 				t_tSouthArea
 		>
 	struct
@@ -213,45 +169,10 @@ export namespace
 		<	t_tNorthArea
 		,	t_tSouthArea
 		>
+	:	t_tNorthArea
+	,	t_tSouthArea
 	{
-		/// access const members of the north member area
-		[[nodiscard]]
-		constexpr
-		auto
-			operator[]
-			(	MemberAccessIDOf
-				<	t_tNorthArea
-					const
-				>	auto
-					i_vMemberID
-			)	const
-		noexcept
-		->	decltype(auto)
-		{	return
-				t_tNorthArea
-				{}[	i_vMemberID
-				]
-			;
-		}
-
-		/// access const members of the south member area
-		[[nodiscard]]
-		constexpr
-		auto
-			operator[]
-			(	MemberAccessIDOf
-				<	t_tSouthArea
-					const
-				>	auto
-					i_vMemberID
-			)	const
-		noexcept
-		->	decltype(auto)
-		{	return
-				t_tSouthArea
-				{}[	i_vMemberID
-				]
-			;
-		}
+		using t_tNorthArea::operator[];
+		using t_tSouthArea::operator[];
 	};
 }

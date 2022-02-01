@@ -60,8 +60,8 @@ export namespace
 	{
 		[[nodiscard]]
 		auto constexpr
-			operator[]
-			(	t_tName
+		(	operator[]
+		)	(	t_tName
 			)	const
 		noexcept
 		->	t_tValue
