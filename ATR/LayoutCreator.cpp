@@ -5,7 +5,6 @@ export import ATR.DataMember;
 
 export import Meta.Template;
 
-export import Pack.Map;
 export import PackTemplate.Type;
 export import Meta.TypeInfo;
 
