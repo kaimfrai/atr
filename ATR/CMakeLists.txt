@@ -22,3 +22,4 @@ add_module(Signature.cpp)
 add_module(StaticDependency.cpp)
 add_module(VirtualArgument.cpp)
 
+add_module(ATR.cpp)

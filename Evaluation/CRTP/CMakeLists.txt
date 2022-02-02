@@ -26,3 +26,5 @@ add_module(SphericBody.cpp)
 add_module(Square.cpp)
 add_module(Triangle.cpp)
 add_module(TriangularShape.cpp)
+
+add_module(CRTP.cpp)
