@@ -1,6 +1,5 @@
 export module Stateless.Tuple;
 
-export import Stateless.Compare;
 export import Stateless.IndexMap;
 export import Stateless.Map;
 
@@ -155,31 +154,6 @@ export namespace
 				return
 					false
 				;
-		}
-
-		/// compares each Stateless element
-		template
-			<	Meta::ProtoStateless
-				...	t_tpOtherStateless
-			>
-		[[nodiscard]]
-		friend
-		constexpr
-		auto
-			operator<=>
-			(	Tuple
-			,	Tuple
-				<	t_tpOtherStateless
-					...
-				>
-			)
-		{	return
-				MapToIndex
-			<=>	Tuple
-				<	t_tpOtherStateless
-					...
-				>::	MapToIndex
-			;
 		}
 	};
 

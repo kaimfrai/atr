@@ -15,8 +15,7 @@ export namespace
 	struct
 		MapItemBase
 	{
-		static constexpr
-		t_tKey
+		static t_tKey constexpr
 			KeyValue
 		{};
 
@@ -26,14 +25,16 @@ export namespace
 					t_tRightKey
 			>
 		[[nodiscard]]
-		friend
-		constexpr
-		auto
+		friend auto constexpr
 			operator<=>
 			(	MapItemBase
 			,	MapItemBase
 				<	t_tRightKey
 				>
+			)
+		->	decltype
+			(	t_tKey{}
+			<=>	t_tRightKey{}
 			)
 		{	return
 				t_tKey{}
