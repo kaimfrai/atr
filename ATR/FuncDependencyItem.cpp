@@ -15,21 +15,19 @@ export namespace
 		>
 	struct
 		FuncDependencyItem
-	:	Stateless::MapToLazy
+	:	Stateless::MapToConstant
 		<	t_tFuncID
 		,	t_tLazyFunction
 		>
 	{
 		constexpr
-			FuncDependencyItem
-			()
-		=	default
-		;
+		(	FuncDependencyItem
+		)	()
+		=	default;
 
-		constexpr
-		explicit
-			FuncDependencyItem
-			(	t_tFuncID
+		explicit constexpr
+		(	FuncDependencyItem
+		)	(	t_tFuncID
 			,	t_tLazyFunction
 			)
 		{}

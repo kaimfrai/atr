@@ -18,33 +18,32 @@ export namespace
 			...	t_tpDependency
 		>
 	auto constexpr
-		Signature
-		(	typename
+	(	Signature
+	)	(	typename
 			t_tpDependency
-			::	ArgumentType
+		::	ArgumentType
 			...	i_vpArgument
 		)
-	noexcept(
-		BodyNoexcept
-		<	t_vFuncID
-		,	t_tpDependency
-			...
-		>
-	)
+		noexcept
+		(	BodyNoexcept
+			<	t_vFuncID
+			,	t_tpDependency
+				...
+			>
+		)
 	->	BodyReturnType
 		<	t_vFuncID
 		,	t_tpDependency
 			...
 		>
 	{	return
-			Body
-			(	t_vFuncID
-				{}
-			,	t_tpDependency
-				{	i_vpArgument
-				}
-				...
-			)
-		;
+		Body
+		(	t_vFuncID
+			{}
+		,	t_tpDependency
+			{	i_vpArgument
+			}
+			...
+		);
 	}
 }

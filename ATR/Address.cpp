@@ -20,10 +20,9 @@ export namespace
 	struct
 		DependencyAddress
 	{
-		constexpr
-		explicit
-			DependencyAddress
-			(	Meta::TypeToken
+		explicit constexpr
+		(	DependencyAddress
+		)	(	Meta::TypeToken
 				<	t_tStaticDependency
 				>
 			,	Meta::TypeToken
@@ -33,8 +32,7 @@ export namespace
 			)
 		{}
 
-		static constexpr
-		auto
+		static auto constexpr
 			Address
 		=	&
 			Signature
@@ -51,8 +49,8 @@ export namespace
 		,	typename
 			...	t_tpArgumentDependency
 		>
-		DependencyAddress
-		(	Meta::TypeToken
+	(	DependencyAddress
+	)	(	Meta::TypeToken
 			<	t_tStaticDependency
 			>
 		,	Meta::TypeToken
@@ -86,13 +84,14 @@ export namespace
 				...	c_vpArgument
 			)
 		{
-			decltype(
-				MapAddress
-				(	c_vFunctionName
-				,	c_vpArgument
-					...
+				decltype
+				(	MapAddress
+					(	c_vFunctionName
+					,	c_vpArgument
+						...
+					)
 				)
-			)::	Address
+			::	Address
 			;
 		}
 	;
@@ -104,28 +103,27 @@ export namespace
 		,	typename
 			...	t_tpArgument
 		>
-	constexpr inline
-	auto
-		Address
-		()
+	auto constexpr
+	(	Address
+	)	()
 	requires
 		ValidAddress
 		<	t_tFuncID
 		,	t_tpArgument
 			...
 		>
-	{
-		return
-			decltype(
-				MapAddress
+	{	return
+			decltype
+			(	MapAddress
 				(	t_tFuncID
 					{}
-				,	std::declval
+				,	::std::declval
 					<	t_tpArgument
 					>()
 					...
 				)
-			)::	Address
+			)
+		::	Address
 		;
 	}
 
@@ -172,15 +170,14 @@ export namespace
 		,	t_tpArgument
 			...
 		>
-	constexpr
-	auto
-		Invoke
-		(	t_tpArgument
+	auto constexpr
+	(	Invoke
+	)	(	t_tpArgument
 			&&
 			...	i_rpArgument
 		)
-		noexcept(
-			AddressNoexcept
+		noexcept
+		(	AddressNoexcept
 			<	t_tFuncID
 			,	t_tpArgument
 				...
@@ -188,22 +185,21 @@ export namespace
 		)
 	->	decltype(auto)
 	{	return
-			std::invoke
-			(	/// may be a pointer to member function, function pointer or function object
-				Address
-				<	t_tFuncID
-				,	t_tpArgument
-					...
-				>()
-			,	ForwardErased
-				(	Meta::Type
-					<	t_tpArgument
-					>
-				,	i_rpArgument
-				)
+		::std::invoke
+		(	/// may be a pointer to member function, function pointer or function object
+			Address
+			<	t_tFuncID
+			,	t_tpArgument
 				...
+			>()
+		,	ForwardErased
+			(	Meta::Type
+				<	t_tpArgument
+				>
+			,	i_rpArgument
 			)
-		;
+			...
+		);
 	}
 
 	/// prevents recursive instantiation of Address
@@ -215,10 +211,9 @@ export namespace
 		AddressProxy
 	{
 		constexpr
-			AddressProxy
-			()
-		=	default
-		;
+		(	AddressProxy
+		)	()
+		=	default;
 
 		template
 			<	ProtoID
@@ -226,10 +221,9 @@ export namespace
 			,	typename
 				...	t_tpArgument
 			>
-		constexpr
-		explicit
-			AddressProxy
-			(	t_tFuncID
+		explicit constexpr
+		(	AddressProxy
+		)	(	t_tFuncID
 			,	Pack::Type
 				<	t_tpArgument
 					...
@@ -237,14 +231,26 @@ export namespace
 			)
 		{}
 
+		template
+			<	typename
+				...	t_tpArgument
+			>
 		[[nodiscard]]
-		constexpr
-		auto
-			operator()
-			()	const
+		auto constexpr
+		(	operator()
+		)	(	t_tpArgument
+				&&
+				...	i_rpArgument
+			)	const
+		->	decltype(auto)
 		{	return
-				t_fAddress
-			;
+			t_fAddress
+			(	::std::forward
+				<	t_tpArgument
+				>(	i_rpArgument
+				)
+				...
+			);
 		}
 	};
 

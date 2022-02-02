@@ -27,10 +27,9 @@ export namespace
 			TargetID
 		;
 
-		constexpr
-		explicit
-			ConstantIDMap
-			(	t_tConstant const
+		explicit constexpr
+		(	ConstantIDMap
+		)	(	t_tConstant const
 				&	i_rConstant
 			,	t_tTargetIdentifier const
 				&	i_rTargetID
@@ -53,27 +52,25 @@ export namespace
 		ConstantOrigin
 	{
 		[[nodiscard]]
-		friend constexpr
-		auto
-			operator->*
-			(	ConstantOrigin const
+		friend auto constexpr
+		(	operator->*
+		)	(	ConstantOrigin const
 				&	i_rConstant
 			,	PseudoStringLiteral auto
 				&&	i_rTargetID
 			)
 		{
 			return
-				ConstantIDMap
-				{	static_cast
-					<	t_tConstant	const
-						&
-					>(	i_rConstant
-					)
-				,	StringLiteral
-					{	i_rTargetID
-					}
+			ConstantIDMap
+			{	static_cast
+				<	t_tConstant	const
+					&
+				>(	i_rConstant
+				)
+			,	StringLiteral
+				{	i_rTargetID
 				}
-			;
+			};
 		}
 	};
 
@@ -82,27 +79,24 @@ export namespace
 		<	ConstantIDMap
 				t_vConstantIDMap
 		>
-	constexpr
-	auto
-		MakeStaticDependencyItem
-		()
+	auto constexpr
+	(	MakeStaticDependencyItem
+	)	()
 	{
-		constexpr
-		auto
+		auto constexpr
 			TargetDataID
 		=	ID_V
 			<	t_vConstantIDMap
-				.	TargetID
+			.	TargetID
 			>
 		;
 
 		return
-			DataDependencyItem
-			{	TargetDataID
-			,	t_vConstantIDMap
-			.	Constant
-			}
-		;
+		DataDependencyItem
+		{	TargetDataID
+		,	t_vConstantIDMap
+		.	Constant
+		};
 	}
 
 	/// creates an FuncDependencyItem from an owner and a FuncIDMap
@@ -110,39 +104,35 @@ export namespace
 		<	FuncIDMap
 				t_vFuncIDMap
 		>
-	constexpr
-	auto
-		MakeStaticDependencyItem
-		()
+	auto constexpr
+	(	MakeStaticDependencyItem
+	)	()
 	{
-		constexpr
-		auto
+		auto constexpr
 			TargetFuncID
 		=	ID_V
 			<	t_vFuncIDMap
-				.	TargetID
+			.	TargetID
 			>
 		;
 
-		constexpr
-		auto
+		auto constexpr
 			OriginFuncID
 		=	ID_V
 			<	t_vFuncIDMap
-				.	OriginID
+			.	OriginID
 			>
 		;
 
 		return
-			FuncDependencyItem
-			{	TargetFuncID
-			,	AddressProxy
-				{	OriginFuncID
-				,	t_vFuncIDMap
-					.	ArgumentPack
-				}
+		FuncDependencyItem
+		{	TargetFuncID
+		,	AddressProxy
+			{	OriginFuncID
+			,	t_vFuncIDMap
+			.	ArgumentPack
 			}
-		;
+		};
 	}
 
 	template

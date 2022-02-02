@@ -64,15 +64,15 @@ export namespace
 		,	Meta::ProtoStateless
 				t_tResult
 		>
-	struct
+	using
 		IndexMap
-	:	MapToStateless
+	=	MapToConstant
 		<	IndexType
 			<	t_nIndex
 			>
 		,	t_tResult
 		>
-	{};
+	;
 
 	template
 		<	Meta::USize

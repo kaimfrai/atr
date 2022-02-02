@@ -26,11 +26,9 @@ export namespace
 			>
 		[[nodiscard]]
 		friend auto constexpr
-			operator<=>
-			(	MapItemBase
-			,	MapItemBase
-				<	t_tRightKey
-				>
+		(	operator<=>
+		)	(	MapItemBase const&
+			,	MapItemBase<t_tRightKey> const&
 			)
 		->	decltype
 			(	t_tKey{}
@@ -47,8 +45,8 @@ export namespace
 	template
 		<	Meta::ProtoStateless
 				t_tKey
-		,	auto
-				t_vResult
+		,	typename
+				t_tResult
 		>
 	struct
 		[[nodiscard]]
@@ -57,68 +55,34 @@ export namespace
 		<	t_tKey
 		>
 	{
+		[[no_unique_address]]
+		t_tResult
+			m_vResult
+		{};
+
+		constexpr
+		(	MapToConstant
+		)	()
+		=	default;
+
+		constexpr
+		(	MapToConstant
+		)	(	t_tResult const
+				&	i_rValue
+			)
+		:	m_vResult
+			{	i_rValue
+			}
+		{}
+
 		///	access the info type by a unique overload of type key
 		[[nodiscard]]
-		constexpr
-		auto
-			operator()
-			(	t_tKey
+		auto constexpr
+		(	operator[]
+		)	(	t_tKey
 			)	const
 		{	return
-				t_vResult
-			;
-		}
-	};
-
-	/// maps one stateless type to another
-	template
-		<	Meta::ProtoStateless
-				t_tKey
-		,	Meta::ProtoStateless
-				t_tResult
-		>
-	struct
-		[[nodiscard]]
-		MapToStateless
-	:	MapToConstant
-		<	t_tKey
-		,	t_tResult{}
-		>
-	{};
-
-	/// maps one stateless type to a specific lazily evaluated value
-	template
-		<	Meta::ProtoStateless
-				t_tKey
-		,	Meta::ProtoStateless
-				t_tLazy
-		>
-	struct
-		[[nodiscard]]
-		MapToLazy
-	:	MapToStateless
-		<	t_tKey
-		,	t_tLazy
-		>
-	{
-		///	access the info type by a unique overload of type key
-		/// hides previously defined operator()
-		[[nodiscard]]
-		constexpr
-		auto
-			operator()
-			(	t_tKey
-					i_vKey
-			)	const
-		{	return
-				MapToStateless
-				<	t_tKey
-				,	t_tLazy
-				>::operator()
-				(	i_vKey
-				)
-				// invoke the result once more
-				()
+				m_vResult
 			;
 		}
 	};
@@ -134,12 +98,7 @@ export namespace
 	:	t_tpMapItem
 		...
 	{
-		///	bring all () operators into scope
-		using
-			t_tpMapItem
-			::	operator()
-			...
-		;
+		using t_tpMapItem::operator[]...;
 
 		static Meta::USize constexpr
 			MapItemCount
@@ -150,133 +109,34 @@ export namespace
 
 		/// default constructor
 		constexpr
-			Map
-			()
-		=	default
-		;
-
-		/// basis for deduction guides
-		constexpr
-		explicit
-			Map
-			(	Std::PackInstanceOfSize
-				<	MapItemCount
-				>	auto
-			,	Std::PackInstanceOfSize
-				<	MapItemCount
-				>	auto
-			)
-		{}
+		(	Map
+		)	()
+		=	default;
 
 		/// basis for deduction guides
 		template
-			<	Meta::ProtoStateless
-				...	t_tpStateless
+			<	Meta::ProtoClass
+				...	t_tpClass
 			>
-		constexpr
-		explicit
-			Map
-			(	Std::PackInstanceOfSize
+		explicit constexpr
+		(	Map
+		)	(	Std::PackInstanceOfSize
 				<	MapItemCount
 				>	auto
-			,	t_tpStateless
-				...
+			,	t_tpClass const
+				&
+				...	i_rpValue
 			)
 		requires
 			(	sizeof...(
-					t_tpStateless
+					t_tpClass
 				)
 			==	MapItemCount
 			)
-		{}
-
-		/// map [] operator to () operator of the items
-		[[nodiscard]]
-		constexpr
-		auto
-			operator[]
-			(	Meta::ProtoStateless auto
-					i_vKey
-			)	const
-		->	decltype(auto)
-		{	return
-				operator()
-					(	i_vKey
-					)
-			;
-		}
-	};
-
-	/// maps every call that isn't mapped to a default value
-	template
-		<	Meta::ProtoStateless
-				t_tDefault
-		,	Meta::ProtoClass
-			...	t_tpMapItem
-		>
-	struct
-		[[nodiscard]]
-		DefaultingMap
-	:	t_tpMapItem
-		...
-	{
-		///	bring all () operators into scope
-		using
-			t_tpMapItem
-			::	operator()
+		:	t_tpMapItem
+			{	i_rpValue
+			}
 			...
-		;
-
-		static Meta::USize constexpr
-			MapItemCount
-		=	sizeof...(
-				t_tpMapItem
-			)
-		;
-
-		/// default constructor
-		constexpr
-			DefaultingMap
-				()
-		=	default
-		;
-
-		/// deduce template from arguments
-		constexpr
-		explicit
-			DefaultingMap
-			(	t_tDefault
-			,	Map
-				<	t_tpMapItem
-					...
-				>
-			)
 		{}
-
-		/// fallback overload that always returns the default value
-		constexpr
-		auto
-			operator()
-			(	Meta::ProtoStateless auto
-			)	const
-		->	t_tDefault
-		{	return{};	}
-
-		/// map [] operator to () operator of the items
-		[[nodiscard]]
-		constexpr
-		auto
-			operator[]
-			(	Meta::ProtoStateless auto
-					i_vKey
-			)	const
-		->	decltype(auto)
-		{
-			return
-				operator()
-				(	i_vKey
-				)
-			;
-		}
 	};
 }

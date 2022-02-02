@@ -18,23 +18,25 @@ export namespace
 		>
 	struct
 		DataDependencyItem
-	:	Stateless::MapToStateless
+	:	Stateless::MapToConstant
 		<	t_tDataID
 		,	t_tMemberOffset
 		>
 	{
 		constexpr
-			DataDependencyItem
-			()
-		=	default
-		;
+		(	DataDependencyItem
+		)	()
+		=	default;
 
-		constexpr
-		explicit
-			DataDependencyItem
-			(	t_tDataID
-			,	t_tMemberOffset
+		explicit constexpr
+		(	DataDependencyItem
+		)	(	t_tDataID
+			,	t_tMemberOffset const
+				&	i_rMemberOffset
 			)
+		:	Stateless::MapToConstant<t_tDataID, t_tMemberOffset>
+			{	i_rMemberOffset
+			}
 		{}
 	};
 

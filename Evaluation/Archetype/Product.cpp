@@ -43,7 +43,7 @@ export namespace
 			(	...
 			*	i_vArgument
 				(	t_tpFuncDependency
-					::	KeyValue
+				::	KeyValue
 				)
 			)
 		;

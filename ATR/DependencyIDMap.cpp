@@ -34,8 +34,8 @@ export namespace
 		;
 
 		explicit constexpr
-			DataIDMap
-			(	t_tOriginIdentifier const
+		(	DataIDMap
+		)	(	t_tOriginIdentifier const
 				&	i_rOriginID
 			,	t_tTargetIdentifier const
 				&	i_rTargetID
@@ -77,8 +77,8 @@ export namespace
 		;
 
 		constexpr
-			DataIDOrigin
-			(	PseudoStringLiteral auto
+		(	DataIDOrigin
+		)	(	PseudoStringLiteral auto
 				&&	i_rIdentifier
 			)
 		:	Identifier
@@ -87,26 +87,22 @@ export namespace
 		{}
 
 		/// creates the mapping
-		friend
-		constexpr
-		auto
-			operator->*
-			(	DataIDOrigin
+		friend auto constexpr
+		(	operator->*
+		)	(	DataIDOrigin
 				const
 				&	i_rOriginID
 			,	PseudoStringLiteral auto
 				&&	i_rTargetDataID
 			)
-		{
-			return
-				DataIDMap
-				{	i_rOriginID
-					.	Identifier
-				,	StringLiteral
-					{	i_rTargetDataID
-					}
+		{	return
+			DataIDMap
+			{	i_rOriginID
+				.	Identifier
+			,	StringLiteral
+				{	i_rTargetDataID
 				}
-			;
+			};
 		}
 	};
 
@@ -114,8 +110,8 @@ export namespace
 		<	PseudoStringLiteral
 				t_tIdentifier
 		>
-		DataIDOrigin
-		(	t_tIdentifier
+	(	DataIDOrigin
+	)	(	t_tIdentifier
 			&&	i_rIdentifier
 		)
 	->	DataIDOrigin
@@ -127,18 +123,15 @@ export namespace
 		>
 	;
 
-	constexpr
-	auto
-		MapDataID
-		(	PseudoStringLiteral auto
+	auto constexpr
+	(	MapDataID
+	)	(	PseudoStringLiteral auto
 			&&	i_rIdentifier
 		)
-	{
-		return
-			DataIDOrigin
-			{	i_rIdentifier
-			}
-		;
+	{	return
+		DataIDOrigin
+		{	i_rIdentifier
+		};
 	}
 
 	/// creates an DataDependencyItem from an owner and a DataIDMap
@@ -148,45 +141,41 @@ export namespace
 		,	DataIDMap
 				t_vDataIDMap
 		>
-	constexpr
-	auto
-		MakeArgumentDependencyItem
-		()
+	auto constexpr
+	(	MakeArgumentDependencyItem
+	)	()
 	{
-		constexpr
-		auto
+		auto constexpr
 			TargetDataID
 		=	ID_V
 			<	t_vDataIDMap
-				.	TargetID
+			.	TargetID
 			>
 		;
 
-		constexpr
-		auto
+		auto constexpr
 			OriginDataID
 		=	ID_V
 			<	t_vDataIDMap
-				.	OriginID
+			.	OriginID
 			>
 		;
 
 		return
-			DataDependencyItem
-			{	TargetDataID
-			,	OffsetOf
-				<	// preserve constness
-					Std::CVQualifier
-					<	t_tOwner
-					>::template
-						Add
-				>(	UnderlyingLayout
-					<	t_tOwner
-					>
-				,	OriginDataID
-				)
-			}
-		;
+		DataDependencyItem
+		{	TargetDataID
+		,	OffsetOf
+			<	// preserve constness
+				Std::CVQualifier
+				<	t_tOwner
+				>::template
+					Add
+			>(	UnderlyingLayout
+				<	t_tOwner
+				>
+			,	OriginDataID
+			)
+		};
 	}
 
 	/// maps one Identifier to another
@@ -264,29 +253,25 @@ export namespace
 		;
 
 		/// creates the mapping
-		friend
-		constexpr
-		auto
-			operator->*
-			(	FuncIDOrigin const
+		friend auto constexpr
+		(	operator->*
+		)	(	FuncIDOrigin const
 				&	i_rOriginID
 			,	PseudoStringLiteral auto
 				&&	i_rTargetID
 			)
-		{
-			return
-				FuncIDMap
-				{	i_rOriginID
-					.	Identifier
-				,	StringLiteral
-					{	i_rTargetID
-					}
-				,	Pack::Type
-					<	t_tpArgument
-						...
-					>{}
+		{	return
+			FuncIDMap
+			{	i_rOriginID
+				.	Identifier
+			,	StringLiteral
+				{	i_rTargetID
 				}
-			;
+			,	Pack::Type
+				<	t_tpArgument
+					...
+				>{}
+			};
 		}
 	};
 
@@ -294,27 +279,25 @@ export namespace
 		<	typename
 			...	t_tpArgument
 		>
-	constexpr
-	auto
-		MapFuncID
-		(	PseudoStringLiteral auto
+	auto constexpr
+	(	MapFuncID
+	)	(	PseudoStringLiteral auto
 			&&	i_rIdentifier
 		)
 	{
 		return
-			FuncIDOrigin
-			<	decltype
-				(	StringLiteral
-					{	i_rIdentifier
-					}
-				)
-			,	t_tpArgument
-				...
-			>{	StringLiteral
+		FuncIDOrigin
+		<	decltype
+			(	StringLiteral
 				{	i_rIdentifier
 				}
+			)
+		,	t_tpArgument
+			...
+		>{	StringLiteral
+			{	i_rIdentifier
 			}
-		;
+		};
 	}
 
 	/// creates an FuncDependencyItem from an owner and a FuncIDMap
@@ -324,26 +307,23 @@ export namespace
 		,	FuncIDMap
 				t_vFuncIDMap
 		>
-	constexpr
-	auto
-		MakeArgumentDependencyItem
-		()
+	auto constexpr
+	(	MakeArgumentDependencyItem
+	)	()
 	{
-		constexpr
-		auto
+		auto constexpr
 			TargetFuncID
 		=	ID_V
 			<	t_vFuncIDMap
-				.	TargetID
+			.	TargetID
 			>
 		;
 
-		constexpr
-		auto
+		auto constexpr
 			OriginFuncID
 		=	ID_V
 			<	t_vFuncIDMap
-				.	OriginID
+			.	OriginID
 			>
 		;
 
@@ -355,7 +335,7 @@ export namespace
 			,	Pack::Concat
 				(	Meta::Type<t_tOwner>
 				,	t_vFuncIDMap
-					.	ArgumentPack
+				.	ArgumentPack
 				)
 			}
 		};
