@@ -2,7 +2,7 @@ export module Pack.Value;
 
 export import Pack.Empty;
 export import Meta.ValueInfo;
-export import Stateless.Tuple;
+export import Meta.TupleList;
 export import Std.TemplateConcepts;
 
 export namespace
@@ -17,7 +17,7 @@ export namespace
 	struct
 		[[nodiscard]]
 		Value
-	:	Stateless::Tuple
+	:	Meta::TupleList
 		<	Meta::ValueInfo
 			<	t_vpElement
 			>

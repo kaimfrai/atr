@@ -113,11 +113,11 @@ export namespace
 					)
 				)
 				return
-					t_vLiterals
+				UnwrapValue
+				(	t_vLiterals
 					[	Index<t_nLiteralIndex>
 					]
-				.	m_vValue
-				;
+				);
 			else
 			if	constexpr
 				(	t_vClause.TestNegative
@@ -126,11 +126,11 @@ export namespace
 				)
 				return
 				not
-					t_vLiterals
+				UnwrapValue
+				(	t_vLiterals
 					[	Index<t_nLiteralIndex>
 					]
-				.	m_vValue
-				;
+				);
 			else
 				return Trait::Tautology;
 		}

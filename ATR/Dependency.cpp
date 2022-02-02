@@ -1,13 +1,11 @@
 export module ATR.Dependency;
 
-export import ATR.FuncDependencyItem;
-export import ATR.DataDependencyItem;
 export import ATR.Erase;
 export import Pack.Sort;
 export import Pack.Type;
 export import Meta.Template;
 export import Meta.TypeInfo;
-export import Stateless.Map;
+export import Meta.TupleList;
 
 export namespace
 	ATR
@@ -29,12 +27,11 @@ export namespace
 		;
 
 		return
-			vSortedDependencyPack
-			.	ApplyTo
-				(	Meta::Template<Stateless::Map>
-					()
-				)
-		;
+		Invoke
+		(	Meta::Template<Meta::KeyTuple>
+			()
+		,	vSortedDependencyPack
+		);
 	}
 
 	/// creates a TypeInfo of the argument-type
@@ -62,50 +59,25 @@ export namespace
 				(	ErasedTypeInfo
 					(	i_vArgumentInfo
 					)
-				,	Meta::Type<Stateless::Map<>>
-				,	Meta::Type<Stateless::Map<>>
+				,	Meta::Type<Meta::KeyTuple<>>
+				,	Meta::Type<Meta::KeyTuple<>>
 				)
 			;
 		}
 		else
 		{
-			Stateless::Pair auto const
-			[	vDataDependencyPack
-			,	vFuncDependencyPack
-			]=	Pack::Filter
+			return
+			i_vDependencyTemplate
+			(	ErasedTypeInfo
+				(	i_vArgumentInfo
+				)
+			,	MakeSortedDependencyMap
 				(	Meta::Pack
 					<	decltype(i_vpDependency)
 						...
 					>()
-				,	[]	<	Meta::TypeInstance
-								t_tDependency
-						>(	t_tDependency
-						)
-					{
-						return
-							DataDependencyMapItemInstance
-							<	typename
-								t_tDependency
-							::	Entity
-							>
-						;
-					}
 				)
-			;
-
-			return
-				i_vDependencyTemplate
-				(	ErasedTypeInfo
-					(	i_vArgumentInfo
-					)
-				,	MakeSortedDependencyMap
-					(	vDataDependencyPack
-					)
-				,	MakeSortedDependencyMap
-					(	vFuncDependencyPack
-					)
-				)
-			;
+			);
 		}
 	}
 }

@@ -6,89 +6,91 @@ export import Pack.Instance;
 export import Pack.Type;
 export import Pack.Value;
 
-export import Stateless.Tuple;
+export import Meta.TupleList;
 
 export namespace
 	Pack
 {
 	/// takes two PackInstances and concatenates the elements into one pack
 	struct
-		Concatenator
+		Concatenator final
 	{
 		/// applies the transformation to all info objects in the pack and returns a transformed pack
+		template
+			<	typename
+				...	t_tpLeft
+			,	typename
+				...	t_tpRight
+			>
 		[[nodiscard]]
-		constexpr
-		Instance auto
-			operator()
-			(	Instance auto
-					i_vPreviousResult
-			,	Instance auto
-					i_vNextPack
+		auto constexpr
+		(	operator()
+		)	(	Meta::TupleList<t_tpLeft...> const
+				&
+			,	Meta::TupleList<t_tpRight...> const
+				&
 			)	const
-		{
-			return
-				Normalize
-				(	i_vPreviousResult
-					.	ConcatWith
-						(	i_vNextPack
-						)
-				)
-			;
+		->	Instance auto
+		{	return
+			Normalize
+			(	Meta::TupleList
+				<	t_tpLeft
+					...
+				,	t_tpRight
+					...
+				>{}
+			);
 		}
 	};
 
 	///	adds all packed elements together into one pack
 	[[nodiscard]]
-	constexpr
-	Instance auto
+	auto constexpr
 		Concat
-		(	Pack::Instance auto
+		(	Instance auto
 				i_vInitial
-		,	Pack::Instance auto
+		,	Instance auto
 			...	i_vpOther
 		)
-	{
-		return
-			FoldLeft
-			(	/// prevent matching to copy cons
-				Stateless::Tuple
-				{	Normalize
-					(	i_vpOther
-					)
-					...
-				}
-			,	Concatenator{}
-			,	Normalize
-				(	i_vInitial
+	->	Instance auto
+	{	return
+		FoldLeft
+		(	/// prevent matching to copy cons
+			Meta::TupleList
+			{	Normalize
+				(	i_vpOther
 				)
+				...
+			}
+		,	Concatenator{}
+		,	Normalize
+			(	i_vInitial
 			)
-		;
+		);
 	}
 
 	/// optimization for one pack
 	[[nodiscard]]
-	constexpr
-	Instance auto
+	auto constexpr
 		Concat
 		(	Pack::Instance auto
 				i_vInitial
 		)
+	->	decltype(auto)
 	{	return
-			Normalize
-			(	i_vInitial
-			)
-		;
+		Normalize
+		(	i_vInitial
+		);
 	}
 
 	///	optimization for no packs
 	[[nodiscard]]
-	constexpr
-	Instance auto
+	auto constexpr
 		Concat
 		()
+	->	decltype(auto)
 	{	return
-			Normalize
-				()
-		;
+		Normalize
+		();
 	}
 }

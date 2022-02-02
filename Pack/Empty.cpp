@@ -1,7 +1,7 @@
 export module Pack.Empty;
 
 export import Std;
-export import Stateless.Tuple;
+export import Meta.TupleList;
 
 export namespace
 	Pack
@@ -10,7 +10,7 @@ export namespace
 	struct
 		[[nodiscard]]
 		Empty
-	:	Stateless::Tuple
+	:	Meta::TupleList
 		<>
 	{
 		friend auto constexpr

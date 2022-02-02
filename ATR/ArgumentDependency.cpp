@@ -5,7 +5,6 @@ export import ATR.ID;
 export import Meta.Template;
 export import Meta.TypeInfo;
 export import PackTemplate.Instance;
-export import Stateless.Map;
 
 export import Std;
 
@@ -16,10 +15,8 @@ export namespace
 	template
 		<	Meta::ProtoValue
 				t_tArgument
-		,	PackTemplate::TypeInstanceOf<Stateless::Map>
-				t_tDataDependencyMap
-		,	PackTemplate::TypeInstanceOf<Stateless::Map>
-				t_tFuncDependencyMap
+		,	PackTemplate::TypeInstanceOf<Meta::KeyTuple>
+				t_tDependencyMap
 		>
 	struct
 		ArgumentDependency
@@ -34,34 +31,10 @@ export namespace
 		;
 
 		[[no_unique_address]]
-		t_tDataDependencyMap
-			DataDependencyMap
+		t_tDependencyMap
+			DependencyMap
 		{};
 
-		[[no_unique_address]]
-		t_tFuncDependencyMap
-			FuncDependencyMap
-		{};
-
-		/// access data of the object
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	ProtoID auto
-					i_vDataID
-			)
-			noexcept
-		->	decltype(auto)
-		{	return
-			::std::invoke
-			(	DataDependencyMap
-				[	i_vDataID
-				]
-			,	Argument
-			);
-		}
-
-		/// call functions of the object
 		template
 			<	typename
 				...	t_tpArgument
@@ -78,7 +51,7 @@ export namespace
 		->	decltype(auto)
 		{	return
 			::std::invoke
-			(	FuncDependencyMap
+			(	DependencyMap
 				[	i_vFuncID
 				]
 			,	Argument

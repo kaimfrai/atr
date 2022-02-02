@@ -7,7 +7,7 @@ export import Pack.Size;
 export import Pack.Instance;
 
 export import Fold.Comma;
-export import Stateless.Tuple;
+export import Meta.TupleList;
 
 export import Std;
 
@@ -74,9 +74,9 @@ export namespace
 
 			return
 			Concat
-			(	vWorsePack
+			(	UnwrapValue(vWorsePack)
 			,	i_vArgument
-			,	vBetterPack
+			,	UnwrapValue(vBetterPack)
 			);
 		}
 	};
@@ -114,7 +114,7 @@ export namespace
 		{
 			return
 			Normalize
-			(	i_vPack
+			(	UnwrapValue(i_vPack)
 			);
 		}
 		else

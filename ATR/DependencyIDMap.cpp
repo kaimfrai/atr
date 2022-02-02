@@ -134,7 +134,7 @@ export namespace
 		};
 	}
 
-	/// creates an DataDependencyItem from an owner and a DataIDMap
+	/// creates a DependencyItem from an owner and a DataIDMap
 	template
 		<	typename
 				t_tOwner
@@ -145,9 +145,9 @@ export namespace
 	(	MakeArgumentDependencyItem
 	)	()
 	{
-		auto constexpr
+		using
 			TargetDataID
-		=	ID_V
+		=	ID_T
 			<	t_vDataIDMap
 			.	TargetID
 			>
@@ -162,9 +162,8 @@ export namespace
 		;
 
 		return
-		DataDependencyItem
-		{	TargetDataID
-		,	OffsetOf
+		Meta::MakeKeyItem<TargetDataID>
+		(	OffsetOf
 			<	// preserve constness
 				Std::CVQualifier
 				<	t_tOwner
@@ -175,7 +174,7 @@ export namespace
 				>
 			,	OriginDataID
 			)
-		};
+		);
 	}
 
 	/// maps one Identifier to another
@@ -300,7 +299,7 @@ export namespace
 		};
 	}
 
-	/// creates an FuncDependencyItem from an owner and a FuncIDMap
+	/// creates a DependencyItem from an owner and a FuncIDMap
 	template
 		<	typename
 				t_tOwner
@@ -311,9 +310,9 @@ export namespace
 	(	MakeArgumentDependencyItem
 	)	()
 	{
-		auto constexpr
+		using
 			TargetFuncID
-		=	ID_V
+		=	ID_T
 			<	t_vFuncIDMap
 			.	TargetID
 			>
@@ -328,9 +327,8 @@ export namespace
 		;
 
 		return
-		FuncDependencyItem
-		{	TargetFuncID
-		,	AddressProxy
+		Meta::MakeKeyItem<TargetFuncID>
+		(	AddressProxy
 			{	OriginFuncID
 			,	Pack::Concat
 				(	Meta::Type<t_tOwner>
@@ -338,7 +336,7 @@ export namespace
 				.	ArgumentPack
 				)
 			}
-		};
+		);
 	}
 
 	template

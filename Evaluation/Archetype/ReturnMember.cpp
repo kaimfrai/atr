@@ -19,10 +19,9 @@ export namespace
 	noexcept
 	->	decltype(auto)
 	{	return
-			i_vObject
-			[	"Member"_id
-			]
-		;
+		i_vObject
+		(	"Member"_id
+		);
 	}
 
 	/// functions prefixed with Get return the datamember withouth get

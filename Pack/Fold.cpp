@@ -126,11 +126,11 @@ export namespace
 		;
 
 		return
-			Normalize
-			(	i_vPack
-			)
-		.	ApplyTo
+			Invoke
 			(	vFolder
+			,	Normalize
+				(	i_vPack
+				)
 			)
 		.	FoldResult
 		;
@@ -160,11 +160,11 @@ export namespace
 		;
 
 		return
-			Normalize
-			(	i_vPack
-			)
-		.	ApplyTo
+			Invoke
 			(	vFolder
+			,	Normalize
+				(	i_vPack
+				)
 			)
 		.	FoldResult
 		;

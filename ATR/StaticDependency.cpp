@@ -5,7 +5,7 @@ export import ATR.ID;
 export import Meta.Template;
 export import Meta.TypeInfo;
 export import PackTemplate.Instance;
-export import Stateless.Map;
+export import Meta.TupleList;
 
 export import Std;
 
@@ -15,12 +15,10 @@ export namespace
 	template
 		<	ProtoID
 				t_tFunctionName
-		,	PackTemplate::TypeInstanceOf
-			<	Stateless::Map
-			>	t_tDataDependencyMap
-		,	PackTemplate::TypeInstanceOf
-			<	Stateless::Map
-			>	t_tFuncDependencyMap
+		,	PackTemplate::TypeInstanceOf<Meta::KeyTuple>
+				t_tDataDependencyMap
+		,	PackTemplate::TypeInstanceOf<Meta::KeyTuple>
+				t_tFuncDependencyMap
 		>
 	struct
 		StaticDependency
@@ -98,10 +96,8 @@ export namespace
 		FunctionName
 	=	StaticDependency
 		<	ID_T<t_vFunctionName>
-		,	Stateless::Map
-			<>
-		,	Stateless::Map
-			<>
+		,	Meta::KeyTuple<>
+		,	Meta::KeyTuple<>
 		>
 	;
 

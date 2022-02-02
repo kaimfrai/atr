@@ -1,7 +1,7 @@
 export module Pack.Filter;
 
 export import Fold.Comma;
-export import Stateless.Tuple;
+export import Meta.TupleList;
 export import Meta.Concept.Empty;
 export import Pack.Instance;
 export import Pack.Concat;
@@ -42,12 +42,12 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	(	Stateless::Pair auto
+		)	(	Meta::ProtoClass auto
 					i_vCurrentResult
 			,	Pack::Instance auto
 					i_vArgument
 			)	const
-		->	Stateless::Pair auto
+		->	decltype(auto)
 		{
 			auto const
 			[	vPositivePack
@@ -62,20 +62,20 @@ export namespace
 					)
 				)
 				return
-				Stateless::Tuple
+				Meta::TupleList
 				{	Concat
-					(	vPositivePack
+					(	UnwrapValue(vPositivePack)
 					,	i_vArgument
 					)
-				,	vNegativePack
+				,	UnwrapValue(vNegativePack)
 				};
 			// put it in the negative pack otherwise
 			else
 				return
-				Stateless::Tuple
-				{	vPositivePack
+				Meta::TupleList
+				{	UnwrapValue(vPositivePack)
 				,	Concat
-					(	vNegativePack
+					(	UnwrapValue(vNegativePack)
 					,	i_vArgument
 					)
 				};
@@ -103,7 +103,7 @@ export namespace
 		,	Meta::ProtoStateless auto
 				i_fPredicate
 		)
-	->	Stateless::Pair auto
+	->	decltype(auto)
 	{	/// optimization for empty packs
 		if constexpr
 			(	EmptyInstance
@@ -114,7 +114,7 @@ export namespace
 			)
 		{
 			return
-			Stateless::Tuple
+			Meta::TupleList
 			{	Meta::Pack()
 			,	Meta::Pack()
 			};
@@ -126,7 +126,7 @@ export namespace
 			,	FilterSplit
 				{	i_fPredicate
 				}
-			,	Stateless::Tuple
+			,	Meta::TupleList
 				{	Meta::Pack()
 				,	Meta::Pack()
 				}

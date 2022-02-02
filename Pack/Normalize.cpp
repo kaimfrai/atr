@@ -5,7 +5,7 @@ export import Meta.MetaInfo;
 export import Pack.Type;
 export import Pack.Value;
 export import Pack.Empty;
-export import Stateless.Tuple;
+export import Meta.TupleList;
 
 export namespace
 	Pack
@@ -37,7 +37,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	(	Stateless::Tuple<>
+		)	(	Meta::TupleList<>
 			)	const
 		->	Empty
 		{	return{};	}
@@ -87,7 +87,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	(	Stateless::Tuple
+		)	(	Meta::TupleList
 				<	Meta::TypeToken<t_tpElement>
 					...
 				>
@@ -107,7 +107,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	(	Stateless::Tuple
+		)	(	Meta::TupleList
 				<	Meta::ValueInfo<t_vpElement>
 					...
 				>
@@ -127,12 +127,12 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	(	Stateless::Tuple
+		)	(	Meta::TupleList
 				<	t_tpElement
 					...
 				>	i_vTuple
 			)	const
-		->	Stateless::Tuple
+		->	Meta::TupleList
 			<	t_tpElement
 				...
 			>

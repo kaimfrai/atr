@@ -11,72 +11,180 @@ export import Meta.Value;
 export namespace
 	Meta
 {
+	/// base class for map items which provides ordering on the key
 	template
-		<	USize
-				t_nIndex
-		,	ProtoAll
-				t_tItem
+		<	Meta::ProtoStateless
+				t_tKey
 		>
 	struct
-		TupleListItem
+		Key
 	{
-		Value<t_tItem>
-			m_vItem
-			[[no_unique_address]]
-		;
+		static t_tKey constexpr
+			KeyValue
+		{};
 
-		auto constexpr
-		(	operator[]
-		)	(	IndexToken<t_nIndex>
-			)	&
-		->	Value<t_tItem>&
-		{	return m_vItem;	}
-
-		auto constexpr
-		(	operator[]
-		)	(	IndexToken<t_nIndex>
-			)	const&
-		->	Value<t_tItem> const&
-		{	return m_vItem;	}
-
-		auto constexpr
-		(	operator[]
-		)	(	IndexToken<t_nIndex>
-			)	&&
-		->	Value<t_tItem>
-		{	return ::std::move(m_vItem);	}
+		/// provide ordering according to key
+		template
+			<	Meta::ProtoStateless
+					t_tRightKey
+			>
+		[[nodiscard]]
+		friend auto constexpr
+		(	operator<=>
+		)	(	Key const&
+			,	Key<t_tRightKey> const&
+			)
+		->	decltype
+			(	t_tKey{}
+			<=>	t_tRightKey{}
+			)
+		{	return
+				t_tKey{}
+			<=>	t_tRightKey{}
+			;
+		}
 	};
 
 	template
-		<	USize
-				t_nIndex
+		<	Meta::ProtoStateless
+				t_tKey
+		,	typename
+				t_tItem
+		>
+	struct
+		KeyItem
+	:	Key<t_tKey>
+	{
+		using ItemType = t_tItem;
+
+		Value<t_tItem>
+			Item
+			[[no_unique_address]]
+		;
+
+		constexpr
+		(	KeyItem
+		)	()
+		=	default;
+
+		constexpr
+		(	KeyItem
+		)	(	t_tItem const
+				&	i_rItem
+			)
+		:	Item
+			{	i_rItem
+			}
+		{}
+
+		auto constexpr
+		(	operator[]
+		)	(	t_tKey
+			)	&
+		->	Value<t_tItem>&
+		{	return Item;	}
+
+		auto constexpr
+		(	operator[]
+		)	(	t_tKey
+			)	const&
+		->	Value<t_tItem> const&
+		{	return Item;	}
+
+		auto constexpr
+		(	operator[]
+		)	(	t_tKey
+			)	&&
+		->	Value<t_tItem>
+		{	return ::std::move(Item);	}
+	};
+
+	template
+		<	ProtoStateless
+				t_tKey
 		,	ProtoStateless
 				t_tItem
 		>
 	struct
-		TupleListItem
-		<	t_nIndex
+		KeyItem
+		<	t_tKey
 		,	t_tItem
 		>
+	:	Key<t_tKey>
 	{
+		using ItemType = t_tItem;
+
+		static Value<t_tItem> constexpr
+			Item
+		;
+
+		constexpr
+		(	KeyItem
+		)	()
+		=	default;
+
+		constexpr
+		(	KeyItem
+		)	(	t_tItem
+			)
+		{}
+
 		auto constexpr
 		(	operator[]
-		)	(	IndexToken<t_nIndex>
+		)	(	t_tKey
 			)	const
 		->	Value<t_tItem>
 		{	return {};	}
 	};
 
 	template
-		<	ProtoConstraint<IsValueTypePair_Of<TupleListItem>>
-			...	t_tpIndexedItem
+		<	ProtoStateless
+				t_tKey
+		,	typename
+				t_tItem
+		>
+	auto constexpr
+	(	MakeKeyItem
+	)	(	t_tItem&&
+				i_rItem
+		)
+	->	KeyItem
+		<	t_tKey
+		,	t_tItem
+		>
+	{	return { ::std::forward<t_tItem>(i_rItem) };	}
+
+	template
+		<	typename//ProtoConstraint<IsTypePack_Of<KeyItem>>
+			...	t_tpKeyItem
 		>
 	struct
-		IndexedTuple
-	:	t_tpIndexedItem
+		KeyTuple
+	:	t_tpKeyItem
 		...
 	{
-		using t_tpIndexedItem::operator[]...;
+		using t_tpKeyItem::operator[]...;
+
+		constexpr
+		(	KeyTuple
+		)	()
+		=	default;
+
+		explicit constexpr
+		(	KeyTuple
+		)	(	CopyConstructibleValue<typename t_tpKeyItem::ItemType> const
+				&
+				...	i_rpItem
+			)
+		requires
+			(	sizeof...(t_tpKeyItem)
+			>	0uz
+			)
+		:	t_tpKeyItem
+			{	i_rpItem
+			}
+			...
+		{}
 
 		template
 			<	USize
@@ -111,6 +219,28 @@ export namespace
 			[	Index<t_nIndex>
 			];
 		}
+
+		friend auto constexpr
+		(	Invoke
+		)	(	auto&&
+					i_rInvocable
+			,	KeyTuple const
+				&	i_rTuple
+			)
+		->	decltype(auto)
+		{	return
+				static_cast<decltype(i_rInvocable)>
+				(	i_rInvocable
+				)
+			(	UnwrapValue
+				(	static_cast<t_tpKeyItem const&>
+					(	i_rTuple
+					)
+				.	Item
+				)
+				...
+			);
+		}
 	};
 }
 
@@ -120,7 +250,7 @@ namespace
 	///	FIXME: Ideally, this helper should be an immediately invoked lambda. However, upon instantiation
 	///	this crashes clang as of now.
 	template
-		<	ProtoValue
+		<	typename
 			...	t_tpItem
 		,	USize
 			...	t_npIndex
@@ -132,18 +262,18 @@ namespace
 				...
 			>
 		)
-	->	IndexedTuple
-		<	TupleListItem
-			<	t_npIndex
+	->	KeyTuple
+		<	KeyItem
+			<	IndexToken<t_npIndex>
 			,	t_tpItem
 			>
 			...
 		>
 	{	return
 		::std::declval
-		<	IndexedTuple
-			<	TupleListItem
-				<	t_npIndex
+		<	KeyTuple
+			<	KeyItem
+				<	IndexToken<t_npIndex>
 				,	t_tpItem
 				>
 				...
@@ -152,7 +282,7 @@ namespace
 	}
 
 	template
-		<	ProtoValue
+		<	typename
 			...	t_tpItem
 		>
 	using
@@ -170,8 +300,36 @@ namespace
 export namespace
 	Meta
 {
+	struct
+		ErasedTuple
+	{
+		EraseTypeToken const
+		*	ErasedTypes
+		;
+		USize const
+			Size
+		;
+	};
+
+	auto constexpr
+	(	operator==
+	)	(	ErasedTuple
+				i_vLeft
+		,	ErasedTuple
+				i_vRight
+		)
+	->	bool
+	{	return
+		::std::equal
+		(	i_vLeft.ErasedTypes
+		,	i_vLeft.ErasedTypes + i_vLeft.Size
+		,	i_vRight.ErasedTypes
+		,	i_vRight.ErasedTypes + i_vRight.Size
+		);
+	}
+
 	template
-		<	ProtoValue
+		<	typename
 			...	t_tpItem
 		>
 	struct
@@ -181,15 +339,50 @@ export namespace
 			...
 		>
 	{
-		using MakeIndexedTuple<t_tpItem...>::operator[];
+		using MakeIndexedTuple<t_tpItem...>::MakeIndexedTuple;
+
+		static EraseTypeToken constexpr
+			EraseTypeArray
+			[]
+		{	Meta::Type
+			<	t_tpItem
+			>
+			...
+		};
+
+		constexpr
+		(	operator ErasedTuple
+		)	()	const
+		{	return
+			ErasedTuple
+			{	+EraseTypeArray
+			,	sizeof...(t_tpItem)
+			};
+		}
 	};
+
+	template
+		<	typename
+			...	t_tpItem
+		>
+	(	TupleList
+	)	(	t_tpItem const&
+			...
+		)
+	->	TupleList
+		<	UnwrapType
+			<	t_tpItem
+			>
+			...
+		>
+	;
 }
 
-namespace
+export namespace
 	std
 {
 	template
-		<	::Meta::ProtoValue
+		<	typename
 			...	t_tpItem
 		>
 	struct
@@ -208,13 +401,13 @@ namespace
 	template
 		<	::std::size_t
 				t_nIndex
-		,	::Meta::ProtoValue
+		,	typename
 			...	t_tpItem
 		>
 	struct
 		tuple_element
 		<	t_nIndex
-		,	::Meta::TupleSet
+		,	::Meta::TupleList
 			<	t_tpItem
 				...
 			>
@@ -222,7 +415,7 @@ namespace
 	:	::std::type_identity
 		<	decltype
 			(	::std::declval
-				<	::Meta::TupleSet
+				<	::Meta::TupleList
 					<	t_tpItem
 						...
 					>

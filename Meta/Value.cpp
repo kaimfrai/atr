@@ -9,7 +9,7 @@ export namespace
 	Meta
 {
 	template
-		<	ProtoAll
+		<	typename
 				t_tValue
 		>
 	struct
@@ -47,9 +47,9 @@ export namespace
 			Type
 		{};
 
+		[[no_unique_address]]
 		t_tValue
-			m_vValue
-			[[no_unique_address]]
+			Object
 		;
 
 		constexpr
@@ -65,7 +65,7 @@ export namespace
 			)
 		requires
 			ProtoCopyConstructible<t_tValue>
-		:	m_vValue
+		:	Object
 			{	i_rValue
 			}
 		{}
@@ -77,7 +77,7 @@ export namespace
 			)
 		requires
 			ProtoMoveConstructible<t_tValue>
-		:	m_vValue
+		:	Object
 			{	::std::move
 				(	i_rValue
 				)
@@ -93,7 +93,7 @@ export namespace
 		requires
 			ProtoCopyable<t_tValue>
 		{
-			m_vValue = i_rValue;
+			Object = i_rValue;
 			return *this;
 		}
 
@@ -106,7 +106,7 @@ export namespace
 		requires
 			ProtoMovable<t_tValue>
 		{
-			m_vValue = ::std::move(i_rValue);
+			Object = ::std::move(i_rValue);
 			return *this;
 		}
 
@@ -139,7 +139,7 @@ export namespace
 				...
 			>
 		{	return
-			m_vValue
+			Object
 			(	::std::forward
 				<	t_tpArgument
 				>(	i_rpArgument
@@ -177,7 +177,7 @@ export namespace
 				...
 			>
 		{	return
-			m_vValue
+			Object
 			(	::std::forward
 				<	t_tpArgument
 				>(	i_rpArgument
@@ -215,7 +215,7 @@ export namespace
 				...
 			>
 		{	return
-			m_vValue
+			Object
 			(	::std::forward
 				<	t_tpArgument
 				>(	i_rpArgument
@@ -249,6 +249,11 @@ export namespace
 		static TypeToken<t_tValue> constexpr
 			Type
 		{};
+
+		static ::std::nullptr_t constexpr
+			Object
+		=	nullptr
+		;
 
 		constexpr
 		(	Value
@@ -291,6 +296,10 @@ export namespace
 			Type
 		{};
 
+		static t_tValue constexpr
+			Object
+		{};
+
 		constexpr
 		(	Value
 		)	()
@@ -302,6 +311,11 @@ export namespace
 		)	(	t_tValue
 			)
 		{}
+
+		constexpr
+		(	operator auto
+		)	()	const
+		{	return Object;	}
 
 		auto constexpr
 		(	operator=
@@ -371,7 +385,7 @@ export namespace
 		{};
 
 		t_tValue
-			m_vValue
+			Object
 			[[no_unique_address]]
 		;
 
@@ -386,7 +400,7 @@ export namespace
 		)	(	t_tValue
 					i_vValue
 			)
-		:	m_vValue
+		:	Object
 			{	i_vValue
 			}
 		{}
@@ -394,7 +408,7 @@ export namespace
 		constexpr
 		(	operator auto
 		)	()	const
-		{	return m_vValue;	}
+		{	return Object;	}
 
 		auto constexpr
 		(	operator=
@@ -403,7 +417,7 @@ export namespace
 			)	&
 		->	Value&
 		{
-			m_vValue = i_vValue;
+			Object = i_vValue;
 			return *this;
 		}
 
@@ -1334,5 +1348,67 @@ export namespace
 	=	Value
 		<	t_tValue
 		>
+	;
+
+	template
+		<	typename
+				t_tValue
+		>
+	auto constexpr
+	(	UnwrapValue
+	)	(	t_tValue&&
+				i_rValue
+		)
+	->	t_tValue
+	{	return i_rValue;	}
+
+	template
+		<	typename
+				t_tValue
+		>
+	auto constexpr
+	(	UnwrapValue
+	)	(	Value<t_tValue>
+			&	i_rValue
+		)
+	->	decltype(auto)
+	{	return UnwrapValue(i_rValue.Object);	}
+
+	template
+		<	typename
+				t_tValue
+		>
+	auto constexpr
+	(	UnwrapValue
+	)	(	Value<t_tValue> const
+			&	i_rValue
+		)
+	->	decltype(auto)
+	{	return UnwrapValue(i_rValue.Object);	}
+
+	template
+		<	typename
+				t_tValue
+		>
+	auto constexpr
+	(	UnwrapValue
+	)	(	Value<t_tValue>
+			&&	i_rValue
+		)
+	->	decltype(auto)
+	{	return UnwrapValue(::std::move(i_rValue).Object);	}
+
+	template
+		<	typename
+				t_tType
+		>
+	using
+		UnwrapType
+	=	decltype
+		(	UnwrapValue
+			(	::std::declval<t_tType>
+				()
+			)
+		)
 	;
 }

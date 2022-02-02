@@ -7,7 +7,7 @@ export import Pack.Template;
 export import PackTemplate.Type;
 export import PackTemplate.Value;
 
-export import Stateless.Tuple;
+export import Meta.TupleList;
 
 export namespace
 	PackTemplate

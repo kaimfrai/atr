@@ -3,7 +3,7 @@ export module Pack.Apply;
 export import Pack.Fold;
 export import Pack.Normalize;
 export import Pack.Instance;
-export import Stateless.Tuple;
+export import Meta.TupleList;
 
 export namespace
 	Pack
@@ -23,15 +23,14 @@ export namespace
 					i_rApplicable
 			)	const
 		{	return
-				Normalize
+			Invoke
+			(	static_cast<decltype(i_rApplicable)>
+				(	i_rApplicable
+				)
+			,	Normalize
 				(	i_vPreviousResult
 				)
-			.	ApplyTo
-				(	static_cast<decltype(i_rApplicable)>
-					(	i_rApplicable
-					)
-				)
-			;
+			);
 		}
 
 		[[nodiscard]]
@@ -44,7 +43,7 @@ export namespace
 			)	const
 		{	return
 			FoldLeft
-			(	Stateless::Tuple
+			(	Meta::TupleList
 				{	static_cast<decltype(i_rpApplicable)>
 					(	i_rpApplicable
 					)

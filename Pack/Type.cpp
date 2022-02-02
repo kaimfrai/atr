@@ -2,7 +2,7 @@ export module Pack.Type;
 
 export import Pack.Empty;
 export import Meta.Type;
-export import Stateless.Tuple;
+export import Meta.TupleList;
 export import Std.TemplateConcepts;
 
 export namespace
@@ -17,7 +17,7 @@ export namespace
 	struct
 		[[nodiscard]]
 		Type
-	:	Stateless::Tuple
+	:	Meta::TupleList
 		<	Meta::TypeToken
 			<	t_tpElement
 			>

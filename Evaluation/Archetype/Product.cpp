@@ -8,17 +8,15 @@ export namespace
 {
 	template
 		<	typename
-			...	t_tpFuncDependency
+			...	t_tpDependency
 		>
 	using
-		DeduceFuncDependencies
+		DeduceDependencies
 	=	ArgumentDependency
 		<	void const
 			*
-		,	Stateless::Map
-			<>
-		,	Stateless::Map
-			<	t_tpFuncDependency
+		,	Meta::KeyTuple
+			<	t_tpDependency
 				...
 			>
 		>
@@ -27,26 +25,25 @@ export namespace
 	/// computes the product of all dependent members and a constant
 	template
 		<	typename
-			...	t_tpFuncDependency
+			...	t_tpDependency
 		>
 	auto inline
 		Body
 		(	FunctionName<"Product">
-		,	DeduceFuncDependencies
-			<	t_tpFuncDependency
+		,	DeduceDependencies
+			<	t_tpDependency
 				...
 			>	i_vArgument
 		)
-	noexcept
+		noexcept
 	->	Float
 	{	return
-			(	...
-			*	i_vArgument
-				(	t_tpFuncDependency
-				::	KeyValue
-				)
+		(	...
+		*	i_vArgument
+			(	t_tpDependency
+			::	KeyValue
 			)
-		;
+		);
 	}
 
 	template

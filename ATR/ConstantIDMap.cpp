@@ -2,7 +2,6 @@ export module ATR.ConstantIDMap;
 
 export import ATR.DependencyIDMap;
 export import ATR.StaticDependency;
-export import ATR.DataDependencyItem;
 
 export import ATR.ID;
 export import ATR.StringLiteral;
@@ -74,7 +73,7 @@ export namespace
 		}
 	};
 
-	/// creates an DataDependencyItem from a ConstantIDMap
+	/// creates a DependencyItem from a ConstantIDMap
 	template
 		<	ConstantIDMap
 				t_vConstantIDMap
@@ -83,23 +82,22 @@ export namespace
 	(	MakeStaticDependencyItem
 	)	()
 	{
-		auto constexpr
+		using
 			TargetDataID
-		=	ID_V
+		=	ID_T
 			<	t_vConstantIDMap
 			.	TargetID
 			>
 		;
 
 		return
-		DataDependencyItem
-		{	TargetDataID
-		,	t_vConstantIDMap
+		Meta::MakeKeyItem<TargetDataID>
+		(	t_vConstantIDMap
 		.	Constant
-		};
+		);
 	}
 
-	/// creates an FuncDependencyItem from an owner and a FuncIDMap
+	/// creates a DependencyItem from a FuncIDMap
 	template
 		<	FuncIDMap
 				t_vFuncIDMap
@@ -108,9 +106,9 @@ export namespace
 	(	MakeStaticDependencyItem
 	)	()
 	{
-		auto constexpr
+		using
 			TargetFuncID
-		=	ID_V
+		=	ID_T
 			<	t_vFuncIDMap
 			.	TargetID
 			>
@@ -125,14 +123,13 @@ export namespace
 		;
 
 		return
-		FuncDependencyItem
-		{	TargetFuncID
-		,	AddressProxy
+		Meta::MakeKeyItem<TargetFuncID>
+		(	AddressProxy
 			{	OriginFuncID
 			,	t_vFuncIDMap
 			.	ArgumentPack
 			}
-		};
+		);
 	}
 
 	template
