@@ -1,7 +1,6 @@
 export module PackTemplate.Instance;
 
 export import Pack.Instance;
-export import Pack.Normalize;
 export import Pack.Template;
 
 export import PackTemplate.Type;
@@ -24,10 +23,6 @@ export namespace
 		>
 	or	ValueInstance
 		<	t_tPackTemplate
-		>
-	or	::std::same_as
-		<	t_tPackTemplate
-		,	Pack::Normalizer
 		>
 	;
 

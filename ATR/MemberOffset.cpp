@@ -6,7 +6,6 @@ export import ATR.ID;
 
 export import Std;
 
-export import PackTemplate.Instance;
 export import Pack.Instance;
 export import Pack.Type;
 export import Meta.ValueInfo;

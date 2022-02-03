@@ -1,6 +1,5 @@
 export module Pack.Template;
 
-export import Pack.Normalize;
 export import Pack.Type;
 export import Pack.Value;
 export import Pack.Empty;
@@ -10,14 +9,6 @@ export import PackTemplate.Value;
 export namespace
 	Pack
 {
-	///	converts an EmptyPack into a type that behaves like a generic template
-	[[nodiscard]]
-	auto constexpr
-		Template
-		(	Empty
-		)
-	->	Normalizer
-	{	return {};	}
 
 	///	converts a TypePackInstance into its corresponding a PackTemplate::Type
 	///	overloaded for other pack types

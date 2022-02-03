@@ -493,8 +493,8 @@ namespace
 				>{}
 			;
 		}(	Meta::Sequence
-			<	t_vStringLiteral.size()
-			>()
+			(	Meta::Index<t_vStringLiteral.size()>
+			)
 		);
 	}
 }

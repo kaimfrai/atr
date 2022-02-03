@@ -12,8 +12,6 @@ export namespace
 	template
 		<	typename
 				t_tConstant
-		,	StringLiteralInstance
-				t_tTargetIdentifier
 		>
 	struct
 		ConstantIDMap
@@ -22,7 +20,7 @@ export namespace
 			Constant
 		;
 
-		t_tTargetIdentifier
+		StringView
 			TargetID
 		;
 
@@ -30,14 +28,14 @@ export namespace
 		(	ConstantIDMap
 		)	(	t_tConstant const
 				&	i_rConstant
-			,	t_tTargetIdentifier const
-				&	i_rTargetID
+			,	StringView
+					i_vTargetID
 			)
 		:	Constant
 			{	i_rConstant
 			}
 		,	TargetID
-			{	i_rTargetID
+			{	i_vTargetID
 			}
 		{}
 	};
@@ -55,20 +53,17 @@ export namespace
 		(	operator->*
 		)	(	ConstantOrigin const
 				&	i_rConstant
-			,	PseudoStringLiteral auto
-				&&	i_rTargetID
+			,	StringView
+					i_vTargetID
 			)
-		{
-			return
+		{	return
 			ConstantIDMap
 			{	static_cast
 				<	t_tConstant	const
 					&
 				>(	i_rConstant
 				)
-			,	StringLiteral
-				{	i_rTargetID
-				}
+			,	i_vTargetID
 			};
 		}
 	};
@@ -86,15 +81,15 @@ export namespace
 		using
 			TargetDataID
 		=	ID_T
-			<	t_vConstantIDMap
-			.	TargetID
+			<	StringLiteral<t_vConstantIDMap.TargetID.size() + 1uz>
+				{	t_vConstantIDMap.TargetID.data()
+				}
 			>
 		;
 
 		return
 		Meta::MakeKeyItem<TargetDataID>
-		(	t_vConstantIDMap
-		.	Constant
+		(	t_vConstantIDMap.Constant
 		);
 	}
 

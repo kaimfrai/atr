@@ -1,10 +1,8 @@
 export module ATR.StringLiteral;
 
+export import Std;
 export import Meta.Integer;
 export import Meta.Value;
-
-export import Std;
-export import Std.TemplateConcepts;
 
 export namespace
 	ATR
@@ -36,6 +34,16 @@ export namespace
 		constexpr
 		(	StringLiteral
 		)	(	char const
+				*	i_aString
+			)
+		:	Meta::Value<char[t_nExtent - 1uz]>
+			{	+i_aString
+			}
+		{}
+
+		constexpr
+		(	StringLiteral
+		)	(	Meta::Value<char> const
 				*	i_aString
 			)
 		:	Meta::Value<char[t_nExtent - 1uz]>
@@ -145,60 +153,4 @@ export namespace
 		,	i_vRight
 		);
 	}
-
-	template
-		<	typename
-				t_tStringLiteral
-		>
-	concept
-		StringLiteralInstance
-	=	Std::ValuePackInstanceOf
-		<	t_tStringLiteral
-		,	StringLiteral
-		>
-	;
-
-	template
-		<	typename
-				t_tStringLiteral
-		>
-	concept
-		PseudoStringLiteral
-	=	StringLiteralInstance
-		<	t_tStringLiteral
-		>
-	or	requires
-			(	t_tStringLiteral
-					c_vStringLiteral
-			)
-		{
-			StringLiteral
-			{	c_vStringLiteral
-			};
-		}
-	;
-
 }
-
-static_assert
-(	ATR::StringLiteralInstance
-	<	ATR::StringLiteral
-		<	5
-		>
-	>
-and	not
-	ATR::StringLiteralInstance
-	<	char const(&)[5]
-	>
-);
-
-static_assert
-(	ATR::PseudoStringLiteral
-	<	ATR::StringLiteral
-		<	5
-		>
-	>
-and	ATR::PseudoStringLiteral
-	<	char const(&)[5]
-	>
-);

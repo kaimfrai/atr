@@ -7,8 +7,6 @@ export import ATR.Concatenate;
 export namespace
 	ATR
 {
-	using ATR::operator""_id;
-
 	/// simply returns a member
 	auto inline
 		Body
@@ -59,16 +57,19 @@ export namespace
 			{
 				if constexpr
 					(	requires
-						{	MemberType::StringLiteral;
+						{	MemberType::StringView;
 						}
 					)
 				{	return
-						MemberType::StringLiteral
+						MemberType::StringView
 					;
 				}
 				else
 					return
-						t_vDataMember
+						ID_T
+						<	t_vDataMember
+						>
+					::	StringView
 					;
 			}
 		;
@@ -80,7 +81,7 @@ export namespace
 				>
 			,	ArgumentDependencyInfo
 				<	decltype(i_rObject)
-				,	MapDataID(fResolveAlias()) ->* "Member"
+				,	MapDataID(fResolveAlias()) ->* "Member"_id
 				>
 			}
 		;

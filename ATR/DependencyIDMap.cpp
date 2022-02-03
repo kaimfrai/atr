@@ -7,7 +7,6 @@ export import ATR.LayoutInfo;
 export import ATR.MemberOffset;
 export import ATR.ID;
 export import ATR.StringLiteral;
-export import Pack.Concat;
 export import Pack.Type;
 export import Std.QualifierTemplate;
 
@@ -15,120 +14,74 @@ export namespace
 	ATR
 {
 	/// maps one Identifier to another
-	template
-		<	StringLiteralInstance
-				t_tOriginIdentifier
-		,	StringLiteralInstance
-				t_tTargetIdentifier
-		>
 	struct
 		DataIDMap
 	{
-		t_tOriginIdentifier
+		StringView
 			OriginID
 		;
 
-		t_tTargetIdentifier
+		StringView
 			TargetID
 		;
 
 		explicit constexpr
 		(	DataIDMap
-		)	(	t_tOriginIdentifier const
-				&	i_rOriginID
-			,	t_tTargetIdentifier const
-				&	i_rTargetID
+		)	(	StringView
+					i_vOriginID
+			,	StringView
+					i_vTargetID
 			)
 		:	OriginID
-			{	i_rOriginID
+			{	i_vOriginID
 			}
 		,	TargetID
-			{	i_rTargetID
+			{	i_vTargetID
 			}
 		{}
 	};
 
-	template
-		<	StringLiteralInstance
-				t_tOriginIdentifier
-		,	StringLiteralInstance
-				t_tTargetIdentifier
-		>
-	(	DataIDMap
-	)	(	t_tOriginIdentifier const&
-		,	t_tTargetIdentifier const&
-		)
-	->	DataIDMap
-		<	t_tOriginIdentifier
-		,	t_tTargetIdentifier
-		>
-	;
-
-	template
-		<	StringLiteralInstance
-				t_tOriginIdentifier
-		>
 	struct
 		DataIDOrigin
 	{
-		t_tOriginIdentifier
+		StringView
 			Identifier
 		;
 
 		constexpr
 		(	DataIDOrigin
-		)	(	PseudoStringLiteral auto
-				&&	i_rIdentifier
+		)	(	StringView
+					i_vIdentifier
 			)
 		:	Identifier
-			{	i_rIdentifier
+			{	i_vIdentifier
 			}
 		{}
 
 		/// creates the mapping
 		friend auto constexpr
 		(	operator->*
-		)	(	DataIDOrigin const
-				&	i_rOriginID
-			,	PseudoStringLiteral auto
-				&&	i_rTargetDataID
+		)	(	DataIDOrigin
+					i_vOriginID
+			,	StringView
+					i_vTargetDataID
 			)
 		{	return
 			DataIDMap
-			{	i_rOriginID
-				.	Identifier
-			,	StringLiteral
-				{	i_rTargetDataID
-				}
+			{	i_vOriginID.Identifier
+			,	i_vTargetDataID
 			};
 		}
 	};
 
-	template
-		<	PseudoStringLiteral
-				t_tIdentifier
-		>
-	(	DataIDOrigin
-	)	(	t_tIdentifier
-			&&	i_rIdentifier
-		)
-	->	DataIDOrigin
-		<	decltype
-			(	StringLiteral
-				{	i_rIdentifier
-				}
-			)
-		>
-	;
-
 	auto constexpr
 	(	MapDataID
-	)	(	PseudoStringLiteral auto
-			&&	i_rIdentifier
+	)	(	StringView
+				i_vIdentifier
 		)
 	{	return
 		DataIDOrigin
-		{	i_rIdentifier
+		{	i_vIdentifier
 		};
 	}
 
@@ -147,16 +100,18 @@ export namespace
 		using
 			TargetDataID
 		=	ID_T
-			<	t_vDataIDMap
-			.	TargetID
+			<	StringLiteral<t_vDataIDMap.TargetID.size() + 1uz>
+				{	t_vDataIDMap.TargetID.data()
+				}
 			>
 		;
 
 		auto constexpr
 			OriginDataID
 		=	ID_V
-			<	t_vDataIDMap
-			.	OriginID
+			<	StringLiteral<t_vDataIDMap.OriginID.size() + 1uz>
+				{	t_vDataIDMap.OriginID.data()
+				}
 			>
 		;
 
@@ -178,93 +133,79 @@ export namespace
 
 	/// maps one Identifier to another
 	template
-		<	StringLiteralInstance
-				t_tOriginIdentifier
-		,	StringLiteralInstance
-				t_tTargetIdentifier
-		,	Pack::TypeInstance
-				t_tArgumentPack
+		<	typename
+			...	t_tpArgument
 		>
 	struct
 		FuncIDMap
 	{
-		t_tOriginIdentifier
+		StringView
 			OriginID
 		;
 
-		t_tTargetIdentifier
+		StringView
 			TargetID
 		;
 
-		t_tArgumentPack
+		static Pack::Type<t_tpArgument...> constexpr
 			ArgumentPack
 		{};
 
 		explicit constexpr
 		(	FuncIDMap
-		)	(	t_tOriginIdentifier const
-				&	i_rOriginID
-			,	t_tTargetIdentifier const
-				&	i_rTargetID
-			,	t_tArgumentPack
+		)	(	StringView
+					i_vOriginID
+			,	StringView
+					i_vTargetID
+			,	Pack::Type<t_tpArgument...>
 			)
 		:	OriginID
-			{	i_rOriginID
+			{	i_vOriginID
 			}
 		,	TargetID
-			{	i_rTargetID
+			{	i_vTargetID
 			}
 		{}
 	};
 
 	template
-		<	StringLiteralInstance
-				t_tOriginIdentifier
-		,	StringLiteralInstance
-				t_tTargetIdentifier
-		,	Pack::TypeInstance
-				t_tArgumentPack
+		<	typename
+			...	t_tpArgument
 		>
 	(	FuncIDMap
-	)	(	t_tOriginIdentifier const&
-		,	t_tTargetIdentifier const&
-		,	t_tArgumentPack
+	)	(	StringView
+		,	StringView
+		,	Pack::Type<t_tpArgument...>
 		)
 	->	FuncIDMap
-		<	t_tOriginIdentifier
-		,	t_tTargetIdentifier
-		,	t_tArgumentPack
+		<	t_tpArgument
+			...
 		>
 	;
 
 	template
-		<	StringLiteralInstance
-				t_tOriginIdentifier
-		,	typename
+		<	typename
 			...	t_tpArgument
 		>
 	struct
 		FuncIDOrigin
 	{
-		t_tOriginIdentifier
+		StringView
 			Identifier
 		;
 
 		/// creates the mapping
 		friend auto constexpr
 		(	operator->*
-		)	(	FuncIDOrigin const
-				&	i_rOriginID
-			,	PseudoStringLiteral auto
-				&&	i_rTargetID
+		)	(	FuncIDOrigin
+					i_vOriginID
+			,	StringView
+					i_vTargetID
 			)
 		{	return
 			FuncIDMap
-			{	i_rOriginID
-				.	Identifier
-			,	StringLiteral
-				{	i_rTargetID
-				}
+			{	i_vOriginID.Identifier
+			,	i_vTargetID
 			,	Pack::Type
 				<	t_tpArgument
 					...
@@ -279,23 +220,15 @@ export namespace
 		>
 	auto constexpr
 	(	MapFuncID
-	)	(	PseudoStringLiteral auto
-			&&	i_rIdentifier
+	)	(	StringView
+				i_vIdentifier
 		)
 	->	decltype(auto)
-	{
-		return
+	{	return
 		FuncIDOrigin
-		<	decltype
-			(	StringLiteral
-				{	i_rIdentifier
-				}
-			)
-		,	t_tpArgument
+		<	t_tpArgument
 			...
-		>{	StringLiteral
-			{	i_rIdentifier
-			}
+		>{	i_vIdentifier
 		};
 	}
 
@@ -309,20 +242,23 @@ export namespace
 	auto constexpr
 	(	MakeArgumentDependencyItem
 	)	()
+	->	decltype(auto)
 	{
 		using
 			TargetFuncID
 		=	ID_T
-			<	t_vFuncIDMap
-			.	TargetID
+			<	StringLiteral<t_vFuncIDMap.TargetID.size() + 1uz>
+				{	t_vFuncIDMap.TargetID.data()
+				}
 			>
 		;
 
 		auto constexpr
 			OriginFuncID
 		=	ID_V
-			<	t_vFuncIDMap
-			.	OriginID
+			<	StringLiteral<t_vFuncIDMap.OriginID.size() + 1uz>
+				{	t_vFuncIDMap.OriginID.data()
+				}
 			>
 		;
 
@@ -330,11 +266,8 @@ export namespace
 		Meta::MakeKeyItem<TargetFuncID>
 		(	AddressProxy
 			{	OriginFuncID
-			,	Pack::Concat
-				(	Pack::Type<t_tOwner>{}
-				,	t_vFuncIDMap
-				.	ArgumentPack
-				)
+			,	Meta::Type<t_tOwner>
+			,	t_vFuncIDMap.ArgumentPack
 			}
 		);
 	}

@@ -7,6 +7,7 @@ export import ATR.ID;
 export import Std;
 export import Meta.Transform;
 export import Meta.Type.Function;
+export import Pack.Type;
 
 export namespace
 	ATR
@@ -232,6 +233,25 @@ export namespace
 		{}
 
 		template
+			<	ProtoID
+					t_tFuncID
+			,	typename
+					t_tOwner
+			,	typename
+				...	t_tpArgument
+			>
+		explicit constexpr
+		(	AddressProxy
+		)	(	t_tFuncID
+			,	Meta::TypeToken<t_tOwner>
+			,	Pack::Type
+				<	t_tpArgument
+					...
+				>
+			)
+		{}
+
+		template
 			<	typename
 				...	t_tpArgument
 			>
@@ -260,8 +280,8 @@ export namespace
 		,	typename
 			...	t_tpArgument
 		>
-		AddressProxy
-		(	t_tFuncID
+	(	AddressProxy
+	)	(	t_tFuncID
 		,	Pack::Type
 			<	t_tpArgument
 				...
@@ -270,6 +290,32 @@ export namespace
 	->	AddressProxy
 		<	Address
 			<	t_tFuncID
+			,	t_tpArgument
+				...
+			>()
+		>
+	;
+
+	template
+		<	ProtoID
+				t_tFuncID
+		,	typename
+				t_tOwner
+		,	typename
+			...	t_tpArgument
+		>
+	(	AddressProxy
+	)	(	t_tFuncID
+		,	Meta::TypeToken<t_tOwner>
+		,	Pack::Type
+			<	t_tpArgument
+				...
+			>
+		)
+	->	AddressProxy
+		<	Address
+			<	t_tFuncID
+			,	t_tOwner
 			,	t_tpArgument
 				...
 			>()

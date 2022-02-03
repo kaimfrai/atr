@@ -4,7 +4,6 @@ export import ATR.ID;
 export import ATR.Erase;
 export import Meta.Type;
 export import Meta.TupleList;
-export import PackTemplate.Instance;
 
 export namespace
 	ATR
@@ -12,12 +11,37 @@ export namespace
 	/// wraps around an object and provides member access via dependency maps
 	template
 		<	Meta::ProtoValue
-				t_tArgument
-		,	PackTemplate::TypeInstanceOf<Meta::KeyItem>
-			...	t_tpDependency
+		,	typename
+			...
 		>
 	struct
 		Dependency
+	{
+		static_assert
+		(	Meta::ProtoNone
+			<	Dependency
+			>
+		,	"Unexpected specialization!"
+		);
+	};
+
+	template
+		<	Meta::ProtoValue
+				t_tArgument
+		,	ProtoID
+			...	t_tpID
+		,	typename
+			...	t_tpItem
+		>
+	struct
+		Dependency
+		<	t_tArgument
+		,	Meta::KeyItem
+			<	t_tpID
+			,	t_tpItem
+			>
+			...
+		>
 	{
 		using
 			ArgumentType
@@ -29,16 +53,26 @@ export namespace
 		;
 
 		[[no_unique_address]]
-		Meta::KeyTuple<t_tpDependency...>
-			DependencyMap
+		Meta::KeyTuple
+		<	Meta::KeyItem
+			<	t_tpID
+			,	t_tpItem
+			>
+			...
+		>	DependencyMap
 		{};
 
 		constexpr
 		(	Dependency
 		)	(	t_tArgument
 					i_vArgument
-			,	Meta::KeyTuple<t_tpDependency...>
-					i_vDependencyMap
+			,	Meta::KeyTuple
+				<	Meta::KeyItem
+					<	t_tpID
+					,	t_tpItem
+					>
+					...
+				>	i_vDependencyMap
 				=	{}
 			)
 		:	Argument
@@ -114,9 +148,8 @@ export namespace
 				<	t_tpKey
 				,	t_tpItem
 				>
-			>	const
-			&
-			...
+				...
+			>
 		)
 	->	Dependency
 		<	t_tArgument
