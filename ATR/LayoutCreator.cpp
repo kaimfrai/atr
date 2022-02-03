@@ -2,11 +2,7 @@ export module ATR.LayoutCreator;
 
 export import ATR.Fork;
 export import ATR.DataMember;
-
-export import Meta.Template;
-
-export import PackTemplate.Type;
-export import Meta.TypeInfo;
+export import Meta.Type;
 
 export namespace
 	ATR
@@ -80,6 +76,25 @@ export namespace
 	}
 
 	template
+		<	typename
+				t_tNorthArea
+		,	typename
+				t_tSouthArea
+		>
+	auto constexpr
+	(	ForkLayout
+	)	(	Meta::TypeToken<t_tNorthArea>
+		,	Meta::TypeToken<t_tSouthArea>
+		)
+	->	Meta::TypeToken
+		<	Fork
+			<	t_tNorthArea
+			,	t_tSouthArea
+			>
+		>
+	{	return {};	}
+
+	template
 		<	DataMemberConfig
 				t_vConfig
 		,	Meta::USize
@@ -91,10 +106,8 @@ export namespace
 		>
 	[[nodiscard]]
 	auto constexpr
-		CreateLayout
-		(	PackTemplate::TypeInstance auto
-				i_vSplitTemplate
-		,	Meta::ValueInfo<t_vConfig>
+	(	CreateLayout
+	)	(	Meta::ValueInfo<t_vConfig>
 				i_vConfig
 		,	Meta::ValueInfo<t_nBegin>
 				i_vBegin
@@ -103,7 +116,7 @@ export namespace
 				i_vEnd
 			=	{}
 		)
-	->	Meta::TypeInstance auto
+	->	decltype(auto)
 	{
 		if	constexpr(t_nBegin == t_nEnd)
 			return Meta::Type<Empty>;
@@ -144,16 +157,14 @@ export namespace
 			;
 
 			return
-			i_vSplitTemplate
+			ForkLayout
 			(	CreateLayout
-				(	i_vSplitTemplate
-				,	i_vConfig
+				(	i_vConfig
 				,	i_vBegin
 				,	vSplitIndex
 				)
 			,	CreateLayout
-				(	i_vSplitTemplate
-				,	i_vConfig
+				(	i_vConfig
 				,	vSplitIndex
 				,	i_vEnd
 				)

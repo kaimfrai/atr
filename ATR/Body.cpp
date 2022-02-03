@@ -3,7 +3,7 @@ export module ATR.Body;
 export import ATR.Dependency;
 export import ATR.ID;
 export import ATR.StringLiteral;
-export import Meta.TypeInfo;
+export import Meta.Type;
 
 export namespace
 	ATR

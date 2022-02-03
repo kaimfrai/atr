@@ -1,5 +1,2 @@
-add_module(Empty.cpp)
-add_module(Instance.cpp)
-add_module(Template.cpp)
 add_module(Type.cpp)
 add_module(Value.cpp)

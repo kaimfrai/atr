@@ -21,7 +21,4 @@ add_module(TupleList.cpp)
 
 add_module(Meta.cpp)
 
-add_module(MetaInfo.cpp)
-add_module(Template.cpp)
-add_module(TypeInfo.cpp)
 add_module(ValueInfo.cpp)

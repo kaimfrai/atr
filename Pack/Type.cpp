@@ -1,6 +1,5 @@
 export module Pack.Type;
 
-export import Pack.Empty;
 export import Meta.Type;
 export import Meta.TupleList;
 export import Std.TemplateConcepts;
@@ -45,9 +44,6 @@ export namespace
 	concept
 		TypeInstance
 	=	PureTypeInstance
-		<	t_tTypePack
-		>
-	or	PureEmptyInstance
 		<	t_tTypePack
 		>
 	;

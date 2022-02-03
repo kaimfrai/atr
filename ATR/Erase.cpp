@@ -1,9 +1,8 @@
 export module ATR.Erase;
 
-export import Meta.Template;
-export import Meta.TypeInfo;
-
 export import Std;
+export import Meta.Type;
+export import Meta.Concept.Category;
 
 export namespace
 	ATR

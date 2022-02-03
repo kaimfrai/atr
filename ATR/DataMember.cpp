@@ -3,7 +3,7 @@ export module ATR.DataMember;
 export import Meta.Value;
 export import ATR.ID;
 
-export import Meta.TypeInfo;
+export import Meta.Type;
 export import Meta.ValueInfo;
 export import Meta.Integer;
 export import Meta.Concept.Empty;

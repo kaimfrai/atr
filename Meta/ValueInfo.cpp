@@ -1,7 +1,8 @@
 export module Meta.ValueInfo;
 
-export import Meta.TypeInfo;
+export import Meta.Type;
 export import Meta.Integer;
+export import Meta.Concept.Category;
 
 export namespace
 	Meta

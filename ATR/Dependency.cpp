@@ -4,6 +4,7 @@ export import ATR.ID;
 export import ATR.Erase;
 export import Meta.Type;
 export import Meta.TupleList;
+export import Std.TemplateConcepts;
 
 export namespace
 	ATR

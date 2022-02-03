@@ -38,9 +38,7 @@ add_subdirectory(Test)
 
 add_subdirectory(ThirdParty)
 
-add_subdirectory(Fold)
 add_subdirectory(Pack)
-add_subdirectory(PackTemplate)
 add_subdirectory(ATR)
 add_subdirectory(Evaluation)
 

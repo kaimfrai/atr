@@ -1,6 +1,5 @@
 export module Pack.Value;
 
-export import Pack.Empty;
 export import Meta.ValueInfo;
 export import Meta.TupleList;
 export import Std.TemplateConcepts;
@@ -45,9 +44,6 @@ export namespace
 	concept
 		ValueInstance
 	=	PureValueInstance
-		<	t_tValuePack
-		>
-	or	PureEmptyInstance
 		<	t_tValuePack
 		>
 	;

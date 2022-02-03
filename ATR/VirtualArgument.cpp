@@ -3,7 +3,7 @@ export module ATR.VirtualArgument;
 export import ATR.Address;
 export import ATR.Body;
 export import ATR.ID;
-export import Meta.TypeInfo;
+export import Meta.Type;
 
 export namespace
 	ATR

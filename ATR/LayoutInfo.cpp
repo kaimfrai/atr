@@ -6,7 +6,6 @@ export import ATR.DataMember;
 export import ATR.LayoutCreator;
 
 export import Meta.ValueInfo;
-export import Meta.Template;
 export import Meta.Type;
 export import Std;
 
@@ -26,8 +25,6 @@ export namespace
 	(	CreateLayout
 	)	(	ProtoID auto
 				i_vTypeID
-		,	PackTemplate::TypeInstance auto
- 				i_vSplitTemplate
 		)
 	{
 		auto constexpr
@@ -40,8 +37,7 @@ export namespace
 
 		return
 		ATR::CreateLayout
-		(	i_vSplitTemplate
-		,	Meta::V
+		(	Meta::V
 			<	vConfig
 			>
 		);
@@ -58,9 +54,6 @@ export namespace
 	=	Meta::TypeEntity
 		<	CreateLayout
 			(	t_tTypeID{}
-			,	Meta::Template
-				<	ATR::Fork
-				>()
 			)
 		>
 	;
@@ -70,14 +63,13 @@ export namespace
 		<	typename
 				t_tObject
 		>
-	Meta::TypeInstance auto constexpr inline
+	Meta::TypeToken
+	<	typename
+		::std::remove_cvref_t<t_tObject>
+	::	LayoutType
+	>	constexpr inline
 		UnderlyingLayout
-	=	Meta::Type
-		<	typename
-			::std::remove_cvref_t<t_tObject>
-		::	LayoutType
-		>
-	;
+	{};
 
 	/// extracts the LayoutType from a possibly reference qualified Object
 	/// preserves cv-qualifiers but not reference qualifiers
