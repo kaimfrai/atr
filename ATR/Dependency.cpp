@@ -2,10 +2,7 @@ export module ATR.Dependency;
 
 export import ATR.ID;
 export import ATR.Erase;
-export import Pack.Sort;
-export import Pack.Type;
-export import Meta.Template;
-export import Meta.TypeInfo;
+export import Meta.Type;
 export import Meta.TupleList;
 export import PackTemplate.Instance;
 

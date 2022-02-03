@@ -1,11 +1,6 @@
 export module Pack.Concat;
 
-export import Pack.Fold;
 export import Pack.Normalize;
-export import Pack.Instance;
-export import Pack.Type;
-export import Pack.Value;
-
 export import Meta.TupleList;
 
 export namespace
@@ -30,7 +25,7 @@ export namespace
 			,	Meta::TupleList<t_tpRight...> const
 				&
 			)	const
-		->	Instance auto
+		->	decltype(auto)
 		{	return
 			Normalize
 			(	Meta::TupleList
@@ -41,56 +36,30 @@ export namespace
 				>{}
 			);
 		}
+
+		template
+			<	typename
+				...	t_tpItem
+			>
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
+		)	(	Meta::TupleList<t_tpItem> const
+				&
+				...
+			)	const
+		->	decltype(auto)
+		{	return
+			Normalize
+			(	Meta::TupleList
+				<	t_tpItem
+					...
+				>{}
+			);
+		}
 	};
 
-	///	adds all packed elements together into one pack
-	[[nodiscard]]
-	auto constexpr
+	Concatenator constexpr inline
 		Concat
-		(	Instance auto
-				i_vInitial
-		,	Instance auto
-			...	i_vpOther
-		)
-	->	Instance auto
-	{	return
-		FoldLeft
-		(	/// prevent matching to copy cons
-			Meta::TupleList
-			{	Normalize
-				(	i_vpOther
-				)
-				...
-			}
-		,	Concatenator{}
-		,	Normalize
-			(	i_vInitial
-			)
-		);
-	}
-
-	/// optimization for one pack
-	[[nodiscard]]
-	auto constexpr
-		Concat
-		(	Pack::Instance auto
-				i_vInitial
-		)
-	->	decltype(auto)
-	{	return
-		Normalize
-		(	i_vInitial
-		);
-	}
-
-	///	optimization for no packs
-	[[nodiscard]]
-	auto constexpr
-		Concat
-		()
-	->	decltype(auto)
-	{	return
-		Normalize
-		();
-	}
+	{};
 }
