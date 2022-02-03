@@ -1,9 +1,7 @@
 export module ATR.Signature;
 
 export import ATR.Body;
-export import ATR.StaticDependency;
-export import ATR.ArgumentDependency;
-
+export import ATR.Dependency;
 export import ATR.ID;
 
 export namespace
@@ -12,9 +10,9 @@ export namespace
 	/// to be instantiated and compiled in a separate .cpp file with extern template
 	/// note that ideally, the body should be available to be inlined in the place of instantiation
 	template
-		<	StaticDependencyInstance
-				t_vFuncID
-		,	ArgumentDependencyInstance
+		<	DependencyInstance
+				t_tFuncID
+		,	DependencyInstance
 			...	t_tpDependency
 		>
 	auto constexpr
@@ -26,20 +24,24 @@ export namespace
 		)
 		noexcept
 		(	BodyNoexcept
-			<	t_vFuncID
+			<	t_tFuncID
 			,	t_tpDependency
 				...
 			>
 		)
 	->	BodyReturnType
-		<	t_vFuncID
+		<	t_tFuncID
 		,	t_tpDependency
 			...
 		>
 	{	return
 		Body
-		(	t_vFuncID
-			{}
+		(	t_tFuncID
+			{	typename
+				t_tFuncID
+			::	ArgumentType
+				{}
+			}
 		,	t_tpDependency
 			{	i_vpArgument
 			}

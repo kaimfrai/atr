@@ -48,7 +48,7 @@ export namespace
 		)	()	const
 		{	return
 			StringView
-			{	this->m_vValue
+			{	this->Object
 			,	t_nExtent - 1uz
 			};
 		}

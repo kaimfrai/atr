@@ -1,7 +1,7 @@
 export module ATR.ConstantIDMap;
 
 export import ATR.DependencyIDMap;
-export import ATR.StaticDependency;
+export import ATR.Dependency;
 
 export import ATR.ID;
 export import ATR.StringLiteral;
@@ -81,6 +81,7 @@ export namespace
 	auto constexpr
 	(	MakeStaticDependencyItem
 	)	()
+	->	decltype(auto)
 	{
 		using
 			TargetDataID
@@ -105,6 +106,7 @@ export namespace
 	auto constexpr
 	(	MakeStaticDependencyItem
 	)	()
+	->	decltype(auto)
 	{
 		using
 			TargetFuncID

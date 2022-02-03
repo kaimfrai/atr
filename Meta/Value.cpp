@@ -482,7 +482,7 @@ export namespace
 		{	return size() == 0uz;	}
 
 		Value<t_tValue>
-			m_vValue
+			Object
 		[	size()
 		];
 
@@ -499,7 +499,7 @@ export namespace
 			)
 		requires
 			ProtoCopyConstructible<t_tValue>
-		:	m_vValue
+		:	Object
 			{	i_vValue[t_npIndex]
 				...
 			}
@@ -512,7 +512,7 @@ export namespace
 			)
 		requires
 			ProtoCopyConstructible<t_tValue>
-		:	m_vValue
+		:	Object
 			{	i_aValue
 				[	t_npIndex
 				]
@@ -527,7 +527,7 @@ export namespace
 			)
 		requires
 			ProtoCopyConstructible<t_tValue>
-		:	m_vValue
+		:	Object
 			{	i_aValue
 				[	t_npIndex
 				]
@@ -544,7 +544,7 @@ export namespace
 			)
 		requires
 			ProtoCopyConstructible<t_tValue>
-		:	m_vValue
+		:	Object
 			{	i_rValue
 				[	t_npIndex
 				]
@@ -563,7 +563,7 @@ export namespace
 			)
 		requires
 			ProtoCopyConstructible<t_tValue>
-		:	m_vValue
+		:	Object
 			{	i_rpArgument
 				...
 			}
@@ -580,7 +580,7 @@ export namespace
 			ProtoMoveConstructible
 			<	t_tValue
 			>
-		:	m_vValue
+		:	Object
 			{	::std::move
 				(	i_rValue
 				)[	t_npIndex
@@ -600,7 +600,7 @@ export namespace
 			)
 		requires
 			ProtoMoveConstructible<t_tValue>
-		:	m_vValue
+		:	Object
 			{	::std::move
 				(	i_rpArgument
 				)
@@ -619,7 +619,7 @@ export namespace
 		requires
 			ProtoCopyable<t_tValue>
 		{	(	...
-			,	(	m_vValue[t_npIndex]
+			,	(	Object[t_npIndex]
 				=	i_rValue[t_npIndex]
 				)
 			);
@@ -638,7 +638,7 @@ export namespace
 		requires
 			ProtoMovable<t_tValue>
 		{	(	...
-			,	(	m_vValue[t_npIndex]
+			,	(	Object[t_npIndex]
 				=	::std::move(i_rValue)[t_npIndex]
 				)
 			);
@@ -655,7 +655,7 @@ export namespace
 		requires
 			ProtoCopyable<t_tValue>
 		{	(	...
-			,	(	m_vValue[t_npIndex]
+			,	(	Object[t_npIndex]
 				=	i_rValue
 				)
 			);
@@ -680,6 +680,66 @@ export namespace
 			);
 		}
 	};
+
+	struct
+		PointerCompare
+	{
+		template
+			<	typename
+					t_tLeft
+			,	typename
+					t_tRight
+			>
+		auto constexpr
+		(	operator()
+		)	(	Meta::Value<t_tLeft const*>
+					i_aLeft
+			,	Meta::Value<t_tRight const*>
+					i_aRight
+			)	const
+		->	bool
+		{	return
+			(	i_aLeft.Object->Object
+			<	i_aRight.Object->Object
+			);
+		}
+	};
+
+
+	template
+		<	typename
+				t_tElement
+		,	Meta::USize
+			...	t_npIndex
+		>
+	auto constexpr
+	(	SortPermutation
+	)	(	IndexedArray<t_tElement, t_npIndex...> const
+			&	i_rArray
+		)
+	->	Value<USize[sizeof...(t_npIndex)]>
+	{
+		Value<Value<t_tElement> const*[sizeof...(t_npIndex)]>
+			vPointers
+		{	&i_rArray.Object
+			[	t_npIndex
+			]
+			...
+		};
+		::std::sort
+		(	begin(vPointers)
+		,	end(vPointers)
+		,	PointerCompare{}
+		);
+		return
+		Value<USize[sizeof...(t_npIndex)]>
+		{	static_cast<USize>
+			(	vPointers[t_npIndex].Object
+			-	i_rArray.Object
+			)
+			...
+		};
+	}
 }
 
 namespace
@@ -760,7 +820,7 @@ export namespace
 
 		using IndexedArray = MakeIndexedArray<t_tValue, t_nExtent>;
 		using IndexedArray::IndexedArray;
-		using IndexedArray::m_vValue;
+		using IndexedArray::Object;
 
 		constexpr
 		(	Value
@@ -771,7 +831,7 @@ export namespace
 		constexpr
 		(	operator Value<Value<t_tValue> const[]>
 		)	()	const&
-		{	return {m_vValue, t_nExtent};	}
+		{	return {Object, t_nExtent};	}
 
 		auto constexpr
 		(	operator=
@@ -816,7 +876,7 @@ export namespace
 					i_nIndex
 			)	&
 		->	Value<t_tValue>&
-		{	return m_vValue[i_nIndex];	}
+		{	return Object[i_nIndex];	}
 
 		auto constexpr
 		(	operator[]
@@ -824,7 +884,7 @@ export namespace
 					i_nIndex
 			)	const&
 		->	Value<t_tValue> const&
-		{	return m_vValue[i_nIndex];	}
+		{	return Object[i_nIndex];	}
 
 		auto constexpr
 		(	operator[]
@@ -834,7 +894,7 @@ export namespace
 		->	Value<t_tValue>
 		requires
 			ProtoMoveConstructible<t_tValue>
-		{	return ::std::move(m_vValue[i_nIndex]);	}
+		{	return ::std::move(Object[i_nIndex]);	}
 
 		friend auto constexpr
 		(	begin
@@ -842,7 +902,7 @@ export namespace
 				&	i_rArray
 			)
 		->	Value<t_tValue>*
-		{	return ::std::begin(i_rArray.m_vValue);	}
+		{	return ::std::begin(i_rArray.Object);	}
 
 		friend auto constexpr
 		(	begin
@@ -850,7 +910,7 @@ export namespace
 				&	i_rArray
 			)
 		->	Value<t_tValue> const*
-		{	return ::std::begin(i_rArray.m_vValue);	}
+		{	return ::std::begin(i_rArray.Object);	}
 
 		friend auto constexpr
 		(	end
@@ -858,7 +918,7 @@ export namespace
 				&	i_rArray
 			)
 		->	Value<t_tValue>*
-		{	return ::std::end(i_rArray.m_vValue);	}
+		{	return ::std::end(i_rArray.Object);	}
 
 		friend auto constexpr
 		(	end
@@ -866,21 +926,21 @@ export namespace
 				&	i_rArray
 			)
 		->	Value<t_tValue> const*
-		{	return ::std::end(i_rArray.m_vValue);	}
+		{	return ::std::end(i_rArray.Object);	}
 
 		[[nodiscard]]
 		auto constexpr
 		(	front
 		)	()	&
 		->	Value<t_tValue>&
-		{	return m_vValue[0uz];	}
+		{	return Object[0uz];	}
 
 		[[nodiscard]]
 		auto constexpr
 		(	front
 		)	()	const&
 		->	Value<t_tValue> const&
-		{	return m_vValue[0uz];	}
+		{	return Object[0uz];	}
 
 		[[nodiscard]]
 		auto constexpr
@@ -889,21 +949,21 @@ export namespace
 		->	Value<t_tValue>
 		requires
 			ProtoMoveConstructible<t_tValue>
-		{	return ::std::move(m_vValue[0uz]);	}
+		{	return ::std::move(Object[0uz]);	}
 
 		[[nodiscard]]
 		auto constexpr
 		(	back
 		)	()	&
 		->	Value<t_tValue>&
-		{	return m_vValue[t_nExtent - 1uz];	}
+		{	return Object[t_nExtent - 1uz];	}
 
 		[[nodiscard]]
 		auto constexpr
 		(	back
 		)	()	const&
 		->	Value<t_tValue> const&
-		{	return m_vValue[t_nExtent - 1uz];	}
+		{	return Object[t_nExtent - 1uz];	}
 
 		[[nodiscard]]
 		auto constexpr
@@ -912,7 +972,7 @@ export namespace
 		->	Value<t_tValue>
 		requires
 			ProtoMoveConstructible<t_tValue>
-		{	return ::std::move(m_vValue[t_nExtent - 1uz]);	}
+		{	return ::std::move(Object[t_nExtent - 1uz]);	}
 	};
 
 	template
@@ -930,7 +990,7 @@ export namespace
 		{};
 
 		t_tValue
-		*	m_vValue
+		*	Object
 		;
 		t_tValue
 		*	m_aEnd
@@ -949,7 +1009,7 @@ export namespace
 			,	t_tValue
 				*	i_aEnd
 			)
-		:	m_vValue
+		:	Object
 			{	i_aBegin
 			}
 		,	m_aEnd
@@ -1020,7 +1080,7 @@ export namespace
 		)	()	const
 		noexcept
 		->	t_tValue const*
-		{	return m_vValue;	}
+		{	return Object;	}
 
 		auto constexpr
 		(	size
@@ -1030,7 +1090,7 @@ export namespace
 		{	return
 			static_cast<USize>
 			(	m_aEnd
-			-	m_vValue
+			-	Object
 			);
 		}
 
@@ -1040,7 +1100,7 @@ export namespace
 					i_nIndex
 			)	&
 		->	t_tValue&
-		{	return m_vValue[i_nIndex];	}
+		{	return Object[i_nIndex];	}
 
 		auto constexpr
 		(	operator[]
@@ -1048,7 +1108,7 @@ export namespace
 					i_nIndex
 			)	const&
 		->	t_tValue const&
-		{	return m_vValue[i_nIndex];	}
+		{	return Object[i_nIndex];	}
 
 		auto constexpr
 		(	operator[]
@@ -1058,7 +1118,7 @@ export namespace
 		->	t_tValue
 		requires
 			ProtoMoveConstructible<t_tValue>
-		{	return ::std::move(m_vValue[i_nIndex]);	}
+		{	return ::std::move(Object[i_nIndex]);	}
 
 		friend auto constexpr
 		(	begin
@@ -1066,7 +1126,7 @@ export namespace
 				&	i_rValue
 			)
 		->	t_tValue*
-		{	return i_rValue.m_vValue;	}
+		{	return i_rValue.Object;	}
 
 		friend auto constexpr
 		(	begin
@@ -1074,7 +1134,7 @@ export namespace
 				&	i_rValue
 			)
 		->	t_tValue const*
-		{	return i_rValue.m_vValue;	}
+		{	return i_rValue.Object;	}
 
 		friend auto constexpr
 		(	end

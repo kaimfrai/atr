@@ -12,13 +12,11 @@ export namespace
 		>
 	using
 		DeduceDependencies
-	=	ArgumentDependency
+	=	Dependency
 		<	void const
 			*
-		,	Meta::KeyTuple
-			<	t_tpDependency
-				...
-			>
+		,	t_tpDependency
+			...
 		>
 	;
 

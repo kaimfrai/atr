@@ -1,7 +1,6 @@
 export module ATR.Body;
 
-export import ATR.StaticDependency;
-export import ATR.ArgumentDependency;
+export import ATR.Dependency;
 export import ATR.ID;
 export import ATR.StringLiteral;
 export import Meta.TypeInfo;
@@ -14,9 +13,9 @@ export namespace
 	/// other template arguments will be deduced.
 	/// does not need to be fully specialized.
 	template
-		<	StaticDependencyInstance
+		<	DependencyInstance
 				t_tFuncID
-		,	ArgumentDependencyInstance
+		,	DependencyInstance
 			...	t_tpDependency
 		>
 	auto inline
@@ -39,21 +38,17 @@ export namespace
 
 	/// whether a call to Body is noexcept
 	template
-		<	StaticDependencyInstance
+		<	DependencyInstance
 				t_tFuncID
-		,	ArgumentDependencyInstance
+		,	DependencyInstance
 			...	t_tpDependency
 		>
-	constexpr
-	bool
+	bool constexpr
 		BodyNoexcept
-	=	noexcept(
-			Body
-			(	t_tFuncID
-				{}
-			,	std::declval
-				<	t_tpDependency
-				>()
+	=	noexcept
+		(	Body
+			(	::std::declval<t_tFuncID>()
+			,	::std::declval<t_tpDependency>()
 				...
 			)
 		)
@@ -61,20 +56,17 @@ export namespace
 
 	/// the type returned by a call to Body
 	template
-		<	StaticDependencyInstance
+		<	DependencyInstance
 				t_tFuncID
 		,	typename
 			...	t_tpDependency
 		>
 	using
 		BodyReturnType
-	=	decltype(
-			Body
-			(	t_tFuncID
-				{}
-			,	std::declval
-				<	t_tpDependency
-				>()
+	=	decltype
+		(	Body
+			(	::std::declval<t_tFuncID>()
+			,	::std::declval<t_tpDependency>()
 				...
 			)
 		)

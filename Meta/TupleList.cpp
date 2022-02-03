@@ -155,7 +155,7 @@ export namespace
 	{	return { ::std::forward<t_tItem>(i_rItem) };	}
 
 	template
-		<	typename//ProtoConstraint<IsTypePack_Of<KeyItem>>
+		<	ProtoConstraint<IsTypePack_Of<KeyItem>>
 			...	t_tpKeyItem
 		>
 	struct
@@ -172,16 +172,12 @@ export namespace
 
 		explicit constexpr
 		(	KeyTuple
-		)	(	CopyConstructibleValue<typename t_tpKeyItem::ItemType> const
+		)	(	t_tpKeyItem const
 				&
-				...	i_rpItem
-			)
-		requires
-			(	sizeof...(t_tpKeyItem)
-			>	0uz
+				...	i_rpKeyItem
 			)
 		:	t_tpKeyItem
-			{	i_rpItem
+			{	i_rpKeyItem
 			}
 			...
 		{}
@@ -242,43 +238,77 @@ export namespace
 			);
 		}
 	};
-}
 
-namespace
-	Meta
-{
-	///	FIXME: Ideally, this helper should be an immediately invoked lambda. However, upon instantiation
-	///	this crashes clang as of now.
+	template
+		<>
+	struct
+		KeyTuple
+		<>
+	{
+		friend auto constexpr
+		(	Invoke
+		)	(	auto&&
+					i_rInvocable
+			,	KeyTuple
+			)
+		->	decltype(auto)
+		{	return
+			static_cast<decltype(i_rInvocable)>
+			(	i_rInvocable
+			)();
+		}
+	};
+
+	template
+		<	typename
+			...	t_tpKeyItem
+		>
+	(	KeyTuple
+	)	(	t_tpKeyItem const&
+			...
+		)
+	->	KeyTuple
+		<	UnwrapType<t_tpKeyItem>
+			...
+		>
+	;
+
 	template
 		<	typename
 			...	t_tpItem
-		,	USize
-			...	t_npIndex
 		>
-	static auto constexpr
-	(	DeduceIndexedTuple
-	)	(	IndexToken
-			<	t_npIndex
-				...
-			>
+	auto constexpr
+	(	MakeIndexedTuple
+	)	(	t_tpItem&&
+			...	i_rpItem
 		)
-	->	KeyTuple
-		<	KeyItem
-			<	IndexToken<t_npIndex>
-			,	t_tpItem
-			>
-			...
-		>
+	->	decltype(auto)
 	{	return
-		::std::declval
-		<	KeyTuple
+		[&]	<	Meta::USize
+				...	t_npIndex
+			>(	Meta::IndexToken<t_npIndex...>
+			)
+		->	KeyTuple
 			<	KeyItem
 				<	IndexToken<t_npIndex>
-				,	t_tpItem
+				,	UnwrapType<t_tpItem>
 				>
 				...
 			>
-		>();
+		{	return
+			KeyTuple
+			<	KeyItem
+				<	IndexToken<t_npIndex>
+				,	UnwrapType<t_tpItem>
+				>
+				...
+			>{	::std::forward<t_tpItem>
+				(	i_rpItem
+				)
+				...
+			};
+		}(	Meta::Sequence(Meta::Index<sizeof...(t_tpItem)>)
+		);
 	}
 
 	template
@@ -286,12 +316,11 @@ namespace
 			...	t_tpItem
 		>
 	using
-		MakeIndexedTuple
+		DeduceIndexedTuple
 	=	decltype
-		(	DeduceIndexedTuple<t_tpItem...>
-			(	Sequence
-				<	sizeof...(t_tpItem)
-				>()
+		(	MakeIndexedTuple
+			(	::std::declval<t_tpItem>()
+				...
 			)
 		)
 	;
@@ -334,12 +363,12 @@ export namespace
 		>
 	struct
 		TupleList
-	:	MakeIndexedTuple
+	:	DeduceIndexedTuple
 		<	t_tpItem
 			...
 		>
 	{
-		using MakeIndexedTuple<t_tpItem...>::MakeIndexedTuple;
+		using DeduceIndexedTuple<t_tpItem...>::DeduceIndexedTuple;
 
 		static EraseTypeToken constexpr
 			EraseTypeArray

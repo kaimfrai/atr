@@ -1,8 +1,7 @@
 export module ATR.DependencyIDMap;
 
 export import ATR.Address;
-export import ATR.ArgumentDependency;
-export import ATR.StaticDependency;
+export import ATR.Dependency;
 export import ATR.LayoutInfo;
 
 export import ATR.MemberOffset;
@@ -89,8 +88,7 @@ export namespace
 		/// creates the mapping
 		friend auto constexpr
 		(	operator->*
-		)	(	DataIDOrigin
-				const
+		)	(	DataIDOrigin const
 				&	i_rOriginID
 			,	PseudoStringLiteral auto
 				&&	i_rTargetDataID
@@ -144,6 +142,7 @@ export namespace
 	auto constexpr
 	(	MakeArgumentDependencyItem
 	)	()
+	->	decltype(auto)
 	{
 		using
 			TargetDataID
@@ -202,8 +201,8 @@ export namespace
 		{};
 
 		explicit constexpr
-			FuncIDMap
-			(	t_tOriginIdentifier const
+		(	FuncIDMap
+		)	(	t_tOriginIdentifier const
 				&	i_rOriginID
 			,	t_tTargetIdentifier const
 				&	i_rTargetID
@@ -283,6 +282,7 @@ export namespace
 	)	(	PseudoStringLiteral auto
 			&&	i_rIdentifier
 		)
+	->	decltype(auto)
 	{
 		return
 		FuncIDOrigin

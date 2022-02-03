@@ -13,7 +13,7 @@ export namespace
 	auto inline
 		Body
 		(	FunctionName<"ReturnMember">
-		,	ArgumentDependencyInstance auto
+		,	DependencyInstance auto
 				i_vObject
 		)
 	noexcept
