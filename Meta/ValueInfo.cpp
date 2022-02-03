@@ -138,25 +138,6 @@ export namespace
 		{	return{};	}
 	};
 
-	///	stateless types derived from ValueInfo
-	template
-		<	typename
-				t_tValueInstance
-		>
-	concept
-		ValueInstance
-	=	/// copy constructs ValueInfo -> unambiguously derived from ValueInfo
-		requires
-			(	t_tValueInstance
-					c_vValueInstance
-			)
-		{
-			ValueInfo
-			{	c_vValueInstance
-			};
-		}
-	;
-
 	/// frequently used shortcut to create an object of type ValueInfo
 	template
 		<	auto
@@ -165,52 +146,6 @@ export namespace
 	ValueInfo<t_vAny> constexpr inline
 		V
 	{};
-
-	///	ValueInstances for which the value is of a specific type
-	template
-		<	typename
-				t_tValueInfo
-		,	typename
-				t_tValue
-		>
-	concept
-		ValueInfoOf
-	=	ValueInstance
-		<	t_tValueInfo
-		>
-	and ::std::same_as
-		<	typename
-			t_tValueInfo
-		::	ValueType
-		,	t_tValue
-		>
-	;
-
-	///	shortcut for frequently used ValueInfo of USize
-	template
-		<	typename
-				t_tValueInfo
-		>
-	concept
-		SizeInfo
-	=	ValueInfoOf
-		<	t_tValueInfo
-		,	Meta::USize
-		>
-	;
-
-	///	shortcut for frequently used ValueInfo of bool
-	template
-		<	typename
-				t_tValueInfo
-		>
-	concept
-		BoolInfo
-	=	ValueInfoOf
-		<	t_tValueInfo
-		,	bool
-		>
-	;
 
 	///	forwards the operator to the wrapped value and returns a ValueInfo of the result
 	template

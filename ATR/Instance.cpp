@@ -4,7 +4,6 @@ export import ATR.ID;
 export import ATR.LayoutInfo;
 export import ATR.MemberOffset;
 export import ATR.Address;
-export import Std.TemplateConcepts;
 export import Std.QualifierTemplate;
 
 export import Std;

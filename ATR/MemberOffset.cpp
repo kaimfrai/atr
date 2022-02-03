@@ -127,8 +127,8 @@ export namespace
 				t_tMember
 		,	Meta::USize
 				t_nOffset
-		,	Meta::SizeInfo
-				t_tAdditionalOffset
+		,	Meta::USize
+				t_nAdditionalOffset
 		>
 	[[nodiscard]]
 	auto constexpr
@@ -137,14 +137,13 @@ export namespace
 			<	t_tMember
 			,	t_nOffset
 			>
-		,	t_tAdditionalOffset
+		,	Meta::ValueInfo<t_nAdditionalOffset>
 		)
 		noexcept
 	->	MemberOffset
 		<	t_tMember
 		,	t_nOffset
-		+	t_tAdditionalOffset
-			::	Value
+		+	t_nAdditionalOffset
 		>
 	{	return{};	}
 
@@ -152,6 +151,8 @@ export namespace
 	template
 		<	Meta::ProtoStateless
 				t_tMember
+		,	Meta::USize
+				t_nOffset
 		>
 	[[nodiscard]]
 	auto constexpr
@@ -160,7 +161,7 @@ export namespace
 			<	t_tMember
 			,	0uz
 			>
-		,	Meta::SizeInfo auto
+		,	Meta::ValueInfo<t_nOffset>
 		)
 		noexcept
 	->	MemberOffset
