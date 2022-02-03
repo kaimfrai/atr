@@ -195,28 +195,26 @@ export namespace
 			...	t_tpItem
 		>
 	auto constexpr
-	(	MakeArgumentDependencyInfo
-	)	(	Meta::KeyItem<t_tpKey, t_tpItem>
+	(	MakeArgumentDependency
+	)	(	t_tArgument&&
+				i_rArgument
+		,	Meta::KeyItem<t_tpKey, t_tpItem>
 			...	i_vpDependency
 		)
 	->	decltype(auto)
 	{	return
-		Meta::Type
-		<	decltype
-			(	Dependency
-				{	ForwardErased
-					(	Meta::Type<t_tArgument>
-					,	::std::declval<t_tArgument>()
-					)
-				,	MakeSortedDependencyMap
-					(	Meta::MakeIndexedTuple
-						(	::std::move(i_vpDependency)
-							...
-						)
-					)
-				}
+		Dependency
+		{	ForwardErased
+			(	Meta::Type<t_tArgument>
+			,	::std::forward<t_tArgument>(i_rArgument)
 			)
-		>;
+		,	MakeSortedDependencyMap
+			(	Meta::MakeIndexedTuple
+				(	::std::move(i_vpDependency)
+					...
+				)
+			)
+		};
 	}
 
 	template

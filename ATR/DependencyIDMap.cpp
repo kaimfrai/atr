@@ -347,14 +347,18 @@ export namespace
 		>
 	auto constexpr inline
 		ArgumentDependencyInfo
-	=	MakeArgumentDependencyInfo
-		<	t_tOwner
-		>(	MakeArgumentDependencyItem
-			<	t_tOwner
-			,	t_vpIDMap
-			>()
-			...
-		)
+	=	Meta::Type
+		<	decltype
+			(	MakeArgumentDependency
+				(	::std::declval<t_tOwner>()
+				,	MakeArgumentDependencyItem
+					<	t_tOwner
+					,	t_vpIDMap
+					>()
+					...
+				)
+			)
+		>
 	;
 }
 
