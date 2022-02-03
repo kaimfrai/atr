@@ -7,7 +7,7 @@ export import ATR.ID;
 export import Std;
 export import Meta.Transform;
 export import Meta.Type.Function;
-export import Pack.Type;
+export import Meta.TupleList;
 
 export namespace
 	ATR
@@ -225,7 +225,7 @@ export namespace
 		explicit constexpr
 		(	AddressProxy
 		)	(	t_tFuncID
-			,	Pack::Type
+			,	Meta::TypePack
 				<	t_tpArgument
 					...
 				>
@@ -244,7 +244,7 @@ export namespace
 		(	AddressProxy
 		)	(	t_tFuncID
 			,	Meta::TypeToken<t_tOwner>
-			,	Pack::Type
+			,	Meta::TypePack
 				<	t_tpArgument
 					...
 				>
@@ -282,7 +282,7 @@ export namespace
 		>
 	(	AddressProxy
 	)	(	t_tFuncID
-		,	Pack::Type
+		,	Meta::TypePack
 			<	t_tpArgument
 				...
 			>
@@ -307,7 +307,7 @@ export namespace
 	(	AddressProxy
 	)	(	t_tFuncID
 		,	Meta::TypeToken<t_tOwner>
-		,	Pack::Type
+		,	Meta::TypePack
 			<	t_tpArgument
 				...
 			>

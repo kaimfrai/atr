@@ -38,7 +38,6 @@ add_subdirectory(Test)
 
 add_subdirectory(ThirdParty)
 
-add_subdirectory(Pack)
 add_subdirectory(ATR)
 add_subdirectory(Evaluation)
 

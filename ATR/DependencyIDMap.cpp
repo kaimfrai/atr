@@ -7,7 +7,6 @@ export import ATR.LayoutInfo;
 export import ATR.MemberOffset;
 export import ATR.ID;
 export import ATR.StringLiteral;
-export import Pack.Type;
 export import Std.QualifierTemplate;
 
 export namespace
@@ -147,7 +146,7 @@ export namespace
 			TargetID
 		;
 
-		static Pack::Type<t_tpArgument...> constexpr
+		static Meta::TypePack<t_tpArgument...> constexpr
 			ArgumentPack
 		{};
 
@@ -157,7 +156,7 @@ export namespace
 					i_vOriginID
 			,	StringView
 					i_vTargetID
-			,	Pack::Type<t_tpArgument...>
+			,	Meta::TypePack<t_tpArgument...>
 			)
 		:	OriginID
 			{	i_vOriginID
@@ -175,7 +174,7 @@ export namespace
 	(	FuncIDMap
 	)	(	StringView
 		,	StringView
-		,	Pack::Type<t_tpArgument...>
+		,	Meta::TypePack<t_tpArgument...>
 		)
 	->	FuncIDMap
 		<	t_tpArgument
@@ -206,7 +205,7 @@ export namespace
 			FuncIDMap
 			{	i_vOriginID.Identifier
 			,	i_vTargetID
-			,	Pack::Type
+			,	Meta::TypePack
 				<	t_tpArgument
 					...
 				>{}

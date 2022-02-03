@@ -5,8 +5,6 @@ export import ATR.DataMember;
 export import ATR.ID;
 
 export import Std;
-
-export import Pack.Type;
 export import Meta.ValueInfo;
 export import Meta.Integer;
 export import Meta.Concept.Empty;

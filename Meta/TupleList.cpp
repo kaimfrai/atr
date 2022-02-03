@@ -405,6 +405,22 @@ export namespace
 			...
 		>
 	;
+		///	wraps around a pack of types
+	///	defines value-based operations
+	template
+		<	typename
+			...	t_tpElement
+		>
+	struct
+		[[nodiscard]]
+		TypePack
+	:	Meta::TupleList
+		<	Meta::TypeToken
+			<	t_tpElement
+			>
+			...
+		>
+	{};
 }
 
 export namespace
