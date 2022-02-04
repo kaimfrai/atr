@@ -13,62 +13,6 @@ export import Std;
 export namespace
 	ATR
 {
-	/// wraps around a value and provides access to it by a name token
-	template
-		<	ProtoID
-				t_tName
-		,	typename
-				t_tValue
-		>
-	struct
-		DataMember
-	{
-		t_tValue
-			Value
-		;
-
-		[[nodiscard]]
-		auto constexpr
-			operator[]
-			(	t_tName
-			)	const
-		noexcept
-		->	t_tValue const&
-		{	return Value;	}
-
-		[[nodiscard]]
-		auto constexpr
-			operator[]
-			(	t_tName
-			)
-		noexcept
-		->	t_tValue&
-		{	return Value;	}
-	};
-
-	/// wraps around a value and provides access to it by a name token
-	template
-		<	ProtoID
-				t_tName
-		,	Meta::ProtoStateless
-				t_tValue
-		>
-	struct
-		DataMember
-		<	t_tName
-		,	t_tValue
-		>
-	{
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	t_tName
-			)	const
-		noexcept
-		->	t_tValue
-		{	return t_tValue{};	}
-	};
-
 	struct
 		DataMemberInfo
 	{

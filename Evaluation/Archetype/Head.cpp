@@ -32,5 +32,8 @@ export namespace
 	;
 }
 
+using T = Bodies3D::Head::LayoutType;
+auto constexpr inline f = Meta::Type<Bodies3D::Head::LayoutType>;
+
 static_assert(AdditionalSize<Bodies3D::Head, 3, 3> == 4);
 static_assert(SizeMinimal<Bodies3D::Head, 3, 3>);

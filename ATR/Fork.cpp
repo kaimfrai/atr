@@ -6,6 +6,17 @@ export import Meta.Concept.Empty;
 export namespace
 	ATR
 {
+	/// wraps around a value and provides access to it by a name token
+	template
+		<	ProtoID
+				t_tName
+		,	typename
+				t_tValue
+		>
+	struct
+		DataMember
+	{};
+
 	/// constrains data ids to those that have the [] operator overloaded in a member area
 	template
 		<	typename
@@ -32,18 +43,207 @@ export namespace
 
 	template
 		<	typename
-				t_tNorthArea
-		,	typename
-				t_tSouthArea
+			...	t_tpDataMember
 		>
 	struct
 		Fork
+	;
+
+	template
+		<	typename
+		,	Meta::USize
+		>
+	concept
+		ProtoDeducePack
+	=	true
+	;
+
+	template
+		<	Meta::USize
+			...	t_npIndex
+		>
+	struct
+		ForkPack
 	{
-		t_tNorthArea
+		explicit constexpr
+		(	ForkPack
+		)	(	Meta::IndexToken
+				<	t_npIndex
+					...
+				>
+			)
+		{}
+
+		template
+			<	ProtoDeducePack<t_npIndex>
+				...	t_tpFront
+			>
+		static auto constexpr
+		(	Front
+		)	(	t_tpFront*...
+			,	...
+			)
+		->	Fork
+			<	t_tpFront
+				...
+			>
+		{	return {};	}
+
+		template
+			<	typename
+				...	t_tpBack
+			>
+		static auto constexpr
+		(	Back
+		)	(	Meta::ValueToType
+				<	t_npIndex
+				,	void const*
+				>
+				...
+			,	t_tpBack*
+				...
+			)
+		->	Fork
+			<	t_tpBack
+				...
+			>
+		{	return {};	}
+	};
+
+	template
+		<	Meta::USize
+			...	t_npIndex
+		>
+	(	ForkPack
+	)	(	Meta::IndexToken<t_npIndex...>
+		)
+	->	ForkPack
+		<	t_npIndex
+			...
+		>
+	;
+
+	[[nodiscard]]
+	auto constexpr
+	(	DataMemberLayoutSplit
+	)	(	::std::initializer_list
+			<	Meta::EraseTypeToken
+			>	i_vTypes
+		)
+	->	Meta::USize
+	{
+		auto const
+			aFirst
+		=	begin(i_vTypes)
+		;
+		auto const
+			aLast
+		=	end(i_vTypes)
+		-	1uz
+		;
+		if	(	(*aFirst)->Alignment
+			==	(*aLast)->Alignment
+			)
+			return
+			::std::bit_floor<Meta::USize>
+			(	i_vTypes.size()
+			-	1uz
+			);
+		else
+		{	auto const
+				aSplitPoint
+			=	::std::lower_bound
+				(	aFirst
+				,	aLast + 1z
+				,	(*aFirst)->Alignment / 2uz
+				,	[]	(	Meta::EraseTypeToken
+								i_vLeft
+						,	Meta::USize
+								i_nRight
+						)
+					->	bool
+					{	return
+							i_vLeft->Alignment
+						>	i_nRight
+						;
+					}
+				)
+			;
+			return
+			static_cast<Meta::USize>
+			(	aSplitPoint
+			-	aFirst
+			);
+		}
+	}
+
+	template
+		<	typename
+			...	t_tpName
+		,	typename
+			...	t_tpDataMember
+		>
+	struct
+		Fork
+		<	DataMember
+			<	t_tpName
+			,	t_tpDataMember
+			>
+			...
+		>
+	{
+		static Meta::USize constexpr
+			SplitIndex
+		=	DataMemberLayoutSplit
+			({	Meta::Type<t_tpDataMember>
+				...
+			})
+		;
+
+		static ForkPack constexpr
+			ForkSplit
+		{	Meta::ValueSequence<SplitIndex>()
+		};
+
+		using
+			NorthAreaType
+		=	decltype
+			(	ForkSplit
+			.	Front
+				(	static_cast
+					<	DataMember
+						<	t_tpName
+						,	t_tpDataMember
+						>*
+					>(	nullptr
+					)
+					...
+				)
+			)
+		;
+
+		using
+			SouthAreaType
+		=	decltype
+			(	ForkSplit
+			.	Back
+				(	static_cast
+					<	DataMember
+						<	t_tpName
+						,	t_tpDataMember
+						>*
+					>(	nullptr
+					)
+					...
+				)
+			)
+		;
+
+		NorthAreaType
 			NorthArea
 		;
 
-		t_tSouthArea
+		SouthAreaType
 			SouthArea
 		;
 
@@ -51,11 +251,15 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	MemberAccessIDOf<t_tNorthArea const> auto
+		)	(	ProtoID auto
 					i_vMemberID
 			)	const
-		noexcept
-		->	decltype(auto)
+			noexcept
+		->	decltype
+			(	NorthArea
+				[	i_vMemberID
+				]
+			)
 		{	return
 			NorthArea
 			[	i_vMemberID
@@ -66,11 +270,15 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	MemberAccessIDOf<t_tNorthArea> auto
+		)	(	ProtoID auto
 					i_vMemberID
 			)
-		noexcept
-		->	decltype(auto)
+			noexcept
+		->	decltype
+			(	NorthArea
+				[	i_vMemberID
+				]
+			)
 		{	return
 			NorthArea
 			[	i_vMemberID
@@ -81,11 +289,15 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	MemberAccessIDOf<t_tSouthArea const> auto
+		)	(	ProtoID auto
 					i_vMemberID
 			)	const
-		noexcept
-		->	decltype(auto)
+			noexcept
+		->	decltype
+			(	SouthArea
+				[	i_vMemberID
+				]
+			)
 		{	return
 			SouthArea
 			[	i_vMemberID
@@ -96,11 +308,15 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	MemberAccessIDOf<t_tSouthArea> auto
+		)	(	ProtoID auto
 					i_vMemberID
 			)
-		noexcept
-		->	decltype(auto)
+			noexcept
+		->	decltype
+			(	SouthArea
+				[	i_vMemberID
+				]
+			)
 		{	return
 			SouthArea
 			[	i_vMemberID
@@ -109,70 +325,94 @@ export namespace
 	};
 
 	template
+		<>
+	struct
+		Fork<>
+	{};
+
+	template
 		<	typename
-				t_tNorthArea
-		,	Meta::ProtoStateless
-				t_tSouthArea
+				t_tName
+		,	typename
+				t_tValue
 		>
 	struct
 		Fork
-		<	t_tNorthArea
-		,	t_tSouthArea
+		<	DataMember
+			<	t_tName
+			,	t_tValue
+			>
 		>
-	:	t_tSouthArea
 	{
-		using t_tSouthArea::operator[];
-
-		t_tNorthArea
-			NorthArea
+		t_tValue
+			Value
 		;
 
-		/// access const members of the north member area
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	MemberAccessIDOf<t_tNorthArea const> auto
-					i_vMemberID
+		)	(	t_tName
+			)	const
+			noexcept
+		->	t_tValue const&
+		{	return Value;	}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	t_tName
+			)
+			noexcept
+		->	t_tValue&
+		{	return Value;	}
+	};
+
+	/// wraps around a value and provides access to it by a name token
+	template
+		<	typename
+				t_tName
+		,	Meta::ProtoStateless
+				t_tValue
+		>
+	struct
+		Fork
+		<	DataMember
+			<	t_tName
+			,	t_tValue
+			>
+		>
+	{
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	t_tName
 			)	const
 		noexcept
-		->	decltype(auto)
-		{	return
-			NorthArea
-			[	i_vMemberID
-			];
-		}
-
-		/// access non-const members of the north member area
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	MemberAccessIDOf<t_tNorthArea> auto
-					i_vMemberID
-			)
-		noexcept
-		->	decltype(auto)
-		{	return
-			NorthArea
-			[	i_vMemberID
-			];
-		}
+		->	t_tValue
+		{	return t_tValue{};	}
 	};
 
 	template
-		<	Meta::ProtoStateless
-				t_tNorthArea
+		<	typename
+				t_tFirstName
+		,	typename
+				t_tFirstType
+		,	typename
+			...	t_tpRemainingName
 		,	Meta::ProtoStateless
-				t_tSouthArea
+			...	t_tpRemainingStateless
 		>
 	struct
 		Fork
-		<	t_tNorthArea
-		,	t_tSouthArea
+		<	DataMember<t_tFirstName, t_tFirstType>
+		,	DataMember<t_tpRemainingName, t_tpRemainingStateless>
+			...
 		>
-	:	t_tNorthArea
-	,	t_tSouthArea
+	:	Fork<DataMember<t_tFirstName, t_tFirstType>>
+	,	Fork<DataMember<t_tpRemainingName, t_tpRemainingStateless>>
+		...
 	{
-		using t_tNorthArea::operator[];
-		using t_tSouthArea::operator[];
+		using Fork<DataMember<t_tFirstName, t_tFirstType>>::operator[];
+		using Fork<DataMember<t_tpRemainingName, t_tpRemainingStateless>>::operator[]...;
 	};
 }

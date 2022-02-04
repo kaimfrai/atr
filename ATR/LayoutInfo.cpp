@@ -3,9 +3,7 @@ export module ATR.LayoutInfo;
 export import ATR.StringLiteral;
 export import ATR.ID;
 export import ATR.DataMember;
-export import ATR.LayoutCreator;
-
-export import Meta.ValueInfo;
+export import ATR.Fork;
 export import Meta.Type;
 export import Std;
 
@@ -19,6 +17,42 @@ export namespace
 	ATR::DataMemberConfig<0uz> constexpr inline
 		LayoutConfig
 	{};
+
+
+	template
+		<	DataMemberConfig
+				t_vConfig
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	CreateLayout
+	)	()
+	->	decltype(auto)
+	{	return
+		[]	<	Meta::USize
+				...	t_npIndex
+			>(	Meta::IndexToken<t_npIndex...>
+			)
+		{
+			return
+			Fork
+			<	DataMember
+				<	ID_T
+					<	StringLiteral<t_vConfig[t_npIndex].Object.Name.size() + 1uz>
+						{	t_vConfig[t_npIndex].Object.Name.data()
+						}
+					>
+				,	Meta::RestoreTypeEntity
+					<	t_vConfig[t_npIndex].Object.Type
+					>
+				>
+				...
+			>{};
+		}(	Meta::Sequence
+			(	Meta::Index<t_vConfig.size()>
+			)
+		);
+	}
 
 	/// the type mapped to the string literal by LayoutInfo
 	template

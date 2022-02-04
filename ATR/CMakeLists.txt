@@ -6,7 +6,6 @@ add_module(LayoutInfo.cpp)
 add_module(Concatenate.cpp)
 add_module(DataMember.cpp)
 add_module(Fork.cpp)
-add_module(LayoutCreator.cpp)
 add_module(MemberOffset.cpp)
 
 add_module(Address.cpp)

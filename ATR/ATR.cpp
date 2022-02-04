@@ -11,7 +11,6 @@ export import ATR.Erase;
 export import ATR.Fork;
 export import ATR.ID;
 export import ATR.Instance;
-export import ATR.LayoutCreator;
 export import ATR.MemberOffset;
 export import ATR.Signature;
 export import ATR.StringLiteral;
