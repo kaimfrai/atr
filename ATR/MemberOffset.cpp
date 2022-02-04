@@ -224,141 +224,58 @@ export namespace
 		;
 	}
 
-	/// returns a MemberOffset for the given member id if it is present
-	template
-		<	template
-				<	typename
-				>
-			typename
-				t_t1Qualifier
-		,	ProtoID
-				t_tName
-		,	typename
-				t_tValue
-		>
 	auto constexpr
-		OffsetOf
-		(	Meta::TypeToken<DataMember<t_tName, t_tValue>>
-		,	t_tName
+	(	MemberType
+	)	(	StringView
+				i_vName
+		,	Meta::Value<DataMemberInfo> const
+			*	i_aBegin
+		,	Meta::Value<DataMemberInfo> const
+			*	i_aEnd
 		)
-	noexcept
+	->	Meta::EraseTypeToken
 	{	return
-			MemberOffset
-			<	t_t1Qualifier
-				<	t_tValue
-				>
-			,	0uz
-			>{}
+			::std::find_if
+			(	i_aBegin
+			,	i_aEnd
+			,	[	vObject = i_vName.Object
+				]	(	Meta::Value<DataMemberInfo> const
+						&	i_rValue
+					)
+				->	bool
+				{
+					return i_rValue.Object.Name.Object == vObject;
+				}
+			)
+		->	Object.Type
 		;
 	}
 
-	/// constrains data ids to those that have the Offset function overloaded in a member area
-	template
-		<	typename
-				t_tDataID
-		,	typename
-				t_tMemberArea
-		,	template
-				<	typename
-				>
-			typename
-				t_t1Qualifier
-		>
-	concept
-		MemberOffsetIDOf
-	=	ProtoID
-		<	t_tDataID
-		>
-	and	requires
-			(	t_tDataID
-					c_vDataID
+	auto constexpr
+	(	ByteOffset
+	)	(	StringView
+				i_vName
+		,	Meta::Value<DataMemberInfo> const
+			*	i_aBegin
+		,	Meta::Value<DataMemberInfo> const
+			*	i_aEnd
+		)
+	->	Meta::USize
+	{
+		Meta::USize
+			nOffset
+		=	0uz
+		;
+		for	(;	i_aBegin != i_aEnd
+			and	i_aBegin->Object.Name.Object == i_vName.Object
+			;	++i_aBegin
 			)
 		{
-			OffsetOf
-			<	t_t1Qualifier
-			>(	Meta::Type<t_tMemberArea>
-			,	c_vDataID
-			);
+			nOffset += i_aBegin->Object.Type->Size;
 		}
-	;
-
-	/// returns a MemberOffset for the given member id if it is present in the north area
-	template
-		<	template
-				<	typename
-				>
-			typename
-				t_t1Qualifier
-		,	typename
-				t_tNorthArea
-		,	typename
-				t_tSouthArea
-		>
-	auto constexpr
-		OffsetOf
-		(	Meta::TypeToken
-			<	Fork
-				<	t_tNorthArea
-				,	t_tSouthArea
-				>
-			>
-		,	MemberOffsetIDOf
-			<	t_tNorthArea
-			,	t_t1Qualifier
-			>	auto
-				i_vMemberID
-		)
-	noexcept
-	{
-		return
-			OffsetOf
-			<	t_t1Qualifier
-			>(	Meta::Type<t_tNorthArea>
-			,	i_vMemberID
-			)
-		;
-	}
-
-	/// returns a MemberOffset for the given member id if it is present in the south area
-	template
-		<	template
-				<	typename
-				>
-			typename
-				t_t1Qualifier
-		,	typename
-				t_tNorthArea
-		,	typename
-				t_tSouthArea
-		>
-	auto constexpr
-		OffsetOf
-		(	Meta::TypeToken
-			<	Fork
-				<	t_tNorthArea
-				,	t_tSouthArea
-				>
-			>
-		,	MemberOffsetIDOf
-			<	t_tSouthArea
-			,	t_t1Qualifier
-			>	auto
-				i_vMemberID
-		)
-	noexcept
-	{
-		return
-			OffsetOf
-			<	t_t1Qualifier
-			>(	Meta::Type<t_tSouthArea>
-			,	i_vMemberID
-			)
-		+	/// offset by the size of the north area
-			Meta::V
-			<	Meta::ByteSize_Of
-				<	t_tNorthArea
-				>
-			>
-		;
+		if	(i_aBegin->Object.Type->Size == 0uz)
+			return 0uz;
+		else
+			return nOffset;
 	}
 }

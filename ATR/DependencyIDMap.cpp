@@ -106,27 +106,60 @@ export namespace
 		;
 
 		auto constexpr
-			OriginDataID
-		=	ID_V
-			<	StringLiteral<t_vDataIDMap.OriginID.size() + 1uz>
-				{	t_vDataIDMap.OriginID.data()
-				}
+		&	rOwnerLayout
+		=	LayoutConfig
+			<	::std::remove_cvref_t<t_tOwner>
+			::	TypeName
 			>
+		;
+
+		Meta::Value<DataMemberInfo> const constexpr
+		*	aBegin
+		=	begin(rOwnerLayout)
+		;
+		Meta::Value<DataMemberInfo> const constexpr
+		*	aEnd
+		=	end(rOwnerLayout)
+		;
+
+		Meta::EraseTypeToken constexpr
+			vMemberType
+		=	MemberType
+			(	t_vDataIDMap.OriginID
+			,	aBegin
+			,	aEnd
+			)
+		;
+
+		using
+			MemberType
+		=	typename
+			Std::CVQualifier
+			<	t_tOwner
+			>
+		::	template
+			Add
+			<	Meta::RestoreTypeEntity
+				<	vMemberType
+				>
+			>
+		;
+
+		Meta::USize constexpr
+			nMemberOffset
+		=	ByteOffset
+			(	t_vDataIDMap.OriginID
+			,	aBegin
+			,	aEnd
+			)
 		;
 
 		return
 		Meta::MakeKeyItem<TargetDataID>
-		(	OffsetOf
-			<	// preserve constness
-				Std::CVQualifier
-				<	t_tOwner
-				>::template
-					Add
-			>(	UnderlyingLayout
-				<	t_tOwner
-				>
-			,	OriginDataID
-			)
+		(	MemberOffset
+			<	MemberType
+			,	nMemberOffset
+			>{}
 		);
 	}
 

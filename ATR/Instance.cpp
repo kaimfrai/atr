@@ -317,55 +317,6 @@ export namespace
 		>
 	;
 
-	/// layout offsets for Archetypes
-	template
-		<	Std::TypePackInstanceOf<Instance>
-				t_tArchetype
-		>
-	auto constexpr
-		OffsetOf
-		(	t_tArchetype&
-		,	ProtoID auto
-				i_vName
-		)
-	{	return
-		ATR::OffsetOf
-		<	/// preserve constness
-			Std::CVQualifier
-			<	t_tArchetype
-			>::	template
-				Add
-		>(	UnderlyingLayout
-			<	t_tArchetype
-			>
-		,	i_vName
-		);
-	}
-
-	template
-		<	Std::TypePackInstanceOf<Instance>
-				t_tArchetype
-		>
-	auto constexpr
-		OffsetOf
-		(	t_tArchetype const&
-		,	ProtoID auto
-				i_vName
-		)
-	{	return
-		ATR::OffsetOf
-		<	/// preserve constness
-			Std::CVQualifier
-			<	t_tArchetype const
-			>::	template
-				Add
-		>(	UnderlyingLayout
-			<	t_tArchetype
-			>
-		,	i_vName
-		);
-	}
-
 	template
 		<	typename
 				t_tObject
