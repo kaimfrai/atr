@@ -2,7 +2,7 @@ export module ATR.DependencyIDMap;
 
 export import ATR.Address;
 export import ATR.Dependency;
-export import ATR.LayoutInfo;
+export import ATR.DataMember;
 
 export import ATR.MemberOffset;
 export import ATR.ID;

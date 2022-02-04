@@ -1,14 +1,10 @@
 export module ATR.DataMember;
 
+export import Std;
 export import Meta.Value;
 export import ATR.ID;
-
 export import Meta.Type;
-export import Meta.ValueInfo;
 export import Meta.Integer;
-export import Meta.Concept.Empty;
-
-export import Std;
 
 export namespace
 	ATR
@@ -329,4 +325,12 @@ export namespace
 		,	ID_T<t_vOriginID>::StringView
 		}
 	;
+
+	/// maps a string literal to a Layout
+	template
+		<	StringLiteral
+		>
+	ATR::DataMemberConfig<0uz> constexpr inline
+		LayoutConfig
+	{};
 }

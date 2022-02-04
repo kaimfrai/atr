@@ -1,11 +1,10 @@
 add_module(ID.cpp)
 add_module(StringLiteral.cpp)
 add_module(Instance.cpp)
-add_module(LayoutInfo.cpp)
 
 add_module(Concatenate.cpp)
 add_module(DataMember.cpp)
-add_module(Fork.cpp)
+add_module(Layout.cpp)
 add_module(MemberOffset.cpp)
 
 add_module(Address.cpp)

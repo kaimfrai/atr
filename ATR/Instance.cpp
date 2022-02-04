@@ -1,12 +1,8 @@
 export module ATR.Instance;
 
 export import ATR.ID;
-export import ATR.LayoutInfo;
-export import ATR.MemberOffset;
+export import ATR.Layout;
 export import ATR.Address;
-export import Std.QualifierTemplate;
-
-export import Std;
 
 export namespace
 	ATR
@@ -17,6 +13,9 @@ export namespace
 		>
 	struct
 		Instance
+	:	CreateLayoutType
+		<	t_tTypeID
+		>
 	{
 		static auto constexpr
 		&	TypeName
@@ -31,107 +30,7 @@ export namespace
 			>
 		;
 
-		LayoutType
-			Layout
-		;
-
-		/// access const member of the layout
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	ATR::MemberAccessIDOf<LayoutType const> auto
-					i_vName
-			)	const
-			noexcept
-		->	decltype(auto)
-		{	return
-			Layout
-			[	i_vName
-			];
-		}
-
-		/// access non-const member of the layout
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	ATR::MemberAccessIDOf<LayoutType> auto
-					i_vName
-			)
-			noexcept
-		->	decltype(auto)
-		{	return
-			Layout
-			[	i_vName
-			];
-		}
-
-		template
-			<	StringLiteral
-					t_vMemberName
-			>
-		requires
-			ATR::MemberAccessIDOf
-			<	ID_T<t_vMemberName>
-			,	LayoutType const
-			>
-		[[nodiscard]]
-		auto constexpr
-		(	Get
-		)	()	const
-			noexcept
-		->	decltype(auto)
-		{	return
-			Layout
-			[	ID_V<t_vMemberName>
-			];
-		}
-
-		template
-			<	StringLiteral
-					t_vMemberName
-			>
-		requires
-			ATR::MemberAccessIDOf
-			<	ID_T<t_vMemberName>
-			,	LayoutType const
-			>
-		[[nodiscard]]
-		auto constexpr
-		(	Get
-		)	()
-			noexcept
-		->	decltype(auto)
-		{	return
-			Layout
-			[	ID_V<t_vMemberName>
-			];
-		}
-
-		template
-			<	StringLiteral
-					t_vMemberName
-			,	typename
-					t_tValue
-			>
-		requires
-			ATR::MemberAccessIDOf
-			<	ID_T<t_vMemberName>
-			,	LayoutType
-			>
-		auto constexpr
-		(	Set
-		)	(	t_tValue
-				&&	i_rValue
-			)
-			noexcept
-		->	void
-		{	(	Get<t_vMemberName>()
-			=	::std::forward
-				<	t_tValue
-				>(	i_rValue
-				)
-			);
-		}
+		using LayoutType::operator[];
 
 		/// call const member functions
 		template
@@ -168,8 +67,8 @@ export namespace
 			Invoke
 			<	t_tFunctionName
 			>(	*this
-			,	::std::forward
-				<	t_tpArgument
+			,	static_cast
+				<	t_tpArgument&&
 				>(	i_rpArgument
 				)
 				...
@@ -211,92 +110,8 @@ export namespace
 			Invoke
 			<	t_tFunctionName
 			>(	*this
-			,	::std::forward
-				<	t_tpArgument
-				>(	i_rpArgument
-				)
-				...
-			);
-		}
-
-		/// call const member functions
-		template
-			<	StringLiteral
-					t_vFuncID
-			,	typename
-				...	t_tpArgument
-			>
-		requires
-			ValidAddress
-			<	ID_T<t_vFuncID>
-			,	Instance const&
-			,	t_tpArgument
-				...
-			>
-		[[nodiscard]]
-		auto constexpr
-		(	Call
-		)	(	t_tpArgument
-				&&
-				...	i_rpArgument
-			)	const
-			noexcept
-			(	AddressNoexcept
-				<	ID_T<t_vFuncID>
-				,	Instance const&
-				,	t_tpArgument
-					...
-				>
-			)
-		->	decltype(auto)
-		{	return
-			Invoke
-			<	ID_T<t_vFuncID>
-			>(	*this
-			,	::std::forward
-				<	t_tpArgument
-				>(	i_rpArgument
-				)
-				...
-			);
-		}
-
-		/// call non-const member functions
-		template
-			<	StringLiteral
-					t_vFuncID
-			,	typename
-				...	t_tpArgument
-			>
-		requires
-			ValidAddress
-			<	ID_T<t_vFuncID>
-			,	Instance&
-			,	t_tpArgument
-				...
-			>
-		[[nodiscard]]
-		auto constexpr
-		(	Call
-		)	(	t_tpArgument
-				&&
-				...	i_rpArgument
-			)
-			noexcept
-			(	AddressNoexcept
-				<	ID_T<t_vFuncID>
-				,	Instance&
-				,	t_tpArgument
-					...
-				>
-			)
-		->	decltype(auto)
-		{	return
-			Invoke
-			<	ID_T<t_vFuncID>
-			>(	*this
-			,	::std::forward
-				<	t_tpArgument
+			,	static_cast
+				<	t_tpArgument&&
 				>(	i_rpArgument
 				)
 				...
@@ -325,7 +140,7 @@ export namespace
 		>
 	concept
 		HasDataMember
-	=	ATR::MemberAccessIDOf
+	=	MemberAccessIDOf
 		<	ID_T<t_vMemberName>
 		,	typename
 			t_tObject

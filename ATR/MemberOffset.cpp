@@ -1,11 +1,9 @@
 export module ATR.MemberOffset;
 
-export import ATR.Fork;
 export import ATR.DataMember;
-export import ATR.ID;
+export import ATR.StringLiteral;
 
 export import Std;
-export import Meta.ValueInfo;
 export import Meta.Integer;
 export import Meta.Concept.Empty;
 
@@ -121,55 +119,6 @@ export namespace
 		}
 	};
 
-	/// increases the offset of a MemberOffset
-	template
-		<	typename
-				t_tMember
-		,	Meta::USize
-				t_nOffset
-		,	Meta::USize
-				t_nAdditionalOffset
-		>
-	[[nodiscard]]
-	auto constexpr
-		operator+
-		(	MemberOffset
-			<	t_tMember
-			,	t_nOffset
-			>
-		,	Meta::ValueInfo<t_nAdditionalOffset>
-		)
-		noexcept
-	->	MemberOffset
-		<	t_tMember
-		,	t_nOffset
-		+	t_nAdditionalOffset
-		>
-	{	return{};	}
-
-	// stateless members always have offset 0
-	template
-		<	Meta::ProtoStateless
-				t_tMember
-		,	Meta::USize
-				t_nOffset
-		>
-	[[nodiscard]]
-	auto constexpr
-		operator+
-		(	MemberOffset
-			<	t_tMember
-			,	0uz
-			>
-		,	Meta::ValueInfo<t_nOffset>
-		)
-		noexcept
-	->	MemberOffset
-		<	t_tMember
-		,	0uz
-		>
-	{	return{};	}
-
 	/// immitates syntax of pointer to member dereference
 	template
 		<	typename
@@ -179,22 +128,20 @@ export namespace
 		>
 	[[nodiscard]]
 	auto constexpr
-		operator->*
-		(	void
+	(	operator->*
+	)	(	void
 			*	i_aObject
 		,	MemberOffset
 			<	t_tMember
 			,	t_nOffset
 			>	i_vMemberOffset
 		)
-	noexcept
+		noexcept
 	->	decltype(auto)
-	{
-		return
-			i_vMemberOffset
-			(	i_aObject
-			)
-		;
+	{	return
+		i_vMemberOffset
+		(	i_aObject
+		);
 	}
 
 		/// immitates syntax of pointer to member dereference
@@ -206,8 +153,8 @@ export namespace
 		>
 	[[nodiscard]]
 	auto constexpr
-		operator->*
-		(	void const
+	(	operator->*
+	)	(	void const
 			*	i_aObject
 		,	MemberOffset
 			<	t_tMember
@@ -216,12 +163,10 @@ export namespace
 		)
 	noexcept
 	->	decltype(auto)
-	{
-		return
-			i_vMemberOffset
-			(	i_aObject
-			)
-		;
+	{	return
+		i_vMemberOffset
+		(	i_aObject
+		);
 	}
 
 	auto constexpr

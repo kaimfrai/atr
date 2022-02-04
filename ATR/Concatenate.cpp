@@ -3,7 +3,6 @@ export module ATR.Concatenate;
 export import ATR.ID;
 export import ATR.StringLiteral;
 export import ATR.DataMember;
-export import ATR.LayoutInfo;
 
 export import Meta.ValueInfo;
 

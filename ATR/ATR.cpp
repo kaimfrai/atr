@@ -8,7 +8,7 @@ export import ATR.DataMember;
 export import ATR.Dependency;
 export import ATR.DependencyIDMap;
 export import ATR.Erase;
-export import ATR.Fork;
+export import ATR.Layout;
 export import ATR.ID;
 export import ATR.Instance;
 export import ATR.MemberOffset;
