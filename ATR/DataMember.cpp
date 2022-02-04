@@ -76,7 +76,7 @@ export namespace
 			Type
 		;
 
-		Meta::Value<char const[]>
+		StringView
 			Name
 		;
 
@@ -107,42 +107,9 @@ export namespace
 		>
 	struct
 		DataMemberConfig
+	:	Meta::Value<DataMemberInfo[t_nMemberCount]>
 	{
-		static auto constexpr
-		(	size
-		)	()
-		->	Meta::USize
-		{	return t_nMemberCount;	}
-
-		DataMemberInfo
-			DataMembers
-		[	t_nMemberCount
-		];
-
-		auto constexpr
-		(	operator[]
-		)	(	Meta::USize
-					i_nIndex
-			)	&
-		->	DataMemberInfo&
-		{
-			if	(i_nIndex >= t_nMemberCount)
-				throw "Index out of bounds!";
-			return DataMembers[i_nIndex];
-		}
-
-		auto constexpr
-		(	operator[]
-		)	(	Meta::USize
-					i_nIndex
-			)	const&
-		->	DataMemberInfo const&
-		{
-			if	(i_nIndex >= t_nMemberCount)
-				throw "Index out of bounds!";
-			return DataMembers[i_nIndex];
-		}
-
+		using Meta::Value<DataMemberInfo[t_nMemberCount]>::Value;
 		auto constexpr
 		(	operator()
 		)	(	::std::initializer_list<DataMemberInfo>
@@ -166,16 +133,16 @@ export namespace
 					(	begin(vCopy)
 					,	end(vCopy)
 					,	[	vName = rExchange.Name
-						]	(	DataMemberInfo const
+						]	(	Meta::Value<DataMemberInfo> const
 								&	i_rInfo
 						)
-						{	return i_rInfo.Name == vName;	}
+						{	return i_rInfo.Object.Name == vName;	}
 					)
 				;
 				if	(vExchangePosition == end(vCopy))
 					throw "Cannot exchange non-existing member!";
 
-				vExchangePosition->Type = rExchange.Type;
+				vExchangePosition->Object.Type = rExchange.Type;
 			}
 
 			::std::sort(begin(vCopy), end(vCopy));
@@ -190,38 +157,6 @@ export namespace
 			)	const
 		->	DataMemberConfig
 		{	return operator()({i_rExchange});	}
-
-		friend auto constexpr
-		(	begin
-		)	(	DataMemberConfig
-				&	i_rConfig
-			)
-		->	DataMemberInfo*
-		{	return i_rConfig.DataMembers;	}
-
-		friend auto constexpr
-		(	begin
-		)	(	DataMemberConfig const
-				&	i_rConfig
-			)
-		->	DataMemberInfo const*
-		{	return i_rConfig.DataMembers;	}
-
-		friend auto constexpr
-		(	end
-		)	(	DataMemberConfig
-				&	i_rConfig
-			)
-		->	DataMemberInfo*
-		{	return i_rConfig.DataMembers + t_nMemberCount;	}
-
-		friend auto constexpr
-		(	end
-		)	(	DataMemberConfig const
-				&	i_rConfig
-			)
-		->	DataMemberInfo const*
-		{	return i_rConfig.DataMembers + t_nMemberCount;	}
 
 	private:
 		constexpr DataMemberConfig() = default;
@@ -286,153 +221,6 @@ export namespace
 			)
 		->	DataMemberInfo const*
 		{	return nullptr;	}
-	};
-
-	template
-		<>
-	struct
-		DataMemberConfig
-		<	1uz
-		>
-	{
-		static auto constexpr
-		(	size
-		)	()
-		->	Meta::USize
-		{	return 1uz;	}
-
-		DataMemberInfo
-			DataMember
-		;
-
-		template
-			<	typename
-					t_tEntity
-			>
-		explicit constexpr
-		(	DataMemberConfig
-		)	(	Meta::TypeToken<t_tEntity>
-					i_vType
-			,	ProtoID auto
-					i_vName
-			)
-		:	DataMember
-			{	.Type = i_vType
-			,	.Name = i_vName.RawArray
-			}
-		{}
-
-		auto constexpr
-		(	operator[]
-		)	(	Meta::USize
-					i_nIndex
-			)	&
-		->	DataMemberInfo&
-		{
-			if	(i_nIndex > 0uz)
-				throw "Index out of bounds!";
-			return DataMember;
-		}
-
-		auto constexpr
-		(	operator[]
-		)	(	Meta::USize
-					i_nIndex
-			)	const&
-		->	DataMemberInfo const&
-		{
-			if	(i_nIndex > 0uz)
-				throw "Index out of bounds!";
-			return DataMember;
-		}
-
-		auto constexpr
-		(	operator()
-		)	(	DataMemberInfo const
-				&	i_rExchange
-			)	const
-		->	DataMemberConfig
-		{
-			DataMemberConfig
-				vCopy
-			=	*this
-			;
-
-			if	(vCopy.DataMember.Name != i_rExchange.Name)
-				throw "Cannot exchange non-existing member!";
-
-			vCopy.DataMember.Type = i_rExchange.Type;
-			return vCopy;
-		}
-
-		friend auto constexpr
-		(	begin
-		)	(	DataMemberConfig
-				&	i_rConfig
-			)
-		->	DataMemberInfo*
-		{	return &i_rConfig.DataMember;	}
-
-		friend auto constexpr
-		(	begin
-		)	(	DataMemberConfig const
-				&	i_rConfig
-			)
-		->	DataMemberInfo const*
-		{	return &i_rConfig.DataMember;	}
-
-		friend auto constexpr
-		(	end
-		)	(	DataMemberConfig
-				&	i_rConfig
-			)
-		->	DataMemberInfo*
-		{	return begin(i_rConfig) + 1z;	}
-
-		friend auto constexpr
-		(	end
-		)	(	DataMemberConfig const
-				&	i_rConfig
-			)
-		->	DataMemberInfo const*
-		{	return begin(i_rConfig) + 1z;	}
-
-	private:
-		constexpr DataMemberConfig() = default;
-
-		template
-			<	Meta::USize
-					t_nLeft
-			,	Meta::USize
-					t_nRight
-			>
-		friend auto constexpr
-		(	operator +
-		)	(	DataMemberConfig<t_nLeft> const&
-			,	DataMemberConfig<t_nRight> const&
-			)
-		->	DataMemberConfig
-			<	t_nLeft
-			+	t_nRight
-			>
-		;
-
-		template
-			<	Meta::USize
-					t_nLeft
-			,	Meta::USize
-					t_nRight
-			>
-		friend auto constexpr
-		(	operator -
-		)	(	DataMemberConfig<t_nLeft> const&
-			,	DataMemberConfig<t_nRight> const&
-			)
-		->	DataMemberConfig
-			<	t_nLeft
-			-	t_nRight
-			>
-		;
 	};
 
 	template
@@ -575,8 +363,10 @@ export namespace
 	DataMemberConfig<1uz> constexpr inline
 		InfoV
 	=	DataMemberConfig<1uz>
-		{	Meta::Type<t_tValue>
-		,	ID_V<t_vName>
+		{	DataMemberInfo
+			{	Meta::Type<t_tValue>
+			,	ID_V<t_vName>.StringView
+			}
 		}
 	;
 
@@ -592,7 +382,7 @@ export namespace
 		{	Meta::Type
 			<	ID_T<t_vTargetID>
 			>
-		,	ID_T<t_vOriginID>::RawArray
+		,	ID_T<t_vOriginID>::StringView
 		}
 	;
 }

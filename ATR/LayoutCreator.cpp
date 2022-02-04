@@ -15,7 +15,7 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	DataMemberLayoutSplit
-	)	(	DataMemberInfo const
+	)	(	Meta::Value<DataMemberInfo>	const
 			*	i_aBegin
 		,	Meta::USize
 				i_nFirstOffset
@@ -35,8 +35,8 @@ export namespace
 		+	i_nEndOffset
 		-	1uz
 		;
-		if	(	aFirst->Type->Alignment
-			==	aLast->Type->Alignment
+		if	(	aFirst->Object.Type->Alignment
+			==	aLast->Object.Type->Alignment
 			)
 			return
 				i_nFirstOffset
@@ -52,8 +52,8 @@ export namespace
 			=	::std::lower_bound
 				(	aFirst
 				,	aLast + 1z
-				,	aFirst->Type->Alignment / 2uz
-				,	[]	(	DataMemberInfo const
+				,	aFirst->Object.Type->Alignment / 2uz
+				,	[]	(	Meta::Value<DataMemberInfo> const
 							&	i_rLeft
 						,	Meta::USize
 								i_nRight
@@ -61,7 +61,7 @@ export namespace
 					->	bool
 					{
 						return
-							i_rLeft.Type->Alignment
+							i_rLeft.Object.Type->Alignment
 						>	i_nRight
 						;
 					}
@@ -74,25 +74,6 @@ export namespace
 			);
 		}
 	}
-
-	template
-		<	typename
-				t_tNorthArea
-		,	typename
-				t_tSouthArea
-		>
-	auto constexpr
-	(	ForkLayout
-	)	(	Meta::TypeToken<t_tNorthArea>
-		,	Meta::TypeToken<t_tSouthArea>
-		)
-	->	Meta::TypeToken
-		<	Fork
-			<	t_tNorthArea
-			,	t_tSouthArea
-			>
-		>
-	{	return {};	}
 
 	template
 		<	DataMemberConfig
@@ -109,6 +90,7 @@ export namespace
 	(	CreateLayout
 	)	(	Meta::ValueInfo<t_vConfig>
 				i_vConfig
+			=	{}
 		,	Meta::ValueInfo<t_nBegin>
 				i_vBegin
 			=	{}
@@ -129,19 +111,17 @@ export namespace
 			+	t_nBegin
 			;
 			return
-			Meta::Type
-			<	ATR::DataMember
-				<	ID_T
-					<	StringLiteral
-						<	aBegin->Name.size() + 1uz
-						>{	aBegin->Name.data()
-						}
-					>
-				,	Meta::RestoreTypeEntity
-					<	aBegin->Type
-					>
+			ATR::DataMember
+			<	ID_T
+				<	StringLiteral
+					<	aBegin->Object.Name.size() + 1uz
+					>{	aBegin->Object.Name.data()
+					}
 				>
-			>;
+			,	Meta::RestoreTypeEntity
+				<	aBegin->Object.Type
+				>
+			>{};
 		}
 		else
 		{
@@ -157,18 +137,18 @@ export namespace
 			;
 
 			return
-			ForkLayout
-			(	CreateLayout
+			Fork
+			<	decltype(CreateLayout
 				(	i_vConfig
 				,	i_vBegin
 				,	vSplitIndex
-				)
-			,	CreateLayout
+				))
+			,	decltype(CreateLayout
 				(	i_vConfig
 				,	vSplitIndex
 				,	i_vEnd
-				)
-			);
+				))
+			>{};
 		}
 	}
 }

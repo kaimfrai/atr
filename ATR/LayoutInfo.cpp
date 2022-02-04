@@ -20,30 +20,6 @@ export namespace
 		LayoutConfig
 	{};
 
-	[[nodiscard]]
-	auto constexpr
-	(	CreateLayout
-	)	(	ProtoID auto
-				i_vTypeID
-		)
-	{
-		auto constexpr
-			vConfig
-		=	LayoutConfig
-			<	i_vTypeID
-			.	RawArray
-			>
-		;
-
-		return
-		ATR::CreateLayout
-		(	Meta::V
-			<	vConfig
-			>
-		);
-	}
-
-
 	/// the type mapped to the string literal by LayoutInfo
 	template
 		<	ProtoID
@@ -51,11 +27,14 @@ export namespace
 		>
 	using
 		CreateLayoutType
-	=	Meta::TypeEntity
-		<	CreateLayout
-			(	t_tTypeID{}
-			)
-		>
+	=	decltype
+		(	CreateLayout
+			<	LayoutConfig
+				<	t_tTypeID
+				::	StringLiteral
+				>
+			>()
+		)
 	;
 
 	/// customization point for specifying layout types

@@ -1348,6 +1348,28 @@ export namespace
 		>
 	;
 
+	template
+		<	typename
+				t_tLeft
+		,	typename
+				t_tRight
+		>
+	auto constexpr
+	(	operator <=>
+	)	(	Meta::Value<t_tLeft> const
+			&	i_rLeft
+		,	Meta::Value<t_tRight> const
+			&	i_rRight
+		)
+	->	decltype
+		(	i_rLeft.Object
+		<=>	i_rRight.Object
+		)
+	{	return
+		(	i_rLeft.Object
+		<=>	i_rRight.Object
+		);
+	}
 
 	template
 		<	ProtoValue
