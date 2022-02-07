@@ -23,25 +23,29 @@ export namespace
 	}
 
 	/// functions prefixed with Get return the datamember without get
+	template
+		<	char const
+			&
+			...	t_rpLetter
+		>
 	auto constexpr
 		MapAddress
-		(	ProtoPrefixID<"Get"> auto
-				i_vGet
-		,	ATR::HasDataMember
-			<	decltype
-				(	"Get"_id
-				-	i_vGet
-				)
+		(	ID
+			<	Char('G')
+			,	Char('e')
+			,	Char('t')
+			,	t_rpLetter
+				...
+			>
+		,	HasDataMember
+			<	ID<t_rpLetter...>
 			>	auto const
 			&	i_rObject
 		)
 	{
 		using
 			MemberName
-		=	decltype
-			(	"Get"_id
-			-	i_vGet
-			)
+		=	ID<t_rpLetter...>
 		;
 		using
 			MemberType

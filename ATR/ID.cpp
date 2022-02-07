@@ -4,109 +4,84 @@ export import ATR.StringLiteral;
 
 import Meta.Index;
 
-///	Unique class to prevent external specializations.
-class
-	Char
-{
-	char
-		m_nChar
-	;
+char constexpr inline i0 = '0';
+char constexpr inline i1 = '1';
+char constexpr inline i2 = '2';
+char constexpr inline i3 = '3';
+char constexpr inline i4 = '4';
+char constexpr inline i5 = '5';
+char constexpr inline i6 = '6';
+char constexpr inline i7 = '7';
+char constexpr inline i8 = '8';
+char constexpr inline i9 = '9';
 
-public:
-	constexpr
-	(	Char
-	)	(	char
-				i_nChar
-		)
-	:	m_nChar
-		{	i_nChar
-		}
-	{}
+char constexpr inline A = 'A';
+char constexpr inline B = 'B';
+char constexpr inline C = 'C';
+char constexpr inline D = 'D';
+char constexpr inline E = 'E';
+char constexpr inline F = 'F';
+char constexpr inline G = 'G';
+char constexpr inline H = 'H';
+char constexpr inline I = 'I';
+char constexpr inline J = 'J';
+char constexpr inline K = 'K';
+char constexpr inline L = 'L';
+char constexpr inline M = 'M';
+char constexpr inline N = 'N';
+char constexpr inline O = 'O';
+char constexpr inline P = 'P';
+char constexpr inline Q = 'Q';
+char constexpr inline R = 'R';
+char constexpr inline S = 'S';
+char constexpr inline T = 'T';
+char constexpr inline U = 'U';
+char constexpr inline V = 'V';
+char constexpr inline W = 'W';
+char constexpr inline X = 'X';
+char constexpr inline Y = 'Y';
+char constexpr inline Z = 'Z';
 
-	constexpr
-	(	operator char
-	)	()	const
-	{	return m_nChar;	}
-};
+char constexpr inline _ = '_';
 
-Char constexpr inline i0 = '0';
-Char constexpr inline i1 = '1';
-Char constexpr inline i2 = '2';
-Char constexpr inline i3 = '3';
-Char constexpr inline i4 = '4';
-Char constexpr inline i5= '5';
-Char constexpr inline i6 = '6';
-Char constexpr inline i7 = '7';
-Char constexpr inline i8 = '8';
-Char constexpr inline i9 = '9';
+char constexpr inline a = 'a';
+char constexpr inline b = 'b';
+char constexpr inline c = 'c';
+char constexpr inline d = 'd';
+char constexpr inline e = 'e';
+char constexpr inline f = 'f';
+char constexpr inline g = 'g';
+char constexpr inline h = 'h';
+char constexpr inline i = 'i';
+char constexpr inline j = 'j';
+char constexpr inline k = 'k';
+char constexpr inline l = 'l';
+char constexpr inline m = 'm';
+char constexpr inline n = 'n';
+char constexpr inline o = 'o';
+char constexpr inline p = 'p';
+char constexpr inline q = 'q';
+char constexpr inline r = 'r';
+char constexpr inline s = 's';
+char constexpr inline t = 't';
+char constexpr inline u = 'u';
+char constexpr inline v = 'v';
+char constexpr inline w = 'w';
+char constexpr inline x = 'x';
+char constexpr inline y = 'y';
+char constexpr inline z = 'z';
 
-Char constexpr inline A = 'A';
-Char constexpr inline B = 'B';
-Char constexpr inline C = 'C';
-Char constexpr inline D = 'D';
-Char constexpr inline E = 'E';
-Char constexpr inline F = 'F';
-Char constexpr inline G = 'G';
-Char constexpr inline H = 'H';
-Char constexpr inline I = 'I';
-Char constexpr inline J = 'J';
-Char constexpr inline K = 'K';
-Char constexpr inline L = 'L';
-Char constexpr inline M = 'M';
-Char constexpr inline N = 'N';
-Char constexpr inline O = 'O';
-Char constexpr inline P = 'P';
-Char constexpr inline Q = 'Q';
-Char constexpr inline R = 'R';
-Char constexpr inline S = 'S';
-Char constexpr inline T = 'T';
-Char constexpr inline U = 'U';
-Char constexpr inline V = 'V';
-Char constexpr inline W = 'W';
-Char constexpr inline X = 'X';
-Char constexpr inline Y = 'Y';
-Char constexpr inline Z = 'Z';
-
-Char constexpr inline _ = '_';
-
-Char constexpr inline a = 'a';
-Char constexpr inline b = 'b';
-Char constexpr inline c = 'c';
-Char constexpr inline d = 'd';
-Char constexpr inline e = 'e';
-Char constexpr inline f = 'f';
-Char constexpr inline g = 'g';
-Char constexpr inline h = 'h';
-Char constexpr inline i = 'i';
-Char constexpr inline j = 'j';
-Char constexpr inline k = 'k';
-Char constexpr inline l = 'l';
-Char constexpr inline m = 'm';
-Char constexpr inline n = 'n';
-Char constexpr inline o = 'o';
-Char constexpr inline p = 'p';
-Char constexpr inline q = 'q';
-Char constexpr inline r = 'r';
-Char constexpr inline s = 's';
-Char constexpr inline t = 't';
-Char constexpr inline u = 'u';
-Char constexpr inline v = 'v';
-Char constexpr inline w = 'w';
-Char constexpr inline x = 'x';
-Char constexpr inline y = 'y';
-Char constexpr inline z = 'z';
-
-namespace
+export namespace
 	ATR
 {
-	static auto constexpr
-	(	ToReference
+	auto constexpr
+	(	Char
 	)	(	char
-				i_nCharacter
+				i_ncharacter
 		)
-	->	Char const&
+	->	char const&
 	{
-		switch(i_nCharacter)
+		switch(i_ncharacter)
 		{
 			//	Digits
 			case '0':
@@ -246,15 +221,11 @@ namespace
 				throw "Invalid character in identitfier!";
 		}
 	}
-}
 
-export namespace
-	ATR
-{
 	/// serves as a base class for all identifer types
 	/// provides conversions to arrays as well as begin and end functions
 	template
-		<	::Char const
+		<	char const
 			&
 			...	t_rpString
 		>
@@ -283,7 +254,7 @@ export namespace
 		{	return StringView;	}
 
 		template
-			<	Char const
+			<	char const
 				&
 				...	t_rpBack
 			>
@@ -307,7 +278,7 @@ export namespace
 		}
 
 		template
-			<	Char const
+			<	char const
 				&
 				...	t_rpFront
 			>
@@ -333,10 +304,9 @@ export namespace
 				)
 			{	return
 					::ATR::ID
-					<	::ATR::ToReference
+					<	Char
 						(	::ATR::ID<t_rpFront...>::RawArray
 							[	t_npIndex
-
 							]
 						)
 						...
@@ -350,7 +320,7 @@ export namespace
 		}
 
 		template
-			<	Char const
+			<	char const
 				&
 				...	t_rpBack
 			>
@@ -398,9 +368,8 @@ namespace
 	auto constexpr
 	(	Make
 	)	()
-	->	ProtoID auto
-	{
-		return
+	->	decltype(auto)
+	{	return
 		[]	<	Meta::USize
 				...	t_npIndex
 			>(	Meta::IndexToken
@@ -409,8 +378,8 @@ namespace
 				>
 			)
 		{	return
-				::ATR::ID
-				<	ToReference
+				ID
+				<	Char
 					(	t_vStringLiteral
 						[	t_npIndex
 						]
