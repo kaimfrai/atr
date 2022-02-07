@@ -223,7 +223,7 @@ namespace
 
 		static SplitPack constexpr
 			LayoutSplit
-		{	Meta::ValueSequence<SplitIndex>()
+		{	Meta::ZeroSequence<SplitIndex>
 		};
 
 		using
@@ -309,9 +309,7 @@ namespace
 				>
 				...
 			>{};
-		}(	Meta::Sequence
-			(	Meta::Index<t_vConfig.size()>
-			)
+		}(	Meta::Sequence<t_vConfig.size()>
 		);
 	}
 }

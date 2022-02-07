@@ -307,7 +307,7 @@ export namespace
 				)
 				...
 			};
-		}(	Meta::Sequence(Meta::Index<sizeof...(t_tpItem)>)
+		}(	Sequence<sizeof...(t_tpItem)>
 		);
 	}
 

@@ -50,23 +50,21 @@ export namespace
 			&
 		>
 	auto constexpr
-		MapAddress
-		(	ID_T<"ComputeArea">
-		,	t_tShape const
-			&
+	(	MapAddress
+	)	(	ID_T<"ComputeArea">
+		,	Argument<t_tShape> const&
 		)
 	{
 		return
-			MakeProductAddress
-			<	t_tShape
-			,	MapFuncID("GetComputeAreaMultiplier"_id)
-			->* "Constant"_id
-			,	MapFuncID("GetHeight"_id)
-			->* "Get0"_id
-			,	MapFuncID("GetWidth"_id)
-			->* "Get1"_id
-			>()
-		;
+		MakeProductAddress
+		<	t_tShape
+		,	MapFuncID("GetComputeAreaMultiplier"_id)
+		->* "Constant"_id
+		,	MapFuncID("GetHeight"_id)
+		->* "Get0"_id
+		,	MapFuncID("GetWidth"_id)
+		->* "Get1"_id
+		>();
 	}
 }
 

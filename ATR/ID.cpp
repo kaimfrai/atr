@@ -315,7 +315,7 @@ export namespace
 			}(	Meta::Sequence
 				<	sizeof...(t_rpFront)
 				-	sizeof...(t_rpString)
-				>()
+				>
 			);
 		}
 
@@ -387,9 +387,7 @@ namespace
 					...
 				>{}
 			;
-		}(	Meta::Sequence
-			(	Meta::Index<t_vStringLiteral.size()>
-			)
+		}(	Meta::Sequence<t_vStringLiteral.size()>
 		);
 	}
 }

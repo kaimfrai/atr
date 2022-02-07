@@ -86,17 +86,18 @@ export namespace
 			...
 		>{}
 	;
+}
 
+namespace
+	Meta
+{
 	template
 		<	USize
 				t_nLength
 		>
 	auto constexpr inline
-	(	Sequence
-	)	(	IndexToken
-			<	t_nLength
-			>
-			=	{}
+	(	MakeSequence
+	)	(	IndexToken<t_nLength>
 		)
 	{	return
 		[]	<	USize
@@ -116,30 +117,32 @@ export namespace
 			>{}
 		);
 	}
+}
+
+export namespace
+	Meta
+{
+	template
+		<	USize
+				t_nSize
+		>
+	auto constexpr inline
+		Sequence
+	=	MakeSequence
+		(	Index<t_nSize>
+		)
+	;
 
 	template
 		<	USize
-				t_nLength
-		,	USize
-				t_nValue
-			=	0uz
+				t_nSize
 		>
 	auto constexpr inline
-	(	ValueSequence
-	)	(	IndexToken
-			<	t_nLength
-			>	i_vLength
-			=	{}
-		,	IndexToken
-			<	t_nValue
-			>	i_vValue
-			=	{}
+		ZeroSequence
+	=	(	Sequence<t_nSize>
+		=	Index<0uz>
 		)
-	{	return
-			Sequence(i_vLength)
-		=	i_vValue
-		;
-	}
+	;
 }
 
 export namespace

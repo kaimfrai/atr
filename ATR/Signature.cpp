@@ -10,41 +10,36 @@ export namespace
 	/// to be instantiated and compiled in a separate .cpp file with extern template
 	/// note that ideally, the body should be available to be inlined in the place of instantiation
 	template
-		<	DependencyInstance
-				t_tFuncID
-		,	DependencyInstance
-			...	t_tpDependency
+		<	Dependency
+				t_vFuncID
+		,	Dependency
+			...	t_vpDependency
 		>
 	auto constexpr
 	(	Signature
 	)	(	typename
-			t_tpDependency
+			decltype(t_vpDependency)
 		::	ArgumentType
 			...	i_vpArgument
 		)
 		noexcept
 		(	BodyNoexcept
-			<	t_tFuncID
-			,	t_tpDependency
+			<	typename decltype(t_vFuncID)::BoundType
+			,	typename decltype(t_vpDependency)::BoundType
 				...
 			>
 		)
 	->	BodyReturnType
-		<	t_tFuncID
-		,	t_tpDependency
+		<	typename decltype(t_vFuncID)::BoundType
+		,	typename decltype(t_vpDependency)::BoundType
 			...
 		>
 	{	return
 		Body
-		(	t_tFuncID
-			{	typename
-				t_tFuncID
-			::	ArgumentType
-				{}
-			}
-		,	t_tpDependency
-			{	i_vpArgument
-			}
+		(	t_vFuncID()
+		,	t_vpDependency
+			(	i_vpArgument
+			)
 			...
 		);
 	}

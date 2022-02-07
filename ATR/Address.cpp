@@ -14,57 +14,97 @@ export namespace
 {
 	template
 		<	typename
-				t_tStaticDependency
-		,	typename
-			...	t_tpArgumentDependency
+				t_tArgument
 		>
 	struct
-		DependencyAddress
+		Argument
 	{
-		explicit constexpr
-		(	DependencyAddress
-		)	(	Meta::TypeToken
-				<	t_tStaticDependency
-				>
-			,	Meta::TypeToken
-				<	t_tpArgumentDependency
-				>
-				...
-			)
-		{}
-
-		static auto constexpr
-			Address
-		=	&
-			Signature
-			<	t_tStaticDependency
-			,	t_tpArgumentDependency
-				...
-			>
-		;
+		auto constexpr
+		(	operator()
+		)	()
+		->	Argument<t_tArgument>
+		{	return *this;	}
 	};
 
 	template
 		<	typename
-				t_tStaticDependency
-		,	typename
-			...	t_tpArgumentDependency
+				t_tArgument
 		>
-	(	DependencyAddress
-	)	(	Meta::TypeToken
-			<	t_tStaticDependency
-			>
-		,	Meta::TypeToken
-			<	t_tpArgumentDependency
-			>
-			...
-		)
-	->	DependencyAddress
-		<	t_tStaticDependency
-		,	t_tpArgumentDependency
-			...
+	struct
+		Argument
+		<	t_tArgument&
 		>
-	;
+	{
+		Argument<t_tArgument>
+			Argument
+		{};
+
+		auto constexpr
+		(	operator()
+		)	()
+		->	::ATR::Argument<t_tArgument>&
+		{	return Argument;	}
+	};
+
+	template
+		<	typename
+				t_tArgument
+		>
+	struct
+		Argument
+		<	t_tArgument const&
+		>
+	{
+		Argument<t_tArgument>
+			Argument
+		{};
+
+		auto constexpr
+		(	operator()
+		)	()	const
+		->	::ATR::Argument<t_tArgument> const&
+		{	return Argument;	}
+	};
+
+	template
+		<	typename
+				t_tArgument
+		>
+	struct
+		Argument
+		<	t_tArgument&&
+		>
+	{
+		Argument<t_tArgument>
+			Argument
+		{};
+
+		auto constexpr
+		(	operator()
+		)	()
+		->	::ATR::Argument<t_tArgument>&&
+		{	return ::std::move(Argument);	}
+	};
+
+	template
+		<	typename
+				t_tArgument
+		>
+	struct
+		Argument
+		<	t_tArgument const&&
+		>
+	{
+		Argument<t_tArgument>
+			Argument
+		{};
+
+		auto constexpr
+		(	operator()
+		)	()	const
+		->	::ATR::Argument<t_tArgument> const&&
+		{	return ::std::move(Argument);	}
+	};
 
 	/// checks if the address is mapped
 	template
@@ -81,19 +121,15 @@ export namespace
 	and	requires
 			(	t_tFunctionName
 					c_vFunctionName
-			,	t_tpArgument
+			,	Argument<t_tpArgument>
 				...	c_vpArgument
 			)
 		{
-				decltype
-				(	MapAddress
-					(	c_vFunctionName
-					,	c_vpArgument
-						...
-					)
-				)
-			::	Address
-			;
+			MapAddress
+			(	c_vFunctionName
+			,	c_vpArgument()
+				...
+			);
 		}
 	;
 
@@ -114,18 +150,12 @@ export namespace
 			...
 		>
 	{	return
-			decltype
-			(	MapAddress
-				(	t_tFuncID
-					{}
-				,	::std::declval
-					<	t_tpArgument
-					>()
-					...
-				)
-			)
-		::	Address
-		;
+		MapAddress
+		(	t_tFuncID
+			{}
+		,	Argument<t_tpArgument>{}()
+			...
+		);
 	}
 
 	/// stores the address to the implementation of the function

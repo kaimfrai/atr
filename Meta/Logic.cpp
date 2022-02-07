@@ -108,7 +108,7 @@ namespace
 			(	Sequence
 				<	t_vTerm[t_npClauseIndex]
 				.	LiteralCount()
-				>()
+				>
 			,	i_rLiterals
 			,	::std::forward
 				<	t_tpArgument
@@ -486,7 +486,7 @@ export namespace
 			<	t_vTerm
 			>(	Sequence
 				<	t_vTerm.ClauseCount()
-				>()
+				>
 			,	Literals
 			,	::std::forward
 				<	t_tpArgument

@@ -48,8 +48,7 @@ export namespace
 				i_vSuffix
 		)
 	->	decltype(t_vConfig)
-	{
-		return
+	{	return
 		[=]	<	Meta::USize
 				...	t_npIndex
 			>(	Meta::IndexToken<t_npIndex...>
@@ -80,9 +79,7 @@ export namespace
 
 			return vResult;
 
-		}(	Meta::Sequence
-			<	t_vConfig.size()
-			>()
+		}(	Meta::Sequence<t_vConfig.size()>
 		);
 	}
 

@@ -114,7 +114,7 @@ export namespace
 		->	::std::remove_pointer_t
 			<	decltype
 				(	SelectByIndex
-					{	ValueSequence<t_nIndex>()
+					{	ZeroSequence<t_nIndex>
 					}(	static_cast
 						<	Type<t_tpParameter>*
 						>(	nullptr

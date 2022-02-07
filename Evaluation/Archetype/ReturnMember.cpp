@@ -11,7 +11,7 @@ export namespace
 	auto inline
 		Body
 		(	FunctionName<"ReturnMember">
-		,	DependencyInstance auto
+		,	ProtoBoundDependency auto
 				i_vObject
 		)
 	noexcept
@@ -27,20 +27,20 @@ export namespace
 		<	char const
 			&
 			...	t_rpLetter
+		,	HasDataMember
+			<	ID<t_rpLetter...>
+			>	t_tObject
 		>
 	auto constexpr
-		MapAddress
-		(	ID
+	(	MapAddress
+	)	(	ID
 			<	Char('G')
 			,	Char('e')
 			,	Char('t')
 			,	t_rpLetter
 				...
 			>
-		,	HasDataMember
-			<	ID<t_rpLetter...>
-			>	auto const
-			&	i_rObject
+		,	Argument<t_tObject> const&
 		)
 	{
 		using
@@ -50,7 +50,7 @@ export namespace
 		using
 			MemberType
 		=	decltype
-			(	i_rObject
+			(	::std::declval<t_tObject const&>()
 				[	MemberName
 					{}
 				]
@@ -71,15 +71,15 @@ export namespace
 		;
 
 		return
-		DependencyAddress
-		{	StaticDependencyInfo
+		&Signature
+		<	StaticDependencyInfo
 			<	"ReturnMember"
 			>
 		,	ArgumentDependencyInfo
-			<	decltype(i_rObject)
+			<	t_tObject const&
 			,	MapDataID(fResolveAlias()) ->* "Member"_id
 			>
-		};
+		>;
 	}
 }
 

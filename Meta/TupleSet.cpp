@@ -109,16 +109,13 @@ export namespace
 		auto constexpr
 		(	operator []
 		)	(	IndexToken<t_nIndex>
-					i_vIndex
 			)	&
 		->	auto&
 		{
 			auto constexpr
 				fIgnoreOther
 			=	SelectByIndex
-				(	ValueSequence
-					(	i_vIndex
-					)
+				(	ZeroSequence<t_nIndex>
 				)
 			;
 			return
@@ -141,16 +138,13 @@ export namespace
 		auto constexpr
 		(	operator []
 		)	(	IndexToken<t_nIndex>
-					i_vIndex
 			)	const&
 		->	auto const&
 		{
 			auto constexpr
 				fIgnoreOther
 			=	SelectByIndex
-				(	ValueSequence
-					(	i_vIndex
-					)
+				(	ZeroSequence<t_nIndex>
 				)
 			;
 			return
@@ -306,7 +300,7 @@ export namespace
 					]
 					...
 				};
-			}(	Sequence(Index<nNotContainedCount>)
+			}(	Sequence<nNotContainedCount>
 			);
 		}
 	}
@@ -356,7 +350,7 @@ export namespace
 					]
 					...
 				};
-			}(	Sequence<nRequiredItemCount>()
+			}(	Sequence<nRequiredItemCount>
 			);
 	}
 }
@@ -398,7 +392,7 @@ namespace
 	:	::std::remove_pointer
 		<	decltype
 			(	::Meta::SelectByIndex
-				{	::Meta::ValueSequence<t_nIndex>()
+				{	::Meta::ZeroSequence<t_nIndex>
 				}(	::std::declval
 					<	t_tpItem*
 					>()

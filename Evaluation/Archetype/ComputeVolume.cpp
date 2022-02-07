@@ -55,24 +55,22 @@ export namespace
 			&
 		>
 	auto constexpr
-		MapAddress
-		(	ID_T<"ComputeVolume">
-		,	t_tBody const
-			&
+	(	MapAddress
+	)	(	ID_T<"ComputeVolume">
+		,	Argument<t_tBody> const&
 		)
 	{
 		return
-			MakeProductAddress
-			<	t_tBody
-			,	MapFuncID("GetComputeVolumeMultiplier"_id)
-			->* "Constant"_id
-			,	MapFuncID("GetDepth"_id)
-			->* "Get0"_id
-			,	MapFuncID("GetHeight"_id)
-			->* "Get1"_id
-			,	MapFuncID("GetWidth"_id)
-			->* "Get2"_id
-			>()
-		;
+		MakeProductAddress
+		<	t_tBody
+		,	MapFuncID("GetComputeVolumeMultiplier"_id)
+		->* "Constant"_id
+		,	MapFuncID("GetDepth"_id)
+		->* "Get0"_id
+		,	MapFuncID("GetHeight"_id)
+		->* "Get1"_id
+		,	MapFuncID("GetWidth"_id)
+		->* "Get2"_id
+		>();
 	}
 }

@@ -16,11 +16,11 @@ export namespace
 			...
 		>
 	struct
-		Dependency
+		BoundDependency
 	{
 		static_assert
 		(	Meta::ProtoNone
-			<	Dependency
+			<	BoundDependency
 			>
 		,	"Unexpected specialization!"
 		);
@@ -35,7 +35,7 @@ export namespace
 			...	t_tpItem
 		>
 	struct
-		Dependency
+		BoundDependency
 		<	t_tArgument
 		,	Meta::KeyItem
 			<	t_tpID
@@ -64,7 +64,7 @@ export namespace
 		{};
 
 		constexpr
-		(	Dependency
+		(	BoundDependency
 		)	(	t_tArgument
 					i_vArgument
 			,	Meta::KeyTuple
@@ -142,8 +142,119 @@ export namespace
 		,	typename
 			...	t_tpItem
 		>
-	(	Dependency
+	(	BoundDependency
 	)	(	t_tArgument
+		,	Meta::KeyTuple
+			<	Meta::KeyItem
+				<	t_tpKey
+				,	t_tpItem
+				>
+				...
+			>
+		)
+	->	BoundDependency
+		<	t_tArgument
+		,	Meta::KeyItem
+			<	t_tpKey
+			,	t_tpItem
+			>
+			...
+		>
+	;
+
+	template
+		<	Meta::ProtoValue
+		,	typename
+			...
+		>
+	struct
+		Dependency
+	{
+		static_assert
+		(	Meta::ProtoNone
+			<	Dependency
+			>
+		,	"Unexpected specialization!"
+		);
+	};
+
+	template
+		<	Meta::ProtoValue
+				t_tArgument
+		,	ProtoID
+			...	t_tpID
+		,	typename
+			...	t_tpItem
+		>
+	struct
+		Dependency
+		<	t_tArgument
+		,	Meta::KeyItem
+			<	t_tpID
+			,	t_tpItem
+			>
+			...
+		>
+	{
+		using
+			ArgumentType
+		=	t_tArgument
+		;
+
+		using
+			BoundType
+		=	BoundDependency
+			<	t_tArgument
+			,	Meta::KeyItem
+				<	t_tpID
+				,	t_tpItem
+				>
+				...
+			>
+		;
+
+		[[no_unique_address]]
+		Meta::TypeToken
+		<	t_tArgument
+		>	ArgumentToken
+		{};
+
+		[[no_unique_address]]
+		Meta::KeyTuple
+		<	Meta::KeyItem
+			<	t_tpID
+			,	t_tpItem
+			>
+			...
+		>	DependencyMap
+		{};
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
+		)	(	ArgumentType
+					i_vArgument
+				=	{}
+			)	const
+		->	decltype(auto)
+		{	return
+			BoundDependency
+			{	i_vArgument
+			,	DependencyMap
+			};
+		}
+	};
+
+	template
+		<	typename
+				t_tArgument
+		,	typename
+			...	t_tpKey
+		,	typename
+			...	t_tpItem
+		>
+	(	Dependency
+	)	(	Meta::TypeToken<t_tArgument>
 		,	Meta::KeyTuple
 			<	Meta::KeyItem
 				<	t_tpKey
@@ -227,18 +338,15 @@ export namespace
 		>
 	auto constexpr
 	(	MakeArgumentDependency
-	)	(	t_tArgument&&
-				i_rArgument
+	)	(	Meta::TypeToken<t_tArgument>
+				i_vArgumentType
 		,	Meta::KeyItem<t_tpKey, t_tpItem>
 			...	i_vpDependency
 		)
 	->	decltype(auto)
 	{	return
 		Dependency
-		{	ForwardErased
-			(	Meta::Type<t_tArgument>
-			,	::std::forward<t_tArgument>(i_rArgument)
-			)
+		{	i_vArgumentType
 		,	MakeSortedDependencyMap
 			(	Meta::MakeIndexedTuple
 				(	::std::move(i_vpDependency)
@@ -263,19 +371,15 @@ export namespace
 		)
 	->	decltype(auto)
 	{	return
-		Meta::Type
-		<	decltype
-			(	Dependency
-				{	ID_V<t_vFunctionName>
-				,	MakeSortedDependencyMap
-					(	Meta::TupleList
-						{	i_vpDependency
-							...
-						}
-					)
+		Dependency
+		{	Meta::Type<ID_T<t_vFunctionName>>
+		,	MakeSortedDependencyMap
+			(	Meta::TupleList
+				{	i_vpDependency
+					...
 				}
 			)
-		>;
+		};
 	}
 
 	template
@@ -283,10 +387,10 @@ export namespace
 				t_tDependency
 		>
 	concept
-		DependencyInstance
+		ProtoBoundDependency
 	=	Std::TypePackInstanceOf
 		<	t_tDependency
-		,	Dependency
+		,	BoundDependency
 		>
 	;
 
@@ -296,7 +400,7 @@ export namespace
 		>
 	using
 		FunctionName
-	=	Dependency
+	=	BoundDependency
 		<	ID_T<t_vFunctionName>
 		>
 	;

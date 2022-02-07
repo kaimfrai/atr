@@ -12,7 +12,7 @@ export namespace
 		>
 	using
 		DeduceDependencies
-	=	Dependency
+	=	BoundDependency
 		<	void const
 			*
 		,	t_tpDependency
@@ -26,8 +26,8 @@ export namespace
 			...	t_tpDependency
 		>
 	auto inline
-		Body
-		(	FunctionName<"Product">
+	(	Body
+	)	(	FunctionName<"Product">
 		,	DeduceDependencies
 			<	t_tpDependency
 				...
@@ -50,22 +50,20 @@ export namespace
 		,	FuncIDMap
 			...	t_vpFuncDependencies
 		>
-	constexpr
-	auto
-		MakeProductAddress
-		()
+	auto constexpr
+	(	MakeProductAddress
+	)	()
 	{
 		return
-			DependencyAddress
-			{	StaticDependencyInfo<"Product">
-			,	ArgumentDependencyInfo
-				<	t_tObject const
-					&
-				,	t_vpFuncDependencies
-					...
-				>
-			}
-		;
+		&Signature
+		<	StaticDependencyInfo<"Product">
+		,	ArgumentDependencyInfo
+			<	t_tObject const
+				&
+			,	t_vpFuncDependencies
+				...
+			>
+		>;
 	}
 }
 

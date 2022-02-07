@@ -169,25 +169,20 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	auto constexpr
-		ErasedTypeInfo
-		(	Meta::TypeToken<t_tEntity>
-		)
-	{	return
-		Meta::Type
-		<	decltype
-			(	ForwardErased
-				(	Meta::Type
-					<	/// top level cv-qualifiers are ignored in the function signature
-						std::remove_cv_t
-						<	t_tEntity
-						>
-					>
-				,	::std::declval
+	using
+		ErasedType
+	=	decltype
+		(	ForwardErased
+			(	Meta::Type
+				<	/// top level cv-qualifiers are ignored in the function signature
+					std::remove_cv_t
 					<	t_tEntity
-					>()
-				)
+					>
+				>
+			,	::std::declval
+				<	t_tEntity
+				>()
 			)
-		>;
-	}
+		)
+	;
 }

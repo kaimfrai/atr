@@ -1345,9 +1345,7 @@ export namespace
 	=	decltype
 		(	MakeIndexedArray
 			<	t_tValue
-			>(	Sequence
-				(	Index<t_nExtent>
-				)
+			>(	Sequence<t_nExtent>
 			)
 		)
 	;

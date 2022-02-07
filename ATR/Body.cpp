@@ -13,9 +13,9 @@ export namespace
 	/// other template arguments will be deduced.
 	/// does not need to be fully specialized.
 	template
-		<	DependencyInstance
+		<	ProtoBoundDependency
 				t_tFuncID
-		,	DependencyInstance
+		,	ProtoBoundDependency
 			...	t_tpDependency
 		>
 	auto inline
@@ -24,7 +24,7 @@ export namespace
 		,	t_tpDependency
 			...
 		)
-	noexcept
+		noexcept
 	{	static_assert
 		(	Meta::ProtoNone
 			<	t_tFuncID
@@ -38,9 +38,9 @@ export namespace
 
 	/// whether a call to Body is noexcept
 	template
-		<	DependencyInstance
+		<	ProtoBoundDependency
 				t_tFuncID
-		,	DependencyInstance
+		,	ProtoBoundDependency
 			...	t_tpDependency
 		>
 	bool constexpr
@@ -56,9 +56,9 @@ export namespace
 
 	/// the type returned by a call to Body
 	template
-		<	DependencyInstance
+		<	ProtoBoundDependency
 				t_tFuncID
-		,	typename
+		,	ProtoBoundDependency
 			...	t_tpDependency
 		>
 	using
