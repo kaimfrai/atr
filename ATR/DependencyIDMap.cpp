@@ -158,8 +158,8 @@ export namespace
 		Meta::MakeKeyItem<TargetDataID>
 		(	MemberOffset
 			<	MemberType
-			,	nMemberOffset
-			>{}
+			>{	nMemberOffset
+			}
 		);
 	}
 

@@ -14,17 +14,15 @@ export namespace
 	template
 		<	typename
 				t_tMember
-		,	Meta::USize
-				t_nOffset
 		>
 	struct
 		MemberOffset
 	:	MemberOffset
 		<	t_tMember const
-		,	t_nOffset
 		>
 	{
-		using MemberOffset<t_tMember const, t_nOffset>::operator();
+		using MemberOffset<t_tMember const>::operator();
+		using MemberOffset<t_tMember const>::Offset;
 
 		[[nodiscard]]
 		auto constexpr
@@ -35,34 +33,27 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{
-			if constexpr(Meta::ProtoStateless<t_tMember>)
-				return
-				t_tMember
-				{};
-			else
-			{
-				auto const
-					aMemberAsChar
-				=	static_cast
-					<	char
-						*
-					>(	i_aObject
-					)
-				+	t_nOffset
-				;
-
-				return
-				*
-				static_cast
-				<	t_tMember
+			auto const
+				aMemberAsChar
+			=	static_cast
+				<	char
 					*
-				>(	static_cast
-					<	void
-						*
-					>(	aMemberAsChar
-					)
-				);
-			}
+				>(	i_aObject
+				)
+			+	Offset
+			;
+
+			return
+			*
+			static_cast
+			<	t_tMember
+				*
+			>(	static_cast
+				<	void
+					*
+				>(	aMemberAsChar
+				)
+			);
 		}
 	};
 
@@ -70,15 +61,16 @@ export namespace
 	template
 		<	typename
 				t_tMember
-		,	Meta::USize
-				t_nOffset
 		>
 	struct
 		MemberOffset
 		<	t_tMember const
-		,	t_nOffset
 		>
 	{
+		Meta::USize
+			Offset
+		;
+
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
@@ -88,34 +80,60 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{
-			if constexpr(Meta::ProtoStateless<t_tMember const>)
-				return
-				t_tMember
-				{};
-			else
-			{
-				auto const
-					aMemberAsChar
-				=	static_cast
-					<	char const
-						*
-					>(	i_aObject
-					)
-				+	t_nOffset
-				;
-
-				return
-				*
-				static_cast
-				<	t_tMember const
+			auto const
+				aMemberAsChar
+			=	static_cast
+				<	char const
 					*
-				>(	static_cast
-					<	void const
-						*
-					>(	aMemberAsChar
-					)
-				);
-			}
+				>(	i_aObject
+				)
+			+	Offset
+			;
+
+			return
+			*
+			static_cast
+			<	t_tMember const
+				*
+			>(	static_cast
+				<	void const
+					*
+				>(	aMemberAsChar
+				)
+			);
+		}
+	};
+
+	template
+		<	Meta::ProtoStateless
+				t_tMember
+		>
+	struct
+		MemberOffset
+		<	t_tMember
+		>
+	{
+		constexpr
+		(	MemberOffset
+		)	()
+		=	default;
+
+		explicit constexpr
+		(	MemberOffset
+		)	(	Meta::USize
+			)
+		{}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
+		)	(	void const*
+			)	const
+			noexcept
+		->	decltype(auto)
+		{	return
+			t_tMember
+			{};
 		}
 	};
 
@@ -123,18 +141,14 @@ export namespace
 	template
 		<	typename
 				t_tMember
-		,	Meta::USize
-				t_nOffset
 		>
 	[[nodiscard]]
 	auto constexpr
 	(	operator->*
 	)	(	void
 			*	i_aObject
-		,	MemberOffset
-			<	t_tMember
-			,	t_nOffset
-			>	i_vMemberOffset
+		,	MemberOffset<t_tMember>
+				i_vMemberOffset
 		)
 		noexcept
 	->	decltype(auto)
@@ -148,18 +162,14 @@ export namespace
 	template
 		<	typename
 				t_tMember
-		,	Meta::USize
-				t_nOffset
 		>
 	[[nodiscard]]
 	auto constexpr
 	(	operator->*
 	)	(	void const
 			*	i_aObject
-		,	MemberOffset
-			<	t_tMember
-			,	t_nOffset
-			>	i_vMemberOffset
+		,	MemberOffset<t_tMember>
+				i_vMemberOffset
 		)
 	noexcept
 	->	decltype(auto)

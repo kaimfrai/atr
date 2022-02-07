@@ -144,9 +144,9 @@ export namespace
 		>
 	auto constexpr inline
 		StaticDependencyInfo
-	=	MakeStaticDependencyInfo
-		<	t_vFuncID
-		>(	MakeStaticDependencyItem
+	=	MakeArgumentDependency
+		(	Meta::Type<ID_T<t_vFuncID>>
+		,	MakeStaticDependencyItem
 			<	t_vpIDMap
 			>()
 			...
