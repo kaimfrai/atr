@@ -1,10 +1,9 @@
 export module Evaluation.Archetype.ComputeVolume;
 
 export import Evaluation.Shared.DataTypes;
-export import Evaluation.Archetype.ReturnMember;
 export import Evaluation.Archetype.Product;
 export import ATR.VirtualArgument;
-export import ATR.ConstantIDMap;
+export import ATR.DependencyIDMap;
 
 export namespace
 	Bodies3D
@@ -34,25 +33,21 @@ export namespace
 				t_tBody
 		>
 	requires
-		ValidAddress
-		<	ID_T<"GetComputeVolumeMultiplier">
-		,	t_tBody const
-			&
+		MemberAccessIDOf
+		<	ID_T<"ComputeVolumeMultiplier">
+		,	t_tBody const&
 		>
-	and ValidAddress
-		<	ID_T<"GetDepth">
-		,	t_tBody const
-			&
+	and MemberAccessIDOf
+		<	ID_T<"Depth">
+		,	t_tBody const&
 		>
-	and	ValidAddress
-		<	ID_T<"GetHeight">
-		,	t_tBody const
-			&
+	and	MemberAccessIDOf
+		<	ID_T<"Height">
+		,	t_tBody const&
 		>
-	and	ValidAddress
-		<	ID_T<"GetWidth">
-		,	t_tBody const
-			&
+	and	MemberAccessIDOf
+		<	ID_T<"Width">
+		,	t_tBody const&
 		>
 	auto constexpr
 	(	MapAddress
@@ -63,21 +58,21 @@ export namespace
 		return
 		MakeProductAddress
 		<	t_tBody
-		,	MapFuncID
-			(	"GetComputeVolumeMultiplier"_id
-			,	"Constant"_id
+		,	MapID
+			(	"ComputeVolumeMultiplier"_id
+			,	"a"_id
 			)
-		,	MapFuncID
-			(	"GetDepth"_id
-			,	"Get0"_id
+		,	MapID
+			(	"Depth"_id
+			,	"b"_id
 			)
-		,	MapFuncID
-			(	"GetHeight"_id
-			,	"Get1"_id
+		,	MapID
+			(	"Height"_id
+			,	"c"_id
 			)
-		,	MapFuncID
-			(	"GetWidth"_id
-			,	"Get2"_id
+		,	MapID
+			(	"Width"_id
+			,	"d"_id
 			)
 		>();
 	}

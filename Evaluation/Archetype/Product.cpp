@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.Product;
 
 export import Evaluation.Shared.DataTypes;
-export import ATR.ConstantIDMap;
+export import ATR.DependencyIDMap;
 
 export namespace
 	ATR
@@ -47,7 +47,7 @@ export namespace
 	template
 		<	typename
 				t_tObject
-		,	FuncIDMap
+		,	IDMap
 			...	t_vpFuncDependencies
 		>
 	auto constexpr
@@ -56,7 +56,7 @@ export namespace
 	{
 		return
 		&Signature
-		<	StaticDependencyInfo<"Product">
+		<	ArgumentDependencyInfo<ID_T<"Product">>
 		,	ArgumentDependencyInfo
 			<	t_tObject const
 				&
