@@ -7,14 +7,19 @@ export import ATR.DataMember;
 export import ATR.MemberOffset;
 export import ATR.ID;
 export import ATR.StringLiteral;
+export import ATR.Layout;
 export import Std.QualifierTemplate;
 
 export namespace
 	ATR
 {
 	/// maps one Identifier to another
+	template
+		<	typename
+			...	t_tpArgument
+		>
 	struct
-		DataIDMap
+		IDMap
 	{
 		StringView
 			OriginID
@@ -23,44 +28,86 @@ export namespace
 		StringView
 			TargetID
 		;
+
+		static Meta::TypePack<t_tpArgument...> constexpr
+			ArgumentPack
+		{};
 	};
 
+	template
+		<	typename
+			...	t_tpArgument
+		>
+	(	IDMap
+	)	(	IDMap<t_tpArgument...>
+		)
+	->	IDMap
+		<	t_tpArgument
+			...
+		>
+	;
+
+	template
+		<	typename
+			...	t_tpArgument
+		>
 	auto constexpr
-	(	MapDataID
+	(	MapID
 	)	(	StringView
 				i_vOrigin
 		,	StringView
 				i_vTarget
 		)
-	->	DataIDMap
+	->	IDMap<t_tpArgument...>
 	{	return
-		DataIDMap
-		{	i_vOrigin
+		IDMap
+		<	t_tpArgument
+			...
+		>{	i_vOrigin
 		,	i_vTarget
 		};
 	}
 
-	/// creates a DependencyItem from an owner and a DataIDMap
 	template
 		<	typename
 				t_tOwner
-		,	DataIDMap
-				t_vDataIDMap
+		,	typename
+			...	t_tpArgument
 		>
 	auto constexpr
-	(	MakeArgumentDependencyItem
-	)	()
-	->	decltype(auto)
-	{
-		using
-			TargetDataID
-		=	ID_T
-			<	StringLiteral<t_vDataIDMap.TargetID.size()>
-				{	t_vDataIDMap.TargetID.data()
-				}
+	(	MapDependency
+	)	(	ProtoID auto
+				i_vFunctionName
+		,	Meta::TypeToken<t_tOwner>
+		,	Meta::TypePack
+			<	t_tpArgument
+				...
 			>
-		;
+		)
+	->	decltype(auto)
+	{	return
+		MapAddress
+		(	i_vFunctionName
+		,	Argument<t_tOwner>{}()
+		,	Argument<t_tpArgument>{}()
+			...
+		);
+	}
 
+	template
+		<	typename
+				t_tOwner
+		>
+	auto constexpr
+	(	MapDependency
+	)	(	MemberAccessIDOf<t_tOwner> auto
+				i_vOrigin
+		,	Meta::TypeToken<t_tOwner>
+				i_vOwner
+		,	Meta::TypePack<>
+			=	{}
+		)
+	{
 		auto constexpr
 		&	rOwnerLayout
 		=	LayoutConfig
@@ -81,161 +128,74 @@ export namespace
 		Meta::EraseTypeToken constexpr
 			vMemberType
 		=	MemberType
-			(	t_vDataIDMap.OriginID
+			(	i_vOrigin
 			,	aBegin
 			,	aEnd
 			)
 		;
 
 		using
-			MemberType
-		=	typename
-			Std::CVQualifier
-			<	t_tOwner
+			RestoredMemberType
+		=	Meta::RestoreTypeEntity
+			<	vMemberType
 			>
-		::	template
-			Add
-			<	Meta::RestoreTypeEntity
-				<	vMemberType
+		;
+
+		//	recursively resolve member alias
+		if	constexpr(MemberAccessIDOf<RestoredMemberType, t_tOwner>)
+			return MapDependency(RestoredMemberType{}, i_vOwner);
+		else
+		{
+			using
+				MemberType
+			=	typename
+				Std::CVQualifier
+				<	t_tOwner
 				>
-			>
-		;
+			::	template
+				Add
+				<	RestoredMemberType
+				>
+			;
 
-		Meta::USize constexpr
-			nMemberOffset
-		=	ByteOffset
-			(	t_vDataIDMap.OriginID
-			,	aBegin
-			,	aEnd
-			)
-		;
-
-		return
-		Meta::MakeKeyItem<TargetDataID>
-		(	MemberOffset
+			return
+			MemberOffset
 			<	MemberType
-			>{	nMemberOffset
-			}
-		);
-	}
-
-	/// maps one Identifier to another
-	template
-		<	typename
-			...	t_tpArgument
-		>
-	struct
-		FuncIDMap
-	{
-		StringView
-			OriginID
-		;
-
-		StringView
-			TargetID
-		;
-
-		static Meta::TypePack<t_tpArgument...> constexpr
-			ArgumentPack
-		{};
-	};
-
-	template
-		<	typename
-			...	t_tpArgument
-		>
-	(	FuncIDMap
-	)	(	FuncIDMap<t_tpArgument...>
-		)
-	->	FuncIDMap
-		<	t_tpArgument
-			...
-		>
-	;
-
-	template
-		<	typename
-			...	t_tpArgument
-		>
-	auto constexpr
-	(	MapFuncID
-	)	(	StringView
-				i_vOrigin
-		,	StringView
-				i_vTarget
-		)
-	->	FuncIDMap<t_tpArgument...>
-	{	return
-		FuncIDMap
-		<	t_tpArgument
-			...
-		>{	i_vOrigin
-		,	i_vTarget
-		};
-	}
-
-	/// creates a DependencyItem from an owner and a FuncIDMap
-	template
-		<	typename
-				t_tOwner
-		,	FuncIDMap
-				t_vFuncIDMap
-		>
-	auto constexpr
-	(	MakeArgumentDependencyItem
-	)	()
-	->	decltype(auto)
-	{
-		using
-			TargetFuncID
-		=	ID_T
-			<	StringLiteral<t_vFuncIDMap.TargetID.size()>
-				{	t_vFuncIDMap.TargetID.data()
-				}
-			>
-		;
-
-		auto constexpr
-			OriginFuncID
-		=	ID_V
-			<	StringLiteral<t_vFuncIDMap.OriginID.size()>
-				{	t_vFuncIDMap.OriginID.data()
-				}
-			>
-		;
-
-		return
-		[&]	<	typename
-				...	t_tpArgument
-			>	(	Meta::TypePack<t_tpArgument...>
-			)
-		{	return
-			Meta::MakeKeyItem<TargetFuncID>
-			(	MapAddress
-				(	OriginFuncID
-				,	Argument<t_tOwner>{}()
-				,	Argument<t_tpArgument>{}()
-					...
+			>{	ByteOffset
+				(	i_vOrigin
+				,	aBegin
+				,	aEnd
 				)
-			);
-		}(	t_vFuncIDMap.ArgumentPack
-		);
+			};
+		}
 	}
 
 	template
 		<	typename
 				t_tOwner
-		,	auto
+		,	IDMap
 			...	t_vpIDMap
 		>
 	auto constexpr inline
 		ArgumentDependencyInfo
 	=	MakeArgumentDependency
 		(	Meta::Type<ErasedType<t_tOwner>>
-		,	MakeArgumentDependencyItem
-			<	t_tOwner
-			,	t_vpIDMap
-			>()
+		,	Meta::MakeKeyItem
+			<	ID_T
+				<	StringLiteral<t_vpIDMap.TargetID.size()>
+					{	t_vpIDMap.TargetID.data()
+					}
+				>
+			>(	MapDependency
+				(	ID_V
+					<	StringLiteral<t_vpIDMap.OriginID.size()>
+						{	t_vpIDMap.OriginID.data()
+						}
+					>
+				,	Meta::Type<t_tOwner>
+				,	t_vpIDMap.ArgumentPack
+				)
+			)
 			...
 		)
 	;
