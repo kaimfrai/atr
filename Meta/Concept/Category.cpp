@@ -588,7 +588,7 @@ export namespace
 		>
 	concept
 		CompoundScalar
-	=	Fund_Array<t_tProto, true>
+	=	Fund_Array<t_tProto, false>
 	and	Scalar<t_tProto>
 	;
 

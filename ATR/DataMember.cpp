@@ -73,16 +73,16 @@ export namespace
 					(	begin(vCopy)
 					,	end(vCopy)
 					,	[	vName = rExchange.Name
-						]	(	Meta::Value<DataMemberInfo> const
-								&	i_rInfo
+						]	(	Meta::Value<DataMemberInfo const&>
+									i_rInfo
 						)
-						{	return i_rInfo.Object.Name == vName;	}
+						{	return i_rInfo.get().Name.Object == vName.Object;	}
 					)
 				;
 				if	(vExchangePosition == end(vCopy))
 					throw "Cannot exchange non-existing member!";
 
-				vExchangePosition->Object.Type = rExchange.Type;
+				vExchangePosition->Type = rExchange.Type;
 			}
 
 			::std::sort(begin(vCopy), end(vCopy));

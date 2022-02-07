@@ -64,12 +64,12 @@ export namespace
 			,	(	vResult
 					[	t_npIndex
 					]
-				.	Object.Name
+				.	get().Name
 				=	(	i_vPrefix
 					+	ID_V
 						<	StringLiteral
-							<	t_vConfig[t_npIndex].Object.Name.size() + 1uz
-							>{	t_vConfig[t_npIndex].Object.Name.data()
+							<	t_vConfig[t_npIndex].get().Name.size() + 1uz
+							>{	t_vConfig[t_npIndex].get().Name.data()
 							}
 						>
 					+	i_vSuffix

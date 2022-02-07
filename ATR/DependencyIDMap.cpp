@@ -113,12 +113,12 @@ export namespace
 			>
 		;
 
-		Meta::Value<DataMemberInfo> const constexpr
-		*	aBegin
+		Meta::Value<DataMemberInfo const*> constexpr
+			aBegin
 		=	begin(rOwnerLayout)
 		;
-		Meta::Value<DataMemberInfo> const constexpr
-		*	aEnd
+		Meta::Value<DataMemberInfo const*> constexpr
+			aEnd
 		=	end(rOwnerLayout)
 		;
 

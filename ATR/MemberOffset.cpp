@@ -173,10 +173,10 @@ export namespace
 	(	MemberType
 	)	(	StringView
 				i_vName
-		,	Meta::Value<DataMemberInfo> const
-			*	i_aBegin
-		,	Meta::Value<DataMemberInfo> const
-			*	i_aEnd
+		,	Meta::Value<DataMemberInfo const*>
+				i_aBegin
+		,	Meta::Value<DataMemberInfo const*>
+				i_aEnd
 		)
 	->	Meta::EraseTypeToken
 	{	return
@@ -184,15 +184,15 @@ export namespace
 			(	i_aBegin
 			,	i_aEnd
 			,	[	vObject = i_vName.Object
-				]	(	Meta::Value<DataMemberInfo> const
-						&	i_rValue
+				]	(	Meta::Value<DataMemberInfo const&>
+							i_rValue
 					)
 				->	bool
 				{
-					return i_rValue.Object.Name.Object == vObject;
+					return i_rValue.get().Name.Object == vObject;
 				}
 			)
-		->	Object.Type
+		->	Type
 		;
 	}
 
@@ -200,10 +200,10 @@ export namespace
 	(	ByteOffset
 	)	(	StringView
 				i_vName
-		,	Meta::Value<DataMemberInfo> const
-			*	i_aBegin
-		,	Meta::Value<DataMemberInfo> const
-			*	i_aEnd
+		,	Meta::Value<DataMemberInfo const*>
+				i_aBegin
+		,	Meta::Value<DataMemberInfo const*>
+				i_aEnd
 		)
 	->	Meta::USize
 	{
@@ -212,13 +212,13 @@ export namespace
 		=	0uz
 		;
 		for	(;	i_aBegin != i_aEnd
-			and	i_aBegin->Object.Name.Object != i_vName.Object
+			and	i_aBegin->Name.Object != i_vName.Object
 			;	++i_aBegin
 			)
 		{
-			nOffset += i_aBegin->Object.Type->Size;
+			nOffset += i_aBegin->Type->Size;
 		}
-		if	(i_aBegin->Object.Type->Size == 0uz)
+		if	(i_aBegin->Type->Size == 0uz)
 			return 0uz;
 		else
 			return nOffset;

@@ -35,6 +35,397 @@ export namespace
 	};
 
 	template
+		<	ProtoPointer
+				t_tPointer
+		>
+	struct
+		Value
+		<	t_tPointer
+		>
+	{
+		using value_type = ::std::remove_pointer_t<t_tPointer>;
+		using difference_type = SSize;
+		using iterator_concept = ::std::contiguous_iterator_tag;
+
+		t_tPointer
+			Object
+		;
+
+		constexpr
+		(	Value
+		)	()
+		=	default;
+
+		constexpr
+		(	Value
+		)	(	t_tPointer
+					i_vPointer
+			)
+		:	Object
+			{	i_vPointer
+			}
+		{}
+
+		constexpr
+		(	operator decltype(auto)
+		)	()	const
+			noexcept
+		{	return Object;	}
+
+		auto constexpr
+		(	operator +=
+		)	(	SSize
+					i_nOffset
+			)	&
+			noexcept
+		->	Value&
+		{	Object += i_nOffset;
+			return *this;
+		}
+
+		auto constexpr
+		(	operator -=
+		)	(	SSize
+					i_nOffset
+			)	&
+			noexcept
+		->	Value&
+		{	Object += i_nOffset;
+			return *this;
+		}
+
+		auto constexpr
+		(	operator ->
+		)	()	const
+			noexcept
+		->	t_tPointer
+		{	return Object;	}
+
+		friend auto constexpr
+		(	operator *
+		)	(	Value
+					i_vValue
+			)
+			noexcept
+		->	decltype(auto)
+		{	return *i_vValue.Object;	}
+
+		friend auto constexpr
+		(	operator ++
+		)	(	Value
+				&	i_rValue
+			)
+			noexcept
+		->	Value&
+		{	++i_rValue.Object;
+			return i_rValue;
+		}
+
+		friend auto constexpr
+		(	operator ++
+		)	(	Value
+				&	i_rValue
+			,	int
+			)
+			noexcept
+		->	Value
+		{	return { i_rValue.Object++ };	}
+
+		friend auto constexpr
+		(	operator --
+		)	(	Value
+				&	i_rValue
+			)
+			noexcept
+		->	Value&
+		{	--i_rValue.Object;
+			return i_rValue;
+		}
+
+		friend auto constexpr
+		(	operator --
+		)	(	Value
+				&	i_rValue
+			,	int
+			)
+			noexcept
+		->	Value
+		{	return { i_rValue.Object-- };	}
+
+		friend auto constexpr
+		(	operator -
+		)	(	Value
+					i_vLeft
+			,	Value
+					i_vRight
+			)
+		->	SSize
+		{	return i_vLeft.Object - i_vRight.Object;	}
+
+		friend auto constexpr
+		(	operator +
+		)	(	Value
+					i_vValue
+			,	SSize
+					i_nOffset
+			)
+		->	Value
+		{	return { i_vValue.Object + i_nOffset };	}
+
+		friend auto constexpr
+		(	operator -
+		)	(	Value
+					i_vValue
+			,	SSize
+					i_nOffset
+			)
+		->	Value
+		{	return { i_vValue.Object - i_nOffset };	}
+
+		friend auto constexpr
+		(	operator +
+		)	(	SSize
+					i_nOffset
+			,	Value
+					i_vValue
+			)
+		->	Value
+		{	return { i_vValue.Object + i_nOffset };	}
+	};
+
+	template
+		<	typename
+				t_tValue
+		>
+	struct
+		Value
+		<	t_tValue
+			&
+		>
+	{
+		t_tValue
+		*	Object
+		;
+
+		constexpr
+		(	Value
+		)	(	t_tValue
+				&	i_rValue
+			)
+		:	Object
+			{	::std::addressof
+				(	i_rValue
+				)
+			}
+		{}
+
+		constexpr
+		(	Value
+		)	(	t_tValue&&
+			)
+		=	delete;
+
+		auto constexpr
+		(	get
+		)	()	const
+			noexcept
+		->	t_tValue&
+		{	return *Object;	}
+
+		template
+			<	typename
+				...	t_tpArgument
+			>
+		auto constexpr
+		(	operator()
+		)	(	t_tpArgument&&
+				...	i_rpArgument
+			)	const
+			noexcept
+			(	::std::is_nothrow_invocable_v
+				<	t_tValue&
+				,	t_tpArgument
+					...
+				>
+			)
+		->	::std::invoke_result_t
+			<	t_tValue&
+			,	t_tpArgument
+				...
+			>
+		requires
+			::std::invocable
+			<	t_tValue&
+			,	t_tpArgument
+				...
+			>
+		{	return
+			::std::invoke
+			(	get()
+			,	::std::forward
+				<	t_tpArgument
+				>(	i_rpArgument
+				)
+				...
+			);
+		}
+
+		constexpr
+		(	operator decltype(auto)
+		)	()	const
+			noexcept
+		{	return get();	}
+
+		friend auto constexpr
+		(	operator &
+		)	(	Value
+					i_vValue
+			)
+		->	Value<t_tValue*>
+		{	return {i_vValue.Object};	}
+
+		friend auto constexpr
+		(	operator ==
+		)	(	Value
+					i_vLeft
+			,	Value
+					i_vRight
+			)
+		->	bool
+		{	return
+			(	i_vLeft.get()
+			==	i_vRight.get()
+			);
+		}
+
+		friend auto constexpr
+		(	operator <=>
+		)	(	Value
+					i_vLeft
+			,	Value
+					i_vRight
+			)
+		->	decltype
+			(	::std::declval<t_tValue&>()
+			<=>	::std::declval<t_tValue&>()
+			)
+		{	return
+			(	i_vLeft.get()
+			<=>	i_vRight.get()
+			);
+		}
+	};
+
+	template
+		<	typename
+				t_tValue
+		>
+	struct
+		Value
+		<	t_tValue
+			&&
+		>
+	{
+		t_tValue
+		*	Object
+		;
+
+		constexpr
+		(	Value
+		)	(	t_tValue
+				&&	i_rValue
+			)
+		:	Object
+			{	::std::addressof
+				(	i_rValue
+				)
+			}
+		{}
+
+		auto constexpr
+		(	get
+		)	()	const
+			noexcept
+		->	t_tValue&&
+		{	return ::std::move(*Object);	}
+
+		template
+			<	typename
+				...	t_tpArgument
+			>
+		auto constexpr
+		(	operator()
+		)	(	t_tpArgument&&
+				...	i_rpArgument
+			)	const
+			noexcept
+			(	::std::is_nothrow_invocable_v
+				<	t_tValue&&
+				,	t_tpArgument
+					...
+				>
+			)
+		->	::std::invoke_result_t
+			<	t_tValue&&
+			,	t_tpArgument
+				...
+			>
+		requires
+			::std::invocable
+			<	t_tValue&&
+			,	t_tpArgument
+				...
+			>
+		{	return
+			::std::invoke
+			(	get()
+			,	::std::forward
+				<	t_tpArgument
+				>(	i_rpArgument
+				)
+				...
+			);
+		}
+
+		constexpr
+		(	operator decltype(auto)
+		)	()	const
+			noexcept
+		{	return get();	}
+
+		friend auto constexpr
+		(	operator ==
+		)	(	Value
+					i_vLeft
+			,	Value
+					i_vRight
+			)
+		->	bool
+		{	return
+			(	i_vLeft.get()
+			==	i_vRight.get()
+			);
+		}
+
+		friend auto constexpr
+		(	operator <=>
+		)	(	Value
+					i_vLeft
+			,	Value
+					i_vRight
+			)
+		->	decltype
+			(	::std::declval<t_tValue&&>()
+			<=>	::std::declval<t_tValue&&>()
+			)
+		{	return
+			(	i_vLeft.get()
+			<=>	i_vRight.get()
+			);
+		}
+	};
+
+	template
 		<	ProtoValue
 				t_tValue
 		>
@@ -453,10 +844,10 @@ export namespace
 		using value_type = Value<t_tValue>;
 		using size_type = USize;
 		using difference_type = SSize;
-		using reference = Value<t_tValue>&;
-		using const_reference = Value<t_tValue> const&;
-		using pointer = Value<t_tValue>*;
-		using const_pointer = Value<t_tValue> const*;
+		using reference = Value<t_tValue&>;
+		using const_reference = Value<t_tValue const&>;
+		using pointer = Value<t_tValue*>;
+		using const_pointer = Value<t_tValue const*>;
 		using iterator = pointer;
 		using const_iterator = const_pointer;
 
@@ -481,7 +872,7 @@ export namespace
 		->	bool
 		{	return size() == 0uz;	}
 
-		Value<t_tValue>
+		t_tValue
 			Object
 		[	size()
 		];
@@ -647,6 +1038,48 @@ export namespace
 		}
 
 		auto constexpr
+		(	operator[]
+		)	(	USize
+					i_nIndex
+			)	&
+		->	t_tValue&
+		{	return Object[i_nIndex];	}
+
+		auto constexpr
+		(	operator[]
+		)	(	USize
+					i_nIndex
+			)	const&
+		->	t_tValue const&
+		{	return Object[i_nIndex];	}
+
+		auto constexpr
+		(	operator[]
+		)	(	USize
+					i_nIndex
+			)	&&
+		->	t_tValue
+		requires
+			ProtoMoveConstructible<t_tValue>
+		{	return ::std::move(Object[i_nIndex]);	}
+
+		friend auto constexpr
+		(	operator +
+		)	(	IndexedArray
+				&	i_rValue
+			)
+		->	Value<t_tValue*>
+		{	return { +i_rValue.Object	};	}
+
+		friend auto constexpr
+		(	operator +
+		)	(	IndexedArray const
+				&	i_rValue
+			)
+		->	Value<t_tValue const*>
+		{	return { +i_rValue.Object	};	}
+
+		auto constexpr
 		(	fill
 		)	(	t_tValue const
 				&	i_rValue
@@ -681,35 +1114,10 @@ export namespace
 		}
 	};
 
-	struct
-		PointerCompare
-	{
-		template
-			<	typename
-					t_tLeft
-			,	typename
-					t_tRight
-			>
-		auto constexpr
-		(	operator()
-		)	(	Meta::Value<t_tLeft const*>
-					i_aLeft
-			,	Meta::Value<t_tRight const*>
-					i_aRight
-			)	const
-		->	bool
-		{	return
-			(	i_aLeft.Object->Object
-			<	i_aRight.Object->Object
-			);
-		}
-	};
-
-
 	template
 		<	typename
 				t_tElement
-		,	Meta::USize
+		,	USize
 			...	t_npIndex
 		>
 	auto constexpr
@@ -719,23 +1127,23 @@ export namespace
 		)
 	->	Value<USize[sizeof...(t_npIndex)]>
 	{
-		Value<Value<t_tElement> const*[sizeof...(t_npIndex)]>
-			vPointers
-		{	&i_rArray.Object
+		Value<t_tElement const&>
+			vElements
+			[sizeof...(t_npIndex)]
+		{	i_rArray
 			[	t_npIndex
 			]
 			...
 		};
 		::std::sort
-		(	begin(vPointers)
-		,	end(vPointers)
-		,	PointerCompare{}
+		(	vElements
+		,	vElements + sizeof...(t_npIndex)
 		);
 		return
 		Value<USize[sizeof...(t_npIndex)]>
 		{	static_cast<USize>
-			(	vPointers[t_npIndex].Object
-			-	i_rArray.Object
+			(	&vElements[t_npIndex]
+			-	+i_rArray
 			)
 			...
 		};
@@ -875,7 +1283,7 @@ export namespace
 		)	(	USize
 					i_nIndex
 			)	&
-		->	Value<t_tValue>&
+		->	Value<t_tValue&>
 		{	return Object[i_nIndex];	}
 
 		auto constexpr
@@ -883,7 +1291,7 @@ export namespace
 		)	(	USize
 					i_nIndex
 			)	const&
-		->	Value<t_tValue> const&
+		->	Value<t_tValue const&>
 		{	return Object[i_nIndex];	}
 
 		auto constexpr
@@ -901,7 +1309,7 @@ export namespace
 		)	(	Value
 				&	i_rArray
 			)
-		->	Value<t_tValue>*
+		->	Value<t_tValue*>
 		{	return ::std::begin(i_rArray.Object);	}
 
 		friend auto constexpr
@@ -909,7 +1317,7 @@ export namespace
 		)	(	Value const
 				&	i_rArray
 			)
-		->	Value<t_tValue> const*
+		->	Value<t_tValue const*>
 		{	return ::std::begin(i_rArray.Object);	}
 
 		friend auto constexpr
@@ -917,7 +1325,7 @@ export namespace
 		)	(	Value
 				&	i_rArray
 			)
-		->	Value<t_tValue>*
+		->	Value<t_tValue*>
 		{	return ::std::end(i_rArray.Object);	}
 
 		friend auto constexpr
@@ -925,7 +1333,7 @@ export namespace
 		)	(	Value const
 				&	i_rArray
 			)
-		->	Value<t_tValue> const*
+		->	Value<t_tValue const*>
 		{	return ::std::end(i_rArray.Object);	}
 
 		[[nodiscard]]
@@ -1085,7 +1493,7 @@ export namespace
 		auto constexpr
 		(	size
 		)	()	const
-		noexcept
+			noexcept
 		->	USize
 		{	return
 			static_cast<USize>
@@ -1094,38 +1502,12 @@ export namespace
 			);
 		}
 
-		auto constexpr
-		(	operator[]
-		)	(	USize
-					i_nIndex
-			)	&
-		->	t_tValue&
-		{	return Object[i_nIndex];	}
-
-		auto constexpr
-		(	operator[]
-		)	(	USize
-					i_nIndex
-			)	const&
-		->	t_tValue const&
-		{	return Object[i_nIndex];	}
-
-		auto constexpr
-		(	operator[]
-		)	(	USize
-					i_nIndex
-			)	&&
-		->	t_tValue
-		requires
-			ProtoMoveConstructible<t_tValue>
-		{	return ::std::move(Object[i_nIndex]);	}
-
 		friend auto constexpr
 		(	begin
 		)	(	Value
 				&	i_rValue
 			)
-		->	t_tValue*
+		->	Value<t_tValue*>
 		{	return i_rValue.Object;	}
 
 		friend auto constexpr
@@ -1133,7 +1515,7 @@ export namespace
 		)	(	Value const
 				&	i_rValue
 			)
-		->	t_tValue const*
+		->	Value<t_tValue const*>
 		{	return i_rValue.Object;	}
 
 		friend auto constexpr
@@ -1141,7 +1523,7 @@ export namespace
 		)	(	Value
 				&	i_rValue
 			)
-		->	t_tValue*
+		->	Value<t_tValue*>
 		{	return i_rValue.m_aEnd;	}
 
 		friend auto constexpr
@@ -1149,7 +1531,7 @@ export namespace
 		)	(	Value const
 				&	i_rValue
 			)
-		->	t_tValue const*
+		->	Value<t_tValue const*>
 		{	return i_rValue.m_aEnd;	}
 	};
 
@@ -1236,9 +1618,9 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	starts_with
-	)	(	Value<Value<t_tValue> const[]>
+	)	(	Value<t_tValue const[]>
 				i_vArray
-		,	Value<Value<t_tValue> const[]>
+		,	Value<t_tValue const[]>
 				i_vPrefix
 		)
 	->	bool
@@ -1249,7 +1631,7 @@ export namespace
 		return
 		::std::equal
 		(	begin(i_vArray)
-		,	begin(i_vArray) + i_vPrefix.size()
+		,	begin(i_vArray) + static_cast<SSize>(i_vPrefix.size())
 		,	begin(i_vPrefix)
 		,	end(i_vPrefix)
 		);
@@ -1264,9 +1646,9 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	ends_with
-	)	(	Value<Value<t_tValue> const[]>
+	)	(	Value<t_tValue const[]>
 				i_vArray
-		,	Value<Value<t_tValue> const[]>
+		,	Value<t_tValue const[]>
 				i_vSuffix
 		)
 	->	bool
@@ -1276,7 +1658,7 @@ export namespace
 
 		return
 		::std::equal
-		(	end(i_vArray) - i_vSuffix.size()
+		(	end(i_vArray) - static_cast<SSize>(i_vSuffix.size())
 		,	end(i_vArray)
 		,	begin(i_vSuffix)
 		,	end(i_vSuffix)
@@ -1356,9 +1738,9 @@ export namespace
 		>
 	auto constexpr
 	(	operator <=>
-	)	(	Meta::Value<t_tLeft> const
+	)	(	Value<t_tLeft> const
 			&	i_rLeft
-		,	Meta::Value<t_tRight> const
+		,	Value<t_tRight> const
 			&	i_rRight
 		)
 	->	decltype

@@ -299,12 +299,12 @@ namespace
 			Layout
 			<	Member
 				<	ID_T
-					<	StringLiteral<t_vConfig[t_npIndex].Object.Name.size() + 1uz>
-						{	t_vConfig[t_npIndex].Object.Name.data()
+					<	StringLiteral<t_vConfig[t_npIndex].get().Name.size() + 1uz>
+						{	t_vConfig[t_npIndex].get().Name.data()
 						}
 					>
 				,	Meta::RestoreTypeEntity
-					<	t_vConfig[t_npIndex].Object.Type
+					<	t_vConfig[t_npIndex].get().Type
 					>
 				>
 				...

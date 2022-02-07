@@ -9,9 +9,9 @@ export namespace
 {
 	struct
 		StringView final
-	:	Meta::Value<Meta::Value<char> const[]>
+	:	Meta::Value<char const[]>
 	{
-		using Meta::Value<Meta::Value<char> const[]>::Value;
+		using Meta::Value<char const[]>::Value;
 	};
 
 	template
@@ -88,11 +88,11 @@ export namespace
 	->	bool
 	{	return
 		(	static_cast
-			<	Meta::Value<Meta::Value<char> const[]> const&
+			<	Meta::Value<char const[]> const&
 			>(	i_rLeft
 			)
 		==	static_cast
-			<	Meta::Value<Meta::Value<char> const[]> const&
+			<	Meta::Value<char const[]> const&
 			>(	i_rRight
 			)
 		);
@@ -110,11 +110,11 @@ export namespace
 	->	::std::strong_ordering
 	{	return
 		(	static_cast
-			<	Meta::Value<Meta::Value<char> const[]> const&
+			<	Meta::Value<char const[]> const&
 			>(	i_rLeft
 			)
 		<=>	static_cast
-			<	Meta::Value<Meta::Value<char> const[]> const&
+			<	Meta::Value<char const[]> const&
 			>(	i_rRight
 			)
 		);
