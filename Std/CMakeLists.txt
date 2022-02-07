@@ -9,7 +9,3 @@ if	(${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
 else()
 	message(FATAL_ERROR "Builing Std module not yet supported for compiler-id ${CMAKE_CXX_COMPILER_ID}!")
 endif()
-
-add_module(QualifierTemplate.cpp)
-add_module(TemplateConcepts.cpp)
-add_module(TemplateTraits.cpp)

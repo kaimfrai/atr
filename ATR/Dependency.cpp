@@ -4,7 +4,6 @@ export import ATR.ID;
 export import ATR.Erase;
 export import Meta.Type;
 export import Meta.TupleList;
-export import Std.TemplateConcepts;
 
 export namespace
 	ATR
@@ -282,18 +281,6 @@ export namespace
 			,	t_tpItem
 			>
 			...
-		>
-	;
-
-	template
-		<	typename
-				t_tDependency
-		>
-	concept
-		ProtoBoundDependency
-	=	Std::TypePackInstanceOf
-		<	t_tDependency
-		,	BoundDependency
 		>
 	;
 

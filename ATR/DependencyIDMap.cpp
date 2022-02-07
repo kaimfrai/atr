@@ -8,7 +8,6 @@ export import ATR.MemberOffset;
 export import ATR.ID;
 export import ATR.StringLiteral;
 export import ATR.Layout;
-export import Std.QualifierTemplate;
 
 export namespace
 	ATR
@@ -140,28 +139,14 @@ export namespace
 		if	constexpr(MemberAccessIDOf<RestoredMemberType, t_tOwner>)
 			return MapDependency(RestoredMemberType{}, i_vOwner);
 		else
-		{
-			using
-				MemberType
-			=	typename
-				Std::CVQualifier
-				<	t_tOwner
-				>
-			::	template
-				Add
-				<	RestoredMemberType
-				>
-			;
-
 			return
 			MemberOffset
-			<	MemberType
+			<	RestoredMemberType
 			>{	::ATR::ByteOffset
 				(	i_vOrigin
 				,	aBegin
 				)
 			};
-		}
 	}
 
 	template

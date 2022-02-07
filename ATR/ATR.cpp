@@ -1,7 +1,6 @@
 export module ATR;
 
 export import ATR.Address;
-export import ATR.Body;
 export import ATR.Concatenate;
 export import ATR.DataMember;
 export import ATR.Dependency;

@@ -8,7 +8,6 @@ add_module(Layout.cpp)
 add_module(MemberOffset.cpp)
 
 add_module(Address.cpp)
-add_module(Body.cpp)
 add_module(Dependency.cpp)
 add_module(DependencyIDMap.cpp)
 add_module(Erase.cpp)
