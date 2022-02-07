@@ -1097,6 +1097,38 @@ export namespace
 				)
 			);
 		}
+
+		friend auto constexpr
+		(	begin
+		)	(	IndexedArray
+				&	i_rArray
+			)
+		->	Value<t_tValue*>
+		{	return ::std::begin(i_rArray.Object);	}
+
+		friend auto constexpr
+		(	begin
+		)	(	IndexedArray const
+				&	i_rArray
+			)
+		->	Value<t_tValue const*>
+		{	return ::std::begin(i_rArray.Object);	}
+
+		friend auto constexpr
+		(	end
+		)	(	IndexedArray
+				&	i_rArray
+			)
+		->	Value<t_tValue*>
+		{	return ::std::end(i_rArray.Object);	}
+
+		friend auto constexpr
+		(	end
+		)	(	IndexedArray const
+				&	i_rArray
+			)
+		->	Value<t_tValue const*>
+		{	return ::std::end(i_rArray.Object);	}
 	};
 
 	template
@@ -1203,6 +1235,34 @@ export namespace
 			)
 		->	void
 		{}
+
+		friend auto constexpr
+		(	begin
+		)	(	IndexedArray&
+			)
+		->	Value<t_tValue*>
+		{	return nullptr;	}
+
+		friend auto constexpr
+		(	begin
+		)	(	IndexedArray const&
+			)
+		->	Value<t_tValue const*>
+		{	return nullptr;	}
+
+		friend auto constexpr
+		(	end
+		)	(	IndexedArray&
+			)
+		->	Value<t_tValue*>
+		{	return nullptr;	}
+
+		friend auto constexpr
+		(	end
+		)	(	IndexedArray const&
+			)
+		->	Value<t_tValue const*>
+		{	return nullptr;	}
 	};
 
 	template
@@ -1365,64 +1425,6 @@ export namespace
 
 			return *this;
 		}
-
-		auto constexpr
-		(	operator[]
-		)	(	USize
-					i_nIndex
-			)	&
-		->	Value<t_tValue&>
-		{	return Object[i_nIndex];	}
-
-		auto constexpr
-		(	operator[]
-		)	(	USize
-					i_nIndex
-			)	const&
-		->	Value<t_tValue const&>
-		{	return Object[i_nIndex];	}
-
-		auto constexpr
-		(	operator[]
-		)	(	USize
-					i_nIndex
-			)	&&
-		->	Value<t_tValue>
-		requires
-			ProtoMoveConstructible<t_tValue>
-		{	return ::std::move(Object[i_nIndex]);	}
-
-		friend auto constexpr
-		(	begin
-		)	(	Value
-				&	i_rArray
-			)
-		->	Value<t_tValue*>
-		{	return ::std::begin(i_rArray.Object);	}
-
-		friend auto constexpr
-		(	begin
-		)	(	Value const
-				&	i_rArray
-			)
-		->	Value<t_tValue const*>
-		{	return ::std::begin(i_rArray.Object);	}
-
-		friend auto constexpr
-		(	end
-		)	(	Value
-				&	i_rArray
-			)
-		->	Value<t_tValue*>
-		{	return ::std::end(i_rArray.Object);	}
-
-		friend auto constexpr
-		(	end
-		)	(	Value const
-				&	i_rArray
-			)
-		->	Value<t_tValue const*>
-		{	return ::std::end(i_rArray.Object);	}
 
 		[[nodiscard]]
 		auto constexpr
