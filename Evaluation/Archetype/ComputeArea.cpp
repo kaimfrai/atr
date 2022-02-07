@@ -52,7 +52,7 @@ export namespace
 	auto constexpr
 	(	MapAddress
 	)	(	ID_T<"ComputeArea">
-		,	Argument<t_tShape> const&
+		,	Meta::TypeToken<t_tShape> const&
 		)
 	{
 		return

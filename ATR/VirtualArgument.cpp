@@ -69,12 +69,12 @@ export namespace
 				>
 			)
 		:	Function
-			{	Address
-				<	t_tFuncID
-				,	t_tObject
-				,	t_tpArgument
+			{	MapAddress
+				(	t_tFuncID{}
+				,	Argument<t_tObject>{}()
+				,	Argument<t_tpArgument>{}()
 					...
-				>()
+				)
 			}
 		{}
 
@@ -149,12 +149,12 @@ export namespace
 				>
 			)
 		:	Function
-			{	Address
-				<	t_tFuncID
-				,	t_tObject
-				,	t_tpArgument
+			{	MapAddress
+				(	t_tFuncID{}
+				,	Argument<t_tObject>{}()
+				,	Argument<t_tpArgument>{}()
 					...
-				>()
+				)
 			}
 		{}
 

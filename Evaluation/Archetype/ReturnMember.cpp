@@ -40,7 +40,7 @@ export namespace
 			,	t_rpLetter
 				...
 			>
-		,	Argument<t_tObject> const&
+		,	Meta::TypeToken<t_tObject> const&
 		)
 	{
 		using

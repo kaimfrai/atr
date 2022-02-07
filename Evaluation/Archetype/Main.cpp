@@ -11,8 +11,8 @@ import Evaluation.Shared.TypeConstruct;
 import Evaluation.Shared.MainTemplate;
 
 static_assert
-(	ATR::Address<ATR::ID_T<"ComputeVolume">, Bodies3D::Head const&>()
-==	ATR::Address<ATR::ID_T<"ComputeVolume">, Bodies3D::Sphere const&>()
+(	ATR::MapAddress(ATR::ID_V<"ComputeVolume">, ATR::Argument<Bodies3D::Head const&>{}())
+==	ATR::MapAddress(ATR::ID_V<"ComputeVolume">, ATR::Argument<Bodies3D::Sphere const&>{}())
 );
 
 auto

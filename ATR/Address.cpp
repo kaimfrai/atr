@@ -5,8 +5,6 @@ export import ATR.Signature;
 export import ATR.ID;
 
 export import Std;
-export import Meta.Transform;
-export import Meta.Type.Function;
 export import Meta.TupleList;
 
 export namespace
@@ -17,13 +15,13 @@ export namespace
 				t_tArgument
 		>
 	struct
-		Argument
+		Argument final
 	{
 		auto constexpr
 		(	operator()
 		)	()
-		->	Argument<t_tArgument>
-		{	return *this;	}
+		->	Meta::TypeToken<t_tArgument>
+		{	return Meta::Type<t_tArgument>;	}
 	};
 
 	template
@@ -33,16 +31,16 @@ export namespace
 	struct
 		Argument
 		<	t_tArgument&
-		>
+		>	final
 	{
-		Argument<t_tArgument>
+		Meta::TypeToken<t_tArgument>
 			Argument
 		{};
 
 		auto constexpr
 		(	operator()
 		)	()
-		->	::ATR::Argument<t_tArgument>&
+		->	Meta::TypeToken<t_tArgument>&
 		{	return Argument;	}
 	};
 
@@ -53,16 +51,16 @@ export namespace
 	struct
 		Argument
 		<	t_tArgument const&
-		>
+		>	final
 	{
-		Argument<t_tArgument>
+		Meta::TypeToken<t_tArgument>
 			Argument
 		{};
 
 		auto constexpr
 		(	operator()
 		)	()	const
-		->	::ATR::Argument<t_tArgument> const&
+		->	Meta::TypeToken<t_tArgument> const&
 		{	return Argument;	}
 	};
 
@@ -73,16 +71,16 @@ export namespace
 	struct
 		Argument
 		<	t_tArgument&&
-		>
+		>	final
 	{
-		Argument<t_tArgument>
+		Meta::TypeToken<t_tArgument>
 			Argument
 		{};
 
 		auto constexpr
 		(	operator()
 		)	()
-		->	::ATR::Argument<t_tArgument>&&
+		->	Meta::TypeToken<t_tArgument>&&
 		{	return ::std::move(Argument);	}
 	};
 
@@ -93,16 +91,16 @@ export namespace
 	struct
 		Argument
 		<	t_tArgument const&&
-		>
+		>	final
 	{
-		Argument<t_tArgument>
+		Meta::TypeToken<t_tArgument>
 			Argument
 		{};
 
 		auto constexpr
 		(	operator()
 		)	()	const
-		->	::ATR::Argument<t_tArgument> const&&
+		->	Meta::TypeToken<t_tArgument> const&&
 		{	return ::std::move(Argument);	}
 	};
 
@@ -136,31 +134,6 @@ export namespace
 	/// stores the address to the implementation of the function
 	template
 		<	ProtoID
-				t_tFuncID
-		,	typename
-			...	t_tpArgument
-		>
-	auto constexpr
-	(	Address
-	)	()
-	requires
-		ValidAddress
-		<	t_tFuncID
-		,	t_tpArgument
-			...
-		>
-	{	return
-		MapAddress
-		(	t_tFuncID
-			{}
-		,	Argument<t_tpArgument>{}()
-			...
-		);
-	}
-
-	/// stores the address to the implementation of the function
-	template
-		<	ProtoID
 				t_tFunctionName
 		,	typename
 			...	t_tpArgument
@@ -173,19 +146,17 @@ export namespace
 		>
 	bool constexpr inline
 		AddressNoexcept
-	=	IsNoexcept
-		(	Meta::RemovePointer
-			(	Meta::Type
-				<	decltype
-					(	Address
-						<	t_tFunctionName
-						,	t_tpArgument
-							...
-						>()
-					)
-				>
+	=	::std::is_nothrow_invocable_v
+		<	decltype
+			(	MapAddress
+				(	t_tFunctionName{}
+				,	Argument<t_tpArgument>{}()
+					...
+				)
 			)
-		)
+		,	ErasedType<t_tpArgument>
+			...
+		>
 	;
 
 	/// invokes the function specified with the given FuncID
@@ -218,137 +189,16 @@ export namespace
 	{	return
 		::std::invoke
 		(	/// may be a pointer to member function, function pointer or function object
-			Address
-			<	t_tFuncID
-			,	t_tpArgument
+			MapAddress
+			(	t_tFuncID{}
+			,	Argument<t_tpArgument>{}()
 				...
-			>()
+			)
 		,	ForwardErased
-			(	Meta::Type
-				<	t_tpArgument
-				>
+			(	Meta::Type<t_tpArgument>
 			,	i_rpArgument
 			)
 			...
 		);
 	}
-
-	/// prevents recursive instantiation of Address
-	template
-		<	auto
-				t_fAddress
-		>
-	struct
-		AddressProxy
-	{
-		constexpr
-		(	AddressProxy
-		)	()
-		=	default;
-
-		template
-			<	ProtoID
-					t_tFuncID
-			,	typename
-				...	t_tpArgument
-			>
-		explicit constexpr
-		(	AddressProxy
-		)	(	t_tFuncID
-			,	Meta::TypePack
-				<	t_tpArgument
-					...
-				>
-			)
-		{}
-
-		template
-			<	ProtoID
-					t_tFuncID
-			,	typename
-					t_tOwner
-			,	typename
-				...	t_tpArgument
-			>
-		explicit constexpr
-		(	AddressProxy
-		)	(	t_tFuncID
-			,	Meta::TypeToken<t_tOwner>
-			,	Meta::TypePack
-				<	t_tpArgument
-					...
-				>
-			)
-		{}
-
-		template
-			<	typename
-				...	t_tpArgument
-			>
-		[[nodiscard]]
-		auto constexpr
-		(	operator()
-		)	(	t_tpArgument
-				&&
-				...	i_rpArgument
-			)	const
-		->	decltype(auto)
-		{	return
-			t_fAddress
-			(	::std::forward
-				<	t_tpArgument
-				>(	i_rpArgument
-				)
-				...
-			);
-		}
-	};
-
-	template
-		<	ProtoID
-				t_tFuncID
-		,	typename
-			...	t_tpArgument
-		>
-	(	AddressProxy
-	)	(	t_tFuncID
-		,	Meta::TypePack
-			<	t_tpArgument
-				...
-			>
-		)
-	->	AddressProxy
-		<	Address
-			<	t_tFuncID
-			,	t_tpArgument
-				...
-			>()
-		>
-	;
-
-	template
-		<	ProtoID
-				t_tFuncID
-		,	typename
-				t_tOwner
-		,	typename
-			...	t_tpArgument
-		>
-	(	AddressProxy
-	)	(	t_tFuncID
-		,	Meta::TypeToken<t_tOwner>
-		,	Meta::TypePack
-			<	t_tpArgument
-				...
-			>
-		)
-	->	AddressProxy
-		<	Address
-			<	t_tFuncID
-			,	t_tOwner
-			,	t_tpArgument
-				...
-			>()
-		>
-	;
 }

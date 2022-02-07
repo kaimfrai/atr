@@ -57,7 +57,7 @@ export namespace
 	auto constexpr
 	(	MapAddress
 	)	(	ID_T<"ComputeVolume">
-		,	Argument<t_tBody> const&
+		,	Meta::TypeToken<t_tBody> const&
 		)
 	{
 		return

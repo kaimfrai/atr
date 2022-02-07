@@ -120,12 +120,19 @@ export namespace
 		;
 
 		return
-		Meta::MakeKeyItem<TargetFuncID>
-		(	AddressProxy
-			{	OriginFuncID
-			,	t_vFuncIDMap
-			.	ArgumentPack
-			}
+		[]	<	typename
+				...	t_tpArgument
+			>	(	Meta::TypePack<t_tpArgument...>
+				)
+		{	return
+			Meta::MakeKeyItem<TargetFuncID>
+			(	MapAddress
+				(	OriginFuncID
+				,	Argument<t_tpArgument>{}()
+					...
+				)
+			);
+		}(	t_vFuncIDMap.ArgumentPack
 		);
 	}
 
