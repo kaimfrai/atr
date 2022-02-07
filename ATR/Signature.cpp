@@ -1,7 +1,6 @@
 export module ATR.Signature;
 
 export import ATR.Dependency;
-export import ATR.ID;
 
 export namespace
 	ATR

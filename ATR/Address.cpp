@@ -7,7 +7,7 @@ export import ATR.ID;
 export import Std;
 export import Meta.TupleList;
 
-export namespace
+namespace
 	ATR
 {
 	template
@@ -103,7 +103,11 @@ export namespace
 		->	Meta::TypeToken<t_tArgument> const&&
 		{	return ::std::move(Argument);	}
 	};
+}
 
+export namespace
+	ATR
+{
 	/// checks if the address is mapped
 	template
 		<	typename
@@ -129,6 +133,21 @@ export namespace
 				...
 			);
 		}
+	;
+
+	template
+		<	ProtoID
+				t_tFuncID
+		,	typename
+			...	t_tpArgument
+		>
+	auto constexpr inline
+	*	Address
+	=	MapAddress
+		(	t_tFuncID{}
+		,	Argument<t_tpArgument>{}()
+			...
+		)
 	;
 
 	/// stores the address to the implementation of the function
@@ -188,12 +207,11 @@ export namespace
 	->	decltype(auto)
 	{	return
 		::std::invoke
-		(	/// may be a pointer to member function, function pointer or function object
-			MapAddress
-			(	t_tFuncID{}
-			,	Argument<t_tpArgument>{}()
+		(	Address
+			<	t_tFuncID
+			,	t_tpArgument
 				...
-			)
+			>
 		,	ForwardErased
 			(	Meta::Type<t_tpArgument>
 			,	i_rpArgument

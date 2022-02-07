@@ -68,15 +68,16 @@ export namespace
 	}
 
 	template
-		<	typename
+		<	ProtoID
+				t_tFuncID
+		,	typename
 				t_tOwner
 		,	typename
 			...	t_tpArgument
 		>
 	auto constexpr
 	(	MapDependency
-	)	(	ProtoID auto
-				i_vFunctionName
+	)	(	t_tFuncID
 		,	Meta::TypeToken<t_tOwner>
 		,	Meta::TypePack
 			<	t_tpArgument
@@ -85,12 +86,12 @@ export namespace
 		)
 	->	decltype(auto)
 	{	return
-		MapAddress
-		(	i_vFunctionName
-		,	Argument<t_tOwner>{}()
-		,	Argument<t_tpArgument>{}()
+		Address
+		<	t_tFuncID
+		,	t_tOwner
+		,	t_tpArgument
 			...
-		);
+		>;
 	}
 
 	template
