@@ -68,8 +68,8 @@ export namespace
 				=	(	i_vPrefix
 					+	ID_V
 						<	StringLiteral
-							<	t_vConfig[t_npIndex].get().Name.size() + 1uz
-							>{	t_vConfig[t_npIndex].get().Name.data()
+							<	t_vConfig[t_npIndex]->Name.size() + 1uz
+							>{	t_vConfig[t_npIndex]->Name.data()
 							}
 						>
 					+	i_vSuffix

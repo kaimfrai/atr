@@ -276,6 +276,13 @@ export namespace
 			noexcept
 		{	return get();	}
 
+		auto constexpr
+		(	operator ->
+		)	()	const
+			noexcept
+		->	t_tValue*
+		{	return Object;	}
+
 		friend auto constexpr
 		(	operator &
 		)	(	Value

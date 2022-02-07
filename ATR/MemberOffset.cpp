@@ -189,7 +189,7 @@ export namespace
 					)
 				->	bool
 				{
-					return i_rValue.get().Name.Object == vObject;
+					return i_rValue->Name.Object == vObject;
 				}
 			)
 		->	Type

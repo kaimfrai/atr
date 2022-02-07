@@ -76,7 +76,7 @@ export namespace
 						]	(	Meta::Value<DataMemberInfo const&>
 									i_rInfo
 						)
-						{	return i_rInfo.get().Name.Object == vName.Object;	}
+						{	return i_rInfo->Name.Object == vName.Object;	}
 					)
 				;
 				if	(vExchangePosition == end(vCopy))
