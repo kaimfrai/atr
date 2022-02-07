@@ -18,46 +18,41 @@ export namespace
 		<	Meta::USize
 				t_nExtent
 		>
-	requires
-		(	t_nExtent
-		>=	2uz
-		)
 	struct
 		StringLiteral final
-	:	Meta::Value
+	:	Meta::DeduceIndexedArray
 		<	char
-				[	t_nExtent
-				-	1uz
-				]
+		,	t_nExtent
 		>
 	{
+		using
+			IndexedArray
+		=	Meta::DeduceIndexedArray
+			<	char
+			,	t_nExtent
+			>
+		;
+
 		constexpr
 		(	StringLiteral
 		)	(	char const
 				*	i_aString
 			)
-		:	Meta::Value<char[t_nExtent - 1uz]>
-			{	+i_aString
+		:	IndexedArray
+			{	{	+i_aString
+				,	t_nExtent
+				}
 			}
 		{}
 
 		constexpr
-		(	StringLiteral
-		)	(	Meta::Value<char> const
-				*	i_aString
-			)
-		:	Meta::Value<char[t_nExtent - 1uz]>
-			{	+i_aString
-			}
-		{}
-
-		constexpr
-		(	operator auto
+		(	operator decltype(auto)
 		)	()	const
+			noexcept
 		{	return
 			StringView
 			{	this->Object
-			,	t_nExtent - 1uz
+			,	t_nExtent
 			};
 		}
 	};
@@ -73,6 +68,7 @@ export namespace
 		)
 	->	StringLiteral
 		<	t_nExtent
+		-	1uz
 		>
 	;
 

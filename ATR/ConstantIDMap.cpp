@@ -81,7 +81,7 @@ export namespace
 		using
 			TargetDataID
 		=	ID_T
-			<	StringLiteral<t_vConstantIDMap.TargetID.size() + 1uz>
+			<	StringLiteral<t_vConstantIDMap.TargetID.size()>
 				{	t_vConstantIDMap.TargetID.data()
 				}
 			>

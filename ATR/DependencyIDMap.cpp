@@ -99,7 +99,7 @@ export namespace
 		using
 			TargetDataID
 		=	ID_T
-			<	StringLiteral<t_vDataIDMap.TargetID.size() + 1uz>
+			<	StringLiteral<t_vDataIDMap.TargetID.size()>
 				{	t_vDataIDMap.TargetID.data()
 				}
 			>
@@ -279,7 +279,7 @@ export namespace
 		using
 			TargetFuncID
 		=	ID_T
-			<	StringLiteral<t_vFuncIDMap.TargetID.size() + 1uz>
+			<	StringLiteral<t_vFuncIDMap.TargetID.size()>
 				{	t_vFuncIDMap.TargetID.data()
 				}
 			>
@@ -288,7 +288,7 @@ export namespace
 		auto constexpr
 			OriginFuncID
 		=	ID_V
-			<	StringLiteral<t_vFuncIDMap.OriginID.size() + 1uz>
+			<	StringLiteral<t_vFuncIDMap.OriginID.size()>
 				{	t_vFuncIDMap.OriginID.data()
 				}
 			>

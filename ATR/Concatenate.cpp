@@ -68,7 +68,7 @@ export namespace
 				=	(	i_vPrefix
 					+	ID_V
 						<	StringLiteral
-							<	t_vConfig[t_npIndex]->Name.size() + 1uz
+							<	t_vConfig[t_npIndex]->Name.size()
 							>{	t_vConfig[t_npIndex]->Name.data()
 							}
 						>
@@ -99,7 +99,7 @@ export namespace
 	=	ATR::InfixLayoutConfig
 		(	ID_V<i_vPrefix>
 		,	Meta::V<LayoutConfig<i_vType>>
-		,	ID<>{}
+		,	""_id
 		)
 	;
 
@@ -114,7 +114,7 @@ export namespace
 	ATR::DataMemberConfig constexpr inline
 		SuffixedLayoutConfig
 	=	ATR::InfixLayoutConfig
-		(	ID<>{}
+		(	""_id
 		,	Meta::V<LayoutConfig<i_vType>>
 		,	ID_V<i_vSuffix>
 		)

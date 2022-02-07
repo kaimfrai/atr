@@ -911,36 +911,6 @@ export namespace
 			}
 		{}
 
-		explicit constexpr
-		(	IndexedArray
-		)	(	t_tValue const
-				*	i_aValue
-			)
-		requires
-			ProtoCopyConstructible<t_tValue>
-		:	Object
-			{	i_aValue
-				[	t_npIndex
-				]
-				...
-			}
-		{}
-
-		explicit constexpr
-		(	IndexedArray
-		)	(	Value<t_tValue> const
-				*	i_aValue
-			)
-		requires
-			ProtoCopyConstructible<t_tValue>
-		:	Object
-			{	i_aValue
-				[	t_npIndex
-				]
-				...
-			}
-		{}
-
 		constexpr
 		(	IndexedArray
 		)	(	t_tValue const
@@ -1057,7 +1027,7 @@ export namespace
 		)	(	USize
 					i_nIndex
 			)	&
-		->	t_tValue&
+		->	Value<t_tValue&>
 		{	return Object[i_nIndex];	}
 
 		auto constexpr
@@ -1065,7 +1035,7 @@ export namespace
 		)	(	USize
 					i_nIndex
 			)	const&
-		->	t_tValue const&
+		->	Value<t_tValue const&>
 		{	return Object[i_nIndex];	}
 
 		auto constexpr
@@ -1073,7 +1043,7 @@ export namespace
 		)	(	USize
 					i_nIndex
 			)	&&
-		->	t_tValue
+		->	Value<t_tValue>
 		requires
 			ProtoMoveConstructible<t_tValue>
 		{	return ::std::move(Object[i_nIndex]);	}
@@ -1127,6 +1097,112 @@ export namespace
 				)
 			);
 		}
+	};
+
+	template
+		<	ProtoValue
+				t_tValue
+		>
+	struct
+		IndexedArray
+		<	t_tValue
+		>
+	{
+		using value_type = Value<t_tValue>;
+		using size_type = USize;
+		using difference_type = SSize;
+		using reference = Value<t_tValue&>;
+		using const_reference = Value<t_tValue const&>;
+		using pointer = Value<t_tValue*>;
+		using const_pointer = Value<t_tValue const*>;
+		using iterator = pointer;
+		using const_iterator = const_pointer;
+
+		[[nodiscard]]
+		static auto constexpr
+		(	size
+		)	()
+		->	USize
+		{	return 0uz;	}
+
+		[[nodiscard]]
+		static auto constexpr
+		(	max_size
+		)	()
+		->	USize
+		{	return 0uz;	}
+
+		[[nodiscard]]
+		static auto constexpr
+		(	empty
+		)	()
+		->	bool
+		{	return true;	}
+
+		constexpr
+		(	IndexedArray
+		)	()
+		=	default
+		;
+
+		explicit constexpr
+		(	IndexedArray
+		)	(	Value<t_tValue const[]>
+			)
+		{}
+
+		[[noreturn]]
+		auto constexpr
+		(	operator[]
+		)	(	USize
+			)	&
+		->	Value<t_tValue&>
+		{	throw "Index out of bounds!";	}
+
+		[[noreturn]]
+		auto constexpr
+		(	operator[]
+		)	(	USize
+			)	const&
+		->	Value<t_tValue const&>
+		{	throw "Index out of bounds!";	}
+
+		[[noreturn]]
+		auto constexpr
+		(	operator[]
+		)	(	USize
+			)	&&
+		->	Value<t_tValue>
+		{	throw "Index out of bounds!";	}
+
+		friend auto constexpr
+		(	operator +
+		)	(	IndexedArray
+			)
+		->	Value<t_tValue*>
+		{	return { nullptr	};	}
+
+		friend auto constexpr
+		(	operator +
+		)	(	IndexedArray const&
+			)
+		->	Value<t_tValue const*>
+		{	return { nullptr	};	}
+
+		auto constexpr
+		(	fill
+		)	(	t_tValue const&
+			)
+		->	void
+		{}
+
+		friend auto constexpr
+		(	swap
+		)	(	IndexedArray&
+			,	IndexedArray&
+			)
+		->	void
+		{}
 	};
 
 	template
@@ -1470,26 +1546,6 @@ export namespace
 
 		constexpr
 		(	Value
-		)	(	t_tValue
-				*	i_aValue
-			)
-		requires
-			ProtoRegular
-			<	t_tValue
-			>
-		:	Value
-			{	i_aValue
-			,	[=] mutable
-				{
-					while(*i_aValue != t_tValue{})
-						++i_aValue;
-					return i_aValue;
-				}()
-			}
-		{}
-
-		constexpr
-		(	Value
 		)	(	::std::nullptr_t
 			)
 		=	delete
@@ -1513,6 +1569,14 @@ export namespace
 			-	Object
 			);
 		}
+
+		auto constexpr
+		(	operator []
+		)	(	USize
+					i_nIndex
+			)	const
+		->	Value<t_tValue&>
+		{	return Object[i_nIndex];	}
 
 		friend auto constexpr
 		(	begin

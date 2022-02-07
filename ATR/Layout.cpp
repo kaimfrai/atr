@@ -299,7 +299,7 @@ namespace
 			Layout
 			<	Member
 				<	ID_T
-					<	StringLiteral<t_vConfig[t_npIndex]->Name.size() + 1uz>
+					<	StringLiteral<t_vConfig[t_npIndex]->Name.size()>
 						{	t_vConfig[t_npIndex]->Name.data()
 						}
 					>
