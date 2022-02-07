@@ -15,96 +15,67 @@ export namespace
 		ForwardErasedType
 	{
 		/// erases type information from a value
+		/// TODO: erase value information: decomposition into fundamental types of the same properties
 		template
 			<	Meta::ProtoValue
 					t_tObject
 			>
 		auto constexpr
-			operator()
-			(	Meta::TypeToken
-				<	t_tObject
-				>
+		(	operator()
+		)	(	Meta::TypeToken<t_tObject>
 			,	t_tObject
 					i_vObject
 			)	const
 		->	t_tObject
-		{	/// TODO: erase value information: decomposition into fundamental types of the same properties
-			return
-				i_vObject
-			;
-		}
+		{	return i_vObject;	}
+
 		/// erases type information from a pointer to non-const
 		template
 			<	Meta::ProtoValue
 					t_tObject
 			>
-		constexpr
-		auto
-			operator()
-			(	Meta::TypeToken
-				<	t_tObject
-					*
-				>
+		auto constexpr
+		(	operator()
+		)	(	Meta::TypeToken<t_tObject*>
 			,	t_tObject
 				*	i_aObject
 			)	const
-		->	void
-			*
-		{	return
-				i_aObject
-			;
-		}
+		->	void*
+		{	return i_aObject;	}
 
 		/// erases type information from a pointer to const
 		template
 			<	Meta::ProtoValue
 					t_tObject
 			>
-		constexpr
-		auto
-			operator()
-			(	Meta::TypeToken
-				<	t_tObject
-					const
-					*
-				>
-			,	t_tObject
-				const
+		auto constexpr
+		(	operator()
+		)	(	Meta::TypeToken<t_tObject const*>
+			,	t_tObject const
 				*	i_aObject
 			)	const
-		->	void
-			const
-			*
-		{	return
-				i_aObject
-			;
-		}
+		->	void const*
+		{	return i_aObject;	}
 
 		/// erases type information from a lvalue reference
 		template
 			<	Meta::ProtoValue
 					t_tObject
 			>
-		constexpr
-		auto
-			operator()
-			(	Meta::TypeToken
-				<	t_tObject
-					&
-				>
+		auto constexpr
+		(	operator()
+		)	(	Meta::TypeToken<t_tObject&>
 			,	t_tObject
 				&	i_rObject
 			)	const
 		->	auto*
-		{
-			return
-				operator()
-				(	Meta::Type<t_tObject*>
-				,	std::addressof
-					(	i_rObject
-					)
+		{	return
+			operator()
+			(	Meta::Type<t_tObject*>
+			,	::std::addressof
+				(	i_rObject
 				)
-			;
+			);
 		}
 
 		/// erases type information from a rvalue reference to small types
@@ -112,13 +83,9 @@ export namespace
 			<	Meta::ProtoValue
 					t_tObject
 			>
-		constexpr
-		auto
-			operator()
-			(	Meta::TypeToken
-				<	t_tObject
-					&&
-				>
+		auto constexpr
+		(	operator()
+		)	(	Meta::TypeToken<t_tObject&&>
 			,	t_tObject
 				&&	i_rObject
 			)	const
@@ -128,8 +95,10 @@ export namespace
 			<=	alignof(std::max_align_t)
 			)
 		{	return
-				i_rObject
-			;
+			operator()
+			(	Meta::Type<t_tObject>
+			,	i_rObject
+			);
 		}
 
 		/// erases type information from a rvalue reference to large types
@@ -137,26 +106,20 @@ export namespace
 			<	Meta::ProtoValue
 					t_tObject
 			>
-		constexpr
-		auto
-			operator()
-			(	Meta::TypeToken
-					<	t_tObject
-						&&
-					>
+		auto constexpr
+		(	operator()
+		)	(	Meta::TypeToken<t_tObject&&>
 			,	t_tObject
 				&&	i_rObject
 			)	const
-		->	auto
-			*
+		->	auto*
 		{	return
-				operator()
-				(	Meta::Type<t_tObject*>
-				,	std::addressof
-					(	i_rObject
-					)
+			operator()
+			(	Meta::Type<t_tObject*>
+			,	::std::addressof
+				(	i_rObject
 				)
-			;
+			);
 		}
 	};
 

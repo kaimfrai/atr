@@ -176,28 +176,26 @@ export namespace
 		,	IDMap
 			...	t_vpIDMap
 		>
-	auto constexpr inline
+	Dependency constexpr inline
 		ArgumentDependencyInfo
-	=	MakeArgumentDependency
-		(	Meta::Type<ErasedType<t_tOwner>>
-		,	Meta::MakeKeyItem
-			<	ID_T
-				<	StringLiteral<t_vpIDMap.TargetID.size()>
-					{	t_vpIDMap.TargetID.data()
+	{	Meta::Type<ErasedType<t_tOwner>>
+	,	Meta::MakeKeyItem
+		<	ID_T
+			<	StringLiteral<t_vpIDMap.TargetID.size()>
+				{	t_vpIDMap.TargetID.data()
+				}
+			>
+		>(	MapDependency
+			(	ID_V
+				<	StringLiteral<t_vpIDMap.OriginID.size()>
+					{	t_vpIDMap.OriginID.data()
 					}
 				>
-			>(	MapDependency
-				(	ID_V
-					<	StringLiteral<t_vpIDMap.OriginID.size()>
-						{	t_vpIDMap.OriginID.data()
-						}
-					>
-				,	Meta::Type<t_tOwner>
-				,	t_vpIDMap.ArgumentPack
-				)
+			,	Meta::Type<t_tOwner>
+			,	t_vpIDMap.ArgumentPack
 			)
-			...
 		)
-	;
+		...
+	};
 }
 
