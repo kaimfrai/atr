@@ -183,13 +183,13 @@ export namespace
 			::std::find_if
 			(	i_aBegin
 			,	i_aEnd
-			,	[	vObject = i_vName.Object
+			,	[	i_vName
 				]	(	Meta::Value<DataMemberInfo const&>
 							i_rValue
 					)
 				->	bool
 				{
-					return i_rValue->Name.Object == vObject;
+					return i_rValue->Name == i_vName;
 				}
 			)
 		->	Type

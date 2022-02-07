@@ -135,13 +135,13 @@ export namespace
 	template
 		<	typename
 				t_tObject
-		,	StringLiteral
-				t_vMemberName
+		,	typename
+				t_tMemberName
 		>
 	concept
 		HasDataMember
 	=	MemberAccessIDOf
-		<	ID_T<t_vMemberName>
+		<	t_tMemberName
 		,	typename
 			t_tObject
 		::	LayoutType

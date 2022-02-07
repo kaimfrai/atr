@@ -661,7 +661,7 @@ export namespace
 		(	CreateLayout
 			<	LayoutConfig
 				<	t_tTypeID
-				::	StringLiteral
+				::	RawArray
 				>
 			>()
 		)

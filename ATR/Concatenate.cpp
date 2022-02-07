@@ -19,7 +19,7 @@ export namespace
 	concept
 		ProtoPrefixID
 	=	ProtoID<t_tID>
-	and	starts_with(t_tID{}, t_vStart)
+	and	starts_with(t_tID{}, ID_V<t_vStart>)
 	;
 
 	/// checks if an identifier end with a given string and is an instance of a given template
@@ -32,7 +32,7 @@ export namespace
 	concept
 		ProtoSuffixID
 	=	ProtoID<t_tID>
-	and	ends_with(t_tID{}, t_vEnd)
+	and	ends_with(t_tID{}, ID_V<t_vEnd>)
 	;
 
 	template

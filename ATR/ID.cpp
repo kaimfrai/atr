@@ -271,18 +271,14 @@ export namespace
 		,	'\0'
 		};
 
-		static StringLiteral constexpr
-			StringLiteral
-		{	RawArray
-		};
-
 		static StringView constexpr
 			StringView
-		{	StringLiteral
+		{	RawArray
+		,	sizeof...(t_rpString)
 		};
 
 		constexpr
-		(	operator auto
+		(	operator decltype(auto)
 		)	()	const
 		{	return StringView;	}
 
@@ -372,76 +368,6 @@ export namespace
 			<	t_rpString
 				...
 			,	t_rpBack
-				...
-			>{};
-		}
-	};
-
-	template<>
-	struct
-		ID<>
-	{
-		template
-			<	Char const
-				&
-				...	t_rpBack
-			>
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator-
-		)	(	ID
-			,	ID
-				<	t_rpBack
-					...
-				>
-			)
-		{	return
-				ID
-				<	t_rpBack
-					...
-				>{}
-			;
-		}
-
-		template
-			<	Char const
-				&
-				...	t_rpFront
-			>
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator-
-		)	(	ID
-				<	t_rpFront
-					...
-				>
-			,	ID
-			)
-		{	return
-				ID
-				<	t_rpFront
-					...
-				>{}
-			;
-		}
-
-		template
-			<	Char const
-				&
-				...	t_rpBack
-			>
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator+
-		)	(	ID
-			,	ID
-				<	t_rpBack
-					...
-				>
-			)
-		{	return
-			ID
-			<	t_rpBack
 				...
 			>{};
 		}
@@ -546,19 +472,18 @@ export namespace
 static_assert
 (	starts_with
 	(	::ATR::ID<a, b, c>{}
-	,	::ATR::StringLiteral{"ab"}
+	,	::ATR::ID_V<"ab">
 	)
 );
 
 static_assert
 (	ends_with
 	(	::ATR::ID<a, b, c>{}
-	,	::ATR::StringLiteral{"bc"}
+	,	::ATR::ID_V<"bc">
 	)
 );
 
 using ATR::operator""_id;
-using ATR::operator==;
 
 static_assert
 (	"ab"_id

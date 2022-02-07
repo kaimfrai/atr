@@ -80,8 +80,8 @@ export namespace
 					,	[	vName = rExchange.Name
 						]	(	Meta::Value<DataMemberInfo const&>
 									i_rInfo
-						)
-						{	return i_rInfo->Name.Object == vName.Object;	}
+							)
+						{	return i_rInfo->Name == vName;	}
 					)
 				;
 				if	(vExchangePosition == end(vCopy))

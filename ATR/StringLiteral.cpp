@@ -44,17 +44,6 @@ export namespace
 				}
 			}
 		{}
-
-		constexpr
-		(	operator decltype(auto)
-		)	()	const
-			noexcept
-		{	return
-			StringView
-			{	this->Object
-			,	t_nExtent
-			};
-		}
 	};
 
 	template
@@ -76,21 +65,15 @@ export namespace
 	///	This allows for template argument erasure.
 	auto constexpr
 	(	operator==
-	)	(	StringView const
-			&	i_rLeft
-		,	StringView const
-			&	i_rRight
+	)	(	StringView
+				i_vLeft
+		,	StringView
+				i_vRight
 		)
 	->	bool
 	{	return
-		(	static_cast
-			<	Meta::Value<char const[]> const&
-			>(	i_rLeft
-			)
-		==	static_cast
-			<	Meta::Value<char const[]> const&
-			>(	i_rRight
-			)
+		(	i_vLeft.Object
+		==	i_vRight.Object
 		);
 	}
 
@@ -98,20 +81,20 @@ export namespace
 	///	This allows for template argument erasure.
 	auto constexpr
 	(	operator<=>
-	)	(	StringView const
-			&	i_rLeft
-		,	StringView const
-			&	i_rRight
+	)	(	StringView
+				i_vLeft
+		,	StringView
+				i_vRight
 		)
 	->	::std::strong_ordering
 	{	return
 		(	static_cast
 			<	Meta::Value<char const[]> const&
-			>(	i_rLeft
+			>(	i_vLeft
 			)
 		<=>	static_cast
 			<	Meta::Value<char const[]> const&
-			>(	i_rRight
+			>(	i_vRight
 			)
 		);
 	}

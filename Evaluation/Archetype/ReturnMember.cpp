@@ -22,69 +22,60 @@ export namespace
 		);
 	}
 
-	/// functions prefixed with Get return the datamember withouth get
-	template
-		<	ProtoPrefixID<"Get">
-				t_tGetter
-		,	StringLiteral
-				t_vDataMember
-			=	(	"Get"_id
-				-	t_tGetter
-					{}
-				).StringLiteral
-		>
+	/// functions prefixed with Get return the datamember without get
 	auto constexpr
 		MapAddress
-		(	t_tGetter
-		,	ATR::HasDataMember<t_vDataMember>	auto const
+		(	ProtoPrefixID<"Get"> auto
+				i_vGet
+		,	ATR::HasDataMember
+			<	decltype
+				(	"Get"_id
+				-	i_vGet
+				)
+			>	auto const
 			&	i_rObject
 		)
 	{
 		using
+			MemberName
+		=	decltype
+			(	"Get"_id
+			-	i_vGet
+			)
+		;
+		using
 			MemberType
 		=	decltype
 			(	i_rObject
-				[	ID_V
-					<	t_vDataMember
-					>
+				[	MemberName
+					{}
 				]
 			)
 		;
 
 		auto constexpr
 			fResolveAlias
-		=	[]
-			{
-				if constexpr
+		=	[]{	if constexpr
 					(	requires
 						{	MemberType::StringView;
 						}
 					)
-				{	return
-						MemberType::StringView
-					;
-				}
+					return MemberType::StringView;
 				else
-					return
-						ID_T
-						<	t_vDataMember
-						>
-					::	StringView
-					;
+					return MemberName::	StringView;
 			}
 		;
 
 		return
-			DependencyAddress
-			{	StaticDependencyInfo
-				<	"ReturnMember"
-				>
-			,	ArgumentDependencyInfo
-				<	decltype(i_rObject)
-				,	MapDataID(fResolveAlias()) ->* "Member"_id
-				>
-			}
-		;
+		DependencyAddress
+		{	StaticDependencyInfo
+			<	"ReturnMember"
+			>
+		,	ArgumentDependencyInfo
+			<	decltype(i_rObject)
+			,	MapDataID(fResolveAlias()) ->* "Member"_id
+			>
+		};
 	}
 }
 
