@@ -185,25 +185,14 @@ export namespace
 				i_vName
 		,	Meta::Value<DataMemberInfo const*>
 				i_aBegin
-		,	Meta::Value<DataMemberInfo const*>
-				i_aEnd
 		)
 	->	Meta::EraseTypeToken
-	{	return
-			::std::find_if
-			(	i_aBegin
-			,	i_aEnd
-			,	[	i_vName
-				]	(	Meta::Value<DataMemberInfo const&>
-							i_rValue
-					)
-				->	bool
-				{
-					return i_rValue->Name == i_vName;
-				}
+	{	//	it is assumed that the name is always contained
+		for	(;	i_aBegin->Name != i_vName
+			;	++i_aBegin
 			)
-		->	Type
-		;
+		{}
+		return i_aBegin->Type;
 	}
 
 	auto constexpr
@@ -212,8 +201,6 @@ export namespace
 				i_vName
 		,	Meta::Value<DataMemberInfo const*>
 				i_aBegin
-		,	Meta::Value<DataMemberInfo const*>
-				i_aEnd
 		)
 	->	Meta::USize
 	{
@@ -221,8 +208,8 @@ export namespace
 			nOffset
 		=	0uz
 		;
-		for	(;	i_aBegin != i_aEnd
-			and	i_aBegin->Name.Object != i_vName.Object
+		//	it is assumed that the name is always contained
+		for	(;	i_aBegin->Name != i_vName
 			;	++i_aBegin
 			)
 		{

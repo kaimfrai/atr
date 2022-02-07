@@ -120,17 +120,12 @@ export namespace
 			aBegin
 		=	begin(rOwnerLayout)
 		;
-		Meta::Value<DataMemberInfo const*> constexpr
-			aEnd
-		=	end(rOwnerLayout)
-		;
 
 		Meta::EraseTypeToken constexpr
 			vMemberType
-		=	MemberType
+		=	::ATR::MemberType
 			(	i_vOrigin
 			,	aBegin
-			,	aEnd
 			)
 		;
 
@@ -161,10 +156,9 @@ export namespace
 			return
 			MemberOffset
 			<	MemberType
-			>{	ByteOffset
+			>{	::ATR::ByteOffset
 				(	i_vOrigin
 				,	aBegin
-				,	aEnd
 				)
 			};
 		}
@@ -185,7 +179,7 @@ export namespace
 				{	t_vpIDMap.TargetID.data()
 				}
 			>
-		>(	MapDependency
+		>(	::ATR::MapDependency
 			(	ID_V
 				<	StringLiteral<t_vpIDMap.OriginID.size()>
 					{	t_vpIDMap.OriginID.data()
