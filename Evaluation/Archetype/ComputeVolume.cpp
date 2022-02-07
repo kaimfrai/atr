@@ -63,14 +63,22 @@ export namespace
 		return
 		MakeProductAddress
 		<	t_tBody
-		,	MapFuncID("GetComputeVolumeMultiplier"_id)
-		->* "Constant"_id
-		,	MapFuncID("GetDepth"_id)
-		->* "Get0"_id
-		,	MapFuncID("GetHeight"_id)
-		->* "Get1"_id
-		,	MapFuncID("GetWidth"_id)
-		->* "Get2"_id
+		,	MapFuncID
+			(	"GetComputeVolumeMultiplier"_id
+			,	"Constant"_id
+			)
+		,	MapFuncID
+			(	"GetDepth"_id
+			,	"Get0"_id
+			)
+		,	MapFuncID
+			(	"GetHeight"_id
+			,	"Get1"_id
+			)
+		,	MapFuncID
+			(	"GetWidth"_id
+			,	"Get2"_id
+			)
 		>();
 	}
 }

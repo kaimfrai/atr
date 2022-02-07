@@ -77,7 +77,10 @@ export namespace
 			>
 		,	ArgumentDependencyInfo
 			<	t_tObject const&
-			,	MapDataID(fResolveAlias()) ->* "Member"_id
+			,	MapDataID
+				(	fResolveAlias()
+				,	"Member"_id
+				)
 			>
 		>;
 	}

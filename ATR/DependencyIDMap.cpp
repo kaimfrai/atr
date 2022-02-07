@@ -23,64 +23,20 @@ export namespace
 		StringView
 			TargetID
 		;
-
-		explicit constexpr
-		(	DataIDMap
-		)	(	StringView
-					i_vOriginID
-			,	StringView
-					i_vTargetID
-			)
-		:	OriginID
-			{	i_vOriginID
-			}
-		,	TargetID
-			{	i_vTargetID
-			}
-		{}
-	};
-
-	struct
-		DataIDOrigin
-	{
-		StringView
-			Identifier
-		;
-
-		constexpr
-		(	DataIDOrigin
-		)	(	StringView
-					i_vIdentifier
-			)
-		:	Identifier
-			{	i_vIdentifier
-			}
-		{}
-
-		/// creates the mapping
-		friend auto constexpr
-		(	operator->*
-		)	(	DataIDOrigin
-					i_vOriginID
-			,	StringView
-					i_vTargetDataID
-			)
-		{	return
-			DataIDMap
-			{	i_vOriginID.Identifier
-			,	i_vTargetDataID
-			};
-		}
 	};
 
 	auto constexpr
 	(	MapDataID
 	)	(	StringView
-				i_vIdentifier
+				i_vOrigin
+		,	StringView
+				i_vTarget
 		)
+	->	DataIDMap
 	{	return
-		DataIDOrigin
-		{	i_vIdentifier
+		DataIDMap
+		{	i_vOrigin
+		,	i_vTarget
 		};
 	}
 
@@ -182,22 +138,6 @@ export namespace
 		static Meta::TypePack<t_tpArgument...> constexpr
 			ArgumentPack
 		{};
-
-		explicit constexpr
-		(	FuncIDMap
-		)	(	StringView
-					i_vOriginID
-			,	StringView
-					i_vTargetID
-			,	Meta::TypePack<t_tpArgument...>
-			)
-		:	OriginID
-			{	i_vOriginID
-			}
-		,	TargetID
-			{	i_vTargetID
-			}
-		{}
 	};
 
 	template
@@ -205,9 +145,7 @@ export namespace
 			...	t_tpArgument
 		>
 	(	FuncIDMap
-	)	(	StringView
-		,	StringView
-		,	Meta::TypePack<t_tpArgument...>
+	)	(	FuncIDMap<t_tpArgument...>
 		)
 	->	FuncIDMap
 		<	t_tpArgument
@@ -219,48 +157,20 @@ export namespace
 		<	typename
 			...	t_tpArgument
 		>
-	struct
-		FuncIDOrigin
-	{
-		StringView
-			Identifier
-		;
-
-		/// creates the mapping
-		friend auto constexpr
-		(	operator->*
-		)	(	FuncIDOrigin
-					i_vOriginID
-			,	StringView
-					i_vTargetID
-			)
-		{	return
-			FuncIDMap
-			{	i_vOriginID.Identifier
-			,	i_vTargetID
-			,	Meta::TypePack
-				<	t_tpArgument
-					...
-				>{}
-			};
-		}
-	};
-
-	template
-		<	typename
-			...	t_tpArgument
-		>
 	auto constexpr
 	(	MapFuncID
 	)	(	StringView
-				i_vIdentifier
+				i_vOrigin
+		,	StringView
+				i_vTarget
 		)
-	->	decltype(auto)
+	->	FuncIDMap<t_tpArgument...>
 	{	return
-		FuncIDOrigin
+		FuncIDMap
 		<	t_tpArgument
 			...
-		>{	i_vIdentifier
+		>{	i_vOrigin
+		,	i_vTarget
 		};
 	}
 

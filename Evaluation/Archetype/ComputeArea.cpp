@@ -58,12 +58,18 @@ export namespace
 		return
 		MakeProductAddress
 		<	t_tShape
-		,	MapFuncID("GetComputeAreaMultiplier"_id)
-		->* "Constant"_id
-		,	MapFuncID("GetHeight"_id)
-		->* "Get0"_id
-		,	MapFuncID("GetWidth"_id)
-		->* "Get1"_id
+		,	MapFuncID
+			(	"GetComputeAreaMultiplier"_id
+			,	"Constant"_id
+			)
+		,	MapFuncID
+			(	"GetHeight"_id
+			,	"Get0"_id
+			)
+		,	MapFuncID
+			(	"GetWidth"_id
+			,	"Get1"_id
+			)
 		>();
 	}
 }
