@@ -212,7 +212,7 @@ export namespace
 		=	0uz
 		;
 		for	(;	i_aBegin != i_aEnd
-			and	i_aBegin->Object.Name.Object == i_vName.Object
+			and	i_aBegin->Object.Name.Object != i_vName.Object
 			;	++i_aBegin
 			)
 		{
