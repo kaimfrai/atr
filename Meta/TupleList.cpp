@@ -324,11 +324,7 @@ export namespace
 			)
 		)
 	;
-}
 
-export namespace
-	Meta
-{
 	struct
 		ErasedTuple
 	{

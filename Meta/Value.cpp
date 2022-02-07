@@ -191,6 +191,14 @@ export namespace
 			)
 		->	Value
 		{	return { i_vValue.Object + i_nOffset };	}
+
+		friend auto constexpr
+		(	operator ==
+		)	(	Value
+			,	Value
+			)
+		->	bool
+		=	default;
 	};
 
 	template
@@ -1155,25 +1163,23 @@ export namespace
 			...
 		};
 	}
-}
 
-namespace
-	Meta
-{
-	///	FIXME: Ideally, this helper should be an immediately invoked lambda. However, upon instantiation
-	///	this crashes clang as of now.
 	template
 		<	ProtoValue
 				t_tValue
 		,	USize
 			...	t_npIndex
+		,	typename
+			...	t_tpArgument
 		>
-	static auto constexpr
-	(	DeduceIndexedArray
+	auto constexpr
+	(	MakeIndexedArray
 	)	(	IndexToken
 			<	t_npIndex
 				...
 			>
+		,	t_tpArgument&&
+			...	i_rpArgument
 		)
 	->	IndexedArray
 		<	t_tValue
@@ -1181,14 +1187,17 @@ namespace
 			...
 		>
 	{	return
-		::std::declval
-		<	IndexedArray
-			<	t_tValue
-			,	t_npIndex
-				...
-			>
-		>();
+		IndexedArray
+		<	t_tValue
+		,	t_npIndex
+			...
+		>{	::std::forward<t_tpArgument>
+			(	i_rpArgument
+			)
+			...
+		};
 	}
+
 	template
 		<	ProtoValue
 				t_tValue
@@ -1196,21 +1205,17 @@ namespace
 				t_nExtent
 		>
 	using
-		MakeIndexedArray
+		DeduceIndexedArray
 	=	decltype
-		(	DeduceIndexedArray
+		(	MakeIndexedArray
 			<	t_tValue
 			>(	Sequence
-				<	t_nExtent
-				>()
+				(	Index<t_nExtent>
+				)
 			)
 		)
 	;
-}
 
-export namespace
-	Meta
-{
 	template
 		<	ProtoValue
 				t_tValue
@@ -1223,7 +1228,7 @@ export namespace
 			[	t_nExtent
 			]
 		>
-	:	MakeIndexedArray
+	:	DeduceIndexedArray
 		<	t_tValue
 		,	t_nExtent
 		>
@@ -1233,7 +1238,7 @@ export namespace
 			Type
 		{};
 
-		using IndexedArray = MakeIndexedArray<t_tValue, t_nExtent>;
+		using IndexedArray = DeduceIndexedArray<t_tValue, t_nExtent>;
 		using IndexedArray::IndexedArray;
 		using IndexedArray::Object;
 
@@ -1259,7 +1264,7 @@ export namespace
 		requires
 			ProtoCopyable<t_tValue>
 		{
-			MakeIndexedArray<t_tValue, t_nExtent>::operator=
+			IndexedArray::operator=
 			(	i_rValue
 			);
 			return *this;
@@ -1276,7 +1281,7 @@ export namespace
 		requires
 			ProtoMovable<t_tValue>
 		{
-			MakeIndexedArray<t_tValue, t_nExtent>::operator=
+			IndexedArray::operator=
 			(	::std::move
 				(	i_rValue
 				)
