@@ -8,6 +8,7 @@ export import ATR.MemberOffset;
 export import ATR.ID;
 export import ATR.StringLiteral;
 export import ATR.Layout;
+export import ATR.Concept;
 
 export namespace
 	ATR
@@ -95,19 +96,27 @@ export namespace
 	}
 
 	template
-		<	typename
+		<	ProtoID
+				t_tOrigin
+		,	ProtoObjectMember<t_tOrigin::RawArray>
 				t_tOwner
 		>
 	auto constexpr
 	(	MapDependency
-	)	(	MemberAccessIDOf<t_tOwner> auto
+	)	(	t_tOrigin
 				i_vOrigin
 		,	Meta::TypeToken<t_tOwner>
 		,	Meta::TypePack<>
 		)
 	{	return
 		MemberOffset
-		<	::std::remove_reference_t<decltype(::std::declval<t_tOwner>()[i_vOrigin])>
+		<	::std::remove_reference_t
+			<	decltype
+				(	::std::declval<t_tOwner>()
+					[	i_vOrigin
+					]
+				)
+			>
 		>{	::std::remove_reference_t<t_tOwner>::OffsetOf(i_vOrigin)
 		};
 	}

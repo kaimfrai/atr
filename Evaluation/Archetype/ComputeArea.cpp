@@ -28,34 +28,21 @@ export namespace
 export namespace
 	ATR
 {
-	template
-		<	typename
-				t_tShape
-		>
-	requires
-		MemberAccessIDOf
-		<	ID_T<"ComputeAreaMultiplier">
-		,	t_tShape const&
-		>
-	and MemberAccessIDOf
-		<	ID_T<"Height">
-		,	t_tShape const&
-		>
-	and	MemberAccessIDOf
-		<	ID_T<"Width">
-		,	t_tShape const&
-		>
 	auto constexpr
 	(	MapAddress
 	)	(	ID_T<"ComputeArea">
-		,	t_tShape const&
+		,	ProtoObjectMember
+			<	"ComputeAreaMultiplier"
+			,	"Height"
+			,	"Width"
+			>	auto const
+			&	i_rShape
 		)
 	{	return
 		&Signature
 		<	StaticDependency<"Product">
 		,	ArgumentDependency
-			<	t_tShape const
-				&
+			<	decltype(i_rShape)
 			,	MapID
 				(	"ComputeAreaMultiplier"_id
 				,	"a"_id

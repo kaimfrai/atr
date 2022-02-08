@@ -198,20 +198,4 @@ export namespace
 			>
 		>
 	;
-
-	template
-		<	typename
-				t_tObject
-		,	typename
-				t_tMemberName
-		>
-	concept
-		HasDataMember
-	=	MemberAccessIDOf
-		<	t_tMemberName
-		,	typename
-			t_tObject
-		::	LayoutType
-		>
-	;
 }

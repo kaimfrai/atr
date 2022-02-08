@@ -1,6 +1,7 @@
 add_module(ID.cpp)
 add_module(StringLiteral.cpp)
 add_module(Instance.cpp)
+add_module(Concept.cpp)
 
 add_module(Concatenate.cpp)
 add_module(DataMember.cpp)

@@ -28,37 +28,22 @@ export namespace
 export namespace
 	ATR
 {
-	template
-		<	typename
-				t_tBody
-		>
-	requires
-		MemberAccessIDOf
-		<	ID_T<"ComputeVolumeMultiplier">
-		,	t_tBody const&
-		>
-	and MemberAccessIDOf
-		<	ID_T<"Depth">
-		,	t_tBody const&
-		>
-	and	MemberAccessIDOf
-		<	ID_T<"Height">
-		,	t_tBody const&
-		>
-	and	MemberAccessIDOf
-		<	ID_T<"Width">
-		,	t_tBody const&
-		>
 	auto constexpr
 	(	MapAddress
 	)	(	ID_T<"ComputeVolume">
-		,	t_tBody const&
+		,	ProtoObjectMember
+			<	"ComputeVolumeMultiplier"
+			,	"Depth"
+			,	"Height"
+			,	"Width"
+			>	auto const
+			&	i_rBody
 		)
 	{	return
 		&Signature
 		<	StaticDependency<"Product">
 		,	ArgumentDependency
-			<	t_tBody const&
+			<	decltype(i_rBody)
 			,	MapID
 				(	"ComputeVolumeMultiplier"_id
 				,	"a"_id

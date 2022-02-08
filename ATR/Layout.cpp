@@ -9,24 +9,6 @@ export namespace
 {
 	template
 		<	typename
-				t_tDataID
-		,	typename
-				t_tMemberArea
-		>
-	concept
-		MemberAccessIDOf
-	=	ProtoID
-		<	t_tDataID
-		>
-	and	requires
-		{	::std::declval<t_tMemberArea>()
-			[	t_tDataID{}
-			];
-		}
-	;
-
-	template
-		<	typename
 			...
 		>
 	struct
