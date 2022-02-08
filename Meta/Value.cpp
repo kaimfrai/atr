@@ -1559,6 +1559,12 @@ export namespace
 		->	bool
 		{	return Object == m_aEnd;	}
 
+		constexpr
+		(	operator decltype(auto)
+		)	()	const
+			noexcept
+		{	return Object;	}
+
 		explicit constexpr
 		(	operator bool
 		)	()	const

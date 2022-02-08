@@ -333,11 +333,7 @@ namespace
 				LayoutType
 			=	Layout
 				<	::Member
-					<	ID_T
-						<	StringLiteral<t_vConfig[t_npDataIndex]->Name.size()>
-							{	t_vConfig[t_npDataIndex]->Name.data()
-							}
-						>
+					<	ID_Of<t_vConfig[t_npDataIndex]->Name>
 					,	Meta::RestoreTypeEntity
 						<	t_vConfig[t_npDataIndex]->Type
 						>
@@ -357,11 +353,7 @@ namespace
 				AliasLayout
 				<	LayoutType
 				,	::Alias
-					<	ID_T
-						<	StringLiteral<t_vConfig[t_npAliasIndex]->Name.size()>
-							{	t_vConfig[t_npAliasIndex]->Name.data()
-							}
-						>
+					<	ID_Of<t_vConfig[t_npAliasIndex]->Name>
 					,	Meta::RestoreTypeEntity
 						<	t_vConfig[t_npAliasIndex]->Type
 						>

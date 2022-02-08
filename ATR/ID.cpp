@@ -222,6 +222,19 @@ export namespace
 		}
 	}
 
+	template
+		<	char const*
+		>
+	struct
+		IDRestore final
+	{
+		friend auto constexpr
+		(	RestoreID
+		)	(	IDRestore
+			)
+		;
+	};
+
 	/// serves as a base class for all identifer types
 	/// provides conversions to arrays as well as begin and end functions
 	template
@@ -247,6 +260,12 @@ export namespace
 		{	RawArray
 		,	sizeof...(t_rpString)
 		};
+
+		friend auto constexpr
+		(	RestoreID
+		)	(	IDRestore<+RawArray>
+			)
+		{	return ID{};	}
 
 		constexpr
 		(	operator decltype(auto)
@@ -342,6 +361,21 @@ export namespace
 			>{};
 		}
 	};
+
+	template
+		<	char const
+			*	t_aEraseID
+		>
+	using
+		ID_Of
+	=	decltype
+		(	RestoreID
+			(	IDRestore
+				<	t_aEraseID
+				>{}
+			)
+		)
+	;
 
 	template
 		<	typename

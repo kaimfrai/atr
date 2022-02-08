@@ -134,17 +134,9 @@ export namespace
 		ArgumentDependencyInfo
 	{	Meta::Type<ErasedType<t_tOwner>>
 	,	Meta::MakeKeyItem
-		<	ID_T
-			<	StringLiteral<t_vpIDMap.TargetID.size()>
-				{	t_vpIDMap.TargetID.data()
-				}
-			>
+		<	ID_Of<t_vpIDMap.TargetID>
 		>(	::ATR::MapDependency
-			(	ID_V
-				<	StringLiteral<t_vpIDMap.OriginID.size()>
-					{	t_vpIDMap.OriginID.data()
-					}
-				>
+			(	ID_Of<t_vpIDMap.OriginID>{}
 			,	Meta::Type<t_tOwner>
 			,	t_vpIDMap.ArgumentPack
 			)
