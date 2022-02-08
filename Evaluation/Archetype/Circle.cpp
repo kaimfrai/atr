@@ -1,19 +1,21 @@
 export module Evaluation.Archetype.Circle;
 
-export import Evaluation.Shared.SizeCheck;
-export import ATR.Instance;
-export import Evaluation.Archetype.Circle.Layout;
+export import Evaluation.Archetype.Ellipse;
 
 export namespace
-	Shapes2D
+	ATR
 {
-	using
-		Circle
-	=	ATR::Type
+	template<>
+	auto constexpr inline
+		LayoutConfig
 		<	"Circle"
 		>
+	=	LayoutConfig
+		<	"Ellipse"
+		>(	Alias
+			<	"Height"
+			,	"Width"
+			>
+		)
 	;
 }
-
-static_assert(AdditionalSize<Shapes2D::Circle, 1, 1> == 4);
-static_assert(SizeMinimal<Shapes2D::Circle, 1, 1>);

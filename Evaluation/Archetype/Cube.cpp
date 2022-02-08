@@ -1,20 +1,25 @@
 export module Evaluation.Archetype.Cube;
 
-export import Evaluation.Shared.SizeCheck;
-export import ATR.Instance;
-export import Evaluation.Archetype.Cube.Layout;
-export import Evaluation.Archetype.ComputeVolume;
+export import Evaluation.Archetype.Cuboid;
 
 export namespace
-	Bodies3D
+	ATR
 {
-	using
-		Cube
-	=	ATR::Type
+	template<>
+	auto constexpr inline
+		LayoutConfig
 		<	"Cube"
 		>
+	=	LayoutConfig
+		<	"Cuboid"
+		>({	Alias
+			<	"Height"
+			,	"Width"
+			>
+		,	Alias
+			<	"Depth"
+			,	"Width"
+			>
+		})
 	;
 }
-
-static_assert(AdditionalSize<Bodies3D::Cube, 1, 1> == 4);
-static_assert(SizeMinimal<Bodies3D::Cube, 1, 1>);

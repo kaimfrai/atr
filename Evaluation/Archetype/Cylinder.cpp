@@ -1,20 +1,28 @@
 export module Evaluation.Archetype.Cylinder;
 
-export import Evaluation.Shared.SizeCheck;
-export import ATR.Instance;
-export import Evaluation.Archetype.Cylinder.Layout;
-export import Evaluation.Archetype.ComputeVolume;
+export import Evaluation.Shared.PiFraction;
+export import Evaluation.Archetype.BasicBody;
 
 export namespace
-	Bodies3D
+	ATR
 {
-	using
-		Cylinder
-	=	ATR::Type
+	template<>
+	auto constexpr inline
+		LayoutConfig
 		<	"Cylinder"
+		>
+	=	LayoutConfig<"BasicBody">
+		(	Alias
+			<	"Height"
+			,	"Width"
+			>
+		)
+	+	InfoV
+		<	"ComputeVolumeMultiplier"
+		,	PiFraction
+			<	1z
+			,	4z
+			>
 		>
 	;
 }
-
-static_assert(AdditionalSize<Bodies3D::Cylinder, 2, 1> == 4);
-static_assert(SizeMinimal<Bodies3D::Cylinder, 2, 1>);

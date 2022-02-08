@@ -1,20 +1,28 @@
 export module Evaluation.Archetype.Cone;
 
-export import Evaluation.Shared.SizeCheck;
-export import ATR.Instance;
-export import Evaluation.Archetype.Cone.Layout;
-export import Evaluation.Archetype.ComputeVolume;
+export import Evaluation.Shared.PiFraction;
+export import Evaluation.Archetype.BasicBody;
 
 export namespace
-	Bodies3D
+	ATR
 {
-	using
-		Cone
-	=	ATR::Type
+	template<>
+	auto constexpr inline
+		LayoutConfig
 		<	"Cone"
+		>
+	=	LayoutConfig<"BasicBody">
+		(	Alias
+			<	"Height"
+			,	"Width"
+			>
+		)
+	+	InfoV
+		<	"ComputeVolumeMultiplier"
+		,	PiFraction
+			<	1z
+			,	12z
+			>
 		>
 	;
 }
-
-static_assert(AdditionalSize<Bodies3D::Cone, 2, 1> == 4);
-static_assert(SizeMinimal<Bodies3D::Cone, 2, 1>);

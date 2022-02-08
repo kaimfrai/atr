@@ -9,6 +9,31 @@ import Evaluation.Archetype.Sphere;
 
 import Evaluation.Shared.TypeConstruct;
 import Evaluation.Shared.MainTemplate;
+import Evaluation.Shared.SizeCheck;
+
+static_assert(AdditionalSize<ATR::Type<"Cube">, 1, 1> == 4);
+static_assert(SizeMinimal<ATR::Type<"Cube">, 1, 1>);
+
+static_assert(AdditionalSize<ATR::Type<"Cuboid">, 3, 1> == 4);
+static_assert(SizeMinimal<ATR::Type<"Cuboid">, 3, 1>);
+
+static_assert(AdditionalSize<ATR::Type<"Pyramid">, 3, 1> == 4);
+static_assert(SizeMinimal<ATR::Type<"Pyramid">, 3, 1>);
+
+static_assert(AdditionalSize<ATR::Type<"Sphere">, 1, 1> == 4);
+static_assert(SizeMinimal<ATR::Type<"Sphere">, 1, 1>);
+
+static_assert(AdditionalSize<ATR::Type<"Cylinder">, 2, 1> == 4);
+static_assert(SizeMinimal<ATR::Type<"Cylinder">, 2, 1>);
+
+static_assert(AdditionalSize<ATR::Type<"Cone">, 2, 1> == 4);
+static_assert(SizeMinimal<ATR::Type<"Cone">, 2, 1>);
+
+static_assert(AdditionalSize<ATR::Type<"Ellipsoid">, 3, 1> == 4);
+static_assert(SizeMinimal<ATR::Type<"Ellipsoid">, 3, 1>);
+
+static_assert(AdditionalSize<ATR::Type<"Head">, 3, 3> == 4);
+static_assert(SizeMinimal<ATR::Type<"Head">, 3, 3>);
 
 static_assert
 (	ATR::Address<ATR::ID_T<"ComputeVolume">, ATR::Type<"Head"> const&>
@@ -32,7 +57,7 @@ auto
 	using
 		Body3D
 	=	ATR::VirtualStorage
-		<	sizeof(Head)
+		<	sizeof(Type<"Head">)
 		,	alignof(Float)
 		,	ATR::Virtual
 			<	"ComputeVolume"

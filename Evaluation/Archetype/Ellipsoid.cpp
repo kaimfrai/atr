@@ -1,20 +1,25 @@
 export module Evaluation.Archetype.Ellipsoid;
 
-export import Evaluation.Shared.SizeCheck;
-export import ATR.Instance;
-export import Evaluation.Archetype.Ellipsoid.Layout;
-export import Evaluation.Archetype.ComputeVolume;
+export import Evaluation.Shared.PiFraction;
+export import Evaluation.Archetype.BasicBody;
 
 export namespace
-	Bodies3D
+	ATR
 {
-	using
-		Ellipsoid
-	=	ATR::Type
+	template<>
+	auto constexpr inline
+		LayoutConfig
 		<	"Ellipsoid"
+		>
+	=	LayoutConfig
+		<	"BasicBody"
+		>
+	+	InfoV
+		<	"ComputeVolumeMultiplier"
+		,	PiFraction
+			<	1z
+			,	6z
+			>
 		>
 	;
 }
-
-static_assert(AdditionalSize<Bodies3D::Ellipsoid, 3, 1> == 4);
-static_assert(SizeMinimal<Bodies3D::Ellipsoid, 3, 1>);

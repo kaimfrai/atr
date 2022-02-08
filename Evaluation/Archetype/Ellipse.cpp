@@ -1,19 +1,25 @@
 export module Evaluation.Archetype.Ellipse;
 
-export import Evaluation.Shared.SizeCheck;
-export import ATR.Instance;
-export import Evaluation.Archetype.Ellipse.Layout;
+export import Evaluation.Shared.PiFraction;
+export import Evaluation.Archetype.BasicShape;
 
 export namespace
-	Shapes2D
+	ATR
 {
-	using
-		Ellipse
-	=	ATR::Type
+	template<>
+	auto constexpr inline
+		LayoutConfig
 		<	"Ellipse"
+		>
+	=	LayoutConfig
+		<	"BasicShape"
+		>
+	+	InfoV
+		<	"ComputeAreaMultiplier"
+		,	PiFraction
+			<	1z
+			,	4z
+			>
 		>
 	;
 }
-
-static_assert(AdditionalSize<Shapes2D::Ellipse, 2, 1> == 4);
-static_assert(SizeMinimal<Shapes2D::Ellipse, 2, 1>);

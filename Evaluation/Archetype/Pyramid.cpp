@@ -1,20 +1,25 @@
 export module Evaluation.Archetype.Pyramid;
 
-export import Evaluation.Shared.SizeCheck;
-export import ATR.Instance;
-export import Evaluation.Archetype.Pyramid.Layout;
-export import Evaluation.Archetype.ComputeVolume;
+export import Evaluation.Shared.Fraction;
+export import Evaluation.Archetype.BasicBody;
 
 export namespace
-	Bodies3D
+	ATR
 {
-	using
-		Pyramid
-	=	ATR::Type
+	template<>
+	auto constexpr inline
+		LayoutConfig
 		<	"Pyramid"
+		>
+	=	LayoutConfig
+		<	"BasicBody"
+		>
+	+	InfoV
+		<	"ComputeVolumeMultiplier"
+		,	Fraction
+			<	1z
+			,	3z
+			>
 		>
 	;
 }
-
-static_assert(AdditionalSize<Bodies3D::Pyramid, 3, 1> == 4);
-static_assert(SizeMinimal<Bodies3D::Pyramid, 3, 1>);

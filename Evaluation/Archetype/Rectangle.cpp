@@ -1,19 +1,23 @@
 export module Evaluation.Archetype.Rectangle;
 
-export import Evaluation.Shared.SizeCheck;
-export import ATR.Instance;
-export import Evaluation.Archetype.Rectangle.Layout;
+export import Evaluation.Shared.Fraction;
+export import Evaluation.Archetype.BasicShape;
 
 export namespace
-	Shapes2D
+	ATR
 {
-	using
-		Rectangle
-	=	ATR::Type
+	template<>
+	auto constexpr inline
+		LayoutConfig
 		<	"Rectangle"
+		>
+	=	LayoutConfig
+		<	"BasicShape"
+		>
+	+	InfoV
+		<	"ComputeAreaMultiplier"
+		,	Fraction
+			<>
 		>
 	;
 }
-
-static_assert(AdditionalSize<Shapes2D::Rectangle, 2, 1> == 4);
-static_assert(SizeMinimal<Shapes2D::Rectangle, 2, 1>);

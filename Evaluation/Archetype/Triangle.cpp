@@ -1,19 +1,25 @@
 export module Evaluation.Archetype.Triangle;
 
-export import Evaluation.Shared.SizeCheck;
-export import ATR.Instance;
-export import Evaluation.Archetype.Triangle.Layout;
+export import Evaluation.Shared.Fraction;
+export import Evaluation.Archetype.BasicShape;
 
 export namespace
-	Shapes2D
+	ATR
 {
-	using
-		Triangle
-	=	ATR::Type
+	template<>
+	auto constexpr inline
+		LayoutConfig
 		<	"Triangle"
+		>
+	=	LayoutConfig
+		<	"BasicShape"
+		>
+	+	InfoV
+		<	"ComputeAreaMultiplier"
+		,	Fraction
+			<	1z
+			,	2z
+			>
 		>
 	;
 }
-
-static_assert(AdditionalSize<Shapes2D::Triangle, 2, 1> == 4);
-static_assert(SizeMinimal<Shapes2D::Triangle, 2, 1>);

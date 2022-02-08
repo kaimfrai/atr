@@ -1,19 +1,20 @@
 export module Evaluation.Archetype.Square;
 
-export import Evaluation.Shared.SizeCheck;
-export import ATR.Instance;
-export import Evaluation.Archetype.Square.Layout;
+export import Evaluation.Archetype.Rectangle;
 
 export namespace
-	Shapes2D
+	ATR
 {
-	using
-		Square
-	=	ATR::Type
+	template<>
+	auto constexpr inline
+		LayoutConfig
 		<	"Square"
 		>
+	=	LayoutConfig<"Rectangle">
+		(	Alias
+			<	"Height"
+			,	"Width"
+			>
+		)
 	;
 }
-
-static_assert(AdditionalSize<Shapes2D::Square, 1, 1> == 4);
-static_assert(SizeMinimal<Shapes2D::Square, 1, 1>);

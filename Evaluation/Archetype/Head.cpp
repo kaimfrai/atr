@@ -1,20 +1,26 @@
 export module Evaluation.Archetype.Head;
 
-export import Evaluation.Shared.SizeCheck;
-export import ATR.Instance;
-export import Evaluation.Archetype.Head.Layout;
-export import Evaluation.Archetype.ComputeVolume;
+export import Evaluation.Archetype.Sphere;
+export import ATR.Concatenate;
 
 export namespace
-	Bodies3D
+	ATR
 {
-	using
-		Head
-	=	ATR::Type
+	template<>
+	auto constexpr inline
+		LayoutConfig
 		<	"Head"
+		>
+	=	LayoutConfig
+		<	"Sphere"
+		>
+	+	SuffixedLayoutConfig
+		<	"Sphere"
+		,	"LeftEye"
+		>
+	+	SuffixedLayoutConfig
+		<	"Sphere"
+		,	"RightEye"
 		>
 	;
 }
-
-static_assert(AdditionalSize<Bodies3D::Head, 3, 3> == 4);
-static_assert(SizeMinimal<Bodies3D::Head, 3, 3>);

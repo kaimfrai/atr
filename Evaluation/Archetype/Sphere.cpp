@@ -1,20 +1,27 @@
 export module Evaluation.Archetype.Sphere;
 
-export import Evaluation.Shared.SizeCheck;
 export import ATR.Instance;
-export import Evaluation.Archetype.Sphere.Layout;
+export import Evaluation.Archetype.Ellipsoid;
 export import Evaluation.Archetype.ComputeVolume;
 
 export namespace
-	Bodies3D
+	ATR
 {
-	using
-		Sphere
-	=	ATR::Type
+	template<>
+	auto constexpr inline
+		LayoutConfig
 		<	"Sphere"
 		>
+	=	LayoutConfig
+		<	"Ellipsoid"
+		>({	Alias
+			<	"Height"
+			,	"Width"
+			>
+		,	Alias
+			<	"Depth"
+			,	"Width"
+			>
+		})
 	;
 }
-
-static_assert(AdditionalSize<Bodies3D::Sphere, 1, 1> == 4);
-static_assert(SizeMinimal<Bodies3D::Sphere, 1, 1>);
