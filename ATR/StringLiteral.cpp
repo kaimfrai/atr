@@ -35,6 +35,11 @@ export namespace
 
 		constexpr
 		(	StringLiteral
+		)	()
+		=	default;
+
+		constexpr
+		(	StringLiteral
 		)	(	char const
 				*	i_aString
 			)
@@ -44,6 +49,29 @@ export namespace
 				}
 			}
 		{}
+
+		explicit constexpr
+		(	StringLiteral
+		)	(	::std::initializer_list<StringView>
+					i_vStringList
+			)
+		:	StringLiteral{}
+		{
+			for	(	auto
+						aPosition
+					=	begin(*this)
+				;	StringView
+						vString
+				:	i_vStringList
+				)
+				(	aPosition
+				=	::std::copy
+					(	begin(vString)
+					,	end(vString)
+					,	aPosition
+					)
+				);
+		}
 	};
 
 	template

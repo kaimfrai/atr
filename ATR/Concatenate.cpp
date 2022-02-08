@@ -9,50 +9,27 @@ export import Meta.ValueInfo;
 export namespace
 	ATR
 {
-	/// checks if an identifier starts with a given string and is an instance of a given template
 	template
-		<	typename
-				t_tID
-		,	StringLiteral
-				t_vStart
-		>
-	concept
-		ProtoPrefixID
-	=	ProtoID<t_tID>
-	and	starts_with(t_tID{}, ID_V<t_vStart>)
-	;
-
-	/// checks if an identifier end with a given string and is an instance of a given template
-	template
-		<	typename
-				t_tID
-		,	StringLiteral
-				t_vEnd
-		>
-	concept
-		ProtoSuffixID
-	=	ProtoID<t_tID>
-	and	ends_with(t_tID{}, ID_V<t_vEnd>)
-	;
-
-	template
-		<	DataMemberConfig
+		<	ProtoID
+				t_tPrefix
+		,	DataMemberConfig
 				t_vConfig
+		,	ProtoID
+				t_tSuffix
 		>
 	auto constexpr
 	(	InfixLayoutConfig
-	)	(	ProtoID auto
-				i_vPrefix
+	)	(	t_tPrefix
 		,	Meta::ValueInfo<t_vConfig>
-		,	ProtoID auto
-				i_vSuffix
+		,	t_tSuffix
 		)
 	->	decltype(t_vConfig)
 	{	return
-		[=]	<	Meta::USize
+		[]	<	Meta::USize
 				...	t_npIndex
 			>(	Meta::IndexToken<t_npIndex...>
 			)
+		->	decltype(auto)
 		{
 			auto
 				vResult
@@ -60,20 +37,19 @@ export namespace
 			;
 
 			(	...
-			,	(	vResult
-					[	t_npIndex
-					]
-				.	get().Name
-				=	(	i_vPrefix
-					+	ID_V
-						<	StringLiteral
-							<	t_vConfig[t_npIndex]->Name.size()
-							>{	t_vConfig[t_npIndex]->Name.data()
-							}
-						>
-					+	i_vSuffix
-					)
-				.	StringView
+			,	(	vResult[t_npIndex]
+				->	Name
+				=	ID_T
+					<	StringLiteral
+						<	t_tPrefix::Length
+						+	t_vConfig[t_npIndex]->Name.size()
+						+	t_tSuffix::Length
+						>{	t_tPrefix::StringView
+						,	t_vConfig[t_npIndex]->Name
+						,	t_tSuffix::StringView
+						}
+					>
+				::	StringView
 				)
 			);
 
@@ -91,9 +67,9 @@ export namespace
 				i_vPrefix
 			=	i_vType
 		>
-	ATR::DataMemberConfig constexpr inline
+	DataMemberConfig constexpr inline
 		PrefixedLayoutConfig
-	=	ATR::InfixLayoutConfig
+	=	InfixLayoutConfig
 		(	ID_V<i_vPrefix>
 		,	Meta::V<LayoutConfig<i_vType>>
 		,	""_id
@@ -108,7 +84,7 @@ export namespace
 				i_vSuffix
 			=	i_vType
 		>
-	ATR::DataMemberConfig constexpr inline
+	DataMemberConfig constexpr inline
 		SuffixedLayoutConfig
 	=	ATR::InfixLayoutConfig
 		(	""_id

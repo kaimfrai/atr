@@ -245,9 +245,14 @@ export namespace
 	struct
 		ID final
 	{
+		static Meta::USize constexpr
+			Length
+		=	sizeof...(t_rpString)
+		;
+
 		static char constexpr
 			RawArray
-			[	sizeof...(t_rpString)
+			[	Length
 			+	1uz
 			]
 		{	t_rpString
@@ -258,7 +263,12 @@ export namespace
 		static StringView constexpr
 			StringView
 		{	RawArray
-		,	sizeof...(t_rpString)
+		,	Length
+		};
+
+		static StringLiteral<Length> constexpr
+			String
+		{	RawArray
 		};
 
 		friend auto constexpr
@@ -270,96 +280,8 @@ export namespace
 		constexpr
 		(	operator decltype(auto)
 		)	()	const
+			noexcept
 		{	return StringView;	}
-
-		template
-			<	char const
-				&
-				...	t_rpBack
-			>
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator-
-		)	(	ID
-			,	ID
-				<	t_rpString
-					...
-				,	t_rpBack
-					...
-				>
-			)
-		{	return
-				ID
-				<	t_rpBack
-					...
-				>{}
-			;
-		}
-
-		template
-			<	char const
-				&
-				...	t_rpFront
-			>
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator-
-		)	(	ID<t_rpFront...>
-			,	ID
-			)
-		requires
-			(	ends_with
-				(	ID<t_rpFront...>::StringView
-				,	StringView
-				)
-			)
-		{	return
-			[]	<	Meta::USize
-					...	t_npIndex
-				>(	Meta::IndexToken
-					<	t_npIndex
-						...
-					>
-				)
-			{	return
-					::ATR::ID
-					<	Char
-						(	::ATR::ID<t_rpFront...>::RawArray
-							[	t_npIndex
-							]
-						)
-						...
-					>{}
-				;
-			}(	Meta::Sequence
-				<	sizeof...(t_rpFront)
-				-	sizeof...(t_rpString)
-				>
-			);
-		}
-
-		template
-			<	char const
-				&
-				...	t_rpBack
-			>
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator+
-		)	(	ID
-			,	ID
-				<	t_rpBack
-					...
-				>
-			)
-		{	return
-			ID
-			<	t_rpString
-				...
-			,	t_rpBack
-				...
-			>{};
-		}
 	};
 
 	template
@@ -482,27 +404,4 @@ static_assert
 	(	::ATR::ID<a, b, c>{}
 	,	::ATR::ID_V<"bc">
 	)
-);
-
-using ATR::operator""_id;
-
-static_assert
-(	"ab"_id
-+	"c"_id
-==	"abc"_id
-);
-static_assert
-(	"ab"_id
--	"abc"_id
-==	"c"_id
-);
-static_assert
-(	"a"_id
-+	"bc"_id
-==	"abc"_id
-);
-static_assert
-(	"abc"_id
--	"bc"_id
-==	"a"_id
 );
