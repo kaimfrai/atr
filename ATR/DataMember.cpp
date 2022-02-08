@@ -20,6 +20,11 @@ export namespace
 			Name
 		;
 
+		StringView
+			Alias
+		=	ID<>::StringView
+		;
+
 		friend auto constexpr
 		(	operator<=>
 		)	(	DataMemberInfo const
@@ -29,15 +34,24 @@ export namespace
 			)
 		->	::std::strong_ordering
 		{
-			if	(i_rLeft.Type == i_rRight.Type)
-				return i_rLeft.Name <=> i_rRight.Name;
+			//	alias are sorted first to resolve them in iterations as soon as possible
+			if	(i_rLeft.Alias and not i_rRight.Alias)
+				return ::std::strong_ordering::less;
 			else
+			if	(not i_rLeft.Alias and i_rRight.Alias)
+				return ::std::strong_ordering::greater;
+			else
+			//	greater alignment means ordered earlier
+			if	(i_rLeft.Type->Alignment != i_rRight.Type->Alignment)
 				return
-					//	greater alignment means ordered earlier
-					i_rLeft.Type->Alignment < i_rRight.Type->Alignment
-				?	::std::strong_ordering::greater
-				:	::std::strong_ordering::less
+
+					i_rLeft.Type->Alignment > i_rRight.Type->Alignment
+				?	::std::strong_ordering::less
+				:	::std::strong_ordering::greater
 				;
+			//	sort by name within same alignment
+			else
+				return i_rLeft.Name <=> i_rRight.Name;
 		}
 	};
 
@@ -88,6 +102,7 @@ export namespace
 					throw "Cannot exchange non-existing member!";
 
 				vExchangePosition->Type = rExchange.Type;
+				vExchangePosition->Alias = rExchange.Alias;
 			}
 
 			::std::sort(begin(vCopy), end(vCopy));
@@ -237,7 +252,7 @@ export namespace
 		InfoV
 	{	DataMemberInfo
 		{	Meta::Type<t_tValue>
-		,	ID_V<t_vName>.StringView
+		,	ID_T<t_vName>::StringView
 		}
 	};
 
@@ -249,10 +264,9 @@ export namespace
 		>
 	DataMemberInfo constexpr inline
 		Alias
-	{	Meta::Type
-		<	ID_T<t_vTargetID>
-		>
-	,	ID_T<t_vOriginID>::StringView
+	{	.Type = Meta::Type<ID_T<t_vTargetID>>
+	,	.Name = ID_T<t_vOriginID>::StringView
+	,	.Alias = ID_T<t_vTargetID>::StringView
 	};
 
 	/// maps a string literal to a Layout

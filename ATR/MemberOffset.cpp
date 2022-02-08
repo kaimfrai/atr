@@ -158,7 +158,7 @@ export namespace
 		);
 	}
 
-		/// immitates syntax of pointer to member dereference
+	/// immitates syntax of pointer to member dereference
 	template
 		<	typename
 				t_tMember
@@ -179,45 +179,75 @@ export namespace
 		);
 	}
 
-	auto constexpr
-	(	MemberType
-	)	(	StringView
-				i_vName
-		,	Meta::Value<DataMemberInfo const*>
-				i_aBegin
-		)
-	->	Meta::EraseTypeToken
-	{	//	it is assumed that the name is always contained
-		for	(;	i_aBegin->Name != i_vName
-			;	++i_aBegin
-			)
-		{}
-		return i_aBegin->Type;
-	}
-
-	auto constexpr
-	(	ByteOffset
-	)	(	StringView
-				i_vName
-		,	Meta::Value<DataMemberInfo const*>
-				i_aBegin
-		)
-	->	Meta::USize
+	struct
+		MemberOffsetInfo final
 	{
-		Meta::USize
-			nOffset
-		=	0uz
+		Meta::Value<DataMemberInfo const*>
+			DataMember
 		;
-		//	it is assumed that the name is always contained
-		for	(;	i_aBegin->Name != i_vName
-			;	++i_aBegin
+
+		Meta::USize
+			Offset
+		;
+
+		static auto constexpr
+		(	ResolveAlias
+		)	(	StringView
+					i_vName
+			,	Meta::Value<DataMemberInfo const*>
+					i_aBegin
 			)
-		{
-			nOffset += i_aBegin->Type->Size;
+		->	Meta::Value<DataMemberInfo const*>
+		{	//	it is assumed that the name is always contained
+			for	(	auto
+						aPosition
+					=	i_aBegin
+				;;
+				)
+				if	(aPosition->Name == i_vName)
+				{
+					if	(aPosition->Alias)
+					{	//	restart loop to resolve an alias
+						i_vName = aPosition->Alias;
+						aPosition = i_aBegin;
+					}
+					else
+						return aPosition;
+				}
+				else
+					++aPosition;
 		}
-		if	(i_aBegin->Type->Size == 0uz)
-			return 0uz;
-		else
-			return nOffset;
-	}
+
+		explicit constexpr
+		(	MemberOffsetInfo
+		)	(	StringView
+					i_vName
+			,	Meta::Value<DataMemberInfo const*>
+					i_aBegin
+			)
+		:	DataMember
+			{	ResolveAlias
+				(	i_vName
+				,	i_aBegin
+				)
+			}
+		,	Offset
+			{	DataMember->Type->Size == 0uz
+			?	//	empty types always have an offset of 0 despite being ordered last
+				0uz
+			:	//	sum of all previous data members
+				::std::transform_reduce
+				(	i_aBegin
+				,	DataMember
+				,	0uz
+				,	::std::plus<Meta::USize>{}
+				,	[]	(	DataMemberInfo const
+							&	i_rDataMember
+						)
+					->	Meta::USize
+					{	return i_rDataMember.Type->Size;	}
+				)
+			}
+		{}
+	};
 }

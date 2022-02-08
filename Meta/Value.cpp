@@ -1551,6 +1551,20 @@ export namespace
 		=	delete
 		;
 
+		[[nodiscard]]
+		auto constexpr
+		(	empty
+		)	()	const
+			noexcept
+		->	bool
+		{	return Object == m_aEnd;	}
+
+		explicit constexpr
+		(	operator bool
+		)	()	const
+			noexcept
+		{	return not empty();	}
+
 		auto constexpr
 		(	data
 		)	()	const

@@ -103,51 +103,25 @@ export namespace
 	)	(	MemberAccessIDOf<t_tOwner> auto
 				i_vOrigin
 		,	Meta::TypeToken<t_tOwner>
-				i_vOwner
 		,	Meta::TypePack<>
-			=	{}
 		)
 	{
-		auto constexpr
-		&	rOwnerLayout
-		=	LayoutConfig
-			<	::std::remove_cvref_t<t_tOwner>
-			::	TypeName
-			>
-		;
-
-		Meta::Value<DataMemberInfo const*> constexpr
-			aBegin
-		=	begin(rOwnerLayout)
-		;
-
-		Meta::EraseTypeToken constexpr
-			vMemberType
-		=	::ATR::MemberType
-			(	i_vOrigin
-			,	aBegin
+		MemberOffsetInfo constexpr
+			vMemberOffsetInfo
+		{	i_vOrigin
+		,	begin
+			(	LayoutConfig
+				<	::std::remove_cvref_t<t_tOwner>
+				::	TypeName
+				>
 			)
-		;
+		};
 
-		using
-			RestoredMemberType
-		=	Meta::RestoreTypeEntity
-			<	vMemberType
-			>
-		;
-
-		//	recursively resolve member alias
-		if	constexpr(MemberAccessIDOf<RestoredMemberType, t_tOwner>)
-			return MapDependency(RestoredMemberType{}, i_vOwner);
-		else
-			return
-			MemberOffset
-			<	RestoredMemberType
-			>{	::ATR::ByteOffset
-				(	i_vOrigin
-				,	aBegin
-				)
-			};
+		return
+		MemberOffset
+		<	Meta::RestoreTypeEntity<vMemberOffsetInfo.DataMember->Type>
+		>{	vMemberOffsetInfo.Offset
+		};
 	}
 
 	template

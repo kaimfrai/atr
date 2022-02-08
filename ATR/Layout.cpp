@@ -31,12 +31,7 @@ export namespace
 		>
 	struct
 		Layout
-	{
-		static_assert
-		(	Meta::ProtoNone<Layout>
-		,	"Unexpected specialization!"
-		);
-	};
+	;
 }
 
 namespace
@@ -44,11 +39,17 @@ namespace
 {
 	template
 		<	typename
+				t_tName
 		,	typename
+				t_tData
 		>
 	struct
 		Member final
-	{};
+	{
+		static Meta::TypeToken<t_tData> constexpr
+			DataType
+		{};
+	};
 
 	template
 		<	typename
@@ -178,19 +179,6 @@ namespace
 
 	template
 		<	typename
-			...
-		>
-	struct
-		SplitLayout final
-	{
-		static_assert
-		(	Meta::ProtoNone<SplitLayout>
-		,	"Unexpected specialization!"
-		);
-	};
-
-	template
-		<	typename
 				t_tPointed
 		>
 	t_tPointed constexpr
@@ -200,23 +188,15 @@ namespace
 
 	template
 		<	typename
-			...	t_tpName
-		,	typename
-			...	t_tpData
+			...	t_tpMember
 		>
 	struct
-		SplitLayout
-		<	Member
-			<	t_tpName
-			,	t_tpData
-			>
-			...
-		>	final
+		SplitLayout final
 	{
 		static Meta::USize constexpr
 			SplitIndex
 		=	LayoutSplitIndex
-			({	Meta::Type<t_tpData>
+			({	t_tpMember::DataType
 				...
 			})
 		;
@@ -232,10 +212,7 @@ namespace
 			(	LayoutSplit
 			.	Front
 				(	NullPtr
-					<	Member
-						<	t_tpName
-						,	t_tpData
-						>
+					<	t_tpMember
 					>
 					...
 				)
@@ -248,10 +225,7 @@ namespace
 			(	LayoutSplit
 			.	Back
 				(	NullPtr
-					<	Member
-						<	t_tpName
-						,	t_tpData
-						>
+					<	t_tpMember
 					>
 					...
 				)
@@ -512,27 +486,19 @@ export namespace
 
 	template
 		<	typename
-			...	t_tpName
-		,	typename
-			...	t_tpData
+			...	t_tpMember
 		>
 	struct
 		Layout
-		<	Member
-			<	t_tpName
-			,	t_tpData
-			>
-			...
-		>
 	:	LayoutFork
-		<	SplitLayoutNorth<Member<t_tpName, t_tpData>...>
-		,	SplitLayoutSouth<Member<t_tpName, t_tpData>...>
+		<	SplitLayoutNorth<t_tpMember...>
+		,	SplitLayoutSouth<t_tpMember...>
 		>
 	{
 		using
 			LayoutFork
-			<	SplitLayoutNorth<Member<t_tpName, t_tpData>...>
-			,	SplitLayoutSouth<Member<t_tpName, t_tpData>...>
+			<	SplitLayoutNorth<t_tpMember...>
+			,	SplitLayoutSouth<t_tpMember...>
 			>
 		::	operator
 			[]
@@ -611,16 +577,78 @@ export namespace
 		(	operator[]
 		)	(	t_tName
 			)	const
-		noexcept
+			noexcept
 		->	t_tData
 		{	return {};	}
 	};
 
 	template
-		<	typename
-				t_tFirstName
+		<	ProtoID
+				t_tAliasName
+		,	ProtoID
+				t_tAliasTarget
 		,	typename
-				t_tFirstData
+			...	t_tpMember
+		>
+	struct
+		Layout
+		<	Member
+			<	t_tAliasName
+			,	t_tAliasTarget
+			>
+		,	t_tpMember
+			...
+		>
+	:	Layout
+		<	t_tpMember
+			...
+		>
+	{
+		using Layout<t_tpMember...>::operator[];
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	t_tAliasName
+			)	&
+			noexcept
+		->	decltype(auto)
+		{	return
+			operator[]
+			(	t_tAliasTarget{}
+			);
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	t_tAliasName
+			)	const&
+			noexcept
+		->	decltype(auto)
+		{	return
+			operator[]
+			(	t_tAliasTarget{}
+			);
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	t_tAliasName
+			)	&&
+			noexcept
+		->	decltype(auto)
+		{	return
+			::std::move(*this)
+			[	t_tAliasTarget{}
+			];
+		}
+	};
+
+	template
+		<	typename
+				t_tFirst
 		,	typename
 			...	t_tpRemainingName
 		,	Meta::ProtoStateless
@@ -628,16 +656,16 @@ export namespace
 		>
 	struct
 		Layout
-		<	Member<t_tFirstName, t_tFirstData>
+		<	t_tFirst
 		,	Member<t_tpRemainingName, t_tpRemainingStateless>
 			...
 		>
-	:	Layout<Member<t_tFirstName, t_tFirstData>>
+	:	Layout<t_tFirst>
 	,	Layout<Member<t_tpRemainingName, t_tpRemainingStateless>>
 		...
 	{
 		using
-			Layout<Member<t_tFirstName, t_tFirstData>>
+			Layout<t_tFirst>
 		::	operator[]
 		;
 
