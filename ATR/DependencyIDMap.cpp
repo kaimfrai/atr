@@ -131,7 +131,7 @@ export namespace
 			...	t_vpIDMap
 		>
 	Dependency constexpr inline
-		ArgumentDependencyInfo
+		ArgumentDependency
 	{	Meta::Type<ErasedType<t_tOwner>>
 	,	Meta::MakeKeyItem
 		<	ID_Of<t_vpIDMap.TargetID>
@@ -143,5 +143,20 @@ export namespace
 		)
 		...
 	};
+
+	template
+		<	StringLiteral
+				t_vFunctionName
+		,	IDMap
+			...	t_vpIDMap
+		>
+	Dependency constexpr inline
+		StaticDependency
+	=	ArgumentDependency
+		<	ID_T<t_vFunctionName>
+		,	t_vpIDMap
+			...
+		>
+	;
 }
 

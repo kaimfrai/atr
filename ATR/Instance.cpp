@@ -32,7 +32,54 @@ export namespace
 
 		using LayoutType::operator[];
 
-		/// call const member functions
+		template
+			<	ProtoID
+					t_tFunctionName
+			,	typename
+				...	t_tpArgument
+			>
+		requires
+			ValidAddress
+			<	t_tFunctionName
+			,	LayoutType&
+			,	t_tpArgument
+				...
+			>
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
+		)	(	t_tFunctionName
+			,	t_tpArgument
+				&&
+				...	i_rpArgument
+			)	&
+			noexcept
+			(	AddressNoexcept
+				<	t_tFunctionName
+				,	LayoutType&
+				,	t_tpArgument
+					...
+				>
+			)
+		->	decltype(auto)
+		{	return
+			Address
+			<	t_tFunctionName
+			,	LayoutType&
+			,	t_tpArgument
+				...
+			>(	ForwardErased
+				(	Meta::Type<LayoutType&>
+				,	*this
+				)
+			,	ForwardErased
+				(	Meta::Type<t_tpArgument>
+				,	i_rpArgument
+				)
+				...
+			);
+		}
+
 		template
 			<	ProtoID
 					t_tFunctionName
@@ -53,7 +100,7 @@ export namespace
 			,	t_tpArgument
 				&&
 				...	i_rpArgument
-			)	const
+			)	const&
 			noexcept
 			(	AddressNoexcept
 				<	t_tFunctionName
@@ -64,12 +111,18 @@ export namespace
 			)
 		->	decltype(auto)
 		{	return
-			Invoke
+			Address
 			<	t_tFunctionName
-			>(	*this
-			,	static_cast
-				<	t_tpArgument&&
-				>(	i_rpArgument
+			,	LayoutType const&
+			,	t_tpArgument
+				...
+			>(	ForwardErased
+				(	Meta::Type<LayoutType const&>
+				,	*this
+				)
+			,	ForwardErased
+				(	Meta::Type<t_tpArgument>
+				,	i_rpArgument
 				)
 				...
 			);
@@ -85,7 +138,7 @@ export namespace
 		requires
 			ValidAddress
 			<	t_tFunctionName
-			,	Instance&
+			,	Instance&&
 			,	t_tpArgument
 				...
 			>
@@ -96,23 +149,29 @@ export namespace
 			,	t_tpArgument
 				&&
 				...	i_rpArgument
-			)
+			)	&&
 			noexcept
 			(	AddressNoexcept
 				<	t_tFunctionName
-				,	Instance&
+				,	Instance&&
 				,	t_tpArgument
 					...
 				>
 			)
 		->	decltype(auto)
 		{	return
-			Invoke
+			Address
 			<	t_tFunctionName
-			>(	*this
-			,	static_cast
-				<	t_tpArgument&&
-				>(	i_rpArgument
+			,	LayoutType&&
+			,	t_tpArgument
+				...
+			>(	ForwardErased
+				(	Meta::Type<LayoutType&&>
+				,	*this
+				)
+			,	ForwardErased
+				(	Meta::Type<t_tpArgument>
+				,	i_rpArgument
 				)
 				...
 			);
