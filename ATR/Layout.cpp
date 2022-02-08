@@ -32,25 +32,49 @@ export namespace
 	struct
 		Layout
 	;
+
+	template
+		<	typename
+		,	typename
+			...
+		>
+	struct
+		AliasLayout
+	{
+		static_assert
+		(	Meta::ProtoNone<AliasLayout>
+		,	"Unexpected specialization!"
+		);
+	};
 }
+
+template
+	<	typename
+			t_tAlias
+	,	typename
+			t_tTarget
+	>
+struct
+	Alias final
+{};
+
+template
+	<	typename
+			t_tName
+	,	typename
+			t_tData
+	>
+struct
+	Member final
+{
+	static Meta::TypeToken<t_tData> constexpr
+		DataType
+	{};
+};
 
 namespace
 	ATR
 {
-	template
-		<	typename
-				t_tName
-		,	typename
-				t_tData
-		>
-	struct
-		Member final
-	{
-		static Meta::TypeToken<t_tData> constexpr
-			DataType
-		{};
-	};
-
 	template
 		<	typename
 		,	Meta::USize
@@ -177,6 +201,30 @@ namespace
 		}
 	}
 
+	[[nodiscard]]
+	static auto constexpr
+	(	AliasSplitIndex
+	)	(	Meta::Value<DataMemberInfo const*>
+				i_aBegin
+		,	Meta::Value<DataMemberInfo const*>
+				i_aEnd
+		)
+	->	Meta::USize
+	{	return
+		static_cast<Meta::USize>
+		(	::std::find_if
+			(	i_aBegin
+			,	i_aEnd
+			,	[]	(	DataMemberInfo const
+						&	i_rDataMember
+					)
+				->	bool
+				{	return i_rDataMember.Alias.empty();	}
+			)
+		-	i_aBegin
+		);
+	}
+
 	template
 		<	typename
 				t_tPointed
@@ -264,26 +312,65 @@ namespace
 	(	CreateLayout
 	)	()
 	->	decltype(auto)
-	{	return
-		[]	<	Meta::USize
-				...	t_npIndex
-			>(	Meta::IndexToken<t_npIndex...>
+	{
+		Meta::USize constexpr
+			nAliasSplitIndex
+		=	AliasSplitIndex
+			(	begin(t_vConfig)
+			,	end(t_vConfig)
 			)
-		{	return
-			Layout
-			<	Member
-				<	ID_T
-					<	StringLiteral<t_vConfig[t_npIndex]->Name.size()>
-						{	t_vConfig[t_npIndex]->Name.data()
-						}
+		;
+		return
+		[]	<	Meta::USize
+				...	t_npAliasIndex
+			,	Meta::USize
+				...	t_npDataIndex
+			>(	Meta::IndexToken<t_npAliasIndex...>
+			,	Meta::IndexToken<t_npDataIndex...>
+			)
+		{
+			using
+				LayoutType
+			=	Layout
+				<	::Member
+					<	ID_T
+						<	StringLiteral<t_vConfig[t_npDataIndex]->Name.size()>
+							{	t_vConfig[t_npDataIndex]->Name.data()
+							}
+						>
+					,	Meta::RestoreTypeEntity
+						<	t_vConfig[t_npDataIndex]->Type
+						>
 					>
-				,	Meta::RestoreTypeEntity
-					<	t_vConfig[t_npIndex]->Type
-					>
+					...
 				>
-				...
-			>{};
-		}(	Meta::Sequence<t_vConfig.size()>
+			;
+			if	constexpr
+				(	nAliasSplitIndex
+				==	0uz
+				)
+				return
+				LayoutType
+				{};
+			else
+				return
+				AliasLayout
+				<	LayoutType
+				,	::Alias
+					<	ID_T
+						<	StringLiteral<t_vConfig[t_npAliasIndex]->Name.size()>
+							{	t_vConfig[t_npAliasIndex]->Name.data()
+							}
+						>
+					,	Meta::RestoreTypeEntity
+						<	t_vConfig[t_npAliasIndex]->Type
+						>
+					>
+					...
+				>{};
+		}(	Meta::Sequence<nAliasSplitIndex>
+		,	Meta::Sequence<t_vConfig.size() - nAliasSplitIndex>
+		+=	Meta::Index<nAliasSplitIndex>
 		);
 	}
 }
@@ -291,6 +378,93 @@ namespace
 export namespace
 	ATR
 {
+	template
+		<	typename
+				t_tAliasName
+		,	typename
+				t_tAliasTarget
+		,	typename
+				t_tDerived
+		>
+	struct
+		AliasAccess
+	{
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	t_tAliasName
+			)	&
+			noexcept
+		->	decltype(auto)
+		{	return
+				static_cast<t_tDerived&>
+				(	*this
+				)
+			[	t_tAliasTarget{}
+			];
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	t_tAliasName
+			)	const&
+			noexcept
+		->	decltype(auto)
+		{	return
+				static_cast<t_tDerived const&>
+				(	*this
+				)
+			[	t_tAliasTarget{}
+			];
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	t_tAliasName
+			)	&&
+			noexcept
+		->	decltype(auto)
+		{	return
+				static_cast<t_tDerived&&>
+				(	*this
+				)
+			[	t_tAliasTarget{}
+			];
+		}
+	};
+
+	template
+		<	typename
+				t_tLayout
+		,	typename
+			...	t_tpAliasName
+		,	typename
+			...	t_tpAliasTarget
+		>
+	struct
+		AliasLayout
+		<	t_tLayout
+		,	::Alias<t_tpAliasName, t_tpAliasTarget>
+			...
+		>
+	:	t_tLayout
+	,	AliasAccess
+		<	t_tpAliasName
+		,	t_tpAliasTarget
+		,	AliasLayout
+			<	t_tLayout
+			,	::Alias<t_tpAliasName, t_tpAliasTarget>
+				...
+			>
+		>
+		...
+	{
+		using t_tLayout::operator[];
+		using AliasAccess<t_tpAliasName, t_tpAliasTarget, AliasLayout>::operator[]...;
+	};
+
 	template
 		<	typename
 				t_tName
@@ -580,70 +754,6 @@ export namespace
 			noexcept
 		->	t_tData
 		{	return {};	}
-	};
-
-	template
-		<	ProtoID
-				t_tAliasName
-		,	ProtoID
-				t_tAliasTarget
-		,	typename
-			...	t_tpMember
-		>
-	struct
-		Layout
-		<	Member
-			<	t_tAliasName
-			,	t_tAliasTarget
-			>
-		,	t_tpMember
-			...
-		>
-	:	Layout
-		<	t_tpMember
-			...
-		>
-	{
-		using Layout<t_tpMember...>::operator[];
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	t_tAliasName
-			)	&
-			noexcept
-		->	decltype(auto)
-		{	return
-			operator[]
-			(	t_tAliasTarget{}
-			);
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	t_tAliasName
-			)	const&
-			noexcept
-		->	decltype(auto)
-		{	return
-			operator[]
-			(	t_tAliasTarget{}
-			);
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	t_tAliasName
-			)	&&
-			noexcept
-		->	decltype(auto)
-		{	return
-			::std::move(*this)
-			[	t_tAliasTarget{}
-			];
-		}
 	};
 
 	template
