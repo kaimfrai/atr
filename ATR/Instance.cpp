@@ -29,6 +29,14 @@ export namespace
 			<	t_tTypeID
 			>
 		;
+		static_assert
+		(	::std::is_standard_layout_v<LayoutType>
+		,	"Member offsets require standard layout types!"
+		);
+		static_assert
+		(	::std::is_trivial_v<LayoutType>
+		,	"Address mapping requires trivial layout types!"
+		);
 
 		using LayoutType::operator[];
 
@@ -39,7 +47,7 @@ export namespace
 				...	t_tpArgument
 			>
 		requires
-			ValidAddress
+			ProtoAddress
 			<	t_tFunctionName
 			,	LayoutType&
 			,	t_tpArgument
@@ -63,12 +71,12 @@ export namespace
 			)
 		->	decltype(auto)
 		{	return
-			Address
-			<	t_tFunctionName
-			,	LayoutType&
-			,	t_tpArgument
+			MapAddress
+			(	t_tFunctionName{}
+			,	static_cast<LayoutType&>(*this)
+			,	static_cast<t_tpArgument&&>(i_rpArgument)
 				...
-			>(	ForwardErased
+			)(	ForwardErased
 				(	Meta::Type<LayoutType&>
 				,	*this
 				)
@@ -87,7 +95,7 @@ export namespace
 				...	t_tpArgument
 			>
 		requires
-			ValidAddress
+			ProtoAddress
 			<	t_tFunctionName
 			,	Instance const&
 			,	t_tpArgument
@@ -111,12 +119,12 @@ export namespace
 			)
 		->	decltype(auto)
 		{	return
-			Address
-			<	t_tFunctionName
-			,	LayoutType const&
-			,	t_tpArgument
+			MapAddress
+			(	t_tFunctionName{}
+			,	static_cast<LayoutType const&>(*this)
+			,	static_cast<t_tpArgument&&>(i_rpArgument)
 				...
-			>(	ForwardErased
+			)(	ForwardErased
 				(	Meta::Type<LayoutType const&>
 				,	*this
 				)
@@ -136,7 +144,7 @@ export namespace
 				...	t_tpArgument
 			>
 		requires
-			ValidAddress
+			ProtoAddress
 			<	t_tFunctionName
 			,	Instance&&
 			,	t_tpArgument
@@ -160,12 +168,12 @@ export namespace
 			)
 		->	decltype(auto)
 		{	return
-			Address
-			<	t_tFunctionName
-			,	LayoutType&&
-			,	t_tpArgument
+			MapAddress
+			(	t_tFunctionName{}
+			,	static_cast<LayoutType&&>(*this)
+			,	static_cast<t_tpArgument&&>(i_rpArgument)
 				...
-			>(	ForwardErased
+			)(	ForwardErased
 				(	Meta::Type<LayoutType&&>
 				,	*this
 				)

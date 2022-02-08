@@ -222,19 +222,6 @@ export namespace
 		}
 	}
 
-	template
-		<	char const*
-		>
-	struct
-		IDRestore final
-	{
-		friend auto constexpr
-		(	RestoreID
-		)	(	IDRestore
-			)
-		;
-	};
-
 	/// serves as a base class for all identifer types
 	/// provides conversions to arrays as well as begin and end functions
 	template
@@ -271,33 +258,12 @@ export namespace
 		{	RawArray
 		};
 
-		friend auto constexpr
-		(	RestoreID
-		)	(	IDRestore<+RawArray>
-			)
-		{	return ID{};	}
-
 		constexpr
 		(	operator decltype(auto)
 		)	()	const
 			noexcept
 		{	return StringView;	}
 	};
-
-	template
-		<	char const
-			*	t_aEraseID
-		>
-	using
-		ID_Of
-	=	decltype
-		(	RestoreID
-			(	IDRestore
-				<	t_aEraseID
-				>{}
-			)
-		)
-	;
 
 	template
 		<	typename
@@ -363,6 +329,19 @@ export namespace
 			<	t_vStringLiteral
 			>()
 		)
+	;
+
+	template
+		<	StringView
+				t_vString
+		>
+	using
+		ID_Of
+	=	ID_T
+		<	StringLiteral<t_vString.size()>
+			{	t_vString.data()
+			}
+		>
 	;
 
 	/// create an identifier value

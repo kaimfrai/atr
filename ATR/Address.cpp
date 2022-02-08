@@ -12,16 +12,89 @@ namespace
 {
 	template
 		<	typename
+				t_tLayout
+		>
+	auto constexpr
+	(	LayoutType
+	)	(	Meta::TypeToken<t_tLayout>
+		)
+	->	Meta::TypeToken<typename t_tLayout::LayoutType>
+	{	return {};	}
+
+	template
+		<	typename
+				t_tLayout
+		>
+	auto constexpr
+	(	LayoutType
+	)	(	Meta::TypeToken<t_tLayout const>
+		)
+	->	Meta::TypeToken<typename t_tLayout::LayoutType const>
+	{	return {};	}
+
+	template
+		<	typename
+				t_tLayout
+		>
+	auto constexpr
+	(	LayoutType
+	)	(	Meta::TypeToken<t_tLayout&>
+		)
+	->	Meta::TypeToken<typename t_tLayout::LayoutType&>
+	{	return {};	}
+
+	template
+		<	typename
+				t_tLayout
+		>
+	auto constexpr
+	(	LayoutType
+	)	(	Meta::TypeToken<t_tLayout const&>
+		)
+	->	Meta::TypeToken<typename t_tLayout::LayoutType const&>
+	{	return {};	}
+
+	template
+		<	typename
+				t_tLayout
+		>
+	auto constexpr
+	(	LayoutType
+	)	(	Meta::TypeToken<t_tLayout&&>
+		)
+	->	Meta::TypeToken<typename t_tLayout::LayoutType&&>
+	{	return {};	}
+
+	template
+		<	typename
+				t_tLayout
+		>
+	auto constexpr
+	(	LayoutType
+	)	(	Meta::TypeToken<t_tLayout const&&>
+		)
+	->	Meta::TypeToken<typename t_tLayout::LayoutType const&&>
+	{	return {};	}
+
+	template
+		<	typename
 				t_tArgument
 		>
 	struct
 		Argument final
 	{
+		explicit constexpr
+		(	Argument
+		)	(	Meta::TypeToken<t_tArgument>
+			)
+		{}
+
 		auto constexpr
 		(	operator()
-		)	()
-		->	Meta::TypeToken<t_tArgument>
-		{	return Meta::Type<t_tArgument>;	}
+		)	()	&&
+			noexcept
+		->	t_tArgument
+		{	return t_tArgument{};	}
 	};
 
 	template
@@ -33,15 +106,22 @@ namespace
 		<	t_tArgument&
 		>	final
 	{
-		Meta::TypeToken<t_tArgument>
-			Argument
+		t_tArgument
+			m_vArgument
 		{};
+
+		explicit constexpr
+		(	Argument
+		)	(	Meta::TypeToken<t_tArgument&>
+			)
+		{}
 
 		auto constexpr
 		(	operator()
-		)	()
-		->	Meta::TypeToken<t_tArgument>&
-		{	return Argument;	}
+		)	()	&&
+			noexcept
+		->	t_tArgument&
+		{	return m_vArgument;	}
 	};
 
 	template
@@ -53,15 +133,22 @@ namespace
 		<	t_tArgument const&
 		>	final
 	{
-		Meta::TypeToken<t_tArgument>
-			Argument
+		t_tArgument
+			m_vArgument
 		{};
+
+		explicit constexpr
+		(	Argument
+		)	(	Meta::TypeToken<t_tArgument const&>
+			)
+		{}
 
 		auto constexpr
 		(	operator()
-		)	()	const
-		->	Meta::TypeToken<t_tArgument> const&
-		{	return Argument;	}
+		)	()	const&&
+			noexcept
+		->	t_tArgument const&
+		{	return m_vArgument;	}
 	};
 
 	template
@@ -73,15 +160,21 @@ namespace
 		<	t_tArgument&&
 		>	final
 	{
-		Meta::TypeToken<t_tArgument>
-			Argument
-		{};
+		t_tArgument
+			m_vArgument
+		;
+
+		explicit constexpr
+		(	Argument
+		)	(	Meta::TypeToken<t_tArgument&&>
+			)
+		{}
 
 		auto constexpr
 		(	operator()
-		)	()
-		->	Meta::TypeToken<t_tArgument>&&
-		{	return ::std::move(Argument);	}
+		)	()	&&
+		->	t_tArgument&&
+		{	return ::std::move(m_vArgument);	}
 	};
 
 	template
@@ -93,48 +186,41 @@ namespace
 		<	t_tArgument const&&
 		>	final
 	{
-		Meta::TypeToken<t_tArgument>
-			Argument
+		t_tArgument
+			m_vArgument
 		{};
+
+
+		explicit constexpr
+		(	Argument
+		)	(	Meta::TypeToken<t_tArgument const&&>
+			)
+		{}
 
 		auto constexpr
 		(	operator()
-		)	()	const
-		->	Meta::TypeToken<t_tArgument> const&&
-		{	return ::std::move(Argument);	}
+		)	()	const&&
+			noexcept
+		->	t_tArgument const&&
+		{	return ::std::move(m_vArgument);	}
 	};
+
+	template
+		<	typename
+				t_tArgument
+		>
+	(	Argument
+	)	(	Meta::TypeToken<t_tArgument>
+		)
+	->	Argument
+		<	t_tArgument
+		>
+	;
 }
 
 export namespace
 	ATR
 {
-	/// checks if the address is mapped
-	template
-		<	typename
-				t_tFunctionName
-		,	typename
-			...	t_tpArgument
-		>
-	concept
-		ValidAddress
-	=	ProtoID
-		<	t_tFunctionName
-		>
-	and	requires
-			(	t_tFunctionName
-					c_vFunctionName
-			,	Argument<t_tpArgument>
-				...	c_vpArgument
-			)
-		{
-			MapAddress
-			(	c_vFunctionName
-			,	c_vpArgument()
-				...
-			);
-		}
-	;
-
 	template
 		<	ProtoID
 				t_tFuncID
@@ -145,8 +231,26 @@ export namespace
 	*	Address
 	=	MapAddress
 		(	t_tFuncID{}
-		,	Argument<t_tpArgument>{}()
+		,	Argument
+			{	LayoutType
+				(	Meta::Type<t_tpArgument>
+				)
+			}()
 			...
+		)
+	;
+
+	/// checks if the address is mapped
+	template
+		<	typename
+				t_tFunctionName
+		,	typename
+			...	t_tpArgument
+		>
+	concept
+		ProtoAddress
+	=	(	Address<t_tFunctionName, t_tpArgument...>
+		!=	nullptr
 		)
 	;
 
@@ -158,7 +262,7 @@ export namespace
 			...	t_tpArgument
 		>
 	requires
-		ValidAddress
+		ProtoAddress
 		<	t_tFunctionName
 		,	t_tpArgument
 			...
@@ -169,7 +273,7 @@ export namespace
 		<	decltype
 			(	MapAddress
 				(	t_tFunctionName{}
-				,	Argument<t_tpArgument>{}()
+				,	::std::declval<t_tpArgument>()
 					...
 				)
 			)
@@ -177,46 +281,4 @@ export namespace
 			...
 		>
 	;
-
-	/// invokes the function specified with the given FuncID
-	template
-		<	ProtoID
-				t_tFuncID
-		,	typename
-			...	t_tpArgument
-		>
-	requires
-		ValidAddress
-		<	t_tFuncID
-		,	t_tpArgument
-			...
-		>
-	auto constexpr
-	(	Invoke
-	)	(	t_tpArgument
-			&&
-			...	i_rpArgument
-		)
-		noexcept
-		(	AddressNoexcept
-			<	t_tFuncID
-			,	t_tpArgument
-				...
-			>
-		)
-	->	decltype(auto)
-	{	return
-		::std::invoke
-		(	Address
-			<	t_tFuncID
-			,	t_tpArgument
-				...
-			>
-		,	ForwardErased
-			(	Meta::Type<t_tpArgument>
-			,	i_rpArgument
-			)
-			...
-		);
-	}
 }

@@ -52,7 +52,7 @@ export namespace
 	auto constexpr
 	(	MapAddress
 	)	(	ID_T<"ComputeVolume">
-		,	Meta::TypeToken<t_tBody> const&
+		,	t_tBody const&
 		)
 	{	return
 		&Signature

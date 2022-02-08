@@ -11,8 +11,8 @@ import Evaluation.Shared.TypeConstruct;
 import Evaluation.Shared.MainTemplate;
 
 static_assert
-(	ATR::Address<ATR::ID_T<"ComputeVolume">, Bodies3D::Head const&>
-==	ATR::Address<ATR::ID_T<"ComputeVolume">, Bodies3D::Sphere const&>
+(	ATR::Address<ATR::ID_T<"ComputeVolume">, ATR::Type<"Head"> const&>
+==	ATR::Address<ATR::ID_T<"ComputeVolume">, ATR::Type<"Sphere"> const&>
 );
 
 auto
@@ -26,6 +26,7 @@ auto
 -> int
 {
 	using ATR::operator""_id;
+	using ATR::Type;
 	using namespace Bodies3D;
 
 	using
@@ -59,14 +60,14 @@ auto
 	return
 		MainTemplate
 		<	Body3D
-		,	&TypeConstruct<Cube>
-		,	&TypeConstruct<Cuboid>
-		,	&TypeConstruct<Pyramid>
-		,	&TypeConstruct<Sphere>
-		,	&TypeConstruct<Cylinder>
-		,	&TypeConstruct<Cone>
-		,	&TypeConstruct<Ellipsoid>
-		,	&TypeConstruct<Head>
+		,	&TypeConstruct<Type<"Cube">>
+		,	&TypeConstruct<Type<"Cuboid">>
+		,	&TypeConstruct<Type<"Pyramid">>
+		,	&TypeConstruct<Type<"Sphere">>
+		,	&TypeConstruct<Type<"Cylinder">>
+		,	&TypeConstruct<Type<"Cone">>
+		,	&TypeConstruct<Type<"Ellipsoid">>
+		,	&TypeConstruct<Type<"Head">>
 		,	fComputeVolume
 		>(	i_nArgCount
 		,	i_aArgValue

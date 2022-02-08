@@ -16,21 +16,5 @@ export namespace
 	;
 }
 
-export namespace
-	ATR
-{
-	template<>
-	auto constexpr
-	(	Invoke
-		<	ID_T<"ComputeVolume">
-		,	Bodies3D::Pyramid const&
-		>
-	)	(	Bodies3D::Pyramid const&
-		)
-	noexcept
-	->	decltype(auto)
-	;
-}
-
 static_assert(AdditionalSize<Bodies3D::Pyramid, 3, 1> == 4);
 static_assert(SizeMinimal<Bodies3D::Pyramid, 3, 1>);

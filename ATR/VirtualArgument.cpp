@@ -67,6 +67,13 @@ export namespace
 				<	t_tObject
 				>
 			)
+		requires
+			ProtoAddress
+			<	t_tFuncID
+			,	t_tObject
+			,	t_tpArgument
+				...
+			>
 		:	Function
 			{	Address
 				<	t_tFuncID
@@ -78,8 +85,8 @@ export namespace
 		{}
 
 		auto constexpr
-			operator()
-			(	t_tFuncID
+		(	operator()
+		)	(	t_tFuncID
 			,	t_tInitial
 					i_vInitial
 			,	t_tpArgument
@@ -89,11 +96,11 @@ export namespace
 		->	t_tReturn
 		{	return
 			Function
-			(	std::forward
+			(	::std::forward
 				<	t_tInitial
 				>(	i_vInitial
 				)
-			,	std::forward
+			,	::std::forward
 				<	t_tpArgument
 				>(	i_rpArgument
 				)
@@ -147,6 +154,13 @@ export namespace
 				<	t_tObject
 				>
 			)
+		requires
+			ProtoAddress
+			<	t_tFuncID
+			,	t_tObject
+			,	t_tpArgument
+				...
+			>
 		:	Function
 			{	Address
 				<	t_tFuncID
@@ -158,8 +172,8 @@ export namespace
 		{}
 
 		auto constexpr
-			operator()
-			(	t_tFuncID
+		(	operator()
+		)	(	t_tFuncID
 			,	t_tInitial
 					i_vInitial
 			,	t_tpArgument
@@ -170,11 +184,11 @@ export namespace
 		->	t_tReturn
 		{	return
 			Function
-			(	std::forward
+			(	::std::forward
 				<	t_tInitial
 				>(	i_vInitial
 				)
-			,	std::forward
+			,	::std::forward
 				<	t_tpArgument
 				>(	i_rpArgument
 				)
@@ -198,7 +212,6 @@ export namespace
 		>
 	;
 
-
 	template
 		<	typename
 			...	t_tpVirtualItem
@@ -218,10 +231,9 @@ export namespace
 			<	typename
 					t_tObject
 			>
-		constexpr
-		explicit
-			VirtualTable
-			(	Meta::TypeToken
+		explicit constexpr
+		(	VirtualTable
+		)	(	Meta::TypeToken
 				<	t_tObject
 				>	i_vObjectType
 			)
@@ -256,8 +268,8 @@ export namespace
 					t_tObject
 			>
 		constexpr
-			VirtualArgument
-			(	t_tObject
+		(	VirtualArgument
+		)	(	t_tObject
 				&&	i_rArgument
 			)
 		:	VTable
@@ -277,10 +289,9 @@ export namespace
 			,	typename
 				...	t_tpArgument
 			>
-		constexpr
-		auto
-			operator()
-			(	t_tFuncID
+		auto constexpr
+		(	operator()
+		)	(	t_tFuncID
 					i_vFuncName
 			,	t_tpArgument
 				&&
@@ -288,16 +299,15 @@ export namespace
 			)
 		->	decltype(auto)
 		{	return
-				VTable
-				(	i_vFuncName
-				,	ErasedArgument
-				,	std::forward
-					<	t_tpArgument
-					>(	i_rpArgument
-					)
-					...
+			VTable
+			(	i_vFuncName
+			,	ErasedArgument
+			,	::std::forward
+				<	t_tpArgument
+				>(	i_rpArgument
 				)
-			;
+				...
+			);
 		}
 	};
 
@@ -340,8 +350,8 @@ export namespace
 			<=	alignof(t_tErased)
 			)
 		constexpr
-			VirtualElement
-			(	Meta::TypeToken
+		(	VirtualElement
+		)	(	Meta::TypeToken
 				<	t_tObject
 				>
 			,	t_tpArgument
@@ -356,7 +366,7 @@ export namespace
 					ErasedElement
 				)
 			t_tObject
-			{	std::forward
+			{	::std::forward
 				<	t_tpArgument
 				>(	i_rArgument
 				)
@@ -370,10 +380,9 @@ export namespace
 			,	typename
 				...	t_tpArgument
 			>
-		constexpr
-		auto
-			operator()
-			(	t_tFuncID
+		auto constexpr
+		(	operator()
+		)	(	t_tFuncID
 					i_vFuncName
 			,	t_tpArgument
 				&&
@@ -381,17 +390,16 @@ export namespace
 			)	const
 		->	decltype(auto)
 		{	return
-				VTable
-				(	i_vFuncName
-				,	&
-					ErasedElement
-				,	std::forward
-					<	t_tpArgument
-					>(	i_rpArgument
-					)
-					...
+			VTable
+			(	i_vFuncName
+			,	&
+				ErasedElement
+			,	::std::forward
+				<	t_tpArgument
+				>(	i_rpArgument
 				)
-			;
+				...
+			);
 		}
 
 		template
@@ -400,10 +408,9 @@ export namespace
 			,	typename
 				...	t_tpArgument
 			>
-		constexpr
-		auto
-			operator()
-			(	t_tFuncID
+		auto constexpr
+		(	operator()
+		)	(	t_tFuncID
 					i_vFuncName
 			,	t_tpArgument
 				&&
@@ -411,24 +418,23 @@ export namespace
 			)
 		->	decltype(auto)
 		{	return
-				VTable
-				(	i_vFuncName
-				,	&
-					ErasedElement
-				,	std::forward
-					<	t_tpArgument
-					>(	i_rpArgument
-					)
-					...
+			VTable
+			(	i_vFuncName
+			,	&
+				ErasedElement
+			,	::std::forward
+				<	t_tpArgument
+				>(	i_rpArgument
 				)
-			;
+				...
+			);
 		}
 	};
 
 	template
-		<	std::size_t
+		<	Meta::USize
 				t_nMaxSize
-		,	std::size_t
+		,	Meta::USize
 				t_nMaxAlign
 		,	typename
 			...	t_tpVirtualItem
@@ -436,7 +442,7 @@ export namespace
 	using
 		VirtualStorage
 	=	VirtualElement
-		<	std::aligned_storage_t
+		<	::std::aligned_storage_t
 			<	t_nMaxSize
 			,	t_nMaxAlign
 			>

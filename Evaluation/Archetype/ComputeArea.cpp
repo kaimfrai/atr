@@ -48,7 +48,7 @@ export namespace
 	auto constexpr
 	(	MapAddress
 	)	(	ID_T<"ComputeArea">
-		,	Meta::TypeToken<t_tShape> const&
+		,	t_tShape const&
 		)
 	{	return
 		&Signature

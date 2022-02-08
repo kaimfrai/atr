@@ -105,22 +105,10 @@ export namespace
 		,	Meta::TypeToken<t_tOwner>
 		,	Meta::TypePack<>
 		)
-	{
-		MemberOffsetInfo constexpr
-			vMemberOffsetInfo
-		{	i_vOrigin
-		,	begin
-			(	LayoutConfig
-				<	::std::remove_cvref_t<t_tOwner>
-				::	TypeName
-				>
-			)
-		};
-
-		return
+	{	return
 		MemberOffset
-		<	Meta::RestoreTypeEntity<vMemberOffsetInfo.DataMember->Type>
-		>{	vMemberOffsetInfo.Offset
+		<	::std::remove_reference_t<decltype(::std::declval<t_tOwner>()[i_vOrigin])>
+		>{	::std::remove_reference_t<t_tOwner>::OffsetOf(i_vOrigin)
 		};
 	}
 

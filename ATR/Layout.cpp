@@ -382,6 +382,20 @@ export namespace
 		AliasAccess
 	{
 		[[nodiscard]]
+		static auto constexpr
+		(	OffsetOf
+		)	(	t_tAliasName
+			)
+		->	Meta::USize
+		{	return
+				t_tDerived
+			::	OffsetOf
+				(	t_tAliasTarget{}
+				)
+			;
+		}
+
+		[[nodiscard]]
 		auto constexpr
 		(	operator[]
 		)	(	t_tAliasName
@@ -454,7 +468,9 @@ export namespace
 		...
 	{
 		using t_tLayout::operator[];
+		using t_tLayout::OffsetOf;
 		using AliasAccess<t_tpAliasName, t_tpAliasTarget, AliasLayout>::operator[]...;
+		using AliasAccess<t_tpAliasName, t_tpAliasTarget, AliasLayout>::OffsetOf...;
 	};
 
 	template
@@ -466,6 +482,21 @@ export namespace
 	struct
 		NorthAccess
 	{
+		[[nodiscard]]
+		static auto constexpr
+		(	OffsetOf
+		)	(	t_tName
+					i_vMemberName
+			)
+		->	Meta::USize
+		{	return
+				decltype(t_tDerived::NorthArea)
+			::	OffsetOf
+				(	i_vMemberName
+				)
+			;
+		}
+
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
@@ -527,6 +558,33 @@ export namespace
 	struct
 		SouthAccess
 	{
+		[[nodiscard]]
+		static auto constexpr
+		(	OffsetOf
+		)	(	t_tName
+					i_vMemberName
+			)
+		->	Meta::USize
+		{	if	constexpr
+				(	Meta::ProtoStateless
+					<	decltype
+						(	::std::declval<t_tDerived>()
+							[	t_tName{}
+							]
+						)
+					>
+				)
+				return 0uz;
+			else
+				return
+					sizeof(t_tDerived::NorthArea)
+				+	decltype(t_tDerived::SouthArea)
+				::	OffsetOf
+					(	i_vMemberName
+					)
+				;
+		}
+
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
@@ -624,22 +682,10 @@ export namespace
 		>
 		...
 	{
-		using
-			NorthAccess
-			<	t_tpNorthName
-			,	LayoutFork
-			>
-		::	operator[]
-			...
-		;
-		using
-			SouthAccess
-			<	t_tpSouthName
-			,	LayoutFork
-			>
-		::	operator[]
-			...
-		;
+		using NorthAccess<t_tpNorthName, LayoutFork>::operator[]...;
+		using NorthAccess<t_tpNorthName, LayoutFork>::OffsetOf...;
+		using SouthAccess<t_tpSouthName, LayoutFork>::operator[]...;
+		using SouthAccess<t_tpSouthName, LayoutFork>::OffsetOf...;
 
 		Layout<Member<t_tpNorthName, t_tpNorthData>...>
 			NorthArea
@@ -669,6 +715,14 @@ export namespace
 		::	operator
 			[]
 		;
+
+		using
+			LayoutFork
+			<	SplitLayoutNorth<t_tpMember...>
+			,	SplitLayoutSouth<t_tpMember...>
+			>
+		::	OffsetOf
+		;
 	};
 
 	template
@@ -691,6 +745,14 @@ export namespace
 			>
 		>
 	{
+		[[nodiscard]]
+		static auto constexpr
+		(	OffsetOf
+		)	(	t_tName
+			)
+		->	Meta::USize
+		{	return 0uz;	}
+
 		t_tData
 			Value
 		;
@@ -739,6 +801,14 @@ export namespace
 		>
 	{
 		[[nodiscard]]
+		static auto constexpr
+		(	OffsetOf
+		)	(	t_tName
+			)
+		->	Meta::USize
+		{	return 0uz;	}
+
+		[[nodiscard]]
 		auto constexpr
 		(	operator[]
 		)	(	t_tName
@@ -770,10 +840,20 @@ export namespace
 			Layout<t_tFirst>
 		::	operator[]
 		;
+		using
+			Layout<t_tFirst>
+		::	OffsetOf
+		;
 
 		using
 			Layout<Member<t_tpRemainingName, t_tpRemainingStateless>>
 		::	operator[]
+			...
+		;
+
+		using
+			Layout<Member<t_tpRemainingName, t_tpRemainingStateless>>
+		::	OffsetOf
 			...
 		;
 	};
