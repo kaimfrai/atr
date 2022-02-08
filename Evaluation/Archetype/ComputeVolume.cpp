@@ -54,26 +54,28 @@ export namespace
 	)	(	ID_T<"ComputeVolume">
 		,	Meta::TypeToken<t_tBody> const&
 		)
-	{
-		return
-		MakeProductAddress
-		<	t_tBody
-		,	MapID
-			(	"ComputeVolumeMultiplier"_id
-			,	"a"_id
-			)
-		,	MapID
-			(	"Depth"_id
-			,	"b"_id
-			)
-		,	MapID
-			(	"Height"_id
-			,	"c"_id
-			)
-		,	MapID
-			(	"Width"_id
-			,	"d"_id
-			)
-		>();
+	{	return
+		&Signature
+		<	StaticDependency<"Product">
+		,	ArgumentDependency
+			<	t_tBody const&
+			,	MapID
+				(	"ComputeVolumeMultiplier"_id
+				,	"a"_id
+				)
+			,	MapID
+				(	"Depth"_id
+				,	"b"_id
+				)
+			,	MapID
+				(	"Height"_id
+				,	"c"_id
+				)
+			,	MapID
+				(	"Width"_id
+				,	"d"_id
+				)
+			>
+		>;
 	}
 }

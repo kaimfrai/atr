@@ -50,23 +50,26 @@ export namespace
 	)	(	ID_T<"ComputeArea">
 		,	Meta::TypeToken<t_tShape> const&
 		)
-	{
-		return
-		MakeProductAddress
-		<	t_tShape
-		,	MapID
-			(	"ComputeAreaMultiplier"_id
-			,	"a"_id
-			)
-		,	MapID
-			(	"Height"_id
-			,	"b"_id
-			)
-		,	MapID
-			(	"Width"_id
-			,	"c"_id
-			)
-		>();
+	{	return
+		&Signature
+		<	StaticDependency<"Product">
+		,	ArgumentDependency
+			<	t_tShape const
+				&
+			,	MapID
+				(	"ComputeAreaMultiplier"_id
+				,	"a"_id
+				)
+			,	MapID
+				(	"Height"_id
+				,	"b"_id
+				)
+			,	MapID
+				(	"Width"_id
+				,	"c"_id
+				)
+			>
+		>;
 	}
 }
 

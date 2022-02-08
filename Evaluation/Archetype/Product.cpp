@@ -28,10 +28,8 @@ export namespace
 	auto inline
 	(	Body
 	)	(	FunctionName<"Product">
-		,	DeduceDependencies
-			<	t_tpDependency
-				...
-			>	i_vArgument
+		,	DeduceDependencies<t_tpDependency...>
+				i_vArgument
 		)
 		noexcept
 	->	Float
@@ -42,28 +40,6 @@ export namespace
 			::	KeyValue
 			)
 		);
-	}
-
-	template
-		<	typename
-				t_tObject
-		,	IDMap
-			...	t_vpFuncDependencies
-		>
-	auto constexpr
-	(	MakeProductAddress
-	)	()
-	{
-		return
-		&Signature
-		<	ArgumentDependencyInfo<ID_T<"Product">>
-		,	ArgumentDependencyInfo
-			<	t_tObject const
-				&
-			,	t_vpFuncDependencies
-				...
-			>
-		>;
 	}
 }
 
