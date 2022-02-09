@@ -1,14 +1,16 @@
 export module ATR.DependencyIDMap;
 
-export import ATR.Address;
-export import ATR.Dependency;
-export import ATR.DataMember;
+export import Meta.Concept.Category;
+export import Meta.Logic;
+export import Meta.Constraint;
 
-export import ATR.MemberOffset;
-export import ATR.ID;
 export import ATR.StringLiteral;
+export import ATR.ID;
+export import ATR.DataMember;
+export import ATR.MemberOffset;
+export import ATR.Dependency;
+export import ATR.Address;
 export import ATR.Layout;
-export import ATR.Concept;
 
 export namespace
 	ATR
@@ -19,7 +21,7 @@ export namespace
 			...	t_tpArgument
 		>
 	struct
-		IDMap
+		IDMap final
 	{
 		StringView
 			OriginID
@@ -67,7 +69,78 @@ export namespace
 		,	i_vTarget
 		};
 	}
+}
 
+export namespace
+	ATR::Trait
+{
+	template
+		<	ProtoID
+				t_tDataID
+		>
+	struct
+		HasDataMember final
+	:	Meta::Trait::LiteralBase
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	Meta::TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return
+				Polarity
+			==	requires
+				{	::std::declval<t_tEntity>()
+					[	t_tDataID{}
+					];
+				}
+			;
+		}
+	};
+}
+
+export namespace
+	ATR
+{
+	template
+		<	StringLiteral
+			...	t_tpMemberName
+		>
+	Meta::Term constexpr inline
+		HasDataMember
+	=(	...
+	and	Meta::Term
+		{	Trait::HasDataMember
+			<	ID_T<t_tpMemberName>
+			>{}
+		}
+	);
+
+	template
+		<	typename
+				t_tProto
+		,	StringLiteral
+			...	t_tpMemberName
+		>
+	concept
+		ProtoMemberInterface
+	=	Meta::ProtoConstraint
+		<	t_tProto
+		,	HasDataMember
+			<	t_tpMemberName
+				...
+			>
+		>
+	;
+}
+
+namespace
+	ATR
+{
 	template
 		<	ProtoID
 				t_tFuncID
@@ -98,7 +171,7 @@ export namespace
 	template
 		<	ProtoID
 				t_tOrigin
-		,	ProtoObjectMember<t_tOrigin::RawArray>
+		,	ProtoMemberInterface<t_tOrigin::RawArray>
 				t_tOwner
 		>
 	auto constexpr
@@ -120,7 +193,11 @@ export namespace
 		>{	::std::remove_reference_t<t_tOwner>::OffsetOf(i_vOrigin)
 		};
 	}
+}
 
+export namespace
+	ATR
+{
 	template
 		<	typename
 				t_tOwner

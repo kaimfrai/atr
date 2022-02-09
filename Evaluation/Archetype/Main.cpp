@@ -52,7 +52,6 @@ auto
 {
 	using ATR::operator""_id;
 	using ATR::Type;
-	using namespace Bodies3D;
 
 	using
 		Body3D
@@ -64,7 +63,7 @@ auto
 			,	auto(	void const
 						*
 					)
-				noexcept
+					noexcept
 				->	Float
 			>
 		>
@@ -76,26 +75,24 @@ auto
 				&	i_rBody3D
 			)
 		{	return
-				i_rBody3D
-				(	"ComputeVolume"_id
-				)
-			;
+			i_rBody3D
+			(	"ComputeVolume"_id
+			);
 		}
 	;
 	return
-		MainTemplate
-		<	Body3D
-		,	&TypeConstruct<Type<"Cube">>
-		,	&TypeConstruct<Type<"Cuboid">>
-		,	&TypeConstruct<Type<"Pyramid">>
-		,	&TypeConstruct<Type<"Sphere">>
-		,	&TypeConstruct<Type<"Cylinder">>
-		,	&TypeConstruct<Type<"Cone">>
-		,	&TypeConstruct<Type<"Ellipsoid">>
-		,	&TypeConstruct<Type<"Head">>
-		,	fComputeVolume
-		>(	i_nArgCount
-		,	i_aArgValue
-		)
-	;
+	MainTemplate
+	<	Body3D
+	,	&TypeConstruct<Type<"Cube">>
+	,	&TypeConstruct<Type<"Cuboid">>
+	,	&TypeConstruct<Type<"Pyramid">>
+	,	&TypeConstruct<Type<"Sphere">>
+	,	&TypeConstruct<Type<"Cylinder">>
+	,	&TypeConstruct<Type<"Cone">>
+	,	&TypeConstruct<Type<"Ellipsoid">>
+	,	&TypeConstruct<Type<"Head">>
+	,	fComputeVolume
+	>(	i_nArgCount
+	,	i_aArgValue
+	);
 }
