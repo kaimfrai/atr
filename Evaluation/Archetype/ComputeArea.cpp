@@ -38,8 +38,7 @@ export namespace
 			>	auto const
 			&	i_rShape
 		)
-	{	return
-		&Signature
+	->	Function
 		<	StaticDependency<"Product">
 		,	ArgumentDependency
 			<	decltype(i_rShape)
@@ -56,8 +55,8 @@ export namespace
 				,	"c"_id
 				)
 			>
-		>;
-	}
+		>
+	;
 }
 
 

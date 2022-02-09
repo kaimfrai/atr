@@ -1,226 +1,83 @@
 export module ATR.Address;
 
+export import ATR.Dependency;
 export import ATR.Erase;
-export import ATR.Signature;
 export import ATR.ID;
 
 export import Std;
 export import Meta.TupleList;
 
-namespace
-	ATR
-{
-	template
-		<	typename
-				t_tLayout
-		>
-	auto constexpr
-	(	LayoutType
-	)	(	Meta::TypeToken<t_tLayout>
-		)
-	->	Meta::TypeToken<typename t_tLayout::LayoutType>
-	{	return {};	}
-
-	template
-		<	typename
-				t_tLayout
-		>
-	auto constexpr
-	(	LayoutType
-	)	(	Meta::TypeToken<t_tLayout const>
-		)
-	->	Meta::TypeToken<typename t_tLayout::LayoutType const>
-	{	return {};	}
-
-	template
-		<	typename
-				t_tLayout
-		>
-	auto constexpr
-	(	LayoutType
-	)	(	Meta::TypeToken<t_tLayout&>
-		)
-	->	Meta::TypeToken<typename t_tLayout::LayoutType&>
-	{	return {};	}
-
-	template
-		<	typename
-				t_tLayout
-		>
-	auto constexpr
-	(	LayoutType
-	)	(	Meta::TypeToken<t_tLayout const&>
-		)
-	->	Meta::TypeToken<typename t_tLayout::LayoutType const&>
-	{	return {};	}
-
-	template
-		<	typename
-				t_tLayout
-		>
-	auto constexpr
-	(	LayoutType
-	)	(	Meta::TypeToken<t_tLayout&&>
-		)
-	->	Meta::TypeToken<typename t_tLayout::LayoutType&&>
-	{	return {};	}
-
-	template
-		<	typename
-				t_tLayout
-		>
-	auto constexpr
-	(	LayoutType
-	)	(	Meta::TypeToken<t_tLayout const&&>
-		)
-	->	Meta::TypeToken<typename t_tLayout::LayoutType const&&>
-	{	return {};	}
-
-	template
-		<	typename
-				t_tArgument
-		>
-	struct
-		Argument final
-	{
-		explicit constexpr
-		(	Argument
-		)	(	Meta::TypeToken<t_tArgument>
-			)
-		{}
-
-		auto constexpr
-		(	operator()
-		)	()	&&
-			noexcept
-		->	t_tArgument
-		{	return t_tArgument{};	}
-	};
-
-	template
-		<	typename
-				t_tArgument
-		>
-	struct
-		Argument
-		<	t_tArgument&
-		>	final
-	{
-		t_tArgument
-			m_vArgument
-		{};
-
-		explicit constexpr
-		(	Argument
-		)	(	Meta::TypeToken<t_tArgument&>
-			)
-		{}
-
-		auto constexpr
-		(	operator()
-		)	()	&&
-			noexcept
-		->	t_tArgument&
-		{	return m_vArgument;	}
-	};
-
-	template
-		<	typename
-				t_tArgument
-		>
-	struct
-		Argument
-		<	t_tArgument const&
-		>	final
-	{
-		t_tArgument
-			m_vArgument
-		{};
-
-		explicit constexpr
-		(	Argument
-		)	(	Meta::TypeToken<t_tArgument const&>
-			)
-		{}
-
-		auto constexpr
-		(	operator()
-		)	()	const&&
-			noexcept
-		->	t_tArgument const&
-		{	return m_vArgument;	}
-	};
-
-	template
-		<	typename
-				t_tArgument
-		>
-	struct
-		Argument
-		<	t_tArgument&&
-		>	final
-	{
-		t_tArgument
-			m_vArgument
-		;
-
-		explicit constexpr
-		(	Argument
-		)	(	Meta::TypeToken<t_tArgument&&>
-			)
-		{}
-
-		auto constexpr
-		(	operator()
-		)	()	&&
-		->	t_tArgument&&
-		{	return ::std::move(m_vArgument);	}
-	};
-
-	template
-		<	typename
-				t_tArgument
-		>
-	struct
-		Argument
-		<	t_tArgument const&&
-		>	final
-	{
-		t_tArgument
-			m_vArgument
-		{};
-
-
-		explicit constexpr
-		(	Argument
-		)	(	Meta::TypeToken<t_tArgument const&&>
-			)
-		{}
-
-		auto constexpr
-		(	operator()
-		)	()	const&&
-			noexcept
-		->	t_tArgument const&&
-		{	return ::std::move(m_vArgument);	}
-	};
-
-	template
-		<	typename
-				t_tArgument
-		>
-	(	Argument
-	)	(	Meta::TypeToken<t_tArgument>
-		)
-	->	Argument
-		<	t_tArgument
-		>
-	;
-}
-
 export namespace
 	ATR
 {
+	template
+		<	Dependency
+				t_vFuncID
+		,	Dependency
+			...	t_vpDependency
+		>
+	struct
+		Function
+	{
+		static bool constexpr
+			Noexcept
+		=	noexcept
+			(	Body
+				(	::std::declval
+					<	typename
+						decltype(t_vFuncID)
+					::	BoundType
+					>()
+				,	::std::declval
+					<	typename
+						decltype(t_vpDependency)
+					::	BoundType
+					>()
+					...
+				)
+			)
+		;
+
+		static auto constexpr
+		(	Signature
+		)	(	typename
+				decltype(t_vpDependency)
+			::	ArgumentType
+				...	i_vpArgument
+			)
+			noexcept(Noexcept)
+		->	decltype(auto)
+		{	/// the body of a function needs to be defined separately and is found here by ADL.
+			/// the requirements are that the first template argument is the FuncID.
+			/// other template arguments will be deduced.
+			return
+			Body
+			(	t_vFuncID()
+			,	t_vpDependency
+				(	i_vpArgument
+				)
+				...
+			);
+		}
+	};
+
+	template
+		<	ProtoID
+				t_tFuncID
+		,	typename
+			...	t_tpArgument
+		>
+	using
+		FunctionType
+	=	decltype
+		(	MapAddress
+			(	t_tFuncID{}
+			,	::std::declval<t_tpArgument>()
+				...
+			)
+		)
+	;
+
 	template
 		<	ProtoID
 				t_tFuncID
@@ -229,15 +86,9 @@ export namespace
 		>
 	auto constexpr inline
 	*	Address
-	=	MapAddress
-		(	t_tFuncID{}
-		,	Argument
-			{	LayoutType
-				(	Meta::Type<t_tpArgument>
-				)
-			}()
-			...
-		)
+	=	&
+		FunctionType<t_tFuncID, t_tpArgument...>
+	::	Signature
 	;
 
 	/// checks if the address is mapped
@@ -261,24 +112,9 @@ export namespace
 		,	typename
 			...	t_tpArgument
 		>
-	requires
-		ProtoAddress
-		<	t_tFunctionName
-		,	t_tpArgument
-			...
-		>
 	bool constexpr inline
 		AddressNoexcept
-	=	::std::is_nothrow_invocable_v
-		<	decltype
-			(	MapAddress
-				(	t_tFunctionName{}
-				,	::std::declval<t_tpArgument>()
-					...
-				)
-			)
-		,	ErasedType<t_tpArgument>
-			...
-		>
+	=	FunctionType<t_tFunctionName, t_tpArgument...>
+	::	Noexcept
 	;
 }

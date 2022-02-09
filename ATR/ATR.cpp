@@ -10,6 +10,5 @@ export import ATR.Layout;
 export import ATR.ID;
 export import ATR.Instance;
 export import ATR.MemberOffset;
-export import ATR.Signature;
 export import ATR.StringLiteral;
 export import ATR.VirtualArgument;

@@ -12,7 +12,6 @@ add_module(Address.cpp)
 add_module(Dependency.cpp)
 add_module(DependencyIDMap.cpp)
 add_module(Erase.cpp)
-add_module(Signature.cpp)
 add_module(VirtualArgument.cpp)
 
 add_module(ATR.cpp)

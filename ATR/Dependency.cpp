@@ -213,12 +213,6 @@ export namespace
 		;
 
 		[[no_unique_address]]
-		Meta::TypeToken
-		<	t_tArgument
-		>	ArgumentToken
-		{};
-
-		[[no_unique_address]]
 		Meta::KeyTuple
 		<	Meta::KeyItem
 			<	t_tpID
@@ -241,7 +235,6 @@ export namespace
 			}
 		{}
 
-
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
@@ -249,9 +242,9 @@ export namespace
 					i_vArgument
 				=	{}
 			)	const
-		->	decltype(auto)
+		->	BoundType
 		{	return
-			BoundDependency
+			BoundType
 			{	i_vArgument
 			,	DependencyMap
 			};
