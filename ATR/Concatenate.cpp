@@ -12,6 +12,81 @@ export namespace
 	template
 		<	ProtoID
 				t_tPrefix
+		,	StringView
+				t_vInfix
+		,	ProtoID
+				t_tSuffix
+		>
+	auto constexpr
+	(	InfixStringView
+	)	()
+	->	StringView
+	{	if	constexpr
+			(	t_vInfix.size() == 0uz
+			)
+			return ID<>::StringView;
+		else
+			return
+				ID_T
+				<	StringLiteral
+					<	t_tPrefix::Length
+					+	t_vInfix.size()
+					+	t_tSuffix::Length
+					>{	t_tPrefix::StringView
+					,	t_vInfix
+					,	t_tSuffix::StringView
+					}
+				>
+			::	StringView
+			;
+	}
+
+	template
+		<	ProtoID
+				t_tPrefix
+		,	DataMemberInfo
+				t_vInfix
+		,	ProtoID
+				t_tSuffix
+		>
+	auto constexpr
+	(	InfixDataMember
+	)	()
+	->	DataMemberInfo
+	{
+		StringView constexpr
+			Name
+		=	InfixStringView
+			<	t_tPrefix
+			,	t_vInfix.Name
+			,	t_tSuffix
+			>()
+		;
+		StringView constexpr
+			Alias
+		=	InfixStringView
+			<	t_tPrefix
+			,	t_vInfix.Alias
+			,	t_tSuffix
+			>()
+		;
+		if	constexpr(Alias)
+			return
+			{	.Type = Meta::Type<ID_Of<Alias>>
+			,	.Name = Name
+			,	.Alias = Alias
+			};
+		else
+			return
+			{	.Type = t_vInfix.Type
+			,	.Name = Name
+			,	.Alias = Alias
+			};
+	}
+
+	template
+		<	ProtoID
+				t_tPrefix
 		,	DataMemberConfig
 				t_vConfig
 		,	ProtoID
@@ -29,31 +104,16 @@ export namespace
 				...	t_npIndex
 			>(	Meta::IndexToken<t_npIndex...>
 			)
-		->	decltype(auto)
-		{
-			auto
-				vResult
-			=	t_vConfig
-			;
-
-			(	...
-			,	(	vResult[t_npIndex]
-				->	Name
-				=	ID_T
-					<	StringLiteral
-						<	t_tPrefix::Length
-						+	t_vConfig[t_npIndex]->Name.size()
-						+	t_tSuffix::Length
-						>{	t_tPrefix::StringView
-						,	t_vConfig[t_npIndex]->Name
-						,	t_tSuffix::StringView
-						}
-					>
-				::	StringView
-				)
-			);
-
-			return vResult;
+		->	decltype(t_vConfig)
+		{	return
+			decltype(t_vConfig)
+			{	InfixDataMember
+				<	t_tPrefix
+				,	t_vConfig[t_npIndex]
+				,	t_tSuffix
+				>()
+				...
+			};
 
 		}(	Meta::Sequence<t_vConfig.size()>
 		);

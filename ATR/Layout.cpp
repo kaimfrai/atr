@@ -22,12 +22,7 @@ export namespace
 		>
 	struct
 		AliasLayout
-	{
-		static_assert
-		(	Meta::ProtoNone<AliasLayout>
-		,	"Unexpected specialization!"
-		);
-	};
+	;
 }
 
 template
@@ -37,7 +32,7 @@ template
 			t_tTarget
 	>
 struct
-	Alias final
+	Alias
 {};
 
 template
@@ -347,6 +342,66 @@ namespace
 		+=	Meta::Index<nAliasSplitIndex>
 		);
 	}
+
+	template
+		<	typename
+			...	t_tpAlias
+		>
+	struct
+		AliasResolver
+	:	t_tpAlias
+		...
+	{
+		template
+			<	typename
+					t_tName
+			>
+		auto constexpr
+		(	MatchAlias
+		)	(	t_tName
+			,	...
+			)	const
+		->	t_tName
+		{	return t_tName{};	}
+
+		template
+			<	typename
+					t_tName
+			,	typename
+					t_tTarget
+			>
+		auto constexpr
+		(	MatchAlias
+		)	(	t_tName
+			,	::Alias<t_tName, t_tTarget> const*
+			)	const
+		->	decltype(auto)
+		{	return
+			operator()
+			(	t_tTarget{}
+			);
+		}
+
+		template
+			<	typename
+					t_tName
+			>
+		auto constexpr
+		(	operator()
+		)	(	t_tName
+					i_vName
+			)	const
+		->	decltype(auto)
+		{	return MatchAlias(i_vName, this);	}
+	};
+
+	template
+		<	typename
+			...	t_tpAlias
+		>
+	AliasResolver<t_tpAlias...> constexpr inline
+		ResolveAlias
+	{};
 }
 
 export namespace
@@ -354,25 +409,46 @@ export namespace
 {
 	template
 		<	typename
-				t_tAliasName
+				t_tLayout
 		,	typename
-				t_tAliasTarget
-		,	typename
-				t_tDerived
+			...	t_tpAlias
 		>
 	struct
-		AliasAccess
+		AliasLayout
+	:	t_tLayout
 	{
+		static auto constexpr
+		(	ResolveAlias
+		)	(	ProtoID auto
+					i_vName
+			)
+		->	decltype(auto)
+		{	return
+			::ATR::ResolveAlias<t_tpAlias...>
+			(	i_vName
+			);
+		}
+
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetOf
-		)	(	t_tAliasName
+		)	(	ProtoID auto
+					i_vMember
 			)
-		->	Meta::USize
-		{	return
-				t_tDerived
+		->	decltype
+			(	t_tLayout
 			::	OffsetOf
-				(	t_tAliasTarget{}
+				(	ResolveAlias
+					(	i_vMember
+					)
+				)
+			)
+		{	return
+				t_tLayout
+			::	OffsetOf
+				(	ResolveAlias
+					(	i_vMember
+					)
 				)
 			;
 		}
@@ -380,99 +456,98 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	t_tAliasName
+		)	(	ProtoID auto
+					i_vMember
 			)	&
 			noexcept
-		->	decltype(auto)
+		->	decltype
+			(	::std::declval<t_tLayout&>()
+				[	ResolveAlias
+					(	i_vMember
+					)
+				]
+			)
 		{	return
-				static_cast<t_tDerived&>
-				(	*this
+			static_cast<t_tLayout&>(*this)
+			[	ResolveAlias
+				(	i_vMember
 				)
-			[	t_tAliasTarget{}
 			];
 		}
 
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	t_tAliasName
+		)	(	ProtoID auto
+					i_vMember
 			)	const&
 			noexcept
-		->	decltype(auto)
+		->	decltype
+			(	::std::declval<t_tLayout const&>()
+				[	ResolveAlias
+					(	i_vMember
+					)
+				]
+			)
 		{	return
-				static_cast<t_tDerived const&>
-				(	*this
+			static_cast<t_tLayout const&>(*this)
+			[	ResolveAlias
+				(	i_vMember
 				)
-			[	t_tAliasTarget{}
 			];
 		}
 
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	t_tAliasName
+		)	(	ProtoID auto
+					i_vMember
 			)	&&
 			noexcept
-		->	decltype(auto)
+		->	decltype
+			(	::std::declval<t_tLayout&&>()
+				[	ResolveAlias
+					(	i_vMember
+					)
+				]
+			)
 		{	return
-				static_cast<t_tDerived&&>
-				(	*this
+			static_cast<t_tLayout&&>(*this)
+			[	ResolveAlias
+				(	i_vMember
 				)
-			[	t_tAliasTarget{}
 			];
 		}
 	};
 
 	template
 		<	typename
-				t_tLayout
-		,	typename
-			...	t_tpAliasName
-		,	typename
-			...	t_tpAliasTarget
+			...	t_tpMember
 		>
 	struct
-		AliasLayout
-		<	t_tLayout
-		,	::Alias<t_tpAliasName, t_tpAliasTarget>
-			...
-		>
-	:	t_tLayout
-	,	AliasAccess
-		<	t_tpAliasName
-		,	t_tpAliasTarget
-		,	AliasLayout
-			<	t_tLayout
-			,	::Alias<t_tpAliasName, t_tpAliasTarget>
-				...
-			>
-		>
-		...
+		Layout
 	{
-		using t_tLayout::operator[];
-		using t_tLayout::OffsetOf;
-		using AliasAccess<t_tpAliasName, t_tpAliasTarget, AliasLayout>::operator[]...;
-		using AliasAccess<t_tpAliasName, t_tpAliasTarget, AliasLayout>::OffsetOf...;
-	};
+		using NorthType = SplitLayoutNorth<t_tpMember...>;
 
-	template
-		<	typename
-				t_tName
-		,	typename
-				t_tDerived
-		>
-	struct
-		NorthAccess
-	{
+		NorthType
+			NorthArea
+		;
+
+		using SouthType = SplitLayoutSouth<t_tpMember...>;
+
+		SouthType
+			SouthArea
+		;
+
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetOf
-		)	(	t_tName
+		)	(	ProtoID auto
 					i_vMemberName
 			)
-		->	Meta::USize
+		->	decltype(NorthType::OffsetOf(i_vMemberName))
 		{	return
-				decltype(t_tDerived::NorthArea)
+				NorthType
 			::	OffsetOf
 				(	i_vMemberName
 				)
@@ -482,16 +557,13 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	t_tName
+		)	(	ProtoID auto
 					i_vMemberID
 			)	&
 			noexcept
-		->	decltype(auto)
+		->	decltype(::std::declval<NorthType&>()[i_vMemberID])
 		{	return
-				static_cast<t_tDerived&>
-				(	*this
-				)
-			.	NorthArea
+			NorthArea
 			[	i_vMemberID
 			];
 		}
@@ -499,16 +571,13 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	t_tName
+		)	(	ProtoID auto
 					i_vMemberID
 			)	const&
 			noexcept
-		->	decltype(auto)
+		->	decltype(::std::declval<NorthType const&>()[i_vMemberID])
 		{	return
-				static_cast<t_tDerived const&>
-				(	*this
-				)
-			.	NorthArea
+			NorthArea
 			[	i_vMemberID
 			];
 		}
@@ -516,70 +585,45 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	t_tName
+		)	(	ProtoID auto
 					i_vMemberID
 			)	&&
 			noexcept
-		->	decltype(auto)
+		->	decltype(::std::declval<NorthType&&>()[i_vMemberID])
 		{	return
-				static_cast<t_tDerived&&>
-				(	*this
-				)
-			.	NorthArea
+			::std::move(NorthArea)
 			[	i_vMemberID
 			];
 		}
-	};
 
-	template
-		<	typename
-				t_tName
-		,	typename
-				t_tDerived
-		>
-	struct
-		SouthAccess
-	{
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetOf
-		)	(	t_tName
+		)	(	ProtoID auto
 					i_vMemberName
 			)
-		->	Meta::USize
-		{	if	constexpr
-				(	Meta::ProtoStateless
-					<	decltype
-						(	::std::declval<t_tDerived>()
-							[	t_tName{}
-							]
-						)
-					>
+		->	decltype(SouthType::OffsetOf(i_vMemberName))
+		{	return
+			(	not Meta::ProtoStateless<decltype(::std::declval<SouthType>()[i_vMemberName])>
+			*	sizeof(NorthType)
+			)
+			+	SouthType
+			::	OffsetOf
+				(	i_vMemberName
 				)
-				return 0uz;
-			else
-				return
-					sizeof(t_tDerived::NorthArea)
-				+	decltype(t_tDerived::SouthArea)
-				::	OffsetOf
-					(	i_vMemberName
-					)
-				;
+			;
 		}
 
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	t_tName
+		)	(	ProtoID auto
 					i_vMemberID
 			)	&
 			noexcept
-		->	decltype(auto)
+		->	decltype(::std::declval<SouthType&>()[i_vMemberID])
 		{	return
-				static_cast<t_tDerived&>
-				(	*this
-				)
-			.	SouthArea
+			SouthArea
 			[	i_vMemberID
 			];
 		}
@@ -587,16 +631,13 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	t_tName
+		)	(	ProtoID auto
 					i_vMemberID
 			)	const&
 			noexcept
-		->	decltype(auto)
+		->	decltype(::std::declval<SouthType const&>()[i_vMemberID])
 		{	return
-				static_cast<t_tDerived const&>
-				(	*this
-				)
-			.	SouthArea
+			SouthArea
 			[	i_vMemberID
 			];
 		}
@@ -604,107 +645,16 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	t_tName
+		)	(	ProtoID auto
 					i_vMemberID
 			)	&&
 			noexcept
-		->	decltype(auto)
+		->	decltype(::std::declval<SouthType&&>()[i_vMemberID])
 		{	return
-				static_cast<t_tDerived&&>
-				(	*this
-				)
-			.	SouthArea
+			::std::move(SouthArea)
 			[	i_vMemberID
 			];
 		}
-	};
-
-	template
-		<	typename
-		,	typename
-		>
-	struct
-		LayoutFork
-	{
-		static_assert
-		(	Meta::ProtoNone<LayoutFork>
-		,	"Unexpected specialization!"
-		);
-	};
-
-	template
-		<	typename
-			...	t_tpNorthName
-		,	typename
-			...	t_tpNorthData
-		,	typename
-			...	t_tpSouthName
-		,	typename
-			...	t_tpSouthData
-		>
-	struct
-		LayoutFork
-		<	Layout<Member<t_tpNorthName, t_tpNorthData>...>
-		,	Layout<Member<t_tpSouthName, t_tpSouthData>...>
-		>
-	:	NorthAccess
-		<	t_tpNorthName
-		,	LayoutFork
-			<	Layout<Member<t_tpNorthName, t_tpNorthData>...>
-			,	Layout<Member<t_tpSouthName, t_tpSouthData>...>
-			>
-		>
-		...
-	,	SouthAccess
-		<	t_tpSouthName
-		,	LayoutFork
-			<	Layout<Member<t_tpNorthName, t_tpNorthData>...>
-			,	Layout<Member<t_tpSouthName, t_tpSouthData>...>
-			>
-		>
-		...
-	{
-		using NorthAccess<t_tpNorthName, LayoutFork>::operator[]...;
-		using NorthAccess<t_tpNorthName, LayoutFork>::OffsetOf...;
-		using SouthAccess<t_tpSouthName, LayoutFork>::operator[]...;
-		using SouthAccess<t_tpSouthName, LayoutFork>::OffsetOf...;
-
-		Layout<Member<t_tpNorthName, t_tpNorthData>...>
-			NorthArea
-		;
-
-		Layout<Member<t_tpSouthName, t_tpSouthData>...>
-			SouthArea
-		;
-	};
-
-	template
-		<	typename
-			...	t_tpMember
-		>
-	struct
-		Layout
-	:	LayoutFork
-		<	SplitLayoutNorth<t_tpMember...>
-		,	SplitLayoutSouth<t_tpMember...>
-		>
-	{
-		using
-			LayoutFork
-			<	SplitLayoutNorth<t_tpMember...>
-			,	SplitLayoutSouth<t_tpMember...>
-			>
-		::	operator
-			[]
-		;
-
-		using
-			LayoutFork
-			<	SplitLayoutNorth<t_tpMember...>
-			,	SplitLayoutSouth<t_tpMember...>
-			>
-		::	OffsetOf
-		;
 	};
 
 	template
