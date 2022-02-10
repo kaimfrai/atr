@@ -14,6 +14,11 @@ export namespace
 		SSize
 	=	decltype(0z)
 	;
+
+	USize constexpr inline
+		BitsPerByte
+	=	::std::numeric_limits<char8_t>::digits
+	;
 }
 
 namespace

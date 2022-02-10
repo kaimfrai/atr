@@ -3,7 +3,6 @@ export module Meta.Bit;
 export import Std;
 
 export import Meta.Integer;
-export import Meta.Type;
 
 export namespace
 	Meta
@@ -17,7 +16,7 @@ export namespace
 		)
 	->	bool
 	{
-		if	(i_nIndex >= BitSize_Of<USize>)
+		if	(i_nIndex >= sizeof(USize) * BitsPerByte)
 			return false;
 
 		return i_nBitField bitand (1uz << i_nIndex);
@@ -32,7 +31,7 @@ export namespace
 	{
 		auto constexpr
 			nMaxBits
-		=	BitSize_Of<USize>
+		=	sizeof(USize) * BitsPerByte
 		;
 		if	(i_nBitCount > nMaxBits)
 			throw "Attempted to set more bits than exist in USize!";

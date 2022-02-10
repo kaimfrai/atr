@@ -1,6 +1,7 @@
 export module Meta.Type.Array;
 
 export import Meta.Type;
+export import Meta.Integer;
 
 export namespace
 	Meta::Token

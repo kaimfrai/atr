@@ -5,6 +5,7 @@ export import Meta.Value;
 export import ATR.ID;
 export import Meta.Type;
 export import Meta.Integer;
+export import Meta.Predicate.Erasure;
 
 export namespace
 	ATR
@@ -12,7 +13,7 @@ export namespace
 	struct
 		DataMemberInfo final
 	{
-		Meta::EraseTypeToken
+		Meta::EraseAlignType
 			Type
 		;
 
@@ -42,10 +43,10 @@ export namespace
 				return ::std::strong_ordering::greater;
 			else
 			//	greater alignment means ordered earlier
-			if	(i_rLeft.Type->Alignment != i_rRight.Type->Alignment)
+			if	(i_rLeft.Type.Align != i_rRight.Type.Align)
 				return
 
-					i_rLeft.Type->Alignment > i_rRight.Type->Alignment
+					i_rLeft.Type.Align > i_rRight.Type.Align
 				?	::std::strong_ordering::less
 				:	::std::strong_ordering::greater
 				;

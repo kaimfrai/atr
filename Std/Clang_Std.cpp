@@ -5,7 +5,6 @@ export import <any>;
 export import <array>;
 export import <bit>;
 export import <cstdint>;
-export import <climits>;
 export import <cstring>;
 export import <compare>;
 export import <concepts>;

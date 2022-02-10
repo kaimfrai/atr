@@ -1,6 +1,7 @@
 export module Meta.Transform;
 
 export import Meta.Type;
+import Std;
 
 export namespace
 	Meta

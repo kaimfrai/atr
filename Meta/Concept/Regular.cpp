@@ -1,23 +1,11 @@
 export module Meta.Concept.Regular;
 
 export import Meta.Concept.Category;
+export import Meta.Concept.Member;
 
 export namespace
 	Meta::Trait
 {
-	template
-		<	ProtoDataMember
-				t_tMember
-		>
-	struct
-		Member final
-	{
-		t_tMember
-			Member
-			[[no_unique_address]]
-		;
-	};
-
 	struct
 		Destructible final
 	:	LiteralBase

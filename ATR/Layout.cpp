@@ -133,7 +133,7 @@ namespace
 	static auto constexpr
 	(	LayoutSplitIndex
 	)	(	::std::initializer_list
-			<	Meta::EraseTypeToken
+			<	Meta::EraseAlignType
 			>	i_vTypes
 		)
 	->	Meta::USize
@@ -147,8 +147,8 @@ namespace
 		=	end(i_vTypes)
 		-	1uz
 		;
-		if	(	(*aFirst)->Alignment
-			==	(*aLast)->Alignment
+		if	(	aFirst->Align
+			==	aLast->Align
 			)
 			return
 			::std::bit_floor<Meta::USize>
@@ -161,15 +161,15 @@ namespace
 			=	::std::lower_bound
 				(	aFirst
 				,	aLast + 1z
-				,	(*aFirst)->Alignment / 2uz
-				,	[]	(	Meta::EraseTypeToken
+				,	aFirst->Align / 2uz
+				,	[]	(	Meta::EraseAlignType
 								i_vLeft
 						,	Meta::USize
 								i_nRight
 						)
 					->	bool
 					{	return
-							i_vLeft->Alignment
+							i_vLeft.Align
 						>	i_nRight
 						;
 					}

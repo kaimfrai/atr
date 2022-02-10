@@ -22,7 +22,7 @@ export namespace
 		->	bool
 		{	return
 				Polarity
-			==	std::is_empty_v
+			==	::std::is_empty_v
 				<	Member<t_tEntity>
 				>
 			;
