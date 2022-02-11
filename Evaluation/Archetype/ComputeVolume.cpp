@@ -1,29 +1,7 @@
 export module Evaluation.Archetype.ComputeVolume;
 
-export import Evaluation.Shared.DataTypes;
-export import Evaluation.Archetype.Product;
-export import ATR.VirtualArgument;
 export import ATR.DependencyIDMap;
-
-export namespace
-	Bodies3D
-{
-	using
-		VolumeComputer
-	=	ATR::VirtualArgument
-		<	void const
-			*
-		,	ATR::Virtual
-			<	"ComputeVolume"
-			,	auto(	void const
-						*
-					)
-				noexcept
-				->	Float
-			>
-		>
-	;
-}
+export import Evaluation.Archetype.Product;
 
 export namespace
 	ATR

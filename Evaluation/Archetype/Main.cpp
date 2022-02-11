@@ -1,3 +1,5 @@
+import ATR.VirtualArgument;
+
 import Evaluation.Archetype.Cone;
 import Evaluation.Archetype.Cube;
 import Evaluation.Archetype.Cuboid;
