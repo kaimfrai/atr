@@ -257,8 +257,7 @@ export namespace
 	using
 		DeduceDependencies
 	=	BoundDependency
-		<	void const
-			*
+		<	::std::byte const*
 		,	t_tpDependency
 			...
 		>

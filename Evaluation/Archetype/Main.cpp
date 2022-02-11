@@ -62,7 +62,7 @@ auto
 		,	alignof(Float)
 		,	ATR::Virtual
 			<	"ComputeVolume"
-			,	auto(	void const
+			,	auto(	::std::byte const
 						*
 					)
 					noexcept

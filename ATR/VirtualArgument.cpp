@@ -326,8 +326,11 @@ export namespace
 		>	VTable
 		;
 
-		t_tErased
+		alignas(t_tErased)
+			::std::byte
 			ErasedElement
+			[	sizeof(t_tErased)
+			]
 		;
 
 	public:
@@ -356,19 +359,18 @@ export namespace
 				>
 			,	t_tpArgument
 				&&
-				...	i_rArgument
+				...	i_rpArgument
 			)
 		:	VTable
 			{	Meta::Type<t_tObject&>
 			}
 		{
-			new (	&
-					ErasedElement
+			new (	+ErasedElement
 				)
 			t_tObject
 			{	::std::forward
 				<	t_tpArgument
-				>(	i_rArgument
+				>(	i_rpArgument
 				)
 				...
 			};
@@ -392,8 +394,7 @@ export namespace
 		{	return
 			VTable
 			(	i_vFuncName
-			,	&
-				ErasedElement
+			,	+ErasedElement
 			,	::std::forward
 				<	t_tpArgument
 				>(	i_rpArgument
@@ -420,8 +421,7 @@ export namespace
 		{	return
 			VTable
 			(	i_vFuncName
-			,	&
-				ErasedElement
+			,	+ErasedElement
 			,	::std::forward
 				<	t_tpArgument
 				>(	i_rpArgument

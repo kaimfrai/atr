@@ -7,6 +7,41 @@ export import Meta.Concept.Category;
 export namespace
 	ATR
 {
+	template
+		<	typename
+				t_tTo
+		,	bool
+				t_bConstCast
+			=	false
+		,	typename
+				t_tFrom
+		>
+	auto constexpr
+	(	PointerCast
+	)	(	t_tFrom
+			*	i_aObject
+		)
+	->	t_tTo*
+	{
+		if	constexpr(::std::is_convertible_v<t_tFrom*, t_tTo*>)
+			return static_cast<t_tTo*>(i_aObject);
+		else
+		if	constexpr(::std::is_const_v<t_tFrom>)
+		{
+			void const* aVoid = i_aObject;
+			if	constexpr(::std::is_const_v<t_tTo>)
+				return static_cast<t_tTo*>(aVoid);
+			else
+			{
+				static_assert(t_bConstCast, "const_cast required but not explicitly requested!");
+				//	trust the caller
+				return const_cast<t_tTo*>(static_cast<t_tTo const*>(aVoid));
+			}
+		}
+		else
+			return static_cast<t_tTo*>(static_cast<void*>(i_aObject));
+	}
+
 	/// erases type information from an argument
 	/// defined as a niebloid as ADL and overloads of the same name
 	//	may yield undefined behaviour
@@ -40,8 +75,8 @@ export namespace
 			,	t_tObject
 				*	i_aObject
 			)	const
-		->	void*
-		{	return i_aObject;	}
+		->	::std::byte*
+		{	return PointerCast<::std::byte>(i_aObject);	}
 
 		/// erases type information from a pointer to const
 		template
@@ -54,8 +89,8 @@ export namespace
 			,	t_tObject const
 				*	i_aObject
 			)	const
-		->	void const*
-		{	return i_aObject;	}
+		->	::std::byte const*
+		{	return PointerCast<::std::byte const>(i_aObject);	}
 
 		/// erases type information from a lvalue reference
 		template
@@ -75,29 +110,6 @@ export namespace
 			,	::std::addressof
 				(	i_rObject
 				)
-			);
-		}
-
-		/// erases type information from a rvalue reference to small types
-		template
-			<	Meta::ProtoValue
-					t_tObject
-			>
-		auto constexpr
-		(	operator()
-		)	(	Meta::TypeToken<t_tObject&&>
-			,	t_tObject
-				&&	i_rObject
-			)	const
-		->	t_tObject
-		requires
-			(	sizeof(t_tObject)
-			<=	alignof(std::max_align_t)
-			)
-		{	return
-			operator()
-			(	Meta::Type<t_tObject>
-			,	i_rObject
 			);
 		}
 

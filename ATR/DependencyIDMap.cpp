@@ -172,13 +172,11 @@ namespace
 		)
 	{	return
 		MemberOffset
-		<	::std::remove_reference_t
-			<	decltype
-				(	::std::declval<t_tOwner>()
-					[	i_vOrigin
-					]
-				)
-			>
+		<	decltype
+			(	::std::declval<t_tOwner>()
+				[	i_vOrigin
+				]
+			)
 		>{	::std::remove_reference_t<t_tOwner>::OffsetOf(i_vOrigin)
 		};
 	}

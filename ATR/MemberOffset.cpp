@@ -2,6 +2,7 @@ export module ATR.MemberOffset;
 
 export import ATR.DataMember;
 export import ATR.StringLiteral;
+export import ATR.Erase;
 
 export import Std;
 export import Meta.Integer;
@@ -10,62 +11,12 @@ export import Meta.Concept.Empty;
 export namespace
 	ATR
 {
-	/// function object retrieving a member from a void pointer
 	template
 		<	typename
 				t_tMember
 		>
 	struct
 		MemberOffset
-	:	MemberOffset
-		<	t_tMember const
-		>
-	{
-		using MemberOffset<t_tMember const>::operator();
-		using MemberOffset<t_tMember const>::Offset;
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator()
-		)	(	void
-				*	i_aObject
-			)	const
-			noexcept
-		->	decltype(auto)
-		{
-			auto const
-				aMemberAsChar
-			=	static_cast
-				<	char
-					*
-				>(	i_aObject
-				)
-			+	Offset
-			;
-
-			return
-			*
-			static_cast
-			<	t_tMember
-				*
-			>(	static_cast
-				<	void
-					*
-				>(	aMemberAsChar
-				)
-			);
-		}
-	};
-
-	/// specialization for const only objects
-	template
-		<	typename
-				t_tMember
-		>
-	struct
-		MemberOffset
-		<	t_tMember const
-		>
 	{
 		Meta::USize
 			Offset
@@ -74,32 +25,51 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	(	void const
+		)	(	::std::byte const
 				*	i_aObject
 			)	const
 			noexcept
-		->	decltype(auto)
+		->	t_tMember
 		{
-			auto const
-				aMemberAsChar
-			=	static_cast
-				<	char const
-					*
-				>(	i_aObject
-				)
-			+	Offset
+			using
+				tPointedType
+			=	::std::conditional_t
+				<	::std::is_reference_v<t_tMember>
+				,	::std::remove_reference_t<t_tMember>
+				,	::std::add_const_t<t_tMember>
+				>
+			;
+			//	using a const object with a non-const member assumes a mutable member
+			//	passing a non-const object converts to const from non-const
+			//	either makes const_cast valid
+			bool constexpr
+				bAllowConstCast
+			=	not ::std::is_const_v<tPointedType>
 			;
 
 			return
-			*
-			static_cast
-			<	t_tMember const
-				*
-			>(	static_cast
-				<	void const
-					*
-				>(	aMemberAsChar
+			static_cast<t_tMember>
+			(	*PointerCast<tPointedType, bAllowConstCast>
+				(	i_aObject
+				+	Offset
 				)
+			);
+		}
+
+		/// immitates syntax of pointer to member dereference
+		[[nodiscard]]
+		friend auto constexpr
+		(	operator->*
+		)	(	::std::byte const
+				*	i_aObject
+			,	MemberOffset
+					i_vMemberOffset
+			)
+			noexcept
+		->	t_tMember
+		{	return
+			i_vMemberOffset
+			(	i_aObject
 			);
 		}
 	};
@@ -127,55 +97,28 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	(	void const*
+		)	(	::std::byte const*
 			)	const
 			noexcept
-		->	decltype(auto)
+		->	t_tMember
 		{	return
 			t_tMember
 			{};
 		}
+
+		friend auto constexpr
+		(	operator->*
+		)	(	::std::byte const
+				*	i_aObject
+			,	MemberOffset
+					i_vMemberOffset
+			)
+			noexcept
+		->	t_tMember
+		{	return
+			i_vMemberOffset
+			(	i_aObject
+			);
+		}
 	};
-
-	/// immitates syntax of pointer to member dereference
-	template
-		<	typename
-				t_tMember
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	operator->*
-	)	(	void
-			*	i_aObject
-		,	MemberOffset<t_tMember>
-				i_vMemberOffset
-		)
-		noexcept
-	->	decltype(auto)
-	{	return
-		i_vMemberOffset
-		(	i_aObject
-		);
-	}
-
-	/// immitates syntax of pointer to member dereference
-	template
-		<	typename
-				t_tMember
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	operator->*
-	)	(	void const
-			*	i_aObject
-		,	MemberOffset<t_tMember>
-				i_vMemberOffset
-		)
-	noexcept
-	->	decltype(auto)
-	{	return
-		i_vMemberOffset
-		(	i_aObject
-		);
-	}
 }
