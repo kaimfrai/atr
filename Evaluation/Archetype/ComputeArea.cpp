@@ -17,12 +17,12 @@ export namespace
 			&	i_rShape
 		)
 	->	Function
-		<	"Product"_id
+		<	"Product"_ID
 		,	ArgumentDependency
 			<	decltype(i_rShape)
-			,	"ComputeAreaMultiplier"_sv
-			,	"Height"_sv
-			,	"Width"_sv
+			,	"ComputeAreaMultiplier"_SV
+			,	"Height"_SV
+			,	"Width"_SV
 			>
 		>
 	;

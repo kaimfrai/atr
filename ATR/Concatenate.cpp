@@ -132,7 +132,7 @@ export namespace
 	=	InfixLayoutConfig
 		(	ID_V<i_vPrefix>
 		,	Meta::V<LayoutConfig<i_vType>>
-		,	""_id
+		,	""_ID
 		)
 	;
 
@@ -147,7 +147,7 @@ export namespace
 	DataMemberConfig constexpr inline
 		SuffixedLayoutConfig
 	=	ATR::InfixLayoutConfig
-		(	""_id
+		(	""_ID
 		,	Meta::V<LayoutConfig<i_vType>>
 		,	ID_V<i_vSuffix>
 		)

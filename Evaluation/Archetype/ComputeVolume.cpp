@@ -18,13 +18,13 @@ export namespace
 			&	i_rBody
 		)
 	->	Function
-		<	"Product"_id
+		<	"Product"_ID
 		,	ArgumentDependency
 			<	decltype(i_rBody)
-			,	"ComputeVolumeMultiplier"_sv
-			,	"Depth"_sv
-			,	"Height"_sv
-			,	"Width"_sv
+			,	"ComputeVolumeMultiplier"_SV
+			,	"Depth"_SV
+			,	"Height"_SV
+			,	"Width"_SV
 			>
 		>
 	;

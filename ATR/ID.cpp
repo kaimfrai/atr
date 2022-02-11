@@ -363,7 +363,7 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	operator
-		""_id
+		""_ID
 	)	()
 	->	ID_T
 		<	t_vString
@@ -377,7 +377,7 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	operator
-		""_sv
+		""_SV
 	)	()
 	->	StringView
 	{	return ID_T<t_vString>::StringView;	}
