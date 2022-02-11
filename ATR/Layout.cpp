@@ -402,6 +402,30 @@ namespace
 	AliasResolver<t_tpAlias...> constexpr inline
 		ResolveAlias
 	{};
+
+	template
+		<	typename
+				t_tLayout
+		>
+	auto constexpr
+	(	ValidateOffsets
+	)	()
+	{
+		static_assert(::std::is_standard_layout_v<t_tLayout>);
+		union
+		{	alignas(t_tLayout) ::std::byte vBuffer[sizeof(t_tLayout)];
+			t_tLayout vLayout;
+		}	vUnion;
+
+		return
+			(	static_cast<void*>(&vUnion.vLayout.NorthArea)
+			==	static_cast<void*>(&vUnion.vBuffer[0uz])
+			)
+		and	(	static_cast<void*>(&vUnion.vLayout.SouthArea)
+			==	static_cast<void*>(&vUnion.vBuffer[sizeof(t_tLayout::NorthArea)])
+			)
+		;
+	}
 }
 
 export namespace
@@ -546,7 +570,13 @@ export namespace
 					i_vMemberName
 			)
 		->	decltype(NorthType::OffsetOf(i_vMemberName))
-		{	return
+		{
+			static_assert
+			(	ValidateOffsets<Layout>()
+			,	"Offsets of north or south areas have unexcepted values!"
+			);
+
+			return
 				NorthType
 			::	OffsetOf
 				(	i_vMemberName
@@ -603,7 +633,13 @@ export namespace
 					i_vMemberName
 			)
 		->	decltype(SouthType::OffsetOf(i_vMemberName))
-		{	return
+		{
+			static_assert
+			(	ValidateOffsets<Layout>()
+			,	"Offsets of north or south areas have unexcepted values!"
+			);
+
+			return
 			(	not Meta::ProtoStateless<decltype(::std::declval<SouthType>()[i_vMemberName])>
 			*	sizeof(NorthType)
 			)
