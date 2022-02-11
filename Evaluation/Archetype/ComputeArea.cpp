@@ -39,7 +39,7 @@ export namespace
 			&	i_rShape
 		)
 	->	Function
-		<	StaticDependency<"Product">
+		<	"Product"_id
 		,	ArgumentDependency
 			<	decltype(i_rShape)
 			,	"ComputeAreaMultiplier"_sv

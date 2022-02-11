@@ -159,6 +159,21 @@ export namespace
 		>	DependencyMap
 		{};
 
+		constexpr
+		(	Dependency
+		)	(	t_tArgument
+			,	t_tpItem const
+				&
+				...	i_rpDependency
+			)
+		requires
+			ProtoID<t_tArgument>
+		:	DependencyMap
+			{	i_rpDependency
+				...
+			}
+		{}
+
 		explicit constexpr
 		(	Dependency
 		)	(	Meta::TypeToken<t_tArgument>
@@ -187,6 +202,24 @@ export namespace
 			};
 		}
 	};
+
+	template
+		<	ProtoID
+				t_tArgument
+		,	typename
+			...	t_tpItem
+		>
+	(	Dependency
+	)	(	t_tArgument
+		,	t_tpItem const&
+			...
+		)
+	->	Dependency
+		<	t_tArgument
+		,	t_tpItem
+			...
+		>
+	;
 
 	template
 		<	typename

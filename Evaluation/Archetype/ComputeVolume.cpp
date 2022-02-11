@@ -40,7 +40,7 @@ export namespace
 			&	i_rBody
 		)
 	->	Function
-		<	StaticDependency<"Product">
+		<	"Product"_id
 		,	ArgumentDependency
 			<	decltype(i_rBody)
 			,	"ComputeVolumeMultiplier"_sv
