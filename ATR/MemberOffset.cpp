@@ -49,9 +49,13 @@ export namespace
 
 			return
 			static_cast<t_tMember>
-			(	*PointerCast<tPointedType, bAllowConstCast>
-				(	i_aObject
-				+	Offset
+			(	*
+				//	we don't know where the byte pointer came from, so we need to launder it
+				::std::launder
+				(	PointerCast<tPointedType, bAllowConstCast>
+					(	i_aObject
+					+	Offset
+					)
 				)
 			);
 		}
