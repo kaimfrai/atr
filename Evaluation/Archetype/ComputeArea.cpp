@@ -42,18 +42,9 @@ export namespace
 		<	StaticDependency<"Product">
 		,	ArgumentDependency
 			<	decltype(i_rShape)
-			,	MapID
-				(	"ComputeAreaMultiplier"_id
-				,	"a"_id
-				)
-			,	MapID
-				(	"Height"_id
-				,	"b"_id
-				)
-			,	MapID
-				(	"Width"_id
-				,	"c"_id
-				)
+			,	"ComputeAreaMultiplier"_sv
+			,	"Height"_sv
+			,	"Width"_sv
 			>
 		>
 	;

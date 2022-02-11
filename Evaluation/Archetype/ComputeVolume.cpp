@@ -43,22 +43,10 @@ export namespace
 		<	StaticDependency<"Product">
 		,	ArgumentDependency
 			<	decltype(i_rBody)
-			,	MapID
-				(	"ComputeVolumeMultiplier"_id
-				,	"a"_id
-				)
-			,	MapID
-				(	"Depth"_id
-				,	"b"_id
-				)
-			,	MapID
-				(	"Height"_id
-				,	"c"_id
-				)
-			,	MapID
-				(	"Width"_id
-				,	"d"_id
-				)
+			,	"ComputeVolumeMultiplier"_sv
+			,	"Depth"_sv
+			,	"Height"_sv
+			,	"Width"_sv
 			>
 		>
 	;

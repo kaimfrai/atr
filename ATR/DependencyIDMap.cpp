@@ -27,13 +27,21 @@ export namespace
 			OriginID
 		;
 
-		StringView
-			TargetID
-		;
-
 		static Meta::TypePack<t_tpArgument...> constexpr
 			ArgumentPack
 		{};
+
+		constexpr
+		(	IDMap
+		)	(	StringView
+					i_vOriginID
+			,	Meta::TypeToken<t_tpArgument>
+				...
+			)
+		:	OriginID
+			{	i_vOriginID
+			}
+		{}
 	};
 
 	template
@@ -41,34 +49,15 @@ export namespace
 			...	t_tpArgument
 		>
 	(	IDMap
-	)	(	IDMap<t_tpArgument...>
+	)	(	StringView
+		,	Meta::TypeToken<t_tpArgument>
+			...
 		)
 	->	IDMap
 		<	t_tpArgument
 			...
 		>
 	;
-
-	template
-		<	typename
-			...	t_tpArgument
-		>
-	auto constexpr
-	(	MapID
-	)	(	StringView
-				i_vOrigin
-		,	StringView
-				i_vTarget
-		)
-	->	IDMap<t_tpArgument...>
-	{	return
-		IDMap
-		<	t_tpArgument
-			...
-		>{	i_vOrigin
-		,	i_vTarget
-		};
-	}
 }
 
 export namespace
@@ -207,13 +196,10 @@ export namespace
 	Dependency constexpr inline
 		ArgumentDependency
 	{	Meta::Type<ErasedType<t_tOwner>>
-	,	Meta::MakeKeyItem
-		<	ID_Of<t_vpIDMap.TargetID>
-		>(	::ATR::MapDependency
-			(	ID_Of<t_vpIDMap.OriginID>{}
-			,	Meta::Type<t_tOwner>
-			,	t_vpIDMap.ArgumentPack
-			)
+	,	::ATR::MapDependency
+		(	ID_Of<t_vpIDMap.OriginID>{}
+		,	Meta::Type<t_tOwner>
+		,	t_vpIDMap.ArgumentPack
 		)
 		...
 	};

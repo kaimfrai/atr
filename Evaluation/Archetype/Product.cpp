@@ -6,20 +6,6 @@ export import ATR.DependencyIDMap;
 export namespace
 	ATR
 {
-	template
-		<	typename
-			...	t_tpDependency
-		>
-	using
-		DeduceDependencies
-	=	BoundDependency
-		<	void const
-			*
-		,	t_tpDependency
-			...
-		>
-	;
-
 	/// computes the product of all dependent members and a constant
 	template
 		<	typename
@@ -34,11 +20,18 @@ export namespace
 		noexcept
 	->	Float
 	{	return
-		(	...
-		*	i_vArgument
-			(	t_tpDependency
-			::	KeyValue
+		[&]	<	Meta::USize
+				...	t_npIndex
+			>(	Meta::IndexToken<t_npIndex...>
 			)
+		->	Float
+		{	return
+			(	...
+			*	i_vArgument
+				(	Meta::Index<t_npIndex>
+				)
+			);
+		}(	i_vArgument.ItemSequence
 		);
 	}
 }

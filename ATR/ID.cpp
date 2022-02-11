@@ -369,6 +369,18 @@ export namespace
 		<	t_vString
 		>
 	{	return{};	}
+
+	template
+		<	StringLiteral
+				t_vString
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	operator
+		""_sv
+	)	()
+	->	StringView
+	{	return ID_T<t_vString>::StringView;	}
 }
 
 static_assert

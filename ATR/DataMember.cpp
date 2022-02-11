@@ -45,7 +45,6 @@ export namespace
 			//	greater alignment means ordered earlier
 			if	(i_rLeft.Type.Align != i_rRight.Type.Align)
 				return
-
 					i_rLeft.Type.Align > i_rRight.Type.Align
 				?	::std::strong_ordering::less
 				:	::std::strong_ordering::greater

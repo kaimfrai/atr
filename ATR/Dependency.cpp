@@ -11,37 +11,12 @@ export namespace
 	/// wraps around an object and provides member access via dependency maps
 	template
 		<	Meta::ProtoValue
-		,	typename
-			...
-		>
-	struct
-		BoundDependency
-	{
-		static_assert
-		(	Meta::ProtoNone
-			<	BoundDependency
-			>
-		,	"Unexpected specialization!"
-		);
-	};
-
-	template
-		<	Meta::ProtoValue
 				t_tArgument
-		,	ProtoID
-			...	t_tpID
 		,	typename
 			...	t_tpItem
 		>
 	struct
 		BoundDependency
-		<	t_tArgument
-		,	Meta::KeyItem
-			<	t_tpID
-			,	t_tpItem
-			>
-			...
-		>
 	{
 		using
 			ArgumentType
@@ -53,24 +28,23 @@ export namespace
 		;
 
 		[[no_unique_address]]
-		Meta::KeyTuple
-		<	Meta::KeyItem
-			<	t_tpID
-			,	t_tpItem
-			>
+		Meta::TupleList
+		<	t_tpItem
 			...
 		>	DependencyMap
 		{};
+
+		static auto constexpr
+			ItemSequence
+		=	Meta::Sequence<sizeof...(t_tpItem)>
+		;
 
 		constexpr
 		(	BoundDependency
 		)	(	t_tArgument
 					i_vArgument
-			,	Meta::KeyTuple
-				<	Meta::KeyItem
-					<	t_tpID
-					,	t_tpItem
-					>
+			,	Meta::TupleList
+				<	t_tpItem
 					...
 				>	i_vDependencyMap
 				=	{}
@@ -84,14 +58,16 @@ export namespace
 		{}
 
 		template
-			<	typename
+			<	Meta::USize
+					t_nIndex
+			,	typename
 				...	t_tpArgument
 			>
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	(	ProtoID auto
-					i_vFuncID
+		)	(	Meta::IndexToken<t_nIndex>
+					i_vIndex
 			,	t_tpArgument
 				&&
 				...	i_rpArgument
@@ -100,7 +76,7 @@ export namespace
 		{
 			if	constexpr
 				(	::std::is_invocable_v
-					<	decltype(DependencyMap[i_vFuncID])
+					<	decltype(DependencyMap[i_vIndex])
 					,	decltype(Argument)
 					,	t_tpArgument
 						...
@@ -109,7 +85,7 @@ export namespace
 				return
 				::std::invoke
 				(	DependencyMap
-					[	i_vFuncID
+					[	i_vIndex
 					]
 				,	Argument
 				,	::std::forward
@@ -122,7 +98,7 @@ export namespace
 				return
 				::std::invoke
 				(	DependencyMap
-					[	i_vFuncID
+					[	i_vIndex
 					]
 				,	::std::forward
 					<	t_tpArgument
@@ -137,63 +113,30 @@ export namespace
 		<	typename
 				t_tArgument
 		,	typename
-			...	t_tpKey
-		,	typename
 			...	t_tpItem
 		>
 	(	BoundDependency
 	)	(	t_tArgument
-		,	Meta::KeyTuple
-			<	Meta::KeyItem
-				<	t_tpKey
-				,	t_tpItem
-				>
+		,	Meta::TupleList
+			<	t_tpItem
 				...
 			>
 		)
 	->	BoundDependency
 		<	t_tArgument
-		,	Meta::KeyItem
-			<	t_tpKey
-			,	t_tpItem
-			>
+		,	t_tpItem
 			...
 		>
 	;
 
 	template
 		<	Meta::ProtoValue
-		,	typename
-			...
-		>
-	struct
-		Dependency
-	{
-		static_assert
-		(	Meta::ProtoNone
-			<	Dependency
-			>
-		,	"Unexpected specialization!"
-		);
-	};
-
-	template
-		<	Meta::ProtoValue
 				t_tArgument
-		,	ProtoID
-			...	t_tpID
 		,	typename
 			...	t_tpItem
 		>
 	struct
 		Dependency
-		<	t_tArgument
-		,	Meta::KeyItem
-			<	t_tpID
-			,	t_tpItem
-			>
-			...
-		>
 	{
 		using
 			ArgumentType
@@ -204,20 +147,14 @@ export namespace
 			BoundType
 		=	BoundDependency
 			<	t_tArgument
-			,	Meta::KeyItem
-				<	t_tpID
-				,	t_tpItem
-				>
+			,	t_tpItem
 				...
 			>
 		;
 
 		[[no_unique_address]]
-		Meta::KeyTuple
-		<	Meta::KeyItem
-			<	t_tpID
-			,	t_tpItem
-			>
+		Meta::TupleList
+		<	t_tpItem
 			...
 		>	DependencyMap
 		{};
@@ -225,7 +162,7 @@ export namespace
 		explicit constexpr
 		(	Dependency
 		)	(	Meta::TypeToken<t_tArgument>
-			,	Meta::KeyItem<t_tpID, t_tpItem> const
+			,	t_tpItem const
 				&
 				...	i_rpDependency
 			)
@@ -255,24 +192,16 @@ export namespace
 		<	typename
 				t_tArgument
 		,	typename
-			...	t_tpKey
-		,	typename
 			...	t_tpItem
 		>
 	(	Dependency
 	)	(	Meta::TypeToken<t_tArgument>
-		,	Meta::KeyItem
-			<	t_tpKey
-			,	t_tpItem
-			>
+		,	t_tpItem const&
 			...
 		)
 	->	Dependency
 		<	t_tArgument
-		,	Meta::KeyItem
-			<	t_tpKey
-			,	t_tpItem
-			>
+		,	t_tpItem
 			...
 		>
 	;
@@ -285,6 +214,20 @@ export namespace
 		FunctionName
 	=	BoundDependency
 		<	ID_T<t_vFunctionName>
+		>
+	;
+
+	template
+		<	typename
+			...	t_tpDependency
+		>
+	using
+		DeduceDependencies
+	=	BoundDependency
+		<	void const
+			*
+		,	t_tpDependency
+			...
 		>
 	;
 }
