@@ -14,15 +14,6 @@ export namespace
 	struct
 		Layout
 	;
-
-	template
-		<	typename
-		,	typename
-			...
-		>
-	struct
-		AliasLayout
-	;
 }
 
 template
@@ -178,30 +169,6 @@ namespace
 		}
 	}
 
-	[[nodiscard]]
-	static auto constexpr
-	(	AliasSplitIndex
-	)	(	Meta::Value<DataMemberInfo const*>
-				i_aBegin
-		,	Meta::Value<DataMemberInfo const*>
-				i_aEnd
-		)
-	->	Meta::USize
-	{	return
-		static_cast<Meta::USize>
-		(	::std::find_if
-			(	i_aBegin
-			,	i_aEnd
-			,	[]	(	DataMemberInfo const
-						&	i_rDataMember
-					)
-				->	bool
-				{	return i_rDataMember.Alias.empty();	}
-			)
-		-	i_aBegin
-		);
-	}
-
 	template
 		<	typename
 				t_tPointed
@@ -280,68 +247,6 @@ namespace
 	::	South
 	;
 
-	template
-		<	DataMemberConfig
-				t_vConfig
-		>
-	[[nodiscard]]
-	static auto constexpr
-	(	CreateLayout
-	)	()
-	->	decltype(auto)
-	{
-		Meta::USize constexpr
-			nAliasSplitIndex
-		=	AliasSplitIndex
-			(	begin(t_vConfig)
-			,	end(t_vConfig)
-			)
-		;
-		return
-		[]	<	Meta::USize
-				...	t_npAliasIndex
-			,	Meta::USize
-				...	t_npDataIndex
-			>(	Meta::IndexToken<t_npAliasIndex...>
-			,	Meta::IndexToken<t_npDataIndex...>
-			)
-		{
-			using
-				LayoutType
-			=	Layout
-				<	::Member
-					<	ID_Of<t_vConfig[t_npDataIndex]->Name>
-					,	Meta::RestoreTypeEntity
-						<	t_vConfig[t_npDataIndex]->Type
-						>
-					>
-					...
-				>
-			;
-			if	constexpr
-				(	nAliasSplitIndex
-				==	0uz
-				)
-				return
-				LayoutType
-				{};
-			else
-				return
-				AliasLayout
-				<	LayoutType
-				,	::Alias
-					<	ID_Of<t_vConfig[t_npAliasIndex]->Name>
-					,	Meta::RestoreTypeEntity
-						<	t_vConfig[t_npAliasIndex]->Type
-						>
-					>
-					...
-				>{};
-		}(	Meta::Sequence<nAliasSplitIndex>
-		,	Meta::Sequence<t_vConfig.size() - nAliasSplitIndex>
-		+=	Meta::Index<nAliasSplitIndex>
-		);
-	}
 
 	template
 		<	typename
@@ -433,6 +338,23 @@ export namespace
 {
 	template
 		<	typename
+				t_tProto
+		,	typename
+				t_tLayout
+		>
+	concept
+		ProtoMemberID
+	=	ProtoID<t_tProto>
+	and	requires
+		{	t_tLayout::OffsetOf(t_tProto{});
+			::std::declval<t_tLayout&>()[t_tProto{}];
+			::std::declval<t_tLayout const&>()[t_tProto{}];
+			::std::declval<t_tLayout&&>()[t_tProto{}];
+		}
+	;
+
+	template
+		<	typename
 				t_tLayout
 		,	typename
 			...	t_tpAlias
@@ -459,14 +381,12 @@ export namespace
 		)	(	ProtoID auto
 					i_vMember
 			)
-		->	decltype
-			(	t_tLayout
-			::	OffsetOf
-				(	ResolveAlias
-					(	i_vMember
-					)
-				)
-			)
+		->	Meta::USize
+		requires
+			ProtoMemberID
+			<	decltype(ResolveAlias(i_vMember))
+			,	t_tLayout
+			>
 		{	return
 				t_tLayout
 			::	OffsetOf
@@ -484,13 +404,12 @@ export namespace
 					i_vMember
 			)	&
 			noexcept
-		->	decltype
-			(	::std::declval<t_tLayout&>()
-				[	ResolveAlias
-					(	i_vMember
-					)
-				]
-			)
+		->	decltype(auto)
+		requires
+			ProtoMemberID
+			<	decltype(ResolveAlias(i_vMember))
+			,	t_tLayout
+			>
 		{	return
 			static_cast<t_tLayout&>(*this)
 			[	ResolveAlias
@@ -506,13 +425,12 @@ export namespace
 					i_vMember
 			)	const&
 			noexcept
-		->	decltype
-			(	::std::declval<t_tLayout const&>()
-				[	ResolveAlias
-					(	i_vMember
-					)
-				]
-			)
+		->	decltype(auto)
+		requires
+			ProtoMemberID
+			<	decltype(ResolveAlias(i_vMember))
+			,	t_tLayout
+			>
 		{	return
 			static_cast<t_tLayout const&>(*this)
 			[	ResolveAlias
@@ -528,13 +446,12 @@ export namespace
 					i_vMember
 			)	&&
 			noexcept
-		->	decltype
-			(	::std::declval<t_tLayout&&>()
-				[	ResolveAlias
-					(	i_vMember
-					)
-				]
-			)
+		->	decltype(auto)
+		requires
+			ProtoMemberID
+			<	decltype(ResolveAlias(i_vMember))
+			,	t_tLayout
+			>
 		{	return
 			static_cast<t_tLayout&&>(*this)
 			[	ResolveAlias
@@ -566,10 +483,10 @@ export namespace
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetOf
-		)	(	ProtoID auto
-					i_vMemberName
+		)	(	ProtoMemberID<NorthType> auto
+					i_vMemberID
 			)
-		->	decltype(NorthType::OffsetOf(i_vMemberName))
+		->	Meta::USize
 		{
 			static_assert
 			(	ValidateOffsets<Layout>()
@@ -579,7 +496,7 @@ export namespace
 			return
 				NorthType
 			::	OffsetOf
-				(	i_vMemberName
+				(	i_vMemberID
 				)
 			;
 		}
@@ -587,11 +504,11 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	ProtoID auto
+		)	(	ProtoMemberID<NorthType> auto
 					i_vMemberID
 			)	&
 			noexcept
-		->	decltype(::std::declval<NorthType&>()[i_vMemberID])
+		->	decltype(auto)
 		{	return
 			NorthArea
 			[	i_vMemberID
@@ -601,11 +518,11 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	ProtoID auto
+		)	(	ProtoMemberID<NorthType> auto
 					i_vMemberID
 			)	const&
 			noexcept
-		->	decltype(::std::declval<NorthType const&>()[i_vMemberID])
+		->	decltype(auto)
 		{	return
 			NorthArea
 			[	i_vMemberID
@@ -615,11 +532,11 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	ProtoID auto
+		)	(	ProtoMemberID<NorthType> auto
 					i_vMemberID
 			)	&&
 			noexcept
-		->	decltype(::std::declval<NorthType&&>()[i_vMemberID])
+		->	decltype(auto)
 		{	return
 			::std::move(NorthArea)
 			[	i_vMemberID
@@ -629,10 +546,10 @@ export namespace
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetOf
-		)	(	ProtoID auto
-					i_vMemberName
+		)	(	ProtoMemberID<SouthType> auto
+					i_vMemberID
 			)
-		->	decltype(SouthType::OffsetOf(i_vMemberName))
+		->	Meta::USize
 		{
 			static_assert
 			(	ValidateOffsets<Layout>()
@@ -640,12 +557,10 @@ export namespace
 			);
 
 			return
-			(	not Meta::ProtoStateless<decltype(::std::declval<SouthType>()[i_vMemberName])>
-			*	sizeof(NorthType)
-			)
+				sizeof(NorthType)
 			+	SouthType
 			::	OffsetOf
-				(	i_vMemberName
+				(	i_vMemberID
 				)
 			;
 		}
@@ -653,11 +568,11 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	ProtoID auto
+		)	(	ProtoMemberID<SouthType> auto
 					i_vMemberID
 			)	&
 			noexcept
-		->	decltype(::std::declval<SouthType&>()[i_vMemberID])
+		->	decltype(auto)
 		{	return
 			SouthArea
 			[	i_vMemberID
@@ -667,11 +582,11 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	ProtoID auto
+		)	(	ProtoMemberID<SouthType> auto
 					i_vMemberID
 			)	const&
 			noexcept
-		->	decltype(::std::declval<SouthType const&>()[i_vMemberID])
+		->	decltype(auto)
 		{	return
 			SouthArea
 			[	i_vMemberID
@@ -681,11 +596,11 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	ProtoID auto
+		)	(	ProtoMemberID<SouthType> auto
 					i_vMemberID
 			)	&&
 			noexcept
-		->	decltype(::std::declval<SouthType&&>()[i_vMemberID])
+		->	decltype(auto)
 		{	return
 			::std::move(SouthArea)
 			[	i_vMemberID
@@ -707,7 +622,7 @@ export namespace
 		>
 	struct
 		Layout
-		<	Member
+		<	::Member
 			<	t_tName
 			,	t_tData
 			>
@@ -753,16 +668,30 @@ export namespace
 		{	return Value;	}
 	};
 
-	/// wraps around a value and provides access to it by a name token
+	template
+		<	typename
+			...	t_tpStatic
+		>
+	struct
+		StaticData
+	:	StaticData
+		<	t_tpStatic
+		>
+		...
+	{
+		using StaticData<t_tpStatic>::operator[]...;
+		using StaticData<t_tpStatic>::OffsetOf...;
+	};
+
 	template
 		<	typename
 				t_tName
-		,	Meta::ProtoStateless
+		,	typename
 				t_tData
 		>
 	struct
-		Layout
-		<	Member
+		StaticData
+		<	::Member
 			<	t_tName
 			,	t_tData
 			>
@@ -786,46 +715,274 @@ export namespace
 		{	return {};	}
 	};
 
+	template<>
+	struct
+		StaticData<>
+	{};
+
 	template
 		<	typename
-				t_tFirst
+				t_tStatic
 		,	typename
-			...	t_tpRemainingName
-		,	Meta::ProtoStateless
-			...	t_tpRemainingStateless
+				t_tDynamic
 		>
 	struct
-		Layout
-		<	t_tFirst
-		,	Member<t_tpRemainingName, t_tpRemainingStateless>
-			...
-		>
-	:	Layout<t_tFirst>
-	,	Layout<Member<t_tpRemainingName, t_tpRemainingStateless>>
-		...
+		Data
 	{
-		using
-			Layout<t_tFirst>
-		::	operator[]
-		;
-		using
-			Layout<t_tFirst>
-		::	OffsetOf
+		static t_tStatic constexpr
+			Static
+		{};
+
+		t_tDynamic
+			Dynamic
 		;
 
-		using
-			Layout<Member<t_tpRemainingName, t_tpRemainingStateless>>
-		::	operator[]
-			...
-		;
+		[[nodiscard]]
+		static auto constexpr
+		(	OffsetOf
+		)	(	ProtoMemberID<t_tDynamic> auto
+					i_vMemberID
+			)
+		->	Meta::USize
+		{	return
+				t_tDynamic
+			::	OffsetOf
+				(	i_vMemberID
+				)
+			;
+		}
 
-		using
-			Layout<Member<t_tpRemainingName, t_tpRemainingStateless>>
-		::	OffsetOf
-			...
-		;
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	ProtoMemberID<t_tDynamic> auto
+					i_vMemberID
+			)	&
+			noexcept
+		->	decltype(auto)
+		{	return
+			Dynamic
+			[	i_vMemberID
+			];
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	ProtoMemberID<t_tDynamic> auto
+					i_vMemberID
+			)	const&
+			noexcept
+		->	decltype(auto)
+		{	return
+			Dynamic
+			[	i_vMemberID
+			];
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	ProtoMemberID<t_tDynamic> auto
+					i_vMemberID
+			)	&&
+			noexcept
+		->	decltype(auto)
+		{	return
+			::std::move(Dynamic)
+			[	i_vMemberID
+			];
+		}
+
+		[[nodiscard]]
+		static auto constexpr
+		(	OffsetOf
+		)	(	ProtoMemberID<t_tStatic> auto
+					i_vMemberID
+			)
+		->	Meta::USize
+		{	return
+				t_tStatic
+			::	OffsetOf
+				(	i_vMemberID
+				)
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	ProtoMemberID<t_tStatic> auto
+					i_vMemberID
+			)	const&
+			noexcept
+		->	decltype(Static[i_vMemberID])
+		{	return
+			Static
+			[	i_vMemberID
+			];
+		}
 	};
+}
 
+namespace
+	ATR
+{
+	[[nodiscard]]
+	static auto constexpr
+	(	AliasCount
+	)	(	Meta::Value<DataMemberInfo const*>
+				i_aBegin
+		,	Meta::Value<DataMemberInfo const*>
+				i_aEnd
+		)
+	->	Meta::USize
+	{	return
+		static_cast<Meta::USize>
+		(	::std::find_if
+			(	i_aBegin
+			,	i_aEnd
+			,	[]	(	DataMemberInfo const
+						&	i_rDataMember
+					)
+				->	bool
+				{	return i_rDataMember.Alias.empty();	}
+			)
+		-	i_aBegin
+		);
+	}
+
+	[[nodiscard]]
+	static auto constexpr
+	(	StaticCount
+	)	(	Meta::Value<DataMemberInfo const*>
+				i_aBegin
+		,	Meta::Value<DataMemberInfo const*>
+				i_aEnd
+		)
+	->	Meta::USize
+	{	return
+		static_cast<Meta::USize>
+		(	i_aEnd
+		-	::std::find_if
+			(	i_aBegin
+			,	i_aEnd
+			,	[]	(	DataMemberInfo const
+						&	i_rDataMember
+					)
+				->	bool
+				{	return i_rDataMember.Type.Align == 0uz;	}
+			)
+		);
+	}
+
+	template
+		<	DataMemberConfig
+				t_vConfig
+		>
+	[[nodiscard]]
+	static auto constexpr
+	(	CreateLayout
+	)	()
+	->	decltype(auto)
+	{
+		Meta::USize constexpr
+			nAliasCount
+		=	AliasCount
+			(	begin(t_vConfig)
+			,	end(t_vConfig)
+			)
+		;
+
+		Meta::USize constexpr
+			nStaticCount
+		=	StaticCount
+			(	begin(t_vConfig) + nAliasCount
+			,	end(t_vConfig)
+			)
+		;
+
+		Meta::USize constexpr
+			nDynamicCount
+		=	t_vConfig.size()
+		-	nAliasCount
+		-	nStaticCount
+		;
+
+		return
+		[]	<	Meta::USize
+				...	t_npAliasIndex
+			,	Meta::USize
+				...	t_npDynamicIndex
+			,	Meta::USize
+				...	t_npStaticIndex
+			>(	Meta::IndexToken<t_npAliasIndex...>
+			,	Meta::IndexToken<t_npDynamicIndex...>
+			,	Meta::IndexToken<t_npStaticIndex...>
+			)
+		{
+			using
+				DynamicLayoutType
+			=	Layout
+				<	::Member
+					<	ID_Of<t_vConfig[t_npDynamicIndex]->Name>
+					,	Meta::RestoreTypeEntity
+						<	t_vConfig[t_npDynamicIndex]->Type
+						>
+					>
+					...
+				>
+			;
+			using
+				StaticLayoutType
+			=	StaticData
+				<	::Member
+					<	ID_Of<t_vConfig[t_npStaticIndex]->Name>
+					,	Meta::RestoreTypeEntity
+						<	t_vConfig[t_npStaticIndex]->Type
+						>
+					>
+					...
+				>
+			;
+
+			using
+				DataType
+			=	Data
+				<	StaticLayoutType
+				,	DynamicLayoutType
+				>
+			;
+
+			if	constexpr
+				(	nAliasCount
+				==	0uz
+				)
+				return
+				DataType
+				{};
+			else
+				return
+				AliasLayout
+				<	DataType
+				,	::Alias
+					<	ID_Of<t_vConfig[t_npAliasIndex]->Name>
+					,	Meta::RestoreTypeEntity
+						<	t_vConfig[t_npAliasIndex]->Type
+						>
+					>
+					...
+				>{};
+		}(	Meta::Sequence<nAliasCount>
+		,	Meta::Sequence<nDynamicCount> += Meta::Index<nAliasCount>
+		,	Meta::Sequence<nStaticCount> +=	Meta::Index<nAliasCount + nDynamicCount>
+		);
+	}
+}
+
+export namespace
+	ATR
+{
 	/// the type mapped to the string literal by LayoutInfo
 	template
 		<	ProtoID

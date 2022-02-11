@@ -131,16 +131,15 @@ namespace
 	ATR
 {
 	template
-		<	ProtoID
-				t_tFuncID
-		,	typename
+		<	typename
 				t_tOwner
 		,	typename
 			...	t_tpArgument
 		>
 	auto constexpr
 	(	MapDependency
-	)	(	t_tFuncID
+	)	(	ProtoAddress<t_tOwner, t_tpArgument...> auto
+				i_vFuncID
 		,	Meta::TypeToken<t_tOwner>
 		,	Meta::TypePack
 			<	t_tpArgument
@@ -150,7 +149,7 @@ namespace
 	->	decltype(auto)
 	{	return
 		Address
-		<	t_tFuncID
+		<	decltype(i_vFuncID)
 		,	t_tOwner
 		,	t_tpArgument
 			...

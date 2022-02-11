@@ -94,15 +94,20 @@ export namespace
 	/// checks if the address is mapped
 	template
 		<	typename
-				t_tFunctionName
+				t_tFuncID
 		,	typename
 			...	t_tpArgument
 		>
 	concept
 		ProtoAddress
-	=	(	Address<t_tFunctionName, t_tpArgument...>
-		!=	nullptr
-		)
+	=	ProtoID<t_tFuncID>
+	and	requires
+		{	MapAddress
+			(	t_tFuncID{}
+			,	::std::declval<t_tpArgument>()
+				...
+			);
+		}
 	;
 
 	/// stores the address to the implementation of the function
