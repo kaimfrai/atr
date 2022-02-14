@@ -169,15 +169,24 @@ namespace
 		,	Meta::TypeToken<t_tOwner>
 		,	Meta::TypePack<>
 		)
-	{	return
-		MemberOffset
-		<	decltype
+	{
+		Meta::USize constexpr
+			nOffset
+		=	::std::remove_reference_t<t_tOwner>::OffsetOf(i_vOrigin)
+		;
+		using
+			tType
+		=	decltype
 			(	::std::declval<t_tOwner>()
 				[	i_vOrigin
 				]
 			)
-		>{	::std::remove_reference_t<t_tOwner>::OffsetOf(i_vOrigin)
-		};
+		;
+		if	constexpr(nOffset == 0uz)
+			//	do not require constructor for stateless types with 0 offset
+			return MemberOffset<tType>{};
+		else
+			return MemberOffset<tType>{nOffset};
 	}
 }
 

@@ -29,33 +29,16 @@ export namespace
 				*	i_aObject
 			)	const
 			noexcept
-		->	t_tMember
-		{
-			using
-				tPointedType
-			=	::std::conditional_t
-				<	::std::is_reference_v<t_tMember>
-				,	::std::remove_reference_t<t_tMember>
-				,	::std::add_const_t<t_tMember>
-				>
-			;
-			//	using a const object with a non-const member assumes a mutable member
-			//	passing a non-const object converts to const from non-const
-			//	either makes const_cast valid
-			bool constexpr
-				bAllowConstCast
-			=	not ::std::is_const_v<tPointedType>
-			;
-
-			return
-			static_cast<t_tMember>
-			(	*
-				//	we don't know where the byte pointer came from, so we need to launder it
-				::std::launder
-				(	PointerCast<tPointedType, bAllowConstCast>
-					(	i_aObject
-					+	Offset
-					)
+		->	//	convert rvalue reference to prvalue
+			//	do not return const which would disable move semantics
+			::std::remove_cvref_t<t_tMember>
+		{	return
+			*
+			//	we don't know where the byte pointer came from, so we need to launder it
+			::std::launder
+			(	PointerCast<::std::remove_reference_t<t_tMember> const>
+				(	i_aObject
+				+	Offset
 				)
 			);
 		}
@@ -79,6 +62,106 @@ export namespace
 	};
 
 	template
+		<	typename
+				t_tMember
+		>
+	struct
+		MemberOffset
+		<	t_tMember&
+		>
+	{
+		Meta::USize
+			Offset
+		;
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
+		)	(	::std::byte
+				*	i_aObject
+			)	const
+			noexcept
+		->	t_tMember&
+		{	return
+			*
+			//	we don't know where the byte pointer came from, so we need to launder it
+			::std::launder
+			(	PointerCast<t_tMember>
+				(	i_aObject
+				+	Offset
+				)
+			);
+		}
+
+		/// immitates syntax of pointer to member dereference
+		[[nodiscard]]
+		friend auto constexpr
+		(	operator->*
+		)	(	::std::byte
+				*	i_aObject
+			,	MemberOffset
+					i_vMemberOffset
+			)
+			noexcept
+		->	t_tMember&
+		{	return
+			i_vMemberOffset
+			(	i_aObject
+			);
+		}
+	};
+
+	template
+		<	typename
+				t_tMember
+		>
+	struct
+		MemberOffset
+		<	t_tMember const&
+		>
+	{
+		Meta::USize
+			Offset
+		;
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
+		)	(	::std::byte const
+				*	i_aObject
+			)	const
+			noexcept
+		->	t_tMember const&
+		{	return
+			*
+			//	we don't know where the byte pointer came from, so we need to launder it
+			::std::launder
+			(	PointerCast<t_tMember const>
+				(	i_aObject
+				+	Offset
+				)
+			);
+		}
+
+		/// immitates syntax of pointer to member dereference
+		[[nodiscard]]
+		friend auto constexpr
+		(	operator->*
+		)	(	::std::byte const
+				*	i_aObject
+			,	MemberOffset
+					i_vMemberOffset
+			)
+			noexcept
+		->	t_tMember const&
+		{	return
+			i_vMemberOffset
+			(	i_aObject
+			);
+		}
+	};
+
+	template
 		<	Meta::ProtoStateless
 				t_tMember
 		>
@@ -87,17 +170,6 @@ export namespace
 		<	t_tMember
 		>
 	{
-		constexpr
-		(	MemberOffset
-		)	()
-		=	default;
-
-		explicit constexpr
-		(	MemberOffset
-		)	(	Meta::USize
-			)
-		{}
-
 		[[nodiscard]]
 		auto constexpr
 		(	operator()

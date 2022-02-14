@@ -10,9 +10,6 @@ export namespace
 	template
 		<	typename
 				t_tTo
-		,	bool
-				t_bConstCast
-			=	false
 		,	typename
 				t_tFrom
 		>
@@ -28,15 +25,8 @@ export namespace
 		else
 		if	constexpr(::std::is_const_v<t_tFrom>)
 		{
-			void const* aVoid = i_aObject;
-			if	constexpr(::std::is_const_v<t_tTo>)
-				return static_cast<t_tTo*>(aVoid);
-			else
-			{
-				static_assert(t_bConstCast, "const_cast required but not explicitly requested!");
-				//	trust the caller
-				return const_cast<t_tTo*>(static_cast<t_tTo const*>(aVoid));
-			}
+			static_assert(::std::is_const_v<t_tTo>, "Cannot cast away const!");
+			return static_cast<t_tTo*>(static_cast<void const*>(i_aObject));
 		}
 		else
 			return static_cast<t_tTo*>(static_cast<void*>(i_aObject));
