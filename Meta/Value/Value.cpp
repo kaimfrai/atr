@@ -3,7 +3,6 @@ export module Meta.Value;
 export import Meta.Index;
 export import Meta.Type;
 export import Meta.Concept;
-export import Meta.Ignore;
 
 export namespace
 	Meta
@@ -1441,11 +1440,6 @@ export namespace
 		=	default
 		;
 
-		constexpr
-		(	operator Value<Value<t_tValue> const[]>
-		)	()	const&
-		{	return {Object, t_nExtent};	}
-
 		auto constexpr
 		(	operator=
 		)	(	t_tValue const
@@ -1689,136 +1683,6 @@ export namespace
 		->	Value<t_tValue const*>
 		{	return i_rValue.m_aEnd;	}
 	};
-
-	template
-		<	ProtoValue
-				t_tValue
-		>
-	auto constexpr
-	(	operator==
-	)	(	Value<t_tValue[]> const
-			&	i_rLeft
-		,	Value<t_tValue[]> const
-			&	i_rRight
-		)
-	->	bool
-	requires
-		ProtoEqualityComparable
-		<	t_tValue
-		>
-	{	return
-		::std::equal
-		(	begin(i_rLeft)
-		,	end(i_rLeft)
-		,	begin(i_rRight)
-		);
-	}
-
-	template
-		<	ProtoValue
-				t_tValue
-		>
-	auto constexpr
-	(	operator<=>
-	)	(	Value<t_tValue[]> const
-			&	i_rLeft
-		,	Value<t_tValue[]> const
-			&	i_rRight
-		)
-	->	decltype
-		(	::std::declval<t_tValue>()
-		<=>	::std::declval<t_tValue>()
-		)
-	{
-		auto vLeftPos = begin(i_rLeft);
-		auto const vLeftEnd = end(i_rLeft);
-		bool bLeftRemaining = (vLeftPos != vLeftEnd);
-
-		auto vRightPos = begin(i_rRight);
-		auto const vRightEnd = end(i_rRight);
-		bool bRightRemaining = (vRightPos != vRightEnd);
-
-		for	(;	(	bLeftRemaining
-				and	bRightRemaining
-				)
-			;		bLeftRemaining
-				=	(++vLeftPos != vLeftEnd)
-			,		bRightRemaining
-				=	(++vRightPos != vRightEnd)
-			)
-		{
-			auto const
-				vResult
-			=	*vLeftPos
-			<=>	*vRightPos
-			;
-			if	(vResult != 0)
-				return vResult;
-		}
-
-		if	(bLeftRemaining)
-			return ::std::strong_ordering::greater;
-		if	(bRightRemaining)
-			return ::std::strong_ordering::less;
-
-		return ::std::strong_ordering::equal;
-	}
-
-	///	Namespace scope allows making use of implicit conversions.
-	///	This allows for template argument erasure.
-	template
-		<	ProtoValue
-				t_tValue
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	starts_with
-	)	(	Value<t_tValue const[]>
-				i_vArray
-		,	Value<t_tValue const[]>
-				i_vPrefix
-		)
-	->	bool
-	{
-		if	(i_vPrefix.size() > i_vArray.size())
-			return false;
-
-		return
-		::std::equal
-		(	begin(i_vArray)
-		,	begin(i_vArray) + static_cast<SSize>(i_vPrefix.size())
-		,	begin(i_vPrefix)
-		,	end(i_vPrefix)
-		);
-	}
-
-	///	Namespace scope allows making use of implicit conversions.
-	///	This allows for template argument erasure.
-	template
-		<	ProtoValue
-				t_tValue
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	ends_with
-	)	(	Value<t_tValue const[]>
-				i_vArray
-		,	Value<t_tValue const[]>
-				i_vSuffix
-		)
-	->	bool
-	{
-		if	(i_vSuffix.size() > i_vArray.size())
-			return false;
-
-		return
-		::std::equal
-		(	end(i_vArray) - static_cast<SSize>(i_vSuffix.size())
-		,	end(i_vArray)
-		,	begin(i_vSuffix)
-		,	end(i_vSuffix)
-		);
-	}
 
 	template
 		<	ProtoValue

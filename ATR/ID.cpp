@@ -382,17 +382,3 @@ export namespace
 	->	StringView
 	{	return ID_T<t_vString>::StringView;	}
 }
-
-static_assert
-(	starts_with
-	(	::ATR::ID<a, b, c>{}
-	,	::ATR::ID_V<"ab">
-	)
-);
-
-static_assert
-(	ends_with
-	(	::ATR::ID<a, b, c>{}
-	,	::ATR::ID_V<"bc">
-	)
-);

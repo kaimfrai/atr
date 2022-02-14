@@ -9,9 +9,58 @@ export namespace
 {
 	struct
 		StringView final
-	:	Meta::Value<char const[]>
 	{
-		using Meta::Value<char const[]>::Value;
+		char const*
+			Data
+		;
+
+		Meta::USize
+			Size
+		;
+
+		[[nodiscard]]
+		auto constexpr
+		(	empty
+		)	()	const
+			noexcept
+		->	bool
+		{	return Size == 0uz;	}
+
+		explicit constexpr
+		(	operator bool
+		)	()	const
+			noexcept
+		{	return not empty();	}
+
+		auto constexpr
+		(	data
+		)	()	const
+			noexcept
+		->	char const*
+		{	return Data;	}
+
+		auto constexpr
+		(	size
+		)	()	const
+			noexcept
+		->	Meta::USize
+		{	return Size;	}
+
+		friend auto constexpr
+		(	begin
+		)	(	StringView
+					i_vView
+			)
+		->	char const*
+		{	return i_vView.Data;	}
+
+		friend auto constexpr
+		(	end
+		)	(	StringView
+					i_vView
+			)
+		->	char const*
+		{	return i_vView.Data + i_vView.Size;	}
 	};
 
 	template
@@ -100,8 +149,8 @@ export namespace
 		)
 	->	bool
 	{	return
-		(	i_vLeft.Object
-		==	i_vRight.Object
+		(	i_vLeft.Data
+		==	i_vRight.Data
 		);
 	}
 
@@ -115,49 +164,41 @@ export namespace
 				i_vRight
 		)
 	->	::std::strong_ordering
-	{	return
-		(	static_cast
-			<	Meta::Value<char const[]> const&
-			>(	i_vLeft
-			)
-		<=>	static_cast
-			<	Meta::Value<char const[]> const&
-			>(	i_vRight
-			)
-		);
-	}
+	{
+		//	taken and modified from
+		//	https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare_three_way
+		auto vLeftPos = begin(i_vLeft);
+		auto const vLeftEnd = end(i_vLeft);
+		bool bLeftRemaining = (vLeftPos != vLeftEnd);
 
-	///	Namespace scope allows making use of implicit conversions.
-	///	This allows for template argument erasure.
-	auto constexpr
-	(	starts_with
-	)	(	StringView
-				i_vLeft
-		,	StringView
-				i_vRight
-		)
-	->	bool
-	{	return
-		Meta::starts_with
-		(	i_vLeft
-		,	i_vRight
-		);
-	}
+		auto vRightPos = begin(i_vRight);
+		auto const vRightEnd = end(i_vRight);
+		bool bRightRemaining = (vRightPos != vRightEnd);
 
-	///	Namespace scope allows making use of implicit conversions.
-	///	This allows for template argument erasure.
-	auto constexpr
-	(	ends_with
-	)	(	StringView
-				i_vLeft
-		,	StringView
-				i_vRight
-		)
-	->	bool
-	{	return
-		Meta::ends_with
-		(	i_vLeft
-		,	i_vRight
-		);
+		for	(
+			;	(	bLeftRemaining
+				and	bRightRemaining
+				)
+			;		bLeftRemaining
+				=	(++vLeftPos != vLeftEnd)
+			,		bRightRemaining
+				=	(++vRightPos != vRightEnd)
+			)
+		{
+			auto const
+				vResult
+			=	*vLeftPos
+			<=>	*vRightPos
+			;
+			if	(vResult != 0)
+				return vResult;
+		}
+
+		if	(bLeftRemaining)
+			return ::std::strong_ordering::greater;
+		if	(bRightRemaining)
+			return ::std::strong_ordering::less;
+
+		return ::std::strong_ordering::equal;
 	}
 }
