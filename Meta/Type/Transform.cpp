@@ -1,4 +1,4 @@
-export module Meta.Transform;
+export module Meta.Type.Transform;
 
 export import Meta.Type;
 import Std;

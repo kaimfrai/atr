@@ -1,5 +1,5 @@
 import Meta.Type;
-import Meta.Transform;
+import Meta.Type.Transform;
 
 using namespace Meta;
 

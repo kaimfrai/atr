@@ -4,3 +4,5 @@ add_module(Erasure.cpp)
 add_module(Regular.cpp)
 add_module(Trivial.cpp)
 add_module(TypeTraits.cpp)
+
+add_module(Predicate.cpp)
