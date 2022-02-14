@@ -4,538 +4,502 @@ export import Meta.Type;
 import Std;
 
 export namespace
-	Meta
+	Meta::Transform
 {
-	namespace
-		Transform
+	struct
+		TypeIdentity final
 	{
-		struct
-			TypeIdentity final
-		{
-			template
-				<	typename
-						t_tEntity
-				>
-			auto constexpr
-			(	operator()
-			)	(	TypeToken<t_tEntity>
-				)	const
-			->	TypeToken<t_tEntity>
-			{	return{};	}
-		};
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	TypeToken<t_tEntity>
+		{	return{};	}
+	};
 
-		struct
-			RemoveExtent final
-		{
-			template
-				<	typename
-						t_tEntity
+	struct
+		RemoveExtent final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	TypeToken
+			<	::std::remove_extent_t
+				<	t_tEntity
 				>
-			auto constexpr
-			(	operator()
-			)	(	TypeToken<t_tEntity>
-				)	const
-			->	TypeToken
-				<	::std::remove_extent_t
-					<	t_tEntity
-					>
-				>
-			{	return {};	}
-		};
+			>
+		{	return {};	}
+	};
 
-		struct
-			AddConst final
-		{
-			template
-				<	typename
-						t_tEntity
+	struct
+		AddConst final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	TypeToken
+			<	::std::add_const_t
+				<	t_tEntity
 				>
-			auto constexpr
-			(	operator()
-			)	(	TypeToken<t_tEntity>
-				)	const
-			->	TypeToken
+			>
+		{	return {};	}
+	};
+
+	struct
+		RemoveConst final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	TypeToken
+			<	::std::remove_const_t
+				<	t_tEntity
+				>
+			>
+		{	return {};	}
+	};
+
+	struct
+		AddVolatile final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	TypeToken
+			<	::std::add_volatile_t
+				<	t_tEntity
+				>
+			>
+		{	return {};	}
+	};
+
+	struct
+		RemoveVolatile final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	TypeToken
+			<	::std::remove_volatile_t
+				<	t_tEntity
+				>
+			>
+		{	return {};	}
+	};
+
+	struct
+		RemoveCV final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	TypeToken
+			<	::std::remove_cv_t
+				<	t_tEntity
+				>
+			>
+		{	return {};	}
+	};
+
+	struct
+		AddPointer final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	TypeToken
+			<	::std::add_pointer_t
+				<	t_tEntity
+				>
+			>
+		{	return {};	}
+	};
+
+	struct
+		RemovePointer final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	TypeToken
+			<	::std::remove_pointer_t
+				<	t_tEntity
+				>
+			>
+		{	return {};	}
+	};
+
+	struct
+		AddLValueReference final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	TypeToken
+			<	::std::add_lvalue_reference_t
+				<	t_tEntity
+				>
+			>
+		{	return {};	}
+	};
+
+	struct
+		AddRValueReference final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	TypeToken
+			<	::std::add_rvalue_reference_t
+				<	t_tEntity
+				>
+			>
+		{	return {};	}
+	};
+
+	struct
+		AddCopyReference final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	TypeToken
+			<	::std::add_lvalue_reference_t
 				<	::std::add_const_t
 					<	t_tEntity
 					>
 				>
-			{	return {};	}
-		};
+			>
+		{	return {};	}
+	};
 
-		struct
-			RemoveConst final
-		{
-			template
-				<	typename
-						t_tEntity
-				>
-			auto constexpr
-			(	operator()
-			)	(	TypeToken<t_tEntity>
-				)	const
-			->	TypeToken
-				<	::std::remove_const_t
-					<	t_tEntity
-					>
-				>
-			{	return {};	}
-		};
-
-		struct
-			AddVolatile final
-		{
-			template
-				<	typename
-						t_tEntity
-				>
-			auto constexpr
-			(	operator()
-			)	(	TypeToken<t_tEntity>
-				)	const
-			->	TypeToken
-				<	::std::add_volatile_t
-					<	t_tEntity
-					>
-				>
-			{	return {};	}
-		};
-
-		struct
-			RemoveVolatile final
-		{
-			template
-				<	typename
-						t_tEntity
-				>
-			auto constexpr
-			(	operator()
-			)	(	TypeToken<t_tEntity>
-				)	const
-			->	TypeToken
-				<	::std::remove_volatile_t
-					<	t_tEntity
-					>
-				>
-			{	return {};	}
-		};
-
-		struct
-			RemoveCV final
-		{
-			template
-				<	typename
-						t_tEntity
-				>
-			auto constexpr
-			(	operator()
-			)	(	TypeToken<t_tEntity>
-				)	const
-			->	TypeToken
-				<	::std::remove_cv_t
-					<	t_tEntity
-					>
-				>
-			{	return {};	}
-		};
-
-		struct
-			AddPointer final
-		{
-			template
-				<	typename
-						t_tEntity
-				>
-			auto constexpr
-			(	operator()
-			)	(	TypeToken<t_tEntity>
-				)	const
-			->	TypeToken
-				<	::std::add_pointer_t
-					<	t_tEntity
-					>
-				>
-			{	return {};	}
-		};
-
-		struct
-			RemovePointer final
-		{
-			template
-				<	typename
-						t_tEntity
-				>
-			auto constexpr
-			(	operator()
-			)	(	TypeToken<t_tEntity>
-				)	const
-			->	TypeToken
-				<	::std::remove_pointer_t
-					<	t_tEntity
-					>
-				>
-			{	return {};	}
-		};
-
-		struct
-			AddLValueReference final
-		{
-			template
-				<	typename
-						t_tEntity
-				>
-			auto constexpr
-			(	operator()
-			)	(	TypeToken<t_tEntity>
-				)	const
-			->	TypeToken
-				<	::std::add_lvalue_reference_t
-					<	t_tEntity
-					>
-				>
-			{	return {};	}
-		};
-
-		struct
-			AddRValueReference final
-		{
-			template
-				<	typename
-						t_tEntity
-				>
-			auto constexpr
-			(	operator()
-			)	(	TypeToken<t_tEntity>
-				)	const
-			->	TypeToken
-				<	::std::add_rvalue_reference_t
-					<	t_tEntity
-					>
-				>
-			{	return {};	}
-		};
-
-		struct
-			AddCopyReference final
-		{
-			template
-				<	typename
-						t_tEntity
-				>
-			auto constexpr
-			(	operator()
-			)	(	TypeToken<t_tEntity>
-				)	const
-			->	TypeToken
-				<	::std::add_lvalue_reference_t
-					<	::std::add_const_t
-						<	t_tEntity
-						>
-					>
-				>
-			{	return {};	}
-		};
-
-		struct
-			RemoveReference final
-		{
-			template
-				<	typename
-						t_tEntity
-				>
-			auto constexpr
-			(	operator()
-			)	(	TypeToken<t_tEntity>
-				)	const
-			->	TypeToken
-				<	::std::remove_reference_t
-					<	t_tEntity
-					>
-				>
-			{	return {};	}
-		};
-
-		struct
-			RemoveCVRef final
-		{
-			template
-				<	typename
-						t_tEntity
-				>
-			auto constexpr
-			(	operator()
-			)	(	TypeToken<t_tEntity>
-				)	const
-			->	TypeToken
-				<	::std::remove_cvref_t
-					<	t_tEntity
-					>
-				>
-			{	return {};	}
-		};
-	}
-
-	auto constexpr inline
-		TypeIdentity
-	=	Transform::TypeIdentity
-		{}
-	;
-
-	auto constexpr inline
-		RemoveExtent
-	=	Transform::RemoveExtent
-		{}
-	;
-
-	auto constexpr inline
-		AddConst
-	=	Transform::AddConst
-		{}
-	;
-
-	auto constexpr inline
-		RemoveConst
-	=	Transform::RemoveConst
-		{}
-	;
-
-	auto constexpr inline
-		AddVolatile
-	=	Transform::AddVolatile
-		{}
-	;
-
-	auto constexpr inline
-		RemoveVolatile
-	=	Transform::RemoveVolatile
-		{}
-	;
-
-	auto constexpr inline
-		RemoveCV
-	=	Transform::RemoveCV
-		{}
-	;
-
-	auto constexpr inline
-		AddPointer
-	=	Transform::AddPointer
-		{}
-	;
-
-	auto constexpr inline
-		RemovePointer
-	=	Transform::RemovePointer
-		{}
-	;
-
-	auto constexpr inline
-		AddLValueReference
-	=	Transform::AddLValueReference
-		{}
-	;
-
-	auto constexpr inline
-		AddRValueReference
-	=	Transform::AddRValueReference
-		{}
-	;
-
-	auto constexpr inline
-		AddCopyReference
-	=	Transform::AddCopyReference
-		{}
-	;
-
-	auto constexpr inline
-		RemoveReference
-	=	Transform::RemoveReference
-		{}
-	;
-
-	auto constexpr inline
-		RemoveCVRef
-	=	Transform::RemoveCVRef
-		{}
-	;
-
-	namespace
-		Token
+	struct
+		RemoveReference final
 	{
-		struct
-			Const final
-		{
-			template
-				<	typename
-						t_tEntity
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	TypeToken
+			<	::std::remove_reference_t
+				<	t_tEntity
 				>
-			friend auto constexpr
-			(	operator+
-			)	(	Type<t_tEntity>
-						i_vType
-				,	Const
-				)
-			->	decltype(AddConst(i_vType))
-			{	return{};	}
+			>
+		{	return {};	}
+	};
 
-			template
-				<	typename
-						t_tEntity
+	struct
+		RemoveCVRef final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	TypeToken
+			<	::std::remove_cvref_t
+				<	t_tEntity
 				>
-			friend auto constexpr
-			(	operator-
-			)	(	Type<t_tEntity>
-						i_vType
-				,	Const
-				)
-			->	decltype(RemoveConst(i_vType))
-			{	return{};	}
-		};
+			>
+		{	return {};	}
+	};
+}
 
-		struct
-			Volatile final
-		{
-			template
-				<	typename
-						t_tEntity
-				>
-			friend auto constexpr
-			(	operator+
-			)	(	Type<t_tEntity>
-						i_vType
-				,	Volatile
-				)
-			->	decltype(AddVolatile(i_vType))
-			{	return{};	}
+export namespace
+	Meta
+{
+	Transform::TypeIdentity constexpr inline
+		TypeIdentity
+	{};
 
-			template
-				<	typename
-						t_tEntity
-				>
-			friend auto constexpr
-			(	operator-
-			)	(	Type<t_tEntity>
-						i_vType
-				,	Volatile
-				)
-			->	decltype(RemoveVolatile(i_vType))
-			{	return{};	}
-		};
+	Transform::RemoveExtent constexpr inline
+		RemoveExtent
+	{};
 
-		struct
-			Pointer final
-		{
-			template
-				<	typename
-						t_tEntity
-				>
-			friend auto constexpr
-			(	operator+
-			)	(	Type<t_tEntity>
-						i_vType
-				,	Pointer
-				)
-			->	decltype(AddPointer(i_vType))
-			{	return{};	}
+	Transform::AddConst constexpr inline
+		AddConst
+	{};
 
-			template
-				<	typename
-						t_tEntity
-				>
-			friend auto constexpr
-			(	operator-
-			)	(	Type<t_tEntity>
-						i_vType
-				,	Pointer
-				)
-			->	decltype(RemovePointer(i_vType))
-			{	return{};	}
-		};
+	Transform::RemoveConst constexpr inline
+		RemoveConst
+	{};
 
-		struct
-			Reference final
-		{
-			template
-				<	typename
-						t_tEntity
-				>
-			friend auto constexpr
-			(	operator-
-			)	(	Type<t_tEntity>
-						i_vType
-				,	Reference
-				)
-			->	decltype(RemoveReference(i_vType))
-			{	return{};	}
-		};
+	Transform::AddVolatile constexpr inline
+		AddVolatile
+	{};
 
-		struct
-			LValueReference final
-		{
-			template
-				<	typename
-						t_tEntity
-				>
-			friend auto constexpr
-			(	operator+
-			)	(	Type<t_tEntity>
-						i_vType
-				,	LValueReference
-				)
-			->	decltype(AddLValueReference(i_vType))
-			{	return{};	}
-		};
+	Transform::RemoveVolatile constexpr inline
+		RemoveVolatile
+	{};
 
-		struct
-			RValueReference final
-		{
-			template
-				<	typename
-						t_tEntity
-				>
-			friend auto constexpr
-			(	operator+
-			)	(	Type<t_tEntity>
-						i_vType
-				,	RValueReference
-				)
-			->	decltype(AddRValueReference(i_vType))
-			{	return{};	}
-		};
-	}
+	Transform::RemoveCV constexpr inline
+		RemoveCV
+	{};
 
-	auto constexpr inline
+	Transform::AddPointer constexpr inline
+		AddPointer
+	{};
+
+	Transform::RemovePointer constexpr inline
+		RemovePointer
+	{};
+
+	Transform::AddLValueReference constexpr inline
+		AddLValueReference
+	{};
+
+	Transform::AddRValueReference constexpr inline
+		AddRValueReference
+	{};
+
+	Transform::AddCopyReference constexpr inline
+		AddCopyReference
+	{};
+
+	Transform::RemoveReference constexpr inline
+		RemoveReference
+	{};
+
+	Transform::RemoveCVRef constexpr inline
+		RemoveCVRef
+	{};
+}
+
+export namespace
+	Meta::Token
+{
+	struct
+		Const final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator +
+		)	(	Type<t_tEntity>
+					i_vType
+			,	Const
+			)
+		->	decltype(AddConst(i_vType))
+		{	return{};	}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator -
+		)	(	Type<t_tEntity>
+					i_vType
+			,	Const
+			)
+		->	decltype(RemoveConst(i_vType))
+		{	return{};	}
+	};
+
+	struct
+		Volatile final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator +
+		)	(	Type<t_tEntity>
+					i_vType
+			,	Volatile
+			)
+		->	decltype(AddVolatile(i_vType))
+		{	return{};	}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator -
+		)	(	Type<t_tEntity>
+					i_vType
+			,	Volatile
+			)
+		->	decltype(RemoveVolatile(i_vType))
+		{	return{};	}
+	};
+
+	struct
+		Pointer final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator +
+		)	(	Type<t_tEntity>
+					i_vType
+			,	Pointer
+			)
+		->	decltype(AddPointer(i_vType))
+		{	return{};	}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator -
+		)	(	Type<t_tEntity>
+					i_vType
+			,	Pointer
+			)
+		->	decltype(RemovePointer(i_vType))
+		{	return{};	}
+	};
+
+	struct
+		Reference final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator -
+		)	(	Type<t_tEntity>
+					i_vType
+			,	Reference
+			)
+		->	decltype(RemoveReference(i_vType))
+		{	return{};	}
+	};
+
+	struct
+		LValueReference final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator +
+		)	(	Type<t_tEntity>
+					i_vType
+			,	LValueReference
+			)
+		->	decltype(AddLValueReference(i_vType))
+		{	return{};	}
+	};
+
+	struct
+		RValueReference final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator +
+		)	(	Type<t_tEntity>
+					i_vType
+			,	RValueReference
+			)
+		->	decltype(AddRValueReference(i_vType))
+		{	return{};	}
+	};
+}
+
+export namespace
+	Meta
+{
+	Token::Const constexpr inline
 		Const
-	=	Token::Const
-		{}
-	;
+	{};
 
-	auto constexpr inline
+	Token::Volatile constexpr inline
 		Volatile
-	=	Token::Volatile
-		{}
-	;
+	{};
 
-	auto constexpr inline
+	Token::Pointer constexpr inline
 		Pointer
-	=	Token::Pointer
-		{}
-	;
+	{};
 
-	auto constexpr inline
+	Token::Reference constexpr inline
 		Reference
-	=	Token::Reference
-		{}
-	;
+	{};
 
-	auto constexpr inline
+	Token::LValueReference constexpr inline
 		LValueReference
-	=	Token::LValueReference
-		{}
-	;
+	{};
 
-	auto constexpr inline
+	Token::RValueReference constexpr inline
 		RValueReference
-	=	Token::RValueReference
-		{}
-	;
+	{};
 }

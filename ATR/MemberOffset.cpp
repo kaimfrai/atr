@@ -36,7 +36,7 @@ export namespace
 			*
 			//	we don't know where the byte pointer came from, so we need to launder it
 			::std::launder
-			(	PointerCast<::std::remove_reference_t<t_tMember> const>
+			(	PointerCast<::std::remove_reference_t<t_tMember>>
 				(	i_aObject
 				+	Offset
 				)
@@ -136,7 +136,7 @@ export namespace
 			*
 			//	we don't know where the byte pointer came from, so we need to launder it
 			::std::launder
-			(	PointerCast<t_tMember const>
+			(	PointerCast<t_tMember>
 				(	i_aObject
 				+	Offset
 				)
