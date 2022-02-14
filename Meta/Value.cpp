@@ -490,6 +490,12 @@ export namespace
 			}
 		{}
 
+		constexpr
+		(	operator decltype(auto)
+		)	()	const&
+			noexcept
+		{	return (Object);	}
+
 		auto constexpr
 		(	operator=
 		)	(	t_tValue const
@@ -719,8 +725,9 @@ export namespace
 		{}
 
 		constexpr
-		(	operator auto
+		(	operator decltype(auto)
 		)	()	const
+			noexcept
 		{	return Object;	}
 
 		auto constexpr
@@ -792,7 +799,7 @@ export namespace
 
 		t_tValue
 			Object
-			[[no_unique_address]]
+
 		;
 
 		constexpr
@@ -800,6 +807,18 @@ export namespace
 		)	()
 		=	default
 		;
+
+		constexpr
+		(	Value
+		)	(	Value const&
+			)
+		=	default;
+
+		constexpr
+		(	Value
+		)	(	Value&&
+			)
+		=	default;
 
 		constexpr
 		(	Value
@@ -812,12 +831,27 @@ export namespace
 		{}
 
 		constexpr
-		(	operator auto
+		(	operator decltype(auto)
 		)	()	const
+			noexcept
 		{	return Object;	}
 
 		auto constexpr
-		(	operator=
+		(	operator =
+		)	(	Value const&
+			)	&
+		->	Value&
+		=	default;
+
+		auto constexpr
+		(	operator =
+		)	(	Value&&
+			)	&
+		->	Value&
+		=	default;
+
+		auto constexpr
+		(	operator =
 		)	(	t_tValue
 					i_vValue
 			)	&
@@ -828,17 +862,17 @@ export namespace
 		}
 
 		friend auto constexpr
-		(	operator==
-		)	(	Value const&
-			,	Value const&
+		(	operator ==
+		)	(	Value
+			,	Value
 			)
 		->	bool
 		=	default;
 
 		friend auto constexpr
 		(	operator <=>
-		)	(	Value const&
-			,	Value const&
+		)	(	Value
+			,	Value
 			)
 		->	decltype
 			(	::std::declval<t_tValue>()
@@ -846,6 +880,31 @@ export namespace
 			)
 		=	default;
 	};
+
+	template
+		<	typename
+				t_tValue
+		,	typename
+				t_tRight
+		>
+	auto constexpr
+	(	operator *
+	)	(	Value<t_tValue> const
+			&	i_rLeft
+		,	Value<t_tValue> const
+			&	i_rRight
+		)
+	->	Value
+		<	decltype
+			(	::std::declval<t_tValue const&>()
+			*	::std::declval<t_tValue const&>()
+			)
+		>
+	{	return
+		{	static_cast<t_tValue const&>(i_rLeft)
+		*	static_cast<t_tValue const&>(i_rRight)
+		};
+	}
 
 	template
 		<	ProtoValue
