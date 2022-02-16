@@ -623,7 +623,7 @@ export namespace
 		->	Meta::USize
 		{	return 0uz;	}
 
-		t_tData
+		Meta::Aggregate<t_tData>
 			Value
 		;
 
@@ -633,7 +633,7 @@ export namespace
 		)	(	t_tName
 			)	const&
 			noexcept
-		->	t_tData const&
+		->	Meta::Aggregate<t_tData> const&
 		{	return Value;	}
 
 		[[nodiscard]]
@@ -642,7 +642,7 @@ export namespace
 		)	(	t_tName
 			)	&
 			noexcept
-		->	t_tData&
+		->	Meta::Aggregate<t_tData>&
 		{	return Value;	}
 
 		[[nodiscard]]
@@ -651,7 +651,7 @@ export namespace
 		)	(	t_tName
 			)	&&
 			noexcept
-		->	t_tData
+		->	Meta::Aggregate<t_tData>
 		{	return Value;	}
 	};
 
