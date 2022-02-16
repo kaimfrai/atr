@@ -2,7 +2,6 @@ export module Evaluation.Replication.Pyramid;
 
 export import Evaluation.Shared.DataTypes;
 export import Evaluation.Shared.Fraction;
-export import Evaluation.Shared.SizeCheck;
 
 export namespace
 	Bodies3D
@@ -55,5 +54,3 @@ export namespace
 		;
 	}
 }
-
-static_assert(SizeMinimal<Bodies3D::Pyramid, 3, 1>);

@@ -29,14 +29,6 @@ export namespace
 			<	t_tTypeID
 			>
 		;
-		static_assert
-		(	::std::is_standard_layout_v<LayoutType>
-		,	"Member offsets require standard layout types!"
-		);
-		static_assert
-		(	::std::is_trivial_v<LayoutType>
-		,	"Address mapping requires trivial layout types!"
-		);
 
 		using LayoutType::operator[];
 

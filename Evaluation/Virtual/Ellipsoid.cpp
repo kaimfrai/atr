@@ -1,6 +1,5 @@
 export module Evaluation.Virtual.Ellipsoid;
 
-export import Evaluation.Shared.SizeCheck;
 export import Evaluation.Virtual.Ellipse;
 export import Evaluation.Virtual.SphericBody;
 
@@ -31,6 +30,3 @@ export namespace
 		}
 	};
 }
-
-static_assert(AdditionalSize<Bodies3D::Ellipsoid, 3, 1> == 20);
-static_assert(not SizeMinimal<Bodies3D::Ellipsoid, 3, 1>);

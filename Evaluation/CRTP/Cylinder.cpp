@@ -1,6 +1,5 @@
 export module Evaluation.CRTP.Cylinder;
 
-export import Evaluation.Shared.SizeCheck;
 export import Evaluation.Shared.PiFraction;
 export import Evaluation.CRTP.Circle;
 export import Evaluation.CRTP.ExtendedShape;
@@ -32,6 +31,3 @@ export namespace
 		}
 	};
 }
-
-static_assert(AdditionalSize<Bodies3D::Cylinder, 2, 1> == 4);
-static_assert(SizeMinimal<Bodies3D::Cylinder, 2, 1>);

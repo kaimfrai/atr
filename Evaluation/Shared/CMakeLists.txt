@@ -6,6 +6,5 @@ add_module(MainTemplate.cpp)
 add_module(PiFraction.cpp)
 add_module(PseudoRandomSequence.cpp)
 add_module(TypeConstruct.cpp)
-add_module(SizeCheck.cpp)
 
 add_module(Shared.cpp)

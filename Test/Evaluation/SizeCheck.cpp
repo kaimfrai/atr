@@ -1,4 +1,4 @@
-export module Evaluation.Shared.SizeCheck;
+export module Test.Evaluation.SizeCheck;
 
 export import Meta.Integer;
 export import Evaluation.Shared.DataTypes;

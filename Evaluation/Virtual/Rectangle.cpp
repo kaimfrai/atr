@@ -1,6 +1,5 @@
 export module Evaluation.Virtual.Rectangle;
 
-export import Evaluation.Shared.SizeCheck;
 export import Evaluation.Virtual.RectangularShape;
 
 export namespace
@@ -28,7 +27,3 @@ export namespace
 		}
 	};
 }
-
-static_assert(AdditionalSize<Shapes2D::Rectangle, 2, 1> == 12);
-static_assert(not SizeMinimal<Shapes2D::Rectangle, 2, 1>);
-

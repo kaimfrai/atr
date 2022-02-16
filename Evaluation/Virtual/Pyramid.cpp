@@ -1,6 +1,5 @@
 export module Evaluation.Virtual.Pyramid;
 
-export import Evaluation.Shared.SizeCheck;
 export import Evaluation.Virtual.Triangle;
 export import Evaluation.Virtual.PyramidicBody;
 
@@ -31,7 +30,3 @@ export namespace
 		}
 	};
 }
-
-static_assert(AdditionalSize<Bodies3D::Pyramid, 3, 1> == 20);
-static_assert(not SizeMinimal<Bodies3D::Pyramid, 3, 1>);
-

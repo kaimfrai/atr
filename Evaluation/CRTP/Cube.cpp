@@ -1,6 +1,5 @@
 export module Evaluation.CRTP.Cube;
 
-export import Evaluation.Shared.SizeCheck;
 export import Evaluation.CRTP.Square;
 export import Evaluation.CRTP.CubicBody;
 export import Evaluation.CRTP.DepthIsWidth;
@@ -19,6 +18,3 @@ export namespace
 		>
 	{};
 }
-
-static_assert(AdditionalSize<Bodies3D::Cube, 1, 1> == 4);
-static_assert(SizeMinimal<Bodies3D::Cube, 1, 1>);

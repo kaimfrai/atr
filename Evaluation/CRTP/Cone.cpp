@@ -1,6 +1,5 @@
 export module Evaluation.CRTP.Cone;
 
-export import Evaluation.Shared.SizeCheck;
 export import Evaluation.Shared.PiFraction;
 export import Evaluation.CRTP.Circle;
 export import Evaluation.CRTP.ExtendedShape;
@@ -32,6 +31,3 @@ export namespace
 		}
 	};
 }
-
-static_assert(AdditionalSize<Bodies3D::Cone, 2, 1> == 4);
-static_assert(SizeMinimal<Bodies3D::Cone, 2, 1>);

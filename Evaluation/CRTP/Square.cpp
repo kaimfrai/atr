@@ -1,6 +1,5 @@
 export module Evaluation.CRTP.Square;
 
-export import Evaluation.Shared.SizeCheck;
 export import Evaluation.CRTP.RectangularShape;
 export import Evaluation.CRTP.HeightIsWidth;
 
@@ -17,6 +16,3 @@ export namespace
 		>
 	{};
 }
-
-static_assert(AdditionalSize<Shapes2D::Square, 1, 1> == 4);
-static_assert(SizeMinimal<Shapes2D::Square, 1, 1>);

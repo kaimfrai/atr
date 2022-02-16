@@ -1,7 +1,6 @@
 export module Evaluation.Replication.Cube;
 
 export import Evaluation.Shared.DataTypes;
-export import Evaluation.Shared.SizeCheck;
 
 export namespace
 	Bodies3D
@@ -45,4 +44,3 @@ export namespace
 	}
 }
 
-static_assert(SizeMinimal<Bodies3D::Cube, 1, 1>);

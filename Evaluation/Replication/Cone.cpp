@@ -2,7 +2,6 @@ export module Evaluation.Replication.Cone;
 
 export import Evaluation.Shared.DataTypes;
 export import Evaluation.Shared.PiFraction;
-export import Evaluation.Shared.SizeCheck;
 
 export namespace
 	Bodies3D
@@ -52,5 +51,3 @@ export namespace
 		;
 	}
 }
-
-static_assert(SizeMinimal<Bodies3D::Cone, 2, 1>);

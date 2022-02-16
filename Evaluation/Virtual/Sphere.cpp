@@ -1,6 +1,5 @@
 export module Evaluation.Virtual.Sphere;
 
-export import Evaluation.Shared.SizeCheck;
 export import Evaluation.Virtual.Circle;
 export import Evaluation.Virtual.SphericBody;
 
@@ -29,7 +28,3 @@ export namespace
 		}
 	};
 }
-
-static_assert(AdditionalSize<Bodies3D::Sphere, 1, 1> == 20);
-static_assert(not SizeMinimal<Bodies3D::Sphere, 1, 1>);
-

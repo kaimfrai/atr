@@ -1,6 +1,5 @@
 export module Evaluation.Virtual.Square;
 
-export import Evaluation.Shared.SizeCheck;
 export import Evaluation.Virtual.RectangularShape;
 
 export namespace
@@ -24,6 +23,3 @@ export namespace
 		}
 	};
 }
-
-static_assert(AdditionalSize<Shapes2D::Square, 1, 1> == 12);
-static_assert(not SizeMinimal<Shapes2D::Square, 1, 1>);

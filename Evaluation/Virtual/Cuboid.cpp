@@ -1,6 +1,5 @@
 export module Evaluation.Virtual.Cuboid;
 
-export import Evaluation.Shared.SizeCheck;
 export import Evaluation.Virtual.Rectangle;
 export import Evaluation.Virtual.CubicBody;
 
@@ -31,6 +30,3 @@ export namespace
 		}
 	};
 }
-
-static_assert(AdditionalSize<Bodies3D::Cuboid, 3, 1> == 20);
-static_assert(not SizeMinimal<Bodies3D::Cuboid, 3, 1>);

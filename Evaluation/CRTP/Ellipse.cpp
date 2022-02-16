@@ -1,6 +1,5 @@
 export module Evaluation.CRTP.Ellipse;
 
-export import Evaluation.Shared.SizeCheck;
 export import Evaluation.CRTP.CircularShape;
 export import Evaluation.CRTP.SeparateHeight;
 
@@ -15,6 +14,3 @@ export namespace
 	,	SeparateHeight
 	{};
 }
-
-static_assert(AdditionalSize<Shapes2D::Ellipse, 2, 1> == 4);
-static_assert(SizeMinimal<Shapes2D::Ellipse, 2, 1>);

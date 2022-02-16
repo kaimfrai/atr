@@ -1,6 +1,5 @@
 export module Evaluation.Virtual.Head;
 
-export import Evaluation.Shared.SizeCheck;
 export import Evaluation.Virtual.Sphere;
 
 export namespace
@@ -18,6 +17,3 @@ export namespace
 		;
 	};
 }
-
-static_assert(AdditionalSize<Bodies3D::Head, 3, 3> == 60);
-static_assert(not SizeMinimal<Bodies3D::Head, 3, 3>);

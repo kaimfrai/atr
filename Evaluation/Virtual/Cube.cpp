@@ -1,6 +1,5 @@
 export module Evaluation.Virtual.Cube;
 
-export import Evaluation.Shared.SizeCheck;
 export import Evaluation.Virtual.Square;
 export import Evaluation.Virtual.CubicBody;
 
@@ -29,6 +28,3 @@ export namespace
 		}
 	};
 }
-
-static_assert(AdditionalSize<Bodies3D::Cube, 1, 1> == 20);
-static_assert(not SizeMinimal<Bodies3D::Cube, 1, 1>);

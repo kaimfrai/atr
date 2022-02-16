@@ -1,6 +1,5 @@
 export module Evaluation.CRTP.Sphere;
 
-export import Evaluation.Shared.SizeCheck;
 export import Evaluation.CRTP.BasicSphere;
 
 export namespace
@@ -13,6 +12,3 @@ export namespace
 		>
 	{};
 }
-
-static_assert(AdditionalSize<Bodies3D::Sphere, 1, 1> == 4);
-static_assert(SizeMinimal<Bodies3D::Sphere, 1, 1>);
