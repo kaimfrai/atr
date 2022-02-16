@@ -43,3 +43,5 @@ set(ADDITIONAL_COMPILE_OPTIONS
 	-fconstexpr-steps=4294967295
 	#-ftime-trace
 )
+
+add_link_options(-fuse-ld=lld)
