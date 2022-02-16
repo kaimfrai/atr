@@ -99,9 +99,3 @@ namespace
 	->	BitClauseIterator
 	{	return { BitClause::Absorbing() };	};
 }
-
-static_assert
-(	::std::input_iterator
-	<	::Meta::Logic::BitClauseIterator
-	>
-);

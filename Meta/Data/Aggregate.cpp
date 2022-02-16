@@ -1155,5 +1155,3 @@ export namespace
 {
 	using ::Meta::Data::Aggregate;
 }
-
-static_assert(std::contiguous_iterator<Meta::Aggregate<int const*>>);

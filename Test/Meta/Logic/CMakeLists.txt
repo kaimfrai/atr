@@ -7,6 +7,8 @@ function(add_logic_test
 	add_module_object_library("Test.Meta.Logic.${test_name}" "${test_name}.cpp")
 endfunction()
 
+add_logic_test(static_assert)
+
 add_logic_test(Equivalence)
 add_logic_test(Negation)
 
