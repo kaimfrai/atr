@@ -354,6 +354,26 @@ export namespace
 
 	template
 		<	typename
+				t_tProto
+		,	typename
+				t_tLayout
+		,	typename
+			...	t_tpAlias
+		>
+	concept
+		ProtoAliasID
+	=	ProtoMemberID
+		<	decltype
+			(	::ATR::ResolveAlias<t_tpAlias...>
+				(	::std::declval<t_tProto>()
+				)
+			)
+		,	t_tLayout
+		>
+	;
+
+	template
+		<	typename
 				t_tLayout
 		,	typename
 			...	t_tpAlias
@@ -362,34 +382,17 @@ export namespace
 		AliasLayout
 	:	t_tLayout
 	{
-		static auto constexpr
-		(	ResolveAlias
-		)	(	ProtoID auto
-					i_vName
-			)
-		->	decltype(auto)
-		{	return
-			::ATR::ResolveAlias<t_tpAlias...>
-			(	i_vName
-			);
-		}
-
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetOf
-		)	(	ProtoID auto
+		)	(	ProtoAliasID<t_tLayout, t_tpAlias...> auto
 					i_vMember
 			)
 		->	Meta::USize
-		requires
-			ProtoMemberID
-			<	decltype(ResolveAlias(i_vMember))
-			,	t_tLayout
-			>
 		{	return
 				t_tLayout
 			::	OffsetOf
-				(	ResolveAlias
+				(	::ATR::ResolveAlias<t_tpAlias...>
 					(	i_vMember
 					)
 				)
@@ -399,19 +402,14 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	ProtoID auto
+		)	(	ProtoAliasID<t_tLayout, t_tpAlias...> auto
 					i_vMember
 			)	&
 			noexcept
 		->	decltype(auto)
-		requires
-			ProtoMemberID
-			<	decltype(ResolveAlias(i_vMember))
-			,	t_tLayout
-			>
 		{	return
 			static_cast<t_tLayout&>(*this)
-			[	ResolveAlias
+			[	::ATR::ResolveAlias<t_tpAlias...>
 				(	i_vMember
 				)
 			];
@@ -420,19 +418,14 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	ProtoID auto
+		)	(	ProtoAliasID<t_tLayout, t_tpAlias...> auto
 					i_vMember
 			)	const&
 			noexcept
 		->	decltype(auto)
-		requires
-			ProtoMemberID
-			<	decltype(ResolveAlias(i_vMember))
-			,	t_tLayout
-			>
 		{	return
 			static_cast<t_tLayout const&>(*this)
-			[	ResolveAlias
+			[	::ATR::ResolveAlias<t_tpAlias...>
 				(	i_vMember
 				)
 			];
@@ -441,19 +434,14 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	ProtoID auto
+		)	(	ProtoAliasID<t_tLayout, t_tpAlias...> auto
 					i_vMember
 			)	&&
 			noexcept
 		->	decltype(auto)
-		requires
-			ProtoMemberID
-			<	decltype(ResolveAlias(i_vMember))
-			,	t_tLayout
-			>
 		{	return
 			static_cast<t_tLayout&&>(*this)
-			[	ResolveAlias
+			[	::ATR::ResolveAlias<t_tpAlias...>
 				(	i_vMember
 				)
 			];
