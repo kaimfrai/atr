@@ -1,6 +1,7 @@
 export module Meta.Predicate.Erasure;
 
-export import Meta.Concept.Member;
+export import Meta.Data.Object;
+export import Meta.Type.Transform;
 
 export namespace
 	Meta
@@ -23,12 +24,15 @@ export namespace
 		constexpr
 		(	EraseAlignType
 		)	(	TypeToken<t_tEntity>
+					i_vType
 			)
 		:	Type
 			{	&TypeToken<t_tEntity>::Erase
 			}
 		,	Align
-			{	Trait::Member<t_tEntity>::Bits.Align
+			{	::std::is_empty_v<Data::Object<t_tEntity>>
+			?	0uz
+			:	BitAlign(i_vType)
 			}
 		{}
 

@@ -20,7 +20,7 @@ export namespace
 		static auto constexpr
 		(	GetElement
 		)	()
-		->	Type<t_tElement>
+		->	TypeToken<t_tElement>
 		{	return {};	}
 	};
 
@@ -32,7 +32,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tElement[t_nExtent]
 			>
 		)
@@ -45,7 +45,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tElement[]
 			>
 		)

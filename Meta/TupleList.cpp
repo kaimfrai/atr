@@ -13,7 +13,7 @@ export namespace
 {
 	/// base class for map items which provides ordering on the key
 	template
-		<	Meta::ProtoStateless
+		<	ProtoConstraint<IsStateless>
 				t_tKey
 		>
 	struct
@@ -25,7 +25,7 @@ export namespace
 
 		/// provide ordering according to key
 		template
-			<	Meta::ProtoStateless
+			<	ProtoConstraint<IsStateless>
 					t_tRightKey
 			>
 		[[nodiscard]]
@@ -46,7 +46,7 @@ export namespace
 	};
 
 	template
-		<	Meta::ProtoStateless
+		<	ProtoConstraint<IsStateless>
 				t_tKey
 		,	typename
 				t_tItem
@@ -100,9 +100,9 @@ export namespace
 	};
 
 	template
-		<	ProtoStateless
+		<	ProtoConstraint<IsStateless>
 				t_tKey
-		,	ProtoStateless
+		,	ProtoConstraint<IsStateless>
 				t_tItem
 		>
 	struct
@@ -138,7 +138,7 @@ export namespace
 	};
 
 	template
-		<	ProtoStateless
+		<	ProtoConstraint<IsStateless>
 				t_tKey
 		,	typename
 				t_tItem
@@ -284,9 +284,9 @@ export namespace
 		)
 	->	decltype(auto)
 	{	return
-		[&]	<	Meta::USize
+		[&]	<	USize
 				...	t_npIndex
-			>(	Meta::IndexToken<t_npIndex...>
+			>(	IndexToken<t_npIndex...>
 			)
 		->	KeyTuple
 			<	KeyItem
@@ -369,7 +369,7 @@ export namespace
 		static EraseTypeToken constexpr
 			EraseTypeArray
 			[]
-		{	Meta::Type
+		{	Type
 			<	t_tpItem
 			>
 			...
@@ -410,8 +410,8 @@ export namespace
 	struct
 		[[nodiscard]]
 		TypePack
-	:	Meta::TupleList
-		<	Meta::TypeToken
+	:	TupleList
+		<	TypeToken
 			<	t_tpElement
 			>
 			...

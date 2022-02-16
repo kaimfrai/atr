@@ -69,19 +69,11 @@ export namespace
 		>
 	struct
 		StringLiteral final
-	:	Meta::DeduceIndexedArray
+	:	Meta::ArrayValue
 		<	char
 		,	t_nExtent
 		>
 	{
-		using
-			IndexedArray
-		=	Meta::DeduceIndexedArray
-			<	char
-			,	t_nExtent
-			>
-		;
-
 		constexpr
 		(	StringLiteral
 		)	()
@@ -92,10 +84,10 @@ export namespace
 		)	(	char const
 				*	i_aString
 			)
-		:	IndexedArray
-			{	{	+i_aString
-				,	t_nExtent
-				}
+		:	Meta::ArrayValue
+			<	char
+			,	t_nExtent
+			>{	i_aString
 			}
 		{}
 

@@ -20,7 +20,7 @@ export namespace
 		>
 	auto constexpr
 	(	Construct
-	)	(	Type<t_tEntity>
+	)	(	TypeToken<t_tEntity>
 		,	t_tpArgument&&
 			...	i_rpArgument
 		)

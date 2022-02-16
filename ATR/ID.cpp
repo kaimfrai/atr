@@ -300,15 +300,14 @@ namespace
 				>
 			)
 		{	return
-				ID
-				<	Char
-					(	t_vStringLiteral
-						[	t_npIndex
-						]
-					)
-					...
-				>{}
-			;
+			ID
+			<	Char
+				(	t_vStringLiteral
+					[	t_npIndex
+					]
+				)
+				...
+			>{};
 		}(	Meta::Sequence<t_vStringLiteral.size()>
 		);
 	}

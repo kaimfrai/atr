@@ -2,7 +2,6 @@ export module ATR.Layout;
 
 export import ATR.ID;
 export import ATR.DataMember;
-export import Meta.Concept.Empty;
 
 export namespace
 	ATR
@@ -831,10 +830,10 @@ namespace
 	[[nodiscard]]
 	static auto constexpr
 	(	AliasCount
-	)	(	Meta::Value<DataMemberInfo const*>
-				i_aBegin
-		,	Meta::Value<DataMemberInfo const*>
-				i_aEnd
+	)	(	DataMemberInfo const
+			*	i_aBegin
+		,	DataMemberInfo const
+			*	i_aEnd
 		)
 	->	Meta::USize
 	{	return
@@ -855,10 +854,10 @@ namespace
 	[[nodiscard]]
 	static auto constexpr
 	(	StaticCount
-	)	(	Meta::Value<DataMemberInfo const*>
-				i_aBegin
-		,	Meta::Value<DataMemberInfo const*>
-				i_aEnd
+	)	(	DataMemberInfo const
+			*	i_aBegin
+		,	DataMemberInfo const
+			*	i_aEnd
 		)
 	->	Meta::USize
 	{	return
@@ -925,9 +924,9 @@ namespace
 				DynamicLayoutType
 			=	Layout
 				<	::Member
-					<	ID_Of<t_vConfig[t_npDynamicIndex]->Name>
+					<	ID_Of<t_vConfig[t_npDynamicIndex].Name>
 					,	Meta::RestoreTypeEntity
-						<	t_vConfig[t_npDynamicIndex]->Type
+						<	t_vConfig[t_npDynamicIndex].Type
 						>
 					>
 					...
@@ -937,9 +936,9 @@ namespace
 				StaticLayoutType
 			=	StaticData
 				<	::Member
-					<	ID_Of<t_vConfig[t_npStaticIndex]->Name>
+					<	ID_Of<t_vConfig[t_npStaticIndex].Name>
 					,	Meta::RestoreTypeEntity
-						<	t_vConfig[t_npStaticIndex]->Type
+						<	t_vConfig[t_npStaticIndex].Type
 						>
 					>
 					...
@@ -966,9 +965,9 @@ namespace
 				AliasLayout
 				<	DataType
 				,	::Alias
-					<	ID_Of<t_vConfig[t_npAliasIndex]->Name>
+					<	ID_Of<t_vConfig[t_npAliasIndex].Name>
 					,	Meta::RestoreTypeEntity
-						<	t_vConfig[t_npAliasIndex]->Type
+						<	t_vConfig[t_npAliasIndex].Type
 						>
 					>
 					...

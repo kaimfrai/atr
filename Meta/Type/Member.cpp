@@ -16,7 +16,7 @@ export namespace
 		static auto constexpr
 		(	GetMember
 		)	()
-		->	Type<t_tMember>
+		->	TypeToken<t_tMember>
 		{	return{};	}
 	};
 
@@ -30,7 +30,7 @@ export namespace
 		static auto constexpr
 		(	GetOwner
 		)	()
-		->	Type<t_tOwner>
+		->	TypeToken<t_tOwner>
 		{	return{};	}
 	};
 
@@ -55,7 +55,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tMember t_tOwner::*
 			>
 		)
@@ -70,7 +70,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tMember t_tOwner::* const
 			>
 		)
@@ -85,7 +85,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tMember t_tOwner::* volatile
 			>
 		)
@@ -100,7 +100,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tMember t_tOwner::* const volatile
 			>
 		)

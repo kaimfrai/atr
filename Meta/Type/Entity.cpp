@@ -33,7 +33,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tEntity
 			>
 		)
@@ -46,7 +46,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tEntity const
 			>
 		)
@@ -59,7 +59,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tEntity volatile
 			>
 		)
@@ -72,7 +72,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tEntity const volatile
 			>
 		)

@@ -61,13 +61,13 @@ export namespace
 		>
 	struct
 		DataMemberConfig final
-	:	Meta::DeduceIndexedArray
+	:	Meta::ArrayValue
 		<	DataMemberInfo
 		,	t_nMemberCount
 		>
 	{
-		using IndexedArray = Meta::DeduceIndexedArray<DataMemberInfo, t_nMemberCount>;
-		using IndexedArray::IndexedArray;
+		using ArrayValue = Meta::ArrayValue<DataMemberInfo, t_nMemberCount>;
+		using ArrayValue::ArrayValue;
 
 		auto constexpr
 		(	operator()
@@ -92,10 +92,10 @@ export namespace
 					(	begin(vCopy)
 					,	end(vCopy)
 					,	[	vName = rExchange.Name
-						]	(	Meta::Value<DataMemberInfo const&>
-									i_rInfo
+						]	(	DataMemberInfo const
+								&	i_rInfo
 							)
-						{	return i_rInfo->Name == vName;	}
+						{	return i_rInfo.Name == vName;	}
 					)
 				;
 				if	(vExchangePosition == end(vCopy))

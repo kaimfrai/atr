@@ -23,7 +23,7 @@ export namespace
 		{	return
 				Polarity
 			==	::std::is_trivially_destructible_v
-				<	Member<t_tEntity>
+				<	t_tEntity
 				>
 			;
 		}
@@ -118,11 +118,13 @@ export namespace
 			)	const
 		->	bool
 		{	return
-				Polarity
+			(	Polarity
 			==	::std::is_trivially_move_constructible_v
-				<	Member<t_tEntity>
+				<	::std::remove_all_extents
+					<	t_tEntity
+					>
 				>
-			;
+			);
 		}
 	};
 
@@ -142,11 +144,13 @@ export namespace
 			)	const
 		->	bool
 		{	return
-				Polarity
+			(	Polarity
 			==	::std::is_trivially_copy_constructible_v
-				<	Member<t_tEntity>
+				<	::std::remove_all_extents
+					<	t_tEntity
+					>
 				>
-			;
+			);
 		}
 	};
 
@@ -166,11 +170,13 @@ export namespace
 			)	const
 		->	bool
 		{	return
-				Polarity
+			(	Polarity
 			==	::std::is_trivially_move_assignable_v
-				<	Member<t_tEntity>
+				<	::std::remove_all_extents
+					<	t_tEntity
+					>
 				>
-			;
+			);
 		}
 	};
 
@@ -190,11 +196,13 @@ export namespace
 			)	const
 		->	bool
 		{	return
-				Polarity
+			(	Polarity
 			==	::std::is_trivially_copy_assignable_v
-				<	Member<t_tEntity>
+				<	::std::remove_all_extents
+					<	t_tEntity
+					>
 				>
-			;
+			);
 		}
 	};
 }

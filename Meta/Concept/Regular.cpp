@@ -1,7 +1,6 @@
 export module Meta.Concept.Regular;
 
 export import Meta.Concept.Category;
-export import Meta.Concept.Member;
 
 export namespace
 	Meta::Trait
@@ -22,11 +21,11 @@ export namespace
 			)	const
 		->	bool
 		{	return
-				Polarity
+			(	Polarity
 			==	::std::is_nothrow_destructible_v
-				<	Member<t_tEntity>
+				<	t_tEntity
 				>
-			;
+			);
 		}
 	};
 
@@ -67,18 +66,18 @@ export namespace
 				==	0uz
 				)
 				return
-					Polarity
+				(	Polarity
 				==	::std::default_initializable<t_tEntity>
-				;
+				);
 			else
 				return
-					Polarity
+				(	Polarity
 				==	::std::is_constructible_v
 					<	t_tEntity
 					,	t_tpArgument
 						...
 					>
-				;
+				);
 		}
 	};
 
@@ -113,11 +112,13 @@ export namespace
 			)	const
 		->	bool
 		{	return
-				Polarity
+			(	Polarity
 			==	::std::is_move_constructible_v
-				<	Member<t_tEntity>
+				<	::std::remove_all_extents_t
+					<	t_tEntity
+					>
 				>
-			;
+			);
 		}
 	};
 
@@ -137,11 +138,13 @@ export namespace
 			)	const
 		->	bool
 		{	return
-				Polarity
+			(	Polarity
 			==	::std::is_copy_constructible_v
-				<	Member<t_tEntity>
+				<	::std::remove_all_extents_t
+					<	t_tEntity
+					>
 				>
-			;
+			);
 		}
 	};
 
@@ -161,11 +164,13 @@ export namespace
 			)	const
 		->	bool
 		{	return
-				Polarity
+			(	Polarity
 			==	::std::is_move_assignable_v
-				<	Member<t_tEntity>
+				<	::std::remove_all_extents_t
+					<	t_tEntity
+					>
 				>
-			;
+			);
 		}
 	};
 
@@ -185,11 +190,13 @@ export namespace
 			)	const
 		->	bool
 		{	return
-				Polarity
+			(	Polarity
 			==	::std::is_copy_assignable_v
-				<	Member<t_tEntity>
+				<	::std::remove_all_extents_t
+					<	t_tEntity
+					>
 				>
-			;
+			);
 		}
 	};
 
@@ -209,13 +216,13 @@ export namespace
 			)	const
 		->	bool
 		{	return
-				Polarity
+			(	Polarity
 			==	::std::equality_comparable
 				<	::std::remove_all_extents_t
 					<	t_tEntity
 					>
 				>
-			;
+			);
 		}
 	};
 }

@@ -6,7 +6,8 @@ export import ATR.Erase;
 
 export import Std;
 export import Meta.Integer;
-export import Meta.Concept.Empty;
+export import Meta.Constraint;
+export import Meta.Predicate.Empty;
 
 export namespace
 	ATR
@@ -162,7 +163,7 @@ export namespace
 	};
 
 	template
-		<	Meta::ProtoStateless
+		<	Meta::ProtoConstraint<Meta::IsStateless>
 				t_tMember
 		>
 	struct
@@ -179,7 +180,7 @@ export namespace
 		->	t_tMember
 		{	return
 			t_tMember
-			{};
+			();
 		}
 
 		friend auto constexpr

@@ -1,6 +1,4 @@
 add_module(Category.cpp)
-add_module(Empty.cpp)
-add_module(Member.cpp)
 add_module(Regular.cpp)
 add_module(RegularCustom.cpp)
 add_module(Trivial.cpp)

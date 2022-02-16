@@ -8,7 +8,7 @@ export namespace
 {
 	Term constexpr inline
 		IsValue
-	{	Trait::SizeGreater<>{true}
+	{	Trait::Data{true}
 	};
 
 	Term constexpr inline
@@ -283,81 +283,5 @@ export namespace
 		IsCVQualifiable
 	=	IsObject
 	or	IsVoid
-	;
-
-	template
-		<	USize
-				t_nObjectSize
-		>
-	Term constexpr inline
-		IsObjectSizeGreater
-	=	Term{Trait::SizeGreater<t_nObjectSize>{}}
-	and	IsObjectSizeGreater<t_nObjectSize - 1uz>
-	;
-
-	template<>
-	Term constexpr inline
-		IsObjectSizeGreater<0uz>
-	=	IsValue
-	;
-
-	template
-		<	USize
-				t_nObjectSize
-		>
-	Term constexpr inline
-		IsObjectSizeAtLeast
-	=	IsObjectSizeGreater
-		<	t_nObjectSize
-		-	1uz
-		>
-	;
-
-	template<>
-	Term constexpr inline
-		IsObjectSizeAtLeast
-		<	0uz
-		>
-	=	IsValue
-	;
-
-	template
-		<	USize
-				t_nObjectSize
-		>
-	Term constexpr inline
-		IsObjectSizeAtMost
-	=	IsValue
-	and	not
-		IsObjectSizeGreater
-		<	t_nObjectSize
-		>
-	;
-
-	template
-		<	USize
-				t_nObjectSize
-		>
-	Term constexpr inline
-		IsObjectSizeLess
-	=	IsValue
-	and	not
-		IsObjectSizeAtLeast
-		<	t_nObjectSize
-		>
-	;
-
-	template
-		<	USize
-				t_nObjectSize
-		>
-	Term constexpr inline
-		IsObjectSize
-	=	IsObjectSizeAtMost
-		<	t_nObjectSize
-		>
-	and	IsObjectSizeAtLeast
-		<	t_nObjectSize
-		>
 	;
 }

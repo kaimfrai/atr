@@ -93,19 +93,12 @@ export namespace
 	=	Constant{false}
 	;
 
-	///	Types for which the size of their values does exceed the given template argument.
-	///	This excludes sizeless types, in particluar unbound arrays which are otherwise
-	///	objects and references for which sizeof yield the size of the referred type.
+	///	Object types which may store data. In particular, this exculdes unbound arrays.
 	///	This has a real semantic meaning, in particular for types used as members in a class.
 	///	In combination with the following traits, all types categories are distinguished with
 	///	as few traits as possible.
-	template
-		<	USize
-				t_nObjectSize
-		=	0uz
-		>
 	struct
-		SizeGreater final
+		Data final
 	:	LiteralBase
 	{
 		template
@@ -117,35 +110,13 @@ export namespace
 		)	(	TypeToken<t_tEntity>
 			)	const
 		->	bool
-		{
-			//	only object types which aren't unbound arrays
-			if	constexpr
-				(	not
-					::std::is_object_v<t_tEntity>
-				or	::std::is_unbounded_array_v<t_tEntity>
+		{	return
+			(	Polarity
+			==	(	::std::is_object_v<t_tEntity>
+				and	not
+					::std::is_unbounded_array_v<t_tEntity>
 				)
-				return not Polarity;
-			else
-			//	this is false for incomplete types
-			if	constexpr
-				(	requires{ sizeof(t_tEntity); }
-				)
-				return
-				(	Polarity
-				==	(	sizeof(t_tEntity)
-					>	t_nObjectSize
-					)
-				);
-			else
-			{
-				//	size will always be at least 1 byte for incomplete object types
-				static_assert
-				(	t_nObjectSize
-				==	0uz
-				,	"Attempted to check size of incomplete type!"
-				);
-				return Polarity;
-			}
+			);
 		}
 	};
 
@@ -319,11 +290,11 @@ export namespace
 				t_bPolarity
 		>
 	concept
-		SizeGreater
+		Data
 	=	Literal
 		<	t_tProto
 		,	Trait::StaticConstraint
-			<	Trait::SizeGreater<>
+			<	Trait::Data
 				{	t_bPolarity
 				}
 			>
@@ -408,7 +379,7 @@ export namespace
 		>
 	concept
 		Value
-	=	SizeGreater<t_tProto, true>
+	=	Data<t_tProto, true>
 	and	All<t_tProto>
 	;
 
@@ -418,7 +389,7 @@ export namespace
 		>
 	concept
 		Valueless
-	=	SizeGreater<t_tProto, false>
+	=	Data<t_tProto, false>
 	and	All<t_tProto>
 	;
 
@@ -744,7 +715,7 @@ export namespace
 	or	//	NonQualified Fuction
 			Int_Enum_Class_LRef_NonQ<t_tProto, true>
 		and	Scalar_Ref_Void<t_tProto, false>
-		and	SizeGreater<t_tProto, false>
+		and	Data<t_tProto, false>
 		and	All<t_tProto>
 	;
 
@@ -906,7 +877,7 @@ export namespace
 				t_tProto
 		>
 	concept
-		ProtoLValueReferenceReference
+		ProtoLValueReference
 	=	Proto::LValueReference<t_tProto>
 	or	Proto::None<t_tProto>
 	;
@@ -917,7 +888,7 @@ export namespace
 				t_tProto
 		>
 	concept
-		ProtoRValueReferenceReference
+		ProtoRValueReference
 	=	Proto::RValueReference<t_tProto>
 	or	Proto::None<t_tProto>
 	;

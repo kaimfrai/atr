@@ -4,8 +4,7 @@ export import ATR.Dependency;
 export import ATR.Erase;
 export import ATR.ID;
 
-export import Std;
-export import Meta.TupleList;
+import Std;
 
 export namespace
 	ATR

@@ -90,7 +90,7 @@ export namespace
 		static auto constexpr
 		(	GetFunctionResult
 		)	()
-		->	Type<t_tResult>
+		->	TypeToken<t_tResult>
 		{	return {};	}
 	};
 
@@ -116,7 +116,7 @@ export namespace
 				(	SelectByIndex
 					{	ZeroSequence<t_nIndex>
 					}(	static_cast
-						<	Type<t_tpParameter>*
+						<	TypeToken<t_tpParameter>*
 						>(	nullptr
 						)
 						...
@@ -152,7 +152,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...)
 			>
 		)
@@ -167,7 +167,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...)
 			>
 		)
@@ -182,7 +182,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) const
 			>
 		)
@@ -197,7 +197,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) volatile
 			>
 		)
@@ -212,7 +212,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) const volatile
 			>
 		)
@@ -227,7 +227,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) const
 			>
 		)
@@ -242,7 +242,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) volatile
 			>
 		)
@@ -257,7 +257,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) const volatile
 			>
 		)
@@ -272,7 +272,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) &
 			>
 		)
@@ -287,7 +287,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) const &
 			>
 		)
@@ -302,7 +302,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) volatile &
 			>
 		)
@@ -317,7 +317,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) const volatile &
 			>
 		)
@@ -332,7 +332,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) &
 			>
 		)
@@ -347,7 +347,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) const &
 			>
 		)
@@ -362,7 +362,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) volatile &
 			>
 		)
@@ -377,7 +377,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) const volatile &
 			>
 		)
@@ -392,7 +392,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) &&
 			>
 		)
@@ -407,7 +407,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) const &&
 			>
 		)
@@ -422,7 +422,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) volatile &&
 			>
 		)
@@ -437,7 +437,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) const volatile &&
 			>
 		)
@@ -452,7 +452,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) &&
 			>
 		)
@@ -467,7 +467,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) const &&
 			>
 		)
@@ -482,7 +482,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) volatile &&
 			>
 		)
@@ -497,7 +497,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) const volatile &&
 			>
 		)
@@ -512,7 +512,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) noexcept
 			>
 		)
@@ -527,7 +527,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) noexcept
 			>
 		)
@@ -542,7 +542,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) const noexcept
 			>
 		)
@@ -557,7 +557,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) volatile noexcept
 			>
 		)
@@ -572,7 +572,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) const volatile noexcept
 			>
 		)
@@ -587,7 +587,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) const noexcept
 			>
 		)
@@ -602,7 +602,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) volatile noexcept
 			>
 		)
@@ -617,7 +617,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) const volatile noexcept
 			>
 		)
@@ -632,7 +632,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) & noexcept
 			>
 		)
@@ -647,7 +647,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) const & noexcept
 			>
 		)
@@ -662,7 +662,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) volatile & noexcept
 			>
 		)
@@ -677,7 +677,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) const volatile & noexcept
 			>
 		)
@@ -692,7 +692,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) & noexcept
 			>
 		)
@@ -707,7 +707,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) const & noexcept
 			>
 		)
@@ -722,7 +722,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) volatile & noexcept
 			>
 		)
@@ -737,7 +737,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) const volatile & noexcept
 			>
 		)
@@ -752,7 +752,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) && noexcept
 			>
 		)
@@ -767,7 +767,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) const && noexcept
 			>
 		)
@@ -782,7 +782,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) volatile && noexcept
 			>
 		)
@@ -797,7 +797,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter...) const volatile && noexcept
 			>
 		)
@@ -812,7 +812,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) && noexcept
 			>
 		)
@@ -827,7 +827,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) const && noexcept
 			>
 		)
@@ -842,7 +842,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) volatile && noexcept
 			>
 		)
@@ -857,7 +857,7 @@ export namespace
 		>
 	auto constexpr
 	(	Decompose
-	)	(	Type
+	)	(	TypeToken
 			<	t_tResult(t_tpParameter..., ...) const volatile && noexcept
 			>
 		)
@@ -870,7 +870,7 @@ export namespace
 		>
 	auto constexpr
 	(	IsNoexcept
-	)	(	Type<t_tEntity>
+	)	(	TypeToken<t_tEntity>
 				i_vType
 		)
 	->	bool

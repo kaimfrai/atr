@@ -7,7 +7,7 @@ export namespace
 		EraseType final
 	{
 	private:
-		template<typename> friend struct Type;
+		template<typename> friend struct TypeToken;
 
 		constexpr
 		(	EraseType
@@ -36,7 +36,7 @@ export namespace
 				t_tEntity
 		>
 	struct
-		Type final
+		TypeToken final
 	{
 		using Entity = t_tEntity;
 
@@ -54,17 +54,17 @@ export namespace
 		(	RestoreType
 		)	(	TypeRestore<&Erase>
 			)
-		{	return Type{};	}
+		{	return TypeToken{};	}
 	};
 
 	template
 		<	typename
 				t_tEntity
 		>
-	(	Type
-	)	(	Type<t_tEntity>
+	(	TypeToken
+	)	(	TypeToken<t_tEntity>
 		)
-	->	Type
+	->	TypeToken
 		<	t_tEntity
 		>
 	;
@@ -73,14 +73,7 @@ export namespace
 export namespace
 	Meta
 {
-	template
-		<	typename
-				t_tEntity
-		>
-	using
-		TypeToken
-	=	Token::Type<t_tEntity>
-	;
+	using ::Meta::Token::TypeToken;
 
 	using
 		EraseTypeToken
@@ -98,7 +91,7 @@ export namespace
 	;
 
 	template
-		<	Token::Type
+		<	TypeToken
 				t_vType
 		>
 	using
@@ -114,7 +107,7 @@ export namespace
 		<	EraseTypeToken
 				t_vEraseType
 		>
-	Token::Type constexpr inline
+	TypeToken constexpr inline
 		RestoreTypeToken
 	=	RestoreType
 		(	Token::TypeRestore

@@ -1,6 +1,7 @@
 export module Meta.Type.Transform;
 
 export import Meta.Type;
+export import Meta.Integer;
 import Std;
 
 export namespace
@@ -36,6 +37,70 @@ export namespace
 			<	::std::remove_extent_t
 				<	t_tEntity
 				>
+			>
+		{	return {};	}
+	};
+
+	struct
+		Extent final
+	{
+		auto constexpr
+		(	operator()
+		)	(	EraseTypeToken
+			)	const
+		->	USize
+		{	return 0uz;	}
+
+		template
+			<	typename
+					t_tEntity
+			,	USize
+					t_nExtent
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity[t_nExtent]>
+			)	const
+		->	USize
+		{	return t_nExtent;	}
+	};
+
+	struct
+		ArrayElement final
+	{
+		auto constexpr
+		(	operator()
+		)	(	EraseTypeToken
+			)	const
+		->	TypeToken<void>
+		{	return {};	}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity[]>
+			)	const
+		->	TypeToken
+			<	t_tEntity
+			>
+		{	return {};	}
+
+
+		template
+			<	typename
+					t_tEntity
+			,	USize
+					t_nExtent
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity[t_nExtent]>
+			)	const
+		->	TypeToken
+			<	t_tEntity
 			>
 		{	return {};	}
 	};
@@ -282,6 +347,10 @@ export namespace
 		RemoveExtent
 	{};
 
+	Transform::ArrayElement constexpr inline
+		ArrayElement
+	{};
+
 	Transform::AddConst constexpr inline
 		AddConst
 	{};
@@ -332,6 +401,76 @@ export namespace
 }
 
 export namespace
+	Meta::Transform
+{
+	struct
+		BitAlign final
+	{
+		auto constexpr
+		(	operator()
+		)	(	EraseTypeToken
+			)	const
+		->	USize
+		{	return 0uz;	}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+					i_vType
+			)	const
+		->	decltype(alignof(t_tEntity))
+		{	if	constexpr(::Meta::RemoveCV(i_vType) == Type<bool>)
+				return 1uz;
+			else
+				return BitsPerByte * alignof(t_tEntity);
+		}
+	};
+
+	struct
+		BitSize final
+	{
+		auto constexpr
+		(	operator()
+		)	(	EraseTypeToken
+			)	const
+		->	USize
+		{	return 0uz;	}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+					i_vType
+			)	const
+		->	decltype(sizeof(t_tEntity))
+		{	if	constexpr(::Meta::RemoveCV(i_vType) == Type<bool>)
+				return 1uz;
+			else
+				return BitsPerByte * sizeof(t_tEntity);
+		}
+	};
+}
+
+export namespace
+	Meta
+{
+	Transform::BitAlign constexpr inline
+		BitAlign
+	{};
+
+	Transform::BitSize constexpr inline
+		BitSize
+	{};
+}
+
+export namespace
 	Meta::Token
 {
 	struct
@@ -343,7 +482,7 @@ export namespace
 			>
 		friend auto constexpr
 		(	operator +
-		)	(	Type<t_tEntity>
+		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	Const
 			)
@@ -356,7 +495,7 @@ export namespace
 			>
 		friend auto constexpr
 		(	operator -
-		)	(	Type<t_tEntity>
+		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	Const
 			)
@@ -373,7 +512,7 @@ export namespace
 			>
 		friend auto constexpr
 		(	operator +
-		)	(	Type<t_tEntity>
+		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	Volatile
 			)
@@ -386,7 +525,7 @@ export namespace
 			>
 		friend auto constexpr
 		(	operator -
-		)	(	Type<t_tEntity>
+		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	Volatile
 			)
@@ -403,7 +542,7 @@ export namespace
 			>
 		friend auto constexpr
 		(	operator +
-		)	(	Type<t_tEntity>
+		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	Pointer
 			)
@@ -416,7 +555,7 @@ export namespace
 			>
 		friend auto constexpr
 		(	operator -
-		)	(	Type<t_tEntity>
+		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	Pointer
 			)
@@ -433,7 +572,7 @@ export namespace
 			>
 		friend auto constexpr
 		(	operator -
-		)	(	Type<t_tEntity>
+		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	Reference
 			)
@@ -450,7 +589,7 @@ export namespace
 			>
 		friend auto constexpr
 		(	operator +
-		)	(	Type<t_tEntity>
+		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	LValueReference
 			)
@@ -467,7 +606,7 @@ export namespace
 			>
 		friend auto constexpr
 		(	operator +
-		)	(	Type<t_tEntity>
+		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	RValueReference
 			)
