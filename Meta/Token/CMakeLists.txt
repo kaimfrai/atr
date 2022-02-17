@@ -6,6 +6,7 @@ add_module(Index.cpp)
 add_module(Pointer.cpp)
 add_module(Query.cpp)
 add_module(Reference.cpp)
+add_module(Sequence.cpp)
 add_module(Transform.cpp)
 
 add_module(Type.cpp)
