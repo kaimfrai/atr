@@ -1,9 +1,9 @@
-export module Meta.Math;
+export module Meta.Arithmetic.Math;
 
 export import Meta.Integer;
 
 export namespace
-	Meta
+	Meta::Arithmetic
 {
 	auto constexpr
 	(	Power

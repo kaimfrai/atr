@@ -5,9 +5,12 @@ export import Std;
 export import Meta.Index;
 export import Meta.Type;
 export import Meta.Concept;
-export import Meta.Bit;
+export import Meta.Arithmetic.Bit;
 export import Meta.Value;
 export import Meta.SelectByIndex;
+
+using ::Meta::Arithmetic::CountOneBits;
+using ::Meta::Arithmetic::GetIndexOfNthOneBit;
 
 export namespace
 	Meta

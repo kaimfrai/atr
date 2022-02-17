@@ -1,7 +1,4 @@
-add_module(Integer.cpp)
-add_module(Math.cpp)
-add_module(Bit.cpp)
-add_module(Literals.cpp)
+add_subdirectory(Arithmetic)
 add_subdirectory(Token)
 add_module(SelectByIndex.cpp)
 add_subdirectory(Lex)

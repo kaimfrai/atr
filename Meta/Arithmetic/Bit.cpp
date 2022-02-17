@@ -1,10 +1,10 @@
-export module Meta.Bit;
+export module Meta.Arithmetic.Bit;
 
 export import Std;
 export import Meta.Integer;
 
 export namespace
-	Meta
+	Meta::Arithmetic
 {
 	auto constexpr
 	(	TestBit

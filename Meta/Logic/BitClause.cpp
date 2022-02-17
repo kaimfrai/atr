@@ -3,7 +3,12 @@ export module Meta.Logic.BitClause;
 export import Std;
 
 export import Meta.Integer;
-export import Meta.Bit;
+export import Meta.Arithmetic.Bit;
+
+using ::Meta::Arithmetic::CountOneBits;
+using ::Meta::Arithmetic::SetOneBits;
+using ::Meta::Arithmetic::GetIndexOfNthOneBit;
+using ::Meta::Arithmetic::CountLowerZeroBits;
 
 namespace
 	Meta::Logic

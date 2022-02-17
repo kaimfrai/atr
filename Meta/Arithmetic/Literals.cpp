@@ -1,6 +1,8 @@
 export module Meta.Literals;
 
-import Meta.Math;
+import Meta.Arithmetic.Math;
+
+using ::Meta::Arithmetic::Power;
 
 namespace
 	Meta::Literals
@@ -201,7 +203,7 @@ namespace
 		{
 			unsigned long long const
 				nExponent
-			=	Meta::Power
+			=	Power
 				(	t_nBase
 				,	i_vParser.Exponent
 				)
