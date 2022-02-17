@@ -266,6 +266,17 @@ export namespace
 	};
 
 	template
+		<	char const
+			&
+			...	t_rpString
+		>
+	(	ID
+	)	(	ID<t_rpString...>
+		)
+	->	ID<t_rpString...>
+	;
+
+	template
 		<	typename
 				t_tID
 		>

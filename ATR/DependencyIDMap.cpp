@@ -170,23 +170,37 @@ namespace
 		,	Meta::TypePack<>
 		)
 	{
-		Meta::USize constexpr
-			nOffset
-		=	::std::remove_reference_t<t_tOwner>::OffsetOf(i_vOrigin)
+		using tOwner = ::std::remove_cvref_t<t_tOwner>;
+		ID constexpr
+			vResolvedAlias
+		=	tOwner::ResolveAlias(i_vOrigin)
 		;
 		using
 			tType
 		=	decltype
 			(	::std::declval<t_tOwner>()
-				[	i_vOrigin
+				[	vResolvedAlias
 				]
 			)
 		;
-		if	constexpr(nOffset == 0uz)
-			//	do not require constructor for stateless types with 0 offset
-			return MemberOffset<tType>{};
+		if	constexpr
+			(	ProtoMemberInterface
+				<	typename
+					tOwner
+				::	StaticLayout
+				,	vResolvedAlias.RawArray
+				>
+			)
+			return
+			StaticMember<tType>
+			{};
 		else
-			return MemberOffset<tType>{nOffset};
+			return
+			MemberOffset<tType>
+			{	tOwner
+			::	DynamicLayout
+			::	OffsetOf(vResolvedAlias)
+			};
 	}
 }
 

@@ -438,6 +438,18 @@ export namespace
 		AliasLayout
 	:	t_tLayout
 	{
+		static auto constexpr
+		(	ResolveAlias
+		)	(	ProtoAliasID<t_tLayout, t_tpAlias...> auto
+					i_vName
+			)
+		->	decltype(auto)
+		{	return
+			::ATR::ResolveAlias<t_tpAlias...>
+			(	i_vName
+			);
+		}
+
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetOf
@@ -448,7 +460,7 @@ export namespace
 		{	return
 				t_tLayout
 			::	OffsetOf
-				(	::ATR::ResolveAlias<t_tpAlias...>
+				(	ResolveAlias
 					(	i_vMember
 					)
 				)
@@ -465,7 +477,7 @@ export namespace
 		->	decltype(auto)
 		{	return
 			static_cast<t_tLayout&>(*this)
-			[	::ATR::ResolveAlias<t_tpAlias...>
+			[	ResolveAlias
 				(	i_vMember
 				)
 			];
@@ -481,7 +493,7 @@ export namespace
 		->	decltype(auto)
 		{	return
 			static_cast<t_tLayout const&>(*this)
-			[	::ATR::ResolveAlias<t_tpAlias...>
+			[	ResolveAlias
 				(	i_vMember
 				)
 			];
@@ -497,7 +509,7 @@ export namespace
 		->	decltype(auto)
 		{	return
 			static_cast<t_tLayout&&>(*this)
-			[	::ATR::ResolveAlias<t_tpAlias...>
+			[	ResolveAlias
 				(	i_vMember
 				)
 			];
@@ -776,6 +788,9 @@ export namespace
 	struct
 		Data
 	{
+		using StaticLayout = t_tStatic;
+		using DynamicLayout = t_tDynamic;
+
 		static t_tStatic constexpr
 			Static
 		{};
@@ -783,6 +798,22 @@ export namespace
 		t_tDynamic
 			Dynamic
 		;
+
+		static auto constexpr
+		(	ResolveAlias
+		)	(	ProtoMemberID<t_tStatic> auto
+					i_vName
+			)
+		->	decltype(i_vName)
+		{	return i_vName;	}
+
+		static auto constexpr
+		(	ResolveAlias
+		)	(	ProtoMemberID<t_tDynamic> auto
+					i_vName
+			)
+		->	decltype(i_vName)
+		{	return i_vName;	}
 
 		[[nodiscard]]
 		static auto constexpr

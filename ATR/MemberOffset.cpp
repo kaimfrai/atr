@@ -6,8 +6,6 @@ export import ATR.Erase;
 
 export import Std;
 export import Meta.Integer;
-export import Meta.Constraint;
-export import Meta.Predicate.Empty;
 
 export namespace
 	ATR
@@ -163,39 +161,21 @@ export namespace
 	};
 
 	template
-		<	Meta::ProtoConstraint<Meta::IsStateless>
+		<	typename
 				t_tMember
 		>
 	struct
-		MemberOffset
-		<	t_tMember
-		>
+		StaticMember
 	{
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	(	::std::byte const*
-			)	const
+		)	()	const
 			noexcept
 		->	t_tMember
 		{	return
 			t_tMember
 			();
-		}
-
-		friend auto constexpr
-		(	operator->*
-		)	(	::std::byte const
-				*	i_aObject
-			,	MemberOffset
-					i_vMemberOffset
-			)
-			noexcept
-		->	t_tMember
-		{	return
-			i_vMemberOffset
-			(	i_aObject
-			);
 		}
 	};
 }
