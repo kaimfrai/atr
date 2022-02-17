@@ -1,161 +1,52 @@
 export module Meta.TupleList;
 
 export import Std;
-
 export import Meta.Index;
-export import Meta.Concept;
-export import Meta.Constraint;
-export import Meta.Predicate;
-export import Meta.Value;
+export import Meta.Data.Aggregate;
 
 export namespace
 	Meta
 {
-	/// base class for map items which provides ordering on the key
 	template
-		<	ProtoConstraint<IsStateless>
-				t_tKey
-		>
-	struct
-		Key
-	{
-		static t_tKey constexpr
-			KeyValue
-		{};
-
-		/// provide ordering according to key
-		template
-			<	ProtoConstraint<IsStateless>
-					t_tRightKey
-			>
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator<=>
-		)	(	Key const&
-			,	Key<t_tRightKey> const&
-			)
-		->	decltype
-			(	t_tKey{}
-			<=>	t_tRightKey{}
-			)
-		{	return
-				t_tKey{}
-			<=>	t_tRightKey{}
-			;
-		}
-	};
-
-	template
-		<	ProtoConstraint<IsStateless>
-				t_tKey
+		<	USize
+				t_nIndex
 		,	typename
 				t_tItem
 		>
 	struct
 		KeyItem
-	:	Key<t_tKey>
 	{
 		using ItemType = t_tItem;
 
-		Value<t_tItem>
+		[[no_unique_address]]
+		Aggregate<t_tItem>
 			Item
-			[[no_unique_address]]
 		;
 
-		constexpr
-		(	KeyItem
-		)	()
-		=	default;
-
-		constexpr
-		(	KeyItem
-		)	(	t_tItem const
-				&	i_rItem
-			)
-		:	Item
-			{	i_rItem
-			}
-		{}
-
 		auto constexpr
 		(	operator[]
-		)	(	t_tKey
+		)	(	IndexToken<t_nIndex>
 			)	&
-		->	Value<t_tItem>&
+		->	Aggregate<t_tItem>&
 		{	return Item;	}
 
 		auto constexpr
 		(	operator[]
-		)	(	t_tKey
+		)	(	IndexToken<t_nIndex>
 			)	const&
-		->	Value<t_tItem> const&
+		->	Aggregate<t_tItem> const&
 		{	return Item;	}
 
 		auto constexpr
 		(	operator[]
-		)	(	t_tKey
+		)	(	IndexToken<t_nIndex>
 			)	&&
-		->	Value<t_tItem>
+		->	Aggregate<t_tItem>
 		{	return ::std::move(Item);	}
 	};
 
 	template
-		<	ProtoConstraint<IsStateless>
-				t_tKey
-		,	ProtoConstraint<IsStateless>
-				t_tItem
-		>
-	struct
-		KeyItem
-		<	t_tKey
-		,	t_tItem
-		>
-	:	Key<t_tKey>
-	{
-		using ItemType = t_tItem;
-
-		static Value<t_tItem> constexpr
-			Item
-		;
-
-		constexpr
-		(	KeyItem
-		)	()
-		=	default;
-
-		constexpr
-		(	KeyItem
-		)	(	t_tItem
-			)
-		{}
-
-		auto constexpr
-		(	operator[]
-		)	(	t_tKey
-			)	const
-		->	Value<t_tItem>
-		{	return {};	}
-	};
-
-	template
-		<	ProtoConstraint<IsStateless>
-				t_tKey
-		,	typename
-				t_tItem
-		>
-	auto constexpr
-	(	MakeKeyItem
-	)	(	t_tItem&&
-				i_rItem
-		)
-	->	KeyItem
-		<	t_tKey
-		,	t_tItem
-		>
-	{	return { ::std::forward<t_tItem>(i_rItem) };	}
-
-	template
-		<	ProtoConstraint<IsTypePack_Of<KeyItem>>
+		<	typename
 			...	t_tpKeyItem
 		>
 	struct
@@ -164,23 +55,6 @@ export namespace
 		...
 	{
 		using t_tpKeyItem::operator[]...;
-
-		constexpr
-		(	KeyTuple
-		)	()
-		=	default;
-
-		explicit constexpr
-		(	KeyTuple
-		)	(	t_tpKeyItem const
-				&
-				...	i_rpKeyItem
-			)
-		:	t_tpKeyItem
-			{	i_rpKeyItem
-			}
-			...
-		{}
 
 		template
 			<	USize
@@ -228,12 +102,11 @@ export namespace
 				static_cast<decltype(i_rInvocable)>
 				(	i_rInvocable
 				)
-			(	UnwrapValue
-				(	static_cast<t_tpKeyItem const&>
-					(	i_rTuple
-					)
-				.	Item
+			(	static_cast<t_tpKeyItem const&>
+				(	i_rTuple
 				)
+			.	Item
+			.	get()
 				...
 			);
 		}
@@ -264,11 +137,11 @@ export namespace
 			...	t_tpKeyItem
 		>
 	(	KeyTuple
-	)	(	t_tpKeyItem const&
+	)	(	Aggregate<t_tpKeyItem>
 			...
 		)
 	->	KeyTuple
-		<	UnwrapType<t_tpKeyItem>
+		<	t_tpKeyItem
 			...
 		>
 	;
@@ -290,16 +163,16 @@ export namespace
 			)
 		->	KeyTuple
 			<	KeyItem
-				<	IndexToken<t_npIndex>
-				,	UnwrapType<t_tpItem>
+				<	t_npIndex
+				,	::std::remove_cvref_t<t_tpItem>
 				>
 				...
 			>
 		{	return
 			KeyTuple
 			<	KeyItem
-				<	IndexToken<t_npIndex>
-				,	UnwrapType<t_tpItem>
+				<	t_npIndex
+				,	::std::remove_cvref_t<t_tpItem>
 				>
 				...
 			>{	::std::forward<t_tpItem>
@@ -364,7 +237,7 @@ export namespace
 			...
 		>
 	{
-		using DeduceIndexedTuple<t_tpItem...>::DeduceIndexedTuple;
+		using IndexedTuple = DeduceIndexedTuple<t_tpItem...>;
 
 		static EraseTypeToken constexpr
 			EraseTypeArray
@@ -391,17 +264,16 @@ export namespace
 			...	t_tpItem
 		>
 	(	TupleList
-	)	(	t_tpItem const&
+	)	(	Aggregate<t_tpItem>
 			...
 		)
 	->	TupleList
-		<	UnwrapType
-			<	t_tpItem
-			>
+		<	t_tpItem
 			...
 		>
 	;
-		///	wraps around a pack of types
+
+	///	wraps around a pack of types
 	///	defines value-based operations
 	template
 		<	typename
