@@ -1,6 +1,6 @@
 export module Meta.Integer;
 
-import Std;
+export import Std;
 
 export namespace
 	Meta

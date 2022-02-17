@@ -1,6 +1,7 @@
 export module Meta.Lex.Pointer;
 
 export import Meta.Type;
+export import Meta.Token.Pointer;
 export import Meta.Lex.CV;
 export import Meta.Lex.Array;
 export import Meta.Lex.Function;

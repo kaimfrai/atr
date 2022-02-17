@@ -1,7 +1,6 @@
 export module Meta.Bit;
 
 export import Std;
-
 export import Meta.Integer;
 
 export namespace
