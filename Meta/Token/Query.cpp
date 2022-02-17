@@ -1,4 +1,4 @@
-export module Meta.Type.Query;
+export module Meta.Token.Query;
 
 export import Meta.Integer;
 export import Meta.Type;

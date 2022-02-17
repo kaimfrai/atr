@@ -1,7 +1,7 @@
-export module Meta.Type.Reference;
+export module Meta.Token.Reference;
 
 export import Meta.Type;
-export import Meta.Type.Transform;
+export import Meta.Token.Transform;
 
 export namespace
 	Meta::Token

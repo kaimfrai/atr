@@ -1,4 +1,4 @@
-export module Meta.Type.Transform;
+export module Meta.Token.Transform;
 
 export import Meta.Type;
 export import Meta.Integer;

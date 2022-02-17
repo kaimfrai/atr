@@ -2,7 +2,7 @@ export module Meta.Lex.Array;
 
 export import Meta.Integer;
 export import Meta.Type;
-export import Meta.Type.Array;
+export import Meta.Token.Array;
 export import Meta.Lex.CV;
 
 export namespace

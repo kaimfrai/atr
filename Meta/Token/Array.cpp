@@ -1,4 +1,4 @@
-export module Meta.Type.Array;
+export module Meta.Token.Array;
 
 export import Meta.Type;
 export import Meta.Integer;

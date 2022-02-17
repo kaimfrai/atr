@@ -1,7 +1,7 @@
 export module Meta.Lex.Reference;
 
 export import Meta.Type;
-export import Meta.Type.Reference;
+export import Meta.Token.Reference;
 export import Meta.Lex.CV;
 export import Meta.Lex.Array;
 export import Meta.Lex.Function;

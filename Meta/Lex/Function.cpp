@@ -1,9 +1,7 @@
 export module Meta.Lex.Function;
 
 export import Meta.Type;
-export import Meta.Type.CV;
-export import Meta.Type.Reference;
-export import Meta.Type.Function;
+export import Meta.Token.Function;
 
 export namespace
 	Meta::Lex

@@ -1,7 +1,7 @@
 export module Meta.Lex.CV;
 
 export import Meta.Type;
-export import Meta.Type.CV;
+export import Meta.Token.CV;
 
 export namespace
 	Meta::Lex

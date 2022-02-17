@@ -1,7 +1,7 @@
-export module Meta.Type.CV;
+export module Meta.Token.CV;
 
 export import Meta.Type;
-export import Meta.Type.Transform;
+export import Meta.Token.Transform;
 
 export namespace
 	Meta::Token

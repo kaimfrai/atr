@@ -1,6 +1,6 @@
 import Meta.Type;
-import Meta.Type.Transform;
-import Meta.Type.Pointer;
+import Meta.Token.Transform;
+import Meta.Token.Pointer;
 
 using namespace Meta;
 

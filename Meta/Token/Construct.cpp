@@ -1,7 +1,7 @@
-export module Meta.Type.Construct;
+export module Meta.Token.Construct;
 
-export import Meta.Type;
 export import Std;
+export import Meta.Type;
 
 export namespace
 	Meta::Token
