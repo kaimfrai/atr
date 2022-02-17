@@ -19,9 +19,10 @@ export namespace
 
 template
 	<	typename
-			t_tAlias
-	,	typename
 			t_tTarget
+	,	char const
+		&
+		...	t_rpAlias
 	>
 struct
 	Alias
@@ -29,9 +30,46 @@ struct
 
 template
 	<	typename
-			t_tName
-	,	typename
+			t_tTarget
+	,	char const
+		&
+		...	t_rpAlias
+	>
+auto constexpr
+(	MakeAlias
+)	(	::ATR::ID<t_rpAlias...>
+	)
+->	::Alias
+	<	t_tTarget
+	,	t_rpAlias
+		...
+	>
+;
+
+template
+	<	::ATR::MemberInfo
+			t_vMember
+	>
+using
+	DeduceAlias
+=	decltype
+	(	::MakeAlias
+		<	::Meta::RestoreTypeEntity
+			<	t_vMember.Type
+			>
+		>(	::ATR::ID_Of
+			<	t_vMember.Name
+			>{}
+		)
+	)
+;
+
+template
+	<	typename
 			t_tData
+	,	char const
+		&
+		...
 	>
 struct
 	Member final
@@ -43,6 +81,42 @@ struct
 		>
 	;
 };
+
+template
+	<	typename
+			t_tData
+	,	char const
+		&
+		...	t_rpName
+	>
+auto constexpr
+(	MakeMember
+)	(	::ATR::ID<t_rpName...>
+	)
+->	::Member
+	<	t_tData
+	,	t_rpName
+		...
+	>
+;
+
+template
+	<	::ATR::MemberInfo
+			t_vMember
+	>
+using
+	DeduceMember
+=	decltype
+	(	::MakeMember
+		<	::Meta::RestoreTypeEntity
+			<	t_vMember.Type
+			>
+		>(	::ATR::ID_Of
+			<	t_vMember.Name
+			>{}
+		)
+	)
+;
 
 namespace
 	ATR
@@ -250,15 +324,16 @@ namespace
 		{	return t_tName{};	}
 
 		template
-			<	typename
-					t_tName
+			<	char const
+				&
+				...	t_rpName
 			,	typename
 					t_tTarget
 			>
 		auto constexpr
 		(	MatchAlias
-		)	(	t_tName
-			,	::Alias<t_tName, t_tTarget> const*
+		)	(	ID<t_rpName...>
+			,	::Alias<t_tTarget, t_rpName...> const*
 			)	const
 		->	decltype(auto)
 		{	return
@@ -584,22 +659,24 @@ export namespace
 
 	template
 		<	typename
-				t_tName
-		,	typename
 				t_tData
+		,	char const
+			&
+			...	t_rpName
 		>
 	struct
 		Layout
 		<	::Member
-			<	t_tName
-			,	t_tData
+			<	t_tData
+			,	t_rpName
+				...
 			>
 		>
 	{
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetOf
-		)	(	t_tName
+		)	(	ID<t_rpName...>
 			)
 		->	Meta::USize
 		{	return 0uz;	}
@@ -611,7 +688,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	t_tName
+		)	(	ID<t_rpName...>
 			)	const&
 			noexcept
 		->	Meta::Aggregate<t_tData> const&
@@ -620,7 +697,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	t_tName
+		)	(	ID<t_rpName...>
 			)	&
 			noexcept
 		->	Meta::Aggregate<t_tData>&
@@ -629,7 +706,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	t_tName
+		)	(	ID<t_rpName...>
 			)	&&
 			noexcept
 		->	Meta::Aggregate<t_tData>
@@ -653,22 +730,24 @@ export namespace
 
 	template
 		<	typename
-				t_tName
-		,	typename
 				t_tData
+		,	char const
+			&
+			...	t_rpName
 		>
 	struct
 		StaticData
 		<	::Member
-			<	t_tName
-			,	t_tData
+			<	t_tData
+			,	t_rpName
+				...
 			>
 		>
 	{
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetOf
-		)	(	t_tName
+		)	(	ID<t_rpName...>
 			)
 		->	Meta::USize
 		{	return 0uz;	}
@@ -676,7 +755,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	t_tName
+		)	(	ID<t_rpName...>
 			)	const
 			noexcept
 		->	t_tData
@@ -892,11 +971,8 @@ namespace
 			using
 				DynamicLayoutType
 			=	Layout
-				<	::Member
-					<	ID_Of<t_vConfig[t_npDynamicIndex].Name>
-					,	Meta::RestoreTypeEntity
-						<	t_vConfig[t_npDynamicIndex].Type
-						>
+				<	::DeduceMember
+					<	t_vConfig[t_npDynamicIndex]
 					>
 					...
 				>
@@ -904,11 +980,8 @@ namespace
 			using
 				StaticLayoutType
 			=	StaticData
-				<	::Member
-					<	ID_Of<t_vConfig[t_npStaticIndex].Name>
-					,	Meta::RestoreTypeEntity
-						<	t_vConfig[t_npStaticIndex].Type
-						>
+				<	::DeduceMember
+					<	t_vConfig[t_npStaticIndex]
 					>
 					...
 				>
@@ -933,11 +1006,8 @@ namespace
 				return
 				AliasLayout
 				<	DataType
-				,	::Alias
-					<	ID_Of<t_vConfig[t_npAliasIndex].Name>
-					,	Meta::RestoreTypeEntity
-						<	t_vConfig[t_npAliasIndex].Type
-						>
+				,	::DeduceAlias
+					<	t_vConfig[t_npAliasIndex]
 					>
 					...
 				>{};

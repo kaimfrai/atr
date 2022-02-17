@@ -8,25 +8,26 @@ export namespace
 	ATR
 {
 	template
-		<	ProtoID
-				t_tTypeID
+		<	char const
+			&
+			...	t_rpName
 		>
 	struct
 		Instance
 	:	CreateLayoutType
-		<	t_tTypeID
+		<	ID<t_rpName...>
 		>
 	{
 		static auto constexpr
 		&	TypeName
-		=	t_tTypeID
+		=	ID<t_rpName...>
 		::	RawArray
 		;
 
 		using
 			LayoutType
 		=	CreateLayoutType
-			<	t_tTypeID
+			<	ID<t_rpName...>
 			>
 		;
 
@@ -177,17 +178,38 @@ export namespace
 			);
 		}
 	};
+}
 
+template
+	<	char const
+		&
+		...	t_rpName
+	>
+auto constexpr
+	DeduceType
+	(	::ATR::ID<t_rpName...>
+	)
+->	::ATR::Instance
+	<	t_rpName
+		...
+	>
+;
+
+export namespace
+	ATR
+{
 	template
 		<	StringLiteral
 				t_vTypeID
 		>
 	using
 		Type
-	=	Instance
-		<	ID_T
-			<	t_vTypeID
-			>
-		>
+	=	decltype
+		(	::DeduceType
+			(	ID_V
+				<	t_vTypeID
+				>
+			)
+		)
 	;
 }

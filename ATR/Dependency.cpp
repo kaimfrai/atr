@@ -10,7 +10,7 @@ export namespace
 {
 	/// wraps around an object and provides member access via dependency maps
 	template
-		<	Meta::ProtoValue
+		<	typename
 				t_tArgument
 		,	typename
 			...	t_tpItem
@@ -130,7 +130,7 @@ export namespace
 	;
 
 	template
-		<	Meta::ProtoValue
+		<	typename
 				t_tArgument
 		,	typename
 			...	t_tpItem
