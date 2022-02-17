@@ -2,7 +2,7 @@ export module ATR.StringLiteral;
 
 export import Std;
 export import Meta.Integer;
-export import Meta.Value;
+export import Meta.Data.Value;
 
 export namespace
 	ATR

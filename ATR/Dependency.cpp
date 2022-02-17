@@ -2,8 +2,8 @@ export module ATR.Dependency;
 
 export import ATR.ID;
 export import ATR.Erase;
-export import Meta.Type;
-export import Meta.TupleList;
+export import Meta.Token.Type;
+export import Meta.Data.TupleList;
 
 export namespace
 	ATR

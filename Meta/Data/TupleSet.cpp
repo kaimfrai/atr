@@ -1,8 +1,8 @@
-export module Meta.TupleSet;
+export module Meta.Data.TupleSet;
 
 export import Std;
 export import Meta.Token.Sequence;
-export import Meta.Type;
+export import Meta.Token.Type;
 export import Meta.Arithmetic.Bit;
 export import Meta.Data.Aggregate;
 

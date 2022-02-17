@@ -1,7 +1,7 @@
 export module ATR.Erase;
 
 export import Std;
-export import Meta.Type;
+export import Meta.Token.Type;
 export import Meta.Token.Transform;
 export import Meta.Concept.Category;
 

@@ -1,6 +1,6 @@
 export module Meta.Concept.Category;
 
-export import Meta.Type;
+export import Meta.Token.Type;
 import Std;
 
 export namespace

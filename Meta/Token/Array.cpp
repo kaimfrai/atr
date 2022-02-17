@@ -1,6 +1,6 @@
 export module Meta.Token.Array;
 
-export import Meta.Type;
+export import Meta.Token.Type;
 export import Meta.Integer;
 
 export namespace
@@ -78,5 +78,26 @@ export namespace
 		>
 	Token::Extent<t_nExtent> constexpr inline
 		Extent
+	{};
+
+	template
+		<	typename
+				t_tElement
+		,	USize
+				t_nExtent
+		>
+	TypeToken<t_tElement[t_nExtent]> constexpr
+		ArrayType
+	{};
+
+	template
+		<	typename
+				t_tElement
+		>
+	TypeToken<t_tElement[]> constexpr
+		ArrayType
+		<	t_tElement
+		,	0uz
+		>
 	{};
 }

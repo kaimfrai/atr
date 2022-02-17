@@ -2,7 +2,7 @@ export module Meta.Predicate.TypeTraits;
 
 export import Std;
 
-export import Meta.Type;
+export import Meta.Token.Type;
 export import Meta.Concept.Category;
 export import Meta.Logic;
 export import Meta.Predicate.Category;

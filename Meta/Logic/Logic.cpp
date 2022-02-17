@@ -3,7 +3,7 @@ export module Meta.Logic;
 export import Meta.Arithmetic.Bit;
 export import Meta.Logic.BitTerm;
 export import Meta.Concept;
-export import Meta.TupleSet;
+export import Meta.Data.TupleSet;
 
 import Std;
 

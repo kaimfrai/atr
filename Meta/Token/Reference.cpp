@@ -1,6 +1,6 @@
 export module Meta.Token.Reference;
 
-export import Meta.Type;
+export import Meta.Token.Type;
 export import Meta.Token.Transform;
 
 export namespace

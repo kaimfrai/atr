@@ -1,6 +1,6 @@
 export module ATR.VirtualArgument;
 
-export import Meta.Type;
+export import Meta.Token.Type;
 export import Meta.Concept.Trivial;
 export import ATR.Address;
 export import ATR.ID;

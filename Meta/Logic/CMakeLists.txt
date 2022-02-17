@@ -6,3 +6,4 @@ add_module(Conjunction.cpp)
 add_module(Disjunction.cpp)
 
 add_module(Logic.cpp)
+add_module(Constraint.cpp)

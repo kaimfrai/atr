@@ -1,7 +1,7 @@
 export module Meta.Token.Query;
 
 export import Meta.Integer;
-export import Meta.Type;
+export import Meta.Token.Type;
 
 export namespace
 	Meta::Query

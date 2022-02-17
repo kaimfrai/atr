@@ -1,4 +1,4 @@
-import Meta.Type;
+import Meta.Token.Type;
 import Meta.Token.Transform;
 import Meta.Token.Pointer;
 

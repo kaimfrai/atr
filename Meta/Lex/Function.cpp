@@ -1,6 +1,6 @@
 export module Meta.Lex.Function;
 
-export import Meta.Type;
+export import Meta.Token.Type;
 export import Meta.Token.Function;
 
 export namespace

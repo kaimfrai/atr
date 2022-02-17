@@ -4,7 +4,7 @@ export import ATR.ID;
 export import ATR.StringLiteral;
 export import ATR.DataMember;
 
-export import Meta.ValueInfo;
+export import Meta.Data.ValueInfo;
 
 export namespace
 	ATR

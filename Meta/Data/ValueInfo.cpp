@@ -1,6 +1,6 @@
-export module Meta.ValueInfo;
+export module Meta.Data.ValueInfo;
 
-export import Meta.Type;
+export import Meta.Token.Type;
 export import Meta.Integer;
 export import Meta.Concept.Category;
 

@@ -1,4 +1,4 @@
-export module Meta.TupleList;
+export module Meta.Data.TupleList;
 
 export import Std;
 export import Meta.Index;
@@ -198,34 +198,6 @@ export namespace
 		)
 	;
 
-	struct
-		ErasedTuple
-	{
-		EraseTypeToken const
-		*	ErasedTypes
-		;
-		USize const
-			Size
-		;
-	};
-
-	auto constexpr
-	(	operator==
-	)	(	ErasedTuple
-				i_vLeft
-		,	ErasedTuple
-				i_vRight
-		)
-	->	bool
-	{	return
-		::std::equal
-		(	i_vLeft.ErasedTypes
-		,	i_vLeft.ErasedTypes + i_vLeft.Size
-		,	i_vRight.ErasedTypes
-		,	i_vRight.ErasedTypes + i_vRight.Size
-		);
-	}
-
 	template
 		<	typename
 			...	t_tpItem
@@ -249,14 +221,9 @@ export namespace
 		};
 
 		constexpr
-		(	operator ErasedTuple
+		(	operator EraseTypeToken const*
 		)	()	const
-		{	return
-			ErasedTuple
-			{	+EraseTypeArray
-			,	sizeof...(t_tpItem)
-			};
-		}
+		{	return +EraseTypeArray;	}
 	};
 
 	template
