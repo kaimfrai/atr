@@ -190,9 +190,9 @@ namespace
 		using
 			tLiteralUnion
 		=	decltype
-			(	SetUnion
-				(	*i_aDeduceLeftLiterals
-				,	*i_aDeduceRightLiterals
+			(	i_aDeduceLeftLiterals
+			->	Union
+				(	*i_aDeduceRightLiterals
 				)
 			)
 		;
@@ -315,12 +315,12 @@ export namespace
 					<	vResultTerm.TrimLiterals()
 					>
 				::	SetLiterals
-					(	Filter
-						(	SetUnion
-							(	Literals
-							,	i_rRight.Literals
-							)
-						,	Index<vResultLiteralField>
+					(	Literals
+					.	Union
+						(	i_rRight.Literals
+						)
+					.	Filter
+						(	Index<vResultLiteralField>
 						)
 					)
 				;
@@ -381,7 +381,8 @@ export namespace
 			==	1uz
 			)
 		:	Literals
-			{	i_rpLiteral
+			{	{	i_rpLiteral
+				}
 				...
 			}
 		{}

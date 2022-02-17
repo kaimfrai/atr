@@ -30,22 +30,6 @@ export namespace
 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x0D>>
 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x0E>>
 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x0F>>
-// 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x10>>
-// 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x11>>
-// 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x12>>
-// 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x13>>
-// 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x14>>
-// 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x15>>
-// 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x16>>
-// 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x17>>
-// 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x18>>
-// 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x19>>
-// 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x1A>>
-// 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x1B>>
-// 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x1C>>
-// 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x1D>>
-// 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x1E>>
-// 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x1F>>
 	and	All<t_tProto>
 	;
 
@@ -63,7 +47,6 @@ export namespace
 	or	Clause<t_tProto, typename t_tTrait::template Clause<0x03>>
 	or	None<t_tProto>
 	;
-
 }
 
 export namespace
@@ -113,11 +96,11 @@ export namespace
 					)
 				)
 				return
-				UnwrapValue
-				(	t_vLiterals
+					t_vLiterals
 					[	Index<t_nLiteralIndex>
 					]
-				);
+				.get()
+				;
 			else
 			if	constexpr
 				(	t_vClause.TestNegative
@@ -126,11 +109,11 @@ export namespace
 				)
 				return
 				not
-				UnwrapValue
-				(	t_vLiterals
+					t_vLiterals
 					[	Index<t_nLiteralIndex>
 					]
-				);
+				.	get()
+				;
 			else
 				return Trait::Tautology;
 		}
@@ -174,9 +157,9 @@ export namespace
 			Clause
 		=	ConstraintClause
 			<	t_vTerm[t_nClauseIndex].TrimLiterals()
-			,	Filter
-				(	t_vLiterals
-				,	Index
+			,	t_vLiterals
+			.	Filter
+				(	Index
 					<	t_vTerm[t_nClauseIndex]
 					.	LiteralField()
 					>

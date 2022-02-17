@@ -1,6 +1,5 @@
 add_subdirectory(Arithmetic)
 add_subdirectory(Token)
-add_module(SelectByIndex.cpp)
 add_subdirectory(Lex)
 add_subdirectory(Concept)
 add_subdirectory(Data)

@@ -22,6 +22,8 @@ set(WARNING_FLAGS
 	-Wauto-import
 	-Werror
 	-Weverything
+	# useful for nested aggregates
+	-Wno-missing-braces
 	# prohibits inline virtual classes
 	-Wno-weak-vtables
 	# not always preventable

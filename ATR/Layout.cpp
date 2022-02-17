@@ -3,7 +3,7 @@ export module ATR.Layout;
 export import ATR.ID;
 export import ATR.DataMember;
 
-import Meta.SelectByIndex;
+import Meta.Token.Sequence;
 
 export namespace
 	ATR
@@ -45,15 +45,6 @@ namespace
 	ATR
 {
 	template
-		<	typename
-		,	Meta::USize
-		>
-	concept
-		ProtoDeducePack
-	=	true
-	;
-
-	template
 		<	Meta::USize
 			...	t_npIndex
 		>
@@ -70,7 +61,7 @@ namespace
 		{}
 
 		template
-			<	ProtoDeducePack<t_npIndex>
+			<	Meta::ProtoIndexedElement<t_npIndex>
 				...	t_tpFront
 			>
 		static auto constexpr
@@ -91,7 +82,7 @@ namespace
 			>
 		static auto constexpr
 		(	Back
-		)	(	Meta::ValueToType<t_npIndex, void const*>
+		)	(	Meta::IgnoreIndexedElement<t_npIndex>
 				...
 			,	t_tpBack*
 				...

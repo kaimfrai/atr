@@ -59,4 +59,25 @@ export namespace
 		=	Index<0uz>
 		)
 	;
+
+	///	Intendend to part of a pack expansion.
+	///	A known amount of argument types may be deduced this way.
+	template
+		<	typename
+		,	USize
+		>
+	concept
+		ProtoIndexedElement
+	=	true
+	;
+
+	///	Intendend to part of a pack expansion.
+	///	A known amount of pointer arguments may be ignored this way.
+	template
+		<	USize
+		>
+	using
+		IgnoreIndexedElement
+	=	void const volatile*
+	;
 }
