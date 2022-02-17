@@ -2,8 +2,10 @@ export module Meta.Data.Aggregate;
 
 export import Meta.Integer;
 export import Meta.Token.Sequence;
+export import Meta.Token.Array;
 export import Meta.Data.Object;
 export import Meta.Concept.Regular;
+
 import Std;
 
 export namespace
@@ -1155,4 +1157,22 @@ export namespace
 	Meta
 {
 	using ::Meta::Data::Aggregate;
+
+	template
+		<	typename
+				t_tValue
+		,	USize
+				t_nExtent
+		>
+	using
+		ArrayAggregate
+	=	Aggregate
+		<	TypeEntity
+			<	ArrayType
+				<	t_tValue
+				,	t_nExtent
+				>
+			>
+		>
+	;
 }

@@ -4,121 +4,121 @@ export import ATR.ID;
 export import ATR.StringLiteral;
 export import ATR.DataMember;
 
-export import Meta.Data.ValueInfo;
-
-export namespace
+namespace
 	ATR
 {
 	template
-		<	ProtoID
-				t_tPrefix
-		,	StringView
-				t_vInfix
-		,	ProtoID
-				t_tSuffix
+		<	char const
+			&
+			...	t_rpPrefix
+		,	char const
+			&
+			...	t_rpInfix
+		,	char const
+			&
+			...	t_rpSuffix
 		>
 	auto constexpr
-	(	InfixStringView
-	)	()
-	->	StringView
-	{	if	constexpr
-			(	t_vInfix.size() == 0uz
-			)
-			return ID<>::StringView;
-		else
-			return
-				ID_T
-				<	StringLiteral
-					<	t_tPrefix::Length
-					+	t_vInfix.size()
-					+	t_tSuffix::Length
-					>{	t_tPrefix::StringView
-					,	t_vInfix
-					,	t_tSuffix::StringView
-					}
-				>
-			::	StringView
-			;
-	}
+	(	InfixID
+	)	(	ID<t_rpPrefix...>
+		,	ID<t_rpInfix...>
+		,	ID<t_rpSuffix...>
+		)
+	->	ID
+		<	t_rpPrefix
+			...
+		,	t_rpInfix
+			...
+		,	t_rpSuffix
+			...
+		>
+	{	return {};	}
 
 	template
-		<	ProtoID
+		<	typename
 				t_tPrefix
-		,	DataMemberInfo
+		,	MemberInfo
 				t_vInfix
-		,	ProtoID
+		,	typename
 				t_tSuffix
 		>
 	auto constexpr
 	(	InfixDataMember
 	)	()
-	->	DataMemberInfo
+	->	MemberInfo
 	{
-		StringView constexpr
-			Name
-		=	InfixStringView
-			<	t_tPrefix
-			,	t_vInfix.Name
-			,	t_tSuffix
-			>()
-		;
-		StringView constexpr
-			Alias
-		=	InfixStringView
-			<	t_tPrefix
-			,	t_vInfix.Alias
-			,	t_tSuffix
-			>()
-		;
-		if	constexpr(Alias)
-			return
-			{	.Type = Meta::Type<ID_Of<Alias>>
-			,	.Name = Name
-			,	.Alias = Alias
-			};
-		else
-			return
-			{	.Type = t_vInfix.Type
-			,	.Name = Name
-			,	.Alias = Alias
-			};
+		MemberInfo
+			vResult
+		{	.SortKey = t_vInfix.SortKey
+		,	.Name
+		=	InfixID
+			(	t_tPrefix{}
+			,	ID_Of<t_vInfix.Name>{}
+			,	t_tSuffix{}
+			)
+		,	.Type = t_vInfix.Type
+		};
+
+		//	also update the alias target if it is an alias
+		if	constexpr
+			(	t_vInfix.SortKey
+			==	AliasSortKey
+			)
+		{
+			using
+				tInfix
+			=	Meta::RestoreTypeEntity<t_vInfix.Type>
+			;
+			using
+				tAliasTarget
+			=	decltype
+				(	InfixID
+					(	t_tPrefix{}
+					,	tInfix{}
+					,	t_tSuffix{}
+					)
+				)
+			;
+				vResult.Type
+			=	Meta::Type<tAliasTarget>
+			;
+		}
+		return vResult;
 	}
 
 	template
-		<	ProtoID
+		<	typename
 				t_tPrefix
-		,	DataMemberConfig
-				t_vConfig
-		,	ProtoID
+		,	auto const
+			&	t_rConfig
+		,	typename
 				t_tSuffix
 		>
-	auto constexpr
-	(	InfixLayoutConfig
-	)	(	t_tPrefix
-		,	Meta::ValueInfo<t_vConfig>
-		,	t_tSuffix
-		)
-	->	decltype(t_vConfig)
-	{	return
-		[]	<	Meta::USize
+	MemberList constexpr inline
+		InfixLayoutConfig
+	=	[]	<	Meta::USize
 				...	t_npIndex
 			>(	Meta::IndexToken<t_npIndex...>
 			)
-		->	decltype(t_vConfig)
+		->	decltype(auto)
 		{	return
-			decltype(t_vConfig)
+			MemberList
 			{	InfixDataMember
 				<	t_tPrefix
-				,	t_vConfig[t_npIndex]
+				,	t_rConfig[t_npIndex]
 				,	t_tSuffix
 				>()
 				...
 			};
 
-		}(	Meta::Sequence<t_vConfig.size()>
-		);
-	}
+		}(	Meta::Sequence<t_rConfig.size()>
+		)
+	;
+}
 
+export namespace
+	ATR
+{
 	/// uses the LayoutConfig mapped to the given literal and prefixes it with that literal
 	template
 		<	StringLiteral
@@ -127,13 +127,13 @@ export namespace
 				i_vPrefix
 			=	i_vType
 		>
-	DataMemberConfig constexpr inline
+	MemberList constexpr inline
 		PrefixedLayoutConfig
-	=	InfixLayoutConfig
-		(	ID_V<i_vPrefix>
-		,	Meta::V<LayoutConfig<i_vType>>
-		,	""_ID
-		)
+	=	::ATR::InfixLayoutConfig
+		<	ID_T<i_vPrefix>
+		,	LayoutConfig<i_vType>
+		,	ID<>
+		>
 	;
 
 	/// uses the LayoutConfig mapped to the given literal and suffixes it with that literal
@@ -144,12 +144,12 @@ export namespace
 				i_vSuffix
 			=	i_vType
 		>
-	DataMemberConfig constexpr inline
+	MemberList constexpr inline
 		SuffixedLayoutConfig
-	=	ATR::InfixLayoutConfig
-		(	""_ID
-		,	Meta::V<LayoutConfig<i_vType>>
-		,	ID_V<i_vSuffix>
-		)
+	=	::ATR::InfixLayoutConfig
+		<	ID<>
+		,	LayoutConfig<i_vType>
+		,	ID_T<i_vSuffix>
+		>
 	;
 }

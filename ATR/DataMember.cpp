@@ -1,58 +1,53 @@
 export module ATR.DataMember;
 
 export import Std;
-export import Meta.Data.Value;
-export import ATR.ID;
-export import Meta.Token.Type;
 export import Meta.Integer;
-export import Meta.Predicate.Erasure;
+export import Meta.Token.Type;
+export import Meta.Token.Query;
+export import Meta.Data.Aggregate;
+export import ATR.ID;
 
 export namespace
 	ATR
 {
+	::Meta::USize constexpr inline
+		AliasSortKey
+	=	0uz
+	;
+
+	::Meta::USize constexpr inline
+		StaticSortKey
+	=	::std::numeric_limits<::Meta::USize>::max()
+	;
+
+	template
+		<	typename
+				t_tData
+		>
+	::Meta::USize constexpr inline
+		MemberSortKey
+	=	//	sort order inverse to alignment
+		StaticSortKey
+	-	(	::std::is_empty_v<Meta::Data::Object<t_tData>>
+		?	0uz // optimize empty members to be static
+		:	Meta::BitAlign(Meta::Type<t_tData>)
+		)
+	;
+
 	struct
-		DataMemberInfo final
+		MemberInfo final
 	{
-		Meta::EraseAlignType
-			Type
-		;
-
-		StringView
-			Name
-		;
-
-		StringView
-			Alias
-		=	ID<>::StringView
-		;
+		Meta::USize SortKey;
+		StringView Name;
+		Meta::EraseTypeToken Type;
 
 		friend auto constexpr
 		(	operator<=>
-		)	(	DataMemberInfo const
-				&	i_rLeft
-			,	DataMemberInfo const
-				&	i_rRight
+		)	(	MemberInfo const&
+			,	MemberInfo const&
 			)
 		->	::std::strong_ordering
-		{
-			//	alias are sorted first to resolve them in iterations as soon as possible
-			if	(i_rLeft.Alias and not i_rRight.Alias)
-				return ::std::strong_ordering::less;
-			else
-			if	(not i_rLeft.Alias and i_rRight.Alias)
-				return ::std::strong_ordering::greater;
-			else
-			//	greater alignment means ordered earlier
-			if	(i_rLeft.Type.Align != i_rRight.Type.Align)
-				return
-					i_rLeft.Type.Align > i_rRight.Type.Align
-				?	::std::strong_ordering::less
-				:	::std::strong_ordering::greater
-				;
-			//	sort by name within same alignment
-			else
-				return i_rLeft.Name <=> i_rRight.Name;
-		}
+		=	default;
 	};
 
 	template
@@ -60,28 +55,25 @@ export namespace
 				t_nMemberCount
 		>
 	struct
-		DataMemberConfig final
-	:	Meta::ArrayValue
-		<	DataMemberInfo
+		MemberList final
+	:	Meta::ArrayAggregate
+		<	MemberInfo
 		,	t_nMemberCount
 		>
 	{
-		using ArrayValue = Meta::ArrayValue<DataMemberInfo, t_nMemberCount>;
-		using ArrayValue::ArrayValue;
-
 		auto constexpr
 		(	operator()
-		)	(	::std::initializer_list<DataMemberInfo>
+		)	(	::std::initializer_list<MemberInfo>
 					i_vExchangeList
 			)	const
-		->	DataMemberConfig
+		->	MemberList
 		{
-			DataMemberConfig
+			MemberList
 				vCopy
 			=	*this
 			;
 
-			for	(	DataMemberInfo const
+			for	(	MemberInfo const
 					&	rExchange
 				:	i_vExchangeList
 				)
@@ -92,7 +84,7 @@ export namespace
 					(	begin(vCopy)
 					,	end(vCopy)
 					,	[	vName = rExchange.Name
-						]	(	DataMemberInfo const
+						]	(	MemberInfo const
 								&	i_rInfo
 							)
 						{	return i_rInfo.Name == vName;	}
@@ -101,8 +93,8 @@ export namespace
 				if	(vExchangePosition == end(vCopy))
 					throw "Cannot exchange non-existing member!";
 
+				vExchangePosition->SortKey = rExchange.SortKey;
 				vExchangePosition->Type = rExchange.Type;
-				vExchangePosition->Alias = rExchange.Alias;
 			}
 
 			::std::sort(begin(vCopy), end(vCopy));
@@ -112,10 +104,10 @@ export namespace
 
 		auto constexpr
 		(	operator()
-		)	(	DataMemberInfo const
+		)	(	MemberInfo const
 				&	i_rExchange
 			)	const
-		->	DataMemberConfig
+		->	MemberList
 		{	return operator()({i_rExchange});	}
 
 		template
@@ -124,12 +116,12 @@ export namespace
 			>
 		friend auto constexpr
 		(	operator +
-		)	(	DataMemberConfig const
+		)	(	MemberList const
 				&	i_rLeft
-			,	DataMemberConfig<t_nRight> const
+			,	MemberList<t_nRight> const
 				&	i_rRight
 			)
-		->	DataMemberConfig
+		->	MemberList
 			<	t_nMemberCount
 			+	t_nRight
 			>
@@ -147,7 +139,7 @@ export namespace
 				return i_rLeft;
 			else
 			{
-				DataMemberConfig
+				MemberList
 				<	t_nMemberCount
 				+	t_nRight
 				>	vResult
@@ -165,7 +157,7 @@ export namespace
 				;
 
 				if	(vLast != end(vResult))
-					throw "Cannot merge DataMemberConfig with identical members!";
+					throw "Cannot merge MemberList with identical members!";
 				return vResult;
 			}
 		}
@@ -176,12 +168,12 @@ export namespace
 			>
 		friend auto constexpr
 		(	operator -
-		)	(	DataMemberConfig const
+		)	(	MemberList const
 				&	i_rLeft
-			,	DataMemberConfig<t_nRight> const
+			,	MemberList<t_nRight> const
 				&	i_rRight
 			)
-		->	DataMemberConfig
+		->	MemberList
 			<	t_nMemberCount
 			-	t_nRight
 			>
@@ -189,19 +181,13 @@ export namespace
 			static_assert
 			(	t_nMemberCount
 			>=	t_nRight
-			,	"Cannot subtract more DataMemberInfos than already exist!"
+			,	"Cannot subtract more MemberInfos than already exist!"
 			);
 			if	constexpr
 				(	t_nRight
 				==	0uz
 				)
 				return i_rLeft;
-			else
-			if	constexpr
-				(	t_nMemberCount
-				==	t_nRight
-				)
-				return DataMemberConfig<0uz>{};
 			else
 			if	(	not
 					::std::includes
@@ -211,9 +197,9 @@ export namespace
 					,	end(i_rRight)
 					)
 				)
-				throw "Cannot subtract DataMemberInfos that are not contained!";
+				throw "Cannot subtract MemberInfos that are not contained!";
 
-			DataMemberConfig
+			MemberList
 			<	t_nMemberCount
 			-	t_nRight
 			>	vResult
@@ -234,11 +220,24 @@ export namespace
 		<	Meta::USize
 				t_nMemberCount
 		>
-	(	DataMemberConfig
-	)	(	DataMemberConfig<t_nMemberCount>
+	(	MemberList
+	)	(	MemberList<t_nMemberCount>
 		)
-	->	DataMemberConfig
+	->	MemberList
 		<	t_nMemberCount
+		>
+	;
+
+	template
+		<	typename
+			...	t_tpDataMember
+		>
+	(	MemberList
+	)	(	t_tpDataMember
+			...
+		)
+	->	MemberList
+		<	sizeof...(t_tpDataMember)
 		>
 	;
 
@@ -248,11 +247,15 @@ export namespace
 		,	typename
 				t_tValue
 		>
-	DataMemberConfig<1uz> constexpr inline
+	MemberList<1uz> constexpr inline
 		InfoV
-	{	DataMemberInfo
-		{	Meta::Type<t_tValue>
-		,	ID_T<t_vName>::StringView
+	{	MemberInfo
+		{	.SortKey
+		=	MemberSortKey<t_tValue>
+		,	.Name
+		=	ID_T<t_vName>::StringView
+		,	.Type
+		=	Meta::Type<t_tValue>
 		}
 	};
 
@@ -262,18 +265,21 @@ export namespace
 		,	StringLiteral
 				t_vTargetID
 		>
-	DataMemberInfo constexpr inline
+	MemberInfo constexpr inline
 		Alias
-	{	.Type = Meta::Type<ID_T<t_vTargetID>>
-	,	.Name = ID_T<t_vOriginID>::StringView
-	,	.Alias = ID_T<t_vTargetID>::StringView
+	{	.SortKey
+	=	AliasSortKey
+	,	.Name
+	=	ID_T<t_vOriginID>::StringView
+	,	.Type
+	=	Meta::Type<ID_T<t_vTargetID>>
 	};
 
 	/// maps a string literal to a Layout
 	template
 		<	StringLiteral
 		>
-	ATR::DataMemberConfig<0uz> constexpr inline
+	MemberList<0uz> constexpr inline
 		LayoutConfig
 	{};
 }

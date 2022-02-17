@@ -1,7 +1,6 @@
 export module ATR.Address;
 
 export import ATR.Dependency;
-export import ATR.Erase;
 export import ATR.ID;
 
 import Std;
@@ -101,15 +100,15 @@ export namespace
 		ProtoAddress
 	=	ProtoID<t_tFuncID>
 	and	requires
-		{	MapAddress
-			(	t_tFuncID{}
-			,	::std::declval<t_tpArgument>()
+		{	typename
+			FunctionType
+			<	t_tFuncID
+			,	t_tpArgument
 				...
-			);
+			>;
 		}
 	;
 
-	/// stores the address to the implementation of the function
 	template
 		<	ProtoID
 				t_tFunctionName

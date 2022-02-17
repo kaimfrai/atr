@@ -41,7 +41,7 @@ export namespace
 		requires
 			ProtoAddress
 			<	t_tFunctionName
-			,	LayoutType&
+			,	Instance&
 			,	t_tpArgument
 				...
 			>
@@ -63,12 +63,12 @@ export namespace
 			)
 		->	decltype(auto)
 		{	return
-			MapAddress
-			(	t_tFunctionName{}
-			,	static_cast<LayoutType&>(*this)
-			,	static_cast<t_tpArgument&&>(i_rpArgument)
+			Address
+			<	t_tFunctionName
+			,	LayoutType const&
+			,	t_tpArgument
 				...
-			)(	ForwardErased
+			>(	ForwardErased
 				(	Meta::Type<LayoutType&>
 				,	*this
 				)
@@ -111,12 +111,12 @@ export namespace
 			)
 		->	decltype(auto)
 		{	return
-			MapAddress
-			(	t_tFunctionName{}
-			,	static_cast<LayoutType const&>(*this)
-			,	static_cast<t_tpArgument&&>(i_rpArgument)
+			Address
+			<	t_tFunctionName
+			,	LayoutType const&
+			,	t_tpArgument
 				...
-			)(	ForwardErased
+			>(	ForwardErased
 				(	Meta::Type<LayoutType const&>
 				,	*this
 				)
@@ -160,12 +160,12 @@ export namespace
 			)
 		->	decltype(auto)
 		{	return
-			MapAddress
-			(	t_tFunctionName{}
-			,	static_cast<LayoutType&&>(*this)
-			,	static_cast<t_tpArgument&&>(i_rpArgument)
+			Address
+			<	t_tFunctionName
+			,	LayoutType const&
+			,	t_tpArgument
 				...
-			)(	ForwardErased
+			>(	ForwardErased
 				(	Meta::Type<LayoutType&&>
 				,	*this
 				)

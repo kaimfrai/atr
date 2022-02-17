@@ -36,9 +36,12 @@ template
 struct
 	Member final
 {
-	static Meta::TypeToken<t_tData> constexpr
-		DataType
-	{};
+	static Meta::USize constexpr
+		SortKey
+	=	::ATR::MemberSortKey
+		<	t_tData
+		>
+	;
 };
 
 namespace
@@ -111,46 +114,35 @@ namespace
 	static auto constexpr
 	(	LayoutSplitIndex
 	)	(	::std::initializer_list
-			<	Meta::EraseAlignType
-			>	i_vTypes
+			<	Meta::USize
+			>	i_vAlignList
 		)
 	->	Meta::USize
 	{
 		auto const
 			aFirst
-		=	begin(i_vTypes)
+		=	begin(i_vAlignList)
 		;
 		auto const
 			aLast
-		=	end(i_vTypes)
+		=	end(i_vAlignList)
 		-	1uz
 		;
-		if	(	aFirst->Align
-			==	aLast->Align
+		if	(	*aFirst
+			==	*aLast
 			)
 			return
 			::std::bit_floor<Meta::USize>
-			(	i_vTypes.size()
+			(	i_vAlignList.size()
 			-	1uz
 			);
 		else
 		{	auto const
 				aSplitPoint
-			=	::std::lower_bound
+			=	::std::upper_bound
 				(	aFirst
 				,	aLast + 1z
-				,	aFirst->Align / 2uz
-				,	[]	(	Meta::EraseAlignType
-								i_vLeft
-						,	Meta::USize
-								i_nRight
-						)
-					->	bool
-					{	return
-							i_vLeft.Align
-						>	i_nRight
-						;
-					}
+				,	*aFirst
 				)
 			;
 			return
@@ -180,7 +172,7 @@ namespace
 		static Meta::USize constexpr
 			SplitIndex
 		=	LayoutSplitIndex
-			({	t_tpMember::DataType
+			({	t_tpMember::SortKey
 				...
 			})
 		;
@@ -811,22 +803,22 @@ namespace
 	[[nodiscard]]
 	static auto constexpr
 	(	AliasCount
-	)	(	DataMemberInfo const
+	)	(	MemberInfo const
 			*	i_aBegin
-		,	DataMemberInfo const
+		,	MemberInfo const
 			*	i_aEnd
 		)
 	->	Meta::USize
 	{	return
 		static_cast<Meta::USize>
-		(	::std::find_if
+		(	::std::lower_bound
 			(	i_aBegin
 			,	i_aEnd
-			,	[]	(	DataMemberInfo const
-						&	i_rDataMember
-					)
-				->	bool
-				{	return i_rDataMember.Alias.empty();	}
+			,	MemberInfo
+				{	.SortKey = AliasSortKey + 1uz
+				,	.Name = {}
+				,	.Type = {}
+				}
 			)
 		-	i_aBegin
 		);
@@ -835,29 +827,29 @@ namespace
 	[[nodiscard]]
 	static auto constexpr
 	(	StaticCount
-	)	(	DataMemberInfo const
+	)	(	MemberInfo const
 			*	i_aBegin
-		,	DataMemberInfo const
+		,	MemberInfo const
 			*	i_aEnd
 		)
 	->	Meta::USize
 	{	return
 		static_cast<Meta::USize>
 		(	i_aEnd
-		-	::std::find_if
+		-	::std::lower_bound
 			(	i_aBegin
 			,	i_aEnd
-			,	[]	(	DataMemberInfo const
-						&	i_rDataMember
-					)
-				->	bool
-				{	return i_rDataMember.Type.Align == 0uz;	}
+			,	MemberInfo
+				{	.SortKey = StaticSortKey
+				,	.Name = {}
+				,	.Type = {}
+				}
 			)
 		);
 	}
 
 	template
-		<	DataMemberConfig
+		<	MemberList
 				t_vConfig
 		>
 	[[nodiscard]]
