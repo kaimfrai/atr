@@ -7,48 +7,76 @@ export namespace
 	Meta::Token
 {
 	template
-		<	typename
-				t_tElement
+		<	USize
+				t_nExtent
 		>
 	struct
-		Array final
+		Extent final
 	{
-		USize
-			Extent
-		;
+		template
+			<	typename
+					t_tElement
+			>
+		friend auto constexpr
+		(	operator +
+		)	(	TypeToken<t_tElement>
+			,	Extent
+			)
+		->	TypeToken<t_tElement[t_nExtent]>
+		{	return {};	}
 
-		static auto constexpr
-		(	GetElement
-		)	()
+		template
+			<	typename
+					t_tElement
+			>
+		friend auto constexpr
+		(	operator -
+		)	(	TypeToken<t_tElement[t_nExtent]>
+			,	Extent
+			)
 		->	TypeToken<t_tElement>
 		{	return {};	}
 	};
 
 	template
-		<	typename
-				t_tElement
-		,	USize
+		<>
+	struct
+		Extent<0uz> final
+	{
+		template
+			<	typename
+					t_tElement
+			>
+		friend auto constexpr
+		(	operator +
+		)	(	TypeToken<t_tElement>
+			,	Extent
+			)
+		->	TypeToken<t_tElement[]>
+		{	return {};	}
+
+		template
+			<	typename
+					t_tElement
+			>
+		friend auto constexpr
+		(	operator -
+		)	(	TypeToken<t_tElement[]>
+			,	Extent
+			)
+		->	TypeToken<t_tElement>
+		{	return {};	}
+	};
+}
+
+export namespace
+	Meta
+{
+	template
+		<	USize
 				t_nExtent
 		>
-	auto constexpr
-	(	Decompose
-	)	(	TypeToken
-			<	t_tElement[t_nExtent]
-			>
-		)
-	->	Array<t_tElement>
-	{	return { t_nExtent }; }
-
-	template
-		<	typename
-				t_tElement
-		>
-	auto constexpr
-	(	Decompose
-	)	(	TypeToken
-			<	t_tElement[]
-			>
-		)
-	->	Array<t_tElement>
-	{	return { 0uz };	}
+	Token::Extent<t_nExtent> constexpr inline
+		Extent
+	{};
 }

@@ -24,7 +24,7 @@ export namespace
 	{
 		explicit constexpr
 		(	SelectByIndex
-		)	(	IndexToken<t_npFront...>
+		)	(	Token::Index<t_npFront...>
 			)
 		{}
 
@@ -49,7 +49,7 @@ export namespace
 			...	t_npFront
 		>
 	(	SelectByIndex
-	)	(	IndexToken<t_npFront...>
+	)	(	Token::Index<t_npFront...>
 		)
 	->	SelectByIndex<t_npFront...>
 	;

@@ -3,6 +3,8 @@ export module ATR.Layout;
 export import ATR.ID;
 export import ATR.DataMember;
 
+import Meta.SelectByIndex;
+
 export namespace
 	ATR
 {

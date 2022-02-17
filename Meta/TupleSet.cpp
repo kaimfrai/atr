@@ -7,8 +7,7 @@ export import Meta.Type;
 export import Meta.Concept;
 export import Meta.Bit;
 export import Meta.Value;
-
-import Meta.SelectByIndex;
+export import Meta.SelectByIndex;
 
 export namespace
 	Meta
@@ -141,12 +140,10 @@ export namespace
 			)	const&
 		->	auto const&
 		{
-			auto constexpr
+			SelectByIndex constexpr
 				fIgnoreOther
-			=	SelectByIndex
-				(	ZeroSequence<t_nIndex>
-				)
-			;
+			{	ZeroSequence<t_nIndex>
+			};
 			return
 				fIgnoreOther
 				(	static_cast

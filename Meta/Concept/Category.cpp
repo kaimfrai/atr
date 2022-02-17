@@ -1,8 +1,7 @@
 export module Meta.Concept.Category;
 
-export import Std;
 export import Meta.Type;
-export import Meta.Type.Function;
+import Std;
 
 export namespace
 	Meta::Trait
@@ -210,9 +209,8 @@ export namespace
 	///	Signed Integral vs. Unsigned Integral.
 	///	Scoped Enum vs. Unscoped Enum.
 	///	Pointer vs. Member Pointer.
-	///	Noexcept Function vs. not Noexcept Function.
 	struct
-		Signed_Scoped_Ptr_Noex final
+		Signed_Scoped_Ptr final
 	:	LiteralBase
 	{
 		template
@@ -222,7 +220,6 @@ export namespace
 		auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
-					i_vType
 			)	const
 		->	bool
 		{	return
@@ -230,7 +227,6 @@ export namespace
 			==	(	::std::is_signed_v<t_tEntity>
 				or	::std::is_scoped_enum_v<t_tEntity>
 				or	::std::is_pointer_v<t_tEntity>
-				or	IsNoexcept(i_vType)
 				)
 			;
 		}
@@ -362,11 +358,11 @@ export namespace
 				t_bPolarity
 		>
 	concept
-		Signed_Scoped_Ptr_Noex
+		Signed_Scoped_Ptr
 	=	Literal
 		<	t_tProto
 		,	Trait::StaticConstraint
-			<	Trait::Signed_Scoped_Ptr_Noex
+			<	Trait::Signed_Scoped_Ptr
 				{	t_bPolarity
 				}
 			>
@@ -529,7 +525,7 @@ export namespace
 		>
 	concept
 		FloatingPoint
-	=	Signed_Scoped_Ptr_Noex<t_tProto, true>
+	=	Signed_Scoped_Ptr<t_tProto, true>
 	and	Float_NPtr<t_tProto>
 	;
 
@@ -539,7 +535,7 @@ export namespace
 		>
 	concept
 		NullPointer
-	=	Signed_Scoped_Ptr_Noex<t_tProto, false>
+	=	Signed_Scoped_Ptr<t_tProto, false>
 	and	Float_NPtr<t_tProto>
 	;
 
@@ -579,7 +575,7 @@ export namespace
 		>
 	concept
 		Pointer
-	=	Signed_Scoped_Ptr_Noex<t_tProto, true>
+	=	Signed_Scoped_Ptr<t_tProto, true>
 	and	Indirection<t_tProto>
 	;
 
@@ -589,7 +585,7 @@ export namespace
 		>
 	concept
 		MemberPointer
-	=	Signed_Scoped_Ptr_Noex<t_tProto, false>
+	=	Signed_Scoped_Ptr<t_tProto, false>
 	and	Indirection<t_tProto>
 	;
 

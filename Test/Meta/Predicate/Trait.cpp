@@ -106,45 +106,6 @@ static_assert(
 static_assert(
 	IsFunction(Type<QNxFunc>));
 
-static_assert(not
-	IsNoexceptFunction(Type<Void>));
-static_assert(not
-	IsNoexceptFunction(Type<Unsigned>));
-static_assert(not
-	IsNoexceptFunction(Type<Signed>));
-static_assert(not
-	IsNoexceptFunction(Type<Float>));
-static_assert(not
-	IsNoexceptFunction(Type<Nullptr>));
-static_assert(not
-	IsNoexceptFunction(Type<Ptr>));
-static_assert(not
-	IsNoexceptFunction(Type<LRef>));
-static_assert(not
-	IsNoexceptFunction(Type<RRef>));
-static_assert(not
-	IsNoexceptFunction(Type<BArr>));
-static_assert(not
-	IsNoexceptFunction(Type<UArr>));
-static_assert(not
-	IsNoexceptFunction(Type<UEnum>));
-static_assert(not
-	IsNoexceptFunction(Type<SEnum>));
-static_assert(not
-	IsNoexceptFunction(Type<Class>));
-static_assert(not
-	IsNoexceptFunction(Type<Union>));
-static_assert(not
-	IsNoexceptFunction(Type<MPtr>));
-static_assert(not
-	IsNoexceptFunction(Type<Func>));
-static_assert(
-	IsNoexceptFunction(Type<NxFunc>));
-static_assert(not
-	IsNoexceptFunction(Type<QFunc>));
-static_assert(
-	IsNoexceptFunction(Type<QNxFunc>));
-
 static_assert(
 	IsVoid(Type<Void>));
 static_assert(not

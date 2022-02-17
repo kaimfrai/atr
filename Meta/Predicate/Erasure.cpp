@@ -1,7 +1,9 @@
 export module Meta.Predicate.Erasure;
 
 export import Meta.Data.Object;
-export import Meta.Type.Transform;
+export import Meta.Type.Query;
+
+import Std;
 
 export namespace
 	Meta

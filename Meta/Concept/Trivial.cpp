@@ -1,6 +1,7 @@
 export module Meta.Concept.Trivial;
 
 export import Meta.Concept.Regular;
+import Std;
 
 export namespace
 	Meta::Trait

@@ -27,8 +27,8 @@ export namespace
 	};
 
 	Term constexpr inline
-		IsSigned_Scoped_Ptr_Noex
-	{	Trait::Signed_Scoped_Ptr_Noex{true}
+		IsSigned_Scoped_Ptr
+	{	Trait::Signed_Scoped_Ptr{true}
 	};
 
 	Term constexpr inline
@@ -36,12 +36,6 @@ export namespace
 	=	not IsFund_Array
 	and	not IsScalar_Ref_Void
 	and	not IsValue
-	;
-
-	Term constexpr inline
-		IsNoexceptFunction
-	=	IsSigned_Scoped_Ptr_Noex
-	and	IsFunction
 	;
 
 	Term constexpr inline
@@ -103,7 +97,7 @@ export namespace
 
 	Term constexpr inline
 		IsFloatingPoint
-	=	IsSigned_Scoped_Ptr_Noex
+	=	IsSigned_Scoped_Ptr
 	and	not IsInt_Enum_Class_LRef_NonQ
 	and	IsFundamentalScalar
 	;
@@ -122,25 +116,25 @@ export namespace
 
 	Term constexpr inline
 		IsUnsigned
-	=	not IsSigned_Scoped_Ptr_Noex
+	=	not IsSigned_Scoped_Ptr
 	and	IsIntegral
 	;
 
 	Term constexpr inline
 		IsSignedIntegral
-	=	IsSigned_Scoped_Ptr_Noex
+	=	IsSigned_Scoped_Ptr
 	and	IsIntegral
 	;
 
 	Term constexpr inline
 		IsSigned
-	=	IsSigned_Scoped_Ptr_Noex
+	=	IsSigned_Scoped_Ptr
 	and	IsFundamentalScalar
 	;
 
 	Term constexpr inline
 		IsPointer
-	=	IsSigned_Scoped_Ptr_Noex
+	=	IsSigned_Scoped_Ptr
 	and	not IsInt_Enum_Class_LRef_NonQ
 	and	not IsFund_Array
 	and	IsScalar
@@ -148,14 +142,14 @@ export namespace
 
 	Term constexpr inline
 		IsNullPointer
-	=	not IsSigned_Scoped_Ptr_Noex
+	=	not IsSigned_Scoped_Ptr
 	and	not IsInt_Enum_Class_LRef_NonQ
 	and	IsFundamentalScalar
 	;
 
 	Term constexpr inline
 		IsMemberPointer
-	=	not IsSigned_Scoped_Ptr_Noex
+	=	not IsSigned_Scoped_Ptr
 	and	not IsInt_Enum_Class_LRef_NonQ
 	and	not IsFund_Array
 	and	IsScalar
@@ -182,13 +176,13 @@ export namespace
 
 	Term constexpr inline
 		IsScopedEnum
-	=	IsSigned_Scoped_Ptr_Noex
+	=	IsSigned_Scoped_Ptr
 	and	IsEnum
 	;
 
 	Term constexpr inline
 		IsUnscopedEnum
-	=	not IsSigned_Scoped_Ptr_Noex
+	=	not IsSigned_Scoped_Ptr
 	and	IsEnum
 	;
 

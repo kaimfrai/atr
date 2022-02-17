@@ -1,6 +1,7 @@
 export module Meta.Concept.Regular;
 
 export import Meta.Concept.Category;
+import Std;
 
 export namespace
 	Meta::Trait

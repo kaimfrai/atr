@@ -1,6 +1,7 @@
 export module Meta.Data.Aggregate;
 
 export import Meta.Integer;
+export import Meta.Index;
 export import Meta.Data.Object;
 export import Meta.Concept.Regular;
 import Std;
