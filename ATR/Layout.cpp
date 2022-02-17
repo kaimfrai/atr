@@ -54,14 +54,10 @@ namespace
 	struct
 		SplitPack final
 	{
-		explicit constexpr
-		(	SplitPack
-		)	(	Meta::IndexToken
-				<	t_npIndex
-					...
-				>
-			)
-		{}
+		[[no_unique_address]]
+		::Meta::IndexToken<t_npIndex...>
+			Sequence
+		;
 
 		template
 			<	Meta::ProtoIndexedElement<t_npIndex>
@@ -98,11 +94,11 @@ namespace
 	};
 
 	template
-		<	Meta::USize
+		<	::Meta::USize
 			...	t_npIndex
 		>
 	(	SplitPack
-	)	(	Meta::IndexToken<t_npIndex...>
+	)	(	::Meta::IndexToken<t_npIndex...>
 		)
 	->	SplitPack
 		<	t_npIndex

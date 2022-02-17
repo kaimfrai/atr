@@ -17,13 +17,12 @@ namespace
 			...	t_npFront
 		>
 	struct
-		SelectByIndex
+		SelectByIndex final
 	{
-		explicit constexpr
-		(	SelectByIndex
-		)	(	Token::Index<t_npFront...>
-			)
-		{}
+		[[no_unique_address]]
+		Token::Index<t_npFront...>
+			FrontSequence
+		;
 
 		template
 			<	typename
