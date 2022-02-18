@@ -1,8 +1,213 @@
 export module Meta.Predicate.Trivial;
 
-export import Meta.Concept.Trivial;
 export import Meta.Logic;
+export import Meta.Constraint;
 export import Meta.Predicate.Regular;
+
+export namespace
+	Meta::Trait
+{
+	struct
+		TriviallyDestructible final
+	:	LiteralBase
+	{
+		using LiteralBase::operator();
+
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return
+			(	Polarity
+			==	::std::is_trivially_destructible_v
+				<	t_tEntity
+				>
+			);
+		}
+	};
+
+	template
+		<	typename
+			...	t_tpArgument
+		>
+	struct
+		TriviallyConstructible_From final
+	:	LiteralBase
+	{
+		using LiteralBase::operator();
+
+		explicit constexpr
+		(	TriviallyConstructible_From
+		)	(	bool
+					i_bPolarity
+			,	TypeToken<t_tpArgument>
+				...
+			)
+		:	LiteralBase
+			{	i_bPolarity
+			}
+		{}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{
+			if	constexpr
+				(	sizeof...(t_tpArgument)
+				==	0uz
+				)
+				return
+				(	Polarity
+				==	(	::std::default_initializable
+						<	t_tEntity
+						>
+					and	::std::is_trivially_constructible_v
+						<	t_tEntity
+						>
+					)
+				);
+			else
+				return
+				(	Polarity
+				==	::std::is_trivially_constructible_v
+					<	t_tEntity
+					,	t_tpArgument
+						...
+					>
+				);
+		}
+	};
+
+	template
+		<	typename
+			...	t_tpArgument
+		>
+	(	TriviallyConstructible_From
+	)	(	bool
+		,	TypeToken<t_tpArgument>
+			...
+		)
+	->	TriviallyConstructible_From
+		<	t_tpArgument
+			...
+		>
+	;
+
+	struct
+		TriviallyMoveConstructible final
+	:	LiteralBase
+	{
+		using LiteralBase::operator();
+
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return
+			(	Polarity
+			==	::std::is_trivially_move_constructible_v
+				<	::std::remove_all_extents
+					<	t_tEntity
+					>
+				>
+			);
+		}
+	};
+
+	struct
+		TriviallyCopyConstructible final
+	:	LiteralBase
+	{
+		using LiteralBase::operator();
+
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return
+			(	Polarity
+			==	::std::is_trivially_copy_constructible_v
+				<	::std::remove_all_extents
+					<	t_tEntity
+					>
+				>
+			);
+		}
+	};
+
+	struct
+		TriviallyMoveAssignable final
+	:	LiteralBase
+	{
+		using LiteralBase::operator();
+
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return
+			(	Polarity
+			==	::std::is_trivially_move_assignable_v
+				<	::std::remove_all_extents
+					<	t_tEntity
+					>
+				>
+			);
+		}
+	};
+
+	struct
+		TriviallyCopyAssignable final
+	:	LiteralBase
+	{
+		using LiteralBase::operator();
+
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return
+			(	Polarity
+			==	::std::is_trivially_copy_assignable_v
+				<	::std::remove_all_extents
+					<	t_tEntity
+					>
+				>
+			);
+		}
+	};
+}
 
 export namespace
 	Meta
@@ -76,8 +281,8 @@ export namespace
 
 	Term constexpr inline
 		IsTrivialRegular
-	=	IsEqualityComparable
-	and	IsTrivial
+	=		IsEqualityComparable
+		and	IsTrivial
 	or	IsScalar
 	;
 }

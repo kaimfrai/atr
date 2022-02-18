@@ -1,7 +1,5 @@
 add_module(Category.cpp)
 add_module(Regular.cpp)
 add_module(RegularCustom.cpp)
-add_module(Trivial.cpp)
-add_module(TrivialCustom.cpp)
 
 add_module(Concept.cpp)

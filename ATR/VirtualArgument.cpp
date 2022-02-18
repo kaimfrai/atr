@@ -1,7 +1,6 @@
 export module ATR.VirtualArgument;
 
 export import Meta.Token.Type;
-export import Meta.Concept.Trivial;
 export import ATR.Address;
 export import ATR.ID;
 
@@ -336,7 +335,7 @@ export namespace
 
 	public:
 		template
-			<	Meta::ProtoTriviallyCopyable
+			<	typename
 					t_tObject
 			,	typename
 				...	t_tpArgument
