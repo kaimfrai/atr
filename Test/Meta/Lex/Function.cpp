@@ -22,16 +22,8 @@ Meta::EraseTypeToken constexpr inline
 		<	Sig
 			<	MatchCV<int>
 			,	Param
-				<	CV
-					<	Ptr
-						<	MatchCV<int>
-						>
-					>
-				,	CV
-					<	Ptr
-						<	MatchCV<int>
-						>
-					>
+				<	MatchCVPointer<MatchCV<int>>
+				,	MatchCVPointer<MatchCV<int>>
 				,	Ref
 					<	MatchCVArray
 						<	MatchCV<int>
@@ -44,11 +36,7 @@ Meta::EraseTypeToken constexpr inline
 						<	Sig
 							<	MatchCV<int>
 							,	Param
-								<	CV
-									<	Ptr
-										<	MatchCV<int>
-										>
-									>
+								<	MatchCVPointer<MatchCV<int>>
 								>
 							>
 						,	Noexcept
@@ -194,16 +182,8 @@ Meta::EraseTypeToken constexpr inline
 		<	Sig
 			<	MatchCV<int>
 			,	Param
-				<	CV
-					<	Ptr
-						<	MatchCV<int>
-						>
-					>
-				,	CV
-					<	Ptr
-						<	MatchCV<int>
-						>
-					>
+				<	MatchCVPointer<MatchCV<int>>
+				,	MatchCVPointer<MatchCV<int>>
 				,	Ref
 					<	MatchCVArray
 						<	MatchCV<int>
@@ -216,11 +196,7 @@ Meta::EraseTypeToken constexpr inline
 						<	Sig
 							<	MatchCV<int>
 							,	Param
-								<	CV
-									<	Ptr
-										<	MatchCV<int>
-										>
-									>
+								<	MatchCVPointer<MatchCV<int>>
 								>
 							,	Meta::Token::Ellipsis
 							>

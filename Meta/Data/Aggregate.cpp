@@ -3,8 +3,8 @@ export module Meta.Data.Aggregate;
 export import Meta.Integer;
 export import Meta.Token.Sequence;
 export import Meta.Token.Array;
+export import Meta.Lex;
 export import Meta.Data.Object;
-export import Meta.Concept.Regular;
 
 import Std;
 
@@ -17,44 +17,98 @@ export namespace
 		>
 	struct
 		Aggregate
-	:	Object<t_tData>
-	{
-		friend auto constexpr
-		(	operator ==
-		)	(	Aggregate
-			,	Aggregate
-			)
-		->	bool
-		=	default;
-	};
+	:	Aggregate
+		<	TokenizeEntity<t_tData>
+		>
+	{};
 
 	template
-		<	ProtoValue
-				t_tData
+		<	typename
+			...	t_tpQualifier
 		>
 	struct
-		Aggregate<t_tData>
-	:	Object<t_tData>
+		Aggregate
+		<	Lex::MatchCV
+			<	void
+			,	t_tpQualifier
+				...
+			>
+		>
+	:	Object
+		<	Lex::MatchCV
+			<	void
+			,	t_tpQualifier
+				...
+			>
+		>
+	{};
+
+	template
+		<	typename
+				t_tSignature
+		,	typename
+			...	t_tpQualifier
+		>
+	struct
+		Aggregate
+		<	Lex::Func
+			<	t_tSignature
+			,	t_tpQualifier
+				...
+			>
+		>
+	:	Object
+		<	Lex::Func
+			<	t_tSignature
+			,	t_tpQualifier
+				...
+			>
+		>
+	{};
+
+	template
+		<	typename
+				t_tData
+		,	typename
+			...	t_tQualifier
+		>
+	struct
+		Aggregate
+		<	Lex::CV
+			<	t_tData
+			,	t_tQualifier
+				...
+			>
+		>
+	:	Object
+		<	Lex::CV
+			<	t_tData
+			,	t_tQualifier
+				...
+			>
+		>
 	{
+		using DataType = typename Lex::CV<t_tData, t_tQualifier...>::Entity;
+
 		auto constexpr
 		(	get
 		)	()	&
 			noexcept
-		->	t_tData&
+		->	DataType&
 		{	return this->Data;	}
 
 		auto constexpr
 		(	get
 		)	()	const&
 			noexcept
-		->	t_tData const&
+		->	DataType const&
 		{	return this->Data;	}
 
 		auto constexpr
 		(	get
 		)	()	&&
 			noexcept
-		->	::std::remove_cv_t<t_tData>
+		->	::std::remove_cv_t<DataType>
 		{	return ::std::move(this->Data);	}
 
 		constexpr
@@ -86,19 +140,19 @@ export namespace
 			)	&
 			noexcept
 			(	::std::is_nothrow_invocable_v
-				<	t_tData&
+				<	DataType&
 				,	t_tpArgument
 					...
 				>
 			)
 		->	::std::invoke_result_t
-			<	t_tData&
+			<	DataType&
 			,	t_tpArgument
 				...
 			>
 		requires
 			::std::is_invocable_v
-			<	t_tData&
+			<	DataType&
 			,	t_tpArgument
 				...
 			>
@@ -125,19 +179,19 @@ export namespace
 			)	const&
 			noexcept
 			(	::std::is_nothrow_invocable_v
-				<	t_tData const&
+				<	DataType const&
 				,	t_tpArgument
 					...
 				>
 			)
 		->	::std::invoke_result_t
-			<	t_tData const&
+			<	DataType const&
 			,	t_tpArgument
 				...
 			>
 		requires
 			::std::is_invocable_v
-			<	t_tData const&
+			<	DataType const&
 			,	t_tpArgument
 				...
 			>
@@ -164,13 +218,13 @@ export namespace
 			)	&&
 			noexcept
 			(	::std::is_nothrow_invocable_v
-				<	t_tData&&
+				<	DataType&&
 				,	t_tpArgument
 					...
 				>
 			)
 		->	::std::invoke_result_t
-			<	t_tData&&
+			<	DataType&&
 			,	t_tpArgument
 				...
 			>
@@ -275,14 +329,29 @@ export namespace
 	};
 
 	template
-		<	ProtoPointer
-				t_tPointer
+		<	typename
+				t_tEntity
+		,	typename
+			...	t_tpCV
 		>
 	struct
-		Aggregate<t_tPointer>
-	:	Object<t_tPointer>
+		Aggregate
+		<	Lex::MatchCVPointer
+			<	t_tEntity
+			,	t_tpCV
+				...
+			>
+		>
+	:	Object
+		<	Lex::MatchCVPointer
+			<	t_tEntity
+			,	t_tpCV
+				...
+			>
+		>
 	{
-		using value_type = ::std::remove_pointer_t<t_tPointer>;
+		using DataType = typename Lex::MatchCVPointer<t_tEntity, t_tpCV...>::Entity;
+		using value_type = ::std::remove_pointer_t<DataType>;
 		using difference_type = SSize;
 		using iterator_concept = ::std::contiguous_iterator_tag;
 
@@ -290,21 +359,21 @@ export namespace
 		(	get
 		)	()	&
 			noexcept
-		->	t_tPointer&
+		->	DataType&
 		{	return this->Data;	}
 
 		auto constexpr
 		(	get
 		)	()	const&
 			noexcept
-		->	t_tPointer const&
+		->	DataType const&
 		{	return this->Data;	}
 
 		auto constexpr
 		(	get
 		)	()	&&
 			noexcept
-		->	::std::remove_cv_t<t_tPointer>
+		->	::std::remove_cv_t<DataType>
 		{	return ::std::move(*this).Data;	}
 
 		constexpr
@@ -329,7 +398,7 @@ export namespace
 		(	operator ->
 		)	()	const
 			noexcept
-		->	::std::remove_cv_t<t_tPointer>
+		->	::std::remove_cv_t<DataType>
 		{	return this->Data;	}
 
 		auto constexpr
@@ -338,7 +407,7 @@ export namespace
 					i_nDifference
 			)	const
 			noexcept
-		->	::std::iter_reference_t<t_tPointer>
+		->	::std::iter_reference_t<DataType>
 		{	return
 			this->Data
 			[	i_nDifference
@@ -347,19 +416,33 @@ export namespace
 	};
 
 	template
-		<	ProtoReference
+		<	typename
 				t_tData
+		,	typename
+				t_tCategory
 		>
 	struct
-		Aggregate<t_tData>
-	:	Object<t_tData>
+		Aggregate
+		<	Lex::Ref
+			<	t_tData
+			,	t_tCategory
+			>
+		>
+	:	Object
+		<	Lex::Ref
+			<	t_tData
+			,	t_tCategory
+			>
+		>
 	{
+		using DataType = typename Lex::Ref<t_tData, t_tCategory>::Entity;
+
 		auto constexpr
 		(	get
 		)	()	const
 			noexcept
-		->	t_tData
-		{	return static_cast<t_tData>(*this->Data);	}
+		->	DataType
+		{	return static_cast<DataType>(*this->Data);	}
 
 		template
 			<	typename
@@ -372,19 +455,19 @@ export namespace
 			)	const
 			noexcept
 			(	::std::is_nothrow_invocable_v
-				<	t_tData
+				<	DataType
 				,	t_tpArgument
 					...
 				>
 			)
 		->	::std::invoke_result_t
-			<	t_tData
+			<	DataType
 			,	t_tpArgument
 				...
 			>
 		requires
 			::std::is_invocable_v
-			<	t_tData
+			<	DataType
 			,	t_tpArgument
 				...
 			>
@@ -413,32 +496,54 @@ export namespace
 		>
 	auto constexpr
 	(	operator &
-	)	(	Aggregate<t_tData&>
+	)	(	Aggregate
+			<	Lex::Ref
+				<	t_tData
+				,	Token::LRef
+				>
+			>
 				i_vValue
 		)
-	->	t_tData*
+	->	typename t_tData::Entity*
 	{	return i_vValue.Data;	}
 
 	template
 		<	typename
 				t_tElement
+		,	typename
+			...	t_tpQualifier
 		>
 	struct
-		Aggregate<t_tElement[]>
-	:	Object<t_tElement[]>
+		Aggregate
+		<	Lex::MatchCVArray
+			<	t_tElement
+			,	0uz
+			,	t_tpQualifier
+				...
+			>
+		>
+	:	Object
+		<	Lex::MatchCVArray
+			<	t_tElement
+			,	0uz
+			,	t_tpQualifier
+				...
+			>
+		>
 	{
+		using ElementType = typename t_tElement::Entity;
 		static_assert
-		(	not ::std::is_bounded_array_v<t_tElement>
+		(	not ::std::is_bounded_array_v<ElementType>
 		,	"Multidimensional arrays are not supported!"
 		);
 
-		using value_type = t_tElement;
+		using value_type = ElementType;
 		using size_type = USize;
 		using difference_type = SSize;
-		using reference = t_tElement&;
-		using const_reference = t_tElement const&;
-		using pointer = t_tElement*;
-		using const_pointer = t_tElement const*;
+		using reference = ElementType&;
+		using const_reference = ElementType const&;
+		using pointer = ElementType*;
+		using const_pointer = ElementType const*;
 		using iterator = pointer;
 		using const_iterator = const_pointer;
 
@@ -446,21 +551,21 @@ export namespace
 		(	get
 		)	()	&
 			noexcept
-		->	t_tElement(&)[]
+		->	ElementType(&)[]
 		=	delete;
 
 		auto constexpr
 		(	get
 		)	()	const&
 			noexcept
-		->	t_tElement const(&)[]
+		->	ElementType const(&)[]
 		=	delete;
 
 		auto constexpr
 		(	get
 		)	()	&&
 			noexcept
-		->	t_tElement(&&)[]
+		->	ElementType(&&)[]
 		=	delete;
 
 		constexpr
@@ -578,23 +683,41 @@ export namespace
 				t_tElement
 		,	USize
 				t_nExtent
+		,	typename
+			...	t_tpQualifier
 		>
 	struct
-		Aggregate<t_tElement[t_nExtent]>
-	:	Object<t_tElement[t_nExtent]>
+		Aggregate
+		<	Lex::MatchCVArray
+			<	t_tElement
+			,	t_nExtent
+			,	t_tpQualifier
+				...
+			>
+		>
+	:	Object
+		<	Lex::MatchCVArray
+			<	t_tElement
+			,	t_nExtent
+			,	t_tpQualifier
+				...
+			>
+		>
 	{
+		using ElementType = typename t_tElement::Entity;
+
 		static_assert
-		(	not ::std::is_bounded_array_v<t_tElement>
+		(	not ::std::is_bounded_array_v<ElementType>
 		,	"Multidimensional arrays are not supported!"
 		);
 
-		using value_type = t_tElement;
+		using value_type = ElementType;
 		using size_type = USize;
 		using difference_type = SSize;
-		using reference = t_tElement&;
-		using const_reference = t_tElement const&;
-		using pointer = t_tElement*;
-		using const_pointer = t_tElement const*;
+		using reference = ElementType&;
+		using const_reference = ElementType const&;
+		using pointer = ElementType*;
+		using const_pointer = ElementType const*;
 		using iterator = pointer;
 		using const_iterator = const_pointer;
 
@@ -602,21 +725,21 @@ export namespace
 		(	get
 		)	()	&
 			noexcept
-		->	t_tElement(&)[t_nExtent]
+		->	ElementType(&)[t_nExtent]
 		{	return this->Data;	}
 
 		auto constexpr
 		(	get
 		)	()	const&
 			noexcept
-		->	t_tElement const(&)[t_nExtent]
+		->	ElementType const(&)[t_nExtent]
 		{	return this->Data;	}
 
 		auto constexpr
 		(	get
 		)	()	&&
 			noexcept
-		->	t_tElement(&&)[t_nExtent]
+		->	ElementType(&&)[t_nExtent]
 		{	return ::std::move(this->Data);	}
 
 		constexpr
@@ -686,7 +809,7 @@ export namespace
 	template
 		<	USize
 				t_nExtent
-		,	ProtoCopyConstructible
+		,	typename
 				t_tData
 		>
 	auto constexpr

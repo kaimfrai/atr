@@ -13,7 +13,11 @@ template
 	>
 ::Meta::EraseTypeToken constexpr inline
 	PointerToQualified
-=	Type<CV<Ptr<MatchCV<int, t_tpQualifier...>>>>
+=	Type
+	<	MatchCVPointer
+		<	MatchCV<int, t_tpQualifier...>
+		>
+	>
 ;
 
 static_assert
@@ -42,7 +46,13 @@ template
 	>
 ::Meta::EraseTypeToken constexpr inline
 	QualifiedPointer
-=	Type<CV<Ptr<CV<Base<int>, Const, Volatile>>, t_tpQualifier...>>
+=	Type
+	<	MatchCVPointer
+		<	MatchCV<int, Const, Volatile>
+		,	t_tpQualifier
+			...
+		>
+	>
 ;
 
 static_assert

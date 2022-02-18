@@ -35,6 +35,21 @@ export namespace
 		,	typename
 			...	t_tpQualifier
 		>
+	using
+		MatchCVPointer
+	=	CV
+		<	Ptr<t_tEntity>
+		,	t_tpQualifier
+			...
+		>
+	;
+
+	template
+		<	typename
+				t_tEntity
+		,	typename
+			...	t_tpQualifier
+		>
 	(	Ptr
 	)	(	CV<t_tEntity, t_tpQualifier...>
 		)
