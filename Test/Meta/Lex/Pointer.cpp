@@ -42,25 +42,25 @@ template
 	>
 ::Meta::EraseTypeToken constexpr inline
 	QualifiedPointer
-=	Type<CV<Ptr<CV<Base<int>>>, t_tpQualifier...>>
+=	Type<CV<Ptr<CV<Base<int>, Const, Volatile>>, t_tpQualifier...>>
 ;
 
 static_assert
-(	TokenizeType<int*>
+(	TokenizeType<int const volatile*>
 ==	QualifiedPointer<>
 );
 
 static_assert
-(	TokenizeType<int* const>
+(	TokenizeType<int const volatile* const>
 ==	QualifiedPointer<Const>
 );
 
 static_assert
-(	TokenizeType<int* volatile>
+(	TokenizeType<int const volatile* volatile>
 ==	QualifiedPointer<Volatile>
 );
 
 static_assert
-(	TokenizeType<int* const volatile>
+(	TokenizeType<int const volatile* const volatile>
 ==	QualifiedPointer<Const, Volatile>
 );

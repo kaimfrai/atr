@@ -23,16 +23,28 @@ export namespace
 		);
 	};
 
+	///	resolve direct base class ambiguity
+	template
+		<	typename
+				t_tQualifier
+		,	typename
+				t_tEntity
+		>
+	struct
+		Qualifier
+	:	t_tQualifier
+	{};
+
 	template
 		<	typename
 				t_tEntity
 		,	typename
-			...	t_tpCV
+			...	t_tpQualifier
 		>
 	struct
 		CV
 	:	t_tEntity
-	,	t_tpCV
+	,	Qualifier<t_tpQualifier, t_tEntity>
 		...
 	{};
 

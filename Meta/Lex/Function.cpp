@@ -7,11 +7,14 @@ export import Meta.Token.Sequence;
 export namespace
 	Meta::Lex
 {
+	///	resolve direct base class ambiguity
 	template
 		<	USize
 				t_nIndex
 		,	typename
 				t_tParam
+		,	typename
+			...	t_tpDisambiguateParam
 		>
 	struct
 		IndexedParam
@@ -52,6 +55,8 @@ auto constexpr
 		<	::Meta::Lex::IndexedParam
 			<	t_npIndex
 			,	t_tpParam
+			,	t_tpParam
+				...
 			>
 			...
 		>
@@ -81,7 +86,6 @@ using
 export namespace
 	Meta::Lex
 {
-
 	template
 		<	typename
 			...	t_tpParam
@@ -112,10 +116,25 @@ export namespace
 	template
 		<	typename
 				t_tResult
+		,	typename
+				t_tParam
 		>
 	struct
 		Result
 	:	t_tResult
+	{};
+
+
+	///	resolve direct base class ambiguity
+	template
+		<	typename
+				t_tQualifier
+		,	typename
+				t_tSig
+		>
+	struct
+		FuncQualifier
+	:	t_tQualifier
 	{};
 
 	template
@@ -128,9 +147,9 @@ export namespace
 		>
 	struct
 		Sig
-	:	Result<t_tResult>
+	:	Result<t_tResult, t_tParam>
 	,	t_tParam
-	,	t_tpEllipsis
+	,	FuncQualifier<t_tpEllipsis, t_tParam>
 		...
 	{};
 
@@ -168,16 +187,6 @@ export namespace
 		>
 	;
 
-	///	resolve direct base class ambiguity
-	template
-		<	typename
-				t_tResult
-		>
-	struct
-		FuncQualifier
-	:	t_tResult
-	{};
-
 	template
 		<	typename
 				t_tSig
@@ -187,7 +196,7 @@ export namespace
 	struct
 		Func
 	:	t_tSig
-	,	FuncQualifier<t_tpQualifier>
+	,	FuncQualifier<t_tpQualifier, t_tSig>
 		...
 	{};
 
