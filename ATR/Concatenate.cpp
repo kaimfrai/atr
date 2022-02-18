@@ -37,53 +37,61 @@ namespace
 	template
 		<	typename
 				t_tPrefix
-		,	MemberInfo
-				t_vInfix
+		,	MemberInfo const
+			&	t_rInfix
 		,	typename
 				t_tSuffix
 		>
 	auto constexpr
 	(	InfixDataMember
 	)	()
-	->	MemberInfo
+	->	MemberInfo const&
 	{
-		MemberInfo
-			vResult
-		{	.SortKey = t_vInfix.SortKey
-		,	.Name
-		=	InfixID
-			(	t_tPrefix{}
-			,	ID_Of<t_vInfix.Name>{}
-			,	t_tSuffix{}
+		using
+			tNewID
+		=	decltype
+			(	InfixID
+				(	t_tPrefix{}
+				,	ID_Of<t_rInfix.Name>{}
+				,	t_tSuffix{}
+				)
 			)
-		,	.Type = t_vInfix.Type
-		};
+		;
 
 		//	also update the alias target if it is an alias
 		if	constexpr
-			(	t_vInfix.SortKey
+			(	t_rInfix.SortKey
 			==	AliasSortKey
 			)
 		{
 			using
-				tInfix
-			=	Meta::RestoreTypeEntity<t_vInfix.Type>
+				tInfixAliasTarget
+			=	Meta::RestoreTypeEntity<t_rInfix.Type>
 			;
 			using
 				tAliasTarget
 			=	decltype
 				(	InfixID
 					(	t_tPrefix{}
-					,	tInfix{}
+					,	tInfixAliasTarget{}
 					,	t_tSuffix{}
 					)
 				)
 			;
-				vResult.Type
-			=	Meta::Type<tAliasTarget>
-			;
+			return
+			MemberInstance
+			<	tNewID
+			,	Meta::Type<tAliasTarget>
+			,	AliasSortKey
+			>;
 		}
-		return vResult;
+		else
+			return
+			MemberInstance
+			<	tNewID
+			,	t_rInfix.Type
+			,	t_rInfix.SortKey
+			>;
 	}
 
 	template
@@ -103,7 +111,7 @@ namespace
 		->	decltype(auto)
 		{	return
 			MemberList
-			{	InfixDataMember
+			{	&InfixDataMember
 				<	t_tPrefix
 				,	t_rConfig[t_npIndex]
 				,	t_tSuffix

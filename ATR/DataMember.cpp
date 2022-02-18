@@ -5,6 +5,7 @@ export import Meta.Integer;
 export import Meta.Token.Type;
 export import Meta.Token.Query;
 export import Meta.Data.Aggregate;
+export import Meta.Data.Value;
 export import ATR.ID;
 
 export namespace
@@ -57,13 +58,13 @@ export namespace
 	struct
 		MemberList final
 	:	Meta::ArrayAggregate
-		<	MemberInfo
+		<	Meta::Aggregate<MemberInfo const&>
 		,	t_nMemberCount
 		>
 	{
 		auto constexpr
 		(	operator()
-		)	(	::std::initializer_list<MemberInfo>
+		)	(	::std::initializer_list<Meta::Value<MemberInfo const&>>
 					i_vExchangeList
 			)	const
 		->	MemberList
@@ -73,7 +74,7 @@ export namespace
 			=	*this
 			;
 
-			for	(	MemberInfo const
+			for	(	Meta::Value<MemberInfo const&> const
 					&	rExchange
 				:	i_vExchangeList
 				)
@@ -83,18 +84,17 @@ export namespace
 				=	::std::find_if
 					(	begin(vCopy)
 					,	end(vCopy)
-					,	[	vName = rExchange.Name
-						]	(	MemberInfo const
-								&	i_rInfo
+					,	[	vName = rExchange.get().Name
+						]	(	Meta::Aggregate<MemberInfo const&>
+									i_vInfo
 							)
-						{	return i_rInfo.Name == vName;	}
+						{	return i_vInfo.get().Name == vName;	}
 					)
 				;
 				if	(vExchangePosition == end(vCopy))
 					throw "Cannot exchange non-existing member!";
 
-				vExchangePosition->SortKey = rExchange.SortKey;
-				vExchangePosition->Type = rExchange.Type;
+				*vExchangePosition = rExchange;
 			}
 
 			::std::sort(begin(vCopy), end(vCopy));
@@ -104,8 +104,8 @@ export namespace
 
 		auto constexpr
 		(	operator()
-		)	(	MemberInfo const
-				&	i_rExchange
+		)	(	Meta::Value<MemberInfo const&>
+					i_rExchange
 			)	const
 		->	MemberList
 		{	return operator()({i_rExchange});	}
@@ -242,6 +242,24 @@ export namespace
 	;
 
 	template
+		<	ProtoID
+				t_tName
+		,	Meta::EraseTypeToken
+				t_vType
+		,	Meta::USize
+				t_nMemberSortKey
+		>
+	MemberInfo constexpr inline
+		MemberInstance
+	{	.SortKey
+	=	t_nMemberSortKey
+	,	.Name
+	=	t_tName::StringView
+	,	.Type
+	=	t_vType
+	};
+
+	template
 		<	StringLiteral
 				t_vName
 		,	typename
@@ -249,14 +267,11 @@ export namespace
 		>
 	MemberList<1uz> constexpr inline
 		Member
-	{	MemberInfo
-		{	.SortKey
-		=	MemberSortKey<t_tValue>
-		,	.Name
-		=	ID_T<t_vName>::StringView
-		,	.Type
-		=	Meta::Type<t_tValue>
-		}
+	{	&MemberInstance
+		<	ID_T<t_vName>
+		,	Meta::Type<t_tValue>
+		,	MemberSortKey<t_tValue>
+		>
 	};
 
 	template
@@ -265,15 +280,14 @@ export namespace
 		,	StringLiteral
 				t_vTargetID
 		>
-	MemberInfo constexpr inline
-		Alias
-	{	.SortKey
-	=	AliasSortKey
-	,	.Name
-	=	ID_T<t_vOriginID>::StringView
-	,	.Type
-	=	Meta::Type<ID_T<t_vTargetID>>
-	};
+	MemberInfo const constexpr inline
+	&	Alias
+	=	MemberInstance
+		<	ID_T<t_vOriginID>
+		,	Meta::Type<ID_T<t_vTargetID>>
+		,	AliasSortKey
+		>
+	;
 
 	/// maps a string literal to a Layout
 	template

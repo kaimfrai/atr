@@ -909,9 +909,9 @@ namespace
 	[[nodiscard]]
 	static auto constexpr
 	(	AliasCount
-	)	(	MemberInfo const
+	)	(	Meta::Aggregate<MemberInfo const&> const
 			*	i_aBegin
-		,	MemberInfo const
+		,	Meta::Aggregate<MemberInfo const&> const
 			*	i_aEnd
 		)
 	->	Meta::USize
@@ -933,9 +933,9 @@ namespace
 	[[nodiscard]]
 	static auto constexpr
 	(	StaticCount
-	)	(	MemberInfo const
+	)	(	Meta::Aggregate<MemberInfo const&> const
 			*	i_aBegin
-		,	MemberInfo const
+		,	Meta::Aggregate<MemberInfo const&> const
 			*	i_aEnd
 		)
 	->	Meta::USize

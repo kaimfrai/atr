@@ -55,6 +55,29 @@ export namespace
 		{}
 	};
 
+	template
+		<	ProtoReference
+				t_rValue
+		>
+	struct
+		Value<t_rValue>
+	:	Data::Aggregate<t_rValue>
+	{
+		constexpr
+		(	Value
+		)	()
+		=	default;
+
+		constexpr
+		(	Value
+		)	(	t_rValue
+					i_rValue
+			)
+		:	Data::Aggregate<t_rValue>
+			{	::std::addressof(i_rValue)
+			}
+		{}
+	};
 
 	template
 		<	typename
