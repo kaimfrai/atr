@@ -18,7 +18,18 @@ export namespace
 		Array
 	:	t_tElement
 	,	t_tExtent
-	{};
+	{
+		static Token::TypeToken constexpr
+			Type
+		=	t_tElement::Type
+		+	t_tExtent{}
+		;
+
+		using
+			Entity
+		=	TypeEntity<Type>
+		;
+	};
 
 	template
 		<	typename

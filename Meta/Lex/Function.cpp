@@ -151,7 +151,18 @@ export namespace
 	,	t_tParam
 	,	FuncQualifier<t_tpEllipsis, t_tParam>
 		...
-	{};
+	{
+		//	TODO incomplete
+		static Token::TypeToken constexpr
+			Type
+		=	Meta::Type<t_tResult(t_tParam)>
+		;
+
+		using
+			Entity
+		=	TypeEntity<Type>
+		;
+	};
 
 	template
 		<	typename

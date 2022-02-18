@@ -1,26 +1,44 @@
 export module Meta.Data.Object;
 
-export import Meta.Concept.Category;
+export import Meta.Lex;
 
 export namespace
 	Meta::Data
 {
 	template
 		<	typename
+				t_tUntokenized
 		>
 	struct
 		Object
+	:	Object
+		<	Meta::TokenizeEntity<t_tUntokenized>
+		>
 	{};
 
 	template
-		<	ProtoValue
+		<	typename
 				t_tData
+		,	typename
+			...	t_tpQualifier
 		>
 	struct
-		Object<t_tData>
+		Object
+		<	Lex::CV
+			<	t_tData
+			,	t_tpQualifier
+				...
+			>
+		>
 	{
 		[[no_unique_address]]
-		t_tData
+		typename
+			Lex::CV
+			<	t_tData
+			,	t_tpQualifier
+				...
+			>
+		::	Entity
 			Data
 		;
 	};
@@ -28,12 +46,28 @@ export namespace
 	template
 		<	typename
 				t_tData
+		,	typename
+			...	t_tpQualifier
 		>
 	struct
-		Object<t_tData const>
+		Object
+		<	Lex::CV
+			<	t_tData
+			,	Token::Const
+			,	t_tpQualifier
+				...
+			>
+		>
 	{
 		[[no_unique_address]]
-		t_tData
+		typename
+			Lex::CV
+			<	t_tData
+			,	//	remove const
+				t_tpQualifier
+				...
+			>
+		::	Entity
 			Data
 		;
 
@@ -52,25 +86,60 @@ export namespace
 
 	template
 		<	typename
-				t_tEntity
+				t_tData
+		,	typename
+				t_tCategory
 		>
 	struct
-		Object<t_tEntity&>
+		Object
+		<	Lex::Ref
+			<	t_tData
+			,	t_tCategory
+			>
+		>
 	{
-		t_tEntity
+		typename t_tData::Entity
 		*	Data
 		;
 	};
 
 	template
 		<	typename
-				t_tEntity
+				t_tData
+		,	typename
+			...	t_tpQualifier
+		,	typename
+				t_tExtent
 		>
 	struct
-		Object<t_tEntity&&>
+		Object
+		<	Lex::Array
+			<	Lex::CV<t_tData, t_tpQualifier...>
+			,	t_tExtent
+			>
+		>
 	{
-		t_tEntity
-		*	Data
+		typename Lex::Array
+			<	Lex::CV<t_tData, t_tpQualifier...>
+			,	t_tExtent
+			>
+		::	Entity
+			Data
 		;
 	};
+
+	template
+		<	typename
+				t_tData
+		,	typename
+			...	t_tpQualifier
+		>
+	struct
+		Object
+		<	Lex::Array
+			<	Lex::CV<t_tData, t_tpQualifier...>
+			,	Token::Extent<0uz>
+			>
+		>
+	{};
 }

@@ -16,7 +16,18 @@ export namespace
 	struct
 		Ptr
 	:	t_tEntity
-	{};
+	{
+		static Token::TypeToken constexpr
+			Type
+		=	t_tEntity::Type
+		+	Pointer
+		;
+
+		using
+			Entity
+		=	TypeEntity<Type>
+		;
+	};
 
 	template
 		<	typename

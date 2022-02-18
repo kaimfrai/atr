@@ -21,6 +21,15 @@ export namespace
 		or	::std::is_enum_v<t_tFundamental>
 		,	"Tokenize ended prematurely!"
 		);
+
+		static Token::TypeToken<t_tFundamental> constexpr
+			Type
+		{};
+
+		using
+			Entity
+		=	t_tFundamental
+		;
 	};
 
 	///	resolve direct base class ambiguity
@@ -46,7 +55,19 @@ export namespace
 	:	t_tEntity
 	,	Qualifier<t_tpQualifier, t_tEntity>
 		...
-	{};
+	{
+		static Token::TypeToken constexpr
+			Type
+		=(	t_tEntity::Type
+		+	...
+		+	t_tpQualifier{}
+		);
+
+		using
+			Entity
+		=	TypeEntity<Type>
+		;
+	};
 
 	template
 		<	typename

@@ -19,7 +19,18 @@ export namespace
 		Ref
 	:	t_tEntity
 	,	t_tReference
-	{};
+	{
+		static Token::TypeToken constexpr
+			Type
+		=	t_tEntity::Type
+		+	t_tReference{}
+		;
+
+		using
+			Entity
+		=	TypeEntity<Type>
+		;
+	};
 
 	template
 		<	typename
