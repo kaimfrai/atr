@@ -7,7 +7,7 @@ export namespace
 	Meta::Token
 {
 	struct
-		LRef final
+		LRef
 	{
 		template
 			<	typename
@@ -24,7 +24,7 @@ export namespace
 	};
 
 	struct
-		RRef final
+		RRef
 	{
 		template
 			<	typename

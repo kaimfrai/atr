@@ -16,20 +16,10 @@ export namespace
 				t_tReference
 		>
 	struct
-		Ref final
-	{
-		constexpr
-		(	Ref
-		)	()
-		=	default;
-
-		explicit constexpr
-		(	Ref
-		)	(	t_tEntity
-			,	t_tReference
-			)
-		{}
-	};
+		Ref
+	:	t_tEntity
+	,	t_tReference
+	{};
 
 	template
 		<	typename
@@ -126,36 +116,4 @@ export namespace
 		,	Token::RRef
 		>
 	;
-
-	template
-		<	typename
-				t_tEntity
-		>
-	auto constexpr
-	(	Tokenize
-	)	(	TypeToken<t_tEntity&>
-		)
-	->	decltype(auto)
-	{	return
-		Ref
-		{	Tokenize(Type<t_tEntity>)
-		,	LRef
-		};
-	}
-
-	template
-		<	typename
-				t_tEntity
-		>
-	auto constexpr
-	(	Tokenize
-	)	(	TypeToken<t_tEntity&&>
-		)
-	->	decltype(auto)
-	{	return
-		Ref
-		{	Tokenize(Type<t_tEntity>)
-		,	RRef
-		};
-	}
 }

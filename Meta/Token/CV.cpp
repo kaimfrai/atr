@@ -7,7 +7,7 @@ export namespace
 	Meta::Token
 {
 	struct
-		Const final
+		Const
 	{
 		template
 			<	typename
@@ -37,7 +37,7 @@ export namespace
 	};
 
 	struct
-		Volatile final
+		Volatile
 	{
 		template
 			<	typename

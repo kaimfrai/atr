@@ -7,7 +7,7 @@ export namespace
 	Meta::Token
 {
 	struct
-		Pointer final
+		Pointer
 	{
 		template
 			<	typename

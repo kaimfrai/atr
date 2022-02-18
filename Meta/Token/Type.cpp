@@ -36,7 +36,7 @@ export namespace
 				t_tEntity
 		>
 	struct
-		TypeToken final
+		TypeToken
 	{
 		using Entity = t_tEntity;
 

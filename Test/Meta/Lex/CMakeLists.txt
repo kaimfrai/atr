@@ -1,0 +1,5 @@
+add_module_object_library(Test.Meta.Lex.CV CV.cpp)
+add_module_object_library(Test.Meta.Lex.Array Array.cpp)
+add_module_object_library(Test.Meta.Lex.Reference Reference.cpp)
+add_module_object_library(Test.Meta.Lex.Pointer Pointer.cpp)
+add_module_object_library(Test.Meta.Lex.Member Member.cpp)

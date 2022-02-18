@@ -2,10 +2,27 @@ export module Meta.Lex.CV;
 
 export import Meta.Token.Type;
 export import Meta.Token.CV;
+import Std;
 
 export namespace
 	Meta::Lex
 {
+	template
+		<	typename
+				t_tFundamental
+		>
+	struct
+		Base
+	{
+		static_assert
+		(	::std::is_fundamental_v<t_tFundamental>
+		or	::std::is_class_v<t_tFundamental>
+		or	::std::is_union_v<t_tFundamental>
+		or	::std::is_enum_v<t_tFundamental>
+		,	"Tokenize ended prematurely!"
+		);
+	};
+
 	template
 		<	typename
 				t_tEntity
@@ -13,31 +30,11 @@ export namespace
 			...	t_tpCV
 		>
 	struct
-		CV final
-	{
-		constexpr
-		(	CV
-		)	()
-		=	default;
-
-		explicit constexpr
-		(	CV
-		)	(	CV<t_tEntity>
-			,	t_tpCV
-				...
-			)
-		{}
-	};
-
-	template
-		<	typename
-				t_tEntity
-		>
-	struct
-		CV<t_tEntity> final
-	{
-		//	keep implicit copy and move constructor
-	};
+		CV
+	:	t_tEntity
+	,	t_tpCV
+		...
+	{};
 
 	template
 		<	typename
@@ -97,67 +94,53 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	auto constexpr
-	(	Tokenize
-	)	(	TypeToken
-			<	t_tEntity
-			>
+	(	CV
+	)	(	t_tEntity
 		)
 	->	CV<t_tEntity>
-	{	return {};	}
+	;
 
 	template
 		<	typename
 				t_tEntity
 		>
-	auto constexpr
-	(	Tokenize
-	)	(	TypeToken
-			<	t_tEntity const
-			>
+	(	CV
+	)	(	t_tEntity
+		,	Token::Const
 		)
-	->	decltype(auto)
-	{	return
-		CV
-		{	Tokenize(Type<t_tEntity>)
-		,	Const
-		};
-	}
+	->	CV
+		<	t_tEntity
+		,	Token::Const
+		>
+	;
 
 	template
 		<	typename
 				t_tEntity
 		>
-	auto constexpr
-	(	Tokenize
-	)	(	TypeToken
-			<	t_tEntity volatile
-			>
+	(	CV
+	)	(	t_tEntity
+		,	Token::Volatile
 		)
-	->	decltype(auto)
-	{	return
-		CV
-		{	Tokenize(Type<t_tEntity>)
-		,	Volatile
-		};
-	}
+	->	CV
+		<	t_tEntity
+		,	Token::Volatile
+		>
+	;
 
 	template
 		<	typename
 				t_tEntity
 		>
-	auto constexpr
-	(	Tokenize
-	)	(	TypeToken
-			<	t_tEntity const volatile
-			>
+	(	CV
+	)	(	t_tEntity
+		,	Token::Const
+		,	Token::Volatile
 		)
-	->	decltype(auto)
-	{	return
-		CV
-		{	Tokenize(Type<t_tEntity>)
-		,	Const
-		,	Volatile
-		};
-	}
+	->	CV
+		<	t_tEntity
+		,	Token::Const
+		,	Token::Volatile
+		>
+	;
 }

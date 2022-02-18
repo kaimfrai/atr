@@ -15,20 +15,10 @@ export namespace
 				t_tExtent
 		>
 	struct
-		Array final
-	{
-		constexpr
-		(	Array
-		)	()
-		=	default;
-
-		constexpr
-		(	Array
-		)	(	t_tElement
-			,	t_tExtent
-			)
-		{}
-	};
+		Array
+	:	t_tElement
+	,	t_tExtent
+	{};
 
 	template
 		<	typename
@@ -65,42 +55,4 @@ export namespace
 		,	Token::Extent<t_nExtent>
 		>
 	;
-
-	template
-		<	typename
-				t_tElement
-		,	USize
-				t_nExtent
-		>
-	auto constexpr
-	(	Tokenize
-	)	(	TypeToken
-			<	t_tElement[t_nExtent]
-			>
-		)
-	->	decltype(auto)
-	{	return
-		Array
-		{	Tokenize(Type<t_tElement>)
-		,	Extent<t_nExtent>
-		};
-	}
-
-	template
-		<	typename
-				t_tElement
-		>
-	auto constexpr
-	(	Tokenize
-	)	(	TypeToken
-			<	t_tElement[]
-			>
-		)
-	->	decltype(auto)
-	{	return
-		Array
-		{	Tokenize(Type<t_tElement>)
-		,	Extent<0uz>
-		};
-	}
 }

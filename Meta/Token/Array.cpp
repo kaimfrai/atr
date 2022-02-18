@@ -11,7 +11,7 @@ export namespace
 				t_nExtent
 		>
 	struct
-		Extent final
+		Extent
 	{
 		template
 			<	typename
@@ -41,7 +41,7 @@ export namespace
 	template
 		<>
 	struct
-		Extent<0uz> final
+		Extent<0uz>
 	{
 		template
 			<	typename

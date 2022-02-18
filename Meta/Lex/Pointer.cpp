@@ -14,19 +14,9 @@ export namespace
 				t_tEntity
 		>
 	struct
-		Ptr final
-	{
-		constexpr
-		(	Ptr
-		)	()
-		=	default;
-
-		explicit constexpr
-		(	Ptr
-		)	(	t_tEntity
-			)
-		{}
-	};
+		Ptr
+	:	t_tEntity
+	{};
 
 	template
 		<	typename
@@ -69,21 +59,4 @@ export namespace
 		<	Func<t_tSignature, t_tpQualifier...>
 		>
 	;
-
-	template
-		<	typename
-				t_tEntity
-		>
-	auto constexpr
-	(	Tokenize
-	)	(	TypeToken<t_tEntity*>
-		)
-	->	decltype(auto)
-	{	return
-		CV
-		{	Ptr
-			{	Tokenize(Type<t_tEntity>)
-			}
-		};
-	}
 }

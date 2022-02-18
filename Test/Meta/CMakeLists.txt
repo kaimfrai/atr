@@ -1,4 +1,5 @@
 add_subdirectory(Data)
+add_subdirectory(Lex)
 add_subdirectory(Literals)
 add_subdirectory(Logic)
 add_subdirectory(Predicate)

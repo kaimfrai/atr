@@ -8,7 +8,11 @@ export namespace
 	Meta::Token
 {
 	struct
-		Noexcept final
+		Noexcept
+	{};
+
+	struct
+		Ellipsis
 	{};
 }
 
@@ -17,5 +21,9 @@ export namespace
 {
 	Token::Noexcept constexpr inline
 		Noexcept
+	{};
+
+	Token::Ellipsis constexpr inline
+		Ellipsis
 	{};
 }
