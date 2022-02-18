@@ -314,21 +314,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...)
+				<	t_tResult(t_tpParam...)
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -339,21 +339,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) const
+				<	t_tResult(t_tpParam...) const
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -365,21 +365,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) volatile
+				<	t_tResult(t_tpParam...) volatile
 				>
-			)
-			->	decltype(auto)
+			)	const
+		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -391,21 +391,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) const volatile
+				<	t_tResult(t_tpParam...) const volatile
 				>
-			)
-			->	decltype(auto)
+			)	const
+		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -418,21 +418,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...)
+				<	t_tResult(t_tpParam..., ...)
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -444,21 +444,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) const
+				<	t_tResult(t_tpParam..., ...) const
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -471,21 +471,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) volatile
+				<	t_tResult(t_tpParam..., ...) volatile
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -498,21 +498,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) const volatile
+				<	t_tResult(t_tpParam..., ...) const volatile
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -526,21 +526,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) &
+				<	t_tResult(t_tpParam...) &
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -552,21 +552,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) const &
+				<	t_tResult(t_tpParam...) const &
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -579,21 +579,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) volatile &
+				<	t_tResult(t_tpParam...) volatile &
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -606,21 +606,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) const volatile &
+				<	t_tResult(t_tpParam...) const volatile &
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -634,21 +634,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) &
+				<	t_tResult(t_tpParam..., ...) &
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -661,21 +661,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) const &
+				<	t_tResult(t_tpParam..., ...) const &
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -689,21 +689,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) volatile &
+				<	t_tResult(t_tpParam..., ...) volatile &
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -717,21 +717,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) const volatile &
+				<	t_tResult(t_tpParam..., ...) const volatile &
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -746,21 +746,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) &&
+				<	t_tResult(t_tpParam...) &&
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -772,21 +772,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) const &&
+				<	t_tResult(t_tpParam...) const &&
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -799,21 +799,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) volatile &&
+				<	t_tResult(t_tpParam...) volatile &&
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -826,21 +826,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) const volatile &&
+				<	t_tResult(t_tpParam...) const volatile &&
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -854,21 +854,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) &&
+				<	t_tResult(t_tpParam..., ...) &&
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -881,21 +881,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) const &&
+				<	t_tResult(t_tpParam..., ...) const &&
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -909,21 +909,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) volatile &&
+				<	t_tResult(t_tpParam..., ...) volatile &&
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -937,21 +937,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) const volatile &&
+				<	t_tResult(t_tpParam..., ...) const volatile &&
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -966,21 +966,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) noexcept
+				<	t_tResult(t_tpParam...) noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -992,21 +992,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) const noexcept
+				<	t_tResult(t_tpParam...) const noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -1019,21 +1019,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) volatile noexcept
+				<	t_tResult(t_tpParam...) volatile noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -1046,21 +1046,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) const volatile noexcept
+				<	t_tResult(t_tpParam...) const volatile noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -1074,21 +1074,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) noexcept
+				<	t_tResult(t_tpParam..., ...) noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -1101,21 +1101,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) const noexcept
+				<	t_tResult(t_tpParam..., ...) const noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -1129,21 +1129,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) volatile noexcept
+				<	t_tResult(t_tpParam..., ...) volatile noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -1157,21 +1157,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) const volatile noexcept
+				<	t_tResult(t_tpParam..., ...) const volatile noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -1186,21 +1186,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) & noexcept
+				<	t_tResult(t_tpParam...) & noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -1213,21 +1213,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) const & noexcept
+				<	t_tResult(t_tpParam...) const & noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -1241,21 +1241,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) volatile & noexcept
+				<	t_tResult(t_tpParam...) volatile & noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -1269,21 +1269,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) const volatile & noexcept
+				<	t_tResult(t_tpParam...) const volatile & noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -1298,21 +1298,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) & noexcept
+				<	t_tResult(t_tpParam..., ...) & noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -1326,21 +1326,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) const & noexcept
+				<	t_tResult(t_tpParam..., ...) const & noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -1355,21 +1355,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) volatile & noexcept
+				<	t_tResult(t_tpParam..., ...) volatile & noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -1384,21 +1384,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) const volatile & noexcept
+				<	t_tResult(t_tpParam..., ...) const volatile & noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -1414,21 +1414,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) && noexcept
+				<	t_tResult(t_tpParam...) && noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -1441,21 +1441,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) const && noexcept
+				<	t_tResult(t_tpParam...) const && noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -1469,21 +1469,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) volatile && noexcept
+				<	t_tResult(t_tpParam...) volatile && noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -1497,21 +1497,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter...) const volatile && noexcept
+				<	t_tResult(t_tpParam...) const volatile && noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				}
@@ -1526,21 +1526,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) && noexcept
+				<	t_tResult(t_tpParam..., ...) && noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -1554,21 +1554,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) const && noexcept
+				<	t_tResult(t_tpParam..., ...) const && noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -1583,21 +1583,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) volatile && noexcept
+				<	t_tResult(t_tpParam..., ...) volatile && noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis
@@ -1612,21 +1612,21 @@ export namespace
 			<	typename
 					t_tResult
 			,	typename
-				...	t_tpParameter
+				...	t_tpParam
 			>
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	t_tResult(t_tpParameter..., ...) const volatile && noexcept
+				<	t_tResult(t_tpParam..., ...) const volatile && noexcept
 				>
 			)	const
 		->	decltype(auto)
 		{	return
 			Func
-			{	Signature
+			{	Sig
 				{	operator()(Type<t_tResult>)
-				,	Parameter
-					{	operator()(Type<t_tpParameter>)
+				,	Param
+					{	operator()(Type<t_tpParam>)
 						...
 					}
 				,	Ellipsis

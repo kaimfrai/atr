@@ -2,88 +2,151 @@ export module Meta.Lex.Function;
 
 export import Meta.Token.Type;
 export import Meta.Token.Function;
+export import Meta.Token.Sequence;
 
 export namespace
 	Meta::Lex
 {
 	template
-		<	typename
-			...	t_tpParameter
+		<	USize
+				t_nIndex
+		,	typename
+				t_tParam
 		>
 	struct
-		Parameter
-	:	t_tpParameter
+		IndexedParam
+	:	t_tParam
+	{};
+
+	template
+		<	typename
+			...	t_tpIndexedParam
+		>
+	struct
+		ParamList
+	:	t_tpIndexedParam
+		...
+	{};
+
+}
+
+template
+	<	typename
+		...	t_tpParam
+	>
+auto constexpr
+(	MakeParamList
+)	(	t_tpParam
+		...	i_vParam
+	)
+->	decltype(auto)
+{	return
+	[	...
+		vpParam
+	=	i_vParam
+	]	<	::Meta::USize
+			...	t_npIndex
+		>(	::Meta::IndexToken<t_npIndex...>
+		)
+	->	::Meta::Lex::ParamList
+		<	::Meta::Lex::IndexedParam
+			<	t_npIndex
+			,	t_tpParam
+			>
+			...
+		>
+	{	return
+		{	vpParam
+			...
+		};
+	}(	Meta::Sequence<sizeof...(t_tpParam)>
+	);
+}
+
+template
+	<	typename
+		...	t_tpParam
+	>
+using
+	DeduceParamList
+=	decltype
+	(	MakeParamList
+		(	t_tpParam
+			{}
+			...
+		)
+	)
+;
+
+export namespace
+	Meta::Lex
+{
+
+	template
+		<	typename
+			...	t_tpParam
+		>
+	struct
+		Param
+	:	::DeduceParamList
+		<	t_tpParam
+			...
+		>
+	{};
+
+	template
+		<	typename
+			...	t_tpParam
+		>
+	(	Param
+	)	(	t_tpParam
+			...
+		)
+	->	Param
+		<	t_tpParam
+			...
+		>
+	;
+
+	///	resolve direct base class ambiguity
+	template
+		<	typename
+				t_tResult
+		>
+	struct
+		Result
+	:	t_tResult
+	{};
+
+	template
+		<	typename
+				t_tResult
+		,	typename
+				t_tParam
+		,	typename
+			...	t_tpEllipsis
+		>
+	struct
+		Sig
+	:	Result<t_tResult>
+	,	t_tParam
+	,	t_tpEllipsis
 		...
 	{};
 
 	template
 		<	typename
-			...	t_tpParameter
-		>
-	(	Parameter
-	)	(	t_tpParameter
-			...
-		)
-	->	Parameter
-		<	t_tpParameter
-			...
-		>
-	;
-
-	template
-		<	typename
-		>
-	struct
-		Signature
-	;
-
-	template
-		<	typename
 				t_tResult
 		,	typename
-			...	t_tpParameter
+			...	t_tpParam
 		>
-	struct
-		Signature
-		<	t_tResult(t_tpParameter...)
-		>
-	:	t_tResult
-	,	Parameter
-		<	t_tpParameter
-			...
-		>
-	{};
-
-	template
-		<	typename
-				t_tResult
-		,	typename
-			...	t_tpParameter
-		>
-	struct
-		Signature
-		<	t_tResult(t_tpParameter..., ...)
-		>
-	:	t_tResult
-	,	Parameter
-		<	t_tpParameter
-			...
-		>
-	,	Token::Ellipsis
-	{};
-
-	template
-		<	typename
-				t_tResult
-		,	typename
-			...	t_tpParameter
-		>
-	(	Signature
+	(	Sig
 	)	(	t_tResult
-		,	Parameter<t_tpParameter...>
+		,	Param<t_tpParam...>
 		)
-	->	Signature
-		<	t_tResult(t_tpParameter...)
+	->	Sig
+		<	t_tResult
+		,	Param<t_tpParam...>
 		>
 	;
 
@@ -91,28 +154,40 @@ export namespace
 		<	typename
 				t_tResult
 		,	typename
-			...	t_tpParameter
+			...	t_tpParam
 		>
-	(	Signature
+	(	Sig
 	)	(	t_tResult
-		,	Parameter<t_tpParameter...>
+		,	Param<t_tpParam...>
 		,	Token::Ellipsis
 		)
-	->	Signature
-		<	t_tResult(t_tpParameter..., ...)
+	->	Sig
+		<	t_tResult
+		,	Param<t_tpParam...>
+		,	Token::Ellipsis
 		>
 	;
 
+	///	resolve direct base class ambiguity
 	template
 		<	typename
-				t_tSignature
+				t_tResult
+		>
+	struct
+		FuncQualifier
+	:	t_tResult
+	{};
+
+	template
+		<	typename
+				t_tSig
 		,	typename
 			...	t_tpQualifier
 		>
 	struct
 		Func
-	:	t_tSignature
-	,	t_tpQualifier
+	:	t_tSig
+	,	FuncQualifier<t_tpQualifier>
 		...
 	{};
 
@@ -120,17 +195,17 @@ export namespace
 		<	typename
 				t_tResult
 		,	typename
-			...	t_tpParameter
+				t_tParam
 		,	typename
 			...	t_tpQualifier
 		>
 	(	Func
-	)	(	Signature<t_tResult(t_tpParameter...)>
+	)	(	Sig<t_tResult, t_tParam>
 		,	t_tpQualifier
 			...
 		)
 	->	Func
-		<	Signature<t_tResult(t_tpParameter...)>
+		<	Sig<t_tResult, t_tParam>
 		,	t_tpQualifier
 			...
 		>
@@ -140,17 +215,17 @@ export namespace
 		<	typename
 				t_tResult
 		,	typename
-			...	t_tpParameter
+				t_tParam
 		,	typename
 			...	t_tpQualifier
 		>
 	(	Func
-	)	(	Signature<t_tResult(t_tpParameter..., ...)>
+	)	(	Sig<t_tResult, t_tParam, Token::Ellipsis>
 		,	t_tpQualifier
 			...
 		)
 	->	Func
-		<	Signature<t_tResult(t_tpParameter..., ...)>
+		<	Sig<t_tResult, t_tParam, Token::Ellipsis>
 		,	t_tpQualifier
 			...
 		>
