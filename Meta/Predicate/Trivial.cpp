@@ -1,7 +1,6 @@
 export module Meta.Predicate.Trivial;
 
 export import Meta.Logic;
-export import Meta.Constraint;
 export import Meta.Predicate.Regular;
 
 export namespace
@@ -11,8 +10,6 @@ export namespace
 		TriviallyDestructible final
 	:	LiteralBase
 	{
-		using LiteralBase::operator();
-
 		template
 			<	typename
 					t_tEntity
@@ -39,8 +36,6 @@ export namespace
 		TriviallyConstructible_From final
 	:	LiteralBase
 	{
-		using LiteralBase::operator();
-
 		explicit constexpr
 		(	TriviallyConstructible_From
 		)	(	bool
@@ -108,8 +103,6 @@ export namespace
 		TriviallyMoveConstructible final
 	:	LiteralBase
 	{
-		using LiteralBase::operator();
-
 		template
 			<	typename
 					t_tEntity
@@ -134,8 +127,6 @@ export namespace
 		TriviallyCopyConstructible final
 	:	LiteralBase
 	{
-		using LiteralBase::operator();
-
 		template
 			<	typename
 					t_tEntity
@@ -160,8 +151,6 @@ export namespace
 		TriviallyMoveAssignable final
 	:	LiteralBase
 	{
-		using LiteralBase::operator();
-
 		template
 			<	typename
 					t_tEntity
@@ -186,8 +175,6 @@ export namespace
 		TriviallyCopyAssignable final
 	:	LiteralBase
 	{
-		using LiteralBase::operator();
-
 		template
 			<	typename
 					t_tEntity

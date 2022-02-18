@@ -2,8 +2,8 @@ export module Meta.Logic;
 
 export import Meta.Arithmetic.Bit;
 export import Meta.Logic.BitTerm;
-export import Meta.Concept;
 export import Meta.Data.TupleSet;
+export import Meta.Concept.Category;
 
 import Std;
 
@@ -229,13 +229,13 @@ export namespace
 	template
 		<	Logic::BitTerm
 				t_vTerm
-		,	ProtoCopyableCustom
+		,	typename
 			...	t_tpLiteral
 		>
 	class
 		Term final
 	{
-		template<Logic::BitTerm, ProtoCopyableCustom...>
+		template<Logic::BitTerm, typename...>
 		friend class Term;
 
 		explicit constexpr
@@ -431,7 +431,7 @@ export namespace
 		template
 			<	Logic::BitTerm
 					t_vRightTerm
-			,	ProtoCopyableCustom
+			,	typename
 				...	t_tpRightLiteral
 			>
 		auto constexpr
@@ -444,7 +444,7 @@ export namespace
 		template
 			<	Logic::BitTerm
 					t_vRightTerm
-			,	ProtoCopyableCustom
+			,	typename
 				...	t_tpRightLiteral
 			>
 		auto constexpr
@@ -457,7 +457,7 @@ export namespace
 		template
 			<	Logic::BitTerm
 					t_vRightTerm
-			,	ProtoCopyableCustom
+			,	typename
 				...	t_tpRightLiteral
 			>
 		auto constexpr
@@ -502,7 +502,7 @@ export namespace
 	};
 
 	template
-		<	ProtoCopyableCustom
+		<	typename
 				t_tLiteral
 		>
 	(	Term
@@ -517,7 +517,7 @@ export namespace
 	template
 		<	Logic::BitTerm
 				t_vTerm
-		,	ProtoCopyableCustom
+		,	typename
 			...	t_tpLiteral
 		>
 	(	Term
