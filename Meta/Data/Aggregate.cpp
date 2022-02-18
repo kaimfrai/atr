@@ -35,11 +35,13 @@ export namespace
 			>
 		>
 	:	Object
-		<	Lex::MatchCV
-			<	void
-			,	t_tpQualifier
-				...
-			>
+		<	typename
+				Lex::MatchCV
+				<	void
+				,	t_tpQualifier
+					...
+				>
+			::	Entity
 		>
 	{};
 
@@ -58,11 +60,13 @@ export namespace
 			>
 		>
 	:	Object
-		<	Lex::Func
-			<	t_tSignature
-			,	t_tpQualifier
-				...
-			>
+		<	typename
+				Lex::Func
+				<	t_tSignature
+				,	t_tpQualifier
+					...
+				>
+			::	Entity
 		>
 	{};
 
@@ -81,11 +85,13 @@ export namespace
 			>
 		>
 	:	Object
-		<	Lex::CV
-			<	t_tData
-			,	t_tQualifier
-				...
-			>
+		<	typename
+				Lex::CV
+				<	t_tData
+				,	t_tQualifier
+					...
+				>
+			::	Entity
 		>
 	{
 		using DataType = typename Lex::CV<t_tData, t_tQualifier...>::Entity;
@@ -343,11 +349,13 @@ export namespace
 			>
 		>
 	:	Object
-		<	Lex::MatchCVPointer
-			<	t_tEntity
-			,	t_tpCV
-				...
-			>
+		<	typename
+				Lex::MatchCVPointer
+				<	t_tEntity
+				,	t_tpCV
+					...
+				>
+			::	Entity
 		>
 	{
 		using DataType = typename Lex::MatchCVPointer<t_tEntity, t_tpCV...>::Entity;
@@ -429,10 +437,12 @@ export namespace
 			>
 		>
 	:	Object
-		<	Lex::Ref
-			<	t_tData
-			,	t_tCategory
-			>
+		<	typename
+				Lex::Ref
+				<	t_tData
+				,	t_tCategory
+				>
+			::	Entity
 		>
 	{
 		using DataType = typename Lex::Ref<t_tData, t_tCategory>::Entity;
@@ -523,12 +533,14 @@ export namespace
 			>
 		>
 	:	Object
-		<	Lex::MatchCVArray
-			<	t_tElement
-			,	0uz
-			,	t_tpQualifier
-				...
-			>
+		<	typename
+				Lex::MatchCVArray
+				<	t_tElement
+				,	0uz
+				,	t_tpQualifier
+					...
+				>
+			::	Entity
 		>
 	{
 		using ElementType = typename t_tElement::Entity;
@@ -696,12 +708,14 @@ export namespace
 			>
 		>
 	:	Object
-		<	Lex::MatchCVArray
-			<	t_tElement
-			,	t_nExtent
-			,	t_tpQualifier
-				...
-			>
+		<	typename
+				Lex::MatchCVArray
+				<	t_tElement
+				,	t_nExtent
+				,	t_tpQualifier
+					...
+				>
+			::	Entity
 		>
 	{
 		using ElementType = typename t_tElement::Entity;
