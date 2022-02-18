@@ -14,7 +14,7 @@ export namespace
 	=	LayoutConfig
 		<	"BasicBody"
 		>
-	+	InfoV
+	+	Member
 		<	"ComputeVolumeMultiplier"
 		,	Fraction
 			<>

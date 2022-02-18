@@ -17,7 +17,7 @@ export namespace
 			,	"Width"
 			>
 		)
-	+	InfoV
+	+	Member
 		<	"ComputeVolumeMultiplier"
 		,	PiFraction
 			<	1z

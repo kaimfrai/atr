@@ -1052,7 +1052,7 @@ namespace
 export namespace
 	ATR
 {
-	/// the type mapped to the string literal by LayoutInfo
+	/// the type mapped to the string literal by Member
 	template
 		<	ProtoID
 				t_tTypeID

@@ -248,7 +248,7 @@ export namespace
 				t_tValue
 		>
 	MemberList<1uz> constexpr inline
-		InfoV
+		Member
 	{	MemberInfo
 		{	.SortKey
 		=	MemberSortKey<t_tValue>

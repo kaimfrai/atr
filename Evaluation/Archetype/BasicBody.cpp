@@ -14,7 +14,7 @@ export namespace
 	=	LayoutConfig
 		<	"BasicShape"
 		>
-	+	InfoV
+	+	Member
 		<	"Depth"
 		,	Float
 		>

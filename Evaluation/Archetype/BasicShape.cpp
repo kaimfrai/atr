@@ -12,15 +12,15 @@ export namespace
 		LayoutConfig
 		<	"BasicShape"
 		>
-	=	InfoV
+	=	Member
 		<	"Height"
 		,	Float
 		>
-	+	InfoV
+	+	Member
 		<	"Width"
 		,	Float
 		>
-	+	InfoV
+	+	Member
 		<	"Color"
 		,	RGBAColor
 		>
