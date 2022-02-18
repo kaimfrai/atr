@@ -2,8 +2,7 @@ export module ATR.Erase;
 
 export import Std;
 export import Meta.Token.Type;
-export import Meta.Token.Transform;
-export import Meta.Concept.Category;
+export import Meta.Lex;
 
 export namespace
 	ATR
@@ -52,29 +51,33 @@ export namespace
 		/// erases type information from a value
 		/// TODO: erase value information: decomposition into fundamental types of the same properties
 		template
-			<	Meta::ProtoValue
-					t_tObject
+			<	typename
+					t_tEntity
+			,	typename
+				...	t_tpQualifier
 			>
 		auto constexpr
 		(	operator()
-		)	(	Meta::TypeToken<t_tObject>
+		)	(	Meta::Lex::CV<t_tEntity, t_tpQualifier...>
 					i_vType
-			,	Meta::TypeEntity<i_vType>
+			,	typename decltype(i_vType)::Entity
 					i_vObject
 			)	const
-		->	t_tObject
+		->	typename decltype(i_vType)::Entity
 		{	return i_vObject;	}
 
 		/// erases type information from a pointer to non-const
 		template
-			<	Meta::ProtoPointer
-					t_tObject
+			<	typename
+					t_tEntity
+			,	typename
+				...	t_tpQualifier
 			>
 		auto constexpr
 		(	operator()
-		)	(	Meta::TypeToken<t_tObject>
+		)	(	Meta::Lex::MatchCVPointer<t_tEntity, t_tpQualifier...>
 					i_vType
-			,	Meta::TypeEntity<i_vType>
+			,	typename decltype(i_vType)::Entity
 					i_aObject
 			)	const
 		->	auto*
@@ -82,20 +85,22 @@ export namespace
 
 		/// erases type information from a reference
 		template
-			<	Meta::ProtoReference
-					t_tObject
+			<	typename
+					t_tEntity
+			,	typename
+					t_tCategory
 			>
 		auto constexpr
 		(	operator()
-		)	(	Meta::TypeToken<t_tObject>
+		)	(	Meta::Lex::Ref<t_tEntity, t_tCategory>
 					i_vType
-			,	Meta::TypeEntity<i_vType>
+			,	typename decltype(i_vType)::Entity
 					i_rObject
 			)	const
 		->	auto*
 		{	return
 			operator()
-			(	Meta::AddPointer(i_vType)
+			(	Meta::Lex::MatchCVPointer<t_tEntity>{}
 			,	::std::addressof
 				(	i_rObject
 				)
@@ -116,12 +121,14 @@ export namespace
 		ErasedType
 	=	decltype
 		(	ForwardErased
-			(	Meta::Type
-				<	/// top level cv-qualifiers are ignored in the function signature
-					std::remove_cv_t
-					<	t_tEntity
+			(	Meta::Tokenize
+				(	/// top level cv-qualifiers are ignored in the function signature
+					Meta::Type
+					<	std::remove_cv_t
+						<	t_tEntity
+						>
 					>
-				>
+				)
 			,	::std::declval
 				<	t_tEntity
 				>()

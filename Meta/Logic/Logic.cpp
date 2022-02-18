@@ -1,9 +1,9 @@
 export module Meta.Logic;
 
 export import Meta.Arithmetic.Bit;
-export import Meta.Logic.BitTerm;
 export import Meta.Data.TupleSet;
-export import Meta.Concept.Category;
+export import Meta.Logic.BitTerm;
+export import Meta.Logic.LiteralBase;
 
 import Std;
 
@@ -475,7 +475,7 @@ export namespace
 		}
 
 		template
-			<	ProtoArgument
+			<	typename
 				...	t_tpArgument
 			>
 		auto constexpr

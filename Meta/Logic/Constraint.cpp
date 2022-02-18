@@ -1,11 +1,59 @@
 export module Meta.Constraint;
 
-export import Meta.Concept;
+export import Meta.Logic.LiteralBase;
 export import Meta.Logic;
 
 export namespace
 	Meta::Proto
 {
+	template
+		<	typename
+				t_tTrait
+		,	t_tTrait
+				t_fTrait
+		>
+	struct
+		Constraint final
+	{
+		template
+			<	typename
+					t_tProto
+			>
+		static bool constexpr
+			Evaluate
+		=	t_fTrait
+			(	Type<t_tProto>
+			)
+		;
+	};
+
+	template
+		<	auto
+				t_fTrait
+		>
+	using
+		StaticConstraint
+	=	Constraint
+		<	decltype(t_fTrait)
+		,	t_fTrait
+		>
+	;
+
+	template
+		<	typename
+				t_tProto
+		,	typename
+				t_tTrait
+		>
+	concept
+		Literal
+	=		t_tTrait
+		::	template
+			Evaluate
+			<	t_tProto
+			>
+	;
+
 	template
 		<	typename
 				t_tProto
@@ -30,7 +78,7 @@ export namespace
 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x0D>>
 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x0E>>
 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x0F>>
-	and	All<t_tProto>
+	and	Literal<t_tProto, StaticConstraint<Trait::Tautology>>
 	;
 
 	template
@@ -45,7 +93,7 @@ export namespace
 	or	Clause<t_tProto, typename t_tTrait::template Clause<0x01>>
 	or	Clause<t_tProto, typename t_tTrait::template Clause<0x02>>
 	or	Clause<t_tProto, typename t_tTrait::template Clause<0x03>>
-	or	None<t_tProto>
+	or	Literal<t_tProto, StaticConstraint<Trait::Contradiction>>
 	;
 }
 
@@ -126,7 +174,7 @@ export namespace
 			(t_nLiteralIndex < ConstraintLiteralLimit)
 		using
 			Literal
-		=	StaticConstraint
+		=	Proto::StaticConstraint
 			<	GetLiteral<t_nLiteralIndex>()
 			>
 		;

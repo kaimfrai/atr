@@ -1,7 +1,153 @@
 export module Meta.Predicate.Category;
 
-export import Meta.Concept.Category;
+export import Meta.Logic.LiteralBase;
 export import Meta.Logic;
+
+import Std;
+
+export namespace
+	Meta::Trait
+{
+	///	Object types which may store data. In particular, this exculdes unbound arrays.
+	///	This has a real semantic meaning, in particular for types used as members in a class.
+	///	In combination with the following traits, all types categories are distinguished with
+	///	as few traits as possible.
+	struct
+		Data final
+	:	LiteralBase
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return
+			(	Polarity
+			==	(	::std::is_object_v<t_tEntity>
+				and	not
+					::std::is_unbounded_array_v<t_tEntity>
+				)
+			);
+		}
+	};
+
+	///	Primarily serves to distinguish type categories with as few traits as possible.
+	///	Void, References vs. Functions, Unbounded Arrays.
+	///	Scalar vs. Bounded Arrays, Classes, Unions.
+	struct
+		Scalar_Ref_Void final
+	:	LiteralBase
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return
+				Polarity
+			==	(	::std::is_scalar_v<t_tEntity>
+				or	::std::is_reference_v<t_tEntity>
+				or	::std::is_void_v<t_tEntity>
+				)
+			;
+		}
+	};
+
+	///	Primarily serves to distinguish type categories with as few traits as possible.
+	///	Arithmetic, Nullpointer vs. Enum, Member Pointer, Pointer.
+	///	Bounded Array vs. Class, Union.
+	///	Void vs. Reference
+	///	UnbounedArray vs. Function
+	struct
+		Fund_Array final
+	:	LiteralBase
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return
+				Polarity
+			==	(	::std::is_fundamental_v<t_tEntity>
+				or	::std::is_array_v<t_tEntity>
+				)
+			;
+		}
+	};
+
+	///	Primarily serves to distinguish type categories with as few traits as possible.
+	///	Integral vs. Floating Point, Nullpointer.
+	///	Enum vs. Member Pointer, Pointer.
+	///	Class vs. Union.
+	///	LValueReference vs. RValueReference.
+	///	Non-Qualified Function vs. Qualified Function.
+	struct
+		Int_Enum_Class_LRef_NonQ final
+	:	LiteralBase
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return
+				Polarity
+			==	(	::std::is_integral_v<t_tEntity>
+				or	::std::is_enum_v<t_tEntity>
+				or	::std::is_class_v<t_tEntity>
+				or	::std::is_lvalue_reference_v<t_tEntity>
+				or	(	::std::is_function_v<t_tEntity>
+					and	requires{Type<t_tEntity*>; }
+					)
+				)
+			;
+		}
+	};
+
+	///	Primarily serves to distinguish type categories with as few traits as possible.
+	///	Signed Integral vs. Unsigned Integral.
+	///	Scoped Enum vs. Unscoped Enum.
+	///	Pointer vs. Member Pointer.
+	struct
+		Signed_Scoped_Ptr final
+	:	LiteralBase
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	bool
+		{	return
+				Polarity
+			==	(	::std::is_signed_v<t_tEntity>
+				or	::std::is_scoped_enum_v<t_tEntity>
+				or	::std::is_pointer_v<t_tEntity>
+				)
+			;
+		}
+	};
+}
 
 export namespace
 	Meta

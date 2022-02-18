@@ -146,7 +146,7 @@ export namespace
 	:	LiteralBase
 	{
 		template
-			<	ProtoValue
+			<	typename
 					t_tEntity
 			>
 		auto constexpr
@@ -235,7 +235,7 @@ export namespace
 	;
 
 	template
-		<	ProtoArgument
+		<	typename
 			...	t_tpArgument
 		>
 	Term constexpr inline

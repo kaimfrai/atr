@@ -57,7 +57,7 @@ export namespace
 			noexcept
 			(	AddressNoexcept
 				<	t_tFunctionName
-				,	LayoutType&
+				,	Instance&
 				,	t_tpArgument
 					...
 				>
@@ -66,15 +66,15 @@ export namespace
 		{	return
 			Address
 			<	t_tFunctionName
-			,	LayoutType const&
+			,	Instance&
 			,	t_tpArgument
 				...
 			>(	ForwardErased
-				(	Meta::Type<LayoutType&>
+				(	Meta::TokenizeEntity<LayoutType&>{}
 				,	*this
 				)
 			,	ForwardErased
-				(	Meta::Type<t_tpArgument>
+				(	Meta::TokenizeEntity<t_tpArgument>{}
 				,	i_rpArgument
 				)
 				...
@@ -114,15 +114,15 @@ export namespace
 		{	return
 			Address
 			<	t_tFunctionName
-			,	LayoutType const&
+			,	Instance const&
 			,	t_tpArgument
 				...
 			>(	ForwardErased
-				(	Meta::Type<LayoutType const&>
+				(	Meta::TokenizeEntity<Instance const&>{}
 				,	*this
 				)
 			,	ForwardErased
-				(	Meta::Type<t_tpArgument>
+				(	Meta::TokenizeEntity<t_tpArgument>{}
 				,	i_rpArgument
 				)
 				...
@@ -163,15 +163,15 @@ export namespace
 		{	return
 			Address
 			<	t_tFunctionName
-			,	LayoutType const&
+			,	Instance const&
 			,	t_tpArgument
 				...
 			>(	ForwardErased
-				(	Meta::Type<LayoutType&&>
+				(	Meta::TokenizeEntity<Instance&&>{}
 				,	*this
 				)
 			,	ForwardErased
-				(	Meta::Type<t_tpArgument>
+				(	Meta::TokenizeEntity<t_tpArgument>{}
 				,	i_rpArgument
 				)
 				...

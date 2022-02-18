@@ -1,6 +1,5 @@
 export module ATR.DependencyIDMap;
 
-export import Meta.Concept.Category;
 export import Meta.Logic;
 export import Meta.Constraint;
 
@@ -81,13 +80,13 @@ export namespace
 			)	const
 		->	bool
 		{	return
-				Polarity
+			(	Polarity
 			==	requires
 				{	::std::declval<t_tEntity>()
 					[	t_tDataID{}
 					];
 				}
-			;
+			);
 		}
 	};
 }

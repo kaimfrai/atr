@@ -15,14 +15,7 @@ export namespace
 		>
 	struct
 		VirtualItem
-	{
-		static_assert
-		(	Meta::ProtoNone
-			<	VirtualItem
-			>
-		,	"Unexpected specialization failure."
-		);
-	};
+	;
 
 	template
 		<	ProtoID
@@ -201,7 +194,7 @@ export namespace
 	template
 		<	StringLiteral
 				t_vFunctionName
-		,	Meta::ProtoFunction
+		,	typename
 				t_tSignature
 		>
 	using
@@ -277,7 +270,7 @@ export namespace
 			}
 		,	ErasedArgument
 			{	ForwardErased
-				(	Meta::Type<t_tObject>
+				(	Meta::TokenizeEntity<t_tObject>{}
 				,	i_rArgument
 				)
 			}

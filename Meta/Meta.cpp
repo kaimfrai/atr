@@ -2,7 +2,6 @@ export module Meta;
 
 export import Meta.Token.Type;
 export import Meta.Logic;
-export import Meta.Concept;
 export import Meta.Literals;
 export import Meta.Predicate;
 export import Meta.Constraint;

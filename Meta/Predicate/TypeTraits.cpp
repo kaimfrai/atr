@@ -3,7 +3,6 @@ export module Meta.Predicate.TypeTraits;
 export import Std;
 
 export import Meta.Token.Type;
-export import Meta.Concept.Category;
 export import Meta.Logic;
 export import Meta.Predicate.Category;
 
@@ -47,15 +46,13 @@ export namespace
 	};
 
 	template
-		<	ProtoReturnable
+		<	typename
 				t_tTarget
 		>
 	struct
 		Convertible_To final
 	:	LiteralBase
 	{
-		using LiteralBase::operator();
-
 		explicit constexpr
 		(	Convertible_To
 		)	(	bool
@@ -77,17 +74,17 @@ export namespace
 			)	const
 		->	bool
 		{	return
-				Polarity
+			(	Polarity
 			==	::std::is_convertible_v
 				<	t_tEntity
 				,	t_tTarget
 				>
-			;
+			);
 		}
 	};
 
 	template
-		<	ProtoReturnable
+		<	typename
 				t_tTarget
 		>
 	(	Convertible_To
@@ -100,15 +97,13 @@ export namespace
 	;
 
 	template
-		<	ProtoArgument
+		<	typename
 				t_tArgument
 		>
 	struct
 		Assignable_From final
 	:	LiteralBase
 	{
-		using LiteralBase::operator();
-
 		explicit constexpr
 		(	Assignable_From
 		)	(	bool
@@ -121,7 +116,7 @@ export namespace
 		{}
 
 		template
-			<	ProtoValue
+			<	typename
 					t_tEntity
 			>
 		auto constexpr
@@ -130,17 +125,17 @@ export namespace
 			)	const
 		->	bool
 		{	return
-				Polarity
+			(	Polarity
 			==	::std::is_assignable_v
 				<	t_tEntity
 				,	t_tArgument
 				>
-			;
+			);
 		}
 	};
 
 	template
-		<	ProtoArgument
+		<	typename
 				t_tArgument
 		>
 	(	Assignable_From
@@ -153,17 +148,15 @@ export namespace
 	;
 
 	template
-		<	ProtoClass
+		<	typename
 				t_tBase
 		>
 	struct
 		Derived_From final
 	:	LiteralBase
 	{
-		using LiteralBase::operator();
-
 		template
-			<	ProtoClass
+			<	typename
 					t_tEntity
 			>
 		auto constexpr
@@ -172,12 +165,12 @@ export namespace
 			)	const
 		->	bool
 		{	return
-				Polarity
+			(	Polarity
 			==	::std::is_base_of_v
 				<	t_tBase
 				,	t_tEntity
 				>
-			;
+			);
 		}
 	};
 
@@ -443,7 +436,7 @@ export namespace
 	;
 
 	template
-		<	ProtoClass
+		<	typename
 				t_tBase
 		>
 	Term constexpr inline

@@ -207,7 +207,7 @@ export namespace
 	;
 
 	template
-		<	ProtoArgument
+		<	typename
 			...	t_tpArgument
 		>
 	Term constexpr inline

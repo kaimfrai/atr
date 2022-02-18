@@ -1,6 +1,5 @@
 export module Meta.Predicate.Empty;
 
-export import Meta.Concept.Category;
 export import Meta.Logic;
 export import Meta.Predicate.Regular;
 export import Meta.Data.Object;
@@ -14,10 +13,8 @@ export namespace
 		Empty final
 	:	LiteralBase
 	{
-		using LiteralBase::operator();
-
 		template
-			<	ProtoCustom
+			<	typename
 					t_tEntity
 			>
 		auto constexpr
