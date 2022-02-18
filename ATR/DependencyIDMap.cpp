@@ -158,37 +158,33 @@ namespace
 
 	template
 		<	ProtoID
-				t_tOrigin
-		,	ProtoMemberInterface<t_tOrigin::RawArray>
+				t_tDataID
+		,	ProtoMemberInterface<t_tDataID::RawArray>
 				t_tOwner
 		>
 	auto constexpr
 	(	MapDependency
-	)	(	t_tOrigin
-				i_vOrigin
+	)	(	t_tDataID
+				i_vDataID
 		,	Meta::TypeToken<t_tOwner>
 		,	Meta::TypePack<>
 		)
 	{
-		using tOwner = ::std::remove_cvref_t<t_tOwner>;
-		ID constexpr
-			vResolvedAlias
-		=	tOwner::ResolveAlias(i_vOrigin)
-		;
 		using
 			tType
 		=	decltype
 			(	::std::declval<t_tOwner>()
-				[	vResolvedAlias
+				[	i_vDataID
 				]
 			)
 		;
+		using tOwner = ::std::remove_cvref_t<t_tOwner>;
 		if	constexpr
 			(	ProtoMemberInterface
 				<	typename
 					tOwner
 				::	StaticLayout
-				,	vResolvedAlias.RawArray
+				,	i_vDataID.RawArray
 				>
 			)
 			return
@@ -199,7 +195,7 @@ namespace
 			MemberOffset<tType>
 			{	tOwner
 			::	DynamicLayout
-			::	OffsetOf(vResolvedAlias)
+			::	OffsetOf(i_vDataID)
 			};
 	}
 }
@@ -217,7 +213,10 @@ export namespace
 		ArgumentDependency
 	{	Meta::Type<ErasedType<t_tOwner>>
 	,	::ATR::MapDependency
-		(	ID_Of<t_vpIDMap.OriginID>{}
+		(	::std::remove_cvref_t<t_tOwner>
+		::	ResolveAlias
+			(	ID_Of<t_vpIDMap.OriginID>{}
+			)
 		,	Meta::Type<t_tOwner>
 		,	t_vpIDMap.ArgumentPack
 		)
