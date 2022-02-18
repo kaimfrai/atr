@@ -34,6 +34,26 @@ export namespace
 	template
 		<	typename
 				t_tElement
+		,	USize
+				t_nExtent
+		,	typename
+			...	t_tpQualifier
+		>
+	using
+		MatchCVArray
+	=	CV
+		<	Array
+			<	t_tElement
+			,	Token::Extent<t_nExtent>
+			>
+		,	t_tpQualifier
+			...
+		>
+	;
+
+	template
+		<	typename
+				t_tElement
 		,	typename
 			...	t_tpQualifier
 		,	USize

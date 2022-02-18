@@ -16,7 +16,14 @@ template
 	>
 Meta::EraseTypeToken constexpr inline
 	ArrayToQualified
-=	Type<Array<MatchCV<int, t_tpQualifier...>, Extent<t_nExtent>>>
+=	Type
+	<	MatchCVArray
+		<	MatchCV<int>
+		,	t_nExtent
+		,	t_tpQualifier
+			...
+		>
+	>
 ;
 
 static_assert

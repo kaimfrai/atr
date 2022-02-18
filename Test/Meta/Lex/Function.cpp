@@ -33,9 +33,9 @@ Meta::EraseTypeToken constexpr inline
 						>
 					>
 				,	Ref
-					<	Array
+					<	MatchCVArray
 						<	MatchCV<int>
-						,	Extent<0uz>
+						,	0uz
 						>
 					,	LRef
 					>
@@ -205,9 +205,9 @@ Meta::EraseTypeToken constexpr inline
 						>
 					>
 				,	Ref
-					<	Array
+					<	MatchCVArray
 						<	MatchCV<int>
-						,	Extent<0uz>
+						,	0uz
 						>
 					,	LRef
 					>

@@ -101,9 +101,11 @@ export namespace
 			)	const
 		->	decltype(auto)
 		{	return
-			Array
-			{	operator()(Type<t_tElement>)
-			,	Extent<t_nExtent>
+			CV
+			{	Array
+				{	operator()(Type<t_tElement>)
+				,	Extent<t_nExtent>
+				}
 			};
 		}
 
@@ -121,9 +123,12 @@ export namespace
 			)	const
 		->	decltype(auto)
 		{	return
-			Array
-			{	operator()(Type<t_tElement const>)
-			,	Extent<t_nExtent>
+			CV
+			{	Array
+				{	operator()(Type<t_tElement>)
+				,	Extent<t_nExtent>
+				}
+			,	Const
 			};
 		}
 
@@ -141,9 +146,12 @@ export namespace
 			)	const
 		->	decltype(auto)
 		{	return
-			Array
-			{	operator()(Type<t_tElement volatile>)
-			,	Extent<t_nExtent>
+			CV
+			{	Array
+				{	operator()(Type<t_tElement>)
+				,	Extent<t_nExtent>
+				}
+			,	Volatile
 			};
 		}
 
@@ -161,9 +169,13 @@ export namespace
 			)	const
 		->	decltype(auto)
 		{	return
-			Array
-			{	operator()(Type<t_tElement const volatile>)
-			,	Extent<t_nExtent>
+			CV
+			{	Array
+				{	operator()(Type<t_tElement>)
+				,	Extent<t_nExtent>
+				}
+			,	Const
+			,	Volatile
 			};
 		}
 
@@ -179,9 +191,11 @@ export namespace
 			)	const
 		->	decltype(auto)
 		{	return
-			Array
-			{	operator()(Type<t_tElement>)
-			,	Extent<0uz>
+			CV
+			{	Array
+				{	operator()(Type<t_tElement>)
+				,	Extent<0uz>
+				}
 			};
 		}
 
@@ -197,9 +211,12 @@ export namespace
 			)	const
 		->	decltype(auto)
 		{	return
-			Array
-			{	operator()(Type<t_tElement const>)
-			,	Extent<0uz>
+			CV
+			{	Array
+				{	operator()(Type<t_tElement>)
+				,	Extent<0uz>
+				}
+			,	Const
 			};
 		}
 
@@ -215,9 +232,12 @@ export namespace
 			)	const
 		->	decltype(auto)
 		{	return
-			Array
-			{	operator()(Type<t_tElement volatile>)
-			,	Extent<0uz>
+			CV
+			{	Array
+				{	operator()(Type<t_tElement>)
+				,	Extent<0uz>
+				}
+			,	Volatile
 			};
 		}
 
@@ -233,9 +253,13 @@ export namespace
 			)	const
 		->	decltype(auto)
 		{	return
-			Array
-			{	operator()(Type<t_tElement const volatile>)
-			,	Extent<0uz>
+			CV
+			{	Array
+				{	operator()(Type<t_tElement>)
+				,	Extent<0uz>
+				}
+			,	Const
+			,	Volatile
 			};
 		}
 

@@ -138,37 +138,14 @@ export namespace
 				t_tData
 		,	typename
 			...	t_tpQualifier
-		,	typename
-				t_tExtent
 		>
 	struct
 		Object
-		<	Lex::Array
-			<	Lex::CV<t_tData, t_tpQualifier...>
-			,	t_tExtent
-			>
-		>
-	{
-		typename Lex::Array
-			<	Lex::CV<t_tData, t_tpQualifier...>
-			,	t_tExtent
-			>
-		::	Entity
-			Data
-		;
-	};
-
-	template
-		<	typename
-				t_tData
-		,	typename
-			...	t_tpQualifier
-		>
-	struct
-		Object
-		<	Lex::Array
-			<	Lex::CV<t_tData, t_tpQualifier...>
-			,	Token::Extent<0uz>
+		<	Lex::MatchCVArray
+			<	Lex::CV<t_tData>
+			,	0uz
+			,	t_tpQualifier
+				...
 			>
 		>
 	{};
