@@ -15,7 +15,7 @@ template
 	>
 ::Meta::EraseTypeToken constexpr inline
 	LRefToQualified
-=	Type<Ref<CV<Base<int>, t_tpQualifier...>, LRef>>
+=	Type<Ref<MatchCV<int, t_tpQualifier...>, LRef>>
 ;
 
 static_assert
@@ -44,7 +44,7 @@ template
 	>
 ::Meta::EraseTypeToken constexpr inline
 	RRefToQualified
-=	Type<Ref<CV<Base<int>, t_tpQualifier...>, RRef>>
+=	Type<Ref<MatchCV<int, t_tpQualifier...>, RRef>>
 ;
 
 static_assert

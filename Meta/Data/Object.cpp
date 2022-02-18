@@ -18,6 +18,36 @@ export namespace
 
 	template
 		<	typename
+			...	t_tpQualifier
+		>
+	struct
+		Object
+		<	Lex::MatchCV
+			<	void
+			,	t_tpQualifier
+				...
+			>
+		>
+	{};
+
+	template
+		<	typename
+				t_tSignature
+		,	typename
+			...	t_tpQualifier
+		>
+	struct
+		Object
+		<	Lex::Func
+			<	t_tSignature
+			,	t_tpQualifier
+				...
+			>
+		>
+	{};
+
+	template
+		<	typename
 				t_tData
 		,	typename
 			...	t_tpQualifier

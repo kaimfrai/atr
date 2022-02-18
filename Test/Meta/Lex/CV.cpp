@@ -13,7 +13,7 @@ template
 	>
 Meta::EraseTypeToken constexpr inline
 	Qualified
-=	Type<CV<Base<int>, t_tpQualifier...>>
+=	Type<MatchCV<int, t_tpQualifier...>>
 ;
 
 static_assert

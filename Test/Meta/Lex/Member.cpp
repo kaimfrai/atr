@@ -15,7 +15,7 @@ template
 	>
 Meta::EraseTypeToken constexpr inline
 	MemberToQualified
-=	Type<CV<Member<CV<Base<int>, t_tpQualifier...>, Owner<Class>>>>
+=	Type<CV<Member<MatchCV<int, t_tpQualifier...>, Owner<Class>>>>
 ;
 
 static_assert
@@ -44,25 +44,25 @@ template
 	>
 Meta::EraseTypeToken constexpr inline
 	QualifiedMember
-=	Type<CV<Member<CV<Base<int>>, Owner<Class>>, t_tpQualifier...>>
+=	Type<CV<Member<MatchCV<int, Const, Volatile>, Owner<Class>>, t_tpQualifier...>>
 ;
 
 static_assert
-(	TokenizeType<int Class::*>
+(	TokenizeType<int const volatile Class::*>
 ==	QualifiedMember<>
 );
 
 static_assert
-(	TokenizeType<int Class::* const>
+(	TokenizeType<int const volatile Class::* const>
 ==	QualifiedMember<Const>
 );
 
 static_assert
-(	TokenizeType<int Class::* volatile>
+(	TokenizeType<int const volatile Class::* volatile>
 ==	QualifiedMember<Volatile>
 );
 
 static_assert
-(	TokenizeType<int Class::* const volatile>
+(	TokenizeType<int const volatile Class::* const volatile>
 ==	QualifiedMember<Const, Volatile>
 );

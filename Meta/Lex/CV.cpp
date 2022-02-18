@@ -15,10 +15,13 @@ export namespace
 		Base
 	{
 		static_assert
-		(	::std::is_fundamental_v<t_tFundamental>
-		or	::std::is_class_v<t_tFundamental>
-		or	::std::is_union_v<t_tFundamental>
-		or	::std::is_enum_v<t_tFundamental>
+		(	(	::std::is_fundamental_v<t_tFundamental>
+			or	::std::is_class_v<t_tFundamental>
+			or	::std::is_union_v<t_tFundamental>
+			or	::std::is_enum_v<t_tFundamental>
+			)
+		and	not ::std::is_const_v<t_tFundamental>
+		and	not ::std::is_volatile_v<t_tFundamental>
 		,	"Tokenize ended prematurely!"
 		);
 
@@ -68,6 +71,21 @@ export namespace
 		=	TypeEntity<Type>
 		;
 	};
+
+	template
+		<	typename
+				t_tData
+		,	typename
+			...	t_tpQualifier
+		>
+	using
+		MatchCV
+	=	CV
+		<	Base<t_tData>
+		,	t_tpQualifier
+			...
+		>
+	;
 
 	template
 		<	typename

@@ -20,21 +20,21 @@ Meta::EraseTypeToken constexpr inline
 =	Type
 	<	Func
 		<	Sig
-			<	CV<Base<int>>
+			<	MatchCV<int>
 			,	Param
 				<	CV
 					<	Ptr
-						<	CV<Base<int>>
+						<	MatchCV<int>
 						>
 					>
 				,	CV
 					<	Ptr
-						<	CV<Base<int>>
+						<	MatchCV<int>
 						>
 					>
 				,	Ref
 					<	Array
-						<	CV<Base<int>>
+						<	MatchCV<int>
 						,	Extent<0uz>
 						>
 					,	LRef
@@ -42,11 +42,11 @@ Meta::EraseTypeToken constexpr inline
 				,	Ref
 					<	Func
 						<	Sig
-							<	CV<Base<int>>
+							<	MatchCV<int>
 							,	Param
 								<	CV
 									<	Ptr
-										<	CV<Base<int>>
+										<	MatchCV<int>
 										>
 									>
 								>
@@ -192,21 +192,21 @@ Meta::EraseTypeToken constexpr inline
 =	Type
 	<	Func
 		<	Sig
-			<	CV<Base<int>>
+			<	MatchCV<int>
 			,	Param
 				<	CV
 					<	Ptr
-						<	CV<Base<int>>
+						<	MatchCV<int>
 						>
 					>
 				,	CV
 					<	Ptr
-						<	CV<Base<int>>
+						<	MatchCV<int>
 						>
 					>
 				,	Ref
 					<	Array
-						<	CV<Base<int>>
+						<	MatchCV<int>
 						,	Extent<0uz>
 						>
 					,	LRef
@@ -214,11 +214,11 @@ Meta::EraseTypeToken constexpr inline
 				,	Ref
 					<	Func
 						<	Sig
-							<	CV<Base<int>>
+							<	MatchCV<int>
 							,	Param
 								<	CV
 									<	Ptr
-										<	CV<Base<int>>
+										<	MatchCV<int>
 										>
 									>
 								>
