@@ -4,8 +4,8 @@ export import Std;
 export import Meta.Index;
 export import Meta.Token.Type;
 export import Meta.Token.Array;
+export import Meta.Lex;
 export import Meta.Data.Aggregate;
-export import Meta.Concept.Regular;
 
 export namespace
 	Meta
@@ -16,17 +16,92 @@ export namespace
 		>
 	struct
 		Value
-	:	Data::Aggregate<t_tValue>
+	:	Value
+		<	TokenizeEntity<t_tValue>
+		>
+	{
+		using
+			Value
+			<	TokenizeEntity<t_tValue>
+			>
+		::	Value
+		;
+	};
+
+	template
+		<	typename
+			...	t_tpQualifier
+		>
+	struct
+		Value
+		<	Lex::MatchCV
+			<	void
+			,	t_tpQualifier
+				...
+			>
+		>
+	:	Aggregate
+		<	typename
+				Lex::MatchCV
+				<	void
+				,	t_tpQualifier
+					...
+				>
+			::	Entity
+		>
 	{};
 
 	template
-		<	ProtoValue
-				t_tValue
+		<	typename
+				t_tSignature
+		,	typename
+			...	t_tpQualifier
 		>
 	struct
-		Value<t_tValue>
-	:	Data::Aggregate<t_tValue>
+		Value
+		<	Lex::Func
+			<	t_tSignature
+			,	t_tpQualifier
+				...
+			>
+		>
+	:	Aggregate
+		<	typename
+				Lex::Func
+				<	t_tSignature
+				,	t_tpQualifier
+					...
+				>
+			::	Entity
+		>
+	{};
+
+	template
+		<	typename
+				t_tData
+		,	typename
+			...	t_tQualifier
+		>
+	struct
+		Value
+		<	Lex::CV
+			<	t_tData
+			,	t_tQualifier
+				...
+			>
+		>
+	:	Aggregate
+		<	typename
+				Lex::CV
+				<	t_tData
+				,	t_tQualifier
+					...
+				>
+			::	Entity
+		>
 	{
+		using ValueType = typename Lex::CV<t_tData, t_tQualifier...>::Entity;
+
 		constexpr
 		(	Value
 		)	()
@@ -34,20 +109,20 @@ export namespace
 
 		constexpr
 		(	Value
-		)	(	t_tValue const
+		)	(	ValueType const
 				&	i_rValue
 			)
-		:	Data::Aggregate<t_tValue>
+		:	Aggregate<ValueType>
 			{	i_rValue
 			}
 		{}
 
 		constexpr
 		(	Value
-		)	(	t_tValue
+		)	(	ValueType
 				&&	i_rValue
 			)
-		:	Data::Aggregate<t_tValue>
+		:	Aggregate<ValueType>
 			{	::std::move
 				(	i_rValue
 				)
@@ -56,13 +131,29 @@ export namespace
 	};
 
 	template
-		<	ProtoReference
-				t_rValue
+		<	typename
+				t_tData
+		,	typename
+				t_tCategory
 		>
 	struct
-		Value<t_rValue>
-	:	Data::Aggregate<t_rValue>
+		Value
+		<	Lex::Ref
+			<	t_tData
+			,	t_tCategory
+			>
+		>
+	:	Aggregate
+		<	typename
+				Lex::Ref
+				<	t_tData
+				,	t_tCategory
+				>
+			::	Entity
+		>
 	{
+		using ValueType = typename Lex::Ref<t_tData, t_tCategory>::Entity;
+
 		constexpr
 		(	Value
 		)	()
@@ -70,10 +161,10 @@ export namespace
 
 		constexpr
 		(	Value
-		)	(	t_rValue
+		)	(	ValueType
 					i_rValue
 			)
-		:	Data::Aggregate<t_rValue>
+		:	Aggregate<ValueType>
 			{	::std::addressof(i_rValue)
 			}
 		{}
@@ -81,12 +172,32 @@ export namespace
 
 	template
 		<	typename
-				t_tValue
+				t_tElement
+		,	typename
+			...	t_tpQualifier
 		>
 	struct
-		Value<t_tValue[]>
-	:	Data::Aggregate<t_tValue[]>
+		Value
+		<	Lex::MatchCVArray
+			<	t_tElement
+			,	0uz
+			,	t_tpQualifier
+				...
+			>
+		>
+	:	Aggregate
+		<	typename
+				Lex::MatchCVArray
+				<	t_tElement
+				,	0uz
+				,	t_tpQualifier
+					...
+				>
+			::	Entity
+		>
 	{
+		using ElementType = typename t_tElement::Entity;
+
 		constexpr
 		(	Value
 		)	()
@@ -95,31 +206,51 @@ export namespace
 
 		constexpr
 		(	Value
-		)	(	t_tValue const*
+		)	(	ElementType const*
 			)
-		:	Data::Aggregate<t_tValue[]>
+		:	Aggregate<ElementType[]>
 			{}
 		{}
 
 		constexpr
 		(	Value
-		)	(	::std::initializer_list<t_tValue const>
+		)	(	::std::initializer_list<ElementType const>
 			)
-		:	Data::Aggregate<t_tValue[]>
+		:	Aggregate<ElementType[]>
 			{}
 		{}
 	};
 
 	template
 		<	typename
-				t_tValue
+				t_tElement
 		,	USize
 				t_nExtent
+		,	typename
+			...	t_tpQualifier
 		>
 	struct
-		Value<t_tValue[t_nExtent]>
-	:	Data::Aggregate<t_tValue[t_nExtent]>
+		Value
+		<	Lex::MatchCVArray
+			<	t_tElement
+			,	t_nExtent
+			,	t_tpQualifier
+				...
+			>
+		>
+	:	Aggregate
+		<	typename
+				Lex::MatchCVArray
+				<	t_tElement
+				,	t_nExtent
+				,	t_tpQualifier
+					...
+				>
+			::	Entity
+		>
 	{
+		using ElementType = typename t_tElement::Entity;
+
 		constexpr
 		(	Value
 		)	()
@@ -128,10 +259,10 @@ export namespace
 
 		constexpr
 		(	Value
-		)	(	t_tValue const
+		)	(	ElementType const
 				*	i_aValue
 			)
-		:	Data::Aggregate<t_tValue[t_nExtent]>
+		:	Aggregate<ElementType[t_nExtent]>
 			{	Data::MakeArrayAggregate<t_nExtent>
 				(	i_aValue
 				)
@@ -140,7 +271,7 @@ export namespace
 
 		constexpr
 		(	Value
-		)	(	::std::initializer_list<t_tValue const>
+		)	(	::std::initializer_list<ElementType const>
 					i_vList
 			)
 		:	Value
@@ -162,11 +293,11 @@ export namespace
 	;
 
 	template
-		<	ProtoValue
+		<	typename
 			...	t_tpValue
 		>
 	(	Value
-	)	(	t_tpValue&&
+	)	(	t_tpValue
 			...
 		)
 	->	Value
