@@ -15,7 +15,7 @@ template
 	>
 Meta::EraseTypeToken constexpr inline
 	MemberToQualified
-=	Type<MatchCVMember<MatchCV<int, t_tpQualifier...>, Owner<Class>>>
+=	Type<MatchCVMember<MatchCV<int, t_tpQualifier...>, Class>>
 ;
 
 static_assert
@@ -44,7 +44,7 @@ template
 	>
 Meta::EraseTypeToken constexpr inline
 	QualifiedMember
-=	Type<CV<Member<MatchCV<int, Const, Volatile>, Owner<Class>>, t_tpQualifier...>>
+=	Type<CV<Member<MatchCV<int, Const, Volatile>, Class>, t_tpQualifier...>>
 ;
 
 static_assert

@@ -9,6 +9,7 @@ export namespace
 {
 	template
 		<	typename
+				t_tOwner
 		>
 	struct
 		Owner
@@ -23,18 +24,17 @@ export namespace
 	struct
 		Member
 	:	t_tMember
-	,	t_tOwner
+	,	Owner<t_tOwner>
 	{
-		//	TODO incomplete
-		static Token::TypeToken constexpr
-			Type
-		=	t_tMember::Type
-		;
-
 		using
 			Entity
-		=	TypeEntity<Type>
+		=	typename t_tMember::Entity
+			t_tOwner::*
 		;
+
+		static Token::TypeToken<Entity> constexpr
+			Type
+		{};
 
 		constexpr
 		(	operator EraseTypeToken
@@ -57,7 +57,7 @@ export namespace
 		)
 	->	Member
 		<	CV<t_tData, t_tpQualifier...>
-		,	Owner<t_tOwner>
+		,	t_tOwner
 		>
 	;
 
@@ -75,7 +75,7 @@ export namespace
 		)
 	->	Member
 		<	Func<t_tSignature, t_tpQualifier...>
-		,	Owner<t_tOwner>
+		,	t_tOwner
 		>
 	;
 

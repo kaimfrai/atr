@@ -117,7 +117,7 @@ export namespace
 		<	typename
 				t_tResult
 		,	typename
-				t_tParam
+			...	t_tpParam
 		>
 	struct
 		Result
@@ -130,7 +130,9 @@ export namespace
 		<	typename
 				t_tQualifier
 		,	typename
-				t_tSig
+				t_tResult
+		,	typename
+			...	t_tpParam
 		>
 	struct
 		FuncQualifier
@@ -147,16 +149,40 @@ export namespace
 		>
 	struct
 		Sig
-	:	Result<t_tResult, t_tParam>
-	,	t_tParam
-	,	FuncQualifier<t_tpEllipsis, t_tParam>
+	;
+
+	template
+		<	typename
+				t_tResult
+		,	typename
+			...	t_tpParam
+		,	typename
+			...	t_tpEllipsis
+		>
+	struct
+		Sig
+		<	t_tResult
+		,	Param<t_tpParam...>
+		,	t_tpEllipsis
+			...
+		>
+	:	Result<t_tResult, t_tpParam..., t_tpEllipsis...>
+	,	Param<t_tpParam...>
+	,	FuncQualifier<t_tpEllipsis, t_tResult, t_tpParam...>
 		...
 	{
-		//	TODO incomplete
 		static Token::TypeToken constexpr
 			Type
-		=	Meta::Type<t_tResult(t_tParam)>
-		;
+		=(	Meta::Type
+			<	typename t_tResult::Entity
+				(	typename t_tpParam::Entity
+					...
+				)
+			>
+		+	...
+		+	t_tpEllipsis
+			{}
+		);
 
 		using
 			Entity
@@ -245,11 +271,13 @@ export namespace
 	,	FuncQualifier<t_tpQualifier, t_tSig>
 		...
 	{
-		//	TODO incomplete
 		static Token::TypeToken constexpr
 			Type
-		=	t_tSig::Type
-		;
+		=(	t_tSig::Type
+		+	...
+		+	t_tpQualifier
+			{}
+		);
 
 		using
 			Entity

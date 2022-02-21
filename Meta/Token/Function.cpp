@@ -3,27 +3,80 @@ export module Meta.Token.Function;
 ///	tokens also required by functions
 export import Meta.Token.CV;
 export import Meta.Token.Reference;
+export import Meta.Token.FunctionTransform;
 
 export namespace
 	Meta::Token
 {
 	struct
-		Noexcept
-	{};
+		Ellipsis
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator +
+		)	(	TypeToken<t_tEntity>
+					i_vType
+			,	Ellipsis
+			)
+		->	decltype(AddEllipsis(i_vType))
+		{	return {};	}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator -
+		)	(	TypeToken<t_tEntity>
+					i_vType
+			,	Ellipsis
+			)
+		->	decltype(RemoveEllipsis(i_vType))
+		{	return {};	}
+	};
 
 	struct
-		Ellipsis
-	{};
+		Noexcept
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator +
+		)	(	TypeToken<t_tEntity>
+					i_vType
+			,	Noexcept
+			)
+		->	decltype(AddNoexcept(i_vType))
+		{	return {};	}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator -
+		)	(	TypeToken<t_tEntity>
+					i_vType
+			,	Noexcept
+			)
+		->	decltype(RemoveNoexcept(i_vType))
+		{	return {};	}
+	};
 }
 
 export namespace
 	Meta
 {
-	Token::Noexcept constexpr inline
-		Noexcept
-	{};
-
 	Token::Ellipsis constexpr inline
 		Ellipsis
+	{};
+
+	Token::Noexcept constexpr inline
+		Noexcept
 	{};
 }

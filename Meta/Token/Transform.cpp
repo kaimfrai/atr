@@ -8,7 +8,7 @@ export namespace
 	Meta::Transform
 {
 	struct
-		TypeIdentity final
+		TypeIdentity
 	{
 		template
 			<	typename
