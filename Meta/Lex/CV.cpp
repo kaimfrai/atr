@@ -70,6 +70,12 @@ export namespace
 			Entity
 		=	TypeEntity<Type>
 		;
+
+		constexpr
+		(	operator EraseTypeToken
+		)	()	const
+			noexcept
+		{	return Type;	}
 	};
 
 	template

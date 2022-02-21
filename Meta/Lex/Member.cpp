@@ -24,7 +24,24 @@ export namespace
 		Member
 	:	t_tMember
 	,	t_tOwner
-	{};
+	{
+		//	TODO incomplete
+		static Token::TypeToken constexpr
+			Type
+		=	t_tMember::Type
+		;
+
+		using
+			Entity
+		=	TypeEntity<Type>
+		;
+
+		constexpr
+		(	operator EraseTypeToken
+		)	()	const
+			noexcept
+		{	return Type;	}
+	};
 
 	template
 		<	typename
@@ -59,6 +76,26 @@ export namespace
 	->	Member
 		<	Func<t_tSignature, t_tpQualifier...>
 		,	Owner<t_tOwner>
+		>
+	;
+
+	template
+		<	typename
+				t_tMember
+		,	typename
+				t_tOwner
+		,	typename
+			...	t_tpQualifier
+		>
+	using
+		MatchCVMember
+	=	CV
+		<	Member
+			<	t_tMember
+			,	t_tOwner
+			>
+		,	t_tpQualifier
+			...
 		>
 	;
 }

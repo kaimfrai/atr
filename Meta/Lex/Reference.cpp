@@ -30,6 +30,12 @@ export namespace
 			Entity
 		=	TypeEntity<Type>
 		;
+
+		constexpr
+		(	operator EraseTypeToken
+		)	()	const
+			noexcept
+		{	return Type;	}
 	};
 
 	template
@@ -126,5 +132,23 @@ export namespace
 		<	Func<t_tSignature, t_tpQualifier...>
 		,	Token::RRef
 		>
+	;
+
+	template
+		<	typename
+				t_tEntity
+		>
+	using
+		MatchLRef
+	=	Ref<t_tEntity, Token::LRef>
+	;
+
+	template
+		<	typename
+				t_tEntity
+		>
+	using
+		MatchRRef
+	=	Ref<t_tEntity, Token::RRef>
 	;
 }

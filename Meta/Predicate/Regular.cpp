@@ -223,7 +223,7 @@ export namespace
 		and	IsCompoundObject
 	or	IsScalar
 	or	IsReference
-	or	IsNonQualifiedFunction
+	or	IsFreeFunction
 	or	IsUnboundedArray
 	;
 

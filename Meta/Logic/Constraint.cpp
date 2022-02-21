@@ -1,5 +1,6 @@
 export module Meta.Constraint;
 
+export import Meta.Lex;
 export import Meta.Logic.LiteralBase;
 export import Meta.Logic;
 

@@ -2,8 +2,7 @@ export module Meta.Predicate.Category;
 
 export import Meta.Logic.LiteralBase;
 export import Meta.Logic;
-
-import Std;
+export import Meta.Predicate.Match;
 
 export namespace
 	Meta::Trait
@@ -15,6 +14,10 @@ export namespace
 	struct
 		Data final
 	:	LiteralBase
+	,	MatchScalar
+	,	MatchBoundedArray
+	,	MatchClass
+	,	MatchUnion
 	{
 		template
 			<	typename
@@ -26,11 +29,9 @@ export namespace
 			)	const
 		->	bool
 		{	return
-			(	Polarity
-			==	(	::std::is_object_v<t_tEntity>
-				and	not
-					::std::is_unbounded_array_v<t_tEntity>
-				)
+			Evaluate
+			(	*this
+			,	TokenizeType<t_tEntity>
 			);
 		}
 	};
@@ -41,6 +42,9 @@ export namespace
 	struct
 		Scalar_Ref_Void final
 	:	LiteralBase
+	,	MatchScalar
+	,	MatchReference
+	,	MatchVoid
 	{
 		template
 			<	typename
@@ -52,12 +56,10 @@ export namespace
 			)	const
 		->	bool
 		{	return
-				Polarity
-			==	(	::std::is_scalar_v<t_tEntity>
-				or	::std::is_reference_v<t_tEntity>
-				or	::std::is_void_v<t_tEntity>
-				)
-			;
+			Evaluate
+			(	*this
+			,	TokenizeType<t_tEntity>
+			);
 		}
 	};
 
@@ -69,6 +71,12 @@ export namespace
 	struct
 		Fund_Array final
 	:	LiteralBase
+	,	MatchIntegral
+	,	MatchFloatingPoint
+	,	MatchNullPointer
+	,	MatchBoundedArray
+	,	MatchVoid
+	,	MatchUnboundedArray
 	{
 		template
 			<	typename
@@ -80,11 +88,10 @@ export namespace
 			)	const
 		->	bool
 		{	return
-				Polarity
-			==	(	::std::is_fundamental_v<t_tEntity>
-				or	::std::is_array_v<t_tEntity>
-				)
-			;
+			Evaluate
+			(	*this
+			,	TokenizeType<t_tEntity>
+			);
 		}
 	};
 
@@ -93,10 +100,15 @@ export namespace
 	///	Enum vs. Member Pointer, Pointer.
 	///	Class vs. Union.
 	///	LValueReference vs. RValueReference.
-	///	Non-Qualified Function vs. Qualified Function.
+	///	Free Function vs. Owned Function.
 	struct
-		Int_Enum_Class_LRef_NonQ final
+		Int_Enum_Class_LRef_Free final
 	:	LiteralBase
+	,	MatchIntegral
+	,	MatchEnum
+	,	MatchClass
+	,	MatchLRef
+	,	MatchFreeFunction
 	{
 		template
 			<	typename
@@ -108,26 +120,25 @@ export namespace
 			)	const
 		->	bool
 		{	return
-				Polarity
-			==	(	::std::is_integral_v<t_tEntity>
-				or	::std::is_enum_v<t_tEntity>
-				or	::std::is_class_v<t_tEntity>
-				or	::std::is_lvalue_reference_v<t_tEntity>
-				or	(	::std::is_function_v<t_tEntity>
-					and	requires{Type<t_tEntity*>; }
-					)
-				)
-			;
+			Evaluate
+			(	*this
+			,	TokenizeType<t_tEntity>
+			);
 		}
 	};
 
 	///	Primarily serves to distinguish type categories with as few traits as possible.
 	///	Signed Integral vs. Unsigned Integral.
+	///	Floating Point vs. NullPointer.
 	///	Scoped Enum vs. Unscoped Enum.
 	///	Pointer vs. Member Pointer.
 	struct
 		Signed_Scoped_Ptr final
 	:	LiteralBase
+	,	MatchSignedIntegral
+	,	MatchFloatingPoint
+	,	MatchScopedEnum
+	,	MatchPointer
 	{
 		template
 			<	typename
@@ -139,12 +150,10 @@ export namespace
 			)	const
 		->	bool
 		{	return
-				Polarity
-			==	(	::std::is_signed_v<t_tEntity>
-				or	::std::is_scoped_enum_v<t_tEntity>
-				or	::std::is_pointer_v<t_tEntity>
-				)
-			;
+			Evaluate
+			(	*this
+			,	TokenizeType<t_tEntity>
+			);
 		}
 	};
 }
@@ -168,8 +177,8 @@ export namespace
 	};
 
 	Term constexpr inline
-		IsInt_Enum_Class_LRef_NonQ
-	{	Trait::Int_Enum_Class_LRef_NonQ{true}
+		IsInt_Enum_Class_LRef_Free
+	{	Trait::Int_Enum_Class_LRef_Free{true}
 	};
 
 	Term constexpr inline
@@ -185,14 +194,14 @@ export namespace
 	;
 
 	Term constexpr inline
-		IsQualifiedFunction
-	=	not IsInt_Enum_Class_LRef_NonQ
+		IsOwnedFunction
+	=	not IsInt_Enum_Class_LRef_Free
 	and	IsFunction
 	;
 
 	Term constexpr inline
-		IsNonQualifiedFunction
-	=	IsInt_Enum_Class_LRef_NonQ
+		IsFreeFunction
+	=	IsInt_Enum_Class_LRef_Free
 	and	IsFunction
 	;
 
@@ -219,13 +228,13 @@ export namespace
 
 	Term constexpr inline
 		IsLValueReference
-	=	IsInt_Enum_Class_LRef_NonQ
+	=	IsInt_Enum_Class_LRef_Free
 	and	IsReference
 	;
 
 	Term constexpr inline
 		IsRValueReference
-	=	not IsInt_Enum_Class_LRef_NonQ
+	=	not IsInt_Enum_Class_LRef_Free
 	and	IsReference
 	;
 
@@ -244,13 +253,13 @@ export namespace
 	Term constexpr inline
 		IsFloatingPoint
 	=	IsSigned_Scoped_Ptr
-	and	not IsInt_Enum_Class_LRef_NonQ
+	and	not IsInt_Enum_Class_LRef_Free
 	and	IsFundamentalScalar
 	;
 
 	Term constexpr inline
 		IsIntegral
-	=	IsInt_Enum_Class_LRef_NonQ
+	=	IsInt_Enum_Class_LRef_Free
 	and	IsFundamentalScalar
 	;
 
@@ -281,7 +290,7 @@ export namespace
 	Term constexpr inline
 		IsPointer
 	=	IsSigned_Scoped_Ptr
-	and	not IsInt_Enum_Class_LRef_NonQ
+	and	not IsInt_Enum_Class_LRef_Free
 	and	not IsFund_Array
 	and	IsScalar
 	;
@@ -289,14 +298,14 @@ export namespace
 	Term constexpr inline
 		IsNullPointer
 	=	not IsSigned_Scoped_Ptr
-	and	not IsInt_Enum_Class_LRef_NonQ
+	and	not IsInt_Enum_Class_LRef_Free
 	and	IsFundamentalScalar
 	;
 
 	Term constexpr inline
 		IsMemberPointer
 	=	not IsSigned_Scoped_Ptr
-	and	not IsInt_Enum_Class_LRef_NonQ
+	and	not IsInt_Enum_Class_LRef_Free
 	and	not IsFund_Array
 	and	IsScalar
 	;
@@ -315,7 +324,7 @@ export namespace
 
 	Term constexpr inline
 		IsEnum
-	=	IsInt_Enum_Class_LRef_NonQ
+	=	IsInt_Enum_Class_LRef_Free
 	and	not IsFund_Array
 	and	IsScalar
 	;
@@ -340,13 +349,13 @@ export namespace
 
 	Term constexpr inline
 		IsClass
-	=	IsInt_Enum_Class_LRef_NonQ
+	=	IsInt_Enum_Class_LRef_Free
 	and	IsCustom
 	;
 
 	Term constexpr inline
 		IsUnion
-	=	not IsInt_Enum_Class_LRef_NonQ
+	=	not IsInt_Enum_Class_LRef_Free
 	and	IsCustom
 	;
 
@@ -383,7 +392,7 @@ export namespace
 	Term constexpr inline
 		IsReferable
 	=	IsObject
-	or	IsNonQualifiedFunction
+	or	IsFreeFunction
 	;
 
 	Term constexpr inline
@@ -394,8 +403,7 @@ export namespace
 
 	Term constexpr inline
 		IsArgument
-	=	IsObject
-	or	IsNonQualifiedFunction
+	=	IsReferable
 	or	IsReference
 	;
 

@@ -209,7 +209,24 @@ export namespace
 	:	t_tSig
 	,	FuncQualifier<t_tpQualifier, t_tSig>
 		...
-	{};
+	{
+		//	TODO incomplete
+		static Token::TypeToken constexpr
+			Type
+		=	t_tSig::Type
+		;
+
+		using
+			Entity
+		=	TypeEntity<Type>
+		;
+
+		constexpr
+		(	operator EraseTypeToken
+		)	()	const
+			noexcept
+		{	return Type;	}
+	};
 
 	template
 		<	typename

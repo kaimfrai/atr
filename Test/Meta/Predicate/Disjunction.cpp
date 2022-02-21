@@ -46,8 +46,8 @@ static_assert
 );
 
 static_assert
-(	(	IsQualifiedFunction
-	or	IsNonQualifiedFunction
+(	(	IsOwnedFunction
+	or	IsFreeFunction
 	)
 ==	IsFunction
 );
