@@ -19,29 +19,20 @@ Meta::EraseTypeToken constexpr inline
 	Qualified
 =	Type
 	<	Func
-		<	Sig
+		<	MatchSignature
 			<	MatchCV<int>
-			,	Param
-				<	MatchCVPointer<MatchCV<int>>
-				,	MatchCVPointer<MatchCV<int>>
-				,	Ref
-					<	MatchCVArray
-						<	MatchCV<int>
-						,	0uz
-						>
-					,	LRef
+			,	MatchCVPointer<MatchCV<int>>
+			,	MatchCVPointer<MatchCV<int>>
+			,	MatchLRef
+				<	MatchCVArray
+					<	MatchCV<int>
+					,	0uz
 					>
-				,	Ref
-					<	Func
-						<	Sig
-							<	MatchCV<int>
-							,	Param
-								<	MatchCVPointer<MatchCV<int>>
-								>
-							>
-						,	Noexcept
-						>
-					,	LRef
+				>
+			,	MatchLRef
+				<	MatchFreeNoexceptFunction
+					<	MatchCV<int>
+					,	MatchCVPointer<MatchCV<int>>
 					>
 				>
 			>
@@ -179,33 +170,24 @@ Meta::EraseTypeToken constexpr inline
 	EllipsisQualified
 =	Type
 	<	Func
-		<	Sig
+		<	MatchEllipsisSignature
 			<	MatchCV<int>
-			,	Param
-				<	MatchCVPointer<MatchCV<int>>
-				,	MatchCVPointer<MatchCV<int>>
-				,	Ref
-					<	MatchCVArray
-						<	MatchCV<int>
-						,	0uz
-						>
-					,	LRef
+			,	MatchCVPointer<MatchCV<int>>
+			,	MatchCVPointer<MatchCV<int>>
+			,	Ref
+				<	MatchCVArray
+					<	MatchCV<int>
+					,	0uz
 					>
-				,	Ref
-					<	Func
-						<	Sig
-							<	MatchCV<int>
-							,	Param
-								<	MatchCVPointer<MatchCV<int>>
-								>
-							,	Meta::Token::Ellipsis
-							>
-						,	Noexcept
-						>
-					,	LRef
-					>
+				,	LRef
 				>
-			,	Meta::Token::Ellipsis
+			,	Ref
+				<	MatchFreeNoexceptEllipsisFunction
+					<	MatchCV<int>
+					,	MatchCVPointer<MatchCV<int>>
+					>
+				,	LRef
+				>
 			>
 		,	t_tpQualifier
 			...

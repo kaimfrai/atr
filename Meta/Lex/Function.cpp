@@ -200,6 +200,41 @@ export namespace
 
 	template
 		<	typename
+				t_tResult
+		,	typename
+			...	t_tpParameter
+		>
+	using
+		MatchSignature
+	=	Sig
+		<	t_tResult
+		,	Param
+			<	t_tpParameter
+				...
+			>
+		>
+	;
+
+	template
+		<	typename
+				t_tResult
+		,	typename
+			...	t_tpParameter
+		>
+	using
+		MatchEllipsisSignature
+	=	Sig
+		<	t_tResult
+		,	Param
+			<	t_tpParameter
+				...
+			>
+		,	Token::Ellipsis
+		>
+	;
+
+	template
+		<	typename
 				t_tSig
 		,	typename
 			...	t_tpQualifier
@@ -265,6 +300,86 @@ export namespace
 		<	Sig<t_tResult, t_tParam, Token::Ellipsis>
 		,	t_tpQualifier
 			...
+		>
+	;
+
+	template
+		<	typename
+				t_tResult
+		,	typename
+			...	t_tpParameter
+		>
+	using
+		MatchFreeFunction
+	=	Func
+		<	Sig
+			<	t_tResult
+			,	Param
+				<	t_tpParameter
+					...
+				>
+			>
+		>
+	;
+
+	template
+		<	typename
+				t_tResult
+		,	typename
+			...	t_tpParameter
+		>
+	using
+		MatchFreeEllipsisFunction
+	=	Func
+		<	Sig
+			<	t_tResult
+			,	Param
+				<	t_tpParameter
+					...
+				>
+			,	Token::Ellipsis
+			>
+		>
+	;
+
+	template
+		<	typename
+				t_tResult
+		,	typename
+			...	t_tpParameter
+		>
+	using
+		MatchFreeNoexceptFunction
+	=	Func
+		<	Sig
+			<	t_tResult
+			,	Param
+				<	t_tpParameter
+					...
+				>
+			>
+		,	Token::Noexcept
+		>
+	;
+
+	template
+		<	typename
+				t_tResult
+		,	typename
+			...	t_tpParameter
+		>
+	using
+		MatchFreeNoexceptEllipsisFunction
+	=	Func
+		<	Sig
+			<	t_tResult
+			,	Param
+				<	t_tpParameter
+					...
+				>
+			,	Token::Ellipsis
+			>
+		,	Token::Noexcept
 		>
 	;
 }
