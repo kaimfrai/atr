@@ -1,6 +1,6 @@
 export module Evaluation.Virtual.IBody;
 
-export import Evaluation.Shared.DataTypes;
+export import Evaluation.Shared;
 
 export namespace
 	Bodies3D

@@ -1,6 +1,6 @@
 export module Evaluation.CRTP.RectangularShape;
 
-export import Evaluation.Shared.Fraction;
+export import Evaluation.Shared;
 export import Evaluation.CRTP.BasicShape;
 export import Evaluation.CRTP.SeparateWidth;
 

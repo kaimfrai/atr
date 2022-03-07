@@ -1,6 +1,6 @@
 export module Evaluation.Virtual.CubicBody;
 
-export import Evaluation.Shared.Fraction;
+export import Evaluation.Shared;
 export import Evaluation.Virtual.ExtendedShape;
 
 export namespace

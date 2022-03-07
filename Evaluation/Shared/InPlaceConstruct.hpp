@@ -1,4 +1,4 @@
-export module Evaluation.Shared.InPlaceConstruct;
+export module Evaluation.Shared:InPlaceConstruct;
 
 export import Std;
 

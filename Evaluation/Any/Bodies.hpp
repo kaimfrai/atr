@@ -1,6 +1,6 @@
 export module Evaluation.Any.Bodies;
 
-export import Evaluation.Shared.DataTypes;
+export import Evaluation.Shared;
 export import Std;
 
 export namespace

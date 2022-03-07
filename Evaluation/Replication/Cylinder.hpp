@@ -1,7 +1,6 @@
 export module Evaluation.Replication.Cylinder;
 
-export import Evaluation.Shared.DataTypes;
-export import Evaluation.Shared.PiFraction;
+export import Evaluation.Shared;
 
 export namespace
 	Bodies3D

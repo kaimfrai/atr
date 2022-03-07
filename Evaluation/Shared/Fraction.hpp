@@ -1,7 +1,8 @@
-export module Evaluation.Shared.Fraction;
+export module Evaluation.Shared:Fraction;
+
+export import :DataTypes;
 
 export import Meta.Integer;
-export import Evaluation.Shared.DataTypes;
 
 export
 {

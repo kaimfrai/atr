@@ -1,4 +1,4 @@
-export module Evaluation.Shared.TypeConstruct;
+export module Evaluation.Shared:TypeConstruct;
 
 export import Meta.Token.Type;
 

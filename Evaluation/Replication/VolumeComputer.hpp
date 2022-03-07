@@ -1,6 +1,6 @@
 export module Evaluation.Replication.VolumeComputer;
 
-export import Evaluation.Shared.DataTypes;
+export import Evaluation.Shared;
 export import Evaluation.Replication.Cube;
 export import Evaluation.Replication.Cuboid;
 export import Evaluation.Replication.Pyramid;

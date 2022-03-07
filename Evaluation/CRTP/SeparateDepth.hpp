@@ -1,6 +1,6 @@
 export module Evaluation.CRTP.SeparateDepth;
 
-export import Evaluation.Shared.DataTypes;
+export import Evaluation.Shared;
 
 export namespace
 	Bodies3D

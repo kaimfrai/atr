@@ -1,6 +1,6 @@
 export module Evaluation.Virtual.CircularShape;
 
-export import Evaluation.Shared.PiFraction;
+export import Evaluation.Shared;
 export import Evaluation.Virtual.BasicShape;
 
 export namespace

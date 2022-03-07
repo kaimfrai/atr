@@ -1,10 +1,12 @@
-add_module(CopyConstruct.hpp)
-add_module(DataTypes.hpp)
-add_module(Fraction.hpp)
-add_module(InPlaceConstruct.hpp)
-add_module(MainTemplate.hpp)
-add_module(PiFraction.hpp)
-add_module(PseudoRandomSequence.hpp)
-add_module(TypeConstruct.hpp)
-
-add_module(Shared.hpp)
+add_module(
+	Shared.hpp
+PARTITION
+	CopyConstruct.hpp
+	DataTypes.hpp
+	Fraction.hpp
+	InPlaceConstruct.hpp
+	MainTemplate.hpp
+	PiFraction.hpp
+	PseudoRandomSequence.hpp
+	TypeConstruct.hpp
+)

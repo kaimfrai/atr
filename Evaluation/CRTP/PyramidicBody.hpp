@@ -1,6 +1,6 @@
 export module Evaluation.CRTP.PyramidicBody;
 
-export import Evaluation.Shared.Fraction;
+export import Evaluation.Shared;
 export import Evaluation.CRTP.ExtendedShape;
 
 export namespace

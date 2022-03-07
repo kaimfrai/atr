@@ -1,4 +1,4 @@
-export module Evaluation.Shared.DataTypes;
+export module Evaluation.Shared:DataTypes;
 
 export import Std;
 

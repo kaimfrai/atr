@@ -9,8 +9,7 @@ import Evaluation.Archetype.Head;
 import Evaluation.Archetype.Pyramid;
 import Evaluation.Archetype.Sphere;
 
-import Evaluation.Shared.TypeConstruct;
-import Evaluation.Shared.MainTemplate;
+import Evaluation.Shared;
 
 auto
 	main

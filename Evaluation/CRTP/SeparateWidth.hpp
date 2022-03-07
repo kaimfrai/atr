@@ -1,6 +1,6 @@
 export module Evaluation.CRTP.SeparateWidth;
 
-export import Evaluation.Shared.DataTypes;
+export import Evaluation.Shared;
 
 export namespace
 	Shapes2D

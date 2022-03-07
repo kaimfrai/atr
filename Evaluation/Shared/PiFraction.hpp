@@ -1,7 +1,8 @@
-export module Evaluation.Shared.PiFraction;
+export module Evaluation.Shared:PiFraction;
+
+export import :DataTypes;
 
 export import Meta.Integer;
-export import Evaluation.Shared.DataTypes;
 export import Std;
 
 export

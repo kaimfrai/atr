@@ -1,6 +1,6 @@
 export module Evaluation.Archetype.BasicShape;
 
-export import Evaluation.Shared.DataTypes;
+export import Evaluation.Shared;
 export import ATR;
 
 export namespace

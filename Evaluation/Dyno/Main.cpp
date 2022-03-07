@@ -8,8 +8,7 @@ import Evaluation.CRTP.Cone;
 import Evaluation.CRTP.Ellipsoid;
 import Evaluation.CRTP.Head;
 
-import Evaluation.Shared.CopyConstruct;
-import Evaluation.Shared.MainTemplate;
+import Evaluation.Shared;
 
 auto
 	main

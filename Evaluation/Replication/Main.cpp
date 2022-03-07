@@ -1,7 +1,6 @@
 import Evaluation.Replication.VolumeComputer;
 
-import Evaluation.Shared.InPlaceConstruct;
-import Evaluation.Shared.MainTemplate;
+import Evaluation.Shared;
 
 auto
 	main
