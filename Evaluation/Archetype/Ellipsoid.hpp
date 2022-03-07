@@ -1,7 +1,8 @@
-export module Evaluation.Archetype.Ellipsoid;
+export module Evaluation.Archetype:Ellipsoid;
+
+export import :BasicBody;
 
 export import Evaluation.Shared;
-export import Evaluation.Archetype.BasicBody;
 
 export namespace
 	ATR

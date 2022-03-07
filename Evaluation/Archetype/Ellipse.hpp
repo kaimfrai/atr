@@ -1,7 +1,8 @@
-export module Evaluation.Archetype.Ellipse;
+export module Evaluation.Archetype:Ellipse;
+
+export import :BasicShape;
 
 export import Evaluation.Shared;
-export import Evaluation.Archetype.BasicShape;
 
 export namespace
 	ATR

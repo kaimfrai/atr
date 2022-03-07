@@ -1,14 +1,6 @@
 import ATR;
 
-import Evaluation.Archetype.Cone;
-import Evaluation.Archetype.Cube;
-import Evaluation.Archetype.Cuboid;
-import Evaluation.Archetype.Cylinder;
-import Evaluation.Archetype.Ellipsoid;
-import Evaluation.Archetype.Head;
-import Evaluation.Archetype.Pyramid;
-import Evaluation.Archetype.Sphere;
-
+import Evaluation.Archetype;
 import Evaluation.Shared;
 
 auto

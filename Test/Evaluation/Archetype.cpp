@@ -1,20 +1,6 @@
 import Test.Evaluation.SizeCheck;
 import ATR;
-
-import Evaluation.Archetype.Square;
-import Evaluation.Archetype.Rectangle;
-import Evaluation.Archetype.Triangle;
-import Evaluation.Archetype.Circle;
-import Evaluation.Archetype.Ellipse;
-
-import Evaluation.Archetype.Cube;
-import Evaluation.Archetype.Cuboid;
-import Evaluation.Archetype.Pyramid;
-import Evaluation.Archetype.Sphere;
-import Evaluation.Archetype.Cylinder;
-import Evaluation.Archetype.Cone;
-import Evaluation.Archetype.Ellipsoid;
-import Evaluation.Archetype.Head;
+import Evaluation.Archetype;
 
 static_assert(AdditionalSize<ATR::Type<"Square">, 1, 1> == 4);
 static_assert(SizeMinimal<ATR::Type<"Square">, 1, 1>);

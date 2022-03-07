@@ -1,4 +1,4 @@
-export module Evaluation.Archetype.BasicShape;
+export module Evaluation.Archetype:BasicShape;
 
 export import Evaluation.Shared;
 export import ATR;

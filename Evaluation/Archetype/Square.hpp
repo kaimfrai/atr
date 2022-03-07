@@ -1,6 +1,6 @@
-export module Evaluation.Archetype.Square;
+export module Evaluation.Archetype:Square;
 
-export import Evaluation.Archetype.Rectangle;
+export import :Rectangle;
 
 export namespace
 	ATR

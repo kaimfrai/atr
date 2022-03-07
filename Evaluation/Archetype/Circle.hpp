@@ -1,6 +1,6 @@
-export module Evaluation.Archetype.Circle;
+export module Evaluation.Archetype:Circle;
 
-export import Evaluation.Archetype.Ellipse;
+export import :Ellipse;
 
 export namespace
 	ATR

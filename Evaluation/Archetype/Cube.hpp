@@ -1,6 +1,6 @@
-export module Evaluation.Archetype.Cube;
+export module Evaluation.Archetype:Cube;
 
-export import Evaluation.Archetype.Cuboid;
+export import :Cuboid;
 
 export namespace
 	ATR

@@ -1,7 +1,8 @@
-export module Evaluation.Archetype.BasicBody;
+export module Evaluation.Archetype:BasicBody;
+
+export import :BasicShape;
 
 export import Evaluation.Shared;
-export import Evaluation.Archetype.BasicShape;
 
 export namespace
 	ATR

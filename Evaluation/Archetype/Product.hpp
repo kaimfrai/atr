@@ -1,7 +1,7 @@
-export module Evaluation.Archetype.Product;
+export module Evaluation.Archetype:Product;
 
-export import Evaluation.Shared;
 export import ATR;
+export import Evaluation.Shared;
 
 export namespace
 	ATR

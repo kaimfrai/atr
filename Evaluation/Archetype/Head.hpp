@@ -1,6 +1,6 @@
-export module Evaluation.Archetype.Head;
+export module Evaluation.Archetype:Head;
 
-export import Evaluation.Archetype.Sphere;
+export import :Sphere;
 export import ATR;
 
 export namespace

@@ -1,7 +1,8 @@
-export module Evaluation.Archetype.ComputeVolume;
+export module Evaluation.Archetype:ComputeVolume;
+
+export import :Product;
 
 export import ATR;
-export import Evaluation.Archetype.Product;
 
 export namespace
 	ATR

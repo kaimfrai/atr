@@ -1,7 +1,8 @@
-export module Evaluation.Archetype.Cylinder;
+export module Evaluation.Archetype:Cylinder;
+
+export import :BasicBody;
 
 export import Evaluation.Shared;
-export import Evaluation.Archetype.BasicBody;
 
 export namespace
 	ATR

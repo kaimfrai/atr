@@ -1,8 +1,8 @@
-export module Evaluation.Archetype.Sphere;
+export module Evaluation.Archetype:Sphere;
+
+export import :Ellipsoid;
 
 export import ATR;
-export import Evaluation.Archetype.Ellipsoid;
-export import Evaluation.Archetype.ComputeVolume;
 
 export namespace
 	ATR
