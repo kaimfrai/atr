@@ -1,4 +1,4 @@
-add_module(Bit.cpp)
-add_module(Integer.cpp)
-add_module(Literals.cpp)
-add_module(Math.cpp)
+add_module(Bit.hpp)
+add_module(Integer.hpp)
+add_module(Literals.hpp)
+add_module(Math.hpp)
