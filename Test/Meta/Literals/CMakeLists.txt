@@ -1,14 +1,13 @@
 add_module(
-	Data.cpp
+	Data.hpp
 )
 
-add_library(
-	Test.Meta.Literals
-OBJECT
+add_module_object_library(
+	Test.Meta.Literals.Integral
 	Integral.cpp
-	FloatingPoint.cpp
 )
 
-add_module_dependencies(
-	Test.Meta.Literals
+add_module_object_library(
+	Test.Meta.Literals.FloatingPoint
+	FloatingPoint.cpp
 )
