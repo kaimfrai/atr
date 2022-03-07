@@ -1,4 +1,4 @@
-export module ATR.Erase;
+export module ATR:Erase;
 
 export import Std;
 export import Meta.Token.Type;

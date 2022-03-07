@@ -1,4 +1,4 @@
-export module ATR.StringLiteral;
+export module ATR:StringLiteral;
 
 export import Std;
 export import Meta.Integer;

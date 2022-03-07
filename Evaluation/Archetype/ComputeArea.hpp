@@ -1,6 +1,6 @@
 export module Evaluation.Archetype.ComputeArea;
 
-export import ATR.DependencyIDMap;
+export import ATR;
 export import Evaluation.Archetype.Product;
 
 export namespace

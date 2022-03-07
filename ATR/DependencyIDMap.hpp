@@ -1,15 +1,15 @@
-export module ATR.DependencyIDMap;
+export module ATR:DependencyIDMap;
+
+export import :StringLiteral;
+export import :ID;
+export import :DataMember;
+export import :MemberOffset;
+export import :Dependency;
+export import :Address;
+export import :Layout;
 
 export import Meta.Logic;
 export import Meta.Constraint;
-
-export import ATR.StringLiteral;
-export import ATR.ID;
-export import ATR.DataMember;
-export import ATR.MemberOffset;
-export import ATR.Dependency;
-export import ATR.Address;
-export import ATR.Layout;
 
 export namespace
 	ATR

@@ -1,6 +1,6 @@
-export module ATR.ID;
+export module ATR:ID;
 
-export import ATR.StringLiteral;
+export import :StringLiteral;
 
 import Meta.Index;
 

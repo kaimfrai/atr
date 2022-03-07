@@ -1,8 +1,9 @@
-export module ATR.VirtualArgument;
+export module ATR:VirtualArgument;
+
+export import :Address;
+export import :ID;
 
 export import Meta.Token.Type;
-export import ATR.Address;
-export import ATR.ID;
 
 export namespace
 	ATR

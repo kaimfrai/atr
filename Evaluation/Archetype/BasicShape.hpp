@@ -1,8 +1,7 @@
 export module Evaluation.Archetype.BasicShape;
 
 export import Evaluation.Shared.DataTypes;
-export import ATR.DataMember;
-export import ATR.Instance;
+export import ATR;
 
 export namespace
 	ATR

@@ -1,8 +1,8 @@
-export module ATR.MemberOffset;
+export module ATR:MemberOffset;
 
-export import ATR.DataMember;
-export import ATR.StringLiteral;
-export import ATR.Erase;
+export import :DataMember;
+export import :StringLiteral;
+export import :Erase;
 
 export import Std;
 export import Meta.Integer;

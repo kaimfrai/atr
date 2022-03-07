@@ -1,4 +1,6 @@
-export module ATR.DataMember;
+export module ATR:DataMember;
+
+export import :ID;
 
 export import Std;
 export import Meta.Integer;
@@ -6,7 +8,6 @@ export import Meta.Token.Type;
 export import Meta.Token.Query;
 export import Meta.Data.Aggregate;
 export import Meta.Data.Value;
-export import ATR.ID;
 
 export namespace
 	ATR

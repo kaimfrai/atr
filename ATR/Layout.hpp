@@ -1,7 +1,7 @@
-export module ATR.Layout;
+export module ATR:Layout;
 
-export import ATR.ID;
-export import ATR.DataMember;
+export import :ID;
+export import :DataMember;
 
 import Meta.Token.Sequence;
 

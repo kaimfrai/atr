@@ -1,7 +1,7 @@
-export module ATR.Address;
+export module ATR:Address;
 
-export import ATR.Dependency;
-export import ATR.ID;
+export import :Dependency;
+export import :ID;
 
 import Std;
 

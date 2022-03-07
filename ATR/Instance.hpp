@@ -1,8 +1,8 @@
-export module ATR.Instance;
+export module ATR:Instance;
 
-export import ATR.ID;
-export import ATR.Layout;
-export import ATR.Address;
+export import :ID;
+export import :Layout;
+export import :Address;
 
 export namespace
 	ATR

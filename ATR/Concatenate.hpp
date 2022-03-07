@@ -1,8 +1,8 @@
-export module ATR.Concatenate;
+export module ATR:Concatenate;
 
-export import ATR.ID;
-export import ATR.StringLiteral;
-export import ATR.DataMember;
+export import :ID;
+export import :StringLiteral;
+export import :DataMember;
 
 namespace
 	ATR

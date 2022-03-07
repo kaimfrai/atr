@@ -1,4 +1,4 @@
-import ATR.VirtualArgument;
+import ATR;
 
 import Evaluation.Archetype.Cone;
 import Evaluation.Archetype.Cube;

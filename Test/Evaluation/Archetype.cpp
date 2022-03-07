@@ -1,5 +1,5 @@
 import Test.Evaluation.SizeCheck;
-import ATR.Instance;
+import ATR;
 
 import Evaluation.Archetype.Square;
 import Evaluation.Archetype.Rectangle;

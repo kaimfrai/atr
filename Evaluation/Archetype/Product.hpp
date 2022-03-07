@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.Product;
 
 export import Evaluation.Shared.DataTypes;
-export import ATR.DependencyIDMap;
+export import ATR;
 
 export namespace
 	ATR
