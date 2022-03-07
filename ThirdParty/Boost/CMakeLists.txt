@@ -1,5 +1,5 @@
 add_module(
-	TypeErasure.cpp
+	TypeErasure.hpp
 BYPRODUCTS
 	${MODULE_CACHE_PATH}/boost${MODULE_INTERFACE_EXTENSION}
 )
