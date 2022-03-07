@@ -1,9 +1,10 @@
-import TestModule;
+import Test.CMake;
 
 auto
 (	main
 )	()
 ->	int
 {
-	return Foo() + Bar();
+	Test::CMake::Fwd fwd{};
+	return Foo() + Bar() + fwd.Invoke1();
 }

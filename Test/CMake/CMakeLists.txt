@@ -1,8 +1,12 @@
 add_module(
-	TestModule.cpp
+	TestModule.hpp
+PARTITION
+	Def.hpp
+	Fwd.hpp
 IMPLEMENTATION
-	Foo.cpp
 	Bar.cpp
+	Foo.cpp
+	Fwd.cpp
 )
 
 add_module_executable(

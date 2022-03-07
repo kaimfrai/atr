@@ -1,4 +1,4 @@
-module TestModule;
+module Test.CMake;
 
 int Foo()
 {
