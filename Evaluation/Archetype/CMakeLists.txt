@@ -1,35 +1,28 @@
-add_module(Product.cpp)
+add_module(Product.hpp)
 
-add_module(ComputeArea.cpp)
-add_module(ComputeVolume.cpp)
+add_module(ComputeArea.hpp)
+add_module(ComputeVolume.hpp)
 
-add_module(BasicShape.cpp)
+add_module(BasicShape.hpp)
 
-add_module(Circle.cpp)
-add_module(Ellipse.cpp)
-add_module(Rectangle.cpp)
-add_module(Square.cpp)
-add_module(Triangle.cpp)
+add_module(Circle.hpp)
+add_module(Ellipse.hpp)
+add_module(Rectangle.hpp)
+add_module(Square.hpp)
+add_module(Triangle.hpp)
 
-add_module(BasicBody.cpp)
+add_module(BasicBody.hpp)
 
-add_module(Cone.cpp)
-add_module(Cube.cpp)
-add_module(Cuboid.cpp)
-add_module(Cylinder.cpp)
-add_module(Ellipsoid.cpp)
-add_module(Head.cpp)
-add_module(Pyramid.cpp)
-add_module(Sphere.cpp)
+add_module(Cone.hpp)
+add_module(Cube.hpp)
+add_module(Cuboid.hpp)
+add_module(Cylinder.hpp)
+add_module(Ellipsoid.hpp)
+add_module(Head.hpp)
+add_module(Pyramid.hpp)
+add_module(Sphere.hpp)
 
-add_executable(
+add_module_executable(
 	evaluation_archetype
 		Main.cpp
 )
-target_compile_options(
-	evaluation_archetype
-		PRIVATE
-		-Wno-error
-		-Wno-everything
-)
-add_module_dependencies(evaluation_archetype)

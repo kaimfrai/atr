@@ -1,13 +1,6 @@
-add_module(Bodies.cpp)
+add_module(Bodies.hpp)
 
-add_executable(
+add_module_executable(
 	evaluation_any
 		Main.cpp
 )
-target_compile_options(
-	evaluation_any
-		PRIVATE
-		-Wno-error
-		-Wno-everything
-)
-add_module_dependencies(evaluation_any)

@@ -1,11 +1,4 @@
-add_executable(
+add_module_executable(
 	evaluation_variant
 		Main.cpp
 )
-target_compile_options(
-	evaluation_variant
-		PRIVATE
-		-Wno-error
-		-Wno-everything
-)
-add_module_dependencies(evaluation_variant)

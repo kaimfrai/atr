@@ -1,21 +1,14 @@
-add_module(Cone.cpp)
-add_module(Cube.cpp)
-add_module(Cuboid.cpp)
-add_module(Cylinder.cpp)
-add_module(Ellipsoid.cpp)
-add_module(Head.cpp)
-add_module(Pyramid.cpp)
-add_module(Sphere.cpp)
-add_module(VolumeComputer.cpp)
+add_module(Cone.hpp)
+add_module(Cube.hpp)
+add_module(Cuboid.hpp)
+add_module(Cylinder.hpp)
+add_module(Ellipsoid.hpp)
+add_module(Head.hpp)
+add_module(Pyramid.hpp)
+add_module(Sphere.hpp)
+add_module(VolumeComputer.hpp)
 
-add_executable(
+add_module_executable(
 	evaluation_replication
 		Main.cpp
 )
-target_compile_options(
-	evaluation_replication
-		PRIVATE
-		-Wno-error
-		-Wno-everything
-)
-add_module_dependencies(evaluation_replication)

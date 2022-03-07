@@ -1,12 +1,6 @@
-add_module(Bodies.cpp)
-add_executable(
+add_module(Bodies.hpp)
+
+add_module_executable(
 	evaluation_type_erasure
 		Main.cpp
 )
-target_compile_options(
-	evaluation_type_erasure
-		PRIVATE
-		-Wno-error
-		-Wno-everything
-)
-add_module_dependencies(evaluation_type_erasure)
