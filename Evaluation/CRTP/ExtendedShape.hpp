@@ -1,6 +1,6 @@
-export module Evaluation.CRTP.ExtendedShape;
+export module Evaluation.CRTP:ExtendedShape;
 
-export import Evaluation.CRTP.BasicBody;
+export import :BasicBody;
 
 export namespace
 	Bodies3D

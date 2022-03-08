@@ -1,4 +1,4 @@
-export module Evaluation.Polymorphic.Bodies;
+export module Evaluation.Polymorphic;
 
 export import Evaluation.Shared;
 export import Polymorphic;

@@ -1,8 +1,8 @@
-export module Evaluation.CRTP.Cube;
+export module Evaluation.CRTP:Cube;
 
-export import Evaluation.CRTP.Square;
-export import Evaluation.CRTP.CubicBody;
-export import Evaluation.CRTP.DepthIsWidth;
+export import :Square;
+export import :CubicBody;
+export import :DepthIsWidth;
 
 export namespace
 	Bodies3D

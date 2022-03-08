@@ -1,4 +1,4 @@
-export module Evaluation.CRTP.SeparateDepth;
+export module Evaluation.CRTP:SeparateDepth;
 
 export import Evaluation.Shared;
 

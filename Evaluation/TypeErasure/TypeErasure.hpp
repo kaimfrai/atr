@@ -1,4 +1,4 @@
-export module Evaluation.TypeErasure.Bodies;
+export module Evaluation.TypeErasure;
 
 export import Boost.TypeErasure;
 

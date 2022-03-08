@@ -1,7 +1,7 @@
-export module Evaluation.CRTP.Circle;
+export module Evaluation.CRTP:Circle;
 
-export import Evaluation.CRTP.CircularShape;
-export import Evaluation.CRTP.HeightIsWidth;
+export import :CircularShape;
+export import :HeightIsWidth;
 
 export namespace
 	Shapes2D

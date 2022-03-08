@@ -1,4 +1,4 @@
-export module Evaluation.CRTP.BasicBody;
+export module Evaluation.CRTP:BasicBody;
 
 export import Evaluation.Shared;
 

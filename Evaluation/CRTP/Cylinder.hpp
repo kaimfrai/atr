@@ -1,9 +1,9 @@
-export module Evaluation.CRTP.Cylinder;
+export module Evaluation.CRTP:Cylinder;
 
 export import Evaluation.Shared;
-export import Evaluation.CRTP.Circle;
-export import Evaluation.CRTP.ExtendedShape;
-export import Evaluation.CRTP.SeparateDepth;
+export import :Circle;
+export import :ExtendedShape;
+export import :SeparateDepth;
 
 export namespace
 	Bodies3D

@@ -1,8 +1,8 @@
-export module Evaluation.CRTP.RectangularShape;
+export module Evaluation.CRTP:RectangularShape;
 
 export import Evaluation.Shared;
-export import Evaluation.CRTP.BasicShape;
-export import Evaluation.CRTP.SeparateWidth;
+export import :BasicShape;
+export import :SeparateWidth;
 
 export namespace
 	Shapes2D

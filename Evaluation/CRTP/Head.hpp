@@ -1,7 +1,7 @@
-export module Evaluation.CRTP.Head;
+export module Evaluation.CRTP:Head;
 
-export import Evaluation.CRTP.BasicSphere;
-export import Evaluation.CRTP.Sphere;
+export import :BasicSphere;
+export import :Sphere;
 
 export namespace
 	Bodies3D

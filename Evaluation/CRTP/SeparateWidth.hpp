@@ -1,4 +1,4 @@
-export module Evaluation.CRTP.SeparateWidth;
+export module Evaluation.CRTP:SeparateWidth;
 
 export import Evaluation.Shared;
 

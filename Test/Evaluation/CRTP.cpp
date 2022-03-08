@@ -1,19 +1,6 @@
 import Test.Evaluation.SizeCheck;
 
-import Evaluation.CRTP.Square;
-import Evaluation.CRTP.Rectangle;
-import Evaluation.CRTP.Triangle;
-import Evaluation.CRTP.Circle;
-import Evaluation.CRTP.Ellipse;
-
-import Evaluation.CRTP.Cube;
-import Evaluation.CRTP.Cuboid;
-import Evaluation.CRTP.Pyramid;
-import Evaluation.CRTP.Sphere;
-import Evaluation.CRTP.Cylinder;
-import Evaluation.CRTP.Cone;
-import Evaluation.CRTP.Ellipsoid;
-import Evaluation.CRTP.Head;
+import Evaluation.CRTP;
 
 //	Shapes
 static_assert(AdditionalSize<Shapes2D::Square, 1, 1> == 4);
