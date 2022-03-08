@@ -1,7 +1,7 @@
 export module Test.Evaluation.SizeCheck;
 
-export import Meta.Integer;
 export import Evaluation.Shared;
+export import Meta.Arithmetic;
 
 export
 {

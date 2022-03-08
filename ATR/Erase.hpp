@@ -1,8 +1,9 @@
 export module ATR:Erase;
 
-export import Std;
-export import Meta.Token.Type;
+export import Meta.Token;
 export import Meta.Lex;
+
+export import Std;
 
 export namespace
 	ATR

@@ -1,11 +1,13 @@
-export module Meta.Logic.BitTerm;
+export module Meta.Logic:BitTerm;
+
+export import :BitClause;
+export import :BitClauseIterator;
+import :Optimizer;
+
+export import Meta.Arithmetic;
 
 export import Std;
-export import Meta.Arithmetic.Bit;
-export import Meta.Logic.BitClause;
-export import Meta.Logic.BitClauseIterator;
 
-import Meta.Logic.Optimizer;
 
 using ::Meta::Arithmetic::CountOneBits;
 using ::Meta::Arithmetic::TestBit;

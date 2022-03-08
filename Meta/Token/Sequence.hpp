@@ -1,8 +1,9 @@
-export module Meta.Token.Sequence;
+export module Meta.Token:Sequence;
 
+export import :Index;
+
+export import Meta.Arithmetic;
 export import Std;
-export import Meta.Integer;
-export import Meta.Index;
 
 namespace
 	Meta

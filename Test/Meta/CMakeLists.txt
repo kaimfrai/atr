@@ -1,6 +1,6 @@
+add_subdirectory(Arithmetic)
 add_subdirectory(Data)
 add_subdirectory(Lex)
-add_subdirectory(Literals)
 add_subdirectory(Logic)
 add_subdirectory(Predicate)
-add_subdirectory(Type)
+add_subdirectory(Token)

@@ -1,4 +1,4 @@
-import Meta.Predicate.Category;
+import Meta.Predicate;
 
 using Meta::Type;
 using Meta::IsValue;

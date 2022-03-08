@@ -1,4 +1,4 @@
-import Meta.Logic.BitClauseIterator;
+import Meta.Logic;
 
 static_assert
 (	::std::input_iterator

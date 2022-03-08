@@ -1,12 +1,13 @@
 export module Meta.Lex;
 
-export import Meta.Token.Type;
-export import Meta.Lex.Array;
-export import Meta.Lex.CV;
-export import Meta.Lex.Function;
-export import Meta.Lex.Member;
-export import Meta.Lex.Pointer;
-export import Meta.Lex.Reference;
+export import :Array;
+export import :CV;
+export import :Function;
+export import :Member;
+export import :Pointer;
+export import :Reference;
+
+export import Meta.Token;
 
 export namespace
 	Meta::Lex

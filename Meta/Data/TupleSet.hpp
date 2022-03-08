@@ -1,10 +1,11 @@
-export module Meta.Data.TupleSet;
+export module Meta.Data:TupleSet;
+
+export import :Aggregate;
+
+export import Meta.Token;
+export import Meta.Arithmetic;
 
 export import Std;
-export import Meta.Token.Sequence;
-export import Meta.Token.Type;
-export import Meta.Arithmetic.Bit;
-export import Meta.Data.Aggregate;
 
 using ::Meta::Arithmetic::CountOneBits;
 using ::Meta::Arithmetic::GetIndexOfNthOneBit;

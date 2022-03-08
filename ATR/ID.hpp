@@ -2,7 +2,7 @@ export module ATR:ID;
 
 export import :StringLiteral;
 
-import Meta.Index;
+import Meta.Arithmetic;
 
 char constexpr inline i0 = '0';
 char constexpr inline i1 = '1';

@@ -1,10 +1,11 @@
-export module Meta.Predicate.TypeTraits;
+export module Meta.Predicate:TypeTraits;
+
+export import :Category;
+
+export import Meta.Token;
+export import Meta.Logic;
 
 export import Std;
-
-export import Meta.Token.Type;
-export import Meta.Logic;
-export import Meta.Predicate.Category;
 
 export namespace
 	Meta::Trait

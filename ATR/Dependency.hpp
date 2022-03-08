@@ -3,8 +3,8 @@ export module ATR:Dependency;
 export import :ID;
 export import :Erase;
 
-export import Meta.Token.Type;
-export import Meta.Data.TupleList;
+export import Meta.Data;
+export import Meta.Token;
 
 export namespace
 	ATR

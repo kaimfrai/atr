@@ -1,8 +1,8 @@
-export module Meta.Predicate.Category;
+export module Meta.Predicate:Category;
 
-export import Meta.Logic.LiteralBase;
+export import :Match;
+
 export import Meta.Logic;
-export import Meta.Predicate.Match;
 
 export namespace
 	Meta::Trait

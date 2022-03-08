@@ -1,8 +1,10 @@
 export module ATR:StringLiteral;
 
+export import Meta.Data;
+
+export import Meta.Arithmetic;
+
 export import Std;
-export import Meta.Integer;
-export import Meta.Data.Value;
 
 export namespace
 	ATR

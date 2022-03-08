@@ -1,9 +1,9 @@
-export module Meta.Token.Function;
+export module Meta.Token:Function;
 
 ///	tokens also required by functions
-export import Meta.Token.CV;
-export import Meta.Token.Reference;
-export import Meta.Token.FunctionTransform;
+export import :CV;
+export import :Reference;
+export import :FunctionTransform;
 
 export namespace
 	Meta::Token

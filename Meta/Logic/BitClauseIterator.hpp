@@ -1,8 +1,8 @@
-export module Meta.Logic.BitClauseIterator;
+export module Meta.Logic:BitClauseIterator;
+
+export import :BitClause;
 
 export import Std;
-
-export import Meta.Logic.BitClause;
 
 namespace
 	Meta::Logic

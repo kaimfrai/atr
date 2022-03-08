@@ -1,5 +1,9 @@
-add_module(Aggregate.hpp)
-add_module(Object.hpp)
-add_module(TupleSet.hpp)
-add_module(TupleList.hpp)
-add_module(Value.hpp)
+add_module(
+	Data.hpp
+PARTITION
+	Aggregate.hpp
+	Object.hpp
+	TupleSet.hpp
+	TupleList.hpp
+	Value.hpp
+)

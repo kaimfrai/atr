@@ -1,10 +1,10 @@
-export module Meta.Data.Aggregate;
+export module Meta.Data:Aggregate;
 
-export import Meta.Integer;
-export import Meta.Token.Sequence;
-export import Meta.Token.Array;
+export import :Object;
+
+export import Meta.Token;
 export import Meta.Lex;
-export import Meta.Data.Object;
+export import Meta.Arithmetic;
 
 import Std;
 

@@ -1,4 +1,4 @@
-export module Meta.Integer;
+export module Meta.Arithmetic:Integer;
 
 export import Std;
 

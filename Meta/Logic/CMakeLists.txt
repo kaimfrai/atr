@@ -1,10 +1,13 @@
-add_module(BitClause.hpp)
-add_module(BitClauseIterator.hpp)
-add_module(Optimizer.hpp)
-add_module(BitTerm.hpp)
-add_module(Conjunction.hpp)
-add_module(Disjunction.hpp)
-
-add_module(LiteralBase.hpp)
-add_module(Logic.hpp)
-add_module(Constraint.hpp)
+add_module(
+	Logic.hpp
+PARTITION
+	BitClause.hpp
+	BitClauseIterator.hpp
+	Optimizer.hpp
+	BitTerm.hpp
+	Conjunction.hpp
+	Disjunction.hpp
+	LiteralBase.hpp
+	Term.hpp
+	Constraint.hpp
+)

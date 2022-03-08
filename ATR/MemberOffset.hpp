@@ -4,8 +4,9 @@ export import :DataMember;
 export import :StringLiteral;
 export import :Erase;
 
+export import Meta.Arithmetic;
+
 export import Std;
-export import Meta.Integer;
 
 export namespace
 	ATR

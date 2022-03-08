@@ -3,7 +3,7 @@ export module ATR:Layout;
 export import :ID;
 export import :DataMember;
 
-import Meta.Token.Sequence;
+import Meta.Token;
 
 export namespace
 	ATR

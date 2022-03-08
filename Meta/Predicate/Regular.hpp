@@ -1,7 +1,8 @@
-export module Meta.Predicate.Regular;
+export module Meta.Predicate:Regular;
+
+export import :Category;
 
 export import Meta.Logic;
-export import Meta.Predicate.Category;
 
 export namespace
 	Meta::Trait

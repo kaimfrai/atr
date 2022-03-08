@@ -1,7 +1,8 @@
-export module Meta.Token.Array;
+export module Meta.Token:Array;
 
-export import Meta.Token.Type;
-export import Meta.Integer;
+export import :Type;
+
+export import Meta.Arithmetic;
 
 export namespace
 	Meta::Token

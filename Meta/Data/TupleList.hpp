@@ -1,8 +1,10 @@
-export module Meta.Data.TupleList;
+export module Meta.Data:TupleList;
+
+export import :Aggregate;
+
+export import Meta.Token;
 
 export import Std;
-export import Meta.Index;
-export import Meta.Data.Aggregate;
 
 export namespace
 	Meta

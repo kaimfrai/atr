@@ -1,11 +1,11 @@
-export module Meta.Data.Value;
+export module Meta.Data:Value;
+
+export import :Aggregate;
+
+export import Meta.Lex;
+export import Meta.Token;
 
 export import Std;
-export import Meta.Index;
-export import Meta.Token.Type;
-export import Meta.Token.Array;
-export import Meta.Lex;
-export import Meta.Data.Aggregate;
 
 export namespace
 	Meta

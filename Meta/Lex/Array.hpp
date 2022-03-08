@@ -1,9 +1,9 @@
-export module Meta.Lex.Array;
+export module Meta.Lex:Array;
 
-export import Meta.Integer;
-export import Meta.Token.Type;
-export import Meta.Token.Array;
-export import Meta.Lex.CV;
+export import :CV;
+
+export import Meta.Token;
+export import Meta.Arithmetic;
 
 export namespace
 	Meta::Lex

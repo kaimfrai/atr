@@ -1,4 +1,4 @@
-import Meta.Token.Type;
+import Meta.Token;
 
 using namespace Meta;
 

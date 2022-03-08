@@ -1,4 +1,8 @@
-add_module(Bit.hpp)
-add_module(Integer.hpp)
-add_module(Literals.hpp)
-add_module(Math.hpp)
+add_module(
+	Arithmetic.hpp
+PARTITION
+	Bit.hpp
+	Integer.hpp
+	Literals.hpp
+	Math.hpp
+)

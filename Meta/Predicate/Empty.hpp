@@ -1,8 +1,9 @@
-export module Meta.Predicate.Empty;
+export module Meta.Predicate:Empty;
+
+export import :Regular;
 
 export import Meta.Logic;
-export import Meta.Predicate.Regular;
-export import Meta.Data.Object;
+export import Meta.Data;
 
 import Std;
 

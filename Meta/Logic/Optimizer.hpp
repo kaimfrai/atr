@@ -1,10 +1,9 @@
-export module Meta.Logic.Optimizer;
+export module Meta.Logic:Optimizer;
+
+export import :BitClause;
+import :BitClauseIterator;
 
 export import Std;
-
-export import Meta.Logic.BitClause;
-
-import Meta.Logic.BitClauseIterator;
 
 namespace
 	Meta::Logic

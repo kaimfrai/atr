@@ -1,4 +1,4 @@
-export module Meta.Data.Object;
+export module Meta.Data:Object;
 
 export import Meta.Lex;
 

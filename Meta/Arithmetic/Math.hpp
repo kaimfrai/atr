@@ -1,6 +1,6 @@
-export module Meta.Arithmetic.Math;
+export module Meta.Arithmetic:Math;
 
-export import Meta.Integer;
+export import :Integer;
 
 export namespace
 	Meta::Arithmetic

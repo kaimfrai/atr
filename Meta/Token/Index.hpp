@@ -1,7 +1,6 @@
-export module Meta.Index;
+export module Meta.Token:Index;
 
-export import Meta.Integer;
-export import Meta.Literals;
+export import Meta.Arithmetic;
 
 export namespace
 	Meta::Token

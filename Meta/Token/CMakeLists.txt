@@ -1,13 +1,16 @@
-add_module(Array.hpp)
-add_module(Construct.hpp)
-add_module(CV.hpp)
-add_module(Function.hpp)
-add_module(FunctionTransform.hpp)
-add_module(Index.hpp)
-add_module(Pointer.hpp)
-add_module(Query.hpp)
-add_module(Reference.hpp)
-add_module(Sequence.hpp)
-add_module(Transform.hpp)
-
-add_module(Type.hpp)
+add_module(
+	Token.hpp
+PARTITION
+	Array.hpp
+	Construct.hpp
+	CV.hpp
+	Function.hpp
+	FunctionTransform.hpp
+	Index.hpp
+	Pointer.hpp
+	Query.hpp
+	Reference.hpp
+	Sequence.hpp
+	Transform.hpp
+	Type.hpp
+)

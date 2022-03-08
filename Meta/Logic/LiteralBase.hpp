@@ -1,6 +1,6 @@
-export module Meta.Logic.LiteralBase;
+export module Meta.Logic:LiteralBase;
 
-export import Meta.Token.Type;
+export import Meta.Token;
 
 import Std;
 

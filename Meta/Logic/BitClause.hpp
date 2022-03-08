@@ -1,9 +1,8 @@
-export module Meta.Logic.BitClause;
+export module Meta.Logic:BitClause;
+
+export import Meta.Arithmetic;
 
 export import Std;
-
-export import Meta.Integer;
-export import Meta.Arithmetic.Bit;
 
 using ::Meta::Arithmetic::CountOneBits;
 using ::Meta::Arithmetic::SetOneBits;

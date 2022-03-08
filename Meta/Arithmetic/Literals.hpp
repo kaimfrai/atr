@@ -1,6 +1,6 @@
-export module Meta.Literals;
+export module Meta.Arithmetic:Literals;
 
-import Meta.Arithmetic.Math;
+import :Math;
 
 using ::Meta::Arithmetic::Power;
 

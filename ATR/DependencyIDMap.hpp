@@ -9,7 +9,6 @@ export import :Address;
 export import :Layout;
 
 export import Meta.Logic;
-export import Meta.Constraint;
 
 export namespace
 	ATR

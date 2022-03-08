@@ -1,6 +1,6 @@
-export module Meta.Logic.Conjunction;
+export module Meta.Logic:Conjunction;
 
-export import Meta.Logic.BitTerm;
+export import :BitTerm;
 
 namespace
 	Meta::Logic

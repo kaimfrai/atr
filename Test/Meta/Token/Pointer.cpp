@@ -1,6 +1,4 @@
-import Meta.Token.Type;
-import Meta.Token.Transform;
-import Meta.Token.Pointer;
+import Meta.Token;
 
 using namespace Meta;
 

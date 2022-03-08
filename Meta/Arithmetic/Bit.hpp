@@ -1,7 +1,8 @@
-export module Meta.Arithmetic.Bit;
+export module Meta.Arithmetic:Bit;
+
+export import :Integer;
 
 export import Std;
-export import Meta.Integer;
 
 export namespace
 	Meta::Arithmetic
