@@ -1,19 +1,6 @@
 import Test.Evaluation.SizeCheck;
 
-import Evaluation.Virtual.Square;
-import Evaluation.Virtual.Rectangle;
-import Evaluation.Virtual.Triangle;
-import Evaluation.Virtual.Circle;
-import Evaluation.Virtual.Ellipse;
-
-import Evaluation.Virtual.Cube;
-import Evaluation.Virtual.Cuboid;
-import Evaluation.Virtual.Pyramid;
-import Evaluation.Virtual.Sphere;
-import Evaluation.Virtual.Cylinder;
-import Evaluation.Virtual.Cone;
-import Evaluation.Virtual.Ellipsoid;
-import Evaluation.Virtual.Head;
+import Evaluation.Virtual;
 
 static_assert(AdditionalSize<Shapes2D::Square, 1, 1> == 12);
 static_assert(not SizeMinimal<Shapes2D::Square, 1, 1>);

@@ -1,7 +1,7 @@
-export module Evaluation.Virtual.TriangularShape;
+export module Evaluation.Virtual:TriangularShape;
 
 export import Evaluation.Shared;
-export import Evaluation.Virtual.BasicShape;
+export import :BasicShape;
 
 export namespace
 	Shapes2D

@@ -1,7 +1,7 @@
-export module Evaluation.Virtual.Pyramid;
+export module Evaluation.Virtual:Pyramid;
 
-export import Evaluation.Virtual.Triangle;
-export import Evaluation.Virtual.PyramidicBody;
+export import :Triangle;
+export import :PyramidicBody;
 
 export namespace
 	Bodies3D

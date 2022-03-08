@@ -1,7 +1,7 @@
-export module Evaluation.Virtual.PyramidicBody;
+export module Evaluation.Virtual:PyramidicBody;
 
 export import Evaluation.Shared;
-export import Evaluation.Virtual.ExtendedShape;
+export import :ExtendedShape;
 
 export namespace
 	Bodies3D

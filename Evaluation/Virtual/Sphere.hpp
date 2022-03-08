@@ -1,7 +1,7 @@
-export module Evaluation.Virtual.Sphere;
+export module Evaluation.Virtual:Sphere;
 
-export import Evaluation.Virtual.Circle;
-export import Evaluation.Virtual.SphericBody;
+export import :Circle;
+export import :SphericBody;
 
 export namespace
 	Bodies3D

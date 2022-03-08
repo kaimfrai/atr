@@ -1,7 +1,7 @@
-export module Evaluation.Virtual.Cube;
+export module Evaluation.Virtual:Cube;
 
-export import Evaluation.Virtual.Square;
-export import Evaluation.Virtual.CubicBody;
+export import :Square;
+export import :CubicBody;
 
 export namespace
 	Bodies3D

@@ -1,6 +1,6 @@
-export module Evaluation.Virtual.Circle;
+export module Evaluation.Virtual:Circle;
 
-export import Evaluation.Virtual.CircularShape;
+export import :CircularShape;
 
 export namespace
 	Shapes2D

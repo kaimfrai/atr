@@ -1,6 +1,6 @@
-export module Evaluation.Virtual.BasicShape;
+export module Evaluation.Virtual:BasicShape;
 
-export import Evaluation.Virtual.IShape;
+export import :IShape;
 
 export namespace
 	Shapes2D

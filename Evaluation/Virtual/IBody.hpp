@@ -1,4 +1,4 @@
-export module Evaluation.Virtual.IBody;
+export module Evaluation.Virtual:IBody;
 
 export import Evaluation.Shared;
 

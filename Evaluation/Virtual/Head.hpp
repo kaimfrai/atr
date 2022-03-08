@@ -1,6 +1,6 @@
-export module Evaluation.Virtual.Head;
+export module Evaluation.Virtual:Head;
 
-export import Evaluation.Virtual.Sphere;
+export import :Sphere;
 
 export namespace
 	Bodies3D

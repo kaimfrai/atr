@@ -1,6 +1,6 @@
-export module Evaluation.Virtual.BasicBody;
+export module Evaluation.Virtual:BasicBody;
 
-export import Evaluation.Virtual.IBody;
+export import :IBody;
 
 export namespace
 	Bodies3D

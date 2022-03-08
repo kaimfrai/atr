@@ -1,7 +1,7 @@
-export module Evaluation.Virtual.Ellipsoid;
+export module Evaluation.Virtual:Ellipsoid;
 
-export import Evaluation.Virtual.Ellipse;
-export import Evaluation.Virtual.SphericBody;
+export import :Ellipse;
+export import :SphericBody;
 
 export namespace
 	Bodies3D

@@ -1,6 +1,6 @@
-export module Evaluation.Virtual.ExtendedShape;
+export module Evaluation.Virtual:ExtendedShape;
 
-export import Evaluation.Virtual.BasicBody;
+export import :BasicBody;
 
 export namespace
 	Bodies3D
