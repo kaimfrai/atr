@@ -1,8 +1,9 @@
 export module Evaluation.Virtual:Cone;
 
-export import Evaluation.Shared;
 export import :Circle;
 export import :ExtendedShape;
+
+export import Evaluation.Shared;
 
 export namespace
 	Bodies3D

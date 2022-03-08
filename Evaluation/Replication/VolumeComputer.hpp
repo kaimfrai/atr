@@ -1,6 +1,5 @@
 export module Evaluation.Replication;
 
-export import Evaluation.Shared;
 export import :Cube;
 export import :Cuboid;
 export import :Pyramid;
@@ -9,6 +8,8 @@ export import :Cylinder;
 export import :Cone;
 export import :Ellipsoid;
 export import :Head;
+
+export import Evaluation.Shared;
 
 export namespace
 	Bodies3D

@@ -1,7 +1,8 @@
 export module Evaluation.Virtual:SphericBody;
 
-export import Evaluation.Shared;
 export import :ExtendedShape;
+
+export import Evaluation.Shared;
 
 export namespace
 	Bodies3D
