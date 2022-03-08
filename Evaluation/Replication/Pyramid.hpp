@@ -1,4 +1,4 @@
-export module Evaluation.Replication.Pyramid;
+export module Evaluation.Replication:Pyramid;
 
 export import Evaluation.Shared;
 

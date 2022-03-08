@@ -1,4 +1,4 @@
-export module Evaluation.Replication.Sphere;
+export module Evaluation.Replication:Sphere;
 
 export import Evaluation.Shared;
 

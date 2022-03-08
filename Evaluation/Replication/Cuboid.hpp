@@ -1,4 +1,4 @@
-export module Evaluation.Replication.Cuboid;
+export module Evaluation.Replication:Cuboid;
 
 export import Evaluation.Shared;
 

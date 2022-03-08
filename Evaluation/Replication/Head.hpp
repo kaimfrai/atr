@@ -1,4 +1,4 @@
-export module Evaluation.Replication.Head;
+export module Evaluation.Replication:Head;
 
 export import Evaluation.Shared;
 

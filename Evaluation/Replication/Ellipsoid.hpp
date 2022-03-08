@@ -1,4 +1,4 @@
-export module Evaluation.Replication.Ellipsoid;
+export module Evaluation.Replication:Ellipsoid;
 
 export import Evaluation.Shared;
 

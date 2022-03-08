@@ -1,4 +1,4 @@
-export module Evaluation.Replication.Cylinder;
+export module Evaluation.Replication:Cylinder;
 
 export import Evaluation.Shared;
 

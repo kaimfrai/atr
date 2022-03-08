@@ -1,4 +1,4 @@
-export module Evaluation.Replication.Cone;
+export module Evaluation.Replication:Cone;
 
 export import Evaluation.Shared;
 

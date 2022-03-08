@@ -1,4 +1,4 @@
-export module Evaluation.Replication.Cube;
+export module Evaluation.Replication:Cube;
 
 export import Evaluation.Shared;
 

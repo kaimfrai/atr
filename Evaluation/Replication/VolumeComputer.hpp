@@ -1,14 +1,14 @@
-export module Evaluation.Replication.VolumeComputer;
+export module Evaluation.Replication;
 
 export import Evaluation.Shared;
-export import Evaluation.Replication.Cube;
-export import Evaluation.Replication.Cuboid;
-export import Evaluation.Replication.Pyramid;
-export import Evaluation.Replication.Sphere;
-export import Evaluation.Replication.Cylinder;
-export import Evaluation.Replication.Cone;
-export import Evaluation.Replication.Ellipsoid;
-export import Evaluation.Replication.Head;
+export import :Cube;
+export import :Cuboid;
+export import :Pyramid;
+export import :Sphere;
+export import :Cylinder;
+export import :Cone;
+export import :Ellipsoid;
+export import :Head;
 
 export namespace
 	Bodies3D
