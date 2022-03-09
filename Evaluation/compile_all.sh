@@ -3,30 +3,30 @@ cd ../build/clang-release
 ninja clean > /dev/null
 
 std_time=$(\time -f "%e" ninja Std 2>&1  1>/dev/null)
-echo "Time Std: ${std_time}"
+echo "Time Std: $(echo ${std_time} | bc)"
 
 type_erasue_time=$(\time -f "%e" ninja Boost.TypeErasure 2>&1  1>/dev/null)
-echo "Time Boost.TypeErasure: ${type_erasue_time}"
+echo "Time Boost.TypeErasure: $(echo ${type_erasue_time} | bc)"
 
 dyno_time=$(\time -f "%e" ninja Dyno 2>&1  1>/dev/null)
-echo "Time Dyno: ${dyno_time}"
+echo "Time Dyno: $(echo ${dyno_time} | bc)"
 
 polymorphic_time=$(\time -f "%e" ninja Polymorphic 2>&1  1>/dev/null)
-echo "Time Polymorphic: ${polymorphic_time}"
+echo "Time Polymorphic: $(echo ${polymorphic_time} | bc)"
 
 atr_time=$(\time -f "%e" ninja ATR 2>&1  1>/dev/null)
-echo "Time ATR: ${atr_time}"
+echo "Time ATR: $(echo ${atr_time} | bc)"
 
 evaluation_time=$(\time -f "%e" ninja Evaluation.Shared 2>&1  1>/dev/null)
-echo "Time Evaluation.Shared: ${evaluation_time}"
+echo "Time Evaluation.Shared: $(echo ${evaluation_time} | bc)"
 
 crtp_time=$(\time -f "%e" ninja Evaluation.CRTP 2>&1  1>/dev/null)
-echo "Time Evaluation.CRTP: ${crtp_time}"
+echo "Time Evaluation.CRTP: $(echo ${crtp_time} | bc)"
 
 echo ""
 
 evaluation_virtual_time=$(\time -f "%e" ninja evaluation_virtual 2>&1  1>/dev/null)
-echo "Time evaluation_virtual: ${evaluation_virtual_time}"
+echo "Time evaluation_virtual: $(echo ${evaluation_virtual_time} | bc)"
 
 evaluation_any_time=$(\time -f "%e" ninja evaluation_any 2>&1  1>/dev/null)
 echo "Time evaluation_any: $(echo ${evaluation_any_time} + ${crtp_time} | bc)"
@@ -44,10 +44,10 @@ evaluation_variant_time=$(\time -f "%e" ninja evaluation_variant 2>&1  1>/dev/nu
 echo "Time evaluation_variant: $(echo ${evaluation_variant_time} + ${crtp_time} | bc)"
 
 evaluation_archetype_time=$(\time -f "%e" ninja evaluation_archetype 2>&1  1>/dev/null)
-echo "Time evaluation_archetype: ${evaluation_archetype_time}"
+echo "Time evaluation_archetype: $(echo ${evaluation_archetype_time} | bc)"
 
 evaluation_replication_time=$(\time -f "%e" ninja evaluation_replication 2>&1  1>/dev/null)
-echo "Time evaluation_replication: ${evaluation_replication_time}"
+echo "Time evaluation_replication: $(echo ${evaluation_replication_time} | bc)"
 
 
 cd ../../Evaluation
