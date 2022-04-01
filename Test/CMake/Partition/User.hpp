@@ -1,14 +1,14 @@
-export module Test.CMake:Fwd;
+export module Test.CMake:User;
 
 export namespace
 	Test::CMake
 {
-	struct Fwd;
+	struct Def;
 
 	struct
 		User
 	{
-		Fwd* fwd;
+		Def* def;
 
 		auto SomeNum() -> int;
 		auto Invoke2() -> int;

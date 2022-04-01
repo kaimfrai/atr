@@ -1,6 +1,6 @@
 export module Test.CMake;
 
-export import :Fwd;
+export import :User;
 export import :Def;
 
 export int Foo();

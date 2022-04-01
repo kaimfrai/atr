@@ -1,0 +1,10 @@
+add_module(
+	FooBar.hpp
+PARTITION
+	Def.hpp
+	User.hpp
+IMPLEMENTATION
+	Bar.cpp
+	Foo.cpp
+	User.cpp
+)

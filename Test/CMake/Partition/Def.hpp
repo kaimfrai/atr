@@ -1,16 +1,16 @@
 export module Test.CMake:Def;
 
-export import :Fwd;
+export import :User;
 
 export namespace
 	Test::CMake
 {
-	struct Fwd
+	struct Def
 	{
 		User u;
 
 		constexpr
-		(	Fwd
+		(	Def
 		)	()
 		:	u{this}
 		{}

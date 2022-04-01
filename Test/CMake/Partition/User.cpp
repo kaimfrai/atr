@@ -1,8 +1,10 @@
-module Test.CMake;
+module Test.CMake:User;
+
+import :Def;
 
 auto Test::CMake::User::Invoke2() -> int
 {
-	return fwd->Invoke3();
+	return def->Invoke3();
 }
 
 auto Test::CMake::User::SomeNum() -> int
