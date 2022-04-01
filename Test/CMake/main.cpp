@@ -1,4 +1,5 @@
 import Test.CMake;
+import Test.CMake.Pimpl;
 
 auto
 (	main
@@ -6,5 +7,7 @@ auto
 ->	int
 {
 	Test::CMake::Fwd fwd{};
-	return Foo() + Bar() + fwd.Invoke1();
+	Pimpl p{12.4l};
+	[[maybe_unused]]ImplAlias* pImpl = p.pImpl;
+	return Foo() + Bar() + fwd.Invoke1() + static_cast<int>(p.get());
 }

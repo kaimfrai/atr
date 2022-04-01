@@ -40,6 +40,7 @@ function(read_module_name
 	module_source_file
 	preprocessed_file
 	out_module_name
+	out_module_target_name
 	out_module_binary
 )
 	string(
@@ -55,7 +56,9 @@ function(read_module_name
 	endif()
 
 	set(${out_module_name} ${module_name} PARENT_SCOPE)
-	set(${out_module_binary} ${PREBUILT_MODULE_PATH}/${module_name}${MODULE_INTERFACE_EXTENSION} PARENT_SCOPE)
+	string(REPLACE ":" "-" module_target_name ${module_name})
+	set(${out_module_target_name} ${module_target_name} PARENT_SCOPE)
+	set(${out_module_binary} ${PREBUILT_MODULE_PATH}/${module_target_name}${MODULE_INTERFACE_EXTENSION} PARENT_SCOPE)
 
 endfunction()
 
@@ -75,6 +78,7 @@ function(read_module_dependencies
 	preprocessed_file
 	module_name
 	out_module_dependencies
+	out_module_target_dependencies
 	out_module_dependency_binaries
 )
 	string(REGEX MATCHALL "${REGEX_IMPORT}${REGEX_ID}" dependencies "${preprocessed_file}")
@@ -89,7 +93,17 @@ function(read_module_dependencies
 	list(APPEND dependencies ${module_partitions})
 	set(${out_module_dependencies} ${dependencies} PARENT_SCOPE)
 
-	set(dependency_binaries ${dependencies})
+	set(module_target_dependencies ${dependencies})
+	list(
+		TRANSFORM
+		module_target_dependencies
+	REPLACE
+		":"
+		"-"
+	)
+	set(${out_module_target_dependencies} ${module_target_dependencies} PARENT_SCOPE)
+
+	set(dependency_binaries ${module_target_dependencies})
 	list(TRANSFORM dependency_binaries PREPEND ${PREBUILT_MODULE_PATH}/)
 	list(TRANSFORM dependency_binaries APPEND ${MODULE_INTERFACE_EXTENSION})
 	set(${out_module_dependency_binaries} ${dependency_binaries} PARENT_SCOPE)
@@ -100,23 +114,15 @@ function(add_module_source_dependencies
 	target_name
 	source_file
 	module_dependencies
+	module_target_dependencies
 	module_dependency_files
 )
 	list(LENGTH module_dependencies module_dependency_count)
 	if(${module_dependency_count} GREATER 0)
 
-		set(dependency_targets ${module_dependencies})
-		list(
-		TRANSFORM
-			dependency_targets
-		REPLACE
-			":"
-			"+"
-		)
-
 		add_dependencies(
 		${target_name}
-			${dependency_targets}
+			${module_target_dependencies}
 		)
 
 		set_source_files_properties(
@@ -165,13 +171,13 @@ endfunction()
 function(add_module_partition
 	module_name
 	partition_name
+	partition_target_name
 	partition_binary
 	interface_file
 	preprocessed_module_file
 )
-	string(REPLACE ":" "+" target_name ${partition_name})
 	add_library(
-		${target_name}
+		${partition_target_name}
 	INTERFACE
 		${interface_file}
 	)
@@ -179,13 +185,15 @@ function(add_module_partition
 		"${preprocessed_module_file}"
 		${module_name}
 		module_dependencies
+		module_target_dependencies
 		module_dependency_binaries
 	)
 
 	add_module_source_dependencies(
-		${target_name}
+		${partition_target_name}
 		${interface_file}
 		"${module_dependencies}"
+		"${module_target_dependencies}"
 		"${module_dependency_binaries}"
 	)
 
@@ -230,6 +238,7 @@ function(add_module
 		${module_interface_file}
 		"${preprocessed_module_file}"
 		module_name
+		module_target_name
 		module_binary
 	)
 
@@ -242,12 +251,14 @@ function(add_module
 			${partition_file}
 			"${preprocessed_partition_file}"
 			partition_name
+			partition_target_name
 			partition_binary
 		)
 
 		add_module_partition(
 			${module_name}
 			${partition_name}
+			${partition_target_name}
 			${partition_binary}
 			${partition_file}
 			"${preprocessed_partition_file}"
@@ -257,6 +268,7 @@ function(add_module
 	add_module_partition(
 		${module_name}
 		${module_name}
+		${module_target_name}
 		${module_binary}
 		${module_interface_file}
 		"${preprocessed_module_file}"
@@ -265,20 +277,20 @@ function(add_module
 	if	(NOT "${MODULE_IMPLEMENTATION}" STREQUAL "")
 
 		add_library(
-			"${module_name}-Obj"
+			"${module_target_name}-Obj"
 		OBJECT
 			${MODULE_IMPLEMENTATION}
 		)
 
 		target_compile_options(
-			"${module_name}-Obj"
+			"${module_target_name}-Obj"
 		PRIVATE
 			-fmodule-file=${module_binary}
 		)
 
 		add_dependencies(
-		"${module_name}-Obj"
-			"${module_name}"
+		"${module_target_name}-Obj"
+			"${module_target_name}"
 		)
 	endif()
 
@@ -303,13 +315,15 @@ function(add_module_dependencies
 			"${preprocessed_module_file}"
 			""
 			module_dependencies
-			module_dependency_files
+			module_target_dependencies
+			module_dependency_binaries
 		)
 		add_module_source_dependencies(
 			${target_name}
 			${source_file}
 			"${module_dependencies}"
-			"${module_dependency_files}"
+			"${module_target_dependencies}"
+			"${module_dependency_binaries}"
 		)
 
 		#add a link dependency for non-interface libraries

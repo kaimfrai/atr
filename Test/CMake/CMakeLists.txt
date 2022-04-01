@@ -1,4 +1,14 @@
 add_module(
+	Impl.hpp
+)
+
+add_module(
+	Pimpl.hpp
+IMPLEMENTATION
+	Pimpl.cpp
+)
+
+add_module(
 	TestModule.hpp
 PARTITION
 	Def.hpp

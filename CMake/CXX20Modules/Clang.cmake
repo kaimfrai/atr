@@ -55,7 +55,7 @@ endfunction()
 function(
 	get_compile_module_interface_command
 	module_interface_file
-	module_file
+	module_binary
 	include_directories
 	out_command
 )
@@ -78,7 +78,7 @@ function(
 		${absolute_include_dirs}
 		--compile ${CMAKE_CURRENT_SOURCE_DIR}/${module_interface_file}
 		-Xclang -emit-module-interface
-		--output ${module_file}
+		--output ${module_binary}
 	)
 
 	set(

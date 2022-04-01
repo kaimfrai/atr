@@ -603,7 +603,7 @@ namespace
 
 		USize const
 			nMaxLiteralCount
-		=	::std::bit_width
+		=	Arithmetic::BitWidth
 			(	vLiteralField
 			)
 		;

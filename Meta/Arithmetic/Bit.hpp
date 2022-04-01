@@ -45,6 +45,20 @@ export namespace
 	}
 
 	auto constexpr
+	(	BitWidth
+	)	(	USize
+				i_nBitField
+		)
+	->	USize
+	{	return
+		static_cast<USize>
+		(	::std::bit_width
+			(	i_nBitField
+			)
+		);
+	}
+
+	auto constexpr
 	(	CountOneBits
 	)	(	USize
 				i_nBitField
@@ -102,7 +116,7 @@ export namespace
 		USize const
 			nLastOneBitIndex
 		=	::std::bit_ceil
-			(	::std::bit_width
+			(	BitWidth
 				(	i_nBitField
 				)
 			)
