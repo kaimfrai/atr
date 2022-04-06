@@ -1,4 +1,8 @@
-module Test.CMake:User;
+module;
+
+#include "Include.h"
+
+module Test.CMake:User.Obj;
 
 import :Def;
 
@@ -9,5 +13,5 @@ auto Test::CMake::User::Invoke2() -> int
 
 auto Test::CMake::User::SomeNum() -> int
 {
-	return 4;
+	return FIVE - 1;
 }

@@ -3,8 +3,10 @@ add_module(
 PARTITION
 	Def.hpp
 	User.hpp
+	Private.hpp
 IMPLEMENTATION
 	Bar.cpp
 	Foo.cpp
 	User.cpp
+	Private.cpp
 )
