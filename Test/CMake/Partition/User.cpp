@@ -2,7 +2,7 @@ module;
 
 #include "Include.h"
 
-module Test.CMake:User.Obj;
+module Test.CMake;
 
 import :Def;
 

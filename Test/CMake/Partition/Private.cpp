@@ -2,7 +2,7 @@ module;
 
 #include "Include.h"
 
-module Test.CMake:Private.Obj;
+module Test.CMake;
 
 import :Private;
 
