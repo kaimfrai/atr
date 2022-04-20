@@ -1,16 +1,39 @@
 set(CMAKE_SYSTEM_NAME Linux)
+set(CMAKE_SYSTEM_PROCESSOR ${CMAKE_HOST_SYSTEM_PROCESSOR})
 
-set(CMAKE_C_COMPILER "clang-15")
-set(CMAKE_CXX_COMPILER "clang++-15") # required for module partitions
+#resolve real path for clang-tidy
+find_program(CMAKE_C_COMPILER clang-15 REQUIRED)
+file(REAL_PATH ${CMAKE_C_COMPILER} CMAKE_C_COMPILER EXPAND_TILDE)
+find_program(CMAKE_CXX_COMPILER clang++-15 REQUIRED)
+file(REAL_PATH ${CMAKE_CXX_COMPILER} CMAKE_CXX_COMPILER EXPAND_TILDE)
+#add ++ to real path
+set(CMAKE_CXX_COMPILER "${CMAKE_CXX_COMPILER}++")
 
-set(CXX_STANDARD_VERSION_FLAG
-	-std=c++2b
-)
-set(CXX_STANDARD_LIBRARY_FLAG
-	-stdlib=libc++
-)
+#do not use libc++ for C objects
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-stdlib=libc++>)
+add_link_options($<$<COMPILE_LANGUAGE:CXX>:-stdlib=libc++>)
+add_link_options($<$<COMPILE_LANGUAGE:CXX>:-lm>)
+add_link_options($<$<COMPILE_LANGUAGE:CXX>:-lc++>)
+add_link_options($<$<COMPILE_LANGUAGE:CXX>:-lc++abi>)
+add_link_options(-fuse-ld=lld)
 
-set(WARNING_FLAGS
+if	(BUILD_WITH_SANITIZER)
+	add_compile_options(
+		-O1
+		-fsanitize=address
+		-fno-omit-frame-pointer
+		-fno-optimize-sibling-calls
+		-fsanitize-address-use-after-return=always
+		-fsanitize-address-use-after-scope
+	)
+	add_link_options(
+		-fsanitize=address
+	)
+
+endif()
+
+
+add_compile_options(
 	-Wall
 	-Wextra
 	-Wpedantic
@@ -38,12 +61,10 @@ set(WARNING_FLAGS
 	-Wno-c++20-compat-pedantic
 )
 
-set(ADDITIONAL_COMPILE_OPTIONS
+add_compile_options(
 	-fconstexpr-backtrace-limit=0
 	-ftemplate-backtrace-limit=0
 	-frelaxed-template-template-args
 	-fconstexpr-steps=4294967295
 	#-ftime-trace
 )
-
-add_link_options(-fuse-ld=lld)

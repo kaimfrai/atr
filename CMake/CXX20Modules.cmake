@@ -1,5 +1,28 @@
 include(CMake/CXX20Modules/${CMAKE_CXX_COMPILER_ID}.cmake)
 
+function(
+	ensure_module_variable_set
+	variable_name
+)
+	if	(NOT ${variable_name})
+		message(FATAL_ERROR "${CMAKE_CXX_COMPILER_ID}.cmake does not appear to define ${variable_name}!")
+	endif()
+endfunction()
+
+ensure_module_variable_set(PREBUILT_MODULE_PATH)
+ensure_module_variable_set(MODULE_CACHE_PATH)
+ensure_module_variable_set(MODULE_INTERFACE_EXTENSION)
+ensure_module_variable_set(MODULE_FLAGS)
+
+file(
+MAKE_DIRECTORY
+	${PREBUILT_MODULE_PATH}
+)
+file(
+MAKE_DIRECTORY
+	${MODULE_CACHE_PATH}
+)
+
 set(REGEX_WHITESPACE "[ \t]+")
 set(REGEX_ID "[a-zA-Z_][a-zA-Z0-9_.]*")
 set(REGEX_FILE "[a-zA-Z0-9_./\:]*")
@@ -294,9 +317,7 @@ function(add_module
 			"${module_name}"
 		PRIVATE
 			-fmodule-file=${module_binary}
-			${WARNING_FLAGS}
 			${MODULE_FLAGS}
-			${ADDITIONAL_COMPILE_OPTIONS}
 		)
 
 		target_include_directories(
@@ -400,6 +421,12 @@ function(add_module_object_library
 		${ARGN}
 	)
 
+	target_compile_options(
+		${target_name}
+	PRIVATE
+		${MODULE_FLAGS}
+	)
+
 	add_module_dependencies(
 		${target_name}
 	)
@@ -417,9 +444,7 @@ function(add_module_executable
 	target_compile_options(
 		${target_name}
 	PRIVATE
-		${WARNING_FLAGS}
 		${MODULE_FLAGS}
-		${ADDITIONAL_COMPILE_OPTIONS}
 	)
 
 	add_module_dependencies(
