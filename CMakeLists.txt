@@ -35,8 +35,6 @@ add_link_options(
 add_subdirectory(Std)
 add_subdirectory(Meta)
 
-add_subdirectory(ThirdParty)
-
 add_subdirectory(ATR)
 add_subdirectory(Evaluation)
 

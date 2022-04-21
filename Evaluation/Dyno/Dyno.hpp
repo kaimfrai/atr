@@ -1,7 +1,7 @@
 export module Evaluation.Dyno;
 
 export import Evaluation.Shared;
-export import Dyno;
+export import <dyno.hpp>;
 
 namespace
 	Bodies3D

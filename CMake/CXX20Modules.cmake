@@ -25,8 +25,8 @@ MAKE_DIRECTORY
 
 set(REGEX_WHITESPACE "[ \t]+")
 set(REGEX_ID "[a-zA-Z_][a-zA-Z0-9_.]*")
-set(REGEX_FILE "[a-zA-Z0-9_./\:]*")
-set(REGEX_HEADER "(<${REGEX_FILE}>|\"${REGEX_FILE}\")")
+set(REGEX_FILE "[a-zA-Z0-9_./\:]+")
+set(REGEX_HEADER "(<${REGEX_FILE}\\.h>|<${REGEX_FILE}\\.hpp>|\"${REGEX_FILE}\\.h\"|\"${REGEX_FILE}\\.hpp\")")
 set(REGEX_NAME "${REGEX_ID}(:${REGEX_ID})?")
 set(REGEX_MODULE "(^|[\n\r])(export${REGEX_WHITESPACE})?module${REGEX_WHITESPACE}")
 set(REGEX_IMPORT "(^|[\n\r])(export${REGEX_WHITESPACE})?import${REGEX_WHITESPACE}")
@@ -73,33 +73,72 @@ function(read_module_name
 		module_name
 		"${preprocessed_file}"
 	)
-	list(TRANSFORM module_name REPLACE "${REGEX_MODULE}" "")
+	list(
+	TRANSFORM
+		module_name
+	REPLACE
+		"${REGEX_MODULE}"
+		""
+	)
 
 	if	(NOT module_name AND ${must_have_module_name})
 		message(FATAL_ERROR "File '${module_source_file}' did not specify a valid module name!")
 	endif()
 
-	set(${out_module_name} ${module_name} PARENT_SCOPE)
-	string(REPLACE ":" "-" module_binary "${module_name}")
-	set(${out_module_binary} ${PREBUILT_MODULE_PATH}/${module_binary}${MODULE_INTERFACE_EXTENSION} PARENT_SCOPE)
+	set(
+	${out_module_name}
+		${module_name}
+	PARENT_SCOPE
+	)
+	string(
+	REPLACE
+		":"
+		"-"
+		module_binary
+		"${module_name}"
+	)
+	set(
+	${out_module_binary}
+		"${PREBUILT_MODULE_PATH}/${module_binary}${MODULE_INTERFACE_EXTENSION}"
+	PARENT_SCOPE
+	)
 
 endfunction()
 
-function(read_module_headerunits
-	preprocessed_file
-	out_module_headerunits
+function(add_header_unit
+	header_unit_file
+	header_unit_path
 )
-	string(REGEX MATCHALL "${REGEX_IMPORT}${REGEX_HEADER}" module_dependencies "${preprocessed_file}")
-	list(TRANSFORM module_dependencies REPLACE "${REGEX_IMPORT}(<|\")" "")
-	list(TRANSFORM module_dependencies REPLACE "(>|\")" "")
-
-	set(${out_module_headerunits} ${module_dependencies} PARENT_SCOPE)
-
+	string(
+		REGEX REPLACE
+		"\\.h$|\\.hpp$"
+		"${MODULE_INTERFACE_EXTENSION}"
+		header_unit_binary
+		"${header_unit_file}"
+	)
+	get_compile_header_unit_command(
+		"${header_unit_path}${header_unit_file}"
+		"${MODULE_CACHE_PATH}/${header_unit_binary}"
+		"${header_unit_path}"
+		compile_header_unit_command
+	)
+	add_custom_command(
+	OUTPUT
+		${MODULE_CACHE_PATH}/${header_unit_binary}
+	COMMAND
+		${compile_header_unit_command}
+	VERBATIM
+	MAIN_DEPENDENCY
+		${header_unit_path}${header_unit_file}
+	COMMENT
+		"Generating precompiled header unit ${header_unit_file}"
+	)
 endfunction()
 
 function(read_module_dependencies
 	preprocessed_file
 	module_name
+	module_includes
 	out_module_target_dependencies
 	out_module_dependency_binaries
 )
@@ -115,8 +154,10 @@ function(read_module_dependencies
 
 	set(dependency_binaries ${module_target_dependencies})
 	list(APPEND dependency_binaries ${module_partitions})
+
 	list(TRANSFORM dependency_binaries PREPEND ${PREBUILT_MODULE_PATH}/)
 	list(TRANSFORM dependency_binaries APPEND ${MODULE_INTERFACE_EXTENSION})
+
 	set(${out_module_dependency_binaries} ${dependency_binaries} PARENT_SCOPE)
 
 endfunction()
@@ -130,32 +171,33 @@ function(add_module_source_dependencies
 	get_target_property(target_type "${target_name}" TYPE)
 	if	(target_type MATCHES "INTERFACE")
 		#add a link dependency for interface libraries
-		foreach(target_dependency IN LISTS module_target_dependencies)
-			target_link_libraries(
-			${target_name}
-			INTERFACE
-				"${target_dependency}"
-			)
-		endforeach()
+		target_link_libraries(
+		${target_name}
+		INTERFACE
+			${module_target_dependencies}
+		)
 	else()
 		#add a link dependency for non-interface libraries
-		foreach(target_dependency IN LISTS module_target_dependencies)
-
-			target_link_libraries(
-			${target_name}
-			PUBLIC
-				"${target_dependency}"
-			)
-
-		endforeach()
+		target_link_libraries(
+		${target_name}
+		PUBLIC
+			${module_target_dependencies}
+		)
 	endif()
 
 	list(LENGTH module_dependency_files module_dependency_count)
 	if(${module_dependency_count} GREATER 0)
+		get_module_dependency_flag_list(
+			"${module_dependency_files}"
+			module_dependency_flag_list
+		)
 		set_source_files_properties(
 		"${source_file}"
+		PROPERTIES
 		OBJECT_DEPENDS
 			"${module_dependency_files}"
+		COMPILE_OPTIONS
+			"${module_dependency_flag_list}"
 		)
 	endif()
 
@@ -169,11 +211,11 @@ function(add_module_command
 	module_dependency_binaries
 	module_byproducts
 )
-
 	get_compile_module_interface_command(
-		${module_interface_file}
-		${module_binary}
-		"${MODULE_INCLUDES}"
+		"${module_interface_file}"
+		"${module_binary}"
+		"${module_includes}"
+		"${module_dependency_binaries}"
 		compile_module_interface_command
 	)
 
@@ -203,13 +245,17 @@ function(add_module_partition
 	preprocessed_module_file
 	module_includes
 	module_byproducts
+	module_header_units
 )
 	read_module_dependencies(
 		"${preprocessed_module_file}"
-		${module_name}
+		"${module_name}"
+		"${module_includes}"
 		module_target_dependencies
 		module_dependency_binaries
 	)
+
+	list(APPEND module_dependency_binaries ${module_header_units})
 
 	add_module_source_dependencies(
 		${module_name}
@@ -225,16 +271,6 @@ function(add_module_partition
 		"${module_includes}"
 		"${module_dependency_binaries}"
 		"${module_byproducts}"
-	)
-
-	read_module_headerunits(
-		"${preprocessed_module_file}"
-		module_header_units
-	)
-	add_module_source_header_units(
-		${module_name}
-		${interface_file}
-		"${module_header_units}"
 	)
 
 endfunction()
@@ -264,6 +300,7 @@ function(add_module_implementation
 	read_module_dependencies(
 		"${preprocessed_module_file}"
 		"${module_name}"
+		"${module_includes}"
 		module_target_dependencies
 		module_dependency_binaries
 	)
@@ -283,7 +320,7 @@ function(add_module
 		MODULE
 		""
 		""
-		"PARTITION;IMPLEMENTATION;BYPRODUCTS;INCLUDES"
+		"PARTITION;IMPLEMENTATION;BYPRODUCTS;INCLUDES;HEADER_UNITS"
 		${ARGN}
 	)
 
@@ -312,12 +349,20 @@ function(add_module
 			${module_interface_file}
 			${MODULE_IMPLEMENTATION}
 		)
-
+		get_module_dependency_flag_list(
+			"${module_binary}"
+			primary_module_flag
+		)
+		get_module_dependency_flag_list(
+			"${MODULE_HEADER_UNITS}"
+			header_unit_flag_list
+		)
 		target_compile_options(
 			"${module_name}"
 		PRIVATE
-			-fmodule-file=${module_binary}
-			${MODULE_FLAGS}
+			"${primary_module_flag}"
+			"${header_unit_flag_list}"
+			"${MODULE_FLAGS}"
 		)
 
 		target_include_directories(
@@ -335,6 +380,7 @@ function(add_module
 		"${preprocessed_module_file}"
 		"${MODULE_INCLUDES}"
 		"${MODULE_BYPRODUCTS}"
+		"${MODULE_HEADER_UNITS}"
 	)
 
 	foreach(partition_file IN LISTS MODULE_PARTITION)
@@ -362,6 +408,7 @@ function(add_module
 			"${preprocessed_partition_file}"
 			"${MODULE_INCLUDES}"
 			"${MODULE_BYPRODUCTS}"
+			"${MODULE_HEADER_UNITS}"
 		)
 	endforeach()
 
@@ -382,15 +429,19 @@ function(add_module_dependencies
 		${target_name}
 		SOURCES
 	)
+	get_target_property(target_includes
+		${target_name}
+	INCLUDE_DIRECTORIES
+	)
 
 	foreach(source_file IN LISTS target_source_files)
 
 		invoke_preprocessor(
-			${source_file}
+			"${source_file}"
 			preprocessed_module_file
 		)
 		read_module_name(
-			${source_file}
+			"${source_file}"
 			"${preprocessed_module_file}"
 			FALSE
 			module_name
@@ -399,12 +450,13 @@ function(add_module_dependencies
 		read_module_dependencies(
 			"${preprocessed_module_file}"
 			"${module_name}"
+			"${target_includes}"
 			module_target_dependencies
 			module_dependency_binaries
 		)
 		add_module_source_dependencies(
 			"${target_name}"
-			${source_file}
+			"${source_file}"
 			"${module_target_dependencies}"
 			"${module_dependency_binaries}"
 		)

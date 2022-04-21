@@ -16,27 +16,52 @@ CACHE STRING
 )
 set(MODULE_FLAGS
 	-fmodules
-	-fprebuilt-module-path=${PREBUILT_MODULE_PATH}
+	#-fprebuilt-module-path=${PREBUILT_MODULE_PATH}
 	-fbuiltin-module-map
 	-fmodules-cache-path=${MODULE_CACHE_PATH}
 	-Xclang -fdisable-module-hash
 	-Werror=export-using-directive
 )
 
-function(
-	add_module_source_header_units
-	target_name
-	source_file
-	module_header_units
+function(get_module_dependency_flag_list
+	module_dependency_binaries
+	out_module_dependency_flag_list
 )
-	# handled implicitly
+	set(module_dependency_flag_list ${module_dependency_binaries})
+	list(TRANSFORM module_dependency_flag_list PREPEND -fmodule-file=)
+	set(
+	${out_module_dependency_flag_list}
+		${module_dependency_flag_list}
+	PARENT_SCOPE
+	)
+
 endfunction()
 
-function(
-	get_compile_module_interface_command
+function(get_cxx_standard_flag
+	out_cxx_standard_flag
+)
+	if	(CMAKE_CXX_STANDARD LESS 20)
+		message(FATAL_ERROR "C++ standard required to be at least 20 to use modules!")
+	elseif(CMAKE_CXX_STANDARD EQUAL 23)
+		# should change in the future
+		set(cxx_standard_flag "-std=c++2b")
+	else()
+		set(cxx_standard_flag "-std=c++${CMAKE_CXX_STANDARD}")
+	endif()
+
+	set(
+	${out_cxx_standard_flag}
+		${cxx_standard_flag}
+	PARENT_SCOPE
+	)
+endfunction()
+
+function(get_compile_module_command
 	module_interface_file
 	module_binary
 	include_directories
+	emit_module_unit_flag
+	module_dependency_binaries
 	out_command
 )
 	if	(include_directories)
@@ -73,15 +98,9 @@ function(
 	#flags specific to CXX
 	string(REPLACE " " ";" cmake_cxx_flags "${CMAKE_CXX_FLAGS}")
 
-	# c++ standard flag
-	if	(CMAKE_CXX_STANDARD LESS 20)
-		message(FATAL_ERROR "C++ standard required to be at least 20 to use modules!")
-	elseif(CMAKE_CXX_STANDARD EQUAL 23)
-		# should change in the future
-		set(cxx_standard_flag "-std=c++2b")
-	else()
-		set(cxx_standard_flag "-std=c++${CMAKE_CXX_STANDARD}")
-	endif()
+	get_cxx_standard_flag(cxx_standard_flag)
+
+	get_module_dependency_flag_list("${module_dependency_binaries}" module_dependency_flag_list)
 
 	set(
 	command
@@ -91,9 +110,10 @@ function(
 		${cmake_cxx_flags}
 		${directory_compile_options}
 		${MODULE_FLAGS}
+		${module_dependency_flag_list}
 		${absolute_include_dirs}
 		--compile ${real_module_interface_file}
-		-Xclang -emit-module-interface
+		${emit_module_unit_flag}
 		--output ${module_binary}
 	)
 
@@ -118,4 +138,50 @@ function(
 	PARENT_SCOPE
 	)
 
+endfunction()
+
+function(get_compile_header_unit_command
+	header_unit_file
+	header_unit_binary
+	include_directories
+	out_command
+)
+	set(emit_module_unit_flag -Xclang -emit-header-unit)
+	get_compile_module_command(
+		"${header_unit_file}"
+		"${header_unit_binary}"
+		"${include_directories}"
+		"${emit_module_unit_flag}"
+		""
+		command
+	)
+	set(
+	${out_command}
+		${command}
+		-w
+	PARENT_SCOPE
+	)
+endfunction()
+
+function(get_compile_module_interface_command
+	module_interface_file
+	module_binary
+	include_directories
+	module_dependency_binaries
+	out_command
+)
+	set(emit_module_unit_flag -Xclang -emit-module-interface)
+	get_compile_module_command(
+		"${module_interface_file}"
+		"${module_binary}"
+		"${include_directories}"
+		"${emit_module_unit_flag}"
+		"${module_dependency_binaries}"
+		command
+	)
+	set(
+	${out_command}
+		${command}
+	PARENT_SCOPE
+	)
 endfunction()

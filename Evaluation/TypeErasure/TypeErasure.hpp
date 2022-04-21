@@ -1,6 +1,7 @@
 export module Evaluation.TypeErasure;
 
-export import Boost.TypeErasure;
+export import "boost.hpp";
+export import Std;
 
 export namespace
 	Bodies3D
