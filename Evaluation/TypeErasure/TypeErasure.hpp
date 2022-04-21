@@ -1,6 +1,6 @@
 export module Evaluation.TypeErasure;
 
-export import "boost.hpp";
+export import Evaluation.TypeErasure.Library;
 export import Std;
 
 export namespace
