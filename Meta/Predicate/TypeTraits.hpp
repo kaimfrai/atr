@@ -25,7 +25,7 @@ export namespace
 		)	(	TypeToken<t_tEntity const>
 			)	const
 		->	bool
-		{	return Polarity;	}
+		{	return true;	}
 	};
 
 	struct
@@ -43,7 +43,7 @@ export namespace
 		)	(	TypeToken<t_tEntity volatile>
 			)	const
 		->	bool
-		{	return Polarity;	}
+		{	return true;	}
 	};
 
 	template
@@ -54,17 +54,6 @@ export namespace
 		Convertible_To final
 	:	LiteralBase
 	{
-		explicit constexpr
-		(	Convertible_To
-		)	(	bool
-					i_bPolarity
-			,	TypeToken<t_tTarget>
-			)
-		:	LiteralBase
-			{	i_bPolarity
-			}
-		{}
-
 		template
 			<	typename
 					t_tEntity
@@ -75,27 +64,12 @@ export namespace
 			)	const
 		->	bool
 		{	return
-			(	Polarity
-			==	::std::is_convertible_v
-				<	t_tEntity
-				,	t_tTarget
-				>
-			);
+			::std::is_convertible_v
+			<	t_tEntity
+			,	t_tTarget
+			>;
 		}
 	};
-
-	template
-		<	typename
-				t_tTarget
-		>
-	(	Convertible_To
-	)	(	bool
-		,	TypeToken<t_tTarget>
-		)
-	->	Convertible_To
-		<	t_tTarget
-		>
-	;
 
 	template
 		<	typename
@@ -105,17 +79,6 @@ export namespace
 		Assignable_From final
 	:	LiteralBase
 	{
-		explicit constexpr
-		(	Assignable_From
-		)	(	bool
-					i_bPolarity
-			,	TypeToken<t_tArgument>
-			)
-		:	LiteralBase
-			{	i_bPolarity
-			}
-		{}
-
 		template
 			<	typename
 					t_tEntity
@@ -126,27 +89,12 @@ export namespace
 			)	const
 		->	bool
 		{	return
-			(	Polarity
-			==	::std::is_assignable_v
-				<	t_tEntity
-				,	t_tArgument
-				>
-			);
+			::std::is_assignable_v
+			<	t_tEntity
+			,	t_tArgument
+			>;
 		}
 	};
-
-	template
-		<	typename
-				t_tArgument
-		>
-	(	Assignable_From
-	)	(	bool
-		,	TypeToken<t_tArgument>
-		)
-	->	Assignable_From
-		<	t_tArgument
-		>
-	;
 
 	template
 		<	typename
@@ -166,12 +114,10 @@ export namespace
 			)	const
 		->	bool
 		{	return
-			(	Polarity
-			==	::std::is_base_of_v
-				<	t_tBase
-				,	t_tEntity
-				>
-			);
+			::std::is_base_of_v
+			<	t_tBase
+			,	t_tEntity
+			>;
 		}
 	};
 
@@ -203,7 +149,7 @@ export namespace
 				>
 			)	const
 		->	bool
-		{	return Polarity;	}
+		{	return true;	}
 
 		template
 			<	typename
@@ -219,7 +165,7 @@ export namespace
 				>
 			)	const
 		->	bool
-		{	return Polarity;	}
+		{	return true;	}
 
 		template
 			<	typename
@@ -235,7 +181,7 @@ export namespace
 				>
 			)	const
 		->	bool
-		{	return Polarity;	}
+		{	return true;	}
 
 		template
 			<	typename
@@ -251,7 +197,7 @@ export namespace
 				>
 			)	const
 		->	bool
-		{	return Polarity;	}
+		{	return true;	}
 	};
 
 	template
@@ -282,7 +228,7 @@ export namespace
 				>
 			)	const
 		->	bool
-		{	return Polarity;	}
+		{	return true;	}
 
 		template
 			<	auto
@@ -298,7 +244,7 @@ export namespace
 				>
 			)	const
 		->	bool
-		{	return Polarity;	}
+		{	return true;	}
 
 		template
 			<	auto
@@ -314,7 +260,7 @@ export namespace
 				>
 			)	const
 		->	bool
-		{	return Polarity;	}
+		{	return true;	}
 
 		template
 			<	auto
@@ -330,7 +276,7 @@ export namespace
 				>
 			)	const
 		->	bool
-		{	return Polarity;	}
+		{	return true;	}
 	};
 
 	template
@@ -363,7 +309,7 @@ export namespace
 				>
 			)	const
 		->	bool
-		{	return Polarity;	}
+		{	return true;	}
 
 		template
 			<	auto
@@ -381,7 +327,7 @@ export namespace
 				>
 			)	const
 		->	bool
-		{	return Polarity;	}
+		{	return true;	}
 
 		template
 			<	auto
@@ -399,7 +345,7 @@ export namespace
 				>
 			)	const
 		->	bool
-		{	return Polarity;	}
+		{	return true;	}
 
 		template
 			<	auto
@@ -417,33 +363,33 @@ export namespace
 				>
 			)	const
 		->	bool
-		{	return Polarity;	}
+		{	return true;	}
 	};
 }
 
 export namespace
 	Meta
 {
-	Term constexpr inline
-		IsConst
-	=	Term{Trait::Const{true}}
+	extern decltype
+	(	Literal<Trait::Const>
 	and	IsCVQualifiable
+	)	IsConst
 	;
 
-	Term constexpr inline
-		IsVolatile
-	=	Term{Trait::Volatile{true}}
+	extern decltype
+	(	Literal<Trait::Volatile>
 	and	IsCVQualifiable
+	)	IsVolatile
 	;
 
 	template
 		<	typename
 				t_tBase
 		>
-	Term constexpr inline
-		IsDerived_From
-	=	Term{Trait::Derived_From<t_tBase>{true}}
+	extern decltype
+	(	Literal<Trait::Derived_From<t_tBase>>
 	and	IsCustom
+	)	IsDerived_From
 	;
 
 	template
@@ -454,10 +400,10 @@ export namespace
 			typename
 				t_t1Pack
 		>
-	Term constexpr inline
-		IsTypePack_Of
-	=	Term{Trait::TypePack_Of<t_t1Pack>{true}}
+	extern decltype
+	(	Literal<Trait::TypePack_Of<t_t1Pack>>
 	and	IsCustom
+	)	IsTypePack_Of
 	;
 
 	template
@@ -468,10 +414,10 @@ export namespace
 			typename
 				t_t1Pack
 		>
-	Term constexpr inline
-		IsValuePack_Of
-	=	Term{Trait::ValuePack_Of<t_t1Pack>{true}}
+	extern decltype
+	(	Literal<Trait::ValuePack_Of<t_t1Pack>>
 	and	IsCustom
+	)	IsValuePack_Of
 	;
 
 
@@ -483,9 +429,9 @@ export namespace
 			typename
 				t_t1Pack
 		>
-	Term constexpr inline
-		IsValueTypePair_Of
-	=	Term{Trait::ValueTypePair_Of<t_t1Pack>{true}}
+	extern decltype
+	(	Literal<Trait::ValueTypePair_Of<t_t1Pack>>
 	and	IsCustom
+	)	IsValueTypePair_Of
 	;
 }

@@ -161,275 +161,270 @@ export namespace
 export namespace
 	Meta
 {
-	Term constexpr inline
+	extern decltype(Literal<Trait::Data>)
 		IsValue
-	{	Trait::Data{true}
-	};
+	;
 
-	Term constexpr inline
+	extern decltype(Literal<Trait::Scalar_Ref_Void>)
 		IsScalar_Ref_Void
-	{	Trait::Scalar_Ref_Void{true}
-	};
+	;
 
-	Term constexpr inline
+	extern decltype(Literal<Trait::Fund_Array>)
 		IsFund_Array
-	{	Trait::Fund_Array{true}
-	};
+	;
 
-	Term constexpr inline
+	extern decltype(Literal<Trait::Int_Enum_Class_LRef_Free>)
 		IsInt_Enum_Class_LRef_Free
-	{	Trait::Int_Enum_Class_LRef_Free{true}
-	};
+	;
 
-	Term constexpr inline
+	extern decltype(Literal<Trait::Signed_Scoped_Ptr>)
 		IsSigned_Scoped_Ptr
-	{	Trait::Signed_Scoped_Ptr{true}
-	};
+	;
 
-	Term constexpr inline
-		IsFunction
-	=	not IsFund_Array
+	extern decltype
+	(	not IsFund_Array
 	and	not IsScalar_Ref_Void
 	and	not IsValue
+	)	IsFunction
 	;
 
-	Term constexpr inline
-		IsOwnedFunction
-	=	not IsInt_Enum_Class_LRef_Free
+	extern decltype
+	(	not IsInt_Enum_Class_LRef_Free
 	and	IsFunction
+	)	IsOwnedFunction
 	;
 
-	Term constexpr inline
-		IsFreeFunction
-	=	IsInt_Enum_Class_LRef_Free
+	extern decltype
+	(	IsInt_Enum_Class_LRef_Free
 	and	IsFunction
+	)	IsFreeFunction
 	;
 
-	Term constexpr inline
-		IsVoid
-	=	IsFund_Array
+	extern decltype
+	(	IsFund_Array
 	and	IsScalar_Ref_Void
 	and	not IsValue
+	)	IsVoid
 	;
 
-	Term constexpr inline
-		IsUnboundedArray
-	=	IsFund_Array
+	extern decltype
+	(	IsFund_Array
 	and	not IsScalar_Ref_Void
 	and	not IsValue
+	)	IsUnboundedArray
 	;
 
-	Term constexpr inline
-		IsReference
-	=	not IsFund_Array
+	extern decltype
+	(	not IsFund_Array
 	and	IsScalar_Ref_Void
 	and	not IsValue
+	)	IsReference
 	;
 
-	Term constexpr inline
-		IsLValueReference
-	=	IsInt_Enum_Class_LRef_Free
+	extern decltype
+	(	IsInt_Enum_Class_LRef_Free
 	and	IsReference
+	)	IsLValueReference
 	;
 
-	Term constexpr inline
-		IsRValueReference
-	=	not IsInt_Enum_Class_LRef_Free
+	extern decltype
+	(	not IsInt_Enum_Class_LRef_Free
 	and	IsReference
+	)	IsRValueReference
 	;
 
-	Term constexpr inline
-		IsScalar
-	=	IsScalar_Ref_Void
+	extern decltype
+	(	IsScalar_Ref_Void
 	and	IsValue
+	)	IsScalar
 	;
 
-	Term constexpr inline
-		IsFundamentalScalar
-	=	IsFund_Array
+	extern decltype
+	(	IsFund_Array
 	and	IsScalar
+	)	IsFundamentalScalar
 	;
 
-	Term constexpr inline
-		IsFloatingPoint
-	=	IsSigned_Scoped_Ptr
+	extern decltype
+	(	IsSigned_Scoped_Ptr
 	and	not IsInt_Enum_Class_LRef_Free
 	and	IsFundamentalScalar
+	)	IsFloatingPoint
 	;
 
-	Term constexpr inline
-		IsIntegral
-	=	IsInt_Enum_Class_LRef_Free
+	extern decltype
+	(	IsInt_Enum_Class_LRef_Free
 	and	IsFundamentalScalar
+	)	IsIntegral
 	;
 
-	Term constexpr inline
-		IsArithmetic
-	=	IsIntegral
+	extern decltype
+	(	IsIntegral
 	or	IsFloatingPoint
+	)	IsArithmetic
 	;
 
-	Term constexpr inline
-		IsUnsigned
-	=	not IsSigned_Scoped_Ptr
+	extern decltype
+	(	not IsSigned_Scoped_Ptr
 	and	IsIntegral
+	)	IsUnsigned
 	;
 
-	Term constexpr inline
-		IsSignedIntegral
-	=	IsSigned_Scoped_Ptr
+	extern decltype
+	(	IsSigned_Scoped_Ptr
 	and	IsIntegral
+	)	IsSignedIntegral
 	;
 
-	Term constexpr inline
-		IsSigned
-	=	IsSigned_Scoped_Ptr
+	extern decltype
+	(	IsSigned_Scoped_Ptr
 	and	IsFundamentalScalar
+	)	IsSigned
 	;
 
-	Term constexpr inline
-		IsPointer
-	=	IsSigned_Scoped_Ptr
+	extern decltype
+	(	IsSigned_Scoped_Ptr
 	and	not IsInt_Enum_Class_LRef_Free
 	and	not IsFund_Array
 	and	IsScalar
+	)	IsPointer
 	;
 
-	Term constexpr inline
-		IsNullPointer
-	=	not IsSigned_Scoped_Ptr
+	extern decltype
+	(	not IsSigned_Scoped_Ptr
 	and	not IsInt_Enum_Class_LRef_Free
 	and	IsFundamentalScalar
+	)	IsNullPointer
 	;
 
-	Term constexpr inline
-		IsMemberPointer
-	=	not IsSigned_Scoped_Ptr
+	extern decltype
+	(	not IsSigned_Scoped_Ptr
 	and	not IsInt_Enum_Class_LRef_Free
 	and	not IsFund_Array
 	and	IsScalar
+	)	IsMemberPointer
 	;
 
-	Term constexpr inline
-		IsCompoundObject
-	=	not IsScalar_Ref_Void
+	extern decltype
+	(	not IsScalar_Ref_Void
 	and	IsValue
+	)	IsCompoundObject
 	;
 
-	Term constexpr inline
-		IsBoundedArray
-	=	IsFund_Array
+	extern decltype
+	(	IsFund_Array
 	and	IsCompoundObject
+	)	IsBoundedArray
 	;
 
-	Term constexpr inline
-		IsEnum
-	=	IsInt_Enum_Class_LRef_Free
+	extern decltype
+	(	IsInt_Enum_Class_LRef_Free
 	and	not IsFund_Array
 	and	IsScalar
+	)	IsEnum
 	;
 
-	Term constexpr inline
-		IsScopedEnum
-	=	IsSigned_Scoped_Ptr
+	extern decltype
+	(	IsSigned_Scoped_Ptr
 	and	IsEnum
+	)	IsScopedEnum
 	;
 
-	Term constexpr inline
-		IsUnscopedEnum
-	=	not IsSigned_Scoped_Ptr
+	extern decltype
+	(	not IsSigned_Scoped_Ptr
 	and	IsEnum
+	)	IsUnscopedEnum
 	;
 
-	Term constexpr inline
-		IsCustom
-	=	not IsFund_Array
+	extern decltype
+	(	not IsFund_Array
 	and	IsCompoundObject
+	)	IsCustom
 	;
 
-	Term constexpr inline
-		IsClass
-	=	IsInt_Enum_Class_LRef_Free
+	extern decltype
+	(	IsInt_Enum_Class_LRef_Free
 	and	IsCustom
+	)	IsClass
 	;
 
-	Term constexpr inline
-		IsUnion
-	=	not IsInt_Enum_Class_LRef_Free
+	extern decltype
+	(	not IsInt_Enum_Class_LRef_Free
 	and	IsCustom
+	)	IsUnion
 	;
 
-	Term constexpr inline
-		IsObject
-	=	IsValue
+	extern decltype
+	(	IsValue
 	or	IsUnboundedArray
+	)	IsObject
 	;
 
-	Term constexpr inline
-		IsArray
-	=	IsBoundedArray
+	extern decltype
+	(	IsBoundedArray
 	or	IsUnboundedArray
+	)	IsArray
 	;
 
-	Term constexpr inline
-		IsFundamental
-	=	IsArithmetic
+	extern decltype
+	(	IsArithmetic
 	or	IsVoid
 	or	IsNullPointer
+	)	IsFundamental
 	;
 
-	Term constexpr inline
-		IsCompound
-	=	IsFunction
+	extern decltype
+	(	IsFunction
 	or	IsReference
 	or	IsArray
 	or	IsPointer
 	or	IsMemberPointer
 	or	IsCustom
 	or	IsEnum
+	)	IsCompound
 	;
 
-	Term constexpr inline
-		IsReferable
-	=	IsObject
+	extern decltype
+	(	IsObject
 	or	IsFreeFunction
+	)	IsReferable
 	;
 
-	Term constexpr inline
-		IsPointable
-	=	IsReferable
+	extern decltype
+	(	IsReferable
 	or	IsVoid
+	)	IsPointable
 	;
 
-	Term constexpr inline
-		IsArgument
-	=	IsReferable
+	extern decltype
+	(	IsReferable
 	or	IsReference
+	)	IsArgument
 	;
 
-	Term constexpr inline
-		IsParameter
-	=	(	IsValue
+	extern decltype
+	(	(	IsValue
 		and	not IsBoundedArray
 		)
 	or	IsReference
+	)	IsParameter
 	;
 
-	Term constexpr inline
-		IsReturnable
-	=	IsParameter
+	extern decltype
+	(	IsParameter
 	or	IsVoid
+	)	IsReturnable
 	;
 
-	Term constexpr inline
-		IsDataMember
-	=	IsValue
+	extern decltype
+	(	IsValue
 	or	IsReference
+	)	IsDataMember
 	;
 
-	Term constexpr inline
-		IsCVQualifiable
-	=	IsObject
+	extern decltype
+	(	IsObject
 	or	IsVoid
+	)	IsCVQualifiable
 	;
 }

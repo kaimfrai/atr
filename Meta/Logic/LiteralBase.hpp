@@ -7,65 +7,81 @@ import Std;
 export namespace
 	Meta::Trait
 {
+	template
+		<	typename
+				t_tLiteral
+		>
 	struct
-		LiteralBase
+		Not final
 	{
-		bool
-			Polarity
-		=	true
+		t_tLiteral
+			Literal
+			[[no_unique_address]]
 		;
 
 		friend auto constexpr
 		(	Evaluate
-		)	(	LiteralBase
-					i_vBase
+		)	(	Not
+					i_vNot
 			,	EraseTypeToken
+					i_vType
 			)
 		->	bool
-		{	return not i_vBase.Polarity;	}
+		{	return not Evaluate(i_vNot.Literal, i_vType);	}
 
 		auto constexpr
 		(	operator()
 		)	(	EraseTypeToken
+					i_vType
 			)	const
 		->	bool
-		{	return not Polarity;	}
+		{	return not Literal(i_vType);	}
 
-		template
-			<	typename
-					t_tPolar
-			>
 		friend auto constexpr
 		(	operator not
-		)	(	t_tPolar
-					i_vPolar
+		)	(	Not
+					i_vNot
 			)
-		->	t_tPolar
-		{
-			i_vPolar.Polarity = not i_vPolar.Polarity;
-			return i_vPolar;
-		}
+		->	t_tLiteral
+		{	return i_vNot.Literal;	}
 	};
 
 	struct
-		Constant final
-	:	LiteralBase
+		LiteralBase
 	{
+		friend auto constexpr
+		(	Evaluate
+		)	(	LiteralBase
+			,	EraseTypeToken
+			)
+		->	bool
+		{	return false;	}
+
 		auto constexpr
 		(	operator()
 		)	(	EraseTypeToken
 			)	const
 		->	bool
-		{	return Polarity;	}
+		{	return false;	}
+
+		template
+			<	typename
+					t_tLiteral
+			>
+		friend auto constexpr
+		(	operator not
+		)	(	t_tLiteral
+					i_vLiteral
+			)
+		->	Not<t_tLiteral>
+		{	return { i_vLiteral };	}
 	};
 
-	auto constexpr inline
+	extern Not<LiteralBase> const constinit
 		Tautology
-	=	Constant{true}
 	;
 
-	auto constexpr inline
+	extern LiteralBase const constinit
 		Contradiction
-	=	Constant{false}
 	;
 }

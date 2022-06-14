@@ -239,16 +239,6 @@ export namespace
 		template<Logic::BitTerm, typename...>
 		friend class Term;
 
-		explicit constexpr
-		(	Term
-		)	(	TupleSet<t_tpLiteral...> const
-				&	i_rLiterals
-			)
-		:	Literals
-			{	i_rLiterals
-			}
-		{}
-
 		template
 			<	typename
 				...	t_tpNewLiteral
@@ -333,7 +323,7 @@ export namespace
 		=	t_vTerm
 		;
 
-		TupleSet<t_tpLiteral...> const
+		TupleSet<t_tpLiteral...>
 			Literals
 		;
 
@@ -346,53 +336,6 @@ export namespace
 			ClauseCount
 		=	t_vTerm.ClauseCount()
 		;
-
-		constexpr
-		(	Term
-		)	()
-		requires
-			(	LiteralCount
-			==	0uz
-			)
-		and	(	t_vTerm.IsAbsorbing()
-			or	t_vTerm.IsIdentity()
-			)
-		{}
-
-		constexpr
-		(	Term
-		)	(	Trait::Constant
-			)
-		=	delete;
-
-		explicit constexpr
-		(	Term
-		)	(	t_tpLiteral const
-				&
-				...	i_rpLiteral
-			)
-		requires
-			(	LiteralCount
-			==	1uz
-			)
-		and	(	ClauseCount
-			==	1uz
-			)
-		and	(	t_vTerm[0uz].LiteralCount()
-			==	1uz
-			)
-		:	Literals
-			{	{	i_rpLiteral
-				}
-				...
-			}
-		{}
-
-		constexpr
-		(	Term
-		)	(	Term const&
-			)
-		=	default;
 
 		auto constexpr
 		(	operator not
@@ -503,39 +446,33 @@ export namespace
 	};
 
 	template
-		<	typename
-				t_tLiteral
-		>
-	(	Term
-	)	(	t_tLiteral const&
-		)
-	->	Term
-		<	Logic::BitClause{0uz}
-		,	t_tLiteral
-		>
-	;
-
-	template
 		<	Logic::BitTerm
 				t_vTerm
 		,	typename
 			...	t_tpLiteral
 		>
 	(	Term
-	)	(	Term<t_vTerm, t_tpLiteral...> const&
+	)	(	Term<t_vTerm, t_tpLiteral...>
 		)
 	->	Term<t_vTerm, t_tpLiteral...>
 	;
 
-	Term constexpr inline
+	extern Term<Logic::BitClause::Absorbing()>
 		True
-	=	Term<Logic::BitClause::Absorbing()>
-		{}
 	;
 
-	Term constexpr inline
+	extern Term<Logic::BitClause::Identity()>
 		False
-	=	Term<Logic::BitClause::Identity()>
-		{}
 	;
+
+	template
+		<	typename
+				t_tLiteral
+		>
+	Term
+	<	Logic::BitClause{0uz}
+	,	t_tLiteral
+	>	inline
+		Literal
+	{};
 }

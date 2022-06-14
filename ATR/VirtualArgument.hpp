@@ -4,6 +4,7 @@ export import :Address;
 export import :ID;
 
 export import Meta.Token;
+export import Meta.Predicate;
 
 export namespace
 	ATR
@@ -329,7 +330,7 @@ export namespace
 
 	public:
 		template
-			<	typename
+			<	Meta::ProtoConstraint<Meta::IsTriviallyCopyable>
 					t_tObject
 			,	typename
 				...	t_tpArgument

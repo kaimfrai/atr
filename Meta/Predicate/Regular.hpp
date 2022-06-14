@@ -21,11 +21,9 @@ export namespace
 			)	const
 		->	bool
 		{	return
-			(	Polarity
-			==	::std::is_nothrow_destructible_v
-				<	t_tEntity
-				>
-			);
+			::std::is_nothrow_destructible_v
+			<	t_tEntity
+			>;
 		}
 	};
 
@@ -37,18 +35,6 @@ export namespace
 		Constructible_From final
 	:	LiteralBase
 	{
-		explicit constexpr
-		(	Constructible_From
-		)	(	bool
-					i_bPolarity
-			,	TypeToken<t_tpArgument>
-				...
-			)
-		:	LiteralBase
-			{	i_bPolarity
-			}
-		{}
-
 		template
 			<	typename
 					t_tEntity
@@ -64,35 +50,18 @@ export namespace
 				==	0uz
 				)
 				return
-				(	Polarity
-				==	::std::default_initializable<t_tEntity>
-				);
+				::std::default_initializable
+				<	t_tEntity
+				>;
 			else
 				return
-				(	Polarity
-				==	::std::is_constructible_v
-					<	t_tEntity
-					,	t_tpArgument
-						...
-					>
-				);
+				::std::is_constructible_v
+				<	t_tEntity
+				,	t_tpArgument
+					...
+				>;
 		}
 	};
-
-	template
-		<	typename
-			...	t_tpArgument
-		>
-	(	Constructible_From
-	)	(	bool
-		,	TypeToken<t_tpArgument>
-			...
-		)
-	->	Constructible_From
-		<	t_tpArgument
-			...
-		>
-	;
 
 	struct
 		MoveConstructible final
@@ -108,13 +77,11 @@ export namespace
 			)	const
 		->	bool
 		{	return
-			(	Polarity
-			==	::std::is_move_constructible_v
-				<	::std::remove_all_extents_t
-					<	t_tEntity
-					>
+			::std::is_move_constructible_v
+			<	::std::remove_all_extents_t
+				<	t_tEntity
 				>
-			);
+			>;
 		}
 	};
 
@@ -132,13 +99,11 @@ export namespace
 			)	const
 		->	bool
 		{	return
-			(	Polarity
-			==	::std::is_copy_constructible_v
-				<	::std::remove_all_extents_t
-					<	t_tEntity
-					>
+			::std::is_copy_constructible_v
+			<	::std::remove_all_extents_t
+				<	t_tEntity
 				>
-			);
+			>;
 		}
 	};
 
@@ -156,13 +121,11 @@ export namespace
 			)	const
 		->	bool
 		{	return
-			(	Polarity
-			==	::std::is_move_assignable_v
-				<	::std::remove_all_extents_t
-					<	t_tEntity
-					>
+			::std::is_move_assignable_v
+			<	::std::remove_all_extents_t
+				<	t_tEntity
 				>
-			);
+			>;
 		}
 	};
 
@@ -180,13 +143,11 @@ export namespace
 			)	const
 		->	bool
 		{	return
-			(	Polarity
-			==	::std::is_copy_assignable_v
-				<	::std::remove_all_extents_t
-					<	t_tEntity
-					>
+			::std::is_copy_assignable_v
+			<	::std::remove_all_extents_t
+				<	t_tEntity
 				>
-			);
+			>;
 		}
 	};
 
@@ -204,13 +165,11 @@ export namespace
 			)	const
 		->	bool
 		{	return
-			(	Polarity
-			==	::std::equality_comparable
-				<	::std::remove_all_extents_t
-					<	t_tEntity
-					>
+			::std::equality_comparable
+			<	::std::remove_all_extents_t
+				<	t_tEntity
 				>
-			);
+			>;
 		}
 	};
 }
@@ -218,81 +177,81 @@ export namespace
 export namespace
 	Meta
 {
-	Term constexpr inline
-		IsEqualityComparable
-	=		Term{Trait::EqualityComparable{true}}
+	extern decltype
+	(		Literal<Trait::EqualityComparable>
 		and	IsCompoundObject
 	or	IsScalar
 	or	IsReference
 	or	IsFreeFunction
 	or	IsUnboundedArray
+	)	IsEqualityComparable
 	;
 
-	Term constexpr inline
-		IsDestructible
-	=		Term{Trait::Destructible{true}}
+	extern decltype
+	(		Literal<Trait::Destructible>
 		and	IsValue
 	or	IsScalar
+	)	IsDestructible
 	;
 
 	template
 		<	typename
 			...	t_tpArgument
 		>
-	Term constexpr inline
-		IsConstructible_From
-	=	Term{Trait::Constructible_From{true, Type<t_tpArgument>...}}
+	extern decltype
+	(	Literal<Trait::Constructible_From<t_tpArgument...>>
 	and	IsDestructible
+	)	IsConstructible_From
 	;
 
 	template<>
-	Term constexpr inline
-		IsConstructible_From<>
-	=		Term{Trait::Constructible_From{true}}
+	extern decltype
+	(		Literal<Trait::Constructible_From<>>
 		and	IsDestructible
 	or	IsScalar
+	)	IsConstructible_From<>
 	;
 
-	Term constexpr inline
-		IsMoveConstructible
-	=		Term{Trait::MoveConstructible{true}}
+	extern decltype
+	(		Literal<Trait::MoveConstructible>
 		and	IsDestructible
 	or	IsScalar
+	)	IsMoveConstructible
 	;
 
-	Term constexpr inline
-		IsCopyConstructible
-	=		Term{Trait::CopyConstructible{true}}
+	extern decltype
+	(		Literal<Trait::CopyConstructible>
 		and	IsMoveConstructible
 	or	IsScalar
+	)	IsCopyConstructible
 	;
 
-	Term constexpr inline
-		IsMovable
-	=		Term{Trait::MoveAssignable{true}}
+	extern decltype
+	(		Literal<Trait::MoveAssignable>
 		and	IsMoveConstructible
 	or	IsScalar
+	)	IsMovable
 	;
 
-	Term constexpr inline
-		IsCopyable
-	=		Term{Trait::CopyAssignable{true}}
+	extern decltype
+	(		Literal<Trait::CopyAssignable>
 		and	IsMoveConstructible
 		and	IsMovable
 	or	IsScalar
+	)	IsCopyable
 	;
 
-	Term constexpr inline
-		IsSemiregular
-	=		IsCopyable
+	extern decltype
+	(		IsCopyable
 		and	IsConstructible_From<>
 	or	IsScalar
+	)	IsSemiregular
 	;
 
-	Term constexpr inline
-		IsRegular
-	=		IsEqualityComparable
+	extern decltype
+	(		IsEqualityComparable
 		and	IsSemiregular
 	or	IsScalar
+	)	IsRegular
 	;
 }

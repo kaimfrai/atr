@@ -79,13 +79,11 @@ export namespace
 			)	const
 		->	bool
 		{	return
-			(	Polarity
-			==	requires
-				{	::std::declval<t_tEntity>()
-					[	t_tDataID{}
-					];
-				}
-			);
+			requires
+			{	::std::declval<t_tEntity>()
+				[	t_tDataID{}
+				];
+			};
 		}
 	};
 }
@@ -97,15 +95,16 @@ export namespace
 		<	StringLiteral
 			...	t_tpMemberName
 		>
-	Meta::Term constexpr inline
-		HasDataMember
-	=(	...
-	and	Meta::Term
-		{	Trait::HasDataMember
+	decltype
+	((	...
+	and	Meta::Literal
+		<	Trait::HasDataMember
 			<	ID_T<t_tpMemberName>
-			>{}
-		}
-	);
+			>
+		>
+	))	inline
+		HasDataMember
+	{};
 
 	template
 		<	typename

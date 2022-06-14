@@ -24,12 +24,10 @@ export namespace
 			)	const
 		->	bool
 		{	return
-			(	Polarity
-			==	//	necessary for empty unions
-				::std::is_empty_v
-				<	::Meta::Data::Object<t_tEntity>
-				>
-			);
+			//	necessary for empty unions
+			::std::is_empty_v
+			<	::Meta::Data::Object<t_tEntity>
+			>;
 		}
 	};
 }
@@ -37,17 +35,17 @@ export namespace
 export namespace
 	Meta
 {
-	Term constexpr inline
-		IsEmpty
-	=	Term{Trait::Empty{true}}
+	extern decltype
+	(	Literal<Trait::Empty>
 	and	IsCustom
+	)	IsEmpty
 	;
 
 	///	Types that do not have a state and can be freely created, copied, and moved.
-	Term constexpr inline
-		IsStateless
-	=	IsEmpty
+	extern decltype
+	(	IsEmpty
 	and	IsConstructible_From<>
 	and	IsCopyConstructible
+	)	IsStateless
 	;
 }

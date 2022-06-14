@@ -22,7 +22,6 @@ export namespace
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-					i_vBase
 			,	TypeToken
 				<	Lex::MatchCV
 					<	t_tEntity
@@ -32,7 +31,7 @@ export namespace
 				>
 			)
 		->	bool
-		{	return i_vBase.Polarity;	}
+		{	return true;	}
 	};
 
 	template
@@ -109,7 +108,6 @@ export namespace
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-					i_vBase
 			,	TypeToken
 				<	Lex::MatchCV
 					<	t_tEntity
@@ -119,7 +117,7 @@ export namespace
 				>
 			)
 		->	bool
-		{	return i_vBase.Polarity;	}
+		{	return true;	}
 	};
 
 	struct
@@ -139,7 +137,6 @@ export namespace
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-					i_vBase
 			,	TypeToken
 				<	Lex::MatchCV
 					<	t_tEntity
@@ -149,7 +146,7 @@ export namespace
 				>
 			)
 		->	bool
-		{	return i_vBase.Polarity;	}
+		{	return true;	}
 	};
 
 	struct
@@ -170,7 +167,6 @@ export namespace
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-					i_vBase
 			,	TypeToken
 				<	Lex::MatchCVPointer
 					<	t_tEntity
@@ -180,7 +176,7 @@ export namespace
 				>
 			)
 		->	bool
-		{	return i_vBase.Polarity;	}
+		{	return true;	}
 	};
 
 	struct
@@ -197,7 +193,6 @@ export namespace
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-					i_vBase
 			,	TypeToken
 				<	Lex::MatchCVMember
 					<	t_tMember
@@ -208,7 +203,7 @@ export namespace
 				>
 			)
 		->	bool
-		{	return i_vBase.Polarity;	}
+		{	return true;	}
 	};
 
 	struct
@@ -235,7 +230,6 @@ export namespace
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-					i_vBase
 			,	TypeToken
 				<	Lex::MatchCV
 					<	t_tEntity
@@ -245,7 +239,7 @@ export namespace
 				>
 			)
 		->	bool
-		{	return i_vBase.Polarity;	}
+		{	return true;	}
 	};
 
 	struct
@@ -262,7 +256,6 @@ export namespace
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-					i_vBase
 			,	TypeToken
 				<	Lex::MatchCV
 					<	t_tEntity
@@ -272,7 +265,7 @@ export namespace
 				>
 			)
 		->	bool
-		{	return i_vBase.Polarity;	}
+		{	return true;	}
 	};
 
 	struct
@@ -289,7 +282,6 @@ export namespace
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-					i_vBase
 			,	TypeToken
 				<	Lex::MatchCVArray
 					<	t_tElement
@@ -300,7 +292,7 @@ export namespace
 				>
 			)
 		->	bool
-		{	return i_vBase.Polarity == (t_nExtent != 0uz);	}
+		{	return true == (t_nExtent != 0uz);	}
 	};
 
 	struct
@@ -315,7 +307,6 @@ export namespace
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-					i_vBase
 			,	TypeToken
 				<	Lex::MatchCVArray
 					<	t_tElement
@@ -326,7 +317,7 @@ export namespace
 				>
 			)
 		->	bool
-		{	return i_vBase.Polarity;	}
+		{	return true;	}
 	};
 
 	struct
@@ -339,7 +330,6 @@ export namespace
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-					i_vBase
 			,	TypeToken
 				<	Lex::MatchLRef
 					<	t_tEntity
@@ -347,7 +337,7 @@ export namespace
 				>
 			)
 		->	bool
-		{	return i_vBase.Polarity;	}
+		{	return true;	}
 	};
 
 	struct
@@ -360,7 +350,6 @@ export namespace
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-					i_vBase
 			,	TypeToken
 				<	Lex::MatchRRef
 					<	t_tEntity
@@ -368,7 +357,7 @@ export namespace
 				>
 			)
 		->	bool
-		{	return i_vBase.Polarity;	}
+		{	return true;	}
 	};
 
 	struct
@@ -387,7 +376,6 @@ export namespace
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-					i_vBase
 			,	TypeToken
 				<	Lex::Func
 					<	t_tEntity
@@ -395,7 +383,7 @@ export namespace
 				>
 			)
 		->	bool
-		{	return i_vBase.Polarity;	}
+		{	return true;	}
 
 		template
 			<	typename
@@ -404,7 +392,6 @@ export namespace
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-					i_vBase
 			,	TypeToken
 				<	Lex::Func
 					<	t_tEntity
@@ -413,7 +400,7 @@ export namespace
 				>
 			)
 		->	bool
-		{	return i_vBase.Polarity;	}
+		{	return true;	}
 	};
 
 	struct
@@ -430,7 +417,6 @@ export namespace
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-					i_vBase
 			,	TypeToken
 				<	Lex::Func
 					<	t_tSignature
@@ -442,7 +428,7 @@ export namespace
 			)
 		->	bool
 		{	return
-			(	i_vBase.Polarity
+			(	true
 			==	(	Type<t_tFirstQualifier>
 				!=	Type<Token::Noexcept>
 				)
