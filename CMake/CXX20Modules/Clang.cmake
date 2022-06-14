@@ -88,11 +88,18 @@ function(get_compile_module_command
 	PROPERTY
 		COMPILE_OPTIONS
 	)
+	get_property(
+		directory_compile_definitions
+	DIRECTORY
+		${CMAKE_CURRENT_SOURCE_DIR}
+	PROPERTY
+		COMPILE_DEFINITIONS
+	)
+	list(TRANSFORM directory_compile_definitions PREPEND -D)
 
 	#flags specific to the current build type
 	string(TOUPPER ${CMAKE_BUILD_TYPE} build_type_flags)
 	set(build_type_flags CMAKE_CXX_FLAGS_${build_type_flags})
-	set(build_type_flags ${${build_type_flags}})
 	string(REPLACE " " ";" build_type_flags "${${build_type_flags}}")
 
 	#flags specific to CXX
@@ -109,6 +116,7 @@ function(get_compile_module_command
 		${build_type_flags}
 		${cmake_cxx_flags}
 		${directory_compile_options}
+		${directory_compile_definitions}
 		${MODULE_FLAGS}
 		${module_dependency_flag_list}
 		${absolute_include_dirs}
