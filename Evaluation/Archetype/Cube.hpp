@@ -6,11 +6,8 @@ export namespace
 	ATR
 {
 	template<>
-	auto constexpr inline
-		LayoutConfig
-		<	"Cube"
-		>
-	=	LayoutConfig
+	DefineMembers
+	<	LayoutConfig
 		<	"Cuboid"
 		>({	Alias
 			<	"Height"
@@ -21,5 +18,9 @@ export namespace
 			,	"Width"
 			>
 		})
+	>	extern
+		LayoutConfig
+		<	"Cube"
+		>
 	;
 }

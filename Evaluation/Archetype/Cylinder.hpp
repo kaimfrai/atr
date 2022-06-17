@@ -8,11 +8,8 @@ export namespace
 	ATR
 {
 	template<>
-	auto constexpr inline
-		LayoutConfig
-		<	"Cylinder"
-		>
-	=	LayoutConfig<"BasicBody">
+	DefineMembers
+	<	LayoutConfig<"BasicBody">
 		(	Alias
 			<	"Height"
 			,	"Width"
@@ -24,6 +21,10 @@ export namespace
 			<	1z
 			,	4z
 			>
+		>
+	>	extern
+		LayoutConfig
+		<	"Cylinder"
 		>
 	;
 }

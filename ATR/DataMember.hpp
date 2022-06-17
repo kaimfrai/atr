@@ -290,11 +290,83 @@ export namespace
 		>
 	;
 
+	template
+		<	MemberList
+				t_vList
+		>
+	struct
+		DefineMembers final
+	{
+		static auto constexpr
+		(	size
+		)	()
+		->	Meta::USize
+		{	return t_vList.size();	}
+
+		explicit(false) constexpr
+		(	operator decltype(t_vList) const&
+		)	()	const
+		{	return t_vList;	}
+
+		auto constexpr
+		(	operator[]
+		)	(	Meta::USize
+					i_nIndex
+			)	const
+		->	decltype(auto)
+		{	return t_vList[i_nIndex];	}
+
+		auto constexpr
+		(	operator()
+		)	(	::std::initializer_list<Meta::Value<MemberInfo const&>>
+					i_vExchangeList
+			)	const
+		->	decltype(t_vList)
+		{	return t_vList(i_vExchangeList);	}
+
+		auto constexpr
+		(	operator()
+		)	(	Meta::Value<MemberInfo const&>
+					i_rExchange
+			)
+		->	decltype(t_vList)
+		{	return t_vList(i_rExchange);	}
+
+		template
+			<	Meta::USize
+					t_nRight
+			>
+		friend auto constexpr
+		(	operator +
+		)	(	DefineMembers
+			,	MemberList<t_nRight> const
+				&	i_rRight
+			)
+		->	decltype(auto)
+		{	return t_vList + i_rRight;	}
+
+		template
+			<	Meta::USize
+					t_nRight
+			>
+		friend auto constexpr
+		(	operator -
+		)	(	DefineMembers
+			,	MemberList<t_nRight> const
+				&	i_rRight
+			)
+		->	decltype(auto)
+		{	return t_vList - i_rRight;	}
+	};
+
+
 	/// maps a string literal to a Layout
 	template
 		<	StringLiteral
 		>
-	MemberList<0uz> constexpr inline
+	DefineMembers
+	<	MemberList<0uz>{}
+	>	extern
 		LayoutConfig
-	{};
+	;
 }

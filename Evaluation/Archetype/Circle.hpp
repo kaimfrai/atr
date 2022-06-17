@@ -6,16 +6,17 @@ export namespace
 	ATR
 {
 	template<>
-	auto constexpr inline
-		LayoutConfig
-		<	"Circle"
-		>
-	=	LayoutConfig
+	DefineMembers
+	<	LayoutConfig
 		<	"Ellipse"
 		>(	Alias
 			<	"Height"
 			,	"Width"
 			>
 		)
+	>	extern
+		LayoutConfig
+		<	"Circle"
+		>
 	;
 }

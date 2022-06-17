@@ -8,11 +8,8 @@ export namespace
 	ATR
 {
 	template<>
-	auto constexpr inline
-		LayoutConfig
-		<	"Pyramid"
-		>
-	=	LayoutConfig
+	DefineMembers
+	<	LayoutConfig
 		<	"BasicBody"
 		>
 	+	Member
@@ -21,6 +18,10 @@ export namespace
 			<	1z
 			,	3z
 			>
+		>
+	>	extern
+		LayoutConfig
+		<	"Pyramid"
 		>
 	;
 }

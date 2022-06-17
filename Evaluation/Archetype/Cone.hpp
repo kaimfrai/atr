@@ -8,11 +8,8 @@ export namespace
 	ATR
 {
 	template<>
-	auto constexpr inline
-		LayoutConfig
-		<	"Cone"
-		>
-	=	LayoutConfig<"BasicBody">
+	DefineMembers
+	<	LayoutConfig<"BasicBody">
 		(	Alias
 			<	"Height"
 			,	"Width"
@@ -24,6 +21,10 @@ export namespace
 			<	1z
 			,	12z
 			>
+		>
+	>	extern
+		LayoutConfig
+		<	"Cone"
 		>
 	;
 }

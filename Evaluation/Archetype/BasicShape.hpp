@@ -7,11 +7,8 @@ export namespace
 	ATR
 {
 	template<>
-	auto constexpr inline
-		LayoutConfig
-		<	"BasicShape"
-		>
-	=	Member
+	DefineMembers
+	<	Member
 		<	"Height"
 		,	Float
 		>
@@ -22,6 +19,10 @@ export namespace
 	+	Member
 		<	"Color"
 		,	RGBAColor
+		>
+	>	extern
+		LayoutConfig
+		<	"BasicShape"
 		>
 	;
 }

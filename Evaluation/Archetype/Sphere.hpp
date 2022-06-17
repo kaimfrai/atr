@@ -8,11 +8,8 @@ export namespace
 	ATR
 {
 	template<>
-	auto constexpr inline
-		LayoutConfig
-		<	"Sphere"
-		>
-	=	LayoutConfig
+	DefineMembers
+	<	LayoutConfig
 		<	"Ellipsoid"
 		>({	Alias
 			<	"Height"
@@ -23,5 +20,9 @@ export namespace
 			,	"Width"
 			>
 		})
+	>	extern
+		LayoutConfig
+		<	"Sphere"
+		>
 	;
 }

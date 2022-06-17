@@ -8,17 +8,18 @@ export namespace
 	ATR
 {
 	template<>
-	auto constexpr inline
-		LayoutConfig
-		<	"Rectangle"
-		>
-	=	LayoutConfig
+	DefineMembers
+	<	LayoutConfig
 		<	"BasicShape"
 		>
 	+	Member
 		<	"ComputeAreaMultiplier"
 		,	Fraction
 			<>
+		>
+	>	extern
+		LayoutConfig
+		<	"Rectangle"
 		>
 	;
 }

@@ -961,7 +961,10 @@ namespace
 	[[nodiscard]]
 	static auto constexpr
 	(	CreateLayout
-	)	()
+	)	(	DefineMembers
+			<	t_vConfig
+			>
+		)
 	->	decltype(auto)
 	{
 		Meta::USize constexpr
@@ -1061,11 +1064,11 @@ export namespace
 		CreateLayoutType
 	=	decltype
 		(	CreateLayout
-			<	LayoutConfig
+			(	LayoutConfig
 				<	t_tTypeID
 				::	RawArray
 				>
-			>()
+			)
 		)
 	;
 }

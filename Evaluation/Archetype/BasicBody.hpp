@@ -8,16 +8,17 @@ export namespace
 	ATR
 {
 	template<>
-	auto constexpr inline
-		LayoutConfig
-		<	"BasicBody"
-		>
-	=	LayoutConfig
+	DefineMembers
+	<	LayoutConfig
 		<	"BasicShape"
 		>
 	+	Member
 		<	"Depth"
 		,	Float
+		>
+	>	extern
+		LayoutConfig
+		<	"BasicBody"
 		>
 	;
 }

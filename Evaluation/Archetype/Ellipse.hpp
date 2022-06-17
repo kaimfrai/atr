@@ -8,11 +8,8 @@ export namespace
 	ATR
 {
 	template<>
-	auto constexpr inline
-		LayoutConfig
-		<	"Ellipse"
-		>
-	=	LayoutConfig
+	DefineMembers
+	<	LayoutConfig
 		<	"BasicShape"
 		>
 	+	Member
@@ -21,6 +18,10 @@ export namespace
 			<	1z
 			,	4z
 			>
+		>
+	>	extern
+		LayoutConfig
+		<	"Ellipse"
 		>
 	;
 }

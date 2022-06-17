@@ -7,11 +7,8 @@ export namespace
 	ATR
 {
 	template<>
-	auto constexpr inline
-		LayoutConfig
-		<	"Head"
-		>
-	=	LayoutConfig
+	DefineMembers
+	<	LayoutConfig
 		<	"Sphere"
 		>
 	+	SuffixedLayoutConfig
@@ -21,6 +18,10 @@ export namespace
 	+	SuffixedLayoutConfig
 		<	"Sphere"
 		,	"RightEye"
+		>
+	>	extern
+		LayoutConfig
+		<	"Head"
 		>
 	;
 }

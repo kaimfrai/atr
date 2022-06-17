@@ -97,8 +97,8 @@ namespace
 	template
 		<	typename
 				t_tPrefix
-		,	auto const
-			&	t_rConfig
+		,	auto
+				t_vConfig
 		,	typename
 				t_tSuffix
 		>
@@ -113,13 +113,13 @@ namespace
 			MemberList
 			{	&InfixDataMember
 				<	t_tPrefix
-				,	t_rConfig[t_npIndex]
+				,	t_vConfig[t_npIndex]
 				,	t_tSuffix
 				>()
 				...
 			};
 
-		}(	Meta::Sequence<t_rConfig.size()>
+		}(	Meta::Sequence<t_vConfig.size()>
 		)
 	;
 }

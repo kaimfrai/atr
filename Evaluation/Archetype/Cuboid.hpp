@@ -8,17 +8,18 @@ export namespace
 	ATR
 {
 	template<>
-	auto constexpr inline
-		LayoutConfig
-		<	"Cuboid"
-		>
-	=	LayoutConfig
+	DefineMembers
+	<	LayoutConfig
 		<	"BasicBody"
 		>
 	+	Member
 		<	"ComputeVolumeMultiplier"
 		,	Fraction
 			<>
+		>
+	>	extern
+		LayoutConfig
+		<	"Cuboid"
 		>
 	;
 }
