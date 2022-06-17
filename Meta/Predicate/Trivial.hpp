@@ -160,77 +160,86 @@ export namespace
 export namespace
 	Meta
 {
-	extern decltype
-	(		Literal<Trait::TriviallyDestructible>
+	DeduceTerm
+	<		Literal<Trait::TriviallyDestructible>
 		and	IsDestructible
 	or	IsScalar
-	)	IsTriviallyDestructible
+	>	extern
+		IsTriviallyDestructible
 	;
 
 	template
 		<	typename
 			...	t_tpArgument
 		>
-	extern decltype
-	(	Literal<Trait::TriviallyConstructible_From<t_tpArgument...>>
+	DeduceTerm
+	<	Literal<Trait::TriviallyConstructible_From<t_tpArgument...>>
 	and	IsTriviallyDestructible
 	and	IsConstructible_From<t_tpArgument...>
-	)	IsTriviallyConstructible_From
-	;
+	>	inline
+		IsTriviallyConstructible_From
+	{};
 
 	template<>
-	extern decltype
-	(		Literal<Trait::TriviallyConstructible_From<>>
+	DeduceTerm
+	<		Literal<Trait::TriviallyConstructible_From<>>
 		and	IsTriviallyDestructible
 		and	IsConstructible_From<>
 	or	IsScalar
-	)	IsTriviallyConstructible_From<>
+	>	extern
+		IsTriviallyConstructible_From<>
 	;
 
-	extern decltype
-	(		Literal<Trait::TriviallyMoveConstructible>
+	DeduceTerm
+	<		Literal<Trait::TriviallyMoveConstructible>
 		and	IsTriviallyDestructible
 		and	IsMoveConstructible
 	or	IsScalar
-	)	IsTriviallyMoveConstructible
+	>	extern
+		IsTriviallyMoveConstructible
 	;
 
-	extern decltype
-	(		Literal<Trait::TriviallyCopyConstructible>
+	DeduceTerm
+	<		Literal<Trait::TriviallyCopyConstructible>
 		and	IsTriviallyMoveConstructible
 		and	IsCopyConstructible
 	or	IsScalar
-	)	IsTriviallyCopyConstructible
+	>	extern
+		IsTriviallyCopyConstructible
 	;
 
-	extern decltype
-	(		Literal<Trait::TriviallyMoveAssignable>
+	DeduceTerm
+	<		Literal<Trait::TriviallyMoveAssignable>
 		and	IsTriviallyMoveConstructible
 		and	IsMovable
 	or	IsScalar
-	)	IsTriviallyMovable
+	>	extern
+		IsTriviallyMovable
 	;
 
-	extern decltype
-	(		Literal<Trait::CopyAssignable>
+	DeduceTerm
+	<		Literal<Trait::CopyAssignable>
 		and	IsTriviallyCopyConstructible
 		and	IsTriviallyMovable
 		and	IsCopyable
 	or	IsScalar
-	)	IsTriviallyCopyable
+	>	extern
+		IsTriviallyCopyable
 	;
 
-	extern decltype
-	(		IsTriviallyCopyable
+	DeduceTerm
+	<		IsTriviallyCopyable
 		and	IsTriviallyConstructible_From<>
 	or	IsScalar
-	)	IsTrivial
+	>	extern
+		IsTrivial
 	;
 
-	extern decltype
-	(		IsEqualityComparable
+	DeduceTerm
+	<		IsEqualityComparable
 		and	IsTrivial
 	or	IsScalar
-	)	IsTrivialRegular
+	>	extern
+		IsTrivialRegular
 	;
 }

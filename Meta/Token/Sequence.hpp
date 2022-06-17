@@ -81,4 +81,42 @@ export namespace
 		IgnoreIndexedElement
 	=	void const volatile*
 	;
+
+	template
+		<	USize
+			...	t_npFront
+		>
+	struct
+		SelectByIndex final
+	{
+		[[no_unique_address]]
+		Token::Index<t_npFront...>
+			FrontSequence
+		;
+
+		template
+			<	typename
+					t_tSelection
+			>
+		auto constexpr
+		(	operator()
+		)	(	IgnoreIndexedElement<t_npFront>
+				...
+			,	t_tSelection
+				*	i_aSeĺection
+			,	...
+			)	const
+		->	t_tSelection*
+		{	return i_aSeĺection;	}
+	};
+
+	template
+		<	USize
+			...	t_npFront
+		>
+	(	SelectByIndex
+	)	(	Token::Index<t_npFront...>
+		)
+	->	SelectByIndex<t_npFront...>
+	;
 }

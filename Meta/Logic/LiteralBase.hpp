@@ -65,7 +65,7 @@ export namespace
 		{	return false;	}
 
 		template
-			<	typename
+			<	::std::derived_from<LiteralBase>
 					t_tLiteral
 			>
 		friend auto constexpr
@@ -77,11 +77,11 @@ export namespace
 		{	return { i_vLiteral };	}
 	};
 
-	extern Not<LiteralBase> const constinit
+	Not<LiteralBase> extern
 		Tautology
 	;
 
-	extern LiteralBase const constinit
+	LiteralBase extern
 		Contradiction
 	;
 }

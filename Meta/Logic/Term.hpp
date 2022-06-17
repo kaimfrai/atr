@@ -3,8 +3,8 @@ export module Meta.Logic:Term;
 export import :BitTerm;
 export import :LiteralBase;
 
-export import Meta.Data;
 export import Meta.Arithmetic;
+export import Meta.Token;
 
 import Std;
 
@@ -24,9 +24,7 @@ namespace
 		>
 	static auto constexpr
 	(	EvaluateLiteral
-	)	(	TupleSet<t_tpLiteral...> const
-			&	i_rLiterals
-		,	t_tpArgument
+	)	(	t_tpArgument
 			&&
 			...	i_rpArgument
 		)
@@ -35,8 +33,20 @@ namespace
 		if	constexpr(t_vLiteral.Positive)
 		{
 			auto constexpr nIndex = CountLowerZeroBits(t_vLiteral.Positive);
+
+			using
+				Literal
+			=	decltype(auto(
+					*SelectByIndex
+					{	Sequence<nIndex>
+					}(	static_cast<t_tpLiteral*>(nullptr)
+						...
+					)
+				))
+			;
+
 			return
-			i_rLiterals[Index<nIndex>]
+			Literal{}
 			(	::std::forward<t_tpArgument>(i_rpArgument)
 				...
 			);
@@ -44,9 +54,19 @@ namespace
 		else
 		{
 			auto constexpr nIndex = CountLowerZeroBits(t_vLiteral.Negative);
+			using
+				Literal
+			=	decltype(auto(
+					*SelectByIndex
+					{	Sequence<nIndex>
+					}(	static_cast<t_tpLiteral*>(nullptr)
+						...
+					)
+				))
+			;
 			return
 			not
-			i_rLiterals[Index<nIndex>]
+			Literal{}
 			(	::std::forward<t_tpArgument>(i_rpArgument)
 				...
 			);
@@ -56,18 +76,16 @@ namespace
 	template
 		<	Logic::BitClause
 				t_vClause
-		,	USize
-			...	t_npLiteralIndex
 		,	typename
 			...	t_tpLiteral
+		,	USize
+			...	t_npLiteralIndex
 		,	typename
 			...	t_tpArgument
 		>
 	static auto constexpr
 	(	EvaluateClause
 	)	(	IndexToken<t_npLiteralIndex...>
-		,	TupleSet<t_tpLiteral...> const
-			&	i_rLiterals
 		,	t_tpArgument
 			&&
 			...	i_rpArgument
@@ -75,9 +93,12 @@ namespace
 	->	bool
 	{	return
 		(	...
-		and	EvaluateLiteral<t_vClause[t_npLiteralIndex]>
-			(	i_rLiterals
-			,	::std::forward
+		and	EvaluateLiteral
+			<	t_vClause[t_npLiteralIndex]
+			,	t_tpLiteral
+				...
+			>
+			(	::std::forward
 				<	t_tpArgument
 				>(	i_rpArgument
 				)
@@ -89,18 +110,16 @@ namespace
 	template
 		<	Logic::BitTerm
 				t_vTerm
-		,	USize
-			...	t_npClauseIndex
 		,	typename
 			...	t_tpLiteral
+		,	USize
+			...	t_npClauseIndex
 		,	typename
 			...	t_tpArgument
 		>
 	static auto constexpr
 	(	EvaluateTerm
 	)	(	IndexToken<t_npClauseIndex...>
-		,	TupleSet<t_tpLiteral...> const
-			&	i_rLiterals
 		,	t_tpArgument
 			&&
 			...	i_rpArgument
@@ -108,12 +127,15 @@ namespace
 	->	bool
 	{	return
 		(	...
-		or	EvaluateClause<t_vTerm[t_npClauseIndex]>
+		or	EvaluateClause
+			<	t_vTerm[t_npClauseIndex]
+			,	t_tpLiteral
+				...
+			>
 			(	Sequence
 				<	t_vTerm[t_npClauseIndex]
 				.	LiteralCount()
 				>
-			,	i_rLiterals
 			,	::std::forward
 				<	t_tpArgument
 				>(	i_rpArgument
@@ -140,93 +162,325 @@ namespace
 		ComputeDisjunction
 	=	&Logic::Intersection
 	;
-	BinaryTermFunction<Logic::BitTerm>  constexpr inline
+	BinaryTermFunction<Logic::BitTerm> constexpr inline
 		ComputeConjunction
 	=	&Logic::Union
 	;
-	BinaryTermFunction<bool>  constexpr inline
+	BinaryTermFunction<bool> constexpr inline
 		ComputeEquivalence
 	=	&Logic::operator==
 	;
-
-	template
-		<	typename
-			...	t_tpLiteral
-		>
-	static auto constexpr inline
-		DeduceTupleSet
-	=	static_cast
-		<	TupleSet
-			<	t_tpLiteral
-				...
-			>	const
-			*
-		>(	nullptr
-		)
-	;
-
-	template
-		<	typename
-				t_tResult
-		,	typename
-			...	t_tpLeftLiteral
-		,	typename
-			...	t_tpRightLiteral
-		>
-	static auto constexpr
-	(	Compute
-	)	(	BinaryTermFunction<t_tResult>
-				i_fCompute
-		,	Logic::BitTerm const
-			&	i_rLeftTerm
-		,	TupleSet<t_tpLeftLiteral...> const
-			*	i_aDeduceLeftLiterals
-		,	Logic::BitTerm const
-			&	i_rRightTerm
-		,	TupleSet<t_tpRightLiteral...> const
-			*	i_aDeduceRightLiterals
-		)
-	->	t_tResult
-	{
-		using
-			tLiteralUnion
-		=	decltype
-			(	i_aDeduceLeftLiterals
-			->	Union
-				(	*i_aDeduceRightLiterals
-				)
-			)
-		;
-		static_assert
-		(	(	tLiteralUnion
-			::	size()
-			<=	Logic::LiteralLimit
-			)
-		,	"Exceeded maximum amount of predicates per term!"
-		);
-
-		::std::array<USize const, sizeof...(t_tpRightLiteral)> constexpr
-			vPermutationArray
-		={	(	tLiteralUnion
-			::	IndexOf(Type<t_tpRightLiteral>)
-			)
-			...
-		};
-
-		return
-		i_fCompute
-		(	i_rLeftTerm
-		,		i_rRightTerm
-			.	Permutation
-				(	vPermutationArray
-				)
-		);
-	}
 }
 
 export namespace
 	Meta
 {
+	struct
+		ErasedTerm final
+	{
+		using UnionBufferType = ::std::array<EraseTypeToken, Logic::LiteralLimit * 2uz>;
+		using LiteralBufferType = ::std::array<EraseTypeToken, Logic::LiteralLimit>;
+
+		Logic::BitTerm const
+			BitTerm
+		;
+		LiteralBufferType const
+			Literals
+		{};
+
+		static auto constexpr
+		(	TrimLiterals
+		)	(	Logic::BitTerm const
+				&	i_rResult
+			,	EraseTypeToken const
+				*	i_aUnion
+			)
+		->	ErasedTerm
+		{
+			auto const
+				vResultLiteralField
+			=	i_rResult.LiteralField()
+			;
+
+			auto const vBitTerm = i_rResult.TrimLiterals();
+
+			USize const
+				nRequiredItemCount
+			=	CountOneBits(vResultLiteralField)
+			;
+			if	(nRequiredItemCount > Logic::LiteralLimit)
+				throw "Exceeded maximum amount of predicates per term!";
+
+			LiteralBufferType
+				vLiterals
+			{};
+			for	(	auto nIndex = 0uz
+				;	nIndex < nRequiredItemCount
+				;	++nIndex
+				)
+			{
+				(	vLiterals[nIndex]
+				=	i_aUnion
+					[	GetIndexOfNthOneBit
+						(	vResultLiteralField
+						,	nIndex
+						)
+					]
+				);
+			}
+			return
+			{	vBitTerm
+			,	vLiterals
+			};
+		}
+
+		static auto constexpr
+		(	ProcessComputation
+		)	(	bool
+					i_bEquivalence
+			,	UnionBufferType const&
+			)
+		->	bool
+		{	return i_bEquivalence;	}
+
+		static auto constexpr
+		(	ProcessComputation
+		)	(	Logic::BitTerm const
+				&	i_rResult
+			,	UnionBufferType const
+				&	i_rUnion
+			)
+		->	ErasedTerm
+		{	return TrimLiterals(i_rResult, i_rUnion.begin());	}
+
+		template
+			<	typename
+					t_tResult
+			>
+		static auto constexpr
+		(	ComputeErasedTerm
+		)	(	ErasedTerm const
+				&	i_rLeft
+			,	ErasedTerm const
+				&	i_rRight
+			,	BinaryTermFunction<t_tResult>
+					i_fCompute
+			)
+		{
+			UnionBufferType
+				vUnion
+			;
+			auto const
+				vMiddle
+			=	::std::copy
+				(	begin(i_rLeft)
+				,	end(i_rLeft)
+				,	vUnion.begin()
+				)
+			;
+			auto const
+				vUnionEnd
+			=	::std::copy_if
+				(	begin(i_rRight)
+				,	end(i_rRight)
+				,	vMiddle
+				,	[	vLeftBegin = begin(i_rLeft)
+					,	vLeftEnd = end(i_rLeft)
+					]	(	EraseTypeToken
+								i_vType
+						)
+					{	return
+							std::find(vLeftBegin, vLeftEnd, i_vType)
+						==	vLeftEnd
+						;
+					}
+				)
+			;
+
+			::std::array<USize, Logic::LiteralLimit>
+				vPermutationArray
+			;
+			auto const
+				vPermutationEnd
+			=	::std::transform
+				(	begin(i_rRight)
+				,	end(i_rRight)
+				,	vPermutationArray.begin()
+				,	[	vUnionBegin = vUnion.begin()
+					,	vUnionEnd
+					]	(	EraseTypeToken
+								i_vType
+						)
+					{
+						return
+						static_cast<USize>
+						(	::std::find
+							(	vUnionBegin
+							,	vUnionEnd
+							,	i_vType
+							)
+						-	vUnionBegin
+						);
+					}
+				)
+			;
+			return
+			ProcessComputation
+			(	i_fCompute
+				(	i_rLeft
+				.	BitTerm
+				,	i_rRight
+				.	BitTerm
+				.	Permutation
+					(	{	vPermutationArray.begin()
+						,	vPermutationEnd
+						}
+					)
+				)
+			,	vUnion
+			);
+		}
+
+		auto constexpr
+		(	LiteralCount
+		)	()	const
+		{	return
+			CountOneBits
+			(	BitTerm
+			.	LiteralField()
+			);
+		}
+
+		auto constexpr
+		(	ClauseCount
+		)	()	const
+		{	return
+				BitTerm
+			.	ClauseCount()
+			;
+		}
+
+		friend auto constexpr
+		(	begin
+		)	(	ErasedTerm const
+				&	i_rTerm
+			)
+		->	EraseTypeToken const*
+		{	return
+				i_rTerm
+			.	Literals
+			.	begin()
+			;
+		}
+
+		friend auto constexpr
+		(	end
+		)	(	ErasedTerm const
+				&	i_rTerm
+			)
+		->	EraseTypeToken const*
+		{	return
+				begin(i_rTerm)
+			+	i_rTerm
+			.	LiteralCount()
+			;
+		}
+
+		auto constexpr
+		(	GetClause
+		)	(	USize
+					i_nClauseIndex
+			)	const
+		{	return
+			TrimLiterals
+			(	BitTerm[i_nClauseIndex]
+			,	Literals.begin()
+			);
+		}
+	};
+
+	auto constexpr
+	(	operator not
+	)	(	ErasedTerm const
+			&	i_rTerm
+		)
+	->	ErasedTerm
+	{	return
+		ErasedTerm
+		{	Negation(i_rTerm.BitTerm)
+		,	i_rTerm.Literals
+		};
+	}
+
+	auto constexpr
+	(	operator and
+	)	(	ErasedTerm const
+			&	i_rLeft
+		,	ErasedTerm const
+			&	i_rRight
+		)
+	->	ErasedTerm
+	{	return
+		ErasedTerm::ComputeErasedTerm
+		(	i_rLeft
+		,	i_rRight
+		,	ComputeConjunction
+		);
+	}
+
+	auto constexpr
+	(	operator or
+	)	(	ErasedTerm const
+			&	i_rLeft
+		,	ErasedTerm const
+			&	i_rRight
+		)
+	->	ErasedTerm
+	{	return
+		ErasedTerm::ComputeErasedTerm
+		(	i_rLeft
+		,	i_rRight
+		,	ComputeDisjunction
+		);
+	}
+
+	auto constexpr
+	(	operator ==
+	)	(	ErasedTerm const
+			&	i_rLeft
+		,	ErasedTerm const
+			&	i_rRight
+		)
+	->	bool
+	{	return
+		ErasedTerm::ComputeErasedTerm
+		(	i_rLeft
+		,	i_rRight
+		,	ComputeEquivalence
+		);
+	}
+
+	ErasedTerm constexpr inline
+		ErasedTrue
+	{	Logic::BitClause::Absorbing()
+	};
+
+	ErasedTerm constexpr inline
+		ErasedFalse
+	{	Logic::BitClause::Identity()
+	};
+
+	template
+		<	typename
+				t_tLiteral
+		>
+	ErasedTerm constexpr inline
+		ErasedLiteral
+	{	Logic::BitClause{0uz}
+	,	{	Type<t_tLiteral>
+		}
+	};
+
 	template
 		<	Logic::BitTerm
 				t_vTerm
@@ -236,96 +490,19 @@ export namespace
 	class
 		Term final
 	{
-		template<Logic::BitTerm, typename...>
-		friend class Term;
-
-		template
-			<	typename
-				...	t_tpNewLiteral
-			>
-		static auto constexpr
-		(	SetLiterals
-		)	(	TupleSet
-				<	t_tpNewLiteral
-					...
-				>	const
-				&	i_rLiterals
-			)
-		->	Term
-			<	t_vTerm
-			,	t_tpNewLiteral
-				...
-			>
-		{	return
-			Term
-			<	t_vTerm
-			,	t_tpNewLiteral
-				...
-			>{	i_rLiterals
-			};
-		}
-
-		template
-			<	BinaryTermFunction<Logic::BitTerm>
-					i_fCompute
-			,	Logic::BitTerm
-					t_vRightTerm
-			,	typename
-				...	t_tpRightLiteral
-			>
-		auto constexpr
-		(	ComputeTerm
-		)	(	Term<t_vRightTerm, t_tpRightLiteral...> const
-				&	i_rRight
-			)	const
-		{
-			auto constexpr
-				vResultTerm
-			=	Compute
-				(	i_fCompute
-				,	t_vTerm
-				,	DeduceTupleSet<t_tpLiteral...>
-				,	t_vRightTerm
-				,	DeduceTupleSet<t_tpRightLiteral...>
-				)
-			;
-
-			auto constexpr
-				vResultLiteralField
-			=	vResultTerm.LiteralField()
-			;
-
-			if	constexpr
-				(	vResultLiteralField
-				==	0uz
-				)
-				return Term<vResultTerm>{};
-			else
-				return
-					Term
-					<	vResultTerm.TrimLiterals()
-					>
-				::	SetLiterals
-					(	Literals
-					.	Union
-						(	i_rRight.Literals
-						)
-					.	Filter
-						(	Index<vResultLiteralField>
-						)
-					)
-				;
-		}
-
 	public:
-		static Logic::BitTerm constexpr
-			BitTerm
-		=	t_vTerm
-		;
+		static ErasedTerm constexpr
+			Erased
+		{	t_vTerm
+		,	{	Type<t_tpLiteral>
+				...
+			}
+		};
 
-		TupleSet<t_tpLiteral...>
-			Literals
-		;
+		explicit(false) constexpr
+		(	operator ErasedTerm const&
+		)	()	const
+		{	return Erased;	}
 
 		static USize constexpr
 			LiteralCount
@@ -336,87 +513,6 @@ export namespace
 			ClauseCount
 		=	t_vTerm.ClauseCount()
 		;
-
-		auto constexpr
-		(	operator not
-		)	()	const
-		{	return
-			Term
-			<	Negation(t_vTerm)
-			,	t_tpLiteral
-				...
-			>{	Literals
-			};
-		}
-
-		auto constexpr
-		(	operator and
-		)	(	Term const
-				&
-			)	const
-		->	Term
-		{	return *this;	}
-
-		auto constexpr
-		(	operator or
-		)	(	Term const
-				&
-			)	const
-		->	Term
-		{	return *this;	}
-
-		auto constexpr
-		(	operator ==
-		)	(	Term const&
-			)	const
-		->	bool
-		{	return true;	}
-
-		template
-			<	Logic::BitTerm
-					t_vRightTerm
-			,	typename
-				...	t_tpRightLiteral
-			>
-		auto constexpr
-		(	operator and
-		)	(	Term<t_vRightTerm, t_tpRightLiteral...> const
-				&	i_rRight
-			)	const
-		{	return ComputeTerm<ComputeConjunction>(i_rRight);	}
-
-		template
-			<	Logic::BitTerm
-					t_vRightTerm
-			,	typename
-				...	t_tpRightLiteral
-			>
-		auto constexpr
-		(	operator or
-		)	(	Term<t_vRightTerm, t_tpRightLiteral...> const
-				&	i_rRight
-			)	const
-		{	return ComputeTerm<ComputeDisjunction>(i_rRight);	}
-
-		template
-			<	Logic::BitTerm
-					t_vRightTerm
-			,	typename
-				...	t_tpRightLiteral
-			>
-		auto constexpr
-		(	operator ==
-		)	(	Term<t_vRightTerm, t_tpRightLiteral...> const&
-			)	const
-		{	return
-			Compute
-			(	ComputeEquivalence
-			,	t_vTerm
-			,	DeduceTupleSet<t_tpLiteral...>
-			,	t_vRightTerm
-			,	DeduceTupleSet<t_tpRightLiteral...>
-			);
-		}
 
 		template
 			<	typename
@@ -432,10 +528,11 @@ export namespace
 		{	return
 			EvaluateTerm
 			<	t_vTerm
+			,	t_tpLiteral
+				...
 			>(	Sequence
-				<	t_vTerm.ClauseCount()
+				<	ClauseCount
 				>
-			,	Literals
 			,	::std::forward
 				<	t_tpArgument
 				>(	i_rpArgument
@@ -456,12 +553,52 @@ export namespace
 		)
 	->	Term<t_vTerm, t_tpLiteral...>
 	;
+}
 
-	extern Term<Logic::BitClause::Absorbing()>
+template
+	<	::Meta::ErasedTerm
+			t_vErased
+	,	::Meta::USize
+		...	t_npIndex
+	>
+auto constexpr
+	MakeTerm
+	(	::Meta::IndexToken<t_npIndex...>
+	)
+->	::Meta::Term
+	<	t_vErased.BitTerm
+	,	::Meta::RestoreTypeEntity
+		<	t_vErased
+		.	Literals
+			[	t_npIndex
+			]
+		>
+		...
+	>
+;
+
+export namespace
+	Meta
+{
+	template
+		<	ErasedTerm
+				t_vErasedTerm
+		>
+	using
+		DeduceTerm
+	=	decltype
+		(	::MakeTerm
+			<	t_vErasedTerm
+			>(	Sequence<t_vErasedTerm.LiteralCount()>
+			)
+		)
+	;
+
+	DeduceTerm<ErasedTrue> extern
 		True
 	;
 
-	extern Term<Logic::BitClause::Identity()>
+	DeduceTerm<ErasedFalse> extern
 		False
 	;
 
@@ -469,9 +606,10 @@ export namespace
 		<	typename
 				t_tLiteral
 		>
-	Term
-	<	Logic::BitClause{0uz}
-	,	t_tLiteral
+	DeduceTerm
+	<	ErasedLiteral
+		<	t_tLiteral
+		>
 	>	inline
 		Literal
 	{};

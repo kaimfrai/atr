@@ -177,81 +177,91 @@ export namespace
 export namespace
 	Meta
 {
-	extern decltype
-	(		Literal<Trait::EqualityComparable>
+	DeduceTerm
+	<		Literal<Trait::EqualityComparable>
 		and	IsCompoundObject
 	or	IsScalar
 	or	IsReference
 	or	IsFreeFunction
 	or	IsUnboundedArray
-	)	IsEqualityComparable
+	>	extern
+		IsEqualityComparable
 	;
 
-	extern decltype
-	(		Literal<Trait::Destructible>
+	DeduceTerm
+	<		Literal<Trait::Destructible>
 		and	IsValue
 	or	IsScalar
-	)	IsDestructible
+	>	extern
+		IsDestructible
 	;
 
 	template
 		<	typename
 			...	t_tpArgument
 		>
-	extern decltype
-	(	Literal<Trait::Constructible_From<t_tpArgument...>>
+	DeduceTerm
+	<	Literal<Trait::Constructible_From<t_tpArgument...>>
 	and	IsDestructible
-	)	IsConstructible_From
-	;
+	>	inline
+		IsConstructible_From
+	{};
 
 	template<>
-	extern decltype
-	(		Literal<Trait::Constructible_From<>>
+	DeduceTerm
+	<		Literal<Trait::Constructible_From<>>
 		and	IsDestructible
 	or	IsScalar
-	)	IsConstructible_From<>
+	>	extern
+		IsConstructible_From<>
 	;
 
-	extern decltype
-	(		Literal<Trait::MoveConstructible>
+	DeduceTerm
+	<		Literal<Trait::MoveConstructible>
 		and	IsDestructible
 	or	IsScalar
-	)	IsMoveConstructible
+	>	extern
+		IsMoveConstructible
 	;
 
-	extern decltype
-	(		Literal<Trait::CopyConstructible>
+	DeduceTerm
+	<		Literal<Trait::CopyConstructible>
 		and	IsMoveConstructible
 	or	IsScalar
-	)	IsCopyConstructible
+	>	extern
+		IsCopyConstructible
 	;
 
-	extern decltype
-	(		Literal<Trait::MoveAssignable>
+	DeduceTerm
+	<		Literal<Trait::MoveAssignable>
 		and	IsMoveConstructible
 	or	IsScalar
-	)	IsMovable
+	>	extern
+		IsMovable
 	;
 
-	extern decltype
-	(		Literal<Trait::CopyAssignable>
+	DeduceTerm
+	<		Literal<Trait::CopyAssignable>
 		and	IsMoveConstructible
 		and	IsMovable
 	or	IsScalar
-	)	IsCopyable
+	>	extern
+		IsCopyable
 	;
 
-	extern decltype
-	(		IsCopyable
+	DeduceTerm
+	<		IsCopyable
 		and	IsConstructible_From<>
 	or	IsScalar
-	)	IsSemiregular
+	>	extern
+		IsSemiregular
 	;
 
-	extern decltype
-	(		IsEqualityComparable
+	DeduceTerm
+	<		IsEqualityComparable
 		and	IsSemiregular
 	or	IsScalar
-	)	IsRegular
+	>	extern
+		IsRegular
 	;
 }

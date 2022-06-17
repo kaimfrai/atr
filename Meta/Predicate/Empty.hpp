@@ -35,17 +35,19 @@ export namespace
 export namespace
 	Meta
 {
-	extern decltype
-	(	Literal<Trait::Empty>
+	DeduceTerm
+	<	Literal<Trait::Empty>
 	and	IsCustom
-	)	IsEmpty
+	>	extern
+		IsEmpty
 	;
 
 	///	Types that do not have a state and can be freely created, copied, and moved.
-	extern decltype
-	(	IsEmpty
+	DeduceTerm
+	<	IsEmpty
 	and	IsConstructible_From<>
 	and	IsCopyConstructible
-	)	IsStateless
+	>	extern
+		IsStateless
 	;
 }

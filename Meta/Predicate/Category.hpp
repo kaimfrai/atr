@@ -161,270 +161,318 @@ export namespace
 export namespace
 	Meta
 {
-	extern decltype(Literal<Trait::Data>)
+	DeduceTerm
+	<	ErasedLiteral<Trait::Data>
+	>	extern
 		IsValue
 	;
 
-	extern decltype(Literal<Trait::Scalar_Ref_Void>)
+	DeduceTerm
+	<	ErasedLiteral<Trait::Scalar_Ref_Void>
+	>	extern
 		IsScalar_Ref_Void
 	;
 
-	extern decltype(Literal<Trait::Fund_Array>)
+	DeduceTerm
+	<	ErasedLiteral<Trait::Fund_Array>
+	>	extern
 		IsFund_Array
 	;
 
-	extern decltype(Literal<Trait::Int_Enum_Class_LRef_Free>)
+	DeduceTerm
+	<	Literal<Trait::Int_Enum_Class_LRef_Free>
+	>	extern
 		IsInt_Enum_Class_LRef_Free
 	;
 
-	extern decltype(Literal<Trait::Signed_Scoped_Ptr>)
+	DeduceTerm
+	<	Literal<Trait::Signed_Scoped_Ptr>
+	>	extern
 		IsSigned_Scoped_Ptr
 	;
 
-	extern decltype
-	(	not IsFund_Array
+	DeduceTerm
+	<	not IsFund_Array
 	and	not IsScalar_Ref_Void
 	and	not IsValue
-	)	IsFunction
+	>	extern
+		IsFunction
 	;
 
-	extern decltype
-	(	not IsInt_Enum_Class_LRef_Free
+	DeduceTerm
+	<	not IsInt_Enum_Class_LRef_Free
 	and	IsFunction
-	)	IsOwnedFunction
+	>	extern
+		IsOwnedFunction
 	;
 
-	extern decltype
-	(	IsInt_Enum_Class_LRef_Free
+	DeduceTerm
+	<	IsInt_Enum_Class_LRef_Free
 	and	IsFunction
-	)	IsFreeFunction
+	>	extern
+		IsFreeFunction
 	;
 
-	extern decltype
-	(	IsFund_Array
+	DeduceTerm
+	<	IsFund_Array
 	and	IsScalar_Ref_Void
 	and	not IsValue
-	)	IsVoid
+	>	extern
+		IsVoid
 	;
 
-	extern decltype
-	(	IsFund_Array
+	DeduceTerm
+	<	IsFund_Array
 	and	not IsScalar_Ref_Void
 	and	not IsValue
-	)	IsUnboundedArray
+	>	extern
+		IsUnboundedArray
 	;
 
-	extern decltype
-	(	not IsFund_Array
+	DeduceTerm
+	<	not IsFund_Array
 	and	IsScalar_Ref_Void
 	and	not IsValue
-	)	IsReference
+	>	extern
+		IsReference
 	;
 
-	extern decltype
-	(	IsInt_Enum_Class_LRef_Free
+	DeduceTerm
+	<	IsInt_Enum_Class_LRef_Free
 	and	IsReference
-	)	IsLValueReference
+	>	extern
+		IsLValueReference
 	;
 
-	extern decltype
-	(	not IsInt_Enum_Class_LRef_Free
+	DeduceTerm
+	<	not IsInt_Enum_Class_LRef_Free
 	and	IsReference
-	)	IsRValueReference
+	>	extern
+		IsRValueReference
 	;
 
-	extern decltype
-	(	IsScalar_Ref_Void
+	DeduceTerm
+	<	IsScalar_Ref_Void
 	and	IsValue
-	)	IsScalar
+	>	extern
+		IsScalar
 	;
 
-	extern decltype
-	(	IsFund_Array
+	DeduceTerm
+	<	IsFund_Array
 	and	IsScalar
-	)	IsFundamentalScalar
+	>	extern
+		IsFundamentalScalar
 	;
 
-	extern decltype
-	(	IsSigned_Scoped_Ptr
+	DeduceTerm
+	<	IsSigned_Scoped_Ptr
 	and	not IsInt_Enum_Class_LRef_Free
 	and	IsFundamentalScalar
-	)	IsFloatingPoint
+	>	extern
+		IsFloatingPoint
 	;
 
-	extern decltype
-	(	IsInt_Enum_Class_LRef_Free
+	DeduceTerm
+	<	IsInt_Enum_Class_LRef_Free
 	and	IsFundamentalScalar
-	)	IsIntegral
+	>	extern
+		IsIntegral
 	;
 
-	extern decltype
-	(	IsIntegral
+	DeduceTerm
+	<	IsIntegral
 	or	IsFloatingPoint
-	)	IsArithmetic
+	>	extern
+		IsArithmetic
 	;
 
-	extern decltype
-	(	not IsSigned_Scoped_Ptr
+	DeduceTerm
+	<	not IsSigned_Scoped_Ptr
 	and	IsIntegral
-	)	IsUnsigned
+	>	extern
+		IsUnsigned
 	;
 
-	extern decltype
-	(	IsSigned_Scoped_Ptr
+	DeduceTerm
+	<	IsSigned_Scoped_Ptr
 	and	IsIntegral
-	)	IsSignedIntegral
+	>	extern
+		IsSignedIntegral
 	;
 
-	extern decltype
-	(	IsSigned_Scoped_Ptr
+	DeduceTerm
+	<	IsSigned_Scoped_Ptr
 	and	IsFundamentalScalar
-	)	IsSigned
+	>	extern
+		IsSigned
 	;
 
-	extern decltype
-	(	IsSigned_Scoped_Ptr
+	DeduceTerm
+	<	IsSigned_Scoped_Ptr
 	and	not IsInt_Enum_Class_LRef_Free
 	and	not IsFund_Array
 	and	IsScalar
-	)	IsPointer
+	>	extern
+		IsPointer
 	;
 
-	extern decltype
-	(	not IsSigned_Scoped_Ptr
+	DeduceTerm
+	<	not IsSigned_Scoped_Ptr
 	and	not IsInt_Enum_Class_LRef_Free
 	and	IsFundamentalScalar
-	)	IsNullPointer
+	>	extern
+		IsNullPointer
 	;
 
-	extern decltype
-	(	not IsSigned_Scoped_Ptr
+	DeduceTerm
+	<	not IsSigned_Scoped_Ptr
 	and	not IsInt_Enum_Class_LRef_Free
 	and	not IsFund_Array
 	and	IsScalar
-	)	IsMemberPointer
+	>	extern
+		IsMemberPointer
 	;
 
-	extern decltype
-	(	not IsScalar_Ref_Void
+	DeduceTerm
+	<	not IsScalar_Ref_Void
 	and	IsValue
-	)	IsCompoundObject
+	>	extern
+		IsCompoundObject
 	;
 
-	extern decltype
-	(	IsFund_Array
+	DeduceTerm
+	<	IsFund_Array
 	and	IsCompoundObject
-	)	IsBoundedArray
+	>	extern
+		IsBoundedArray
 	;
 
-	extern decltype
-	(	IsInt_Enum_Class_LRef_Free
+	DeduceTerm
+	<	IsInt_Enum_Class_LRef_Free
 	and	not IsFund_Array
 	and	IsScalar
-	)	IsEnum
+	>	extern
+		IsEnum
 	;
 
-	extern decltype
-	(	IsSigned_Scoped_Ptr
+	DeduceTerm
+	<	IsSigned_Scoped_Ptr
 	and	IsEnum
-	)	IsScopedEnum
+	>	extern
+		IsScopedEnum
 	;
 
-	extern decltype
-	(	not IsSigned_Scoped_Ptr
+	DeduceTerm
+	<	not IsSigned_Scoped_Ptr
 	and	IsEnum
-	)	IsUnscopedEnum
+	>	extern
+		IsUnscopedEnum
 	;
 
-	extern decltype
-	(	not IsFund_Array
+	DeduceTerm
+	<	not IsFund_Array
 	and	IsCompoundObject
-	)	IsCustom
+	>	extern
+		IsCustom
 	;
 
-	extern decltype
-	(	IsInt_Enum_Class_LRef_Free
+	DeduceTerm
+	<	IsInt_Enum_Class_LRef_Free
 	and	IsCustom
-	)	IsClass
+	>	extern
+		IsClass
 	;
 
-	extern decltype
-	(	not IsInt_Enum_Class_LRef_Free
+	DeduceTerm
+	<	not IsInt_Enum_Class_LRef_Free
 	and	IsCustom
-	)	IsUnion
+	>	extern
+		IsUnion
 	;
 
-	extern decltype
-	(	IsValue
+	DeduceTerm
+	<	IsValue
 	or	IsUnboundedArray
-	)	IsObject
+	>	extern
+		IsObject
 	;
 
-	extern decltype
-	(	IsBoundedArray
+	DeduceTerm
+	<	IsBoundedArray
 	or	IsUnboundedArray
-	)	IsArray
+	>	extern
+		IsArray
 	;
 
-	extern decltype
-	(	IsArithmetic
+	DeduceTerm
+	<	IsArithmetic
 	or	IsVoid
 	or	IsNullPointer
-	)	IsFundamental
+	>	extern
+		IsFundamental
 	;
 
-	extern decltype
-	(	IsFunction
+	DeduceTerm
+	<	IsFunction
 	or	IsReference
 	or	IsArray
 	or	IsPointer
 	or	IsMemberPointer
 	or	IsCustom
 	or	IsEnum
-	)	IsCompound
+	>	extern
+		IsCompound
 	;
 
-	extern decltype
-	(	IsObject
+	DeduceTerm
+	<	IsObject
 	or	IsFreeFunction
-	)	IsReferable
+	>	extern
+		IsReferable
 	;
 
-	extern decltype
-	(	IsReferable
+	DeduceTerm
+	<	IsReferable
 	or	IsVoid
-	)	IsPointable
+	>	extern
+		IsPointable
 	;
 
-	extern decltype
-	(	IsReferable
+	DeduceTerm
+	<	IsReferable
 	or	IsReference
-	)	IsArgument
+	>	extern
+		IsArgument
 	;
 
-	extern decltype
-	(	(	IsValue
+	DeduceTerm
+	<	(	IsValue
 		and	not IsBoundedArray
 		)
 	or	IsReference
-	)	IsParameter
+	>	extern
+		IsParameter
 	;
 
-	extern decltype
-	(	IsParameter
+	DeduceTerm
+	<	IsParameter
 	or	IsVoid
-	)	IsReturnable
+	>	extern
+		IsReturnable
 	;
 
-	extern decltype
-	(	IsValue
+	DeduceTerm
+	<	IsValue
 	or	IsReference
-	)	IsDataMember
+	>	extern
+		IsDataMember
 	;
 
-	extern decltype
-	(	IsObject
+	DeduceTerm
+	<	IsObject
 	or	IsVoid
-	)	IsCVQualifiable
+	>	extern
+		IsCVQualifiable
 	;
 }

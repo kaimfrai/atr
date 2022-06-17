@@ -3,8 +3,6 @@ export module Meta.Logic:Constraint;
 export import :LiteralBase;
 export import :Term;
 
-export import Meta.Lex;
-
 export namespace
 	Meta::Proto
 {
@@ -115,16 +113,25 @@ export namespace
 	;
 
 	template
-		<	Logic::BitClause
-				t_vClause
-		,	TupleSet
-				t_vLiterals
+		<	ErasedTerm
+				t_vTerm
 		>
 	struct
 		ConstraintClause final
 	{
 		static_assert
-		(	t_vClause.LiteralCount()
+		(	t_vTerm.ClauseCount()
+		<=	1uz
+		,	"Given term is not a clause!"
+		);
+
+		static auto constexpr
+			BitClause
+		=	t_vTerm.BitTerm[0uz]
+		;
+
+		static_assert
+		(	BitClause.LiteralCount()
 		<=	ConstraintLiteralLimit
 		,	"Too many predicates to be used in a constraint clause!"
 		);
@@ -137,33 +144,33 @@ export namespace
 		(	GetLiteral
 		)	()
 		{
-			if	constexpr(t_vClause.IsIdentity())
+			if	constexpr(BitClause.IsIdentity())
 				return Trait::Contradiction;
 			else
 			if	constexpr
-				(	t_vClause.TestPositive
+				(	BitClause.TestPositive
 					(	t_nLiteralIndex
 					)
 				)
 				return
-					t_vLiterals
-					[	Index<t_nLiteralIndex>
+				RestoreTypeEntity
+				<	t_vTerm.Literals
+					[	t_nLiteralIndex
 					]
-				.get()
-				;
+				>{};
 			else
 			if	constexpr
-				(	t_vClause.TestNegative
+				(	BitClause.TestNegative
 					(	t_nLiteralIndex
 					)
 				)
 				return
 				not
-					t_vLiterals
-					[	Index<t_nLiteralIndex>
+				RestoreTypeEntity
+				<	t_vTerm.Literals
+					[	t_nLiteralIndex
 					]
-				.	get()
-				;
+				>{};
 			else
 				return Trait::Tautology;
 		}
@@ -183,16 +190,14 @@ export namespace
 	};
 
 	template
-		<	Logic::BitTerm
-				t_vTerm
-		,	TupleSet
-				t_vLiterals
+		<	ErasedTerm const
+			&	t_rTerm
 		>
 	struct
 		ConstraintTerm final
 	{
 		static_assert
-		(	t_vTerm.ClauseCount()
+		(	t_rTerm.ClauseCount()
 		<=	ConstraintClauseLimit
 		,	"Too many clauses to be used in a constraint term!"
 		);
@@ -206,14 +211,7 @@ export namespace
 		using
 			Clause
 		=	ConstraintClause
-			<	t_vTerm[t_nClauseIndex].TrimLiterals()
-			,	t_vLiterals
-			.	Filter
-				(	Index
-					<	t_vTerm[t_nClauseIndex]
-					.	LiteralField()
-					>
-				)
+			<	t_rTerm.GetClause(t_nClauseIndex)
 			>
 		;
 	};
@@ -225,16 +223,15 @@ export namespace
 	template
 		<	typename
 				t_tProto
-		,	Term
-				t_fTrait
+		,	ErasedTerm const
+			&	t_rTerm
 		>
 	concept
 		ProtoConstraint
 	=	Proto::Term
 		<	t_tProto
 		,	Trait::ConstraintTerm
-			<	t_fTrait.BitTerm
-			,	t_fTrait.Literals
+			<	t_rTerm
 			>
 		>
 	;

@@ -95,14 +95,14 @@ export namespace
 		<	StringLiteral
 			...	t_tpMemberName
 		>
-	decltype
-	((	...
+	Meta::DeduceTerm
+	<(	...
 	and	Meta::Literal
 		<	Trait::HasDataMember
 			<	ID_T<t_tpMemberName>
 			>
 		>
-	))	inline
+	)>	inline
 		HasDataMember
 	{};
 

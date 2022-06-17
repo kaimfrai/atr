@@ -29,9 +29,10 @@ export namespace
 		MemberSortKey
 	=	//	sort order inverse to alignment
 		StaticSortKey
-	-	(	::std::is_empty_v<Meta::Data::Object<t_tData>>
-		?	0uz // optimize empty members to be static
-		:	Meta::BitAlign(Meta::Type<t_tData>)
+	-	(	not
+			::std::is_empty_v<Meta::Data::Object<t_tData>>
+		*	// optimize empty members to be static
+			Meta::BitAlign(Meta::Type<t_tData>)
 		)
 	;
 

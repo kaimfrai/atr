@@ -370,27 +370,30 @@ export namespace
 export namespace
 	Meta
 {
-	extern decltype
-	(	Literal<Trait::Const>
+	DeduceTerm
+	<	Literal<Trait::Const>
 	and	IsCVQualifiable
-	)	IsConst
+	>	extern
+		IsConst
 	;
 
-	extern decltype
-	(	Literal<Trait::Volatile>
+	DeduceTerm
+	<	Literal<Trait::Volatile>
 	and	IsCVQualifiable
-	)	IsVolatile
+	>	extern
+		IsVolatile
 	;
 
 	template
 		<	typename
 				t_tBase
 		>
-	extern decltype
-	(	Literal<Trait::Derived_From<t_tBase>>
+	DeduceTerm
+	<	Literal<Trait::Derived_From<t_tBase>>
 	and	IsCustom
-	)	IsDerived_From
-	;
+	>	inline
+		IsDerived_From
+	{};
 
 	template
 		<	template
@@ -400,11 +403,12 @@ export namespace
 			typename
 				t_t1Pack
 		>
-	extern decltype
-	(	Literal<Trait::TypePack_Of<t_t1Pack>>
+	DeduceTerm
+	<	Literal<Trait::TypePack_Of<t_t1Pack>>
 	and	IsCustom
-	)	IsTypePack_Of
-	;
+	>	inline
+		IsTypePack_Of
+	{};
 
 	template
 		<	template
@@ -414,12 +418,11 @@ export namespace
 			typename
 				t_t1Pack
 		>
-	extern decltype
-	(	Literal<Trait::ValuePack_Of<t_t1Pack>>
+	DeduceTerm
+	<	Literal<Trait::ValuePack_Of<t_t1Pack>>
 	and	IsCustom
-	)	IsValuePack_Of
-	;
-
+	>	inline IsValuePack_Of
+	{};
 
 	template
 		<	template
@@ -429,9 +432,10 @@ export namespace
 			typename
 				t_t1Pack
 		>
-	extern decltype
-	(	Literal<Trait::ValueTypePair_Of<t_t1Pack>>
+	DeduceTerm
+	<	Literal<Trait::ValueTypePair_Of<t_t1Pack>>
 	and	IsCustom
-	)	IsValueTypePair_Of
-	;
+	>	inline
+		IsValueTypePair_Of
+	{};
 }
