@@ -72,11 +72,11 @@ export namespace
 export namespace
 	Meta
 {
-	Token::Ellipsis constexpr inline
+	Token::Ellipsis extern
 		Ellipsis
-	{};
+	;
 
-	Token::Noexcept constexpr inline
+	Token::Noexcept extern
 		Noexcept
-	{};
+	;
 }

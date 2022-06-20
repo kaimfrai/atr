@@ -11,6 +11,7 @@ PARTITION
 	Query.hpp
 	Reference.hpp
 	Sequence.hpp
+	Specifier.hpp
 	Transform.hpp
 	Type.hpp
 )

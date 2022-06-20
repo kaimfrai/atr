@@ -173,19 +173,19 @@ export namespace
 export namespace
 	Meta
 {
-	Transform::AddEllipsis constexpr inline
+	Transform::AddEllipsis extern
 		AddEllipsis
-	{};
+	;
 
-	Transform::RemoveEllipsis constexpr inline
+	Transform::RemoveEllipsis extern
 		RemoveEllipsis
-	{};
+	;
 
-	Transform::AddNoexcept constexpr inline
+	Transform::AddNoexcept extern
 		AddNoexcept
-	{};
+	;
 
-	Transform::RemoveNoexcept constexpr inline
+	Transform::RemoveNoexcept extern
 		RemoveNoexcept
-	{};
+	;
 }

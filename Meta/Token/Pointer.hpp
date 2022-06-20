@@ -40,7 +40,7 @@ export namespace
 export namespace
 	Meta
 {
-	Token::Pointer constexpr inline
+	Token::Pointer extern
 		Pointer
-	{};
+	;
 }

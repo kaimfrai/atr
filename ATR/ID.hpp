@@ -359,11 +359,8 @@ export namespace
 		<	StringLiteral
 				t_vStringLiteral
 		>
-	ProtoID auto constexpr inline
+	ID_T<t_vStringLiteral> extern
 		ID_V
-	=	Make
-		<	t_vStringLiteral
-		>()
 	;
 
 	template

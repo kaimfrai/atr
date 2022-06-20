@@ -44,11 +44,11 @@ export namespace
 export namespace
 	Meta
 {
-	Token::LRef constexpr inline
+	Token::LRef extern
 		LRef
-	{};
+	;
 
-	Token::RRef constexpr inline
+	Token::RRef extern
 		RRef
-	{};
+	;
 }

@@ -109,9 +109,9 @@ export namespace
 		}
 	};
 
-	ForwardErasedType constexpr inline
+	ForwardErasedType extern
 		ForwardErased
-	{};
+	;
 
 	/// converts a TypeInfo into a TypeInfo of the corresponding erased type
 	template

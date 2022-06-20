@@ -4,7 +4,11 @@ using Meta::Type;
 using Meta::TokenizeType;
 using Meta::Token::Const;
 using Meta::Token::Volatile;
+using Meta::Token::Mutable;
 using Meta::Token::Extent;
+
+template<typename t_tEntity>
+using Mut = Meta::Specifier::Mutable<t_tEntity>;
 
 using namespace Meta::Lex;
 
@@ -64,4 +68,14 @@ static_assert
 static_assert
 (	TokenizeType<int const volatile[42]>
 ==	ArrayToQualified<42uz, Const, Volatile>
+);
+
+static_assert
+(	TokenizeType<Mut<int[42]>>
+==	ArrayToQualified<42uz, Mutable>
+);
+
+static_assert
+(	TokenizeType<Mut<int volatile[42]>>
+==	ArrayToQualified<42uz, Mutable, Volatile>
 );

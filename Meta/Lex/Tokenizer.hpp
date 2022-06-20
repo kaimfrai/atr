@@ -90,6 +90,45 @@ export namespace
 
 		template
 			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken
+				<	Specifier::Mutable<t_tEntity>
+				>
+			)	const
+		->	decltype(auto)
+		{	return
+			CV
+			{	operator()(Type<t_tEntity>)
+			,	Mutable
+			};
+		}
+
+
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken
+				<	Specifier::Mutable<t_tEntity volatile>
+				>
+			)	const
+		->	decltype(auto)
+		{	return
+			CV
+			{	operator()(Type<t_tEntity>)
+			,	Mutable
+			,	Volatile
+			};
+		}
+
+
+		template
+			<	typename
 					t_tElement
 			,	USize
 					t_nExtent
@@ -1668,9 +1707,9 @@ export namespace
 export namespace
 	Meta
 {
-	Lex::Tokenizer constexpr inline
+	Lex::Tokenizer extern
 		Tokenize
-	{};
+	;
 
 	template
 		<	typename

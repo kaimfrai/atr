@@ -65,16 +65,50 @@ export namespace
 		->	decltype(RemoveVolatile(i_vType))
 		{	return{};	}
 	};
+
+	struct
+		Mutable
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator +
+		)	(	TypeToken<t_tEntity>
+					i_vType
+			,	Mutable
+			)
+		->	decltype(AddMutable(i_vType))
+		{	return{};	}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator -
+		)	(	TypeToken<t_tEntity>
+					i_vType
+			,	Mutable
+			)
+		->	decltype(RemoveMutable(i_vType))
+		{	return{};	}
+	};
 }
 
 export namespace
 	Meta
 {
-	Token::Const constexpr inline
+	Token::Const extern
 		Const
-	{};
+	;
 
-	Token::Volatile constexpr inline
+	Token::Volatile extern
 		Volatile
-	{};
+	;
+
+	Token::Mutable extern
+		Mutable
+	;
 }

@@ -108,6 +108,56 @@ export namespace
 				t_tEntity
 		>
 	(	CV
+	)	(	CV<t_tEntity, Token::Const>
+		)
+	->	CV<t_tEntity, Token::Const>
+	;
+
+	template
+		<	typename
+				t_tEntity
+		>
+	(	CV
+	)	(	CV<t_tEntity, Token::Volatile>
+		)
+	->	CV<t_tEntity, Token::Volatile>
+	;
+
+	template
+		<	typename
+				t_tEntity
+		>
+	(	CV
+	)	(	CV<t_tEntity, Token::Const, Token::Volatile>
+		)
+	->	CV<t_tEntity, Token::Const, Token::Volatile>
+	;
+
+	template
+		<	typename
+				t_tEntity
+		>
+	(	CV
+	)	(	CV<t_tEntity, Token::Mutable>
+		)
+	->	CV<t_tEntity, Token::Mutable>
+	;
+
+	template
+		<	typename
+				t_tEntity
+		>
+	(	CV
+	)	(	CV<t_tEntity, Token::Mutable, Token::Volatile>
+		)
+	->	CV<t_tEntity, Token::Mutable, Token::Volatile>
+	;
+
+	template
+		<	typename
+				t_tEntity
+		>
+	(	CV
 	)	(	CV<t_tEntity>
 		,	Token::Const
 		)
@@ -143,6 +193,36 @@ export namespace
 	->	CV
 		<	t_tEntity
 		,	Token::Const
+		,	Token::Volatile
+		>
+	;
+
+	template
+		<	typename
+				t_tEntity
+		>
+	(	CV
+	)	(	CV<t_tEntity>
+		,	Token::Mutable
+		)
+	->	CV
+		<	t_tEntity
+		,	Token::Mutable
+		>
+	;
+
+	template
+		<	typename
+				t_tEntity
+		>
+	(	CV
+	)	(	CV<t_tEntity>
+		,	Token::Mutable
+		,	Token::Volatile
+		)
+	->	CV
+		<	t_tEntity
+		,	Token::Mutable
 		,	Token::Volatile
 		>
 	;
@@ -197,6 +277,36 @@ export namespace
 	->	CV
 		<	t_tEntity
 		,	Token::Const
+		,	Token::Volatile
+		>
+	;
+
+	template
+		<	typename
+				t_tEntity
+		>
+	(	CV
+	)	(	t_tEntity
+		,	Token::Mutable
+		)
+	->	CV
+		<	t_tEntity
+		,	Token::Mutable
+		>
+	;
+
+	template
+		<	typename
+				t_tEntity
+		>
+	(	CV
+	)	(	t_tEntity
+		,	Token::Mutable
+		,	Token::Volatile
+		)
+	->	CV
+		<	t_tEntity
+		,	Token::Mutable
 		,	Token::Volatile
 		>
 	;
