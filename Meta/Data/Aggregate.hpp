@@ -94,7 +94,8 @@ export namespace
 			::	Entity
 		>
 	{
-		using DataType = typename Lex::CV<t_tData, t_tQualifier...>::Entity;
+		using DataType = TypeEntity<Lex::CV<t_tData, t_tQualifier...>::Type - Mutable>;
+		using ConstDataType = TypeEntity<Lex::CV<t_tData, t_tQualifier...>::Type + Const - Mutable>;
 
 		auto constexpr
 		(	get
@@ -107,7 +108,7 @@ export namespace
 		(	get
 		)	()	const&
 			noexcept
-		->	DataType const&
+		->	ConstDataType&
 		{	return this->Data;	}
 
 		auto constexpr
@@ -185,19 +186,19 @@ export namespace
 			)	const&
 			noexcept
 			(	::std::is_nothrow_invocable_v
-				<	DataType const&
+				<	ConstDataType&
 				,	t_tpArgument
 					...
 				>
 			)
 		->	::std::invoke_result_t
-			<	DataType const&
+			<	ConstDataType&
 			,	t_tpArgument
 				...
 			>
 		requires
 			::std::is_invocable_v
-			<	DataType const&
+			<	ConstDataType&
 			,	t_tpArgument
 				...
 			>
@@ -236,13 +237,13 @@ export namespace
 			>
 		requires
 			::std::is_invocable_v
-			<	t_tData&&
+			<	DataType&&
 			,	t_tpArgument
 				...
 			>
 		{	return
 			{	::std::invoke
-				(	::std::move(*this).get()
+				(	::std::move(get())
 				,	::std::forward
 					<	t_tpArgument
 					>(	i_rpArgument
@@ -358,7 +359,8 @@ export namespace
 			::	Entity
 		>
 	{
-		using DataType = typename Lex::MatchCVPointer<t_tEntity, t_tpCV...>::Entity;
+		using DataType = TypeEntity<Lex::MatchCVPointer<t_tEntity, t_tpCV...>::Type - Mutable>;
+		using ConstDataType = TypeEntity<Lex::MatchCVPointer<t_tEntity, t_tpCV...>::Type + Const - Mutable>;
 		using value_type = ::std::remove_pointer_t<DataType>;
 		using difference_type = SSize;
 		using iterator_concept = ::std::contiguous_iterator_tag;
@@ -374,7 +376,7 @@ export namespace
 		(	get
 		)	()	const&
 			noexcept
-		->	DataType const&
+		->	ConstDataType&
 		{	return this->Data;	}
 
 		auto constexpr
@@ -543,7 +545,8 @@ export namespace
 			::	Entity
 		>
 	{
-		using ElementType = typename t_tElement::Entity;
+		using ElementType = TypeEntity<Lex::CV<t_tElement, t_tpQualifier...>::Type - Mutable>;
+		using ConstElementType = TypeEntity<Lex::CV<t_tElement, t_tpQualifier...>::Type + Const - Mutable>;
 		static_assert
 		(	not ::std::is_bounded_array_v<ElementType>
 		,	"Multidimensional arrays are not supported!"
@@ -553,9 +556,9 @@ export namespace
 		using size_type = USize;
 		using difference_type = SSize;
 		using reference = ElementType&;
-		using const_reference = ElementType const&;
+		using const_reference = ConstElementType&;
 		using pointer = ElementType*;
-		using const_pointer = ElementType const*;
+		using const_pointer = ConstElementType*;
 		using iterator = pointer;
 		using const_iterator = const_pointer;
 
@@ -570,7 +573,7 @@ export namespace
 		(	get
 		)	()	const&
 			noexcept
-		->	ElementType const(&)[]
+		->	ConstElementType(&)[]
 		=	delete;
 
 		auto constexpr
@@ -668,7 +671,7 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	begin
-		)	(	Aggregate const&
+		)	(	ConstElementType&
 			)
 		->	const_iterator
 		{	return nullptr;	}
@@ -718,7 +721,8 @@ export namespace
 			::	Entity
 		>
 	{
-		using ElementType = typename t_tElement::Entity;
+		using ElementType = TypeEntity<Lex::CV<t_tElement, t_tpQualifier...>::Type - Mutable>;
+		using ConstElementType = TypeEntity<Lex::CV<t_tElement, t_tpQualifier...>::Type + Const - Mutable>;
 
 		static_assert
 		(	not ::std::is_bounded_array_v<ElementType>
@@ -729,9 +733,9 @@ export namespace
 		using size_type = USize;
 		using difference_type = SSize;
 		using reference = ElementType&;
-		using const_reference = ElementType const&;
+		using const_reference = ConstElementType&;
 		using pointer = ElementType*;
-		using const_pointer = ElementType const*;
+		using const_pointer = ConstElementType*;
 		using iterator = pointer;
 		using const_iterator = const_pointer;
 
@@ -746,7 +750,7 @@ export namespace
 		(	get
 		)	()	const&
 			noexcept
-		->	ElementType const(&)[t_nExtent]
+		->	ConstElementType(&)[t_nExtent]
 		{	return this->Data;	}
 
 		auto constexpr

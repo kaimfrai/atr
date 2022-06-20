@@ -1,5 +1,6 @@
 export module Meta.Token:Array;
 
+export import :Specifier;
 export import :Type;
 
 export import Meta.Arithmetic;
@@ -31,11 +32,35 @@ export namespace
 					t_tElement
 			>
 		friend auto constexpr
+		(	operator +
+		)	(	TypeToken<Specifier::Mutable<t_tElement>>
+			,	Extent
+			)
+		->	TypeToken<Specifier::Mutable<t_tElement[t_nExtent]>>
+		{	return {};	}
+
+		template
+			<	typename
+					t_tElement
+			>
+		friend auto constexpr
 		(	operator -
 		)	(	TypeToken<t_tElement[t_nExtent]>
 			,	Extent
 			)
 		->	TypeToken<t_tElement>
+		{	return {};	}
+
+		template
+			<	typename
+					t_tElement
+			>
+		friend auto constexpr
+		(	operator -
+		)	(	TypeToken<Specifier::Mutable<t_tElement[t_nExtent]>>
+			,	Extent
+			)
+		->	TypeToken<Specifier::Mutable<t_tElement>>
 		{	return {};	}
 	};
 

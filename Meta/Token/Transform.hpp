@@ -86,9 +86,7 @@ export namespace
 		)	(	TypeToken<Specifier::Mutable<t_tEntity>>
 			)	const
 		->	TypeToken
-			<	::std::add_const_t
-				<	t_tEntity
-				>
+			<	Specifier::Mutable<t_tEntity>
 			>
 		{	return {};	}
 	};
@@ -508,9 +506,7 @@ export namespace
 			)	const
 		->	TypeToken
 			<	::std::add_lvalue_reference_t
-				<	::std::add_const_t
-					<	t_tEntity
-					>
+				<	t_tEntity
 				>
 			>
 		{	return {};	}

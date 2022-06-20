@@ -73,6 +73,37 @@ export namespace
 		;
 	};
 
+
+
+	template
+		<	typename
+				t_tData
+		,	typename
+			...	t_tpQualifier
+		>
+	struct
+		Object
+		<	Lex::CV
+			<	t_tData
+			,	Token::Mutable
+			,	t_tpQualifier
+				...
+			>
+		>
+	{
+		[[no_unique_address]]
+		mutable
+		typename
+			Lex::CV
+			<	t_tData
+			,	t_tpQualifier
+				...
+			>
+		::	Entity
+			Data
+		;
+	};
+
 	template
 		<	typename
 				t_tData
@@ -136,16 +167,54 @@ export namespace
 	template
 		<	typename
 				t_tData
-		,	typename
-			...	t_tpQualifier
 		>
 	struct
 		Object
 		<	Lex::MatchCVArray
 			<	Lex::CV<t_tData>
 			,	0uz
-			,	t_tpQualifier
-				...
+			>
+		>
+	{};
+
+	template
+		<	typename
+				t_tData
+		>
+	struct
+		Object
+		<	Lex::MatchCVArray
+			<	Lex::CV<t_tData>
+			,	0uz
+			,	Token::Const
+			>
+		>
+	{};
+
+	template
+		<	typename
+				t_tData
+		>
+	struct
+		Object
+		<	Lex::MatchCVArray
+			<	Lex::CV<t_tData>
+			,	0uz
+			,	Token::Volatile
+			>
+		>
+	{};
+	template
+		<	typename
+				t_tData
+		>
+	struct
+		Object
+		<	Lex::MatchCVArray
+			<	Lex::CV<t_tData>
+			,	0uz
+			,	Token::Const
+			,	Token::Volatile
 			>
 		>
 	{};
