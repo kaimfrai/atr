@@ -1,0 +1,100 @@
+export module ATR:Layout.AliasLayout;
+
+import :Layout.AliasResolver;
+import :Layout.Concept;
+
+import Meta.Arithmetic;
+
+using ::Meta::USize;
+
+export namespace
+	ATR
+{
+	template
+		<	typename
+				t_tLayout
+		,	typename
+			...	t_tpAlias
+		>
+	struct
+		AliasLayout
+	:	t_tLayout
+	{
+		static auto constexpr
+		(	ResolveAlias
+		)	(	ProtoAliasID<t_tLayout, t_tpAlias...> auto
+					i_vName
+			)
+		->	decltype(auto)
+		{	return
+			::ResolveAlias<t_tpAlias...>
+			(	i_vName
+			);
+		}
+
+		[[nodiscard]]
+		static auto constexpr
+		(	OffsetOf
+		)	(	ProtoAliasID<t_tLayout, t_tpAlias...> auto
+					i_vMember
+			)
+		->	USize
+		{	return
+				t_tLayout
+			::	OffsetOf
+				(	ResolveAlias
+					(	i_vMember
+					)
+				)
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	ProtoAliasID<t_tLayout, t_tpAlias...> auto
+					i_vMember
+			)	&
+			noexcept
+		->	decltype(auto)
+		{	return
+			static_cast<t_tLayout&>(*this)
+			[	ResolveAlias
+				(	i_vMember
+				)
+			];
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	ProtoAliasID<t_tLayout, t_tpAlias...> auto
+					i_vMember
+			)	const&
+			noexcept
+		->	decltype(auto)
+		{	return
+			static_cast<t_tLayout const&>(*this)
+			[	ResolveAlias
+				(	i_vMember
+				)
+			];
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	ProtoAliasID<t_tLayout, t_tpAlias...> auto
+					i_vMember
+			)	&&
+			noexcept
+		->	decltype(auto)
+		{	return
+			static_cast<t_tLayout&&>(*this)
+			[	ResolveAlias
+				(	i_vMember
+				)
+			];
+		}
+	};
+}
