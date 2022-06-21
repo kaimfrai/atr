@@ -52,6 +52,13 @@ namespace
 	}
 
 	template
+		<>
+	auto constexpr
+	(	UIntZero<1uz>
+	)	()
+	{	return false;	}
+
+	template
 		<	USize
 				t_nBitCount
 		>

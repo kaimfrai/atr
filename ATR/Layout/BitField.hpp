@@ -1,6 +1,8 @@
 export module ATR:Layout.BitField;
 
 import :ID;
+import :Layout.BitReference;
+import :Layout.BitOffset;
 import :Layout.Member;
 
 import Meta.Arithmetic;
@@ -25,116 +27,6 @@ export namespace
 				t_nOffset
 		,	USize
 				t_nSize
-		>
-	class
-		BitFieldReference
-	{
-	public:
-		using
-			FieldType
-		=	UInt
-			<	t_nSize
-			>
-		;
-
-	private:
-		using
-			BufferType
-		=	UInt
-			<	t_nSize
-			+	t_nOffset
-			>
-		;
-
-		::std::byte
-		*	m_aUnderlyingArray
-		;
-
-		struct
-			Layout final
-		{
-			BufferType : t_nOffset;
-			BufferType Field : t_nSize;
-			BufferType : (sizeof(BufferType) - t_nOffset - t_nSize);
-		};
-
-		static_assert
-		(	sizeof(Layout)
-		==	sizeof(BufferType)
-		);
-
-		template
-			<	USize
-			,	typename
-			,	char const&
-			>
-		friend struct
-			BitView
-		;
-
-		static auto constexpr
-		(	ReadField
-		)	(	::std::byte const
-				*	i_aBuffer
-			)
-		->	FieldType
-		{
-			return
-			static_cast<FieldType>
-			(	ReadFromBytes<Layout>
-				(	i_aBuffer
-				)
-			.	Field
-			);
-		}
-
-		static auto constexpr
-		(	WriteField
-		)	(	FieldType
-					i_vValue
-			,	::std::byte
-				*	i_aBuffer
-			)
-		->	void
-		{
-			auto
-				vLayout
-			=	ReadFromBytes<Layout>
-				(	i_aBuffer
-				)
-			;
-			vLayout.Field = static_cast<BufferType>(i_vValue);
-			WriteToBytes(vLayout);
-		}
-
-	public:
-		[[nodiscard]]
-		explicit(false) constexpr
-		(	operator FieldType
-		)	()	const
-		{	return
-			ReadField
-			(	m_aUnderlyingArray
-			);
-		}
-
-		auto constexpr
-		(	operator =
-		)	(	FieldType
-					i_vValue
-			)	&
-		->	BitFieldReference
-		{
-			WriteField(i_vValue, m_aUnderlyingArray);
-			return *this;
-		}
-	};
-
-	template
-		<	USize
-				t_nOffset
-		,	USize
-				t_nSize
 		,	char const
 			&
 			...	t_rpName
@@ -148,7 +40,7 @@ export namespace
 		;
 		using
 			reference
-		=	BitFieldReference
+		=	BitReference
 			<	t_nOffset
 			,	BitSize
 			>
@@ -217,6 +109,64 @@ export namespace
 			,	i_aBuffer
 			);
 		}
+
+		template
+			<	typename
+				...	t_tpTransform
+			>
+		static auto constexpr
+		(	OffsetOf
+		)	(	::ATR::ID<t_rpName...>
+			,	::Meta::Lex::Transform<t_tpTransform...>
+					i_vTransform
+			)
+		{
+			using
+				tTransformed
+			=	Meta::TypeEntity
+				<	i_vTransform
+					(	Meta::Type<t_tEntity>
+					)
+				>
+			;
+
+			auto constexpr
+				nByteOffset
+			=	t_nOffset / ::Meta::BitsPerByte
+			;
+			auto constexpr
+				nBitOffset
+			=	t_nOffset - nByteOffset
+			;
+
+			//	only opt into using BitReference for T&
+			if	constexpr
+				(	::std::is_lvalue_reference_v<tTransformed>
+				and	not
+					::std::is_const_v
+					<	::std::remove_reference_t
+						<	tTransformed
+						>
+					>
+				)
+			{	return
+				BitOffset
+				<	nBitOffset
+				,	tTransformed
+				>{	nByteOffset
+				};
+			}
+			else
+			{	return
+				BitOffset
+				<	nBitOffset
+				,	::std::remove_cvref_t
+					<	tTransformed
+					>
+				>{	nByteOffset
+				};
+			}
+		}
 	};
 
 	template
@@ -259,6 +209,58 @@ export namespace
 			,	i_aBuffer
 			);
 		}
+
+		template
+			<	typename
+				...	t_tpTransform
+			>
+		static auto constexpr
+		(	OffsetOf
+		)	(	::ATR::ID<t_rpName...>
+			,	::Meta::Lex::Transform<t_tpTransform...>
+					i_vTransform
+			)
+		{
+			using
+				tTransformed
+			=	Meta::TypeEntity
+				<	i_vTransform
+					(	Meta::Type<t_tEntity>
+					)
+				>
+			;
+
+			auto constexpr
+				nByteOffset
+			=	t_nOffset / ::Meta::BitsPerByte
+			;
+			auto constexpr
+				nBitOffset
+			=	t_nOffset - nByteOffset
+			;
+
+			//	for mutable, opt into using BitReference for T const& and T&
+			if	constexpr
+				(	::std::is_lvalue_reference_v<tTransformed>
+				)
+			{	return
+				BitOffset
+				<	nBitOffset
+				,	tTransformed
+				>{	nByteOffset
+				};
+			}
+			else
+			{	return
+				BitOffset
+				<	nBitOffset
+				,	::std::remove_cvref_t
+					<	tTransformed
+					>
+				>{	nByteOffset
+				};
+			}
+		}
 	};
 
 	template
@@ -273,6 +275,7 @@ export namespace
 		using t_tpBitView::View...;
 		using t_tpBitView::ConstView...;
 		using t_tpBitView::MoveView...;
+		using t_tpBitView::OffsetOf...;
 
 		static auto constexpr
 			BitCount
@@ -287,7 +290,8 @@ export namespace
 		=	BitCount / BitsPerByte
 		;
 
-		::std::byte
+		// must be mutable in case one bitfield is mutable
+		mutable ::std::byte
 			Buffer
 			[	BufferSize
 			]

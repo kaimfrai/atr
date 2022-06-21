@@ -1,7 +1,5 @@
 export module ATR:Layout.MemberOffset;
 
-export import :DataMember;
-export import :StringLiteral;
 export import :Erase;
 
 export import Meta.Arithmetic;
