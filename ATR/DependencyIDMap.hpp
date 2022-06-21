@@ -3,7 +3,6 @@ export module ATR:DependencyIDMap;
 export import :StringLiteral;
 export import :ID;
 export import :DataMember;
-export import :MemberOffset;
 export import :Dependency;
 export import :Address;
 export import :Layout;

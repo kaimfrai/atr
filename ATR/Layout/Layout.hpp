@@ -4,9 +4,9 @@ import :ID;
 import :Layout.Alias;
 import :Layout.Concept;
 import :Layout.Member;
+import :Layout.MemberOffset;
 import :Layout.Split;
 import :Layout.ValidateOffsets;
-import :MemberOffset;
 
 import Meta.Arithmetic;
 import Meta.Data;

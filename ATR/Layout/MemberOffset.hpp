@@ -1,4 +1,4 @@
-export module ATR:MemberOffset;
+export module ATR:Layout.MemberOffset;
 
 export import :DataMember;
 export import :StringLiteral;
@@ -180,23 +180,4 @@ export namespace
 		+	i_nMember.Offset
 		};
 	}
-
-	template
-		<	typename
-				t_tMember
-		>
-	struct
-		StaticMember
-	{
-		[[nodiscard]]
-		auto constexpr
-		(	operator()
-		)	()	const
-			noexcept
-		->	t_tMember
-		{	return
-			t_tMember
-			();
-		}
-	};
 }

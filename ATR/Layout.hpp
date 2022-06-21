@@ -6,7 +6,7 @@ export import :Layout.AliasLayout;
 export import :Layout.Concept;
 export import :Layout.Data;
 export import :Layout.Layout;
-
+export import :Layout.MemberOffset;
 export import :Layout.Static;
 export import :Layout.Type;
 

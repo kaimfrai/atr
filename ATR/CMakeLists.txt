@@ -16,11 +16,11 @@ PARTITION
 	Layout/Layout.hpp
 	Layout/LayoutFwd.hpp
 	Layout/Member.hpp
+	Layout/MemberOffset.hpp
 	Layout/Split.hpp
 	Layout/Static.hpp
 	Layout/Type.hpp
 	Layout/ValidateOffsets.hpp
-	MemberOffset.hpp
 
 	Erase.hpp
 	Address.hpp

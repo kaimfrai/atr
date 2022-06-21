@@ -9,6 +9,5 @@ export import :Erase;
 export import :Layout;
 export import :ID;
 export import :Instance;
-export import :MemberOffset;
 export import :StringLiteral;
 export import :VirtualArgument;

@@ -2,11 +2,29 @@ export module ATR:Layout.Static;
 
 import :ID;
 import :Layout.Member;
-import :MemberOffset;
 
 export namespace
 	ATR
 {
+	template
+		<	typename
+				t_tMember
+		>
+	struct
+		StaticMember
+	{
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
+		)	()	const
+			noexcept
+		->	t_tMember
+		{	return
+			t_tMember
+			();
+		}
+	};
+
 	template
 		<	typename
 			...	t_tpStatic
