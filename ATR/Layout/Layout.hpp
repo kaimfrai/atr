@@ -6,9 +6,11 @@ import :Layout.Concept;
 import :Layout.Member;
 import :Layout.Split;
 import :Layout.ValidateOffsets;
+import :MemberOffset;
 
 import Meta.Arithmetic;
 import Meta.Data;
+import Meta.Lex;
 
 using ::Meta::Aggregate;
 using ::Meta::USize;
@@ -35,13 +37,19 @@ export namespace
 			SouthArea
 		;
 
+		template
+			<	typename
+				...	t_tpTransform
+			>
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetOf
 		)	(	ProtoMemberID<NorthType> auto
 					i_vMemberID
+			,	Meta::Lex::Transform<t_tpTransform...>
+					i_vTransform
 			)
-		->	USize
+		->	decltype(auto)
 		{
 			static_assert
 			(	ValidateOffsets<Layout>()
@@ -52,6 +60,7 @@ export namespace
 				NorthType
 			::	OffsetOf
 				(	i_vMemberID
+				,	i_vTransform
 				)
 			;
 		}
@@ -98,13 +107,19 @@ export namespace
 			];
 		}
 
+		template
+			<	typename
+				...	t_tpTransform
+			>
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetOf
 		)	(	ProtoMemberID<SouthType> auto
 					i_vMemberID
+			,	Meta::Lex::Transform<t_tpTransform...>
+					i_vTransform
 			)
-		->	USize
+		->	decltype(auto)
 		{
 			static_assert
 			(	ValidateOffsets<Layout>()
@@ -116,6 +131,7 @@ export namespace
 			+	SouthType
 			::	OffsetOf
 				(	i_vMemberID
+				,	i_vTransform
 				)
 			;
 		}
@@ -178,20 +194,35 @@ export namespace
 		>
 	struct
 		Layout
-		<	Member
+		<	::Member
 			<	t_tData
 			,	t_rpName
 				...
 			>
 		>
 	{
+		template
+			<	typename
+				...	t_tpTransform
+			>
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetOf
 		)	(	ID<t_rpName...>
+			,	Meta::Lex::Transform<t_tpTransform...>
+					i_vTransform
 			)
-		->	USize
-		{	return 0uz;	}
+		->	decltype(auto)
+		{	return
+			MemberOffset
+			<	Meta::TypeEntity
+				<	i_vTransform
+					(	Meta::Type<Aggregate<t_tData>>
+					)
+				>
+			>{	0uz
+			};
+		}
 
 		Aggregate<t_tData>
 			Value

@@ -8,6 +8,8 @@ export import Meta.Arithmetic;
 
 export import Std;
 
+using ::Meta::USize;
+
 export namespace
 	ATR
 {
@@ -18,7 +20,7 @@ export namespace
 	struct
 		MemberOffset
 	{
-		Meta::USize
+		USize
 			Offset
 		;
 
@@ -70,7 +72,7 @@ export namespace
 		<	t_tMember&
 		>
 	{
-		Meta::USize
+		USize
 			Offset
 		;
 
@@ -120,7 +122,7 @@ export namespace
 		<	t_tMember const&
 		>
 	{
-		Meta::USize
+		USize
 			Offset
 		;
 
@@ -160,6 +162,24 @@ export namespace
 			);
 		}
 	};
+
+	template
+		<	typename
+				t_tMember
+		>
+	auto constexpr
+	(	operator +
+	)	(	USize
+				i_nOffset
+		,	MemberOffset<t_tMember>
+				i_nMember
+		)
+	->	MemberOffset<t_tMember>
+	{	return
+		{	i_nOffset
+		+	i_nMember.Offset
+		};
+	}
 
 	template
 		<	typename

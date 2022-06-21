@@ -164,36 +164,23 @@ namespace
 	)	(	t_tDataID
 				i_vDataID
 		,	Meta::TypeToken<t_tOwner>
+				i_vOwner
 		,	Meta::TypePack<>
 		)
 	{
-		using
-			tType
-		=	decltype
-			(	::std::declval<t_tOwner>()
-				[	i_vDataID
-				]
+		auto constexpr
+			fOwnerTransform
+		=	Meta::ComposeTransform
+			(	i_vOwner
 			)
 		;
-		using tOwner = ::std::remove_cvref_t<t_tOwner>;
-		if	constexpr
-			(	ProtoMemberInterface
-				<	typename
-					tOwner
-				::	StaticLayout
-				,	i_vDataID.RawArray
-				>
+		return
+			::std::remove_cvref_t<t_tOwner>
+		::	OffsetOf
+			(	i_vDataID
+			,	fOwnerTransform
 			)
-			return
-			StaticMember<tType>
-			{};
-		else
-			return
-			MemberOffset<tType>
-			{	tOwner
-			::	DynamicLayout
-			::	OffsetOf(i_vDataID)
-			};
+		;
 	}
 }
 

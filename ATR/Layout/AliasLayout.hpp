@@ -4,6 +4,7 @@ import :Layout.AliasResolver;
 import :Layout.Concept;
 
 import Meta.Arithmetic;
+import Meta.Lex;
 
 using ::Meta::USize;
 
@@ -32,19 +33,26 @@ export namespace
 			);
 		}
 
+		template
+			<	typename
+				...	t_tpTransform
+			>
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetOf
 		)	(	ProtoAliasID<t_tLayout, t_tpAlias...> auto
 					i_vMember
+			,	Meta::Lex::Transform<t_tpTransform...>
+					i_vTransform
 			)
-		->	USize
+		->	decltype(auto)
 		{	return
 				t_tLayout
 			::	OffsetOf
 				(	ResolveAlias
 					(	i_vMember
 					)
+				,	i_vTransform
 				)
 			;
 		}

@@ -19,7 +19,7 @@ export namespace
 		ProtoMemberID
 	=	ProtoID<t_tProto>
 	and	requires
-		{	t_tLayout::OffsetOf(t_tProto{});
+		{	t_tLayout::OffsetOf(t_tProto{}, Meta::Lex::Transform<>{});
 			::std::declval<t_tLayout&>()[t_tProto{}];
 			::std::declval<t_tLayout const&>()[t_tProto{}];
 			::std::declval<t_tLayout&&>()[t_tProto{}];

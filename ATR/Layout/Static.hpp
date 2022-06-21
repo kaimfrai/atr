@@ -2,6 +2,7 @@ export module ATR:Layout.Static;
 
 import :ID;
 import :Layout.Member;
+import :MemberOffset;
 
 export namespace
 	ATR
@@ -37,13 +38,18 @@ export namespace
 			>
 		>
 	{
+		template
+			<	typename
+				...	t_tpTransform
+			>
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetOf
 		)	(	ID<t_rpName...>
+			,	Meta::Lex::Transform<t_tpTransform...>
 			)
-		->	Meta::USize
-		{	return 0uz;	}
+		->	StaticMember<t_tData>
+		{	return	{};	}
 
 		[[nodiscard]]
 		auto constexpr

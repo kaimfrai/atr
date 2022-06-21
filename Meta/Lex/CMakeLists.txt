@@ -1,5 +1,5 @@
 add_module(
-	Tokenizer.hpp
+	Lex.hpp
 PARTITION
 	Array.hpp
 	CV.hpp
@@ -7,4 +7,6 @@ PARTITION
 	Member.hpp
 	Pointer.hpp
 	Reference.hpp
+	Tokenizer.hpp
+	Transform.hpp
 )

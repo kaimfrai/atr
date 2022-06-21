@@ -1,4 +1,4 @@
-export module Meta.Lex;
+export module Meta.Lex:Tokenizer;
 
 export import :Array;
 export import :CV;

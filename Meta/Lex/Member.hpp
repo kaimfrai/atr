@@ -14,7 +14,29 @@ export namespace
 		>
 	struct
 		Owner
-	{};
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator +
+		)	(	TypeToken<t_tEntity>
+			)
+		->	TypeToken<t_tEntity t_tOwner::*>
+		{	return{};	}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator -
+		)	(	TypeToken<t_tEntity t_tOwner::*>
+			)
+		->	TypeToken<t_tEntity>
+		{	return{};	}
+	};
 
 	template
 		<	typename
