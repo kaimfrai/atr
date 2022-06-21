@@ -31,6 +31,20 @@ struct
 		<	t_tData
 		>
 	;
+
+	static USize constexpr
+		BitSize
+	=	::Meta::BitSize
+		(	::Meta::Type<t_tData>
+		)
+	;
+
+	static USize constexpr
+		BitAlign
+	=	::Meta::BitAlign
+		(	::Meta::Type<t_tData>
+		)
+	;
 };
 
 template

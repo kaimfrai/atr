@@ -1,5 +1,6 @@
 module ATR:Layout.Split;
 
+import :Layout.BitField;
 import :Layout.LayoutFwd;
 import :Layout.Member;
 
@@ -45,20 +46,40 @@ struct
 
 	template
 		<	typename
+				t_tFirstBack
+		,	typename
 			...	t_tpBack
 		>
 	static auto constexpr
 	(	Back
 	)	(	IgnoreIndexedElement<t_npIndex>
 			...
+		,	t_tFirstBack*
 		,	t_tpBack*
 			...
 		)
-	->	Layout
-		<	t_tpBack
-			...
-		>
-	{	return {};	}
+	{
+		if	constexpr
+			(	t_tFirstBack
+			::	BitAlign
+			==	1uz
+			)
+		{
+			return
+			MakeBitLayout
+			<	t_tFirstBack
+			,	t_tpBack
+				...
+			>();
+		}
+		else
+			return
+			Layout
+			<	t_tFirstBack
+			,	t_tpBack
+				...
+			>{};
+	}
 };
 
 template

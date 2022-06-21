@@ -7,6 +7,71 @@ export import Std;
 export namespace
 	Meta::Arithmetic
 {
+	template
+		<	typename
+				t_tEntity
+		>
+	using
+		ByteArray
+	=	::std::byte
+		[	sizeof(t_tEntity)
+		]
+	;
+
+	template
+		<	typename
+				t_tEntity
+		>
+	auto constexpr
+	(	ReadFromBytes
+	)	(	::std::byte const
+			*	i_aBytes
+		)
+	->	t_tEntity
+	{
+		ByteArray<t_tEntity>
+			vBytes
+		;
+		::std::copy
+		(	i_aBytes
+		,	i_aBytes + sizeof(t_tEntity)
+		,	+vBytes
+		);
+		return
+		::std::bit_cast
+		<	t_tEntity
+		>(	vBytes
+		);
+	}
+
+	template
+		<	typename
+				t_tEntity
+		>
+	auto constexpr
+	(	WriteToBytes
+	)	(	t_tEntity const
+			&	i_rEntity
+		,	::std::byte
+			*	o_aBytes
+		)
+	->	::std::byte*
+	{
+		auto const
+			vBytes
+		=	::std::bit_cast
+			<	ByteArray<t_tEntity>
+			>(	i_rEntity
+			)
+		;
+		return
+		::std::copy
+		(	::std::begin(vBytes)
+		,	::std::end(vBytes)
+		,	+o_aBytes
+		);
+	}
+
 	auto constexpr
 	(	TestBit
 	)	(	USize

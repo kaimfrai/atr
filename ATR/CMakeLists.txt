@@ -9,6 +9,7 @@ PARTITION
 	Layout/Alias.hpp
 	Layout/AliasLayout.hpp
 	Layout/AliasResolver.hpp
+	Layout/BitField.hpp
 	Layout/Concept.hpp
 	Layout/Create.hpp
 	Layout/Data.hpp
