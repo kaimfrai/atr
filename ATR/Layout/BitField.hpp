@@ -53,9 +53,9 @@ export namespace
 		struct
 			Layout final
 		{
-			BufferType Offset : t_nOffset;
-			FieldType Field : t_nSize;
-			BufferType Padding : (sizeof(BufferType) - t_nOffset - t_nSize);
+			BufferType : t_nOffset;
+			BufferType Field : t_nSize;
+			BufferType : (sizeof(BufferType) - t_nOffset - t_nSize);
 		};
 
 		static_assert
@@ -80,11 +80,12 @@ export namespace
 		->	FieldType
 		{
 			return
-				ReadFromBytes<Layout>
+			static_cast<FieldType>
+			(	ReadFromBytes<Layout>
 				(	i_aBuffer
 				)
 			.	Field
-			;
+			);
 		}
 
 		static auto constexpr
@@ -102,7 +103,7 @@ export namespace
 				(	i_aBuffer
 				)
 			;
-			vLayout.Field = i_vValue;
+			vLayout.Field = static_cast<BufferType>(i_vValue);
 			WriteToBytes(vLayout);
 		}
 
