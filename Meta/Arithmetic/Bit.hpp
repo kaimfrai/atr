@@ -4,6 +4,53 @@ export import :Integer;
 
 export import Std;
 
+using ::Meta::USize;
+
+static_assert
+(	::std::endian::native
+==	::std::endian::little
+,	"Big Endian not yet supported for use byte casting!"
+);
+
+template
+	<	USize
+			t_nValueBytes
+	,	USize
+			t_nPaddingBytes
+	>
+struct
+	Object final
+{
+	::std::byte
+		Value
+		[	t_nValueBytes
+		]
+	;
+
+	::std::byte
+		Padding
+		[	t_nPaddingBytes
+		]
+	{};
+};
+
+template
+	<	USize
+			t_nValueBytes
+	>
+struct
+	Object
+	<	t_nValueBytes
+	,	0uz
+	>	final
+{
+	::std::byte
+		Value
+		[	t_nValueBytes
+		]
+	;
+};
+
 export namespace
 	Meta::Arithmetic
 {
@@ -22,7 +69,11 @@ export namespace
 	template
 		<	typename
 				t_tEntity
+		,	USize
+				t_nValueBytes
+			=	sizeof(t_tEntity)
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	ReadFromBytes
 	)	(	::std::byte const
@@ -30,24 +81,31 @@ export namespace
 		)
 	->	t_tEntity
 	{
-		ByteArray<t_tEntity>
-			vBytes
+		static_assert(t_nValueBytes <= sizeof(t_tEntity));
+
+		using tObject = ::Object<t_nValueBytes, sizeof(t_tEntity) - t_nValueBytes>;
+		tObject
+			vObject
 		;
+
 		::std::copy
 		(	i_aBytes
-		,	i_aBytes + sizeof(t_tEntity)
-		,	begin(vBytes)
+		,	i_aBytes + t_nValueBytes
+		,	vObject.Value
 		);
 		return
 		::std::bit_cast
 		<	t_tEntity
-		>(	vBytes
+		>(	vObject
 		);
 	}
 
 	template
 		<	typename
 				t_tEntity
+		,	USize
+				t_nValueBytes
+			=	sizeof(t_tEntity)
 		>
 	auto constexpr
 	(	WriteToBytes
@@ -58,17 +116,21 @@ export namespace
 		)
 	->	::std::byte*
 	{
+		static_assert(t_nValueBytes <= sizeof(t_tEntity));
+
+		using tObject = ::Object<t_nValueBytes, sizeof(t_tEntity) - t_nValueBytes>;
+
 		auto const
-			vBytes
+			vObject
 		=	::std::bit_cast
-			<	ByteArray<t_tEntity>
+			<	tObject
 			>(	i_rEntity
 			)
 		;
 		return
 		::std::copy
-		(	begin(vBytes)
-		,	end(vBytes)
+		(	vObject.Value
+		,	vObject.Value + t_nValueBytes
 		,	o_aBytes
 		);
 	}

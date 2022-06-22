@@ -41,8 +41,12 @@ export namespace
 		);
 
 		static_assert
-		(	t_nOffset + t_nSize
-		<=	sizeof(USize) * BitsPerByte
+		(	requires
+			{	typename
+				::Meta::UInt
+				<	t_nSize
+				>;
+			}
 		,	"Exceeded supported amount of bits per bitfield!"
 		);
 
@@ -51,15 +55,18 @@ export namespace
 		;
 
 		static auto constexpr
-			LowerBitCount
-		=	Meta::ByteFloor
-			(	(	t_nOffset
-				+	t_nSize
-				+	(BitsPerByte - 1uz)
-				)
-			/	BitsPerByte
-			*	BitsPerByte
+			BufferByteSize
+		=	(	t_nOffset
+			+	t_nSize
+			+	(BitsPerByte - 1uz)
 			)
+		/	BitsPerByte
+		;
+
+		static auto constexpr
+			LowerBitCount
+		=	::std::min(BufferByteSize, sizeof(USize))
+		*	BitsPerByte
 		;
 
 		using LowerFieldType = UInt<LowerBitCount>;
@@ -106,8 +113,10 @@ export namespace
 		{
 			auto
 				vLowerField
-			=	ReadFromBytes<LowerFieldType>
-				(	i_aBuffer
+			=	ReadFromBytes
+				<	LowerFieldType
+				,	LowerBitCount / BitsPerByte
+				>(	i_aBuffer
 				)
 			;
 
@@ -122,7 +131,10 @@ export namespace
 				auto
 					vUpperField
 				=	static_cast<UInt<t_nSize>>
-					(	ReadFromBytes<UpperFieldType>
+					(	ReadFromBytes
+						<	UpperFieldType
+						,	UpperBitCount / BitsPerByte
+						>
 						(	i_aBuffer + sizeof(LowerFieldType)
 						)
 					bitand
@@ -143,7 +155,7 @@ export namespace
 				)
 				return static_cast<bool>(vLowerField);
 			else
-				return vLowerField;
+				return static_cast<UInt<t_nSize>>(vLowerField);
 		}
 
 		using FieldType = decltype(ReadField(nullptr));
@@ -159,8 +171,10 @@ export namespace
 		{
 			auto
 				vLowerField
-			=	ReadFromBytes<LowerFieldType>
-				(	i_aBuffer
+			=	ReadFromBytes
+				<	LowerFieldType
+				,	LowerBitCount / BitsPerByte
+				>(	i_aBuffer
 				)
 			;
 
@@ -177,7 +191,9 @@ export namespace
 			);
 
 			WriteToBytes
-			(	vLowerField
+			<	LowerFieldType
+			,	LowerBitCount / BitsPerByte
+			>(	vLowerField
 			,	i_aBuffer
 			);
 
@@ -188,7 +204,10 @@ export namespace
 			{
 				auto
 					vUpperField
-				=	ReadFromBytes<UpperFieldType>
+				=	ReadFromBytes
+					<	UpperFieldType
+					,	UpperBitCount / BitsPerByte
+					>
 					(	i_aBuffer
 					)
 				;
@@ -203,7 +222,9 @@ export namespace
 				);
 
 				WriteToBytes
-				(	vUpperField
+				<	UpperFieldType
+				,	UpperBitCount / BitsPerByte
+				>(	vUpperField
 				,	i_aBuffer + sizeof(LowerFieldType)
 				);
 			}

@@ -81,6 +81,15 @@ auto constexpr
 ->	::std::uint_least64_t
 ;
 
+#ifdef __GNUG__
+auto constexpr
+(	UInt
+)	(	BitCount<128uz>
+	)
+->	unsigned __int128
+;
+#endif
+
 auto constexpr
 (	SInt
 )	(	BitCount<8uz>
@@ -106,6 +115,15 @@ auto constexpr
 	)
 ->	::std::int_least64_t
 ;
+
+#ifdef __GNUG__
+auto constexpr
+(	SInt
+)	(	BitCount<128uz>
+	)
+->	__int128
+;
+#endif
 
 export namespace
 	Meta

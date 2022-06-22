@@ -13,7 +13,7 @@ template
 auto constexpr SetAndCheck(UInt<t_nSize> v) -> bool
 {
 	using BitReference = ATR::BitReference<t_nOffset % BitsPerByte, t_nSize>;
-	::std::byte aBuffer[::Meta::ByteCeil(t_nOffset + t_nSize) / BitsPerByte]{};
+	::std::byte aBuffer[(t_nOffset + t_nSize + (BitsPerByte - 1uz))/ BitsPerByte]{};
 	auto const nPrevious = BitReference::ReadField(aBuffer + t_nOffset / BitsPerByte);
 	BitReference r{aBuffer + t_nOffset / BitsPerByte};
 	r = v;
@@ -39,7 +39,7 @@ static_assert
 );
 
 static_assert
-(	SetAndCheck<31, 31>(886554332)
+(	SetAndCheck<31, 31>(854332)
 );
 
 static_assert
