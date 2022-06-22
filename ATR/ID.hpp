@@ -363,29 +363,33 @@ export namespace
 		ID_V
 	;
 
-	template
-		<	StringLiteral
-				t_vString
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	operator
-		""_ID
-	)	()
-	->	ID_T
-		<	t_vString
-		>
-	{	return{};	}
+	inline namespace
+		Literals
+	{
+		template
+			<	StringLiteral
+					t_vString
+			>
+		[[nodiscard]]
+		auto constexpr
+		(	operator
+			""_ID
+		)	()
+		->	ID_T
+			<	t_vString
+			>
+		{	return{};	}
 
-	template
-		<	StringLiteral
-				t_vString
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	operator
-		""_SV
-	)	()
-	->	StringView
-	{	return ID_T<t_vString>::StringView;	}
+		template
+			<	StringLiteral
+					t_vString
+			>
+		[[nodiscard]]
+		auto constexpr
+		(	operator
+			""_SV
+		)	()
+		->	StringView
+		{	return ID_T<t_vString>::StringView;	}
+	}
 }

@@ -107,9 +107,17 @@ export namespace
 		auto constexpr
 		(	operator()
 		)	(	TypeToken<Specifier::BitField<t_nSize>>
-			)
+			)	const
 		->	USize
-		{	return 1uz;	}
+		{
+			if	constexpr
+				(	t_nSize
+				==	sizeof(UInt<t_nSize>) * BitsPerByte
+				)
+				return alignof(UInt<t_nSize>);
+			else
+				return 1uz;
+		}
 
 		template
 			<	typename

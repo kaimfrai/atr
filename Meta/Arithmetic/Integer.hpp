@@ -19,72 +19,93 @@ export namespace
 		BitsPerByte
 	=	::std::numeric_limits<char8_t>::digits
 	;
-}
 
-namespace
-	Meta
-{
-	template
-		<	USize
-				t_nBitCount
-		>
-	static auto constexpr
-	(	UIntZero
-	)	()
-	{	if	constexpr(t_nBitCount <= 16uz)
-		{
-			if	constexpr(t_nBitCount <= 8uz)
-				return ::std::uint_least8_t{};
-			else
-				return ::std::uint_least16_t{};
-		}
-		else
-		if	constexpr(t_nBitCount <= 32uz)
-			return ::std::uint_least32_t{};
-		else
-		{
-			static_assert
-			(	t_nBitCount <= 64uz
-			,	"Unsigned integers greater than 64 bits not supported!"
-			);
-			return ::std::uint_least64_t{};
-		}
-	}
-
-	template
-		<>
 	auto constexpr
-	(	UIntZero<1uz>
-	)	()
-	{	return false;	}
+	(	ByteFloor
+	)	(	USize
+				i_nBits
+		)
+	->	USize
+	{	return
+		::std::max
+		(	::std::bit_floor(i_nBits)
+		,	BitsPerByte
+		);
+	}
 
-	template
-		<	USize
-				t_nBitCount
-		>
-	static auto constexpr
-	(	SIntZero
-	)	()
-	{	if	constexpr(t_nBitCount <= 16uz)
-		{
-			if	constexpr(t_nBitCount <= 8uz)
-				return ::std::int_least8_t{};
-			else
-				return ::std::int_least16_t{};
-		}
-		else
-		if	constexpr(t_nBitCount <= 32uz)
-			return ::std::int_least32_t{};
-		else
-		{
-			static_assert
-			(	t_nBitCount <= 64uz
-			,	"Signed integers greater than 64 bits not supported!"
-			);
-			return ::std::int_least64_t{};
-		}
+	auto constexpr
+	(	ByteCeil
+	)	(	USize
+				i_nBits
+		)
+	->	USize
+	{	return
+		::std::max
+		(	::std::bit_ceil(i_nBits)
+		,	BitsPerByte
+		);
 	}
 }
+
+template
+	<	::Meta::USize
+			t_nBitCount
+	>
+struct
+	BitCount
+{};
+
+auto constexpr
+(	UInt
+)	(	BitCount<8uz>
+	)
+->	::std::uint_least8_t
+;
+
+auto constexpr
+(	UInt
+)	(	BitCount<16uz>
+	)
+->	::std::uint_least16_t
+;
+auto constexpr
+(	UInt
+)	(	BitCount<32uz>
+	)
+->	::std::uint_least32_t
+;
+auto constexpr
+(	UInt
+)	(	BitCount<64uz>
+	)
+->	::std::uint_least64_t
+;
+
+auto constexpr
+(	SInt
+)	(	BitCount<8uz>
+	)
+->	::std::int_least8_t
+;
+
+auto constexpr
+(	SInt
+)	(	BitCount<16uz>
+	)
+->	::std::int_least16_t
+;
+auto constexpr
+(	SInt
+)	(	BitCount<32uz>
+	)
+->	::std::int_least32_t
+;
+auto constexpr
+(	SInt
+)	(	BitCount<64uz>
+	)
+->	::std::int_least64_t
+;
 
 export namespace
 	Meta
@@ -96,7 +117,11 @@ export namespace
 	using
 		UInt
 	=	decltype
-		(	UIntZero<t_nBitCount>()
+		(	::UInt
+			(	::BitCount
+				<	ByteCeil(t_nBitCount)
+				>{}
+			)
 		)
 	;
 
@@ -107,7 +132,11 @@ export namespace
 	using
 		SInt
 	=	decltype
-		(	SIntZero<t_nBitCount>()
+		(	::SInt
+			(	::BitCount
+				<	ByteCeil(t_nBitCount)
+				>{}
+			)
 		)
 	;
 }

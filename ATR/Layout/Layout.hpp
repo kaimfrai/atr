@@ -2,6 +2,7 @@ export module ATR:Layout.Layout;
 
 import :ID;
 import :Layout.Alias;
+import :Layout.BitOffset;
 import :Layout.Concept;
 import :Layout.Member;
 import :Layout.MemberOffset;

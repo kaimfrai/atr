@@ -11,6 +11,9 @@ export import Std;
 export namespace
 	ATR
 {
+	using ::Meta::Specifier::Mutable;
+	using ::Meta::Specifier::BitField;
+
 	::Meta::USize constexpr inline
 		AliasSortKey
 	=	0uz

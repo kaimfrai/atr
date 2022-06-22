@@ -1,7 +1,7 @@
 module ATR:Layout.Split;
 
-import :Layout.BitField;
 import :Layout.LayoutFwd;
+import :Layout.MakeBitLayout;
 import :Layout.Member;
 
 import Meta.Arithmetic;
@@ -15,6 +15,36 @@ using ::Meta::IndexToken;
 using ::Meta::ProtoIndexedElement;
 using ::Meta::USize;
 using ::Meta::ZeroSequence;
+
+export template
+	<	typename
+		...	t_tpMember
+	>
+auto constexpr
+(	MakeLayout
+)	()
+->	decltype(auto)
+{
+	if	constexpr
+		((	...
+		and	(	1uz
+			==	t_tpMember
+			::	BitAlign
+			)
+		))
+		return
+		MakeBitLayout
+		<	t_tpMember
+			...
+		>();
+	else
+		return
+		Layout
+		<	t_tpMember
+			...
+		>{};
+}
+
 
 template
 	<	USize
@@ -38,47 +68,27 @@ struct
 			...
 		,	...
 		)
-	->	Layout
-		<	t_tpFront
-			...
-		>
-	{	return {};	}
+	->	decltype(auto)
+	{	return
+		MakeLayout<t_tpFront...>
+		();
+	}
 
 	template
 		<	typename
-				t_tFirstBack
-		,	typename
 			...	t_tpBack
 		>
 	static auto constexpr
 	(	Back
 	)	(	IgnoreIndexedElement<t_npIndex>
 			...
-		,	t_tFirstBack*
 		,	t_tpBack*
 			...
 		)
-	{
-		if	constexpr
-			(	t_tFirstBack
-			::	BitAlign
-			==	1uz
-			)
-		{
-			return
-			MakeBitLayout
-			<	t_tFirstBack
-			,	t_tpBack
-				...
-			>();
-		}
-		else
-			return
-			Layout
-			<	t_tFirstBack
-			,	t_tpBack
-				...
-			>{};
+	->	decltype(auto)
+	{	return
+		MakeLayout<t_tpBack...>
+		();
 	}
 };
 

@@ -13,9 +13,10 @@ export namespace
 		>
 	using
 		ByteArray
-	=	::std::byte
-		[	sizeof(t_tEntity)
-		]
+	=	::std::array
+		<	::std::byte
+		,	sizeof(t_tEntity)
+		>
 	;
 
 	template
@@ -35,7 +36,7 @@ export namespace
 		::std::copy
 		(	i_aBytes
 		,	i_aBytes + sizeof(t_tEntity)
-		,	+vBytes
+		,	begin(vBytes)
 		);
 		return
 		::std::bit_cast
@@ -66,9 +67,9 @@ export namespace
 		;
 		return
 		::std::copy
-		(	::std::begin(vBytes)
-		,	::std::end(vBytes)
-		,	+o_aBytes
+		(	begin(vBytes)
+		,	end(vBytes)
+		,	o_aBytes
 		);
 	}
 

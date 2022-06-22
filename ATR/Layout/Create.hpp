@@ -5,6 +5,7 @@ import :Layout.AliasLayout;
 import :Layout.Data;
 import :Layout.LayoutFwd;
 import :Layout.Member;
+import :Layout.Split;
 import :Layout.Static;
 
 import Meta.Arithmetic;
@@ -124,12 +125,14 @@ auto constexpr
 	{
 		using
 			DynamicLayoutType
-		=	Layout
-			<	DeduceMember
-				<	t_vConfig[t_npDynamicIndex]
-				>
-				...
-			>
+		=	decltype
+			(	::MakeLayout
+				<	DeduceMember
+					<	t_vConfig[t_npDynamicIndex]
+					>
+					...
+				>()
+			)
 		;
 		using
 			StaticLayoutType
