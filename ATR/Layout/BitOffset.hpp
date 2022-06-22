@@ -97,10 +97,12 @@ export namespace
 			{	// the underlying byte array is defined mutable
 				// if the offset points to that array this is well defined
 				// if not all bets are off regardless
-				const_cast
-				<	::std::byte*
-				>(	i_aObject
-				+	Offset
+				::std::launder
+				(	const_cast
+					<	::std::byte*
+					>(	i_aObject
+					+	Offset
+					)
 				)
 			};
 		}
