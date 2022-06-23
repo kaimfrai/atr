@@ -10,6 +10,7 @@ PARTITION
 	Layout/AliasLayout.hpp
 	Layout/AliasResolver.hpp
 	Layout/Bit/Access.hpp
+	Layout/Bit/ArrayReference.hpp
 	Layout/Bit/Iterator.hpp
 	Layout/Bit/Layout.hpp
 	Layout/Bit/MakeLayout.hpp
