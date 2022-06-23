@@ -1,5 +1,6 @@
 import ATR;
 
+using ::Meta::Arithmetic::SetOneBits;
 using ::Meta::BitsPerByte;
 using ::Meta::UInt;
 using ::Meta::USize;
@@ -23,6 +24,7 @@ auto constexpr SetAndCheck(UInt<t_nSize> v) -> bool
 
 	using BitReference = ATR::Bit::Reference<vBitSize, vBitOffset>;
 	using BitAccess = typename BitReference::BitAccess;
+	v &= SetOneBits(t_nSize);
 
 	::std::byte aBuffer[(t_nOffset + t_nSize + (BitsPerByte - 1uz))/ BitsPerByte]{};
 	::std::byte* const aPosition = aBuffer + t_nOffset / BitsPerByte;
@@ -38,6 +40,10 @@ static_assert
 );
 static_assert
 (	SetAndCheck<28, 7>(31)
+);
+
+static_assert
+(	SetAndCheck<20, 10>(105)
 );
 
 static_assert

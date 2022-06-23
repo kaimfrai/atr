@@ -5,10 +5,13 @@ import :Layout.Bit.ElementReference;
 import :Layout.Bit.Iterator;
 
 import Meta.Arithmetic;
+import Meta.Token;
 
 import Std;
 
-// using ::Meta::USize;
+using ::Meta::IndexToken;
+using ::Meta::Sequence;
+using ::Meta::USize;
 
 export namespace
 	ATR::Bit
@@ -28,7 +31,27 @@ export namespace
 		,	"Cannot form a reference to BitFields of length 0!"
 		);
 
-		using BitAccess = Access<t_nSize>;
+		static EOffset constexpr
+			MaximumOffset
+		{	[]
+			<	USize
+				...	t_npIndex
+			>	(	IndexToken<t_npIndex...>
+				)
+			{	return
+				::std::max
+				({	(	(	static_cast<USize>(t_nSize)
+						*	t_npIndex
+						)
+					%	BitsPerByte
+					)
+					...
+				});
+			}(	// include offset of one-past-the-end for end() iterator value
+				Sequence<t_nCount + 1uz>
+			)
+		};
+		using BitAccess = Access<t_nSize, MaximumOffset>;
 		using MaskType = typename BitAccess::BufferFieldType;
 
 		static auto constexpr
@@ -38,10 +61,10 @@ export namespace
 			)
 		;
 
-		using reference = ElementReference<t_nSize>;
+		using reference = ElementReference<t_nSize, MaximumOffset>;
 		using difference_type = SSize;
 		using value_type = typename BitAccess::FieldType;
-		using iterator = Iterator<t_nSize>;
+		using iterator = Iterator<t_nSize, MaximumOffset>;
 
 		::std::byte
 		*	const
@@ -78,7 +101,7 @@ export namespace
 
 			return
 			{	m_aUnderlyingArray + vByteOffset
-			,	ZeroOffsetMask << vBitOffset
+			,	static_cast<MaskType>(ZeroOffsetMask << vBitOffset)
 			};
 		}
 

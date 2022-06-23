@@ -12,45 +12,6 @@ static_assert
 ,	"Big Endian not yet supported for use byte casting!"
 );
 
-template
-	<	USize
-			t_nValueBytes
-	,	USize
-			t_nPaddingBytes
-	>
-struct
-	Object final
-{
-	::std::byte
-		Value
-		[	t_nValueBytes
-		]
-	;
-
-	::std::byte
-		Padding
-		[	t_nPaddingBytes
-		]
-	{};
-};
-
-template
-	<	USize
-			t_nValueBytes
-	>
-struct
-	Object
-	<	t_nValueBytes
-	,	0uz
-	>	final
-{
-	::std::byte
-		Value
-		[	t_nValueBytes
-		]
-	;
-};
-
 export namespace
 	Meta::Arithmetic
 {
@@ -78,20 +39,25 @@ export namespace
 	(	ReadFromBytes
 	)	(	::std::byte const
 			*	i_aBytes
+		,	USize
+				i_nActiveValueBytes
+			=	t_nValueBytes
 		)
 	->	t_tEntity
 	{
 		static_assert(t_nValueBytes <= sizeof(t_tEntity));
 
-		using tObject = ::Object<t_nValueBytes, sizeof(t_tEntity) - t_nValueBytes>;
+		using tObject = ByteArray<t_tEntity>;
 		tObject
 			vObject
-		;
+		{};
+		if (i_nActiveValueBytes > t_nValueBytes)
+			::std::unreachable();
 
 		::std::copy
 		(	i_aBytes
-		,	i_aBytes + t_nValueBytes
-		,	vObject.Value
+		,	i_aBytes + i_nActiveValueBytes
+		,	begin(vObject)
 		);
 		return
 		::std::bit_cast
@@ -113,12 +79,18 @@ export namespace
 			&	i_rEntity
 		,	::std::byte
 			*	o_aBytes
+		,	USize
+				i_nActiveValueBytes
+			=	t_nValueBytes
 		)
 	->	::std::byte*
 	{
 		static_assert(t_nValueBytes <= sizeof(t_tEntity));
 
-		using tObject = ::Object<t_nValueBytes, sizeof(t_tEntity) - t_nValueBytes>;
+		using tObject = ByteArray<t_tEntity>;
+
+		if (i_nActiveValueBytes > t_nValueBytes)
+			::std::unreachable();
 
 		auto const
 			vObject
@@ -129,8 +101,8 @@ export namespace
 		;
 		return
 		::std::copy
-		(	vObject.Value
-		,	vObject.Value + t_nValueBytes
+		(	begin(vObject)
+		,	begin(vObject) + i_nActiveValueBytes
 		,	o_aBytes
 		);
 	}

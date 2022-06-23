@@ -47,10 +47,6 @@ export namespace
 				t_nSize
 		,	EOffset
 				t_nMaxOffset
-			=	static_cast<EOffset>
-				(	BitsPerByte
-				-	1uz
-				)
 		>
 	struct
 		Access final
@@ -75,6 +71,12 @@ export namespace
 			)
 		/	BitsPerByte
 		;
+
+		static_assert
+		(	BufferByteSize
+		<=	sizeof(USize)
+		,	"Bit Buffers greater than USize not yet supported!"
+		);
 
 		static auto constexpr
 			BufferBitSize
@@ -128,6 +130,41 @@ export namespace
 
 		using FieldType = decltype(CastToField(0));
 
+		static auto constexpr
+		(	BitOffset
+		)	(	BufferFieldType
+					i_nMask
+			)
+		->	BufferFieldType
+		{
+			if	constexpr
+				(	t_nSize
+				==	ESize{1}
+				)
+			{
+				return 0uz;
+			}
+			else
+			{
+				if	(i_nMask == 0)
+					::std::unreachable();
+
+				return static_cast<BufferFieldType>(::std::countr_zero(i_nMask));
+			}
+		}
+
+		static auto constexpr
+		(	RealBufferSize
+		)	(	BufferFieldType
+					i_nMask
+			)
+		->	USize
+		{	return
+			(	(static_cast<USize>(t_nSize) + static_cast<USize>(BitOffset(i_nMask)) + (BitsPerByte - 1uz))
+			/	BitsPerByte
+			);
+		}
+
 		[[nodiscard]]
 		static auto constexpr
 		(	ReadField
@@ -148,19 +185,12 @@ export namespace
 				<	BufferFieldType
 				,	BufferByteSize
 				>(	i_aBuffer
+				,	RealBufferSize(i_nMask)
 				)
 			;
 
 			vBufferField &= i_nMask;
-
-			if	constexpr
-				(	t_nSize
-				>	ESize{1}
-				)
-			{
-				// not necessary for 1 bit as it is casted to bool
-				vBufferField >>= ::std::countr_zero(i_nMask);
-			}
+			vBufferField >>= BitOffset(i_nMask);
 
 			return CastToField(vBufferField);
 		}
@@ -187,6 +217,7 @@ export namespace
 					<	BufferFieldType
 					,	BufferByteSize
 					>(	i_aBuffer
+					,	RealBufferSize(i_nMask)
 					)
 				bitand
 					static_cast<BufferFieldType>
@@ -205,7 +236,7 @@ export namespace
 			:	static_cast<BufferFieldType>
 				(	static_cast<BufferFieldType>
 					(	static_cast<BufferFieldType>(i_vValue)
-					<<	::std::countr_zero(i_nMask)
+					<<	BitOffset(i_nMask)
 					)
 				bitand
 					i_nMask
@@ -219,6 +250,7 @@ export namespace
 			bitor
 				vSetMask
 			,	i_aBuffer
+			,	RealBufferSize(i_nMask)
 			);
 		}
 	};
