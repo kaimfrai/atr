@@ -133,12 +133,15 @@ export namespace
 		(	ReadField
 		)	(	::std::byte const
 				*	i_aBuffer
-			,	EOffset
-					i_nOffset
-				=	t_nMaxOffset
+			,	BufferFieldType
+					i_nMask
+				=	BitFieldMask
 			)
 		->	FieldType
 		{
+			if	(i_nMask == 0)
+				::std::unreachable();
+
 			auto
 				vBufferField
 			=	ReadFromBytes
@@ -148,8 +151,16 @@ export namespace
 				)
 			;
 
-			vBufferField >>= static_cast<BufferFieldType>(i_nOffset);
-			vBufferField &= BitFieldMask;
+			vBufferField &= i_nMask;
+
+			if	constexpr
+				(	t_nSize
+				>	ESize{1}
+				)
+			{
+				// not necessary for 1 bit as it is casted to bool
+				vBufferField >>= ::std::countr_zero(i_nMask);
+			}
 
 			return CastToField(vBufferField);
 		}
@@ -160,43 +171,53 @@ export namespace
 					i_vValue
 			,	::std::byte
 				*	i_aBuffer
-			,	EOffset
-					i_nOffset
-				=	t_nMaxOffset
+			,	BufferFieldType
+					i_nMask
+				=	BitFieldMask
 			)
 		->	void
 		{
-			auto
+			if	(i_nMask == 0)
+				::std::unreachable();
+
+			auto const
 				vBufferField
-			=	// safe offset bits at the back
-				::std::rotr
+			=	static_cast<BufferFieldType>
 				(	ReadFromBytes
 					<	BufferFieldType
 					,	BufferByteSize
 					>(	i_aBuffer
 					)
-				,	::std::to_underlying(i_nOffset)
+				bitand
+					static_cast<BufferFieldType>
+					(	compl i_nMask
+					)
 				)
 			;
 
-			(	vBufferField
-			&=	static_cast<BufferFieldType>(compl BitFieldMask)
-			);
-
-			(	vBufferField
-			|=	i_vValue
-			bitand
-				BitFieldMask
-			);
+			auto const
+				vSetMask
+			{	(t_nSize == ESize{1})
+			?	// optimization for bool
+				static_cast<BufferFieldType>
+				(	i_vValue * i_nMask
+				)
+			:	static_cast<BufferFieldType>
+				(	static_cast<BufferFieldType>
+					(	static_cast<BufferFieldType>(i_vValue)
+					<<	::std::countr_zero(i_nMask)
+					)
+				bitand
+					i_nMask
+				)
+			};
 
 			WriteToBytes
 			<	BufferFieldType
 			,	BufferByteSize
-			>(	// bring offset bits back to the front
-				::std::rotl
-				(	vBufferField
-				,	::std::to_underlying(i_nOffset)
-				)
+			>(	vBufferField
+			bitor
+				vSetMask
 			,	i_aBuffer
 			);
 		}
