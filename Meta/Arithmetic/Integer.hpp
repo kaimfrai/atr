@@ -88,6 +88,9 @@ auto constexpr
 	)
 ->	unsigned __int128
 ;
+using UIntMax = unsigned __int128;
+#else
+using UIntMax = ::std::uintmax_t;
 #endif
 
 auto constexpr
@@ -123,6 +126,9 @@ auto constexpr
 	)
 ->	__int128
 ;
+using SIntMax = __int128;
+#else
+using SIntMax = ::std::intmax_t;
 #endif
 
 export namespace
@@ -143,6 +149,11 @@ export namespace
 		)
 	;
 
+	using
+		UIntMax
+	=	::UIntMax
+	;
+
 	template
 		<	USize
 				t_nBitCount
@@ -156,5 +167,10 @@ export namespace
 				>{}
 			)
 		)
+	;
+
+	using
+		SIntMax
+	=	::SIntMax
 	;
 }

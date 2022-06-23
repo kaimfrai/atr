@@ -30,6 +30,11 @@ namespace ATR
 }
 
 using namespace ATR::Literals;
+using ATR::BitReference;
+using ::Meta::UInt;
+
+using Offset = ::ATR::EBitFieldOffset;
+using Size = ::ATR::EBitFieldSize;
 using BitFieldTest = ::ATR::Type<"BitFieldTest">;
 
 static_assert
@@ -45,7 +50,7 @@ static_assert
 			[	"0BoolBit"_ID
 			]
 		)
-	,	ATR::BitReference<0uz, 1uz>
+	,	BitReference<Size{1}, Offset{0}>
 	>
 );
 
@@ -78,7 +83,7 @@ static_assert
 			[	"1MutBoolBit"_ID
 			]
 		)
-	,	ATR::BitReference<1uz, 1uz>
+	,	BitReference<Size{1}, Offset{1}>
 	>
 );
 
@@ -89,7 +94,7 @@ static_assert
 			[	"1MutBoolBit"_ID
 			]
 		)
-	,	ATR::BitReference<1uz, 1uz>
+	,	BitReference<Size{1}, Offset{1}>
 	>
 );
 
@@ -111,7 +116,7 @@ static_assert
 			[	"2BitField31"_ID
 			]
 		)
-	,	ATR::BitReference<2uz, 31uz>
+	,	BitReference<Size{31}, Offset{2}>
 	>
 );
 
@@ -144,7 +149,7 @@ static_assert
 			[	"3MutBitField31"_ID
 			]
 		)
-	,	ATR::BitReference<1uz, 31uz>
+	,	BitReference<Size{31}, Offset{1}>
 	>
 );
 
@@ -155,7 +160,7 @@ static_assert
 			[	"3MutBitField31"_ID
 			]
 		)
-	,	ATR::BitReference<1uz, 31uz>
+	,	BitReference<Size{31}, Offset{1}>
 	>
 );
 

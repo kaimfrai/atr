@@ -1,19 +1,22 @@
 export module ATR:Layout.BitOffset;
 
-export import :Erase;
-export import :Layout.BitReference;
+import :Layout.BitAccess;
+import :Layout.BitReference;
 
-export import Meta.Arithmetic;
+import Meta.Arithmetic;
+import Meta.Token;
 
-export import Std;
+import Std;
 
+using ::Meta::BitSize;
+using ::Meta::Type;
 using ::Meta::USize;
 
 export namespace
 	ATR
 {
 	template
-		<	USize
+		<	EBitFieldOffset
 				t_nBitOffset
 		,	typename
 				t_tMember
@@ -21,6 +24,18 @@ export namespace
 	struct
 		BitOffset
 	{
+		using
+			BitAccess
+		=	::ATR::BitAccess
+			<	static_cast<EBitFieldSize>
+				(	BitSize
+					(	Type<t_tMember>
+					)
+				)
+			,	t_nBitOffset
+			>
+		;
+
 		USize
 			Offset
 		;
@@ -32,40 +47,49 @@ export namespace
 				*	i_aObject
 			)	const
 			noexcept
-		->	//	convert rvalue reference to prvalue
-			//	do not return const which would disable move semantics
-			::std::remove_cvref_t<t_tMember>
+		->	typename BitAccess::FieldType
 		{	return
-			{	BitReference
-				<	t_nBitOffset
-				,	Meta::BitSize
-					(	Meta::Type<t_tMember>
-					)
-				>
+				BitAccess
 			::	ReadField(i_aObject + Offset)
-			};
+			;
 		}
 
 		/// immitates syntax of pointer to member dereference
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator->*
-		)	(	::std::byte const
+		)	(	::std::byte
 				*	i_aObject
 			,	BitOffset
 					i_vBitOffset
 			)
 			noexcept
-		->	t_tMember
+		->	decltype(auto)
 		{	return
 			i_vBitOffset
 			(	i_aObject
 			);
 		}
+
+
+		[[nodiscard]]
+		friend auto constexpr
+		(	operator +
+		)	(	USize
+					i_nOffset
+			,	BitOffset
+					i_vMember
+			)
+		->	BitOffset
+		{	return
+			{	i_nOffset
+			+	i_vMember.Offset
+			};
+		}
 	};
 
 	template
-		<	USize
+		<	EBitFieldOffset
 				t_nBitOffset
 		,	typename
 				t_tMember
@@ -76,6 +100,18 @@ export namespace
 		,	t_tMember&
 		>
 	{
+		using
+			BitReference
+		=	::ATR::BitReference
+			<	static_cast<EBitFieldSize>
+				(	BitSize
+					(	Type<t_tMember>
+					)
+				)
+			,	t_nBitOffset
+			>
+		;
+
 		USize
 			Offset
 		;
@@ -88,11 +124,6 @@ export namespace
 			)	const
 			noexcept
 		->	BitReference
-			<	t_nBitOffset
-			,	Meta::BitSize
-				(	Meta::Type<t_tMember>
-				)
-			>
 		{	return
 			{	// the underlying byte array is defined mutable
 				// if the offset points to that array this is well defined
@@ -123,25 +154,20 @@ export namespace
 			(	i_aObject
 			);
 		}
-	};
 
-	template
-		<	USize
-				t_nBitOffset
-		,	typename
-				t_tMember
-		>
-	auto constexpr
-	(	operator +
-	)	(	USize
-				i_nOffset
-		,	BitOffset<t_nBitOffset, t_tMember>
-				i_nMember
-		)
-	->	BitOffset<t_nBitOffset, t_tMember>
-	{	return
-		{	i_nOffset
-		+	i_nMember.Offset
-		};
-	}
+		[[nodiscard]]
+		friend auto constexpr
+		(	operator +
+		)	(	USize
+					i_nOffset
+			,	BitOffset
+					i_vMember
+			)
+		->	BitOffset
+		{	return
+			{	i_nOffset
+			+	i_vMember.Offset
+			};
+		}
+	};
 }

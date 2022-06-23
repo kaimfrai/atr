@@ -6,6 +6,7 @@ import Std;
 
 using ::ATR::ProtoID;
 using ::Meta::BitsPerByte;
+using ::Meta::USize;
 
 export namespace
 	ATR
@@ -21,15 +22,17 @@ export namespace
 	{
 		using t_tpBitView::View...;
 		using t_tpBitView::ConstView...;
-		using t_tpBitView::MoveView...;
+		using t_tpBitView::Move...;
 		using t_tpBitView::OffsetOf...;
 
 		static auto constexpr
 			BitCount
 		=(	0uz
 		+	...
-		+	t_tpBitView
-		::	BitSize
+		+	static_cast<USize>
+			(	t_tpBitView
+			::	BitSize
+			)
 		);
 
 		static auto constexpr
@@ -84,7 +87,7 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			MoveView
+			Move
 			(	i_vMemberID
 			,	+Buffer
 			);

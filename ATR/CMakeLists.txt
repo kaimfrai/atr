@@ -9,6 +9,8 @@ PARTITION
 	Layout/Alias.hpp
 	Layout/AliasLayout.hpp
 	Layout/AliasResolver.hpp
+	Layout/BitAccess.hpp
+	Layout/BitIterator.hpp
 	Layout/BitLayout.hpp
 	Layout/BitOffset.hpp
 	Layout/BitReference.hpp

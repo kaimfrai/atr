@@ -1,6 +1,7 @@
 export module ATR:Layout.BitView;
 
 import :ID;
+import :Layout.BitAccess;
 import :Layout.BitReference;
 import :Layout.BitOffset;
 
@@ -8,12 +9,18 @@ import Meta.Arithmetic;
 
 import Std;
 
+using ::Meta::BitSize;
 using ::Meta::BitsPerByte;
+using ::Meta::Lex::Transform;
+using ::Meta::Type;
+using ::Meta::TypeEntity;
 using ::Meta::USize;
 
 export namespace
 	ATR
 {
+	using ::Meta::Specifier::Mutable;
+
 	template
 		<	USize
 				t_nOffset
@@ -28,39 +35,56 @@ export namespace
 	{
 		static auto constexpr
 			BitSize
-		=	t_nSize
+		=	static_cast<EBitFieldSize>(t_nSize)
 		;
+
+		static auto constexpr
+			ByteOffset
+		=	t_nOffset / BitsPerByte
+		;
+
+		static auto constexpr
+			BitOffset
+		=	static_cast<EBitFieldOffset>(t_nOffset % BitsPerByte)
+		;
+
 		using
 			reference
 		=	BitReference
-			<	t_nOffset % BitsPerByte
-			,	BitSize
+			<	BitSize
+			,	BitOffset
 			>
+		;
+		using
+			BitAccess
+		=	typename
+			reference
+		::	BitAccess
 		;
 
 		static auto constexpr
 		(	View
-		)	(	::ATR::ID<t_rpName...>
+		)	(	ID<t_rpName...>
 			,	::std::byte
 				*	i_aBuffer
 			)
 			noexcept
 		->	reference
 		{	return
-			{	i_aBuffer + t_nOffset / BitsPerByte
+			{	i_aBuffer + ByteOffset
 			};
 		}
 
 		static auto constexpr
-		(	MoveView
-		)	(	::ATR::ID<t_rpName...>
+		(	Move
+		)	(	ID<t_rpName...>
 			,	::std::byte const
 				*	i_aBuffer
 			)
 			noexcept
 		->	typename reference::FieldType
 		{	return
-				reference
+				BitAccess
 			::	ReadField(i_aBuffer)
 			;
 		}
@@ -79,8 +103,8 @@ export namespace
 		BitView
 	:	BitViewBase
 		<	t_nOffset
-		,	::Meta::BitSize
-			(	::Meta::Type<t_tEntity>
+		,	BitSize
+			(	Type<t_tEntity>
 			)
 		,	t_rpName
 			...
@@ -88,7 +112,7 @@ export namespace
 	{
 		static auto constexpr
 		(	ConstView
-		)	(	::ATR::ID<t_rpName...>
+		)	(	ID<t_rpName...>
 					i_vName
 			,	::std::byte const
 				*	i_aBuffer
@@ -96,7 +120,7 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			BitView::MoveView
+			BitView::Move
 			(	i_vName
 			,	i_aBuffer
 			);
@@ -108,27 +132,18 @@ export namespace
 			>
 		static auto constexpr
 		(	OffsetOf
-		)	(	::ATR::ID<t_rpName...>
-			,	::Meta::Lex::Transform<t_tpTransform...>
+		)	(	ID<t_rpName...>
+			,	Transform<t_tpTransform...>
 					i_vTransform
 			)
 		{
 			using
 				tTransformed
-			=	Meta::TypeEntity
+			=	TypeEntity
 				<	i_vTransform
-					(	Meta::Type<t_tEntity>
+					(	Type<t_tEntity>
 					)
 				>
-			;
-
-			auto constexpr
-				nByteOffset
-			=	t_nOffset / ::Meta::BitsPerByte
-			;
-			auto constexpr
-				nBitOffset
-			=	t_nOffset - nByteOffset
 			;
 
 			//	only opt into using BitReference for T&
@@ -143,19 +158,19 @@ export namespace
 				)
 			{	return
 				BitOffset
-				<	nBitOffset
+				<	BitView::BitOffset
 				,	tTransformed
-				>{	nByteOffset
+				>{	BitView::ByteOffset
 				};
 			}
 			else
 			{	return
 				BitOffset
-				<	nBitOffset
+				<	BitView::BitOffset
 				,	::std::remove_cvref_t
 					<	tTransformed
 					>
-				>{	nByteOffset
+				>{	BitView::ByteOffset
 				};
 			}
 		}
@@ -173,14 +188,14 @@ export namespace
 	struct
 		BitView
 		<	t_nOffset
-		,	::Meta::Specifier::Mutable<t_tEntity>
+		,	Mutable<t_tEntity>
 		,	t_rpName
 			...
 		>
 	:	BitViewBase
 		<	t_nOffset
-		,	::Meta::BitSize
-			(	::Meta::Type<t_tEntity>
+		,	BitSize
+			(	Type<t_tEntity>
 			)
 		,	t_rpName
 			...
@@ -188,7 +203,7 @@ export namespace
 	{
 		static auto constexpr
 		(	ConstView
-		)	(	::ATR::ID<t_rpName...>
+		)	(	ID<t_rpName...>
 					i_vName
 			,	::std::byte
 				*	i_aBuffer
@@ -208,27 +223,18 @@ export namespace
 			>
 		static auto constexpr
 		(	OffsetOf
-		)	(	::ATR::ID<t_rpName...>
-			,	::Meta::Lex::Transform<t_tpTransform...>
+		)	(	ID<t_rpName...>
+			,	Transform<t_tpTransform...>
 					i_vTransform
 			)
 		{
 			using
 				tTransformed
-			=	Meta::TypeEntity
+			=	TypeEntity
 				<	i_vTransform
-					(	Meta::Type<t_tEntity>
+					(	Type<t_tEntity>
 					)
 				>
-			;
-
-			auto constexpr
-				nByteOffset
-			=	t_nOffset / ::Meta::BitsPerByte
-			;
-			auto constexpr
-				nBitOffset
-			=	t_nOffset - nByteOffset
 			;
 
 			//	for mutable, opt into using BitReference for T const& and T&
@@ -237,19 +243,19 @@ export namespace
 				)
 			{	return
 				BitOffset
-				<	nBitOffset
+				<	BitView::BitOffset
 				,	tTransformed
-				>{	nByteOffset
+				>{	BitView::ByteOffset
 				};
 			}
 			else
 			{	return
 				BitOffset
-				<	nBitOffset
+				<	BitView::BitOffset
 				,	::std::remove_cvref_t
 					<	tTransformed
 					>
-				>{	nByteOffset
+				>{	BitView::ByteOffset
 				};
 			}
 		}

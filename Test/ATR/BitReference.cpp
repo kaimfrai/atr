@@ -12,10 +12,22 @@ template
 	>
 auto constexpr SetAndCheck(UInt<t_nSize> v) -> bool
 {
-	using BitReference = ATR::BitReference<t_nOffset % BitsPerByte, t_nSize>;
+	auto constexpr
+		vBitOffset
+	=	static_cast<ATR::EBitFieldOffset>(t_nOffset % BitsPerByte)
+	;
+	auto constexpr
+		vBitSize
+	=	static_cast<ATR::EBitFieldSize>(t_nSize)
+	;
+
+	using BitReference = ATR::BitReference<vBitSize, vBitOffset>;
+	using BitAccess = typename BitReference::BitAccess;
+
 	::std::byte aBuffer[(t_nOffset + t_nSize + (BitsPerByte - 1uz))/ BitsPerByte]{};
-	auto const nPrevious = BitReference::ReadField(aBuffer + t_nOffset / BitsPerByte);
-	BitReference r{aBuffer + t_nOffset / BitsPerByte};
+	::std::byte* const aPosition = aBuffer + t_nOffset / BitsPerByte;
+	auto const nPrevious = BitAccess::ReadField(aPosition);
+	BitReference r{aPosition};
 	r = v;
 
 	return ((v != nPrevious) == (r != nPrevious)) and r == v;

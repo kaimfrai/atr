@@ -3,6 +3,8 @@ export module ATR:Layout;
 export import :DataMember;
 export import :ID;
 export import :Layout.AliasLayout;
+export import :Layout.BitAccess;
+export import :Layout.BitIterator;
 export import :Layout.BitLayout;
 export import :Layout.BitReference;
 export import :Layout.BitView;
