@@ -1,4 +1,4 @@
-export module ATR:Layout.Bit.Reference;
+export module ATR:Layout.Bit.ElementReference;
 
 import :Layout.Bit.Access;
 
@@ -10,18 +10,20 @@ export namespace
 	template
 		<	ESize
 				t_nSize
-		,	EOffset
-				t_nOffset
 		>
 	struct
-		Reference final
+		ElementReference final
 	{
-		using BitAccess = ::ATR::Bit::Access<t_nSize, t_nOffset>;
+		using BitAccess = ::ATR::Bit::Access<t_nSize>;
 		using FieldType = typename BitAccess::FieldType;
+		using MaskType = typename BitAccess::BufferFieldType;
 
 		::std::byte
 		*	const
 			m_aUnderlyingArray
+		;
+		MaskType const
+			m_vMask
 		;
 
 		[[nodiscard]]
@@ -31,6 +33,7 @@ export namespace
 		{	return
 			BitAccess::ReadField
 			(	m_aUnderlyingArray
+			,	m_vMask
 			);
 		}
 
@@ -39,9 +42,13 @@ export namespace
 		)	(	FieldType
 					i_vValue
 			)	&
-		->	Reference&
+		->	ElementReference&
 		{
-			BitAccess::WriteField(i_vValue, m_aUnderlyingArray);
+			BitAccess::WriteField
+			(	i_vValue
+			,	m_aUnderlyingArray
+			,	m_vMask
+			);
 			return *this;
 		}
 
@@ -50,7 +57,7 @@ export namespace
 		)	(	FieldType
 					i_vValue
 			)	&&
-		->	Reference&&
+		->	ElementReference&&
 		{
 			return
 			::std::move

@@ -4,6 +4,8 @@ export import :DataMember;
 export import :ID;
 export import :Layout.AliasLayout;
 export import :Layout.Bit.Access;
+export import :Layout.Bit.ArrayReference;
+export import :Layout.Bit.ElementReference;
 export import :Layout.Bit.Iterator;
 export import :Layout.Bit.Layout;
 export import :Layout.Bit.MemberOffset;

@@ -1,7 +1,7 @@
 export module ATR:Layout.Bit.Iterator;
 
 import :Layout.Bit.Access;
-import :Layout.Bit.ArrayReference;
+import :Layout.Bit.ElementReference;
 
 import Meta.Arithmetic;
 
@@ -25,10 +25,24 @@ export namespace
 		using reference = ElementReference<t_nSize>;
 		using difference_type = SSize;
 		using value_type = typename BitAccess::FieldType;
+		using MaskType = typename BitAccess::BufferFieldType;
 
-		reference
-			m_vReference
+		::std::byte
+		*	m_aUnderlyingArray
 		;
+		MaskType
+			m_vMask
+		;
+
+		auto constexpr
+		(	operator *
+		)	()	const
+		->	reference
+		{	return
+			{	m_aUnderlyingArray
+			,	m_vMask
+			};
+		}
 
 		auto constexpr
 		(	operator[]
@@ -37,14 +51,11 @@ export namespace
 			)	const
 		->	reference
 		{
-			return (*this + i_nIndex).m_vReference;
+			auto const vOffset = (*this + i_nIndex);
+			return
+			*	vOffset
+			;
 		}
-
-		auto constexpr
-		(	operator *
-		)	()	const
-		->	reference
-		{	return m_vReference;	}
 
 		auto constexpr
 		(	operator +=
@@ -55,7 +66,7 @@ export namespace
 		{
 			auto const
 				vMask
-			=	m_vReference.m_vMask
+			=	m_vMask
 			;
 			if	(vMask == 0)
 				::std::unreachable();
@@ -73,7 +84,7 @@ export namespace
 			+	static_cast<SSize>(t_nSize)
 			*	i_nIncrement
 			;
-			(	m_vReference.m_aUnderlyingArray
+			(	m_aUnderlyingArray
 			+=	(	vTotalBitOffset
 				/	static_cast<SSize>(BitsPerByte)
 				)
@@ -91,7 +102,7 @@ export namespace
 			,	"The following optimization is invalid."
 			);
 
-			(	m_vReference.m_vMask
+			(	m_vMask
 			= 	::std::rotl
 				(	vMask
 				,	static_cast<unsigned int>

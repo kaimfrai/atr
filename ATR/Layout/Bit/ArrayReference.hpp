@@ -1,8 +1,14 @@
 export module ATR:Layout.Bit.ArrayReference;
 
 import :Layout.Bit.Access;
+import :Layout.Bit.ElementReference;
+import :Layout.Bit.Iterator;
+
+import Meta.Arithmetic;
 
 import Std;
+
+// using ::Meta::USize;
 
 export namespace
 	ATR::Bit
@@ -10,59 +16,102 @@ export namespace
 	template
 		<	ESize
 				t_nSize
+		,	USize
+				t_nCount
 		>
 	struct
-		ElementReference final
+		ArrayReference final
 	{
-		using BitAccess = ::ATR::Bit::Access<t_nSize>;
-		using FieldType = typename BitAccess::FieldType;
+		static_assert
+		(	t_nSize
+		>	ESize{}
+		,	"Cannot form a reference to BitFields of length 0!"
+		);
+
+		using BitAccess = Access<t_nSize>;
 		using MaskType = typename BitAccess::BufferFieldType;
 
+		static auto constexpr
+			ZeroOffsetMask
+		=	SetOneBits
+			(	static_cast<USize>(t_nSize)
+			)
+		;
+
+		using reference = ElementReference<t_nSize>;
+		using difference_type = SSize;
+		using value_type = typename BitAccess::FieldType;
+		using iterator = Iterator<t_nSize>;
+
 		::std::byte
-		*	m_aUnderlyingArray
-		;
-		MaskType
-			m_vMask
+		*	const
+			m_aUnderlyingArray
 		;
 
-		[[nodiscard]]
-		explicit(false) constexpr
-		(	operator FieldType
-		)	()	const
-		{	return
-			BitAccess::ReadField
-			(	m_aUnderlyingArray
-			,	m_vMask
-			);
-		}
-
 		auto constexpr
-		(	operator =
-		)	(	FieldType
-					i_vValue
-			)	&
-		->	ElementReference&
+		(	IteratorAt
+		)	(	USize
+					i_nIndex
+			)	const&
+		->	iterator
 		{
-			BitAccess::WriteField
-			(	i_vValue
-			,	m_aUnderlyingArray
-			,	m_vMask
-			);
-			return *this;
-		}
+			if	(i_nIndex > t_nCount)
+				::std::unreachable();
 
-		auto constexpr
-		(	operator =
-		)	(	FieldType
-					i_vValue
-			)	&&
-		->	ElementReference&&
-		{
+			auto const
+				vTotalOffset
+			=	i_nIndex
+			*	static_cast<USize>(t_nSize)
+			;
+
+			auto const
+				vByteOffset
+			=	vTotalOffset
+			/	BitsPerByte
+			;
+
+			auto const
+				vBitOffset
+			=	vTotalOffset
+			%	BitsPerByte
+			;
+
 			return
-			::std::move
-			(	*this
-			=	i_vValue
-			);
+			{	m_aUnderlyingArray + vByteOffset
+			,	ZeroOffsetMask << vBitOffset
+			};
 		}
+
+		auto constexpr
+		(	operator[]
+		)	(	USize
+					i_nIndex
+			)	&
+		->	reference
+		{	return *IteratorAt(i_nIndex);	}
+
+		auto constexpr
+		(	operator[]
+		)	(	USize
+					i_nIndex
+			)	const&
+		->	value_type
+		{	return *IteratorAt(i_nIndex);	}
+
+		friend auto constexpr
+		(	begin
+		)	(	ArrayReference
+					i_vArray
+			)
+		->	iterator
+		{	return i_vArray.IteratorAt(0z);	}
+
+		friend auto constexpr
+		(	end
+		)	(	ArrayReference
+					i_vArray
+			)
+		->	iterator
+		{	return i_vArray.IteratorAt(t_nCount);	}
 	};
 }
