@@ -14,14 +14,14 @@ auto constexpr SetAndCheck(UInt<t_nSize> v) -> bool
 {
 	auto constexpr
 		vBitOffset
-	=	static_cast<ATR::EBitFieldOffset>(t_nOffset % BitsPerByte)
+	=	static_cast<ATR::Bit::EOffset>(t_nOffset % BitsPerByte)
 	;
 	auto constexpr
 		vBitSize
-	=	static_cast<ATR::EBitFieldSize>(t_nSize)
+	=	static_cast<ATR::Bit::ESize>(t_nSize)
 	;
 
-	using BitReference = ATR::BitReference<vBitSize, vBitOffset>;
+	using BitReference = ATR::Bit::Reference<vBitSize, vBitOffset>;
 	using BitAccess = typename BitReference::BitAccess;
 
 	::std::byte aBuffer[(t_nOffset + t_nSize + (BitsPerByte - 1uz))/ BitsPerByte]{};

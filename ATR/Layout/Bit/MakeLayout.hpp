@@ -1,7 +1,7 @@
-export module ATR:Layout.MakeBitLayout;
+export module ATR:Layout.Bit.MakeLayout;
 
-import :Layout.BitLayout;
-import :Layout.BitView;
+import :Layout.Bit.Layout;
+import :Layout.Bit.View;
 import :Layout.Member;
 
 import Meta.Arithmetic;
@@ -59,7 +59,7 @@ auto constexpr
 (	MakeBitView
 )	(	::Member<t_tData, t_rpName...>
 	)
-->	ATR::BitView
+->	::ATR::Bit::View
 	<	t_nOffset
 	,	t_tData
 	,	t_rpName
@@ -109,7 +109,7 @@ auto constexpr
 		)
 	{
 		return
-		ATR::BitLayout
+		::ATR::Bit::Layout
 		<	DeduceBitView
 			<	vOffsetArray[t_npIndex]
 			,	t_tpBitFieldMember

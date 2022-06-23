@@ -1,4 +1,4 @@
-export module ATR:Layout.BitAccess;
+export module ATR:Layout.Bit.Access;
 
 import Meta.Arithmetic;
 
@@ -16,14 +16,14 @@ using ::Meta::USize;
 static_assert
 (	::std::endian::native
 ==	::std::endian::little
-,	"Big Endian not yet supported for BitAccess!"
+,	"Big Endian not yet supported for Bit::Access!"
 );
 
 export namespace
-	ATR
+	ATR::Bit
 {
 	enum class
-		EBitFieldOffset
+		EOffset
 	:	UInt
 		<	BitWidth
 			(	BitsPerByte
@@ -33,7 +33,7 @@ export namespace
 	{};
 
 	enum class
-		EBitFieldSize
+		ESize
 	:	UInt
 		<	BitWidth
 			(	BitsPerByte
@@ -43,28 +43,28 @@ export namespace
 	{};
 
 	template
-		<	EBitFieldSize
+		<	ESize
 				t_nSize
-		,	EBitFieldOffset
+		,	EOffset
 				t_nMaxOffset
-			=	static_cast<EBitFieldOffset>
+			=	static_cast<EOffset>
 				(	BitsPerByte
 				-	1uz
 				)
 		>
 	struct
-		BitAccess final
+		Access final
 	{
 		static_assert
 		(	static_cast<USize>(t_nMaxOffset)
 		<	BitsPerByte
-		,	"BitAccess not properly aligned! Expected maximum offset below Bits per Byte!"
+		,	"Bit::Access not properly aligned! Expected maximum offset below Bits per Byte!"
 		);
 
 		static_assert
 		(	static_cast<USize>(t_nSize)
 		>	0uz
-		,	"BitAccess cannot access a bit field of length 0!"
+		,	"Bit::Access cannot access a bit field of length 0!"
 		);
 
 		static auto constexpr
@@ -133,7 +133,7 @@ export namespace
 		(	ReadField
 		)	(	::std::byte const
 				*	i_aBuffer
-			,	EBitFieldOffset
+			,	EOffset
 					i_nOffset
 				=	t_nMaxOffset
 			)
@@ -160,7 +160,7 @@ export namespace
 					i_vValue
 			,	::std::byte
 				*	i_aBuffer
-			,	EBitFieldOffset
+			,	EOffset
 					i_nOffset
 				=	t_nMaxOffset
 			)

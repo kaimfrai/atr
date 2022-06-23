@@ -1,14 +1,14 @@
-export module ATR:Layout.BitIterator;
+export module ATR:Layout.Bit.Iterator;
 
-import :Layout.BitAccess;
+import :Layout.Bit.Access;
 
 import Std;
 
 export namespace
-	ATR
+	ATR::Bit
 {
 	template
-		<	EBitFieldSize
+		<	ESize
 				t_nSize
 		>
 	struct

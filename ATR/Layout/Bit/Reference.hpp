@@ -1,22 +1,22 @@
-export module ATR:Layout.BitReference;
+export module ATR:Layout.Bit.Reference;
 
-import :Layout.BitAccess;
+import :Layout.Bit.Access;
 
 import Std;
 
 export namespace
-	ATR
+	ATR::Bit
 {
 	template
-		<	EBitFieldSize
+		<	ESize
 				t_nSize
-		,	EBitFieldOffset
+		,	EOffset
 				t_nOffset
 		>
 	struct
-		BitReference final
+		Reference final
 	{
-		using BitAccess = ::ATR::BitAccess<t_nSize, t_nOffset>;
+		using BitAccess = ::ATR::Bit::Access<t_nSize, t_nOffset>;
 		using FieldType = typename BitAccess::FieldType;
 
 		::std::byte
@@ -38,7 +38,7 @@ export namespace
 		)	(	FieldType
 					i_vValue
 			)	&
-		->	BitReference&
+		->	Reference&
 		{
 			BitAccess::WriteField(i_vValue, m_aUnderlyingArray);
 			return *this;
@@ -49,7 +49,7 @@ export namespace
 		)	(	FieldType
 					i_vValue
 			)	&&
-		->	BitReference&&
+		->	Reference&&
 		{
 			return
 			::std::move

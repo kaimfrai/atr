@@ -9,18 +9,18 @@ PARTITION
 	Layout/Alias.hpp
 	Layout/AliasLayout.hpp
 	Layout/AliasResolver.hpp
-	Layout/BitAccess.hpp
-	Layout/BitIterator.hpp
-	Layout/BitLayout.hpp
-	Layout/BitOffset.hpp
-	Layout/BitReference.hpp
-	Layout/BitView.hpp
+	Layout/Bit/Access.hpp
+	Layout/Bit/Iterator.hpp
+	Layout/Bit/Layout.hpp
+	Layout/Bit/MakeLayout.hpp
+	Layout/Bit/MemberOffset.hpp
+	Layout/Bit/Reference.hpp
+	Layout/Bit/View.hpp
 	Layout/Concept.hpp
 	Layout/Create.hpp
 	Layout/Data.hpp
 	Layout/Layout.hpp
 	Layout/LayoutFwd.hpp
-	Layout/MakeBitLayout.hpp
 	Layout/Member.hpp
 	Layout/MemberOffset.hpp
 	Layout/Split.hpp

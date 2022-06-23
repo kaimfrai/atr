@@ -1,7 +1,7 @@
-export module ATR:Layout.BitOffset;
+export module ATR:Layout.Bit.MemberOffset;
 
-import :Layout.BitAccess;
-import :Layout.BitReference;
+import :Layout.Bit.Access;
+import :Layout.Bit.Reference;
 
 import Meta.Arithmetic;
 import Meta.Token;
@@ -13,21 +13,21 @@ using ::Meta::Type;
 using ::Meta::USize;
 
 export namespace
-	ATR
+	ATR::Bit
 {
 	template
-		<	EBitFieldOffset
+		<	EOffset
 				t_nBitOffset
 		,	typename
 				t_tMember
 		>
 	struct
-		BitOffset
+		MemberOffset
 	{
 		using
 			BitAccess
-		=	::ATR::BitAccess
-			<	static_cast<EBitFieldSize>
+		=	::ATR::Bit::Access
+			<	static_cast<ESize>
 				(	BitSize
 					(	Type<t_tMember>
 					)
@@ -60,7 +60,7 @@ export namespace
 		(	operator->*
 		)	(	::std::byte
 				*	i_aObject
-			,	BitOffset
+			,	MemberOffset
 					i_vBitOffset
 			)
 			noexcept
@@ -77,10 +77,10 @@ export namespace
 		(	operator +
 		)	(	USize
 					i_nOffset
-			,	BitOffset
+			,	MemberOffset
 					i_vMember
 			)
-		->	BitOffset
+		->	MemberOffset
 		{	return
 			{	i_nOffset
 			+	i_vMember.Offset
@@ -89,21 +89,21 @@ export namespace
 	};
 
 	template
-		<	EBitFieldOffset
+		<	EOffset
 				t_nBitOffset
 		,	typename
 				t_tMember
 		>
 	struct
-		BitOffset
+		MemberOffset
 		<	t_nBitOffset
 		,	t_tMember&
 		>
 	{
 		using
 			BitReference
-		=	::ATR::BitReference
-			<	static_cast<EBitFieldSize>
+		=	::ATR::Bit::Reference
+			<	static_cast<ESize>
 				(	BitSize
 					(	Type<t_tMember>
 					)
@@ -144,7 +144,7 @@ export namespace
 		(	operator->*
 		)	(	::std::byte
 				*	i_aObject
-			,	BitOffset
+			,	MemberOffset
 					i_vBitOffset
 			)
 			noexcept
@@ -160,10 +160,10 @@ export namespace
 		(	operator +
 		)	(	USize
 					i_nOffset
-			,	BitOffset
+			,	MemberOffset
 					i_vMember
 			)
-		->	BitOffset
+		->	MemberOffset
 		{	return
 			{	i_nOffset
 			+	i_vMember.Offset

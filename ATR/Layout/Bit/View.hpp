@@ -1,9 +1,9 @@
-export module ATR:Layout.BitView;
+export module ATR:Layout.Bit.View;
 
 import :ID;
-import :Layout.BitAccess;
-import :Layout.BitReference;
-import :Layout.BitOffset;
+import :Layout.Bit.Access;
+import :Layout.Bit.MemberOffset;
+import :Layout.Bit.Reference;
 
 import Meta.Arithmetic;
 
@@ -17,7 +17,7 @@ using ::Meta::TypeEntity;
 using ::Meta::USize;
 
 export namespace
-	ATR
+	ATR::Bit
 {
 	using ::Meta::Specifier::Mutable;
 
@@ -31,11 +31,11 @@ export namespace
 			...	t_rpName
 		>
 	struct
-		BitViewBase
+		ViewBase
 	{
 		static auto constexpr
 			BitSize
-		=	static_cast<EBitFieldSize>(t_nSize)
+		=	static_cast<ESize>(t_nSize)
 		;
 
 		static auto constexpr
@@ -45,12 +45,12 @@ export namespace
 
 		static auto constexpr
 			BitOffset
-		=	static_cast<EBitFieldOffset>(t_nOffset % BitsPerByte)
+		=	static_cast<EOffset>(t_nOffset % BitsPerByte)
 		;
 
 		using
 			reference
-		=	BitReference
+		=	Reference
 			<	BitSize
 			,	BitOffset
 			>
@@ -63,7 +63,7 @@ export namespace
 		;
 
 		static auto constexpr
-		(	View
+		(	Ref
 		)	(	ID<t_rpName...>
 			,	::std::byte
 				*	i_aBuffer
@@ -100,8 +100,8 @@ export namespace
 			...	t_rpName
 		>
 	struct
-		BitView
-	:	BitViewBase
+		View
+	:	ViewBase
 		<	t_nOffset
 		,	BitSize
 			(	Type<t_tEntity>
@@ -111,7 +111,7 @@ export namespace
 		>
 	{
 		static auto constexpr
-		(	ConstView
+		(	Const
 		)	(	ID<t_rpName...>
 					i_vName
 			,	::std::byte const
@@ -120,7 +120,7 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			BitView::Move
+			View::Move
 			(	i_vName
 			,	i_aBuffer
 			);
@@ -157,20 +157,20 @@ export namespace
 					>
 				)
 			{	return
-				BitOffset
-				<	BitView::BitOffset
+				MemberOffset
+				<	View::BitOffset
 				,	tTransformed
-				>{	BitView::ByteOffset
+				>{	View::ByteOffset
 				};
 			}
 			else
 			{	return
-				BitOffset
-				<	BitView::BitOffset
+				MemberOffset
+				<	View::BitOffset
 				,	::std::remove_cvref_t
 					<	tTransformed
 					>
-				>{	BitView::ByteOffset
+				>{	View::ByteOffset
 				};
 			}
 		}
@@ -186,13 +186,13 @@ export namespace
 			...	t_rpName
 		>
 	struct
-		BitView
+		View
 		<	t_nOffset
 		,	Mutable<t_tEntity>
 		,	t_rpName
 			...
 		>
-	:	BitViewBase
+	:	ViewBase
 		<	t_nOffset
 		,	BitSize
 			(	Type<t_tEntity>
@@ -202,7 +202,7 @@ export namespace
 		>
 	{
 		static auto constexpr
-		(	ConstView
+		(	Const
 		)	(	ID<t_rpName...>
 					i_vName
 			,	::std::byte
@@ -211,7 +211,7 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			BitView::View
+			View::Ref
 			(	i_vName
 			,	i_aBuffer
 			);
@@ -242,20 +242,20 @@ export namespace
 				(	::std::is_lvalue_reference_v<tTransformed>
 				)
 			{	return
-				BitOffset
-				<	BitView::BitOffset
+				MemberOffset
+				<	View::BitOffset
 				,	tTransformed
-				>{	BitView::ByteOffset
+				>{	View::ByteOffset
 				};
 			}
 			else
 			{	return
-				BitOffset
-				<	BitView::BitOffset
+				MemberOffset
+				<	View::BitOffset
 				,	::std::remove_cvref_t
 					<	tTransformed
 					>
-				>{	BitView::ByteOffset
+				>{	View::ByteOffset
 				};
 			}
 		}

@@ -1,7 +1,7 @@
 module ATR:Layout.Split;
 
 import :Layout.LayoutFwd;
-import :Layout.MakeBitLayout;
+import :Layout.Bit.MakeLayout;
 import :Layout.Member;
 
 import Meta.Arithmetic;

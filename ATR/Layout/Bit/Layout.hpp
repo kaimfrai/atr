@@ -1,4 +1,4 @@
-export module ATR:Layout.BitLayout;
+export module ATR:Layout.Bit.Layout;
 
 import :ID;
 
@@ -9,19 +9,19 @@ using ::Meta::BitsPerByte;
 using ::Meta::USize;
 
 export namespace
-	ATR
+	ATR::Bit
 {
 	template
 		<	typename
 			...	t_tpBitView
 		>
 	struct
-		BitLayout
+		Layout
 	:	t_tpBitView
 		...
 	{
-		using t_tpBitView::View...;
-		using t_tpBitView::ConstView...;
+		using t_tpBitView::Ref...;
+		using t_tpBitView::Const...;
 		using t_tpBitView::Move...;
 		using t_tpBitView::OffsetOf...;
 
@@ -57,7 +57,7 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			View
+			Ref
 			(	i_vMemberID
 			,	+Buffer
 			);
@@ -72,7 +72,7 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			ConstView
+			Const
 			(	i_vMemberID
 			,	+Buffer
 			);
