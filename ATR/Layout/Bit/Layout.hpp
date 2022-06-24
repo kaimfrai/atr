@@ -1,6 +1,7 @@
 export module ATR:Layout.Bit.Layout;
 
 import :ID;
+import :Layout.Bit.Types;
 
 import Std;
 
@@ -35,17 +36,9 @@ export namespace
 			)
 		);
 
-		static auto constexpr
-			BufferSize
-		=	(BitCount + (BitsPerByte - 1uz))
-		/	 BitsPerByte
-		;
-
 		// must be mutable in case one bitfield is mutable
-		mutable ::std::byte
+		mutable BitFieldBuffer<ESize{BitCount}, EOffset{0}, 1uz>
 			Buffer
-			[	BufferSize
-			]
 		;
 
 		[[nodiscard]]

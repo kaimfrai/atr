@@ -1,6 +1,7 @@
 export module ATR:Layout.Bit.Reference;
 
 import :Layout.Bit.Access;
+import :Layout.Bit.Types;
 
 import Std;
 
@@ -23,7 +24,7 @@ export namespace
 		);
 
 		using BitAccess = ::ATR::Bit::Access<t_nSize, t_nOffset>;
-		using FieldType = typename BitAccess::FieldType;
+		using value_type = typename BitAccess::FieldType;
 
 		::std::byte
 		*	const
@@ -32,7 +33,7 @@ export namespace
 
 		[[nodiscard]]
 		explicit(false) constexpr
-		(	operator FieldType
+		(	operator value_type
 		)	()	const
 		{	return
 			BitAccess::ReadField
@@ -42,7 +43,7 @@ export namespace
 
 		auto constexpr
 		(	operator =
-		)	(	FieldType
+		)	(	value_type
 					i_vValue
 			)	&
 		->	Reference&
@@ -53,7 +54,7 @@ export namespace
 
 		auto constexpr
 		(	operator =
-		)	(	FieldType
+		)	(	value_type
 					i_vValue
 			)	&&
 		->	Reference&&

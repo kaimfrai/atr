@@ -10,13 +10,14 @@ PARTITION
 	Layout/AliasLayout.hpp
 	Layout/AliasResolver.hpp
 	Layout/Bit/Access.hpp
-	Layout/Bit/ArrayReference.hpp
+	Layout/Bit/Array.hpp
 	Layout/Bit/ElementReference.hpp
 	Layout/Bit/Iterator.hpp
 	Layout/Bit/Layout.hpp
 	Layout/Bit/MakeLayout.hpp
 	Layout/Bit/MemberOffset.hpp
 	Layout/Bit/Reference.hpp
+	Layout/Bit/Types.hpp
 	Layout/Bit/View.hpp
 	Layout/Concept.hpp
 	Layout/Create.hpp

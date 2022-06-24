@@ -2,8 +2,10 @@ export module ATR:Layout.Bit.View;
 
 import :ID;
 import :Layout.Bit.Access;
+import :Layout.Bit.Array;
 import :Layout.Bit.MemberOffset;
 import :Layout.Bit.Reference;
+import :Layout.Bit.Types;
 
 import Meta.Arithmetic;
 
@@ -60,11 +62,12 @@ export namespace
 			,	BitOffset
 			>
 		;
+
 		using
-			BitAccess
+			value_type
 		=	typename
 			reference
-		::	BitAccess
+		::	value_type
 		;
 
 		static auto constexpr
@@ -87,11 +90,87 @@ export namespace
 				*	i_aBuffer
 			)
 			noexcept
-		->	typename reference::FieldType
+		->	value_type
 		{	return
-				BitAccess
+				reference
+			::	BitAccess
 			::	ReadField(i_aBuffer)
 			;
+		}
+	};
+
+	template
+		<	USize
+				t_nOffset
+		,	USize
+				t_nSize
+		,	USize
+				t_nExtent
+		,	char const
+			&
+			...	t_rpName
+		>
+	struct
+		ArrayView
+	{
+		static auto constexpr
+			BitSize
+		=	static_cast<ESize>(t_nSize)
+		;
+
+		static auto constexpr
+			ByteOffset
+		=	t_nOffset / BitsPerByte
+		;
+
+		static auto constexpr
+			BitOffset
+		=	static_cast<EOffset>(t_nOffset % BitsPerByte)
+		;
+
+		using
+			reference
+		=	ArrayReference
+			<	BitSize
+			,	t_nExtent
+			,	BitOffset
+			>
+		;
+
+		using
+			value_type
+		=	ArrayValue<BitSize, t_nExtent>
+		;
+
+		static auto constexpr
+		(	ReadWriteView
+		)	(	ID<t_rpName...>
+			,	::std::byte
+				*	i_aBuffer
+			)
+			noexcept
+		->	reference
+		{	return
+			{	i_aBuffer + ByteOffset
+			};
+		}
+
+		static auto constexpr
+		(	Value
+		)	(	ID<t_rpName...>
+			,	::std::byte const
+				*	i_aBuffer
+			)
+			noexcept
+		->	value_type
+		{	return
+			CopyArray
+			<	BitSize
+			,	t_nExtent
+			,	BitOffset
+			>(	i_aBuffer
+			+	ByteOffset
+			);
 		}
 	};
 
@@ -105,12 +184,62 @@ export namespace
 			...	t_rpName
 		>
 	struct
-		View
+		ViewBase
 	:	SingleView
 		<	t_nOffset
 		,	BitSize
 			(	Type<t_tEntity>
 			)
+		,	t_rpName
+			...
+		>
+	{};
+
+	template
+		<	USize
+				t_nOffset
+		,	typename
+				t_tEntity
+		,	USize
+				t_nExtent
+		,	char const
+			&
+			...	t_rpName
+		>
+	struct
+		ViewBase
+		<	t_nOffset
+		,	t_tEntity
+				[	t_nExtent
+				]
+		,	t_rpName
+			...
+		>
+	:	ArrayView
+		<	t_nOffset
+		,	BitSize
+			(	Type<t_tEntity>
+			)
+		,	t_nExtent
+		,	t_rpName
+			...
+		>
+	{};
+
+	template
+		<	USize
+				t_nOffset
+		,	typename
+				t_tEntity
+		,	char const
+			&
+			...	t_rpName
+		>
+	struct
+		View
+	:	ViewBase
+		<	t_nOffset
+		,	t_tEntity
 		,	t_rpName
 			...
 		>
@@ -181,11 +310,9 @@ export namespace
 		,	t_rpName
 			...
 		>
-	:	SingleView
+	:	ViewBase
 		<	t_nOffset
-		,	BitSize
-			(	Type<t_tEntity>
-			)
+		,	t_tEntity
 		,	t_rpName
 			...
 		>

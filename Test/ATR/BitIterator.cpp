@@ -125,7 +125,7 @@ ArrayReference<ESize{10}, 4> constexpr
 };
 
 static_assert(begin(arr) == First);
-static_assert(arr.IteratorAt(1) == Second);
-static_assert(arr.IteratorAt(2) == Third);
-static_assert(arr.IteratorAt(3) == Forth);
+static_assert(IteratorAt(arr, 1) == Second);
+static_assert(IteratorAt(arr, 2) == Third);
+static_assert(IteratorAt(arr, 3) == Forth);
 static_assert(end(arr) == Fifth);

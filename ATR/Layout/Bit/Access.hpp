@@ -1,5 +1,7 @@
 export module ATR:Layout.Bit.Access;
 
+import :Layout.Bit.Types;
+
 import Meta.Arithmetic;
 
 import Std;
@@ -22,26 +24,6 @@ static_assert
 export namespace
 	ATR::Bit
 {
-	enum class
-		EOffset
-	:	UInt
-		<	BitWidth
-			(	BitsPerByte
-			-	1uz
-			)
-		>
-	{};
-
-	enum class
-		ESize
-	:	UInt
-		<	BitWidth
-			(	BitsPerByte
-			*	sizeof(UIntMax)
-			)
-		>
-	{};
-
 	template
 		<	ESize
 				t_nSize
@@ -65,11 +47,10 @@ export namespace
 
 		static auto constexpr
 			BufferByteSize
-		=	(	static_cast<USize>(t_nMaxOffset)
-			+	static_cast<USize>(t_nSize)
-			+	(BitsPerByte - 1uz)
+		=	BitFieldBufferSize
+			(	t_nSize
+			,	t_nMaxOffset
 			)
-		/	BitsPerByte
 		;
 
 		static_assert
@@ -160,8 +141,9 @@ export namespace
 			)
 		->	USize
 		{	return
-			(	(static_cast<USize>(t_nSize) + static_cast<USize>(BitOffset(i_nMask)) + (BitsPerByte - 1uz))
-			/	BitsPerByte
+			BitFieldBufferSize
+			(	t_nSize
+			,	static_cast<EOffset>(BitOffset(i_nMask))
 			);
 		}
 

@@ -2,6 +2,7 @@ export module ATR:Layout.Bit.Iterator;
 
 import :Layout.Bit.Access;
 import :Layout.Bit.ElementReference;
+import :Layout.Bit.Types;
 
 import Meta.Arithmetic;
 

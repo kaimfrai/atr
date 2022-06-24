@@ -31,7 +31,6 @@ export namespace
 			>
 		{	return {};	}
 
-
 		template
 			<	typename
 					t_tEntity
@@ -46,6 +45,21 @@ export namespace
 			<	t_tEntity
 			>
 		{	return {};	}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<Specifier::Mut<t_tEntity>>
+			)	const
+		->	decltype(auto)
+		{	return
+			operator()
+			(	Type<t_tEntity>
+			);
+		}
 	};
 
 	struct
@@ -70,6 +84,21 @@ export namespace
 			)	const
 		->	USize
 		{	return t_nExtent;	}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<Specifier::Mut<t_tEntity>>
+			)	const
+		->	decltype(auto)
+		{	return
+			operator()
+			(	Type<t_tEntity>
+			);
+		}
 	};
 
 	struct

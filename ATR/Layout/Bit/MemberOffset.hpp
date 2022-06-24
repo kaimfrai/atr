@@ -1,7 +1,9 @@
 export module ATR:Layout.Bit.MemberOffset;
 
 import :Layout.Bit.Access;
+import :Layout.Bit.Array;
 import :Layout.Bit.Reference;
+import :Layout.Bit.Types;
 
 import Meta.Arithmetic;
 import Meta.Predicate;
@@ -45,6 +47,11 @@ export namespace
 		);
 
 		static_assert
+		(	requires{	sizeof(t_tMember);	}
+		,	"Types without size not supported!"
+		);
+
+		static_assert
 		(	not
 			::Meta::IsTypePack_Of<::Meta::Specifier::Mut>
 			(	Type<t_tMember>
@@ -80,15 +87,15 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{
+			i_aObject += Offset;
+
 			using namespace ATR::Bit;
 
 			auto constexpr
 				vBitSize
-			=	static_cast<ESize>
-				(	BitSize
-					(	Type<t_tMember>
-					-	LRef
-					)
+			=	BitSize
+				(	Type<t_tMember>
+				-	LRef
 				)
 			;
 
@@ -97,32 +104,72 @@ export namespace
 					<	t_tMember
 					>
 				)
-				return
-				Reference
-				<	vBitSize
-				,	t_nBitOffset
-				>{	// the underlying byte array is defined mutable
+			{
+				auto* const
+					aBuffer
+				=	// the underlying byte array is defined mutable
 					// if the offset points to that array this is well defined
 					// if not all bets are off regardless
 					::std::launder
 					(	const_cast
 						<	::std::byte*
 						>(	i_aObject
-						+	Offset
 						)
 					)
-				};
-			else
-				return
-					Access
-					<	vBitSize
-					,	t_nBitOffset
-					>
-				::	ReadField
-					(	i_aObject
-					+	Offset
-					)
 				;
+
+				if	constexpr
+					(	::std::is_bounded_array_v
+						<	t_tMember
+						>
+					)
+				{
+					auto constexpr nExtent = ::std::extent_v<t_tMember>;
+					auto constexpr vElementBitSize = vBitSize / nExtent;
+					return
+					ArrayReference
+					<	ESize{vElementBitSize}
+					,	nExtent
+					,	t_nBitOffset
+					>{	aBuffer
+					};
+				}
+				else
+					return
+					Reference
+					<	ESize{vBitSize}
+					,	t_nBitOffset
+					>{	aBuffer
+					};
+			}
+			else
+			{	if	constexpr
+					(	::std::is_bounded_array_v
+						<	t_tMember
+						>
+					)
+				{
+					auto constexpr nExtent = ::std::extent_v<t_tMember>;
+					auto constexpr vElementBitSize = vBitSize / nExtent;
+					return
+					CopyArray
+					<	ESize{vElementBitSize}
+					,	nExtent
+					,	t_nBitOffset
+					>(	i_aObject
+					);
+				}
+				else
+					return
+						Access
+						<	ESize{vBitSize}
+						,	t_nBitOffset
+						>
+					::	ReadField
+						(	i_aObject
+						)
+					;
+			}
 		}
 
 		/// immitates syntax of pointer to member dereference

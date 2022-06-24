@@ -25,7 +25,7 @@ auto constexpr SetAndCheck(UInt<t_nSize> v) -> bool
 	=	static_cast<ATR::Bit::EOffset>(t_nOffset)
 	;
 
-	::std::byte aBuffer[(t_nCount * t_nSize + t_nOffset + (BitsPerByte - 1uz))/ BitsPerByte]{};
+	ATR::Bit::BitFieldBuffer<vBitSize, vOffset, t_nCount> aBuffer{};
 
 	using ArrayReference = ATR::Bit::ArrayReference<vBitSize, t_nCount, vOffset>;
 

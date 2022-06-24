@@ -26,10 +26,9 @@ auto constexpr SetAndCheck(UInt<t_nSize> v) -> bool
 	using BitAccess = typename BitReference::BitAccess;
 	v &= SetOneBits(t_nSize);
 
-	::std::byte aBuffer[(t_nOffset + t_nSize + (BitsPerByte - 1uz))/ BitsPerByte]{};
-	::std::byte* const aPosition = aBuffer + t_nOffset / BitsPerByte;
-	auto const nPrevious = BitAccess::ReadField(aPosition);
-	BitReference r{aPosition};
+	ATR::Bit::BitFieldBuffer<vBitSize, vBitOffset, 1uz> aBuffer{};
+	auto const nPrevious = BitAccess::ReadField(aBuffer);
+	BitReference r{aBuffer};
 	r = v;
 
 	return ((v != nPrevious) == (r != nPrevious)) and r == v;
