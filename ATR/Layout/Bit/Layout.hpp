@@ -30,10 +30,7 @@ export namespace
 			BitCount
 		=(	0uz
 		+	...
-		+	static_cast<USize>
-			(	t_tpBitView
-			::	BitSize
-			)
+		+	t_tpBitView::BitCount
 		);
 
 		// must be mutable in case one bitfield is mutable

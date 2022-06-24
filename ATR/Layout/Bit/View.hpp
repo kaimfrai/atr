@@ -193,7 +193,12 @@ export namespace
 		,	t_rpName
 			...
 		>
-	{};
+	{
+		static auto constexpr
+			BitCount
+		=	static_cast<USize>(ViewBase::BitSize)
+		;
+	};
 
 	template
 		<	USize
@@ -224,7 +229,13 @@ export namespace
 		,	t_rpName
 			...
 		>
-	{};
+	{
+		static auto constexpr
+			BitCount
+		=	static_cast<USize>(ViewBase::BitSize)
+		*	t_nExtent
+		;
+	};
 
 	template
 		<	USize

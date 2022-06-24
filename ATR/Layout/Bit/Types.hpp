@@ -39,13 +39,13 @@ export namespace
 				i_nOffset
 			=	EOffset{0uz}
 		,	USize
-				i_nCount
+				i_nExtent
 			=	1uz
 		)
 	->	USize
 	{	return
 		(	(	static_cast<USize>(i_nSize)
-			*	i_nCount
+			*	i_nExtent
 			+	static_cast<USize>(i_nOffset)
 			+	(BitsPerByte - 1uz)
 			)
@@ -60,7 +60,7 @@ export namespace
 				t_nOffset
 			=	EOffset{0uz}
 		,	USize
-				t_nCount
+				t_nExtent
 			=	1uz
 		>
 	using
@@ -69,7 +69,7 @@ export namespace
 		[	BitFieldBufferSize
 			(	t_nSize
 			,	t_nOffset
-			,	t_nCount
+			,	t_nExtent
 			)
 		]
 	;

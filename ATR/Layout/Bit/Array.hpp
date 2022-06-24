@@ -23,7 +23,7 @@ export namespace
 		,	ESize
 				t_nSize
 		,	USize
-				t_nCount
+				t_nExtent
 		,	EOffset
 				t_nOffset
 		>
@@ -45,7 +45,7 @@ export namespace
 		static auto constexpr
 			BitCount
 		=	static_cast<USize>(t_nSize)
-		*	t_nCount
+		*	t_nExtent
 		;
 
 		static auto constexpr
@@ -53,7 +53,7 @@ export namespace
 		=	BitFieldBufferSize
 			(	t_nSize
 			,	t_nOffset
-			,	t_nCount
+			,	t_nExtent
 			)
 		;
 
@@ -75,7 +75,7 @@ export namespace
 					...
 				});
 			}(	// include offset of one-past-the-end for end() iterator value
-				Sequence<t_nCount + 1uz>
+				Sequence<t_nExtent + 1uz>
 			)
 		};
 		using BitAccess = Access<t_nSize, MaximumOffset>;
@@ -106,7 +106,7 @@ export namespace
 			)
 		->	iterator
 		{
-			if	(i_nIndex > t_nCount)
+			if	(i_nIndex > t_nExtent)
 				::std::unreachable();
 
 			auto const
@@ -162,7 +162,7 @@ export namespace
 			(	BitFieldBufferSize
 				(	t_nSize
 				,	t_nOffset
-				,	t_nCount
+				,	t_nExtent
 				)
 			<=	sizeof(t_tTarget)
 			)
@@ -231,7 +231,7 @@ export namespace
 		<	ESize
 				t_nSize
 		,	USize
-				t_nCount
+				t_nExtent
 		,	EOffset
 				t_nOffset
 			=	EOffset{0}
@@ -241,7 +241,7 @@ export namespace
 	:	Array
 		<	::std::byte* const
 		,	t_nSize
-		,	t_nCount
+		,	t_nExtent
 		,	t_nOffset
 		>
 	{
@@ -259,14 +259,14 @@ export namespace
 					i_vArray
 			)
 		->	decltype(auto)
-		{	return IteratorAt(i_vArray, t_nCount);	}
+		{	return IteratorAt(i_vArray, t_nExtent);	}
 	};
 
 	template
 		<	ESize
 				t_nSize
 		,	USize
-				t_nCount
+				t_nExtent
 		>
 	struct
 		ArrayValue
@@ -274,10 +274,10 @@ export namespace
 		<	BitFieldBuffer
 			<	t_nSize
 			,	EOffset{0}
-			,	t_nCount
+			,	t_nExtent
 			>
 		,	t_nSize
-		,	t_nCount
+		,	t_nExtent
 		,	EOffset{0}
 		>
 	{
@@ -295,7 +295,7 @@ export namespace
 				&	i_rArray
 			)
 		->	decltype(auto)
-		{	return IteratorAt(i_rArray, t_nCount);	}
+		{	return IteratorAt(i_rArray, t_nExtent);	}
 	};
 
 	template

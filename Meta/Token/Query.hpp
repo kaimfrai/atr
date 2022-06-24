@@ -158,9 +158,10 @@ export namespace
 			)	const
 		->	decltype(alignof(t_tEntity))
 		{	return
-				BitsPerByte
-			*	alignof(::std::remove_all_extents_t<t_tEntity>)
-			;
+			(	::std::is_array_v<t_tEntity>
+			?	operator()(Type<::std::remove_all_extents_t<t_tEntity>>)
+			:	BitsPerByte * alignof(t_tEntity)
+			);
 		}
 
 		template

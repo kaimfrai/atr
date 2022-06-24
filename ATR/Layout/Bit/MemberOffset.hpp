@@ -119,12 +119,17 @@ export namespace
 				;
 
 				if	constexpr
-					(	::std::is_bounded_array_v
-						<	t_tMember
+					(	using
+							tArray
+						=	::std::remove_reference_t
+							<	t_tMember
+							>
+					;	::std::is_bounded_array_v
+						<	tArray
 						>
 					)
 				{
-					auto constexpr nExtent = ::std::extent_v<t_tMember>;
+					auto constexpr nExtent = ::std::extent_v<tArray>;
 					auto constexpr vElementBitSize = vBitSize / nExtent;
 					return
 					ArrayReference
