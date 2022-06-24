@@ -21,6 +21,9 @@ export namespace
 				t_nSize
 		,	USize
 				t_nCount
+		,	EOffset
+				t_nOffset
+			=	EOffset{0}
 		>
 	struct
 		ArrayReference final
@@ -29,6 +32,12 @@ export namespace
 		(	t_nSize
 		>	ESize{}
 		,	"Cannot form a reference to BitFields of length 0!"
+		);
+
+		static_assert
+		(	static_cast<USize>(t_nOffset)
+		<	BitsPerByte
+		,	"Bit::ArrayReference not properly aligned! Expected maximum offset below Bits per Byte!"
 		);
 
 		static EOffset constexpr
@@ -42,6 +51,7 @@ export namespace
 				::std::max
 				({	(	(	static_cast<USize>(t_nSize)
 						*	t_npIndex
+						+	static_cast<USize>(t_nOffset)
 						)
 					%	BitsPerByte
 					)
@@ -85,6 +95,7 @@ export namespace
 				vTotalOffset
 			=	i_nIndex
 			*	static_cast<USize>(t_nSize)
+			+	static_cast<USize>(t_nOffset)
 			;
 
 			auto const

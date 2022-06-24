@@ -27,6 +27,12 @@ export namespace
 		MemberOffset
 	{
 		static_assert
+		(	static_cast<USize>(t_nBitOffset)
+		<	BitsPerByte
+		,	"Bit::MemberOffset not properly aligned! Expected maximum offset below Bits per Byte!"
+		);
+
+		static_assert
 		(	not
 			::std::is_const_v<t_tMember>
 		,	"Prefer pure value types to const value types!"

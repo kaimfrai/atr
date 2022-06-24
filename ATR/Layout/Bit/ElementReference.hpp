@@ -16,6 +16,12 @@ export namespace
 	struct
 		ElementReference final
 	{
+		static_assert
+		(	static_cast<USize>(t_nMaxOffset)
+		<	BitsPerByte
+		,	"Bit::ElementReference not properly aligned! Expected maximum offset below Bits per Byte!"
+		);
+
 		using BitAccess = ::ATR::Bit::Access<t_nSize, t_nMaxOffset>;
 		using FieldType = typename BitAccess::FieldType;
 

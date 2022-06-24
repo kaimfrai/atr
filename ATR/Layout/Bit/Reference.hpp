@@ -16,6 +16,12 @@ export namespace
 	struct
 		Reference final
 	{
+		static_assert
+		(	static_cast<USize>(t_nOffset)
+		<	BitsPerByte
+		,	"Bit::Reference not properly aligned! Expected maximum offset below Bits per Byte!"
+		);
+
 		using BitAccess = ::ATR::Bit::Access<t_nSize, t_nOffset>;
 		using FieldType = typename BitAccess::FieldType;
 

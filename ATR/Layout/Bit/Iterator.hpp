@@ -22,6 +22,12 @@ export namespace
 	struct
 		Iterator final
 	{
+		static_assert
+		(	static_cast<USize>(t_nMaxOffset)
+		<	BitsPerByte
+		,	"Bit::Iterator not properly aligned! Expected maximum offset below Bits per Byte!"
+		);
+
 		using BitAccess = Access<t_nSize, t_nMaxOffset>;
 
 		using reference = ElementReference<t_nSize, t_nMaxOffset>;
