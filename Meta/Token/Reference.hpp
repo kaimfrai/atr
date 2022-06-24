@@ -21,6 +21,19 @@ export namespace
 			)
 		->	decltype(AddLValueReference(i_vType))
 		{	return{};	}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator -
+		)	(	TypeToken<t_tEntity>
+					i_vType
+			,	LRef
+			)
+		->	decltype(RemoveLValueReference(i_vType))
+		{	return{};	}
 	};
 
 	struct
@@ -38,6 +51,49 @@ export namespace
 			)
 		->	decltype(AddRValueReference(i_vType))
 		{	return{};	}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator -
+		)	(	TypeToken<t_tEntity>
+					i_vType
+			,	RRef
+			)
+		->	decltype(RemoveRValueReference(i_vType))
+		{	return{};	}
+	};
+
+	struct
+		CopyRef
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator +
+		)	(	TypeToken<t_tEntity>
+					i_vType
+			,	CopyRef
+			)
+		->	decltype(AddCopyReference(i_vType))
+		{	return{};	}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator -
+		)	(	TypeToken<t_tEntity>
+					i_vType
+			,	CopyRef
+			)
+		->	decltype(RemoveCopyReference(i_vType))
+		{	return{};	}
 	};
 }
 
@@ -50,5 +106,9 @@ export namespace
 
 	Token::RRef extern
 		RRef
+	;
+
+	Token::CopyRef extern
+		CopyRef
 	;
 }

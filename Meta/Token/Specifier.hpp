@@ -12,7 +12,7 @@ export namespace
 				t_tEntity
 		>
 	struct
-		Mutable final
+		Mut final
 	{
 		[[no_unique_address]]
 		mutable t_tEntity Entity;
@@ -24,8 +24,8 @@ export namespace
 				t_tEntity
 		>
 	struct
-		Mutable
-		<	Mutable
+		Mut
+		<	Mut
 			<	t_tEntity
 			>
 		>

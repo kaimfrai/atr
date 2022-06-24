@@ -11,7 +11,7 @@ export import Std;
 export namespace
 	ATR
 {
-	using ::Meta::Specifier::Mutable;
+	using ::Meta::Specifier::Mut;
 	using ::Meta::Specifier::BitField;
 
 	::Meta::USize constexpr inline

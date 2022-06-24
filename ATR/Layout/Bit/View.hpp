@@ -12,6 +12,13 @@ import Std;
 using ::Meta::BitSize;
 using ::Meta::BitsPerByte;
 using ::Meta::Lex::Transform;
+using ::Meta::Const;
+using ::Meta::CopyRef;
+using ::Meta::LRef;
+using ::Meta::Mutable;
+using ::Meta::RRef;
+using ::Meta::Specifier::Mut;
+using ::Meta::Volatile;
 using ::Meta::Type;
 using ::Meta::TypeEntity;
 using ::Meta::USize;
@@ -19,8 +26,6 @@ using ::Meta::USize;
 export namespace
 	ATR::Bit
 {
-	using ::Meta::Specifier::Mutable;
-
 	template
 		<	USize
 				t_nOffset
@@ -31,7 +36,7 @@ export namespace
 			...	t_rpName
 		>
 	struct
-		ViewBase
+		SingleView
 	{
 		static auto constexpr
 			BitSize
@@ -63,7 +68,7 @@ export namespace
 		;
 
 		static auto constexpr
-		(	Ref
+		(	ReadWriteView
 		)	(	ID<t_rpName...>
 			,	::std::byte
 				*	i_aBuffer
@@ -76,7 +81,7 @@ export namespace
 		}
 
 		static auto constexpr
-		(	Move
+		(	Value
 		)	(	ID<t_rpName...>
 			,	::std::byte const
 				*	i_aBuffer
@@ -101,7 +106,7 @@ export namespace
 		>
 	struct
 		View
-	:	ViewBase
+	:	SingleView
 		<	t_nOffset
 		,	BitSize
 			(	Type<t_tEntity>
@@ -111,7 +116,7 @@ export namespace
 		>
 	{
 		static auto constexpr
-		(	Const
+		(	ReadView
 		)	(	ID<t_rpName...>
 					i_vName
 			,	::std::byte const
@@ -120,7 +125,7 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			View::Move
+			View::Value
 			(	i_vName
 			,	i_aBuffer
 			);
@@ -143,36 +148,20 @@ export namespace
 				<	i_vTransform
 					(	Type<t_tEntity>
 					)
+				//	reference only for mutable reference
+				//	pure value otherwise
+				-	RRef
+				-	Const
+				-	Volatile
+				-	CopyRef
 				>
 			;
-
-			//	only opt into using BitReference for T&
-			if	constexpr
-				(	::std::is_lvalue_reference_v<tTransformed>
-				and	not
-					::std::is_const_v
-					<	::std::remove_reference_t
-						<	tTransformed
-						>
-					>
-				)
-			{	return
-				MemberOffset
-				<	View::BitOffset
-				,	tTransformed
-				>{	View::ByteOffset
-				};
-			}
-			else
-			{	return
-				MemberOffset
-				<	View::BitOffset
-				,	::std::remove_cvref_t
-					<	tTransformed
-					>
-				>{	View::ByteOffset
-				};
-			}
+			return
+			MemberOffset
+			<	View::BitOffset
+			,	tTransformed
+			>{	View::ByteOffset
+			};
 		}
 	};
 
@@ -188,11 +177,11 @@ export namespace
 	struct
 		View
 		<	t_nOffset
-		,	Mutable<t_tEntity>
+		,	Mut<t_tEntity>
 		,	t_rpName
 			...
 		>
-	:	ViewBase
+	:	SingleView
 		<	t_nOffset
 		,	BitSize
 			(	Type<t_tEntity>
@@ -202,7 +191,7 @@ export namespace
 		>
 	{
 		static auto constexpr
-		(	Const
+		(	ReadView
 		)	(	ID<t_rpName...>
 					i_vName
 			,	::std::byte
@@ -211,7 +200,7 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			View::Ref
+			View::ReadWriteView
 			(	i_vName
 			,	i_aBuffer
 			);
@@ -234,30 +223,22 @@ export namespace
 				<	i_vTransform
 					(	Type<t_tEntity>
 					)
+				//	reference for const& and &
+				//	pure value otherwise
+				-	RRef
+				-	Const
+				-	Volatile
+					//	 this takes const out of const&
+				+	Mutable
+				-	Mutable
 				>
 			;
-
-			//	for mutable, opt into using BitReference for T const& and T&
-			if	constexpr
-				(	::std::is_lvalue_reference_v<tTransformed>
-				)
-			{	return
-				MemberOffset
-				<	View::BitOffset
-				,	tTransformed
-				>{	View::ByteOffset
-				};
-			}
-			else
-			{	return
-				MemberOffset
-				<	View::BitOffset
-				,	::std::remove_cvref_t
-					<	tTransformed
-					>
-				>{	View::ByteOffset
-				};
-			}
+			return
+			MemberOffset
+			<	View::BitOffset
+			,	tTransformed
+			>{	View::ByteOffset
+			};
 		}
 	};
 }

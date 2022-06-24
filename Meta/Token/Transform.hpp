@@ -47,10 +47,10 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<Specifier::Mutable<t_tEntity>>
+		)	(	TypeToken<Specifier::Mut<t_tEntity>>
 			)	const
 		->	TypeToken
-			<	Specifier::Mutable
+			<	Specifier::Mut
 				<	::std::remove_extent_t
 					<	t_tEntity
 					>
@@ -83,10 +83,10 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<Specifier::Mutable<t_tEntity>>
+		)	(	TypeToken<Specifier::Mut<t_tEntity>>
 			)	const
 		->	TypeToken
-			<	Specifier::Mutable<t_tEntity>
+			<	Specifier::Mut<t_tEntity>
 			>
 		{	return {};	}
 	};
@@ -115,10 +115,10 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<Specifier::Mutable<t_tEntity>>
+		)	(	TypeToken<Specifier::Mut<t_tEntity>>
 			)	const
 		->	TypeToken
-			<	Specifier::Mutable
+			<	Specifier::Mut
 				<	t_tEntity
 				>
 			>
@@ -149,10 +149,10 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<Specifier::Mutable<t_tEntity>>
+		)	(	TypeToken<Specifier::Mut<t_tEntity>>
 			)	const
 		->	TypeToken
-			<	Specifier::Mutable
+			<	Specifier::Mut
 				<	::std::add_volatile_t
 					<	t_tEntity
 					>
@@ -185,10 +185,10 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<Specifier::Mutable<t_tEntity>>
+		)	(	TypeToken<Specifier::Mut<t_tEntity>>
 			)	const
 		->	TypeToken
-			<	Specifier::Mutable
+			<	Specifier::Mut
 				<	::std::remove_volatile_t
 					<	t_tEntity
 					>
@@ -221,7 +221,7 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<Specifier::Mutable<t_tEntity>>
+		)	(	TypeToken<Specifier::Mut<t_tEntity>>
 			)	const
 		->	TypeToken
 			<	::std::remove_cv_t
@@ -243,7 +243,7 @@ export namespace
 		)	(	TypeToken<t_tEntity>
 			)	const
 		->	TypeToken
-			<	Specifier::Mutable
+			<	Specifier::Mut
 				<	t_tEntity
 				>
 			>
@@ -255,10 +255,10 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<Specifier::Mutable<t_tEntity>>
+		)	(	TypeToken<Specifier::Mut<t_tEntity>>
 			)	const
 		->	TypeToken
-			<	Specifier::Mutable
+			<	Specifier::Mut
 				<	t_tEntity
 				>
 			>
@@ -286,7 +286,7 @@ export namespace
 		)	(	TypeToken<t_tEntity&>
 			)	const
 		->	TypeToken
-			<	t_tEntity
+			<	::std::remove_const_t<t_tEntity>
 				&
 			>
 		{	return {};	}
@@ -300,7 +300,7 @@ export namespace
 		)	(	TypeToken<t_tEntity&&>
 			)	const
 		->	TypeToken
-			<	t_tEntity
+			<	::std::remove_const_t<t_tEntity>
 				&&
 			>
 		{	return {};	}
@@ -328,7 +328,7 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<Specifier::Mutable<t_tEntity>>
+		)	(	TypeToken<Specifier::Mut<t_tEntity>>
 			)	const
 		->	TypeToken
 			<	t_tEntity
@@ -360,10 +360,10 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<Specifier::Mutable<t_tEntity>>
+		)	(	TypeToken<Specifier::Mut<t_tEntity>>
 			)	const
 		->	TypeToken
-			<	Specifier::Mutable
+			<	Specifier::Mut
 				<	::std::add_pointer_t
 					<	t_tEntity
 					>
@@ -396,10 +396,10 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<Specifier::Mutable<t_tEntity>>
+		)	(	TypeToken<Specifier::Mut<t_tEntity>>
 			)	const
 		->	TypeToken
-			<	Specifier::Mutable
+			<	Specifier::Mut
 				<	::std::remove_pointer_t
 					<	t_tEntity
 					>
@@ -432,12 +432,42 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<Specifier::Mutable<t_tEntity>>
+		)	(	TypeToken<Specifier::Mut<t_tEntity>>
 			)	const
 		->	TypeToken
 			<	::std::add_lvalue_reference_t
 				<	t_tEntity
 				>
+			>
+		{	return {};	}
+	};
+
+	struct
+		RemoveLValueReference final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	TypeToken
+			<	t_tEntity
+			>
+		{	return {};	}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity&>
+			)	const
+		->	TypeToken
+			<	t_tEntity
 			>
 		{	return {};	}
 	};
@@ -466,12 +496,42 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<Specifier::Mutable<t_tEntity>>
+		)	(	TypeToken<Specifier::Mut<t_tEntity>>
 			)	const
 		->	TypeToken
 			<	::std::add_rvalue_reference_t
 				<	t_tEntity
 				>
+			>
+		{	return {};	}
+	};
+
+	struct
+		RemoveRValueReference final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	TypeToken
+			<	t_tEntity
+			>
+		{	return {};	}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity&&>
+			)	const
+		->	TypeToken
+			<	t_tEntity
 			>
 		{	return {};	}
 	};
@@ -490,7 +550,9 @@ export namespace
 		->	TypeToken
 			<	::std::add_lvalue_reference_t
 				<	::std::add_const_t
-					<	t_tEntity
+					<	::std::remove_reference_t
+						<	t_tEntity
+						>
 					>
 				>
 			>
@@ -502,12 +564,42 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<Specifier::Mutable<t_tEntity>>
+		)	(	TypeToken<Specifier::Mut<t_tEntity>>
 			)	const
 		->	TypeToken
 			<	::std::add_lvalue_reference_t
 				<	t_tEntity
 				>
+			>
+		{	return {};	}
+	};
+
+	struct
+		RemoveCopyReference final
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity>
+			)	const
+		->	TypeToken
+			<	t_tEntity
+			>
+		{	return {};	}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		auto constexpr
+		(	operator()
+		)	(	TypeToken<t_tEntity const&>
+			)	const
+		->	TypeToken
+			<	t_tEntity
 			>
 		{	return {};	}
 	};
@@ -536,10 +628,10 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<Specifier::Mutable<t_tEntity>>
+		)	(	TypeToken<Specifier::Mut<t_tEntity>>
 			)	const
 		->	TypeToken
-			<	Specifier::Mutable
+			<	Specifier::Mut
 				<	t_tEntity
 				>
 			>
@@ -570,7 +662,7 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<Specifier::Mutable<t_tEntity>>
+		)	(	TypeToken<Specifier::Mut<t_tEntity>>
 			)	const
 		->	TypeToken
 			<	::std::remove_cvref_t
@@ -632,12 +724,24 @@ export namespace
 		AddLValueReference
 	;
 
+	Transform::RemoveLValueReference extern
+		RemoveLValueReference
+	;
+
 	Transform::AddRValueReference extern
 		AddRValueReference
 	;
 
+	Transform::RemoveRValueReference extern
+		RemoveRValueReference
+	;
+
 	Transform::AddCopyReference extern
 		AddCopyReference
+	;
+
+	Transform::RemoveCopyReference extern
+		RemoveCopyReference
 	;
 
 	Transform::RemoveReference extern

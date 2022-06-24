@@ -10,7 +10,7 @@ namespace ATR
 		>
 	+	Member
 		<	"1MutBoolBit"
-		,	Mutable<bool>
+		,	Mut<bool>
 		>
 	+	Member
 		<	"2BitField31"
@@ -18,7 +18,7 @@ namespace ATR
 		>
 	+	Member
 		<	"3MutBitField31"
-		,	Mutable
+		,	Mut
 			<	BitField<31>
 			>
 		>

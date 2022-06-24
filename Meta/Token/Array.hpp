@@ -33,10 +33,10 @@ export namespace
 			>
 		friend auto constexpr
 		(	operator +
-		)	(	TypeToken<Specifier::Mutable<t_tElement>>
+		)	(	TypeToken<Specifier::Mut<t_tElement>>
 			,	Extent
 			)
-		->	TypeToken<Specifier::Mutable<t_tElement[t_nExtent]>>
+		->	TypeToken<Specifier::Mut<t_tElement[t_nExtent]>>
 		{	return {};	}
 
 		template
@@ -57,10 +57,10 @@ export namespace
 			>
 		friend auto constexpr
 		(	operator -
-		)	(	TypeToken<Specifier::Mutable<t_tElement[t_nExtent]>>
+		)	(	TypeToken<Specifier::Mut<t_tElement[t_nExtent]>>
 			,	Extent
 			)
-		->	TypeToken<Specifier::Mutable<t_tElement>>
+		->	TypeToken<Specifier::Mut<t_tElement>>
 		{	return {};	}
 	};
 

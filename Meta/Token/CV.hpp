@@ -95,6 +95,23 @@ export namespace
 		->	decltype(RemoveMutable(i_vType))
 		{	return{};	}
 	};
+
+	struct
+		CV
+	{
+		template
+			<	typename
+					t_tEntity
+			>
+		friend auto constexpr
+		(	operator -
+		)	(	TypeToken<t_tEntity>
+					i_vType
+			,	CV
+			)
+		->	decltype(RemoveCV(i_vType))
+		{	return{};	}
+	};
 }
 
 export namespace
@@ -110,5 +127,9 @@ export namespace
 
 	Token::Mutable extern
 		Mutable
+	;
+
+	Token::CV extern
+		CV
 	;
 }

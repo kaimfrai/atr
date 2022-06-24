@@ -1,13 +1,11 @@
 import Meta.Lex;
 
+using Meta::Specifier::Mut;
 using Meta::Type;
 using Meta::TokenizeType;
 using Meta::Token::Const;
 using Meta::Token::Volatile;
 using Meta::Token::Mutable;
-
-template<typename t_tEntity>
-using Mut = Meta::Specifier::Mutable<t_tEntity>;
 
 using namespace Meta::Lex;
 

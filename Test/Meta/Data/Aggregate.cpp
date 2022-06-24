@@ -2,9 +2,7 @@ import Meta.Data;
 import Std;
 
 using namespace Meta;
-
-template<typename t_tEntity>
-using Mut = Specifier::Mutable<t_tEntity>;
+using ::Meta::Specifier::Mut;
 
 static_assert(::std::contiguous_iterator<Aggregate<int const*>>);
 

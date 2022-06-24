@@ -20,9 +20,9 @@ export namespace
 	:	t_tpBitView
 		...
 	{
-		using t_tpBitView::Ref...;
-		using t_tpBitView::Const...;
-		using t_tpBitView::Move...;
+		using t_tpBitView::ReadWriteView...;
+		using t_tpBitView::ReadView...;
+		using t_tpBitView::Value...;
 		using t_tpBitView::OffsetOf...;
 
 		static auto constexpr
@@ -57,7 +57,7 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Ref
+			ReadWriteView
 			(	i_vMemberID
 			,	+Buffer
 			);
@@ -72,7 +72,7 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Const
+			ReadView
 			(	i_vMemberID
 			,	+Buffer
 			);
@@ -87,7 +87,7 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Move
+			Value
 			(	i_vMemberID
 			,	+Buffer
 			);

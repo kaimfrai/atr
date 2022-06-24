@@ -9,6 +9,8 @@ import Meta.Token;
 
 import Std;
 
+using ::Meta::Specifier::BitField;
+using ::Meta::Specifier::Mut;
 using ::Meta::Sequence;
 using ::Meta::IndexToken;
 using ::Meta::USize;
@@ -62,6 +64,120 @@ auto constexpr
 ->	::ATR::Bit::View
 	<	t_nOffset
 	,	t_tData
+	,	t_rpName
+		...
+	>
+;
+
+template
+	<	USize
+			t_nOffset
+	,	char const
+		&
+		...	t_rpName
+	>
+auto constexpr
+(	MakeBitView
+)	(	::Member<bool, t_rpName...>
+	)
+->	::ATR::Bit::View
+	<	t_nOffset
+	,	BitField<1>
+	,	t_rpName
+		...
+	>
+;
+
+template
+	<	USize
+			t_nOffset
+	,	char const
+		&
+		...	t_rpName
+	>
+auto constexpr
+(	MakeBitView
+)	(	::Member<bool const, t_rpName...>
+	)
+->	::ATR::Bit::View
+	<	t_nOffset
+	,	BitField<1> const
+	,	t_rpName
+		...
+	>
+;
+
+template
+	<	USize
+			t_nOffset
+	,	char const
+		&
+		...	t_rpName
+	>
+auto constexpr
+(	MakeBitView
+)	(	::Member<bool volatile, t_rpName...>
+	)
+->	::ATR::Bit::View
+	<	t_nOffset
+	,	BitField<1> volatile
+	,	t_rpName
+		...
+	>
+;
+
+template
+	<	USize
+			t_nOffset
+	,	char const
+		&
+		...	t_rpName
+	>
+auto constexpr
+(	MakeBitView
+)	(	::Member<bool const volatile, t_rpName...>
+	)
+->	::ATR::Bit::View
+	<	t_nOffset
+	,	BitField<1> const volatile
+	,	t_rpName
+		...
+	>
+;
+
+template
+	<	USize
+			t_nOffset
+	,	char const
+		&
+		...	t_rpName
+	>
+auto constexpr
+(	MakeBitView
+)	(	::Member<Mut<bool>, t_rpName...>
+	)
+->	::ATR::Bit::View
+	<	t_nOffset
+	,	Mut<BitField<1>>
+	,	t_rpName
+		...
+	>
+;
+
+template
+	<	USize
+			t_nOffset
+	,	char const
+		&
+		...	t_rpName
+	>
+auto constexpr
+(	MakeBitView
+)	(	::Member<Mut<bool volatile>, t_rpName...>
+	)
+->	::ATR::Bit::View
+	<	t_nOffset
+	,	Mut<BitField<1> volatile>
 	,	t_rpName
 		...
 	>

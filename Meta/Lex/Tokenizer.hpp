@@ -95,7 +95,7 @@ export namespace
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	Specifier::Mutable<t_tEntity>
+				<	Specifier::Mut<t_tEntity>
 				>
 			)	const
 		->	decltype(auto)
@@ -114,7 +114,7 @@ export namespace
 		auto constexpr
 		(	operator()
 		)	(	TypeToken
-				<	Specifier::Mutable<t_tEntity volatile>
+				<	Specifier::Mut<t_tEntity volatile>
 				>
 			)	const
 		->	decltype(auto)

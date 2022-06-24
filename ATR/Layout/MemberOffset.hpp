@@ -3,9 +3,14 @@ export module ATR:Layout.MemberOffset;
 export import :Erase;
 
 export import Meta.Arithmetic;
+export import Meta.Predicate;
 
 export import Std;
 
+using ::Meta::Const;
+using ::Meta::LRef;
+using ::Meta::Type;
+using ::Meta::TypeEntity;
 using ::Meta::USize;
 
 export namespace
@@ -18,6 +23,50 @@ export namespace
 	struct
 		MemberOffset
 	{
+		static_assert
+		(	not
+			::std::is_const_v<t_tMember>
+		,	"Prefer pure value types to const value types!"
+		);
+
+		static_assert
+		(	not
+			::std::is_volatile_v<t_tMember>
+		,	"Prefer pure value types to volatile value types!"
+		);
+
+		static_assert
+		(	not
+			::Meta::IsTypePack_Of<::Meta::Specifier::Mut>
+			(	Type<t_tMember>
+			)
+		,	"Prefer pure value types to mutable value types!"
+		);
+
+		static_assert
+		(	not
+			::std::is_rvalue_reference_v<t_tMember>
+		,	"Prefer pure value types to rvalue references!"
+		);
+
+		using
+			ValueType
+		=	::std::remove_reference_t
+			<	t_tMember
+			>
+		;
+		//	byte const for values
+		//	byte for value&
+		//	byte const for value const&
+		using
+			ByteType
+		=	TypeEntity
+			<	Type<::std::byte>
+			+	Const
+			-	LRef
+			>
+		;
+
 		USize
 			Offset
 		;
@@ -25,18 +74,16 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	(	::std::byte const
+		)	(	ByteType
 				*	i_aObject
 			)	const
 			noexcept
-		->	//	convert rvalue reference to prvalue
-			//	do not return const which would disable move semantics
-			::std::remove_cvref_t<t_tMember>
+		->	t_tMember
 		{	return
 			*
 			//	we don't know where the byte pointer came from, so we need to launder it
 			::std::launder
-			(	PointerCast<::std::remove_reference_t<t_tMember>>
+			(	PointerCast<ValueType>
 				(	i_aObject
 				+	Offset
 				)
@@ -47,7 +94,7 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator->*
-		)	(	::std::byte const
+		)	(	ByteType
 				*	i_aObject
 			,	MemberOffset
 					i_vMemberOffset
@@ -59,123 +106,19 @@ export namespace
 			(	i_aObject
 			);
 		}
-	};
 
-	template
-		<	typename
-				t_tMember
-		>
-	struct
-		MemberOffset
-		<	t_tMember&
-		>
-	{
-		USize
-			Offset
-		;
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator()
-		)	(	::std::byte
-				*	i_aObject
-			)	const
-			noexcept
-		->	t_tMember&
-		{	return
-			*
-			//	we don't know where the byte pointer came from, so we need to launder it
-			::std::launder
-			(	PointerCast<t_tMember>
-				(	i_aObject
-				+	Offset
-				)
-			);
-		}
-
-		/// immitates syntax of pointer to member dereference
-		[[nodiscard]]
 		friend auto constexpr
-		(	operator->*
-		)	(	::std::byte
-				*	i_aObject
+		(	operator +
+		)	(	USize
+					i_nOffset
 			,	MemberOffset
 					i_vMemberOffset
 			)
-			noexcept
-		->	t_tMember&
+		->	MemberOffset
 		{	return
-			i_vMemberOffset
-			(	i_aObject
-			);
+			{	i_nOffset
+			+	i_vMemberOffset.Offset
+			};
 		}
 	};
-
-	template
-		<	typename
-				t_tMember
-		>
-	struct
-		MemberOffset
-		<	t_tMember const&
-		>
-	{
-		USize
-			Offset
-		;
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator()
-		)	(	::std::byte const
-				*	i_aObject
-			)	const
-			noexcept
-		->	t_tMember const&
-		{	return
-			*
-			//	we don't know where the byte pointer came from, so we need to launder it
-			::std::launder
-			(	PointerCast<t_tMember>
-				(	i_aObject
-				+	Offset
-				)
-			);
-		}
-
-		/// immitates syntax of pointer to member dereference
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator->*
-		)	(	::std::byte const
-				*	i_aObject
-			,	MemberOffset
-					i_vMemberOffset
-			)
-			noexcept
-		->	t_tMember const&
-		{	return
-			i_vMemberOffset
-			(	i_aObject
-			);
-		}
-	};
-
-	template
-		<	typename
-				t_tMember
-		>
-	auto constexpr
-	(	operator +
-	)	(	USize
-				i_nOffset
-		,	MemberOffset<t_tMember>
-				i_nMember
-		)
-	->	MemberOffset<t_tMember>
-	{	return
-		{	i_nOffset
-		+	i_nMember.Offset
-		};
-	}
 }

@@ -95,7 +95,7 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<Specifier::Mutable<t_tMutable>>
+		)	(	TypeToken<Specifier::Mut<t_tMutable>>
 			)	const
 		->	USize
 		{	return operator()(Type<t_tMutable>);	}
@@ -191,7 +191,7 @@ export namespace
 			>
 		auto constexpr
 		(	operator()
-		)	(	TypeToken<Specifier::Mutable<t_tMutable>>
+		)	(	TypeToken<Specifier::Mut<t_tMutable>>
 			)	const
 		->	USize
 		{	return operator()(Type<t_tMutable>);	}
@@ -203,7 +203,7 @@ export namespace
 		auto constexpr
 		(	operator()
 		)	(	TypeToken<Specifier::BitField<t_nSize>>
-			)
+			)	const
 		->	USize
 		{	return t_nSize;	}
 

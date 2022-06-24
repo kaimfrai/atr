@@ -15,9 +15,24 @@ export namespace
 	->	bool
 	{
 		static_assert(::std::is_standard_layout_v<t_tLayout>);
+		// can't use mutable here
+		struct
+			FakeLayout
+		{
+			alignas(decltype(t_tLayout::NorthArea))
+			::std::byte NorthArea
+				[sizeof(t_tLayout::NorthArea)]
+			;
+			alignas(decltype(t_tLayout::SouthArea))
+			::std::byte SouthArea
+				[sizeof(t_tLayout::SouthArea)]
+			;
+		};
+		static_assert(sizeof(FakeLayout) == sizeof(t_tLayout));
+		static_assert(alignof(FakeLayout) == alignof(t_tLayout));
 		union
 		{	alignas(t_tLayout) ::std::byte vBuffer[sizeof(t_tLayout)];
-			t_tLayout vLayout;
+			FakeLayout vLayout;
 		}	vUnion;
 
 		return

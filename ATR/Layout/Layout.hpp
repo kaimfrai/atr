@@ -14,6 +14,9 @@ import Meta.Data;
 import Meta.Lex;
 
 using ::Meta::Aggregate;
+using ::Meta::CV;
+using ::Meta::Type;
+using ::Meta::TypeEntity;
 using ::Meta::USize;
 
 export namespace
@@ -202,29 +205,6 @@ export namespace
 			>
 		>
 	{
-		template
-			<	typename
-				...	t_tpTransform
-			>
-		[[nodiscard]]
-		static auto constexpr
-		(	OffsetOf
-		)	(	ID<t_rpName...>
-			,	Meta::Lex::Transform<t_tpTransform...>
-					i_vTransform
-			)
-		->	decltype(auto)
-		{	return
-			MemberOffset
-			<	Meta::TypeEntity
-				<	i_vTransform
-					(	Meta::Type<Aggregate<t_tData>>
-					)
-				>
-			>{	0uz
-			};
-		}
-
 		Aggregate<t_tData>
 			Value
 		;
@@ -253,7 +233,45 @@ export namespace
 		)	(	ID<t_rpName...>
 			)	&&
 			noexcept
-		->	Aggregate<t_tData>
-		{	return Value;	}
+		->	Aggregate
+			<	TypeEntity
+				<	Type<t_tData>
+				-	CV
+				>
+			>
+		{	return
+			{	Value
+			};
+		}
+
+		template
+			<	typename
+				...	t_tpTransform
+			>
+		[[nodiscard]]
+		static auto constexpr
+		(	OffsetOf
+		)	(	ID<t_rpName...>
+					i_vName
+			,	Meta::Lex::Transform<t_tpTransform...>
+					i_vTransform
+			)
+		->	decltype(auto)
+		{	return
+			MemberOffset
+			<	decltype
+				(	::std::declval
+					<	TypeEntity
+						<	i_vTransform
+							(	Type<Layout>
+							)
+						>
+					>()
+					[	i_vName
+					]
+				)
+			>{	0uz
+			};
+		}
 	};
 }
