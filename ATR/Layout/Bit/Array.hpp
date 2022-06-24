@@ -88,19 +88,28 @@ export namespace
 			)
 		;
 
-		using reference = ElementReference<t_nSize, MaximumOffset>;
-		using difference_type = SSize;
-		using value_type = typename BitAccess::FieldType;
-		using iterator = Iterator<t_nSize, MaximumOffset>;
-
 		t_tArray
 			m_aUnderlyingArray
 		;
 
+		using reference = ElementReference<::std::remove_pointer_t<decltype(+m_aUnderlyingArray)>, t_nSize, MaximumOffset>;
+		using difference_type = SSize;
+		using value_type = typename BitAccess::FieldType;
+		using iterator = Iterator<::std::remove_pointer_t<decltype(+m_aUnderlyingArray)>, t_nSize, MaximumOffset>;
+
+		template
+			<	typename
+					t_tDerived
+			>
+		requires
+			::std::derived_from
+			<	::std::remove_reference_t<t_tDerived>
+			,	Array
+			>
 		friend auto constexpr
 		(	IteratorAt
-		)	(	::std::derived_from<Array> auto
-				&	i_rArray
+		)	(	t_tDerived
+				&&	i_rArray
 			,	USize
 					i_nIndex
 			)
@@ -150,6 +159,14 @@ export namespace
 		->	value_type
 		{	return *IteratorAt(*this, i_nIndex);	}
 
+		auto constexpr
+		(	operator[]
+		)	(	USize
+					i_nIndex
+			)	&&
+		->	value_type
+		{	return *IteratorAt(::std::move(*this), i_nIndex);	}
+
 		template
 			<	typename
 					t_tTarget
@@ -159,11 +176,7 @@ export namespace
 		)	()	const
 		->	t_tTarget
 			requires
-			(	BitFieldBufferSize
-				(	t_nSize
-				,	t_nOffset
-				,	t_nExtent
-				)
+			(	BufferSize
 			<=	sizeof(t_tTarget)
 			)
 		{
@@ -191,6 +204,10 @@ export namespace
 		(	all
 		)	()	const
 		->	bool
+			requires requires
+			{
+				typename UInt<BitCount>;
+			}
 		{
 			using tField = UInt<BitCount>;
 			auto const
@@ -204,6 +221,10 @@ export namespace
 		(	any
 		)	()	const
 		->	bool
+			requires requires
+			{
+				typename UInt<BitCount>;
+			}
 		{
 			using tField = UInt<BitCount>;
 			auto const
@@ -217,6 +238,10 @@ export namespace
 		(	none
 		)	()	const
 		->	bool
+			requires requires
+			{
+				typename UInt<BitCount>;
+			}
 		{
 			using tField = UInt<BitCount>;
 			auto const
@@ -256,6 +281,41 @@ export namespace
 		friend auto constexpr
 		(	end
 		)	(	ArrayReference
+					i_vArray
+			)
+		->	decltype(auto)
+		{	return IteratorAt(i_vArray, t_nExtent);	}
+	};
+
+	template
+		<	ESize
+				t_nSize
+		,	USize
+				t_nExtent
+		,	EOffset
+				t_nOffset
+			=	EOffset{0}
+		>
+	struct
+		ArrayConstReference
+	:	Array
+		<	::std::byte const* const
+		,	t_nSize
+		,	t_nExtent
+		,	t_nOffset
+		>
+	{
+		friend auto constexpr
+		(	begin
+		)	(	ArrayConstReference
+					i_vArray
+			)
+		->	decltype(auto)
+		{	return IteratorAt(i_vArray, 0z);	}
+
+		friend auto constexpr
+		(	end
+		)	(	ArrayConstReference
 					i_vArray
 			)
 		->	decltype(auto)
@@ -357,7 +417,7 @@ export namespace
 		}
 		else
 		{
-			ArrayReference
+			ArrayConstReference
 			<	t_nSize
 			,	t_nExtent
 			,	t_nOffset
@@ -367,7 +427,7 @@ export namespace
 			};
 			ArrayValue<t_nSize, t_nExtent>
 				vResult
-			;
+			{};
 			::std::copy
 			(	begin(rReference)
 			,	end(rReference)

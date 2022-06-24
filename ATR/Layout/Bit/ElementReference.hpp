@@ -9,7 +9,9 @@ export namespace
 	ATR::Bit
 {
 	template
-		<	ESize
+		<	typename
+				t_tBuffer
+		,	ESize
 				t_nSize
 		,	EOffset
 				t_nMaxOffset
@@ -31,7 +33,7 @@ export namespace
 		using AssignType = UInt<static_cast<USize>(t_nSize)>;
 		using MaskType = typename BitAccess::BufferFieldType;
 
-		::std::byte
+		t_tBuffer
 		*	const
 			m_aUnderlyingArray
 		;
@@ -56,6 +58,10 @@ export namespace
 					i_vValue
 			)	&
 		->	ElementReference&
+			requires
+			(	not
+				::std::is_const_v<t_tBuffer>
+			)
 		{
 			BitAccess::WriteField
 			(	i_vValue
@@ -71,6 +77,10 @@ export namespace
 					i_vValue
 			)	&&
 		->	ElementReference&&
+			requires
+			(	not
+				::std::is_const_v<t_tBuffer>
+			)
 		{
 			return
 			::std::move
@@ -97,13 +107,16 @@ export namespace
 
 	//	catch dangerous implicit conversion from UInt8 to bool
 	template
-		<	EOffset
+		<	typename
+				t_tBuffer
+		,	EOffset
 				t_nMaxOffset
 		>
 	auto constexpr
 	(	operator==
 	)	(	ElementReference
-			<	ESize{1}
+			<	t_tBuffer
+			,	ESize{1}
 			,	t_nMaxOffset
 			>
 		,	UInt<1uz>

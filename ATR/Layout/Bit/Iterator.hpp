@@ -15,7 +15,9 @@ export namespace
 	ATR::Bit
 {
 	template
-		<	ESize
+		<	typename
+				t_tBuffer
+		,	ESize
 				t_nSize
 		,	EOffset
 				t_nMaxOffset
@@ -31,12 +33,12 @@ export namespace
 
 		using BitAccess = Access<t_nSize, t_nMaxOffset>;
 
-		using reference = ElementReference<t_nSize, t_nMaxOffset>;
+		using reference = ElementReference<t_tBuffer, t_nSize, t_nMaxOffset>;
 		using difference_type = SSize;
 		using value_type = typename BitAccess::FieldType;
 		using MaskType = typename BitAccess::BufferFieldType;
 
-		::std::byte
+		t_tBuffer
 		*	m_aUnderlyingArray
 		;
 		MaskType

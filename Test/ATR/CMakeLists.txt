@@ -1,4 +1,5 @@
 add_module_object_library(Test.ATR.OffsetOf OffsetOf.cpp)
+add_module_object_library(Test.ATR.BitArrayValue BitArrayValue.cpp)
 add_module_object_library(Test.ATR.BitReference BitReference.cpp)
 add_module_object_library(Test.ATR.BitIterator BitIterator.cpp)
 add_module_object_library(Test.ATR.BitField BitField.cpp)

@@ -9,13 +9,15 @@ export namespace
 	ATR::Bit
 {
 	template
-		<	ESize
+		<	typename
+				t_tBuffer
+		,	ESize
 				t_nSize
 		,	EOffset
 				t_nOffset
 		>
 	struct
-		Reference final
+		SingleReference final
 	{
 		static_assert
 		(	static_cast<USize>(t_nOffset)
@@ -26,7 +28,7 @@ export namespace
 		using BitAccess = ::ATR::Bit::Access<t_nSize, t_nOffset>;
 		using value_type = typename BitAccess::FieldType;
 
-		::std::byte
+		t_tBuffer
 		*	const
 			m_aUnderlyingArray
 		;
@@ -46,7 +48,11 @@ export namespace
 		)	(	value_type
 					i_vValue
 			)	&
-		->	Reference&
+		->	SingleReference&
+			requires
+			(	not
+				::std::is_const_v<t_tBuffer>
+			)
 		{
 			BitAccess::WriteField(i_vValue, m_aUnderlyingArray);
 			return *this;
@@ -57,7 +63,11 @@ export namespace
 		)	(	value_type
 					i_vValue
 			)	&&
-		->	Reference&&
+		->	SingleReference&&
+			requires
+			(	not
+				::std::is_const_v<t_tBuffer>
+			)
 		{
 			return
 			::std::move
@@ -66,4 +76,19 @@ export namespace
 			);
 		}
 	};
+
+	template
+		<	ESize
+				t_nSize
+		,	EOffset
+				t_nOffset
+		>
+	using
+		Reference
+	=	SingleReference
+		<	::std::byte
+		,	t_nSize
+		,	t_nOffset
+		>
+	;
 }

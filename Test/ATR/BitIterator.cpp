@@ -13,7 +13,7 @@ using ::Meta::USize;
 
 static_assert
 (	::std::random_access_iterator
-	<	Iterator<ESize{1}, EOffset{0}>
+	<	Iterator<::std::byte, ESize{1}, EOffset{0}>
 	>
 );
 
@@ -23,7 +23,7 @@ static_assert
 	]
 {};
 
-Iterator<ESize{10}, EOffset{6}> constexpr
+Iterator<::std::byte, ESize{10}, EOffset{6}> constexpr
 	First
 {	+Buffer
 ,	SetOneBits(10)
