@@ -29,9 +29,13 @@ export namespace
 		->	bool
 		{	return not Evaluate(i_vNot.Literal, i_vType);	}
 
+		template
+			<	typename
+					t_tEntity
+			>
 		auto constexpr
 		(	operator()
-		)	(	EraseTypeToken
+		)	(	TypeToken<t_tEntity>
 					i_vType
 			)	const
 		->	bool

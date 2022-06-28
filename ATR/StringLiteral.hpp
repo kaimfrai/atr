@@ -110,8 +110,9 @@ export namespace
 
 	///	Namespace scope allows making use of implicit conversions.
 	///	This allows for template argument erasure.
+	[[nodiscard]]
 	auto constexpr
-	(	operator==
+	(	operator ==
 	)	(	StringView
 				i_vLeft
 		,	StringView
@@ -126,8 +127,9 @@ export namespace
 
 	///	Namespace scope allows making use of implicit conversions.
 	///	This allows for template argument erasure.
+	[[nodiscard]]
 	auto constexpr
-	(	operator<=>
+	(	operator <=>
 	)	(	StringView
 				i_vLeft
 		,	StringView

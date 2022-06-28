@@ -2,11 +2,16 @@ export module ATR:DataMember;
 
 export import :ID;
 
-export import Meta.Data;
-export import Meta.Token;
 export import Meta.Arithmetic;
+export import Meta.Data;
+export import Meta.Predicate;
+export import Meta.Token;
 
 export import Std;
+
+using ::Meta::IndexToken;
+using ::Meta::Sequence;
+using ::Meta::USize;
 
 export namespace
 	ATR
@@ -14,21 +19,21 @@ export namespace
 	using ::Meta::Specifier::Mut;
 	using ::Meta::Specifier::BitField;
 
-	::Meta::USize constexpr inline
+	USize constexpr inline
 		AliasSortKey
 	=	0uz
 	;
 
-	::Meta::USize constexpr inline
+	USize constexpr inline
 		StaticSortKey
-	=	::std::numeric_limits<::Meta::USize>::max()
+	=	::std::numeric_limits<USize>::max()
 	;
 
 	template
 		<	typename
 				t_tData
 		>
-	::Meta::USize constexpr inline
+	USize constexpr inline
 		MemberSortKey
 	=	//	sort order inverse to alignment
 		StaticSortKey
@@ -42,7 +47,7 @@ export namespace
 	struct
 		MemberInfo final
 	{
-		Meta::USize SortKey;
+		USize SortKey;
 		StringView Name;
 		Meta::EraseTypeToken Type;
 
@@ -56,7 +61,7 @@ export namespace
 	};
 
 	template
-		<	Meta::USize
+		<	USize
 				t_nMemberCount
 		>
 	struct
@@ -218,6 +223,36 @@ export namespace
 			);
 			return vResult;
 		}
+
+		friend auto constexpr
+		(	operator ==
+		)	(	MemberList const
+				&	i_rLeft
+			,	MemberList const
+				&	i_rRight
+			)
+		->	bool
+		=	default;
+
+		template
+			<	USize
+					t_nRightMemberCount
+			>
+		friend auto constexpr
+		(	operator ==
+		)	(	MemberList const
+				&
+			,	MemberList<t_nRightMemberCount> const
+				&
+			)
+		->	bool
+		{
+			static_assert
+			(	t_nMemberCount != t_nRightMemberCount
+			,	"Unexpected overload choice!"
+			);
+			return false;
+		}
 	};
 
 	template
@@ -250,7 +285,7 @@ export namespace
 				t_tName
 		,	Meta::EraseTypeToken
 				t_vType
-		,	Meta::USize
+		,	USize
 				t_nMemberSortKey
 		>
 	MemberInfo constexpr inline
@@ -293,6 +328,25 @@ export namespace
 		>
 	;
 
+	inline namespace
+		Literals
+	{
+		template
+			<	char
+				...	t_npNumeric
+			>
+		auto constexpr
+		(	operator""_ext
+		)	()
+		->	::Meta::Token::Extent
+			<	::Meta::Literals::EvaluateNumericLiteral
+				<	t_npNumeric
+					...
+				>()
+			>
+		{	return {};	}
+	}
+
 	template
 		<	MemberList
 				t_vList
@@ -300,6 +354,12 @@ export namespace
 	struct
 		DefineMembers final
 	{
+		static auto constexpr
+		(	get
+		)	()
+		->	decltype(t_vList) const&
+		{	return t_vList;	}
+
 		static auto constexpr
 		(	size
 		)	()
@@ -313,7 +373,7 @@ export namespace
 
 		auto constexpr
 		(	operator[]
-		)	(	Meta::USize
+		)	(	USize
 					i_nIndex
 			)	const
 		->	decltype(auto)
@@ -336,7 +396,7 @@ export namespace
 		{	return t_vList(i_rExchange);	}
 
 		template
-			<	Meta::USize
+			<	USize
 					t_nRight
 			>
 		friend auto constexpr
@@ -348,8 +408,40 @@ export namespace
 		->	decltype(auto)
 		{	return t_vList + i_rRight;	}
 
+		friend auto constexpr
+		(	operator *
+		)	(	DefineMembers
+			,	Meta::ProtoConstraint<Meta::IsStateless> auto
+					i_fTransform
+			)
+		->	decltype(t_vList)
+		{
+			return
+			[]	<	USize
+					...	t_npIndex
+				>(	IndexToken<t_npIndex...>
+				)
+			->	decltype(t_vList)
+			{
+				decltype(t_vList)
+					vList
+				{	&MemberInstance
+					<	ID_Of<t_vList[t_npIndex].get().Name>
+					,	(	Meta::RestoreTypeToken<t_vList[t_npIndex].get().Type>
+						+	decltype(i_fTransform){}
+						)
+					,	t_vList[t_npIndex].get().SortKey
+					>
+					...
+				};
+				::std::sort(begin(vList), end(vList));
+				return vList;
+			}(	Sequence<t_vList.size()>
+			);
+		}
+
 		template
-			<	Meta::USize
+			<	USize
 					t_nRight
 			>
 		friend auto constexpr
@@ -360,8 +452,28 @@ export namespace
 			)
 		->	decltype(auto)
 		{	return t_vList - i_rRight;	}
-	};
 
+
+		friend auto constexpr
+		(	operator ==
+		)	(	DefineMembers
+			,	DefineMembers
+			)
+		->	bool
+		=	default;
+
+		template
+			<	MemberList
+					t_vRightList
+			>
+		friend auto constexpr
+		(	operator ==
+		)	(	DefineMembers
+			,	DefineMembers<t_vRightList>
+			)
+		->	bool
+		{	return false;	}
+	};
 
 	/// maps a string literal to a Layout
 	template

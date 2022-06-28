@@ -587,19 +587,19 @@ export namespace
 		(	operator decltype(auto)
 		)	()	&
 			noexcept
-		{	return get();	}
+		{	return ::std::declval<ElementType(&)[]>();	}
 
 		constexpr
 		(	operator decltype(auto)
 		)	()	const&
 			noexcept
-		{	return get();	}
+		{	return ::std::declval<ConstElementType(&)[]>();	}
 
 		constexpr
 		(	operator decltype(auto)
 		)	()	&&
 			noexcept
-		{	return ::std::move(*this).get();	}
+		{	return ::std::declval<ElementType(&&)[]>();	}
 
 		[[nodiscard]]
 		static auto constexpr
@@ -830,6 +830,7 @@ export namespace
 		,	typename
 				t_tData
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	MakeArrayAggregate
 	)	(	t_tData const
@@ -1037,6 +1038,7 @@ export namespace
 		<	typename
 				t_tData
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	operator +
 	)	(	Aggregate<t_tData>
@@ -1052,6 +1054,7 @@ export namespace
 		<	typename
 				t_tData
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	operator +
 	)	(	Aggregate<t_tData> const
@@ -1067,6 +1070,7 @@ export namespace
 		<	::std::contiguous_iterator
 				t_tData
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	operator *
 	)	(	Aggregate<t_tData> const
@@ -1155,6 +1159,7 @@ export namespace
 		<	::std::random_access_iterator
 				t_tData
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	operator +
 	)	(	Aggregate<t_tData> const
@@ -1173,6 +1178,7 @@ export namespace
 		<	::std::random_access_iterator
 				t_tData
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	operator +
 	)	(	::std::iter_difference_t<t_tData> const
@@ -1208,6 +1214,7 @@ export namespace
 		<	::std::random_access_iterator
 				t_tData
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	operator -
 	)	(	Aggregate<t_tData> const
@@ -1224,10 +1231,72 @@ export namespace
 
 	template
 		<	typename
+				t_tElement
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	operator ==
+	)	(	Aggregate<t_tElement[]>
+		,	Aggregate<t_tElement[]>
+		)
+	->	bool
+	{	return true;	}
+
+	template
+		<	typename
+				t_tElement
+		,	USize
+				t_nExtent
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	operator ==
+	)	(	Aggregate<t_tElement[t_nExtent]> const
+			&	i_rLeft
+		,	Aggregate<t_tElement[t_nExtent]> const
+			&	i_rRight
+		)
+	->	bool
+	{	return
+		::std::equal
+		(	begin(i_rLeft)
+		,	end(i_rLeft)
+		,	begin(i_rRight)
+		,	end(i_rRight)
+		);
+	}
+
+	template
+		<	typename
 				t_tLeft
 		,	typename
 				t_tRight
 		>
+	[[nodiscard]]
+	auto constexpr
+	(	operator ==
+	)	(	Aggregate<t_tLeft> const
+			&	i_rLeft
+		,	Aggregate<t_tRight> const
+			&	i_rRight
+		)
+	->	decltype
+		(	i_rLeft.get()
+		==	i_rRight.get()
+		)
+	{	return
+		(	i_rLeft.get()
+		==	i_rRight.get()
+		);
+	}
+
+	template
+		<	typename
+				t_tLeft
+		,	typename
+				t_tRight
+		>
+	[[nodiscard]]
 	auto constexpr
 	(	operator <=>
 	)	(	Aggregate<t_tLeft> const
@@ -1249,6 +1318,7 @@ export namespace
 		<	typename
 				t_tData
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	begin
 	)	(	Aggregate<t_tData>
@@ -1261,6 +1331,7 @@ export namespace
 		<	typename
 				t_tData
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	begin
 	)	(	Aggregate<t_tData> const
@@ -1273,6 +1344,7 @@ export namespace
 		<	typename
 				t_tData
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	end
 	)	(	Aggregate<t_tData>
@@ -1285,6 +1357,7 @@ export namespace
 		<	typename
 				t_tData
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	end
 	)	(	Aggregate<t_tData> const
