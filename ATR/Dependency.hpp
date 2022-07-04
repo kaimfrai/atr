@@ -40,24 +40,6 @@ export namespace
 		=	Meta::Sequence<sizeof...(t_tpItem)>
 		;
 
-		constexpr
-		(	BoundDependency
-		)	(	t_tArgument
-					i_vArgument
-			,	Meta::TupleList
-				<	t_tpItem
-					...
-				>	i_vDependencyMap
-				=	{}
-			)
-		:	Argument
-			{	i_vArgument
-			}
-		,	DependencyMap
-			{	i_vDependencyMap
-			}
-		{}
-
 		template
 			<	Meta::USize
 					t_nIndex
