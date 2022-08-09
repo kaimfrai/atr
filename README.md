@@ -31,12 +31,6 @@ Sicherstellen, dass Boost-Header gefunden werden können (automatisch bei Instal
 
 # Durchführung der Evaluation
 
-Für das Erstellen der einzelnen Projekte folgende Befehle in diesem Ordner ausführen:
-```
-> mkdir build
-> cmake -S ./ -B ./build  --toolchain=CMake/Linux-Clang.cmake -G="Ninja"
-> cmake --build ./build
-```
 
 Für das Ausführen der Evaluation folgende Befehle ausführen.
 ```
@@ -45,7 +39,7 @@ Für das Ausführen der Evaluation folgende Befehle ausführen.
 ```
 
 Das Programm perf benötigt standardmäßig erweiterte Rechte.
-Sollte dies unerwünscht sein, sowohl Zeile 2 als auch Zeile 18 in evaluation.sh mit # auskommentieren, dann folgenden Befehl ausführen.
+Sollte dies unerwünscht sein, Zeile 17 in evaluation.sh mit # auskommentieren, dann folgenden Befehl ausführen.
 ```
 > bash evaluation.sh
 ```
