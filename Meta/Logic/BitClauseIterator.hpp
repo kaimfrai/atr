@@ -2,8 +2,6 @@ export module Meta.Logic:BitClauseIterator;
 
 export import :BitClause;
 
-export import Std;
-
 namespace
 	Meta::Logic
 {

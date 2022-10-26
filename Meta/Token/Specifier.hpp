@@ -2,8 +2,6 @@ export module Meta.Token:Specifier;
 
 export import Meta.Arithmetic;
 
-export import Std;
-
 export namespace
 	Meta::Specifier
 {

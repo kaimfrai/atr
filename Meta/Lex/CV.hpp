@@ -2,7 +2,7 @@ export module Meta.Lex:CV;
 
 export import Meta.Token;
 
-import Std;
+import <type_traits>;
 
 export namespace
 	Meta::Lex

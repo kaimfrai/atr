@@ -2,7 +2,7 @@ export module Meta.Token:Construct;
 
 export import :Type;
 
-export import Std;
+import <type_traits>;
 
 export namespace
 	Meta::Token

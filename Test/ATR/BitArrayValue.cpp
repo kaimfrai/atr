@@ -1,5 +1,7 @@
 import ATR;
 
+import <bit>;
+
 using Array = ::ATR::Bit::ArrayValue<ATR::Bit::ESize{1}, 31>;
 
 auto constexpr

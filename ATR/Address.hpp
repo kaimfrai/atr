@@ -3,7 +3,7 @@ export module ATR:Address;
 export import :Dependency;
 export import :ID;
 
-import Std;
+import <utility>;
 
 export namespace
 	ATR

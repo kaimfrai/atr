@@ -1,5 +1,8 @@
 import ATR;
 
+import <cstdint>;
+import <type_traits>;
+
 namespace ATR
 {
 	template<>

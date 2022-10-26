@@ -14,6 +14,28 @@ set(MODULE_FLAGS
 )
 
 set(STANDARD_HEADER_UNITS
+	cassert
+	cctype
+	cerrno
+	cfenv
+	cfloat
+	cinttypes
+	climits
+	clocale
+	cmath
+	csetjmp
+	csignal
+	cstdarg
+	cstddef
+	cstdint
+	cstdio
+	cstdlib
+	cstring
+	ctime
+	cuchar
+	cwchar
+	cwctype
+
 	algorithm
 	any
 	array

@@ -13,6 +13,8 @@ import Meta.Arithmetic;
 import Meta.Data;
 import Meta.Lex;
 
+import <utility>;
+
 using ::Meta::Aggregate;
 using ::Meta::CV;
 using ::Meta::Type;

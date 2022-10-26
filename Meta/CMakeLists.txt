@@ -6,4 +6,3 @@ add_subdirectory(Logic)
 add_subdirectory(Predicate)
 
 add_module(Meta.hpp)
-

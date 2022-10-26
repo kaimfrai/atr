@@ -3,7 +3,8 @@ export module ATR:Layout.Bit.Reference;
 import :Layout.Bit.Access;
 import :Layout.Bit.Types;
 
-import Std;
+import <type_traits>;
+import <utility>;
 
 export namespace
 	ATR::Bit

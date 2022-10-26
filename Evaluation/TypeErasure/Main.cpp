@@ -2,6 +2,7 @@ import Evaluation.CRTP;
 
 import Evaluation.Shared;
 
+import <algorithm>;
 #include "boost.hpp"
 
 namespace

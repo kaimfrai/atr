@@ -3,7 +3,7 @@ export module Meta.Token:Transform;
 export import :Specifier;
 export import :Type;
 
-import Std;
+import <type_traits>;
 
 export namespace
 	Meta::Transform

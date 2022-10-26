@@ -5,7 +5,9 @@ export import :Aggregate;
 export import Meta.Lex;
 export import Meta.Token;
 
-export import Std;
+import <iterator>;
+import <memory>;
+import <utility>;
 
 export namespace
 	Meta

@@ -3,7 +3,8 @@ export module Meta.Token:Sequence;
 export import :Index;
 
 export import Meta.Arithmetic;
-export import Std;
+
+import <utility>;
 
 namespace
 	Meta

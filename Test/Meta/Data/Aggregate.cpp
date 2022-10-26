@@ -1,5 +1,7 @@
 import Meta.Data;
-import Std;
+
+import <iterator>;
+import <utility>;
 
 using namespace Meta;
 using ::Meta::Specifier::Mut;

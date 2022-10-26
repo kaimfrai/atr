@@ -5,6 +5,8 @@ import :Layout.Concept;
 import Meta.Arithmetic;
 import Meta.Lex;
 
+import <utility>;
+
 using ::Meta::USize;
 
 export namespace

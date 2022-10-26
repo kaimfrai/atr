@@ -2,7 +2,7 @@ import Evaluation.Virtual;
 
 import Evaluation.Shared;
 
-import Std;
+import <memory>;
 
 auto
 	main

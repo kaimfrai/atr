@@ -4,7 +4,8 @@ import :Layout.Bit.Types;
 
 import Meta.Arithmetic;
 
-import Std;
+import <bit>;
+import <utility>;
 
 using ::Meta::Arithmetic::ReadFromBytes;
 using ::Meta::Arithmetic::WriteToBytes;

@@ -21,8 +21,8 @@ set(CMAKE_CXX_EXTENSIONS
 )
 
 include(CMake/CXX20Modules.cmake)
+enable_standard_header_units()
 
-add_subdirectory(Std)
 add_subdirectory(Meta)
 
 add_subdirectory(ATR)

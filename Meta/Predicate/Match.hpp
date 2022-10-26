@@ -3,7 +3,7 @@ export module Meta.Predicate:Match;
 export import Meta.Logic;
 export import Meta.Lex;
 
-export import Std;
+import <type_traits>;
 
 export namespace
 	Meta::Trait
@@ -54,7 +54,7 @@ export namespace
 
 	using MatchVoid = MatchCV<void>;
 
-	using MatchNullPointer = MatchCV<::std::nullptr_t>;
+	using MatchNullPointer = MatchCV<decltype(nullptr)>;
 
 	struct
 		MatchUnsignedIntegral

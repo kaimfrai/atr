@@ -10,7 +10,8 @@ import :Layout.Static;
 
 import Meta.Arithmetic;
 import Meta.Token;
-import Std;
+
+import <algorithm>;
 
 using ::ATR::AliasLayout;
 using ::ATR::AliasSortKey;

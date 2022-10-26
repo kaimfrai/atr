@@ -111,13 +111,13 @@ function(add_system_header_unit
 )
 	get_compile_system_header_unit_command(
 		"${STANDARD_LIBRARY_INCLUDE_PATH}/${header_unit_file}"
-		"${PREBUILT_MODULE_PATH}/${binary_file}${MODULE_INTERFACE_EXTENSION}"
+		"${PREBUILT_MODULE_PATH}/${header_unit_file}${MODULE_INTERFACE_EXTENSION}"
 		compile_header_unit_command
 	)
 
 	add_custom_command(
 	OUTPUT
-		${PREBUILT_MODULE_PATH}/${binary_file}${MODULE_INTERFACE_EXTENSION}
+		${PREBUILT_MODULE_PATH}/${header_unit_file}${MODULE_INTERFACE_EXTENSION}
 	COMMAND
 		${compile_header_unit_command}
 	VERBATIM
@@ -127,6 +127,14 @@ function(add_system_header_unit
 		"Generating precompiled system header unit ${header_unit_file}"
 	)
 
+	add_custom_target(
+		${header_unit_file}
+	DEPENDS
+		${PREBUILT_MODULE_PATH}/${header_unit_file}${MODULE_INTERFACE_EXTENSION}
+	SOURCES
+		${STANDARD_LIBRARY_INCLUDE_PATH}/${header_unit_file}
+	)
+
 endfunction()
 
 function(add_system_header_units
@@ -134,6 +142,19 @@ function(add_system_header_units
 	foreach(system_header IN LISTS ARGN)
 		add_system_header_unit(${system_header})
 	endforeach()
+
+endfunction()
+
+function(enable_standard_header_units
+)
+	add_system_header_units(
+		${STANDARD_HEADER_UNITS}
+	)
+	add_custom_target(
+		Std
+	DEPENDS
+		${STANDARD_HEADER_UNITS}
+	)
 
 endfunction()
 

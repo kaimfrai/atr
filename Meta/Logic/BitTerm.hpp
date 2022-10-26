@@ -6,8 +6,11 @@ import :Optimizer;
 
 export import Meta.Arithmetic;
 
-export import Std;
-
+import <algorithm>;
+import <functional>;
+import <numeric>;
+import <span>;
+import <utility>;
 
 using ::Meta::Arithmetic::CountOneBits;
 using ::Meta::Arithmetic::TestBit;

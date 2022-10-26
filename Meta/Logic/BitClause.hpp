@@ -2,7 +2,7 @@ export module Meta.Logic:BitClause;
 
 export import Meta.Arithmetic;
 
-export import Std;
+import <span>;
 
 using ::Meta::Arithmetic::CountOneBits;
 using ::Meta::Arithmetic::SetOneBits;

@@ -3,7 +3,7 @@ export module ATR:Layout.Bit.Layout;
 import :ID;
 import :Layout.Bit.Types;
 
-import Std;
+import <cstddef>;
 
 using ::ATR::ProtoID;
 using ::Meta::BitsPerByte;

@@ -1,5 +1,7 @@
 import ATR;
 
+import <cstddef>;
+
 using ::Meta::BitsPerByte;
 using ::Meta::UInt;
 using ::Meta::USize;

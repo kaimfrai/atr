@@ -4,6 +4,9 @@ export import :Regular;
 
 export import Meta.Logic;
 
+import <concepts>;
+import <type_traits>;
+
 export namespace
 	Meta::Trait
 {

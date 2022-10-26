@@ -6,8 +6,6 @@ module Test.CMake;
 
 import :Private;
 
-import Std;
-
 namespace
 	Private
 {

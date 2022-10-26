@@ -6,7 +6,10 @@ export import :LiteralBase;
 export import Meta.Arithmetic;
 export import Meta.Token;
 
-import Std;
+import <algorithm>;
+import <array>;
+import <span>;
+import <utility>;
 
 using ::Meta::Arithmetic::CountUpperZeroBits;
 using ::Meta::Arithmetic::CountLowerZeroBits;

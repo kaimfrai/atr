@@ -1,6 +1,6 @@
 export module Evaluation.Shared:InPlaceConstruct;
 
-export import Std;
+import <utility>;
 
 export
 {

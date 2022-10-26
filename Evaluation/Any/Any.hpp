@@ -1,7 +1,8 @@
 export module Evaluation.Any;
 
 export import Evaluation.Shared;
-export import Std;
+
+import <any>;
 
 export namespace
 	Bodies3D

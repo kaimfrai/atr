@@ -6,7 +6,10 @@ import :Layout.Member;
 
 import Meta.Arithmetic;
 import Meta.Token;
-import Std;
+
+import <algorithm>;
+import <bit>;
+import <initializer_list>;
 
 using ::ATR::Layout;
 

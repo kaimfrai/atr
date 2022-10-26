@@ -1,6 +1,6 @@
 module Test.CMake.Virtual;
 
-import Std;
+import <iostream>;
 
 namespace
 	Test

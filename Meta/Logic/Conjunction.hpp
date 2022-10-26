@@ -2,6 +2,8 @@ export module Meta.Logic:Conjunction;
 
 export import :BitTerm;
 
+import <span>;
+
 namespace
 	Meta::Logic
 {
