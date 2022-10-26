@@ -33,7 +33,6 @@ function(
 			${CXX_STANDARD_LIBRARY_FLAG}
 			${WARNING_FLAGS}
 			${MODULE_FLAGS}
-			${ADDITIONAL_COMPILE_OPTIONS}
 			-c -x c++-header
 			${CMAKE_CURRENT_SOURCE_DIR}/${header_unit}
 		VERBATIM
@@ -75,7 +74,6 @@ function(
 		${CXX_STANDARD_LIBRARY_FLAG}
 		${WARNING_FLAGS}
 		${MODULE_FLAGS}
-		${ADDITIONAL_COMPILE_OPTIONS}
 		-c ${CMAKE_CURRENT_SOURCE_DIR}/${module_interface_file}
 		-fmodule-only
 	)

@@ -10,9 +10,6 @@ set(WARNING_FLAGS
 	-Werror
 )
 
-set(ADDITIONAL_COMPILE_OPTIONS
-)
-
 set(CXX_STANDARD_VERSION_FLAG
 	-std=c++2b
 )

@@ -10,23 +10,19 @@ function(
 endfunction()
 
 ensure_module_variable_set(PREBUILT_MODULE_PATH)
-ensure_module_variable_set(MODULE_CACHE_PATH)
 ensure_module_variable_set(MODULE_INTERFACE_EXTENSION)
 ensure_module_variable_set(MODULE_FLAGS)
+ensure_module_variable_set(STANDARD_LIBRARY_INCLUDE_PATH)
 
 file(
 MAKE_DIRECTORY
 	${PREBUILT_MODULE_PATH}
 )
-file(
-MAKE_DIRECTORY
-	${MODULE_CACHE_PATH}
-)
 
 set(REGEX_WHITESPACE "[ \t]+")
 set(REGEX_ID "[a-zA-Z_][a-zA-Z0-9_.]*")
 set(REGEX_FILE "[a-zA-Z0-9_./\:]+")
-set(REGEX_HEADER "(<${REGEX_FILE}\\.h>|<${REGEX_FILE}\\.hpp>|\"${REGEX_FILE}\\.h\"|\"${REGEX_FILE}\\.hpp\")")
+set(REGEX_HEADER "<${REGEX_FILE}>|\"${REGEX_FILE}\"")
 set(REGEX_NAME "${REGEX_ID}(:${REGEX_ID})?")
 set(REGEX_MODULE "(^|[\n\r])(export${REGEX_WHITESPACE})?module${REGEX_WHITESPACE}")
 set(REGEX_IMPORT "(^|[\n\r])(export${REGEX_WHITESPACE})?import${REGEX_WHITESPACE}")
@@ -35,12 +31,10 @@ function(invoke_preprocessor
 	file_name
 	out_preprocessed_file
 )
-	file(REAL_PATH
-		${file_name}
+	get_source_file_property(
 		file_path
-	BASE_DIRECTORY
-		${CMAKE_CURRENT_SOURCE_DIR}
-		EXPAND_TILDE
+		"${file_name}"
+		LOCATION
 	)
 
 	file(READ
@@ -51,9 +45,9 @@ function(invoke_preprocessor
 	#module declarations and imports
 	string(
 	REGEX MATCHALL
-		"(${REGEX_MODULE}${REGEX_NAME}|${REGEX_IMPORT}(:?${REGEX_ID}|${REGEX_HEADER}))"
+		"${REGEX_MODULE}${REGEX_NAME}|${REGEX_IMPORT}(:?${REGEX_ID}|${REGEX_HEADER})"
 		file_content
-		${file_content}
+		"${file_content}"
 	)
 
 	set(${out_preprocessed_file} "${file_content}" PARENT_SCOPE)
@@ -66,6 +60,7 @@ function(read_module_name
 	must_have_module_name
 	out_module_name
 	out_module_binary
+	out_module_object
 )
 	string(
 	REGEX MATCH
@@ -90,6 +85,7 @@ function(read_module_name
 		${module_name}
 	PARENT_SCOPE
 	)
+
 	string(
 	REPLACE
 		":"
@@ -102,48 +98,94 @@ function(read_module_name
 		"${PREBUILT_MODULE_PATH}/${module_binary}${MODULE_INTERFACE_EXTENSION}"
 	PARENT_SCOPE
 	)
+	set(
+	${out_module_object}
+		"${PREBUILT_MODULE_PATH}/${module_binary}${CMAKE_CXX_OUTPUT_EXTENSION}"
+	PARENT_SCOPE
+	)
 
 endfunction()
 
-function(add_header_unit
+function(add_system_header_unit
 	header_unit_file
-	header_unit_path
 )
-	string(
-		REGEX REPLACE
-		"\\.h$|\\.hpp$"
-		"${MODULE_INTERFACE_EXTENSION}"
-		header_unit_binary
-		"${header_unit_file}"
-	)
-	get_compile_header_unit_command(
-		"${header_unit_path}${header_unit_file}"
-		"${MODULE_CACHE_PATH}/${header_unit_binary}"
-		"${header_unit_path}"
+	get_compile_system_header_unit_command(
+		"${STANDARD_LIBRARY_INCLUDE_PATH}/${header_unit_file}"
+		"${PREBUILT_MODULE_PATH}/${binary_file}${MODULE_INTERFACE_EXTENSION}"
 		compile_header_unit_command
 	)
+
 	add_custom_command(
 	OUTPUT
-		${MODULE_CACHE_PATH}/${header_unit_binary}
+		${PREBUILT_MODULE_PATH}/${binary_file}${MODULE_INTERFACE_EXTENSION}
 	COMMAND
 		${compile_header_unit_command}
 	VERBATIM
-	MAIN_DEPENDENCY
-		${header_unit_path}${header_unit_file}
+	DEPENDS
+		"${STANDARD_LIBRARY_INCLUDE_PATH}/${header_unit_file}"
 	COMMENT
-		"Generating precompiled header unit ${header_unit_file}"
+		"Generating precompiled system header unit ${header_unit_file}"
 	)
+
+endfunction()
+
+function(add_system_header_units
+)
+	foreach(system_header IN LISTS ARGN)
+		add_system_header_unit(${system_header})
+	endforeach()
+
+endfunction()
+
+function(add_user_header_unit
+	header_unit
+)
+	cmake_path(GET header_unit FILENAME header_unit_file)
+
+	get_compile_user_header_unit_command(
+		"${header_unit}"
+		"${PREBUILT_MODULE_PATH}/${header_unit_file}${MODULE_INTERFACE_EXTENSION}"
+		compile_header_unit_command
+	)
+
+	add_custom_command(
+	OUTPUT
+		${PREBUILT_MODULE_PATH}/${header_unit_file}${MODULE_INTERFACE_EXTENSION}
+	COMMAND
+		${compile_header_unit_command}
+	VERBATIM
+	DEPENDS
+		${header_unit}
+	COMMENT
+		"Generating precompiled user header unit ${header_unit_file}"
+	)
+
 endfunction()
 
 function(read_module_dependencies
 	preprocessed_file
 	module_name
-	module_includes
 	out_module_target_dependencies
 	out_module_dependency_binaries
 )
+	set(dependency_binaries)
+
+	string(REGEX MATCHALL "${REGEX_MODULE}${REGEX_NAME}" module_declaration "${preprocessed_file}")
+	if (NOT ${module_declaration} MATCHES "^export" AND NOT ${module_declaration} MATCHES ":")
+		list(
+		TRANSFORM
+			module_declaration
+		REPLACE
+			"${REGEX_MODULE}"
+			""
+		)
+		list(APPEND dependency_binaries ${module_declaration})
+	endif()
+
 	string(REGEX MATCHALL "${REGEX_IMPORT}${REGEX_ID}" module_target_dependencies "${preprocessed_file}")
 	list(TRANSFORM module_target_dependencies REPLACE "${REGEX_IMPORT}" "")
+
+	list(APPEND dependency_binaries ${module_target_dependencies})
 
 	set(${out_module_target_dependencies} ${module_target_dependencies} PARENT_SCOPE)
 
@@ -152,8 +194,14 @@ function(read_module_dependencies
 	list(TRANSFORM module_partitions REPLACE "${REGEX_IMPORT}:" "")
 	list(TRANSFORM module_partitions PREPEND "${module_name}-")
 
-	set(dependency_binaries ${module_target_dependencies})
 	list(APPEND dependency_binaries ${module_partitions})
+
+	string(REGEX MATCHALL "${REGEX_IMPORT}${REGEX_HEADER}" header_units "${preprocessed_file}")
+
+	list(TRANSFORM header_units REPLACE "${REGEX_IMPORT}(<|\")" "")
+	list(TRANSFORM header_units REPLACE "(>|\")" "")
+
+	list(APPEND dependency_binaries ${header_units})
 
 	list(TRANSFORM dependency_binaries PREPEND ${PREBUILT_MODULE_PATH}/)
 	list(TRANSFORM dependency_binaries APPEND ${MODULE_INTERFACE_EXTENSION})
@@ -163,28 +211,9 @@ function(read_module_dependencies
 endfunction()
 
 function(add_module_source_dependencies
-	target_name
 	source_file
-	module_target_dependencies
 	module_dependency_files
 )
-	get_target_property(target_type "${target_name}" TYPE)
-	if	(target_type MATCHES "INTERFACE")
-		#add a link dependency for interface libraries
-		target_link_libraries(
-		${target_name}
-		INTERFACE
-			${module_target_dependencies}
-		)
-	else()
-		#add a link dependency for non-interface libraries
-		target_link_libraries(
-		${target_name}
-		PUBLIC
-			${module_target_dependencies}
-		)
-	endif()
-
 	list(LENGTH module_dependency_files module_dependency_count)
 	if(${module_dependency_count} GREATER 0)
 		get_module_dependency_flag_list(
@@ -198,7 +227,10 @@ function(add_module_source_dependencies
 			"${module_dependency_files}"
 		COMPILE_OPTIONS
 			"${module_dependency_flag_list}"
+		LANGUAGE
+			CXX
 		)
+
 	endif()
 
 endfunction()
@@ -206,17 +238,17 @@ endfunction()
 function(add_module_command
 	module_interface_file
 	module_binary
+	module_object
 	module_name
-	module_includes
 	module_dependency_binaries
-	module_byproducts
 )
 	get_compile_module_interface_command(
 		"${module_interface_file}"
 		"${module_binary}"
-		"${module_includes}"
+		"${module_object}"
 		"${module_dependency_binaries}"
 		compile_module_interface_command
+		compile_module_object_command
 	)
 
 	add_custom_command(
@@ -225,14 +257,23 @@ function(add_module_command
 	COMMAND
 		${compile_module_interface_command}
 	VERBATIM
-	MAIN_DEPENDENCY
-		${module_interface_file}
 	DEPENDS
+		${module_interface_file}
 		${module_dependency_binaries}
-	BYPRODUCTS
-		${module_byproducts}
 	COMMENT
-		"Generating precompiled module ${module_name}"
+		"Generating precompiled module interface ${module_name}"
+	)
+
+	add_custom_command(
+	OUTPUT
+		${module_object}
+	COMMAND
+		${compile_module_object_command}
+	VERBATIM
+	DEPENDS
+		${module_binary}
+	COMMENT
+		"Generating precompiled module object ${module_name}"
 	)
 
 endfunction()
@@ -241,36 +282,35 @@ function(add_module_partition
 	module_name
 	partition_name
 	partition_binary
+	partition_object
 	interface_file
 	preprocessed_module_file
-	module_includes
-	module_byproducts
-	module_header_units
 )
+	target_sources(
+		"${module_name}"
+	PRIVATE
+		"${partition_object}"
+	)
+
 	read_module_dependencies(
 		"${preprocessed_module_file}"
 		"${module_name}"
-		"${module_includes}"
 		module_target_dependencies
 		module_dependency_binaries
 	)
 
-	list(APPEND module_dependency_binaries ${module_header_units})
-
-	add_module_source_dependencies(
-		${module_name}
-		${interface_file}
-		"${module_target_dependencies}"
-		"${module_dependency_binaries}"
+	target_link_libraries(
+		"${module_name}"
+	INTERFACE
+		${module_target_dependencies}
 	)
 
 	add_module_command(
-		${interface_file}
-		${partition_binary}
-		${partition_name}
-		"${module_includes}"
+		"${interface_file}"
+		"${partition_binary}"
+		"${partition_object}"
+		"${partition_name}"
 		"${module_dependency_binaries}"
-		"${module_byproducts}"
 	)
 
 endfunction()
@@ -279,7 +319,6 @@ function(add_module_implementation
 	source_file
 	module_name
 	module_binary
-	module_includes
 )
 	invoke_preprocessor(
 		"${source_file}"
@@ -291,6 +330,7 @@ function(add_module_implementation
 		TRUE
 		module_implementation_name
 		module_implementation_binary
+		module_implementation_object
 	)
 
 	if	(NOT "${module_implementation_name}" STREQUAL "${module_name}")
@@ -300,17 +340,21 @@ function(add_module_implementation
 	read_module_dependencies(
 		"${preprocessed_module_file}"
 		"${module_name}"
-		"${module_includes}"
 		module_target_dependencies
 		module_dependency_binaries
 	)
 
-	add_module_source_dependencies(
+	target_link_libraries(
 		"${module_name}"
+	INTERFACE
+		${module_target_dependencies}
+	)
+
+	add_module_source_dependencies(
 		"${source_file}"
-		"${module_target_dependencies}"
 		"${module_dependency_binaries}"
 	)
+
 endfunction()
 
 function(add_module
@@ -320,7 +364,7 @@ function(add_module
 		MODULE
 		""
 		""
-		"PARTITION;IMPLEMENTATION;BYPRODUCTS;INCLUDES;HEADER_UNITS"
+		"PARTITION;IMPLEMENTATION"
 		${ARGN}
 	)
 
@@ -334,53 +378,29 @@ function(add_module
 		TRUE
 		module_name
 		module_binary
+		module_object
 	)
 
-	if	("${MODULE_IMPLEMENTATION}" STREQUAL "")
-		add_library(
-			"${module_name}"
-		INTERFACE
-			${module_interface_file}
-		)
-	else()
-		add_library(
-			"${module_name}"
-		STATIC
-			${module_interface_file}
-			${MODULE_IMPLEMENTATION}
-		)
-		get_module_dependency_flag_list(
-			"${module_binary}"
-			primary_module_flag
-		)
-		get_module_dependency_flag_list(
-			"${MODULE_HEADER_UNITS}"
-			header_unit_flag_list
-		)
-		target_compile_options(
-			"${module_name}"
-		PRIVATE
-			"${primary_module_flag}"
-			"${header_unit_flag_list}"
-			"${MODULE_FLAGS}"
-		)
+	get_module_dependency_flag_list(
+		"${module_binary}"
+		primary_module_flag
+	)
 
-		target_include_directories(
-			"${module_name}"
-		PRIVATE
-			"${MODULE_INCLUDES}"
-		)
-	endif()
+	add_library(
+		"${module_name}"
+	STATIC
+		${MODULE_IMPLEMENTATION}
+	)
+
+	set_target_properties("${module_name}" PROPERTIES LINKER_LANGUAGE CXX)
 
 	add_module_partition(
-		${module_name}
-		${module_name}
-		${module_binary}
-		${module_interface_file}
+		"${module_name}"
+		"${module_name}"
+		"${module_binary}"
+		"${module_object}"
+		"${module_interface_file}"
 		"${preprocessed_module_file}"
-		"${MODULE_INCLUDES}"
-		"${MODULE_BYPRODUCTS}"
-		"${MODULE_HEADER_UNITS}"
 	)
 
 	foreach(partition_file IN LISTS MODULE_PARTITION)
@@ -394,6 +414,7 @@ function(add_module
 			TRUE
 			partition_name
 			partition_binary
+			partition_object
 		)
 
 		if	(NOT ${partition_name} MATCHES "^${module_name}:")
@@ -404,11 +425,9 @@ function(add_module
 			"${module_name}"
 			"${partition_name}"
 			"${partition_binary}"
+			"${partition_object}"
 			"${partition_file}"
 			"${preprocessed_partition_file}"
-			"${MODULE_INCLUDES}"
-			"${MODULE_BYPRODUCTS}"
-			"${MODULE_HEADER_UNITS}"
 		)
 	endforeach()
 
@@ -417,24 +436,15 @@ function(add_module
 			"${module_implementation}"
 			"${module_name}"
 			"${module_binary}"
-			"${MODULE_INCLUDES}"
 		)
 	endforeach()
+
 endfunction()
 
 function(add_module_dependencies
 	target_name
 )
-	get_target_property(target_source_files
-		${target_name}
-		SOURCES
-	)
-	get_target_property(target_includes
-		${target_name}
-	INCLUDE_DIRECTORIES
-	)
-
-	foreach(source_file IN LISTS target_source_files)
+	foreach(source_file IN LISTS ARGN)
 
 		invoke_preprocessor(
 			"${source_file}"
@@ -446,22 +456,28 @@ function(add_module_dependencies
 			FALSE
 			module_name
 			module_binary
+			module_object
 		)
 		read_module_dependencies(
 			"${preprocessed_module_file}"
 			"${module_name}"
-			"${target_includes}"
 			module_target_dependencies
 			module_dependency_binaries
 		)
-		add_module_source_dependencies(
+
+		target_link_libraries(
 			"${target_name}"
+		PUBLIC
+			${module_target_dependencies}
+		)
+
+		add_module_source_dependencies(
 			"${source_file}"
-			"${module_target_dependencies}"
 			"${module_dependency_binaries}"
 		)
 
 	endforeach()
+
 endfunction()
 
 function(add_module_object_library
@@ -474,13 +490,14 @@ function(add_module_object_library
 	)
 
 	target_compile_options(
-		${target_name}
+		"${target_name}"
 	PRIVATE
 		${MODULE_FLAGS}
 	)
 
 	add_module_dependencies(
-		${target_name}
+		"${target_name}"
+		${ARGN}
 	)
 
 endfunction()
@@ -494,13 +511,14 @@ function(add_module_executable
 	)
 
 	target_compile_options(
-		${target_name}
+		"${target_name}"
 	PRIVATE
 		${MODULE_FLAGS}
 	)
 
 	add_module_dependencies(
-		${target_name}
+		"${target_name}"
+		${ARGN}
 	)
 
 endfunction()

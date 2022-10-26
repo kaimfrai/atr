@@ -22,7 +22,7 @@ namespace
 		,	typename
 			...	t_tpArgument
 		>
-	static auto constexpr
+	auto constexpr
 	(	EvaluateLiteral
 	)	(	t_tpArgument
 			&&
@@ -83,7 +83,7 @@ namespace
 		,	typename
 			...	t_tpArgument
 		>
-	static auto constexpr
+	auto constexpr
 	(	EvaluateClause
 	)	(	IndexToken<t_npLiteralIndex...>
 		,	t_tpArgument
@@ -117,7 +117,7 @@ namespace
 		,	typename
 			...	t_tpArgument
 		>
-	static auto constexpr
+	auto constexpr
 	(	EvaluateTerm
 	)	(	IndexToken<t_npClauseIndex...>
 		,	t_tpArgument

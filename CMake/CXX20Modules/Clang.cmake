@@ -3,11 +3,6 @@ set(PREBUILT_MODULE_PATH
 CACHE STRING
 	"The directory in which prebuilt modules are stored."
 )
-set(MODULE_CACHE_PATH
-	${CMAKE_BINARY_DIR}/modules/cache
-CACHE STRING
-	"The directory in which prebuilt header units are stored."
-)
 
 set(MODULE_INTERFACE_EXTENSION
 	.pcm
@@ -15,13 +10,99 @@ CACHE STRING
 	"The extension used for prebuilt module files."
 )
 set(MODULE_FLAGS
-	-fmodules
-	#-fprebuilt-module-path=${PREBUILT_MODULE_PATH}
-	-fbuiltin-module-map
-	-fmodules-cache-path=${MODULE_CACHE_PATH}
-	-Xclang -fdisable-module-hash
 	-Werror=export-using-directive
 )
+
+set(STANDARD_HEADER_UNITS
+	algorithm
+	any
+	array
+	atomic
+	barrier
+	bit
+	bitset
+	charconv
+	chrono
+	codecvt
+	compare
+	complex
+	concepts
+	condition_variable
+	coroutine
+	deque
+	exception
+	execution
+	#expected
+	filesystem
+	#flat_map
+	#flat_set
+	format
+	forward_list
+	fstream
+	functional
+	future
+	#generator
+	initializer_list
+	iomanip
+	ios
+	iosfwd
+	iostream
+	istream
+	iterator
+	latch
+	limits
+	list
+	locale
+	map
+	#mdspan
+	memory
+	memory_resource
+	mutex
+	new
+	numbers
+	numeric
+	optional
+	ostream
+	#print
+	queue
+	random
+	ranges
+	ratio
+	regex
+	scoped_allocator
+	semaphore
+	set
+	shared_mutex
+	#source_location
+	span
+	#spanstream
+	sstream
+	stack
+	#stacktrace
+	stdexcept
+	#stdfloat
+	#stop_token
+	streambuf
+	string
+	string_view
+	strstream
+	#syncstream
+	system_error
+	thread
+	tuple
+	typeindex
+	typeinfo
+	type_traits
+	unordered_map
+	unordered_set
+	utility
+	valarray
+	variant
+	vector
+	version
+)
+
+find_path(STANDARD_LIBRARY_INCLUDE_PATH ${STANDARD_HEADER_UNITS} PATH_SUFFIXES include/c++/v1 REQUIRED DOC "Path for standard library includes")
 
 function(get_module_dependency_flag_list
 	module_dependency_binaries
@@ -54,142 +135,274 @@ function(get_cxx_standard_flag
 		${cxx_standard_flag}
 	PARENT_SCOPE
 	)
+
+endfunction()
+
+function(resolve_generator_expression
+	expression
+	out_expression
+)
+	if	(expression STREQUAL NOTFOUND)
+
+		set(${out_expression}
+			""
+		PARENT_SCOPE
+		)
+
+	else()
+
+		# keep CXX and Clang generator expressions, discard all others
+		# resolve top level generator expressions first as they may contain a list
+		string(
+		REGEX REPLACE
+			"\\$\\<\\$\\<COMPILE_LANGUAGE:CXX\\>:([^>]*)\\>"
+			"\\1"
+			expression
+			"${expression}"
+		)
+
+		string(
+		REGEX REPLACE
+			"\\$\\<\\$\\<COMPILE_LANGUAGE:[^>]*\\>:([^>]*)\\>"
+			""
+			expression
+			"${expression}"
+		)
+
+		string(
+		REGEX REPLACE
+			"\\$\\<\\$\\<CXX_COMPILER_ID:([^>,]+,)*Clang(,[^>,]+)*\\>:([^>]*)\\>"
+			"\\3"
+			expression
+			"${expression}"
+		)
+
+		string(
+		REGEX REPLACE
+			"\\$\\<\\$\\<CXX_COMPILER_ID:[^>]*\\>:([^>]*)\\>"
+			""
+			expression
+			"${expression}"
+		)
+
+		list(
+		TRANSFORM
+			expression
+		REPLACE
+			"\\$\\<\\$\\<COMPILE_LANGUAGE:CXX\\>:([^>]*)\\>"
+			"\\1"
+		)
+		list(
+		FILTER
+			expression
+		EXCLUDE REGEX
+			"\\$\\<\\$\\<COMPILE_LANGUAGE:[^>]*\\>:([^>]*)\\>"
+		)
+
+		list(
+		TRANSFORM
+			expression
+		REPLACE
+			"\\$\\<\\$\\<CXX_COMPILER_ID:([^>,]+,)*Clang(,[^>,]+)*\\>:([^>]*)\\>"
+			"\\3"
+		)
+		list(
+		FILTER
+			expression
+		EXCLUDE REGEX
+			"\\$\\<\\$\\<CXX_COMPILER_ID:[^>]*\\>:([^>]*)\\>"
+		)
+
+		set(${out_expression}
+			${expression}
+		PARENT_SCOPE
+		)
+
+	endif()
+
+endfunction()
+
+function(get_file_and_directory_properties
+	module_interface_file
+	property_name
+	out_properties
+)
+	get_source_file_property(
+		file_property
+		"${module_interface_file}"
+		"${property_name}"
+	)
+	resolve_generator_expression("${file_property}" file_property)
+
+	get_directory_property(
+		directory_property
+		"${property_name}"
+	)
+	resolve_generator_expression("${directory_property}" directory_property)
+
+	set(${out_properties}
+		${directory_property}
+		${file_property}
+	PARENT_SCOPE
+	)
+
+endfunction()
+
+function(get_cmake_cxx_flags
+	out_cmake_cxx_flags
+)
+	#flags specific to the current build type
+	string(TOUPPER ${CMAKE_BUILD_TYPE} build_type_flags)
+	set(build_type_flags "CMAKE_CXX_FLAGS_${build_type_flags}")
+	string(REPLACE " " ";" build_type_flags "${${build_type_flags}}")
+	resolve_generator_expression("${build_type_flags}" build_type_flags)
+
+	#flags specific to CXX
+	string(REPLACE " " ";" cmake_cxx_flags "${CMAKE_CXX_FLAGS}")
+	resolve_generator_expression("${cmake_cxx_flags}" cmake_cxx_flags)
+
+	set(${out_cmake_cxx_flags}
+		${build_type_flags}
+		${cmake_cxx_flags}
+	PARENT_SCOPE
+	)
+
 endfunction()
 
 function(get_compile_module_command
 	module_interface_file
 	module_binary
-	include_directories
-	emit_module_unit_flag
+	module_object
+	file_type_flag
 	module_dependency_binaries
-	out_command
+	out_interface_command
+	out_object_command
 )
-	if	(include_directories)
-		set(absolute_include_dirs "")
-		foreach(include_dir IN LISTS include_directories)
-			file(REAL_PATH ${include_dir} absolute_dir)
-			list(APPEND absolute_include_dirs -I${absolute_dir})
-		endforeach()
-	endif()
-
-	file(REAL_PATH
-		${module_interface_file}
-		real_module_interface_file
-	BASE_DIRECTORY
-		${CMAKE_CURRENT_SOURCE_DIR}
-		EXPAND_TILDE
-	)
-
-	#flags specific to the current directory
-	get_property(
-		directory_compile_options
-	DIRECTORY
-		${CMAKE_CURRENT_SOURCE_DIR}
-	PROPERTY
-		COMPILE_OPTIONS
-	)
-	get_property(
-		directory_compile_definitions
-	DIRECTORY
-		${CMAKE_CURRENT_SOURCE_DIR}
-	PROPERTY
-		COMPILE_DEFINITIONS
-	)
-	list(TRANSFORM directory_compile_definitions PREPEND -D)
-
-	#flags specific to the current build type
-	string(TOUPPER ${CMAKE_BUILD_TYPE} build_type_flags)
-	set(build_type_flags CMAKE_CXX_FLAGS_${build_type_flags})
-	string(REPLACE " " ";" build_type_flags "${${build_type_flags}}")
-
-	#flags specific to CXX
-	string(REPLACE " " ";" cmake_cxx_flags "${CMAKE_CXX_FLAGS}")
-
 	get_cxx_standard_flag(cxx_standard_flag)
+	get_cmake_cxx_flags(cmake_cxx_flags)
+
+	get_file_and_directory_properties("${module_interface_file}" "INCLUDE_DIRECTORIES" include_dirs)
+	list(TRANSFORM include_dirs PREPEND -I)
+
+	get_file_and_directory_properties("${module_interface_file}" "COMPILE_OPTIONS" compile_options_flags)
+
+	get_file_and_directory_properties("${module_interface_file}" "COMPILE_DEFINITIONS" compile_definition_flags)
+	list(TRANSFORM compile_definition_flags PREPEND -D)
+
+	get_source_file_property(
+		real_module_interface_file
+		"${module_interface_file}"
+		LOCATION
+	)
 
 	get_module_dependency_flag_list("${module_dependency_binaries}" module_dependency_flag_list)
 
 	set(
-	command
+	interface_command
 		${CMAKE_CXX_COMPILER}
 		${cxx_standard_flag}
-		${build_type_flags}
 		${cmake_cxx_flags}
-		${directory_compile_options}
-		${directory_compile_definitions}
+		${compile_options_flags}
+		${compile_definition_flags}
 		${MODULE_FLAGS}
 		${module_dependency_flag_list}
-		${absolute_include_dirs}
-		--compile ${real_module_interface_file}
-		${emit_module_unit_flag}
+		${include_dirs}
+		${file_type_flag}
+		--precompile ${real_module_interface_file}
 		--output ${module_binary}
 	)
 
-	# keep CXX generator expressions, discard all others
-	list(
-	TRANSFORM
-		command
-	REPLACE
-		"\\$\\<\\$\\<COMPILE_LANGUAGE:CXX\\>:([^>]*)\\>"
-		"\\1"
-	)
-	list(
-	FILTER
-		directory_compile_options
-	EXCLUDE REGEX
-		"\\$\\<\\$\\<COMPILE_LANGUAGE:[^>]*\\>:([^>]*)\\>"
+	set(
+	${out_interface_command}
+		${interface_command}
+	PARENT_SCOPE
 	)
 
 	set(
-	${out_command}
-		${command}
+	object_command
+		${CMAKE_CXX_COMPILER}
+		--compile ${module_binary}
+		--output ${module_object}
+	)
+
+	set(
+	${out_object_command}
+		${object_command}
 	PARENT_SCOPE
 	)
 
 endfunction()
 
-function(get_compile_header_unit_command
+function(get_compile_user_header_unit_command
 	header_unit_file
 	header_unit_binary
-	include_directories
 	out_command
 )
-	set(emit_module_unit_flag -Xclang -emit-header-unit)
 	get_compile_module_command(
 		"${header_unit_file}"
 		"${header_unit_binary}"
-		"${include_directories}"
-		"${emit_module_unit_flag}"
 		""
-		command
+		"-fmodule-header;-xc++-user-header"
+		""
+		interface_command
+		object_command
 	)
 	set(
 	${out_command}
-		${command}
-		-w
+		${interface_command}
 	PARENT_SCOPE
 	)
+
+endfunction()
+
+function(get_compile_system_header_unit_command
+	header_unit_file
+	header_unit_binary
+	out_command
+)
+	get_compile_module_command(
+		"${header_unit_file}"
+		"${header_unit_binary}"
+		""
+		"--no-warnings;-fmodule-header=system;-xc++-system-header"
+		""
+		interface_command
+		object_command
+	)
+	set(
+	${out_command}
+		${interface_command}
+	PARENT_SCOPE
+	)
+
 endfunction()
 
 function(get_compile_module_interface_command
 	module_interface_file
 	module_binary
-	include_directories
+	module_object
 	module_dependency_binaries
-	out_command
+	out_compile_module_interface_command
+	out_compile_module_object_command
 )
-	set(emit_module_unit_flag -Xclang -emit-module-interface)
 	get_compile_module_command(
 		"${module_interface_file}"
 		"${module_binary}"
-		"${include_directories}"
-		"${emit_module_unit_flag}"
+		"${module_object}"
+		"-xc++-module"
 		"${module_dependency_binaries}"
-		command
+		interface_command
+		object_command
 	)
 	set(
-	${out_command}
-		${command}
+	${out_compile_module_interface_command}
+		${interface_command}
 	PARENT_SCOPE
 	)
+	set(
+	${out_compile_module_object_command}
+		${object_command}
+	PARENT_SCOPE
+	)
+
 endfunction()

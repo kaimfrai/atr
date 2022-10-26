@@ -107,13 +107,14 @@ export
 				;
 			}
 
-			friend bool
+			friend auto inline
 				operator==
 				(	Iterator const
 					&	i_rLeft
 				,	Iterator const
 					&	i_rRight
 				)
+			->	bool
 			{	return
 				(	i_rLeft
 					.	m_nCounter

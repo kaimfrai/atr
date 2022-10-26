@@ -1,7 +1,14 @@
-import Evaluation.TypeErasure;
 import Evaluation.CRTP;
 
 import Evaluation.Shared;
+
+#include "boost.hpp"
+
+namespace
+	Bodies3D
+{
+	BOOST_TYPE_ERASURE_MEMBER(ComputeVolume, )
+}
 
 auto
 	main

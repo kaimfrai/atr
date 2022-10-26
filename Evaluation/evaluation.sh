@@ -6,12 +6,27 @@ cd ./build/Evaluation/
 ninja evaluation_virtual evaluation_any evaluation_dyno evaluation_polymorphic evaluation_type_erasure evaluation_archetype evaluation_replication evaluation_variant
 cd ../../Evaluation
 
-bash compile_all.sh
+if [ $# -ne 1 ] || [ $1 == "compile" ]
+then
+	bash compile_all.sh
+fi
 
-bash assembly_all.sh
+if [ $# -ne 1 ] || [ $1 == "assembly" ]
+then
+	bash assembly_all.sh
+fi
 
-bash memcheck_all.sh 1 42 100000
+if [ $# -ne 1 ] || [ $1 == "memcheck" ]
+then
+	bash memcheck_all.sh 1 42 100000
+fi
 
-bash cachegrind_all.sh 1 42 100000
+if [ $# -ne 1 ] || [ $1 == "cachegrind" ]
+then
+	bash cachegrind_all.sh 1 42 100000
+fi
 
-bash perf_stat_all.sh 1 42 100000 100
+if [ $# -ne 1 ] || [ $1 == "perf" ]
+then
+	bash perf_stat_all.sh 1 42 100000 100
+fi

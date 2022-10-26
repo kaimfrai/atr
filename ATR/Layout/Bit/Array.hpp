@@ -20,6 +20,49 @@ export namespace
 	template
 		<	typename
 				t_tArray
+		>
+	auto constexpr
+	(	IteratorAt
+	)	(	t_tArray
+			&&	i_rArray
+		,	USize
+				i_nIndex
+		)
+	->	std::remove_reference_t<t_tArray>::iterator
+	{
+		using Array = std::remove_reference_t<t_tArray>;
+		if	(i_nIndex > Array::Extent)
+			::std::unreachable();
+
+		auto const
+			vTotalOffset
+		=	i_nIndex
+		*	static_cast<USize>(Array::Size)
+		+	static_cast<USize>(Array::Offset)
+		;
+
+		auto const
+			vByteOffset
+		=	vTotalOffset
+		/	BitsPerByte
+		;
+
+		auto const
+			vBitOffset
+		=	vTotalOffset
+		%	BitsPerByte
+		;
+
+		return
+		typename Array::iterator
+		{	i_rArray.m_aUnderlyingArray + vByteOffset
+		,	static_cast<Array::MaskType>(Array::ZeroOffsetMask << vBitOffset)
+		};
+	}
+
+	template
+		<	typename
+				t_tArray
 		,	ESize
 				t_nSize
 		,	USize
@@ -30,6 +73,10 @@ export namespace
 	struct
 		Array
 	{
+		static auto constexpr Size = t_nSize;
+		static auto constexpr Extent = t_nExtent;
+		static auto constexpr Offset = t_nOffset;
+
 		static_assert
 		(	t_nSize
 		>	ESize{}
@@ -59,10 +106,9 @@ export namespace
 
 		static EOffset constexpr
 			MaximumOffset
-		{	[]
-			<	USize
-				...	t_npIndex
-			>	(	IndexToken<t_npIndex...>
+		{	[]	<	USize
+					...	t_npIndex
+				>(	IndexToken<t_npIndex...>
 				)
 			{	return
 				::std::max
@@ -96,52 +142,6 @@ export namespace
 		using difference_type = SSize;
 		using value_type = typename BitAccess::FieldType;
 		using iterator = Iterator<::std::remove_pointer_t<decltype(+m_aUnderlyingArray)>, t_nSize, MaximumOffset>;
-
-		template
-			<	typename
-					t_tDerived
-			>
-		requires
-			::std::derived_from
-			<	::std::remove_reference_t<t_tDerived>
-			,	Array
-			>
-		friend auto constexpr
-		(	IteratorAt
-		)	(	t_tDerived
-				&&	i_rArray
-			,	USize
-					i_nIndex
-			)
-		->	iterator
-		{
-			if	(i_nIndex > t_nExtent)
-				::std::unreachable();
-
-			auto const
-				vTotalOffset
-			=	i_nIndex
-			*	static_cast<USize>(t_nSize)
-			+	static_cast<USize>(t_nOffset)
-			;
-
-			auto const
-				vByteOffset
-			=	vTotalOffset
-			/	BitsPerByte
-			;
-
-			auto const
-				vBitOffset
-			=	vTotalOffset
-			%	BitsPerByte
-			;
-
-			return
-			{	i_rArray.m_aUnderlyingArray + vByteOffset
-			,	static_cast<MaskType>(ZeroOffsetMask << vBitOffset)
-			};
-		}
 
 		auto constexpr
 		(	operator[]

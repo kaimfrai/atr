@@ -452,7 +452,7 @@ namespace
 		<	char
 			...	t_npBasicCharacter
 		>
-	static auto constexpr
+	auto constexpr
 	(	ParseNumericLiteral
 	)	(	BasicCharacter<t_npBasicCharacter>
 			...	i_vpNumeric
@@ -468,7 +468,7 @@ namespace
 		<	char
 			...	t_npBasicCharacter
 		>
-	static auto constexpr
+	auto constexpr
 	(	ParseNumericLiteral
 	)	(	BasicCharacter<'0'>
 		,	BasicCharacter<t_npBasicCharacter>
@@ -493,7 +493,7 @@ namespace
 		<	char
 			...	t_npBasicCharacter
 		>
-	static auto constexpr
+	auto constexpr
 	(	ParseNumericLiteral
 	)	(	BasicCharacter<'0'>
 		,	BasicCharacter<'X'>
@@ -511,7 +511,7 @@ namespace
 		<	char
 			...	t_npBasicCharacter
 		>
-	static auto constexpr
+	auto constexpr
 	(	ParseNumericLiteral
 	)	(	BasicCharacter<'0'>
 		,	BasicCharacter<'x'>
@@ -529,7 +529,7 @@ namespace
 		<	char
 			...	t_npBasicCharacter
 		>
-	static auto constexpr
+	auto constexpr
 	(	ParseNumericLiteral
 	)	(	BasicCharacter<'0'>
 		,	BasicCharacter<'B'>
@@ -547,7 +547,7 @@ namespace
 		<	char
 			...	t_npBasicCharacter
 		>
-	static auto constexpr
+	auto constexpr
 	(	ParseNumericLiteral
 	)	(	BasicCharacter<'0'>
 		,	BasicCharacter<'b'>
