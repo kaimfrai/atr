@@ -7,8 +7,7 @@ import :Layout.Member;
 import Meta.Arithmetic;
 import Meta.Token;
 
-import <algorithm>;
-import <array>;
+import std;
 
 using ::Meta::Specifier::BitField;
 using ::Meta::Specifier::Mut;

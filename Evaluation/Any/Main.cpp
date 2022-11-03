@@ -3,8 +3,7 @@ import Evaluation.CRTP;
 
 import Evaluation.Shared;
 
-import <any>;
-import <utility>;
+import std;
 
 auto
 	main

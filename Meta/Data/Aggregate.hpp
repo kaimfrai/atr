@@ -6,10 +6,7 @@ export import Meta.Token;
 export import Meta.Lex;
 export import Meta.Arithmetic;
 
-import <functional>;
-import <iterator>;
-import <type_traits>;
-import <utility>;
+import std;
 
 export namespace
 	Meta::Data

@@ -2,10 +2,7 @@ export module Meta.Arithmetic:Bit;
 
 export import :Integer;
 
-import <algorithm>;
-import <array>;
-import <bit>;
-import <utility>;
+import std;
 
 using ::Meta::USize;
 

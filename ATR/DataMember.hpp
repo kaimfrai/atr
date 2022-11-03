@@ -7,10 +7,7 @@ export import Meta.Data;
 export import Meta.Predicate;
 export import Meta.Token;
 
-import <algorithm>;
-import <compare>;
-export import <initializer_list>;
-import <limits>;
+export import std;
 
 using ::Meta::IndexToken;
 using ::Meta::Sequence;

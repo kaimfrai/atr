@@ -4,8 +4,7 @@ export import :Category;
 
 export import Meta.Logic;
 
-import <concepts>;
-import <type_traits>;
+import std;
 
 export namespace
 	Meta::Trait

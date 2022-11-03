@@ -127,14 +127,6 @@ function(add_system_header_unit
 		"Generating precompiled system header unit ${header_unit_file}"
 	)
 
-	add_custom_target(
-		${header_unit_file}
-	DEPENDS
-		${PREBUILT_MODULE_PATH}/${header_unit_file}${MODULE_INTERFACE_EXTENSION}
-	SOURCES
-		${STANDARD_LIBRARY_INCLUDE_PATH}/${header_unit_file}
-	)
-
 endfunction()
 
 function(add_system_header_units
@@ -145,26 +137,13 @@ function(add_system_header_units
 
 endfunction()
 
-function(enable_standard_header_units
-)
-	add_system_header_units(
-		${STANDARD_HEADER_UNITS}
-	)
-	add_custom_target(
-		Std
-	DEPENDS
-		${STANDARD_HEADER_UNITS}
-	)
-
-endfunction()
-
 function(add_user_header_unit
 	header_unit
 )
+	file(REAL_PATH "${header_unit}" header_unit_path EXPAND_TILDE)
 	cmake_path(GET header_unit FILENAME header_unit_file)
-
 	get_compile_user_header_unit_command(
-		"${header_unit}"
+		"${header_unit_path}"
 		"${PREBUILT_MODULE_PATH}/${header_unit_file}${MODULE_INTERFACE_EXTENSION}"
 		compile_header_unit_command
 	)
@@ -176,7 +155,7 @@ function(add_user_header_unit
 		${compile_header_unit_command}
 	VERBATIM
 	DEPENDS
-		${header_unit}
+		${header_unit_path}
 	COMMENT
 		"Generating precompiled user header unit ${header_unit_file}"
 	)
@@ -543,3 +522,15 @@ function(add_module_executable
 	)
 
 endfunction()
+
+function(
+	add_standard_module
+)
+	cmake_path(REMOVE_EXTENSION CMAKE_CURRENT_LIST_FILE OUTPUT_VARIABLE cxx20_modules)
+	add_user_header_unit(
+		${cxx20_modules}/std.hpp
+	)
+	add_module(${cxx20_modules}/std.cppm)
+endfunction()
+
+add_standard_module()

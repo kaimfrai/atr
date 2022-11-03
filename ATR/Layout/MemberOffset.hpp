@@ -5,8 +5,7 @@ export import :Erase;
 export import Meta.Arithmetic;
 export import Meta.Predicate;
 
-import <memory>;
-import <type_traits>;
+import std;
 
 using ::Meta::Const;
 using ::Meta::LRef;

@@ -8,12 +8,7 @@ import :Layout.Bit.Types;
 import Meta.Arithmetic;
 import Meta.Token;
 
-import <algorithm>;
-import <array>;
-import <bit>;
-import <cstddef>;
-import <type_traits>;
-import <utility>;
+import std;
 
 using ::Meta::IndexToken;
 using ::Meta::Sequence;

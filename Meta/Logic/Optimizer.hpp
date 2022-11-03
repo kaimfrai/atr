@@ -3,9 +3,7 @@ export module Meta.Logic:Optimizer;
 export import :BitClause;
 import :BitClauseIterator;
 
-import <algorithm>;
-import <array>;
-import <span>;
+import std;
 
 namespace
 	Meta::Logic

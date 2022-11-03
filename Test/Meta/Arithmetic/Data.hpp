@@ -2,8 +2,7 @@ export module Test.Meta.Literals.Data;
 
 export import Meta.Arithmetic;
 
-import <algorithm>;
-import <limits>;
+import std;
 
 auto constexpr
 (	Abs

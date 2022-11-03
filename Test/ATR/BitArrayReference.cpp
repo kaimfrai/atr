@@ -1,6 +1,6 @@
 import ATR;
 
-import <cstddef>;
+import std;
 
 using ::Meta::BitsPerByte;
 using ::Meta::UInt;

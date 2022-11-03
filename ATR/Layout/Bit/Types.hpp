@@ -2,7 +2,7 @@ export module ATR:Layout.Bit.Types;
 
 import Meta.Arithmetic;
 
-import <cstddef>;
+import std;
 
 using ::Meta::Arithmetic::BitWidth;
 using ::Meta::BitsPerByte;

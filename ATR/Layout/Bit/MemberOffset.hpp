@@ -9,8 +9,7 @@ import Meta.Arithmetic;
 import Meta.Predicate;
 import Meta.Token;
 
-import <memory>;
-import <type_traits>;
+import std;
 
 using ::Meta::BitSize;
 using ::Meta::LRef;

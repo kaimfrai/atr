@@ -1,7 +1,6 @@
 export module ATR:Layout.ValidateOffsets;
 
-import <cstddef>;
-import <type_traits>;
+import std;
 
 export namespace
 	ATR

@@ -7,9 +7,7 @@ import :Layout.Member;
 import Meta.Arithmetic;
 import Meta.Token;
 
-import <algorithm>;
-import <bit>;
-import <initializer_list>;
+import std;
 
 using ::ATR::Layout;
 

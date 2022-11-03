@@ -1,6 +1,6 @@
 export module Evaluation.Shared:PseudoRandomSequence;
 
-import <random>;
+import std;
 
 export
 {

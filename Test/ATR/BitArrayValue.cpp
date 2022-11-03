@@ -1,6 +1,6 @@
 import ATR;
 
-import <bit>;
+import std;
 
 using Array = ::ATR::Bit::ArrayValue<ATR::Bit::ESize{1}, 31>;
 

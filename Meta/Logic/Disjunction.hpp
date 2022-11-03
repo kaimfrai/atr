@@ -2,7 +2,7 @@ export module Meta.Logic:Disjunction;
 
 export import :BitTerm;
 
-import <span>;
+import std;
 
 namespace
 	Meta::Logic

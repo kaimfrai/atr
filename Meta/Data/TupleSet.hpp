@@ -5,8 +5,7 @@ export import :Aggregate;
 export import Meta.Token;
 export import Meta.Arithmetic;
 
-import <array>;
-import <bit>;
+import std;
 
 using ::Meta::Arithmetic::CountOneBits;
 using ::Meta::Arithmetic::GetIndexOfNthOneBit;

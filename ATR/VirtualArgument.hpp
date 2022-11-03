@@ -6,8 +6,7 @@ export import :ID;
 export import Meta.Token;
 export import Meta.Predicate;
 
-import <concepts>;
-import <utility>;
+import std;
 
 export namespace
 	ATR

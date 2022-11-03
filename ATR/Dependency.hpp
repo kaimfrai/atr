@@ -6,7 +6,7 @@ export import :Erase;
 export import Meta.Data;
 export import Meta.Token;
 
-import <type_traits>;
+import std;
 
 export namespace
 	ATR

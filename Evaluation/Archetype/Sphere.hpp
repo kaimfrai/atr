@@ -4,8 +4,6 @@ export import :Ellipsoid;
 
 export import ATR;
 
-// import <initializer_list>;
-
 export namespace
 	ATR
 {

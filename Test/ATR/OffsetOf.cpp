@@ -1,7 +1,6 @@
 import ATR;
 
-import <cstddef>;
-import <type_traits>;
+import std;
 
 namespace ATR
 {

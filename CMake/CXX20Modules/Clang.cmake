@@ -343,6 +343,7 @@ function(get_compile_module_command
 	set(
 	object_command
 		${CMAKE_CXX_COMPILER}
+		${cmake_cxx_flags}
 		--compile ${module_binary}
 		--output ${module_object}
 	)

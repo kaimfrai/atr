@@ -1,7 +1,6 @@
 import ATR;
 
-import <cstddef>;
-import <iterator>;
+import std;
 
 using ::ATR::Bit::EOffset;
 using ::ATR::Bit::ESize;

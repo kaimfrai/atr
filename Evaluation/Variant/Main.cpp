@@ -2,7 +2,7 @@ import Evaluation.CRTP;
 
 import Evaluation.Shared;
 
-import <variant>;
+import std;
 
 auto
 	main

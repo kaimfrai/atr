@@ -1,6 +1,6 @@
 export module Evaluation.Shared:DataTypes;
 
-import <cstdint>;
+import std;
 
 export
 {
