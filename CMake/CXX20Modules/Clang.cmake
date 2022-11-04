@@ -296,7 +296,6 @@ function(get_compile_module_command
 	module_binary
 	module_object
 	file_type_flag
-	module_dependency_binaries
 	out_interface_command
 	out_object_command
 )
@@ -316,8 +315,6 @@ function(get_compile_module_command
 		"${module_interface_file}"
 		LOCATION
 	)
-
-	get_module_dependency_flag_list("${module_dependency_binaries}" module_dependency_flag_list)
 
 	set(
 	interface_command
@@ -366,7 +363,6 @@ function(get_compile_user_header_unit_command
 		"${header_unit_binary}"
 		""
 		"-fmodule-header;-xc++-user-header"
-		""
 		interface_command
 		object_command
 	)
@@ -388,7 +384,6 @@ function(get_compile_system_header_unit_command
 		"${header_unit_binary}"
 		""
 		"--no-warnings;-fmodule-header=system;-xc++-system-header"
-		""
 		interface_command
 		object_command
 	)
@@ -404,7 +399,6 @@ function(get_compile_module_interface_command
 	module_interface_file
 	module_binary
 	module_object
-	module_dependency_binaries
 	out_compile_module_interface_command
 	out_compile_module_object_command
 )
@@ -413,7 +407,6 @@ function(get_compile_module_interface_command
 		"${module_binary}"
 		"${module_object}"
 		"-xc++-module"
-		"${module_dependency_binaries}"
 		interface_command
 		object_command
 	)

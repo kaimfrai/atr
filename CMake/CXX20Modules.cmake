@@ -61,7 +61,7 @@ function(add_user_header_unit
 	cmake_path(GET header_unit FILENAME header_unit_file)
 
 	read_module_properties("${header_unit_path}")
-	get_source_file_property(module_dependencies "${header_unit_path}" "MODULE_DEPENDENCIES")
+	get_source_file_property(module_dependencies "${header_unit_path}" OBJECT_DEPENDS)
 
 	get_compile_user_header_unit_command(
 		"${header_unit_path}"
@@ -90,20 +90,16 @@ function(add_module_unit_command
 	module_interface
 	module_object
 )
-	get_source_file_property(module_dependency_binaries "${module_unit_file}" "MODULE_IMPORTS")
-
-	list(TRANSFORM module_dependency_binaries REPLACE ":" "-")
-	list(TRANSFORM module_dependency_binaries PREPEND "${PREBUILT_MODULE_PATH}/")
-	list(TRANSFORM module_dependency_binaries APPEND "${MODULE_INTERFACE_EXTENSION}")
 
 	get_compile_module_interface_command(
 		"${module_unit_file}"
 		"${module_interface}"
 		"${module_object}"
-		"${module_dependency_binaries}"
 		compile_module_interface_command
 		compile_module_object_command
 	)
+
+	get_source_file_property(module_dependencies "${module_unit_file}" OBJECT_DEPENDS)
 
 	add_custom_command(
 	OUTPUT
@@ -113,7 +109,7 @@ function(add_module_unit_command
 	VERBATIM
 	DEPENDS
 		${module_unit_file}
-		${module_dependency_binaries}
+		${module_dependencies}
 	COMMENT
 		"Generating precompiled module interface ${module_unit_name}"
 	)
