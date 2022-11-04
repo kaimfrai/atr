@@ -6,7 +6,7 @@ import :Layout.Bit.Types;
 
 import Meta.Arithmetic;
 
-import std;
+import Std;
 
 using ::Meta::SSize;
 using ::Meta::USize;

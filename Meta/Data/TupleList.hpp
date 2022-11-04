@@ -4,7 +4,7 @@ export import :Aggregate;
 
 export import Meta.Token;
 
-import std;
+import Std;
 
 export namespace
 	Meta

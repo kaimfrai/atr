@@ -4,7 +4,7 @@ export import :Category;
 
 export import Meta.Logic;
 
-import std;
+import Std;
 
 export namespace
 	Meta::Trait

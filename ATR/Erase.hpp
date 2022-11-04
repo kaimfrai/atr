@@ -3,7 +3,7 @@ export module ATR:Erase;
 export import Meta.Lex;
 export import Meta.Token;
 
-import std;
+import Std;
 
 export namespace
 	ATR

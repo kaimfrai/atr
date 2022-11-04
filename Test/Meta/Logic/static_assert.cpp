@@ -1,6 +1,6 @@
 import Meta.Logic;
 
-import std;
+import Std;
 
 static_assert
 (	::std::input_iterator

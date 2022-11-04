@@ -4,7 +4,7 @@ export import :Index;
 
 export import Meta.Arithmetic;
 
-import std;
+import Std;
 
 namespace
 	Meta

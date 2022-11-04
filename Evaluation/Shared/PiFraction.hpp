@@ -4,7 +4,7 @@ export import :DataTypes;
 
 export import Meta.Arithmetic;
 
-import std;
+import Std;
 
 export
 {

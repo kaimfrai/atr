@@ -3,7 +3,7 @@ export module Meta.Logic:Constraint;
 export import :LiteralBase;
 export import :Term;
 
-import std;
+import Std;
 
 export namespace
 	Meta::Proto

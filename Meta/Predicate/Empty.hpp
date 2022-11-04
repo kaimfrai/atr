@@ -5,7 +5,7 @@ export import :Regular;
 export import Meta.Logic;
 export import Meta.Data;
 
-import std;
+import Std;
 
 export namespace
 	Meta::Trait

@@ -7,7 +7,7 @@ export import Meta.Data;
 export import Meta.Predicate;
 export import Meta.Token;
 
-export import std;
+export import Std;
 
 using ::Meta::IndexToken;
 using ::Meta::Sequence;

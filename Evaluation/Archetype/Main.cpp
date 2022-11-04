@@ -3,7 +3,7 @@ import ATR;
 import Evaluation.Archetype;
 import Evaluation.Shared;
 
-import std;
+import Std;
 
 auto
 	main

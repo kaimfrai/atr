@@ -3,7 +3,7 @@ export module ATR:StringLiteral;
 export import Meta.Data;
 export import Meta.Arithmetic;
 
-import std;
+import Std;
 
 export namespace
 	ATR

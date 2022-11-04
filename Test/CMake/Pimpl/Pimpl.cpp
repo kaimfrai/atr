@@ -2,7 +2,7 @@ module Test.CMake.Pimpl;
 
 import Test.CMake.Impl;
 
-import std;
+import Std;
 
 Pimpl::Pimpl(long double d) noexcept
 :	pImpl{new Impl{d}}

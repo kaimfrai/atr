@@ -5,7 +5,7 @@ import :Layout.Concept;
 import Meta.Arithmetic;
 import Meta.Lex;
 
-import std;
+import Std;
 
 using ::Meta::USize;
 

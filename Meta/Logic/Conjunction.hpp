@@ -2,7 +2,7 @@ export module Meta.Logic:Conjunction;
 
 export import :BitTerm;
 
-import std;
+import Std;
 
 namespace
 	Meta::Logic

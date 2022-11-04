@@ -11,7 +11,7 @@ import :Layout.Static;
 import Meta.Arithmetic;
 import Meta.Token;
 
-import std;
+import Std;
 
 using ::ATR::AliasLayout;
 using ::ATR::AliasSortKey;

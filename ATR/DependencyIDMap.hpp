@@ -9,7 +9,7 @@ export import :Layout;
 
 export import Meta.Logic;
 
-import std;
+import Std;
 
 export namespace
 	ATR

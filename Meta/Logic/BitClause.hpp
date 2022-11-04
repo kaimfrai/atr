@@ -2,7 +2,7 @@ export module Meta.Logic:BitClause;
 
 export import Meta.Arithmetic;
 
-import std;
+import Std;
 
 using ::Meta::Arithmetic::CountOneBits;
 using ::Meta::Arithmetic::SetOneBits;

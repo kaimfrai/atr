@@ -7,7 +7,7 @@ import :Layout.Member;
 import Meta.Arithmetic;
 import Meta.Token;
 
-import std;
+import Std;
 
 using ::Meta::Specifier::BitField;
 using ::Meta::Specifier::Mut;

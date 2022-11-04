@@ -1,6 +1,6 @@
 import Meta.Data;
 
-import std;
+import Std;
 
 using namespace Meta;
 using ::Meta::Specifier::Mut;

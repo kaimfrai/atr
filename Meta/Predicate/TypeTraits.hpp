@@ -5,7 +5,7 @@ export import :Category;
 export import Meta.Token;
 export import Meta.Logic;
 
-import std;
+import Std;
 
 export namespace
 	Meta::Trait

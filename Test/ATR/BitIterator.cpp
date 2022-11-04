@@ -1,6 +1,6 @@
 import ATR;
 
-import std;
+import Std;
 
 using ::ATR::Bit::EOffset;
 using ::ATR::Bit::ESize;

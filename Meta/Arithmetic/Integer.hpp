@@ -1,6 +1,6 @@
 export module Meta.Arithmetic:Integer;
 
-import std;
+import Std;
 
 export namespace
 	Meta

@@ -530,7 +530,7 @@ function(
 	add_user_header_unit(
 		${cxx20_modules}/std.hpp
 	)
-	add_module(${cxx20_modules}/std.cppm)
+	add_module(${cxx20_modules}/Std.cpp)
 endfunction()
 
 add_standard_module()

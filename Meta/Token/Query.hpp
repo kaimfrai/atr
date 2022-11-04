@@ -5,7 +5,7 @@ export import :Type;
 
 export import Meta.Arithmetic;
 
-import std;
+import Std;
 
 export namespace
 	Meta::Query

@@ -4,7 +4,7 @@ import :ID;
 import :Layout.Alias;
 import :Layout.AliasResolver;
 
-import std;
+import Std;
 
 export namespace
 	ATR

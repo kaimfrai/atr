@@ -13,7 +13,7 @@ import Meta.Arithmetic;
 import Meta.Data;
 import Meta.Lex;
 
-import std;
+import Std;
 
 using ::Meta::Aggregate;
 using ::Meta::CV;

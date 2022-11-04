@@ -2,7 +2,7 @@ import Evaluation.Replication;
 
 import Evaluation.Shared;
 
-import std;
+import Std;
 
 auto
 	main

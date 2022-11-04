@@ -2,7 +2,7 @@ export module Meta.Logic:LiteralBase;
 
 export import Meta.Token;
 
-import std;
+import Std;
 
 export namespace
 	Meta::Trait
