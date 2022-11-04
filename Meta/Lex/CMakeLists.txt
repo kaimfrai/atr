@@ -1,6 +1,6 @@
 add_module(
 	Lex.hpp
-PARTITION
+
 	Array.hpp
 	CV.hpp
 	Function.hpp

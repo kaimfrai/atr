@@ -1,6 +1,6 @@
 add_module(
 	Token.hpp
-PARTITION
+
 	Array.hpp
 	Construct.hpp
 	CV.hpp

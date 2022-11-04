@@ -1,6 +1,6 @@
 add_module(
 	ATR.hpp
-PARTITION
+
 	ID.hpp
 	StringLiteral.hpp
 

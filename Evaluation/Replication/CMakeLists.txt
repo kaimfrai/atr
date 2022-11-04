@@ -1,6 +1,6 @@
 add_module(
 	VolumeComputer.hpp
-PARTITION
+
 	Cone.hpp
 	Cube.hpp
 	Cuboid.hpp

@@ -1,6 +1,6 @@
 add_module(
 	Logic.hpp
-PARTITION
+
 	BitClause.hpp
 	BitClauseIterator.hpp
 	Optimizer.hpp

@@ -1,6 +1,6 @@
 add_module(
 	Interface.hpp
-IMPLEMENTATION
+
 	Impl.cpp
 )
 

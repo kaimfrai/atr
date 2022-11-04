@@ -1,6 +1,6 @@
 add_module(
 	Data.hpp
-PARTITION
+
 	Aggregate.hpp
 	Object.hpp
 	TupleSet.hpp

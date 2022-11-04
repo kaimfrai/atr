@@ -1,6 +1,6 @@
 add_module(Archetype.hpp
-PARTITION
-	Product.hpp
+
+Product.hpp
 
 	ComputeArea.hpp
 	ComputeVolume.hpp

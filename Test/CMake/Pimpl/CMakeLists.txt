@@ -4,6 +4,6 @@ add_module(
 
 add_module(
 	Pimpl.hpp
-IMPLEMENTATION
+
 	Pimpl.cpp
 )

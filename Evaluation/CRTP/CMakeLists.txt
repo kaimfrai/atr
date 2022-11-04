@@ -1,6 +1,6 @@
 add_module(
 	CRTP.hpp
-PARTITION
+
 	BasicBody.hpp
 	BasicShape.hpp
 	BasicSphere.hpp

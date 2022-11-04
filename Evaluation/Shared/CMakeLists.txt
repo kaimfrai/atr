@@ -1,6 +1,6 @@
 add_module(
 	Shared.hpp
-PARTITION
+
 	CopyConstruct.hpp
 	DataTypes.hpp
 	Fraction.hpp

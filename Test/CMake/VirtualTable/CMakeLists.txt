@@ -1,8 +1,8 @@
 add_module(
 	Primary.cpp
-PARTITION
+
 	Interface.cpp
-IMPLEMENTATION
+
 	Impl.cpp
 )
 

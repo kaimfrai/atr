@@ -1,6 +1,6 @@
 add_module(
 	Predicate.hpp
-PARTITION
+
 	Category.hpp
 	Empty.hpp
 	Match.hpp

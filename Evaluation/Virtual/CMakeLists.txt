@@ -1,6 +1,6 @@
 add_module(
 	Virtual.hpp
-PARTITION
+
 	BasicBody.hpp
 	BasicShape.hpp
 	Circle.hpp

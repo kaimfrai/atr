@@ -1,4 +1,7 @@
-include(CMake/CXX20Modules/${CMAKE_CXX_COMPILER_ID}.cmake)
+cmake_path(REMOVE_EXTENSION CMAKE_CURRENT_LIST_FILE OUTPUT_VARIABLE CXX20_MODULES_PATH)
+
+include(${CXX20_MODULES_PATH}/${CMAKE_CXX_COMPILER_ID}.cmake)
+include(${CXX20_MODULES_PATH}/Dependency.cmake)
 
 function(
 	ensure_module_variable_set
@@ -19,92 +22,6 @@ MAKE_DIRECTORY
 	${PREBUILT_MODULE_PATH}
 )
 
-set(REGEX_WHITESPACE "[ \t]+")
-set(REGEX_ID "[a-zA-Z_][a-zA-Z0-9_.]*")
-set(REGEX_FILE "[a-zA-Z0-9_./\:]+")
-set(REGEX_HEADER "<${REGEX_FILE}>|\"${REGEX_FILE}\"")
-set(REGEX_NAME "${REGEX_ID}(:${REGEX_ID})?")
-set(REGEX_MODULE "(^|[\n\r])(export${REGEX_WHITESPACE})?module${REGEX_WHITESPACE}")
-set(REGEX_IMPORT "(^|[\n\r])(export${REGEX_WHITESPACE})?import${REGEX_WHITESPACE}")
-
-function(invoke_preprocessor
-	file_name
-	out_preprocessed_file
-)
-	get_source_file_property(
-		file_path
-		"${file_name}"
-		LOCATION
-	)
-
-	file(READ
-		${file_path}
-		file_content
-	)
-
-	#module declarations and imports
-	string(
-	REGEX MATCHALL
-		"${REGEX_MODULE}${REGEX_NAME}|${REGEX_IMPORT}(:?${REGEX_ID}|${REGEX_HEADER})"
-		file_content
-		"${file_content}"
-	)
-
-	set(${out_preprocessed_file} "${file_content}" PARENT_SCOPE)
-
-endfunction()
-
-function(read_module_name
-	module_source_file
-	preprocessed_file
-	must_have_module_name
-	out_module_name
-	out_module_binary
-	out_module_object
-)
-	string(
-	REGEX MATCH
-		"${REGEX_MODULE}${REGEX_NAME}"
-		module_name
-		"${preprocessed_file}"
-	)
-	list(
-	TRANSFORM
-		module_name
-	REPLACE
-		"${REGEX_MODULE}"
-		""
-	)
-
-	if	(NOT module_name AND ${must_have_module_name})
-		message(FATAL_ERROR "File '${module_source_file}' did not specify a valid module name!")
-	endif()
-
-	set(
-	${out_module_name}
-		${module_name}
-	PARENT_SCOPE
-	)
-
-	string(
-	REPLACE
-		":"
-		"-"
-		module_binary
-		"${module_name}"
-	)
-	set(
-	${out_module_binary}
-		"${PREBUILT_MODULE_PATH}/${module_binary}${MODULE_INTERFACE_EXTENSION}"
-	PARENT_SCOPE
-	)
-	set(
-	${out_module_object}
-		"${PREBUILT_MODULE_PATH}/${module_binary}${CMAKE_CXX_OUTPUT_EXTENSION}"
-	PARENT_SCOPE
-	)
-
-endfunction()
 
 function(add_system_header_unit
 	header_unit_file
@@ -142,6 +59,10 @@ function(add_user_header_unit
 )
 	file(REAL_PATH "${header_unit}" header_unit_path EXPAND_TILDE)
 	cmake_path(GET header_unit FILENAME header_unit_file)
+
+	read_module_properties("${header_unit_path}")
+	get_source_file_property(module_dependencies "${header_unit_path}" "MODULE_DEPENDENCIES")
+
 	get_compile_user_header_unit_command(
 		"${header_unit_path}"
 		"${PREBUILT_MODULE_PATH}/${header_unit_file}${MODULE_INTERFACE_EXTENSION}"
@@ -156,95 +77,28 @@ function(add_user_header_unit
 	VERBATIM
 	DEPENDS
 		${header_unit_path}
+		${module_dependencies}
 	COMMENT
 		"Generating precompiled user header unit ${header_unit_file}"
 	)
 
 endfunction()
 
-function(read_module_dependencies
-	preprocessed_file
-	module_name
-	out_module_target_dependencies
-	out_module_dependency_binaries
-)
-	set(dependency_binaries)
-
-	string(REGEX MATCHALL "${REGEX_MODULE}${REGEX_NAME}" module_declaration "${preprocessed_file}")
-	if (NOT ${module_declaration} MATCHES "^export" AND NOT ${module_declaration} MATCHES ":")
-		list(
-		TRANSFORM
-			module_declaration
-		REPLACE
-			"${REGEX_MODULE}"
-			""
-		)
-		list(APPEND dependency_binaries ${module_declaration})
-	endif()
-
-	string(REGEX MATCHALL "${REGEX_IMPORT}${REGEX_ID}" module_target_dependencies "${preprocessed_file}")
-	list(TRANSFORM module_target_dependencies REPLACE "${REGEX_IMPORT}" "")
-
-	list(APPEND dependency_binaries ${module_target_dependencies})
-
-	set(${out_module_target_dependencies} ${module_target_dependencies} PARENT_SCOPE)
-
-	string(REGEX MATCHALL "${REGEX_IMPORT}:${REGEX_ID}" module_partitions "${preprocessed_file}")
-
-	list(TRANSFORM module_partitions REPLACE "${REGEX_IMPORT}:" "")
-	list(TRANSFORM module_partitions PREPEND "${module_name}-")
-
-	list(APPEND dependency_binaries ${module_partitions})
-
-	string(REGEX MATCHALL "${REGEX_IMPORT}${REGEX_HEADER}" header_units "${preprocessed_file}")
-
-	list(TRANSFORM header_units REPLACE "${REGEX_IMPORT}(<|\")" "")
-	list(TRANSFORM header_units REPLACE "(>|\")" "")
-
-	list(APPEND dependency_binaries ${header_units})
-
-	list(TRANSFORM dependency_binaries PREPEND ${PREBUILT_MODULE_PATH}/)
-	list(TRANSFORM dependency_binaries APPEND ${MODULE_INTERFACE_EXTENSION})
-
-	set(${out_module_dependency_binaries} ${dependency_binaries} PARENT_SCOPE)
-
-endfunction()
-
-function(add_module_source_dependencies
-	source_file
-	module_dependency_files
-)
-	list(LENGTH module_dependency_files module_dependency_count)
-	if(${module_dependency_count} GREATER 0)
-		get_module_dependency_flag_list(
-			"${module_dependency_files}"
-			module_dependency_flag_list
-		)
-		set_source_files_properties(
-		"${source_file}"
-		PROPERTIES
-		OBJECT_DEPENDS
-			"${module_dependency_files}"
-		COMPILE_OPTIONS
-			"${module_dependency_flag_list}"
-		LANGUAGE
-			CXX
-		)
-
-	endif()
-
-endfunction()
-
-function(add_module_command
-	module_interface_file
-	module_binary
+function(add_module_unit_command
+	module_unit_file
+	module_unit_name
+	module_interface
 	module_object
-	module_name
-	module_dependency_binaries
 )
+	get_source_file_property(module_dependency_binaries "${module_unit_file}" "MODULE_IMPORTS")
+
+	list(TRANSFORM module_dependency_binaries REPLACE ":" "-")
+	list(TRANSFORM module_dependency_binaries PREPEND "${PREBUILT_MODULE_PATH}/")
+	list(TRANSFORM module_dependency_binaries APPEND "${MODULE_INTERFACE_EXTENSION}")
+
 	get_compile_module_interface_command(
-		"${module_interface_file}"
-		"${module_binary}"
+		"${module_unit_file}"
+		"${module_interface}"
 		"${module_object}"
 		"${module_dependency_binaries}"
 		compile_module_interface_command
@@ -253,15 +107,15 @@ function(add_module_command
 
 	add_custom_command(
 	OUTPUT
-		${module_binary}
+		${module_interface}
 	COMMAND
 		${compile_module_interface_command}
 	VERBATIM
 	DEPENDS
-		${module_interface_file}
+		${module_unit_file}
 		${module_dependency_binaries}
 	COMMENT
-		"Generating precompiled module interface ${module_name}"
+		"Generating precompiled module interface ${module_unit_name}"
 	)
 
 	add_custom_command(
@@ -271,172 +125,96 @@ function(add_module_command
 		${compile_module_object_command}
 	VERBATIM
 	DEPENDS
-		${module_binary}
+		${module_interface}
 	COMMENT
-		"Generating precompiled module object ${module_name}"
+		"Generating precompiled module object ${module_unit_name}"
 	)
-
 endfunction()
 
-function(add_module_partition
-	module_name
-	partition_name
-	partition_binary
-	partition_object
-	interface_file
-	preprocessed_module_file
+function(link_module_dependencies
+	module_unit_file
+	target_name
+	link_visibility
 )
-	target_sources(
-		"${module_name}"
-	PRIVATE
-		"${partition_object}"
-	)
-
-	read_module_dependencies(
-		"${preprocessed_module_file}"
-		"${module_name}"
-		module_target_dependencies
-		module_dependency_binaries
-	)
-
+	get_source_file_property(module_dependencies "${module_unit_file}" "MODULE_DEPENDENCIES")
 	target_link_libraries(
-		"${module_name}"
-	INTERFACE
-		${module_target_dependencies}
-	)
-
-	add_module_command(
-		"${interface_file}"
-		"${partition_binary}"
-		"${partition_object}"
-		"${partition_name}"
-		"${module_dependency_binaries}"
+		"${target_name}"
+	"${link_visibility}"
+		${module_dependencies}
 	)
 
 endfunction()
 
-function(add_module_implementation
-	source_file
-	module_name
-	module_binary
-)
-	invoke_preprocessor(
-		"${source_file}"
-		preprocessed_module_file
-	)
-	read_module_name(
-		"${source_file}"
-		"${preprocessed_module_file}"
-		TRUE
-		module_implementation_name
-		module_implementation_binary
-		module_implementation_object
-	)
-
-	if	(NOT "${module_implementation_name}" STREQUAL "${module_name}")
-		message(FATAL_ERROR "Implementation ${source_file} does not appear to belong to module ${module_name}!")
-	endif()
-
-	read_module_dependencies(
-		"${preprocessed_module_file}"
-		"${module_name}"
-		module_target_dependencies
-		module_dependency_binaries
-	)
-
-	target_link_libraries(
-		"${module_name}"
-	INTERFACE
-		${module_target_dependencies}
-	)
-
-	add_module_source_dependencies(
-		"${source_file}"
-		"${module_dependency_binaries}"
-	)
-
-endfunction()
 
 function(add_module
 	module_interface_file
 )
-	cmake_parse_arguments(
-		MODULE
-		""
-		""
-		"PARTITION;IMPLEMENTATION"
-		${ARGN}
-	)
+	read_module_properties("${module_interface_file}")
 
-	invoke_preprocessor(
-		${module_interface_file}
-		preprocessed_module_file
-	)
-	read_module_name(
-		${module_interface_file}
-		"${preprocessed_module_file}"
-		TRUE
-		module_name
-		module_binary
-		module_object
-	)
+	get_source_file_property(module_type "${module_interface_file}" "MODULE_TYPE")
+	if	(NOT "${module_type}" STREQUAL "PRIMARY_INTERFACE")
+		message(FATAL_ERROR "The file '${module_interface_file}' is of module type '${module_type}'! Expected 'PRIMARY_INTERFACE'!")
+	endif()
 
-	get_module_dependency_flag_list(
-		"${module_binary}"
-		primary_module_flag
+	get_source_file_property(module_name "${module_interface_file}" "MODULE_NAME")
+
+	add_module_unit_command(
+		"${module_interface_file}"
+		"${module_name}"
+		"${PREBUILT_MODULE_PATH}/${module_name}${MODULE_INTERFACE_EXTENSION}"
+		"${PREBUILT_MODULE_PATH}/${module_name}${CMAKE_CXX_OUTPUT_EXTENSION}"
 	)
 
 	add_library(
 		"${module_name}"
 	STATIC
-		${MODULE_IMPLEMENTATION}
+		"${PREBUILT_MODULE_PATH}/${module_name}${CMAKE_CXX_OUTPUT_EXTENSION}"
 	)
 
 	set_target_properties("${module_name}" PROPERTIES LINKER_LANGUAGE CXX)
 
-	add_module_partition(
-		"${module_name}"
-		"${module_name}"
-		"${module_binary}"
-		"${module_object}"
-		"${module_interface_file}"
-		"${preprocessed_module_file}"
-	)
+	link_module_dependencies("${module_interface_file}" "${module_name}" "INTERFACE")
 
-	foreach(partition_file IN LISTS MODULE_PARTITION)
-		invoke_preprocessor(
-			"${partition_file}"
-			preprocessed_partition_file
-		)
-		read_module_name(
-			"${partition_file}"
-			"${preprocessed_partition_file}"
-			TRUE
-			partition_name
-			partition_binary
-			partition_object
-		)
+	foreach(unit_file IN LISTS ARGN)
 
-		if	(NOT ${partition_name} MATCHES "^${module_name}:")
-			message(FATAL_ERROR "Partition ${partition_file} does not appear to belong to module ${module_name} with primary interface declared in ${module_interface_file}!")
+		read_module_properties("${unit_file}")
+
+		get_source_file_property(file_module_name "${unit_file}" "MODULE_NAME")
+		if	(NOT "${module_name}" STREQUAL "${file_module_name}")
+			message(FATAL_ERROR "The file '${unit_file}' is part of module '${file_module_name}'! Expected '${module_name}'!")
 		endif()
 
-		add_module_partition(
-			"${module_name}"
-			"${partition_name}"
-			"${partition_binary}"
-			"${partition_object}"
-			"${partition_file}"
-			"${preprocessed_partition_file}"
-		)
-	endforeach()
+		get_source_file_property(file_module_type "${unit_file}" "MODULE_TYPE")
+		if	("${file_module_type}" MATCHES "_PARTITION$")
 
-	foreach(module_implementation IN LISTS MODULE_IMPLEMENTATION)
-		add_module_implementation(
-			"${module_implementation}"
-			"${module_name}"
-			"${module_binary}"
-		)
+			get_source_file_property(partition_name "${unit_file}" "MODULE_PARTITION")
+
+			target_sources(
+				"${module_name}"
+			PRIVATE
+				"${PREBUILT_MODULE_PATH}/${module_name}-${partition_name}${CMAKE_CXX_OUTPUT_EXTENSION}"
+			)
+
+			add_module_unit_command(
+				"${unit_file}"
+				"${module_name}:${partition_name}"
+				"${PREBUILT_MODULE_PATH}/${module_name}-${partition_name}${MODULE_INTERFACE_EXTENSION}"
+				"${PREBUILT_MODULE_PATH}/${module_name}-${partition_name}${CMAKE_CXX_OUTPUT_EXTENSION}"
+			)
+
+		elseif("${file_module_type}" STREQUAL "IMPLEMENTATION")
+
+			target_sources("${module_name}" PRIVATE "${unit_file}")
+
+		else()
+			message(
+			FATAL_ERROR
+				"The file '${unit_file}' is of module type '${file_module_type}'! Expected 'INTERFACE_PARTITION', 'IMPLEMENTATION_PARTITION' or 'IMPLEMENTATION'!"
+			)
+		endif()
+
+		link_module_dependencies("${unit_file}" "${module_name}" "INTERFACE")
+
 	endforeach()
 
 endfunction()
@@ -446,35 +224,9 @@ function(add_module_dependencies
 )
 	foreach(source_file IN LISTS ARGN)
 
-		invoke_preprocessor(
-			"${source_file}"
-			preprocessed_module_file
-		)
-		read_module_name(
-			"${source_file}"
-			"${preprocessed_module_file}"
-			FALSE
-			module_name
-			module_binary
-			module_object
-		)
-		read_module_dependencies(
-			"${preprocessed_module_file}"
-			"${module_name}"
-			module_target_dependencies
-			module_dependency_binaries
-		)
+		read_module_properties("${source_file}")
 
-		target_link_libraries(
-			"${target_name}"
-		PUBLIC
-			${module_target_dependencies}
-		)
-
-		add_module_source_dependencies(
-			"${source_file}"
-			"${module_dependency_binaries}"
-		)
+		link_module_dependencies("${source_file}" "${target_name}" "PUBLIC")
 
 	endforeach()
 
@@ -526,11 +278,10 @@ endfunction()
 function(
 	add_standard_module
 )
-	cmake_path(REMOVE_EXTENSION CMAKE_CURRENT_LIST_FILE OUTPUT_VARIABLE cxx20_modules)
 	add_user_header_unit(
-		${cxx20_modules}/std.hpp
+		${CXX20_MODULES_PATH}/std.hpp
 	)
-	add_module(${cxx20_modules}/Std.cpp)
+	add_module(${CXX20_MODULES_PATH}/Std.cpp)
 endfunction()
 
 add_standard_module()
