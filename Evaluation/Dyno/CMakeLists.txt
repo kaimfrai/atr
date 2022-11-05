@@ -9,6 +9,10 @@ COMPILE_OPTIONS
 	"$<$<CXX_COMPILER_ID:Clang>:-Wno-gnu-string-literal-operator-template;-Wno-shadow-uncaptured-local;-Wno-reserved-identifier;-Wno-implicit-int-conversion;-Wno-missing-variable-declarations>"
 )
 
+force_import_std(
+	"${DYNO_INCLUDE_PATH}/dyno.hpp"
+)
+
 add_user_header_unit(
 	"${DYNO_INCLUDE_PATH}/dyno.hpp"
 )

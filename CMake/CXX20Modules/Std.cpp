@@ -1,3 +1,3 @@
 export module Std;
 
-export import "std.hpp";
+export import <std.hpp>;

@@ -286,9 +286,35 @@ function(
 	add_standard_module
 )
 	add_user_header_unit(
-		${CXX20_MODULES_PATH}/std.hpp
+		${CXX20_MODULES_PATH}/include/std.hpp
 	)
+
+	include_directories(${CXX20_MODULES_PATH}/include/)
+
 	add_module(${CXX20_MODULES_PATH}/Std.cpp)
+
+
 endfunction()
 
 add_standard_module()
+
+function(
+	force_import_std
+	file
+)
+	set_property(
+	SOURCE "${file}"
+	APPEND PROPERTY
+		COMPILE_OPTIONS
+		"-fmodule-file=${PREBUILT_MODULE_PATH}/std.hpp${MODULE_INTERFACE_EXTENSION}"
+		"--include${CXX20_MODULES_PATH}/include/import_std.hpp"
+	)
+
+	set_property(
+	SOURCE "${file}"
+	APPEND PROPERTY
+		OBJECT_DEPENDS
+		"${PREBUILT_MODULE_PATH}/std.hpp${MODULE_INTERFACE_EXTENSION}"
+	)
+
+endfunction()

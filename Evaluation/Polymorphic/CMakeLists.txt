@@ -9,6 +9,10 @@ COMPILE_OPTIONS
 	"$<$<CXX_COMPILER_ID:Clang>:-Wno-cast-function-type-strict>"
 )
 
+force_import_std(
+	"${POLYMORPHIC_INCLUDE_PATH}/polymorphic.hpp"
+)
+
 add_user_header_unit(
 	"${POLYMORPHIC_INCLUDE_PATH}/polymorphic.hpp"
 )
