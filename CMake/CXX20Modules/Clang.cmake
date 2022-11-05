@@ -424,3 +424,24 @@ function(get_compile_module_interface_command
 	)
 
 endfunction()
+
+function(
+	force_import_std
+	file
+)
+	set_property(
+	SOURCE "${file}"
+	APPEND PROPERTY
+		COMPILE_OPTIONS
+		"-fmodule-file=${PREBUILT_MODULE_PATH}/std.hpp${MODULE_INTERFACE_EXTENSION}"
+		"--include${CXX20_MODULES_PATH}/include/import_std.hpp"
+	)
+
+	set_property(
+	SOURCE "${file}"
+	APPEND PROPERTY
+		OBJECT_DEPENDS
+		"${PREBUILT_MODULE_PATH}/std.hpp${MODULE_INTERFACE_EXTENSION}"
+	)
+
+endfunction()
