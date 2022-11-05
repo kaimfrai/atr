@@ -125,6 +125,8 @@ set(STANDARD_HEADER_UNITS
 )
 
 find_path(STANDARD_LIBRARY_INCLUDE_PATH ${STANDARD_HEADER_UNITS} PATH_SUFFIXES include/c++/v1 REQUIRED DOC "Path for standard library includes")
+file(REAL_PATH "${STANDARD_LIBRARY_INCLUDE_PATH}" STANDARD_LIBRARY_INCLUDE_PATH EXPAND_TILDE)
+message("Found standard library at ${STANDARD_LIBRARY_INCLUDE_PATH}")
 
 function(get_module_dependency_flag_list
 	module_dependency_binaries

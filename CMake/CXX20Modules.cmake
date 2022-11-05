@@ -26,8 +26,18 @@ MAKE_DIRECTORY
 function(add_system_header_unit
 	header_unit_file
 )
+	file(REAL_PATH
+		"${header_unit_file}"
+		header_unit_path
+	EXPAND_TILDE
+	BASE_DIRECTORY
+		"${STANDARD_LIBRARY_INCLUDE_PATH}"
+	)
+	read_module_properties("${header_unit_path}")
+	get_source_file_property(module_dependencies "${header_unit_path}" OBJECT_DEPENDS)
+
 	get_compile_system_header_unit_command(
-		"${STANDARD_LIBRARY_INCLUDE_PATH}/${header_unit_file}"
+		"${header_unit_path}"
 		"${PREBUILT_MODULE_PATH}/${header_unit_file}${MODULE_INTERFACE_EXTENSION}"
 		compile_header_unit_command
 	)
@@ -39,7 +49,8 @@ function(add_system_header_unit
 		${compile_header_unit_command}
 	VERBATIM
 	DEPENDS
-		"${STANDARD_LIBRARY_INCLUDE_PATH}/${header_unit_file}"
+		"${header_unit_path}"
+		${module_dependencies}
 	COMMENT
 		"Generating precompiled system header unit ${header_unit_file}"
 	)
