@@ -43,16 +43,14 @@ export namespace
 	template
 		<	typename
 				t_tData
-		,	char const
-			&
-			...	t_rpName
+		,	ProtoID
+				t_tName
 		>
 	struct
 		StaticData
 		<	::Member
 			<	t_tData
-			,	t_rpName
-				...
+			,	t_tName
 			>
 		>
 	{
@@ -63,7 +61,7 @@ export namespace
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetOf
-		)	(	ID<t_rpName...>
+		)	(	t_tName
 			,	Meta::Lex::Transform<t_tpTransform...>
 			)
 		->	StaticMember<t_tData>
@@ -72,7 +70,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	ID<t_rpName...>
+		)	(	t_tName
 			)	const
 			noexcept
 		->	t_tData

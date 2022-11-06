@@ -8,8 +8,7 @@ export namespace
 	ATR
 {
 	template
-		<	char const
-			&
+		<	decltype(auto)
 			...	t_rpName
 		>
 	struct
@@ -178,38 +177,16 @@ export namespace
 			);
 		}
 	};
-}
 
-template
-	<	char const
-		&
-		...	t_rpName
-	>
-auto constexpr
-	DeduceType
-	(	::ATR::ID<t_rpName...>
-	)
-->	::ATR::Instance
-	<	t_rpName
-		...
-	>
-;
-
-export namespace
-	ATR
-{
 	template
 		<	StringLiteral
 				t_vTypeID
 		>
 	using
 		Type
-	=	decltype
-		(	::DeduceType
-			(	ID_V
-				<	t_vTypeID
-				>
-			)
-		)
+	=	ID_T
+		<	t_vTypeID
+		,	::ATR::Instance
+		>
 	;
 }

@@ -26,16 +26,15 @@ struct
 	{	return t_tName{};	}
 
 	template
-		<	char const
-			&
-			...	t_rpName
+		<	::ATR::ProtoID
+				t_tName
 		,	typename
 				t_tTarget
 		>
 	auto constexpr
 	(	MatchAlias
-	)	(	ID<t_rpName...>
-		,	::Alias<t_tTarget, t_rpName...> const*
+	)	(	t_tName
+		,	::Alias<t_tTarget, t_tName> const*
 		)	const
 	->	decltype(auto)
 	{	return

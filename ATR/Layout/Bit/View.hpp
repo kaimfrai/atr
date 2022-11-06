@@ -33,9 +33,8 @@ export namespace
 				t_nOffset
 		,	USize
 				t_nSize
-		,	char const
-			&
-			...	t_rpName
+		,	ProtoID
+				t_tName
 		>
 	struct
 		SingleView
@@ -72,7 +71,7 @@ export namespace
 
 		static auto constexpr
 		(	ReadWriteView
-		)	(	ID<t_rpName...>
+		)	(	t_tName
 			,	::std::byte
 				*	i_aBuffer
 			)
@@ -85,7 +84,7 @@ export namespace
 
 		static auto constexpr
 		(	Value
-		)	(	ID<t_rpName...>
+		)	(	t_tName
 			,	::std::byte const
 				*	i_aBuffer
 			)
@@ -106,9 +105,8 @@ export namespace
 				t_nSize
 		,	USize
 				t_nExtent
-		,	char const
-			&
-			...	t_rpName
+		,	ProtoID
+				t_tName
 		>
 	struct
 		ArrayView
@@ -144,7 +142,7 @@ export namespace
 
 		static auto constexpr
 		(	ReadWriteView
-		)	(	ID<t_rpName...>
+		)	(	t_tName
 			,	::std::byte
 				*	i_aBuffer
 			)
@@ -157,7 +155,7 @@ export namespace
 
 		static auto constexpr
 		(	Value
-		)	(	ID<t_rpName...>
+		)	(	t_tName
 			,	::std::byte const
 				*	i_aBuffer
 			)
@@ -179,9 +177,8 @@ export namespace
 				t_nOffset
 		,	typename
 				t_tEntity
-		,	char const
-			&
-			...	t_rpName
+		,	ProtoID
+				t_tName
 		>
 	struct
 		ViewBase
@@ -190,8 +187,7 @@ export namespace
 		,	BitSize
 			(	Type<t_tEntity>
 			)
-		,	t_rpName
-			...
+		,	t_tName
 		>
 	{
 		static auto constexpr
@@ -207,9 +203,8 @@ export namespace
 				t_tEntity
 		,	USize
 				t_nExtent
-		,	char const
-			&
-			...	t_rpName
+		,	ProtoID
+				t_tName
 		>
 	struct
 		ViewBase
@@ -217,8 +212,7 @@ export namespace
 		,	t_tEntity
 				[	t_nExtent
 				]
-		,	t_rpName
-			...
+		,	t_tName
 		>
 	:	ArrayView
 		<	t_nOffset
@@ -226,8 +220,7 @@ export namespace
 			(	Type<t_tEntity>
 			)
 		,	t_nExtent
-		,	t_rpName
-			...
+		,	t_tName
 		>
 	{
 		static auto constexpr
@@ -242,22 +235,20 @@ export namespace
 				t_nOffset
 		,	typename
 				t_tEntity
-		,	char const
-			&
-			...	t_rpName
+		,	ProtoID
+				t_tName
 		>
 	struct
 		View
 	:	ViewBase
 		<	t_nOffset
 		,	t_tEntity
-		,	t_rpName
-			...
+		,	t_tName
 		>
 	{
 		static auto constexpr
 		(	ReadView
-		)	(	ID<t_rpName...>
+		)	(	t_tName
 					i_vName
 			,	::std::byte const
 				*	i_aBuffer
@@ -277,7 +268,7 @@ export namespace
 			>
 		static auto constexpr
 		(	OffsetOf
-		)	(	ID<t_rpName...>
+		)	(	t_tName
 			,	Transform<t_tpTransform...>
 					i_vTransform
 			)
@@ -310,27 +301,24 @@ export namespace
 				t_nOffset
 		,	typename
 				t_tEntity
-		,	char const
-			&
-			...	t_rpName
+		,	ProtoID
+				t_tName
 		>
 	struct
 		View
 		<	t_nOffset
 		,	Mut<t_tEntity>
-		,	t_rpName
-			...
+		,	t_tName
 		>
 	:	ViewBase
 		<	t_nOffset
 		,	t_tEntity
-		,	t_rpName
-			...
+		,	t_tName
 		>
 	{
 		static auto constexpr
 		(	ReadView
-		)	(	ID<t_rpName...>
+		)	(	t_tName
 					i_vName
 			,	::std::byte
 				*	i_aBuffer
@@ -350,7 +338,7 @@ export namespace
 			>
 		static auto constexpr
 		(	OffsetOf
-		)	(	ID<t_rpName...>
+		)	(	t_tName
 			,	Transform<t_tpTransform...>
 					i_vTransform
 			)

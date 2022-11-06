@@ -194,16 +194,14 @@ export namespace
 	template
 		<	typename
 				t_tData
-		,	char const
-			&
-			...	t_rpName
+		,	ProtoID
+				t_tName
 		>
 	struct
 		Layout
 		<	::Member
 			<	t_tData
-			,	t_rpName
-				...
+			,	t_tName
 			>
 		>
 	{
@@ -214,7 +212,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	ID<t_rpName...>
+		)	(	t_tName
 			)	const&
 			noexcept
 		->	Aggregate<t_tData> const&
@@ -223,7 +221,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	ID<t_rpName...>
+		)	(	t_tName
 			)	&
 			noexcept
 		->	Aggregate<t_tData>&
@@ -232,7 +230,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	ID<t_rpName...>
+		)	(	t_tName
 			)	&&
 			noexcept
 		->	Aggregate
@@ -253,7 +251,7 @@ export namespace
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetOf
-		)	(	ID<t_rpName...>
+		)	(	t_tName
 					i_vName
 			,	Meta::Lex::Transform<t_tpTransform...>
 					i_vTransform

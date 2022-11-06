@@ -8,31 +8,48 @@ namespace
 	ATR
 {
 	template
-		<	char const
-			&
-			...	t_rpPrefix
-		,	char const
-			&
-			...	t_rpInfix
-		,	char const
-			&
-			...	t_rpSuffix
+		<	Meta::USize
+				t_nSize
 		>
 	auto constexpr
 	(	InfixID
-	)	(	ID<t_rpPrefix...>
-		,	ID<t_rpInfix...>
-		,	ID<t_rpSuffix...>
+	)	(	StringView
+				i_vPrefix
+		,	StringView
+				i_vInfix
+		,	StringView
+				i_vSuffix
 		)
-	->	ID
-		<	t_rpPrefix
-			...
-		,	t_rpInfix
-			...
-		,	t_rpSuffix
-			...
-		>
-	{	return {};	}
+	->	StringLiteral<t_nSize>
+	{
+		StringLiteral<t_nSize>
+			vResult
+		;
+
+		auto vPos
+		=	::std::copy
+			(	begin(i_vPrefix)
+			,	end(i_vPrefix)
+			,	begin(vResult)
+			)
+		;
+		(	vPos
+		=	::std::copy
+			(	begin(i_vInfix)
+			,	end(i_vInfix)
+			,	vPos
+			)
+		);
+		::std::copy
+		(	begin(i_vSuffix)
+		,	end(i_vSuffix)
+		,	vPos
+		);
+
+		return
+			vResult
+		;
+	}
 
 	template
 		<	typename
@@ -49,13 +66,16 @@ namespace
 	{
 		using
 			tNewID
-		=	decltype
-			(	InfixID
-				(	t_tPrefix{}
-				,	ID_Of<t_rInfix.Name>{}
-				,	t_tSuffix{}
+		=	ID_T
+			<	InfixID
+				<	t_tPrefix::Length
+				+	t_rInfix.Name.Size
+				+	t_tSuffix::Length
+				>(	t_tPrefix::StringView
+				,	t_rInfix.Name
+				,	t_tSuffix::StringView
 				)
-			)
+			>
 		;
 
 		//	also update the alias target if it is an alias
@@ -70,13 +90,16 @@ namespace
 			;
 			using
 				tAliasTarget
-			=	decltype
-				(	InfixID
-					(	t_tPrefix{}
-					,	tInfixAliasTarget{}
-					,	t_tSuffix{}
+			=	ID_T
+				<	InfixID
+					<	t_tPrefix::Length
+					+	tInfixAliasTarget::Length
+					+	t_tSuffix::Length
+					>(	t_tPrefix::StringView
+					,	tInfixAliasTarget::StringView
+					,	t_tSuffix::StringView
 					)
-				)
+				>
 			;
 			return
 			MemberInstance

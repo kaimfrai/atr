@@ -18,9 +18,7 @@ using ::Meta::USize;
 export template
 	<	typename
 			t_tData
-	,	char const
-		&
-		...
+	,	ATR::ProtoID
 	>
 struct
 	Member final
@@ -48,37 +46,17 @@ struct
 };
 
 template
-	<	typename
-			t_tData
-	,	char const
-		&
-		...	t_rpName
-	>
-auto constexpr
-(	MakeMember
-)	(	ID<t_rpName...>
-	)
-->	Member
-	<	t_tData
-	,	t_rpName
-		...
-	>
-;
-
-template
 	<	MemberInfo
 			t_vMember
 	>
 using
 	DeduceMember
-=	decltype
-	(	MakeMember
-		<	RestoreTypeEntity
-			<	t_vMember.Type
-			>
-		>(	ID_Of
-			<	t_vMember.Name
-			>{}
-		)
-	)
+=	Member
+	<	RestoreTypeEntity
+		<	t_vMember.Type
+		>
+	,	ID_Of
+		<	t_vMember.Name
+		>
+	>
 ;

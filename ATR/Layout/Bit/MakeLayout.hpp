@@ -1,5 +1,6 @@
 export module ATR:Layout.Bit.MakeLayout;
 
+import :ID;
 import :Layout.Bit.Layout;
 import :Layout.Bit.View;
 import :Layout.Member;
@@ -53,133 +54,119 @@ template
 			t_nOffset
 	,	typename
 			t_tData
-	,	char const
-		&
-		...	t_rpName
+	,	::ATR::ProtoID
+			t_tName
 	>
 auto constexpr
 (	MakeBitView
-)	(	::Member<t_tData, t_rpName...>
+)	(	::Member<t_tData, t_tName>
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
 	,	t_tData
-	,	t_rpName
-		...
+	,	t_tName
 	>
 ;
 
 template
 	<	USize
-			t_nOffset
-	,	char const
-		&
-		...	t_rpName
+		t_nOffset
+	,	::ATR::ProtoID
+			t_tName
 	>
 auto constexpr
 (	MakeBitView
-)	(	::Member<bool, t_rpName...>
+)	(	::Member<bool, t_tName>
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
 	,	BitField<1>
-	,	t_rpName
-		...
+	,	t_tName
 	>
 ;
 
 template
 	<	USize
 			t_nOffset
-	,	char const
-		&
-		...	t_rpName
+	,	::ATR::ProtoID
+			t_tName
 	>
 auto constexpr
 (	MakeBitView
-)	(	::Member<bool const, t_rpName...>
+)	(	::Member<bool const, t_tName>
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
 	,	BitField<1> const
-	,	t_rpName
-		...
+	,	t_tName
 	>
 ;
 
 template
 	<	USize
 			t_nOffset
-	,	char const
-		&
-		...	t_rpName
+	,	::ATR::ProtoID
+			t_tName
 	>
 auto constexpr
 (	MakeBitView
-)	(	::Member<bool volatile, t_rpName...>
+)	(	::Member<bool volatile, t_tName>
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
 	,	BitField<1> volatile
-	,	t_rpName
-		...
+	,	t_tName
 	>
 ;
 
 template
 	<	USize
 			t_nOffset
-	,	char const
-		&
-		...	t_rpName
+	,	::ATR::ProtoID
+			t_tName
 	>
 auto constexpr
 (	MakeBitView
-)	(	::Member<bool const volatile, t_rpName...>
+)	(	::Member<bool const volatile, t_tName>
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
 	,	BitField<1> const volatile
-	,	t_rpName
-		...
+	,	t_tName
 	>
 ;
 
 template
 	<	USize
 			t_nOffset
-	,	char const
-		&
-		...	t_rpName
+	,	::ATR::ProtoID
+			t_tName
 	>
 auto constexpr
 (	MakeBitView
-)	(	::Member<Mut<bool>, t_rpName...>
+)	(	::Member<Mut<bool>, t_tName>
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
 	,	Mut<BitField<1>>
-	,	t_rpName
-		...
+	,	t_tName
 	>
 ;
 
 template
 	<	USize
 			t_nOffset
-	,	char const
-		&
-		...	t_rpName
+	,	::ATR::ProtoID
+			t_tName
 	>
 auto constexpr
 (	MakeBitView
-)	(	::Member<Mut<bool volatile>, t_rpName...>
+)	(	::Member<Mut<bool volatile>, t_tName>
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
 	,	Mut<BitField<1> volatile>
-	,	t_rpName
-		...
+	,	t_tName
 	>
 ;
 
@@ -188,19 +175,17 @@ template
 			t_nOffset
 	,	USize
 			t_nExtent
-	,	char const
-		&
-		...	t_rpName
+	,	::ATR::ProtoID
+			t_tName
 	>
 auto constexpr
 (	MakeBitView
-)	(	::Member<bool[t_nExtent], t_rpName...>
+)	(	::Member<bool[t_nExtent], t_tName>
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
 	,	BitField<1>[t_nExtent]
-	,	t_rpName
-		...
+	,	t_tName
 	>
 ;
 
@@ -209,19 +194,17 @@ template
 			t_nOffset
 	,	USize
 			t_nExtent
-	,	char const
-		&
-		...	t_rpName
+	,	::ATR::ProtoID
+			t_tName
 	>
 auto constexpr
 (	MakeBitView
-)	(	::Member<bool const[t_nExtent], t_rpName...>
+)	(	::Member<bool const[t_nExtent], t_tName>
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
 	,	BitField<1> const[t_nExtent]
-	,	t_rpName
-		...
+	,	t_tName
 	>
 ;
 
@@ -230,19 +213,17 @@ template
 			t_nOffset
 	,	USize
 			t_nExtent
-	,	char const
-		&
-		...	t_rpName
+	,	::ATR::ProtoID
+			t_tName
 	>
 auto constexpr
 (	MakeBitView
-)	(	::Member<bool volatile[t_nExtent], t_rpName...>
+)	(	::Member<bool volatile[t_nExtent], t_tName>
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
 	,	BitField<1> volatile[t_nExtent]
-	,	t_rpName
-		...
+	,	t_tName
 	>
 ;
 
@@ -251,19 +232,17 @@ template
 			t_nOffset
 	,	USize
 			t_nExtent
-	,	char const
-		&
-		...	t_rpName
+	,	::ATR::ProtoID
+			t_tName
 	>
 auto constexpr
 (	MakeBitView
-)	(	::Member<bool const volatile[t_nExtent], t_rpName...>
+)	(	::Member<bool const volatile[t_nExtent], t_tName>
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
 	,	BitField<1> const volatile[t_nExtent]
-	,	t_rpName
-		...
+	,	t_tName
 	>
 ;
 
@@ -272,19 +251,17 @@ template
 			t_nOffset
 	,	USize
 			t_nExtent
-	,	char const
-		&
-		...	t_rpName
+	,	::ATR::ProtoID
+			t_tName
 	>
 auto constexpr
 (	MakeBitView
-)	(	::Member<Mut<bool[t_nExtent]>, t_rpName...>
+)	(	::Member<Mut<bool[t_nExtent]>, t_tName>
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
 	,	Mut<BitField<1>[t_nExtent]>
-	,	t_rpName
-		...
+	,	t_tName
 	>
 ;
 
@@ -293,19 +270,17 @@ template
 			t_nOffset
 	,	USize
 			t_nExtent
-	,	char const
-		&
-		...	t_rpName
+	,	::ATR::ProtoID
+			t_tName
 	>
 auto constexpr
 (	MakeBitView
-)	(	::Member<Mut<bool volatile[t_nExtent]>, t_rpName...>
+)	(	::Member<Mut<bool volatile[t_nExtent]>, t_tName>
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
 	,	Mut<BitField<1> volatile[t_nExtent]>
-	,	t_rpName
-		...
+	,	t_tName
 	>
 ;
 

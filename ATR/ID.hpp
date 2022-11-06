@@ -4,16 +4,7 @@ export import :StringLiteral;
 
 import Meta.Arithmetic;
 
-char constexpr inline i0 = '0';
-char constexpr inline i1 = '1';
-char constexpr inline i2 = '2';
-char constexpr inline i3 = '3';
-char constexpr inline i4 = '4';
-char constexpr inline i5 = '5';
-char constexpr inline i6 = '6';
-char constexpr inline i7 = '7';
-char constexpr inline i8 = '8';
-char constexpr inline i9 = '9';
+import Std;
 
 char constexpr inline A = 'A';
 char constexpr inline B = 'B';
@@ -71,162 +62,161 @@ char constexpr inline x = 'x';
 char constexpr inline y = 'y';
 char constexpr inline z = 'z';
 
-export namespace
-	ATR
+template
+	<	char
+			t_nCharacter
+	>
+auto constexpr
+(	FromChar
+)	(
+	)
+->	decltype(auto)
 {
-	auto constexpr
-	(	Char
-	)	(	char
-				i_ncharacter
-		)
-	->	char const&
-	{
-		switch(i_ncharacter)
+	if	constexpr(t_nCharacter >= '0' and t_nCharacter <= '9')
+		return t_nCharacter - '0';
+	else
+		switch(t_nCharacter)
 		{
-			//	Digits
-			case '0':
-				return ::i0;
-			case '1':
-				return ::i1;
-			case '2':
-				return ::i2;
-			case '3':
-				return ::i3;
-			case '4':
-				return ::i4;
-			case '5':
-				return ::i5;
-			case '6':
-				return ::i6;
-			case '7':
-				return ::i7;
-			case '8':
-				return ::i8;
-			case '9':
-				return ::i9;
-
 			//	Upper Case
 			case 'A':
-				return ::A;
+				return (::A);
 			case 'B':
-				return ::B;
+				return (::B);
 			case 'C':
-				return ::C;
+				return (::C);
 			case 'D':
-				return ::D;
+				return (::D);
 			case 'E':
-				return ::E;
+				return (::E);
 			case 'F':
-				return ::F;
+				return (::F);
 			case 'G':
-				return ::G;
+				return (::G);
 			case 'H':
-				return ::H;
+				return (::H);
 			case 'I':
-				return ::I;
+				return (::I);
 			case 'J':
-				return ::J;
+				return (::J);
 			case 'K':
-				return ::K;
+				return (::K);
 			case 'L':
-				return ::L;
+				return (::L);
 			case 'M':
-				return ::M;
+				return (::M);
 			case 'N':
-				return ::N;
+				return (::N);
 			case 'O':
-				return ::O;
+				return (::O);
 			case 'P':
-				return ::P;
+				return (::P);
 			case 'Q':
-				return ::Q;
+				return (::Q);
 			case 'R':
-				return ::R;
+				return (::R);
 			case 'S':
-				return ::S;
+				return (::S);
 			case 'T':
-				return ::T;
+				return (::T);
 			case 'U':
-				return ::U;
+				return (::U);
 			case 'V':
-				return ::V;
+				return (::V);
 			case 'W':
-				return ::W;
+				return (::W);
 			case 'X':
-				return ::X;
+				return (::X);
 			case 'Y':
-				return ::Y;
+				return (::Y);
 			case 'Z':
-				return ::Z;
+				return (::Z);
 
 			//	Underscore
 			case '_':
-				return ::_;
+				return (::_);
 
 			//	Lower Case
 			case 'a':
-				return ::a;
+				return (::a);
 			case 'b':
-				return ::b;
+				return (::b);
 			case 'c':
-				return ::c;
+				return (::c);
 			case 'd':
-				return ::d;
+				return (::d);
 			case 'e':
-				return ::e;
+				return (::e);
 			case 'f':
-				return ::f;
+				return (::f);
 			case 'g':
-				return ::g;
+				return (::g);
 			case 'h':
-				return ::h;
+				return (::h);
 			case 'i':
-				return ::i;
+				return (::i);
 			case 'j':
-				return ::j;
+				return (::j);
 			case 'k':
-				return ::k;
+				return (::k);
 			case 'l':
-				return ::l;
+				return (::l);
 			case 'm':
-				return ::m;
+				return (::m);
 			case 'n':
-				return ::n;
+				return (::n);
 			case 'o':
-				return ::o;
+				return (::o);
 			case 'p':
-				return ::p;
+				return (::p);
 			case 'q':
-				return ::q;
+				return (::q);
 			case 'r':
-				return ::r;
+				return (::r);
 			case 's':
-				return ::s;
+				return (::s);
 			case 't':
-				return ::t;
+				return (::t);
 			case 'u':
-				return ::u;
+				return (::u);
 			case 'v':
-				return ::v;
+				return (::v);
 			case 'w':
-				return ::w;
+				return (::w);
 			case 'x':
-				return ::x;
+				return (::x);
 			case 'y':
-				return ::y;
+				return (::y);
 			case 'z':
-				return ::z;
+				return (::z);
 
 			default:
 				throw "Invalid character in identitfier!";
 		}
-	}
+}
 
+auto constexpr
+(	ToChar
+)	(	int
+			i_nChar
+	)
+->	char
+{	return static_cast<char>(i_nChar + '0');	}
+
+auto constexpr
+(	ToChar
+)	(	char const
+		&	i_rChar
+	)
+->	char
+{	return i_rChar;	}
+
+export namespace
+	ATR
+{
 	/// serves as a base class for all identifer types
 	/// provides conversions to arrays as well as begin and end functions
 	template
-		<	char const
-			&
+		<	decltype(auto)
 			...	t_rpString
 		>
 	struct
@@ -242,7 +232,7 @@ export namespace
 			[	Length
 			+	1uz
 			]
-		{	t_rpString
+		{	::ToChar(t_rpString)
 			...
 		,	'\0'
 		};
@@ -262,19 +252,8 @@ export namespace
 		(	operator decltype(auto)
 		)	()	const
 			noexcept
-		{	return StringView;	}
+		{	return (StringView);	}
 	};
-
-	template
-		<	char const
-			&
-			...	t_rpString
-		>
-	(	ID
-	)	(	ID<t_rpString...>
-		)
-	->	ID<t_rpString...>
-	;
 
 	template
 		<	typename
@@ -284,7 +263,11 @@ export namespace
 		ProtoID
 	=	requires(t_tID c_vID)
 		{
-			::ATR::ID{c_vID};
+			{ &t_tID::Length } -> std::same_as<Meta::USize const*>;
+			{ &t_tID::RawArray } -> std::same_as<char const(*)[t_tID::Length + 1uz]>;
+			{ &t_tID::StringView } -> std::same_as<StringView const*>;
+			{ &t_tID::String } -> std::same_as<StringLiteral<t_tID::Length> const*>;
+			{ &t_tID::operator decltype(auto) } -> std::same_as<auto (t_tID::*)() const noexcept -> StringView const&>;
 		}
 	;
 }
@@ -297,6 +280,13 @@ namespace
 	template
 		<	StringLiteral
 				t_vStringLiteral
+		,	template
+				<	decltype(auto)
+				...
+				>
+			typename
+				t_t1ID
+			=	::ATR::ID
 		>
 	auto constexpr
 	(	Make
@@ -311,12 +301,12 @@ namespace
 				>
 			)
 		{	return
-			ID
-			<	Char
-				(	t_vStringLiteral
+			t_t1ID
+			<	::FromChar
+				<	t_vStringLiteral
 					[	t_npIndex
 					]
-				)
+				>()
 				...
 			>{};
 		}(	Meta::Sequence<t_vStringLiteral.size()>
@@ -331,12 +321,20 @@ export namespace
 	template
 		<	StringLiteral
 				t_vStringLiteral
+		,	template
+				<	decltype(auto)
+					...
+				>
+			typename
+				t_t1ID
+			=	::ATR::ID
 		>
 	using
 		ID_T
 	=	decltype
 		(	Make
 			<	t_vStringLiteral
+			,	t_t1ID
 			>()
 		)
 	;
@@ -344,6 +342,13 @@ export namespace
 	template
 		<	StringView
 				t_vString
+		,	template
+				<	decltype(auto)
+				...
+				>
+			typename
+				t_t1ID
+			=	::ATR::ID
 		>
 	using
 		ID_Of
@@ -351,6 +356,7 @@ export namespace
 		<	StringLiteral<t_vString.size()>
 			{	t_vString.data()
 			}
+		,	t_t1ID
 		>
 	;
 
@@ -358,8 +364,15 @@ export namespace
 	template
 		<	StringLiteral
 				t_vStringLiteral
+		,	template
+				<	decltype(auto)
+				...
+				>
+			typename
+				t_t1ID
+			=	::ATR::ID
 		>
-	ID_T<t_vStringLiteral> extern
+	ID_T<t_vStringLiteral, t_t1ID> extern
 		ID_V
 	;
 

@@ -11,31 +11,11 @@ using ::Meta::RestoreTypeEntity;
 export template
 	<	typename
 			t_tTarget
-	,	char const
-		&
-		...	t_rpAlias
+	,	::ATR::ProtoID
 	>
 struct
 	Alias
 {};
-
-template
-	<	typename
-			t_tTarget
-	,	char const
-		&
-		...	t_rpAlias
-	>
-auto constexpr
-(	MakeAlias
-)	(	ID<t_rpAlias...>
-	)
-->	Alias
-	<	t_tTarget
-	,	t_rpAlias
-		...
-	>
-;
 
 template
 	<	MemberInfo
@@ -43,14 +23,12 @@ template
 	>
 using
 	DeduceAlias
-=	decltype
-	(	MakeAlias
-		<	RestoreTypeEntity
-			<	t_vMember.Type
-			>
-		>(	ID_Of
-			<	t_vMember.Name
-			>{}
-		)
-	)
+=	Alias
+	<	RestoreTypeEntity
+		<	t_vMember.Type
+		>
+	,	ID_Of
+		<	t_vMember.Name
+		>
+	>
 ;
