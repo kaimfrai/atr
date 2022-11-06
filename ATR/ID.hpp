@@ -210,50 +210,59 @@ auto constexpr
 ->	char
 {	return i_rChar;	}
 
+/// serves as a base class for all identifer types
+/// provides conversions to arrays as well as begin and end functions
+template
+	<	decltype(auto)
+		...	t_vpString
+	>
+struct
+	ID final
+{
+	static ::Meta::USize constexpr
+		Length
+	=	sizeof...(t_vpString)
+	;
+
+	static char constexpr
+		RawArray
+		[	Length
+		+	1uz
+		]
+	{	::ToChar(t_vpString)
+		...
+	,	'\0'
+	};
+
+	static ::ATR::StringView constexpr
+		StringView
+	{	RawArray
+	,	Length
+	};
+
+	static ::ATR::StringLiteral<Length> constexpr
+		String
+	{	RawArray
+	};
+
+	[[nodiscard]] constexpr
+	(	operator decltype(auto)
+	)	()	const
+		noexcept
+	{	return (StringView);	}
+};
+
 export namespace
 	ATR
 {
-	/// serves as a base class for all identifer types
-	/// provides conversions to arrays as well as begin and end functions
 	template
 		<	decltype(auto)
-			...	t_rpString
+			...	t_vpString
 		>
-	struct
-		ID final
-	{
-		static Meta::USize constexpr
-			Length
-		=	sizeof...(t_rpString)
-		;
-
-		static char constexpr
-			RawArray
-			[	Length
-			+	1uz
-			]
-		{	::ToChar(t_rpString)
-			...
-		,	'\0'
-		};
-
-		static StringView constexpr
-			StringView
-		{	RawArray
-		,	Length
-		};
-
-		static StringLiteral<Length> constexpr
-			String
-		{	RawArray
-		};
-
-		constexpr
-		(	operator decltype(auto)
-		)	()	const
-			noexcept
-		{	return (StringView);	}
-	};
+	using
+		ID
+	=	::ID<t_vpString...>
+	;
 
 	template
 		<	typename
@@ -286,31 +295,26 @@ namespace
 				>
 			typename
 				t_t1ID
-			=	::ATR::ID
+		,	Meta::USize
+			...	t_npIndex
 		>
 	auto constexpr
 	(	Make
-	)	()
-	->	decltype(auto)
-	{	return
-		[]	<	Meta::USize
-				...	t_npIndex
-			>(	Meta::IndexToken
+	)	(	Meta::IndexToken
 				<	t_npIndex
 					...
 				>
-			)
-		{	return
-			t_t1ID
-			<	::FromChar
-				<	t_vStringLiteral
-					[	t_npIndex
-					]
-				>()
-				...
-			>{};
-		}(	Meta::Sequence<t_vStringLiteral.size()>
-		);
+		)
+	->	decltype(auto)
+	{	return
+		t_t1ID
+		<	::FromChar
+			<	t_vStringLiteral
+				[	t_npIndex
+				]
+			>()
+			...
+		>{};
 	}
 }
 
@@ -335,7 +339,8 @@ export namespace
 		(	Make
 			<	t_vStringLiteral
 			,	t_t1ID
-			>()
+			>(	Meta::Sequence<t_vStringLiteral.size()>
+			)
 		)
 	;
 

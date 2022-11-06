@@ -9,24 +9,24 @@ export namespace
 {
 	template
 		<	decltype(auto)
-			...	t_rpName
+			...	t_vpName
 		>
 	struct
 		Instance
 	:	CreateLayoutType
-		<	ID<t_rpName...>
+		<	ID<t_vpName...>
 		>
 	{
 		static auto constexpr
 		&	TypeName
-		=	ID<t_rpName...>
+		=	ID<t_vpName...>
 		::	RawArray
 		;
 
 		using
 			LayoutType
 		=	CreateLayoutType
-			<	ID<t_rpName...>
+			<	ID<t_vpName...>
 			>
 		;
 

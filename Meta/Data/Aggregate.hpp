@@ -1320,6 +1320,32 @@ export namespace
 		>
 	[[nodiscard]]
 	auto constexpr
+	(	data
+	)	(	Aggregate<t_tData>
+			&	i_rArray
+		)
+	->	decltype(::std::data(i_rArray.get()))
+	{	return ::std::data(i_rArray.get());	}
+
+	template
+		<	typename
+				t_tData
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	data
+	)	(	Aggregate<t_tData> const
+			&	i_rArray
+		)
+	->	decltype(::std::data(i_rArray.get()))
+	{	return ::std::data(i_rArray.get());	}
+
+	template
+		<	typename
+				t_tData
+		>
+	[[nodiscard]]
+	auto constexpr
 	(	begin
 	)	(	Aggregate<t_tData>
 			&	i_rArray

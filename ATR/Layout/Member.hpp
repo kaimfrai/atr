@@ -9,7 +9,6 @@ import Meta.Token;
 
 using ::ATR::MemberInfo;
 using ::ATR::MemberSortKey;
-using ::ATR::ID;
 using ::ATR::ID_Of;
 
 using ::Meta::RestoreTypeEntity;

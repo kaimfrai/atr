@@ -3,7 +3,6 @@ export module ATR:Layout.Alias;
 import :DataMember;
 import :ID;
 
-using ::ATR::ID;
 using ::ATR::ID_Of;
 using ::ATR::MemberInfo;
 using ::Meta::RestoreTypeEntity;

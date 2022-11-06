@@ -21,6 +21,15 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr
+		(	operator[]
+		)	(	Meta::USize
+					t_nIndex
+			)	const
+		->	char const&
+		{	return Data[t_nIndex];	}
+
+		[[nodiscard]]
+		auto constexpr
 		(	empty
 		)	()	const
 			noexcept
