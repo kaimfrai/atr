@@ -67,13 +67,13 @@ export namespace
 	struct
 		MemberList final
 	:	Meta::ArrayAggregate
-		<	Meta::Aggregate<MemberInfo const&>
+		<	MemberInfo
 		,	t_nMemberCount
 		>
 	{
 		auto constexpr
 		(	operator()
-		)	(	::std::initializer_list<Meta::Value<MemberInfo const&>>
+		)	(	::std::initializer_list<MemberInfo const>
 					i_vExchangeList
 			)	const
 		->	MemberList
@@ -83,7 +83,7 @@ export namespace
 			=	*this
 			;
 
-			for	(	Meta::Value<MemberInfo const&> const
+			for	(	MemberInfo const
 					&	rExchange
 				:	i_vExchangeList
 				)
@@ -93,11 +93,11 @@ export namespace
 				=	::std::find_if
 					(	begin(vCopy)
 					,	end(vCopy)
-					,	[	vName = rExchange.get().Name
-						]	(	Meta::Aggregate<MemberInfo const&>
-									i_vInfo
+					,	[	vName = rExchange.Name
+						]	(	MemberInfo const
+								&	i_rInfo
 							)
-						{	return i_vInfo.get().Name == vName;	}
+						{	return i_rInfo.Name == vName;	}
 					)
 				;
 				if	(vExchangePosition == end(vCopy))
@@ -113,8 +113,8 @@ export namespace
 
 		auto constexpr
 		(	operator()
-		)	(	Meta::Value<MemberInfo const&>
-					i_rExchange
+		)	(	MemberInfo const
+				&	i_rExchange
 			)	const
 		->	MemberList
 		{	return operator()({i_rExchange});	}
@@ -306,7 +306,7 @@ export namespace
 		>
 	MemberList<1uz> constexpr inline
 		Member
-	{	&MemberInstance
+	{	MemberInstance
 		<	ID_T<t_vName>
 		,	Meta::Type<t_tValue>
 		,	MemberSortKey<t_tValue>
@@ -381,7 +381,7 @@ export namespace
 
 		auto constexpr
 		(	operator()
-		)	(	::std::initializer_list<Meta::Value<MemberInfo const&>>
+		)	(	::std::initializer_list<MemberInfo const>
 					i_vExchangeList
 			)	const
 		->	decltype(t_vList)
@@ -389,8 +389,8 @@ export namespace
 
 		auto constexpr
 		(	operator()
-		)	(	Meta::Value<MemberInfo const&>
-					i_rExchange
+		)	(	MemberInfo const
+				&	i_rExchange
 			)
 		->	decltype(t_vList)
 		{	return t_vList(i_rExchange);	}
@@ -425,12 +425,12 @@ export namespace
 			{
 				decltype(t_vList)
 					vList
-				{	&MemberInstance
-					<	ID_Of<t_vList[t_npIndex].get().Name>
-					,	(	Meta::RestoreTypeToken<t_vList[t_npIndex].get().Type>
+				{	MemberInstance
+					<	ID_Of<t_vList[t_npIndex].Name>
+					,	(	Meta::RestoreTypeToken<t_vList[t_npIndex].Type>
 						+	decltype(i_fTransform){}
 						)
-					,	t_vList[t_npIndex].get().SortKey
+					,	t_vList[t_npIndex].SortKey
 					>
 					...
 				};

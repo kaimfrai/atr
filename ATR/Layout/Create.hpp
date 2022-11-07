@@ -31,9 +31,9 @@ using ::Meta::USize;
 [[nodiscard]]
 auto constexpr
 (	AliasCount
-)	(	Aggregate<MemberInfo const&> const
+)	(	MemberInfo const
 		*	i_aBegin
-	,	Aggregate<MemberInfo const&> const
+	,	MemberInfo const
 		*	i_aEnd
 	)
 ->	USize
@@ -55,9 +55,9 @@ auto constexpr
 [[nodiscard]]
 auto constexpr
 (	StaticCount
-)	(	Aggregate<MemberInfo const&> const
+)	(	MemberInfo const
 		*	i_aBegin
-	,	Aggregate<MemberInfo const&> const
+	,	MemberInfo const
 		*	i_aEnd
 	)
 ->	USize
