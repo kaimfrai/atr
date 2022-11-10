@@ -59,6 +59,14 @@ namespace
 			)
 		;
 
+		[[nodiscard]]
+		auto constexpr
+		(	Evaluate
+		)	(	FieldType
+			)	const
+		->	BitClause
+		;
+
 		auto constexpr
 		(	LiteralField
 		)	()	const
@@ -243,6 +251,25 @@ namespace
 		{	Absorbing().Negative
 		}
 	{}
+
+	[[nodiscard]]
+	auto constexpr
+	(	BitClause
+	::	Evaluate
+	)	(	FieldType
+				i_vPreset
+		)	const
+	->	BitClause
+	{
+		BitClause
+			vCopy
+		=	*this
+		;
+		vCopy.Positive &= compl i_vPreset;
+		vCopy.Negative &= i_vPreset;
+
+		return vCopy;
+	}
 
 	auto constexpr
 	(	BitClause

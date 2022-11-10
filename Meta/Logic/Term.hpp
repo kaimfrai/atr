@@ -14,135 +14,37 @@ using ::Meta::Arithmetic::CountLowerZeroBits;
 namespace
 	Meta
 {
-	template
-		<	Logic::BitClause
-				t_vLiteral
-		,	typename
-			...	t_tpLiteral
-		,	typename
-			...	t_tpArgument
-		>
 	auto constexpr
-	(	EvaluateLiteral
-	)	(	t_tpArgument
-			&&
-			...	i_rpArgument
+	(	EvaluateTerm
+	)	(	Logic::BitTerm const
+			&	i_rTerm
+		,	std::span<bool const>
+				i_vPreset
 		)
 	->	bool
 	{
-		if	constexpr(t_vLiteral.Positive)
-		{
-			auto constexpr nIndex = CountLowerZeroBits(t_vLiteral.Positive);
-
-			using
-				Literal
-			=	decltype(auto(
-					*SelectByIndex
-					{	Sequence<nIndex>
-					}(	static_cast<t_tpLiteral*>(nullptr)
-						...
-					)
-				))
-			;
-
-			return
-			Literal{}
-			(	::std::forward<t_tpArgument>(i_rpArgument)
-				...
-			);
-		}
-		else
-		{
-			auto constexpr nIndex = CountLowerZeroBits(t_vLiteral.Negative);
-			using
-				Literal
-			=	decltype(auto(
-					*SelectByIndex
-					{	Sequence<nIndex>
-					}(	static_cast<t_tpLiteral*>(nullptr)
-						...
-					)
-				))
-			;
-			return
-			not
-			Literal{}
-			(	::std::forward<t_tpArgument>(i_rpArgument)
-				...
-			);
-		}
-	}
-
-	template
-		<	Logic::BitClause
-				t_vClause
-		,	typename
-			...	t_tpLiteral
-		,	USize
-			...	t_npLiteralIndex
-		,	typename
-			...	t_tpArgument
-		>
-	auto constexpr
-	(	EvaluateClause
-	)	(	IndexToken<t_npLiteralIndex...>
-		,	t_tpArgument
-			&&
-			...	i_rpArgument
-		)
-	->	bool
-	{	return
-		(	...
-		and	EvaluateLiteral
-			<	t_vClause[t_npLiteralIndex]
-			,	t_tpLiteral
-				...
-			>
-			(	::std::forward
-				<	t_tpArgument
-				>(	i_rpArgument
-				)
-				...
+		Logic::BitClause::FieldType
+			nPresetMask
+		{	0uz
+		};
+		for	(	Logic::BitClause::FieldType
+					nShift
+				=	0uz
+			;	bool
+					bPreset
+			:	i_vPreset
 			)
-		);
-	}
-
-	template
-		<	Logic::BitTerm
-				t_vTerm
-		,	typename
-			...	t_tpLiteral
-		,	USize
-			...	t_npClauseIndex
-		,	typename
-			...	t_tpArgument
-		>
-	auto constexpr
-	(	EvaluateTerm
-	)	(	IndexToken<t_npClauseIndex...>
-		,	t_tpArgument
-			&&
-			...	i_rpArgument
-		)
-	->	bool
-	{	return
-		(	...
-		or	EvaluateClause
-			<	t_vTerm[t_npClauseIndex]
-			,	t_tpLiteral
-				...
-			>
-			(	Sequence
-				<	t_vTerm[t_npClauseIndex]
-				.	LiteralCount()
-				>
-			,	::std::forward
-				<	t_tpArgument
-				>(	i_rpArgument
-				)
-				...
+		{
+			nPresetMask |= bPreset << nShift;
+			++nShift;
+		}
+		return
+			i_rTerm
+		.	Evaluate
+			(	nPresetMask
+			,	true
 			)
-		);
+		;
 	}
 
 	template
@@ -527,17 +429,14 @@ export namespace
 		->	bool
 		{	return
 			EvaluateTerm
-			<	t_vTerm
-			,	t_tpLiteral
-				...
-			>(	Sequence
-				<	ClauseCount
-				>
-			,	::std::forward
-				<	t_tpArgument
-				>(	i_rpArgument
-				)
-				...
+			(	t_vTerm
+			,	std::array
+				{	t_tpLiteral{}
+					(	std::forward<t_tpArgument>(i_rpArgument)
+						...
+					)
+					...
+				}
 			);
 		}
 	};

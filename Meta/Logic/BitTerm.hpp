@@ -71,6 +71,23 @@ namespace
 		;
 
 		auto constexpr
+		(	Evaluate
+		)	(	Logic::BitClause::FieldType
+					i_vPreset
+			,	bool
+					i_bIdentity
+			)	const
+		->	bool
+		{
+			for	(auto vClause : *this)
+			{
+				if	(vClause.Evaluate(i_vPreset).IsAbsorbing())
+					return i_bIdentity;
+			}
+			return not i_bIdentity;
+		}
+
+		auto constexpr
 		(	LiteralField
 		)	()	const
 		->	USize
