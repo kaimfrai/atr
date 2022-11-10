@@ -23,10 +23,8 @@ add_module(
 	Layout/Create.hpp
 	Layout/Data.hpp
 	Layout/Layout.hpp
-	Layout/LayoutFwd.hpp
 	Layout/Member.hpp
 	Layout/MemberOffset.hpp
-	Layout/Split.hpp
 	Layout/Static.hpp
 	Layout/Type.hpp
 	Layout/ValidateOffsets.hpp

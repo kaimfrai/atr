@@ -2,11 +2,11 @@ export module ATR:Layout.Layout;
 
 import :ID;
 import :Layout.Alias;
+import :Layout.Bit.MakeLayout;
 import :Layout.Bit.MemberOffset;
 import :Layout.Concept;
 import :Layout.Member;
 import :Layout.MemberOffset;
-import :Layout.Split;
 import :Layout.ValidateOffsets;
 
 import Meta.Arithmetic;
@@ -26,18 +26,153 @@ export namespace
 {
 	template
 		<	typename
+			...
+		>
+	struct
+		Layout
+	;
+}
+
+template
+	<	typename
+		...	t_tpMember
+	>
+auto constexpr
+(	MakeLayout
+)	()
+->	decltype(auto)
+{
+	if	constexpr
+		((	...
+		and	(	1uz
+			==	t_tpMember
+			::	BitAlign
+			)
+		))
+		return
+		MakeBitLayout
+		<	t_tpMember
+			...
+		>();
+	else
+		return
+		::ATR::Layout
+		<	t_tpMember
+			...
+		>{};
+}
+
+template
+	<	Meta::EraseTypeToken const
+		*	t_aTypes
+	,	USize
+		...	t_npIndex
+	>
+auto constexpr
+(	SplitLayoutType
+)	(	Meta::IndexToken<t_npIndex...>
+	)
+{
+	return
+	::MakeLayout
+	<	::Meta::RestoreTypeEntity
+		<	t_aTypes[t_npIndex]
+		>
+		...
+	>()
+	;
+};
+
+[[nodiscard]]
+auto constexpr
+(	LayoutSplitIndex
+)	(	::std::initializer_list
+		<	USize
+		>	i_vAlignList
+	)
+->	USize
+{
+	auto const
+		aFirst
+	=	begin(i_vAlignList)
+	;
+	auto const
+		aLast
+	=	end(i_vAlignList)
+	-	1uz
+	;
+	if	(	*aFirst
+		==	*aLast
+		)
+		return
+		::std::bit_floor<Meta::USize>
+		(	i_vAlignList.size()
+		-	1uz
+		);
+	else
+	{	auto const
+			aSplitPoint
+		=	::std::upper_bound
+			(	aFirst
+			,	aLast + 1z
+			,	*aFirst
+			)
+		;
+		return
+		static_cast<Meta::USize>
+		(	aSplitPoint
+		-	aFirst
+		);
+	}
+}
+
+export namespace
+	ATR
+{
+	template
+		<	typename
 			...	t_tpMember
 		>
 	struct
 		Layout
 	{
-		using NorthType = ::SplitLayoutNorth<t_tpMember...>;
+		static USize constexpr
+			SplitIndex
+		=	LayoutSplitIndex
+			({	t_tpMember::SortKey
+				...
+			})
+		;
+
+		static Meta::EraseTypeToken constexpr
+			MemberTypes
+		[]{	Meta::Type<t_tpMember>
+			...
+		};
+
+
+		using
+			NorthType
+		=	decltype
+			(	SplitLayoutType<+MemberTypes>
+				(	Meta::Sequence<SplitIndex>
+				)
+			)
+		;
 
 		NorthType
 			NorthArea
 		;
 
-		using SouthType = ::SplitLayoutSouth<t_tpMember...>;
+		using
+			SouthType
+		=	decltype
+			(	SplitLayoutType<+MemberTypes>
+				(	Meta::Sequence<sizeof...(t_tpMember) - SplitIndex>
+				+=	Meta::Index<SplitIndex>
+				)
+			)
+		;
 
 		SouthType
 			SouthArea

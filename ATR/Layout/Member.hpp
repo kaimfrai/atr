@@ -2,7 +2,6 @@ export module ATR:Layout.Member;
 
 import :DataMember;
 import :ID;
-import :Layout.LayoutFwd;
 
 import Meta.Arithmetic;
 import Meta.Token;

@@ -3,9 +3,8 @@ export module ATR:Layout.Create;
 import :DataMember;
 import :Layout.AliasLayout;
 import :Layout.Data;
-import :Layout.LayoutFwd;
+import :Layout.Layout;
 import :Layout.Member;
-import :Layout.Split;
 import :Layout.Static;
 
 import Meta.Arithmetic;
