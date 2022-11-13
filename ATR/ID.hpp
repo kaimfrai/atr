@@ -256,15 +256,6 @@ export namespace
 	ATR
 {
 	template
-		<	decltype(auto)
-			...	t_vpString
-		>
-	using
-		ID
-	=	::ID<t_vpString...>
-	;
-
-	template
 		<	typename
 				t_tID
 		>
@@ -331,7 +322,7 @@ export namespace
 				>
 			typename
 				t_t1ID
-			=	::ATR::ID
+			=	::ID
 		>
 	using
 		ID_T
@@ -353,7 +344,7 @@ export namespace
 				>
 			typename
 				t_t1ID
-			=	::ATR::ID
+			=	::ID
 		>
 	using
 		ID_Of
@@ -375,7 +366,7 @@ export namespace
 				>
 			typename
 				t_t1ID
-			=	::ATR::ID
+			=	::ID
 		>
 	ID_T<t_vStringLiteral, t_t1ID> extern
 		ID_V
