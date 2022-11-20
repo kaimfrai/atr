@@ -7,6 +7,7 @@ function(add_logic_test
 	add_module_object_library("Test.Meta.Logic.${test_name}" "${test_name}.cpp")
 endfunction()
 
+
 add_logic_test(static_assert)
 
 add_logic_test(Equivalence)
@@ -36,5 +37,5 @@ add_logic_test(Clause_and_Literal)
 add_logic_test(Clause_or_Literal)
 add_logic_test(Clause_and_Clause)
 add_logic_test(Clause_or_Clause)
-add_logic_test(Clause_and_Term)
+add_subdirectory(Clause_and_Term)
 add_logic_test(Clause_or_Term)
