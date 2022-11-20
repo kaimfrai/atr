@@ -1,7 +1,3 @@
-module;
-
-#include <new>
-
 module Test.CMake.CrossFwdDecl;
 
 namespace
