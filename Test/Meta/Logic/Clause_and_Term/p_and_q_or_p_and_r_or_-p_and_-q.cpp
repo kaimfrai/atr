@@ -132,4 +132,3 @@ static_assert
 	)
 ==	(!p	and	!q	and	!r)
 );
-
