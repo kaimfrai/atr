@@ -1,5 +1,3 @@
-
-
 function(read_module_properties
 	file_name
 )
@@ -8,8 +6,9 @@ function(read_module_properties
 	set(regex_file "[a-zA-Z0-9_./\:]+")
 	set(regex_header "(<${regex_file}>|\"${regex_file}\")")
 	set(regex_name "${regex_id}(:${regex_id})?")
-	set(regex_module "(^|[\n\r])(export${regex_whitespace})?module${regex_whitespace}")
-	set(regex_import "(^|[\n\r])(export${regex_whitespace})?import${regex_whitespace}")
+	set(regex_new_line "(^|[\n\r])")
+	set(regex_module "${regex_new_line}(export${regex_whitespace})?module${regex_whitespace}")
+	set(regex_import "${regex_new_line}(export${regex_whitespace})?import${regex_whitespace}")
 
 	get_source_file_property(
 		file_path
@@ -53,12 +52,12 @@ function(read_module_properties
 			string(REGEX REPLACE "${regex_id}:" "" module_partition "${module_name}")
 			string(REGEX REPLACE ":${regex_id}" "" module_name "${module_name}")
 
-			if	(${module_declaration} MATCHES "^export")
+			if	(${module_declaration} MATCHES "${regex_new_line}export")
 				set(module_type "INTERFACE_PARTITION")
 			else()
 				set(module_type "IMPLEMENTATION_PARTITION")
 			endif()
-		elseif(${module_declaration} MATCHES "^export")
+		elseif(${module_declaration} MATCHES "${regex_new_line}export")
 			set(module_type "PRIMARY_INTERFACE")
 		else()
 			set(module_type "IMPLEMENTATION")
