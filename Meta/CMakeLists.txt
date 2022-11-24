@@ -4,5 +4,6 @@ add_subdirectory(Lex)
 add_subdirectory(Data)
 add_subdirectory(Logic)
 add_subdirectory(Predicate)
+add_subdirectory(ID)
 
 add_module(Meta.hpp)

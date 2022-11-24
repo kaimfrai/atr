@@ -86,7 +86,7 @@ export namespace
 }
 
 export namespace
-	Meta::Literals
+	Meta::inline Literals
 {
 	template
 		<	char

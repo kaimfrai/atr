@@ -1,7 +1,6 @@
 export module ATR:Layout;
 
 export import :DataMember;
-export import :ID;
 export import :Layout.AliasLayout;
 export import :Layout.Bit.Access;
 export import :Layout.Bit.Array;
@@ -18,3 +17,5 @@ export import :Layout.Layout;
 export import :Layout.MemberOffset;
 export import :Layout.Static;
 export import :Layout.Type;
+
+export import Meta.ID;

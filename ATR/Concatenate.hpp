@@ -1,56 +1,12 @@
 export module ATR:Concatenate;
 
-export import :ID;
-export import :StringLiteral;
 export import :DataMember;
+
+export import Meta.ID;
 
 namespace
 	ATR
 {
-	template
-		<	Meta::USize
-				t_nSize
-		>
-	auto constexpr
-	(	InfixID
-	)	(	StringView
-				i_vPrefix
-		,	StringView
-				i_vInfix
-		,	StringView
-				i_vSuffix
-		)
-	->	StringLiteral<t_nSize>
-	{
-		StringLiteral<t_nSize>
-			vResult
-		;
-
-		auto vPos
-		=	::std::copy
-			(	begin(i_vPrefix)
-			,	end(i_vPrefix)
-			,	begin(vResult)
-			)
-		;
-		(	vPos
-		=	::std::copy
-			(	begin(i_vInfix)
-			,	end(i_vInfix)
-			,	vPos
-			)
-		);
-		::std::copy
-		(	begin(i_vSuffix)
-		,	end(i_vSuffix)
-		,	vPos
-		);
-
-		return
-			vResult
-		;
-	}
-
 	template
 		<	typename
 				t_tPrefix
@@ -66,14 +22,16 @@ namespace
 	{
 		using
 			tNewID
-		=	ID_T
-			<	InfixID
+		=	Meta::ID_T
+			<	Meta::Concatenate
 				<	t_tPrefix::Length
 				+	t_vInfix.Name.Size
 				+	t_tSuffix::Length
-				>(	t_tPrefix::StringView
-				,	t_vInfix.Name
-				,	t_tSuffix::StringView
+				>(	std::array
+					{	t_tPrefix::StringView
+					,	t_vInfix.Name
+					,	t_tSuffix::StringView
+					}
 				)
 			>
 		;
@@ -90,14 +48,16 @@ namespace
 			;
 			using
 				tAliasTarget
-			=	ID_T
-				<	InfixID
+			=	Meta::ID_T
+				<	Meta::Concatenate
 					<	t_tPrefix::Length
 					+	tInfixAliasTarget::Length
 					+	t_tSuffix::Length
-					>(	t_tPrefix::StringView
-					,	tInfixAliasTarget::StringView
-					,	t_tSuffix::StringView
+					>(	std::array
+						{	t_tPrefix::StringView
+						,	tInfixAliasTarget::StringView
+						,	t_tSuffix::StringView
+						}
 					)
 				>
 			;
@@ -152,35 +112,35 @@ export namespace
 {
 	/// uses the LayoutConfig mapped to the given literal and prefixes it with that literal
 	template
-		<	StringLiteral
+		<	Meta::StringLiteral
 				i_vType
-		,	StringLiteral
+		,	Meta::StringLiteral
 				i_vPrefix
 			=	i_vType
 		>
 	MemberList constexpr inline
 		PrefixedLayoutConfig
 	=	::ATR::InfixLayoutConfig
-		<	ID_T<i_vPrefix>
+		<	Meta::ID_T<i_vPrefix>
 		,	LayoutConfig<i_vType>
-		,	ID<>
+		,	Meta::ID_T<"">
 		>
 	;
 
 	/// uses the LayoutConfig mapped to the given literal and suffixes it with that literal
 	template
-		<	StringLiteral
+		<	Meta::StringLiteral
 				i_vType
-		,	StringLiteral
+		,	Meta::StringLiteral
 				i_vSuffix
 			=	i_vType
 		>
 	MemberList constexpr inline
 		SuffixedLayoutConfig
 	=	::ATR::InfixLayoutConfig
-		<	ID<>
+		<	Meta::ID_T<"">
 		,	LayoutConfig<i_vType>
-		,	ID_T<i_vSuffix>
+		,	Meta::ID_T<i_vSuffix>
 		>
 	;
 }

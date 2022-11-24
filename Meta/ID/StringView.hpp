@@ -1,12 +1,11 @@
-export module ATR:StringLiteral;
+export module Meta.ID:StringView;
 
-export import Meta.Data;
 export import Meta.Arithmetic;
 
 import Std;
 
 export namespace
-	ATR
+	Meta
 {
 	struct
 		StringView final
@@ -72,50 +71,6 @@ export namespace
 		->	char const*
 		{	return i_vView.Data + i_vView.Size;	}
 	};
-
-	template
-		<	Meta::USize
-				t_nExtent
-		>
-	struct
-		StringLiteral final
-	:	Meta::ArrayValue
-		<	char
-		,	t_nExtent
-		>
-	{
-		constexpr
-		(	StringLiteral
-		)	()
-		=	default;
-
-		constexpr
-		(	StringLiteral
-		)	(	char const
-				*	i_aString
-			)
-		:	Meta::ArrayValue
-			<	char
-			,	t_nExtent
-			>{	i_aString
-			}
-		{}
-	};
-
-	template
-		<	Meta::USize
-				t_nExtent
-		>
-	(	StringLiteral
-	)	(	char const
-			(&)	[	t_nExtent
-				]
-		)
-	->	StringLiteral
-		<	t_nExtent
-		-	1uz
-		>
-	;
 
 	///	Namespace scope allows making use of implicit conversions.
 	///	This allows for template argument erasure.

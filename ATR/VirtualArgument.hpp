@@ -1,8 +1,8 @@
 export module ATR:VirtualArgument;
 
 export import :Address;
-export import :ID;
 
+export import Meta.ID;
 export import Meta.Token;
 export import Meta.Predicate;
 
@@ -12,7 +12,7 @@ export namespace
 	ATR
 {
 	template
-		<	ProtoID
+		<	Meta::ProtoID
 				t_tFuncID
 		,	typename
 				t_tSignature
@@ -22,7 +22,7 @@ export namespace
 	;
 
 	template
-		<	ProtoID
+		<	Meta::ProtoID
 				t_tFuncID
 		,	typename
 				t_tReturn
@@ -107,7 +107,7 @@ export namespace
 	};
 
 	template
-		<	ProtoID
+		<	Meta::ProtoID
 				t_tFuncID
 		,	typename
 				t_tReturn
@@ -196,7 +196,7 @@ export namespace
 
 	/// helper alias. builds a function ID type and extracts raw signature and noexcept qualifier
 	template
-		<	StringLiteral
+		<	Meta::StringLiteral
 				t_vFunctionName
 		,	typename
 				t_tSignature
@@ -204,7 +204,7 @@ export namespace
 	using
 		Virtual
 	=	VirtualItem
-		<	ID_T<t_vFunctionName>
+		<	Meta::ID_T<t_vFunctionName>
 		,	t_tSignature
 		>
 	;
@@ -281,7 +281,7 @@ export namespace
 		{}
 
 		template
-			<	ProtoID
+			<	Meta::ProtoID
 					t_tFuncID
 			,	typename
 				...	t_tpArgument
@@ -374,7 +374,7 @@ export namespace
 		}
 
 		template
-			<	ProtoID
+			<	Meta::ProtoID
 					t_tFuncID
 			,	typename
 				...	t_tpArgument
@@ -401,7 +401,7 @@ export namespace
 		}
 
 		template
-			<	ProtoID
+			<	Meta::ProtoID
 					t_tFuncID
 			,	typename
 				...	t_tpArgument

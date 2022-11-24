@@ -7,7 +7,18 @@ export import :Dependency;
 export import :DependencyIDMap;
 export import :Erase;
 export import :Layout;
-export import :ID;
 export import :Instance;
-export import :StringLiteral;
 export import :VirtualArgument;
+
+export namespace
+	ATR
+{
+	using Meta::ID_T;
+}
+
+export namespace
+	ATR::inline Literals
+{
+	using ::Meta::Literals::operator""_ID;
+	using ::Meta::Literals::operator""_SV;
+}

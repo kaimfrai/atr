@@ -1,14 +1,14 @@
 export module ATR:Layout.Member;
 
 import :DataMember;
-import :ID;
 
+import Meta.ID;
 import Meta.Arithmetic;
 import Meta.Token;
 
 using ::ATR::MemberInfo;
 using ::ATR::MemberSortKey;
-using ::ATR::ID_Of;
+using ::Meta::ID_Of;
 
 using ::Meta::RestoreTypeEntity;
 using ::Meta::USize;
@@ -16,7 +16,7 @@ using ::Meta::USize;
 export template
 	<	typename
 			t_tData
-	,	ATR::ProtoID
+	,	Meta::ProtoID
 	>
 struct
 	Member final

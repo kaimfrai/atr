@@ -105,7 +105,7 @@ static_assert
 template
 	<	typename
 			t_tOwner
-	,	ATR::StringLiteral
+	,	Meta::StringLiteral
 			t_vMemberName
 	>
 using
@@ -113,7 +113,7 @@ using
 =	decltype
 	(	::std::remove_cvref_t<t_tOwner>
 	::	OffsetOf
-		(	ATR::ID_V<t_vMemberName>
+		(	Meta::ID_V<t_vMemberName>
 		,	Meta::ComposeTransform(Meta::Type<t_tOwner>)
 		)
 	)

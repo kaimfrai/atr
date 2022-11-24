@@ -1,11 +1,11 @@
 export module ATR:Layout.Bit.Layout;
 
-import :ID;
+import Meta.ID;
 import :Layout.Bit.Types;
 
 import Std;
 
-using ::ATR::ProtoID;
+using ::Meta::ProtoID;
 using ::Meta::BitsPerByte;
 using ::Meta::USize;
 

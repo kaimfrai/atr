@@ -1,8 +1,8 @@
 export module ATR:Layout.AliasResolver;
 
-import :ID;
 import :Layout.Alias;
 
+import Meta.ID;
 
 export template
 	<	typename
@@ -26,7 +26,7 @@ struct
 	{	return t_tName{};	}
 
 	template
-		<	::ATR::ProtoID
+		<	::Meta::ProtoID
 				t_tName
 		,	typename
 				t_tTarget

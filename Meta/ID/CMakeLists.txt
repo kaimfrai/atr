@@ -1,0 +1,16 @@
+add_module(
+	ID.hpp
+	Alias.hpp
+	Concatenate.hpp
+	Concept.hpp
+	Conversion.hpp
+	Decimal.hpp
+	Literals.hpp
+	LowerCase.hpp
+	Make.hpp
+	Special.hpp
+	StringLiteral.hpp
+	StringView.hpp
+	Template.hpp
+	UpperCase.hpp
+)

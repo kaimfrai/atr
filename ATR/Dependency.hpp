@@ -1,6 +1,6 @@
 export module ATR:Dependency;
 
-export import :ID;
+export import Meta.ID;
 export import :Erase;
 
 export import Meta.Data;
@@ -152,7 +152,7 @@ export namespace
 				...	i_rpDependency
 			)
 		requires
-			ProtoID<t_tArgument>
+			Meta::ProtoID<t_tArgument>
 		:	DependencyMap
 			{	i_rpDependency
 				...
@@ -189,7 +189,7 @@ export namespace
 	};
 
 	template
-		<	ProtoID
+		<	Meta::ProtoID
 				t_tArgument
 		,	typename
 			...	t_tpItem
@@ -225,13 +225,13 @@ export namespace
 	;
 
 	template
-		<	StringLiteral
+		<	Meta::StringLiteral
 				t_vFunctionName
 		>
 	using
 		FunctionName
 	=	BoundDependency
-		<	ID_T<t_vFunctionName>
+		<	Meta::ID_T<t_vFunctionName>
 		>
 	;
 

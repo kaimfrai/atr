@@ -9,7 +9,7 @@ export namespace
 {
 	auto constexpr
 	(	MapAddress
-	)	(	ID_T<"ComputeArea">
+	)	(	Meta::ID_T<"ComputeArea">
 		,	ProtoMemberInterface
 			<	"ComputeAreaMultiplier"
 			,	"Height"

@@ -1,7 +1,8 @@
 export module ATR:Address;
 
 export import :Dependency;
-export import :ID;
+
+export import Meta.ID;
 
 import Std;
 
@@ -60,7 +61,7 @@ export namespace
 	};
 
 	template
-		<	ProtoID
+		<	Meta::ProtoID
 				t_tFuncID
 		,	typename
 			...	t_tpArgument
@@ -77,7 +78,7 @@ export namespace
 	;
 
 	template
-		<	ProtoID
+		<	Meta::ProtoID
 				t_tFuncID
 		,	typename
 			...	t_tpArgument
@@ -98,7 +99,7 @@ export namespace
 		>
 	concept
 		ProtoAddress
-	=	ProtoID<t_tFuncID>
+	=	Meta::ProtoID<t_tFuncID>
 	and	requires
 		{	typename
 			FunctionType
@@ -110,7 +111,7 @@ export namespace
 	;
 
 	template
-		<	ProtoID
+		<	Meta::ProtoID
 				t_tFunctionName
 		,	typename
 			...	t_tpArgument

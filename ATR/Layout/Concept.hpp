@@ -1,6 +1,6 @@
 export module ATR:Layout.Concept;
 
-import :ID;
+import Meta.ID;
 import :Layout.Alias;
 import :Layout.AliasResolver;
 
@@ -17,7 +17,7 @@ export namespace
 		>
 	concept
 		ProtoMemberID
-	=	ProtoID<t_tProto>
+	=	Meta::ProtoID<t_tProto>
 	and	requires
 		{	t_tLayout::OffsetOf(t_tProto{}, Meta::Lex::Transform<>{});
 			::std::declval<t_tLayout&>()[t_tProto{}];

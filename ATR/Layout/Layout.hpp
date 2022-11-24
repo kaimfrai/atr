@@ -1,6 +1,5 @@
 export module ATR:Layout.Layout;
 
-import :ID;
 import :Layout.Alias;
 import :Layout.Bit.MakeLayout;
 import :Layout.Bit.MemberOffset;
@@ -9,6 +8,7 @@ import :Layout.Member;
 import :Layout.MemberOffset;
 import :Layout.ValidateOffsets;
 
+import Meta.ID;
 import Meta.Arithmetic;
 import Meta.Data;
 import Meta.Lex;

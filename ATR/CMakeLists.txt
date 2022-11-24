@@ -1,9 +1,6 @@
 add_module(
 	ATR.hpp
 
-	ID.hpp
-	StringLiteral.hpp
-
 	DataMember.hpp
 	Layout.hpp
 	Layout/Alias.hpp

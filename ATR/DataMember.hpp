@@ -1,7 +1,6 @@
 export module ATR:DataMember;
 
-export import :ID;
-
+export import Meta.ID;
 export import Meta.Arithmetic;
 export import Meta.Data;
 export import Meta.Predicate;
@@ -48,7 +47,7 @@ export namespace
 		MemberInfo final
 	{
 		USize SortKey;
-		StringView Name;
+		Meta::StringView Name;
 		Meta::EraseTypeToken Type;
 
 		friend auto constexpr
@@ -281,7 +280,7 @@ export namespace
 	;
 
 	template
-		<	ProtoID
+		<	Meta::ProtoID
 				t_tName
 		,	Meta::EraseTypeToken
 				t_vType
@@ -299,7 +298,7 @@ export namespace
 	};
 
 	template
-		<	StringLiteral
+		<	Meta::StringLiteral
 				t_vName
 		,	typename
 				t_tValue
@@ -307,23 +306,23 @@ export namespace
 	MemberList<1uz> constexpr inline
 		Member
 	{	MemberInstance
-		<	ID_T<t_vName>
+		<	Meta::ID_T<t_vName>
 		,	Meta::Type<t_tValue>
 		,	MemberSortKey<t_tValue>
 		>
 	};
 
 	template
-		<	StringLiteral
+		<	Meta::StringLiteral
 				t_vOriginID
-		,	StringLiteral
+		,	Meta::StringLiteral
 				t_vTargetID
 		>
 	MemberInfo const constexpr inline
 	&	Alias
 	=	MemberInstance
-		<	ID_T<t_vOriginID>
-		,	Meta::Type<ID_T<t_vTargetID>>
+		<	Meta::ID_T<t_vOriginID>
+		,	Meta::Type<Meta::ID_T<t_vTargetID>>
 		,	AliasSortKey
 		>
 	;
@@ -339,7 +338,7 @@ export namespace
 		(	operator""_ext
 		)	()
 		->	::Meta::Token::Extent
-			<	::Meta::Literals::EvaluateNumericLiteral
+			<	::Meta::EvaluateNumericLiteral
 				<	t_npNumeric
 					...
 				>()
@@ -426,7 +425,7 @@ export namespace
 				decltype(t_vList)
 					vList
 				{	MemberInstance
-					<	ID_Of<t_vList[t_npIndex].Name>
+					<	Meta::ID_Of<t_vList[t_npIndex].Name>
 					,	(	Meta::RestoreTypeToken<t_vList[t_npIndex].Type>
 						+	decltype(i_fTransform){}
 						)
@@ -477,7 +476,7 @@ export namespace
 
 	/// maps a string literal to a Layout
 	template
-		<	StringLiteral
+		<	Meta::StringLiteral
 		>
 	DefineMembers
 	<	MemberList<0uz>{}

@@ -1,8 +1,9 @@
 export module ATR:Layout.Type;
 
 import :DataMember;
-import :ID;
 import :Layout.Create;
+
+import Meta.ID;
 
 export namespace
 	ATR

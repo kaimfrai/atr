@@ -1,7 +1,8 @@
 export module ATR:Layout.Static;
 
-import :ID;
 import :Layout.Member;
+
+import Meta.ID;
 
 export namespace
 	ATR
@@ -43,7 +44,7 @@ export namespace
 	template
 		<	typename
 				t_tData
-		,	ProtoID
+		,	Meta::ProtoID
 				t_tName
 		>
 	struct

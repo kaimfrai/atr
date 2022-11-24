@@ -1,12 +1,11 @@
 export module ATR:DependencyIDMap;
 
-export import :StringLiteral;
-export import :ID;
 export import :DataMember;
 export import :Dependency;
 export import :Address;
 export import :Layout;
 
+export import Meta.ID;
 export import Meta.Logic;
 
 import Std;
@@ -22,7 +21,7 @@ export namespace
 	struct
 		IDMap final
 	{
-		StringView
+		Meta::StringView
 			OriginID
 		;
 
@@ -32,7 +31,7 @@ export namespace
 
 		constexpr
 		(	IDMap
-		)	(	StringView
+		)	(	Meta::StringView
 					i_vOriginID
 			,	Meta::TypeToken<t_tpArgument>
 				...
@@ -48,7 +47,7 @@ export namespace
 			...	t_tpArgument
 		>
 	(	IDMap
-	)	(	StringView
+	)	(	Meta::StringView
 		,	Meta::TypeToken<t_tpArgument>
 			...
 		)
@@ -93,14 +92,14 @@ export namespace
 	ATR
 {
 	template
-		<	StringLiteral
+		<	Meta::StringLiteral
 			...	t_tpMemberName
 		>
 	Meta::DeduceTerm
 	<(	...
 	and	Meta::Literal
 		<	Trait::HasDataMember
-			<	ID_T<t_tpMemberName>
+			<	Meta::ID_T<t_tpMemberName>
 			>
 		>
 	)>	inline
@@ -110,7 +109,7 @@ export namespace
 	template
 		<	typename
 				t_tProto
-		,	StringLiteral
+		,	Meta::StringLiteral
 			...	t_tpMemberName
 		>
 	concept
@@ -209,7 +208,7 @@ export namespace
 	};
 
 	template
-		<	StringLiteral
+		<	Meta::StringLiteral
 				t_vFunctionName
 		,	IDMap
 			...	t_vpIDMap
@@ -217,7 +216,7 @@ export namespace
 	Dependency constexpr inline
 		StaticDependency
 	=	ArgumentDependency
-		<	ID_T<t_vFunctionName>
+		<	Meta::ID_T<t_vFunctionName>
 		,	t_vpIDMap
 			...
 		>

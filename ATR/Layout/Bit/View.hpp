@@ -1,6 +1,6 @@
 export module ATR:Layout.Bit.View;
 
-import :ID;
+import Meta.ID;
 import :Layout.Bit.Access;
 import :Layout.Bit.Array;
 import :Layout.Bit.MemberOffset;
@@ -33,7 +33,7 @@ export namespace
 				t_nOffset
 		,	USize
 				t_nSize
-		,	ProtoID
+		,	Meta::ProtoID
 				t_tName
 		>
 	struct
@@ -105,7 +105,7 @@ export namespace
 				t_nSize
 		,	USize
 				t_nExtent
-		,	ProtoID
+		,	Meta::ProtoID
 				t_tName
 		>
 	struct
@@ -177,7 +177,7 @@ export namespace
 				t_nOffset
 		,	typename
 				t_tEntity
-		,	ProtoID
+		,	Meta::ProtoID
 				t_tName
 		>
 	struct
@@ -203,7 +203,7 @@ export namespace
 				t_tEntity
 		,	USize
 				t_nExtent
-		,	ProtoID
+		,	Meta::ProtoID
 				t_tName
 		>
 	struct
@@ -235,7 +235,7 @@ export namespace
 				t_nOffset
 		,	typename
 				t_tEntity
-		,	ProtoID
+		,	Meta::ProtoID
 				t_tName
 		>
 	struct
@@ -301,7 +301,7 @@ export namespace
 				t_nOffset
 		,	typename
 				t_tEntity
-		,	ProtoID
+		,	Meta::ProtoID
 				t_tName
 		>
 	struct

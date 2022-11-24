@@ -1,32 +1,33 @@
 export module ATR:Instance;
 
-export import :ID;
 export import :Layout;
 export import :Address;
+
+export import Meta.ID;
 
 export namespace
 	ATR
 {
 	template
-		<	decltype(auto)
-			...	t_vpName
+		<	Meta::ProtoID
+				t_tName
 		>
 	struct
 		Instance
 	:	CreateLayoutType
-		<	ID<t_vpName...>
+		<	t_tName
 		>
 	{
 		static auto constexpr
 		&	TypeName
-		=	ID<t_vpName...>
+		=	t_tName
 		::	RawArray
 		;
 
 		using
 			LayoutType
 		=	CreateLayoutType
-			<	ID<t_vpName...>
+			<	t_tName
 			>
 		;
 
@@ -179,14 +180,15 @@ export namespace
 	};
 
 	template
-		<	StringLiteral
+		<	Meta::StringLiteral
 				t_vTypeID
 		>
 	using
 		Type
-	=	ID_T
-		<	t_vTypeID
-		,	::ATR::Instance
+	=	::ATR::Instance
+		<	Meta::ID_T
+			<	t_vTypeID
+			>
 		>
 	;
 }
