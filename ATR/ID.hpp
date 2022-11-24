@@ -71,128 +71,390 @@ auto constexpr
 )	(
 	)
 ->	decltype(auto)
-{
-	if	constexpr(t_nCharacter >= '0' and t_nCharacter <= '9')
-		return t_nCharacter - '0';
-	else
-		switch(t_nCharacter)
-		{
-			//	Upper Case
-			case 'A':
-				return (::A);
-			case 'B':
-				return (::B);
-			case 'C':
-				return (::C);
-			case 'D':
-				return (::D);
-			case 'E':
-				return (::E);
-			case 'F':
-				return (::F);
-			case 'G':
-				return (::G);
-			case 'H':
-				return (::H);
-			case 'I':
-				return (::I);
-			case 'J':
-				return (::J);
-			case 'K':
-				return (::K);
-			case 'L':
-				return (::L);
-			case 'M':
-				return (::M);
-			case 'N':
-				return (::N);
-			case 'O':
-				return (::O);
-			case 'P':
-				return (::P);
-			case 'Q':
-				return (::Q);
-			case 'R':
-				return (::R);
-			case 'S':
-				return (::S);
-			case 'T':
-				return (::T);
-			case 'U':
-				return (::U);
-			case 'V':
-				return (::V);
-			case 'W':
-				return (::W);
-			case 'X':
-				return (::X);
-			case 'Y':
-				return (::Y);
-			case 'Z':
-				return (::Z);
+{	return t_nCharacter;	}
 
-			//	Underscore
-			case '_':
-				return (::_);
+template<>
+auto constexpr
+(	FromChar<'0'>
+)	()
+->	decltype(auto)
+{	return 0; }
+template<>
+auto constexpr
+(	FromChar<'1'>
+)	()
+->	decltype(auto)
+{	return 1; }
+template<>
+auto constexpr
+(	FromChar<'2'>
+)	()
+->	decltype(auto)
+{	return 2; }
+template<>
+auto constexpr
+(	FromChar<'3'>
+)	()
+->	decltype(auto)
+{	return 3; }
+template<>
+auto constexpr
+(	FromChar<'4'>
+)	()
+->	decltype(auto)
+{	return 4; }
+template<>
+auto constexpr
+(	FromChar<'5'>
+)	()
+->	decltype(auto)
+{	return 5; }
+template<>
+auto constexpr
+(	FromChar<'6'>
+)	()
+->	decltype(auto)
+{	return 6; }
+template<>
+auto constexpr
+(	FromChar<'7'>
+)	()
+->	decltype(auto)
+{	return 7; }
+template<>
+auto constexpr
+(	FromChar<'8'>
+)	()
+->	decltype(auto)
+{	return 8; }
+template<>
+auto constexpr
+(	FromChar<'9'>
+)	()
+->	decltype(auto)
+{	return 9; }
 
-			//	Lower Case
-			case 'a':
-				return (::a);
-			case 'b':
-				return (::b);
-			case 'c':
-				return (::c);
-			case 'd':
-				return (::d);
-			case 'e':
-				return (::e);
-			case 'f':
-				return (::f);
-			case 'g':
-				return (::g);
-			case 'h':
-				return (::h);
-			case 'i':
-				return (::i);
-			case 'j':
-				return (::j);
-			case 'k':
-				return (::k);
-			case 'l':
-				return (::l);
-			case 'm':
-				return (::m);
-			case 'n':
-				return (::n);
-			case 'o':
-				return (::o);
-			case 'p':
-				return (::p);
-			case 'q':
-				return (::q);
-			case 'r':
-				return (::r);
-			case 's':
-				return (::s);
-			case 't':
-				return (::t);
-			case 'u':
-				return (::u);
-			case 'v':
-				return (::v);
-			case 'w':
-				return (::w);
-			case 'x':
-				return (::x);
-			case 'y':
-				return (::y);
-			case 'z':
-				return (::z);
+template<>
+auto constexpr
+(	FromChar<'_'>
+)	()
+->	decltype(auto)
+{	return (::_); }
 
-			default:
-				throw "Invalid character in identitfier!";
-		}
-}
+
+template<>
+auto constexpr
+(	FromChar<'A'>
+)	()
+->	decltype(auto)
+{	return (::A); }
+template<>
+auto constexpr
+(	FromChar<'B'>
+)	()
+->	decltype(auto)
+{	return (::B); }
+template<>
+auto constexpr
+(	FromChar<'C'>
+)	()
+->	decltype(auto)
+{	return (::C); }
+template<>
+auto constexpr
+(	FromChar<'D'>
+)	()
+->	decltype(auto)
+{	return (::D); }
+template<>
+auto constexpr
+(	FromChar<'E'>
+)	()
+->	decltype(auto)
+{	return (::E); }
+template<>
+auto constexpr
+(	FromChar<'F'>
+)	()
+->	decltype(auto)
+{	return (::F); }
+template<>
+auto constexpr
+(	FromChar<'G'>
+)	()
+->	decltype(auto)
+{	return (::G); }
+template<>
+auto constexpr
+(	FromChar<'H'>
+)	()
+->	decltype(auto)
+{	return (::H); }
+template<>
+auto constexpr
+(	FromChar<'I'>
+)	()
+->	decltype(auto)
+{	return (::I); }
+template<>
+auto constexpr
+(	FromChar<'J'>
+)	()
+->	decltype(auto)
+{	return (::J); }
+template<>
+auto constexpr
+(	FromChar<'K'>
+)	()
+->	decltype(auto)
+{	return (::K); }
+template<>
+auto constexpr
+(	FromChar<'L'>
+)	()
+->	decltype(auto)
+{	return (::L); }
+template<>
+auto constexpr
+(	FromChar<'M'>
+)	()
+->	decltype(auto)
+{	return (::M); }
+template<>
+auto constexpr
+(	FromChar<'N'>
+)	()
+->	decltype(auto)
+{	return (::N); }
+template<>
+auto constexpr
+(	FromChar<'O'>
+)	()
+->	decltype(auto)
+{	return (::O); }
+template<>
+auto constexpr
+(	FromChar<'P'>
+)	()
+->	decltype(auto)
+{	return (::P); }
+template<>
+auto constexpr
+(	FromChar<'Q'>
+)	()
+->	decltype(auto)
+{	return (::Q); }
+template<>
+auto constexpr
+(	FromChar<'R'>
+)	()
+->	decltype(auto)
+{	return (::R); }
+template<>
+auto constexpr
+(	FromChar<'S'>
+)	()
+->	decltype(auto)
+{	return (::S); }
+template<>
+auto constexpr
+(	FromChar<'T'>
+)	()
+->	decltype(auto)
+{	return (::T); }
+template<>
+auto constexpr
+(	FromChar<'U'>
+)	()
+->	decltype(auto)
+{	return (::U); }
+template<>
+auto constexpr
+(	FromChar<'V'>
+)	()
+->	decltype(auto)
+{	return (::V); }
+template<>
+auto constexpr
+(	FromChar<'W'>
+)	()
+->	decltype(auto)
+{	return (::W); }
+template<>
+auto constexpr
+(	FromChar<'X'>
+)	()
+->	decltype(auto)
+{	return (::X); }
+template<>
+auto constexpr
+(	FromChar<'Y'>
+)	()
+->	decltype(auto)
+{	return (::Y); }
+template<>
+auto constexpr
+(	FromChar<'Z'>
+)	()
+->	decltype(auto)
+{	return (::Z); }
+
+template<>
+auto constexpr
+(	FromChar<'a'>
+)	()
+->	decltype(auto)
+{	return (::a); }
+template<>
+auto constexpr
+(	FromChar<'b'>
+)	()
+->	decltype(auto)
+{	return (::b); }
+template<>
+auto constexpr
+(	FromChar<'c'>
+)	()
+->	decltype(auto)
+{	return (::c); }
+template<>
+auto constexpr
+(	FromChar<'d'>
+)	()
+->	decltype(auto)
+{	return (::d); }
+template<>
+auto constexpr
+(	FromChar<'e'>
+)	()
+->	decltype(auto)
+{	return (::e); }
+template<>
+auto constexpr
+(	FromChar<'f'>
+)	()
+->	decltype(auto)
+{	return (::f); }
+template<>
+auto constexpr
+(	FromChar<'g'>
+)	()
+->	decltype(auto)
+{	return (::g); }
+template<>
+auto constexpr
+(	FromChar<'h'>
+)	()
+->	decltype(auto)
+{	return (::h); }
+template<>
+auto constexpr
+(	FromChar<'i'>
+)	()
+->	decltype(auto)
+{	return (::i); }
+template<>
+auto constexpr
+(	FromChar<'j'>
+)	()
+->	decltype(auto)
+{	return (::j); }
+template<>
+auto constexpr
+(	FromChar<'k'>
+)	()
+->	decltype(auto)
+{	return (::k); }
+template<>
+auto constexpr
+(	FromChar<'l'>
+)	()
+->	decltype(auto)
+{	return (::l); }
+template<>
+auto constexpr
+(	FromChar<'m'>
+)	()
+->	decltype(auto)
+{	return (::m); }
+template<>
+auto constexpr
+(	FromChar<'n'>
+)	()
+->	decltype(auto)
+{	return (::n); }
+template<>
+auto constexpr
+(	FromChar<'o'>
+)	()
+->	decltype(auto)
+{	return (::o); }
+template<>
+auto constexpr
+(	FromChar<'p'>
+)	()
+->	decltype(auto)
+{	return (::p); }
+template<>
+auto constexpr
+(	FromChar<'q'>
+)	()
+->	decltype(auto)
+{	return (::q); }
+template<>
+auto constexpr
+(	FromChar<'r'>
+)	()
+->	decltype(auto)
+{	return (::r); }
+template<>
+auto constexpr
+(	FromChar<'s'>
+)	()
+->	decltype(auto)
+{	return (::s); }
+template<>
+auto constexpr
+(	FromChar<'t'>
+)	()
+->	decltype(auto)
+{	return (::t); }
+template<>
+auto constexpr
+(	FromChar<'u'>
+)	()
+->	decltype(auto)
+{	return (::u); }
+template<>
+auto constexpr
+(	FromChar<'v'>
+)	()
+->	decltype(auto)
+{	return (::v); }
+template<>
+auto constexpr
+(	FromChar<'w'>
+)	()
+->	decltype(auto)
+{	return (::w); }
+template<>
+auto constexpr
+(	FromChar<'x'>
+)	()
+->	decltype(auto)
+{	return (::x); }
+template<>
+auto constexpr
+(	FromChar<'y'>
+)	()
+->	decltype(auto)
+{	return (::y); }
+template<>
+auto constexpr
+(	FromChar<'z'>
+)	()
+->	decltype(auto)
+{	return (::z); }
 
 auto constexpr
 (	ToChar
