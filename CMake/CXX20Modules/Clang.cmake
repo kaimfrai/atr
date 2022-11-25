@@ -124,9 +124,28 @@ set(STANDARD_HEADER_UNITS
 	version
 )
 
-find_path(STANDARD_LIBRARY_INCLUDE_PATH ${STANDARD_HEADER_UNITS} PATH_SUFFIXES include/c++/v1 REQUIRED DOC "Path for standard library includes")
-file(REAL_PATH "${STANDARD_LIBRARY_INCLUDE_PATH}" STANDARD_LIBRARY_INCLUDE_PATH EXPAND_TILDE)
-message("Found standard library at ${STANDARD_LIBRARY_INCLUDE_PATH}")
+if	(COMPILER_SEARCH_PATHS)
+	set(STANDARD_LIBRARY_INCLUDE_PATH ${COMPILER_SEARCH_PATHS}/include/c++/v1 CACHE STRING "Path for standard library includes")
+else()
+	find_path(STANDARD_LIBRARY_INCLUDE_PATH ${STANDARD_HEADER_UNITS} PATH_SUFFIXES include/c++/v1 REQUIRED DOC "Path for standard library includes")
+	file(REAL_PATH "${STANDARD_LIBRARY_INCLUDE_PATH}" STANDARD_LIBRARY_INCLUDE_PATH EXPAND_TILDE)
+endif()
+
+if	(EXISTS "${STANDARD_LIBRARY_INCLUDE_PATH}" AND IS_DIRECTORY "${STANDARD_LIBRARY_INCLUDE_PATH}")
+
+	message("Found standard library at ${STANDARD_LIBRARY_INCLUDE_PATH}")
+
+	foreach(header IN LISTS STANDARD_HEADER_UNITS)
+
+		if	(NOT EXISTS "${STANDARD_LIBRARY_INCLUDE_PATH}/${header}")
+			message(WARNING "Standard library did not contain header <${header}>!")
+		endif()
+
+	endforeach()
+
+else()
+	message(FATAL_ERROR "Could not find standard library at ${STANDARD_LIBRARY_INCLUDE_PATH}")
+endif()
 
 function(get_module_dependency_flag_list
 	module_dependency_binaries

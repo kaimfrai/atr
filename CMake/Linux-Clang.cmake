@@ -1,13 +1,24 @@
 set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR ${CMAKE_HOST_SYSTEM_PROCESSOR})
 
-#resolve real path for clang-tidy
-find_program(CMAKE_C_COMPILER clang-16 REQUIRED)
-file(REAL_PATH ${CMAKE_C_COMPILER} CMAKE_C_COMPILER EXPAND_TILDE)
-find_program(CMAKE_CXX_COMPILER clang++-16 REQUIRED)
-file(REAL_PATH ${CMAKE_CXX_COMPILER} CMAKE_CXX_COMPILER EXPAND_TILDE)
-#add ++ to real path
-set(CMAKE_CXX_COMPILER "${CMAKE_CXX_COMPILER}++")
+if	(COMPILER_SEARCH_PATHS)
+	set(CMAKE_C_COMPILER ${COMPILER_SEARCH_PATHS}/bin/clang)
+	set(CMAKE_CXX_COMPILER ${COMPILER_SEARCH_PATHS}/bin/clang++)
+else()
+	find_program(CMAKE_C_COMPILER clang REQUIRED)
+	find_program(CMAKE_CXX_COMPILER clang++ REQUIRED)
+	#resolve real path for clang-tidy
+	file(REAL_PATH ${CMAKE_C_COMPILER} CMAKE_C_COMPILER EXPAND_TILDE)
+	file(REAL_PATH ${CMAKE_CXX_COMPILER} CMAKE_CXX_COMPILER EXPAND_TILDE)
+	#add ++ to real path
+	set(CMAKE_CXX_COMPILER "${CMAKE_CXX_COMPILER}++")
+endif()
+
+if (EXISTS "${CMAKE_CXX_COMPILER}" AND NOT IS_DIRECTORY "${CMAKE_CXX_COMPILER}")
+	message("Found C++ Compiler at ${CMAKE_CXX_COMPILER}")
+else()
+	message(FATAL_ERROR "Could not find C++ Compiler at ${CMAKE_CXX_COMPILER}")
+endif()
 
 #do not use libc++ for C objects
 add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-stdlib=libc++>)
