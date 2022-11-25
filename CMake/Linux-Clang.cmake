@@ -22,9 +22,11 @@ endif()
 
 #do not use libc++ for C objects
 add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-stdlib=libc++>)
+add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-fexperimental-library>)
 add_link_options($<$<COMPILE_LANGUAGE:CXX>:-lm>)
 add_link_options($<$<COMPILE_LANGUAGE:CXX>:-lc++>)
 add_link_options($<$<COMPILE_LANGUAGE:CXX>:-lc++abi>)
+add_link_options($<$<COMPILE_LANGUAGE:CXX>:-lc++experimental>)
 add_link_options(-fuse-ld=lld)
 
 if	(BUILD_WITH_SANITIZER)
