@@ -1,7 +1,7 @@
 module Meta.ID:Conversion;
 
 template
-	<	char
+	<	char8_t
 			t_nCharacter
 	>
 auto constexpr
@@ -13,8 +13,8 @@ auto constexpr
 
 auto constexpr
 (	ToChar
-)	(	char
+)	(	char8_t
 			i_cChar
 	)
-->	char
+->	char8_t
 {	return i_cChar;	}

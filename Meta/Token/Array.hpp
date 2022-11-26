@@ -126,4 +126,20 @@ export namespace
 		,	0uz
 		>
 	{};
+
+	template
+		<	typename
+				t_tElement
+		,	USize
+				t_nExtent
+		>
+	using
+		ArrayEntity
+	=	TypeEntity
+		<	ArrayType
+			<	t_tElement
+			,	t_nExtent
+			>
+		>
+	;
 }

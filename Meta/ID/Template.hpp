@@ -22,12 +22,12 @@ export namespace
 	struct
 		ID final
 	{
-		static ::Meta::USize constexpr
+		static USize constexpr
 			Length
 		=	sizeof...(t_vpString)
 		;
 
-		static char constexpr
+		static char8_t constexpr
 			RawArray
 			[	Length
 			+	1uz
@@ -37,13 +37,13 @@ export namespace
 		,	'\0'
 		};
 
-		static ::Meta::StringView constexpr
+		static StringView constexpr
 			StringView
 		{	RawArray
 		,	Length
 		};
 
-		static ::Meta::StringLiteral<Length> constexpr
+		static StringLiteral<Length> constexpr
 			String
 		{	RawArray
 		};

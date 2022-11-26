@@ -12,11 +12,23 @@ export namespace
 		>
 	struct
 		StringLiteral final
-	:	Meta::ArrayValue
-		<	char
-		,	t_nExtent
+	:	Aggregate
+		<	ArrayEntity
+			<	char8_t
+			,	t_nExtent
+			>
 		>
 	{
+		using
+			AggregateType
+		=	Aggregate
+			<	ArrayEntity
+				<	char8_t
+				,	t_nExtent
+				>
+			>
+		;
+
 		constexpr
 		(	StringLiteral
 		)	()
@@ -24,23 +36,25 @@ export namespace
 
 		constexpr
 		(	StringLiteral
-		)	(	char const
+		)	(	auto const
 				*	i_aString
 			)
-		:	Meta::ArrayValue
-			<	char
-			,	t_nExtent
-			>{	i_aString
+		:	AggregateType
+			{	Data::MakeArrayAggregate<ArrayEntity<char8_t, t_nExtent>>
+				(	i_aString
+				)
 			}
 		{}
 	};
 
 	template
-		<	Meta::USize
+		<	typename
+				t_tChar
+		,	USize
 				t_nExtent
 		>
 	(	StringLiteral
-	)	(	char const
+	)	(	t_tChar const
 			(&)	[	t_nExtent
 				]
 		)

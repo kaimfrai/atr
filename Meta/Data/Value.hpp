@@ -250,6 +250,17 @@ export namespace
 		>
 	{
 		using ElementType = typename t_tElement::Entity;
+		using
+			ArrayType
+		=	typename
+				Lex::MatchCVArray
+				<	t_tElement
+				,	t_nExtent
+				,	t_tpQualifier
+					...
+				>
+			::	Entity
+		;
 
 		constexpr
 		(	Value
@@ -262,8 +273,9 @@ export namespace
 		)	(	ElementType const
 				*	i_aValue
 			)
-		:	Aggregate<ElementType[t_nExtent]>
-			{	Data::MakeArrayAggregate<t_nExtent>
+		:	Aggregate
+			<	ArrayType
+			>{	Data::MakeArrayAggregate<ArrayType>
 				(	i_aValue
 				)
 			}

@@ -68,5 +68,5 @@ auto constexpr
 )	(	int
 			i_nChar
 	)
-->	char
-{	return static_cast<char>(i_nChar + '0');	}
+->	char8_t
+{	return static_cast<char8_t>(i_nChar + '0');	}

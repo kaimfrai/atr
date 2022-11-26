@@ -2,32 +2,32 @@ module Meta.ID:LowerCase;
 
 import :Conversion;
 
-char constexpr inline a = 'a';
-char constexpr inline b = 'b';
-char constexpr inline c = 'c';
-char constexpr inline d = 'd';
-char constexpr inline e = 'e';
-char constexpr inline f = 'f';
-char constexpr inline g = 'g';
-char constexpr inline h = 'h';
-char constexpr inline i = 'i';
-char constexpr inline j = 'j';
-char constexpr inline k = 'k';
-char constexpr inline l = 'l';
-char constexpr inline m = 'm';
-char constexpr inline n = 'n';
-char constexpr inline o = 'o';
-char constexpr inline p = 'p';
-char constexpr inline q = 'q';
-char constexpr inline r = 'r';
-char constexpr inline s = 's';
-char constexpr inline t = 't';
-char constexpr inline u = 'u';
-char constexpr inline v = 'v';
-char constexpr inline w = 'w';
-char constexpr inline x = 'x';
-char constexpr inline y = 'y';
-char constexpr inline z = 'z';
+char8_t constexpr inline a = 'a';
+char8_t constexpr inline b = 'b';
+char8_t constexpr inline c = 'c';
+char8_t constexpr inline d = 'd';
+char8_t constexpr inline e = 'e';
+char8_t constexpr inline f = 'f';
+char8_t constexpr inline g = 'g';
+char8_t constexpr inline h = 'h';
+char8_t constexpr inline i = 'i';
+char8_t constexpr inline j = 'j';
+char8_t constexpr inline k = 'k';
+char8_t constexpr inline l = 'l';
+char8_t constexpr inline m = 'm';
+char8_t constexpr inline n = 'n';
+char8_t constexpr inline o = 'o';
+char8_t constexpr inline p = 'p';
+char8_t constexpr inline q = 'q';
+char8_t constexpr inline r = 'r';
+char8_t constexpr inline s = 's';
+char8_t constexpr inline t = 't';
+char8_t constexpr inline u = 'u';
+char8_t constexpr inline v = 'v';
+char8_t constexpr inline w = 'w';
+char8_t constexpr inline x = 'x';
+char8_t constexpr inline y = 'y';
+char8_t constexpr inline z = 'z';
 
 template<>
 auto constexpr

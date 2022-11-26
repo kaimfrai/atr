@@ -10,21 +10,21 @@ export namespace
 	struct
 		StringView final
 	{
-		char const*
+		char8_t const*
 			Data
 		;
 
-		Meta::USize
+		USize
 			Size
 		;
 
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	Meta::USize
+		)	(	USize
 					t_nIndex
 			)	const
-		->	char const&
+		->	char8_t const&
 		{	return Data[t_nIndex];	}
 
 		[[nodiscard]]
@@ -45,7 +45,7 @@ export namespace
 		(	data
 		)	()	const
 			noexcept
-		->	char const*
+		->	char8_t const*
 		{	return Data;	}
 
 		auto constexpr
@@ -60,7 +60,7 @@ export namespace
 		)	(	StringView
 					i_vView
 			)
-		->	char const*
+		->	char8_t const*
 		{	return i_vView.Data;	}
 
 		friend auto constexpr
@@ -68,7 +68,7 @@ export namespace
 		)	(	StringView
 					i_vView
 			)
-		->	char const*
+		->	char8_t const*
 		{	return i_vView.Data + i_vView.Size;	}
 	};
 

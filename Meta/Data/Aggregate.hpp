@@ -825,32 +825,34 @@ export namespace
 	};
 
 	template
-		<	USize
-				t_nExtent
+		<	typename
+				t_tTarget
 		,	typename
-				t_tData
+				t_tSource
 		>
 	[[nodiscard]]
 	auto constexpr
 	(	MakeArrayAggregate
-	)	(	t_tData const
-			*	i_aData
+	)	(	t_tSource const
+			*	i_aSource
 		)
-	->	Aggregate<t_tData[t_nExtent]>
+	->	Aggregate<t_tTarget>
 	{	return
-		[	i_aData
+		[	i_aSource
 		]	<	USize
 				...	t_npIndex
 			>(	IndexToken<t_npIndex...>
 			)
-		->	Aggregate<t_tData[t_nExtent]>
+		->	Aggregate<t_tTarget>
 		{	return
-			{	i_aData
-				[	t_npIndex
-				]
+			{	static_cast<::std::remove_extent_t<t_tTarget>>
+				(	i_aSource
+					[	t_npIndex
+					]
+				)
 				...
 			};
-		}(	Sequence<t_nExtent>
+		}(	Sequence<::std::extent_v<t_tTarget>>
 		);
 	}
 
@@ -1407,11 +1409,9 @@ export namespace
 	using
 		ArrayAggregate
 	=	Aggregate
-		<	TypeEntity
-			<	ArrayType
-				<	t_tValue
-				,	t_nExtent
-				>
+		<	ArrayEntity
+			<	t_tValue
+			,	t_nExtent
 			>
 		>
 	;
