@@ -44,6 +44,23 @@ export namespace
 			>
 		{	return {};	}
 
+		template
+			<	auto
+				...	t_npSuffix
+			>
+		friend auto constexpr
+		(	operator |
+		)	(	Index
+			,	Index<t_npSuffix...>
+			)
+		->	Index
+			<	t_npIndex
+				...
+			,	t_npSuffix
+				...
+			>
+		{	return {};	}
+
 		auto constexpr
 		(	operator ++
 		)	()	const

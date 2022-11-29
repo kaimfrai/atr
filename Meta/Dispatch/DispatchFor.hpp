@@ -11,6 +11,49 @@ export import Std;
 export namespace
 	Meta
 {
+	using
+		PrintableCharSet
+	=	decltype
+		(	(Sequence<'~' + 1 - ' '> += Index<' '>)
+		.	CastAll<char>()
+		)
+	;
+
+	using
+		LowerCaseCharSet
+	=	decltype
+		(	(Sequence<'z' + 1 - 'a'> += Index<'a'>)
+		.	CastAll<char>()
+		)
+	;
+
+	using
+		UpperCaseCharSet
+	=	decltype
+		(	(Sequence<'Z' + 1 - 'A'> += Index<'A'>)
+		.	CastAll<char>()
+		)
+	;
+
+	using
+		DecimalCharSet
+	=	decltype
+		(	(Sequence<'9' + 1 - '0'> += Index<'0'>)
+		.	CastAll<char>()
+		)
+	;
+
+	using
+		BasicCharSet
+	=	decltype
+		(	DecimalCharSet{}
+		|	UpperCaseCharSet{}
+		|	Index<'_'>
+		|	LowerCaseCharSet{}
+		)
+	;
+
+
 	template
 		<	typename
 		>
@@ -153,7 +196,9 @@ export namespace
 
 	private:
 		template
-			<	ProtoID
+			<	typename
+					t_tCharacterSet
+			,	ProtoID
 					t_tID
 			>
 		requires
@@ -191,7 +236,7 @@ export namespace
 				}
 				else
 				{	return
-					{	&Step<tNextID>::Next
+					{	&Step<t_tCharacterSet, tNextID>::Next
 					,	&Final<tNextID>
 					};
 				}
@@ -239,16 +284,23 @@ export namespace
 					,	i_nOffset
 					};
 
-				}(	(Sequence<'~' + 1 - ' '> += Index<' '>).CastAll<char>()
+				}(	t_tCharacterSet{}
 				);
 			}
 		};
 
 	public:
+		template
+			<	typename
+					t_tCharacterSet
+				=	BasicCharSet
+			>
 		static auto constexpr
 		(	Dispatch
 		)	(	std::string_view
 					i_sToDispatch
+			,	t_tCharacterSet
+				=	t_tCharacterSet{}
 			)
 		->	auto
 			(*)	(	t_tpArgument
@@ -265,7 +317,7 @@ export namespace
 			else
 			{	StepPair
 					vResult
-				{	&Step<ID<>>::Next
+				{	&Step<t_tCharacterSet, ID<>>::Next
 				,	&Final<ID<>>
 				};
 				for	(	auto const
