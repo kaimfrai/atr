@@ -229,8 +229,35 @@ export namespace
 				IsPathBlocked<t_tID>
 			)
 		struct
-			Step final
+			Step
+		;
+
+		template
+			<	char
+				...	t_npChar
+			,	ProtoID
+					t_tID
+			>
+		struct
+			Step
+			<	IndexToken<t_npChar...>
+			,	t_tID
+			>	final
 		{
+			template
+				<	char
+						t_nParsed
+				>
+			using
+				NextID
+			=	ID_T
+				<	Concatenate
+					(	t_tID::String
+					,	t_nParsed
+					)
+				>
+			;
+
 			template
 				<	char
 						t_nParsed
@@ -239,28 +266,16 @@ export namespace
 			(	GetNextStep
 			)	()
 			->	StepPair
-			{
-				using
-					tNextID
-				=	ID_T
-					<	Concatenate
-						(	t_tID::String
-						,	t_nParsed
-						)
-					>
-				;
-				if	constexpr
-					(	IsPathBlocked<tNextID>
+			{	if	constexpr
+					(	IsPathBlocked<NextID<t_nParsed>>
 					)
 				{	return
-					{	&PathBlocked
-					,	&Final<tNextID>
-					};
+					{};
 				}
 				else
 				{	return
-					{	&Step<t_tCharacterSet, tNextID>::Next
-					,	&Final<tNextID>
+					{	&Step<IndexToken<t_npChar...>, NextID<t_nParsed>>::Next
+					,	&Final<NextID<t_nParsed>>
 					};
 				}
 			}
@@ -273,42 +288,33 @@ export namespace
 						i_nOffset
 				)
 			->	StepPair
-			{	return
-				[	&i_sString
-				,	&i_nOffset
-				]	<	char
-						...	t_cpChar
-					>(	IndexToken
-						<	t_cpChar
-							...
-						>
-					)
-				{	if	(	StepPair
-								fParse
-						;	(	...
-							or	(	i_sString[i_nOffset] == t_cpChar
-								?	(	(void)
-										(	fParse
-										=	GetNextStep<t_cpChar>()
-										)
-									,	true
+			{
+				auto const nChar = i_sString[i_nOffset];
+				if	(	StepPair
+							fParse
+					;	(	...
+						or	(	not
+								IsPathBlocked<NextID<t_npChar>>
+							and	nChar == t_npChar
+							?	(	(void)
+									(	fParse
+									=	GetNextStep<t_npChar>()
 									)
-								:	false
+								,	true
 								)
+							:	false
 							)
 						)
-					{	return
-							fParse
-						;
-					}
-					throw
-					Dispatch::UnkownCharError
-					{	i_sString
-					,	i_nOffset
-					};
-
-				}(	t_tCharacterSet{}
-				);
+					)
+				{	return
+						fParse
+					;
+				}
+				throw
+				Dispatch::PathBlockedError
+				{	i_sString
+				,	i_nOffset
+				};
 			}
 		};
 

@@ -24,28 +24,6 @@ export namespace
 	};
 
 	struct
-		UnkownCharError
-	:	Error
-	{
-		explicit(true)
-		(	UnkownCharError
-		)	(	std::string_view
-					i_sParsed
-			,	USize
-					i_nPosition
-			)
-		:	Error
-			{	std::format
-				(	"Unknown character \"{}\" at position {} while parsing \"{}\"!"
-				,	i_sParsed[i_nPosition]
-				,	i_nPosition
-				,	i_sParsed
-				)
-			}
-		{}
-	};
-
-	struct
 		PathBlockedError
 	:	Error
 	{
@@ -58,9 +36,9 @@ export namespace
 			)
 		:	Error
 			{	std::format
-				(	"Dispatch path for \"{}\" was blocked while parsing \"{}\"!"
-				,	i_sString.substr(0uz, i_nPosition)
+				(	"Dispatch path for \"{}\" was blocked at \"{}\" !"
 				,	i_sString
+				,	i_sString.substr(0uz, i_nPosition)
 				)
 			}
 		{}

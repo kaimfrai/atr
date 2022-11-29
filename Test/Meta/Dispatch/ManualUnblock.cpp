@@ -100,7 +100,7 @@ static_assert
 );
 
 static_assert
-(	IsPathBlocked<double(int, int), ID_T<"">>
+(	IsPathBlocked<int(int, int) noexcept, ID_T<"">>
 );
 static_assert
 (	IsPathBlocked<int(double), ID_T<"M">>
@@ -209,79 +209,6 @@ static_assert
 	(	"Multiply1"
 	)
 ==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"Multiply1">>
-);
-
-static_assert
-(	Meta::DispatchFor
-	<	int(int, int)
-	>::Dispatch
-	(	"N"
-	)
-==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"N">>
-);
-static_assert
-(	Meta::DispatchFor
-	<	int(int, int)
-	>::Dispatch
-	(	"Mg"
-	)
-==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"Mg">>
-);
-static_assert
-(	Meta::DispatchFor
-	<	int(int, int)
-	>::Dispatch
-	(	"Mur"
-	)
-==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"Mur">>
-);
-static_assert
-(	Meta::DispatchFor
-	<	int(int, int)
-	>::Dispatch
-	(	"Mulf"
-	)
-==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"Mulf">>
-);
-static_assert
-(	Meta::DispatchFor
-	<	int(int, int)
-	>::Dispatch
-	(	"Mult1"
-	)
-==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"Mult1">>
-);
-static_assert
-(	Meta::DispatchFor
-	<	int(int, int)
-	>::Dispatch
-	(	"Multih"
-	)
-==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"Multih">>
-);
-static_assert
-(	Meta::DispatchFor
-	<	int(int, int)
-	>::Dispatch
-	(	"Multipa"
-	)
-==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"Multipa">>
-);
-static_assert
-(	Meta::DispatchFor
-	<	int(int, int)
-	>::Dispatch
-	(	"Multipl3"
-	)
-==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"Multipl3">>
-);
-static_assert
-(	Meta::DispatchFor
-	<	int(int, int)
-	>::Dispatch
-	(	"Multiplyn"
-	)
-==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"Multiplyn">>
 );
 
 static_assert
