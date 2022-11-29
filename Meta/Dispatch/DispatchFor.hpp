@@ -2,8 +2,11 @@ export module Meta.Dispatch:DispatchFor;
 
 export import :BlockedPath;
 export import :Error;
+export import :CharacterSet;
+export import :Final;
+import :StepPair;
+export import :Step;
 
-export import Meta.Arithmetic;
 export import Meta.ID;
 export import Meta.Lex;
 
@@ -12,48 +15,6 @@ export import Std;
 export namespace
 	Meta
 {
-	using
-		PrintableCharSet
-	=	decltype
-		(	(Sequence<'~' + 1 - ' '> += Index<' '>)
-		.	CastAll<char>()
-		)
-	;
-
-	using
-		LowerCaseCharSet
-	=	decltype
-		(	(Sequence<'z' + 1 - 'a'> += Index<'a'>)
-		.	CastAll<char>()
-		)
-	;
-
-	using
-		UpperCaseCharSet
-	=	decltype
-		(	(Sequence<'Z' + 1 - 'A'> += Index<'A'>)
-		.	CastAll<char>()
-		)
-	;
-
-	using
-		DecimalCharSet
-	=	decltype
-		(	(Sequence<'9' + 1 - '0'> += Index<'0'>)
-		.	CastAll<char>()
-		)
-	;
-
-	using
-		BasicCharSet
-	=	decltype
-		(	DecimalCharSet{}
-		|	UpperCaseCharSet{}
-		|	Index<'_'>
-		|	LowerCaseCharSet{}
-		)
-	;
-
 	template
 		<	typename
 				t_tFunction
@@ -89,14 +50,7 @@ export namespace
 		>
 	{
 		using
-			ResultType
-		=	typename
-			t_tResult
-		::	Entity
-		;
-
-		using
-			FunctionType
+			PlainFunctionType
 		=	typename
 			Lex::Func
 			<	Lex::MatchSignature
@@ -110,219 +64,25 @@ export namespace
 		::	Entity
 		;
 
-	private:
-		struct
-			StepPair final
-		{
-			auto
-			(	*m_fNext
-			)	(	std::string_view
-				,	USize
-				)
-			->	StepPair
-			;
-
-			FunctionType
-				*m_fFinal
-			;
-
-			auto constexpr
-			(	operator()
-			)	(	std::string_view
-						i_sString
-				,	USize
-						i_nOffset
-				)
-			{	(	*this
-				=	m_fNext
-					(	i_sString
-					,	i_nOffset
-					)
-				);
-			}
-		};
-
-		[[noreturn]]
-		static auto constexpr
-		(	PathBlocked
-		)	(	std::string_view
-					i_sString
-			,	USize
-					i_nOffset
-			)
-		->	StepPair
-		{	throw
-			Dispatch::PathBlockedError
-			{	i_sString
-			,	i_nOffset
-			};
-		}
-
-		template
-			<	ProtoID
-					t_tID
-			>
-		static bool constexpr
-			IsPathBlocked
-		=	Dispatch::IsPathBlocked
-			<	FunctionType
-			,	t_tID
-			>
-		;
-
-	public:
-		template
-			<	ProtoID
-					t_tID
-			>
-		static auto constexpr
-		(	Final
-		)	(	typename t_tpArgument::Entity
-				...	i_rpArgument
-			)
-		->	ResultType
-		{
-			auto constexpr
-				vPath
-			=	Dispatch::PathID
-				<	FunctionType
-				,	t_tID
-				>{}
-			;
-			if	constexpr
-				(	requires
-					{	Call
-						(	vPath
-						,	std::forward<typename t_tpArgument::Entity>
-							(	i_rpArgument
-							)
-							...
-						);
-					}
-				)
-			{	return
-				Call
-				(	vPath
-				,	std::forward<typename t_tpArgument::Entity>
-					(	i_rpArgument
-					)
+		using
+			QualifiedFunctionType
+		=	typename
+			Lex::Func
+			<	Lex::MatchSignature
+				<	t_tResult
+				,	t_tpArgument
 					...
-				);
-			}
-			else
-			{	throw
-				Dispatch::NoDefinitionError
-				{	t_tID::RawArray
-				};
-			}
-		}
-
-	private:
-		template
-			<	typename
-					t_tCharacterSet
-			,	ProtoID
-					t_tID
+				>
+			,	t_tpQualifier
+				...
 			>
-		requires
-			(	not
-				IsPathBlocked<t_tID>
-			)
-		struct
-			Step
+		::	Entity
 		;
 
 		template
-			<	char
-				...	t_npChar
-			,	ProtoID
-					t_tID
-			>
-		struct
-			Step
-			<	IndexToken<t_npChar...>
-			,	t_tID
-			>	final
-		{
-			template
-				<	char
-						t_nParsed
-				>
-			using
-				NextID
-			=	ID_T
-				<	Concatenate
-					(	t_tID::String
-					,	t_nParsed
-					)
-				>
-			;
-
-			template
-				<	char
-						t_nParsed
-				>
-			static auto constexpr
-			(	GetNextStep
-			)	()
-			->	StepPair
-			{	if	constexpr
-					(	IsPathBlocked<NextID<t_nParsed>>
-					)
-				{	return
-					{};
-				}
-				else
-				{	return
-					{	&Step<IndexToken<t_npChar...>, NextID<t_nParsed>>::Next
-					,	&Final<NextID<t_nParsed>>
-					};
-				}
-			}
-
-			static auto constexpr
-			(	Next
-			)	(	std::string_view
-						i_sString
-				,	USize
-						i_nOffset
-				)
-			->	StepPair
-			{
-				auto const nChar = i_sString[i_nOffset];
-				if	(	StepPair
-							fParse
-					;	(	...
-						or	(	not
-								IsPathBlocked<NextID<t_npChar>>
-							and	nChar == t_npChar
-							?	(	(void)
-									(	fParse
-									=	GetNextStep<t_npChar>()
-									)
-								,	true
-								)
-							:	false
-							)
-						)
-					)
-				{	return
-						fParse
-					;
-				}
-				throw
-				Dispatch::PathBlockedError
-				{	i_sString
-				,	i_nOffset
-				};
-			}
-		};
-
-	public:
-		template
 			<	typename
 					t_tCharacterSet
-				=	BasicCharSet
+				=	Dispatch::BasicCharSet
 			>
 		static auto constexpr
 		(	Dispatch
@@ -331,19 +91,22 @@ export namespace
 			,	t_tCharacterSet
 				=	t_tCharacterSet{}
 			)
-		->	FunctionType*
+		->	PlainFunctionType*
 		{	if	constexpr
-				(	IsPathBlocked<ID<>>
+				(	Dispatch::IsPathBlocked
+					<	QualifiedFunctionType
+					,	ID<>
+					>
 				)
 			{	return
-					&Final<ID<>>
+					&Dispatch::Final<QualifiedFunctionType, ID<>>::operator()
 				;
 			}
 			else
-			{	StepPair
+			{	Dispatch::StepPair<PlainFunctionType>
 					vResult
-				{	&Step<t_tCharacterSet, ID<>>::Next
-				,	&Final<ID<>>
+				{	&Dispatch::Step<QualifiedFunctionType, t_tCharacterSet, ID<>>::Advance
+				,	&Dispatch::Final<QualifiedFunctionType, ID<>>::operator()
 				};
 				for	(	auto const
 						&	vChar

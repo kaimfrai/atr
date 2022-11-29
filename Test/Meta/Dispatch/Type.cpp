@@ -4,7 +4,14 @@ import Std;
 
 static_assert
 (	std::is_same_v
-	<	Meta::DispatchFor<int(int, int)>::FunctionType
+	<	Meta::DispatchFor<int(int, int)>::PlainFunctionType
+	,	int(int, int)
+	>
+);
+
+static_assert
+(	std::is_same_v
+	<	Meta::DispatchFor<int(int, int)>::QualifiedFunctionType
 	,	int(int, int)
 	>
 );
@@ -12,7 +19,7 @@ static_assert
 static_assert
 (	std::is_same_v
 	<	decltype
-		(	&Meta::DispatchFor<int(int, int)>::template Final<Meta::ID_T<"">>
+		(	&Meta::Dispatch::Final<int(int, int), Meta::ID_T<"">>::operator()
 		)
 	,	int(*)(int, int)
 	>
@@ -20,15 +27,22 @@ static_assert
 
 static_assert
 (	std::is_same_v
-	<	Meta::DispatchFor<int(int, int) noexcept>::FunctionType
+	<	Meta::DispatchFor<int(int, int) noexcept>::PlainFunctionType
 	,	int(int, int) // cannot be noexcept
 	>
 );
 
 static_assert
 (	std::is_same_v
+	<	Meta::DispatchFor<int(int, int) noexcept>::QualifiedFunctionType
+	,	int(int, int) noexcept
+	>
+);
+
+static_assert
+(	std::is_same_v
 	<	decltype
-		(	&Meta::DispatchFor<int(int, int) noexcept>::template Final<Meta::ID_T<"">>
+		(	&Meta::Dispatch::Final<int(int, int) noexcept, Meta::ID_T<"">>::operator()
 		)
 	,	int(*)(int, int) // cannot be noexcept
 	>

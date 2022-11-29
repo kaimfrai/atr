@@ -136,7 +136,7 @@ static_assert
 	>::Dispatch
 	(	""
 	)
-==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"">>
+==	&Meta::Dispatch::Final<int(int, int), ID_T<"">>::operator()
 );
 static_assert
 (	Meta::DispatchFor
@@ -144,7 +144,7 @@ static_assert
 	>::Dispatch
 	(	"M"
 	)
-==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"M">>
+==	&Meta::Dispatch::Final<int(int, int), ID_T<"M">>::operator()
 );
 static_assert
 (	Meta::DispatchFor
@@ -152,7 +152,7 @@ static_assert
 	>::Dispatch
 	(	"Mu"
 	)
-==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"Mu">>
+==	&Meta::Dispatch::Final<int(int, int), ID_T<"Mu">>::operator()
 );
 static_assert
 (	Meta::DispatchFor
@@ -160,7 +160,7 @@ static_assert
 	>::Dispatch
 	(	"Mul"
 	)
-==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"Mul">>
+==	&Meta::Dispatch::Final<int(int, int), ID_T<"Mul">>::operator()
 );
 static_assert
 (	Meta::DispatchFor
@@ -168,7 +168,7 @@ static_assert
 	>::Dispatch
 	(	"Mult"
 	)
-==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"Mult">>
+==	&Meta::Dispatch::Final<int(int, int), ID_T<"Mult">>::operator()
 );
 static_assert
 (	Meta::DispatchFor
@@ -176,7 +176,7 @@ static_assert
 	>::Dispatch
 	(	"Multi"
 	)
-==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"Multi">>
+==	&Meta::Dispatch::Final<int(int, int), ID_T<"Multi">>::operator()
 );
 static_assert
 (	Meta::DispatchFor
@@ -184,7 +184,7 @@ static_assert
 	>::Dispatch
 	(	"Multip"
 	)
-==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"Multip">>
+==	&Meta::Dispatch::Final<int(int, int), ID_T<"Multip">>::operator()
 );
 static_assert
 (	Meta::DispatchFor
@@ -192,7 +192,7 @@ static_assert
 	>::Dispatch
 	(	"Multipl"
 	)
-==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"Multipl">>
+==	&Meta::Dispatch::Final<int(int, int), ID_T<"Multipl">>::operator()
 );
 static_assert
 (	Meta::DispatchFor
@@ -200,7 +200,7 @@ static_assert
 	>::Dispatch
 	(	"Multiply"
 	)
-==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"Multiply">>
+==	&Meta::Dispatch::Final<int(int, int), ID_T<"Multiply">>::operator()
 );
 static_assert
 (	Meta::DispatchFor
@@ -208,7 +208,7 @@ static_assert
 	>::Dispatch
 	(	"Multiply1"
 	)
-==	&Meta::DispatchFor<int(int, int)>::template Final<ID_T<"Multiply1">>
+==	&Meta::Dispatch::Final<int(int, int), ID_T<"Multiply1">>::operator()
 );
 
 static_assert
