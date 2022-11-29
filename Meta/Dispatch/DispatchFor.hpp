@@ -5,6 +5,7 @@ export import :Error;
 
 export import Meta.Arithmetic;
 export import Meta.ID;
+export import Meta.Lex;
 
 export import Std;
 
@@ -53,31 +54,60 @@ export namespace
 		)
 	;
 
-
 	template
 		<	typename
+				t_tFunction
 		>
 	struct
 		DispatchFor
-	;
+	:	DispatchFor
+		<	TokenizeEntity
+			<	t_tFunction
+			>
+		>
+	{};
 
 	template
 		<	typename
 				t_tResult
 		,	typename
 			...	t_tpArgument
+		,	typename
+			...	t_tpQualifier
 		>
 	struct
 		DispatchFor
-		<	t_tResult
-				(	t_tpArgument
+		<	Lex::Func
+			<	Lex::MatchSignature
+				<	t_tResult
+				,	t_tpArgument
 					...
-				)
+				>
+			,	t_tpQualifier
+				...
+			>
 		>
 	{
 		using
 			ResultType
-		=	t_tResult
+		=	typename
+			t_tResult
+		::	Entity
+		;
+
+		using
+			FunctionType
+		=	typename
+			Lex::Func
+			<	Lex::MatchSignature
+				<	t_tResult
+				,	t_tpArgument
+					...
+				>
+			//	Cannot use qualifiers like noexcept as the dispatching may throw exceptions
+			//	However, the dispatch paths may differ depending on the qualifiers.
+			>
+		::	Entity
 		;
 
 	private:
@@ -89,15 +119,11 @@ export namespace
 			)	(	std::string_view
 				,	USize
 				)
-			-> StepPair
+			->	StepPair
 			;
 
-			auto
-			(	*m_fFinal
-			)	(	t_tpArgument
-					...
-				)
-			->	ResultType
+			FunctionType
+				*m_fFinal
 			;
 
 			auto constexpr
@@ -139,7 +165,7 @@ export namespace
 		static bool constexpr
 			IsPathBlocked
 		=	Dispatch::IsPathBlocked
-			<	t_tResult(t_tpArgument...)
+			<	FunctionType
 			,	t_tID
 			>
 		;
@@ -151,7 +177,7 @@ export namespace
 			>
 		static auto constexpr
 		(	Final
-		)	(	t_tpArgument
+		)	(	typename t_tpArgument::Entity
 				...	i_rpArgument
 			)
 		->	ResultType
@@ -159,10 +185,7 @@ export namespace
 			auto constexpr
 				vPath
 			=	Dispatch::PathID
-				<	t_tResult
-						(	t_tpArgument
-							...
-						)
+				<	FunctionType
 				,	t_tID
 				>{}
 			;
@@ -170,7 +193,7 @@ export namespace
 				(	requires
 					{	Call
 						(	vPath
-						,	std::forward<t_tpArgument>
+						,	std::forward<typename t_tpArgument::Entity>
 							(	i_rpArgument
 							)
 							...
@@ -180,7 +203,7 @@ export namespace
 			{	return
 				Call
 				(	vPath
-				,	std::forward<t_tpArgument>
+				,	std::forward<typename t_tpArgument::Entity>
 					(	i_rpArgument
 					)
 					...
@@ -302,11 +325,7 @@ export namespace
 			,	t_tCharacterSet
 				=	t_tCharacterSet{}
 			)
-		->	auto
-			(*)	(	t_tpArgument
-					...
-				)
-			->	ResultType
+		->	FunctionType*
 		{	if	constexpr
 				(	IsPathBlocked<ID<>>
 				)
