@@ -1,12 +1,12 @@
 module Meta.ID:Special;
 
-import :Conversion;
+import Meta.Token;
 
-char8_t constexpr inline _ = '_';
+char constexpr inline _ = '_';
 
-template<>
 auto constexpr
-(	FromChar<'_'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'_'>
+	)
+->	char const&
 {	return (::_); }

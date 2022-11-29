@@ -1,6 +1,5 @@
 export module Meta.ID:Template;
 
-import :Conversion;
 import :UpperCase;
 import :LowerCase;
 import :Special;
@@ -9,6 +8,14 @@ import :StringView;
 import :StringLiteral;
 
 import Meta.Arithmetic;
+
+auto constexpr
+(	ToChar
+)	(	char
+			i_cChar
+	)
+->	char
+{	return i_cChar;	}
 
 export namespace
 	Meta
@@ -27,7 +34,7 @@ export namespace
 		=	sizeof...(t_vpString)
 		;
 
-		static char8_t constexpr
+		static char constexpr
 			RawArray
 			[	Length
 			+	1uz

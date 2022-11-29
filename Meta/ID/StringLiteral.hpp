@@ -14,7 +14,7 @@ export namespace
 		StringLiteral final
 	:	Aggregate
 		<	ArrayEntity
-			<	char8_t
+			<	char
 			,	t_nExtent
 			>
 		>
@@ -23,7 +23,7 @@ export namespace
 			AggregateType
 		=	Aggregate
 			<	ArrayEntity
-				<	char8_t
+				<	char
 				,	t_nExtent
 				>
 			>
@@ -36,11 +36,11 @@ export namespace
 
 		constexpr
 		(	StringLiteral
-		)	(	auto const
+		)	(	char const
 				*	i_aString
 			)
 		:	AggregateType
-			{	Data::MakeArrayAggregate<ArrayEntity<char8_t, t_nExtent>>
+			{	Data::MakeArrayAggregate<ArrayEntity<char, t_nExtent>>
 				(	i_aString
 				)
 			}
@@ -48,13 +48,23 @@ export namespace
 	};
 
 	template
-		<	typename
-				t_tChar
-		,	USize
+		<	USize
 				t_nExtent
 		>
 	(	StringLiteral
-	)	(	t_tChar const
+	)	(	StringLiteral<t_nExtent>
+		)
+	->	StringLiteral
+		<	t_nExtent
+		>
+	;
+
+	template
+		<	USize
+				t_nExtent
+		>
+	(	StringLiteral
+	)	(	char const
 			(&)	[	t_nExtent
 				]
 		)

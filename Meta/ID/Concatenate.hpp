@@ -44,4 +44,26 @@ export namespace
 			vResult
 		;
 	}
+
+	template
+		<	Meta::USize
+				t_nSize
+		>
+	auto constexpr
+	(	Concatenate
+	)	(	StringLiteral<t_nSize> const
+			&	i_rLeft
+		,	char
+				i_nRight
+		)
+	->	StringLiteral<t_nSize + 1uz>
+	{
+		StringLiteral<t_nSize + 1uz>
+			vResult
+		;
+		if constexpr(t_nSize > 0uz)
+			std::copy(begin(i_rLeft), end(i_rLeft), begin(vResult));
+		vResult[t_nSize] = i_nRight;
+		return vResult;
+	}
 }

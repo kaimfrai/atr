@@ -1,187 +1,187 @@
 module Meta.ID:LowerCase;
 
-import :Conversion;
+import Meta.Token;
 
-char8_t constexpr inline a = 'a';
-char8_t constexpr inline b = 'b';
-char8_t constexpr inline c = 'c';
-char8_t constexpr inline d = 'd';
-char8_t constexpr inline e = 'e';
-char8_t constexpr inline f = 'f';
-char8_t constexpr inline g = 'g';
-char8_t constexpr inline h = 'h';
-char8_t constexpr inline i = 'i';
-char8_t constexpr inline j = 'j';
-char8_t constexpr inline k = 'k';
-char8_t constexpr inline l = 'l';
-char8_t constexpr inline m = 'm';
-char8_t constexpr inline n = 'n';
-char8_t constexpr inline o = 'o';
-char8_t constexpr inline p = 'p';
-char8_t constexpr inline q = 'q';
-char8_t constexpr inline r = 'r';
-char8_t constexpr inline s = 's';
-char8_t constexpr inline t = 't';
-char8_t constexpr inline u = 'u';
-char8_t constexpr inline v = 'v';
-char8_t constexpr inline w = 'w';
-char8_t constexpr inline x = 'x';
-char8_t constexpr inline y = 'y';
-char8_t constexpr inline z = 'z';
+char constexpr inline a = 'a';
+char constexpr inline b = 'b';
+char constexpr inline c = 'c';
+char constexpr inline d = 'd';
+char constexpr inline e = 'e';
+char constexpr inline f = 'f';
+char constexpr inline g = 'g';
+char constexpr inline h = 'h';
+char constexpr inline i = 'i';
+char constexpr inline j = 'j';
+char constexpr inline k = 'k';
+char constexpr inline l = 'l';
+char constexpr inline m = 'm';
+char constexpr inline n = 'n';
+char constexpr inline o = 'o';
+char constexpr inline p = 'p';
+char constexpr inline q = 'q';
+char constexpr inline r = 'r';
+char constexpr inline s = 's';
+char constexpr inline t = 't';
+char constexpr inline u = 'u';
+char constexpr inline v = 'v';
+char constexpr inline w = 'w';
+char constexpr inline x = 'x';
+char constexpr inline y = 'y';
+char constexpr inline z = 'z';
 
-template<>
 auto constexpr
-(	FromChar<'a'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'a'>
+	)
+->	char const&
 {	return (::a); }
-template<>
 auto constexpr
-(	FromChar<'b'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'b'>
+	)
+->	char const&
 {	return (::b); }
-template<>
 auto constexpr
-(	FromChar<'c'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'c'>
+	)
+->	char const&
 {	return (::c); }
-template<>
 auto constexpr
-(	FromChar<'d'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'d'>
+	)
+->	char const&
 {	return (::d); }
-template<>
 auto constexpr
-(	FromChar<'e'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'e'>
+	)
+->	char const&
 {	return (::e); }
-template<>
 auto constexpr
-(	FromChar<'f'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'f'>
+	)
+->	char const&
 {	return (::f); }
-template<>
 auto constexpr
-(	FromChar<'g'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'g'>
+	)
+->	char const&
 {	return (::g); }
-template<>
 auto constexpr
-(	FromChar<'h'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'h'>
+	)
+->	char const&
 {	return (::h); }
-template<>
 auto constexpr
-(	FromChar<'i'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'i'>
+	)
+->	char const&
 {	return (::i); }
-template<>
 auto constexpr
-(	FromChar<'j'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'j'>
+	)
+->	char const&
 {	return (::j); }
-template<>
 auto constexpr
-(	FromChar<'k'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'k'>
+	)
+->	char const&
 {	return (::k); }
-template<>
 auto constexpr
-(	FromChar<'l'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'l'>
+	)
+->	char const&
 {	return (::l); }
-template<>
 auto constexpr
-(	FromChar<'m'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'m'>
+	)
+->	char const&
 {	return (::m); }
-template<>
 auto constexpr
-(	FromChar<'n'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'n'>
+	)
+->	char const&
 {	return (::n); }
-template<>
 auto constexpr
-(	FromChar<'o'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'o'>
+	)
+->	char const&
 {	return (::o); }
-template<>
 auto constexpr
-(	FromChar<'p'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'p'>
+	)
+->	char const&
 {	return (::p); }
-template<>
 auto constexpr
-(	FromChar<'q'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'q'>
+	)
+->	char const&
 {	return (::q); }
-template<>
 auto constexpr
-(	FromChar<'r'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'r'>
+	)
+->	char const&
 {	return (::r); }
-template<>
 auto constexpr
-(	FromChar<'s'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'s'>
+	)
+->	char const&
 {	return (::s); }
-template<>
 auto constexpr
-(	FromChar<'t'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'t'>
+	)
+->	char const&
 {	return (::t); }
-template<>
 auto constexpr
-(	FromChar<'u'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'u'>
+	)
+->	char const&
 {	return (::u); }
-template<>
 auto constexpr
-(	FromChar<'v'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'v'>
+	)
+->	char const&
 {	return (::v); }
-template<>
 auto constexpr
-(	FromChar<'w'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'w'>
+	)
+->	char const&
 {	return (::w); }
-template<>
 auto constexpr
-(	FromChar<'x'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'x'>
+	)
+->	char const&
 {	return (::x); }
-template<>
 auto constexpr
-(	FromChar<'y'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'y'>
+	)
+->	char const&
 {	return (::y); }
-template<>
 auto constexpr
-(	FromChar<'z'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'z'>
+	)
+->	char const&
 {	return (::z); }

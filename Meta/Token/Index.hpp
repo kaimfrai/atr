@@ -6,14 +6,14 @@ export namespace
 	Meta::Token
 {
 	template
-		<	USize
+		<	auto
 			...	t_npIndex
 		>
 	struct
 		Index
 	{
 		template
-			<	USize
+			<	auto
 					t_nAssign
 			>
 		auto constexpr
@@ -29,7 +29,7 @@ export namespace
 		{	return {};	}
 
 		template
-			<	USize
+			<	auto
 					t_nAdd
 			>
 		auto constexpr
@@ -54,6 +54,22 @@ export namespace
 				...
 			>
 		{	return	{};	}
+
+		template
+			<	typename
+					t_tCast
+			>
+		static auto constexpr
+		(	CastAll
+		)	()
+		{	return
+			Index
+			<	static_cast<t_tCast>
+				(	t_npIndex
+				)
+				...
+			>{};
+		}
 	};
 }
 
@@ -61,7 +77,7 @@ export namespace
 	Meta
 {
 	template
-		<	USize
+		<	auto
 			...	t_npIndex
 		>
 	using
@@ -73,7 +89,7 @@ export namespace
 	;
 
 	template
-		<	USize
+		<	auto
 			...	t_npIndex
 		>
 	auto constexpr inline

@@ -1,12 +1,24 @@
 module Meta.ID:Make;
 
-import :Conversion;
 import :UpperCase;
 import :LowerCase;
 import :Special;
 import :Decimal;
 import :Template;
 import :StringLiteral;
+
+import Meta.Token;
+
+template
+	<	char
+			t_nCharacter
+	>
+auto constexpr
+(	FromChar
+)	(	Meta::IndexToken<t_nCharacter>
+	)
+->	char
+{	return t_nCharacter;	}
 
 /// dispatches a string literal into its characters
 ///	creates an instance of the given identifer template with all dispatched characters inserted
@@ -25,10 +37,12 @@ auto constexpr
 	)
 ->	::Meta::ID
 	<	::FromChar
-		<	t_vStringLiteral
-			[	t_npIndex
-			]
-		>()
+		(	Meta::IndexToken
+			<	t_vStringLiteral
+				[	t_npIndex
+				]
+			>{}
+		)
 		...
 	>
 {	return{};	}

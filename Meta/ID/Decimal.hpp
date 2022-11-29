@@ -1,66 +1,66 @@
 module Meta.ID:Decimal;
 
-import :Conversion;
+import Meta.Token;
 
-template<>
 auto constexpr
-(	FromChar<'0'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'0'>
+	)
+->	int
 {	return 0; }
-template<>
 auto constexpr
-(	FromChar<'1'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'1'>
+	)
+->	int
 {	return 1; }
-template<>
 auto constexpr
-(	FromChar<'2'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'2'>
+	)
+->	int
 {	return 2; }
-template<>
 auto constexpr
-(	FromChar<'3'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'3'>
+	)
+->	int
 {	return 3; }
-template<>
 auto constexpr
-(	FromChar<'4'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'4'>
+	)
+->	int
 {	return 4; }
-template<>
 auto constexpr
-(	FromChar<'5'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'5'>
+	)
+->	int
 {	return 5; }
-template<>
 auto constexpr
-(	FromChar<'6'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'6'>
+	)
+->	int
 {	return 6; }
-template<>
 auto constexpr
-(	FromChar<'7'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'7'>
+	)
+->	int
 {	return 7; }
-template<>
 auto constexpr
-(	FromChar<'8'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'8'>
+	)
+->	int
 {	return 8; }
-template<>
 auto constexpr
-(	FromChar<'9'>
-)	()
-->	decltype(auto)
+(	FromChar
+)	(	Meta::IndexToken<'9'>
+	)
+->	int
 {	return 9; }
 
 auto constexpr
@@ -68,5 +68,5 @@ auto constexpr
 )	(	int
 			i_nChar
 	)
-->	char8_t
-{	return static_cast<char8_t>(i_nChar + '0');	}
+->	char
+{	return static_cast<char>(i_nChar + '0');	}

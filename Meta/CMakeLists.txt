@@ -5,5 +5,6 @@ add_subdirectory(Data)
 add_subdirectory(Logic)
 add_subdirectory(Predicate)
 add_subdirectory(ID)
+add_subdirectory(Dispatch)
 
 add_module(Meta.hpp)

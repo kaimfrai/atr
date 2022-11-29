@@ -10,7 +10,7 @@ namespace
 	Meta
 {
 	template
-		<	USize
+		<	auto
 				t_nLength
 		>
 	auto constexpr inline
@@ -27,11 +27,15 @@ namespace
 			)
 		{	return
 			IndexToken
-			<	t_npIndex
+			<	static_cast<decltype(t_nLength)>
+				(	t_npIndex
+				)
 				...
 			>{};
 		}(	::std::make_index_sequence
-			<	t_nLength
+			<	static_cast<std::size_t>
+				(	t_nLength
+				)
 			>{}
 		);
 	}
@@ -41,7 +45,7 @@ export namespace
 	Meta
 {
 	template
-		<	USize
+		<	auto
 				t_nSize
 		>
 	auto constexpr inline
@@ -52,13 +56,13 @@ export namespace
 	;
 
 	template
-		<	USize
+		<	auto
 				t_nSize
 		>
 	auto constexpr inline
 		ZeroSequence
 	=	(	Sequence<t_nSize>
-		=	Index<0uz>
+		=	Index<decltype(t_nSize){}>
 		)
 	;
 

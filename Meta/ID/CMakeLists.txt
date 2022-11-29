@@ -3,7 +3,6 @@ add_module(
 	Alias.hpp
 	Concatenate.hpp
 	Concept.hpp
-	Conversion.hpp
 	Decimal.hpp
 	Literals.hpp
 	LowerCase.hpp

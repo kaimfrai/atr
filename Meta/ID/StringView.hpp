@@ -10,7 +10,7 @@ export namespace
 	struct
 		StringView final
 	{
-		char8_t const*
+		char const*
 			Data
 		;
 
@@ -24,7 +24,7 @@ export namespace
 		)	(	USize
 					t_nIndex
 			)	const
-		->	char8_t const&
+		->	char const&
 		{	return Data[t_nIndex];	}
 
 		[[nodiscard]]
@@ -45,7 +45,7 @@ export namespace
 		(	data
 		)	()	const
 			noexcept
-		->	char8_t const*
+		->	char const*
 		{	return Data;	}
 
 		auto constexpr
@@ -60,7 +60,7 @@ export namespace
 		)	(	StringView
 					i_vView
 			)
-		->	char8_t const*
+		->	char const*
 		{	return i_vView.Data;	}
 
 		friend auto constexpr
@@ -68,7 +68,7 @@ export namespace
 		)	(	StringView
 					i_vView
 			)
-		->	char8_t const*
+		->	char const*
 		{	return i_vView.Data + i_vView.Size;	}
 	};
 
@@ -137,4 +137,29 @@ export namespace
 
 		return ::std::strong_ordering::equal;
 	}
+
+	namespace
+		String
+	{
+		template
+			<	char
+					t_cChar
+			>
+		auto constexpr inline
+			Char
+		=	t_cChar
+		;
+	}
+
+	template
+		<	char
+				t_cChar
+		>
+	StringView constexpr inline
+		SingleView
+	=	StringView
+		{	&String::Char<t_cChar>
+		,	1uz
+		}
+	;
 }

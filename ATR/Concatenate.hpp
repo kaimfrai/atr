@@ -123,7 +123,7 @@ export namespace
 	=	::ATR::InfixLayoutConfig
 		<	Meta::ID_T<i_vPrefix>
 		,	LayoutConfig<i_vType>
-		,	Meta::ID_T<"">
+		,	Meta::ID<>
 		>
 	;
 
@@ -138,7 +138,7 @@ export namespace
 	MemberList constexpr inline
 		SuffixedLayoutConfig
 	=	::ATR::InfixLayoutConfig
-		<	Meta::ID_T<"">
+		<	Meta::ID<>
 		,	LayoutConfig<i_vType>
 		,	Meta::ID_T<i_vSuffix>
 		>
