@@ -3,6 +3,8 @@ export module Meta.ID:StringLiteral;
 export import Meta.Data;
 export import Meta.Arithmetic;
 
+export import Std;
+
 export namespace
 	Meta
 {
@@ -45,6 +47,40 @@ export namespace
 				)
 			}
 		{}
+
+		auto constexpr
+		(	starts_with
+		)	(	std::string_view
+					i_vPrefix
+			)	const
+		->	bool
+		{	return
+				std::string_view
+				{	this->data()
+				,	t_nExtent
+				}
+			.	starts_with
+				(	i_vPrefix
+				)
+			;
+		}
+
+		auto constexpr
+		(	ends_with
+		)	(	std::string_view
+					i_vPrefix
+			)	const
+		->	bool
+		{	return
+				std::string_view
+				{	this->data()
+				,	t_nExtent
+				}
+			.	ends_with
+				(	i_vPrefix
+				)
+			;
+		}
 	};
 
 	template

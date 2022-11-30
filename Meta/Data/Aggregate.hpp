@@ -691,6 +691,18 @@ export namespace
 			)
 		->	const_iterator
 		{	return nullptr;	}
+
+		auto constexpr
+		(	data
+		)	()	&
+		->	pointer
+		{	return nullptr;	}
+
+		auto constexpr
+		(	data
+		)	()	const&
+		->	const_pointer
+		{	return nullptr;	}
 	};
 
 	template
@@ -822,6 +834,18 @@ export namespace
 			)	&&
 		->	value_type
 		{	return ::std::move(this->Data)[i_nIndex];	}
+
+		auto constexpr
+		(	data
+		)	()	&
+		->	pointer
+		{	return this->Data;	}
+
+		auto constexpr
+		(	data
+		)	()	const&
+		->	const_pointer
+		{	return this->Data;	}
 	};
 
 	template

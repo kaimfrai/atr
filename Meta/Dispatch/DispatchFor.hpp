@@ -4,7 +4,7 @@ export import :BlockedPath;
 export import :Error;
 export import :CharacterSet;
 export import :Final;
-import :StepPair;
+export import :StepPair;
 export import :Step;
 
 export import Meta.ID;

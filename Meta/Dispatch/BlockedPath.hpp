@@ -11,8 +11,7 @@ export namespace
 	///	The first deleting makes call invalid.
 	///	Any more deletions make the call ambiguous.
 	///	Either way, we get SFINAE.
-	template<typename t_tFunction, ProtoID t_tName>
-	auto Block(PathID<t_tFunction, t_tName>) -> void;
+	auto Block(auto) -> void;
 
 	template
 		<	typename
