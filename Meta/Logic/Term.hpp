@@ -444,7 +444,7 @@ export namespace
 					i_vParameter
 			)
 		->	bool
-		{	return	i_vParameter();	}
+		{	return	std::move(i_vParameter)();	}
 	};
 
 	template

@@ -8,7 +8,7 @@ export namespace
 	/**
 	 * Enables creating functions that work like templates but are not.
 	 * To be used as a function parameter making use of implicit conversions.
-	 * For multiple arguments {} are required.
+	 * For zero or multiple arguments {} are required.
 	 * The second argument is the function body which will recieve all arguments upon creation and store the result.
 	 * Use operator() to retrieve the result in the actual function.
 	 */
@@ -29,7 +29,7 @@ export namespace
 			<	typename
 				...	t_tpArgument
 			>
-		constexpr
+		explicit(false) constexpr
 		(	TemplateParameter
 		)	(	t_tpArgument
 				&&
@@ -45,10 +45,16 @@ export namespace
 			}
 		{}
 
+		TemplateParameter(TemplateParameter const&) = delete;
+		TemplateParameter(TemplateParameter&&) = delete;
+		TemplateParameter& operator=(TemplateParameter const&) = delete;
+		TemplateParameter& operator=(TemplateParameter&&) = delete;
+
+		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	()	const
+		)	()	&&
 		->	t_tResult
-		{	return m_bResult;	}
+		{	return static_cast<t_tResult>(m_bResult);	}
 	};
 }
