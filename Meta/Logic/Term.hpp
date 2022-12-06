@@ -5,6 +5,7 @@ export import :LiteralBase;
 
 export import Meta.Arithmetic;
 export import Meta.Token;
+export import Meta.Functional;
 
 import Std;
 
@@ -416,29 +417,34 @@ export namespace
 		=	t_vTerm.ClauseCount()
 		;
 
-		template
-			<	typename
-				...	t_tpArgument
-			>
-		auto constexpr
+		static auto constexpr
 		(	operator ()
-		)	(	t_tpArgument
-				&&
-				...	i_rpArgument
-			)	const
+		)	(	TemplateParameter
+				<	bool
+				,	[]	(	auto
+							&&
+							...	i_rpArgument
+						)
+					->	bool
+					{	return
+						EvaluateTerm
+						(	t_vTerm
+						,	std::array<bool, LiteralCount>
+							{	t_tpLiteral{}
+								(	std::forward<decltype(i_rpArgument)>
+									(	i_rpArgument
+									)
+									...
+								)
+								...
+							}
+						);
+					}
+				>
+					i_vParameter
+			)
 		->	bool
-		{	return
-			EvaluateTerm
-			(	t_vTerm
-			,	std::array
-				{	t_tpLiteral{}
-					(	std::forward<t_tpArgument>(i_rpArgument)
-						...
-					)
-					...
-				}
-			);
-		}
+		{	return	i_vParameter();	}
 	};
 
 	template
