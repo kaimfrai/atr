@@ -41,4 +41,5 @@ add_module(
 	Fold/Fold.cpp
 
 	Fold.cpp
+	Construct.cpp
 )
