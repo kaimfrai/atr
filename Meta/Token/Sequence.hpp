@@ -59,6 +59,31 @@ export namespace
 		<	auto
 				t_nSize
 		>
+	auto constexpr
+	(	InjectSequence
+	)	(	auto
+			&&	i_fTransform
+		,	auto
+			&&	i_fReduce
+		)
+	{	return
+			Sequence<t_nSize>
+		.	TransformReduce
+			(	std::forward<decltype(i_fTransform)>
+				(	i_fTransform
+				)
+			,	std::forward<decltype(i_fReduce)>
+				(	i_fReduce
+				)
+			)
+		;
+
+	}
+
+	template
+		<	auto
+				t_nSize
+		>
 	auto constexpr inline
 		ZeroSequence
 	=	(	Sequence<t_nSize>

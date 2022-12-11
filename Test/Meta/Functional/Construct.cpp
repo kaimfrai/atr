@@ -12,7 +12,7 @@ struct
 };
 
 static_assert
-(	Construct<Test>{}
+(	Construct<Test>()
 	(	2
 	)
 ==	Test
@@ -50,7 +50,7 @@ template
 ;
 
 static_assert
-(	ConstructValuePack<ValuePack>{}
+(	Construct<ValuePack>()
 	(	2
 	,	23
 	,	52
@@ -91,7 +91,7 @@ template
 ;
 
 static_assert
-(	ConstructTypePack<TypePack>{}
+(	Construct<TypePack>()
 	(	2
 	)
 ==	TypePack

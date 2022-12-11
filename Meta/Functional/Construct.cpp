@@ -10,7 +10,7 @@ export namespace
 				t_tEntity
 		>
 	struct
-		Construct
+		ConstructType
 	{
 		[[nodiscard]]
 		static auto constexpr
@@ -47,6 +47,16 @@ export namespace
 			};
 		}
 	};
+
+	template
+		<	typename
+				t_tEntity
+		>
+	auto constexpr
+	(	Construct
+	)	()
+	->	ConstructType<t_tEntity>
+	{	return{};	}
 
 	template
 		<	template
@@ -97,6 +107,20 @@ export namespace
 
 	template
 		<	template
+				<	auto
+					...
+				>
+			typename
+				t_t1Entity
+		>
+	auto constexpr
+	(	Construct
+	)	()
+	->	ConstructValuePack<t_t1Entity>
+	{	return{};	}
+
+	template
+		<	template
 				<	typename
 					...
 				>
@@ -141,4 +165,18 @@ export namespace
 			};
 		}
 	};
+
+	template
+		<	template
+				<	typename
+					...
+				>
+			typename
+				t_t1Entity
+		>
+	auto constexpr
+	(	Construct
+	)	()
+	->	ConstructTypePack<t_t1Entity>
+	{	return{};	}
 }

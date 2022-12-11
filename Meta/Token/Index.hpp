@@ -2,6 +2,8 @@ export module Meta.Token:Index;
 
 export import Meta.Arithmetic;
 
+export import Std;
+
 export namespace
 	Meta::Token
 {
@@ -12,6 +14,15 @@ export namespace
 	struct
 		Index
 	{
+		constexpr
+		(	operator auto
+		)	()	const
+			requires
+				(	sizeof...(t_npIndex)
+				==	1uz
+				)
+		{	return (t_npIndex + ... + 0uz);}
+
 		template
 			<	auto
 					t_nAssign
@@ -86,6 +97,40 @@ export namespace
 				)
 				...
 			>{};
+		}
+
+		static auto constexpr
+		(	TransformReduce
+		)	(	auto
+				&&	i_fTransform
+			,	auto
+				&&	i_fReduce
+			)
+			requires
+				(	...
+				and	std::invocable
+					<	decltype(i_fTransform)
+					,	Index<t_npIndex>
+					>
+				)
+			and	std::invocable
+				<	decltype(i_fReduce)
+				,	std::invoke_result_t
+					<	decltype(i_fTransform)
+					,	Index<t_npIndex>
+					>
+					...
+				>
+		{	return
+			std::forward<decltype(i_fReduce)>
+			(	i_fReduce
+			)(	std::forward<decltype(i_fTransform)>
+				(	i_fTransform
+				)(	Index<t_npIndex>
+					{}
+				)
+				...
+			);
 		}
 	};
 }
