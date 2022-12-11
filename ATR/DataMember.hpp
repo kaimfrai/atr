@@ -415,28 +415,28 @@ export namespace
 			)
 		->	decltype(t_vList)
 		{
-			return
-			[]	<	USize
-					...	t_npIndex
-				>(	IndexToken<t_npIndex...>
-				)
-			->	decltype(t_vList)
-			{
-				decltype(t_vList)
-					vList
-				{	MemberInstance
-					<	Meta::ID_Of<t_vList[t_npIndex].Name>
-					,	(	Meta::RestoreTypeToken<t_vList[t_npIndex].Type>
-						+	decltype(i_fTransform){}
+			auto
+				vList
+			=	Meta::InjectSequence<t_vList.size()>
+				(	[]	(	auto
+								i_vIndex
 						)
-					,	t_vList[t_npIndex].SortKey
-					>
-					...
-				};
-				::std::sort(begin(vList), end(vList));
-				return vList;
-			}(	Sequence<t_vList.size()>
-			);
+					{
+						auto constexpr& vItem = t_vList[i_vIndex];
+						return
+						MemberInstance
+						<	Meta::ID_Of<vItem.Name>
+						,	(	Meta::RestoreTypeToken<vItem.Type>
+							+	decltype(i_fTransform){}
+							)
+						,	vItem.SortKey
+						>;
+					}
+				,	Meta::Construct<decltype(t_vList)>()
+				)
+			;
+			::std::sort(begin(vList), end(vList));
+			return vList;
 		}
 
 		template

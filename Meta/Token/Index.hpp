@@ -21,7 +21,9 @@ export namespace
 				(	sizeof...(t_npIndex)
 				==	1uz
 				)
-		{	return (t_npIndex + ... + 0uz);}
+		{	if constexpr(sizeof...(t_npIndex) == 1uz)
+				return (..., t_npIndex);
+		}
 
 		template
 			<	auto

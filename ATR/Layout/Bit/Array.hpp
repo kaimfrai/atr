@@ -106,22 +106,28 @@ export namespace
 
 		static EOffset constexpr
 			MaximumOffset
-		{	[]	<	USize
-					...	t_npIndex
-				>(	IndexToken<t_npIndex...>
-				)
-			{	return
-				::std::max
-				({	(	(	static_cast<USize>(t_nSize)
-						*	t_npIndex
+		{	// include offset of one-past-the-end for end() iterator value
+			Meta::InjectSequence<t_nExtent + 1uz>
+			(	[]	(	USize
+							i_nIndex
+					)
+				{	return
+					(	(	static_cast<USize>(t_nSize)
+						*	i_nIndex
 						+	static_cast<USize>(t_nOffset)
 						)
 					%	BitsPerByte
+					);
+				}
+			,	[]	(	auto
+						...	i_nOffset
 					)
-					...
-				});
-			}(	// include offset of one-past-the-end for end() iterator value
-				Sequence<t_nExtent + 1uz>
+				{	return
+					::std::max
+					({	i_nOffset
+						...
+					});
+				}
 			)
 		};
 		using BitAccess = Access<t_nSize, MaximumOffset>;

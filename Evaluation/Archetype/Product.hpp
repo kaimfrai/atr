@@ -20,18 +20,18 @@ export namespace
 		noexcept
 	->	Float
 	{	return
-		[&]	<	Meta::USize
-				...	t_npIndex
-			>(	Meta::IndexToken<t_npIndex...>
-			)
-		->	Float
-		{	return
-			(	...
-			*	i_vArgument
-				(	Meta::Index<t_npIndex>
+		i_vArgument.ItemSequence.TransformReduce
+		(	[	&i_vArgument
+			]	(	auto
+						i_vIndex
 				)
-			);
-		}(	i_vArgument.ItemSequence
+			{	return
+				i_vArgument
+				(	i_vIndex
+				);
+			}
+		,	Meta::Fold<&Meta::Functional::Key::operator*>
+			{}
 		);
 	}
 }

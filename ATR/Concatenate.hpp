@@ -3,6 +3,7 @@ export module ATR:Concatenate;
 export import :DataMember;
 
 export import Meta.ID;
+export import Meta.Functional;
 
 namespace
 	ATR
@@ -87,22 +88,18 @@ namespace
 		>
 	MemberList constexpr inline
 		InfixLayoutConfig
-	=	[]	<	Meta::USize
-				...	t_npIndex
-			>(	Meta::IndexToken<t_npIndex...>
-			)
-		->	decltype(auto)
-		{	return
-			MemberList
-			{	InfixDataMember
+	=	Meta::InjectSequence<t_vConfig.size()>
+		(	[]	(	auto
+						i_vIndex
+				)
+			{	return
+				InfixDataMember
 				<	t_tPrefix
-				,	t_vConfig[t_npIndex]
+				,	t_vConfig[i_vIndex]
 				,	t_tSuffix
-				>()
-				...
-			};
-
-		}(	Meta::Sequence<t_vConfig.size()>
+				>();
+			}
+		,	Meta::Construct<MemberList>()
 		)
 	;
 }

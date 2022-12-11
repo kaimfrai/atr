@@ -4,6 +4,7 @@ export import :Aggregate;
 
 export import Meta.Token;
 export import Meta.Arithmetic;
+export import Meta.Functional;
 
 import Std;
 
@@ -207,28 +208,37 @@ export namespace
 				}();
 
 				return
-				[	&
-				]	<	USize
-						...	t_npIndex
-					>(	IndexToken<t_npIndex...>
-					)
-				{	return
-					::Meta::TupleSet
-					{	static_cast<TupleSetItem<t_tpItem> const*>
-						(	this
+				InjectSequence<nNotContainedCount>
+				(	[&]	(	auto
+								i_vIndex
 						)
-					->	Item
-						...
-					,	i_rRight
+					{	return
+						i_rRight
 						[	Index
 							<	vNotContainedIndices
-								[	t_npIndex
+								[	i_vIndex
 								]
 							>
-						]
-						...
-					};
-				}(	Sequence<nNotContainedCount>
+						];
+					}
+				,	[	this
+					]	(	auto
+							&&
+							...	i_rpNotContained
+						)
+					{	return
+						::Meta::TupleSet
+						{	static_cast<TupleSetItem<t_tpItem> const*>
+							(	this
+							)
+						->	Item
+							...
+						,	std::forward<decltype(i_rpNotContained)>
+							(	i_rpNotContained
+							)
+							...
+						};
+					}
 				);
 			}
 		}
@@ -257,24 +267,22 @@ export namespace
 				return *this;
 			else
 				return
-				[	&
-				]	<	USize
-						...	t_npIndex
-					>(	IndexToken<t_npIndex...>
-					)
-				{	return
-					::Meta::TupleSet
-					{	(*this)
+				InjectSequnce<nRequiredItemCount>
+				(	[	this
+					]	(	auto
+								i_vIndex
+						)
+					{	return
+						(*this)
 						[	Index
 							<	GetIndexOfNthOneBit
 								(	t_nFilterField
-								,	t_npIndex
+								,	i_vIndex
 								)
 							>
-						]
-						...
-					};
-				}(	Sequence<nRequiredItemCount>
+						];
+					}
+				,	Construct<::Meta::TupleSet>()
 				);
 		}
 	};
