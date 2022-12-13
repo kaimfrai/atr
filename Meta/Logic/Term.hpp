@@ -81,8 +81,20 @@ export namespace
 	struct
 		ErasedTerm final
 	{
-		using UnionBufferType = ::std::array<EraseTypeToken, Logic::LiteralLimit * 2uz>;
-		using LiteralBufferType = ::std::array<EraseTypeToken, Logic::LiteralLimit>;
+		using
+			UnionBufferType
+		=	::std::array
+			<	EraseTypeToken
+			,	2uz * Logic::LiteralLimit
+			>
+		;
+		using
+			LiteralBufferType
+		=	::std::array
+			<	EraseTypeToken
+			,	Logic::LiteralLimit
+			>
+		;
 
 		Logic::BitTerm const
 			BitTerm
@@ -141,7 +153,8 @@ export namespace
 		(	ProcessComputation
 		)	(	bool
 					i_bEquivalence
-			,	UnionBufferType const&
+			,	EraseTypeToken const
+				*
 			)
 		->	bool
 		{	return i_bEquivalence;	}
@@ -150,24 +163,18 @@ export namespace
 		(	ProcessComputation
 		)	(	Logic::BitTerm const
 				&	i_rResult
-			,	UnionBufferType const
-				&	i_rUnion
+			,	EraseTypeToken const
+				*	i_aUnion
 			)
 		->	ErasedTerm
-		{	return TrimLiterals(i_rResult, i_rUnion.begin());	}
+		{	return TrimLiterals(i_rResult, i_aUnion);	}
 
-		template
-			<	typename
-					t_tResult
-			>
 		static auto constexpr
-		(	ComputeErasedTerm
+		(	GetLiteralUnion
 		)	(	ErasedTerm const
 				&	i_rLeft
 			,	ErasedTerm const
 				&	i_rRight
-			,	BinaryTermFunction<t_tResult>
-					i_fCompute
 			)
 		{
 			UnionBufferType
@@ -199,6 +206,59 @@ export namespace
 					}
 				)
 			;
+			//	compiler will complain about uninitialized buffer in constant expression otherwise
+			if consteval
+			{
+				std::fill
+				(	vUnionEnd
+				,	vUnion.end()
+				,	nullptr
+				);
+			}
+			return
+			std::pair
+			{	vUnion
+			,	static_cast<USize>
+				(	vUnionEnd
+				-	vUnion.begin()
+				)
+			};
+		}
+
+		template
+			<	typename
+					t_tResult
+			>
+		static auto constexpr
+		(	ComputeErasedTerm
+		)	(	ErasedTerm const
+				&	i_rLeft
+			,	ErasedTerm const
+				&	i_rRight
+			,	BinaryTermFunction<t_tResult>
+					i_fCompute
+			)
+		{
+			if	(std::ranges::equal(i_rLeft, i_rRight))
+			{
+				return
+				ProcessComputation
+				(	i_fCompute
+					(	i_rLeft.BitTerm
+					,	i_rRight.BitTerm
+					)
+				,	i_rLeft.Literals.begin()
+				);
+			}
+
+			auto const
+			[	vUnion
+			,	vUnionEndIndex
+			]=	GetLiteralUnion
+				(	i_rLeft
+				,	i_rRight
+				)
+			;
 
 			::std::array<USize, Logic::LiteralLimit>
 				vPermutationArray
@@ -210,12 +270,11 @@ export namespace
 				,	end(i_rRight)
 				,	vPermutationArray.begin()
 				,	[	vUnionBegin = vUnion.begin()
-					,	vUnionEnd
+					,	vUnionEnd = vUnion.begin() + vUnionEndIndex
 					]	(	EraseTypeToken
 								i_vType
 						)
-					{
-						return
+					{	return
 						static_cast<USize>
 						(	::std::find
 							(	vUnionBegin
@@ -240,7 +299,7 @@ export namespace
 						}
 					)
 				)
-			,	vUnion
+			,	vUnion.begin()
 			);
 		}
 
