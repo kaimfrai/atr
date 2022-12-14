@@ -18,15 +18,7 @@ namespace
 	export struct
 		BitTerm final
 	{
-		using
-			ClauseBufferType
-		=	StaticBufferedSpan
-			<	BitClause
-			,	ClauseLimit
-			>
-		;
-
-		ClauseBufferType const
+		BitClauseBuffer const
 			Clauses
 		{};
 
@@ -42,55 +34,23 @@ namespace
 			)
 		:	Clauses
 			{	i_vClause.IsIdentity()
-			?	ClauseBufferType{}
-			:	ClauseBufferType
+			?	BitClauseBuffer{}
+			:	BitClauseBuffer
 				{	i_vClause
 				}
 			}
 		{}
 
 	private:
-		template
-			<	::std::size_t
-				...	t_npIndex
-			>
 		constexpr
 		(	BitTerm
-		)	(	BitClause const
-				*	i_aClauses
-			,	::std::index_sequence
-				<	t_npIndex
-					...
-				>
+		)	(	BitClauseBuffer const
+				&	i_rClauses
 			)
 		:	Clauses
-			{	ClauseBufferType
-				{	i_aClauses
-					[	t_npIndex
-					]
-					...
-				}
-			.	pop_back
-				((	...
-				+	i_aClauses[t_npIndex].IsIdentity()
-				))
+			{	i_rClauses
 			}
 		{}
-
-		constexpr
-		(	BitTerm
-		)	(	BitClause const
-				(&
-				)[	ClauseLimit
-				]
-			)
-		;
-
-		constexpr
-		(	BitTerm
-		)	(	BitClauseArray const&
-			)
-		;
 
 	public:
 		constexpr
@@ -228,32 +188,6 @@ namespace
 		)
 	->	bool
 	;
-
-	constexpr
-	(	BitTerm
-	::	BitTerm
-	)	(	BitClause const
-			(&	i_rClauses
-			)[	ClauseLimit
-			]
-		)
-	:	BitTerm
-		{	+i_rClauses
-		,	::std::make_index_sequence<ClauseLimit>{}
-		}
-	{}
-
-	constexpr
-	(	BitTerm
-	::	BitTerm
-	)	(	BitClauseArray const
-			&	i_rClauses
-		)
-	:	BitTerm
-		{	i_rClauses.data()
-		,	::std::make_index_sequence<ClauseLimit>{}
-		}
-	{}
 
 	constexpr
 	(	BitTerm

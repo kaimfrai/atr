@@ -1,6 +1,7 @@
 export module Meta.Logic:Optimizer;
 
 export import :BitClause;
+export import :BufferedSpan;
 import :BitClauseIterator;
 
 import Std;
@@ -9,8 +10,8 @@ namespace
 	Meta::Logic
 {
 	export using
-		BitClauseArray
-	=	::std::array
+		BitClauseBuffer
+	=	StaticBufferedSpan
 		<	BitClause
 		,	ClauseLimit
 		>
@@ -105,14 +106,14 @@ namespace
 				&	i_rOptimizer
 			)
 		->	BitClause*
-		;
+		{	return i_rOptimizer.m_aTermBegin;	}
 
 		class
 			Sentinel final
 		{
 			BitClause
 			*	const
-			&	m_rTermEnd
+			*	m_rTermEnd
 			;
 
 			constexpr
@@ -122,7 +123,7 @@ namespace
 					&	i_rTermEnd
 				)
 			:	m_rTermEnd
-				{	i_rTermEnd
+				{	std::addressof(i_rTermEnd)
 				}
 			{}
 
@@ -135,6 +136,11 @@ namespace
 			;
 
 		public:
+			explicit(false) constexpr
+			(	Sentinel
+			)	()
+			=	default;
+
 			auto constexpr
 			(	operator ==
 			)	(	BitClause
@@ -142,7 +148,7 @@ namespace
 				)	const
 			->	bool
 			{
-				return i_aClause == m_rTermEnd;
+				return i_aClause == *m_rTermEnd;
 			}
 		};
 
@@ -152,7 +158,9 @@ namespace
 				&	i_rOptimizer
 			)
 		->	Sentinel
-		;
+		{	//	does not get invalidated when the size changes
+			return {i_rOptimizer.m_aTermEnd};
+		}
 
 		explicit constexpr
 		(	Optimizer
@@ -167,9 +175,28 @@ namespace
 
 		constexpr
 		(	operator
-			BitClauseArray
+			BitClauseBuffer
 		)	()	&&
-		;
+		{
+			Optimize(true);
+
+			if	(ClauseLimit < size())
+				throw "Optimized term contains to many clauses to copy!";
+
+			BitClauseBuffer
+				vArray
+			{};
+			auto f [[maybe_unused]]
+			=	std::ranges::begin(std::as_const(*this))
+			;
+
+			auto g [[maybe_unused]]
+			=	std::ranges::end(std::as_const(*this))
+			;
+			vArray.AppendUnique(std::as_const(*this));
+
+			return vArray;
+		}
 
 		auto constexpr
 		(	clear
@@ -526,24 +553,6 @@ namespace
 		);
 	}
 
-	auto constexpr
-	(	begin
-	)	(	Optimizer const
-			&	i_rOptimizer
-		)
-	->	BitClause*
-	{	return i_rOptimizer.m_aTermBegin;	}
-
-	auto constexpr
-	(	end
-	)	(	Optimizer const
-			&	i_rOptimizer
-		)
-	->	Optimizer::Sentinel
-	{	//	does not get invalidated when the size changes
-		return {i_rOptimizer.m_aTermEnd};
-	}
-
 	constexpr
 	(	Optimizer
 	::	Optimizer
@@ -568,29 +577,6 @@ namespace
 		delete[]
 			m_aTermBegin
 		;
-	}
-
-	constexpr
-	(	Optimizer
-	::	operator
-		BitClauseArray
-	)	()	&&
-	{
-		Optimize(true);
-
-		if	(ClauseLimit < size())
-			throw "Optimized term contains to many clauses to copy!";
-
-		BitClauseArray
-			vArray
-		{};
-
-		::std::copy
-		(	m_aTermBegin
-		,	m_aTermEnd
-		,	begin(vArray)
-		);
-		return vArray;
 	}
 
 	auto constexpr
