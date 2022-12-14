@@ -1,6 +1,7 @@
 add_module(
 	Logic.hpp
 
+	BufferedSpan.cpp
 	BitClause.hpp
 	BitClauseIterator.hpp
 	Optimizer.hpp
