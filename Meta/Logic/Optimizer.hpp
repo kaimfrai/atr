@@ -20,8 +20,8 @@ namespace
 	export class
 		Optimizer final
 	{
-		BitClause
-		*	m_aTermBegin
+		DynamicBufferedSpan<BitClause>
+			m_vTerm
 		;
 		BitClause
 		*	m_aTermEnd
@@ -106,7 +106,7 @@ namespace
 				&	i_rOptimizer
 			)
 		->	BitClause*
-		{	return i_rOptimizer.m_aTermBegin;	}
+		{	return begin(i_rOptimizer.m_vTerm);	}
 
 		class
 			Sentinel final
@@ -162,16 +162,21 @@ namespace
 			return {i_rOptimizer.m_aTermEnd};
 		}
 
-		explicit constexpr
+		explicit(true) constexpr
 		(	Optimizer
 		)	(	USize
+					i_nClauseCount
 			)
-		;
+		:	m_vTerm
+			{	typename DynamicBufferedSpan<BitClause>::BufferType
+				{	i_nClauseCount
+				}
+			}
+		,	m_aTermEnd
+			{	begin(m_vTerm)
+			}
+		{}
 
-		constexpr
-		(	compl Optimizer
-		)	()
-		;
 
 		constexpr
 		(	operator
@@ -277,7 +282,7 @@ namespace
 				);
 			}
 		}	vReverseView
-		{	m_aTermBegin
+		{	begin(m_vTerm)
 		,	m_aTermEnd
 		};
 		return vReverseView;
@@ -346,7 +351,7 @@ namespace
 				bNegationContained
 			=(	i_rTerm.m_aTermEnd
 			!=	::std::find
-				(	i_rTerm.m_aTermBegin
+				(	begin(i_rTerm)
 				,	i_rTerm.m_aTermEnd
 				,	Inverse(i_rLiteralClause)
 				)
@@ -404,7 +409,7 @@ namespace
 		)
 	->	void
 	{
-		::std::sort(m_aTermBegin, m_aTermEnd);
+		::std::sort(begin(m_vTerm), m_aTermEnd);
 		for	(	BitClause
 				&	rClause
 			:	ReverseView()
@@ -544,8 +549,8 @@ namespace
 	->	void
 	{
 		::std::swap
-		(	i_rLeft.m_aTermBegin
-		,	i_rRight.m_aTermBegin
+		(	i_rLeft.m_vTerm
+		,	i_rRight.m_vTerm
 		);
 		::std::swap
 		(	i_rLeft.m_aTermEnd
@@ -553,38 +558,12 @@ namespace
 		);
 	}
 
-	constexpr
-	(	Optimizer
-	::	Optimizer
-	)	(	USize
-				i_nClauseCount
-		)
-	:	m_aTermBegin
-		{	new	BitClause
-			[	i_nClauseCount
-			]
-		}
-	,	m_aTermEnd
-		{	m_aTermBegin
-		}
-	{}
-
-	constexpr
-	(	Optimizer
-	::	compl Optimizer
-	)	()
-	{
-		delete[]
-			m_aTermBegin
-		;
-	}
-
 	auto constexpr
 	(	Optimizer
 	::	clear
 	)	()
 	->	void
-	{	m_aTermEnd = m_aTermBegin;	}
+	{	m_aTermEnd = begin(m_vTerm);	}
 
 	auto constexpr
 	(	Optimizer
@@ -594,7 +573,7 @@ namespace
 	{	return
 		static_cast<USize>
 		(	m_aTermEnd
-		-	m_aTermBegin
+		-	begin(m_vTerm)
 		);
 	}
 
@@ -605,7 +584,7 @@ namespace
 	->	bool
 	{	return
 			size() >= 1uz
-		and	m_aTermBegin[0uz].IsAbsorbing()
+		and	m_vTerm[0uz].IsAbsorbing()
 		;
 	}
 
@@ -629,7 +608,7 @@ namespace
 	->	BitClause*
 	{
 		if	(	not
-				(	i_aEraseClause >= m_aTermBegin
+				(	i_aEraseClause >= begin(m_vTerm)
 				and	i_aEraseClause < m_aTermEnd
 				)
 			)
@@ -668,9 +647,9 @@ namespace
 			or	i_vInsertClause.IsAbsorbing()
 			)
 		{
-			*m_aTermBegin = i_vInsertClause;
-			m_aTermEnd = ::std::next(m_aTermBegin);
-			return m_aTermBegin;
+			*begin(m_vTerm) = i_vInsertClause;
+			m_aTermEnd = ::std::next(begin(m_vTerm));
+			return begin(m_vTerm);
 		}
 
 		BitClause

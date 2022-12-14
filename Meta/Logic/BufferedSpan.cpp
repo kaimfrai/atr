@@ -27,13 +27,17 @@ export namespace
 			pointer
 		=	value_type*
 		;
+		using
+			const_pointer
+		=	value_type const*
+		;
 
 		using
 			iterator
 		=	pointer
 		;
 
-		std::unique_ptr<t_tElement, t_tDeleter>
+		std::unique_ptr<t_tElement[], t_tDeleter>
 			m_vBuffer
 		;
 		USize
@@ -57,10 +61,31 @@ export namespace
 		->	pointer
 		{	return i_rUniqueBuffer.m_vBuffer.get();	}
 
+		friend auto constexpr
+		(	begin
+		)	(	UniqueBuffer const
+				&	i_rUniqueBuffer
+			)
+		->	pointer
+		{	return i_rUniqueBuffer.m_vBuffer.get();	}
+
 		[[nodiscard]]
 		friend auto constexpr
 		(	end
 		)	(	UniqueBuffer
+				&	i_rUniqueBuffer
+			)
+		->	pointer
+		{	return
+				begin(i_rUniqueBuffer)
+			+	i_rUniqueBuffer.max_size()
+			;
+		}
+
+		[[nodiscard]]
+		friend auto constexpr
+		(	end
+		)	(	UniqueBuffer const
 				&	i_rUniqueBuffer
 			)
 		->	pointer
@@ -170,6 +195,10 @@ export namespace
 			;
 			typename
 				t_tBuffer
+			::	const_pointer
+			;
+			typename
+				t_tBuffer
 			::	iterator
 			;
 
@@ -217,6 +246,13 @@ export namespace
 		=	typename
 				BufferType
 			::	pointer
+		;
+
+		using
+			const_pointer
+		=	typename
+				BufferType
+			::	const_pointer
 		;
 
 		static_assert
@@ -343,7 +379,7 @@ export namespace
 		(	push_back
 		)	(	std::convertible_to<value_type> auto
 				&&	i_rValue
-			)	&
+			)	&&
 		->	BufferedSpan
 		{	return
 			std::move
@@ -353,6 +389,24 @@ export namespace
 					)
 				)
 			);
+		}
+
+		auto constexpr
+		(	reset
+		)	(	std::convertible_to<value_type> auto
+				&&
+				...	i_rpValue
+			)	&
+		{
+			if	(sizeof...(i_rpValue) > max_size())
+				throw "To many elements for buffer!";
+
+			*this = BufferedSpan
+			{	std::forward<decltype(i_rpValue)>
+				(	i_rpValue
+				)
+				...
+			};
 		}
 
 		auto constexpr
@@ -390,6 +444,37 @@ export namespace
 		)	()	&&
 		->	decltype(auto)
 		{	return pop_back(1uz);	}
+
+		auto constexpr
+		(	erase
+		)	(	pointer
+					i_aErase
+			)	&
+		->	pointer
+		{
+			auto const
+				vEnd
+			=	end(*this)
+			;
+			if	(	i_aErase < begin(*this)
+				or	i_aErase >= vEnd
+				)
+				return vEnd;
+
+			pointer
+				aNext
+			=	::std::next
+				(	i_aErase
+				)
+			;
+			::std::move
+			(	aNext
+			,	vEnd
+			,	i_aErase
+			);
+			--m_nElementCount;
+			return aNext;
+		}
 
 		[[nodiscard]]
 		auto constexpr
@@ -617,6 +702,21 @@ export namespace
 				)
 			);
 		}
+
+		auto constexpr
+		(	sort
+		)	()	&
+		->	BufferedSpan&
+		{
+			std::sort(begin(*this), end(*this));
+			return *this;
+		}
+
+		auto constexpr
+		(	sort
+		)	()	&&
+		->	BufferedSpan
+		{	return std::move(sort());	}
 	};
 
 	template
