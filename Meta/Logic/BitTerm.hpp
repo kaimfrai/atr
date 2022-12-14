@@ -3,6 +3,7 @@ export module Meta.Logic:BitTerm;
 export import :BitClause;
 export import :BitClauseIterator;
 import :Optimizer;
+import :BufferedSpan;
 
 export import Meta.Arithmetic;
 
@@ -17,10 +18,17 @@ namespace
 	export struct
 		BitTerm final
 	{
-		BitClause const
+		using
+			ClauseBufferType
+		=	StaticBufferedSpan
+			<	BitClause
+			,	ClauseLimit
+			>
+		;
+
+		ClauseBufferType const
 			Clauses
-		[	ClauseLimit
-		]{};
+		{};
 
 		constexpr
 		(	BitTerm
@@ -30,23 +38,44 @@ namespace
 		constexpr
 		(	BitTerm
 		)	(	BitClause
+					i_vClause
 			)
-		;
+		:	Clauses
+			{	i_vClause.IsIdentity()
+			?	ClauseBufferType{}
+			:	ClauseBufferType
+				{	i_vClause
+				}
+			}
+		{}
 
 	private:
 		template
 			<	::std::size_t
 				...	t_npIndex
 			>
-		explicit constexpr
+		constexpr
 		(	BitTerm
-		)	(	BitClause const*
+		)	(	BitClause const
+				*	i_aClauses
 			,	::std::index_sequence
 				<	t_npIndex
 					...
 				>
 			)
-		;
+		:	Clauses
+			{	ClauseBufferType
+				{	i_aClauses
+					[	t_npIndex
+					]
+					...
+				}
+			.	pop_back
+				((	...
+				+	i_aClauses[t_npIndex].IsIdentity()
+				))
+			}
+		{}
 
 		constexpr
 		(	BitTerm
@@ -203,39 +232,6 @@ namespace
 	constexpr
 	(	BitTerm
 	::	BitTerm
-	)	(	BitClause
-				i_vClause
-		)
-	:	Clauses
-		{	i_vClause
-		}
-	{}
-
-	template
-		<	::std::size_t
-			...	t_npIndex
-		>
-	constexpr
-	(	BitTerm
-	::	BitTerm
-	)	(	BitClause const
-			*	i_aClauses
-		,	::std::index_sequence
-			<	t_npIndex
-				...
-			>
-		)
-	:	Clauses
-		{	i_aClauses
-			[	t_npIndex
-			]
-			...
-		}
-	{}
-
-	constexpr
-	(	BitTerm
-	::	BitTerm
 	)	(	BitClause const
 			(&	i_rClauses
 			)[	ClauseLimit
@@ -383,12 +379,7 @@ namespace
 	::	ClauseCount
 	)	()	const
 	->	USize
-	{	return
-		static_cast<USize>
-		(	end(*this)
-		-	begin(*this)
-		);
-	}
+	{	return Clauses.size();	}
 
 	auto constexpr
 	(	BitTerm
@@ -427,7 +418,7 @@ namespace
 			&	i_rTerm
 		)
 	->	BitClause const*
-	{	return i_rTerm.Clauses;	}
+	{	return begin(i_rTerm.Clauses);	}
 
 	auto constexpr
 	(	end
@@ -435,13 +426,7 @@ namespace
 			&	i_rTerm
 		)
 	->	BitClause const*
-	{	return
-		::std::lower_bound
-		(	i_rTerm.Clauses
-		,	i_rTerm.Clauses + ClauseLimit
-		,	BitClause::Identity()
-		);
-	}
+	{	return end(i_rTerm.Clauses);	}
 
 	auto constexpr
 	(	Intersection

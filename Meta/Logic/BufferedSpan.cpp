@@ -1,6 +1,7 @@
 export module Meta.Logic:BufferedSpan;
 // TODO find more appropriate module. as of now, this is only required in Meta.Logic
 export import Meta.Arithmetic;
+export import Meta.Token;
 
 import Std;
 
@@ -85,6 +86,37 @@ export namespace
 			}
 		{}
 
+		explicit(true) constexpr
+		(	UniqueBuffer
+		)	(	auto
+				&&
+				...	i_rpElement
+			)
+			requires
+			(	sizeof...(i_rpElement)
+			>	0uz
+			)
+		:	UniqueBuffer
+			{	sizeof...(i_rpElement)
+			}
+		{
+			[&]	<	USize
+					...	t_npIndex
+				>(	IndexToken
+					<	t_npIndex
+						...
+					>
+				)
+			{
+				(	...
+				,	(	m_vBuffer[t_npIndex]
+					=	std::forward<decltype(i_rpElement)>(i_rpElement)
+					)
+				);
+			}(	Sequence<sizeof...(i_rpElement)>
+			);
+		}
+
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
@@ -155,7 +187,12 @@ export namespace
 				>
 			;
 		}
-	and	std::is_trivial_v
+	and	std::default_initializable
+		<	typename
+				t_tBuffer
+			::	value_type
+		>
+	and	std::is_trivially_destructible_v
 		<	typename
 				t_tBuffer
 			::	value_type
@@ -248,6 +285,27 @@ export namespace
 			}
 		{}
 
+		explicit(true) constexpr
+		(	BufferedSpan
+		)	(	auto
+				&&
+				...	i_rpElement
+			)
+			requires
+			(	sizeof...(i_rpElement)
+			>	0uz
+			)
+		:	m_vBuffer
+			{	std::forward<decltype(i_rpElement)>
+				(	i_rpElement
+				)
+				...
+			}
+		,	m_nElementCount
+			{	sizeof...(i_rpElement)
+			}
+		{}
+
 		[[nodiscard]]
 		auto constexpr
 		(	max_size
@@ -266,7 +324,8 @@ export namespace
 		(	push_back
 		)	(	std::convertible_to<value_type> auto
 				&&	i_rValue
-			)
+			)	&
+		->	BufferedSpan&
 		{
 			if	(m_nElementCount < max_size())
 			{
@@ -277,7 +336,60 @@ export namespace
 				;
 				++m_nElementCount;
 			}
+			return *this;
 		}
+
+		auto constexpr
+		(	push_back
+		)	(	std::convertible_to<value_type> auto
+				&&	i_rValue
+			)	&
+		->	BufferedSpan
+		{	return
+			std::move
+			(	push_back
+				(	std::forward<decltype(i_rValue)>
+					(	i_rValue
+					)
+				)
+			);
+		}
+
+		auto constexpr
+		(	pop_back
+		)	(	USize
+					i_nCount
+			)	&
+		->	BufferedSpan&
+		{	static_assert
+			(	std::is_trivially_destructible_v<value_type>
+			,	"The following optimization is only valid for trivially destructible elements!"
+			);
+				m_nElementCount
+			-=	std::min(m_nElementCount, i_nCount)
+			;
+			return *this;
+		}
+
+		auto constexpr
+		(	pop_back
+		)	(	USize
+					i_nCount
+			)	&&
+		->	BufferedSpan
+		{	return std::move(pop_back(i_nCount));	}
+
+		auto constexpr
+		(	pop_back
+		)	()	&
+		->	decltype(auto)
+		{	return pop_back(1uz);	}
+
+		auto constexpr
+		(	pop_back
+		)	()	&&
+		->	decltype(auto)
+		{	return pop_back(1uz);	}
 
 		[[nodiscard]]
 		auto constexpr
