@@ -165,6 +165,50 @@ namespace
 			)
 		->	BitTerm
 		;
+
+		auto constexpr
+		(	transform_reduce
+		)	(	auto
+				&&	i_rInitial
+			,	auto
+				&&	i_fReduce
+			,	auto
+				&&	i_fTransform
+			)	const
+		{
+			auto const
+				vBegin
+			=	begin(*this)
+			,	vEnd
+			=	end(*this).base()
+			;
+			if	constexpr
+				(	std::is_member_pointer_v
+					<	std::remove_cvref_t
+						<	decltype(i_fTransform)
+						>
+					>
+				)
+			{	return
+				std::transform_reduce
+				(	vBegin
+				,	vEnd
+				,	std::forward<decltype(i_rInitial)>(i_rInitial)
+				,	std::forward<decltype(i_fReduce)>(i_fReduce)
+				,	std::mem_fn(i_fTransform)
+				);
+			}
+			else
+			{	return
+				std::transform_reduce
+				(	vBegin
+				,	vEnd
+				,	std::forward<decltype(i_rInitial)>(i_rInitial)
+				,	std::forward<decltype(i_fReduce)>(i_fReduce)
+				,	std::forward<decltype(i_fTransform)>(i_fTransform)
+				);
+			}
+		}
 	};
 
 	export auto constexpr
@@ -204,12 +248,10 @@ namespace
 	)	()	const
 	->	USize
 	{	return
-		::std::transform_reduce
-		(	begin(*this)
-		,	end(*this).base()
-		,	0uz
-		,	::std::bit_or<USize>{}
-		,	::std::mem_fn(&BitClause::LiteralField)
+		transform_reduce
+		(	0uz
+		,	std::bit_or<USize>{}
+		,	&BitClause::LiteralField
 		);
 	}
 
@@ -469,12 +511,10 @@ namespace
 
 		USize const
 			nMaxClauseCount
-		=	::std::transform_reduce
-			(	begin(i_rTerm)
-			,	end(i_rTerm).base()
-			,	1uz
-			,	::std::multiplies<USize>{}
-			,	::std::mem_fn(&BitClause::LiteralCount)
+		=	i_rTerm.transform_reduce
+			(	1uz
+			,	std::multiplies<USize>{}
+			,	&BitClause::LiteralCount
 			)
 		;
 

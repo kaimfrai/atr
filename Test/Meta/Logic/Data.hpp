@@ -32,7 +32,7 @@ export
 				return false;
 
 			if	(	bool const
-					bLiteralsPermutation
+						bLiteralsPermutation
 				=	std::ranges::is_permutation
 					(	i_rLeft.Term.Literals
 					,	i_rRight.Term.Literals
@@ -53,23 +53,19 @@ export
 
 			auto const
 				vLeftLiteralSum
-			=	std::transform_reduce
-				(	begin(i_rLeft.Term.BitTerm)
-				,	end(i_rLeft.Term.BitTerm).base()
-				,	0uz
+			=	i_rLeft.Term.BitTerm.transform_reduce
+				(	0uz
 				,	std::plus<>{}
-				,	std::mem_fn(&Meta::Logic::BitClause::LiteralCount)
+				,	&Meta::Logic::BitClause::LiteralCount
 				)
 			;
 
 			auto const
 				vRightLiteralSum
-			=	std::transform_reduce
-				(	begin(i_rLeft.Term.BitTerm)
-				,	end(i_rLeft.Term.BitTerm).base()
-				,	0uz
+			=	i_rRight.Term.BitTerm.transform_reduce
+				(	0uz
 				,	std::plus<>{}
-				,	std::mem_fn(&Meta::Logic::BitClause::LiteralCount)
+				,	&Meta::Logic::BitClause::LiteralCount
 				)
 			;
 
