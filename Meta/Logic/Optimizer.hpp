@@ -25,43 +25,6 @@ namespace
 		;
 
 		auto constexpr
-		(	ReverseView
-		)	()	const
-		{
-			struct
-			{
-				BitClause
-				*	m_aTermBegin
-				;
-				BitClause
-				*	m_aTermEnd
-				;
-
-				auto constexpr
-				(	begin
-				)	()	const
-				{	return
-					::std::make_reverse_iterator
-					(	m_aTermEnd
-					);
-				}
-
-				auto constexpr
-				(	end
-				)	()	const
-				{	return
-					::std::make_reverse_iterator
-					(	m_aTermBegin
-					);
-				}
-			}	vReverseView
-			{	begin(m_vTerm)
-			,	end(m_vTerm)
-			};
-			return vReverseView;
-		}
-
-		auto constexpr
 		(	AppendLiteralRedundancy
 		)	(	BitClause
 					i_vLiteral
@@ -180,7 +143,7 @@ namespace
 			m_vTerm.sort();
 			for	(	BitClause
 					&	rClause
-				:	ReverseView()
+				:	*this | std::views::reverse
 				)
 			{
 				if	(	(	i_rRedundancyBuffer
@@ -307,16 +270,24 @@ namespace
 	public:
 		friend auto constexpr
 		(	begin
-		)	(	Optimizer const
+		)	(	Optimizer
 				&	i_rOptimizer
 			)
 		->	BitClause*
 		{	return begin(i_rOptimizer.m_vTerm);	}
 
+		friend auto constexpr
+		(	begin
+		)	(	Optimizer const
+				&	i_rOptimizer
+			)
+		->	BitClause const*
+		{	return begin(i_rOptimizer.m_vTerm);	}
+
 		class
 			Sentinel final
 		{
-			BitClause
+			BitClause const
 			*	m_aTermBegin
 			;
 			USize const
@@ -325,7 +296,7 @@ namespace
 
 			constexpr
 			(	Sentinel
-			)	(	BitClause
+			)	(	BitClause const
 					*	i_aTermBegin
 				,	USize const
 					&	i_rTermSize
@@ -354,7 +325,7 @@ namespace
 
 			auto constexpr
 			(	operator ==
-			)	(	BitClause
+			)	(	BitClause const
 					*	i_aClause
 				)	const
 			->	bool
@@ -362,6 +333,16 @@ namespace
 				return i_aClause == m_aTermBegin + *m_aTermSize;
 			}
 		};
+
+		friend auto constexpr
+		(	end
+		)	(	Optimizer
+				&	i_rOptimizer
+			)
+		->	Sentinel
+		{	//	does not get invalidated when the size changes
+			return end(std::as_const(i_rOptimizer));
+		}
 
 		friend auto constexpr
 		(	end
@@ -401,7 +382,7 @@ namespace
 			BitClauseBuffer
 				vArray
 			{};
-			vArray.AppendUnique(std::as_const(*this));
+			vArray.AppendUnique(*this);
 
 			return vArray;
 		}
@@ -473,7 +454,7 @@ namespace
 			;
 			for	(	BitClause
 					&	rClause
-				:	ReverseView()
+				:	*this | std::views::reverse
 				)
 			{
 				//	insert clause is redundant
