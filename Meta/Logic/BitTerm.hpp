@@ -533,7 +533,7 @@ namespace
 				}
 			}
 			vOptimizer.clear();
-			swap(vResultBuffer, vOptimizer);
+			std::swap(vResultBuffer, vOptimizer);
 		}
 
 		return {::std::move(vOptimizer)};

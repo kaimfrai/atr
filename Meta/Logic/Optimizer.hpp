@@ -90,14 +90,6 @@ namespace
 
 	public:
 		friend auto constexpr
-		(	swap
-		)	(	Optimizer&
-			,	Optimizer&
-			)
-		->	void
-		;
-
-		friend auto constexpr
 		(	begin
 		)	(	Optimizer const
 				&	i_rOptimizer
@@ -532,21 +524,6 @@ namespace
 		TrimRedundantLiterals
 		(	vRedundancyBuffer
 		,	i_bConsiderAlternatives
-		);
-	}
-
-	auto constexpr
-	(	swap
-	)	(	Optimizer
-			&	i_rLeft
-		,	Optimizer
-			&	i_rRight
-		)
-	->	void
-	{
-		::std::swap
-		(	i_rLeft.m_vTerm
-		,	i_rRight.m_vTerm
 		);
 	}
 
