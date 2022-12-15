@@ -357,21 +357,31 @@ export namespace
 		{	return m_nElementCount;	}
 
 		auto constexpr
+		(	EnsureNewSizeValid
+		)	(	USize
+					i_nNewSize
+			)	const
+		{
+			if	(i_nNewSize > max_size())
+				throw "To many elements for buffer!";
+		}
+
+		auto constexpr
 		(	push_back
 		)	(	std::convertible_to<value_type> auto
 				&&	i_rValue
 			)	&
 		->	BufferedSpan&
 		{
-			if	(m_nElementCount < max_size())
-			{
-					m_vBuffer[m_nElementCount]
-				=	std::forward<decltype(i_rValue)>
-					(	i_rValue
-					)
-				;
-				++m_nElementCount;
-			}
+			EnsureNewSizeValid(size() + 1uz);
+
+				m_vBuffer[m_nElementCount]
+			=	std::forward<decltype(i_rValue)>
+				(	i_rValue
+				)
+			;
+			++m_nElementCount;
+
 			return *this;
 		}
 
@@ -397,16 +407,33 @@ export namespace
 				&&
 				...	i_rpValue
 			)	&
+		->	BufferedSpan&
 		{
-			if	(sizeof...(i_rpValue) > max_size())
-				throw "To many elements for buffer!";
+			auto constexpr
+				vNewElementCount
+			=	sizeof...(i_rpValue)
+			;
+			EnsureNewSizeValid(vNewElementCount);
 
-			*this = BufferedSpan
-			{	std::forward<decltype(i_rpValue)>
-				(	i_rpValue
+			clear();
+
+			[&]	<	USize
+					...	t_npIndex
+				>(	IndexToken<t_npIndex...>
 				)
-				...
-			};
+			{
+				(	...
+				,	(	m_vBuffer[t_npIndex]
+					=	std::forward<decltype(i_rpValue)>
+						(	i_rpValue
+						)
+					)
+				);
+			}(	Sequence<vNewElementCount>
+			);
+			m_nElementCount = vNewElementCount;
+
+			return *this;
 		}
 
 		auto constexpr
@@ -472,7 +499,8 @@ export namespace
 			,	vEnd
 			,	i_aErase
 			);
-			--m_nElementCount;
+			pop_back();
+
 			return aNext;
 		}
 
@@ -622,14 +650,16 @@ export namespace
 		auto constexpr
 		(	clear
 		)	()
-		{	m_nElementCount = 0uz;	}
+		{
+			pop_back(size());
+		}
 
 		[[nodiscard]]
 		auto constexpr
 		(	empty
 		)	()	const
 		->	bool
-		{	return m_nElementCount == 0uz;	}
+		{	return size() == 0uz;	}
 
 		auto constexpr
 		(	AppendUnique

@@ -120,13 +120,12 @@ namespace
 			{
 				bool const
 					bNegationContained
-				=(	end(i_rTerm.m_vTerm)
-				!=	::std::find
-					(	begin(i_rTerm)
-					,	end(i_rTerm.m_vTerm)
-					,	Inverse(i_rLiteralClause)
+				=	i_rTerm.m_vTerm.contains
+					(	Inverse
+						(	i_rLiteralClause
+						)
 					)
-				);
+				;
 
 				if	(bNegationContained)
 					insert(BitClause::Absorbing());
@@ -178,7 +177,7 @@ namespace
 			)
 		->	void
 		{
-			::std::sort(begin(m_vTerm), end(m_vTerm));
+			m_vTerm.sort();
 			for	(	BitClause
 					&	rClause
 				:	ReverseView()
@@ -413,36 +412,30 @@ namespace
 		->	void
 		{	m_vTerm.clear();	}
 
+		[[nodiscard]]
 		auto constexpr
 		(	size
 		)	()	const
 		->	USize
-		{	return
-			static_cast<USize>
-			(	end(m_vTerm)
-			-	begin(m_vTerm)
-			);
-		}
+		{	return m_vTerm.size();	}
 
+		[[nodiscard]]
 		auto constexpr
 		(	IsAbsorbing
 		)	()	const
 		->	bool
 		{	return
-				size() >= 1uz
+				not IsIdentity()
 			and	m_vTerm[0uz].IsAbsorbing()
 			;
 		}
 
+		[[nodiscard]]
 		auto constexpr
 		(	IsIdentity
 		)	()	const
 		->	bool
-		{	return
-				size()
-			==	0uz
-			;
-		}
+		{	return m_vTerm.empty();	}
 
 		auto constexpr
 		(	erase
@@ -451,25 +444,7 @@ namespace
 			)
 		->	BitClause*
 		{
-			if	(	i_aEraseClause < begin(m_vTerm)
-				or	i_aEraseClause >= end(m_vTerm)
-				)
-				return end(m_vTerm);
-
-			BitClause
-			*	aNext
-			=	::std::next
-				(	i_aEraseClause
-				)
-			;
-
-			::std::move
-			(	aNext
-			,	end(m_vTerm)
-			,	i_aEraseClause
-			);
-			m_vTerm.pop_back();
-			return aNext;
+			return m_vTerm.erase(i_aEraseClause);
 		}
 
 		auto constexpr
@@ -488,8 +463,7 @@ namespace
 				or	i_vInsertClause.IsAbsorbing()
 				)
 			{
-				*begin(m_vTerm) = i_vInsertClause;
-				m_vTerm.m_nElementCount = 1uz;
+				m_vTerm.reset(i_vInsertClause);
 				return begin(m_vTerm);
 			}
 
@@ -517,8 +491,7 @@ namespace
 
 			if	(aInsertPosition == end(m_vTerm))
 			{
-				*aInsertPosition = i_vInsertClause;
-				++m_vTerm.m_nElementCount;
+				m_vTerm.push_back(i_vInsertClause);
 			}
 			return aInsertPosition;
 		}
