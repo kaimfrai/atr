@@ -6,10 +6,10 @@ import :BitClauseIterator;
 
 import Std;
 
-namespace
+export namespace
 	Meta::Logic
 {
-	export using
+	 using
 		BitClauseBuffer
 	=	StaticBufferedSpan
 		<	BitClause
@@ -17,7 +17,7 @@ namespace
 		>
 	;
 
-	export class
+	class
 		Optimizer final
 	{
 		DynamicBufferedSpan<BitClause>
@@ -349,7 +349,7 @@ namespace
 			}
 		{}
 
-		constexpr
+		explicit(false) constexpr
 		(	operator
 			BitClauseBuffer
 		)	()	&&
