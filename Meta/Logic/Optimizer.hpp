@@ -23,9 +23,6 @@ namespace
 		DynamicBufferedSpan<BitClause>
 			m_vTerm
 		;
-		BitClause
-		*	m_aTermEnd
-		;
 
 		auto constexpr
 		(	ReverseView
@@ -112,18 +109,24 @@ namespace
 			Sentinel final
 		{
 			BitClause
-			*	const
-			*	m_rTermEnd
+			*	m_aTermBegin
+			;
+			USize const
+			*	m_aTermSize
 			;
 
 			constexpr
 			(	Sentinel
 			)	(	BitClause
-					*	const
-					&	i_rTermEnd
+					*	i_aTermBegin
+				,	USize const
+					&	i_rTermSize
 				)
-			:	m_rTermEnd
-				{	std::addressof(i_rTermEnd)
+			:	m_aTermBegin
+				{	i_aTermBegin
+				}
+			,	m_aTermSize
+				{	std::addressof(i_rTermSize)
 				}
 			{}
 
@@ -148,7 +151,7 @@ namespace
 				)	const
 			->	bool
 			{
-				return i_aClause == *m_rTermEnd;
+				return i_aClause == m_aTermBegin + *m_aTermSize;
 			}
 		};
 
@@ -159,7 +162,10 @@ namespace
 			)
 		->	Sentinel
 		{	//	does not get invalidated when the size changes
-			return {i_rOptimizer.m_aTermEnd};
+			return
+			{	begin(i_rOptimizer)
+			,	i_rOptimizer.m_vTerm.m_nElementCount
+			};
 		}
 
 		explicit(true) constexpr
@@ -171,9 +177,6 @@ namespace
 			{	typename DynamicBufferedSpan<BitClause>::BufferType
 				{	i_nClauseCount
 				}
-			}
-		,	m_aTermEnd
-			{	begin(m_vTerm)
 			}
 		{}
 
@@ -191,13 +194,6 @@ namespace
 			BitClauseBuffer
 				vArray
 			{};
-			auto f [[maybe_unused]]
-			=	std::ranges::begin(std::as_const(*this))
-			;
-
-			auto g [[maybe_unused]]
-			=	std::ranges::end(std::as_const(*this))
-			;
 			vArray.AppendUnique(std::as_const(*this));
 
 			return vArray;
@@ -283,7 +279,7 @@ namespace
 			}
 		}	vReverseView
 		{	begin(m_vTerm)
-		,	m_aTermEnd
+		,	end(m_vTerm)
 		};
 		return vReverseView;
 	}
@@ -349,10 +345,10 @@ namespace
 		{
 			bool const
 				bNegationContained
-			=(	i_rTerm.m_aTermEnd
+			=(	end(i_rTerm.m_vTerm)
 			!=	::std::find
 				(	begin(i_rTerm)
-				,	i_rTerm.m_aTermEnd
+				,	end(i_rTerm.m_vTerm)
 				,	Inverse(i_rLiteralClause)
 				)
 			);
@@ -409,7 +405,7 @@ namespace
 		)
 	->	void
 	{
-		::std::sort(begin(m_vTerm), m_aTermEnd);
+		::std::sort(begin(m_vTerm), end(m_vTerm));
 		for	(	BitClause
 				&	rClause
 			:	ReverseView()
@@ -552,10 +548,6 @@ namespace
 		(	i_rLeft.m_vTerm
 		,	i_rRight.m_vTerm
 		);
-		::std::swap
-		(	i_rLeft.m_aTermEnd
-		,	i_rRight.m_aTermEnd
-		);
 	}
 
 	auto constexpr
@@ -563,7 +555,8 @@ namespace
 	::	clear
 	)	()
 	->	void
-	{	m_aTermEnd = begin(m_vTerm);	}
+	{	m_vTerm.clear();
+	}
 
 	auto constexpr
 	(	Optimizer
@@ -572,7 +565,7 @@ namespace
 	->	USize
 	{	return
 		static_cast<USize>
-		(	m_aTermEnd
+		(	end(m_vTerm)
 		-	begin(m_vTerm)
 		);
 	}
@@ -607,12 +600,10 @@ namespace
 		)
 	->	BitClause*
 	{
-		if	(	not
-				(	i_aEraseClause >= begin(m_vTerm)
-				and	i_aEraseClause < m_aTermEnd
-				)
+		if	(	i_aEraseClause < begin(m_vTerm)
+			or	i_aEraseClause >= end(m_vTerm)
 			)
-			return m_aTermEnd;
+			return end(m_vTerm);
 
 		BitClause
 		*	aNext
@@ -620,13 +611,13 @@ namespace
 			(	i_aEraseClause
 			)
 		;
-		(	m_aTermEnd
-		=	::std::move
-			(	aNext
-			,	m_aTermEnd
-			,	i_aEraseClause
-			)
+
+		::std::move
+		(	aNext
+		,	end(m_vTerm)
+		,	i_aEraseClause
 		);
+		m_vTerm.pop_back();
 		return aNext;
 	}
 
@@ -641,20 +632,20 @@ namespace
 		if	(	IsAbsorbing()
 			or	i_vInsertClause.IsIdentity()
 			)
-			return m_aTermEnd;
+			return end(m_vTerm);
 
 		if	(	IsIdentity()
 			or	i_vInsertClause.IsAbsorbing()
 			)
 		{
 			*begin(m_vTerm) = i_vInsertClause;
-			m_aTermEnd = ::std::next(begin(m_vTerm));
+			m_vTerm.m_nElementCount = 1uz;
 			return begin(m_vTerm);
 		}
 
 		BitClause
 		*	aInsertPosition
-		=	m_aTermEnd
+		=	end(m_vTerm)
 		;
 		for	(	BitClause
 				&	rClause
@@ -663,7 +654,7 @@ namespace
 		{
 			//	insert clause is redundant
 			if	(i_vInsertClause.Includes(rClause))
-				return m_aTermEnd;
+				return end(m_vTerm);
 
 			//	overwrite redundant clause
 			if	(rClause.Includes(i_vInsertClause))
@@ -674,8 +665,11 @@ namespace
 			}
 		}
 
-		if	(aInsertPosition == m_aTermEnd)
-			*(m_aTermEnd++) = i_vInsertClause;
+		if	(aInsertPosition == end(m_vTerm))
+		{
+			*aInsertPosition = i_vInsertClause;
+			++m_vTerm.m_nElementCount;
+		}
 		return aInsertPosition;
 	}
 
