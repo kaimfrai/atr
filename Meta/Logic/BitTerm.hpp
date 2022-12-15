@@ -15,30 +15,6 @@ using ::Meta::Arithmetic::TestBit;
 export namespace
 	Meta::Logic
 {
-	auto constexpr
-	(	Union
-	)	(	struct BitTerm const&
-		,	struct BitTerm const&
-		)
-	->	struct BitTerm
-	;
-
-	auto constexpr
-	(	Intersection
-	)	(	struct BitTerm const&
-		,	struct BitTerm const&
-		)
-	->	struct BitTerm
-	;
-
-	auto constexpr
-	(	operator ==
-	)	(	struct BitTerm const&
-		,	struct BitTerm const&
-		)
-	->	bool
-	;
-
 	struct
 		BitTerm final
 	{

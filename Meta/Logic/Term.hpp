@@ -14,22 +14,22 @@ using ::Meta::Arithmetic::CountUpperZeroBits;
 using ::Meta::Arithmetic::CountLowerZeroBits;
 
 namespace
-	Meta
+	Meta::Logic
 {
 	auto constexpr
 	(	EvaluateTerm
-	)	(	Logic::BitTerm const
+	)	(	BitTerm const
 			&	i_rTerm
 		,	std::span<bool const>
 				i_vPreset
 		)
 	->	bool
 	{
-		Logic::BitClause::FieldType
+		BitClause::FieldType
 			nPresetMask
 		{	0uz
 		};
-		for	(	Logic::BitClause::FieldType
+		for	(	BitClause::FieldType
 					nShift
 				=	0uz
 			;	bool
@@ -56,24 +56,36 @@ namespace
 	using
 		BinaryTermFunction
 	=	auto
-		(*)	(	Logic::BitTerm const&
-			,	Logic::BitTerm const&
+		(*)	(	BitTerm const&
+			,	BitTerm const&
 			)
 		->	t_tResult
 	;
 
-	BinaryTermFunction<Logic::BitTerm> constexpr inline
+	BinaryTermFunction<BitTerm> constexpr inline
 		ComputeDisjunction
-	=	&Logic::Intersection
+	=	+[]	(	BitTerm const
+				&	i_rLeft
+			,	BitTerm const
+				&	i_rRight
+			)
+		->	BitTerm
+		{	return Intersection(i_rLeft, i_rRight);	}
 	;
-	BinaryTermFunction<Logic::BitTerm> constexpr inline
+	BinaryTermFunction<BitTerm> constexpr inline
 		ComputeConjunction
-	=	&Logic::Union
+	=	+[]	(	BitTerm const
+				&	i_rLeft
+			,	BitTerm const
+				&	i_rRight
+			)
+		->	BitTerm
+		{	return Union(i_rLeft, i_rRight);	}
 	;
 	BinaryTermFunction<bool> constexpr inline
 		ComputeEquivalence
-	=	&Logic::operator==
-	;
+	{	Fold<&Functional::Key::operator== >{}
+	};
 }
 
 export namespace
@@ -227,7 +239,7 @@ export namespace
 				&	i_rLeft
 			,	ErasedTerm const
 				&	i_rRight
-			,	BinaryTermFunction<t_tResult>
+			,	Logic::BinaryTermFunction<t_tResult>
 					i_fCompute
 			)
 		{
@@ -354,7 +366,7 @@ export namespace
 		ErasedTerm::ComputeErasedTerm
 		(	i_rLeft
 		,	i_rRight
-		,	ComputeConjunction
+		,	Logic::ComputeConjunction
 		);
 	}
 
@@ -370,7 +382,7 @@ export namespace
 		ErasedTerm::ComputeErasedTerm
 		(	i_rLeft
 		,	i_rRight
-		,	ComputeDisjunction
+		,	Logic::ComputeDisjunction
 		);
 	}
 
@@ -386,7 +398,7 @@ export namespace
 		ErasedTerm::ComputeErasedTerm
 		(	i_rLeft
 		,	i_rRight
-		,	ComputeEquivalence
+		,	Logic::ComputeEquivalence
 		);
 	}
 

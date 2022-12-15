@@ -92,5 +92,14 @@ export namespace
 				...
 			);
 		}
+
+		template
+			<	typename
+					t_tFunction
+			>
+		explicit(true) constexpr
+		(	operator t_tFunction
+		)	()	const
+		{	return &operator();	}
 	};
 }
