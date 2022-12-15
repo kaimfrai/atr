@@ -27,6 +27,7 @@ export namespace
 			pointer
 		=	value_type*
 		;
+
 		using
 			const_pointer
 		=	value_type const*
@@ -35,6 +36,11 @@ export namespace
 		using
 			iterator
 		=	pointer
+		;
+
+		using
+			const_iterator
+		=	const_pointer
 		;
 
 		std::unique_ptr<t_tElement[], t_tDeleter>
@@ -201,6 +207,10 @@ export namespace
 				t_tBuffer
 			::	iterator
 			;
+			typename
+				t_tBuffer
+			::	const_iterator
+			;
 
 			{	&c_vBuffer[0uz]
 			}->	std::same_as
@@ -266,6 +276,13 @@ export namespace
 		=	typename
 				BufferType
 			::	iterator
+		;
+
+		using
+			const_iterator
+		=	typename
+				BufferType
+			::	const_iterator
 		;
 
 		using
@@ -348,6 +365,28 @@ export namespace
 		)	()	const
 		->	USize
 		{	return m_vBuffer.max_size();	}
+
+		[[nodiscard]]
+		auto constexpr
+		(	ViewBuffer
+		)	()	&
+		->	std::span<value_type>
+		{	return
+			{	begin(*this)
+			,	max_size()
+			};
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	ViewBuffer
+		)	()	const&
+		->	std::span<value_type const>
+		{	return
+			{	begin(*this)
+			,	max_size()
+			};
+		}
 
 		[[nodiscard]]
 		auto constexpr
@@ -481,7 +520,8 @@ export namespace
 		{
 			auto const
 				vEnd
-			=	end(*this)
+			=	begin(*this)
+			+	size()
 			;
 			if	(	i_aErase < begin(*this)
 				or	i_aErase >= vEnd
@@ -537,6 +577,7 @@ export namespace
 		)	(	BufferedSpan
 				&	i_rBufferedSpan
 			)
+		->	iterator
 		{	return
 			std::ranges::begin
 			(	i_rBufferedSpan
@@ -550,6 +591,7 @@ export namespace
 		)	(	BufferedSpan const
 				&	i_rBufferedSpan
 			)
+		->	const_iterator
 		{	return
 			std::ranges::begin
 			(	i_rBufferedSpan
@@ -557,27 +599,74 @@ export namespace
 			);
 		}
 
+		template
+			<	std::convertible_to<const_iterator>
+					t_tIterator
+			>
+		struct
+			Sentinel
+		{
+			t_tIterator
+				m_aEnd
+			;
+
+			explicit(false) constexpr
+			(	Sentinel
+			)	()
+			=	default;
+
+			explicit(true) constexpr
+			(	Sentinel
+			)	(	t_tIterator
+						i_aBegin
+				,	USize
+						i_nSize
+				)
+			:	m_aEnd
+				{	i_aBegin
+				}
+			{
+				std::ranges::advance
+				(	m_aEnd
+				,	static_cast<SSize>
+					(	i_nSize
+					)
+				);
+			}
+
+			auto constexpr
+			(	base
+			)	()	const
+			{	return m_aEnd;	}
+
+			[[nodiscard]]
+			friend auto constexpr
+			(	operator==
+			)	(	t_tIterator
+						i_aPosition
+				,	Sentinel
+						i_vSentinel
+				)
+			->	bool
+			{	return
+					i_aPosition
+				==	i_vSentinel.m_aEnd
+				;
+			}
+		};
+
 		[[nodiscard]]
 		friend auto constexpr
 		(	end
 		)	(	BufferedSpan
 				&	i_rBufferedSpan
 			)
-		{	auto
-				vEnd
-			=	begin
-				(	i_rBufferedSpan
-				)
-			;
-			std::ranges::advance
-			(	vEnd
-			,	static_cast<SSize>
-				(	i_rBufferedSpan.size()
-				)
-			);
-			return
-				vEnd
-			;
+		->	Sentinel<iterator>
+		{	return
+			Sentinel<iterator>
+			{	begin(i_rBufferedSpan)
+			,	i_rBufferedSpan.size()
+			};
 		}
 
 		[[nodiscard]]
@@ -586,21 +675,12 @@ export namespace
 		)	(	BufferedSpan const
 				&	i_rBufferedSpan
 			)
-		{	auto
-				vEnd
-			=	begin
-				(	i_rBufferedSpan
-				)
-			;
-			std::ranges::advance
-			(	vEnd
-			,	static_cast<SSize>
-				(	i_rBufferedSpan.size()
-				)
-			);
-			return
-				vEnd
-			;
+		->	Sentinel<const_iterator>
+		{	return
+			Sentinel<const_iterator>
+			{	begin(i_rBufferedSpan)
+			,	i_rBufferedSpan.size()
+			};
 		}
 
 		auto constexpr
@@ -627,9 +707,10 @@ export namespace
 			)	const
 		{	return
 			//	TODO ranges::find does not appear to be usable with modules
+			//	find is not usable with a sentinel
 			std::find
 			(	begin(*this)
-			,	end(*this)
+			,	end(*this).base()
 			,	i_rValue
 			);
 		}
@@ -669,7 +750,7 @@ export namespace
 		{
 			auto const
 				vOldEnd
-			=	end(*this)
+			=	end(*this).base()
 			;
 
 			auto const
@@ -711,7 +792,7 @@ export namespace
 		)	()	&
 		{
 			std::ranges::fill
-			(	end(*this)
+			(	end(*this).base()
 			,	end(m_vBuffer)
 			,	value_type{}
 			);
@@ -738,7 +819,9 @@ export namespace
 		)	()	&
 		->	BufferedSpan&
 		{
-			std::sort(begin(*this), end(*this));
+			//	TODO ranges::sort does not appear to be usable with modules
+			//	sort is not usable with a sentinel
+			std::sort(begin(*this), end(*this).base());
 			return *this;
 		}
 

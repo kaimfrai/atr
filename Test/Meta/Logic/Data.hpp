@@ -55,7 +55,7 @@ export
 				vLeftLiteralSum
 			=	std::transform_reduce
 				(	begin(i_rLeft.Term.BitTerm)
-				,	end(i_rLeft.Term.BitTerm)
+				,	end(i_rLeft.Term.BitTerm).base()
 				,	0uz
 				,	std::plus<>{}
 				,	std::mem_fn(&Meta::Logic::BitClause::LiteralCount)
@@ -66,7 +66,7 @@ export
 				vRightLiteralSum
 			=	std::transform_reduce
 				(	begin(i_rLeft.Term.BitTerm)
-				,	end(i_rLeft.Term.BitTerm)
+				,	end(i_rLeft.Term.BitTerm).base()
 				,	0uz
 				,	std::plus<>{}
 				,	std::mem_fn(&Meta::Logic::BitClause::LiteralCount)

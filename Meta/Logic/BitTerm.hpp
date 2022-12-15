@@ -59,6 +59,22 @@ namespace
 		)	()	const
 		;
 
+		friend auto constexpr
+		(	begin
+		)	(	BitTerm const
+				&	i_rTerm
+			)
+		->	decltype(auto)
+		{	return begin(i_rTerm.Clauses);	}
+
+		friend auto constexpr
+		(	end
+		)	(	BitTerm const
+				&	i_rTerm
+			)
+		->	decltype(auto)
+		{	return end(i_rTerm.Clauses);	}
+
 		auto constexpr
 		(	Evaluate
 		)	(	Logic::BitClause::FieldType
@@ -128,20 +144,6 @@ namespace
 		;
 
 		friend auto constexpr
-		(	begin
-		)	(	BitTerm const&
-			)
-		->	BitClause const*
-		;
-
-		friend auto constexpr
-		(	end
-		)	(	BitTerm const&
-			)
-		->	BitClause const*
-		;
-
-		friend auto constexpr
 		(	Intersection
 		)	(	BitTerm const&
 			,	BitTerm const&
@@ -194,7 +196,7 @@ namespace
 	::	operator
 		::std::span<BitClause const>
 	)	()	const
-	{	return {begin(*this), end(*this)};	}
+	{	return {begin(*this), end(*this).base()};	}
 
 	auto constexpr
 	(	BitTerm
@@ -204,7 +206,7 @@ namespace
 	{	return
 		::std::transform_reduce
 		(	begin(*this)
-		,	end(*this)
+		,	end(*this).base()
 		,	0uz
 		,	::std::bit_or<USize>{}
 		,	::std::mem_fn(&BitClause::LiteralField)
@@ -226,7 +228,7 @@ namespace
 		};
 
 		for	(	BitClause
-				vClause
+					vClause
 			:	*this
 			)
 			vPermutationResult.insert(vClause.Permutation(i_vPermutation));
@@ -338,29 +340,11 @@ namespace
 		)
 	->	bool
 	{	return
-		::std::equal
-		(	begin(i_rLeftTerm)
-		,	end(i_rLeftTerm)
-		,	begin(i_rRightTerm)
-		,	end(i_rRightTerm)
+		::std::ranges::equal
+		(	i_rLeftTerm
+		,	i_rRightTerm
 		);
 	}
-
-	auto constexpr
-	(	begin
-	)	(	BitTerm const
-			&	i_rTerm
-		)
-	->	BitClause const*
-	{	return begin(i_rTerm.Clauses);	}
-
-	auto constexpr
-	(	end
-	)	(	BitTerm const
-			&	i_rTerm
-		)
-	->	BitClause const*
-	{	return end(i_rTerm.Clauses);	}
 
 	auto constexpr
 	(	Intersection
@@ -487,7 +471,7 @@ namespace
 			nMaxClauseCount
 		=	::std::transform_reduce
 			(	begin(i_rTerm)
-			,	end(i_rTerm)
+			,	end(i_rTerm).base()
 			,	1uz
 			,	::std::multiplies<USize>{}
 			,	::std::mem_fn(&BitClause::LiteralCount)

@@ -24,6 +24,76 @@ namespace
 			m_vTerm
 		;
 
+		friend auto constexpr
+		(	begin
+		)	(	Optimizer
+				&	i_rOptimizer
+			)
+		->	decltype(auto)
+		{	return begin(i_rOptimizer.m_vTerm);	}
+
+		friend auto constexpr
+		(	begin
+		)	(	Optimizer const
+				&	i_rOptimizer
+			)
+		->	decltype(auto)
+		{	return begin(i_rOptimizer.m_vTerm);	}
+
+		friend auto constexpr
+		(	end
+		)	(	Optimizer
+				&	i_rOptimizer
+			)
+		->	decltype(auto)
+		{	return end(i_rOptimizer.m_vTerm);	}
+
+		friend auto constexpr
+		(	end
+		)	(	Optimizer const
+				&	i_rOptimizer
+			)
+		->	decltype(auto)
+		{	return end(i_rOptimizer.m_vTerm);	}
+
+		auto constexpr
+		(	ViewDynamicBuffer
+		)	()	&
+		{	return
+				m_vTerm.ViewBuffer()
+			|	std::views::take_while
+				(	[	this
+					]	(	BitClause
+							&	i_rClause
+						)
+					{	return
+							&i_rClause
+						!=	end(*this)
+						;
+					}
+				)
+			;
+		}
+
+		auto constexpr
+		(	ViewDynamicBuffer
+		)	()	const&
+		{	return
+				m_vTerm.ViewBuffer()
+			|	std::views::take_while
+				(	[	this
+					]	(	BitClause const
+							&	i_rClause
+						)
+					{	return
+							&i_rClause
+						!=	end(*this)
+						;
+					}
+				)
+			;
+		}
+
 		auto constexpr
 		(	AppendLiteralRedundancy
 		)	(	BitClause
@@ -98,7 +168,7 @@ namespace
 
 			for	(	BitClause const
 					&	rRedundancyClause
-				:	i_rTerm
+				:	i_rTerm.ViewDynamicBuffer()
 				)
 			{
 				//	skip containing clause
@@ -143,12 +213,11 @@ namespace
 			m_vTerm.sort();
 			for	(	BitClause
 					&	rClause
-				:	*this | std::views::reverse
+				:	m_vTerm | std::views::reverse
 				)
 			{
-				if	(	(	i_rRedundancyBuffer
-						.	ComputeClauseRedundancy
-						)(	rClause
+				if	(	i_rRedundancyBuffer.ComputeClauseRedundancy
+						(	rClause
 						,	*this
 						)
 					)
@@ -169,7 +238,7 @@ namespace
 		{
 			for	(	BitClause
 						vRedundancyClause
-				:	i_rRedundancyCondition
+				:	i_rRedundancyCondition.ViewDynamicBuffer()
 				)
 			{
 				insert
@@ -196,7 +265,7 @@ namespace
 		{
 			for	(	BitClause const
 					&	rClause
-				:	*this
+				:	ViewDynamicBuffer()
 				)
 			{
 				for	(	BitClause const
@@ -268,95 +337,6 @@ namespace
 		}
 
 	public:
-		friend auto constexpr
-		(	begin
-		)	(	Optimizer
-				&	i_rOptimizer
-			)
-		->	BitClause*
-		{	return begin(i_rOptimizer.m_vTerm);	}
-
-		friend auto constexpr
-		(	begin
-		)	(	Optimizer const
-				&	i_rOptimizer
-			)
-		->	BitClause const*
-		{	return begin(i_rOptimizer.m_vTerm);	}
-
-		class
-			Sentinel final
-		{
-			BitClause const
-			*	m_aTermBegin
-			;
-			USize const
-			*	m_aTermSize
-			;
-
-			constexpr
-			(	Sentinel
-			)	(	BitClause const
-					*	i_aTermBegin
-				,	USize const
-					&	i_rTermSize
-				)
-			:	m_aTermBegin
-				{	i_aTermBegin
-				}
-			,	m_aTermSize
-				{	std::addressof(i_rTermSize)
-				}
-			{}
-
-			friend auto constexpr
-			(	end
-			)	(	Optimizer const
-					&
-				)
-			->	Sentinel
-			;
-
-		public:
-			explicit(false) constexpr
-			(	Sentinel
-			)	()
-			=	default;
-
-			auto constexpr
-			(	operator ==
-			)	(	BitClause const
-					*	i_aClause
-				)	const
-			->	bool
-			{
-				return i_aClause == m_aTermBegin + *m_aTermSize;
-			}
-		};
-
-		friend auto constexpr
-		(	end
-		)	(	Optimizer
-				&	i_rOptimizer
-			)
-		->	Sentinel
-		{	//	does not get invalidated when the size changes
-			return end(std::as_const(i_rOptimizer));
-		}
-
-		friend auto constexpr
-		(	end
-		)	(	Optimizer const
-				&	i_rOptimizer
-			)
-		->	Sentinel
-		{	//	does not get invalidated when the size changes
-			return
-			{	begin(i_rOptimizer)
-			,	i_rOptimizer.m_vTerm.m_nElementCount
-			};
-		}
-
 		explicit(true) constexpr
 		(	Optimizer
 		)	(	USize
@@ -438,7 +418,7 @@ namespace
 			if	(	IsAbsorbing()
 				or	i_vInsertClause.IsIdentity()
 				)
-				return end(m_vTerm);
+				return end(m_vTerm).base();
 
 			if	(	IsIdentity()
 				or	i_vInsertClause.IsAbsorbing()
@@ -450,16 +430,16 @@ namespace
 
 			BitClause
 			*	aInsertPosition
-			=	end(m_vTerm)
+			=	end(m_vTerm).base()
 			;
 			for	(	BitClause
 					&	rClause
-				:	*this | std::views::reverse
+				:	m_vTerm | std::views::reverse
 				)
 			{
 				//	insert clause is redundant
 				if	(i_vInsertClause.Includes(rClause))
-					return end(m_vTerm);
+					return end(m_vTerm).base();
 
 				//	overwrite redundant clause
 				if	(rClause.Includes(i_vInsertClause))
