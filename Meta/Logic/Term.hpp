@@ -113,8 +113,8 @@ export namespace
 		(	TrimLiterals
 		)	(	Logic::BitTerm const
 				&	i_rResult
-			,	EraseTypeToken const
-				*	i_aUnion
+			,	std::span<EraseTypeToken const>
+					i_vUnion
 			)
 		->	ErasedTerm
 		{
@@ -141,7 +141,7 @@ export namespace
 				)
 			{
 				(	vLiterals[nIndex]
-				=	i_aUnion
+				=	i_vUnion
 					[	GetIndexOfNthOneBit
 						(	vResultLiteralField
 						,	nIndex
@@ -159,8 +159,7 @@ export namespace
 		(	ProcessComputation
 		)	(	bool
 					i_bEquivalence
-			,	EraseTypeToken const
-				*
+			,	std::span<EraseTypeToken const>
 			)
 		->	bool
 		{	return i_bEquivalence;	}
@@ -169,11 +168,11 @@ export namespace
 		(	ProcessComputation
 		)	(	Logic::BitTerm const
 				&	i_rResult
-			,	EraseTypeToken const
-				*	i_aUnion
+			,	std::span<EraseTypeToken const>
+					i_vUnion
 			)
 		->	ErasedTerm
-		{	return TrimLiterals(i_rResult, i_aUnion);	}
+		{	return TrimLiterals(i_rResult, i_vUnion);	}
 
 		static auto constexpr
 		(	GetLiteralUnion
@@ -251,7 +250,7 @@ export namespace
 					(	i_rLeft.BitTerm
 					,	i_rRight.BitTerm
 					)
-				,	begin(i_rLeft)
+				,	i_rLeft.Literals
 				);
 			}
 
@@ -279,7 +278,7 @@ export namespace
 						}
 					)
 				)
-			,	begin(vUnion)
+			,	vUnion
 			);
 		}
 
@@ -336,7 +335,7 @@ export namespace
 		{	return
 			TrimLiterals
 			(	BitTerm[i_nClauseIndex]
-			,	Literals.begin()
+			,	Literals
 			);
 		}
 	};

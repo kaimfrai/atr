@@ -110,7 +110,7 @@ export namespace
 				};
 				for	(	auto const
 						&	vChar
-					:	i_sToDispatch
+					:	std::span{i_sToDispatch}
 					)
 				{
 					vResult

@@ -40,19 +40,20 @@ auto
 		}
 	;
 	return
-		MainTemplate
-		<	Body3D
-		,	&CopyConstruct<Cube>
-		,	&CopyConstruct<Cuboid>
-		,	&CopyConstruct<Pyramid>
-		,	&CopyConstruct<Sphere>
-		,	&CopyConstruct<Cylinder>
-		,	&CopyConstruct<Cone>
-		,	&CopyConstruct<Ellipsoid>
-		,	&CopyConstruct<Head>
-		,	fComputeVolume
-		>(	i_nArgCount
-		,	i_aArgValue
-		)
-	;
+	MainTemplate
+	<	Body3D
+	,	&CopyConstruct<Cube>
+	,	&CopyConstruct<Cuboid>
+	,	&CopyConstruct<Pyramid>
+	,	&CopyConstruct<Sphere>
+	,	&CopyConstruct<Cylinder>
+	,	&CopyConstruct<Cone>
+	,	&CopyConstruct<Ellipsoid>
+	,	&CopyConstruct<Head>
+	,	fComputeVolume
+	>(	std::span
+		{	i_aArgValue
+		,	static_cast<Meta::USize>(i_nArgCount)
+		}
+	);
 }

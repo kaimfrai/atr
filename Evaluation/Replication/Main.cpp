@@ -35,19 +35,20 @@ auto
 		}
 	;
 	return
-		MainTemplate
-		<	Body3D
-		,	&InPlaceConstruct<Cube>
-		,	&InPlaceConstruct<Cuboid>
-		,	&InPlaceConstruct<Pyramid>
-		,	&InPlaceConstruct<Sphere>
-		,	&InPlaceConstruct<Cylinder>
-		,	&InPlaceConstruct<Cone>
-		,	&InPlaceConstruct<Ellipsoid>
-		,	&InPlaceConstruct<Head>
-		,	fComputeVolume
-		>(	i_nArgCount
-		,	i_aArgValue
-		)
-	;
+	MainTemplate
+	<	Body3D
+	,	&InPlaceConstruct<Cube>
+	,	&InPlaceConstruct<Cuboid>
+	,	&InPlaceConstruct<Pyramid>
+	,	&InPlaceConstruct<Sphere>
+	,	&InPlaceConstruct<Cylinder>
+	,	&InPlaceConstruct<Cone>
+	,	&InPlaceConstruct<Ellipsoid>
+	,	&InPlaceConstruct<Head>
+	,	fComputeVolume
+	>(	std::span
+		{	i_aArgValue
+		,	static_cast<Meta::USize>(i_nArgCount)
+		}
+	);
 }

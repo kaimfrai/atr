@@ -10,8 +10,8 @@ export namespace
 	struct
 		StringView final
 	{
-		char const*
-			Data
+		char const
+		*	Data
 		;
 
 		USize
@@ -25,7 +25,10 @@ export namespace
 					t_nIndex
 			)	const
 		->	char const&
-		{	return Data[t_nIndex];	}
+		{
+			std::span const vSpan{Data, Size};
+			return vSpan[t_nIndex];
+		}
 
 		[[nodiscard]]
 		auto constexpr
@@ -52,7 +55,7 @@ export namespace
 		(	size
 		)	()	const
 			noexcept
-		->	Meta::USize
+		->	USize
 		{	return Size;	}
 
 		friend auto constexpr
@@ -103,12 +106,14 @@ export namespace
 	{
 		//	taken and modified from
 		//	https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare_three_way
-		auto vLeftPos = begin(i_vLeft);
-		auto const vLeftEnd = end(i_vLeft);
+		std::span const vLeft = i_vLeft;
+		std::span const vRight = i_vRight;
+		auto vLeftPos = begin(vLeft);
+		auto const vLeftEnd = end(vLeft);
 		bool bLeftRemaining = (vLeftPos != vLeftEnd);
 
-		auto vRightPos = begin(i_vRight);
-		auto const vRightEnd = end(i_vRight);
+		auto vRightPos = begin(vRight);
+		auto const vRightEnd = end(vRight);
 		bool bRightRemaining = (vRightPos != vRightEnd);
 
 		for	(

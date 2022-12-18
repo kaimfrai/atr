@@ -58,7 +58,9 @@ auto
 	,	&TypeConstruct<Type<"Ellipsoid">>
 	,	&TypeConstruct<Type<"Head">>
 	,	fComputeVolume
-	>(	i_nArgCount
-	,	i_aArgValue
+	>(	std::span
+		{	i_aArgValue
+		,	static_cast<Meta::USize>(i_nArgCount)
+		}
 	);
 }

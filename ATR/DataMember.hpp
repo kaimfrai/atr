@@ -84,7 +84,7 @@ export namespace
 
 			for	(	MemberInfo const
 					&	rExchange
-				:	i_vExchangeList
+				:	std::span{i_vExchangeList}
 				)
 			{
 				auto const

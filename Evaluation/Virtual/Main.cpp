@@ -37,19 +37,20 @@ auto
 		}
 	;
 	return
-		MainTemplate
-		<	Body3D
-		,	&std::make_unique<Cube>
-		,	&std::make_unique<Cuboid>
-		,	&std::make_unique<Pyramid>
-		,	&std::make_unique<Sphere>
-		,	&std::make_unique<Cylinder>
-		,	&std::make_unique<Cone>
-		,	&std::make_unique<Ellipsoid>
-		,	&std::make_unique<Head>
-		,	fComputeVolume
-		>(	i_nArgCount
-		,	i_aArgValue
-		)
-	;
+	MainTemplate
+	<	Body3D
+	,	&std::make_unique<Cube>
+	,	&std::make_unique<Cuboid>
+	,	&std::make_unique<Pyramid>
+	,	&std::make_unique<Sphere>
+	,	&std::make_unique<Cylinder>
+	,	&std::make_unique<Cone>
+	,	&std::make_unique<Ellipsoid>
+	,	&std::make_unique<Head>
+	,	fComputeVolume
+	>(	std::span
+		{	i_aArgValue
+		,	static_cast<Meta::USize>(i_nArgCount)
+		}
+	);
 }

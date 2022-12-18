@@ -861,8 +861,14 @@ export namespace
 			*	i_aSource
 		)
 	->	Aggregate<t_tTarget>
-	{	return
-		[	i_aSource
+	{
+		auto constexpr
+			vExtent
+		=	::std::extent_v<t_tTarget>
+		;
+
+		return
+		[	vSource = std::span{i_aSource, vExtent}
 		]	<	USize
 				...	t_npIndex
 			>(	IndexToken<t_npIndex...>
@@ -870,13 +876,13 @@ export namespace
 		->	Aggregate<t_tTarget>
 		{	return
 			{	static_cast<::std::remove_extent_t<t_tTarget>>
-				(	i_aSource
+				(	vSource
 					[	t_npIndex
 					]
 				)
 				...
 			};
-		}(	Sequence<::std::extent_v<t_tTarget>>
+		}(	Sequence<vExtent>
 		);
 	}
 

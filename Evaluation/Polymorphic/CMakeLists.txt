@@ -6,7 +6,7 @@ PROPERTIES
 INCLUDE_DIRECTORIES
 	"${POLYMORPHIC_INCLUDE_PATH}"
 COMPILE_OPTIONS
-	"$<$<CXX_COMPILER_ID:Clang>:-Wno-cast-function-type-strict>"
+	"$<$<CXX_COMPILER_ID:Clang>:-Wno-cast-function-type-strict;-Wno-unsafe-buffer-usage>"
 )
 
 force_import_std(

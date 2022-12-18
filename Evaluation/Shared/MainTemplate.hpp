@@ -183,11 +183,8 @@ export
 		>
 	auto inline
 		MainTemplate
-		(	int
-				i_nArgCount
-		,	char const
-			*	i_aArgValue
-			[]
+		(	std::span<char const*>
+				i_vArguments
 		)
 	->	int
 	{
@@ -199,9 +196,9 @@ export
 		auto const
 			vLoopIterations
 		=	std::strtoull
-			(	i_aArgValue
-				[	i_nArgCount
-				-	3
+			(	i_vArguments
+				[	i_vArguments.size()
+				-	3uz
 				]
 			,	nullptr
 			,	10
@@ -210,9 +207,9 @@ export
 		auto const
 			vRandomSeed
 		=	std::strtoull
-			(	i_aArgValue
-				[	i_nArgCount
-				-	2
+			(	i_vArguments
+				[	i_vArguments.size()
+				-	2uz
 				]
 			,	nullptr
 			,	10
@@ -221,9 +218,9 @@ export
 		auto const
 			vRandomSequenceLength
 		=	std::strtoull
-			(	i_aArgValue
-				[	i_nArgCount
-				-	1
+			(	i_vArguments
+				[	i_vArguments.size()
+				-	1uz
 				]
 			,	nullptr
 			,	10
