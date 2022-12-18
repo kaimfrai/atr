@@ -12,5 +12,5 @@ export struct
 	Pimpl(long double) noexcept;
 	~Pimpl() noexcept;
 
-	long double get() const noexcept;
+	auto get() const noexcept -> long double;
 };
