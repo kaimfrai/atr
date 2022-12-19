@@ -17,6 +17,9 @@ echo "Time Dyno $(echo ${dyno_time} | bc)"
 polymorphic_time=$(\time -f "%e" ninja Evaluation.Polymorphic.Library 2>&1  1>/dev/null)
 echo "Time Polymorphic: $(echo ${polymorphic_time} | bc)"
 
+meta_time=$(\time -f "%e" ninja Meta 2>&1  1>/dev/null)
+echo "Time Meta: $(echo ${meta_time} | bc)"
+
 atr_time=$(\time -f "%e" ninja ATR 2>&1  1>/dev/null)
 echo "Time ATR: $(echo ${atr_time} | bc)"
 
