@@ -25,7 +25,7 @@ export namespace
 
 		for	(	auto
 					vInsertPosition
-				=	begin(vResult)
+				=	vResult.begin()
 			;	auto
 					vStringView
 			:	i_vStringViews
@@ -62,7 +62,7 @@ export namespace
 			vResult
 		;
 		if constexpr(t_nSize > 0uz)
-			std::copy(begin(i_rLeft), end(i_rLeft), begin(vResult));
+			std::copy(i_rLeft.begin(), i_rLeft.end().base(), vResult.begin());
 		vResult[t_nSize] = i_nRight;
 		return vResult;
 	}

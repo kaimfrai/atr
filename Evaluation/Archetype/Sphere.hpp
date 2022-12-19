@@ -11,15 +11,15 @@ export namespace
 	DefineMembers
 	<	LayoutConfig
 		<	"Ellipsoid"
-		>({	Alias
+		>(	Alias
 			<	"Height"
 			,	"Width"
 			>
-		,	Alias
+		)(	Alias
 			<	"Depth"
 			,	"Width"
 			>
-		})
+		)
 	>	extern
 		LayoutConfig
 		<	"Sphere"

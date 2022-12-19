@@ -72,51 +72,34 @@ export namespace
 	{
 		auto constexpr
 		(	operator()
-		)	(	::std::initializer_list<MemberInfo const>
-					i_vExchangeList
-			)	const
-		->	MemberList
-		{
-			MemberList
-				vCopy
-			=	*this
-			;
-
-			for	(	MemberInfo const
-					&	rExchange
-				:	std::span{i_vExchangeList}
-				)
-			{
-				auto const
-					vExchangePosition
-				=	::std::find_if
-					(	begin(vCopy)
-					,	end(vCopy)
-					,	[	vName = rExchange.Name
-						]	(	MemberInfo const
-								&	i_rInfo
-							)
-						{	return i_rInfo.Name == vName;	}
-					)
-				;
-				if	(vExchangePosition == end(vCopy))
-					throw "Cannot exchange non-existing member!";
-
-				*vExchangePosition = rExchange;
-			}
-
-			::std::sort(begin(vCopy), end(vCopy));
-
-			return vCopy;
-		}
-
-		auto constexpr
-		(	operator()
 		)	(	MemberInfo const
 				&	i_rExchange
 			)	const
 		->	MemberList
-		{	return operator()({i_rExchange});	}
+		{
+			auto vCopy = *this;
+			auto const
+				vExchangePosition
+			=	std::find_if
+				(	vCopy.begin()
+				,	vCopy.end().base()
+				,	[	vName = i_rExchange.Name
+					]	(	MemberInfo const
+							&	i_rMember
+						)
+					{
+						return i_rMember.Name == vName;
+					}
+				)
+			;
+			if	(vExchangePosition == vCopy.end())
+				throw "Cannot exchange non-existing member!";
+
+			*vExchangePosition = i_rExchange;
+			std::sort(vCopy.begin(), vCopy.end().base());
+
+			return vCopy;
+		}
 
 		template
 			<	Meta::USize
@@ -155,16 +138,16 @@ export namespace
 
 				auto const
 					vLast
-				=	::std::set_union
-					(	begin(i_rLeft)
-					,	end(i_rLeft)
-					,	begin(i_rRight)
-					,	end(i_rRight)
-					,	begin(vResult)
+				=	std::set_union
+					(	i_rLeft.begin()
+					,	i_rLeft.end().base()
+					,	i_rRight.begin()
+					,	i_rRight.end().base()
+					,	vResult.begin()
 					)
 				;
 
-				if	(vLast != end(vResult))
+				if	(vLast != vResult.end())
 					throw "Cannot merge MemberList with identical members!";
 				return vResult;
 			}
@@ -198,11 +181,9 @@ export namespace
 				return i_rLeft;
 			else
 			if	(	not
-					::std::includes
-					(	begin(i_rLeft)
-					,	end(i_rLeft)
-					,	begin(i_rRight)
-					,	end(i_rRight)
+					std::ranges::includes
+					(	i_rLeft
+					,	i_rRight
 					)
 				)
 				throw "Cannot subtract MemberInfos that are not contained!";
@@ -213,11 +194,9 @@ export namespace
 			>	vResult
 			;
 
-			::std::set_difference
-			(	begin(i_rLeft)
-			,	end(i_rLeft)
-			,	begin(i_rRight)
-			,	end(i_rRight)
+			std::ranges::set_difference
+			(	i_rLeft
+			,	i_rRight
 			,	begin(vResult)
 			);
 			return vResult;
@@ -380,14 +359,6 @@ export namespace
 
 		auto constexpr
 		(	operator()
-		)	(	::std::initializer_list<MemberInfo const>
-					i_vExchangeList
-			)	const
-		->	decltype(t_vList)
-		{	return t_vList(i_vExchangeList);	}
-
-		auto constexpr
-		(	operator()
 		)	(	MemberInfo const
 				&	i_rExchange
 			)
@@ -435,7 +406,7 @@ export namespace
 				,	Meta::Construct<decltype(t_vList)>()
 				)
 			;
-			::std::sort(begin(vList), end(vList));
+			std::sort(vList.begin(), vList.end().base());
 			return vList;
 		}
 

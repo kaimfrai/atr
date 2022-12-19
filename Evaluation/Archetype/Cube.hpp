@@ -9,15 +9,15 @@ export namespace
 	DefineMembers
 	<	LayoutConfig
 		<	"Cuboid"
-		>({	Alias
+		>(	Alias
 			<	"Height"
 			,	"Width"
 			>
-		,	Alias
+		)(	Alias
 			<	"Depth"
 			,	"Width"
 			>
-		})
+		)
 	>	extern
 		LayoutConfig
 		<	"Cube"

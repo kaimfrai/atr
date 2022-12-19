@@ -560,8 +560,8 @@ export namespace
 		using const_reference = ConstElementType&;
 		using pointer = ElementType*;
 		using const_pointer = ConstElementType*;
-		using iterator = pointer;
-		using const_iterator = const_pointer;
+		using iterator = Iterator<value_type>;
+		using const_iterator = Iterator<value_type const>;
 
 		auto constexpr
 		(	get
@@ -662,36 +662,32 @@ export namespace
 		{	return nullptr;	}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto constexpr
 		(	begin
-		)	(	Aggregate&
-			)
+		)	()	&
 		->	iterator
-		{	return nullptr;	}
+		{	return { nullptr };	}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto constexpr
 		(	begin
-		)	(	ConstElementType&
-			)
+		)	()	const&
 		->	const_iterator
-		{	return nullptr;	}
+		{	return { nullptr };	}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto constexpr
 		(	end
-		)	(	Aggregate&
-			)
-		->	iterator
-		{	return nullptr;	}
+		)	()	&
+		->	Sentinel<value_type>
+		{	return { nullptr };	}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto constexpr
 		(	end
-		)	(	Aggregate const&
-			)
-		->	const_iterator
-		{	return nullptr;	}
+		)	()	const&
+		->	Sentinel<value_type const>
+		{	return { nullptr };	}
 
 		auto constexpr
 		(	data
@@ -749,8 +745,8 @@ export namespace
 		using const_reference = ConstElementType&;
 		using pointer = ElementType*;
 		using const_pointer = ConstElementType*;
-		using iterator = pointer;
-		using const_iterator = const_pointer;
+		using iterator = Iterator<value_type>;
+		using const_iterator = Iterator<value_type const>;
 
 		auto constexpr
 		(	get
@@ -795,8 +791,17 @@ export namespace
 		static auto constexpr
 		(	size
 		)	()
+			noexcept
 		->	size_type
 		{	return t_nExtent;	}
+
+		[[nodiscard]]
+		static auto constexpr
+		(	ssize
+		)	()
+			noexcept
+		->	difference_type
+		{	return static_cast<difference_type>(t_nExtent);	}
 
 		[[nodiscard]]
 		static auto constexpr
@@ -839,14 +844,53 @@ export namespace
 		auto constexpr
 		(	data
 		)	()	&
+			noexcept
 		->	pointer
 		{	return this->Data;	}
 
 		auto constexpr
 		(	data
 		)	()	const&
+			noexcept
 		->	const_pointer
 		{	return this->Data;	}
+
+		auto constexpr
+		(	data
+		)	()	&&
+		=	delete;
+
+		[[nodiscard]]
+		auto constexpr
+		(	begin
+		)	()	&
+			noexcept
+		->	iterator
+		{	return { data() };	}
+
+		[[nodiscard]]
+		auto constexpr
+		(	begin
+		)	()	const&
+			noexcept
+		->	const_iterator
+		{	return { data() };	}
+
+		[[nodiscard]]
+		auto constexpr
+		(	end
+		)	()	&
+			noexcept
+		->	Sentinel<value_type>
+		{	return begin() + ssize();	}
+
+		[[nodiscard]]
+		auto constexpr
+		(	end
+		)	()	const&
+			noexcept
+		->	Sentinel<value_type const>
+		{	return begin() + ssize();	}
 	};
 
 	template
@@ -1296,11 +1340,9 @@ export namespace
 		)
 	->	bool
 	{	return
-		::std::equal
-		(	begin(i_rLeft)
-		,	end(i_rLeft)
-		,	begin(i_rRight)
-		,	end(i_rRight)
+		std::ranges::equal
+		(	i_rLeft
+		,	i_rRight
 		);
 	}
 
@@ -1377,58 +1419,6 @@ export namespace
 		)
 	->	decltype(::std::data(i_rArray.get()))
 	{	return ::std::data(i_rArray.get());	}
-
-	template
-		<	typename
-				t_tData
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	begin
-	)	(	Aggregate<t_tData>
-			&	i_rArray
-		)
-	->	decltype(::std::begin(i_rArray.get()))
-	{	return ::std::begin(i_rArray.get());	}
-
-	template
-		<	typename
-				t_tData
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	begin
-	)	(	Aggregate<t_tData> const
-			&	i_rArray
-		)
-	->	decltype(::std::begin(i_rArray.get()))
-	{	return ::std::begin(i_rArray.get());	}
-
-	template
-		<	typename
-				t_tData
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	end
-	)	(	Aggregate<t_tData>
-			&	i_rArray
-		)
-	->	decltype(::std::end(i_rArray.get()))
-	{	return ::std::end(i_rArray.get());	}
-
-	template
-		<	typename
-				t_tData
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	end
-	)	(	Aggregate<t_tData> const
-			&	i_rArray
-		)
-	->	decltype(::std::end(i_rArray.get()))
-	{	return ::std::end(i_rArray.get());	}
 }
 
 export namespace

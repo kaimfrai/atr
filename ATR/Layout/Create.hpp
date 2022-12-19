@@ -26,21 +26,23 @@ using ::Meta::Index;
 using ::Meta::IndexToken;
 using ::Meta::Sequence;
 using ::Meta::USize;
+using ::Meta::Data::Iterator;
+using ::Meta::Data::Sentinel;
 
 [[nodiscard]]
 auto constexpr
 (	AliasCount
-)	(	MemberInfo const
-		*	i_aBegin
-	,	MemberInfo const
-		*	i_aEnd
+)	(	Iterator<MemberInfo const>
+			i_aBegin
+	,	Sentinel<MemberInfo const>
+			i_aEnd
 	)
 ->	USize
 {	return
 	static_cast<USize>
 	(	::std::lower_bound
 		(	i_aBegin
-		,	i_aEnd
+		,	i_aEnd.base()
 		,	MemberInfo
 			{	.SortKey = AliasSortKey + 1uz
 			,	.Name = {}
@@ -54,18 +56,18 @@ auto constexpr
 [[nodiscard]]
 auto constexpr
 (	StaticCount
-)	(	MemberInfo const
-		*	i_aBegin
-	,	MemberInfo const
-		*	i_aEnd
+)	(	Iterator<MemberInfo const>
+			i_aBegin
+	,	Sentinel<MemberInfo const>
+			i_aEnd
 	)
 ->	USize
 {	return
 	static_cast<USize>
-	(	i_aEnd
+	(	i_aEnd.base()
 	-	::std::lower_bound
 		(	i_aBegin
-		,	i_aEnd
+		,	i_aEnd.base()
 		,	MemberInfo
 			{	.SortKey = StaticSortKey
 			,	.Name = {}
@@ -91,16 +93,16 @@ auto constexpr
 	USize constexpr
 		nAliasCount
 	=	AliasCount
-		(	begin(t_vConfig)
-		,	end(t_vConfig)
+		(	t_vConfig.begin()
+		,	t_vConfig.end()
 		)
 	;
 
 	USize constexpr
 		nStaticCount
 	=	StaticCount
-		(	begin(t_vConfig) + nAliasCount
-		,	end(t_vConfig)
+		(	t_vConfig.begin() + nAliasCount
+		,	t_vConfig.end()
 		)
 	;
 
