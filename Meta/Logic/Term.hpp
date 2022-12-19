@@ -6,7 +6,6 @@ export import :BufferedSpan;
 
 export import Meta.Arithmetic;
 export import Meta.Token;
-export import Meta.Functional;
 
 import Std;
 
@@ -457,32 +456,25 @@ export namespace
 
 		static auto constexpr
 		(	operator ()
-		)	(	TemplateParameter
-				<	bool
-				,	[]	(	auto
-							&&
-							...	i_rpArgument
-						)
-					->	bool
-					{	return
-						EvaluateTerm
-						(	t_vTerm
-						,	std::array<bool, LiteralCount>
-							{	t_tpLiteral{}
-								(	std::forward<decltype(i_rpArgument)>
-									(	i_rpArgument
-									)
-									...
-								)
-								...
-							}
-						);
-					}
-				>
-					i_vParameter
+		)	(	auto
+				&&
+				...	i_rpArgument
 			)
 		->	bool
-		{	return	std::move(i_vParameter)();	}
+		{	return
+			EvaluateTerm
+			(	t_vTerm
+			,	std::array
+				{	t_tpLiteral{}
+					(	std::forward<decltype(i_rpArgument)>
+						(	i_rpArgument
+						)
+						...
+					)
+					...
+				}
+			);
+		}
 	};
 
 	template
