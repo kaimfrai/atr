@@ -2,6 +2,7 @@ export module Meta.Logic:BufferedSpan;
 // TODO find more appropriate module. as of now, this is only required in Meta.Logic
 export import Meta.Arithmetic;
 export import Meta.Token;
+export import Meta.Data;
 
 import Std;
 
@@ -35,12 +36,16 @@ export namespace
 
 		using
 			iterator
-		=	pointer
+		=	Data::Iterator
+			<	value_type
+			>
 		;
 
 		using
 			const_iterator
-		=	const_pointer
+		=	Data::Iterator
+			<	value_type const
+			>
 		;
 
 		std::unique_ptr<t_tElement[], t_tDeleter>
@@ -64,16 +69,22 @@ export namespace
 		)	(	UniqueBuffer
 				&	i_rUniqueBuffer
 			)
-		->	pointer
-		{	return i_rUniqueBuffer.m_vBuffer.get();	}
+		->	iterator
+		{	return
+			{	i_rUniqueBuffer.m_vBuffer.get()
+			};
+		}
 
 		friend auto constexpr
 		(	begin
 		)	(	UniqueBuffer const
 				&	i_rUniqueBuffer
 			)
-		->	pointer
-		{	return i_rUniqueBuffer.m_vBuffer.get();	}
+		->	const_iterator
+		{	return
+			{	i_rUniqueBuffer.m_vBuffer.get()
+			};
+		}
 
 		[[nodiscard]]
 		friend auto constexpr
@@ -81,10 +92,10 @@ export namespace
 		)	(	UniqueBuffer
 				&	i_rUniqueBuffer
 			)
-		->	pointer
+		->	Data::Sentinel<value_type>
 		{	return
 				begin(i_rUniqueBuffer)
-			+	i_rUniqueBuffer.max_size()
+			+	static_cast<SSize>(i_rUniqueBuffer.max_size())
 			;
 		}
 
@@ -94,10 +105,10 @@ export namespace
 		)	(	UniqueBuffer const
 				&	i_rUniqueBuffer
 			)
-		->	pointer
+		->	Data::Sentinel<value_type const>
 		{	return
 				begin(i_rUniqueBuffer)
-			+	i_rUniqueBuffer.max_size()
+			+	static_cast<SSize>(i_rUniqueBuffer.max_size())
 			;
 		}
 
@@ -203,14 +214,6 @@ export namespace
 				t_tBuffer
 			::	const_pointer
 			;
-			typename
-				t_tBuffer
-			::	iterator
-			;
-			typename
-				t_tBuffer
-			::	const_iterator
-			;
 
 			{	&c_vBuffer[0uz]
 			}->	std::same_as
@@ -272,24 +275,24 @@ export namespace
 		);
 
 		using
-			iterator
-		=	typename
-				BufferType
-			::	iterator
-		;
-
-		using
-			const_iterator
-		=	typename
-				BufferType
-			::	const_iterator
-		;
-
-		using
 			value_type
 		=	typename
 				BufferType
 			::	value_type
+		;
+
+		using
+			iterator
+		=	Data::Iterator
+			<	value_type
+			>
+		;
+
+		using
+			const_iterator
+		=	Data::Iterator
+			<	value_type const
+			>
 		;
 
 		BufferType
@@ -363,6 +366,7 @@ export namespace
 		auto constexpr
 		(	max_size
 		)	()	const
+			noexcept
 		->	USize
 		{	return m_vBuffer.max_size();	}
 
@@ -392,8 +396,17 @@ export namespace
 		auto constexpr
 		(	size
 		)	()	const
+			noexcept
 		->	USize
 		{	return m_nElementCount;	}
+
+		[[nodiscard]]
+		auto constexpr
+		(	ssize
+		)	()	const
+			noexcept
+		->	SSize
+		{	return static_cast<SSize>(m_nElementCount);	}
 
 		auto constexpr
 		(	EnsureNewSizeValid
@@ -513,22 +526,22 @@ export namespace
 
 		auto constexpr
 		(	erase
-		)	(	pointer
+		)	(	iterator
 					i_aErase
 			)	&
-		->	pointer
+		->	iterator
 		{
 			auto const
 				vEnd
 			=	begin(*this)
-			+	size()
+			+	ssize()
 			;
 			if	(	i_aErase < begin(*this)
 				or	i_aErase >= vEnd
 				)
 				return vEnd;
 
-			pointer
+			auto
 				aNext
 			=	::std::next
 				(	i_aErase
@@ -550,6 +563,7 @@ export namespace
 		)	(	USize
 					i_nIndex
 			)	&
+			noexcept
 		->	decltype(auto)
 		{	return m_vBuffer[i_nIndex];	}
 
@@ -559,6 +573,7 @@ export namespace
 		)	(	USize
 					i_nIndex
 			)	const&
+			noexcept
 		->	decltype(auto)
 		{	return m_vBuffer[i_nIndex];	}
 
@@ -568,6 +583,7 @@ export namespace
 		)	(	USize
 					i_nIndex
 			)	&&
+			noexcept
 		->	decltype(auto)
 		{	return std::move(*this).m_vBuffer[i_nIndex];	}
 
@@ -577,11 +593,14 @@ export namespace
 		)	(	BufferedSpan
 				&	i_rBufferedSpan
 			)
+			noexcept
 		->	iterator
 		{	return
-			std::ranges::begin
-			(	i_rBufferedSpan
-			.	m_vBuffer
+			iterator
+			(	std::ranges::begin
+				(	i_rBufferedSpan
+				.	m_vBuffer
+				)
 			);
 		}
 
@@ -591,69 +610,16 @@ export namespace
 		)	(	BufferedSpan const
 				&	i_rBufferedSpan
 			)
+			noexcept
 		->	const_iterator
 		{	return
-			std::ranges::begin
-			(	i_rBufferedSpan
-			.	m_vBuffer
+			const_iterator
+			(	std::ranges::begin
+				(	i_rBufferedSpan
+				.	m_vBuffer
+				)
 			);
 		}
-
-		template
-			<	std::convertible_to<const_iterator>
-					t_tIterator
-			>
-		struct
-			Sentinel
-		{
-			t_tIterator
-				m_aEnd
-			;
-
-			explicit(false) constexpr
-			(	Sentinel
-			)	()
-			=	default;
-
-			explicit(true) constexpr
-			(	Sentinel
-			)	(	t_tIterator
-						i_aBegin
-				,	USize
-						i_nSize
-				)
-			:	m_aEnd
-				{	i_aBegin
-				}
-			{
-				std::ranges::advance
-				(	m_aEnd
-				,	static_cast<SSize>
-					(	i_nSize
-					)
-				);
-			}
-
-			auto constexpr
-			(	base
-			)	()	const
-			{	return m_aEnd;	}
-
-			[[nodiscard]]
-			friend auto constexpr
-			(	operator==
-			)	(	t_tIterator
-						i_aPosition
-				,	Sentinel
-						i_vSentinel
-				)
-			->	bool
-			{	return
-					i_aPosition
-				==	i_vSentinel.m_aEnd
-				;
-			}
-		};
 
 		[[nodiscard]]
 		friend auto constexpr
@@ -661,12 +627,13 @@ export namespace
 		)	(	BufferedSpan
 				&	i_rBufferedSpan
 			)
-		->	Sentinel<iterator>
+			noexcept
+		->	Data::Sentinel<value_type>
 		{	return
-			Sentinel<iterator>
-			{	begin(i_rBufferedSpan)
-			,	i_rBufferedSpan.size()
-			};
+			Data::Sentinel<value_type>
+			(	begin(i_rBufferedSpan)
+			+	i_rBufferedSpan.ssize()
+			);
 		}
 
 		[[nodiscard]]
@@ -675,12 +642,13 @@ export namespace
 		)	(	BufferedSpan const
 				&	i_rBufferedSpan
 			)
-		->	Sentinel<const_iterator>
+			noexcept
+		->	Data::Sentinel<value_type const>
 		{	return
-			Sentinel<const_iterator>
-			{	begin(i_rBufferedSpan)
-			,	i_rBufferedSpan.size()
-			};
+			Data::Sentinel<value_type const>
+			(	begin(i_rBufferedSpan)
+			+	i_rBufferedSpan.ssize()
+			);
 		}
 
 		auto constexpr
@@ -739,6 +707,7 @@ export namespace
 		auto constexpr
 		(	empty
 		)	()	const
+			noexcept
 		->	bool
 		{	return size() == 0uz;	}
 
@@ -793,7 +762,7 @@ export namespace
 		{
 			std::ranges::fill
 			(	end(*this).base()
-			,	end(m_vBuffer)
+			,	Data::Sentinel<value_type>(end(m_vBuffer))
 			,	value_type{}
 			);
 		}

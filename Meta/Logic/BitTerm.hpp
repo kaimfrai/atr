@@ -90,7 +90,7 @@ export namespace
 			)	const
 		->	bool
 		{
-			for	(auto vClause : std::span{*this})
+			for	(auto vClause : *this)
 			{
 				if	(vClause.Evaluate(i_vPreset).IsAbsorbing())
 					return i_bIdentity;
@@ -114,7 +114,7 @@ export namespace
 
 			for	(	BitClause
 						vClause
-				:	std::span{*this}
+				:	*this
 				)
 				vPermutationResult.insert(vClause.Permutation(i_vPermutation));
 
@@ -370,12 +370,12 @@ export namespace
 
 			for	(	BitClause
 						i_vLeftClause
-				:	std::span{i_rLeftTerm}
+				:	i_rLeftTerm
 				)
 			{
 				for	(	BitClause
 							i_vRightClause
-					:	std::span{i_rRightTerm}
+					:	i_rRightTerm
 					)
 				{
 					vOptimizer.insert(Union(i_vLeftClause, i_vRightClause));
@@ -421,7 +421,7 @@ export namespace
 
 			for	(	BitClause const
 						vClause
-				:	std::span{i_rTerm}
+				:	i_rTerm
 				)
 			{
 				for	(	BitClause const
@@ -435,7 +435,7 @@ export namespace
 					;
 					for	(	BitClause const
 								vCurrentClause
-						:	std::span{vOptimizer}
+						:	vOptimizer
 						)
 					{
 						vResultBuffer.insert

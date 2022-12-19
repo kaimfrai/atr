@@ -276,7 +276,7 @@ export namespace
 		:	Aggregate
 			<	ArrayType
 			>{	Data::MakeArrayAggregate<ArrayType>
-				(	i_aValue
+				(	Data::Iterator{i_aValue}
 				)
 			}
 		{}

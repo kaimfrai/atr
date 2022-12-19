@@ -1,6 +1,7 @@
 export module Meta.Data:Aggregate;
 
 export import :Object;
+export import :Iterator;
 
 export import Meta.Token;
 export import Meta.Lex;
@@ -857,26 +858,31 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	MakeArrayAggregate
-	)	(	t_tSource const
-			*	i_aSource
+	)	(	Iterator<t_tSource const>
+				i_aSource
 		)
+		noexcept
 	->	Aggregate<t_tTarget>
 	{
 		auto constexpr
 			vExtent
 		=	::std::extent_v<t_tTarget>
 		;
+		using
+			tElement
+		=	::std::remove_extent_t<t_tTarget>
+		;
 
 		return
-		[	vSource = std::span{i_aSource, vExtent}
+		[	i_aSource
 		]	<	USize
 				...	t_npIndex
 			>(	IndexToken<t_npIndex...>
 			)
 		->	Aggregate<t_tTarget>
 		{	return
-			{	static_cast<::std::remove_extent_t<t_tTarget>>
-				(	vSource
+			{	static_cast<tElement>
+				(	i_aSource
 					[	t_npIndex
 					]
 				)

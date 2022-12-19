@@ -6,4 +6,5 @@ add_module(
 	TupleSet.hpp
 	TupleList.hpp
 	Value.hpp
+	Iterator.cpp
 )

@@ -20,6 +20,14 @@ export namespace
 	class
 		Optimizer final
 	{
+		using
+			BufferType
+		=	DynamicBufferedSpan<BitClause>
+		;
+
+		using iterator = typename BufferType::iterator;
+		using const_iterator = typename BufferType::const_iterator;
+
 		DynamicBufferedSpan<BitClause>
 			m_vTerm
 		;
@@ -67,7 +75,7 @@ export namespace
 							&	i_rClause
 						)
 					{	return
-							&i_rClause
+							Data::Iterator{&i_rClause}
 						!=	end(*this)
 						;
 					}
@@ -86,7 +94,7 @@ export namespace
 							&	i_rClause
 						)
 					{	return
-							&i_rClause
+							Data::Iterator{&i_rClause}
 						!=	end(*this)
 						;
 					}
@@ -222,7 +230,7 @@ export namespace
 						)
 					)
 				{
-					erase(&rClause);
+					erase(iterator{&rClause});
 				}
 			}
 		}
@@ -400,10 +408,10 @@ export namespace
 
 		auto constexpr
 		(	erase
-		)	(	BitClause
-				*	i_aEraseClause
+		)	(	iterator
+				i_aEraseClause
 			)
-		->	BitClause*
+		->	iterator
 		{
 			return m_vTerm.erase(i_aEraseClause);
 		}
@@ -413,7 +421,7 @@ export namespace
 		)	(	BitClause
 					i_vInsertClause
 			)
-		->	BitClause*
+		->	iterator
 		{
 			if	(	IsAbsorbing()
 				or	i_vInsertClause.IsIdentity()
@@ -428,8 +436,8 @@ export namespace
 				return begin(m_vTerm);
 			}
 
-			BitClause
-			*	aInsertPosition
+			auto
+				aInsertPosition
 			=	end(m_vTerm).base()
 			;
 			for	(	BitClause
@@ -446,7 +454,7 @@ export namespace
 				{
 					rClause = i_vInsertClause;
 					erase(aInsertPosition);
-					aInsertPosition = &rClause;
+					aInsertPosition = iterator{&rClause};
 				}
 			}
 

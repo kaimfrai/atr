@@ -71,6 +71,8 @@ add_compile_options(
 	-Wno-c++98-compat-pedantic
 	# using c++23
 	-Wno-c++20-compat-pedantic
+	# using C++23
+	-Wno-c++20-extensions
 )
 
 add_compile_options(

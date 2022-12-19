@@ -43,7 +43,7 @@ export namespace
 			)
 		:	AggregateType
 			{	Data::MakeArrayAggregate<ArrayEntity<char, t_nExtent>>
-				(	i_aString
+				(	Data::Iterator{i_aString}
 				)
 			}
 		{}

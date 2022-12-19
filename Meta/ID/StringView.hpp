@@ -1,6 +1,7 @@
 export module Meta.ID:StringView;
 
 export import Meta.Arithmetic;
+export import Meta.Data;
 
 import Std;
 
@@ -10,6 +11,9 @@ export namespace
 	struct
 		StringView final
 	{
+		using iterator = Data::Iterator<char const>;
+		using const_iterator = iterator;
+
 		char const
 		*	Data
 		;
@@ -22,13 +26,11 @@ export namespace
 		auto constexpr
 		(	operator[]
 		)	(	USize
-					t_nIndex
+					i_nIndex
 			)	const
+			noexcept
 		->	char const&
-		{
-			std::span const vSpan{Data, Size};
-			return vSpan[t_nIndex];
-		}
+		{	return iterator{Data}[i_nIndex];	}
 
 		[[nodiscard]]
 		auto constexpr
@@ -36,14 +38,16 @@ export namespace
 		)	()	const
 			noexcept
 		->	bool
-		{	return Size == 0uz;	}
+		{	return size() == 0uz;	}
 
-		explicit constexpr
+		[[nodiscard]]
+		explicit(true) constexpr
 		(	operator bool
 		)	()	const
 			noexcept
 		{	return not empty();	}
 
+		[[nodiscard]]
 		auto constexpr
 		(	data
 		)	()	const
@@ -51,6 +55,7 @@ export namespace
 		->	char const*
 		{	return Data;	}
 
+		[[nodiscard]]
 		auto constexpr
 		(	size
 		)	()	const
@@ -58,21 +63,33 @@ export namespace
 		->	USize
 		{	return Size;	}
 
+		[[nodiscard]]
+		auto constexpr
+		(	ssize
+		)	()	const
+			noexcept
+		->	SSize
+		{	return static_cast<SSize>(size());	}
+
+		[[nodiscard]]
 		friend auto constexpr
 		(	begin
 		)	(	StringView
 					i_vView
 			)
-		->	char const*
-		{	return i_vView.Data;	}
+			noexcept
+		->	iterator
+		{	return iterator{i_vView.Data};	}
 
+		[[nodiscard]]
 		friend auto constexpr
 		(	end
 		)	(	StringView
 					i_vView
 			)
-		->	char const*
-		{	return i_vView.Data + i_vView.Size;	}
+			noexcept
+		->	iterator
+		{	return iterator{i_vView.Data} + i_vView.ssize();	}
 	};
 
 	///	Namespace scope allows making use of implicit conversions.
@@ -106,14 +123,12 @@ export namespace
 	{
 		//	taken and modified from
 		//	https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare_three_way
-		std::span const vLeft = i_vLeft;
-		std::span const vRight = i_vRight;
-		auto vLeftPos = begin(vLeft);
-		auto const vLeftEnd = end(vLeft);
+		auto vLeftPos = begin(i_vLeft);
+		auto const vLeftEnd = end(i_vLeft);
 		bool bLeftRemaining = (vLeftPos != vLeftEnd);
 
-		auto vRightPos = begin(vRight);
-		auto const vRightEnd = end(vRight);
+		auto vRightPos = begin(i_vRight);
+		auto const vRightEnd = end(i_vRight);
 		bool bRightRemaining = (vRightPos != vRightEnd);
 
 		for	(
