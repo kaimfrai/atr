@@ -1,20 +1,11 @@
 export module Meta.Arithmetic:Integer;
 
+import Meta.Arithmetic.Size;
 import Std;
 
 export namespace
 	Meta
 {
-	using
-		USize
-	=	decltype(0uz)
-	;
-
-	using
-		SSize
-	=	decltype(0z)
-	;
-
 	USize constexpr inline
 		BitsPerByte
 	=	::std::numeric_limits<char8_t>::digits

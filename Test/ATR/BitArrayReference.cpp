@@ -1,6 +1,7 @@
 import ATR;
 
 import Meta.Arithmetic;
+import Meta.Arithmetic.Size;
 
 import Std;
 
