@@ -2,7 +2,6 @@ export module Meta.ID:Template;
 
 import :UpperCase;
 import :LowerCase;
-import :Special;
 import :Decimal;
 import :StringView;
 import :StringLiteral;

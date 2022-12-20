@@ -7,7 +7,7 @@ auto
 ->	int
 {
 	Test::CMake::Def def{};
-	Pimpl p{12.4l};
+	Pimpl p{12.4L};
 	[[maybe_unused]]ImplAlias* pImpl = p.pImpl;
 	return Foo() + Bar() + def.Invoke1() + static_cast<int>(p.get());
 }

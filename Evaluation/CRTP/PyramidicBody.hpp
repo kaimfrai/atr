@@ -24,13 +24,11 @@ export namespace
 			()	const
 		noexcept
 		->	Float
-		{
-			return
-				Fraction
-				<	1ll
-				,	3ll
-				>{}
-			;
+		{	return
+			Fraction
+			<	1uz
+			,	3uz
+			>{};
 		}
 	};
 }

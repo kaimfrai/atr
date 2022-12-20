@@ -7,7 +7,6 @@ add_module(
 	Literals.hpp
 	LowerCase.hpp
 	Make.hpp
-	Special.hpp
 	StringLiteral.hpp
 	StringView.hpp
 	Template.hpp

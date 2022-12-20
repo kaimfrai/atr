@@ -128,7 +128,7 @@ export namespace
 					t_tSelection
 			>
 		auto constexpr
-		(	operator()
+		(	operator() // NOLINT(cert-dcl50-cpp)
 		)	(	IgnoreIndexedElement<t_npFront>
 				...
 			,	t_tSelection

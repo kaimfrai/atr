@@ -41,8 +41,8 @@ export namespace
 
 		return
 			Fraction
-			<	1ll
-			,	3ll
+			<	1uz
+			,	3uz
 			>{}
 		*	aPyramid
 			->	Depth

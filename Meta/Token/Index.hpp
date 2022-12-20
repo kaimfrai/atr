@@ -14,13 +14,9 @@ export namespace
 	struct
 		Index
 	{
-		constexpr
+		explicit(sizeof...(t_npIndex) != 1uz) constexpr
 		(	operator auto
 		)	()	const
-			requires
-				(	sizeof...(t_npIndex)
-				==	1uz
-				)
 		{	if constexpr(sizeof...(t_npIndex) == 1uz)
 				return (..., t_npIndex);
 		}

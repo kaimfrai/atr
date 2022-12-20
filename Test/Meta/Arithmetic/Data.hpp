@@ -10,7 +10,7 @@ auto constexpr
 			i_nValue
 	)
 -> long double
-{	if	(i_nValue < 0.0l)
+{	if	(i_nValue < 0.0L)
 		return -i_nValue;
 	else
 		return i_nValue;

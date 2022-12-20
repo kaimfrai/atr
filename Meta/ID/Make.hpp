@@ -2,7 +2,6 @@ module Meta.ID:Make;
 
 import :UpperCase;
 import :LowerCase;
-import :Special;
 import :Decimal;
 import :Template;
 import :StringLiteral;

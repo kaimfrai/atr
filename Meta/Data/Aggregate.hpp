@@ -629,7 +629,7 @@ export namespace
 		)	(	USize
 			)	&
 		->	reference
-		{	throw "Index out of bounds!";	}
+		{	((void)"Index out of bounds!", std::unreachable());	}
 
 		[[noreturn]]
 		auto constexpr
@@ -637,7 +637,7 @@ export namespace
 		)	(	USize
 			)	const&
 		->	const_reference
-		{	throw "Index out of bounds!";	}
+		{	((void)"Index out of bounds!", std::unreachable());	}
 
 		[[noreturn]]
 		auto constexpr
@@ -645,7 +645,7 @@ export namespace
 		)	(	USize
 			)	&&
 		->	value_type
-		{	throw "Index out of bounds!";	}
+		{	((void)"Index out of bounds!", std::unreachable());	}
 
 		friend auto constexpr
 		(	operator +

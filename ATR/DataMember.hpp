@@ -55,6 +55,7 @@ export namespace
 		)	(	MemberInfo const&
 			,	MemberInfo const&
 			)
+			noexcept
 		->	::std::strong_ordering
 		=	default;
 	};
@@ -75,6 +76,7 @@ export namespace
 		)	(	MemberInfo const
 				&	i_rExchange
 			)	const
+			noexcept
 		->	MemberList
 		{
 			auto vCopy = *this;
@@ -93,7 +95,7 @@ export namespace
 				)
 			;
 			if	(vExchangePosition == vCopy.end())
-				throw "Cannot exchange non-existing member!";
+				((void)"Cannot exchange non-existing member!", std::unreachable());
 
 			*vExchangePosition = i_rExchange;
 			std::sort(vCopy.begin(), vCopy.end().base());
@@ -112,6 +114,7 @@ export namespace
 			,	MemberList<t_nRight> const
 				&	i_rRight
 			)
+			noexcept
 		->	MemberList
 			<	t_nMemberCount
 			+	t_nRight
@@ -148,7 +151,9 @@ export namespace
 				;
 
 				if	(vLast != vResult.end())
-					throw "Cannot merge MemberList with identical members!";
+				{
+					((void)"Cannot merge MemberList with identical members!", std::unreachable());
+				}
 				return vResult;
 			}
 		}
@@ -164,6 +169,7 @@ export namespace
 			,	MemberList<t_nRight> const
 				&	i_rRight
 			)
+			noexcept
 		->	MemberList
 			<	t_nMemberCount
 			-	t_nRight
@@ -186,7 +192,9 @@ export namespace
 					,	i_rRight
 					)
 				)
-				throw "Cannot subtract MemberInfos that are not contained!";
+			{
+				((void)"Cannot subtract MemberInfos that are not contained!", std::unreachable());
+			}
 
 			MemberList
 			<	t_nMemberCount
@@ -209,6 +217,7 @@ export namespace
 			,	MemberList const
 				&	i_rRight
 			)
+			noexcept
 		->	bool
 		=	default;
 
@@ -223,6 +232,7 @@ export namespace
 			,	MemberList<t_nRightMemberCount> const
 				&
 			)
+			noexcept
 		->	bool
 		{
 			static_assert
@@ -335,33 +345,38 @@ export namespace
 		static auto constexpr
 		(	get
 		)	()
+			noexcept
 		->	decltype(t_vList) const&
 		{	return t_vList;	}
 
 		static auto constexpr
 		(	size
 		)	()
+			noexcept
 		->	Meta::USize
 		{	return t_vList.size();	}
 
 		explicit(false) constexpr
 		(	operator decltype(t_vList) const&
 		)	()	const
+			noexcept
 		{	return t_vList;	}
 
-		auto constexpr
+		static auto constexpr
 		(	operator[]
 		)	(	USize
 					i_nIndex
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return t_vList[i_nIndex];	}
 
-		auto constexpr
+		static auto constexpr
 		(	operator()
 		)	(	MemberInfo const
 				&	i_rExchange
 			)
+			noexcept
 		->	decltype(t_vList)
 		{	return t_vList(i_rExchange);	}
 
@@ -375,6 +390,7 @@ export namespace
 			,	MemberList<t_nRight> const
 				&	i_rRight
 			)
+			noexcept
 		->	decltype(auto)
 		{	return t_vList + i_rRight;	}
 
@@ -384,6 +400,7 @@ export namespace
 			,	Meta::ProtoConstraint<Meta::IsStateless> auto
 					i_fTransform
 			)
+			noexcept
 		->	decltype(t_vList)
 		{
 			auto
@@ -420,6 +437,7 @@ export namespace
 			,	MemberList<t_nRight> const
 				&	i_rRight
 			)
+			noexcept
 		->	decltype(auto)
 		{	return t_vList - i_rRight;	}
 
@@ -429,6 +447,7 @@ export namespace
 		)	(	DefineMembers
 			,	DefineMembers
 			)
+			noexcept
 		->	bool
 		=	default;
 
@@ -441,6 +460,7 @@ export namespace
 		)	(	DefineMembers
 			,	DefineMembers<t_vRightList>
 			)
+			noexcept
 		->	bool
 		{	return false;	}
 	};

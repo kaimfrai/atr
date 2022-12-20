@@ -212,7 +212,7 @@ export namespace
 		->	BitClause
 		{
 			if	(i_nIndex >= ClauseLimit)
-				throw "Index beyond ClauseLimit!";
+				((void)"Index beyond ClauseLimit!", std::unreachable());
 
 			return Clauses[i_nIndex];
 		}

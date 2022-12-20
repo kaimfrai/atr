@@ -18,7 +18,7 @@ struct
 				t_tName
 		>
 	auto constexpr
-	(	MatchAlias
+	(	MatchAlias // NOLINT(cert-dcl50-cpp)
 	)	(	t_tName
 		,	...
 		)	const

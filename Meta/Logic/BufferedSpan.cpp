@@ -415,7 +415,7 @@ export namespace
 			)	const
 		{
 			if	(i_nNewSize > max_size())
-				throw "To many elements for buffer!";
+				((void)"To many elements for buffer!", std::unreachable());
 		}
 
 		auto constexpr

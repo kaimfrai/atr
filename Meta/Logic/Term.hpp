@@ -129,7 +129,7 @@ export namespace
 			=	CountOneBits(vResultLiteralField)
 			;
 			if	(nRequiredItemCount > Logic::LiteralLimit)
-				throw "Exceeded maximum amount of predicates per term!";
+				((void)"Exceeded maximum amount of predicates per term!", std::unreachable());
 
 			LiteralBufferType
 				vLiterals
@@ -344,6 +344,7 @@ export namespace
 	)	(	ErasedTerm const
 			&	i_rTerm
 		)
+		noexcept
 	->	ErasedTerm
 	{	return
 		ErasedTerm
@@ -359,6 +360,7 @@ export namespace
 		,	ErasedTerm const
 			&	i_rRight
 		)
+		noexcept
 	->	ErasedTerm
 	{	return
 		ErasedTerm::ComputeErasedTerm
@@ -375,6 +377,7 @@ export namespace
 		,	ErasedTerm const
 			&	i_rRight
 		)
+		noexcept
 	->	ErasedTerm
 	{	return
 		ErasedTerm::ComputeErasedTerm
@@ -442,6 +445,7 @@ export namespace
 		explicit(false) constexpr
 		(	operator ErasedTerm const&
 		)	()	const
+			noexcept
 		{	return Erased;	}
 
 		static USize constexpr

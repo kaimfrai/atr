@@ -134,7 +134,7 @@ export namespace
 		=	sizeof(USize) * BitsPerByte
 		;
 		if	(i_nBitCount > nMaxBits)
-			throw "Attempted to set more bits than exist in USize!";
+			((void)"Attempted to set more bits than exist in USize!", std::unreachable());
 
 		return
 			compl 0uz

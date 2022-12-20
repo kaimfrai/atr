@@ -23,13 +23,11 @@ export namespace
 		noexcept
 		->	Float
 		override
-		{
-			return
-				Fraction
-				<	1ll
-				,	3ll
-				>{}
-			;
+		{	return
+			Fraction
+			<	1uz
+			,	3uz
+			>{};
 		}
 	};
 }

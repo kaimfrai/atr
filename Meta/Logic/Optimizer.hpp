@@ -365,7 +365,7 @@ export namespace
 			Optimize(true);
 
 			if	(ClauseLimit < size())
-				throw "Optimized term contains to many clauses to copy!";
+				((void)"Optimized term contains to many clauses to copy!", std::unreachable());
 
 			BitClauseBuffer
 				vArray

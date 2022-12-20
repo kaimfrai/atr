@@ -31,16 +31,18 @@ export namespace
 			>
 		;
 
-		constexpr
+		explicit(false) constexpr
 		(	StringLiteral
 		)	()
+			noexcept
 		=	default;
 
-		constexpr
+		explicit(false) constexpr
 		(	StringLiteral
 		)	(	char const
 				*	i_aString
 			)
+			noexcept
 		:	AggregateType
 			{	Data::MakeArrayAggregate<ArrayEntity<char, t_nExtent>>
 				(	Data::Iterator{i_aString}

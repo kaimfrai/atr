@@ -34,7 +34,7 @@ export namespace
 		->	FieldType
 		{
 			if	(i_nAbsoluteIndex >= LiteralLimit)
-				throw "Index to large to convert to a bit field!";
+				((void)"Index to large to convert to a bit field!", std::unreachable());
 			return
 			static_cast<FieldType>
 			(	1uz
@@ -211,7 +211,7 @@ export namespace
 		->	BitClause
 		{
 			if	(i_nRelativeIndex >= LiteralCount())
-				throw "Index beyond LiteralCount!";
+				((void)"Index beyond LiteralCount!", std::unreachable());
 
 			if	(IsIdentity())
 				return *this;

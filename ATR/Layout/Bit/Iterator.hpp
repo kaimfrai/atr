@@ -223,6 +223,7 @@ export namespace
 		auto constexpr
 		(	operator++
 		)	(int) &
+		->	Iterator
 		{	return
 			::std::exchange
 			(	*this
