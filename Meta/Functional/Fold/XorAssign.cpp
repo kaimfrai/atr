@@ -3,8 +3,6 @@ export module Meta.Functional:Fold.XorAssign;
 export import :FoldTraits;
 export import :Key;
 
-export import Std;
-
 export namespace
 	Meta::Functional
 {
@@ -17,7 +15,7 @@ export namespace
 		noexcept
 		(	noexcept
 			(	(	...
-				^=	std::forward<decltype(i_rpArgument)>
+				^=	static_cast<decltype(i_rpArgument)>
 					(	i_rpArgument
 					)
 				)
@@ -27,14 +25,14 @@ export namespace
 		requires
 			requires
 			{	(	...
-				^=	std::forward<decltype(i_rpArgument)>
+				^=	static_cast<decltype(i_rpArgument)>
 					(	i_rpArgument
 					)
 				);
 			}
 	{	return
 		(	...
-		^=	std::forward<decltype(i_rpArgument)>
+		^=	static_cast<decltype(i_rpArgument)>
 			(	i_rpArgument
 			)
 		);
@@ -48,7 +46,7 @@ export namespace
 		)
 		noexcept
 		(	noexcept
-			(	(	std::forward<decltype(i_rpArgument)>
+			(	(	static_cast<decltype(i_rpArgument)>
 					(	i_rpArgument
 					)
 				^=	...
@@ -58,14 +56,14 @@ export namespace
 	->	decltype(auto)
 		requires
 			requires
-			{	(	std::forward<decltype(i_rpArgument)>
+			{	(	static_cast<decltype(i_rpArgument)>
 					(	i_rpArgument
 					)
 				^=	...
 				);
 			}
 	{	return
-		(	std::forward<decltype(i_rpArgument)>
+		(	static_cast<decltype(i_rpArgument)>
 			(	i_rpArgument
 			)
 		^=	...
