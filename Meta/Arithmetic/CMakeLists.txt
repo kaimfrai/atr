@@ -6,3 +6,7 @@ add_module(
 	Literals.hpp
 	Math.hpp
 )
+
+add_module(
+	Size.cpp
+)

@@ -8,6 +8,7 @@ export import :Pointer;
 export import :Reference;
 
 export import Meta.Token;
+import Meta.Arithmetic.Size;
 
 export namespace
 	Meta::Lex

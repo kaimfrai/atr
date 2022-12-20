@@ -1,5 +1,6 @@
 import ATR;
 
+import Meta.Arithmetic;
 import Std;
 
 using ::ATR::Bit::EOffset;

@@ -1,5 +1,8 @@
 import ATR;
 
+import Meta.Arithmetic.Size;
+import Meta.Arithmetic;
+
 import Std;
 
 using ::Meta::Arithmetic::SetOneBits;

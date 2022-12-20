@@ -1,6 +1,6 @@
 export module Meta.Dispatch:StepPair;
 
-export import Meta.Arithmetic;
+import Meta.Arithmetic.Size;
 
 export import Std;
 

@@ -5,6 +5,7 @@ export import :Address;
 export import Meta.ID;
 export import Meta.Token;
 export import Meta.Predicate;
+import Meta.Arithmetic.Size;
 
 import Std;
 

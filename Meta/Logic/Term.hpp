@@ -4,7 +4,8 @@ export import :BitTerm;
 export import :LiteralBase;
 export import :BufferedSpan;
 
-export import Meta.Arithmetic;
+import Meta.Arithmetic.Size;
+import Meta.Arithmetic;
 export import Meta.Token;
 
 import Std;

@@ -7,7 +7,7 @@ import :Layout.Layout;
 import :Layout.Member;
 import :Layout.Static;
 
-import Meta.Arithmetic;
+import Meta.Arithmetic.Size;
 import Meta.Token;
 
 import Std;

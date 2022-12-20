@@ -1,6 +1,6 @@
 export module Meta.Dispatch:CharacterSet;
 
-export import Meta.Arithmetic;
+import Meta.Arithmetic.Size;
 export import Meta.Token;
 
 export namespace

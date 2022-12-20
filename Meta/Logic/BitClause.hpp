@@ -1,6 +1,7 @@
 export module Meta.Logic:BitClause;
 
-export import Meta.Arithmetic;
+import Meta.Arithmetic.Size;
+import Meta.Arithmetic;
 
 import Std;
 

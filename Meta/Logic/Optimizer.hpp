@@ -4,6 +4,8 @@ export import :BitClause;
 export import :BufferedSpan;
 import :BitClauseIterator;
 
+import Meta.Arithmetic.Size;
+
 import Std;
 
 export namespace

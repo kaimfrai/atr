@@ -3,7 +3,7 @@ export module ATR:Layout.Member;
 import :DataMember;
 
 import Meta.ID;
-import Meta.Arithmetic;
+import Meta.Arithmetic.Size;
 import Meta.Token;
 
 using ::ATR::MemberInfo;

@@ -2,6 +2,7 @@ export module ATR:Layout.Bit.Access;
 
 import :Layout.Bit.Types;
 
+import Meta.Arithmetic.Size;
 import Meta.Arithmetic;
 
 import Std;

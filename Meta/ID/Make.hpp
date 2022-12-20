@@ -7,6 +7,7 @@ import :Template;
 import :StringLiteral;
 
 import Meta.Token;
+import Meta.Arithmetic.Size;
 
 template
 	<	char

@@ -6,7 +6,7 @@ import :Decimal;
 import :StringView;
 import :StringLiteral;
 
-import Meta.Arithmetic;
+import Meta.Arithmetic.Size;
 
 auto constexpr
 (	ToChar

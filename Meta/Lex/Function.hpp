@@ -1,6 +1,7 @@
 export module Meta.Lex:Function;
 
 export import Meta.Token;
+import Meta.Arithmetic.Size;
 
 export namespace
 	Meta::Lex

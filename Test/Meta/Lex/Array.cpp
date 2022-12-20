@@ -1,4 +1,5 @@
 import Meta.Lex;
+import Meta.Arithmetic.Size;
 
 using Meta::Specifier::Mut;
 using Meta::Type;

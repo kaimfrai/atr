@@ -1,10 +1,11 @@
 export module ATR:Dependency;
 
-export import Meta.ID;
 export import :Erase;
 
+export import Meta.ID;
 export import Meta.Data;
 export import Meta.Token;
+import Meta.Arithmetic.Size;
 
 import Std;
 

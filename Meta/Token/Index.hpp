@@ -1,6 +1,6 @@
 export module Meta.Token:Index;
 
-export import Meta.Arithmetic;
+import Meta.Arithmetic.Size;
 
 export import Std;
 

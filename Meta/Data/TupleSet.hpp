@@ -3,7 +3,8 @@ export module Meta.Data:TupleSet;
 export import :Aggregate;
 
 export import Meta.Token;
-export import Meta.Arithmetic;
+import Meta.Arithmetic.Size;
+import Meta.Arithmetic;
 export import Meta.Functional;
 
 import Std;
