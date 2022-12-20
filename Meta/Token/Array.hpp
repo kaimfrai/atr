@@ -3,7 +3,7 @@ export module Meta.Token:Array;
 export import :Specifier;
 export import :Type;
 
-export import Meta.Arithmetic;
+import Meta.Arithmetic.Size;
 
 export namespace
 	Meta::Token

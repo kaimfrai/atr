@@ -2,6 +2,8 @@ export module Meta.Logic:BitClauseIterator;
 
 export import :BitClause;
 
+import Meta.Arithmetic.Size;
+
 namespace
 	Meta::Logic
 {

@@ -1,7 +1,10 @@
 export module ATR:Layout.Bit.Layout;
 
-import Meta.ID;
 import :Layout.Bit.Types;
+
+import Meta.ID;
+import Meta.Arithmetic.Size;
+import Meta.Arithmetic;
 
 import Std;
 

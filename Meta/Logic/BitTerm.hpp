@@ -5,7 +5,8 @@ export import :BitClauseIterator;
 import :Optimizer;
 import :BufferedSpan;
 
-export import Meta.Arithmetic;
+import Meta.Arithmetic.Size;
+import Meta.Arithmetic;
 
 import Std;
 

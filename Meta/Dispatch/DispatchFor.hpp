@@ -9,6 +9,7 @@ export import :Step;
 
 export import Meta.ID;
 export import Meta.Lex;
+import Meta.Arithmetic.Size;
 
 export import Std;
 

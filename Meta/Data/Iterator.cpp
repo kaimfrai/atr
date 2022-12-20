@@ -1,6 +1,6 @@
 export module Meta.Data:Iterator;
 
-export import Meta.Arithmetic;
+import Meta.Arithmetic.Size;
 import Std;
 
 export namespace

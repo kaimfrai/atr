@@ -3,7 +3,7 @@ export module Meta.ID:Concept;
 import :StringView;
 import :StringLiteral;
 
-import Meta.Arithmetic;
+import Meta.Arithmetic.Size;
 
 import Std;
 

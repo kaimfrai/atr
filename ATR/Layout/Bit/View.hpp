@@ -7,6 +7,7 @@ import :Layout.Bit.MemberOffset;
 import :Layout.Bit.Reference;
 import :Layout.Bit.Types;
 
+import Meta.Arithmetic.Size;
 import Meta.Arithmetic;
 
 import Std;

@@ -1,5 +1,7 @@
 import ATR;
 
+import Meta.Arithmetic;
+
 import Std;
 
 namespace ATR

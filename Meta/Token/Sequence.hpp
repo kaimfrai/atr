@@ -2,7 +2,7 @@ export module Meta.Token:Sequence;
 
 export import :Index;
 
-export import Meta.Arithmetic;
+import Meta.Arithmetic.Size;
 
 import Std;
 
