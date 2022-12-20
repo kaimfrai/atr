@@ -3,34 +3,21 @@ export module Meta.Functional:Fold.Comma;
 export import :FoldTraits;
 export import :Key;
 
-export import Std;
-
 // Forward cannot be nodiscard due to comma discarding
+// It is assumed that all template arguments are references
+// This holds true as long as it is passed with decltype
 template
 	<	typename
 			t_tArgument
 	>
 auto constexpr
 (	forward
-)	(	std::remove_reference_t<t_tArgument>
+)	(	t_tArgument
 		&	i_rArgument
 	)
 	noexcept
-->	t_tArgument&&
-{	return static_cast<t_tArgument&&>(i_rArgument);	}
-
-template
-	<	typename
-			t_tArgument
-	>
-auto constexpr
-(	forward
-)	(	std::remove_reference_t<t_tArgument>
-		&&	i_rArgument
-	)
-	noexcept
-->	t_tArgument&&
-{	return static_cast<t_tArgument&&>(i_rArgument);	}
+->	t_tArgument
+{	return static_cast<t_tArgument>(i_rArgument);	}
 
 export namespace
 	Meta::Functional
