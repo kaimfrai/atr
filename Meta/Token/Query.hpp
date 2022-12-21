@@ -3,6 +3,7 @@ export module Meta.Token:Query;
 export import :Specifier;
 export import :Type;
 
+import Meta.Byte.BitCount;
 import Meta.Size;
 import Meta.Arithmetic;
 
@@ -144,7 +145,7 @@ export namespace
 		{
 			if	constexpr
 				(	t_nSize
-				==	sizeof(UInt<t_nSize>) * BitsPerByte
+				==	sizeof(UInt<t_nSize>) * Byte::BitCount
 				)
 				return alignof(UInt<t_nSize>);
 			else
@@ -163,7 +164,7 @@ export namespace
 		{	return
 			(	::std::is_array_v<t_tEntity>
 			?	operator()(Type<::std::remove_all_extents_t<t_tEntity>>)
-			:	BitsPerByte * alignof(t_tEntity)
+			:	Byte::BitCount * alignof(t_tEntity)
 			);
 		}
 
@@ -264,7 +265,7 @@ export namespace
 					)
 				;
 			else
-				return BitsPerByte * sizeof(t_tEntity);
+				return Byte::BitCount * sizeof(t_tEntity);
 		}
 
 		template

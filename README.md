@@ -69,7 +69,11 @@ The Meta directory provides a collection of meta programming utilities, most of 
 
 ### Arithmetic
 
-Provides compile time handling of arithmetic types, bitfields, and byte buffers. Also contains a parser for user defined numeric literal operator templates.
+Provides compile time handling of arithmetic types, and bitfields. Also contains a parser for user defined numeric literal operator templates.
+
+### Byte
+
+Provides compile time utilities for computations around bytes and byte buffers.
 
 ### Data
 

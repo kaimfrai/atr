@@ -4,6 +4,7 @@ import :Layout.Bit.Access;
 import :Layout.Bit.ElementReference;
 import :Layout.Bit.Types;
 
+import Meta.Byte.BitCount;
 import Meta.Size;
 
 import Std;
@@ -27,7 +28,7 @@ export namespace
 	{
 		static_assert
 		(	static_cast<USize>(t_nMaxOffset)
-		<	BitsPerByte
+		<	::Meta::Byte::BitCount
 		,	"Bit::Iterator not properly aligned! Expected maximum offset below Bits per Byte!"
 		);
 
@@ -99,11 +100,11 @@ export namespace
 			=	::std::next
 				(	m_aUnderlyingArray
 				,	(	vTotalBitOffset
-					/	static_cast<SSize>(BitsPerByte)
+					/	static_cast<SSize>(::Meta::Byte::BitCount)
 					)
 				-	// subract one more if the remainder is negative
 					static_cast<SSize>
-					(	(vTotalBitOffset % static_cast<SSize>(BitsPerByte))
+					(	(vTotalBitOffset % static_cast<SSize>(::Meta::Byte::BitCount))
 					<	0z
 					)
 				)
@@ -111,8 +112,8 @@ export namespace
 
 			static_assert
 			(	::std::numeric_limits<USize>::max()
-			%	BitsPerByte
-			==	BitsPerByte - 1uz
+			%	::Meta::Byte::BitCount
+			==	::Meta::Byte::BitCount - 1uz
 			,	"The following optimization is invalid."
 			);
 
@@ -120,7 +121,7 @@ export namespace
 			= 	::std::rotl
 				(	vMask
 				,	static_cast<unsigned int>
-					(	static_cast<USize>(vTotalBitOffset) % BitsPerByte
+					(	static_cast<USize>(vTotalBitOffset) % ::Meta::Byte::BitCount
 					-	vCurrentBitOffset
 					)
 				)
@@ -180,7 +181,7 @@ export namespace
 		{
 			auto const
 				vByteDiff
-			=	static_cast<SSize>(BitsPerByte)
+			=	static_cast<SSize>(::Meta::Byte::BitCount)
 			*	(	i_vLeft.m_vReference.m_vUnderlyingArray
 				-	i_vRight.m_vReference.m_vUnderlyingArray
 				)

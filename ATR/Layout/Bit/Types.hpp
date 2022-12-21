@@ -2,11 +2,12 @@ export module ATR:Layout.Bit.Types;
 
 import Meta.Size;
 import Meta.Arithmetic;
+import Meta.Byte.BitCount;
 
 import Std;
 
 using ::Meta::Arithmetic::BitWidth;
-using ::Meta::BitsPerByte;
+using ::Meta::Byte::BitCount;
 using ::Meta::UInt;
 using ::Meta::UIntMax;
 using ::Meta::USize;
@@ -18,7 +19,7 @@ export namespace
 		EOffset
 	:	UInt
 		<	BitWidth
-			(	BitsPerByte
+			(	BitCount
 			-	1uz
 			)
 		>
@@ -28,7 +29,7 @@ export namespace
 		ESize
 	:	UInt
 		<	BitWidth
-			(	BitsPerByte
+			(	BitCount
 			*	sizeof(UIntMax)
 			)
 		>
@@ -50,9 +51,9 @@ export namespace
 		(	(	static_cast<USize>(i_nSize)
 			*	i_nExtent
 			+	static_cast<USize>(i_nOffset)
-			+	(BitsPerByte - 1uz)
+			+	(BitCount - 1uz)
 			)
-		/	 BitsPerByte
+		/	 BitCount
 		);
 	}
 

@@ -4,14 +4,14 @@ import :Layout.Bit.Types;
 
 import Meta.Size;
 import Meta.Arithmetic;
+import Meta.Byte.ReadBuffer;
+import Meta.Byte.WriteBuffer;
+import Meta.Byte.BitCount;
 
 import Std;
 
-using ::Meta::Arithmetic::ReadFromBytes;
-using ::Meta::Arithmetic::WriteToBytes;
 using ::Meta::Arithmetic::BitWidth;
 using ::Meta::Arithmetic::SetOneBits;
-using ::Meta::BitsPerByte;
 using ::Meta::UInt;
 using ::Meta::UIntMax;
 using ::Meta::USize;
@@ -36,7 +36,7 @@ export namespace
 	{
 		static_assert
 		(	static_cast<USize>(t_nMaxOffset)
-		<	BitsPerByte
+		<	::Meta::Byte::BitCount
 		,	"Bit::Access not properly aligned! Expected maximum offset below Bits per Byte!"
 		);
 
@@ -63,7 +63,7 @@ export namespace
 		static auto constexpr
 			BufferBitSize
 		=	BufferByteSize
-		*	BitsPerByte
+		*	::Meta::Byte::BitCount
 		;
 
 		static_assert
@@ -164,7 +164,7 @@ export namespace
 
 			auto
 				vBufferField
-			=	ReadFromBytes
+			=	::Meta::Byte::ReadBuffer
 				<	BufferFieldType
 				,	BufferByteSize
 				>(	i_aBuffer
@@ -196,7 +196,7 @@ export namespace
 			auto const
 				vBufferField
 			=	static_cast<BufferFieldType>
-				(	ReadFromBytes
+				(	::Meta::Byte::ReadBuffer
 					<	BufferFieldType
 					,	BufferByteSize
 					>(	i_aBuffer
@@ -226,7 +226,7 @@ export namespace
 				)
 			};
 
-			WriteToBytes
+			::Meta::Byte::WriteBuffer
 			<	BufferFieldType
 			,	BufferByteSize
 			>(	vBufferField

@@ -9,7 +9,6 @@ import Meta.Arithmetic;
 import Std;
 
 using ::Meta::ProtoID;
-using ::Meta::BitsPerByte;
 using ::Meta::USize;
 
 export namespace

@@ -8,6 +8,7 @@ import :Layout.Bit.Types;
 import Meta.Size;
 import Meta.Predicate;
 import Meta.Token;
+import Meta.Byte.BitCount;
 
 import Std;
 
@@ -30,7 +31,7 @@ export namespace
 	{
 		static_assert
 		(	static_cast<USize>(t_nBitOffset)
-		<	BitsPerByte
+		<	::Meta::Byte::BitCount
 		,	"Bit::MemberOffset not properly aligned! Expected maximum offset below Bits per Byte!"
 		);
 

@@ -8,6 +8,9 @@ import :Layout.Bit.Types;
 import Meta.Size;
 import Meta.Arithmetic;
 import Meta.Token;
+import Meta.Byte.BitCount;
+import Meta.Byte.AsBuffer;
+import Meta.Byte.ReadBuffer;
 
 import Std;
 
@@ -45,13 +48,13 @@ export namespace
 		auto const
 			vByteOffset
 		=	vTotalOffset
-		/	BitsPerByte
+		/	::Meta::Byte::BitCount
 		;
 
 		auto const
 			vBitOffset
 		=	vTotalOffset
-		%	BitsPerByte
+		%	::Meta::Byte::BitCount
 		;
 
 		return
@@ -86,7 +89,7 @@ export namespace
 
 		static_assert
 		(	static_cast<USize>(t_nOffset)
-		<	BitsPerByte
+		<	::Meta::Byte::BitCount
 		,	"Bit::ArrayReference not properly aligned! Expected maximum offset below Bits per Byte!"
 		);
 
@@ -117,7 +120,7 @@ export namespace
 						*	i_nIndex
 						+	static_cast<USize>(t_nOffset)
 						)
-					%	BitsPerByte
+					%	::Meta::Byte::BitCount
 					);
 				}
 			,	[]	(	auto
@@ -189,7 +192,7 @@ export namespace
 		{
 			auto const
 				vField
-			=	ReadFromBytes
+			=	::Meta::Byte::ReadBuffer
 				<	t_tTarget
 				,	BufferSize
 				>(	m_aUnderlyingArray
@@ -393,7 +396,7 @@ export namespace
 				{	typename
 					UInt
 					<	nBufferSize
-					*	BitsPerByte
+					*	::Meta::Byte::BitCount
 					>;
 
 				}
@@ -411,13 +414,13 @@ export namespace
 			;
 			auto const
 				vAsBytes
-			=	::std::bit_cast<Meta::Arithmetic::ByteArray<decltype(nInteger)>>
+			=	::Meta::Byte::AsBuffer
 				(	nInteger
 				)
 			;
 
 			return
-			ReadFromBytes
+			::Meta::Byte::ReadBuffer
 			<	ArrayValue<t_nSize, t_nExtent>
 			>(	begin(vAsBytes)
 			);
