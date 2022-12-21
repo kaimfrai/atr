@@ -4,7 +4,7 @@ export import Meta.ID;
 export import Meta.Data;
 export import Meta.Predicate;
 export import Meta.Token;
-import Meta.Arithmetic.Size;
+import Meta.Size;
 import Meta.Arithmetic;
 
 export import Std;

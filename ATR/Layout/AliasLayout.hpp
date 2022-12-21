@@ -3,7 +3,7 @@ export module ATR:Layout.AliasLayout;
 import :Layout.AliasResolver;
 import :Layout.Concept;
 
-import Meta.Arithmetic.Size;
+import Meta.Size;
 import Meta.Lex;
 
 using ::Meta::USize;

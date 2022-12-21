@@ -2,7 +2,7 @@ import Evaluation.Polymorphic;
 import Evaluation.CRTP;
 
 import Evaluation.Shared;
-import Meta.Arithmetic.Size;
+import Meta.Size;
 
 auto
 	main

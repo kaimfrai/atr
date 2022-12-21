@@ -1,3 +1,8 @@
+add_module_object_library(
+	Test.Meta.Size
+	Size.cpp
+)
+
 add_subdirectory(Arithmetic)
 add_subdirectory(Data)
 add_subdirectory(Lex)

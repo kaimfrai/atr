@@ -2,7 +2,7 @@ export module Evaluation.Shared:Fraction;
 
 export import :DataTypes;
 
-import Meta.Arithmetic.Size;
+import Meta.Size;
 
 export
 {

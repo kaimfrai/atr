@@ -4,7 +4,7 @@ import :Layout.Bit.Access;
 import :Layout.Bit.ElementReference;
 import :Layout.Bit.Types;
 
-import Meta.Arithmetic.Size;
+import Meta.Size;
 
 import Std;
 

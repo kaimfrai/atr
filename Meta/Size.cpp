@@ -1,4 +1,4 @@
-export module Meta.Arithmetic.Size;
+export module Meta.Size;
 
 export namespace
 	Meta

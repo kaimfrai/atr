@@ -5,7 +5,7 @@ export import :Erase;
 export import Meta.ID;
 export import Meta.Data;
 export import Meta.Token;
-import Meta.Arithmetic.Size;
+import Meta.Size;
 
 import Std;
 

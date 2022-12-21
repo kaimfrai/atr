@@ -2,7 +2,7 @@ export module Evaluation.Shared:PiFraction;
 
 export import :DataTypes;
 
-import Meta.Arithmetic.Size;
+import Meta.Size;
 
 import Std;
 

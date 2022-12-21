@@ -5,7 +5,7 @@ import :Layout.Bit.ElementReference;
 import :Layout.Bit.Iterator;
 import :Layout.Bit.Types;
 
-import Meta.Arithmetic.Size;
+import Meta.Size;
 import Meta.Arithmetic;
 import Meta.Token;
 

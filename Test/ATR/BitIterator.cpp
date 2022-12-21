@@ -1,7 +1,7 @@
 import ATR;
 
 import Meta.Arithmetic;
-import Meta.Arithmetic.Size;
+import Meta.Size;
 import Std;
 
 using ::ATR::Bit::EOffset;

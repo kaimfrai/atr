@@ -5,7 +5,7 @@ export import :Iterator;
 
 export import Meta.Token;
 export import Meta.Lex;
-import Meta.Arithmetic.Size;
+import Meta.Size;
 
 import Std;
 

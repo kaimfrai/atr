@@ -2,7 +2,7 @@ export module Meta.Logic:Conjunction;
 
 export import :BitTerm;
 
-import Meta.Arithmetic.Size;
+import Meta.Size;
 
 import Std;
 

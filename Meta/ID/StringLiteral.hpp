@@ -1,7 +1,7 @@
 export module Meta.ID:StringLiteral;
 
 export import Meta.Data;
-import Meta.Arithmetic.Size;
+import Meta.Size;
 
 export import Std;
 

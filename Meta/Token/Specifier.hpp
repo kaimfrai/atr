@@ -1,6 +1,6 @@
 export module Meta.Token:Specifier;
 
-import Meta.Arithmetic.Size;
+import Meta.Size;
 import Meta.Arithmetic;
 
 export namespace
