@@ -3,7 +3,7 @@ export module Meta.Lex:Array;
 export import :CV;
 
 export import Meta.Token;
-import Meta.Arithmetic.Size;
+import Meta.Size;
 
 export namespace
 	Meta::Lex

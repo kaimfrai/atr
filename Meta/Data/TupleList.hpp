@@ -3,7 +3,7 @@ export module Meta.Data:TupleList;
 export import :Aggregate;
 
 export import Meta.Token;
-import Meta.Arithmetic.Size;
+import Meta.Size;
 
 import Std;
 

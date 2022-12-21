@@ -5,7 +5,7 @@ import :Layout.Bit.Layout;
 import :Layout.Bit.View;
 import :Layout.Member;
 
-import Meta.Arithmetic.Size;
+import Meta.Size;
 import Meta.Token;
 
 import Std;

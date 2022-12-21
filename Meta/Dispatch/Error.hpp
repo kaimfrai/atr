@@ -1,6 +1,6 @@
 export module Meta.Dispatch:Error;
 
-import Meta.Arithmetic.Size;
+import Meta.Size;
 
 export import Std;
 

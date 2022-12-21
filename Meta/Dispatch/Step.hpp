@@ -7,7 +7,7 @@ export import :StepPair;
 export import Meta.ID;
 export import Meta.Token;
 export import Meta.Lex;
-import Meta.Arithmetic.Size;
+import Meta.Size;
 
 namespace
 	Meta::Dispatch

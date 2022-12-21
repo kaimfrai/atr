@@ -1,6 +1,6 @@
 export module Meta.Logic:BufferedSpan;
 // TODO find more appropriate module. as of now, this is only required in Meta.Logic
-import Meta.Arithmetic.Size;
+import Meta.Size;
 export import Meta.Token;
 export import Meta.Data;
 

@@ -1,7 +1,7 @@
 export module Meta.Arithmetic:Math;
 
 export import :Integer;
-import Meta.Arithmetic.Size;
+import Meta.Size;
 
 export namespace
 	Meta::Arithmetic

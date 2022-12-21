@@ -1,6 +1,6 @@
 export module Meta.ID:StringView;
 
-import Meta.Arithmetic.Size;
+import Meta.Size;
 export import Meta.Data;
 
 import Std;

@@ -1,6 +1,6 @@
 export module Test.Meta.Literals.Data;
 
-import Meta.Arithmetic.Size;
+import Meta.Size;
 import Meta.Arithmetic;
 
 import Std;

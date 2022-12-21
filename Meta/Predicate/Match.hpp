@@ -2,7 +2,7 @@ export module Meta.Predicate:Match;
 
 export import Meta.Logic;
 export import Meta.Lex;
-import Meta.Arithmetic.Size;
+import Meta.Size;
 
 import Std;
 

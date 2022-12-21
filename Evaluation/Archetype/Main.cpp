@@ -2,7 +2,7 @@ import ATR;
 
 import Evaluation.Archetype;
 import Evaluation.Shared;
-import Meta.Arithmetic.Size;
+import Meta.Size;
 
 import Std;
 

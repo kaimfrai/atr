@@ -1,6 +1,6 @@
 export module ATR:Layout.Bit.Types;
 
-import Meta.Arithmetic.Size;
+import Meta.Size;
 import Meta.Arithmetic;
 
 import Std;

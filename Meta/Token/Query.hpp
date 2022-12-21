@@ -3,7 +3,7 @@ export module Meta.Token:Query;
 export import :Specifier;
 export import :Type;
 
-import Meta.Arithmetic.Size;
+import Meta.Size;
 import Meta.Arithmetic;
 
 import Std;

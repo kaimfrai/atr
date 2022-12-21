@@ -1,7 +1,7 @@
 export module Meta.Arithmetic:Bit;
 
 export import :Integer;
-import Meta.Arithmetic.Size;
+import Meta.Size;
 
 import Std;
 

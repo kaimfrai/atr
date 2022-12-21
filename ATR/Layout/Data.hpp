@@ -2,7 +2,7 @@ export module ATR:Layout.Data;
 
 import :Layout.Concept;
 
-import Meta.Arithmetic.Size;
+import Meta.Size;
 import Meta.Lex;
 
 import Std;

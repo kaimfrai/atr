@@ -9,7 +9,7 @@ import :Layout.MemberOffset;
 import :Layout.ValidateOffsets;
 
 import Meta.ID;
-import Meta.Arithmetic.Size;
+import Meta.Size;
 import Meta.Data;
 import Meta.Lex;
 

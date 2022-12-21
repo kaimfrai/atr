@@ -1,6 +1,6 @@
 export module Meta;
 
-import Meta.Arithmetic.Size;
+import Meta.Size;
 export import Meta.Data;
 export import Meta.Dispatch;
 export import Meta.Functional;

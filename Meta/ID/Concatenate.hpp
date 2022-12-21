@@ -3,7 +3,7 @@ export module Meta.ID:Concatenate;
 export import :StringView;
 export import :StringLiteral;
 
-import Meta.Arithmetic.Size;
+import Meta.Size;
 
 export import Std;
 

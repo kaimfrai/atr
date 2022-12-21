@@ -1,7 +1,7 @@
 import Evaluation.Replication;
 
 import Evaluation.Shared;
-import Meta.Arithmetic.Size;
+import Meta.Size;
 
 import Std;
 

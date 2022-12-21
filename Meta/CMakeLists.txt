@@ -1,3 +1,7 @@
+add_module(
+	Size.cpp
+)
+
 add_subdirectory(Arithmetic)
 add_subdirectory(Token)
 add_subdirectory(Lex)
