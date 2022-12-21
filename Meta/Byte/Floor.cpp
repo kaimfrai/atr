@@ -1,6 +1,6 @@
 export module Meta.Byte.Floor;
 
-import Meta.Byte.BitCount;
+import Meta.Bit.ByteSize;
 import Meta.Size;
 import Std;
 
@@ -19,7 +19,7 @@ export namespace
 		(	::std::bit_floor
 			(	i_nBits
 			)
-		,	BitCount
+		,	Bit::ByteSize
 		);
 	}
 }

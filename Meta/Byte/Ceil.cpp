@@ -1,6 +1,6 @@
 export module Meta.Byte.Ceil;
 
-import Meta.Byte.BitCount;
+import Meta.Bit.ByteSize;
 import Meta.Size;
 import Std;
 
@@ -19,7 +19,7 @@ export namespace
 		(	::std::bit_ceil
 			(	i_nBits
 			)
-		,	BitCount
+		,	Bit::ByteSize
 		);
 	}
 }

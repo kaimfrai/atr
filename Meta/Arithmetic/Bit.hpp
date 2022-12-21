@@ -1,7 +1,7 @@
 export module Meta.Arithmetic:Bit;
 
 export import :Integer;
-import Meta.Byte.BitCount;
+import Meta.Bit.ByteSize;
 import Meta.Size;
 
 import Std;
@@ -20,7 +20,7 @@ export namespace
 		)
 	->	bool
 	{
-		if	(i_nIndex >= sizeof(USize) * Byte::BitCount)
+		if	(i_nIndex >= sizeof(USize) * Bit::ByteSize)
 			return false;
 
 		return i_nBitField bitand (1uz << i_nIndex);
@@ -35,7 +35,7 @@ export namespace
 	{
 		auto constexpr
 			nMaxBits
-		=	sizeof(USize) * Byte::BitCount
+		=	sizeof(USize) * Bit::ByteSize
 		;
 		if	(i_nBitCount > nMaxBits)
 			((void)"Attempted to set more bits than exist in USize!", std::unreachable());

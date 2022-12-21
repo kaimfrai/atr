@@ -6,7 +6,7 @@ import Meta.Size;
 import Meta.Arithmetic;
 import Meta.Byte.ReadBuffer;
 import Meta.Byte.WriteBuffer;
-import Meta.Byte.BitCount;
+import Meta.Bit.ByteSize;
 
 import Std;
 
@@ -36,7 +36,7 @@ export namespace
 	{
 		static_assert
 		(	static_cast<USize>(t_nMaxOffset)
-		<	::Meta::Byte::BitCount
+		<	::Meta::Bit::ByteSize
 		,	"Bit::Access not properly aligned! Expected maximum offset below Bits per Byte!"
 		);
 
@@ -63,7 +63,7 @@ export namespace
 		static auto constexpr
 			BufferBitSize
 		=	BufferByteSize
-		*	::Meta::Byte::BitCount
+		*	::Meta::Bit::ByteSize
 		;
 
 		static_assert

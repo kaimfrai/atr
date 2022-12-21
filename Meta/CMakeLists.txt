@@ -2,6 +2,7 @@ add_module(
 	Size.cpp
 )
 
+add_subdirectory(Bit)
 add_subdirectory(Byte)
 
 add_subdirectory(Arithmetic)

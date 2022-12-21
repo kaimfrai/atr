@@ -8,7 +8,7 @@ import :Layout.Bit.Types;
 import Meta.Size;
 import Meta.Arithmetic;
 import Meta.Token;
-import Meta.Byte.BitCount;
+import Meta.Bit.ByteSize;
 import Meta.Byte.AsBuffer;
 import Meta.Byte.ReadBuffer;
 
@@ -48,13 +48,13 @@ export namespace
 		auto const
 			vByteOffset
 		=	vTotalOffset
-		/	::Meta::Byte::BitCount
+		/	::Meta::Bit::ByteSize
 		;
 
 		auto const
 			vBitOffset
 		=	vTotalOffset
-		%	::Meta::Byte::BitCount
+		%	::Meta::Bit::ByteSize
 		;
 
 		return
@@ -89,7 +89,7 @@ export namespace
 
 		static_assert
 		(	static_cast<USize>(t_nOffset)
-		<	::Meta::Byte::BitCount
+		<	::Meta::Bit::ByteSize
 		,	"Bit::ArrayReference not properly aligned! Expected maximum offset below Bits per Byte!"
 		);
 
@@ -120,7 +120,7 @@ export namespace
 						*	i_nIndex
 						+	static_cast<USize>(t_nOffset)
 						)
-					%	::Meta::Byte::BitCount
+					%	::Meta::Bit::ByteSize
 					);
 				}
 			,	[]	(	auto
@@ -396,7 +396,7 @@ export namespace
 				{	typename
 					UInt
 					<	nBufferSize
-					*	::Meta::Byte::BitCount
+					*	::Meta::Bit::ByteSize
 					>;
 
 				}
