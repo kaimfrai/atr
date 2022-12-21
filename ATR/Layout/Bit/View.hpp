@@ -9,7 +9,7 @@ import :Layout.Bit.Types;
 
 import Meta.Size;
 import Meta.Arithmetic;
-import Meta.Byte.BitCount;
+import Meta.Bit.ByteSize;
 
 import Std;
 
@@ -47,12 +47,12 @@ export namespace
 
 		static auto constexpr
 			ByteOffset
-		=	t_nOffset / ::Meta::Byte::BitCount
+		=	t_nOffset / ::Meta::Bit::ByteSize
 		;
 
 		static auto constexpr
 			BitOffset
-		=	static_cast<EOffset>(t_nOffset % ::Meta::Byte::BitCount)
+		=	static_cast<EOffset>(t_nOffset % ::Meta::Bit::ByteSize)
 		;
 
 		using
@@ -119,12 +119,12 @@ export namespace
 
 		static auto constexpr
 			ByteOffset
-		=	t_nOffset / ::Meta::Byte::BitCount
+		=	t_nOffset / ::Meta::Bit::ByteSize
 		;
 
 		static auto constexpr
 			BitOffset
-		=	static_cast<EOffset>(t_nOffset % ::Meta::Byte::BitCount)
+		=	static_cast<EOffset>(t_nOffset % ::Meta::Bit::ByteSize)
 		;
 
 		using

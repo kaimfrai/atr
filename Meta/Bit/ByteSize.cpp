@@ -1,13 +1,13 @@
-export module Meta.Byte.BitCount;
+export module Meta.Bit.ByteSize;
 
 import Meta.Size;
 import Std;
 
 export namespace
-	Meta::Byte
+	Meta::Bit
 {
 	USize constexpr inline
-		BitCount
+		ByteSize
 	=	::std::numeric_limits
 		<	char8_t
 		>

@@ -3,7 +3,7 @@ export module ATR:Layout.Bit.ElementReference;
 import :Layout.Bit.Access;
 import :Layout.Bit.Types;
 
-import Meta.Byte.BitCount;
+import Meta.Bit.ByteSize;
 
 import Std;
 
@@ -23,7 +23,7 @@ export namespace
 	{
 		static_assert
 		(	static_cast<USize>(t_nMaxOffset)
-		<	::Meta::Byte::BitCount
+		<	::Meta::Bit::ByteSize
 		,	"Bit::ElementReference not properly aligned! Expected maximum offset below Bits per Byte!"
 		);
 
