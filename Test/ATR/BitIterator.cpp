@@ -10,7 +10,6 @@ using ::ATR::Bit::Iterator;
 using ::ATR::Bit::ArrayReference;
 
 using ::Meta::Arithmetic::SetOneBits;
-using ::Meta::BitsPerByte;
 using ::Meta::UInt;
 using ::Meta::USize;
 

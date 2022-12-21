@@ -226,6 +226,14 @@ function(add_module
 
 endfunction()
 
+function(add_single_file_modules
+)
+	foreach(file IN LISTS ARGN)
+		add_module("${file}")
+	endforeach()
+
+endfunction()
+
 function(add_module_dependencies
 	target_name
 )

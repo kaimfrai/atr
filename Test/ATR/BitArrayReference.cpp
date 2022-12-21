@@ -5,7 +5,6 @@ import Meta.Size;
 
 import Std;
 
-using ::Meta::BitsPerByte;
 using ::Meta::UInt;
 using ::Meta::USize;
 

@@ -2,11 +2,11 @@ import ATR;
 
 import Meta.Size;
 import Meta.Arithmetic;
+import Meta.Byte.BitCount;
 
 import Std;
 
 using ::Meta::Arithmetic::SetOneBits;
-using ::Meta::BitsPerByte;
 using ::Meta::UInt;
 using ::Meta::USize;
 
@@ -20,7 +20,7 @@ auto constexpr SetAndCheck(UInt<t_nSize> v) -> bool
 {
 	auto constexpr
 		vBitOffset
-	=	static_cast<ATR::Bit::EOffset>(t_nOffset % BitsPerByte)
+	=	static_cast<ATR::Bit::EOffset>(t_nOffset % ::Meta::Byte::BitCount)
 	;
 	auto constexpr
 		vBitSize

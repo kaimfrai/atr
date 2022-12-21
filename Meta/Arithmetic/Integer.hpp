@@ -1,41 +1,15 @@
 export module Meta.Arithmetic:Integer;
 
+import Meta.Byte.Ceil;
 import Meta.Size;
 import Std;
 
 export namespace
 	Meta
 {
-	USize constexpr inline
-		BitsPerByte
-	=	::std::numeric_limits<char8_t>::digits
-	;
 
-	auto constexpr
-	(	ByteFloor
-	)	(	USize
-				i_nBits
-		)
-	->	USize
-	{	return
-		::std::max
-		(	::std::bit_floor(i_nBits)
-		,	BitsPerByte
-		);
-	}
 
-	auto constexpr
-	(	ByteCeil
-	)	(	USize
-				i_nBits
-		)
-	->	USize
-	{	return
-		::std::max
-		(	::std::bit_ceil(i_nBits)
-		,	BitsPerByte
-		);
-	}
+
 }
 
 template
@@ -134,7 +108,7 @@ export namespace
 	=	decltype
 		(	::UInt
 			(	::BitCount
-				<	ByteCeil(t_nBitCount)
+				<	Byte::Ceil(t_nBitCount)
 				>{}
 			)
 		)
@@ -154,7 +128,7 @@ export namespace
 	=	decltype
 		(	::SInt
 			(	::BitCount
-				<	ByteCeil(t_nBitCount)
+				<	Byte::Ceil(t_nBitCount)
 				>{}
 			)
 		)

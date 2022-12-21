@@ -1,6 +1,7 @@
 export module Meta;
 
-import Meta.Size;
+export import Meta.Size;
+export import Meta.Byte;
 export import Meta.Data;
 export import Meta.Dispatch;
 export import Meta.Functional;
