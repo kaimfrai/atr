@@ -1,7 +1,13 @@
 add_single_file_modules(
 	ByteSize.cpp
 	Count.cpp
+	CountOnes.cpp
 	IndexLowestOne.cpp
 	IndexView.cpp
 	Iterator.cpp
+	Power.cpp
+	Set.cpp
+	SetOnes.cpp
+	Test.cpp
+	Width.cpp
 )

@@ -3,10 +3,10 @@ import ATR;
 import Meta.Size;
 import Meta.Arithmetic;
 import Meta.Bit.ByteSize;
+import Meta.Bit.SetOnes;
 
 import Std;
 
-using ::Meta::Arithmetic::SetOneBits;
 using ::Meta::UInt;
 using ::Meta::USize;
 
@@ -29,7 +29,7 @@ auto constexpr SetAndCheck(UInt<t_nSize> v) -> bool
 
 	using BitReference = ATR::Bit::Reference<vBitSize, vBitOffset>;
 	using BitAccess = typename BitReference::BitAccess;
-	v &= SetOneBits(t_nSize);
+	v &= Meta::Bit::SetOnes(t_nSize);
 
 	ATR::Bit::BitFieldBuffer<vBitSize, vBitOffset, 1uz> aBuffer{};
 	auto const nPrevious = BitAccess::ReadField(aBuffer);

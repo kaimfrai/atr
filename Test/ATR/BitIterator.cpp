@@ -2,6 +2,7 @@ import ATR;
 
 import Meta.Arithmetic;
 import Meta.Size;
+import Meta.Bit.SetOnes;
 import Std;
 
 using ::ATR::Bit::EOffset;
@@ -9,9 +10,9 @@ using ::ATR::Bit::ESize;
 using ::ATR::Bit::Iterator;
 using ::ATR::Bit::ArrayReference;
 
-using ::Meta::Arithmetic::SetOneBits;
 using ::Meta::UInt;
 using ::Meta::USize;
+using ::Meta::Bit::SetOnes;
 
 static_assert
 (	::std::random_access_iterator
@@ -28,7 +29,7 @@ static_assert
 Iterator<::std::byte, ESize{10}, EOffset{6}> constexpr
 	First
 {	+Buffer
-,	SetOneBits(10)
+,	SetOnes(10)
 };
 
 static_assert(First == First);
@@ -46,7 +47,7 @@ static_assert
 (	Second
 ==	decltype(Second)
 	{	+Buffer + 1
-	,	SetOneBits(10) << 2
+	,	SetOnes(10) << 2
 	}
 );
 
@@ -66,7 +67,7 @@ static_assert
 (	Third
 ==	decltype(Third)
 	{	+Buffer + 2
-	,	SetOneBits(10) << 4
+	,	SetOnes(10) << 4
 	}
 );
 
@@ -90,7 +91,7 @@ static_assert
 (	Forth
 ==	decltype(Forth)
 	{	+Buffer + 3
-	,	SetOneBits(10) << 6
+	,	SetOnes(10) << 6
 	}
 );
 
@@ -117,7 +118,7 @@ static_assert
 (	Fifth
 ==	decltype(Fifth)
 	{	+Buffer + 5
-	,	SetOneBits(10) << 0
+	,	SetOnes(10) << 0
 	}
 );
 

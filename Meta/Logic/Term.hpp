@@ -268,11 +268,14 @@ export namespace
 			);
 		}
 
+		[[nodiscard]]
 		auto constexpr
 		(	LiteralCount
 		)	()	const
+			noexcept
+		->	USize
 		{	return
-			CountOneBits
+			CountOnes
 			(	BitTerm
 			.	LiteralField()
 			);

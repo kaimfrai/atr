@@ -6,11 +6,12 @@ import :Optimizer;
 
 import Meta.Size;
 import Meta.Arithmetic;
+import Meta.Bit.CountOnes;
+import Meta.Bit.Width;
+import Meta.Bit.Test;
+import Meta.Bit.Power;
 
 import Std;
-
-using ::Meta::Arithmetic::CountOneBits;
-using ::Meta::Arithmetic::TestBit;
 
 export namespace
 	Meta::Logic
@@ -133,12 +134,12 @@ export namespace
 			;
 			auto const
 				nRequiredLiteralCount
-			=	CountOneBits(vLiteralField)
+			=	Bit::CountOnes(vLiteralField)
 			;
 
 			auto const
 				nMaxLiteralCount
-			=	Arithmetic::BitWidth
+			=	Bit::Width
 				(	vLiteralField
 				)
 			;
@@ -169,7 +170,7 @@ export namespace
 						]
 					=	nPermutation
 					;
-					nPermutation += TestBit(vLiteralField, nIndex);
+					nPermutation += Bit::Test(vLiteralField, nIndex);
 				}
 
 				return
@@ -301,7 +302,7 @@ export namespace
 
 			auto const
 				nCombinedLiteralCount
-			=	CountOneBits
+			=	CountOnes
 				(	i_rLeftTerm.LiteralField()
 				bitor
 					i_rRightTerm.LiteralField()
@@ -311,8 +312,7 @@ export namespace
 			//	at most 2^LiteralCount clauses are possible
 			auto const
 				nMaxClauseCount
-			=	1uz
-			<<	nCombinedLiteralCount
+			=	Bit::Power(nCombinedLiteralCount)
 			;
 
 			Optimizer
@@ -349,7 +349,7 @@ export namespace
 
 			auto const
 				nCombinedLiteralCount
-			=	CountOneBits
+			=	CountOnes
 				(	i_rLeftTerm.LiteralField()
 				bitor
 					i_rRightTerm.LiteralField()
@@ -359,8 +359,7 @@ export namespace
 			//	at most 2^LiteralCount clauses are possible
 			auto const
 				nMaxClauseCount
-			=	1uz
-			<<	nCombinedLiteralCount
+			=	Bit::Power(nCombinedLiteralCount)
 			;
 
 			Optimizer
