@@ -2,8 +2,6 @@ add_single_file_modules(
 	AsBuffer.cpp
 	AsObject.cpp
 	Buffer.cpp
-	Ceil.cpp
-	Floor.cpp
 	ReadBuffer.cpp
 	WriteBuffer.cpp
 
