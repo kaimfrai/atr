@@ -211,21 +211,13 @@ export namespace
 		)	(	USize
 					i_nRelativeIndex
 			)	const
+			noexcept
 		->	BitClause
 		{
-			if	(i_nRelativeIndex >= LiteralCount())
-				((void)"Index beyond LiteralCount!", std::unreachable());
-
-			if	(IsIdentity())
-				return *this;
-
 			auto const
 				nIndexField
 			=	BitIndexToField
-				(	GetIndexOfNthOneBit
-					(	LiteralField()
-					,	i_nRelativeIndex
-					)
+				(	i_nRelativeIndex
 				)
 			;
 
@@ -303,11 +295,6 @@ export namespace
 			(	i_vLeft.Negative
 			|=	i_vRight.Negative
 			);
-
-			if	(i_vLeft.Positive bitand i_vLeft.Negative)
-			{
-				return BitClause::Identity();
-			}
 
 			return i_vLeft;
 		}
@@ -391,30 +378,28 @@ export namespace
 		)	()	const
 		->	BitClause
 		{
-			USize const
-				nFirstPositiveIndex
-			=	CountLowerZeroBits
-				(	Positive
-				)
-			;
-			USize const
-				nFirstNegativeIndex
-			=	CountLowerZeroBits
-				(	Negative
-				)
-			;
-
 			BitClause
 				vResult
 			=	Absorbing()
 			;
-			if	(nFirstPositiveIndex < nFirstNegativeIndex)
-				vResult.Positive = BitIndexToField(nFirstPositiveIndex);
-			else
-			if	(nFirstPositiveIndex > nFirstNegativeIndex)
-				vResult.Negative = BitIndexToField(nFirstNegativeIndex);
-			else
-				return Identity();
+
+			auto const
+				vCombined
+			=	Positive
+			bitor
+				Negative
+			;
+			auto const
+				vMask
+			=	vCombined bitand -vCombined
+			;
+
+			if	(Positive bitand vMask)
+				vResult.Positive = static_cast<FieldType>(vMask);
+
+			if	(Negative bitand vMask)
+				vResult.Negative = static_cast<FieldType>(vMask);
+
 			return vResult;
 		}
 
