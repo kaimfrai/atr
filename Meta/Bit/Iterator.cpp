@@ -1,5 +1,6 @@
 export module Meta.Bit.Iterator;
 
+import Meta.Bit.IndexLowestOne;
 import Meta.Size;
 
 import Std;
@@ -21,75 +22,24 @@ export namespace
 			Field
 		;
 
-		static auto constexpr
-		(	ShiftField
-		)	(	USize
-				&	i_rField
-			,	value_type
-				&	i_rIndex
-			)
-			noexcept
-		->	void
-		{
-			i_rField >>= 1uz;
-			++i_rIndex;
-		}
-
-		[[nodiscard]]
-		static auto constexpr
-		(	NextIndex
-		)	(	USize
-				&	i_rField
-			,	value_type
-					i_nIndex
-			)
-			noexcept
-		->	value_type
-		{
-			if	(i_rField == 0uz)
-				return i_nIndex;
-
-			while
-				(	not
-					(	i_rField
-					bitand
-						1uz
-					)
-				)
-			{
-				ShiftField(i_rField, i_nIndex);
-			}
-
-			return
-				i_nIndex
-			;
-		}
-
-		value_type
-			Index
-		=	NextIndex
-			(	Field
-			,	value_type{}
-			)
-		;
-
 		[[nodiscard]]
 		auto constexpr
 		(	operator *
 		)	()	const
 			noexcept
 		->	value_type
-		{	return Index;	}
+		{	return
+			IndexLowestOne
+			(	Field
+			);
+		}
 
 		auto constexpr
 		(	operator ++
 		)	()	&
 			noexcept
 		->	IndexIterator&
-		{
-			ShiftField(Field, Index);
-			Index = NextIndex(Field, Index);
-
+		{	Field &= Field - 1uz;
 			return *this;
 		}
 
