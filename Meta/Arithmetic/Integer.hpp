@@ -1,16 +1,8 @@
 export module Meta.Arithmetic:Integer;
 
-import Meta.Byte.Ceil;
+import Meta.Bit.ByteSize;
 import Meta.Size;
 import Std;
-
-export namespace
-	Meta
-{
-
-
-
-}
 
 template
 	<	::Meta::USize
@@ -108,7 +100,7 @@ export namespace
 	=	decltype
 		(	::UInt
 			(	::BitCount
-				<	Byte::Ceil(t_nBitCount)
+				<	std::bit_ceil(t_nBitCount / Bit::ByteSize + (0uz != t_nBitCount % Bit::ByteSize)) * Bit::ByteSize
 				>{}
 			)
 		)
@@ -128,7 +120,7 @@ export namespace
 	=	decltype
 		(	::SInt
 			(	::BitCount
-				<	Byte::Ceil(t_nBitCount)
+				<	std::bit_ceil(t_nBitCount / Bit::ByteSize + (0uz != t_nBitCount % Bit::ByteSize)) * Bit::ByteSize
 				>{}
 			)
 		)
