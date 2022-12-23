@@ -5,7 +5,6 @@ export import :Type;
 
 import Meta.Bit.ByteSize;
 import Meta.Size;
-import Meta.Arithmetic;
 
 import Std;
 
@@ -143,13 +142,7 @@ export namespace
 			)	const
 		->	USize
 		{
-			if	constexpr
-				(	t_nSize
-				==	sizeof(UInt<t_nSize>) * Bit::ByteSize
-				)
-				return alignof(UInt<t_nSize>);
-			else
-				return 1uz;
+			return 1uz;
 		}
 
 		template
