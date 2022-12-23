@@ -33,13 +33,12 @@ export namespace
 		noexcept
 	->	t_tObject
 	{
-		auto constexpr nObjectSize = sizeof(t_tObject);
-		static_assert(t_nValueBytes <= nObjectSize);
+		static_assert(t_nValueBytes <= sizeof(t_tObject));
 
 		if (i_nActiveValueBytes > t_nValueBytes)
 			::std::unreachable();
 
-		Buffer<nObjectSize>
+		BufferFor<t_tObject>
 			vObject
 		;
 
