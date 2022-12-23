@@ -16,7 +16,12 @@ template
 	,	USize
 			t_nSize
 	>
-auto constexpr SetAndCheck(UInt<t_nSize> v) -> bool
+auto constexpr
+(	SetAndCheck
+)	(	UInt<t_nSize>
+			i_vValue
+	)
+->	bool
 {
 	auto constexpr
 		vBitOffset
@@ -29,14 +34,14 @@ auto constexpr SetAndCheck(UInt<t_nSize> v) -> bool
 
 	using BitReference = ATR::Bit::Reference<vBitSize, vBitOffset>;
 	using BitAccess = typename BitReference::BitAccess;
-	v &= Meta::Bit::SetOnes(t_nSize);
+	i_vValue &= Meta::Bit::SetOnes(t_nSize).Value;
 
 	ATR::Bit::BitFieldBuffer<vBitSize, vBitOffset, 1uz> aBuffer{};
 	auto const nPrevious = BitAccess::ReadField(aBuffer);
 	BitReference r{aBuffer};
-	r = v;
+	r = i_vValue;
 
-	return ((v != nPrevious) == (r != nPrevious)) and r == v;
+	return ((i_vValue != nPrevious) == (r != nPrevious)) and r == i_vValue;
 }
 
 static_assert

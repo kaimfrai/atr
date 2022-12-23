@@ -47,7 +47,7 @@ auto constexpr SetAndCheck(UInt<t_nSize> v) -> bool
 	{
 		if	(arr[i] != FieldType{})
 			return false;
-		arr[i] = static_cast<FieldType>((i * v) bitand ArrayReference::ZeroOffsetMask);
+		arr[i] = static_cast<FieldType>((i * v) bitand ArrayReference::ZeroOffsetMask.Value);
 	}
 
 	for	(	auto i = 0uz
@@ -58,7 +58,7 @@ auto constexpr SetAndCheck(UInt<t_nSize> v) -> bool
 	{
 		FieldType const
 			vExpected
-		=	((v * i++) bitand ArrayReference::ZeroOffsetMask)
+		=	((v * i++) bitand ArrayReference::ZeroOffsetMask.Value)
 		;
 		if	(vField != vExpected)
 			return false;

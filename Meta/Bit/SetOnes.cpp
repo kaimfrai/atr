@@ -1,5 +1,6 @@
 export module Meta.Bit.SetOnes;
 
+import Meta.Bit.Field;
 import Meta.Size;
 
 export namespace
@@ -12,11 +13,12 @@ export namespace
 				i_nBitCount
 		)
 		noexcept
-	->	USize
+	->	Field
 	{	return
-		compl
-		(	compl 0uz
-		<<	i_nBitCount
-		);
+		{	compl
+			(	compl 0uz
+			<<	i_nBitCount
+			)
+		};
 	}
 }

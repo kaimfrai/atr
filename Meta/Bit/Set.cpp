@@ -1,5 +1,6 @@
 export module Meta.Bit.Set;
 
+import Meta.Bit.Field;
 import Meta.Bit.Power;
 
 import Meta.Size;
@@ -9,18 +10,33 @@ export namespace
 {
 	[[nodiscard]]
 	auto constexpr
-	(	Set
+	(	PowerField
 	)	(	USize
+				i_nIndex
+		)
+		noexcept
+	->	Field
+	{	return
+		{	Power
+			(	i_nIndex
+			)
+		};
+	}
+
+	[[nodiscard]]
+	auto constexpr
+	(	Set
+	)	(	Field
 				i_nField
 		,	USize
 				i_nIndex
 		)
 		noexcept
-	->	USize
+	->	Field
 	{	return
 		(	i_nField
 		bitor
-			Power(i_nIndex)
+			PowerField(i_nIndex)
 		);
 	}
 }
