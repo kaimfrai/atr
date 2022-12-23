@@ -3,7 +3,6 @@ add_module(
 
 	Aggregate.hpp
 	Object.hpp
-	TupleSet.hpp
 	TupleList.hpp
 	Value.hpp
 )
