@@ -2,11 +2,12 @@ export module Meta.Logic:Term;
 
 export import :BitTerm;
 export import :LiteralBase;
-export import :BufferedSpan;
 
 import Meta.Size;
 import Meta.Arithmetic;
+import Meta.Buffer.Static;
 export import Meta.Token;
+import Meta.Functional;
 
 import Std;
 
@@ -182,7 +183,7 @@ export namespace
 				&	i_rRight
 			)
 		{
-			StaticBufferedSpan
+			Buffer::Static
 			<	EraseTypeToken
 			,	Logic::LiteralLimit
 			>	vUnion
@@ -205,7 +206,7 @@ export namespace
 			)	const
 		->	Logic::BitTerm
 		{
-			StaticBufferedSpan
+			Buffer::Static
 			<	USize
 			,	Logic::LiteralLimit
 			>	vPermutationArray

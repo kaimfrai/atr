@@ -1,10 +1,12 @@
 export module Meta.Logic:Optimizer;
 
 export import :BitClause;
-export import :BufferedSpan;
 import :BitClauseIterator;
 
+import Meta.Buffer.Static;
+import Meta.Buffer.Dynamic;
 import Meta.Size;
+import Meta.Buffer.Iterator;
 
 import Std;
 
@@ -13,7 +15,7 @@ export namespace
 {
 	 using
 		BitClauseBuffer
-	=	StaticBufferedSpan
+	=	Buffer::Static
 		<	BitClause
 		,	ClauseLimit
 		>
@@ -24,13 +26,13 @@ export namespace
 	{
 		using
 			BufferType
-		=	DynamicBufferedSpan<BitClause>
+		=	Buffer::Dynamic<BitClause>
 		;
 
 		using iterator = typename BufferType::iterator;
 		using const_iterator = typename BufferType::const_iterator;
 
-		DynamicBufferedSpan<BitClause>
+		BufferType
 			m_vTerm
 		;
 
@@ -77,7 +79,7 @@ export namespace
 							&	i_rClause
 						)
 					{	return
-							Data::Iterator{&i_rClause}
+							Buffer::Iterator{&i_rClause}
 						!=	end(*this)
 						;
 					}
@@ -96,7 +98,7 @@ export namespace
 							&	i_rClause
 						)
 					{	return
-							Data::Iterator{&i_rClause}
+							Buffer::Iterator{&i_rClause}
 						!=	end(*this)
 						;
 					}
@@ -353,7 +355,7 @@ export namespace
 					i_nClauseCount
 			)
 		:	m_vTerm
-			{	typename DynamicBufferedSpan<BitClause>::BufferType
+			{	typename BufferType::BufferType
 				{	i_nClauseCount
 				}
 			}

@@ -1,10 +1,10 @@
-export module Meta.Data:Iterator;
+export module Meta.Buffer.Iterator;
 
 import Meta.Size;
 import Std;
 
 export namespace
-	Meta::Data
+	Meta::Buffer
 {
 	template
 		<	typename
@@ -281,7 +281,7 @@ export namespace
 		>
 	struct
 		iterator_traits
-		<	Meta::Data::Iterator
+		<	::Meta::Buffer::Iterator
 			<	t_tValue
 			>
 		>

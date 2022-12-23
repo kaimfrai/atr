@@ -3,7 +3,6 @@ export module Meta.Logic:BitTerm;
 export import :BitClause;
 export import :BitClauseIterator;
 import :Optimizer;
-import :BufferedSpan;
 
 import Meta.Size;
 import Meta.Arithmetic;
