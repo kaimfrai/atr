@@ -2,14 +2,16 @@ export module Meta.Logic:BitClause;
 
 import Meta.Size;
 import Meta.Arithmetic;
+import Meta.Bit.CountOnes;
+import Meta.Bit.SetOnes;
 import Meta.Bit.ByteSize;
+import Meta.Bit.Test;
+import Meta.Bit.Width;
 
 import Std;
 
-using ::Meta::Arithmetic::CountOneBits;
-using ::Meta::Arithmetic::SetOneBits;
-using ::Meta::Arithmetic::GetIndexOfNthOneBit;
-using ::Meta::Arithmetic::CountLowerZeroBits;
+using ::Meta::Bit::CountOnes;
+using ::Meta::Bit::SetOnes;
 
 export namespace
 	Meta::Logic
@@ -66,7 +68,7 @@ export namespace
 		(	BitClause
 		)	()
 		:	Positive
-			{	SetOneBits(LiteralLimit)
+			{	SetOnes(LiteralLimit)
 			}
 		,	Negative
 			{	Positive
@@ -200,7 +202,7 @@ export namespace
 				return 0uz;
 
 			return
-			CountOneBits
+			CountOnes
 			(	LiteralField()
 			);
 		}
@@ -409,24 +411,27 @@ export namespace
 		)	(	USize
 					i_nAbsoluteIndex
 			)	const
+			noexcept
 		->	bool
 		{	return
+			Bit::Test
 			(	Positive
-			bitand
-				BitIndexToField(i_nAbsoluteIndex)
+			,	i_nAbsoluteIndex
 			);
 		}
 
+		[[nodiscard]]
 		auto constexpr
 		(	TestNegative
 		)	(	USize
 					i_nAbsoluteIndex
 			)	const
+			noexcept
 		->	bool
 		{	return
+			Bit::Test
 			(	Negative
-			bitand
-				BitIndexToField(i_nAbsoluteIndex)
+			,	i_nAbsoluteIndex
 			);
 		}
 
@@ -441,14 +446,14 @@ export namespace
 			=	LiteralField()
 			;
 
-			USize const
+			auto const
 				nRequiredLiteralCount
-			=	CountOneBits(vLiteralField)
+			=	CountOnes(vLiteralField)
 			;
 
-			USize const
+			auto const
 				nMaxLiteralCount
-			=	Arithmetic::BitWidth
+			=	Bit::Width
 				(	vLiteralField
 				)
 			;

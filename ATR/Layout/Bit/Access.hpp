@@ -7,11 +7,10 @@ import Meta.Arithmetic;
 import Meta.Byte.ReadBuffer;
 import Meta.Byte.WriteBuffer;
 import Meta.Bit.ByteSize;
+import Meta.Bit.SetOnes;
 
 import Std;
 
-using ::Meta::Arithmetic::BitWidth;
-using ::Meta::Arithmetic::SetOneBits;
 using ::Meta::UInt;
 using ::Meta::UIntMax;
 using ::Meta::USize;
@@ -82,7 +81,7 @@ export namespace
 			BitFieldMask
 		=	static_cast
 			<	BufferFieldType
-			>(	SetOneBits(static_cast<USize>(t_nSize))
+			>(	Meta::Bit::SetOnes(static_cast<USize>(t_nSize))
 			)
 		;
 

@@ -4,6 +4,7 @@ import :Layout.Bit.Access;
 import :Layout.Bit.ElementReference;
 import :Layout.Bit.Types;
 
+import Meta.Bit.IndexLowestOne;
 import Meta.Bit.ByteSize;
 import Meta.Size;
 
@@ -80,13 +81,11 @@ export namespace
 				vMask
 			=	m_vMask
 			;
-			if	(vMask == 0)
-				::std::unreachable();
 
 			USize const
 				vCurrentBitOffset
-			=	static_cast<USize>
-				(	::std::countr_zero(vMask)
+			=	Meta::Bit::IndexLowestOne
+				(	vMask
 				)
 			;
 

@@ -11,6 +11,7 @@ import Meta.Token;
 import Meta.Bit.ByteSize;
 import Meta.Byte.AsBuffer;
 import Meta.Byte.ReadBuffer;
+import Meta.Bit.SetOnes;
 
 import Std;
 
@@ -139,7 +140,7 @@ export namespace
 
 		static auto constexpr
 			ZeroOffsetMask
-		=	SetOneBits
+		=	Meta::Bit::SetOnes
 			(	static_cast<USize>(t_nSize)
 			)
 		;
@@ -205,7 +206,7 @@ export namespace
 				)
 			bitand
 				static_cast<t_tTarget>
-				(	SetOneBits(BitCount)
+				(	Meta::Bit::SetOnes(BitCount)
 				)
 			);
 		}
@@ -224,7 +225,7 @@ export namespace
 				vField
 			=	CastTo<tField>()
 			;
-			return vField == SetOneBits(BitCount);
+			return vField == Meta::Bit::SetOnes(BitCount);
 		}
 
 		auto constexpr
