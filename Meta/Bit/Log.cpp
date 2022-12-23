@@ -1,4 +1,4 @@
-export module Meta.Bit.IndexLowestOne;
+export module Meta.Bit.Log;
 
 import Meta.Size;
 
@@ -9,20 +9,20 @@ export namespace
 {
 	[[nodiscard]]
 	auto constexpr
-	(	IndexLowestOne
+	(	Log
 	)	(	USize
-				i_nBitField
+				i_nArgument
 		)
 		noexcept
 	->	USize
-	{	if	(i_nBitField == 0uz)
+	{
+		if (i_nArgument == 0uz)
 			::std::unreachable();
-
 		return
-		static_cast<USize>
-		(	::std::countr_zero
-			(	i_nBitField
+			static_cast<USize>
+			(	::std::bit_width(i_nArgument)
 			)
-		);
+		-	1uz
+		;
 	}
 }

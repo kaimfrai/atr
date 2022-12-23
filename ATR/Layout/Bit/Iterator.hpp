@@ -4,9 +4,10 @@ import :Layout.Bit.Access;
 import :Layout.Bit.ElementReference;
 import :Layout.Bit.Types;
 
-import Meta.Bit.IndexLowestOne;
+import Meta.Bit.LowestOne;
 import Meta.Bit.ByteSize;
 import Meta.Size;
+import Meta.Bit.Field;
 
 import Std;
 
@@ -82,10 +83,10 @@ export namespace
 			=	m_vMask
 			;
 
-			USize const
+			auto const
 				vCurrentBitOffset
 			=	Meta::Bit::IndexLowestOne
-				(	vMask
+				(	Meta::Bit::Field{vMask}
 				)
 			;
 
