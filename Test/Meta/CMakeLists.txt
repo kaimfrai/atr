@@ -4,6 +4,7 @@ add_module_object_library(
 )
 
 add_subdirectory(Arithmetic)
+add_subdirectory(Bit)
 add_subdirectory(Buffer)
 add_subdirectory(Data)
 add_subdirectory(Lex)
