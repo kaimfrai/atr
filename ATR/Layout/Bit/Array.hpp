@@ -61,7 +61,7 @@ export namespace
 		return
 		typename Array::iterator
 		{	i_rArray.m_aUnderlyingArray + vByteOffset
-		,	static_cast<Array::MaskType>(Array::ZeroOffsetMask << vBitOffset)
+		,	static_cast<Array::MaskType>(Array::ZeroOffsetMask.Value << vBitOffset)
 		};
 	}
 
@@ -206,7 +206,7 @@ export namespace
 				)
 			bitand
 				static_cast<t_tTarget>
-				(	Meta::Bit::SetOnes(BitCount)
+				(	Meta::Bit::SetOnes(BitCount).Value
 				)
 			);
 		}
@@ -225,7 +225,7 @@ export namespace
 				vField
 			=	CastTo<tField>()
 			;
-			return vField == Meta::Bit::SetOnes(BitCount);
+			return vField == Meta::Bit::SetOnes(BitCount).Value;
 		}
 
 		auto constexpr

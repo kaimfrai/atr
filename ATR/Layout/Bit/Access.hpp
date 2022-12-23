@@ -81,7 +81,7 @@ export namespace
 			BitFieldMask
 		=	static_cast
 			<	BufferFieldType
-			>(	Meta::Bit::SetOnes(static_cast<USize>(t_nSize))
+			>(	Meta::Bit::SetOnes(static_cast<USize>(t_nSize)).Value
 			)
 		;
 

@@ -69,7 +69,7 @@ export namespace
 		(	BitClause
 		)	()
 		:	Positive
-			{	SetOnes(LiteralLimit)
+			{	SetOnes(LiteralLimit).Value
 			}
 		,	Negative
 			{	Positive

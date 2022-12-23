@@ -12,7 +12,20 @@ using ::ATR::Bit::ArrayReference;
 
 using ::Meta::UInt;
 using ::Meta::USize;
-using ::Meta::Bit::SetOnes;
+
+[[nodiscard]]
+auto constexpr
+(	SetOnes
+)	(	int
+			i_nCount
+	)
+->	USize
+{	return
+	Meta::Bit::SetOnes
+	(	static_cast<USize>(i_nCount)
+	).Value
+	;
+}
 
 static_assert
 (	::std::random_access_iterator
