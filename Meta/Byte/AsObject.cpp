@@ -12,8 +12,8 @@ export namespace
 		>
 	auto constexpr
 	(	AsObject
-	)	(	Buffer
-			<	sizeof(t_tObject)
+	)	(	BufferFor
+			<	t_tObject
 			>	const
 			&	i_rBuffer
 		)

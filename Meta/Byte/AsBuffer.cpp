@@ -12,13 +12,13 @@ export namespace
 			&	i_rObject
 		)
 		noexcept
-	->	Buffer
-		<	sizeof(i_rObject)
+	->	BufferFor
+		<	decltype(i_rObject)
 		>
 	{	return
 		::std::bit_cast
-		<	Buffer
-			<	sizeof(i_rObject)
+		<	BufferFor
+			<	decltype(i_rObject)
 			>
 		>(	i_rObject
 		);

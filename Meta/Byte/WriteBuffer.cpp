@@ -32,8 +32,7 @@ export namespace
 		)
 	->	::std::byte*
 	{
-		auto constexpr nObjectSize = sizeof(t_tObject);
-		static_assert(t_nValueBytes <= nObjectSize);
+		static_assert(t_nValueBytes <= sizeof(t_tObject));
 
 		if (i_nActiveValueBytes > t_nValueBytes)
 			::std::unreachable();
