@@ -1,17 +1,21 @@
 export module Meta.Data:Aggregate;
 
 export import :Object;
-export import :Iterator;
 
 export import Meta.Token;
 export import Meta.Lex;
+import Meta.Buffer.Iterator;
 import Meta.Size;
 
 import Std;
 
+using ::Meta::Buffer::Iterator;
+using ::Meta::Buffer::Sentinel;
+
 export namespace
 	Meta::Data
 {
+
 	template
 		<	typename
 				t_tData

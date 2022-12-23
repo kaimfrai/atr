@@ -7,6 +7,7 @@ import :Layout.Layout;
 import :Layout.Member;
 import :Layout.Static;
 
+import Meta.Buffer.Iterator;
 import Meta.Size;
 import Meta.Token;
 
@@ -26,8 +27,8 @@ using ::Meta::Index;
 using ::Meta::IndexToken;
 using ::Meta::Sequence;
 using ::Meta::USize;
-using ::Meta::Data::Iterator;
-using ::Meta::Data::Sentinel;
+using ::Meta::Buffer::Iterator;
+using ::Meta::Buffer::Sentinel;
 
 [[nodiscard]]
 auto constexpr

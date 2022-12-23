@@ -4,6 +4,7 @@ export import :Aggregate;
 
 export import Meta.Lex;
 export import Meta.Token;
+import Meta.Buffer.Iterator;
 import Meta.Size;
 
 import Std;
@@ -277,7 +278,7 @@ export namespace
 		:	Aggregate
 			<	ArrayType
 			>{	Data::MakeArrayAggregate<ArrayType>
-				(	Data::Iterator{i_aValue}
+				(	Buffer::Iterator{i_aValue}
 				)
 			}
 		{}

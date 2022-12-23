@@ -1,253 +1,21 @@
-export module Meta.Logic:BufferedSpan;
-// TODO find more appropriate module. as of now, this is only required in Meta.Logic
+export module Meta.Buffer.Fixed;
+
+import Meta.Buffer.Iterator;
+import Meta.Buffer.Proto;
 import Meta.Size;
-export import Meta.Token;
-export import Meta.Data;
 
 import Std;
 
 export namespace
-	Meta
+	Meta::Buffer
 {
 	template
-		<	typename
-				t_tElement
-		,	typename
-				t_tDeleter
-			=	std::default_delete<t_tElement[]>
-		>
-	struct
-		UniqueBuffer
-	{
-		using
-			value_type
-		=	t_tElement
-		;
-
-		using
-			pointer
-		=	value_type*
-		;
-
-		using
-			const_pointer
-		=	value_type const*
-		;
-
-		using
-			iterator
-		=	Data::Iterator
-			<	value_type
-			>
-		;
-
-		using
-			const_iterator
-		=	Data::Iterator
-			<	value_type const
-			>
-		;
-
-		std::unique_ptr<t_tElement[], t_tDeleter>
-			m_vBuffer
-		;
-		USize
-			m_nCapacity
-		;
-
-		[[nodiscard]]
-		auto constexpr
-		(	max_size
-		)	()	const
-		{
-			return m_nCapacity;
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	begin
-		)	(	UniqueBuffer
-				&	i_rUniqueBuffer
-			)
-		->	iterator
-		{	return
-			{	i_rUniqueBuffer.m_vBuffer.get()
-			};
-		}
-
-		friend auto constexpr
-		(	begin
-		)	(	UniqueBuffer const
-				&	i_rUniqueBuffer
-			)
-		->	const_iterator
-		{	return
-			{	i_rUniqueBuffer.m_vBuffer.get()
-			};
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	end
-		)	(	UniqueBuffer
-				&	i_rUniqueBuffer
-			)
-		->	Data::Sentinel<value_type>
-		{	return
-				begin(i_rUniqueBuffer)
-			+	static_cast<SSize>(i_rUniqueBuffer.max_size())
-			;
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	end
-		)	(	UniqueBuffer const
-				&	i_rUniqueBuffer
-			)
-		->	Data::Sentinel<value_type const>
-		{	return
-				begin(i_rUniqueBuffer)
-			+	static_cast<SSize>(i_rUniqueBuffer.max_size())
-			;
-		}
-
-		explicit(true) constexpr
-		(	UniqueBuffer
-		)	(	USize
-					i_nCapacity
-			)
-		:	m_vBuffer
-			{	// TODO should be make_unique_for_overwrite as soon as it is available
-				std::make_unique<t_tElement[]>
-				(	i_nCapacity
-				)
-			}
-		,	m_nCapacity
-			{	i_nCapacity
-			}
-		{}
-
-		explicit(true) constexpr
-		(	UniqueBuffer
-		)	(	auto
-				&&
-				...	i_rpElement
-			)
-			requires
-			(	sizeof...(i_rpElement)
-			>	0uz
-			)
-		:	UniqueBuffer
-			{	sizeof...(i_rpElement)
-			}
-		{
-			[&]	<	USize
-					...	t_npIndex
-				>(	IndexToken
-					<	t_npIndex
-						...
-					>
-				)
-			{
-				(	...
-				,	(	m_vBuffer[t_npIndex]
-					=	std::forward<decltype(i_rpElement)>(i_rpElement)
-					)
-				);
-			}(	Sequence<sizeof...(i_rpElement)>
-			);
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	USize
-					i_nIndex
-			)	&
-		->	decltype(auto)
-		{	return m_vBuffer[i_nIndex];	}
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	USize
-					i_nIndex
-			)	const&
-		->	decltype(auto)
-		{	return m_vBuffer[i_nIndex];	}
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	USize
-					i_nIndex
-			)	&&
-		->	decltype(auto)
-		{	return std::move(*this).m_vBuffer[i_nIndex];	}
-	};
-
-	template
-		<	typename
-				t_tBuffer
-		>
-	concept
-		ProtoBuffer
-	=	std::ranges::contiguous_range
-		<	t_tBuffer
-		>
-	and	requires
-			(	t_tBuffer
-					c_vBuffer
-			)
-		{
-			typename
-				t_tBuffer
-			::	value_type
-			;
-
-			typename
-				t_tBuffer
-			::	pointer
-			;
-			typename
-				t_tBuffer
-			::	const_pointer
-			;
-
-			{	&c_vBuffer[0uz]
-			}->	std::same_as
-				<	typename
-						t_tBuffer
-					::	pointer
-				>
-			;
-
-			{	c_vBuffer.max_size()
-			}->	std::same_as
-				<	USize
-				>
-			;
-		}
-	and	std::default_initializable
-		<	typename
-				t_tBuffer
-			::	value_type
-		>
-	and	std::is_trivially_destructible_v
-		<	typename
-				t_tBuffer
-			::	value_type
-		>
-	;
-
-	template
-		<	ProtoBuffer
+		<	Proto
 				t_tBuffer
 		>
 	struct
 		//	needs to be usable as template argument, so no private members!
-		BufferedSpan
+		Fixed
 	{
 		using
 			BufferType
@@ -283,14 +51,14 @@ export namespace
 
 		using
 			iterator
-		=	Data::Iterator
+		=	Iterator
 			<	value_type
 			>
 		;
 
 		using
 			const_iterator
-		=	Data::Iterator
+		=	Iterator
 			<	value_type const
 			>
 		;
@@ -303,26 +71,26 @@ export namespace
 		{};
 
 		explicit(false) constexpr
-		(	BufferedSpan
+		(	Fixed
 		)	()
 		=	default;
 
 		explicit(false) constexpr
-		(	BufferedSpan
-		)	(	BufferedSpan const
+		(	Fixed
+		)	(	Fixed const
 				&
 			)
 		=	default;
 
 		explicit(false) constexpr
-		(	BufferedSpan
-		)	(	BufferedSpan
+		(	Fixed
+		)	(	Fixed
 				&&
 			)
 		=	default;
 
 		explicit(true) constexpr
-		(	BufferedSpan
+		(	Fixed
 		)	(	BufferType const
 				&	i_rBuffer
 			)
@@ -332,7 +100,7 @@ export namespace
 		{}
 
 		explicit(true) constexpr
-		(	BufferedSpan
+		(	Fixed
 		)	(	std::remove_cv_t<BufferType>
 				&&	i_rBuffer
 			)
@@ -342,7 +110,7 @@ export namespace
 		{}
 
 		explicit(true) constexpr
-		(	BufferedSpan
+		(	Fixed
 		)	(	auto
 				&&
 				...	i_rpElement
@@ -423,7 +191,7 @@ export namespace
 		)	(	std::convertible_to<value_type> auto
 				&&	i_rValue
 			)	&
-		->	BufferedSpan&
+		->	Fixed&
 		{
 			EnsureNewSizeValid(size() + 1uz);
 
@@ -442,7 +210,7 @@ export namespace
 		)	(	std::convertible_to<value_type> auto
 				&&	i_rValue
 			)	&&
-		->	BufferedSpan
+		->	Fixed
 		{	return
 			std::move
 			(	push_back
@@ -459,7 +227,7 @@ export namespace
 				&&
 				...	i_rpValue
 			)	&
-		->	BufferedSpan&
+		->	Fixed&
 		{
 			auto constexpr
 				vNewElementCount
@@ -471,7 +239,7 @@ export namespace
 
 			[&]	<	USize
 					...	t_npIndex
-				>(	IndexToken<t_npIndex...>
+				>(	std::index_sequence<t_npIndex...>
 				)
 			{
 				(	...
@@ -481,7 +249,7 @@ export namespace
 						)
 					)
 				);
-			}(	Sequence<vNewElementCount>
+			}(	std::make_index_sequence<vNewElementCount>{}
 			);
 			m_nElementCount = vNewElementCount;
 
@@ -493,7 +261,7 @@ export namespace
 		)	(	USize
 					i_nCount
 			)	&
-		->	BufferedSpan&
+		->	Fixed&
 		{	static_assert
 			(	std::is_trivially_destructible_v<value_type>
 			,	"The following optimization is only valid for trivially destructible elements!"
@@ -509,7 +277,7 @@ export namespace
 		)	(	USize
 					i_nCount
 			)	&&
-		->	BufferedSpan
+		->	Fixed
 		{	return std::move(pop_back(i_nCount));	}
 
 		auto constexpr
@@ -590,15 +358,15 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	begin
-		)	(	BufferedSpan
-				&	i_rBufferedSpan
+		)	(	Fixed
+				&	i_rFixed
 			)
 			noexcept
 		->	iterator
 		{	return
 			iterator
 			(	std::ranges::begin
-				(	i_rBufferedSpan
+				(	i_rFixed
 				.	m_vBuffer
 				)
 			);
@@ -607,15 +375,15 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	begin
-		)	(	BufferedSpan const
-				&	i_rBufferedSpan
+		)	(	Fixed const
+				&	i_rFixed
 			)
 			noexcept
 		->	const_iterator
 		{	return
 			const_iterator
 			(	std::ranges::begin
-				(	i_rBufferedSpan
+				(	i_rFixed
 				.	m_vBuffer
 				)
 			);
@@ -624,47 +392,47 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	end
-		)	(	BufferedSpan
-				&	i_rBufferedSpan
+		)	(	Fixed
+				&	i_rFixed
 			)
 			noexcept
-		->	Data::Sentinel<value_type>
+		->	Sentinel<value_type>
 		{	return
-			Data::Sentinel<value_type>
-			(	begin(i_rBufferedSpan)
-			+	i_rBufferedSpan.ssize()
+			Sentinel<value_type>
+			(	begin(i_rFixed)
+			+	i_rFixed.ssize()
 			);
 		}
 
 		[[nodiscard]]
 		friend auto constexpr
 		(	end
-		)	(	BufferedSpan const
-				&	i_rBufferedSpan
+		)	(	Fixed const
+				&	i_rFixed
 			)
 			noexcept
-		->	Data::Sentinel<value_type const>
+		->	Sentinel<value_type const>
 		{	return
-			Data::Sentinel<value_type const>
-			(	begin(i_rBufferedSpan)
-			+	i_rBufferedSpan.ssize()
+			Sentinel<value_type const>
+			(	begin(i_rFixed)
+			+	i_rFixed.ssize()
 			);
 		}
 
 		auto constexpr
 		(	operator=
-		)	(	BufferedSpan const
+		)	(	Fixed const
 				&
 			)	&
-		->	BufferedSpan&
+		->	Fixed&
 		=	default;
 
 		auto constexpr
 		(	operator=
-		)	(	BufferedSpan
+		)	(	Fixed
 				&&
 			)	&
-		->	BufferedSpan&
+		->	Fixed&
 		=	default;
 
 		[[nodiscard]]
@@ -762,7 +530,7 @@ export namespace
 		{
 			std::ranges::fill
 			(	end(*this).base()
-			,	Data::Sentinel<value_type>(end(m_vBuffer))
+			,	Sentinel<value_type>(end(m_vBuffer))
 			,	value_type{}
 			);
 		}
@@ -786,7 +554,7 @@ export namespace
 		auto constexpr
 		(	sort
 		)	()	&
-		->	BufferedSpan&
+		->	Fixed&
 		{
 			//	TODO ranges::sort does not appear to be usable with modules
 			//	sort is not usable with a sentinel
@@ -797,36 +565,7 @@ export namespace
 		auto constexpr
 		(	sort
 		)	()	&&
-		->	BufferedSpan
+		->	Fixed
 		{	return std::move(sort());	}
 	};
-
-	template
-		<	typename
-				t_tElement
-		>
-	using
-		DynamicBufferedSpan
-	=	BufferedSpan
-		<	UniqueBuffer
-			<	t_tElement
-			>
-		>
-	;
-
-	template
-		<	typename
-				t_tElement
-		,	USize
-				t_nExtent
-		>
-	using
-		StaticBufferedSpan
-	=	BufferedSpan
-		<	std::array
-			<	t_tElement
-			,	t_nExtent
-			>
-		>
-	;
 }

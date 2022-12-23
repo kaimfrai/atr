@@ -4,6 +4,7 @@ add_module(
 
 add_subdirectory(Bit)
 add_subdirectory(Byte)
+add_subdirectory(Buffer)
 
 add_subdirectory(Arithmetic)
 add_subdirectory(Token)

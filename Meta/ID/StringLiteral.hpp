@@ -2,6 +2,7 @@ export module Meta.ID:StringLiteral;
 
 export import Meta.Data;
 import Meta.Size;
+import Meta.Buffer.Iterator;
 
 export import Std;
 
@@ -45,7 +46,7 @@ export namespace
 			noexcept
 		:	AggregateType
 			{	Data::MakeArrayAggregate<ArrayEntity<char, t_nExtent>>
-				(	Data::Iterator{i_aString}
+				(	Buffer::Iterator{i_aString}
 				)
 			}
 		{}

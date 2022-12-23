@@ -3,6 +3,8 @@ export module Meta.ID:StringView;
 import Meta.Size;
 export import Meta.Data;
 
+import Meta.Buffer.Iterator;
+
 import Std;
 
 export namespace
@@ -11,7 +13,7 @@ export namespace
 	struct
 		StringView final
 	{
-		using iterator = Data::Iterator<char const>;
+		using iterator = Buffer::Iterator<char const>;
 		using const_iterator = iterator;
 
 		char const

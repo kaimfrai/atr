@@ -1,9 +1,9 @@
-import Meta.Data;
+import Meta.Buffer.Iterator;
 
 import Std;
 
-using Meta::Data::Iterator;
-using Meta::Data::Sentinel;
+using Meta::Buffer::Iterator;
+using Meta::Buffer::Sentinel;
 
 static_assert(std::contiguous_iterator<Iterator<char>>);
 static_assert(std::contiguous_iterator<Iterator<char const>>);
