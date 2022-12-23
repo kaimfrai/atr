@@ -2,6 +2,7 @@ export module Meta.Logic:BitClause;
 
 import Meta.Size;
 import Meta.Arithmetic;
+import Meta.Bit.ByteSize;
 
 import Std;
 
@@ -26,6 +27,7 @@ export namespace
 		BitClause final
 	{
 		using FieldType = UInt<LiteralLimit>;
+		static_assert(sizeof(FieldType) * Bit::ByteSize == LiteralLimit);
 
 		static auto constexpr
 		(	BitIndexToField
@@ -43,8 +45,8 @@ export namespace
 			);
 		}
 
-		FieldType Positive : LiteralLimit;
-		FieldType Negative : LiteralLimit;
+		FieldType Positive;
+		FieldType Negative;
 
 		[[nodiscard]]
 		static auto constexpr
@@ -343,27 +345,10 @@ export namespace
 					i_vClause
 			)
 		->	BitClause
-		{
-			if	(	i_vClause.Positive
-				==	i_vClause.Negative
-				)
-			{
-				i_vClause.Positive = compl i_vClause.Positive;
-				i_vClause.Negative = compl i_vClause.Negative;
-				return i_vClause;
-			}
-
-			//	cannot use std::swap for bitfields
-			BitClause::FieldType const
-				vOldPositive
-			=	i_vClause.Positive
-			;
-			(	i_vClause.Positive
-			=	i_vClause.Negative
-			);
-			(	i_vClause.Negative
-			=	vOldPositive
-			);
+		{	if	(i_vClause.Positive == i_vClause.Negative)
+				i_vClause.Positive = i_vClause.Negative = compl i_vClause.Positive;
+			else
+				std::swap(i_vClause.Positive, i_vClause.Negative);
 			return i_vClause;
 		}
 
