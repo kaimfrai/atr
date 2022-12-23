@@ -8,11 +8,9 @@ import Meta.Arithmetic;
 import Meta.Buffer.Static;
 export import Meta.Token;
 import Meta.Functional;
+import Meta.Bit.IndexView;
 
 import Std;
-
-using ::Meta::Arithmetic::CountUpperZeroBits;
-using ::Meta::Arithmetic::CountLowerZeroBits;
 
 namespace
 	Meta::Logic
@@ -119,39 +117,26 @@ export namespace
 			)
 		->	ErasedTerm
 		{
-			auto const
-				vResultLiteralField
-			=	i_rResult.LiteralField()
-			;
-
-			auto const vBitTerm = i_rResult.TrimLiterals();
-
-			USize const
-				nRequiredItemCount
-			=	CountOneBits(vResultLiteralField)
-			;
-			if	(nRequiredItemCount > Logic::LiteralLimit)
-				((void)"Exceeded maximum amount of predicates per term!", std::unreachable());
-
 			LiteralBufferType
 				vLiterals
 			{};
-			for	(	auto nIndex = 0uz
-				;	nIndex < nRequiredItemCount
-				;	++nIndex
+
+			for	(	auto
+						nArrayIndex
+					=	0uz
+				;	auto
+						vBitIndex
+				:	Bit::IndexView
+					{	i_rResult.LiteralField()
+					}
 				)
 			{
-				(	vLiterals[nIndex]
-				=	i_vUnion
-					[	GetIndexOfNthOneBit
-						(	vResultLiteralField
-						,	nIndex
-						)
-					]
-				);
+				vLiterals[nArrayIndex] = i_vUnion[vBitIndex];
+				++nArrayIndex;
 			}
+
 			return
-			{	vBitTerm
+			{	i_rResult.TrimLiterals()
 			,	vLiterals
 			};
 		}
