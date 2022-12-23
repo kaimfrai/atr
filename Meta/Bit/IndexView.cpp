@@ -1,5 +1,6 @@
 export module Meta.Bit.IndexView;
 
+import Meta.Bit.Field;
 import Meta.Bit.Iterator;
 import Meta.Size;
 
@@ -9,7 +10,7 @@ export namespace
 	struct
 		IndexView
 	{
-		USize
+		Field
 			Field
 		;
 

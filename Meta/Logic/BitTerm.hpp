@@ -10,6 +10,7 @@ import Meta.Bit.CountOnes;
 import Meta.Bit.Width;
 import Meta.Bit.Test;
 import Meta.Bit.Power;
+import Meta.Bit.Field;
 
 import Std;
 
@@ -452,14 +453,16 @@ export namespace
 			return {::std::move(vOptimizer)};
 		}
 
+		[[nodiscard]]
 		auto constexpr
 		(	LiteralField
 		)	()	const
-		->	USize
+			noexcept
+		->	Bit::Field
 		{	return
 			transform_reduce
-			(	0uz
-			,	std::bit_or<USize>{}
+			(	Bit::Field{}
+			,	std::bit_or<Bit::Field>{}
 			,	&BitClause::LiteralField
 			);
 		}

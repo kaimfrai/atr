@@ -3,11 +3,10 @@ export module ATR:Layout.Bit.Types;
 import Meta.Size;
 import Meta.Arithmetic;
 import Meta.Bit.ByteSize;
-import Meta.Bit.Width;
+import Meta.Bit.Log;
 
 import Std;
 
-using ::Meta::Bit::Width;
 using ::Meta::UInt;
 using ::Meta::UIntMax;
 using ::Meta::USize;
@@ -18,9 +17,8 @@ export namespace
 	enum class
 		EOffset
 	:	UInt
-		<	Width
+		<	Meta::Bit::Log
 			(	::Meta::Bit::ByteSize
-			-	1uz
 			)
 		>
 	{};
@@ -28,7 +26,8 @@ export namespace
 	enum class
 		ESize
 	:	UInt
-		<	Width
+		<	1uz
+		+	Meta::Bit::Log
 			(	::Meta::Bit::ByteSize
 			*	sizeof(UIntMax)
 			)

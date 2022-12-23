@@ -1,5 +1,6 @@
 export module Meta.Bit.CountOnes;
 
+import Meta.Bit.Field;
 import Meta.Size;
 
 import Std;
@@ -10,15 +11,15 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	CountOnes
-	)	(	USize
-				i_nBitField
+	)	(	Field
+				i_nField
 		)
 		noexcept
 	->	USize
 	{	return
 		static_cast<USize>
 		(	::std::popcount
-			(	i_nBitField
+			(	i_nField.Value
 			)
 		);
 	}

@@ -7,6 +7,7 @@ import Meta.Bit.SetOnes;
 import Meta.Bit.ByteSize;
 import Meta.Bit.Test;
 import Meta.Bit.Width;
+import Meta.Bit.Field;
 
 import Std;
 
@@ -112,17 +113,15 @@ export namespace
 		auto constexpr
 		(	LiteralField
 		)	()	const
-		->	USize
+		->	Bit::Field
 		{
 			if	(IsIdentity())
-				return 0uz;
+				return {};
 
 			return
-			(	0uz
+			(	Bit::Field{Positive}
 			bitor
-				Positive
-			bitor
-				Negative
+				Bit::Field{Negative}
 			);
 		}
 
@@ -415,7 +414,7 @@ export namespace
 		->	bool
 		{	return
 			Bit::Test
-			(	Positive
+			(	Bit::Field{Positive}
 			,	i_nAbsoluteIndex
 			);
 		}
@@ -430,7 +429,7 @@ export namespace
 		->	bool
 		{	return
 			Bit::Test
-			(	Negative
+			(	Bit::Field{Negative}
 			,	i_nAbsoluteIndex
 			);
 		}
@@ -441,7 +440,7 @@ export namespace
 		)	()	const
 		->	BitClause
 		{
-			USize const
+			auto const
 				vLiteralField
 			=	LiteralField()
 			;

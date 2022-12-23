@@ -1,6 +1,7 @@
 export module Meta.Bit.Iterator;
 
-import Meta.Bit.IndexLowestOne;
+import Meta.Bit.Field;
+import Meta.Bit.LowestOne;
 import Meta.Size;
 
 import Std;
@@ -18,7 +19,7 @@ export namespace
 		using difference_type = SSize;
 		using value_type = USize;
 
-		USize
+		Field
 			Field
 		;
 
@@ -39,7 +40,7 @@ export namespace
 		)	()	&
 			noexcept
 		->	IndexIterator&
-		{	Field &= Field - 1uz;
+		{	Field = UnsetLowestOne(Field);
 			return *this;
 		}
 
@@ -49,9 +50,9 @@ export namespace
 			noexcept
 		->	IndexIterator
 		{	return
-			std::exchange
+			::std::exchange
 			(	*this
-			,	std::ranges::next
+			,	::std::next
 				(	*this
 				)
 			);
@@ -75,8 +76,8 @@ export namespace
 			noexcept
 		->	bool
 		{	return
-				i_vIterator.Field
-			==	0uz
+				i_vIterator
+			==	IndexIterator{}
 			;
 		}
 	};
