@@ -157,7 +157,7 @@ export namespace
 		{	return
 			(	::std::is_array_v<t_tEntity>
 			?	operator()(Type<::std::remove_all_extents_t<t_tEntity>>)
-			:	Bit::ByteSize * alignof(t_tEntity)
+			:	Bit::ByteSize.get() * alignof(t_tEntity)
 			);
 		}
 

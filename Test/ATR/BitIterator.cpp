@@ -3,6 +3,7 @@ import ATR;
 import Meta.Arithmetic;
 import Meta.Size;
 import Meta.Bit.SetOnes;
+import Meta.Bit.Count;
 import Std;
 
 using ::ATR::Bit::EOffset;
@@ -22,7 +23,7 @@ auto constexpr
 ->	USize
 {	return
 	Meta::Bit::SetOnes
-	(	static_cast<USize>(i_nCount)
+	(	Meta::Bits{static_cast<USize>(i_nCount)}
 	).Value
 	;
 }

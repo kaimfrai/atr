@@ -1,5 +1,6 @@
 export module Meta.Bit.Power;
 
+import Meta.Bit.Count;
 import Meta.Size;
 
 export namespace
@@ -8,14 +9,14 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	Power
-	)	(	USize
+	)	(	Bits
 				i_nIndex
 		)
 		noexcept
 	->	USize
 	{	return
 		(	1uz
-		<<	i_nIndex
+		<<	i_nIndex.get()
 		);
 	}
 }

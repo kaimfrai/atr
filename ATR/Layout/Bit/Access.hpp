@@ -8,12 +8,14 @@ import Meta.Byte.ReadBuffer;
 import Meta.Byte.WriteBuffer;
 import Meta.Bit.ByteSize;
 import Meta.Bit.SetOnes;
+import Meta.Bit.Count;
 
 import Std;
 
 using ::Meta::UInt;
 using ::Meta::UIntMax;
 using ::Meta::USize;
+using ::Meta::Bits;
 
 static_assert
 (	::std::endian::native
@@ -35,7 +37,7 @@ export namespace
 	{
 		static_assert
 		(	static_cast<USize>(t_nMaxOffset)
-		<	::Meta::Bit::ByteSize
+		<	::Meta::Bit::ByteSize.get()
 		,	"Bit::Access not properly aligned! Expected maximum offset below Bits per Byte!"
 		);
 
@@ -61,8 +63,8 @@ export namespace
 
 		static auto constexpr
 			BufferBitSize
-		=	BufferByteSize
-		*	::Meta::Bit::ByteSize
+		=	::Meta::Bit::ByteSize
+		*	BufferByteSize
 		;
 
 		static_assert
@@ -81,7 +83,7 @@ export namespace
 			BitFieldMask
 		=	static_cast
 			<	BufferFieldType
-			>(	Meta::Bit::SetOnes(static_cast<USize>(t_nSize)).Value
+			>(	Meta::Bit::SetOnes(Meta::Bits{static_cast<USize>(t_nSize)}).Value
 			)
 		;
 
@@ -104,7 +106,7 @@ export namespace
 			else
 				return
 				static_cast
-				<	UInt<static_cast<USize>(t_nSize)>
+				<	UInt<Bits{static_cast<USize>(t_nSize)}>
 				>(	i_vBufferField
 				);
 		}

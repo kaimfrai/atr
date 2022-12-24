@@ -9,8 +9,11 @@ import Meta.Buffer.Static;
 export import Meta.Token;
 import Meta.Functional;
 import Meta.Bit.IndexView;
+import Meta.Bit.Count;
 
 import Std;
+
+using ::Meta::Literals::operator""_bits;
 
 namespace
 	Meta::Logic
@@ -192,7 +195,7 @@ export namespace
 		->	Logic::BitTerm
 		{
 			Buffer::Static
-			<	USize
+			<	Bits
 			,	Logic::LiteralLimit
 			>	vPermutationArray
 			;
@@ -257,10 +260,12 @@ export namespace
 						]	(	EraseTypeToken
 									i_vType
 							)
+						->	Bits
 						{	return
-							vUnion.FindIndexOf
-							(	i_vType
-							);
+							{	vUnion.FindIndexOf
+								(	i_vType
+								)
+							};
 						}
 					)
 				)
@@ -275,10 +280,12 @@ export namespace
 			noexcept
 		->	USize
 		{	return
-			CountOnes
-			(	BitTerm
-			.	LiteralField()
-			);
+				CountOnes
+				(	BitTerm
+				.	LiteralField()
+				)
+			.	get()
+			;
 		}
 
 		auto constexpr
@@ -395,7 +402,7 @@ export namespace
 		>
 	ErasedTerm constexpr inline
 		ErasedLiteral
-	{	Logic::BitClause{0uz}
+	{	Logic::BitClause{0_bits}
 	,	{	Type<t_tLiteral>
 		}
 	};

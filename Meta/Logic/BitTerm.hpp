@@ -11,6 +11,7 @@ import Meta.Bit.Width;
 import Meta.Bit.Test;
 import Meta.Bit.Power;
 import Meta.Bit.Field;
+import Meta.Bit.Count;
 
 import Std;
 
@@ -103,7 +104,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	Permutation
-		)	(	::std::span<USize const>
+		)	(	::std::span<Bits const>
 					i_vPermutation
 			)	const
 		->	BitTerm
@@ -151,34 +152,34 @@ export namespace
 				return *this;
 			else
 			{
-				USize
+				Bits
 					vTrimLiteralPermutation
 				[	LiteralLimit
 				]{};
 
-				for	(	USize
+				for	(	Bits
 							nIndex
-						=	0uz
-					,		nPermutation
-						=	0uz
+						{}
+						,	nPermutation
+						{}
 					;		nIndex
 						<	nMaxLiteralCount
 					;	++	nIndex
 					)
 				{
 						vTrimLiteralPermutation
-						[	nIndex
+						[	nIndex.get()
 						]
 					=	nPermutation
 					;
-					nPermutation += Bit::Test(vLiteralField, nIndex);
+					nPermutation += Bits{Bit::Test(vLiteralField, nIndex)};
 				}
 
 				return
 				Permutation
-				(	::std::span<USize const>
+				(	::std::span<Bits const>
 					{	+vTrimLiteralPermutation
-					,	nMaxLiteralCount
+					,	nMaxLiteralCount.get()
 					}
 				);
 			}

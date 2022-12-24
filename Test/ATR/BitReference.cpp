@@ -4,16 +4,20 @@ import Meta.Size;
 import Meta.Arithmetic;
 import Meta.Bit.ByteSize;
 import Meta.Bit.SetOnes;
+import Meta.Bit.Count;
 
 import Std;
 
 using ::Meta::UInt;
 using ::Meta::USize;
+using ::Meta::Bits;
+
+using ::Meta::Literals::operator""_bits;
 
 template
 	<	USize
 			t_nOffset
-	,	USize
+	,	Bits
 			t_nSize
 	>
 auto constexpr
@@ -25,11 +29,11 @@ auto constexpr
 {
 	auto constexpr
 		vBitOffset
-	=	static_cast<ATR::Bit::EOffset>(t_nOffset % ::Meta::Bit::ByteSize)
+	=	static_cast<ATR::Bit::EOffset>(t_nOffset % ::Meta::Bit::ByteSize.get())
 	;
 	auto constexpr
 		vBitSize
-	=	static_cast<ATR::Bit::ESize>(t_nSize)
+	=	static_cast<ATR::Bit::ESize>(t_nSize.get())
 	;
 
 	using BitReference = ATR::Bit::Reference<vBitSize, vBitOffset>;
@@ -45,62 +49,62 @@ auto constexpr
 }
 
 static_assert
-(	SetAndCheck<7, 28>(31)
+(	SetAndCheck<7, 28_bits>(31)
 );
 static_assert
-(	SetAndCheck<28, 7>(31)
-);
-
-static_assert
-(	SetAndCheck<20, 10>(105)
+(	SetAndCheck<28, 7_bits>(31)
 );
 
 static_assert
-(	SetAndCheck<0, 3>(1)
-);
-static_assert
-(	SetAndCheck<3, 1>(true)
-);
-static_assert
-(	SetAndCheck<1, 3>(2)
+(	SetAndCheck<20, 10_bits>(105)
 );
 
 static_assert
-(	SetAndCheck<31, 31>(854332)
+(	SetAndCheck<0, 3_bits>(1)
+);
+static_assert
+(	SetAndCheck<3, 1_bits>(true)
+);
+static_assert
+(	SetAndCheck<1, 3_bits>(2)
 );
 
 static_assert
-(	SetAndCheck<33, 31>(345678)
+(	SetAndCheck<31, 31_bits>(854332)
 );
 
 static_assert
-(	SetAndCheck<0, 3>(1)
+(	SetAndCheck<33, 31_bits>(345678)
 );
 
 static_assert
-(	SetAndCheck<31, 1>(true)
-);
-static_assert
-(	SetAndCheck<33, 1>(true)
+(	SetAndCheck<0, 3_bits>(1)
 );
 
 static_assert
-(	SetAndCheck<1, 31>(987656)
+(	SetAndCheck<31, 1_bits>(true)
 );
 static_assert
-(	SetAndCheck<1, 33>(564354)
-);
-
-static_assert
-(	SetAndCheck<1, 63>(54575747)
-);
-static_assert
-(	SetAndCheck<63, 1>(true)
+(	SetAndCheck<33, 1_bits>(true)
 );
 
 static_assert
-(	SetAndCheck<65, 63>(765434567876)
+(	SetAndCheck<1, 31_bits>(987656)
 );
 static_assert
-(	SetAndCheck<65, 1>(true)
+(	SetAndCheck<1, 33_bits>(564354)
+);
+
+static_assert
+(	SetAndCheck<1, 63_bits>(54575747)
+);
+static_assert
+(	SetAndCheck<63, 1_bits>(true)
+);
+
+static_assert
+(	SetAndCheck<65, 63_bits>(765434567876)
+);
+static_assert
+(	SetAndCheck<65, 1_bits>(true)
 );

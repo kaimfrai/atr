@@ -2,6 +2,7 @@ export module Meta.Token:Specifier;
 
 import Meta.Size;
 import Meta.Arithmetic;
+import Meta.Bit.Count;
 
 export namespace
 	Meta::Specifier
@@ -37,6 +38,6 @@ export namespace
 	struct
 		BitField final
 	{
-		UInt<t_nSize> Entity : t_nSize;
+		UInt<Bits{t_nSize}> Entity : t_nSize;
 	};
 }

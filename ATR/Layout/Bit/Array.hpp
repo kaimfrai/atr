@@ -12,6 +12,7 @@ import Meta.Bit.ByteSize;
 import Meta.Byte.AsBuffer;
 import Meta.Byte.ReadBuffer;
 import Meta.Bit.SetOnes;
+import Meta.Bit.Count;
 
 import Std;
 
@@ -49,13 +50,13 @@ export namespace
 		auto const
 			vByteOffset
 		=	vTotalOffset
-		/	::Meta::Bit::ByteSize
+		/	::Meta::Bit::ByteSize.get()
 		;
 
 		auto const
 			vBitOffset
 		=	vTotalOffset
-		%	::Meta::Bit::ByteSize
+		%	::Meta::Bit::ByteSize.get()
 		;
 
 		return
@@ -90,15 +91,15 @@ export namespace
 
 		static_assert
 		(	static_cast<USize>(t_nOffset)
-		<	::Meta::Bit::ByteSize
+		<	::Meta::Bit::ByteSize.get()
 		,	"Bit::ArrayReference not properly aligned! Expected maximum offset below Bits per Byte!"
 		);
 
-		static auto constexpr
+		static Bits constexpr
 			BitCount
-		=	static_cast<USize>(t_nSize)
+		{	static_cast<USize>(t_nSize)
 		*	t_nExtent
-		;
+		};
 
 		static auto constexpr
 			BufferSize
@@ -121,7 +122,7 @@ export namespace
 						*	i_nIndex
 						+	static_cast<USize>(t_nOffset)
 						)
-					%	::Meta::Bit::ByteSize
+					%	::Meta::Bit::ByteSize.get()
 					);
 				}
 			,	[]	(	auto
@@ -141,7 +142,7 @@ export namespace
 		static auto constexpr
 			ZeroOffsetMask
 		=	Meta::Bit::SetOnes
-			(	static_cast<USize>(t_nSize)
+			(	Meta::Bits{static_cast<USize>(t_nSize)}
 			)
 		;
 
@@ -396,8 +397,8 @@ export namespace
 			;	requires
 				{	typename
 					UInt
-					<	nBufferSize
-					*	::Meta::Bit::ByteSize
+					<	::Meta::Bit::ByteSize
+					*	nBufferSize
 					>;
 
 				}

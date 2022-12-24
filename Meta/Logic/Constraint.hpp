@@ -3,6 +3,7 @@ export module Meta.Logic:Constraint;
 export import :LiteralBase;
 export import :Term;
 
+import Meta.Bit.Count;
 import Meta.Size;
 
 import Std;
@@ -153,7 +154,7 @@ export namespace
 			else
 			if	constexpr
 				(	BitClause.TestPositive
-					(	t_nLiteralIndex
+					(	Bits{t_nLiteralIndex}
 					)
 				)
 				return
@@ -165,7 +166,7 @@ export namespace
 			else
 			if	constexpr
 				(	BitClause.TestNegative
-					(	t_nLiteralIndex
+					(	Bits{t_nLiteralIndex}
 					)
 				)
 				return

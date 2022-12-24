@@ -47,12 +47,12 @@ export namespace
 
 		static auto constexpr
 			ByteOffset
-		=	t_nOffset / ::Meta::Bit::ByteSize
+		=	t_nOffset / ::Meta::Bit::ByteSize.get()
 		;
 
 		static auto constexpr
 			BitOffset
-		=	static_cast<EOffset>(t_nOffset % ::Meta::Bit::ByteSize)
+		=	static_cast<EOffset>(t_nOffset % ::Meta::Bit::ByteSize.get())
 		;
 
 		using
@@ -119,12 +119,12 @@ export namespace
 
 		static auto constexpr
 			ByteOffset
-		=	t_nOffset / ::Meta::Bit::ByteSize
+		=	t_nOffset / ::Meta::Bit::ByteSize.get()
 		;
 
 		static auto constexpr
 			BitOffset
-		=	static_cast<EOffset>(t_nOffset % ::Meta::Bit::ByteSize)
+		=	static_cast<EOffset>(t_nOffset % ::Meta::Bit::ByteSize.get())
 		;
 
 		using

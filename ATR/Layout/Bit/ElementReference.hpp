@@ -4,8 +4,11 @@ import :Layout.Bit.Access;
 import :Layout.Bit.Types;
 
 import Meta.Bit.ByteSize;
+import Meta.Bit.Count;
 
 import Std;
+
+using ::Meta::Literals::operator""_bits;
 
 export namespace
 	ATR::Bit
@@ -23,7 +26,7 @@ export namespace
 	{
 		static_assert
 		(	static_cast<USize>(t_nMaxOffset)
-		<	::Meta::Bit::ByteSize
+		<	::Meta::Bit::ByteSize.get()
 		,	"Bit::ElementReference not properly aligned! Expected maximum offset below Bits per Byte!"
 		);
 
@@ -32,7 +35,7 @@ export namespace
 
 		//	do not implicitly convert to bool on assignment
 		//	e.g. 2 converts to true but false is expected as the first bit is 0
-		using AssignType = UInt<static_cast<USize>(t_nSize)>;
+		using AssignType = UInt<Bits{static_cast<USize>(t_nSize)}>;
 		using MaskType = typename BitAccess::BufferFieldType;
 
 		t_tBuffer
@@ -121,7 +124,7 @@ export namespace
 			,	ESize{1}
 			,	t_nMaxOffset
 			>
-		,	UInt<1uz>
+		,	UInt<1_bits>
 		)
 	=	delete;
 }

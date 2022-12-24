@@ -31,7 +31,7 @@ export namespace
 	{
 		static_assert
 		(	static_cast<USize>(t_nBitOffset)
-		<	::Meta::Bit::ByteSize
+		<	::Meta::Bit::ByteSize.get()
 		,	"Bit::MemberOffset not properly aligned! Expected maximum offset below Bits per Byte!"
 		);
 

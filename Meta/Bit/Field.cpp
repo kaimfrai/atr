@@ -12,6 +12,7 @@ export namespace
 			Value
 		;
 
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator bitor
 		)	(	Field
@@ -28,6 +29,7 @@ export namespace
 			};
 		}
 
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator ==
 		)	(	Field
