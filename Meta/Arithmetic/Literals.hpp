@@ -1,8 +1,8 @@
 export module Meta.Arithmetic:Literals;
 
-import :Math;
+import Meta.Math.Power;
 
-using ::Meta::Arithmetic::Power;
+using ::Meta::Math::Power;
 
 template
 	<	char

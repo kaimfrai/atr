@@ -3,5 +3,4 @@ add_module(
 
 	Integer.hpp
 	Literals.hpp
-	Math.hpp
 )
