@@ -1,8 +1,8 @@
 export module Meta.Bit.Test;
 
+import Meta.Bit.Count;
 import Meta.Bit.Field;
 import Meta.Bit.Power;
-import Meta.Size;
 
 export namespace
 	Meta::Bit
@@ -12,7 +12,7 @@ export namespace
 	(	Test
 	)	(	Field
 				i_nField
-		,	USize
+		,	Bits
 				i_nIndex
 		)
 		noexcept

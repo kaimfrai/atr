@@ -1,39 +1,42 @@
 export module Meta.Arithmetic:Integer;
 
-import Meta.Bit.ByteSize;
-import Meta.Size;
+import Meta.Bit.Count;
+import Meta.Byte.Count;
+
 import Std;
 
 template
-	<	::Meta::USize
-			t_nBitCount
+	<	auto
+			t_nCount
 	>
-struct
-	BitCount
-{};
+auto constexpr
+(	UInt
+)	(	::Meta::Bit::Count<t_nCount>
+	)
+=	delete;
 
 auto constexpr
 (	UInt
-)	(	BitCount<8uz>
+)	(	::Meta::Byte::Count<sizeof(::std::uint_least8_t)>
 	)
 ->	::std::uint_least8_t
 ;
 
 auto constexpr
 (	UInt
-)	(	BitCount<16uz>
+)	(	::Meta::Byte::Count<sizeof(::std::uint_least16_t)>
 	)
 ->	::std::uint_least16_t
 ;
 auto constexpr
 (	UInt
-)	(	BitCount<32uz>
+)	(	::Meta::Byte::Count<sizeof(::std::uint_least32_t)>
 	)
 ->	::std::uint_least32_t
 ;
 auto constexpr
 (	UInt
-)	(	BitCount<64uz>
+)	(	::Meta::Byte::Count<sizeof(::std::uint_least64_t)>
 	)
 ->	::std::uint_least64_t
 ;
@@ -41,7 +44,7 @@ auto constexpr
 #ifdef __GNUG__
 auto constexpr
 (	UInt
-)	(	BitCount<128uz>
+)	(	::Meta::Byte::Count<sizeof(unsigned __int128)>
 	)
 ->	unsigned __int128
 ;
@@ -50,28 +53,38 @@ using UIntMax = unsigned __int128;
 using UIntMax = ::std::uintmax_t;
 #endif
 
+template
+	<	auto
+			t_nCount
+	>
 auto constexpr
 (	SInt
-)	(	BitCount<8uz>
+)	(	::Meta::Bit::Count<t_nCount>
+	)
+=	delete;
+
+auto constexpr
+(	SInt
+)	(	::Meta::Byte::Count<sizeof(::std::int_least8_t)>
 	)
 ->	::std::int_least8_t
 ;
 
 auto constexpr
 (	SInt
-)	(	BitCount<16uz>
+)	(	::Meta::Byte::Count<sizeof(::std::int_least16_t)>
 	)
 ->	::std::int_least16_t
 ;
 auto constexpr
 (	SInt
-)	(	BitCount<32uz>
+)	(	::Meta::Byte::Count<sizeof(::std::int_least32_t)>
 	)
 ->	::std::int_least32_t
 ;
 auto constexpr
 (	SInt
-)	(	BitCount<64uz>
+)	(	::Meta::Byte::Count<sizeof(::std::int_least64_t)>
 	)
 ->	::std::int_least64_t
 ;
@@ -79,7 +92,7 @@ auto constexpr
 #ifdef __GNUG__
 auto constexpr
 (	SInt
-)	(	BitCount<128uz>
+)	(	::Meta::Byte::Count<sizeof(__int128)>
 	)
 ->	__int128
 ;
@@ -92,15 +105,15 @@ export namespace
 	Meta
 {
 	template
-		<	USize
-				t_nBitCount
+		<	Bits
+				t_nBits
 		>
 	using
 		UInt
 	=	decltype
 		(	::UInt
-			(	::BitCount
-				<	std::bit_ceil(t_nBitCount / Bit::ByteSize + (0uz != t_nBitCount % Bit::ByteSize)) * Bit::ByteSize
+			(	Byte::Count
+				<	Bytes(t_nBits).Ceil().get()
 				>{}
 			)
 		)
@@ -112,15 +125,15 @@ export namespace
 	;
 
 	template
-		<	USize
-				t_nBitCount
+		<	Bits
+				t_nBits
 		>
 	using
 		SInt
 	=	decltype
 		(	::SInt
-			(	::BitCount
-				<	std::bit_ceil(t_nBitCount / Bit::ByteSize + (0uz != t_nBitCount % Bit::ByteSize)) * Bit::ByteSize
+			(	Byte::Count
+				<	Bytes(t_nBits).Ceil().get()
 				>{}
 			)
 		)

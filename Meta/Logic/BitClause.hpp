@@ -8,6 +8,8 @@ import Meta.Bit.ByteSize;
 import Meta.Bit.Test;
 import Meta.Bit.Width;
 import Meta.Bit.Field;
+import Meta.Bit.Count;
+import Meta.Bit.Set;
 
 import Std;
 
@@ -29,23 +31,23 @@ export namespace
 	struct
 		BitClause final
 	{
-		using FieldType = UInt<LiteralLimit>;
-		static_assert(sizeof(FieldType) * Bit::ByteSize == LiteralLimit);
+		using FieldType = UInt<Bits{LiteralLimit}>;
+		static_assert((Bit::ByteSize * sizeof(FieldType)).get() == LiteralLimit);
 
 		static auto constexpr
 		(	BitIndexToField
-		)	(	USize
+		)	(	Bits
 					i_nAbsoluteIndex
 			)
 		->	FieldType
 		{
-			if	(i_nAbsoluteIndex >= LiteralLimit)
+			if	(i_nAbsoluteIndex.get() >= LiteralLimit)
 				((void)"Index to large to convert to a bit field!", std::unreachable());
 			return
 			static_cast<FieldType>
-			(	1uz
-			<<	i_nAbsoluteIndex
-			);
+			(Bit::PowerField
+			(	i_nAbsoluteIndex
+			).Value);
 		}
 
 		FieldType Positive;
@@ -69,7 +71,7 @@ export namespace
 		(	BitClause
 		)	()
 		:	Positive
-			{	SetOnes(LiteralLimit).Value
+			{	SetOnes(Bits{LiteralLimit}).Value
 			}
 		,	Negative
 			{	Positive
@@ -78,7 +80,7 @@ export namespace
 
 		explicit(true) constexpr
 		(	BitClause
-		)	(	USize
+		)	(	Bits
 					i_nPositive
 			)
 		:	Positive
@@ -128,7 +130,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	Permutation
-		)	(	::std::span<USize const>
+		)	(	::std::span<Bits const>
 					i_vPermutation
 			)	const
 		->	BitClause
@@ -141,10 +143,10 @@ export namespace
 			=	Absorbing()
 			;
 
-			for	(	USize
+			for	(	Bits
 						nAbsoluteIndex
-					=	0uz
-				;		nAbsoluteIndex
+					{}
+				;		nAbsoluteIndex.get()
 					<	i_vPermutation.size()
 				;	++	nAbsoluteIndex
 				)
@@ -152,14 +154,14 @@ export namespace
 				if	(TestPositive(nAbsoluteIndex))
 					(	vResult.Positive
 					|=	BitIndexToField
-						(	i_vPermutation[nAbsoluteIndex]
+						(	i_vPermutation[nAbsoluteIndex.get()]
 						)
 					);
 				else
 				if	(TestNegative(nAbsoluteIndex))
 					(	vResult.Negative
 					|=	BitIndexToField
-						(	i_vPermutation[nAbsoluteIndex]
+						(	i_vPermutation[nAbsoluteIndex.get()]
 						)
 					);
 			}
@@ -195,21 +197,24 @@ export namespace
 		auto constexpr
 		(	LiteralCount
 		)	()	const
+			noexcept
 		->	USize
 		{
 			if	(IsIdentity())
 				return 0uz;
 
 			return
-			CountOnes
-			(	LiteralField()
-			);
+				CountOnes
+				(	LiteralField()
+				)
+			.	get()
+			;
 		}
 
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	USize
+		)	(	Bits
 					i_nRelativeIndex
 			)	const
 			noexcept
@@ -407,7 +412,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	TestPositive
-		)	(	USize
+		)	(	Bits
 					i_nAbsoluteIndex
 			)	const
 			noexcept
@@ -422,7 +427,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	TestNegative
-		)	(	USize
+		)	(	Bits
 					i_nAbsoluteIndex
 			)	const
 			noexcept
@@ -468,11 +473,11 @@ export namespace
 				=	Absorbing()
 				;
 
-				for	(	USize
+				for	(	Bits
 							nAbsoluteIndex
-						=	0uz
-					,		nPermutation
-						=	0uz
+						{}
+						,	nPermutation
+						{}
 					;		nAbsoluteIndex
 						<	nMaxLiteralCount
 					;	++	nAbsoluteIndex

@@ -1,7 +1,7 @@
 export module Meta.Bit.SetOnes;
 
+import Meta.Bit.Count;
 import Meta.Bit.Field;
-import Meta.Size;
 
 export namespace
 	Meta::Bit
@@ -9,7 +9,7 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	SetOnes
-	)	(	USize
+	)	(	Bits
 				i_nBitCount
 		)
 		noexcept
@@ -17,7 +17,7 @@ export namespace
 	{	return
 		{	compl
 			(	compl 0uz
-			<<	i_nBitCount
+			<<	i_nBitCount.get()
 			)
 		};
 	}

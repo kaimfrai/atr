@@ -1,8 +1,11 @@
 export module Meta.Bit.Log;
 
+import Meta.Bit.Count;
 import Meta.Size;
 
 import Std;
+
+using ::Meta::Literals::operator""_bits;
 
 export namespace
 	Meta::Bit
@@ -10,19 +13,21 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	Log
-	)	(	USize
+	)	(	Bits
 				i_nArgument
 		)
 		noexcept
-	->	USize
+	->	Bits
 	{
-		if (i_nArgument == 0uz)
+		if (i_nArgument == 0_bits)
 			::std::unreachable();
 		return
-			static_cast<USize>
-			(	::std::bit_width(i_nArgument)
+		{	static_cast<USize>
+			(	::std::bit_width
+				(	i_nArgument.get()
+				)
 			)
 		-	1uz
-		;
+		};
 	}
 }

@@ -1,5 +1,6 @@
 export module Meta.Bit.Set;
 
+import Meta.Bit.Count;
 import Meta.Bit.Field;
 import Meta.Bit.Power;
 
@@ -11,7 +12,7 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	PowerField
-	)	(	USize
+	)	(	Bits
 				i_nIndex
 		)
 		noexcept
@@ -28,7 +29,7 @@ export namespace
 	(	Set
 	)	(	Field
 				i_nField
-		,	USize
+		,	Bits
 				i_nIndex
 		)
 		noexcept

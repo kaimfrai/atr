@@ -4,12 +4,16 @@ import Meta.Size;
 import Meta.Arithmetic;
 import Meta.Bit.ByteSize;
 import Meta.Bit.Log;
+import Meta.Bit.Count;
+import Meta.Byte.Count;
 
 import Std;
 
 using ::Meta::UInt;
 using ::Meta::UIntMax;
 using ::Meta::USize;
+
+using ::Meta::Literals::operator""_bits;
 
 export namespace
 	ATR::Bit
@@ -26,7 +30,7 @@ export namespace
 	enum class
 		ESize
 	:	UInt
-		<	1uz
+		<	1_bits
 		+	Meta::Bit::Log
 			(	::Meta::Bit::ByteSize
 			*	sizeof(UIntMax)
@@ -47,13 +51,15 @@ export namespace
 		)
 	->	USize
 	{	return
-		(	(	static_cast<USize>(i_nSize)
-			*	i_nExtent
-			+	static_cast<USize>(i_nOffset)
-			+	(::Meta::Bit::ByteSize - 1uz)
+			Meta::Bytes
+			(	Meta::Bits
+				{	static_cast<USize>(i_nSize)
+				*	i_nExtent
+				+	static_cast<USize>(i_nOffset)
+				}
 			)
-		/	 ::Meta::Bit::ByteSize
-		);
+		.	get()
+		;
 	}
 
 	template

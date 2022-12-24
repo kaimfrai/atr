@@ -1,5 +1,6 @@
 export module Meta.Bit.CountOnes;
 
+import Meta.Bit.Count;
 import Meta.Bit.Field;
 import Meta.Size;
 
@@ -15,12 +16,14 @@ export namespace
 				i_nField
 		)
 		noexcept
-	->	USize
+	->	Bits
 	{	return
-		static_cast<USize>
-		(	::std::popcount
-			(	i_nField.Value
+		Bits
+		{	static_cast<USize>
+			(	::std::popcount
+				(	i_nField.Value
+				)
 			)
-		);
+		};
 	}
 }

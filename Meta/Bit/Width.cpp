@@ -1,5 +1,6 @@
 export module Meta.Bit.Width;
 
+import Meta.Bit.Count;
 import Meta.Bit.Field;
 import Meta.Size;
 
@@ -15,12 +16,13 @@ export namespace
 				i_nField
 		)
 		noexcept
-	->	USize
+	->	Bits
 	{	return
-		static_cast<USize>
-		(	::std::bit_width
-			(	i_nField.Value
+		{	static_cast<USize>
+			(	::std::bit_width
+				(	i_nField.Value
+				)
 			)
-		);
+		};
 	}
 }

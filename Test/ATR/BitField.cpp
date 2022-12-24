@@ -1,8 +1,11 @@
 import ATR;
 
+import Meta.Bit.Count;
 import Meta.Arithmetic;
 
 import Std;
+
+using ::Meta::Literals::operator""_bits;
 
 namespace ATR
 {
@@ -131,7 +134,7 @@ static_assert
 			[	"2BitField31"_ID
 			]
 		)
-	,	UInt<31uz>
+	,	UInt<31_bits>
 	>
 );
 
@@ -142,7 +145,7 @@ static_assert
 			[	"2BitField31"_ID
 			]
 		)
-	,	UInt<31uz>
+	,	UInt<31_bits>
 	>
 );
 
@@ -175,6 +178,6 @@ static_assert
 			[	"3MutBitField31"_ID
 			]
 		)
-	,	UInt<31uz>
+	,	UInt<31_bits>
 	>
 );
