@@ -329,7 +329,7 @@ export namespace
 		(	operator""_ext
 		)	()
 		->	::Meta::Token::Extent
-			<	::Meta::EvaluateNumericLiteral
+			<	::Meta::Arithmetic::EvaluateNumericLiteral
 				<	t_npNumeric
 					...
 				>()

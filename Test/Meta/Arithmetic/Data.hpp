@@ -65,4 +65,4 @@ export template
 auto constexpr
 (	operator""_Test
 )	()
-{	return Meta::EvaluateNumericLiteral<t_npNumeric...>();	}
+{	return Meta::Arithmetic::EvaluateNumericLiteral<t_npNumeric...>();	}
