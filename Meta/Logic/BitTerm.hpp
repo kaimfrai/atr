@@ -5,7 +5,6 @@ export import :BitClauseIterator;
 import :Optimizer;
 
 import Meta.Size;
-import Meta.Arithmetic;
 import Meta.Bit.CountOnes;
 import Meta.Bit.Width;
 import Meta.Bit.Test;

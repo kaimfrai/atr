@@ -1,11 +1,11 @@
 import ATR;
 
 import Meta.Bit.Count;
-import Meta.Arithmetic;
+import Meta.Arithmetic.Integer;
 
 import Std;
 
-using ::Meta::Literals::operator""_bits;
+using namespace ::Meta::Literals;
 
 namespace ATR
 {
@@ -21,12 +21,12 @@ namespace ATR
 		>
 	+	Member
 		<	"2BitField31"
-		,	BitField<31>
+		,	BitField<31_bits>
 		>
 	+	Member
 		<	"3MutBitField31"
 		,	Mut
-			<	BitField<31>
+			<	BitField<31_bits>
 			>
 		>
 	>	extern

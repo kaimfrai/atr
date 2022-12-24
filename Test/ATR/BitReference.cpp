@@ -1,10 +1,10 @@
 import ATR;
 
 import Meta.Size;
-import Meta.Arithmetic;
 import Meta.Bit.ByteSize;
 import Meta.Bit.SetOnes;
 import Meta.Bit.Count;
+import Meta.Arithmetic.Integer;
 
 import Std;
 

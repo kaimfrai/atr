@@ -3,12 +3,12 @@ export module ATR:Layout.Bit.Access;
 import :Layout.Bit.Types;
 
 import Meta.Size;
-import Meta.Arithmetic;
 import Meta.Byte.ReadBuffer;
 import Meta.Byte.WriteBuffer;
 import Meta.Bit.ByteSize;
 import Meta.Bit.SetOnes;
 import Meta.Bit.Count;
+import Meta.Arithmetic.Integer;
 
 import Std;
 

@@ -1,9 +1,9 @@
 import ATR;
 
-import Meta.Arithmetic;
 import Meta.Size;
 import Meta.Bit.SetOnes;
 import Meta.Bit.Count;
+import Meta.Arithmetic.Integer;
 import Std;
 
 using ::ATR::Bit::EOffset;

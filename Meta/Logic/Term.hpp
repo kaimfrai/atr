@@ -4,7 +4,6 @@ export import :BitTerm;
 export import :LiteralBase;
 
 import Meta.Size;
-import Meta.Arithmetic;
 import Meta.Buffer.Static;
 export import Meta.Token;
 import Meta.Functional;

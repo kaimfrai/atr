@@ -16,6 +16,8 @@ using ::Meta::Sequence;
 using ::Meta::IndexToken;
 using ::Meta::USize;
 
+using namespace ::Meta::Literals;
+
 template
 	<	USize
 			t_nSize
@@ -80,7 +82,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1>
+	,	BitField<1_bits>
 	,	t_tName
 	>
 ;
@@ -97,7 +99,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1> const
+	,	BitField<1_bits> const
 	,	t_tName
 	>
 ;
@@ -114,7 +116,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1> volatile
+	,	BitField<1_bits> volatile
 	,	t_tName
 	>
 ;
@@ -131,7 +133,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1> const volatile
+	,	BitField<1_bits> const volatile
 	,	t_tName
 	>
 ;
@@ -148,7 +150,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	Mut<BitField<1>>
+	,	Mut<BitField<1_bits>>
 	,	t_tName
 	>
 ;
@@ -165,7 +167,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	Mut<BitField<1> volatile>
+	,	Mut<BitField<1_bits> volatile>
 	,	t_tName
 	>
 ;
@@ -184,7 +186,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1>[t_nExtent]
+	,	BitField<1_bits>[t_nExtent]
 	,	t_tName
 	>
 ;
@@ -203,7 +205,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1> const[t_nExtent]
+	,	BitField<1_bits> const[t_nExtent]
 	,	t_tName
 	>
 ;
@@ -222,7 +224,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1> volatile[t_nExtent]
+	,	BitField<1_bits> volatile[t_nExtent]
 	,	t_tName
 	>
 ;
@@ -241,7 +243,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1> const volatile[t_nExtent]
+	,	BitField<1_bits> const volatile[t_nExtent]
 	,	t_tName
 	>
 ;
@@ -260,7 +262,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	Mut<BitField<1>[t_nExtent]>
+	,	Mut<BitField<1_bits>[t_nExtent]>
 	,	t_tName
 	>
 ;
@@ -279,7 +281,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	Mut<BitField<1> volatile[t_nExtent]>
+	,	Mut<BitField<1_bits> volatile[t_nExtent]>
 	,	t_tName
 	>
 ;

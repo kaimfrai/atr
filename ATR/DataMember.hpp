@@ -5,8 +5,8 @@ export import Meta.Data;
 export import Meta.Predicate;
 export import Meta.Token;
 import Meta.Size;
-import Meta.Arithmetic;
 import Meta.Functional;
+import Meta.Arithmetic.Literals;
 
 export import Std;
 

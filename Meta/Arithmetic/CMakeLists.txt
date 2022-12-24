@@ -1,6 +1,4 @@
-add_module(
-	Arithmetic.hpp
-
-	Integer.hpp
-	Literals.hpp
+add_single_file_modules(
+	Integer.cpp
+	Literals.cpp
 )

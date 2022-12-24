@@ -1,8 +1,10 @@
 export module Meta.Token:Specifier;
 
 import Meta.Size;
-import Meta.Arithmetic;
 import Meta.Bit.Count;
+import Meta.Byte.Buffer;
+
+import Std;
 
 export namespace
 	Meta::Specifier
@@ -32,12 +34,12 @@ export namespace
 	;
 
 	template
-		<	USize
+		<	Bits
 				t_nSize
 		>
 	struct
 		BitField final
 	{
-		UInt<Bits{t_nSize}> Entity : t_nSize;
+		Byte::Buffer<t_nSize> Entity;
 	};
 }

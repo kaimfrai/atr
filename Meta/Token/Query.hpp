@@ -3,6 +3,7 @@ export module Meta.Token:Query;
 export import :Specifier;
 export import :Type;
 
+import Meta.Bit.Count;
 import Meta.Bit.ByteSize;
 import Meta.Size;
 
@@ -133,7 +134,7 @@ export namespace
 		{	return operator()(Type<t_tMutable>);	}
 
 		template
-			<	USize
+			<	Bits
 					t_nSize
 			>
 		auto constexpr
@@ -224,7 +225,7 @@ export namespace
 		{	return operator()(Type<t_tMutable>);	}
 
 		template
-			<	USize
+			<	Bits
 					t_nSize
 			>
 		auto constexpr
@@ -232,7 +233,7 @@ export namespace
 		)	(	TypeToken<Specifier::BitField<t_nSize>>
 			)	const
 		->	USize
-		{	return t_nSize;	}
+		{	return t_nSize.get();	}
 
 		template
 			<	typename

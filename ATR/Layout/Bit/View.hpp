@@ -8,7 +8,6 @@ import :Layout.Bit.Reference;
 import :Layout.Bit.Types;
 
 import Meta.Size;
-import Meta.Arithmetic;
 import Meta.Bit.ByteSize;
 
 import Std;
