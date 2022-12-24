@@ -72,12 +72,14 @@ struct
 	,	t_nParsed
 	>
 {
+	[[nodiscard]]
 	friend auto constexpr
-	(	operator<<
+	(	operator <<
 	)	(	t_t1DerivedParser<t_nRadix,	t_vpDerivedParserArgument...>
 				i_vParser
 		,	BasicCharacter<t_nCharacter>
 		)
+		noexcept
 	{	return i_vParser.Append(t_nParsed);	}
 };
 
@@ -110,12 +112,14 @@ struct
 ,	ParseItem<t_tDerivedParser, 'F', 0xFull>
 ,	ParseItem<t_tDerivedParser, 'f', 0xFull>
 {
+	[[nodiscard]]
 	friend auto constexpr
 	(	operator<<
 	)	(	t_tDerivedParser
 				i_vParser
 		,	BasicCharacter<'\''>
 		)
+		noexcept
 	{	return i_vParser;	}
 };
 
@@ -150,11 +154,13 @@ struct
 	=	0ull
 	;
 
+	[[nodiscard]]
 	auto constexpr
 	(	Append
 	)	(	unsigned long long
 				i_nParsed
 		)	const
+		noexcept
 	->	ExponentParser
 	{	return
 		{	.Numerator = Numerator
@@ -163,8 +169,9 @@ struct
 		};
 	}
 
+	[[nodiscard]]
 	friend auto constexpr
-	(	operator<<
+	(	operator <<
 	)	(	ExponentParser
 				i_vParser
 		,	BasicCharacter<'+'>
@@ -172,12 +179,14 @@ struct
 	->	ExponentParser
 	{	return i_vParser;	}
 
+	[[nodiscard]]
 	friend auto constexpr
-	(	operator<<
+	(	operator <<
 	)	(	ExponentParser
 				i_vParser
 		,	BasicCharacter<'-'>
 		)
+		noexcept
 	->	ExponentParser
 		<	t_nRadix
 		,	t_nBase
@@ -191,11 +200,13 @@ struct
 		};
 	}
 
+	[[nodiscard]]
 	friend auto constexpr
 	(	Evaluate
 	)	(	ExponentParser
 				i_vParser
 		)
+		noexcept
 	->	long double
 	{
 		unsigned long long const
@@ -238,12 +249,14 @@ struct
 	<	t_tDerivedParser
 	>
 {
+	[[nodiscard]]
 	friend auto constexpr
 	(	operator<<
 	)	(	t_tDerivedParser
 				i_vParser
 		,	BasicCharacter<'E'>
 		)
+		noexcept
 	->	ExponentParser<Decimal, Decimal>
 	{	return
 		{	.Numerator = i_vParser.Numerator
@@ -251,12 +264,14 @@ struct
 		};
 	}
 
+	[[nodiscard]]
 	friend auto constexpr
 	(	operator<<
 	)	(	t_tDerivedParser
 				i_vParser
 		,	BasicCharacter<'e'>
 		)
+		noexcept
 	->	ExponentParser<Decimal, Decimal>
 	{	return
 		{	.Numerator = i_vParser.Numerator
@@ -284,12 +299,14 @@ struct
 		>
 	>
 {
+	[[nodiscard]]
 	friend auto constexpr
-	(	operator<<
+	(	operator <<
 	)	(	t_t1DerivedParser<Hexadecimal>
 				i_vParser
 		,	BasicCharacter<'P'>
 		)
+		noexcept
 		//	radix for hexadecimal exponent is decimal
 		//	base for hexadecimal exponent is binary
 	->	ExponentParser<Decimal, Binary>
@@ -299,12 +316,14 @@ struct
 		};
 	}
 
+	[[nodiscard]]
 	friend auto constexpr
-	(	operator<<
+	(	operator <<
 	)	(	t_t1DerivedParser<Hexadecimal>
 				i_vParser
 		,	BasicCharacter<'p'>
 		)
+		noexcept
 		//	radix for hexadecimal exponent is decimal
 		//	base for hexadecimal exponent is binary
 	->	ExponentParser<Decimal, Binary>
@@ -334,11 +353,13 @@ struct
 		Denominator
 	;
 
+	[[nodiscard]]
 	auto constexpr
 	(	Append
 	)	(	unsigned long long
 				i_nParsed
 		)	const
+		noexcept
 	->	FloatParser
 	{	return
 		{	.Numerator = Numerator * t_nRadix + i_nParsed
@@ -346,11 +367,13 @@ struct
 		};
 	}
 
+	[[nodiscard]]
 	friend auto constexpr
 	(	Evaluate
 	)	(	FloatParser
 				i_vParser
 		)
+		noexcept
 	->	long double
 	{	return
 		(	static_cast<long double>
@@ -384,23 +407,27 @@ struct
 	=	1ull
 	;
 
+	[[nodiscard]]
 	auto constexpr
 	(	Append
 	)	(	unsigned long long
 				i_nParsed
 		)	const
+		noexcept
 	->	IntegerParser
 	{	return
 		{	.Numerator = Numerator * t_nRadix + i_nParsed
 		};
 	}
 
+	[[nodiscard]]
 	friend auto constexpr
-	(	operator<<
+	(	operator <<
 	)	(	IntegerParser
 				i_vParser
 		,	BasicCharacter<'.'>
 		)
+		noexcept
 	->	FloatParser<t_nRadix>
 	{	return
 		{	.Numerator = i_vParser.Numerator
@@ -408,11 +435,13 @@ struct
 		};
 	}
 
+	[[nodiscard]]
 	friend auto constexpr
 	(	Evaluate
 	)	(	IntegerParser
 				i_vParser
 		)
+		noexcept
 	->	unsigned long long
 	{	return i_vParser.Numerator;	}
 };
@@ -449,13 +478,15 @@ template
 	<	char
 		...	t_npBasicCharacter
 	>
+[[nodiscard]]
 auto constexpr
 (	ParseNumericLiteral
 )	(	BasicCharacter<t_npBasicCharacter>
 		...	i_vpNumeric
 	)
+	noexcept
 {	return
-	(	DecimalParser
+	(	::DecimalParser
 	<<	...
 	<<	i_vpNumeric
 	);
@@ -465,12 +496,14 @@ template
 	<	char
 		...	t_npBasicCharacter
 	>
+[[nodiscard]]
 auto constexpr
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
 	,	BasicCharacter<t_npBasicCharacter>
 		...	i_vpNumeric
 	)
+	noexcept
 /// leading 0 indicates octal integral unless there is a separator or exponent
 requires
 	(	...
@@ -480,7 +513,7 @@ requires
 		)
 	)
 {	return
-	(	OctalParser
+	(	::OctalParser
 	<<	...
 	<<	i_vpNumeric
 	);
@@ -490,6 +523,7 @@ template
 	<	char
 		...	t_npBasicCharacter
 	>
+[[nodiscard]]
 auto constexpr
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
@@ -497,8 +531,9 @@ auto constexpr
 	,	BasicCharacter<t_npBasicCharacter>
 		...	i_vpNumeric
 	)
+	noexcept
 {	return
-	(	HexadecimalParser
+	(	::HexadecimalParser
 	<<	...
 	<<	i_vpNumeric
 	);
@@ -508,6 +543,7 @@ template
 	<	char
 		...	t_npBasicCharacter
 	>
+[[nodiscard]]
 auto constexpr
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
@@ -515,6 +551,7 @@ auto constexpr
 	,	BasicCharacter<t_npBasicCharacter>
 		...	i_vpNumeric
 	)
+	noexcept
 {	return
 	(	HexadecimalParser
 	<<	...
@@ -526,6 +563,7 @@ template
 	<	char
 		...	t_npBasicCharacter
 	>
+[[nodiscard]]
 auto constexpr
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
@@ -533,6 +571,7 @@ auto constexpr
 	,	BasicCharacter<t_npBasicCharacter>
 		...	i_vpNumeric
 	)
+	noexcept
 {	return
 	(	BinaryParser
 	<<	...
@@ -544,6 +583,7 @@ template
 	<	char
 		...	t_npBasicCharacter
 	>
+[[nodiscard]]
 auto constexpr
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
@@ -551,6 +591,7 @@ auto constexpr
 	,	BasicCharacter<t_npBasicCharacter>
 		...	i_vpNumeric
 	)
+	noexcept
 {	return
 	(	BinaryParser
 	<<	...
@@ -559,18 +600,20 @@ auto constexpr
 }
 
 export namespace
-	Meta
+	Meta::Arithmetic
 {
 	template
 		<	char
 			...	t_npBasicCharacter
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	EvaluateNumericLiteral
 	)	()
+		noexcept
 	{	return
 		Evaluate
-		(	ParseNumericLiteral
+		(	::ParseNumericLiteral
 			(	BasicCharacter<t_npBasicCharacter>
 				{}
 				...
