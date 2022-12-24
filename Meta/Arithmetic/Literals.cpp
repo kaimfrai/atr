@@ -1,4 +1,4 @@
-export module Meta.Arithmetic:Literals;
+export module Meta.Arithmetic.Literals;
 
 import Meta.Math.Power;
 

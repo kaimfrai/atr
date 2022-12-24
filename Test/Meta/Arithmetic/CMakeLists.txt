@@ -3,6 +3,11 @@ add_module(
 )
 
 add_module_object_library(
+	Test.Meta.Literals.Integer
+	Integer.cpp
+)
+
+add_module_object_library(
 	Test.Meta.Literals.Integral
 	Integral.cpp
 )

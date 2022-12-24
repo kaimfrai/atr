@@ -6,7 +6,6 @@ import :Layout.Bit.Iterator;
 import :Layout.Bit.Types;
 
 import Meta.Size;
-import Meta.Arithmetic;
 import Meta.Token;
 import Meta.Bit.ByteSize;
 import Meta.Byte.AsBuffer;
@@ -394,14 +393,8 @@ export namespace
 				,	t_nOffset
 				,	t_nExtent
 				)
-			;	requires
-				{	typename
-					UInt
-					<	::Meta::Bit::ByteSize
-					*	nBufferSize
-					>;
-
-				}
+			;	nBufferSize
+			<=	sizeof(UIntMax)
 			)
 		{
 			auto const

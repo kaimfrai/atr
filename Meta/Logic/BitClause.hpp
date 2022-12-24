@@ -1,7 +1,6 @@
 export module Meta.Logic:BitClause;
 
 import Meta.Size;
-import Meta.Arithmetic;
 import Meta.Bit.CountOnes;
 import Meta.Bit.SetOnes;
 import Meta.Bit.ByteSize;
@@ -10,6 +9,7 @@ import Meta.Bit.Width;
 import Meta.Bit.Field;
 import Meta.Bit.Count;
 import Meta.Bit.Set;
+import Meta.Arithmetic.Integer;
 
 import Std;
 

@@ -1,8 +1,10 @@
 import ATR;
 
-import Meta.Arithmetic;
-
+import Meta.Arithmetic.Integer;
+import Meta.Bit.Count;
 import Std;
+
+using namespace ::Meta::Literals;
 
 namespace ATR
 {
@@ -34,15 +36,15 @@ namespace ATR
 		>
 	+	Member
 		<	"Field"
-		,	BitField<3>
+		,	BitField<3_bits>
 		>
 	+	Member
 		<	"FieldConst"
-		,	BitField<3> const
+		,	BitField<3_bits> const
 		>
 	+	Member
 		<	"FieldMut"
-		,	Mut<BitField<3>>
+		,	Mut<BitField<3_bits>>
 		>
 	+	Member
 		<	"ArrayBool"
@@ -59,15 +61,15 @@ namespace ATR
 
 	+	Member
 		<	"ArrayField"
-		,	BitField<3>[5]
+		,	BitField<3_bits>[5]
 		>
 	+	Member
 		<	"ArrayFieldConst"
-		,	BitField<3> const[5]
+		,	BitField<3_bits> const[5]
 		>
 	+	Member
 		<	"ArrayFieldMut"
-		,	Mut<BitField<3>[5]>
+		,	Mut<BitField<3_bits>[5]>
 		>
 	>	extern
 		LayoutConfig
@@ -339,7 +341,7 @@ static_assert
 		<	OffsetOfTest&
 		,	"Bool"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{4}, BitField<1>&>
+	,	ATR::Bit::MemberOffset<EOffset{4}, BitField<1_bits>&>
 	>
 );
 
@@ -349,7 +351,7 @@ static_assert
 		<	OffsetOfTest const&
 		,	"Bool"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{4}, BitField<1>>
+	,	ATR::Bit::MemberOffset<EOffset{4}, BitField<1_bits>>
 	>
 );
 
@@ -359,7 +361,7 @@ static_assert
 		<	OffsetOfTest&&
 		,	"Bool"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{4}, BitField<1>>
+	,	ATR::Bit::MemberOffset<EOffset{4}, BitField<1_bits>>
 	>
 );
 
@@ -370,7 +372,7 @@ static_assert
 		<	OffsetOfTest&
 		,	"BoolConst"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{5}, BitField<1>>
+	,	ATR::Bit::MemberOffset<EOffset{5}, BitField<1_bits>>
 	>
 );
 
@@ -380,7 +382,7 @@ static_assert
 		<	OffsetOfTest const&
 		,	"BoolConst"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{5}, BitField<1>>
+	,	ATR::Bit::MemberOffset<EOffset{5}, BitField<1_bits>>
 	>
 );
 
@@ -390,7 +392,7 @@ static_assert
 		<	OffsetOfTest&&
 		,	"BoolConst"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{5}, BitField<1>>
+	,	ATR::Bit::MemberOffset<EOffset{5}, BitField<1_bits>>
 	>
 );
 
@@ -401,7 +403,7 @@ static_assert
 		<	OffsetOfTest&
 		,	"BoolMut"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{6}, BitField<1>&>
+	,	ATR::Bit::MemberOffset<EOffset{6}, BitField<1_bits>&>
 	>
 );
 
@@ -411,7 +413,7 @@ static_assert
 		<	OffsetOfTest const&
 		,	"BoolMut"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{6}, BitField<1>&>
+	,	ATR::Bit::MemberOffset<EOffset{6}, BitField<1_bits>&>
 	>
 );
 
@@ -421,7 +423,7 @@ static_assert
 		<	OffsetOfTest&&
 		,	"BoolMut"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{6}, BitField<1>>
+	,	ATR::Bit::MemberOffset<EOffset{6}, BitField<1_bits>>
 	>
 );
 
@@ -429,7 +431,7 @@ static_assert
 (	::std::is_same_v
 	<	MemberType
 		<	::std::byte*
-		,	ATR::Bit::MemberOffset<EOffset{7}, BitField<1>&>
+		,	ATR::Bit::MemberOffset<EOffset{7}, BitField<1_bits>&>
 		>
 	,	ATR::Bit::Reference<ESize{1}, EOffset{7}>
 	>
@@ -439,7 +441,7 @@ static_assert
 (	::std::is_same_v
 	<	MemberType
 		<	::std::byte*
-		,	ATR::Bit::MemberOffset<EOffset{7}, BitField<1>>
+		,	ATR::Bit::MemberOffset<EOffset{7}, BitField<1_bits>>
 		>
 	,	bool
 	>
@@ -452,7 +454,7 @@ static_assert
 		<	OffsetOfTest&
 		,	"Field"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{7}, BitField<3>&>
+	,	ATR::Bit::MemberOffset<EOffset{7}, BitField<3_bits>&>
 	>
 );
 
@@ -462,7 +464,7 @@ static_assert
 		<	OffsetOfTest const&
 		,	"Field"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{7}, BitField<3>>
+	,	ATR::Bit::MemberOffset<EOffset{7}, BitField<3_bits>>
 	>
 );
 
@@ -472,7 +474,7 @@ static_assert
 		<	OffsetOfTest&&
 		,	"Field"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{7}, BitField<3>>
+	,	ATR::Bit::MemberOffset<EOffset{7}, BitField<3_bits>>
 	>
 );
 
@@ -482,7 +484,7 @@ static_assert
 		<	OffsetOfTest&
 		,	"FieldConst"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{2}, BitField<3>>
+	,	ATR::Bit::MemberOffset<EOffset{2}, BitField<3_bits>>
 	>
 );
 
@@ -492,7 +494,7 @@ static_assert
 		<	OffsetOfTest const&
 		,	"FieldConst"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{2}, BitField<3>>
+	,	ATR::Bit::MemberOffset<EOffset{2}, BitField<3_bits>>
 	>
 );
 
@@ -502,7 +504,7 @@ static_assert
 		<	OffsetOfTest&&
 		,	"FieldConst"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{2}, BitField<3>>
+	,	ATR::Bit::MemberOffset<EOffset{2}, BitField<3_bits>>
 	>
 );
 
@@ -512,7 +514,7 @@ static_assert
 		<	OffsetOfTest&
 		,	"FieldMut"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{5}, BitField<3>&>
+	,	ATR::Bit::MemberOffset<EOffset{5}, BitField<3_bits>&>
 	>
 );
 
@@ -522,7 +524,7 @@ static_assert
 		<	OffsetOfTest const&
 		,	"FieldMut"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{5}, BitField<3>&>
+	,	ATR::Bit::MemberOffset<EOffset{5}, BitField<3_bits>&>
 	>
 );
 
@@ -532,7 +534,7 @@ static_assert
 		<	OffsetOfTest&&
 		,	"FieldMut"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{5}, BitField<3>>
+	,	ATR::Bit::MemberOffset<EOffset{5}, BitField<3_bits>>
 	>
 );
 
@@ -542,7 +544,7 @@ static_assert
 		<	OffsetOfTest&
 		,	"ArrayBool"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{0}, BitField<1>(&)[5]>
+	,	ATR::Bit::MemberOffset<EOffset{0}, BitField<1_bits>(&)[5]>
 	>
 );
 
@@ -552,7 +554,7 @@ static_assert
 		<	OffsetOfTest const&
 		,	"ArrayBool"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{0}, BitField<1>[5]>
+	,	ATR::Bit::MemberOffset<EOffset{0}, BitField<1_bits>[5]>
 	>
 );
 
@@ -562,7 +564,7 @@ static_assert
 		<	OffsetOfTest&&
 		,	"ArrayBool"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{0}, BitField<1>[5]>
+	,	ATR::Bit::MemberOffset<EOffset{0}, BitField<1_bits>[5]>
 	>
 );
 
@@ -572,7 +574,7 @@ static_assert
 		<	OffsetOfTest&
 		,	"ArrayBoolConst"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{5}, BitField<1>[5]>
+	,	ATR::Bit::MemberOffset<EOffset{5}, BitField<1_bits>[5]>
 	>
 );
 
@@ -582,7 +584,7 @@ static_assert
 		<	OffsetOfTest const&
 		,	"ArrayBoolConst"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{5}, BitField<1>[5]>
+	,	ATR::Bit::MemberOffset<EOffset{5}, BitField<1_bits>[5]>
 	>
 );
 
@@ -592,7 +594,7 @@ static_assert
 		<	OffsetOfTest&&
 		,	"ArrayBoolConst"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{5}, BitField<1>[5]>
+	,	ATR::Bit::MemberOffset<EOffset{5}, BitField<1_bits>[5]>
 	>
 );
 
@@ -602,7 +604,7 @@ static_assert
 		<	OffsetOfTest&
 		,	"ArrayBoolMut"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{2}, BitField<1>(&)[5]>
+	,	ATR::Bit::MemberOffset<EOffset{2}, BitField<1_bits>(&)[5]>
 	>
 );
 
@@ -612,7 +614,7 @@ static_assert
 		<	OffsetOfTest const&
 		,	"ArrayBoolMut"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{2}, BitField<1>(&)[5]>
+	,	ATR::Bit::MemberOffset<EOffset{2}, BitField<1_bits>(&)[5]>
 	>
 );
 
@@ -622,7 +624,7 @@ static_assert
 		<	OffsetOfTest&&
 		,	"ArrayBoolMut"
 		>
-	,	ATR::Bit::MemberOffset<EOffset{2}, BitField<1>[5]>
+	,	ATR::Bit::MemberOffset<EOffset{2}, BitField<1_bits>[5]>
 	>
 );
 
@@ -631,7 +633,7 @@ static_assert
 (	::std::is_same_v
 	<	MemberType
 		<	::std::byte*
-		,	ATR::Bit::MemberOffset<EOffset{5}, BitField<1>(&)[5]>
+		,	ATR::Bit::MemberOffset<EOffset{5}, BitField<1_bits>(&)[5]>
 		>
 	,	ATR::Bit::ArrayReference<ESize{1}, 5, EOffset{5}>
 	>
@@ -641,7 +643,7 @@ static_assert
 (	::std::is_same_v
 	<	MemberType
 		<	::std::byte*
-		,	ATR::Bit::MemberOffset<EOffset{5}, BitField<1>[5]>
+		,	ATR::Bit::MemberOffset<EOffset{5}, BitField<1_bits>[5]>
 		>
 	,	ATR::Bit::ArrayValue<ESize{1}, 5>
 	>

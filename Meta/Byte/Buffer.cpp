@@ -1,20 +1,20 @@
 export module Meta.Byte.Buffer;
 
-import Meta.Size;
+import Meta.Byte.Count;
 import Std;
 
 export namespace
 	Meta::Byte
 {
 	template
-		<	USize
+		<	Bytes
 				t_nSize
 		>
 	using
 		Buffer
 	=	::std::array
 		<	::std::byte
-		,	t_nSize
+		,	t_nSize.get()
 		>
 	;
 
@@ -25,7 +25,9 @@ export namespace
 	using
 		BufferFor
 	=	Buffer
-		<	sizeof(t_tEntity)
+		<	Bytes
+			{	sizeof(t_tEntity)
+			}
 		>
 	;
 }

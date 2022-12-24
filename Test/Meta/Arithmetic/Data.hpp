@@ -1,7 +1,7 @@
 export module Test.Meta.Literals.Data;
 
+import Meta.Arithmetic.Literals;
 import Meta.Size;
-import Meta.Arithmetic;
 
 import Std;
 

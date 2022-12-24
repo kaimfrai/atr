@@ -1,11 +1,11 @@
 export module ATR:Layout.Bit.Types;
 
 import Meta.Size;
-import Meta.Arithmetic;
 import Meta.Bit.ByteSize;
 import Meta.Bit.Log;
 import Meta.Bit.Count;
 import Meta.Byte.Count;
+import Meta.Arithmetic.Integer;
 
 import Std;
 

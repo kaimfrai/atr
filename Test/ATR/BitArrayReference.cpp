@@ -1,8 +1,8 @@
 import ATR;
 
-import Meta.Arithmetic;
 import Meta.Size;
 import Meta.Bit.Count;
+import Meta.Arithmetic.Integer;
 
 import Std;
 

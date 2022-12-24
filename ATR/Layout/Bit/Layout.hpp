@@ -4,7 +4,6 @@ import :Layout.Bit.Types;
 
 import Meta.ID;
 import Meta.Size;
-import Meta.Arithmetic;
 
 import Std;
 
