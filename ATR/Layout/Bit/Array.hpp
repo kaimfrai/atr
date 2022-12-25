@@ -191,10 +191,10 @@ export namespace
 			<=	SizeOf<t_tTarget>
 			)
 		{
-			auto const
+			t_tTarget const
 				vField
 			=	::Meta::Byte::ReadBuffer
-				<	t_tTarget
+				<	SizeOf<t_tTarget>
 				,	BufferSize
 				>(	m_aUnderlyingArray.begin()
 				)
@@ -416,7 +416,7 @@ export namespace
 
 			return
 			::Meta::Byte::ReadBuffer
-			<	ArrayValue<t_nSize, t_nExtent>
+			<	::Meta::Bits{static_cast<USize>(t_nSize)} * t_nExtent
 			>(	begin(vAsBytes)
 			);
 		}

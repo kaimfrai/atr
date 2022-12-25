@@ -266,6 +266,64 @@ export namespace
 {
 	[[nodiscard]]
 	auto constexpr
+	(	operator <<
+	)	(	std::integral auto
+				i_vLeft
+		,	Bits
+				i_vRight
+		)
+		noexcept
+	->	decltype(i_vLeft)
+	{	return
+		static_cast<decltype(i_vLeft)>
+		(	i_vLeft
+		<<	i_vRight.get()
+		);
+	}
+
+	[[nodiscard]]
+	auto constexpr
+	(	operator <<=
+	)	(	std::integral auto
+			&	i_rLeft
+		,	Bits
+				i_vRight
+		)
+		noexcept
+	->	decltype(i_rLeft)
+	{	return i_rLeft = i_rLeft << i_vRight;	}
+
+	[[nodiscard]]
+	auto constexpr
+	(	operator >>
+	)	(	std::integral auto
+				i_vLeft
+		,	Bits
+				i_vRight
+		)
+		noexcept
+	->	decltype(i_vLeft)
+	{	return
+		static_cast<decltype(i_vLeft)>
+		(	i_vLeft
+		>>	i_vRight.get()
+		);
+	}
+
+	[[nodiscard]]
+	auto constexpr
+	(	operator >>=
+	)	(	std::integral auto
+			&	i_rLeft
+		,	Bits
+				i_vRight
+		)
+		noexcept
+	->	decltype(i_rLeft)
+	{	return i_rLeft = i_rLeft >> i_vRight;	}
+
+	[[nodiscard]]
+	auto constexpr
 	(	operator ==
 	)	(	Bits
 				i_vLeft

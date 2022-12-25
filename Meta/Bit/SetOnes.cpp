@@ -6,6 +6,11 @@ import Meta.Bit.Field;
 export namespace
 	Meta::Bit
 {
+	template
+		<	typename
+				t_tField
+			=	Field
+		>
 	[[nodiscard]]
 	auto constexpr
 	(	SetOnes
@@ -13,12 +18,13 @@ export namespace
 				i_nBitCount
 		)
 		noexcept
-	->	Field
+	->	t_tField
 	{	return
-		{	compl
-			(	compl 0uz
-			<<	i_nBitCount.get()
+		t_tField
+		(	compl
+			(	compl t_tField{}
+			<<	i_nBitCount
 			)
-		};
+		);
 	}
 }
