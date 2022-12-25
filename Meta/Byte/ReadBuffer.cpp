@@ -1,6 +1,6 @@
 export module Meta.Byte.ReadBuffer;
 
-import Meta.Size;
+import Meta.Byte.Count;
 import Meta.Byte.Buffer;
 import Meta.Byte.AsObject;
 import Std;
@@ -17,23 +17,23 @@ export namespace
 	template
 		<	typename
 				t_tObject
-		,	USize
+		,	Bytes
 				t_nValueBytes
-			=	sizeof(t_tObject)
+			=	SizeOf<t_tObject>
 		>
 	[[nodiscard]]
 	auto constexpr
 	(	ReadBuffer
 	)	(	::std::byte const
 			*	i_aBytes
-		,	USize
+		,	Bytes
 				i_nActiveValueBytes
 			=	t_nValueBytes
 		)
 		noexcept
 	->	t_tObject
 	{
-		static_assert(t_nValueBytes <= sizeof(t_tObject));
+		static_assert(t_nValueBytes <= SizeOf<t_tObject>);
 
 		if (i_nActiveValueBytes > t_nValueBytes)
 			::std::unreachable();

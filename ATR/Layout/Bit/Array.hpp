@@ -60,7 +60,7 @@ export namespace
 
 		return
 		typename Array::iterator
-		{	::std::next(i_rArray.m_aUnderlyingArray, static_cast<SSize>(vByteOffset))
+		{	::std::next(&i_rArray.m_aUnderlyingArray[0uz], static_cast<SSize>(vByteOffset))
 		,	static_cast<Array::MaskType>(Array::ZeroOffsetMask.Value << vBitOffset)
 		};
 	}
@@ -149,10 +149,10 @@ export namespace
 			m_aUnderlyingArray
 		;
 
-		using reference = ElementReference<::std::remove_pointer_t<decltype(+m_aUnderlyingArray)>, t_nSize, MaximumOffset>;
+		using reference = ElementReference<::std::remove_reference_t<decltype(m_aUnderlyingArray[0uz])>, t_nSize, MaximumOffset>;
 		using difference_type = SSize;
 		using value_type = typename BitAccess::FieldType;
-		using iterator = Iterator<::std::remove_pointer_t<decltype(+m_aUnderlyingArray)>, t_nSize, MaximumOffset>;
+		using iterator = Iterator<::std::remove_reference_t<decltype(m_aUnderlyingArray[0uz])>, t_nSize, MaximumOffset>;
 
 		auto constexpr
 		(	operator[]
@@ -188,7 +188,7 @@ export namespace
 		->	t_tTarget
 			requires
 			(	BufferSize
-			<=	sizeof(t_tTarget)
+			<=	SizeOf<t_tTarget>
 			)
 		{
 			auto const
@@ -196,7 +196,7 @@ export namespace
 			=	::Meta::Byte::ReadBuffer
 				<	t_tTarget
 				,	BufferSize
-				>(	m_aUnderlyingArray
+				>(	m_aUnderlyingArray.begin()
 				)
 			;
 			return
@@ -394,7 +394,7 @@ export namespace
 				,	t_nExtent
 				)
 			;	nBufferSize
-			<=	sizeof(UIntMax)
+			<=	SizeOf<UIntMax>
 			)
 		{
 			auto const

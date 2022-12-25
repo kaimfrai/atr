@@ -1,6 +1,6 @@
 export module Meta.Byte.WriteBuffer;
 
-import Meta.Size;
+import Meta.Byte.Count;
 import Meta.Byte.AsBuffer;
 import Std;
 
@@ -16,9 +16,9 @@ export namespace
 	template
 		<	typename
 				t_tObject
-		,	USize
+		,	Bytes
 				t_nValueBytes
-			=	sizeof(t_tObject)
+			=	SizeOf<t_tObject>
 		>
 	auto constexpr
 	(	WriteBuffer
@@ -26,13 +26,13 @@ export namespace
 			&	i_rObject
 		,	::std::byte
 			*	o_aBytes
-		,	USize
+		,	Bytes
 				i_nActiveValueBytes
 			=	t_nValueBytes
 		)
 	->	::std::byte*
 	{
-		static_assert(t_nValueBytes <= sizeof(t_tObject));
+		static_assert(t_nValueBytes <= SizeOf<t_tObject>);
 
 		if (i_nActiveValueBytes > t_nValueBytes)
 			::std::unreachable();
