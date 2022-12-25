@@ -1,7 +1,8 @@
 export module Meta.Byte.WriteBuffer;
 
 import Meta.Byte.Count;
-import Meta.Byte.AsBuffer;
+import Meta.Byte.Copy;
+import Meta.Byte.Buffer;
 import Std;
 
 static_assert
@@ -14,15 +15,15 @@ export namespace
 	Meta::Byte
 {
 	template
-		<	typename
-				t_tObject
+		<	Bytes
+				t_nObjectBytes
 		,	Bytes
 				t_nValueBytes
-			=	SizeOf<t_tObject>
+			=	t_nObjectBytes
 		>
 	auto constexpr
 	(	WriteBuffer
-	)	(	t_tObject const
+	)	(	Copy<t_nObjectBytes> const
 			&	i_rObject
 		,	::std::byte
 			*	o_aBytes
@@ -30,25 +31,49 @@ export namespace
 				i_nActiveValueBytes
 			=	t_nValueBytes
 		)
+		noexcept
 	->	::std::byte*
 	{
-		static_assert(t_nValueBytes <= SizeOf<t_tObject>);
+		static_assert(t_nValueBytes <= t_nObjectBytes);
 
 		if (i_nActiveValueBytes > t_nValueBytes)
 			::std::unreachable();
 
-		auto const
-			vBuffer
-		=	AsBuffer
-			(	i_rObject
-			)
-		;
-
 		return
 		::std::copy
-		(	begin(vBuffer)
-		,	begin(vBuffer) + i_nActiveValueBytes
+		(	begin(i_rObject)
+		,	begin(i_rObject) + i_nActiveValueBytes
 		,	o_aBytes
 		);
+	}
+
+	template
+		<	Bytes
+				t_nValueBytes
+		,	Bytes
+				t_nObjectBytes
+		>
+	auto constexpr
+	(	WriteBuffer
+	)	(	Copy<t_nObjectBytes> const
+			&	i_rObject
+		,	Bytes
+				i_nActiveValueBytes
+			=	t_nValueBytes
+		)
+		noexcept
+	->	Buffer<t_nValueBytes>
+	{
+		Buffer<t_nValueBytes>
+			vBuffer
+		;
+		WriteBuffer
+		(	i_rObject
+		,	vBuffer.begin()
+		,	i_nActiveValueBytes
+		);
+		return
+			vBuffer
+		;
 	}
 }

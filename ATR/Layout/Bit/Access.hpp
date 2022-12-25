@@ -165,10 +165,10 @@ export namespace
 			if	(i_nMask == 0)
 				::std::unreachable();
 
-			auto
+			BufferFieldType
 				vBufferField
 			=	::Meta::Byte::ReadBuffer
-				<	BufferFieldType
+				<	::Meta::Byte::SizeOf<BufferFieldType>
 				,	BufferByteSize
 				>(	i_aBuffer
 				,	RealBufferSize(i_nMask)
@@ -199,11 +199,13 @@ export namespace
 			auto const
 				vBufferField
 			=	static_cast<BufferFieldType>
-				(	::Meta::Byte::ReadBuffer
-					<	BufferFieldType
-					,	BufferByteSize
-					>(	i_aBuffer
-					,	RealBufferSize(i_nMask)
+				(	static_cast<BufferFieldType>
+					(	::Meta::Byte::ReadBuffer
+						<	::Meta::Byte::SizeOf<BufferFieldType>
+						,	BufferByteSize
+						>(	i_aBuffer
+						,	RealBufferSize(i_nMask)
+						)
 					)
 				bitand
 					static_cast<BufferFieldType>
@@ -230,11 +232,13 @@ export namespace
 			};
 
 			::Meta::Byte::WriteBuffer
-			<	BufferFieldType
+			<	::Meta::Byte::SizeOf<BufferFieldType>
 			,	BufferByteSize
-			>(	vBufferField
-			bitor
-				vSetMask
+			>(	static_cast<BufferFieldType>
+				(	vBufferField
+				bitor
+					vSetMask
+				)
 			,	i_aBuffer
 			,	RealBufferSize(i_nMask)
 			);

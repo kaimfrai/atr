@@ -1,8 +1,7 @@
 export module Meta.Byte.ReadBuffer;
 
 import Meta.Byte.Count;
-import Meta.Byte.Buffer;
-import Meta.Byte.AsObject;
+import Meta.Byte.Copy;
 import Std;
 
 static_assert
@@ -15,11 +14,11 @@ export namespace
 	Meta::Byte
 {
 	template
-		<	typename
-				t_tObject
+		<	Bytes
+				t_nObjectBytes
 		,	Bytes
 				t_nValueBytes
-			=	SizeOf<t_tObject>
+			=	t_nObjectBytes
 		>
 	[[nodiscard]]
 	auto constexpr
@@ -31,14 +30,14 @@ export namespace
 			=	t_nValueBytes
 		)
 		noexcept
-	->	t_tObject
+	->	Copy<t_nObjectBytes>
 	{
-		static_assert(t_nValueBytes <= SizeOf<t_tObject>);
+		static_assert(t_nValueBytes <= t_nObjectBytes);
 
 		if (i_nActiveValueBytes > t_nValueBytes)
 			::std::unreachable();
 
-		BufferFor<t_tObject>
+		Copy<t_nObjectBytes>
 			vObject
 		;
 
@@ -54,8 +53,7 @@ export namespace
 		);
 
 		return
-		AsObject<t_tObject>
-		(	vObject
-		);
+			vObject
+		;
 	}
 }
