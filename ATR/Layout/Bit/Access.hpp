@@ -9,6 +9,7 @@ import Meta.Bit.ByteSize;
 import Meta.Bit.SetOnes;
 import Meta.Bit.Count;
 import Meta.Arithmetic.Integer;
+import Meta.Byte.Count;
 
 import Std;
 
@@ -16,6 +17,8 @@ using ::Meta::UInt;
 using ::Meta::UIntMax;
 using ::Meta::USize;
 using ::Meta::Bits;
+using ::Meta::Bytes;
+using ::Meta::Byte::SizeOf;
 
 static_assert
 (	::std::endian::native
@@ -57,14 +60,13 @@ export namespace
 
 		static_assert
 		(	BufferByteSize
-		<=	sizeof(USize)
+		<=	SizeOf<USize>
 		,	"Bit Buffers greater than USize not yet supported!"
 		);
 
-		static auto constexpr
+		static Bits constexpr
 			BufferBitSize
-		=	::Meta::Bit::ByteSize
-		*	BufferByteSize
+		=	BufferByteSize
 		;
 
 		static_assert
@@ -141,7 +143,7 @@ export namespace
 		)	(	BufferFieldType
 					i_nMask
 			)
-		->	USize
+		->	Bytes
 		{	return
 			BitFieldBufferSize
 			(	t_nSize

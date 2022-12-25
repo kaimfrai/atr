@@ -25,6 +25,61 @@ export namespace
 		::	digits
 		>
 	;
+
+	template
+		<	typename
+				t_tObject
+		>
+	using
+		Width
+	=	Count
+		<	sizeof(t_tObject)
+		>
+	;
+}
+
+export namespace
+	Meta::Bit
+{
+	template
+		<	typename
+				t_tObject
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	operator +
+	)	(	t_tObject
+			*	i_aObject
+		,	Byte::Width<t_tObject>
+				i_nOffset
+		)
+		noexcept
+	->	t_tObject*
+	{	return
+			i_aObject
+		+	i_nOffset.get()
+		;
+	}
+
+	template
+		<	typename
+				t_tObject
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	operator -
+	)	(	t_tObject
+			*	i_aObject
+		,	Byte::Width<t_tObject>
+				i_nOffset
+		)
+		noexcept
+	->	t_tObject*
+	{	return
+			i_aObject
+		-	i_nOffset.get()
+		;
+	}
 }
 
 export namespace
@@ -36,6 +91,19 @@ export namespace
 		<	1uz
 		>
 	;
+}
+
+export namespace
+	Meta::Byte
+{
+	template
+		<	typename
+				t_tObject
+		>
+	Bytes constexpr inline
+		SizeOf
+	{	sizeof(t_tObject)
+	};
 }
 
 export namespace

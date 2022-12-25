@@ -6,6 +6,7 @@ import Meta.Bit.Log;
 import Meta.Bit.Count;
 import Meta.Byte.Count;
 import Meta.Arithmetic.Integer;
+import Meta.Byte.Buffer;
 
 import Std;
 
@@ -13,7 +14,7 @@ using ::Meta::UInt;
 using ::Meta::UIntMax;
 using ::Meta::USize;
 
-using ::Meta::Literals::operator""_bits;
+using namespace ::Meta::Literals;
 
 export namespace
 	ATR::Bit
@@ -49,17 +50,15 @@ export namespace
 				i_nExtent
 			=	1uz
 		)
-	->	USize
+	->	Meta::Bytes
 	{	return
-			Meta::Bytes
-			(	Meta::Bits
-				{	static_cast<USize>(i_nSize)
-				*	i_nExtent
-				+	static_cast<USize>(i_nOffset)
-				}
-			)
-		.	get()
-		;
+		Meta::Bytes
+		(	Meta::Bits
+			{	static_cast<USize>(i_nSize)
+			*	i_nExtent
+			+	static_cast<USize>(i_nOffset)
+			}
+		);
 	}
 
 	template
@@ -74,12 +73,12 @@ export namespace
 		>
 	using
 		BitFieldBuffer
-	=	::std::byte
-		[	BitFieldBufferSize
+	=	::Meta::Byte::Buffer
+		<	BitFieldBufferSize
 			(	t_nSize
 			,	t_nOffset
 			,	t_nExtent
 			)
-		]
+		>
 	;
 }

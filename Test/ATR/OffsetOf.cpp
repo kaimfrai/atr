@@ -2,7 +2,19 @@ import ATR;
 
 import Meta.Arithmetic.Integer;
 import Meta.Bit.Count;
+import Meta.Byte.Count;
 import Std;
+
+using ::ATR::Bit::Reference;
+using ::Meta::Data::Aggregate;
+using ::Meta::Specifier::Mut;
+using ::Meta::Specifier::BitField;
+using ::Meta::UInt;
+using ::Meta::Byte::SizeOf;
+using ::Meta::Byte::Width;
+
+using ::ATR::Bit::EOffset;
+using ::ATR::Bit::ESize;
 
 using namespace ::Meta::Literals;
 
@@ -78,14 +90,6 @@ namespace ATR
 	;
 }
 
-using ::ATR::Bit::Reference;
-using ::Meta::Data::Aggregate;
-using ::Meta::Specifier::Mut;
-using ::Meta::Specifier::BitField;
-using ::Meta::UInt;
-
-using ::ATR::Bit::EOffset;
-using ::ATR::Bit::ESize;
 using OffsetOfTest = ::ATR::Type<"OffsetOfTest">;
 
 auto constexpr
@@ -94,15 +98,14 @@ auto constexpr
 ;
 
 static_assert
-(	sizeof(OffsetOfTest)
-==	(	3
-	+	(ExpectedBufferSize + (sizeof(int) - 1)) / sizeof(int)
+(	SizeOf<OffsetOfTest>
+==	(	Width<int>{3}
+	+	Width<int>(ExpectedBufferSize)
 	)
-*	sizeof(int)
 );
 
 static_assert
-(	sizeof(OffsetOfTest::DynamicLayout::SouthType::Buffer)
+(	SizeOf<decltype(OffsetOfTest::DynamicLayout::SouthType::Buffer)>
 ==	ExpectedBufferSize
 );
 
