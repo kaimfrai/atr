@@ -3,6 +3,7 @@ export module ATR:Layout.Bit.Access;
 import :Layout.Bit.Types;
 
 import Meta.Size;
+import Meta.Byte.OutSpan;
 import Meta.Byte.Buffer;
 import Meta.Bit.ByteSize;
 import Meta.Bit.SetOnes;
@@ -166,11 +167,11 @@ export namespace
 
 			BufferFieldType
 				vBufferField
-			{	::Meta::Byte::BufferFor<BufferFieldType>::template ReadBuffer
-				<	BufferByteSize
-				>(	i_aBuffer
-				,	RealBufferSize(i_nMask)
-				)
+			{	::Meta::Byte::BufferFor<BufferFieldType>
+				{	{	i_aBuffer
+					,	RealBufferSize(i_nMask)
+					}
+				}
 			};
 
 			vBufferField &= i_nMask;
@@ -198,11 +199,11 @@ export namespace
 				vBufferField
 			=	static_cast<BufferFieldType>
 				(	static_cast<BufferFieldType>
-					(	::Meta::Byte::BufferFor<BufferFieldType>::template ReadBuffer
-						<	BufferByteSize
-						>(	i_aBuffer
-						,	RealBufferSize(i_nMask)
-						)
+					(	::Meta::Byte::BufferFor<BufferFieldType>
+						{	{	i_aBuffer
+							,	RealBufferSize(i_nMask)
+							}
+						}
 					)
 				bitand
 					static_cast<BufferFieldType>
@@ -228,17 +229,18 @@ export namespace
 				)
 			};
 
-			::Meta::Byte::Buffer
-			{	static_cast<BufferFieldType>
-				(	vBufferField
-				bitor
-					vSetMask
-				)
-			}.template WriteBuffer
-			<	BufferByteSize
-			>(	i_aBuffer
-			,	RealBufferSize(i_nMask)
-			);
+				::Meta::Byte::OutSpan
+				{	i_aBuffer
+				,	RealBufferSize(i_nMask)
+				}
+			=	::Meta::Byte::Buffer
+				{	static_cast<BufferFieldType>
+					(	vBufferField
+					bitor
+						vSetMask
+					)
+				}
+			;
 		}
 	};
 }
