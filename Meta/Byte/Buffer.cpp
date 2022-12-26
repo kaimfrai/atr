@@ -1,13 +1,9 @@
 export module Meta.Byte.Buffer;
 
+import Meta.Byte.OutSpan;
+import Meta.Byte.InSpan;
 import Meta.Byte.Count;
 import Std;
-
-static_assert
-(	::std::endian::native
-==	::std::endian::little
-,	"Big Endian not yet supported for Meta::Byte::Buffer!"
-);
 
 export namespace
 	Meta::Byte
@@ -23,137 +19,6 @@ export namespace
 			m_vValue
 		[	t_nSize.get()
 		];
-
-		template
-			<	Bytes
-					t_nValueBytes
-				=	t_nSize
-			>
-		[[nodiscard]]
-		static auto constexpr
-		(	ReadBuffer
-		)	(	::std::byte const
-				*	i_aBytes
-			,	Bytes
-					i_nActiveValueBytes
-				=	t_nValueBytes
-			)
-			noexcept
-		->	Buffer<t_nSize>
-		{
-			static_assert(t_nValueBytes <= t_nSize);
-
-			if (i_nActiveValueBytes > t_nValueBytes)
-				::std::unreachable();
-
-			Buffer<t_nSize>
-				vObject
-			;
-
-			::std::copy
-			(	i_aBytes
-			,	i_aBytes + i_nActiveValueBytes
-			,	begin(vObject)
-			);
-			::std::fill
-			(	begin(vObject) + i_nActiveValueBytes
-			,	end(vObject)
-			,	::std::byte{}
-			);
-
-			return
-				vObject
-			;
-		}
-
-		template
-			<	Bytes
-					t_nObjectBytes
-			>
-		[[nodiscard]]
-		auto constexpr
-		(	ReadBuffer
-		)	(	Bytes
-					i_nActiveValueBytes
-				=	t_nSize
-			)	const
-			noexcept
-		->	Buffer<t_nObjectBytes>
-		{
-			if	constexpr(t_nObjectBytes == t_nSize)
-				return *this;
-			else
-			{	return
-				Buffer<t_nObjectBytes>::template ReadBuffer
-				<	t_nSize
-				>(	begin(*this)
-				,	i_nActiveValueBytes
-				);
-			}
-		}
-
-		template
-			<	Bytes
-					t_nValueBytes
-				=	t_nSize
-			>
-		auto constexpr
-		(	WriteBuffer
-		)	(	::std::byte
-				*	o_aBytes
-			,	Bytes
-					i_nActiveValueBytes
-				=	t_nValueBytes
-			)	const
-			noexcept
-		->	::std::byte*
-		{
-			static_assert(t_nValueBytes <= t_nSize);
-
-			if (i_nActiveValueBytes > t_nValueBytes)
-				::std::unreachable();
-
-			return
-			::std::copy
-			(	begin(*this)
-			,	begin(*this) + i_nActiveValueBytes
-			,	o_aBytes
-			);
-		}
-
-		template
-			<	Bytes
-					t_nValueBytes
-			>
-		auto constexpr
-		(	WriteBuffer
-		)	(	Bytes
-					i_nActiveValueBytes
-				=	t_nValueBytes
-			)	const
-			noexcept
-		->	Buffer<t_nValueBytes>
-		{
-			if	constexpr(t_nValueBytes == t_nSize)
-			{
-				return
-					*this
-				;
-			}
-			else
-			{
-				Buffer<t_nValueBytes>
-					vBuffer
-				;
-				WriteBuffer
-				(	vBuffer.begin()
-				,	i_nActiveValueBytes
-				);
-				return
-					vBuffer
-				;
-			}
-		}
 
 		explicit(false) constexpr
 		(	Buffer
@@ -179,10 +44,24 @@ export namespace
 
 		explicit(true) constexpr
 		(	Buffer
+		)	(	InSpan
+					i_vBytes
+			)
+			noexcept
+		{
+			OutSpan{m_vValue, t_nSize} = i_vBytes;
+		}
+
+		explicit(true) constexpr
+		(	Buffer
 		)	(	auto const
 				&	i_rObject
 			)
 			noexcept
+		requires
+			(	SizeOf<decltype(i_rObject)>
+			==	t_nSize
+			)
 		:	Buffer
 			{	::std::bit_cast
 				<	Buffer
@@ -198,10 +77,9 @@ export namespace
 			)
 			noexcept
 		:	Buffer
-			{	ReadBuffer<>
-				(	i_vByteList.begin()
-				,	Bytes{i_vByteList.size()}
-				)
+			{	InSpan
+				{	i_vByteList
+				}
 			}
 		{}
 
@@ -211,18 +89,38 @@ export namespace
 			>
 		requires
 			(	SizeOf<t_tObject>
-			==	t_nSize
+			>=	t_nSize
 			)
 		[[nodiscard]]
 		explicit(true) constexpr
 		(	operator t_tObject
 		)	()	const
 			noexcept
-		{	return
-			::std::bit_cast
-			<	t_tObject
-			>(	*this
-			);
+		{
+			auto constexpr
+				nObjectSize
+			=	SizeOf<t_tObject>
+			;
+
+			if	constexpr(nObjectSize == t_nSize)
+			{
+				return
+				::std::bit_cast
+				<	t_tObject
+				>(	*this
+				);
+			}
+			else
+			{
+				return
+				static_cast<t_tObject>
+				(	Buffer<nObjectSize>
+					{	InSpan
+						{	*this
+						}
+					}
+				);
+			}
 		}
 
 		friend auto constexpr

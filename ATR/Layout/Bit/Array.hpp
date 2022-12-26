@@ -11,6 +11,7 @@ import Meta.Bit.ByteSize;
 import Meta.Byte.Buffer;
 import Meta.Bit.SetOnes;
 import Meta.Bit.Count;
+import Meta.Byte.Count;
 
 import Std;
 
@@ -192,10 +193,11 @@ export namespace
 		{
 			t_tTarget const
 				vField
-			{	::Meta::Byte::BufferFor<t_tTarget>::template ReadBuffer
-				<	BufferSize
-				>(	begin(m_aUnderlyingArray)
-				)
+			{	::Meta::Byte::BufferFor<t_tTarget>
+				{	{	+m_aUnderlyingArray
+					,	BufferSize.get()
+					}
+				}
 			};
 			return
 			static_cast<t_tTarget>
@@ -405,18 +407,12 @@ export namespace
 				(	i_aBuffer
 				)
 			;
-			auto const
-				vAsBytes
-			=	::Meta::Byte::Buffer
-				(	nInteger
-				)
-			;
 
 			return
 			ArrayValue<t_nSize, t_nExtent>
-			{	vAsBytes.template ReadBuffer
-				<	::Meta::Bits{static_cast<USize>(t_nSize)} * t_nExtent
-				>()
+			{	::Meta::Byte::Buffer
+				(	nInteger
+				)
 			};
 		}
 		else
