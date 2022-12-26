@@ -8,8 +8,7 @@ import :Layout.Bit.Types;
 import Meta.Size;
 import Meta.Token;
 import Meta.Bit.ByteSize;
-import Meta.Byte.AsBuffer;
-import Meta.Byte.ReadBuffer;
+import Meta.Byte.Buffer;
 import Meta.Bit.SetOnes;
 import Meta.Bit.Count;
 
