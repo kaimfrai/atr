@@ -50,7 +50,7 @@ static_assert
 	<	ATR::Bit::ESize{16}
 	,	8
 	,	ATR::Bit::EOffset{3}
-	>(	Buffer.begin()
+	>(	begin(Buffer)
 	)[	0uz
 	]
 ==	0x7A

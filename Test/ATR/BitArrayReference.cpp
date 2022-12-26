@@ -45,7 +45,7 @@ auto constexpr
 
 	ArrayReference
 		arr
-	{	aBuffer.begin()
+	{	begin(aBuffer)
 	};
 
 	using FieldType = typename ArrayReference::value_type;

@@ -50,7 +50,7 @@ export namespace
 		{	return
 			ReadWriteView
 			(	i_vMemberID
-			,	Buffer.begin()
+			,	begin(Buffer)
 			);
 		}
 
@@ -65,7 +65,7 @@ export namespace
 		{	return
 			ReadView
 			(	i_vMemberID
-			,	Buffer.begin()
+			,	begin(Buffer)
 			);
 		}
 
@@ -80,7 +80,7 @@ export namespace
 		{	return
 			Value
 			(	i_vMemberID
-			,	Buffer.begin()
+			,	begin(Buffer)
 			);
 		}
 	};

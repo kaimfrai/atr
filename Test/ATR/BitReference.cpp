@@ -41,8 +41,8 @@ auto constexpr
 	i_vValue &= Meta::Bit::SetOnes(t_nSize).Value;
 
 	ATR::Bit::BitFieldBuffer<vBitSize, vBitOffset, 1uz> aBuffer{};
-	auto const nPrevious = BitAccess::ReadField(aBuffer.data());
-	BitReference r{aBuffer.data()};
+	auto const nPrevious = BitAccess::ReadField(begin(aBuffer));
+	BitReference r{begin(aBuffer)};
 	r = i_vValue;
 
 	return ((i_vValue != nPrevious) == (r != nPrevious)) and r == i_vValue;

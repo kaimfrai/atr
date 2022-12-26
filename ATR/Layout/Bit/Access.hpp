@@ -166,13 +166,12 @@ export namespace
 
 			BufferFieldType
 				vBufferField
-			=	::Meta::Byte::ReadBuffer
-				<	::Meta::Byte::SizeOf<BufferFieldType>
-				,	BufferByteSize
+			{	::Meta::Byte::BufferFor<BufferFieldType>::template ReadBuffer
+				<	BufferByteSize
 				>(	i_aBuffer
 				,	RealBufferSize(i_nMask)
 				)
-			;
+			};
 
 			vBufferField &= i_nMask;
 			vBufferField >>= BitOffset(i_nMask);
@@ -199,9 +198,8 @@ export namespace
 				vBufferField
 			=	static_cast<BufferFieldType>
 				(	static_cast<BufferFieldType>
-					(	::Meta::Byte::ReadBuffer
-						<	::Meta::Byte::SizeOf<BufferFieldType>
-						,	BufferByteSize
+					(	::Meta::Byte::BufferFor<BufferFieldType>::template ReadBuffer
+						<	BufferByteSize
 						>(	i_aBuffer
 						,	RealBufferSize(i_nMask)
 						)
@@ -230,15 +228,15 @@ export namespace
 				)
 			};
 
-			::Meta::Byte::WriteBuffer
-			<	::Meta::Byte::SizeOf<BufferFieldType>
-			,	BufferByteSize
-			>(	static_cast<BufferFieldType>
+			::Meta::Byte::Buffer
+			{	static_cast<BufferFieldType>
 				(	vBufferField
 				bitor
 					vSetMask
 				)
-			,	i_aBuffer
+			}.template WriteBuffer
+			<	BufferByteSize
+			>(	i_aBuffer
 			,	RealBufferSize(i_nMask)
 			);
 		}
