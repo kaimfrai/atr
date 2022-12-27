@@ -42,6 +42,24 @@ export namespace
 			noexcept
 		=	default;
 
+		auto constexpr
+		(	operator =
+		)	(	Buffer const
+				&
+			)	&
+			noexcept
+		->	Buffer&
+		=	default;
+
+		auto constexpr
+		(	operator =
+		)	(	Buffer
+				&&
+			)	&
+			noexcept
+		->	Buffer&
+		=	default;
+
 		explicit(true) constexpr
 		(	Buffer
 		)	(	InSpan

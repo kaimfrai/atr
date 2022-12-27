@@ -124,6 +124,13 @@ export namespace
 	struct
 		ConstraintClause final
 	{
+		using
+			IndexType
+		=	typename
+				ErasedTerm
+			::	IndexType
+		;
+
 		static_assert
 		(	t_vTerm.ClauseCount()
 		<=	1uz
@@ -153,9 +160,9 @@ export namespace
 				return Trait::Contradiction;
 			else
 			if	constexpr
-				(	BitClause.TestPositive
-					(	Bits{t_nLiteralIndex}
-					)
+				(	BitClause.Positive
+					[	IndexType{t_nLiteralIndex}
+					]
 				)
 				return
 				RestoreTypeEntity
@@ -165,9 +172,9 @@ export namespace
 				>{};
 			else
 			if	constexpr
-				(	BitClause.TestNegative
-					(	Bits{t_nLiteralIndex}
-					)
+				(	BitClause.Negative
+					[	IndexType{t_nLiteralIndex}
+					]
 				)
 				return
 				not

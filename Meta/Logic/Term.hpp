@@ -7,12 +7,14 @@ import Meta.Size;
 import Meta.Buffer.Static;
 export import Meta.Token;
 import Meta.Functional;
-import Meta.Bit.IndexView;
+import Meta.Arithmetic.BitIndexView;
 import Meta.Bit.Count;
+import Meta.Arithmetic.BitField;
+import Meta.Arithmetic.BitIndex;
 
 import Std;
 
-using ::Meta::Literals::operator""_bits;
+using namespace ::Meta::Literals;
 
 namespace
 	Meta::Logic
@@ -30,15 +32,16 @@ namespace
 			nPresetMask
 		{	0uz
 		};
-		for	(	BitClause::FieldType
+		for	(	BitClause::IndexType
 					nShift
-				=	0uz
+				{}
 			;	bool
 					bPreset
 			:	i_vPreset
 			)
 		{
-			nPresetMask |= bPreset << nShift;
+			if	(bPreset)
+				nPresetMask.Set(nShift);
 			++nShift;
 		}
 		return
@@ -103,6 +106,13 @@ export namespace
 			>
 		;
 
+		using
+			IndexType
+		=	typename
+				Logic::BitTerm
+			::	IndexType
+		;
+
 		Logic::BitTerm const
 			BitTerm
 		;
@@ -128,12 +138,12 @@ export namespace
 					=	0uz
 				;	auto
 						vBitIndex
-				:	Bit::IndexView
+				:	Arithmetic::BitIndexView
 					{	i_rResult.LiteralField()
 					}
 				)
 			{
-				vLiterals[nArrayIndex] = i_vUnion[vBitIndex];
+				vLiterals[nArrayIndex] = i_vUnion[static_cast<USize>(vBitIndex.get())];
 				++nArrayIndex;
 			}
 
@@ -194,7 +204,7 @@ export namespace
 		->	Logic::BitTerm
 		{
 			Buffer::Static
-			<	Bits
+			<	IndexType
 			,	Logic::LiteralLimit
 			>	vPermutationArray
 			;
@@ -259,10 +269,12 @@ export namespace
 						]	(	EraseTypeToken
 									i_vType
 							)
-						->	Bits
 						{	return
-							{	vUnion.FindIndexOf
-								(	i_vType
+							IndexType
+							{	static_cast<typename IndexType::IndexType>
+								(	vUnion.FindIndexOf
+									(	i_vType
+									)
 								)
 							};
 						}
@@ -279,12 +291,13 @@ export namespace
 			noexcept
 		->	USize
 		{	return
-				CountOnes
+			static_cast<USize>
+			(	CountOnes
 				(	BitTerm
 				.	LiteralField()
 				)
 			.	get()
-			;
+			);
 		}
 
 		auto constexpr
@@ -401,7 +414,7 @@ export namespace
 		>
 	ErasedTerm constexpr inline
 		ErasedLiteral
-	{	Logic::BitClause{0_bits}
+	{	Logic::BitClause{0_bdx}
 	,	{	Type<t_tLiteral>
 		}
 	};

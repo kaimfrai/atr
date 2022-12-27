@@ -5,14 +5,14 @@ export import :BitClauseIterator;
 import :Optimizer;
 
 import Meta.Size;
-import Meta.Bit.CountOnes;
-import Meta.Bit.Width;
-import Meta.Bit.Test;
-import Meta.Bit.Power;
-import Meta.Bit.Field;
 import Meta.Bit.Count;
+import Meta.Byte.Count;
+import Meta.Arithmetic.BitIndex;
 
 import Std;
+
+using ::Meta::Byte::SizeOf;
+using ::Meta::Arithmetic::BitIndex;
 
 export namespace
 	Meta::Logic
@@ -20,6 +20,19 @@ export namespace
 	struct
 		BitTerm final
 	{
+		using
+			FieldType
+		=	typename
+				BitClause
+			::	FieldType
+		;
+		using
+			IndexType
+		=	typename
+				BitClause
+			::	IndexType
+		;
+
 		BitClauseBuffer const
 			Clauses
 		{};
@@ -85,7 +98,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	Evaluate
-		)	(	Logic::BitClause::FieldType
+		)	(	FieldType
 					i_vPreset
 			,	bool
 					i_bIdentity
@@ -102,8 +115,59 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr
+		(	transform_reduce
+		)	(	auto
+				&&	i_rInitial
+			,	auto
+				&&	i_fReduce
+			,	auto
+				&&	i_fTransform
+			)	const
+		{
+			if	constexpr
+				(	std::is_member_pointer_v
+					<	std::remove_cvref_t
+						<	decltype(i_fTransform)
+						>
+					>
+				)
+			{	return
+				transform_reduce
+				(	std::forward<decltype(i_rInitial)>(i_rInitial)
+				,	std::forward<decltype(i_fReduce)>(i_fReduce)
+				,	std::mem_fn(i_fTransform)
+				);
+			}
+			else
+			{	return
+				std::transform_reduce
+				(	begin(*this)
+				,	end(*this).base()
+				,	std::forward<decltype(i_rInitial)>(i_rInitial)
+				,	std::forward<decltype(i_fReduce)>(i_fReduce)
+				,	std::forward<decltype(i_fTransform)>(i_fTransform)
+				);
+			}
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	LiteralField
+		)	()	const
+			noexcept
+		->	FieldType
+		{	return
+			transform_reduce
+			(	FieldType{}
+			,	::std::bit_or<typename BitClause::FieldType>{}
+			,	&BitClause::LiteralField
+			);
+		}
+
+		[[nodiscard]]
+		auto constexpr
 		(	Permutation
-		)	(	::std::span<Bits const>
+		)	(	::std::span<BitClause::IndexType const>
 					i_vPermutation
 			)	const
 		->	BitTerm
@@ -135,14 +199,12 @@ export namespace
 			;
 			auto const
 				nRequiredLiteralCount
-			=	Bit::CountOnes(vLiteralField)
+			=	CountOnes(vLiteralField)
 			;
 
 			auto const
 				nMaxLiteralCount
-			=	Bit::Width
-				(	vLiteralField
-				)
+			=	CurrentWidth(vLiteralField)
 			;
 
 			if	(	nRequiredLiteralCount
@@ -151,18 +213,18 @@ export namespace
 				return *this;
 			else
 			{
-				Bits
+				BitClause::IndexType
 					vTrimLiteralPermutation
 				[	LiteralLimit
 				]{};
 
-				for	(	Bits
+				for	(	BitClause::IndexType
 							nIndex
 						{}
 						,	nPermutation
 						{}
-					;		nIndex
-						<	nMaxLiteralCount
+					;		nIndex.get()
+						<	nMaxLiteralCount.get()
 					;	++	nIndex
 					)
 				{
@@ -171,14 +233,15 @@ export namespace
 						]
 					=	nPermutation
 					;
-					nPermutation += Bits{Bit::Test(vLiteralField, nIndex)};
+					if	(vLiteralField[nIndex])
+						++nPermutation;
 				}
 
 				return
 				Permutation
-				(	::std::span<Bits const>
+				(	::std::span<BitClause::IndexType const>
 					{	+vTrimLiteralPermutation
-					,	nMaxLiteralCount.get()
+					,	static_cast<USize>(nMaxLiteralCount.get())
 					}
 				);
 			}
@@ -217,51 +280,6 @@ export namespace
 				((void)"Index beyond ClauseLimit!", std::unreachable());
 
 			return Clauses[i_nIndex];
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	transform_reduce
-		)	(	auto
-				&&	i_rInitial
-			,	auto
-				&&	i_fReduce
-			,	auto
-				&&	i_fTransform
-			)	const
-		{
-			auto const
-				vBegin
-			=	begin(*this)
-			,	vEnd
-			=	end(*this).base()
-			;
-			if	constexpr
-				(	std::is_member_pointer_v
-					<	std::remove_cvref_t
-						<	decltype(i_fTransform)
-						>
-					>
-				)
-			{	return
-				std::transform_reduce
-				(	vBegin
-				,	vEnd
-				,	std::forward<decltype(i_rInitial)>(i_rInitial)
-				,	std::forward<decltype(i_fReduce)>(i_fReduce)
-				,	std::mem_fn(i_fTransform)
-				);
-			}
-			else
-			{	return
-				std::transform_reduce
-				(	vBegin
-				,	vEnd
-				,	std::forward<decltype(i_rInitial)>(i_rInitial)
-				,	std::forward<decltype(i_fReduce)>(i_fReduce)
-				,	std::forward<decltype(i_fTransform)>(i_fTransform)
-				);
-			}
 		}
 
 		[[nodiscard]]
@@ -313,7 +331,7 @@ export namespace
 			//	at most 2^LiteralCount clauses are possible
 			auto const
 				nMaxClauseCount
-			=	Bit::Power(nCombinedLiteralCount)
+			=	Power(BitIndex<SizeOf<USize>>{nCombinedLiteralCount})
 			;
 
 			Optimizer
@@ -360,7 +378,7 @@ export namespace
 			//	at most 2^LiteralCount clauses are possible
 			auto const
 				nMaxClauseCount
-			=	Bit::Power(nCombinedLiteralCount)
+			=	Power(BitIndex<SizeOf<USize>>{nCombinedLiteralCount})
 			;
 
 			Optimizer
@@ -451,20 +469,6 @@ export namespace
 			}
 
 			return {::std::move(vOptimizer)};
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	LiteralField
-		)	()	const
-			noexcept
-		->	Bit::Field
-		{	return
-			transform_reduce
-			(	Bit::Field{}
-			,	std::bit_or<Bit::Field>{}
-			,	&BitClause::LiteralField
-			);
 		}
 	};
 }

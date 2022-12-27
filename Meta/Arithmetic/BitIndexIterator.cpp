@@ -1,25 +1,30 @@
-export module Meta.Bit.Iterator;
+export module Meta.Arithmetic.BitIndexIterator;
 
-import Meta.Bit.Field;
-import Meta.Bit.LowestOne;
+import Meta.Bit.Count;
+import Meta.Arithmetic.BitField;
+import Meta.Arithmetic.BitIndex;
 import Meta.Size;
 
 import Std;
 
 export namespace
-	Meta::Bit
+	Meta::Arithmetic
 {
 	struct
-		Sentinel
+		BitIndexSentinel
 	{};
 
+	template
+		<	Bits
+				t_nWidth
+		>
 	struct
-		IndexIterator
+		BitIndexIterator
 	{
 		using difference_type = SSize;
-		using value_type = USize;
+		using value_type = BitIndex<t_nWidth>;
 
-		Field
+		BitField<t_nWidth>
 			Field
 		;
 
@@ -39,16 +44,17 @@ export namespace
 		(	operator ++
 		)	()	&
 			noexcept
-		->	IndexIterator&
-		{	Field = UnsetLowestOne(Field);
+		->	BitIndexIterator&
+		{	Field.UnsetLowestOne();
 			return *this;
 		}
 
+		[[nodiscard("Use preincrement when discarding the result")]]
 		auto constexpr
 		(	operator ++
 		)	(int)	&
 			noexcept
-		->	IndexIterator
+		->	BitIndexIterator
 		{	return
 			::std::exchange
 			(	*this
@@ -60,8 +66,8 @@ export namespace
 
 		friend auto constexpr
 		(	operator ==
-		)	(	IndexIterator
-			,	IndexIterator
+		)	(	BitIndexIterator
+			,	BitIndexIterator
 			)
 			noexcept
 		->	bool
@@ -69,16 +75,28 @@ export namespace
 
 		friend auto constexpr
 		(	operator ==
-		)	(	IndexIterator
+		)	(	BitIndexIterator
 					i_vIterator
-			,	Sentinel
+			,	BitIndexSentinel
 			)
 			noexcept
 		->	bool
 		{	return
 				i_vIterator
-			==	IndexIterator{}
+			==	BitIndexIterator{}
 			;
 		}
 	};
+
+	template
+		<	Bits
+				t_nWidth
+		>
+	(	BitIndexIterator
+	)	(	BitField<t_nWidth>
+		)
+	->	BitIndexIterator
+		<	t_nWidth
+		>
+	;
 }

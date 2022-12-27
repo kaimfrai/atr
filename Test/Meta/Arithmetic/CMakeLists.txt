@@ -3,16 +3,24 @@ add_module(
 )
 
 add_module_object_library(
-	Test.Meta.Literals.Integer
+	Test.Meta.Arithmetic.Integer
 	Integer.cpp
 )
 
 add_module_object_library(
-	Test.Meta.Literals.Integral
+	Test.Meta.Arithmetic.Integral
 	Integral.cpp
 )
 
 add_module_object_library(
-	Test.Meta.Literals.FloatingPoint
+	Test.Meta.Arithmetic.FloatingPoint
 	FloatingPoint.cpp
+)
+add_module_object_library(
+	Test.Meta.Arithmetic.BitIndexIterator
+	BitIndexIterator.cpp
+)
+add_module_object_library(
+	Test.Meta.Arithmetic.BitIndexView
+	BitIndexView.cpp
 )

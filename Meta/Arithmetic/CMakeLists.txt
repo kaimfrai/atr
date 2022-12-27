@@ -1,4 +1,9 @@
 add_single_file_modules(
+	BitField.cpp
+	BitIndex.cpp
 	Integer.cpp
+	BitIndexIterator.cpp
+	BitIndexView.cpp
+	BitSize.cpp
 	Literals.cpp
 )

@@ -4,17 +4,12 @@ import Meta.Size;
 import Meta.Bit.CountOnes;
 import Meta.Bit.SetOnes;
 import Meta.Bit.ByteSize;
-import Meta.Bit.Test;
-import Meta.Bit.Width;
 import Meta.Bit.Field;
 import Meta.Bit.Count;
-import Meta.Bit.Set;
 import Meta.Arithmetic.Integer;
+import Meta.Arithmetic.BitField;
 
 import Std;
-
-using ::Meta::Bit::CountOnes;
-using ::Meta::Bit::SetOnes;
 
 export namespace
 	Meta::Logic
@@ -31,24 +26,9 @@ export namespace
 	struct
 		BitClause final
 	{
-		using FieldType = UInt<Bits{LiteralLimit}>;
+		using FieldType = Meta::Arithmetic::BitField<Bits{LiteralLimit}>;
+		using IndexType = typename FieldType::IndexType;
 		static_assert((Bit::ByteSize * sizeof(FieldType)).get() == LiteralLimit);
-
-		static auto constexpr
-		(	BitIndexToField
-		)	(	Bits
-					i_nAbsoluteIndex
-			)
-		->	FieldType
-		{
-			if	(i_nAbsoluteIndex.get() >= LiteralLimit)
-				((void)"Index to large to convert to a bit field!", std::unreachable());
-			return
-			static_cast<FieldType>
-			(Bit::PowerField
-			(	i_nAbsoluteIndex
-			).Value);
-		}
 
 		FieldType Positive;
 		FieldType Negative;
@@ -71,7 +51,7 @@ export namespace
 		(	BitClause
 		)	()
 		:	Positive
-			{	SetOnes(Bits{LiteralLimit}).Value
+			{	compl FieldType{}
 			}
 		,	Negative
 			{	Positive
@@ -80,13 +60,11 @@ export namespace
 
 		explicit(true) constexpr
 		(	BitClause
-		)	(	Bits
+		)	(	IndexType
 					i_nPositive
 			)
 		:	Positive
-			{	BitIndexToField
-				(	i_nPositive
-				)
+			{	i_nPositive
 			}
 		,	Negative
 			{	Absorbing().Negative
@@ -115,22 +93,22 @@ export namespace
 		auto constexpr
 		(	LiteralField
 		)	()	const
-		->	Bit::Field
+		->	FieldType
 		{
 			if	(IsIdentity())
 				return {};
 
 			return
-			(	Bit::Field{Positive}
+			(	Positive
 			bitor
-				Bit::Field{Negative}
+				Negative
 			);
 		}
 
 		[[nodiscard]]
 		auto constexpr
 		(	Permutation
-		)	(	::std::span<Bits const>
+		)	(	::std::span<IndexType const>
 					i_vPermutation
 			)	const
 		->	BitClause
@@ -143,27 +121,27 @@ export namespace
 			=	Absorbing()
 			;
 
-			for	(	Bits
-						nAbsoluteIndex
+			for	(	IndexType
+						nIndex
 					{}
-				;		nAbsoluteIndex.get()
+				;		static_cast<USize>(nIndex.get())
 					<	i_vPermutation.size()
-				;	++	nAbsoluteIndex
+				;	++	nIndex
 				)
 			{
-				if	(TestPositive(nAbsoluteIndex))
-					(	vResult.Positive
-					|=	BitIndexToField
-						(	i_vPermutation[nAbsoluteIndex.get()]
-						)
+				if	(Positive[nIndex])
+				{
+					vResult.Positive.Set
+					(	i_vPermutation[static_cast<USize>(nIndex.get())]
 					);
+				}
 				else
-				if	(TestNegative(nAbsoluteIndex))
-					(	vResult.Negative
-					|=	BitIndexToField
-						(	i_vPermutation[nAbsoluteIndex.get()]
-						)
+				if	(Negative[nIndex])
+				{
+					vResult.Negative.Set
+					(	i_vPermutation[static_cast<USize>(nIndex.get())]
 					);
+				}
 			}
 			return vResult;
 		}
@@ -187,6 +165,7 @@ export namespace
 		)	()	const
 		->	bool
 		{	return
+			static_cast<bool>
 			(	Positive
 			bitand
 				Negative
@@ -204,28 +183,25 @@ export namespace
 				return 0uz;
 
 			return
-				CountOnes
-				(	LiteralField()
-				)
+			static_cast<USize>
+			(	CountOnes(LiteralField())
 			.	get()
-			;
+			);
 		}
 
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	Bits
-					i_nRelativeIndex
+		)	(	IndexType
+					i_nIndex
 			)	const
 			noexcept
 		->	BitClause
 		{
-			auto const
+			FieldType const
 				nIndexField
-			=	BitIndexToField
-				(	i_nRelativeIndex
-				)
-			;
+			{	i_nIndex
+			};
 
 			BitClause
 				vLiteral
@@ -253,6 +229,7 @@ export namespace
 		)	(	BitClause
 			,	BitClause
 			)
+			noexcept
 		->	bool
 		=	default;
 
@@ -262,6 +239,7 @@ export namespace
 		)	(	BitClause
 			,	BitClause
 			)
+			noexcept
 		->	::std::strong_ordering
 		=	default;
 
@@ -397,46 +375,16 @@ export namespace
 			;
 			auto const
 				vMask
-			=	vCombined bitand -vCombined
+			=	LowestOne(vCombined)
 			;
 
 			if	(Positive bitand vMask)
-				vResult.Positive = static_cast<FieldType>(vMask);
+				vResult.Positive = vMask;
 
 			if	(Negative bitand vMask)
-				vResult.Negative = static_cast<FieldType>(vMask);
+				vResult.Negative = vMask;
 
 			return vResult;
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	TestPositive
-		)	(	Bits
-					i_nAbsoluteIndex
-			)	const
-			noexcept
-		->	bool
-		{	return
-			Bit::Test
-			(	Bit::Field{Positive}
-			,	i_nAbsoluteIndex
-			);
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	TestNegative
-		)	(	Bits
-					i_nAbsoluteIndex
-			)	const
-			noexcept
-		->	bool
-		{	return
-			Bit::Test
-			(	Bit::Field{Negative}
-			,	i_nAbsoluteIndex
-			);
 		}
 
 		[[nodiscard]]
@@ -457,9 +405,7 @@ export namespace
 
 			auto const
 				nMaxLiteralCount
-			=	Bit::Width
-				(	vLiteralField
-				)
+			=	CurrentWidth(vLiteralField)
 			;
 
 			if	(	nRequiredLiteralCount
@@ -473,29 +419,25 @@ export namespace
 				=	Absorbing()
 				;
 
-				for	(	Bits
-							nAbsoluteIndex
+				for	(	IndexType
+							nIndex
 						{}
 						,	nPermutation
 						{}
-					;		nAbsoluteIndex
-						<	nMaxLiteralCount
-					;	++	nAbsoluteIndex
+					;		nIndex.get()
+						<	nMaxLiteralCount.get()
+					;	++	nIndex
 					)
 				{
-					if	(TestPositive(nAbsoluteIndex))
-						(	vResult.Positive
-						|=	BitIndexToField
-							(	nPermutation++
-							)
-						);
+					if	(Positive[nIndex])
+					{
+						vResult.Positive.Set(nPermutation++);
+					}
 					else
-					if	(TestNegative(nAbsoluteIndex))
-						(	vResult.Negative
-						|=	BitIndexToField
-							(	nPermutation++
-							)
-						);
+					if	(Negative[nIndex])
+					{
+						vResult.Negative.Set(nPermutation++);
+					}
 				}
 
 				return
