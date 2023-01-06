@@ -26,10 +26,10 @@ export namespace
 		static auto constexpr
 			Width
 		=	Bits
-			(	::std::bit_width
+			{	::std::bit_width
 				(	t_nWidth.get()
 				)
-			)
+			}
 		;
 
 		using
