@@ -269,6 +269,7 @@ export namespace
 						]	(	EraseTypeToken
 									i_vType
 							)
+						->	IndexType
 						{	return
 							IndexType
 							{	static_cast<typename IndexType::IndexType>
