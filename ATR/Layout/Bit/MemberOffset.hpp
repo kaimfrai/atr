@@ -87,7 +87,7 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{
-			i_aObject += Offset;
+			i_aObject = ::std::next(i_aObject, static_cast<SSize>(Offset));
 
 			using namespace ATR::Bit;
 

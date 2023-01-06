@@ -98,8 +98,11 @@ auto constexpr
 	;
 	auto const
 		aLast
-	=	end(i_vAlignList)
-	-	1uz
+	=	::std::next
+		(	aFirst
+		,	ssize(i_vAlignList)
+		-	1z
+		)
 	;
 	if	(	*aFirst
 		==	*aLast
@@ -114,7 +117,7 @@ auto constexpr
 			aSplitPoint
 		=	::std::upper_bound
 			(	aFirst
-			,	aLast + 1z
+			,	end(i_vAlignList)
 			,	*aFirst
 			)
 		;

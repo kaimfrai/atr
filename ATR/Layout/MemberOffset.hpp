@@ -84,8 +84,12 @@ export namespace
 			//	we don't know where the byte pointer came from, so we need to launder it
 			::std::launder
 			(	PointerCast<ValueType>
-				(	i_aObject
-				+	Offset
+				(	::std::next
+					(	i_aObject
+					,	static_cast<::Meta::SSize>
+						(	Offset
+						)
+					)
 				)
 			);
 		}

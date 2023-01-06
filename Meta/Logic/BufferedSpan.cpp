@@ -597,11 +597,11 @@ export namespace
 		->	iterator
 		{	return
 			iterator
-			(	std::ranges::begin
+			{	std::ranges::begin
 				(	i_rBufferedSpan
 				.	m_vBuffer
 				)
-			);
+			};
 		}
 
 		[[nodiscard]]
@@ -614,11 +614,11 @@ export namespace
 		->	const_iterator
 		{	return
 			const_iterator
-			(	std::ranges::begin
+			{	std::ranges::begin
 				(	i_rBufferedSpan
 				.	m_vBuffer
 				)
-			);
+			};
 		}
 
 		[[nodiscard]]
@@ -762,7 +762,7 @@ export namespace
 		{
 			std::ranges::fill
 			(	end(*this).base()
-			,	Data::Sentinel<value_type>(end(m_vBuffer))
+			,	Data::Sentinel<value_type>{end(m_vBuffer)}
 			,	value_type{}
 			);
 		}

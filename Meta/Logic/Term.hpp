@@ -186,8 +186,8 @@ export namespace
 			,	Logic::LiteralLimit
 			>	vUnion
 			;
-			vUnion.AppendUnique(i_rLeft);
-			vUnion.AppendUnique(i_rRight);
+			vUnion.AppendUnique(i_rLeft.LiteralSpan());
+			vUnion.AppendUnique(i_rRight.LiteralSpan());
 
 			//	compiler will complain about uninitialized buffer in constant expression otherwise
 			if consteval
@@ -212,7 +212,7 @@ export namespace
 
 				vPermutationArray
 			.	AppendUnique
-				(	*this
+				(	LiteralSpan()
 				|	std::views::transform
 					(	i_fMapIndex
 					)
@@ -241,7 +241,7 @@ export namespace
 					i_fCompute
 			)
 		{
-			if	(std::ranges::equal(i_rLeft, i_rRight))
+			if	(std::ranges::equal(i_rLeft.LiteralSpan(), i_rRight.LiteralSpan()))
 			{
 				return
 				ProcessComputation
@@ -300,30 +300,16 @@ export namespace
 			;
 		}
 
-		friend auto constexpr
-		(	begin
-		)	(	ErasedTerm const
-				&	i_rTerm
-			)
-		->	EraseTypeToken const*
+		[[nodiscard]]
+		auto constexpr
+		(	LiteralSpan
+		)	()	const
+			noexcept
+		->	::std::span<EraseTypeToken const>
 		{	return
-				i_rTerm
-			.	Literals
-			.	begin()
-			;
-		}
-
-		friend auto constexpr
-		(	end
-		)	(	ErasedTerm const
-				&	i_rTerm
-			)
-		->	EraseTypeToken const*
-		{	return
-				begin(i_rTerm)
-			+	i_rTerm
-			.	LiteralCount()
-			;
+			{	Literals.begin()
+			,	LiteralCount()
+			};
 		}
 
 		auto constexpr

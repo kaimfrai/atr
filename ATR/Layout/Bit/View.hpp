@@ -78,7 +78,7 @@ export namespace
 			noexcept
 		->	reference
 		{	return
-			{	i_aBuffer + ByteOffset
+			{	::std::next(i_aBuffer, static_cast<SSize>(ByteOffset))
 			};
 		}
 
@@ -149,7 +149,7 @@ export namespace
 			noexcept
 		->	reference
 		{	return
-			{	i_aBuffer + ByteOffset
+			{	::std::next(i_aBuffer, static_cast<SSize>(ByteOffset))
 			};
 		}
 
@@ -166,8 +166,12 @@ export namespace
 			<	BitSize
 			,	t_nExtent
 			,	BitOffset
-			>(	i_aBuffer
-			+	ByteOffset
+			>(	::std::next
+				(	i_aBuffer
+				,	static_cast<SSize>
+					(	ByteOffset
+					)
+				)
 			);
 		}
 	};

@@ -56,7 +56,7 @@ export namespace
 
 		::std::copy
 		(	i_aBytes
-		,	i_aBytes + i_nActiveValueBytes
+		,	::std::next(i_aBytes, static_cast<SSize>(i_nActiveValueBytes))
 		,	begin(vObject)
 		);
 		return
@@ -102,7 +102,7 @@ export namespace
 		return
 		::std::copy
 		(	begin(vObject)
-		,	begin(vObject) + i_nActiveValueBytes
+		,	::std::next(begin(vObject), static_cast<SSize>(i_nActiveValueBytes))
 		,	o_aBytes
 		);
 	}

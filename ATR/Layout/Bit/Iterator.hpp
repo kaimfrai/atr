@@ -96,13 +96,16 @@ export namespace
 			*	i_nIncrement
 			;
 			(	m_aUnderlyingArray
-			+=	(	vTotalBitOffset
-				/	static_cast<SSize>(BitsPerByte)
-				)
-			-	// subract one more if the remainder is negative
-				static_cast<SSize>
-				(	(vTotalBitOffset % static_cast<SSize>(BitsPerByte))
-				<	0z
+			=	::std::next
+				(	m_aUnderlyingArray
+				,	(	vTotalBitOffset
+					/	static_cast<SSize>(BitsPerByte)
+					)
+				-	// subract one more if the remainder is negative
+					static_cast<SSize>
+					(	(vTotalBitOffset % static_cast<SSize>(BitsPerByte))
+					<	0z
+					)
 				)
 			);
 

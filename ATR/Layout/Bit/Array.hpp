@@ -55,7 +55,7 @@ export namespace
 
 		return
 		typename Array::iterator
-		{	i_rArray.m_aUnderlyingArray + vByteOffset
+		{	::std::next(i_rArray.m_aUnderlyingArray, static_cast<SSize>(vByteOffset))
 		,	static_cast<Array::MaskType>(Array::ZeroOffsetMask << vBitOffset)
 		};
 	}
