@@ -1,6 +1,7 @@
 export module Meta.Arithmetic.Integer;
 
 import Meta.Memory.Size;
+import Meta.Memory.Size.Round;
 
 import Std;
 
