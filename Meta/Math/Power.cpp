@@ -19,7 +19,9 @@ export namespace
 		if	(	i_nExponent
 			==	0uz
 			)
-		{	return 1uz;
+		{	return
+				1uz
+			;
 		}
 		else
 		if	(	i_nExponent

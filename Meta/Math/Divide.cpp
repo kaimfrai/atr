@@ -1,7 +1,5 @@
 export module Meta.Math.Divide;
 
-import Meta.Size;
-
 export namespace
 	Meta::Math
 {
