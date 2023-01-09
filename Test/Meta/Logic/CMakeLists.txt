@@ -10,7 +10,7 @@ endfunction()
 
 add_logic_test(static_assert)
 
-add_logic_test(Equivalence)
+add_subdirectory(Equivalence)
 add_subdirectory(Negation)
 
 add_logic_test(Constant_and_Constant)
