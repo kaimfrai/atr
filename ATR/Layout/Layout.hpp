@@ -13,6 +13,7 @@ import Meta.Size;
 import Meta.Data;
 import Meta.Lex;
 import Meta.Memory.Size;
+import Meta.Memory.Size.Compare;
 
 import Std;
 

@@ -4,6 +4,7 @@ import Meta.Arithmetic.BitRange;
 import Meta.Arithmetic.BitIndex;
 import Meta.Byte.InSpan;
 import Meta.Memory.Size;
+import Meta.Memory.Size.Compare;
 import Meta.Byte.Buffer;
 import Meta.Arithmetic.Integer;
 

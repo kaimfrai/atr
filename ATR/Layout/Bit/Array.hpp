@@ -6,6 +6,7 @@ import :Layout.Bit.Iterator;
 
 import Meta.Arithmetic.BitIndex;
 import Meta.Memory.Size;
+import Meta.Memory.Size.Compare;
 import Meta.Size;
 import Meta.Arithmetic.Integer;
 import Meta.Byte.Buffer;

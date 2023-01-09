@@ -3,6 +3,7 @@ export module Meta.Arithmetic.BitIndex;
 import Meta.Arithmetic.Literals;
 import Meta.Arithmetic.Integer;
 import Meta.Memory.Size;
+import Meta.Memory.Size.Compare;
 import Meta.Math.Divide;
 
 import Std;

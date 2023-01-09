@@ -1,4 +1,5 @@
 import Meta.Memory.Count;
+import Meta.Memory.Count.Compare;
 
 using ::Meta::Bytes;
 using namespace ::Meta::Literals;

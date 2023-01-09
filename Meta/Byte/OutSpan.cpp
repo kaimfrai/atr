@@ -3,6 +3,7 @@ export module Meta.Byte.OutSpan;
 import Meta.Byte.InSpan;
 import Meta.Memory.Count;
 import Meta.Memory.Size;
+import Meta.Memory.Count.Compare;
 import Std;
 
 export namespace

@@ -2,6 +2,7 @@ export module ATR:Layout.Bit.Access;
 
 import Meta.Byte.OutSpan;
 import Meta.Memory.Size;
+import Meta.Memory.Size.Compare;
 import Meta.Arithmetic.Integer;
 import Meta.Arithmetic.BitField;
 import Meta.Byte.InSpan;
