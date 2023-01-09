@@ -2,8 +2,9 @@ export module Meta.Byte.OutSpan;
 
 import Meta.Byte.InSpan;
 import Meta.Memory.Count;
-import Meta.Memory.Size;
 import Meta.Memory.Count.Compare;
+import Meta.Memory.Size;
+
 import Std;
 
 export namespace
@@ -15,7 +16,6 @@ export namespace
 		::std::span<::std::byte>
 			m_vOut
 		;
-
 	public:
 
 		explicit(false) constexpr
@@ -25,6 +25,7 @@ export namespace
 			,	::std::byte
 				*	i_aEnd
 			)
+			noexcept
 		:	m_vOut
 			{	i_aBegin
 			,	i_aEnd

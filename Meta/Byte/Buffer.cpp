@@ -3,6 +3,7 @@ export module Meta.Byte.Buffer;
 import Meta.Byte.OutSpan;
 import Meta.Byte.InSpan;
 import Meta.Memory.Size;
+
 import Std;
 
 export namespace
@@ -13,7 +14,7 @@ export namespace
 				t_nSize
 		>
 	struct
-		Buffer
+		Buffer final
 	{
 		::std::byte
 			m_vValue
@@ -24,40 +25,6 @@ export namespace
 		(	Buffer
 		)	()
 			noexcept
-		=	default;
-
-		explicit(false) constexpr
-		(	Buffer
-		)	(	Buffer const
-				&
-			)
-			noexcept
-		=	default;
-
-		explicit(false) constexpr
-		(	Buffer
-		)	(	Buffer
-				&&
-			)
-			noexcept
-		=	default;
-
-		auto constexpr
-		(	operator =
-		)	(	Buffer const
-				&
-			)	&
-			noexcept
-		->	Buffer&
-		=	default;
-
-		auto constexpr
-		(	operator =
-		)	(	Buffer
-				&&
-			)	&
-			noexcept
-		->	Buffer&
 		=	default;
 
 		explicit(true) constexpr
@@ -82,7 +49,9 @@ export namespace
 			)
 			noexcept
 		requires
-			(	Memory::SizeOf<decltype(i_rObject)>
+			(	Memory::SizeOf
+				<	decltype(i_rObject)
+				>
 			==	t_nSize
 			)
 		:	Buffer
@@ -101,8 +70,11 @@ export namespace
 			noexcept
 		:	Buffer
 			{	InSpan
-				{	Buffer<Memory::SizeOf<decltype(i_rObject)>>
-					{	i_rObject
+				{	Buffer
+					<	Memory::SizeOf
+						<	decltype(i_rObject)
+						>
+					>{	i_rObject
 					}
 				}
 			}
@@ -138,17 +110,18 @@ export namespace
 				>
 			;
 
-			if	constexpr(nByteSize == t_nSize)
-			{
-				return
+			if	constexpr
+				(	nByteSize
+				==	t_nSize
+				)
+			{	return
 				::std::bit_cast
 				<	t_tObject
 				>(	*this
 				);
 			}
 			else
-			{
-				return
+			{	return
 				static_cast<t_tObject>
 				(	Buffer<nByteSize>
 					{	InSpan
@@ -159,21 +132,35 @@ export namespace
 			}
 		}
 
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator +
 		)	(	Buffer
 				&	i_rBuffer
 			)
+			noexcept
 		->	::std::byte*
-		{	return	+i_rBuffer.m_vValue;	}
+		{	return
+				+
+				i_rBuffer
+			.	m_vValue
+			;
+		}
 
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator +
 		)	(	Buffer const
 				&	i_rBuffer
 			)
+			noexcept
 		->	::std::byte const*
-		{	return	+i_rBuffer.m_vValue;	}
+		{	return
+				+
+				i_rBuffer
+			.	m_vValue
+			;
+		}
 
 		friend auto constexpr
 		(	operator +
@@ -182,13 +169,20 @@ export namespace
 			)
 		=	delete;
 
+		[[nodiscard]]
 		friend auto constexpr
 		(	begin
 		)	(	Buffer
 				&	i_rBuffer
 			)
+			noexcept
 		->	decltype(auto)
-		{	return ::std::begin(i_rBuffer.m_vValue);	}
+		{	return
+			::std::begin
+			(	i_rBuffer
+			.	m_vValue
+			);
+		}
 
 		[[nodiscard]]
 		friend auto constexpr
@@ -196,8 +190,14 @@ export namespace
 		)	(	Buffer const
 				&	i_rBuffer
 			)
+			noexcept
 		->	decltype(auto)
-		{	return ::std::begin(i_rBuffer.m_vValue);	}
+		{	return
+			::std::begin
+			(	i_rBuffer
+			.	m_vValue
+			);
+		}
 
 		[[nodiscard]]
 		friend auto constexpr
@@ -205,8 +205,14 @@ export namespace
 		)	(	Buffer
 				&	i_rBuffer
 			)
+			noexcept
 		->	decltype(auto)
-		{	return ::std::end(i_rBuffer.m_vValue);	}
+		{	return
+			::std::end
+			(	i_rBuffer
+			.	m_vValue
+			);
+		}
 
 		[[nodiscard]]
 		friend auto constexpr
@@ -214,8 +220,14 @@ export namespace
 		)	(	Buffer const
 				&	i_rBuffer
 			)
+			noexcept
 		->	decltype(auto)
-		{	return ::std::end(i_rBuffer.m_vValue);	}
+		{	return
+			::std::end
+			(	i_rBuffer
+			.	m_vValue
+			);
+		}
 	};
 
 	template

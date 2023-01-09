@@ -2,6 +2,7 @@ export module Meta.Byte.InSpan;
 
 import Meta.Memory.Size;
 import Meta.Memory.Count;
+
 import Std;
 
 export namespace
@@ -23,6 +24,7 @@ export namespace
 			,	ByteSize
 					i_nSize
 			)
+			noexcept
 		:	InSpan
 			{	i_aBegin
 			,	i_aBegin
