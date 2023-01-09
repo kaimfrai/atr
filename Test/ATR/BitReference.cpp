@@ -2,6 +2,7 @@ import ATR;
 
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
+import Meta.Memory.Size.PointerArithmetic;
 import Meta.Arithmetic.Integer;
 import Meta.Arithmetic.BitField;
 import Meta.Arithmetic.BitIndex;

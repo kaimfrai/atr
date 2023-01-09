@@ -1,6 +1,6 @@
 export module Meta.Byte.Buffer.Range;
 
-import Meta.Memory.Size;
+import Meta.Memory.Size.PointerArithmetic;
 import Meta.Byte.Buffer;
 
 import Std;
@@ -9,7 +9,7 @@ export namespace
 	Meta::Byte
 {
 	template
-		<	ByteSize
+		<	auto
 				t_nSize
 		>
 	[[nodiscard]]
@@ -27,7 +27,7 @@ export namespace
 	}
 
 	template
-		<	ByteSize
+		<	auto
 				t_nSize
 		>
 	[[nodiscard]]
@@ -45,7 +45,7 @@ export namespace
 	}
 
 	template
-		<	ByteSize
+		<	auto
 				t_nSize
 		>
 	[[nodiscard]]
@@ -64,7 +64,7 @@ export namespace
 	}
 
 	template
-		<	ByteSize
+		<	auto
 				t_nSize
 		>
 	[[nodiscard]]

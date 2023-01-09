@@ -7,6 +7,7 @@ import :Layout.Bit.Reference;
 
 import Meta.ID;
 import Meta.Memory.Size;
+import Meta.Memory.Size.PointerArithmetic;
 import Meta.Arithmetic.BitIndex;
 
 import Meta.Size;

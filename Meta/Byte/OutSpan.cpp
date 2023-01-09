@@ -4,6 +4,7 @@ import Meta.Byte.InSpan;
 import Meta.Memory.Count;
 import Meta.Memory.Count.Compare;
 import Meta.Memory.Size;
+import Meta.Memory.Size.PointerArithmetic;
 
 import Std;
 

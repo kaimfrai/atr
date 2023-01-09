@@ -8,6 +8,7 @@ import Meta.Size;
 import Meta.Predicate;
 import Meta.Token;
 import Meta.Memory.Size;
+import Meta.Memory.Size.PointerArithmetic;
 import Meta.Arithmetic.BitIndex;
 
 import Std;

@@ -1,6 +1,7 @@
 export module Meta.Byte.InSpan;
 
 import Meta.Memory.Size;
+import Meta.Memory.Size.PointerArithmetic;
 import Meta.Memory.Count;
 
 import Std;
