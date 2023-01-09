@@ -11,7 +11,7 @@ endfunction()
 add_logic_test(static_assert)
 
 add_logic_test(Equivalence)
-add_logic_test(Negation)
+add_subdirectory(Negation)
 
 add_logic_test(Constant_and_Constant)
 add_logic_test(Constant_or_Constant)
