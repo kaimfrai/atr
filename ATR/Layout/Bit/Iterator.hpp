@@ -8,6 +8,7 @@ import Meta.Math.Divide;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.PointerArithmetic;
+import Meta.Memory.Size.Scale;
 import Meta.Arithmetic.BitIndex;
 
 import Std;

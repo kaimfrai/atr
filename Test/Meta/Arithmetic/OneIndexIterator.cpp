@@ -2,6 +2,7 @@ import Meta.Arithmetic.OneIndexIterator;
 import Meta.Arithmetic.BitIndex;
 import Meta.Arithmetic.BitField;
 import Meta.Memory.Size;
+import Meta.Memory.Size.Scale;
 
 import Std;
 

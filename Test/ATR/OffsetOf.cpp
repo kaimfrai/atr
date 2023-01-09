@@ -5,6 +5,7 @@ import Meta.Arithmetic.BitField;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
+import Meta.Memory.Size.Scale;
 import Meta.Arithmetic.BitIndex;
 
 import Std;

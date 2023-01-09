@@ -3,4 +3,5 @@ add_single_file_modules(
 	Compare.cpp
 	PointerArithmetic.cpp
 	Round.cpp
+	Scale.cpp
 )
