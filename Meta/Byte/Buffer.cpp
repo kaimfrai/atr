@@ -93,6 +93,18 @@ export namespace
 			}
 		{}
 
+		[[nodiscard]]
+		explicit(true) constexpr
+		(	operator InSpan
+		)	()	const
+			noexcept
+		{	return
+			InSpan
+			{	m_vValue
+			,	t_nSize
+			};
+		}
+
 		template
 			<	typename
 					t_tObject
@@ -124,9 +136,9 @@ export namespace
 			{	return
 				static_cast<t_tObject>
 				(	Buffer<nByteSize>
-					{	InSpan
-						{	*this
-						}
+					{	static_cast<InSpan>
+						(	*this
+						)
 					}
 				);
 			}
@@ -168,66 +180,6 @@ export namespace
 				&&	i_rBuffer
 			)
 		=	delete;
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	begin
-		)	(	Buffer
-				&	i_rBuffer
-			)
-			noexcept
-		->	decltype(auto)
-		{	return
-			::std::begin
-			(	i_rBuffer
-			.	m_vValue
-			);
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	begin
-		)	(	Buffer const
-				&	i_rBuffer
-			)
-			noexcept
-		->	decltype(auto)
-		{	return
-			::std::begin
-			(	i_rBuffer
-			.	m_vValue
-			);
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	end
-		)	(	Buffer
-				&	i_rBuffer
-			)
-			noexcept
-		->	decltype(auto)
-		{	return
-			::std::end
-			(	i_rBuffer
-			.	m_vValue
-			);
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	end
-		)	(	Buffer const
-				&	i_rBuffer
-			)
-			noexcept
-		->	decltype(auto)
-		{	return
-			::std::end
-			(	i_rBuffer
-			.	m_vValue
-			);
-		}
 	};
 
 	template

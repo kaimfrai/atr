@@ -3,6 +3,7 @@ import ATR;
 import Meta.Memory.Size;
 import Meta.Arithmetic.BitField;
 import Meta.Byte.Buffer;
+import Meta.Byte.Buffer.Range;
 import Meta.Arithmetic.BitIndex;
 
 import Std;

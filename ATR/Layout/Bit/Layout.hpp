@@ -4,6 +4,7 @@ import Meta.ID;
 import Meta.Size;
 import Meta.Memory.Size;
 import Meta.Byte.Buffer;
+import Meta.Byte.Buffer.Range;
 
 import Std;
 

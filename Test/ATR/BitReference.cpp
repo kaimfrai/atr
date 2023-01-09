@@ -6,6 +6,7 @@ import Meta.Arithmetic.Integer;
 import Meta.Arithmetic.BitField;
 import Meta.Arithmetic.BitIndex;
 import Meta.Byte.Buffer;
+import Meta.Byte.Buffer.Range;
 
 import Std;
 
