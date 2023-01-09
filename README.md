@@ -4,17 +4,17 @@ This project provides the ATR library. ATR is an experimental alternative to inh
 
 ## Requirements
 Supported OS:
-Current Linux Distributions (tested Ubuntu 22.04)
+* Current Linux Distributions (tested Ubuntu 22.04)
 
 Required software:
 
-CMake version 3.20 oder higher
-Clang 16 (currently still in development, latest commit tested (2023-01-08): https://github.com/llvm/llvm-project/commits/f71ffd3b735b
-perf (package linux-tools-generic under Ubuntu 22.04)
-valgrind
-Boost.TypeErasure (tested version 1.74.0)
+* CMake version 3.20 oder higher
+* Clang 16 (currently still in development, latest commit tested (2023-01-08): https://github.com/llvm/llvm-project/commits/f71ffd3b735b
+* perf (package linux-tools-generic under Ubuntu 22.04)
+* valgrind
+* Boost.TypeErasure (tested version 1.74.0)
 
-Require third party projects:
+Required third party projects:
 
 ```
 > cd ..
@@ -33,14 +33,14 @@ The classes VirtualArgument and VirtualElement enable using different types with
 
 This directory provides multiple implementations of a volume computation of different shape-types. Each implementation is measured in terms of compilation duration, memory usage, total runtime, cache behavior, and assembly size.
 
-Any: An implementation using std::any, CRTP, and function pointers.
-Archetype: An implementation using ATR.
-Dyno: An implementation using the dyno library and CRTP.
-Polymorphic: An implementation using the polymorphic library and CRTP.
-Replication: An hand-optimized implementation which resembles closely the result of ATR.
-TypeErasure: An implementation using the TypeErasure library from boost and CRTP.
-Variant: An implementation using std::variant, std::visit, and CRTP.
-Virtual: An implementation using interfaces, inheritance, virtual functions, and std::unique_ptr.
+* Any: An implementation using std::any, CRTP, and function pointers.
+* Archetype: An implementation using ATR.
+* Dyno: An implementation using the dyno library and CRTP.
+* Polymorphic: An implementation using the polymorphic library and CRTP.
+* Replication: An hand-optimized implementation which resembles closely the result of ATR.
+* TypeErasure: An implementation using the TypeErasure library from boost and CRTP.
+* Variant: An implementation using std::variant, std::visit, and CRTP.
+* Virtual: An implementation using interfaces, inheritance, virtual functions, and std::unique_ptr.
 
 Note that the assembly of archetype is nearly identical to the assembly of replication.
 
