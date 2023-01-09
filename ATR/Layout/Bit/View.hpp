@@ -5,14 +5,17 @@ import :Layout.Bit.Access;
 import :Layout.Bit.Array;
 import :Layout.Bit.MemberOffset;
 import :Layout.Bit.Reference;
-import :Layout.Bit.Types;
+
+import Meta.Bit.Count;
+import Meta.Byte.Count;
+import Meta.Bit.Size;
+import Meta.Byte.Size;
+import Meta.Arithmetic.BitIndex;
 
 import Meta.Size;
-import Meta.Bit.ByteSize;
 
 import Std;
 
-using ::Meta::BitSize;
 using ::Meta::Lex::Transform;
 using ::Meta::Const;
 using ::Meta::CopyRef;
@@ -25,13 +28,15 @@ using ::Meta::Type;
 using ::Meta::TypeEntity;
 using ::Meta::USize;
 
+using namespace ::Meta::Literals;
+
 export namespace
 	ATR::Bit
 {
 	template
-		<	USize
+		<	::Meta::BitSize
 				t_nOffset
-		,	USize
+		,	::Meta::BitSize
 				t_nSize
 		,	Meta::ProtoID
 				t_tName
@@ -41,17 +46,23 @@ export namespace
 	{
 		static auto constexpr
 			BitSize
-		=	static_cast<ESize>(t_nSize)
+		=	t_nSize
 		;
 
 		static auto constexpr
 			ByteOffset
-		=	t_nOffset / ::Meta::Bit::ByteSize.get()
+		=	FloorCast<::Meta::ByteSize>
+			(	t_nOffset
+			)
+		.	Quotient
 		;
 
 		static auto constexpr
 			BitOffset
-		=	static_cast<EOffset>(t_nOffset % ::Meta::Bit::ByteSize.get())
+		=	FloorCast<::Meta::ByteSize>
+			(	t_nOffset
+			)
+		.	Remainder
 		;
 
 		using
@@ -78,7 +89,8 @@ export namespace
 			noexcept
 		->	reference
 		{	return
-			{	::std::next(i_aBuffer, static_cast<SSize>(ByteOffset))
+			{	i_aBuffer
+			+	ByteOffset
 			};
 		}
 
@@ -92,16 +104,18 @@ export namespace
 		->	value_type
 		{	return
 				reference
-			::	BitAccess
-			::	ReadField(i_aBuffer)
+			::	Read
+				(	i_aBuffer
+				+	ByteOffset
+				)
 			;
 		}
 	};
 
 	template
-		<	USize
+		<	::Meta::BitSize
 				t_nOffset
-		,	USize
+		,	::Meta::BitSize
 				t_nSize
 		,	USize
 				t_nExtent
@@ -113,17 +127,23 @@ export namespace
 	{
 		static auto constexpr
 			BitSize
-		=	static_cast<ESize>(t_nSize)
+		=	t_nSize
 		;
 
 		static auto constexpr
 			ByteOffset
-		=	t_nOffset / ::Meta::Bit::ByteSize.get()
+		=	FloorCast<::Meta::ByteSize>
+			(	t_nOffset
+			)
+		.	Quotient
 		;
 
 		static auto constexpr
 			BitOffset
-		=	static_cast<EOffset>(t_nOffset % ::Meta::Bit::ByteSize.get())
+		=	FloorCast<::Meta::ByteSize>
+			(	t_nOffset
+			)
+		.	Remainder
 		;
 
 		using
@@ -137,7 +157,10 @@ export namespace
 
 		using
 			value_type
-		=	ArrayValue<BitSize, t_nExtent>
+		=	ArrayValue
+			<	BitSize
+			,	t_nExtent
+			>
 		;
 
 		static auto constexpr
@@ -149,7 +172,8 @@ export namespace
 			noexcept
 		->	reference
 		{	return
-			{	::std::next(i_aBuffer, static_cast<SSize>(ByteOffset))
+			{	i_aBuffer
+			+	ByteOffset
 			};
 		}
 
@@ -163,21 +187,19 @@ export namespace
 		->	value_type
 		{	return
 			CopyArray
-			<	BitSize
-			,	t_nExtent
-			,	BitOffset
-			>(	::std::next
-				(	i_aBuffer
-				,	static_cast<SSize>
-					(	ByteOffset
-					)
-				)
+			(	ArrayConstReference
+				<	BitSize
+				,	t_nExtent
+				,	BitOffset
+				>{	i_aBuffer
+				+	ByteOffset
+				}
 			);
 		}
 	};
 
 	template
-		<	USize
+		<	::Meta::BitSize
 				t_nOffset
 		,	typename
 				t_tEntity
@@ -188,20 +210,15 @@ export namespace
 		ViewBase
 	:	SingleView
 		<	t_nOffset
-		,	BitSize
+		,	::Meta::BitSize_Of
 			(	Type<t_tEntity>
 			)
 		,	t_tName
 		>
-	{
-		static auto constexpr
-			BitCount
-		=	static_cast<USize>(ViewBase::BitSize)
-		;
-	};
+	{};
 
 	template
-		<	USize
+		<	::Meta::BitSize
 				t_nOffset
 		,	typename
 				t_tEntity
@@ -220,7 +237,7 @@ export namespace
 		>
 	:	ArrayView
 		<	t_nOffset
-		,	BitSize
+		,	::Meta::BitSize_Of
 			(	Type<t_tEntity>
 			)
 		,	t_nExtent
@@ -228,14 +245,16 @@ export namespace
 		>
 	{
 		static auto constexpr
-			BitCount
-		=	static_cast<USize>(ViewBase::BitSize)
+			BitSize
+		=	Meta::BitSize_Of
+			(	Type<t_tEntity>
+			)
 		*	t_nExtent
 		;
 	};
 
 	template
-		<	USize
+		<	::Meta::BitSize
 				t_nOffset
 		,	typename
 				t_tEntity
@@ -301,7 +320,7 @@ export namespace
 	};
 
 	template
-		<	USize
+		<	::Meta::BitSize
 				t_nOffset
 		,	typename
 				t_tEntity

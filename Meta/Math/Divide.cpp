@@ -5,39 +5,52 @@ import Meta.Size;
 export namespace
 	Meta::Math
 {
+	template
+		<	typename
+				t_tQuotient
+		,	typename
+				t_tRemainder
+		>
 	struct
 		Divide
 	{
-		USize
+		t_tQuotient
 			Quotient
 		;
-		USize
+		t_tRemainder
 			Remainder
 		;
 
 		explicit(true) constexpr
 		(	Divide
-		)	(	USize
+		)	(	auto
 					i_nNumerator
-			,	USize
+			,	auto
 					i_nDenominator
 			)
 		:	Quotient
-			{	i_nNumerator / i_nDenominator
+			{	i_nNumerator
+			/	i_nDenominator
 			}
 		,	Remainder
-			{	i_nNumerator % i_nDenominator
+			{	i_nNumerator
+			%	i_nDenominator
 			}
-		{}
+		{
+		}
 
 		[[nodiscard]]
 		auto constexpr
 		(	Floor
 		)	()	const
 			noexcept
-		->	USize
+		->	t_tQuotient
 		{	return
 				Quotient
+			-	static_cast<t_tQuotient>
+				(	Remainder
+				<	t_tRemainder{}
+				)
 			;
 		}
 
@@ -46,13 +59,30 @@ export namespace
 		(	Ceil
 		)	()	const
 			noexcept
-		->	USize
+		->	t_tQuotient
 		{	return
 				Quotient
-			+	(	Remainder
-				!=	0uz
+			+	static_cast<t_tQuotient>
+				(	Remainder
+				>	t_tRemainder{}
 				)
 			;
 		}
 	};
+
+	template
+		<	typename
+				t_tNumerator
+		,	typename
+				t_tDenominator
+		>
+	(	Divide
+	)	(	t_tNumerator
+		,	t_tDenominator
+		)
+	->	Divide
+		<	decltype(t_tNumerator{} / t_tDenominator{})
+		,	decltype(t_tNumerator{} % t_tDenominator{})
+		>
+	;
 }

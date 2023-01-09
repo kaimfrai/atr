@@ -1,11 +1,14 @@
 export module ATR:Layout.Bit.Reference;
 
 import :Layout.Bit.Access;
-import :Layout.Bit.Types;
 
-import Meta.Bit.ByteSize;
+import Meta.Bit.Size;
+import Meta.Arithmetic.BitIndex;
+import Meta.Byte.Size;
 
 import Std;
+
+using namespace ::Meta::Literals;
 
 export namespace
 	ATR::Bit
@@ -13,22 +16,63 @@ export namespace
 	template
 		<	typename
 				t_tBuffer
-		,	ESize
+		,	::Meta::BitSize
 				t_nSize
-		,	EOffset
+		,	::Meta::Arithmetic::BitIndex<1_byte>
 				t_nOffset
 		>
 	struct
 		SingleReference final
 	{
-		static_assert
-		(	static_cast<USize>(t_nOffset)
-		<	::Meta::Bit::ByteSize.get()
-		,	"Bit::Reference not properly aligned! Expected maximum offset below Bits per Byte!"
-		);
+		using
+			BitAccess
+		=	::ATR::Bit::Access
+			<	t_nSize
+			,	t_nOffset
+			>
+		;
+		using
+			value_type
+		=	typename
+				BitAccess
+			::	FieldType
+		;
 
-		using BitAccess = ::ATR::Bit::Access<t_nSize, t_nOffset>;
-		using value_type = typename BitAccess::FieldType;
+		[[nodiscard]]
+		static auto constexpr
+		(	Read
+		)	(	t_tBuffer const
+				*	i_aUnderlyingArray
+			)
+			noexcept
+		->	value_type
+		{	return
+			BitAccess::ReadField
+			(	i_aUnderlyingArray
+			,	t_nOffset
+			);
+		}
+
+		static auto constexpr
+		(	Write
+		)	(	value_type
+					i_nValue
+			,	t_tBuffer
+				*	i_aUnderlyingArray
+			)
+			noexcept
+		->	void
+		requires
+			(	not
+				::std::is_const_v<t_tBuffer>
+			)
+		{	return
+			BitAccess::WriteField
+			(	i_nValue
+			,	i_aUnderlyingArray
+			,	t_nOffset
+			);
+		}
 
 		t_tBuffer
 		*	const
@@ -36,13 +80,25 @@ export namespace
 		;
 
 		[[nodiscard]]
+		auto constexpr
+		(	get
+		)	()	const
+			noexcept
+		->	value_type
+		{	return
+			Read
+			(	m_aUnderlyingArray
+			);
+		}
+
+		[[nodiscard]]
 		explicit(false) constexpr
 		(	operator value_type
 		)	()	const
+			noexcept
 		{	return
-			BitAccess::ReadField
-			(	m_aUnderlyingArray
-			);
+				get()
+			;
 		}
 
 		auto constexpr
@@ -50,13 +106,17 @@ export namespace
 		)	(	value_type
 					i_vValue
 			)	&
+			noexcept
 		->	SingleReference&
-			requires
+		requires
 			(	not
 				::std::is_const_v<t_tBuffer>
 			)
 		{
-			BitAccess::WriteField(i_vValue, m_aUnderlyingArray);
+			Write
+			(	i_vValue
+			,	m_aUnderlyingArray
+			);
 			return *this;
 		}
 
@@ -65,13 +125,13 @@ export namespace
 		)	(	value_type
 					i_vValue
 			)	&&
+			noexcept
 		->	SingleReference&&
-			requires
+		requires
 			(	not
 				::std::is_const_v<t_tBuffer>
 			)
-		{
-			return
+		{	return
 			::std::move
 			(	*this
 			=	i_vValue
@@ -80,9 +140,9 @@ export namespace
 	};
 
 	template
-		<	ESize
+		<	::Meta::BitSize
 				t_nSize
-		,	EOffset
+		,	::Meta::Arithmetic::BitIndex<1_byte>
 				t_nOffset
 		>
 	using

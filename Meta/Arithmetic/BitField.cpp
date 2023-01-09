@@ -1,11 +1,11 @@
 export module Meta.Arithmetic.BitField;
 
-import Meta.Arithmetic.BitSize;
+import Meta.Arithmetic.BitRange;
 import Meta.Arithmetic.BitIndex;
-import Meta.Byte.Count;
+import Meta.Byte.InSpan;
+import Meta.Byte.Size;
 import Meta.Byte.Buffer;
-import Meta.Bit.Count;
-import Meta.Size;
+import Meta.Arithmetic.Integer;
 
 import Std;
 
@@ -15,12 +15,12 @@ export namespace
 	Meta::Arithmetic
 {
 	template
-		<	Bits
+		<	BitSize
 				t_nWidth
 		>
 	requires
 		(	t_nWidth
-		>	1_bits
+		>	0_bit
 		)
 	struct
 	// no private members to be usable as template argument
@@ -33,8 +33,8 @@ export namespace
 			>
 		;
 		using
-			SizeType
-		=	BitSize
+			CountType
+		=	BitRange
 			<	t_nWidth
 			>
 		;
@@ -56,9 +56,10 @@ export namespace
 			m_vValue
 		;
 
+		[[nodiscard]]
 		static auto constexpr
 		(	Sanitize
-		)	(	FieldType
+		)	(	UIntMax
 					i_nField
 			)
 			noexcept
@@ -68,18 +69,23 @@ export namespace
 				(	t_nWidth
 				==	Byte::SizeOf<FieldType>
 				)
-			{
-				return i_nField;
+			{	return
+				static_cast<FieldType>
+				(	i_nField
+				);
 			}
 			else
-			{
-				return
-				FieldType
-				(	i_nField
+			{	return
+				static_cast<FieldType>
+				(	static_cast<FieldType>
+					(	i_nField
+					)
 				bitand
-					compl
-					(	compl FieldType{}
-					<<	IndexType{t_nWidth.get()}
+					static_cast<FieldType>
+					(	compl
+						(	compl FieldType{}
+						<<	t_nWidth.get()
+						)
 					)
 				);
 			}
@@ -96,6 +102,7 @@ export namespace
 		)	(	FieldType
 					i_vValue
 			)
+			noexcept
 		:	m_vValue
 			{	i_vValue
 			}
@@ -105,11 +112,30 @@ export namespace
 
 		explicit(true) constexpr
 		(	BitField
-		)	(	IndexType
-					i_nIndex
+		)	(	Byte::InSpan
+					i_vSpan
 			)
+			noexcept
+		:	m_vValue
+			{	i_vSpan
+			}
+		{
+			(void)get();
+		}
+
+		explicit(true) constexpr
+		(	BitField
+		)	(	CountType
+					i_vSetBits
+			)
+			noexcept
 		:	BitField
-			{	Power(i_nIndex)
+			{	compl
+				BitField
+				{}
+			>>	(	CountType::MaximumValue
+				-	i_vSetBits.get()
+				)
 			}
 		{}
 
@@ -127,6 +153,23 @@ export namespace
 			if	(nField != Sanitize(nField))
 				::std::unreachable();
 			return nField;
+		}
+
+		template
+			<	auto
+					t_nOtherWidth
+			>
+		[[nodiscard]]
+		explicit(t_nOtherWidth < t_nWidth) constexpr
+		(	operator BitField<t_nOtherWidth>
+		)	()	const
+			noexcept
+		{	return
+			BitField<t_nOtherWidth>
+			{	Byte::InSpan
+				{	m_vValue
+				}
+			};
 		}
 
 		[[nodiscard]]
@@ -147,7 +190,12 @@ export namespace
 					i_vField
 			)
 			noexcept
-		{	return not static_cast<bool>(i_vField);	}
+		{	return
+			not
+			static_cast<bool>
+			(	i_vField
+			);
+		}
 
 		[[nodiscard]]
 		friend auto constexpr
@@ -161,7 +209,7 @@ export namespace
 		->	BitField
 		{	return
 			BitField
-			{	Sanitize
+			{	static_cast<FieldType>
 				(	i_vLeft.get()
 				bitand
 					i_vRight.get()
@@ -196,7 +244,7 @@ export namespace
 		->	BitField
 		{	return
 			BitField
-			{	Sanitize
+			{	static_cast<FieldType>
 				(	i_vLeft.get()
 				bitor
 					i_vRight.get()
@@ -231,7 +279,7 @@ export namespace
 		->	BitField
 		{	return
 			BitField
-			{	Sanitize
+			{	static_cast<FieldType>
 				(	i_vLeft.get()
 				xor	i_vRight.get()
 				)
@@ -263,27 +311,48 @@ export namespace
 		{	return
 			BitField
 			{	Sanitize
-				(	compl
-					i_vField.get()
+				(	static_cast<FieldType>
+					(	compl
+						i_vField.get()
+					)
 				)
 			};
 		}
 
+		template
+			<	auto
+					t_nOffset
+			>
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator <<
 		)	(	BitField
 					i_vField
-			,	IndexType
+			,	BitIndex<t_nOffset>
 					i_nIndex
 			)
 			noexcept
 		->	BitField
-		{	return
-			BitField
-			{	Sanitize
-				(	i_vField.get()
-				<<	i_nIndex
+			<	t_nWidth
+			+	BitIndex<t_nOffset>::HighestValue
+			>
+		{	using
+				tLargerField
+			=	BitField
+				<	t_nWidth
+				+	BitIndex<t_nOffset>::HighestValue
+				>
+			;
+
+			return
+			tLargerField
+			{	static_cast<tLargerField::FieldType>
+				(	static_cast<tLargerField::FieldType>
+					(	i_vField.get()
+					)
+				<<	static_cast<tLargerField::FieldType>
+					(	i_nIndex.get()
+					)
 				)
 			};
 		}
@@ -295,10 +364,17 @@ export namespace
 			)	&
 			noexcept
 		->	BitField&
-		{	return
+		{
+			return
 				*this
-			=	*this
-			<<	i_nIndex
+			=	BitField
+				{	Sanitize
+					(	static_cast<FieldType>
+						(	get()
+						<<	i_nIndex.get()
+						)
+					)
+				}
 			;
 		}
 
@@ -315,8 +391,10 @@ export namespace
 		{	return
 			BitField
 			{	Sanitize
-				(	i_vField.get()
-				>>	i_nIndex
+				(	static_cast<FieldType>
+					(	i_vField.get()
+					>>	i_nIndex.get()
+					)
 				)
 			};
 		}
@@ -380,6 +458,7 @@ export namespace
 			;
 		}
 
+
 		[[nodiscard]]
 		friend auto constexpr
 		(	CountOnes
@@ -387,10 +466,10 @@ export namespace
 					i_vField
 			)
 			noexcept
-		->	SizeType
+		->	CountType
 		{	return
-			SizeType
-			{	static_cast<typename SizeType::SizeType>
+			CountType
+			{	static_cast<CountType::CountType>
 				(	::std::popcount
 					(	i_vField.get()
 					)
@@ -426,14 +505,18 @@ export namespace
 			noexcept
 		->	IndexType
 		{
-			if	(i_vField.get() == FieldType{})
+			auto const
+				nField
+			=	i_vField.get()
+			;
+			if	(nField == FieldType{})
 				::std::unreachable();
 
 			return
 			IndexType
-			{	static_cast<typename IndexType::IndexType>
+			{	static_cast<IndexType::IndexType>
 				(	::std::countr_zero
-					(	i_vField.get()
+					(	nField
 					)
 				)
 			};
@@ -446,10 +529,10 @@ export namespace
 					i_vField
 			)
 			noexcept
-		->	SizeType
+		->	CountType
 		{	return
-			SizeType
-			{	static_cast<typename SizeType::SizeType>
+			CountType
+			{	static_cast<typename CountType::CountType>
 				(	::std::bit_width
 					(	i_vField.get()
 					)
@@ -482,7 +565,15 @@ export namespace
 			)	&
 			noexcept
 		->	BitField&
-		{	return *this |= BitField{i_nIndex};	}
+		{	return
+				*this
+			|=	BitField
+				{	Power
+					(	i_nIndex
+					)
+				}
+			;
+		}
 
 		auto constexpr
 		(	Unset
@@ -491,6 +582,15 @@ export namespace
 			)	&
 			noexcept
 		->	BitField&
-		{	return *this &= compl BitField{i_nIndex};	}
+		{	return
+				*this
+			&=	compl
+				BitField
+				{	Power
+					(	i_nIndex
+					)
+				}
+			;
+		}
 	};
 }

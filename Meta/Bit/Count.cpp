@@ -12,15 +12,16 @@ export namespace
 		<	USize
 				t_nWidth
 		>
-	requires
-		(	t_nWidth
-		>	0uz
-		)
 	struct
 		Count
 	{
-		USize
-			Value
+		using
+			CountType
+		=	decltype(auto(t_nWidth))
+		;
+
+		CountType
+			m_nValue
 		;
 
 		[[nodiscard]]
@@ -28,223 +29,48 @@ export namespace
 		(	get
 		)	()	&
 			noexcept
-		->	USize&
-		{	return Value;	}
+		->	CountType&
+		{	return m_nValue;	}
 
 		[[nodiscard]]
 		auto constexpr
 		(	get
 		)	()	const&
 			noexcept
-		->	USize const&
-		{	return Value;	}
+		->	CountType const&
+		{	return m_nValue;	}
 
 		[[nodiscard]]
 		auto constexpr
 		(	get
 		)	()	&&
 			noexcept
-		->	USize
-		{	return Value;	}
+		->	CountType
+		{	return m_nValue;	}
 
 		[[nodiscard]]
 		explicit(true) constexpr
-		(	operator USize
+		(	operator CountType
 		)	()	const
 			noexcept
 		{	return get();	}
 
 		template
-			<	USize
-					t_nTargetWidth
+			<	auto
+					t_nOtherWidth
 			>
 		[[nodiscard]]
 		explicit(false) constexpr
-		(	operator Count<t_nTargetWidth>
+		(	operator Count<t_nOtherWidth>
 		)	()	const
 			noexcept
 		{	return
 			{	Math::Divide
-				(	Value * t_nWidth
-				,	t_nTargetWidth
+				(	get()
+				*	t_nWidth
+				,	t_nOtherWidth
 				)
 			.	Ceil()
-			};
-		}
-
-		auto constexpr
-		(	operator +=
-		)	(	Count
-					i_vOffset
-			)	&
-			noexcept
-		->	Count&
-		{		get()
-			+=	i_vOffset.get()
-			;
-			return *this;
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator +
-		)	(	Count
-					i_vCount
-			,	Count
-					i_vOffset
-			)
-			noexcept
-		->	Count
-		{	return i_vCount += i_vOffset;	}
-
-		auto constexpr
-		(	operator ++
-		)	()	&
-			noexcept
-		->	Count&
-		{	return *this += Count{1uz};	}
-
-		[[nodiscard("Use preincrement if you discard the value")]]
-		auto constexpr
-		(	operator ++
-		)	(int)	&
-			noexcept
-		->	Count
-		{	return
-			{	Value++
-			};
-		}
-
-		auto constexpr
-		(	operator -=
-		)	(	Count
-					i_vOffset
-			)	&
-			noexcept
-		->	Count&
-		{		get()
-			-=	i_vOffset.get()
-			;
-			return *this;
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator -
-		)	(	Count
-					i_vCount
-			,	Count
-					i_vOffset
-			)
-			noexcept
-		->	Count
-		{	return i_vCount -= i_vOffset;	}
-
-		auto constexpr
-		(	operator --
-		)	()	&
-			noexcept
-		->	Count&
-		{	return *this -= Count{1uz};	}
-
-		[[nodiscard("Use predecrement if you discard the value")]]
-		auto constexpr
-		(	operator --
-		)	(int)	&
-			noexcept
-		->	Count
-		{	return
-			{	Value--
-			};
-		}
-
-		auto constexpr
-		(	operator *=
-		)	(	USize
-					i_vScalar
-			)	&
-			noexcept
-		->	Count&
-		{		get()
-			*=	i_vScalar
-			;
-			return *this;
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator *
-		)	(	Count
-					i_vCount
-			,	USize
-					i_vScalar
-			)
-			noexcept
-		->	Count
-		{	return i_vCount *= i_vScalar;	}
-
-		auto constexpr
-		(	operator /=
-		)	(	USize
-					i_vScalar
-			)	&
-			noexcept
-		->	Count&
-		{		get()
-			/=	i_vScalar
-			;
-			return *this;
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator /
-		)	(	Count
-					i_vCount
-			,	USize
-					i_vScalar
-			)
-			noexcept
-		->	Count
-		{	return i_vCount /= i_vScalar;	}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator /
-		)	(	Count
-					i_vLeft
-			,	Count
-					i_vRight
-			)
-			noexcept
-		->	USize
-		{	return i_vLeft.get() / i_vRight.get();	}
-
-		[[nodiscard]]
-		auto constexpr
-		(	Ceil
-		)	()	const
-		->	Count
-		{	return
-			{	static_cast<USize>
-				(	::std::bit_ceil
-					(	get()
-					)
-				)
-			};
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	Floor
-		)	()	const
-		->	Count
-		{	return
-			{	static_cast<USize>
-				(	::std::bit_floor
-					(	get()
-					)
-				)
 			};
 		}
 	};
@@ -266,64 +92,6 @@ export namespace
 {
 	[[nodiscard]]
 	auto constexpr
-	(	operator <<
-	)	(	std::integral auto
-				i_vLeft
-		,	Bits
-				i_vRight
-		)
-		noexcept
-	->	decltype(i_vLeft)
-	{	return
-		static_cast<decltype(i_vLeft)>
-		(	i_vLeft
-		<<	i_vRight.get()
-		);
-	}
-
-	[[nodiscard]]
-	auto constexpr
-	(	operator <<=
-	)	(	std::integral auto
-			&	i_rLeft
-		,	Bits
-				i_vRight
-		)
-		noexcept
-	->	decltype(i_rLeft)
-	{	return i_rLeft = i_rLeft << i_vRight;	}
-
-	[[nodiscard]]
-	auto constexpr
-	(	operator >>
-	)	(	std::integral auto
-				i_vLeft
-		,	Bits
-				i_vRight
-		)
-		noexcept
-	->	decltype(i_vLeft)
-	{	return
-		static_cast<decltype(i_vLeft)>
-		(	i_vLeft
-		>>	i_vRight.get()
-		);
-	}
-
-	[[nodiscard]]
-	auto constexpr
-	(	operator >>=
-	)	(	std::integral auto
-			&	i_rLeft
-		,	Bits
-				i_vRight
-		)
-		noexcept
-	->	decltype(i_rLeft)
-	{	return i_rLeft = i_rLeft >> i_vRight;	}
-
-	[[nodiscard]]
-	auto constexpr
 	(	operator ==
 	)	(	Bits
 				i_vLeft
@@ -333,8 +101,8 @@ export namespace
 		noexcept
 	->	bool
 	{	return
-			i_vLeft.Value
-		==	i_vRight.Value
+			i_vLeft.get()
+		==	i_vRight.get()
 		;
 	}
 
@@ -349,8 +117,8 @@ export namespace
 		noexcept
 	->	::std::strong_ordering
 	{	return
-			i_vLeft.Value
-		<=>	i_vRight.Value
+			i_vLeft.get()
+		<=>	i_vRight.get()
 		;
 	}
 }
@@ -366,7 +134,7 @@ export namespace
 		)
 	->	Bits
 	{	return
-		{	static_cast<USize>
+		{	static_cast<Bits::CountType>
 			(	i_nBits
 			)
 		};

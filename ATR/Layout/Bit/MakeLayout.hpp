@@ -7,6 +7,7 @@ import :Layout.Member;
 
 import Meta.Size;
 import Meta.Token;
+import Meta.Bit.Size;
 
 import Std;
 
@@ -24,12 +25,12 @@ template
 	>
 auto constexpr
 (	BitFieldOffsetArray
-)	(	::std::array<USize, t_nSize> const
+)	(	::std::array<::Meta::BitSize, t_nSize> const
 		&	i_rSizes
 	)
-->	::std::array<USize, t_nSize>
+->	::std::array<::Meta::BitSize, t_nSize>
 {
-	::std::array<USize, t_nSize>
+	::std::array<::Meta::BitSize, t_nSize>
 		vOffsetArray
 	{};
 
@@ -37,11 +38,11 @@ auto constexpr
 	(	begin(i_rSizes)
 	,	end(i_rSizes)
 	,	begin(vOffsetArray)
-	,	[	m_nOffset = 0uz
-		]	(	USize
+	,	[	m_nOffset = 0_bit
+		]	(	::Meta::BitSize
 					i_nSize
 			)	mutable
-		->	USize
+		->	::Meta::BitSize
 		{
 			auto const nCurrent = m_nOffset;
 			m_nOffset += i_nSize;
@@ -52,7 +53,7 @@ auto constexpr
 }
 
 template
-	<	USize
+	<	::Meta::BitSize
 			t_nOffset
 	,	typename
 			t_tData
@@ -71,8 +72,8 @@ auto constexpr
 ;
 
 template
-	<	USize
-		t_nOffset
+	<	::Meta::BitSize
+			t_nOffset
 	,	::Meta::ProtoID
 			t_tName
 	>
@@ -82,13 +83,13 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1_bits>
+	,	BitField<1_bit>
 	,	t_tName
 	>
 ;
 
 template
-	<	USize
+	<	::Meta::BitSize
 			t_nOffset
 	,	::Meta::ProtoID
 			t_tName
@@ -99,13 +100,13 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1_bits> const
+	,	BitField<1_bit> const
 	,	t_tName
 	>
 ;
 
 template
-	<	USize
+	<	::Meta::BitSize
 			t_nOffset
 	,	::Meta::ProtoID
 			t_tName
@@ -116,13 +117,13 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1_bits> volatile
+	,	BitField<1_bit> volatile
 	,	t_tName
 	>
 ;
 
 template
-	<	USize
+	<	::Meta::BitSize
 			t_nOffset
 	,	::Meta::ProtoID
 			t_tName
@@ -133,13 +134,13 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1_bits> const volatile
+	,	BitField<1_bit> const volatile
 	,	t_tName
 	>
 ;
 
 template
-	<	USize
+	<	::Meta::BitSize
 			t_nOffset
 	,	::Meta::ProtoID
 			t_tName
@@ -150,13 +151,13 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	Mut<BitField<1_bits>>
+	,	Mut<BitField<1_bit>>
 	,	t_tName
 	>
 ;
 
 template
-	<	USize
+	<	::Meta::BitSize
 			t_nOffset
 	,	::Meta::ProtoID
 			t_tName
@@ -167,13 +168,13 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	Mut<BitField<1_bits> volatile>
+	,	Mut<BitField<1_bit> volatile>
 	,	t_tName
 	>
 ;
 
 template
-	<	USize
+	<	::Meta::BitSize
 			t_nOffset
 	,	USize
 			t_nExtent
@@ -186,13 +187,13 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1_bits>[t_nExtent]
+	,	BitField<1_bit>[t_nExtent]
 	,	t_tName
 	>
 ;
 
 template
-	<	USize
+	<	::Meta::BitSize
 			t_nOffset
 	,	USize
 			t_nExtent
@@ -205,13 +206,13 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1_bits> const[t_nExtent]
+	,	BitField<1_bit> const[t_nExtent]
 	,	t_tName
 	>
 ;
 
 template
-	<	USize
+	<	::Meta::BitSize
 			t_nOffset
 	,	USize
 			t_nExtent
@@ -224,13 +225,13 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1_bits> volatile[t_nExtent]
+	,	BitField<1_bit> volatile[t_nExtent]
 	,	t_tName
 	>
 ;
 
 template
-	<	USize
+	<	::Meta::BitSize
 			t_nOffset
 	,	USize
 			t_nExtent
@@ -243,13 +244,13 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1_bits> const volatile[t_nExtent]
+	,	BitField<1_bit> const volatile[t_nExtent]
 	,	t_tName
 	>
 ;
 
 template
-	<	USize
+	<	::Meta::BitSize
 			t_nOffset
 	,	USize
 			t_nExtent
@@ -262,13 +263,13 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	Mut<BitField<1_bits>[t_nExtent]>
+	,	Mut<BitField<1_bit>[t_nExtent]>
 	,	t_tName
 	>
 ;
 
 template
-	<	USize
+	<	::Meta::BitSize
 			t_nOffset
 	,	USize
 			t_nExtent
@@ -281,13 +282,13 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	Mut<BitField<1_bits> volatile[t_nExtent]>
+	,	Mut<BitField<1_bit> volatile[t_nExtent]>
 	,	t_tName
 	>
 ;
 
 template
-	<	USize
+	<	::Meta::BitSize
 			t_nOffset
 	,	typename
 			t_tMember

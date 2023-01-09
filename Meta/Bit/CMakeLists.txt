@@ -1,15 +1,4 @@
 add_single_file_modules(
-	ByteSize.cpp
 	Count.cpp
-	CountOnes.cpp
-	Field.cpp
-	IndexView.cpp
-	Iterator.cpp
-	Log.cpp
-	LowestOne.cpp
-	Power.cpp
-	Set.cpp
-	SetOnes.cpp
-	Test.cpp
-	Width.cpp
+	Size.cpp
 )

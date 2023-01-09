@@ -11,7 +11,6 @@ import Meta.Arithmetic.BitIndex;
 
 import Std;
 
-using ::Meta::Byte::SizeOf;
 using ::Meta::Arithmetic::BitIndex;
 
 export namespace
@@ -191,6 +190,8 @@ export namespace
 		auto constexpr
 		(	TrimLiterals
 		)	()	const
+			noexcept
+		->	BitTerm
 		{
 			auto const
 				vLiteralField
@@ -199,33 +200,38 @@ export namespace
 			;
 			auto const
 				nRequiredLiteralCount
-			=	CountOnes(vLiteralField)
+			=	CountOnes
+				(	vLiteralField
+				)
 			;
 
 			auto const
 				nMaxLiteralCount
-			=	CurrentWidth(vLiteralField)
+			=	CurrentWidth
+				(	vLiteralField
+				)
 			;
 
 			if	(	nRequiredLiteralCount
 				==	nMaxLiteralCount
 				)
-				return *this;
+			{	return
+					*this
+				;
+			}
 			else
 			{
 				BitClause::IndexType
 					vTrimLiteralPermutation
-				[	LiteralLimit
+				[	LiteralLimit.get()
 				]{};
 
 				for	(	BitClause::IndexType
+							nPermutation
+						{}
+					;	auto
 							nIndex
-						{}
-						,	nPermutation
-						{}
-					;		nIndex.get()
-						<	nMaxLiteralCount.get()
-					;	++	nIndex
+					:	nMaxLiteralCount
 					)
 				{
 						vTrimLiteralPermutation
@@ -328,15 +334,9 @@ export namespace
 				)
 			;
 
-			//	at most 2^LiteralCount clauses are possible
-			auto const
-				nMaxClauseCount
-			=	Power(BitIndex<SizeOf<USize>>{nCombinedLiteralCount})
-			;
-
 			Optimizer
 				vOptimizer
-			{	nMaxClauseCount
+			{	nCombinedLiteralCount
 			};
 
 			vOptimizer.insert(i_rLeftTerm);
@@ -375,15 +375,9 @@ export namespace
 				)
 			;
 
-			//	at most 2^LiteralCount clauses are possible
-			auto const
-				nMaxClauseCount
-			=	Power(BitIndex<SizeOf<USize>>{nCombinedLiteralCount})
-			;
-
 			Optimizer
 				vOptimizer
-			{	nMaxClauseCount
+			{	nCombinedLiteralCount
 			};
 
 			for	(	BitClause

@@ -1,8 +1,15 @@
 import ATR;
 
+import Meta.Bit.Size;
+import Meta.Arithmetic.BitField;
+import Meta.Byte.Buffer;
+import Meta.Arithmetic.BitIndex;
+
 import Std;
 
-using Array = ::ATR::Bit::ArrayValue<ATR::Bit::ESize{1}, 31>;
+using namespace ::Meta::Literals;
+
+using Array = ::ATR::Bit::ArrayValue<1_bit, 31>;
 
 auto constexpr
 	None
@@ -31,10 +38,8 @@ static_assert(not Some.all());
 static_assert(All.all());
 
 
-ATR::Bit::BitFieldBuffer
-<	ATR::Bit::ESize{16}
-,	ATR::Bit::EOffset{3}
-,	8
+::Meta::Byte::Buffer
+<	16_bit * 8 + 3_bdx
 >	constexpr
 	Buffer
 {	static_cast<::std::byte>(0x7A << 3)
@@ -47,11 +52,13 @@ ATR::Bit::BitFieldBuffer
 
 static_assert
 (	ATR::Bit::CopyArray
-	<	ATR::Bit::ESize{16}
-	,	8
-	,	ATR::Bit::EOffset{3}
-	>(	begin(Buffer)
+	(	ATR::Bit::ArrayConstReference
+		<	16_bit
+		,	8
+		,	3_bdx
+		>{	begin(Buffer)
+		}
 	)[	0uz
 	]
-==	0x7A
+==	::Meta::Arithmetic::BitField<16_bit>{0x7A}
 );

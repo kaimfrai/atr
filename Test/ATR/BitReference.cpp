@@ -1,110 +1,215 @@
 import ATR;
 
-import Meta.Size;
-import Meta.Bit.ByteSize;
-import Meta.Bit.SetOnes;
-import Meta.Bit.Count;
+import Meta.Byte.Size;
+import Meta.Bit.Size;
 import Meta.Arithmetic.Integer;
+import Meta.Arithmetic.BitField;
+import Meta.Arithmetic.BitIndex;
+import Meta.Byte.Buffer;
 
 import Std;
 
-using ::Meta::UInt;
-using ::Meta::USize;
-using ::Meta::Bits;
+using namespace ::Meta::Literals;
 
-using ::Meta::Literals::operator""_bits;
+using ::Meta::Arithmetic::BitField;
 
 template
-	<	USize
+	<	::Meta::BitSize
 			t_nOffset
-	,	Bits
+	,	auto
 			t_nSize
 	>
+[[nodiscard]]
 auto constexpr
 (	SetAndCheck
-)	(	UInt<t_nSize>
+)	(	BitField<t_nSize>
 			i_vValue
 	)
+	noexcept
 ->	bool
 {
 	auto constexpr
-		vBitOffset
-	=	static_cast<ATR::Bit::EOffset>(t_nOffset % ::Meta::Bit::ByteSize.get())
+		nOffset
+	=	FloorCast<::Meta::ByteSize>
+		(	t_nOffset
+		)
 	;
 	auto constexpr
-		vBitSize
-	=	static_cast<ATR::Bit::ESize>(t_nSize.get())
+		nByteOffset
+	=	nOffset.Quotient
+	;
+	auto constexpr
+		nBitOffset
+	=	nOffset.Remainder
+	;
+	using
+		BitReference
+	=	ATR::Bit::Reference
+		<	t_nSize
+		,	nBitOffset
+		>
 	;
 
-	using BitReference = ATR::Bit::Reference<vBitSize, vBitOffset>;
-	using BitAccess = typename BitReference::BitAccess;
-	i_vValue &= Meta::Bit::SetOnes(t_nSize).Value;
+	::Meta::Byte::Buffer
+	<	t_nSize
+	+	nByteOffset
+	+	nBitOffset
+	>	aBuffer
+	{};
 
-	ATR::Bit::BitFieldBuffer<vBitSize, vBitOffset, 1uz> aBuffer{};
-	auto const nPrevious = BitAccess::ReadField(begin(aBuffer));
-	BitReference r{begin(aBuffer)};
-	r = i_vValue;
+	auto const
+		aStart
+	=	begin(aBuffer)
+	+	nByteOffset
+	;
+	BitReference
+		rReference
+	{	aStart
+	};
+	auto const
+		nPrevious
+	=	rReference
+	.	get()
+	;
+	(	rReference
+	=	i_vValue
+	);
 
-	return ((i_vValue != nPrevious) == (r != nPrevious)) and r == i_vValue;
+	return
+		(	(i_vValue != nPrevious)
+		==	(rReference != nPrevious)
+		)
+	and	(	rReference
+		==	i_vValue
+		)
+	;
 }
 
 static_assert
-(	SetAndCheck<7, 28_bits>(31)
+(	SetAndCheck<7_bit>
+	(	BitField<28_bit>
+		{	31
+		}
+	)
 );
 static_assert
-(	SetAndCheck<28, 7_bits>(31)
-);
-
-static_assert
-(	SetAndCheck<20, 10_bits>(105)
-);
-
-static_assert
-(	SetAndCheck<0, 3_bits>(1)
-);
-static_assert
-(	SetAndCheck<3, 1_bits>(true)
-);
-static_assert
-(	SetAndCheck<1, 3_bits>(2)
+(	SetAndCheck<28_bit>
+	(	BitField<7_bit>
+		{	31
+		}
+	)
 );
 
 static_assert
-(	SetAndCheck<31, 31_bits>(854332)
+(	SetAndCheck<20_bit>
+	(	BitField<10_bit>
+		{	105
+		}
+	)
 );
 
 static_assert
-(	SetAndCheck<33, 31_bits>(345678)
+(	SetAndCheck<0_bit>
+	(	BitField<3_bit>
+		{	1
+		}
+	)
+);
+static_assert
+(	SetAndCheck<3_bit>
+	(	BitField<1_bit>
+		{	true
+		}
+	)
+);
+static_assert
+(	SetAndCheck<1_bit>
+	(	BitField<3_bit>
+		{	2
+		}
+	)
 );
 
 static_assert
-(	SetAndCheck<0, 3_bits>(1)
+(	SetAndCheck<31_bit>
+	(	BitField<31_bit>
+		{	854332
+		}
+	)
 );
 
 static_assert
-(	SetAndCheck<31, 1_bits>(true)
-);
-static_assert
-(	SetAndCheck<33, 1_bits>(true)
-);
-
-static_assert
-(	SetAndCheck<1, 31_bits>(987656)
-);
-static_assert
-(	SetAndCheck<1, 33_bits>(564354)
+(	SetAndCheck<33_bit>
+	(	BitField<31_bit>
+		{	345678
+		}
+	)
 );
 
 static_assert
-(	SetAndCheck<1, 63_bits>(54575747)
-);
-static_assert
-(	SetAndCheck<63, 1_bits>(true)
+(	SetAndCheck<0_bit>
+	(	BitField<3_bit>
+		{	1
+		}
+	)
 );
 
 static_assert
-(	SetAndCheck<65, 63_bits>(765434567876)
+(	SetAndCheck<31_bit>
+	(	BitField<1_bit>
+		{	true
+		}
+	)
 );
 static_assert
-(	SetAndCheck<65, 1_bits>(true)
+(	SetAndCheck<33_bit>
+	(	BitField<1_bit>
+		{	true
+		}
+	)
+);
+
+static_assert
+(	SetAndCheck<1_bit>
+	(	BitField<31_bit>
+		{	987656
+		}
+	)
+);
+static_assert
+(	SetAndCheck<1_bit>
+	(	BitField<33_bit>
+		{	564354
+		}
+	)
+);
+
+static_assert
+(	SetAndCheck<1_bit>
+	(	BitField<63_bit>
+		{	54575747
+		}
+	)
+);
+static_assert
+(	SetAndCheck<63_bit>
+	(	BitField<1_bit>
+		{	true
+		}
+	)
+);
+
+static_assert
+(	SetAndCheck<65_bit>
+	(	BitField<63_bit>
+		{	765434567876
+		}
+	)
+);
+static_assert
+(	SetAndCheck<65_bit>
+	(	BitField<1_bit>
+		{	true
+		}
+	)
 );

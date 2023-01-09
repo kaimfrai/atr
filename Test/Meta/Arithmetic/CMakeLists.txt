@@ -17,10 +17,10 @@ add_module_object_library(
 	FloatingPoint.cpp
 )
 add_module_object_library(
-	Test.Meta.Arithmetic.BitIndexIterator
-	BitIndexIterator.cpp
+	Test.Meta.Arithmetic.OneIndexIterator
+	OneIndexIterator.cpp
 )
 add_module_object_library(
-	Test.Meta.Arithmetic.BitIndexView
-	BitIndexView.cpp
+	Test.Meta.Arithmetic.OneIndexView
+	OneIndexView.cpp
 )

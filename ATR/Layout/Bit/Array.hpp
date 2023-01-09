@@ -1,23 +1,19 @@
 export module ATR:Layout.Bit.Array;
 
-import :Layout.Bit.Access;
 import :Layout.Bit.ElementReference;
+import :Layout.Bit.Reference;
 import :Layout.Bit.Iterator;
-import :Layout.Bit.Types;
 
-import Meta.Size;
-import Meta.Token;
-import Meta.Bit.ByteSize;
-import Meta.Byte.Buffer;
-import Meta.Bit.SetOnes;
-import Meta.Bit.Count;
 import Meta.Byte.Count;
+import Meta.Arithmetic.BitIndex;
+import Meta.Byte.Size;
+import Meta.Size;
+import Meta.Arithmetic.Integer;
+import Meta.Byte.Buffer;
 
 import Std;
 
-using ::Meta::IndexToken;
-using ::Meta::Sequence;
-using ::Meta::USize;
+using namespace ::Meta::Literals;
 
 export namespace
 	ATR::Bit
@@ -25,413 +21,343 @@ export namespace
 	template
 		<	typename
 				t_tArray
-		>
-	auto constexpr
-	(	IteratorAt
-	)	(	t_tArray
-			&&	i_rArray
-		,	USize
-				i_nIndex
-		)
-	->	std::remove_reference_t<t_tArray>::iterator
-	{
-		using Array = std::remove_reference_t<t_tArray>;
-		if	(i_nIndex > Array::Extent)
-			::std::unreachable();
-
-		auto const
-			vTotalOffset
-		=	i_nIndex
-		*	static_cast<USize>(Array::Size)
-		+	static_cast<USize>(Array::Offset)
-		;
-
-		auto const
-			vByteOffset
-		=	vTotalOffset
-		/	::Meta::Bit::ByteSize.get()
-		;
-
-		auto const
-			vBitOffset
-		=	vTotalOffset
-		%	::Meta::Bit::ByteSize.get()
-		;
-
-		return
-		typename Array::iterator
-		{	::std::next(+i_rArray.m_aUnderlyingArray, static_cast<SSize>(vByteOffset))
-		,	static_cast<Array::MaskType>(Array::ZeroOffsetMask.Value << vBitOffset)
-		};
-	}
-
-	template
-		<	typename
-				t_tArray
-		,	ESize
+		,	::Meta::BitSize
 				t_nSize
-		,	USize
+		,	::Meta::USize
 				t_nExtent
-		,	EOffset
+		,	::Meta::Arithmetic::BitIndex<1_byte>
 				t_nOffset
 		>
 	struct
 		Array
 	{
-		static auto constexpr Size = t_nSize;
-		static auto constexpr Extent = t_nExtent;
-		static auto constexpr Offset = t_nOffset;
+		static auto constexpr
+			ElementSize
+		=	t_nSize
+		;
+		static auto constexpr
+			Extent
+		=	t_nExtent
+		;
+		static auto constexpr
+			Offset
+		=	t_nOffset
+		;
 
-		static_assert
-		(	t_nSize
-		>	ESize{}
-		,	"Cannot form a reference to BitFields of length 0!"
-		);
-
-		static_assert
-		(	static_cast<USize>(t_nOffset)
-		<	::Meta::Bit::ByteSize.get()
-		,	"Bit::ArrayReference not properly aligned! Expected maximum offset below Bits per Byte!"
-		);
-
-		static Bits constexpr
-			BitCount
-		{	static_cast<USize>(t_nSize)
+		static Meta::BitSize constexpr
+			BitSize
+		{	ElementSize
 		*	t_nExtent
 		};
 
 		static auto constexpr
 			BufferSize
-		=	BitFieldBufferSize
-			(	t_nSize
-			,	t_nOffset
-			,	t_nExtent
-			)
-		;
-
-		static EOffset constexpr
-			MaximumOffset
-		{	// include offset of one-past-the-end for end() iterator value
-			Meta::InjectSequence<t_nExtent + 1uz>
-			(	[]	(	USize
-							i_nIndex
-					)
-				{	return
-					(	(	static_cast<USize>(t_nSize)
-						*	i_nIndex
-						+	static_cast<USize>(t_nOffset)
-						)
-					%	::Meta::Bit::ByteSize.get()
-					);
-				}
-			,	[]	(	auto
-						...	i_nOffset
-					)
-				{	return
-					::std::max
-					({	i_nOffset
-						...
-					});
-				}
-			)
-		};
-		using BitAccess = Access<t_nSize, MaximumOffset>;
-		using MaskType = typename BitAccess::BufferFieldType;
-
-		static auto constexpr
-			ZeroOffsetMask
-		=	Meta::Bit::SetOnes
-			(	Meta::Bits{static_cast<USize>(t_nSize)}
-			)
+		=	ElementSize
+		*	t_nExtent
+		+	t_nOffset
 		;
 
 		t_tArray
 			m_aUnderlyingArray
 		;
 
-		using reference = ElementReference<::std::remove_pointer_t<decltype(+m_aUnderlyingArray)>, t_nSize, MaximumOffset>;
-		using difference_type = SSize;
-		using value_type = typename BitAccess::FieldType;
-		using iterator = Iterator<::std::remove_pointer_t<decltype(+m_aUnderlyingArray)>, t_nSize, MaximumOffset>;
-
-		auto constexpr
-		(	operator[]
-		)	(	USize
-					i_nIndex
-			)	&
-		->	reference
-		{	return *IteratorAt(*this, i_nIndex);	}
-
-		auto constexpr
-		(	operator[]
-		)	(	USize
-					i_nIndex
-			)	const&
-		->	value_type
-		{	return *IteratorAt(*this, i_nIndex);	}
-
-		auto constexpr
-		(	operator[]
-		)	(	USize
-					i_nIndex
-			)	&&
-		->	value_type
-		{	return *IteratorAt(::std::move(*this), i_nIndex);	}
-
-		template
-			<	typename
-					t_tTarget
+		using
+			BufferElement
+		=	::std::remove_pointer_t
+			<	decltype(+m_aUnderlyingArray)
 			>
-		auto constexpr
-		(	CastTo
-		)	()	const
-		->	t_tTarget
-			requires
-			(	BufferSize
-			<=	SizeOf<t_tTarget>
+		;
+
+		static auto constexpr
+			MaximumOffset
+		{	[]	<	::std::size_t
+					...	t_npIndex
+				>(	::std::index_sequence<t_npIndex...>
+				)
+			{	return
+				::std::max
+				({	FloorCast<::Meta::ByteSize>
+					(	ElementSize
+					*	t_npIndex
+					+	Offset
+					)
+				.	Remainder
+					...
+				});
+			}(	// include offset of one-past-the-end for end() iterator value
+				::std::make_index_sequence<Extent + 1uz>{}
 			)
-		{
-			t_tTarget const
-				vField
-			{	::Meta::Byte::BufferFor<t_tTarget>
-				{	{	+m_aUnderlyingArray
-					,	BufferSize.get()
-					}
-				}
+		};
+
+		using
+			iterator
+		=	Iterator
+			<	BufferElement
+			,	ElementSize
+			,	MaximumOffset
+			>
+		;
+		using
+			const_iterator
+		=	Iterator
+			<	BufferElement const
+			,	ElementSize
+			,	MaximumOffset
+			>
+		;
+		using
+			reference
+		=	typename
+				iterator
+			::	reference
+		;
+		using
+			difference_type
+		=	typename
+				iterator
+			::	difference_type
+		;
+		using
+			value_type
+		=	typename
+				iterator
+			::	value_type
+		;
+
+		[[nodiscard]]
+		auto constexpr
+		(	begin
+		)	()
+			noexcept
+		->	iterator
+		{	return
+			iterator
+			{	+m_aUnderlyingArray
+			,	Offset
 			};
-			return
-			static_cast<t_tTarget>
-			(	(	vField
-				>>	static_cast<t_tTarget>(t_nOffset)
-				)
-			bitand
-				static_cast<t_tTarget>
-				(	Meta::Bit::SetOnes(BitCount).Value
-				)
-			);
 		}
 
+		[[nodiscard]]
+		auto constexpr
+		(	begin
+		)	()	const
+			noexcept
+		->	const_iterator
+		{	return
+			const_iterator
+			{	+m_aUnderlyingArray
+			,	Offset
+			};
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	end
+		)	()
+			noexcept
+		->	iterator
+		{	return
+				begin()
+			+	static_cast<difference_type>(t_nExtent)
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	end
+		)	()	const
+			noexcept
+		->	const_iterator
+		{	return
+				begin()
+			+	static_cast<difference_type>(t_nExtent)
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	difference_type
+					i_nIndex
+			)	&
+			noexcept
+		->	reference
+		{	return begin()[i_nIndex];	}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	difference_type
+					i_nIndex
+			)	const&
+			noexcept
+		->	value_type
+		{	return begin()[i_nIndex];	}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	difference_type
+					i_nIndex
+			)	&&
+			noexcept
+		->	value_type
+		{	return begin()[i_nIndex];	}
+
+		[[nodiscard]]
+		auto constexpr
+		(	get
+		)	()	const
+			noexcept
+		->	auto
+		{	return
+				Reference
+				<	BitSize
+				,	Offset
+				>
+			::	Read
+				(	+
+					m_aUnderlyingArray
+				)
+			;
+		}
+
+		[[nodiscard]]
 		auto constexpr
 		(	all
 		)	()	const
+			noexcept
 		->	bool
-			requires requires
-			{
-				typename UInt<BitCount>;
-			}
-		{
-			using tField = UInt<BitCount>;
-			auto const
-				vField
-			=	CastTo<tField>()
+		{	return
+				get()
+			==	compl
+				decltype(get())
+				{}
 			;
-			return vField == Meta::Bit::SetOnes(BitCount).Value;
 		}
 
+		[[nodiscard]]
 		auto constexpr
 		(	any
 		)	()	const
+			noexcept
 		->	bool
-			requires requires
-			{
-				typename UInt<BitCount>;
-			}
-		{
-			using tField = UInt<BitCount>;
-			auto const
-				vField
-			=	CastTo<tField>()
+		{	return
+				get()
+			!=	decltype(get())
+				{}
 			;
-			return vField != tField{};
 		}
 
+		[[nodiscard]]
 		auto constexpr
 		(	none
 		)	()	const
+			noexcept
 		->	bool
-			requires requires
-			{
-				typename UInt<BitCount>;
-			}
-		{
-			using tField = UInt<BitCount>;
-			auto const
-				vField
-			=	CastTo<tField>()
+		{	return
+				get()
+			==	decltype(get())
+				{}
 			;
-			return vField == tField{};
 		}
 	};
 
 	template
-		<	ESize
+		<	::Meta::BitSize
 				t_nSize
-		,	USize
+		,	::Meta::USize
 				t_nExtent
-		,	EOffset
+		,	::Meta::Arithmetic::BitIndex<1_byte>
 				t_nOffset
-			=	EOffset{0}
+			=	0_bdx
 		>
-	struct
+	using
 		ArrayReference
-	:	Array
+	=	Array
 		<	::std::byte* const
 		,	t_nSize
 		,	t_nExtent
 		,	t_nOffset
 		>
-	{
-		friend auto constexpr
-		(	begin
-		)	(	ArrayReference
-					i_vArray
-			)
-		->	decltype(auto)
-		{	return IteratorAt(i_vArray, 0z);	}
-
-		friend auto constexpr
-		(	end
-		)	(	ArrayReference
-					i_vArray
-			)
-		->	decltype(auto)
-		{	return IteratorAt(i_vArray, t_nExtent);	}
-	};
+	;
 
 	template
-		<	ESize
+		<	::Meta::BitSize
 				t_nSize
-		,	USize
+		,	::Meta::USize
 				t_nExtent
-		,	EOffset
+		,	::Meta::Arithmetic::BitIndex<1_byte>
 				t_nOffset
-			=	EOffset{0}
 		>
-	struct
+	using
 		ArrayConstReference
-	:	Array
+	=	Array
 		<	::std::byte const* const
 		,	t_nSize
 		,	t_nExtent
 		,	t_nOffset
 		>
-	{
-		friend auto constexpr
-		(	begin
-		)	(	ArrayConstReference
-					i_vArray
-			)
-		->	decltype(auto)
-		{	return IteratorAt(i_vArray, 0z);	}
-
-		friend auto constexpr
-		(	end
-		)	(	ArrayConstReference
-					i_vArray
-			)
-		->	decltype(auto)
-		{	return IteratorAt(i_vArray, t_nExtent);	}
-	};
+	;
 
 	template
-		<	ESize
+		<	::Meta::BitSize
 				t_nSize
-		,	USize
+		,	::Meta::USize
 				t_nExtent
 		>
-	struct
+	using
 		ArrayValue
-	:	Array
-		<	BitFieldBuffer
+	=	Array
+		<	::Meta::Byte::Buffer
 			<	t_nSize
-			,	EOffset{0}
-			,	t_nExtent
+			*	t_nExtent
 			>
 		,	t_nSize
 		,	t_nExtent
-		,	EOffset{0}
+		,	0_bdx
 		>
-	{
-		friend auto constexpr
-		(	begin
-		)	(	ArrayValue
-				&	i_rArray
-			)
-		->	decltype(auto)
-		{	return IteratorAt(i_rArray, 0z);	}
-
-		friend auto constexpr
-		(	end
-		)	(	ArrayValue
-				&	i_rArray
-			)
-		->	decltype(auto)
-		{	return IteratorAt(i_rArray, t_nExtent);	}
-	};
+	;
 
 	template
-		<	ESize
+		<	::Meta::BitSize
 				t_nSize
-		,	USize
+		,	::Meta::USize
 				t_nExtent
-		,	EOffset
+		,	::Meta::Arithmetic::BitIndex<1_byte>
 				t_nOffset
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	CopyArray
-	)	(	::std::byte const
-			*	i_aBuffer
+	)	(	ArrayConstReference<t_nSize, t_nExtent, t_nOffset>
+				i_vBuffer
 		)
+		noexcept
 	->	ArrayValue<t_nSize, t_nExtent>
 	{
 		// optimization using bit shift of an integer type
 		if	constexpr
-			(	auto constexpr
-				nBufferSize
-			=	BitFieldBufferSize
-				(	t_nSize
-				,	t_nOffset
-				,	t_nExtent
-				)
-			;	nBufferSize
-			<=	SizeOf<UIntMax>
+			(	i_vBuffer.BufferSize
+			<=	::Meta::Byte::SizeOf<::Meta::UIntMax>
 			)
 		{
-			auto const
-				nInteger
-			=	Access
-				<	ESize{static_cast<USize>(t_nSize) * t_nExtent}
-				,	t_nOffset
-				>
-			::	ReadField
-				(	i_aBuffer
-				)
-			;
-
 			return
 			ArrayValue<t_nSize, t_nExtent>
-			{	::Meta::Byte::Buffer
-				(	nInteger
-				)
+			{	i_vBuffer
+			.	get()
+			.	m_vValue
 			};
 		}
 		else
 		{
-			ArrayConstReference
-			<	t_nSize
-			,	t_nExtent
-			,	t_nOffset
-			>	const
-				rReference
-			{	i_aBuffer
-			};
 			ArrayValue<t_nSize, t_nExtent>
 				vResult
 			{};
 			::std::copy
-			(	begin(rReference)
-			,	end(rReference)
-			,	begin(vResult)
+			(	i_vBuffer.begin()
+			,	i_vBuffer.end()
+			,	vResult.begin()
 			);
 			return
 				vResult

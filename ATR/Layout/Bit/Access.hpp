@@ -1,153 +1,142 @@
 export module ATR:Layout.Bit.Access;
 
-import :Layout.Bit.Types;
-
-import Meta.Size;
 import Meta.Byte.OutSpan;
-import Meta.Byte.Buffer;
-import Meta.Bit.ByteSize;
-import Meta.Bit.SetOnes;
-import Meta.Bit.Count;
+import Meta.Byte.Size;
 import Meta.Arithmetic.Integer;
-import Meta.Byte.Count;
+import Meta.Arithmetic.BitField;
+import Meta.Byte.InSpan;
+import Meta.Arithmetic.BitIndex;
 
 import Std;
 
-using ::Meta::UInt;
-using ::Meta::UIntMax;
-using ::Meta::USize;
-using ::Meta::Bits;
-using ::Meta::Bytes;
-using ::Meta::Byte::SizeOf;
-
-static_assert
-(	::std::endian::native
-==	::std::endian::little
-,	"Big Endian not yet supported for Bit::Access!"
-);
+using namespace ::Meta::Literals;
 
 export namespace
 	ATR::Bit
 {
 	template
-		<	ESize
+		<	::Meta::BitSize
 				t_nSize
-		,	EOffset
+		,	::Meta::Arithmetic::BitIndex<1_byte>
 				t_nMaxOffset
 		>
 	struct
 		Access final
 	{
-		static_assert
-		(	static_cast<USize>(t_nMaxOffset)
-		<	::Meta::Bit::ByteSize.get()
-		,	"Bit::Access not properly aligned! Expected maximum offset below Bits per Byte!"
-		);
+		using
+			FieldType
+		=	::Meta::Arithmetic::BitField
+			<	t_nSize
+			>
+		;
 
-		static_assert
-		(	static_cast<USize>(t_nSize)
-		>	0uz
-		,	"Bit::Access cannot access a bit field of length 0!"
-		);
-
-		static auto constexpr
+		static ::Meta::ByteSize constexpr
 			BufferByteSize
-		=	BitFieldBufferSize
-			(	t_nSize
-			,	t_nMaxOffset
-			)
+		=	t_nSize
+		+	t_nMaxOffset
 		;
 
 		static_assert
 		(	BufferByteSize
-		<=	SizeOf<USize>
-		,	"Bit Buffers greater than USize not yet supported!"
+		<=	::Meta::Byte::SizeOf<::Meta::UIntMax>
+		,	"Bit Buffers greater than UIntMax not yet supported!"
 		);
 
-		static Bits constexpr
-			BufferBitSize
-		=	BufferByteSize
+		using
+			BufferFieldType
+		=	::Meta::Arithmetic::BitField
+			<	BufferByteSize
+			>
 		;
 
-		static_assert
-		(	requires
-			{	typename
-				::Meta::UInt
-				<	BufferBitSize
-				>;
-			}
-		,	"Exceeded supported amount of bits per bit buffer!"
-		);
-
-		using BufferFieldType = UInt<BufferBitSize>;
-
-		static auto constexpr
-			BitFieldMask
-		=	static_cast
-			<	BufferFieldType
-			>(	Meta::Bit::SetOnes(Meta::Bits{static_cast<USize>(t_nSize)}).Value
-			)
+		using
+			OffsetType
+		=	::Meta::Arithmetic::BitIndex
+			<	1_bit
+			+	t_nMaxOffset
+			>
 		;
 
 		[[nodiscard]]
 		static auto constexpr
-		(	CastToField
-		)	(	BufferFieldType
-					i_vBufferField
+		(	OffsetMask
+		)	(	::Meta::Arithmetic::BitIndex<1_byte>
+					i_nOffset
 			)
-		->	decltype(auto)
-		{
-			if	constexpr
-				(	static_cast<USize>(t_nSize)
-				==	1uz
-				)
-				return
-				static_cast<bool>
-				(	i_vBufferField
-				);
-			else
-				return
-				static_cast
-				<	UInt<Bits{static_cast<USize>(t_nSize)}>
-				>(	i_vBufferField
-				);
-		}
-
-		using FieldType = decltype(CastToField(0));
-
-		static auto constexpr
-		(	BitOffset
-		)	(	BufferFieldType
-					i_nMask
-			)
+			noexcept
 		->	BufferFieldType
-		{
-			if	constexpr
-				(	t_nSize
-				==	ESize{1}
+		{	return
+				compl
+				FieldType
+				{}
+			<<	static_cast<OffsetType>
+				(	i_nOffset
 				)
-			{
-				return 0uz;
-			}
-			else
-			{
-				if	(i_nMask == 0)
-					::std::unreachable();
-
-				return static_cast<BufferFieldType>(::std::countr_zero(i_nMask));
-			}
+			;
 		}
 
+		[[nodiscard]]
 		static auto constexpr
-		(	RealBufferSize
+		(	MaskOffset
 		)	(	BufferFieldType
 					i_nMask
 			)
-		->	Bytes
+			noexcept
+		->	OffsetType
 		{	return
-			BitFieldBufferSize
-			(	t_nSize
-			,	static_cast<EOffset>(BitOffset(i_nMask))
+			static_cast<OffsetType>
+			(	IndexLowestOne
+				(	i_nMask
+				)
+			);
+		}
+
+	private:
+		[[nodiscard]]
+		static auto constexpr
+		(	ReadField
+		)	(	::std::byte const
+				*	i_aBuffer
+			,	OffsetType
+					i_nOffset
+			,	BufferFieldType
+					i_nMask
+			)
+			noexcept
+		->	FieldType
+		{	BufferFieldType
+				vBufferField
+			{	{	i_aBuffer
+				,	t_nSize
+				+	i_nOffset
+				}
+			};
+
+			vBufferField &= i_nMask;
+			vBufferField >>= i_nOffset;
+
+			return
+			static_cast<FieldType>
+			(	vBufferField
+			);
+		}
+
+	public:
+		[[nodiscard]]
+		static auto constexpr
+		(	ReadField
+		)	(	::std::byte const
+				*	i_aBuffer
+			,	::Meta::Arithmetic::BitIndex<1_byte>
+					i_nOffset
+			)
+			noexcept
+		->	FieldType
+		{	return
+			ReadField
+			(	i_aBuffer
+			,	static_cast<OffsetType>(i_nOffset)
+			,	OffsetMask(i_nOffset)
 			);
 		}
 
@@ -158,26 +147,91 @@ export namespace
 				*	i_aBuffer
 			,	BufferFieldType
 					i_nMask
-				=	BitFieldMask
 			)
+			noexcept
 		->	FieldType
-		{
-			if	(i_nMask == 0)
-				::std::unreachable();
+		{	return
+			ReadField
+			(	i_aBuffer
+			,	MaskOffset
+				(	i_nMask
+				)
+			,	i_nMask
+			);
+		}
 
-			BufferFieldType
-				vBufferField
-			{	::Meta::Byte::BufferFor<BufferFieldType>
-				{	{	i_aBuffer
-					,	RealBufferSize(i_nMask)
-					}
-				}
+	private:
+		static auto constexpr
+		(	WriteField
+		)	(	FieldType
+					i_vValue
+			,	::std::byte
+				*	i_aBuffer
+			,	OffsetType
+					i_nOffset
+			,	BufferFieldType
+					i_nMask
+			)
+			noexcept
+		->	void
+		{
+			::Meta::Byte::OutSpan
+				vBuffer
+			{	i_aBuffer
+			,	t_nSize
+			+	i_nOffset
 			};
 
-			vBufferField &= i_nMask;
-			vBufferField >>= BitOffset(i_nMask);
+			auto const
+				vBufferField
+			=	BufferFieldType
+				{	::Meta::Byte::InSpan
+					{	vBuffer
+					}
+				}
+			bitand
+				compl
+				i_nMask
+			;
 
-			return CastToField(vBufferField);
+			auto const
+				vSetMask
+			=	i_vValue
+			<<	i_nOffset
+			;
+
+			(	vBuffer
+			=	(	vBufferField
+				bitor
+					vSetMask
+				)
+			.	m_vValue
+			);
+		}
+
+	public:
+		static auto constexpr
+		(	WriteField
+		)	(	FieldType
+					i_vValue
+			,	::std::byte
+				*	i_aBuffer
+			,	::Meta::Arithmetic::BitIndex<1_byte>
+					i_nOffset
+			)
+			noexcept
+		->	void
+		{	return
+			WriteField
+			(	i_vValue
+			,	i_aBuffer
+			,	static_cast<OffsetType>
+				(	i_nOffset
+				)
+			,	OffsetMask
+				(	i_nOffset
+				)
+			);
 		}
 
 		static auto constexpr
@@ -188,59 +242,18 @@ export namespace
 				*	i_aBuffer
 			,	BufferFieldType
 					i_nMask
-				=	BitFieldMask
 			)
+			noexcept
 		->	void
-		{
-			if	(i_nMask == 0)
-				::std::unreachable();
-
-			auto const
-				vBufferField
-			=	static_cast<BufferFieldType>
-				(	static_cast<BufferFieldType>
-					(	::Meta::Byte::BufferFor<BufferFieldType>
-						{	{	i_aBuffer
-							,	RealBufferSize(i_nMask)
-							}
-						}
-					)
-				bitand
-					static_cast<BufferFieldType>
-					(	compl i_nMask
-					)
+		{	return
+			WriteField
+			(	i_vValue
+			,	i_aBuffer
+			,	MaskOffset
+				(	i_nMask
 				)
-			;
-
-			auto const
-				vSetMask
-			{	(t_nSize == ESize{1})
-			?	// optimization for bool
-				static_cast<BufferFieldType>
-				(	i_vValue * i_nMask
-				)
-			:	static_cast<BufferFieldType>
-				(	static_cast<BufferFieldType>
-					(	static_cast<BufferFieldType>(i_vValue)
-					<<	BitOffset(i_nMask)
-					)
-				bitand
-					i_nMask
-				)
-			};
-
-				::Meta::Byte::OutSpan
-				{	i_aBuffer
-				,	RealBufferSize(i_nMask)
-				}
-			=	::Meta::Byte::Buffer
-				{	static_cast<BufferFieldType>
-					(	vBufferField
-					bitor
-						vSetMask
-					)
-				}
-			;
+			,	i_nMask
+			);
 		}
 	};
 }

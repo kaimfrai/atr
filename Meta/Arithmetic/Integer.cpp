@@ -1,71 +1,79 @@
 export module Meta.Arithmetic.Integer;
 
-import Meta.Bit.Count;
-import Meta.Byte.Count;
+import Meta.Byte.Size;
 
 import Std;
 
-template<::std::size_t>
-auto MapUInt() = delete;
+using ::Meta::Byte::SizeOf;
+
+template<::Meta::ByteSize>
+auto MapSInt() = delete;
 
 template<>
-auto MapUInt
-	<sizeof(::std::uint_least8_t )>()
-{	return ::std::uint_least8_t{}; }
+auto MapSInt
+	<SizeOf<::std::int_least8_t>>()
+{	return ::std::int_least8_t{}; }
 
 template<>
-auto MapUInt
-	<sizeof(::std::uint_least16_t)>()
-{	return ::std::uint_least16_t{}; }
+auto MapSInt
+	<SizeOf<::std::int_least16_t>>()
+{	return ::std::int_least16_t{}; }
 
 template<>
-auto MapUInt
-	<sizeof(::std::uint_least32_t)>()
-{	return ::std::uint_least32_t{}; }
+auto MapSInt
+	<SizeOf<::std::int_least32_t>>()
+{	return ::std::int_least32_t{}; }
 
 template<>
-auto MapUInt
-	<sizeof(::std::uint_least64_t)>()
-{	return ::std::uint_least64_t{}; }
+auto MapSInt
+	<SizeOf<::std::int_least64_t>>()
+{	return ::std::int_least64_t{}; }
+
+template<>
+auto MapSInt
+	<SizeOf<__int128>>()
+{	return __int128{};	}
 
 export namespace
 	Meta
 {
 	template
-		<	Bits
-				t_nBits
+		<	ByteSize
+				t_nSize
 		>
 	using
-		UInt
+		SInt
 	=	decltype
-		(	::MapUInt
-			<	Bytes(t_nBits)
-			.	Ceil()
-			.	get()
+		(	::MapSInt
+			<	CeilPower2
+				(	t_nSize
+				)
 			>()
 		)
 	;
 
 	using
-		UIntMax
-	=	::std::uintmax_t
+		SIntMax
+	=	::std::intmax_t
 	;
 
 	template
-		<	Bits
-				t_nBits
+		<	ByteSize
+				t_nSize
 		>
 	using
-		SInt
-	=	::std::make_signed_t
-		<	UInt<t_nBits>
+		UInt
+	=	::std::make_unsigned_t
+		<	SInt
+			<	t_nSize
+			>
 		>
 	;
 
 	using
-		SIntMax
-	=	::std::make_signed_t
-		<	UIntMax
+		UIntMax
+	=	::std::make_unsigned_t
+		<	SIntMax
 		>
 	;
 }

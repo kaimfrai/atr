@@ -1,9 +1,13 @@
 import ATR;
 
-import Meta.Bit.Count;
+import Meta.Bit.Size;
 import Meta.Arithmetic.Integer;
+import Meta.Arithmetic.BitField;
+import Meta.Arithmetic.BitIndex;
 
 import Std;
+
+using ::Meta::Arithmetic::BitField;
 
 using namespace ::Meta::Literals;
 
@@ -21,12 +25,12 @@ namespace ATR
 		>
 	+	Member
 		<	"2BitField31"
-		,	BitField<31_bits>
+		,	BitField<31_bit>
 		>
 	+	Member
 		<	"3MutBitField31"
 		,	Mut
-			<	BitField<31_bits>
+			<	BitField<31_bit>
 			>
 		>
 	>	extern
@@ -40,8 +44,6 @@ using namespace ATR::Literals;
 using ATR::Bit::Reference;
 using ::Meta::UInt;
 
-using Offset = ::ATR::Bit::EOffset;
-using Size = ::ATR::Bit::ESize;
 using BitFieldTest = ::ATR::Type<"BitFieldTest">;
 
 static_assert
@@ -57,7 +59,7 @@ static_assert
 			[	"0BoolBit"_ID
 			]
 		)
-	,	Reference<Size{1}, Offset{0}>
+	,	Reference<1_bit, 0_bdx>
 	>
 );
 
@@ -68,7 +70,9 @@ static_assert
 			[	"0BoolBit"_ID
 			]
 		)
-	,	bool
+	,	//TODO make this bool
+		//bool
+		BitField<1_bit>
 	>
 );
 
@@ -79,7 +83,9 @@ static_assert
 			[	"0BoolBit"_ID
 			]
 		)
-	,	bool
+	,	//TODO make this bool
+		//bool
+		BitField<1_bit>
 	>
 );
 
@@ -90,7 +96,8 @@ static_assert
 			[	"1MutBoolBit"_ID
 			]
 		)
-	,	Reference<Size{1}, Offset{1}>
+	,	//TODO make this bool
+		Reference<1_bit, 1_bdx>
 	>
 );
 
@@ -101,7 +108,8 @@ static_assert
 			[	"1MutBoolBit"_ID
 			]
 		)
-	,	Reference<Size{1}, Offset{1}>
+	,	//TODO make this bool
+		Reference<1_bit, 1_bdx>
 	>
 );
 
@@ -112,7 +120,9 @@ static_assert
 			[	"1MutBoolBit"_ID
 			]
 		)
-	,	bool
+	,	//TODO make this bool
+		//bool
+		BitField<1_bit>
 	>
 );
 
@@ -123,7 +133,7 @@ static_assert
 			[	"2BitField31"_ID
 			]
 		)
-	,	Reference<Size{31}, Offset{2}>
+	,	Reference<31_bit, 2_bdx>
 	>
 );
 
@@ -134,7 +144,7 @@ static_assert
 			[	"2BitField31"_ID
 			]
 		)
-	,	UInt<31_bits>
+	,	BitField<31_bit>
 	>
 );
 
@@ -145,7 +155,7 @@ static_assert
 			[	"2BitField31"_ID
 			]
 		)
-	,	UInt<31_bits>
+	,	BitField<31_bit>
 	>
 );
 
@@ -156,7 +166,7 @@ static_assert
 			[	"3MutBitField31"_ID
 			]
 		)
-	,	Reference<Size{31}, Offset{1}>
+	,	Reference<31_bit, 1_bdx>
 	>
 );
 
@@ -167,7 +177,7 @@ static_assert
 			[	"3MutBitField31"_ID
 			]
 		)
-	,	Reference<Size{31}, Offset{1}>
+	,	Reference<31_bit, 1_bdx>
 	>
 );
 
@@ -178,6 +188,6 @@ static_assert
 			[	"3MutBitField31"_ID
 			]
 		)
-	,	UInt<31_bits>
+	,	BitField<31_bit>
 	>
 );

@@ -1,22 +1,22 @@
-import Meta.Arithmetic.BitIndexIterator;
+import Meta.Arithmetic.OneIndexIterator;
 import Meta.Arithmetic.BitIndex;
 import Meta.Arithmetic.BitField;
-import Meta.Byte.Count;
+import Meta.Byte.Size;
 
 import Std;
 
-auto constexpr BitSize = ::Meta::Byte::SizeOf<decltype(0uz)>;
+auto constexpr BitCount = ::Meta::Byte::SizeOf<decltype(0uz)> / 2z;
 
-using BitField = ::Meta::Arithmetic::BitField<BitSize>;
-using BitIndex = ::Meta::Arithmetic::BitIndex<BitSize>;
-using Iterator =::Meta::Arithmetic::BitIndexIterator<BitSize>;
-using ::Meta::Arithmetic::BitIndexSentinel;
+using BitField = ::Meta::Arithmetic::BitField<BitCount>;
+using BitIndex = ::Meta::Arithmetic::BitIndex<BitCount>;
+using Iterator =::Meta::Arithmetic::OneIndexIterator<BitCount>;
+using ::Meta::Arithmetic::OneIndexSentinel;
 
 static_assert(std::forward_iterator<Iterator>);
-static_assert(std::sentinel_for<BitIndexSentinel, Iterator>);
+static_assert(std::sentinel_for<OneIndexSentinel, Iterator>);
 
-static_assert(Iterator{BitField{1uz}} != BitIndexSentinel{});
-static_assert(Iterator{BitField{0uz}} == BitIndexSentinel{});
+static_assert(Iterator{BitField{1uz}} != OneIndexSentinel{});
+static_assert(Iterator{BitField{0uz}} == OneIndexSentinel{});
 
 static_assert
 (	*Iterator{BitField{0b0000000000000001uz}}

@@ -9,7 +9,6 @@ export import :Layout.Bit.Iterator;
 export import :Layout.Bit.Layout;
 export import :Layout.Bit.MemberOffset;
 export import :Layout.Bit.Reference;
-export import :Layout.Bit.Types;
 export import :Layout.Bit.View;
 export import :Layout.Concept;
 export import :Layout.Data;

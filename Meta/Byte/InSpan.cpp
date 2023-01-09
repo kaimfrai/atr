@@ -1,5 +1,6 @@
 export module Meta.Byte.InSpan;
 
+import Meta.Byte.Size;
 import Meta.Byte.Count;
 import Std;
 
@@ -17,14 +18,15 @@ export namespace
 
 		explicit(false) constexpr
 		(	InSpan
-		)	(	::std::byte const*
-					i_aBegin
-			,	Bytes
-					i_nCount
+		)	(	::std::byte const
+				*	i_aBegin
+			,	ByteSize
+					i_nSize
 			)
 		:	InSpan
 			{	i_aBegin
-			,	i_nCount.get()
+			,	i_aBegin
+			+	i_nSize
 			}
 		{}
 
@@ -35,15 +37,17 @@ export namespace
 			noexcept
 		->	Bytes
 		{	return
-			{	::std::span<::std::byte const>
-			::	size()
+			{	static_cast<Bytes::CountType>
+				(	::std::span<::std::byte const>
+				::	size()
+				)
 			};
 		}
 
 		[[nodiscard]]
 		auto constexpr
 		(	subspan
-		)	(	Bytes
+		)	(	ByteSize
 					i_nOffset
 			,	Bytes
 					i_nCount
@@ -54,8 +58,8 @@ export namespace
 				vSubSpan
 			=	::std::span<::std::byte const>
 			::	subspan
-				(	i_nOffset.get()
-				,	i_nCount.get()
+				(	static_cast<::std::size_t>(i_nOffset.get())
+				,	static_cast<::std::size_t>(i_nCount.get())
 				)
 			;
 			return

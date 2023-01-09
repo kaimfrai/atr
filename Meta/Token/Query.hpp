@@ -3,17 +3,45 @@ export module Meta.Token:Query;
 export import :Specifier;
 export import :Type;
 
-import Meta.Bit.Count;
-import Meta.Bit.ByteSize;
+import Meta.Bit.Size;
+import Meta.Byte.Size;
 import Meta.Size;
 
 import Std;
+
+namespace
+	Meta::Query
+{
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoAligned
+	=	requires
+		{
+			alignof(t_tProto);
+		}
+	;
+
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoSized
+	=	requires
+		{
+			sizeof(t_tProto);
+		}
+	;
+}
 
 export namespace
 	Meta::Query
 {
 	struct
-		ArrayElement final
+		ArrayElement_Of final
 	{
 		auto constexpr
 		(	operator()
@@ -67,7 +95,7 @@ export namespace
 	};
 
 	struct
-		ArrayExtent final
+		ArrayExtent_Of final
 	{
 		auto constexpr
 		(	operator()
@@ -106,213 +134,220 @@ export namespace
 	};
 
 	struct
-		BitAlign final
+		BitAlign_Of final
 	{
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	EraseTypeToken
-			)	const
-		->	USize
-		{	return 0uz;	}
+			)
+			noexcept
+		->	BitSize
+		{	return {};	}
 
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken<bool>
-			)	const
-		->	USize
-		{	return 1uz;	}
+			)
+			noexcept
+		->	BitSize
+		{	return {1z};	}
 
 		template
-			<	typename
+			<	ProtoAligned
 					t_tMutable
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken<Specifier::Mut<t_tMutable>>
-			)	const
-		->	USize
+			)
+			noexcept
+		->	BitSize
 		{	return operator()(Type<t_tMutable>);	}
 
 		template
-			<	Bits
+			<	BitSize
 					t_nSize
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken<Specifier::BitField<t_nSize>>
-			)	const
-		->	USize
-		{
-			return 1uz;
-		}
+			)
+			noexcept
+		->	BitSize
+		{	return {1z};	}
 
 		template
-			<	typename
+			<	ProtoAligned
 					t_tEntity
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
-			)	const
-		->	decltype(alignof(t_tEntity))
-		{	return
-			(	::std::is_array_v<t_tEntity>
-			?	operator()(Type<::std::remove_all_extents_t<t_tEntity>>)
-			:	Bit::ByteSize.get() * alignof(t_tEntity)
-			);
+			)
+			noexcept
+		->	BitSize
+		{
+			if	constexpr
+				(	::std::is_const_v<t_tEntity>
+				or	::std::is_volatile_v<t_tEntity>
+				)
+			{	return
+				operator()
+				(	Type
+					<	::std::remove_cv_t
+						<	t_tEntity
+						>
+					>
+				);
+			}
+			else
+			if	constexpr
+				(	::std::is_array_v
+					<	t_tEntity
+					>
+				)
+			{	return
+				operator()
+				(	Type
+					<	::std::remove_all_extents_t
+						<	t_tEntity
+						>
+					>
+				);
+			}
+			else
+			{	return
+				ByteSize
+				{	alignof(t_tEntity)
+				};
+			}
 		}
-
-		template
-			<	typename
-					t_tEntity
-			>
-		auto constexpr
-		(	operator()
-		)	(	TypeToken<t_tEntity const>
-			)	const
-		->	USize
-		{	return operator()(Type<t_tEntity>);	}
-
-		template
-			<	typename
-					t_tEntity
-			>
-		auto constexpr
-		(	operator()
-		)	(	TypeToken<t_tEntity volatile>
-			)	const
-		->	USize
-		{	return operator()(Type<t_tEntity>);	}
-
-		template
-			<	typename
-					t_tEntity
-			>
-		auto constexpr
-		(	operator()
-		)	(	TypeToken<t_tEntity const volatile>
-			)	const
-		->	USize
-		{	return operator()(Type<t_tEntity>);	}
 	};
 
 	struct
-		BitSize final
+		BitSize_Of final
 	{
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	EraseTypeToken
-			)	const
-		->	USize
-		{	return 0uz;	}
+			)
+			noexcept
+		->	BitSize
+		{	return {};	}
 
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken<bool>
-			)	const
-		->	USize
-		{	return 1uz;	}
+			)
+			noexcept
+		->	BitSize
+		{	return {1z};	}
 
 		template
-			<	typename
+			<	ProtoSized
 					t_tMutable
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken<Specifier::Mut<t_tMutable>>
-			)	const
-		->	USize
+			)
+			noexcept
+		->	BitSize
 		{	return operator()(Type<t_tMutable>);	}
 
 		template
-			<	Bits
+			<	BitSize
 					t_nSize
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken<Specifier::BitField<t_nSize>>
-			)	const
-		->	USize
-		{	return t_nSize.get();	}
+			)
+			noexcept
+		->	BitSize
+		{	return t_nSize;	}
 
 		template
-			<	typename
+			<	ProtoSized
 					t_tEntity
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
-			)	const
-		->	decltype(sizeof(t_tEntity))
+			)
+			noexcept
+		->	BitSize
 		{
 			if	constexpr
-				(	USize constexpr
+				(	::std::is_const_v<t_tEntity>
+				or	::std::is_volatile_v<t_tEntity>
+				)
+			{	return
+				operator()
+				(	Type
+					<	::std::remove_cv_t
+						<	t_tEntity
+						>
+					>
+				);
+			}
+			else
+			if	constexpr
+				(	auto constexpr
 						nExtent
-					=	::std::extent_v<t_tEntity>
+					=	::std::extent_v
+						<	t_tEntity
+						>
 				;	nExtent
 				!=	0uz
 				)
-				return
-					nExtent
-				*	operator()
-					(	Type<::std::remove_extent_t<t_tEntity>>
+			{	return
+					operator()
+					(	Type
+						<	::std::remove_extent_t
+							<	t_tEntity
+							>
+						>
 					)
+				*	nExtent
 				;
+			}
 			else
-				return Bit::ByteSize * sizeof(t_tEntity);
+			{	return
+				ByteSize
+				{	sizeof(t_tEntity)
+				};
+			}
 		}
-
-		template
-			<	typename
-					t_tEntity
-			>
-		auto constexpr
-		(	operator()
-		)	(	TypeToken<t_tEntity const>
-			)	const
-		->	USize
-		{	return operator()(Type<t_tEntity>);	}
-
-		template
-			<	typename
-					t_tEntity
-			>
-		auto constexpr
-		(	operator()
-		)	(	TypeToken<t_tEntity volatile>
-			)	const
-		->	USize
-		{	return operator()(Type<t_tEntity>);	}
-
-		template
-			<	typename
-					t_tEntity
-			>
-		auto constexpr
-		(	operator()
-		)	(	TypeToken<t_tEntity const volatile>
-			)	const
-		->	USize
-		{	return operator()(Type<t_tEntity>);	}
 	};
 }
 
 export namespace
 	Meta
 {
-	Query::ArrayElement extern
-		ArrayElement
+	Query::ArrayElement_Of const extern
+		ArrayElement_Of
 	;
 
-	Query::ArrayExtent extern
-		ArrayExtent
+	Query::ArrayExtent_Of const extern
+		ArrayExtent_Of
 	;
 
-	Query::BitAlign extern
-		BitAlign
+	Query::BitAlign_Of const extern
+		BitAlign_Of
 	;
 
-	Query::BitSize extern
-		BitSize
+	Query::BitSize_Of const extern
+		BitSize_Of
 	;
 }

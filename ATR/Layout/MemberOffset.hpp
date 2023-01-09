@@ -3,6 +3,7 @@ export module ATR:Layout.MemberOffset;
 export import :Erase;
 
 import Meta.Size;
+import Meta.Byte.Size;
 export import Meta.Predicate;
 
 import Std;
@@ -67,7 +68,7 @@ export namespace
 			>
 		;
 
-		USize
+		::Meta::ByteSize
 			Offset
 		;
 
@@ -84,12 +85,8 @@ export namespace
 			//	we don't know where the byte pointer came from, so we need to launder it
 			::std::launder
 			(	PointerCast<ValueType>
-				(	::std::next
-					(	i_aObject
-					,	static_cast<::Meta::SSize>
-						(	Offset
-						)
-					)
+				(	i_aObject
+				+	Offset
 				)
 			);
 		}
@@ -113,7 +110,7 @@ export namespace
 
 		friend auto constexpr
 		(	operator +
-		)	(	USize
+		)	(	::Meta::ByteSize
 					i_nOffset
 			,	MemberOffset
 					i_vMemberOffset

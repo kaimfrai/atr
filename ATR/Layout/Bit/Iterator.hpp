@@ -2,17 +2,17 @@ export module ATR:Layout.Bit.Iterator;
 
 import :Layout.Bit.Access;
 import :Layout.Bit.ElementReference;
-import :Layout.Bit.Types;
 
-import Meta.Bit.LowestOne;
-import Meta.Bit.ByteSize;
 import Meta.Size;
-import Meta.Bit.Field;
+import Meta.Byte.Size;
+import Meta.Byte.Count;
+import Meta.Math.Divide;
+import Meta.Bit.Size;
+import Meta.Arithmetic.BitIndex;
 
 import Std;
 
-using ::Meta::SSize;
-using ::Meta::USize;
+using namespace ::Meta::Literals;
 
 export namespace
 	ATR::Bit
@@ -20,27 +20,47 @@ export namespace
 	template
 		<	typename
 				t_tBuffer
-		,	ESize
+		,	::Meta::BitSize
 				t_nSize
-		,	EOffset
+		,	::Meta::Arithmetic::BitIndex<1_byte>
 				t_nMaxOffset
 		>
 	struct
 		Iterator final
 	{
-		static_assert
-		(	static_cast<USize>(t_nMaxOffset)
-		<	::Meta::Bit::ByteSize.get()
-		,	"Bit::Iterator not properly aligned! Expected maximum offset below Bits per Byte!"
-		);
+		using
+			BitAccess
+		=	Access
+			<	t_nSize
+			,	t_nMaxOffset
+			>
+		;
 
-		using BitAccess = Access<t_nSize, t_nMaxOffset>;
-
-		using reference = ElementReference<t_tBuffer, t_nSize, t_nMaxOffset>;
-		using difference_type = SSize;
-		using value_type = typename BitAccess::FieldType;
-		using MaskType = typename BitAccess::BufferFieldType;
-
+		using
+			reference
+		=	ElementReference
+			<	t_tBuffer
+			,	t_nSize
+			,	t_nMaxOffset
+			>
+		;
+		using
+			difference_type
+		=	::Meta::SSize
+		;
+		using
+			value_type
+		=	typename
+				BitAccess
+			::	FieldType
+		;
+		using
+			MaskType
+		=	typename
+				BitAccess
+			::	BufferFieldType
+		;
+	private:
 		t_tBuffer
 		*	m_aUnderlyingArray
 		;
@@ -48,9 +68,61 @@ export namespace
 			m_vMask
 		;
 
+	public:
+		explicit(false) constexpr
+		(	Iterator
+		)	()
+			noexcept
+		=	default;
+
+		explicit(true) constexpr
+		(	Iterator
+		)	(	t_tBuffer
+				*	i_aUnderlyingArray
+			,	MaskType
+					i_nMask
+			)
+		:	m_aUnderlyingArray
+			{	i_aUnderlyingArray
+			}
+		,	m_vMask
+			{	i_nMask
+			}
+		{}
+
+		explicit(true) constexpr
+		(	Iterator
+		)	(	t_tBuffer
+				*	i_aUnderlyingArray
+			,	::Meta::Arithmetic::BitIndex<1_byte>
+					i_nOffset
+			)
+		:	Iterator
+			{	i_aUnderlyingArray
+			,	BitAccess
+			::	OffsetMask
+				(	i_nOffset
+				)
+			}
+		{}
+
+		[[nodiscard]]
+		explicit(false) constexpr
+		(	operator Iterator<t_tBuffer const, t_nSize, t_nMaxOffset>
+		)	()	const
+			noexcept
+		{	return
+			Iterator<t_tBuffer const, t_nSize, t_nMaxOffset>
+			{	m_aUnderlyingArray
+			,	m_vMask
+			};
+		}
+
+		[[nodiscard]]
 		auto constexpr
 		(	operator *
 		)	()	const
+			noexcept
 		->	reference
 		{	return
 			{	m_aUnderlyingArray
@@ -58,24 +130,33 @@ export namespace
 			};
 		}
 
+		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	SSize
+		)	(	difference_type
 					i_nIndex
 			)	const
+			noexcept
 		->	reference
 		{
-			auto const vOffset = (*this + i_nIndex);
+			auto const
+				vOffset
+			=	(	*this
+				+	i_nIndex
+				)
+			;
 			return
-			*	vOffset
+				*
+				vOffset
 			;
 		}
 
 		auto constexpr
 		(	operator +=
-		)	(	SSize
+		)	(	difference_type
 					i_nIncrement
 			)	&
+			noexcept
 		->	Iterator&
 		{
 			auto const
@@ -84,92 +165,104 @@ export namespace
 			;
 
 			auto const
-				vCurrentBitOffset
-			=	Meta::Bit::IndexLowestOne
-				(	Meta::Bit::Field{vMask}
+				nCurrentBitOffset
+			=	IndexLowestOne
+				(	vMask
 				)
 			;
 
 			auto const
-				vTotalBitOffset
-			=	static_cast<SSize>(vCurrentBitOffset)
-			+	static_cast<SSize>(t_nSize)
+				nTotalBitOffset
+			=	t_nSize
 			*	i_nIncrement
+			+	nCurrentBitOffset
 			;
-			(	m_aUnderlyingArray
-			=	::std::next
-				(	m_aUnderlyingArray
-				,	(	vTotalBitOffset
-					/	static_cast<SSize>(::Meta::Bit::ByteSize.get())
-					)
-				-	// subract one more if the remainder is negative
-					static_cast<SSize>
-					(	(vTotalBitOffset % static_cast<SSize>(::Meta::Bit::ByteSize.get()))
-					<	0z
-					)
+			auto const
+			[	nByteOffset
+			,	nNewBitOffset
+			]=	FloorCast<::Meta::ByteSize>
+				(	nTotalBitOffset
 				)
-			);
+			;
 
-			static_assert
-			(	::std::numeric_limits<USize>::max()
-			%	::Meta::Bit::ByteSize.get()
-			==	::Meta::Bit::ByteSize.get() - 1uz
-			,	"The following optimization is invalid."
+			(	m_aUnderlyingArray
+			+=	nByteOffset
 			);
 
 			(	m_vMask
-			= 	::std::rotl
-				(	vMask
-				,	static_cast<unsigned int>
-					(	static_cast<USize>(vTotalBitOffset) % ::Meta::Bit::ByteSize.get()
-					-	vCurrentBitOffset
-					)
+			=	BitAccess
+			::	OffsetMask
+				(	nNewBitOffset
 				)
 			);
 
-			return *this;
+			return
+				*this
+			;
 		}
 
 		auto constexpr
 		(	operator -=
-		)	(	SSize
+		)	(	difference_type
 					i_nDecrement
 			)	&
+			noexcept
 		->	Iterator&
-		{
-			return operator+=(-i_nDecrement);
+		{	return
+			(	*this
+			+=	-i_nDecrement
+			);
 		}
 
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator +
 		)	(	Iterator
 					i_vIterator
-			,	SSize
+			,	difference_type
 					i_nIncrement
 			)
+			noexcept
 		->	Iterator
-		{	return i_vIterator += i_nIncrement;	}
+		{	return
+			(	i_vIterator
+			+=	i_nIncrement
+			);
+		}
 
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator +
-		)	(	SSize
+		)	(	difference_type
 					i_nIncrement
 			,	Iterator
 					i_vIterator
 			)
+			noexcept
 		->	Iterator
-		{	return i_vIterator += i_nIncrement;	}
+		{	return
+			(	i_vIterator
+			+=	i_nIncrement
+			);
+		}
 
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator -
 		)	(	Iterator
 					i_vIterator
-			,	SSize
+			,	difference_type
 					i_nDecrement
 			)
+			noexcept
 		->	Iterator
-		{	return i_vIterator -= i_nDecrement;	}
+		{	return
+			(	i_vIterator
+			-=	i_nDecrement
+			);
+		}
 
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator -
 		)	(	Iterator
@@ -177,34 +270,21 @@ export namespace
 			,	Iterator
 					i_vRight
 			)
-		->	SSize
+			noexcept
+		->	difference_type
 		{
-			auto const
+			::Meta::ByteSize const
 				vByteDiff
-			=	static_cast<SSize>(::Meta::Bit::ByteSize.get())
-			*	(	i_vLeft.m_vReference.m_vUnderlyingArray
-				-	i_vRight.m_vReference.m_vUnderlyingArray
+			{	::std::distance
+				(	i_vLeft.m_vUnderlyingArray
+				,	i_vRight.m_vUnderlyingArray
 				)
-			;
-			auto const
-				vLeftMask
-			=	i_vLeft.m_vReference.m_vMask
-			;
+			};
 
-			auto const
-				vRightMask
-			=	i_vRight.m_vReference.m_vMask
-			;
-
-			if	(	vLeftMask == 0
-				or	vRightMask == 0
-				)
-				::std::unreachable();
-
-			SSize const
+			::Meta::BitSize const
 				vBitDiff
-			{	::std::countr_zero(vLeftMask)
-			-	::std::countr_zero(vRightMask)
+			{	IndexLowestOne(i_vLeft.m_vMask)
+			-	IndexLowestOne(i_vRight.m_vMask)
 			};
 			return
 			(	(	vByteDiff
@@ -217,6 +297,7 @@ export namespace
 		auto constexpr
 		(	operator++
 		)	()	&
+			noexcept
 		->	Iterator&
 		{	return
 			(	*this
@@ -224,9 +305,11 @@ export namespace
 			);
 		}
 
+		[[nodiscard("Use preincrement when discarding the result!")]]
 		auto constexpr
 		(	operator++
 		)	(int) &
+			noexcept
 		->	Iterator
 		{	return
 			::std::exchange
@@ -245,9 +328,11 @@ export namespace
 			);
 		}
 
+		[[nodiscard("Use predecrement when discarding the result!")]]
 		auto constexpr
 		(	operator--
 		)	(int) &
+			noexcept
 		->	Iterator
 		{	return
 			::std::exchange
@@ -256,11 +341,13 @@ export namespace
 			);
 		}
 
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator <=>
 		)	(	Iterator
 			,	Iterator
 			)
+			noexcept
 		->	::std::strong_ordering
 		=	default;
 	};

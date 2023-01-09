@@ -41,7 +41,10 @@ export namespace
 	-	(	not
 			::std::is_empty_v<Meta::Data::Object<t_tData>>
 		*	// optimize empty members to be static
-			Meta::BitAlign(Meta::Type<t_tData>)
+			Meta::BitAlign_Of
+			(	Meta::Type<t_tData>
+			)
+		.	get()
 		)
 	;
 

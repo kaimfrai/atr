@@ -28,16 +28,16 @@ struct
 		>
 	;
 
-	static USize constexpr
+	static auto constexpr
 		BitSize
-	=	::Meta::BitSize
+	=	::Meta::BitSize_Of
 		(	::Meta::Type<t_tData>
 		)
 	;
 
-	static USize constexpr
+	static auto constexpr
 		BitAlign
-	=	::Meta::BitAlign
+	=	::Meta::BitAlign_Of
 		(	::Meta::Type<t_tData>
 		)
 	;

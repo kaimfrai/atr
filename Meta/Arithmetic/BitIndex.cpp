@@ -3,6 +3,10 @@ export module Meta.Arithmetic.BitIndex;
 import Meta.Arithmetic.Literals;
 import Meta.Arithmetic.Integer;
 import Meta.Bit.Count;
+import Meta.Byte.Count;
+import Meta.Bit.Size;
+import Meta.Byte.Size;
+import Meta.Math.Divide;
 
 import Std;
 
@@ -12,53 +16,86 @@ export namespace
 	Meta::Arithmetic
 {
 	template
-		<	Bits
+		<	BitSize
 				t_nWidth
 		>
 	requires
 		(	t_nWidth
-		>	0_bits
+		>	0_bit
 		)
 	struct
 		BitIndex
 	{
 		static auto constexpr
-			Width
-		=	Bits
-			{	::std::bit_width
-				(	t_nWidth.get()
-				-	1uz
-				)
-			+	1uz
-			}
+			FieldWidth
+		=	t_nWidth
 		;
+
+		static auto constexpr
+			HighestValue
+		=	(	FieldWidth
+			-	1_bit
+			)
+		;
+		static auto constexpr
+			LowestValue
+		=	(	-
+				HighestValue
+			-	1_bit
+			)
+		;
+
+		static BitSize constexpr
+			IndexWidth
+		{	::std::bit_width
+			(	static_cast
+				<	::std::make_unsigned_t
+					<	BitSize::SizeType
+					>
+				>(	HighestValue.get()
+				)
+			)
+		};
 
 		using
 			IndexType
-		=	SInt<Width>
+		=	SInt
+			<	IndexWidth
+			+	1_bit
+			>
 		;
 
 		using
 			FieldType
-		=	UInt<t_nWidth>
+		=	UInt
+			<	FieldWidth
+			>
 		;
 
 		[[nodiscard]]
 		static auto constexpr
 		(	Sanitize
-		)	(	IndexType
+		)	(	SIntMax
 					i_nIndex
 			)
 			noexcept
 		->	IndexType
-		{	if	constexpr(t_nWidth.get() >> (Width - 1_bits))
-				return i_nIndex;
-			else
-				return
-				IndexType
+		{	if	constexpr
+				(	FieldWidth.get()
+				>>	IndexWidth.get()
+				)
+			{	return
+				static_cast<IndexType>
 				(	i_nIndex
-				%	static_cast<IndexType>(t_nWidth.get())
 				);
+			}
+			else
+			{	return
+				static_cast<IndexType>
+				(	i_nIndex
+				%	FieldWidth.get()
+				);
+			}
 		}
 
 		IndexType
@@ -100,6 +137,20 @@ export namespace
 			(void)get();
 		}
 
+		explicit(true) constexpr
+		(	BitIndex
+		)	(	BitSize
+					i_nBitSize
+			)
+			noexcept
+		:	BitIndex
+			{	Sanitize
+				(	i_nBitSize
+				.	get()
+				)
+			}
+		{}
+
 		auto constexpr
 		(	operator =
 		)	(	BitIndex const
@@ -131,23 +182,53 @@ export namespace
 		}
 
 		template
-			<	Bits
-					t_nLarger
+			<	auto
+					t_nOtherWidth
 			>
-		requires
-			(	t_nLarger
-			>	t_nWidth
-			)
+		[[nodiscard]]
+		explicit(t_nOtherWidth <= t_nWidth) constexpr
+		(	operator BitIndex<t_nOtherWidth>
+		)	()	const
+			noexcept
+		{
+			auto const
+				nValue
+			=	get()
+			;
+
+			using
+				tOtherIndex
+			=	BitIndex
+				<	t_nOtherWidth
+				>
+			;
+			if	(	nValue < tOtherIndex::LowestValue.get()
+				or	nValue > tOtherIndex::HighestValue.get()
+				)
+			{	::std::unreachable();
+			}
+
+			return
+			tOtherIndex
+			{	static_cast<tOtherIndex::IndexType>
+				(	nValue
+				)
+			};
+		}
+
+		[[nodiscard]]
 		explicit(false) constexpr
-		(	operator BitIndex<t_nLarger>
+		(	operator BitSize
 		)	()	const
 			noexcept
 		{	return
-			BitIndex<t_nLarger>
+			BitSize
 			{	get()
 			};
 		}
 
+
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator ==
 		)	(	BitIndex
@@ -157,6 +238,7 @@ export namespace
 		->	bool
 		=	default;
 
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator <=>
 		)	(	BitIndex
@@ -165,6 +247,20 @@ export namespace
 			noexcept
 		->	::std::strong_ordering
 		=	default;
+
+		[[nodiscard]]
+		friend auto constexpr
+		(	operator +
+		)	(	BitSize
+					i_nLeft
+			,	BitIndex
+					i_nRight
+			)
+			noexcept
+		->	BitSize
+		{	i_nLeft.get() += i_nRight.get();
+			return i_nLeft;
+		}
 
 		[[nodiscard]]
 		friend auto constexpr
@@ -179,8 +275,10 @@ export namespace
 		{	return
 			BitIndex
 			{	Sanitize
-				(	i_nLeft.get()
-				+	i_nRight.get()
+				(	static_cast<IndexType>
+					(	i_nLeft.get()
+					+	i_nRight.get()
+					)
 				)
 			};
 		}
@@ -230,8 +328,10 @@ export namespace
 		{	return
 			BitIndex
 			{	Sanitize
-				(	i_nLeft.get()
-				-	i_nRight.get()
+				(	static_cast<IndexType>
+					(	i_nLeft.get()
+					-	i_nRight.get()
+					)
 				)
 			};
 		}
@@ -279,7 +379,7 @@ export namespace
 			noexcept
 		->	FieldType
 		{	return
-			FieldType
+			static_cast<FieldType>
 			(	i_nField
 			>>	i_nIndex.get()
 			);
@@ -301,6 +401,12 @@ export namespace
 			;
 		}
 
+		static auto constexpr
+			ShiftedWidth
+		=	FieldWidth
+		+	HighestValue
+		;
+
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator <<
@@ -310,9 +416,12 @@ export namespace
 					i_nIndex
 			)
 			noexcept
-		->	FieldType
+		requires
+			(	ShiftedWidth
+			<=	Byte::SizeOf<UIntMax>
+			)
 		{	return
-			FieldType
+			static_cast<UInt<ShiftedWidth>>
 			(	i_nField
 			<<	i_nIndex.get()
 			);
@@ -329,8 +438,10 @@ export namespace
 		->	FieldType&
 		{	return
 				i_rField
-			=	i_rField
-			<<	i_nIndex
+			=	static_cast<FieldType>
+				(	i_rField
+				<<	i_nIndex.get()
+				)
 			;
 		}
 
@@ -365,14 +476,82 @@ export namespace
 					i_nIndex
 			)
 		->	FieldType
-		{	return
-				FieldType{1}
-			<<	i_nIndex
+		{
+			FieldType
+				nPower
+			{	1
+			};
+			return
+				nPower
+			<<=	i_nIndex
 			;
 		}
 	};
 }
 
+export namespace
+	Meta::Bit
+{
+	template
+		<	typename
+				t_tSize
+		>
+	struct
+		[[nodiscard]]
+		FloorCastResult
+	{
+		t_tSize
+			Quotient
+		;
+		using
+			RemainderType
+		=	Arithmetic::BitIndex
+			<	t_tSize{1}
+			>
+		;
+		RemainderType
+			Remainder
+		;
+
+		explicit(true) constexpr
+		(	FloorCastResult
+		)	(	BitSize
+					i_nBitSize
+			)
+		:	Quotient
+			{	Math::Divide
+				(	i_nBitSize.get()
+				,	t_tSize::Width
+				)
+			.	Floor
+				()
+			}
+		,	Remainder
+			{	i_nBitSize
+			-	Quotient
+			}
+		{}
+	};
+
+	///	ADL-enabled
+	template
+		<	typename
+				t_tSize
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	FloorCast
+	)	(	BitSize
+				i_nBitSize
+		)
+		noexcept
+	->	FloorCastResult<t_tSize>
+	{	return
+		FloorCastResult<t_tSize>
+		{	i_nBitSize
+		};
+	}
+}
 
 export namespace
 	Meta::inline Literals
@@ -397,10 +576,13 @@ export namespace
 
 		return
 		Arithmetic::BitIndex
-		<	Bits
-			{	nParsed + 1ull
+		<	BitSize
+			{	static_cast<BitSize::SizeType>
+				(	nParsed
+				)
 			}
-		>(	nParsed
-		);
+		+	1_bit
+		>{	nParsed
+		};
 	}
 }

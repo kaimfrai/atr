@@ -12,6 +12,8 @@ import Meta.ID;
 import Meta.Size;
 import Meta.Data;
 import Meta.Lex;
+import Meta.Bit.Size;
+import Meta.Byte.Size;
 
 import Std;
 
@@ -20,6 +22,8 @@ using ::Meta::CV;
 using ::Meta::Type;
 using ::Meta::TypeEntity;
 using ::Meta::USize;
+
+using namespace ::Meta::Literals;
 
 export namespace
 	ATR
@@ -44,7 +48,7 @@ auto constexpr
 {
 	if	constexpr
 		((	...
-		and	(	1uz
+		and	(	1_bit
 			==	t_tpMember
 			::	BitAlign
 			)
@@ -271,7 +275,7 @@ export namespace
 			);
 
 			return
-				sizeof(NorthType)
+				::Meta::Byte::SizeOf<NorthType>
 			+	SouthType
 			::	OffsetOf
 				(	i_vMemberID

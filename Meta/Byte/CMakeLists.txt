@@ -3,6 +3,5 @@ add_single_file_modules(
 	Count.cpp
 	InSpan.cpp
 	OutSpan.cpp
-
-	Module.cpp
+	Size.cpp
 )

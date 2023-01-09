@@ -1,19 +1,19 @@
-export module Meta.Arithmetic.BitIndexView;
+export module Meta.Arithmetic.OneIndexView;
 
 import Meta.Arithmetic.BitField;
-import Meta.Arithmetic.BitIndexIterator;
-import Meta.Bit.Count;
+import Meta.Arithmetic.OneIndexIterator;
+import Meta.Bit.Size;
 import Meta.Size;
 
 export namespace
 	Meta::Arithmetic
 {
 	template
-		<	Bits
+		<	BitSize
 				t_nWidth
 		>
 	struct
-		BitIndexView
+		OneIndexView
 	{
 		BitField<t_nWidth>
 			Field
@@ -24,7 +24,7 @@ export namespace
 		(	begin
 		)	()	const
 			noexcept
-		->	BitIndexIterator<t_nWidth>
+		->	OneIndexIterator<t_nWidth>
 		{	return { Field };	}
 
 		[[nodiscard]]
@@ -32,18 +32,18 @@ export namespace
 		(	end
 		)	()	const
 			noexcept
-		->	BitIndexSentinel
+		->	OneIndexSentinel
 		{	return {};	}
 	};
 
 	template
-		<	Bits
+		<	auto
 				t_nWidth
 		>
-	(	BitIndexView
+	(	OneIndexView
 	)	(	BitField<t_nWidth>
 		)
-	->	BitIndexView
+	->	OneIndexView
 		<	t_nWidth
 		>
 	;

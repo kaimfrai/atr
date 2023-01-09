@@ -1,6 +1,6 @@
 import ATR;
 
-import Meta.Bit.Count;
+import Meta.Bit.Size;
 
 using namespace ::Meta::Literals;
 
@@ -19,7 +19,7 @@ namespace
 		>
 	+	Member
 		<	"Field"
-		,	BitField<3_bits>
+		,	BitField<3_bit>
 		>
 	>	extern
 		LayoutConfig
@@ -39,7 +39,7 @@ namespace
 		>
 	+	Member
 		<	"Field"
-		,	BitField<3_bits> const
+		,	BitField<3_bit> const
 		>
 	>	extern
 		LayoutConfig
@@ -59,7 +59,7 @@ namespace
 		>
 	+	Member
 		<	"Field"
-		,	Mut<BitField<3_bits>>
+		,	Mut<BitField<3_bit>>
 		>
 	>	extern
 		LayoutConfig
@@ -79,7 +79,7 @@ namespace
 		>
 	+	Member
 		<	"Field"
-		,	BitField<3_bits>[5]
+		,	BitField<3_bit>[5]
 		>
 	>	extern
 		LayoutConfig

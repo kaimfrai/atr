@@ -1,31 +1,86 @@
 export module Meta.Arithmetic.BitIndexIterator;
 
-import Meta.Bit.Count;
-import Meta.Arithmetic.BitField;
 import Meta.Arithmetic.BitIndex;
+import Meta.Bit.Size;
+import Meta.Bit.Count;
 import Meta.Size;
+import Meta.Arithmetic.Integer;
 
 import Std;
 
 export namespace
 	Meta::Arithmetic
 {
+	template
+		<	BitSize
+				t_nWidth
+		>
 	struct
 		BitIndexSentinel
-	{};
+	{
+		static auto constexpr
+			FieldWidth
+		=	t_nWidth
+		;
+
+		static Bits constexpr
+			HighestValue
+		{	static_cast
+			<	::std::make_unsigned_t
+				<	BitSize::SizeType
+				>
+			>(	FieldWidth.get()
+			)
+		};
+
+		static BitSize constexpr
+			CountWidth
+		{	::std::bit_width
+			(	HighestValue.get()
+			)
+		};
+
+		using
+			CountType
+		=	UInt
+			<	CountWidth
+			>
+		;
+
+		CountType
+			m_nCount
+		;
+
+		[[nodiscard]]
+		friend auto constexpr
+		(	operator ==
+		)	(	BitIndexSentinel
+			,	BitIndexSentinel
+			)
+			noexcept
+		->	bool
+		=	default;
+	};
 
 	template
-		<	Bits
+		<	BitSize
 				t_nWidth
 		>
 	struct
 		BitIndexIterator
+	:	BitIndexSentinel
+		<	t_nWidth
+		>
 	{
-		using difference_type = SSize;
-		using value_type = BitIndex<t_nWidth>;
-
-		BitField<t_nWidth>
-			Field
+		using
+			difference_type
+		=	SSize
+		;
+		using
+			value_type
+		=	BitIndex
+			<	t_nWidth
+			>
 		;
 
 		[[nodiscard]]
@@ -35,9 +90,11 @@ export namespace
 			noexcept
 		->	value_type
 		{	return
-			IndexLowestOne
-			(	Field
-			);
+			value_type
+			{	static_cast<value_type::IndexType>
+				(	this->m_nCount
+				)
+			};
 		}
 
 		auto constexpr
@@ -45,7 +102,7 @@ export namespace
 		)	()	&
 			noexcept
 		->	BitIndexIterator&
-		{	Field.UnsetLowestOne();
+		{	++this->m_nCount;
 			return *this;
 		}
 
@@ -63,40 +120,5 @@ export namespace
 				)
 			);
 		}
-
-		friend auto constexpr
-		(	operator ==
-		)	(	BitIndexIterator
-			,	BitIndexIterator
-			)
-			noexcept
-		->	bool
-		=	default;
-
-		friend auto constexpr
-		(	operator ==
-		)	(	BitIndexIterator
-					i_vIterator
-			,	BitIndexSentinel
-			)
-			noexcept
-		->	bool
-		{	return
-				i_vIterator
-			==	BitIndexIterator{}
-			;
-		}
 	};
-
-	template
-		<	Bits
-				t_nWidth
-		>
-	(	BitIndexIterator
-	)	(	BitField<t_nWidth>
-		)
-	->	BitIndexIterator
-		<	t_nWidth
-		>
-	;
 }

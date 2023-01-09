@@ -1,7 +1,6 @@
 export module Meta.Byte.Count;
 
 export import Meta.Bit.Count;
-import Meta.Bit.ByteSize;
 import Meta.Size;
 
 import Std;
@@ -25,61 +24,6 @@ export namespace
 		::	digits
 		>
 	;
-
-	template
-		<	typename
-				t_tObject
-		>
-	using
-		Width
-	=	Count
-		<	sizeof(t_tObject)
-		>
-	;
-}
-
-export namespace
-	Meta::Bit
-{
-	template
-		<	typename
-				t_tObject
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	operator +
-	)	(	t_tObject
-			*	i_aObject
-		,	Byte::Width<t_tObject>
-				i_nOffset
-		)
-		noexcept
-	->	t_tObject*
-	{	return
-			i_aObject
-		+	i_nOffset.get()
-		;
-	}
-
-	template
-		<	typename
-				t_tObject
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	operator -
-	)	(	t_tObject
-			*	i_aObject
-		,	Byte::Width<t_tObject>
-				i_nOffset
-		)
-		noexcept
-	->	t_tObject*
-	{	return
-			i_aObject
-		-	i_nOffset.get()
-		;
-	}
 }
 
 export namespace
@@ -101,7 +45,7 @@ export namespace
 				t_tObject
 		>
 	Bytes constexpr inline
-		SizeOf
+		ByteCount
 	{	sizeof(t_tObject)
 	};
 }
@@ -117,7 +61,7 @@ export namespace
 		)
 	->	Bytes
 	{	return
-		{	static_cast<USize>
+		{	static_cast<Bytes::CountType>
 			(	i_nBits
 			)
 		};

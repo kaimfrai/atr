@@ -1,22 +1,24 @@
 export module Meta.Logic:BitClause;
 
 import Meta.Size;
-import Meta.Bit.CountOnes;
-import Meta.Bit.SetOnes;
-import Meta.Bit.ByteSize;
-import Meta.Bit.Field;
 import Meta.Bit.Count;
+import Meta.Byte.Count;
+import Meta.Bit.Size;
+import Meta.Byte.Size;
 import Meta.Arithmetic.Integer;
 import Meta.Arithmetic.BitField;
+import Meta.Arithmetic.BitRange;
 
 import Std;
+
+using namespace ::Meta::Literals;
 
 export namespace
 	Meta::Logic
 {
-	USize constexpr inline
+	auto constexpr inline
 		LiteralLimit
-	=	16uz
+	=	16_bit
 	;
 	USize constexpr inline
 		ClauseLimit
@@ -26,9 +28,25 @@ export namespace
 	struct
 		BitClause final
 	{
-		using FieldType = Meta::Arithmetic::BitField<Bits{LiteralLimit}>;
-		using IndexType = typename FieldType::IndexType;
-		static_assert((Bit::ByteSize * sizeof(FieldType)).get() == LiteralLimit);
+		using
+			FieldType
+		=	Arithmetic::BitField
+			<	LiteralLimit
+			>
+		;
+
+		static_assert
+		(	Byte::SizeOf<FieldType>
+		==	LiteralLimit
+		);
+
+		using
+			IndexType
+		=	typename
+				FieldType
+			::	IndexType
+		;
+
 
 		FieldType Positive;
 		FieldType Negative;
@@ -64,7 +82,7 @@ export namespace
 					i_nPositive
 			)
 		:	Positive
-			{	i_nPositive
+			{	Power(i_nPositive)
 			}
 		,	Negative
 			{	Absorbing().Negative
@@ -121,25 +139,32 @@ export namespace
 			=	Absorbing()
 			;
 
-			for	(	IndexType
+			for	(	auto
 						nIndex
-					{}
-				;		static_cast<USize>(nIndex.get())
-					<	i_vPermutation.size()
-				;	++	nIndex
+				:	Arithmetic::BitRange<LiteralLimit>
+					{	i_vPermutation.size()
+					}
 				)
 			{
 				if	(Positive[nIndex])
 				{
 					vResult.Positive.Set
-					(	i_vPermutation[static_cast<USize>(nIndex.get())]
+					(	i_vPermutation
+						[	static_cast<USize>
+							(	nIndex.get()
+							)
+						]
 					);
 				}
 				else
 				if	(Negative[nIndex])
 				{
 					vResult.Negative.Set
-					(	i_vPermutation[static_cast<USize>(nIndex.get())]
+					(	i_vPermutation
+						[	static_cast<USize>
+							(	nIndex.get()
+							)
+						]
 					);
 				}
 			}
@@ -200,7 +225,9 @@ export namespace
 		{
 			FieldType const
 				nIndexField
-			{	i_nIndex
+			{	Power
+				(	i_nIndex
+				)
 			};
 
 			BitClause
@@ -385,65 +412,6 @@ export namespace
 				vResult.Negative = vMask;
 
 			return vResult;
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	TrimLiterals
-		)	()	const
-		->	BitClause
-		{
-			auto const
-				vLiteralField
-			=	LiteralField()
-			;
-
-			auto const
-				nRequiredLiteralCount
-			=	CountOnes(vLiteralField)
-			;
-
-			auto const
-				nMaxLiteralCount
-			=	CurrentWidth(vLiteralField)
-			;
-
-			if	(	nRequiredLiteralCount
-				==	nMaxLiteralCount
-				)
-				return *this;
-			else
-			{
-				BitClause
-					vResult
-				=	Absorbing()
-				;
-
-				for	(	IndexType
-							nIndex
-						{}
-						,	nPermutation
-						{}
-					;		nIndex.get()
-						<	nMaxLiteralCount.get()
-					;	++	nIndex
-					)
-				{
-					if	(Positive[nIndex])
-					{
-						vResult.Positive.Set(nPermutation++);
-					}
-					else
-					if	(Negative[nIndex])
-					{
-						vResult.Negative.Set(nPermutation++);
-					}
-				}
-
-				return
-					vResult
-				;
-			}
 		}
 	};
 }

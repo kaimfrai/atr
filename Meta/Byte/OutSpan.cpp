@@ -2,6 +2,7 @@ export module Meta.Byte.OutSpan;
 
 import Meta.Byte.InSpan;
 import Meta.Byte.Count;
+import Meta.Byte.Size;
 import Std;
 
 export namespace
@@ -18,14 +19,28 @@ export namespace
 
 		explicit(false) constexpr
 		(	OutSpan
-		)	(	::std::byte*
-					i_aBegin
-			,	Bytes
-					i_nSize
+		)	(	::std::byte
+				*	i_aBegin
+			,	::std::byte
+				*	i_aEnd
 			)
 		:	m_vOut
 			{	i_aBegin
-			,	i_nSize.get()
+			,	i_aEnd
+			}
+		{}
+
+		explicit(false) constexpr
+		(	OutSpan
+		)	(	::std::byte
+				*	i_aBegin
+			,	ByteSize
+					i_nSize
+			)
+		:	OutSpan
+			{	i_aBegin
+			,	i_aBegin
+			+	i_nSize
 			}
 		{}
 
@@ -36,8 +51,10 @@ export namespace
 			noexcept
 		->	Bytes
 		{	return
-			{	m_vOut
-			.	size()
+			{	static_cast<Bytes::CountType>
+				(	m_vOut
+				.	size()
+				)
 			};
 		}
 
@@ -69,7 +86,8 @@ export namespace
 		(	operator =
 		)	(	InSpan
 					i_vFrom
-			)	const&
+			)	const
+			noexcept
 		->	OutSpan const&
 		{
 			static_assert
@@ -89,10 +107,11 @@ export namespace
 
 			if	(nInSize > nOutSize)
 			{
-				i_vFrom = i_vFrom.subspan(0_bytes, nOutSize);
+				i_vFrom = i_vFrom.subspan(0_byte, nOutSize);
 			}
 
-			auto const aLast
+			auto const
+				aLast
 			=	::std::copy
 				(	i_vFrom.begin()
 				,	i_vFrom.end()

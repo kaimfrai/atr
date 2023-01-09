@@ -1,14 +1,16 @@
 export module ATR:Layout.Bit.Layout;
 
-import :Layout.Bit.Types;
-
 import Meta.ID;
 import Meta.Size;
+import Meta.Bit.Size;
+import Meta.Byte.Buffer;
 
 import Std;
 
 using ::Meta::ProtoID;
 using ::Meta::USize;
+
+using namespace ::Meta::Literals;
 
 export namespace
 	ATR::Bit
@@ -28,14 +30,14 @@ export namespace
 		using t_tpBitView::OffsetOf...;
 
 		static auto constexpr
-			BitCount
-		=(	0uz
+			BitSize
+		=(	0_bit
 		+	...
-		+	t_tpBitView::BitCount
+		+	t_tpBitView::BitSize
 		);
 
 		// must be mutable in case one bitfield is mutable
-		mutable BitFieldBuffer<ESize{BitCount}, EOffset{0}, 1uz>
+		mutable ::Meta::Byte::Buffer<BitSize>
 			Buffer
 		;
 

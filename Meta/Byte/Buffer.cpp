@@ -2,14 +2,14 @@ export module Meta.Byte.Buffer;
 
 import Meta.Byte.OutSpan;
 import Meta.Byte.InSpan;
-import Meta.Byte.Count;
+import Meta.Byte.Size;
 import Std;
 
 export namespace
 	Meta::Byte
 {
 	template
-		<	Bytes
+		<	ByteSize
 				t_nSize
 		>
 	struct
@@ -67,7 +67,12 @@ export namespace
 			)
 			noexcept
 		{
-			OutSpan{m_vValue, t_nSize} = i_vBytes;
+			(	OutSpan
+				{	m_vValue
+				,	t_nSize
+				}
+			=	i_vBytes
+			);
 		}
 
 		explicit(true) constexpr
@@ -90,6 +95,21 @@ export namespace
 
 		explicit(true) constexpr
 		(	Buffer
+		)	(	auto const
+				&	i_rObject
+			)
+			noexcept
+		:	Buffer
+			{	InSpan
+				{	Buffer<SizeOf<decltype(i_rObject)>>
+					{	i_rObject
+					}
+				}
+			}
+		{}
+
+		explicit(true) constexpr
+		(	Buffer
 		)	(	::std::initializer_list<::std::byte>
 					i_vByteList
 			)
@@ -105,10 +125,6 @@ export namespace
 			<	typename
 					t_tObject
 			>
-		requires
-			(	SizeOf<t_tObject>
-			>=	t_nSize
-			)
 		[[nodiscard]]
 		explicit(true) constexpr
 		(	operator t_tObject
@@ -116,11 +132,13 @@ export namespace
 			noexcept
 		{
 			auto constexpr
-				nObjectSize
-			=	SizeOf<t_tObject>
+				nByteSize
+			=	SizeOf
+				<	t_tObject
+				>
 			;
 
-			if	constexpr(nObjectSize == t_nSize)
+			if	constexpr(nByteSize == t_nSize)
 			{
 				return
 				::std::bit_cast
@@ -132,7 +150,7 @@ export namespace
 			{
 				return
 				static_cast<t_tObject>
-				(	Buffer<nObjectSize>
+				(	Buffer<nByteSize>
 					{	InSpan
 						{	*this
 						}
@@ -209,7 +227,9 @@ export namespace
 			&
 		)
 	->	Buffer
-		<	SizeOf<t_tObject>
+		<	SizeOf
+			<	t_tObject
+			>
 		>
 	;
 	template
@@ -218,10 +238,10 @@ export namespace
 		>
 	(	Buffer
 	)	(	t_tpByte
-			...	i_vpByte
+			...
 		)
 	->	Buffer
-		<	Bytes
+		<	ByteSize
 			{	sizeof...(t_tpByte)
 			}
 		>
@@ -229,14 +249,14 @@ export namespace
 
 	template
 		<	typename
-				t_tEntity
+				t_tObject
 		>
 	using
 		BufferFor
 	=	Buffer
-		<	Bytes
-			{	sizeof(t_tEntity)
-			}
+		<	SizeOf
+			<	t_tObject
+			>
 		>
 	;
 }

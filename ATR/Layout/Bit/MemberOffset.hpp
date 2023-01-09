@@ -3,25 +3,26 @@ export module ATR:Layout.Bit.MemberOffset;
 import :Layout.Bit.Access;
 import :Layout.Bit.Array;
 import :Layout.Bit.Reference;
-import :Layout.Bit.Types;
 
 import Meta.Size;
 import Meta.Predicate;
 import Meta.Token;
-import Meta.Bit.ByteSize;
+import Meta.Byte.Size;
+import Meta.Arithmetic.BitIndex;
 
 import Std;
 
-using ::Meta::BitSize;
 using ::Meta::LRef;
 using ::Meta::Type;
 using ::Meta::USize;
+
+using namespace ::Meta::Literals;
 
 export namespace
 	ATR::Bit
 {
 	template
-		<	EOffset
+		<	::Meta::Arithmetic::BitIndex<1_byte>
 				t_nBitOffset
 		,	typename
 				t_tMember
@@ -29,12 +30,6 @@ export namespace
 	struct
 		MemberOffset
 	{
-		static_assert
-		(	static_cast<USize>(t_nBitOffset)
-		<	::Meta::Bit::ByteSize.get()
-		,	"Bit::MemberOffset not properly aligned! Expected maximum offset below Bits per Byte!"
-		);
-
 		static_assert
 		(	not
 			::std::is_const_v<t_tMember>
@@ -74,8 +69,7 @@ export namespace
 		,	"Prefer pure value types to const lvalue references!"
 		);
 
-
-		USize
+		::Meta::ByteSize
 			Offset
 		;
 
@@ -88,13 +82,15 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{
-			i_aObject = ::std::next(i_aObject, static_cast<SSize>(Offset));
+				i_aObject
+			+=	Offset
+			;
 
 			using namespace ATR::Bit;
 
 			auto constexpr
 				vBitSize
-			=	BitSize
+			=	::Meta::BitSize_Of
 				(	Type<t_tMember>
 				-	LRef
 				)
@@ -134,47 +130,50 @@ export namespace
 					auto constexpr vElementBitSize = vBitSize / nExtent;
 					return
 					ArrayReference
-					<	ESize{vElementBitSize}
+					<	vElementBitSize
 					,	nExtent
 					,	t_nBitOffset
 					>{	aBuffer
 					};
 				}
 				else
-					return
+				{	return
 					Reference
-					<	ESize{vBitSize}
+					<	vBitSize
 					,	t_nBitOffset
 					>{	aBuffer
 					};
+				}
 			}
 			else
-			{	if	constexpr
-					(	::std::is_bounded_array_v
-						<	t_tMember
-						>
-					)
-				{
-					auto constexpr nExtent = ::std::extent_v<t_tMember>;
-					auto constexpr vElementBitSize = vBitSize / nExtent;
-					return
-					CopyArray
-					<	ESize{vElementBitSize}
+			if	constexpr
+				(	::std::is_bounded_array_v
+					<	t_tMember
+					>
+				)
+			{
+				auto constexpr nExtent = ::std::extent_v<t_tMember>;
+				auto constexpr vElementBitSize = vBitSize / nExtent;
+				return
+				CopyArray
+				(	ArrayConstReference
+					<	vElementBitSize
 					,	nExtent
 					,	t_nBitOffset
-					>(	i_aObject
-					);
-				}
-				else
-					return
-						Access
-						<	ESize{vBitSize}
-						,	t_nBitOffset
-						>
-					::	ReadField
-						(	i_aObject
-						)
-					;
+					>{	i_aObject
+					}
+				);
+			}
+			else
+			{	return
+					Reference
+					<	vBitSize
+					,	t_nBitOffset
+					>
+				::	Read
+					(	i_aObject
+					)
+				;
 			}
 		}
 
@@ -199,7 +198,7 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator +
-		)	(	USize
+		)	(	::Meta::ByteSize
 					i_nOffset
 			,	MemberOffset
 					i_vMember

@@ -73,6 +73,8 @@ add_compile_options(
 	-Wno-c++20-compat-pedantic
 	# using C++23
 	-Wno-c++20-extensions
+	# more useful as warning
+	-Wno-error=deprecated-declarations
 )
 
 add_compile_options(

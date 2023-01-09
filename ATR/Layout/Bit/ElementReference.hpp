@@ -1,14 +1,14 @@
 export module ATR:Layout.Bit.ElementReference;
 
 import :Layout.Bit.Access;
-import :Layout.Bit.Types;
 
-import Meta.Bit.ByteSize;
-import Meta.Bit.Count;
+import Meta.Bit.Size;
+import Meta.Byte.Size;
+import Meta.Arithmetic.BitIndex;
 
 import Std;
 
-using ::Meta::Literals::operator""_bits;
+using namespace ::Meta::Literals;
 
 export namespace
 	ATR::Bit
@@ -16,27 +16,34 @@ export namespace
 	template
 		<	typename
 				t_tBuffer
-		,	ESize
+		,	::Meta::BitSize
 				t_nSize
-		,	EOffset
+		,	::Meta::Arithmetic::BitIndex<1_byte>
 				t_nMaxOffset
 		>
 	struct
 		ElementReference final
 	{
-		static_assert
-		(	static_cast<USize>(t_nMaxOffset)
-		<	::Meta::Bit::ByteSize.get()
-		,	"Bit::ElementReference not properly aligned! Expected maximum offset below Bits per Byte!"
-		);
+		using
+			BitAccess
+		=	::ATR::Bit::Access
+			<	t_nSize
+			,	t_nMaxOffset
+			>
+		;
+		using
+			FieldType
+		=	typename
+				BitAccess
+			::	FieldType
+		;
 
-		using BitAccess = ::ATR::Bit::Access<t_nSize, t_nMaxOffset>;
-		using FieldType = typename BitAccess::FieldType;
-
-		//	do not implicitly convert to bool on assignment
-		//	e.g. 2 converts to true but false is expected as the first bit is 0
-		using AssignType = UInt<Bits{static_cast<USize>(t_nSize)}>;
-		using MaskType = typename BitAccess::BufferFieldType;
+		using
+			MaskType
+		=	typename
+				BitAccess
+			::	BufferFieldType
+		;
 
 		t_tBuffer
 		*	const
@@ -50,6 +57,7 @@ export namespace
 		explicit(false) constexpr
 		(	operator FieldType
 		)	()	const
+			noexcept
 		{	return
 			BitAccess::ReadField
 			(	m_aUnderlyingArray
@@ -59,9 +67,10 @@ export namespace
 
 		auto constexpr
 		(	operator =
-		)	(	AssignType
+		)	(	FieldType
 					i_vValue
 			)	&
+			noexcept
 		->	ElementReference&
 			requires
 			(	not
@@ -78,16 +87,16 @@ export namespace
 
 		auto constexpr
 		(	operator =
-		)	(	AssignType
+		)	(	FieldType
 					i_vValue
 			)	&&
+			noexcept
 		->	ElementReference&&
 			requires
 			(	not
 				::std::is_const_v<t_tBuffer>
 			)
-		{
-			return
+		{	return
 			::std::move
 			(	*this
 			=	i_vValue
@@ -102,6 +111,7 @@ export namespace
 			,	FieldType
 					i_vRight
 			)
+			noexcept
 		->	bool
 		{	return
 				i_vLeft.operator FieldType()
@@ -109,22 +119,4 @@ export namespace
 			;
 		}
 	};
-
-	//	catch dangerous implicit conversion from UInt8 to bool
-	template
-		<	typename
-				t_tBuffer
-		,	EOffset
-				t_nMaxOffset
-		>
-	auto constexpr
-	(	operator==
-	)	(	ElementReference
-			<	t_tBuffer
-			,	ESize{1}
-			,	t_nMaxOffset
-			>
-		,	UInt<1_bits>
-		)
-	=	delete;
 }

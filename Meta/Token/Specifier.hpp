@@ -1,7 +1,7 @@
 export module Meta.Token:Specifier;
 
 import Meta.Size;
-import Meta.Bit.Count;
+import Meta.Bit.Size;
 import Meta.Byte.Buffer;
 
 import Std;
@@ -34,7 +34,7 @@ export namespace
 	;
 
 	template
-		<	Bits
+		<	BitSize
 				t_nSize
 		>
 	struct

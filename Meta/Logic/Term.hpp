@@ -7,7 +7,7 @@ import Meta.Size;
 import Meta.Buffer.Static;
 export import Meta.Token;
 import Meta.Functional;
-import Meta.Arithmetic.BitIndexView;
+import Meta.Arithmetic.OneIndexView;
 import Meta.Bit.Count;
 import Meta.Arithmetic.BitField;
 import Meta.Arithmetic.BitIndex;
@@ -102,7 +102,7 @@ export namespace
 			LiteralBufferType
 		=	::std::array
 			<	EraseTypeToken
-			,	Logic::LiteralLimit
+			,	Logic::LiteralLimit.get()
 			>
 		;
 
@@ -138,12 +138,20 @@ export namespace
 					=	0uz
 				;	auto
 						vBitIndex
-				:	Arithmetic::BitIndexView
+				:	Arithmetic::OneIndexView
 					{	i_rResult.LiteralField()
 					}
 				)
 			{
-				vLiterals[nArrayIndex] = i_vUnion[static_cast<USize>(vBitIndex.get())];
+				(	vLiterals
+					[	nArrayIndex
+					]
+				=	i_vUnion
+					[	static_cast<USize>
+						(	vBitIndex.get()
+						)
+					]
+				);
 				++nArrayIndex;
 			}
 
@@ -182,7 +190,7 @@ export namespace
 		{
 			Buffer::Static
 			<	EraseTypeToken
-			,	Logic::LiteralLimit
+			,	Logic::LiteralLimit.get()
 			>	vUnion
 			;
 			vUnion.AppendUnique(i_rLeft.LiteralSpan());
@@ -205,7 +213,7 @@ export namespace
 		{
 			Buffer::Static
 			<	IndexType
-			,	Logic::LiteralLimit
+			,	Logic::LiteralLimit.get()
 			>	vPermutationArray
 			;
 

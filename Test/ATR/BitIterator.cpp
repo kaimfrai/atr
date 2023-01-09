@@ -1,36 +1,25 @@
 import ATR;
 
 import Meta.Size;
-import Meta.Bit.SetOnes;
 import Meta.Bit.Count;
 import Meta.Arithmetic.Integer;
+import Meta.Arithmetic.BitField;
+import Meta.Bit.Size;
+import Meta.Byte.Count;
+import Meta.Arithmetic.BitIndex;
 import Std;
 
-using ::ATR::Bit::EOffset;
-using ::ATR::Bit::ESize;
 using ::ATR::Bit::Iterator;
 using ::ATR::Bit::ArrayReference;
 
 using ::Meta::UInt;
 using ::Meta::USize;
 
-[[nodiscard]]
-auto constexpr
-(	SetOnes
-)	(	int
-			i_nCount
-	)
-->	USize
-{	return
-	Meta::Bit::SetOnes
-	(	Meta::Bits{static_cast<USize>(i_nCount)}
-	).Value
-	;
-}
+using namespace ::Meta::Literals;
 
 static_assert
 (	::std::random_access_iterator
-	<	Iterator<::std::byte, ESize{1}, EOffset{0}>
+	<	Iterator<::std::byte, 1_bit, 0_bdx>
 	>
 );
 
@@ -40,10 +29,20 @@ static_assert
 	]
 {};
 
-Iterator<::std::byte, ESize{10}, EOffset{6}> constexpr
+using IteratorType = Iterator<::std::byte, 10_bit, 6_bdx>;
+
+using MaskType = IteratorType::MaskType;
+
+MaskType constexpr Mask
+{	0b0000'0011'1111'1111
+};
+
+using Index = MaskType::IndexType;
+
+IteratorType constexpr
 	First
 {	+Buffer
-,	SetOnes(10)
+,	Mask
 };
 
 static_assert(First == First);
@@ -59,9 +58,11 @@ static_assert(Second - 1 == First);
 static_assert(Second == Second);
 static_assert
 (	Second
-==	decltype(Second)
+==	IteratorType
 	{	+Buffer + 1
-	,	SetOnes(10) << 2
+	,	static_cast<MaskType>
+		(	Mask << Index{2}
+		)
 	}
 );
 
@@ -79,9 +80,11 @@ static_assert(Third - 1 == Second);
 static_assert(Third == Third);
 static_assert
 (	Third
-==	decltype(Third)
+==	IteratorType
 	{	+Buffer + 2
-	,	SetOnes(10) << 4
+	,	static_cast<MaskType>
+		(	Mask << Index{4}
+		)
 	}
 );
 
@@ -103,9 +106,11 @@ static_assert(Forth == Forth);
 
 static_assert
 (	Forth
-==	decltype(Forth)
+==	IteratorType
 	{	+Buffer + 3
-	,	SetOnes(10) << 6
+	,	static_cast<MaskType>
+		(	Mask << Index{6}
+		)
 	}
 );
 
@@ -130,19 +135,22 @@ static_assert(Fifth == Fifth);
 
 static_assert
 (	Fifth
-==	decltype(Fifth)
+==	IteratorType
 	{	+Buffer + 5
-	,	SetOnes(10) << 0
+	,	static_cast<MaskType>
+		(	Mask << Index{0}
+		)
 	}
 );
 
-ArrayReference<ESize{10}, 4> constexpr
+ArrayReference<10_bit, 4> constexpr
 	arr
 {	+Buffer
 };
 
-static_assert(begin(arr) == First);
-static_assert(IteratorAt(arr, 1) == Second);
-static_assert(IteratorAt(arr, 2) == Third);
-static_assert(IteratorAt(arr, 3) == Forth);
-static_assert(end(arr) == Fifth);
+static_assert(arr.begin() == First);
+static_assert(arr.begin() + 1 == Second);
+static_assert(arr.begin() + 2 == Third);
+static_assert(arr.begin() + 3 == Forth);
+static_assert(arr.begin() + 4 == Fifth);
+static_assert(arr.end() == Fifth);
