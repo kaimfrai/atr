@@ -9,7 +9,7 @@ Current Linux Distributions (tested Ubuntu 22.04)
 Required software:
 
 CMake version 3.20 oder higher
-Clang 16 (currently a preview)
+Clang 16 (currently still in development, latest commit tested (2023-01-08): https://github.com/llvm/llvm-project/commits/f71ffd3b735b
 perf (package linux-tools-generic under Ubuntu 22.04)
 valgrind
 Boost.TypeErasure (tested version 1.74.0)
