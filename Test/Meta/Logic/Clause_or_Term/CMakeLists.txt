@@ -4,6 +4,15 @@ function(add_clause_or_test
 	add_module_object_library("Test.Meta.Logic.Clause_or_${test_name}" "${test_name}.cpp")
 endfunction()
 
+add_clause_or_test(T)
+add_clause_or_test(F)
+
+add_clause_or_test(p)
+add_clause_or_test(-p)
+
+add_clause_or_test(p_and_q)
+add_clause_or_test(p_and_q_and_r)
+
 add_clause_or_test(p_or_q)
 add_clause_or_test(p_or_q_or_r)
 
