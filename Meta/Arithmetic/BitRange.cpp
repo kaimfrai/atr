@@ -4,10 +4,7 @@ import Meta.Arithmetic.BitIndex;
 import Meta.Arithmetic.Literals;
 import Meta.Arithmetic.Integer;
 import Meta.Arithmetic.BitIndexIterator;
-import Meta.Bit.Count;
-import Meta.Byte.Count;
-import Meta.Byte.Size;
-import Meta.Bit.Size;
+import Meta.Memory.Size;
 import Meta.Size;
 
 import Std;

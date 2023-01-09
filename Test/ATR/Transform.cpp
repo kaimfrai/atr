@@ -1,6 +1,6 @@
 import ATR;
 
-import Meta.Bit.Size;
+import Meta.Memory.Size;
 
 using namespace ::Meta::Literals;
 

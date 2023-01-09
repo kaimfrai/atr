@@ -1,13 +1,13 @@
-export module Meta.Bit.Size;
+export module Meta.Memory.Size;
 
-import Meta.Bit.Count;
+import Meta.Memory.Count;
 import Meta.Math.Divide;
 import Meta.Size;
 
 import Std;
 
 export namespace
-	Meta::Bit
+	Meta::Memory
 {
 	template
 		<	SSize
@@ -367,6 +367,23 @@ export namespace
 			};
 		}
 	};
+
+	template
+		<	typename
+				t_tObject
+		>
+	using
+		ByteWidth
+	=	Size
+		<	::std::numeric_limits
+			<	::std::underlying_type_t
+				<	::std::byte
+				>
+			>
+		::	digits
+		*	sizeof(t_tObject)
+		>
+	;
 }
 
 export namespace
@@ -374,15 +391,31 @@ export namespace
 {
 	using
 		BitSize
-	=	Bit::Size
+	=	Memory::Size
 		<	1uz
+		>
+	;
+
+	using
+		ByteSize
+	=	Memory::ByteWidth
+		<	::std::byte
 		>
 	;
 }
 
 export namespace
-	Meta::Bit
+	Meta::Memory
 {
+	template
+		<	typename
+				t_tObject
+		>
+	ByteSize constexpr inline
+		SizeOf
+	{	sizeof(t_tObject)
+	};
+
 	[[nodiscard]]
 	auto constexpr
 	(	operator +
@@ -438,6 +471,88 @@ export namespace
 		<=>	i_vRight.get()
 		;
 	}
+
+	template
+		<	typename
+				t_tObject
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	operator +
+	)	(	t_tObject
+			*	i_aObject
+		,	ByteWidth<t_tObject>
+				i_nOffset
+		)
+		noexcept
+	->	t_tObject*
+	{	return
+		::std::next
+		(	i_aObject
+		,	i_nOffset.get()
+		);
+	}
+
+	template
+		<	typename
+				t_tObject
+		>
+	auto constexpr
+	(	operator +=
+	)	(	t_tObject
+			*&	i_aObject
+		,	ByteWidth<t_tObject>
+				i_nOffset
+		)
+		noexcept
+	->	t_tObject*&
+	{	return
+			i_aObject
+		=	i_aObject
+		+	i_nOffset
+		;
+	}
+
+	template
+		<	typename
+				t_tObject
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	operator -
+	)	(	t_tObject
+			*	i_aObject
+		,	ByteWidth<t_tObject>
+				i_nOffset
+		)
+		noexcept
+	->	t_tObject*
+	{	return
+		::std::prev
+		(	i_aObject
+		,	i_nOffset.get()
+		);
+	}
+
+	template
+		<	typename
+				t_tObject
+		>
+	auto constexpr
+	(	operator -=
+	)	(	t_tObject
+			*&	i_aObject
+		,	ByteWidth<t_tObject>
+				i_nOffset
+		)
+		noexcept
+	->	t_tObject*&
+	{	return
+			i_aObject
+		=	i_aObject
+		-	i_nOffset
+		;
+	}
 }
 
 export namespace
@@ -453,6 +568,20 @@ export namespace
 	{	return
 		{	static_cast<BitSize::SizeType>
 			(	i_nBits
+			)
+		};
+	}
+
+	[[nodiscard]]
+	auto constexpr
+	(	operator""_byte
+	)	(	unsigned long long
+				i_nBytes
+		)
+	->	ByteSize
+	{	return
+		{	static_cast<ByteSize::SizeType>
+			(	i_nBytes
 			)
 		};
 	}

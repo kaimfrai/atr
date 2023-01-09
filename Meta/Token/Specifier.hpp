@@ -1,7 +1,7 @@
 export module Meta.Token:Specifier;
 
 import Meta.Size;
-import Meta.Bit.Size;
+import Meta.Memory.Size;
 import Meta.Byte.Buffer;
 
 import Std;

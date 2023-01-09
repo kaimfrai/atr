@@ -4,9 +4,8 @@ import :Layout.Bit.ElementReference;
 import :Layout.Bit.Reference;
 import :Layout.Bit.Iterator;
 
-import Meta.Byte.Count;
 import Meta.Arithmetic.BitIndex;
-import Meta.Byte.Size;
+import Meta.Memory.Size;
 import Meta.Size;
 import Meta.Arithmetic.Integer;
 import Meta.Byte.Buffer;
@@ -339,7 +338,7 @@ export namespace
 		// optimization using bit shift of an integer type
 		if	constexpr
 			(	i_vBuffer.BufferSize
-			<=	::Meta::Byte::SizeOf<::Meta::UIntMax>
+			<=	::Meta::Memory::SizeOf<::Meta::UIntMax>
 			)
 		{
 			return

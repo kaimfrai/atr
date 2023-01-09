@@ -1,6 +1,5 @@
 import Meta.Arithmetic.Integer;
-import Meta.Bit.Size;
-import Meta.Byte.Size;
+import Meta.Memory.Size;
 
 import Std;
 
@@ -8,7 +7,7 @@ using ::Meta::UInt;
 using ::Meta::SInt;
 using ::Meta::UIntMax;
 using ::Meta::SIntMax;
-using ::Meta::Byte::SizeOf;
+using ::Meta::Memory::SizeOf;
 
 using namespace ::Meta::Literals;
 

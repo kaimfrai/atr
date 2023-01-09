@@ -4,10 +4,8 @@ import :Layout.Bit.Access;
 import :Layout.Bit.ElementReference;
 
 import Meta.Size;
-import Meta.Byte.Size;
-import Meta.Byte.Count;
 import Meta.Math.Divide;
-import Meta.Bit.Size;
+import Meta.Memory.Size;
 import Meta.Arithmetic.BitIndex;
 
 import Std;

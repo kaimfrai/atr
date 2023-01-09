@@ -1,11 +1,11 @@
 import Meta.Arithmetic.OneIndexIterator;
 import Meta.Arithmetic.BitIndex;
 import Meta.Arithmetic.BitField;
-import Meta.Byte.Size;
+import Meta.Memory.Size;
 
 import Std;
 
-auto constexpr BitCount = ::Meta::Byte::SizeOf<decltype(0uz)> / 2z;
+auto constexpr BitCount = ::Meta::Memory::SizeOf<decltype(0uz)> / 2z;
 
 using BitField = ::Meta::Arithmetic::BitField<BitCount>;
 using BitIndex = ::Meta::Arithmetic::BitIndex<BitCount>;

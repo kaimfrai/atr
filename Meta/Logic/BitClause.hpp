@@ -1,10 +1,7 @@
 export module Meta.Logic:BitClause;
 
 import Meta.Size;
-import Meta.Bit.Count;
-import Meta.Byte.Count;
-import Meta.Bit.Size;
-import Meta.Byte.Size;
+import Meta.Memory.Size;
 import Meta.Arithmetic.Integer;
 import Meta.Arithmetic.BitField;
 import Meta.Arithmetic.BitRange;
@@ -36,7 +33,7 @@ export namespace
 		;
 
 		static_assert
-		(	Byte::SizeOf<FieldType>
+		(	Memory::SizeOf<FieldType>
 		==	LiteralLimit
 		);
 

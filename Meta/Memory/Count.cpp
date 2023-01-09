@@ -1,4 +1,4 @@
-export module Meta.Bit.Count;
+export module Meta.Memory.Count;
 
 import Meta.Math.Divide;
 import Meta.Size;
@@ -6,7 +6,7 @@ import Meta.Size;
 import Std;
 
 export namespace
-	Meta::Bit
+	Meta::Memory
 {
 	template
 		<	USize
@@ -74,6 +74,23 @@ export namespace
 			};
 		}
 	};
+
+	template
+		<	typename
+				t_tObject
+		>
+	using
+		ByteCount
+	=	Count
+		<	::std::numeric_limits
+			<	std::underlying_type_t
+				<	std::byte
+				>
+			>
+		::	digits
+		*	sizeof(t_tObject)
+		>
+	;
 }
 
 export namespace
@@ -81,14 +98,21 @@ export namespace
 {
 	using
 		Bits
-	=	Bit::Count
+	=	Memory::Count
 		<	1uz
+		>
+	;
+
+	using
+		Bytes
+	=	Memory::ByteCount
+		<	::std::byte
 		>
 	;
 }
 
 export namespace
-	Meta::Bit
+	Meta::Memory
 {
 	[[nodiscard]]
 	auto constexpr
@@ -132,10 +156,26 @@ export namespace
 	)	(	unsigned long long
 				i_nBits
 		)
+		noexcept
 	->	Bits
 	{	return
 		{	static_cast<Bits::CountType>
 			(	i_nBits
+			)
+		};
+	}
+
+	[[nodiscard]]
+	auto constexpr
+	(	operator""_bytes
+	)	(	unsigned long long
+				i_nBytes
+		)
+		noexcept
+	->	Bytes
+	{	return
+		{	static_cast<Bytes::CountType>
+			(	i_nBytes
 			)
 		};
 	}

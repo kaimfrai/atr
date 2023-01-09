@@ -3,7 +3,7 @@ export module ATR:Layout.MemberOffset;
 export import :Erase;
 
 import Meta.Size;
-import Meta.Byte.Size;
+import Meta.Memory.Size;
 export import Meta.Predicate;
 
 import Std;

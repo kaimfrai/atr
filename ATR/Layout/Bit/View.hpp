@@ -1,15 +1,12 @@
 export module ATR:Layout.Bit.View;
 
-import Meta.ID;
 import :Layout.Bit.Access;
 import :Layout.Bit.Array;
 import :Layout.Bit.MemberOffset;
 import :Layout.Bit.Reference;
 
-import Meta.Bit.Count;
-import Meta.Byte.Count;
-import Meta.Bit.Size;
-import Meta.Byte.Size;
+import Meta.ID;
+import Meta.Memory.Size;
 import Meta.Arithmetic.BitIndex;
 
 import Meta.Size;

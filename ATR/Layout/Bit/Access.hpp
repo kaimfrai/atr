@@ -1,7 +1,7 @@
 export module ATR:Layout.Bit.Access;
 
 import Meta.Byte.OutSpan;
-import Meta.Byte.Size;
+import Meta.Memory.Size;
 import Meta.Arithmetic.Integer;
 import Meta.Arithmetic.BitField;
 import Meta.Byte.InSpan;
@@ -38,7 +38,7 @@ export namespace
 
 		static_assert
 		(	BufferByteSize
-		<=	::Meta::Byte::SizeOf<::Meta::UIntMax>
+		<=	::Meta::Memory::SizeOf<::Meta::UIntMax>
 		,	"Bit Buffers greater than UIntMax not yet supported!"
 		);
 

@@ -3,7 +3,6 @@ export module Meta.Logic:Constraint;
 export import :LiteralBase;
 export import :Term;
 
-import Meta.Bit.Count;
 import Meta.Size;
 
 import Std;

@@ -2,9 +2,7 @@ import ATR;
 
 import Meta.Arithmetic.Integer;
 import Meta.Arithmetic.BitField;
-import Meta.Bit.Count;
-import Meta.Byte.Count;
-import Meta.Byte.Size;
+import Meta.Memory.Size;
 import Meta.Arithmetic.BitIndex;
 
 import Std;
@@ -13,8 +11,8 @@ using ::Meta::Data::Aggregate;
 using ::Meta::Specifier::Mut;
 using ::Meta::Specifier::BitField;
 using ::Meta::UInt;
-using ::Meta::Byte::SizeOf;
-using ::Meta::Byte::Width;
+using ::Meta::Memory::SizeOf;
+using ::Meta::Memory::ByteWidth;
 
 using namespace ::Meta::Literals;
 
@@ -104,15 +102,15 @@ using OffsetOfTest = ::ATR::Type<"OffsetOfTest">;
 
 static_assert
 (	SizeOf<OffsetOfTest>
-==	(	Width<int>{3}
-	+	static_cast<Width<int>>
+==	(	ByteWidth<int>{3}
+	+	static_cast<ByteWidth<int>>
 		(	ExpectedBufferSize
 		)
 	)
 );
 
 static_assert
-(	::Meta::Byte::SizeOf<decltype(OffsetOfTest::DynamicLayout::SouthType::Buffer)>
+(	::Meta::Memory::SizeOf<decltype(OffsetOfTest::DynamicLayout::SouthType::Buffer)>
 ==	ExpectedBufferSize
 );
 

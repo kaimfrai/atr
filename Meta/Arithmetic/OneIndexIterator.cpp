@@ -1,6 +1,6 @@
 export module Meta.Arithmetic.OneIndexIterator;
 
-import Meta.Bit.Size;
+import Meta.Memory.Size;
 import Meta.Arithmetic.BitField;
 import Meta.Arithmetic.BitIndex;
 import Meta.Size;

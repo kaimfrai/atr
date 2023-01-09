@@ -2,9 +2,8 @@ export module ATR:Layout.Bit.Reference;
 
 import :Layout.Bit.Access;
 
-import Meta.Bit.Size;
 import Meta.Arithmetic.BitIndex;
-import Meta.Byte.Size;
+import Meta.Memory.Size;
 
 import Std;
 

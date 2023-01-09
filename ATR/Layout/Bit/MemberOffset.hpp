@@ -7,7 +7,7 @@ import :Layout.Bit.Reference;
 import Meta.Size;
 import Meta.Predicate;
 import Meta.Token;
-import Meta.Byte.Size;
+import Meta.Memory.Size;
 import Meta.Arithmetic.BitIndex;
 
 import Std;

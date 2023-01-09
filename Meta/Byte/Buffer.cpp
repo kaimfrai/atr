@@ -2,7 +2,7 @@ export module Meta.Byte.Buffer;
 
 import Meta.Byte.OutSpan;
 import Meta.Byte.InSpan;
-import Meta.Byte.Size;
+import Meta.Memory.Size;
 import Std;
 
 export namespace
@@ -82,7 +82,7 @@ export namespace
 			)
 			noexcept
 		requires
-			(	SizeOf<decltype(i_rObject)>
+			(	Memory::SizeOf<decltype(i_rObject)>
 			==	t_nSize
 			)
 		:	Buffer
@@ -101,7 +101,7 @@ export namespace
 			noexcept
 		:	Buffer
 			{	InSpan
-				{	Buffer<SizeOf<decltype(i_rObject)>>
+				{	Buffer<Memory::SizeOf<decltype(i_rObject)>>
 					{	i_rObject
 					}
 				}
@@ -133,7 +133,7 @@ export namespace
 		{
 			auto constexpr
 				nByteSize
-			=	SizeOf
+			=	Memory::SizeOf
 				<	t_tObject
 				>
 			;
@@ -227,7 +227,7 @@ export namespace
 			&
 		)
 	->	Buffer
-		<	SizeOf
+		<	Memory::SizeOf
 			<	t_tObject
 			>
 		>
@@ -254,7 +254,7 @@ export namespace
 	using
 		BufferFor
 	=	Buffer
-		<	SizeOf
+		<	Memory::SizeOf
 			<	t_tObject
 			>
 		>

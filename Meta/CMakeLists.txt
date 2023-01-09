@@ -3,6 +3,7 @@ add_module(
 )
 
 add_subdirectory(Math)
+add_subdirectory(Memory)
 add_subdirectory(Bit)
 add_subdirectory(Byte)
 add_subdirectory(Buffer)

@@ -1,8 +1,8 @@
 export module Meta.Byte.OutSpan;
 
 import Meta.Byte.InSpan;
-import Meta.Byte.Count;
-import Meta.Byte.Size;
+import Meta.Memory.Count;
+import Meta.Memory.Size;
 import Std;
 
 export namespace

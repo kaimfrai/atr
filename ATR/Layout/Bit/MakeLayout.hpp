@@ -1,13 +1,13 @@
 export module ATR:Layout.Bit.MakeLayout;
 
-import Meta.ID;
 import :Layout.Bit.Layout;
 import :Layout.Bit.View;
 import :Layout.Member;
 
+import Meta.ID;
 import Meta.Size;
 import Meta.Token;
-import Meta.Bit.Size;
+import Meta.Memory.Size;
 
 import Std;
 

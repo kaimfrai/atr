@@ -2,10 +2,7 @@ export module Meta.Arithmetic.BitIndex;
 
 import Meta.Arithmetic.Literals;
 import Meta.Arithmetic.Integer;
-import Meta.Bit.Count;
-import Meta.Byte.Count;
-import Meta.Bit.Size;
-import Meta.Byte.Size;
+import Meta.Memory.Size;
 import Meta.Math.Divide;
 
 import Std;
@@ -418,7 +415,7 @@ export namespace
 			noexcept
 		requires
 			(	ShiftedWidth
-			<=	Byte::SizeOf<UIntMax>
+			<=	Memory::SizeOf<UIntMax>
 			)
 		{	return
 			static_cast<UInt<ShiftedWidth>>
@@ -490,7 +487,7 @@ export namespace
 }
 
 export namespace
-	Meta::Bit
+	Meta::Memory
 {
 	template
 		<	typename

@@ -1,6 +1,6 @@
 import Meta.Arithmetic.OneIndexView;
 
-import Meta.Bit.Size;
+import Meta.Memory.Size;
 import Std;
 
 using namespace ::Meta::Literals;

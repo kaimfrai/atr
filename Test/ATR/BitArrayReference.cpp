@@ -1,14 +1,12 @@
 import ATR;
 
 import Meta.Size;
-import Meta.Bit.Size;
-import Meta.Byte.Count;
+import Meta.Memory.Size;
 import Meta.Arithmetic.Integer;
 import Meta.Arithmetic.BitField;
 import Meta.Arithmetic.BitRange;
 import Meta.Byte.Buffer;
 import Meta.Arithmetic.BitIndex;
-import Meta.Byte.Size;
 
 import Std;
 

@@ -3,7 +3,7 @@ export module Meta.Arithmetic.BitField;
 import Meta.Arithmetic.BitRange;
 import Meta.Arithmetic.BitIndex;
 import Meta.Byte.InSpan;
-import Meta.Byte.Size;
+import Meta.Memory.Size;
 import Meta.Byte.Buffer;
 import Meta.Arithmetic.Integer;
 
@@ -67,7 +67,7 @@ export namespace
 		{
 			if	constexpr
 				(	t_nWidth
-				==	Byte::SizeOf<FieldType>
+				==	Memory::SizeOf<FieldType>
 				)
 			{	return
 				static_cast<FieldType>

@@ -12,8 +12,7 @@ import Meta.ID;
 import Meta.Size;
 import Meta.Data;
 import Meta.Lex;
-import Meta.Bit.Size;
-import Meta.Byte.Size;
+import Meta.Memory.Size;
 
 import Std;
 
@@ -275,7 +274,7 @@ export namespace
 			);
 
 			return
-				::Meta::Byte::SizeOf<NorthType>
+				::Meta::Memory::SizeOf<NorthType>
 			+	SouthType
 			::	OffsetOf
 				(	i_vMemberID

@@ -3,8 +3,7 @@ export module Meta.Token:Query;
 export import :Specifier;
 export import :Type;
 
-import Meta.Bit.Size;
-import Meta.Byte.Size;
+import Meta.Memory.Size;
 import Meta.Size;
 
 import Std;

@@ -1,10 +1,10 @@
 export module Meta.Arithmetic.Integer;
 
-import Meta.Byte.Size;
+import Meta.Memory.Size;
 
 import Std;
 
-using ::Meta::Byte::SizeOf;
+using ::Meta::Memory::SizeOf;
 
 template<::Meta::ByteSize>
 auto MapSInt() = delete;

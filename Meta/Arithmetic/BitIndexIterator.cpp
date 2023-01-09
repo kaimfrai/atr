@@ -1,8 +1,8 @@
 export module Meta.Arithmetic.BitIndexIterator;
 
 import Meta.Arithmetic.BitIndex;
-import Meta.Bit.Size;
-import Meta.Bit.Count;
+import Meta.Memory.Size;
+import Meta.Memory.Count;
 import Meta.Size;
 import Meta.Arithmetic.Integer;
 
