@@ -3,6 +3,7 @@ import ATR;
 import Meta.Arithmetic.Integer;
 import Meta.Arithmetic.BitField;
 import Meta.Memory.Size;
+import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
 import Meta.Arithmetic.BitIndex;
 

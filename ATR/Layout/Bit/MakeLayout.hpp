@@ -8,6 +8,7 @@ import Meta.ID;
 import Meta.Size;
 import Meta.Token;
 import Meta.Memory.Size;
+import Meta.Memory.Size.Arithmetic;
 
 import Std;
 

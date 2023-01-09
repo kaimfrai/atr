@@ -6,6 +6,7 @@ import :Layout.Bit.ElementReference;
 import Meta.Size;
 import Meta.Math.Divide;
 import Meta.Memory.Size;
+import Meta.Memory.Size.Arithmetic;
 import Meta.Arithmetic.BitIndex;
 
 import Std;

@@ -206,21 +206,6 @@ export namespace
 
 		[[nodiscard]]
 		friend auto constexpr
-		(	operator -
-		)	(	Size
-					i_nSize
-			)
-			noexcept
-		->	Size
-		{	return
-			{	-
-				i_nSize
-			.	get()
-			};
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
 		(	CeilPower2
 		)	(	Size
 					i_nSize
@@ -304,68 +289,6 @@ export namespace
 				};
 			}
 		}
-
-		auto constexpr
-		(	operator +=
-		)	(	Size
-					i_vOffset
-			)	&
-			noexcept
-		->	Size&
-		{		get()
-			+=	i_vOffset.get()
-			;
-			return *this;
-		}
-
-		auto constexpr
-		(	operator -=
-		)	(	Size
-					i_vOffset
-			)	&
-			noexcept
-		->	Size&
-		{		get()
-			-=	i_vOffset.get()
-			;
-			return *this;
-		}
-
-		auto constexpr
-		(	operator ++
-		)	()	&
-			noexcept
-		->	Size&
-		{	return *this += Size{1z};	}
-
-		[[nodiscard("Use preincrement if you discard the value")]]
-		auto constexpr
-		(	operator ++
-		)	(int)	&
-			noexcept
-		->	Size
-		{	return
-			{	get()++
-			};
-		}
-
-		auto constexpr
-		(	operator --
-		)	()	&
-			noexcept
-		->	Size&
-		{	return *this -= Size{1z};	}
-
-		[[nodiscard("Use predecrement if you discard the value")]]
-		auto constexpr
-		(	operator --
-		)	(int)	&
-			noexcept
-		->	Size
-		{	return
-			{	get()--
-			};
-		}
 	};
 
 	template
@@ -415,30 +338,6 @@ export namespace
 		SizeOf
 	{	sizeof(t_tObject)
 	};
-
-	[[nodiscard]]
-	auto constexpr
-	(	operator +
-	)	(	BitSize
-				i_vSize
-		,	BitSize
-				i_vOffset
-		)
-		noexcept
-	->	BitSize
-	{	return i_vSize += i_vOffset;	}
-
-	[[nodiscard]]
-	auto constexpr
-	(	operator -
-	)	(	BitSize
-				i_vSize
-		,	BitSize
-				i_vOffset
-		)
-		noexcept
-	->	BitSize
-	{	return i_vSize -= i_vOffset;	}
 
 	template
 		<	typename
@@ -532,6 +431,7 @@ export namespace
 	)	(	unsigned long long
 				i_nBits
 		)
+		noexcept
 	->	BitSize
 	{	return
 		{	static_cast<BitSize::SizeType>
@@ -546,6 +446,7 @@ export namespace
 	)	(	unsigned long long
 				i_nBytes
 		)
+		noexcept
 	->	ByteSize
 	{	return
 		{	static_cast<ByteSize::SizeType>

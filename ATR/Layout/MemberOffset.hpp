@@ -4,6 +4,7 @@ export import :Erase;
 
 import Meta.Size;
 import Meta.Memory.Size;
+import Meta.Memory.Size.Arithmetic;
 export import Meta.Predicate;
 
 import Std;
