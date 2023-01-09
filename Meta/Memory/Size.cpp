@@ -1,8 +1,6 @@
 export module Meta.Memory.Size;
 
-import Meta.Memory.Count;
 import Meta.Math.Divide;
-import Meta.Size;
 
 import Std;
 
@@ -10,7 +8,7 @@ export namespace
 	Meta::Memory
 {
 	template
-		<	SSize
+		<	decltype(0z)
 				t_nWidth
 		>
 	requires

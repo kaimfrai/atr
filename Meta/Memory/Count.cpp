@@ -1,7 +1,6 @@
 export module Meta.Memory.Count;
 
 import Meta.Math.Divide;
-import Meta.Size;
 
 import Std;
 
@@ -9,7 +8,7 @@ export namespace
 	Meta::Memory
 {
 	template
-		<	USize
+		<	decltype(0uz)
 				t_nWidth
 		>
 	struct
