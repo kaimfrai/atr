@@ -7,6 +7,7 @@ import :Optimizer;
 import Meta.Size;
 import Meta.Bit.Index;
 import Meta.Bit.Index.Arithmetic;
+import Meta.Bit.IndexRange.Compare;
 
 import Std;
 

@@ -6,6 +6,7 @@ import Meta.Arithmetic.Integer;
 import Meta.Arithmetic.Sanitize;
 import Meta.Bit.IndexIterator;
 import Meta.Memory.Size;
+import Meta.Memory.Size.Compare;
 import Meta.Size;
 
 import Std;
@@ -90,7 +91,7 @@ export namespace
 					t_nOtherWidth
 			>
 		[[nodiscard]]
-		explicit(t_nOtherWidth < t_nWidth) constexpr
+		explicit(t_nOtherWidth <= t_nWidth) constexpr
 		(	operator IndexRange<t_nOtherWidth>
 		)	()	const
 			noexcept
@@ -184,25 +185,5 @@ export namespace
 			.	m_nValue
 			};
 		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator ==
-		)	(	IndexRange
-			,	IndexRange
-			)
-			noexcept
-		->	bool
-		=	default;
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator <=>
-		)	(	IndexRange
-			,	IndexRange
-			)
-			noexcept
-		->	::std::strong_ordering
-		=	default;
 	};
 }

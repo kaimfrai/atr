@@ -9,3 +9,4 @@ add_single_file_modules(
 )
 
 add_subdirectory(Index)
+add_subdirectory(IndexRange)
