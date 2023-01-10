@@ -1,6 +1,6 @@
-export module Meta.Arithmetic.BitIndexIterator;
+export module Meta.Bit.IndexIterator;
 
-import Meta.Arithmetic.BitIndex;
+import Meta.Bit.Index;
 import Meta.Memory.Size;
 import Meta.Memory.Count;
 import Meta.Size;
@@ -9,14 +9,14 @@ import Meta.Arithmetic.Integer;
 import Std;
 
 export namespace
-	Meta::Arithmetic
+	Meta::Bit
 {
 	template
 		<	BitSize
 				t_nWidth
 		>
 	struct
-		BitIndexSentinel
+		IndexSentinel
 	{
 		static auto constexpr
 			FieldWidth
@@ -54,8 +54,8 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator ==
-		)	(	BitIndexSentinel
-			,	BitIndexSentinel
+		)	(	IndexSentinel
+			,	IndexSentinel
 			)
 			noexcept
 		->	bool
@@ -67,8 +67,8 @@ export namespace
 				t_nWidth
 		>
 	struct
-		BitIndexIterator
-	:	BitIndexSentinel
+		IndexIterator
+	:	IndexSentinel
 		<	t_nWidth
 		>
 	{
@@ -78,7 +78,7 @@ export namespace
 		;
 		using
 			value_type
-		=	BitIndex
+		=	Index
 			<	t_nWidth
 			>
 		;
@@ -101,7 +101,7 @@ export namespace
 		(	operator ++
 		)	()	&
 			noexcept
-		->	BitIndexIterator&
+		->	IndexIterator&
 		{	++this->m_nCount;
 			return *this;
 		}
@@ -111,7 +111,7 @@ export namespace
 		(	operator ++
 		)	(int)	&
 			noexcept
-		->	BitIndexIterator
+		->	IndexIterator
 		{	return
 			::std::exchange
 			(	*this

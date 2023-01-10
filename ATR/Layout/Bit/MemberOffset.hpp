@@ -9,7 +9,7 @@ import Meta.Predicate;
 import Meta.Token;
 import Meta.Memory.Size;
 import Meta.Memory.Size.PointerArithmetic;
-import Meta.Arithmetic.BitIndex;
+import Meta.Bit.Index;
 
 import Std;
 
@@ -23,7 +23,7 @@ export namespace
 	ATR::Bit
 {
 	template
-		<	::Meta::Arithmetic::BitIndex<1_byte>
+		<	::Meta::Bit::Index<1_byte>
 				t_nBitOffset
 		,	typename
 				t_tMember

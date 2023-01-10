@@ -4,7 +4,7 @@ import :Layout.Bit.ElementReference;
 import :Layout.Bit.Reference;
 import :Layout.Bit.Iterator;
 
-import Meta.Arithmetic.BitIndex;
+import Meta.Bit.Index;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Scale;
@@ -26,7 +26,7 @@ export namespace
 				t_nSize
 		,	::Meta::USize
 				t_nExtent
-		,	::Meta::Arithmetic::BitIndex<1_byte>
+		,	::Meta::Bit::Index<1_byte>
 				t_nOffset
 		>
 	struct
@@ -269,7 +269,7 @@ export namespace
 				t_nSize
 		,	::Meta::USize
 				t_nExtent
-		,	::Meta::Arithmetic::BitIndex<1_byte>
+		,	::Meta::Bit::Index<1_byte>
 				t_nOffset
 			=	0_bdx
 		>
@@ -288,7 +288,7 @@ export namespace
 				t_nSize
 		,	::Meta::USize
 				t_nExtent
-		,	::Meta::Arithmetic::BitIndex<1_byte>
+		,	::Meta::Bit::Index<1_byte>
 				t_nOffset
 		>
 	using
@@ -325,7 +325,7 @@ export namespace
 				t_nSize
 		,	::Meta::USize
 				t_nExtent
-		,	::Meta::Arithmetic::BitIndex<1_byte>
+		,	::Meta::Bit::Index<1_byte>
 				t_nOffset
 		>
 	[[nodiscard]]

@@ -2,9 +2,9 @@ import ATR;
 
 import Meta.Size;
 import Meta.Arithmetic.Integer;
-import Meta.Arithmetic.BitField;
+import Meta.Bit.Field;
 import Meta.Memory.Size;
-import Meta.Arithmetic.BitIndex;
+import Meta.Bit.Index;
 import Std;
 
 using ::ATR::Bit::Iterator;

@@ -2,12 +2,12 @@ import ATR;
 
 import Meta.Memory.Size;
 import Meta.Arithmetic.Integer;
-import Meta.Arithmetic.BitField;
-import Meta.Arithmetic.BitIndex;
+import Meta.Bit.Field;
+import Meta.Bit.Index;
 
 import Std;
 
-using ::Meta::Arithmetic::BitField;
+using ::Meta::Bit::Field;
 
 using namespace ::Meta::Literals;
 
@@ -72,7 +72,7 @@ static_assert
 		)
 	,	//TODO make this bool
 		//bool
-		BitField<1_bit>
+		Field<1_bit>
 	>
 );
 
@@ -85,7 +85,7 @@ static_assert
 		)
 	,	//TODO make this bool
 		//bool
-		BitField<1_bit>
+		Field<1_bit>
 	>
 );
 
@@ -122,7 +122,7 @@ static_assert
 		)
 	,	//TODO make this bool
 		//bool
-		BitField<1_bit>
+		Field<1_bit>
 	>
 );
 
@@ -144,7 +144,7 @@ static_assert
 			[	"2BitField31"_ID
 			]
 		)
-	,	BitField<31_bit>
+	,	Field<31_bit>
 	>
 );
 
@@ -155,7 +155,7 @@ static_assert
 			[	"2BitField31"_ID
 			]
 		)
-	,	BitField<31_bit>
+	,	Field<31_bit>
 	>
 );
 
@@ -188,6 +188,6 @@ static_assert
 			[	"3MutBitField31"_ID
 			]
 		)
-	,	BitField<31_bit>
+	,	Field<31_bit>
 	>
 );

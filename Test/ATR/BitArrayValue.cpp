@@ -2,10 +2,10 @@ import ATR;
 
 import Meta.Memory.Size;
 import Meta.Memory.Size.Scale;
-import Meta.Arithmetic.BitField;
+import Meta.Bit.Field;
 import Meta.Byte.Buffer;
 import Meta.Byte.Buffer.Range;
-import Meta.Arithmetic.BitIndex;
+import Meta.Bit.Index;
 
 import Std;
 
@@ -62,5 +62,5 @@ static_assert
 		}
 	)[	0uz
 	]
-==	::Meta::Arithmetic::BitField<16_bit>{0x7A}
+==	::Meta::Bit::Field<16_bit>{0x7A}
 );

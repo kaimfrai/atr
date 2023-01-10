@@ -1,4 +1,4 @@
-export module Meta.Arithmetic.BitIndex;
+export module Meta.Bit.Index;
 
 import Meta.Arithmetic.Literals;
 import Meta.Arithmetic.Integer;
@@ -12,7 +12,7 @@ import Std;
 using namespace Meta::Literals;
 
 export namespace
-	Meta::Arithmetic
+	Meta::Bit
 {
 	template
 		<	BitSize
@@ -23,7 +23,7 @@ export namespace
 		>	0_bit
 		)
 	struct
-		BitIndex
+		Index
 	{
 		static auto constexpr
 			FieldWidth
@@ -102,29 +102,29 @@ export namespace
 		;
 
 		explicit(false) constexpr
-		(	BitIndex
+		(	Index
 		)	()
 			noexcept
 		=	default;
 
 		explicit(false) constexpr
-		(	BitIndex
-		)	(	BitIndex const
+		(	Index
+		)	(	Index const
 				&
 			)
 			noexcept
 		=	default;
 
 		explicit(false) constexpr
-		(	BitIndex
-		)	(	BitIndex
+		(	Index
+		)	(	Index
 				&&
 			)
 			noexcept
 		=	default;
 
 		explicit(true) constexpr
-		(	BitIndex
+		(	Index
 		)	(	IndexType
 					i_nValue
 			)
@@ -137,12 +137,12 @@ export namespace
 		}
 
 		explicit(true) constexpr
-		(	BitIndex
+		(	Index
 		)	(	BitSize
 					i_nBitSize
 			)
 			noexcept
-		:	BitIndex
+		:	Index
 			{	Sanitize
 				(	i_nBitSize
 				.	get()
@@ -152,20 +152,20 @@ export namespace
 
 		auto constexpr
 		(	operator =
-		)	(	BitIndex const
+		)	(	Index const
 				&
 			)	&
 			noexcept
-		->	BitIndex&
+		->	Index&
 		=	default;
 
 		auto constexpr
 		(	operator =
-		)	(	BitIndex
+		)	(	Index
 				&&
 			)	&
 			noexcept
-		->	BitIndex&
+		->	Index&
 		=	default;
 
 		[[nodiscard]]
@@ -186,7 +186,7 @@ export namespace
 			>
 		[[nodiscard]]
 		explicit(t_nOtherWidth <= t_nWidth) constexpr
-		(	operator BitIndex<t_nOtherWidth>
+		(	operator Index<t_nOtherWidth>
 		)	()	const
 			noexcept
 		{
@@ -197,7 +197,7 @@ export namespace
 
 			using
 				tOtherIndex
-			=	BitIndex
+			=	Index
 				<	t_nOtherWidth
 				>
 			;
@@ -230,8 +230,8 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator ==
-		)	(	BitIndex
-			,	BitIndex
+		)	(	Index
+			,	Index
 			)
 			noexcept
 		->	bool
@@ -240,8 +240,8 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator <=>
-		)	(	BitIndex
-			,	BitIndex
+		)	(	Index
+			,	Index
 			)
 			noexcept
 		->	::std::strong_ordering
@@ -252,7 +252,7 @@ export namespace
 		(	operator +
 		)	(	BitSize
 					i_nLeft
-			,	BitIndex
+			,	Index
 					i_nRight
 			)
 			noexcept
@@ -264,15 +264,15 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator +
-		)	(	BitIndex
+		)	(	Index
 					i_nLeft
-			,	BitIndex
+			,	Index
 					i_nRight
 			)
 			noexcept
-		->	BitIndex
+		->	Index
 		{	return
-			BitIndex
+			Index
 			{	Sanitize
 				(	static_cast<IndexType>
 					(	i_nLeft.get()
@@ -284,11 +284,11 @@ export namespace
 
 		auto constexpr
 		(	operator +=
-		)	(	BitIndex
+		)	(	Index
 					i_nOffset
 			)	&
 			noexcept
-		->	BitIndex&
+		->	Index&
 		{
 			*this = *this + i_nOffset;
 			return *this;
@@ -298,34 +298,34 @@ export namespace
 		(	operator ++
 		)	()	&
 			noexcept
-		->	BitIndex&
-		{	return *this +=  BitIndex{1};	}
+		->	Index&
+		{	return *this +=  Index{1};	}
 
 		[[nodiscard("Use preincrement when discarding the result")]]
 		auto constexpr
 		(	operator ++
 		)	(int)	&
 			noexcept
-		->	BitIndex
+		->	Index
 		{	return
 			::std::exchange
 			(	*this
-			,	*this + BitIndex{1}
+			,	*this + Index{1}
 			);
 		}
 
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator -
-		)	(	BitIndex
+		)	(	Index
 					i_nLeft
-			,	BitIndex
+			,	Index
 					i_nRight
 			)
 			noexcept
-		->	BitIndex
+		->	Index
 		{	return
-			BitIndex
+			Index
 			{	Sanitize
 				(	static_cast<IndexType>
 					(	i_nLeft.get()
@@ -337,11 +337,11 @@ export namespace
 
 		auto constexpr
 		(	operator -=
-		)	(	BitIndex
+		)	(	Index
 					i_nOffset
 			)	&
 			noexcept
-		->	BitIndex&
+		->	Index&
 		{
 			*this = *this - i_nOffset;
 			return *this;
@@ -351,19 +351,19 @@ export namespace
 		(	operator --
 		)	()	&
 			noexcept
-		->	BitIndex&
-		{	return *this -=  BitIndex{1};	}
+		->	Index&
+		{	return *this -=  Index{1};	}
 
 		[[nodiscard("Use predecrement when discarding the result")]]
 		auto constexpr
 		(	operator --
 		)	(int)	&
 			noexcept
-		->	BitIndex
+		->	Index
 		{	return
 			::std::exchange
 			(	*this
-			,	*this - BitIndex{1}
+			,	*this - Index{1}
 			);
 		}
 
@@ -372,7 +372,7 @@ export namespace
 		(	operator >>
 		)	(	FieldType
 					i_nField
-			,	BitIndex
+			,	Index
 					i_nIndex
 			)
 			noexcept
@@ -388,7 +388,7 @@ export namespace
 		(	operator >>=
 		)	(	FieldType
 				&	i_rField
-			,	BitIndex
+			,	Index
 					i_nIndex
 			)
 			noexcept
@@ -411,7 +411,7 @@ export namespace
 		(	operator <<
 		)	(	FieldType
 					i_nField
-			,	BitIndex
+			,	Index
 					i_nIndex
 			)
 			noexcept
@@ -430,7 +430,7 @@ export namespace
 		(	operator <<=
 		)	(	FieldType
 				&	i_rField
-			,	BitIndex
+			,	Index
 					i_nIndex
 			)
 			noexcept
@@ -449,7 +449,7 @@ export namespace
 		(	Test
 		)	(	FieldType
 					i_nField
-			,	BitIndex
+			,	Index
 					i_nIndex
 			)
 			noexcept
@@ -471,7 +471,7 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	Power
-		)	(	BitIndex
+		)	(	Index
 					i_nIndex
 			)
 		->	FieldType
@@ -504,7 +504,7 @@ export namespace
 		;
 		using
 			RemainderType
-		=	Arithmetic::BitIndex
+		=	Bit::Index
 			<	t_tSize{1}
 			>
 		;
@@ -574,7 +574,7 @@ export namespace
 		;
 
 		return
-		Arithmetic::BitIndex
+		Bit::Index
 		<	BitSize
 			{	static_cast<BitSize::SizeType>
 				(	nParsed

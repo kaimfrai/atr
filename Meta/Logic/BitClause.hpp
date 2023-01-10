@@ -4,8 +4,8 @@ import Meta.Size;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Compare;
 import Meta.Arithmetic.Integer;
-import Meta.Arithmetic.BitField;
-import Meta.Arithmetic.BitRange;
+import Meta.Bit.Field;
+import Meta.Bit.IndexRange;
 
 import Std;
 
@@ -28,7 +28,7 @@ export namespace
 	{
 		using
 			FieldType
-		=	Arithmetic::BitField
+		=	Bit::Field
 			<	LiteralLimit
 			>
 		;
@@ -139,7 +139,7 @@ export namespace
 
 			for	(	auto
 						nIndex
-				:	Arithmetic::BitRange<LiteralLimit>
+				:	Bit::IndexRange<LiteralLimit>
 					{	i_vPermutation.size()
 					}
 				)

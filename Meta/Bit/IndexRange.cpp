@@ -1,9 +1,9 @@
-export module Meta.Arithmetic.BitRange;
+export module Meta.Bit.IndexRange;
 
-import Meta.Arithmetic.BitIndex;
+import Meta.Bit.Index;
 import Meta.Arithmetic.Literals;
 import Meta.Arithmetic.Integer;
-import Meta.Arithmetic.BitIndexIterator;
+import Meta.Bit.IndexIterator;
 import Meta.Memory.Size;
 import Meta.Size;
 
@@ -12,14 +12,14 @@ import Std;
 using namespace Meta::Literals;
 
 export namespace
-	Meta::Arithmetic
+	Meta::Bit
 {
 	template
 		<	BitSize
 				t_nWidth
 		>
 	struct
-		BitRange
+		IndexRange
 	{
 		static auto constexpr
 			FieldWidth
@@ -28,14 +28,14 @@ export namespace
 
 		using
 			iterator
-		=	BitIndexIterator
+		=	IndexIterator
 			<	FieldWidth
 			>
 		;
 
 		using
 			sentinel
-		=	BitIndexSentinel
+		=	IndexSentinel
 			<	FieldWidth
 			>
 		;
@@ -77,29 +77,29 @@ export namespace
 		;
 
 		explicit(false) constexpr
-		(	BitRange
+		(	IndexRange
 		)	()
 			noexcept
 		=	default;
 
 		explicit(false) constexpr
-		(	BitRange
-		)	(	BitRange const
+		(	IndexRange
+		)	(	IndexRange const
 				&
 			)
 			noexcept
 		=	default;
 
 		explicit(false) constexpr
-		(	BitRange
-		)	(	BitRange
+		(	IndexRange
+		)	(	IndexRange
 				&&
 			)
 			noexcept
 		=	default;
 
 		explicit(true) constexpr
-		(	BitRange
+		(	IndexRange
 		)	(	UIntMax
 					i_nValue
 			)
@@ -124,7 +124,7 @@ export namespace
 			>
 		[[nodiscard]]
 		explicit(t_nOtherWidth < t_nWidth) constexpr
-		(	operator BitRange<t_nOtherWidth>
+		(	operator IndexRange<t_nOtherWidth>
 		)	()	const
 			noexcept
 		{
@@ -134,7 +134,7 @@ export namespace
 			;
 			using
 				tOtherRange
-			=	BitRange
+			=	IndexRange
 				<	t_nOtherWidth
 				>
 			;
@@ -155,20 +155,20 @@ export namespace
 
 		auto constexpr
 		(	operator =
-		)	(	BitRange const
+		)	(	IndexRange const
 				&
 			)	&
 			noexcept
-		->	BitRange&
+		->	IndexRange&
 		=	default;
 
 		auto constexpr
 		(	operator =
-		)	(	BitRange
+		)	(	IndexRange
 				&&
 			)	&
 			noexcept
-		->	BitRange&
+		->	IndexRange&
 		=	default;
 
 		[[nodiscard]]
@@ -188,7 +188,7 @@ export namespace
 		(	front
 		)	()	const
 			noexcept
-		->	BitIndex<t_nWidth>
+		->	Index<t_nWidth>
 		{
 			auto const
 				nValue
@@ -199,7 +199,7 @@ export namespace
 
 			using
 				tIndexType
-			=	BitIndex
+			=	Index
 				<	t_nWidth
 				>
 			;
@@ -217,7 +217,7 @@ export namespace
 		(	back
 		)	()	const
 			noexcept
-		->	BitIndex<t_nWidth>
+		->	Index<t_nWidth>
 		{
 			auto const
 				nValue
@@ -228,7 +228,7 @@ export namespace
 
 			using
 				tIndexType
-			=	BitIndex
+			=	Index
 				<	t_nWidth
 				>
 			;
@@ -244,7 +244,7 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	begin
-		)	(	BitRange
+		)	(	IndexRange
 			)
 			noexcept
 		->	iterator
@@ -257,7 +257,7 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	end
-		)	(	BitRange
+		)	(	IndexRange
 					i_nRange
 			)
 			noexcept
@@ -271,8 +271,8 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator ==
-		)	(	BitRange
-			,	BitRange
+		)	(	IndexRange
+			,	IndexRange
 			)
 			noexcept
 		->	bool
@@ -281,8 +281,8 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator <=>
-		)	(	BitRange
-			,	BitRange
+		)	(	IndexRange
+			,	IndexRange
 			)
 			noexcept
 		->	::std::strong_ordering

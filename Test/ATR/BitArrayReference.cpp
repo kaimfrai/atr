@@ -4,11 +4,11 @@ import Meta.Size;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Scale;
 import Meta.Arithmetic.Integer;
-import Meta.Arithmetic.BitField;
-import Meta.Arithmetic.BitRange;
+import Meta.Bit.Field;
+import Meta.Bit.IndexRange;
 import Meta.Byte.Buffer;
 import Meta.Byte.Buffer.Range;
-import Meta.Arithmetic.BitIndex;
+import Meta.Bit.Index;
 
 import Std;
 
@@ -22,7 +22,7 @@ template
 			t_nSize
 	,	USize
 			t_nCount
-	,	::Meta::Arithmetic::BitIndex<1_byte>
+	,	::Meta::Bit::Index<1_byte>
 			t_nOffset
 		=	0_bdx
 	>

@@ -9,7 +9,7 @@ import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.PointerArithmetic;
 import Meta.Memory.Size.Scale;
-import Meta.Arithmetic.BitIndex;
+import Meta.Bit.Index;
 
 import Std;
 
@@ -23,7 +23,7 @@ export namespace
 				t_tBuffer
 		,	::Meta::BitSize
 				t_nSize
-		,	::Meta::Arithmetic::BitIndex<1_byte>
+		,	::Meta::Bit::Index<1_byte>
 				t_nMaxOffset
 		>
 	struct
@@ -95,7 +95,7 @@ export namespace
 		(	Iterator
 		)	(	t_tBuffer
 				*	i_aUnderlyingArray
-			,	::Meta::Arithmetic::BitIndex<1_byte>
+			,	::Meta::Bit::Index<1_byte>
 					i_nOffset
 			)
 		:	Iterator

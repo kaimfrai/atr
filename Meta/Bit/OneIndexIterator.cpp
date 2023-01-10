@@ -1,14 +1,14 @@
-export module Meta.Arithmetic.OneIndexIterator;
+export module Meta.Bit.OneIndexIterator;
 
 import Meta.Memory.Size;
-import Meta.Arithmetic.BitField;
-import Meta.Arithmetic.BitIndex;
+import Meta.Bit.Field;
+import Meta.Bit.Index;
 import Meta.Size;
 
 import Std;
 
 export namespace
-	Meta::Arithmetic
+	Meta::Bit
 {
 	struct
 		OneIndexSentinel
@@ -22,9 +22,9 @@ export namespace
 		OneIndexIterator
 	{
 		using difference_type = SSize;
-		using value_type = BitIndex<t_nWidth>;
+		using value_type = Index<t_nWidth>;
 
-		BitField<t_nWidth>
+		Field<t_nWidth>
 			Field
 		;
 
@@ -95,7 +95,7 @@ export namespace
 				t_nWidth
 		>
 	(	OneIndexIterator
-	)	(	BitField<t_nWidth>
+	)	(	Field<t_nWidth>
 		)
 	->	OneIndexIterator
 		<	t_nWidth

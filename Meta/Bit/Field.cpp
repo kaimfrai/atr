@@ -1,7 +1,7 @@
-export module Meta.Arithmetic.BitField;
+export module Meta.Bit.Field;
 
-import Meta.Arithmetic.BitRange;
-import Meta.Arithmetic.BitIndex;
+import Meta.Bit.IndexRange;
+import Meta.Bit.Index;
 import Meta.Byte.InSpan;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
@@ -14,7 +14,7 @@ import Std;
 using namespace Meta::Literals;
 
 export namespace
-	Meta::Arithmetic
+	Meta::Bit
 {
 	template
 		<	BitSize
@@ -26,17 +26,17 @@ export namespace
 		)
 	struct
 	// no private members to be usable as template argument
-		BitField
+		Field
 	{
 		using
 			IndexType
-		=	BitIndex
+		=	Index
 			<	t_nWidth
 			>
 		;
 		using
 			CountType
-		=	BitRange
+		=	IndexRange
 			<	t_nWidth
 			>
 		;
@@ -94,13 +94,13 @@ export namespace
 		}
 
 		explicit(false) constexpr
-		(	BitField
+		(	Field
 		)	()
 			noexcept
 		=	default;
 
 		explicit(true) constexpr
-		(	BitField
+		(	Field
 		)	(	FieldType
 					i_vValue
 			)
@@ -113,7 +113,7 @@ export namespace
 		}
 
 		explicit(true) constexpr
-		(	BitField
+		(	Field
 		)	(	Byte::InSpan
 					i_vSpan
 			)
@@ -126,14 +126,14 @@ export namespace
 		}
 
 		explicit(true) constexpr
-		(	BitField
+		(	Field
 		)	(	CountType
 					i_vSetBits
 			)
 			noexcept
-		:	BitField
+		:	Field
 			{	compl
-				BitField
+				Field
 				{}
 			>>	(	CountType::MaximumValue
 				-	i_vSetBits.get()
@@ -163,11 +163,11 @@ export namespace
 			>
 		[[nodiscard]]
 		explicit(t_nOtherWidth < t_nWidth) constexpr
-		(	operator BitField<t_nOtherWidth>
+		(	operator Field<t_nOtherWidth>
 		)	()	const
 			noexcept
 		{	return
-			BitField<t_nOtherWidth>
+			Field<t_nOtherWidth>
 			{	Byte::InSpan
 				{	m_vValue
 				}
@@ -188,7 +188,7 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator not
-		)	(	BitField
+		)	(	Field
 					i_vField
 			)
 			noexcept
@@ -202,15 +202,15 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator bitand
-		)	(	BitField
+		)	(	Field
 					i_vLeft
-			,	BitField
+			,	Field
 					i_vRight
 			)
 			noexcept
-		->	BitField
+		->	Field
 		{	return
-			BitField
+			Field
 			{	static_cast<FieldType>
 				(	i_vLeft.get()
 				bitand
@@ -221,11 +221,11 @@ export namespace
 
 		auto constexpr
 		(	operator &=
-		)	(	BitField
+		)	(	Field
 					i_vRight
 			)	&
 			noexcept
-		->	BitField&
+		->	Field&
 		{	return
 				*this
 			=	*this
@@ -237,15 +237,15 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator bitor
-		)	(	BitField
+		)	(	Field
 					i_vLeft
-			,	BitField
+			,	Field
 					i_vRight
 			)
 			noexcept
-		->	BitField
+		->	Field
 		{	return
-			BitField
+			Field
 			{	static_cast<FieldType>
 				(	i_vLeft.get()
 				bitor
@@ -256,11 +256,11 @@ export namespace
 
 		auto constexpr
 		(	operator |=
-		)	(	BitField
+		)	(	Field
 					i_vRight
 			)	&
 			noexcept
-		->	BitField&
+		->	Field&
 		{	return
 				*this
 			=	*this
@@ -272,15 +272,15 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator xor
-		)	(	BitField
+		)	(	Field
 					i_vLeft
-			,	BitField
+			,	Field
 					i_vRight
 			)
 			noexcept
-		->	BitField
+		->	Field
 		{	return
-			BitField
+			Field
 			{	static_cast<FieldType>
 				(	i_vLeft.get()
 				xor	i_vRight.get()
@@ -290,11 +290,11 @@ export namespace
 
 		auto constexpr
 		(	operator ^=
-		)	(	BitField
+		)	(	Field
 					i_vRight
 			)	&
 			noexcept
-		->	BitField&
+		->	Field&
 		{	return
 				*this
 			=	*this
@@ -305,13 +305,13 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator compl
-		)	(	BitField
+		)	(	Field
 					i_vField
 			)
 			noexcept
-		->	BitField
+		->	Field
 		{	return
-			BitField
+			Field
 			{	Sanitize
 				(	static_cast<FieldType>
 					(	compl
@@ -328,21 +328,21 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator <<
-		)	(	BitField
+		)	(	Field
 					i_vField
-			,	BitIndex<t_nOffset>
+			,	Index<t_nOffset>
 					i_nIndex
 			)
 			noexcept
-		->	BitField
+		->	Field
 			<	t_nWidth
-			+	BitIndex<t_nOffset>::HighestValue
+			+	Index<t_nOffset>::HighestValue
 			>
 		{	using
 				tLargerField
-			=	BitField
+			=	Field
 				<	t_nWidth
-				+	BitIndex<t_nOffset>::HighestValue
+				+	Index<t_nOffset>::HighestValue
 				>
 			;
 
@@ -365,11 +365,11 @@ export namespace
 					i_nIndex
 			)	&
 			noexcept
-		->	BitField&
+		->	Field&
 		{
 			return
 				*this
-			=	BitField
+			=	Field
 				{	Sanitize
 					(	static_cast<FieldType>
 						(	get()
@@ -383,15 +383,15 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator >>
-		)	(	BitField
+		)	(	Field
 					i_vField
 			,	IndexType
 					i_nIndex
 			)
 			noexcept
-		->	BitField
+		->	Field
 		{	return
-			BitField
+			Field
 			{	Sanitize
 				(	static_cast<FieldType>
 					(	i_vField.get()
@@ -407,7 +407,7 @@ export namespace
 					i_nIndex
 			)	&
 			noexcept
-		->	BitField&
+		->	Field&
 		{	return
 				*this
 			=	*this
@@ -432,9 +432,9 @@ export namespace
 
 		friend auto constexpr
 		(	operator ==
-		)	(	BitField
+		)	(	Field
 					i_vLeft
-			,	BitField
+			,	Field
 					i_vRight
 			)
 			noexcept
@@ -447,9 +447,9 @@ export namespace
 
 		friend auto constexpr
 		(	operator <=>
-		)	(	BitField
+		)	(	Field
 					i_vLeft
-			,	BitField
+			,	Field
 					i_vRight
 			)
 			noexcept
@@ -464,7 +464,7 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	CountOnes
-		)	(	BitField
+		)	(	Field
 					i_vField
 			)
 			noexcept
@@ -482,13 +482,13 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	LowestOne
-		)	(	BitField
+		)	(	Field
 					i_vField
 			)
 			noexcept
-		->	BitField
+		->	Field
 		{	return
-			BitField
+			Field
 			{	Sanitize
 				(	i_vField.get()
 				bitand
@@ -501,7 +501,7 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	IndexLowestOne
-		)	(	BitField
+		)	(	Field
 					i_vField
 			)
 			noexcept
@@ -527,7 +527,7 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	CurrentWidth
-		)	(	BitField
+		)	(	Field
 					i_vField
 			)
 			noexcept
@@ -545,10 +545,10 @@ export namespace
 		auto constexpr
 		(	UnsetLowestOne
 		)	()	&
-		->	BitField&
+		->	Field&
 		{	return
 				*this
-			=	BitField
+			=	Field
 				{	Sanitize
 					(	get()
 					bitand
@@ -566,10 +566,10 @@ export namespace
 					i_nIndex
 			)	&
 			noexcept
-		->	BitField&
+		->	Field&
 		{	return
 				*this
-			|=	BitField
+			|=	Field
 				{	Power
 					(	i_nIndex
 					)
@@ -583,11 +583,11 @@ export namespace
 					i_nIndex
 			)	&
 			noexcept
-		->	BitField&
+		->	Field&
 		{	return
 				*this
 			&=	compl
-				BitField
+				Field
 				{	Power
 					(	i_nIndex
 					)

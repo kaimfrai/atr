@@ -1,12 +1,12 @@
 import ATR;
 
 import Meta.Arithmetic.Integer;
-import Meta.Arithmetic.BitField;
+import Meta.Bit.Field;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Scale;
-import Meta.Arithmetic.BitIndex;
+import Meta.Bit.Index;
 
 import Std;
 
@@ -455,7 +455,7 @@ static_assert
 		,	ATR::Bit::MemberOffset<7_bdx, BitField<1_bit>>
 		>
 	,	// TODO make this bool
-		Meta::Arithmetic::BitField<1_bit>
+		::Meta::Bit::Field<1_bit>
 	>
 );
 

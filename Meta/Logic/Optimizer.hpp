@@ -7,7 +7,7 @@ import Meta.Buffer.Static;
 import Meta.Buffer.Dynamic;
 import Meta.Size;
 import Meta.Buffer.Iterator;
-import Meta.Arithmetic.BitRange;
+import Meta.Bit.IndexRange;
 
 import Std;
 
@@ -364,7 +364,7 @@ export namespace
 
 		explicit(true) constexpr
 		(	Optimizer
-		)	(	Arithmetic::BitRange<LiteralLimit>
+		)	(	Bit::IndexRange<LiteralLimit>
 					i_nLiteralCount
 			)
 		:	Optimizer

@@ -4,9 +4,9 @@ import Meta.Byte.OutSpan;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Compare;
 import Meta.Arithmetic.Integer;
-import Meta.Arithmetic.BitField;
+import Meta.Bit.Field;
 import Meta.Byte.InSpan;
-import Meta.Arithmetic.BitIndex;
+import Meta.Bit.Index;
 
 import Std;
 
@@ -18,7 +18,7 @@ export namespace
 	template
 		<	::Meta::BitSize
 				t_nSize
-		,	::Meta::Arithmetic::BitIndex<1_byte>
+		,	::Meta::Bit::Index<1_byte>
 				t_nMaxOffset
 		>
 	struct
@@ -26,7 +26,7 @@ export namespace
 	{
 		using
 			FieldType
-		=	::Meta::Arithmetic::BitField
+		=	::Meta::Bit::Field
 			<	t_nSize
 			>
 		;
@@ -45,14 +45,14 @@ export namespace
 
 		using
 			BufferFieldType
-		=	::Meta::Arithmetic::BitField
+		=	::Meta::Bit::Field
 			<	BufferByteSize
 			>
 		;
 
 		using
 			OffsetType
-		=	::Meta::Arithmetic::BitIndex
+		=	::Meta::Bit::Index
 			<	1_bit
 			+	t_nMaxOffset
 			>
@@ -61,7 +61,7 @@ export namespace
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetMask
-		)	(	::Meta::Arithmetic::BitIndex<1_byte>
+		)	(	::Meta::Bit::Index<1_byte>
 					i_nOffset
 			)
 			noexcept
@@ -128,7 +128,7 @@ export namespace
 		(	ReadField
 		)	(	::std::byte const
 				*	i_aBuffer
-			,	::Meta::Arithmetic::BitIndex<1_byte>
+			,	::Meta::Bit::Index<1_byte>
 					i_nOffset
 			)
 			noexcept
@@ -217,7 +217,7 @@ export namespace
 					i_vValue
 			,	::std::byte
 				*	i_aBuffer
-			,	::Meta::Arithmetic::BitIndex<1_byte>
+			,	::Meta::Bit::Index<1_byte>
 					i_nOffset
 			)
 			noexcept

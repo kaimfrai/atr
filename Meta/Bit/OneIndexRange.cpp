@@ -1,12 +1,12 @@
-export module Meta.Arithmetic.OneIndexView;
+export module Meta.Bit.OneIndexRange;
 
-import Meta.Arithmetic.BitField;
-import Meta.Arithmetic.OneIndexIterator;
+import Meta.Bit.Field;
+import Meta.Bit.OneIndexIterator;
 import Meta.Memory.Size;
 import Meta.Size;
 
 export namespace
-	Meta::Arithmetic
+	Meta::Bit
 {
 	template
 		<	BitSize
@@ -15,7 +15,7 @@ export namespace
 	struct
 		OneIndexView
 	{
-		BitField<t_nWidth>
+		Field<t_nWidth>
 			Field
 		;
 
@@ -41,7 +41,7 @@ export namespace
 				t_nWidth
 		>
 	(	OneIndexView
-	)	(	BitField<t_nWidth>
+	)	(	Field<t_nWidth>
 		)
 	->	OneIndexView
 		<	t_nWidth

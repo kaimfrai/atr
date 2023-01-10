@@ -5,11 +5,11 @@ export import :BitClauseIterator;
 import :Optimizer;
 
 import Meta.Size;
-import Meta.Arithmetic.BitIndex;
+import Meta.Bit.Index;
 
 import Std;
 
-using ::Meta::Arithmetic::BitIndex;
+using ::Meta::Bit::Index;
 
 export namespace
 	Meta::Logic

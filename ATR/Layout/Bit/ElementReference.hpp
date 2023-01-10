@@ -3,7 +3,7 @@ export module ATR:Layout.Bit.ElementReference;
 import :Layout.Bit.Access;
 
 import Meta.Memory.Size;
-import Meta.Arithmetic.BitIndex;
+import Meta.Bit.Index;
 
 import Std;
 
@@ -17,7 +17,7 @@ export namespace
 				t_tBuffer
 		,	::Meta::BitSize
 				t_nSize
-		,	::Meta::Arithmetic::BitIndex<1_byte>
+		,	::Meta::Bit::Index<1_byte>
 				t_nMaxOffset
 		>
 	struct

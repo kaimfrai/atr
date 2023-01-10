@@ -7,9 +7,9 @@ import Meta.Size;
 import Meta.Buffer.Static;
 export import Meta.Token;
 import Meta.Functional;
-import Meta.Arithmetic.OneIndexView;
-import Meta.Arithmetic.BitField;
-import Meta.Arithmetic.BitIndex;
+import Meta.Bit.OneIndexRange;
+import Meta.Bit.Field;
+import Meta.Bit.Index;
 
 import Std;
 
@@ -137,7 +137,7 @@ export namespace
 					=	0uz
 				;	auto
 						vBitIndex
-				:	Arithmetic::OneIndexView
+				:	Bit::OneIndexView
 					{	i_rResult.LiteralField()
 					}
 				)
