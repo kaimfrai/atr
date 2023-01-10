@@ -1,15 +1,12 @@
 export module Meta.Bit.Index;
 
-import Meta.Arithmetic.Literals;
-import Meta.Arithmetic.Integer;
-import Meta.Arithmetic.IntegerFor;
 import Meta.Arithmetic.Sanitize;
+import Meta.Arithmetic.Literals;
+import Meta.Arithmetic.IntegerFor;
+import Meta.Arithmetic.Integer;
 import Meta.Memory.Size;
-import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
-import Meta.Math.Divide;
-
-import Std;
+import Meta.Memory.Size.Arithmetic;
 
 using namespace Meta::Literals;
 
