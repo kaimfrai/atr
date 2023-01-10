@@ -6,6 +6,7 @@ import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Arithmetic.Integer;
 import Meta.Bit.Field;
+import Meta.Bit.Field.Arithmetic;
 import Meta.Byte.InSpan;
 import Meta.Bit.Index;
 
@@ -54,8 +55,9 @@ export namespace
 		using
 			OffsetType
 		=	::Meta::Bit::Index
-			<	1_bit
-			+	t_nMaxOffset
+			<	BufferByteSize
+			-	t_nSize
+			+	1_bit
 			>
 		;
 

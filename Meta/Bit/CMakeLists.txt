@@ -8,5 +8,6 @@ add_single_file_modules(
 	OneIndexRange.cpp
 )
 
+add_subdirectory(Field)
 add_subdirectory(Index)
 add_subdirectory(IndexRange)

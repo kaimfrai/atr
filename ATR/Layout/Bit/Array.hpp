@@ -4,6 +4,7 @@ import :Layout.Bit.ElementReference;
 import :Layout.Bit.Reference;
 import :Layout.Bit.Iterator;
 
+import Meta.Bit.Field.Arithmetic;
 import Meta.Bit.Index;
 import Meta.Bit.Index.Compare;
 import Meta.Memory.Size;

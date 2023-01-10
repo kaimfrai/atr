@@ -86,12 +86,34 @@ export namespace
 		explicit(true) constexpr
 		(	Field
 		)	(	UIntMax
-					i_vValue
+					i_nValue
 			)
 			noexcept
 		:	m_vValue
 			{	AssertSanitized
-				(	i_vValue
+				(	i_nValue
+				)
+			}
+		{}
+
+		//	Accept result of bit operations without casts
+		explicit(true) constexpr
+		(	Field
+		)	(	int
+					i_nValue
+			)
+			noexcept
+		requires
+			::std::is_same_v
+			<	int
+			,	decltype
+				(	compl
+					FieldType{}
+				)
+			>
+		:	Field
+			{	static_cast<UIntMax>
+				(	i_nValue
 				)
 			}
 		{}
@@ -142,7 +164,7 @@ export namespace
 					t_nOtherWidth
 			>
 		[[nodiscard]]
-		explicit(t_nOtherWidth < t_nWidth) constexpr
+		explicit(true) constexpr
 		(	operator Field<t_nOtherWidth>
 		)	()	const
 			noexcept
@@ -177,128 +199,6 @@ export namespace
 			static_cast<bool>
 			(	i_vField
 			);
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator bitand
-		)	(	Field
-					i_vLeft
-			,	Field
-					i_vRight
-			)
-			noexcept
-		->	Field
-		{	return
-			Field
-			{	static_cast<FieldType>
-				(	i_vLeft.get()
-				bitand
-					i_vRight.get()
-				)
-			};
-		}
-
-		auto constexpr
-		(	operator &=
-		)	(	Field
-					i_vRight
-			)	&
-			noexcept
-		->	Field&
-		{	return
-				*this
-			=	*this
-			bitand
-				i_vRight
-			;
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator bitor
-		)	(	Field
-					i_vLeft
-			,	Field
-					i_vRight
-			)
-			noexcept
-		->	Field
-		{	return
-			Field
-			{	static_cast<FieldType>
-				(	i_vLeft.get()
-				bitor
-					i_vRight.get()
-				)
-			};
-		}
-
-		auto constexpr
-		(	operator |=
-		)	(	Field
-					i_vRight
-			)	&
-			noexcept
-		->	Field&
-		{	return
-				*this
-			=	*this
-			bitor
-				i_vRight
-			;
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator xor
-		)	(	Field
-					i_vLeft
-			,	Field
-					i_vRight
-			)
-			noexcept
-		->	Field
-		{	return
-			Field
-			{	static_cast<FieldType>
-				(	i_vLeft.get()
-				xor	i_vRight.get()
-				)
-			};
-		}
-
-		auto constexpr
-		(	operator ^=
-		)	(	Field
-					i_vRight
-			)	&
-			noexcept
-		->	Field&
-		{	return
-				*this
-			=	*this
-			xor	i_vRight
-			;
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator compl
-		)	(	Field
-					i_vField
-			)
-			noexcept
-		->	Field
-		{	return
-			Field
-			{	Sanitize
-				(	static_cast<FieldType>
-					(	compl
-						i_vField.get()
-					)
-				)
-			};
 		}
 
 		template

@@ -9,6 +9,7 @@ import Meta.Bit.Index;
 import Meta.Bit.Index.Arithmetic;
 import Meta.Bit.IndexRange.Compare;
 import Meta.Bit.IndexRange.Range;
+import Meta.Bit.Field.Arithmetic;
 
 import Std;
 
