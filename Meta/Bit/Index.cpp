@@ -156,30 +156,6 @@ export namespace
 			noexcept
 		->	::std::strong_ordering
 		=	default;
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	Test
-		)	(	FieldType
-					i_nField
-			,	Index
-					i_nIndex
-			)
-			noexcept
-		->	bool
-		{
-			FieldType constexpr nOne{1};
-
-			return
-			(	nOne
-			==	(	(	i_nField
-					>>	i_nIndex
-					)
-				bitand
-					nOne
-				)
-			);
-		}
 	};
 }
 

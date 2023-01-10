@@ -2,6 +2,7 @@ export module Meta.Bit.Field;
 
 import Meta.Bit.IndexRange;
 import Meta.Bit.Index;
+import Meta.Bit.Index.Test;
 import Meta.Byte.InSpan;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
