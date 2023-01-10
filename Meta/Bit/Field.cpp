@@ -73,33 +73,13 @@ export namespace
 			)
 		;
 
-		[[nodiscard]]
 		static auto constexpr
-		(	Sanitize
-		)	(	UIntMax
-					i_nField
-			)
-			noexcept
-		->	FieldType
-		{
-			if	constexpr
-				(	t_nWidth
-				==	Memory::SizeOf<FieldType>
-				)
-			{	return
-				static_cast<FieldType>
-				(	i_nField
-				);
-			}
-			else
-			{	return
-				static_cast<FieldType>
-				(	i_nField
-				bitand
-					Mask
-				);
-			}
-		}
+			Sanitize
+		=	&
+			Arithmetic::SanitizeUnsigned
+			<	Mask
+			>
+		;
 
 		static auto constexpr
 			AssertSanitized
