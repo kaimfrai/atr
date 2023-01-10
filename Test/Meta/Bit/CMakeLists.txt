@@ -5,5 +5,5 @@ add_module_object_library(
 )
 add_module_object_library(
 	Test.Meta.Bit.OneIndexRange
-	OneIndexView.cpp
+	OneIndexRange.cpp
 )

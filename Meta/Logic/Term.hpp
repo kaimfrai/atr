@@ -139,7 +139,7 @@ export namespace
 					=	0uz
 				;	auto
 						vBitIndex
-				:	Bit::OneIndexView
+				:	Bit::OneIndexRange
 					{	i_rResult.LiteralField()
 					}
 				)

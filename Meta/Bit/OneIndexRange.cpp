@@ -13,7 +13,7 @@ export namespace
 				t_nWidth
 		>
 	struct
-		OneIndexView
+		OneIndexRange
 	{
 		Field<t_nWidth>
 			Field
@@ -40,10 +40,10 @@ export namespace
 		<	auto
 				t_nWidth
 		>
-	(	OneIndexView
+	(	OneIndexRange
 	)	(	Field<t_nWidth>
 		)
-	->	OneIndexView
+	->	OneIndexRange
 		<	t_nWidth
 		>
 	;
