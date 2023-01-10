@@ -6,6 +6,7 @@ import Meta.Memory.Size.Compare;
 import Meta.Arithmetic.Integer;
 import Meta.Bit.Field;
 import Meta.Bit.Field.Arithmetic;
+import Meta.Bit.Field.Compare;
 import Meta.Bit.IndexRange;
 import Meta.Bit.IndexRange.Range;
 import Meta.Bit.Index.Shift;

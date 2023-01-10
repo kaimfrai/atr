@@ -136,6 +136,38 @@ export namespace
 			=	i_vValue
 			);
 		}
+
+		[[nodiscard]]
+		friend auto constexpr
+		(	operator ==
+		)	(	SingleReference
+					i_rReference
+			,	value_type
+					i_vValue
+			)
+			noexcept
+		->	bool
+		{	return
+				i_rReference.get()
+			==	i_vValue
+			;
+		}
+
+		[[nodiscard]]
+		friend auto constexpr
+		(	operator <=>
+		)	(	SingleReference
+					i_rReference
+			,	value_type
+					i_vValue
+			)
+			noexcept
+		->	bool
+		{	return
+				i_rReference.get()
+			<=>	i_vValue
+			;
+		}
 	};
 
 	template

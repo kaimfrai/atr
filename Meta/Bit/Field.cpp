@@ -308,35 +308,7 @@ export namespace
 			);
 		}
 
-		friend auto constexpr
-		(	operator ==
-		)	(	Field
-					i_vLeft
-			,	Field
-					i_vRight
-			)
-			noexcept
-		->	bool
-		{	return
-				i_vLeft.get()
-			==	i_vRight.get()
-			;
-		}
 
-		friend auto constexpr
-		(	operator <=>
-		)	(	Field
-					i_vLeft
-			,	Field
-					i_vRight
-			)
-			noexcept
-		->	::std::strong_ordering
-		{	return
-				i_vLeft.get()
-			<=>	i_vRight.get()
-			;
-		}
 
 
 		[[nodiscard]]

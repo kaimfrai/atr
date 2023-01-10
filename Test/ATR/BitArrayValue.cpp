@@ -4,6 +4,7 @@ import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Scale;
 import Meta.Bit.Field;
+import Meta.Bit.Field.Compare;
 import Meta.Byte.Buffer;
 import Meta.Byte.Buffer.Range;
 import Meta.Bit.Index;

@@ -2,6 +2,7 @@ export module Meta.Bit.OneIndexIterator;
 
 import Meta.Memory.Size;
 import Meta.Bit.Field;
+import Meta.Bit.Field.Compare;
 import Meta.Bit.Index;
 import Meta.Size;
 

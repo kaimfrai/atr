@@ -4,6 +4,7 @@ import :Layout.Bit.Access;
 
 import Meta.Memory.Size;
 import Meta.Bit.Index;
+import Meta.Bit.Field.Compare;
 
 import Std;
 
