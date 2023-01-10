@@ -157,84 +157,6 @@ export namespace
 		->	::std::strong_ordering
 		=	default;
 
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator >>
-		)	(	FieldType
-					i_nField
-			,	Index
-					i_nIndex
-			)
-			noexcept
-		->	FieldType
-		{	return
-			static_cast<FieldType>
-			(	i_nField
-			>>	i_nIndex.get()
-			);
-		}
-
-		friend auto constexpr
-		(	operator >>=
-		)	(	FieldType
-				&	i_rField
-			,	Index
-					i_nIndex
-			)
-			noexcept
-		->	FieldType&
-		{	return
-				i_rField
-			=	i_rField
-			>>	i_nIndex
-			;
-		}
-
-		static auto constexpr
-			ShiftedWidth
-		=	FieldWidth
-		+	HighestValue
-		;
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator <<
-		)	(	FieldType
-					i_nField
-			,	Index
-					i_nIndex
-			)
-			noexcept
-		requires
-			(	ShiftedWidth
-			<=	Memory::SizeOf<UIntMax>
-			)
-		{	return
-			static_cast<UInt<ShiftedWidth>>
-			(	i_nField
-			<<	i_nIndex.get()
-			);
-		}
-
-		friend auto constexpr
-		(	operator <<=
-		)	(	FieldType
-				&	i_rField
-			,	Index
-					i_nIndex
-			)
-			noexcept
-		->	FieldType&
-		{	return
-				i_rField
-			=	static_cast<FieldType>
-				(	i_rField
-				<<	i_nIndex.get()
-				)
-			;
-		}
-
 		[[nodiscard]]
 		friend auto constexpr
 		(	Test
@@ -257,24 +179,6 @@ export namespace
 					nOne
 				)
 			);
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	Power
-		)	(	Index
-					i_nIndex
-			)
-		->	FieldType
-		{
-			FieldType
-				nPower
-			{	1
-			};
-			return
-				nPower
-			<<=	i_nIndex
-			;
 		}
 	};
 }

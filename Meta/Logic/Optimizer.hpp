@@ -8,13 +8,14 @@ import Meta.Buffer.Dynamic;
 import Meta.Size;
 import Meta.Buffer.Iterator;
 import Meta.Bit.IndexRange;
+import Meta.Bit.Index.Shift;
 
 import Std;
 
 export namespace
 	Meta::Logic
 {
-	 using
+	using
 		BitClauseBuffer
 	=	Buffer::Static
 		<	BitClause
