@@ -2,6 +2,8 @@ export module Meta.Bit.Index;
 
 import Meta.Arithmetic.Literals;
 import Meta.Arithmetic.Integer;
+import Meta.Arithmetic.IntegerFor;
+import Meta.Arithmetic.Sanitize;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
@@ -36,31 +38,11 @@ export namespace
 			-	1_bit
 			)
 		;
-		static auto constexpr
-			LowestValue
-		=	(	-
-				HighestValue
-			-	1_bit
-			)
-		;
-
-		static BitSize constexpr
-			IndexWidth
-		{	::std::bit_width
-			(	static_cast
-				<	::std::make_unsigned_t
-					<	BitSize::SizeType
-					>
-				>(	HighestValue.get()
-				)
-			)
-		};
 
 		using
 			IndexType
-		=	SInt
-			<	IndexWidth
-			+	1_bit
+		=	SInt_For
+			<	HighestValue.get()
 			>
 		;
 
@@ -71,34 +53,16 @@ export namespace
 			>
 		;
 
-		[[nodiscard]]
-		static auto constexpr
-		(	Sanitize
-		)	(	SIntMax
-					i_nIndex
-			)
-			noexcept
-		->	IndexType
-		{	if	constexpr
-				(	FieldWidth.get()
-				>>	IndexWidth.get()
-				)
-			{	return
-				static_cast<IndexType>
-				(	i_nIndex
-				);
-			}
-			else
-			{	return
-				static_cast<IndexType>
-				(	i_nIndex
-				%	FieldWidth.get()
-				);
-			}
-		}
-
 		IndexType
 			m_nValue
+		;
+
+		static auto constexpr
+			AssertSanitized
+		=	&
+			Arithmetic::AssertSanitizedSigned
+			<	HighestValue.get()
+			>
 		;
 
 		explicit(false) constexpr
@@ -107,34 +71,18 @@ export namespace
 			noexcept
 		=	default;
 
-		explicit(false) constexpr
-		(	Index
-		)	(	Index const
-				&
-			)
-			noexcept
-		=	default;
-
-		explicit(false) constexpr
-		(	Index
-		)	(	Index
-				&&
-			)
-			noexcept
-		=	default;
-
 		explicit(true) constexpr
 		(	Index
-		)	(	IndexType
+		)	(	SIntMax
 					i_nValue
 			)
 			noexcept
 		:	m_nValue
-			{	i_nValue
+			{	AssertSanitized
+				(	i_nValue
+				)
 			}
-		{
-			(void)get();
-		}
+		{}
 
 		explicit(true) constexpr
 		(	Index
@@ -143,30 +91,10 @@ export namespace
 			)
 			noexcept
 		:	Index
-			{	Sanitize
-				(	i_nBitSize
-				.	get()
-				)
+			{	i_nBitSize
+			.	get()
 			}
 		{}
-
-		auto constexpr
-		(	operator =
-		)	(	Index const
-				&
-			)	&
-			noexcept
-		->	Index&
-		=	default;
-
-		auto constexpr
-		(	operator =
-		)	(	Index
-				&&
-			)	&
-			noexcept
-		->	Index&
-		=	default;
 
 		[[nodiscard]]
 		auto constexpr
@@ -174,10 +102,10 @@ export namespace
 		)	()	const
 			noexcept
 		->	IndexType
-		{
-			if	(m_nValue != Sanitize(m_nValue))
-				::std::unreachable();
-			return m_nValue;
+		{	return
+			AssertSanitized
+			(	m_nValue
+			);
 		}
 
 		template
@@ -189,29 +117,10 @@ export namespace
 		(	operator Index<t_nOtherWidth>
 		)	()	const
 			noexcept
-		{
-			auto const
-				nValue
-			=	get()
-			;
-
-			using
-				tOtherIndex
-			=	Index
-				<	t_nOtherWidth
-				>
-			;
-			if	(	nValue < tOtherIndex::LowestValue.get()
-				or	nValue > tOtherIndex::HighestValue.get()
-				)
-			{	::std::unreachable();
-			}
-
-			return
-			tOtherIndex
-			{	static_cast<tOtherIndex::IndexType>
-				(	nValue
-				)
+		{	return
+			Index
+			<	t_nOtherWidth
+			>{	get()
 			};
 		}
 
@@ -225,7 +134,6 @@ export namespace
 			{	get()
 			};
 		}
-
 
 		[[nodiscard]]
 		friend auto constexpr
@@ -273,12 +181,8 @@ export namespace
 		->	Index
 		{	return
 			Index
-			{	Sanitize
-				(	static_cast<IndexType>
-					(	i_nLeft.get()
-					+	i_nRight.get()
-					)
-				)
+			{	i_nLeft.get()
+			+	i_nRight.get()
 			};
 		}
 
@@ -326,12 +230,8 @@ export namespace
 		->	Index
 		{	return
 			Index
-			{	Sanitize
-				(	static_cast<IndexType>
-					(	i_nLeft.get()
-					-	i_nRight.get()
-					)
-				)
+			{	i_nLeft.get()
+			-	i_nRight.get()
 			};
 		}
 

@@ -8,10 +8,11 @@ import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
 import Meta.Byte.Buffer;
 import Meta.Arithmetic.Integer;
+import Meta.Arithmetic.Sanitize;
 
 import Std;
 
-using namespace Meta::Literals;
+using namespace ::Meta::Literals;
 
 export namespace
 	Meta::Bit
@@ -58,6 +59,20 @@ export namespace
 			m_vValue
 		;
 
+		static auto constexpr
+			Mask
+		=	static_cast<FieldType>
+			(	static_cast<FieldType>
+				(	compl
+					FieldType{}
+				)
+			>>	(	Memory::SizeOf<FieldType>
+				-	t_nWidth
+				)
+			.	get()
+			)
+		;
+
 		[[nodiscard]]
 		static auto constexpr
 		(	Sanitize
@@ -79,19 +94,20 @@ export namespace
 			else
 			{	return
 				static_cast<FieldType>
-				(	static_cast<FieldType>
-					(	i_nField
-					)
+				(	i_nField
 				bitand
-					static_cast<FieldType>
-					(	compl
-						(	compl FieldType{}
-						<<	t_nWidth.get()
-						)
-					)
+					Mask
 				);
 			}
 		}
+
+		static auto constexpr
+			AssertSanitized
+		=	&
+			Arithmetic::AssertSanitizedUnsigned
+			<	Mask
+			>
+		;
 
 		explicit(false) constexpr
 		(	Field
@@ -101,16 +117,16 @@ export namespace
 
 		explicit(true) constexpr
 		(	Field
-		)	(	FieldType
+		)	(	UIntMax
 					i_vValue
 			)
 			noexcept
 		:	m_vValue
-			{	i_vValue
+			{	AssertSanitized
+				(	i_vValue
+				)
 			}
-		{
-			(void)get();
-		}
+		{}
 
 		explicit(true) constexpr
 		(	Field
@@ -125,36 +141,32 @@ export namespace
 			(void)get();
 		}
 
-		explicit(true) constexpr
-		(	Field
-		)	(	CountType
-					i_vSetBits
-			)
-			noexcept
-		:	Field
-			{	compl
-				Field
-				{}
-			>>	(	CountType::MaximumValue
-				-	i_vSetBits.get()
-				)
-			}
-		{}
-
 		[[nodiscard]]
 		auto constexpr
 		(	get
 		)	()	const
 			noexcept
 		->	FieldType
-		{
-			FieldType const
-				nField
-			{	m_vValue
-			};
-			if	(nField != Sanitize(nField))
-				::std::unreachable();
-			return nField;
+		{	return
+			AssertSanitized
+			(	static_cast<FieldType>
+				(	m_vValue
+				)
+			);
+		}
+
+		auto constexpr
+		(	operator =
+		)	(	UIntMax
+					i_nValue
+			)	&
+			noexcept
+		{	return
+			(	*this
+			=	Field
+				{	i_nValue
+				}
+			);
 		}
 
 		template
@@ -392,11 +404,9 @@ export namespace
 		->	Field
 		{	return
 			Field
-			{	Sanitize
-				(	static_cast<FieldType>
-					(	i_vField.get()
-					>>	i_nIndex.get()
-					)
+			{	static_cast<FieldType>
+				(	i_vField.get()
+				>>	i_nIndex.get()
 				)
 			};
 		}
@@ -487,13 +497,18 @@ export namespace
 			)
 			noexcept
 		->	Field
-		{	return
+		{	auto const
+				nValue
+			=	i_vField.get()
+			;
+
+			return
 			Field
 			{	Sanitize
-				(	i_vField.get()
+				(	nValue
 				bitand
 					-
-					i_vField.get()
+					nValue
 				)
 			};
 		}
@@ -546,13 +561,18 @@ export namespace
 		(	UnsetLowestOne
 		)	()	&
 		->	Field&
-		{	return
+		{	auto const
+				nValue
+			=	get()
+			;
+
+			return
 				*this
 			=	Field
-				{	Sanitize
-					(	get()
+				{	static_cast<FieldType>
+					(	nValue
 					bitand
-						(	get()
+						(	nValue
 						-	FieldType{1}
 						)
 					)

@@ -3,6 +3,7 @@ export module Meta.Bit.IndexRange;
 import Meta.Bit.Index;
 import Meta.Arithmetic.Literals;
 import Meta.Arithmetic.Integer;
+import Meta.Arithmetic.Sanitize;
 import Meta.Bit.IndexIterator;
 import Meta.Memory.Size;
 import Meta.Size;
@@ -53,24 +54,13 @@ export namespace
 			::	CountType
 		;
 
-		[[nodiscard]]
 		static auto constexpr
-		(	Sanitize
-		)	(	UIntMax
-					i_nRange
-			)
-			noexcept
-		->	CountType
-		{	return
-			::std::min
-			(	static_cast<CountType>
-				(	i_nRange
-				)
-			,	static_cast<CountType>
-				(	HighestValue.get()
-				)
-			);
-		}
+			AssertSanitized
+		=	&
+			Arithmetic::AssertSanitizedUnsigned
+			<	HighestValue.get()
+			>
+		;
 
 		CountType
 			m_nValue
@@ -82,22 +72,6 @@ export namespace
 			noexcept
 		=	default;
 
-		explicit(false) constexpr
-		(	IndexRange
-		)	(	IndexRange const
-				&
-			)
-			noexcept
-		=	default;
-
-		explicit(false) constexpr
-		(	IndexRange
-		)	(	IndexRange
-				&&
-			)
-			noexcept
-		=	default;
-
 		explicit(true) constexpr
 		(	IndexRange
 		)	(	UIntMax
@@ -105,18 +79,11 @@ export namespace
 			)
 			noexcept
 		:	m_nValue
-			{	Sanitize
+			{	AssertSanitized
 				(	i_nValue
 				)
 			}
-		{
-			if	(	m_nValue
-				!=	i_nValue
-				)
-			{	::std::unreachable
-				();
-			}
-		}
+		{}
 
 		template
 			<	auto
@@ -127,49 +94,12 @@ export namespace
 		(	operator IndexRange<t_nOtherWidth>
 		)	()	const
 			noexcept
-		{
-			auto const
-				nValue
-			=	get()
-			;
-			using
-				tOtherRange
-			=	IndexRange
-				<	t_nOtherWidth
-				>
-			;
-
-			if	(	nValue
-				>	tOtherRange::HighestValue
-				)
-			{	::std::unreachable();
-			}
-
-			return
-			tOtherRange
-			{	static_cast<tOtherRange::CountType>
-				(	nValue
-				)
+		{	return
+			IndexRange
+			<	t_nOtherWidth
+			>{	get()
 			};
 		}
-
-		auto constexpr
-		(	operator =
-		)	(	IndexRange const
-				&
-			)	&
-			noexcept
-		->	IndexRange&
-		=	default;
-
-		auto constexpr
-		(	operator =
-		)	(	IndexRange
-				&&
-			)	&
-			noexcept
-		->	IndexRange&
-		=	default;
 
 		[[nodiscard]]
 		auto constexpr
@@ -177,10 +107,10 @@ export namespace
 		)	()	const
 			noexcept
 		->	CountType
-		{
-			if	(m_nValue != Sanitize(m_nValue))
-				::std::unreachable();
-			return m_nValue;
+		{	return
+			AssertSanitized
+			(	m_nValue
+			);
 		}
 
 		[[nodiscard]]
@@ -190,26 +120,13 @@ export namespace
 			noexcept
 		->	Index<t_nWidth>
 		{
-			auto const
-				nValue
-			=	get()
-			;
-			if	(nValue <= CountType{})
+			if	(get() <= CountType{})
 				::std::unreachable();
 
-			using
-				tIndexType
-			=	Index
-				<	t_nWidth
-				>
-			;
 			return
-			tIndexType
-			{	static_cast<tIndexType::IndexType>
-				(	nValue
-				-	nValue
-				)
-			};
+			Index
+			<	t_nWidth
+			>{};
 		}
 
 		[[nodiscard]]
