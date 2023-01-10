@@ -1,119 +1,79 @@
 export module Meta.Bit.Index.Shift;
 
 import Meta.Bit.Index;
-import Meta.Bit.Mask;
-import Meta.Arithmetic.Sanitize;
 import Meta.Arithmetic.Integer;
-import Meta.Memory.Size.Arithmetic;
+import Meta.Memory.Size;
+
+import Std;
 
 export namespace
 	Meta::Bit
 {
-	template
-		<	auto
-				t_nWidth
-		>
 	[[nodiscard]]
 	auto constexpr
 	(	operator >>
-	)	(	UInt<t_nWidth>
+	)	(	::std::integral auto
 				i_nField
-		,	Index<t_nWidth>
+		,	Index<Memory::SizeOf<decltype(i_nField)>>
 				i_nIndex
 		)
 		noexcept
-	->	UInt<t_nWidth>
+	->	decltype(i_nField)
 	{	return
-		static_cast<UInt<t_nWidth>>
-		(	Arithmetic::AssertSanitizedUnsigned
-			<	Mask<t_nWidth>
-			>(	i_nField
-			)
-		>>	i_nIndex.get()
+		static_cast<decltype(i_nField)>
+		(	i_nField
+		>>	i_nIndex
+		.	get()
 		);
 	}
 
-	template
-		<	auto
-				t_nWidth
-		>
 	auto constexpr
 	(	operator >>=
-	)	(	UInt<t_nWidth>
+	)	(	::std::integral auto
 			&	i_rField
-		,	Index<t_nWidth>
+		,	Index<Memory::SizeOf<decltype(i_rField)>>
 				i_nIndex
 		)
 		noexcept
-	->	UInt<t_nWidth>&
+	->	decltype(i_rField)
 	{	return
 		(	i_rField
-		=	(	Arithmetic::AssertSanitizedUnsigned
-				<	Mask<t_nWidth>
-				>(	i_rField
-				)
-			)
-		>>	i_nIndex
+		>>=	i_nIndex
+		.	get()
 		);
 	}
 
-	template
-		<	auto
-				t_nWidth
-		>
 	[[nodiscard]]
 	auto constexpr
 	(	operator <<
-	)	(	UInt<t_nWidth>
+	)	(	::std::integral auto
 				i_nField
-		,	Index<t_nWidth>
+		,	Index<Memory::SizeOf<decltype(i_nField)>>
 				i_nIndex
 		)
 		noexcept
-	->	UInt
-		<	t_nWidth
-		+	Index<t_nWidth>
-		::	MaximumShift
-		>
+	->	decltype(i_nField)
 	{	return
-		static_cast
-		<	UInt
-			<	t_nWidth
-			+	Index<t_nWidth>
-			::	MaximumShift
-			>
-		>(	Arithmetic::AssertSanitizedUnsigned
-			<	Mask<t_nWidth>
-			>(	i_nField
-			)
-		<<	i_nIndex.get()
+		static_cast<decltype(i_nField)>
+		(	i_nField
+		<<	i_nIndex
+		.	get()
 		);
 	}
 
-	template
-		<	auto
-				t_nWidth
-		>
 	auto constexpr
 	(	operator <<=
-	)	(	UInt<t_nWidth>
+	)	(	::std::integral auto
 			&	i_rField
-		,	Index<t_nWidth>
+		,	Index<Memory::SizeOf<decltype(i_rField)>>
 				i_nIndex
 		)
 		noexcept
-	->	UInt<t_nWidth>&
+	->	decltype(i_rField)
 	{	return
 		(	i_rField
-		=	Arithmetic::SanitizeUnsigned
-			<	Mask<t_nWidth>
-			>(	Arithmetic::AssertSanitizedUnsigned
-				<	Mask<t_nWidth>
-				>(	i_rField
-				)
-			<<	i_nIndex
-			.	get()
-			)
+		<<=	i_nIndex
+		.	get()
 		);
 	}
 

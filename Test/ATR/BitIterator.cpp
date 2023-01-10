@@ -2,6 +2,7 @@ import ATR;
 
 import Meta.Bit.Field;
 import Meta.Memory.Size;
+import Meta.Bit.Field.Shift;
 import Meta.Bit.Index;
 import Meta.Bit.Mask;
 

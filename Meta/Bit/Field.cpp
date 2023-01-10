@@ -201,97 +201,6 @@ export namespace
 			);
 		}
 
-		template
-			<	auto
-					t_nOffset
-			>
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator <<
-		)	(	Field
-					i_vField
-			,	Index<t_nOffset>
-					i_nIndex
-			)
-			noexcept
-		->	Field
-			<	t_nWidth
-			+	Index<t_nOffset>::MaximumShift
-			>
-		{	using
-				tLargerField
-			=	Field
-				<	t_nWidth
-				+	Index<t_nOffset>::MaximumShift
-				>
-			;
-
-			return
-			tLargerField
-			{	static_cast<tLargerField::FieldType>
-				(	static_cast<tLargerField::FieldType>
-					(	i_vField.get()
-					)
-				<<	static_cast<tLargerField::FieldType>
-					(	i_nIndex.get()
-					)
-				)
-			};
-		}
-
-		auto constexpr
-		(	operator <<=
-		)	(	IndexType
-					i_nIndex
-			)	&
-			noexcept
-		->	Field&
-		{
-			return
-				*this
-			=	Field
-				{	Sanitize
-					(	static_cast<FieldType>
-						(	get()
-						<<	i_nIndex.get()
-						)
-					)
-				}
-			;
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator >>
-		)	(	Field
-					i_vField
-			,	IndexType
-					i_nIndex
-			)
-			noexcept
-		->	Field
-		{	return
-			Field
-			{	static_cast<FieldType>
-				(	i_vField.get()
-				>>	i_nIndex.get()
-				)
-			};
-		}
-
-		auto constexpr
-		(	operator >>=
-		)	(	IndexType
-					i_nIndex
-			)	&
-			noexcept
-		->	Field&
-		{	return
-				*this
-			=	*this
-			>>	i_nIndex
-			;
-		}
 
 		[[nodiscard]]
 		auto constexpr
@@ -307,9 +216,6 @@ export namespace
 			,	i_nIndex
 			);
 		}
-
-
-
 
 		[[nodiscard]]
 		friend auto constexpr
