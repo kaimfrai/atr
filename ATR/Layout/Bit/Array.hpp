@@ -8,6 +8,7 @@ import Meta.Bit.Index;
 import Meta.Bit.Index.Compare;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
+import Meta.Memory.Size.Cast;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Scale;
 import Meta.Size;
@@ -79,7 +80,7 @@ export namespace
 				)
 			{	return
 				::std::max
-				({	FloorCast<::Meta::ByteSize>
+				({	SizeCast<::Meta::ByteSize>
 					(	ElementSize
 					*	t_npIndex
 					+	Offset

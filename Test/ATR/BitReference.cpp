@@ -2,6 +2,7 @@ import ATR;
 
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
+import Meta.Memory.Size.Cast;
 import Meta.Memory.Size.PointerArithmetic;
 import Meta.Arithmetic.Integer;
 import Meta.Bit.Field;
@@ -32,7 +33,7 @@ auto constexpr
 {
 	auto constexpr
 		nOffset
-	=	FloorCast<::Meta::ByteSize>
+	=	SizeCast<::Meta::ByteSize>
 		(	t_nOffset
 		)
 	;

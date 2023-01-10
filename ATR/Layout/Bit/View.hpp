@@ -7,6 +7,7 @@ import :Layout.Bit.Reference;
 
 import Meta.ID;
 import Meta.Memory.Size;
+import Meta.Memory.Size.Cast;
 import Meta.Memory.Size.PointerArithmetic;
 import Meta.Bit.Index;
 
@@ -49,7 +50,7 @@ export namespace
 
 		static auto constexpr
 			ByteOffset
-		=	FloorCast<::Meta::ByteSize>
+		=	SizeCast<::Meta::ByteSize>
 			(	t_nOffset
 			)
 		.	Quotient
@@ -57,7 +58,7 @@ export namespace
 
 		static auto constexpr
 			BitOffset
-		=	FloorCast<::Meta::ByteSize>
+		=	SizeCast<::Meta::ByteSize>
 			(	t_nOffset
 			)
 		.	Remainder
@@ -130,7 +131,7 @@ export namespace
 
 		static auto constexpr
 			ByteOffset
-		=	FloorCast<::Meta::ByteSize>
+		=	SizeCast<::Meta::ByteSize>
 			(	t_nOffset
 			)
 		.	Quotient
@@ -138,7 +139,7 @@ export namespace
 
 		static auto constexpr
 			BitOffset
-		=	FloorCast<::Meta::ByteSize>
+		=	SizeCast<::Meta::ByteSize>
 			(	t_nOffset
 			)
 		.	Remainder

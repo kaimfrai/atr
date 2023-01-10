@@ -7,6 +7,7 @@ import Meta.Size;
 import Meta.Math.Divide;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
+import Meta.Memory.Size.Cast;
 import Meta.Memory.Size.PointerArithmetic;
 import Meta.Memory.Size.Scale;
 import Meta.Bit.Index;
@@ -181,7 +182,7 @@ export namespace
 			auto const
 			[	nByteOffset
 			,	nNewBitOffset
-			]=	FloorCast<::Meta::ByteSize>
+			]=	SizeCast<::Meta::ByteSize>
 				(	nTotalBitOffset
 				)
 			;
