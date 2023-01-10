@@ -3,6 +3,7 @@ add_single_file_modules(
 	Index.cpp
 	IndexIterator.cpp
 	IndexRange.cpp
+	Mask.cpp
 	OneIndexIterator.cpp
 	OneIndexRange.cpp
 )

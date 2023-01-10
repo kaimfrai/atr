@@ -9,6 +9,7 @@ import Meta.Memory.Size.Compare;
 import Meta.Byte.Buffer;
 import Meta.Arithmetic.Integer;
 import Meta.Arithmetic.Sanitize;
+import Meta.Bit.Mask;
 
 import Std;
 
@@ -60,24 +61,10 @@ export namespace
 		;
 
 		static auto constexpr
-			Mask
-		=	static_cast<FieldType>
-			(	static_cast<FieldType>
-				(	compl
-					FieldType{}
-				)
-			>>	(	Memory::SizeOf<FieldType>
-				-	t_nWidth
-				)
-			.	get()
-			)
-		;
-
-		static auto constexpr
 			Sanitize
 		=	&
 			Arithmetic::SanitizeUnsigned
-			<	Mask
+			<	Mask<t_nWidth>
 			>
 		;
 
@@ -85,7 +72,7 @@ export namespace
 			AssertSanitized
 		=	&
 			Arithmetic::AssertSanitizedUnsigned
-			<	Mask
+			<	Mask<t_nWidth>
 			>
 		;
 

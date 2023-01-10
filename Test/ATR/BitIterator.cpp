@@ -5,6 +5,8 @@ import Meta.Arithmetic.Integer;
 import Meta.Bit.Field;
 import Meta.Memory.Size;
 import Meta.Bit.Index;
+import Meta.Bit.Mask;
+
 import Std;
 
 using ::ATR::Bit::Iterator;
@@ -31,8 +33,11 @@ using IteratorType = Iterator<::std::byte, 10_bit, 6_bdx>;
 
 using MaskType = IteratorType::MaskType;
 
-MaskType constexpr Mask
-{	0b0000'0011'1111'1111
+MaskType constexpr
+	Mask
+{	::Meta::Bit::Mask
+	<	10_bit
+	>
 };
 
 using Index = MaskType::IndexType;
