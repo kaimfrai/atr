@@ -45,9 +45,9 @@ export namespace
 		;
 		using
 			FieldType
-		=	typename
-				IndexType
-			::	FieldType
+		=	UInt
+			<	t_nWidth
+			>
 		;
 
 		using

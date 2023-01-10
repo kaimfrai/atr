@@ -28,13 +28,8 @@ export namespace
 		Index
 	{
 		static auto constexpr
-			FieldWidth
-		=	t_nWidth
-		;
-
-		static auto constexpr
 			HighestValue
-		=	(	FieldWidth
+		=	(	t_nWidth
 			-	1_bit
 			)
 		;
@@ -44,13 +39,6 @@ export namespace
 		=	SInt_For
 			<	HighestValue
 			.	get()
-			>
-		;
-
-		using
-			FieldType
-		=	UInt
-			<	FieldWidth
 			>
 		;
 
