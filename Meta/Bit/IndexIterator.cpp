@@ -103,7 +103,9 @@ export namespace
 			noexcept
 		->	IndexIterator&
 		{	++this->m_nCount;
-			return *this;
+			return
+				*this
+			;
 		}
 
 		[[nodiscard("Use preincrement when discarding the result")]]

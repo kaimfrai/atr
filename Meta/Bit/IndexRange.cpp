@@ -158,32 +158,5 @@ export namespace
 				)
 			};
 		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	begin
-		)	(	IndexRange
-			)
-			noexcept
-		->	iterator
-		{	return
-			{	CountType
-				{}
-			};
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	end
-		)	(	IndexRange
-					i_nRange
-			)
-			noexcept
-		->	sentinel
-		{	return
-			{	i_nRange
-			.	m_nValue
-			};
-		}
 	};
 }
