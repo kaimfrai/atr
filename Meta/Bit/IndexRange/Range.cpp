@@ -1,5 +1,6 @@
 export module Meta.Bit.IndexRange.Range;
 
+import Meta.Bit.Index;
 import Meta.Bit.IndexRange;
 import Meta.Bit.IndexIterator;
 
@@ -16,7 +17,11 @@ export namespace
 	)	(	IndexRange<t_nWidth>
 		)
 		noexcept
-	->	IndexIterator<t_nWidth>
+	->	IndexIterator
+		<	Index
+			<	t_nWidth
+			>
+		>
 	{	return
 		{};
 	}
@@ -32,7 +37,13 @@ export namespace
 				i_vRange
 		)
 		noexcept
-	->	IndexSentinel<t_nWidth>
+	->	IndexSentinel
+		<	typename
+				IndexRange
+				<	t_nWidth
+				>
+			::	CountType
+		>
 	{	return
 		{	i_vRange
 		.	get()

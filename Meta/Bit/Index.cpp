@@ -2,7 +2,6 @@ export module Meta.Bit.Index;
 
 import Meta.Arithmetic.Sanitize;
 import Meta.Arithmetic.Literals;
-import Meta.Arithmetic.IntegerFor;
 import Meta.Arithmetic.Integer;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Compare;
@@ -25,31 +24,31 @@ export namespace
 		Index
 	{
 		static auto constexpr
-			HighestValue
-		=	(	t_nWidth
-			-	1_bit
-			)
-		;
-
-		using
-			IndexType
-		=	SInt_For
-			<	HighestValue
-			.	get()
-			>
-		;
-
-		IndexType
-			m_nValue
+			MaximumShift
+		=	t_nWidth
+		-	1_bit
 		;
 
 		static auto constexpr
 			AssertSanitized
 		=	&
 			Arithmetic::AssertSanitizedSigned
-			<	HighestValue
+			<	MaximumShift
 			.	get()
 			>
+		;
+
+		using
+			IndexType
+		=	decltype
+			(	AssertSanitized
+				(	0
+				)
+			)
+		;
+
+		IndexType
+			m_nValue
 		;
 
 		explicit(false) constexpr

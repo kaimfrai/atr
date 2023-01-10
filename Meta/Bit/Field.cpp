@@ -316,13 +316,13 @@ export namespace
 			noexcept
 		->	Field
 			<	t_nWidth
-			+	Index<t_nOffset>::HighestValue
+			+	Index<t_nOffset>::MaximumShift
 			>
 		{	using
 				tLargerField
 			=	Field
 				<	t_nWidth
-				+	Index<t_nOffset>::HighestValue
+				+	Index<t_nOffset>::MaximumShift
 				>
 			;
 

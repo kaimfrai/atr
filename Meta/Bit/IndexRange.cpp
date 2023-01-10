@@ -1,15 +1,9 @@
 export module Meta.Bit.IndexRange;
 
-import Meta.Bit.Index;
-import Meta.Arithmetic.Literals;
-import Meta.Arithmetic.Integer;
 import Meta.Arithmetic.Sanitize;
-import Meta.Bit.IndexIterator;
+import Meta.Arithmetic.Integer;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Compare;
-import Meta.Size;
-
-import Std;
 
 export namespace
 	Meta::Bit
@@ -22,43 +16,21 @@ export namespace
 		IndexRange
 	{
 		static auto constexpr
-			FieldWidth
-		=	t_nWidth
-		;
-
-		using
-			iterator
-		=	IndexIterator
-			<	FieldWidth
+			AssertSanitized
+		=	&
+			Arithmetic::AssertSanitizedUnsigned
+			<	t_nWidth
+			.	get()
 			>
-		;
-
-		using
-			sentinel
-		=	IndexSentinel
-			<	FieldWidth
-			>
-		;
-
-		static auto constexpr
-			HighestValue
-		=	iterator
-		::	HighestValue
 		;
 
 		using
 			CountType
-		=	typename
-				iterator
-			::	CountType
-		;
-
-		static auto constexpr
-			AssertSanitized
-		=	&
-			Arithmetic::AssertSanitizedUnsigned
-			<	HighestValue.get()
-			>
+		=	decltype
+			(	AssertSanitized
+				(	0u
+				)
+			)
 		;
 
 		CountType

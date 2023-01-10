@@ -73,14 +73,14 @@ export namespace
 	->	UInt
 		<	t_nWidth
 		+	Index<t_nWidth>
-		::	HighestValue
+		::	MaximumShift
 		>
 	{	return
 		static_cast
 		<	UInt
 			<	t_nWidth
 			+	Index<t_nWidth>
-			::	HighestValue
+			::	MaximumShift
 			>
 		>(	Arithmetic::AssertSanitizedUnsigned
 			<	Mask<t_nWidth>

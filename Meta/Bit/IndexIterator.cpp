@@ -1,50 +1,20 @@
 export module Meta.Bit.IndexIterator;
 
-import Meta.Bit.Index;
-import Meta.Memory.Size;
-import Meta.Memory.Count;
-import Meta.Size;
-import Meta.Arithmetic.Integer;
-
 import Std;
 
 export namespace
 	Meta::Bit
 {
 	template
-		<	BitSize
-				t_nWidth
+		<	typename
+				t_tCount
 		>
 	struct
 		IndexSentinel
 	{
-		static auto constexpr
-			FieldWidth
-		=	t_nWidth
-		;
-
-		static Bits constexpr
-			HighestValue
-		{	static_cast
-			<	::std::make_unsigned_t
-				<	BitSize::SizeType
-				>
-			>(	FieldWidth.get()
-			)
-		};
-
-		static BitSize constexpr
-			CountWidth
-		{	::std::bit_width
-			(	HighestValue.get()
-			)
-		};
-
 		using
 			CountType
-		=	UInt
-			<	CountWidth
-			>
+		=	t_tCount
 		;
 
 		CountType
@@ -63,24 +33,26 @@ export namespace
 	};
 
 	template
-		<	BitSize
-				t_nWidth
+		<	typename
+				t_tIndex
 		>
 	struct
 		IndexIterator
 	:	IndexSentinel
-		<	t_nWidth
+		<	::std::make_unsigned_t
+			<	typename
+					t_tIndex
+				::	IndexType
+			>
 		>
 	{
 		using
 			difference_type
-		=	SSize
+		=	int
 		;
 		using
 			value_type
-		=	Index
-			<	t_nWidth
-			>
+		=	t_tIndex
 		;
 
 		[[nodiscard]]
