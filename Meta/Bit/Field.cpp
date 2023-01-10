@@ -164,7 +164,7 @@ export namespace
 					t_nOtherWidth
 			>
 		[[nodiscard]]
-		explicit(true) constexpr
+		explicit(t_nOtherWidth < t_nWidth) constexpr
 		(	operator Field<t_nOtherWidth>
 		)	()	const
 			noexcept

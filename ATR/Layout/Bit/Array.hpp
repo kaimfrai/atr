@@ -294,6 +294,7 @@ export namespace
 				t_nExtent
 		,	::Meta::Bit::Index<1_byte>
 				t_nOffset
+			=	0_bdx
 		>
 	using
 		ArrayConstReference
