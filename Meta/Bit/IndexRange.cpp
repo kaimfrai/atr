@@ -11,8 +11,6 @@ import Meta.Size;
 
 import Std;
 
-using namespace Meta::Literals;
-
 export namespace
 	Meta::Bit
 {
@@ -112,51 +110,6 @@ export namespace
 			AssertSanitized
 			(	m_nValue
 			);
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	front
-		)	()	const
-			noexcept
-		->	Index<t_nWidth>
-		{
-			if	(get() <= CountType{})
-				::std::unreachable();
-
-			return
-			Index
-			<	t_nWidth
-			>{};
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	back
-		)	()	const
-			noexcept
-		->	Index<t_nWidth>
-		{
-			auto const
-				nValue
-			=	get()
-			;
-			if	(nValue <= CountType{})
-				::std::unreachable();
-
-			using
-				tIndexType
-			=	Index
-				<	t_nWidth
-				>
-			;
-			return
-			tIndexType
-			{	static_cast<tIndexType::IndexType>
-				(	nValue
-				-	CountType{1u}
-				)
-			};
 		}
 	};
 }

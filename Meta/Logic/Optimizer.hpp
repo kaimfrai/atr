@@ -8,6 +8,7 @@ import Meta.Buffer.Dynamic;
 import Meta.Size;
 import Meta.Buffer.Iterator;
 import Meta.Bit.IndexRange;
+import Meta.Bit.IndexRange.Access;
 import Meta.Bit.Index.Shift;
 
 import Std;
@@ -371,8 +372,7 @@ export namespace
 		:	Optimizer
 			{	//	at most 2^(LiteralCount - 1) clauses are possible
 				Power
-				(	i_nLiteralCount
-				.	back()
+				(	back(i_nLiteralCount)
 				)
 			//	TODO use buffer more efficiently, should be possible to use half
 			*	2uz
