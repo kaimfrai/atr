@@ -13,17 +13,17 @@ export namespace
 	auto constexpr
 	(	operator bitand
 	)	(	Field<t_nWidth>
-				i_vLeft
-		,	Field<t_nWidth>
-				i_vRight
+				i_nLeft
+		,	decltype(i_nLeft)
+				i_nRight
 		)
 		noexcept
 	->	Field<t_nWidth>
 	{	return
 		Field<t_nWidth>
-		{	i_vLeft.get()
+		{	i_nLeft.get()
 		bitand
-			i_vRight.get()
+			i_nRight.get()
 		};
 	}
 
@@ -35,8 +35,8 @@ export namespace
 	(	operator &=
 	)	(	Field<t_nWidth>
 			&	i_rLeft
-		,	Field<t_nWidth>
-				i_vRight
+		,	decltype(auto(i_rLeft))
+				i_nRight
 		)
 		noexcept
 	->	Field<t_nWidth>&
@@ -44,7 +44,7 @@ export namespace
 		(	i_rLeft
 		=	i_rLeft
 		bitand
-			i_vRight
+			i_nRight
 		);
 	}
 
@@ -56,17 +56,17 @@ export namespace
 	auto constexpr
 	(	operator bitor
 	)	(	Field<t_nWidth>
-				i_vLeft
-		,	Field<t_nWidth>
-				i_vRight
+				i_nLeft
+		,	decltype(i_nLeft)
+				i_nRight
 		)
 		noexcept
 	->	Field<t_nWidth>
 	{	return
 		Field<t_nWidth>
-		{	i_vLeft.get()
+		{	i_nLeft.get()
 			bitor
-				i_vRight.get()
+				i_nRight.get()
 		};
 	}
 
@@ -78,8 +78,8 @@ export namespace
 	(	operator |=
 	)	(	Field<t_nWidth>
 			&	i_rLeft
-		,	Field<t_nWidth>
-				i_vRight
+		,	decltype(auto(i_rLeft))
+				i_nRight
 		)
 		noexcept
 	->	Field<t_nWidth>&
@@ -87,7 +87,7 @@ export namespace
 		(	i_rLeft
 		=	i_rLeft
 		bitor
-			i_vRight
+			i_nRight
 		);
 	}
 
@@ -99,16 +99,16 @@ export namespace
 	auto constexpr
 	(	operator xor
 	)	(	Field<t_nWidth>
-				i_vLeft
-		,	Field<t_nWidth>
-				i_vRight
+				i_nLeft
+		,	decltype(i_nLeft)
+				i_nRight
 		)
 		noexcept
 	->	Field<t_nWidth>
 	{	return
 		Field<t_nWidth>
-		{	i_vLeft.get()
-		xor	i_vRight.get()
+		{	i_nLeft.get()
+		xor	i_nRight.get()
 		};
 	}
 	template
@@ -119,15 +119,15 @@ export namespace
 	(	operator ^=
 	)	(	Field<t_nWidth>
 			&	i_rLeft
-		,	Field<t_nWidth>
-				i_vRight
+		,	decltype(auto(i_rLeft))
+				i_nRight
 		)
 		noexcept
 	->	Field<t_nWidth>&
 	{	return
 		(	i_rLeft
 		=	i_rLeft
-		xor	i_vRight
+		xor	i_nRight
 		);
 	}
 
@@ -139,7 +139,7 @@ export namespace
 	auto constexpr
 	(	operator compl
 	)	(	Field<t_nSize>
-				i_vField
+				i_nField
 		)
 		noexcept
 	->	Field<t_nSize>
@@ -148,7 +148,7 @@ export namespace
 		{	Field<t_nSize>::Sanitize
 			(	static_cast<Field<t_nSize>::FieldType>
 				(	compl
-					i_vField.get()
+					i_nField.get()
 				)
 			)
 		};

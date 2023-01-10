@@ -18,7 +18,7 @@ export namespace
 	(	operator +
 	)	(	Index<t_nSize>
 				i_nLeft
-		,	Index<t_nSize>
+		,	decltype(i_nLeft)
 				i_nRight
 		)
 		noexcept
@@ -38,7 +38,7 @@ export namespace
 	(	operator +=
 	)	(	Index<t_nSize>
 			&	i_rIndex
-		,	Index<t_nSize>
+		,	decltype(auto(i_rIndex))
 				i_nOffset
 		)
 		noexcept
@@ -104,7 +104,7 @@ export namespace
 	(	operator -
 	)	(	Index<t_nSize>
 				i_nLeft
-		,	Index<t_nSize>
+		,	decltype(i_nLeft)
 				i_nRight
 		)
 		noexcept
@@ -124,7 +124,7 @@ export namespace
 	(	operator -=
 	)	(	Index<t_nSize>
 			&	i_rIndex
-		,	Index<t_nSize>
+		,	decltype(auto(i_rIndex))
 				i_nOffset
 		)
 		noexcept
