@@ -10,6 +10,7 @@ import Meta.Functional;
 import Meta.Bit.OneIndexRange;
 import Meta.Bit.Field;
 import Meta.Bit.Index;
+import Meta.Bit.Index.Arithmetic;
 
 import Std;
 

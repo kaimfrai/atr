@@ -1,6 +1,7 @@
 import ATR;
 
 import Meta.Memory.Size;
+import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Scale;
 import Meta.Bit.Field;
 import Meta.Byte.Buffer;

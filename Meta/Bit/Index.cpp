@@ -42,7 +42,8 @@ export namespace
 		using
 			IndexType
 		=	SInt_For
-			<	HighestValue.get()
+			<	HighestValue
+			.	get()
 			>
 		;
 
@@ -61,7 +62,8 @@ export namespace
 			AssertSanitized
 		=	&
 			Arithmetic::AssertSanitizedSigned
-			<	HighestValue.get()
+			<	HighestValue
+			.	get()
 			>
 		;
 
@@ -155,117 +157,6 @@ export namespace
 		->	::std::strong_ordering
 		=	default;
 
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator +
-		)	(	BitSize
-					i_nLeft
-			,	Index
-					i_nRight
-			)
-			noexcept
-		->	BitSize
-		{	i_nLeft.get() += i_nRight.get();
-			return i_nLeft;
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator +
-		)	(	Index
-					i_nLeft
-			,	Index
-					i_nRight
-			)
-			noexcept
-		->	Index
-		{	return
-			Index
-			{	i_nLeft.get()
-			+	i_nRight.get()
-			};
-		}
-
-		auto constexpr
-		(	operator +=
-		)	(	Index
-					i_nOffset
-			)	&
-			noexcept
-		->	Index&
-		{
-			*this = *this + i_nOffset;
-			return *this;
-		}
-
-		auto constexpr
-		(	operator ++
-		)	()	&
-			noexcept
-		->	Index&
-		{	return *this +=  Index{1};	}
-
-		[[nodiscard("Use preincrement when discarding the result")]]
-		auto constexpr
-		(	operator ++
-		)	(int)	&
-			noexcept
-		->	Index
-		{	return
-			::std::exchange
-			(	*this
-			,	*this + Index{1}
-			);
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator -
-		)	(	Index
-					i_nLeft
-			,	Index
-					i_nRight
-			)
-			noexcept
-		->	Index
-		{	return
-			Index
-			{	i_nLeft.get()
-			-	i_nRight.get()
-			};
-		}
-
-		auto constexpr
-		(	operator -=
-		)	(	Index
-					i_nOffset
-			)	&
-			noexcept
-		->	Index&
-		{
-			*this = *this - i_nOffset;
-			return *this;
-		}
-
-		auto constexpr
-		(	operator --
-		)	()	&
-			noexcept
-		->	Index&
-		{	return *this -=  Index{1};	}
-
-		[[nodiscard("Use predecrement when discarding the result")]]
-		auto constexpr
-		(	operator --
-		)	(int)	&
-			noexcept
-		->	Index
-		{	return
-			::std::exchange
-			(	*this
-			,	*this - Index{1}
-			);
-		}
 
 		[[nodiscard]]
 		friend auto constexpr

@@ -6,3 +6,5 @@ add_single_file_modules(
 	OneIndexIterator.cpp
 	OneIndexRange.cpp
 )
+
+add_subdirectory(Index)
