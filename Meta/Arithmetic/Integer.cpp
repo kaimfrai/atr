@@ -30,11 +30,6 @@ auto MapSInt
 	<SizeOf<::std::int_least64_t>>()
 {	return ::std::int_least64_t{}; }
 
-template<>
-auto MapSInt
-	<SizeOf<__int128>>()
-{	return __int128{};	}
-
 export namespace
 	Meta
 {
