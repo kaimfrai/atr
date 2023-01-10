@@ -1,5 +1,6 @@
 import Meta.Bit.OneIndexIterator;
 import Meta.Bit.Index;
+import Meta.Bit.Index.Compare;
 import Meta.Bit.Field;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Scale;

@@ -5,6 +5,7 @@ import :Layout.Bit.Reference;
 import :Layout.Bit.Iterator;
 
 import Meta.Bit.Index;
+import Meta.Bit.Index.Compare;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;

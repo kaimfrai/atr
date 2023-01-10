@@ -136,26 +136,6 @@ export namespace
 			{	get()
 			};
 		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator ==
-		)	(	Index
-			,	Index
-			)
-			noexcept
-		->	bool
-		=	default;
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator <=>
-		)	(	Index
-			,	Index
-			)
-			noexcept
-		->	::std::strong_ordering
-		=	default;
 	};
 }
 
