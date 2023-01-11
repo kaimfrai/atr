@@ -219,24 +219,6 @@ export namespace
 
 		[[nodiscard]]
 		friend auto constexpr
-		(	CountOnes
-		)	(	Field
-					i_vField
-			)
-			noexcept
-		->	CountType
-		{	return
-			CountType
-			{	static_cast<CountType::CountType>
-				(	::std::popcount
-					(	i_vField.get()
-					)
-				)
-			};
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
 		(	LowestOne
 		)	(	Field
 					i_vField

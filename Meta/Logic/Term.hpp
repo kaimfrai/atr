@@ -9,9 +9,10 @@ export import Meta.Token;
 import Meta.Functional;
 import Meta.Bit.OneIndexRange;
 import Meta.Bit.Field;
+import Meta.Bit.Field.CountOnes;
 import Meta.Bit.Index;
-import Meta.Bit.Index.Compare;
 import Meta.Bit.Index.Arithmetic;
+import Meta.Bit.Index.Compare;
 
 import Std;
 

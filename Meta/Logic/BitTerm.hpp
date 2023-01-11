@@ -10,6 +10,7 @@ import Meta.Bit.Index.Arithmetic;
 import Meta.Bit.Count.Compare;
 import Meta.Bit.Count.Range;
 import Meta.Bit.Field.Arithmetic;
+import Meta.Bit.Field.CountOnes;
 
 import Std;
 

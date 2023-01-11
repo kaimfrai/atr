@@ -7,6 +7,7 @@ import Meta.Arithmetic.Integer;
 import Meta.Bit.Field;
 import Meta.Bit.Field.Arithmetic;
 import Meta.Bit.Field.Compare;
+import Meta.Bit.Field.CountOnes;
 import Meta.Bit.Count;
 import Meta.Bit.Count.Range;
 import Meta.Bit.Index.Shift;
