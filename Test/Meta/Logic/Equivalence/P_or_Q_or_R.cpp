@@ -9,12 +9,12 @@ static_assert
 );
 static_assert
 (	(P_or_Q_or_R)
-==	(P	or	R	or	Q)
+==	(P_or_R	or	Q)
 );
 
 static_assert
 (	(P_or_Q_or_R)
-==	(Q	or	P	or	R)
+==	(Q	or	P_or_R)
 );
 static_assert
 (	(P_or_Q_or_R)

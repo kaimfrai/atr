@@ -83,7 +83,7 @@ static_assert
 (	(	(nP_and_nQ_and_R)
 	or	(P_and_Q_or_P_and_R)
 	)
-==	(P_and_Q	or	nQ_and_R)
+==	(P_and_Q_or_nQ_and_R)
 );
 static_assert
 (	(	(nP_and_nQ_and_nR)
@@ -122,11 +122,11 @@ static_assert
 (	(	(nQ_and_R)
 	or	(P_and_Q_or_P_and_R)
 	)
-==	(P_and_Q	or	nQ_and_R)
+==	(P_and_Q_or_nQ_and_R)
 );
 static_assert
 (	(	(nQ_and_nR)
 	or	(P_and_Q_or_P_and_R)
 	)
-==	(P	or	nQ_and_nR)
+==	(P_or_nQ_and_nR)
 );

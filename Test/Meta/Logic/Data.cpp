@@ -234,6 +234,51 @@ export
 	;
 
 	auto constexpr inline
+		P_and_Q_or_nR
+	=	P_and_Q or nR
+	;
+	auto constexpr inline
+		nP_and_Q_or_Q_and_R
+	=	nP_and_Q or Q_and_R
+	;
+	auto constexpr inline
+		P_and_Q_or_nP_and_nR
+	=	P_and_Q or nP_and_nR
+	;
+	auto constexpr inline
+		P_and_Q_or_P_and_nR
+	=	P_and_Q or P_and_nR
+	;
+	auto constexpr inline
+		P_and_Q_or_P_and_nR_or_nP_and_nQ
+	=	P_and_Q_or_P_and_nR or nP and nQ
+	;
+	auto constexpr inline
+		nP_and_Q_or_P_and_nQ_and_nR
+	=	nP_and_Q or P_and_nQ_and_nR
+	;
+	auto constexpr inline
+		P_and_Q_or_P_and_nR_or_nP_and_nQ_and_R
+	=	P_and_Q_or_P_and_nR or nP_and_nQ_and_R
+	;
+	auto constexpr inline
+		P_and_Q_or_Q_and_R
+	=	P_and_Q or Q_and_R
+	;
+	auto constexpr inline
+		P_and_Q_or_Q_and_nR
+	=	P_and_Q or Q_and_nR
+	;
+	auto constexpr inline
+		P_and_Q_or_nQ_and_R
+	=	P_and_Q or nQ_and_R
+	;
+	auto constexpr inline
+		P_and_Q_or_nQ_and_nR
+	=	P_and_Q or nQ_and_nR
+	;
+
+	auto constexpr inline
 		P_and_nR_or_nP_and_nQ
 	=	P_and_nR or nP_and_nQ
 	;
@@ -348,6 +393,46 @@ export
 	auto constexpr inline
 		P_or_Q
 	=	P or Q
+	;
+	auto constexpr inline
+		P_or_nQ
+	=	P or nQ
+	;
+	auto constexpr inline
+		P_or_R
+	=	P or R
+	;
+	auto constexpr inline
+		P_or_nR
+	=	P or nR
+	;
+	auto constexpr inline
+		nP_or_R
+	=	nP or R
+	;
+	auto constexpr inline
+		nP_or_nR
+	=	nP or nR
+	;
+	auto constexpr inline
+		P_or_nQ_and_R
+	=	P or nQ_and_R
+	;
+	auto constexpr inline
+		P_or_nQ_and_nR
+	=	P or nQ_and_nR
+	;
+	auto constexpr inline
+		nP_or_nQ
+	=	nP or nQ
+	;
+	auto constexpr inline
+		nP_or_nQ_and_R
+	=	nP or nQ_and_R
+	;
+	auto constexpr inline
+		nP_or_nQ_and_nR
+	=	nP or nQ_and_nR
 	;
 	auto constexpr inline
 		P_or_Q_and_R

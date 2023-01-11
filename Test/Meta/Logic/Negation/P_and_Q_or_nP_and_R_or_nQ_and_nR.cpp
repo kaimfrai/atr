@@ -11,13 +11,13 @@ static_assert
 );
 static_assert
 (	not
-	(P_and_Q	or	nQ_and_nR	or	nP_and_R)
+	(P_and_Q_or_nQ_and_nR	or	nP_and_R)
 ==	(P_and_nQ_and_R	or	nP_and_Q_and_nR)
 );
 
 static_assert
 (	not
-	(nP_and_R	or	P_and_Q	or	nQ_and_nR)
+	(nP_and_R	or	P_and_Q_or_nQ_and_nR)
 ==	(P_and_nQ_and_R	or	nP_and_Q_and_nR)
 );
 static_assert
