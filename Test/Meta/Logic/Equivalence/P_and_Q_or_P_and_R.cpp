@@ -1,13 +1,13 @@
 import Meta.Logic.Test.Data;
 
 /// ************************************************************************************************
-///	(p	and	q	or	p	and	r)
+///	(P	and	Q	or	P	and	R)
 /// ************************************************************************************************
 static_assert
-(	(p	and	q	or	p	and	r)
-==	(p	and	q	or	p	and	r)
+(	(P	and	Q	or	P	and	R)
+==	(P	and	Q	or	P	and	R)
 );
 static_assert
-(	(p	and	q	or	p	and	r)
-==	(p	and	r	or	p	and	q)
+(	(P	and	Q	or	P	and	R)
+==	(P	and	R	or	P	and	Q)
 );

@@ -1,37 +1,37 @@
 import Meta.Logic.Test.Data;
 
 /// ************************************************************************************************
-///	(p	and	q	or	p	and	r	or	q	and	r)
+///	(P	and	Q	or	P	and	R	or	Q	and	R)
 /// ************************************************************************************************
 static_assert
 (	not
-	(p	and	q	or	p	and	r	or	q	and	r)
-==	(!p	and	!q	or	!p	and	!r	or	!q	and	!r)
+	(P	and	Q	or	P	and	R	or	Q	and	R)
+==	(nP	and	nQ	or	nP	and	nR	or	nQ	and	nR)
 );
 static_assert
 (	not
-	(p	and	q	or	q	and	r	or	p	and	r)
-==	(!p	and	!q	or	!p	and	!r	or	!q	and	!r)
-);
-
-static_assert
-(	not
-	(p	and	r	or	p	and	q	or	q	and	r)
-==	(!p	and	!q	or	!p	and	!r	or	!q	and	!r)
-);
-static_assert
-(	not
-	(p	and	r	or	q	and	r	or	p	and	q)
-==	(!p	and	!q	or	!p	and	!r	or	!q	and	!r)
+	(P	and	Q	or	Q	and	R	or	P	and	R)
+==	(nP	and	nQ	or	nP	and	nR	or	nQ	and	nR)
 );
 
 static_assert
 (	not
-	(q	and	r	or	p	and	q	or	p	and	r)
-==	(!p	and	!q	or	!p	and	!r	or	!q	and	!r)
+	(P	and	R	or	P	and	Q	or	Q	and	R)
+==	(nP	and	nQ	or	nP	and	nR	or	nQ	and	nR)
 );
 static_assert
 (	not
-	(q	and	r	or	p	and	r	or	p	and	q)
-==	(!p	and	!q	or	!p	and	!r	or	!q	and	!r)
+	(P	and	R	or	Q	and	R	or	P	and	Q)
+==	(nP	and	nQ	or	nP	and	nR	or	nQ	and	nR)
+);
+
+static_assert
+(	not
+	(Q	and	R	or	P	and	Q	or	P	and	R)
+==	(nP	and	nQ	or	nP	and	nR	or	nQ	and	nR)
+);
+static_assert
+(	not
+	(Q	and	R	or	P	and	R	or	P	and	Q)
+==	(nP	and	nQ	or	nP	and	nR	or	nQ	and	nR)
 );

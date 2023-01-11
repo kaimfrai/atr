@@ -1,15 +1,15 @@
 import Meta.Logic.Test.Data;
 
 /// ************************************************************************************************
-///	(p	and	q	or	!p	and	r)
+///	(P	and	Q	or	nP	and	R)
 /// ************************************************************************************************
 static_assert
 (	not
-	(p	and	q	or	!p	and	r)
-==	(p	and	!q	or	!p	and	!r)
+	(P	and	Q	or	nP	and	R)
+==	(P	and	nQ	or	nP	and	nR)
 );
 static_assert
 (	not
-	(!p	and	r	or	p	and	q)
-==	(p	and	!q	or	!p	and	!r)
+	(nP	and	R	or	P	and	Q)
+==	(P	and	nQ	or	nP	and	nR)
 );

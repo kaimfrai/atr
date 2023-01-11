@@ -1,134 +1,134 @@
 import Meta.Logic.Test.Data;
 
 /// ************************************************************************************************
-///	(p	and	q	or	p	and	r	or	!p	and	!q)
-///	(p	and	q	or	!p	and	!q	or	!q	and	r)
+///	(P	and	Q	or	P	and	R	or	nP	and	nQ)
+///	(P	and	Q	or	nP	and	nQ	or	nQ	and	R)
 /// ************************************************************************************************
 
 static_assert
-(	(	(p	and	q)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
+(	(	(P	and	Q)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
 	)
-==	(p	and	q)
+==	(P	and	Q)
 );
 static_assert
-(	(	(p	and	q	and	r)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
+(	(	(P	and	Q	and	R)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
 	)
-==	(p	and	q	and	r)
+==	(P	and	Q	and	R)
 );
 static_assert
-(	(	(p	and	q	and	!r)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
+(	(	(P	and	Q	and	nR)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
 	)
-==	(p	and	q	and	!r)
+==	(P	and	Q	and	nR)
 );
 
 static_assert
-(	(	(p	and	!q)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
+(	(	(P	and	nQ)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
 	)
-==	(p	and	!q	and	r)
+==	(P	and	nQ	and	R)
 );
 static_assert
-(	(	(p	and	!q	and	r)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
+(	(	(P	and	nQ	and	R)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
 	)
-==	(p	and	!q	and	r)
+==	(P	and	nQ	and	R)
 );
 static_assert
-(	(	(p	and	!q	and	!r)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
+(	(	(P	and	nQ	and	nR)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
 	)
 ==	(F)
 );
 
 static_assert
-(	(	(p	and	r)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
+(	(	(P	and	R)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
 	)
-==	(p	and	r)
+==	(P	and	R)
 );
 static_assert
-(	(	(p	and	!r)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
+(	(	(P	and	nR)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
 	)
-==	(p	and	q	and	!r)
+==	(P	and	Q	and	nR)
 );
 
 static_assert
-(	(	(!p	and	q)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
+(	(	(nP	and	Q)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
 	)
 ==	(F)
 );
 static_assert
-(	(	(!p	and	q	and	r)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
+(	(	(nP	and	Q	and	R)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
 	)
 ==	(F)
 );
 static_assert
-(	(	(!p	and	q	and	!r)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
+(	(	(nP	and	Q	and	nR)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
 	)
 ==	(F)
 );
 
 static_assert
-(	(	(!p	and	!q)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
+(	(	(nP	and	nQ)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
 	)
-==	(!p	and	!q)
+==	(nP	and	nQ)
 );
 static_assert
-(	(	(!p	and	!q	and	r)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
+(	(	(nP	and	nQ	and	R)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
 	)
-==	(!p	and	!q	and	r)
+==	(nP	and	nQ	and	R)
 );
 static_assert
-(	(	(!p	and	!q	and	!r)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
+(	(	(nP	and	nQ	and	nR)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
 	)
-==	(!p	and	!q	and	!r)
-);
-
-static_assert
-(	(	(!p	and	r)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
-	)
-==	(!p	and	!q	and	r)
-);
-static_assert
-(	(	(!p	and	!r)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
-	)
-==	(!p	and	!q	and	!r)
+==	(nP	and	nQ	and	nR)
 );
 
 static_assert
-(	(	(q	and	r)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
+(	(	(nP	and	R)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
 	)
-==	(p	and	q	and	r)
+==	(nP	and	nQ	and	R)
 );
 static_assert
-(	(	(q	and	!r)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
+(	(	(nP	and	nR)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
 	)
-==	(p	and	q	and	!r)
+==	(nP	and	nQ	and	nR)
 );
 
 static_assert
-(	(	(!q	and	r)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
+(	(	(Q	and	R)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
 	)
-==	(!q	and	r)
+==	(P	and	Q	and	R)
 );
 static_assert
-(	(	(!q	and	!r)
-	and	(p	and	q	or	p	and	r	or	!p	and	!q)
+(	(	(Q	and	nR)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
 	)
-==	(!p	and	!q	and	!r)
+==	(P	and	Q	and	nR)
+);
+
+static_assert
+(	(	(nQ	and	R)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
+	)
+==	(nQ	and	R)
+);
+static_assert
+(	(	(nQ	and	nR)
+	and	(P	and	Q	or	P	and	R	or	nP	and	nQ)
+	)
+==	(nP	and	nQ	and	nR)
 );

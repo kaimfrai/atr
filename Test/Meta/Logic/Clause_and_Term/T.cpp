@@ -4,14 +4,14 @@ import Meta.Logic.Test.Data;
 ///	(T)
 /// ************************************************************************************************
 static_assert
-(	(	(p	and	q)
+(	(	(P	and	Q)
 	and	(T)
 	)
-==	(p	and	q)
+==	(P	and	Q)
 );
 static_assert
-(	(	(p	and	q	and	r)
+(	(	(P	and	Q	and	R)
 	and	(T)
 	)
-==	(p	and	q	and	r)
+==	(P	and	Q	and	R)
 );

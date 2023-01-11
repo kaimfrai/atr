@@ -1,31 +1,31 @@
 import Meta.Logic.Test.Data;
 
 /// ************************************************************************************************
-///	(p	and	q	and	r)
+///	(P	and	Q	and	R)
 /// ************************************************************************************************
 static_assert
-(	(p	and	q	and	r)
-==	(p	and	q	and	r)
+(	(P	and	Q	and	R)
+==	(P	and	Q	and	R)
 );
 static_assert
-(	(p	and	q	and	r)
-==	(p	and	r	and	q)
-);
-
-static_assert
-(	(p	and	q	and	r)
-==	(q	and	p	and	r)
-);
-static_assert
-(	(p	and	q	and	r)
-==	(q	and	r	and	p)
+(	(P	and	Q	and	R)
+==	(P	and	R	and	Q)
 );
 
 static_assert
-(	(p	and	q	and	r)
-==	(r	and	p	and	q)
+(	(P	and	Q	and	R)
+==	(Q	and	P	and	R)
 );
 static_assert
-(	(p	and	q	and	r)
-==	(r	and	q	and	p)
+(	(P	and	Q	and	R)
+==	(Q	and	R	and	P)
+);
+
+static_assert
+(	(P	and	Q	and	R)
+==	(R	and	P	and	Q)
+);
+static_assert
+(	(P	and	Q	and	R)
+==	(R	and	Q	and	P)
 );

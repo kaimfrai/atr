@@ -127,10 +127,23 @@ export
 	TestTerm constexpr inline T{::Meta::ErasedTrue};
 	TestTerm constexpr inline F{::Meta::ErasedFalse};
 	/// Literals
-	struct P{};
-	TestTerm constexpr inline p{::Meta::ErasedLiteral<P>};
-	struct Q{};
-	TestTerm constexpr inline q{::Meta::ErasedLiteral<Q>};
-	struct R{};
-	TestTerm constexpr inline r{::Meta::ErasedLiteral<R>};
+	struct p{};
+	TestTerm constexpr inline P{::Meta::ErasedLiteral<p>};
+	struct q{};
+	TestTerm constexpr inline Q{::Meta::ErasedLiteral<q>};
+	struct r{};
+	TestTerm constexpr inline R{::Meta::ErasedLiteral<r>};
+
+	auto constexpr inline
+		nP
+	=	!P
+	;
+	auto constexpr inline
+		nQ
+	=	!Q
+	;
+	auto constexpr inline
+		nR
+	=	!R
+	;
 }
