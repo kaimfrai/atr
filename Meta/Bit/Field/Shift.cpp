@@ -24,7 +24,8 @@ export namespace
 	->	Field<t_nWidth>
 	{	return
 		Field<t_nWidth>
-		{	i_vField.get()
+		{	i_vField
+		.	get()
 		>>	i_nIndex
 		};
 	}

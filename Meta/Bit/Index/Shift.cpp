@@ -8,24 +8,6 @@ import Std;
 export namespace
 	Meta::Bit
 {
-	[[nodiscard]]
-	auto constexpr
-	(	operator >>
-	)	(	::std::integral auto
-				i_nField
-		,	Index_For<decltype(i_nField)>
-				i_nIndex
-		)
-		noexcept
-	->	decltype(i_nField)
-	{	return
-		static_cast<decltype(i_nField)>
-		(	i_nField
-		>>	i_nIndex
-		.	get()
-		);
-	}
-
 	auto constexpr
 	(	operator >>=
 	)	(	::std::integral auto
@@ -44,7 +26,7 @@ export namespace
 
 	[[nodiscard]]
 	auto constexpr
-	(	operator <<
+	(	operator >>
 	)	(	::std::integral auto
 				i_nField
 		,	Index_For<decltype(i_nField)>
@@ -53,10 +35,8 @@ export namespace
 		noexcept
 	->	decltype(i_nField)
 	{	return
-		static_cast<decltype(i_nField)>
 		(	i_nField
-		<<	i_nIndex
-		.	get()
+		>>=	i_nIndex
 		);
 	}
 
@@ -73,6 +53,22 @@ export namespace
 		(	i_rField
 		<<=	i_nIndex
 		.	get()
+		);
+	}
+
+	[[nodiscard]]
+	auto constexpr
+	(	operator <<
+	)	(	::std::integral auto
+				i_nField
+		,	Index_For<decltype(i_nField)>
+				i_nIndex
+		)
+		noexcept
+	->	decltype(i_nField)
+	{	return
+		(	i_nField
+		<<=	i_nIndex
 		);
 	}
 
