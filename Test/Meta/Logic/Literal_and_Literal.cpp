@@ -20,14 +20,14 @@ static_assert
 (	(	Q
 	and	P
 	)
-==	(P	and	Q)
+==	(P_and_Q)
 );
 
 static_assert
 (	(	nQ
 	and	P
 	)
-==	(P	and	nQ)
+==	(P_and_nQ)
 );
 
 /// ************************************************************************************************
@@ -50,11 +50,11 @@ static_assert
 (	(	Q
 	and	nP
 	)
-==	(nP	and	Q)
+==	(nP_and_Q)
 );
 static_assert
 (	(	nQ
 	and	nP
 	)
-==	(nP	and	nQ)
+==	(nP_and_nQ)
 );

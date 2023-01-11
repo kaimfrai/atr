@@ -146,4 +146,91 @@ export
 		nR
 	=	!R
 	;
+
+	auto constexpr inline
+		P_and_Q
+	=	P and Q
+	;
+	auto constexpr inline
+		P_and_nQ
+	=	P and nQ
+	;
+	auto constexpr inline
+		P_and_R
+	=	P and R
+	;
+	auto constexpr inline
+		P_and_nR
+	=	P and nR
+	;
+
+	auto constexpr inline
+		nP_and_Q
+	=	nP and Q
+	;
+	auto constexpr inline
+		nP_and_nQ
+	=	nP and nQ
+	;
+	auto constexpr inline
+		nP_and_R
+	=	nP and R
+	;
+	auto constexpr inline
+		nP_and_nR
+	=	nP and nR
+	;
+
+	auto constexpr inline
+		Q_and_R
+	=	Q and R
+	;
+	auto constexpr inline
+		Q_and_nR
+	=	Q and nR
+	;
+
+	auto constexpr inline
+		nQ_and_R
+	=	nQ and R
+	;
+	auto constexpr inline
+		nQ_and_nR
+	=	nQ and nR
+	;
+
+	auto constexpr inline
+		P_and_Q_and_R
+	=	P_and_Q and R
+	;
+	auto constexpr inline
+		P_and_Q_and_nR
+	=	P_and_Q and nR
+	;
+	auto constexpr inline
+		P_and_nQ_and_R
+	=	P_and_nQ and R
+	;
+	auto constexpr inline
+		P_and_nQ_and_nR
+	=	P_and_nQ and nR
+	;
+
+	auto constexpr inline
+		nP_and_Q_and_R
+	=	nP_and_Q and R
+	;
+	auto constexpr inline
+		nP_and_Q_and_nR
+	=	nP_and_Q and nR
+	;
+	auto constexpr inline
+		nP_and_nQ_and_R
+	=	nP_and_nQ and R
+	;
+	auto constexpr inline
+		nP_and_nQ_and_nR
+	=	nP_and_nQ and nR
+	;
+
 }

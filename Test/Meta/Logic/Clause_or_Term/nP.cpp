@@ -4,129 +4,129 @@ import Meta.Logic.Test.Data;
 ///	nP
 /// ************************************************************************************************
 static_assert
-(	(	(P	and	Q)
+(	(	(P_and_Q)
 	or	nP
 	)
 ==	(nP	or	Q)
 );
 static_assert
-(	(	(P	and	Q	and	R)
+(	(	(P_and_Q_and_R)
 	or	nP
 	)
-==	(nP	or	Q	and	R)
+==	(nP	or	Q_and_R)
 );
 static_assert
-(	(	(P	and	Q	and	nR)
+(	(	(P_and_Q_and_nR)
 	or	nP
 	)
-==	(nP	or	Q	and	nR)
+==	(nP	or	Q_and_nR)
 );
 
 static_assert
-(	(	(P	and	nQ)
+(	(	(P_and_nQ)
 	or	nP
 	)
 ==	(nP	or	nQ)
 );
 static_assert
-(	(	(P	and	nQ	and	R)
+(	(	(P_and_nQ_and_R)
 	or	nP
 	)
-==	(nP	or	nQ	and	R)
+==	(nP	or	nQ_and_R)
 );
 static_assert
-(	(	(P	and	nQ	and	nR)
+(	(	(P_and_nQ_and_nR)
 	or	nP
 	)
-==	(nP	or	nQ	and	nR)
+==	(nP	or	nQ_and_nR)
 );
 
 static_assert
-(	(	(P	and	R)
+(	(	(P_and_R)
 	or	nP
 	)
 ==	(nP	or	R)
 );
 static_assert
-(	(	(P	and	nR)
+(	(	(P_and_nR)
 	or	nP
 	)
 ==	(nP	or	nR)
 );
 
 static_assert
-(	(	(nP	and	Q)
+(	(	(nP_and_Q)
 	or	nP
 	)
 ==	nP
 );
 static_assert
-(	(	(nP	and	Q	and	R)
+(	(	(nP_and_Q_and_R)
 	or	nP
 	)
 ==	nP
 );
 static_assert
-(	(	(nP	and	Q	and	nR)
-	or	nP
-	)
-==	nP
-);
-
-static_assert
-(	(	(nP	and	nQ)
-	or	nP
-	)
-==	nP
-);
-static_assert
-(	(	(nP	and	nQ	and	R)
-	or	nP
-	)
-==	nP
-);
-static_assert
-(	(	(nP	and	nQ	and	nR)
+(	(	(nP_and_Q_and_nR)
 	or	nP
 	)
 ==	nP
 );
 
 static_assert
-(	(	(nP	and	R)
+(	(	(nP_and_nQ)
 	or	nP
 	)
 ==	nP
 );
 static_assert
-(	(	(nP	and	nR)
+(	(	(nP_and_nQ_and_R)
+	or	nP
+	)
+==	nP
+);
+static_assert
+(	(	(nP_and_nQ_and_nR)
 	or	nP
 	)
 ==	nP
 );
 
 static_assert
-(	(	(Q	and	R)
+(	(	(nP_and_R)
 	or	nP
 	)
-==	(nP	or	Q	and	R)
+==	nP
 );
 static_assert
-(	(	(Q	and	nR)
+(	(	(nP_and_nR)
 	or	nP
 	)
-==	(nP	or	Q	and	nR)
+==	nP
 );
 
 static_assert
-(	(	(nQ	and	R)
+(	(	(Q_and_R)
 	or	nP
 	)
-==	(nP	or	nQ	and	R)
+==	(nP	or	Q_and_R)
 );
 static_assert
-(	(	(nQ	and	nR)
+(	(	(Q_and_nR)
 	or	nP
 	)
-==	(nP	or	nQ	and	nR)
+==	(nP	or	Q_and_nR)
+);
+
+static_assert
+(	(	(nQ_and_R)
+	or	nP
+	)
+==	(nP	or	nQ_and_R)
+);
+static_assert
+(	(	(nQ_and_nR)
+	or	nP
+	)
+==	(nP	or	nQ_and_nR)
 );
