@@ -223,4 +223,24 @@ export namespace
 			>
 		>
 	;
+
+	template
+		<	typename
+				t_tObject
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	ReadObject
+	)	(	InSpan
+				i_vBytes
+		)
+		noexcept
+	->	t_tObject
+	{	return
+		static_cast<t_tObject>
+		(	BufferFor<t_tObject>
+			{	i_vBytes
+			}
+		);
+	}
 }

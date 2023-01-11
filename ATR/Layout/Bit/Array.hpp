@@ -351,9 +351,10 @@ export namespace
 		{
 			return
 			ArrayValue<t_nSize, t_nExtent>
-			{	i_vBuffer
-			.	get()
-			.	m_vValue
+			{	::Meta::Byte::Buffer
+				{	i_vBuffer
+				.	get()
+				}
 			};
 		}
 		else

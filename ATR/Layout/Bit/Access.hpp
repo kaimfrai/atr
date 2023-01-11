@@ -10,6 +10,7 @@ import Meta.Bit.Field.Arithmetic;
 import Meta.Bit.Field.LowestOne;
 import Meta.Bit.Field.Shift;
 import Meta.Byte.InSpan;
+import Meta.Byte.Buffer;
 import Meta.Bit.Index;
 
 import Std;
@@ -110,12 +111,16 @@ export namespace
 			)
 			noexcept
 		->	FieldType
-		{	BufferFieldType
+		{
+			auto
 				vBufferField
-			{	{	i_aBuffer
-				,	t_nSize
-				+	i_nOffset
-				}
+			{	ReadObject<BufferFieldType>
+				(	Meta::Byte::InSpan
+					{	i_aBuffer
+					,	t_nSize
+					+	i_nOffset
+					}
+				)
 			};
 
 			vBufferField &= i_nMask;
@@ -190,11 +195,11 @@ export namespace
 
 			auto const
 				vBufferField
-			=	BufferFieldType
-				{	::Meta::Byte::InSpan
+			=	ReadObject<BufferFieldType>
+				(	::Meta::Byte::InSpan
 					{	vBuffer
 					}
-				}
+				)
 			bitand
 				compl
 				i_nMask
@@ -207,11 +212,11 @@ export namespace
 			;
 
 			(	vBuffer
-			=	(	vBufferField
+			=	::Meta::Byte::Buffer
+				{	vBufferField
 				bitor
 					vSetMask
-				)
-			.	m_vValue
+				}
 			);
 		}
 

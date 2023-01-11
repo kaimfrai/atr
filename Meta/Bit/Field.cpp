@@ -1,11 +1,8 @@
 export module Meta.Bit.Field;
 
-import Meta.Bit.Count;
 import Meta.Bit.Index;
 import Meta.Bit.Index.Test;
-import Meta.Byte.InSpan;
 import Meta.Memory.Size;
-import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
 import Meta.Byte.Buffer;
 import Meta.Arithmetic.Integer;
@@ -28,7 +25,7 @@ export namespace
 		>	0_bit
 		)
 	struct
-	// no private members to be usable as template argument
+	//	no private members to be usable as template argument
 		Field
 	{
 		using
@@ -37,12 +34,7 @@ export namespace
 			<	t_nWidth
 			>
 		;
-		using
-			CountType
-		=	Count
-			<	t_nWidth
-			>
-		;
+
 		using
 			FieldType
 		=	UInt
@@ -50,14 +42,30 @@ export namespace
 			>
 		;
 
-		using
-			BufferType
-		=	Byte::Buffer
-			<	t_nWidth
+		static auto constexpr
+			IsFullWidthInteger
+		=	t_nWidth
+		==	Memory::SizeOf
+			<	FieldType
 			>
 		;
 
-		BufferType
+		using
+			ValueType
+		=	::std::conditional_t
+			<	Memory::SizeOf<FieldType>
+			==	ByteSize(t_nWidth)
+			,	// if no memory is saved, use fast to compile integers
+				FieldType
+			,	// if it's possible to save some memory, we will
+				// may hit compilation time
+				Byte::Buffer
+				<	t_nWidth
+				>
+			>
+		;
+
+		ValueType
 			m_vValue
 		;
 
@@ -65,7 +73,9 @@ export namespace
 			Sanitize
 		=	&
 			Arithmetic::SanitizeUnsigned
-			<	Mask<t_nWidth>
+			<	Mask
+				<	t_nWidth
+				>
 			>
 		;
 
@@ -73,7 +83,9 @@ export namespace
 			AssertSanitized
 		=	&
 			Arithmetic::AssertSanitizedUnsigned
-			<	Mask<t_nWidth>
+			<	Mask
+				<	t_nWidth
+				>
 			>
 		;
 
@@ -95,41 +107,6 @@ export namespace
 				)
 			}
 		{}
-
-		//	Accept result of bit operations without casts
-		explicit(true) constexpr
-		(	Field
-		)	(	int
-					i_nValue
-			)
-			noexcept
-		requires
-			::std::is_same_v
-			<	int
-			,	decltype
-				(	compl
-					FieldType{}
-				)
-			>
-		:	Field
-			{	static_cast<UIntMax>
-				(	i_nValue
-				)
-			}
-		{}
-
-		explicit(true) constexpr
-		(	Field
-		)	(	Byte::InSpan
-					i_vSpan
-			)
-			noexcept
-		:	m_vValue
-			{	i_vSpan
-			}
-		{
-			(void)get();
-		}
 
 		[[nodiscard]]
 		auto constexpr
@@ -171,9 +148,7 @@ export namespace
 			noexcept
 		{	return
 			Field<t_nOtherWidth>
-			{	Byte::InSpan
-				{	m_vValue
-				}
+			{	get()
 			};
 		}
 
@@ -202,7 +177,6 @@ export namespace
 			);
 		}
 
-
 		[[nodiscard]]
 		auto constexpr
 		(	operator []
@@ -217,8 +191,6 @@ export namespace
 			,	i_nIndex
 			);
 		}
-
-
 	};
 
 	template

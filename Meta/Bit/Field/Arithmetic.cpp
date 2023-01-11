@@ -21,9 +21,11 @@ export namespace
 	->	Field<t_nWidth>
 	{	return
 		Field<t_nWidth>
-		{	i_nLeft.get()
-		bitand
-			i_nRight.get()
+		{	static_cast<Field<t_nWidth>::FieldType>
+			(	i_nLeft.get()
+			bitand
+				i_nRight.get()
+			)
 		};
 	}
 
@@ -64,9 +66,11 @@ export namespace
 	->	Field<t_nWidth>
 	{	return
 		Field<t_nWidth>
-		{	i_nLeft.get()
-		bitor
-			i_nRight.get()
+		{	static_cast<Field<t_nWidth>::FieldType>
+			(	i_nLeft.get()
+			bitor
+				i_nRight.get()
+			)
 		};
 	}
 
@@ -107,8 +111,10 @@ export namespace
 	->	Field<t_nWidth>
 	{	return
 		Field<t_nWidth>
-		{	i_nLeft.get()
-		xor	i_nRight.get()
+		{	static_cast<Field<t_nWidth>::FieldType>
+			(	i_nLeft.get()
+			xor	i_nRight.get()
+			)
 		};
 	}
 	template
