@@ -1,8 +1,8 @@
 export module Meta.Logic.Test.Data;
 
-export import Meta.Logic;
+import Meta.Logic;
 
-export import Std;
+import Std;
 
 export
 {
@@ -233,4 +233,148 @@ export
 	=	nP_and_nQ and nR
 	;
 
+	auto constexpr inline
+		P_and_nR_or_nP_and_nQ
+	=	P_and_nR or nP_and_nQ
+	;
+	auto constexpr inline
+		nP_and_nR_or_nP_and_nQ
+	=	nP_and_nR or nP_and_nQ
+	;
+	auto constexpr inline
+		P_and_nR_or_nP_and_nQ_and_R
+	=	P_and_nR or nP_and_nQ_and_R
+	;
+	auto constexpr inline
+		nP_and_nR_or_nP_and_nQ_and_R
+	=	nP_and_nR or nP_and_nQ_and_R
+	;
+	auto constexpr inline
+		P_and_nR_or_nP_and_nQ_or_Q_and_R
+	=	P_and_nR_or_nP_and_nQ or Q_and_R
+	;
+	auto constexpr inline
+		P_and_Q_and_R_or_nP_and_nQ
+	=	P_and_Q_and_R or nP_and_nQ
+	;
+	auto constexpr inline
+		P_and_Q_and_R_or_nP_and_nQ_and_R
+	=	P_and_Q_and_R or nP_and_nQ_and_R
+	;
+	auto constexpr inline
+		P_and_Q_and_R_or_nP_and_nQ_and_nR
+	=	P_and_Q_and_R or nP_and_nQ_and_nR
+	;
+	auto constexpr inline
+		nP_and_Q_and_R_or_nP_and_nQ_and_nR
+	=	nP_and_Q_and_R or nP_and_nQ_and_nR
+	;
+	auto constexpr inline
+		P_and_Q_and_R_or_nP_and_nQ_or_nP_and_nR
+	=	P_and_Q_and_R_or_nP_and_nQ or nP_and_nR
+	;
+	auto constexpr inline
+		P_and_Q_and_R_or_nP_and_nQ_or_nP_and_nR_or_nQ_and_nR
+	=	P_and_Q_and_R_or_nP_and_nQ_or_nP_and_nR or nQ_and_nR
+	;
+	auto constexpr inline
+		P_and_Q_and_R_or_P_and_nQ_and_nR
+	=	P_and_Q_and_R or P_and_nQ_and_nR
+	;
+	auto constexpr inline
+		P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR
+	=	P_and_Q_and_R_or_P_and_nQ_and_nR or nP_and_Q_and_nR
+	;
+	auto constexpr inline
+		P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR_or_nP_and_nQ_and_R
+	=	P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR or nP_and_nQ_and_R
+	;
+	auto constexpr inline
+		P_and_Q_or_nP_and_nQ
+	=	P_and_Q or nP_and_nQ
+	;
+	auto constexpr inline
+		P_and_Q_or_nP_and_nQ_and_R
+	=	P_and_Q or nP_and_nQ_and_R
+	;
+	auto constexpr inline
+		P_and_Q_or_nP_and_nQ_and_nR
+	=	P_and_Q or nP_and_nQ_and_nR
+	;
+	auto constexpr inline
+		P_and_Q_or_nP_and_nQ_or_nQ_and_R
+	=	P_and_Q_or_nP_and_nQ or nQ_and_R
+	;
+	auto constexpr inline
+		P_and_Q_or_nP_and_nQ_or_R
+	=	P_and_Q_or_nP_and_nQ or R
+	;
+	auto constexpr inline
+		P_and_Q_or_nP_and_R
+	=	P_and_Q or nP_and_R
+	;
+	auto constexpr inline
+		nP_and_Q_or_nP_and_R
+	=	nP_and_Q or nP_and_R
+	;
+	auto constexpr inline
+		P_and_Q_or_nP_and_R_or_nQ_and_nR
+	=	P_and_Q_or_nP_and_R or nQ_and_nR
+	;
+	auto constexpr inline
+		P_and_Q_or_P_and_R
+	=	P_and_Q or P_and_R
+	;
+	auto constexpr inline
+		P_and_Q_or_P_and_R_or_nP_and_nQ
+	=	P_and_Q_or_P_and_R or nP_and_nQ
+	;
+	auto constexpr inline
+		P_and_Q_or_P_and_R_or_nP_and_nQ_and_nR
+	=	P_and_Q_or_P_and_R or nP_and_nQ_and_nR
+	;
+	auto constexpr inline
+		P_and_Q_or_P_and_R_or_Q_and_R
+	=	P_and_Q_or_P_and_R or Q_and_R
+	;
+	auto constexpr inline
+		P_and_Q_or_R
+	=	P_and_Q or R
+	;
+	auto constexpr inline
+		nP_and_Q_or_R
+	=	nP_and_Q or R
+	;
+	auto constexpr inline
+		P_or_Q
+	=	P or Q
+	;
+	auto constexpr inline
+		P_or_Q_and_R
+	=	P or Q_and_R
+	;
+	auto constexpr inline
+		P_or_Q_and_nR
+	=	P or Q_and_nR
+	;
+	auto constexpr inline
+		nP_or_Q
+	=	nP or Q
+	;
+	auto constexpr inline
+		nP_or_Q_and_R
+	=	nP or Q_and_R
+	;
+	auto constexpr inline
+		nP_or_Q_and_nR
+	=	nP or Q_and_nR
+	;
+	auto constexpr inline
+		P_or_Q_or_R
+	=	P_or_Q or R
+	;
+	auto constexpr inline
+		nP_or_Q_or_R
+	=	nP_or_Q or R
+	;
 }
