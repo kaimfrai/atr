@@ -121,6 +121,19 @@ export namespace
 			};
 		}
 	};
+
+	template
+		<	typename
+				t_tObject
+		>
+	using
+		Index_For
+	=	Index
+		<	Memory::SizeOf
+			<	t_tObject
+			>
+		>
+	;
 }
 
 export namespace

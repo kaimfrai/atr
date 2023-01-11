@@ -2,7 +2,6 @@ export module Meta.Bit.Count.Compare;
 
 import Meta.Bit.Count;
 import Meta.Arithmetic.Integer;
-import Meta.Memory.Size;
 
 import Std;
 
@@ -12,9 +11,9 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	operator ==
-	)	(	Count<Memory::SizeOf<UIntMax>>
+	)	(	Count_For<UIntMax>
 				i_vLeft
-		,	Count<Memory::SizeOf<UIntMax>>
+		,	Count_For<UIntMax>
 				i_vRight
 		)
 		noexcept
@@ -28,9 +27,9 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	operator <=>
-	)	(	Count<Memory::SizeOf<UIntMax>>
+	)	(	Count_For<UIntMax>
 				i_vLeft
-		,	Count<Memory::SizeOf<UIntMax>>
+		,	Count_For<UIntMax>
 				i_vRight
 		)
 		noexcept

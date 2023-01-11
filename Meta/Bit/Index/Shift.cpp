@@ -2,7 +2,6 @@ export module Meta.Bit.Index.Shift;
 
 import Meta.Bit.Index;
 import Meta.Arithmetic.Integer;
-import Meta.Memory.Size;
 
 import Std;
 
@@ -14,7 +13,7 @@ export namespace
 	(	operator >>
 	)	(	::std::integral auto
 				i_nField
-		,	Index<Memory::SizeOf<decltype(i_nField)>>
+		,	Index_For<decltype(i_nField)>
 				i_nIndex
 		)
 		noexcept
@@ -31,7 +30,7 @@ export namespace
 	(	operator >>=
 	)	(	::std::integral auto
 			&	i_rField
-		,	Index<Memory::SizeOf<decltype(i_rField)>>
+		,	Index_For<decltype(i_rField)>
 				i_nIndex
 		)
 		noexcept
@@ -48,7 +47,7 @@ export namespace
 	(	operator <<
 	)	(	::std::integral auto
 				i_nField
-		,	Index<Memory::SizeOf<decltype(i_nField)>>
+		,	Index_For<decltype(i_nField)>
 				i_nIndex
 		)
 		noexcept
@@ -65,7 +64,7 @@ export namespace
 	(	operator <<=
 	)	(	::std::integral auto
 			&	i_rField
-		,	Index<Memory::SizeOf<decltype(i_rField)>>
+		,	Index_For<decltype(i_rField)>
 				i_nIndex
 		)
 		noexcept

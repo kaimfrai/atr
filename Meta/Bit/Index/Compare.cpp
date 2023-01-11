@@ -2,7 +2,6 @@ export module Meta.Bit.Index.Compare;
 
 import Meta.Bit.Index;
 import Meta.Arithmetic.Integer;
-import Meta.Memory.Size;
 
 import Std;
 
@@ -12,9 +11,9 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	operator ==
-	)	(	Index<Memory::SizeOf<UIntMax>>
+	)	(	Index_For<UIntMax>
 				i_vLeft
-		,	Index<Memory::SizeOf<UIntMax>>
+		,	Index_For<UIntMax>
 				i_vRight
 		)
 		noexcept
@@ -28,9 +27,9 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	operator <=>
-	)	(	Index<Memory::SizeOf<UIntMax>>
+	)	(	Index_For<UIntMax>
 				i_vLeft
-		,	Index<Memory::SizeOf<UIntMax>>
+		,	Index_For<UIntMax>
 				i_vRight
 		)
 		noexcept

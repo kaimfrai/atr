@@ -84,4 +84,17 @@ export namespace
 			);
 		}
 	};
+
+	template
+		<	typename
+				t_tObject
+		>
+	using
+		Count_For
+	=	Count
+		<	Memory::SizeOf
+			<	t_tObject
+			>
+		>
+	;
 }
