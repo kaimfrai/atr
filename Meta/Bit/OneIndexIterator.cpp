@@ -5,6 +5,7 @@ import Meta.Bit.Field;
 import Meta.Bit.Field.Compare;
 import Meta.Bit.Index;
 import Meta.Size;
+import Meta.Bit.Field.LowestOne;
 
 import Std;
 
@@ -46,8 +47,12 @@ export namespace
 		)	()	&
 			noexcept
 		->	OneIndexIterator&
-		{	Field.UnsetLowestOne();
-			return *this;
+		{	UnsetLowestOne
+			(	Field
+			);
+			return
+				*this
+			;
 		}
 
 		[[nodiscard("Use preincrement when discarding the result")]]

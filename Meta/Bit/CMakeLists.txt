@@ -4,6 +4,7 @@ add_single_file_modules(
 	IndexIterator.cpp
 	Count.cpp
 	CountOnes.cpp
+	LowestOne.cpp
 	Mask.cpp
 	OneIndexIterator.cpp
 	OneIndexRange.cpp

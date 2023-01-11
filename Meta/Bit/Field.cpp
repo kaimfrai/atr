@@ -241,55 +241,6 @@ export namespace
 			};
 		}
 
-		[[nodiscard]]
-		friend auto constexpr
-		(	IndexLowestOne
-		)	(	Field
-					i_vField
-			)
-			noexcept
-		->	IndexType
-		{
-			auto const
-				nField
-			=	i_vField.get()
-			;
-			if	(nField == FieldType{})
-				::std::unreachable();
-
-			return
-			IndexType
-			{	static_cast<IndexType::IndexType>
-				(	::std::countr_zero
-					(	nField
-					)
-				)
-			};
-		}
-
-		auto constexpr
-		(	UnsetLowestOne
-		)	()	&
-		->	Field&
-		{	auto const
-				nValue
-			=	get()
-			;
-
-			return
-				*this
-			=	Field
-				{	static_cast<FieldType>
-					(	nValue
-					bitand
-						(	nValue
-						-	FieldType{1}
-						)
-					)
-				}
-			;
-		}
-
 		auto constexpr
 		(	Set
 		)	(	IndexType
