@@ -267,24 +267,6 @@ export namespace
 			};
 		}
 
-		[[nodiscard]]
-		friend auto constexpr
-		(	CurrentWidth
-		)	(	Field
-					i_vField
-			)
-			noexcept
-		->	CountType
-		{	return
-			CountType
-			{	static_cast<typename CountType::CountType>
-				(	::std::bit_width
-					(	i_vField.get()
-					)
-				)
-			};
-		}
-
 		auto constexpr
 		(	UnsetLowestOne
 		)	()	&

@@ -7,6 +7,7 @@ add_single_file_modules(
 	Mask.cpp
 	OneIndexIterator.cpp
 	OneIndexRange.cpp
+	Width.cpp
 )
 
 add_subdirectory(Field)

@@ -11,6 +11,7 @@ import Meta.Bit.Count.Compare;
 import Meta.Bit.Count.Range;
 import Meta.Bit.Field.Arithmetic;
 import Meta.Bit.Field.CountOnes;
+import Meta.Bit.Field.Width;
 
 import Std;
 
@@ -210,7 +211,7 @@ export namespace
 
 			auto const
 				nMaxLiteralCount
-			=	CurrentWidth
+			=	Width
 				(	vLiteralField
 				)
 			;
