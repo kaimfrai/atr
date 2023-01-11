@@ -13,6 +13,27 @@ export namespace
 		>
 	[[nodiscard]]
 	auto constexpr
+	(	LowestOne
+	)	(	Field<t_nSize>
+				i_nField
+		)
+		noexcept
+	->	Field<t_nSize>
+	{	return
+		Field<t_nSize>
+		{	LowestOne
+			(	i_nField
+			.	get()
+			)
+		};
+	}
+
+	template
+		<	auto
+				t_nSize
+		>
+	[[nodiscard]]
+	auto constexpr
 	(	IndexLowestOne
 	)	(	Field<t_nSize>
 				i_nField

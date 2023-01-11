@@ -9,6 +9,23 @@ export namespace
 {
 	[[nodiscard]]
 	auto constexpr
+	(	LowestOne
+	)	(	::std::integral auto
+				i_nField
+		)
+		noexcept
+	->	decltype(i_nField)
+	{	return
+		static_cast<decltype(i_nField)>
+		(	i_nField
+		bitand
+			-
+			i_nField
+		);
+	}
+
+	[[nodiscard]]
+	auto constexpr
 	(	IndexLowestOne
 	)	(	::std::integral auto
 				i_nField

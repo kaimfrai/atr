@@ -8,6 +8,7 @@ import Meta.Bit.Field;
 import Meta.Bit.Field.Arithmetic;
 import Meta.Bit.Field.Compare;
 import Meta.Bit.Field.CountOnes;
+import Meta.Bit.Field.LowestOne;
 import Meta.Bit.Count;
 import Meta.Bit.Count.Range;
 import Meta.Bit.Index.Shift;
@@ -390,6 +391,7 @@ export namespace
 		auto constexpr
 		(	FirstLiteral
 		)	()	const
+			noexcept
 		->	BitClause
 		{
 			BitClause
@@ -405,7 +407,9 @@ export namespace
 			;
 			auto const
 				vMask
-			=	LowestOne(vCombined)
+			=	LowestOne
+				(	vCombined
+				)
 			;
 
 			if	(Positive bitand vMask)

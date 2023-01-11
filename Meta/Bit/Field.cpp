@@ -217,30 +217,6 @@ export namespace
 			);
 		}
 
-		[[nodiscard]]
-		friend auto constexpr
-		(	LowestOne
-		)	(	Field
-					i_vField
-			)
-			noexcept
-		->	Field
-		{	auto const
-				nValue
-			=	i_vField.get()
-			;
-
-			return
-			Field
-			{	Sanitize
-				(	nValue
-				bitand
-					-
-					nValue
-				)
-			};
-		}
-
 		auto constexpr
 		(	Set
 		)	(	IndexType
