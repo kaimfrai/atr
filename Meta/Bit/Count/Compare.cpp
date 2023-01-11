@@ -1,6 +1,6 @@
-export module Meta.Bit.IndexRange.Compare;
+export module Meta.Bit.Count.Compare;
 
-import Meta.Bit.IndexRange;
+import Meta.Bit.Count;
 import Meta.Arithmetic.Integer;
 import Meta.Memory.Size;
 
@@ -12,9 +12,9 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	operator ==
-	)	(	IndexRange<Memory::SizeOf<UIntMax>>
+	)	(	Count<Memory::SizeOf<UIntMax>>
 				i_vLeft
-		,	IndexRange<Memory::SizeOf<UIntMax>>
+		,	Count<Memory::SizeOf<UIntMax>>
 				i_vRight
 		)
 		noexcept
@@ -28,9 +28,9 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	operator <=>
-	)	(	IndexRange<Memory::SizeOf<UIntMax>>
+	)	(	Count<Memory::SizeOf<UIntMax>>
 				i_vLeft
-		,	IndexRange<Memory::SizeOf<UIntMax>>
+		,	Count<Memory::SizeOf<UIntMax>>
 				i_vRight
 		)
 		noexcept

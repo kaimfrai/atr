@@ -1,7 +1,7 @@
-export module Meta.Bit.IndexRange.Range;
+export module Meta.Bit.Count.Range;
 
 import Meta.Bit.Index;
-import Meta.Bit.IndexRange;
+import Meta.Bit.Count;
 import Meta.Bit.IndexIterator;
 
 export namespace
@@ -14,7 +14,7 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	begin
-	)	(	IndexRange<t_nWidth>
+	)	(	Count<t_nWidth>
 		)
 		noexcept
 	->	IndexIterator
@@ -33,13 +33,13 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	end
-	)	(	IndexRange<t_nWidth>
+	)	(	Count<t_nWidth>
 				i_vRange
 		)
 		noexcept
 	->	IndexSentinel
 		<	typename
-				IndexRange
+				Count
 				<	t_nWidth
 				>
 			::	CountType

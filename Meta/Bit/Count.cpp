@@ -1,4 +1,4 @@
-export module Meta.Bit.IndexRange;
+export module Meta.Bit.Count;
 
 import Meta.Arithmetic.Sanitize;
 import Meta.Arithmetic.Integer;
@@ -13,7 +13,7 @@ export namespace
 				t_nWidth
 		>
 	struct
-		IndexRange
+		Count
 	{
 		static auto constexpr
 			AssertSanitized
@@ -38,13 +38,13 @@ export namespace
 		;
 
 		explicit(false) constexpr
-		(	IndexRange
+		(	Count
 		)	()
 			noexcept
 		=	default;
 
 		explicit(true) constexpr
-		(	IndexRange
+		(	Count
 		)	(	UIntMax
 					i_nValue
 			)
@@ -62,11 +62,11 @@ export namespace
 			>
 		[[nodiscard]]
 		explicit(t_nOtherWidth <= t_nWidth) constexpr
-		(	operator IndexRange<t_nOtherWidth>
+		(	operator Count<t_nOtherWidth>
 		)	()	const
 			noexcept
 		{	return
-			IndexRange
+			Count
 			<	t_nOtherWidth
 			>{	get()
 			};

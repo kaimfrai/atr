@@ -6,7 +6,7 @@ import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Scale;
 import Meta.Arithmetic.Integer;
 import Meta.Bit.Field;
-import Meta.Bit.IndexRange;
+import Meta.Bit.Count;
 import Meta.Byte.Buffer;
 import Meta.Byte.Buffer.Range;
 import Meta.Bit.Index;

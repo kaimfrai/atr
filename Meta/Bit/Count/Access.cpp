@@ -1,6 +1,6 @@
-export module Meta.Bit.IndexRange.Access;
+export module Meta.Bit.Count.Access;
 
-import Meta.Bit.IndexRange;
+import Meta.Bit.Count;
 import Meta.Bit.Index;
 
 import Std;
@@ -15,7 +15,7 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	front
-	)	(	IndexRange<t_nWidth>
+	)	(	Count<t_nWidth>
 				i_vRange
 		)
 		noexcept
@@ -37,7 +37,7 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	back
-	)	(	IndexRange<t_nWidth>
+	)	(	Count<t_nWidth>
 				i_vRange
 		)
 		noexcept

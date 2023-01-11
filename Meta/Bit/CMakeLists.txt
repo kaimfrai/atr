@@ -2,7 +2,7 @@ add_single_file_modules(
 	Field.cpp
 	Index.cpp
 	IndexIterator.cpp
-	IndexRange.cpp
+	Count.cpp
 	Mask.cpp
 	OneIndexIterator.cpp
 	OneIndexRange.cpp
@@ -10,4 +10,4 @@ add_single_file_modules(
 
 add_subdirectory(Field)
 add_subdirectory(Index)
-add_subdirectory(IndexRange)
+add_subdirectory(Count)

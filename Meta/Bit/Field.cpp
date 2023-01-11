@@ -1,6 +1,6 @@
 export module Meta.Bit.Field;
 
-import Meta.Bit.IndexRange;
+import Meta.Bit.Count;
 import Meta.Bit.Index;
 import Meta.Bit.Index.Test;
 import Meta.Byte.InSpan;
@@ -39,7 +39,7 @@ export namespace
 		;
 		using
 			CountType
-		=	IndexRange
+		=	Count
 			<	t_nWidth
 			>
 		;
