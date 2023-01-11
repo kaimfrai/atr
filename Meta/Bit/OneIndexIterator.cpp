@@ -1,11 +1,9 @@
 export module Meta.Bit.OneIndexIterator;
 
-import Meta.Memory.Size;
-import Meta.Bit.Field;
-import Meta.Bit.Field.Compare;
 import Meta.Bit.Index;
-import Meta.Size;
-import Meta.Bit.Field.LowestOne;
+import Meta.Bit.LowestOne;
+import Meta.Arithmetic.Integer;
+import Meta.Memory.Size;
 
 import Std;
 
@@ -23,11 +21,19 @@ export namespace
 	struct
 		OneIndexIterator
 	{
-		using difference_type = SSize;
-		using value_type = Index<t_nWidth>;
+		using
+			difference_type
+		= 	int
+		;
+		using
+			value_type
+		=	Index
+			<	t_nWidth
+			>
+		;
 
-		Field<t_nWidth>
-			Field
+		UInt<t_nWidth>
+			m_nField
 		;
 
 		[[nodiscard]]
@@ -37,8 +43,10 @@ export namespace
 			noexcept
 		->	value_type
 		{	return
-			IndexLowestOne
-			(	Field
+			ChangeWidth<t_nWidth>
+			(	IndexLowestOne
+				(	m_nField
+				)
 			);
 		}
 
@@ -48,7 +56,7 @@ export namespace
 			noexcept
 		->	OneIndexIterator&
 		{	UnsetLowestOne
-			(	Field
+			(	m_nField
 			);
 			return
 				*this
@@ -97,14 +105,16 @@ export namespace
 	};
 
 	template
-		<	auto
-				t_nWidth
+		<	typename
+				t_tField
 		>
 	(	OneIndexIterator
-	)	(	Field<t_nWidth>
+	)	(	t_tField
 		)
 	->	OneIndexIterator
-		<	t_nWidth
+		<	Memory::SizeOf
+			<	t_tField
+			>
 		>
 	;
 }

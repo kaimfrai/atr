@@ -3,7 +3,6 @@ export module Meta.Bit.OneIndexRange;
 import Meta.Bit.Field;
 import Meta.Bit.OneIndexIterator;
 import Meta.Memory.Size;
-import Meta.Size;
 
 export namespace
 	Meta::Bit
@@ -16,7 +15,7 @@ export namespace
 		OneIndexRange
 	{
 		Field<t_nWidth>
-			Field
+			m_vField
 		;
 
 		[[nodiscard]]
@@ -25,7 +24,11 @@ export namespace
 		)	()	const
 			noexcept
 		->	OneIndexIterator<t_nWidth>
-		{	return { Field };	}
+		{	return
+			{	m_vField
+			.	get()
+			};
+		}
 
 		[[nodiscard]]
 		auto constexpr
