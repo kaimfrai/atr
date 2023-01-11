@@ -35,13 +35,13 @@ export namespace
 			::	max()
 			)
 		{	return
-			static_cast<SInt_For<t_nHighestValue>>
+			Arithmetic::Narrow<t_nHighestValue>
 			(	i_nValue
 			);
 		}
 		else
 		{	return
-			static_cast<SInt_For<t_nHighestValue>>
+			Arithmetic::Narrow<t_nHighestValue>
 			(	i_nValue
 			%	(	t_nHighestValue
 				+	1z
@@ -95,13 +95,13 @@ export namespace
 			::	max()
 			)
 		{	return
-			static_cast<UInt_For<t_nHighestValue>>
+			Arithmetic::Narrow<t_nHighestValue>
 			(	i_nValue
 			);
 		}
 		else
 		{	return
-			static_cast<UInt_For<t_nHighestValue>>
+			Arithmetic::Narrow<t_nHighestValue>
 			(	i_nValue
 			%	(	t_nHighestValue
 				+	1uz

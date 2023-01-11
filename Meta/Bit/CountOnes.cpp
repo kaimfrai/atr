@@ -1,7 +1,7 @@
 export module Meta.Bit.CountOnes;
 
 import Meta.Bit.Count;
-import Meta.Arithmetic.Integer;
+import Meta.Math.Sign;
 
 import Std;
 
@@ -18,7 +18,7 @@ export namespace
 	->	Count_For<decltype(i_nField)>
 	{	return
 		Count_For<decltype(i_nField)>
-		{	static_cast<UIntMax>
+		{	Math::Unsigned
 			(	::std::popcount
 				(	i_nField
 				)

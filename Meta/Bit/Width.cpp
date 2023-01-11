@@ -1,6 +1,7 @@
 export module Meta.Bit.Width;
 
 import Meta.Bit.Count;
+import Meta.Math.Sign;
 
 import Std;
 
@@ -17,7 +18,7 @@ export namespace
 	->	Count_For<decltype(i_nField)>
 	{	return
 		Count_For<decltype(i_nField)>
-		{	static_cast<unsigned>
+		{	Math::Unsigned
 			(	::std::bit_width
 				(	i_nField
 				)

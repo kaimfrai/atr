@@ -90,7 +90,7 @@ export namespace
 	{	return
 		static_cast<UInt<t_nWidth>>
 		(	UInt<t_nWidth>{1u}
-		<<	i_nIndex.get()
+		<<	i_nIndex
 		);
 	}
 }

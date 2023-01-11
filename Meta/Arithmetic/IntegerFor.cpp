@@ -1,13 +1,14 @@
 export module Meta.Arithmetic.IntegerFor;
 
 import Meta.Arithmetic.Integer;
+import Meta.Math.Sign;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 
 import Std;
 
 export namespace
-	Meta
+	Meta::Arithmetic
 {
 	template
 		<	SIntMax
@@ -18,21 +19,36 @@ export namespace
 	=	SInt
 		<	BitSize
 			{	::std::bit_width
-				(	static_cast
-					<	::std::make_unsigned_t
-						<	SIntMax
-						>
-					>(	(	t_nValue
+				(	Math::Unsigned
+					(	(	t_nValue
 						>=	0z
 						)
 					?	t_nValue
-					:	-(t_nValue + 1z)
+					:	compl t_nValue
 					)
 				)
 			}
 		+	1_bit
 		>
 	;
+
+	template
+		<	SIntMax
+				t_nMaxValue
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	Narrow
+	)	(	SIntMax
+				i_nValue
+		)
+		noexcept
+	->	SInt_For<t_nMaxValue>
+	{	return
+		static_cast<SInt_For<t_nMaxValue>>
+		(	i_nValue
+		);
+	}
 
 	template
 		<	UIntMax
@@ -48,4 +64,22 @@ export namespace
 			}
 		>
 	;
+
+	template
+		<	UIntMax
+				t_nMaxValue
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	Narrow
+	)	(	UIntMax
+				i_nValue
+		)
+		noexcept
+	->	UInt_For<t_nMaxValue>
+	{	return
+		static_cast<UInt_For<t_nMaxValue>>
+		(	i_nValue
+		);
+	}
 }

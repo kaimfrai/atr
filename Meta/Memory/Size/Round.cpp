@@ -1,6 +1,7 @@
 export module Meta.Memory.Size.Round;
 
 import Meta.Memory.Size;
+import Meta.Math.Sign;
 
 import Std;
 
@@ -46,7 +47,7 @@ export namespace
 			{	-
 				static_cast<tSizeType>
 				(	::std::bit_floor
-					(	static_cast<::std::make_unsigned_t<tSizeType>>
+					(	Math::Unsigned
 						(	-nValue
 						)
 					)
@@ -59,7 +60,7 @@ export namespace
 			tSize
 			{	static_cast<tSizeType>
 				(	::std::bit_ceil
-					(	static_cast<::std::make_unsigned_t<tSizeType>>
+					(	Math::Unsigned
 						(	nValue
 						)
 					)
@@ -105,7 +106,7 @@ export namespace
 			{	-
 				static_cast<tSizeType>
 				(	::std::bit_ceil
-					(	static_cast<::std::make_unsigned_t<tSizeType>>
+					(	Math::Unsigned
 						(	-nValue
 						)
 					)
@@ -117,7 +118,7 @@ export namespace
 			tSize
 			{	static_cast<tSizeType>
 				(	::std::bit_floor
-					(	static_cast<::std::make_unsigned_t<tSizeType>>
+					(	Math::Unsigned
 						(	nValue
 						)
 					)
