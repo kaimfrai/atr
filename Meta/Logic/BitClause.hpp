@@ -9,6 +9,7 @@ import Meta.Bit.Field.Arithmetic;
 import Meta.Bit.Field.Compare;
 import Meta.Bit.Field.CountOnes;
 import Meta.Bit.Field.LowestOne;
+import Meta.Bit.Field.Set;
 import Meta.Bit.Count;
 import Meta.Bit.Count.Range;
 import Meta.Bit.Index.Shift;
@@ -152,8 +153,9 @@ export namespace
 			{
 				if	(Positive[nIndex])
 				{
-					vResult.Positive.Set
-					(	i_vPermutation
+					Set
+					(	vResult.Positive
+					,	i_vPermutation
 						[	static_cast<USize>
 							(	nIndex.get()
 							)
@@ -163,8 +165,9 @@ export namespace
 				else
 				if	(Negative[nIndex])
 				{
-					vResult.Negative.Set
-					(	i_vPermutation
+					Set
+					(	vResult.Negative
+					,	i_vPermutation
 						[	static_cast<USize>
 							(	nIndex.get()
 							)

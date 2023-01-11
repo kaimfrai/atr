@@ -82,11 +82,33 @@ export namespace
 	)	(	Index<t_nWidth>
 				i_nIndex
 		)
+		noexcept
 	->	UInt<t_nWidth>
 	{	return
 		static_cast<UInt<t_nWidth>>
 		(	UInt<t_nWidth>{1u}
 		<<	i_nIndex
+		);
+	}
+
+	template
+		<	auto
+				t_nWidth
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	AntiPower
+	)	(	Index<t_nWidth>
+				i_nIndex
+		)
+		noexcept
+	->	UInt<t_nWidth>
+	{	return
+		static_cast<UInt<t_nWidth>>
+		(	compl
+			Power
+			(	i_nIndex
+			)
 		);
 	}
 }

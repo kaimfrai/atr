@@ -151,6 +151,7 @@ export namespace
 					i_nValue
 			)	&
 			noexcept
+		->	Field&
 		{	return
 			(	*this
 			=	Field
@@ -217,39 +218,6 @@ export namespace
 			);
 		}
 
-		auto constexpr
-		(	Set
-		)	(	IndexType
-					i_nIndex
-			)	&
-			noexcept
-		->	Field&
-		{	return
-				*this
-			|=	Field
-				{	Power
-					(	i_nIndex
-					)
-				}
-			;
-		}
 
-		auto constexpr
-		(	Unset
-		)	(	IndexType
-					i_nIndex
-			)	&
-			noexcept
-		->	Field&
-		{	return
-				*this
-			&=	compl
-				Field
-				{	Power
-					(	i_nIndex
-					)
-				}
-			;
-		}
 	};
 }

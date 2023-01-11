@@ -10,6 +10,7 @@ import Meta.Functional;
 import Meta.Bit.OneIndexRange;
 import Meta.Bit.Field;
 import Meta.Bit.Field.CountOnes;
+import Meta.Bit.Field.Set;
 import Meta.Bit.Index;
 import Meta.Bit.Index.Arithmetic;
 import Meta.Bit.Index.Compare;
@@ -43,7 +44,11 @@ namespace
 			)
 		{
 			if	(bPreset)
-				nPresetMask.Set(nShift);
+			{	Set
+				(	nPresetMask
+				,	nShift
+				);
+			}
 			++nShift;
 		}
 		return
