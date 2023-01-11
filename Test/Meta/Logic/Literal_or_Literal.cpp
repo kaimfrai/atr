@@ -13,7 +13,7 @@ static_assert
 (	(	nP
 	or	P
 	)
-==	(T)
+==	T
 );
 
 static_assert
@@ -36,7 +36,7 @@ static_assert
 (	(	P
 	or	nP
 	)
-==	(T)
+==	T
 );
 static_assert
 (	(	nP

@@ -26,19 +26,19 @@ static_assert
 (	(	(P	and	nQ)
 	and	(P	and	Q	or	nP	and	R)
 	)
-==	(F)
+==	F
 );
 static_assert
 (	(	(P	and	nQ	and	R)
 	and	(P	and	Q	or	nP	and	R)
 	)
-==	(F)
+==	F
 );
 static_assert
 (	(	(P	and	nQ	and	nR)
 	and	(P	and	Q	or	nP	and	R)
 	)
-==	(F)
+==	F
 );
 
 static_assert
@@ -70,7 +70,7 @@ static_assert
 (	(	(nP	and	Q	and	nR)
 	and	(P	and	Q	or	nP	and	R)
 	)
-==	(F)
+==	F
 );
 
 static_assert
@@ -89,7 +89,7 @@ static_assert
 (	(	(nP	and	nQ	and	nR)
 	and	(P	and	Q	or	nP	and	R)
 	)
-==	(F)
+==	F
 );
 
 static_assert
@@ -102,7 +102,7 @@ static_assert
 (	(	(nP	and	nR)
 	and	(P	and	Q	or	nP	and	R)
 	)
-==	(F)
+==	F
 );
 
 static_assert
@@ -128,5 +128,5 @@ static_assert
 (	(	(nQ	and	nR)
 	and	(P	and	Q	or	nP	and	R)
 	)
-==	(F)
+==	F
 );

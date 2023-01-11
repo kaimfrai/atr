@@ -89,7 +89,7 @@ static_assert
 (	(	(nP	and	nQ	and	nR)
 	and	(P	or	Q	or	R)
 	)
-==	(F)
+==	F
 );
 
 static_assert
