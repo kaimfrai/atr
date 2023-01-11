@@ -62,4 +62,18 @@ export namespace
 			)
 		);
 	}
+
+	[[nodiscard]]
+	auto constexpr
+	(	UnsetLowestOne
+	)	(	::std::integral auto
+			&&	i_rField
+		)
+		noexcept
+	->	decltype(auto(i_rField))
+	{	return
+		UnsetLowestOne
+		(	i_rField
+		);
+	}
 }

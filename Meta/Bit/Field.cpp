@@ -220,4 +220,17 @@ export namespace
 
 
 	};
+
+	template
+		<	typename
+				t_tObject
+		>
+	using
+		Field_For
+	=	Field
+		<	Memory::SizeOf
+			<	t_tObject
+			>
+		>
+	;
 }

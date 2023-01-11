@@ -1,7 +1,6 @@
 export module Meta.Bit.Field.Compare;
 
 import Meta.Arithmetic.Integer;
-import Meta.Memory.Size;
 import Meta.Bit.Field;
 
 import Std;
@@ -9,11 +8,12 @@ import Std;
 export namespace
 	Meta::Bit
 {
+	[[nodiscard]]
 	auto constexpr
 	(	operator ==
-	)	(	Field<Memory::SizeOf<UIntMax>>
+	)	(	Field_For<UIntMax>
 				i_nLeft
-		,	Field<Memory::SizeOf<UIntMax>>
+		,	Field_For<UIntMax>
 				i_nRight
 		)
 		noexcept
@@ -24,11 +24,12 @@ export namespace
 		;
 	}
 
+	[[nodiscard]]
 	auto constexpr
 	(	operator <=>
-	)	(	Field<Memory::SizeOf<UIntMax>>
+	)	(	Field_For<UIntMax>
 				i_nLeft
-		,	Field<Memory::SizeOf<UIntMax>>
+		,	Field_For<UIntMax>
 				i_nRight
 		)
 		noexcept

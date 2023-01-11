@@ -9,18 +9,18 @@ export namespace
 {
 	template
 		<	auto
-				t_nSize
+				t_nWidth
 		>
 	[[nodiscard]]
 	auto constexpr
 	(	LowestOne
-	)	(	Field<t_nSize>
+	)	(	Field<t_nWidth>
 				i_nField
 		)
 		noexcept
-	->	Field<t_nSize>
+	->	Field<t_nWidth>
 	{	return
-		Field<t_nSize>
+		Field<t_nWidth>
 		{	LowestOne
 			(	i_nField
 			.	get()
@@ -30,49 +30,60 @@ export namespace
 
 	template
 		<	auto
-				t_nSize
+				t_nWidth
 		>
 	[[nodiscard]]
 	auto constexpr
 	(	IndexLowestOne
-	)	(	Field<t_nSize>
+	)	(	Field<t_nWidth>
 				i_nField
 		)
 		noexcept
-	->	Index<t_nSize>
+	->	Index<t_nWidth>
 	{	return
-		Index<t_nSize>
-		{	IndexLowestOne
+		ChangeWidth<t_nWidth>
+		(	IndexLowestOne
 			(	i_nField
 			.	get()
 			)
-		};
+		);
 	}
 
 	template
 		<	auto
-				t_nSize
+				t_nWidth
 		>
 	auto constexpr
 	(	UnsetLowestOne
-	)	(	Field<t_nSize>
+	)	(	Field<t_nWidth>
 			&	i_rField
 		)
-	->	Field<t_nSize>&
-	{
-		auto
-			nValue
-		=	i_rField
-		.	get()
-		;
+		noexcept
+	->	Field<t_nWidth>&
+	{	return
 		(	i_rField
 		=	UnsetLowestOne
-			(	nValue
+			(	i_rField
+			.	get()
 			)
 		);
+	}
 
-		return
-			i_rField
-		;
+	template
+		<	auto
+				t_nWidth
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	UnsetLowestOne
+	)	(	Field<t_nWidth>
+			&&	i_rField
+		)
+		noexcept
+	->	Field<t_nWidth>
+	{	return
+		UnsetLowestOne
+		(	i_rField
+		);
 	}
 }

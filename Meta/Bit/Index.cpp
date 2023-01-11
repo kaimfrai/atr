@@ -99,15 +99,35 @@ export namespace
 					t_nOtherWidth
 			>
 		[[nodiscard]]
+		friend auto constexpr
+		(	ChangeWidth
+		)	(	Index
+					i_nIndex
+			)
+			noexcept
+		->	Index<t_nOtherWidth>
+		{	return
+			Index
+			<	t_nOtherWidth
+			>{	i_nIndex
+			.	get()
+			};
+		}
+
+		template
+			<	auto
+					t_nOtherWidth
+			>
+		[[nodiscard]]
 		explicit(t_nOtherWidth <= t_nWidth) constexpr
 		(	operator Index<t_nOtherWidth>
 		)	()	const
 			noexcept
 		{	return
-			Index
+			ChangeWidth
 			<	t_nOtherWidth
-			>{	get()
-			};
+			>(	*this
+			);
 		}
 
 		[[nodiscard]]

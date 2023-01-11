@@ -20,18 +20,34 @@ export namespace
 		)
 		noexcept
 	->	decltype(i_rField)
-	{
-		auto
-			nValue
-		=	i_rField
-		.	get()
-		;
-		return
+	{	return
 		(	i_rField
 		=	Set
-			(	nValue
+			(	i_rField
+			.	get()
 			,	i_nIndex
 			)
+		);
+	}
+
+	template
+		<	auto
+				t_nWidth
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	Set
+	)	(	Field<t_nWidth>
+			&&	i_rField
+		,	typename Field<t_nWidth>::IndexType
+				i_nIndex
+		)
+		noexcept
+	->	Field<t_nWidth>
+	{	return
+		Set
+		(	i_rField
+		,	i_nIndex
 		);
 	}
 
@@ -48,18 +64,34 @@ export namespace
 		)
 		noexcept
 	->	decltype(i_rField)
-	{
-		auto
-			nValue
-		=	i_rField
-		.	get()
-		;
-		return
+	{	return
 		(	i_rField
 		=	Unset
-			(	nValue
+			(	i_rField
+			.	get()
 			,	i_nIndex
 			)
+		);
+	}
+
+	template
+		<	auto
+				t_nWidth
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	Unset
+	)	(	Field<t_nWidth>
+			&&	i_rField
+		,	typename Field<t_nWidth>::IndexType
+				i_nIndex
+		)
+		noexcept
+	->	Field<t_nWidth>
+	{	return
+		Unset
+		(	i_rField
+		,	i_nIndex
 		);
 	}
 }

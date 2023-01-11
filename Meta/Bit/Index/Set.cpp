@@ -25,6 +25,23 @@ export namespace
 		);
 	}
 
+	[[nodiscard]]
+	auto constexpr
+	(	Set
+	)	(	::std::integral auto
+			&&	i_rField
+		,	Index_For<decltype(i_rField)>
+				i_nIndex
+		)
+		noexcept
+	->	decltype(auto(i_rField))
+	{	return
+		Set
+		(	i_rField
+		,	i_nIndex
+		);
+	}
+
 	auto constexpr
 	(	Unset
 	)	(	::std::integral auto
@@ -39,6 +56,23 @@ export namespace
 		&=	AntiPower
 			(	i_nIndex
 			)
+		);
+	}
+
+	[[nodiscard]]
+	auto constexpr
+	(	Unset
+	)	(	::std::integral auto
+			&&	i_rField
+		,	Index_For<decltype(i_rField)>
+				i_nIndex
+		)
+		noexcept
+	->	decltype(auto(i_rField))
+	{	return
+		Unset
+		(	i_rField
+		,	i_nIndex
 		);
 	}
 }

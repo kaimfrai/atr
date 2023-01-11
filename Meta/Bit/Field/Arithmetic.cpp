@@ -65,8 +65,8 @@ export namespace
 	{	return
 		Field<t_nWidth>
 		{	i_nLeft.get()
-			bitor
-				i_nRight.get()
+		bitor
+			i_nRight.get()
 		};
 	}
 
@@ -133,20 +133,20 @@ export namespace
 
 	template
 		<	auto
-				t_nSize
+				t_nWidth
 		>
 	[[nodiscard]]
 	auto constexpr
 	(	operator compl
-	)	(	Field<t_nSize>
+	)	(	Field<t_nWidth>
 				i_nField
 		)
 		noexcept
-	->	Field<t_nSize>
+	->	Field<t_nWidth>
 	{	return
-		Field<t_nSize>
-		{	Field<t_nSize>::Sanitize
-			(	static_cast<Field<t_nSize>::FieldType>
+		Field<t_nWidth>
+		{	Field<t_nWidth>::Sanitize
+			(	static_cast<Field<t_nWidth>::FieldType>
 				(	compl
 					i_nField.get()
 				)

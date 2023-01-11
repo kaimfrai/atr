@@ -61,15 +61,35 @@ export namespace
 					t_nOtherWidth
 			>
 		[[nodiscard]]
+		friend auto constexpr
+		(	ChangeWidth
+		)	(	Count
+					i_nCount
+			)
+			noexcept
+		->	Count<t_nOtherWidth>
+		{	return
+			Count
+			<	t_nOtherWidth
+			>{	i_nCount
+			.	get()
+			};
+		}
+
+		template
+			<	auto
+					t_nOtherWidth
+			>
+		[[nodiscard]]
 		explicit(t_nOtherWidth <= t_nWidth) constexpr
 		(	operator Count<t_nOtherWidth>
 		)	()	const
 			noexcept
 		{	return
-			Count
+			ChangeWidth
 			<	t_nOtherWidth
-			>{	get()
-			};
+			>(	*this
+			);
 		}
 
 		[[nodiscard]]
