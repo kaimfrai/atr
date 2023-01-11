@@ -1,5 +1,5 @@
 add_module(
-	Data.hpp
+	Data.cpp
 )
 function(add_logic_test
 	test_name

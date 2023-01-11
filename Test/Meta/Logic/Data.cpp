@@ -13,6 +13,7 @@ export
 			Term
 		;
 
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator ==
 		)	(	TestTerm const
@@ -20,6 +21,7 @@ export
 			,	TestTerm const
 				&	i_rRight
 			)
+			noexcept
 		->	bool
 		{
 			if	(	bool const
@@ -33,9 +35,11 @@ export
 
 			if	(	bool const
 						bLiteralsPermutation
-				=	std::ranges::is_permutation
-					(	i_rLeft.Term.Literals
-					,	i_rRight.Term.Literals
+				=	::std::is_permutation
+					(	begin(i_rLeft.Term.Literals)
+					,	end(i_rLeft.Term.Literals)
+					,	begin(i_rRight.Term.Literals)
+					,	end(i_rRight.Term.Literals)
 					)
 				;	not
 					bLiteralsPermutation
@@ -55,7 +59,7 @@ export
 				vLeftLiteralSum
 			=	i_rLeft.Term.BitTerm.transform_reduce
 				(	0uz
-				,	std::plus<>{}
+				,	::std::plus<>{}
 				,	&Meta::Logic::BitClause::LiteralCount
 				)
 			;
@@ -64,7 +68,7 @@ export
 				vRightLiteralSum
 			=	i_rRight.Term.BitTerm.transform_reduce
 				(	0uz
-				,	std::plus<>{}
+				,	::std::plus<>{}
 				,	&Meta::Logic::BitClause::LiteralCount
 				)
 			;
@@ -72,6 +76,7 @@ export
 			return vLeftLiteralSum == vRightLiteralSum;
 		}
 
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator and
 		)	(	TestTerm const
@@ -79,6 +84,7 @@ export
 			,	TestTerm const
 				&	i_rRight
 			)
+			noexcept
 		->	TestTerm
 		{	return
 			{	i_rLeft.Term
@@ -86,6 +92,7 @@ export
 			};
 		}
 
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator or
 		)	(	TestTerm const
@@ -93,6 +100,7 @@ export
 			,	TestTerm const
 				&	i_rRight
 			)
+			noexcept
 		->	TestTerm
 		{	return
 			{	i_rLeft.Term
@@ -100,11 +108,13 @@ export
 			};
 		}
 
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator not
 		)	(	TestTerm const
 				&	i_rTerm
 			)
+			noexcept
 		->	TestTerm
 		{	return
 			{	not
