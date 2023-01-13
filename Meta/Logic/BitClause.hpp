@@ -389,39 +389,5 @@ export namespace
 			.	IsAbsorbing()
 			);
 		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	FirstLiteral
-		)	()	const
-			noexcept
-		->	BitClause
-		{
-			BitClause
-				vResult
-			=	Absorbing()
-			;
-
-			auto const
-				vCombined
-			=	Positive
-			bitor
-				Negative
-			;
-			auto const
-				vMask
-			=	LowestOne
-				(	vCombined
-				)
-			;
-
-			if	(Positive bitand vMask)
-				vResult.Positive = vMask;
-
-			if	(Negative bitand vMask)
-				vResult.Negative = vMask;
-
-			return vResult;
-		}
 	};
 }

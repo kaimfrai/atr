@@ -57,6 +57,8 @@ export namespace
 	(	UnsetLowestOne
 	)	(	Field<t_nWidth>
 			&	i_rField
+		,	decltype(auto(i_rField))
+				i_nMask
 		)
 		noexcept
 	->	Field<t_nWidth>&
@@ -65,7 +67,52 @@ export namespace
 		=	UnsetLowestOne
 			(	i_rField
 			.	get()
+			,	i_nMask
+			.	get()
 			)
+		);
+	}
+
+	template
+		<	auto
+				t_nWidth
+		>
+	auto constexpr
+	(	UnsetLowestOne
+	)	(	Field<t_nWidth>
+			&	i_rField
+		)
+		noexcept
+	->	Field<t_nWidth>&
+	{	return
+		(	i_rField
+		=	UnsetLowestOne
+			(	i_rField
+			.	get()
+			,	i_rField
+			.	get()
+			)
+		);
+	}
+
+	template
+		<	auto
+				t_nWidth
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	UnsetLowestOne
+	)	(	Field<t_nWidth>
+			&&	i_rField
+		,	decltype(auto(i_rField))
+				i_nMask
+		)
+		noexcept
+	->	Field<t_nWidth>
+	{	return
+		UnsetLowestOne
+		(	i_rField
+		,	i_nMask
 		);
 	}
 
@@ -84,6 +131,7 @@ export namespace
 	{	return
 		UnsetLowestOne
 		(	i_rField
+		,	i_rField
 		);
 	}
 }

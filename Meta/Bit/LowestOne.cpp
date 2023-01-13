@@ -16,10 +16,8 @@ export namespace
 		noexcept
 	->	decltype(i_nField)
 	{	return
-		static_cast<decltype(i_nField)>
 		(	i_nField
-		bitand
-			-
+		&=	-
 			i_nField
 		);
 	}
@@ -48,18 +46,46 @@ export namespace
 	(	UnsetLowestOne
 	)	(	::std::integral auto
 			&	i_rField
+		,	decltype(auto(i_rField))
+				i_nMask
 		)
 		noexcept
 	->	decltype(i_rField)
 	{	return
 		(	i_rField
-		=	static_cast<decltype(auto(i_rField))>
-			(	i_rField
-			bitand
-				(	i_rField
-				-	1
-				)
-			)
+		&=	i_nMask
+		-	1
+		);
+	}
+
+	auto constexpr
+	(	UnsetLowestOne
+	)	(	::std::integral auto
+			&	i_rField
+		)
+		noexcept
+	->	decltype(i_rField)
+	{	return
+		UnsetLowestOne
+		(	i_rField
+		,	i_rField
+		);
+	}
+
+	[[nodiscard]]
+	auto constexpr
+	(	UnsetLowestOne
+	)	(	::std::integral auto
+			&&	i_rField
+		,	decltype(auto(i_rField))
+				i_nMask
+		)
+		noexcept
+	->	decltype(auto(i_rField))
+	{	return
+		UnsetLowestOne
+		(	i_rField
+		,	i_nMask
 		);
 	}
 
@@ -74,6 +100,7 @@ export namespace
 	{	return
 		UnsetLowestOne
 		(	i_rField
+		,	i_rField
 		);
 	}
 }

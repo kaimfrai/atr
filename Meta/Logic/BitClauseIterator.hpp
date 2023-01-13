@@ -2,100 +2,182 @@ export module Meta.Logic:BitClauseIterator;
 
 export import :BitClause;
 
-import Meta.Size;
+import Meta.Bit.Field.Arithmetic;
+import Meta.Bit.Field.Compare;
+import Meta.Bit.Field.LowestOne;
 
-namespace
+import Std;
+
+export namespace
 	Meta::Logic
 {
-	export class
+	[[nodiscard]]
+	auto constexpr
+	(	FirstLiteral
+	)	(	BitClause
+				i_vClause
+		)
+		noexcept
+	->	BitClause
+	{
+		auto const
+			vMask
+		=	LowestOne
+			(	i_vClause.Positive
+			bitor
+				i_vClause.Negative
+			)
+		;
+
+		(	i_vClause.Positive
+		&=	vMask
+		);
+
+		(	i_vClause.Negative
+		&=	vMask
+		);
+
+		return
+			i_vClause
+		;
+	}
+
+	auto constexpr
+	(	EraseFirstLiteral
+	)	(	BitClause
+			&	i_rClause
+		)
+		noexcept
+	->	BitClause&
+	{
+		auto const
+			nCombined
+		=	i_rClause.Positive
+		bitor
+			i_rClause.Negative
+		;
+		UnsetLowestOne
+		(	i_rClause.Positive
+		,	nCombined
+		);
+		UnsetLowestOne
+		(	i_rClause.Negative
+		,	nCombined
+		);
+
+		return
+			i_rClause
+		;
+	}
+
+	struct
+		BitClauseSentinel
+	{};
+
+	struct
 		BitClauseIterator final
 	{
-		BitClause
+		using
+			difference_type
+		=	int
+		;
+		using
+			value_type
+		=	BitClause
+		;
+
+		value_type
 			m_vClause
 		;
 
-		friend auto constexpr
-		(	begin
-		)	(	BitClause
-			)
-		->	BitClauseIterator
-		;
-
-		friend auto constexpr
-		(	end
-		)	(	BitClause
-			)
-		->	BitClauseIterator
-		;
-
-		constexpr
-		(	BitClauseIterator
-		)	(	BitClause
-					i_vClause
-			)
-		:	m_vClause
-			{	i_vClause
-			}
-		{}
-
-	public:
-		using difference_type = SSize;
-		using value_type = BitClause;
-
+		[[nodiscard]]
 		auto constexpr
 		(	operator *
 		)	()	const
-		->	BitClause
-		{	return m_vClause.FirstLiteral(); }
+			noexcept
+		->	value_type
+		{	return
+			FirstLiteral
+			(	m_vClause
+			);
+		}
 
 		auto constexpr
 		(	operator ++
 		)	()	&
+			noexcept
 		->	BitClauseIterator&
 		{
+			EraseFirstLiteral
 			(	m_vClause
-			=	Difference
-				(	m_vClause
-				,	m_vClause.FirstLiteral()
-				)
 			);
-			return *this;
+			return
+				*this
+			;
 		}
 
+		[[nodiscard("Use preincrement when discarding the value!")]]
 		auto constexpr
 		(	operator ++
 		)	(int)	&
+			noexcept
 		->	BitClauseIterator
-		{
-			auto const
-				vCopy
-			=	*this;
-			operator++();
-			return vCopy;
+		{	return
+			::std::exchange
+			(	*this
+			,	::std::next
+				(	*this
+				)
+			);
 		}
 
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator ==
 		)	(	BitClauseIterator
 			,	BitClauseIterator
 			)
+			noexcept
 		->	bool
 		=	default;
 
+		[[nodiscard]]
+		friend auto constexpr
+		(	operator ==
+		)	(	BitClauseIterator
+					i_vIterator
+			,	BitClauseSentinel
+			)
+			noexcept
+		->	bool
+		{	return
+				i_vIterator.m_vClause.Positive
+			==	i_vIterator.m_vClause.Negative
+			;
+		}
 	};
 
-	export auto constexpr
+	[[nodiscard]]
+	auto constexpr
 	(	begin
 	)	(	BitClause
 				i_vClause
 		)
+		noexcept
 	->	BitClauseIterator
-	{	return { i_vClause };	}
+	{	return
+		{	i_vClause
+		};
+	}
 
-	export auto constexpr
+	[[nodiscard]]
+	auto constexpr
 	(	end
 	)	(	BitClause
 		)
-	->	BitClauseIterator
-	{	return { BitClause::Absorbing() };	};
+		noexcept
+	->	BitClauseSentinel
+	{	return
+		{};
+	}
 }
