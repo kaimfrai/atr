@@ -1,0 +1,23 @@
+export module Test.Meta.Logic.Cache.PQR_or_nPnQ_or_nPnR;
+
+import Test.Meta.Logic.Term;
+import Test.Meta.Logic.Cache.PQ;
+import Test.Meta.Logic.Cache.PQR;
+import Test.Meta.Logic.Cache.PQ_or_PR;
+import Test.Meta.Logic.Cache.PQR_or_nPnQ;
+
+export
+{
+	auto constexpr inline
+		PQR_or_nPnQ_or_nPnR
+	=	PQR_or_nPnQ or nPnR
+	;
+	auto constexpr inline
+		PQ_or_PR_or_nPnQnR
+	=	PQ_or_PR or nPnQnR
+	;
+	auto constexpr inline
+		PQ_or_PnR_or_nPnQR
+	=	PQ_or_PnR or nPnQR
+	;
+}

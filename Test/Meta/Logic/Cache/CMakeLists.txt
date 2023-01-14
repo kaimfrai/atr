@@ -6,7 +6,18 @@ add_single_file_modules(
 	PQ.cpp
 	PQ_or_R.cpp
 	PQ_or_PR.cpp
+	PQ_or_PR_or_nPnQ.cpp
+	PQ_or_PR_or_QR.cpp
 	PQ_or_nPnQ.cpp
+	PQ_or_nPnQ_or_R.cpp
 	PQ_or_nPR.cpp
+	PQ_or_nPR_or_nQnR.cpp
 	PQR.cpp
+	PQR_or_nPnQ.cpp
+	PQR_or_nPnQ_or_nPnR.cpp
+	PQR_or_nPnQ_or_nPnR_or_nQnR.cpp
+	PQR_or_nPnQnR.cpp
+	PQR_or_PnQnR.cpp
+	PQR_or_PnQnR_or_nPQnR.cpp
+	PQR_or_PnQnR_or_nPQnR_or_nPnQR.cpp
 )
