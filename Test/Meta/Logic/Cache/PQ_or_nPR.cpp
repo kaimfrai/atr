@@ -40,4 +40,32 @@ export
 		PnQ_or_nPnR
 	=	PnQ or nPnR
 	;
+
+	auto constexpr inline
+		PR_or_nPQ
+	=	PR or nPQ
+	;
+	auto constexpr inline
+		PR_or_nPnQ
+	=	PR or nPnQ
+	;
+
+	auto constexpr inline
+		PR_or_QnR
+	=	PR or QnR
+	;
+	auto constexpr inline
+		PR_or_nQnR
+	=	PR or nQnR
+	;
+
+	auto constexpr inline
+		nPnQ_or_QR
+	=	nPnQ or QR
+	;
+
+	auto constexpr inline
+		nPnR_or_QR
+	=	nPnR or QR
+	;
 }

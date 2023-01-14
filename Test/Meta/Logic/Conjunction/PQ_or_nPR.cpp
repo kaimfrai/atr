@@ -46,7 +46,7 @@ static_assert
 (	(	R
 	and	(PQ_or_nPR)
 	)
-==	(nPR	or	QR)
+==	(nPR_or_QR)
 );
 static_assert
 (	(	nR

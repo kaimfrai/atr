@@ -122,7 +122,7 @@ static_assert
 (	(	(nPQnR)
 	or	(PQ_or_PR)
 	)
-==	(PR	or	QnR)
+==	(PR_or_QnR)
 );
 
 static_assert
@@ -154,7 +154,7 @@ static_assert
 (	(	(nPnR)
 	or	(PQ_or_PR)
 	)
-==	(PQ_or_PR	or	nPnR)
+==	(PQ_or_PR_or_nPnR)
 );
 
 static_assert
@@ -167,7 +167,7 @@ static_assert
 (	(	(QnR)
 	or	(PQ_or_PR)
 	)
-==	(PR	or	QnR)
+==	(PR_or_QnR)
 );
 
 static_assert

@@ -40,14 +40,14 @@ static_assert
 (	(	nQ
 	and	(PQ_or_PR_or_nPnQ)
 	)
-==	(nPnQ	or	nQR)
+==	(nPnQ_or_nQR)
 );
 
 static_assert
 (	(	R
 	and	(PQ_or_PR_or_nPnQ)
 	)
-==	(PR	or	nQR)
+==	(PR_or_nQR)
 );
 static_assert
 (	(	nR
