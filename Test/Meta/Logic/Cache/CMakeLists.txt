@@ -1,6 +1,12 @@
 add_single_file_modules(
 	Constant.cpp
 	Literal.cpp
+	P_or_Q.cpp
+	P_or_Q_or_R.cpp
 	PQ.cpp
+	PQ_or_R.cpp
+	PQ_or_PR.cpp
+	PQ_or_nPnQ.cpp
+	PQ_or_nPR.cpp
 	PQR.cpp
 )
