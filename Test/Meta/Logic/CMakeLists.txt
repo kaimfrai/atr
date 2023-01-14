@@ -1,4 +1,7 @@
-add_module(
+add_subdirectory(Cache)
+
+add_single_file_modules(
+	Term.cpp
 	Data.cpp
 )
 function(add_logic_test
