@@ -24,7 +24,20 @@ export
 	;
 
 	auto constexpr inline
+		PnR_or_nPQ
+	=	PnR or nPQ
+	;
+	auto constexpr inline
 		PnR_or_nPnQ
 	=	PnR or nPnQ
+	;
+
+	auto constexpr inline
+		PnQ_or_nPR
+	=	PnQ or nPR
+	;
+	auto constexpr inline
+		PnQ_or_nPnR
+	=	PnQ or nPnR
 	;
 }

@@ -10,4 +10,8 @@ export
 		PQR_or_PnQnR_or_nPQnR
 	=	PQR_or_PnQnR or nPQnR
 	;
+	auto constexpr inline
+		PQnR_or_PnQR_or_nPQR
+	=	PQnR_or_PnQR or nPQR
+	;
 }

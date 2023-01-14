@@ -15,4 +15,8 @@ export
 		nP_or_Q_or_R
 	=	nP_or_Q or R
 	;
+	auto constexpr inline
+		nP_or_nQ_or_nR
+	=	nP_or_nQ or nR
+	;
 }

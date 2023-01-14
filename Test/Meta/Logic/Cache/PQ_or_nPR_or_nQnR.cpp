@@ -12,6 +12,11 @@ export
 	;
 
 	auto constexpr inline
+		PnQ_or_nPR_or_QnR
+	=	PnQ_or_nPR or QnR
+	;
+
+	auto constexpr inline
 		PnR_or_nPnQ_or_QR
 	=	PnR_or_nPnQ or QR
 	;

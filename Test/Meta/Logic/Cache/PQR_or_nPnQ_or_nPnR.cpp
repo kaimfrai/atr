@@ -13,11 +13,21 @@ export
 	=	PQR_or_nPnQ or nPnR
 	;
 	auto constexpr inline
+		PQnR_or_nPnQ_or_nPR
+	=	PQnR_or_nPnQ or nPR
+	;
+
+	auto constexpr inline
 		PQ_or_PR_or_nPnQnR
 	=	PQ_or_PR or nPnQnR
 	;
 	auto constexpr inline
 		PQ_or_PnR_or_nPnQR
 	=	PQ_or_PnR or nPnQR
+	;
+
+	auto constexpr inline
+		PnQ_or_PnR_or_nPQR
+	=	PnQ_or_PnR or nPQR
 	;
 }

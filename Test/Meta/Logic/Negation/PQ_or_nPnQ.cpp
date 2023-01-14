@@ -5,11 +5,6 @@ import Test.Meta.Logic.Data;
 ///	********************************************************
 static_assert
 (	not
-	(PQ_or_nPnQ)
-==	(PnQ	or	nPQ)
-);
-static_assert
-(	not
-	(nPnQ	or	PQ)
-==	(PnQ	or	nPQ)
+	PQ_or_nPnQ
+==	PnQ_or_nPQ
 );

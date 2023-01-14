@@ -10,12 +10,34 @@ export
 	=	PQR or PnQnR
 	;
 	auto constexpr inline
-		nPQR_or_nPnQnR
-	=	nPQR or nPnQnR
+		PQR_or_nPnQR
+	=	PQR or nPnQR
 	;
 
 	auto constexpr inline
-		PQR_or_nPnQR
-	=	PQR or nPnQR
+		PQnR_or_PnQR
+	=	PQnR or PnQR
+	;
+	auto constexpr inline
+		PQnR_or_nPnQnR
+	=	PQnR or nPnQnR
+	;
+
+	auto constexpr inline
+		PnQR_or_nPQR
+	=	PnQR or nPQR
+	;
+	auto constexpr inline
+		PnQnR_or_nPQnR
+	=	PnQnR or nPQnR
+	;
+
+	auto constexpr inline
+		nPQR_or_nPnQnR
+	=	nPQR or nPnQnR
+	;
+	auto constexpr inline
+		nPQnR_or_nPnQR
+	=	nPQnR or nPnQR
 	;
 }
