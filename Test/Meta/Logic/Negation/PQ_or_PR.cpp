@@ -1,4 +1,4 @@
-import Meta.Logic.Test.Data;
+import Test.Meta.Logic.Data;
 
 ///	********************************************************
 ///	(PQ_or_PR)

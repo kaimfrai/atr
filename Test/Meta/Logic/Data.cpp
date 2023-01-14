@@ -1,4 +1,4 @@
-export module Meta.Logic.Test.Data;
+export module Test.Meta.Logic.Data;
 
 import Meta.Logic;
 
