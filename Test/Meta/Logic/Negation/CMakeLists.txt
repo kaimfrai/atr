@@ -22,10 +22,10 @@ add_negation_test(
 )
 
 add_negation_test(
-	P_and_Q
+	PQ
 )
 add_negation_test(
-	P_and_Q_and_R
+	PQR
 )
 
 add_negation_test(
@@ -36,59 +36,59 @@ add_negation_test(
 )
 
 add_negation_test(
-	P_and_Q_or_P_and_R
+	PQ_or_PR
 )
 add_negation_test(
-	P_and_Q_or_P_and_R_or_nP_and_nQ
+	PQ_or_PR_or_nPnQ
 )
 add_negation_test(
-	P_and_Q_or_P_and_R_or_Q_and_R
-)
-
-add_negation_test(
-	P_and_Q_or_nP_and_nQ
-)
-add_negation_test(
-	P_and_Q_or_nP_and_nQ_or_R
-)
-add_negation_test(
-	P_and_Q_or_nP_and_nQ_or_nQ_and_R
+	PQ_or_PR_or_QR
 )
 
 add_negation_test(
-	P_and_Q_or_nP_and_R
+	PQ_or_nPnQ
 )
 add_negation_test(
-	P_and_Q_or_nP_and_R_or_nQ_and_nR
+	PQ_or_nPnQ_or_R
 )
-
 add_negation_test(
-	P_and_nR_or_nP_and_nQ_or_Q_and_R
-)
-
-add_negation_test(
-	P_and_Q_or_R
+	PQ_or_nPnQ_or_nQR
 )
 
 add_negation_test(
-	P_and_Q_and_R_or_P_and_nQ_and_nR
+	PQ_or_nPR
 )
 add_negation_test(
-	P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR
-)
-add_negation_test(
-	P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR_or_nP_and_nQ_and_R
+	PQ_or_nPR_or_nQnR
 )
 
 add_negation_test(
-	P_and_Q_and_R_or_nP_and_nQ
+	PnR_or_nPnQ_or_QR
+)
+
+add_negation_test(
+	PQ_or_R
+)
+
+add_negation_test(
+	PQR_or_PnQnR
 )
 add_negation_test(
-	P_and_Q_and_R_or_nP_and_nQ_or_nP_and_nR
+	PQR_or_PnQnR_or_nPQnR
 )
 add_negation_test(
-	P_and_Q_and_R_or_nP_and_nQ_or_nP_and_nR_or_nQ_and_nR
+	PQR_or_PnQnR_or_nPQnR_or_nPnQR
+)
+
+add_negation_test(
+	PQR_or_nPnQ
 )
 add_negation_test(
-	P_and_Q_and_R_or_nP_and_nQ_and_nR
+	PQR_or_nPnQ_or_nPnR
+)
+add_negation_test(
+	PQR_or_nPnQ_or_nPnR_or_nQnR
+)
+add_negation_test(
+	PQR_or_nPnQnR
 )
