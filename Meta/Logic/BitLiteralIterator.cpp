@@ -1,4 +1,4 @@
-export module Meta.Logic:BitClauseIterator;
+export module Meta.Logic:BitLiteralIterator;
 
 export import :BitClause;
 
@@ -71,11 +71,11 @@ export namespace
 	}
 
 	struct
-		BitClauseSentinel
+		BitLiteralSentinel
 	{};
 
 	struct
-		BitClauseIterator final
+		BitLiteralIterator final
 	{
 		using
 			difference_type
@@ -106,7 +106,7 @@ export namespace
 		(	operator ++
 		)	()	&
 			noexcept
-		->	BitClauseIterator&
+		->	BitLiteralIterator&
 		{
 			EraseFirstLiteral
 			(	m_vClause
@@ -121,7 +121,7 @@ export namespace
 		(	operator ++
 		)	(int)	&
 			noexcept
-		->	BitClauseIterator
+		->	BitLiteralIterator
 		{	return
 			::std::exchange
 			(	*this
@@ -134,8 +134,8 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator ==
-		)	(	BitClauseIterator
-			,	BitClauseIterator
+		)	(	BitLiteralIterator
+			,	BitLiteralIterator
 			)
 			noexcept
 		->	bool
@@ -144,9 +144,9 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator ==
-		)	(	BitClauseIterator
+		)	(	BitLiteralIterator
 					i_vIterator
-			,	BitClauseSentinel
+			,	BitLiteralSentinel
 			)
 			noexcept
 		->	bool
@@ -164,7 +164,7 @@ export namespace
 				i_vClause
 		)
 		noexcept
-	->	BitClauseIterator
+	->	BitLiteralIterator
 	{	return
 		{	i_vClause
 		};
@@ -176,7 +176,7 @@ export namespace
 	)	(	BitClause
 		)
 		noexcept
-	->	BitClauseSentinel
+	->	BitLiteralSentinel
 	{	return
 		{};
 	}

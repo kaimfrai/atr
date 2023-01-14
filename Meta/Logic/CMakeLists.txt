@@ -2,7 +2,7 @@ add_module(
 	Logic.hpp
 
 	BitClause.hpp
-	BitClauseIterator.hpp
+	BitLiteralIterator.cpp
 	Optimizer.hpp
 	BitTerm.hpp
 	LiteralBase.hpp

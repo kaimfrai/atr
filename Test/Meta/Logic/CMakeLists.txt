@@ -8,7 +8,7 @@ function(add_logic_test
 endfunction()
 
 
-add_logic_test(static_assert)
+add_logic_test(BitLiteralIterator)
 
 add_subdirectory(Equivalence)
 add_subdirectory(Negation)

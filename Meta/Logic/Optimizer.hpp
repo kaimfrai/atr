@@ -1,7 +1,7 @@
 export module Meta.Logic:Optimizer;
 
 export import :BitClause;
-import :BitClauseIterator;
+import :BitLiteralIterator;
 
 import Meta.Buffer.Static;
 import Meta.Buffer.Dynamic;
