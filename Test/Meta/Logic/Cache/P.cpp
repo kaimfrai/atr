@@ -1,4 +1,4 @@
-export module Test.Meta.Logic.Cache.Literal;
+export module Test.Meta.Logic.Cache.P;
 
 import Test.Meta.Logic.Term;
 
@@ -12,17 +12,4 @@ export
 	TestTerm constexpr inline Q{::Meta::ErasedLiteral<q>};
 	struct r{};
 	TestTerm constexpr inline R{::Meta::ErasedLiteral<r>};
-
-	auto constexpr inline
-		nP
-	=	!P
-	;
-	auto constexpr inline
-		nQ
-	=	!Q
-	;
-	auto constexpr inline
-		nR
-	=	!R
-	;
 }

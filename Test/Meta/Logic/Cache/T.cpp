@@ -1,4 +1,4 @@
-export module Test.Meta.Logic.Cache.Constant;
+export module Test.Meta.Logic.Cache.T;
 
 import Test.Meta.Logic.Term;
 
@@ -7,5 +7,4 @@ import Meta.Logic;
 export
 {
 	TestTerm constexpr inline T{::Meta::ErasedTrue};
-	TestTerm constexpr inline F{::Meta::ErasedFalse};
 }

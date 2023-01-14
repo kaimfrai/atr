@@ -1,8 +1,9 @@
 export module Test.Meta.Logic.Data;
 
 export import Test.Meta.Logic.Term;
-export import Test.Meta.Logic.Cache.Constant;
-export import Test.Meta.Logic.Cache.Literal;
+export import Test.Meta.Logic.Cache.F;
+export import Test.Meta.Logic.Cache.P;
+export import Test.Meta.Logic.Cache.nP;
 export import Test.Meta.Logic.Cache.P_or_Q;
 export import Test.Meta.Logic.Cache.P_or_Q_or_R;
 export import Test.Meta.Logic.Cache.PQ;
@@ -22,3 +23,4 @@ export import Test.Meta.Logic.Cache.PQR_or_nPnQnR;
 export import Test.Meta.Logic.Cache.PQR_or_PnQnR;
 export import Test.Meta.Logic.Cache.PQR_or_PnQnR_or_nPQnR;
 export import Test.Meta.Logic.Cache.PQR_or_PnQnR_or_nPQnR_or_nPnQR;
+export import Test.Meta.Logic.Cache.T;
