@@ -122,7 +122,7 @@ static_assert
 (	(	(nPQnR)
 	or	(PQR)
 	)
-==	(PQR	or	nPQnR)
+==	(PQR_or_nPQnR)
 );
 
 static_assert
