@@ -8,8 +8,3 @@ static_assert
 	(P_or_Q)
 ==	(nP_and_nQ)
 );
-static_assert
-(	not
-	(Q	or	P)
-==	(nP_and_nQ)
-);
