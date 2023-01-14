@@ -1,185 +1,185 @@
 import Meta.Logic.Test.Data;
 
 /// ************************************************************************************************
-///	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
-///	(P_and_nR_or_nP_and_nQ_or_Q_and_R)
+///	(PQ_or_nPR_or_nQnR)
+///	(PnR_or_nPnQ_or_QR)
 /// ************************************************************************************************
 static_assert
 (	(	T
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+==	(PQ_or_nPR_or_nQnR)
 );
 static_assert
 (	(	F
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
 ==	F
 );
 
 static_assert
 (	(	P
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(P_and_Q_or_P_and_nR)
+==	(PQ_or_PnR)
 );
 static_assert
 (	(	nP
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(nP_and_R	or	nP_and_nQ)
+==	(nPR	or	nPnQ)
 );
 
 static_assert
 (	(	Q
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(P_and_Q_or_Q_and_R)
+==	(PQ_or_QR)
 );
 static_assert
 (	(	nQ
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(nP_and_nQ	or	nQ_and_nR)
+==	(nPnQ	or	nQnR)
 );
 
 static_assert
 (	(	R
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(nP_and_R	or	Q_and_R)
+==	(nPR	or	QR)
 );
 static_assert
 (	(	nR
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(P_and_nR	or	nQ_and_nR)
+==	(PnR	or	nQnR)
 );
 
 static_assert
-(	(	(P_and_Q)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+(	(	(PQ)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(P_and_Q)
+==	(PQ)
 );
 static_assert
-(	(	(P_and_Q_and_R)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+(	(	(PQR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(P_and_Q_and_R)
+==	(PQR)
 );
 static_assert
-(	(	(P_and_Q_and_nR)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+(	(	(PQnR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(P_and_Q_and_nR)
+==	(PQnR)
 );
 
 static_assert
-(	(	(P_and_nQ)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+(	(	(PnQ)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(P_and_nQ_and_nR)
+==	(PnQnR)
 );
 static_assert
-(	(	(P_and_nQ_and_R)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+(	(	(PnQR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
 ==	F
 );
 static_assert
-(	(	(P_and_nQ_and_nR)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+(	(	(PnQnR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(P_and_nQ_and_nR)
+==	(PnQnR)
 );
 
 static_assert
-(	(	(P_and_R)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+(	(	(PR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(P_and_Q_and_R)
+==	(PQR)
 );
 static_assert
-(	(	(P_and_nR)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+(	(	(PnR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(P_and_nR)
+==	(PnR)
 );
 
 static_assert
-(	(	(nP_and_Q)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+(	(	(nPQ)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(nP_and_Q_and_R)
+==	(nPQR)
 );
 static_assert
-(	(	(nP_and_Q_and_R)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+(	(	(nPQR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(nP_and_Q_and_R)
+==	(nPQR)
 );
 static_assert
-(	(	(nP_and_Q_and_nR)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+(	(	(nPQnR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
 ==	F
 );
 
 static_assert
-(	(	(nP_and_nQ)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+(	(	(nPnQ)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(nP_and_nQ)
+==	(nPnQ)
 );
 static_assert
-(	(	(nP_and_nQ_and_R)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+(	(	(nPnQR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(nP_and_nQ_and_R)
+==	(nPnQR)
 );
 static_assert
-(	(	(nP_and_nQ_and_nR)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+(	(	(nPnQnR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(nP_and_nQ_and_nR)
-);
-
-static_assert
-(	(	(nP_and_R)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
-	)
-==	(nP_and_R)
-);
-static_assert
-(	(	(nP_and_nR)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
-	)
-==	(nP_and_nQ_and_nR)
+==	(nPnQnR)
 );
 
 static_assert
-(	(	(nQ_and_R)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+(	(	(nPR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(nP_and_nQ_and_R)
+==	(nPR)
 );
 static_assert
-(	(	(nQ_and_nR)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+(	(	(nPnR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(nQ_and_nR)
+==	(nPnQnR)
 );
 
 static_assert
-(	(	(Q_and_R)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+(	(	(nQR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(Q_and_R)
+==	(nPnQR)
 );
 static_assert
-(	(	(Q_and_nR)
-	and	(P_and_Q_or_nP_and_R_or_nQ_and_nR)
+(	(	(nQnR)
+	and	(PQ_or_nPR_or_nQnR)
 	)
-==	(P_and_Q_and_nR)
+==	(nQnR)
+);
+
+static_assert
+(	(	(QR)
+	and	(PQ_or_nPR_or_nQnR)
+	)
+==	(QR)
+);
+static_assert
+(	(	(QnR)
+	and	(PQ_or_nPR_or_nQnR)
+	)
+==	(PQnR)
 );

@@ -33,139 +33,139 @@ static_assert
 (	(	Q
 	and	nP
 	)
-==	(nP_and_Q)
+==	(nPQ)
 );
 static_assert
 (	(	nQ
 	and	nP
 	)
-==	(nP_and_nQ)
+==	(nPnQ)
 );
 
 static_assert
-(	(	(P_and_Q)
+(	(	(PQ)
 	and	nP
 	)
 ==	F
 );
 static_assert
-(	(	(P_and_Q_and_R)
+(	(	(PQR)
 	and	nP
 	)
 ==	F
 );
 static_assert
-(	(	(P_and_Q_and_nR)
-	and	nP
-	)
-==	F
-);
-
-static_assert
-(	(	(P_and_nQ)
-	and	nP
-	)
-==	F
-);
-static_assert
-(	(	(P_and_nQ_and_R)
-	and	nP
-	)
-==	F
-);
-static_assert
-(	(	(P_and_nQ_and_nR)
+(	(	(PQnR)
 	and	nP
 	)
 ==	F
 );
 
 static_assert
-(	(	(P_and_R)
+(	(	(PnQ)
 	and	nP
 	)
 ==	F
 );
 static_assert
-(	(	(P_and_nR)
+(	(	(PnQR)
+	and	nP
+	)
+==	F
+);
+static_assert
+(	(	(PnQnR)
 	and	nP
 	)
 ==	F
 );
 
 static_assert
-(	(	(nP_and_Q)
+(	(	(PR)
 	and	nP
 	)
-==	(nP_and_Q)
+==	F
 );
 static_assert
-(	(	(nP_and_Q_and_R)
+(	(	(PnR)
 	and	nP
 	)
-==	(nP_and_Q_and_R)
-);
-static_assert
-(	(	(nP_and_Q_and_nR)
-	and	nP
-	)
-==	(nP_and_Q_and_nR)
+==	F
 );
 
 static_assert
-(	(	(nP_and_nQ)
+(	(	(nPQ)
 	and	nP
 	)
-==	(nP_and_nQ)
+==	(nPQ)
 );
 static_assert
-(	(	(nP_and_nQ_and_R)
+(	(	(nPQR)
 	and	nP
 	)
-==	(nP_and_nQ_and_R)
+==	(nPQR)
 );
 static_assert
-(	(	(nP_and_nQ_and_nR)
+(	(	(nPQnR)
 	and	nP
 	)
-==	(nP_and_nQ_and_nR)
-);
-
-static_assert
-(	(	(nP_and_R)
-	and	nP
-	)
-==	(nP_and_R)
-);
-static_assert
-(	(	(nP_and_nR)
-	and	nP
-	)
-==	(nP_and_nR)
+==	(nPQnR)
 );
 
 static_assert
-(	(	(Q_and_R)
+(	(	(nPnQ)
 	and	nP
 	)
-==	(nP_and_Q_and_R)
+==	(nPnQ)
 );
 static_assert
-(	(	(Q_and_nR)
+(	(	(nPnQR)
 	and	nP
 	)
-==	(nP_and_Q_and_nR)
+==	(nPnQR)
+);
+static_assert
+(	(	(nPnQnR)
+	and	nP
+	)
+==	(nPnQnR)
 );
 
 static_assert
-(	(	(nQ_and_R)
+(	(	(nPR)
 	and	nP
 	)
-==	(nP_and_nQ_and_R)
+==	(nPR)
 );
 static_assert
-(	(	(nQ_and_nR)
+(	(	(nPnR)
 	and	nP
 	)
-==	(nP_and_nQ_and_nR)
+==	(nPnR)
+);
+
+static_assert
+(	(	(QR)
+	and	nP
+	)
+==	(nPQR)
+);
+static_assert
+(	(	(QnR)
+	and	nP
+	)
+==	(nPQnR)
+);
+
+static_assert
+(	(	(nQR)
+	and	nP
+	)
+==	(nPnQR)
+);
+static_assert
+(	(	(nQnR)
+	and	nP
+	)
+==	(nPnQnR)
 );

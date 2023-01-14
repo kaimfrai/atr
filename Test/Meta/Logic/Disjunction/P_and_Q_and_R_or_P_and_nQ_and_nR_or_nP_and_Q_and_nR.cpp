@@ -1,183 +1,183 @@
 import Meta.Logic.Test.Data;
 
 /// ************************************************************************************************
-///	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+///	(PQR_or_PnQnR_or_nPQnR)
 /// ************************************************************************************************
 static_assert
 (	(	T
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
 ==	T
 );
 static_assert
 (	(	F
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+==	(PQR_or_PnQnR_or_nPQnR)
 );
 
 static_assert
 (	(	P
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(P_or_Q_and_nR)
+==	(P_or_QnR)
 );
 static_assert
 (	(	nP
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(nP_or_Q_and_R	or	nQ_and_nR)
+==	(nP_or_QR	or	nQnR)
 );
 
 static_assert
 (	(	Q
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(P_and_nR	or	Q)
+==	(PnR	or	Q)
 );
 static_assert
 (	(	nQ
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(P_and_R	or	nP_and_nR	or	nQ)
+==	(PR	or	nPnR	or	nQ)
 );
 
 static_assert
 (	(	R
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(P_and_nQ	or	nP_and_Q_or_R)
+==	(PnQ	or	nPQ_or_R)
 );
 static_assert
 (	(	nR
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(P_and_Q_or_nR)
+==	(PQ_or_nR)
 );
 
 static_assert
-(	(	(P_and_Q)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+(	(	(PQ)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(P_and_Q_or_P_and_nR	or	Q_and_nR)
+==	(PQ_or_PnR	or	QnR)
 );
 static_assert
-(	(	(P_and_Q_and_R)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+(	(	(PQR)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+==	(PQR_or_PnQnR_or_nPQnR)
 );
 static_assert
-(	(	(P_and_Q_and_nR)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+(	(	(PQnR)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(P_and_Q_or_P_and_nR	or	Q_and_nR)
-);
-
-static_assert
-(	(	(P_and_R)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
-	)
-==	(P_and_nQ	or	P_and_R	or	nP_and_Q_and_nR)
-);
-static_assert
-(	(	(P_and_nR)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
-	)
-==	(P_and_Q_or_P_and_nR	or	Q_and_nR)
+==	(PQ_or_PnR	or	QnR)
 );
 
 static_assert
-(	(	(P_and_nQ)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+(	(	(PR)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(P_and_nQ	or	P_and_R	or	nP_and_Q_and_nR)
+==	(PnQ	or	PR	or	nPQnR)
 );
 static_assert
-(	(	(P_and_nQ_and_R)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+(	(	(PnR)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(P_and_nQ	or	P_and_R	or	nP_and_Q_and_nR)
-);
-static_assert
-(	(	(P_and_nQ_and_nR)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
-	)
-==	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+==	(PQ_or_PnR	or	QnR)
 );
 
 static_assert
-(	(	(nP_and_Q)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+(	(	(PnQ)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(nP_and_Q_or_P_and_nQ_and_nR	or	Q_and_R)
+==	(PnQ	or	PR	or	nPQnR)
 );
 static_assert
-(	(	(nP_and_Q_and_R)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+(	(	(PnQR)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(P_and_nQ_and_nR	or	nP_and_Q_or_Q_and_R)
+==	(PnQ	or	PR	or	nPQnR)
 );
 static_assert
-(	(	(nP_and_Q_and_nR)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+(	(	(PnQnR)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
-);
-
-static_assert
-(	(	(nP_and_nQ)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
-	)
-==	(P_and_Q_and_R_or_nP_and_nQ_or_nP_and_nR_or_nQ_and_nR)
-);
-static_assert
-(	(	(nP_and_nQ_and_R)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
-	)
-==	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR_or_nP_and_nQ_and_R)
-);
-static_assert
-(	(	(nP_and_nQ_and_nR)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
-	)
-==	(P_and_Q_and_R	or	nP_and_nR	or	nQ_and_nR)
+==	(PQR_or_PnQnR_or_nPQnR)
 );
 
 static_assert
-(	(	(nP_and_R)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+(	(	(nPQ)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(P_and_nQ_and_nR	or	nP_and_Q_or_nP_and_R	or	Q_and_R)
+==	(nPQ_or_PnQnR	or	QR)
 );
 static_assert
-(	(	(nP_and_nR)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+(	(	(nPQR)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(P_and_Q_and_R	or	nP_and_nR	or	nQ_and_nR)
+==	(PnQnR	or	nPQ_or_QR)
+);
+static_assert
+(	(	(nPQnR)
+	or	(PQR_or_PnQnR_or_nPQnR)
+	)
+==	(PQR_or_PnQnR_or_nPQnR)
 );
 
 static_assert
-(	(	(Q_and_R)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+(	(	(nPnQ)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(P_and_nQ_and_nR	or	nP_and_Q_or_Q_and_R)
+==	(PQR_or_nPnQ_or_nPnR_or_nQnR)
 );
 static_assert
-(	(	(Q_and_nR)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+(	(	(nPnQR)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(P_and_Q_or_P_and_nR	or	Q_and_nR)
+==	(PQR_or_PnQnR_or_nPQnR_or_nPnQR)
 );
 static_assert
-(	(	(nQ_and_R)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+(	(	(nPnQnR)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(P_and_nQ	or	P_and_R	or	nP_and_Q_and_nR	or	nQ_and_R)
+==	(PQR	or	nPnR	or	nQnR)
+);
+
+static_assert
+(	(	(nPR)
+	or	(PQR_or_PnQnR_or_nPQnR)
+	)
+==	(PnQnR	or	nPQ_or_nPR	or	QR)
 );
 static_assert
-(	(	(nQ_and_nR)
-	or	(P_and_Q_and_R_or_P_and_nQ_and_nR_or_nP_and_Q_and_nR)
+(	(	(nPnR)
+	or	(PQR_or_PnQnR_or_nPQnR)
 	)
-==	(P_and_Q_and_R	or	nP_and_nR	or	nQ_and_nR)
+==	(PQR	or	nPnR	or	nQnR)
+);
+
+static_assert
+(	(	(QR)
+	or	(PQR_or_PnQnR_or_nPQnR)
+	)
+==	(PnQnR	or	nPQ_or_QR)
+);
+static_assert
+(	(	(QnR)
+	or	(PQR_or_PnQnR_or_nPQnR)
+	)
+==	(PQ_or_PnR	or	QnR)
+);
+static_assert
+(	(	(nQR)
+	or	(PQR_or_PnQnR_or_nPQnR)
+	)
+==	(PnQ	or	PR	or	nPQnR	or	nQR)
+);
+static_assert
+(	(	(nQnR)
+	or	(PQR_or_PnQnR_or_nPQnR)
+	)
+==	(PQR	or	nPnR	or	nQnR)
 );
