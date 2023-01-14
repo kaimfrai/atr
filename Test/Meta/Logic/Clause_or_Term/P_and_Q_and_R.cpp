@@ -4,6 +4,58 @@ import Meta.Logic.Test.Data;
 ///	(P_and_Q_and_R)
 /// ************************************************************************************************
 static_assert
+(	(	T
+	and	(P_and_Q_and_R)
+	)
+==	(P_and_Q_and_R)
+);
+static_assert
+(	(	F
+	and	(P_and_Q_and_R)
+	)
+==	F
+);
+
+static_assert
+(	(	P
+	or	(P_and_Q_and_R)
+	)
+==	P
+);
+static_assert
+(	(	nP
+	or	(P_and_Q_and_R)
+	)
+==	(nP_or_Q_and_R)
+);
+
+static_assert
+(	(	Q
+	or	(P_and_Q_and_R)
+	)
+==	Q
+);
+static_assert
+(	(	nQ
+	or	(P_and_Q_and_R)
+	)
+==	(P_and_R	or	nQ)
+);
+
+static_assert
+(	(	R
+	or	(P_and_Q_and_R)
+	)
+==	R
+);
+static_assert
+(	(	nR
+	or	(P_and_Q_and_R)
+	)
+==	(P_and_Q_or_nR)
+);
+
+static_assert
 (	(	(P_and_Q)
 	or	(P_and_Q_and_R)
 	)
