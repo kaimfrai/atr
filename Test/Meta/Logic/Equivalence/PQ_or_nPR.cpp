@@ -4,10 +4,10 @@ import Test.Meta.Logic.Data;
 ///	(PQ_or_nPR)
 ///	********************************************************
 static_assert
-(	(PQ_or_nPR)
+(	(PQ or nPR)
 ==	(PQ_or_nPR)
 );
 static_assert
-(	(PQ_or_nPR)
-==	(nPR	or	PQ)
+(	(nPR or PQ)
+==	PQ_or_nPR
 );

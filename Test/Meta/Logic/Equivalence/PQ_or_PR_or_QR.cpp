@@ -4,28 +4,28 @@ import Test.Meta.Logic.Data;
 ///	(PQ_or_PR_or_QR)
 ///	********************************************************
 static_assert
-(	(PQ_or_PR_or_QR)
-==	(PQ_or_PR_or_QR)
+(	(PQ or PR or QR)
+==	PQ_or_PR_or_QR
 );
 static_assert
-(	(PQ_or_PR_or_QR)
-==	(PQ_or_QR	or	PR)
-);
-
-static_assert
-(	(PQ_or_PR_or_QR)
-==	(PR	or	PQ_or_QR)
-);
-static_assert
-(	(PQ_or_PR_or_QR)
-==	(PR	or	QR	or	PQ)
+(	(PQ or QR or PR)
+==	PQ_or_PR_or_QR
 );
 
 static_assert
-(	(PQ_or_PR_or_QR)
-==	(QR	or	PQ_or_PR)
+(	(PR or PQ or QR)
+==	PQ_or_PR_or_QR
 );
 static_assert
-(	(PQ_or_PR_or_QR)
-==	(QR	or	PR	or	PQ)
+(	(PR or QR or PQ)
+==	PQ_or_PR_or_QR
+);
+
+static_assert
+(	(QR or PQ or PR)
+==	PQ_or_PR_or_QR
+);
+static_assert
+(	(QR or PR or PQ)
+==	PQ_or_PR_or_QR
 );

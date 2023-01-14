@@ -5,28 +5,28 @@ import Test.Meta.Logic.Data;
 ///	(PnR_or_nPnQ_or_QR)
 ///	********************************************************
 static_assert
-(	(PQ_or_nPR_or_nQnR)
-==	(PnR_or_nPnQ_or_QR)
+(	(PnR or nPnQ or QR)
+==	PQ_or_nPR_or_nQnR
 );
 static_assert
-(	(PQ_or_nPR_or_nQnR)
-==	(PnR	or	QR	or	nPnQ)
-);
-
-static_assert
-(	(PQ_or_nPR_or_nQnR)
-==	(nPnQ	or	PnR	or	QR)
-);
-static_assert
-(	(PQ_or_nPR_or_nQnR)
-==	(nPnQ	or	QR	or	PnR)
+(	(PnR or QR or nPnQ)
+==	PQ_or_nPR_or_nQnR
 );
 
 static_assert
-(	(PQ_or_nPR_or_nQnR)
-==	(QR	or	PnR_or_nPnQ)
+(	(nPnQ or PnR or QR)
+==	PQ_or_nPR_or_nQnR
 );
 static_assert
-(	(PQ_or_nPR_or_nQnR)
-==	(QR	or	nPnQ	or	PnR)
+(	(nPnQ or QR or PnR)
+==	PQ_or_nPR_or_nQnR
+);
+
+static_assert
+(	(QR or PnR_or_nPnQ)
+==	PQ_or_nPR_or_nQnR
+);
+static_assert
+(	(QR or nPnQ or PnR)
+==	PQ_or_nPR_or_nQnR
 );
