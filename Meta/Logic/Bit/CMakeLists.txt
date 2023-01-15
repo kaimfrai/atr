@@ -1,7 +1,10 @@
 add_single_file_modules(
 	BinaryFunction.cpp
+	Clause.cpp
 	Conjunction.cpp
 	Disjunction.cpp
 	Equivalence.cpp
 	Evaluate.cpp
+	LiteralIterator.cpp
+	Term.cpp
 )
