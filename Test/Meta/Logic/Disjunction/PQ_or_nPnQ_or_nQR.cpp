@@ -53,7 +53,7 @@ static_assert
 (	(	nR
 	or	(PQ_or_nPnQ_or_nQR)
 	)
-==	(P_or_nQ	or	nR)
+==	(P_or_nQ_or_nR)
 );
 
 static_assert
