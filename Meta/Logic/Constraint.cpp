@@ -1,7 +1,7 @@
-export module Meta.Logic:Constraint;
+export module Meta.Logic.Constraint;
 
-export import :LiteralBase;
-export import :Term;
+export import Meta.Logic.LiteralBase;
+export import Meta.Logic.Term;
 
 import Meta.Size;
 

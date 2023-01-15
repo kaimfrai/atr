@@ -1,7 +1,7 @@
-export module Meta.Logic:Term;
+export module Meta.Logic.Term;
 
-export import :BitTerm;
-export import :LiteralBase;
+export import Meta.Logic.BitTerm;
+export import Meta.Logic.LiteralBase;
 
 import Meta.Size;
 import Meta.Buffer.Static;

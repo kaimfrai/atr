@@ -1,8 +1,8 @@
-export module Meta.Logic:BitTerm;
+export module Meta.Logic.BitTerm;
 
-export import :BitClause;
-export import :BitLiteralIterator;
-import :Optimizer;
+export import Meta.Logic.BitClause;
+export import Meta.Logic.BitLiteralIterator;
+import Meta.Logic.Optimizer;
 
 import Meta.Size;
 import Meta.Bit.Index;

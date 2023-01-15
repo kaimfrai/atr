@@ -1,4 +1,4 @@
-export module Meta.Logic:BitClause;
+export module Meta.Logic.BitClause;
 
 import Meta.Size;
 import Meta.Memory.Size;

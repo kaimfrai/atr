@@ -1,11 +1,11 @@
-add_module(
-	Logic.hpp
+add_single_file_modules(
+	Logic.cpp
 
-	BitClause.hpp
+	BitClause.cpp
 	BitLiteralIterator.cpp
-	Optimizer.hpp
-	BitTerm.hpp
-	LiteralBase.hpp
-	Term.hpp
-	Constraint.hpp
+	Optimizer.cpp
+	BitTerm.cpp
+	LiteralBase.cpp
+	Term.cpp
+	Constraint.cpp
 )

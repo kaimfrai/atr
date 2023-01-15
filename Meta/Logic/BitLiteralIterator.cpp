@@ -1,6 +1,6 @@
-export module Meta.Logic:BitLiteralIterator;
+export module Meta.Logic.BitLiteralIterator;
 
-export import :BitClause;
+export import Meta.Logic.BitClause;
 
 import Meta.Bit.Field.Arithmetic;
 import Meta.Bit.Field.Compare;
