@@ -2,6 +2,7 @@ export module Meta.Logic.Constraint;
 
 export import Meta.Logic.LiteralBase;
 export import Meta.Logic.Term;
+export import Meta.Logic.ErasedTerm;
 
 import Meta.Size;
 

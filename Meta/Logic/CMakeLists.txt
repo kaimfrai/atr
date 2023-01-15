@@ -8,4 +8,7 @@ add_single_file_modules(
 	LiteralBase.cpp
 	Term.cpp
 	Constraint.cpp
+	ErasedTerm.cpp
 )
+
+add_subdirectory(Bit)
