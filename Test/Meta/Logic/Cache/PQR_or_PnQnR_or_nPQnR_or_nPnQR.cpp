@@ -1,18 +1,18 @@
-export module Test.Meta.Logic.Cache.PQR_or_PnQnR_or_nPQnR_or_nPnQR;
+export module Test.Meta.Logic.Cache.PQR_PnQnR_nPQnR_nPnQR;
 
 export import Test.Meta.Logic.Cache.PQR;
-export import Test.Meta.Logic.Cache.PQR_or_PnQnR_or_nPQnR;
+export import Test.Meta.Logic.Cache.PQR_PnQnR_nPQnR;
 
 export
 {
 	DeduceTerm
-	<	PQR_or_PnQnR_or_nPQnR or nPnQR
+	<	PQR_PnQnR_nPQnR or nPnQR
 	>	const extern
-		PQR_or_PnQnR_or_nPQnR_or_nPnQR
+		PQR_PnQnR_nPQnR_nPnQR
 	;
 	DeduceTerm
-	<	PQnR_or_PnQR_or_nPQR or nPnQnR
+	<	PQnR_PnQR_nPQR or nPnQnR
 	>	const extern
-		PQnR_or_PnQR_or_nPQR_or_nPnQnR
+		PQnR_PnQR_nPQR_nPnQnR
 	;
 }

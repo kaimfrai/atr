@@ -1,10 +1,10 @@
-import Test.Meta.Logic.Cache.PQ_or_nPnQ;
+import Test.Meta.Logic.Cache.PQ_nPnQ;
 
 ///	********************************************************
-///	PQ_or_nPnQ
+///	PQ_nPnQ
 ///	********************************************************
 static_assert
 (	not
-	PQ_or_nPnQ
-==	PnQ_or_nPQ
+	PQ_nPnQ
+==	PnQ_nPQ
 );

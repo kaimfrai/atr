@@ -1,10 +1,10 @@
-import Test.Meta.Logic.Cache.PQ_or_PR_or_QR;
+import Test.Meta.Logic.Cache.PQ_PR_QR;
 
 ///	********************************************************
-///	PQ_or_PR_or_QR
+///	PQ_PR_QR
 ///	********************************************************
 static_assert
 (	not
-	PQ_or_PR_or_QR
-==	nPnQ_or_nPnR_or_nQnR
+	PQ_PR_QR
+==	nPnQ_nPnR_nQnR
 );

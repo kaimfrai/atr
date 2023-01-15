@@ -4,8 +4,8 @@ import Test.Meta.Logic.Cache.nP;
 import Test.Meta.Logic.Cache.PQ;
 import Test.Meta.Logic.Cache.PQR;
 import Test.Meta.Logic.Cache.T;
-import Test.Meta.Logic.Cache.P_or_Q;
-import Test.Meta.Logic.Cache.PQ_or_R;
+import Test.Meta.Logic.Cache.P_Q;
+import Test.Meta.Logic.Cache.PQ_R;
 
 ///	********************************************************
 ///	nP
@@ -40,64 +40,64 @@ static_assert
 (	(	Q
 	or	nP
 	)
-==	nP_or_Q
+==	nP_Q
 );
 static_assert
 (	(	nQ
 	or	nP
 	)
-==	nP_or_nQ
+==	nP_nQ
 );
 
 static_assert
 (	(	PQ
 	or	nP
 	)
-==	nP_or_Q
+==	nP_Q
 );
 static_assert
 (	(	PQR
 	or	nP
 	)
-==	nP_or_QR
+==	nP_QR
 );
 static_assert
 (	(	PQnR
 	or	nP
 	)
-==	nP_or_QnR
+==	nP_QnR
 );
 
 static_assert
 (	(	PnQ
 	or	nP
 	)
-==	nP_or_nQ
+==	nP_nQ
 );
 static_assert
 (	(	PnQR
 	or	nP
 	)
-==	nP_or_nQR
+==	nP_nQR
 );
 static_assert
 (	(	PnQnR
 	or	nP
 	)
-==	nP_or_nQnR
+==	nP_nQnR
 );
 
 static_assert
 (	(	PR
 	or	nP
 	)
-==	nP_or_R
+==	nP_R
 );
 static_assert
 (	(	PnR
 	or	nP
 	)
-==	nP_or_nR
+==	nP_nR
 );
 
 static_assert
@@ -155,24 +155,24 @@ static_assert
 (	(	QR
 	or	nP
 	)
-==	nP_or_QR
+==	nP_QR
 );
 static_assert
 (	(	QnR
 	or	nP
 	)
-==	nP_or_QnR
+==	nP_QnR
 );
 
 static_assert
 (	(	nQR
 	or	nP
 	)
-==	nP_or_nQR
+==	nP_nQR
 );
 static_assert
 (	(	nQnR
 	or	nP
 	)
-==	nP_or_nQnR
+==	nP_nQnR
 );

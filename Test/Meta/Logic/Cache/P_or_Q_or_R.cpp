@@ -1,52 +1,52 @@
-export module Test.Meta.Logic.Cache.P_or_Q_or_R;
+export module Test.Meta.Logic.Cache.P_Q_R;
 
 export import Test.Meta.Logic.Cache.P;
 export import Test.Meta.Logic.Cache.nP;
-export import Test.Meta.Logic.Cache.P_or_Q;
+export import Test.Meta.Logic.Cache.P_Q;
 
 export
 {
 	DeduceTerm
-	<	P_or_Q or R
+	<	P_Q or R
 	>	const extern
-		P_or_Q_or_R
+		P_Q_R
 	;
 	DeduceTerm
-	<	P_or_Q or nR
+	<	P_Q or nR
 	>	const extern
-		P_or_Q_or_nR
-	;
-
-	DeduceTerm
-	<	P_or_nQ or R
-	>	const extern
-		P_or_nQ_or_R
-	;
-	DeduceTerm
-	<	P_or_nQ or nR
-	>	const extern
-		P_or_nQ_or_nR
+		P_Q_nR
 	;
 
 	DeduceTerm
-	<	nP_or_Q or R
+	<	P_nQ or R
 	>	const extern
-		nP_or_Q_or_R
+		P_nQ_R
 	;
 	DeduceTerm
-	<	nP_or_Q or nR
+	<	P_nQ or nR
 	>	const extern
-		nP_or_Q_or_nR
+		P_nQ_nR
 	;
 
 	DeduceTerm
-	<	nP_or_nQ or R
+	<	nP_Q or R
 	>	const extern
-		nP_or_nQ_or_R
+		nP_Q_R
 	;
 	DeduceTerm
-	<	nP_or_nQ or nR
+	<	nP_Q or nR
 	>	const extern
-		nP_or_nQ_or_nR
+		nP_Q_nR
+	;
+
+	DeduceTerm
+	<	nP_nQ or R
+	>	const extern
+		nP_nQ_R
+	;
+	DeduceTerm
+	<	nP_nQ or nR
+	>	const extern
+		nP_nQ_nR
 	;
 }

@@ -1,5 +1,5 @@
 import Test.Meta.Logic.Cache.PQR;
-import Test.Meta.Logic.Cache.P_or_Q_or_R;
+import Test.Meta.Logic.Cache.P_Q_R;
 
 ///	********************************************************
 ///	PQR
@@ -7,5 +7,5 @@ import Test.Meta.Logic.Cache.P_or_Q_or_R;
 static_assert
 (	not
 	PQR
-==	nP_or_nQ_or_nR
+==	nP_nQ_nR
 );

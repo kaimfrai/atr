@@ -4,193 +4,193 @@ import Test.Meta.Logic.Cache.nP;
 import Test.Meta.Logic.Cache.PQ;
 import Test.Meta.Logic.Cache.PQR;
 import Test.Meta.Logic.Cache.T;
-import Test.Meta.Logic.Cache.P_or_Q;
-import Test.Meta.Logic.Cache.PQ_or_R;
-import Test.Meta.Logic.Cache.PQ_or_nPR;
-import Test.Meta.Logic.Cache.P_or_Q_or_R;
-import Test.Meta.Logic.Cache.PQ_or_PR_or_nPnQ;
-import Test.Meta.Logic.Cache.PQ_or_nPR_or_nQnR;
+import Test.Meta.Logic.Cache.P_Q;
+import Test.Meta.Logic.Cache.PQ_R;
+import Test.Meta.Logic.Cache.PQ_nPR;
+import Test.Meta.Logic.Cache.P_Q_R;
+import Test.Meta.Logic.Cache.PQ_PR_nPnQ;
+import Test.Meta.Logic.Cache.PQ_nPR_nQnR;
 
 ///	********************************************************
-///	PQ_or_nPR
+///	PQ_nPR
 ///	********************************************************
 static_assert
 (	(	T
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
 ==	T
 );
 static_assert
 (	(	F
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	PQ_or_nPR
+==	PQ_nPR
 );
 
 static_assert
 (	(	P
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	P_or_R
+==	P_R
 );
 static_assert
 (	(	nP
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	nP_or_Q
+==	nP_Q
 );
 
 static_assert
 (	(	Q
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	nPR_or_Q
+==	nPR_Q
 );
 static_assert
 (	(	nQ
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	P_or_nQ_or_R
+==	P_nQ_R
 );
 
 static_assert
 (	(	R
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	PQ_or_R
+==	PQ_R
 );
 static_assert
 (	(	nR
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	nP_or_Q_or_nR
+==	nP_Q_nR
 );
 
 static_assert
 (	(	PQ
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	PQ_or_nPR
+==	PQ_nPR
 );
 static_assert
 (	(	PQR
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	PQ_or_nPR
+==	PQ_nPR
 );
 static_assert
 (	(	PQnR
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	PQ_or_nPR
+==	PQ_nPR
 );
 
 static_assert
 (	(	PnQ
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	P_or_R
+==	P_R
 );
 
 static_assert
 (	(	PnQR
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	PQ_or_R
+==	PQ_R
 );
 static_assert
 (	(	PnQnR
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	PQ_or_PnR_or_nPR
+==	PQ_PnR_nPR
 );
 
 static_assert
 (	(	PR
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	PQ_or_R
+==	PQ_R
 );
 static_assert
 (	(	PnR
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	PQ_or_PnR_or_nPR
+==	PQ_PnR_nPR
 );
 
 static_assert
 (	(	nPQ
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	nPR_or_Q
+==	nPR_Q
 );
 static_assert
 (	(	nPQR
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	PQ_or_nPR
+==	PQ_nPR
 );
 static_assert
 (	(	nPQnR
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	nPR_or_Q
+==	nPR_Q
 );
 
 static_assert
 (	(	nPnQ
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	PQ_or_nPnQ_or_nPR
+==	PQ_nPnQ_nPR
 );
 static_assert
 (	(	nPnQR
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	PQ_or_nPR
+==	PQ_nPR
 );
 static_assert
 (	(	nPnQnR
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	PQ_or_nPnQ_or_nPR
+==	PQ_nPnQ_nPR
 );
 
 static_assert
 (	(	nPR
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	PQ_or_nPR
+==	PQ_nPR
 );
 static_assert
 (	(	nPnR
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	nP_or_Q
+==	nP_Q
 );
 
 static_assert
 (	(	QR
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	PQ_or_nPR
+==	PQ_nPR
 );
 static_assert
 (	(	QnR
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	nPR_or_Q
+==	nPR_Q
 );
 
 static_assert
 (	(	nQR
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	PQ_or_R
+==	PQ_R
 );
 static_assert
 (	(	nQnR
-	or	PQ_or_nPR
+	or	PQ_nPR
 	)
-==	PQ_or_nPR_or_nQnR
+==	PQ_nPR_nQnR
 );

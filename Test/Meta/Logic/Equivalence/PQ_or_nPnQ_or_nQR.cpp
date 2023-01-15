@@ -1,32 +1,32 @@
-import Test.Meta.Logic.Cache.PQ_or_PR_or_nPnQ;
+import Test.Meta.Logic.Cache.PQ_PR_nPnQ;
 
 ///	********************************************************
-///	PQ_or_PR_or_nPnQ
-///	PQ_or_nPnQ_or_nQR
+///	PQ_PR_nPnQ
+///	PQ_nPnQ_nQR
 ///	********************************************************
 static_assert
 (	(PQ or nPnQ or nQR)
-==	PQ_or_PR_or_nPnQ
+==	PQ_PR_nPnQ
 );
 static_assert
 (	(PQ or nQR or nPnQ)
-==	PQ_or_PR_or_nPnQ
+==	PQ_PR_nPnQ
 );
 
 static_assert
 (	(nPnQ or PQ or nQR)
-==	PQ_or_PR_or_nPnQ
+==	PQ_PR_nPnQ
 );
 static_assert
 (	(nPnQ or nQR or PQ)
-==	PQ_or_PR_or_nPnQ
+==	PQ_PR_nPnQ
 );
 
 static_assert
 (	(nQR or PQ or nPnQ)
-==	PQ_or_PR_or_nPnQ
+==	PQ_PR_nPnQ
 );
 static_assert
 (	(nQR or nPnQ or PQ)
-==	PQ_or_PR_or_nPnQ
+==	PQ_PR_nPnQ
 );

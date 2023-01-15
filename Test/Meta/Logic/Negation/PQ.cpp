@@ -1,5 +1,5 @@
 import Test.Meta.Logic.Cache.PQ;
-import Test.Meta.Logic.Cache.P_or_Q;
+import Test.Meta.Logic.Cache.P_Q;
 
 ///	********************************************************
 ///	PQ
@@ -7,5 +7,5 @@ import Test.Meta.Logic.Cache.P_or_Q;
 static_assert
 (	not
 	PQ
-==	nP_or_nQ
+==	nP_nQ
 );

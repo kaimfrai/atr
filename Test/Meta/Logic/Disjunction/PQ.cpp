@@ -4,12 +4,12 @@ import Test.Meta.Logic.Cache.nP;
 import Test.Meta.Logic.Cache.PQ;
 import Test.Meta.Logic.Cache.PQR;
 import Test.Meta.Logic.Cache.T;
-import Test.Meta.Logic.Cache.P_or_Q;
-import Test.Meta.Logic.Cache.PQ_or_PR;
-import Test.Meta.Logic.Cache.PQ_or_R;
-import Test.Meta.Logic.Cache.PQR_or_nPnQ;
-import Test.Meta.Logic.Cache.PQ_or_nPnQ;
-import Test.Meta.Logic.Cache.PQ_or_nPR;
+import Test.Meta.Logic.Cache.P_Q;
+import Test.Meta.Logic.Cache.PQ_PR;
+import Test.Meta.Logic.Cache.PQ_R;
+import Test.Meta.Logic.Cache.PQR_nPnQ;
+import Test.Meta.Logic.Cache.PQ_nPnQ;
+import Test.Meta.Logic.Cache.PQ_nPR;
 
 ///	********************************************************
 ///	PQ
@@ -37,7 +37,7 @@ static_assert
 (	(	nP
 	or	PQ
 	)
-==	nP_or_Q
+==	nP_Q
 );
 
 static_assert
@@ -50,20 +50,20 @@ static_assert
 (	(	nQ
 	or	PQ
 	)
-==	P_or_nQ
+==	P_nQ
 );
 
 static_assert
 (	(	R
 	or	PQ
 	)
-==	PQ_or_R
+==	PQ_R
 );
 static_assert
 (	(	nR
 	or	PQ
 	)
-==	PQ_or_nR
+==	PQ_nR
 );
 
 static_assert
@@ -95,26 +95,26 @@ static_assert
 (	(	PnQR
 	or	PQ
 	)
-==	PQ_or_PR
+==	PQ_PR
 );
 static_assert
 (	(	PnQnR
 	or	PQ
 	)
-==	PQ_or_PnR
+==	PQ_PnR
 );
 
 static_assert
 (	(	PR
 	or	PQ
 	)
-==	PQ_or_PR
+==	PQ_PR
 );
 static_assert
 (	(	PnR
 	or	PQ
 	)
-==	PQ_or_PnR
+==	PQ_PnR
 );
 
 static_assert
@@ -127,69 +127,69 @@ static_assert
 (	(	nPQR
 	or	PQ
 	)
-==	PQ_or_QR
+==	PQ_QR
 );
 static_assert
 (	(	nPQnR
 	or	PQ
 	)
-==	PQ_or_QnR
+==	PQ_QnR
 );
 
 static_assert
 (	(	nPnQ
 	or	PQ
 	)
-==	PQ_or_nPnQ
+==	PQ_nPnQ
 );
 static_assert
 (	(	nPnQR
 	or	PQ
 	)
-==	PQ_or_nPnQR
+==	PQ_nPnQR
 );
 static_assert
 (	(	nPnQnR
 	or	PQ
 	)
-==	PQ_or_nPnQnR
+==	PQ_nPnQnR
 );
 
 static_assert
 (	(	nPR
 	or	PQ
 	)
-==	PQ_or_nPR
+==	PQ_nPR
 );
 static_assert
 (	(	nPnR
 	or	PQ
 	)
-==	PQ_or_nPnR
+==	PQ_nPnR
 );
 
 static_assert
 (	(	QR
 	or	PQ
 	)
-==	PQ_or_QR
+==	PQ_QR
 );
 static_assert
 (	(	QnR
 	or	PQ
 	)
-==	PQ_or_QnR
+==	PQ_QnR
 );
 
 static_assert
 (	(	nQR
 	or	PQ
 	)
-==	PQ_or_nQR
+==	PQ_nQR
 );
 static_assert
 (	(	nQnR
 	or	PQ
 	)
-==	PQ_or_nQnR
+==	PQ_nQnR
 );

@@ -1,4 +1,4 @@
-export module Test.Meta.Logic.Cache.PQ_or_nPnQ;
+export module Test.Meta.Logic.Cache.PQ_nPnQ;
 
 export import Test.Meta.Logic.Cache.PQ;
 
@@ -7,23 +7,23 @@ export
 	DeduceTerm
 	<	PQ or nPnQ
 	>	const extern
-		PQ_or_nPnQ
+		PQ_nPnQ
 	;
 	DeduceTerm
 	<	PnQ or nPQ
 	>	const extern
-		PnQ_or_nPQ
+		PnQ_nPQ
 	;
 
 	DeduceTerm
 	<	PR or nPnR
 	>	const extern
-		PR_or_nPnR
+		PR_nPnR
 	;
 
 	DeduceTerm
 	<	PnR or nPR
 	>	const extern
-		PnR_or_nPR
+		PnR_nPR
 	;
 }
