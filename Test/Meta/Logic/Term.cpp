@@ -1,12 +1,14 @@
 export module Test.Meta.Logic.Term;
 
-import Meta.Logic;
-import Meta.Logic.Bit.Term;
-import Meta.Logic.ErasedTerm.Conjunction;
-import Meta.Logic.ErasedTerm.Disjunction;
-import Meta.Logic.ErasedTerm.Equivalence;
-import Meta.Logic.ErasedTerm.Negation;
+export import Meta.Logic.ErasedTerm.Conjunction;
+export import Meta.Logic.ErasedTerm.Disjunction;
+export import Meta.Logic.ErasedTerm.Negation;
 
+import Meta.Logic.ErasedTerm;
+import Meta.Logic.Term;
+import Meta.Logic.Bit.Clause;
+//	provide custom Equivalence
+import Meta.Logic.ErasedTerm.Equivalence;
 
 import Std;
 
@@ -14,31 +16,23 @@ export
 {
 	using ::Meta::DeduceTerm;
 
-	template
-		<	::Meta::Logic::Bit::Term
-				t_vLeftTerm
-		,	typename
-			...	t_tpLeftLiteral
-		,	::Meta::Logic::Bit::Term
-				t_vRightTerm
-		,	typename
-			...	t_tpRightLiteral
-		>
 	[[nodiscard]]
 	auto constexpr
 	(	operator ==
-	)	(	::Meta::Term<t_vLeftTerm, t_tpLeftLiteral...>
-				i_vLeft
-		,	::Meta::Term<t_vRightTerm, t_tpRightLiteral...>
-				i_vRight
+	)	(	::Meta::ErasedTerm const
+			&	i_rLeft
+		,	::Meta::ErasedTerm const
+			&	i_rRight
 		)
 		noexcept
 	->	bool
 	{
 		if	(	bool const
 					bEquivalent
-				=	i_vLeft.Erased
-				==	i_vRight.Erased
+				=	::Meta::operator ==
+					(	i_rLeft
+					,	i_rRight
+					)
 			;	not
 				bEquivalent
 			)
@@ -50,10 +44,10 @@ export
 		if	(	bool const
 					bLiteralsPermutation
 			=	::std::is_permutation
-				(	begin(i_vLeft.Erased.Literals)
-				,	end(i_vLeft.Erased.Literals)
-				,	begin(i_vRight.Erased.Literals)
-				,	end(i_vRight.Erased.Literals)
+				(	begin(i_rLeft.Literals)
+				,	end(i_rLeft.Literals)
+				,	begin(i_rRight.Literals)
+				,	end(i_rRight.Literals)
 				)
 			;	not
 				bLiteralsPermutation
@@ -65,8 +59,8 @@ export
 
 		if	(	bool const
 					bEqualClauseCount
-				=	i_vLeft.Erased.ClauseCount()
-				==	i_vRight.Erased.ClauseCount()
+				=	i_rLeft.ClauseCount()
+				==	i_rRight.ClauseCount()
 			;	not
 				bEqualClauseCount
 			)
@@ -77,7 +71,7 @@ export
 
 		auto const
 			vLeftLiteralSum
-		=	i_vLeft.Erased.BitTerm.transform_reduce
+		=	i_rLeft.BitTerm.transform_reduce
 			(	0uz
 			,	::std::plus<>{}
 			,	&Meta::Logic::Bit::Clause::LiteralCount
@@ -86,7 +80,7 @@ export
 
 		auto const
 			vRightLiteralSum
-		=	i_vRight.Erased.BitTerm.transform_reduce
+		=	i_rRight.BitTerm.transform_reduce
 			(	0uz
 			,	::std::plus<>{}
 			,	&Meta::Logic::Bit::Clause::LiteralCount
@@ -97,80 +91,5 @@ export
 			vLeftLiteralSum
 		==	vRightLiteralSum
 		;
-	}
-
-	template
-		<	::Meta::Logic::Bit::Term
-				t_vLeftTerm
-		,	typename
-			...	t_tpLeftLiteral
-		,	::Meta::Logic::Bit::Term
-				t_vRightTerm
-		,	typename
-			...	t_tpRightLiteral
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	operator and
-	)	(	::Meta::Term<t_vLeftTerm, t_tpLeftLiteral...>
-				i_vLeft
-		,	::Meta::Term<t_vRightTerm, t_tpRightLiteral...>
-				i_vRight
-		)
-		noexcept
-	->	DeduceTerm
-		<	i_vLeft.Erased
-		and	i_vRight.Erased
-		>
-	{	return
-		{};
-	}
-
-	template
-		<	::Meta::Logic::Bit::Term
-				t_vLeftTerm
-		,	typename
-			...	t_tpLeftLiteral
-		,	::Meta::Logic::Bit::Term
-				t_vRightTerm
-		,	typename
-			...	t_tpRightLiteral
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	operator or
-	)	(	::Meta::Term<t_vLeftTerm, t_tpLeftLiteral...>
-				i_vLeft
-		,	::Meta::Term<t_vRightTerm, t_tpRightLiteral...>
-				i_vRight
-		)
-		noexcept
-	->	DeduceTerm
-		<	i_vLeft.Erased
-		or	i_vRight.Erased
-		>
-	{	return
-		{};
-	}
-
-	template
-		<	::Meta::Logic::Bit::Term
-				t_vTerm
-		,	typename
-			...	t_tpLiteral
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	operator not
-	)	(	::Meta::Term<t_vTerm, t_tpLiteral...>
-				i_vTerm
-		)
-		noexcept
-	->	DeduceTerm
-		<	not
-			i_vTerm.Erased
-		>
-	{	return
-		{};
 	}
 }
