@@ -33,139 +33,139 @@ static_assert
 (	(	Q
 	and	nP
 	)
-==	(nPQ)
+==	nPQ
 );
 static_assert
 (	(	nQ
 	and	nP
 	)
-==	(nPnQ)
+==	nPnQ
 );
 
 static_assert
-(	(	(PQ)
+(	(	PQ
 	and	nP
 	)
 ==	F
 );
 static_assert
-(	(	(PQR)
+(	(	PQR
 	and	nP
 	)
 ==	F
 );
 static_assert
-(	(	(PQnR)
-	and	nP
-	)
-==	F
-);
-
-static_assert
-(	(	(PnQ)
-	and	nP
-	)
-==	F
-);
-static_assert
-(	(	(PnQR)
-	and	nP
-	)
-==	F
-);
-static_assert
-(	(	(PnQnR)
+(	(	PQnR
 	and	nP
 	)
 ==	F
 );
 
 static_assert
-(	(	(PR)
+(	(	PnQ
 	and	nP
 	)
 ==	F
 );
 static_assert
-(	(	(PnR)
+(	(	PnQR
+	and	nP
+	)
+==	F
+);
+static_assert
+(	(	PnQnR
 	and	nP
 	)
 ==	F
 );
 
 static_assert
-(	(	(nPQ)
+(	(	PR
 	and	nP
 	)
-==	(nPQ)
+==	F
 );
 static_assert
-(	(	(nPQR)
+(	(	PnR
 	and	nP
 	)
-==	(nPQR)
-);
-static_assert
-(	(	(nPQnR)
-	and	nP
-	)
-==	(nPQnR)
+==	F
 );
 
 static_assert
-(	(	(nPnQ)
+(	(	nPQ
 	and	nP
 	)
-==	(nPnQ)
+==	nPQ
 );
 static_assert
-(	(	(nPnQR)
+(	(	nPQR
 	and	nP
 	)
-==	(nPnQR)
+==	nPQR
 );
 static_assert
-(	(	(nPnQnR)
+(	(	nPQnR
 	and	nP
 	)
-==	(nPnQnR)
-);
-
-static_assert
-(	(	(nPR)
-	and	nP
-	)
-==	(nPR)
-);
-static_assert
-(	(	(nPnR)
-	and	nP
-	)
-==	(nPnR)
+==	nPQnR
 );
 
 static_assert
-(	(	(QR)
+(	(	nPnQ
 	and	nP
 	)
-==	(nPQR)
+==	nPnQ
 );
 static_assert
-(	(	(QnR)
+(	(	nPnQR
 	and	nP
 	)
-==	(nPQnR)
+==	nPnQR
+);
+static_assert
+(	(	nPnQnR
+	and	nP
+	)
+==	nPnQnR
 );
 
 static_assert
-(	(	(nQR)
+(	(	nPR
 	and	nP
 	)
-==	(nPnQR)
+==	nPR
 );
 static_assert
-(	(	(nQnR)
+(	(	nPnR
 	and	nP
 	)
-==	(nPnQnR)
+==	nPnR
+);
+
+static_assert
+(	(	QR
+	and	nP
+	)
+==	nPQR
+);
+static_assert
+(	(	QnR
+	and	nP
+	)
+==	nPQnR
+);
+
+static_assert
+(	(	nQR
+	and	nP
+	)
+==	nPnQR
+);
+static_assert
+(	(	nQnR
+	and	nP
+	)
+==	nPnQnR
 );

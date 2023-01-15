@@ -30,14 +30,14 @@ static_assert
 );
 
 static_assert
-(	(	(PQ)
+(	(	PQ
 	or	F
 	)
-==	(PQ)
+==	PQ
 );
 static_assert
-(	(	(PQR)
+(	(	PQR
 	or	F
 	)
-==	(PQR)
+==	PQR
 );

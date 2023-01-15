@@ -1,8 +1,8 @@
 import Test.Meta.Logic.Data;
 
 ///	********************************************************
-///	(PQ_or_PR_or_nPnQ)
-///	(PQ_or_nPnQ_or_nQR)
+///	PQ_or_PR_or_nPnQ
+///	PQ_or_nPnQ_or_nQR
 ///	********************************************************
 static_assert
 (	(PQ or nPnQ or nQR)
