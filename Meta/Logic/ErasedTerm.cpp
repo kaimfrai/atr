@@ -1,23 +1,16 @@
 export module Meta.Logic.ErasedTerm;
 
-export import Meta.Logic.Bit.Term;
-export import Meta.Logic.LiteralBase;
-import Meta.Logic.Bit.BinaryFunction;
-import Meta.Logic.Bit.Conjunction;
-import Meta.Logic.Bit.Disjunction;
-import Meta.Logic.Bit.Equivalence;
-
-import Meta.Size;
-import Meta.Buffer.Static;
 export import Meta.Token;
-import Meta.Functional;
+
+import Meta.Logic.Bit.Term;
+import Meta.Logic.Bit.BinaryFunction;
+
+import Meta.Buffer.Static;
 import Meta.Bit.OneIndexRange;
-import Meta.Bit.Field;
 import Meta.Bit.Field.CountOnes;
-import Meta.Bit.Field.Set;
 import Meta.Bit.Index;
-import Meta.Bit.Index.Arithmetic;
 import Meta.Bit.Index.Compare;
+import Meta.Size;
 
 import Std;
 

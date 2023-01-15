@@ -1,6 +1,7 @@
 export module Test.Meta.Logic.Term;
 
 import Meta.Logic;
+import Meta.Logic.Bit.Term;
 import Meta.Logic.ErasedTerm.Conjunction;
 import Meta.Logic.ErasedTerm.Disjunction;
 import Meta.Logic.ErasedTerm.Equivalence;
