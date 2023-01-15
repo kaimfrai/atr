@@ -2,24 +2,24 @@ add_single_file_modules(
 	F.cpp
 	P.cpp
 	nP.cpp
-	P_or_Q.cpp
-	P_or_Q_or_R.cpp
+	P_Q.cpp
+	P_Q_R.cpp
 	PQ.cpp
-	PQ_or_R.cpp
-	PQ_or_PR.cpp
-	PQ_or_PR_or_nPnQ.cpp
-	PQ_or_PR_or_QR.cpp
-	PQ_or_nPnQ.cpp
-	PQ_or_nPnQ_or_R.cpp
-	PQ_or_nPR.cpp
-	PQ_or_nPR_or_nQnR.cpp
+	PQ_R.cpp
+	PQ_PR.cpp
+	PQ_PR_nPnQ.cpp
+	PQ_PR_QR.cpp
+	PQ_nPnQ.cpp
+	PQ_nPnQ_R.cpp
+	PQ_nPR.cpp
+	PQ_nPR_nQnR.cpp
 	PQR.cpp
-	PQR_or_nPnQ.cpp
-	PQR_or_nPnQ_or_nPnR.cpp
-	PQR_or_nPnQ_or_nPnR_or_nQnR.cpp
-	PQR_or_nPnQnR.cpp
-	PQR_or_PnQnR.cpp
-	PQR_or_PnQnR_or_nPQnR.cpp
-	PQR_or_PnQnR_or_nPQnR_or_nPnQR.cpp
+	PQR_nPnQ.cpp
+	PQR_nPnQ_nPnR.cpp
+	PQR_nPnQ_nPnR_nQnR.cpp
+	PQR_nPnQnR.cpp
+	PQR_PnQnR.cpp
+	PQR_PnQnR_nPQnR.cpp
+	PQR_PnQnR_nPQnR_nPnQR.cpp
 	T.cpp
 )

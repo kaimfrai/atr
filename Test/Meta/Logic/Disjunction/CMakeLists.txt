@@ -29,66 +29,66 @@ add_disjunction_test(
 )
 
 add_disjunction_test(
-	P_or_Q
+	P_Q
 )
 add_disjunction_test(
-	P_or_Q_or_R
-)
-
-add_disjunction_test(
-	PQ_or_PR
-)
-add_disjunction_test(
-	PQ_or_PR_or_nPnQ
-)
-add_disjunction_test(
-	PQ_or_PR_or_QR
+	P_Q_R
 )
 
 add_disjunction_test(
-	PQ_or_nPnQ
+	PQ_PR
 )
 add_disjunction_test(
-	PQ_or_nPnQ_or_R
+	PQ_PR_nPnQ
 )
 add_disjunction_test(
-	PQ_or_nPnQ_or_nQR
-)
-
-add_disjunction_test(
-	PQ_or_nPR
-)
-add_disjunction_test(
-	PQ_or_nPR_or_nQnR
+	PQ_PR_QR
 )
 
 add_disjunction_test(
-	PnR_or_nPnQ_or_QR
+	PQ_nPnQ
+)
+add_disjunction_test(
+	PQ_nPnQ_R
+)
+add_disjunction_test(
+	PQ_nPnQ_nQR
 )
 
 add_disjunction_test(
-	PQ_or_R
+	PQ_nPR
+)
+add_disjunction_test(
+	PQ_nPR_nQnR
 )
 
 add_disjunction_test(
-	PQR_or_PnQnR
-)
-add_disjunction_test(
-	PQR_or_PnQnR_or_nPQnR
-)
-add_disjunction_test(
-	PQR_or_PnQnR_or_nPQnR_or_nPnQR
+	PnR_nPnQ_QR
 )
 
 add_disjunction_test(
-	PQR_or_nPnQ
+	PQ_R
+)
+
+add_disjunction_test(
+	PQR_PnQnR
 )
 add_disjunction_test(
-	PQR_or_nPnQ_or_nPnR
+	PQR_PnQnR_nPQnR
 )
 add_disjunction_test(
-	PQR_or_nPnQ_or_nPnR_or_nQnR
+	PQR_PnQnR_nPQnR_nPnQR
+)
+
+add_disjunction_test(
+	PQR_nPnQ
 )
 add_disjunction_test(
-	PQR_or_nPnQnR
+	PQR_nPnQ_nPnR
+)
+add_disjunction_test(
+	PQR_nPnQ_nPnR_nQnR
+)
+add_disjunction_test(
+	PQR_nPnQnR
 )
