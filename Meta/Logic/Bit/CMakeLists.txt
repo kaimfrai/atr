@@ -6,5 +6,6 @@ add_single_file_modules(
 	Equivalence.cpp
 	Evaluate.cpp
 	LiteralIterator.cpp
+	Optimizer.cpp
 	Term.cpp
 )

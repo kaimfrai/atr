@@ -1,7 +1,6 @@
 add_single_file_modules(
 	Logic.cpp
 
-	Optimizer.cpp
 	LiteralBase.cpp
 	Term.cpp
 	Constraint.cpp
