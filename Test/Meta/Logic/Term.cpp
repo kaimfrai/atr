@@ -1,6 +1,11 @@
 export module Test.Meta.Logic.Term;
 
 import Meta.Logic;
+import Meta.Logic.ErasedTerm.Conjunction;
+import Meta.Logic.ErasedTerm.Disjunction;
+import Meta.Logic.ErasedTerm.Equivalence;
+import Meta.Logic.ErasedTerm.Negation;
+
 
 import Std;
 

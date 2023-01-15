@@ -8,3 +8,4 @@ add_single_file_modules(
 )
 
 add_subdirectory(Bit)
+add_subdirectory(ErasedTerm)

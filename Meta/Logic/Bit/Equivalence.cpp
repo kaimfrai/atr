@@ -2,13 +2,33 @@ export module Meta.Logic.Bit.Equivalence;
 
 import Meta.Logic.Bit.Term;
 import Meta.Logic.Bit.BinaryFunction;
-import Meta.Functional;
+
+import Std;
 
 export namespace
 	Meta::Logic::Bit
 {
+	[[nodiscard]]
+	auto constexpr
+	(	operator ==
+	)	(	Term const
+			&	i_rLeft
+		,	Term const
+			&	i_rRight
+		)
+		noexcept
+	->	bool
+	{	return
+		::std::equal
+		(	begin(i_rLeft)
+		,	end(i_rLeft).base()
+		,	begin(i_rRight)
+		,	end(i_rRight).base()
+		);
+	}
+
 	BinaryFunction<bool> constexpr inline
 		ComputeEquivalence
-	{	Fold<&Functional::Key::operator== >{}
+	{	&operator==
 	};
 }
