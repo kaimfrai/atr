@@ -1,4 +1,5 @@
-import Test.Meta.Logic.Data;
+import Test.Meta.Logic.Cache.P;
+import Test.Meta.Logic.Cache.nP;
 
 ///	********************************************************
 ///	nP

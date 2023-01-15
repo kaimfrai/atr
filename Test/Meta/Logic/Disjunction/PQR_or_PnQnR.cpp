@@ -1,4 +1,15 @@
-import Test.Meta.Logic.Data;
+import Test.Meta.Logic.Cache.F;
+import Test.Meta.Logic.Cache.P;
+import Test.Meta.Logic.Cache.nP;
+import Test.Meta.Logic.Cache.PQ;
+import Test.Meta.Logic.Cache.PQR;
+import Test.Meta.Logic.Cache.T;
+import Test.Meta.Logic.Cache.PQR_or_PnQnR;
+import Test.Meta.Logic.Cache.PQ_or_nPnQ_or_R;
+import Test.Meta.Logic.Cache.PQ_or_PR;
+import Test.Meta.Logic.Cache.PQR_or_nPnQ_or_nPnR;
+import Test.Meta.Logic.Cache.PQR_or_PnQnR_or_nPQnR;
+import Test.Meta.Logic.Cache.PQ_or_PR_or_QR;
 
 ///	********************************************************
 ///	PQR_or_PnQnR

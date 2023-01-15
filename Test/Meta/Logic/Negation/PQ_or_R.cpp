@@ -1,4 +1,5 @@
-import Test.Meta.Logic.Data;
+import Test.Meta.Logic.Cache.PQ_or_R;
+import Test.Meta.Logic.Cache.PQ_or_PR;
 
 ///	********************************************************
 ///	PQ_or_R

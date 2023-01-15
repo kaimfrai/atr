@@ -1,10 +1,9 @@
 export module Test.Meta.Logic.Cache.PQR_or_nPnQ_or_nPnR;
 
-import Test.Meta.Logic.Term;
-import Test.Meta.Logic.Cache.PQ;
-import Test.Meta.Logic.Cache.PQR;
-import Test.Meta.Logic.Cache.PQ_or_PR;
-import Test.Meta.Logic.Cache.PQR_or_nPnQ;
+export import Test.Meta.Logic.Cache.PQ;
+export import Test.Meta.Logic.Cache.PQR;
+export import Test.Meta.Logic.Cache.PQ_or_PR;
+export import Test.Meta.Logic.Cache.PQR_or_nPnQ;
 
 export
 {

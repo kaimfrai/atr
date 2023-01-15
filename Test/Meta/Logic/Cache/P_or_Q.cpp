@@ -1,8 +1,7 @@
 export module Test.Meta.Logic.Cache.P_or_Q;
 
-import Test.Meta.Logic.Term;
-import Test.Meta.Logic.Cache.P;
-import Test.Meta.Logic.Cache.nP;
+export import Test.Meta.Logic.Cache.P;
+export import Test.Meta.Logic.Cache.nP;
 
 export
 {

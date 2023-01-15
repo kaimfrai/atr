@@ -1,7 +1,6 @@
 export module Test.Meta.Logic.Cache.PQ_or_nPR;
 
-import Test.Meta.Logic.Term;
-import Test.Meta.Logic.Cache.PQ;
+export import Test.Meta.Logic.Cache.PQ;
 
 export
 {
