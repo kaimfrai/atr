@@ -6,10 +6,33 @@ import Meta.Logic;
 
 export
 {
-	struct p{};
-	TestTerm constexpr inline P{::Meta::ErasedLiteral<p>};
-	struct q{};
-	TestTerm constexpr inline Q{::Meta::ErasedLiteral<q>};
-	struct r{};
-	TestTerm constexpr inline R{::Meta::ErasedLiteral<r>};
+	struct
+		p
+	{};
+	TestTerm constexpr inline
+		P
+	{	::Meta::ErasedLiteral
+		<	p
+		>
+	};
+
+	struct
+		q
+	{};
+	TestTerm constexpr inline
+		Q
+	{	::Meta::ErasedLiteral
+		<	q
+		>
+	};
+
+	struct
+		r
+	{};
+	TestTerm constexpr inline
+		R
+	{	::Meta::ErasedLiteral
+		<	r
+		>
+	};
 }

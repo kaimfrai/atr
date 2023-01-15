@@ -7,14 +7,19 @@ export
 {
 	auto constexpr inline
 		nP
-	=	!P
+	=	not
+		P
 	;
+
 	auto constexpr inline
 		nQ
-	=	!Q
+	=	not
+		Q
 	;
+
 	auto constexpr inline
 		nR
-	=	!R
+	=	not
+		R
 	;
 }

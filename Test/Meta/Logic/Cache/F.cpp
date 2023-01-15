@@ -6,5 +6,8 @@ import Meta.Logic;
 
 export
 {
-	TestTerm constexpr inline F{::Meta::ErasedFalse};
+	TestTerm constexpr inline
+		F
+	{	::Meta::ErasedFalse
+	};
 }
