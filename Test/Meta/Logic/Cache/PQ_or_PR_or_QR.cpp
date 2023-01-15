@@ -28,5 +28,4 @@ export
 	>	const extern
 		nPnQ_or_nPnR_or_nQnR
 	;
-
 }

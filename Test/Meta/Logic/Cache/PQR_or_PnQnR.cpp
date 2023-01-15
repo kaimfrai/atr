@@ -27,20 +27,9 @@ export
 		PQnR_or_PnQR
 	;
 	DeduceTerm
-	<	PQnR or nPQR
-	>	const extern
-		PQnR_or_nPQR
-	;
-	DeduceTerm
 	<	PQnR or nPnQnR
 	>	const extern
 		PQnR_or_nPnQnR
-	;
-
-	DeduceTerm
-	<	PnQR or nPQR
-	>	const extern
-		PnQR_or_nPQR
 	;
 
 	DeduceTerm
@@ -52,12 +41,6 @@ export
 	<	PnQnR or nPnQR
 	>	const extern
 		PnQnR_or_nPnQR
-	;
-
-	DeduceTerm
-	<	nPQR or nPnQnR
-	>	const extern
-		nPQR_or_nPnQnR
 	;
 
 	DeduceTerm
