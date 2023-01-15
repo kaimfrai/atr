@@ -1,11 +1,11 @@
 export module Test.Meta.Logic.Cache.P;
 
-export import Test.Meta.Logic.Term;
-
 import Meta.Logic;
 
 export
 {
+	using ::Meta::DeduceTerm;
+
 	struct
 		p
 	{};

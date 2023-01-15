@@ -7,10 +7,25 @@ import Test.Meta.Logic.Cache.T;
 import Test.Meta.Logic.Cache.P_Q_R;
 import Test.Meta.Logic.Cache.P_Q;
 import Test.Meta.Logic.Cache.PQ_PR;
+import Test.Meta.Logic.Cache.Equivalence;
+import Meta.Logic.ErasedTerm.Conjunction;
 
 ///	********************************************************
 ///	P_Q_R
 ///	********************************************************
+static_assert
+(	(	T
+	and	P_Q_R
+	)
+==	P_Q_R
+);
+static_assert
+(	(	F
+	and	P_Q_R
+	)
+==	F
+);
+
 static_assert
 (	(	P
 	and	P_Q_R

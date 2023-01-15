@@ -1,4 +1,6 @@
 add_single_file_modules(
+	Equivalence.cpp
+
 	F.cpp
 	P.cpp
 	nP.cpp

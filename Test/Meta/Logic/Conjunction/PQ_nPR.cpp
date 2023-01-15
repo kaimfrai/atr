@@ -7,6 +7,8 @@ import Test.Meta.Logic.Cache.T;
 import Test.Meta.Logic.Cache.PQ_nPR;
 import Test.Meta.Logic.Cache.PQ_nPR;
 import Test.Meta.Logic.Cache.PQ_PR;
+import Test.Meta.Logic.Cache.Equivalence;
+import Meta.Logic.ErasedTerm.Conjunction;
 
 ///	********************************************************
 ///	PQ_nPR

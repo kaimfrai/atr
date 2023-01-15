@@ -1,4 +1,5 @@
 import Test.Meta.Logic.Cache.F;
+import Test.Meta.Logic.Cache.Equivalence;
 
 ///	********************************************************
 ///	F

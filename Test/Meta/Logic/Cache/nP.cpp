@@ -2,6 +2,8 @@ export module Test.Meta.Logic.Cache.nP;
 
 export import Test.Meta.Logic.Cache.P;
 
+import Meta.Logic.ErasedTerm.Negation;
+
 export
 {
 	DeduceTerm

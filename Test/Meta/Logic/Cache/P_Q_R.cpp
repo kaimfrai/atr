@@ -3,6 +3,7 @@ export module Test.Meta.Logic.Cache.P_Q_R;
 export import Test.Meta.Logic.Cache.P;
 export import Test.Meta.Logic.Cache.nP;
 export import Test.Meta.Logic.Cache.P_Q;
+import Meta.Logic.ErasedTerm.Disjunction;
 
 export
 {

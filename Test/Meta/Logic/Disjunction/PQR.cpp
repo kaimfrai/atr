@@ -10,21 +10,23 @@ import Test.Meta.Logic.Cache.PQ_PR;
 import Test.Meta.Logic.Cache.PQR_PnQnR;
 import Test.Meta.Logic.Cache.PQR_nPnQ;
 import Test.Meta.Logic.Cache.PQR_nPnQnR;
+import Test.Meta.Logic.Cache.Equivalence;
+import Meta.Logic.ErasedTerm.Disjunction;
 
 ///	********************************************************
 ///	PQR
 ///	********************************************************
 static_assert
 (	(	T
-	and	PQR
+	or	PQR
 	)
-==	PQR
+==	T
 );
 static_assert
 (	(	F
-	and	PQR
+	or	PQR
 	)
-==	F
+==	PQR
 );
 
 static_assert

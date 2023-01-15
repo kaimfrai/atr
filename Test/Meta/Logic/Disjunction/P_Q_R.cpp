@@ -5,6 +5,8 @@ import Test.Meta.Logic.Cache.PQ;
 import Test.Meta.Logic.Cache.PQR;
 import Test.Meta.Logic.Cache.T;
 import Test.Meta.Logic.Cache.P_Q_R;
+import Test.Meta.Logic.Cache.Equivalence;
+import Meta.Logic.ErasedTerm.Disjunction;
 
 ///	********************************************************
 ///	P_Q_R
@@ -59,19 +61,6 @@ static_assert
 	or	P_Q_R
 	)
 ==	T
-);
-
-static_assert
-(	(	T
-	and	P_Q_R
-	)
-==	P_Q_R
-);
-static_assert
-(	(	F
-	and	P_Q_R
-	)
-==	F
 );
 
 static_assert

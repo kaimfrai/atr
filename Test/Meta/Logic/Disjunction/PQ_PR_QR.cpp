@@ -9,6 +9,8 @@ import Test.Meta.Logic.Cache.PQ_PR_QR;
 import Test.Meta.Logic.Cache.P_Q_R;
 import Test.Meta.Logic.Cache.PQ_nPnQ_R;
 import Test.Meta.Logic.Cache.PQR_nPnQ_nPnR_nQnR;
+import Test.Meta.Logic.Cache.Equivalence;
+import Meta.Logic.ErasedTerm.Disjunction;
 
 ///	********************************************************
 ///	PQ_PR_QR

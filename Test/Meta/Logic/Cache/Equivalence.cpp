@@ -1,8 +1,4 @@
-export module Test.Meta.Logic.Term;
-
-export import Meta.Logic.ErasedTerm.Conjunction;
-export import Meta.Logic.ErasedTerm.Disjunction;
-export import Meta.Logic.ErasedTerm.Negation;
+export module Test.Meta.Logic.Cache.Equivalence;
 
 import Meta.Logic.ErasedTerm;
 import Meta.Logic.Term;

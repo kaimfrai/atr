@@ -1,4 +1,6 @@
 import Test.Meta.Logic.Cache.PQR_nPnQ;
+import Test.Meta.Logic.Cache.Equivalence;
+import Meta.Logic.ErasedTerm.Disjunction;
 
 ///	********************************************************
 ///	PQR_nPnQ
