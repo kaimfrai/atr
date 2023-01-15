@@ -5,21 +5,24 @@ import Test.Meta.Logic.Cache.P;
 
 export
 {
-	auto constexpr inline
-		nP
-	=	not
+	DeduceTerm
+	<	not
 		P
+	>	const extern
+		nP
 	;
 
-	auto constexpr inline
-		nQ
-	=	not
+	DeduceTerm
+	<	not
 		Q
+	>	const extern
+		nQ
 	;
 
-	auto constexpr inline
-		nR
-	=	not
+	DeduceTerm
+	<	not
 		R
+	>	const extern
+		nR
 	;
 }

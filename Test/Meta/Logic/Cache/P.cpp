@@ -9,30 +9,33 @@ export
 	struct
 		p
 	{};
-	TestTerm constexpr inline
-		P
-	{	::Meta::ErasedLiteral
+	DeduceTerm
+	<	::Meta::ErasedLiteral
 		<	p
 		>
-	};
+	>	const extern
+		P
+	;
 
 	struct
 		q
 	{};
-	TestTerm constexpr inline
-		Q
-	{	::Meta::ErasedLiteral
+	DeduceTerm
+	<	::Meta::ErasedLiteral
 		<	q
 		>
-	};
+	>	const extern
+		Q
+	;
 
 	struct
 		r
 	{};
-	TestTerm constexpr inline
-		R
-	{	::Meta::ErasedLiteral
+	DeduceTerm
+	<	::Meta::ErasedLiteral
 		<	r
 		>
-	};
+	>	const extern
+		R
+	;
 }

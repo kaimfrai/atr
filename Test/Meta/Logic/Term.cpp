@@ -6,132 +6,165 @@ import Std;
 
 export
 {
-	struct
-		TestTerm
+	using ::Meta::DeduceTerm;
+
+	template
+		<	::Meta::Logic::BitTerm
+				t_vLeftTerm
+		,	typename
+			...	t_tpLeftLiteral
+		,	::Meta::Logic::BitTerm
+				t_vRightTerm
+		,	typename
+			...	t_tpRightLiteral
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	operator ==
+	)	(	::Meta::Term<t_vLeftTerm, t_tpLeftLiteral...>
+				i_vLeft
+		,	::Meta::Term<t_vRightTerm, t_tpRightLiteral...>
+				i_vRight
+		)
+		noexcept
+	->	bool
 	{
-		::Meta::ErasedTerm
-			Term
+		if	(	bool const
+					bEquivalent
+				=	i_vLeft.Erased
+				==	i_vRight.Erased
+			;	not
+				bEquivalent
+			)
+		{	return
+				false
+			;
+		}
+
+		if	(	bool const
+					bLiteralsPermutation
+			=	::std::is_permutation
+				(	begin(i_vLeft.Erased.Literals)
+				,	end(i_vLeft.Erased.Literals)
+				,	begin(i_vRight.Erased.Literals)
+				,	end(i_vRight.Erased.Literals)
+				)
+			;	not
+				bLiteralsPermutation
+			)
+		{	return
+				false
+			;
+		}
+
+		if	(	bool const
+					bEqualClauseCount
+				=	i_vLeft.Erased.ClauseCount()
+				==	i_vRight.Erased.ClauseCount()
+			;	not
+				bEqualClauseCount
+			)
+		{	return
+				false
+			;
+		}
+
+		auto const
+			vLeftLiteralSum
+		=	i_vLeft.Erased.BitTerm.transform_reduce
+			(	0uz
+			,	::std::plus<>{}
+			,	&Meta::Logic::BitClause::LiteralCount
+			)
 		;
 
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator ==
-		)	(	TestTerm const
-				&	i_rLeft
-			,	TestTerm const
-				&	i_rRight
+		auto const
+			vRightLiteralSum
+		=	i_vRight.Erased.BitTerm.transform_reduce
+			(	0uz
+			,	::std::plus<>{}
+			,	&Meta::Logic::BitClause::LiteralCount
 			)
-			noexcept
-		->	bool
-		{
-			if	(	bool const
-						bEquivalent
-					=	i_rLeft.Term
-					==	i_rRight.Term
-				;	not
-					bEquivalent
-				)
-			{	return
-					false
-				;
-			}
+		;
 
-			if	(	bool const
-						bLiteralsPermutation
-				=	::std::is_permutation
-					(	begin(i_rLeft.Term.Literals)
-					,	end(i_rLeft.Term.Literals)
-					,	begin(i_rRight.Term.Literals)
-					,	end(i_rRight.Term.Literals)
-					)
-				;	not
-					bLiteralsPermutation
-				)
-			{	return
-					false
-				;
-			}
+		return
+			vLeftLiteralSum
+		==	vRightLiteralSum
+		;
+	}
 
-			if	(	bool const
-						bEqualClauseCount
-					=	i_rLeft.Term.ClauseCount()
-					==	i_rRight.Term.ClauseCount()
-				;	not
-					bEqualClauseCount
-				)
-			{	return
-					false
-				;
-			}
+	template
+		<	::Meta::Logic::BitTerm
+				t_vLeftTerm
+		,	typename
+			...	t_tpLeftLiteral
+		,	::Meta::Logic::BitTerm
+				t_vRightTerm
+		,	typename
+			...	t_tpRightLiteral
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	operator and
+	)	(	::Meta::Term<t_vLeftTerm, t_tpLeftLiteral...>
+				i_vLeft
+		,	::Meta::Term<t_vRightTerm, t_tpRightLiteral...>
+				i_vRight
+		)
+		noexcept
+	->	DeduceTerm
+		<	i_vLeft.Erased
+		and	i_vRight.Erased
+		>
+	{	return
+		{};
+	}
 
-			auto const
-				vLeftLiteralSum
-			=	i_rLeft.Term.BitTerm.transform_reduce
-				(	0uz
-				,	::std::plus<>{}
-				,	&Meta::Logic::BitClause::LiteralCount
-				)
-			;
+	template
+		<	::Meta::Logic::BitTerm
+				t_vLeftTerm
+		,	typename
+			...	t_tpLeftLiteral
+		,	::Meta::Logic::BitTerm
+				t_vRightTerm
+		,	typename
+			...	t_tpRightLiteral
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	operator or
+	)	(	::Meta::Term<t_vLeftTerm, t_tpLeftLiteral...>
+				i_vLeft
+		,	::Meta::Term<t_vRightTerm, t_tpRightLiteral...>
+				i_vRight
+		)
+		noexcept
+	->	DeduceTerm
+		<	i_vLeft.Erased
+		or	i_vRight.Erased
+		>
+	{	return
+		{};
+	}
 
-			auto const
-				vRightLiteralSum
-			=	i_rRight.Term.BitTerm.transform_reduce
-				(	0uz
-				,	::std::plus<>{}
-				,	&Meta::Logic::BitClause::LiteralCount
-				)
-			;
-
-			return
-				vLeftLiteralSum
-			==	vRightLiteralSum
-			;
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator and
-		)	(	TestTerm const
-				&	i_rLeft
-			,	TestTerm const
-				&	i_rRight
-			)
-			noexcept
-		->	TestTerm
-		{	return
-			{	i_rLeft.Term
-			and	i_rRight.Term
-			};
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator or
-		)	(	TestTerm const
-				&	i_rLeft
-			,	TestTerm const
-				&	i_rRight
-			)
-			noexcept
-		->	TestTerm
-		{	return
-			{	i_rLeft.Term
-			or	i_rRight.Term
-			};
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator not
-		)	(	TestTerm const
-				&	i_rTerm
-			)
-			noexcept
-		->	TestTerm
-		{	return
-			{	not
-				i_rTerm.Term
-			};
-		}
-	};
+	template
+		<	::Meta::Logic::BitTerm
+				t_vTerm
+		,	typename
+			...	t_tpLiteral
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	operator not
+	)	(	::Meta::Term<t_vTerm, t_tpLiteral...>
+				i_vTerm
+		)
+		noexcept
+	->	DeduceTerm
+		<	not
+			i_vTerm.Erased
+		>
+	{	return
+		{};
+	}
 }

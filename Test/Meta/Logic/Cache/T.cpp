@@ -6,8 +6,9 @@ import Meta.Logic;
 
 export
 {
-	TestTerm constexpr inline
+	DeduceTerm
+	<	::Meta::ErasedTrue
+	>	const extern
 		T
-	{	::Meta::ErasedTrue
-	};
+	;
 }
