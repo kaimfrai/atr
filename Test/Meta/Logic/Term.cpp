@@ -9,7 +9,7 @@ export
 	struct
 		TestTerm
 	{
-		Meta::ErasedTerm
+		::Meta::ErasedTerm
 			Term
 		;
 
@@ -31,7 +31,10 @@ export
 				;	not
 					bEquivalent
 				)
-				return false;
+			{	return
+					false
+				;
+			}
 
 			if	(	bool const
 						bLiteralsPermutation
@@ -44,7 +47,10 @@ export
 				;	not
 					bLiteralsPermutation
 				)
-				return false;
+			{	return
+					false
+				;
+			}
 
 			if	(	bool const
 						bEqualClauseCount
@@ -53,7 +59,10 @@ export
 				;	not
 					bEqualClauseCount
 				)
-				return false;
+			{	return
+					false
+				;
+			}
 
 			auto const
 				vLeftLiteralSum
@@ -73,7 +82,10 @@ export
 				)
 			;
 
-			return vLeftLiteralSum == vRightLiteralSum;
+			return
+				vLeftLiteralSum
+			==	vRightLiteralSum
+			;
 		}
 
 		[[nodiscard]]
