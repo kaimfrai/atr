@@ -1,6 +1,6 @@
 export module Meta.Logic.ErasedTerm;
 
-export import Meta.Logic.BitTerm;
+export import Meta.Logic.Bit.Term;
 export import Meta.Logic.LiteralBase;
 import Meta.Logic.Bit.BinaryFunction;
 import Meta.Logic.Bit.Conjunction;
@@ -33,18 +33,18 @@ export namespace
 			LiteralBufferType
 		=	::std::array
 			<	EraseTypeToken
-			,	Logic::LiteralLimit.get()
+			,	Logic::Bit::LiteralLimit.get()
 			>
 		;
 
 		using
 			IndexType
 		=	typename
-				Logic::BitTerm
+				Logic::Bit::Term
 			::	IndexType
 		;
 
-		Logic::BitTerm const
+		Logic::Bit::Term const
 			BitTerm
 		;
 		LiteralBufferType const
@@ -53,7 +53,7 @@ export namespace
 
 		static auto constexpr
 		(	TrimLiterals
-		)	(	Logic::BitTerm const
+		)	(	Logic::Bit::Term const
 				&	i_rResult
 			,	std::span<EraseTypeToken const>
 					i_vUnion
@@ -103,7 +103,7 @@ export namespace
 
 		static auto constexpr
 		(	ProcessComputation
-		)	(	Logic::BitTerm const
+		)	(	Logic::Bit::Term const
 				&	i_rResult
 			,	std::span<EraseTypeToken const>
 					i_vUnion
@@ -121,7 +121,7 @@ export namespace
 		{
 			Buffer::Static
 			<	EraseTypeToken
-			,	Logic::LiteralLimit.get()
+			,	Logic::Bit::LiteralLimit.get()
 			>	vUnion
 			;
 			vUnion.AppendUnique(i_rLeft.LiteralSpan());
@@ -140,11 +140,11 @@ export namespace
 		)	(	auto const
 				&	i_fMapIndex
 			)	const
-		->	Logic::BitTerm
+		->	Logic::Bit::Term
 		{
 			Buffer::Static
 			<	IndexType
-			,	Logic::LiteralLimit.get()
+			,	Logic::Bit::LiteralLimit.get()
 			>	vPermutationArray
 			;
 
@@ -340,12 +340,12 @@ export namespace
 
 	ErasedTerm constexpr inline
 		ErasedTrue
-	{	Logic::BitClause::Absorbing()
+	{	Logic::Bit::Clause::Absorbing()
 	};
 
 	ErasedTerm constexpr inline
 		ErasedFalse
-	{	Logic::BitClause::Identity()
+	{	Logic::Bit::Clause::Identity()
 	};
 
 	template
@@ -354,7 +354,7 @@ export namespace
 		>
 	ErasedTerm constexpr inline
 		ErasedLiteral
-	{	Logic::BitClause{0_bdx}
+	{	Logic::Bit::Clause{0_bdx}
 	,	{	Type<t_tLiteral>
 		}
 	};

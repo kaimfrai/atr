@@ -1,8 +1,8 @@
-export module Meta.Logic.BitTerm;
+export module Meta.Logic.Bit.Term;
 
-export import Meta.Logic.BitClause;
-export import Meta.Logic.BitLiteralIterator;
-import Meta.Logic.Optimizer;
+export import Meta.Logic.Bit.Clause;
+export import Meta.Logic.Bit.LiteralIterator;
+import Meta.Logic.Bit.Optimizer;
 
 import Meta.Size;
 import Meta.Bit.Index;
@@ -18,50 +18,50 @@ import Std;
 using ::Meta::Bit::Index;
 
 export namespace
-	Meta::Logic
+	Meta::Logic::Bit
 {
 	struct
-		BitTerm final
+		Term final
 	{
 		using
 			FieldType
 		=	typename
-				BitClause
+				Clause
 			::	FieldType
 		;
 		using
 			IndexType
 		=	typename
-				BitClause
+				Clause
 			::	IndexType
 		;
 
-		BitClauseBuffer const
+		ClauseBuffer const
 			Clauses
 		{};
 
 		explicit(false) constexpr
-		(	BitTerm
+		(	Term
 		)	()
 		=	default;
 
 		explicit(false) constexpr
-		(	BitTerm
-		)	(	BitClause
+		(	Term
+		)	(	Clause
 					i_vClause
 			)
 		:	Clauses
 			{	i_vClause.IsIdentity()
-			?	BitClauseBuffer{}
-			:	BitClauseBuffer
+			?	ClauseBuffer{}
+			:	ClauseBuffer
 				{	i_vClause
 				}
 			}
 		{}
 
 		explicit(false) constexpr
-		(	BitTerm
-		)	(	BitClauseBuffer const
+		(	Term
+		)	(	ClauseBuffer const
 				&	i_rClauses
 			)
 		:	Clauses
@@ -72,7 +72,7 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	begin
-		)	(	BitTerm const
+		)	(	Term const
 				&	i_rTerm
 			)
 		->	decltype(auto)
@@ -81,7 +81,7 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	end
-		)	(	BitTerm const
+		)	(	Term const
 				&	i_rTerm
 			)
 		->	decltype(auto)
@@ -90,7 +90,7 @@ export namespace
 		[[nodiscard]]
 		explicit(false) constexpr
 		(	operator
-			::std::span<BitClause const>
+			::std::span<Clause const>
 		)	()	const&
 		{	return
 			{	begin(*this)
@@ -162,18 +162,18 @@ export namespace
 		{	return
 			transform_reduce
 			(	FieldType{}
-			,	::std::bit_or<typename BitClause::FieldType>{}
-			,	&BitClause::LiteralField
+			,	::std::bit_or<typename Clause::FieldType>{}
+			,	&Clause::LiteralField
 			);
 		}
 
 		[[nodiscard]]
 		auto constexpr
 		(	Permutation
-		)	(	::std::span<BitClause::IndexType const>
+		)	(	::std::span<Clause::IndexType const>
 					i_vPermutation
 			)	const
-		->	BitTerm
+		->	Term
 		{
 			Optimizer
 				vPermutationResult
@@ -181,7 +181,7 @@ export namespace
 			*	ClauseCount()
 			};
 
-			for	(	BitClause
+			for	(	Clause
 						vClause
 				:	*this
 				)
@@ -195,7 +195,7 @@ export namespace
 		(	TrimLiterals
 		)	()	const
 			noexcept
-		->	BitTerm
+		->	Term
 		{
 			auto const
 				vLiteralField
@@ -225,12 +225,12 @@ export namespace
 			}
 			else
 			{
-				BitClause::IndexType
+				Clause::IndexType
 					vTrimLiteralPermutation
 				[	LiteralLimit.get()
 				]{};
 
-				for	(	BitClause::IndexType
+				for	(	Clause::IndexType
 							nPermutation
 						{}
 					;	auto
@@ -249,7 +249,7 @@ export namespace
 
 				return
 				Permutation
-				(	::std::span<BitClause::IndexType const>
+				(	::std::span<Clause::IndexType const>
 					{	+vTrimLiteralPermutation
 					,	static_cast<USize>(nMaxLiteralCount.get())
 					}
@@ -284,7 +284,7 @@ export namespace
 		)	(	USize
 					i_nIndex
 			)	const&
-		->	BitClause
+		->	Clause
 		{
 			if	(i_nIndex >= ClauseLimit)
 				((void)"Index beyond ClauseLimit!", std::unreachable());
@@ -295,9 +295,9 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator ==
-		)	(	BitTerm const
+		)	(	Term const
 				&	i_rLeftTerm
-			,	BitTerm const
+			,	Term const
 				&	i_rRightTerm
 			)
 		->	bool
@@ -311,15 +311,15 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	Intersection
-		)	(	BitTerm const
+		)	(	Term const
 				&	i_rLeftTerm
-			,	BitTerm const
+			,	Term const
 				&	i_rRightTerm
 			)
-		->	BitTerm
+		->	Term
 		{
 			if	(i_rLeftTerm.IsAbsorbing() or i_rRightTerm.IsAbsorbing())
-				return BitClause::Absorbing();
+				return Clause::Absorbing();
 
 			if	(i_rLeftTerm.IsIdentity())
 				return i_rRightTerm;
@@ -352,15 +352,15 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	Union
-		)	(	BitTerm const
+		)	(	Term const
 				&	i_rLeftTerm
-			,	BitTerm const
+			,	Term const
 				&	i_rRightTerm
 			)
-		->	BitTerm
+		->	Term
 		{
 			if	(i_rLeftTerm.IsIdentity() or i_rRightTerm.IsIdentity())
-				return BitClause::Identity();
+				return Clause::Identity();
 
 			if	(i_rLeftTerm.IsAbsorbing())
 				return i_rRightTerm;
@@ -384,12 +384,12 @@ export namespace
 			{	nCombinedLiteralCount
 			};
 
-			for	(	BitClause
+			for	(	Clause
 						i_vLeftClause
 				:	i_rLeftTerm
 				)
 			{
-				for	(	BitClause
+				for	(	Clause
 							i_vRightClause
 					:	i_rRightTerm
 					)
@@ -404,23 +404,23 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	Negation
-		)	(	BitTerm const
+		)	(	Term const
 				&	i_rTerm
 			)
-		->	BitTerm
+		->	Term
 		{
 			if	(i_rTerm.IsAbsorbing())
-				return BitClause::Identity();
+				return Clause::Identity();
 
 			if	(i_rTerm.IsIdentity())
-				return BitClause::Absorbing();
+				return Clause::Absorbing();
 
 			USize const
 				nMaxClauseCount
 			=	i_rTerm.transform_reduce
 				(	1uz
 				,	std::multiplies<USize>{}
-				,	&BitClause::LiteralCount
+				,	&Clause::LiteralCount
 				)
 			;
 
@@ -428,28 +428,28 @@ export namespace
 				vOptimizer
 			{	nMaxClauseCount
 			};
-			vOptimizer.insert(BitClause::Absorbing());
+			vOptimizer.insert(Clause::Absorbing());
 
 			Optimizer
 				vResultBuffer
 			{	nMaxClauseCount
 			};
 
-			for	(	BitClause const
+			for	(	Clause const
 						vClause
 				:	i_rTerm
 				)
 			{
-				for	(	BitClause const
+				for	(	Clause const
 							vLiteral
 					:	vClause
 					)
 				{
-					BitClause const
+					Clause const
 						vNegatedLiteral
 					=	Inverse(vLiteral)
 					;
-					for	(	BitClause const
+					for	(	Clause const
 								vCurrentClause
 						:	vOptimizer
 						)

@@ -1,6 +1,6 @@
-export module Meta.Logic.BitLiteralIterator;
+export module Meta.Logic.Bit.LiteralIterator;
 
-export import Meta.Logic.BitClause;
+export import Meta.Logic.Bit.Clause;
 
 import Meta.Bit.Field.Arithmetic;
 import Meta.Bit.Field.Compare;
@@ -9,16 +9,16 @@ import Meta.Bit.Field.LowestOne;
 import Std;
 
 export namespace
-	Meta::Logic
+	Meta::Logic::Bit
 {
 	[[nodiscard]]
 	auto constexpr
 	(	FirstLiteral
-	)	(	BitClause
+	)	(	Clause
 				i_vClause
 		)
 		noexcept
-	->	BitClause
+	->	Clause
 	{
 		auto const
 			vMask
@@ -44,11 +44,11 @@ export namespace
 
 	auto constexpr
 	(	EraseFirstLiteral
-	)	(	BitClause
+	)	(	Clause
 			&	i_rClause
 		)
 		noexcept
-	->	BitClause&
+	->	Clause&
 	{
 		auto const
 			nCombined
@@ -71,11 +71,11 @@ export namespace
 	}
 
 	struct
-		BitLiteralSentinel
+		LiteralSentinel
 	{};
 
 	struct
-		BitLiteralIterator final
+		LiteralIterator final
 	{
 		using
 			difference_type
@@ -83,7 +83,7 @@ export namespace
 		;
 		using
 			value_type
-		=	BitClause
+		=	Clause
 		;
 
 		value_type
@@ -106,7 +106,7 @@ export namespace
 		(	operator ++
 		)	()	&
 			noexcept
-		->	BitLiteralIterator&
+		->	LiteralIterator&
 		{
 			EraseFirstLiteral
 			(	m_vClause
@@ -121,7 +121,7 @@ export namespace
 		(	operator ++
 		)	(int)	&
 			noexcept
-		->	BitLiteralIterator
+		->	LiteralIterator
 		{	return
 			::std::exchange
 			(	*this
@@ -134,8 +134,8 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator ==
-		)	(	BitLiteralIterator
-			,	BitLiteralIterator
+		)	(	LiteralIterator
+			,	LiteralIterator
 			)
 			noexcept
 		->	bool
@@ -144,9 +144,9 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator ==
-		)	(	BitLiteralIterator
+		)	(	LiteralIterator
 					i_vIterator
-			,	BitLiteralSentinel
+			,	LiteralSentinel
 			)
 			noexcept
 		->	bool
@@ -160,11 +160,11 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	begin
-	)	(	BitClause
+	)	(	Clause
 				i_vClause
 		)
 		noexcept
-	->	BitLiteralIterator
+	->	LiteralIterator
 	{	return
 		{	i_vClause
 		};
@@ -173,10 +173,10 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	end
-	)	(	BitClause
+	)	(	Clause
 		)
 		noexcept
-	->	BitLiteralSentinel
+	->	LiteralSentinel
 	{	return
 		{};
 	}

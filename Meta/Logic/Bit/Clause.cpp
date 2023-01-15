@@ -1,4 +1,4 @@
-export module Meta.Logic.BitClause;
+export module Meta.Logic.Bit.Clause;
 
 import Meta.Size;
 import Meta.Memory.Size;
@@ -19,7 +19,7 @@ import Std;
 using namespace ::Meta::Literals;
 
 export namespace
-	Meta::Logic
+	Meta::Logic::Bit
 {
 	auto constexpr inline
 		LiteralLimit
@@ -31,11 +31,11 @@ export namespace
 	;
 
 	struct
-		BitClause final
+		Clause final
 	{
 		using
 			FieldType
-		=	Bit::Field
+		=	::Meta::Bit::Field
 			<	LiteralLimit
 			>
 		;
@@ -60,18 +60,18 @@ export namespace
 		static auto constexpr
 		(	Absorbing
 		)	()
-		->	BitClause
+		->	Clause
 		{	return Inverse(Identity());	}
 
 		[[nodiscard]]
 		static auto constexpr
 		(	Identity
 		)	()
-		->	BitClause
-		{	return BitClause{};	}
+		->	Clause
+		{	return Clause{};	}
 
 		explicit(false) constexpr
-		(	BitClause
+		(	Clause
 		)	()
 		:	Positive
 			{	compl FieldType{}
@@ -82,7 +82,7 @@ export namespace
 		{}
 
 		explicit(true) constexpr
-		(	BitClause
+		(	Clause
 		)	(	IndexType
 					i_nPositive
 			)
@@ -100,9 +100,9 @@ export namespace
 		)	(	FieldType
 					i_vPreset
 			)	const
-		->	BitClause
+		->	Clause
 		{
-			BitClause
+			Clause
 				vCopy
 			=	*this
 			;
@@ -134,19 +134,19 @@ export namespace
 		)	(	::std::span<IndexType const>
 					i_vPermutation
 			)	const
-		->	BitClause
+		->	Clause
 		{
 			if	(Positive == Negative)
 				return *this;
 
-			BitClause
+			Clause
 				vResult
 			=	Absorbing()
 			;
 
 			for	(	auto
 						nIndex
-				:	Bit::Count<LiteralLimit>
+				:	::Meta::Bit::Count<LiteralLimit>
 					{	i_vPermutation.size()
 					}
 				)
@@ -228,7 +228,7 @@ export namespace
 					i_nIndex
 			)	const
 			noexcept
-		->	BitClause
+		->	Clause
 		{
 			FieldType const
 				nIndexField
@@ -237,7 +237,7 @@ export namespace
 				)
 			};
 
-			BitClause
+			Clause
 				vLiteral
 			=	*this
 			;
@@ -260,8 +260,8 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator ==
-		)	(	BitClause
-			,	BitClause
+		)	(	Clause
+			,	Clause
 			)
 			noexcept
 		->	bool
@@ -270,8 +270,8 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator<=>
-		)	(	BitClause
-			,	BitClause
+		)	(	Clause
+			,	Clause
 			)
 			noexcept
 		->	::std::strong_ordering
@@ -280,12 +280,12 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	Intersection
-		)	(	BitClause
+		)	(	Clause
 					i_vLeft
-			,	BitClause
+			,	Clause
 					i_vRight
 			)
-		->	BitClause
+		->	Clause
 		{
 			(	i_vLeft.Positive
 			&=	i_vRight.Positive
@@ -299,12 +299,12 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	Union
-		)	(	BitClause
+		)	(	Clause
 					i_vLeft
-			,	BitClause
+			,	Clause
 					i_vRight
 			)
-		->	BitClause
+		->	Clause
 		{
 			(	i_vLeft.Positive
 			|=	i_vRight.Positive
@@ -320,12 +320,12 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	Difference
-		)	(	BitClause
+		)	(	Clause
 					i_vLeft
-			,	BitClause
+			,	Clause
 					i_vRight
 			)
-		->	BitClause
+		->	Clause
 		{
 			if	(i_vLeft.IsIdentity())
 				return Inverse(i_vRight);
@@ -346,10 +346,10 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	Inverse
-		)	(	BitClause
+		)	(	Clause
 					i_vClause
 			)
-		->	BitClause
+		->	Clause
 		{	if	(i_vClause.Positive == i_vClause.Negative)
 				i_vClause.Positive = i_vClause.Negative = compl i_vClause.Positive;
 			else
@@ -360,7 +360,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	Includes
-		)	(	BitClause
+		)	(	Clause
 					i_vContained
 			)	const
 		->	bool
@@ -376,7 +376,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	Intersects
-		)	(	BitClause
+		)	(	Clause
 					i_vIntersection
 			)	const
 		->	bool

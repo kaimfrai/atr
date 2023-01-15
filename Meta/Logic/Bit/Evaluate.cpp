@@ -1,7 +1,7 @@
 export module Meta.Logic.Bit.Evaluate;
 
-import Meta.Logic.BitTerm;
-import Meta.Logic.BitClause;
+import Meta.Logic.Bit.Term;
+import Meta.Logic.Bit.Clause;
 import Meta.Bit.Field.Set;
 import Meta.Bit.Index.Arithmetic;
 
@@ -13,7 +13,7 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	EvaluateTerm
-	)	(	BitTerm const
+	)	(	Term const
 			&	i_rTerm
 		,	::std::span<bool const>
 				i_vPreset
@@ -21,11 +21,11 @@ export namespace
 		noexcept
 	->	bool
 	{
-		BitClause::FieldType
+		Clause::FieldType
 			nPresetMask
 		{	0uz
 		};
-		for	(	BitClause::IndexType
+		for	(	Clause::IndexType
 					nShift
 				{}
 			;	bool

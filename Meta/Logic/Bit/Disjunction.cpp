@@ -1,19 +1,19 @@
 export module Meta.Logic.Bit.Disjunction;
 
-import Meta.Logic.BitTerm;
+import Meta.Logic.Bit.Term;
 import Meta.Logic.Bit.BinaryFunction;
 
 export namespace
 	Meta::Logic::Bit
 {
-	BinaryFunction<BitTerm> constexpr inline
+	BinaryFunction<Term> constexpr inline
 		ComputeDisjunction
-	=	+[]	(	BitTerm const
+	=	+[]	(	Term const
 				&	i_rLeft
-			,	BitTerm const
+			,	Term const
 				&	i_rRight
 			)
-		->	BitTerm
+		->	Term
 		{	return
 			Intersection
 			(	i_rLeft

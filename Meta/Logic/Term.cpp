@@ -1,6 +1,6 @@
 export module Meta.Logic.Term;
 
-export import Meta.Logic.BitTerm;
+export import Meta.Logic.Bit.Term;
 export import Meta.Logic.LiteralBase;
 import Meta.Logic.ErasedTerm;
 import Meta.Logic.Bit.Evaluate;
@@ -25,7 +25,7 @@ export namespace
 	Meta
 {
 	template
-		<	Logic::BitTerm
+		<	Logic::Bit::Term
 				t_vTerm
 		,	typename
 			...	t_tpLiteral
@@ -82,7 +82,7 @@ export namespace
 	};
 
 	template
-		<	Logic::BitTerm
+		<	Logic::Bit::Term
 				t_vTerm
 		,	typename
 			...	t_tpLiteral

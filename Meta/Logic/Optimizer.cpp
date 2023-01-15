@@ -1,7 +1,7 @@
-export module Meta.Logic.Optimizer;
+export module Meta.Logic.Bit.Optimizer;
 
-export import Meta.Logic.BitClause;
-import Meta.Logic.BitLiteralIterator;
+export import Meta.Logic.Bit.Clause;
+import Meta.Logic.Bit.LiteralIterator;
 
 import Meta.Buffer.Static;
 import Meta.Buffer.Dynamic;
@@ -14,12 +14,12 @@ import Meta.Bit.Index.Shift;
 import Std;
 
 export namespace
-	Meta::Logic
+	Meta::Logic::Bit
 {
 	using
-		BitClauseBuffer
+		ClauseBuffer
 	=	Buffer::Static
-		<	BitClause
+		<	Clause
 		,	ClauseLimit
 		>
 	;
@@ -29,7 +29,7 @@ export namespace
 	{
 		using
 			BufferType
-		=	Buffer::Dynamic<BitClause>
+		=	Buffer::Dynamic<Clause>
 		;
 
 		using iterator = typename BufferType::iterator;
@@ -78,7 +78,7 @@ export namespace
 				m_vTerm.ViewBuffer()
 			|	std::views::take_while
 				(	[	this
-					]	(	BitClause
+					]	(	Clause
 							&	i_rClause
 						)
 					{	return
@@ -97,7 +97,7 @@ export namespace
 				m_vTerm.ViewBuffer()
 			|	std::views::take_while
 				(	[	this
-					]	(	BitClause const
+					]	(	Clause const
 							&	i_rClause
 						)
 					{	return
@@ -111,25 +111,25 @@ export namespace
 
 		auto constexpr
 		(	AppendLiteralRedundancy
-		)	(	BitClause
+		)	(	Clause
 					i_vLiteral
-			,	BitClause
+			,	Clause
 					i_vLiteralClause
-			,	BitClause
+			,	Clause
 					i_vRedundancyClause
 		)
 		->	bool
 		{
 			if	(i_vLiteralClause.Includes(i_vRedundancyClause))
 			{
-				insert(BitClause::Absorbing());
+				insert(Clause::Absorbing());
 				return true;
 			}
 
 			if	(i_vRedundancyClause.Includes(i_vLiteral))
 				return false;
 
-			BitClause const
+			Clause const
 				vSynthesizedClause
 			=	Difference
 				(	i_vRedundancyClause
@@ -152,9 +152,9 @@ export namespace
 
 		auto constexpr
 		(	ComputeLiteralRedundancy
-		)	(	BitClause
+		)	(	Clause
 					i_vLiteral
-			,	BitClause const
+			,	Clause const
 				&	i_rLiteralClause
 			,	Optimizer const
 				&	i_rTerm
@@ -176,12 +176,12 @@ export namespace
 				;
 
 				if	(bNegationContained)
-					insert(BitClause::Absorbing());
+					insert(Clause::Absorbing());
 
 				return bNegationContained;
 			}
 
-			for	(	BitClause const
+			for	(	Clause const
 					&	rRedundancyClause
 				:	i_rTerm.ViewDynamicBuffer()
 				)
@@ -204,7 +204,7 @@ export namespace
 
 		auto constexpr
 		(	ComputeClauseRedundancy
-		)	(	BitClause const
+		)	(	Clause const
 				&	i_rCurrentClause
 			,	Optimizer const
 				&	i_rTerm
@@ -212,7 +212,7 @@ export namespace
 		->	bool
 		{	return
 			ComputeLiteralRedundancy
-			(	BitClause::Identity()
+			(	Clause::Identity()
 			,	i_rCurrentClause
 			,	i_rTerm
 			);
@@ -226,7 +226,7 @@ export namespace
 		->	void
 		{
 			m_vTerm.sort();
-			for	(	BitClause
+			for	(	Clause
 					&	rClause
 				:	m_vTerm | std::views::reverse
 				)
@@ -244,14 +244,14 @@ export namespace
 
 		auto constexpr
 		(	SynthesizeClauses
-		)	(	BitClause
+		)	(	Clause
 					i_vSynthesizedClause
 			,	Optimizer const
 				&	i_rRedundancyCondition
 			)
 		->	bool
 		{
-			for	(	BitClause
+			for	(	Clause
 						vRedundancyClause
 				:	i_rRedundancyCondition.ViewDynamicBuffer()
 				)
@@ -278,12 +278,12 @@ export namespace
 			)
 		->	bool
 		{
-			for	(	BitClause const
+			for	(	Clause const
 					&	rClause
 				:	ViewDynamicBuffer()
 				)
 			{
-				for	(	BitClause const
+				for	(	Clause const
 							vLiteral
 					:	rClause
 					)
@@ -366,7 +366,7 @@ export namespace
 
 		explicit(true) constexpr
 		(	Optimizer
-		)	(	Bit::Count<LiteralLimit>
+		)	(	::Meta::Bit::Count<LiteralLimit>
 					i_nLiteralCount
 			)
 		:	Optimizer
@@ -381,7 +381,7 @@ export namespace
 
 		explicit(false) constexpr
 		(	operator
-			BitClauseBuffer
+			ClauseBuffer
 		)	()	&&
 		{
 			Optimize(true);
@@ -389,7 +389,7 @@ export namespace
 			if	(ClauseLimit < size())
 				((void)"Optimized term contains to many clauses to copy!", std::unreachable());
 
-			BitClauseBuffer
+			ClauseBuffer
 				vArray
 			{};
 			vArray.AppendUnique(*this);
@@ -440,7 +440,7 @@ export namespace
 
 		auto constexpr
 		(	insert
-		)	(	BitClause
+		)	(	Clause
 					i_vInsertClause
 			)
 		->	iterator
@@ -462,7 +462,7 @@ export namespace
 				aInsertPosition
 			=	end(m_vTerm).base()
 			;
-			for	(	BitClause
+			for	(	Clause
 					&	rClause
 				:	m_vTerm | std::views::reverse
 				)
@@ -489,12 +489,12 @@ export namespace
 
 		auto constexpr
 		(	insert
-		)	(	::std::span<BitClause const>
+		)	(	::std::span<Clause const>
 					i_vInsertTerm
 			)
 		->	void
 		{
-			for	(	BitClause
+			for	(	Clause
 						vInsertClause
 				:	i_vInsertTerm
 				)

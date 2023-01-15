@@ -9,11 +9,11 @@ export
 	using ::Meta::DeduceTerm;
 
 	template
-		<	::Meta::Logic::BitTerm
+		<	::Meta::Logic::Bit::Term
 				t_vLeftTerm
 		,	typename
 			...	t_tpLeftLiteral
-		,	::Meta::Logic::BitTerm
+		,	::Meta::Logic::Bit::Term
 				t_vRightTerm
 		,	typename
 			...	t_tpRightLiteral
@@ -74,7 +74,7 @@ export
 		=	i_vLeft.Erased.BitTerm.transform_reduce
 			(	0uz
 			,	::std::plus<>{}
-			,	&Meta::Logic::BitClause::LiteralCount
+			,	&Meta::Logic::Bit::Clause::LiteralCount
 			)
 		;
 
@@ -83,7 +83,7 @@ export
 		=	i_vRight.Erased.BitTerm.transform_reduce
 			(	0uz
 			,	::std::plus<>{}
-			,	&Meta::Logic::BitClause::LiteralCount
+			,	&Meta::Logic::Bit::Clause::LiteralCount
 			)
 		;
 
@@ -94,11 +94,11 @@ export
 	}
 
 	template
-		<	::Meta::Logic::BitTerm
+		<	::Meta::Logic::Bit::Term
 				t_vLeftTerm
 		,	typename
 			...	t_tpLeftLiteral
-		,	::Meta::Logic::BitTerm
+		,	::Meta::Logic::Bit::Term
 				t_vRightTerm
 		,	typename
 			...	t_tpRightLiteral
@@ -121,11 +121,11 @@ export
 	}
 
 	template
-		<	::Meta::Logic::BitTerm
+		<	::Meta::Logic::Bit::Term
 				t_vLeftTerm
 		,	typename
 			...	t_tpLeftLiteral
-		,	::Meta::Logic::BitTerm
+		,	::Meta::Logic::Bit::Term
 				t_vRightTerm
 		,	typename
 			...	t_tpRightLiteral
@@ -148,7 +148,7 @@ export
 	}
 
 	template
-		<	::Meta::Logic::BitTerm
+		<	::Meta::Logic::Bit::Term
 				t_vTerm
 		,	typename
 			...	t_tpLiteral

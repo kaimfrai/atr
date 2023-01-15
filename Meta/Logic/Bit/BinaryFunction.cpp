@@ -1,6 +1,6 @@
 export module Meta.Logic.Bit.BinaryFunction;
 
-import Meta.Logic.BitTerm;
+import Meta.Logic.Bit.Term;
 
 export namespace
 	Meta::Logic::Bit
@@ -12,8 +12,8 @@ export namespace
 	using
 		BinaryFunction
 	=	auto
-		(*)	(	BitTerm const&
-			,	BitTerm const&
+		(*)	(	Term const&
+			,	Term const&
 			)
 		->	t_tResult
 	;

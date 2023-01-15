@@ -1,19 +1,19 @@
 export module Meta.Logic.Bit.Conjunction;
 
-import Meta.Logic.BitTerm;
+import Meta.Logic.Bit.Term;
 import Meta.Logic.Bit.BinaryFunction;
 
 export namespace
 	Meta::Logic::Bit
 {
-	BinaryFunction<BitTerm> constexpr inline
+	BinaryFunction<Term> constexpr inline
 		ComputeConjunction
-	=	+[]	(	BitTerm const
+	=	+[]	(	Term const
 				&	i_rLeft
-			,	BitTerm const
+			,	Term const
 				&	i_rRight
 			)
-		->	BitTerm
+		->	Term
 		{	return
 			Union
 			(	i_rLeft
