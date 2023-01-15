@@ -1,9 +1,4 @@
-
-add_module_object_library(
-	Test.Meta.Bit.OneIndexIterator
-	OneIndexIterator.cpp
-)
-add_module_object_library(
-	Test.Meta.Bit.OneIndexRange
-	OneIndexRange.cpp
+add_module_object_tests(
+	OneIndexIterator
+	OneIndexRange
 )

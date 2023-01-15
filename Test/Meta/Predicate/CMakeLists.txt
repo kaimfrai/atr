@@ -1,9 +1,5 @@
-add_module_object_library(Test.Meta.Predicate.Trait
-	Trait.cpp
-)
-add_module_object_library(Test.Meta.Predicate.Conjunction
-	Conjunction.cpp
-)
-add_module_object_library(Test.Meta.Predicate.Disjunction
-	Disjunction.cpp
+add_module_object_tests(
+	Trait
+	Conjunction
+	Disjunction
 )

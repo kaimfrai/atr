@@ -1,6 +1,5 @@
-add_module_object_library(
-	Test.Meta.Size
-	Size.cpp
+add_module_object_tests(
+	Size
 )
 
 add_subdirectory(Arithmetic)
