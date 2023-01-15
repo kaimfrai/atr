@@ -5,13 +5,15 @@ import Test.Meta.Logic.Cache.PQR;
 
 export
 {
-	auto constexpr inline
+	DeduceTerm
+	<	PQR or nPnQnR
+	>	const extern
 		PQR_or_nPnQnR
-	=	PQR or nPnQnR
 	;
 
-	auto constexpr inline
+	DeduceTerm
+	<	PnQR or nPQnR
+	>	const extern
 		PnQR_or_nPQnR
-	=	PnQR or nPQnR
 	;
 }

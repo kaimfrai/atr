@@ -6,55 +6,67 @@ import Test.Meta.Logic.Cache.nP;
 
 export
 {
-	auto constexpr inline
+	DeduceTerm
+	<	P and Q
+	>	const extern
 		PQ
-	=	P and Q
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	P and nQ
+	>	const extern
 		PnQ
-	=	P and nQ
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	P and R
+	>	const extern
 		PR
-	=	P and R
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	P and nR
+	>	const extern
 		PnR
-	=	P and nR
 	;
 
-	auto constexpr inline
+	DeduceTerm
+	<	nP and Q
+	>	const extern
 		nPQ
-	=	nP and Q
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	nP and nQ
+	>	const extern
 		nPnQ
-	=	nP and nQ
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	nP and R
+	>	const extern
 		nPR
-	=	nP and R
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	nP and nR
+	>	const extern
 		nPnR
-	=	nP and nR
 	;
 
-	auto constexpr inline
+	DeduceTerm
+	<	Q and R
+	>	const extern
 		QR
-	=	Q and R
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	Q and nR
+	>	const extern
 		QnR
-	=	Q and nR
 	;
 
-	auto constexpr inline
+	DeduceTerm
+	<	nQ and R
+	>	const extern
 		nQR
-	=	nQ and R
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	nQ and nR
+	>	const extern
 		nQnR
-	=	nQ and nR
 	;
 }

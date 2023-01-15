@@ -7,37 +7,45 @@ import Test.Meta.Logic.Cache.PQ;
 
 export
 {
-	auto constexpr inline
+	DeduceTerm
+	<	PQ and R
+	>	const extern
 		PQR
-	=	PQ and R
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	PQ and nR
+	>	const extern
 		PQnR
-	=	PQ and nR
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	PnQ and R
+	>	const extern
 		PnQR
-	=	PnQ and R
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	PnQ and nR
+	>	const extern
 		PnQnR
-	=	PnQ and nR
 	;
 
-	auto constexpr inline
+	DeduceTerm
+	<	nPQ and R
+	>	const extern
 		nPQR
-	=	nPQ and R
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	nPQ and nR
+	>	const extern
 		nPQnR
-	=	nPQ and nR
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	nPnQ and R
+	>	const extern
 		nPnQR
-	=	nPnQ and R
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	nPnQ and nR
+	>	const extern
 		nPnQnR
-	=	nPnQ and nR
 	;
 }

@@ -9,58 +9,70 @@ import Test.Meta.Logic.Cache.PQ_or_nPnQ;
 
 export
 {
-	auto constexpr inline
+	DeduceTerm
+	<	PQ_or_nPnQ or R
+	>	const extern
 		PQ_or_nPnQ_or_R
-	=	PQ_or_nPnQ or R
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	PQ_or_nPnQ or nR
+	>	const extern
 		PQ_or_nPnQ_or_nR
-	=	PQ_or_nPnQ or nR
 	;
 
-	auto constexpr inline
+	DeduceTerm
+	<	PnQ_or_nPQ or R
+	>	const extern
 		PnQ_or_nPQ_or_R
-	=	PnQ_or_nPQ or R
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	PnQ_or_nPQ or nR
+	>	const extern
 		PnQ_or_nPQ_or_nR
-	=	PnQ_or_nPQ or nR
 	;
 
-	auto constexpr inline
+	DeduceTerm
+	<	PR_or_nPnR or Q
+	>	const extern
 		PR_or_nPnR_or_Q
-	=	PR_or_nPnR or Q
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	PR_or_nPnR or nQ
+	>	const extern
 		PR_or_nPnR_or_nQ
-	=	PR_or_nPnR or nQ
 	;
 
-	auto constexpr inline
+	DeduceTerm
+	<	PnR_or_nPR or Q
+	>	const extern
 		PnR_or_nPR_or_Q
-	=	PnR_or_nPR or Q
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	PnR_or_nPR or nQ
+	>	const extern
 		PnR_or_nPR_or_nQ
-	=	PnR_or_nPR or nQ
 	;
 
-	auto constexpr inline
+	DeduceTerm
+	<	P_or_QR or nQnR
+	>	const extern
 		P_or_QR_or_nQnR
-	=	P_or_QR or nQnR
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	P_or_QnR or nQR
+	>	const extern
 		P_or_QnR_or_nQR
-	=	P_or_QnR or nQR
 	;
 
-	auto constexpr inline
+	DeduceTerm
+	<	nP_or_QR or nQnR
+	>	const extern
 		nP_or_QR_or_nQnR
-	=	nP_or_QR or nQnR
 	;
 
-	auto constexpr inline
+	DeduceTerm
+	<	nP_or_nQR or QnR
+	>	const extern
 		nP_or_nQR_or_QnR
-	=	nP_or_nQR or QnR
 	;
 }

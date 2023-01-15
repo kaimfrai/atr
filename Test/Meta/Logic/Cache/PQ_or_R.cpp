@@ -7,105 +7,129 @@ import Test.Meta.Logic.Cache.PQ;
 
 export
 {
-	auto constexpr inline
+	DeduceTerm
+	<	PQ or R
+	>	const extern
 		PQ_or_R
-	=	PQ or R
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	PQ or nR
+	>	const extern
 		PQ_or_nR
-	=	PQ or nR
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	PnQ or R
+	>	const extern
 		PnQ_or_R
-	=	PnQ or R
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	PnQ or nR
+	>	const extern
 		PnQ_or_nR
-	=	PnQ or nR
 	;
 
-	auto constexpr inline
+	DeduceTerm
+	<	PR or Q
+	>	const extern
 		PR_or_Q
-	=	PR or Q
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	PR or nQ
+	>	const extern
 		PR_or_nQ
-	=	PR or nQ
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	PnR or Q
+	>	const extern
 		PnR_or_Q
-	=	PnR or Q
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	PnR or nQ
+	>	const extern
 		PnR_or_nQ
-	=	PnR or nQ
 	;
 
-	auto constexpr inline
+	DeduceTerm
+	<	P or QR
+	>	const extern
 		P_or_QR
-	=	P or QR
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	P or QnR
+	>	const extern
 		P_or_QnR
-	=	P or QnR
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	P or nQR
+	>	const extern
 		P_or_nQR
-	=	P or nQR
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	P or nQnR
+	>	const extern
 		P_or_nQnR
-	=	P or nQnR
 	;
 
-	auto constexpr inline
+	DeduceTerm
+	<	nPQ or R
+	>	const extern
 		nPQ_or_R
-	=	nPQ or R
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	nPQ or nR
+	>	const extern
 		nPQ_or_nR
-	=	nPQ or nR
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	nPnQ or R
+	>	const extern
 		nPnQ_or_R
-	=	nPnQ or R
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	nPnQ or nR
+	>	const extern
 		nPnQ_or_nR
-	=	nPnQ or nR
 	;
 
-	auto constexpr inline
+	DeduceTerm
+	<	nPR or Q
+	>	const extern
 		nPR_or_Q
-	=	nPR or Q
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	nPR or nQ
+	>	const extern
 		nPR_or_nQ
-	=	nPR or nQ
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	nPnR or Q
+	>	const extern
 		nPnR_or_Q
-	=	nPnR or Q
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	nPnR or nQ
+	>	const extern
 		nPnR_or_nQ
-	=	nPnR or nQ
 	;
 
-	auto constexpr inline
+	DeduceTerm
+	<	nP or QR
+	>	const extern
 		nP_or_QR
-	=	nP or QR
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	nP or QnR
+	>	const extern
 		nP_or_QnR
-	=	nP or QnR
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	nP or nQR
+	>	const extern
 		nP_or_nQR
-	=	nP or nQR
 	;
-	auto constexpr inline
+	DeduceTerm
+	<	nP or nQnR
+	>	const extern
 		nP_or_nQnR
-	=	nP or nQnR
 	;
 }
