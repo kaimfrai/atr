@@ -1,4 +1,4 @@
-export module Meta.ID:StringLiteral;
+export module Meta.ID.StringLiteral;
 
 export import Meta.Data;
 import Meta.Size;

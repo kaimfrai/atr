@@ -1,7 +1,7 @@
-export module Meta.ID:Concatenate;
+export module Meta.ID.Concatenate;
 
-export import :StringView;
-export import :StringLiteral;
+export import Meta.ID.StringView;
+export import Meta.ID.StringLiteral;
 
 import Meta.Size;
 

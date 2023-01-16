@@ -1,8 +1,8 @@
-export module Meta.ID:Alias;
+export module Meta.ID.Alias;
 
-import :Make;
-export import :StringView;
-export import :StringLiteral;
+import Meta.ID.Make;
+export import Meta.ID.StringView;
+export import Meta.ID.StringLiteral;
 
 import Meta.Token.Sequence;
 

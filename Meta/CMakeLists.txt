@@ -22,6 +22,7 @@ add_single_file_modules(
 	Byte.cpp
 	Data.cpp
 	Dispatch.cpp
+	ID.cpp
 	Lex.cpp
 	Logic.cpp
 	Math.cpp

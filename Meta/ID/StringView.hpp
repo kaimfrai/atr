@@ -1,4 +1,4 @@
-export module Meta.ID:StringView;
+export module Meta.ID.StringView;
 
 import Meta.Size;
 export import Meta.Data;

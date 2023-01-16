@@ -1,5 +1,4 @@
-add_module(
-	ID.hpp
+add_single_file_modules(
 	Alias.hpp
 	Concatenate.hpp
 	Concept.hpp

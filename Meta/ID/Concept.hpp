@@ -1,7 +1,7 @@
-export module Meta.ID:Concept;
+export module Meta.ID.Concept;
 
-import :StringView;
-import :StringLiteral;
+import Meta.ID.StringView;
+import Meta.ID.StringLiteral;
 
 import Meta.Size;
 
