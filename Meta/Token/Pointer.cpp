@@ -1,7 +1,7 @@
-export module Meta.Token:Pointer;
+export module Meta.Token.Pointer;
 
-export import :Type;
-export import :Transform;
+export import Meta.Token.Type;
+export import Meta.Token.Transform;
 
 export namespace
 	Meta::Token

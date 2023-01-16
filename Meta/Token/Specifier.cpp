@@ -1,4 +1,4 @@
-export module Meta.Token:Specifier;
+export module Meta.Token.Specifier;
 
 import Meta.Size;
 import Meta.Memory.Size;

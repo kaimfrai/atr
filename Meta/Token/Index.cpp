@@ -1,4 +1,4 @@
-export module Meta.Token:Index;
+export module Meta.Token.Index;
 
 import Meta.Size;
 

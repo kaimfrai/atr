@@ -1,7 +1,7 @@
-export module Meta.Token:Array;
+export module Meta.Token.Array;
 
-export import :Specifier;
-export import :Type;
+export import Meta.Token.Specifier;
+export import Meta.Token.Type;
 
 import Meta.Size;
 

@@ -1,4 +1,4 @@
-export module Meta.Token:Type;
+export module Meta.Token.Type;
 
 export namespace
 	Meta::Token

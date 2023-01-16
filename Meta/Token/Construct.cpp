@@ -1,6 +1,6 @@
-export module Meta.Token:Construct;
+export module Meta.Token.Construct;
 
-export import :Type;
+export import Meta.Token.Type;
 
 import Std;
 
