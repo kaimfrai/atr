@@ -1,10 +1,10 @@
 add_single_file_modules(
-	TemplateParameter.hpp
-	Key.cpp
+	Construct.cpp
+	Fold.cpp
 	FoldDirection.cpp
 	FoldTraits.cpp
-	Fold.cpp
-	Construct.cpp
+	Key.cpp
+	TemplateParameter.cpp
 )
 
 add_subdirectory(Fold)
