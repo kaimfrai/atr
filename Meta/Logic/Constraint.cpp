@@ -90,14 +90,20 @@ export namespace
 		<	typename
 				t_tProto
 		,	typename
-				t_tTrait
+				t_tClause0x00
+		,	typename
+				t_tClause0x01
+		,	typename
+				t_tClause0x02
+		,	typename
+				t_tClause0x03
 		>
 	concept
 		Term
-	=	Clause<t_tProto, typename t_tTrait::template Clause<0x00>>
-	or	Clause<t_tProto, typename t_tTrait::template Clause<0x01>>
-	or	Clause<t_tProto, typename t_tTrait::template Clause<0x02>>
-	or	Clause<t_tProto, typename t_tTrait::template Clause<0x03>>
+	=	Clause<t_tProto, t_tClause0x00>
+	or	Clause<t_tProto, t_tClause0x01>
+	or	Clause<t_tProto, t_tClause0x02>
+	or	Clause<t_tProto, t_tClause0x03>
 	or	Literal<t_tProto, StaticConstraint<Trait::Contradiction>>
 	;
 }
@@ -202,33 +208,6 @@ export namespace
 			>
 		;
 	};
-
-	template
-		<	Logic::Erased::Term const
-			&	t_rTerm
-		>
-	struct
-		ConstraintTerm final
-	{
-		static_assert
-		(	t_rTerm.ClauseCount()
-		<=	ConstraintClauseLimit
-		,	"Too many clauses to be used in a constraint term!"
-		);
-
-		template
-			<	USize
-					t_nClauseIndex
-			>
-		requires
-			(t_nClauseIndex < ConstraintClauseLimit)
-		using
-			Clause
-		=	ConstraintClause
-			<	t_rTerm.GetClause(t_nClauseIndex)
-			>
-		;
-	};
 }
 
 export namespace
@@ -244,9 +223,10 @@ export namespace
 		ProtoConstraint
 	=	Proto::Term
 		<	t_tProto
-		,	Trait::ConstraintTerm
-			<	t_rTerm
-			>
+		,	Trait::ConstraintClause<t_rTerm.GetClause(0x00)>
+		,	Trait::ConstraintClause<t_rTerm.GetClause(0x01)>
+		,	Trait::ConstraintClause<t_rTerm.GetClause(0x02)>
+		,	Trait::ConstraintClause<t_rTerm.GetClause(0x03)>
 		>
 	;
 }
