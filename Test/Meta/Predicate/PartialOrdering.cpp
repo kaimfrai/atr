@@ -11,7 +11,7 @@ enum class
 
 [[nodiscard]]
 auto constexpr
-(	Overload
+(	FullTerm
 )	(	ProtoConstraint
 		<	IsArithmetic
 		>	auto
@@ -26,7 +26,7 @@ auto constexpr
 
 [[nodiscard]]
 auto constexpr
-(	Overload
+(	FullTerm
 )	(	ProtoConstraint
 		<	IsIntegral
 		>	auto
@@ -41,11 +41,54 @@ auto constexpr
 
 
 static_assert
-(	Overload(5.0)
+(	FullTerm(5.0)
 ==	EOverload::Arithmetic
 );
 
 static_assert
-(	Overload(5)
+(	FullTerm(5)
+==	EOverload::Integral
+);
+
+
+[[nodiscard]]
+auto constexpr
+(	AdHoc
+)	(	ProtoConstraint
+		<	IsIntegral
+		or	IsFloatingPoint
+		>	auto
+	)
+	noexcept
+->	EOverload
+{	return
+		EOverload
+	::	Arithmetic
+	;
+}
+
+[[nodiscard]]
+auto constexpr
+(	AdHoc
+)	(	ProtoConstraint
+		<	IsUnsigned
+		or	IsSignedIntegral
+		>	auto
+	)
+	noexcept
+->	EOverload
+{	return
+		EOverload
+	::	Integral
+	;
+}
+
+static_assert
+(	AdHoc(5.0)
+==	EOverload::Arithmetic
+);
+
+static_assert
+(	AdHoc(5)
 ==	EOverload::Integral
 );
