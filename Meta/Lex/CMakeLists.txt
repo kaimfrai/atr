@@ -1,10 +1,10 @@
 add_single_file_modules(
-	Array.hpp
-	CV.hpp
-	Function.hpp
-	Member.hpp
-	Pointer.hpp
-	Reference.hpp
-	Tokenizer.hpp
-	Transform.hpp
+	Array.cpp
+	CV.cpp
+	Function.cpp
+	Member.cpp
+	Pointer.cpp
+	Reference.cpp
+	Tokenizer.cpp
+	Transform.cpp
 )
