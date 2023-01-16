@@ -1,7 +1,3 @@
-add_module(
-	Size.cpp
-)
-
 add_subdirectory(Math)
 add_subdirectory(Memory)
 add_subdirectory(Bit)
@@ -19,4 +15,16 @@ add_subdirectory(Predicate)
 add_subdirectory(ID)
 add_subdirectory(Dispatch)
 
-add_module(Meta.hpp)
+add_single_file_modules(
+	Arithmetic.cpp
+	Bit.cpp
+	Buffer.cpp
+	Byte.cpp
+	Logic.cpp
+	Math.cpp
+	Memory.cpp
+	Size.cpp
+	Token.cpp
+
+	Meta.cpp
+)

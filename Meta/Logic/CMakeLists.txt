@@ -1,6 +1,4 @@
 add_single_file_modules(
-	Logic.cpp
-
 	Conjunction.cpp
 	Constraint.cpp
 	Disjunction.cpp
