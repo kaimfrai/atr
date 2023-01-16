@@ -1,17 +1,17 @@
 add_module(
-	Token.hpp
+	Token.cpp
 
-	Array.hpp
-	Construct.hpp
-	CV.hpp
-	Function.hpp
-	FunctionTransform.hpp
-	Index.hpp
-	Pointer.hpp
-	Query.hpp
-	Reference.hpp
-	Sequence.hpp
-	Specifier.hpp
-	Transform.hpp
-	Type.hpp
+	Array.cpp
+	Construct.cpp
+	CV.cpp
+	Function.cpp
+	FunctionTransform.cpp
+	Index.cpp
+	Pointer.cpp
+	Query.cpp
+	Reference.cpp
+	Sequence.cpp
+	Specifier.cpp
+	Transform.cpp
+	Type.cpp
 )
