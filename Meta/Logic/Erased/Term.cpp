@@ -4,6 +4,7 @@ export import Meta.Token;
 
 import Meta.Logic.Bit.Term;
 import Meta.Logic.Bit.BinaryFunction;
+import Meta.Logic.Erased.Clause;
 
 import Meta.Buffer.Static;
 import Meta.Bit.OneIndexRange;
@@ -14,7 +15,6 @@ import Meta.Size;
 
 import Std;
 
-using namespace ::Meta::Literals;
 
 export namespace
 	Meta::Logic::Erased
@@ -284,16 +284,23 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr
-		(	GetClause
+		(	operator []
 		)	(	USize
 					i_nClauseIndex
 			)	const
 			noexcept
-		{	return
-			TrimLiterals
-			(	BitTerm[i_nClauseIndex]
-			,	Literals
-			);
+		->	Clause
+		{	auto const
+				vTrimmed
+			=	TrimLiterals
+				(	BitTerm[i_nClauseIndex]
+				,	Literals
+				)
+			;
+			return
+			{	vTrimmed.BitTerm[0uz]
+			,	vTrimmed.Literals
+			};
 		}
 	};
 
@@ -305,16 +312,5 @@ export namespace
 	Term constexpr inline
 		False
 	{	Bit::Clause::Identity()
-	};
-
-	template
-		<	typename
-				t_tLiteral
-		>
-	Term constexpr inline
-		Literal
-	{	Bit::Clause{0_bdx}
-	,	{	Type<t_tLiteral>
-		}
 	};
 }

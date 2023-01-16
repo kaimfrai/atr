@@ -3,11 +3,13 @@ export module Meta.Logic.Term;
 import Meta.Logic.Bit.Term;
 import Meta.Logic.Erased.Term;
 import Meta.Logic.Bit.Evaluate;
-
+import Meta.Bit.Index;
 import Meta.Token;
 import Meta.Size;
 
 import Std;
+
+using namespace ::Meta::Literals;
 
 export namespace
 	Meta::Logic
@@ -131,7 +133,16 @@ export namespace
 		False
 	;
 
-	using Erased::Literal;
+	template
+		<	typename
+				t_tLiteral
+		>
+	Erased::Term constexpr inline
+		Literal
+	{	Bit::Clause{0_bdx}
+	,	{	Type<t_tLiteral>
+		}
+	};
 
 	template
 		<	typename
