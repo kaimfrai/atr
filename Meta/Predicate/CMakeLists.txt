@@ -1,8 +1,8 @@
 add_single_file_modules(
-	Category.hpp
-	Empty.hpp
-	Match.hpp
-	Regular.hpp
-	Trivial.hpp
-	TypeTraits.hpp
+	Category.cpp
+	Empty.cpp
+	Match.cpp
+	Regular.cpp
+	Trivial.cpp
+	TypeTraits.cpp
 )
