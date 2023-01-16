@@ -1,6 +1,6 @@
-export module Meta.Predicate:Category;
+export module Meta.Predicate.Category;
 
-export import :Match;
+export import Meta.Predicate.Match;
 
 import Meta.Logic.LiteralBase;
 import Meta.Logic.Term;

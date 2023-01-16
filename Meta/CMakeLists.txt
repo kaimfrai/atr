@@ -25,6 +25,7 @@ add_single_file_modules(
 	Logic.cpp
 	Math.cpp
 	Memory.cpp
+	Predicate.cpp
 	Size.cpp
 	Token.cpp
 

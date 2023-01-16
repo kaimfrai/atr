@@ -1,4 +1,4 @@
-export module Meta.Predicate:Match;
+export module Meta.Predicate.Match;
 
 export import Meta.Lex;
 import Meta.Logic.LiteralBase;

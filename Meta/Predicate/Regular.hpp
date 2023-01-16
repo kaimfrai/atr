@@ -1,6 +1,6 @@
-export module Meta.Predicate:Regular;
+export module Meta.Predicate.Regular;
 
-export import :Category;
+export import Meta.Predicate.Category;
 
 import Meta.Logic.LiteralBase;
 import Meta.Logic.Term;
@@ -180,6 +180,7 @@ export namespace
 	};
 }
 
+using ::Meta::Logic::DeduceTerm;
 using ::Meta::Logic::Literal;
 
 export namespace

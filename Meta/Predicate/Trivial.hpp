@@ -1,11 +1,12 @@
-export module Meta.Predicate:Trivial;
+export module Meta.Predicate.Trivial;
 
-export import :Regular;
+export import Meta.Predicate.Regular;
 
 import Meta.Logic.LiteralBase;
 import Meta.Token.Type;
 import Meta.Logic.Conjunction;
 import Meta.Logic.Disjunction;
+import Meta.Logic.Term;
 
 import Std;
 
@@ -161,6 +162,9 @@ export namespace
 		}
 	};
 }
+
+using ::Meta::Logic::DeduceTerm;
+using ::Meta::Logic::Literal;
 
 export namespace
 	Meta

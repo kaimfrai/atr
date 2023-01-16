@@ -1,6 +1,4 @@
-add_module(
-	Predicate.hpp
-
+add_single_file_modules(
 	Category.hpp
 	Empty.hpp
 	Match.hpp

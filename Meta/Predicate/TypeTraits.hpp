@@ -1,6 +1,6 @@
-export module Meta.Predicate:TypeTraits;
+export module Meta.Predicate.TypeTraits;
 
-export import :Category;
+export import Meta.Predicate.Category;
 
 import Meta.Logic.LiteralBase;
 import Meta.Logic.Term;
@@ -369,6 +369,7 @@ export namespace
 	};
 }
 
+using ::Meta::Logic::DeduceTerm;
 using ::Meta::Logic::Literal;
 
 export namespace
