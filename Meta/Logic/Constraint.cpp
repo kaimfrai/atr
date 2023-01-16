@@ -13,50 +13,15 @@ export namespace
 {
 	template
 		<	typename
-				t_tTrait
-		,	t_tTrait
-				t_fTrait
-		>
-	struct
-		Constraint final
-	{
-		template
-			<	typename
-					t_tProto
-			>
-		static bool constexpr
-			Evaluate
-		=	t_fTrait
-			(	Type<t_tProto>
-			)
-		;
-	};
-
-	template
-		<	auto
-				t_fTrait
-		>
-	using
-		StaticConstraint
-	=	Constraint
-		<	decltype(t_fTrait)
-		,	t_fTrait
-		>
-	;
-
-	template
-		<	typename
 				t_tProto
 		,	typename
 				t_tTrait
 		>
 	concept
 		Literal
-	=		t_tTrait
-		::	template
-			Evaluate
-			<	t_tProto
-			>
+	=	t_tTrait{}
+		(	Type<t_tProto>
+		)
 	;
 
 	template
@@ -83,7 +48,7 @@ export namespace
 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x0D>>
 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x0E>>
 	and	Literal<t_tProto, typename t_tTrait::template Literal<0x0F>>
-	and	Literal<t_tProto, StaticConstraint<Trait::Tautology>>
+	and	Literal<t_tProto, decltype(Trait::Tautology)>
 	;
 
 	template
@@ -104,7 +69,7 @@ export namespace
 	or	Clause<t_tProto, t_tClause0x01>
 	or	Clause<t_tProto, t_tClause0x02>
 	or	Clause<t_tProto, t_tClause0x03>
-	or	Literal<t_tProto, StaticConstraint<Trait::Contradiction>>
+	or	Literal<t_tProto, decltype(Trait::Contradiction)>
 	;
 }
 
@@ -115,12 +80,6 @@ export namespace
 	USize constexpr inline
 		ConstraintLiteralLimit
 	=	16uz
-	;
-
-	///	Corresponds to the amount of Clauses listed in Meta::Proto::Term
-	USize constexpr inline
-		ConstraintClauseLimit
-	=	4uz
 	;
 
 	template
@@ -203,9 +162,9 @@ export namespace
 			(t_nLiteralIndex < ConstraintLiteralLimit)
 		using
 			Literal
-		=	Proto::StaticConstraint
-			<	GetLiteral<t_nLiteralIndex>()
-			>
+		=	decltype
+			(	GetLiteral<t_nLiteralIndex>()
+			)
 		;
 	};
 }
