@@ -4,9 +4,7 @@ import Meta.Logic;
 
 export
 {
-	::Meta::DeduceTerm
-	<	::Meta::ErasedFalse
-	>	const extern
+	decltype(::Meta::Logic::False) extern
 		F
 	;
 }

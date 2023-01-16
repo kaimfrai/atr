@@ -2,7 +2,7 @@ export module Test.Meta.Logic.Cache.PQ_PR_QR;
 
 export import Test.Meta.Logic.Cache.PQ;
 export import Test.Meta.Logic.Cache.PQ_PR;
-import Meta.Logic.ErasedTerm.Disjunction;
+import Meta.Logic.Disjunction;
 
 export
 {

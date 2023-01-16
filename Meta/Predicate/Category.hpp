@@ -3,6 +3,9 @@ export module Meta.Predicate:Category;
 export import :Match;
 
 export import Meta.Logic;
+export import Meta.Logic.Negation;
+export import Meta.Logic.Conjunction;
+export import Meta.Logic.Disjunction;
 
 export namespace
 	Meta::Trait
@@ -158,36 +161,39 @@ export namespace
 	};
 }
 
+using ::Meta::Logic::DeduceTerm;
+using ::Meta::Logic::Literal;
+
 export namespace
 	Meta
 {
 	DeduceTerm
-	<	ErasedLiteral<Trait::Data>
-	>	extern
+	<	Literal<Trait::Data>
+	>	const extern
 		IsValue
 	;
 
 	DeduceTerm
-	<	ErasedLiteral<Trait::Scalar_Ref_Void>
-	>	extern
+	<	Literal<Trait::Scalar_Ref_Void>
+	>	const extern
 		IsScalar_Ref_Void
 	;
 
 	DeduceTerm
-	<	ErasedLiteral<Trait::Fund_Array>
-	>	extern
+	<	Literal<Trait::Fund_Array>
+	>	const extern
 		IsFund_Array
 	;
 
 	DeduceTerm
 	<	Literal<Trait::Int_Enum_Class_LRef_Free>
-	>	extern
+	>	const extern
 		IsInt_Enum_Class_LRef_Free
 	;
 
 	DeduceTerm
 	<	Literal<Trait::Signed_Scoped_Ptr>
-	>	extern
+	>	const extern
 		IsSigned_Scoped_Ptr
 	;
 
@@ -195,21 +201,21 @@ export namespace
 	<	not IsFund_Array
 	and	not IsScalar_Ref_Void
 	and	not IsValue
-	>	extern
+	>	const extern
 		IsFunction
 	;
 
 	DeduceTerm
 	<	not IsInt_Enum_Class_LRef_Free
 	and	IsFunction
-	>	extern
+	>	const extern
 		IsOwnedFunction
 	;
 
 	DeduceTerm
 	<	IsInt_Enum_Class_LRef_Free
 	and	IsFunction
-	>	extern
+	>	const extern
 		IsFreeFunction
 	;
 
@@ -217,7 +223,7 @@ export namespace
 	<	IsFund_Array
 	and	IsScalar_Ref_Void
 	and	not IsValue
-	>	extern
+	>	const extern
 		IsVoid
 	;
 
@@ -225,7 +231,7 @@ export namespace
 	<	IsFund_Array
 	and	not IsScalar_Ref_Void
 	and	not IsValue
-	>	extern
+	>	const extern
 		IsUnboundedArray
 	;
 
@@ -233,35 +239,35 @@ export namespace
 	<	not IsFund_Array
 	and	IsScalar_Ref_Void
 	and	not IsValue
-	>	extern
+	>	const extern
 		IsReference
 	;
 
 	DeduceTerm
 	<	IsInt_Enum_Class_LRef_Free
 	and	IsReference
-	>	extern
+	>	const extern
 		IsLValueReference
 	;
 
 	DeduceTerm
 	<	not IsInt_Enum_Class_LRef_Free
 	and	IsReference
-	>	extern
+	>	const extern
 		IsRValueReference
 	;
 
 	DeduceTerm
 	<	IsScalar_Ref_Void
 	and	IsValue
-	>	extern
+	>	const extern
 		IsScalar
 	;
 
 	DeduceTerm
 	<	IsFund_Array
 	and	IsScalar
-	>	extern
+	>	const extern
 		IsFundamentalScalar
 	;
 
@@ -269,42 +275,42 @@ export namespace
 	<	IsSigned_Scoped_Ptr
 	and	not IsInt_Enum_Class_LRef_Free
 	and	IsFundamentalScalar
-	>	extern
+	>	const extern
 		IsFloatingPoint
 	;
 
 	DeduceTerm
 	<	IsInt_Enum_Class_LRef_Free
 	and	IsFundamentalScalar
-	>	extern
+	>	const extern
 		IsIntegral
 	;
 
 	DeduceTerm
 	<	IsIntegral
 	or	IsFloatingPoint
-	>	extern
+	>	const extern
 		IsArithmetic
 	;
 
 	DeduceTerm
 	<	not IsSigned_Scoped_Ptr
 	and	IsIntegral
-	>	extern
+	>	const extern
 		IsUnsigned
 	;
 
 	DeduceTerm
 	<	IsSigned_Scoped_Ptr
 	and	IsIntegral
-	>	extern
+	>	const extern
 		IsSignedIntegral
 	;
 
 	DeduceTerm
 	<	IsSigned_Scoped_Ptr
 	and	IsFundamentalScalar
-	>	extern
+	>	const extern
 		IsSigned
 	;
 
@@ -313,7 +319,7 @@ export namespace
 	and	not IsInt_Enum_Class_LRef_Free
 	and	not IsFund_Array
 	and	IsScalar
-	>	extern
+	>	const extern
 		IsPointer
 	;
 
@@ -321,7 +327,7 @@ export namespace
 	<	not IsSigned_Scoped_Ptr
 	and	not IsInt_Enum_Class_LRef_Free
 	and	IsFundamentalScalar
-	>	extern
+	>	const extern
 		IsNullPointer
 	;
 
@@ -330,21 +336,21 @@ export namespace
 	and	not IsInt_Enum_Class_LRef_Free
 	and	not IsFund_Array
 	and	IsScalar
-	>	extern
+	>	const extern
 		IsMemberPointer
 	;
 
 	DeduceTerm
 	<	not IsScalar_Ref_Void
 	and	IsValue
-	>	extern
+	>	const extern
 		IsCompoundObject
 	;
 
 	DeduceTerm
 	<	IsFund_Array
 	and	IsCompoundObject
-	>	extern
+	>	const extern
 		IsBoundedArray
 	;
 
@@ -352,56 +358,56 @@ export namespace
 	<	IsInt_Enum_Class_LRef_Free
 	and	not IsFund_Array
 	and	IsScalar
-	>	extern
+	>	const extern
 		IsEnum
 	;
 
 	DeduceTerm
 	<	IsSigned_Scoped_Ptr
 	and	IsEnum
-	>	extern
+	>	const extern
 		IsScopedEnum
 	;
 
 	DeduceTerm
 	<	not IsSigned_Scoped_Ptr
 	and	IsEnum
-	>	extern
+	>	const extern
 		IsUnscopedEnum
 	;
 
 	DeduceTerm
 	<	not IsFund_Array
 	and	IsCompoundObject
-	>	extern
+	>	const extern
 		IsCustom
 	;
 
 	DeduceTerm
 	<	IsInt_Enum_Class_LRef_Free
 	and	IsCustom
-	>	extern
+	>	const extern
 		IsClass
 	;
 
 	DeduceTerm
 	<	not IsInt_Enum_Class_LRef_Free
 	and	IsCustom
-	>	extern
+	>	const extern
 		IsUnion
 	;
 
 	DeduceTerm
 	<	IsValue
 	or	IsUnboundedArray
-	>	extern
+	>	const extern
 		IsObject
 	;
 
 	DeduceTerm
 	<	IsBoundedArray
 	or	IsUnboundedArray
-	>	extern
+	>	const extern
 		IsArray
 	;
 
@@ -409,7 +415,7 @@ export namespace
 	<	IsArithmetic
 	or	IsVoid
 	or	IsNullPointer
-	>	extern
+	>	const extern
 		IsFundamental
 	;
 
@@ -421,28 +427,28 @@ export namespace
 	or	IsMemberPointer
 	or	IsCustom
 	or	IsEnum
-	>	extern
+	>	const extern
 		IsCompound
 	;
 
 	DeduceTerm
 	<	IsObject
 	or	IsFreeFunction
-	>	extern
+	>	const extern
 		IsReferable
 	;
 
 	DeduceTerm
 	<	IsReferable
 	or	IsVoid
-	>	extern
+	>	const extern
 		IsPointable
 	;
 
 	DeduceTerm
 	<	IsReferable
 	or	IsReference
-	>	extern
+	>	const extern
 		IsArgument
 	;
 
@@ -451,28 +457,28 @@ export namespace
 		and	not IsBoundedArray
 		)
 	or	IsReference
-	>	extern
+	>	const extern
 		IsParameter
 	;
 
 	DeduceTerm
 	<	IsParameter
 	or	IsVoid
-	>	extern
+	>	const extern
 		IsReturnable
 	;
 
 	DeduceTerm
 	<	IsValue
 	or	IsReference
-	>	extern
+	>	const extern
 		IsDataMember
 	;
 
 	DeduceTerm
 	<	IsObject
 	or	IsVoid
-	>	extern
+	>	const extern
 		IsCVQualifiable
 	;
 }

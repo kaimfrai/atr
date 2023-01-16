@@ -1,16 +1,17 @@
 export module Test.Meta.Logic.Cache.P;
 
-import Meta.Logic;
+import Meta.Logic.Term;
+import Meta.Logic.Erased.Term;
 
 export
 {
-	using ::Meta::DeduceTerm;
+	using ::Meta::Logic::DeduceTerm;
 
 	struct
 		p
 	{};
 	DeduceTerm
-	<	::Meta::ErasedLiteral
+	<	::Meta::Logic::Erased::Literal
 		<	p
 		>
 	>	const extern
@@ -21,7 +22,7 @@ export
 		q
 	{};
 	DeduceTerm
-	<	::Meta::ErasedLiteral
+	<	::Meta::Logic::Erased::Literal
 		<	q
 		>
 	>	const extern
@@ -32,7 +33,7 @@ export
 		r
 	{};
 	DeduceTerm
-	<	::Meta::ErasedLiteral
+	<	::Meta::Logic::Erased::Literal
 		<	r
 		>
 	>	const extern

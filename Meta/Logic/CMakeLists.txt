@@ -1,11 +1,14 @@
 add_single_file_modules(
 	Logic.cpp
 
-	LiteralBase.cpp
-	Term.cpp
+	Conjunction.cpp
 	Constraint.cpp
-	ErasedTerm.cpp
+	Disjunction.cpp
+	Equivalence.cpp
+	LiteralBase.cpp
+	Negation.cpp
+	Term.cpp
 )
 
 add_subdirectory(Bit)
-add_subdirectory(ErasedTerm)
+add_subdirectory(Erased)

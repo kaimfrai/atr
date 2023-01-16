@@ -107,5 +107,5 @@ static_assert
 (	(	IsFundamental
 	or	IsCompound
 	)
-==	True
+==	Logic::True
 );

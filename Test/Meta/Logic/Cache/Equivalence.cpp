@@ -1,23 +1,21 @@
 export module Test.Meta.Logic.Cache.Equivalence;
 
-import Meta.Logic.ErasedTerm;
+import Meta.Logic.Erased.Term;
 import Meta.Logic.Term;
 import Meta.Logic.Bit.Clause;
 //	provide custom Equivalence
-import Meta.Logic.ErasedTerm.Equivalence;
+import Meta.Logic.Erased.Equivalence;
 
 import Std;
 
 export
 {
-	using ::Meta::DeduceTerm;
-
 	[[nodiscard]]
 	auto constexpr
 	(	operator ==
-	)	(	::Meta::ErasedTerm const
+	)	(	::Meta::Logic::Erased::Term const
 			&	i_rLeft
-		,	::Meta::ErasedTerm const
+		,	::Meta::Logic::Erased::Term const
 			&	i_rRight
 		)
 		noexcept
@@ -25,7 +23,7 @@ export
 	{
 		if	(	bool const
 					bEquivalent
-				=	::Meta::operator ==
+				=	::Meta::Logic::Erased::operator ==
 					(	i_rLeft
 					,	i_rRight
 					)

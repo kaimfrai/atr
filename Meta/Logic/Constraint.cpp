@@ -2,7 +2,7 @@ export module Meta.Logic.Constraint;
 
 export import Meta.Logic.LiteralBase;
 export import Meta.Logic.Term;
-export import Meta.Logic.ErasedTerm;
+export import Meta.Logic.Erased.Term;
 
 import Meta.Size;
 
@@ -118,7 +118,7 @@ export namespace
 	;
 
 	template
-		<	ErasedTerm
+		<	Logic::Erased::Term
 				t_vTerm
 		>
 	struct
@@ -127,7 +127,9 @@ export namespace
 		using
 			IndexType
 		=	typename
-				ErasedTerm
+				Logic
+			::	Erased
+			::	Term
 			::	IndexType
 		;
 
@@ -202,7 +204,7 @@ export namespace
 	};
 
 	template
-		<	ErasedTerm const
+		<	Logic::Erased::Term const
 			&	t_rTerm
 		>
 	struct
@@ -235,7 +237,7 @@ export namespace
 	template
 		<	typename
 				t_tProto
-		,	ErasedTerm const
+		,	Logic::Erased::Term const
 			&	t_rTerm
 		>
 	concept

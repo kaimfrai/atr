@@ -1,26 +1,27 @@
-export module Meta.Logic.ErasedTerm.Negation;
+export module Meta.Logic.Erased.Negation;
 
-import Meta.Logic.ErasedTerm;
+import Meta.Logic.Erased.Term;
 import Meta.Logic.Bit.Negation;
 
 export namespace
-	Meta
+	Meta::Logic::Erased
 {
 	[[nodiscard]]
 	auto constexpr
 	(	operator not
-	)	(	ErasedTerm const
+	)	(	Term const
 			&	i_rTerm
 		)
 		noexcept
-	->	ErasedTerm
+	->	Term
 	{	return
-		ErasedTerm
+		Term
 		{	Negation
 			(	i_rTerm
 			.	BitTerm
 			)
-		,	i_rTerm.Literals
+		,	i_rTerm
+		.	Literals
 		};
 	}
 }

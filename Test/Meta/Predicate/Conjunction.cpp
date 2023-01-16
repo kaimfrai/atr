@@ -59,5 +59,5 @@ static_assert
 	and	not
 		IsCompound
 	)
-==	False
+==	Logic::False
 );

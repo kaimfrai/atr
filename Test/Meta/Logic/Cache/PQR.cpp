@@ -3,7 +3,7 @@ export module Test.Meta.Logic.Cache.PQR;
 export import Test.Meta.Logic.Cache.P;
 export import Test.Meta.Logic.Cache.nP;
 export import Test.Meta.Logic.Cache.PQ;
-import Meta.Logic.ErasedTerm.Conjunction;
+import Meta.Logic.Conjunction;
 
 export
 {

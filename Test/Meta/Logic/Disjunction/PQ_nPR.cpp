@@ -11,7 +11,7 @@ import Test.Meta.Logic.Cache.P_Q_R;
 import Test.Meta.Logic.Cache.PQ_PR_nPnQ;
 import Test.Meta.Logic.Cache.PQ_nPR_nQnR;
 import Test.Meta.Logic.Cache.Equivalence;
-import Meta.Logic.ErasedTerm.Disjunction;
+import Meta.Logic.Disjunction;
 
 ///	********************************************************
 ///	PQ_nPR

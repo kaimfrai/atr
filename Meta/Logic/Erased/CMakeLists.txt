@@ -3,4 +3,5 @@ add_single_file_modules(
 	Disjunction.cpp
 	Equivalence.cpp
 	Negation.cpp
+	Term.cpp
 )

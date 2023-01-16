@@ -1,6 +1,6 @@
 import Test.Meta.Logic.Cache.PQR_PnQnR_nPQnR_nPnQR;
 import Test.Meta.Logic.Cache.Equivalence;
-import Meta.Logic.ErasedTerm.Negation;
+import Meta.Logic.Negation;
 
 ///	********************************************************
 ///	PQR_PnQnR_nPQnR_nPnQR

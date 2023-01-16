@@ -1,6 +1,6 @@
 import Test.Meta.Logic.Cache.PQ_PR;
 import Test.Meta.Logic.Cache.Equivalence;
-import Meta.Logic.ErasedTerm.Disjunction;
+import Meta.Logic.Disjunction;
 
 ///	********************************************************
 ///	PQ_PR

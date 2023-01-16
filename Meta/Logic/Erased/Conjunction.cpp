@@ -1,23 +1,23 @@
-export module Meta.Logic.ErasedTerm.Conjunction;
+export module Meta.Logic.Erased.Conjunction;
 
-import Meta.Logic.ErasedTerm;
+import Meta.Logic.Erased.Term;
 import Meta.Logic.Bit.Conjunction;
 
 export namespace
-	Meta
+	Meta::Logic::Erased
 {
 	[[nodiscard]]
 	auto constexpr
 	(	operator and
-	)	(	ErasedTerm const
+	)	(	Term const
 			&	i_rLeft
-		,	ErasedTerm const
+		,	Term const
 			&	i_rRight
 		)
 		noexcept
-	->	ErasedTerm
+	->	Term
 	{	return
-		ErasedTerm::ComputeErasedTerm
+		Term::Compute
 		(	i_rLeft
 		,	i_rRight
 		,	Logic::Bit::ComputeConjunction

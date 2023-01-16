@@ -1,7 +1,7 @@
 export module Meta.Logic.Term;
 
 import Meta.Logic.Bit.Term;
-import Meta.Logic.ErasedTerm;
+import Meta.Logic.Erased.Term;
 import Meta.Logic.Bit.Evaluate;
 
 import Meta.Token;
@@ -10,10 +10,10 @@ import Meta.Size;
 import Std;
 
 export namespace
-	Meta
+	Meta::Logic
 {
 	template
-		<	Logic::Bit::Term
+		<	Bit::Term
 				t_vTerm
 		,	typename
 			...	t_tpLiteral
@@ -22,7 +22,7 @@ export namespace
 		Term final
 	{
 	public:
-		static ErasedTerm constexpr
+		static Erased::Term constexpr
 			Erased
 		{	t_vTerm
 		,	{	Type<t_tpLiteral>
@@ -31,7 +31,7 @@ export namespace
 		};
 
 		explicit(false) constexpr
-		(	operator ErasedTerm const&
+		(	operator Erased::Term const&
 		)	()	const
 			noexcept
 		{	return Erased;	}
@@ -46,19 +46,21 @@ export namespace
 		=	t_vTerm.ClauseCount()
 		;
 
+		[[nodiscard]]
 		static auto constexpr
 		(	operator ()
 		)	(	auto
 				&&
 				...	i_rpArgument
 			)
+			noexcept
 		->	bool
 		{	return
-			Logic::Bit::EvaluateTerm
+			Bit::EvaluateTerm
 			(	t_vTerm
-			,	std::array
+			,	::std::array
 				{	t_tpLiteral{}
-					(	std::forward<decltype(i_rpArgument)>
+					(	::std::forward<decltype(i_rpArgument)>
 						(	i_rpArgument
 						)
 						...
@@ -70,7 +72,7 @@ export namespace
 	};
 
 	template
-		<	Logic::Bit::Term
+		<	Bit::Term
 				t_vTerm
 		,	typename
 			...	t_tpLiteral
@@ -83,7 +85,7 @@ export namespace
 }
 
 template
-	<	::Meta::ErasedTerm
+	<	::Meta::Logic::Erased::Term
 			t_vErased
 	,	::Meta::USize
 		...	t_npIndex
@@ -92,7 +94,7 @@ auto constexpr
 	MakeTerm
 	(	::Meta::IndexToken<t_npIndex...>
 	)
-->	::Meta::Term
+->	::Meta::Logic::Term
 	<	t_vErased.BitTerm
 	,	::Meta::RestoreTypeEntity
 		<	t_vErased
@@ -105,10 +107,10 @@ auto constexpr
 ;
 
 export namespace
-	Meta
+	Meta::Logic
 {
 	template
-		<	ErasedTerm
+		<	Erased::Term
 				t_vErasedTerm
 		>
 	using
@@ -121,11 +123,11 @@ export namespace
 		)
 	;
 
-	DeduceTerm<ErasedTrue> extern
+	DeduceTerm<Erased::True> const extern
 		True
 	;
 
-	DeduceTerm<ErasedFalse> extern
+	DeduceTerm<Erased::False> const extern
 		False
 	;
 
@@ -134,7 +136,7 @@ export namespace
 				t_tLiteral
 		>
 	DeduceTerm
-	<	ErasedLiteral
+	<	Erased::Literal
 		<	t_tLiteral
 		>
 	>	inline

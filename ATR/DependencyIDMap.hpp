@@ -88,6 +88,9 @@ export namespace
 	};
 }
 
+using ::Meta::Logic::DeduceTerm;
+using ::Meta::Logic::Literal;
+
 export namespace
 	ATR
 {
@@ -95,9 +98,9 @@ export namespace
 		<	Meta::StringLiteral
 			...	t_tpMemberName
 		>
-	Meta::DeduceTerm
+	DeduceTerm
 	<(	...
-	and	Meta::Literal
+	and	Literal
 		<	Trait::HasDataMember
 			<	Meta::ID_T<t_tpMemberName>
 			>

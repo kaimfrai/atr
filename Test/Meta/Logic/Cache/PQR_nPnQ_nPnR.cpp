@@ -4,7 +4,7 @@ export import Test.Meta.Logic.Cache.PQ;
 export import Test.Meta.Logic.Cache.PQR;
 export import Test.Meta.Logic.Cache.PQ_PR;
 export import Test.Meta.Logic.Cache.PQR_nPnQ;
-import Meta.Logic.ErasedTerm.Disjunction;
+import Meta.Logic.Disjunction;
 
 export
 {

@@ -1,23 +1,23 @@
-export module Meta.Logic.ErasedTerm.Equivalence;
+export module Meta.Logic.Erased.Equivalence;
 
-import Meta.Logic.ErasedTerm;
+import Meta.Logic.Erased.Term;
 import Meta.Logic.Bit.Equivalence;
 
 export namespace
-	Meta
+	Meta::Logic::Erased
 {
 	[[nodiscard]]
 	auto constexpr
 	(	operator ==
-	)	(	ErasedTerm const
+	)	(	Term const
 			&	i_rLeft
-		,	ErasedTerm const
+		,	Term const
 			&	i_rRight
 		)
 		noexcept
 	->	bool
 	{	return
-		ErasedTerm::ComputeErasedTerm
+		Term::Compute
 		(	i_rLeft
 		,	i_rRight
 		,	Logic::Bit::ComputeEquivalence

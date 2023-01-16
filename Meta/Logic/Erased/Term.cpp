@@ -1,4 +1,4 @@
-export module Meta.Logic.ErasedTerm;
+export module Meta.Logic.Erased.Term;
 
 export import Meta.Token;
 
@@ -17,41 +17,45 @@ import Std;
 using namespace ::Meta::Literals;
 
 export namespace
-	Meta
+	Meta::Logic::Erased
 {
 	struct
-		ErasedTerm final
+		Term final
 	{
 		using
 			LiteralBufferType
 		=	::std::array
 			<	EraseTypeToken
-			,	Logic::Bit::LiteralLimit.get()
+			,	Bit::LiteralLimit.get()
 			>
 		;
 
 		using
 			IndexType
 		=	typename
-				Logic::Bit::Term
+				Logic
+			::	Bit
+			::	Term
 			::	IndexType
 		;
 
-		Logic::Bit::Term const
+		Bit::Term const
 			BitTerm
 		;
 		LiteralBufferType const
 			Literals
 		{};
 
+		[[nodiscard]]
 		static auto constexpr
 		(	TrimLiterals
-		)	(	Logic::Bit::Term const
+		)	(	Bit::Term const
 				&	i_rResult
-			,	std::span<EraseTypeToken const>
+			,	::std::span<EraseTypeToken const>
 					i_vUnion
 			)
-		->	ErasedTerm
+			noexcept
+		->	Term
 		{
 			LiteralBufferType
 				vLiterals
@@ -62,7 +66,7 @@ export namespace
 					=	0uz
 				;	auto
 						vBitIndex
-				:	Bit::OneIndexRange
+				:	::Meta::Bit::OneIndexRange
 					{	i_rResult.LiteralField()
 					}
 				)
@@ -85,32 +89,50 @@ export namespace
 			};
 		}
 
+		[[nodiscard]]
 		static auto constexpr
 		(	ProcessComputation
 		)	(	bool
 					i_bEquivalence
-			,	std::span<EraseTypeToken const>
+			,	::std::span<EraseTypeToken const>
 			)
+			noexcept
 		->	bool
-		{	return i_bEquivalence;	}
+		{	return
+				i_bEquivalence
+			;
+		}
 
+		[[nodiscard]]
 		static auto constexpr
 		(	ProcessComputation
-		)	(	Logic::Bit::Term const
+		)	(	Bit::Term const
 				&	i_rResult
 			,	std::span<EraseTypeToken const>
 					i_vUnion
 			)
-		->	ErasedTerm
-		{	return TrimLiterals(i_rResult, i_vUnion);	}
+			noexcept
+		->	Term
+		{	return
+			TrimLiterals
+			(	i_rResult
+			,	i_vUnion
+			);
+		}
 
+		[[nodiscard]]
 		static auto constexpr
 		(	GetLiteralUnion
-		)	(	ErasedTerm const
+		)	(	Term const
 				&	i_rLeft
-			,	ErasedTerm const
+			,	Term const
 				&	i_rRight
 			)
+			noexcept
+		->	Buffer::Static
+			<	EraseTypeToken
+			,	Logic::Bit::LiteralLimit.get()
+			>
 		{
 			Buffer::Static
 			<	EraseTypeToken
@@ -128,12 +150,14 @@ export namespace
 			return vUnion;
 		}
 
+		[[nodiscard]]
 		auto constexpr
 		(	GetBitTermPermutation
 		)	(	auto const
 				&	i_fMapIndex
 			)	const
-		->	Logic::Bit::Term
+			noexcept
+		->	Bit::Term
 		{
 			Buffer::Static
 			<	IndexType
@@ -162,15 +186,17 @@ export namespace
 			<	typename
 					t_tResult
 			>
+		[[nodiscard]]
 		static auto constexpr
-		(	ComputeErasedTerm
-		)	(	ErasedTerm const
+		(	Compute
+		)	(	Term const
 				&	i_rLeft
-			,	ErasedTerm const
+			,	Term const
 				&	i_rRight
-			,	Logic::Bit::BinaryFunction<t_tResult>
+			,	Bit::BinaryFunction<t_tResult>
 					i_fCompute
 			)
+			noexcept
 		{
 			if	(std::ranges::equal(i_rLeft.LiteralSpan(), i_rRight.LiteralSpan()))
 			{
@@ -233,9 +259,11 @@ export namespace
 			);
 		}
 
+		[[nodiscard]]
 		auto constexpr
 		(	ClauseCount
 		)	()	const
+			noexcept
 		{	return
 				BitTerm
 			.	ClauseCount()
@@ -254,11 +282,13 @@ export namespace
 			};
 		}
 
+		[[nodiscard]]
 		auto constexpr
 		(	GetClause
 		)	(	USize
 					i_nClauseIndex
 			)	const
+			noexcept
 		{	return
 			TrimLiterals
 			(	BitTerm[i_nClauseIndex]
@@ -267,23 +297,23 @@ export namespace
 		}
 	};
 
-	ErasedTerm constexpr inline
-		ErasedTrue
-	{	Logic::Bit::Clause::Absorbing()
+	Term constexpr inline
+		True
+	{	Bit::Clause::Absorbing()
 	};
 
-	ErasedTerm constexpr inline
-		ErasedFalse
-	{	Logic::Bit::Clause::Identity()
+	Term constexpr inline
+		False
+	{	Bit::Clause::Identity()
 	};
 
 	template
 		<	typename
 				t_tLiteral
 		>
-	ErasedTerm constexpr inline
-		ErasedLiteral
-	{	Logic::Bit::Clause{0_bdx}
+	Term constexpr inline
+		Literal
+	{	Bit::Clause{0_bdx}
 	,	{	Type<t_tLiteral>
 		}
 	};

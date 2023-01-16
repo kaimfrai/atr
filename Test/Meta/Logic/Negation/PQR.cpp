@@ -1,7 +1,7 @@
 import Test.Meta.Logic.Cache.PQR;
 import Test.Meta.Logic.Cache.P_Q_R;
 import Test.Meta.Logic.Cache.Equivalence;
-import Meta.Logic.ErasedTerm.Negation;
+import Meta.Logic.Negation;
 
 ///	********************************************************
 ///	PQR
