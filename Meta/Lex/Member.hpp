@@ -1,7 +1,7 @@
-export module Meta.Lex:Member;
+export module Meta.Lex.Member;
 
-export import :CV;
-export import :Function;
+export import Meta.Lex.CV;
+export import Meta.Lex.Function;
 
 import Meta.Token.Type;
 

@@ -1,6 +1,6 @@
-export module Meta.Lex:Transform;
+export module Meta.Lex.Transform;
 
-export import :Tokenizer;
+export import Meta.Lex.Tokenizer;
 
 import Meta.Token.Pointer;
 import Meta.Token.Type;

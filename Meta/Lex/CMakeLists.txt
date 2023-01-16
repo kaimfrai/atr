@@ -1,6 +1,4 @@
-add_module(
-	Lex.hpp
-
+add_single_file_modules(
 	Array.hpp
 	CV.hpp
 	Function.hpp

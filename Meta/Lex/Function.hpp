@@ -1,4 +1,4 @@
-export module Meta.Lex:Function;
+export module Meta.Lex.Function;
 
 import Meta.Token.Sequence;
 import Meta.Token.Type;

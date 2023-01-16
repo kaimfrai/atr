@@ -1,8 +1,8 @@
-export module Meta.Lex:Pointer;
+export module Meta.Lex.Pointer;
 
-export import :CV;
-export import :Array;
-export import :Function;
+export import Meta.Lex.CV;
+export import Meta.Lex.Array;
+export import Meta.Lex.Function;
 
 import Meta.Token.Pointer;
 import Meta.Token.Type;
