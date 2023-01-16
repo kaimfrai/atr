@@ -6,10 +6,13 @@ import :Layout.Bit.Reference;
 
 import Meta.Size;
 import Meta.Predicate;
-import Meta.Token;
+import Meta.Token.Query;
 import Meta.Memory.Size;
 import Meta.Memory.Size.PointerArithmetic;
 import Meta.Bit.Index;
+import Meta.Token.Reference;
+import Meta.Token.Type;
+import Meta.Token.Specifier;
 
 import Std;
 

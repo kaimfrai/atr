@@ -1,4 +1,5 @@
 import Meta.Predicate;
+import Meta.Token.Type;
 
 using Meta::Type;
 using Meta::IsValue;

@@ -6,6 +6,7 @@ export import Meta.Logic;
 export import Meta.Logic.Negation;
 export import Meta.Logic.Conjunction;
 export import Meta.Logic.Disjunction;
+import Meta.Token.Type;
 
 export namespace
 	Meta::Trait

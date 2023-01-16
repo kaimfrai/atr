@@ -2,11 +2,15 @@ export module ATR:Layout.MemberOffset;
 
 export import :Erase;
 
+import Meta.Token.Specifier;
 import Meta.Size;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.PointerArithmetic;
 export import Meta.Predicate;
+import Meta.Token.Reference;
+import Meta.Token.CV;
+import Meta.Token.Type;
 
 import Std;
 

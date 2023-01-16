@@ -2,9 +2,10 @@ export module ATR:Layout.Member;
 
 import :DataMember;
 
+import Meta.Token.Query;
+import Meta.Token.Type;
 import Meta.ID;
 import Meta.Size;
-import Meta.Token;
 
 using ::ATR::MemberInfo;
 using ::ATR::MemberSortKey;

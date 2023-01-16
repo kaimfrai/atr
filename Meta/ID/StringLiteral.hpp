@@ -3,6 +3,7 @@ export module Meta.ID:StringLiteral;
 export import Meta.Data;
 import Meta.Size;
 import Meta.Buffer.Iterator;
+import Meta.Token.Array;
 
 export import Std;
 

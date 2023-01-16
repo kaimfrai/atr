@@ -1,6 +1,6 @@
 export module Meta.Logic.Erased.Clause;
 
-export import Meta.Token;
+import Meta.Token.Type;
 
 import Meta.Logic.Erased.Literal;
 import Meta.Logic.Bit.Clause;

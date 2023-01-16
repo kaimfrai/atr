@@ -1,6 +1,7 @@
 export module Meta.Token.FunctionTransform;
 
-export import Meta.Token.Transform;
+import Meta.Token.Transform;
+import Meta.Token.Type;
 
 export namespace
 	Meta::Transform

@@ -8,5 +8,3 @@ export import :Pointer;
 export import :Reference;
 export import :Tokenizer;
 export import :Transform;
-
-export import Meta.Token;

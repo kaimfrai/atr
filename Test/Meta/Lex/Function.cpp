@@ -1,4 +1,9 @@
 import Meta.Lex;
+import Meta.Token.Reference;
+import Meta.Token.Function;
+import Meta.Token.Type;
+import Meta.Token.CV;
+import Meta.Token.Array;
 
 using Meta::Type;
 using Meta::TokenizeType;

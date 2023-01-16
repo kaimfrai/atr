@@ -1,6 +1,6 @@
 export module Meta.Logic.Erased.Literal;
 
-export import Meta.Token;
+import Meta.Token.Type;
 import Meta.Logic.LiteralBase;
 
 export namespace

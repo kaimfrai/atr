@@ -3,6 +3,7 @@ export module Meta.Predicate:Trivial;
 export import :Regular;
 
 export import Meta.Logic;
+import Meta.Token.Type;
 
 import Std;
 

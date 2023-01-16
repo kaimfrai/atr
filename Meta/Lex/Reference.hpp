@@ -4,7 +4,8 @@ export import :CV;
 export import :Array;
 export import :Function;
 
-export import Meta.Token;
+import Meta.Token.Reference;
+import Meta.Token.Type;
 
 export namespace
 	Meta::Lex

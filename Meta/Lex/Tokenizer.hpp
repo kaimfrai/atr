@@ -7,7 +7,12 @@ export import :Member;
 export import :Pointer;
 export import :Reference;
 
-export import Meta.Token;
+import Meta.Token.Specifier;
+import Meta.Token.Function;
+import Meta.Token.Reference;
+import Meta.Token.Type;
+import Meta.Token.CV;
+import Meta.Token.Array;
 import Meta.Size;
 
 export namespace

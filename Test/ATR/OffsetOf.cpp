@@ -7,6 +7,8 @@ import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Scale;
 import Meta.Bit.Index;
+import Meta.Token.Specifier;
+import Meta.Token.Type;
 
 import Std;
 

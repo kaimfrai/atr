@@ -4,7 +4,9 @@ import Meta.Logic.Bit.Term;
 import Meta.Logic.Erased.Term;
 import Meta.Logic.Bit.Evaluate;
 import Meta.Bit.Index;
-import Meta.Token;
+import Meta.Token.Type;
+import Meta.Token.Index;
+import Meta.Token.Sequence;
 import Meta.Size;
 
 import Std;

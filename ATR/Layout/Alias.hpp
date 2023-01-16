@@ -3,6 +3,7 @@ export module ATR:Layout.Alias;
 import :DataMember;
 
 import Meta.ID;
+import Meta.Token.Type;
 
 using ::Meta::ID_Of;
 using ::ATR::MemberInfo;

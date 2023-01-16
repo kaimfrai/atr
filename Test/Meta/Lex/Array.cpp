@@ -1,5 +1,9 @@
 import Meta.Lex;
 import Meta.Size;
+import Meta.Token.Specifier;
+import Meta.Token.Type;
+import Meta.Token.CV;
+import Meta.Token.Array;
 
 using Meta::Specifier::Mut;
 using Meta::Type;

@@ -4,6 +4,7 @@ export import Meta.Logic.LiteralBase;
 export import Meta.Logic.Erased.Literal;
 export import Meta.Logic.Erased.Clause;
 export import Meta.Logic.Erased.Term;
+import Meta.Token.Type;
 
 export namespace
 	Meta::Proto

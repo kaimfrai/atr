@@ -1,6 +1,6 @@
 module Meta.ID:Decimal;
 
-import Meta.Token;
+import Meta.Token.Index;
 
 auto constexpr
 (	FromChar

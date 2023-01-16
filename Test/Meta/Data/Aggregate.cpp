@@ -1,4 +1,6 @@
 import Meta.Data;
+import Meta.Token.Specifier;
+import Meta.Token.Type;
 
 import Std;
 

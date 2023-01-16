@@ -1,6 +1,9 @@
 export module Meta.Lex:Function;
 
-export import Meta.Token;
+import Meta.Token.Sequence;
+import Meta.Token.Type;
+import Meta.Token.Function;
+import Meta.Token.Index;
 import Meta.Size;
 
 export namespace

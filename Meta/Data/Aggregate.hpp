@@ -2,10 +2,16 @@ export module Meta.Data:Aggregate;
 
 export import :Object;
 
-export import Meta.Token;
 export import Meta.Lex;
 import Meta.Buffer.Iterator;
 import Meta.Size;
+import Meta.Token.Reference;
+import Meta.Token.Function;
+import Meta.Token.Index;
+import Meta.Token.Sequence;
+import Meta.Token.CV;
+import Meta.Token.Type;
+import Meta.Token.Array;
 
 import Std;
 

@@ -1,4 +1,7 @@
 import Meta.Lex;
+import Meta.Token.Specifier;
+import Meta.Token.Type;
+import Meta.Token.CV;
 
 using Meta::Specifier::Mut;
 using Meta::Type;

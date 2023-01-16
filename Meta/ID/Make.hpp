@@ -6,7 +6,8 @@ import :Decimal;
 import :Template;
 import :StringLiteral;
 
-import Meta.Token;
+import Meta.Token.Index;
+import Meta.Token.Sequence;
 import Meta.Size;
 
 template

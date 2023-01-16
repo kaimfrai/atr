@@ -1,6 +1,6 @@
 export module Meta.Token.Sequence;
 
-export import Meta.Token.Index;
+import Meta.Token.Index;
 
 import Meta.Size;
 

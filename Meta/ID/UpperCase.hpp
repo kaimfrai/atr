@@ -1,6 +1,6 @@
 module Meta.ID:UpperCase;
 
-import Meta.Token;
+import Meta.Token.Index;
 
 char constexpr inline A = 'A';
 char constexpr inline B = 'B';

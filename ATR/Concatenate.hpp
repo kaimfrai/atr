@@ -4,6 +4,8 @@ export import :DataMember;
 
 export import Meta.ID;
 export import Meta.Functional;
+import Meta.Token.Sequence;
+import Meta.Token.Type;
 
 namespace
 	ATR

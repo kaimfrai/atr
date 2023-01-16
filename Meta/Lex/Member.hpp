@@ -3,7 +3,7 @@ export module Meta.Lex:Member;
 export import :CV;
 export import :Function;
 
-export import Meta.Token;
+import Meta.Token.Type;
 
 export namespace
 	Meta::Lex

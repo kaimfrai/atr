@@ -1,7 +1,8 @@
 export module Meta.Dispatch:CharacterSet;
 
 import Meta.Size;
-export import Meta.Token;
+import Meta.Token.Sequence;
+import Meta.Token.Index;
 
 export namespace
 	Meta::Dispatch

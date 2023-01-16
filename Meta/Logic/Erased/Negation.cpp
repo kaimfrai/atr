@@ -3,6 +3,8 @@ export module Meta.Logic.Erased.Negation;
 import Meta.Logic.Erased.Term;
 import Meta.Logic.Bit.Negation;
 
+import Std;
+
 export namespace
 	Meta::Logic::Erased
 {

@@ -1,6 +1,6 @@
 export module Meta.Logic.Erased.Term;
 
-export import Meta.Token;
+import Meta.Token.Type;
 
 import Meta.Logic.Bit.Term;
 import Meta.Logic.Bit.BinaryFunction;
@@ -14,7 +14,6 @@ import Meta.Bit.Index.Compare;
 import Meta.Size;
 
 import Std;
-
 
 export namespace
 	Meta::Logic::Erased

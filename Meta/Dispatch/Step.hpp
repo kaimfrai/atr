@@ -5,8 +5,8 @@ export import :Final;
 export import :StepPair;
 
 export import Meta.ID;
-export import Meta.Token;
 export import Meta.Lex;
+import Meta.Token.Index;
 import Meta.Size;
 
 namespace

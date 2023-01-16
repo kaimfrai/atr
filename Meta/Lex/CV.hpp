@@ -1,6 +1,7 @@
 export module Meta.Lex:CV;
 
-export import Meta.Token;
+import Meta.Token.Type;
+import Meta.Token.CV;
 
 import Std;
 

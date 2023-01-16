@@ -8,8 +8,9 @@ import :Layout.Member;
 import :Layout.Static;
 
 import Meta.Buffer.Iterator;
+import Meta.Token.Index;
+import Meta.Token.Sequence;
 import Meta.Size;
-import Meta.Token;
 
 import Std;
 

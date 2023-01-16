@@ -3,8 +3,9 @@ export module Meta.Data:Value;
 export import :Aggregate;
 
 export import Meta.Lex;
-export import Meta.Token;
 import Meta.Buffer.Iterator;
+import Meta.Token.Array;
+import Meta.Token.Type;
 import Meta.Size;
 
 import Std;

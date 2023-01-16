@@ -3,10 +3,15 @@ export module ATR:DataMember;
 export import Meta.ID;
 export import Meta.Data;
 export import Meta.Predicate;
-export import Meta.Token;
+import Meta.Token.Query;
+import Meta.Token.Type;
 import Meta.Size;
 import Meta.Functional;
 import Meta.Arithmetic.Literals;
+import Meta.Token.Sequence;
+import Meta.Token.Index;
+import Meta.Token.Specifier;
+import Meta.Token.Array;
 
 export import Std;
 

@@ -2,7 +2,9 @@ export module Meta.Data:TupleList;
 
 export import :Aggregate;
 
-export import Meta.Token;
+import Meta.Token.Index;
+import Meta.Token.Sequence;
+import Meta.Token.Type;
 import Meta.Size;
 
 import Std;

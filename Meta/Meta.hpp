@@ -8,4 +8,3 @@ export import Meta.ID;
 export import Meta.Lex;
 export import Meta.Logic;
 export import Meta.Predicate;
-export import Meta.Token;

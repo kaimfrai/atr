@@ -1,6 +1,6 @@
 export module Evaluation.Shared:TypeConstruct;
 
-export import Meta.Token;
+import Meta.Token.Type;
 
 export
 {

@@ -2,7 +2,8 @@ export module Meta.Lex:Array;
 
 export import :CV;
 
-export import Meta.Token;
+import Meta.Token.Array;
+import Meta.Token.Type;
 import Meta.Size;
 
 export namespace

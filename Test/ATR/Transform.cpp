@@ -1,6 +1,8 @@
 import ATR;
 
 import Meta.Memory.Size;
+import Meta.Token.CV;
+import Meta.Token.Specifier;
 
 using namespace ::Meta::Literals;
 

@@ -1,4 +1,7 @@
 import Meta.Lex;
+import Meta.Token.Reference;
+import Meta.Token.Type;
+import Meta.Token.CV;
 
 using Meta::Type;
 using Meta::TokenizeType;

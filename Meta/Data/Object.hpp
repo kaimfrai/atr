@@ -1,6 +1,8 @@
 export module Meta.Data:Object;
 
 export import Meta.Lex;
+import Meta.Token.Specifier;
+import Meta.Token.CV;
 
 export namespace
 	Meta::Data

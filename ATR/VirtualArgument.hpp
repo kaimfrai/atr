@@ -3,8 +3,8 @@ export module ATR:VirtualArgument;
 export import :Address;
 
 export import Meta.ID;
-export import Meta.Token;
 export import Meta.Predicate;
+import Meta.Token.Type;
 import Meta.Size;
 
 import Std;

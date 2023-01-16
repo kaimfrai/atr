@@ -6,9 +6,11 @@ import :Layout.Member;
 
 import Meta.ID;
 import Meta.Size;
-import Meta.Token;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
+import Meta.Token.Sequence;
+import Meta.Token.Index;
+import Meta.Token.Specifier;
 
 import Std;
 

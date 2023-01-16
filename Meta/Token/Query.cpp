@@ -1,7 +1,7 @@
 export module Meta.Token.Query;
 
-export import Meta.Token.Specifier;
-export import Meta.Token.Type;
+import Meta.Token.Specifier;
+import Meta.Token.Type;
 
 import Meta.Memory.Size;
 import Meta.Size;

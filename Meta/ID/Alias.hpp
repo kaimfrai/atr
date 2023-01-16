@@ -4,6 +4,8 @@ import :Make;
 export import :StringView;
 export import :StringLiteral;
 
+import Meta.Token.Sequence;
+
 export namespace
 	Meta
 {
