@@ -175,17 +175,17 @@ export namespace
 	template
 		<	typename
 				t_tProto
-		,	Logic::Erased::Term const
-			&	t_rTerm
+		,	Logic::Erased::Term
+				t_vTerm
 		>
 	concept
 		ProtoConstraint
 	=	Proto::Term
 		<	t_tProto
-		,	Trait::ConstraintClause<t_rTerm.GetClause(0x00)>
-		,	Trait::ConstraintClause<t_rTerm.GetClause(0x01)>
-		,	Trait::ConstraintClause<t_rTerm.GetClause(0x02)>
-		,	Trait::ConstraintClause<t_rTerm.GetClause(0x03)>
+		,	Trait::ConstraintClause<t_vTerm.GetClause(0x00)>
+		,	Trait::ConstraintClause<t_vTerm.GetClause(0x01)>
+		,	Trait::ConstraintClause<t_vTerm.GetClause(0x02)>
+		,	Trait::ConstraintClause<t_vTerm.GetClause(0x03)>
 		>
 	;
 }
