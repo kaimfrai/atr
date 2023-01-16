@@ -2,6 +2,7 @@ export module Meta.Logic.Erased.Term;
 
 import Meta.Token.Type;
 
+import Meta.Logic.Bit.Clause;
 import Meta.Logic.Bit.Term;
 import Meta.Logic.Bit.BinaryFunction;
 import Meta.Logic.Erased.Clause;

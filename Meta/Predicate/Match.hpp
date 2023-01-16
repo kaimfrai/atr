@@ -1,7 +1,7 @@
 export module Meta.Predicate:Match;
 
-export import Meta.Logic;
 export import Meta.Lex;
+import Meta.Logic.LiteralBase;
 import Meta.Token.Function;
 import Meta.Token.Type;
 import Meta.Size;

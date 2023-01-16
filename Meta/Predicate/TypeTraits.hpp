@@ -2,8 +2,10 @@ export module Meta.Predicate:TypeTraits;
 
 export import :Category;
 
-export import Meta.Logic;
+import Meta.Logic.LiteralBase;
+import Meta.Logic.Term;
 import Meta.Token.Type;
+import Meta.Logic.Conjunction;
 
 import Std;
 

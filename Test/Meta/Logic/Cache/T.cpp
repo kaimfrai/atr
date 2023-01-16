@@ -1,6 +1,6 @@
 export module Test.Meta.Logic.Cache.T;
 
-import Meta.Logic;
+import Meta.Logic.Term;
 
 export
 {

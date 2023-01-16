@@ -1,6 +1,6 @@
 export module Meta.Logic.Bit.Optimizer;
 
-export import Meta.Logic.Bit.Clause;
+import Meta.Logic.Bit.Clause;
 import Meta.Logic.Bit.LiteralIterator;
 
 import Meta.Buffer.Static;

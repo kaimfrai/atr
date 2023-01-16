@@ -2,10 +2,11 @@ export module Meta.Predicate:Category;
 
 export import :Match;
 
-export import Meta.Logic;
-export import Meta.Logic.Negation;
-export import Meta.Logic.Conjunction;
-export import Meta.Logic.Disjunction;
+import Meta.Logic.LiteralBase;
+import Meta.Logic.Term;
+import Meta.Logic.Negation;
+import Meta.Logic.Conjunction;
+import Meta.Logic.Disjunction;
 import Meta.Token.Type;
 
 export namespace

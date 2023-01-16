@@ -12,6 +12,7 @@ import Meta.Token.Sequence;
 import Meta.Token.Index;
 import Meta.Token.Specifier;
 import Meta.Token.Array;
+import Meta.Logic.Constraint;
 
 export import Std;
 

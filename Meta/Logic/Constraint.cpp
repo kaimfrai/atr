@@ -1,9 +1,8 @@
 export module Meta.Logic.Constraint;
 
-export import Meta.Logic.LiteralBase;
-export import Meta.Logic.Erased.Literal;
-export import Meta.Logic.Erased.Clause;
-export import Meta.Logic.Erased.Term;
+import Meta.Logic.Erased.Literal;
+import Meta.Logic.Erased.Clause;
+import Meta.Logic.Erased.Term;
 import Meta.Token.Type;
 
 export namespace

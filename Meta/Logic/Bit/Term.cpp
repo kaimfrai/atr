@@ -1,7 +1,7 @@
 export module Meta.Logic.Bit.Term;
 
-export import Meta.Logic.Bit.Clause;
-export import Meta.Logic.Bit.LiteralIterator;
+import Meta.Logic.Bit.Clause;
+import Meta.Logic.Bit.LiteralIterator;
 import Meta.Logic.Bit.Optimizer;
 
 import Meta.Size;

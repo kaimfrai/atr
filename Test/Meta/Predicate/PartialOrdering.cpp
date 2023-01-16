@@ -1,4 +1,6 @@
 import Meta.Predicate;
+import Meta.Logic.Constraint;
+import Meta.Logic.Disjunction;
 
 using ::Meta::ProtoConstraint;
 using namespace ::Meta;

@@ -1,5 +1,6 @@
 export module Meta.Logic.Bit.Negation;
 
+import Meta.Logic.Bit.LiteralIterator;
 import Meta.Logic.Bit.Term;
 import Meta.Logic.Bit.Clause;
 import Meta.Logic.Bit.Optimizer;

@@ -6,8 +6,11 @@ export import :Address;
 export import :Layout;
 
 export import Meta.ID;
-export import Meta.Logic;
 import Meta.Token.Type;
+import Meta.Logic.LiteralBase;
+import Meta.Logic.Term;
+import Meta.Logic.Constraint;
+import Meta.Logic.Conjunction;
 
 import Std;
 

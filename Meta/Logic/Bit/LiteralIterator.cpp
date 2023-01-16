@@ -1,7 +1,6 @@
 export module Meta.Logic.Bit.LiteralIterator;
 
-export import Meta.Logic.Bit.Clause;
-
+import Meta.Logic.Bit.Clause;
 import Meta.Bit.Field.Arithmetic;
 import Meta.Bit.Field.Compare;
 import Meta.Bit.Field.LowestOne;

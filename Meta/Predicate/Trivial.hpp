@@ -2,8 +2,10 @@ export module Meta.Predicate:Trivial;
 
 export import :Regular;
 
-export import Meta.Logic;
+import Meta.Logic.LiteralBase;
 import Meta.Token.Type;
+import Meta.Logic.Conjunction;
+import Meta.Logic.Disjunction;
 
 import Std;
 

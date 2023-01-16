@@ -1,4 +1,8 @@
 import Meta.Predicate;
+import Meta.Logic.Conjunction;
+import Meta.Logic.Negation;
+import Meta.Logic.Equivalence;
+import Meta.Logic.Term;
 
 using namespace Meta;
 

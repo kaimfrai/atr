@@ -1,5 +1,6 @@
 export module Meta.Logic.Term;
 
+import Meta.Logic.Bit.Clause;
 import Meta.Logic.Bit.Term;
 import Meta.Logic.Erased.Term;
 import Meta.Logic.Bit.Evaluate;

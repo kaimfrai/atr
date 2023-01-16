@@ -2,9 +2,10 @@ export module Meta.Predicate:Empty;
 
 export import :Regular;
 
-export import Meta.Logic;
 export import Meta.Data;
 import Meta.Token.Type;
+import Meta.Logic.LiteralBase;
+import Meta.Logic.Conjunction;
 
 import Std;
 

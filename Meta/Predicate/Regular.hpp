@@ -2,8 +2,11 @@ export module Meta.Predicate:Regular;
 
 export import :Category;
 
-export import Meta.Logic;
+import Meta.Logic.LiteralBase;
+import Meta.Logic.Term;
 import Meta.Token.Type;
+import Meta.Logic.Conjunction;
+import Meta.Logic.Disjunction;
 
 import Std;
 
