@@ -1,7 +1,7 @@
-export module Meta.Dispatch:Final;
+export module Meta.Dispatch.Final;
 
-export import :Error;
-export import :Path;
+export import Meta.Dispatch.Error;
+export import Meta.Dispatch.Path;
 
 export import Meta.Lex;
 

@@ -1,4 +1,4 @@
-export module Meta.Dispatch:Error;
+export module Meta.Dispatch.Error;
 
 import Meta.Size;
 

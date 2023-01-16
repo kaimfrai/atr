@@ -1,6 +1,4 @@
-add_module(
-	Dispatch.hpp
-
+add_single_file_modules(
 	BlockedPath.hpp
 	Path.hpp
 	DispatchFor.hpp

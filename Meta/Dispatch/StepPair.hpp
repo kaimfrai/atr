@@ -1,4 +1,4 @@
-export module Meta.Dispatch:StepPair;
+export module Meta.Dispatch.StepPair;
 
 import Meta.Size;
 

@@ -1,4 +1,4 @@
-export module Meta.Dispatch:Path;
+export module Meta.Dispatch.Path;
 
 export import Meta.ID;
 

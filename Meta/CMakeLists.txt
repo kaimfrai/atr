@@ -21,6 +21,7 @@ add_single_file_modules(
 	Buffer.cpp
 	Byte.cpp
 	Data.cpp
+	Dispatch.cpp
 	Logic.cpp
 	Math.cpp
 	Memory.cpp

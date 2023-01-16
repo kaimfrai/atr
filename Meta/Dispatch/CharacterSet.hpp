@@ -1,4 +1,4 @@
-export module Meta.Dispatch:CharacterSet;
+export module Meta.Dispatch.CharacterSet;
 
 import Meta.Size;
 import Meta.Token.Sequence;
