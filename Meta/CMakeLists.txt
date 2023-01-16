@@ -20,6 +20,7 @@ add_single_file_modules(
 	Bit.cpp
 	Buffer.cpp
 	Byte.cpp
+	Data.cpp
 	Logic.cpp
 	Math.cpp
 	Memory.cpp

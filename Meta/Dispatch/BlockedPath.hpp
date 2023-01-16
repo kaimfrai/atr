@@ -1,6 +1,6 @@
-export module Meta.Dispatch:BlockedPath;
+export module Meta.Dispatch.BlockedPath;
 
-export import :Path;
+export import Meta.Dispatch.Path;
 
 export import Std;
 

@@ -1,6 +1,6 @@
-export module Meta.Data:TupleList;
+export module Meta.Data.TupleList;
 
-export import :Aggregate;
+export import Meta.Data.Aggregate;
 
 import Meta.Token.Index;
 import Meta.Token.Sequence;

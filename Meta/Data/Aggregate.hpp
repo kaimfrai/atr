@@ -1,6 +1,6 @@
-export module Meta.Data:Aggregate;
+export module Meta.Data.Aggregate;
 
-export import :Object;
+export import Meta.Data.Object;
 
 export import Meta.Lex;
 import Meta.Buffer.Iterator;
