@@ -1,11 +1,10 @@
 add_single_file_modules(
-	BlockedPath.hpp
-	Path.hpp
-	DispatchFor.hpp
-	Error.hpp
-	StepPair.hpp
-	CharacterSet.hpp
-	Step.hpp
-	Final.hpp
+	BlockedPath.cpp
+	Path.cpp
+	DispatchFor.cpp
+	Error.cpp
+	StepPair.cpp
+	CharacterSet.cpp
+	Step.cpp
+	Final.cpp
 )
-
