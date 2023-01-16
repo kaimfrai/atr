@@ -367,6 +367,8 @@ export namespace
 	};
 }
 
+using ::Meta::Logic::Literal;
+
 export namespace
 	Meta
 {

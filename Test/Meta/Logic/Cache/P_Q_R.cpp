@@ -3,7 +3,11 @@ export module Test.Meta.Logic.Cache.P_Q_R;
 export import Test.Meta.Logic.Cache.P;
 export import Test.Meta.Logic.Cache.nP;
 export import Test.Meta.Logic.Cache.P_Q;
+
+import Meta.Logic.Term;
 import Meta.Logic.Disjunction;
+
+using ::Meta::Logic::DeduceTerm;
 
 export
 {

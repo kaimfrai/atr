@@ -4,7 +4,11 @@ export import Test.Meta.Logic.Cache.PQ;
 export import Test.Meta.Logic.Cache.PQR;
 export import Test.Meta.Logic.Cache.PQ_PR;
 export import Test.Meta.Logic.Cache.PQR_nPnQ;
+
+import Meta.Logic.Term;
 import Meta.Logic.Disjunction;
+
+using ::Meta::Logic::DeduceTerm;
 
 export
 {

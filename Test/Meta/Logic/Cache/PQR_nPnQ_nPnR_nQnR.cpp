@@ -2,7 +2,11 @@ export module Test.Meta.Logic.Cache.PQR_nPnQ_nPnR_nQnR;
 
 export import Test.Meta.Logic.Cache.PQ;
 export import Test.Meta.Logic.Cache.PQR_nPnQ_nPnR;
+
+import Meta.Logic.Term;
 import Meta.Logic.Disjunction;
+
+using ::Meta::Logic::DeduceTerm;
 
 export
 {

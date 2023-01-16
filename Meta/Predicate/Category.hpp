@@ -162,37 +162,37 @@ export namespace
 }
 
 using ::Meta::Logic::DeduceTerm;
-using ::Meta::Logic::Literal;
+using ::Meta::Logic::DeduceLiteral;
 
 export namespace
 	Meta
 {
-	DeduceTerm
-	<	Literal<Trait::Data>
+	DeduceLiteral
+	<	Trait::Data
 	>	const extern
 		IsValue
 	;
 
-	DeduceTerm
-	<	Literal<Trait::Scalar_Ref_Void>
+	DeduceLiteral
+	<	Trait::Scalar_Ref_Void
 	>	const extern
 		IsScalar_Ref_Void
 	;
 
-	DeduceTerm
-	<	Literal<Trait::Fund_Array>
+	DeduceLiteral
+	<	Trait::Fund_Array
 	>	const extern
 		IsFund_Array
 	;
 
-	DeduceTerm
-	<	Literal<Trait::Int_Enum_Class_LRef_Free>
+	DeduceLiteral
+	<	Trait::Int_Enum_Class_LRef_Free
 	>	const extern
 		IsInt_Enum_Class_LRef_Free
 	;
 
-	DeduceTerm
-	<	Literal<Trait::Signed_Scoped_Ptr>
+	DeduceLiteral
+	<	Trait::Signed_Scoped_Ptr
 	>	const extern
 		IsSigned_Scoped_Ptr
 	;

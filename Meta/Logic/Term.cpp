@@ -131,15 +131,20 @@ export namespace
 		False
 	;
 
+	using Erased::Literal;
+
 	template
 		<	typename
 				t_tLiteral
 		>
-	DeduceTerm
-	<	Erased::Literal
-		<	t_tLiteral
+	using
+		DeduceLiteral
+	=	Term
+		<	Literal
+			<	t_tLiteral
+			>
+		.	BitTerm
+		,	t_tLiteral
 		>
-	>	inline
-		Literal
-	{};
+	;
 }
