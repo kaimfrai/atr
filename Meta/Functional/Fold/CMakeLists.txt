@@ -1,0 +1,35 @@
+add_single_file_modules(
+	And.cpp
+	Assign.cpp
+	Bitand.cpp
+	BitandAssign.cpp
+	Bitor.cpp
+	BitorAssign.cpp
+	Comma.cpp
+	Divide.cpp
+	DivideAssign.cpp
+	Equals.cpp
+	Greater.cpp
+	GreaterEquals.cpp
+	LeftShift.cpp
+	LeftShiftAssign.cpp
+	Less.cpp
+	LessEquals.cpp
+	Minus.cpp
+	MinusAssign.cpp
+	Modulo.cpp
+	ModuloAssign.cpp
+	Multiply.cpp
+	MultiplyAssign.cpp
+	NotEquals.cpp
+	Or.cpp
+	Plus.cpp
+	PlusAssign.cpp
+	PtrToMemOfPtr.cpp
+	RightShift.cpp
+	RightShiftAssign.cpp
+	Xor.cpp
+	XorAssign.cpp
+
+	Fold.cpp
+)

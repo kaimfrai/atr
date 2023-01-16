@@ -1,7 +1,7 @@
-export module Meta.Functional:Fold.Minus;
+export module Meta.Functional.Fold.Minus;
 
-export import :FoldTraits;
-export import :Key;
+export import Meta.Functional.FoldTraits;
+export import Meta.Functional.Key;
 
 export namespace
 	Meta::Functional

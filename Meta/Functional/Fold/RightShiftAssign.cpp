@@ -1,7 +1,7 @@
-export module Meta.Functional:Fold.RightShiftAssign;
+export module Meta.Functional.Fold.RightShiftAssign;
 
-export import :FoldTraits;
-export import :Key;
+export import Meta.Functional.FoldTraits;
+export import Meta.Functional.Key;
 
 export namespace
 	Meta::Functional

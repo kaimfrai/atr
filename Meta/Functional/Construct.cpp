@@ -1,4 +1,4 @@
-export module Meta.Functional:Construct;
+export module Meta.Functional.Construct;
 
 export import Std;
 

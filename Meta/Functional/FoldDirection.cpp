@@ -1,4 +1,4 @@
-export module Meta.Functional:FoldDirection;
+export module Meta.Functional.FoldDirection;
 
 export namespace
 	Meta::Functional

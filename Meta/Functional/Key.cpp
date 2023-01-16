@@ -1,6 +1,4 @@
-export module Meta.Functional:Key;
-
-import Std;
+export module Meta.Functional.Key;
 
 export namespace
 	Meta::Functional

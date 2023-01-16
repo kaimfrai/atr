@@ -1,4 +1,4 @@
-export module Meta.Functional:TemplateParameter;
+export module Meta.Functional.TemplateParameter;
 
 import Std;
 

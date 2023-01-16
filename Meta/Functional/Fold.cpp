@@ -1,8 +1,8 @@
-export module Meta.Functional:Fold;
+export module Meta.Functional.Fold;
 
-export import :Fold.Fold;
-export import :FoldDirection;
-export import :Key;
+export import Meta.Functional.Fold.Fold;
+export import Meta.Functional.FoldDirection;
+export import Meta.Functional.Key;
 
 import Std;
 
