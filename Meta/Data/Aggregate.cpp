@@ -3,6 +3,11 @@ export module Meta.Data.Aggregate;
 import Meta.Data.Object;
 
 import Meta.Lex.Tokenizer;
+import Meta.Lex.Pointer;
+import Meta.Lex.Reference;
+import Meta.Lex.Function;
+import Meta.Lex.CV;
+import Meta.Lex.Array;
 import Meta.Buffer.Iterator;
 import Meta.Size;
 import Meta.Token.Reference;

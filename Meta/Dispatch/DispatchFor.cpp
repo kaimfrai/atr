@@ -8,6 +8,7 @@ export import Meta.Dispatch.StepPair;
 export import Meta.Dispatch.Step;
 
 import Meta.Lex.Tokenizer;
+import Meta.Lex.Function;
 import Meta.Size;
 import Meta.ID.Template;
 

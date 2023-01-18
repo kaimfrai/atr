@@ -8,6 +8,7 @@ import Meta.ID.Concatenate;
 import Meta.ID.Concept;
 import Meta.ID.Alias;
 import Meta.Lex.Tokenizer;
+import Meta.Lex.Function;
 import Meta.Token.Index;
 import Meta.Size;
 

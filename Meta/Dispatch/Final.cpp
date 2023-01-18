@@ -4,6 +4,7 @@ export import Meta.Dispatch.Error;
 export import Meta.Dispatch.Path;
 
 import Meta.Lex.Tokenizer;
+import Meta.Lex.Function;
 import Meta.ID.Concept;
 
 import Std;

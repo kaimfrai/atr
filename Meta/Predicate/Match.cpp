@@ -1,6 +1,8 @@
 export module Meta.Predicate.Match;
 
 import Meta.Lex.CV;
+import Meta.Lex.Array;
+import Meta.Lex.Function;
 import Meta.Lex.Pointer;
 import Meta.Lex.Member;
 import Meta.Lex.Reference;

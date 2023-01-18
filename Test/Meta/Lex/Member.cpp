@@ -1,5 +1,6 @@
 import Meta.Lex.Member;
 import Meta.Lex.Tokenizer;
+import Meta.Lex.CV;
 import Meta.Token.Specifier;
 import Meta.Token.Type;
 import Meta.Token.CV;

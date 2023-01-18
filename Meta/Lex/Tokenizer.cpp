@@ -1,11 +1,11 @@
 export module Meta.Lex.Tokenizer;
 
-export import Meta.Lex.Array;
-export import Meta.Lex.CV;
-export import Meta.Lex.Function;
-export import Meta.Lex.Member;
-export import Meta.Lex.Pointer;
-export import Meta.Lex.Reference;
+import Meta.Lex.Array;
+import Meta.Lex.CV;
+import Meta.Lex.Function;
+import Meta.Lex.Member;
+import Meta.Lex.Pointer;
+import Meta.Lex.Reference;
 
 import Meta.Token.Specifier;
 import Meta.Token.Function;

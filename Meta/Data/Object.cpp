@@ -1,6 +1,10 @@
 export module Meta.Data.Object;
 
 import Meta.Lex.Tokenizer;
+import Meta.Lex.Reference;
+import Meta.Lex.Function;
+import Meta.Lex.CV;
+import Meta.Lex.Array;
 import Meta.Token.Specifier;
 import Meta.Token.CV;
 

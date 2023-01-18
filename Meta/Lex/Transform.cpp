@@ -1,6 +1,12 @@
 export module Meta.Lex.Transform;
 
-export import Meta.Lex.Tokenizer;
+import Meta.Lex.Tokenizer;
+import Meta.Lex.Pointer;
+import Meta.Lex.Reference;
+import Meta.Lex.Member;
+import Meta.Lex.Function;
+import Meta.Lex.CV;
+import Meta.Lex.Array;
 
 import Meta.Token.Pointer;
 import Meta.Token.Type;
