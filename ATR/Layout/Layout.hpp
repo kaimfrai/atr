@@ -9,7 +9,7 @@ import :Layout.MemberOffset;
 import :Layout.ValidateOffsets;
 
 import Meta.Size;
-import Meta.Lex;
+import Meta.Lex.Transform;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Compare;
 import Meta.Token.Index;

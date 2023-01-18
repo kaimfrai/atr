@@ -9,6 +9,7 @@ export import Meta.Predicate;
 import Meta.Token.Type;
 import Meta.Size;
 import Meta.Logic.Constraint;
+import Meta.Lex.Tokenizer;
 
 import Std;
 

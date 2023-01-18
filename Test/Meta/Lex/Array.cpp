@@ -1,4 +1,5 @@
-import Meta.Lex;
+import Meta.Lex.CV;
+import Meta.Lex.Tokenizer;
 import Meta.Size;
 import Meta.Token.Specifier;
 import Meta.Token.Type;

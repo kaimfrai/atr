@@ -8,6 +8,7 @@ import Meta.Logic.Negation;
 import Meta.Logic.Conjunction;
 import Meta.Logic.Disjunction;
 import Meta.Token.Type;
+import Meta.Lex.Tokenizer;
 
 export namespace
 	Meta::Trait

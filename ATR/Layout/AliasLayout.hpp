@@ -4,7 +4,7 @@ import :Layout.AliasResolver;
 import :Layout.Concept;
 
 import Meta.Size;
-import Meta.Lex;
+import Meta.Lex.Transform;
 
 using ::Meta::USize;
 

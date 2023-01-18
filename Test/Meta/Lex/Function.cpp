@@ -1,4 +1,5 @@
-import Meta.Lex;
+import Meta.Lex.Function;
+import Meta.Lex.Tokenizer;
 import Meta.Token.Reference;
 import Meta.Token.Function;
 import Meta.Token.Type;

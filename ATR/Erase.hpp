@@ -1,6 +1,9 @@
 export module ATR:Erase;
 
-export import Meta.Lex;
+import Meta.Lex.CV;
+import Meta.Lex.Pointer;
+import Meta.Lex.Reference;
+import Meta.Lex.Tokenizer;
 import Meta.Token.Type;
 
 import Std;

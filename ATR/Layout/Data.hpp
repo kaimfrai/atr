@@ -3,7 +3,7 @@ export module ATR:Layout.Data;
 import :Layout.Concept;
 
 import Meta.Size;
-import Meta.Lex;
+import Meta.Lex.Transform;
 
 import Std;
 

@@ -6,6 +6,7 @@ export import :Address;
 import Meta.ID.Concept;
 import Meta.ID.StringLiteral;
 import Meta.ID.Alias;
+import Meta.Lex.Tokenizer;
 
 export namespace
 	ATR

@@ -1,6 +1,9 @@
 export module Meta.Predicate.Match;
 
-export import Meta.Lex;
+import Meta.Lex.CV;
+import Meta.Lex.Pointer;
+import Meta.Lex.Member;
+import Meta.Lex.Reference;
 import Meta.Logic.LiteralBase;
 import Meta.Token.Function;
 import Meta.Token.Type;

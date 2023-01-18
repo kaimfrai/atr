@@ -2,7 +2,7 @@ export module Meta.Data.Value;
 
 export import Meta.Data.Aggregate;
 
-export import Meta.Lex;
+import Meta.Lex.Tokenizer;
 import Meta.Buffer.Iterator;
 import Meta.Token.Array;
 import Meta.Token.Type;

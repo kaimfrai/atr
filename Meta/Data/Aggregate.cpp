@@ -2,7 +2,7 @@ export module Meta.Data.Aggregate;
 
 export import Meta.Data.Object;
 
-export import Meta.Lex;
+import Meta.Lex.Tokenizer;
 import Meta.Buffer.Iterator;
 import Meta.Size;
 import Meta.Token.Reference;

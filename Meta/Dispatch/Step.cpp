@@ -7,7 +7,7 @@ export import Meta.Dispatch.StepPair;
 import Meta.ID.Concatenate;
 import Meta.ID.Concept;
 import Meta.ID.Alias;
-export import Meta.Lex;
+import Meta.Lex.Tokenizer;
 import Meta.Token.Index;
 import Meta.Size;
 
