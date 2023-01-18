@@ -1,7 +1,7 @@
 export module Meta.Functional.FoldTraits;
 
-export import Meta.Functional.Key;
-export import Meta.Functional.FoldDirection;
+import Meta.Functional.Key;
+import Meta.Functional.FoldDirection;
 
 import Std;
 

@@ -1,7 +1,8 @@
 export module Meta.Functional.Fold.Comma;
 
-export import Meta.Functional.FoldTraits;
-export import Meta.Functional.Key;
+import Meta.Functional.FoldDirection;
+import Meta.Functional.FoldTraits;
+import Meta.Functional.Key;
 
 // Forward cannot be nodiscard due to comma discarding
 // It is assumed that all template arguments are references

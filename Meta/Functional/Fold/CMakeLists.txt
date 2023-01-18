@@ -30,6 +30,4 @@ add_single_file_modules(
 	RightShiftAssign.cpp
 	Xor.cpp
 	XorAssign.cpp
-
-	Fold.cpp
 )

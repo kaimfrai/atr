@@ -1,7 +1,8 @@
 export module Meta.Functional.Fold.Greater;
 
-export import Meta.Functional.FoldTraits;
-export import Meta.Functional.Key;
+import Meta.Functional.FoldDirection;
+import Meta.Functional.FoldTraits;
+import Meta.Functional.Key;
 
 export namespace
 	Meta::Functional

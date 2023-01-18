@@ -1,8 +1,8 @@
 export module Meta.Functional.Fold;
 
-export import Meta.Functional.Fold.Fold;
-export import Meta.Functional.FoldDirection;
-export import Meta.Functional.Key;
+import Meta.Functional.FoldDirection;
+import Meta.Functional.Key;
+import Meta.Functional.FoldTraits;
 
 import Std;
 
@@ -25,7 +25,7 @@ export namespace
 				&&
 				...	c_rpArgument
 			)
-		{	Functional::DoFold
+		{	DoFold
 			(	Functional::FoldTraits<t_tFold>::Token
 			,	std::declval<t_tpArgument>()
 				...
@@ -42,7 +42,7 @@ export namespace
 	auto constexpr inline
 		IsNoexceptFold
 	=	noexcept
-		(	Functional::DoFold
+		(	DoFold
 			(	Functional::FoldTraits<t_tFold>::Token
 			,	std::declval<t_tpArgument>()
 				...
@@ -84,7 +84,7 @@ export namespace
 					...
 				>
 		{	return
-			Functional::DoFold
+			DoFold
 			(	Token
 			,	std::forward<decltype(i_rpArgument)>
 				(	i_rpArgument
