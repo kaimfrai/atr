@@ -3,6 +3,7 @@ export module Evaluation.Archetype:ComputeArea;
 export import :Product;
 
 export import ATR;
+import Meta.ID.Alias;
 
 export namespace
 	ATR

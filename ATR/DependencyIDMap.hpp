@@ -5,7 +5,9 @@ export import :Dependency;
 export import :Address;
 export import :Layout;
 
-export import Meta.ID;
+import Meta.ID.StringView;
+import Meta.ID.StringLiteral;
+import Meta.ID.Alias;
 import Meta.Token.Type;
 import Meta.Logic.LiteralBase;
 import Meta.Logic.Term;

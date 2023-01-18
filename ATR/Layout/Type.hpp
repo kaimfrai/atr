@@ -3,7 +3,7 @@ export module ATR:Layout.Type;
 import :DataMember;
 import :Layout.Create;
 
-import Meta.ID;
+import Meta.ID.Concept;
 
 export namespace
 	ATR

@@ -1,6 +1,6 @@
 export module ATR:Layout.Bit.Layout;
 
-import Meta.ID;
+import Meta.ID.Concept;
 import Meta.Size;
 import Meta.Memory.Size;
 import Meta.Byte.Buffer;

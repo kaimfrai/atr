@@ -2,7 +2,9 @@ export module ATR:Concatenate;
 
 export import :DataMember;
 
-export import Meta.ID;
+import Meta.ID.Alias;
+import Meta.ID.Concatenate;
+import Meta.ID.Template;
 import Meta.Functional.Construct;
 import Meta.Token.Sequence;
 import Meta.Token.Type;

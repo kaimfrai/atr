@@ -10,6 +10,8 @@ export import :Layout;
 export import :Instance;
 export import :VirtualArgument;
 
+import Meta.ID.Literals;
+
 export namespace
 	ATR
 {

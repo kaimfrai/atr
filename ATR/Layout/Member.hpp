@@ -4,7 +4,8 @@ import :DataMember;
 
 import Meta.Token.Query;
 import Meta.Token.Type;
-import Meta.ID;
+import Meta.ID.Concept;
+import Meta.ID.Alias;
 import Meta.Size;
 
 using ::ATR::MemberInfo;

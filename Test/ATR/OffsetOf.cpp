@@ -10,6 +10,7 @@ import Meta.Bit.Index;
 import Meta.Token.Specifier;
 import Meta.Token.Type;
 import Meta.Data.Aggregate;
+import Meta.ID.Alias;
 
 import Std;
 

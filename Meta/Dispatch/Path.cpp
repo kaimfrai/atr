@@ -1,6 +1,8 @@
 export module Meta.Dispatch.Path;
 
-export import Meta.ID;
+import Meta.ID.Concept;
+import Meta.ID.StringLiteral;
+import Meta.ID.Alias;
 
 export namespace
 	Meta::Dispatch

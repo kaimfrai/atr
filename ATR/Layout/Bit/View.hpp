@@ -5,7 +5,7 @@ import :Layout.Bit.Array;
 import :Layout.Bit.MemberOffset;
 import :Layout.Bit.Reference;
 
-import Meta.ID;
+import Meta.ID.Concept;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Cast;
 import Meta.Memory.Size.PointerArithmetic;

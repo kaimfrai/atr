@@ -4,6 +4,7 @@ export import Meta.Dispatch.Error;
 export import Meta.Dispatch.Path;
 
 export import Meta.Lex;
+import Meta.ID.Concept;
 
 export namespace
 	Meta::Dispatch

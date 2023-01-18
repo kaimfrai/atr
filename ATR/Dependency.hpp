@@ -2,7 +2,9 @@ export module ATR:Dependency;
 
 export import :Erase;
 
-export import Meta.ID;
+import Meta.ID.Concept;
+import Meta.ID.StringLiteral;
+import Meta.ID.Alias;
 import Meta.Size;
 import Meta.Token.Sequence;
 import Meta.Token.Index;

@@ -2,7 +2,9 @@ export module ATR:VirtualArgument;
 
 export import :Address;
 
-export import Meta.ID;
+import Meta.ID.Concept;
+import Meta.ID.StringLiteral;
+import Meta.ID.Alias;
 export import Meta.Predicate;
 import Meta.Token.Type;
 import Meta.Size;

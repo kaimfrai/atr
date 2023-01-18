@@ -1,6 +1,5 @@
 export module ATR:DataMember;
 
-export import Meta.ID;
 export import Meta.Predicate;
 import Meta.Token.Query;
 import Meta.Token.Type;
@@ -14,6 +13,10 @@ import Meta.Token.Array;
 import Meta.Logic.Constraint;
 import Meta.Data.Object;
 import Meta.Data.Aggregate;
+import Meta.ID.Alias;
+import Meta.ID.StringView;
+import Meta.ID.StringLiteral;
+import Meta.ID.Concept;
 
 export import Std;
 

@@ -3,7 +3,9 @@ export module ATR:Instance;
 export import :Layout;
 export import :Address;
 
-export import Meta.ID;
+import Meta.ID.Concept;
+import Meta.ID.StringLiteral;
+import Meta.ID.Alias;
 
 export namespace
 	ATR

@@ -3,7 +3,7 @@ export module ATR:Layout.Concept;
 import :Layout.Alias;
 import :Layout.AliasResolver;
 
-import Meta.ID;
+import Meta.ID.Concept;
 import Meta.Lex.Transform;
 
 import Std;

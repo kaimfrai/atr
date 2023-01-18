@@ -2,7 +2,7 @@ export module ATR:Layout.AliasResolver;
 
 import :Layout.Alias;
 
-import Meta.ID;
+import Meta.ID.Concept;
 
 export template
 	<	typename
