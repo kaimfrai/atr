@@ -1,6 +1,6 @@
 export module ATR:DataMember;
 
-export import Meta.Predicate;
+import Meta.Predicate.Empty;
 import Meta.Token.Query;
 import Meta.Token.Type;
 import Meta.Size;

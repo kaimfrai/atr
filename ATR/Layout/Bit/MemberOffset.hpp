@@ -5,7 +5,7 @@ import :Layout.Bit.Array;
 import :Layout.Bit.Reference;
 
 import Meta.Size;
-import Meta.Predicate;
+import Meta.Predicate.TypeTraits;
 import Meta.Token.Query;
 import Meta.Memory.Size;
 import Meta.Memory.Size.PointerArithmetic;

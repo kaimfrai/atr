@@ -1,4 +1,4 @@
-import Meta.Predicate;
+import Meta.Predicate.Category;
 import Meta.Token.Type;
 
 using Meta::Type;

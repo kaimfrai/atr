@@ -1,4 +1,4 @@
-import Meta.Predicate;
+import Meta.Predicate.Category;
 import Meta.Logic.Conjunction;
 import Meta.Logic.Negation;
 import Meta.Logic.Equivalence;

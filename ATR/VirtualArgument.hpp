@@ -5,7 +5,7 @@ export import :Address;
 import Meta.ID.Concept;
 import Meta.ID.StringLiteral;
 import Meta.ID.Alias;
-export import Meta.Predicate;
+import Meta.Predicate.Trivial;
 import Meta.Token.Type;
 import Meta.Size;
 import Meta.Logic.Constraint;

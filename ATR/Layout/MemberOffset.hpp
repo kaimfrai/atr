@@ -7,7 +7,7 @@ import Meta.Size;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.PointerArithmetic;
-export import Meta.Predicate;
+import Meta.Predicate.TypeTraits;
 import Meta.Token.Reference;
 import Meta.Token.CV;
 import Meta.Token.Type;
