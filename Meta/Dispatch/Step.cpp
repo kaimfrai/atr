@@ -11,6 +11,8 @@ import Meta.Lex.Tokenizer;
 import Meta.Token.Index;
 import Meta.Size;
 
+import Std;
+
 export namespace
 	Meta::Dispatch
 {

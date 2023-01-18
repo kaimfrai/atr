@@ -3,7 +3,7 @@ export module Meta.Functional.FoldTraits;
 export import Meta.Functional.Key;
 export import Meta.Functional.FoldDirection;
 
-export import Std;
+import Std;
 
 export namespace
 	Meta::Functional

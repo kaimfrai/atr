@@ -4,6 +4,8 @@ import Meta.ID.Concept;
 import Meta.ID.StringLiteral;
 import Meta.ID.Alias;
 
+import Std;
+
 export namespace
 	Meta::Dispatch
 {

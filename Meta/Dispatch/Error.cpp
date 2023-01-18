@@ -2,7 +2,7 @@ export module Meta.Dispatch.Error;
 
 import Meta.Size;
 
-export import Std;
+import Std;
 
 export namespace
 	Meta::Dispatch

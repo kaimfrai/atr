@@ -5,7 +5,7 @@ export import Meta.ID.StringLiteral;
 
 import Meta.Size;
 
-export import Std;
+import Std;
 
 export namespace
 	Meta

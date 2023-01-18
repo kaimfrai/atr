@@ -5,7 +5,7 @@ import Meta.Buffer.Iterator;
 import Meta.Token.Array;
 import Meta.Data.Aggregate;
 
-export import Std;
+import Std;
 
 export namespace
 	Meta

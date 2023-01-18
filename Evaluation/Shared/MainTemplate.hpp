@@ -3,7 +3,7 @@ export module Evaluation.Shared:MainTemplate;
 export import :DataTypes;
 export import :PseudoRandomSequence;
 
-export import Std;
+import Std;
 
 export
 {

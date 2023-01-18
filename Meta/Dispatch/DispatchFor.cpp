@@ -11,7 +11,7 @@ import Meta.Lex.Tokenizer;
 import Meta.Size;
 import Meta.ID.Template;
 
-export import Std;
+import Std;
 
 export namespace
 	Meta

@@ -3,7 +3,7 @@ export module Meta.Dispatch.BlockedPath;
 export import Meta.Dispatch.Path;
 import Meta.ID.Concept;
 
-export import Std;
+import Std;
 
 export namespace
 	Meta::Dispatch

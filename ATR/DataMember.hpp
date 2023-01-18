@@ -18,7 +18,7 @@ import Meta.ID.StringView;
 import Meta.ID.StringLiteral;
 import Meta.ID.Concept;
 
-export import Std;
+import Std;
 
 using ::Meta::IndexToken;
 using ::Meta::Sequence;

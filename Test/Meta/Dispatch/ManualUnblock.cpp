@@ -2,6 +2,8 @@ import Meta.Dispatch.BlockedPath;
 import Meta.Dispatch.DispatchFor;
 import Meta.ID.Alias;
 
+import Std;
+
 namespace
 	Meta::Dispatch
 {

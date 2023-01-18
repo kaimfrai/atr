@@ -2,7 +2,7 @@ export module Meta.Token.Index;
 
 import Meta.Size;
 
-export import Std;
+import Std;
 
 export namespace
 	Meta::Token

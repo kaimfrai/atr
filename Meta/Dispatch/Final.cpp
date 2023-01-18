@@ -6,6 +6,8 @@ export import Meta.Dispatch.Path;
 import Meta.Lex.Tokenizer;
 import Meta.ID.Concept;
 
+import Std;
+
 export namespace
 	Meta::Dispatch
 {
