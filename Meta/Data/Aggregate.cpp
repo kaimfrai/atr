@@ -1,6 +1,6 @@
 export module Meta.Data.Aggregate;
 
-export import Meta.Data.Object;
+import Meta.Data.Object;
 
 import Meta.Lex.Tokenizer;
 import Meta.Buffer.Iterator;
