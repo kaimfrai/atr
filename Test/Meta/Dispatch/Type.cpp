@@ -1,4 +1,4 @@
-import Meta.Dispatch;
+import Meta.Dispatch.DispatchFor;
 
 import Std;
 
