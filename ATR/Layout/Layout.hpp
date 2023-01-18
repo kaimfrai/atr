@@ -10,7 +10,6 @@ import :Layout.ValidateOffsets;
 
 import Meta.ID;
 import Meta.Size;
-import Meta.Data;
 import Meta.Lex;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Compare;
@@ -18,6 +17,7 @@ import Meta.Token.Index;
 import Meta.Token.Sequence;
 import Meta.Token.CV;
 import Meta.Token.Type;
+import Meta.Data.Aggregate;
 
 import Std;
 

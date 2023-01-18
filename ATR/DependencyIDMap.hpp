@@ -11,6 +11,7 @@ import Meta.Logic.LiteralBase;
 import Meta.Logic.Term;
 import Meta.Logic.Constraint;
 import Meta.Logic.Conjunction;
+import Meta.Data.TupleList;
 
 import Std;
 

@@ -3,6 +3,7 @@ export module ATR:Layout.Static;
 import :Layout.Member;
 
 import Meta.ID;
+import Meta.Lex.Transform;
 
 export namespace
 	ATR

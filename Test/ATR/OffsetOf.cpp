@@ -9,6 +9,7 @@ import Meta.Memory.Size.Scale;
 import Meta.Bit.Index;
 import Meta.Token.Specifier;
 import Meta.Token.Type;
+import Meta.Data.Aggregate;
 
 import Std;
 

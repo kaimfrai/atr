@@ -3,11 +3,11 @@ export module ATR:Dependency;
 export import :Erase;
 
 export import Meta.ID;
-export import Meta.Data;
 import Meta.Size;
 import Meta.Token.Sequence;
 import Meta.Token.Index;
 import Meta.Token.Type;
+import Meta.Data.TupleList;
 
 import Std;
 

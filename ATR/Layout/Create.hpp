@@ -23,7 +23,6 @@ using ::ATR::MemberList;
 using ::ATR::StaticData;
 using ::ATR::StaticSortKey;
 
-using ::Meta::Aggregate;
 using ::Meta::Index;
 using ::Meta::IndexToken;
 using ::Meta::Sequence;

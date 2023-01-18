@@ -2,11 +2,11 @@ export module Meta.Predicate.Empty;
 
 export import Meta.Predicate.Regular;
 
-export import Meta.Data;
 import Meta.Token.Type;
 import Meta.Logic.LiteralBase;
 import Meta.Logic.Conjunction;
 import Meta.Logic.Term;
+import Meta.Data.Object;
 
 import Std;
 

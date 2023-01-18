@@ -1,9 +1,9 @@
 export module Meta.ID.StringLiteral;
 
-export import Meta.Data;
 import Meta.Size;
 import Meta.Buffer.Iterator;
 import Meta.Token.Array;
+import Meta.Data.Aggregate;
 
 export import Std;
 
