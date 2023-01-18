@@ -3,7 +3,7 @@ export module ATR:Concatenate;
 export import :DataMember;
 
 export import Meta.ID;
-export import Meta.Functional;
+import Meta.Functional.Construct;
 import Meta.Token.Sequence;
 import Meta.Token.Type;
 

@@ -1,4 +1,4 @@
-import Meta.Functional;
+import Meta.Functional.Construct;
 import Std;
 
 using namespace Meta;
@@ -8,7 +8,15 @@ struct
 {
 	int i;
 
-	friend auto constexpr operator ==(Test const&, Test const&) -> bool = default;
+	[[nodiscard]]
+	friend auto constexpr
+	(	operator ==
+	)	(	Test const&
+		,	Test const&
+		)
+		noexcept
+	->	bool
+	=	default;
 };
 
 static_assert
@@ -33,7 +41,15 @@ struct
 		]
 	;
 
-	friend auto constexpr operator ==(ValuePack const&, ValuePack const&) -> bool = default;
+	[[nodiscard]]
+	friend auto constexpr
+	(	operator ==
+	)	(	ValuePack const&
+		,	ValuePack const&
+		)
+		noexcept
+	->	bool
+	=	default;
 };
 
 template
@@ -75,7 +91,15 @@ struct
 		Value
 	;
 
-	friend auto constexpr operator ==(TypePack const&, TypePack const&) -> bool = default;
+	[[nodiscard]]
+	friend auto constexpr
+	(	operator ==
+	)	(	TypePack const&
+		,	TypePack const&
+		)
+		noexcept
+	->	bool
+	=	default;
 };
 
 template

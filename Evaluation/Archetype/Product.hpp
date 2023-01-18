@@ -2,6 +2,9 @@ export module Evaluation.Archetype:Product;
 
 export import ATR;
 export import Evaluation.Shared;
+import Meta.Functional.Fold.Multiply;
+import Meta.Functional.Fold;
+import Meta.Functional.Key;
 
 export namespace
 	ATR

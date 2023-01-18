@@ -1,4 +1,5 @@
-import Meta.Functional;
+import Meta.Functional.Fold;
+import Meta.Functional.Fold.Fold;
 
 using Meta::Fold;
 using namespace Meta::Functional;

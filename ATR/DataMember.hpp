@@ -5,7 +5,7 @@ export import Meta.Predicate;
 import Meta.Token.Query;
 import Meta.Token.Type;
 import Meta.Size;
-import Meta.Functional;
+import Meta.Functional.Construct;
 import Meta.Arithmetic.Literals;
 import Meta.Token.Sequence;
 import Meta.Token.Index;
