@@ -5,6 +5,7 @@ export import :DataMember;
 import Meta.ID.Alias;
 import Meta.ID.Concatenate;
 import Meta.ID.Template;
+import Meta.ID.StringLiteral;
 import Meta.Functional.Construct;
 import Meta.Token.Sequence;
 import Meta.Token.Type;
