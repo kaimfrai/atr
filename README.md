@@ -69,11 +69,19 @@ The Meta directory provides a collection of meta programming utilities, most of 
 
 ### Arithmetic
 
-Provides compile time handling of arithmetic types, and bitfields. Also contains a parser for user defined numeric literal operator templates.
+Provides definitions of arithmetic types based on their width. Also contains a parser for user defined numeric literal operator templates.
+
+### Bit
+
+Type-safe abstractions over bit operations. The template Bit::Field uses the minimal amount of bytes for a bitfield of a given bit width and allows type-safe operations on them which guarantee that no more than the given amount of bits is ever used to represent the value.
+
+### Buffer
+
+Adaptor for sequence of elements where the capacity never changes after construction. The underlying Buffer may be static (array) or dynamic (heap).
 
 ### Byte
 
-Provides compile time utilities for computations around bytes and byte buffers.
+Abstraction over arrays of bytes that enable conversion of objects from and to arrays of bytes at compile time. 
 
 ### Data
 
@@ -96,7 +104,16 @@ Function objects that analyse a certain type and separate it into multiple token
 
 ### Logic
 
-Allows for combination of predicates into a logical term. The term is optimized as much as possible, such as optimizing A or not A into a tautology. The optimization is performed without type-information which saves many template instantiations which would be required otherwise, saving hours of compilation time for complex terms with many different predicates. For efficient buffer usages, a maximum literal and clause limit applies. A term may be used as an argument for the concept ProtoConstraint, resulting in a concept which evaluates the type according to the predicates. Using a term as a template argument makes it possible to customize constraints in functions and classes via its template arguments. It is particularily useful to create ad-hoc constraints when specifying an interface in ATR.
+Allows for combination of predicates into a logical term. The term is optimized as much as possible, such as optimizing A or not A into a tautology. The optimization is performed without type-information which saves many template instantiations that would be required otherwise, saving hours of compilation time for complex terms with many different types of predicates. For efficient buffer usages, a maximum literal and clause limit applies. A term may be used as an argument for the concept ProtoConstraint, resulting in a concept which evaluates the type according to the predicates. Using a term as a template argument makes it possible to customize constraints in functions and classes via its template arguments. It is particularily useful to create ad-hoc constraints when specifying an interface in ATR.
+
+### Math
+
+A collection of basic mathmetical operations enabled for constexpr.
+
+### Memory
+
+Aims for type-safe operations on pointers. For example int* can nomrally be incremented by any integer number. Ideally, it should only be incremented by values representing multiples of the byte width of an integer: Memory::ByteWidth<int>.
+Values representing a bit width can be easily converted to values representing a byte width, without mixing up the unit.
 
 ### Predicate
 
@@ -105,4 +122,10 @@ Provides the standard type_traits as function objects. These can be used in comb
 ### Token
 
 Provides classes that represent constructs in the C++ language which cannot be easily deduced in all potential combinations, such as cv-qualifiers, references, or an ellipsis. The TypeToken allows for a bi-directional mapping between types and unique identifier-values of the same type. This can be used to perform operations on type-lists with standard algorithms and without many template instantiations.
+
+## Test
+
+A collection of .cpp files with compile time assertions that verify upon compilation that the library works as intended.
+Tests may be used as a reference for how the library is intended to be used.
+
 
