@@ -1,7 +1,7 @@
 export module Meta.Dispatch.Final;
 
-export import Meta.Dispatch.Error;
-export import Meta.Dispatch.Path;
+import Meta.Dispatch.Error;
+import Meta.Dispatch.Path;
 
 import Meta.Lex.Tokenizer;
 import Meta.Lex.Function;

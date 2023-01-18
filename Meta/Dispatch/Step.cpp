@@ -1,8 +1,9 @@
 export module Meta.Dispatch.Step;
 
-export import Meta.Dispatch.BlockedPath;
-export import Meta.Dispatch.Final;
-export import Meta.Dispatch.StepPair;
+import Meta.Dispatch.BlockedPath;
+import Meta.Dispatch.Final;
+import Meta.Dispatch.StepPair;
+import Meta.Dispatch.Error;
 
 import Meta.ID.Concatenate;
 import Meta.ID.Concept;

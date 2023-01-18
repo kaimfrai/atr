@@ -1,11 +1,11 @@
 export module Meta.Dispatch.DispatchFor;
 
-export import Meta.Dispatch.BlockedPath;
-export import Meta.Dispatch.Error;
-export import Meta.Dispatch.CharacterSet;
-export import Meta.Dispatch.Final;
-export import Meta.Dispatch.StepPair;
-export import Meta.Dispatch.Step;
+import Meta.Dispatch.BlockedPath;
+import Meta.Dispatch.Error;
+import Meta.Dispatch.CharacterSet;
+import Meta.Dispatch.Final;
+import Meta.Dispatch.StepPair;
+import Meta.Dispatch.Step;
 
 import Meta.Lex.Tokenizer;
 import Meta.Lex.Function;
