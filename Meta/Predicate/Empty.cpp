@@ -1,6 +1,7 @@
 export module Meta.Predicate.Empty;
 
-export import Meta.Predicate.Regular;
+import Meta.Predicate.Regular;
+import Meta.Predicate.Category;
 
 import Meta.Token.Type;
 import Meta.Logic.LiteralBase;

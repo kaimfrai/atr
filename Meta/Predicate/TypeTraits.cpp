@@ -1,6 +1,6 @@
 export module Meta.Predicate.TypeTraits;
 
-export import Meta.Predicate.Category;
+import Meta.Predicate.Category;
 
 import Meta.Logic.LiteralBase;
 import Meta.Logic.Term;
