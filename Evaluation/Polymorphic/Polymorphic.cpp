@@ -1,7 +1,7 @@
 export module Evaluation.Polymorphic;
 
 import Evaluation.Shared.DataTypes;
-export import Evaluation.Polymorphic.Library;
+import Evaluation.Polymorphic.Library;
 
 export namespace
 	Bodies3D

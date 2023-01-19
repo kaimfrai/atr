@@ -1,6 +1,8 @@
 export module Evaluation.TypeErasure;
 
-export import Evaluation.TypeErasure.Library;
+import Evaluation.TypeErasure.Library;
+
+import Std;
 
 export namespace
 	Bodies3D

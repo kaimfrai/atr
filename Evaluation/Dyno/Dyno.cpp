@@ -1,16 +1,14 @@
 export module Evaluation.Dyno;
 
 import Evaluation.Shared.DataTypes;
-export import Evaluation.Dyno.Library;
+import Evaluation.Dyno.Library;
 
-namespace
+using namespace dyno::literals;
+
+export namespace
 	Bodies3D
 {
-	using namespace
-		dyno::literals
-	;
-
-	export struct
+	struct
 		VolumeComputer
 	:	decltype(
 			dyno::requires_

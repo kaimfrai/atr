@@ -1,3 +1,5 @@
+import Evaluation.TypeErasure;
+import Evaluation.TypeErasure.Library;
 import Evaluation.CRTP.Cube;
 import Evaluation.CRTP.Cuboid;
 import Evaluation.CRTP.Pyramid;
@@ -9,8 +11,9 @@ import Evaluation.CRTP.Head;
 
 import Evaluation.Shared.MainTemplate;
 import Evaluation.Shared.CopyConstruct;
-import Evaluation.TypeErasure;
 import Meta.Size;
+
+import Std;
 
 auto
 	main
