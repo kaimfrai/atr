@@ -1,6 +1,6 @@
 export module ATR.Address;
 
-export import ATR.Dependency;
+import ATR.Dependency;
 
 import Meta.ID.Concept;
 

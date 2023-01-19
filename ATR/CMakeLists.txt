@@ -2,7 +2,6 @@ add_single_file_modules(
 	ATR.cpp
 
 	DataMember.cpp
-	Layout.cpp
 	Layout/Alias.cpp
 	Layout/AliasLayout.cpp
 	Layout/AliasResolver.cpp

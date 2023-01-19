@@ -1,7 +1,7 @@
 export module ATR.Instance;
 
-export import ATR.Layout;
-export import ATR.Address;
+import ATR.Address;
+import ATR.Layout.Type;
 
 import Meta.ID.Concept;
 import Meta.ID.StringLiteral;

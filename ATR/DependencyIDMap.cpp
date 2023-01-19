@@ -1,9 +1,9 @@
 export module ATR.DependencyIDMap;
 
-export import ATR.DataMember;
-export import ATR.Dependency;
-export import ATR.Address;
-export import ATR.Layout;
+import ATR.DataMember;
+import ATR.Dependency;
+import ATR.Address;
+import ATR.Erase;
 
 import Meta.ID.Alias;
 import Meta.ID.Concept;
