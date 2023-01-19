@@ -1,12 +1,12 @@
 add_module(
-	Shared.hpp
+	Shared.cpp
 
-	CopyConstruct.hpp
-	DataTypes.hpp
-	Fraction.hpp
-	InPlaceConstruct.hpp
-	MainTemplate.hpp
-	PiFraction.hpp
-	PseudoRandomSequence.hpp
-	TypeConstruct.hpp
+	CopyConstruct.cpp
+	DataTypes.cpp
+	Fraction.cpp
+	InPlaceConstruct.cpp
+	MainTemplate.cpp
+	PiFraction.cpp
+	PseudoRandomSequence.cpp
+	TypeConstruct.cpp
 )

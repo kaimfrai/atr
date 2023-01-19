@@ -18,18 +18,18 @@ add_user_header_unit(
 )
 
 set_source_files_properties(
-	Library.hpp
+	Library.cpp
 PROPERTIES
 INCLUDE_DIRECTORIES
 	"${DYNO_INCLUDE_PATH}"
 )
 
 add_module(
-	Library.hpp
+	Library.cpp
 )
 
 add_module(
-	Dyno.hpp
+	Dyno.cpp
 )
 
 add_module_executable(

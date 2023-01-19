@@ -1,14 +1,14 @@
 add_module(
-	VolumeComputer.hpp
+	VolumeComputer.cpp
 
-	Cone.hpp
-	Cube.hpp
-	Cuboid.hpp
-	Cylinder.hpp
-	Ellipsoid.hpp
-	Head.hpp
-	Pyramid.hpp
-	Sphere.hpp
+	Cone.cpp
+	Cube.cpp
+	Cuboid.cpp
+	Cylinder.cpp
+	Ellipsoid.cpp
+	Head.cpp
+	Pyramid.cpp
+	Sphere.cpp
 )
 
 add_module_executable(

@@ -1,30 +1,30 @@
 add_module(
-	Virtual.hpp
+	Virtual.cpp
 
-	BasicBody.hpp
-	BasicShape.hpp
-	Circle.hpp
-	CircularShape.hpp
-	Cone.hpp
-	Cube.hpp
-	CubicBody.hpp
-	Cuboid.hpp
-	Cylinder.hpp
-	Ellipse.hpp
-	Ellipsoid.hpp
-	ExtendedShape.hpp
-	Head.hpp
-	IBody.hpp
-	IShape.hpp
-	Pyramid.hpp
-	PyramidicBody.hpp
-	Rectangle.hpp
-	RectangularShape.hpp
-	Sphere.hpp
-	SphericBody.hpp
-	Square.hpp
-	Triangle.hpp
-	TriangularShape.hpp
+	BasicBody.cpp
+	BasicShape.cpp
+	Circle.cpp
+	CircularShape.cpp
+	Cone.cpp
+	Cube.cpp
+	CubicBody.cpp
+	Cuboid.cpp
+	Cylinder.cpp
+	Ellipse.cpp
+	Ellipsoid.cpp
+	ExtendedShape.cpp
+	Head.cpp
+	IBody.cpp
+	IShape.cpp
+	Pyramid.cpp
+	PyramidicBody.cpp
+	Rectangle.cpp
+	RectangularShape.cpp
+	Sphere.cpp
+	SphericBody.cpp
+	Square.cpp
+	Triangle.cpp
+	TriangularShape.cpp
 )
 
 add_module_executable(

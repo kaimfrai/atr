@@ -1,26 +1,26 @@
-add_module(Archetype.hpp
+add_module(Archetype.cpp
 
-Product.hpp
+Product.cpp
 
-	ComputeArea.hpp
-	ComputeVolume.hpp
+	ComputeArea.cpp
+	ComputeVolume.cpp
 
-	BasicShape.hpp
-	Circle.hpp
-	Ellipse.hpp
-	Rectangle.hpp
-	Square.hpp
-	Triangle.hpp
+	BasicShape.cpp
+	Circle.cpp
+	Ellipse.cpp
+	Rectangle.cpp
+	Square.cpp
+	Triangle.cpp
 
-	BasicBody.hpp
-	Cone.hpp
-	Cube.hpp
-	Cuboid.hpp
-	Cylinder.hpp
-	Ellipsoid.hpp
-	Head.hpp
-	Pyramid.hpp
-	Sphere.hpp
+	BasicBody.cpp
+	Cone.cpp
+	Cube.cpp
+	Cuboid.cpp
+	Cylinder.cpp
+	Ellipsoid.cpp
+	Head.cpp
+	Pyramid.cpp
+	Sphere.cpp
 )
 
 add_module_executable(
