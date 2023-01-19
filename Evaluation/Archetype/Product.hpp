@@ -2,9 +2,9 @@ export module Evaluation.Archetype:Product;
 
 export import ATR;
 export import Evaluation.Shared;
-import Meta.Functional.Fold.Multiply;
-import Meta.Functional.Fold;
-import Meta.Functional.Key;
+import Meta.Token.Index;
+
+import Std;
 
 export namespace
 	ATR
@@ -23,18 +23,22 @@ export namespace
 		noexcept
 	->	Float
 	{	return
-		i_vArgument.ItemSequence.TransformReduce
-		(	[	&i_vArgument
-			]	(	auto
-						i_vIndex
+		[	&i_vArgument
+		]	<	::std::size_t
+				...	t_npIndex
+			>(	::std::index_sequence
+				<	t_npIndex
+					...
+				>
+			)
+		{	return
+			(	...
+			*	i_vArgument
+				(	::Meta::Index<t_npIndex>
 				)
-			{	return
-				i_vArgument
-				(	i_vIndex
-				);
-			}
-		,	Meta::Fold<&Meta::Functional::Key::operator*>
-			{}
+			);
+		}(	i_vArgument
+		.	ItemSequence
 		);
 	}
 }

@@ -1,10 +1,11 @@
 export module Meta.Lex.Function;
 
-import Meta.Token.Sequence;
 import Meta.Token.Type;
 import Meta.Token.Function;
 import Meta.Token.Index;
 import Meta.Size;
+
+import Std;
 
 export namespace
 	Meta::Lex
@@ -49,9 +50,12 @@ auto constexpr
 	[	...
 		vpParam
 	=	i_vParam
-	]	<	::Meta::USize
+	]	<	::std::size_t
 			...	t_npIndex
-		>(	::Meta::IndexToken<t_npIndex...>
+		>(	::std::index_sequence
+			<	t_npIndex
+				...
+			>
 		)
 	->	::Meta::Lex::ParamList
 		<	::Meta::Lex::IndexedParam
@@ -66,7 +70,9 @@ auto constexpr
 		{	vpParam
 			...
 		};
-	}(	Meta::Sequence<sizeof...(t_tpParam)>
+	}(	::std::make_index_sequence
+		<	sizeof...(t_tpParam)
+		>{}
 	);
 }
 

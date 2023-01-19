@@ -4,7 +4,7 @@ import Meta.ID.Make;
 import Meta.ID.StringView;
 import Meta.ID.StringLiteral;
 
-import Meta.Token.Sequence;
+import Std;
 
 export namespace
 	Meta
@@ -19,7 +19,10 @@ export namespace
 	=	decltype
 		(	::Make
 			<	t_vStringLiteral
-			>(	Meta::Sequence<t_vStringLiteral.size()>
+			>(	::std::make_index_sequence
+				<	t_vStringLiteral
+				.	size()
+				>{}
 			)
 		)
 	;

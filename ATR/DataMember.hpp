@@ -6,7 +6,6 @@ import Meta.Token.Type;
 import Meta.Size;
 import Meta.Functional.Construct;
 import Meta.Arithmetic.Literals;
-import Meta.Token.Sequence;
 import Meta.Token.Index;
 import Meta.Token.Specifier;
 import Meta.Token.Array;
@@ -20,8 +19,6 @@ import Meta.ID.Concept;
 
 import Std;
 
-using ::Meta::IndexToken;
-using ::Meta::Sequence;
 using ::Meta::USize;
 
 export namespace
@@ -420,25 +417,29 @@ export namespace
 		{
 			auto
 				vList
-			=	Meta::InjectSequence<t_vList.size()>
-				(	[]	(	auto
-								i_vIndex
-						)
-					{
-						auto constexpr& vItem = t_vList[i_vIndex];
-						return
-						MemberInstance
-						<	Meta::ID_Of<vItem.Name>
-						,	(	Meta::RestoreTypeToken<vItem.Type>
+			=	[]	<	::std::size_t
+						...	t_npIndex
+					>(	::std::index_sequence<t_npIndex...>
+					)
+				{	return
+					decltype(t_vList)
+					{	MemberInstance
+						<	Meta::ID_Of<t_vList[t_npIndex].Name>
+						,	(	Meta::RestoreTypeToken<t_vList[t_npIndex].Type>
 							+	decltype(i_fTransform){}
 							)
-						,	vItem.SortKey
-						>;
-					}
-				,	Meta::Construct<decltype(t_vList)>()
+						,	t_vList[t_npIndex].SortKey
+						>
+						...
+					};
+				}(	::std::make_index_sequence
+					<	t_vList
+					.	size()
+					>{}
 				)
 			;
-			std::sort(vList.begin(), vList.end().base());
+
+			::std::sort(vList.begin(), vList.end().base());
 			return vList;
 		}
 

@@ -7,8 +7,8 @@ import Meta.ID.Template;
 import Meta.ID.StringLiteral;
 
 import Meta.Token.Index;
-import Meta.Token.Sequence;
-import Meta.Size;
+
+import Std;
 
 export
 {
@@ -28,12 +28,12 @@ export
 	template
 		<	Meta::StringLiteral
 				t_vStringLiteral
-		,	Meta::USize
+		,	::std::size_t
 			...	t_npIndex
 		>
 	auto constexpr
 	(	Make
-	)	(	Meta::IndexToken
+	)	(	::std::index_sequence
 			<	t_npIndex
 				...
 			>

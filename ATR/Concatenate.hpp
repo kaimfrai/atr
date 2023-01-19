@@ -7,7 +7,6 @@ import Meta.ID.Concatenate;
 import Meta.ID.Template;
 import Meta.ID.StringLiteral;
 import Meta.Functional.Construct;
-import Meta.Token.Sequence;
 import Meta.Token.Type;
 
 import Std;
@@ -95,18 +94,23 @@ namespace
 		>
 	MemberList constexpr inline
 		InfixLayoutConfig
-	=	Meta::InjectSequence<t_vConfig.size()>
-		(	[]	(	auto
-						i_vIndex
-				)
-			{	return
-				InfixDataMember
+	=	[]	<	::std::size_t
+				...	t_npIndex
+			>(	::std::index_sequence<t_npIndex...>
+			)
+		{	return
+			MemberList
+			{	InfixDataMember
 				<	t_tPrefix
-				,	t_vConfig[i_vIndex]
+				,	t_vConfig[t_npIndex]
 				,	t_tSuffix
-				>();
-			}
-		,	Meta::Construct<MemberList>()
+				>()
+				...
+			};
+		}(	::std::make_index_sequence
+			<	t_vConfig
+			.	size()
+			>{}
 		)
 	;
 }

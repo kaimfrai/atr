@@ -6,7 +6,6 @@ import Meta.ID.Concept;
 import Meta.ID.StringLiteral;
 import Meta.ID.Alias;
 import Meta.Size;
-import Meta.Token.Sequence;
 import Meta.Token.Index;
 import Meta.Token.Type;
 import Meta.Data.TupleList;
@@ -44,7 +43,9 @@ export namespace
 
 		static auto constexpr
 			ItemSequence
-		=	Meta::Sequence<sizeof...(t_tpItem)>
+		=	::std::make_index_sequence
+			<	sizeof...(t_tpItem)
+			>{}
 		;
 
 		template

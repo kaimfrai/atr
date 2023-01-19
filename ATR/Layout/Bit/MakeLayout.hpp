@@ -8,16 +8,12 @@ import Meta.ID.Concept;
 import Meta.Size;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
-import Meta.Token.Sequence;
-import Meta.Token.Index;
 import Meta.Token.Specifier;
 
 import Std;
 
 using ::Meta::Specifier::BitField;
 using ::Meta::Specifier::Mut;
-using ::Meta::Sequence;
-using ::Meta::IndexToken;
 using ::Meta::USize;
 
 using namespace ::Meta::Literals;
@@ -326,9 +322,9 @@ auto constexpr
 
 	return
 	[	&vOffsetArray
-	]	<	USize
+	]	<	::std::size_t
 			...	t_npIndex
-		>(	IndexToken<t_npIndex...>
+		>(	::std::index_sequence<t_npIndex...>
 		)
 	{
 		return
@@ -339,6 +335,8 @@ auto constexpr
 			>
 			...
 		>{};
-	}(	Sequence<sizeof...(t_tpBitFieldMember)>
+	}(	::std::make_index_sequence
+		<	sizeof...(t_tpBitFieldMember)
+		>{}
 	);
 }

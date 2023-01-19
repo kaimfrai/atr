@@ -7,8 +7,6 @@ import Meta.Logic.Bit.Evaluate;
 import Meta.Bit.Index;
 import Meta.Token.Type;
 import Meta.Token.Index;
-import Meta.Token.Sequence;
-import Meta.Size;
 
 import Std;
 
@@ -41,12 +39,12 @@ export namespace
 			noexcept
 		{	return Erased;	}
 
-		static USize constexpr
+		static auto constexpr
 			LiteralCount
 		=	sizeof...(t_tpLiteral)
 		;
 
-		static USize constexpr
+		static auto constexpr
 			ClauseCount
 		=	t_vTerm.ClauseCount()
 		;
@@ -95,12 +93,15 @@ export namespace
 template
 	<	::Meta::Logic::Erased::Term
 			t_vErased
-	,	::Meta::USize
+	,	::std::size_t
 		...	t_npIndex
 	>
 auto constexpr
 	MakeTerm
-	(	::Meta::IndexToken<t_npIndex...>
+	(	::std::index_sequence
+		<	t_npIndex
+			...
+		>
 	)
 ->	::Meta::Logic::Term
 	<	t_vErased.BitTerm
@@ -126,7 +127,10 @@ export namespace
 	=	decltype
 		(	::MakeTerm
 			<	t_vErasedTerm
-			>(	Sequence<t_vErasedTerm.LiteralCount()>
+			>(	::std::make_index_sequence
+				<	t_vErasedTerm
+				.	LiteralCount()
+				>{}
 			)
 		)
 	;

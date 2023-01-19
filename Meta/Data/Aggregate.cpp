@@ -13,7 +13,6 @@ import Meta.Size;
 import Meta.Token.Reference;
 import Meta.Token.Function;
 import Meta.Token.Index;
-import Meta.Token.Sequence;
 import Meta.Token.CV;
 import Meta.Token.Type;
 import Meta.Token.Array;
@@ -934,9 +933,12 @@ export namespace
 
 		return
 		[	i_aSource
-		]	<	USize
+		]	<	::std::size_t
 				...	t_npIndex
-			>(	IndexToken<t_npIndex...>
+			>(	::std::index_sequence
+				<	t_npIndex
+					...
+				>
 			)
 		->	Aggregate<t_tTarget>
 		{	return
@@ -947,7 +949,9 @@ export namespace
 				)
 				...
 			};
-		}(	Sequence<vExtent>
+		}(	::std::make_index_sequence
+			<	vExtent
+			>{}
 		);
 	}
 

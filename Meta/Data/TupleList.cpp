@@ -3,7 +3,6 @@ export module Meta.Data.TupleList;
 import Meta.Data.Aggregate;
 
 import Meta.Token.Index;
-import Meta.Token.Sequence;
 import Meta.Token.Type;
 import Meta.Size;
 
@@ -162,9 +161,12 @@ export namespace
 		)
 	->	decltype(auto)
 	{	return
-		[&]	<	USize
+		[&]	<	::std::size_t
 				...	t_npIndex
-			>(	IndexToken<t_npIndex...>
+			>(	::std::index_sequence
+				<	t_npIndex
+					...
+				>
 			)
 		->	KeyTuple
 			<	KeyItem
@@ -185,7 +187,9 @@ export namespace
 				)
 				...
 			};
-		}(	Sequence<sizeof...(t_tpItem)>
+		}(	::std::make_index_sequence
+			<	sizeof...(t_tpItem)
+			>{}
 		);
 	}
 
