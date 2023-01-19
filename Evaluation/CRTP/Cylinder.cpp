@@ -1,10 +1,10 @@
-export module Evaluation.CRTP:Cylinder;
+export module Evaluation.CRTP.Cylinder;
 
 import Evaluation.Shared.DataTypes;
 import Evaluation.Shared.PiFraction;
-export import :Circle;
-export import :ExtendedShape;
-export import :SeparateDepth;
+export import Evaluation.CRTP.Circle;
+export import Evaluation.CRTP.ExtendedShape;
+export import Evaluation.CRTP.SeparateDepth;
 
 export namespace
 	Bodies3D

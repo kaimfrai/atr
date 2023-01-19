@@ -1,8 +1,8 @@
-export module Evaluation.CRTP:PyramidicBody;
+export module Evaluation.CRTP.PyramidicBody;
 
 import Evaluation.Shared.DataTypes;
 import Evaluation.Shared.Fraction;
-export import :ExtendedShape;
+export import Evaluation.CRTP.ExtendedShape;
 
 export namespace
 	Bodies3D

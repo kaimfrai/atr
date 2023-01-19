@@ -1,6 +1,6 @@
-export module Evaluation.CRTP:ExtendedShape;
+export module Evaluation.CRTP.ExtendedShape;
 
-export import :BasicBody;
+export import Evaluation.CRTP.BasicBody;
 
 import Evaluation.Shared.DataTypes;
 

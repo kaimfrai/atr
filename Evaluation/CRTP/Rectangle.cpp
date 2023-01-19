@@ -1,7 +1,7 @@
-export module Evaluation.CRTP:Rectangle;
+export module Evaluation.CRTP.Rectangle;
 
-export import :RectangularShape;
-export import :SeparateHeight;
+export import Evaluation.CRTP.RectangularShape;
+export import Evaluation.CRTP.SeparateHeight;
 
 export namespace
 	Shapes2D

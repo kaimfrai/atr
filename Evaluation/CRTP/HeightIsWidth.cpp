@@ -1,4 +1,4 @@
-export module Evaluation.CRTP:HeightIsWidth;
+export module Evaluation.CRTP.HeightIsWidth;
 
 import Evaluation.Shared.DataTypes;
 

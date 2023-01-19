@@ -1,8 +1,8 @@
-export module Evaluation.CRTP:CircularShape;
+export module Evaluation.CRTP.CircularShape;
 
 import Evaluation.Shared.PiFraction;
-export import :BasicShape;
-export import :SeparateWidth;
+export import Evaluation.CRTP.BasicShape;
+export import Evaluation.CRTP.SeparateWidth;
 
 export namespace
 	Shapes2D

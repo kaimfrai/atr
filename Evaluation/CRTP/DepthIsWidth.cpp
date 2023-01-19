@@ -1,4 +1,4 @@
-export module Evaluation.CRTP:DepthIsWidth;
+export module Evaluation.CRTP.DepthIsWidth;
 
 import Evaluation.Shared.DataTypes;
 

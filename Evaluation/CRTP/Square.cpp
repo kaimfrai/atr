@@ -1,7 +1,7 @@
-export module Evaluation.CRTP:Square;
+export module Evaluation.CRTP.Square;
 
-export import :RectangularShape;
-export import :HeightIsWidth;
+export import Evaluation.CRTP.RectangularShape;
+export import Evaluation.CRTP.HeightIsWidth;
 
 export namespace
 	Shapes2D

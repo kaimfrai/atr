@@ -1,9 +1,9 @@
-export module Evaluation.CRTP:Cone;
+export module Evaluation.CRTP.Cone;
 
 import Evaluation.Shared.PiFraction;
-export import :Circle;
-export import :ExtendedShape;
-export import :SeparateDepth;
+export import Evaluation.CRTP.Circle;
+export import Evaluation.CRTP.ExtendedShape;
+export import Evaluation.CRTP.SeparateDepth;
 
 export namespace
 	Bodies3D

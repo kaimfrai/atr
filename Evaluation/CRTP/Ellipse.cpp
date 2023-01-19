@@ -1,7 +1,7 @@
-export module Evaluation.CRTP:Ellipse;
+export module Evaluation.CRTP.Ellipse;
 
-export import :CircularShape;
-export import :SeparateHeight;
+export import Evaluation.CRTP.CircularShape;
+export import Evaluation.CRTP.SeparateHeight;
 
 export namespace
 	Shapes2D

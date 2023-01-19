@@ -1,4 +1,4 @@
-export module Evaluation.CRTP:BasicShape;
+export module Evaluation.CRTP.BasicShape;
 
 import Evaluation.Shared.DataTypes;
 

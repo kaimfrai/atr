@@ -1,4 +1,4 @@
-export module Evaluation.CRTP:SeparateHeight;
+export module Evaluation.CRTP.SeparateHeight;
 
 import Evaluation.Shared.DataTypes;
 
