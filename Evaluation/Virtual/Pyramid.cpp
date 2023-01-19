@@ -3,6 +3,8 @@ export module Evaluation.Virtual:Pyramid;
 export import :Triangle;
 export import :PyramidicBody;
 
+import Evaluation.Shared.DataTypes;
+
 export namespace
 	Bodies3D
 {

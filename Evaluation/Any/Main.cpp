@@ -1,7 +1,8 @@
 import Evaluation.Any;
 import Evaluation.CRTP;
 
-import Evaluation.Shared;
+import Evaluation.Shared.MainTemplate;
+import Evaluation.Shared.InPlaceConstruct;
 import Meta.Size;
 
 import Std;

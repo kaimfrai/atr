@@ -1,6 +1,6 @@
 export module Evaluation.Polymorphic;
 
-export import Evaluation.Shared;
+import Evaluation.Shared.DataTypes;
 export import Evaluation.Polymorphic.Library;
 
 export namespace

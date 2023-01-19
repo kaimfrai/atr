@@ -2,7 +2,8 @@ export module Evaluation.Virtual:RectangularShape;
 
 export import :BasicShape;
 
-export import Evaluation.Shared;
+import Evaluation.Shared.DataTypes;
+import Evaluation.Shared.Fraction;
 
 export namespace
 	Shapes2D

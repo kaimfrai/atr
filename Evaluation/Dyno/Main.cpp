@@ -1,7 +1,8 @@
 import Evaluation.Dyno;
 import Evaluation.CRTP;
 
-import Evaluation.Shared;
+import Evaluation.Shared.MainTemplate;
+import Evaluation.Shared.CopyConstruct;
 import Meta.Size;
 
 import Std;

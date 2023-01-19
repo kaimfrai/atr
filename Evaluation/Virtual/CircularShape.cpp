@@ -2,7 +2,8 @@ export module Evaluation.Virtual:CircularShape;
 
 export import :BasicShape;
 
-export import Evaluation.Shared;
+import Evaluation.Shared.DataTypes;
+import Evaluation.Shared.PiFraction;
 
 export namespace
 	Shapes2D

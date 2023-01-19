@@ -3,7 +3,8 @@ export module Evaluation.Virtual:Cylinder;
 export import :Circle;
 export import :ExtendedShape;
 
-export import Evaluation.Shared;
+import Evaluation.Shared.DataTypes;
+import Evaluation.Shared.PiFraction;
 
 export namespace
 	Bodies3D

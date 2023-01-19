@@ -2,7 +2,7 @@ export module Evaluation.Archetype:Triangle;
 
 export import :BasicShape;
 
-export import Evaluation.Shared;
+import Evaluation.Shared.Fraction;
 
 import ATR.DataMember;
 

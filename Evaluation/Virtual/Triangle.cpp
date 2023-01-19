@@ -2,6 +2,8 @@ export module Evaluation.Virtual:Triangle;
 
 export import :TriangularShape;
 
+import Evaluation.Shared.DataTypes;
+
 export namespace
 	Shapes2D
 {

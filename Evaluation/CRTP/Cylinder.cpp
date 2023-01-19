@@ -1,6 +1,7 @@
 export module Evaluation.CRTP:Cylinder;
 
-export import Evaluation.Shared;
+import Evaluation.Shared.DataTypes;
+import Evaluation.Shared.PiFraction;
 export import :Circle;
 export import :ExtendedShape;
 export import :SeparateDepth;

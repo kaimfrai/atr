@@ -2,7 +2,7 @@ export module Evaluation.Archetype:Pyramid;
 
 export import :BasicBody;
 
-export import Evaluation.Shared;
+import Evaluation.Shared.Fraction;
 
 import ATR.DataMember;
 

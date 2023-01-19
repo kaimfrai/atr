@@ -2,7 +2,7 @@ export module Evaluation.Archetype:Cylinder;
 
 export import :BasicBody;
 
-export import Evaluation.Shared;
+import Evaluation.Shared.PiFraction;
 
 import ATR.DataMember;
 

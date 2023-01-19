@@ -2,7 +2,8 @@ export module Evaluation.Virtual:PyramidicBody;
 
 export import :ExtendedShape;
 
-export import Evaluation.Shared;
+import Evaluation.Shared.DataTypes;
+import Evaluation.Shared.Fraction;
 
 export namespace
 	Bodies3D

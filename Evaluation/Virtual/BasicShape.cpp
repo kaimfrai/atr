@@ -2,6 +2,8 @@ export module Evaluation.Virtual:BasicShape;
 
 export import :IShape;
 
+import Evaluation.Shared.DataTypes;
+
 export namespace
 	Shapes2D
 {

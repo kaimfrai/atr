@@ -1,6 +1,6 @@
 export module Evaluation.CRTP:CircularShape;
 
-export import Evaluation.Shared;
+import Evaluation.Shared.PiFraction;
 export import :BasicShape;
 export import :SeparateWidth;
 

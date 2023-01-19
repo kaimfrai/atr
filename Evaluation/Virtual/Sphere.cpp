@@ -3,6 +3,8 @@ export module Evaluation.Virtual:Sphere;
 export import :Circle;
 export import :SphericBody;
 
+import Evaluation.Shared.DataTypes;
+
 export namespace
 	Bodies3D
 {

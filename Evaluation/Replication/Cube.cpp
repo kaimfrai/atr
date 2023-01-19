@@ -1,6 +1,6 @@
 export module Evaluation.Replication:Cube;
 
-export import Evaluation.Shared;
+import Evaluation.Shared.DataTypes;
 
 export namespace
 	Bodies3D

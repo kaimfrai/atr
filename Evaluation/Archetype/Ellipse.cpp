@@ -2,7 +2,7 @@ export module Evaluation.Archetype:Ellipse;
 
 export import :BasicShape;
 
-export import Evaluation.Shared;
+import Evaluation.Shared.PiFraction;
 
 import ATR.DataMember;
 

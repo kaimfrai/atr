@@ -1,6 +1,6 @@
 export module Evaluation.CRTP:BasicBody;
 
-export import Evaluation.Shared;
+import Evaluation.Shared.DataTypes;
 
 export namespace
 	Bodies3D

@@ -2,7 +2,7 @@ export module Evaluation.Archetype:BasicBody;
 
 export import :BasicShape;
 
-export import Evaluation.Shared;
+import Evaluation.Shared.DataTypes;
 
 import ATR.DataMember;
 

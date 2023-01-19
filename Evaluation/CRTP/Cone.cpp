@@ -1,6 +1,6 @@
 export module Evaluation.CRTP:Cone;
 
-export import Evaluation.Shared;
+import Evaluation.Shared.PiFraction;
 export import :Circle;
 export import :ExtendedShape;
 export import :SeparateDepth;

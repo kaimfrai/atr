@@ -1,6 +1,7 @@
 import Evaluation.CRTP;
 
-import Evaluation.Shared;
+import Evaluation.Shared.MainTemplate;
+import Evaluation.Shared.CopyConstruct;
 import Evaluation.TypeErasure;
 import Meta.Size;
 

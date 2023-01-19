@@ -2,6 +2,8 @@ export module Evaluation.Virtual:ExtendedShape;
 
 export import :BasicBody;
 
+import Evaluation.Shared.DataTypes;
+
 export namespace
 	Bodies3D
 {

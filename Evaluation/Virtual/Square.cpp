@@ -2,6 +2,8 @@ export module Evaluation.Virtual:Square;
 
 export import :RectangularShape;
 
+import Evaluation.Shared.DataTypes;
+
 export namespace
 	Shapes2D
 {

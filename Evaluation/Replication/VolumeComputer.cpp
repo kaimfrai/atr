@@ -9,7 +9,7 @@ export import :Cone;
 export import :Ellipsoid;
 export import :Head;
 
-export import Evaluation.Shared;
+import Evaluation.Shared.DataTypes;
 
 import Std;
 

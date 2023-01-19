@@ -1,6 +1,7 @@
 export module Evaluation.Replication:Pyramid;
 
-export import Evaluation.Shared;
+import Evaluation.Shared.DataTypes;
+import Evaluation.Shared.Fraction;
 
 export namespace
 	Bodies3D

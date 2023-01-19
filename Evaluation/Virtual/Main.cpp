@@ -1,6 +1,6 @@
 import Evaluation.Virtual;
 
-import Evaluation.Shared;
+import Evaluation.Shared.MainTemplate;
 import Meta.Size;
 
 import Std;

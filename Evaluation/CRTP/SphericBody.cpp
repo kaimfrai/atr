@@ -1,6 +1,7 @@
 export module Evaluation.CRTP:SphericBody;
 
-export import Evaluation.Shared;
+import Evaluation.Shared.DataTypes;
+import Evaluation.Shared.PiFraction;
 export import :ExtendedShape;
 
 export namespace

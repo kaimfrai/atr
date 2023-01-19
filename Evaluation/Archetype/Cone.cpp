@@ -2,7 +2,7 @@ export module Evaluation.Archetype:Cone;
 
 export import :BasicBody;
 
-export import Evaluation.Shared;
+import Evaluation.Shared.PiFraction;
 
 import ATR.DataMember;
 
