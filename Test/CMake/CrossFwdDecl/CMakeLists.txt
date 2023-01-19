@@ -1,5 +1,5 @@
 add_module(
-	Interface.hpp
+	Interface.cpp
 
 	Impl.cpp
 )

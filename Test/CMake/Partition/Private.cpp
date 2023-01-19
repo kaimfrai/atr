@@ -2,13 +2,14 @@ module;
 
 #include "Include.h"
 
-module Test.CMake;
-
-import :Private;
+export module Test.CMake:Private;
 
 namespace
 	Private
 {
-	const Secret Secret::sec{};
+	export struct
+		Secret
+	{
+		static Secret const sec;
+	};
 }
-

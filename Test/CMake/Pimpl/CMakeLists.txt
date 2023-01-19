@@ -1,9 +1,9 @@
 add_module(
-	Impl.hpp
+	Impl.cpp
 )
 
 add_module(
-	Pimpl.hpp
-
 	Pimpl.cpp
+
+	PimplImpl.cpp
 )

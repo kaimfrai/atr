@@ -1,5 +1,5 @@
 add_module(
-	Data.hpp
+	Data.cpp
 )
 
 add_module_object_tests(

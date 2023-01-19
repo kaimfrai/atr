@@ -1,17 +1,16 @@
-module;
+export module Test.CMake:User;
 
-#include "Include.h"
-
-module Test.CMake;
-
-import :Def;
-
-auto Test::CMake::User::Invoke2() -> int
+export namespace
+	Test::CMake
 {
-	return def->Invoke3();
-}
+	struct Def;
 
-auto Test::CMake::User::SomeNum() -> int
-{
-	return FIVE - 1;
+	struct
+		User
+	{
+		Def* def;
+
+		auto SomeNum() -> int;
+		auto Invoke2() -> int;
+	};
 }

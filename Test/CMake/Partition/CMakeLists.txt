@@ -1,12 +1,12 @@
 add_module(
-	FooBar.hpp
+	FooBar.cpp
 
-	Def.hpp
-	User.hpp
-	Private.hpp
+	Def.cpp
+	User.cpp
+	Private.cpp
 
 	Bar.cpp
 	Foo.cpp
-	User.cpp
-	Private.cpp
+	UserImpl.cpp
+	PrivateImpl.cpp
 )

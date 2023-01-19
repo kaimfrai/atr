@@ -1,19 +1,16 @@
-module Test.CMake.Pimpl;
+export module Test.CMake.Pimpl;
 
 import Test.CMake.Impl;
 
-import Std;
+export using ImplAlias = Impl;
 
-Pimpl::Pimpl(long double d) noexcept
-:	pImpl{new Impl{d}}
-{}
-
-Pimpl::~Pimpl() noexcept
+export struct
+	Pimpl
 {
-	delete pImpl;
-}
+	Impl* pImpl;
 
-long double Pimpl::get() const noexcept
-{
-	return pImpl->d;
-}
+	Pimpl(long double) noexcept;
+	~Pimpl() noexcept;
+
+	auto get() const noexcept -> long double;
+};
