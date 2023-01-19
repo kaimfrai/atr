@@ -1,37 +1,37 @@
 add_module(
-	ATR.hpp
+	ATR.cpp
 
-	DataMember.hpp
-	Layout.hpp
-	Layout/Alias.hpp
-	Layout/AliasLayout.hpp
-	Layout/AliasResolver.hpp
-	Layout/Bit/Access.hpp
-	Layout/Bit/Array.hpp
-	Layout/Bit/ElementReference.hpp
-	Layout/Bit/Iterator.hpp
-	Layout/Bit/Layout.hpp
-	Layout/Bit/MakeLayout.hpp
-	Layout/Bit/MemberOffset.hpp
-	Layout/Bit/Reference.hpp
-	Layout/Bit/View.hpp
-	Layout/Concept.hpp
-	Layout/Create.hpp
-	Layout/Data.hpp
-	Layout/Layout.hpp
-	Layout/Member.hpp
-	Layout/MemberOffset.hpp
-	Layout/Static.hpp
-	Layout/Type.hpp
-	Layout/ValidateOffsets.hpp
+	DataMember.cpp
+	Layout.cpp
+	Layout/Alias.cpp
+	Layout/AliasLayout.cpp
+	Layout/AliasResolver.cpp
+	Layout/Bit/Access.cpp
+	Layout/Bit/Array.cpp
+	Layout/Bit/ElementReference.cpp
+	Layout/Bit/Iterator.cpp
+	Layout/Bit/Layout.cpp
+	Layout/Bit/MakeLayout.cpp
+	Layout/Bit/MemberOffset.cpp
+	Layout/Bit/Reference.cpp
+	Layout/Bit/View.cpp
+	Layout/Concept.cpp
+	Layout/Create.cpp
+	Layout/Data.cpp
+	Layout/Layout.cpp
+	Layout/Member.cpp
+	Layout/MemberOffset.cpp
+	Layout/Static.cpp
+	Layout/Type.cpp
+	Layout/ValidateOffsets.cpp
 
-	Erase.hpp
-	Address.hpp
-	Dependency.hpp
+	Erase.cpp
+	Address.cpp
+	Dependency.cpp
 
-	Concatenate.hpp
-	DependencyIDMap.hpp
-	VirtualArgument.hpp
+	Concatenate.cpp
+	DependencyIDMap.cpp
+	VirtualArgument.cpp
 
-	Instance.hpp
+	Instance.cpp
 )
