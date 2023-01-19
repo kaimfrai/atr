@@ -1,4 +1,4 @@
-import ATR;
+import ATR.Layout.Bit.Array;
 
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;

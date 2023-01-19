@@ -1,4 +1,10 @@
-import ATR;
+import ATR.DataMember;
+import ATR.Instance;
+import ATR.Layout.MemberOffset;
+import ATR.Layout.Bit.Iterator;
+import ATR.Layout.Bit.MemberOffset;
+import ATR.Layout.Bit.Reference;
+import ATR.Layout.Bit.Array;
 
 import Meta.Arithmetic.Integer;
 import Meta.Bit.Field;

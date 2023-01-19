@@ -24,6 +24,8 @@ add_single_file_modules(
 	Layout/Type.cpp
 	Layout/ValidateOffsets.cpp
 
+	Literals.cpp
+
 	Erase.cpp
 	Address.cpp
 	Dependency.cpp

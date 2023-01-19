@@ -2,6 +2,8 @@ export module Evaluation.Archetype:Cube;
 
 export import :Cuboid;
 
+import ATR.DataMember;
+
 export namespace
 	ATR
 {

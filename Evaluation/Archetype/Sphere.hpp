@@ -2,7 +2,7 @@ export module Evaluation.Archetype:Sphere;
 
 export import :Ellipsoid;
 
-export import ATR;
+import ATR.DataMember;
 
 export namespace
 	ATR

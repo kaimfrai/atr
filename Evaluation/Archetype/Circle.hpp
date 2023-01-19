@@ -2,6 +2,8 @@ export module Evaluation.Archetype:Circle;
 
 export import :Ellipse;
 
+import ATR.DataMember;
+
 export namespace
 	ATR
 {

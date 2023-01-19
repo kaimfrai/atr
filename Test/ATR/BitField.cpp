@@ -1,4 +1,7 @@
-import ATR;
+import ATR.DataMember;
+import ATR.Layout.Bit.Reference;
+import ATR.Instance;
+import ATR.Literals;
 
 import Meta.Memory.Size;
 import Meta.Arithmetic.Integer;

@@ -1,4 +1,4 @@
-import ATR;
+import ATR.DataMember;
 
 import Meta.Memory.Size;
 import Meta.Token.CV;

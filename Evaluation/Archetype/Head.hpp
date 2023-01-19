@@ -1,7 +1,9 @@
 export module Evaluation.Archetype:Head;
 
 export import :Sphere;
-export import ATR;
+
+import ATR.DataMember;
+import ATR.Concatenate;
 
 export namespace
 	ATR

@@ -1,4 +1,5 @@
-import ATR;
+import ATR.Layout.Bit.Iterator;
+import ATR.Layout.Bit.Array;
 
 import Meta.Bit.Field;
 import Meta.Memory.Size;

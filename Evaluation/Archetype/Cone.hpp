@@ -4,6 +4,8 @@ export import :BasicBody;
 
 export import Evaluation.Shared;
 
+import ATR.DataMember;
+
 export namespace
 	ATR
 {

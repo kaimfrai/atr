@@ -2,6 +2,8 @@ export module Evaluation.Archetype:Square;
 
 export import :Rectangle;
 
+import ATR.DataMember;
+
 export namespace
 	ATR
 {

@@ -1,5 +1,7 @@
 import Test.Evaluation.SizeCheck;
-import ATR;
+import ATR.Instance;
+import ATR.Address;
+import ATR.Literals;
 import Evaluation.Archetype;
 
 static_assert(AdditionalSize<ATR::Type<"Square">, 1, 1> == 4);

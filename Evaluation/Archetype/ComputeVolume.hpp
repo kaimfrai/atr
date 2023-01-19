@@ -2,7 +2,9 @@ export module Evaluation.Archetype:ComputeVolume;
 
 export import :Product;
 
-export import ATR;
+import ATR.DependencyIDMap;
+import ATR.Literals;
+import ATR.Address;
 
 export namespace
 	ATR

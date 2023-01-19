@@ -1,4 +1,6 @@
-import ATR;
+import ATR.VirtualArgument;
+import ATR.Literals;
+import ATR.Instance;
 
 import Evaluation.Archetype;
 import Evaluation.Shared;
