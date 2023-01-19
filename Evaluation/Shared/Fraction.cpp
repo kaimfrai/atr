@@ -1,16 +1,16 @@
-export module Evaluation.Shared:Fraction;
+export module Evaluation.Shared.Fraction;
 
-export import :DataTypes;
+export import Evaluation.Shared.DataTypes;
 
-import Meta.Size;
+import Std;
 
 export
 {
 	template
-		<	Meta::SSize
+		<	::std::intmax_t
 				t_nNumerator
 			=	1z
-		,	Meta::SSize
+		,	::std::intmax_t
 				t_nDenominator
 			=	1z
 		>

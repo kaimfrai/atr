@@ -1,4 +1,4 @@
-export module Evaluation.Shared:PseudoRandomSequence;
+export module Evaluation.Shared.PseudoRandomSequence;
 
 import Std;
 

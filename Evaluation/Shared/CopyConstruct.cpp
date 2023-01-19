@@ -1,4 +1,4 @@
-export module Evaluation.Shared:CopyConstruct;
+export module Evaluation.Shared.CopyConstruct;
 
 export
 {

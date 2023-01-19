@@ -1,10 +1,10 @@
 export module Evaluation.Shared;
 
-export import :CopyConstruct;
-export import :DataTypes;
-export import :Fraction;
-export import :InPlaceConstruct;
-export import :MainTemplate;
-export import :PiFraction;
-export import :PseudoRandomSequence;
-export import :TypeConstruct;
+export import Evaluation.Shared.CopyConstruct;
+export import Evaluation.Shared.DataTypes;
+export import Evaluation.Shared.Fraction;
+export import Evaluation.Shared.InPlaceConstruct;
+export import Evaluation.Shared.MainTemplate;
+export import Evaluation.Shared.PiFraction;
+export import Evaluation.Shared.PseudoRandomSequence;
+export import Evaluation.Shared.TypeConstruct;
