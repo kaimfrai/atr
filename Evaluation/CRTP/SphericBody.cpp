@@ -2,7 +2,7 @@ export module Evaluation.CRTP.SphericBody;
 
 import Evaluation.Shared.DataTypes;
 import Evaluation.Shared.PiFraction;
-export import Evaluation.CRTP.ExtendedShape;
+import Evaluation.CRTP.ExtendedShape;
 
 export namespace
 	Bodies3D

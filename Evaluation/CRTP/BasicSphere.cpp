@@ -1,8 +1,8 @@
 export module Evaluation.CRTP.BasicSphere;
 
-export import Evaluation.CRTP.Circle;
-export import Evaluation.CRTP.SphericBody;
-export import Evaluation.CRTP.DepthIsWidth;
+import Evaluation.CRTP.Circle;
+import Evaluation.CRTP.SphericBody;
+import Evaluation.CRTP.DepthIsWidth;
 
 export namespace
 	Bodies3D

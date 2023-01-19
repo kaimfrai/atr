@@ -2,8 +2,8 @@ export module Evaluation.CRTP.TriangularShape;
 
 import Evaluation.Shared.DataTypes;
 import Evaluation.Shared.Fraction;
-export import Evaluation.CRTP.BasicShape;
-export import Evaluation.CRTP.SeparateWidth;
+import Evaluation.CRTP.BasicShape;
+import Evaluation.CRTP.SeparateWidth;
 
 export namespace
 	Shapes2D

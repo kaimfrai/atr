@@ -1,8 +1,8 @@
 export module Evaluation.CRTP.Cuboid;
 
-export import Evaluation.CRTP.Rectangle;
-export import Evaluation.CRTP.CubicBody;
-export import Evaluation.CRTP.SeparateDepth;
+import Evaluation.CRTP.Rectangle;
+import Evaluation.CRTP.CubicBody;
+import Evaluation.CRTP.SeparateDepth;
 
 export namespace
 	Bodies3D

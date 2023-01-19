@@ -1,7 +1,7 @@
 export module Evaluation.CRTP.Triangle;
 
-export import Evaluation.CRTP.TriangularShape;
-export import Evaluation.CRTP.SeparateHeight;
+import Evaluation.CRTP.TriangularShape;
+import Evaluation.CRTP.SeparateHeight;
 
 export namespace
 	Shapes2D

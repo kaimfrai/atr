@@ -1,8 +1,8 @@
 export module Evaluation.CRTP.Ellipsoid;
 
-export import Evaluation.CRTP.Ellipse;
-export import Evaluation.CRTP.SphericBody;
-export import Evaluation.CRTP.SeparateDepth;
+import Evaluation.CRTP.Ellipse;
+import Evaluation.CRTP.SphericBody;
+import Evaluation.CRTP.SeparateDepth;
 
 export namespace
 	Bodies3D
