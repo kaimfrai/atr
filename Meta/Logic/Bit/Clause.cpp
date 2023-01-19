@@ -94,22 +94,18 @@ export namespace
 			}
 		{}
 
-		[[nodiscard]]
 		auto constexpr
 		(	Evaluate
 		)	(	FieldType
 					i_vPreset
-			)	const
-		->	Clause
+			)	&
+			noexcept
+		->	Clause&
 		{
-			Clause
-				vCopy
-			=	*this
-			;
-			vCopy.Positive &= compl i_vPreset;
-			vCopy.Negative &= i_vPreset;
+			Positive &= compl i_vPreset;
+			Negative &= i_vPreset;
 
-			return vCopy;
+			return *this;
 		}
 
 		[[nodiscard]]

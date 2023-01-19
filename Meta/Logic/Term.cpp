@@ -63,15 +63,18 @@ export namespace
 		{	return
 			Bit::EvaluateTerm
 			(	t_vTerm
-			,	::std::array
-				{	t_tpLiteral{}
+			,	Bit::EvaluationField
+				(	::std::make_index_sequence
+					<	sizeof...(t_tpLiteral)
+					>{}
+				,	t_tpLiteral{}
 					(	::std::forward<decltype(i_rpArgument)>
 						(	i_rpArgument
 						)
 						...
 					)
 					...
-				}
+				)
 			);
 		}
 	};

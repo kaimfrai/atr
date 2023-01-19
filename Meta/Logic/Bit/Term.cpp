@@ -106,6 +106,7 @@ export namespace
 			,	bool
 					i_bIdentity
 			)	const
+			noexcept
 		->	bool
 		{
 			for	(auto vClause : *this)

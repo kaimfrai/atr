@@ -2,8 +2,6 @@ export module Meta.Logic.Bit.Evaluate;
 
 import Meta.Logic.Bit.Term;
 import Meta.Logic.Bit.Clause;
-import Meta.Bit.Field.Set;
-import Meta.Bit.Index.Arithmetic;
 
 import Std;
 
@@ -15,38 +13,43 @@ export namespace
 	(	EvaluateTerm
 	)	(	Term const
 			&	i_rTerm
-		,	::std::span<bool const>
-				i_vPreset
+		,	Clause::FieldType
+				i_nPresetMask
 		)
 		noexcept
 	->	bool
-	{
-		Clause::FieldType
-			nPresetMask
-		{	0uz
-		};
-		for	(	Clause::IndexType
-					nShift
-				{}
-			;	bool
-					bPreset
-			:	i_vPreset
-			)
-		{
-			if	(bPreset)
-			{	Set
-				(	nPresetMask
-				,	nShift
-				);
-			}
-			++nShift;
-		}
-		return
+	{	return
 			i_rTerm
 		.	Evaluate
-			(	nPresetMask
+			(	i_nPresetMask
 			,	true
 			)
 		;
+	}
+
+	template
+		<	::std::size_t
+			...	t_npIndex
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	EvaluationField
+	)	(	::std::index_sequence
+			<	t_npIndex
+				...
+			>
+		,	decltype(t_npIndex)
+			...	i_vpResult
+		)
+		noexcept
+	->	Bit::Clause::FieldType
+	{	return
+		Bit::Clause::FieldType
+		{(	...
+		bitor
+			(	i_vpResult
+			<<	t_npIndex
+			)
+		)};
 	}
 }
