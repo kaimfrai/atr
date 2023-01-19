@@ -1,4 +1,4 @@
-export module ATR:Layout.Bit.Access;
+export module ATR.Layout.Bit.Access;
 
 import Meta.Byte.OutSpan;
 import Meta.Memory.Size;

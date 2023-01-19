@@ -1,6 +1,6 @@
-export module ATR:Layout.Bit.Reference;
+export module ATR.Layout.Bit.Reference;
 
-import :Layout.Bit.Access;
+import ATR.Layout.Bit.Access;
 
 import Meta.Bit.Index;
 import Meta.Memory.Size;

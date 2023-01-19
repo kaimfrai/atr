@@ -1,4 +1,4 @@
-export module ATR:Layout.Bit.Layout;
+export module ATR.Layout.Bit.Layout;
 
 import Meta.ID.Concept;
 import Meta.Size;

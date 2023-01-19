@@ -1,6 +1,6 @@
-export module ATR:VirtualArgument;
+export module ATR.VirtualArgument;
 
-export import :Address;
+export import ATR.Address;
 
 import Meta.ID.Concept;
 import Meta.ID.StringLiteral;

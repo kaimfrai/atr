@@ -1,6 +1,6 @@
-export module ATR:Layout.Data;
+export module ATR.Layout.Data;
 
-import :Layout.Concept;
+import ATR.Layout.Concept;
 
 import Meta.Size;
 import Meta.Lex.Transform;

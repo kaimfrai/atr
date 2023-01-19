@@ -1,6 +1,6 @@
-export module ATR:Layout.Alias;
+export module ATR.Layout.Alias;
 
-import :DataMember;
+import ATR.DataMember;
 
 import Meta.ID.Concept;
 import Meta.ID.Alias;
@@ -19,7 +19,7 @@ struct
 	Alias
 {};
 
-template
+export template
 	<	MemberInfo
 			t_vMember
 	>

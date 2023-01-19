@@ -1,9 +1,11 @@
-export module ATR:Layout.Type;
+export module ATR.Layout.Type;
 
-import :DataMember;
-import :Layout.Create;
+import ATR.DataMember;
+import ATR.Layout.Create;
 
 import Meta.ID.Concept;
+
+using ::Meta::ProtoID;
 
 export namespace
 	ATR

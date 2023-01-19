@@ -1,8 +1,8 @@
-export module ATR:Layout.Bit.MakeLayout;
+export module ATR.Layout.Bit.MakeLayout;
 
-import :Layout.Bit.Layout;
-import :Layout.Bit.View;
-import :Layout.Member;
+import ATR.Layout.Bit.Layout;
+import ATR.Layout.Bit.View;
+import ATR.Layout.Member;
 
 import Meta.ID.Concept;
 import Meta.Size;

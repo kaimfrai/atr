@@ -1,4 +1,4 @@
-export module ATR:Layout.ValidateOffsets;
+export module ATR.Layout.ValidateOffsets;
 
 import Std;
 

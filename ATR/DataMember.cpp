@@ -1,4 +1,4 @@
-export module ATR:DataMember;
+export module ATR.DataMember;
 
 import Meta.Predicate.Empty;
 import Meta.Token.Query;

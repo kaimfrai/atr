@@ -1,10 +1,12 @@
-export module ATR:DependencyIDMap;
+export module ATR.DependencyIDMap;
 
-export import :DataMember;
-export import :Dependency;
-export import :Address;
-export import :Layout;
+export import ATR.DataMember;
+export import ATR.Dependency;
+export import ATR.Address;
+export import ATR.Layout;
 
+import Meta.ID.Alias;
+import Meta.ID.Concept;
 import Meta.ID.StringView;
 import Meta.ID.StringLiteral;
 import Meta.ID.Alias;
@@ -17,6 +19,9 @@ import Meta.Data.TupleList;
 import Meta.Lex.Transform;
 
 import Std;
+
+using ::Meta::ProtoID;
+using ::Meta::ID_Of;
 
 export namespace
 	ATR

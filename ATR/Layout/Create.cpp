@@ -1,11 +1,13 @@
-export module ATR:Layout.Create;
+export module ATR.Layout.Create;
 
-import :DataMember;
-import :Layout.AliasLayout;
-import :Layout.Data;
-import :Layout.Layout;
-import :Layout.Member;
-import :Layout.Static;
+import ATR.DataMember;
+import ATR.Layout.Alias;
+import ATR.Layout.AliasLayout;
+import ATR.Layout.Data;
+import ATR.Layout.Layout;
+import ATR.Layout.Member;
+import ATR.Layout.Static;
+import ATR.Layout.Layout;
 
 import Meta.Buffer.Iterator;
 import Meta.Token.Index;
@@ -18,6 +20,7 @@ using ::ATR::AliasLayout;
 using ::ATR::AliasSortKey;
 using ::ATR::Data;
 using ::ATR::DefineMembers;
+using ::ATR::MemberInfo;
 using ::ATR::Layout;
 using ::ATR::MemberList;
 using ::ATR::StaticData;

@@ -1,8 +1,8 @@
-export module ATR:Layout.Bit.MemberOffset;
+export module ATR.Layout.Bit.MemberOffset;
 
-import :Layout.Bit.Access;
-import :Layout.Bit.Array;
-import :Layout.Bit.Reference;
+import ATR.Layout.Bit.Access;
+import ATR.Layout.Bit.Array;
+import ATR.Layout.Bit.Reference;
 
 import Meta.Size;
 import Meta.Predicate.TypeTraits;

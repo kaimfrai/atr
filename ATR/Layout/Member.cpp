@@ -1,6 +1,6 @@
-export module ATR:Layout.Member;
+export module ATR.Layout.Member;
 
-import :DataMember;
+import ATR.DataMember;
 
 import Meta.Token.Query;
 import Meta.Token.Type;
@@ -45,7 +45,7 @@ struct
 	;
 };
 
-template
+export template
 	<	MemberInfo
 			t_vMember
 	>

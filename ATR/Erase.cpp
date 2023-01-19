@@ -1,4 +1,4 @@
-export module ATR:Erase;
+export module ATR.Erase;
 
 import Meta.Lex.CV;
 import Meta.Lex.Pointer;

@@ -1,7 +1,7 @@
-export module ATR:Layout.Bit.Iterator;
+export module ATR.Layout.Bit.Iterator;
 
-import :Layout.Bit.Access;
-import :Layout.Bit.ElementReference;
+import ATR.Layout.Bit.Access;
+import ATR.Layout.Bit.ElementReference;
 
 import Meta.Size;
 import Meta.Math.Divide;

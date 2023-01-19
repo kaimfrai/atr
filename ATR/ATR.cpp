@@ -1,14 +1,14 @@
 export module ATR;
 
-export import :Address;
-export import :Concatenate;
-export import :DataMember;
-export import :Dependency;
-export import :DependencyIDMap;
-export import :Erase;
-export import :Layout;
-export import :Instance;
-export import :VirtualArgument;
+export import ATR.Address;
+export import ATR.Concatenate;
+export import ATR.DataMember;
+export import ATR.Dependency;
+export import ATR.DependencyIDMap;
+export import ATR.Erase;
+export import ATR.Layout;
+export import ATR.Instance;
+export import ATR.VirtualArgument;
 
 import Meta.ID.Alias;
 import Meta.ID.Literals;

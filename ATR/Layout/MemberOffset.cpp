@@ -1,6 +1,6 @@
-export module ATR:Layout.MemberOffset;
+export module ATR.Layout.MemberOffset;
 
-export import :Erase;
+export import ATR.Erase;
 
 import Meta.Token.Specifier;
 import Meta.Size;

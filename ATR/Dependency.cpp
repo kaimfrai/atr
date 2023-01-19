@@ -1,6 +1,6 @@
-export module ATR:Dependency;
+export module ATR.Dependency;
 
-export import :Erase;
+export import ATR.Erase;
 
 import Meta.ID.Concept;
 import Meta.ID.StringLiteral;

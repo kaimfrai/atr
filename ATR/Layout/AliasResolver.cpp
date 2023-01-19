@@ -1,6 +1,6 @@
-export module ATR:Layout.AliasResolver;
+export module ATR.Layout.AliasResolver;
 
-import :Layout.Alias;
+import ATR.Layout.Alias;
 
 import Meta.ID.Concept;
 

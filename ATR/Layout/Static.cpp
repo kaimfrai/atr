@@ -1,6 +1,6 @@
-export module ATR:Layout.Static;
+export module ATR.Layout.Static;
 
-import :Layout.Member;
+import ATR.Layout.Member;
 
 import Meta.ID.Concept;
 import Meta.Lex.Transform;

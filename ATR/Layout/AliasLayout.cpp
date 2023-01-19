@@ -1,7 +1,7 @@
-export module ATR:Layout.AliasLayout;
+export module ATR.Layout.AliasLayout;
 
-import :Layout.AliasResolver;
-import :Layout.Concept;
+import ATR.Layout.AliasResolver;
+import ATR.Layout.Concept;
 
 import Meta.Size;
 import Meta.Lex.Transform;

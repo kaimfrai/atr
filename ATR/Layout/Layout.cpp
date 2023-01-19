@@ -1,12 +1,12 @@
-export module ATR:Layout.Layout;
+export module ATR.Layout.Layout;
 
-import :Layout.Alias;
-import :Layout.Bit.MakeLayout;
-import :Layout.Bit.MemberOffset;
-import :Layout.Concept;
-import :Layout.Member;
-import :Layout.MemberOffset;
-import :Layout.ValidateOffsets;
+import ATR.Layout.Alias;
+import ATR.Layout.Bit.MakeLayout;
+import ATR.Layout.Bit.MemberOffset;
+import ATR.Layout.Concept;
+import ATR.Layout.Member;
+import ATR.Layout.MemberOffset;
+import ATR.Layout.ValidateOffsets;
 
 import Meta.Size;
 import Meta.Lex.Transform;
@@ -17,6 +17,7 @@ import Meta.Token.Sequence;
 import Meta.Token.CV;
 import Meta.Token.Type;
 import Meta.Data.Aggregate;
+import Meta.ID.Concept;
 
 import Std;
 
@@ -25,6 +26,7 @@ using ::Meta::CV;
 using ::Meta::Type;
 using ::Meta::TypeEntity;
 using ::Meta::USize;
+using ::Meta::ProtoID;
 
 using namespace ::Meta::Literals;
 
@@ -40,7 +42,7 @@ export namespace
 	;
 }
 
-template
+export template
 	<	typename
 		...	t_tpMember
 	>

@@ -1,12 +1,14 @@
-export module ATR:Instance;
+export module ATR.Instance;
 
-export import :Layout;
-export import :Address;
+export import ATR.Layout;
+export import ATR.Address;
 
 import Meta.ID.Concept;
 import Meta.ID.StringLiteral;
 import Meta.ID.Alias;
 import Meta.Lex.Tokenizer;
+
+using ::Meta::ProtoID;
 
 export namespace
 	ATR

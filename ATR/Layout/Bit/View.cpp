@@ -1,9 +1,9 @@
-export module ATR:Layout.Bit.View;
+export module ATR.Layout.Bit.View;
 
-import :Layout.Bit.Access;
-import :Layout.Bit.Array;
-import :Layout.Bit.MemberOffset;
-import :Layout.Bit.Reference;
+import ATR.Layout.Bit.Access;
+import ATR.Layout.Bit.Array;
+import ATR.Layout.Bit.MemberOffset;
+import ATR.Layout.Bit.Reference;
 
 import Meta.ID.Concept;
 import Meta.Memory.Size;

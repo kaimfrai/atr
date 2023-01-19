@@ -1,8 +1,8 @@
-export module ATR:Layout.Bit.Array;
+export module ATR.Layout.Bit.Array;
 
-import :Layout.Bit.ElementReference;
-import :Layout.Bit.Reference;
-import :Layout.Bit.Iterator;
+import ATR.Layout.Bit.ElementReference;
+import ATR.Layout.Bit.Reference;
+import ATR.Layout.Bit.Iterator;
 
 import Meta.Bit.Field.Arithmetic;
 import Meta.Bit.Field.Compare;

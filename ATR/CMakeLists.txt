@@ -1,4 +1,4 @@
-add_module(
+add_single_file_modules(
 	ATR.cpp
 
 	DataMember.cpp
