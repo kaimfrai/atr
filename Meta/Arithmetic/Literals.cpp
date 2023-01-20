@@ -43,15 +43,11 @@ struct
 template
 	<	template
 			<	unsigned char
-			,	auto
-				...
 			>
 		typename
 			t_t1DerivedParser
 	,	unsigned char
 			t_nRadix
-	,	auto
-		...	t_vpDerivedParserArgument
 	,	char
 			t_nCharacter
 	,	unsigned char
@@ -65,8 +61,6 @@ struct
 	ParseItem
 	<	t_t1DerivedParser
 		<	t_nRadix
-		,	t_vpDerivedParserArgument
-			...
 		>
 	,	t_nCharacter
 	,	t_nParsed
@@ -75,12 +69,19 @@ struct
 	[[nodiscard]]
 	friend auto constexpr
 	(	operator <<
-	)	(	t_t1DerivedParser<t_nRadix,	t_vpDerivedParserArgument...>
+	)	(	t_t1DerivedParser<t_nRadix>
 				i_vParser
 		,	BasicCharacter<t_nCharacter>
 		)
 		noexcept
-	{	return i_vParser.Append(t_nParsed);	}
+	->	t_t1DerivedParser<t_nRadix>
+	{	return
+			i_vParser
+		.	Append
+			(	t_nParsed
+			)
+		;
+	}
 };
 
 template
@@ -114,25 +115,22 @@ struct
 		,	BasicCharacter<'\''>
 		)
 		noexcept
-	{	return i_vParser;	}
+	->	t_tDerivedParser
+	{	return
+			i_vParser
+		;
+	}
 };
 
 template
 	<	unsigned char
 			t_nRadix
-	,	unsigned char
-			t_nBase
-	,	bool
-			t_bPositive
-		=	true
 	>
 struct
 	ExponentParser
 :	BaseParser
 	<	ExponentParser
 		<	t_nRadix
-		,	t_nBase
-		,	t_bPositive
 		>
 	>
 {
@@ -147,20 +145,27 @@ struct
 		Exponent
 	=	0u
 	;
+	unsigned char
+		Base
+	;
+	bool
+		Positive
+	=	true
+	;
 
-	[[nodiscard]]
 	auto constexpr
 	(	Append
 	)	(	unsigned char
 				i_nParsed
-		)	const
+		)	&
 		noexcept
-	->	ExponentParser
-	{	return
-		{	.Numerator = Numerator
-		,	.Denominator = Denominator
-		,	.Exponent = Exponent * t_nRadix + i_nParsed
-		};
+	->	ExponentParser&
+	{
+		Exponent *= t_nRadix;
+		Exponent += i_nParsed;
+		return
+			*this
+		;
 	}
 
 	[[nodiscard]]
@@ -170,8 +175,15 @@ struct
 				i_vParser
 		,	BasicCharacter<'+'>
 		)
+		noexcept
 	->	ExponentParser
-	{	return i_vParser;	}
+	{
+		i_vParser.Positive = true;
+
+		return
+			i_vParser
+		;
+	}
 
 	[[nodiscard]]
 	friend auto constexpr
@@ -182,16 +194,12 @@ struct
 		)
 		noexcept
 	->	ExponentParser
-		<	t_nRadix
-		,	t_nBase
-		,	not
-			t_bPositive
-		>
-	{	return
-		{	.Numerator = i_vParser.Numerator
-		,	.Denominator = i_vParser.Denominator
-		,	.Exponent = i_vParser.Exponent
-		};
+	{
+		i_vParser.Positive = false;
+
+		return
+			i_vParser
+		;
 	}
 
 	[[nodiscard]]
@@ -206,12 +214,14 @@ struct
 		auto const
 			nExponent
 		=	Power
-			(	static_cast<long double>(t_nBase)
+			(	static_cast<long double>(i_vParser.Base)
 			,	i_vParser.Exponent
 			)
 		;
-		if	constexpr(t_bPositive)
-			return
+		if	(	i_vParser
+			.	Positive
+			)
+		{	return
 			(	(	static_cast<long double>
 					(	i_vParser.Numerator
 					)
@@ -221,8 +231,9 @@ struct
 				(	i_vParser.Denominator
 				)
 			);
+		}
 		else
-			return
+		{	return
 			(	static_cast<long double>
 				(	i_vParser.Numerator
 				)
@@ -232,6 +243,7 @@ struct
 				*	nExponent
 				)
 			);
+		}
 	}
 };
 
@@ -247,16 +259,17 @@ struct
 {
 	[[nodiscard]]
 	friend auto constexpr
-	(	operator<<
+	(	operator <<
 	)	(	t_tDerivedParser
 				i_vParser
 		,	BasicCharacter<'E'>
 		)
 		noexcept
-	->	ExponentParser<Decimal, Decimal>
+	->	ExponentParser<Decimal>
 	{	return
 		{	.Numerator = i_vParser.Numerator
 		,	.Denominator = i_vParser.Denominator
+		,	.Base = Decimal
 		};
 	}
 };
@@ -290,10 +303,11 @@ struct
 		noexcept
 		//	radix for hexadecimal exponent is decimal
 		//	base for hexadecimal exponent is binary
-	->	ExponentParser<Decimal, Binary>
+	->	ExponentParser<Decimal>
 	{	return
 		{	.Numerator = i_vParser.Numerator
 		,	.Denominator = i_vParser.Denominator
+		,	.Base = Binary
 		};
 	}
 };
@@ -317,18 +331,20 @@ struct
 		Denominator
 	;
 
-	[[nodiscard]]
 	auto constexpr
 	(	Append
 	)	(	unsigned char
 				i_nParsed
-		)	const
+		)	&
 		noexcept
-	->	FloatParser
-	{	return
-		{	.Numerator = Numerator * t_nRadix + i_nParsed
-		,	.Denominator = Denominator * t_nRadix
-		};
+	->	FloatParser&
+	{
+		Numerator *= t_nRadix;
+		Numerator += i_nParsed;
+		Denominator *= t_nRadix;
+		return
+			*this
+		;
 	}
 
 	[[nodiscard]]
@@ -371,17 +387,19 @@ struct
 	=	1ull
 	;
 
-	[[nodiscard]]
 	auto constexpr
 	(	Append
 	)	(	unsigned char
 				i_nParsed
-		)	const
+		)	&
 		noexcept
-	->	IntegerParser
-	{	return
-		{	.Numerator = Numerator * t_nRadix + i_nParsed
-		};
+	->	IntegerParser&
+	{
+		Numerator *= t_nRadix;
+		Numerator += i_nParsed;
+		return
+			*this
+		;
 	}
 
 	[[nodiscard]]
@@ -407,7 +425,11 @@ struct
 		)
 		noexcept
 	->	unsigned long long
-	{	return i_vParser.Numerator;	}
+	{	return
+			i_vParser
+		.	Numerator
+		;
+	}
 };
 
 auto constexpr inline
@@ -563,8 +585,8 @@ export namespace
 	{	return
 		Evaluate
 		(	::ParseNumericLiteral
-			(	BasicCharacter
-				<	ToUpper
+			(	::BasicCharacter
+				<	::ToUpper
 					(	t_npBasicCharacter
 					)
 				>{}
