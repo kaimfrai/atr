@@ -1,6 +1,8 @@
 export module Meta.Math.Power;
 
-import Meta.Size;
+import Meta.Memory.Size;
+
+import Std;
 
 export namespace
 	Meta::Math
@@ -8,49 +10,91 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	Power
-	)	(	USize
+	)	(	::std::integral auto
 				i_nBase
-		,	USize
+		,	decltype(i_nBase)
 				i_nExponent
 		)
 		noexcept
-	->	USize
+	->	decltype(i_nBase)
 	{
-		if	(	i_nExponent
-			==	0uz
-			)
-		{	return
-				1uz
-			;
-		}
-		else
-		if	(	i_nExponent
-			==	1uz
-			)
-		{	return
-				i_nBase
-			;
-		}
-		else
-		{	auto const
-				nUnevenPower
-			=	Power
-				(	i_nBase
-				,	i_nExponent % 2uz
+		using
+			tInteger
+		=	decltype(i_nBase)
+		;
+
+		static_assert
+		(	::std::is_unsigned_v<tInteger>
+		,	"Power of signed integer not yet supported!"
+		);
+
+		auto constexpr
+			nBitWidth
+		=	static_cast<tInteger>
+			(	BitSize
+				(	Memory::ByteWidth<tInteger>
+					{	1z
+					}
 				)
-			;
-			auto const
-				nHalfPower
-			=	Power
-				(	i_nBase
-				,	i_nExponent / 2uz
-				)
-			;
-			return
-				nUnevenPower
-			*	nHalfPower
-			*	nHalfPower
-			;
+			.	get()
+			)
+		;
+
+		if	(	i_nExponent
+			>=	nBitWidth
+			and	i_nBase
+			>=	tInteger{2u}
+			)
+		{	::std::unreachable
+			();
 		}
+
+		tInteger constexpr
+			nOne
+		{	1u
+		};
+
+		auto
+			nResult
+		=	nOne
+		;
+		auto
+			nExponentMask
+		=	nBitWidth
+		>>	nOne
+		;
+		do
+		{
+			bool const
+				nBitSet
+			=	i_nExponent
+			>=	nExponentMask
+			;
+
+			(	nResult
+			*=	(	nBitSet
+				*	i_nBase
+				+	not
+					nBitSet
+				)
+			*	nResult
+			);
+
+			(	i_nExponent
+			&=	compl
+				nExponentMask
+			);
+
+			(	nExponentMask
+			>>=	nOne
+			);
+
+		}	while
+			(	nExponentMask
+			)
+		;
+		return
+			nResult
+		;
 	}
 }
