@@ -11,21 +11,21 @@ struct
 	BasicCharacter
 {};
 
-auto constexpr inline
+unsigned char constexpr inline
 	Decimal
-=	10ull
+=	10u
 ;
-auto constexpr inline
+unsigned char constexpr inline
 	Octal
-=	8ull
+=	8u
 ;
-auto constexpr inline
+unsigned char constexpr inline
 	Hexadecimal
-=	16ull
+=	16u
 ;
-auto constexpr inline
+unsigned char constexpr inline
 	Binary
-=	2ull
+=	2u
 ;
 
 template
@@ -33,7 +33,7 @@ template
 			t_tDerivedParser
 	,	char
 			t_nCharacter
-	,	unsigned long long
+	,	unsigned char
 			t_nParsed
 	>
 struct
@@ -42,19 +42,19 @@ struct
 
 template
 	<	template
-			<	unsigned long long
+			<	unsigned char
 			,	auto
 				...
 			>
 		typename
 			t_t1DerivedParser
-	,	unsigned long long
+	,	unsigned char
 			t_nRadix
 	,	auto
 		...	t_vpDerivedParserArgument
 	,	char
 			t_nCharacter
-	,	unsigned long long
+	,	unsigned char
 			t_nParsed
 	>
 requires
@@ -89,28 +89,28 @@ template
 	>
 struct
 	BaseParser
-:	ParseItem<t_tDerivedParser, '0', 0x0ull>
-,	ParseItem<t_tDerivedParser, '1', 0x1ull>
-,	ParseItem<t_tDerivedParser, '2', 0x2ull>
-,	ParseItem<t_tDerivedParser, '3', 0x3ull>
-,	ParseItem<t_tDerivedParser, '4', 0x4ull>
-,	ParseItem<t_tDerivedParser, '5', 0x5ull>
-,	ParseItem<t_tDerivedParser, '6', 0x6ull>
-,	ParseItem<t_tDerivedParser, '7', 0x7ull>
-,	ParseItem<t_tDerivedParser, '8', 0x8ull>
-,	ParseItem<t_tDerivedParser, '9', 0x9ull>
-,	ParseItem<t_tDerivedParser, 'A', 0xAull>
-,	ParseItem<t_tDerivedParser, 'a', 0xAull>
-,	ParseItem<t_tDerivedParser, 'B', 0xBull>
-,	ParseItem<t_tDerivedParser, 'b', 0xBull>
-,	ParseItem<t_tDerivedParser, 'C', 0xCull>
-,	ParseItem<t_tDerivedParser, 'c', 0xCull>
-,	ParseItem<t_tDerivedParser, 'D', 0xDull>
-,	ParseItem<t_tDerivedParser, 'd', 0xDull>
-,	ParseItem<t_tDerivedParser, 'E', 0xEull>
-,	ParseItem<t_tDerivedParser, 'e', 0xEull>
-,	ParseItem<t_tDerivedParser, 'F', 0xFull>
-,	ParseItem<t_tDerivedParser, 'f', 0xFull>
+:	ParseItem<t_tDerivedParser, '0', 0x0u>
+,	ParseItem<t_tDerivedParser, '1', 0x1u>
+,	ParseItem<t_tDerivedParser, '2', 0x2u>
+,	ParseItem<t_tDerivedParser, '3', 0x3u>
+,	ParseItem<t_tDerivedParser, '4', 0x4u>
+,	ParseItem<t_tDerivedParser, '5', 0x5u>
+,	ParseItem<t_tDerivedParser, '6', 0x6u>
+,	ParseItem<t_tDerivedParser, '7', 0x7u>
+,	ParseItem<t_tDerivedParser, '8', 0x8u>
+,	ParseItem<t_tDerivedParser, '9', 0x9u>
+,	ParseItem<t_tDerivedParser, 'A', 0xAu>
+,	ParseItem<t_tDerivedParser, 'a', 0xAu>
+,	ParseItem<t_tDerivedParser, 'B', 0xBu>
+,	ParseItem<t_tDerivedParser, 'b', 0xBu>
+,	ParseItem<t_tDerivedParser, 'C', 0xCu>
+,	ParseItem<t_tDerivedParser, 'c', 0xCu>
+,	ParseItem<t_tDerivedParser, 'D', 0xDu>
+,	ParseItem<t_tDerivedParser, 'd', 0xDu>
+,	ParseItem<t_tDerivedParser, 'E', 0xEu>
+,	ParseItem<t_tDerivedParser, 'e', 0xEu>
+,	ParseItem<t_tDerivedParser, 'F', 0xFu>
+,	ParseItem<t_tDerivedParser, 'f', 0xFu>
 {
 	[[nodiscard]]
 	friend auto constexpr
@@ -124,9 +124,9 @@ struct
 };
 
 template
-	<	unsigned long long
+	<	unsigned char
 			t_nRadix
-	,	unsigned long long
+	,	unsigned char
 			t_nBase
 	,	bool
 			t_bPositive
@@ -157,7 +157,7 @@ struct
 	[[nodiscard]]
 	auto constexpr
 	(	Append
-	)	(	unsigned long long
+	)	(	unsigned char
 				i_nParsed
 		)	const
 		noexcept
@@ -165,7 +165,7 @@ struct
 	{	return
 		{	.Numerator = Numerator
 		,	.Denominator = Denominator
-		,	.Exponent = static_cast<unsigned>(Exponent * t_nRadix + i_nParsed)
+		,	.Exponent = Exponent * t_nRadix + i_nParsed
 		};
 	}
 
@@ -284,7 +284,7 @@ struct
 
 template
 	<	template
-			<	unsigned long long
+			<	unsigned char
 			>
 		typename
 			t_t1DerivedParser
@@ -337,7 +337,7 @@ struct
 };
 
 template
-	<	unsigned long long
+	<	unsigned char
 			t_nRadix
 	>
 struct
@@ -358,7 +358,7 @@ struct
 	[[nodiscard]]
 	auto constexpr
 	(	Append
-	)	(	unsigned long long
+	)	(	unsigned char
 				i_nParsed
 		)	const
 		noexcept
@@ -389,7 +389,7 @@ struct
 };
 
 template
-	<	unsigned long long
+	<	unsigned char
 			t_nRadix
 	>
 struct
@@ -412,7 +412,7 @@ struct
 	[[nodiscard]]
 	auto constexpr
 	(	Append
-	)	(	unsigned long long
+	)	(	unsigned char
 				i_nParsed
 		)	const
 		noexcept
