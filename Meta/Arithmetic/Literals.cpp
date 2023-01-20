@@ -100,17 +100,11 @@ struct
 ,	ParseItem<t_tDerivedParser, '8', 0x8u>
 ,	ParseItem<t_tDerivedParser, '9', 0x9u>
 ,	ParseItem<t_tDerivedParser, 'A', 0xAu>
-,	ParseItem<t_tDerivedParser, 'a', 0xAu>
 ,	ParseItem<t_tDerivedParser, 'B', 0xBu>
-,	ParseItem<t_tDerivedParser, 'b', 0xBu>
 ,	ParseItem<t_tDerivedParser, 'C', 0xCu>
-,	ParseItem<t_tDerivedParser, 'c', 0xCu>
 ,	ParseItem<t_tDerivedParser, 'D', 0xDu>
-,	ParseItem<t_tDerivedParser, 'd', 0xDu>
 ,	ParseItem<t_tDerivedParser, 'E', 0xEu>
-,	ParseItem<t_tDerivedParser, 'e', 0xEu>
 ,	ParseItem<t_tDerivedParser, 'F', 0xFu>
-,	ParseItem<t_tDerivedParser, 'f', 0xFu>
 {
 	[[nodiscard]]
 	friend auto constexpr
@@ -265,21 +259,6 @@ struct
 		,	.Denominator = i_vParser.Denominator
 		};
 	}
-
-	[[nodiscard]]
-	friend auto constexpr
-	(	operator<<
-	)	(	t_tDerivedParser
-				i_vParser
-		,	BasicCharacter<'e'>
-		)
-		noexcept
-	->	ExponentParser<Decimal, Decimal>
-	{	return
-		{	.Numerator = i_vParser.Numerator
-		,	.Denominator = i_vParser.Denominator
-		};
-	}
 };
 
 template
@@ -307,23 +286,6 @@ struct
 	)	(	t_t1DerivedParser<Hexadecimal>
 				i_vParser
 		,	BasicCharacter<'P'>
-		)
-		noexcept
-		//	radix for hexadecimal exponent is decimal
-		//	base for hexadecimal exponent is binary
-	->	ExponentParser<Decimal, Binary>
-	{	return
-		{	.Numerator = i_vParser.Numerator
-		,	.Denominator = i_vParser.Denominator
-		};
-	}
-
-	[[nodiscard]]
-	friend auto constexpr
-	(	operator <<
-	)	(	t_t1DerivedParser<Hexadecimal>
-				i_vParser
-		,	BasicCharacter<'p'>
 		)
 		noexcept
 		//	radix for hexadecimal exponent is decimal
@@ -510,7 +472,6 @@ auto constexpr
 requires
 	(	...
 	and	(	t_npBasicCharacter != '.'
-		and	t_npBasicCharacter != 'e'
 		and	t_npBasicCharacter != 'E'
 		)
 	)
@@ -549,26 +510,6 @@ template
 auto constexpr
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
-	,	BasicCharacter<'x'>
-	,	BasicCharacter<t_npBasicCharacter>
-		...	i_vpNumeric
-	)
-	noexcept
-{	return
-	(	HexadecimalParser
-	<<	...
-	<<	i_vpNumeric
-	);
-}
-
-template
-	<	char
-		...	t_npBasicCharacter
-	>
-[[nodiscard]]
-auto constexpr
-(	ParseNumericLiteral
-)	(	BasicCharacter<'0'>
 	,	BasicCharacter<'B'>
 	,	BasicCharacter<t_npBasicCharacter>
 		...	i_vpNumeric
@@ -581,24 +522,30 @@ auto constexpr
 	);
 }
 
-template
-	<	char
-		...	t_npBasicCharacter
-	>
 [[nodiscard]]
 auto constexpr
-(	ParseNumericLiteral
-)	(	BasicCharacter<'0'>
-	,	BasicCharacter<'b'>
-	,	BasicCharacter<t_npBasicCharacter>
-		...	i_vpNumeric
+(	ToUpper
+)	(	char
+			i_nChar
 	)
 	noexcept
-{	return
-	(	BinaryParser
-	<<	...
-	<<	i_vpNumeric
-	);
+->	char
+{	if	(	i_nChar
+		>=	'a'
+		and	i_nChar
+		<=	'z'
+		)
+	{	return
+		static_cast<char>
+		(	i_nChar
+		-	'a'
+		+	'A'
+		);
+	}
+
+	return
+		i_nChar
+	;
 }
 
 export namespace
@@ -616,8 +563,11 @@ export namespace
 	{	return
 		Evaluate
 		(	::ParseNumericLiteral
-			(	BasicCharacter<t_npBasicCharacter>
-				{}
+			(	BasicCharacter
+				<	ToUpper
+					(	t_npBasicCharacter
+					)
+				>{}
 				...
 			)
 		);
