@@ -13,14 +13,14 @@ struct
 	BasicCharacter
 {};
 
-using
-	RadixType
-=	unsigned char
-;
-using
-	ParseType
-=	unsigned char
-;
+enum class
+	ERadix
+:	unsigned char
+{	Binary = 2u
+,	Octal = 8u
+,	Decimal = 10u
+,	Hexadecimal = 16u
+};
 
 using
 	UIntMax
@@ -28,74 +28,91 @@ using
 ;
 
 using
+	ParseType
+=	::std::underlying_type_t
+	<	ERadix
+	>
+;
+
+using
 	FloatMax
 =	long double
 ;
 
-RadixType constexpr inline
-	Decimal
-=	10u
-;
-RadixType constexpr inline
-	Octal
-=	8u
-;
-RadixType constexpr inline
-	Hexadecimal
-=	16u
-;
-RadixType constexpr inline
-	Binary
-=	2u
-;
+auto constexpr
+(	operator <=>
+)	(	ParseType
+			i_nParsed
+	,	ERadix
+			i_eRadix
+	)
+	noexcept
+->	::std::strong_ordering
+{	return
+	(	i_nParsed
+	<=>	::std::to_underlying
+		(	i_eRadix
+		)
+	);
+}
 
-template
-	<	typename
-			t_tDerivedParser
-	,	char
-			t_nCharacter
-	,	RadixType
-			t_nParsed
-	>
+auto constexpr
+(	operator *=
+)	(	::std::integral auto
+		&	i_rCounter
+	,	ERadix
+			i_eRadix
+	)
+	noexcept
+->	decltype(i_rCounter)
+{	return
+	(	i_rCounter
+	*=	::std::to_underlying
+		(	i_eRadix
+		)
+	);
+}
+
 struct
-	ParseItem
-{};
+	IgnoreQuote
+{
+	[[nodiscard]]
+	friend auto constexpr
+	(	operator<<
+	)	(	auto
+				i_vParser
+		,	BasicCharacter<'\''>
+		)
+		noexcept
+	->	decltype(i_vParser)
+	{	return
+			i_vParser
+		;
+	}
+};
 
 template
-	<	template
-			<	RadixType
-			>
-		typename
-			t_t1DerivedParser
-	,	RadixType
-			t_nRadix
-	,	char
+	<	char
 			t_nCharacter
 	,	ParseType
 			t_nParsed
 	>
-requires
-	(	t_nRadix
-	>	t_nParsed
-	)
 struct
 	ParseItem
-	<	t_t1DerivedParser
-		<	t_nRadix
-		>
-	,	t_nCharacter
-	,	t_nParsed
-	>
 {
 	[[nodiscard]]
 	friend auto constexpr
 	(	operator <<
-	)	(	t_t1DerivedParser<t_nRadix>
+	)	(	auto
 				i_vParser
 		,	BasicCharacter<t_nCharacter>
 		)
 		noexcept
-	->	t_t1DerivedParser<t_nRadix>
+	->	decltype(i_vParser)
+		requires
+		(	i_vParser.Radix
+		>	t_nParsed
+		)
 	{	return
 			i_vParser
 		.	Append
@@ -105,56 +122,40 @@ struct
 	}
 };
 
-template
-	<	typename
-			t_tDerivedParser
-	>
 struct
 	BaseParser
-:	ParseItem<t_tDerivedParser, '0', 0x0u>
-,	ParseItem<t_tDerivedParser, '1', 0x1u>
-,	ParseItem<t_tDerivedParser, '2', 0x2u>
-,	ParseItem<t_tDerivedParser, '3', 0x3u>
-,	ParseItem<t_tDerivedParser, '4', 0x4u>
-,	ParseItem<t_tDerivedParser, '5', 0x5u>
-,	ParseItem<t_tDerivedParser, '6', 0x6u>
-,	ParseItem<t_tDerivedParser, '7', 0x7u>
-,	ParseItem<t_tDerivedParser, '8', 0x8u>
-,	ParseItem<t_tDerivedParser, '9', 0x9u>
-,	ParseItem<t_tDerivedParser, 'A', 0xAu>
-,	ParseItem<t_tDerivedParser, 'B', 0xBu>
-,	ParseItem<t_tDerivedParser, 'C', 0xCu>
-,	ParseItem<t_tDerivedParser, 'D', 0xDu>
-,	ParseItem<t_tDerivedParser, 'E', 0xEu>
-,	ParseItem<t_tDerivedParser, 'F', 0xFu>
-{
-	[[nodiscard]]
-	friend auto constexpr
-	(	operator<<
-	)	(	t_tDerivedParser
-				i_vParser
-		,	BasicCharacter<'\''>
-		)
-		noexcept
-	->	t_tDerivedParser
-	{	return
-			i_vParser
-		;
-	}
-};
+:	IgnoreQuote
+,	ParseItem<'0', 0x0u>
+,	ParseItem<'1', 0x1u>
+,	ParseItem<'2', 0x2u>
+,	ParseItem<'3', 0x3u>
+,	ParseItem<'4', 0x4u>
+,	ParseItem<'5', 0x5u>
+,	ParseItem<'6', 0x6u>
+,	ParseItem<'7', 0x7u>
+,	ParseItem<'8', 0x8u>
+,	ParseItem<'9', 0x9u>
+,	ParseItem<'A', 0xAu>
+,	ParseItem<'B', 0xBu>
+,	ParseItem<'C', 0xCu>
+,	ParseItem<'D', 0xDu>
+,	ParseItem<'E', 0xEu>
+,	ParseItem<'F', 0xFu>
+{};
 
 template
-	<	RadixType
-			t_nRadix
+	<	ERadix
+			t_eRadix
 	>
 struct
 	ExponentParser
 :	BaseParser
-	<	ExponentParser
-		<	t_nRadix
-		>
-	>
 {
+	static auto constexpr
+		Radix
+	=	t_eRadix
+	;
+
 	UIntMax
 		Numerator
 	;
@@ -166,7 +167,7 @@ struct
 		Exponent
 	=	0u
 	;
-	RadixType
+	ERadix
 		Base
 	;
 	bool
@@ -182,7 +183,7 @@ struct
 		noexcept
 	->	ExponentParser&
 	{
-		Exponent *= t_nRadix;
+		Exponent *= t_eRadix;
 		Exponent += i_nParsed;
 		return
 			*this
@@ -268,83 +269,50 @@ struct
 	}
 };
 
-template
-	<	typename
-			t_tDerivedParser
-	>
 struct
 	SignificandParser
 :	BaseParser
-	<	t_tDerivedParser
-	>
 {
+	using enum ERadix;
+
 	[[nodiscard]]
 	friend auto constexpr
 	(	operator <<
-	)	(	t_tDerivedParser
+	)	(	auto
 				i_vParser
-		,	BasicCharacter<'E'>
-		)
-		noexcept
-	->	ExponentParser<Decimal>
-	{	return
-		{	.Numerator = i_vParser.Numerator
-		,	.Denominator = i_vParser.Denominator
-		,	.Base = Decimal
-		};
-	}
-};
-
-template
-	<	template
-			<	RadixType
+		,	BasicCharacter
+			<	(	i_vParser.Radix
+				==	Hexadecimal
+				)
+			?	'P'
+			:	'E'
 			>
-		typename
-			t_t1DerivedParser
-	>
-struct
-	SignificandParser
-	<	t_t1DerivedParser
-		<	Hexadecimal
-		>
-	>
-:	BaseParser
-	<	t_t1DerivedParser
-		<	Hexadecimal
-		>
-	>
-{
-	[[nodiscard]]
-	friend auto constexpr
-	(	operator <<
-	)	(	t_t1DerivedParser<Hexadecimal>
-				i_vParser
-		,	BasicCharacter<'P'>
 		)
 		noexcept
-		//	radix for hexadecimal exponent is decimal
-		//	base for hexadecimal exponent is binary
 	->	ExponentParser<Decimal>
-	{	return
+	{	//	radix for hexadecimal exponent is decimal
+		//	base for hexadecimal exponent is binary
+		return
 		{	.Numerator = i_vParser.Numerator
 		,	.Denominator = i_vParser.Denominator
-		,	.Base = Binary
+		,	.Base = (i_vParser.Radix == Hexadecimal) ? Binary : Decimal
 		};
 	}
 };
 
 template
-	<	RadixType
-			t_nRadix
+	<	ERadix
+			t_eRadix
 	>
 struct
 	FloatParser
 :	SignificandParser
-	<	FloatParser
-		<	t_nRadix
-		>
-	>
 {
+	static auto constexpr
+		Radix
+	=	t_eRadix
+	;
+
 	UIntMax
 		Numerator
 	;
@@ -360,9 +328,9 @@ struct
 		noexcept
 	->	FloatParser&
 	{
-		Numerator *= t_nRadix;
+		Numerator *= t_eRadix;
 		Numerator += i_nParsed;
-		Denominator *= t_nRadix;
+		Denominator *= t_eRadix;
 		return
 			*this
 		;
@@ -388,17 +356,18 @@ struct
 };
 
 template
-	<	RadixType
-			t_nRadix
+	<	ERadix
+			t_eRadix
 	>
 struct
 	IntegerParser
 :	SignificandParser
-	<	IntegerParser
-		<	t_nRadix
-		>
-	>
 {
+	static auto constexpr
+		Radix
+	=	t_eRadix
+	;
+
 	UIntMax
 		Numerator
 	;
@@ -416,7 +385,7 @@ struct
 		noexcept
 	->	IntegerParser&
 	{
-		Numerator *= t_nRadix;
+		Numerator *= t_eRadix;
 		Numerator += i_nParsed;
 		return
 			*this
@@ -431,7 +400,7 @@ struct
 		,	BasicCharacter<'.'>
 		)
 		noexcept
-	->	FloatParser<t_nRadix>
+	->	FloatParser<t_eRadix>
 	{	return
 		{	.Numerator = i_vParser.Numerator
 		,	.Denominator = Denominator
@@ -456,28 +425,28 @@ struct
 auto constexpr inline
 	DecimalParser
 =	IntegerParser
-	<	Decimal
+	<	ERadix::Decimal
 	>{}
 ;
 
 auto constexpr inline
 	OctalParser
 =	IntegerParser
-	<	Octal
+	<	ERadix::Octal
 	>{}
 ;
 
 auto constexpr inline
 	HexadecimalParser
 =	IntegerParser
-	<	Hexadecimal
+	<	ERadix::Hexadecimal
 	>{}
 ;
 
 auto constexpr inline
 	BinaryParser
 =	IntegerParser
-	<	Binary
+	<	ERadix::Binary
 	>{}
 ;
 
