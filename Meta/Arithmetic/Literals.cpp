@@ -422,34 +422,6 @@ struct
 	}
 };
 
-auto constexpr inline
-	DecimalParser
-=	IntegerParser
-	<	ERadix::Decimal
-	>{}
-;
-
-auto constexpr inline
-	OctalParser
-=	IntegerParser
-	<	ERadix::Octal
-	>{}
-;
-
-auto constexpr inline
-	HexadecimalParser
-=	IntegerParser
-	<	ERadix::Hexadecimal
-	>{}
-;
-
-auto constexpr inline
-	BinaryParser
-=	IntegerParser
-	<	ERadix::Binary
-	>{}
-;
-
 template
 	<	char
 		...	t_npBasicCharacter
@@ -462,7 +434,9 @@ auto constexpr
 	)
 	noexcept
 {	return
-	(	::DecimalParser
+	(	IntegerParser
+		<	ERadix::Decimal
+		>{}
 	<<	...
 	<<	i_vpNumeric
 	);
@@ -488,7 +462,9 @@ requires
 		)
 	)
 {	return
-	(	::OctalParser
+	(	IntegerParser
+		<	ERadix::Octal
+		>{}
 	<<	...
 	<<	i_vpNumeric
 	);
@@ -508,7 +484,9 @@ auto constexpr
 	)
 	noexcept
 {	return
-	(	::HexadecimalParser
+	(	IntegerParser
+		<	ERadix::Hexadecimal
+		>{}
 	<<	...
 	<<	i_vpNumeric
 	);
@@ -528,7 +506,9 @@ auto constexpr
 	)
 	noexcept
 {	return
-	(	BinaryParser
+	(	IntegerParser
+		<	ERadix::Binary
+		>{}
 	<<	...
 	<<	i_vpNumeric
 	);
