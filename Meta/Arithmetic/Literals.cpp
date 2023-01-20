@@ -149,9 +149,9 @@ struct
 		Denominator
 	=	1ull
 	;
-	unsigned long long
+	unsigned
 		Exponent
-	=	0ull
+	=	0u
 	;
 
 	[[nodiscard]]
@@ -165,7 +165,7 @@ struct
 	{	return
 		{	.Numerator = Numerator
 		,	.Denominator = Denominator
-		,	.Exponent = Exponent * t_nRadix + i_nParsed
+		,	.Exponent = static_cast<unsigned>(Exponent * t_nRadix + i_nParsed)
 		};
 	}
 
@@ -209,17 +209,18 @@ struct
 		noexcept
 	->	long double
 	{
-		unsigned long long const
+		auto const
 			nExponent
 		=	Power
-			(	t_nBase
+			(	static_cast<long double>(t_nBase)
 			,	i_vParser.Exponent
 			)
 		;
 		if	constexpr(t_bPositive)
 			return
-			(	static_cast<long double>
-				(	i_vParser.Numerator
+			(	(	static_cast<long double>
+					(	i_vParser.Numerator
+					)
 				*	nExponent
 				)
 			/	static_cast<long double>
@@ -231,8 +232,9 @@ struct
 			(	static_cast<long double>
 				(	i_vParser.Numerator
 				)
-			/	static_cast<long double>
-				(	i_vParser.Denominator
+			/	(	static_cast<long double>
+					(	i_vParser.Denominator
+					)
 				*	nExponent
 				)
 			);

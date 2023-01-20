@@ -1,4 +1,21 @@
-import Test.Meta.Literals.Data;
+import Meta.Arithmetic.Literals;
+
+template
+	<	char
+		...	t_npNumeric
+	>
+[[nodiscard]]
+auto constexpr
+(	operator""_Test
+)	()
+	noexcept
+->	unsigned long long
+{	return
+	::Meta::Arithmetic::EvaluateNumericLiteral
+	<	t_npNumeric
+		...
+	>();
+}
 
 static_assert
 (	0x0_Test

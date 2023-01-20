@@ -1,100 +1,122 @@
-import Test.Meta.Literals.Data;
+import Meta.Arithmetic.Literals;
+import Meta.Math.Approximate;
+
+using ::Meta::Math::Approximate;
+
+template
+	<	char
+		...	t_npNumeric
+	>
+[[nodiscard]]
+auto constexpr
+(	operator""_Test
+)	()
+	noexcept
+->	double
+{	return
+	static_cast<double>
+	(	::Meta::Arithmetic::EvaluateNumericLiteral
+		<	t_npNumeric
+			...
+		>()
+	);
+}
 
 static_assert
 (	Approximate
 	(	123.456_Test
-	,	123.456L
+	,	123.456
 	)
 );
 static_assert
 (	Approximate
-	(	123e4_Test
-	,	123e4L
+	(	123e+287_Test
+	,	123e+287
 	)
 );
 static_assert
 (	Approximate
-	(	123E4_Test
-	,	123E4L
+	(	123E+287_Test
+	,	123E+287
 	)
 );
 static_assert
 (	Approximate
-	(	123e-4_Test
-	,	123e-4L
+	(	123e-287_Test
+	,	123e-287
 	)
 );
 static_assert
 (	Approximate
-	(	123E-4_Test
-	,	123E-4L
+	(	123E-287_Test
+	,	123E-287
 	)
 );
 static_assert
 (	Approximate
-	(	123.45e6_Test
-	,	123.45e6L
+	(	123.45e287_Test
+	,	123.45e287
 	)
 );
 static_assert
 (	Approximate
-	(	123.45E6_Test
-	,	123.45E6L
+	(	123.45E287_Test
+	,	123.45E287
 	)
 );
 static_assert
 (	Approximate
-	(	123.45e-6_Test
-	,	123.45e-6L
+	(	123.45e-287_Test
+	,	123.45e-287
 	)
 );
 static_assert
 (	Approximate
-	(	123.45E-6_Test
-	,	123.45E-6L
+	(	123.45E-287_Test
+	,	123.45E-287
 	)
 );
 
 static_assert
 (	Approximate
 	(	0x1bfp4_Test
-	,	0x1bfp4L
+	,	0x1bfp4
 	)
 );
 static_assert
 (	Approximate
 	(	0X1BFP4_Test
-	,	0X1BFP4L
+	,	0X1BFP4
 	)
 );
 static_assert
 (	Approximate
 	(	0X1BFP-4_Test
-	,	0X1BFP-4L
+	,	0X1BFP-4
 	)
 );
 
 static_assert
 (	Approximate
 	(	0x1bf.acp6_Test
-	,	0x1bf.acp6L
+	,	0x1bf.acp6
 	)
 );
 static_assert
 (	Approximate
 	(	0X1BF.ACP6_Test
-	,	0X1BF.ACP6L
+	,	0X1BF.ACP6
 	)
 );
 static_assert
 (	Approximate
 	(	0x1bf.acp-6_Test
-	,	0x1bf.acp-6L
+	,	0x1bf.acp-6
 	)
 );
 static_assert
 (	Approximate
 	(	0X1BF.ACP-6_Test
-	,	0X1BF.ACP-6L
+	,	0X1BF.ACP-6
 	)
 );

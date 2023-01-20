@@ -1,5 +1,7 @@
 export module Meta.Math.Power;
 
+import Meta.Math.Sign;
+import Meta.Math.Abs;
 import Meta.Memory.Size;
 
 import Std;
@@ -7,61 +9,87 @@ import Std;
 export namespace
 	Meta::Math
 {
+	template
+		<	typename
+				t_tArithmetic
+		>
+	auto constexpr inline
+		MaxExponent
+	=	Unsigned
+		(	::std::numeric_limits
+			<	t_tArithmetic
+			>
+		::	max_exponent
+		)
+	;
+
+	template
+		<	::std::integral
+				t_tArithmetic
+		>
+	auto constexpr inline
+		MaxExponent
+		<	t_tArithmetic
+		>
+	=	Unsigned
+		(	::std::bit_width
+			(	Unsigned
+				(	::std::numeric_limits
+					<	t_tArithmetic
+					>
+				::	max()
+				)
+			)
+		)
+	;
+
 	[[nodiscard]]
 	auto constexpr
 	(	Power
-	)	(	::std::integral auto
+	)	(	auto
 				i_nBase
-		,	decltype(i_nBase)
+		,	unsigned
 				i_nExponent
 		)
 		noexcept
 	->	decltype(i_nBase)
 	{
 		using
-			tInteger
+			tResult
 		=	decltype(i_nBase)
 		;
 
-		static_assert
-		(	::std::is_unsigned_v<tInteger>
-		,	"Power of signed integer not yet supported!"
-		);
-
 		auto constexpr
-			nBitWidth
-		=	static_cast<tInteger>
-			(	BitSize
-				(	Memory::ByteWidth<tInteger>
-					{	1z
-					}
-				)
-			.	get()
-			)
+			nMaxExponent
+		=	MaxExponent
+			<	tResult
+			>
 		;
 
-		if	(	i_nExponent
-			>=	nBitWidth
-			and	i_nBase
-			>=	tInteger{2u}
+		if	(	(	i_nExponent
+				>=	nMaxExponent
+				)
+			and	(	Abs(i_nBase)
+				>=	::std::numeric_limits
+					<	tResult
+					>
+				::	radix
+				)
 			)
 		{	::std::unreachable
 			();
 		}
 
-		tInteger constexpr
-			nOne
-		{	1u
-		};
-
-		auto
+		tResult
 			nResult
-		=	nOne
-		;
+		{	1
+		};
 		auto
 			nExponentMask
-		=	nBitWidth
-		>>	nOne
+		=	::std::bit_ceil
+			(	nMaxExponent
+			)
+		>>	1u
 		;
 		do
 		{
@@ -86,7 +114,7 @@ export namespace
 			);
 
 			(	nExponentMask
-			>>=	nOne
+			>>=	1u
 			);
 
 		}	while

@@ -1,3 +1,5 @@
 add_module_object_tests(
-	Power
+	FloatPower
+	SignedPower
+	UnsignedPower
 )
