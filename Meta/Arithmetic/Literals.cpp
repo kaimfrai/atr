@@ -2,6 +2,8 @@ export module Meta.Arithmetic.Literals;
 
 import Meta.Math.Power;
 
+import Std;
+
 using ::Meta::Math::Power;
 
 template
@@ -11,19 +13,38 @@ struct
 	BasicCharacter
 {};
 
-unsigned char constexpr inline
+using
+	RadixType
+=	unsigned char
+;
+using
+	ParseType
+=	unsigned char
+;
+
+using
+	UIntMax
+=	::std::uintmax_t
+;
+
+using
+	FloatMax
+=	long double
+;
+
+RadixType constexpr inline
 	Decimal
 =	10u
 ;
-unsigned char constexpr inline
+RadixType constexpr inline
 	Octal
 =	8u
 ;
-unsigned char constexpr inline
+RadixType constexpr inline
 	Hexadecimal
 =	16u
 ;
-unsigned char constexpr inline
+RadixType constexpr inline
 	Binary
 =	2u
 ;
@@ -33,7 +54,7 @@ template
 			t_tDerivedParser
 	,	char
 			t_nCharacter
-	,	unsigned char
+	,	RadixType
 			t_nParsed
 	>
 struct
@@ -42,15 +63,15 @@ struct
 
 template
 	<	template
-			<	unsigned char
+			<	RadixType
 			>
 		typename
 			t_t1DerivedParser
-	,	unsigned char
+	,	RadixType
 			t_nRadix
 	,	char
 			t_nCharacter
-	,	unsigned char
+	,	ParseType
 			t_nParsed
 	>
 requires
@@ -123,7 +144,7 @@ struct
 };
 
 template
-	<	unsigned char
+	<	RadixType
 			t_nRadix
 	>
 struct
@@ -134,10 +155,10 @@ struct
 		>
 	>
 {
-	unsigned long long
+	UIntMax
 		Numerator
 	;
-	unsigned long long
+	UIntMax
 		Denominator
 	=	1ull
 	;
@@ -145,7 +166,7 @@ struct
 		Exponent
 	=	0u
 	;
-	unsigned char
+	RadixType
 		Base
 	;
 	bool
@@ -155,7 +176,7 @@ struct
 
 	auto constexpr
 	(	Append
-	)	(	unsigned char
+	)	(	ParseType
 				i_nParsed
 		)	&
 		noexcept
@@ -209,12 +230,12 @@ struct
 				i_vParser
 		)
 		noexcept
-	->	long double
+	->	FloatMax
 	{
 		auto const
 			nExponent
 		=	Power
-			(	static_cast<long double>(i_vParser.Base)
+			(	static_cast<FloatMax>(i_vParser.Base)
 			,	i_vParser.Exponent
 			)
 		;
@@ -222,22 +243,22 @@ struct
 			.	Positive
 			)
 		{	return
-			(	(	static_cast<long double>
+			(	(	static_cast<FloatMax>
 					(	i_vParser.Numerator
 					)
 				*	nExponent
 				)
-			/	static_cast<long double>
+			/	static_cast<FloatMax>
 				(	i_vParser.Denominator
 				)
 			);
 		}
 		else
 		{	return
-			(	static_cast<long double>
+			(	static_cast<FloatMax>
 				(	i_vParser.Numerator
 				)
-			/	(	static_cast<long double>
+			/	(	static_cast<FloatMax>
 					(	i_vParser.Denominator
 					)
 				*	nExponent
@@ -276,7 +297,7 @@ struct
 
 template
 	<	template
-			<	unsigned char
+			<	RadixType
 			>
 		typename
 			t_t1DerivedParser
@@ -313,7 +334,7 @@ struct
 };
 
 template
-	<	unsigned char
+	<	RadixType
 			t_nRadix
 	>
 struct
@@ -324,16 +345,16 @@ struct
 		>
 	>
 {
-	unsigned long long
+	UIntMax
 		Numerator
 	;
-	unsigned long long
+	UIntMax
 		Denominator
 	;
 
 	auto constexpr
 	(	Append
-	)	(	unsigned char
+	)	(	ParseType
 				i_nParsed
 		)	&
 		noexcept
@@ -354,12 +375,12 @@ struct
 				i_vParser
 		)
 		noexcept
-	->	long double
+	->	FloatMax
 	{	return
-		(	static_cast<long double>
+		(	static_cast<FloatMax>
 			(	i_vParser.Numerator
 			)
-		/	static_cast<long double>
+		/	static_cast<FloatMax>
 			(	i_vParser.Denominator
 			)
 		);
@@ -367,7 +388,7 @@ struct
 };
 
 template
-	<	unsigned char
+	<	RadixType
 			t_nRadix
 	>
 struct
@@ -378,18 +399,18 @@ struct
 		>
 	>
 {
-	unsigned long long
+	UIntMax
 		Numerator
 	;
 
-	static unsigned long long constexpr
+	static UIntMax constexpr
 		Denominator
-	=	1ull
+	=	1uz
 	;
 
 	auto constexpr
 	(	Append
-	)	(	unsigned char
+	)	(	ParseType
 				i_nParsed
 		)	&
 		noexcept
@@ -424,7 +445,7 @@ struct
 				i_vParser
 		)
 		noexcept
-	->	unsigned long long
+	->	UIntMax
 	{	return
 			i_vParser
 		.	Numerator
