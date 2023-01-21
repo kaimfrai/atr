@@ -47,13 +47,14 @@ Note that the assembly of archetype is nearly identical to the assembly of repli
 To run all evaluation scripts do the following:
 ```
 > cd Evaluation
-> sudo bash evaluation.sh
+> bash evaluation.sh assembly
+> bash evaluation.sh cachegrind
+> bash evaluation.sh compile
+> bash evaluation.sh memcheck
+> sudo bash evaluation.sh perf
 ```
 
-To make use of perf the script requires elevated rights. If that is not desired, uncomment line 31 in evaluation.sh with # and run the following command instead:
-```
-> bash evaluation.sh
-```
+To make use of perf the script requires elevated rights.
 
 ## CMake
 
