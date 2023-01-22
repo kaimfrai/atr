@@ -26,4 +26,37 @@ export namespace
 			>
 		>
 	;
+
+	// cannot have a mutable lvalue reference
+	template
+		<	typename
+				t_tEntity
+		>
+	struct
+		Mut
+		<	t_tEntity&
+		>
+	;
+
+	// cannot have a mutable rvalue reference
+	template
+		<	typename
+				t_tEntity
+		>
+	struct
+		Mut
+		<	t_tEntity&&
+		>
+	;
+
+	// cannot have a mutable const
+	template
+		<	typename
+				t_tEntity
+		>
+	struct
+		Mut
+		<	t_tEntity const
+		>
+	;
 }
