@@ -1,6 +1,13 @@
 import Test.Evaluation.SizeCheck;
 
-import Evaluation.Replication;
+import Evaluation.Replication.Cube;
+import Evaluation.Replication.Cuboid;
+import Evaluation.Replication.Pyramid;
+import Evaluation.Replication.Sphere;
+import Evaluation.Replication.Cylinder;
+import Evaluation.Replication.Cone;
+import Evaluation.Replication.Ellipsoid;
+import Evaluation.Replication.Head;
 
 // Bodies
 static_assert(SizeMinimal<Bodies3D::Cube, 1, 1>);
