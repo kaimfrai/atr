@@ -25,7 +25,6 @@ export namespace
 	ATR
 {
 	using ::Meta::Specifier::Mut;
-	using ::Meta::Specifier::BitField;
 
 	USize constexpr inline
 		AliasSortKey

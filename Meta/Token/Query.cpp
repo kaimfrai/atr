@@ -3,6 +3,7 @@ export module Meta.Token.Query;
 import Meta.Token.Specifier;
 import Meta.Token.Type;
 
+import Meta.Bit.Field;
 import Meta.Memory.Size;
 import Meta.Size;
 
@@ -173,11 +174,24 @@ export namespace
 		[[nodiscard]]
 		static auto constexpr
 		(	operator()
-		)	(	TypeToken<Specifier::BitField<t_nSize>>
+		)	(	TypeToken<Bit::Field<t_nSize>>
 			)
 			noexcept
 		->	BitSize
-		{	return {1z};	}
+		{	if	constexpr
+				(	Bit::Field<t_nSize>
+				::	IsFullWidthInteger
+				)
+			{	return
+					t_nSize
+				;
+			}
+			else
+			{	return
+				{	1z
+				};
+			}
+		}
 
 		template
 			<	ProtoAligned
@@ -269,7 +283,7 @@ export namespace
 		[[nodiscard]]
 		static auto constexpr
 		(	operator()
-		)	(	TypeToken<Specifier::BitField<t_nSize>>
+		)	(	TypeToken<Bit::Field<t_nSize>>
 			)
 			noexcept
 		->	BitSize

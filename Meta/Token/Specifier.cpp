@@ -32,14 +32,4 @@ export namespace
 			>
 		>
 	;
-
-	template
-		<	BitSize
-				t_nSize
-		>
-	struct
-		BitField final
-	{
-		Byte::Buffer<t_nSize> Entity;
-	};
 }

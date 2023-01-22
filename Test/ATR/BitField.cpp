@@ -28,12 +28,12 @@ namespace ATR
 		>
 	+	Member
 		<	"2BitField31"
-		,	BitField<31_bit>
+		,	Field<31_bit>
 		>
 	+	Member
 		<	"3MutBitField31"
 		,	Mut
-			<	BitField<31_bit>
+			<	Field<31_bit>
 			>
 		>
 	>	extern

@@ -5,6 +5,7 @@ import ATR.Layout.Bit.View;
 import ATR.Layout.Member;
 
 import Meta.ID.Concept;
+import Meta.Bit.Field;
 import Meta.Size;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
@@ -12,7 +13,7 @@ import Meta.Token.Specifier;
 
 import Std;
 
-using ::Meta::Specifier::BitField;
+using ::Meta::Bit::Field;
 using ::Meta::Specifier::Mut;
 using ::Meta::USize;
 
@@ -23,7 +24,7 @@ template
 			t_nSize
 	>
 auto constexpr
-(	BitFieldOffsetArray
+(	FieldOffsetArray
 )	(	::std::array<::Meta::BitSize, t_nSize> const
 		&	i_rSizes
 	)
@@ -82,7 +83,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1_bit>
+	,	Field<1_bit>
 	,	t_tName
 	>
 ;
@@ -99,7 +100,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1_bit> const
+	,	Field<1_bit> const
 	,	t_tName
 	>
 ;
@@ -116,7 +117,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1_bit> volatile
+	,	Field<1_bit> volatile
 	,	t_tName
 	>
 ;
@@ -133,7 +134,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1_bit> const volatile
+	,	Field<1_bit> const volatile
 	,	t_tName
 	>
 ;
@@ -150,7 +151,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	Mut<BitField<1_bit>>
+	,	Mut<Field<1_bit>>
 	,	t_tName
 	>
 ;
@@ -167,7 +168,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	Mut<BitField<1_bit> volatile>
+	,	Mut<Field<1_bit> volatile>
 	,	t_tName
 	>
 ;
@@ -186,7 +187,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1_bit>[t_nExtent]
+	,	Field<1_bit>[t_nExtent]
 	,	t_tName
 	>
 ;
@@ -205,7 +206,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1_bit> const[t_nExtent]
+	,	Field<1_bit> const[t_nExtent]
 	,	t_tName
 	>
 ;
@@ -224,7 +225,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1_bit> volatile[t_nExtent]
+	,	Field<1_bit> volatile[t_nExtent]
 	,	t_tName
 	>
 ;
@@ -243,7 +244,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	BitField<1_bit> const volatile[t_nExtent]
+	,	Field<1_bit> const volatile[t_nExtent]
 	,	t_tName
 	>
 ;
@@ -262,7 +263,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	Mut<BitField<1_bit>[t_nExtent]>
+	,	Mut<Field<1_bit>[t_nExtent]>
 	,	t_tName
 	>
 ;
@@ -281,7 +282,7 @@ auto constexpr
 	)
 ->	::ATR::Bit::View
 	<	t_nOffset
-	,	Mut<BitField<1_bit> volatile[t_nExtent]>
+	,	Mut<Field<1_bit> volatile[t_nExtent]>
 	,	t_tName
 	>
 ;
@@ -304,7 +305,7 @@ using
 
 export template
 	<	typename
-		...	t_tpBitFieldMember
+		...	t_tpFieldMember
 	>
 auto constexpr
 (	MakeBitLayout
@@ -312,9 +313,9 @@ auto constexpr
 {
 	auto constexpr
 		vOffsetArray
-	=	::BitFieldOffsetArray
+	=	::FieldOffsetArray
 		(	::std::array
-			{	t_tpBitFieldMember::BitSize
+			{	t_tpFieldMember::BitSize
 				...
 			}
 		)
@@ -331,12 +332,12 @@ auto constexpr
 		::ATR::Bit::Layout
 		<	DeduceBitView
 			<	vOffsetArray[t_npIndex]
-			,	t_tpBitFieldMember
+			,	t_tpFieldMember
 			>
 			...
 		>{};
 	}(	::std::make_index_sequence
-		<	sizeof...(t_tpBitFieldMember)
+		<	sizeof...(t_tpFieldMember)
 		>{}
 	);
 }

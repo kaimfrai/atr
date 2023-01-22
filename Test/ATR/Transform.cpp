@@ -1,9 +1,11 @@
 import ATR.DataMember;
 
+import Meta.Bit.Field;
 import Meta.Memory.Size;
 import Meta.Token.CV;
 import Meta.Token.Specifier;
 
+using ::Meta::Bit::Field;
 using namespace ::Meta::Literals;
 
 namespace
@@ -21,7 +23,7 @@ namespace
 		>
 	+	Member
 		<	"Field"
-		,	BitField<3_bit>
+		,	Field<3_bit>
 		>
 	>	extern
 		LayoutConfig
@@ -41,7 +43,7 @@ namespace
 		>
 	+	Member
 		<	"Field"
-		,	BitField<3_bit> const
+		,	Field<3_bit> const
 		>
 	>	extern
 		LayoutConfig
@@ -61,7 +63,7 @@ namespace
 		>
 	+	Member
 		<	"Field"
-		,	Mut<BitField<3_bit>>
+		,	Mut<Field<3_bit>>
 		>
 	>	extern
 		LayoutConfig
@@ -81,7 +83,7 @@ namespace
 		>
 	+	Member
 		<	"Field"
-		,	BitField<3_bit>[5]
+		,	Field<3_bit>[5]
 		>
 	>	extern
 		LayoutConfig
