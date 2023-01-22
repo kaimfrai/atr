@@ -27,12 +27,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator +
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	Const
 			)
+			noexcept
 		->	decltype(AddConst(i_vType))
 		{	return{};	}
 
@@ -40,12 +42,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator -
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	Const
 			)
+			noexcept
 		->	decltype(RemoveConst(i_vType))
 		{	return{};	}
 	};
@@ -57,12 +61,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator +
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	Volatile
 			)
+			noexcept
 		->	decltype(AddVolatile(i_vType))
 		{	return{};	}
 
@@ -70,12 +76,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator -
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	Volatile
 			)
+			noexcept
 		->	decltype(RemoveVolatile(i_vType))
 		{	return{};	}
 	};
@@ -87,12 +95,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator +
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	Mutable
 			)
+			noexcept
 		->	decltype(AddMutable(i_vType))
 		{	return{};	}
 
@@ -100,12 +110,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator -
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	Mutable
 			)
+			noexcept
 		->	decltype(RemoveMutable(i_vType))
 		{	return{};	}
 	};
@@ -117,12 +129,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator -
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	CV
 			)
+			noexcept
 		->	decltype(RemoveCV(i_vType))
 		{	return{};	}
 	};

@@ -21,12 +21,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator +
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	Ellipsis
 			)
+			noexcept
 		->	decltype(AddEllipsis(i_vType))
 		{	return {};	}
 
@@ -34,12 +36,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator -
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	Ellipsis
 			)
+			noexcept
 		->	decltype(RemoveEllipsis(i_vType))
 		{	return {};	}
 	};
@@ -51,12 +55,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator +
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	Noexcept
 			)
+			noexcept
 		->	decltype(AddNoexcept(i_vType))
 		{	return {};	}
 
@@ -64,12 +70,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator -
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	Noexcept
 			)
+			noexcept
 		->	decltype(RemoveNoexcept(i_vType))
 		{	return {};	}
 	};

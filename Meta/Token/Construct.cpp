@@ -19,6 +19,7 @@ export namespace
 		,	t_tpArgument
 			...
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	Construct
 	)	(	TypeToken<t_tEntity>

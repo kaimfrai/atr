@@ -17,12 +17,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator +
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	Pointer
 			)
+			noexcept
 		->	decltype(AddPointer(i_vType))
 		{	return{};	}
 
@@ -30,12 +32,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator -
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	Pointer
 			)
+			noexcept
 		->	decltype(RemovePointer(i_vType))
 		{	return{};	}
 	};
@@ -44,7 +48,7 @@ export namespace
 export namespace
 	Meta
 {
-	Token::Pointer extern
+	Token::Pointer const extern
 		Pointer
 	;
 }

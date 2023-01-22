@@ -43,10 +43,12 @@ export namespace
 	struct
 		ArrayElement_Of final
 	{
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeID
-			)	const
+			)
+			noexcept
 		->	TypeToken<void>
 		{	return {};	}
 
@@ -54,10 +56,11 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity[]>
-			)	const
+			)
 		->	TypeToken
 			<	t_tEntity
 			>
@@ -69,10 +72,12 @@ export namespace
 			,	USize
 					t_nExtent
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity[t_nExtent]>
-			)	const
+			)
+			noexcept
 		->	TypeToken
 			<	t_tEntity
 			>
@@ -82,10 +87,12 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken<Specifier::Mut<t_tEntity>>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			operator()
@@ -97,10 +104,12 @@ export namespace
 	struct
 		ArrayExtent_Of final
 	{
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeID
-			)	const
+			)
+			noexcept
 		->	USize
 		{	return 0uz;	}
 
@@ -110,10 +119,12 @@ export namespace
 			,	USize
 					t_nExtent
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity[t_nExtent]>
-			)	const
+			)
+			noexcept
 		->	USize
 		{	return t_nExtent;	}
 
@@ -121,10 +132,12 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken<Specifier::Mut<t_tEntity>>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			operator()

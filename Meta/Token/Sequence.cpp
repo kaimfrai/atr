@@ -13,10 +13,12 @@ namespace
 		<	auto
 				t_nLength
 		>
+	[[nodiscard]]
 	auto constexpr inline
 	(	MakeSequence
 	)	(	IndexToken<t_nLength>
 		)
+		noexcept
 	{	return
 		[]	<	USize
 				...	t_npIndex
@@ -59,6 +61,7 @@ export namespace
 		<	auto
 				t_nSize
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	InjectSequence
 	)	(	auto
@@ -66,6 +69,7 @@ export namespace
 		,	auto
 			&&	i_fReduce
 		)
+		noexcept
 	{	return
 			Sequence<t_nSize>
 		.	TransformReduce
@@ -127,14 +131,16 @@ export namespace
 			<	typename
 					t_tSelection
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator() // NOLINT(cert-dcl50-cpp)
 		)	(	IgnoreIndexedElement<t_npFront>
 				...
 			,	t_tSelection
 				*	i_aSeĺection
 			,	...
-			)	const
+			)
+			noexcept
 		->	t_tSelection*
 		{	return i_aSeĺection;	}
 	};

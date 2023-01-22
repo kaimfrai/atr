@@ -25,12 +25,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator +
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	LRef
 			)
+			noexcept
 		->	decltype(AddLValueReference(i_vType))
 		{	return{};	}
 
@@ -38,12 +40,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator -
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	LRef
 			)
+			noexcept
 		->	decltype(RemoveLValueReference(i_vType))
 		{	return{};	}
 	};
@@ -55,12 +59,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator +
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	RRef
 			)
+			noexcept
 		->	decltype(AddRValueReference(i_vType))
 		{	return{};	}
 
@@ -68,12 +74,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator -
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	RRef
 			)
+			noexcept
 		->	decltype(RemoveRValueReference(i_vType))
 		{	return{};	}
 	};
@@ -85,12 +93,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator +
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	CopyRef
 			)
+			noexcept
 		->	decltype(AddCopyReference(i_vType))
 		{	return{};	}
 
@@ -98,12 +108,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	operator -
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	CopyRef
 			)
+			noexcept
 		->	decltype(RemoveCopyReference(i_vType))
 		{	return{};	}
 	};
