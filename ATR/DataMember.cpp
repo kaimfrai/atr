@@ -3,6 +3,7 @@ export module ATR.DataMember;
 import Meta.Predicate.Empty;
 import Meta.Token.Query;
 import Meta.Token.Type;
+import Meta.Token.Type.Compare;
 import Meta.Size;
 import Meta.Functional.Construct;
 import Meta.Arithmetic.Literals;

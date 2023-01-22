@@ -13,3 +13,5 @@ add_single_file_modules(
 	Transform.cpp
 	Type.cpp
 )
+
+add_subdirectory(Type)
