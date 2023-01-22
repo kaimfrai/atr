@@ -41,7 +41,7 @@ export namespace
 	Meta::Query
 {
 	struct
-		ArrayElement_Of final
+		ArrayElement_Of
 	{
 		[[nodiscard]]
 		static auto constexpr
@@ -102,7 +102,7 @@ export namespace
 	};
 
 	struct
-		ArrayExtent_Of final
+		ArrayExtent_Of
 	{
 		[[nodiscard]]
 		static auto constexpr
@@ -147,7 +147,7 @@ export namespace
 	};
 
 	struct
-		BitAlign_Of final
+		BitAlign_Of
 	{
 		[[nodiscard]]
 		static auto constexpr
@@ -256,7 +256,7 @@ export namespace
 	};
 
 	struct
-		BitSize_Of final
+		BitSize_Of
 	{
 		[[nodiscard]]
 		static auto constexpr
