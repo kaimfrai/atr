@@ -1,7 +1,19 @@
 export module Meta.Token.Reference;
 
 import Meta.Token.Type;
-import Meta.Token.Transform;
+import Meta.Token.Transform.AddLValueReference;
+import Meta.Token.Transform.RemoveLValueReference;
+import Meta.Token.Transform.AddRValueReference;
+import Meta.Token.Transform.RemoveRValueReference;
+import Meta.Token.Transform.AddCopyReference;
+import Meta.Token.Transform.RemoveCopyReference;
+
+using ::Meta::AddLValueReference;
+using ::Meta::RemoveLValueReference;
+using ::Meta::AddRValueReference;
+using ::Meta::RemoveRValueReference;
+using ::Meta::AddCopyReference;
+using ::Meta::RemoveCopyReference;
 
 export namespace
 	Meta::Token

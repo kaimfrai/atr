@@ -1,7 +1,11 @@
 export module Meta.Token.Pointer;
 
 import Meta.Token.Type;
-import Meta.Token.Transform;
+import Meta.Token.Transform.AddPointer;
+import Meta.Token.Transform.RemovePointer;
+
+using ::Meta::AddPointer;
+using ::Meta::RemovePointer;
 
 export namespace
 	Meta::Token

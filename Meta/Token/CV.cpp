@@ -1,7 +1,21 @@
 export module Meta.Token.CV;
 
 import Meta.Token.Type;
-import Meta.Token.Transform;
+import Meta.Token.Transform.AddConst;
+import Meta.Token.Transform.RemoveConst;
+import Meta.Token.Transform.AddVolatile;
+import Meta.Token.Transform.RemoveVolatile;
+import Meta.Token.Transform.AddMutable;
+import Meta.Token.Transform.RemoveMutable;
+import Meta.Token.Transform.RemoveCV;
+
+using ::Meta::AddConst;
+using ::Meta::RemoveConst;
+using ::Meta::AddVolatile;
+using ::Meta::RemoveVolatile;
+using ::Meta::AddMutable;
+using ::Meta::RemoveMutable;
+using ::Meta::RemoveCV;
 
 export namespace
 	Meta::Token
