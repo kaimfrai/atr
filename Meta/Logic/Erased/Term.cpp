@@ -25,7 +25,7 @@ export namespace
 		using
 			LiteralBufferType
 		=	::std::array
-			<	EraseTypeToken
+			<	TypeID
 			,	Bit::LiteralLimit.get()
 			>
 		;
@@ -51,7 +51,7 @@ export namespace
 		(	TrimLiterals
 		)	(	Bit::Term const
 				&	i_rResult
-			,	::std::span<EraseTypeToken const>
+			,	::std::span<TypeID const>
 					i_vUnion
 			)
 			noexcept
@@ -94,7 +94,7 @@ export namespace
 		(	ProcessComputation
 		)	(	bool
 					i_bEquivalence
-			,	::std::span<EraseTypeToken const>
+			,	::std::span<TypeID const>
 			)
 			noexcept
 		->	bool
@@ -108,7 +108,7 @@ export namespace
 		(	ProcessComputation
 		)	(	Bit::Term const
 				&	i_rResult
-			,	std::span<EraseTypeToken const>
+			,	std::span<TypeID const>
 					i_vUnion
 			)
 			noexcept
@@ -130,12 +130,12 @@ export namespace
 			)
 			noexcept
 		->	Buffer::Static
-			<	EraseTypeToken
+			<	TypeID
 			,	Logic::Bit::LiteralLimit.get()
 			>
 		{
 			Buffer::Static
-			<	EraseTypeToken
+			<	TypeID
 			,	Logic::Bit::LiteralLimit.get()
 			>	vUnion
 			;
@@ -224,7 +224,7 @@ export namespace
 				(	i_rLeft.BitTerm
 				,	i_rRight.GetBitTermPermutation
 					(	[	&vUnion
-						]	(	EraseTypeToken
+						]	(	TypeID
 									i_vType
 							)
 						->	IndexType
@@ -275,7 +275,7 @@ export namespace
 		(	LiteralSpan
 		)	()	const
 			noexcept
-		->	::std::span<EraseTypeToken const>
+		->	::std::span<TypeID const>
 		{	return
 			{	Literals.begin()
 			,	LiteralCount()

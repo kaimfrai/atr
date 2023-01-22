@@ -72,7 +72,7 @@ auto constexpr
 }
 
 template
-	<	Meta::EraseTypeToken const
+	<	Meta::TypeID const
 		*	t_aTypes
 	,	USize
 		...	t_npIndex
@@ -156,7 +156,7 @@ export namespace
 			})
 		;
 
-		static Meta::EraseTypeToken constexpr
+		static Meta::TypeID constexpr
 			MemberTypes
 		[]{	Meta::Type<t_tpMember>
 			...

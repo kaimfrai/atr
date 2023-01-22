@@ -45,7 +45,7 @@ export namespace
 	{
 		auto constexpr
 		(	operator()
-		)	(	EraseTypeToken
+		)	(	TypeID
 			)	const
 		->	TypeToken<void>
 		{	return {};	}
@@ -99,7 +99,7 @@ export namespace
 	{
 		auto constexpr
 		(	operator()
-		)	(	EraseTypeToken
+		)	(	TypeID
 			)	const
 		->	USize
 		{	return 0uz;	}
@@ -139,7 +139,7 @@ export namespace
 		[[nodiscard]]
 		static auto constexpr
 		(	operator()
-		)	(	EraseTypeToken
+		)	(	TypeID
 			)
 			noexcept
 		->	BitSize
@@ -248,7 +248,7 @@ export namespace
 		[[nodiscard]]
 		static auto constexpr
 		(	operator()
-		)	(	EraseTypeToken
+		)	(	TypeID
 			)
 			noexcept
 		->	BitSize

@@ -220,7 +220,7 @@ export namespace
 	{
 		using IndexedTuple = DeduceIndexedTuple<t_tpItem...>;
 
-		static EraseTypeToken constexpr
+		static TypeID constexpr
 			EraseTypeArray
 			[]
 		{	Type
@@ -230,7 +230,7 @@ export namespace
 		};
 
 		constexpr
-		(	operator EraseTypeToken const*
+		(	operator TypeID const*
 		)	()	const
 		{	return +EraseTypeArray;	}
 	};

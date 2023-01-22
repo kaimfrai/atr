@@ -18,7 +18,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-::Meta::EraseTypeToken constexpr inline
+::Meta::TypeID constexpr inline
 	LRefToQualified
 =	Type<MatchLRef<MatchCV<int, t_tpQualifier...>>>
 ;
@@ -47,7 +47,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-::Meta::EraseTypeToken constexpr inline
+::Meta::TypeID constexpr inline
 	RRefToQualified
 =	Type<MatchRRef<MatchCV<int, t_tpQualifier...>>>
 ;

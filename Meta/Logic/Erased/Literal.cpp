@@ -9,7 +9,7 @@ export namespace
 	struct
 		Literal
 	{
-		EraseTypeToken
+		TypeID
 			Type
 		;
 		bool

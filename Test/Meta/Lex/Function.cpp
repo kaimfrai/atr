@@ -25,7 +25,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-Meta::EraseTypeToken constexpr inline
+Meta::TypeID constexpr inline
 	Qualified
 =	Type
 	<	Func
@@ -176,7 +176,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-Meta::EraseTypeToken constexpr inline
+Meta::TypeID constexpr inline
 	EllipsisQualified
 =	Type
 	<	Func

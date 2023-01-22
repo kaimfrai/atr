@@ -59,15 +59,15 @@ export namespace
 	{
 		USize SortKey;
 		Meta::StringView Name;
-		Meta::EraseTypeToken Type;
+		Meta::TypeID Type;
 
+		[[nodiscard]]
 		friend auto constexpr
-		(	operator<=>
+		(	operator <=>
 		)	(	MemberInfo const&
 			,	MemberInfo const&
 			)
 			noexcept
-		->	::std::strong_ordering
 		=	default;
 	};
 
@@ -282,7 +282,7 @@ export namespace
 	template
 		<	Meta::ProtoID
 				t_tName
-		,	Meta::EraseTypeToken
+		,	Meta::TypeID
 				t_vType
 		,	USize
 				t_nMemberSortKey

@@ -23,7 +23,7 @@ export namespace
 		using
 			LiteralBufferType
 		=	::std::array
-			<	EraseTypeToken
+			<	TypeID
 			,	Bit::LiteralLimit.get()
 			>
 		;

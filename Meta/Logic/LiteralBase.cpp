@@ -12,7 +12,7 @@ export namespace
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-			,	EraseTypeToken
+			,	TypeID
 			)
 			noexcept
 		->	bool
@@ -24,7 +24,7 @@ export namespace
 		[[nodiscard]]
 		static auto constexpr
 		(	operator()
-		)	(	EraseTypeToken
+		)	(	TypeID
 			)
 			noexcept
 		->	bool

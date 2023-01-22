@@ -18,7 +18,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-::Meta::EraseTypeToken constexpr inline
+::Meta::TypeID constexpr inline
 	PointerToQualified
 =	Type
 	<	MatchCVPointer
@@ -51,7 +51,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-::Meta::EraseTypeToken constexpr inline
+::Meta::TypeID constexpr inline
 	QualifiedPointer
 =	Type
 	<	MatchCVPointer

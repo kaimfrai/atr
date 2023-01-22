@@ -1,5 +1,7 @@
 export module Meta.Token.Type;
 
+import Std;
+
 export namespace
 	Meta::Token
 {
@@ -7,19 +9,66 @@ export namespace
 		EraseType final
 	{
 	private:
-		template<typename> friend struct TypeToken;
+		template
+			<	typename
+			>
+		friend struct
+			TypeToken
+		;
 
-		constexpr
+		explicit (false)
+			constexpr
 		(	EraseType
 		)	()
+			noexcept
 		=	default;
 
-		constexpr EraseType(EraseType const&) = delete;
-		constexpr EraseType(EraseType&&) = delete;
+		explicit(false) constexpr
+		(	EraseType
+		)	(	EraseType const&
+			)
+		=	delete;
+	};
+
+	struct
+		TypeID final
+	{
+		EraseType const
+		*	Erase
+		;
+
+		[[nodiscard]]
+		friend auto constexpr
+		(	operator ==
+		)	(	TypeID
+			,	TypeID
+			)
+			noexcept
+		->	bool
+		=	default;
+
+		[[nodiscard]]
+		friend auto constexpr
+		(	operator <=>
+		)	(	TypeID
+					i_vLeft
+			,	TypeID
+					i_vRight
+			)
+			noexcept
+		->	::std::partial_ordering
+		{	return
+				(	i_vLeft
+				==	i_vRight
+				)
+			?	::std::partial_ordering::equivalent
+			:	::std::partial_ordering::unordered
+			;
+		}
 	};
 
 	template
-		<	EraseType const*
+		<	TypeID
 		>
 	struct
 		TypeRestore final
@@ -28,6 +77,7 @@ export namespace
 		(	RestoreType
 		)	(	TypeRestore
 			)
+			noexcept
 		;
 	};
 
@@ -38,23 +88,57 @@ export namespace
 	struct
 		TypeToken
 	{
-		using Entity = t_tEntity;
+		using
+			Entity
+		=	t_tEntity
+		;
 
 		static EraseType constexpr
 			Erase
 		{};
 
-		constexpr
+		[[nodiscard]]
+		explicit(false) constexpr
 		(	operator
-			EraseType const*
+			TypeID
 		)	()	const
-		{	return &Erase;	}
+		{	return
+			{	&Erase
+			};
+		}
 
+		[[nodiscard]]
 		friend auto constexpr
 		(	RestoreType
-		)	(	TypeRestore<&Erase>
+		)	(	TypeRestore
+				<	TypeID
+					{	&Erase
+					}
+				>
 			)
-		{	return TypeToken{};	}
+			noexcept
+		{	return
+			TypeToken
+			{};
+		}
+
+		friend auto constexpr
+		(	operator ==
+		)	(	TypeID
+			,	TypeID
+			)
+			noexcept
+		->	bool
+		;
+
+		friend auto constexpr
+		(	operator <=>
+		)	(	TypeID
+			,	TypeID
+			)
+			noexcept
+		->	::std::partial_ordering
+		;
 	};
 
 	template
@@ -62,7 +146,9 @@ export namespace
 				t_tEntity
 		>
 	(	TypeToken
-	)	(	TypeToken<t_tEntity>
+	)	(	TypeToken
+			<	t_tEntity
+			>
 		)
 	->	TypeToken
 		<	t_tEntity
@@ -75,10 +161,7 @@ export namespace
 {
 	using ::Meta::Token::TypeToken;
 
-	using
-		EraseTypeToken
-	=	Token::EraseType const*
-	;
+	using ::Meta::Token::TypeID;
 
 	template
 		<	typename
@@ -86,8 +169,9 @@ export namespace
 		>
 	auto constexpr inline
 		Type
-	=	TypeToken<t_tEntity>
-		{}
+	=	TypeToken
+		<	t_tEntity
+		>{}
 	;
 
 	template
@@ -104,27 +188,27 @@ export namespace
 
 
 	template
-		<	EraseTypeToken
-				t_vEraseType
+		<	TypeID
+				t_vTypeID
 		>
 	TypeToken constexpr inline
 		RestoreTypeToken
 	=	RestoreType
 		(	Token::TypeRestore
-			<	t_vEraseType
+			<	t_vTypeID
 			>{}
 		)
 	;
 
 	template
-		<	EraseTypeToken
-				t_vEraseType
+		<	TypeID
+				t_vTypeID
 		>
 	using
 		RestoreTypeEntity
 	=	TypeEntity
 		<	RestoreTypeToken
-			<	t_vEraseType
+			<	t_vTypeID
 			>
 		>
 	;

@@ -23,7 +23,7 @@ template
 	,	typename
 		...	t_tpQualifier
 	>
-Meta::EraseTypeToken constexpr inline
+Meta::TypeID constexpr inline
 	ArrayToQualified
 =	Type
 	<	MatchCVArray

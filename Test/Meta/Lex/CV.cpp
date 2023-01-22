@@ -17,7 +17,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-Meta::EraseTypeToken constexpr inline
+Meta::TypeID constexpr inline
 	Qualified
 =	Type<MatchCV<int, t_tpQualifier...>>
 ;

@@ -32,7 +32,7 @@ export namespace
 		;
 
 		constexpr
-		(	operator EraseTypeToken
+		(	operator TypeID
 		)	()	const
 			noexcept
 		{	return Type;	}

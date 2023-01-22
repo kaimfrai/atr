@@ -20,7 +20,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-Meta::EraseTypeToken constexpr inline
+Meta::TypeID constexpr inline
 	MemberToQualified
 =	Type<MatchCVMember<MatchCV<int, t_tpQualifier...>, Class>>
 ;
@@ -59,7 +59,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-Meta::EraseTypeToken constexpr inline
+Meta::TypeID constexpr inline
 	QualifiedMember
 =	Type<CV<Member<MatchCV<int, Const, Volatile>, Class>, t_tpQualifier...>>
 ;
