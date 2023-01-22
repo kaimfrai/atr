@@ -1,7 +1,7 @@
 export module Evaluation.Virtual.Ellipsoid;
 
-export import Evaluation.Virtual.Ellipse;
-export import Evaluation.Virtual.SphericBody;
+import Evaluation.Virtual.Ellipse;
+import Evaluation.Virtual.SphericBody;
 
 import Evaluation.Shared.DataTypes;
 

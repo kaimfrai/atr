@@ -1,7 +1,7 @@
 export module Evaluation.Virtual.Cube;
 
-export import Evaluation.Virtual.Square;
-export import Evaluation.Virtual.CubicBody;
+import Evaluation.Virtual.Square;
+import Evaluation.Virtual.CubicBody;
 
 import Evaluation.Shared.DataTypes;
 

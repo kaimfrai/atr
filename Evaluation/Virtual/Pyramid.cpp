@@ -1,7 +1,7 @@
 export module Evaluation.Virtual.Pyramid;
 
-export import Evaluation.Virtual.Triangle;
-export import Evaluation.Virtual.PyramidicBody;
+import Evaluation.Virtual.Triangle;
+import Evaluation.Virtual.PyramidicBody;
 
 import Evaluation.Shared.DataTypes;
 

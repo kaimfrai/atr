@@ -1,3 +1,4 @@
+import Evaluation.Virtual.IBody;
 import Evaluation.Virtual.Cube;
 import Evaluation.Virtual.Cuboid;
 import Evaluation.Virtual.Pyramid;

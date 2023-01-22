@@ -1,6 +1,6 @@
 export module Evaluation.Virtual.ExtendedShape;
 
-export import Evaluation.Virtual.BasicBody;
+import Evaluation.Virtual.BasicBody;
 
 import Evaluation.Shared.DataTypes;
 

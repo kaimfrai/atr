@@ -1,6 +1,6 @@
 export module Evaluation.Virtual.BasicBody;
 
-export import Evaluation.Virtual.IBody;
+import Evaluation.Virtual.IBody;
 
 import Evaluation.Shared.DataTypes;
 

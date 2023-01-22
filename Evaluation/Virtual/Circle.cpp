@@ -1,6 +1,6 @@
 export module Evaluation.Virtual.Circle;
 
-export import Evaluation.Virtual.CircularShape;
+import Evaluation.Virtual.CircularShape;
 
 import Evaluation.Shared.DataTypes;
 

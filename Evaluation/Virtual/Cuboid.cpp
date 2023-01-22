@@ -1,7 +1,7 @@
 export module Evaluation.Virtual.Cuboid;
 
-export import Evaluation.Virtual.Rectangle;
-export import Evaluation.Virtual.CubicBody;
+import Evaluation.Virtual.Rectangle;
+import Evaluation.Virtual.CubicBody;
 
 import Evaluation.Shared.DataTypes;
 

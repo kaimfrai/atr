@@ -1,6 +1,6 @@
 export module Evaluation.Virtual.SphericBody;
 
-export import Evaluation.Virtual.ExtendedShape;
+import Evaluation.Virtual.ExtendedShape;
 
 import Evaluation.Shared.DataTypes;
 import Evaluation.Shared.PiFraction;

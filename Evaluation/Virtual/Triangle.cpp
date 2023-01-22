@@ -1,6 +1,6 @@
 export module Evaluation.Virtual.Triangle;
 
-export import Evaluation.Virtual.TriangularShape;
+import Evaluation.Virtual.TriangularShape;
 
 import Evaluation.Shared.DataTypes;
 
