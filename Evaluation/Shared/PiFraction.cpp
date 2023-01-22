@@ -1,6 +1,6 @@
 export module Evaluation.Shared.PiFraction;
 
-export import Evaluation.Shared.DataTypes;
+import Evaluation.Shared.DataTypes;
 
 import Meta.Size;
 

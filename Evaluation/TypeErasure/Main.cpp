@@ -9,6 +9,7 @@ import Evaluation.CRTP.Cone;
 import Evaluation.CRTP.Ellipsoid;
 import Evaluation.CRTP.Head;
 
+import Evaluation.Shared.DataTypes;
 import Evaluation.Shared.MainTemplate;
 import Evaluation.Shared.CopyConstruct;
 import Meta.Size;

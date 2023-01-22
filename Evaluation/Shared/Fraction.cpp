@@ -1,6 +1,6 @@
 export module Evaluation.Shared.Fraction;
 
-export import Evaluation.Shared.DataTypes;
+import Evaluation.Shared.DataTypes;
 
 import Std;
 

@@ -3,6 +3,7 @@ import ATR.Literals;
 import ATR.Instance;
 
 import Evaluation.Archetype;
+import Evaluation.Shared.DataTypes;
 import Evaluation.Shared.MainTemplate;
 import Evaluation.Shared.TypeConstruct;
 import Meta.Size;

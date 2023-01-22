@@ -1,5 +1,6 @@
 export module Evaluation.CRTP.Cone;
 
+import Evaluation.Shared.DataTypes;
 import Evaluation.Shared.PiFraction;
 import Evaluation.CRTP.Circle;
 import Evaluation.CRTP.ExtendedShape;
