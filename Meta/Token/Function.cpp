@@ -86,11 +86,11 @@ export namespace
 export namespace
 	Meta
 {
-	Token::Ellipsis extern
+	Token::Ellipsis const extern
 		Ellipsis
 	;
 
-	Token::Noexcept extern
+	Token::Noexcept const extern
 		Noexcept
 	;
 }

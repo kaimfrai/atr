@@ -124,15 +124,15 @@ export namespace
 export namespace
 	Meta
 {
-	Token::LRef extern
+	Token::LRef const extern
 		LRef
 	;
 
-	Token::RRef extern
+	Token::RRef const extern
 		RRef
 	;
 
-	Token::CopyRef extern
+	Token::CopyRef const extern
 		CopyRef
 	;
 }

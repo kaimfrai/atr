@@ -145,19 +145,19 @@ export namespace
 export namespace
 	Meta
 {
-	Token::Const extern
+	Token::Const const extern
 		Const
 	;
 
-	Token::Volatile extern
+	Token::Volatile const extern
 		Volatile
 	;
 
-	Token::Mutable extern
+	Token::Mutable const extern
 		Mutable
 	;
 
-	Token::CV extern
+	Token::CV const extern
 		CV
 	;
 }
