@@ -1,6 +1,6 @@
-export module Evaluation.Archetype:ComputeArea;
+export module Evaluation.Archetype.ComputeArea;
 
-export import :Product;
+import Evaluation.Archetype.Product;
 
 import ATR.DependencyIDMap;
 import ATR.Literals;
@@ -9,6 +9,8 @@ import ATR.Address;
 export namespace
 	ATR
 {
+	using ::ATR::Body;
+
 	auto constexpr
 	(	MapAddress
 	)	(	ID_T<"ComputeArea">

@@ -1,6 +1,6 @@
-export module Evaluation.Archetype:Triangle;
+export module Evaluation.Archetype.Triangle;
 
-export import :BasicShape;
+import Evaluation.Archetype.BasicShape;
 
 import Evaluation.Shared.Fraction;
 

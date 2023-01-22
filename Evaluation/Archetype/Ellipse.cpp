@@ -1,6 +1,6 @@
-export module Evaluation.Archetype:Ellipse;
+export module Evaluation.Archetype.Ellipse;
 
-export import :BasicShape;
+import Evaluation.Archetype.BasicShape;
 
 import Evaluation.Shared.PiFraction;
 

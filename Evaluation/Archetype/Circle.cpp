@@ -1,6 +1,6 @@
-export module Evaluation.Archetype:Circle;
+export module Evaluation.Archetype.Circle;
 
-export import :Ellipse;
+import Evaluation.Archetype.Ellipse;
 
 import ATR.DataMember;
 

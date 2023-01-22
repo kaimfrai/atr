@@ -1,6 +1,6 @@
-export module Evaluation.Archetype:Pyramid;
+export module Evaluation.Archetype.Pyramid;
 
-export import :BasicBody;
+import Evaluation.Archetype.BasicBody;
 
 import Evaluation.Shared.Fraction;
 

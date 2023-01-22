@@ -1,6 +1,6 @@
-export module Evaluation.Archetype:Cone;
+export module Evaluation.Archetype.Cone;
 
-export import :BasicBody;
+import Evaluation.Archetype.BasicBody;
 
 import Evaluation.Shared.PiFraction;
 

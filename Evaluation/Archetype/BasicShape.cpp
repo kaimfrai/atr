@@ -1,4 +1,4 @@
-export module Evaluation.Archetype:BasicShape;
+export module Evaluation.Archetype.BasicShape;
 
 import Evaluation.Shared.DataTypes;
 import ATR.DataMember;

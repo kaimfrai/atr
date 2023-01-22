@@ -1,6 +1,6 @@
-export module Evaluation.Archetype:Cylinder;
+export module Evaluation.Archetype.Cylinder;
 
-export import :BasicBody;
+import Evaluation.Archetype.BasicBody;
 
 import Evaluation.Shared.PiFraction;
 

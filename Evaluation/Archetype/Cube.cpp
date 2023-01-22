@@ -1,6 +1,6 @@
-export module Evaluation.Archetype:Cube;
+export module Evaluation.Archetype.Cube;
 
-export import :Cuboid;
+import Evaluation.Archetype.Cuboid;
 
 import ATR.DataMember;
 

@@ -1,6 +1,6 @@
-export module Evaluation.Archetype:Sphere;
+export module Evaluation.Archetype.Sphere;
 
-export import :Ellipsoid;
+import Evaluation.Archetype.Ellipsoid;
 
 import ATR.DataMember;
 

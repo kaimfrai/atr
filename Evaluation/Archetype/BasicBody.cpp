@@ -1,6 +1,6 @@
-export module Evaluation.Archetype:BasicBody;
+export module Evaluation.Archetype.BasicBody;
 
-export import :BasicShape;
+import Evaluation.Archetype.BasicShape;
 
 import Evaluation.Shared.DataTypes;
 

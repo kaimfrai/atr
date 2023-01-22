@@ -1,4 +1,4 @@
-export module Evaluation.Archetype:Product;
+export module Evaluation.Archetype.Product;
 
 import Evaluation.Shared.DataTypes;
 import ATR.Dependency;

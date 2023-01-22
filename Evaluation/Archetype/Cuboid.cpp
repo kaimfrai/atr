@@ -1,6 +1,6 @@
-export module Evaluation.Archetype:Cuboid;
+export module Evaluation.Archetype.Cuboid;
 
-export import :BasicBody;
+import Evaluation.Archetype.BasicBody;
 
 import Evaluation.Shared.Fraction;
 

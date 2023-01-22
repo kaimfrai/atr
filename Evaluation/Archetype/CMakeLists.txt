@@ -1,6 +1,5 @@
-add_module(Archetype.cpp
-
-Product.cpp
+add_single_file_modules(
+	Product.cpp
 
 	ComputeArea.cpp
 	ComputeVolume.cpp
