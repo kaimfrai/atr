@@ -1,4 +1,4 @@
-export module Evaluation.Replication:Sphere;
+export module Evaluation.Replication.Sphere;
 
 import Evaluation.Shared.DataTypes;
 import Evaluation.Shared.PiFraction;

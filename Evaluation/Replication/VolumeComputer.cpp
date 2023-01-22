@@ -1,13 +1,13 @@
-export module Evaluation.Replication;
+export module Evaluation.Replication.VolumeComputer;
 
-export import :Cube;
-export import :Cuboid;
-export import :Pyramid;
-export import :Sphere;
-export import :Cylinder;
-export import :Cone;
-export import :Ellipsoid;
-export import :Head;
+import Evaluation.Replication.Cube;
+import Evaluation.Replication.Cuboid;
+import Evaluation.Replication.Pyramid;
+import Evaluation.Replication.Sphere;
+import Evaluation.Replication.Cylinder;
+import Evaluation.Replication.Cone;
+import Evaluation.Replication.Ellipsoid;
+import Evaluation.Replication.Head;
 
 import Evaluation.Shared.DataTypes;
 

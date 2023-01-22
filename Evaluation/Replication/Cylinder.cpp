@@ -1,4 +1,4 @@
-export module Evaluation.Replication:Cylinder;
+export module Evaluation.Replication.Cylinder;
 
 import Evaluation.Shared.DataTypes;
 import Evaluation.Shared.PiFraction;

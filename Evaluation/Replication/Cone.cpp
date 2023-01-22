@@ -1,4 +1,4 @@
-export module Evaluation.Replication:Cone;
+export module Evaluation.Replication.Cone;
 
 import Evaluation.Shared.DataTypes;
 import Evaluation.Shared.PiFraction;
