@@ -1,6 +1,4 @@
-add_module(
-	Virtual.cpp
-
+add_single_file_modules(
 	BasicBody.cpp
 	BasicShape.cpp
 	Circle.cpp

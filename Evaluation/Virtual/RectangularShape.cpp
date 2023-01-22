@@ -1,6 +1,6 @@
-export module Evaluation.Virtual:RectangularShape;
+export module Evaluation.Virtual.RectangularShape;
 
-export import :BasicShape;
+export import Evaluation.Virtual.BasicShape;
 
 import Evaluation.Shared.DataTypes;
 import Evaluation.Shared.Fraction;

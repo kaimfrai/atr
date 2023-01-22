@@ -1,4 +1,4 @@
-export module Evaluation.Virtual:IShape;
+export module Evaluation.Virtual.IShape;
 
 import Evaluation.Shared.DataTypes;
 

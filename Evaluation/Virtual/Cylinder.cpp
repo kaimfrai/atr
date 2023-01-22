@@ -1,7 +1,7 @@
-export module Evaluation.Virtual:Cylinder;
+export module Evaluation.Virtual.Cylinder;
 
-export import :Circle;
-export import :ExtendedShape;
+export import Evaluation.Virtual.Circle;
+export import Evaluation.Virtual.ExtendedShape;
 
 import Evaluation.Shared.DataTypes;
 import Evaluation.Shared.PiFraction;

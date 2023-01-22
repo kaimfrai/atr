@@ -1,6 +1,6 @@
-export module Evaluation.Virtual:Rectangle;
+export module Evaluation.Virtual.Rectangle;
 
-export import :RectangularShape;
+export import Evaluation.Virtual.RectangularShape;
 
 import Evaluation.Shared.DataTypes;
 

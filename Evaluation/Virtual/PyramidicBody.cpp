@@ -1,6 +1,6 @@
-export module Evaluation.Virtual:PyramidicBody;
+export module Evaluation.Virtual.PyramidicBody;
 
-export import :ExtendedShape;
+export import Evaluation.Virtual.ExtendedShape;
 
 import Evaluation.Shared.DataTypes;
 import Evaluation.Shared.Fraction;

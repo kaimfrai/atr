@@ -1,6 +1,6 @@
-export module Evaluation.Virtual:BasicShape;
+export module Evaluation.Virtual.BasicShape;
 
-export import :IShape;
+export import Evaluation.Virtual.IShape;
 
 import Evaluation.Shared.DataTypes;
 

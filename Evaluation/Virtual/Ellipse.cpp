@@ -1,6 +1,6 @@
-export module Evaluation.Virtual:Ellipse;
+export module Evaluation.Virtual.Ellipse;
 
-export import :CircularShape;
+export import Evaluation.Virtual.CircularShape;
 
 import Evaluation.Shared.DataTypes;
 

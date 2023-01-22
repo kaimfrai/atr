@@ -1,7 +1,7 @@
-export module Evaluation.Virtual:Sphere;
+export module Evaluation.Virtual.Sphere;
 
-export import :Circle;
-export import :SphericBody;
+export import Evaluation.Virtual.Circle;
+export import Evaluation.Virtual.SphericBody;
 
 import Evaluation.Shared.DataTypes;
 
