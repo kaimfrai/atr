@@ -1,11 +1,5 @@
 export module Meta.Token.Specifier;
 
-import Meta.Size;
-import Meta.Memory.Size;
-import Meta.Byte.Buffer;
-
-import Std;
-
 export namespace
 	Meta::Specifier
 {
