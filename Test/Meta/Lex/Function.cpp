@@ -2,6 +2,7 @@ import Meta.Lex.Function;
 import Meta.Lex.Tokenizer;
 import Meta.Lex.Pointer;
 import Meta.Lex.Reference;
+import Meta.Lex.Base;
 import Meta.Lex.CV;
 import Meta.Lex.Array;
 import Meta.Token.LRef;
@@ -37,7 +38,7 @@ Meta::TypeID constexpr inline
 			,	MatchCVPointer<MatchCV<int>>
 			,	MatchLRef
 				<	MatchCVArray
-					<	MatchCV<int>
+					<	Base<int>
 					,	0uz
 					>
 				>
@@ -188,7 +189,7 @@ Meta::TypeID constexpr inline
 			,	MatchCVPointer<MatchCV<int>>
 			,	Ref
 				<	MatchCVArray
-					<	MatchCV<int>
+					<	Base<int>
 					,	0uz
 					>
 				,	LRef

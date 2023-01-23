@@ -81,8 +81,6 @@ export namespace
 		;
 	};
 
-
-
 	template
 		<	typename
 				t_tData
@@ -145,12 +143,6 @@ export namespace
 		)	(	Object const&
 			)	&
 		=	delete;
-
-		auto constexpr
-		(	operator =
-		)	(	Object&&
-			)	&
-		=	delete;
 	};
 
 	template
@@ -175,12 +167,16 @@ export namespace
 	template
 		<	typename
 				t_tData
+		,	typename
+			...	t_tpQualifier
 		>
 	struct
 		Object
 		<	Lex::MatchCVArray
-			<	Lex::CV<t_tData>
+			<	t_tData
 			,	0uz
+			,	t_tpQualifier
+				...
 			>
 		>
 	{};
@@ -188,41 +184,17 @@ export namespace
 	template
 		<	typename
 				t_tData
+		,	typename
+			...	t_tpQualifier
 		>
 	struct
 		Object
 		<	Lex::MatchCVArray
-			<	Lex::CV<t_tData>
+			<	t_tData
 			,	0uz
 			,	Token::Const
-			>
-		>
-	{};
-
-	template
-		<	typename
-				t_tData
-		>
-	struct
-		Object
-		<	Lex::MatchCVArray
-			<	Lex::CV<t_tData>
-			,	0uz
-			,	Token::Volatile
-			>
-		>
-	{};
-	template
-		<	typename
-				t_tData
-		>
-	struct
-		Object
-		<	Lex::MatchCVArray
-			<	Lex::CV<t_tData>
-			,	0uz
-			,	Token::Const
-			,	Token::Volatile
+			,	t_tpQualifier
+				...
 			>
 		>
 	{};

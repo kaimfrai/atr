@@ -68,7 +68,7 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	MakeArray
-	)	(	t_tElement
+	)	(	CV<t_tElement>
 		,	Token::Extent<t_nExtent>
 		,	t_tpQualifier
 			...

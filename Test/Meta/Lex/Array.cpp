@@ -1,3 +1,4 @@
+import Meta.Lex.Base;
 import Meta.Lex.CV;
 import Meta.Lex.Tokenizer;
 import Meta.Lex.Array;
@@ -29,7 +30,7 @@ Meta::TypeID constexpr inline
 	ArrayToQualified
 =	Type
 	<	MatchCVArray
-		<	MatchCV<int>
+		<	Base<int>
 		,	t_nExtent
 		,	t_tpQualifier
 			...
