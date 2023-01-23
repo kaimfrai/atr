@@ -29,30 +29,31 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tEntity
 				>
-			)	const
+			)
+			noexcept
 		->	CV<Base<t_tEntity>>
 		{	return
-			CV
-			{	Base<t_tEntity>
-				{}
-			};
+			{};
 		}
 
 		template
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tEntity const
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			CV
@@ -65,12 +66,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tEntity volatile
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			CV
@@ -83,12 +86,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tEntity const volatile
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			CV
@@ -102,12 +107,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	Specifier::Mut<t_tEntity>
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			CV
@@ -121,12 +128,14 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	Specifier::Mut<t_tEntity volatile>
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			CV
@@ -143,12 +152,14 @@ export namespace
 			,	USize
 					t_nExtent
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tElement[t_nExtent]
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			CV
@@ -165,12 +176,14 @@ export namespace
 			,	USize
 					t_nExtent
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tElement const[t_nExtent]
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			CV
@@ -188,12 +201,14 @@ export namespace
 			,	USize
 					t_nExtent
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tElement volatile[t_nExtent]
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			CV
@@ -211,12 +226,14 @@ export namespace
 			,	USize
 					t_nExtent
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tElement const volatile[t_nExtent]
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			CV
@@ -233,12 +250,14 @@ export namespace
 			<	typename
 					t_tElement
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tElement[]
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			CV
@@ -253,12 +272,14 @@ export namespace
 			<	typename
 					t_tElement
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tElement const[]
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			CV
@@ -274,12 +295,14 @@ export namespace
 			<	typename
 					t_tElement
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tElement volatile[]
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			CV
@@ -295,12 +318,14 @@ export namespace
 			<	typename
 					t_tElement
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tElement const volatile[]
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			CV
@@ -317,10 +342,12 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity*>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			CV
@@ -334,10 +361,12 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity&>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Ref
@@ -350,10 +379,12 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity&&>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Ref
@@ -368,12 +399,14 @@ export namespace
 			,	typename
 					t_tOwner
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tMember t_tOwner::*
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			CV
@@ -390,12 +423,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...)
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -415,12 +450,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) const
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -441,12 +478,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) volatile
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -467,12 +506,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) const volatile
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -494,12 +535,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...)
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -520,12 +563,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) const
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -547,12 +592,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) volatile
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -574,12 +621,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) const volatile
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -602,12 +651,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) &
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -628,12 +679,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) const &
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -655,12 +708,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) volatile &
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -682,12 +737,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) const volatile &
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -710,12 +767,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) &
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -737,12 +796,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) const &
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -765,12 +826,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) volatile &
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -793,12 +856,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) const volatile &
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -822,12 +887,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) &&
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -848,12 +915,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) const &&
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -875,12 +944,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) volatile &&
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -902,12 +973,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) const volatile &&
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -930,12 +1003,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) &&
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -957,12 +1032,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) const &&
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -985,12 +1062,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) volatile &&
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1013,12 +1092,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) const volatile &&
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1042,12 +1123,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1068,12 +1151,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) const noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1095,12 +1180,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) volatile noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1122,12 +1209,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) const volatile noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1150,12 +1239,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1177,12 +1268,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) const noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1205,12 +1298,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) volatile noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1233,12 +1328,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) const volatile noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1262,12 +1359,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) & noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1289,12 +1388,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) const & noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1317,12 +1418,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) volatile & noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1345,12 +1448,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) const volatile & noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1374,12 +1479,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) & noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1402,12 +1509,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) const & noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1431,12 +1540,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) volatile & noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1460,12 +1571,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) const volatile & noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1490,12 +1603,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) && noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1517,12 +1632,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) const && noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1545,12 +1662,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) volatile && noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1573,12 +1692,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam...) const volatile && noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1602,12 +1723,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) && noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1630,12 +1753,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) const && noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1659,12 +1784,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) volatile && noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1688,12 +1815,14 @@ export namespace
 			,	typename
 				...	t_tpParam
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParam..., ...) const volatile && noexcept
 				>
-			)	const
+			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Func
@@ -1717,7 +1846,7 @@ export namespace
 export namespace
 	Meta
 {
-	Lex::Tokenizer extern
+	Lex::Tokenizer const extern
 		Tokenize
 	;
 
