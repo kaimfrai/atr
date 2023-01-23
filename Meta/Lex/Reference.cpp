@@ -19,8 +19,6 @@ export namespace
 		>
 	struct
 		Ref
-	:	t_tEntity
-	,	t_tReference
 	{
 		static Token::TypeToken constexpr
 			Type
@@ -33,7 +31,8 @@ export namespace
 		=	TypeEntity<Type>
 		;
 
-		constexpr
+		[[nodiscard]]
+		explicit(false) constexpr
 		(	operator TypeID
 		)	()	const
 			noexcept
@@ -44,97 +43,20 @@ export namespace
 		<	typename
 				t_tEntity
 		,	typename
-			...	t_tpQualifier
+				t_tCategory
 		>
-	(	Ref
-	)	(	CV<t_tEntity, t_tpQualifier...>
-		,	Token::LRef
+	[[nodiscard]]
+	auto constexpr
+	(	MakeRef
+	)	(	t_tEntity
+		,	t_tCategory
 		)
+		noexcept
 	->	Ref
-		<	CV<t_tEntity, t_tpQualifier...>
-		,	Token::LRef
+		<	t_tEntity
+		,	t_tCategory
 		>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		,	typename
-			...	t_tpQualifier
-		>
-	(	Ref
-	)	(	CV<t_tEntity, t_tpQualifier...>
-		,	Token::RRef
-		)
-	->	Ref
-		<	CV<t_tEntity, t_tpQualifier...>
-		,	Token::RRef
-		>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		,	typename
-				t_tExtent
-		>
-	(	Ref
-	)	(	Array<t_tEntity, t_tExtent>
-		,	Token::LRef
-		)
-	->	Ref
-		<	Array<t_tEntity, t_tExtent>
-		,	Token::LRef
-		>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		,	typename
-				t_tExtent
-		>
-	(	Ref
-	)	(	Array<t_tEntity, t_tExtent>
-		,	Token::RRef
-		)
-	->	Ref
-		<	Array<t_tEntity, t_tExtent>
-		,	Token::RRef
-		>
-	;
-
-	template
-		<	typename
-				t_tSignature
-		,	typename
-			...	t_tpQualifier
-		>
-	(	Ref
-	)	(	Func<t_tSignature, t_tpQualifier...>
-		,	Token::LRef
-		)
-	->	Ref
-		<	Func<t_tSignature, t_tpQualifier...>
-		,	Token::LRef
-		>
-	;
-
-	template
-		<	typename
-				t_tSignature
-		,	typename
-			...	t_tpQualifier
-		>
-	(	Ref
-	)	(	Func<t_tSignature, t_tpQualifier...>
-		,	Token::RRef
-		)
-	->	Ref
-		<	Func<t_tSignature, t_tpQualifier...>
-		,	Token::RRef
-		>
-	;
+	{	return {};	}
 
 	template
 		<	typename
@@ -142,7 +64,10 @@ export namespace
 		>
 	using
 		MatchLRef
-	=	Ref<t_tEntity, Token::LRef>
+	=	Ref
+		<	t_tEntity
+		,	Token::LRef
+		>
 	;
 
 	template
@@ -151,6 +76,9 @@ export namespace
 		>
 	using
 		MatchRRef
-	=	Ref<t_tEntity, Token::RRef>
+	=	Ref
+		<	t_tEntity
+		,	Token::RRef
+		>
 	;
 }

@@ -38,18 +38,6 @@ export namespace
 		;
 	};
 
-	///	resolve direct base class ambiguity
-	template
-		<	typename
-				t_tQualifier
-		,	typename
-				t_tEntity
-		>
-	struct
-		Qualifier
-	:	t_tQualifier
-	{};
-
 	template
 		<	typename
 				t_tEntity
@@ -58,10 +46,38 @@ export namespace
 		>
 	struct
 		CV
-	:	t_tEntity
-	,	Qualifier<t_tpQualifier, t_tEntity>
-		...
 	{
+		static_assert
+		(	[]{	if	constexpr
+					(	sizeof...(t_tpQualifier)
+					==	2uz
+					)
+				{	TypeID const
+						vQualifier
+						[]
+					{	Type<t_tpQualifier>
+						...
+					};
+					return
+						(	vQualifier[0uz]
+						!=	vQualifier[1uz]
+						)
+					and	(	vQualifier[1uz]
+						==	Type<Token::Volatile>
+						)
+					;
+				}
+				else
+				{
+					return
+						sizeof...(t_tpQualifier)
+					<	2uz
+					;
+				}
+			}()
+		,	"Invalid sequence of qualifiers!"
+		);
+
 		static Token::TypeToken constexpr
 			Type
 		=(	t_tEntity::Type
@@ -99,218 +115,17 @@ export namespace
 	template
 		<	typename
 				t_tEntity
+		,	typename
+			...	t_tpQualifier
 		>
-	(	CV
+	[[nodiscard]]
+	auto constexpr
+	(	MakeCV
 	)	(	CV<t_tEntity>
+		,	t_tpQualifier
+			...
 		)
-	->	CV<t_tEntity>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		>
-	(	CV
-	)	(	CV<t_tEntity, Token::Const>
-		)
-	->	CV<t_tEntity, Token::Const>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		>
-	(	CV
-	)	(	CV<t_tEntity, Token::Volatile>
-		)
-	->	CV<t_tEntity, Token::Volatile>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		>
-	(	CV
-	)	(	CV<t_tEntity, Token::Const, Token::Volatile>
-		)
-	->	CV<t_tEntity, Token::Const, Token::Volatile>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		>
-	(	CV
-	)	(	CV<t_tEntity, Token::Mutable>
-		)
-	->	CV<t_tEntity, Token::Mutable>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		>
-	(	CV
-	)	(	CV<t_tEntity, Token::Mutable, Token::Volatile>
-		)
-	->	CV<t_tEntity, Token::Mutable, Token::Volatile>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		>
-	(	CV
-	)	(	CV<t_tEntity>
-		,	Token::Const
-		)
-	->	CV
-		<	t_tEntity
-		,	Token::Const
-		>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		>
-	(	CV
-	)	(	CV<t_tEntity>
-		,	Token::Volatile
-		)
-	->	CV
-		<	t_tEntity
-		,	Token::Volatile
-		>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		>
-	(	CV
-	)	(	CV<t_tEntity>
-		,	Token::Const
-		,	Token::Volatile
-		)
-	->	CV
-		<	t_tEntity
-		,	Token::Const
-		,	Token::Volatile
-		>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		>
-	(	CV
-	)	(	CV<t_tEntity>
-		,	Token::Mutable
-		)
-	->	CV
-		<	t_tEntity
-		,	Token::Mutable
-		>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		>
-	(	CV
-	)	(	CV<t_tEntity>
-		,	Token::Mutable
-		,	Token::Volatile
-		)
-	->	CV
-		<	t_tEntity
-		,	Token::Mutable
-		,	Token::Volatile
-		>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		>
-	(	CV
-	)	(	t_tEntity
-		)
-	->	CV<t_tEntity>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		>
-	(	CV
-	)	(	t_tEntity
-		,	Token::Const
-		)
-	->	CV
-		<	t_tEntity
-		,	Token::Const
-		>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		>
-	(	CV
-	)	(	t_tEntity
-		,	Token::Volatile
-		)
-	->	CV
-		<	t_tEntity
-		,	Token::Volatile
-		>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		>
-	(	CV
-	)	(	t_tEntity
-		,	Token::Const
-		,	Token::Volatile
-		)
-	->	CV
-		<	t_tEntity
-		,	Token::Const
-		,	Token::Volatile
-		>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		>
-	(	CV
-	)	(	t_tEntity
-		,	Token::Mutable
-		)
-	->	CV
-		<	t_tEntity
-		,	Token::Mutable
-		>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		>
-	(	CV
-	)	(	t_tEntity
-		,	Token::Mutable
-		,	Token::Volatile
-		)
-	->	CV
-		<	t_tEntity
-		,	Token::Mutable
-		,	Token::Volatile
-		>
-	;
+		noexcept
+	->	CV<t_tEntity, t_tpQualifier...>
+	{	return {};	}
 }

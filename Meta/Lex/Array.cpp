@@ -17,8 +17,6 @@ export namespace
 		>
 	struct
 		Array
-	:	t_tElement
-	,	t_tExtent
 	{
 		static Token::TypeToken constexpr
 			Type
@@ -31,7 +29,8 @@ export namespace
 		=	TypeEntity<Type>
 		;
 
-		constexpr
+		[[nodiscard]]
+		explicit(false) constexpr
 		(	operator TypeID
 		)	()	const
 			noexcept
@@ -61,36 +60,25 @@ export namespace
 	template
 		<	typename
 				t_tElement
+		,	USize
+				t_nExtent
 		,	typename
 			...	t_tpQualifier
-		,	USize
-				t_nExtent
 		>
-	(	Array
-	)	(	CV<t_tElement, t_tpQualifier...>
+	[[nodiscard]]
+	auto constexpr
+	(	MakeArray
+	)	(	t_tElement
 		,	Token::Extent<t_nExtent>
+		,	t_tpQualifier
+			...
 		)
-	->	Array
-		<	CV<t_tElement, t_tpQualifier...>
-		,	Token::Extent<t_nExtent>
+		noexcept
+	->	MatchCVArray
+		<	t_tElement
+		,	t_nExtent
+		,	t_tpQualifier
+			...
 		>
-	;
-
-	template
-		<	typename
-				t_tElement
-		,	typename
-				t_tNestedExtent
-		,	USize
-				t_nExtent
-		>
-	(	Array
-	)	(	Array<t_tElement, t_tNestedExtent>
-		,	Token::Extent<t_nExtent>
-		)
-	->	Array
-		<	Array<t_tElement, t_tNestedExtent>
-		,	Token::Extent<t_nExtent>
-		>
-	;
+	{	return {};	}
 }

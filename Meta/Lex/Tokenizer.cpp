@@ -56,10 +56,10 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			CV
-			{	operator()(Type<t_tEntity>)
+			MakeCV
+			(	operator()(Type<t_tEntity>)
 			,	Const
-			};
+			);
 		}
 
 		template
@@ -76,10 +76,10 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			CV
-			{	operator()(Type<t_tEntity>)
+			MakeCV
+			(	operator()(Type<t_tEntity>)
 			,	Volatile
-			};
+			);
 		}
 
 		template
@@ -96,11 +96,11 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			CV
-			{	operator()(Type<t_tEntity>)
+			MakeCV
+			(	operator()(Type<t_tEntity>)
 			,	Const
 			,	Volatile
-			};
+			);
 		}
 
 		template
@@ -117,12 +117,11 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			CV
-			{	operator()(Type<t_tEntity>)
+			MakeCV
+			(	operator()(Type<t_tEntity>)
 			,	Mutable
-			};
+			);
 		}
-
 
 		template
 			<	typename
@@ -138,13 +137,12 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			CV
-			{	operator()(Type<t_tEntity>)
+			MakeCV
+			(	operator()(Type<t_tEntity>)
 			,	Mutable
 			,	Volatile
-			};
+			);
 		}
-
 
 		template
 			<	typename
@@ -162,12 +160,10 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			CV
-			{	Array
-				{	operator()(Type<t_tElement>)
-				,	Extent<t_nExtent>
-				}
-			};
+			MakeArray
+			(	operator()(Type<t_tElement>)
+			,	Extent<t_nExtent>
+			);
 		}
 
 		template
@@ -186,13 +182,11 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			CV
-			{	Array
-				{	operator()(Type<t_tElement>)
-				,	Extent<t_nExtent>
-				}
+			MakeArray
+			(	operator()(Type<t_tElement>)
+			,	Extent<t_nExtent>
 			,	Const
-			};
+			);
 		}
 
 		template
@@ -211,13 +205,11 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			CV
-			{	Array
-				{	operator()(Type<t_tElement>)
-				,	Extent<t_nExtent>
-				}
+			MakeArray
+			(	operator()(Type<t_tElement>)
+			,	Extent<t_nExtent>
 			,	Volatile
-			};
+			);
 		}
 
 		template
@@ -236,14 +228,12 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			CV
-			{	Array
-				{	operator()(Type<t_tElement>)
-				,	Extent<t_nExtent>
-				}
+			MakeArray
+			(	operator()(Type<t_tElement>)
+			,	Extent<t_nExtent>
 			,	Const
 			,	Volatile
-			};
+			);
 		}
 
 		template
@@ -260,12 +250,10 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			CV
-			{	Array
-				{	operator()(Type<t_tElement>)
-				,	Extent<0uz>
-				}
-			};
+			MakeArray
+			(	operator()(Type<t_tElement>)
+			,	Extent<0uz>
+			);
 		}
 
 		template
@@ -282,13 +270,11 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			CV
-			{	Array
-				{	operator()(Type<t_tElement>)
-				,	Extent<0uz>
-				}
+			MakeArray
+			(	operator()(Type<t_tElement>)
+			,	Extent<0uz>
 			,	Const
-			};
+			);
 		}
 
 		template
@@ -305,13 +291,11 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			CV
-			{	Array
-				{	operator()(Type<t_tElement>)
-				,	Extent<0uz>
-				}
+			MakeArray
+			(	operator()(Type<t_tElement>)
+			,	Extent<0uz>
 			,	Volatile
-			};
+			);
 		}
 
 		template
@@ -328,14 +312,12 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			CV
-			{	Array
-				{	operator()(Type<t_tElement>)
-				,	Extent<0uz>
-				}
+			MakeArray
+			(	operator()(Type<t_tElement>)
+			,	Extent<0uz>
 			,	Const
 			,	Volatile
-			};
+			);
 		}
 
 		template
@@ -350,11 +332,9 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			CV
-			{	Ptr
-				{	operator()(Type<t_tEntity>)
-				}
-			};
+			MakePtr
+			(	operator()(Type<t_tEntity>)
+			);
 		}
 
 		template
@@ -369,10 +349,10 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Ref
-			{	operator()(Type<t_tEntity>)
+			MakeRef
+			(	operator()(Type<t_tEntity>)
 			,	LRef
-			};
+			);
 		}
 
 		template
@@ -387,10 +367,10 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Ref
-			{	operator()(Type<t_tEntity>)
+			MakeRef
+			(	operator()(Type<t_tEntity>)
 			,	RRef
-			};
+			);
 		}
 
 		template
@@ -409,12 +389,10 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			CV
-			{	Member
-				{	operator()(Type<t_tMember>)
-				,	Owner<t_tOwner>{}
-				}
-			};
+			MakeMember
+			(	operator()(Type<t_tMember>)
+			,	Owner<t_tOwner>{}
+			);
 		}
 
 		template

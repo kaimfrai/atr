@@ -16,7 +16,6 @@ export namespace
 		>
 	struct
 		Ptr
-	:	t_tEntity
 	{
 		static Token::TypeToken constexpr
 			Type
@@ -29,7 +28,8 @@ export namespace
 		=	TypeEntity<Type>
 		;
 
-		constexpr
+		[[nodiscard]]
+		explicit(false) constexpr
 		(	operator TypeID
 		)	()	const
 			noexcept
@@ -57,39 +57,18 @@ export namespace
 		,	typename
 			...	t_tpQualifier
 		>
-	(	Ptr
-	)	(	CV<t_tEntity, t_tpQualifier...>
+	[[nodiscard]]
+	auto constexpr
+	(	MakePtr
+	)	(	t_tEntity
+		,	t_tpQualifier
+			...
 		)
-	->	Ptr
-		<	CV<t_tEntity, t_tpQualifier...>
+		noexcept
+	->	MatchCVPointer
+		<	t_tEntity
+		,	t_tpQualifier
+			...
 		>
-	;
-
-	template
-		<	typename
-				t_tEntity
-		,	typename
-				t_tExtent
-		>
-	(	Ptr
-	)	(	Array<t_tEntity, t_tExtent>
-		)
-	->	Ptr
-		<	Array<t_tEntity, t_tExtent>
-		>
-	;
-
-	template
-		<	typename
-				t_tSignature
-		,	typename
-			...	t_tpQualifier
-		>
-	(	Ptr
-	)	(	Func<t_tSignature, t_tpQualifier...>
-		)
-	->	Ptr
-		<	Func<t_tSignature, t_tpQualifier...>
-		>
-	;
+	{	return {};	}
 }

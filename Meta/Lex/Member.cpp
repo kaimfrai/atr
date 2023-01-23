@@ -46,8 +46,6 @@ export namespace
 		>
 	struct
 		Member
-	:	t_tMember
-	,	Owner<t_tOwner>
 	{
 		using
 			Entity
@@ -59,48 +57,13 @@ export namespace
 			Type
 		{};
 
-		constexpr
+		[[nodiscard]]
+		explicit(false) constexpr
 		(	operator TypeID
 		)	()	const
 			noexcept
 		{	return Type;	}
 	};
-
-	template
-		<	typename
-				t_tData
-		,	typename
-			...	t_tpQualifier
-		,	typename
-				t_tOwner
-		>
-	(	Member
-	)	(	CV<t_tData, t_tpQualifier...>
-		,	Owner<t_tOwner>
-		)
-	->	Member
-		<	CV<t_tData, t_tpQualifier...>
-		,	t_tOwner
-		>
-	;
-
-	template
-		<	typename
-				t_tSignature
-		,	typename
-			...	t_tpQualifier
-		,	typename
-				t_tOwner
-		>
-	(	Member
-	)	(	Func<t_tSignature, t_tpQualifier...>
-		,	Owner<t_tOwner>
-		)
-	->	Member
-		<	Func<t_tSignature, t_tpQualifier...>
-		,	t_tOwner
-		>
-	;
 
 	template
 		<	typename
@@ -121,4 +84,29 @@ export namespace
 			...
 		>
 	;
+
+	template
+		<	typename
+				t_tMember
+		,	typename
+				t_tOwner
+		,	typename
+			...	t_tpQualifier
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	MakeMember
+	)	(	t_tMember
+		,	Owner<t_tOwner>
+		,	t_tpQualifier
+			...
+		)
+		noexcept
+	->	MatchCVMember
+		<	t_tMember
+		,	t_tOwner
+		,	t_tpQualifier
+			...
+		>
+	{	return {};	}
 }
