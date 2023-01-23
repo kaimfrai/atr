@@ -2,7 +2,7 @@ export module Meta.Lex.Array;
 
 import Meta.Lex.CV;
 
-import Meta.Token.Array;
+import Meta.Token.Extent;
 import Meta.Token.Type;
 import Meta.Size;
 

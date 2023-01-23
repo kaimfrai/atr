@@ -12,7 +12,7 @@ import Meta.Token.Function;
 import Meta.Token.Reference;
 import Meta.Token.Type;
 import Meta.Token.CV;
-import Meta.Token.Array;
+import Meta.Token.Extent;
 import Meta.Size;
 
 export namespace

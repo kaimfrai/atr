@@ -2,6 +2,7 @@ add_single_file_modules(
 	Array.cpp
 	Construct.cpp
 	CV.cpp
+	Extent.cpp
 	Function.cpp
 	Index.cpp
 	Pointer.cpp

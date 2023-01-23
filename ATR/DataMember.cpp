@@ -9,7 +9,7 @@ import Meta.Functional.Construct;
 import Meta.Arithmetic.Literals;
 import Meta.Token.Index;
 import Meta.Token.Specifier;
-import Meta.Token.Array;
+import Meta.Token.Extent;
 import Meta.Logic.Constraint;
 import Meta.Data.Object;
 import Meta.Data.Aggregate;
