@@ -14,6 +14,7 @@ export import Meta.Token.Pointer;
 export import Meta.Token.Query;
 export import Meta.Token.Reference;
 export import Meta.Token.RRef;
+export import Meta.Token.SelectByIndex;
 export import Meta.Token.Sequence;
 export import Meta.Token.Transform.AddConst;
 export import Meta.Token.Transform.AddCopyReference;

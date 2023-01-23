@@ -14,6 +14,7 @@ add_single_file_modules(
 	Query.cpp
 	Reference.cpp
 	RRef.cpp
+	SelectByIndex.cpp
 	Sequence.cpp
 	Specifier.cpp
 	Type.cpp
