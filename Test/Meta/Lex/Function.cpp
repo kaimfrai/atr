@@ -14,7 +14,6 @@ import Meta.Token.Volatile;
 import Meta.Token.Extent;
 
 using Meta::Type;
-using Meta::TokenizeType;
 using Meta::Token::Const;
 using Meta::Token::Volatile;
 using Meta::Token::LRef;
@@ -23,6 +22,19 @@ using Meta::Token::Noexcept;
 using Meta::Token::Extent;
 
 using namespace Meta::Lex;
+
+template
+	<	typename
+			t_tEntity
+	>
+auto constexpr inline
+	TokenizeType
+=	::Meta::Type
+	<	::Meta::TokenizeEntity
+		<	t_tEntity
+		>
+	>
+;
 
 template
 	<	typename

@@ -8,7 +8,6 @@ import Meta.Lex.Member;
 import Meta.Lex.Reference;
 import Meta.Logic.LiteralBase;
 import Meta.Token.Noexcept;
-import Meta.Token.Type;
 import Meta.Size;
 
 import Std;
@@ -27,17 +26,17 @@ export namespace
 			<	typename
 				...	t_tpQualifier
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-			,	TypeToken
-				<	Lex::MatchCV
-					<	t_tEntity
-					,	t_tpQualifier
-						...
-					>
+			,	Lex::MatchCV
+				<	t_tEntity
+				,	t_tpQualifier
+					...
 				>
 			)
+			noexcept
 		->	bool
 		{	return true;	}
 	};
@@ -113,17 +112,17 @@ export namespace
 			>
 		requires
 			::std::is_scoped_enum_v<t_tEntity>
+		[[nodiscard]]
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-			,	TypeToken
-				<	Lex::MatchCV
-					<	t_tEntity
-					,	t_tpQualifier
-						...
-					>
+			,	Lex::MatchCV
+				<	t_tEntity
+				,	t_tpQualifier
+					...
 				>
 			)
+			noexcept
 		->	bool
 		{	return true;	}
 	};
@@ -142,17 +141,17 @@ export namespace
 			and not
 				::std::is_scoped_enum_v<t_tEntity>
 			)
+		[[nodiscard]]
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-			,	TypeToken
-				<	Lex::MatchCV
-					<	t_tEntity
-					,	t_tpQualifier
-						...
-					>
+			,	Lex::MatchCV
+				<	t_tEntity
+				,	t_tpQualifier
+					...
 				>
 			)
+			noexcept
 		->	bool
 		{	return true;	}
 	};
@@ -172,17 +171,17 @@ export namespace
 			,	typename
 				...	t_tpQualifier
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-			,	TypeToken
-				<	Lex::MatchCVPointer
-					<	t_tEntity
-					,	t_tpQualifier
-						...
-					>
+			,	Lex::MatchCVPointer
+				<	t_tEntity
+				,	t_tpQualifier
+					...
 				>
 			)
+			noexcept
 		->	bool
 		{	return true;	}
 	};
@@ -198,18 +197,18 @@ export namespace
 			,	typename
 				...	t_tpQualifier
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-			,	TypeToken
-				<	Lex::MatchCVMember
-					<	t_tMember
-					,	t_tOwner
-					,	t_tpQualifier
-						...
-					>
+			,	Lex::MatchCVMember
+				<	t_tMember
+				,	t_tOwner
+				,	t_tpQualifier
+					...
 				>
 			)
+			noexcept
 		->	bool
 		{	return true;	}
 	};
@@ -235,17 +234,17 @@ export namespace
 			>
 		requires
 			::std::is_class_v<t_tEntity>
+		[[nodiscard]]
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-			,	TypeToken
-				<	Lex::MatchCV
-					<	t_tEntity
-					,	t_tpQualifier
-						...
-					>
+			,	Lex::MatchCV
+				<	t_tEntity
+				,	t_tpQualifier
+					...
 				>
 			)
+			noexcept
 		->	bool
 		{	return true;	}
 	};
@@ -261,17 +260,17 @@ export namespace
 			>
 		requires
 			::std::is_union_v<t_tEntity>
+		[[nodiscard]]
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-			,	TypeToken
-				<	Lex::MatchCV
-					<	t_tEntity
-					,	t_tpQualifier
-						...
-					>
+			,	Lex::MatchCV
+				<	t_tEntity
+				,	t_tpQualifier
+					...
 				>
 			)
+			noexcept
 		->	bool
 		{	return true;	}
 	};
@@ -287,20 +286,20 @@ export namespace
 			,	typename
 				...	t_tpQualifier
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-			,	TypeToken
-				<	Lex::MatchCVArray
-					<	t_tElement
-					,	t_nExtent
-					,	t_tpQualifier
-						...
-					>
+			,	Lex::MatchCVArray
+				<	t_tElement
+				,	t_nExtent
+				,	t_tpQualifier
+					...
 				>
 			)
+			noexcept
 		->	bool
-		{	return true == (t_nExtent != 0uz);	}
+		{	return t_nExtent != 0uz;	}
 	};
 
 	struct
@@ -312,18 +311,18 @@ export namespace
 			,	typename
 				...	t_tpQualifier
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-			,	TypeToken
-				<	Lex::MatchCVArray
-					<	t_tElement
-					,	0uz
-					,	t_tpQualifier
-						...
-					>
+			,	Lex::MatchCVArray
+				<	t_tElement
+				,	0uz
+				,	t_tpQualifier
+					...
 				>
 			)
+			noexcept
 		->	bool
 		{	return true;	}
 	};
@@ -335,15 +334,15 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-			,	TypeToken
-				<	Lex::MatchLRef
-					<	t_tEntity
-					>
+			,	Lex::MatchLRef
+				<	t_tEntity
 				>
 			)
+			noexcept
 		->	bool
 		{	return true;	}
 	};
@@ -355,15 +354,15 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-			,	TypeToken
-				<	Lex::MatchRRef
-					<	t_tEntity
-					>
+			,	Lex::MatchRRef
+				<	t_tEntity
 				>
 			)
+			noexcept
 		->	bool
 		{	return true;	}
 	};
@@ -381,15 +380,15 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-			,	TypeToken
-				<	Lex::Func
-					<	t_tEntity
-					>
+			,	Lex::Func
+				<	t_tEntity
 				>
 			)
+			noexcept
 		->	bool
 		{	return true;	}
 
@@ -397,16 +396,16 @@ export namespace
 			<	typename
 					t_tEntity
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-			,	TypeToken
-				<	Lex::Func
-					<	t_tEntity
-					,	Token::Noexcept
-					>
+			,	Lex::Func
+				<	t_tEntity
+				,	Token::Noexcept
 				>
 			)
+			noexcept
 		->	bool
 		{	return true;	}
 	};
@@ -422,24 +421,22 @@ export namespace
 			,	typename
 				...	t_tpQualifier
 			>
+		[[nodiscard]]
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-			,	TypeToken
-				<	Lex::Func
-					<	t_tSignature
-					,	t_tFirstQualifier
-					,	t_tpQualifier
-						...
-					>
+			,	Lex::Func
+				<	t_tSignature
+				,	t_tFirstQualifier
+				,	t_tpQualifier
+					...
 				>
 			)
+			noexcept
 		->	bool
 		{	return
-			(	true
-			==	(	Type<t_tFirstQualifier>
-				!=	Type<Token::Noexcept>
-				)
+			(	t_tFirstQualifier{}
+			!=	Noexcept
 			);
 		}
 	};
