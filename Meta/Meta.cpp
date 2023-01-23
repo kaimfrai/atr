@@ -14,5 +14,6 @@ export import Meta.Math;
 export import Meta.Memory;
 export import Meta.Predicate;
 export import Meta.Token;
+export import Meta.Trait;
 
 export import Meta.Size;

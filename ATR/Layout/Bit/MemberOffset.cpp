@@ -6,13 +6,13 @@ import ATR.Layout.Bit.Reference;
 
 import Meta.Size;
 import Meta.Predicate.TypeTraits;
-import Meta.Token.Query;
 import Meta.Memory.Size;
 import Meta.Memory.Size.PointerArithmetic;
 import Meta.Bit.Index;
 import Meta.Token.LRef;
 import Meta.Token.Type;
 import Meta.Token.Specifier;
+import Meta.Trait.BitSize;
 
 import Std;
 

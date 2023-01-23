@@ -11,7 +11,6 @@ add_single_file_modules(
 	Mutable.cpp
 	Noexcept.cpp
 	Pointer.cpp
-	Query.cpp
 	Reference.cpp
 	RRef.cpp
 	SelectByIndex.cpp

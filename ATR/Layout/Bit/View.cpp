@@ -10,7 +10,6 @@ import Meta.Memory.Size;
 import Meta.Memory.Size.Cast;
 import Meta.Memory.Size.PointerArithmetic;
 import Meta.Bit.Index;
-import Meta.Token.Query;
 import Meta.Token.LRef;
 import Meta.Token.RRef;
 import Meta.Token.CopyRef;
@@ -19,6 +18,7 @@ import Meta.Token.Const;
 import Meta.Token.Mutable;
 import Meta.Token.Volatile;
 import Meta.Token.Type;
+import Meta.Trait.BitSize;
 import Meta.Lex.Transform;
 
 import Meta.Size;

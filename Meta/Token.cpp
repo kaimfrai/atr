@@ -11,7 +11,6 @@ export import Meta.Token.LRef;
 export import Meta.Token.Mutable;
 export import Meta.Token.Noexcept;
 export import Meta.Token.Pointer;
-export import Meta.Token.Query;
 export import Meta.Token.Reference;
 export import Meta.Token.RRef;
 export import Meta.Token.SelectByIndex;

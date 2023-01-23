@@ -1,7 +1,6 @@
 export module ATR.DataMember;
 
 import Meta.Predicate.Empty;
-import Meta.Token.Query;
 import Meta.Token.Type;
 import Meta.Token.Type.Compare;
 import Meta.Size;
@@ -10,6 +9,7 @@ import Meta.Arithmetic.Literals;
 import Meta.Token.Index;
 import Meta.Token.Specifier;
 import Meta.Token.Extent;
+import Meta.Trait.BitAlign;
 import Meta.Logic.Constraint;
 import Meta.Data.Object;
 import Meta.Data.Aggregate;

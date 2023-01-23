@@ -3,7 +3,7 @@ add_subdirectory(Memory)
 add_subdirectory(Bit)
 add_subdirectory(Byte)
 add_subdirectory(Buffer)
-
+add_subdirectory(Trait)
 
 add_subdirectory(Arithmetic)
 add_subdirectory(Token)
@@ -31,6 +31,7 @@ add_single_file_modules(
 	Predicate.cpp
 	Size.cpp
 	Token.cpp
+	Trait.cpp
 
 	Meta.cpp
 )

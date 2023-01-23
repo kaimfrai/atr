@@ -2,8 +2,9 @@ export module ATR.Layout.Member;
 
 import ATR.DataMember;
 
-import Meta.Token.Query;
 import Meta.Token.Type;
+import Meta.Trait.BitSize;
+import Meta.Trait.BitAlign;
 import Meta.ID.Concept;
 import Meta.ID.Alias;
 import Meta.Size;
