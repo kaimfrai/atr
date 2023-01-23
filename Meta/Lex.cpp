@@ -1,6 +1,7 @@
 export module Meta.Lex;
 
 export import Meta.Lex.Array;
+export import Meta.Lex.Base;
 export import Meta.Lex.CV;
 export import Meta.Lex.Function;
 export import Meta.Lex.Member;

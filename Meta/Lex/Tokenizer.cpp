@@ -1,6 +1,7 @@
 export module Meta.Lex.Tokenizer;
 
 import Meta.Lex.Array;
+import Meta.Lex.Base;
 import Meta.Lex.Function;
 import Meta.Lex.CV;
 import Meta.Lex.Member;

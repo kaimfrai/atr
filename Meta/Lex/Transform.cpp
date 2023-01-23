@@ -7,6 +7,7 @@ import Meta.Lex.Member;
 import Meta.Lex.Function;
 import Meta.Lex.CV;
 import Meta.Lex.Array;
+import Meta.Lex.Base;
 
 import Meta.Token.Owner;
 import Meta.Token.Pointer;
