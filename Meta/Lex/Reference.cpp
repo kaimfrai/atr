@@ -4,7 +4,8 @@ import Meta.Lex.CV;
 import Meta.Lex.Array;
 import Meta.Lex.Function;
 
-import Meta.Token.Reference;
+import Meta.Token.LRef;
+import Meta.Token.RRef;
 import Meta.Token.Type;
 
 export namespace

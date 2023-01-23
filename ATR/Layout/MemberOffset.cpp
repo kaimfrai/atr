@@ -8,7 +8,7 @@ import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.PointerArithmetic;
 import Meta.Predicate.TypeTraits;
-import Meta.Token.Reference;
+import Meta.Token.LRef;
 import Meta.Token.Const;
 import Meta.Token.Type;
 

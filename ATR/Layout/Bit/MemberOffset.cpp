@@ -10,7 +10,7 @@ import Meta.Token.Query;
 import Meta.Memory.Size;
 import Meta.Memory.Size.PointerArithmetic;
 import Meta.Bit.Index;
-import Meta.Token.Reference;
+import Meta.Token.LRef;
 import Meta.Token.Type;
 import Meta.Token.Specifier;
 

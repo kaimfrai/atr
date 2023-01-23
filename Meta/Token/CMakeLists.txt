@@ -2,15 +2,18 @@ add_single_file_modules(
 	Array.cpp
 	Const.cpp
 	Construct.cpp
+	CopyRef.cpp
 	CV.cpp
 	Ellipsis.cpp
 	Extent.cpp
 	Index.cpp
+	LRef.cpp
 	Mutable.cpp
 	Noexcept.cpp
 	Pointer.cpp
 	Query.cpp
 	Reference.cpp
+	RRef.cpp
 	Sequence.cpp
 	Specifier.cpp
 	Type.cpp
