@@ -412,15 +412,15 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
-			};
+					)
+				)
+			);
 		}
 
 		template
@@ -439,16 +439,16 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	Const
-			};
+			);
 		}
 
 		template
@@ -467,16 +467,16 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	Volatile
-			};
+			);
 		}
 
 		template
@@ -495,17 +495,17 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	Const
 			,	Volatile
-			};
+			);
 		}
 
 		template
@@ -524,16 +524,16 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
-			};
+				)
+			);
 		}
 
 		template
@@ -552,17 +552,17 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	Const
-			};
+			);
 		}
 
 		template
@@ -581,17 +581,17 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	Volatile
-			};
+			);
 		}
 
 		template
@@ -610,18 +610,18 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	Const
 			,	Volatile
-			};
+			);
 		}
 
 		template
@@ -640,16 +640,16 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	LRef
-			};
+			);
 		}
 
 		template
@@ -668,17 +668,17 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	Const
 			,	LRef
-			};
+			);
 		}
 
 		template
@@ -697,17 +697,17 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	Volatile
 			,	LRef
-			};
+			);
 		}
 
 		template
@@ -726,18 +726,18 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	Const
 			,	Volatile
 			,	LRef
-			};
+			);
 		}
 
 		template
@@ -756,17 +756,17 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	LRef
-			};
+			);
 		}
 
 		template
@@ -785,18 +785,18 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	Const
 			,	LRef
-			};
+			);
 		}
 
 		template
@@ -815,18 +815,18 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	Volatile
 			,	LRef
-			};
+			);
 		}
 
 		template
@@ -845,19 +845,19 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	Const
 			,	Volatile
 			,	LRef
-			};
+			);
 		}
 
 		template
@@ -876,16 +876,16 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	RRef
-			};
+			);
 		}
 
 		template
@@ -904,17 +904,17 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	Const
 			,	RRef
-			};
+			);
 		}
 
 		template
@@ -933,17 +933,17 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	Volatile
 			,	RRef
-			};
+			);
 		}
 
 		template
@@ -962,18 +962,18 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	Const
 			,	Volatile
 			,	RRef
-			};
+			);
 		}
 
 		template
@@ -992,17 +992,17 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	RRef
-			};
+			);
 		}
 
 		template
@@ -1021,18 +1021,18 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	Const
 			,	RRef
-			};
+			);
 		}
 
 		template
@@ -1051,18 +1051,18 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	Volatile
 			,	RRef
-			};
+			);
 		}
 
 		template
@@ -1081,19 +1081,19 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	Const
 			,	Volatile
 			,	RRef
-			};
+			);
 		}
 
 		template
@@ -1112,16 +1112,16 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1140,17 +1140,17 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	Const
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1169,17 +1169,17 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	Volatile
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1198,18 +1198,18 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	Const
 			,	Volatile
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1228,17 +1228,17 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1257,18 +1257,18 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	Const
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1287,18 +1287,18 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	Volatile
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1317,19 +1317,19 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	Const
 			,	Volatile
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1348,17 +1348,17 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	LRef
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1377,18 +1377,18 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	Const
 			,	LRef
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1407,18 +1407,18 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	Volatile
 			,	LRef
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1437,19 +1437,19 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	Const
 			,	Volatile
 			,	LRef
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1468,18 +1468,18 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	LRef
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1498,19 +1498,19 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	Const
 			,	LRef
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1529,19 +1529,19 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	Volatile
 			,	LRef
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1560,20 +1560,20 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	Const
 			,	Volatile
 			,	LRef
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1592,17 +1592,17 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	RRef
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1621,18 +1621,18 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	Const
 			,	RRef
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1651,18 +1651,18 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	Volatile
 			,	RRef
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1681,19 +1681,19 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
-				}
+					)
+				)
 			,	Const
 			,	Volatile
 			,	RRef
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1712,18 +1712,18 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	RRef
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1742,19 +1742,19 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	Const
 			,	RRef
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1773,19 +1773,19 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	Volatile
 			,	RRef
 			,	Noexcept
-			};
+			);
 		}
 
 		template
@@ -1804,20 +1804,20 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Func
-			{	Sig
-				{	operator()(Type<t_tResult>)
-				,	Param
-					{	operator()(Type<t_tpParam>)
+			MakeFunc
+			(	MakeSig
+				(	operator()(Type<t_tResult>)
+				,	MakeParam
+					(	operator()(Type<t_tpParam>)
 						...
-					}
+					)
 				,	Ellipsis
-				}
+				)
 			,	Const
 			,	Volatile
 			,	RRef
 			,	Noexcept
-			};
+			);
 		}
 	};
 }

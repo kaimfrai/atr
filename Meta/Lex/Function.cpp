@@ -3,94 +3,6 @@ export module Meta.Lex.Function;
 import Meta.Token.Type;
 import Meta.Token.Ellipsis;
 import Meta.Token.Noexcept;
-import Meta.Token.Index;
-import Meta.Size;
-
-import Std;
-
-export namespace
-	Meta::Lex
-{
-	///	resolve direct base class ambiguity
-	template
-		<	USize
-				t_nIndex
-		,	typename
-				t_tParam
-		,	typename
-			...	t_tpDisambiguateParam
-		>
-	struct
-		IndexedParam
-	:	t_tParam
-	{};
-
-	template
-		<	typename
-			...	t_tpIndexedParam
-		>
-	struct
-		ParamList
-	:	t_tpIndexedParam
-		...
-	{};
-
-}
-
-template
-	<	typename
-		...	t_tpParam
-	>
-auto constexpr
-(	MakeParamList
-)	(	t_tpParam
-		...	i_vParam
-	)
-->	decltype(auto)
-{	return
-	[	...
-		vpParam
-	=	i_vParam
-	]	<	::std::size_t
-			...	t_npIndex
-		>(	::std::index_sequence
-			<	t_npIndex
-				...
-			>
-		)
-	->	::Meta::Lex::ParamList
-		<	::Meta::Lex::IndexedParam
-			<	t_npIndex
-			,	t_tpParam
-			,	t_tpParam
-				...
-			>
-			...
-		>
-	{	return
-		{	vpParam
-			...
-		};
-	}(	::std::make_index_sequence
-		<	sizeof...(t_tpParam)
-		>{}
-	);
-}
-
-template
-	<	typename
-		...	t_tpParam
-	>
-using
-	DeduceParamList
-=	decltype
-	(	MakeParamList
-		(	t_tpParam
-			{}
-			...
-		)
-	)
-;
 
 export namespace
 	Meta::Lex
@@ -101,52 +13,39 @@ export namespace
 		>
 	struct
 		Param
-	:	::DeduceParamList
-		<	t_tpParam
-			...
-		>
-	{};
+	{
+		template
+			<	typename
+					t_tResult
+			>
+		static Token::TypeToken constexpr
+			Type
+		=	::Meta::Type
+			<	auto
+					(	typename t_tpParam::Entity
+						...
+					)
+				->	typename t_tResult::Entity
+			>
+		;
+	};
 
 	template
 		<	typename
 			...	t_tpParam
 		>
-	(	Param
+	[[nodiscard]]
+	auto constexpr
+	(	MakeParam
 	)	(	t_tpParam
 			...
 		)
+		noexcept
 	->	Param
 		<	t_tpParam
 			...
 		>
-	;
-
-	///	resolve direct base class ambiguity
-	template
-		<	typename
-				t_tResult
-		,	typename
-			...	t_tpParam
-		>
-	struct
-		Result
-	:	t_tResult
-	{};
-
-
-	///	resolve direct base class ambiguity
-	template
-		<	typename
-				t_tQualifier
-		,	typename
-				t_tResult
-		,	typename
-			...	t_tpParam
-		>
-	struct
-		FuncQualifier
-	:	t_tQualifier
-	{};
+	{	return {};	}
 
 	template
 		<	typename
@@ -158,36 +57,22 @@ export namespace
 		>
 	struct
 		Sig
-	;
-
-	template
-		<	typename
-				t_tResult
-		,	typename
-			...	t_tpParam
-		,	typename
-			...	t_tpEllipsis
-		>
-	struct
-		Sig
-		<	t_tResult
-		,	Param<t_tpParam...>
-		,	t_tpEllipsis
-			...
-		>
-	:	Result<t_tResult, t_tpParam..., t_tpEllipsis...>
-	,	Param<t_tpParam...>
-	,	FuncQualifier<t_tpEllipsis, t_tResult, t_tpParam...>
-		...
 	{
+		static_assert
+		(	(	(	sizeof...(t_tpEllipsis)
+				<=	1uz
+				)
+			and	...
+			and	(	t_tpEllipsis{}
+				==	Ellipsis
+				)
+			)
+		,	"Invalid Ellipsis token sequence!"
+		);
+
 		static Token::TypeToken constexpr
 			Type
-		=(	Meta::Type
-			<	typename t_tResult::Entity
-				(	typename t_tpParam::Entity
-					...
-				)
-			>
+		=(	t_tParam::template Type<t_tResult>
 		+	...
 		+	t_tpEllipsis
 			{}
@@ -203,35 +88,27 @@ export namespace
 		<	typename
 				t_tResult
 		,	typename
-			...	t_tpParam
-		>
-	(	Sig
-	)	(	t_tResult
-		,	Param<t_tpParam...>
-		)
-	->	Sig
-		<	t_tResult
-		,	Param<t_tpParam...>
-		>
-	;
-
-	template
-		<	typename
-				t_tResult
+				t_tParam
 		,	typename
-			...	t_tpParam
+			...	t_tpEllipsis
 		>
-	(	Sig
+	[[nodiscard]]
+	auto constexpr
+	(	MakeSig
 	)	(	t_tResult
-		,	Param<t_tpParam...>
-		,	Token::Ellipsis
+		,	t_tParam
+		,	t_tpEllipsis
+			...
 		)
+		noexcept
 	->	Sig
 		<	t_tResult
-		,	Param<t_tpParam...>
-		,	Token::Ellipsis
+		,	t_tParam
+		,	t_tpEllipsis
+			...
 		>
-	;
+	{	return {};	}
+
 
 	template
 		<	typename
@@ -276,9 +153,6 @@ export namespace
 		>
 	struct
 		Func
-	:	t_tSig
-	,	FuncQualifier<t_tpQualifier, t_tSig>
-		...
 	{
 		static Token::TypeToken constexpr
 			Type
@@ -293,7 +167,8 @@ export namespace
 		=	TypeEntity<Type>
 		;
 
-		constexpr
+		[[nodiscard]]
+		explicit(false) constexpr
 		(	operator TypeID
 		)	()	const
 			noexcept
@@ -302,43 +177,24 @@ export namespace
 
 	template
 		<	typename
-				t_tResult
-		,	typename
-				t_tParam
+				t_tSignature
 		,	typename
 			...	t_tpQualifier
 		>
-	(	Func
-	)	(	Sig<t_tResult, t_tParam>
+	[[nodiscard]]
+	auto constexpr
+	(	MakeFunc
+	)	(	t_tSignature
 		,	t_tpQualifier
 			...
 		)
+		noexcept
 	->	Func
-		<	Sig<t_tResult, t_tParam>
+		<	t_tSignature
 		,	t_tpQualifier
 			...
 		>
-	;
-
-	template
-		<	typename
-				t_tResult
-		,	typename
-				t_tParam
-		,	typename
-			...	t_tpQualifier
-		>
-	(	Func
-	)	(	Sig<t_tResult, t_tParam, Token::Ellipsis>
-		,	t_tpQualifier
-			...
-		)
-	->	Func
-		<	Sig<t_tResult, t_tParam, Token::Ellipsis>
-		,	t_tpQualifier
-			...
-		>
-	;
+	{	return {};	}
 
 	template
 		<	typename
@@ -349,12 +205,10 @@ export namespace
 	using
 		MatchFreeFunction
 	=	Func
-		<	Sig
+		<	MatchSignature
 			<	t_tResult
-			,	Param
-				<	t_tpParameter
-					...
-				>
+			,	t_tpParameter
+				...
 			>
 		>
 	;
@@ -368,13 +222,10 @@ export namespace
 	using
 		MatchFreeEllipsisFunction
 	=	Func
-		<	Sig
+		<	MatchEllipsisSignature
 			<	t_tResult
-			,	Param
-				<	t_tpParameter
-					...
-				>
-			,	Token::Ellipsis
+			,	t_tpParameter
+				...
 			>
 		>
 	;
@@ -388,12 +239,10 @@ export namespace
 	using
 		MatchFreeNoexceptFunction
 	=	Func
-		<	Sig
+		<	MatchSignature
 			<	t_tResult
-			,	Param
-				<	t_tpParameter
-					...
-				>
+			,	t_tpParameter
+				...
 			>
 		,	Token::Noexcept
 		>
@@ -408,13 +257,10 @@ export namespace
 	using
 		MatchFreeNoexceptEllipsisFunction
 	=	Func
-		<	Sig
+		<	MatchEllipsisSignature
 			<	t_tResult
-			,	Param
-				<	t_tpParameter
-					...
-				>
-			,	Token::Ellipsis
+			,	t_tpParameter
+				...
 			>
 		,	Token::Noexcept
 		>
