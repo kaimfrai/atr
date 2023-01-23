@@ -11,6 +11,7 @@ export namespace
 		>
 	struct
 		Owner
+	:	TypeToken<Owner<t_tOwner>>
 	{
 		template
 			<	typename

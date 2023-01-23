@@ -12,6 +12,7 @@ export namespace
 {
 	struct
 		Pointer
+	:	TypeToken<Pointer>
 	{
 		template
 			<	typename

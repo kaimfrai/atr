@@ -10,6 +10,7 @@ export namespace
 {
 	struct
 		Reference
+	:	TypeToken<Reference>
 	{
 		template
 			<	typename

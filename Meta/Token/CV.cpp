@@ -10,6 +10,7 @@ export namespace
 {
 	struct
 		CV
+	:	TypeToken<CV>
 	{
 		template
 			<	typename

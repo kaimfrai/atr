@@ -14,6 +14,7 @@ export namespace
 		>
 	struct
 		Extent
+	:	TypeToken<Extent<t_nExtent>>
 	{
 		template
 			<	typename
@@ -76,6 +77,7 @@ export namespace
 		<>
 	struct
 		Extent<0uz>
+	:	TypeToken<Extent<0uz>>
 	{
 		template
 			<	typename

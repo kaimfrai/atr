@@ -12,6 +12,7 @@ export namespace
 {
 	struct
 		Const
+	:	TypeToken<Const>
 	{
 		template
 			<	typename

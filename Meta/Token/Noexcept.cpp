@@ -12,6 +12,7 @@ export namespace
 {
 	struct
 		Noexcept
+	:	TypeToken<Noexcept>
 	{
 		template
 			<	typename

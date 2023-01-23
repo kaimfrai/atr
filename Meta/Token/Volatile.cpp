@@ -12,6 +12,7 @@ export namespace
 {
 	struct
 		Volatile
+	:	TypeToken<Volatile>
 	{
 		template
 			<	typename

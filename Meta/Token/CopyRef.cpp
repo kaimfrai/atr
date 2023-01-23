@@ -12,6 +12,7 @@ export namespace
 {
 	struct
 		CopyRef
+	:	TypeToken<CopyRef>
 	{
 		template
 			<	typename

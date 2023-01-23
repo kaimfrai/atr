@@ -12,6 +12,7 @@ export namespace
 {
 	struct
 		RRef
+	:	TypeToken<RRef>
 	{
 		template
 			<	typename

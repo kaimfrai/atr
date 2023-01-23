@@ -12,6 +12,7 @@ export namespace
 {
 	struct
 		Ellipsis
+	:	TypeToken<Ellipsis>
 	{
 		template
 			<	typename

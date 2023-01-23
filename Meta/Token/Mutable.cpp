@@ -12,6 +12,7 @@ export namespace
 {
 	struct
 		Mutable
+	:	TypeToken<Mutable>
 	{
 		template
 			<	typename

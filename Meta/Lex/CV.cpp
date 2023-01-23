@@ -63,7 +63,7 @@ export namespace
 						!=	vQualifier[1uz]
 						)
 					and	(	vQualifier[1uz]
-						==	Type<Token::Volatile>
+						==	Volatile
 						)
 					;
 				}
