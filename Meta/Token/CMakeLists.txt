@@ -3,10 +3,11 @@ add_single_file_modules(
 	Const.cpp
 	Construct.cpp
 	CV.cpp
+	Ellipsis.cpp
 	Extent.cpp
-	Function.cpp
 	Index.cpp
 	Mutable.cpp
+	Noexcept.cpp
 	Pointer.cpp
 	Query.cpp
 	Reference.cpp

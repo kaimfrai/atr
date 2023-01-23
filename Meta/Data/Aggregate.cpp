@@ -11,7 +11,6 @@ import Meta.Lex.Array;
 import Meta.Buffer.Iterator;
 import Meta.Size;
 import Meta.Token.Reference;
-import Meta.Token.Function;
 import Meta.Token.Index;
 import Meta.Token.Const;
 import Meta.Token.Mutable;

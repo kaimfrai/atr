@@ -5,7 +5,7 @@ import Meta.Lex.Reference;
 import Meta.Lex.CV;
 import Meta.Lex.Array;
 import Meta.Token.Reference;
-import Meta.Token.Function;
+import Meta.Token.Noexcept;
 import Meta.Token.Type;
 import Meta.Token.Const;
 import Meta.Token.Volatile;

@@ -1,7 +1,8 @@
 export module Meta.Lex.Function;
 
 import Meta.Token.Type;
-import Meta.Token.Function;
+import Meta.Token.Ellipsis;
+import Meta.Token.Noexcept;
 import Meta.Token.Index;
 import Meta.Size;
 

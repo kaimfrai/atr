@@ -8,7 +8,8 @@ import Meta.Lex.Pointer;
 import Meta.Lex.Reference;
 
 import Meta.Token.Specifier;
-import Meta.Token.Function;
+import Meta.Token.Ellipsis;
+import Meta.Token.Noexcept;
 import Meta.Token.Reference;
 import Meta.Token.Type;
 import Meta.Token.Const;

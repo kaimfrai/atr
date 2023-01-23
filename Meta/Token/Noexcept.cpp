@@ -1,53 +1,15 @@
-export module Meta.Token.Function;
+export module Meta.Token.Noexcept;
 
 import Meta.Token.Type;
-import Meta.Token.Transform.AddEllipsis;
-import Meta.Token.Transform.RemoveEllipsis;
 import Meta.Token.Transform.AddNoexcept;
 import Meta.Token.Transform.RemoveNoexcept;
 
-using ::Meta::AddEllipsis;
-using ::Meta::RemoveEllipsis;
 using ::Meta::AddNoexcept;
 using ::Meta::RemoveNoexcept;
 
 export namespace
 	Meta::Token
 {
-	struct
-		Ellipsis
-	{
-		template
-			<	typename
-					t_tEntity
-			>
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator +
-		)	(	TypeToken<t_tEntity>
-					i_vType
-			,	Ellipsis
-			)
-			noexcept
-		->	decltype(AddEllipsis(i_vType))
-		{	return {};	}
-
-		template
-			<	typename
-					t_tEntity
-			>
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator -
-		)	(	TypeToken<t_tEntity>
-					i_vType
-			,	Ellipsis
-			)
-			noexcept
-		->	decltype(RemoveEllipsis(i_vType))
-		{	return {};	}
-	};
-
 	struct
 		Noexcept
 	{
@@ -86,10 +48,6 @@ export namespace
 export namespace
 	Meta
 {
-	Token::Ellipsis const extern
-		Ellipsis
-	;
-
 	Token::Noexcept const extern
 		Noexcept
 	;
