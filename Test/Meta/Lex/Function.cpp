@@ -7,7 +7,8 @@ import Meta.Lex.Array;
 import Meta.Token.Reference;
 import Meta.Token.Function;
 import Meta.Token.Type;
-import Meta.Token.CV;
+import Meta.Token.Const;
+import Meta.Token.Volatile;
 import Meta.Token.Extent;
 
 using Meta::Type;

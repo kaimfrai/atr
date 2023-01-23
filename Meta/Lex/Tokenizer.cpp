@@ -1,8 +1,8 @@
 export module Meta.Lex.Tokenizer;
 
 import Meta.Lex.Array;
-import Meta.Lex.CV;
 import Meta.Lex.Function;
+import Meta.Lex.CV;
 import Meta.Lex.Member;
 import Meta.Lex.Pointer;
 import Meta.Lex.Reference;
@@ -11,7 +11,9 @@ import Meta.Token.Specifier;
 import Meta.Token.Function;
 import Meta.Token.Reference;
 import Meta.Token.Type;
-import Meta.Token.CV;
+import Meta.Token.Const;
+import Meta.Token.Mutable;
+import Meta.Token.Volatile;
 import Meta.Token.Extent;
 import Meta.Size;
 

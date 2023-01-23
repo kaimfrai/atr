@@ -4,7 +4,9 @@ import Meta.Lex.Array;
 import Meta.Size;
 import Meta.Token.Specifier;
 import Meta.Token.Type;
-import Meta.Token.CV;
+import Meta.Token.Const;
+import Meta.Token.Mutable;
+import Meta.Token.Volatile;
 import Meta.Token.Extent;
 
 using Meta::Specifier::Mut;

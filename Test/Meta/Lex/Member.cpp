@@ -3,7 +3,9 @@ import Meta.Lex.Tokenizer;
 import Meta.Lex.CV;
 import Meta.Token.Specifier;
 import Meta.Token.Type;
-import Meta.Token.CV;
+import Meta.Token.Const;
+import Meta.Token.Mutable;
+import Meta.Token.Volatile;
 
 using Meta::Specifier::Mut;
 using Meta::Type;

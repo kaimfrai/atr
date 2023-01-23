@@ -6,7 +6,9 @@ import Meta.Lex.Function;
 import Meta.Lex.CV;
 import Meta.Lex.Array;
 import Meta.Token.Specifier;
-import Meta.Token.CV;
+import Meta.Token.Const;
+import Meta.Token.Mutable;
+import Meta.Token.Volatile;
 
 export namespace
 	Meta::Data

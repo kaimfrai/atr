@@ -13,7 +13,8 @@ import Meta.Size;
 import Meta.Token.Reference;
 import Meta.Token.Function;
 import Meta.Token.Index;
-import Meta.Token.CV;
+import Meta.Token.Const;
+import Meta.Token.Mutable;
 import Meta.Token.Type;
 import Meta.Token.Array;
 

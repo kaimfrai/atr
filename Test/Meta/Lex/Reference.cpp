@@ -3,7 +3,8 @@ import Meta.Lex.Tokenizer;
 import Meta.Lex.CV;
 import Meta.Token.Reference;
 import Meta.Token.Type;
-import Meta.Token.CV;
+import Meta.Token.Const;
+import Meta.Token.Volatile;
 
 using Meta::Type;
 using Meta::TokenizeType;

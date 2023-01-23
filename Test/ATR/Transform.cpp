@@ -2,7 +2,8 @@ import ATR.DataMember;
 
 import Meta.Bit.Field;
 import Meta.Memory.Size;
-import Meta.Token.CV;
+import Meta.Token.Const;
+import Meta.Token.Mutable;
 import Meta.Token.Specifier;
 
 using ::Meta::Bit::Field;

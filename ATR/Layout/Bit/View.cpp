@@ -13,7 +13,9 @@ import Meta.Bit.Index;
 import Meta.Token.Query;
 import Meta.Token.Reference;
 import Meta.Token.Specifier;
-import Meta.Token.CV;
+import Meta.Token.Const;
+import Meta.Token.Mutable;
+import Meta.Token.Volatile;
 import Meta.Token.Type;
 import Meta.Lex.Transform;
 

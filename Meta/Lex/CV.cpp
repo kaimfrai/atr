@@ -1,7 +1,9 @@
 export module Meta.Lex.CV;
 
 import Meta.Token.Type;
-import Meta.Token.CV;
+import Meta.Token.Const;
+import Meta.Token.Mutable;
+import Meta.Token.Volatile;
 
 import Std;
 

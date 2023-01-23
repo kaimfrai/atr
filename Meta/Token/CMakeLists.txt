@@ -1,16 +1,19 @@
 add_single_file_modules(
 	Array.cpp
+	Const.cpp
 	Construct.cpp
 	CV.cpp
 	Extent.cpp
 	Function.cpp
 	Index.cpp
+	Mutable.cpp
 	Pointer.cpp
 	Query.cpp
 	Reference.cpp
 	Sequence.cpp
 	Specifier.cpp
 	Type.cpp
+	Volatile.cpp
 )
 
 add_subdirectory(Type)
