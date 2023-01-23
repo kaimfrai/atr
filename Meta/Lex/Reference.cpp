@@ -1,8 +1,6 @@
 export module Meta.Lex.Reference;
 
 import Meta.Lex.CV;
-import Meta.Lex.Array;
-import Meta.Lex.Function;
 
 import Meta.Token.LRef;
 import Meta.Token.RRef;

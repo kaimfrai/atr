@@ -11,7 +11,6 @@ import Meta.Token.Noexcept;
 import Meta.Token.Type;
 import Meta.Token.Const;
 import Meta.Token.Volatile;
-import Meta.Token.Extent;
 
 using Meta::Type;
 using Meta::Token::Const;
@@ -19,7 +18,6 @@ using Meta::Token::Volatile;
 using Meta::Token::LRef;
 using Meta::Token::RRef;
 using Meta::Token::Noexcept;
-using Meta::Token::Extent;
 
 using namespace Meta::Lex;
 

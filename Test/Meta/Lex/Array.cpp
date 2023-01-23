@@ -2,20 +2,17 @@ import Meta.Lex.Base;
 import Meta.Lex.CV;
 import Meta.Lex.Tokenizer;
 import Meta.Lex.Array;
-import Meta.Size;
 import Meta.Token.Specifier;
 import Meta.Token.Type;
 import Meta.Token.Const;
 import Meta.Token.Mutable;
 import Meta.Token.Volatile;
-import Meta.Token.Extent;
 
 using Meta::Specifier::Mut;
 using Meta::Type;
 using Meta::Token::Const;
 using Meta::Token::Volatile;
 using Meta::Token::Mutable;
-using Meta::Token::Extent;
 
 using namespace Meta::Lex;
 
@@ -33,7 +30,7 @@ auto constexpr inline
 ;
 
 template
-	<	Meta::USize
+	<	auto
 			t_nExtent
 	,	typename
 		...	t_tpQualifier
