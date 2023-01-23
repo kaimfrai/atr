@@ -10,6 +10,7 @@ export import Meta.Token.Index;
 export import Meta.Token.LRef;
 export import Meta.Token.Mutable;
 export import Meta.Token.Noexcept;
+export import Meta.Token.Owner;
 export import Meta.Token.Pointer;
 export import Meta.Token.Reference;
 export import Meta.Token.RRef;

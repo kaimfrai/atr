@@ -3,41 +3,12 @@ export module Meta.Lex.Member;
 import Meta.Lex.CV;
 import Meta.Lex.Function;
 
+import Meta.Token.Owner;
 import Meta.Token.Type;
 
 export namespace
 	Meta::Lex
 {
-	template
-		<	typename
-				t_tOwner
-		>
-	struct
-		Owner
-	{
-		template
-			<	typename
-					t_tEntity
-			>
-		friend auto constexpr
-		(	operator +
-		)	(	TypeToken<t_tEntity>
-			)
-		->	TypeToken<t_tEntity t_tOwner::*>
-		{	return{};	}
-
-		template
-			<	typename
-					t_tEntity
-			>
-		friend auto constexpr
-		(	operator -
-		)	(	TypeToken<t_tEntity t_tOwner::*>
-			)
-		->	TypeToken<t_tEntity>
-		{	return{};	}
-	};
-
 	template
 		<	typename
 				t_tMember
@@ -97,7 +68,7 @@ export namespace
 	auto constexpr
 	(	MakeMember
 	)	(	t_tMember
-		,	Owner<t_tOwner>
+		,	Token::Owner<t_tOwner>
 		,	t_tpQualifier
 			...
 		)

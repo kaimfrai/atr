@@ -17,6 +17,7 @@ import Meta.Token.Const;
 import Meta.Token.Mutable;
 import Meta.Token.Volatile;
 import Meta.Token.Extent;
+import Meta.Token.Owner;
 import Meta.Size;
 
 export namespace
@@ -391,7 +392,7 @@ export namespace
 		{	return
 			MakeMember
 			(	operator()(Type<t_tMember>)
-			,	Owner<t_tOwner>{}
+			,	Owner<t_tOwner>
 			);
 		}
 

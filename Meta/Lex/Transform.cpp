@@ -8,6 +8,7 @@ import Meta.Lex.Function;
 import Meta.Lex.CV;
 import Meta.Lex.Array;
 
+import Meta.Token.Owner;
 import Meta.Token.Pointer;
 import Meta.Token.Type;
 
@@ -136,7 +137,7 @@ export namespace
 		{	return
 			Compose
 			(	t_tEntity{}
-			,	Transform<Owner<t_tOwner>, t_tpTransform...>{}
+			,	Transform<Token::Owner<t_tOwner>, t_tpTransform...>{}
 			);
 		}
 
@@ -204,7 +205,7 @@ export namespace
 export namespace
 	Meta
 {
-	Lex::TransformComposer extern
+	Lex::TransformComposer const extern
 		ComposeTransform
 	;
 }

@@ -10,6 +10,7 @@ add_single_file_modules(
 	LRef.cpp
 	Mutable.cpp
 	Noexcept.cpp
+	Owner.cpp
 	Pointer.cpp
 	Reference.cpp
 	RRef.cpp
