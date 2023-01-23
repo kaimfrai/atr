@@ -15,6 +15,11 @@ export namespace
 		>
 	struct
 		CV
+	:	decltype
+		((	t_tEntity{}
+		+	...
+		+	t_tpQualifier{}
+		))
 	{
 		static_assert
 		(	[]{	if	constexpr
@@ -45,24 +50,6 @@ export namespace
 			}()
 		,	"Invalid sequence of qualifiers!"
 		);
-
-		static Token::TypeToken constexpr
-			Type
-		=(	t_tEntity::Type
-		+	...
-		+	t_tpQualifier{}
-		);
-
-		using
-			Entity
-		=	TypeEntity<Type>
-		;
-
-		constexpr
-		(	operator TypeID
-		)	()	const
-			noexcept
-		{	return Type;	}
 	};
 
 	template

@@ -17,25 +17,11 @@ export namespace
 		>
 	struct
 		Array
-	{
-		static Token::TypeToken constexpr
-			Type
-		=	t_tElement::Type
+	:	decltype
+		(	t_tElement{}
 		+	t_tExtent{}
-		;
-
-		using
-			Entity
-		=	TypeEntity<Type>
-		;
-
-		[[nodiscard]]
-		explicit(false) constexpr
-		(	operator TypeID
-		)	()	const
-			noexcept
-		{	return Type;	}
-	};
+		)
+	{};
 
 	template
 		<	typename

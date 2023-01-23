@@ -19,25 +19,11 @@ export namespace
 		>
 	struct
 		Ref
-	{
-		static Token::TypeToken constexpr
-			Type
-		=	t_tEntity::Type
+	:	decltype
+		(	t_tEntity{}
 		+	t_tReference{}
-		;
-
-		using
-			Entity
-		=	TypeEntity<Type>
-		;
-
-		[[nodiscard]]
-		explicit(false) constexpr
-		(	operator TypeID
-		)	()	const
-			noexcept
-		{	return Type;	}
-	};
+		)
+	{};
 
 	template
 		<	typename

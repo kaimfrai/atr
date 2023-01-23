@@ -18,16 +18,23 @@ export namespace
 			<	typename
 					t_tResult
 			>
-		static Token::TypeToken constexpr
-			Type
-		=	::Meta::Type
+		[[nodiscard]]
+		friend auto constexpr
+		(	operator +
+		)	(	TypeToken<t_tResult>
+			,	Param
+			)
+			noexcept
+		->	Token::TypeToken
 			<	auto
-					(	typename t_tpParam::Entity
+					(	typename
+							t_tpParam
+						::	Entity
 						...
 					)
-				->	typename t_tResult::Entity
+				->	t_tResult
 			>
-		;
+		{	return {}; }
 	};
 
 	template
@@ -57,6 +64,14 @@ export namespace
 		>
 	struct
 		Sig
+	:	decltype
+		((	(	t_tResult{}
+			+	t_tParam{}
+			)
+		+	...
+		+	t_tpEllipsis
+			{}
+		))
 	{
 		static_assert
 		(	(	(	sizeof...(t_tpEllipsis)
@@ -69,19 +84,6 @@ export namespace
 			)
 		,	"Invalid Ellipsis token sequence!"
 		);
-
-		static Token::TypeToken constexpr
-			Type
-		=(	t_tParam::template Type<t_tResult>
-		+	...
-		+	t_tpEllipsis
-			{}
-		);
-
-		using
-			Entity
-		=	TypeEntity<Type>
-		;
 	};
 
 	template
@@ -153,27 +155,12 @@ export namespace
 		>
 	struct
 		Func
-	{
-		static Token::TypeToken constexpr
-			Type
-		=(	t_tSig::Type
+	:	decltype
+		((	t_tSig{}
 		+	...
-		+	t_tpQualifier
-			{}
-		);
-
-		using
-			Entity
-		=	TypeEntity<Type>
-		;
-
-		[[nodiscard]]
-		explicit(false) constexpr
-		(	operator TypeID
-		)	()	const
-			noexcept
-		{	return Type;	}
-	};
+		+	t_tpQualifier{}
+		))
+	{};
 
 	template
 		<	typename

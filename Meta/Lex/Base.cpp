@@ -13,6 +13,7 @@ export namespace
 		>
 	struct
 		Base
+	:	Token::TypeToken<t_tFundamental>
 	{
 		static_assert
 		(	(	::std::is_fundamental_v<t_tFundamental>
@@ -24,14 +25,5 @@ export namespace
 		and	not ::std::is_volatile_v<t_tFundamental>
 		,	"Tokenize ended prematurely!"
 		);
-
-		static Token::TypeToken<t_tFundamental> constexpr
-			Type
-		{};
-
-		using
-			Entity
-		=	t_tFundamental
-		;
 	};
 }

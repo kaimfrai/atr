@@ -16,25 +16,11 @@ export namespace
 		>
 	struct
 		Ptr
-	{
-		static Token::TypeToken constexpr
-			Type
-		=	t_tEntity::Type
+	:	decltype
+		(	t_tEntity{}
 		+	Pointer
-		;
-
-		using
-			Entity
-		=	TypeEntity<Type>
-		;
-
-		[[nodiscard]]
-		explicit(false) constexpr
-		(	operator TypeID
-		)	()	const
-			noexcept
-		{	return Type;	}
-	};
+		)
+	{};
 
 	template
 		<	typename

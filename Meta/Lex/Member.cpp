@@ -17,24 +17,11 @@ export namespace
 		>
 	struct
 		Member
-	{
-		using
-			Entity
-		=	typename t_tMember::Entity
-			t_tOwner::*
-		;
-
-		static Token::TypeToken<Entity> constexpr
-			Type
-		{};
-
-		[[nodiscard]]
-		explicit(false) constexpr
-		(	operator TypeID
-		)	()	const
-			noexcept
-		{	return Type;	}
-	};
+	:	decltype
+		(	t_tMember{}
+		+	Owner<t_tOwner>
+		)
+	{};
 
 	template
 		<	typename

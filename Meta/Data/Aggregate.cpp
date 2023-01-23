@@ -109,8 +109,8 @@ export namespace
 			::	Entity
 		>
 	{
-		using DataType = TypeEntity<Lex::CV<t_tData, t_tQualifier...>::Type - Mutable>;
-		using ConstDataType = TypeEntity<Lex::CV<t_tData, t_tQualifier...>::Type + Const - Mutable>;
+		using DataType = TypeEntity<Lex::CV<t_tData, t_tQualifier...>{} - Mutable>;
+		using ConstDataType = TypeEntity<Lex::CV<t_tData, t_tQualifier...>{} + Const - Mutable>;
 
 		auto constexpr
 		(	get
@@ -374,8 +374,8 @@ export namespace
 			::	Entity
 		>
 	{
-		using DataType = TypeEntity<Lex::MatchCVPointer<t_tEntity, t_tpCV...>::Type - Mutable>;
-		using ConstDataType = TypeEntity<Lex::MatchCVPointer<t_tEntity, t_tpCV...>::Type + Const - Mutable>;
+		using DataType = TypeEntity<Lex::MatchCVPointer<t_tEntity, t_tpCV...>{} - Mutable>;
+		using ConstDataType = TypeEntity<Lex::MatchCVPointer<t_tEntity, t_tpCV...>{} + Const - Mutable>;
 		using value_type = ::std::remove_pointer_t<DataType>;
 		using difference_type = SSize;
 		using iterator_concept = ::std::contiguous_iterator_tag;
@@ -560,8 +560,8 @@ export namespace
 			::	Entity
 		>
 	{
-		using ElementType = TypeEntity<Lex::CV<t_tElement, t_tpQualifier...>::Type - Mutable>;
-		using ConstElementType = TypeEntity<Lex::CV<t_tElement, t_tpQualifier...>::Type + Const - Mutable>;
+		using ElementType = TypeEntity<Lex::CV<t_tElement, t_tpQualifier...>{} - Mutable>;
+		using ConstElementType = TypeEntity<Lex::CV<t_tElement, t_tpQualifier...>{} + Const - Mutable>;
 		static_assert
 		(	not ::std::is_bounded_array_v<ElementType>
 		,	"Multidimensional arrays are not supported!"
@@ -744,8 +744,8 @@ export namespace
 			::	Entity
 		>
 	{
-		using ElementType = TypeEntity<Lex::CV<t_tElement, t_tpQualifier...>::Type - Mutable>;
-		using ConstElementType = TypeEntity<Lex::CV<t_tElement, t_tpQualifier...>::Type + Const - Mutable>;
+		using ElementType = TypeEntity<Lex::CV<t_tElement, t_tpQualifier...>{} - Mutable>;
+		using ConstElementType = TypeEntity<Lex::CV<t_tElement, t_tpQualifier...>{} + Const - Mutable>;
 
 		static_assert
 		(	not ::std::is_bounded_array_v<ElementType>
