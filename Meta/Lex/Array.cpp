@@ -6,6 +6,20 @@ import Meta.Token.Extent;
 import Meta.Token.Type;
 import Meta.Size;
 
+template
+	<	typename
+			t_tElement
+	,	typename
+			t_tExtent
+	>
+struct
+	Array
+:	decltype
+	(	t_tElement{}
+	+	t_tExtent{}
+	)
+{};
+
 export namespace
 	Meta::Lex
 {
@@ -15,13 +29,13 @@ export namespace
 		,	typename
 				t_tExtent
 		>
-	struct
+	using
 		Array
-	:	decltype
-		(	t_tElement{}
-		+	t_tExtent{}
-		)
-	{};
+	=	::Array
+		<	t_tElement
+		,	t_tExtent
+		>
+	;
 
 	template
 		<	typename
@@ -34,7 +48,7 @@ export namespace
 	using
 		MatchCVArray
 	=	CV
-		<	Array
+		<	::Array
 			<	t_tElement
 			,	Token::Extent<t_nExtent>
 			>

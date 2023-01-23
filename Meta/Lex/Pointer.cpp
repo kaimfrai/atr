@@ -7,6 +7,18 @@ import Meta.Lex.Function;
 import Meta.Token.Pointer;
 import Meta.Token.Type;
 
+template
+	<	typename
+			t_tEntity
+	>
+struct
+	Ptr
+:	decltype
+	(	t_tEntity{}
+	+	::Meta::Pointer
+	)
+{};
+
 export namespace
 	Meta::Lex
 {
@@ -14,13 +26,12 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	struct
+	using
 		Ptr
-	:	decltype
-		(	t_tEntity{}
-		+	Pointer
-		)
-	{};
+	=	::Ptr
+		<	t_tEntity
+		>
+	;
 
 	template
 		<	typename
@@ -31,7 +42,7 @@ export namespace
 	using
 		MatchCVPointer
 	=	CV
-		<	Ptr<t_tEntity>
+		<	::Ptr<t_tEntity>
 		,	t_tpQualifier
 			...
 		>

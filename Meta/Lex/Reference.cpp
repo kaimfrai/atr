@@ -8,23 +8,23 @@ import Meta.Token.LRef;
 import Meta.Token.RRef;
 import Meta.Token.Type;
 
+template
+	<	typename
+			t_tEntity
+	,	typename
+			t_tReference
+	>
+struct
+	Ref
+:	decltype
+	(	t_tEntity{}
+	+	t_tReference{}
+	)
+{};
+
 export namespace
 	Meta::Lex
 {
-	template
-		<	typename
-				t_tEntity
-		,	typename
-				t_tReference
-		>
-	struct
-		Ref
-	:	decltype
-		(	t_tEntity{}
-		+	t_tReference{}
-		)
-	{};
-
 	template
 		<	typename
 				t_tEntity
@@ -38,7 +38,7 @@ export namespace
 		,	t_tCategory
 		)
 		noexcept
-	->	Ref
+	->	::Ref
 		<	t_tEntity
 		,	t_tCategory
 		>
@@ -47,10 +47,24 @@ export namespace
 	template
 		<	typename
 				t_tEntity
+		,	typename
+				t_tCategory
+		>
+	using
+		Ref
+	=	::Ref
+		<	t_tEntity
+		,	t_tCategory
+		>
+	;
+
+	template
+		<	typename
+				t_tEntity
 		>
 	using
 		MatchLRef
-	=	Ref
+	=	::Ref
 		<	t_tEntity
 		,	Token::LRef
 		>
@@ -62,7 +76,7 @@ export namespace
 		>
 	using
 		MatchRRef
-	=	Ref
+	=	::Ref
 		<	t_tEntity
 		,	Token::RRef
 		>

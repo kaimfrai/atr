@@ -6,6 +6,20 @@ import Meta.Lex.Function;
 import Meta.Token.Owner;
 import Meta.Token.Type;
 
+template
+	<	typename
+			t_tMember
+	,	typename
+			t_tOwner
+	>
+struct
+	Member
+:	decltype
+	(	t_tMember{}
+	+	::Meta::Owner<t_tOwner>
+	)
+{};
+
 export namespace
 	Meta::Lex
 {
@@ -15,13 +29,13 @@ export namespace
 		,	typename
 				t_tOwner
 		>
-	struct
+	using
 		Member
-	:	decltype
-		(	t_tMember{}
-		+	Owner<t_tOwner>
-		)
-	{};
+	=	::Member
+		<	t_tMember
+		,	t_tOwner
+		>
+	;
 
 	template
 		<	typename
@@ -34,7 +48,7 @@ export namespace
 	using
 		MatchCVMember
 	=	CV
-		<	Member
+		<	::Member
 			<	t_tMember
 			,	t_tOwner
 			>

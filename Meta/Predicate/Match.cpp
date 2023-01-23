@@ -378,31 +378,27 @@ export namespace
 	{
 		template
 			<	typename
-					t_tEntity
+					t_tSig
+			,	typename
+				...	t_tpQualifier
 			>
-		[[nodiscard]]
-		friend auto constexpr
-		(	Evaluate
-		)	(	LiteralBase
-			,	Lex::Func
-				<	t_tEntity
-				>
+		requires
+			(	(	sizeof...(t_tpQualifier)
+				<=	1uz
+				)
+			and	...
+			and	(	t_tpQualifier{}
+				==	Noexcept
+				)
 			)
-			noexcept
-		->	bool
-		{	return true;	}
-
-		template
-			<	typename
-					t_tEntity
-			>
 		[[nodiscard]]
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
 			,	Lex::Func
-				<	t_tEntity
-				,	Token::Noexcept
+				<	t_tSig
+				,	t_tpQualifier
+					...
 				>
 			)
 			noexcept
@@ -421,6 +417,10 @@ export namespace
 			,	typename
 				...	t_tpQualifier
 			>
+		requires
+			(	t_tFirstQualifier{}
+			!=	Noexcept
+			)
 		[[nodiscard]]
 		friend auto constexpr
 		(	Evaluate
@@ -434,10 +434,6 @@ export namespace
 			)
 			noexcept
 		->	bool
-		{	return
-			(	t_tFirstQualifier{}
-			!=	Noexcept
-			);
-		}
+		{	return true;	}
 	};
 }

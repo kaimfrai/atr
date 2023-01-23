@@ -4,39 +4,86 @@ import Meta.Token.Type;
 import Meta.Token.Ellipsis;
 import Meta.Token.Noexcept;
 
-export namespace
-	Meta::Lex
+template
+	<	typename
+		...	t_tpParam
+	>
+struct
+	Param
 {
 	template
 		<	typename
-			...	t_tpParam
+				t_tResult
 		>
-	struct
-		Param
-	{
-		template
-			<	typename
-					t_tResult
-			>
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator +
-		)	(	TypeToken<t_tResult>
-			,	Param
-			)
-			noexcept
-		->	Token::TypeToken
-			<	auto
-					(	typename
-							t_tpParam
-						::	Entity
-						...
-					)
-				->	t_tResult
-			>
-		{	return {}; }
-	};
+	[[nodiscard]]
+	friend auto constexpr
+	(	operator +
+	)	(	::Meta::Token::TypeToken<t_tResult>
+		,	Param
+		)
+		noexcept
+	->	::Meta::Token::TypeToken
+		<	auto
+				(	typename
+						t_tpParam
+					::	Entity
+					...
+				)
+			->	t_tResult
+		>
+	{	return {}; }
+};
 
+template
+	<	typename
+			t_tResult
+	,	typename
+			t_tParam
+	,	typename
+		...	t_tpEllipsis
+	>
+struct
+	Sig
+:	decltype
+	((	(	t_tResult{}
+		+	t_tParam{}
+		)
+	+	...
+	+	t_tpEllipsis
+		{}
+	))
+{
+	static_assert
+	(	(	(	sizeof...(t_tpEllipsis)
+			<=	1uz
+			)
+		and	...
+		and	(	t_tpEllipsis{}
+			==	::Meta::Ellipsis
+			)
+		)
+	,	"Invalid Ellipsis token sequence!"
+	);
+};
+
+template
+	<	typename
+			t_tSig
+	,	typename
+		...	t_tpQualifier
+	>
+struct
+	Func
+:	decltype
+	((	t_tSig{}
+	+	...
+	+	t_tpQualifier{}
+	))
+{};
+
+export namespace
+	Meta::Lex
+{
 	template
 		<	typename
 			...	t_tpParam
@@ -48,43 +95,11 @@ export namespace
 			...
 		)
 		noexcept
-	->	Param
+	->	::Param
 		<	t_tpParam
 			...
 		>
 	{	return {};	}
-
-	template
-		<	typename
-				t_tResult
-		,	typename
-				t_tParam
-		,	typename
-			...	t_tpEllipsis
-		>
-	struct
-		Sig
-	:	decltype
-		((	(	t_tResult{}
-			+	t_tParam{}
-			)
-		+	...
-		+	t_tpEllipsis
-			{}
-		))
-	{
-		static_assert
-		(	(	(	sizeof...(t_tpEllipsis)
-				<=	1uz
-				)
-			and	...
-			and	(	t_tpEllipsis{}
-				==	Ellipsis
-				)
-			)
-		,	"Invalid Ellipsis token sequence!"
-		);
-	};
 
 	template
 		<	typename
@@ -103,7 +118,7 @@ export namespace
 			...
 		)
 		noexcept
-	->	Sig
+	->	::Sig
 		<	t_tResult
 		,	t_tParam
 		,	t_tpEllipsis
@@ -120,9 +135,9 @@ export namespace
 		>
 	using
 		MatchSignature
-	=	Sig
+	=	::Sig
 		<	t_tResult
-		,	Param
+		,	::Param
 			<	t_tpParameter
 				...
 			>
@@ -137,30 +152,15 @@ export namespace
 		>
 	using
 		MatchEllipsisSignature
-	=	Sig
+	=	::Sig
 		<	t_tResult
-		,	Param
+		,	::Param
 			<	t_tpParameter
 				...
 			>
 		,	Token::Ellipsis
 		>
 	;
-
-	template
-		<	typename
-				t_tSig
-		,	typename
-			...	t_tpQualifier
-		>
-	struct
-		Func
-	:	decltype
-		((	t_tSig{}
-		+	...
-		+	t_tpQualifier{}
-		))
-	{};
 
 	template
 		<	typename
@@ -176,12 +176,27 @@ export namespace
 			...
 		)
 		noexcept
-	->	Func
+	->	::Func
 		<	t_tSignature
 		,	t_tpQualifier
 			...
 		>
 	{	return {};	}
+
+	template
+		<	typename
+				t_tSig
+		,	typename
+			...	t_tpQualifier
+		>
+	using
+		Func
+	=	::Func
+		<	t_tSig
+		,	t_tpQualifier
+			...
+		>
+	;
 
 	template
 		<	typename
@@ -191,7 +206,7 @@ export namespace
 		>
 	using
 		MatchFreeFunction
-	=	Func
+	=	::Func
 		<	MatchSignature
 			<	t_tResult
 			,	t_tpParameter
@@ -208,7 +223,7 @@ export namespace
 		>
 	using
 		MatchFreeEllipsisFunction
-	=	Func
+	=	::Func
 		<	MatchEllipsisSignature
 			<	t_tResult
 			,	t_tpParameter
@@ -225,7 +240,7 @@ export namespace
 		>
 	using
 		MatchFreeNoexceptFunction
-	=	Func
+	=	::Func
 		<	MatchSignature
 			<	t_tResult
 			,	t_tpParameter
@@ -243,7 +258,7 @@ export namespace
 		>
 	using
 		MatchFreeNoexceptEllipsisFunction
-	=	Func
+	=	::Func
 		<	MatchEllipsisSignature
 			<	t_tResult
 			,	t_tpParameter

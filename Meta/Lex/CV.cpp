@@ -4,6 +4,51 @@ import Meta.Lex.Base;
 import Meta.Token.Type;
 import Meta.Token.Volatile;
 
+template
+	<	typename
+			t_tEntity
+	,	typename
+		...	t_tpQualifier
+	>
+struct
+	CV
+:	decltype
+	((	t_tEntity{}
+	+	...
+	+	t_tpQualifier{}
+	))
+{
+	static_assert
+	(	[]{	if	constexpr
+				(	sizeof...(t_tpQualifier)
+				==	2uz
+				)
+			{	::Meta::TypeID const
+					vQualifier
+					[]
+				{	::Meta::Type<t_tpQualifier>
+					...
+				};
+				return
+					(	vQualifier[0uz]
+					!=	vQualifier[1uz]
+					)
+				and	(	vQualifier[1uz]
+					==	::Meta::Volatile
+					)
+				;
+			}
+			else
+			{	return
+					sizeof...(t_tpQualifier)
+				<	2uz
+				;
+			}
+		}()
+	,	"Invalid sequence of qualifiers!"
+	);
+};
+
 export namespace
 	Meta::Lex
 {
@@ -13,44 +58,14 @@ export namespace
 		,	typename
 			...	t_tpQualifier
 		>
-	struct
+	using
 		CV
-	:	decltype
-		((	t_tEntity{}
-		+	...
-		+	t_tpQualifier{}
-		))
-	{
-		static_assert
-		(	[]{	if	constexpr
-					(	sizeof...(t_tpQualifier)
-					==	2uz
-					)
-				{	TypeID const
-						vQualifier
-						[]
-					{	Type<t_tpQualifier>
-						...
-					};
-					return
-						(	vQualifier[0uz]
-						!=	vQualifier[1uz]
-						)
-					and	(	vQualifier[1uz]
-						==	Volatile
-						)
-					;
-				}
-				else
-				{	return
-						sizeof...(t_tpQualifier)
-					<	2uz
-					;
-				}
-			}()
-		,	"Invalid sequence of qualifiers!"
-		);
-	};
+	=	::CV
+		<	t_tEntity
+		,	t_tpQualifier
+			...
+		>
+	;
 
 	template
 		<	typename
@@ -60,7 +75,7 @@ export namespace
 		>
 	using
 		MatchCV
-	=	CV
+	=	::CV
 		<	Base<t_tData>
 		,	t_tpQualifier
 			...
@@ -76,11 +91,11 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	MakeCV
-	)	(	CV<t_tEntity>
+	)	(	::CV<t_tEntity>
 		,	t_tpQualifier
 			...
 		)
 		noexcept
-	->	CV<t_tEntity, t_tpQualifier...>
+	->	::CV<t_tEntity, t_tpQualifier...>
 	{	return {};	}
 }
