@@ -8,4 +8,5 @@ add_single_file_modules(
 	Reference.cpp
 	Tokenizer.cpp
 	Transform.cpp
+	TransformComposer.cpp
 )

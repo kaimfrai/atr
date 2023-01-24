@@ -18,7 +18,7 @@ import Meta.Token.Type;
 import Meta.Data.Aggregate;
 import Meta.ID.Alias;
 import Meta.ID.StringLiteral;
-import Meta.Lex.Transform;
+import Meta.Lex.TransformComposer;
 
 import Std;
 

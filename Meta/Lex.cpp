@@ -9,3 +9,4 @@ export import Meta.Lex.Pointer;
 export import Meta.Lex.Reference;
 export import Meta.Lex.Tokenizer;
 export import Meta.Lex.Transform;
+export import Meta.Lex.TransformComposer;
