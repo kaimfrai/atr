@@ -1,0 +1,13 @@
+add_single_file_modules(
+	Array.cpp
+	Class.cpp
+	CV.cpp
+	Enum.cpp
+	Function.cpp
+	Fundamental.cpp
+	Member.cpp
+	Pointer.cpp
+	Reference.cpp
+	Scalar.cpp
+	Union.cpp
+)

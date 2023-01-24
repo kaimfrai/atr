@@ -4,3 +4,5 @@ add_single_file_modules(
 	BitAlign.cpp
 	BitSize.cpp
 )
+
+add_subdirectory(Match)

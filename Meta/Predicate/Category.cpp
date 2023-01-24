@@ -1,6 +1,16 @@
 export module Meta.Predicate.Category;
 
-import Meta.Predicate.Match;
+import Meta.Trait.Match.Array;
+import Meta.Trait.Match.Class;
+import Meta.Trait.Match.CV;
+import Meta.Trait.Match.Enum;
+import Meta.Trait.Match.Function;
+import Meta.Trait.Match.Fundamental;
+import Meta.Trait.Match.Member;
+import Meta.Trait.Match.Pointer;
+import Meta.Trait.Match.Reference;
+import Meta.Trait.Match.Scalar;
+import Meta.Trait.Match.Union;
 
 import Meta.Logic.LiteralBase;
 import Meta.Logic.Term;
@@ -20,10 +30,10 @@ export namespace
 	struct
 		Data final
 	:	LiteralBase
-	,	MatchScalar
-	,	MatchBoundedArray
-	,	MatchClass
-	,	MatchUnion
+	,	Match::Scalar
+	,	Match::BoundedArray
+	,	Match::Class
+	,	Match::Union
 	{
 		template
 			<	typename
@@ -48,9 +58,9 @@ export namespace
 	struct
 		Scalar_Ref_Void final
 	:	LiteralBase
-	,	MatchScalar
-	,	MatchReference
-	,	MatchVoid
+	,	Match::Scalar
+	,	Match::Reference
+	,	Match::Void
 	{
 		template
 			<	typename
@@ -77,12 +87,12 @@ export namespace
 	struct
 		Fund_Array final
 	:	LiteralBase
-	,	MatchIntegral
-	,	MatchFloatingPoint
-	,	MatchNullPointer
-	,	MatchBoundedArray
-	,	MatchVoid
-	,	MatchUnboundedArray
+	,	Match::Integral
+	,	Match::FloatingPoint
+	,	Match::NullPointer
+	,	Match::BoundedArray
+	,	Match::Void
+	,	Match::UnboundedArray
 	{
 		template
 			<	typename
@@ -110,11 +120,11 @@ export namespace
 	struct
 		Int_Enum_Class_LRef_Free final
 	:	LiteralBase
-	,	MatchIntegral
-	,	MatchEnum
-	,	MatchClass
-	,	MatchLRef
-	,	MatchFreeFunction
+	,	Match::Integral
+	,	Match::Enum
+	,	Match::Class
+	,	Match::LRef
+	,	Match::FreeFunction
 	{
 		template
 			<	typename
@@ -141,10 +151,10 @@ export namespace
 	struct
 		Signed_Scoped_Ptr final
 	:	LiteralBase
-	,	MatchSignedIntegral
-	,	MatchFloatingPoint
-	,	MatchScopedEnum
-	,	MatchPointer
+	,	Match::SignedIntegral
+	,	Match::FloatingPoint
+	,	Match::ScopedEnum
+	,	Match::Pointer
 	{
 		template
 			<	typename
