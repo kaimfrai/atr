@@ -1,6 +1,11 @@
 export module Meta.Token.Index;
 
+import Meta.Math.Next;
+import Meta.Math.Prev;
 import Meta.Arithmetic.Literals;
+
+using ::Meta::Math::Next;
+using ::Meta::Math::Prev;
 
 export namespace
 	Meta::Token
@@ -82,8 +87,21 @@ export namespace
 		)	()	const
 			noexcept
 		->	Index
-			<	(	t_npIndex
-				+	1
+			<	Next
+				(	t_npIndex
+				)
+				...
+			>
+		{	return	{};	}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator --
+		)	()	const
+			noexcept
+		->	Index
+			<	Prev
+				(	t_npIndex
 				)
 				...
 			>

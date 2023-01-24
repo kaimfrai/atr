@@ -1,5 +1,8 @@
 export module Meta.Math.Abs;
 
+import Meta.Math.Sign;
+import Meta.Math.Next;
+
 import Std;
 
 export namespace
@@ -12,22 +15,52 @@ export namespace
 				i_nArithmetic
 		)
 		noexcept
-	->	decltype(i_nArithmetic)
 	{
+		using
+			tArithmetic
+		=	decltype
+			(	i_nArithmetic
+			)
+		;
 		if	constexpr
-			(	::std::is_unsigned_v
-				<	decltype(i_nArithmetic)
+			(	::std::is_floating_point_v
+				<	tArithmetic
 				>
 			)
-			return
+		{	return
 				i_nArithmetic
-			;
-		else
-			return
-				i_nArithmetic
-			>=	0
+			>=	tArithmetic{}
 			?	i_nArithmetic
 			:	-i_nArithmetic
 			;
+		}
+		else
+		if	constexpr
+			(	::std::is_unsigned_v
+				<	tArithmetic
+				>
+			)
+		{	return
+				i_nArithmetic
+			;
+		}
+		else
+		{	return
+				(	i_nArithmetic
+				>=	tArithmetic{}
+				)
+			?	Unsigned
+				(	i_nArithmetic
+				)
+			:	Next
+				(	Unsigned
+					(	-
+						Next
+						(	i_nArithmetic
+						)
+					)
+				)
+			;
+		}
 	}
 }

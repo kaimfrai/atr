@@ -1,9 +1,13 @@
 export module Meta.Arithmetic.Sanitize;
 
+import Meta.Math.Next;
 import Meta.Arithmetic.Integer;
 import Meta.Arithmetic.IntegerFor;
 
 import Std;
+
+using ::Meta::Arithmetic::Narrow;
+using ::Meta::Math::Next;
 
 export namespace
 	Meta::Arithmetic
@@ -35,17 +39,15 @@ export namespace
 			::	max()
 			)
 		{	return
-			Arithmetic::Narrow<t_nHighestValue>
+			Narrow<t_nHighestValue>
 			(	i_nValue
 			);
 		}
 		else
 		{	return
-			Arithmetic::Narrow<t_nHighestValue>
+			Narrow<t_nHighestValue>
 			(	i_nValue
-			%	(	t_nHighestValue
-				+	1z
-				)
+			%	Next(t_nHighestValue)
 			);
 		}
 	}
@@ -95,17 +97,15 @@ export namespace
 			::	max()
 			)
 		{	return
-			Arithmetic::Narrow<t_nHighestValue>
+			Narrow<t_nHighestValue>
 			(	i_nValue
 			);
 		}
 		else
 		{	return
-			Arithmetic::Narrow<t_nHighestValue>
+			Narrow<t_nHighestValue>
 			(	i_nValue
-			%	(	t_nHighestValue
-				+	1uz
-				)
+			%	Next(t_nHighestValue)
 			);
 		}
 	}

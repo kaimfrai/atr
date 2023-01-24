@@ -219,9 +219,7 @@ export
 			vRandomSequenceLength
 		=	std::strtoull
 			(	i_vArguments
-				[	i_vArguments.size()
-				-	1uz
-				]
+			.	back()
 			,	nullptr
 			,	10
 			)

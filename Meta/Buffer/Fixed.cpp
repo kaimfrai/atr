@@ -2,9 +2,12 @@ export module Meta.Buffer.Fixed;
 
 import Meta.Buffer.Iterator;
 import Meta.Buffer.Proto;
+import Meta.Math.Next;
 import Meta.Size;
 
 import Std;
+
+using ::Meta::Math::Next;
 
 export namespace
 	Meta::Buffer
@@ -193,7 +196,7 @@ export namespace
 			)	&
 		->	Fixed&
 		{
-			EnsureNewSizeValid(size() + 1uz);
+			EnsureNewSizeValid(Next(size()));
 
 				m_vBuffer[m_nElementCount]
 			=	std::forward<decltype(i_rValue)>

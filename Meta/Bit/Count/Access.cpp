@@ -2,8 +2,11 @@ export module Meta.Bit.Count.Access;
 
 import Meta.Bit.Count;
 import Meta.Bit.Index;
+import Meta.Math.Prev;
 
 import Std;
+
+using ::Meta::Math::Prev;
 
 export namespace
 	Meta::Bit
@@ -60,8 +63,9 @@ export namespace
 		return
 		tIndexType
 		{	static_cast<tIndexType::IndexType>
-			(	nValue
-			-	1u
+			(	Prev
+				(	nValue
+				)
 			)
 		};
 	}

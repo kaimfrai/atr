@@ -3,6 +3,8 @@ add_single_file_modules(
 	Approximate.cpp
 	Congruent.cpp
 	Divide.cpp
+	Next.cpp
 	Power.cpp
+	Prev.cpp
 	Sign.cpp
 )

@@ -18,9 +18,11 @@ import Meta.Token.CV;
 import Meta.Token.Type;
 import Meta.Data.Aggregate;
 import Meta.ID.Concept;
+import Meta.Math.Prev;
 
 import Std;
 
+using ::Meta::Math::Prev;
 using ::Meta::Aggregate;
 using ::Meta::CV;
 using ::Meta::Type;
@@ -109,8 +111,9 @@ auto constexpr
 		aLast
 	=	::std::next
 		(	aFirst
-		,	ssize(i_vAlignList)
-		-	1z
+		,	Prev
+			(	ssize(i_vAlignList)
+			)
 		)
 	;
 	if	(	*aFirst
@@ -118,8 +121,10 @@ auto constexpr
 		)
 		return
 		::std::bit_floor<Meta::USize>
-		(	i_vAlignList.size()
-		-	1uz
+		(	Prev
+			(	i_vAlignList
+			.	size()
+			)
 		);
 	else
 	{	auto const

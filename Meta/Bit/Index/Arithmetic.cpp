@@ -1,10 +1,13 @@
 export module Meta.Bit.Index.Arithmetic;
 
+import Meta.Math.Next;
+import Meta.Math.Prev;
 import Meta.Bit.Index;
 
 import Std;
 
-using namespace Meta::Literals;
+using ::Meta::Math::Next;
+using ::Meta::Math::Prev;
 
 export namespace
 	Meta::Bit
@@ -64,9 +67,10 @@ export namespace
 	{	return
 		(	i_rIndex
 		=	Index<t_nSize>
-			{	i_rIndex
-			.	get()
-			+	1
+			{	Next
+				(	i_rIndex
+				.	get()
+				)
 			}
 		);
 	}
@@ -87,11 +91,9 @@ export namespace
 	{	return
 		::std::exchange
 		(	i_rIndex
-		,	Index<t_nSize>
-			{	i_rIndex
-			.	get()
-			+	1
-			}
+		,	Next
+			(	i_rIndex
+			)
 		);
 	}
 
@@ -150,9 +152,10 @@ export namespace
 	{	return
 		(	i_rIndex
 		=	Index<t_nSize>
-			{	i_rIndex
-			.	get()
-			-	1
+			{	Prev
+				(	i_rIndex
+				.	get()
+				)
 			}
 		);
 	}
@@ -173,11 +176,9 @@ export namespace
 	{	return
 		::std::exchange
 		(	i_rIndex
-		,	Index<t_nSize>
-			{	i_rIndex
-			.	get()
-			-	1
-			}
+		,	Prev
+			(	i_rIndex
+			)
 		);
 	}
 }

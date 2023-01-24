@@ -1,5 +1,6 @@
 export module Meta.Math.Congruent;
 
+import Meta.Math.Abs;
 import Meta.Size;
 
 export namespace
@@ -25,14 +26,8 @@ export namespace
 
 		USize const
 			nPositiveIndex
-		=	(	bNegative
-			?	static_cast<USize>
-				(	-
-					i_nNumerator
-				)
-			:	static_cast<USize>
-				(	i_nNumerator
-				)
+		=	Abs
+			(	i_nNumerator
 			)
 		;
 		USize const

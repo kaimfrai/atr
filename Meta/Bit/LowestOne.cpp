@@ -1,8 +1,11 @@
 export module Meta.Bit.LowestOne;
 
 import Meta.Bit.Index;
+import Meta.Math.Prev;
 
 import Std;
+
+using ::Meta::Math::Prev;
 
 export namespace
 	Meta::Bit
@@ -53,8 +56,9 @@ export namespace
 	->	decltype(i_rField)
 	{	return
 		(	i_rField
-		&=	i_nMask
-		-	1
+		&=	Prev
+			(	i_nMask
+			)
 		);
 	}
 

@@ -318,7 +318,9 @@ export namespace
 		{	return
 			::std::exchange
 			(	*this
-			, 	*this + 1z
+			, 	::std::next
+				(	*this
+				)
 			);
 		}
 
@@ -341,7 +343,9 @@ export namespace
 		{	return
 			::std::exchange
 			(	*this
-			, 	*this + 1z
+			, 	::std::prev
+				(	*this
+				)
 			);
 		}
 
