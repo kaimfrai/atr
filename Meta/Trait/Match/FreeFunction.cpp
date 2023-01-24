@@ -1,4 +1,4 @@
-export module Meta.Trait.Match.Function;
+export module Meta.Trait.Match.FreeFunction;
 
 import Meta.Lex.Function;
 import Meta.Logic.LiteralBase;
@@ -31,37 +31,6 @@ export namespace
 		)	(	LiteralBase
 			,	Lex::Func
 				<	t_tSig
-				,	t_tpQualifier
-					...
-				>
-			)
-			noexcept
-		->	bool
-		{	return true;	}
-	};
-
-	struct
-		OwnedFunction
-	{
-		template
-			<	typename
-					t_tSignature
-			,	typename
-					t_tFirstQualifier
-			,	typename
-				...	t_tpQualifier
-			>
-		requires
-			(	t_tFirstQualifier{}
-			!=	Noexcept
-			)
-		[[nodiscard]]
-		friend auto constexpr
-		(	Evaluate
-		)	(	LiteralBase
-			,	Lex::Func
-				<	t_tSignature
-				,	t_tFirstQualifier
 				,	t_tpQualifier
 					...
 				>

@@ -4,10 +4,11 @@ add_single_file_modules(
 	CV.cpp
 	Enum.cpp
 	FloatingPoint.cpp
-	Function.cpp
+	FreeFunction.cpp
 	Integral.cpp
 	Member.cpp
 	NullPointer.cpp
+	OwnedFunction.cpp
 	Pointer.cpp
 	Reference.cpp
 	Scalar.cpp

@@ -4,7 +4,7 @@ import Meta.Trait.Match.Integral;
 import Meta.Trait.Match.Enum;
 import Meta.Trait.Match.Class;
 import Meta.Trait.Match.Reference;
-import Meta.Trait.Match.Function;
+import Meta.Trait.Match.FreeFunction;
 
 import Meta.Logic.LiteralBase;
 import Meta.Token.Type;
