@@ -1,6 +1,6 @@
 export module Meta.Predicate.Category;
 
-import Meta.Trait.Match.Array;
+import Meta.Trait.Match.BoundedArray;
 import Meta.Trait.Match.Class;
 import Meta.Trait.Match.CV;
 import Meta.Trait.Match.Enum;
@@ -11,6 +11,7 @@ import Meta.Trait.Match.Pointer;
 import Meta.Trait.Match.Reference;
 import Meta.Trait.Match.Scalar;
 import Meta.Trait.Match.Union;
+import Meta.Trait.Match.UnboundedArray;
 
 import Meta.Logic.LiteralBase;
 import Meta.Logic.Term;

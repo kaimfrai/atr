@@ -1,5 +1,5 @@
 add_single_file_modules(
-	Array.cpp
+	BoundedArray.cpp
 	Class.cpp
 	CV.cpp
 	Enum.cpp
@@ -10,4 +10,5 @@ add_single_file_modules(
 	Reference.cpp
 	Scalar.cpp
 	Union.cpp
+	UnboundedArray.cpp
 )

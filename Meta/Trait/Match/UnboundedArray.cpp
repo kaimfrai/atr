@@ -1,4 +1,4 @@
-export module Meta.Trait.Match.Array;
+export module Meta.Trait.Match.UnboundedArray;
 
 import Meta.Logic.LiteralBase;
 import Meta.Lex.Array;
