@@ -11,9 +11,11 @@ add_single_file_modules(
 	Pointer.cpp
 	Reference.cpp
 	Scalar.cpp
+	ScopedEnum.cpp
 	SignedIntegral.cpp
 	UnboundedArray.cpp
 	Union.cpp
+	UnscopedEnum.cpp
 	Unsigned.cpp
 	Void.cpp
 )

@@ -2,7 +2,7 @@ export module Meta.Trait.Signed_Scoped_Ptr;
 
 import Meta.Trait.Match.SignedIntegral;
 import Meta.Trait.Match.FloatingPoint;
-import Meta.Trait.Match.Enum;
+import Meta.Trait.Match.ScopedEnum;
 import Meta.Trait.Match.Pointer;
 
 import Meta.Logic.LiteralBase;
