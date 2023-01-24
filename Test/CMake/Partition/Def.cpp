@@ -1,4 +1,4 @@
-export module Test.CMake:Def;
+export module Test.CMake.FooBar:Def;
 
 export import :User;
 

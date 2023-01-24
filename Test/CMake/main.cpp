@@ -1,4 +1,4 @@
-import Test.CMake;
+import Test.CMake.FooBar;
 import Test.CMake.Pimpl;
 
 auto

@@ -1,4 +1,4 @@
-module Test.CMake;
+module Test.CMake.FooBar;
 
 int Bar()
 {

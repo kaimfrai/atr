@@ -2,7 +2,7 @@ module;
 
 #include "Include.h"
 
-export module Test.CMake:Private;
+export module Test.CMake.FooBar:Private;
 
 namespace
 	Private

@@ -165,6 +165,11 @@ function(add_module
 
 	get_source_file_property(module_name "${module_interface_file}" "MODULE_NAME")
 
+	cmake_path(GET module_interface_file STEM file_stem)
+	if	(NOT ${module_name} MATCHES "([A-Za-z0-9_]+\.)*${file_stem}")
+		message(WARNING "Module name '${module_name}' does not match file name '${module_interface_file}'")
+	endif()
+
 	add_module_unit_command(
 		"${module_interface_file}"
 		"${module_name}"

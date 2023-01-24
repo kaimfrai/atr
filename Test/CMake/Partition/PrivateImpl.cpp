@@ -2,7 +2,7 @@ module;
 
 #include "Include.h"
 
-module Test.CMake;
+module Test.CMake.FooBar;
 
 import :Private;
 

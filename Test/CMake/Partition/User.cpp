@@ -1,4 +1,4 @@
-export module Test.CMake:User;
+export module Test.CMake.FooBar:User;
 
 export namespace
 	Test::CMake
