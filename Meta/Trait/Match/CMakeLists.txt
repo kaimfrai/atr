@@ -6,11 +6,13 @@ add_single_file_modules(
 	FloatingPoint.cpp
 	FreeFunction.cpp
 	Integral.cpp
+	LRef.cpp
 	Member.cpp
 	NullPointer.cpp
 	OwnedFunction.cpp
 	Pointer.cpp
 	Reference.cpp
+	RRef.cpp
 	Scalar.cpp
 	ScopedEnum.cpp
 	SignedIntegral.cpp
