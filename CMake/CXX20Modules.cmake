@@ -201,6 +201,11 @@ function(add_module
 
 			get_source_file_property(partition_name "${unit_file}" "MODULE_PARTITION")
 
+			cmake_path(GET unit_file STEM unit_file_stem)
+			if	(NOT ${partition_name} MATCHES "([A-Za-z0-9_]+\.)*${unit_file_stem}")
+				message(WARNING "Partition name '${partition_name}' does not match file name '${unit_file}'")
+			endif()
+
 			target_sources(
 				"${module_name}"
 			PRIVATE
