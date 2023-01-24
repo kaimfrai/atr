@@ -165,11 +165,6 @@ function(add_module
 
 	get_source_file_property(module_name "${module_interface_file}" "MODULE_NAME")
 
-	cmake_path(GET module_interface_file STEM file_stem)
-	if	(NOT ${module_name} MATCHES "([A-Za-z0-9_]+\.)*${file_stem}")
-		message(WARNING "Module name '${module_name}' does not match file name '${module_interface_file}'")
-	endif()
-
 	add_module_unit_command(
 		"${module_interface_file}"
 		"${module_name}"
@@ -200,11 +195,6 @@ function(add_module
 		if	("${file_module_type}" MATCHES "_PARTITION$")
 
 			get_source_file_property(partition_name "${unit_file}" "MODULE_PARTITION")
-
-			cmake_path(GET unit_file STEM unit_file_stem)
-			if	(NOT ${partition_name} MATCHES "([A-Za-z0-9_]+\.)*${unit_file_stem}")
-				message(WARNING "Partition name '${partition_name}' does not match file name '${unit_file}'")
-			endif()
 
 			target_sources(
 				"${module_name}"

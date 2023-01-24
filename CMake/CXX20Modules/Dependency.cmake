@@ -2,6 +2,7 @@ function(read_module_properties
 	file_name
 )
 	set(regex_whitespace "[ \t]+")
+	set(regex_submodule "[a-zA-Z_][a-zA-Z0-9_]*")
 	set(regex_id "[a-zA-Z_][a-zA-Z0-9_.]*")
 	set(regex_file "[a-zA-Z0-9_./\:]+")
 	set(regex_header "(<${regex_file}>|\"${regex_file}\")")
@@ -15,6 +16,7 @@ function(read_module_properties
 		"${file_name}"
 		LOCATION
 	)
+	cmake_path(GET file_path STEM file_stem)
 
 	file(READ
 		${file_path}
@@ -42,7 +44,9 @@ function(read_module_properties
 
 	list(LENGTH module_declaration module_declaration_count)
 	if	(module_declaration_count GREATER 1)
+
 		message(FATAL_ERROR "File ${file_path} contained more than one module declaration!")
+
 	elseif(module_declaration_count EQUAL 1)
 
 		string(REGEX REPLACE "${regex_module}" "" module_name "${module_declaration}")
@@ -50,6 +54,11 @@ function(read_module_properties
 		if	(module_name MATCHES "^${regex_id}:${regex_id}$")
 
 			string(REGEX REPLACE "${regex_id}:" "" module_partition "${module_name}")
+
+			if	(NOT ${module_partition} MATCHES "^(${regex_submodule}\.)*${file_stem}$")
+				message(WARNING "Partition name '${module_name}' does not match file name '${file_path}'")
+			endif()
+
 			string(REGEX REPLACE ":${regex_id}" "" module_name "${module_name}")
 
 			if	(${module_declaration} MATCHES "${regex_new_line}export")
@@ -57,11 +66,20 @@ function(read_module_properties
 			else()
 				set(module_type "IMPLEMENTATION_PARTITION")
 			endif()
+
 		elseif(${module_declaration} MATCHES "${regex_new_line}export")
+
 			set(module_type "PRIMARY_INTERFACE")
+
+			if	(NOT ${module_name} MATCHES "^(${regex_submodule}\.)*${file_stem}$")
+				message(WARNING "Module name '${module_name}' does not match file name '${file_path}'")
+			endif()
+
 		else()
+
 			set(module_type "IMPLEMENTATION")
 			list(APPEND module_imports ${module_name})
+
 		endif()
 
 	endif()
