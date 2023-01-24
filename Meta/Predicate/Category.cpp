@@ -1,17 +1,19 @@
 export module Meta.Predicate.Category;
 
+import Meta.Trait.Match.Arithmetic;
 import Meta.Trait.Match.BoundedArray;
 import Meta.Trait.Match.Class;
 import Meta.Trait.Match.CV;
 import Meta.Trait.Match.Enum;
 import Meta.Trait.Match.Function;
-import Meta.Trait.Match.Fundamental;
 import Meta.Trait.Match.Member;
+import Meta.Trait.Match.NullPointer;
 import Meta.Trait.Match.Pointer;
 import Meta.Trait.Match.Reference;
 import Meta.Trait.Match.Scalar;
 import Meta.Trait.Match.Union;
 import Meta.Trait.Match.UnboundedArray;
+import Meta.Trait.Match.Void;
 
 import Meta.Logic.LiteralBase;
 import Meta.Logic.Term;

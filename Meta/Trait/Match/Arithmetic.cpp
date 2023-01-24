@@ -1,4 +1,4 @@
-export module Meta.Trait.Match.Fundamental;
+export module Meta.Trait.Match.Arithmetic;
 
 import Meta.Trait.Match.CV;
 
@@ -7,18 +7,6 @@ import Std;
 export namespace
 	Meta::Trait::Match
 {
-	using
-		Void
-	=	CV<void>
-	;
-
-	using
-		NullPointer
-	=	CV
-		<	decltype(nullptr)
-		>
-	;
-
 	struct
 		UnsignedIntegral
 	:	CV<bool>

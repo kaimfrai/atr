@@ -1,6 +1,7 @@
 export module Meta.Trait.Match.Scalar;
 
-import Meta.Trait.Match.Fundamental;
+import Meta.Trait.Match.Arithmetic;
+import Meta.Trait.Match.NullPointer;
 import Meta.Trait.Match.Enum;
 import Meta.Trait.Match.Pointer;
 import Meta.Trait.Match.Member;
