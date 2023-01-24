@@ -1,4 +1,3 @@
-add_subdirectory(CrossFwdDecl)
 add_subdirectory(Partition)
 add_subdirectory(Pimpl)
 add_subdirectory(VirtualTable)
