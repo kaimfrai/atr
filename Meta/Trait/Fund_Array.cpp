@@ -1,6 +1,7 @@
 export module Meta.Trait.Fund_Array;
 
-import Meta.Trait.Match.Arithmetic;
+import Meta.Trait.Match.Integral;
+import Meta.Trait.Match.FloatingPoint;
 import Meta.Trait.Match.BoundedArray;
 import Meta.Trait.Match.NullPointer;
 import Meta.Trait.Match.Void;

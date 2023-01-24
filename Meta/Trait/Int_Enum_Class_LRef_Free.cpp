@@ -1,6 +1,6 @@
 export module Meta.Trait.Int_Enum_Class_LRef_Free;
 
-import Meta.Trait.Match.Arithmetic;
+import Meta.Trait.Match.Integral;
 import Meta.Trait.Match.Enum;
 import Meta.Trait.Match.Class;
 import Meta.Trait.Match.Reference;

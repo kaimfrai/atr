@@ -1,16 +1,19 @@
 add_single_file_modules(
-	Arithmetic.cpp
 	BoundedArray.cpp
 	Class.cpp
 	CV.cpp
 	Enum.cpp
+	FloatingPoint.cpp
 	Function.cpp
+	Integral.cpp
 	Member.cpp
 	NullPointer.cpp
 	Pointer.cpp
 	Reference.cpp
 	Scalar.cpp
-	Union.cpp
+	SignedIntegral.cpp
 	UnboundedArray.cpp
+	Union.cpp
+	Unsigned.cpp
 	Void.cpp
 )

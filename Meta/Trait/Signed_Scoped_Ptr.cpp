@@ -1,6 +1,7 @@
 export module Meta.Trait.Signed_Scoped_Ptr;
 
-import Meta.Trait.Match.Arithmetic;
+import Meta.Trait.Match.SignedIntegral;
+import Meta.Trait.Match.FloatingPoint;
 import Meta.Trait.Match.Enum;
 import Meta.Trait.Match.Pointer;
 
