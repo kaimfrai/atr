@@ -123,7 +123,7 @@ export namespace
 			)	const
 			noexcept
 		->	t_tValue&
-		{	return *std::ranges::next(m_aData, i_nIndex);	}
+		{	return *std::next(m_aData, i_nIndex);	}
 
 		[[nodiscard]]
 		auto constexpr
@@ -150,7 +150,7 @@ export namespace
 		{	return
 			std::exchange
 			(	*this
-			,	std::ranges::next(*this)
+			,	std::next(*this)
 			);
 		}
 
@@ -169,7 +169,7 @@ export namespace
 		{	return
 			std::exchange
 			(	*this
-			,	std::ranges::prev(*this)
+			,	std::prev(*this)
 			);
 		}
 
@@ -182,7 +182,7 @@ export namespace
 			)
 			noexcept
 		->	SSize
-		{	return std::ranges::distance(i_vRight.m_aData, i_vLeft.m_aData);	}
+		{	return std::distance(i_vRight.m_aData, i_vLeft.m_aData);	}
 
 		auto constexpr
 		(	operator+=
@@ -191,7 +191,7 @@ export namespace
 			)	&
 			noexcept
 		->	Iterator&
-		{	m_aData = std::ranges::next(m_aData, i_vOffset);
+		{	m_aData = std::next(m_aData, i_vOffset);
 			return *this;
 		}
 
@@ -202,7 +202,7 @@ export namespace
 			)	&
 			noexcept
 		->	Iterator&
-		{	m_aData = std::ranges::prev(m_aData, i_vOffset);
+		{	m_aData = std::prev(m_aData, i_vOffset);
 			return *this;
 		}
 

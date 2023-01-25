@@ -366,9 +366,10 @@ export namespace
 			)
 			noexcept
 		->	iterator
-		{	return
+		{	using ::std::begin;
+			return
 			iterator
-			{	std::ranges::begin
+			{	begin
 				(	i_rFixed
 				.	m_vBuffer
 				)
@@ -383,9 +384,10 @@ export namespace
 			)
 			noexcept
 		->	const_iterator
-		{	return
+		{	using ::std::begin;
+			return
 			const_iterator
-			{	std::ranges::begin
+			{	begin
 				(	i_rFixed
 				.	m_vBuffer
 				)
@@ -531,9 +533,9 @@ export namespace
 		(	SetUnusedToDefault
 		)	()	&
 		{
-			std::ranges::fill
+			std::fill
 			(	end(*this).base()
-			,	Sentinel<value_type>{end(m_vBuffer)}
+			,	Sentinel<value_type>{end(m_vBuffer)}.base()
 			,	value_type{}
 			);
 		}

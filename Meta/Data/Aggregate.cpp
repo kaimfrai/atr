@@ -1358,10 +1358,14 @@ export namespace
 			&	i_rRight
 		)
 	->	bool
-	{	return
-		std::ranges::equal
-		(	i_rLeft
-		,	i_rRight
+	{	using ::std::begin;
+		using ::std::end;
+		return
+		std::equal
+		(	begin(i_rLeft)
+		,	end(i_rLeft)
+		,	begin(i_rRight)
+		,	end(i_rRight)
 		);
 	}
 

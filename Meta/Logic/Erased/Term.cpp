@@ -198,7 +198,21 @@ export namespace
 			)
 			noexcept
 		{
-			if	(std::ranges::equal(i_rLeft.LiteralSpan(), i_rRight.LiteralSpan()))
+			using ::std::begin;
+			using ::std::end;
+
+			if	(	auto const
+						vLeftSpan
+					=	i_rLeft.LiteralSpan()
+					,	vRightSpan
+					=	i_rRight.LiteralSpan()
+				;	::std::equal
+					(	begin(vLeftSpan)
+					,	end(vLeftSpan)
+					,	begin(vRightSpan)
+					,	end(vRightSpan)
+					)
+				)
 			{
 				return
 				ProcessComputation
