@@ -37,7 +37,7 @@ export namespace
 			)
 			noexcept
 		->	BitSize
-		{	return {};	}
+		{	return 0_bit;	}
 
 		[[nodiscard]]
 		static auto constexpr
@@ -46,7 +46,7 @@ export namespace
 			)
 			noexcept
 		->	BitSize
-		{	return {1z};	}
+		{	return 1_bit;	}
 
 		template
 			<	ProtoAligned
@@ -72,19 +72,13 @@ export namespace
 			)
 			noexcept
 		->	BitSize
-		{	if	constexpr
+		{	return
 				(	Bit::Field<t_nSize>
 				::	IsFullWidthInteger
 				)
-			{	return
-					t_nSize
-				;
-			}
-			else
-			{	return
-				{	1z
-				};
-			}
+			?	t_nSize
+			:	1_bit
+			;
 		}
 
 		template
@@ -128,9 +122,20 @@ export namespace
 				);
 			}
 			else
-			{	return
+			{	// necessary to check unions
+				struct
+					Wrapper
+				{
+					[[no_unique_address]]
+					t_tEntity _;
+				};
+				return
 				ByteSize
-				{	alignof(t_tEntity)
+				{	not
+					::std::is_empty_v
+					<	Wrapper
+					>
+				*	alignof(t_tEntity)
 				};
 			}
 		}

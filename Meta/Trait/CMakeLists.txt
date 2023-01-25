@@ -4,6 +4,7 @@ add_single_file_modules(
 	BitAlign.cpp
 	BitSize.cpp
 	Data.cpp
+	Empty.cpp
 	Fund_Array.cpp
 	Int_Enum_Class_LRef_Free.cpp
 	Scalar_Ref_Void.cpp

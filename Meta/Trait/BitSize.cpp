@@ -5,6 +5,7 @@ import Meta.Token.Type;
 
 import Meta.Bit.Field;
 import Meta.Memory.Size;
+import Meta.Memory.Size.Scale;
 
 import Std;
 
@@ -37,7 +38,7 @@ export namespace
 			)
 			noexcept
 		->	BitSize
-		{	return {};	}
+		{	return 0_bit;	}
 
 		[[nodiscard]]
 		static auto constexpr
@@ -46,7 +47,7 @@ export namespace
 			)
 			noexcept
 		->	BitSize
-		{	return {1z};	}
+		{	return 1_bit;	}
 
 		template
 			<	ProtoSized
@@ -121,9 +122,21 @@ export namespace
 				;
 			}
 			else
-			{	return
+			{	// TODO reuse BitAlign_Of implementation for empty types
+				// necessary to check unions
+				struct
+					Wrapper
+				{
+					[[no_unique_address]]
+					t_tEntity _;
+				};
+				return
 				ByteSize
-				{	sizeof(t_tEntity)
+				{	not
+					::std::is_empty_v
+					<	Wrapper
+					>
+				*	sizeof(t_tEntity)
 				};
 			}
 		}

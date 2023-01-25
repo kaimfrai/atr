@@ -5,6 +5,7 @@ export import Meta.Trait.ArrayExtent;
 export import Meta.Trait.BitAlign;
 export import Meta.Trait.BitSize;
 export import Meta.Trait.Data;
+export import Meta.Trait.Empty;
 export import Meta.Trait.Fund_Array;
 export import Meta.Trait.Int_Enum_Class_LRef_Free;
 export import Meta.Trait.Match.BoundedArray;

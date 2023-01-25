@@ -1,6 +1,6 @@
 export module ATR.DataMember;
 
-import Meta.Predicate.Empty;
+import Meta.Predicate.Stateless;
 import Meta.Token.Type;
 import Meta.Token.Type.Compare;
 import Meta.Size;
@@ -44,15 +44,12 @@ export namespace
 	USize constexpr inline
 		MemberSortKey
 	=	//	sort order inverse to alignment
+		//	optimize empty members to be static
 		StaticSortKey
-	-	(	not
-			::std::is_empty_v<Meta::Data::Object<t_tData>>
-		*	// optimize empty members to be static
-			Meta::BitAlign_Of
-			(	Meta::Type<t_tData>
-			)
-		.	get()
+	-	Meta::BitAlign_Of
+		(	Meta::Type<t_tData>
 		)
+	.	get()
 	;
 
 	struct
@@ -409,7 +406,7 @@ export namespace
 		friend auto constexpr
 		(	operator *
 		)	(	DefineMembers
-			,	Meta::ProtoConstraint<Meta::IsStateless> auto
+			,	Meta::ProtoStateless auto
 					i_fTransform
 			)
 			noexcept
