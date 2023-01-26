@@ -4,13 +4,11 @@ import Meta.Token.Type;
 import Meta.Token.Type.Compare;
 import Meta.Trait.BitAlign;
 import Meta.ID.StringView;
-import Meta.ID.Concept;
 import Meta.Size;
 
 import Std;
 
 using ::Meta::BitAlign_Of;
-using ::Meta::ProtoID;
 using ::Meta::StringView;
 using ::Meta::Type;
 using ::Meta::TypeID;
@@ -60,23 +58,5 @@ export namespace
 			)
 			noexcept
 		=	default;
-	};
-
-	template
-		<	ProtoID
-				t_tName
-		,	TypeID
-				t_vType
-		,	USize
-				t_nMemberSortKey
-		>
-	MemberInfo constexpr inline
-		MemberInstance
-	{	.SortKey
-	=	t_nMemberSortKey
-	,	.Name
-	=	t_tName::StringView
-	,	.Type
-	=	t_vType
 	};
 }

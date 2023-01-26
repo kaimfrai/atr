@@ -231,10 +231,10 @@ export namespace
 		>
 	MemberList<1uz> constexpr inline
 		Member
-	{	MemberInstance
-		<	Meta::ID_T<t_vName>
+	{	MemberInfo
+		{	MemberSortKey<t_tValue>
+		,	Meta::ID_T<t_vName>::StringView
 		,	Meta::Type<t_tValue>
-		,	MemberSortKey<t_tValue>
-		>
+		}
 	};
 }

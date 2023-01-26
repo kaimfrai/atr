@@ -5,7 +5,6 @@ import ATR.DataMember;
 
 import Meta.ID.Alias;
 import Meta.ID.StringLiteral;
-import Meta.Predicate.Stateless;
 import Meta.Token.Type;
 import Meta.Size;
 
@@ -78,38 +77,39 @@ export namespace
 		friend auto constexpr
 		(	operator *
 		)	(	DefineMembers
-			,	Meta::ProtoStateless auto
+			,	auto
 					i_fTransform
 			)
 			noexcept
 		->	decltype(t_vList)
 		{
 			auto
-				vList
-			=	[]	<	::std::size_t
-						...	t_npIndex
-					>(	::std::index_sequence<t_npIndex...>
-					)
-				{	return
-					decltype(t_vList)
-					{	MemberInstance
-						<	Meta::ID_Of<t_vList[t_npIndex].Name>
-						,	(	Meta::RestoreTypeToken<t_vList[t_npIndex].Type>
-							+	decltype(i_fTransform){}
-							)
-						,	t_vList[t_npIndex].SortKey
-						>
-						...
-					};
-				}(	::std::make_index_sequence
-					<	t_vList
-					.	size()
-					>{}
-				)
+				vResult
+			=	t_vList
 			;
 
-			::std::sort(vList.begin(), vList.end().base());
-			return vList;
+			[&]	<	::std::size_t
+					...	t_npIndex
+				>(	::std::index_sequence<t_npIndex...>
+				)
+			{	(	...
+				,	(	vResult[t_npIndex].Type
+					=	(	Meta::RestoreTypeToken<t_vList[t_npIndex].Type>
+						+	i_fTransform
+						)
+					)
+				);
+			}(	::std::make_index_sequence
+				<	t_vList
+				.	size()
+				>{}
+			);
+
+			::std::sort
+			(	vResult.begin()
+			,	vResult.end().base()
+			);
+			return vResult;
 		}
 
 		template

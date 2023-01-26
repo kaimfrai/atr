@@ -30,13 +30,13 @@ namespace
 	->	MemberInfo
 	{
 		using
-			tNewID
+			tNewName
 		=	Meta::ID_T
 			<	Meta::Concatenate
 				<	t_tPrefix::Length
 				+	t_vInfix.Name.Size
 				+	t_tSuffix::Length
-				>(	std::array
+				>(	::std::array
 					{	t_tPrefix::StringView
 					,	t_vInfix.Name
 					,	t_tSuffix::StringView
@@ -44,6 +44,13 @@ namespace
 				)
 			>
 		;
+		auto
+			vResult
+		=	t_vInfix
+		;
+		(	vResult.Name
+		=	tNewName::StringView
+		);
 
 		//	also update the alias target if it is an alias
 		if	constexpr
@@ -53,7 +60,9 @@ namespace
 		{
 			using
 				tInfixAliasTarget
-			=	Meta::RestoreTypeEntity<t_vInfix.Type>
+			=	Meta::RestoreTypeEntity
+				<	t_vInfix.Type
+				>
 			;
 			using
 				tAliasTarget
@@ -70,20 +79,15 @@ namespace
 					)
 				>
 			;
-			return
-			MemberInstance
-			<	tNewID
-			,	Meta::Type<tAliasTarget>
-			,	AliasSortKey
-			>;
+			(	vResult.Type
+			=	::Meta::Type
+				<	tAliasTarget
+				>
+			);
 		}
-		else
-			return
-			MemberInstance
-			<	tNewID
-			,	t_vInfix.Type
-			,	t_vInfix.SortKey
-			>;
+		return
+			vResult
+		;
 	}
 
 	template

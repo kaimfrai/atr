@@ -19,12 +19,10 @@ export namespace
 		,	StringLiteral
 				t_vTargetID
 		>
-	MemberInfo const constexpr inline
-	&	Alias
-	=	MemberInstance
-		<	ID_T<t_vOriginID>
-		,	Type<ID_T<t_vTargetID>>
-		,	AliasSortKey
-		>
-	;
+	MemberInfo constexpr inline
+		Alias
+	{	.SortKey = AliasSortKey
+	,	.Name = ID_T<t_vOriginID>::StringView
+	,	.Type = Type<ID_T<t_vTargetID>>
+	};
 }
