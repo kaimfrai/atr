@@ -2,7 +2,8 @@ export module Evaluation.Archetype.Sphere;
 
 import Evaluation.Archetype.Ellipsoid;
 
-import ATR.DataMember;
+import ATR.Member.Alias;
+import ATR.LayoutConfig;
 
 export namespace
 	ATR
@@ -20,7 +21,7 @@ export namespace
 			,	"Width"
 			>
 		)
-	>	extern
+	>	const extern
 		LayoutConfig
 		<	"Sphere"
 		>

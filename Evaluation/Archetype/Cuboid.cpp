@@ -4,7 +4,8 @@ import Evaluation.Archetype.BasicBody;
 
 import Evaluation.Shared.Fraction;
 
-import ATR.DataMember;
+import ATR.MemberList;
+import ATR.LayoutConfig;
 
 export namespace
 	ATR
@@ -19,7 +20,7 @@ export namespace
 		,	Fraction
 			<>
 		>
-	>	extern
+	>	const extern
 		LayoutConfig
 		<	"Cuboid"
 		>

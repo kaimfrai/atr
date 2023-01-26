@@ -1,6 +1,8 @@
 export module ATR.Concatenate;
 
+import ATR.LayoutConfig;
 import ATR.DataMember;
+import ATR.MemberList;
 
 import Meta.ID.Alias;
 import Meta.ID.Concatenate;

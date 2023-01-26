@@ -2,7 +2,8 @@ export module Evaluation.Archetype.Square;
 
 import Evaluation.Archetype.Rectangle;
 
-import ATR.DataMember;
+import ATR.Member.Alias;
+import ATR.LayoutConfig;
 
 export namespace
 	ATR
@@ -15,7 +16,7 @@ export namespace
 			,	"Width"
 			>
 		)
-	>	extern
+	>	const extern
 		LayoutConfig
 		<	"Square"
 		>

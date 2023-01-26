@@ -2,6 +2,10 @@ add_single_file_modules(
 	ATR.cpp
 
 	DataMember.cpp
+	LayoutConfig.cpp
+	MemberList.cpp
+	Member/Alias.cpp
+
 	Layout/Alias.cpp
 	Layout/AliasLayout.cpp
 	Layout/AliasResolver.cpp

@@ -1,4 +1,5 @@
-import ATR.DataMember;
+import ATR.MemberList;
+import ATR.LayoutConfig;
 import ATR.Layout.Bit.Reference;
 import ATR.Instance;
 import ATR.Literals;
@@ -7,10 +8,13 @@ import Meta.Memory.Size;
 import Meta.Arithmetic.Integer;
 import Meta.Bit.Field;
 import Meta.Bit.Index;
+import Meta.Token.Specifier;
 
 import Std;
 
 using ::Meta::Bit::Field;
+using ::ATR::Member;
+using ::Meta::Specifier::Mut;
 
 using namespace ::Meta::Literals;
 
@@ -36,7 +40,7 @@ namespace ATR
 			<	Field<31_bit>
 			>
 		>
-	>	extern
+	>	const extern
 		LayoutConfig
 		<	"BitFieldTest"
 		>

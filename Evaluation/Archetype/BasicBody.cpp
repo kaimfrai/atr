@@ -1,10 +1,10 @@
 export module Evaluation.Archetype.BasicBody;
 
 import Evaluation.Archetype.BasicShape;
-
 import Evaluation.Shared.DataTypes;
 
-import ATR.DataMember;
+import ATR.MemberList;
+import ATR.LayoutConfig;
 
 export namespace
 	ATR
@@ -18,7 +18,7 @@ export namespace
 		<	"Depth"
 		,	Float
 		>
-	>	extern
+	>	const extern
 		LayoutConfig
 		<	"BasicBody"
 		>

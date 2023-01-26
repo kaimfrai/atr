@@ -2,7 +2,8 @@ export module Evaluation.Archetype.Circle;
 
 import Evaluation.Archetype.Ellipse;
 
-import ATR.DataMember;
+import ATR.Member.Alias;
+import ATR.LayoutConfig;
 
 export namespace
 	ATR
@@ -16,7 +17,7 @@ export namespace
 			,	"Width"
 			>
 		)
-	>	extern
+	>	const extern
 		LayoutConfig
 		<	"Circle"
 		>

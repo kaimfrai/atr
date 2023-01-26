@@ -1,12 +1,16 @@
-import ATR.DataMember;
+import ATR.MemberList;
+import ATR.LayoutConfig;
 
 import Meta.Bit.Field;
 import Meta.Memory.Size;
 import Meta.Token.Const;
 import Meta.Token.Mutable;
 import Meta.Token.Specifier;
+import Meta.Token.Extent;
 
 using ::Meta::Bit::Field;
+using ::Meta::Specifier::Mut;
+
 using namespace ::Meta::Literals;
 
 namespace
@@ -26,7 +30,7 @@ namespace
 		<	"Field"
 		,	Field<3_bit>
 		>
-	>	extern
+	>	const extern
 		LayoutConfig
 		<	"Single"
 		>
@@ -46,7 +50,7 @@ namespace
 		<	"Field"
 		,	Field<3_bit> const
 		>
-	>	extern
+	>	const extern
 		LayoutConfig
 		<	"ConstSingle"
 		>
@@ -66,7 +70,7 @@ namespace
 		<	"Field"
 		,	Mut<Field<3_bit>>
 		>
-	>	extern
+	>	const extern
 		LayoutConfig
 		<	"MutSingle"
 		>
@@ -86,14 +90,12 @@ namespace
 		<	"Field"
 		,	Field<3_bit>[5]
 		>
-	>	extern
+	>	const extern
 		LayoutConfig
 		<	"Array"
 		>
 	;
 }
-
-using namespace ::ATR::Literals;
 
 static_assert
 (	ATR::LayoutConfig<"Single">

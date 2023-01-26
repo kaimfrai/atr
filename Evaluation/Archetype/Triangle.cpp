@@ -4,7 +4,8 @@ import Evaluation.Archetype.BasicShape;
 
 import Evaluation.Shared.Fraction;
 
-import ATR.DataMember;
+import ATR.MemberList;
+import ATR.LayoutConfig;
 
 export namespace
 	ATR
@@ -21,7 +22,7 @@ export namespace
 			,	2z
 			>
 		>
-	>	extern
+	>	const extern
 		LayoutConfig
 		<	"Triangle"
 		>

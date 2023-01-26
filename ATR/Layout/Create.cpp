@@ -1,6 +1,8 @@
 export module ATR.Layout.Create;
 
 import ATR.DataMember;
+import ATR.LayoutConfig;
+import ATR.MemberList;
 import ATR.Layout.Alias;
 import ATR.Layout.AliasLayout;
 import ATR.Layout.Data;

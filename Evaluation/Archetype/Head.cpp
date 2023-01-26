@@ -2,7 +2,7 @@ export module Evaluation.Archetype.Head;
 
 import Evaluation.Archetype.Sphere;
 
-import ATR.DataMember;
+import ATR.LayoutConfig;
 import ATR.Concatenate;
 
 export namespace
@@ -21,7 +21,7 @@ export namespace
 		<	"Sphere"
 		,	"RightEye"
 		>
-	>	extern
+	>	const extern
 		LayoutConfig
 		<	"Head"
 		>

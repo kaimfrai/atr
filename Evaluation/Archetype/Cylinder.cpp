@@ -1,10 +1,11 @@
 export module Evaluation.Archetype.Cylinder;
 
 import Evaluation.Archetype.BasicBody;
-
 import Evaluation.Shared.PiFraction;
 
-import ATR.DataMember;
+import ATR.Member.Alias;
+import ATR.MemberList;
+import ATR.LayoutConfig;
 
 export namespace
 	ATR
@@ -24,7 +25,7 @@ export namespace
 			,	4z
 			>
 		>
-	>	extern
+	>	const extern
 		LayoutConfig
 		<	"Cylinder"
 		>

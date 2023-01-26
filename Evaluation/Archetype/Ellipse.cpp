@@ -4,7 +4,8 @@ import Evaluation.Archetype.BasicShape;
 
 import Evaluation.Shared.PiFraction;
 
-import ATR.DataMember;
+import ATR.MemberList;
+import ATR.LayoutConfig;
 
 export namespace
 	ATR
@@ -21,7 +22,7 @@ export namespace
 			,	4z
 			>
 		>
-	>	extern
+	>	const extern
 		LayoutConfig
 		<	"Ellipse"
 		>

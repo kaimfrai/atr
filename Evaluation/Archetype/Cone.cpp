@@ -4,7 +4,9 @@ import Evaluation.Archetype.BasicBody;
 
 import Evaluation.Shared.PiFraction;
 
-import ATR.DataMember;
+import ATR.Member.Alias;
+import ATR.MemberList;
+import ATR.LayoutConfig;
 
 export namespace
 	ATR
@@ -24,7 +26,7 @@ export namespace
 			,	12z
 			>
 		>
-	>	extern
+	>	const extern
 		LayoutConfig
 		<	"Cone"
 		>

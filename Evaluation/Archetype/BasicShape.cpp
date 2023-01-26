@@ -1,7 +1,8 @@
 export module Evaluation.Archetype.BasicShape;
 
 import Evaluation.Shared.DataTypes;
-import ATR.DataMember;
+import ATR.MemberList;
+import ATR.LayoutConfig;
 
 export namespace
 	ATR
@@ -20,7 +21,7 @@ export namespace
 		<	"Color"
 		,	RGBAColor
 		>
-	>	extern
+	>	const extern
 		LayoutConfig
 		<	"BasicShape"
 		>

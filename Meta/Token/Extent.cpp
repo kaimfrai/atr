@@ -1,5 +1,6 @@
 export module Meta.Token.Extent;
 
+import Meta.Arithmetic.Literals;
 import Meta.Token.Specifier;
 import Meta.Token.Type;
 
@@ -134,4 +135,25 @@ export namespace
 	Token::Extent<t_nExtent> constexpr inline
 		Extent
 	{};
+}
+
+export namespace
+		Meta::inline Literals
+{
+	template
+		<	char
+			...	t_npNumeric
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	operator""_ext
+	)	()
+		noexcept
+	->	::Extent
+		<	Arithmetic::EvaluateNumericLiteral
+			<	t_npNumeric
+				...
+			>()
+		>
+	{	return {};	}
 }

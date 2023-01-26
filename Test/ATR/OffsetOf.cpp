@@ -1,4 +1,5 @@
-import ATR.DataMember;
+import ATR.MemberList;
+import ATR.LayoutConfig;
 import ATR.Instance;
 import ATR.Layout.MemberOffset;
 import ATR.Layout.Bit.Iterator;
