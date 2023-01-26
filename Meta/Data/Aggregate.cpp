@@ -1363,9 +1363,9 @@ export namespace
 		return
 		std::equal
 		(	begin(i_rLeft)
-		,	end(i_rLeft)
+		,	end(i_rLeft).base()
 		,	begin(i_rRight)
-		,	end(i_rRight)
+		,	end(i_rRight).base()
 		);
 	}
 
