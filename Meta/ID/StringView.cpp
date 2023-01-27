@@ -103,6 +103,7 @@ export namespace
 		,	StringView
 				i_vRight
 		)
+		noexcept
 	->	bool
 	{	return
 		(	i_vLeft.Data
@@ -120,43 +121,15 @@ export namespace
 		,	StringView
 				i_vRight
 		)
+		noexcept
 	->	::std::strong_ordering
-	{
-		//	taken and modified from
-		//	https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare_three_way
-		auto vLeftPos = begin(i_vLeft);
-		auto const vLeftEnd = end(i_vLeft);
-		bool bLeftRemaining = (vLeftPos != vLeftEnd);
-
-		auto vRightPos = begin(i_vRight);
-		auto const vRightEnd = end(i_vRight);
-		bool bRightRemaining = (vRightPos != vRightEnd);
-
-		for	(
-			;	(	bLeftRemaining
-				and	bRightRemaining
-				)
-			;		bLeftRemaining
-				=	(++vLeftPos != vLeftEnd)
-			,		bRightRemaining
-				=	(++vRightPos != vRightEnd)
-			)
-		{
-			auto const
-				vResult
-			=	*vLeftPos
-			<=>	*vRightPos
-			;
-			if	(::std::is_neq(vResult))
-				return vResult;
-		}
-
-		if	(bLeftRemaining)
-			return ::std::strong_ordering::greater;
-		if	(bRightRemaining)
-			return ::std::strong_ordering::less;
-
-		return ::std::strong_ordering::equal;
+	{	return
+		::std::lexicographical_compare_three_way
+		(	begin(i_vLeft)
+		,	end(i_vLeft)
+		,	begin(i_vRight)
+		,	end(i_vRight)
+		);
 	}
 
 	namespace
