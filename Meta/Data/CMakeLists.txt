@@ -4,3 +4,5 @@ add_single_file_modules(
 	TupleList.cpp
 	Value.cpp
 )
+
+add_subdirectory(Aggregate)

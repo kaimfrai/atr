@@ -4,6 +4,7 @@ import Meta.Size;
 import Meta.Buffer.Iterator;
 import Meta.Token.Array;
 import Meta.Data.Aggregate;
+import Meta.Data.Aggregate.Array;
 
 import Std;
 

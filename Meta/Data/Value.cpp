@@ -1,6 +1,7 @@
 export module Meta.Data.Value;
 
 import Meta.Data.Aggregate;
+import Meta.Data.Aggregate.Array;
 
 import Meta.Lex.Tokenizer;
 import Meta.Lex.Reference;

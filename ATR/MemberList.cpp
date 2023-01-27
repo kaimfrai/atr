@@ -5,6 +5,7 @@ import Meta.ID.StringView;
 import Meta.ID.StringLiteral;
 import Meta.ID.Alias;
 import Meta.Data.Aggregate;
+import Meta.Data.Aggregate.Array;
 import Meta.Token.Type;
 import Meta.Size;
 
