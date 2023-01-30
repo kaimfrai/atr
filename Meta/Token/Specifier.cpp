@@ -59,4 +59,16 @@ export namespace
 		<	t_tEntity const
 		>
 	;
+
+	// cannot have a mutable unbounded array
+	template
+		<	typename
+				t_tEntity
+		>
+	struct
+		Mut
+		<	t_tEntity
+				[]
+		>
+	;
 }

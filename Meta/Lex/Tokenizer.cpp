@@ -21,6 +21,8 @@ import Meta.Token.Extent;
 import Meta.Token.Owner;
 import Meta.Size;
 
+import Std;
+
 export namespace
 	Meta::Lex
 {
@@ -185,9 +187,8 @@ export namespace
 		->	decltype(auto)
 		{	return
 			MakeArray
-			(	operator()(Type<t_tElement>)
+			(	operator()(Type<t_tElement const>)
 			,	Extent<t_nExtent>
-			,	Const
 			);
 		}
 
@@ -208,9 +209,8 @@ export namespace
 		->	decltype(auto)
 		{	return
 			MakeArray
-			(	operator()(Type<t_tElement>)
+			(	operator()(Type<t_tElement volatile>)
 			,	Extent<t_nExtent>
-			,	Volatile
 			);
 		}
 
@@ -231,10 +231,96 @@ export namespace
 		->	decltype(auto)
 		{	return
 			MakeArray
+			(	operator()(Type<t_tElement const volatile>)
+			,	Extent<t_nExtent>
+			);
+		}
+
+		template
+			<	typename
+					t_tElement
+			,	USize
+					t_nExtent
+			>
+		[[nodiscard]]
+		static auto constexpr
+		(	operator()
+		)	(	TypeToken
+				<	::std::array<t_tElement, t_nExtent>
+				>
+			)
+			noexcept
+		->	decltype(auto)
+		{	return
+			MakeArray
 			(	operator()(Type<t_tElement>)
 			,	Extent<t_nExtent>
-			,	Const
-			,	Volatile
+			);
+		}
+
+		template
+			<	typename
+					t_tElement
+			,	USize
+					t_nExtent
+			>
+		[[nodiscard]]
+		static auto constexpr
+		(	operator()
+		)	(	TypeToken
+				<	::std::array<t_tElement, t_nExtent> const
+				>
+			)
+			noexcept
+		->	decltype(auto)
+		{	return
+			MakeArray
+			(	operator()(Type<t_tElement const>)
+			,	Extent<t_nExtent>
+			);
+		}
+
+		template
+			<	typename
+					t_tElement
+			,	USize
+					t_nExtent
+			>
+		[[nodiscard]]
+		static auto constexpr
+		(	operator()
+		)	(	TypeToken
+				<	::std::array<t_tElement, t_nExtent> volatile
+				>
+			)
+			noexcept
+		->	decltype(auto)
+		{	return
+			MakeArray
+			(	operator()(Type<t_tElement volatile>)
+			,	Extent<t_nExtent>
+			);
+		}
+
+		template
+			<	typename
+					t_tElement
+			,	USize
+					t_nExtent
+			>
+		[[nodiscard]]
+		static auto constexpr
+		(	operator()
+		)	(	TypeToken
+				<	::std::array<t_tElement, t_nExtent> const volatile
+				>
+			)
+			noexcept
+		->	decltype(auto)
+		{	return
+			MakeArray
+			(	operator()(Type<t_tElement const volatile>)
+			,	Extent<t_nExtent>
 			);
 		}
 
@@ -273,9 +359,8 @@ export namespace
 		->	decltype(auto)
 		{	return
 			MakeArray
-			(	operator()(Type<t_tElement>)
+			(	operator()(Type<t_tElement const>)
 			,	Extent<0uz>
-			,	Const
 			);
 		}
 
@@ -294,9 +379,8 @@ export namespace
 		->	decltype(auto)
 		{	return
 			MakeArray
-			(	operator()(Type<t_tElement>)
+			(	operator()(Type<t_tElement volatile>)
 			,	Extent<0uz>
-			,	Volatile
 			);
 		}
 
@@ -315,10 +399,8 @@ export namespace
 		->	decltype(auto)
 		{	return
 			MakeArray
-			(	operator()(Type<t_tElement>)
+			(	operator()(Type<t_tElement const volatile>)
 			,	Extent<0uz>
-			,	Const
-			,	Volatile
 			);
 		}
 

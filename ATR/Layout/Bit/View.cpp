@@ -1,6 +1,5 @@
 export module ATR.Layout.Bit.View;
 
-import ATR.Layout.Bit.Access;
 import ATR.Layout.Bit.Array;
 import ATR.Layout.Bit.MemberOffset;
 import ATR.Layout.Bit.Reference;
@@ -9,8 +8,6 @@ import Meta.ID.Concept;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Cast;
 import Meta.Memory.Size.PointerArithmetic;
-import Meta.Bit.Index;
-import Meta.Token.LRef;
 import Meta.Token.RRef;
 import Meta.Token.CopyRef;
 import Meta.Token.Specifier;
@@ -20,6 +17,7 @@ import Meta.Token.Volatile;
 import Meta.Token.Type;
 import Meta.Trait.BitSize;
 import Meta.Lex.Transform;
+import Meta.Lex.Tokenizer;
 
 import Meta.Size;
 
@@ -28,13 +26,11 @@ import Std;
 using ::Meta::Lex::Transform;
 using ::Meta::Const;
 using ::Meta::CopyRef;
-using ::Meta::LRef;
 using ::Meta::Mutable;
 using ::Meta::RRef;
 using ::Meta::Specifier::Mut;
 using ::Meta::Volatile;
 using ::Meta::Type;
-using ::Meta::TypeEntity;
 using ::Meta::USize;
 
 using namespace ::Meta::Literals;
@@ -298,31 +294,30 @@ export namespace
 			<	typename
 				...	t_tpTransform
 			>
+		[[nodiscard]]
 		static auto constexpr
 		(	OffsetOf
 		)	(	t_tName
 			,	Transform<t_tpTransform...>
 					i_vTransform
 			)
-		{
-			using
-				tTransformed
-			=	TypeEntity
-				<	i_vTransform
-					(	Type<t_tEntity>
-					)
-				//	reference only for mutable reference
-				//	pure value otherwise
-				-	RRef
-				-	Const
-				-	Volatile
-				-	CopyRef
-				>
-			;
-			return
+			noexcept
+		{	return
 			MemberOffset
 			<	View::BitOffset
-			,	tTransformed
+			,	decltype
+				(	::Meta::Tokenize
+					(	i_vTransform
+						(	Type<t_tEntity>
+						)
+					//	reference only for mutable reference
+					//	pure value otherwise
+					-	RRef
+					-	Const
+					-	Volatile
+					-	CopyRef
+					)
+				)
 			>{	View::ByteOffset
 			};
 		}
@@ -368,33 +363,32 @@ export namespace
 			<	typename
 				...	t_tpTransform
 			>
+		[[nodiscard]]
 		static auto constexpr
 		(	OffsetOf
 		)	(	t_tName
 			,	Transform<t_tpTransform...>
 					i_vTransform
 			)
-		{
-			using
-				tTransformed
-			=	TypeEntity
-				<	i_vTransform
-					(	Type<t_tEntity>
-					)
-				//	reference for const& and &
-				//	pure value otherwise
-				-	RRef
-				-	Const
-				-	Volatile
-					//	 this takes const out of const&
-				+	Mutable
-				-	Mutable
-				>
-			;
-			return
+			noexcept
+		{	return
 			MemberOffset
 			<	View::BitOffset
-			,	tTransformed
+			,	decltype
+				(	::Meta::Tokenize
+					(	i_vTransform
+						(	Type<t_tEntity>
+						)
+					//	reference for const& and &
+					//	pure value otherwise
+					-	RRef
+					-	Const
+					-	Volatile
+						//	 this takes const out of const&
+					+	Mutable
+					-	Mutable
+					)
+				)
 			>{	View::ByteOffset
 			};
 		}

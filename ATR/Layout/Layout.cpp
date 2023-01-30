@@ -1,8 +1,6 @@
 export module ATR.Layout.Layout;
 
-import ATR.Layout.Alias;
 import ATR.Layout.Bit.MakeLayout;
-import ATR.Layout.Bit.MemberOffset;
 import ATR.Layout.Concept;
 import ATR.Layout.Member;
 import ATR.Layout.MemberOffset;
@@ -19,6 +17,7 @@ import Meta.Token.Type;
 import Meta.Data.Aggregate;
 import Meta.ID.Concept;
 import Meta.Math.Prev;
+import Meta.Lex.Tokenizer;
 
 import Std;
 
@@ -74,8 +73,8 @@ auto constexpr
 }
 
 template
-	<	Meta::TypeID const
-		*	t_aTypes
+	<	typename
+		...	t_tpMember
 	,	USize
 		...	t_npIndex
 	>
@@ -84,10 +83,18 @@ auto constexpr
 )	(	Meta::IndexToken<t_npIndex...>
 	)
 {
+	static_assert(sizeof...(t_tpMember) > sizeof...(t_npIndex));
+	::std::array<::Meta::TypeID, sizeof...(t_tpMember)> constexpr
+		vTypes
+	{	::Meta::Type<t_tpMember>
+		...
+	};
 	return
 	::MakeLayout
 	<	::Meta::RestoreTypeEntity
-		<	t_aTypes[t_npIndex]
+		<	vTypes
+			[	t_npIndex
+			]
 		>
 		...
 	>()
@@ -161,17 +168,10 @@ export namespace
 			})
 		;
 
-		static Meta::TypeID constexpr
-			MemberTypes
-		[]{	Meta::Type<t_tpMember>
-			...
-		};
-
-
 		using
 			NorthType
 		=	decltype
-			(	SplitLayoutType<+MemberTypes>
+			(	SplitLayoutType<t_tpMember...>
 				(	Meta::Sequence<SplitIndex>
 				)
 			)
@@ -184,7 +184,7 @@ export namespace
 		using
 			SouthType
 		=	decltype
-			(	SplitLayoutType<+MemberTypes>
+			(	SplitLayoutType<t_tpMember...>
 				(	Meta::Sequence<sizeof...(t_tpMember) - SplitIndex>
 				+=	Meta::Index<SplitIndex>
 				)
@@ -411,17 +411,19 @@ export namespace
 		->	decltype(auto)
 		{	return
 			MemberOffset
-			<	decltype
-				(	::std::declval
-					<	TypeEntity
-						<	i_vTransform
-							(	Type<Layout>
-							)
-						>
-					>()
-					[	i_vName
-					]
-				)
+			<	::Meta::TokenizeEntity
+				<	decltype
+					(	::std::declval
+						<	TypeEntity
+							<	i_vTransform
+								(	Type<Layout>
+								)
+							>
+						>()
+						[	i_vName
+						]
+					)
+				>
 			>{	0uz
 			};
 		}

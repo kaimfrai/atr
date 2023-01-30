@@ -40,5 +40,6 @@ export import Meta.Token.Transform.RemoveReference;
 export import Meta.Token.Transform.RemoveRValueReference;
 export import Meta.Token.Transform.RemoveVolatile;
 export import Meta.Token.Type;
+export import Meta.Token.Type.Cast;
 export import Meta.Token.Type.Compare;
 export import Meta.Token.Volatile;

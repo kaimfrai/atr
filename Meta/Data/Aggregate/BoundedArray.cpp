@@ -12,7 +12,6 @@ import Meta.Size;
 
 import Std;
 
-using ::Meta::USize;
 using ::Meta::Buffer::Iterator;
 using ::Meta::Buffer::Sentinel;
 
@@ -71,21 +70,21 @@ export namespace
 		(	get
 		)	()	&
 			noexcept
-		->	ElementType(&)[t_nExtent]
+		->	::std::array<ElementType, t_nExtent>&
 		{	return this->Data;	}
 
 		auto constexpr
 		(	get
 		)	()	const&
 			noexcept
-		->	ConstElementType(&)[t_nExtent]
+		->	::std::array<ElementType, t_nExtent> const&
 		{	return this->Data;	}
 
 		auto constexpr
 		(	get
 		)	()	&&
 			noexcept
-		->	ElementType(&&)[t_nExtent]
+		->	::std::array<ElementType, t_nExtent>
 		{	return ::std::move(this->Data);	}
 
 		constexpr
@@ -165,14 +164,14 @@ export namespace
 		)	()	&
 			noexcept
 		->	pointer
-		{	return this->Data;	}
+		{	return this->Data.data();	}
 
 		auto constexpr
 		(	data
 		)	()	const&
 			noexcept
 		->	const_pointer
-		{	return this->Data;	}
+		{	return this->Data.data();	}
 
 		auto constexpr
 		(	data

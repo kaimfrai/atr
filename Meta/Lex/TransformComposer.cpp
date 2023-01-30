@@ -10,6 +10,7 @@ import Meta.Lex.CV;
 import Meta.Lex.Array;
 import Meta.Lex.Base;
 
+import Meta.Token.Extent;
 import Meta.Token.Owner;
 import Meta.Token.Pointer;
 import Meta.Token.Type;
@@ -67,15 +68,15 @@ export namespace
 		template
 			<	typename
 					t_tEntity
-			,	typename
-					t_tExtent
+			,	auto
+					t_nExtent
 			,	typename
 				...	t_tpTransform
 			>
 		[[nodiscard]]
 		auto constexpr
 		(	Compose
-		)	(	Array<t_tEntity, t_tExtent>
+		)	(	Array<t_tEntity, t_nExtent>
 			,	Transform<t_tpTransform...>
 			)
 			noexcept
@@ -84,7 +85,7 @@ export namespace
 			Compose
 			(	t_tEntity{}
 			,	Transform
-				<	t_tExtent
+				<	Token::Extent<t_nExtent>
 				,	t_tpTransform
 					...
 				>{}

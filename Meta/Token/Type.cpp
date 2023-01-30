@@ -1,5 +1,12 @@
 export module Meta.Token.Type;
 
+import Meta.Token.Specifier;
+import Meta.Size;
+
+import Std;
+
+using ::Meta::Specifier::Mut;
+
 export namespace
 	Meta::Token
 {
@@ -114,6 +121,66 @@ export namespace
 	template
 		<	typename
 				t_tEntity
+		,	USize
+				t_nExtent
+		>
+	struct
+		TypeToken
+		<	t_tEntity
+				[	t_nExtent
+				]
+		>
+	{
+		using
+			Entity
+		=	::std::array
+			<	t_tEntity
+			,	t_nExtent
+			>
+		;
+
+		static EraseType constexpr
+			Erase
+		{};
+
+		[[nodiscard]]
+		explicit(false) constexpr
+		(	operator
+			TypeID
+		)	()	const
+		{	return
+			{	&Erase
+			};
+		}
+
+		[[nodiscard]]
+		friend auto constexpr
+		(	RestoreType
+		)	(	TypeRestore
+				<	TypeID
+					{	&Erase
+					}
+				>
+			)
+			noexcept
+		{	return
+			TypeToken
+			{};
+		}
+
+		friend auto constexpr
+		(	operator ==
+		)	(	TypeID
+			,	TypeID
+			)
+			noexcept
+		->	bool
+		;
+	};
+
+	template
+		<	typename
+				t_tEntity
 		>
 	(	TypeToken
 	)	(	TypeToken
@@ -141,6 +208,137 @@ export namespace
 		Type
 	=	TypeToken
 		<	t_tEntity
+		>{}
+	;
+
+	// c-style arrays and std::array are treated interchangably
+	// c-style arrays are more readable as types
+	// std::array is more useful as object
+	template
+		<	typename
+				t_tElement
+		,	USize
+				t_nExtent
+		>
+	auto constexpr inline
+		Type
+		<	::std::array
+			<	t_tElement
+			,	t_nExtent
+			>
+		>
+	=	TypeToken
+		<	t_tElement
+				[	t_nExtent
+				]
+		>{}
+	;
+
+	template
+		<	typename
+				t_tElement
+		,	USize
+				t_nExtent
+		>
+	auto constexpr inline
+		Type
+		<	::std::array
+			<	t_tElement
+			,	t_nExtent
+			>	const
+		>
+	=	TypeToken
+		<	t_tElement const
+				[	t_nExtent
+				]
+		>{}
+	;
+
+	template
+		<	typename
+				t_tElement
+		,	USize
+				t_nExtent
+		>
+	auto constexpr inline
+		Type
+		<	::std::array
+			<	t_tElement
+			,	t_nExtent
+			>	volatile
+		>
+	=	TypeToken
+		<	t_tElement volatile
+				[	t_nExtent
+				]
+		>{}
+	;
+
+	template
+		<	typename
+				t_tElement
+		,	USize
+				t_nExtent
+		>
+	auto constexpr inline
+		Type
+		<	::std::array
+			<	t_tElement
+			,	t_nExtent
+			>	const volatile
+		>
+	=	TypeToken
+		<	t_tElement const volatile
+				[	t_nExtent
+				]
+		>{}
+	;
+
+	template
+		<	typename
+				t_tElement
+		,	USize
+				t_nExtent
+		>
+	auto constexpr inline
+		Type
+		<	Mut
+			<	::std::array
+				<	t_tElement
+				,	t_nExtent
+				>
+			>
+		>
+	=	TypeToken
+		<	Mut
+			<	t_tElement
+					[	t_nExtent
+					]
+			>
+		>{}
+	;
+
+	template
+		<	typename
+				t_tElement
+		,	USize
+				t_nExtent
+		>
+	auto constexpr inline
+		Type
+		<	Mut
+			<	::std::array
+				<	t_tElement
+				,	t_nExtent
+				>	volatile
+			>
+		>
+	=	TypeToken
+		<	Mut
+			<	t_tElement volatile
+					[	t_nExtent
+					]
+			>
 		>{}
 	;
 

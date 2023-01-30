@@ -4,6 +4,8 @@ import Meta.Lex.Base;
 import Meta.Token.Type;
 import Meta.Token.Volatile;
 
+import Std;
+
 template
 	<	typename
 			t_tEntity
@@ -19,13 +21,16 @@ struct
 	))
 {
 	static_assert
-	(	[]{	if	constexpr
-				(	sizeof...(t_tpQualifier)
+	(	[]{	auto constexpr
+				nQualifierCount
+			=	sizeof...(t_tpQualifier)
+			;
+			if	constexpr
+				(	nQualifierCount
 				==	2uz
 				)
-			{	::Meta::TypeID const
+			{	::std::array<::Meta::TypeID, nQualifierCount> const
 					vQualifier
-					[]
 				{	::Meta::Type<t_tpQualifier>
 					...
 				};
@@ -40,7 +45,7 @@ struct
 			}
 			else
 			{	return
-					sizeof...(t_tpQualifier)
+					nQualifierCount
 				<	2uz
 				;
 			}

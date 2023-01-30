@@ -1,8 +1,9 @@
 export module Meta.Token.Array;
 
 import Meta.Token.Type;
-
 import Meta.Size;
+
+import Std;
 
 export namespace
 	Meta
@@ -13,7 +14,7 @@ export namespace
 		,	USize
 				t_nExtent
 		>
-	TypeToken<t_tElement[t_nExtent]> constexpr
+	TypeToken<::std::array<t_tElement, t_nExtent>> constexpr
 		ArrayType
 	{};
 

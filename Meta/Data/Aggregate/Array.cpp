@@ -3,7 +3,11 @@ export module Meta.Data.Aggregate.Array;
 import Meta.Data.Aggregate.BoundedArray;
 import Meta.Data.Aggregate.UnboundedArray;
 import Meta.Buffer.Iterator;
+import Meta.Trait.ArrayExtent;
+import Meta.Trait.ArrayElement;
 import Meta.Token.Array;
+import Meta.Token.Type;
+import Meta.Token.Type.Cast;
 import Meta.Size;
 
 import Std;
@@ -31,11 +35,15 @@ export namespace
 	{
 		auto constexpr
 			vExtent
-		=	::std::extent_v<t_tTarget>
+		=	ArrayExtent_Of
+			(	Type<t_tTarget>
+			)
 		;
-		using
-			tElement
-		=	::std::remove_extent_t<t_tTarget>
+		static auto constexpr
+			vElementType
+		=	ArrayElement_Of
+			(	Type<t_tTarget>
+			)
 		;
 
 		return
@@ -49,8 +57,9 @@ export namespace
 			)
 		->	Aggregate<t_tTarget>
 		{	return
-			{	static_cast<tElement>
-				(	i_aSource
+			{	Cast
+				(	vElementType
+				,	i_aSource
 					[	t_npIndex
 					]
 				)

@@ -3,20 +3,23 @@ export module Meta.Lex.Array;
 import Meta.Lex.CV;
 
 import Meta.Token.Extent;
-import Meta.Token.Type;
 import Meta.Size;
+
+using ::Meta::USize;
 
 template
 	<	typename
 			t_tElement
-	,	typename
-			t_tExtent
+	,	USize
+			t_nExtent
 	>
 struct
 	Array
 :	decltype
 	(	t_tElement{}
-	+	t_tExtent{}
+	+	Meta::Extent
+		<	t_nExtent
+		>
 	)
 {};
 
@@ -26,14 +29,14 @@ export namespace
 	template
 		<	typename
 				t_tElement
-		,	typename
-				t_tExtent
+		,	USize
+				t_nExtent
 		>
 	using
 		Array
 	=	::Array
 		<	t_tElement
-		,	t_tExtent
+		,	t_nExtent
 		>
 	;
 
@@ -47,10 +50,12 @@ export namespace
 		>
 	using
 		MatchCVArray
-	=	CV
+	=	//	matching all const objects should include arrays, therefore
+		//	qualifiers are outside of the array and not attached to the element
+		CV
 		<	::Array
 			<	t_tElement
-			,	Token::Extent<t_nExtent>
+			,	t_nExtent
 			>
 		,	t_tpQualifier
 			...
@@ -60,18 +65,16 @@ export namespace
 	template
 		<	typename
 				t_tElement
-		,	USize
-				t_nExtent
 		,	typename
 			...	t_tpQualifier
+		,	USize
+				t_nExtent
 		>
 	[[nodiscard]]
 	auto constexpr
 	(	MakeArray
-	)	(	CV<t_tElement>
+	)	(	CV<t_tElement, t_tpQualifier...>
 		,	Token::Extent<t_nExtent>
-		,	t_tpQualifier
-			...
 		)
 		noexcept
 	->	MatchCVArray

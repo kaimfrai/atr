@@ -1,11 +1,9 @@
 export module Meta.Logic.Bit.Term;
 
 import Meta.Logic.Bit.Clause;
-import Meta.Logic.Bit.LiteralIterator;
 import Meta.Logic.Bit.Optimizer;
 
 import Meta.Size;
-import Meta.Bit.Index;
 import Meta.Bit.Index.Arithmetic;
 import Meta.Bit.Count.Compare;
 import Meta.Bit.Count.Range;
@@ -14,8 +12,6 @@ import Meta.Bit.Field.CountOnes;
 import Meta.Bit.Field.Width;
 
 import Std;
-
-using ::Meta::Bit::Index;
 
 export namespace
 	Meta::Logic::Bit
@@ -226,10 +222,9 @@ export namespace
 			}
 			else
 			{
-				Clause::IndexType
+				::std::array<Clause::IndexType, LiteralLimit.get()>
 					vTrimLiteralPermutation
-				[	LiteralLimit.get()
-				]{};
+				{};
 
 				for	(	Clause::IndexType
 							nPermutation
@@ -239,11 +234,14 @@ export namespace
 					:	nMaxLiteralCount
 					)
 				{
-						vTrimLiteralPermutation
-						[	nIndex.get()
+					(	vTrimLiteralPermutation
+						[	static_cast<USize>
+							(	nIndex.get()
+							)
 						]
 					=	nPermutation
-					;
+					);
+
 					if	(vLiteralField[nIndex])
 						++nPermutation;
 				}
@@ -251,7 +249,7 @@ export namespace
 				return
 				Permutation
 				(	::std::span<Clause::IndexType const>
-					{	+vTrimLiteralPermutation
+					{	vTrimLiteralPermutation.begin()
 					,	static_cast<USize>(nMaxLiteralCount.get())
 					}
 				);

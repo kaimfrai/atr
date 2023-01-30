@@ -1,79 +1,56 @@
 export module ATR.Layout.Bit.MemberOffset;
 
-import ATR.Layout.Bit.Access;
 import ATR.Layout.Bit.Array;
 import ATR.Layout.Bit.Reference;
 
 import Meta.Size;
-import Meta.Predicate.TypeTraits;
 import Meta.Memory.Size;
 import Meta.Memory.Size.PointerArithmetic;
 import Meta.Bit.Index;
-import Meta.Token.LRef;
-import Meta.Token.Type;
-import Meta.Token.Specifier;
 import Meta.Trait.BitSize;
+import Meta.Lex.CV;
+import Meta.Lex.Reference;
+import Meta.Lex.Array;
 
 import Std;
 
-using ::Meta::LRef;
-using ::Meta::Type;
 using ::Meta::USize;
+using ::Meta::Lex::MatchCV;
+using ::Meta::Lex::MatchCVArray;
+using ::Meta::Lex::MatchLRef;
+using ::Meta::ByteSize;
+using ::Meta::BitSize_Of;
 
 using namespace ::Meta::Literals;
+
+using BitOffset = ::Meta::Bit::Index<1_byte>;
 
 export namespace
 	ATR::Bit
 {
 	template
-		<	::Meta::Bit::Index<1_byte>
-				t_nBitOffset
+		<	BitOffset
 		,	typename
-				t_tMember
 		>
 	struct
 		MemberOffset
-	{
-		static_assert
-		(	not
-			::std::is_const_v<t_tMember>
-		,	"Prefer pure value types to const value types!"
-		);
+	;
 
-		static_assert
-		(	not
-			::std::is_volatile_v<t_tMember>
-		,	"Prefer pure value types to volatile value types!"
-		);
-
-		static_assert
-		(	requires{	sizeof(t_tMember);	}
-		,	"Types without size not supported!"
-		);
-
-		static_assert
-		(	not
-			::Meta::IsTypePack_Of<::Meta::Specifier::Mut>
-			(	Type<t_tMember>
-			)
-		,	"Prefer pure value types to mutable value types!"
-		);
-
-		static_assert
-		(	not
-			::std::is_rvalue_reference_v<t_tMember>
-		,	"Prefer pure value types to rvalue references!"
-		);
-
-		static_assert
-		(	not
-			::std::is_const_v
-			<	::std::remove_reference_t<t_tMember>
+	template
+		<	BitOffset
+				t_nBitOffset
+		,	typename
+				t_tData
+		>
+	struct
+		MemberOffset
+		<	t_nBitOffset
+		,	MatchCV
+			<	t_tData
 			>
-		,	"Prefer pure value types to const lvalue references!"
-		);
-
-		::Meta::ByteSize
+		>
+	{
+		ByteSize
 			Offset
 		;
 
@@ -86,132 +63,240 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{
-				i_aObject
-			+=	Offset
-			;
-
-			using namespace ATR::Bit;
-
 			auto constexpr
 				vBitSize
-			=	::Meta::BitSize_Of
-				(	Type<t_tMember>
-				-	LRef
+			=	BitSize_Of
+				(	MatchCV
+					<	t_tData
+					>{}
+				)
+			;
+			return
+				Reference
+				<	vBitSize
+				,	t_nBitOffset
+				>
+			::	Read
+				(	i_aObject
+				+	Offset
+				)
+			;
+		}
+	};
+
+	template
+		<	BitOffset
+				t_nBitOffset
+		,	typename
+				t_tElement
+		,	USize
+				t_nExtent
+		>
+	struct
+		MemberOffset
+		<	t_nBitOffset
+		,	MatchCVArray
+			<	t_tElement
+			,	t_nExtent
+			>
+		>
+	{
+		ByteSize
+			Offset
+		;
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
+		)	(	::std::byte const
+				*	i_aObject
+			)	const
+			noexcept
+		->	decltype(auto)
+		{
+			auto constexpr
+				vElementBitSize
+			=	BitSize_Of
+				(	t_tElement{}
+				)
+			;
+			return
+			CopyArray
+			(	ArrayConstReference
+				<	vElementBitSize
+				,	t_nExtent
+				,	t_nBitOffset
+				>{	i_aObject
+				+	Offset
+				}
+			);
+		}
+	};
+
+	template
+		<	BitOffset
+				t_nBitOffset
+		,	typename
+				t_tData
+		>
+	struct
+		MemberOffset
+		<	t_nBitOffset
+		,	MatchLRef
+			<	MatchCV
+				<	t_tData
+				>
+			>
+		>
+	{
+		ByteSize
+			Offset
+		;
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
+		)	(	::std::byte const
+				*	i_aObject
+			)	const
+			noexcept
+		->	decltype(auto)
+		{
+			auto constexpr
+				vBitSize
+			=	BitSize_Of
+				(	MatchCV
+					<	t_tData
+					>{}
+				)
+			;
+			auto* const
+				aBuffer
+			=	// the underlying byte array is defined mutable
+				// if the offset points to that array this is well defined
+				// if not all bets are off regardless
+				::std::launder
+				(	const_cast
+					<	::std::byte*
+					>(	i_aObject
+					+	Offset
+					)
 				)
 			;
 
-			if	constexpr
-				(	::std::is_reference_v
-					<	t_tMember
-					>
-				)
-			{
-				auto* const
-					aBuffer
-				=	// the underlying byte array is defined mutable
-					// if the offset points to that array this is well defined
-					// if not all bets are off regardless
-					::std::launder
-					(	const_cast
-						<	::std::byte*
-						>(	i_aObject
-						)
-					)
-				;
-
-				if	constexpr
-					(	using
-							tArray
-						=	::std::remove_reference_t
-							<	t_tMember
-							>
-					;	::std::is_bounded_array_v
-						<	tArray
-						>
-					)
-				{
-					auto constexpr nExtent = ::std::extent_v<tArray>;
-					auto constexpr vElementBitSize = vBitSize / nExtent;
-					return
-					ArrayReference
-					<	vElementBitSize
-					,	nExtent
-					,	t_nBitOffset
-					>{	aBuffer
-					};
-				}
-				else
-				{	return
-					Reference
-					<	vBitSize
-					,	t_nBitOffset
-					>{	aBuffer
-					};
-				}
-			}
-			else
-			if	constexpr
-				(	::std::is_bounded_array_v
-					<	t_tMember
-					>
-				)
-			{
-				auto constexpr nExtent = ::std::extent_v<t_tMember>;
-				auto constexpr vElementBitSize = vBitSize / nExtent;
-				return
-				CopyArray
-				(	ArrayConstReference
-					<	vElementBitSize
-					,	nExtent
-					,	t_nBitOffset
-					>{	i_aObject
-					}
-				);
-			}
-			else
-			{	return
-					Reference
-					<	vBitSize
-					,	t_nBitOffset
-					>
-				::	Read
-					(	i_aObject
-					)
-				;
-			}
-		}
-
-		/// immitates syntax of pointer to member dereference
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator->*
-		)	(	::std::byte const
-				*	i_aObject
-			,	MemberOffset
-					i_vBitOffset
-			)
-			noexcept
-		->	decltype(auto)
-		{	return
-			i_vBitOffset
-			(	i_aObject
-			);
-		}
-
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator +
-		)	(	::Meta::ByteSize
-					i_nOffset
-			,	MemberOffset
-					i_vMember
-			)
-		->	MemberOffset
-		{	return
-			{	i_nOffset
-			+	i_vMember.Offset
+			return
+			Reference
+			<	vBitSize
+			,	t_nBitOffset
+			>{	aBuffer
 			};
 		}
 	};
+
+	template
+		<	BitOffset
+				t_nBitOffset
+		,	typename
+				t_tElement
+		,	USize
+				t_nExtent
+		>
+	struct
+		MemberOffset
+		<	t_nBitOffset
+		,	MatchLRef
+			<	MatchCVArray
+				<	t_tElement
+				,	t_nExtent
+				>
+			>
+		>
+	{
+		ByteSize
+			Offset
+		;
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
+		)	(	::std::byte const
+				*	i_aObject
+			)	const
+			noexcept
+		->	decltype(auto)
+		{
+			auto constexpr
+				vElementBitSize
+			=	BitSize_Of
+				(	t_tElement{}
+				)
+			;
+
+			auto* const
+				aBuffer
+			=	// the underlying byte array is defined mutable
+				// if the offset points to that array this is well defined
+				// if not all bets are off regardless
+				::std::launder
+				(	const_cast
+					<	::std::byte*
+					>(	i_aObject
+					+	Offset
+					)
+				)
+			;
+			return
+			ArrayReference
+			<	vElementBitSize
+			,	t_nExtent
+			,	t_nBitOffset
+			>{	aBuffer
+			};
+		}
+	};
+
+	/// immitates syntax of pointer to member dereference
+	template
+		<	BitOffset
+				t_nBitOffset
+		,	typename
+				t_tEntity
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	operator->*
+	)	(	::std::byte const
+			*	i_aObject
+		,	MemberOffset<t_nBitOffset, t_tEntity>
+				i_vBitOffset
+		)
+		noexcept
+	->	decltype(auto)
+	{	return
+		i_vBitOffset
+		(	i_aObject
+		);
+	}
+
+	template
+		<	BitOffset
+				t_nBitOffset
+		,	typename
+				t_tEntity
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	operator +
+	)	(	ByteSize
+				i_nOffset
+		,	MemberOffset<t_nBitOffset, t_tEntity>
+				i_vMember
+		)
+		noexcept
+	->	MemberOffset<t_nBitOffset, t_tEntity>
+	{	return
+		{	i_nOffset
+		+	i_vMember.Offset
+		};
+	}
 }
