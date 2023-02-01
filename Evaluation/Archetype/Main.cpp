@@ -1,5 +1,5 @@
 import ATR.Virtual.Interface;
-import ATR.VirtualArgument;
+import ATR.Virtual.Storage;
 import ATR.Literals;
 import ATR.Instance;
 
@@ -34,10 +34,10 @@ auto
 
 	using
 		Body3D
-	=	ATR::VirtualStorage
+	=	ATR::Virtual::Storage
 		<	sizeof(Type<"Head">)
 		,	alignof(Float)
-		,	ATR::Interface
+		,	ATR::Virtual::Interface
 			<	"ComputeVolume"
 			,	auto(	::std::byte const
 						*

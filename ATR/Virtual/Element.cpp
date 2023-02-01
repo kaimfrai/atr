@@ -1,32 +1,34 @@
-export module ATR.VirtualArgument;
+export module ATR.Virtual.Element;
 
 import ATR.Virtual.Table;
 
-import Meta.ID.Concept;
-import Meta.ID.StringLiteral;
-import Meta.ID.Alias;
 import Meta.Predicate.Trivial;
-import Meta.Token.Type;
-import Meta.Size;
 import Meta.Logic.Constraint;
-import Meta.Lex.Tokenizer;
+import Meta.Token.Type;
+import Meta.ID.Concept;
 
 import Std;
 
+using ::Meta::ProtoID;
+using ::Meta::TypeToken;
+using ::Meta::Type;
+using ::Meta::ProtoConstraint;
+using ::Meta::IsTriviallyCopyable;
+
 export namespace
-	ATR
+	ATR::Virtual
 {
 	template
 		<	typename
 				t_tErased
 		,	typename
-			...	t_tpVirtualItem
+			...	t_tpEntry
 		>
 	class
-		VirtualElement
+		Element
 	{
-		Virtual::Table
-		<	t_tpVirtualItem
+		Table
+		<	t_tpEntry
 			...
 		>	VTable
 		;
@@ -40,7 +42,7 @@ export namespace
 
 	public:
 		template
-			<	Meta::ProtoConstraint<Meta::IsTriviallyCopyable>
+			<	ProtoConstraint<IsTriviallyCopyable>
 					t_tObject
 			,	typename
 				...	t_tpArgument
@@ -57,9 +59,9 @@ export namespace
 		and	(	alignof(t_tObject)
 			<=	alignof(t_tErased)
 			)
-		constexpr
-		(	VirtualElement
-		)	(	Meta::TypeToken
+		explicit(false) constexpr
+		(	Element
+		)	(	TypeToken
 				<	t_tObject
 				>
 			,	t_tpArgument
@@ -67,7 +69,7 @@ export namespace
 				...	i_rpArgument
 			)
 		:	VTable
-			{	Meta::Type<t_tObject&>
+			{	Type<t_tObject&>
 			}
 		{
 			new (	+ErasedElement
@@ -82,7 +84,7 @@ export namespace
 		}
 
 		template
-			<	Meta::ProtoID
+			<	ProtoID
 					t_tFuncID
 			,	typename
 				...	t_tpArgument
@@ -109,7 +111,7 @@ export namespace
 		}
 
 		template
-			<	Meta::ProtoID
+			<	ProtoID
 					t_tFuncID
 			,	typename
 				...	t_tpArgument
@@ -135,24 +137,4 @@ export namespace
 			);
 		}
 	};
-
-	template
-		<	Meta::USize
-				t_nMaxSize
-		,	Meta::USize
-				t_nMaxAlign
-		,	typename
-			...	t_tpVirtualItem
-		>
-	using
-		VirtualStorage
-	=	VirtualElement
-		<	::std::aligned_storage_t
-			<	t_nMaxSize
-			,	t_nMaxAlign
-			>
-		,	t_tpVirtualItem
-			...
-		>
-	;
 }

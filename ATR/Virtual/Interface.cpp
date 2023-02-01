@@ -10,7 +10,7 @@ using ::Meta::ID_T;
 using ::Meta::TokenizeEntity;
 
 export namespace
-	ATR
+	ATR::Virtual
 {
 	/// helper alias. builds a function ID type and extracts raw signature and noexcept qualifier
 	template
@@ -21,7 +21,7 @@ export namespace
 		>
 	using
 		Interface
-	=	Virtual::Entry
+	=	Entry
 		<	ID_T
 			<	t_vFunctionName
 			>

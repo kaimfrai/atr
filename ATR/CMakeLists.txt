@@ -36,7 +36,6 @@ add_single_file_modules(
 
 	Concatenate.cpp
 	DependencyIDMap.cpp
-	VirtualArgument.cpp
 
 	Instance.cpp
 )
