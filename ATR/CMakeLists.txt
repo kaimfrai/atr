@@ -40,3 +40,6 @@ add_single_file_modules(
 
 	Instance.cpp
 )
+
+add_subdirectory(Virtual)
+

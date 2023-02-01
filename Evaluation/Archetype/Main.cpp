@@ -1,3 +1,4 @@
+import ATR.Virtual.Interface;
 import ATR.VirtualArgument;
 import ATR.Literals;
 import ATR.Instance;
@@ -36,7 +37,7 @@ auto
 	=	ATR::VirtualStorage
 		<	sizeof(Type<"Head">)
 		,	alignof(Float)
-		,	ATR::Virtual
+		,	ATR::Interface
 			<	"ComputeVolume"
 			,	auto(	::std::byte const
 						*
