@@ -81,7 +81,7 @@ export namespace
 			<	typename
 					t_tObject
 			>
-		explicit constexpr
+		explicit(true) constexpr
 		(	Entry
 		)	(	TypeToken
 				<	t_tObject

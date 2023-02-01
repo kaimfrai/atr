@@ -27,3 +27,6 @@ export import ATR.Member.Alias;
 export import ATR.Literals;
 export import ATR.Instance;
 export import ATR.VirtualArgument;
+export import ATR.Virtual.Entry;
+export import ATR.Virtual.Interface;
+export import ATR.Virtual.Table;

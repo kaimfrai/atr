@@ -1,6 +1,6 @@
 export module ATR.VirtualArgument;
 
-import ATR.Address;
+import ATR.Virtual.Table;
 
 import Meta.ID.Concept;
 import Meta.ID.StringLiteral;
@@ -18,38 +18,6 @@ export namespace
 {
 	template
 		<	typename
-			...	t_tpVirtualItem
-		>
-	struct
-		VirtualTable
-	:	t_tpVirtualItem
-		...
-	{
-		using
-			t_tpVirtualItem
-			::	operator()
-			...
-		;
-
-		template
-			<	typename
-					t_tObject
-			>
-		explicit constexpr
-		(	VirtualTable
-		)	(	Meta::TypeToken
-				<	t_tObject
-				>	i_vObjectType
-			)
-		:	t_tpVirtualItem
-			{	i_vObjectType
-			}
-			...
-		{}
-	};
-
-	template
-		<	typename
 				t_tErased
 		,	typename
 			...	t_tpVirtualItem
@@ -57,10 +25,10 @@ export namespace
 	class
 		VirtualArgument
 	{
-		VirtualTable
+		Virtual::Table
 		<	t_tpVirtualItem
 			...
-		> VTable
+		>	VTable
 		;
 
 		t_tErased
@@ -124,7 +92,7 @@ export namespace
 	class
 		VirtualElement
 	{
-		VirtualTable
+		Virtual::Table
 		<	t_tpVirtualItem
 			...
 		>	VTable
