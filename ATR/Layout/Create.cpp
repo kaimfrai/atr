@@ -2,7 +2,7 @@ export module ATR.Layout.Create;
 
 import ATR.DataMember;
 import ATR.LayoutConfig;
-import ATR.MemberList;
+import ATR.Member.List;
 import ATR.Layout.Alias;
 import ATR.Layout.AliasLayout;
 import ATR.Layout.Data;
@@ -24,7 +24,7 @@ using ::ATR::Data;
 using ::ATR::DefineMembers;
 using ::ATR::MemberInfo;
 using ::ATR::Layout;
-using ::ATR::MemberList;
+using ::ATR::Member::List;
 using ::ATR::StaticData;
 using ::ATR::StaticSortKey;
 
@@ -84,7 +84,7 @@ auto constexpr
 }
 
 export template
-	<	MemberList
+	<	List
 			t_vConfig
 	>
 [[nodiscard]]

@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.BasicShape;
 
 import Evaluation.Shared.DataTypes;
-import ATR.MemberList;
+import ATR.Member.List;
 import ATR.LayoutConfig;
 
 export namespace
@@ -9,15 +9,15 @@ export namespace
 {
 	template<>
 	DefineMembers
-	<	Member
+	<	Member::New
 		<	"Height"
 		,	Float
 		>
-	+	Member
+	+	Member::New
 		<	"Width"
 		,	Float
 		>
-	+	Member
+	+	Member::New
 		<	"Color"
 		,	RGBAColor
 		>

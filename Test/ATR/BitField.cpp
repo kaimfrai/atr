@@ -1,4 +1,4 @@
-import ATR.MemberList;
+import ATR.Member.List;
 import ATR.LayoutConfig;
 import ATR.Layout.Bit.Reference;
 import ATR.Instance;
@@ -13,7 +13,6 @@ import Meta.Token.Specifier;
 import Std;
 
 using ::Meta::Bit::Field;
-using ::ATR::Member;
 using ::Meta::Specifier::Mut;
 
 using namespace ::Meta::Literals;
@@ -22,19 +21,19 @@ namespace ATR
 {
 	template<>
 	DefineMembers
-	<	Member
+	<	Member::New
 		<	"0BoolBit"
 		,	bool
 		>
-	+	Member
+	+	Member::New
 		<	"1MutBoolBit"
 		,	Mut<bool>
 		>
-	+	Member
+	+	Member::New
 		<	"2BitField31"
 		,	Field<31_bit>
 		>
-	+	Member
+	+	Member::New
 		<	"3MutBitField31"
 		,	Mut
 			<	Field<31_bit>

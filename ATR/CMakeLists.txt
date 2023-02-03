@@ -3,7 +3,6 @@ add_single_file_modules(
 
 	DataMember.cpp
 	LayoutConfig.cpp
-	MemberList.cpp
 
 	Literals.cpp
 

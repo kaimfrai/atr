@@ -3,7 +3,7 @@ export module Evaluation.Archetype.BasicBody;
 import Evaluation.Archetype.BasicShape;
 import Evaluation.Shared.DataTypes;
 
-import ATR.MemberList;
+import ATR.Member.List;
 import ATR.LayoutConfig;
 
 export namespace
@@ -14,7 +14,7 @@ export namespace
 	<	LayoutConfig
 		<	"BasicShape"
 		>
-	+	Member
+	+	Member::New
 		<	"Depth"
 		,	Float
 		>

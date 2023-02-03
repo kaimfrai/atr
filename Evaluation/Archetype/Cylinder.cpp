@@ -4,7 +4,7 @@ import Evaluation.Archetype.BasicBody;
 import Evaluation.Shared.PiFraction;
 
 import ATR.Member.Alias;
-import ATR.MemberList;
+import ATR.Member.List;
 import ATR.LayoutConfig;
 
 export namespace
@@ -18,7 +18,7 @@ export namespace
 			,	"Width"
 			>
 		)
-	+	Member
+	+	Member::New
 		<	"ComputeVolumeMultiplier"
 		,	PiFraction
 			<	1z

@@ -1,4 +1,4 @@
-import ATR.MemberList;
+import ATR.Member.List;
 import ATR.LayoutConfig;
 
 import Meta.Bit.Field;
@@ -18,15 +18,15 @@ namespace
 {
 	template<>
 	DefineMembers
-	<	Member
+	<	Member::New
 		<	"Int"
 		,	int
 		>
-	+	Member
+	+	Member::New
 		<	"Bool"
 		,	bool
 		>
-	+	Member
+	+	Member::New
 		<	"Field"
 		,	Field<3_bit>
 		>
@@ -38,15 +38,15 @@ namespace
 
 	template<>
 	DefineMembers
-	<	Member
+	<	Member::New
 		<	"Int"
 		,	int const
 		>
-	+	Member
+	+	Member::New
 		<	"Bool"
 		,	bool const
 		>
-	+	Member
+	+	Member::New
 		<	"Field"
 		,	Field<3_bit> const
 		>
@@ -58,15 +58,15 @@ namespace
 
 	template<>
 	DefineMembers
-	<	Member
+	<	Member::New
 		<	"Int"
 		,	Mut<int>
 		>
-	+	Member
+	+	Member::New
 		<	"Bool"
 		,	Mut<bool>
 		>
-	+	Member
+	+	Member::New
 		<	"Field"
 		,	Mut<Field<3_bit>>
 		>
@@ -78,15 +78,15 @@ namespace
 
 	template<>
 	DefineMembers
-	<	Member
+	<	Member::New
 		<	"Int"
 		,	int[5]
 		>
-	+	Member
+	+	Member::New
 		<	"Bool"
 		,	bool[5]
 		>
-	+	Member
+	+	Member::New
 		<	"Field"
 		,	Field<3_bit>[5]
 		>

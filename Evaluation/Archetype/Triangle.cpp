@@ -4,7 +4,7 @@ import Evaluation.Archetype.BasicShape;
 
 import Evaluation.Shared.Fraction;
 
-import ATR.MemberList;
+import ATR.Member.List;
 import ATR.LayoutConfig;
 
 export namespace
@@ -15,7 +15,7 @@ export namespace
 	<	LayoutConfig
 		<	"BasicShape"
 		>
-	+	Member
+	+	Member::New
 		<	"ComputeAreaMultiplier"
 		,	Fraction
 			<	1z

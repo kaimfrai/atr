@@ -1,6 +1,6 @@
 export module ATR.LayoutConfig;
 
-import ATR.MemberList;
+import ATR.Member.List;
 import ATR.DataMember;
 
 import Meta.ID.Alias;
@@ -11,12 +11,13 @@ import Meta.Size;
 import Std;
 
 using ::Meta::USize;
+using ::ATR::Member::List;
 
 export namespace
 	ATR
 {
 	template
-		<	MemberList
+		<	List
 				t_vList
 		>
 	struct
@@ -67,7 +68,7 @@ export namespace
 		friend auto constexpr
 		(	operator +
 		)	(	DefineMembers
-			,	MemberList<t_nRight> const
+			,	List<t_nRight> const
 				&	i_rRight
 			)
 			noexcept
@@ -119,7 +120,7 @@ export namespace
 		friend auto constexpr
 		(	operator -
 		)	(	DefineMembers
-			,	MemberList<t_nRight> const
+			,	List<t_nRight> const
 				&	i_rRight
 			)
 			noexcept
@@ -137,7 +138,7 @@ export namespace
 		=	default;
 
 		template
-			<	MemberList
+			<	List
 					t_vRightList
 			>
 		friend auto constexpr
@@ -155,7 +156,7 @@ export namespace
 		<	Meta::StringLiteral
 		>
 	DefineMembers
-	<	MemberList<0uz>{}
+	<	List<0uz>{}
 	>	const extern
 		LayoutConfig
 	;

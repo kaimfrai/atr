@@ -2,7 +2,7 @@ export module ATR.Concatenate;
 
 import ATR.LayoutConfig;
 import ATR.DataMember;
-import ATR.MemberList;
+import ATR.Member.List;
 
 import Meta.ID.Alias;
 import Meta.ID.Concatenate;
@@ -98,14 +98,14 @@ namespace
 		,	typename
 				t_tSuffix
 		>
-	MemberList constexpr inline
+	Member::List constexpr inline
 		InfixLayoutConfig
 	=	[]	<	::std::size_t
 				...	t_npIndex
 			>(	::std::index_sequence<t_npIndex...>
 			)
 		{	return
-			MemberList
+			Member::List
 			{	InfixDataMember
 				<	t_tPrefix
 				,	t_vConfig[t_npIndex]
@@ -132,7 +132,7 @@ export namespace
 				i_vPrefix
 			=	i_vType
 		>
-	MemberList constexpr inline
+	Member::List constexpr inline
 		PrefixedLayoutConfig
 	=	::ATR::InfixLayoutConfig
 		<	Meta::ID_T<i_vPrefix>
@@ -149,7 +149,7 @@ export namespace
 				i_vSuffix
 			=	i_vType
 		>
-	MemberList constexpr inline
+	Member::List constexpr inline
 		SuffixedLayoutConfig
 	=	::ATR::InfixLayoutConfig
 		<	Meta::ID<>

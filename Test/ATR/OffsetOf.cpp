@@ -1,4 +1,4 @@
-import ATR.MemberList;
+import ATR.Member.List;
 import ATR.LayoutConfig;
 import ATR.Instance;
 import ATR.Layout.MemberOffset;
@@ -35,68 +35,68 @@ namespace ATR
 {
 	template<>
 	DefineMembers
-	<	Member
+	<	Member::New
 		<	"Int"
 		,	int
 		>
-	+	Member
+	+	Member::New
 		<	"IntConst"
 		,	int const
 		>
-	+	Member
+	+	Member::New
 		<	"IntMut"
 		,	Mut<int>
 		>
-	+	Member
+	+	Member::New
 		<	"Bool"
 		,	bool
 		>
-	+	Member
+	+	Member::New
 		<	"BoolConst"
 		,	bool const
 		>
-	+	Member
+	+	Member::New
 		<	"BoolMut"
 		,	Mut<bool>
 		>
-	+	Member
+	+	Member::New
 		<	"Field"
 		,	Field<3_bit>
 		>
-	+	Member
+	+	Member::New
 		<	"FieldConst"
 		,	Field<3_bit> const
 		>
-	+	Member
+	+	Member::New
 		<	"FieldMut"
 		,	Mut<Field<3_bit>>
 		>
-	+	Member
+	+	Member::New
 		<	"ArrayBool"
 		,	bool[5]
 		>
-	+	Member
+	+	Member::New
 		<	"ArrayBoolConst"
 		,	bool const[5]
 		>
-	+	Member
+	+	Member::New
 		<	"ArrayBoolMut"
 		,	Mut<bool[5]>
 		>
 
-	+	Member
+	+	Member::New
 		<	"ArrayField"
 		,	Field<3_bit>[5]
 		>
-	+	Member
+	+	Member::New
 		<	"ArrayFieldConst"
 		,	Field<3_bit> const[5]
 		>
-	+	Member
+	+	Member::New
 		<	"ArrayFieldMut"
 		,	Mut<Field<3_bit>[5]>
 		>
-	>	extern
+	>	extern const
 		LayoutConfig
 		<	"OffsetOfTest"
 		>

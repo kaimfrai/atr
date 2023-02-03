@@ -22,7 +22,7 @@ export import ATR.Layout.Layout;
 export import ATR.Layout.MemberOffset;
 export import ATR.Layout.Static;
 export import ATR.Layout.Type;
-export import ATR.MemberList;
+export import ATR.Member.List;
 export import ATR.Member.Alias;
 export import ATR.Literals;
 export import ATR.Instance;

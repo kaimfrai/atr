@@ -1,4 +1,4 @@
-export module ATR.MemberList;
+export module ATR.Member.List;
 
 import ATR.DataMember;
 import Meta.ID.StringView;
@@ -14,14 +14,14 @@ import Std;
 using ::Meta::USize;
 
 export namespace
-	ATR
+	ATR::Member
 {
 	template
 		<	USize
 				t_nMemberCount
 		>
 	struct
-		MemberList final
+		List final
 	:	Meta::ArrayAggregate
 		<	MemberInfo
 		,	t_nMemberCount
@@ -33,7 +33,7 @@ export namespace
 				&	i_rExchange
 			)	const
 			noexcept
-		->	MemberList
+		->	List
 		{
 			auto vCopy = *this;
 			auto const
@@ -65,13 +65,13 @@ export namespace
 			>
 		friend auto constexpr
 		(	operator +
-		)	(	MemberList const
+		)	(	List const
 				&	i_rLeft
-			,	MemberList<t_nRight> const
+			,	List<t_nRight> const
 				&	i_rRight
 			)
 			noexcept
-		->	MemberList
+		->	List
 			<	t_nMemberCount
 			+	t_nRight
 			>
@@ -89,7 +89,7 @@ export namespace
 				return i_rLeft;
 			else
 			{
-				MemberList
+				List
 				<	t_nMemberCount
 				+	t_nRight
 				>	vResult
@@ -120,13 +120,13 @@ export namespace
 			>
 		friend auto constexpr
 		(	operator -
-		)	(	MemberList const
+		)	(	List const
 				&	i_rLeft
-			,	MemberList<t_nRight> const
+			,	List<t_nRight> const
 				&	i_rRight
 			)
 			noexcept
-		->	MemberList
+		->	List
 			<	t_nMemberCount
 			-	t_nRight
 			>
@@ -152,7 +152,7 @@ export namespace
 				((void)"Cannot subtract MemberInfos that are not contained!", std::unreachable());
 			}
 
-			MemberList
+			List
 			<	t_nMemberCount
 			-	t_nRight
 			>	vResult
@@ -168,9 +168,9 @@ export namespace
 
 		friend auto constexpr
 		(	operator ==
-		)	(	MemberList const
+		)	(	List const
 				&	i_rLeft
-			,	MemberList const
+			,	List const
 				&	i_rRight
 			)
 			noexcept
@@ -183,9 +183,9 @@ export namespace
 			>
 		friend auto constexpr
 		(	operator ==
-		)	(	MemberList const
+		)	(	List const
 				&
-			,	MemberList<t_nRightMemberCount> const
+			,	List<t_nRightMemberCount> const
 				&
 			)
 			noexcept
@@ -203,10 +203,10 @@ export namespace
 		<	Meta::USize
 				t_nMemberCount
 		>
-	(	MemberList
-	)	(	MemberList<t_nMemberCount>
+	(	List
+	)	(	List<t_nMemberCount>
 		)
-	->	MemberList
+	->	List
 		<	t_nMemberCount
 		>
 	;
@@ -215,11 +215,11 @@ export namespace
 		<	typename
 			...	t_tpDataMember
 		>
-	(	MemberList
+	(	List
 	)	(	t_tpDataMember
 			...
 		)
-	->	MemberList
+	->	List
 		<	sizeof...(t_tpDataMember)
 		>
 	;
@@ -230,8 +230,8 @@ export namespace
 		,	typename
 				t_tValue
 		>
-	MemberList<1uz> constexpr inline
-		Member
+	List<1uz> constexpr inline
+		New
 	{	MemberInfo
 		{	MemberSortKey<t_tValue>
 		,	Meta::ID_T<t_vName>::StringView
