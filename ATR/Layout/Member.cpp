@@ -1,6 +1,7 @@
 export module ATR.Layout.Member;
 
 import ATR.DataMember;
+import ATR.Member.SortKey;
 
 import Meta.Token.Type;
 import Meta.Trait.BitSize;
@@ -10,7 +11,7 @@ import Meta.ID.Alias;
 import Meta.Size;
 
 using ::ATR::MemberInfo;
-using ::ATR::MemberSortKey;
+using ::ATR::Member::AlignSortKey;
 using ::Meta::ID_Of;
 
 using ::Meta::RestoreTypeEntity;
@@ -26,7 +27,7 @@ struct
 {
 	static USize constexpr
 		SortKey
-	=	MemberSortKey
+	=	AlignSortKey
 		<	t_tData
 		>
 	;

@@ -1,6 +1,7 @@
 export module ATR.Layout.Create;
 
 import ATR.DataMember;
+import ATR.Member.SortKey;
 import ATR.Member.Definition;
 import ATR.Member.List;
 import ATR.Layout.Alias;
@@ -19,14 +20,14 @@ import Meta.Size;
 import Std;
 
 using ::ATR::AliasLayout;
-using ::ATR::AliasSortKey;
+using ::ATR::Member::AliasSortKey;
 using ::ATR::Data;
 using ::ATR::Member::Definition;
 using ::ATR::MemberInfo;
 using ::ATR::Layout;
 using ::ATR::Member::List;
 using ::ATR::StaticData;
-using ::ATR::StaticSortKey;
+using ::ATR::Member::StaticSortKey;
 
 using ::Meta::Index;
 using ::Meta::IndexToken;

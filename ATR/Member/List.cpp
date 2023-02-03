@@ -1,6 +1,7 @@
 export module ATR.Member.List;
 
 import ATR.DataMember;
+import ATR.Member.SortKey;
 import Meta.ID.StringView;
 import Meta.ID.StringLiteral;
 import Meta.ID.Alias;
@@ -233,7 +234,7 @@ export namespace
 	List<1uz> constexpr inline
 		New
 	{	MemberInfo
-		{	MemberSortKey<t_tValue>
+		{	AlignSortKey<t_tValue>
 		,	Meta::ID_T<t_vName>::StringView
 		,	Meta::Type<t_tValue>
 		}

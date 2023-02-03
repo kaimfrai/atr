@@ -1,5 +1,6 @@
 export module ATR.Member.Alias;
 
+import ATR.Member.SortKey;
 import ATR.DataMember;
 
 import Meta.ID.StringLiteral;
@@ -11,7 +12,7 @@ using ::Meta::StringLiteral;
 using ::Meta::Type;
 
 export namespace
-	ATR
+	ATR::Member
 {
 	template
 		<	StringLiteral
