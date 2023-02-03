@@ -35,15 +35,6 @@ export namespace
 			noexcept
 		{	return t_vList;	}
 
-		static auto constexpr
-		(	operator()
-		)	(	Info const
-				&	i_rExchange
-			)
-			noexcept
-		->	decltype(t_vList)
-		{	return t_vList(i_rExchange);	}
-
 		friend auto constexpr
 		(	operator *
 		)	(	Definition

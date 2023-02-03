@@ -28,38 +28,6 @@ export namespace
 		,	t_nMemberCount
 		>
 	{
-		auto constexpr
-		(	operator()
-		)	(	Info const
-				&	i_rExchange
-			)	const
-			noexcept
-		->	List
-		{
-			auto vCopy = *this;
-			auto const
-				vExchangePosition
-			=	::std::find_if
-				(	vCopy.begin()
-				,	vCopy.end().base()
-				,	[	vName = i_rExchange.Name
-					]	(	Info const
-							&	i_rMember
-						)
-					{
-						return i_rMember.Name == vName;
-					}
-				)
-			;
-			if	(vExchangePosition == vCopy.end())
-				((void)"Cannot exchange non-existing member!", std::unreachable());
-
-			*vExchangePosition = i_rExchange;
-			::std::sort(vCopy.begin(), vCopy.end().base());
-
-			return vCopy;
-		}
-
 		friend auto constexpr
 		(	operator ==
 		)	(	List const

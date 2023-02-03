@@ -1,29 +1,69 @@
 export module ATR.Member.Alias;
 
 import ATR.Member.SortKey;
-import ATR.Member.Info;
+import ATR.Member.List;
 
-import Meta.ID.StringLiteral;
-import Meta.ID.Alias;
+import Meta.ID.StringView;
+import Meta.ID.Concept;
 import Meta.Token.Type;
 
-using ::Meta::ID_T;
-using ::Meta::StringLiteral;
+import Std;
+
+using ::Meta::ProtoID;
 using ::Meta::Type;
 
 export namespace
 	ATR::Member
 {
 	template
-		<	StringLiteral
-				t_vOriginID
-		,	StringLiteral
-				t_vTargetID
+		<	auto
+				t_nMemberCount
 		>
-	Info constexpr inline
-		Alias
-	{	.SortKey = AliasSortKey
-	,	.Name = ID_T<t_vOriginID>::StringView
-	,	.Type = Type<ID_T<t_vTargetID>>
-	};
+	[[nodiscard]]
+	auto constexpr
+	(	Alias
+	)	(	List<t_nMemberCount>
+				i_nList
+		,	ProtoID auto
+				i_vOrigin
+		,	ProtoID auto
+				i_vTarget
+		)
+		noexcept
+	->	List<t_nMemberCount>
+	{
+		auto const
+			vExchangePosition
+		=	::std::find_if
+			(	i_nList.begin()
+			,	i_nList.end().base()
+			,	[]	(	auto const
+						&	i_rMember
+					)
+				{	return
+						i_rMember.Name
+					==	decltype(i_vOrigin)::StringView
+					;
+				}
+			)
+		;
+		if	(vExchangePosition == i_nList.end())
+		{
+			((void)"Cannot exchange non-existing member!", std::unreachable());
+		}
+
+		(	vExchangePosition->SortKey
+		=	AliasSortKey
+		);
+		(	vExchangePosition->Type
+		=	Type<decltype(i_vTarget)>
+		);
+
+		::std::sort
+		(	i_nList.begin()
+		,	i_nList.end().base()
+		);
+
+		return i_nList;
+	}
 }
