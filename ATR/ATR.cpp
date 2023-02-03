@@ -28,6 +28,7 @@ export import ATR.Member.List;
 export import ATR.Member.PrefixDefinition;
 export import ATR.Member.SortKey;
 export import ATR.Member.SuffixDefinition;
+export import  ATR.Member.Transform;
 export import ATR.Member.Union;
 export import ATR.Literals;
 export import ATR.Instance;

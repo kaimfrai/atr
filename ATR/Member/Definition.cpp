@@ -36,44 +36,6 @@ export namespace
 		{	return t_vList;	}
 
 		friend auto constexpr
-		(	operator *
-		)	(	Definition
-			,	auto
-					i_fTransform
-			)
-			noexcept
-		->	decltype(t_vList)
-		{
-			auto
-				vResult
-			=	t_vList
-			;
-
-			[&]	<	::std::size_t
-					...	t_npIndex
-				>(	::std::index_sequence<t_npIndex...>
-				)
-			{	(	...
-				,	(	vResult[t_npIndex].Type
-					=	(	Meta::RestoreTypeToken<t_vList[t_npIndex].Type>
-						+	i_fTransform
-						)
-					)
-				);
-			}(	::std::make_index_sequence
-				<	t_vList
-				.	size()
-				>{}
-			);
-
-			::std::sort
-			(	vResult.begin()
-			,	vResult.end().base()
-			);
-			return vResult;
-		}
-
-		friend auto constexpr
 		(	operator ==
 		)	(	Definition
 			,	Definition

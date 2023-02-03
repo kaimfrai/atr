@@ -1,6 +1,7 @@
 import ATR.Member.List;
 import ATR.Member.Union;
 import ATR.Member.Definition;
+import ATR.Member.Transform;
 
 import Meta.Bit.Field;
 import Meta.Memory.Size;
