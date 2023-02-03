@@ -112,13 +112,13 @@ namespace
 			List
 			{	InfixDataMember
 				<	ID_T<t_vPrefix>
-				,	Definition_For<t_vType>[t_npIndex]
+				,	All_Of<t_vType>[t_npIndex]
 				,	ID_T<t_vSuffix>
 				>()
 				...
 			};
 		}(	::std::make_index_sequence
-			<	Definition_For<t_vType>
+			<	All_Of<t_vType>
 			.	size()
 			>{}
 		)

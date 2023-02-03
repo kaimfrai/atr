@@ -23,38 +23,17 @@ export namespace
 		Definition final
 	{
 		static auto constexpr
-			All
-		=	t_vList
-		;
-
-		static auto constexpr
 		(	get
 		)	()
 			noexcept
 		->	decltype(t_vList) const&
 		{	return t_vList;	}
 
-		static auto constexpr
-		(	size
-		)	()
-			noexcept
-		->	USize
-		{	return t_vList.size();	}
-
 		explicit(false) constexpr
 		(	operator decltype(t_vList) const&
 		)	()	const
 			noexcept
 		{	return t_vList;	}
-
-		static auto constexpr
-		(	operator[]
-		)	(	USize
-					i_nIndex
-			)
-			noexcept
-		->	decltype(auto)
-		{	return t_vList[i_nIndex];	}
 
 		static auto constexpr
 		(	operator()
@@ -146,6 +125,6 @@ export namespace
 	=	Definition_For
 		<	t_vType
 		>
-	.	All
+	.	get()
 	;
 }
