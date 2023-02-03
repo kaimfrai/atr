@@ -1,11 +1,17 @@
 export module ATR.Layout.AliasLayout;
 
-import ATR.Layout.AliasResolver;
 import ATR.Layout.Concept;
 
 import Meta.Size;
+import Meta.ID.StringView;
+import Meta.ID.Alias;
+import Meta.ID.Concept;
 import Meta.Lex.Transform;
 
+import Std;
+
+using ::Meta::ProtoID;
+using ::Meta::ID_Of;
 using ::Meta::USize;
 
 export namespace
@@ -21,16 +27,62 @@ export namespace
 		AliasLayout
 	:	t_tLayout
 	{
+		[[nodiscard]]
 		static auto constexpr
 		(	ResolveAlias
-		)	(	ProtoAliasID<t_tLayout, t_tpAlias...> auto
+		)	(	Meta::StringView
 					i_vName
 			)
+			noexcept
 		->	decltype(auto)
-		{	return
-			::ResolveAlias<t_tpAlias...>
-			(	i_vName
-			);
+		{
+			::std::array constexpr
+				vTargets
+			{	t_tpAlias::Target
+				...
+			};
+			::std::array constexpr
+				vNames
+			{	t_tpAlias::Name
+				...
+			};
+
+			for(;;)
+			{
+				auto
+					vEntry
+				=	::std::lower_bound
+					(	vNames.begin()
+					,	vNames.end()
+					,	i_vName
+					)
+				;
+				if	(	(	vEntry
+						!=	vNames.end()
+						)
+					and (	*
+							vEntry
+						==	i_vName
+						)
+					)
+				{
+					(	i_vName
+					=	*
+						::std::next
+						(	vTargets.begin()
+						,	::std::distance
+							(	vNames.begin()
+							,	vEntry
+							)
+						)
+					);
+				}
+				else
+				{	return
+						i_vName
+					;
+				}
+			}
 		}
 
 		template
@@ -40,18 +92,30 @@ export namespace
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetOf
-		)	(	ProtoAliasID<t_tLayout, t_tpAlias...> auto
+		)	(	ProtoID auto
 					i_vMember
 			,	Meta::Lex::Transform<t_tpTransform...>
 					i_vTransform
 			)
+			noexcept
 		->	decltype(auto)
+			requires
+				ProtoMemberID
+				<	ID_Of
+					<	ResolveAlias
+						(	i_vMember.StringView
+						)
+					>
+				,	t_tLayout
+				>
 		{	return
 				t_tLayout
 			::	OffsetOf
-				(	ResolveAlias
-					(	i_vMember
-					)
+				(	ID_Of
+					<	ResolveAlias
+						(	i_vMember.StringView
+						)
+					>{}
 				,	i_vTransform
 				)
 			;
@@ -60,48 +124,81 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	ProtoAliasID<t_tLayout, t_tpAlias...> auto
+		)	(	ProtoID auto
 					i_vMember
 			)	&
 			noexcept
 		->	decltype(auto)
+			requires
+				ProtoMemberID
+				<	ID_Of
+					<	ResolveAlias
+						(	i_vMember.StringView
+						)
+					>
+				,	t_tLayout
+				>
 		{	return
 			static_cast<t_tLayout&>(*this)
-			[	ResolveAlias
-				(	i_vMember
-				)
+			[	ID_Of
+				<	ResolveAlias
+					(	i_vMember.StringView
+					)
+				>{}
 			];
 		}
 
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	ProtoAliasID<t_tLayout, t_tpAlias...> auto
+		)	(	ProtoID auto
 					i_vMember
 			)	const&
 			noexcept
 		->	decltype(auto)
+			requires
+				ProtoMemberID
+				<	ID_Of
+					<	ResolveAlias
+						(	i_vMember.StringView
+						)
+					>
+				,	t_tLayout
+				>
 		{	return
 			static_cast<t_tLayout const&>(*this)
-			[	ResolveAlias
-				(	i_vMember
-				)
+			[	ID_Of
+				<	ResolveAlias
+					(	i_vMember.StringView
+					)
+				>{}
 			];
 		}
 
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
-		)	(	ProtoAliasID<t_tLayout, t_tpAlias...> auto
+		)	(	ProtoID auto
 					i_vMember
 			)	&&
 			noexcept
 		->	decltype(auto)
+			requires
+				ProtoMemberID
+				<	ID_Of
+					<	ResolveAlias
+						(	i_vMember.StringView
+						)
+					>
+				,	t_tLayout
+				>
 		{	return
 			static_cast<t_tLayout&&>(*this)
-			[	ResolveAlias
-				(	i_vMember
-				)
+			[	ID_Of
+				<	ResolveAlias
+					(	i_vMember.StringView
+					)
+				>{}
 			];
 		}
 	};

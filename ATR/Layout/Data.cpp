@@ -4,6 +4,7 @@ import ATR.Layout.Concept;
 
 import Meta.Size;
 import Meta.Lex.Transform;
+import Meta.ID.StringView;
 
 import Std;
 
@@ -34,15 +35,7 @@ export namespace
 
 		static auto constexpr
 		(	ResolveAlias
-		)	(	ProtoMemberID<t_tStatic> auto
-					i_vName
-			)
-		->	decltype(i_vName)
-		{	return i_vName;	}
-
-		static auto constexpr
-		(	ResolveAlias
-		)	(	ProtoMemberID<t_tDynamic> auto
+		)	(	::Meta::StringView
 					i_vName
 			)
 		->	decltype(i_vName)

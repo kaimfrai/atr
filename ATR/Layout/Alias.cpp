@@ -11,13 +11,26 @@ using ::ATR::MemberInfo;
 using ::Meta::RestoreTypeEntity;
 
 export template
-	<	typename
+	<	::Meta::ProtoID
 			t_tTarget
 	,	::Meta::ProtoID
+			t_tName
 	>
 struct
 	Alias
-{};
+{
+	static auto constexpr
+		Target
+	=	t_tTarget
+	::	StringView
+	;
+
+	static auto constexpr
+		Name
+	=	t_tName
+	::	StringView
+	;
+};
 
 export template
 	<	MemberInfo

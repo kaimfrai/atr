@@ -1,7 +1,6 @@
 add_single_file_modules(
 	Alias.cpp
 	AliasLayout.cpp
-	AliasResolver.cpp
 	Concept.cpp
 	Create.cpp
 	Data.cpp

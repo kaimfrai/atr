@@ -213,10 +213,12 @@ export namespace
 		ArgumentDependency
 	{	Meta::Type<ErasedType<t_tOwner>>
 	,	::ATR::MapDependency
-		(	::std::remove_cvref_t<t_tOwner>
-		::	ResolveAlias
-			(	ID_Of<t_vpIDMap.OriginID>{}
-			)
+		(	ID_Of
+			<	::std::remove_cvref_t<t_tOwner>
+			::	ResolveAlias
+				(	t_vpIDMap.OriginID
+				)
+			>{}
 		,	Meta::Type<t_tOwner>
 		,	t_vpIDMap.ArgumentPack
 		)

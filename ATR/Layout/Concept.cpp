@@ -1,7 +1,6 @@
 export module ATR.Layout.Concept;
 
 import ATR.Layout.Alias;
-import ATR.Layout.AliasResolver;
 
 import Meta.ID.Concept;
 import Meta.Lex.Transform;
@@ -26,25 +25,5 @@ export namespace
 			::std::declval<t_tLayout const&>()[t_tProto{}];
 			::std::declval<t_tLayout&&>()[t_tProto{}];
 		}
-	;
-
-	template
-		<	typename
-				t_tProto
-		,	typename
-				t_tLayout
-		,	typename
-			...	t_tpAlias
-		>
-	concept
-		ProtoAliasID
-	=	ProtoMemberID
-		<	decltype
-			(	ResolveAlias<t_tpAlias...>
-				(	::std::declval<t_tProto>()
-				)
-			)
-		,	t_tLayout
-		>
 	;
 }
