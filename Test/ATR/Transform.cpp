@@ -2,6 +2,7 @@ import ATR.Member.List;
 import ATR.Member.Union;
 import ATR.Member.Definition;
 import ATR.Member.Transform;
+import ATR.Member.Compare;
 
 import Meta.Bit.Field;
 import Meta.Memory.Size;
@@ -100,34 +101,35 @@ namespace
 }
 
 using ::ATR::Member::Definition_For;
+using ::ATR::Member::All_Of;
 
 static_assert
-(	Definition_For<"Single">
-!=	Definition_For<"ConstSingle">
+(	All_Of<"Single">
+!=	All_Of<"ConstSingle">
 );
 
 static_assert
 (	Definition_For<"Single"> * Meta::Const
-==	Definition_For<"ConstSingle">
+==	All_Of<"ConstSingle">
 );
 
 
 static_assert
-(	Definition_For<"Single">
-!=	Definition_For<"MutSingle">
+(	All_Of<"Single">
+!=	All_Of<"MutSingle">
 );
 
 static_assert
 (	Definition_For<"Single"> * Meta::Mutable
-==	Definition_For<"MutSingle">
+==	All_Of<"MutSingle">
 );
 
 static_assert
-(	Definition_For<"Single">
-!=	Definition_For<"Array">
+(	All_Of<"Single">
+!=	All_Of<"Array">
 );
 
 static_assert
 (	Definition_For<"Single"> * 5_ext
-==	Definition_For<"Array">
+==	All_Of<"Array">
 );

@@ -27,39 +27,7 @@ export namespace
 		<	Info
 		,	t_nMemberCount
 		>
-	{
-		friend auto constexpr
-		(	operator ==
-		)	(	List const
-				&	i_rLeft
-			,	List const
-				&	i_rRight
-			)
-			noexcept
-		->	bool
-		=	default;
-
-		template
-			<	USize
-					t_nRightMemberCount
-			>
-		friend auto constexpr
-		(	operator ==
-		)	(	List const
-				&
-			,	List<t_nRightMemberCount> const
-				&
-			)
-			noexcept
-		->	bool
-		{
-			static_assert
-			(	t_nMemberCount != t_nRightMemberCount
-			,	"Unexpected overload choice!"
-			);
-			return false;
-		}
-	};
+	{};
 
 	template
 		<	USize

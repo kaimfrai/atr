@@ -1,5 +1,6 @@
 add_single_file_modules(
 	Alias.cpp
+	Compare.cpp
 	Definition.cpp
 	Difference.cpp
 	InfixDefinition.cpp

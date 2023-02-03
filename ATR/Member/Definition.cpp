@@ -16,6 +16,7 @@ export namespace
 	struct
 		Definition final
 	{
+		[[nodiscard]]
 		static auto constexpr
 		(	get
 		)	()
@@ -23,33 +24,12 @@ export namespace
 		->	decltype(t_vList) const&
 		{	return t_vList;	}
 
+		[[nodiscard]]
 		explicit(false) constexpr
 		(	operator decltype(t_vList) const&
 		)	()	const
 			noexcept
 		{	return t_vList;	}
-
-		friend auto constexpr
-		(	operator ==
-		)	(	Definition
-			,	Definition
-			)
-			noexcept
-		->	bool
-		=	default;
-
-		template
-			<	List
-					t_vRightList
-			>
-		friend auto constexpr
-		(	operator ==
-		)	(	Definition
-			,	Definition<t_vRightList>
-			)
-			noexcept
-		->	bool
-		{	return false;	}
 	};
 
 	/// maps a string literal to a Layout
