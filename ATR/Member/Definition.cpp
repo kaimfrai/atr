@@ -1,16 +1,10 @@
 export module ATR.Member.Definition;
 
 import ATR.Member.List;
-import ATR.Member.Info;
 
-import Meta.ID.Alias;
 import Meta.ID.StringLiteral;
-import Meta.Token.Type;
-import Meta.Size;
 
-import Std;
-
-using ::Meta::USize;
+using ::Meta::StringLiteral;
 
 export namespace
 	ATR::Member
@@ -60,7 +54,7 @@ export namespace
 
 	/// maps a string literal to a Layout
 	template
-		<	Meta::StringLiteral
+		<	StringLiteral
 		>
 	Definition
 	<	List<0uz>{}
@@ -70,7 +64,7 @@ export namespace
 
 	/// maps a string literal to a Layout
 	template
-		<	Meta::StringLiteral
+		<	StringLiteral
 				t_vType
 		>
 	auto const constexpr inline

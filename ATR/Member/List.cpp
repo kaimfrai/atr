@@ -2,7 +2,6 @@ export module ATR.Member.List;
 
 import ATR.Member.Info;
 import ATR.Member.SortKey;
-import Meta.ID.StringView;
 import Meta.ID.StringLiteral;
 import Meta.ID.Alias;
 import Meta.Data.Aggregate;
@@ -10,9 +9,10 @@ import Meta.Data.Aggregate.Array;
 import Meta.Token.Type;
 import Meta.Size;
 
-import Std;
-
 using ::Meta::USize;
+using ::Meta::StringLiteral;
+using ::Meta::ID_T;
+using ::Meta::Type;
 
 export namespace
 	ATR::Member
@@ -62,7 +62,7 @@ export namespace
 	};
 
 	template
-		<	Meta::USize
+		<	USize
 				t_nMemberCount
 		>
 	(	List
@@ -87,7 +87,7 @@ export namespace
 	;
 
 	template
-		<	Meta::StringLiteral
+		<	StringLiteral
 				t_vName
 		,	typename
 				t_tValue
@@ -96,8 +96,8 @@ export namespace
 		New
 	{	Info
 		{	AlignSortKey<t_tValue>
-		,	Meta::ID_T<t_vName>::StringView
-		,	Meta::Type<t_tValue>
+		,	ID_T<t_vName>::StringView
+		,	Type<t_tValue>
 		}
 	};
 }
