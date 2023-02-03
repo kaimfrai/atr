@@ -1,6 +1,6 @@
 export module ATR.Layout.Create;
 
-import ATR.DataMember;
+import ATR.Member.Info;
 import ATR.Member.SortKey;
 import ATR.Member.Definition;
 import ATR.Member.List;
@@ -23,7 +23,7 @@ using ::ATR::AliasLayout;
 using ::ATR::Member::AliasSortKey;
 using ::ATR::Data;
 using ::ATR::Member::Definition;
-using ::ATR::MemberInfo;
+using ::ATR::Member::Info;
 using ::ATR::Layout;
 using ::ATR::Member::List;
 using ::ATR::StaticData;
@@ -39,9 +39,9 @@ using ::Meta::Buffer::Sentinel;
 [[nodiscard]]
 auto constexpr
 (	AliasCount
-)	(	Iterator<MemberInfo const>
+)	(	Iterator<Info const>
 			i_aBegin
-	,	Sentinel<MemberInfo const>
+	,	Sentinel<Info const>
 			i_aEnd
 	)
 ->	USize
@@ -50,7 +50,7 @@ auto constexpr
 	(	::std::lower_bound
 		(	i_aBegin
 		,	i_aEnd.base()
-		,	MemberInfo
+		,	Info
 			{	.SortKey = AliasSortKey + 1uz
 			,	.Name = {}
 			,	.Type = {}
@@ -63,9 +63,9 @@ auto constexpr
 [[nodiscard]]
 auto constexpr
 (	StaticCount
-)	(	Iterator<MemberInfo const>
+)	(	Iterator<Info const>
 			i_aBegin
-	,	Sentinel<MemberInfo const>
+	,	Sentinel<Info const>
 			i_aEnd
 	)
 ->	USize
@@ -75,7 +75,7 @@ auto constexpr
 	-	::std::lower_bound
 		(	i_aBegin
 		,	i_aEnd.base()
-		,	MemberInfo
+		,	Info
 			{	.SortKey = StaticSortKey
 			,	.Name = {}
 			,	.Type = {}

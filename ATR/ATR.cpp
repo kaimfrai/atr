@@ -1,7 +1,6 @@
 export module ATR;
 
 export import ATR.Address;
-export import ATR.DataMember;
 export import ATR.Dependency;
 export import ATR.DependencyIDMap;
 export import ATR.Erase;
@@ -23,6 +22,7 @@ export import ATR.Layout.Type;
 export import ATR.Member.Alias;
 export import ATR.Member.Definition;
 export import ATR.Member.InfixDefinition;
+export import ATR.Member.Info;
 export import ATR.Member.List;
 export import ATR.Member.PrefixDefinition;
 export import ATR.Member.SortKey;

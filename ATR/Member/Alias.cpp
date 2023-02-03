@@ -1,7 +1,7 @@
 export module ATR.Member.Alias;
 
 import ATR.Member.SortKey;
-import ATR.DataMember;
+import ATR.Member.Info;
 
 import Meta.ID.StringLiteral;
 import Meta.ID.Alias;
@@ -20,7 +20,7 @@ export namespace
 		,	StringLiteral
 				t_vTargetID
 		>
-	MemberInfo constexpr inline
+	Info constexpr inline
 		Alias
 	{	.SortKey = AliasSortKey
 	,	.Name = ID_T<t_vOriginID>::StringView

@@ -1,6 +1,6 @@
 export module ATR.Layout.Member;
 
-import ATR.DataMember;
+import ATR.Member.Info;
 import ATR.Member.SortKey;
 
 import Meta.Token.Type;
@@ -10,7 +10,7 @@ import Meta.ID.Concept;
 import Meta.ID.Alias;
 import Meta.Size;
 
-using ::ATR::MemberInfo;
+using ::ATR::Member::Info;
 using ::ATR::Member::AlignSortKey;
 using ::Meta::ID_Of;
 
@@ -48,7 +48,7 @@ struct
 };
 
 export template
-	<	MemberInfo
+	<	Info
 			t_vMember
 	>
 using

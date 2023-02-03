@@ -1,8 +1,6 @@
 add_single_file_modules(
 	ATR.cpp
 
-	DataMember.cpp
-
 	Literals.cpp
 
 	Erase.cpp

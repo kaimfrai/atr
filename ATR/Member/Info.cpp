@@ -1,4 +1,4 @@
-export module ATR.DataMember;
+export module ATR.Member.Info;
 
 import Meta.Token.Type;
 import Meta.Token.Type.Compare;
@@ -12,10 +12,10 @@ using ::Meta::TypeID;
 using ::Meta::USize;
 
 export namespace
-	ATR
+	ATR::Member
 {
 	struct
-		MemberInfo final
+		Info final
 	{
 		USize SortKey;
 		StringView Name;
@@ -24,8 +24,8 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator <=>
-		)	(	MemberInfo const&
-			,	MemberInfo const&
+		)	(	Info const&
+			,	Info const&
 			)
 			noexcept
 		=	default;

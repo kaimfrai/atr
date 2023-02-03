@@ -1,6 +1,6 @@
 export module ATR.Member.InfixDefinition;
 
-import ATR.DataMember;
+import ATR.Member.Info;
 import ATR.Member.SortKey;
 import ATR.Member.Definition;
 import ATR.Member.List;
@@ -21,7 +21,7 @@ namespace
 	template
 		<	typename
 				t_tPrefix
-		,	MemberInfo
+		,	Info
 				t_vInfix
 		,	typename
 				t_tSuffix
@@ -31,7 +31,7 @@ namespace
 	(	InfixDataMember
 	)	()
 		noexcept
-	->	MemberInfo
+	->	Info
 	{
 		using
 			tNewName

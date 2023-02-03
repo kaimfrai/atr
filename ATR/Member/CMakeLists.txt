@@ -2,6 +2,7 @@ add_single_file_modules(
 	Alias.cpp
 	Definition.cpp
 	InfixDefinition.cpp
+	Info.cpp
 	List.cpp
 	PrefixDefinition.cpp
 	SortKey.cpp

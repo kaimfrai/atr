@@ -1,7 +1,7 @@
 export module ATR.Member.Definition;
 
 import ATR.Member.List;
-import ATR.DataMember;
+import ATR.Member.Info;
 
 import Meta.ID.Alias;
 import Meta.ID.StringLiteral;
@@ -53,7 +53,7 @@ export namespace
 
 		static auto constexpr
 		(	operator()
-		)	(	MemberInfo const
+		)	(	Info const
 				&	i_rExchange
 			)
 			noexcept

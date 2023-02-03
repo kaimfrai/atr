@@ -1,6 +1,6 @@
 export module ATR.Member.List;
 
-import ATR.DataMember;
+import ATR.Member.Info;
 import ATR.Member.SortKey;
 import Meta.ID.StringView;
 import Meta.ID.StringLiteral;
@@ -24,13 +24,13 @@ export namespace
 	struct
 		List final
 	:	Meta::ArrayAggregate
-		<	MemberInfo
+		<	Info
 		,	t_nMemberCount
 		>
 	{
 		auto constexpr
 		(	operator()
-		)	(	MemberInfo const
+		)	(	Info const
 				&	i_rExchange
 			)	const
 			noexcept
@@ -43,7 +43,7 @@ export namespace
 				(	vCopy.begin()
 				,	vCopy.end().base()
 				,	[	vName = i_rExchange.Name
-					]	(	MemberInfo const
+					]	(	Info const
 							&	i_rMember
 						)
 					{
@@ -233,7 +233,7 @@ export namespace
 		>
 	List<1uz> constexpr inline
 		New
-	{	MemberInfo
+	{	Info
 		{	AlignSortKey<t_tValue>
 		,	Meta::ID_T<t_vName>::StringView
 		,	Meta::Type<t_tValue>

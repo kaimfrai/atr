@@ -1,13 +1,13 @@
 export module ATR.Layout.Alias;
 
-import ATR.DataMember;
+import ATR.Member.Info;
 
 import Meta.ID.Concept;
 import Meta.ID.Alias;
 import Meta.Token.Type;
 
 using ::Meta::ID_Of;
-using ::ATR::MemberInfo;
+using ::ATR::Member::Info;
 using ::Meta::RestoreTypeEntity;
 
 export template
@@ -33,7 +33,7 @@ struct
 };
 
 export template
-	<	MemberInfo
+	<	Info
 			t_vMember
 	>
 using

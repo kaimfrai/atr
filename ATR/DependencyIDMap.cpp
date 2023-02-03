@@ -1,6 +1,6 @@
 export module ATR.DependencyIDMap;
 
-import ATR.DataMember;
+import ATR.Member.Info;
 import ATR.Dependency;
 import ATR.Address;
 import ATR.Erase;
