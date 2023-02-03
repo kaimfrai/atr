@@ -1,5 +1,6 @@
 import ATR.Member.List;
 import ATR.Member.Definition;
+import ATR.Member.Union;
 import ATR.Instance;
 import ATR.Layout.MemberOffset;
 import ATR.Layout.Bit.MemberOffset;

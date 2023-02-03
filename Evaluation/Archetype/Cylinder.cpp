@@ -5,6 +5,7 @@ import Evaluation.Shared.PiFraction;
 
 import ATR.Member.Alias;
 import ATR.Member.List;
+import ATR.Member.Union;
 import ATR.Member.Definition;
 
 export namespace

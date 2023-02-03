@@ -65,61 +65,6 @@ export namespace
 					t_nRight
 			>
 		friend auto constexpr
-		(	operator +
-		)	(	List const
-				&	i_rLeft
-			,	List<t_nRight> const
-				&	i_rRight
-			)
-			noexcept
-		->	List
-			<	t_nMemberCount
-			+	t_nRight
-			>
-		{
-			if	constexpr
-				(	t_nMemberCount
-				==	0uz
-				)
-				return i_rRight;
-			else
-			if	constexpr
-				(	t_nRight
-				==	0uz
-				)
-				return i_rLeft;
-			else
-			{
-				List
-				<	t_nMemberCount
-				+	t_nRight
-				>	vResult
-				;
-
-				auto const
-					vLast
-				=	std::set_union
-					(	i_rLeft.begin()
-					,	i_rLeft.end().base()
-					,	i_rRight.begin()
-					,	i_rRight.end().base()
-					,	vResult.begin()
-					)
-				;
-
-				if	(vLast != vResult.end())
-				{
-					((void)"Cannot merge MemberList with identical members!", std::unreachable());
-				}
-				return vResult;
-			}
-		}
-
-		template
-			<	Meta::USize
-					t_nRight
-			>
-		friend auto constexpr
 		(	operator -
 		)	(	List const
 				&	i_rLeft

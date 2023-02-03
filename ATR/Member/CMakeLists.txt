@@ -7,4 +7,5 @@ add_single_file_modules(
 	PrefixDefinition.cpp
 	SortKey.cpp
 	SuffixDefinition.cpp
+	Union.cpp
 )

@@ -1,4 +1,5 @@
 import ATR.Member.List;
+import ATR.Member.Union;
 import ATR.Member.Definition;
 
 import Meta.Bit.Field;

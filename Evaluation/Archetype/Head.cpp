@@ -3,6 +3,7 @@ export module Evaluation.Archetype.Head;
 import Evaluation.Archetype.Sphere;
 
 import ATR.Member.Definition;
+import ATR.Member.Union;
 import ATR.Member.SuffixDefinition;
 
 export namespace
@@ -10,7 +11,7 @@ export namespace
 {
 	template<>
 	Definition
-	<	Definition_For
+	<	All_Of
 		<	"Sphere"
 		>
 	+	SuffixDefinition_For

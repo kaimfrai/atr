@@ -23,6 +23,11 @@ export namespace
 		Definition final
 	{
 		static auto constexpr
+			All
+		=	t_vList
+		;
+
+		static auto constexpr
 		(	get
 		)	()
 			noexcept
@@ -59,20 +64,6 @@ export namespace
 			noexcept
 		->	decltype(t_vList)
 		{	return t_vList(i_rExchange);	}
-
-		template
-			<	USize
-					t_nRight
-			>
-		friend auto constexpr
-		(	operator +
-		)	(	Definition
-			,	List<t_nRight> const
-				&	i_rRight
-			)
-			noexcept
-		->	decltype(auto)
-		{	return t_vList + i_rRight;	}
 
 		friend auto constexpr
 		(	operator *
@@ -158,5 +149,18 @@ export namespace
 	<	List<0uz>{}
 	>	const extern
 		Definition_For
+	;
+
+	/// maps a string literal to a Layout
+	template
+		<	Meta::StringLiteral
+				t_vType
+		>
+	auto const constexpr inline
+	&	All_Of
+	=	Definition_For
+		<	t_vType
+		>
+	.	All
 	;
 }

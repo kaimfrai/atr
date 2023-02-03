@@ -6,13 +6,14 @@ import Evaluation.Shared.PiFraction;
 
 import ATR.Member.List;
 import ATR.Member.Definition;
+import ATR.Member.Union;
 
 export namespace
 	ATR::Member
 {
 	template<>
 	Definition
-	<	Definition_For
+	<	All_Of
 		<	"BasicBody"
 		>
 	+	New

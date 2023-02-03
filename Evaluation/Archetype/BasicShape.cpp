@@ -2,6 +2,7 @@ export module Evaluation.Archetype.BasicShape;
 
 import Evaluation.Shared.DataTypes;
 import ATR.Member.List;
+import ATR.Member.Union;
 import ATR.Member.Definition;
 
 export namespace

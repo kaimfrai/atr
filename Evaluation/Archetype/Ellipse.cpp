@@ -5,6 +5,7 @@ import Evaluation.Archetype.BasicShape;
 import Evaluation.Shared.PiFraction;
 
 import ATR.Member.List;
+import ATR.Member.Union;
 import ATR.Member.Definition;
 
 export namespace
@@ -12,7 +13,7 @@ export namespace
 {
 	template<>
 	Definition
-	<	Definition_For
+	<	All_Of
 		<	"BasicShape"
 		>
 	+	New
