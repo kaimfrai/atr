@@ -1,6 +1,6 @@
 export module ATR.DependencyIDMap;
 
-import ATR.Member.Info;
+import ATR.Member.OffsetOf;
 import ATR.Dependency;
 import ATR.Address;
 import ATR.Erase;
@@ -9,14 +9,12 @@ import Meta.ID.Alias;
 import Meta.ID.Concept;
 import Meta.ID.StringView;
 import Meta.ID.StringLiteral;
-import Meta.ID.Alias;
 import Meta.Token.Type;
 import Meta.Logic.LiteralBase;
 import Meta.Logic.Term;
 import Meta.Logic.Constraint;
 import Meta.Logic.Conjunction;
 import Meta.Data.TupleList;
-import Meta.Lex.TransformComposer;
 
 import Std;
 
@@ -183,20 +181,11 @@ namespace
 				i_vOwner
 		,	Meta::TypePack<>
 		)
-	{
-		auto constexpr
-			fOwnerTransform
-		=	Meta::ComposeTransform
-			(	i_vOwner
-			)
-		;
-		return
-			::std::remove_cvref_t<t_tOwner>
-		::	OffsetOf
-			(	i_vDataID
-			,	fOwnerTransform
-			)
-		;
+	{	return
+		Member::OffsetOf
+		(	i_vDataID
+		,	i_vOwner
+		);
 	}
 }
 

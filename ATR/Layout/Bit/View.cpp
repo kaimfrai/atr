@@ -1,35 +1,21 @@
 export module ATR.Layout.Bit.View;
 
 import ATR.Layout.Bit.Array;
-import ATR.Layout.Bit.MemberOffset;
 import ATR.Layout.Bit.Reference;
 
 import Meta.ID.Concept;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Cast;
 import Meta.Memory.Size.PointerArithmetic;
-import Meta.Token.RRef;
-import Meta.Token.CopyRef;
 import Meta.Token.Specifier;
-import Meta.Token.Const;
-import Meta.Token.Mutable;
-import Meta.Token.Volatile;
 import Meta.Token.Type;
 import Meta.Trait.BitSize;
-import Meta.Lex.Transform;
-import Meta.Lex.Tokenizer;
 
 import Meta.Size;
 
 import Std;
 
-using ::Meta::Lex::Transform;
-using ::Meta::Const;
-using ::Meta::CopyRef;
-using ::Meta::Mutable;
-using ::Meta::RRef;
 using ::Meta::Specifier::Mut;
-using ::Meta::Volatile;
 using ::Meta::Type;
 using ::Meta::USize;
 
@@ -289,38 +275,6 @@ export namespace
 			,	i_aBuffer
 			);
 		}
-
-		template
-			<	typename
-				...	t_tpTransform
-			>
-		[[nodiscard]]
-		static auto constexpr
-		(	OffsetOf
-		)	(	t_tName
-			,	Transform<t_tpTransform...>
-					i_vTransform
-			)
-			noexcept
-		{	return
-			MemberOffset
-			<	View::BitOffset
-			,	decltype
-				(	::Meta::Tokenize
-					(	i_vTransform
-						(	Type<t_tEntity>
-						)
-					//	reference only for mutable reference
-					//	pure value otherwise
-					-	RRef
-					-	Const
-					-	Volatile
-					-	CopyRef
-					)
-				)
-			>{	View::ByteOffset
-			};
-		}
 	};
 
 	template
@@ -357,40 +311,6 @@ export namespace
 			(	i_vName
 			,	i_aBuffer
 			);
-		}
-
-		template
-			<	typename
-				...	t_tpTransform
-			>
-		[[nodiscard]]
-		static auto constexpr
-		(	OffsetOf
-		)	(	t_tName
-			,	Transform<t_tpTransform...>
-					i_vTransform
-			)
-			noexcept
-		{	return
-			MemberOffset
-			<	View::BitOffset
-			,	decltype
-				(	::Meta::Tokenize
-					(	i_vTransform
-						(	Type<t_tEntity>
-						)
-					//	reference for const& and &
-					//	pure value otherwise
-					-	RRef
-					-	Const
-					-	Volatile
-						//	 this takes const out of const&
-					+	Mutable
-					-	Mutable
-					)
-				)
-			>{	View::ByteOffset
-			};
 		}
 	};
 }

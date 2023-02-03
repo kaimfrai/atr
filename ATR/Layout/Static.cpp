@@ -3,7 +3,6 @@ export module ATR.Layout.Static;
 import ATR.Layout.Member;
 
 import Meta.ID.Concept;
-import Meta.Lex.Transform;
 
 export namespace
 	ATR
@@ -39,7 +38,6 @@ export namespace
 		...
 	{
 		using StaticData<t_tpStatic>::operator[]...;
-		using StaticData<t_tpStatic>::OffsetOf...;
 	};
 
 	template
@@ -56,19 +54,6 @@ export namespace
 			>
 		>
 	{
-		template
-			<	typename
-				...	t_tpTransform
-			>
-		[[nodiscard]]
-		static auto constexpr
-		(	OffsetOf
-		)	(	t_tName
-			,	Meta::Lex::Transform<t_tpTransform...>
-			)
-		->	StaticMember<t_tData>
-		{	return	{};	}
-
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]

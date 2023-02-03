@@ -2,17 +2,14 @@ export module ATR.Layout.AliasLayout;
 
 import ATR.Layout.Concept;
 
-import Meta.Size;
 import Meta.ID.StringView;
 import Meta.ID.Alias;
 import Meta.ID.Concept;
-import Meta.Lex.Transform;
 
 import Std;
 
 using ::Meta::ProtoID;
 using ::Meta::ID_Of;
-using ::Meta::USize;
 
 export namespace
 	ATR
@@ -83,42 +80,6 @@ export namespace
 					;
 				}
 			}
-		}
-
-		template
-			<	typename
-				...	t_tpTransform
-			>
-		[[nodiscard]]
-		static auto constexpr
-		(	OffsetOf
-		)	(	ProtoID auto
-					i_vMember
-			,	Meta::Lex::Transform<t_tpTransform...>
-					i_vTransform
-			)
-			noexcept
-		->	decltype(auto)
-			requires
-				ProtoMemberID
-				<	ID_Of
-					<	ResolveAlias
-						(	i_vMember.StringView
-						)
-					>
-				,	t_tLayout
-				>
-		{	return
-				t_tLayout
-			::	OffsetOf
-				(	ID_Of
-					<	ResolveAlias
-						(	i_vMember.StringView
-						)
-					>{}
-				,	i_vTransform
-				)
-			;
 		}
 
 		[[nodiscard]]

@@ -2,6 +2,7 @@ export module ATR.Instance;
 
 import ATR.Address;
 import ATR.Layout.Type;
+import ATR.Member.Definition;
 
 import Meta.ID.Concept;
 import Meta.ID.StringLiteral;
@@ -14,7 +15,7 @@ export namespace
 	ATR
 {
 	template
-		<	Meta::ProtoID
+		<	ProtoID
 				t_tName
 		>
 	struct
@@ -27,6 +28,13 @@ export namespace
 		&	TypeName
 		=	t_tName
 		::	RawArray
+		;
+
+		static auto const constexpr
+		&	MemberList
+		=	Member::All_Of
+			<	TypeName
+			>
 		;
 
 		using

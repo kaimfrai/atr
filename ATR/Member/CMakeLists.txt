@@ -6,6 +6,7 @@ add_single_file_modules(
 	InfixDefinition.cpp
 	Info.cpp
 	List.cpp
+	OffsetOf.cpp
 	PrefixDefinition.cpp
 	SortKey.cpp
 	SuffixDefinition.cpp

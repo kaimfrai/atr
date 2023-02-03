@@ -1,15 +1,11 @@
 export module ATR.Layout.Bit.Layout;
 
 import Meta.ID.Concept;
-import Meta.Size;
 import Meta.Memory.Size;
 import Meta.Byte.Buffer;
 import Meta.Byte.Buffer.Range;
 
-import Std;
-
 using ::Meta::ProtoID;
-using ::Meta::USize;
 
 using namespace ::Meta::Literals;
 
@@ -28,7 +24,6 @@ export namespace
 		using t_tpBitView::ReadWriteView...;
 		using t_tpBitView::ReadView...;
 		using t_tpBitView::Value...;
-		using t_tpBitView::OffsetOf...;
 
 		static auto constexpr
 			BitSize

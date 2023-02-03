@@ -26,6 +26,7 @@ export import ATR.Member.Difference;
 export import ATR.Member.InfixDefinition;
 export import ATR.Member.Info;
 export import ATR.Member.List;
+export import ATR.Member.OffsetOf;
 export import ATR.Member.PrefixDefinition;
 export import ATR.Member.SortKey;
 export import ATR.Member.SuffixDefinition;

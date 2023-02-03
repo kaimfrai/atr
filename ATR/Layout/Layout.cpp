@@ -3,11 +3,8 @@ export module ATR.Layout.Layout;
 import ATR.Layout.Bit.MakeLayout;
 import ATR.Layout.Concept;
 import ATR.Layout.Member;
-import ATR.Layout.MemberOffset;
-import ATR.Layout.ValidateOffsets;
 
 import Meta.Size;
-import Meta.Lex.Transform;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Compare;
 import Meta.Token.Index;
@@ -17,7 +14,6 @@ import Meta.Token.Type;
 import Meta.Data.Aggregate;
 import Meta.ID.Concept;
 import Meta.Math.Prev;
-import Meta.Lex.Tokenizer;
 
 import Std;
 
@@ -195,34 +191,6 @@ export namespace
 			SouthArea
 		;
 
-		template
-			<	typename
-				...	t_tpTransform
-			>
-		[[nodiscard]]
-		static auto constexpr
-		(	OffsetOf
-		)	(	ProtoMemberID<NorthType> auto
-					i_vMemberID
-			,	Meta::Lex::Transform<t_tpTransform...>
-					i_vTransform
-			)
-		->	decltype(auto)
-		{
-			static_assert
-			(	ValidateOffsets<Layout>()
-			,	"Offsets of north or south areas have unexcepted values!"
-			);
-
-			return
-				NorthType
-			::	OffsetOf
-				(	i_vMemberID
-				,	i_vTransform
-				)
-			;
-		}
-
 		[[nodiscard]]
 		auto constexpr
 		(	operator[]
@@ -263,35 +231,6 @@ export namespace
 			::std::move(NorthArea)
 			[	i_vMemberID
 			];
-		}
-
-		template
-			<	typename
-				...	t_tpTransform
-			>
-		[[nodiscard]]
-		static auto constexpr
-		(	OffsetOf
-		)	(	ProtoMemberID<SouthType> auto
-					i_vMemberID
-			,	Meta::Lex::Transform<t_tpTransform...>
-					i_vTransform
-			)
-		->	decltype(auto)
-		{
-			static_assert
-			(	ValidateOffsets<Layout>()
-			,	"Offsets of north or south areas have unexcepted values!"
-			);
-
-			return
-				::Meta::Memory::SizeOf<NorthType>
-			+	SouthType
-			::	OffsetOf
-				(	i_vMemberID
-				,	i_vTransform
-				)
-			;
 		}
 
 		[[nodiscard]]
@@ -393,38 +332,6 @@ export namespace
 			>
 		{	return
 			{	Value
-			};
-		}
-
-		template
-			<	typename
-				...	t_tpTransform
-			>
-		[[nodiscard]]
-		static auto constexpr
-		(	OffsetOf
-		)	(	t_tName
-					i_vName
-			,	Meta::Lex::Transform<t_tpTransform...>
-					i_vTransform
-			)
-		->	decltype(auto)
-		{	return
-			MemberOffset
-			<	::Meta::TokenizeEntity
-				<	decltype
-					(	::std::declval
-						<	TypeEntity
-							<	i_vTransform
-								(	Type<Layout>
-								)
-							>
-						>()
-						[	i_vName
-						]
-					)
-				>
-			>{	0uz
 			};
 		}
 	};

@@ -1,6 +1,7 @@
 import ATR.Member.List;
 import ATR.Member.Definition;
 import ATR.Member.Union;
+import ATR.Member.OffsetOf;
 import ATR.Instance;
 import ATR.Layout.MemberOffset;
 import ATR.Layout.Bit.MemberOffset;
@@ -141,10 +142,9 @@ auto constexpr inline
 	OffsetType
 =	Type
 	<	decltype
-		(	::std::remove_cvref_t<t_tOwner>
-		::	OffsetOf
+		(	ATR::Member::OffsetOf
 			(	Meta::ID_V<t_vMemberName>
-			,	Meta::ComposeTransform(Meta::Type<t_tOwner>)
+			,	Meta::Type<t_tOwner>
 			)
 		)
 	>
@@ -195,7 +195,7 @@ static_assert
 	,	"Int"
 	>
 ==	MemberOffset_For
-	<	Aggregate<int>&
+	<	int&
 	>
 );
 
@@ -205,7 +205,7 @@ static_assert
 	,	"Int"
 	>
 ==	MemberOffset_For
-	<	Aggregate<int> const&
+	<	int const&
 	>
 );
 
@@ -215,7 +215,7 @@ static_assert
 	,	"Int"
 	>
 ==	MemberOffset_For
-	<	Aggregate<int>
+	<	int
 	>
 );
 
@@ -254,7 +254,7 @@ static_assert
 	,	"IntConst"
 	>
 ==	MemberOffset_For
-	<	Aggregate<int const>&
+	<	int const&
 	>
 );
 
@@ -264,7 +264,7 @@ static_assert
 	,	"IntConst"
 	>
 ==	MemberOffset_For
-	<	Aggregate<int const> const&
+	<	int const&
 	>
 );
 
@@ -274,7 +274,7 @@ static_assert
 	,	"IntConst"
 	>
 ==	MemberOffset_For
-	<	Aggregate<int>
+	<	int
 	>
 );
 
@@ -315,7 +315,7 @@ static_assert
 	,	"IntMut"
 	>
 ==	MemberOffset_For
-	<	Aggregate<Mut<int>>&
+	<	int&
 	>
 );
 
@@ -325,7 +325,7 @@ static_assert
 	,	"IntMut"
 	>
 ==	MemberOffset_For
-	<	Aggregate<Mut<int>> const&
+	<	int&
 	>
 );
 
@@ -335,7 +335,7 @@ static_assert
 	,	"IntMut"
 	>
 ==	MemberOffset_For
-	<	Aggregate<int>
+	<	int
 	>
 );
 
@@ -421,7 +421,7 @@ static_assert
 	>
 ==	BitMemberOffset_For
 	<	4_bdx
-	,	Field<1_bit>&
+	,	bool&
 	>
 );
 
@@ -432,7 +432,7 @@ static_assert
 	>
 ==	BitMemberOffset_For
 	<	4_bdx
-	,	Field<1_bit>
+	,	bool
 	>
 );
 
@@ -443,7 +443,7 @@ static_assert
 	>
 ==	BitMemberOffset_For
 	<	4_bdx
-	,	Field<1_bit>
+	,	bool
 	>
 );
 
@@ -455,7 +455,7 @@ static_assert
 	>
 ==	BitMemberOffset_For
 	<	5_bdx
-	,	Field<1_bit>
+	,	bool
 	>
 );
 
@@ -466,7 +466,7 @@ static_assert
 	>
 ==	BitMemberOffset_For
 	<	5_bdx
-	,	Field<1_bit>
+	,	bool
 	>
 );
 
@@ -477,7 +477,7 @@ static_assert
 	>
 ==	BitMemberOffset_For
 	<	5_bdx
-	,	Field<1_bit>
+	,	bool
 	>
 );
 
@@ -489,7 +489,7 @@ static_assert
 	>
 ==	BitMemberOffset_For
 	<	6_bdx
-	,	Field<1_bit>&
+	,	bool&
 	>
 );
 
@@ -500,7 +500,7 @@ static_assert
 	>
 ==	BitMemberOffset_For
 	<	6_bdx
-	,	Field<1_bit>&
+	,	bool&
 	>
 );
 
@@ -511,7 +511,7 @@ static_assert
 	>
 ==	BitMemberOffset_For
 	<	6_bdx
-	,	Field<1_bit>
+	,	bool
 	>
 );
 
@@ -711,8 +711,7 @@ static_assert
 	>
 ==	BitMemberOffset_For
 	<	2_bdx
-	,	// TODO make this bool
-		Field<1_bit>(&)[5]
+	,	bool(&)[5]
 	>
 );
 
@@ -723,8 +722,7 @@ static_assert
 	>
 ==	BitMemberOffset_For
 	<	2_bdx
-	,	// TODO make this bool
-		Field<1_bit>(&)[5]
+	,	bool(&)[5]
 	>
 );
 
@@ -735,8 +733,7 @@ static_assert
 	>
 ==	BitMemberOffset_For
 	<	2_bdx
-	,	// TODO make this bool
-		Field<1_bit>[5]
+	,	bool[5]
 	>
 );
 

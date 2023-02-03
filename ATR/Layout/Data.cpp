@@ -2,13 +2,9 @@ export module ATR.Layout.Data;
 
 import ATR.Layout.Concept;
 
-import Meta.Size;
-import Meta.Lex.Transform;
 import Meta.ID.StringView;
 
 import Std;
-
-using ::Meta::USize;
 
 export namespace
 	ATR
@@ -40,28 +36,6 @@ export namespace
 			)
 		->	decltype(i_vName)
 		{	return i_vName;	}
-
-		template
-			<	typename
-				...	t_tpTransform
-			>
-		[[nodiscard]]
-		static auto constexpr
-		(	OffsetOf
-		)	(	ProtoMemberID<t_tDynamic> auto
-					i_vMemberID
-			,	Meta::Lex::Transform<t_tpTransform...>
-					i_vTransform
-			)
-		->	decltype(auto)
-		{	return
-				t_tDynamic
-			::	OffsetOf
-				(	i_vMemberID
-				,	i_vTransform
-				)
-			;
-		}
 
 		[[nodiscard]]
 		auto constexpr
@@ -103,28 +77,6 @@ export namespace
 			::std::move(Dynamic)
 			[	i_vMemberID
 			];
-		}
-
-		template
-			<	typename
-				...	t_tpTransform
-			>
-		[[nodiscard]]
-		static auto constexpr
-		(	OffsetOf
-		)	(	ProtoMemberID<t_tStatic> auto
-					i_vMemberID
-			,	Meta::Lex::Transform<t_tpTransform...>
-					i_vTransform
-			)
-		->	decltype(auto)
-		{	return
-				t_tStatic
-			::	OffsetOf
-				(	i_vMemberID
-				,	i_vTransform
-				)
-			;
 		}
 
 		[[nodiscard]]
