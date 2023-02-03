@@ -1,6 +1,7 @@
 add_single_file_modules(
 	Alias.cpp
 	Definition.cpp
+	Difference.cpp
 	InfixDefinition.cpp
 	Info.cpp
 	List.cpp

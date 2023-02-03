@@ -21,6 +21,7 @@ export import ATR.Layout.Static;
 export import ATR.Layout.Type;
 export import ATR.Member.Alias;
 export import ATR.Member.Definition;
+export import ATR.Member.Difference;
 export import ATR.Member.InfixDefinition;
 export import ATR.Member.Info;
 export import ATR.Member.List;

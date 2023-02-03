@@ -60,58 +60,6 @@ export namespace
 			return vCopy;
 		}
 
-		template
-			<	Meta::USize
-					t_nRight
-			>
-		friend auto constexpr
-		(	operator -
-		)	(	List const
-				&	i_rLeft
-			,	List<t_nRight> const
-				&	i_rRight
-			)
-			noexcept
-		->	List
-			<	t_nMemberCount
-			-	t_nRight
-			>
-		{
-			static_assert
-			(	t_nMemberCount
-			>=	t_nRight
-			,	"Cannot subtract more MemberInfos than already exist!"
-			);
-			if	constexpr
-				(	t_nRight
-				==	0uz
-				)
-				return i_rLeft;
-			else
-			if	(	not
-					std::ranges::includes
-					(	i_rLeft
-					,	i_rRight
-					)
-				)
-			{
-				((void)"Cannot subtract MemberInfos that are not contained!", std::unreachable());
-			}
-
-			List
-			<	t_nMemberCount
-			-	t_nRight
-			>	vResult
-			;
-
-			std::ranges::set_difference
-			(	i_rLeft
-			,	i_rRight
-			,	begin(vResult)
-			);
-			return vResult;
-		}
-
 		friend auto constexpr
 		(	operator ==
 		)	(	List const

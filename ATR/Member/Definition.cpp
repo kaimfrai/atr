@@ -103,21 +103,6 @@ export namespace
 			return vResult;
 		}
 
-		template
-			<	USize
-					t_nRight
-			>
-		friend auto constexpr
-		(	operator -
-		)	(	Definition
-			,	List<t_nRight> const
-				&	i_rRight
-			)
-			noexcept
-		->	decltype(auto)
-		{	return t_vList - i_rRight;	}
-
-
 		friend auto constexpr
 		(	operator ==
 		)	(	Definition
