@@ -3,14 +3,14 @@ export module Evaluation.Archetype.Sphere;
 import Evaluation.Archetype.Ellipsoid;
 
 import ATR.Member.Alias;
-import ATR.LayoutConfig;
+import ATR.Member.Definition;
 
 export namespace
-	ATR
+	ATR::Member
 {
 	template<>
-	DefineMembers
-	<	LayoutConfig
+	Definition
+	<	Definition_For
 		<	"Ellipsoid"
 		>(	Alias
 			<	"Height"
@@ -22,7 +22,7 @@ export namespace
 			>
 		)
 	>	const extern
-		LayoutConfig
+		Definition_For
 		<	"Sphere"
 		>
 	;

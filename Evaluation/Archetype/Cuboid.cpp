@@ -5,23 +5,23 @@ import Evaluation.Archetype.BasicBody;
 import Evaluation.Shared.Fraction;
 
 import ATR.Member.List;
-import ATR.LayoutConfig;
+import ATR.Member.Definition;
 
 export namespace
-	ATR
+	ATR::Member
 {
 	template<>
-	DefineMembers
-	<	LayoutConfig
+	Definition
+	<	Definition_For
 		<	"BasicBody"
 		>
-	+	Member::New
+	+	New
 		<	"ComputeVolumeMultiplier"
 		,	Fraction
 			<>
 		>
 	>	const extern
-		LayoutConfig
+		Definition_For
 		<	"Cuboid"
 		>
 	;

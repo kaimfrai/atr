@@ -5,17 +5,17 @@ import Evaluation.Archetype.BasicShape;
 import Evaluation.Shared.PiFraction;
 
 import ATR.Member.List;
-import ATR.LayoutConfig;
+import ATR.Member.Definition;
 
 export namespace
-	ATR
+	ATR::Member
 {
 	template<>
-	DefineMembers
-	<	LayoutConfig
+	Definition
+	<	Definition_For
 		<	"BasicShape"
 		>
-	+	Member::New
+	+	New
 		<	"ComputeAreaMultiplier"
 		,	PiFraction
 			<	1z
@@ -23,7 +23,7 @@ export namespace
 			>
 		>
 	>	const extern
-		LayoutConfig
+		Definition_For
 		<	"Ellipse"
 		>
 	;

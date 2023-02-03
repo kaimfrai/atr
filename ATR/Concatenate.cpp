@@ -1,6 +1,6 @@
 export module ATR.Concatenate;
 
-import ATR.LayoutConfig;
+import ATR.Member.Definition;
 import ATR.DataMember;
 import ATR.Member.List;
 
@@ -14,7 +14,7 @@ import Meta.Token.Type;
 import Std;
 
 namespace
-	ATR
+	ATR::Member
 {
 	template
 		<	typename
@@ -98,14 +98,14 @@ namespace
 		,	typename
 				t_tSuffix
 		>
-	Member::List constexpr inline
-		InfixLayoutConfig
+	List constexpr inline
+		InfixDefinition_For
 	=	[]	<	::std::size_t
 				...	t_npIndex
 			>(	::std::index_sequence<t_npIndex...>
 			)
 		{	return
-			Member::List
+			List
 			{	InfixDataMember
 				<	t_tPrefix
 				,	t_vConfig[t_npIndex]
@@ -122,9 +122,9 @@ namespace
 }
 
 export namespace
-	ATR
+	ATR::Member
 {
-	/// uses the LayoutConfig mapped to the given literal and prefixes it with that literal
+	/// uses the Definition_For the given literal and prefixes it with that literal
 	template
 		<	Meta::StringLiteral
 				i_vType
@@ -132,16 +132,16 @@ export namespace
 				i_vPrefix
 			=	i_vType
 		>
-	Member::List constexpr inline
-		PrefixedLayoutConfig
-	=	::ATR::InfixLayoutConfig
+	List constexpr inline
+		PrefixedDefinition_For
+	=	InfixDefinition_For
 		<	Meta::ID_T<i_vPrefix>
-		,	LayoutConfig<i_vType>
+		,	Definition_For<i_vType>
 		,	Meta::ID<>
 		>
 	;
 
-	/// uses the LayoutConfig mapped to the given literal and suffixes it with that literal
+	/// uses the Definition_For the given literal and suffixes it with that literal
 	template
 		<	Meta::StringLiteral
 				i_vType
@@ -149,11 +149,11 @@ export namespace
 				i_vSuffix
 			=	i_vType
 		>
-	Member::List constexpr inline
-		SuffixedLayoutConfig
-	=	::ATR::InfixLayoutConfig
+	List constexpr inline
+		SuffixedDefinition_For
+	=	InfixDefinition_For
 		<	Meta::ID<>
-		,	LayoutConfig<i_vType>
+		,	Definition_For<i_vType>
 		,	Meta::ID_T<i_vSuffix>
 		>
 	;

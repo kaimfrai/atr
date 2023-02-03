@@ -3,14 +3,14 @@ export module Evaluation.Archetype.Circle;
 import Evaluation.Archetype.Ellipse;
 
 import ATR.Member.Alias;
-import ATR.LayoutConfig;
+import ATR.Member.Definition;
 
 export namespace
-	ATR
+	ATR::Member
 {
 	template<>
-	DefineMembers
-	<	LayoutConfig
+	Definition
+	<	Definition_For
 		<	"Ellipse"
 		>(	Alias
 			<	"Height"
@@ -18,7 +18,7 @@ export namespace
 			>
 		)
 	>	const extern
-		LayoutConfig
+		Definition_For
 		<	"Circle"
 		>
 	;

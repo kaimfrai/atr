@@ -2,27 +2,27 @@ export module Evaluation.Archetype.BasicShape;
 
 import Evaluation.Shared.DataTypes;
 import ATR.Member.List;
-import ATR.LayoutConfig;
+import ATR.Member.Definition;
 
 export namespace
-	ATR
+	ATR::Member
 {
 	template<>
-	DefineMembers
-	<	Member::New
+	Definition
+	<	New
 		<	"Height"
 		,	Float
 		>
-	+	Member::New
+	+	New
 		<	"Width"
 		,	Float
 		>
-	+	Member::New
+	+	New
 		<	"Color"
 		,	RGBAColor
 		>
 	>	const extern
-		LayoutConfig
+		Definition_For
 		<	"BasicShape"
 		>
 	;

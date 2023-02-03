@@ -2,7 +2,6 @@ add_single_file_modules(
 	ATR.cpp
 
 	DataMember.cpp
-	LayoutConfig.cpp
 
 	Literals.cpp
 

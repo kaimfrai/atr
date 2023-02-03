@@ -1,5 +1,5 @@
 import ATR.Member.List;
-import ATR.LayoutConfig;
+import ATR.Member.Definition;
 import ATR.Layout.Bit.Reference;
 import ATR.Instance;
 import ATR.Literals;
@@ -17,30 +17,31 @@ using ::Meta::Specifier::Mut;
 
 using namespace ::Meta::Literals;
 
-namespace ATR
+namespace
+	ATR::Member
 {
 	template<>
-	DefineMembers
-	<	Member::New
+	Definition
+	<	New
 		<	"0BoolBit"
 		,	bool
 		>
-	+	Member::New
+	+	New
 		<	"1MutBoolBit"
 		,	Mut<bool>
 		>
-	+	Member::New
+	+	New
 		<	"2BitField31"
 		,	Field<31_bit>
 		>
-	+	Member::New
+	+	New
 		<	"3MutBitField31"
 		,	Mut
 			<	Field<31_bit>
 			>
 		>
 	>	const extern
-		LayoutConfig
+		Definition_For
 		<	"BitFieldTest"
 		>
 	;

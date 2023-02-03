@@ -5,23 +5,23 @@ import Evaluation.Archetype.BasicShape;
 import Evaluation.Shared.Fraction;
 
 import ATR.Member.List;
-import ATR.LayoutConfig;
+import ATR.Member.Definition;
 
 export namespace
-	ATR
+	ATR::Member
 {
 	template<>
-	DefineMembers
-	<	LayoutConfig
+	Definition
+	<	Definition_For
 		<	"BasicShape"
 		>
-	+	Member::New
+	+	New
 		<	"ComputeAreaMultiplier"
 		,	Fraction
 			<>
 		>
 	>	const extern
-		LayoutConfig
+		Definition_For
 		<	"Rectangle"
 		>
 	;

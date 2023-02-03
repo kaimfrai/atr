@@ -1,12 +1,12 @@
 export module ATR.Layout.Type;
 
-import ATR.LayoutConfig;
+import ATR.Member.Definition;
 import ATR.Layout.Create;
 
 import Meta.ID.Concept;
 
 using ::Meta::ProtoID;
-using ::ATR::LayoutConfig;
+using ::ATR::Member::Definition_For;
 
 export namespace
 	ATR
@@ -20,7 +20,7 @@ export namespace
 		CreateLayoutType
 	=	decltype
 		(	::CreateLayout
-			(	LayoutConfig
+			(	Definition_For
 				<	t_tTypeID
 				::	RawArray
 				>

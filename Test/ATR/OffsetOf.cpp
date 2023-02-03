@@ -1,5 +1,5 @@
 import ATR.Member.List;
-import ATR.LayoutConfig;
+import ATR.Member.Definition;
 import ATR.Instance;
 import ATR.Layout.MemberOffset;
 import ATR.Layout.Bit.MemberOffset;
@@ -31,73 +31,74 @@ using ::Meta::Type;
 
 using namespace ::Meta::Literals;
 
-namespace ATR
+namespace
+	ATR::Member
 {
 	template<>
-	DefineMembers
-	<	Member::New
+	Definition
+	<	New
 		<	"Int"
 		,	int
 		>
-	+	Member::New
+	+	New
 		<	"IntConst"
 		,	int const
 		>
-	+	Member::New
+	+	New
 		<	"IntMut"
 		,	Mut<int>
 		>
-	+	Member::New
+	+	New
 		<	"Bool"
 		,	bool
 		>
-	+	Member::New
+	+	New
 		<	"BoolConst"
 		,	bool const
 		>
-	+	Member::New
+	+	New
 		<	"BoolMut"
 		,	Mut<bool>
 		>
-	+	Member::New
+	+	New
 		<	"Field"
 		,	Field<3_bit>
 		>
-	+	Member::New
+	+	New
 		<	"FieldConst"
 		,	Field<3_bit> const
 		>
-	+	Member::New
+	+	New
 		<	"FieldMut"
 		,	Mut<Field<3_bit>>
 		>
-	+	Member::New
+	+	New
 		<	"ArrayBool"
 		,	bool[5]
 		>
-	+	Member::New
+	+	New
 		<	"ArrayBoolConst"
 		,	bool const[5]
 		>
-	+	Member::New
+	+	New
 		<	"ArrayBoolMut"
 		,	Mut<bool[5]>
 		>
 
-	+	Member::New
+	+	New
 		<	"ArrayField"
 		,	Field<3_bit>[5]
 		>
-	+	Member::New
+	+	New
 		<	"ArrayFieldConst"
 		,	Field<3_bit> const[5]
 		>
-	+	Member::New
+	+	New
 		<	"ArrayFieldMut"
 		,	Mut<Field<3_bit>[5]>
 		>
 	>	extern const
-		LayoutConfig
+		Definition_For
 		<	"OffsetOfTest"
 		>
 	;

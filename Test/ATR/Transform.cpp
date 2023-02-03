@@ -1,5 +1,5 @@
 import ATR.Member.List;
-import ATR.LayoutConfig;
+import ATR.Member.Definition;
 
 import Meta.Bit.Field;
 import Meta.Memory.Size;
@@ -14,116 +14,118 @@ using ::Meta::Specifier::Mut;
 using namespace ::Meta::Literals;
 
 namespace
-	ATR
+	ATR::Member
 {
 	template<>
-	DefineMembers
-	<	Member::New
+	Definition
+	<	New
 		<	"Int"
 		,	int
 		>
-	+	Member::New
+	+	New
 		<	"Bool"
 		,	bool
 		>
-	+	Member::New
+	+	New
 		<	"Field"
 		,	Field<3_bit>
 		>
 	>	const extern
-		LayoutConfig
+		Definition_For
 		<	"Single"
 		>
 	;
 
 	template<>
-	DefineMembers
-	<	Member::New
+	Definition
+	<	New
 		<	"Int"
 		,	int const
 		>
-	+	Member::New
+	+	New
 		<	"Bool"
 		,	bool const
 		>
-	+	Member::New
+	+	New
 		<	"Field"
 		,	Field<3_bit> const
 		>
 	>	const extern
-		LayoutConfig
+		Definition_For
 		<	"ConstSingle"
 		>
 	;
 
 	template<>
-	DefineMembers
-	<	Member::New
+	Definition
+	<	New
 		<	"Int"
 		,	Mut<int>
 		>
-	+	Member::New
+	+	New
 		<	"Bool"
 		,	Mut<bool>
 		>
-	+	Member::New
+	+	New
 		<	"Field"
 		,	Mut<Field<3_bit>>
 		>
 	>	const extern
-		LayoutConfig
+		Definition_For
 		<	"MutSingle"
 		>
 	;
 
 	template<>
-	DefineMembers
-	<	Member::New
+	Definition
+	<	New
 		<	"Int"
 		,	int[5]
 		>
-	+	Member::New
+	+	New
 		<	"Bool"
 		,	bool[5]
 		>
-	+	Member::New
+	+	New
 		<	"Field"
 		,	Field<3_bit>[5]
 		>
 	>	const extern
-		LayoutConfig
+		Definition_For
 		<	"Array"
 		>
 	;
 }
 
+using ::ATR::Member::Definition_For;
+
 static_assert
-(	ATR::LayoutConfig<"Single">
-!=	ATR::LayoutConfig<"ConstSingle">
+(	Definition_For<"Single">
+!=	Definition_For<"ConstSingle">
 );
 
 static_assert
-(	ATR::LayoutConfig<"Single"> * Meta::Const
-==	ATR::LayoutConfig<"ConstSingle">
+(	Definition_For<"Single"> * Meta::Const
+==	Definition_For<"ConstSingle">
 );
 
 
 static_assert
-(	ATR::LayoutConfig<"Single">
-!=	ATR::LayoutConfig<"MutSingle">
+(	Definition_For<"Single">
+!=	Definition_For<"MutSingle">
 );
 
 static_assert
-(	ATR::LayoutConfig<"Single"> * Meta::Mutable
-==	ATR::LayoutConfig<"MutSingle">
+(	Definition_For<"Single"> * Meta::Mutable
+==	Definition_For<"MutSingle">
 );
 
 static_assert
-(	ATR::LayoutConfig<"Single">
-!=	ATR::LayoutConfig<"Array">
+(	Definition_For<"Single">
+!=	Definition_For<"Array">
 );
 
 static_assert
-(	ATR::LayoutConfig<"Single"> * 5_ext
-==	ATR::LayoutConfig<"Array">
+(	Definition_For<"Single"> * 5_ext
+==	Definition_For<"Array">
 );

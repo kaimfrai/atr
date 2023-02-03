@@ -2,27 +2,27 @@ export module Evaluation.Archetype.Head;
 
 import Evaluation.Archetype.Sphere;
 
-import ATR.LayoutConfig;
+import ATR.Member.Definition;
 import ATR.Concatenate;
 
 export namespace
-	ATR
+	ATR::Member
 {
 	template<>
-	DefineMembers
-	<	LayoutConfig
+	Definition
+	<	Definition_For
 		<	"Sphere"
 		>
-	+	SuffixedLayoutConfig
+	+	SuffixedDefinition_For
 		<	"Sphere"
 		,	"LeftEye"
 		>
-	+	SuffixedLayoutConfig
+	+	SuffixedDefinition_For
 		<	"Sphere"
 		,	"RightEye"
 		>
 	>	const extern
-		LayoutConfig
+		Definition_For
 		<	"Head"
 		>
 	;

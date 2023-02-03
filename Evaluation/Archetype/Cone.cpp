@@ -6,20 +6,20 @@ import Evaluation.Shared.PiFraction;
 
 import ATR.Member.Alias;
 import ATR.Member.List;
-import ATR.LayoutConfig;
+import ATR.Member.Definition;
 
 export namespace
-	ATR
+	ATR::Member
 {
 	template<>
-	DefineMembers
-	<	LayoutConfig<"BasicBody">
+	Definition
+	<	Definition_For<"BasicBody">
 		(	Alias
 			<	"Height"
 			,	"Width"
 			>
 		)
-	+	Member::New
+	+	New
 		<	"ComputeVolumeMultiplier"
 		,	PiFraction
 			<	1z
@@ -27,7 +27,7 @@ export namespace
 			>
 		>
 	>	const extern
-		LayoutConfig
+		Definition_For
 		<	"Cone"
 		>
 	;
