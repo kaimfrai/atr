@@ -9,7 +9,7 @@ Supported OS:
 Required software:
 
 * CMake version 3.20 oder higher
-* Clang 16 (currently still in development, latest commit tested (2023-01-08): https://github.com/llvm/llvm-project/commits/f71ffd3b735b
+* Clang 16 (currently not fully released, requires version later than 2023-02-02 with commit https://github.com/llvm/llvm-project/commit/cdd44e2c85542d152aef19cfd1d2ad451d774935)
 * perf (package linux-tools-generic under Ubuntu 22.04)
 * valgrind
 * Boost.TypeErasure (tested version 1.74.0)
