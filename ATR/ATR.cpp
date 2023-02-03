@@ -1,7 +1,6 @@
 export module ATR;
 
 export import ATR.Address;
-export import ATR.Concatenate;
 export import ATR.DataMember;
 export import ATR.Dependency;
 export import ATR.DependencyIDMap;
@@ -21,9 +20,12 @@ export import ATR.Layout.Layout;
 export import ATR.Layout.MemberOffset;
 export import ATR.Layout.Static;
 export import ATR.Layout.Type;
-export import ATR.Member.Definition;
-export import ATR.Member.List;
 export import ATR.Member.Alias;
+export import ATR.Member.Definition;
+export import ATR.Member.InfixDefinition;
+export import ATR.Member.List;
+export import ATR.Member.PrefixDefinition;
+export import ATR.Member.SuffixDefinition;
 export import ATR.Literals;
 export import ATR.Instance;
 export import ATR.Virtual.Argument;

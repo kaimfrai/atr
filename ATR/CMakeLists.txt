@@ -9,7 +9,6 @@ add_single_file_modules(
 	Address.cpp
 	Dependency.cpp
 
-	Concatenate.cpp
 	DependencyIDMap.cpp
 
 	Instance.cpp

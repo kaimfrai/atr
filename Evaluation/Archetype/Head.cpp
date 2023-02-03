@@ -3,7 +3,7 @@ export module Evaluation.Archetype.Head;
 import Evaluation.Archetype.Sphere;
 
 import ATR.Member.Definition;
-import ATR.Concatenate;
+import ATR.Member.SuffixDefinition;
 
 export namespace
 	ATR::Member
@@ -13,11 +13,11 @@ export namespace
 	<	Definition_For
 		<	"Sphere"
 		>
-	+	SuffixedDefinition_For
+	+	SuffixDefinition_For
 		<	"Sphere"
 		,	"LeftEye"
 		>
-	+	SuffixedDefinition_For
+	+	SuffixDefinition_For
 		<	"Sphere"
 		,	"RightEye"
 		>

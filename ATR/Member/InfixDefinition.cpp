@@ -1,17 +1,18 @@
-export module ATR.Concatenate;
+export module ATR.Member.InfixDefinition;
 
-import ATR.Member.Definition;
 import ATR.DataMember;
+import ATR.Member.Definition;
 import ATR.Member.List;
 
 import Meta.ID.Alias;
 import Meta.ID.Concatenate;
-import Meta.ID.Template;
 import Meta.ID.StringLiteral;
-import Meta.Functional.Construct;
 import Meta.Token.Type;
 
 import Std;
+
+using ::Meta::ID_T;
+using ::Meta::StringLiteral;
 
 namespace
 	ATR::Member
@@ -24,9 +25,11 @@ namespace
 		,	typename
 				t_tSuffix
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	InfixDataMember
 	)	()
+		noexcept
 	->	MemberInfo
 	{
 		using
@@ -90,13 +93,13 @@ namespace
 		;
 	}
 
-	template
-		<	typename
-				t_tPrefix
-		,	auto
-				t_vConfig
-		,	typename
-				t_tSuffix
+	export template
+		<	StringLiteral
+				t_vPrefix
+		,	StringLiteral
+				t_vType
+		,	StringLiteral
+				t_vSuffix
 		>
 	List constexpr inline
 		InfixDefinition_For
@@ -107,54 +110,16 @@ namespace
 		{	return
 			List
 			{	InfixDataMember
-				<	t_tPrefix
-				,	t_vConfig[t_npIndex]
-				,	t_tSuffix
+				<	ID_T<t_vPrefix>
+				,	Definition_For<t_vType>[t_npIndex]
+				,	ID_T<t_vSuffix>
 				>()
 				...
 			};
 		}(	::std::make_index_sequence
-			<	t_vConfig
+			<	Definition_For<t_vType>
 			.	size()
 			>{}
 		)
-	;
-}
-
-export namespace
-	ATR::Member
-{
-	/// uses the Definition_For the given literal and prefixes it with that literal
-	template
-		<	Meta::StringLiteral
-				i_vType
-		,	Meta::StringLiteral
-				i_vPrefix
-			=	i_vType
-		>
-	List constexpr inline
-		PrefixedDefinition_For
-	=	InfixDefinition_For
-		<	Meta::ID_T<i_vPrefix>
-		,	Definition_For<i_vType>
-		,	Meta::ID<>
-		>
-	;
-
-	/// uses the Definition_For the given literal and suffixes it with that literal
-	template
-		<	Meta::StringLiteral
-				i_vType
-		,	Meta::StringLiteral
-				i_vSuffix
-			=	i_vType
-		>
-	List constexpr inline
-		SuffixedDefinition_For
-	=	InfixDefinition_For
-		<	Meta::ID<>
-		,	Definition_For<i_vType>
-		,	Meta::ID_T<i_vSuffix>
-		>
 	;
 }
