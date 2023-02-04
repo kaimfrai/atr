@@ -84,6 +84,18 @@ export namespace
 	};
 
 	template
+		<	auto
+				t_nWidth
+		>
+	(	Size
+	)	(	Size<t_nWidth>
+		)
+	->	Size
+		<	t_nWidth
+		>
+	;
+
+	template
 		<	typename
 				t_tObject
 		>

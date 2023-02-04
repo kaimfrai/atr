@@ -4,6 +4,8 @@ import ATR.Layout.Member;
 
 import Meta.ID.Concept;
 
+using ::Meta::ProtoID;
+
 export namespace
 	ATR
 {
@@ -15,9 +17,9 @@ export namespace
 		StaticMember
 	{
 		[[nodiscard]]
-		auto constexpr
+		static auto constexpr
 		(	operator()
-		)	()	const
+		)	()
 			noexcept
 		->	t_tMember
 		{	return
@@ -43,7 +45,7 @@ export namespace
 	template
 		<	typename
 				t_tData
-		,	Meta::ProtoID
+		,	ProtoID
 				t_tName
 		>
 	struct
@@ -55,10 +57,10 @@ export namespace
 		>
 	{
 		[[nodiscard]]
-		auto constexpr
+		static auto constexpr
 		(	operator[]
 		)	(	t_tName
-			)	const
+			)
 			noexcept
 		->	t_tData
 		{	return {};	}

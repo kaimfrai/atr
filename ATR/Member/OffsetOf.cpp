@@ -1,6 +1,6 @@
 export module ATR.Member.OffsetOf;
 
-import ATR.Member.List;
+import ATR.Member.Info;
 
 import ATR.Layout.Static;
 import ATR.Layout.Bit.MemberOffset;
@@ -11,23 +11,23 @@ import Meta.Memory.Size.Cast;
 import Meta.ID.StringView;
 import Meta.ID.Concept;
 import Meta.Token.Type;
-import Meta.Token.RRef;
+import Meta.Token.LRef;
+import Meta.Token.CV;
 import Meta.Token.Reference;
 import Meta.Token.CopyRef;
-import Meta.Token.Const;
-import Meta.Token.Volatile;
 import Meta.Trait.BitAlign;
 import Meta.Memory.Size.Compare;
 import Meta.Lex.TransformComposer;
 import Meta.Lex.Tokenizer;
 
+import Std;
+
 using ::Meta::StringView;
 using ::Meta::ProtoID;
-using ::Meta::Const;
 using ::Meta::CopyRef;
-using ::Meta::RRef;
+using ::Meta::LRef;
+using ::Meta::CV;
 using ::Meta::Reference;
-using ::Meta::Volatile;
 
 using namespace ::Meta::Literals;
 
@@ -45,15 +45,11 @@ export namespace
 		;
 	};
 
-	template
-		<	auto
-				t_nCount
-		>
 	[[nodiscard]]
 	auto constexpr
-	(	OffsetOf
-	)	(	List<t_nCount> const
-			&	i_rList
+	(	ComputeErasedOffset
+	)	(	::std::span<Info const>
+				i_vList
 		,	StringView
 				i_vName
 		)
@@ -66,17 +62,19 @@ export namespace
 
 		for	(	auto const
 				&	i_rInfo
-			:	i_rList
+			:	i_vList
 			)
 		{
-			if	(i_rInfo.Name == i_vName)
-			{
-				vOffset.Type = i_rInfo.Type.Type;
+			if	(	i_rInfo.Name
+				==	i_vName
+				)
+			{	(	vOffset.Type
+				=	i_rInfo.Type.Type
+				);
 				break;
 			}
 			else
-			{
-				(	vOffset.Offset
+			{	(	vOffset.Offset
 				+=	i_rInfo.Type.Size
 				);
 			}
@@ -84,6 +82,79 @@ export namespace
 		return
 			vOffset
 		;
+	}
+
+	template
+		<	::Meta::BitSize
+				t_vOffset
+		,	typename
+				t_tMember
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	ComputeMemberOffset
+	)	(	::Meta::TypeToken<t_tMember>
+				i_vMemberType
+		)
+		noexcept
+	{
+		auto constexpr
+			vBitAlign
+		=	Meta::BitAlign_Of
+			(	i_vMemberType
+			-	Reference
+			)
+		;
+		if	constexpr
+			(	vBitAlign
+			==	0_bit
+			)
+		{	return
+			StaticMember
+			<	Meta::TypeEntity
+				<	i_vMemberType
+				-	Reference
+				-	CV
+				>
+			>{};
+		}
+		else
+		if	constexpr
+			(	vBitAlign
+			==	1_bit
+			)
+		{
+			auto constexpr
+				vByteSize
+			=	SizeCast<::Meta::ByteSize>
+				(	t_vOffset
+				)
+			;
+			return
+			Bit::MemberOffset
+			<	vByteSize.Remainder
+			,	decltype
+				(	::Meta::Tokenize
+					(	i_vMemberType
+					//	reference only for &
+					//	pure value otherwise
+					-	CopyRef
+					)
+				)
+			>{	vByteSize.Quotient
+			};
+		}
+		else
+		{	return
+			MemberOffset
+			<	decltype
+				(	Meta::Tokenize
+					(	i_vMemberType
+					)
+				)
+			>{	t_vOffset
+			};
+		}
 	}
 
 	template
@@ -96,99 +167,90 @@ export namespace
 	)	(	ProtoID auto
 				i_vName
 		,	Meta::TypeToken<t_tOwner>
-				i_vOwner
+		,	auto
+			...	t_vpQualifer
 		)
 		noexcept
 	{
 		auto constexpr
-			fOwnerTransform
-		=	Meta::ComposeTransform
-			(	i_vOwner
-			)
-		;
-		auto constexpr
 			vErasedOffset
-		=	OffsetOf
-			(	Meta::TypeEntity<i_vOwner - Reference>
+		=	ComputeErasedOffset
+			(	t_tOwner
 			::	MemberList
-			,	Meta::TypeEntity<i_vOwner - Reference>
+			,	t_tOwner
 			::	ResolveAlias
 				(	i_vName.StringView
 				)
 			)
 		;
+		return
+		ComputeMemberOffset<vErasedOffset.Offset>
+		(	(	Meta::RestoreTypeToken
+				<	vErasedOffset.Type
+				>
+			+	...
+			+	t_vpQualifer
+			)
+		-	CV
+		);
+	}
 
-		auto constexpr
-			vType
-		=	Meta::RestoreTypeToken
-			<	vErasedOffset.Type
-			>
-		;
-		auto constexpr
-			vBitAlign
-		=	Meta::BitAlign_Of
-			(	vType
-			)
-		;
+	template
+		<	typename
+				t_tOwner
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	OffsetOf
+	)	(	ProtoID auto
+				i_vName
+		,	Meta::TypeToken<t_tOwner&>
+		)
+		noexcept
+	{	return
+		OffsetOf
+		(	i_vName
+		,	Meta::Type<t_tOwner>
+		,	LRef
+		);
+	}
 
-		if	constexpr
-			(	vBitAlign
-			==	0_bit
-			)
-		{	return
-				StaticMember
-				<	Meta::TypeEntity
-					<	vType
-					>
-				>{}
-			;
-		}
-		else
-		if	constexpr
-			(	vBitAlign
-			==	1_bit
-			)
-		{
-			auto constexpr
-				vByteSize
-			=	SizeCast<::Meta::ByteSize>
-				(	vErasedOffset.Offset
-				)
-			;
-			return
-			Bit::MemberOffset
-			<	vByteSize.Remainder
-			,	decltype
-				(	::Meta::Tokenize
-					(	fOwnerTransform
-						(	vType
-						)
-					//	reference only for &
-					//	pure value otherwise
-					-	RRef
-					-	Const
-					-	Volatile
-					-	CopyRef
-					)
-				)
-			>{	vByteSize.Quotient
-			};
-		}
-		else
-		{	return
-			MemberOffset
-			<	decltype
-				(	Meta::Tokenize
-					(	fOwnerTransform
-						(	vType
-						)
-					-	RRef
-					-	Const
-					-	Volatile
-					)
-				)
-			>{	vErasedOffset.Offset
-			};
-		}
+	template
+		<	typename
+				t_tOwner
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	OffsetOf
+	)	(	ProtoID auto
+				i_vName
+		,	Meta::TypeToken<t_tOwner const&>
+		)
+		noexcept
+	{	return
+		OffsetOf
+		(	i_vName
+		,	Meta::Type<t_tOwner>
+		,	CopyRef
+		);
+	}
+
+	template
+		<	typename
+				t_tOwner
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	OffsetOf
+	)	(	ProtoID auto
+				i_vName
+		,	Meta::TypeToken<t_tOwner&&>
+		)
+		noexcept
+	{	return
+		OffsetOf
+		(	i_vName
+		,	Meta::Type<t_tOwner>
+		);
 	}
 }

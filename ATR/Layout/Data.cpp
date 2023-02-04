@@ -80,11 +80,11 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		static auto constexpr
 		(	operator[]
 		)	(	ProtoMemberID<t_tStatic> auto
 					i_vMemberID
-			)	const&
+			)
 			noexcept
 		->	decltype(Static[i_vMemberID])
 		{	return
