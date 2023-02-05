@@ -100,8 +100,7 @@ static_assert
 			[	"1MutBoolBit"_ID
 			]
 		)
-	,	//TODO make this bool
-		Reference<1_bit, 1_bdx>
+	,	Reference<1_bit, 1_bdx>
 	>
 );
 
@@ -112,8 +111,7 @@ static_assert
 			[	"1MutBoolBit"_ID
 			]
 		)
-	,	//TODO make this bool
-		Reference<1_bit, 1_bdx>
+	,	Reference<1_bit, 1_bdx>
 	>
 );
 
