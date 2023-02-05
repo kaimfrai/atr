@@ -3,9 +3,6 @@ add_single_file_modules(
 	Array.cpp
 	ElementReference.cpp
 	Iterator.cpp
-	Layout.cpp
-	MakeLayout.cpp
 	MemberOffset.cpp
 	Reference.cpp
-	View.cpp
 )

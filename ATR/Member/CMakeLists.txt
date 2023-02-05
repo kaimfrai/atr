@@ -1,6 +1,7 @@
 add_single_file_modules(
 	Alias.cpp
 	Compare.cpp
+	Contains.cpp
 	Definition.cpp
 	Difference.cpp
 	InfixDefinition.cpp
@@ -8,8 +9,8 @@ add_single_file_modules(
 	List.cpp
 	OffsetOf.cpp
 	PrefixDefinition.cpp
-	SortKey.cpp
 	SuffixDefinition.cpp
 	Transform.cpp
 	Union.cpp
+	View.cpp
 )

@@ -1,29 +1,26 @@
 export module ATR.Layout.Layout;
 
-import ATR.Layout.Bit.MakeLayout;
-import ATR.Layout.Concept;
-import ATR.Layout.Member;
+import ATR.Member.Info;
 
 import Meta.Size;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Compare;
-import Meta.Token.Index;
-import Meta.Token.Sequence;
-import Meta.Token.CV;
+import Meta.Memory.Size.Arithmetic;
 import Meta.Token.Type;
 import Meta.Data.Aggregate;
-import Meta.ID.Concept;
 import Meta.Math.Prev;
+import Meta.Trait.BitAlign;
+import Meta.Trait.BitSize;
+import Meta.Byte.Buffer;
 
 import Std;
 
 using ::Meta::Math::Prev;
 using ::Meta::Aggregate;
-using ::Meta::CV;
 using ::Meta::Type;
-using ::Meta::TypeEntity;
 using ::Meta::USize;
-using ::Meta::ProtoID;
+using ::Meta::BitAlign_Of;
+using ::Meta::BitSize_Of;
 
 using namespace ::Meta::Literals;
 
@@ -39,71 +36,50 @@ export namespace
 	;
 }
 
-export template
-	<	typename
-		...	t_tpMember
-	>
-auto constexpr
-(	MakeLayout
-)	()
-->	decltype(auto)
-{
-	if	constexpr
-		((	...
-		and	(	1_bit
-			==	t_tpMember
-			::	BitAlign
-			)
-		))
-		return
-		MakeBitLayout
-		<	t_tpMember
-			...
-		>();
-	else
-		return
-		::ATR::Layout
-		<	t_tpMember
-			...
-		>{};
-}
-
 template
 	<	typename
 		...	t_tpMember
-	,	USize
+	,	::std::size_t
 		...	t_npIndex
+	,	::std::size_t
+			t_nOffset
+		=	0uz
 	>
+[[nodiscard]]
 auto constexpr
 (	SplitLayoutType
-)	(	Meta::IndexToken<t_npIndex...>
+)	(	::std::index_sequence<t_npIndex...>
+	,	::std::index_sequence<t_nOffset>
+		=	{}
 	)
+	noexcept
 {
 	static_assert(sizeof...(t_tpMember) > sizeof...(t_npIndex));
 	::std::array<::Meta::TypeID, sizeof...(t_tpMember)> constexpr
 		vTypes
-	{	::Meta::Type<t_tpMember>
+	{	Type<t_tpMember>
 		...
 	};
 	return
-	::MakeLayout
+	::ATR::Layout
 	<	::Meta::RestoreTypeEntity
 		<	vTypes
 			[	t_npIndex
+			+	t_nOffset
 			]
 		>
 		...
-	>()
-	;
+	>();
 };
 
 [[nodiscard]]
 auto constexpr
 (	LayoutSplitIndex
 )	(	::std::initializer_list
-		<	USize
+		<	::ATR::Member::Alignment
 		>	i_vAlignList
 	)
+	noexcept
 ->	USize
 {
 	auto const
@@ -112,11 +88,8 @@ auto constexpr
 	;
 	auto const
 		aLast
-	=	::std::next
-		(	aFirst
-		,	Prev
-			(	ssize(i_vAlignList)
-			)
+	=	::std::prev
+		(	i_vAlignList.end()
 		)
 	;
 	if	(	*aFirst
@@ -159,7 +132,13 @@ export namespace
 		static USize constexpr
 			SplitIndex
 		=	LayoutSplitIndex
-			({	t_tpMember::SortKey
+			({	::ATR::Member::Alignment
+				{	BitAlign_Of
+					(	Type
+						<	t_tpMember
+						>
+					)
+				}
 				...
 			})
 		;
@@ -168,7 +147,9 @@ export namespace
 			NorthType
 		=	decltype
 			(	SplitLayoutType<t_tpMember...>
-				(	Meta::Sequence<SplitIndex>
+				(	::std::make_index_sequence
+					<	SplitIndex
+					>{}
 				)
 			)
 		;
@@ -181,8 +162,13 @@ export namespace
 			SouthType
 		=	decltype
 			(	SplitLayoutType<t_tpMember...>
-				(	Meta::Sequence<sizeof...(t_tpMember) - SplitIndex>
-				+=	Meta::Index<SplitIndex>
+				(	::std::make_index_sequence
+					<	sizeof...(t_tpMember)
+					-	SplitIndex
+					>{}
+				,	::std::index_sequence
+					<	SplitIndex
+					>{}
 				)
 			)
 		;
@@ -190,90 +176,6 @@ export namespace
 		SouthType
 			SouthArea
 		;
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	ProtoMemberID<NorthType> auto
-					i_vMemberID
-			)	&
-			noexcept
-		->	decltype(auto)
-		{	return
-			NorthArea
-			[	i_vMemberID
-			];
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	ProtoMemberID<NorthType> auto
-					i_vMemberID
-			)	const&
-			noexcept
-		->	decltype(auto)
-		{	return
-			NorthArea
-			[	i_vMemberID
-			];
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	ProtoMemberID<NorthType> auto
-					i_vMemberID
-			)	&&
-			noexcept
-		->	decltype(auto)
-		{	return
-			::std::move(NorthArea)
-			[	i_vMemberID
-			];
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	ProtoMemberID<SouthType> auto
-					i_vMemberID
-			)	&
-			noexcept
-		->	decltype(auto)
-		{	return
-			SouthArea
-			[	i_vMemberID
-			];
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	ProtoMemberID<SouthType> auto
-					i_vMemberID
-			)	const&
-			noexcept
-		->	decltype(auto)
-		{	return
-			SouthArea
-			[	i_vMemberID
-			];
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	ProtoMemberID<SouthType> auto
-					i_vMemberID
-			)	&&
-			noexcept
-		->	decltype(auto)
-		{	return
-			::std::move(SouthArea)
-			[	i_vMemberID
-			];
-		}
 	};
 
 	template
@@ -285,54 +187,47 @@ export namespace
 	template
 		<	typename
 				t_tData
-		,	ProtoID
-				t_tName
 		>
 	struct
 		Layout
-		<	::Member
-			<	t_tData
-			,	t_tName
-			>
+		<	t_tData
 		>
 	{
 		Aggregate<t_tData>
 			Value
 		;
+	};
 
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	t_tName
-			)	const&
-			noexcept
-		->	Aggregate<t_tData> const&
-		{	return Value;	}
+	template
+		<	typename
+			...	t_tpBitField
+		>
+	requires
+		(	...
+		and	(	1_bit
+			==	BitAlign_Of
+				(	Type<t_tpBitField>
+				)
+			)
+		)
+	struct
+		Layout
+		<	t_tpBitField
+			...
+		>
+	{
+		static auto constexpr
+			BitSize
+		=(	0_bit
+		+	...
+		+	BitSize_Of
+			(	Type<t_tpBitField>
+			)
+		);
 
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	t_tName
-			)	&
-			noexcept
-		->	Aggregate<t_tData>&
-		{	return Value;	}
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	t_tName
-			)	&&
-			noexcept
-		->	Aggregate
-			<	TypeEntity
-				<	Type<t_tData>
-				-	CV
-				>
-			>
-		{	return
-			{	Value
-			};
-		}
+		// must be mutable in case one bitfield is mutable
+		mutable ::Meta::Byte::Buffer<BitSize>
+			Buffer
+		;
 	};
 }

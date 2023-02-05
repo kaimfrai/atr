@@ -45,8 +45,8 @@ export namespace
 		<	StringLiteral
 				t_vStringLiteral
 		>
-	ID_T<t_vStringLiteral> extern
+	ID_T<t_vStringLiteral> constexpr inline
 		ID_V
-	;
+	{};
 }
 

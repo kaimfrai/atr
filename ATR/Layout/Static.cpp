@@ -1,11 +1,5 @@
 export module ATR.Layout.Static;
 
-import ATR.Layout.Member;
-
-import Meta.ID.Concept;
-
-using ::Meta::ProtoID;
-
 export namespace
 	ATR
 {
@@ -27,47 +21,4 @@ export namespace
 			();
 		}
 	};
-
-	template
-		<	typename
-			...	t_tpStatic
-		>
-	struct
-		StaticData
-	:	StaticData
-		<	t_tpStatic
-		>
-		...
-	{
-		using StaticData<t_tpStatic>::operator[]...;
-	};
-
-	template
-		<	typename
-				t_tData
-		,	ProtoID
-				t_tName
-		>
-	struct
-		StaticData
-		<	::Member
-			<	t_tData
-			,	t_tName
-			>
-		>
-	{
-		[[nodiscard]]
-		static auto constexpr
-		(	operator[]
-		)	(	t_tName
-			)
-			noexcept
-		->	t_tData
-		{	return {};	}
-	};
-
-	template<>
-	struct
-		StaticData<>
-	{};
 }

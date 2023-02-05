@@ -19,7 +19,7 @@ export namespace
 	using
 		CreateLayoutType
 	=	decltype
-		(	::CreateLayout
+		(	CreateLayout
 			(	Definition_For
 				<	t_tTypeID
 				::	RawArray

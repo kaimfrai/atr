@@ -26,10 +26,10 @@ export namespace
 		<	"Product"_ID
 		,	ArgumentDependency
 			<	decltype(i_rBody)
-			,	"ComputeVolumeMultiplier"_SV
-			,	"Depth"_SV
-			,	"Height"_SV
-			,	"Width"_SV
+			,	"ComputeVolumeMultiplier"_ID
+			,	"Depth"_ID
+			,	"Height"_ID
+			,	"Width"_ID
 			>
 		>
 	;

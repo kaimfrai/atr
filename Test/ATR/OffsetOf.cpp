@@ -128,7 +128,7 @@ static_assert
 );
 
 static_assert
-(	::Meta::Memory::SizeOf<decltype(OffsetOfTest::DynamicLayout::SouthType::Buffer)>
+(	::Meta::Memory::SizeOf<decltype(OffsetOfTest::SouthType::Buffer)>
 ==	ExpectedBufferSize
 );
 

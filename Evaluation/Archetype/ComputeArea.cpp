@@ -25,9 +25,9 @@ export namespace
 		<	"Product"_ID
 		,	ArgumentDependency
 			<	decltype(i_rShape)
-			,	"ComputeAreaMultiplier"_SV
-			,	"Height"_SV
-			,	"Width"_SV
+			,	"ComputeAreaMultiplier"_ID
+			,	"Height"_ID
+			,	"Width"_ID
 			>
 		>
 	;

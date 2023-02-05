@@ -8,18 +8,17 @@ import ATR.Member.Alias;
 import ATR.Member.List;
 import ATR.Member.Union;
 import ATR.Member.Definition;
-import ATR.Literals;
 
 export namespace
 	ATR::Member
 {
 	template<>
 	Definition
-	<	Alias
-		(	All_Of<"BasicBody">
-		,	"Height"_ID
-		,	"Width"_ID
-		)
+	<	"BasicBody"_def
+	+	Alias
+		<	"Height"
+		,	"Width"
+		>
 	+	New
 		<	"ComputeVolumeMultiplier"
 		,	PiFraction

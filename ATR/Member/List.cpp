@@ -1,56 +1,49 @@
 export module ATR.Member.List;
 
 import ATR.Member.Info;
-import ATR.Member.SortKey;
+
 import Meta.ID.StringLiteral;
 import Meta.ID.Alias;
-import Meta.Data.Aggregate;
 import Meta.Data.Aggregate.Array;
 import Meta.Token.Type;
 import Meta.Size;
+import Meta.Trait.BitAlign;
 
 using ::Meta::USize;
+using ::Meta::SSize;
 using ::Meta::StringLiteral;
 using ::Meta::ID_T;
 using ::Meta::Type;
+using ::Meta::BitAlign_Of;
 
 export namespace
 	ATR::Member
 {
 	template
 		<	USize
-				t_nMemberCount
+				t_nDataCount
 		>
 	struct
 		List final
 	:	Meta::ArrayAggregate
 		<	Info
-		,	t_nMemberCount
+		,	t_nDataCount
 		>
-	{};
+	{
+		SSize
+			DynamicSize
+		;
+	};
 
 	template
 		<	USize
-				t_nMemberCount
+				t_nDataCount
 		>
 	(	List
-	)	(	List<t_nMemberCount>
+	)	(	List<t_nDataCount>
 		)
 	->	List
-		<	t_nMemberCount
-		>
-	;
-
-	template
-		<	typename
-			...	t_tpDataMember
-		>
-	(	List
-	)	(	t_tpDataMember
-			...
-		)
-	->	List
-		<	sizeof...(t_tpDataMember)
+		<	t_nDataCount
 		>
 	;
 
@@ -60,12 +53,10 @@ export namespace
 		,	typename
 				t_tValue
 		>
-	List<1uz> constexpr inline
+	Info constexpr inline
 		New
-	{	Info
-		{	AlignSortKey<t_tValue>
-		,	ID_T<t_vName>::StringView
-		,	Type<t_tValue>
-		}
+	{	BitAlign_Of(Type<t_tValue>)
+	,	ID_T<t_vName>::StringView
+	,	Type<t_tValue>
 	};
 }

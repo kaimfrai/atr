@@ -9,57 +9,87 @@ export namespace
 		<	typename
 				t_tLayout
 		>
-	[[nodiscard]]
 	auto consteval
 	(	ValidateOffsets
 	)	()
 		noexcept
-	->	bool
+	->	void
 	{
 		static_assert
 		(	::std::is_standard_layout_v
 			<	t_tLayout
 			>
+		,	"Layouts are required to be standard layout!"
+		);
+		static_assert
+		(	::std::is_trivial_v
+			<	t_tLayout
+			>
+		,	"Layouts are required to be trivial!"
 		);
 
-		union
-		{	alignas(t_tLayout)
-			::std::array<::std::byte, sizeof(t_tLayout)>
-				Buffer
-			{};
-			t_tLayout
-				Layout
-			;
-		}	vUnion
-		{};
+		if	constexpr
+			(	requires
+					(	t_tLayout
+							c_vLayout
+					)
+				{	c_vLayout.NorthArea;
+					c_vLayout.SouthArea;
+				}
+			)
+		{
+			ValidateOffsets
+			<	decltype(t_tLayout::NorthArea)
+			>();
 
-		return
-			(	static_cast<void*>
-				(	::std::addressof
-					(	vUnion.Layout.NorthArea
+			ValidateOffsets
+			<	decltype(t_tLayout::SouthArea)
+			>();
+
+			union
+			{	alignas(t_tLayout)
+				::std::array<::std::byte, sizeof(t_tLayout)>
+					Buffer
+				{};
+				t_tLayout
+					Layout
+				;
+			}	constexpr vUnion
+			{};
+
+			static_assert
+			(	(	static_cast<void const*>
+					(	::std::addressof
+						(	vUnion.Layout.NorthArea
+						)
+					)
+				==	static_cast<void const*>
+					(	::std::addressof
+						(	vUnion.Buffer
+							[	0uz
+							]
+						)
 					)
 				)
-			==	static_cast<void*>
-				(	::std::addressof
-					(	vUnion.Buffer
-						[	0uz
-						]
+			,	"Unexpected offset in NorthArea!"
+			);
+
+			static_assert
+			(	(	static_cast<void const*>
+					(	::std::addressof
+						(	vUnion.Layout.SouthArea
+						)
+					)
+				==	static_cast<void const*>
+					(	::std::addressof
+						(	vUnion.Buffer
+							[	sizeof t_tLayout::NorthArea
+							]
+						)
 					)
 				)
-			)
-		and	(	static_cast<void*>
-				(	::std::addressof
-					(	vUnion.Layout.SouthArea
-					)
-				)
-			==	static_cast<void*>
-				(	::std::addressof
-					(	vUnion.Buffer
-						[	sizeof t_tLayout::NorthArea
-						]
-					)
-				)
-			)
-		;
+			,	"Unexpected offset in SouthArea!"
+			);
+		}
 	}
 }

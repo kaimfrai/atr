@@ -4,13 +4,15 @@ import ATR.Member.List;
 
 import Meta.ID.StringLiteral;
 
+import Std;
+
 using ::Meta::StringLiteral;
 
 export namespace
 	ATR::Member
 {
 	template
-		<	List
+		<	auto
 				t_vList
 		>
 	struct
@@ -54,4 +56,21 @@ export namespace
 		>
 	.	get()
 	;
+
+	template
+		<	StringLiteral
+				t_vType
+		>
+	auto constexpr
+	(	operator""_def
+	)	()
+		noexcept
+	->	decltype(auto)
+	{	return
+		(	Definition_For
+			<	t_vType
+			>
+		.	get()
+		);
+	}
 }

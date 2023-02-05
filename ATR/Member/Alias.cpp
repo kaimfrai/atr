@@ -1,69 +1,65 @@
 export module ATR.Member.Alias;
 
-import ATR.Member.SortKey;
 import ATR.Member.List;
+import ATR.Member.Info;
 
-import Meta.ID.StringView;
-import Meta.ID.Concept;
-import Meta.Token.Type;
+import Meta.ID.StringLiteral;
+import Meta.ID.Alias;
+import Meta.Size;
 
 import Std;
 
-using ::Meta::ProtoID;
-using ::Meta::Type;
+using ::Meta::USize;
+using ::Meta::ID_T;
+using ::Meta::StringLiteral;
 
 export namespace
 	ATR::Member
 {
 	template
-		<	auto
-				t_nMemberCount
+		<	USize
+				t_nAliasCount
+		,	USize
+				t_nDataCount
 		>
-	[[nodiscard]]
-	auto constexpr
-	(	Alias
-	)	(	List<t_nMemberCount>
-				i_nList
-		,	ProtoID auto
-				i_vOrigin
-		,	ProtoID auto
-				i_vTarget
-		)
-		noexcept
-	->	List<t_nMemberCount>
+	struct
+		AliasedList
 	{
-		auto const
-			vExchangePosition
-		=	::std::find_if
-			(	i_nList.begin()
-			,	i_nList.end().base()
-			,	[]	(	auto const
-						&	i_rMember
-					)
-				{	return
-						i_rMember.Name
-					==	decltype(i_vOrigin)::StringView
-					;
-				}
-			)
+		::std::array<AliasInfo, t_nAliasCount>
+			AliasInfos
 		;
-		if	(vExchangePosition == i_nList.end())
-		{
-			((void)"Cannot exchange non-existing member!", std::unreachable());
-		}
+		List<t_nDataCount>
+			DataInfos
+		;
+	};
 
-		(	vExchangePosition->SortKey
-		=	AliasSortKey
-		);
-		(	vExchangePosition->Type
-		=	Type<decltype(i_vTarget)>
-		);
+	template
+		<	USize
+				t_nAliasedCount
+		,	USize
+				t_nDataCount
+		>
+	(	AliasedList
+	)	(	AliasedList
+			<	t_nAliasedCount
+			,	t_nDataCount
+			>
+		)
+	->	AliasedList
+		<	t_nAliasedCount
+		,	t_nDataCount
+		>
+	;
 
-		::std::sort
-		(	i_nList.begin()
-		,	i_nList.end().base()
-		);
-
-		return i_nList;
-	}
+	template
+		<	StringLiteral
+				t_vName
+		,	StringLiteral
+				t_vTarget
+		>
+	AliasInfo constexpr inline
+		Alias
+	{	ID_T<t_vName>::StringView
+	,	ID_T<t_vTarget>::StringView
+	};
 }

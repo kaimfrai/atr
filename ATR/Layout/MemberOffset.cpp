@@ -3,7 +3,6 @@ export module ATR.Layout.MemberOffset;
 import ATR.Erase;
 
 import Meta.Memory.Size;
-import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.PointerArithmetic;
 import Meta.Lex.Reference;
 import Meta.Lex.CV;
@@ -52,6 +51,11 @@ export namespace
 			::	Entity
 		;
 
+		using
+			ResultType
+		=	ValueType
+		;
+
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
@@ -59,7 +63,7 @@ export namespace
 				*	i_aObject
 			)	const
 			noexcept
-		->	ValueType
+		->	ResultType
 		{	return
 			*
 			//	we don't know where the byte pointer came from, so we need to launder it
@@ -105,6 +109,12 @@ export namespace
 		;
 
 		using
+			ResultType
+		=	ValueType
+			&
+		;
+
+		using
 			ByteType
 		=	//	byte for value&
 			//	byte const for value const&
@@ -123,7 +133,7 @@ export namespace
 				*	i_aObject
 			)	const
 			noexcept
-		->	ValueType&
+		->	ResultType
 		{	return
 			*
 			//	we don't know where the byte pointer came from, so we need to launder it
@@ -158,23 +168,74 @@ export namespace
 		);
 	}
 
+	/// immitates syntax of pointer to member dereference
 	template
 		<	typename
+				t_tLayout
+		,	typename
 				t_tEntity
 		>
 	[[nodiscard]]
 	auto constexpr
-	(	operator +
-	)	(	::Meta::ByteSize
-				i_nOffset
+	(	operator->*
+	)	(	auto
+			*	i_aObject
 		,	MemberOffset<t_tEntity>
-				i_vMemberOffset
+				i_vOffset
 		)
 		noexcept
-	->	MemberOffset<t_tEntity>
-	{	return
-		{	i_nOffset
-		+	i_vMemberOffset.Offset
-		};
+	->	typename MemberOffset<t_tEntity>::ResultType
+	{
+		if	constexpr
+			(	requires
+				{	i_aObject->Value;
+				}
+			)
+		{
+			if	constexpr
+				(	::std::is_convertible_v
+					<	decltype((i_aObject->Value))
+					,	typename MemberOffset<t_tEntity>::ResultType
+					>
+				)
+			{	return
+				(	i_aObject
+				->	Value
+				);
+			}
+			else
+			{
+				::std::unreachable();
+			}
+		}
+		else
+		{	auto constexpr
+				vNorthSize
+			=	BitSize_Of
+				(	Type
+					<	typename
+							t_tLayout
+						::	NorthType
+					>
+				)
+			;
+			if	(	vNorthSize
+				>	i_vOffset.Offset
+				)
+			{	return
+					&i_aObject->NorthArea
+				->*	i_vOffset
+				;
+			}
+			else
+			{	return
+					&i_aObject->SouthArea
+				->*	MemberOffset
+					{	i_vOffset.Offset
+					-	vNorthSize
+					}
+				;
+			}
+		}
 	}
 }

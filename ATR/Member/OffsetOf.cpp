@@ -1,10 +1,11 @@
 export module ATR.Member.OffsetOf;
 
 import ATR.Member.Info;
-
+import ATR.Member.View;
 import ATR.Layout.Static;
 import ATR.Layout.Bit.MemberOffset;
 import ATR.Layout.MemberOffset;
+
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Cast;
@@ -17,7 +18,6 @@ import Meta.Token.Reference;
 import Meta.Token.CopyRef;
 import Meta.Trait.BitAlign;
 import Meta.Memory.Size.Compare;
-import Meta.Lex.TransformComposer;
 import Meta.Lex.Tokenizer;
 
 import Std;
@@ -48,8 +48,8 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	ComputeErasedOffset
-	)	(	::std::span<Info const>
-				i_vList
+	)	(	DataView
+				i_vView
 		,	StringView
 				i_vName
 		)
@@ -62,7 +62,7 @@ export namespace
 
 		for	(	auto const
 				&	i_rInfo
-			:	i_vList
+			:	i_vView
 			)
 		{
 			if	(	i_rInfo.Name
@@ -71,7 +71,9 @@ export namespace
 			{	(	vOffset.Type
 				=	i_rInfo.Type.Type
 				);
-				break;
+				return
+					vOffset
+				;
 			}
 			else
 			{	(	vOffset.Offset
@@ -79,9 +81,50 @@ export namespace
 				);
 			}
 		}
-		return
-			vOffset
+
+		::std::unreachable();
+	}
+
+	[[nodiscard]]
+	auto constexpr
+	(	ComputeErasedOffset
+	)	(	AliasView
+				i_vView
+		,	StringView
+				i_vName
+		)
+	->	ErasedOffset
+	{
+		auto const
+			aEntry
+		=	::std::ranges::lower_bound
+			(	i_vView.AliasInfos
+			,	i_vName
+			,	{}
+			,	&AliasInfo::Name
+			)
 		;
+		if	(	(	aEntry
+				!=	i_vView.AliasInfos.end()
+				)
+			and (	aEntry->Name
+				==	i_vName
+				)
+			)
+		{
+			return
+			ComputeErasedOffset
+			(	i_vView
+			,	aEntry->Target
+			);
+		}
+		else
+		{	return
+			ComputeErasedOffset
+			(	i_vView.DataInfos
+			,	i_vName
+			);
+		}
 	}
 
 	template
@@ -177,10 +220,7 @@ export namespace
 		=	ComputeErasedOffset
 			(	t_tOwner
 			::	MemberList
-			,	t_tOwner
-			::	ResolveAlias
-				(	i_vName.StringView
-				)
+			,	i_vName.StringView
 			)
 		;
 		return

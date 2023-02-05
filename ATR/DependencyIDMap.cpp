@@ -1,6 +1,9 @@
 export module ATR.DependencyIDMap;
 
 import ATR.Member.OffsetOf;
+import ATR.Member.Info;
+import ATR.Member.Alias;
+import ATR.Member.Contains;
 import ATR.Dependency;
 import ATR.Address;
 import ATR.Erase;
@@ -14,56 +17,49 @@ import Meta.Logic.LiteralBase;
 import Meta.Logic.Term;
 import Meta.Logic.Constraint;
 import Meta.Logic.Conjunction;
-import Meta.Data.TupleList;
 
 import Std;
 
 using ::Meta::ProtoID;
 using ::Meta::ID_Of;
+using ::Meta::StringView;
 
 export namespace
 	ATR
 {
 	/// maps one Identifier to another
 	template
-		<	typename
+		<	ProtoID
+				t_tName
+		,	typename
 			...	t_tpArgument
 		>
 	struct
 		IDMap final
 	{
-		Meta::StringView
-			OriginID
-		;
-
-		static Meta::TypePack<t_tpArgument...> constexpr
-			ArgumentPack
-		{};
-
-		constexpr
+		explicit(false) constexpr
 		(	IDMap
-		)	(	Meta::StringView
-					i_vOriginID
+		)	(	t_tName
 			,	Meta::TypeToken<t_tpArgument>
 				...
 			)
-		:	OriginID
-			{	i_vOriginID
-			}
 		{}
 	};
 
 	template
-		<	typename
+		<	ProtoID
+				t_tName
+		,	typename
 			...	t_tpArgument
 		>
 	(	IDMap
-	)	(	Meta::StringView
+	)	(	t_tName
 		,	Meta::TypeToken<t_tpArgument>
 			...
 		)
 	->	IDMap
-		<	t_tpArgument
+		<	t_tName
+		,	t_tpArgument
 			...
 		>
 	;
@@ -84,17 +80,20 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		[[nodiscard]]
+		static auto constexpr
 		(	operator()
-		)	(	Meta::TypeToken<t_tEntity>
-			)	const
+		)	(	::Meta::TypeToken<t_tEntity>
+			)
+			noexcept
 		->	bool
 		{	return
-			requires
-			{	::std::declval<t_tEntity>()
-				[	t_tDataID{}
-				];
-			};
+			Contains
+			(	::std::remove_reference_t<t_tEntity>
+			::	MemberList
+			,	t_tDataID
+			::	StringView
+			);
 		}
 	};
 }
@@ -146,21 +145,18 @@ namespace
 				t_tOwner
 		,	typename
 			...	t_tpArgument
+		,	ProtoAddress<t_tOwner, t_tpArgument...>
+				t_tName
 		>
 	auto constexpr
 	(	MapDependency
-	)	(	ProtoAddress<t_tOwner, t_tpArgument...> auto
-				i_vFuncID
+	)	(	IDMap<t_tName, t_tpArgument...>
 		,	Meta::TypeToken<t_tOwner>
-		,	Meta::TypePack
-			<	t_tpArgument
-				...
-			>
 		)
 	->	decltype(auto)
 	{	return
 		Address
-		<	decltype(i_vFuncID)
+		<	t_tName
 		,	t_tOwner
 		,	t_tpArgument
 			...
@@ -175,15 +171,13 @@ namespace
 		>
 	auto constexpr
 	(	MapDependency
-	)	(	t_tDataID
-				i_vDataID
+	)	(	IDMap<t_tDataID>
 		,	Meta::TypeToken<t_tOwner>
 				i_vOwner
-		,	Meta::TypePack<>
 		)
 	{	return
 		Member::OffsetOf
-		(	i_vDataID
+		(	t_tDataID{}
 		,	i_vOwner
 		);
 	}
@@ -202,14 +196,8 @@ export namespace
 		ArgumentDependency
 	{	Meta::Type<ErasedType<t_tOwner>>
 	,	::ATR::MapDependency
-		(	ID_Of
-			<	::std::remove_cvref_t<t_tOwner>
-			::	ResolveAlias
-				(	t_vpIDMap.OriginID
-				)
-			>{}
+		(	t_vpIDMap
 		,	Meta::Type<t_tOwner>
-		,	t_vpIDMap.ArgumentPack
 		)
 		...
 	};

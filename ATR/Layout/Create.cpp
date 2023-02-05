@@ -1,184 +1,86 @@
 export module ATR.Layout.Create;
 
-import ATR.Member.Info;
-import ATR.Member.SortKey;
 import ATR.Member.Definition;
 import ATR.Member.List;
-import ATR.Layout.Alias;
-import ATR.Layout.AliasLayout;
-import ATR.Layout.Data;
+import ATR.Member.Alias;
 import ATR.Layout.Layout;
-import ATR.Layout.Member;
-import ATR.Layout.Static;
-import ATR.Layout.Layout;
+import ATR.Layout.ValidateOffsets;
 
-import Meta.Buffer.Iterator;
-import Meta.Token.Index;
-import Meta.Token.Sequence;
+import Meta.Token.Type;
 import Meta.Size;
 
 import Std;
 
-using ::ATR::AliasLayout;
-using ::ATR::Member::AliasSortKey;
-using ::ATR::Data;
-using ::ATR::Member::Definition;
-using ::ATR::Member::Info;
-using ::ATR::Layout;
-using ::ATR::Member::List;
-using ::ATR::StaticData;
-using ::ATR::Member::StaticSortKey;
-
-using ::Meta::Index;
-using ::Meta::IndexToken;
-using ::Meta::Sequence;
 using ::Meta::USize;
-using ::Meta::Buffer::Iterator;
-using ::Meta::Buffer::Sentinel;
+using ::Meta::RestoreTypeEntity;
 
-[[nodiscard]]
-auto constexpr
-(	AliasCount
-)	(	Iterator<Info const>
-			i_aBegin
-	,	Sentinel<Info const>
-			i_aEnd
-	)
-->	USize
-{	return
-	static_cast<USize>
-	(	::std::lower_bound
-		(	i_aBegin
-		,	i_aEnd.base()
-		,	Info
-			{	.SortKey = AliasSortKey + 1uz
-			,	.Name = {}
-			,	.Type = {}
-			}
-		)
-	-	i_aBegin
-	);
-}
-
-[[nodiscard]]
-auto constexpr
-(	StaticCount
-)	(	Iterator<Info const>
-			i_aBegin
-	,	Sentinel<Info const>
-			i_aEnd
-	)
-->	USize
-{	return
-	static_cast<USize>
-	(	i_aEnd.base()
-	-	::std::lower_bound
-		(	i_aBegin
-		,	i_aEnd.base()
-		,	Info
-			{	.SortKey = StaticSortKey
-			,	.Name = {}
-			,	.Type = {}
-			}
-		)
-	);
-}
-
-export template
-	<	List
-			t_vConfig
-	>
-[[nodiscard]]
-auto constexpr
-(	CreateLayout
-)	(	Definition
-		<	t_vConfig
-		>
-	)
-->	decltype(auto)
+export namespace
+	ATR
 {
-	USize constexpr
-		nAliasCount
-	=	AliasCount
-		(	t_vConfig.begin()
-		,	t_vConfig.end()
+	template
+	<	Member::List
+			t_vDynamic
+	>
+	[[nodiscard]]
+	auto constexpr
+	(	CreateLayout
+	)	(	Member::Definition
+			<	t_vDynamic
+			>
 		)
-	;
-
-	USize constexpr
-		nStaticCount
-	=	StaticCount
-		(	t_vConfig.begin() + nAliasCount
-		,	t_vConfig.end()
-		)
-	;
-
-	USize constexpr
-		nDynamicCount
-	=	t_vConfig.size()
-	-	nAliasCount
-	-	nStaticCount
-	;
-
-	return
-	[]	<	USize
-			...	t_npAliasIndex
-		,	USize
-			...	t_npDynamicIndex
-		,	USize
-			...	t_npStaticIndex
-		>(	IndexToken<t_npAliasIndex...>
-		,	IndexToken<t_npDynamicIndex...>
-		,	IndexToken<t_npStaticIndex...>
-		)
-	{
-		using
-			DynamicLayoutType
-		=	decltype
-			(	::MakeLayout
-				<	DeduceMember
-					<	t_vConfig[t_npDynamicIndex]
+	->	decltype(auto)
+	{	return
+		[]	<	::std::size_t
+				...	t_npDynamicIndex
+			>(	::std::index_sequence
+				<	t_npDynamicIndex
+					...
+				>
+			)
+		{	using
+				t_tLayout
+			=	Layout
+				<	RestoreTypeEntity
+					<	t_vDynamic[t_npDynamicIndex]
+					.	Type
 					>
 					...
-				>()
-			)
-		;
-		using
-			StaticLayoutType
-		=	StaticData
-			<	DeduceMember
-				<	t_vConfig[t_npStaticIndex]
 				>
-				...
-			>
-		;
+			;
 
-		using
-			DataType
-		=	Data
-			<	StaticLayoutType
-			,	DynamicLayoutType
-			>
-		;
+			ValidateOffsets
+			<	t_tLayout
+			>();
 
-		if	constexpr
-			(	nAliasCount
-			==	0uz
-			)
 			return
-			DataType
-			{};
-		else
-			return
-			AliasLayout
-			<	DataType
-			,	DeduceAlias
-				<	t_vConfig[t_npAliasIndex]
-				>
-				...
-			>{};
-	}(	Sequence<nAliasCount>
-	,	Sequence<nDynamicCount> += Index<nAliasCount>
-	,	Sequence<nStaticCount> += Index<nAliasCount + nDynamicCount>
-	);
+				t_tLayout{}
+			;
+		}(	::std::make_index_sequence
+			<	static_cast<USize>
+				(	t_vDynamic.DynamicSize
+				)
+			>{}
+		);
+	}
+
+	template
+		<	Member::AliasedList
+				t_vAliased
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	CreateLayout
+	)	(	Member::Definition
+			<	t_vAliased
+			>
+		)
+		noexcept
+	->	decltype(auto)
+	{	return
+		CreateLayout
+		(	Member::Definition
+			<	t_vAliased.DataInfos
+			>{}
+		);
+	}
 }

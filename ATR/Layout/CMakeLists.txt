@@ -1,11 +1,6 @@
 add_single_file_modules(
-	Alias.cpp
-	AliasLayout.cpp
-	Concept.cpp
 	Create.cpp
-	Data.cpp
 	Layout.cpp
-	Member.cpp
 	MemberOffset.cpp
 	Static.cpp
 	Type.cpp

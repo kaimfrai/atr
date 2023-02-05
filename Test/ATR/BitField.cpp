@@ -78,9 +78,7 @@ static_assert
 			[	"0BoolBit"_ID
 			]
 		)
-	,	//TODO make this bool
-		//bool
-		Field<1_bit>
+	,	bool
 	>
 );
 
@@ -91,9 +89,7 @@ static_assert
 			[	"0BoolBit"_ID
 			]
 		)
-	,	//TODO make this bool
-		//bool
-		Field<1_bit>
+	,	bool
 	>
 );
 
@@ -128,9 +124,7 @@ static_assert
 			[	"1MutBoolBit"_ID
 			]
 		)
-	,	//TODO make this bool
-		//bool
-		Field<1_bit>
+	,	bool
 	>
 );
 

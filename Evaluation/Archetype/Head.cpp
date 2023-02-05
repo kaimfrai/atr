@@ -11,9 +11,7 @@ export namespace
 {
 	template<>
 	Definition
-	<	All_Of
-		<	"Sphere"
-		>
+	<	"Sphere"_def
 	+	SuffixDefinition_For
 		<	"Sphere"
 		,	"LeftEye"

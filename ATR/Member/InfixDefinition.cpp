@@ -1,18 +1,22 @@
 export module ATR.Member.InfixDefinition;
 
 import ATR.Member.Info;
-import ATR.Member.SortKey;
 import ATR.Member.Definition;
 import ATR.Member.List;
+import ATR.Member.Alias;
 
 import Meta.ID.Alias;
+import Meta.ID.Concept;
 import Meta.ID.Concatenate;
+import Meta.ID.StringView;
 import Meta.ID.StringLiteral;
-import Meta.Token.Type;
 
 import Std;
 
-using ::Meta::ID_T;
+using ::Meta::ProtoID;
+using ::Meta::ID_V;
+using ::Meta::ID_Of;
+using ::Meta::StringView;
 using ::Meta::StringLiteral;
 
 namespace
@@ -20,78 +24,156 @@ namespace
 {
 	template
 		<	typename
-				t_tPrefix
-		,	Info
-				t_vInfix
+				t_tObject
 		,	typename
-				t_tSuffix
+				t_tMember
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	ChangeMember
+	)	(	auto
+				i_vObject
+		,	t_tMember t_tObject
+			::*	i_fMember
+		,	t_tMember const
+			&	i_rMember
+		)
+		noexcept
+	->	decltype(i_vObject)
+	{
+		(	i_vObject
+		.*	i_fMember
+		=	i_rMember
+		);
+
+		return
+			i_vObject
+		;
+	}
+
+	template
+		<	auto
+				t_vObject
+		,	StringView decltype(t_vObject)
+			::*	t_fMember
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	InfixMember
+	)	(	ProtoID auto
+				i_vPrefix
+		,	ProtoID auto
+				i_vSuffix
+		)
+	{
+		auto
+			vResult
+		=	t_vObject
+		;
+		(	vResult
+		.*	t_fMember
+		=	Concatenate
+			(	i_vPrefix
+			,	ID_Of
+				<	t_vObject
+				.*	t_fMember
+				>{}
+			,	i_vSuffix
+			)
+		.	StringView
+		);
+
+		return
+			vResult
+		;
+	}
+
+	template
+		<	List
+				t_vList
 		>
 	[[nodiscard]]
 	auto constexpr
 	(	InfixDataMember
-	)	()
+	)	(	ProtoID auto
+				i_vPrefix
+		,	Definition<t_vList>
+		,	ProtoID auto
+				i_vSuffix
+		)
 		noexcept
-	->	Info
-	{
-		using
-			tNewName
-		=	Meta::ID_T
-			<	Meta::Concatenate
-				<	t_tPrefix::Length
-				+	t_vInfix.Name.Size
-				+	t_tSuffix::Length
-				>(	::std::array
-					{	t_tPrefix::StringView
-					,	t_vInfix.Name
-					,	t_tSuffix::StringView
-					}
-				)
-			>
-		;
-		auto
-			vResult
-		=	t_vInfix
-		;
-		(	vResult.Name
-		=	tNewName::StringView
-		);
-
-		//	also update the alias target if it is an alias
-		if	constexpr
-			(	t_vInfix.SortKey
-			==	AliasSortKey
+	->	decltype(t_vList)
+	{	return
+		[=]	<	::std::size_t
+				...	t_npIndex
+			>(	::std::index_sequence<t_npIndex...>
 			)
-		{
-			using
-				tInfixAliasTarget
-			=	Meta::RestoreTypeEntity
-				<	t_vInfix.Type
-				>
-			;
-			using
-				tAliasTarget
-			=	Meta::ID_T
-				<	Meta::Concatenate
-					<	t_tPrefix::Length
-					+	tInfixAliasTarget::Length
-					+	t_tSuffix::Length
-					>(	std::array
-						{	t_tPrefix::StringView
-						,	tInfixAliasTarget::StringView
-						,	t_tSuffix::StringView
-						}
+		{	return
+			decltype(t_vList)
+			{	{	InfixMember
+					<	t_vList[t_npIndex]
+					,	&Info::Name
+					>(	i_vPrefix
+					,	i_vSuffix
 					)
-				>
-			;
-			(	vResult.Type
-			=	::Meta::Type
-				<	tAliasTarget
-				>
-			);
-		}
-		return
-			vResult
-		;
+					...
+				}
+			,	t_vList.DynamicSize
+			};
+		}(	::std::make_index_sequence
+			<	t_vList
+			.	size()
+			>{}
+		);
+	}
+
+	template
+		<	AliasedList
+				t_vAliased
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	InfixDataMember
+	)	(	ProtoID auto
+				i_vPrefix
+		,	Definition<t_vAliased>
+		,	ProtoID auto
+				i_vSuffix
+		)
+		noexcept
+	->	decltype(t_vAliased)
+	{	return
+		{	[=]	<	::std::size_t
+					...	t_npIndex
+				>(	::std::index_sequence<t_npIndex...>
+				)
+			{	return
+				::std::array
+				{	InfixMember
+					<	InfixMember
+						<	t_vAliased.AliasInfos[t_npIndex]
+						,	&AliasInfo::Name
+						>(	i_vPrefix
+						,	i_vSuffix
+						)
+					,	&AliasInfo::Target
+					>(	i_vPrefix
+					,	i_vSuffix
+					)
+					...
+				};
+			}(	::std::make_index_sequence
+				<	t_vAliased
+				.	AliasInfos
+				.	size()
+				>{}
+			)
+		,	InfixDataMember
+			(	i_vPrefix
+			,	Definition<t_vAliased.DataInfos>{}
+			,	i_vSuffix
+			)
+		};
 	}
 
 	export template
@@ -102,25 +184,12 @@ namespace
 		,	StringLiteral
 				t_vSuffix
 		>
-	List constexpr inline
+	auto constexpr inline
 		InfixDefinition_For
-	=	[]	<	::std::size_t
-				...	t_npIndex
-			>(	::std::index_sequence<t_npIndex...>
-			)
-		{	return
-			List
-			{	InfixDataMember
-				<	ID_T<t_vPrefix>
-				,	All_Of<t_vType>[t_npIndex]
-				,	ID_T<t_vSuffix>
-				>()
-				...
-			};
-		}(	::std::make_index_sequence
-			<	All_Of<t_vType>
-			.	size()
-			>{}
+	=	InfixDataMember
+		(	ID_V<t_vPrefix>
+		,	Definition_For<t_vType>
+		,	ID_V<t_vSuffix>
 		)
 	;
 }

@@ -2,6 +2,7 @@ export module ATR.Layout.Bit.MemberOffset;
 
 import ATR.Layout.Bit.Array;
 import ATR.Layout.Bit.Reference;
+import ATR.Layout.Layout;
 
 import Meta.Size;
 import Meta.Memory.Size;
@@ -11,9 +12,11 @@ import Meta.Trait.BitSize;
 import Meta.Lex.CV;
 import Meta.Lex.Reference;
 import Meta.Lex.Array;
+import Meta.Token.Type;
 
 import Std;
 
+using ::Meta::Type;
 using ::Meta::USize;
 using ::Meta::Lex::MatchCV;
 using ::Meta::Lex::MatchCVArray;
@@ -50,6 +53,11 @@ export namespace
 			>
 		>
 	{
+		using
+			ResultType
+		=	t_tData
+		;
+
 		ByteSize
 			Offset
 		;
@@ -61,7 +69,7 @@ export namespace
 				*	i_aObject
 			)	const
 			noexcept
-		->	decltype(auto)
+		->	ResultType
 		{
 			auto constexpr
 				vBitSize
@@ -72,7 +80,8 @@ export namespace
 				)
 			;
 			return
-				Reference
+			static_cast<ResultType>
+			(	Reference
 				<	vBitSize
 				,	t_nBitOffset
 				>
@@ -80,7 +89,7 @@ export namespace
 				(	i_aObject
 				+	Offset
 				)
-			;
+			);
 		}
 	};
 
@@ -101,6 +110,16 @@ export namespace
 			>
 		>
 	{
+		using
+			ResultType
+		=	ArrayValue
+			<	BitSize_Of
+				(	t_tElement{}
+				)
+			,	t_nExtent
+			>
+		;
+
 		ByteSize
 			Offset
 		;
@@ -112,7 +131,7 @@ export namespace
 				*	i_aObject
 			)	const
 			noexcept
-		->	decltype(auto)
+		->	ResultType
 		{
 			auto constexpr
 				vElementBitSize
@@ -149,6 +168,18 @@ export namespace
 			>
 		>
 	{
+		using
+			ResultType
+		=	Reference
+			<	BitSize_Of
+				(	MatchCV
+					<	t_tData
+					>{}
+				)
+			,	t_nBitOffset
+			>
+		;
+
 		ByteSize
 			Offset
 		;
@@ -160,16 +191,8 @@ export namespace
 				*	i_aObject
 			)	const
 			noexcept
-		->	decltype(auto)
+		->	ResultType
 		{
-			auto constexpr
-				vBitSize
-			=	BitSize_Of
-				(	MatchCV
-					<	t_tData
-					>{}
-				)
-			;
 			auto* const
 				aBuffer
 			=	// the underlying byte array is defined mutable
@@ -185,10 +208,7 @@ export namespace
 			;
 
 			return
-			Reference
-			<	vBitSize
-			,	t_nBitOffset
-			>{	aBuffer
+			{	aBuffer
 			};
 		}
 	};
@@ -212,6 +232,17 @@ export namespace
 			>
 		>
 	{
+		using
+			ResultType
+		=	ArrayReference
+			<	BitSize_Of
+				(	t_tElement{}
+				)
+			,	t_nExtent
+			,	t_nBitOffset
+			>
+		;
+
 		ByteSize
 			Offset
 		;
@@ -223,16 +254,8 @@ export namespace
 				*	i_aObject
 			)	const
 			noexcept
-		->	decltype(auto)
-		{
-			auto constexpr
-				vElementBitSize
-			=	BitSize_Of
-				(	t_tElement{}
-				)
-			;
-
-			auto* const
+		->	ResultType
+		{	auto* const
 				aBuffer
 			=	// the underlying byte array is defined mutable
 				// if the offset points to that array this is well defined
@@ -246,11 +269,7 @@ export namespace
 				)
 			;
 			return
-			ArrayReference
-			<	vElementBitSize
-			,	t_nExtent
-			,	t_nBitOffset
-			>{	aBuffer
+			{	aBuffer
 			};
 		}
 	};
@@ -278,25 +297,57 @@ export namespace
 		);
 	}
 
+	/// immitates syntax of pointer to member dereference
 	template
-		<	BitOffset
+		<	typename
+				t_tLayout
+		,	BitOffset
 				t_nBitOffset
 		,	typename
 				t_tEntity
 		>
 	[[nodiscard]]
 	auto constexpr
-	(	operator +
-	)	(	ByteSize
-				i_nOffset
+	(	operator->*
+	)	(	t_tLayout const
+			*	i_aObject
 		,	MemberOffset<t_nBitOffset, t_tEntity>
-				i_vMember
+				i_vBitOffset
 		)
 		noexcept
-	->	MemberOffset<t_nBitOffset, t_tEntity>
-	{	return
-		{	i_nOffset
-		+	i_vMember.Offset
-		};
+	->	typename MemberOffset<t_nBitOffset, t_tEntity>::ResultType
+	{
+		if	constexpr
+			(	requires
+				{	i_aObject->Buffer;
+				}
+			)
+		{	return
+			i_vBitOffset
+			(	+i_aObject->Buffer
+			);
+		}
+		else
+		{	static_assert
+			(	ValidateOffsets
+				<	t_tLayout
+				>()
+			,	"Misconfigured layout offsets!"
+			);
+
+			return
+				&i_aObject->SouthArea
+			->*	MemberOffset<t_nBitOffset, t_tEntity>
+				{	i_vBitOffset.Offset
+				-	ByteSize_Of
+					(	Type
+						<	typename
+								t_tLayout
+							::	NorthType
+						>
+					)
+				}
+			;
+		}
 	}
 }
