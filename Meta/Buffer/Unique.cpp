@@ -117,8 +117,7 @@ export namespace
 					i_nCapacity
 			)
 		:	m_vBuffer
-			{	// TODO should be make_unique_for_overwrite as soon as it is available
-				std::make_unique<t_tElement[]>
+			{	::std::make_unique_for_overwrite<t_tElement[]>
 				(	i_nCapacity
 				)
 			}
