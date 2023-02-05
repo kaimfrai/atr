@@ -5,15 +5,15 @@ import ATR.Member.OffsetOf;
 import ATR.Instance;
 import ATR.Layout.MemberOffset;
 import ATR.Layout.Bit.MemberOffset;
-import ATR.Layout.Bit.Reference;
-import ATR.Layout.Bit.Array;
 
+import Meta.Bit.Reference;
+import Meta.Bit.Array;
 import Meta.Bit.Field;
+import Meta.Bit.Index;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Scale;
-import Meta.Bit.Index;
 import Meta.Token.Specifier;
 import Meta.Token.Type;
 import Meta.Data.Aggregate;
@@ -519,10 +519,13 @@ static_assert
 (	BitMemberType_For
 	<	::std::byte*
 	,	7_bdx
-	,	Field<1_bit>&
+	,	bool&
 	>
 ==	Type
-	<	ATR::Bit::Reference<1_bit, 7_bdx>
+	<	::Meta::Bit::Reference
+		<	1_bit
+		,	7_bdx
+		>
 	>
 );
 
@@ -530,11 +533,10 @@ static_assert
 (	BitMemberType_For
 	<	::std::byte*
 	,	7_bdx
-	,	Field<1_bit>
+	,	bool
 	>
 ==	Type
-	<	// TODO make this bool
-		::Meta::Bit::Field<1_bit>
+	<	bool
 	>
 );
 
@@ -742,10 +744,10 @@ static_assert
 (	BitMemberType_For
 	<	::std::byte*
 	,	5_bdx
-	, 	Field<1_bit>(&)[5]
+	,	bool(&)[5]
 	>
 ==	Type
-	<	ATR::Bit::ArrayReference
+	<	::Meta::Bit::ArrayReference
 		<	1_bit
 		,	5
 		,	5_bdx
@@ -757,10 +759,10 @@ static_assert
 (	BitMemberType_For
 	<	::std::byte*
 	,	5_bdx
-	,	Field<1_bit>[5]
+	,	bool[5]
 	>
 ==	Type
-	<	ATR::Bit::ArrayValue
+	<	::Meta::Bit::ArrayValue
 		<	1_bit
 		,	5
 		>

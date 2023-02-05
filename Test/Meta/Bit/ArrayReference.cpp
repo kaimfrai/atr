@@ -1,15 +1,15 @@
-import ATR.Layout.Bit.Array;
+import Meta.Bit.Array;
+import Meta.Bit.Field;
+import Meta.Bit.Count;
+import Meta.Bit.Index;
 
 import Meta.Size;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Scale;
 import Meta.Arithmetic.Integer;
-import Meta.Bit.Field;
-import Meta.Bit.Count;
 import Meta.Byte.Buffer;
 import Meta.Byte.Buffer.Range;
-import Meta.Bit.Index;
 
 import Std;
 
@@ -39,7 +39,7 @@ auto constexpr
 		aBuffer
 	{};
 
-	using ArrayReference = ATR::Bit::ArrayReference<t_nSize, t_nCount, t_nOffset>;
+	using ArrayReference = Meta::Bit::ArrayReference<t_nSize, t_nCount, t_nOffset>;
 
 	ArrayReference
 		arr

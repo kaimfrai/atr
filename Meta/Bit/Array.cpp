@@ -1,9 +1,8 @@
-export module ATR.Layout.Bit.Array;
+export module Meta.Bit.Array;
 
-import ATR.Layout.Bit.ElementReference;
-import ATR.Layout.Bit.Reference;
-import ATR.Layout.Bit.Iterator;
-
+import Meta.Bit.ElementReference;
+import Meta.Bit.Reference;
+import Meta.Bit.Iterator;
 import Meta.Bit.Field.Arithmetic;
 import Meta.Bit.Field.Compare;
 import Meta.Bit.Index;
@@ -19,19 +18,17 @@ import Meta.Byte.Buffer;
 
 import Std;
 
-using namespace ::Meta::Literals;
-
 export namespace
-	ATR::Bit
+	Meta::Bit
 {
 	template
 		<	typename
 				t_tArray
-		,	::Meta::BitSize
+		,	BitSize
 				t_nSize
-		,	::Meta::USize
+		,	USize
 				t_nExtent
-		,	::Meta::Bit::Index<1_byte>
+		,	Index<1_byte>
 				t_nOffset
 		>
 	struct
@@ -50,7 +47,7 @@ export namespace
 		=	t_nOffset
 		;
 
-		static Meta::BitSize constexpr
+		static BitSize constexpr
 			BitSize
 		{	ElementSize
 		*	t_nExtent
@@ -82,7 +79,7 @@ export namespace
 				)
 			{	return
 				::std::max
-				({	SizeCast<::Meta::ByteSize>
+				({	SizeCast<ByteSize>
 					(	ElementSize
 					*	t_npIndex
 					+	Offset
@@ -270,11 +267,11 @@ export namespace
 	};
 
 	template
-		<	::Meta::BitSize
+		<	BitSize
 				t_nSize
-		,	::Meta::USize
+		,	USize
 				t_nExtent
-		,	::Meta::Bit::Index<1_byte>
+		,	Index<1_byte>
 				t_nOffset
 			=	0_bdx
 		>
@@ -289,11 +286,11 @@ export namespace
 	;
 
 	template
-		<	::Meta::BitSize
+		<	BitSize
 				t_nSize
-		,	::Meta::USize
+		,	USize
 				t_nExtent
-		,	::Meta::Bit::Index<1_byte>
+		,	Index<1_byte>
 				t_nOffset
 			=	0_bdx
 		>
@@ -308,15 +305,15 @@ export namespace
 	;
 
 	template
-		<	::Meta::BitSize
+		<	BitSize
 				t_nSize
-		,	::Meta::USize
+		,	USize
 				t_nExtent
 		>
 	using
 		ArrayValue
 	=	Array
-		<	::Meta::Byte::Buffer
+		<	Byte::Buffer
 			<	t_nSize
 			*	t_nExtent
 			>
@@ -327,11 +324,11 @@ export namespace
 	;
 
 	template
-		<	::Meta::BitSize
+		<	BitSize
 				t_nSize
-		,	::Meta::USize
+		,	USize
 				t_nExtent
-		,	::Meta::Bit::Index<1_byte>
+		,	Index<1_byte>
 				t_nOffset
 		>
 	[[nodiscard]]
@@ -346,12 +343,12 @@ export namespace
 		// optimization using bit shift of an integer type
 		if	constexpr
 			(	i_vBuffer.BufferSize
-			<=	::Meta::Memory::SizeOf<::Meta::UIntMax>
+			<=	Memory::SizeOf<UIntMax>
 			)
 		{
 			return
 			ArrayValue<t_nSize, t_nExtent>
-			{	::Meta::Byte::Buffer
+			{	Byte::Buffer
 				{	i_vBuffer
 				.	get()
 				}

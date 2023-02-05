@@ -1,13 +1,18 @@
 add_single_file_modules(
+	Access.cpp
+	Array.cpp
+	ElementReference.cpp
 	Field.cpp
 	Index.cpp
 	IndexIterator.cpp
+	Iterator.cpp
 	Count.cpp
 	CountOnes.cpp
 	LowestOne.cpp
 	Mask.cpp
 	OneIndexIterator.cpp
 	OneIndexRange.cpp
+	Reference.cpp
 	Width.cpp
 )
 

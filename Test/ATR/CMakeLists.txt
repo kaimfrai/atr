@@ -1,9 +1,5 @@
 add_module_object_tests(
 	OffsetOf
-	BitArrayValue
-	BitReference
-	BitIterator
 	BitField
-	BitArrayReference
 	Transform
 )

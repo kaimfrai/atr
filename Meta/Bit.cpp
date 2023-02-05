@@ -1,10 +1,13 @@
 export module Meta.Bit;
 
+export import Meta.Bit.Access;
+export import Meta.Bit.Array;
 export import Meta.Bit.Count;
 export import Meta.Bit.Count.Access;
 export import Meta.Bit.Count.Compare;
 export import Meta.Bit.Count.Range;
 export import Meta.Bit.CountOnes;
+export import Meta.Bit.ElementReference;
 export import Meta.Bit.Field;
 export import Meta.Bit.Field.Arithmetic;
 export import Meta.Bit.Field.Compare;
@@ -20,8 +23,10 @@ export import Meta.Bit.Index.Set;
 export import Meta.Bit.Index.Shift;
 export import Meta.Bit.Index.Test;
 export import Meta.Bit.IndexIterator;
+export import Meta.Bit.Iterator;
 export import Meta.Bit.LowestOne;
 export import Meta.Bit.Mask;
 export import Meta.Bit.OneIndexIterator;
 export import Meta.Bit.OneIndexRange;
+export import Meta.Bit.Reference;
 export import Meta.Bit.Width;

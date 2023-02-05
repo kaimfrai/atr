@@ -1,19 +1,19 @@
-import ATR.Layout.Bit.Array;
+import Meta.Bit.Array;
+import Meta.Bit.Index;
+import Meta.Bit.Field;
+import Meta.Bit.Field.Compare;
 
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Scale;
-import Meta.Bit.Field;
-import Meta.Bit.Field.Compare;
 import Meta.Byte.Buffer;
 import Meta.Byte.Buffer.Range;
-import Meta.Bit.Index;
 
 import Std;
 
 using namespace ::Meta::Literals;
 
-using Array = ::ATR::Bit::ArrayValue<1_bit, 31>;
+using Array = ::Meta::Bit::ArrayValue<1_bit, 31>;
 
 auto constexpr
 	None
@@ -55,8 +55,8 @@ static_assert(All.all());
 };
 
 static_assert
-(	ATR::Bit::CopyArray
-	(	ATR::Bit::ArrayConstReference
+(	::Meta::Bit::CopyArray
+	(	::Meta::Bit::ArrayConstReference
 		<	16_bit
 		,	8
 		,	3_bdx

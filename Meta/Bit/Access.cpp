@@ -1,4 +1,4 @@
-export module ATR.Layout.Bit.Access;
+export module Meta.Bit.Access;
 
 import Meta.Byte.OutSpan;
 import Meta.Memory.Size;
@@ -15,15 +15,13 @@ import Meta.Bit.Index;
 
 import Std;
 
-using namespace ::Meta::Literals;
-
 export namespace
-	ATR::Bit
+	Meta::Bit
 {
 	template
-		<	::Meta::BitSize
+		<	BitSize
 				t_nSize
-		,	::Meta::Bit::Index<1_byte>
+		,	Index<1_byte>
 				t_nMaxOffset
 		>
 	struct
@@ -31,12 +29,12 @@ export namespace
 	{
 		using
 			FieldType
-		=	::Meta::Bit::Field
+		=	Field
 			<	t_nSize
 			>
 		;
 
-		static ::Meta::ByteSize constexpr
+		static ByteSize constexpr
 			BufferByteSize
 		=	t_nSize
 		+	t_nMaxOffset
@@ -44,20 +42,20 @@ export namespace
 
 		static_assert
 		(	BufferByteSize
-		<=	::Meta::Memory::SizeOf<::Meta::UIntMax>
+		<=	Memory::SizeOf<UIntMax>
 		,	"Bit Buffers greater than UIntMax not yet supported!"
 		);
 
 		using
 			BufferFieldType
-		=	::Meta::Bit::Field
+		=	Field
 			<	BufferByteSize
 			>
 		;
 
 		using
 			OffsetType
-		=	::Meta::Bit::Index
+		=	Index
 			<	BufferByteSize
 			-	t_nSize
 			+	1_bit
@@ -67,7 +65,7 @@ export namespace
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetMask
-		)	(	::Meta::Bit::Index<1_byte>
+		)	(	Index<1_byte>
 					i_nOffset
 			)
 			noexcept
@@ -115,7 +113,7 @@ export namespace
 			auto
 				vBufferField
 			{	ReadObject<BufferFieldType>
-				(	Meta::Byte::InSpan
+				(	Byte::InSpan
 					{	i_aBuffer
 					,	t_nSize
 					+	i_nOffset
@@ -138,7 +136,7 @@ export namespace
 		(	ReadField
 		)	(	::std::byte const
 				*	i_aBuffer
-			,	::Meta::Bit::Index<1_byte>
+			,	Index<1_byte>
 					i_nOffset
 			)
 			noexcept
@@ -186,7 +184,7 @@ export namespace
 			noexcept
 		->	void
 		{
-			::Meta::Byte::OutSpan
+			Byte::OutSpan
 				vBuffer
 			{	i_aBuffer
 			,	t_nSize
@@ -196,7 +194,7 @@ export namespace
 			auto const
 				vBufferField
 			=	ReadObject<BufferFieldType>
-				(	::Meta::Byte::InSpan
+				(	Byte::InSpan
 					{	vBuffer
 					}
 				)
@@ -212,7 +210,7 @@ export namespace
 			;
 
 			(	vBuffer
-			=	::Meta::Byte::Buffer
+			=	Byte::Buffer
 				{	vBufferField
 				bitor
 					vSetMask
@@ -227,7 +225,7 @@ export namespace
 					i_vValue
 			,	::std::byte
 				*	i_aBuffer
-			,	::Meta::Bit::Index<1_byte>
+			,	Index<1_byte>
 					i_nOffset
 			)
 			noexcept

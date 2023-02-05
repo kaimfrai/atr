@@ -1,13 +1,13 @@
 export module ATR.Layout.Bit.MemberOffset;
 
-import ATR.Layout.Bit.Array;
-import ATR.Layout.Bit.Reference;
 import ATR.Layout.Layout;
 
 import Meta.Size;
 import Meta.Memory.Size;
 import Meta.Memory.Size.PointerArithmetic;
 import Meta.Bit.Index;
+import Meta.Bit.Array;
+import Meta.Bit.Reference;
 import Meta.Trait.BitSize;
 import Meta.Lex.CV;
 import Meta.Lex.Reference;
@@ -81,7 +81,7 @@ export namespace
 			;
 			return
 			static_cast<ResultType>
-			(	Reference
+			(	::Meta::Bit::Reference
 				<	vBitSize
 				,	t_nBitOffset
 				>
@@ -112,7 +112,7 @@ export namespace
 	{
 		using
 			ResultType
-		=	ArrayValue
+		=	::Meta::Bit::ArrayValue
 			<	BitSize_Of
 				(	t_tElement{}
 				)
@@ -141,7 +141,7 @@ export namespace
 			;
 			return
 			CopyArray
-			(	ArrayConstReference
+			(	::Meta::Bit::ArrayConstReference
 				<	vElementBitSize
 				,	t_nExtent
 				,	t_nBitOffset
@@ -170,7 +170,7 @@ export namespace
 	{
 		using
 			ResultType
-		=	Reference
+		=	::Meta::Bit::Reference
 			<	BitSize_Of
 				(	MatchCV
 					<	t_tData
@@ -234,7 +234,7 @@ export namespace
 	{
 		using
 			ResultType
-		=	ArrayReference
+		=	::Meta::Bit::ArrayReference
 			<	BitSize_Of
 				(	t_tElement{}
 				)

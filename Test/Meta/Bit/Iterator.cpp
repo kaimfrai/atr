@@ -1,11 +1,11 @@
-import ATR.Layout.Bit.Iterator;
-import ATR.Layout.Bit.Array;
-
-import Meta.Bit.Field;
-import Meta.Memory.Size;
+import Meta.Bit.Iterator;
+import Meta.Bit.Array;
 import Meta.Bit.Field.Shift;
 import Meta.Bit.Index;
 import Meta.Bit.Mask;
+
+import Meta.Bit.Field;
+import Meta.Memory.Size;
 
 import Std;
 
@@ -15,7 +15,7 @@ using ::std::end;
 
 using
 	IteratorType
-=	::ATR::Bit::Iterator
+=	::Meta::Bit::Iterator
 	<	::std::byte const
 	,	10_bit
 	,	6_bdx
@@ -247,7 +247,7 @@ static_assert
 	}
 );
 
-::ATR::Bit::ArrayConstReference<10_bit, 4> constexpr
+::Meta::Bit::ArrayConstReference<10_bit, 4> constexpr
 	Reference
 {	+Buffer
 };

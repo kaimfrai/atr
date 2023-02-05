@@ -1,10 +1,7 @@
-export module ATR.Layout.Bit.Iterator;
+export module Meta.Bit.Iterator;
 
-import ATR.Layout.Bit.Access;
-import ATR.Layout.Bit.ElementReference;
-
-import Meta.Size;
-import Meta.Math.Divide;
+import Meta.Bit.Access;
+import Meta.Bit.ElementReference;
 import Meta.Bit.Index;
 import Meta.Bit.Field.Compare;
 import Meta.Bit.Field.LowestOne;
@@ -13,20 +10,20 @@ import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Cast;
 import Meta.Memory.Size.PointerArithmetic;
 import Meta.Memory.Size.Scale;
+import Meta.Math.Divide;
+import Meta.Size;
 
 import Std;
 
-using namespace ::Meta::Literals;
-
 export namespace
-	ATR::Bit
+	Meta::Bit
 {
 	template
 		<	typename
 				t_tBuffer
-		,	::Meta::BitSize
+		,	BitSize
 				t_nSize
-		,	::Meta::Bit::Index<1_byte>
+		,	Index<1_byte>
 				t_nMaxOffset
 		>
 	struct
@@ -98,7 +95,7 @@ export namespace
 		(	Iterator
 		)	(	t_tBuffer
 				*	i_aUnderlyingArray
-			,	::Meta::Bit::Index<1_byte>
+			,	Index<1_byte>
 					i_nOffset
 			)
 		:	Iterator
@@ -277,7 +274,7 @@ export namespace
 			noexcept
 		->	difference_type
 		{
-			::Meta::ByteSize const
+			ByteSize const
 				vByteDiff
 			{	::std::distance
 				(	i_vLeft.m_vUnderlyingArray
@@ -285,7 +282,7 @@ export namespace
 				)
 			};
 
-			::Meta::BitSize const
+			BitSize const
 				vBitDiff
 			{	IndexLowestOne(i_vLeft.m_vMask)
 			-	IndexLowestOne(i_vRight.m_vMask)

@@ -1,7 +1,6 @@
 import ATR.Member.List;
 import ATR.Member.Union;
 import ATR.Member.Definition;
-import ATR.Layout.Bit.Reference;
 import ATR.Instance;
 import ATR.Literals;
 
@@ -9,6 +8,7 @@ import Meta.Memory.Size;
 import Meta.Arithmetic.Integer;
 import Meta.Bit.Field;
 import Meta.Bit.Index;
+import Meta.Bit.Reference;
 import Meta.Token.Specifier;
 
 import Std;
@@ -48,8 +48,8 @@ namespace
 	;
 }
 
-using namespace ATR::Literals;
-using ATR::Bit::Reference;
+using namespace ::ATR::Literals;
+using ::Meta::Bit::Reference;
 using ::Meta::UInt;
 
 using BitFieldTest = ::ATR::Type<"BitFieldTest">;

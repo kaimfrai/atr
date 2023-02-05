@@ -1,24 +1,21 @@
-export module ATR.Layout.Bit.ElementReference;
+export module Meta.Bit.ElementReference;
 
-import ATR.Layout.Bit.Access;
-
-import Meta.Memory.Size;
+import Meta.Bit.Access;
 import Meta.Bit.Index;
 import Meta.Bit.Field.Compare;
+import Meta.Memory.Size;
 
 import Std;
 
-using namespace ::Meta::Literals;
-
 export namespace
-	ATR::Bit
+	Meta::Bit
 {
 	template
 		<	typename
 				t_tBuffer
-		,	::Meta::BitSize
+		,	BitSize
 				t_nSize
-		,	::Meta::Bit::Index<1_byte>
+		,	Index<1_byte>
 				t_nMaxOffset
 		>
 	struct
@@ -26,7 +23,7 @@ export namespace
 	{
 		using
 			BitAccess
-		=	::ATR::Bit::Access
+		=	Access
 			<	t_nSize
 			,	t_nMaxOffset
 			>
