@@ -7,20 +7,20 @@ import Meta.Memory.Size;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Token.Type;
-import Meta.Data.Aggregate;
 import Meta.Math.Prev;
 import Meta.Trait.BitAlign;
 import Meta.Trait.BitSize;
 import Meta.Byte.Buffer;
+import Meta.Token.Specifier;
 
 import Std;
 
 using ::Meta::Math::Prev;
-using ::Meta::Aggregate;
 using ::Meta::Type;
 using ::Meta::USize;
 using ::Meta::BitAlign_Of;
 using ::Meta::BitSize_Of;
+using ::Meta::Specifier::Mut;
 
 using namespace ::Meta::Literals;
 
@@ -193,9 +193,97 @@ export namespace
 		<	t_tData
 		>
 	{
-		Aggregate<t_tData>
+		t_tData
 			Value
 		;
+	};
+
+	template
+		<	typename
+				t_tData
+		>
+	struct
+		Layout
+		<	t_tData const
+		>
+	:	Layout<t_tData>
+	{
+		auto& operator=(Layout) = delete;
+	};
+
+	template
+		<	typename
+				t_tData
+		>
+	struct
+		Layout
+		<	Mut<t_tData>
+		>
+	{
+		mutable
+		t_tData
+			Value
+		;
+	};
+
+	template
+		<	typename
+				t_tData
+		,	USize
+				t_nExtent
+		>
+	struct
+		Layout
+		<	Mut
+			<	t_tData
+					[	t_nExtent
+					]
+			>
+		>
+	{
+		mutable
+		::std::array<t_tData, t_nExtent>
+			Value
+		;
+	};
+
+	template
+		<	typename
+				t_tData
+		,	USize
+				t_nExtent
+		>
+	struct
+		Layout
+		<	t_tData
+				[	t_nExtent
+				]
+		>
+	{
+		::std::array<t_tData, t_nExtent>
+			Value
+		;
+	};
+
+	template
+		<	typename
+				t_tData
+		,	USize
+				t_nExtent
+		>
+	struct
+		Layout
+		<	t_tData const
+				[	t_nExtent
+				]
+		>
+	:	Layout
+		<	t_tData
+				[	t_nExtent
+				]
+		>
+	{
+		auto& operator=(Layout) = delete;
 	};
 
 	template

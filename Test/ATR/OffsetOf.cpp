@@ -4,7 +4,6 @@ import ATR.Member.Union;
 import ATR.Member.OffsetOf;
 import ATR.Instance;
 import ATR.Layout.MemberOffset;
-import ATR.Layout.Bit.MemberOffset;
 
 import Meta.Bit.Reference;
 import Meta.Bit.Array;
@@ -30,6 +29,7 @@ using ::Meta::Bit::Field;
 using ::Meta::Memory::SizeOf;
 using ::Meta::Memory::ByteWidth;
 using ::Meta::Type;
+using ::Meta::BitSize;
 
 using namespace ::Meta::Literals;
 
@@ -151,86 +151,218 @@ auto constexpr inline
 ;
 
 template
-	<	typename
+	<	BitSize
+			t_nOffset
+	,	typename
 			t_tEntity
 	>
 auto constexpr inline
 	MemberOffset_For
 =	Type
 	<	::ATR::MemberOffset
-		<	::Meta::TokenizeEntity
-			<	t_tEntity
-			>
+		<	t_nOffset
+		,	t_tEntity
 		>
 	>
 ;
 
+static_assert
+(	OffsetType
+	<	OffsetOfTest
+	,	"Int"
+	>
+==	MemberOffset_For
+	<	0_bit
+	,	int
+	>
+);
+
+static_assert
+(	OffsetType
+	<	OffsetOfTest
+	,	"IntConst"
+	>
+==	MemberOffset_For
+	<	32_bit
+	,	int const
+	>
+);
+
+static_assert
+(	OffsetType
+	<	OffsetOfTest
+	,	"IntMut"
+	>
+==	MemberOffset_For
+	<	64_bit
+	,	Mut<int>
+	>
+);
+
+static_assert
+(	OffsetType
+	<	OffsetOfTest
+	,	"ArrayBool"
+	>
+==	MemberOffset_For
+	<	96_bit
+	,	bool[5]
+	>
+);
+
+static_assert
+(	OffsetType
+	<	OffsetOfTest
+	,	"ArrayBoolConst"
+	>
+==	MemberOffset_For
+	<	101_bit
+	,	bool const[5]
+	>
+);
+
+static_assert
+(	OffsetType
+	<	OffsetOfTest
+	,	"ArrayBoolMut"
+	>
+==	MemberOffset_For
+	<	106_bit
+	,	Mut<bool[5]>
+	>
+);
+
+static_assert
+(	OffsetType
+	<	OffsetOfTest
+	,	"Bool"
+	>
+==	MemberOffset_For
+	<	156_bit
+	,	bool
+	>
+);
+
+static_assert
+(	OffsetType
+	<	OffsetOfTest
+	,	"BoolConst"
+	>
+==	MemberOffset_For
+	<	157_bit
+	,	bool const
+	>
+);
+
+static_assert
+(	OffsetType
+	<	OffsetOfTest
+	,	"BoolMut"
+	>
+==	MemberOffset_For
+	<	158_bit
+	,	Mut<bool>
+	>
+);
+
+static_assert
+(	OffsetType
+	<	OffsetOfTest
+	,	"Field"
+	>
+==	MemberOffset_For
+	<	159_bit
+	,	Field<3_bit>
+	>
+);
+
+static_assert
+(	OffsetType
+	<	OffsetOfTest
+	,	"FieldConst"
+	>
+==	MemberOffset_For
+	<	162_bit
+	,	Field<3_bit> const
+	>
+);
+
+static_assert
+(	OffsetType
+	<	OffsetOfTest
+	,	"FieldMut"
+	>
+==	MemberOffset_For
+	<	165_bit
+	,	Mut<Field<3_bit>>
+	>
+);
+
 template
 	<	typename
 			t_tOwner
+	,	BitSize
+			t_nOffset
 	,	typename
 			t_tEntity
 	>
 auto constexpr inline
-	GetMemberType_For
+	MemberType_For
 =	Type
 	<	decltype
-		(	(	::std::declval<t_tOwner>()
-			->*	::std::declval
-				<	::ATR::MemberOffset
-					<	::Meta::TokenizeEntity
-						<	t_tEntity
-						>
-					>
-				>()
+		(	::std::declval
+			<	::ATR::MemberOffset
+				<	t_nOffset
+				,	t_tEntity
+				>
+			>()
+			(	::std::declval<t_tOwner>()
 			)
-		.	get()
 		)
 	>
 ;
 
 static_assert
-(	OffsetType
-	<	OffsetOfTest&
-	,	"Int"
-	>
-==	MemberOffset_For
-	<	int&
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest const&
-	,	"Int"
-	>
-==	MemberOffset_For
-	<	int const&
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&&
-	,	"Int"
-	>
-==	MemberOffset_For
-	<	int
-	>
-);
-
-static_assert
-(	GetMemberType_For
+(	MemberType_For
 	<	::std::byte*
-	,	Aggregate<int>&
+	,	0_bit
+	,	int
 	>
 ==	Type<int&>
 );
 
 static_assert
-(	GetMemberType_For
+(	MemberType_For
+	<	::std::byte const*
+	,	0_bit
+	,	int
+	>
+==	Type<int const&>
+);
+
+static_assert
+(	MemberType_For
+	<	OffsetOfTest*
+	,	0_bit
+	,	int
+	>
+==	Type<int&>
+);
+
+static_assert
+(	MemberType_For
+	<	OffsetOfTest const*
+	,	0_bit
+	,	int
+	>
+==	Type<int const&>
+);
+
+static_assert
+(	MemberType_For
 	<	::std::byte*
-	,	Aggregate<int> const&
+	,	32_bit
+	,	int const
 	>
 ==	Type
 	<	int const&
@@ -238,50 +370,10 @@ static_assert
 );
 
 static_assert
-(	GetMemberType_For
-	<	::std::byte*
-	,	Aggregate<int>
-	>
-==	Type
-	<	int
-	>
-);
-
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&
-	,	"IntConst"
-	>
-==	MemberOffset_For
-	<	int const&
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest const&
-	,	"IntConst"
-	>
-==	MemberOffset_For
-	<	int const&
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&&
-	,	"IntConst"
-	>
-==	MemberOffset_For
-	<	int
-	>
-);
-
-static_assert
-(	GetMemberType_For
-	<	::std::byte*
-	,	Aggregate<int const>&
+(	MemberType_For
+	<	::std::byte const*
+	,	32_bit
+	,	int const
 	>
 ==	Type
 	<	int const&
@@ -289,9 +381,10 @@ static_assert
 );
 
 static_assert
-(	GetMemberType_For
-	<	::std::byte*
-	,	Aggregate<int const> const&
+(	MemberType_For
+	<	OffsetOfTest*
+	,	32_bit
+	,	int const
 	>
 ==	Type
 	<	int const&
@@ -299,50 +392,21 @@ static_assert
 );
 
 static_assert
-(	GetMemberType_For
-	<	::std::byte*
-	,	Aggregate<int>
+(	MemberType_For
+	<	OffsetOfTest const*
+	,	32_bit
+	,	int const
 	>
 ==	Type
-	<	int
-	>
-);
-
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&
-	,	"IntMut"
-	>
-==	MemberOffset_For
-	<	int&
+	<	int const&
 	>
 );
 
 static_assert
-(	OffsetType
-	<	OffsetOfTest const&
-	,	"IntMut"
-	>
-==	MemberOffset_For
-	<	int&
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&&
-	,	"IntMut"
-	>
-==	MemberOffset_For
-	<	int
-	>
-);
-
-static_assert
-(	GetMemberType_For
+(	MemberType_For
 	<	::std::byte*
-	,	Aggregate<Mut<int>>&
+	,	64_bit
+	,	Mut<int>
 	>
 ==	Type
 	<	int&
@@ -350,9 +414,10 @@ static_assert
 );
 
 static_assert
-(	GetMemberType_For
-	<	::std::byte*
-	,	Aggregate<Mut<int>> const&
+(	MemberType_For
+	<	::std::byte const*
+	,	64_bit
+	,	Mut<int>
 	>
 ==	Type
 	<	int&
@@ -360,179 +425,45 @@ static_assert
 );
 
 static_assert
-(	GetMemberType_For
-	<	::std::byte*
-	,	Aggregate<int>
+(	MemberType_For
+	<	OffsetOfTest*
+	,	64_bit
+	,	Mut<int>
 	>
 ==	Type
-	<	int
-	>
-);
-
-
-template
-	<	::Meta::Bit::Index<1_byte>
-			t_nBitOffset
-	,	typename
-			t_tEntity
-	>
-auto constexpr inline
-	BitMemberOffset_For
-=	Type
-	<	::ATR::Bit::MemberOffset
-		<	t_nBitOffset
-		,	::Meta::TokenizeEntity
-			<	t_tEntity
-			>
-		>
-	>
-;
-
-template
-	<	typename
-			t_tOwner
-	,	::Meta::Bit::Index<1_byte>
-			t_nBitOffset
-	,	typename
-			t_tEntity
-	>
-auto constexpr inline
-	BitMemberType_For
-=	Type
-	<	decltype
-		(	(	::std::declval<t_tOwner>()
-			->*	::std::declval
-				<	::ATR::Bit::MemberOffset
-					<	t_nBitOffset
-					,	::Meta::TokenizeEntity
-						<	t_tEntity
-						>
-					>
-				>()
-			)
-		)
-	>
-;
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&
-	,	"Bool"
-	>
-==	BitMemberOffset_For
-	<	4_bdx
-	,	bool&
+	<	int&
 	>
 );
 
 static_assert
-(	OffsetType
-	<	OffsetOfTest const&
-	,	"Bool"
+(	MemberType_For
+	<	OffsetOfTest const*
+	,	64_bit
+	,	Mut<int>
 	>
-==	BitMemberOffset_For
-	<	4_bdx
-	,	bool
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&&
-	,	"Bool"
-	>
-==	BitMemberOffset_For
-	<	4_bdx
-	,	bool
-	>
-);
-
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&
-	,	"BoolConst"
-	>
-==	BitMemberOffset_For
-	<	5_bdx
-	,	bool
+==	Type
+	<	int&
 	>
 );
 
 static_assert
-(	OffsetType
-	<	OffsetOfTest const&
-	,	"BoolConst"
-	>
-==	BitMemberOffset_For
-	<	5_bdx
-	,	bool
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&&
-	,	"BoolConst"
-	>
-==	BitMemberOffset_For
-	<	5_bdx
-	,	bool
-	>
-);
-
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&
-	,	"BoolMut"
-	>
-==	BitMemberOffset_For
-	<	6_bdx
-	,	bool&
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest const&
-	,	"BoolMut"
-	>
-==	BitMemberOffset_For
-	<	6_bdx
-	,	bool&
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&&
-	,	"BoolMut"
-	>
-==	BitMemberOffset_For
-	<	6_bdx
-	,	bool
-	>
-);
-
-static_assert
-(	BitMemberType_For
+(	MemberType_For
 	<	::std::byte*
-	,	7_bdx
-	,	bool&
+	,	156_bit
+	,	bool
 	>
 ==	Type
 	<	::Meta::Bit::Reference
 		<	1_bit
-		,	7_bdx
+		,	4_bdx
 		>
 	>
 );
 
 static_assert
-(	BitMemberType_For
-	<	::std::byte*
-	,	7_bdx
+(	MemberType_For
+	<	::std::byte const*
+	,	156_bit
 	,	bool
 	>
 ==	Type
@@ -540,211 +471,36 @@ static_assert
 	>
 );
 
-
 static_assert
-(	OffsetType
-	<	OffsetOfTest&
-	,	"Field"
+(	MemberType_For
+	<	OffsetOfTest*
+	,	156_bit
+	,	bool
 	>
-==	BitMemberOffset_For
-	<	7_bdx
-	,	Field<3_bit>&
+==	Type
+	<	::Meta::Bit::Reference
+		<	1_bit
+		,	4_bdx
+		>
 	>
 );
 
 static_assert
-(	OffsetType
-	<	OffsetOfTest const&
-	,	"Field"
+(	MemberType_For
+	<	OffsetOfTest const*
+	,	156_bit
+	,	bool
 	>
-==	BitMemberOffset_For
-	<	7_bdx
-	,	Field<3_bit>
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&&
-	,	"Field"
-	>
-==	BitMemberOffset_For
-	<	7_bdx
-	,	Field<3_bit>
+==	Type
+	<	bool
 	>
 );
 
 static_assert
-(	OffsetType
-	<	OffsetOfTest&
-	,	"FieldConst"
-	>
-==	BitMemberOffset_For
-	<	2_bdx
-	,	Field<3_bit>
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest const&
-	,	"FieldConst"
-	>
-==	BitMemberOffset_For
-	<	2_bdx
-	,	Field<3_bit>
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&&
-	,	"FieldConst"
-	>
-==	BitMemberOffset_For
-	<	2_bdx
-	,	Field<3_bit>
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&
-	,	"FieldMut"
-	>
-==	BitMemberOffset_For
-	<	5_bdx
-	,	Field<3_bit>&
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest const&
-	,	"FieldMut"
-	>
-==	BitMemberOffset_For
-	<	5_bdx
-	,	Field<3_bit>&
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&&
-	,	"FieldMut"
-	>
-==	BitMemberOffset_For
-	<	5_bdx
-	,	Field<3_bit>
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&
-	,	"ArrayBool"
-	>
-==	BitMemberOffset_For
-	<	0_bdx
-	,	bool(&)[5]
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest const&
-	,	"ArrayBool"
-	>
-==	BitMemberOffset_For
-	<	0_bdx
-	,	bool[5]
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&&
-	,	"ArrayBool"
-	>
-==	BitMemberOffset_For
-	<	0_bdx
-	,	bool[5]
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&
-	,	"ArrayBoolConst"
-	>
-==	BitMemberOffset_For
-	<	5_bdx
-	,	bool[5]
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest const&
-	,	"ArrayBoolConst"
-	>
-==	BitMemberOffset_For
-	<	5_bdx
-	,	bool[5]
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&&
-	,	"ArrayBoolConst"
-	>
-==	BitMemberOffset_For
-	<	5_bdx
-	,	bool[5]
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&
-	,	"ArrayBoolMut"
-	>
-==	BitMemberOffset_For
-	<	2_bdx
-	,	bool(&)[5]
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest const&
-	,	"ArrayBoolMut"
-	>
-==	BitMemberOffset_For
-	<	2_bdx
-	,	bool(&)[5]
-	>
-);
-
-static_assert
-(	OffsetType
-	<	OffsetOfTest&&
-	,	"ArrayBoolMut"
-	>
-==	BitMemberOffset_For
-	<	2_bdx
-	,	bool[5]
-	>
-);
-
-
-static_assert
-(	BitMemberType_For
+(	MemberType_For
 	<	::std::byte*
-	,	5_bdx
-	,	bool(&)[5]
+	,	5_bit
+	,	bool[5]
 	>
 ==	Type
 	<	::Meta::Bit::ArrayReference
@@ -756,9 +512,38 @@ static_assert
 );
 
 static_assert
-(	BitMemberType_For
-	<	::std::byte*
+(	MemberType_For
+	<	::std::byte const*
 	,	5_bdx
+	,	bool[5]
+	>
+==	Type
+	<	::Meta::Bit::ArrayValue
+		<	1_bit
+		,	5
+		>
+	>
+);
+
+static_assert
+(	MemberType_For
+	<	OffsetOfTest*
+	,	96_bit
+	,	bool[5]
+	>
+==	Type
+	<	::Meta::Bit::ArrayReference
+		<	1_bit
+		,	5
+		,	0_bdx
+		>
+	>
+);
+
+static_assert
+(	MemberType_For
+	<	OffsetOfTest const*
+	,	96_bit
 	,	bool[5]
 	>
 ==	Type

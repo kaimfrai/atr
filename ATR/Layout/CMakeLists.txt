@@ -6,5 +6,3 @@ add_single_file_modules(
 	Type.cpp
 	ValidateOffsets.cpp
 )
-
-add_subdirectory(Bit)

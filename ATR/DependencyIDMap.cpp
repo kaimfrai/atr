@@ -197,7 +197,11 @@ export namespace
 	{	Meta::Type<ErasedType<t_tOwner>>
 	,	::ATR::MapDependency
 		(	t_vpIDMap
-		,	Meta::Type<t_tOwner>
+		,	Meta::Type
+			<	::std::remove_cvref_t
+				<	t_tOwner
+				>
+			>
 		)
 		...
 	};

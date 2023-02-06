@@ -1,0 +1,11 @@
+add_single_file_modules(
+	Array.cpp
+	Bool.cpp
+	BoolArray.cpp
+	Field.cpp
+	FieldArray.cpp
+	Layout.cpp
+	Member.cpp
+	Mutable.cpp
+	Object.cpp
+)

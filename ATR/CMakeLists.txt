@@ -14,4 +14,5 @@ add_single_file_modules(
 
 add_subdirectory(Layout)
 add_subdirectory(Member)
+add_subdirectory(Offset)
 add_subdirectory(Virtual)

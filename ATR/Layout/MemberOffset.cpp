@@ -1,241 +1,138 @@
 export module ATR.Layout.MemberOffset;
 
-import ATR.Erase;
+import ATR.Offset.Member;
+import ATR.Offset.Array;
+import ATR.Offset.Bool;
+import ATR.Offset.BoolArray;
+import ATR.Offset.Field;
+import ATR.Offset.FieldArray;
+import ATR.Offset.Layout;
+import ATR.Offset.Mutable;
+import ATR.Offset.Object;
 
+import Meta.Token.Specifier;
 import Meta.Memory.Size;
-import Meta.Memory.Size.PointerArithmetic;
-import Meta.Lex.Reference;
-import Meta.Lex.CV;
-import Meta.Token.Type;
 
-import Std;
-
-using ::Meta::Type;
-using ::Meta::TypeEntity;
+using ::Meta::BitSize;
+using ::Meta::Specifier::Mut;
 
 export namespace
 	ATR
 {
 	template
-		<	typename
-		>
-	struct
-		MemberOffset
-	;
-
-	template
-		<	typename
+		<	BitSize
+				t_nOffset
+		,	typename
 				t_tData
 		>
 	struct
 		MemberOffset
-		<	::Meta::Lex::MatchCV
-			<	t_tData
-			>
+	:	MemberOffset
+		<	t_nOffset
+		,	t_tData const
 		>
 	{
-		::Meta::ByteSize
-			Offset
-		;
-
 		using
-			ByteType
-		=	::std::byte const
-		;
-		using
-			ValueType
-		=	typename
-				::Meta::Lex::MatchCV
-				<	t_tData
-				>
-			::	Entity
-		;
-
-		using
-			ResultType
-		=	ValueType
+			MemberOffset
+			<	t_nOffset
+			,	t_tData const
+			>
+		::	operator ()
 		;
 
 		[[nodiscard]]
-		auto constexpr
-		(	operator()
-		)	(	ByteType
+		static auto constexpr
+		(	operator ()
+		)	(	auto
 				*	i_aObject
-			)	const
-			noexcept
-		->	ResultType
-		{	return
-			*
-			//	we don't know where the byte pointer came from, so we need to launder it
-			::std::launder
-			(	PointerCast<ValueType>
-				(	i_aObject
-				+	Offset
-				)
-			);
-		}
-	};
-
-	template
-		<	typename
-				t_tData
-		,	typename
-			...	t_tpQualifier
-		>
-	struct
-		MemberOffset
-		<	::Meta::Lex::MatchLRef
-			<	::Meta::Lex::MatchCV
-				<	t_tData
-				,	t_tpQualifier
-					...
-				>
-			>
-		>
-	{
-		::Meta::ByteSize
-			Offset
-		;
-
-		using
-			ValueType
-		=	typename
-				::Meta::Lex::MatchCV
-				<	t_tData
-				,	t_tpQualifier
-					...
-				>
-			::	Entity
-		;
-
-		using
-			ResultType
-		=	ValueType
-			&
-		;
-
-		using
-			ByteType
-		=	//	byte for value&
-			//	byte const for value const&
-			TypeEntity
-			<	(	Type<::std::byte>
-				+	...
-				+	t_tpQualifier{}
-				)
-			>
-		;
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator()
-		)	(	ByteType
-				*	i_aObject
-			)	const
-			noexcept
-		->	ResultType
-		{	return
-			*
-			//	we don't know where the byte pointer came from, so we need to launder it
-			::std::launder
-			(	PointerCast
-				<	ValueType
-				>(	i_aObject
-				+	Offset
-				)
-			);
-		}
-	};
-
-	/// immitates syntax of pointer to member dereference
-	template
-		<	typename
-				t_tEntity
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	operator->*
-	)	(	typename MemberOffset<t_tEntity>::ByteType
-			*	i_aObject
-		,	MemberOffset<t_tEntity>
-				i_vMemberOffset
-		)
-		noexcept
-	->	decltype(auto)
-	{	return
-		i_vMemberOffset
-		(	i_aObject
-		);
-	}
-
-	/// immitates syntax of pointer to member dereference
-	template
-		<	typename
-				t_tLayout
-		,	typename
-				t_tEntity
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	operator->*
-	)	(	auto
-			*	i_aObject
-		,	MemberOffset<t_tEntity>
-				i_vOffset
-		)
-		noexcept
-	->	typename MemberOffset<t_tEntity>::ResultType
-	{
-		if	constexpr
-			(	requires
-				{	i_aObject->Value;
-				}
 			)
-		{
-			if	constexpr
-				(	::std::is_convertible_v
-					<	decltype((i_aObject->Value))
-					,	typename MemberOffset<t_tEntity>::ResultType
-					>
-				)
-			{	return
-				(	i_aObject
-				->	Value
-				);
-			}
-			else
-			{
-				::std::unreachable();
-			}
-		}
-		else
-		{	auto constexpr
-				vNorthSize
-			=	BitSize_Of
-				(	Type
-					<	typename
-							t_tLayout
-						::	NorthType
-					>
-				)
+			noexcept
+		->	decltype
+			(	i_aObject
+			->*	Offset::Member
+				<	t_nOffset
+				,	t_tData
+				>{}
+			)
+		{	return
+				i_aObject
+			->*	Offset::Member
+				<	t_nOffset
+				,	t_tData
+				>{}
 			;
-			if	(	vNorthSize
-				>	i_vOffset.Offset
-				)
-			{	return
-					&i_aObject->NorthArea
-				->*	i_vOffset
-				;
-			}
-			else
-			{	return
-					&i_aObject->SouthArea
-				->*	MemberOffset
-					{	i_vOffset.Offset
-					-	vNorthSize
-					}
-				;
-			}
 		}
-	}
+	};
+
+	template
+		<	BitSize
+				t_nOffset
+		,	typename
+				t_tData
+		>
+	struct
+		MemberOffset
+		<	t_nOffset
+		,	t_tData const
+		>
+	{
+		[[nodiscard]]
+		static auto constexpr
+		(	operator ()
+		)	(	auto const
+				*	i_aObject
+			)
+			noexcept
+		->	decltype
+			(	i_aObject
+			->*	Offset::Member
+				<	t_nOffset
+				,	t_tData const
+				>{}
+			)
+		{	return
+				i_aObject
+			->*	Offset::Member
+				<	t_nOffset
+				,	t_tData const
+				>{}
+			;
+		}
+	};
+
+	template
+		<	BitSize
+				t_nOffset
+		,	typename
+				t_tData
+		>
+	struct
+		MemberOffset
+		<	t_nOffset
+		,	Mut<t_tData>
+		>
+	{
+		[[nodiscard]]
+		static auto constexpr
+		(	operator ()
+		)	(	auto const
+				*	i_aObject
+			)
+			noexcept
+		->	decltype
+			(	i_aObject
+			->*	Offset::Member
+				<	t_nOffset
+				,	Mut<t_tData>
+				>{}
+			)
+		{	return
+				i_aObject
+			->*	Offset::Member
+				<	t_nOffset
+				,	Mut<t_tData>
+				>{}
+			;
+		}
+	};
 }

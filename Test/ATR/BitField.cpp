@@ -122,7 +122,8 @@ static_assert
 			[	"1MutBoolBit"_ID
 			]
 		)
-	,	bool
+	,	// TODO this should be bool
+		Reference<1_bit, 1_bdx>
 	>
 );
 
@@ -188,6 +189,7 @@ static_assert
 			[	"3MutBitField31"_ID
 			]
 		)
-	,	Field<31_bit>
+	,	// TODO this should be a value
+		Reference<31_bit, 1_bdx>
 	>
 );

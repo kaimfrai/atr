@@ -22,10 +22,28 @@ export namespace
 		,	"Layouts are required to be standard layout!"
 		);
 		static_assert
-		(	::std::is_trivial_v
+		(	::std::is_trivially_default_constructible_v
 			<	t_tLayout
 			>
-		,	"Layouts are required to be trivial!"
+		,	"Layouts are required to be trivially constructible!"
+		);
+		static_assert
+		(	::std::is_trivially_destructible_v
+			<	t_tLayout
+			>
+		,	"Layouts are required to be trivially destructible!"
+		);
+		static_assert
+		(	::std::is_trivially_copy_constructible_v
+			<	t_tLayout
+			>
+		,	"Layouts are required to be trivially constructible!"
+		);
+		static_assert
+		(	::std::is_trivially_move_constructible_v
+			<	t_tLayout
+			>
+		,	"Layouts are required to be trivially constructible!"
 		);
 
 		if	constexpr

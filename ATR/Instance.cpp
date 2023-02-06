@@ -6,7 +6,6 @@ import ATR.Member.Definition;
 import ATR.Member.Contains;
 import ATR.Member.OffsetOf;
 import ATR.Layout.MemberOffset;
-import ATR.Layout.Bit.MemberOffset;
 
 import Meta.ID.Concept;
 import Meta.ID.StringLiteral;
@@ -67,12 +66,11 @@ export namespace
 				)
 			)
 		{	return
-				this
-			->*	OffsetOf
-				(	i_vMemberID
-				,	Meta::Type<Instance&>
-				)
-			;
+			OffsetOf
+			(	i_vMemberID
+			,	Meta::Type<Instance>
+			)(	this
+			);
 		}
 
 		[[nodiscard]]
@@ -90,12 +88,11 @@ export namespace
 				)
 			)
 		{	return
-				this
-			->*	OffsetOf
-				(	i_vMemberID
-				,	Meta::Type<Instance const&>
-				)
-			;
+			OffsetOf
+			(	i_vMemberID
+			,	Meta::Type<Instance>
+			)(	this
+			);
 		}
 
 		[[nodiscard]]
@@ -105,7 +102,7 @@ export namespace
 					i_vMemberID
 			)	&&
 			noexcept
-		->	decltype(auto)
+		->	auto
 		requires
 			(	ContainsDynamic
 				(	MemberList
@@ -113,12 +110,13 @@ export namespace
 				)
 			)
 		{	return
-				this
-			->*	OffsetOf
-				(	i_vMemberID
-				,	Meta::Type<Instance&&>
+			OffsetOf
+			(	i_vMemberID
+			,	Meta::Type<Instance>
+			)(	static_cast<Instance const*>
+				(	this
 				)
-			;
+			);
 		}
 
 		[[nodiscard]]

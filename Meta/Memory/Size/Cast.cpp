@@ -2,6 +2,7 @@ export module Meta.Memory.Size.Cast;
 
 import Meta.Bit.Index;
 import Meta.Memory.Size;
+import Meta.Memory.Size.Arithmetic;
 import Meta.Math.Divide;
 
 export namespace
