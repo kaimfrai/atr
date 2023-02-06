@@ -145,22 +145,24 @@ namespace
 				t_tOwner
 		,	typename
 			...	t_tpArgument
-		,	ProtoAddress<t_tOwner, t_tpArgument...>
+		,	ProtoID
 				t_tName
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	MapDependency
 	)	(	IDMap<t_tName, t_tpArgument...>
 		,	Meta::TypeToken<t_tOwner>
 		)
-	->	decltype(auto)
-	{	return
-		Address
+		noexcept
+	->	FunctionType
 		<	t_tName
 		,	t_tOwner
 		,	t_tpArgument
 			...
-		>;
+		>
+	{	return
+		{};
 	}
 
 	template
@@ -169,12 +171,14 @@ namespace
 		,	ProtoMemberInterface<t_tDataID::RawArray>
 				t_tOwner
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	MapDependency
 	)	(	IDMap<t_tDataID>
 		,	Meta::TypeToken<t_tOwner>
 				i_vOwner
 		)
+		noexcept
 	{	return
 		Member::OffsetOf
 		(	t_tDataID{}

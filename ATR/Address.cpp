@@ -37,8 +37,9 @@ export namespace
 			)
 		;
 
+		[[nodiscard]]
 		static auto constexpr
-		(	Signature
+		(	operator ()
 		)	(	typename
 				decltype(t_vpDependency)
 			::	ArgumentType
@@ -87,7 +88,7 @@ export namespace
 	*	Address
 	=	&
 		FunctionType<t_tFuncID, t_tpArgument...>
-	::	Signature
+	::	operator ()
 	;
 
 	/// checks if the address is mapped
