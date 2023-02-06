@@ -22,7 +22,7 @@ export namespace
 			&	i_rShape
 		)
 	->	Function
-		<	"Product"_ID
+		<	FunctionName<"Product">
 		,	ArgumentDependency
 			<	decltype(i_rShape)
 			,	"ComputeAreaMultiplier"_ID

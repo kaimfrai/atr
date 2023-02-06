@@ -23,7 +23,7 @@ export namespace
 			&	i_rBody
 		)
 	->	Function
-		<	"Product"_ID
+		<	FunctionName<"Product">
 		,	ArgumentDependency
 			<	decltype(i_rBody)
 			,	"ComputeVolumeMultiplier"_ID

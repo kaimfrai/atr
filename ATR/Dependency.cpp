@@ -6,9 +6,9 @@ import Meta.ID.Concept;
 import Meta.ID.StringLiteral;
 import Meta.ID.Alias;
 import Meta.Size;
+import Meta.Token.SelectByIndex;
 import Meta.Token.Index;
 import Meta.Token.Type;
-import Meta.Data.TupleList;
 
 import Std;
 
@@ -23,23 +23,17 @@ export namespace
 			...	t_tpItem
 		>
 	struct
-		BoundDependency
+		Dependency
 	{
 		using
 			ArgumentType
 		=	t_tArgument
 		;
+
 		[[no_unique_address]]
 		t_tArgument
 			Argument
 		;
-
-		[[no_unique_address]]
-		Meta::TupleList
-		<	t_tpItem
-			...
-		>	DependencyMap
-		{};
 
 		static auto constexpr
 			ItemSequence
@@ -58,199 +52,64 @@ export namespace
 		auto constexpr
 		(	operator()
 		)	(	Meta::IndexToken<t_nIndex>
-					i_vIndex
 			,	t_tpArgument
 				&&
 				...	i_rpArgument
 			)
 		->	decltype(auto)
 		{
+			auto constexpr
+				vItemPtr
+			=	::Meta::Token::SelectByIndex
+				{	::std::make_index_sequence
+					<	t_nIndex
+					>{}
+				}(	static_cast<t_tpItem*>
+					(	nullptr
+					)
+					...
+				)
+			;
+			using
+				tItem
+			=	decltype
+				(	auto
+					(	*
+						vItemPtr
+					)
+				)
+			;
+
 			if	constexpr
 				(	::std::is_invocable_v
-					<	decltype(DependencyMap[i_vIndex])
+					<	tItem
 					,	decltype(Argument)
 					,	t_tpArgument
 						...
 					>
 				)
-				return
-				::std::invoke
-				(	DependencyMap
-					[	i_vIndex
-					]
-				,	Argument
+			{	return
+					tItem
+				::	operator()
+				(	Argument
 				,	::std::forward
 					<	t_tpArgument
 					>(	i_rpArgument
 					)
 					...
 				);
+			}
 			else
-				return
-				::std::invoke
-				(	DependencyMap
-					[	i_vIndex
-					]
-				,	::std::forward
+			{	return
+					tItem
+				::	operator ()
+				(	::std::forward
 					<	t_tpArgument
 					>(	i_rpArgument
 					)
 					...
 				);
+			}
 		}
 	};
-
-	template
-		<	typename
-				t_tArgument
-		,	typename
-			...	t_tpItem
-		>
-	(	BoundDependency
-	)	(	t_tArgument
-		,	Meta::TupleList
-			<	t_tpItem
-				...
-			>
-		)
-	->	BoundDependency
-		<	t_tArgument
-		,	t_tpItem
-			...
-		>
-	;
-
-	template
-		<	typename
-				t_tArgument
-		,	typename
-			...	t_tpItem
-		>
-	struct
-		Dependency
-	{
-		using
-			ArgumentType
-		=	t_tArgument
-		;
-
-		using
-			BoundType
-		=	BoundDependency
-			<	t_tArgument
-			,	t_tpItem
-				...
-			>
-		;
-
-		[[no_unique_address]]
-		Meta::TupleList
-		<	t_tpItem
-			...
-		>	DependencyMap
-		{};
-
-		constexpr
-		(	Dependency
-		)	(	t_tArgument
-			,	t_tpItem const
-				&
-				...	i_rpDependency
-			)
-		requires
-			Meta::ProtoID<t_tArgument>
-		:	DependencyMap
-			{	i_rpDependency
-				...
-			}
-		{}
-
-		explicit constexpr
-		(	Dependency
-		)	(	Meta::TypeToken<t_tArgument>
-			,	t_tpItem const
-				&
-				...	i_rpDependency
-			)
-		:	DependencyMap
-			{	i_rpDependency
-				...
-			}
-		{}
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator()
-		)	(	ArgumentType
-					i_vArgument
-				=	{}
-			)	const
-		->	BoundType
-		{	return
-			BoundType
-			{	i_vArgument
-			,	DependencyMap
-			};
-		}
-	};
-
-	template
-		<	Meta::ProtoID
-				t_tArgument
-		,	typename
-			...	t_tpItem
-		>
-	(	Dependency
-	)	(	t_tArgument
-		,	t_tpItem const&
-			...
-		)
-	->	Dependency
-		<	t_tArgument
-		,	t_tpItem
-			...
-		>
-	;
-
-	template
-		<	typename
-				t_tArgument
-		,	typename
-			...	t_tpItem
-		>
-	(	Dependency
-	)	(	Meta::TypeToken<t_tArgument>
-		,	t_tpItem const&
-			...
-		)
-	->	Dependency
-		<	t_tArgument
-		,	t_tpItem
-			...
-		>
-	;
-
-	template
-		<	Meta::StringLiteral
-				t_vFunctionName
-		>
-	using
-		FunctionName
-	=	BoundDependency
-		<	Meta::ID_T<t_vFunctionName>
-		>
-	;
-
-	template
-		<	typename
-			...	t_tpDependency
-		>
-	using
-		DeduceDependencies
-	=	BoundDependency
-		<	::std::byte const*
-		,	t_tpDependency
-			...
-		>
-	;
 }

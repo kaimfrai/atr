@@ -191,24 +191,52 @@ export namespace
 	ATR
 {
 	template
+		<	Meta::StringLiteral
+				t_vFunctionName
+		>
+	using
+		FunctionName
+	=	Dependency
+		<	Meta::ID_T<t_vFunctionName>
+		>
+	;
+
+	template
+		<	typename
+			...	t_tpDependency
+		>
+	using
+		DeduceDependencies
+	=	Dependency
+		<	::std::byte const*
+		,	t_tpDependency
+			...
+		>
+	;
+
+	template
 		<	typename
 				t_tOwner
 		,	IDMap
 			...	t_vpIDMap
 		>
-	Dependency constexpr inline
+	using
 		ArgumentDependency
-	{	Meta::Type<ErasedType<t_tOwner>>
-	,	::ATR::MapDependency
-		(	t_vpIDMap
-		,	Meta::Type
-			<	::std::remove_cvref_t
-				<	t_tOwner
-				>
-			>
-		)
-		...
-	};
+	=	Dependency
+		<	ErasedType<t_tOwner>
+		,	decltype
+			(	::ATR::MapDependency
+				(	t_vpIDMap
+				,	Meta::Type
+					<	::std::remove_cvref_t
+						<	t_tOwner
+						>
+					>
+				)
+			)
+			...
+		>
+	;
 
 	template
 		<	Meta::StringLiteral
@@ -216,7 +244,7 @@ export namespace
 		,	IDMap
 			...	t_vpIDMap
 		>
-	Dependency constexpr inline
+	using
 		StaticDependency
 	=	ArgumentDependency
 		<	Meta::ID_T<t_vFunctionName>

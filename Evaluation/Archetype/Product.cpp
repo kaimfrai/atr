@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.Product;
 
 import Evaluation.Shared.DataTypes;
-import ATR.Dependency;
+import ATR.DependencyIDMap;
 import Meta.Token.Index;
 
 import Std;

@@ -10,10 +10,10 @@ export namespace
 	ATR
 {
 	template
-		<	Dependency
-				t_vFuncID
-		,	Dependency
-			...	t_vpDependency
+		<	typename
+				t_tFuncID
+		,	typename
+			...	t_tpDependency
 		>
 	struct
 		Function
@@ -23,14 +23,10 @@ export namespace
 		=	noexcept
 			(	Body
 				(	::std::declval
-					<	typename
-						decltype(t_vFuncID)
-					::	BoundType
+					<	t_tFuncID
 					>()
 				,	::std::declval
-					<	typename
-						decltype(t_vpDependency)
-					::	BoundType
+					<	t_tpDependency
 					>()
 					...
 				)
@@ -41,8 +37,8 @@ export namespace
 		static auto constexpr
 		(	operator ()
 		)	(	typename
-				decltype(t_vpDependency)
-			::	ArgumentType
+					t_tpDependency
+				::	ArgumentType
 				...	i_vpArgument
 			)
 			noexcept(Noexcept)
@@ -52,10 +48,11 @@ export namespace
 			/// other template arguments will be deduced.
 			return
 			Body
-			(	t_vFuncID()
-			,	t_vpDependency
-				(	i_vpArgument
-				)
+			(	t_tFuncID
+				{}
+			,	t_tpDependency
+				{	i_vpArgument
+				}
 				...
 			);
 		}

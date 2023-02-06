@@ -1,8 +1,6 @@
 export module Meta.Token.SelectByIndex;
 
-import Meta.Token.Index;
-
-import Meta.Size;
+import Std;
 
 export namespace
 	Meta::Token
@@ -11,7 +9,7 @@ export namespace
 	///	A known amount of argument types may be deduced this way.
 	template
 		<	typename
-		,	USize
+		,	::std::size_t
 		>
 	concept
 		ProtoIndexedElement
@@ -21,7 +19,7 @@ export namespace
 	///	Intendend to part of a pack expansion.
 	///	A known amount of pointer arguments may be ignored this way.
 	template
-		<	USize
+		<	::std::size_t
 		>
 	using
 		IgnoreIndexedElement
@@ -29,14 +27,14 @@ export namespace
 	;
 
 	template
-		<	USize
+		<	::std::size_t
 			...	t_npFront
 		>
 	struct
 		SelectByIndex final
 	{
 		[[no_unique_address]]
-		Token::Index<t_npFront...>
+		::std::index_sequence<t_npFront...>
 			FrontSequence
 		;
 
@@ -62,11 +60,11 @@ export namespace
 	};
 
 	template
-		<	USize
+		<	::std::size_t
 			...	t_npFront
 		>
 	(	SelectByIndex
-	)	(	Token::Index
+	)	(	::std::index_sequence
 			<	t_npFront
 				...
 			>
