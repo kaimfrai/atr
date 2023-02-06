@@ -8,15 +8,16 @@ export
 		<	typename
 				t_tBody
 		>
+	[[nodiscard]]
 	auto constexpr
 		InPlaceConstruct
 		()
-	noexcept
-	->	std::in_place_type_t
+		noexcept
+	->	::std::in_place_type_t
 		<	t_tBody
 		>
 	{	return
-		std::in_place_type
+		::std::in_place_type
 		<	t_tBody
 		>;
 	}

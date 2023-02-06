@@ -9,7 +9,7 @@ export
 	{
 		using
 			EngineType
-		=	std::mt19937_64
+		=	::std::mt19937_64
 		;
 
 		using
@@ -28,9 +28,9 @@ export
 		;
 
 	public:
-		explicit
-			PseudoRandomSequence
-			(	ResultType
+		explicit(true) inline
+		(	PseudoRandomSequence
+		)	(	ResultType
 					i_vSeed
 			,	ResultType
 					i_vIterations
@@ -59,9 +59,9 @@ export
 			;
 
 		public:
-			explicit
-				Iterator
-				(	ResultType
+			explicit(true) inline
+			(	Iterator
+			)	(	ResultType
 						i_nSeed
 				,	ResultType
 						i_nIterationCounter
@@ -84,17 +84,21 @@ export
 				}
 			{}
 
-			ResultType
+			[[nodiscard]]
+			auto inline
 				operator*
 				()	const
+				noexcept
+			->	ResultType
 			{	return
 					m_nCurrent
 				;
 			}
 
-			Iterator&
-				operator++
-				()
+			auto inline
+			(	operator++
+			)	()	&
+			->	Iterator&
 			{
 				(	m_nCurrent
 				=	m_vEngine
@@ -107,13 +111,15 @@ export
 				;
 			}
 
+			[[nodiscard]]
 			friend auto inline
-				operator==
-				(	Iterator const
+			(	operator==
+			)	(	Iterator const
 					&	i_rLeft
 				,	Iterator const
 					&	i_rRight
 				)
+				noexcept
 			->	bool
 			{	return
 				(	i_rLeft
@@ -124,26 +130,33 @@ export
 			}
 		};
 
-		ResultType
-			size
-			()	const
+		[[nodiscard]]
+		auto inline
+		(	size
+		)	()	const
+			noexcept
+		->	ResultType
 		{	return
 				m_nIterations
 			;
 		}
 
-		Iterator
-			begin
-			()	const
+		[[nodiscard]]
+		auto inline
+		(	begin
+		)	()	const
+		->	Iterator
 		{	return
 			Iterator
 			{	m_nSeed
 			};
 		}
 
-		Iterator
-			end
-			()	const
+		[[nodiscard]]
+		auto inline
+		(	end
+		)	()	const
+		->	Iterator
 		{	return
 			Iterator
 			{	m_nSeed

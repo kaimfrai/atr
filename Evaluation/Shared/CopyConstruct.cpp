@@ -6,6 +6,7 @@ export
 		<	typename
 				t_tBody
 		>
+	[[nodiscard]]
 	auto constexpr
 		CopyConstruct
 		()

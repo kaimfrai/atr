@@ -2,52 +2,50 @@ export module Evaluation.Shared.PiFraction;
 
 import Evaluation.Shared.DataTypes;
 
-import Meta.Size;
-
 import Std;
 
 export
 {
 	Float constexpr inline
 		Pi
-	=	std::numbers::pi_v
+	=	::std::numbers::pi_v
 		<	Float
 		>
 	;
 
 	template
-		<	Meta::SSize
+		<	::std::ptrdiff_t
 				t_nNumerator
 			=	1z
-		,	Meta::SSize
+		,	::std::ptrdiff_t
 				t_nDenominator
 			=	1z
 		>
 	struct
 		PiFraction
 	{
-		constexpr
-		auto
+		[[nodiscard]]
+		auto constexpr
 			operator()
 			()	const
+			noexcept
 		->	Float
-		{
-			return
+		{	return
 				Pi
 			*	static_cast<Float>(t_nNumerator)
 			/	static_cast<Float>(t_nDenominator)
 			;
 		}
 
-		constexpr
-			operator
+		[[nodiscard]]
+		explicit(false) constexpr
+		(	operator
 			Float
-			()	const
-		{
-			return
-				operator()
-				()
-			;
+		)	()	const
+			noexcept
+		{	return
+			operator()
+			();
 		}
 	};
 }

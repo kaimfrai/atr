@@ -29,23 +29,25 @@ export
 		,	auto
 				t_fComputeVolume
 		>
-	auto
-		EvaluateRandomContainer
-		(	PseudoRandomSequence const
+	[[nodiscard]]
+	auto inline
+	(	EvaluateRandomContainer
+	)	(	PseudoRandomSequence const
 			&	i_rRandom
 
 		)
+	->	Float
 	{
-		std::vector
+		::std::vector
 		<	t_tBody3D
 		>	vElements
 		;
 
-		vElements
+			vElements
 		.	reserve
 			(	i_rRandom
-				.	size
-					()
+			.	size
+				()
 			)
 		;
 
@@ -61,80 +63,80 @@ export
 			{	case
 					0
 				:	vElements
-					.	emplace_back
-						(	t_fMakeCube
-							()
-						)
+				.	emplace_back
+					(	t_fMakeCube
+						()
+					)
 				;	break
 				;
 
 				case
 					1
 				:	vElements
-					.	emplace_back
-						(	t_fMakeCuboid
-							()
-						)
+				.	emplace_back
+					(	t_fMakeCuboid
+						()
+					)
 				;	break
 				;
 
 				case
 					2
 				:	vElements
-					.	emplace_back
-						(	t_fMakePyramid
-							()
-						)
+				.	emplace_back
+					(	t_fMakePyramid
+						()
+					)
 				;	break
 				;
 
 				case
 					3
 				:	vElements
-					.	emplace_back
-						(	t_fMakeSphere
-							()
-						)
+				.	emplace_back
+					(	t_fMakeSphere
+						()
+					)
 				;	break
 				;
 
 				case
 					4
 				:	vElements
-					.	emplace_back
-						(	t_fMakeCylinder
-							()
-						)
+				.	emplace_back
+					(	t_fMakeCylinder
+						()
+					)
 				;	break
 				;
 
 				case
 					5
 				:	vElements
-					.	emplace_back
-						(	t_fMakeCone
-							()
-						)
+				.	emplace_back
+					(	t_fMakeCone
+						()
+					)
 				;	break
 				;
 
 				case
 					6
 				:	vElements
-					.	emplace_back
-						(	t_fMakeEllipsoid
-							()
-						)
+				.	emplace_back
+					(	t_fMakeEllipsoid
+						()
+					)
 				;	break
 				;
 
 				case
 					7
 				:	vElements
-					.	emplace_back
-						(	t_fMakeHead
-							()
-						)
+				.	emplace_back
+					(	t_fMakeHead
+						()
+					)
 				;	break
 				;
 			}
@@ -147,12 +149,11 @@ export
 				&	rBody
 				:	vElements
 			)
-		{
-				vLoopSum
+		{	(	vLoopSum
 			+=	t_fComputeVolume
 				(	rBody
 				)
-			;
+			);
 		}
 		return
 			vLoopSum
@@ -181,9 +182,10 @@ export
 		,	auto
 				t_fComputeVolume
 		>
+	[[nodiscard]]
 	auto inline
 		MainTemplate
-		(	std::span<char const*>
+		(	::std::span<char const*>
 				i_vArguments
 		)
 	->	int
@@ -195,7 +197,7 @@ export
 
 		auto const
 			vLoopIterations
-		=	std::strtoull
+		=	::std::strtoull
 			(	i_vArguments
 				[	i_vArguments.size()
 				-	3uz
@@ -206,7 +208,7 @@ export
 		;
 		auto const
 			vRandomSeed
-		=	std::strtoull
+		=	::std::strtoull
 			(	i_vArguments
 				[	i_vArguments.size()
 				-	2uz
@@ -217,20 +219,20 @@ export
 		;
 		auto const
 			vRandomSequenceLength
-		=	std::strtoull
+		=	::std::strtoull
 			(	i_vArguments
 			.	back()
 			,	nullptr
 			,	10
 			)
 		;
-		for (	auto _
+		for (	auto
+					_
 				=	0ull
-			;	_ <  vLoopIterations
+			;	_ < vLoopIterations
 			;	++_
 			)
-		{
-			(	TotalSum
+		{	(	TotalSum
 			+=	EvaluateRandomContainer
 				<	t_tBody3D
 				,	t_fMakeCube

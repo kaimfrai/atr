@@ -8,11 +8,12 @@ export
 		<	typename
 				t_tBody
 		>
+	[[nodiscard]]
 	auto constexpr
 		TypeConstruct
 		()
-	noexcept
-	->	Meta::TypeToken
+		noexcept
+	->	::Meta::TypeToken
 		<	t_tBody
 		>
 	{	return{};	}
