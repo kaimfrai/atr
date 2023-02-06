@@ -77,7 +77,7 @@ export namespace
 			)
 		{	::std::copy
 			(	i_rLeft.begin()
-			,	i_rLeft.end().base()
+			,	i_rLeft.end()
 			,	vResult.begin()
 			);
 		}
