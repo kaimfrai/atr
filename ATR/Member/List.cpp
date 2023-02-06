@@ -4,10 +4,11 @@ import ATR.Member.Info;
 
 import Meta.ID.StringLiteral;
 import Meta.ID.Alias;
-import Meta.Data.Aggregate.Array;
 import Meta.Token.Type;
 import Meta.Size;
 import Meta.Trait.BitAlign;
+
+import Std;
 
 using ::Meta::USize;
 using ::Meta::SSize;
@@ -24,15 +25,97 @@ export namespace
 				t_nDataCount
 		>
 	struct
-		List final
-	:	Meta::ArrayAggregate
-		<	Info
-		,	t_nDataCount
-		>
+		List
 	{
+		[[no_unique_address]]
+		::std::array<Info, t_nDataCount>
+			DataInfos
+		;
 		SSize
 			DynamicSize
 		;
+
+		[[nodiscard]]
+		static auto constexpr
+		(	size
+		)	()
+			noexcept
+		->	USize
+		{	return t_nDataCount;	}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator []
+		)	(	USize
+					i_nIndex
+			)	&
+			noexcept
+		->	Info&
+		{	return
+			DataInfos
+			[	i_nIndex
+			];
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator []
+		)	(	USize
+					i_nIndex
+			)	const&
+			noexcept
+		->	Info const&
+		{	return
+			DataInfos
+			[	i_nIndex
+			];
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator []
+		)	(	USize
+					i_nIndex
+			)	&&
+			noexcept
+		->	Info
+		{	return
+			DataInfos
+			[	i_nIndex
+			];
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	begin
+		)	()	&
+			noexcept
+		{	return DataInfos.begin();	}
+
+		[[nodiscard]]
+		auto constexpr
+		(	begin
+		)	()	const&
+			noexcept
+		{	return DataInfos.begin();	}
+
+		auto begin() && = delete;
+
+		[[nodiscard]]
+		auto constexpr
+		(	end
+		)	()	&
+			noexcept
+		{	return DataInfos.end();	}
+
+		[[nodiscard]]
+		auto constexpr
+		(	end
+		)	()	const&
+			noexcept
+		{	return DataInfos.end();	}
+
+		auto end() && = delete;
 	};
 
 	template

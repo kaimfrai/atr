@@ -25,6 +25,7 @@ export namespace
 	struct
 		AliasedList
 	{
+		[[no_unique_address]]
 		::std::array<AliasInfo, t_nAliasCount>
 			AliasInfos
 		;

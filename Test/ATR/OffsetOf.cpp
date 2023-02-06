@@ -15,7 +15,6 @@ import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Scale;
 import Meta.Token.Specifier;
 import Meta.Token.Type;
-import Meta.Data.Aggregate;
 import Meta.ID.Alias;
 import Meta.ID.StringLiteral;
 import Meta.Lex.TransformComposer;
@@ -23,7 +22,6 @@ import Meta.Lex.Tokenizer;
 
 import Std;
 
-using ::Meta::Data::Aggregate;
 using ::Meta::Specifier::Mut;
 using ::Meta::Bit::Field;
 using ::Meta::Memory::SizeOf;

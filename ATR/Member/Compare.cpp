@@ -34,9 +34,9 @@ export namespace
 		return
 		::std::equal
 		(	i_rLeft.begin()
-		,	i_rLeft.end().base()
+		,	i_rLeft.end()
 		,	i_rRight.begin()
-		,	i_rRight.end().base()
+		,	i_rRight.end()
 		);
 	}
 }

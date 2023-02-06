@@ -48,7 +48,7 @@ export namespace
 
 		::std::sort
 		(	vResult.begin()
-		,	vResult.end().base()
+		,	vResult.end()
 		);
 
 		return

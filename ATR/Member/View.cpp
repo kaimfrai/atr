@@ -38,7 +38,7 @@ export namespace
 			)
 			noexcept
 		:	DataInfos
-			{	i_rList.get()
+			{	i_rList
 			}
 		,	DynamicCount
 			{	static_cast<size_type>

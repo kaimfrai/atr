@@ -168,7 +168,7 @@ namespace
 		;
 		auto const
 			aEnd
-		=	i_rDataList.end().base()
+		=	i_rDataList.end()
 		;
 		auto const
 			aReplaced
@@ -278,7 +278,7 @@ export namespace
 		else
 		{	return
 			{	InsertSorted
-				(	i_rList.get()
+				(	i_rList.DataInfos
 				,	i_rInfo
 				)
 			,	i_rList.DynamicSize
@@ -308,8 +308,8 @@ export namespace
 		>
 	{	return
 		{	Merge
-			(	i_rLeft.get()
-			,	i_rRight.get()
+			(	i_rLeft.DataInfos
+			,	i_rRight.DataInfos
 			)
 		,	i_rLeft.DynamicSize
 		+	i_rRight.DynamicSize
