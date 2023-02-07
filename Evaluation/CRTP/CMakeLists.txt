@@ -1,32 +1,36 @@
 add_single_file_modules(
-	CRTP.cpp
-
-	BasicBody.cpp
-	BasicShape.cpp
-	BasicSphere.cpp
-	Circle.cpp
-	CircularShape.cpp
-	Cone.cpp
-	Cube.cpp
-	CubicBody.cpp
-	Cuboid.cpp
-	Cylinder.cpp
-	DepthIsWidth.cpp
-	Ellipse.cpp
-	Ellipsoid.cpp
-	ExtendedShape.cpp
-	Head.cpp
-	HeightIsWidth.cpp
-	Pyramid.cpp
-	PyramidicBody.cpp
-	Rectangle.cpp
-	RectangularShape.cpp
 	SeparateDepth.cpp
 	SeparateHeight.cpp
 	SeparateWidth.cpp
-	Sphere.cpp
-	SphericBody.cpp
+	DepthIsWidth.cpp
+	HeightIsWidth.cpp
+
+	BasicShape.cpp
+	CircularShape.cpp
+	RectangularShape.cpp
+	TriangularShape.cpp
+
+	Ellipse.cpp
+	Circle.cpp
+	Rectangle.cpp
 	Square.cpp
 	Triangle.cpp
-	TriangularShape.cpp
+
+	BasicBody.cpp
+	ExtendedShape.cpp
+	CubicBody.cpp
+	PyramidicBody.cpp
+	SphericBody.cpp
+	BasicSphere.cpp
+
+	Cone.cpp
+	Cube.cpp
+	Cuboid.cpp
+	Cylinder.cpp
+	Ellipsoid.cpp
+	Sphere.cpp
+	Head.cpp
+	Pyramid.cpp
+
+	CRTP.cpp
 )

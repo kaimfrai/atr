@@ -21,7 +21,7 @@ export namespace
 	template
 		<	BitSize
 				t_nSize
-		,	Index<1_byte>
+		,	ByteIndex
 				t_nMaxOffset
 		>
 	struct
@@ -65,7 +65,7 @@ export namespace
 		[[nodiscard]]
 		static auto constexpr
 		(	OffsetMask
-		)	(	Index<1_byte>
+		)	(	ByteIndex
 					i_nOffset
 			)
 			noexcept
@@ -136,7 +136,7 @@ export namespace
 		(	ReadField
 		)	(	::std::byte const
 				*	i_aBuffer
-			,	Index<1_byte>
+			,	ByteIndex
 					i_nOffset
 			)
 			noexcept
@@ -225,7 +225,7 @@ export namespace
 					i_vValue
 			,	::std::byte
 				*	i_aBuffer
-			,	Index<1_byte>
+			,	ByteIndex
 					i_nOffset
 			)
 			noexcept

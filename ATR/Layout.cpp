@@ -1,11 +1,9 @@
-export module ATR.Layout.Layout;
-
-import ATR.Member.Info;
+export module ATR.Layout;
 
 import Meta.Size;
 import Meta.Memory.Size;
-import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Arithmetic;
+import Meta.Memory.Alignment;
 import Meta.Token.Type;
 import Meta.Math.Prev;
 import Meta.Trait.BitAlign;
@@ -76,7 +74,7 @@ auto constexpr
 auto constexpr
 (	LayoutSplitIndex
 )	(	::std::initializer_list
-		<	::ATR::Member::Alignment
+		<	::Meta::Memory::Alignment
 		>	i_vAlignList
 	)
 	noexcept
@@ -132,7 +130,7 @@ export namespace
 		static USize constexpr
 			SplitIndex
 		=	LayoutSplitIndex
-			({	::ATR::Member::Alignment
+			({	::Meta::Memory::Alignment
 				{	BitAlign_Of
 					(	Type
 						<	t_tpMember
@@ -292,7 +290,7 @@ export namespace
 		>
 	requires
 		(	...
-		and	(	1_bit
+		and	(	1_align
 			==	BitAlign_Of
 				(	Type<t_tpBitField>
 				)

@@ -1,9 +1,10 @@
 add_single_file_modules(
+	Literal.cpp
 	Clause.cpp
+	Term.cpp
+
 	Conjunction.cpp
 	Disjunction.cpp
 	Equivalence.cpp
-	Literal.cpp
 	Negation.cpp
-	Term.cpp
 )

@@ -1,11 +1,11 @@
 add_single_file_modules(
-	Array.cpp
-	Bool.cpp
-	BoolArray.cpp
-	Field.cpp
-	FieldArray.cpp
-	Layout.cpp
 	Member.cpp
+	Field.cpp
+	Bool.cpp
+	FieldArray.cpp
+	BoolArray.cpp
 	Mutable.cpp
 	Object.cpp
+	Array.cpp
+	Layout.cpp
 )

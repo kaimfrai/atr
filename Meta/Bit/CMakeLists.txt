@@ -1,21 +1,28 @@
 add_single_file_modules(
-	Access.cpp
-	Array.cpp
-	ElementReference.cpp
-	Field.cpp
+	Mask.cpp
 	Index.cpp
 	IndexIterator.cpp
-	Iterator.cpp
 	Count.cpp
 	CountOnes.cpp
 	LowestOne.cpp
-	Mask.cpp
 	OneIndexIterator.cpp
-	OneIndexRange.cpp
-	Reference.cpp
 	Width.cpp
 )
 
-add_subdirectory(Field)
 add_subdirectory(Index)
+
+add_single_file_modules(
+	Field.cpp
+	OneIndexRange.cpp
+)
+
+add_subdirectory(Field)
 add_subdirectory(Count)
+
+add_single_file_modules(
+	Access.cpp
+	ElementReference.cpp
+	Iterator.cpp
+	Reference.cpp
+	Array.cpp
+)

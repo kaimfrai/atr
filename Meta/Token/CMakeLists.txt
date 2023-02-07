@@ -1,4 +1,11 @@
 add_single_file_modules(
+	Specifier.cpp
+	Type.cpp
+)
+
+add_subdirectory(Transform)
+
+add_single_file_modules(
 	Array.cpp
 	Const.cpp
 	Construct.cpp
@@ -16,10 +23,7 @@ add_single_file_modules(
 	RRef.cpp
 	SelectByIndex.cpp
 	Sequence.cpp
-	Specifier.cpp
-	Type.cpp
 	Volatile.cpp
 )
 
 add_subdirectory(Type)
-add_subdirectory(Transform)

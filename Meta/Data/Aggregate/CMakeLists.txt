@@ -1,11 +1,11 @@
 add_single_file_modules(
-	Array.cpp
+	Primary.cpp
 	BoundedArray.cpp
+	UnboundedArray.cpp
+	Array.cpp
 	CV.cpp
 	Function.cpp
 	Pointer.cpp
-	Primary.cpp
 	Reference.cpp
-	UnboundedArray.cpp
 	Void.cpp
 )

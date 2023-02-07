@@ -144,6 +144,17 @@ function(link_module_dependencies
 	link_visibility
 )
 	get_source_file_property(module_dependencies "${module_unit_file}" "MODULE_DEPENDENCIES")
+
+	foreach(target_dependency IN LISTS module_dependencies)
+
+		if (NOT TARGET ${target_dependency})
+
+			message(WARNING "${target_name} is configured before its dependency ${target_dependency}")
+
+		endif()
+
+	endforeach()
+
 	target_link_libraries(
 		"${target_name}"
 	"${link_visibility}"

@@ -1,9 +1,9 @@
 add_single_file_modules(
 	Construct.cpp
-	Fold.cpp
 	FoldDirection.cpp
-	FoldTraits.cpp
 	Key.cpp
+	FoldTraits.cpp
+	Fold.cpp
 	TemplateParameter.cpp
 )
 

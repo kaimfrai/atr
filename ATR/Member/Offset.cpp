@@ -1,4 +1,4 @@
-export module ATR.Layout.MemberOffset;
+export module ATR.Member.Offset;
 
 import ATR.Offset.Member;
 import ATR.Offset.Array;
@@ -17,7 +17,7 @@ using ::Meta::BitSize;
 using ::Meta::Specifier::Mut;
 
 export namespace
-	ATR
+	ATR::Member
 {
 	template
 		<	BitSize
@@ -26,14 +26,14 @@ export namespace
 				t_tData
 		>
 	struct
-		MemberOffset
-	:	MemberOffset
+		Offset
+	:	Offset
 		<	t_nOffset
 		,	t_tData const
 		>
 	{
 		using
-			MemberOffset
+			Offset
 			<	t_nOffset
 			,	t_tData const
 			>
@@ -49,14 +49,14 @@ export namespace
 			noexcept
 		->	decltype
 			(	i_aObject
-			->*	Offset::Member
+			->*	::ATR::Offset::Member
 				<	t_nOffset
 				,	t_tData
 				>{}
 			)
 		{	return
 				i_aObject
-			->*	Offset::Member
+			->*	::ATR::Offset::Member
 				<	t_nOffset
 				,	t_tData
 				>{}
@@ -71,7 +71,7 @@ export namespace
 				t_tData
 		>
 	struct
-		MemberOffset
+		Offset
 		<	t_nOffset
 		,	t_tData const
 		>
@@ -85,14 +85,14 @@ export namespace
 			noexcept
 		->	decltype
 			(	i_aObject
-			->*	Offset::Member
+			->*	::ATR::Offset::Member
 				<	t_nOffset
 				,	t_tData const
 				>{}
 			)
 		{	return
 				i_aObject
-			->*	Offset::Member
+			->*	::ATR::Offset::Member
 				<	t_nOffset
 				,	t_tData const
 				>{}
@@ -107,7 +107,7 @@ export namespace
 				t_tData
 		>
 	struct
-		MemberOffset
+		Offset
 		<	t_nOffset
 		,	Mut<t_tData>
 		>
@@ -121,14 +121,14 @@ export namespace
 			noexcept
 		->	decltype
 			(	i_aObject
-			->*	Offset::Member
+			->*	::ATR::Offset::Member
 				<	t_nOffset
 				,	Mut<t_tData>
 				>{}
 			)
 		{	return
 				i_aObject
-			->*	Offset::Member
+			->*	::ATR::Offset::Member
 				<	t_nOffset
 				,	Mut<t_tData>
 				>{}

@@ -5,3 +5,7 @@ add_single_file_modules(
 
 add_subdirectory(Count)
 add_subdirectory(Size)
+
+add_single_file_modules(
+	Alignment.cpp
+)

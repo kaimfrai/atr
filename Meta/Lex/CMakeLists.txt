@@ -1,7 +1,7 @@
 add_single_file_modules(
-	Array.cpp
 	Base.cpp
 	CV.cpp
+	Array.cpp
 	Function.cpp
 	Member.cpp
 	Pointer.cpp

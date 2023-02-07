@@ -23,6 +23,14 @@ export namespace
 	struct
 		Index
 	{
+		using
+			MemorySizeType
+		=	Memory::Size
+			<	t_nWidth
+			.	get()
+			>
+		;
+
 		static auto constexpr
 			MaximumShift
 		=	t_nWidth
@@ -152,6 +160,17 @@ export namespace
 		<	Memory::SizeOf
 			<	t_tObject
 			>
+		>
+	;
+}
+
+export namespace
+	Meta
+{
+	using
+		ByteIndex
+	=	Bit::Index
+		<	1_byte
 		>
 	;
 }

@@ -23,7 +23,7 @@ export namespace
 				t_tBuffer
 		,	BitSize
 				t_nSize
-		,	Index<1_byte>
+		,	ByteIndex
 				t_nMaxOffset
 		>
 	struct
@@ -95,7 +95,7 @@ export namespace
 		(	Iterator
 		)	(	t_tBuffer
 				*	i_aUnderlyingArray
-			,	Index<1_byte>
+			,	ByteIndex
 					i_nOffset
 			)
 		:	Iterator
@@ -181,7 +181,7 @@ export namespace
 			auto const
 			[	nByteOffset
 			,	nNewBitOffset
-			]=	SizeCast<::Meta::ByteSize>
+			]=	IndexCast<::Meta::ByteIndex>
 				(	nTotalBitOffset
 				)
 			;

@@ -2,8 +2,8 @@ export module ATR.Member.OffsetOf;
 
 import ATR.Member.Info;
 import ATR.Member.View;
-import ATR.Layout.Static;
-import ATR.Layout.MemberOffset;
+import ATR.Member.Static;
+import ATR.Member.Offset;
 
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
@@ -11,7 +11,7 @@ import Meta.ID.StringView;
 import Meta.ID.Concept;
 import Meta.Token.Type;
 import Meta.Trait.BitAlign;
-import Meta.Memory.Size.Compare;
+import Meta.Memory.Alignment;
 
 import Std;
 
@@ -138,10 +138,10 @@ export namespace
 		;
 		if	constexpr
 			(	vBitAlign
-			==	0_bit
+			==	0_align
 			)
 		{	return
-			StaticMember
+			Static
 			<	Meta::TypeEntity
 				<	i_vMemberType
 				>
@@ -149,7 +149,7 @@ export namespace
 		}
 		else
 		{	return
-			MemberOffset
+			Offset
 			<	t_vOffset
 			,	t_tMember
 			>{};

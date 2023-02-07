@@ -1,14 +1,14 @@
-export module ATR.Layout.Static;
+export module ATR.Member.Static;
 
 export namespace
-	ATR
+	ATR::Member
 {
 	template
 		<	typename
 				t_tMember
 		>
 	struct
-		StaticMember
+		Static
 	{
 		[[nodiscard]]
 		static auto constexpr

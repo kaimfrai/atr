@@ -28,7 +28,7 @@ export namespace
 				t_nSize
 		,	USize
 				t_nExtent
-		,	Index<1_byte>
+		,	ByteIndex
 				t_nOffset
 		>
 	struct
@@ -79,7 +79,7 @@ export namespace
 				)
 			{	return
 				::std::max
-				({	SizeCast<ByteSize>
+				({	IndexCast<ByteIndex>
 					(	ElementSize
 					*	t_npIndex
 					+	Offset
@@ -271,7 +271,7 @@ export namespace
 				t_nSize
 		,	USize
 				t_nExtent
-		,	Index<1_byte>
+		,	ByteIndex
 				t_nOffset
 			=	0_bdx
 		>
@@ -290,7 +290,7 @@ export namespace
 				t_nSize
 		,	USize
 				t_nExtent
-		,	Index<1_byte>
+		,	ByteIndex
 				t_nOffset
 			=	0_bdx
 		>
@@ -328,7 +328,7 @@ export namespace
 				t_nSize
 		,	USize
 				t_nExtent
-		,	Index<1_byte>
+		,	ByteIndex
 				t_nOffset
 		>
 	[[nodiscard]]

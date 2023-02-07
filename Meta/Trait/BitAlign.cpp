@@ -5,6 +5,7 @@ import Meta.Token.Type;
 
 import Meta.Bit.Field;
 import Meta.Memory.Size;
+import Meta.Memory.Alignment;
 
 import Std;
 
@@ -36,8 +37,8 @@ export namespace
 		)	(	TypeID
 			)
 			noexcept
-		->	BitSize
-		{	return 0_bit;	}
+		->	Memory::Alignment
+		{	return 0_align;	}
 
 		[[nodiscard]]
 		static auto constexpr
@@ -45,8 +46,8 @@ export namespace
 		)	(	TypeToken<bool>
 			)
 			noexcept
-		->	BitSize
-		{	return 1_bit;	}
+		->	Memory::Alignment
+		{	return 1_align;	}
 
 		template
 			<	ProtoAligned
@@ -58,7 +59,7 @@ export namespace
 		)	(	TypeToken<Specifier::Mut<t_tMutable>>
 			)
 			noexcept
-		->	BitSize
+		->	Memory::Alignment
 		{	return operator()(Type<t_tMutable>);	}
 
 		template
@@ -71,13 +72,15 @@ export namespace
 		)	(	TypeToken<Bit::Field<t_nSize>>
 			)
 			noexcept
-		->	BitSize
+		->	Memory::Alignment
 		{	return
 				(	Bit::Field<t_nSize>
 				::	IsFullWidthInteger
 				)
-			?	t_nSize
-			:	1_bit
+			?	Memory::Alignment
+				{	t_nSize
+				}
+			:	1_align
 			;
 		}
 
@@ -91,7 +94,7 @@ export namespace
 		)	(	TypeToken<t_tEntity>
 			)
 			noexcept
-		->	BitSize
+		->	Memory::Alignment
 		{
 			if	constexpr
 				(	::std::is_const_v<t_tEntity>
@@ -130,7 +133,7 @@ export namespace
 					t_tEntity _;
 				};
 				return
-				ByteSize
+				Memory::Alignment
 				{	not
 					::std::is_empty_v
 					<	Wrapper

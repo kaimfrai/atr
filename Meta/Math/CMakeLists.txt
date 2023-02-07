@@ -1,10 +1,10 @@
 add_single_file_modules(
-	Abs.cpp
-	Approximate.cpp
-	Congruent.cpp
 	Divide.cpp
 	Next.cpp
-	Power.cpp
 	Prev.cpp
 	Sign.cpp
+	Abs.cpp
+	Power.cpp
+	Congruent.cpp
+	Approximate.cpp
 )

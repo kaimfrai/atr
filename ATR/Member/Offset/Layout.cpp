@@ -6,7 +6,7 @@ import ATR.Offset.Field;
 import ATR.Offset.FieldArray;
 import ATR.Offset.Mutable;
 import ATR.Offset.Member;
-import ATR.Layout.Layout;
+import ATR.Layout;
 
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;

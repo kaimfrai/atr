@@ -14,7 +14,7 @@ export namespace
 				t_tBuffer
 		,	BitSize
 				t_nSize
-		,	Index<1_byte>
+		,	ByteIndex
 				t_nOffset
 		>
 	struct
@@ -170,7 +170,7 @@ export namespace
 	template
 		<	BitSize
 				t_nSize
-		,	Index<1_byte>
+		,	ByteIndex
 				t_nOffset
 		>
 	using

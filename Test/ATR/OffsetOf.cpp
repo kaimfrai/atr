@@ -3,7 +3,7 @@ import ATR.Member.Definition;
 import ATR.Member.Union;
 import ATR.Member.OffsetOf;
 import ATR.Instance;
-import ATR.Layout.MemberOffset;
+import ATR.Member.Offset;
 
 import Meta.Bit.Reference;
 import Meta.Bit.Array;
@@ -157,7 +157,7 @@ template
 auto constexpr inline
 	MemberOffset_For
 =	Type
-	<	::ATR::MemberOffset
+	<	::ATR::Member::Offset
 		<	t_nOffset
 		,	t_tEntity
 		>
@@ -309,7 +309,7 @@ auto constexpr inline
 =	Type
 	<	decltype
 		(	::std::declval
-			<	::ATR::MemberOffset
+			<	::ATR::Member::Offset
 				<	t_nOffset
 				,	t_tEntity
 				>

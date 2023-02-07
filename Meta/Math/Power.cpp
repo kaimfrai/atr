@@ -2,7 +2,6 @@ export module Meta.Math.Power;
 
 import Meta.Math.Sign;
 import Meta.Math.Abs;
-import Meta.Memory.Size;
 
 import Std;
 

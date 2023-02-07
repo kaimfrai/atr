@@ -3,7 +3,7 @@ export module ATR.Layout.Create;
 import ATR.Member.Definition;
 import ATR.Member.List;
 import ATR.Member.Alias;
-import ATR.Layout.Layout;
+import ATR.Layout;
 import ATR.Layout.ValidateOffsets;
 
 import Meta.Token.Type;

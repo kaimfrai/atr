@@ -1,14 +1,14 @@
 add_single_file_modules(
-	VolumeComputer.cpp
-
 	Cone.cpp
 	Cube.cpp
 	Cuboid.cpp
 	Cylinder.cpp
 	Ellipsoid.cpp
+	Sphere.cpp
 	Head.cpp
 	Pyramid.cpp
-	Sphere.cpp
+
+	VolumeComputer.cpp
 )
 
 add_module_executable(

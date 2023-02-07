@@ -34,7 +34,7 @@ auto constexpr
 {
 	auto constexpr
 		nOffset
-	=	SizeCast<::Meta::ByteSize>
+	=	IndexCast<::Meta::ByteIndex>
 		(	t_nOffset
 		)
 	;

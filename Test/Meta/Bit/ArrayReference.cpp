@@ -23,7 +23,7 @@ template
 			t_nSize
 	,	USize
 			t_nCount
-	,	::Meta::Bit::Index<1_byte>
+	,	::Meta::ByteIndex
 			t_nOffset
 		=	0_bdx
 	>

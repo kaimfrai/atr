@@ -1,6 +1,5 @@
 export module Meta.Memory.Size.Cast;
 
-import Meta.Bit.Index;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Math.Divide;
@@ -10,29 +9,31 @@ export namespace
 {
 	template
 		<	typename
-				t_tSize
+				t_tIndex
 		>
 	struct
 		[[nodiscard]]
-		SizeCastResult
+		IndexCastResult
 	{
-		t_tSize
+		using
+			SizeType
+		=	typename
+				t_tIndex
+			::	MemorySizeType
+		;
+		SizeType
 			Quotient
 		;
 		using
 			RemainderType
-		=	Bit::Index
-			<	t_tSize
-				{	1z
-				}
-			>
+		=	t_tIndex
 		;
 		RemainderType
 			Remainder
 		;
 
 		explicit(true) constexpr
-		(	SizeCastResult
+		(	IndexCastResult
 		)	(	BitSize
 					i_nBitSize
 			)
@@ -40,7 +41,7 @@ export namespace
 			{	Math::Divide
 				(	i_nBitSize
 				.	get()
-				,	t_tSize::Width
+				,	SizeType::Width
 				)
 			.	Floor
 				()
@@ -55,18 +56,18 @@ export namespace
 	///	ADL-enabled
 	template
 		<	typename
-				t_tSize
+				t_tIndex
 		>
 	[[nodiscard]]
 	auto constexpr
-	(	SizeCast
+	(	IndexCast
 	)	(	BitSize
 				i_nBitSize
 		)
 		noexcept
-	->	SizeCastResult<t_tSize>
+	->	IndexCastResult<t_tIndex>
 	{	return
-		SizeCastResult<t_tSize>
+		IndexCastResult<t_tIndex>
 		{	i_nBitSize
 		};
 	}

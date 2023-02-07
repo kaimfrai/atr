@@ -15,7 +15,7 @@ export namespace
 				t_tBuffer
 		,	BitSize
 				t_nSize
-		,	Index<1_byte>
+		,	ByteIndex
 				t_nMaxOffset
 		>
 	struct

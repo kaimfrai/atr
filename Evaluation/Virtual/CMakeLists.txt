@@ -1,28 +1,31 @@
 add_single_file_modules(
-	BasicBody.cpp
-	BasicShape.cpp
-	Circle.cpp
-	CircularShape.cpp
-	Cone.cpp
-	Cube.cpp
-	CubicBody.cpp
-	Cuboid.cpp
-	Cylinder.cpp
-	Ellipse.cpp
-	Ellipsoid.cpp
-	ExtendedShape.cpp
-	Head.cpp
-	IBody.cpp
 	IShape.cpp
-	Pyramid.cpp
-	PyramidicBody.cpp
-	Rectangle.cpp
+	BasicShape.cpp
+	CircularShape.cpp
 	RectangularShape.cpp
-	Sphere.cpp
-	SphericBody.cpp
+	TriangularShape.cpp
+
+	Circle.cpp
+	Ellipse.cpp
+	Rectangle.cpp
 	Square.cpp
 	Triangle.cpp
-	TriangularShape.cpp
+
+	IBody.cpp
+	BasicBody.cpp
+	ExtendedShape.cpp
+	CubicBody.cpp
+	PyramidicBody.cpp
+	SphericBody.cpp
+
+	Cone.cpp
+	Cuboid.cpp
+	Cube.cpp
+	Cylinder.cpp
+	Ellipsoid.cpp
+	Sphere.cpp
+	Head.cpp
+	Pyramid.cpp
 )
 
 add_module_executable(

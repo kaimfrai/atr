@@ -5,7 +5,7 @@ import ATR.Layout.Type;
 import ATR.Member.Definition;
 import ATR.Member.Contains;
 import ATR.Member.OffsetOf;
-import ATR.Layout.MemberOffset;
+import ATR.Member.Offset;
 
 import Meta.ID.Concept;
 import Meta.ID.StringLiteral;

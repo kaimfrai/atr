@@ -1,24 +1,30 @@
 add_single_file_modules(
 	BoundedArray.cpp
+	UnboundedArray.cpp
+
 	Class.cpp
 	CV.cpp
-	Enum.cpp
 	FloatingPoint.cpp
 	FreeFunction.cpp
-	Integral.cpp
-	LRef.cpp
 	Member.cpp
 	NullPointer.cpp
 	OwnedFunction.cpp
 	Pointer.cpp
-	Reference.cpp
+
+	LRef.cpp
 	RRef.cpp
-	Scalar.cpp
+	Reference.cpp
+
 	ScopedEnum.cpp
-	SignedIntegral.cpp
-	UnboundedArray.cpp
-	Union.cpp
 	UnscopedEnum.cpp
+	Enum.cpp
+
+	SignedIntegral.cpp
 	Unsigned.cpp
+	Integral.cpp
+
+	Scalar.cpp
+
+	Union.cpp
 	Void.cpp
 )

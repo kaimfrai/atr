@@ -1,4 +1,6 @@
 add_single_file_modules(
+	Identity.cpp
+
 	AddConst.cpp
 	AddCopyReference.cpp
 	AddEllipsis.cpp
@@ -8,7 +10,7 @@ add_single_file_modules(
 	AddPointer.cpp
 	AddRValueReference.cpp
 	AddVolatile.cpp
-	Identity.cpp
+
 	RemoveConst.cpp
 	RemoveCopyReference.cpp
 	RemoveCV.cpp

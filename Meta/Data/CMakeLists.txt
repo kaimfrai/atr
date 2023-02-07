@@ -1,8 +1,11 @@
 add_single_file_modules(
-	Aggregate.cpp
 	Object.cpp
-	TupleList.cpp
-	Value.cpp
 )
 
 add_subdirectory(Aggregate)
+
+add_single_file_modules(
+	Aggregate.cpp
+	TupleList.cpp
+	Value.cpp
+)

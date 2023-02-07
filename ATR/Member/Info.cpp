@@ -3,6 +3,7 @@ export module ATR.Member.Info;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
+import Meta.Memory.Alignment;
 import Meta.Trait.BitSize;
 import Meta.Token.Type;
 import Meta.Token.Type.Compare;
@@ -10,6 +11,7 @@ import Meta.ID.StringView;
 
 import Std;
 
+using ::Meta::Memory::Alignment;
 using ::Meta::TypeToken;
 using ::Meta::BitSize;
 using ::Meta::BitSize_Of;
@@ -91,42 +93,6 @@ export namespace
 			)
 			noexcept
 		=	default;
-	};
-
-	struct
-		Alignment
-	{
-		BitSize
-			Value
-		;
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator ==
-		)	(	Alignment
-					i_vLeft
-			,	Alignment
-					i_vRight
-			)
-			noexcept
-		->	bool
-		=	default;
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator <=>
-		)	(	Alignment
-					i_vLeft
-			,	Alignment
-					i_vRight
-			)
-			noexcept
-		->	::std::strong_ordering
-		{	return
-				-i_vLeft.Value
-			<=>	-i_vRight.Value
-			;
-		}
 	};
 
 	struct

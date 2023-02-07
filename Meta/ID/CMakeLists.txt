@@ -1,13 +1,13 @@
 add_single_file_modules(
-	Alias.cpp
-	Concatenate.cpp
-	Concept.cpp
 	Decimal.cpp
-	Literals.cpp
-	LowerCase.cpp
-	Make.cpp
-	StringLiteral.cpp
 	StringView.cpp
-	Template.cpp
+	StringLiteral.cpp
+	LowerCase.cpp
 	UpperCase.cpp
+	Template.cpp
+	Make.cpp
+	Alias.cpp
+	Concept.cpp
+	Concatenate.cpp
+	Literals.cpp
 )
