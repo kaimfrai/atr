@@ -147,7 +147,7 @@ export namespace
 			=	*vLeftPos
 			<=>	*vRightPos
 			;
-			if	(vResult != 0)
+			if	(::std::is_neq(vResult))
 				return vResult;
 		}
 

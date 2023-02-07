@@ -54,19 +54,12 @@ add_compile_options(
 	-Wmissing-variable-declarations
 	-Wctad-maybe-unsupported
 	-Wcomma
-	-Wauto-import
 	-Werror
 	-Weverything
-	# useful for nested aggregates
-	-Wno-missing-braces
 	# prohibits inline virtual classes
 	-Wno-weak-vtables
 	# not always preventable
 	-Wno-padded
-	# necessary to define concepts in DNF
-	-Wno-logical-op-parentheses
-	# triggered when using std::sort with defaulted comparison
-	-Wno-zero-as-null-pointer-constant
 	# using C++23
 	-Wno-c++98-compat-pedantic
 	# using c++23
