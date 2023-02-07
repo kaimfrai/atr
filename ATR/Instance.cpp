@@ -10,7 +10,6 @@ import ATR.Member.Offset;
 import Meta.ID.Concept;
 import Meta.ID.StringLiteral;
 import Meta.ID.Alias;
-import Meta.Lex.Tokenizer;
 import Meta.Token.Type;
 
 using ::Meta::ProtoID;
@@ -177,12 +176,10 @@ export namespace
 			,	t_tpArgument
 				...
 			>(	ForwardErased
-				(	Meta::TokenizeEntity<LayoutType&>{}
-				,	*this
+				(	this
 				)
 			,	ForwardErased
-				(	Meta::TokenizeEntity<t_tpArgument>{}
-				,	i_rpArgument
+				(	i_rpArgument
 				)
 				...
 			);
@@ -225,12 +222,10 @@ export namespace
 			,	t_tpArgument
 				...
 			>(	ForwardErased
-				(	Meta::TokenizeEntity<Instance const&>{}
-				,	*this
+				(	this
 				)
 			,	ForwardErased
-				(	Meta::TokenizeEntity<t_tpArgument>{}
-				,	i_rpArgument
+				(	i_rpArgument
 				)
 				...
 			);
@@ -274,12 +269,10 @@ export namespace
 			,	t_tpArgument
 				...
 			>(	ForwardErased
-				(	Meta::TokenizeEntity<Instance&&>{}
-				,	*this
+				(	this
 				)
 			,	ForwardErased
-				(	Meta::TokenizeEntity<t_tpArgument>{}
-				,	i_rpArgument
+				(	i_rpArgument
 				)
 				...
 			);

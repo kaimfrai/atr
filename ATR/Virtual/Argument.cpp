@@ -49,8 +49,7 @@ export namespace
 			}
 		,	m_vErasedArgument
 			{	ForwardErased
-				(	TokenizeEntity<t_tObject>{}
-				,	i_rArgument
+				(	i_rArgument
 				)
 			}
 		{}
