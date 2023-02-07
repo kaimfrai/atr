@@ -5,46 +5,15 @@ import Meta.Lex.Pointer;
 import Meta.Lex.Reference;
 import Meta.Lex.Tokenizer;
 import Meta.Token.Type;
+import Meta.Memory.PointerCast;
 
 import Std;
+
+using ::Meta::Memory::PointerCast;
 
 export namespace
 	ATR
 {
-	template
-		<	typename
-				t_tTo
-		,	typename
-				t_tFrom
-		>
-	auto constexpr
-	(	PointerCast
-	)	(	t_tFrom const
-			*	i_aObject
-		)
-	{	if	constexpr(::std::is_convertible_v<t_tFrom*, t_tTo const*>)
-			return static_cast<t_tTo const*>(i_aObject);
-		else
-			return static_cast<t_tTo const*>(static_cast<void const*>(i_aObject));
-	}
-
-	template
-		<	typename
-				t_tTo
-		,	typename
-				t_tFrom
-		>
-	auto constexpr
-	(	PointerCast
-	)	(	t_tFrom
-			*	i_aObject
-		)
-	{	if	constexpr(::std::is_convertible_v<t_tFrom*, t_tTo*>)
-			return static_cast<t_tTo*>(i_aObject);
-		else
-			return static_cast<t_tTo*>(static_cast<void*>(i_aObject));
-	}
-
 	/// erases type information from an argument
 	/// defined as a niebloid as ADL and overloads of the same name
 	//	may yield undefined behaviour

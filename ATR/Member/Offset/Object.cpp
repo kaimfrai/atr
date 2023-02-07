@@ -1,14 +1,15 @@
 export module ATR.Offset.Object;
 
 import ATR.Offset.Member;
-import ATR.Erase;
 
 import Meta.Memory.Size;
 import Meta.Memory.Size.PointerArithmetic;
+import Meta.Memory.PointerCast;
 
 import Std;
 
 using ::Meta::BitSize;
+using ::Meta::Memory::PointerCast;
 
 export namespace
 	ATR::Offset
