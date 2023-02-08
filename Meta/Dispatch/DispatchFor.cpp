@@ -7,7 +7,8 @@ import Meta.Dispatch.Final;
 import Meta.Dispatch.StepPair;
 import Meta.Dispatch.Step;
 
-import Meta.Lex.Tokenizer;
+import Meta.Lex.Match;
+import Meta.Lex.FreeFunctionTokenizer;
 import Meta.Lex.Function;
 import Meta.Size;
 import Meta.ID.Template;
@@ -24,8 +25,9 @@ export namespace
 	struct
 		DispatchFor
 	:	DispatchFor
-		<	TokenizeEntity
+		<	Match_To
 			<	t_tFunction
+			,	Lex::FreeFunctionTokenizer
 			>
 		>
 	{};

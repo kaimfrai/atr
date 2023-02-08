@@ -17,8 +17,6 @@ import Meta.Token.Specifier;
 import Meta.Token.Type;
 import Meta.ID.Alias;
 import Meta.ID.StringLiteral;
-import Meta.Lex.TransformComposer;
-import Meta.Lex.Tokenizer;
 
 import Std;
 

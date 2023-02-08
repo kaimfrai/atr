@@ -29,15 +29,12 @@ export namespace
 		<	typename
 				t_tEntity
 		,	typename
-			...	t_tpTokenizer
+				t_tTokenizer
 		>
 	using
 		Match_To
 	=	decltype
-		(	Lex::Match
-			<	t_tpTokenizer
-				...
-			>
+		(	t_tTokenizer
 		::	operator ()
 			(	Type
 				<	t_tEntity

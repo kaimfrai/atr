@@ -8,7 +8,8 @@ import Meta.Dispatch.Error;
 import Meta.ID.Concatenate;
 import Meta.ID.Concept;
 import Meta.ID.Alias;
-import Meta.Lex.Tokenizer;
+import Meta.Lex.Match;
+import Meta.Lex.FreeFunctionTokenizer;
 import Meta.Lex.Function;
 import Meta.Token.Index;
 import Meta.Size;
@@ -29,8 +30,9 @@ export namespace
 	struct
 		Step final
 	:	Step
-		<	TokenizeEntity
+		<	Match_To
 			<	t_tFunction
+			,	Lex::FreeFunctionTokenizer
 			>
 		,	t_tCharacterSet
 		,	t_tID

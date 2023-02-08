@@ -3,7 +3,8 @@ export module Meta.Dispatch.Final;
 import Meta.Dispatch.Error;
 import Meta.Dispatch.Path;
 
-import Meta.Lex.Tokenizer;
+import Meta.Lex.Match;
+import Meta.Lex.FreeFunctionTokenizer;
 import Meta.Lex.Function;
 import Meta.ID.Concept;
 
@@ -21,8 +22,9 @@ export namespace
 	struct
 		Final final
 	:	Final
-		<	TokenizeEntity
+		<	Match_To
 			<	t_tFunction
+			,	Lex::FreeFunctionTokenizer
 			>
 		,	t_tID
 		>

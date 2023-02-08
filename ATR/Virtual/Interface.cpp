@@ -3,9 +3,8 @@ export module ATR.Virtual.Interface;
 import ATR.Virtual.Entry;
 import Meta.ID.StringLiteral;
 import Meta.ID.Alias;
-import Meta.Lex.Function.Tokenizer;
-import Meta.Lex.Function.Noexcept;
 import Meta.Lex.Match;
+import Meta.Lex.FreeFunctionTokenizer;
 
 using ::Meta::StringLiteral;
 using ::Meta::ID_T;
@@ -28,8 +27,7 @@ export namespace
 			>
 		,	::Meta::Match_To
 			<	t_tSignature
-			,	::Meta::Lex::Function::Tokenizer<>
-			,	::Meta::Lex::Function::Noexcept
+			,	::Meta::Lex::FreeFunctionTokenizer
 			>
 		>
 	;
