@@ -107,7 +107,7 @@ function(read_module_properties
 		"${file_path}"
 		OBJECT_DEPENDS
 	)
-	if	("${object_depends}" STREQUAL NOTFOUND)
+	if	(NOT object_depends)
 		set(object_depends)
 	endif()
 
@@ -123,7 +123,7 @@ function(read_module_properties
 		"${file_path}"
 		COMPILE_OPTIONS
 	)
-	if	("${compile_options}" STREQUAL NOTFOUND)
+	if	(NOT compile_options)
 		set(compile_options)
 	endif()
 

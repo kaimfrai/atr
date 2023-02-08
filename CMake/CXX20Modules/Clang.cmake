@@ -185,7 +185,7 @@ function(resolve_generator_expression
 	expression
 	out_expression
 )
-	if	(expression STREQUAL NOTFOUND)
+	if	(NOT expression)
 
 		set(${out_expression}
 			""
