@@ -45,7 +45,6 @@ set(STANDARD_HEADER_UNITS
 	bitset
 	charconv
 	chrono
-	codecvt
 	compare
 	complex
 	concepts
@@ -95,7 +94,7 @@ set(STANDARD_HEADER_UNITS
 	semaphore
 	set
 	shared_mutex
-	#source_location
+	source_location
 	span
 	#spanstream
 	sstream
@@ -107,7 +106,6 @@ set(STANDARD_HEADER_UNITS
 	streambuf
 	string
 	string_view
-	strstream
 	#syncstream
 	system_error
 	thread
