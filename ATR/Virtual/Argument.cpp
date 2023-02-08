@@ -4,13 +4,11 @@ import ATR.Virtual.Table;
 import ATR.Erase;
 
 import Meta.Token.Type;
-import Meta.Lex.Tokenizer;
 import Meta.ID.Concept;
 
 import Std;
 
 using ::Meta::ProtoID;
-using ::Meta::TokenizeEntity;
 using ::Meta::Type;
 
 export namespace

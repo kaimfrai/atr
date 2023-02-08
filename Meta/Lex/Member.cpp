@@ -28,26 +28,12 @@ export namespace
 				t_tMember
 		,	typename
 				t_tOwner
-		>
-	using
-		Member
-	=	::Member
-		<	t_tMember
-		,	t_tOwner
-		>
-	;
-
-	template
-		<	typename
-				t_tMember
-		,	typename
-				t_tOwner
 		,	typename
 			...	t_tpQualifier
 		>
 	using
 		MatchCVMember
-	=	CV
+	=	MatchCV
 		<	::Member
 			<	t_tMember
 			,	t_tOwner

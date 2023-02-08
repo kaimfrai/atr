@@ -31,20 +31,6 @@ export namespace
 				t_tElement
 		,	USize
 				t_nExtent
-		>
-	using
-		Array
-	=	::Array
-		<	t_tElement
-		,	t_nExtent
-		>
-	;
-
-	template
-		<	typename
-				t_tElement
-		,	USize
-				t_nExtent
 		,	typename
 			...	t_tpQualifier
 		>
@@ -52,7 +38,7 @@ export namespace
 		MatchCVArray
 	=	//	matching all const objects should include arrays, therefore
 		//	qualifiers are outside of the array and not attached to the element
-		CV
+		MatchCV
 		<	::Array
 			<	t_tElement
 			,	t_nExtent
@@ -73,8 +59,10 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	MakeArray
-	)	(	CV<t_tElement, t_tpQualifier...>
+	)	(	MatchCV<t_tElement>
 		,	Token::Extent<t_nExtent>
+		,	t_tpQualifier
+			...
 		)
 		noexcept
 	->	MatchCVArray

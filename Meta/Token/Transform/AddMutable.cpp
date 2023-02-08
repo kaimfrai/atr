@@ -56,7 +56,7 @@ export namespace
 			)
 			noexcept
 		->	TypeToken
-			<	t_tEntity const
+			<	t_tEntity
 			>
 		{	return {};	}
 

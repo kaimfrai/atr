@@ -15,7 +15,7 @@ export namespace
 		>
 	struct
 		Aggregate
-		<	Lex::MatchCV
+		<	Lex::MatchCVType
 			<	void
 			,	t_tpQualifier
 				...
@@ -23,7 +23,7 @@ export namespace
 		>
 	:	Object
 		<	typename
-				Lex::MatchCV
+				Lex::MatchCVType
 				<	void
 				,	t_tpQualifier
 					...

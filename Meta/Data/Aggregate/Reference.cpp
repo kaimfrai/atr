@@ -20,21 +20,21 @@ export namespace
 		>
 	struct
 		Aggregate
-		<	Lex::Ref
+		<	Lex::MatchRef
 			<	t_tData
 			,	t_tCategory
 			>
 		>
 	:	Object
 		<	typename
-				Lex::Ref
+				Lex::MatchRef
 				<	t_tData
 				,	t_tCategory
 				>
 			::	Entity
 		>
 	{
-		using DataType = typename Lex::Ref<t_tData, t_tCategory>::Entity;
+		using DataType = typename Lex::MatchRef<t_tData, t_tCategory>::Entity;
 
 		auto constexpr
 		(	get
@@ -96,7 +96,7 @@ export namespace
 	auto constexpr
 	(	operator &
 	)	(	Aggregate
-			<	Lex::Ref
+			<	Lex::MatchRef
 				<	t_tData
 				,	Token::LRef
 				>

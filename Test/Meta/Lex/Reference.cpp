@@ -34,7 +34,11 @@ template
 	>
 ::Meta::TypeID constexpr inline
 	LRefToQualified
-=	Type<MatchLRef<MatchCV<int, t_tpQualifier...>>>
+=	Type
+	<	MatchLRef
+		<	MatchCVType<int, t_tpQualifier...>
+		>
+	>
 ;
 
 static_assert
@@ -63,7 +67,11 @@ template
 	>
 ::Meta::TypeID constexpr inline
 	RRefToQualified
-=	Type<MatchRRef<MatchCV<int, t_tpQualifier...>>>
+=	Type
+	<	MatchRRef
+		<	MatchCVType<int, t_tpQualifier...>
+		>
+	>
 ;
 
 static_assert

@@ -51,7 +51,7 @@ export namespace
 		>
 	struct
 		Step
-		<	Lex::Func
+		<	Lex::MatchFunction
 			<	Lex::MatchSignature
 				<	t_tResult
 				,	t_tpArgument
@@ -67,7 +67,7 @@ export namespace
 		using
 			PlainFunctionType
 		=	typename
-			Lex::Func
+			Lex::MatchFunction
 			<	Lex::MatchSignature
 				<	t_tResult
 				,	t_tpArgument
@@ -82,7 +82,7 @@ export namespace
 		using
 			QualifiedFunctionType
 		=	typename
-			Lex::Func
+			Lex::MatchFunction
 			<	Lex::MatchSignature
 				<	t_tResult
 				,	t_tpArgument

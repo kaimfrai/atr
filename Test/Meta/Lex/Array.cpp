@@ -1,4 +1,3 @@
-import Meta.Lex.Base;
 import Meta.Lex.CV;
 import Meta.Lex.Tokenizer;
 import Meta.Lex.Array;
@@ -10,6 +9,7 @@ import Meta.Token.Volatile;
 
 using Meta::Specifier::Mut;
 using Meta::Type;
+using Meta::TypeToken;
 using Meta::Token::Const;
 using Meta::Token::Volatile;
 using Meta::Token::Mutable;
@@ -22,7 +22,7 @@ template
 	>
 auto constexpr inline
 	TokenizeType
-=	::Meta::Type
+=	Type
 	<	::Meta::TokenizeEntity
 		<	t_tEntity
 		>
@@ -39,7 +39,7 @@ Meta::TypeID constexpr inline
 	ArrayToQualified
 =	Type
 	<	MatchCVArray
-		<	Base<int>
+		<	TypeToken<int>
 		,	t_nExtent
 		,	t_tpQualifier
 			...

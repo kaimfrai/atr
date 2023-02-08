@@ -17,7 +17,7 @@ export namespace
 		>
 	struct
 		Aggregate
-		<	Lex::Func
+		<	Lex::MatchFunction
 			<	t_tSignature
 			,	t_tpQualifier
 				...
@@ -25,7 +25,7 @@ export namespace
 		>
 	:	Object
 		<	typename
-				Lex::Func
+				Lex::MatchFunction
 				<	t_tSignature
 				,	t_tpQualifier
 					...

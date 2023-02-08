@@ -4,6 +4,8 @@ import Meta.Token.Type;
 import Meta.Token.Ellipsis;
 import Meta.Token.Noexcept;
 
+using ::Meta::TypeToken;
+
 template
 	<	typename
 		...	t_tpParam
@@ -18,15 +20,13 @@ struct
 	[[nodiscard]]
 	friend auto constexpr
 	(	operator +
-	)	(	::Meta::Token::TypeToken<t_tResult>
+	)	(	TypeToken<t_tResult>
 		,	Param
 		)
 		noexcept
-	->	::Meta::Token::TypeToken
+	->	TypeToken
 		<	auto
-				(	typename
-						t_tpParam
-					::	Entity
+				(	typename t_tpParam::Entity
 					...
 				)
 			->	t_tResult
@@ -151,6 +151,21 @@ export namespace
 			...	t_tpParameter
 		>
 	using
+		MatchTypeSignature
+	=	MatchSignature
+		<	TypeToken<t_tResult>
+		,	TypeToken<t_tpParameter>
+			...
+		>
+	;
+
+	template
+		<	typename
+				t_tResult
+		,	typename
+			...	t_tpParameter
+		>
+	using
 		MatchEllipsisSignature
 	=	::Sig
 		<	t_tResult
@@ -190,7 +205,7 @@ export namespace
 			...	t_tpQualifier
 		>
 	using
-		Func
+		MatchFunction
 	=	::Func
 		<	t_tSig
 		,	t_tpQualifier

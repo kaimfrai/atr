@@ -6,7 +6,7 @@ export namespace
 	Meta::Token::Transform
 {
 	struct
-		TypeIdentity
+		Identity
 	{
 		template
 			<	typename
@@ -26,7 +26,7 @@ export namespace
 export namespace
 	Meta
 {
-	Token::Transform::TypeIdentity const extern
-		TypeIdentity
+	Token::Transform::Identity const extern
+		Identity
 	;
 }

@@ -47,8 +47,8 @@ export namespace
 			::	Entity
 		>
 	{
-		using ElementType = TypeEntity<Lex::CV<t_tElement, t_tpQualifier...>{} - Mutable>;
-		using ConstElementType = TypeEntity<Lex::CV<t_tElement, t_tpQualifier...>{} + Const - Mutable>;
+		using ElementType = TypeEntity<Lex::MatchCV<t_tElement, t_tpQualifier...>{} - Mutable>;
+		using ConstElementType = TypeEntity<Lex::MatchCV<t_tElement, t_tpQualifier...>{} + Const - Mutable>;
 		static_assert
 		(	not ::std::is_bounded_array_v<ElementType>
 		,	"Multidimensional arrays are not supported!"

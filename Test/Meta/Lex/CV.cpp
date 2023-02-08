@@ -33,7 +33,9 @@ template
 	>
 Meta::TypeID constexpr inline
 	Qualified
-=	Type<MatchCV<int, t_tpQualifier...>>
+=	Type
+	<	MatchCVType<int, t_tpQualifier...>
+	>
 ;
 
 static_assert

@@ -28,7 +28,7 @@ export namespace
 		>
 	struct
 		Object
-		<	Lex::MatchCV
+		<	Lex::MatchCVType
 			<	void
 			,	t_tpQualifier
 				...
@@ -44,7 +44,7 @@ export namespace
 		>
 	struct
 		Object
-		<	Lex::Func
+		<	Lex::MatchFunction
 			<	t_tSignature
 			,	t_tpQualifier
 				...
@@ -60,7 +60,7 @@ export namespace
 		>
 	struct
 		Object
-		<	Lex::CV
+		<	Lex::MatchCV
 			<	t_tData
 			,	t_tpQualifier
 				...
@@ -69,7 +69,7 @@ export namespace
 	{
 		[[no_unique_address]]
 		typename
-			Lex::CV
+			Lex::MatchCV
 			<	t_tData
 			,	t_tpQualifier
 				...
@@ -87,7 +87,7 @@ export namespace
 		>
 	struct
 		Object
-		<	Lex::CV
+		<	Lex::MatchCV
 			<	t_tData
 			,	Token::Mutable
 			,	t_tpQualifier
@@ -98,7 +98,7 @@ export namespace
 		[[no_unique_address]]
 		mutable
 		typename
-			Lex::CV
+			Lex::MatchCV
 			<	t_tData
 			,	t_tpQualifier
 				...
@@ -116,7 +116,7 @@ export namespace
 		>
 	struct
 		Object
-		<	Lex::CV
+		<	Lex::MatchCV
 			<	t_tData
 			,	Token::Const
 			,	t_tpQualifier
@@ -126,7 +126,7 @@ export namespace
 	{
 		[[no_unique_address]]
 		typename
-			Lex::CV
+			Lex::MatchCV
 			<	t_tData
 			,	//	remove const
 				t_tpQualifier
@@ -151,7 +151,7 @@ export namespace
 		>
 	struct
 		Object
-		<	Lex::Ref
+		<	Lex::MatchRef
 			<	t_tData
 			,	t_tCategory
 			>

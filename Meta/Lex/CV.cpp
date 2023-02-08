@@ -1,6 +1,5 @@
 export module Meta.Lex.CV;
 
-import Meta.Lex.Base;
 import Meta.Token.Type;
 import Meta.Token.Volatile;
 
@@ -59,14 +58,14 @@ export namespace
 {
 	template
 		<	typename
-				t_tEntity
+				t_tData
 		,	typename
 			...	t_tpQualifier
 		>
 	using
-		CV
+		MatchCV
 	=	::CV
-		<	t_tEntity
+		<	t_tData
 		,	t_tpQualifier
 			...
 		>
@@ -79,9 +78,9 @@ export namespace
 			...	t_tpQualifier
 		>
 	using
-		MatchCV
-	=	::CV
-		<	Base<t_tData>
+		MatchCVType
+	=	MatchCV
+		<	TypeToken<t_tData>
 		,	t_tpQualifier
 			...
 		>
@@ -96,11 +95,11 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	MakeCV
-	)	(	::CV<t_tEntity>
+	)	(	MatchCV<t_tEntity>
 		,	t_tpQualifier
 			...
 		)
 		noexcept
-	->	::CV<t_tEntity, t_tpQualifier...>
+	->	MatchCV<t_tEntity, t_tpQualifier...>
 	{	return {};	}
 }

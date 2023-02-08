@@ -40,7 +40,7 @@ export namespace
 		>
 	struct
 		Final
-		<	Lex::Func
+		<	Lex::MatchFunction
 			<	Lex::MatchSignature
 				<	t_tResult
 				,	t_tpArgument
@@ -63,7 +63,7 @@ export namespace
 				vPath
 			=	PathID
 				<	typename
-					Lex::Func
+					Lex::MatchFunction
 					<	Lex::MatchSignature
 						<	t_tResult
 						,	t_tpArgument

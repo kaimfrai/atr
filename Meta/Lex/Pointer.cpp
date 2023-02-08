@@ -23,23 +23,12 @@ export namespace
 	template
 		<	typename
 				t_tEntity
-		>
-	using
-		Ptr
-	=	::Ptr
-		<	t_tEntity
-		>
-	;
-
-	template
-		<	typename
-				t_tEntity
 		,	typename
 			...	t_tpQualifier
 		>
 	using
 		MatchCVPointer
-	=	CV
+	=	MatchCV
 		<	::Ptr<t_tEntity>
 		,	t_tpQualifier
 			...

@@ -36,7 +36,12 @@ template
 	>
 Meta::TypeID constexpr inline
 	MemberToQualified
-=	Type<MatchCVMember<MatchCV<int, t_tpQualifier...>, Class>>
+=	Type
+	<	MatchCVMember
+		<	MatchCVType<int, t_tpQualifier...>
+		,	Class
+		>
+	>
 ;
 
 static_assert
@@ -75,7 +80,14 @@ template
 	>
 Meta::TypeID constexpr inline
 	QualifiedMember
-=	Type<CV<Member<MatchCV<int, Const, Volatile>, Class>, t_tpQualifier...>>
+=	Type
+	<	MatchCVMember
+		<	MatchCVType<int, Const, Volatile>
+		,	Class
+		,	t_tpQualifier
+			...
+		>
+	>
 ;
 
 static_assert

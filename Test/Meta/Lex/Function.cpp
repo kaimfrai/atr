@@ -2,7 +2,6 @@ import Meta.Lex.Function;
 import Meta.Lex.Tokenizer;
 import Meta.Lex.Pointer;
 import Meta.Lex.Reference;
-import Meta.Lex.Base;
 import Meta.Lex.CV;
 import Meta.Lex.Array;
 import Meta.Token.LRef;
@@ -13,6 +12,7 @@ import Meta.Token.Const;
 import Meta.Token.Volatile;
 
 using Meta::Type;
+using Meta::TypeToken;
 using Meta::Token::Const;
 using Meta::Token::Volatile;
 using Meta::Token::LRef;
@@ -27,7 +27,7 @@ template
 	>
 auto constexpr inline
 	TokenizeType
-=	::Meta::Type
+=	Type
 	<	::Meta::TokenizeEntity
 		<	t_tEntity
 		>
@@ -41,21 +41,21 @@ template
 Meta::TypeID constexpr inline
 	Qualified
 =	Type
-	<	Func
+	<	MatchFunction
 		<	MatchSignature
-			<	MatchCV<int>
-			,	MatchCVPointer<MatchCV<int>>
-			,	MatchCVPointer<MatchCV<int>>
+			<	MatchCVType<int>
+			,	MatchCVPointer<MatchCVType<int>>
+			,	MatchCVPointer<MatchCVType<int>>
 			,	MatchLRef
 				<	MatchCVArray
-					<	Base<int>
+					<	TypeToken<int>
 					,	0uz
 					>
 				>
 			,	MatchLRef
 				<	MatchFreeNoexceptFunction
-					<	MatchCV<int>
-					,	MatchCVPointer<MatchCV<int>>
+					<	MatchCVType<int>
+					,	MatchCVPointer<MatchCVType<int>>
 					>
 				>
 			>
@@ -192,22 +192,22 @@ template
 Meta::TypeID constexpr inline
 	EllipsisQualified
 =	Type
-	<	Func
+	<	MatchFunction
 		<	MatchEllipsisSignature
-			<	MatchCV<int>
-			,	MatchCVPointer<MatchCV<int>>
-			,	MatchCVPointer<MatchCV<int>>
-			,	Ref
+			<	MatchCVType<int>
+			,	MatchCVPointer<MatchCVType<int>>
+			,	MatchCVPointer<MatchCVType<int>>
+			,	MatchRef
 				<	MatchCVArray
-					<	Base<int>
+					<	TypeToken<int>
 					,	0uz
 					>
 				,	LRef
 				>
-			,	Ref
+			,	MatchRef
 				<	MatchFreeNoexceptEllipsisFunction
-					<	MatchCV<int>
-					,	MatchCVPointer<MatchCV<int>>
+					<	MatchCVType<int>
+					,	MatchCVPointer<MatchCVType<int>>
 					>
 				,	LRef
 				>

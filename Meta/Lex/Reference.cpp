@@ -29,27 +29,8 @@ export namespace
 		,	typename
 				t_tCategory
 		>
-	[[nodiscard]]
-	auto constexpr
-	(	MakeRef
-	)	(	t_tEntity
-		,	t_tCategory
-		)
-		noexcept
-	->	::Ref
-		<	t_tEntity
-		,	t_tCategory
-		>
-	{	return {};	}
-
-	template
-		<	typename
-				t_tEntity
-		,	typename
-				t_tCategory
-		>
 	using
-		Ref
+		MatchRef
 	=	::Ref
 		<	t_tEntity
 		,	t_tCategory
@@ -59,10 +40,29 @@ export namespace
 	template
 		<	typename
 				t_tEntity
+		,	typename
+				t_tCategory
+		>
+	[[nodiscard]]
+	auto constexpr
+	(	MakeRef
+	)	(	t_tEntity
+		,	t_tCategory
+		)
+		noexcept
+	->	MatchRef
+		<	t_tEntity
+		,	t_tCategory
+		>
+	{	return {};	}
+
+	template
+		<	typename
+				t_tEntity
 		>
 	using
 		MatchLRef
-	=	::Ref
+	=	MatchRef
 		<	t_tEntity
 		,	Token::LRef
 		>
@@ -74,7 +74,7 @@ export namespace
 		>
 	using
 		MatchRRef
-	=	::Ref
+	=	MatchRef
 		<	t_tEntity
 		,	Token::RRef
 		>

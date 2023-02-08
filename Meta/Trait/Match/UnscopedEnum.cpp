@@ -26,7 +26,7 @@ export namespace
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-			,	Lex::MatchCV
+			,	Lex::MatchCVType
 				<	t_tEntity
 				,	t_tpQualifier
 					...

@@ -3,11 +3,12 @@ export module ATR.Virtual.Interface;
 import ATR.Virtual.Entry;
 import Meta.ID.StringLiteral;
 import Meta.ID.Alias;
-import Meta.Lex.Tokenizer;
+import Meta.Lex.Function.Tokenizer;
+import Meta.Lex.Function.Noexcept;
+import Meta.Lex.Match;
 
 using ::Meta::StringLiteral;
 using ::Meta::ID_T;
-using ::Meta::TokenizeEntity;
 
 export namespace
 	ATR::Virtual
@@ -25,8 +26,10 @@ export namespace
 		<	ID_T
 			<	t_vFunctionName
 			>
-		,	TokenizeEntity
+		,	::Meta::Match_To
 			<	t_tSignature
+			,	::Meta::Lex::Function::Tokenizer<>
+			,	::Meta::Lex::Function::Noexcept
 			>
 		>
 	;

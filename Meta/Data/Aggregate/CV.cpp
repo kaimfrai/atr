@@ -22,7 +22,7 @@ export namespace
 		>
 	struct
 		Aggregate
-		<	Lex::CV
+		<	Lex::MatchCV
 			<	t_tData
 			,	t_tQualifier
 				...
@@ -30,7 +30,7 @@ export namespace
 		>
 	:	Object
 		<	typename
-				Lex::CV
+				Lex::MatchCV
 				<	t_tData
 				,	t_tQualifier
 					...
@@ -38,8 +38,8 @@ export namespace
 			::	Entity
 		>
 	{
-		using DataType = TypeEntity<Lex::CV<t_tData, t_tQualifier...>{} - Mutable>;
-		using ConstDataType = TypeEntity<Lex::CV<t_tData, t_tQualifier...>{} + Const - Mutable>;
+		using DataType = TypeEntity<Lex::MatchCV<t_tData, t_tQualifier...>{} - Mutable>;
+		using ConstDataType = TypeEntity<Lex::MatchCV<t_tData, t_tQualifier...>{} + Const - Mutable>;
 
 		auto constexpr
 		(	get

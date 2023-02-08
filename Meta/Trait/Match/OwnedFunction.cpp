@@ -26,7 +26,7 @@ export namespace
 		friend auto constexpr
 		(	Evaluate
 		)	(	LiteralBase
-			,	Lex::Func
+			,	Lex::MatchFunction
 				<	t_tSignature
 				,	t_tFirstQualifier
 				,	t_tpQualifier

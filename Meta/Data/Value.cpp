@@ -42,7 +42,7 @@ export namespace
 		>
 	struct
 		Value
-		<	Lex::MatchCV
+		<	Lex::MatchCVType
 			<	void
 			,	t_tpQualifier
 				...
@@ -50,7 +50,7 @@ export namespace
 		>
 	:	Aggregate
 		<	typename
-				Lex::MatchCV
+				Lex::MatchCVType
 				<	void
 				,	t_tpQualifier
 					...
@@ -67,7 +67,7 @@ export namespace
 		>
 	struct
 		Value
-		<	Lex::Func
+		<	Lex::MatchFunction
 			<	t_tSignature
 			,	t_tpQualifier
 				...
@@ -75,7 +75,7 @@ export namespace
 		>
 	:	Aggregate
 		<	typename
-				Lex::Func
+				Lex::MatchFunction
 				<	t_tSignature
 				,	t_tpQualifier
 					...
@@ -92,7 +92,7 @@ export namespace
 		>
 	struct
 		Value
-		<	Lex::CV
+		<	Lex::MatchCV
 			<	t_tData
 			,	t_tQualifier
 				...
@@ -100,7 +100,7 @@ export namespace
 		>
 	:	Aggregate
 		<	typename
-				Lex::CV
+				Lex::MatchCV
 				<	t_tData
 				,	t_tQualifier
 					...
@@ -108,7 +108,7 @@ export namespace
 			::	Entity
 		>
 	{
-		using ValueType = typename Lex::CV<t_tData, t_tQualifier...>::Entity;
+		using ValueType = typename Lex::MatchCV<t_tData, t_tQualifier...>::Entity;
 
 		constexpr
 		(	Value
@@ -146,21 +146,21 @@ export namespace
 		>
 	struct
 		Value
-		<	Lex::Ref
+		<	Lex::MatchRef
 			<	t_tData
 			,	t_tCategory
 			>
 		>
 	:	Aggregate
 		<	typename
-				Lex::Ref
+				Lex::MatchRef
 				<	t_tData
 				,	t_tCategory
 				>
 			::	Entity
 		>
 	{
-		using ValueType = typename Lex::Ref<t_tData, t_tCategory>::Entity;
+		using ValueType = typename Lex::MatchRef<t_tData, t_tCategory>::Entity;
 
 		constexpr
 		(	Value

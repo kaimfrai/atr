@@ -8,9 +8,9 @@ export namespace
 {
 	struct
 		AddEllipsis
-	:	TypeIdentity
+	:	Identity
 	{
-		using TypeIdentity::operator();
+		using Identity::operator();
 
 		template
 			<	typename

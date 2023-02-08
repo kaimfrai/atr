@@ -36,7 +36,7 @@ template
 	PointerToQualified
 =	Type
 	<	MatchCVPointer
-		<	MatchCV<int, t_tpQualifier...>
+		<	MatchCVType<int, t_tpQualifier...>
 		>
 	>
 ;
@@ -69,7 +69,7 @@ template
 	QualifiedPointer
 =	Type
 	<	MatchCVPointer
-		<	MatchCV<int, Const, Volatile>
+		<	MatchCVType<int, Const, Volatile>
 		,	t_tpQualifier
 			...
 		>

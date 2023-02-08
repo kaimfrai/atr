@@ -8,7 +8,6 @@ import Meta.Lex.Member;
 import Meta.Lex.Function;
 import Meta.Lex.CV;
 import Meta.Lex.Array;
-import Meta.Lex.Base;
 
 import Meta.Token.Extent;
 import Meta.Token.Owner;
@@ -30,7 +29,7 @@ export namespace
 		[[nodiscard]]
 		static auto constexpr
 		(	Compose
-		)	(	Base<t_tFundamental>
+		)	(	TypeToken<t_tFundamental>
 			,	Transform<t_tpTransform...>
 			)
 			noexcept
@@ -48,7 +47,7 @@ export namespace
 		[[nodiscard]]
 		static auto constexpr
 		(	Compose
-		)	(	CV<t_tEntity, t_tpQualifier...>
+		)	(	MatchCV<t_tEntity, t_tpQualifier...>
 			,	Transform<t_tpTransform...>
 			)
 			noexcept
@@ -71,12 +70,14 @@ export namespace
 			,	auto
 					t_nExtent
 			,	typename
+				...	t_tpQualifier
+			,	typename
 				...	t_tpTransform
 			>
 		[[nodiscard]]
 		auto constexpr
 		(	Compose
-		)	(	Array<t_tEntity, t_nExtent>
+		)	(	MatchCVArray<t_tEntity, t_nExtent, t_tpQualifier...>
 			,	Transform<t_tpTransform...>
 			)
 			noexcept
@@ -86,6 +87,8 @@ export namespace
 			(	t_tEntity{}
 			,	Transform
 				<	Token::Extent<t_nExtent>
+				,	t_tpQualifier
+					...
 				,	t_tpTransform
 					...
 				>{}
@@ -103,7 +106,7 @@ export namespace
 		[[nodiscard]]
 		static auto constexpr
 		(	Compose
-		)	(	Func<t_tEntity, t_tpQualifier...>
+		)	(	MatchFunction<t_tEntity, t_tpQualifier...>
 			,	Transform<t_tpTransform...>
 			)
 			noexcept
@@ -126,12 +129,14 @@ export namespace
 			,	typename
 					t_tOwner
 			,	typename
+				...	t_tpQualifier
+			,	typename
 				...	t_tpTransform
 			>
 		[[nodiscard]]
 		static auto constexpr
 		(	Compose
-		)	(	Member<t_tEntity, t_tOwner>
+		)	(	MatchCVMember<t_tEntity, t_tOwner, t_tpQualifier...>
 			,	Transform<t_tpTransform...>
 			)
 			noexcept
@@ -143,6 +148,8 @@ export namespace
 				<	Token::Owner
 					<	t_tOwner
 					>
+				,	t_tpQualifier
+					...
 				,	t_tpTransform
 					...
 				>{}
@@ -153,12 +160,14 @@ export namespace
 			<	typename
 					t_tEntity
 			,	typename
+				...	t_tpQualifier
+			,	typename
 				...	t_tpTransform
 			>
 		[[nodiscard]]
 		static auto constexpr
 		(	Compose
-		)	(	Ptr<t_tEntity>
+		)	(	MatchCVPointer<t_tEntity, t_tpQualifier...>
 			,	Transform<t_tpTransform...>
 			)
 			noexcept
@@ -168,6 +177,8 @@ export namespace
 			(	t_tEntity{}
 			,	Transform
 				<	Token::Pointer
+				,	t_tpQualifier
+					...
 				,	t_tpTransform
 					...
 				>{}
@@ -185,7 +196,7 @@ export namespace
 		[[nodiscard]]
 		static auto constexpr
 		(	Compose
-		)	(	Ref<t_tEntity, t_tReference>
+		)	(	MatchRef<t_tEntity, t_tReference>
 			,	Transform<t_tpTransform...>
 			)
 			noexcept

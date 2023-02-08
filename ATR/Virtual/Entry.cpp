@@ -8,8 +8,9 @@ import Meta.Token.Type;
 
 import Std;
 
-using ::Meta::Lex::Func;
-using ::Meta::Lex::MatchSignature;
+using ::Meta::TypeToken;
+using ::Meta::Lex::MatchFunction;
+using ::Meta::Lex::MatchTypeSignature;
 using ::Meta::TypeToken;
 using ::Meta::ProtoID;
 
@@ -39,8 +40,8 @@ export namespace
 	struct
 		Entry
 		<	t_tFuncID
-		,	Func
-			<	MatchSignature
+		,	MatchFunction
+			<	MatchTypeSignature
 				<	t_tResult
 				,	t_tInitial
 				,	t_tpArgument
@@ -57,24 +58,14 @@ export namespace
 		>	0uz
 		;
 
-		using
-			TFunction
-		=	typename
-				Func
-				<	MatchSignature
-					<	t_tResult
-					,	t_tInitial
-					,	t_tpArgument
-						...
-					>
-				,	t_tpNoexcept
-					...
-				>
-			::	Entity
-		;
-
-		TFunction
-		*	Function
+		auto
+		(*	Function
+		)	(	t_tInitial
+			,	t_tpArgument
+				...
+			)
+			noexcept(IsNoexcept)
+		->	t_tResult
 		{};
 
 		template
@@ -108,22 +99,22 @@ export namespace
 		auto constexpr
 		(	operator()
 		)	(	t_tFuncID
-			,	typename t_tInitial::Entity
+			,	t_tInitial
 					i_vInitial
-			,	typename t_tpArgument::Entity
+			,	t_tpArgument
 				&&
 				...	i_rpArgument
 			)	const
 			noexcept(IsNoexcept)
-		->	typename t_tResult::Entity
+		->	t_tResult
 		{	return
 			Function
 			(	::std::forward
-				<	typename t_tInitial::Entity
+				<	t_tInitial
 				>(	i_vInitial
 				)
 			,	::std::forward
-				<	typename t_tpArgument::Entity
+				<	t_tpArgument
 				>(	i_rpArgument
 				)
 				...
