@@ -146,14 +146,33 @@ else()
 endif()
 
 function(get_module_dependency_flag_list
+	module_dependency_names
 	module_dependency_binaries
 	out_module_dependency_flag_list
 )
-	set(module_dependency_flag_list ${module_dependency_binaries})
-	list(TRANSFORM module_dependency_flag_list PREPEND -fmodule-file=)
+	set(module_dependency_flag_list)
+	foreach(name binary IN ZIP_LISTS module_dependency_names module_dependency_binaries)
+		list(APPEND module_dependency_flag_list "-fmodule-file=${name}=${binary}")
+	endforeach()
 	set(
 	${out_module_dependency_flag_list}
 		${module_dependency_flag_list}
+	PARENT_SCOPE
+	)
+
+endfunction()
+
+function(get_header_dependency_flag_list
+	header_dependency_binaries
+	out_header_dependency_flag_list
+)
+	set(header_dependency_flag_list "${header_dependency_binaries}")
+
+	list(TRANSFORM header_dependency_flag_list PREPEND "-fmodule-file=")
+
+	set(
+	${out_header_dependency_flag_list}
+		${header_dependency_flag_list}
 	PARENT_SCOPE
 	)
 

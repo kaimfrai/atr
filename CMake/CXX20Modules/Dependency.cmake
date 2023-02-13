@@ -100,7 +100,6 @@ function(read_module_properties
 	string(REGEX MATCHALL "${regex_import}${regex_header}" header_unit_imports "${file_content}")
 	list(TRANSFORM header_unit_imports REPLACE "${regex_import}(<|\")(${regex_file})(>|\")" "\\4")
 
-	list(APPEND module_imports ${header_unit_imports})
 
 	get_source_file_property(
 		object_depends
@@ -116,7 +115,11 @@ function(read_module_properties
 	list(TRANSFORM module_dependency_binaries PREPEND "${PREBUILT_MODULE_PATH}/")
 	list(TRANSFORM module_dependency_binaries APPEND "${MODULE_INTERFACE_EXTENSION}")
 
-	list(APPEND object_depends ${module_dependency_binaries})
+	set(header_unit_binaries ${header_unit_imports})
+	list(TRANSFORM header_unit_binaries PREPEND "${PREBUILT_MODULE_PATH}/")
+	list(TRANSFORM header_unit_binaries APPEND "${MODULE_INTERFACE_EXTENSION}")
+
+	list(APPEND object_depends ${module_dependency_binaries} ${header_unit_binaries})
 
 	get_source_file_property(
 		compile_options
@@ -128,10 +131,15 @@ function(read_module_properties
 	endif()
 
 	get_module_dependency_flag_list(
+		"${module_imports}"
 		"${module_dependency_binaries}"
 		module_dependency_flag_list
 	)
-	list(APPEND compile_options ${module_dependency_flag_list})
+	get_header_dependency_flag_list(
+		"${header_unit_binaries}"
+		header_dependency_flag_list
+	)
+	list(APPEND compile_options ${module_dependency_flag_list} ${header_dependency_flag_list})
 
 	set_source_files_properties(
 		"${file_path}"
