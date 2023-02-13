@@ -1,6 +1,8 @@
 export module Evaluation.TypeErasure;
 
 import Evaluation.TypeErasure.Library;
+// required for use of macro
+import "boost.hpp";
 
 import Std;
 
