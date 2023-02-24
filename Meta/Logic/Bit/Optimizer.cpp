@@ -228,7 +228,7 @@ export namespace
 			m_vTerm.sort();
 			for	(	Clause
 					&	rClause
-				:	m_vTerm | std::views::reverse
+				:	::std::views::reverse(m_vTerm)
 				)
 			{
 				if	(	i_rRedundancyBuffer.ComputeClauseRedundancy
@@ -464,7 +464,7 @@ export namespace
 			;
 			for	(	Clause
 					&	rClause
-				:	m_vTerm | std::views::reverse
+				:	::std::views::reverse(m_vTerm)
 				)
 			{
 				//	insert clause is redundant
