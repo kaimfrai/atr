@@ -99,6 +99,17 @@ then
 		2> variant.txt
 fi
 
+if [ $# -lt 5 ] || [ $5 == "visitor" ]
+then
+	echo "visitor"
+	perf\
+		stat\
+		--repeat $4\
+		../../Evaluation/Evaluation/Visitor/evaluation_visitor\
+		$1 $2 $3\
+		2> visitor.txt
+fi
+
 echo 1 > /proc/sys/kernel/nmi_watchdog
 
 cd ../../../Evaluation

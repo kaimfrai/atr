@@ -90,6 +90,16 @@ then
 		2> variant.txt
 fi
 
+if [ $# -lt 4 ] || [ $4 == "visitor" ]
+then
+	echo "visitor"
+	valgrind\
+		--tool=cachegrind\
+		../../Evaluation/Evaluation/Visitor/evaluation_visitor\
+		$1 $2 $3\
+		2> visitor.txt
+fi
+
 cd ../../../Evaluation
 
 echo "Ergebnisse in ../build/cachegrind_evaluation/$1_$2_$3/"

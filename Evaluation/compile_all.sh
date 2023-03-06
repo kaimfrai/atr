@@ -83,6 +83,12 @@ then
 	echo "Time evaluation_variant: $(echo ${evaluation_variant_time} + ${crtp_time} | bc)"
 fi
 
+if [ $# -lt 1 ] || [ $1 == "visitor" ]
+then
+	evaluation_visitor_time=$(\time -f "%e" ninja evaluation_visitor 2>&1  1>/dev/null)
+	echo "Time evaluation_visitor: $(echo ${evaluation_visitor_time} + ${crtp_time} | bc)"
+fi
+
 if [ $# -lt 1 ] || [ $1 == "archetype" ]
 then
 	evaluation_archetype_time=$(\time -f "%e" ninja evaluation_archetype 2>&1  1>/dev/null)

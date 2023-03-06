@@ -106,5 +106,18 @@ then
 		-fexperimental-library
 fi
 
+if [ $# -lt 1 ] || [ $1 == "visitor" ]
+then
+	echo "visitor"
+	clang++-17\
+		-std=c++2b -stdlib=libc++ -O3\
+		-fprebuilt-module-path=../build/Evaluation/modules\
+		-S -masm=intel -fverbose-asm\
+		Visitor/Main.cpp\
+		-o ../build/assembly/visitor.s\
+		-frelaxed-template-template-args\
+		-fexperimental-library
+fi
+
 echo "Ergebnisse in ../build/assembly/"
 

@@ -14,7 +14,8 @@ then
 		evaluation_type_erasure\
 		evaluation_archetype\
 		evaluation_replication\
-		evaluation_variant
+		evaluation_variant\
+		evaluation_visitor
 else
 	ninja\
 		"evaluation_$2"
