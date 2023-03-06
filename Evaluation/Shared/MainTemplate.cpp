@@ -145,7 +145,7 @@ export
 		Float
 			vLoopSum
 		{};
-		for	(	auto const
+		for	(	auto
 				&	rBody
 				:	vElements
 			)

@@ -13,81 +13,18 @@ import Meta.Size;
 
 import Std;
 
-template
-	<	typename
-			t_tObject
-	,	typename
-		...	t_tpArgument
-	>
-auto constexpr
-(	New
-)	(	t_tpArgument
-		&&
-		...	i_rpArgument
-	)
-->	::std::remove_cvref_t<t_tObject>*
-{	return
-	new
-	::std::remove_cvref_t<t_tObject>
-	{	::std::forward<t_tpArgument>
-		(	i_rpArgument
-		)
-		...
-	};
-}
-
-template
-	<	typename
-			t_tObject
-	>
-auto constexpr
-(	Delete
-)	(	void
-		*	i_aObject
-	)
-	noexcept
-->	void
-{	delete
-	static_cast<t_tObject*>
-	(	i_aObject
-	);
-}
-
-template<>
-auto constexpr
-(	Delete
-	<	void
-	>
-)	(	void*
-	)
-	noexcept
-->	void
-{}
-
 using
 	Deleter
-=	decltype
-	(	&
-		Delete
-		<	void
-		>
-	)
+=	auto
+	(*)	(	void
+			*
+		)
+		noexcept
+	->	void
 ;
 
-template
-	<	typename
-			t_tObject
-	>
-Deleter constexpr inline
-	Deleter_Of
-=	&Delete
-	<	::std::remove_cvref_t
-		<	t_tObject
-		>
-	>
-;
 
-struct
+class
 	ObjectReference
 {
 	void
@@ -97,14 +34,20 @@ struct
 		m_fDeleter
 	;
 
-	auto constexpr
-	(	Delete
-	)	()	const
-		noexcept
-	{	m_fDeleter
-		(	m_aObject
-		);
-	}
+	explicit(true) constexpr
+	(	ObjectReference
+	)	(	void
+			*	i_aObject
+		,	Deleter
+				i_fDeleter
+		)
+	:	m_aObject
+		{	i_aObject
+		}
+	,	m_fDeleter
+		{	i_fDeleter
+		}
+	{}
 
 	template
 		<	typename
@@ -118,35 +61,25 @@ struct
 	{	return
 		static_cast<t_tObject>
 		(	*
-			static_cast
-			<	::std::add_pointer_t
-				<	t_tObject
-				>
-			>(	m_aObject
+			::std::launder
+			(	static_cast
+				<	::std::add_pointer_t
+					<	t_tObject
+					>
+				>(	m_aObject
+				)
 			)
 		);
 	}
 
 	template
-		<	typename
-				t_tObject
+		<	::std::size_t
+		,	::std::align_val_t
 		>
 	friend
-	auto constexpr
-	(	RefersTo
-	)	(	ObjectReference
-				i_rObject
-		)
-		noexcept
-	->	bool
-	{	return
-		(	i_rObject
-			.	m_fDeleter
-		==	Deleter_Of
-			<	t_tObject
-			>
-		);
-	}
+	class
+		ObjectValue
+	;
 };
 
 template
@@ -166,60 +99,6 @@ using
 	>
 ;
 
-template
-	<	auto
-			t_fOverload
-	,	typename
-		...	t_tpCandidate
-	>
-auto constexpr
-(	Visit
-)	(	ObjectReference
-			i_rObject
-	)
-->	CommonResult
-	<	t_fOverload
-	,	t_tpCandidate
-		...
-	>
-{	using
-		tResult
-	=	CommonResult
-		<	t_fOverload
-		,	t_tpCandidate
-			...
-		>
-	;
-	tResult
-		vResult
-	{};
-	if	(	not
-			(	...
-			or	(	(	RefersTo<t_tpCandidate>
-						(	i_rObject
-						)
-					)
-				?	(	(void)
-						(	vResult
-						=	t_fOverload
-							(	static_cast<t_tpCandidate>
-								(	i_rObject
-								)
-							)
-						)
-					,	true
-					)
-				:	false
-				)
-			)
-		)
-	{	::std::unreachable();
-	}
-	return
-		vResult
-	;
-}
-
 using
 	Visitor
 =	auto
@@ -228,18 +107,296 @@ using
 	->	bool
 ;
 
+template
+	<	typename
+			t_tObject
+	>
+[[nodiscard]]
+auto constexpr
+(	LaunderCast
+)	(	void
+		*	i_aObject
+	)
+->	t_tObject*
+{	return
+	::std::launder
+	(	::std::bit_cast<t_tObject*>
+		(	i_aObject
+		)
+	);
+}
+
+template
+	<	::std::size_t
+			t_nBufferSize
+	,	::std::align_val_t
+			t_nBufferAlign
+	>
 class
 	ObjectValue
 {
-	ObjectReference
-		m_rObject
+	static
+	auto constexpr
+		BufferSize
+	=	t_nBufferSize
 	;
 
-	static ObjectReference constexpr
-		NullReference
-	{	nullptr
-	,	Deleter_Of<void>
-	};
+	static
+	auto constexpr
+		BufferAlign
+	=	static_cast<::std::size_t>
+		(	t_nBufferAlign
+		)
+	;
+
+	static_assert
+	(	(BufferSize % BufferAlign) == 0uz
+	,	"BufferSize must be a true multiple of the BufferAlign!"
+	);
+
+	template
+		<	typename
+				t_tObject
+		>
+	static
+	auto constexpr
+		FitsBuffer
+	=	::std::is_trivially_move_constructible_v
+		<	t_tObject
+		>
+	and	::std::is_trivially_move_assignable_v
+		<	t_tObject
+		>
+	and	(	sizeof(t_tObject)
+		<=	BufferSize
+		)
+	and	(	alignof(t_tObject)
+		<=	BufferAlign
+		)
+	;
+
+	static_assert
+	(	FitsBuffer<void*>
+	,	"Pointers must always fit into the buffer!"
+	);
+
+	template
+		<	typename
+				t_tObject
+		>
+	static
+	auto constexpr
+	(	GetPointerFromBuffer
+	)	(	void
+			*	i_aObject
+		)
+		noexcept
+	->	t_tObject*
+	{
+		if	constexpr
+			(	::std::is_void_v
+				<	t_tObject
+				>
+			)
+		{	return
+				nullptr
+			;
+		}
+		else
+		if	constexpr
+			(	FitsBuffer<t_tObject>
+			)
+		{	return
+			LaunderCast<t_tObject>
+			(	i_aObject
+			);
+		}
+		else
+		{	return
+			*
+			LaunderCast<t_tObject*>
+			(	i_aObject
+			);
+		}
+	}
+
+	template
+		<	typename
+				t_tObject
+		>
+	static
+	auto constexpr
+	(	Delete
+	)	(	void
+			*	i_aObject
+		)
+		noexcept
+	->	void
+	{
+		if	constexpr
+			(	::std::is_void_v
+				<	t_tObject
+				>
+			)
+		{	// nothing
+		}
+		else
+		if	constexpr
+			(	FitsBuffer<t_tObject>
+			)
+		{
+			if	constexpr
+				(	not
+					::std::is_trivially_destructible_v
+					<	t_tObject
+					>
+				)
+			{	(	LaunderCast
+					<	t_tObject
+					>(	i_aObject
+					)
+				->	compl
+					t_tObject
+					()
+				);
+			}
+		}
+		else
+		{	delete
+			LaunderCast
+			<	t_tObject
+			>(	i_aObject
+			);
+		}
+	}
+
+	template
+		<	typename
+				t_tObject
+		>
+	static
+	auto constexpr
+	(	Access
+	)	(	void
+			*	i_aBuffer
+		)
+		noexcept
+	->	ObjectReference
+	{	return
+		ObjectReference
+		{	GetPointerFromBuffer
+			<	t_tObject
+			>(	i_aBuffer
+			)
+		,	&Delete<t_tObject>
+		};
+	}
+
+	using
+		Buffer
+	=	::std::array
+		<	::std::byte
+		,	BufferSize
+		>
+	;
+
+	alignas(BufferAlign)
+	Buffer
+		m_vBuffer
+	;
+	auto
+	(*	m_fAccess
+	)	(	void
+			*
+		)
+		noexcept
+	->	ObjectReference
+	;
+
+	template
+		<	typename
+				t_tObject
+		,	typename
+			...	t_tpArgument
+		>
+	static
+	auto constexpr
+	(	New
+	)	(	t_tpArgument
+			&&
+			...	i_rpArgument
+		)
+	->	Buffer
+	{
+		alignas(BufferAlign)
+		Buffer
+			vBuffer
+		{};
+
+		if	constexpr
+			(	::std::is_void_v
+				<	t_tObject
+				>
+			)
+		{	//	nothing
+		}
+		else
+		if	constexpr
+			(	FitsBuffer
+				<	t_tObject
+				>
+			)
+		{	::std::construct_at
+			(	GetPointerFromBuffer
+				<	t_tObject
+				>(	vBuffer
+					.	data()
+				)
+			,	::std::forward<t_tpArgument>
+				(	i_rpArgument
+				)
+				...
+			);
+		}
+		else
+		{	::std::construct_at
+			(	::std::bit_cast<t_tObject**>
+				(	vBuffer.data()
+				)
+			,	new
+				t_tObject
+				{	::std::forward<t_tpArgument>
+					(	i_rpArgument
+					)
+					...
+				}
+			);
+		}
+
+		return
+			vBuffer
+		;
+	}
+
+	auto constexpr
+	(	Destroy
+	)	()
+		noexcept
+	->	void
+	{
+		auto const
+		[	aObject
+		,	fDeleter
+		]=	m_fAccess
+			(	m_vBuffer
+				.	data
+					()
+			)
+		;
+		fDeleter
+		(	aObject
+		);
+	}
 
 public:
 	template
@@ -255,14 +412,16 @@ public:
 			&&
 			...	i_rpArgument
 		)
-	:	m_rObject
-		{	New<t_tObject>
+	:	m_vBuffer
+		{	New<::std::remove_cvref_t<t_tObject>>
 			(	::std::forward<t_tpArgument>
 				(	i_rpArgument
 				)
 				...
 			)
-		,	Deleter_Of<t_tObject>
+		}
+	,	m_fAccess
+		{	&Access<::std::remove_cvref_t<t_tObject>>
 		}
 	{}
 
@@ -272,10 +431,16 @@ public:
 			&&	i_rOther
 		)
 		noexcept
-	:	m_rObject
+	:	m_vBuffer
+		{	// buffer is not cleared, just the access to it
+			i_rOther
+			.	m_vBuffer
+		}
+	,	m_fAccess
 		{	::std::exchange
-			(	i_rOther.m_rObject
-			,	NullReference
+			(	i_rOther
+				.	m_fAccess
+			,	&Access<void>
 			)
 		}
 	{}
@@ -288,11 +453,19 @@ public:
 		)	&
 		noexcept
 	->	ObjectValue&
-	{	(	m_rObject
+	{
+		Destroy();
+
+		(	m_vBuffer
+		=	i_rOther
+			.	m_vBuffer
+		);
+
+		(	m_fAccess
 		=	::std::exchange
 			(	i_rOther
-				.	m_rObject
-			,	NullReference
+				.	m_fAccess
+			,	&Access<void>
 			)
 		);
 		return
@@ -303,11 +476,14 @@ public:
 	explicit(false) constexpr
 	(	operator
 		ObjectReference
-	)	()	const&
+	)	()	&
 		noexcept
 	{	return
-			m_rObject
-		;
+		m_fAccess
+		(	m_vBuffer
+			.	data
+				()
+		);
 	}
 
 	constexpr
@@ -315,9 +491,84 @@ public:
 		ObjectValue
 	)	()
 		noexcept
-	{	m_rObject
-		.	Delete
-			()
+	{	Destroy();
+	}
+
+	template
+		<	typename
+				t_tObject
+		>
+	static
+	auto constexpr
+	(	RefersTo
+	)	(	ObjectReference
+				i_rObject
+		)
+		noexcept
+	->	bool
+	{	return
+		(	i_rObject
+			.	m_fDeleter
+		==	&Delete
+			<	::std::remove_cvref_t
+				<	t_tObject
+				>
+			>
+		);
+	}
+
+	template
+		<	auto
+				t_fOverload
+		,	typename
+			...	t_tpCandidate
+		>
+	static
+	auto constexpr
+	(	Visit
+	)	(	ObjectReference
+				i_rObject
+		)
+	->	CommonResult
+		<	t_fOverload
+		,	t_tpCandidate
+			...
+		>
+	{	using
+			tResult
+		=	CommonResult
+			<	t_fOverload
+			,	t_tpCandidate
+				...
+			>
+		;
+		tResult
+			vResult
+		{};
+		if	(	not
+				(	...
+				or	(	(	RefersTo<t_tpCandidate>
+							(	i_rObject
+							)
+						)
+					?	(	(void)
+							(	vResult
+							=	t_fOverload
+								(	static_cast<t_tpCandidate>
+									(	i_rObject
+									)
+								)
+							)
+						,	true
+						)
+					:	false
+					)
+				)
+			)
+		{	::std::unreachable();
+		}
+		return
+			vResult
 		;
 	}
 };
@@ -339,14 +590,20 @@ auto
 	using
 		Body3D
 	=	ObjectValue
+		<	sizeof(Cuboid)
+		,	::std::align_val_t
+			{	alignof(Cuboid)
+			}
+		>
 	;
+
 	auto constexpr
 		fComputeVolume
 	=	+[]	(	ObjectReference
 					i_rObject
 			)
 		{	return
-			Visit
+			Body3D::Visit
 			<	[]	(	auto const
 						&	i_rBody
 					)
