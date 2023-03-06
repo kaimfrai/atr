@@ -5,7 +5,7 @@ mkdir -p ../build/assembly/
 if [ $# -lt 1 ] || [ $1 == "virtual" ]
 then
 	echo "virtual"
-	clang++-16\
+	clang++-17\
 		-std=c++2b -stdlib=libc++ -O3\
 		-fprebuilt-module-path=../build/Evaluation/modules\
 		-S -masm=intel -fverbose-asm\
@@ -18,7 +18,7 @@ fi
 if [ $# -lt 1 ] || [ $1 == "any" ]
 then
 	echo "any"
-	clang++-16\
+	clang++-17\
 		-std=c++2b -stdlib=libc++ -O3\
 		-fprebuilt-module-path=../build/Evaluation/modules\
 		-S -masm=intel -fverbose-asm\
@@ -31,7 +31,7 @@ fi
 if [ $# -lt 1 ] || [ $1 == "dyno" ]
 then
 	echo "dyno"
-	clang++-16\
+	clang++-17\
 		-std=c++2b -stdlib=libc++ -O3\
 		-fprebuilt-module-path=../build/Evaluation/modules\
 		-S -masm=intel -fverbose-asm\
@@ -44,7 +44,7 @@ fi
 if [ $# -lt 1 ] || [ $1 == "polymorphic" ]
 then
 	echo "polymorphic"
-	clang++-16\
+	clang++-17\
 		-std=c++2b -stdlib=libc++ -O3\
 		-fprebuilt-module-path=../build/Evaluation/modules\
 		-S -masm=intel -fverbose-asm\
@@ -57,7 +57,7 @@ fi
 if [ $# -lt 1 ] || [ $1 == "type_erasure" ]
 then
 	echo "type_erasure"
-	clang++-16\
+	clang++-17\
 		-std=c++2b -stdlib=libc++ -O3\
 		-fprebuilt-module-path=../build/Evaluation/modules\
 		-S -masm=intel -fverbose-asm\
@@ -70,7 +70,7 @@ fi
 if [ $# -lt 1 ] || [ $1 == "archetype" ]
 then
 	echo "archetype"
-	clang++-16\
+	clang++-17\
 		-std=c++2b -stdlib=libc++ -O3\
 		-fprebuilt-module-path=../build/Evaluation/modules\
 		-S -masm=intel -fverbose-asm\
@@ -83,7 +83,7 @@ fi
 if [ $# -lt 1 ] || [ $1 == "replication" ]
 then
 	echo "replication"
-	clang++-16\
+	clang++-17\
 		-std=c++2b -stdlib=libc++ -O3\
 		-fprebuilt-module-path=../build/Evaluation/modules\
 		-S -masm=intel -fverbose-asm\
@@ -96,7 +96,7 @@ fi
 if [ $# -lt 1 ] || [ $1 == "variant" ]
 then
 	echo "variant"
-	clang++-16\
+	clang++-17\
 		-std=c++2b -stdlib=libc++ -O3\
 		-fprebuilt-module-path=../build/Evaluation/modules\
 		-S -masm=intel -fverbose-asm\
