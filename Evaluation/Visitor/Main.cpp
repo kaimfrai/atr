@@ -127,6 +127,32 @@ auto constexpr
 }
 
 template
+	<	typename
+			t_tObject
+	>
+auto constexpr
+(	Invoke
+)	(	t_tObject
+		&&	i_rObject
+	,	auto
+		&	o_rResult
+	,	::std::invocable<t_tObject> auto const
+		&	i_fOverload
+	)
+->	bool
+{	(	o_rResult
+	=	i_fOverload
+		(	::std::forward<t_tObject>
+			(	i_rObject
+			)
+		)
+	);
+	return
+		true
+	;
+}
+
+template
 	<	::std::size_t
 			t_nBufferSize
 	,	::std::align_val_t
@@ -454,7 +480,8 @@ public:
 		noexcept
 	->	ObjectValue&
 	{
-		Destroy();
+		Destroy
+		();
 
 		(	m_vBuffer
 		=	i_rOther
@@ -491,7 +518,8 @@ public:
 		ObjectValue
 	)	()
 		noexcept
-	{	Destroy();
+	{	Destroy
+		();
 	}
 
 	template
@@ -515,6 +543,36 @@ public:
 				>
 			>
 		);
+	}
+
+	template
+		<	typename
+				t_tCandidate
+		>
+	static
+	auto constexpr
+	(	TryDispatch
+	)	(	ObjectReference
+				i_rObject
+		,	auto
+			&	o_rResult
+		,	::std::invocable<t_tCandidate> auto const
+			&	i_fOverload
+		)
+	->	bool
+	{	return
+			RefersTo<t_tCandidate>
+			(	i_rObject
+			)
+		?	Invoke
+			(	static_cast<t_tCandidate>
+				(	i_rObject
+				)
+			,	o_rResult
+			,	i_fOverload
+			)
+		:	false
+		;
 	}
 
 	template
@@ -545,27 +603,19 @@ public:
 		tResult
 			vResult
 		{};
+
 		if	(	not
 				(	...
-				or	(	(	RefersTo<t_tpCandidate>
-							(	i_rObject
-							)
-						)
-					?	(	(void)
-							(	vResult
-							=	t_fOverload
-								(	static_cast<t_tpCandidate>
-									(	i_rObject
-									)
-								)
-							)
-						,	true
-						)
-					:	false
+				or	TryDispatch
+					<	t_tpCandidate
+					>(	i_rObject
+					,	vResult
+					,	t_fOverload
 					)
 				)
 			)
-		{	::std::unreachable();
+		{	::std::unreachable
+			();
 		}
 		return
 			vResult
