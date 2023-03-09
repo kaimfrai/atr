@@ -14,63 +14,46 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	PointerCast
-	)	(	t_tFrom const
-			*	i_aObject
-		)
-		noexcept
-	->	t_tTo const*
-	{	if	constexpr
-			(	::std::is_convertible_v
-				<	t_tFrom const*
-				,	t_tTo const*
-				>
-			)
-		{	return
-			static_cast<t_tTo const*>
-			(	i_aObject
-			);
-		}
-		else
-		{	return
-			static_cast<t_tTo const*>
-			(	static_cast<void const*>
-				(	i_aObject
-				)
-			);
-		}
-	}
-
-	template
-		<	typename
-				t_tTo
-		,	typename
-				t_tFrom
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	PointerCast
 	)	(	t_tFrom
 			*	i_aObject
 		)
 		noexcept
-	->	t_tTo*
-	{	if	constexpr
+	->	::std::conditional_t
+		<	::std::is_const_v
+			<	t_tFrom
+			>
+		,	t_tTo const*
+		,	t_tTo*
+		>
+	{	using
+			tTo
+		=	::std::conditional_t
+			<	::std::is_const_v
+				<	t_tFrom
+				>
+			,	t_tTo const
+			,	t_tTo
+			>
+		;
+		if	constexpr
 			(	::std::is_convertible_v
 				<	t_tFrom*
-				,	t_tTo*
+				,	tTo*
+				>
+			or	::std::is_base_of_v
+				<	t_tFrom
+				,	tTo
 				>
 			)
 		{	return
-			static_cast<t_tTo*>
+			static_cast<tTo*>
 			(	i_aObject
 			);
 		}
 		else
 		{	return
-			static_cast<t_tTo*>
-			(	static_cast<void*>
-				(	i_aObject
-				)
+			::std::bit_cast<tTo*>
+			(	i_aObject
 			);
 		}
 	}
