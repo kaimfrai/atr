@@ -9,7 +9,7 @@ import Std;
 using ::Meta::Specifier::Mut;
 
 export namespace
-	Meta::Token
+	Meta
 {
 	struct
 		EraseType final
@@ -111,14 +111,6 @@ export namespace
 		<	t_tEntity
 		>
 	;
-}
-
-export namespace
-	Meta
-{
-	using ::Meta::Token::TypeToken;
-
-	using ::Meta::Token::TypeID;
 
 	template
 		<	typename
