@@ -2,6 +2,7 @@ add_single_file_modules(
 	Size.cpp
 )
 
+add_subdirectory(Generic)
 add_subdirectory(Math)
 add_subdirectory(Memory)
 add_subdirectory(Arithmetic)

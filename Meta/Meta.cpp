@@ -7,6 +7,7 @@ export import Meta.Byte;
 export import Meta.Data;
 export import Meta.Dispatch;
 export import Meta.Functional;
+export import Meta.Generic.Map;
 export import Meta.ID;
 export import Meta.Lex;
 export import Meta.Logic;
