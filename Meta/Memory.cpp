@@ -1,6 +1,7 @@
 export module Meta.Memory;
 
 export import Meta.Memory.Alignment;
+export import Meta.Memory.Constraint;
 export import Meta.Memory.Count;
 export import Meta.Memory.Count.Compare;
 export import Meta.Memory.PointerCast;

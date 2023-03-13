@@ -1,6 +1,6 @@
 export module Meta.Logic.LiteralBase;
 
-import Meta.Token.Type;;
+import Meta.Token.TypeID;
 
 export namespace
 	Meta::Trait

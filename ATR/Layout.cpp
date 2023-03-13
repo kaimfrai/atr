@@ -5,6 +5,7 @@ import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Alignment;
 import Meta.Token.Type;
+import Meta.Token.TypeID;
 import Meta.Math.Prev;
 import Meta.Trait.BitAlign;
 import Meta.Trait.BitSize;

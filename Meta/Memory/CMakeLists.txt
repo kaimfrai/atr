@@ -9,4 +9,5 @@ add_subdirectory(Size)
 
 add_single_file_modules(
 	Alignment.cpp
+	Constraint.cpp
 )

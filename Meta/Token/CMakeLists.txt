@@ -1,5 +1,6 @@
 add_single_file_modules(
 	Specifier.cpp
+	TypeID.cpp
 	Type.cpp
 )
 

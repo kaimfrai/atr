@@ -6,6 +6,7 @@ import Meta.Memory.Size.Compare;
 import Meta.Memory.Alignment;
 import Meta.Trait.BitSize;
 import Meta.Token.Type;
+import Meta.Token.TypeID;
 import Meta.Token.Type.Compare;
 import Meta.ID.StringView;
 

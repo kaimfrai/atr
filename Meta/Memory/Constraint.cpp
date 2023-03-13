@@ -1,0 +1,155 @@
+export module Meta.Memory.Constraint;
+
+import Meta.Memory.Size;
+import Meta.Memory.Size.Scale;
+import Meta.Memory.Alignment;
+
+import Std;
+
+export namespace
+	Meta::Memory
+{
+	struct
+		Constraint
+	{
+		Alignment
+			Align
+		;
+		BitSize
+			Size
+		;
+	};
+
+	//	customization point
+	template
+		<	typename
+				t_tEntity
+		>
+	Constraint constexpr inline
+		Constraint_Of
+	=	[]
+		{	if	constexpr
+				(	::std::is_const_v
+					<	t_tEntity
+					>
+				or	::std::is_volatile_v
+					<	t_tEntity
+					>
+				)
+			{	return
+				Constraint_Of
+				<	::std::remove_cv_t
+					<	t_tEntity
+					>
+				>;
+			}
+			else
+			if	constexpr
+				(	::std::is_array_v
+					<	t_tEntity
+					>
+				)
+			{
+				auto
+					vConstraint
+				=	Constraint_Of
+					<	::std::remove_all_extents_t
+						<	t_tEntity
+						>
+					>
+				;
+
+				(	vConstraint.Size
+				*=	::std::extent_v
+					<	t_tEntity
+					>
+				);
+
+				return
+					vConstraint
+				;
+			}
+			else
+			if	constexpr
+				(	::std::is_reference_v
+					<	t_tEntity
+					>
+				)
+			{	return
+				Constraint_Of
+				<	::std::add_pointer_t
+					<	t_tEntity
+					>
+				>;
+			}
+			else
+			if	constexpr
+				(	::std::is_object_v
+					<	t_tEntity
+					>
+				)
+			{
+				Constraint
+					vConstraint
+				{	.	Align
+					=	Alignment
+						{	ByteSize
+							(	alignof
+								(	t_tEntity
+								)
+							)
+						}
+				,	.	Size
+					=	ByteSize
+						{	sizeof
+							(	t_tEntity
+							)
+						}
+				};
+
+				// necessary to check unions
+				struct
+					Wrapper
+				{
+					[[no_unique_address]]
+					t_tEntity _;
+				};
+
+				auto const
+					vHasState
+				=	not
+					::std::is_empty_v
+					<	Wrapper
+					>
+				;
+				(	vConstraint.Align.Value
+				*=	vHasState
+				);
+				(	vConstraint.Size
+				*=	vHasState
+				);
+
+				return
+					vConstraint
+				;
+			}
+			else
+			{	return
+				Constraint
+				{	0_align
+				,	0_bit
+				};
+			}
+		}()
+	;
+
+	template
+		<>
+	Constraint constexpr inline
+		Constraint_Of
+		<	bool
+		>
+	{	1_align
+	,	1_bit
+	};
+}

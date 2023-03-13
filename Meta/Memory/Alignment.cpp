@@ -38,7 +38,7 @@ export namespace
 			)
 			noexcept
 		->	::std::strong_ordering
-		{	/// alignment ordering from highest to lowers
+		{	/// alignment ordering from highest to lowest
 			/// this is a more useful default
 			return
 				-i_vLeft.Value

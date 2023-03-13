@@ -55,6 +55,10 @@ using ::Meta::UInt;
 using BitFieldTest = ::ATR::Type<"BitFieldTest">;
 
 static_assert
+(	alignof(BitFieldTest)
+==	alignof(char)
+);
+static_assert
 (	sizeof(BitFieldTest)
 ==	sizeof(::std::uint_least32_t)
 *	2

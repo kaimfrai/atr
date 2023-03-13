@@ -2,6 +2,7 @@ export module Meta.Trait.ArrayExtent;
 
 import Meta.Token.Specifier;
 import Meta.Token.Type;
+import Meta.Token.TypeID;
 
 import Meta.Size;
 

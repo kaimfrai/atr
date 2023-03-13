@@ -10,6 +10,7 @@ import Meta.Memory.Size.Arithmetic;
 import Meta.ID.StringView;
 import Meta.ID.Concept;
 import Meta.Token.Type;
+import Meta.Token.TypeID;
 import Meta.Trait.BitAlign;
 import Meta.Memory.Alignment;
 

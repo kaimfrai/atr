@@ -1,6 +1,6 @@
 export module Meta.Logic.Erased.Term;
 
-import Meta.Token.Type;
+import Meta.Token.TypeID;
 
 import Meta.Logic.Bit.Clause;
 import Meta.Logic.Bit.Term;

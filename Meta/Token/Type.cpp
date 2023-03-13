@@ -1,59 +1,12 @@
 export module Meta.Token.Type;
 
-import Meta.Token.Specifier;
+import Meta.Token.TypeID;
+import Meta.Memory.Constraint;
 import Meta.Generic.Map;
-import Meta.Size;
-
-import Std;
-
-using ::Meta::Specifier::Mut;
 
 export namespace
 	Meta
 {
-	struct
-		EraseType final
-	{
-	private:
-		template
-			<	typename
-			>
-		friend struct
-			TypeToken
-		;
-
-		explicit (false)
-			constexpr
-		(	EraseType
-		)	()
-			noexcept
-		=	default;
-
-		explicit(false) constexpr
-		(	EraseType
-		)	(	EraseType const&
-			)
-		=	delete;
-	};
-
-	struct
-		TypeID final
-	{
-		EraseType const
-		*	Erase
-		;
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator ==
-		)	(	TypeID
-			,	TypeID
-			)
-			noexcept
-		->	bool
-		=	default;
-	};
-
 	template
 		<	typename
 				t_tEntity
@@ -66,22 +19,25 @@ export namespace
 		=	t_tEntity
 		;
 
-		static EraseType constexpr
-			Erase
-		{};
-
 		[[nodiscard]]
 		explicit(false) constexpr
 		(	operator
 			TypeID
 		)	()	const
+			noexcept
 		{
 			TypeID constexpr
 				vTypeID
-			{	&Erase
+			{	&Memory::Constraint_Of
+				<	t_tEntity
+				>
 			};
 
-			Generic::StoreKeyValuePair<vTypeID, TypeToken{}>();
+			Generic::StoreKeyValuePair
+			<	vTypeID
+			,	TypeToken
+				{}
+			>();
 
 			return
 				vTypeID

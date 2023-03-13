@@ -53,8 +53,8 @@ using UArr = int[];
 enum UEnum : int;
 enum class SEnum : int;
 
-class Class;
-union Union;
+class Class{};
+union Union{};
 
 using MPtr = int Class::*;
 

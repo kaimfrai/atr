@@ -4,6 +4,8 @@ import Meta.Bit.Index;
 import Meta.Bit.Index.Test;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Compare;
+import Meta.Memory.Alignment;
+import Meta.Memory.Constraint;
 import Meta.Byte.Buffer;
 import Meta.Arithmetic.Integer;
 import Meta.Arithmetic.Sanitize;
@@ -39,14 +41,6 @@ export namespace
 			FieldType
 		=	UInt
 			<	t_nWidth
-			>
-		;
-
-		static auto constexpr
-			IsFullWidthInteger
-		=	t_nWidth
-		==	Memory::SizeOf
-			<	FieldType
 			>
 		;
 
@@ -204,5 +198,43 @@ export namespace
 			<	t_tObject
 			>
 		>
+	;
+}
+
+export namespace
+	Meta::Memory
+{
+	template
+		<	BitSize
+				t_nWidth
+		>
+	Constraint constexpr inline
+		Constraint_Of
+		<	Bit::Field
+			<	t_nWidth
+			>
+		>
+	=	[]{	auto
+				vConstraint
+			=	Constraint_Of
+				<	UInt
+					<	t_nWidth
+					>
+				>
+			;
+			if	(	vConstraint.Size
+				!=	t_nWidth
+				)
+			{	(	vConstraint.Align
+				=	1_align
+				);
+				(	vConstraint.Size
+				=	t_nWidth
+				);
+			}
+			return
+				vConstraint
+			;
+		}()
 	;
 }

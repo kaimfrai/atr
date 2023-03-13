@@ -4,6 +4,7 @@ import Meta.Data.Aggregate;
 
 import Meta.Token.Index;
 import Meta.Token.Type;
+import Meta.Token.TypeID;
 import Meta.Size;
 
 import Std;

@@ -2,6 +2,7 @@ export module Meta.Trait.ArrayElement;
 
 import Meta.Token.Specifier;
 import Meta.Token.Type;
+import Meta.Token.TypeID;
 
 export namespace
 	Meta::Trait

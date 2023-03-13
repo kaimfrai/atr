@@ -1,5 +1,7 @@
 export module Meta.Token.Specifier;
 
+import Meta.Memory.Constraint;
+
 export namespace
 	Meta::Specifier
 {
@@ -69,6 +71,25 @@ export namespace
 		Mut
 		<	t_tEntity
 				[]
+		>
+	;
+}
+
+export namespace
+	Meta::Memory
+{
+	template
+		<	typename
+				t_tEntity
+		>
+	Constraint constexpr inline
+		Constraint_Of
+		<	::Meta::Specifier::Mut
+			<	t_tEntity
+			>
+		>
+	=	Constraint_Of
+		<	t_tEntity
 		>
 	;
 }

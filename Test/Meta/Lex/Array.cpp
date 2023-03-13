@@ -3,6 +3,7 @@ import Meta.Lex.Tokenizer;
 import Meta.Lex.Array;
 import Meta.Token.Specifier;
 import Meta.Token.Type;
+import Meta.Token.TypeID;
 import Meta.Token.Const;
 import Meta.Token.Mutable;
 import Meta.Token.Volatile;
