@@ -7,6 +7,7 @@ export namespace
 	// compile time known value or reference.
 	// Syntax:
 	// template class Map<(Key)>::Store<(Value)>;
+	// StoreKeyValuePair<(Key), (Value)>();
 	// auto const value = Map<(Key)>::Load();
 	template
 		<	decltype(auto)
@@ -17,7 +18,7 @@ export namespace
 	{
 		friend auto constexpr
 		(	Get
-		)	(	Map<t_vKey>
+		)	(	Map
 			)
 			noexcept
 		->	decltype(auto)
@@ -40,7 +41,7 @@ export namespace
 			friend
 			auto constexpr
 			(	Get
-			)	(	Map<t_vKey>
+			)	(	Map
 				)
 				noexcept
 			->	decltype(auto)
@@ -62,4 +63,24 @@ export namespace
 			);
 		}
 	};
+
+	template
+		<	decltype(auto)
+				t_vKey
+		,	decltype(auto)
+				t_vValue
+		>
+	auto constexpr
+	(	StoreKeyValuePair
+	)	()
+		noexcept
+	->	void
+	{	return
+		(void)
+		typename
+			Map<t_vKey>
+		::	template
+			Store<t_vValue>
+		{};
+	}
 }

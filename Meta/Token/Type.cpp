@@ -1,6 +1,7 @@
 export module Meta.Token.Type;
 
 import Meta.Token.Specifier;
+import Meta.Generic.Map;
 import Meta.Size;
 
 import Std;
@@ -54,20 +55,6 @@ export namespace
 	};
 
 	template
-		<	TypeID
-		>
-	struct
-		TypeRestore final
-	{
-		friend auto constexpr
-		(	RestoreType
-		)	(	TypeRestore
-			)
-			noexcept
-		;
-	};
-
-	template
 		<	typename
 				t_tEntity
 		>
@@ -88,24 +75,17 @@ export namespace
 		(	operator
 			TypeID
 		)	()	const
-		{	return
+		{
+			TypeID constexpr
+				vTypeID
 			{	&Erase
 			};
-		}
 
-		[[nodiscard]]
-		friend auto constexpr
-		(	RestoreType
-		)	(	TypeRestore
-				<	TypeID
-					{	&Erase
-					}
-				>
-			)
-			noexcept
-		{	return
-			TypeToken
-			{};
+			Generic::StoreKeyValuePair<vTypeID, TypeToken{}>();
+
+			return
+				vTypeID
+			;
 		}
 
 		friend auto constexpr
@@ -148,24 +128,17 @@ export namespace
 		(	operator
 			TypeID
 		)	()	const
-		{	return
+		{
+			TypeID constexpr
+				vTypeID
 			{	&Erase
 			};
-		}
 
-		[[nodiscard]]
-		friend auto constexpr
-		(	RestoreType
-		)	(	TypeRestore
-				<	TypeID
-					{	&Erase
-					}
-				>
-			)
-			noexcept
-		{	return
-			TypeToken
-			{};
+			Generic::StoreKeyValuePair<vTypeID, TypeToken{}>();
+
+			return
+				vTypeID
+			;
 		}
 
 		friend auto constexpr
@@ -361,11 +334,12 @@ export namespace
 		>
 	TypeToken constexpr inline
 		RestoreTypeToken
-	=	RestoreType
-		(	Token::TypeRestore
-			<	t_vTypeID
-			>{}
-		)
+	=	Generic
+	::	Map
+		<	t_vTypeID
+		>
+	::	Load
+		()
 	;
 
 	template
