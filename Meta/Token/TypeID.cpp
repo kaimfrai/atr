@@ -1,6 +1,5 @@
 export module Meta.Token.TypeID;
 
-import Meta.Memory.Size.Compare;
 import Meta.Memory.Constraint;
 
 export namespace
@@ -15,13 +14,23 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr
-		(	operator
-			->
+		(	GetAlign
 		)	()	const
 			noexcept
-		->	Memory::Constraint const*
 		{	return
 				Constraint
+			->	Align
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	GetSize
+		)	()	const
+			noexcept
+		{	return
+				Constraint
+			->	Size
 			;
 		}
 

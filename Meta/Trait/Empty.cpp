@@ -1,9 +1,8 @@
 export module Meta.Trait.Empty;
 
-import Meta.Token.Type;
-import Meta.Trait.BitSize;
-import Meta.Memory.Size.Compare;
+import Meta.Token.TypeID;
 import Meta.Memory.Size;
+import Meta.Memory.Size.Compare;
 
 export namespace
 	Meta::Trait
@@ -11,22 +10,18 @@ export namespace
 	struct
 		Empty
 	{
-		template
-			<	typename
-					t_tEntity
-			>
 		[[nodiscard]]
-		static auto constexpr
-		(	operator()
-		)	(	TypeToken<t_tEntity>
+		auto static constexpr
+		(	operator
+			()
+		)	(	TypeID
 					i_vType
 			)
 			noexcept
 		->	bool
 		{	return
-				::Meta::BitSize_Of
-				(	i_vType
-				)
+				i_vType.GetSize
+				()
 			==	0_bit
 			;
 		}

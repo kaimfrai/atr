@@ -1,21 +1,14 @@
 export module ATR.Member.Info;
 
-import Meta.Memory.Size;
+import Meta.Memory.Alignment;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
-import Meta.Memory.Alignment;
-import Meta.Trait.BitSize;
-import Meta.Token.Type;
 import Meta.Token.TypeID;
 import Meta.Token.Type.Compare;
 import Meta.ID.StringView;
 
 import Std;
 
-using ::Meta::Memory::Alignment;
-using ::Meta::TypeToken;
-using ::Meta::BitSize;
-using ::Meta::BitSize_Of;
 using ::Meta::StringView;
 using ::Meta::TypeID;
 
@@ -25,92 +18,58 @@ export namespace
 	ATR::Member
 {
 	struct
-		TypeInfo
-	{
-		BitSize Size;
-		TypeID Type;
-
-		explicit(false) constexpr
-		(	TypeInfo
-		)	()
-			noexcept
-		=	default;
-
-		template
-			<	typename
-					t_tEntity
-			>
-		explicit(false) constexpr
-		(	TypeInfo
-		)	(	TypeToken
-				<	t_tEntity
-				>	i_vType
-			)
-		:	Size
-			{	BitSize_Of
-				(	i_vType
-				)
-			}
-		,	Type
-			{	i_vType.operator TypeID()
-			}
-		{}
-
-		[[nodiscard]]
-		explicit(false) constexpr
-		(	operator TypeID
-		)	()	const
-			noexcept
-		{	return
-				Type
-			;
-		}
-
-		template
-			<	typename
-					t_tEntity
-			>
-		auto constexpr
-		(	operator =
-		)	(	TypeToken
-				<	t_tEntity
-				>	i_vType
-			)	&
-			noexcept
-		->	TypeInfo&
-		{
-			Size = BitSize_Of(i_vType);
-			Type = i_vType;
-			return
-				*this
-			;
-		}
-
-		[[nodiscard]]
-		friend auto constexpr
-		(	operator <=>
-		)	(	TypeInfo const&
-			,	TypeInfo const&
-			)
-			noexcept
-		=	default;
-	};
-
-	struct
 		Info final
 	{
-		Alignment Align;
+		TypeID Type;
 		StringView Name;
-		TypeInfo Type;
+
+		[[nodiscard]]
+		friend
+		auto constexpr
+		(	operator
+			==
+		)	(	Info const
+				&	i_rLeft
+			,	Info const
+				&	i_rRight
+			)
+			noexcept
+		->	bool
+		=	default;
 
 		[[nodiscard]]
 		friend auto constexpr
-		(	operator <=>
-		)	(	Info const&
-			,	Info const&
+		(	operator
+			<=>
+		)	(	Info const
+				&	i_rLeft
+			,	Info const
+				&	i_rRight
 			)
 			noexcept
-		=	default;
+		->	::std::strong_ordering
+		{
+			if	(	auto const
+						vCompareAlign
+					=	-
+						i_rLeft.Type.GetAlign().Value
+					<=>	-
+						i_rRight.Type.GetAlign().Value
+				;	not
+					::std::is_eq
+					(	vCompareAlign
+					)
+				)
+			{	return
+					vCompareAlign
+				;
+			}
+
+			return
+				i_rLeft.Name
+			<=>	i_rRight.Name
+			;
+		}
 
 		[[nodiscard]]
 		friend auto constexpr
@@ -121,8 +80,8 @@ export namespace
 			noexcept
 		->	bool
 		{	return
-				i_rInfo.Align.Value
-			!=	0_bit
+				i_rInfo.Type.GetAlign()
+			!=	0_align
 			;
 		}
 	};

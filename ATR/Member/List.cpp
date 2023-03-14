@@ -6,7 +6,6 @@ import Meta.ID.StringLiteral;
 import Meta.ID.Alias;
 import Meta.Token.Type;
 import Meta.Size;
-import Meta.Trait.BitAlign;
 
 import Std;
 
@@ -15,7 +14,6 @@ using ::Meta::SSize;
 using ::Meta::StringLiteral;
 using ::Meta::ID_T;
 using ::Meta::Type;
-using ::Meta::BitAlign_Of;
 
 export namespace
 	ATR::Member
@@ -138,8 +136,7 @@ export namespace
 		>
 	Info constexpr inline
 		New
-	{	BitAlign_Of(Type<t_tValue>)
+	{	Type<t_tValue>
 	,	ID_T<t_vName>::StringView
-	,	Type<t_tValue>
 	};
 }

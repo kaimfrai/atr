@@ -14,13 +14,14 @@ export namespace
 		(	operator
 			()
 		)	(	TypeID
-					i_aType
+					i_vType
 			)
 			noexcept
 		->	Memory::Alignment
 		{	return
-				i_aType
-			->	Align
+				i_vType
+			.	GetAlign
+				()
 			;
 		}
 	};

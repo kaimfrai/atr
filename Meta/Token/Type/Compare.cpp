@@ -15,15 +15,15 @@ export namespace
 	(	operator
 		<=>
 	)	(	TypeID
-				i_aLeft
+				i_vLeft
 		,	TypeID
-				i_aRight
+				i_vRight
 		)
 		noexcept
 	->	::std::partial_ordering
 	{
-		if	(	i_aLeft
-			==	i_aRight
+		if	(	i_vLeft
+			==	i_vRight
 			)
 		{	return
 				::std::partial_ordering::equivalent
@@ -31,31 +31,16 @@ export namespace
 		}
 
 		if	(	::std::strong_ordering const
-					vCompareAlign
-				=	i_aLeft->Align
-				<=>	i_aRight->Align
+					vCompareConstraint
+				=	*i_vLeft.Constraint
+				<=>	*i_vRight.Constraint
 			;	not
 				::std::is_eq
-				(	vCompareAlign
+				(	vCompareConstraint
 				)
 			)
 		{	return
-				vCompareAlign
-			;
-		}
-
-		if	(	::std::strong_ordering const
-					vCompareSize
-				=	i_aLeft->Size
-				<=>	i_aRight->Size
-			;	not
-				::std::is_eq
-				(	vCompareSize
-				)
-			)
-		{
-			return
-				vCompareSize
+				vCompareConstraint
 			;
 		}
 

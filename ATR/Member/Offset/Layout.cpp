@@ -10,16 +10,14 @@ import ATR.Layout;
 
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
-import Meta.Trait.BitSize;
-import Meta.Token.Type;
+import Meta.Memory.Constraint;
 import Meta.Token.Specifier;
 
 import Std;
 
-using ::Meta::Type;
-using ::Meta::BitSize_Of;
 using ::Meta::BitSize;
 using ::Meta::Specifier::Mut;
+using ::Meta::Memory::Constraint_Of;
 
 using namespace ::Meta::Literals;
 
@@ -119,13 +117,12 @@ export namespace
 		else
 		{	auto constexpr
 				vNorthSize
-			=	BitSize_Of
-				(	Type
-					<	typename
-							Layout<t_tpMember...>
-						::	NorthType
-					>
-				)
+			=	Constraint_Of
+				<	typename
+						Layout<t_tpMember...>
+					::	NorthType
+				>
+			.	Size
 			;
 			if	constexpr
 				(	vNorthSize
@@ -187,13 +184,12 @@ export namespace
 		else
 		{	auto constexpr
 				vNorthSize
-			=	BitSize_Of
-				(	Type
-					<	typename
-							Layout<t_tpMember...>
-						::	NorthType
-					>
-				)
+			=	Constraint_Of
+				<	typename
+						Layout<t_tpMember...>
+					::	NorthType
+				>
+			.	Size
 			;
 			if	constexpr
 				(	vNorthSize
@@ -255,13 +251,12 @@ export namespace
 		else
 		{	auto constexpr
 				vNorthSize
-			=	BitSize_Of
-				(	Type
-					<	typename
-							Layout<t_tpMember...>
-						::	NorthType
-					>
-				)
+			=	Constraint_Of
+				<	typename
+						Layout<t_tpMember...>
+					::	NorthType
+				>
+			.	Size
 			;
 			if	constexpr
 				(	vNorthSize

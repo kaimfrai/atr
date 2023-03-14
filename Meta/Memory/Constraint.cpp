@@ -1,6 +1,7 @@
 export module Meta.Memory.Constraint;
 
 import Meta.Memory.Size;
+import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Scale;
 import Meta.Memory.Alignment;
 
@@ -18,6 +19,16 @@ export namespace
 		BitSize
 			Size
 		;
+
+		[[nodiscard]]
+		friend
+		auto constexpr
+		(	operator
+			<=>
+		)	(	Constraint
+			,	Constraint
+			)
+		=	default;
 	};
 
 	//	customization point

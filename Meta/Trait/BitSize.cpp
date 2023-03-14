@@ -14,13 +14,14 @@ export namespace
 		(	operator
 			()
 		)	(	TypeID
-					i_aType
+					i_vType
 			)
 			noexcept
 		->	BitSize
 		{	return
-				i_aType
-			->	Size
+				i_vType
+			.	GetSize
+				()
 			;
 		}
 	};

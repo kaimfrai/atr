@@ -5,13 +5,13 @@ import ATR.Member.View;
 import ATR.Member.Static;
 import ATR.Member.Offset;
 
+import Meta.Memory.Constraint;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 import Meta.ID.StringView;
 import Meta.ID.Concept;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
-import Meta.Trait.BitAlign;
 import Meta.Memory.Alignment;
 
 import Std;
@@ -59,7 +59,7 @@ export namespace
 				==	i_vName
 				)
 			{	(	vOffset.Type
-				=	i_rInfo.Type.Type
+				=	i_rInfo.Type
 				);
 				return
 					vOffset
@@ -67,7 +67,7 @@ export namespace
 			}
 			else
 			{	(	vOffset.Offset
-				+=	i_rInfo.Type.Size
+				+=	i_rInfo.Type.GetSize()
 				);
 			}
 		}
@@ -133,9 +133,10 @@ export namespace
 	{
 		auto constexpr
 			vBitAlign
-		=	Meta::BitAlign_Of
-			(	i_vMemberType
-			)
+		=	::Meta::Memory::Constraint_Of
+			<	t_tMember
+			>
+		.	Align
 		;
 		if	constexpr
 			(	vBitAlign

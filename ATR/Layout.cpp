@@ -4,11 +4,10 @@ import Meta.Size;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Alignment;
+import Meta.Memory.Constraint;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 import Meta.Math.Prev;
-import Meta.Trait.BitAlign;
-import Meta.Trait.BitSize;
 import Meta.Byte.Buffer;
 import Meta.Token.Specifier;
 
@@ -17,9 +16,8 @@ import Std;
 using ::Meta::Math::Prev;
 using ::Meta::Type;
 using ::Meta::USize;
-using ::Meta::BitAlign_Of;
-using ::Meta::BitSize_Of;
 using ::Meta::Specifier::Mut;
+using ::Meta::Memory::Constraint_Of;
 
 using namespace ::Meta::Literals;
 
@@ -83,12 +81,16 @@ auto constexpr
 {
 	auto const
 		aFirst
-	=	begin(i_vAlignList)
+	=	i_vAlignList
+	.	begin
+		()
 	;
 	auto const
 		aLast
 	=	::std::prev
-		(	i_vAlignList.end()
+		(	i_vAlignList
+		.	end
+			()
 		)
 	;
 	if	(	*aFirst
@@ -98,7 +100,8 @@ auto constexpr
 		::std::bit_floor<Meta::USize>
 		(	Prev
 			(	i_vAlignList
-			.	size()
+			.	size
+				()
 			)
 		);
 	else
@@ -106,8 +109,12 @@ auto constexpr
 			aSplitPoint
 		=	::std::upper_bound
 			(	aFirst
-			,	end(i_vAlignList)
+			,	i_vAlignList
+			.	end
+				()
 			,	*aFirst
+			,	::std::greater<>
+				{}
 			)
 		;
 		return
@@ -131,13 +138,10 @@ export namespace
 		static USize constexpr
 			SplitIndex
 		=	LayoutSplitIndex
-			({	::Meta::Memory::Alignment
-				{	BitAlign_Of
-					(	Type
-						<	t_tpMember
-						>
-					)
-				}
+			({	Constraint_Of
+				<	t_tpMember
+				>
+			.	Align
 				...
 			})
 		;
@@ -292,9 +296,10 @@ export namespace
 	requires
 		(	...
 		and	(	1_align
-			==	BitAlign_Of
-				(	Type<t_tpBitField>
-				)
+			==	Constraint_Of
+				<	t_tpBitField
+				>
+			.	Align
 			)
 		)
 	struct
@@ -307,9 +312,10 @@ export namespace
 			BitSize
 		=(	0_bit
 		+	...
-		+	BitSize_Of
-			(	Type<t_tpBitField>
-			)
+		+	Constraint_Of
+			<	t_tpBitField
+			>
+		.	Size
 		);
 
 		// must be mutable in case one bitfield is mutable
