@@ -1,6 +1,3 @@
-import ATR.Member.List;
-import ATR.Member.Definition;
-import ATR.Member.Union;
 import ATR.Member.OffsetOf;
 import ATR.Instance;
 import ATR.Member.Offset;
@@ -32,74 +29,29 @@ using namespace ::Meta::Literals;
 namespace
 	ATR::Member
 {
-	template<>
-	Definition
-	<	New
-		<	"Int"
-		,	int
-		>
-	+	New
-		<	"IntConst"
-		,	int const
-		>
-	+	New
-		<	"IntMut"
-		,	Mut<int>
-		>
-	+	New
-		<	"Bool"
-		,	bool
-		>
-	+	New
-		<	"BoolConst"
-		,	bool const
-		>
-	+	New
-		<	"BoolMut"
-		,	Mut<bool>
-		>
-	+	New
-		<	"Field"
-		,	Field<3_bit>
-		>
-	+	New
-		<	"FieldConst"
-		,	Field<3_bit> const
-		>
-	+	New
-		<	"FieldMut"
-		,	Mut<Field<3_bit>>
-		>
-	+	New
-		<	"ArrayBool"
-		,	bool[5]
-		>
-	+	New
-		<	"ArrayBoolConst"
-		,	bool const[5]
-		>
-	+	New
-		<	"ArrayBoolMut"
-		,	Mut<bool[5]>
-		>
-
-	+	New
-		<	"ArrayField"
-		,	Field<3_bit>[5]
-		>
-	+	New
-		<	"ArrayFieldConst"
-		,	Field<3_bit> const[5]
-		>
-	+	New
-		<	"ArrayFieldMut"
-		,	Mut<Field<3_bit>[5]>
-		>
-	>	extern const
-		Definition_For
-		<	"OffsetOfTest"
-		>
-	;
+	auto constexpr
+	(	Configure
+	)	(	::Meta::ID_T<"OffsetOfTest">
+		,	auto
+			&&	o_rConfig
+		)
+	{
+		o_rConfig("Int", ::Meta::Type<int>);
+		o_rConfig("IntConst", ::Meta::Type<int const>);
+		o_rConfig("IntMut", ::Meta::Type<Mut<int>>);
+		o_rConfig("Bool", ::Meta::Type<bool>);
+		o_rConfig("BoolConst", ::Meta::Type<bool const>);
+		o_rConfig("BoolMut", ::Meta::Type<Mut<bool>>);
+		o_rConfig("Field", ::Meta::Type<Field<3_bit>>);
+		o_rConfig("FieldConst", ::Meta::Type<Field<3_bit> const>);
+		o_rConfig("FieldMut", ::Meta::Type<Mut<Field<3_bit>>>);
+		o_rConfig("ArrayBool", ::Meta::Type<bool[5]>);
+		o_rConfig("ArrayBoolConst", ::Meta::Type<bool const[5]>);
+		o_rConfig("ArrayBoolMut", ::Meta::Type<Mut<bool[5]>>);
+		o_rConfig("ArrayField", ::Meta::Type<Field<3_bit>[5]>);
+		o_rConfig("ArrayFieldConst", ::Meta::Type<Field<3_bit> const[5]>);
+		o_rConfig("ArrayFieldMut", ::Meta::Type<Field<3_bit>[5]>);
+	}
 }
 
 using OffsetOfTest = ::ATR::Type<"OffsetOfTest">;
@@ -131,16 +83,17 @@ static_assert
 template
 	<	typename
 			t_tOwner
-	,	Meta::StringLiteral
+	,	::Meta::StringLiteral
 			t_vMemberName
 	>
 auto constexpr inline
 	OffsetType
 =	Type
 	<	decltype
-		(	ATR::Member::OffsetOf
-			(	Meta::ID_V<t_vMemberName>
-			,	Meta::Type<t_tOwner>
+		(	::ATR::Member::OffsetOf
+			(	::Meta::ID_V<t_vMemberName>
+			,	::std::declval<t_tOwner>()
+				.	TypeName
 			)
 		)
 	>
@@ -320,7 +273,7 @@ auto constexpr inline
 
 static_assert
 (	MemberType_For
-	<	::std::byte*
+	<	::std::byte(&)[]
 	,	0_bit
 	,	int
 	>
@@ -329,7 +282,7 @@ static_assert
 
 static_assert
 (	MemberType_For
-	<	::std::byte const*
+	<	::std::byte const(&)[]
 	,	0_bit
 	,	int
 	>
@@ -338,7 +291,7 @@ static_assert
 
 static_assert
 (	MemberType_For
-	<	OffsetOfTest*
+	<	OffsetOfTest&
 	,	0_bit
 	,	int
 	>
@@ -347,7 +300,7 @@ static_assert
 
 static_assert
 (	MemberType_For
-	<	OffsetOfTest const*
+	<	OffsetOfTest const&
 	,	0_bit
 	,	int
 	>
@@ -356,7 +309,7 @@ static_assert
 
 static_assert
 (	MemberType_For
-	<	::std::byte*
+	<	::std::byte(&)[]
 	,	32_bit
 	,	int const
 	>
@@ -367,7 +320,7 @@ static_assert
 
 static_assert
 (	MemberType_For
-	<	::std::byte const*
+	<	::std::byte const(&)[]
 	,	32_bit
 	,	int const
 	>
@@ -378,7 +331,7 @@ static_assert
 
 static_assert
 (	MemberType_For
-	<	OffsetOfTest*
+	<	OffsetOfTest&
 	,	32_bit
 	,	int const
 	>
@@ -389,7 +342,7 @@ static_assert
 
 static_assert
 (	MemberType_For
-	<	OffsetOfTest const*
+	<	OffsetOfTest const&
 	,	32_bit
 	,	int const
 	>
@@ -400,7 +353,7 @@ static_assert
 
 static_assert
 (	MemberType_For
-	<	::std::byte*
+	<	::std::byte(&)[]
 	,	64_bit
 	,	Mut<int>
 	>
@@ -411,7 +364,7 @@ static_assert
 
 static_assert
 (	MemberType_For
-	<	::std::byte const*
+	<	::std::byte const(&)[]
 	,	64_bit
 	,	Mut<int>
 	>
@@ -422,7 +375,7 @@ static_assert
 
 static_assert
 (	MemberType_For
-	<	OffsetOfTest*
+	<	OffsetOfTest&
 	,	64_bit
 	,	Mut<int>
 	>
@@ -433,7 +386,7 @@ static_assert
 
 static_assert
 (	MemberType_For
-	<	OffsetOfTest const*
+	<	OffsetOfTest const&
 	,	64_bit
 	,	Mut<int>
 	>
@@ -444,13 +397,13 @@ static_assert
 
 static_assert
 (	MemberType_For
-	<	::std::byte*
+	<	::std::byte(&)[]
 	,	156_bit
 	,	bool
 	>
 ==	Type
 	<	::Meta::Bit::Reference
-		<	1_bit
+		<	bool
 		,	4_bdx
 		>
 	>
@@ -458,7 +411,7 @@ static_assert
 
 static_assert
 (	MemberType_For
-	<	::std::byte const*
+	<	::std::byte const(&)[]
 	,	156_bit
 	,	bool
 	>
@@ -469,13 +422,13 @@ static_assert
 
 static_assert
 (	MemberType_For
-	<	OffsetOfTest*
+	<	OffsetOfTest&
 	,	156_bit
 	,	bool
 	>
 ==	Type
 	<	::Meta::Bit::Reference
-		<	1_bit
+		<	bool
 		,	4_bdx
 		>
 	>
@@ -483,7 +436,7 @@ static_assert
 
 static_assert
 (	MemberType_For
-	<	OffsetOfTest const*
+	<	OffsetOfTest const&
 	,	156_bit
 	,	bool
 	>
@@ -494,7 +447,7 @@ static_assert
 
 static_assert
 (	MemberType_For
-	<	::std::byte*
+	<	::std::byte(&)[]
 	,	5_bit
 	,	bool[5]
 	>
@@ -509,7 +462,7 @@ static_assert
 
 static_assert
 (	MemberType_For
-	<	::std::byte const*
+	<	::std::byte const(&)[]
 	,	5_bdx
 	,	bool[5]
 	>
@@ -523,7 +476,7 @@ static_assert
 
 static_assert
 (	MemberType_For
-	<	OffsetOfTest*
+	<	OffsetOfTest&
 	,	96_bit
 	,	bool[5]
 	>
@@ -538,7 +491,7 @@ static_assert
 
 static_assert
 (	MemberType_For
-	<	OffsetOfTest const*
+	<	OffsetOfTest const&
 	,	96_bit
 	,	bool[5]
 	>

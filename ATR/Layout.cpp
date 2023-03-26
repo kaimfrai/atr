@@ -3,21 +3,32 @@ export module ATR.Layout;
 import Meta.Size;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
+import Meta.Memory.Size.PointerArithmetic;
+import Meta.Memory.Size.Compare;
+import Meta.Memory.Size.Cast;
 import Meta.Memory.Alignment;
 import Meta.Memory.Constraint;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 import Meta.Math.Prev;
-import Meta.Byte.Buffer;
 import Meta.Token.Specifier;
+import Meta.Bit.Reference;
+import Meta.Bit.Index;
+import Meta.Bit.Field;
+import Meta.Bit.Array;
 
 import Std;
 
+using ::Meta::Bit::ArrayReference;
+using ::Meta::Bit::Reference;
 using ::Meta::Math::Prev;
 using ::Meta::Type;
 using ::Meta::USize;
 using ::Meta::Specifier::Mut;
-using ::Meta::Memory::Constraint_Of;
+using ::Meta::Memory::BitAlign_Of;
+using ::Meta::Memory::BitSize_Of;
+using ::Meta::ByteIndex;
+using ::Meta::BitSize;
 
 using namespace ::Meta::Literals;
 
@@ -138,10 +149,9 @@ export namespace
 		static USize constexpr
 			SplitIndex
 		=	LayoutSplitIndex
-			({	Constraint_Of
+			({	BitAlign_Of
 				<	t_tpMember
 				>
-			.	Align
 				...
 			})
 		;
@@ -209,8 +219,11 @@ export namespace
 		Layout
 		<	t_tData const
 		>
-	:	Layout<t_tData>
 	{
+		t_tData
+			Value
+		;
+
 		auto& operator=(Layout) = delete;
 	};
 
@@ -280,47 +293,53 @@ export namespace
 				[	t_nExtent
 				]
 		>
-	:	Layout
-		<	t_tData
-				[	t_nExtent
-				]
-		>
 	{
+		::std::array<t_tData, t_nExtent>
+			Value
+		;
+
 		auto& operator=(Layout) = delete;
 	};
 
 	template
 		<	typename
+				t_tFirstBitField
+		,	typename
 			...	t_tpBitField
 		>
 	requires
-		(	...
-		and	(	1_align
-			==	Constraint_Of
-				<	t_tpBitField
-				>
-			.	Align
-			)
+		(	1_align
+		==	BitAlign_Of
+			<	t_tFirstBitField
+			>
 		)
 	struct
 		Layout
-		<	t_tpBitField
+		<	t_tFirstBitField
+		,	t_tpBitField
 			...
 		>
 	{
-		static auto constexpr
-			BitSize
-		=(	0_bit
-		+	...
-		+	Constraint_Of
-			<	t_tpBitField
-			>
-		.	Size
-		);
+		::Meta::ByteSize static constexpr
+			ByteSize
+		=	(	BitSize_Of
+				<	t_tFirstBitField
+				>
+			+	...
+			+	BitSize_Of
+				<	t_tpBitField
+				>
+			)
+		;
 
 		// must be mutable in case one bitfield is mutable
-		mutable ::Meta::Byte::Buffer<BitSize>
+		mutable
+		::std::byte
 			Buffer
+			[	ByteSize
+				.	get
+					()
+			]
 		;
 	};
 }

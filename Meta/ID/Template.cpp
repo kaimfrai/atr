@@ -3,10 +3,12 @@ export module Meta.ID.Template;
 import Meta.ID.UpperCase;
 import Meta.ID.LowerCase;
 import Meta.ID.Decimal;
-import Meta.ID.StringView;
 import Meta.ID.StringLiteral;
 
+import Meta.Token.Index;
 import Meta.Size;
+
+import Std;
 
 auto constexpr
 (	ToChar
@@ -15,6 +17,17 @@ auto constexpr
 	)
 ->	char
 {	return i_cChar;	}
+
+export template
+	<	char
+			t_nCharacter
+	>
+auto constexpr
+(	FromChar
+)	(	Meta::IndexToken<t_nCharacter>
+	)
+->	char
+{	return t_nCharacter;	}
 
 export namespace
 	Meta
@@ -28,36 +41,56 @@ export namespace
 	struct
 		ID final
 	{
+		template
+			<	char
+				...	t_vpSuffix
+			>
+		using
+			Append
+		=	ID
+			<	(t_vpString)
+				...
+			,	::FromChar
+				(	Meta::IndexToken
+					<	t_vpSuffix
+					>{}
+				)
+				...
+			>
+		;
+
 		static USize constexpr
 			Length
 		=	sizeof...(t_vpString)
 		;
 
-		static char constexpr
-			RawArray
-			[	Length
-			+	1uz
-			]
+		static StringLiteral<Length> constexpr
+			String
 		{	::ToChar(t_vpString)
 			...
 		,	'\0'
 		};
 
-		static StringView constexpr
-			StringView
-		{	RawArray
-		,	Length
-		};
-
-		static StringLiteral<Length> constexpr
-			String
-		{	RawArray
-		};
-
-		[[nodiscard]] constexpr
-		(	operator decltype(auto)
+		[[nodiscard]]
+		explicit(false) constexpr
+		(	operator
+			StringLiteral<Length>
 		)	()	const
 			noexcept
-		{	return (StringView);	}
+		{	return
+				String
+			;
+		}
+
+		[[nodiscard]]
+		explicit(false) constexpr
+		(	operator
+			StringView
+		)	()	const
+			noexcept
+		{	return
+				String
+			;
+		}
 	};
 }

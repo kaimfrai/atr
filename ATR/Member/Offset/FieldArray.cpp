@@ -34,7 +34,8 @@ export namespace
 	auto constexpr
 	(	operator->*
 	)	(	::std::byte
-			*	i_aObject
+			(&	i_rObject
+			)	[]
 		,	Member
 			<	t_nOffset
 			,	Field<t_nWidth>
@@ -57,7 +58,7 @@ export namespace
 		,	t_nExtent
 		,	vByteOffset.Remainder
 		>{	::std::launder
-			(	i_aObject
+			(	i_rObject
 			+	vByteOffset.Quotient
 			)
 		};
@@ -75,7 +76,8 @@ export namespace
 	auto constexpr
 	(	operator->*
 	)	(	::std::byte const
-			*	i_aObject
+			(&	i_rObject
+			)	[]
 		,	Member
 			<	t_nOffset
 			,	Field<t_nWidth> const
@@ -98,7 +100,7 @@ export namespace
 			<	t_nWidth
 			,	t_nExtent
 			,	vByteOffset.Remainder
-			>{	i_aObject
+			>{	i_rObject
 			+	vByteOffset.Quotient
 			}
 		);

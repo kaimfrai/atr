@@ -1,8 +1,5 @@
-import ATR.Member.List;
-import ATR.Member.Union;
-import ATR.Member.Definition;
-import ATR.Member.Transform;
-import ATR.Member.Compare;
+import ATR.Member.DynamicTypes;
+import ATR.Member.ConfigTransformer;
 
 import Meta.Bit.Field;
 import Meta.Memory.Size;
@@ -10,6 +7,11 @@ import Meta.Token.Const;
 import Meta.Token.Mutable;
 import Meta.Token.Specifier;
 import Meta.Token.Extent;
+import Meta.Token.Type;
+import Meta.ID.Alias;
+import Meta.ID.Literals;
+
+import Std;
 
 using ::Meta::Bit::Field;
 using ::Meta::Specifier::Mut;
@@ -19,117 +21,110 @@ using namespace ::Meta::Literals;
 namespace
 	ATR::Member
 {
-	template<>
-	Definition
-	<	New
-		<	"Int"
-		,	int
-		>
-	+	New
-		<	"Bool"
-		,	bool
-		>
-	+	New
-		<	"Field"
-		,	Field<3_bit>
-		>
-	>	const extern
-		Definition_For
-		<	"Single"
-		>
-	;
+	auto constexpr
+	(	Configure
+	)	(	::Meta::ID_T<"Single">
+		,	auto
+			&&	o_rConfig
+		)
+	{
+		o_rConfig("Int", ::Meta::Type<int>);
+		o_rConfig("Bool", ::Meta::Type<bool>);
+		o_rConfig("Field", ::Meta::Type<Field<3_bit>>);
+	}
 
-	template<>
-	Definition
-	<	New
-		<	"Int"
-		,	int const
-		>
-	+	New
-		<	"Bool"
-		,	bool const
-		>
-	+	New
-		<	"Field"
-		,	Field<3_bit> const
-		>
-	>	const extern
-		Definition_For
-		<	"ConstSingle"
-		>
-	;
+	auto constexpr
+	(	Configure
+	)	(	::Meta::ID_T<"Const">
+		,	auto
+			&&	o_rConfig
+		)
+	{
+		o_rConfig("Int", ::Meta::Type<int const>);
+		o_rConfig("Bool", ::Meta::Type<bool const>);
+		o_rConfig("Field", ::Meta::Type<Field<3_bit> const>);
+	}
 
-	template<>
-	Definition
-	<	New
-		<	"Int"
-		,	Mut<int>
-		>
-	+	New
-		<	"Bool"
-		,	Mut<bool>
-		>
-	+	New
-		<	"Field"
-		,	Mut<Field<3_bit>>
-		>
-	>	const extern
-		Definition_For
-		<	"MutSingle"
-		>
-	;
+	auto constexpr
+	(	Configure
+	)	(	::Meta::ID_T<"TransformedConst">
+		,	auto
+			&&	o_rConfig
+		)
+	{
+		Configure("Single"_ID, ConfigTransformer{ o_rConfig, ::Meta::Const });
+	}
 
-	template<>
-	Definition
-	<	New
-		<	"Int"
-		,	int[5]
-		>
-	+	New
-		<	"Bool"
-		,	bool[5]
-		>
-	+	New
-		<	"Field"
-		,	Field<3_bit>[5]
-		>
-	>	const extern
-		Definition_For
-		<	"Array"
-		>
-	;
+	auto constexpr
+	(	Configure
+	)	(	::Meta::ID_T<"Mut">
+		,	auto
+			&&	o_rConfig
+		)
+	{
+		o_rConfig("Int", ::Meta::Type<Mut<int>>);
+		o_rConfig("Bool", ::Meta::Type<Mut<bool>>);
+		o_rConfig("Field", ::Meta::Type<Mut<Field<3_bit>>>);
+	}
+
+	auto constexpr
+	(	Configure
+	)	(	::Meta::ID_T<"TransformedMut">
+		,	auto
+			&&	o_rConfig
+		)
+	{
+		Configure("Single"_ID, ConfigTransformer{ o_rConfig, ::Meta::Mutable });
+	}
+
+	auto constexpr
+	(	Configure
+	)	(	::Meta::ID_T<"Array">
+		,	auto
+			&&	o_rConfig
+		)
+	{
+		o_rConfig("Int", ::Meta::Type<int[5]>);
+		o_rConfig("Bool", ::Meta::Type<bool[5]>);
+		o_rConfig("Field", ::Meta::Type<Field<3_bit>[5]>);
+	}
+
+	auto constexpr
+	(	Configure
+	)	(	::Meta::ID_T<"TransformedArray">
+		,	auto
+			&&	o_rConfig
+		)
+	{
+		Configure("Single"_ID, ConfigTransformer{ o_rConfig, ::Meta::Extent<5uz> });
+	}
 }
 
-using ::ATR::Member::Definition_For;
-using ::ATR::Member::All_Of;
+using ::ATR::Member::DynamicTypes_Of;
 
 static_assert
-(	All_Of<"Single">
-!=	All_Of<"ConstSingle">
+(	DynamicTypes_Of<"Single">
+!=	DynamicTypes_Of<"TransformedConst">
+);
+static_assert
+(	DynamicTypes_Of<"Const">
+==	DynamicTypes_Of<"TransformedConst">
 );
 
 static_assert
-(	Definition_For<"Single"> * Meta::Const
-==	All_Of<"ConstSingle">
+(	DynamicTypes_Of<"Single">
+!=	DynamicTypes_Of<"TransformedMut">
 );
-
-
 static_assert
-(	All_Of<"Single">
-!=	All_Of<"MutSingle">
-);
-
-static_assert
-(	Definition_For<"Single"> * Meta::Mutable
-==	All_Of<"MutSingle">
+(	DynamicTypes_Of<"Mut">
+==	DynamicTypes_Of<"TransformedMut">
 );
 
 static_assert
-(	All_Of<"Single">
-!=	All_Of<"Array">
+(	DynamicTypes_Of<"Single">
+!=	DynamicTypes_Of<"TransformedArray">
 );
-
 static_assert
-(	Definition_For<"Single"> * 5_ext
-==	All_Of<"Array">
+(	DynamicTypes_Of<"Array">
+==	DynamicTypes_Of<"TransformedArray">
 );

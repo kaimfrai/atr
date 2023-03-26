@@ -18,8 +18,11 @@ export namespace
 	{
 		::std::byte
 			m_vValue
-		[	t_nSize.get()
-		];
+			[	t_nSize
+				.	get
+					()
+			]
+		;
 
 		explicit(false) constexpr
 		(	Buffer
@@ -145,39 +148,40 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
-		(	operator +
+		friend
+		auto constexpr
+		(	operator+
 		)	(	Buffer
 				&	i_rBuffer
 			)
 			noexcept
 		->	::std::byte*
 		{	return
-				+
-				i_rBuffer
+			+	i_rBuffer
 			.	m_vValue
 			;
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
-		(	operator +
+		friend
+		auto constexpr
+		(	operator+
 		)	(	Buffer const
 				&	i_rBuffer
 			)
 			noexcept
 		->	::std::byte const*
 		{	return
-				+
-				i_rBuffer
+			+	i_rBuffer
 			.	m_vValue
 			;
 		}
 
-		friend auto constexpr
-		(	operator +
+		friend
+		auto constexpr
+		(	operator+
 		)	(	Buffer const volatile
-				&&	i_rBuffer
+				&&
 			)
 		=	delete;
 	};

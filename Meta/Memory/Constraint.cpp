@@ -21,6 +21,28 @@ export namespace
 		;
 
 		[[nodiscard]]
+		auto constexpr
+		(	IsAligned
+		)	()	const
+			noexcept
+		{	return
+				Align
+			!=	0_align
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	IsStateful
+		)	()	const
+			noexcept
+		{	return
+				Size
+			!=	0_bit
+			;
+		}
+
+		[[nodiscard]]
 		friend
 		auto constexpr
 		(	operator
@@ -163,4 +185,28 @@ export namespace
 	{	1_align
 	,	1_bit
 	};
+
+	template
+		<	typename
+				t_tEntity
+		>
+	auto constexpr inline
+		BitSize_Of
+	=		Constraint_Of
+			<	t_tEntity
+			>
+		.	Size
+	;
+
+	template
+		<	typename
+				t_tEntity
+		>
+	auto constexpr inline
+		BitAlign_Of
+	=		Constraint_Of
+			<	t_tEntity
+			>
+		.	Align
+	;
 }

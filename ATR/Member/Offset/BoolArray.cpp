@@ -27,7 +27,8 @@ export namespace
 	auto constexpr
 	(	operator->*
 	)	(	::std::byte
-			*	i_aObject
+			(&	i_rObject
+			)	[]
 		,	Member
 			<	t_nOffset
 			,	bool[t_nExtent]
@@ -36,7 +37,7 @@ export namespace
 		noexcept
 	->	decltype(auto)
 	{	return
-			i_aObject
+			i_rObject
 		->*	Member
 			<	t_nOffset
 			,	Field<1_bit>
@@ -56,7 +57,8 @@ export namespace
 	auto constexpr
 	(	operator->*
 	)	(	::std::byte const
-			*	i_aObject
+			(&	i_rObject
+			)	[]
 		,	Member
 			<	t_nOffset
 			,	bool const
@@ -67,7 +69,7 @@ export namespace
 		noexcept
 	->	decltype(auto)
 	{	return
-			i_aObject
+			i_rObject
 		->*	Member
 			<	t_nOffset
 			,	Field<1_bit> const

@@ -1,23 +1,27 @@
-add_single_file_modules(
-	Info.cpp
-	List.cpp
-	Alias.cpp
-)
-
 add_subdirectory(Offset)
 
 add_single_file_modules(
-	View.cpp
-	Compare.cpp
-	Contains.cpp
-	Definition.cpp
-	Difference.cpp
-	InfixDefinition.cpp
+	Constants.cpp
+	Layout.cpp
+	Name.cpp
+	Info.cpp
+	Alias.cpp
+	NamedInfo.cpp
+)
+
+add_subdirectory(Compare)
+
+add_single_file_modules(
+	Finalize.cpp
+	ConfigData.cpp
+	ConfigBuilder.cpp
+	Config.cpp
+	DynamicTypes.cpp
+	DynamicSize.cpp
+	Storage.cpp
+	ConfigAffixer.cpp
 	Static.cpp
 	Offset.cpp
 	OffsetOf.cpp
-	PrefixDefinition.cpp
-	SuffixDefinition.cpp
-	Transform.cpp
-	Union.cpp
+	ConfigTransformer.cpp
 )

@@ -49,7 +49,7 @@ auto constexpr
 	using
 		BitReference
 	=	Meta::Bit::Reference
-		<	t_nSize
+		<	Field<t_nSize>
 		,	nBitOffset
 		>
 	;

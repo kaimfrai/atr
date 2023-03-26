@@ -1,8 +1,6 @@
 export module Meta.Trait.Empty;
 
 import Meta.Token.TypeID;
-import Meta.Memory.Size;
-import Meta.Memory.Size.Compare;
 
 export namespace
 	Meta::Trait
@@ -20,9 +18,10 @@ export namespace
 			noexcept
 		->	bool
 		{	return
-				i_vType.GetSize
+				not
+				i_vType
+			.	IsStateful
 				()
-			==	0_bit
 			;
 		}
 	};

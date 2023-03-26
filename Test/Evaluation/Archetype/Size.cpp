@@ -1,8 +1,8 @@
 import Test.Evaluation.SizeCheck;
+
 import ATR.Instance;
-import ATR.Address;
 import ATR.Literals;
-import Evaluation.Archetype.ComputeVolume;
+
 import Evaluation.Archetype.Square;
 import Evaluation.Archetype.Rectangle;
 import Evaluation.Archetype.Triangle;
@@ -56,9 +56,3 @@ static_assert(SizeMinimal<ATR::Type<"Ellipsoid">, 3, 1>);
 
 static_assert(AdditionalSize<ATR::Type<"Head">, 3, 3> == 4);
 static_assert(SizeMinimal<ATR::Type<"Head">, 3, 3>);
-
-static_assert
-(	ATR::Address<ATR::ID_T<"ComputeVolume">, ATR::Type<"Head"> const&>
-==	ATR::Address<ATR::ID_T<"ComputeVolume">, ATR::Type<"Sphere"> const&>
-);
-

@@ -2,23 +2,22 @@ export module Evaluation.Archetype.Square;
 
 import Evaluation.Archetype.Rectangle;
 
-import ATR.Member.Alias;
-import ATR.Member.Union;
-import ATR.Member.Definition;
+import Meta.ID.Alias;
+import Meta.ID.Literals;
+
+using namespace ::Meta::Literals;
 
 export namespace
 	ATR::Member
 {
-	template<>
-	Definition
-	<	"Rectangle"_def
-	+	Alias
-		<	"Height"
-		,	"Width"
-		>
-	>	const extern
-		Definition_For
-		<	"Square"
-		>
-	;
+	auto constexpr
+	(	Configure
+	)	(	::Meta::ID_T<"Square">
+		,	auto
+			&&	o_rConfig
+		)
+	{
+		o_rConfig("Height", "Width");
+		Configure("Rectangle"_ID, o_rConfig);
+	}
 }

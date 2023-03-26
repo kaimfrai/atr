@@ -24,7 +24,8 @@ export namespace
 	auto constexpr
 	(	operator->*
 	)	(	::std::byte
-			*	i_aObject
+			(&	i_rObject
+			)	[]
 		,	Member<t_nOffset, t_tData>
 		)
 		noexcept
@@ -35,7 +36,7 @@ export namespace
 		//	so we need to launder it
 		::std::launder
 		(	PointerCast<t_tData>
-			(	i_aObject
+			(	i_rObject
 			+	t_nOffset
 			)
 		);
@@ -51,7 +52,8 @@ export namespace
 	auto constexpr
 	(	operator->*
 	)	(	::std::byte const
-			*	i_aObject
+			(&	i_rObject
+			)	[]
 		,	Member<t_nOffset, t_tData const>
 		)
 		noexcept
@@ -62,7 +64,7 @@ export namespace
 		//	so we need to launder it
 		::std::launder
 		(	PointerCast<t_tData const>
-			(	i_aObject
+			(	i_rObject
 			+	t_nOffset
 			)
 		);

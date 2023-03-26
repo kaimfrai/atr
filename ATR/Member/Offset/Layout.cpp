@@ -4,7 +4,6 @@ import ATR.Offset.Bool;
 import ATR.Offset.BoolArray;
 import ATR.Offset.Field;
 import ATR.Offset.FieldArray;
-import ATR.Offset.Mutable;
 import ATR.Offset.Member;
 import ATR.Layout;
 
@@ -17,7 +16,7 @@ import Std;
 
 using ::Meta::BitSize;
 using ::Meta::Specifier::Mut;
-using ::Meta::Memory::Constraint_Of;
+using ::Meta::Memory::BitSize_Of;
 
 using namespace ::Meta::Literals;
 
@@ -32,14 +31,14 @@ export namespace
 	auto constexpr
 	(	operator->*
 	)	(	Layout<t_tMember> const
-			*	i_aObject
+			&	i_rObject
 		,	Member<0_bit, ::std::add_const_t<t_tMember>>
 		)
 		noexcept
 	->	decltype(auto)
 	{	return
-		(	i_aObject
-		->	Value
+		(	i_rObject
+			.	Value
 		);
 	}
 
@@ -51,14 +50,14 @@ export namespace
 	auto constexpr
 	(	operator->*
 	)	(	Layout<Mut<t_tMember>> const
-			*	i_aObject
+			&	i_rObject
 		,	Member<0_bit, Mut<t_tMember>>
 		)
 		noexcept
 	->	decltype(auto)
 	{	return
-		(	i_aObject
-		->	Value
+		(	i_rObject
+			.	Value
 		);
 	}
 
@@ -70,14 +69,14 @@ export namespace
 	auto constexpr
 	(	operator->*
 	)	(	Layout<t_tMember>
-			*	i_aObject
+			&	i_rObject
 		,	Member<0_bit, t_tMember>
 		)
 		noexcept
 	->	decltype(auto)
 	{	return
-		(	i_aObject
-		->	Value
+		(	i_rObject
+			.	Value
 		);
 	}
 
@@ -93,7 +92,7 @@ export namespace
 	auto constexpr
 	(	operator->*
 	)	(	Layout<t_tpMember...>
-			*	i_aObject
+			&	i_rObject
 		,	Member<t_nOffset, t_tData>
 				i_vMember
 		)
@@ -106,36 +105,40 @@ export namespace
 	{
 		if	constexpr
 			(	requires
-				{	+i_aObject->Buffer;
+				{	i_rObject
+					.	Buffer
+					;
 				}
 			)
 		{	return
-				+i_aObject->Buffer
+				i_rObject
+				.	Buffer
 			->*	i_vMember
 			;
 		}
 		else
 		{	auto constexpr
 				vNorthSize
-			=	Constraint_Of
+			=	BitSize_Of
 				<	typename
 						Layout<t_tpMember...>
 					::	NorthType
 				>
-			.	Size
 			;
 			if	constexpr
 				(	vNorthSize
 				>	t_nOffset
 				)
 			{	return
-					&i_aObject->NorthArea
+					i_rObject
+					.	NorthArea
 				->*	i_vMember
 				;
 			}
 			else
 			{	return
-					&i_aObject->SouthArea
+					i_rObject
+					.	SouthArea
 				->*	Member
 					<	t_nOffset
 					-	vNorthSize
@@ -158,7 +161,7 @@ export namespace
 	auto constexpr
 	(	operator->*
 	)	(	Layout<t_tpMember...> const
-			*	i_aObject
+			&	i_rObject
 		,	Member<t_nOffset, t_tData const>
 				i_vMember
 		)
@@ -171,12 +174,15 @@ export namespace
 	{
 		if	constexpr
 			(	requires
-				{	+i_aObject->Buffer;
+				{	i_rObject
+					.	Buffer
+					;
 				}
 			)
 		{	return
-				static_cast<::std::byte const*>
-				(	+i_aObject->Buffer
+				static_cast<::std::byte const(&)[]>
+				(	i_rObject
+					.	Buffer
 				)
 			->*	i_vMember
 			;
@@ -184,25 +190,26 @@ export namespace
 		else
 		{	auto constexpr
 				vNorthSize
-			=	Constraint_Of
+			=	BitSize_Of
 				<	typename
 						Layout<t_tpMember...>
 					::	NorthType
 				>
-			.	Size
 			;
 			if	constexpr
 				(	vNorthSize
 				>	t_nOffset
 				)
 			{	return
-					&i_aObject->NorthArea
+					i_rObject
+					.	NorthArea
 				->*	i_vMember
 				;
 			}
 			else
 			{	return
-					&i_aObject->SouthArea
+					i_rObject
+					.	SouthArea
 				->*	Member
 					<	t_nOffset
 					-	vNorthSize
@@ -225,7 +232,7 @@ export namespace
 	auto constexpr
 	(	operator->*
 	)	(	Layout<t_tpMember...> const
-			*	i_aObject
+			&	i_rObject
 		,	Member<t_nOffset, Mut<t_tData>>
 				i_vMember
 		)
@@ -238,12 +245,15 @@ export namespace
 	{
 		if	constexpr
 			(	requires
-				{	+i_aObject->Buffer;
+				{	i_rObject
+					.	Buffer
+					;
 				}
 			)
 		{	return
-				static_cast<::std::byte const*>
-				(	+i_aObject->Buffer
+				static_cast<::std::byte const(&)[]>
+				(	i_rObject
+					.	Buffer
 				)
 			->*	i_vMember
 			;
@@ -251,25 +261,26 @@ export namespace
 		else
 		{	auto constexpr
 				vNorthSize
-			=	Constraint_Of
+			=	BitSize_Of
 				<	typename
 						Layout<t_tpMember...>
 					::	NorthType
 				>
-			.	Size
 			;
 			if	constexpr
 				(	vNorthSize
 				>	t_nOffset
 				)
 			{	return
-					&i_aObject->NorthArea
+					i_rObject
+					.	NorthArea
 				->*	i_vMember
 				;
 			}
 			else
 			{	return
-					&i_aObject->SouthArea
+					i_rObject
+					.	SouthArea
 				->*	Member
 					<	t_nOffset
 					-	vNorthSize

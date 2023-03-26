@@ -1,0 +1,8 @@
+add_module_object_tests(
+	AliasCount
+	MemberCount
+	TypeList
+	NameList
+	Size
+	Address
+)

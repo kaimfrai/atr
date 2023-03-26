@@ -101,7 +101,7 @@ export namespace
 			else
 			{	throw
 				NoDefinitionError
-				{	t_tID::RawArray
+				{	t_tID{}
 				};
 			}
 		}

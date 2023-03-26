@@ -1,6 +1,5 @@
 export module Meta.ID.Concept;
 
-import Meta.ID.StringView;
 import Meta.ID.StringLiteral;
 
 import Meta.Size;
@@ -16,13 +15,29 @@ export namespace
 		>
 	concept
 		ProtoID
-	=	requires(t_tID c_vID)
-		{
-			{ &t_tID::Length } -> std::same_as<USize const*>;
-			{ &t_tID::RawArray } -> std::same_as<char const(*)[t_tID::Length + 1uz]>;
-			{ &t_tID::StringView } -> std::same_as<StringView const*>;
-			{ &t_tID::String } -> std::same_as<StringLiteral<t_tID::Length> const*>;
-			{ &t_tID::operator decltype(auto) } -> std::same_as<auto (t_tID::*)() const noexcept -> StringView const&>;
-		}
+	=	::std::convertible_to
+		<	t_tID
+		,	decltype
+			(	t_tID
+			::	String
+			)
+		>
+	and	::std::convertible_to
+		<	t_tID
+		,	StringView
+		>
+	;
+
+	template
+		<	ProtoID
+				t_tID
+		>
+	(	StringLiteral
+	)	(	t_tID
+		)
+	->	StringLiteral
+		<	t_tID
+		::	Length
+		>
 	;
 }

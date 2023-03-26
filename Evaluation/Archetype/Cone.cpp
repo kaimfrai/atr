@@ -4,31 +4,24 @@ import Evaluation.Archetype.BasicBody;
 
 import Evaluation.Shared.PiFraction;
 
-import ATR.Member.Alias;
-import ATR.Member.List;
-import ATR.Member.Union;
-import ATR.Member.Definition;
+import Meta.ID.Alias;
+import Meta.ID.Literals;
+import Meta.Token.Type;
+
+using namespace ::Meta::Literals;
 
 export namespace
 	ATR::Member
 {
-	template<>
-	Definition
-	<	"BasicBody"_def
-	+	Alias
-		<	"Height"
-		,	"Width"
-		>
-	+	New
-		<	"ComputeVolumeMultiplier"
-		,	PiFraction
-			<	1z
-			,	12z
-			>
-		>
-	>	const extern
-		Definition_For
-		<	"Cone"
-		>
-	;
+	auto constexpr
+	(	Configure
+	)	(	::Meta::ID_T<"Cone">
+		,	auto
+			&&	o_rConfig
+		)
+	{
+		o_rConfig("Height", "Width");
+		Configure("BasicBody"_ID, o_rConfig);
+		o_rConfig("ComputeVolumeMultiplier", ::Meta::Type<PiFraction<1z, 12z>>);
+	}
 }

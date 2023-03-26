@@ -29,7 +29,8 @@ export namespace
 	auto constexpr
 	(	operator->*
 	)	(	::std::byte
-			*	i_aObject
+			(&	i_rObject
+			)	[]
 		,	Member
 			<	t_nOffset
 			,	Field<t_nWidth>
@@ -46,11 +47,12 @@ export namespace
 		;
 		return
 		Reference
-		<	t_nWidth
+		<	Field<t_nWidth>
 		,	vByteOffset.Remainder
 		>{	::std::launder
-			(	i_aObject
-			+	vByteOffset.Quotient
+			(	i_rObject
+			+	vByteOffset
+				.	Quotient
 			)
 		};
 	}
@@ -65,7 +67,8 @@ export namespace
 	auto constexpr
 	(	operator->*
 	)	(	::std::byte const
-			*	i_aObject
+			(&	i_rObject
+			)	[]
 		,	Member
 			<	t_nOffset
 			,	Field<t_nWidth> const
@@ -73,7 +76,8 @@ export namespace
 		)
 		noexcept
 	->	decltype(auto)
-	{	auto constexpr
+	{
+		auto constexpr
 			vByteOffset
 		=	IndexCast<ByteIndex>
 			(	t_nOffset
@@ -81,12 +85,14 @@ export namespace
 		;
 		return
 			Reference
-			<	t_nWidth
-			,	vByteOffset.Remainder
+			<	Field<t_nWidth> const
+			,	vByteOffset
+				.	Remainder
 			>
 		::	Read
-			(	i_aObject
-			+	vByteOffset.Quotient
+			(	i_rObject
+			+	vByteOffset
+				.	Quotient
 			)
 		;
 	}

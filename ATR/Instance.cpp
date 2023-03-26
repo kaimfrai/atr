@@ -2,20 +2,27 @@ export module ATR.Instance;
 
 import ATR.Address;
 import ATR.Layout.Type;
-import ATR.Member.Definition;
-import ATR.Member.Contains;
-import ATR.Member.OffsetOf;
 import ATR.Member.Offset;
+import ATR.Member.Storage;
+import ATR.Member.Config;
+import ATR.Member.DynamicSize;
+import ATR.Member.Static;
+import ATR.Member.OffsetOf;
+import ATR.Layout;
 
+import Meta.Memory.Size.Arithmetic;
 import Meta.ID.Concept;
 import Meta.ID.StringLiteral;
 import Meta.ID.Alias;
 import Meta.Token.Type;
 
+import Meta.Size;
+
+import Std;
+
 using ::Meta::ProtoID;
-using ::ATR::Member::ContainsDynamic;
-using ::ATR::Member::ContainsStatic;
-using ::ATR::Member::OffsetOf;
+using ::ATR::Member::ProtoDynamicMember_Of;
+using ::ATR::Member::ProtoStaticMember_Of;
 
 export namespace
 	ATR
@@ -28,17 +35,16 @@ export namespace
 		Instance
 	:	CreateLayoutType
 		<	t_tName
+			{}
 		>
 	{
-		static auto constexpr
-		&	TypeName
-		=	t_tName
-		::	RawArray
-		;
+		t_tName static constexpr
+			TypeName
+		{};
 
-		static auto const constexpr
-		&	MemberList
-		=	Member::All_Of
+		auto static constexpr
+		&	Config
+		=	Member::Config_Of
 			<	TypeName
 			>
 		;
@@ -46,96 +52,70 @@ export namespace
 		using
 			LayoutType
 		=	CreateLayoutType
-			<	t_tName
+			<	TypeName
 			>
 		;
 
 		[[nodiscard]]
 		auto constexpr
-		(	operator []
-		)	(	ProtoID auto
+		(	operator[]
+		)	(	ProtoDynamicMember_Of<t_tName> auto
 					i_vMemberID
 			)	&
 			noexcept
 		->	decltype(auto)
-		requires
-			(	ContainsDynamic
-				(	MemberList
-				,	i_vMemberID.StringView
-				)
-			)
 		{	return
-			OffsetOf
+			Member::OffsetOf
 			(	i_vMemberID
-			,	Meta::Type<Instance>
-			)(	this
+			,	TypeName
+			)(	*this
 			);
 		}
 
 		[[nodiscard]]
 		auto constexpr
-		(	operator []
-		)	(	ProtoID auto
+		(	operator[]
+		)	(	ProtoDynamicMember_Of<t_tName> auto
 					i_vMemberID
 			)	const&
 			noexcept
 		->	decltype(auto)
-		requires
-			(	ContainsDynamic
-				(	MemberList
-				,	i_vMemberID.StringView
-				)
-			)
 		{	return
-			OffsetOf
+			Member::OffsetOf
 			(	i_vMemberID
-			,	Meta::Type<Instance>
-			)(	this
+			,	TypeName
+			)(	*this
 			);
 		}
 
 		[[nodiscard]]
 		auto constexpr
-		(	operator []
-		)	(	ProtoID auto
+		(	operator[]
+		)	(	ProtoDynamicMember_Of<t_tName> auto
 					i_vMemberID
 			)	&&
 			noexcept
 		->	auto
-		requires
-			(	ContainsDynamic
-				(	MemberList
-				,	i_vMemberID.StringView
-				)
-			)
 		{	return
-			OffsetOf
+			Member::OffsetOf
 			(	i_vMemberID
-			,	Meta::Type<Instance>
-			)(	static_cast<Instance const*>
-				(	this
-				)
+			,	TypeName
+			)(	::std::move(*this)
 			);
 		}
 
 		[[nodiscard]]
-		static auto constexpr
-		(	operator []
-		)	(	ProtoID auto
+		auto static constexpr
+		(	operator[]
+		)	(	ProtoStaticMember_Of<t_tName> auto
 					i_vMemberID
 			)
 			noexcept
 		->	decltype(auto)
-		requires
-			(	ContainsStatic
-				(	MemberList
-				,	i_vMemberID.StringView
-				)
-			)
 		{	return
-			OffsetOf
+			Member::OffsetOf
 			(	i_vMemberID
-			,	Meta::Type<Instance>
+			,	TypeName
 			)();
 		}
 

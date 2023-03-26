@@ -1,17 +1,18 @@
 export module ATR.Offset.Bool;
 
-import ATR.Offset.Field;
 import ATR.Offset.Member;
 
 import Meta.Memory.Size;
-import Meta.Bit.Field;
+import Meta.Memory.Size.Cast;
+import Meta.Memory.Size.PointerArithmetic;
+import Meta.Bit.Reference;
+import Meta.Bit.Index;
 
 import Std;
 
-using ::Meta::Bit::Field;
+using ::Meta::Bit::Reference;
 using ::Meta::BitSize;
-
-using namespace ::Meta::Literals;
+using ::Meta::ByteIndex;
 
 export namespace
 	ATR::Offset
@@ -24,7 +25,8 @@ export namespace
 	auto constexpr
 	(	operator->*
 	)	(	::std::byte
-			*	i_aObject
+			(&	i_rObject
+			)	[]
 		,	Member
 			<	t_nOffset
 			,	bool
@@ -32,13 +34,24 @@ export namespace
 		)
 		noexcept
 	->	decltype(auto)
-	{	return
-			i_aObject
-		->*	Member
-			<	t_nOffset
-			,	Field<1_bit>
-			>{}
+	{
+		auto constexpr
+			vByteOffset
+		=	IndexCast<ByteIndex>
+			(	t_nOffset
+			)
 		;
+		return
+		Reference
+		<	bool
+		,	vByteOffset
+			.	Remainder
+		>{	::std::launder
+			(	i_rObject
+			+	vByteOffset
+				.	Quotient
+			)
+		};
 	}
 
 	template
@@ -49,7 +62,8 @@ export namespace
 	auto constexpr
 	(	operator->*
 	)	(	::std::byte const
-			*	i_aObject
+			(&	i_rObject
+			)	[]
 		,	Member
 			<	t_nOffset
 			,	bool const
@@ -57,13 +71,23 @@ export namespace
 		)
 		noexcept
 	->	bool
-	{	return
-		static_cast<bool>
-		(	i_aObject
-		->*	Member
-			<	t_nOffset
-			,	Field<1_bit> const
-			>{}
-		);
+	{	auto constexpr
+			vByteOffset
+		=	IndexCast<ByteIndex>
+			(	t_nOffset
+			)
+		;
+		return
+			Reference
+			<	bool const
+			,	vByteOffset
+				.	Remainder
+			>
+		::	Read
+			(	i_rObject
+			+	vByteOffset
+				.	Quotient
+			)
+		;
 	}
 }

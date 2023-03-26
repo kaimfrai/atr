@@ -1,7 +1,6 @@
 export module Meta.ID.Alias;
 
 import Meta.ID.Make;
-import Meta.ID.StringView;
 import Meta.ID.StringLiteral;
 
 import Std;
@@ -21,23 +20,11 @@ export namespace
 			<	t_vStringLiteral
 			>(	::std::make_index_sequence
 				<	t_vStringLiteral
-				.	size()
+					.	max_size
+						()
 				>{}
 			)
 		)
-	;
-
-	template
-		<	StringView
-				t_vString
-		>
-	using
-		ID_Of
-	=	ID_T
-		<	StringLiteral<t_vString.size()>
-			{	t_vString.data()
-			}
-		>
 	;
 
 	/// create an identifier value

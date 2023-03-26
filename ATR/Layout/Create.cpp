@@ -1,33 +1,26 @@
 export module ATR.Layout.Create;
 
-import ATR.Member.Definition;
-import ATR.Member.List;
-import ATR.Member.Alias;
 import ATR.Layout;
 import ATR.Layout.ValidateOffsets;
 
 import Meta.Token.Type;
-import Meta.Size;
 
 import Std;
 
-using ::Meta::USize;
 using ::Meta::RestoreTypeEntity;
 
 export namespace
 	ATR
 {
 	template
-	<	Member::List
-			t_vDynamic
-	>
+		<	auto
+				t_vDynamic
+		>
 	[[nodiscard]]
 	auto constexpr
 	(	CreateLayout
-	)	(	Member::Definition
-			<	t_vDynamic
-			>
-		)
+	)	()
+		noexcept
 	->	decltype(auto)
 	{	return
 		[]	<	::std::size_t
@@ -41,8 +34,9 @@ export namespace
 				t_tLayout
 			=	Layout
 				<	RestoreTypeEntity
-					<	t_vDynamic[t_npDynamicIndex]
-					.	Type
+					<	t_vDynamic
+						[	t_npDynamicIndex
+						]
 					>
 					...
 				>
@@ -56,30 +50,7 @@ export namespace
 				t_tLayout{}
 			;
 		}(	::std::make_index_sequence
-			<	static_cast<USize>
-				(	t_vDynamic.DynamicSize
-				)
-			>{}
-		);
-	}
-
-	template
-		<	Member::AliasedList
-				t_vAliased
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	CreateLayout
-	)	(	Member::Definition
-			<	t_vAliased
-			>
-		)
-		noexcept
-	->	decltype(auto)
-	{	return
-		CreateLayout
-		(	Member::Definition
-			<	t_vAliased.DataInfos
+			<	t_vDynamic.size()
 			>{}
 		);
 	}

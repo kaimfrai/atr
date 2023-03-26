@@ -3,6 +3,7 @@ export module Meta.Bit.Array;
 import Meta.Bit.ElementReference;
 import Meta.Bit.Reference;
 import Meta.Bit.Iterator;
+import Meta.Bit.Field;
 import Meta.Bit.Field.Arithmetic;
 import Meta.Bit.Field.Compare;
 import Meta.Bit.Index;
@@ -215,7 +216,7 @@ export namespace
 		->	auto
 		{	return
 				Reference
-				<	BitSize
+				<	Field<BitSize>
 				,	Offset
 				>
 			::	Read

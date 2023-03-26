@@ -1,30 +1,28 @@
 export module ATR.Layout.Type;
 
-import ATR.Member.Definition;
+import ATR.Member.DynamicTypes;
 import ATR.Layout.Create;
 
-import Meta.ID.Concept;
+import Meta.ID.StringLiteral;
 
-using ::Meta::ProtoID;
-using ::ATR::Member::Definition_For;
+using ::Meta::StringLiteral;
 
 export namespace
 	ATR
 {
 	/// the type mapped to the string literal by Member
 	template
-		<	ProtoID
-				t_tTypeID
+		<	StringLiteral
+				t_vTypeName
 		>
 	using
 		CreateLayoutType
 	=	decltype
 		(	CreateLayout
-			(	Definition_For
-				<	t_tTypeID
-				::	RawArray
+			<	Member::DynamicTypes_Of
+				<	t_vTypeName
 				>
-			)
+			>()
 		)
 	;
 }

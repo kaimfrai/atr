@@ -11,7 +11,7 @@ export namespace
 		Static
 	{
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	()
 			noexcept

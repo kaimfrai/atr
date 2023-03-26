@@ -1,16 +1,13 @@
 export module ATR.DependencyIDMap;
 
-import ATR.Member.OffsetOf;
-import ATR.Member.Info;
-import ATR.Member.Alias;
-import ATR.Member.Contains;
 import ATR.Dependency;
 import ATR.Address;
 import ATR.Erase;
+import ATR.Member.Storage;
+import ATR.Member.OffsetOf;
 
 import Meta.ID.Alias;
 import Meta.ID.Concept;
-import Meta.ID.StringView;
 import Meta.ID.StringLiteral;
 import Meta.Token.Type;
 import Meta.Logic.LiteralBase;
@@ -21,13 +18,11 @@ import Meta.Logic.Conjunction;
 import Std;
 
 using ::Meta::ProtoID;
-using ::Meta::ID_Of;
-using ::Meta::StringView;
+using ::ATR::Member::OffsetOf;
 
 export namespace
 	ATR
 {
-	/// maps one Identifier to another
 	template
 		<	ProtoID
 				t_tName
@@ -81,19 +76,23 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	::Meta::TypeToken<t_tEntity>
 			)
 			noexcept
 		->	bool
 		{	return
-			Contains
-			(	::std::remove_reference_t<t_tEntity>
-			::	MemberList
-			,	t_tDataID
-			::	StringView
-			);
+				Member::GetStorage
+				(		::std::remove_cvref_t
+						<	t_tEntity
+						>
+					::	TypeName
+				,	t_tDataID
+					{}
+				)
+			!=	Member::EStorage::None
+			;
 		}
 	};
 }
@@ -142,22 +141,21 @@ namespace
 {
 	template
 		<	typename
-				t_tOwner
+				t_tName
 		,	typename
 			...	t_tpArgument
-		,	ProtoID
-				t_tName
 		>
 	[[nodiscard]]
 	auto constexpr
 	(	MapDependency
 	)	(	IDMap<t_tName, t_tpArgument...>
-		,	Meta::TypeToken<t_tOwner>
+		,	auto
+			&&	i_rOwner
 		)
 		noexcept
 	->	FunctionType
 		<	t_tName
-		,	t_tOwner
+		,	decltype(i_rOwner)
 		,	t_tpArgument
 			...
 		>
@@ -165,25 +163,24 @@ namespace
 		{};
 	}
 
-	template
-		<	ProtoID
-				t_tDataID
-		,	ProtoMemberInterface<t_tDataID::RawArray>
-				t_tOwner
-		>
 	[[nodiscard]]
 	auto constexpr
 	(	MapDependency
-	)	(	IDMap<t_tDataID>
-		,	Meta::TypeToken<t_tOwner>
-				i_vOwner
+	)	(	ProtoID auto
+				i_vDataID
+		,	auto
+			&&	i_rOwner
 		)
 		noexcept
+	->	decltype
+		(	OffsetOf
+			(	i_vDataID
+			,	i_rOwner
+				.	TypeName
+			)
+		)
 	{	return
-		Member::OffsetOf
-		(	t_tDataID{}
-		,	i_vOwner
-		);
+		{};
 	}
 }
 
@@ -208,7 +205,7 @@ export namespace
 	using
 		DeduceDependencies
 	=	Dependency
-		<	::std::byte const*
+		<	::std::byte const(&)[]
 		,	t_tpDependency
 			...
 		>
@@ -217,7 +214,7 @@ export namespace
 	template
 		<	typename
 				t_tOwner
-		,	IDMap
+		,	auto
 			...	t_vpIDMap
 		>
 	using
@@ -227,11 +224,7 @@ export namespace
 		,	decltype
 			(	::ATR::MapDependency
 				(	t_vpIDMap
-				,	Meta::Type
-					<	::std::remove_cvref_t
-						<	t_tOwner
-						>
-					>
+				,	::std::declval<t_tOwner>()
 				)
 			)
 			...
@@ -241,7 +234,7 @@ export namespace
 	template
 		<	Meta::StringLiteral
 				t_vFunctionName
-		,	IDMap
+		,	auto
 			...	t_vpIDMap
 		>
 	using

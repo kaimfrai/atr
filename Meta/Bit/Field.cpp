@@ -173,7 +173,7 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr
-		(	operator []
+		(	operator[]
 		)	(	IndexType
 					i_nIndex
 			)	const
@@ -222,15 +222,20 @@ export namespace
 					>
 				>
 			;
-			if	(	vConstraint.Size
+			if	(	vConstraint
+					.	Size
 				!=	t_nWidth
 				)
-			{	(	vConstraint.Align
+			{
+				vConstraint
+				.	Align
 				=	1_align
-				);
-				(	vConstraint.Size
+				;
+
+				vConstraint
+				.	Size
 				=	t_nWidth
-				);
+				;
 			}
 			return
 				vConstraint

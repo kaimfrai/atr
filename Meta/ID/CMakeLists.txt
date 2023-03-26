@@ -1,6 +1,5 @@
 add_single_file_modules(
 	Decimal.cpp
-	StringView.cpp
 	StringLiteral.cpp
 	LowerCase.cpp
 	UpperCase.cpp
@@ -8,6 +7,5 @@ add_single_file_modules(
 	Make.cpp
 	Alias.cpp
 	Concept.cpp
-	Concatenate.cpp
 	Literals.cpp
 )

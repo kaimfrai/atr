@@ -101,7 +101,7 @@ export namespace
 		{	return
 			VTable
 			(	i_vFuncName
-			,	+ErasedElement
+			,	ErasedElement
 			,	::std::forward
 				<	t_tpArgument
 				>(	i_rpArgument
@@ -128,7 +128,7 @@ export namespace
 		{	return
 			VTable
 			(	i_vFuncName
-			,	+ErasedElement
+			,	ErasedElement
 			,	::std::forward
 				<	t_tpArgument
 				>(	i_rpArgument

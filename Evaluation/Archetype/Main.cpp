@@ -40,7 +40,8 @@ auto
 		,	ATR::Virtual::Interface
 			<	"ComputeVolume"
 			,	auto(	::std::byte const
-						*
+						(&
+						)	[]
 					)
 					noexcept
 				->	Float
@@ -72,7 +73,7 @@ auto
 	,	&TypeConstruct<Type<"Ellipsoid">>
 	,	&TypeConstruct<Type<"Head">>
 	,	fComputeVolume
-	>(	std::span
+	>(	::std::span
 		{	i_aArgValue
 		,	static_cast<Meta::USize>(i_nArgCount)
 		}

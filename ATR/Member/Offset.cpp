@@ -37,25 +37,19 @@ export namespace
 			<	t_nOffset
 			,	t_tData const
 			>
-		::	operator ()
+		::	operator()
 		;
 
 		[[nodiscard]]
 		static auto constexpr
-		(	operator ()
+		(	operator()
 		)	(	auto
-				*	i_aObject
+				&	i_rObject
 			)
 			noexcept
-		->	decltype
-			(	i_aObject
-			->*	::ATR::Offset::Member
-				<	t_nOffset
-				,	t_tData
-				>{}
-			)
+		->	decltype(auto)
 		{	return
-				i_aObject
+				i_rObject
 			->*	::ATR::Offset::Member
 				<	t_nOffset
 				,	t_tData
@@ -78,20 +72,14 @@ export namespace
 	{
 		[[nodiscard]]
 		static auto constexpr
-		(	operator ()
+		(	operator()
 		)	(	auto const
-				*	i_aObject
+				&	i_rObject
 			)
 			noexcept
-		->	decltype
-			(	i_aObject
-			->*	::ATR::Offset::Member
-				<	t_nOffset
-				,	t_tData const
-				>{}
-			)
+		->	decltype(auto)
 		{	return
-				i_aObject
+				i_rObject
 			->*	::ATR::Offset::Member
 				<	t_nOffset
 				,	t_tData const
@@ -114,20 +102,14 @@ export namespace
 	{
 		[[nodiscard]]
 		static auto constexpr
-		(	operator ()
+		(	operator()
 		)	(	auto const
-				*	i_aObject
+				&	i_rObject
 			)
 			noexcept
-		->	decltype
-			(	i_aObject
-			->*	::ATR::Offset::Member
-				<	t_nOffset
-				,	Mut<t_tData>
-				>{}
-			)
+		->	decltype(auto)
 		{	return
-				i_aObject
+				i_rObject
 			->*	::ATR::Offset::Member
 				<	t_nOffset
 				,	Mut<t_tData>

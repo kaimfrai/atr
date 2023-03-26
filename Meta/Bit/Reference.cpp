@@ -2,7 +2,7 @@ export module Meta.Bit.Reference;
 
 import Meta.Bit.Access;
 import Meta.Bit.Index;
-import Meta.Memory.Size;
+import Meta.Memory.Constraint;
 
 import Std;
 
@@ -11,66 +11,81 @@ export namespace
 {
 	template
 		<	typename
-				t_tBuffer
-		,	BitSize
-				t_nSize
+				t_tValue
 		,	ByteIndex
-				t_nOffset
+				t_vOffset
 		>
 	struct
-		SingleReference final
+		Reference final
 	{
 		using
 			BitAccess
 		=	Access
-			<	t_nSize
-			,	t_nOffset
+			<	Memory::BitSize_Of
+				<	t_tValue
+				>
+			,	t_vOffset
 			>
 		;
 		using
 			value_type
-		=	typename
-				BitAccess
-			::	FieldType
+		=	::std::remove_cv_t
+			<	t_tValue
+			>
+		;
+
+		using
+			BufferType
+		=	::std::conditional_t
+			<	::std::is_const_v
+				<	t_tValue
+				>
+			,	::std::byte const
+			,	::std::byte
+			>
 		;
 
 		[[nodiscard]]
 		static auto constexpr
 		(	Read
-		)	(	t_tBuffer const
+		)	(	::std::byte const
 				*	i_aUnderlyingArray
 			)
 			noexcept
 		->	value_type
 		{	return
-			BitAccess::ReadField
-			(	i_aUnderlyingArray
-			,	t_nOffset
+			static_cast<value_type>
+			(	BitAccess::ReadField
+				(	i_aUnderlyingArray
+				,	t_vOffset
+				)
 			);
 		}
 
 		static auto constexpr
 		(	Write
 		)	(	value_type
-					i_nValue
-			,	t_tBuffer
+					i_vValue
+			,	::std::byte
 				*	i_aUnderlyingArray
 			)
 			noexcept
 		->	void
 		requires
 			(	not
-				::std::is_const_v<t_tBuffer>
+				::std::is_const_v
+				<	t_tValue
+				>
 			)
 		{	return
 			BitAccess::WriteField
-			(	i_nValue
+			(	i_vValue
 			,	i_aUnderlyingArray
-			,	t_nOffset
+			,	t_vOffset
 			);
 		}
 
-		t_tBuffer
+		BufferType
 		*	const
 			m_aUnderlyingArray
 		;
@@ -89,12 +104,13 @@ export namespace
 
 		[[nodiscard]]
 		explicit(false) constexpr
-		(	operator value_type
+		(	operator
+			value_type
 		)	()	const
 			noexcept
 		{	return
-				get()
-			;
+			get
+			();
 		}
 
 		auto constexpr
@@ -103,10 +119,12 @@ export namespace
 					i_vValue
 			)	&
 			noexcept
-		->	SingleReference&
+		->	Reference&
 		requires
 			(	not
-				::std::is_const_v<t_tBuffer>
+				::std::is_const_v
+				<	t_tValue
+				>
 			)
 		{
 			Write
@@ -122,10 +140,12 @@ export namespace
 					i_vValue
 			)	&&
 			noexcept
-		->	SingleReference&&
+		->	Reference&&
 		requires
 			(	not
-				::std::is_const_v<t_tBuffer>
+				::std::is_const_v
+				<	t_tValue
+				>
 			)
 		{	return
 			::std::move
@@ -135,9 +155,10 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
-		(	operator ==
-		)	(	SingleReference
+		friend
+		auto constexpr
+		(	operator==
+		)	(	Reference
 					i_rReference
 			,	value_type
 					i_vValue
@@ -145,15 +166,17 @@ export namespace
 			noexcept
 		->	bool
 		{	return
-				i_rReference.get()
+				i_rReference
+				.	get
+					()
 			==	i_vValue
 			;
 		}
 
 		[[nodiscard]]
 		friend auto constexpr
-		(	operator <=>
-		)	(	SingleReference
+		(	operator<=>
+		)	(	Reference
 					i_rReference
 			,	value_type
 					i_vValue
@@ -161,24 +184,10 @@ export namespace
 			noexcept
 		->	bool
 		{	return
-				i_rReference.get()
+				i_rReference
+				.	get()
 			<=>	i_vValue
 			;
 		}
 	};
-
-	template
-		<	BitSize
-				t_nSize
-		,	ByteIndex
-				t_nOffset
-		>
-	using
-		Reference
-	=	SingleReference
-		<	::std::byte
-		,	t_nSize
-		,	t_nOffset
-		>
-	;
 }

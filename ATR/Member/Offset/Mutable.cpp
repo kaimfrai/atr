@@ -21,7 +21,8 @@ export namespace
 	auto constexpr
 	(	operator->*
 	)	(	::std::byte const
-			*	i_aObject
+			(&	i_rObject
+			)	[]
 		,	Member<t_nOffset, Mut<t_tData>>
 		)
 		noexcept
@@ -30,8 +31,8 @@ export namespace
 			// the underlying data member is defined mutable
 			// if the offset points to that data member this is well defined
 			// if not all bets are off regardless
-			const_cast<::std::byte*>
-			(	i_aObject
+			const_cast<::std::byte(&)[]>
+			(	i_rObject
 			)
 		->*	Member
 			<	t_nOffset

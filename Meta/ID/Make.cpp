@@ -12,17 +12,6 @@ import Std;
 
 export
 {
-	template
-		<	char
-				t_nCharacter
-		>
-	auto constexpr
-	(	FromChar
-	)	(	Meta::IndexToken<t_nCharacter>
-		)
-	->	char
-	{	return t_nCharacter;	}
-
 	/// dispatches a string literal into its characters
 	///	creates an instance of the given identifer template with all dispatched characters inserted
 	template

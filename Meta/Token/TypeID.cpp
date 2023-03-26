@@ -25,12 +25,37 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr
+		(	IsAligned
+		)	()	const
+			noexcept
+		{	return
+				Constraint
+			->	IsAligned
+				()
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr
 		(	GetSize
 		)	()	const
 			noexcept
 		{	return
 				Constraint
 			->	Size
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	IsStateful
+		)	()	const
+			noexcept
+		->	bool
+		{	return
+				Constraint
+			->	IsStateful
+				()
 			;
 		}
 

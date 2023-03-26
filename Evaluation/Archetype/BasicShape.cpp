@@ -1,30 +1,22 @@
 export module Evaluation.Archetype.BasicShape;
 
 import Evaluation.Shared.DataTypes;
-import ATR.Member.List;
-import ATR.Member.Union;
-import ATR.Member.Definition;
+
+import Meta.ID.Alias;
+import Meta.Token.Type;
 
 export namespace
 	ATR::Member
 {
-	template<>
-	Definition
-	<	New
-		<	"Height"
-		,	Float
-		>
-	+	New
-		<	"Width"
-		,	Float
-		>
-	+	New
-		<	"Color"
-		,	RGBAColor
-		>
-	>	const extern
-		Definition_For
-		<	"BasicShape"
-		>
-	;
+	auto constexpr
+	(	Configure
+	)	(	::Meta::ID_T<"BasicShape">
+		,	auto
+			&&	o_rConfig
+		)
+	{
+		o_rConfig("Height", ::Meta::Type<Float>);
+		o_rConfig("Width", ::Meta::Type<Float>);
+		o_rConfig("Color", ::Meta::Type<RGBAColor>);
+	}
 }

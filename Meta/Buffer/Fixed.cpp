@@ -296,6 +296,31 @@ export namespace
 		{	return pop_back(1uz);	}
 
 		auto constexpr
+		(	insert
+		)	(	iterator
+					i_aPosition
+			,	::std::convertible_to<value_type> auto
+				&&	i_rValue
+			)	&
+		->	iterator
+		{
+			EnsureNewSizeValid(Next(size()));
+
+			::std::move_backward
+			(	i_aPosition
+			,	end(*this).base()
+			,	::std::next
+				(	end(*this).base()
+				)
+			);
+
+			*i_aPosition = ::std::forward<decltype(i_rValue)>(i_rValue);
+			++m_nElementCount;
+
+			return i_aPosition;
+		}
+
+		auto constexpr
 		(	erase
 		)	(	iterator
 					i_aErase

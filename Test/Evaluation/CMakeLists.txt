@@ -1,7 +1,10 @@
 add_module(SizeCheck.cpp)
 
-add_module_object_tests(
+add_subdirectory(
 	Archetype
+)
+
+add_module_object_tests(
 	CRTP
 	Replication
 	Virtual

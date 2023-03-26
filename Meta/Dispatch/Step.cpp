@@ -5,7 +5,6 @@ import Meta.Dispatch.Final;
 import Meta.Dispatch.StepPair;
 import Meta.Dispatch.Error;
 
-import Meta.ID.Concatenate;
 import Meta.ID.Concept;
 import Meta.ID.Alias;
 import Meta.Lex.Match;
@@ -108,11 +107,11 @@ export namespace
 			>
 		using
 			NextID
-		=	ID_T
-			<	Concatenate
-				(	t_tID::String
-				,	t_nParsed
-				)
+		=	typename
+			t_tID
+		::	template
+			Append
+			<	t_nParsed
 			>
 		;
 

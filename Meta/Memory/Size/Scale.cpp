@@ -46,6 +46,22 @@ export namespace
 		);
 	}
 
+	[[nodiscard]]
+	auto constexpr
+	(	operator *
+	)	(	typename BitSize::SizeType
+				i_vScalar
+		,	BitSize
+				i_vSize
+		)
+		noexcept
+	->	BitSize
+	{	return
+		(	i_vSize
+		*=	i_vScalar
+		);
+	}
+
 	template
 		<	auto
 				t_nWidth
@@ -77,6 +93,22 @@ export namespace
 				i_vSize
 		,	Bits
 				i_vCount
+		)
+		noexcept
+	->	BitSize
+	{	return
+		(	i_vSize
+		*=	i_vCount
+		);
+	}
+
+	[[nodiscard]]
+	auto constexpr
+	(	operator *
+	)	(	Bits
+				i_vCount
+		,	BitSize
+				i_vSize
 		)
 		noexcept
 	->	BitSize

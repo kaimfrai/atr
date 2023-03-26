@@ -59,10 +59,14 @@ export namespace
 			::	FunctionType
 		,	t_tFunction
 		>
-	and	t_vName.starts_with
-		(	t_tProto
-		::	ID
-		::	RawArray
-		)
+	and		::std::string_view
+			{	t_vName
+			}
+		.	starts_with
+			(	typename
+				t_tProto
+			::	ID
+				{}
+			)
 	;
 }

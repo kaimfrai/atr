@@ -21,6 +21,7 @@ export namespace
 			&&	i_rObject
 		)
 		noexcept
+	->	decltype(auto)
 	{	if	constexpr
 			(	::std::is_scalar_v
 				<	t_tEntity
@@ -57,12 +58,31 @@ export namespace
 			}
 		}
 		else
-		{	return
-			PointerCast<::std::byte>
-			(	::std::addressof
-				(	i_rObject
+		{	auto const
+				aByteArray
+			=	PointerCast<::std::byte[]>
+				(	::std::addressof
+					(	i_rObject
+					)
 				)
-			);
+			;
+
+			if	constexpr
+				(	::std::is_lvalue_reference_v
+					<	t_tEntity
+					>
+				)
+			{
+				return
+				*	aByteArray
+				;
+			}
+			else
+			{	return
+				::std::move
+				(	*	aByteArray
+				);
+			}
 		}
 	}
 
