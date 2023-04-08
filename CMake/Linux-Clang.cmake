@@ -20,6 +20,8 @@ else()
 	message(FATAL_ERROR "Could not find C++ Compiler at ${CMAKE_CXX_COMPILER}")
 endif()
 
+add_compile_options(-march=native)
+
 #do not use libc++ for C objects
 add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-stdlib=libc++>)
 add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-fexperimental-library>)
