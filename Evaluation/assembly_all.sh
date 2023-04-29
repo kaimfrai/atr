@@ -12,7 +12,8 @@ then
 		Virtual/Main.cpp\
 		-o ../build/assembly/virtual.s\
 		-frelaxed-template-template-args\
-		-fexperimental-library
+		-fexperimental-library\
+		-march=native
 fi
 
 if [ $# -lt 1 ] || [ $1 == "any" ]
@@ -25,7 +26,8 @@ then
 		Any/Main.cpp\
 		-o ../build/assembly/any.s\
 		-frelaxed-template-template-args\
-		-fexperimental-library
+		-fexperimental-library\
+		-march=native
 fi
 
 if [ $# -lt 1 ] || [ $1 == "dyno" ]
@@ -38,7 +40,8 @@ then
 		Dyno/Main.cpp\
 		-o ../build/assembly/dyno.s\
 		-frelaxed-template-template-args\
-		-fexperimental-library
+		-fexperimental-library\
+		-march=native
 fi
 
 if [ $# -lt 1 ] || [ $1 == "polymorphic" ]
@@ -51,7 +54,8 @@ then
 		Polymorphic/Main.cpp\
 		-o ../build/assembly/polymorphic.s\
 		-frelaxed-template-template-args\
-		-fexperimental-library
+		-fexperimental-library\
+		-march=native
 fi
 
 if [ $# -lt 1 ] || [ $1 == "type_erasure" ]
@@ -64,7 +68,8 @@ then
 		TypeErasure/Main.cpp\
 		-o ../build/assembly/type_erasure.s\
 		-frelaxed-template-template-args\
-		-fexperimental-library
+		-fexperimental-library\
+		-march=native
 fi
 
 if [ $# -lt 1 ] || [ $1 == "archetype" ]
@@ -77,7 +82,8 @@ then
 		Archetype/Main.cpp\
 		-o ../build/assembly/archetype.s\
 		-frelaxed-template-template-args\
-		-fexperimental-library
+		-fexperimental-library\
+		-march=native
 fi
 
 if [ $# -lt 1 ] || [ $1 == "replication" ]
@@ -90,7 +96,8 @@ then
 		Replication/Main.cpp\
 		-o ../build/assembly/replication.s\
 		-frelaxed-template-template-args\
-		-fexperimental-library
+		-fexperimental-library\
+		-march=native
 fi
 
 if [ $# -lt 1 ] || [ $1 == "variant" ]
@@ -103,7 +110,8 @@ then
 		Variant/Main.cpp\
 		-o ../build/assembly/variant.s\
 		-frelaxed-template-template-args\
-		-fexperimental-library
+		-fexperimental-library\
+		-march=native
 fi
 
 if [ $# -lt 1 ] || [ $1 == "visitor" ]
@@ -116,7 +124,8 @@ then
 		Visitor/Main.cpp\
 		-o ../build/assembly/visitor.s\
 		-frelaxed-template-template-args\
-		-fexperimental-library
+		-fexperimental-library\
+		-march=native
 fi
 
 echo "Ergebnisse in ../build/assembly/"
