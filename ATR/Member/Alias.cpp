@@ -47,4 +47,18 @@ export namespace
 		::	span
 		;
 	};
+
+	struct
+		ConstAliasView
+	:	::std::span
+		<	Alias const
+		>
+	{
+		using
+			::std::span
+			<	Alias const
+			>
+		::	span
+		;
+	};
 }

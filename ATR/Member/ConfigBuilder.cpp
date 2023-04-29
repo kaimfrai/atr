@@ -91,6 +91,64 @@ export namespace
 			};
 		}
 
+		[[nodiscard]]
+		auto constexpr
+		(	GetAliasView
+		)	()	const&
+			noexcept
+		->	ConstAliasView
+		{	return
+			{	m_vAliasList
+				.	begin
+					()
+			,	m_aConfig
+				->	AliasCount
+			};
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	HasAlias
+		)	(	NameView
+					i_rMemberName
+			)	const
+			noexcept
+		->	bool
+		{
+			auto const
+				rAliasView
+			=	GetAliasView
+				()
+			;
+
+			auto const
+				aPosition
+			=	::std::lower_bound
+				(	rAliasView
+					.	begin
+						()
+				,	rAliasView
+					.	end
+						()
+				,	i_rMemberName
+				,	Compare::Name
+					{}
+				)
+			;
+
+			return
+			(	(	aPosition
+				!=	rAliasView
+					.	end
+						()
+				)
+			and	(	aPosition
+					->	Name
+				==	i_rMemberName
+				)
+			);
+		}
+
 		auto constexpr
 		(	operator()
 		)	(	NameView
@@ -157,36 +215,12 @@ export namespace
 			)	&
 			noexcept
 		{
-			auto const
-				rAliasView
-			=	GetAliasView
-				()
-			;
-
-			auto const
-				aPosition
-			=	::std::lower_bound
-				(	rAliasView
-					.	begin
-						()
-				,	rAliasView
-					.	end
-						()
-				,	i_rMemberName
-				,	Compare::Name
-					{}
+			if	(	HasAlias
+					(	i_rMemberName
+					)
 				)
-			;
-
-			if	(	aPosition
-				!=	rAliasView
-					.	end
-						()
-				and	aPosition
-					->	Name
-				==	i_rMemberName
-				)
-			{	return;
+			{	return
+				;
 			}
 
 			auto const
