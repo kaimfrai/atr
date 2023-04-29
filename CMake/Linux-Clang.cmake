@@ -31,6 +31,9 @@ add_link_options($<$<COMPILE_LANGUAGE:CXX>:-lc++abi>)
 add_link_options($<$<COMPILE_LANGUAGE:CXX>:-lc++experimental>)
 add_link_options(-fuse-ld=lld)
 
+set(MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS -ffunction-sections)
+set(MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS -Wl,--icf=all)
+
 if	(BUILD_WITH_SANITIZER)
 	add_compile_options(
 		-O1
