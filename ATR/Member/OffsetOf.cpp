@@ -46,7 +46,7 @@ export namespace
 				->	Type
 				.	GetAlign
 					()
-			!=	0_align
+			>	0_align
 			)
 		{
 			return

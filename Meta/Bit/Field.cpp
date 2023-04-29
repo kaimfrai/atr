@@ -1,15 +1,16 @@
 export module Meta.Bit.Field;
 
-import Meta.Bit.Index;
-import Meta.Bit.Index.Test;
-import Meta.Memory.Size;
-import Meta.Memory.Size.Compare;
-import Meta.Memory.Alignment;
-import Meta.Memory.Constraint;
-import Meta.Byte.Buffer;
 import Meta.Arithmetic.Integer;
 import Meta.Arithmetic.Sanitize;
+import Meta.Bit.Index.Test;
+import Meta.Bit.Index;
 import Meta.Bit.Mask;
+import Meta.Byte.Buffer;
+import Meta.Memory.Alignment;
+import Meta.Memory.Constraint;
+import Meta.Memory.Size.Compare;
+import Meta.Memory.Size;
+import Meta.Size;
 
 import Std;
 
@@ -214,32 +215,20 @@ export namespace
 			<	t_nWidth
 			>
 		>
-	=	[]{	auto
-				vConstraint
-			=	Constraint_Of
-				<	UInt
-					<	t_nWidth
-					>
-				>
-			;
-			if	(	vConstraint
-					.	Size
-				!=	t_nWidth
-				)
-			{
-				vConstraint
-				.	Align
-				=	1_align
-				;
-
-				vConstraint
-				.	Size
+	=	[]{	return
+			Constraint
+			{	.Align
+				=	{	::std::countr_zero
+						(	static_cast<::Meta::USize>
+							(	t_nWidth
+								.	Value
+							)
+						)
+					+	1
+					}
+			,	.Size
 				=	t_nWidth
-				;
-			}
-			return
-				vConstraint
-			;
+			};
 		}()
 	;
 }

@@ -4,8 +4,26 @@ import Meta.Memory.Size;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Scale;
 import Meta.Memory.Alignment;
+import Meta.Size;
 
 import Std;
+
+namespace
+	Meta::Memory
+{
+	auto constexpr inline
+		ByteAlign
+	=	::std::countr_zero
+		(	static_cast<::Meta::USize>
+			(	BitSize
+				(	1_byte
+				)
+			.	Value
+			)
+		)
+	+	1
+	;
+}
 
 export namespace
 	Meta::Memory
@@ -27,7 +45,7 @@ export namespace
 			noexcept
 		{	return
 				Align
-			!=	0_align
+			>	0_align
 			;
 		}
 
@@ -38,7 +56,7 @@ export namespace
 			noexcept
 		{	return
 				Size
-			!=	0_bit
+			>	0_bit
 			;
 		}
 
@@ -60,8 +78,7 @@ export namespace
 		>
 	Constraint constexpr inline
 		Constraint_Of
-	=	[]
-		{	if	constexpr
+	=	[]{	if	constexpr
 				(	::std::is_const_v
 					<	t_tEntity
 					>
@@ -122,24 +139,6 @@ export namespace
 					>
 				)
 			{
-				Constraint
-					vConstraint
-				{	.	Align
-					=	Alignment
-						{	ByteSize
-							(	alignof
-								(	t_tEntity
-								)
-							)
-						}
-				,	.	Size
-					=	ByteSize
-						{	sizeof
-							(	t_tEntity
-							)
-						}
-				};
-
 				// necessary to check unions
 				struct
 					Wrapper
@@ -148,31 +147,39 @@ export namespace
 					t_tEntity _;
 				};
 
-				auto const
-					vHasState
-				=	not
-					::std::is_empty_v
-					<	Wrapper
-					>
-				;
-				(	vConstraint.Align.Value
-				*=	vHasState
-				);
-				(	vConstraint.Size
-				*=	vHasState
-				);
+				if constexpr
+					(	not
+						::std::is_empty_v
+						<	Wrapper
+						>
+					)
+				{	return
+					Constraint
+					{	.	Align
+						=	{	::std::countr_zero
+								(	alignof
+									(	t_tEntity
+									)
+								)
+							+	ByteAlign
+							}
+					,	.	Size
+						=	ByteSize
+							{	sizeof
+								(	t_tEntity
+								)
+							}
+					};
+				}
+			}
 
-				return
-					vConstraint
-				;
-			}
-			else
-			{	return
-				Constraint
-				{	0_align
-				,	0_bit
-				};
-			}
+			return
+			Constraint
+			{	.Align
+				=	0_align
+			,	.Size
+				=	0_bit
+			};
 		}()
 	;
 

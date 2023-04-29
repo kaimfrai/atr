@@ -1,9 +1,5 @@
 export module Meta.Memory.Alignment;
 
-import Meta.Memory.Size;
-import Meta.Memory.Size.Arithmetic;
-import Meta.Memory.Size.Compare;
-
 import Std;
 
 export namespace
@@ -12,7 +8,8 @@ export namespace
 	struct
 		Alignment
 	{
-		BitSize
+		// Result of std::countr_zero
+		int
 			Value
 		;
 
@@ -49,13 +46,13 @@ export namespace
 	auto constexpr
 	(	operator""_align
 	)	(	unsigned long long
-				i_nBits
+				i_nBitExponent
 		)
 		noexcept
 	->	Memory::Alignment
 	{	return
-		{	static_cast<BitSize::SizeType>
-			(	i_nBits
+		{	static_cast<int>
+			(	i_nBitExponent
 			)
 		};
 	}

@@ -29,7 +29,7 @@ export namespace
 		;
 
 		SizeType
-			m_nValue
+			Value
 		;
 
 		[[nodiscard]]
@@ -38,7 +38,7 @@ export namespace
 		)	()	&
 			noexcept
 		->	SizeType&
-		{	return m_nValue;	}
+		{	return Value;	}
 
 		[[nodiscard]]
 		auto constexpr
@@ -46,7 +46,7 @@ export namespace
 		)	()	const&
 			noexcept
 		->	SizeType const&
-		{	return m_nValue;	}
+		{	return Value;	}
 
 		[[nodiscard]]
 		auto constexpr
@@ -54,7 +54,7 @@ export namespace
 		)	()	&&
 			noexcept
 		->	SizeType
-		{	return m_nValue;	}
+		{	return Value;	}
 
 		[[nodiscard]]
 		explicit(true) constexpr

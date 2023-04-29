@@ -308,8 +308,8 @@ export namespace
 			...	t_tpBitField
 		>
 	requires
-		(	1_align
-		==	BitAlign_Of
+		(	BitAlign_Of<::std::byte>
+		>	BitAlign_Of
 			<	t_tFirstBitField
 			>
 		)
