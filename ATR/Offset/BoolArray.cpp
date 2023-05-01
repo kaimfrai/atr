@@ -3,8 +3,8 @@ export module ATR.Offset.BoolArray;
 import ATR.Offset.FieldArray;
 import ATR.Offset.Member;
 
-import Meta.Memory.Size;
 import Meta.Bit.Field;
+import Meta.Memory.Size;
 import Meta.Size;
 
 import Std;

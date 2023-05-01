@@ -1,16 +1,16 @@
-import Evaluation.Archetype.Square;
-import Evaluation.Archetype.Rectangle;
-import Evaluation.Archetype.Triangle;
 import Evaluation.Archetype.Circle;
-import Evaluation.Archetype.Ellipse;
+import Evaluation.Archetype.Cone;
 import Evaluation.Archetype.Cube;
 import Evaluation.Archetype.Cuboid;
-import Evaluation.Archetype.Pyramid;
-import Evaluation.Archetype.Sphere;
 import Evaluation.Archetype.Cylinder;
-import Evaluation.Archetype.Cone;
+import Evaluation.Archetype.Ellipse;
 import Evaluation.Archetype.Ellipsoid;
 import Evaluation.Archetype.Head;
+import Evaluation.Archetype.Pyramid;
+import Evaluation.Archetype.Rectangle;
+import Evaluation.Archetype.Sphere;
+import Evaluation.Archetype.Square;
+import Evaluation.Archetype.Triangle;
 import Evaluation.Shared.DataTypes;
 import Evaluation.Shared.Fraction;
 import Evaluation.Shared.PiFraction;
@@ -20,19 +20,20 @@ import ATR.Member.NamedInfo;
 import ATR.Member.Info;
 
 import Meta.ID.StringLiteral;
-import Meta.Memory.Size;
-import Meta.Memory.Size.Arithmetic;
-import Meta.Memory.Size.Scale;
-import Meta.Memory.Size.Compare;
 import Meta.Memory.Constraint;
+import Meta.Memory.Size.Arithmetic;
+import Meta.Memory.Size.Compare;
+import Meta.Memory.Size.Scale;
+import Meta.Memory.Size;
 import Meta.Token.Type;
 
 import Std;
 
-using namespace ::Meta::Literals;
-using ::Meta::Memory::BitSize_Of;
 using ::ATR::Member::Config_Of;
 using ::ATR::Member::NamedInfo;
+using ::Meta::Memory::BitSize_Of;
+
+using namespace ::Meta::Literals;
 
 struct
 	NamedInfoView
@@ -78,8 +79,7 @@ template
 
 [[nodiscard]]
 auto constexpr
-(	operator
-	==
+(	operator==
 )	(	::std::span<NamedInfo const>
 			i_rLeftList
 	,	NameList
@@ -114,7 +114,7 @@ auto constexpr
 }
 
 static_assert
-(	Config_Of<"Square">.GetNameView()
+(	Config_Of<"Square">.NamedInfoView()
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 1z>
@@ -132,7 +132,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Rectangle">.GetNameView()
+(	Config_Of<"Rectangle">.NamedInfoView()
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 2z>
@@ -150,7 +150,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Triangle">.GetNameView()
+(	Config_Of<"Triangle">.NamedInfoView()
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 2z>
@@ -168,7 +168,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Circle">.GetNameView()
+(	Config_Of<"Circle">.NamedInfoView()
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 1z>
@@ -186,7 +186,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Ellipse">.GetNameView()
+(	Config_Of<"Ellipse">.NamedInfoView()
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 2z>
@@ -204,7 +204,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Cube">.GetNameView()
+(	Config_Of<"Cube">.NamedInfoView()
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 1z>
@@ -225,7 +225,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Cuboid">.GetNameView()
+(	Config_Of<"Cuboid">.NamedInfoView()
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 3z>
@@ -246,7 +246,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Pyramid">.GetNameView()
+(	Config_Of<"Pyramid">.NamedInfoView()
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 3z>
@@ -267,7 +267,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Sphere">.GetNameView()
+(	Config_Of<"Sphere">.NamedInfoView()
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 1z>
@@ -288,7 +288,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Cylinder">.GetNameView()
+(	Config_Of<"Cylinder">.NamedInfoView()
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 2z>
@@ -309,7 +309,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Cone">.GetNameView()
+(	Config_Of<"Cone">.NamedInfoView()
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 2z>
@@ -330,7 +330,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Ellipsoid">.GetNameView()
+(	Config_Of<"Ellipsoid">.NamedInfoView()
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 3z>
@@ -352,7 +352,7 @@ static_assert
 
 
 static_assert
-(	Config_Of<"Head">.GetNameView()
+(	Config_Of<"Head">.NamedInfoView()
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 3z>

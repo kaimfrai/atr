@@ -1,17 +1,17 @@
 export module ATR.Member.Offset;
 
-import ATR.Offset.Member;
 import ATR.Offset.Array;
 import ATR.Offset.Bool;
 import ATR.Offset.BoolArray;
 import ATR.Offset.Field;
 import ATR.Offset.FieldArray;
 import ATR.Offset.Layout;
+import ATR.Offset.Member;
 import ATR.Offset.Mutable;
 import ATR.Offset.Object;
 
-import Meta.Token.Specifier;
 import Meta.Memory.Size;
+import Meta.Token.Specifier;
 
 using ::Meta::BitSize;
 using ::Meta::Specifier::Mut;

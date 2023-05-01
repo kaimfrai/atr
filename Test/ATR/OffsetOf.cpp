@@ -1,28 +1,28 @@
-import ATR.Member.OffsetOf;
 import ATR.Instance;
 import ATR.Member.Offset;
+import ATR.Member.OffsetOf;
 
-import Meta.Bit.Reference;
 import Meta.Bit.Array;
 import Meta.Bit.Field;
 import Meta.Bit.Index;
-import Meta.Memory.Size;
+import Meta.Bit.Reference;
+import Meta.ID.Alias;
+import Meta.ID.StringLiteral;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Scale;
+import Meta.Memory.Size;
 import Meta.Token.Specifier;
 import Meta.Token.Type;
-import Meta.ID.Alias;
-import Meta.ID.StringLiteral;
 
 import Std;
 
-using ::Meta::Specifier::Mut;
 using ::Meta::Bit::Field;
-using ::Meta::Memory::SizeOf;
-using ::Meta::Memory::ByteWidth;
-using ::Meta::Type;
 using ::Meta::BitSize;
+using ::Meta::Memory::ByteWidth;
+using ::Meta::Memory::SizeOf;
+using ::Meta::Specifier::Mut;
+using ::Meta::Type;
 
 using namespace ::Meta::Literals;
 
@@ -76,7 +76,7 @@ static_assert
 );
 
 static_assert
-(	::Meta::Memory::SizeOf<decltype(OffsetOfTest::SouthType::Buffer)>
+(	::Meta::Memory::SizeOf<decltype(OffsetOfTest{}.SouthArea.Buffer)>
 ==	ExpectedBufferSize
 );
 

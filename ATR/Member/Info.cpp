@@ -1,7 +1,11 @@
 export module ATR.Member.Info;
 
-import Meta.Token.TypeID;
+import Meta.Memory.Size.Compare;
 import Meta.Memory.Size;
+import Meta.Token.Type.Compare;
+import Meta.Token.TypeID;
+
+import Std;
 
 using ::Meta::BitSize;
 using ::Meta::TypeID;
@@ -18,5 +22,16 @@ export namespace
 		BitSize
 			Offset
 		;
+
+		[[nodiscard]]
+		auto friend constexpr
+		(	operator<=>
+		)	(	Info const
+				&
+			,	Info const
+				&
+			)
+			noexcept
+		=	default;
 	};
 }

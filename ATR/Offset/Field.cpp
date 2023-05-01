@@ -1,23 +1,20 @@
-export module ATR.Offset.FieldArray;
+export module ATR.Offset.Field;
 
 import ATR.Offset.Member;
 
-import Meta.Memory.Size;
-import Meta.Memory.Size.Cast;
-import Meta.Memory.Size.PointerArithmetic;
-import Meta.Bit.Array;
 import Meta.Bit.Field;
 import Meta.Bit.Index;
-import Meta.Size;
+import Meta.Bit.Reference;
+import Meta.Memory.Size.Cast;
+import Meta.Memory.Size.PointerArithmetic;
+import Meta.Memory.Size;
 
 import Std;
 
-using ::Meta::Bit::ArrayReference;
-using ::Meta::Bit::ArrayConstReference;
 using ::Meta::Bit::Field;
+using ::Meta::Bit::Reference;
 using ::Meta::BitSize;
 using ::Meta::ByteIndex;
-using ::Meta::USize;
 
 export namespace
 	ATR::Offset
@@ -27,8 +24,6 @@ export namespace
 				t_nOffset
 		,	BitSize
 				t_nWidth
-		,	USize
-				t_nExtent
 		>
 	[[nodiscard]]
 	auto constexpr
@@ -39,8 +34,6 @@ export namespace
 		,	Member
 			<	t_nOffset
 			,	Field<t_nWidth>
-					[	t_nExtent
-					]
 			>
 		)
 		noexcept
@@ -53,13 +46,13 @@ export namespace
 			)
 		;
 		return
-		ArrayReference
-		<	t_nWidth
-		,	t_nExtent
+		Reference
+		<	Field<t_nWidth>
 		,	vByteOffset.Remainder
 		>{	::std::launder
 			(	i_rObject
-			+	vByteOffset.Quotient
+			+	vByteOffset
+				.	Quotient
 			)
 		};
 	}
@@ -69,8 +62,6 @@ export namespace
 				t_nOffset
 		,	BitSize
 				t_nWidth
-		,	USize
-				t_nExtent
 		>
 	[[nodiscard]]
 	auto constexpr
@@ -81,8 +72,6 @@ export namespace
 		,	Member
 			<	t_nOffset
 			,	Field<t_nWidth> const
-					[	t_nExtent
-					]
 			>
 		)
 		noexcept
@@ -95,14 +84,16 @@ export namespace
 			)
 		;
 		return
-		CopyArray
-		(	ArrayConstReference
-			<	t_nWidth
-			,	t_nExtent
-			,	vByteOffset.Remainder
-			>{	i_rObject
-			+	vByteOffset.Quotient
-			}
-		);
+			Reference
+			<	Field<t_nWidth> const
+			,	vByteOffset
+				.	Remainder
+			>
+		::	Read
+			(	i_rObject
+			+	vByteOffset
+				.	Quotient
+			)
+		;
 	}
 }

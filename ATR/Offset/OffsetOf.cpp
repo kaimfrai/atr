@@ -1,17 +1,17 @@
 export module ATR.Member.OffsetOf;
 
 import ATR.Member.Config;
-import ATR.Member.Static;
 import ATR.Member.Offset;
+import ATR.Member.Static;
 
 import Meta.ID.Concept;
-import Meta.Token.Type;
 import Meta.Memory.Alignment;
-
-using namespace ::Meta::Literals;
+import Meta.Token.Type;
 
 using ::Meta::ProtoID;
 using ::Meta::RestoreTypeEntity;
+
+using namespace ::Meta::Literals;
 
 export namespace
 	ATR::Member

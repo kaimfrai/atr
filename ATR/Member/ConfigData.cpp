@@ -1,24 +1,19 @@
 export module ATR.Member.ConfigData;
 
 import ATR.Member.Info;
+import ATR.Member.LayoutBuffer;
 import ATR.Member.Name;
-import ATR.Member.Layout;
 import ATR.Member.NamedInfo;
-import ATR.Member.Compare.GreaterAlign;
-import ATR.Member.Compare.Name;
+import ATR.Member.Ordered;
 
-import Meta.Token.TypeID;
+import Meta.Memory.Size.Compare;
 import Meta.Memory.Size;
-import Meta.Memory.Alignment;
 import Meta.Size;
 
 import Std;
 
-using namespace ::Meta::Literals;
-
 using ::Meta::BitSize;
-using ::Meta::TypeID;
-using ::Meta::USize;
+using ::Meta::SSize;
 
 export namespace
 	ATR::Member
@@ -26,92 +21,84 @@ export namespace
 	struct
 		ConfigData
 	{
+		BitSize
+			Size
+		{};
+
 		LayoutBuffer
-			LayoutList
+			Layout
 		{};
 
 		NamedInfoBuffer
 			NamedInfoList
 		{};
 
-		USize
-			MemberCount
-		;
-
-		USize
-			AliasCount
-		;
-
 		[[nodiscard]]
 		auto constexpr
-		(	GetTypeView
-		)	()	const&
-			noexcept
-		->	::std::span
-			<	TypeID const
-			>
-		{	return
-			{	begin
-				(	LayoutList
-				)
-			,	MemberCount
-			};
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	GetNameView
-		)	()	const&
-			noexcept
-		->	::std::span
-			<	NamedInfo const
-			>
-		{	return
-			{	::std::begin
-				(	NamedInfoList
-				)
-			,	(	MemberCount
-				+	AliasCount
-				)
-			};
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	GetDynamicCount
+		(	MemberCount
 		)	()	const
 			noexcept
-		->	USize
-		{
-			auto const
-				rTypeView
-			=	GetTypeView
+		->	SSize
+		{	return
+			::std::reduce
+			(	Layout
+				.	begin
+					()
+			,	Layout
+				.	end
+					()
+			,	0z
+			,	[]	(	SSize
+							i_vCurrent
+					,	auto const
+						&	i_rBuffer
+					)
+				{	return
+						i_vCurrent
+					+	i_rBuffer
+						.	Count
+					;
+				}
+			);
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	NameCount
+		)	()	const
+			noexcept
+		->	SSize
+		{	return
+			NamedInfoList
+			.	Count
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	AliasCount
+		)	()	const
+			noexcept
+		->	SSize
+		{	return
+				NameCount
+				()
+			-	MemberCount
 				()
 			;
+		}
 
-			auto const
-				aFirstStatic
-			=	::std::lower_bound
-				(	rTypeView
-					.	begin
-						()
-				,	rTypeView
-					.	end
-						()
-				,	0_align
-				,	Compare::GreaterAlign
-					{}
-				)
+		[[nodiscard]]
+		auto constexpr
+		(	NamedInfoView
+		)	()	const&
+			noexcept
+		->	decltype(auto)
+		{	return
+			NamedInfoList
+			.	View
+				()
 			;
-			return
-			static_cast<USize>
-			(	::std::distance
-				(	rTypeView
-					.	begin
-						()
-				,	aFirstStatic
-				)
-			);
 		}
 
 		[[nodiscard]]
@@ -126,26 +113,15 @@ export namespace
 			>
 		{
 			auto const
-				rNameView
-			=	GetNameView
-				()
-			;
-			auto const
 				aNamePosition
-			=	::std::lower_bound
-				(	rNameView
-					.	begin
-						()
-				,	rNameView
-					.	end
-						()
+			=	::ATR::Member::lower_bound
+				(	NamedInfoList
 				,	i_rMemberName
-				,	Compare::Name
-					{}
 				)
 			;
+
 			if	(	(	aNamePosition
-					==	rNameView
+					==	NamedInfoList
 						.	end
 							()
 					)
@@ -195,5 +171,16 @@ export namespace
 			::std::unreachable
 			();
 		}
+
+		[[nodiscard]]
+		auto friend constexpr
+		(	operator<=>
+		)	(	ConfigData const
+				&
+			,	ConfigData const
+				&
+			)
+			noexcept
+		=	default;
 	};
 }

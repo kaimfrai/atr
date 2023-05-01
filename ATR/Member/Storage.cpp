@@ -2,10 +2,9 @@ export module ATR.Member.Storage;
 
 import ATR.Member.Name;
 import ATR.Member.Config;
-import ATR.Member.DynamicSize;
 
-import Meta.Memory.Size.Compare;
 import Meta.ID.Concept;
+import Meta.Memory.Size.Compare;
 
 import Std;
 
@@ -33,9 +32,16 @@ export namespace
 		noexcept
 	->	EStorage
 	{
+		auto constexpr
+		&	rConfig
+		=	Config_Of
+			<	i_vTypeName
+			>
+		;
+
 		if	(	auto const
 					vOffset
-				=	Config_Of<i_vTypeName>
+				=	rConfig
 					.	FindMemberInfo
 						(	i_rMemberName
 						)
@@ -48,7 +54,8 @@ export namespace
 					.	value
 						()
 					.	Offset
-				<	DynamicSize_Of<i_vTypeName>
+				<	rConfig
+					.	Size
 				)
 			{	return
 					EStorage::Dynamic

@@ -1,229 +1,313 @@
 export module ATR.Member.Finalize;
 
 import ATR.Member.Alias;
-import ATR.Member.Layout;
-import ATR.Member.NamedInfo;
 import ATR.Member.Compare.Name;
-import ATR.Member.Compare.GreaterName;
+import ATR.Member.ConfigData;
+import ATR.Member.LayoutBuffer;
+import ATR.Member.NamedInfo;
+import ATR.Member.NamedType;
+import ATR.Member.Ordered;
 
-import Meta.Token.TypeID;
-import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
+import Meta.Memory.Size;
 
 import Std;
 
-using ::Meta::TypeID;
 using ::Meta::BitSize;
+
+using namespace ::Meta::Literals;
 
 namespace
 	ATR::Member
 {
 	auto constexpr
-	(	SetLayout
-	)	(	NamedInfoView
-				i_rMemberView
-		,	LayoutView
-				i_rLayoutView
+	(	ExtractTypeBuffer
+	)	(	NamedTypeBuffer::value_type const
+			&	i_rAlignedBuffer
 		)
 		noexcept
-	->	void
+	->	LayoutBuffer::value_type
 	{
+		LayoutBuffer::value_type
+			vResult
+		{	.Buffer
+			{}
+		,	.Count
+			=	i_rAlignedBuffer
+				.	Count
+		};
+
 		::std::transform
-		(	i_rMemberView
+		(	i_rAlignedBuffer
 			.	begin
 				()
-		,	i_rMemberView
+		,	i_rAlignedBuffer
 			.	end
 				()
-		,	i_rLayoutView
+		,	vResult
 			.	begin
 				()
-		,	[]	(	NamedInfo const
+		,	[]	(	auto const
 					&	i_rName
 				)
 			{	return
 					i_rName
-					.	Info
 					.	Type
 				;
 			}
 		);
+
+		return
+			vResult
+		;
 	}
 
+	[[nodiscard]]
 	auto constexpr
-	(	SetOffsets
-	)	(	NamedInfoView
-				i_rMemberView
+	(	MakeLayout
+	)	(	NamedTypeConstView
+				i_rNamedTypeView
 		)
 		noexcept
-	->	void
+	->	LayoutBuffer
 	{
-		BitSize
-			vOffset
+		LayoutBuffer
+			vLayout
 		{};
 
-		for	(	auto
-				&	rMember
-			:	i_rMemberView
-			)
-		{
-			rMember
-			.	Info
-			.	Offset
-			=	vOffset
-			;
+		::std::transform
+		(	i_rNamedTypeView
+			.	begin
+				()
+		,	i_rNamedTypeView
+			.	end
+				()
+		,	vLayout
+			.	begin
+				()
+		,	&ExtractTypeBuffer
+		);
 
-			vOffset
-			+=	rMember
-				.	Info
-				.	Type
-				.	GetSize
-					()
-			;
-		}
+		return
+			vLayout
+		;
 	}
 
 	auto constexpr
 	(	SortMembers
-	)	(	NamedInfoView
-				i_rMemberView
+	)	(	NamedTypeConstView
+				i_rNamedTypeView
+		,	BitSize
+			&	o_rAccumulatedOffset
 		)
 		noexcept
-	->	void
+	->	NamedInfoBuffer
 	{
-		::std::sort
-		(	i_rMemberView
-			.	begin
-				()
-		,	i_rMemberView
-			.	end
-				()
-		,	Compare::Name
-			{}
-		);
+		NamedInfoBuffer
+			vResult
+		{};
+
+		for	(	auto const
+				&	rAlignedNames
+			:	i_rNamedTypeView
+			)
+		{
+			for	(	auto const
+					&	[	rName
+						,	rType
+						]
+				:	rAlignedNames
+				)
+			{
+				auto
+				&	rNamedInfo
+				=	::ATR::Member::emplace
+					(	vResult
+					,	rName
+					)
+				;
+
+				rNamedInfo
+				.	Info
+				.	Type
+				=	rType
+				;
+
+				auto const
+					vSize
+				=	rType
+					.	GetSize
+						()
+				;
+
+				rNamedInfo
+				.	Info
+				.	Offset
+				=	o_rAccumulatedOffset
+				;
+
+				o_rAccumulatedOffset
+				+=	vSize
+				;
+			}
+		}
+
+		return
+			vResult
+		;
 	}
 
+	[[nodiscard]]
 	auto constexpr
 	(	ResolveAliases
-	)	(	NamedInfoView
-				i_rMemberView
-		,	AliasView
+	)	(	NamedInfoBuffer const
+			&	i_rNamedInfos
+		,	NamedInfoBuffer::iterator
+				o_aAliasBegin
+		,	AliasConstView
 				i_rAliasView
 		)
 		noexcept
-	->	void
+	->	NamedInfoBuffer::iterator
 	{
 		auto const
-			fAssignInfo
-		=	[	i_rMemberView
-			]	(	Alias
-					&	o_rAlias
+			fResolveTarget
+		=	[	i_rNamedInfos
+			]	(	Alias const
+					&	i_rAlias
 				)
 			{
 				auto const
 					aMember
-				=	::std::lower_bound
-					(	i_rMemberView
-						.	begin
-							()
-					,	i_rMemberView
-						.	end
-							()
-					,	o_rAlias
+				=	::ATR::Member::lower_bound
+					(	i_rNamedInfos
+					,	i_rAlias
 						.	Target
-					,	Compare::Name
-						{}
 					)
 				;
 
-				o_rAlias
-				.	Info
-				=	aMember
-					->	Info
-				;
+				return
+				NamedInfo
+				{	.Name
+					=	i_rAlias
+						.	Name
+				,	.Info
+					=	aMember
+						->	Info
+				};
 			}
 		;
 
-		::std::for_each
+		return
+		::std::transform
 		(	i_rAliasView
 			.	begin
 				()
 		,	i_rAliasView
 			.	end
 				()
-		,	fAssignInfo
+		,	o_aAliasBegin
+		,	fResolveTarget
 		);
 	}
 
 	auto constexpr
-	(	MergeMembers
-	)	(	NamedInfoView
-				i_rMemberView
-		,	AliasView
+	(	MakeMembers
+	)	(	NamedTypeConstView
+				i_rNamedTypeView
+		,	AliasConstView
 				i_rAliasView
+		,	BitSize
+			&	o_rAccumulatedOffset
 		)
 		noexcept
-	->	void
+	->	NamedInfoBuffer
 	{
-		::std::merge
-		(	i_rMemberView
-			.	rbegin
-				()
-		,	i_rMemberView
-			.	rend
-				()
-		,	i_rAliasView
-			.	rbegin
-				()
-		,	i_rAliasView
-			.	rend
-				()
-		,	::std::prev
-			(	i_rMemberView
-				.	rbegin
-					()
-			,	ssize
-				(	i_rAliasView
-				)
+		NamedInfoBuffer
+			vNamedInfo
+		=	SortMembers
+			(	i_rNamedTypeView
+			,	o_rAccumulatedOffset
 			)
-		,	Compare::GreaterName
+		;
+
+		auto const
+			aNamedInfoBegin
+		=	vNamedInfo
+			.	begin
+				()
+		;
+
+		auto const
+			aAliasBegin
+		=	vNamedInfo
+			.	end
+				()
+		;
+
+		auto const
+			aAliasEnd
+		=	ResolveAliases
+			(	vNamedInfo
+			,	aAliasBegin
+			,	i_rAliasView
+			)
+		;
+
+		::std::sort
+		(	aNamedInfoBegin
+		,	aAliasEnd
+		,	Compare::Name
 			{}
 		);
+
+		vNamedInfo
+		.	Count
+		=	::std::distance
+			(	aNamedInfoBegin
+			,	aAliasEnd
+			)
+		;
+
+		return
+			vNamedInfo
+		;
 	}
 
 	export auto constexpr
 	(	Finalize
-	)	(	NamedInfoView
-				i_rMemberView
-		,	AliasView
+	)	(	NamedTypeConstView
+				i_rNamedTypeView
+		,	AliasConstView
 				i_rAliasView
-		,	LayoutView
-				i_rLayoutView
 		)
 		noexcept
-	->	void
+	->	ConfigData
 	{
-		SetLayout
-		(	i_rMemberView
-		,	i_rLayoutView
-		);
+		BitSize
+			vAccumulatedOffset
+		=	0_bit;
 
-		SetOffsets
-		(	i_rMemberView
-		);
+		auto const
+			vLayout
+		=	MakeLayout
+			(	i_rNamedTypeView
+			)
+		;
 
-		SortMembers
-		(	i_rMemberView
-		);
+		auto const
+			vNamedInfos
+		=	MakeMembers
+			(	i_rNamedTypeView
+			,	i_rAliasView
+			,	vAccumulatedOffset
+			)
+		;
 
-		ResolveAliases
-		(	i_rMemberView
-		,	i_rAliasView
-		);
-
-		MergeMembers
-		(	i_rMemberView
-		,	i_rAliasView
-		);
+		return
+		{	vAccumulatedOffset
+		,	vLayout
+		,	vNamedInfos
+		};
 	}
 }

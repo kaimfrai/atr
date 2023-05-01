@@ -2,11 +2,10 @@ export module ATR.Member.ConfigAffixer;
 
 import ATR.Member.ConfigBuilder;
 import ATR.Member.Name;
-import ATR.Member.Config;
 
 import Meta.Token.TypeID;
 
-export import Std;
+import Std;
 
 export namespace
 	ATR::Member

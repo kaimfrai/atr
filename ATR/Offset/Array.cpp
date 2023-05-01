@@ -1,6 +1,5 @@
 export module ATR.Offset.Array;
 
-import ATR.Offset.Object;
 import ATR.Offset.Member;
 
 import Meta.Memory.Size;

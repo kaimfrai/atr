@@ -212,6 +212,45 @@ export namespace
 			(	Buffer
 			);
 		}
+
+		[[nodiscard]]
+		auto friend constexpr
+		(	operator==
+		)	(	StringLiteral const
+				&
+			,	StringLiteral const
+				&
+			)
+			noexcept
+		->	bool
+		=	default;
+
+		[[nodiscard]]
+		auto friend constexpr
+		(	operator<=>
+		)	(	StringLiteral const
+				&	i_rLeft
+			,	StringLiteral const
+				&	i_rRight
+			)
+			noexcept
+		->	::std::strong_ordering
+		{	return
+			::std::lexicographical_compare_three_way
+			(	i_rLeft
+				.	begin
+					()
+			,	i_rLeft
+				.	end
+					()
+			,	i_rRight
+				.	begin
+					()
+			,	i_rRight
+				.	end
+					()
+			);
+		}
 	};
 
 	template

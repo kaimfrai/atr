@@ -1,14 +1,14 @@
 export module ATR.Member.Config;
 
-import ATR.Member.ConfigData;
 import ATR.Member.ConfigBuilder;
+import ATR.Member.ConfigData;
 import ATR.Member.Finalize;
 
-import Meta.ID.StringLiteral;
 import Meta.ID.Alias;
+import Meta.ID.StringLiteral;
 
-using ::Meta::StringLiteral;
 using ::Meta::ID_V;
+using ::Meta::StringLiteral;
 
 export namespace
 	ATR::Member
@@ -20,35 +20,24 @@ export namespace
 	ConfigData constexpr inline
 		Config_Of
 	=	[]{
-			ConfigData
-				vConfig
-			{};
-
 			ConfigBuilder
 				vConfigBuilder
-			{	vConfig
-			};
+			{};
 
 			Configure
 			(	ID_V<t_vTypeName>
 			,	vConfigBuilder
 			);
 
+			return
 			Finalize
 			(	vConfigBuilder
-				.	GetMemberNameView
+				.	NamedTypeView
 					()
 			,	vConfigBuilder
-				.	GetAliasView
-					()
-			,	vConfigBuilder
-				.	GetTypeView
+				.	AliasView
 					()
 			);
-
-			return
-				vConfig
-			;
 		}()
 	;
 }

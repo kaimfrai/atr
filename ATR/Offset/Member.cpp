@@ -3,8 +3,8 @@ export module ATR.Offset.Member;
 import Meta.Memory.Size;
 import Meta.Token.Specifier;
 
-using ::Meta::Specifier::Mut;
 using ::Meta::BitSize;
+using ::Meta::Specifier::Mut;
 
 export namespace
 	ATR::Offset

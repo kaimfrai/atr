@@ -2,9 +2,9 @@ export module ATR.Offset.Object;
 
 import ATR.Offset.Member;
 
-import Meta.Memory.Size;
-import Meta.Memory.Size.PointerArithmetic;
 import Meta.Memory.PointerCast;
+import Meta.Memory.Size.PointerArithmetic;
+import Meta.Memory.Size;
 
 import Std;
 

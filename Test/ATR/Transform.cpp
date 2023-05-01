@@ -1,15 +1,15 @@
-import ATR.Member.DynamicTypes;
+import ATR.Member.Config;
 import ATR.Member.ConfigTransformer;
 
 import Meta.Bit.Field;
-import Meta.Memory.Size;
-import Meta.Token.Const;
-import Meta.Token.Mutable;
-import Meta.Token.Specifier;
-import Meta.Token.Extent;
-import Meta.Token.Type;
 import Meta.ID.Alias;
 import Meta.ID.Literals;
+import Meta.Memory.Size;
+import Meta.Token.Const;
+import Meta.Token.Extent;
+import Meta.Token.Mutable;
+import Meta.Token.Specifier;
+import Meta.Token.Type;
 
 import Std;
 
@@ -100,31 +100,31 @@ namespace
 	}
 }
 
-using ::ATR::Member::DynamicTypes_Of;
+using ::ATR::Member::Config_Of;
 
 static_assert
-(	DynamicTypes_Of<"Single">
-!=	DynamicTypes_Of<"TransformedConst">
+(	Config_Of<"Single">
+!=	Config_Of<"TransformedConst">
 );
 static_assert
-(	DynamicTypes_Of<"Const">
-==	DynamicTypes_Of<"TransformedConst">
-);
-
-static_assert
-(	DynamicTypes_Of<"Single">
-!=	DynamicTypes_Of<"TransformedMut">
-);
-static_assert
-(	DynamicTypes_Of<"Mut">
-==	DynamicTypes_Of<"TransformedMut">
+(	Config_Of<"Const">
+==	Config_Of<"TransformedConst">
 );
 
 static_assert
-(	DynamicTypes_Of<"Single">
-!=	DynamicTypes_Of<"TransformedArray">
+(	Config_Of<"Single">
+!=	Config_Of<"TransformedMut">
 );
 static_assert
-(	DynamicTypes_Of<"Array">
-==	DynamicTypes_Of<"TransformedArray">
+(	Config_Of<"Mut">
+==	Config_Of<"TransformedMut">
+);
+
+static_assert
+(	Config_Of<"Single">
+!=	Config_Of<"TransformedArray">
+);
+static_assert
+(	Config_Of<"Array">
+==	Config_Of<"TransformedArray">
 );

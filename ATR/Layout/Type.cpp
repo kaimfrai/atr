@@ -1,7 +1,7 @@
 export module ATR.Layout.Type;
 
-import ATR.Member.DynamicTypes;
 import ATR.Layout.Create;
+import ATR.Member.Config;
 
 import Meta.ID.StringLiteral;
 
@@ -18,10 +18,11 @@ export namespace
 	using
 		CreateLayoutType
 	=	decltype
-		(	CreateLayout
-			<	Member::DynamicTypes_Of
+		(	Layout::CreateLayout
+			<	Member::Config_Of
 				<	t_vTypeName
 				>
+			.	Layout
 			>()
 		)
 	;

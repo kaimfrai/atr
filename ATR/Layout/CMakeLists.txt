@@ -1,4 +1,8 @@
 add_single_file_modules(
+	Empty.cpp
+	Value.cpp
+	Bit.cpp
+	Fork.cpp
 	ValidateOffsets.cpp
 	Create.cpp
 	Type.cpp

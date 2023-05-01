@@ -1,18 +1,23 @@
-export module ATR.Offset.Bool;
+export module ATR.Offset.FieldArray;
 
 import ATR.Offset.Member;
 
-import Meta.Memory.Size;
+import Meta.Bit.Array;
+import Meta.Bit.Field;
+import Meta.Bit.Index;
 import Meta.Memory.Size.Cast;
 import Meta.Memory.Size.PointerArithmetic;
-import Meta.Bit.Reference;
-import Meta.Bit.Index;
+import Meta.Memory.Size;
+import Meta.Size;
 
 import Std;
 
-using ::Meta::Bit::Reference;
+using ::Meta::Bit::ArrayReference;
+using ::Meta::Bit::ArrayConstReference;
+using ::Meta::Bit::Field;
 using ::Meta::BitSize;
 using ::Meta::ByteIndex;
+using ::Meta::USize;
 
 export namespace
 	ATR::Offset
@@ -20,6 +25,10 @@ export namespace
 	template
 		<	BitSize
 				t_nOffset
+		,	BitSize
+				t_nWidth
+		,	USize
+				t_nExtent
 		>
 	[[nodiscard]]
 	auto constexpr
@@ -29,7 +38,9 @@ export namespace
 			)	[]
 		,	Member
 			<	t_nOffset
-			,	bool
+			,	Field<t_nWidth>
+					[	t_nExtent
+					]
 			>
 		)
 		noexcept
@@ -42,14 +53,13 @@ export namespace
 			)
 		;
 		return
-		Reference
-		<	bool
-		,	vByteOffset
-			.	Remainder
+		ArrayReference
+		<	t_nWidth
+		,	t_nExtent
+		,	vByteOffset.Remainder
 		>{	::std::launder
 			(	i_rObject
-			+	vByteOffset
-				.	Quotient
+			+	vByteOffset.Quotient
 			)
 		};
 	}
@@ -57,6 +67,10 @@ export namespace
 	template
 		<	BitSize
 				t_nOffset
+		,	BitSize
+				t_nWidth
+		,	USize
+				t_nExtent
 		>
 	[[nodiscard]]
 	auto constexpr
@@ -66,28 +80,29 @@ export namespace
 			)	[]
 		,	Member
 			<	t_nOffset
-			,	bool const
+			,	Field<t_nWidth> const
+					[	t_nExtent
+					]
 			>
 		)
 		noexcept
-	->	bool
-	{	auto constexpr
+	->	decltype(auto)
+	{
+		auto constexpr
 			vByteOffset
 		=	IndexCast<ByteIndex>
 			(	t_nOffset
 			)
 		;
 		return
-			Reference
-			<	bool const
-			,	vByteOffset
-				.	Remainder
-			>
-		::	Read
-			(	i_rObject
-			+	vByteOffset
-				.	Quotient
-			)
-		;
+		CopyArray
+		(	ArrayConstReference
+			<	t_nWidth
+			,	t_nExtent
+			,	vByteOffset.Remainder
+			>{	i_rObject
+			+	vByteOffset.Quotient
+			}
+		);
 	}
 }

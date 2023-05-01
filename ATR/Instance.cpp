@@ -2,27 +2,20 @@ export module ATR.Instance;
 
 import ATR.Address;
 import ATR.Layout.Type;
-import ATR.Member.Offset;
 import ATR.Member.Storage;
 import ATR.Member.Config;
-import ATR.Member.DynamicSize;
-import ATR.Member.Static;
 import ATR.Member.OffsetOf;
-import ATR.Layout;
 
-import Meta.Memory.Size.Arithmetic;
+import Meta.ID.Alias;
 import Meta.ID.Concept;
 import Meta.ID.StringLiteral;
-import Meta.ID.Alias;
-import Meta.Token.Type;
-
-import Meta.Size;
+import Meta.Memory.Size.Arithmetic;
 
 import Std;
 
-using ::Meta::ProtoID;
 using ::ATR::Member::ProtoDynamicMember_Of;
 using ::ATR::Member::ProtoStaticMember_Of;
+using ::Meta::ProtoID;
 
 export namespace
 	ATR

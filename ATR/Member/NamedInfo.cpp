@@ -1,9 +1,9 @@
 export module ATR.Member.NamedInfo;
 
 import ATR.Member.Constants;
-import ATR.Member.Name;
-import ATR.Member.Alias;
+import ATR.Member.CountedBuffer;
 import ATR.Member.Info;
+import ATR.Member.Name;
 
 import Std;
 
@@ -21,45 +21,23 @@ export namespace
 			Info
 		{};
 
-		auto constexpr
-		(	operator=
-		)	(	Alias const
-				&	i_rAlias
-			)	&
+		[[nodiscard]]
+		auto friend constexpr
+		(	operator<=>
+		)	(	NamedInfo const
+				&
+			,	NamedInfo const
+				&
+			)
 			noexcept
-		{
-			Name
-			=	i_rAlias
-				.	Name
-			;
-			Info
-			=	i_rAlias
-				.	Info
-			;
-			return
-			*	this
-			;
-		}
+		=	default;
 	};
 
 	using
 		NamedInfoBuffer
-	=	NamedInfo
-			[	NamedInfoBufferSize
-			]
-	;
-
-	struct
-		NamedInfoView
-	:	::std::span
+	=	CountedBuffer
 		<	NamedInfo
+		,	NameBufferSize
 		>
-	{
-		using
-			::std::span
-			<	NamedInfo
-			>
-		::	span
-		;
-	};
+	;
 }
