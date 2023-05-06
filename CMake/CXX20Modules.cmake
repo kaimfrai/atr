@@ -14,7 +14,6 @@ endfunction()
 
 ensure_module_variable_set(PREBUILT_MODULE_PATH)
 ensure_module_variable_set(MODULE_INTERFACE_EXTENSION)
-ensure_module_variable_set(MODULE_FLAGS)
 ensure_module_variable_set(STANDARD_LIBRARY_INCLUDE_PATH)
 
 file(
@@ -302,12 +301,6 @@ function(add_module_object_library
 		${ARGN}
 	)
 
-	target_compile_options(
-		"${target_name}"
-	PRIVATE
-		${MODULE_FLAGS}
-	)
-
 	add_module_dependencies(
 		"${target_name}"
 		${ARGN}
@@ -321,12 +314,6 @@ function(add_module_executable
 	add_executable(
 		${target_name}
 		${ARGN}
-	)
-
-	target_compile_options(
-		"${target_name}"
-	PRIVATE
-		${MODULE_FLAGS}
 	)
 
 	add_module_dependencies(

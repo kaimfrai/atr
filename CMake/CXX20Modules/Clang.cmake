@@ -9,9 +9,6 @@ set(MODULE_INTERFACE_EXTENSION
 CACHE STRING
 	"The extension used for prebuilt module files."
 )
-set(MODULE_FLAGS
-	-Werror=export-using-directive
-)
 
 set(STANDARD_HEADER_UNITS
 	cassert
@@ -361,7 +358,6 @@ function(get_compile_module_command
 		${cmake_cxx_flags}
 		${compile_options_flags}
 		${compile_definition_flags}
-		${MODULE_FLAGS}
 		${module_dependency_flag_list}
 		${include_dirs}
 		${file_type_flag}

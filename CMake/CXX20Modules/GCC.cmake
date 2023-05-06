@@ -11,10 +11,6 @@ set(MODULE_INTERFACE_EXTENSION
 	.gcm
 )
 
-set(MODULE_FLAGS
-	-fmodules-ts
-)
-
 function(
 	add_module_source_header_units
 	target_name
@@ -32,7 +28,6 @@ function(
 			${CXX_STANDARD_VERSION_FLAG}
 			${CXX_STANDARD_LIBRARY_FLAG}
 			${WARNING_FLAGS}
-			${MODULE_FLAGS}
 			-c -x c++-header
 			${CMAKE_CURRENT_SOURCE_DIR}/${header_unit}
 		VERBATIM
@@ -73,7 +68,6 @@ function(
 		${CXX_STANDARD_VERSION_FLAG}
 		${CXX_STANDARD_LIBRARY_FLAG}
 		${WARNING_FLAGS}
-		${MODULE_FLAGS}
 		-c ${CMAKE_CURRENT_SOURCE_DIR}/${module_interface_file}
 		-fmodule-only
 	)
