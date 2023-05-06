@@ -67,7 +67,7 @@ export namespace
 			<	NamedInfo const
 			>
 		{	return
-			{	begin
+			{	::std::begin
 				(	NamedInfoList
 				)
 			,	(	MemberCount

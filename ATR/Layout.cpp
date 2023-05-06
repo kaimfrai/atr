@@ -63,8 +63,9 @@ auto constexpr
 	noexcept
 {
 	static_assert(sizeof...(t_tpMember) > sizeof...(t_npIndex));
-	::std::array<::Meta::TypeID, sizeof...(t_tpMember)> constexpr
+	::Meta::TypeID constexpr
 		vTypes
+		[]
 	{	Type<t_tpMember>
 		...
 	};

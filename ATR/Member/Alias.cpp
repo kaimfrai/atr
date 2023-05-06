@@ -28,10 +28,9 @@ export namespace
 
 	using
 		AliasBuffer
-	=	::std::array
-		<	Alias
-		,	NamedInfoBufferSize
-		>
+	=	Alias
+			[	NamedInfoBufferSize
+			]
 	;
 
 	struct

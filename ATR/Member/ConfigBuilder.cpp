@@ -67,7 +67,7 @@ export namespace
 			noexcept
 		->	NamedInfoView
 		{	return
-			{	begin
+			{	::std::begin
 				(	m_aConfig
 					->	NamedInfoList
 				)
@@ -83,9 +83,9 @@ export namespace
 			noexcept
 		->	AliasView
 		{	return
-			{	m_vAliasList
-				.	begin
-					()
+			{	::std::begin
+				(	m_vAliasList
+				)
 			,	m_aConfig
 				->	AliasCount
 			};
@@ -98,9 +98,9 @@ export namespace
 			noexcept
 		->	ConstAliasView
 		{	return
-			{	m_vAliasList
-				.	begin
-					()
+			{	::std::begin
+				(	m_vAliasList
+				)
 			,	m_aConfig
 				->	AliasCount
 			};

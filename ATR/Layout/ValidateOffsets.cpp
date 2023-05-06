@@ -66,8 +66,10 @@ export namespace
 
 			union
 			{	alignas(t_tLayout)
-				::std::array<::std::byte, sizeof(t_tLayout)>
+				::std::byte
 					Buffer
+					[	sizeof(t_tLayout)
+					]
 				{};
 				t_tLayout
 					Layout

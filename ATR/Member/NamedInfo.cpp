@@ -44,10 +44,9 @@ export namespace
 
 	using
 		NamedInfoBuffer
-	=	::std::array
-		<	NamedInfo
-		,	NamedInfoBufferSize
-		>
+	=	NamedInfo
+			[	NamedInfoBufferSize
+			]
 	;
 
 	struct
