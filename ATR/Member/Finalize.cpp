@@ -286,7 +286,8 @@ namespace
 	{
 		BitSize
 			vAccumulatedOffset
-		=	0_bit;
+		=	0_bit
+		;
 
 		auto const
 			vLayout
