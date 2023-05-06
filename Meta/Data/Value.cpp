@@ -8,7 +8,6 @@ import Meta.Lex.Reference;
 import Meta.Lex.Function;
 import Meta.Lex.CV;
 import Meta.Lex.Array;
-import Meta.Buffer.Iterator;
 import Meta.Token.Array;
 import Meta.Token.Type;
 import Meta.Size;
@@ -284,7 +283,7 @@ export namespace
 		:	Aggregate
 			<	ArrayType
 			>{	Data::MakeArrayAggregate<ArrayType>
-				(	Buffer::Iterator{i_aValue}
+				(	i_aValue
 				)
 			}
 		{}

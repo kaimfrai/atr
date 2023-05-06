@@ -33,8 +33,11 @@ export namespace
 		StringLiteral final
 	{
 		[[no_unique_address]]
-		::std::array<char, t_nExtent + 1uz>
+		char
 			Buffer
+			[	t_nExtent
+			+	1uz
+			]
 		{};
 
 		[[nodiscard]]
@@ -43,9 +46,9 @@ export namespace
 			StringView
 		)	()	const
 		{	return
-			{	Buffer
-				.	data
-					()
+			{	::std::data
+				(	Buffer
+				)
 			};
 		}
 
@@ -93,9 +96,9 @@ export namespace
 		{
 			for	(	auto
 						aBuffer
-					=	Buffer
-						.	begin
-							()
+					=	::std::begin
+						(	Buffer
+						)
 				;	*	i_aString
 					!=	'\0'
 				;	i_aString
@@ -136,9 +139,9 @@ export namespace
 		{
 			for	(	auto
 						aPosition
-					=	Buffer
-						.	begin
-							()
+					=	::std::begin
+						(	Buffer
+						)
 				;	auto
 						rString
 				:	i_rStringList
@@ -172,9 +175,9 @@ export namespace
 				,	i_rString
 					.	end
 						()
-				,	Buffer
-					.	begin
-						()
+				,	::std::begin
+					(	Buffer
+					)
 				)
 			=	'\0'
 			;
@@ -205,10 +208,9 @@ export namespace
 		)	()	&
 			noexcept
 		{	return
-			Buffer
-			.	begin
-				()
-			;
+			::std::begin
+			(	Buffer
+			);
 		}
 	};
 

@@ -17,10 +17,9 @@ export namespace
 	using
 		Static
 	=	Fixed
-		<	std::array
-			<	t_tElement
-			,	t_nExtent
-			>
+		<	t_tElement
+				[	t_nExtent
+				]
 		>
 	;
 }

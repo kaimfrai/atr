@@ -4,7 +4,6 @@ import Meta.Data.Aggregate.Primary;
 import Meta.Data.Object;
 import Meta.Lex.Array;
 import Meta.Lex.CV;
-import Meta.Buffer.Iterator;
 import Meta.Token.Mutable;
 import Meta.Token.Const;
 import Meta.Token.Type;
@@ -13,8 +12,6 @@ import Meta.Size;
 import Std;
 
 using ::Meta::USize;
-using ::Meta::Buffer::Iterator;
-using ::Meta::Buffer::Sentinel;
 
 export namespace
 	Meta::Data
@@ -61,8 +58,8 @@ export namespace
 		using const_reference = ConstElementType&;
 		using pointer = ElementType*;
 		using const_pointer = ConstElementType*;
-		using iterator = Iterator<value_type>;
-		using const_iterator = Iterator<value_type const>;
+		using iterator = pointer;
+		using const_iterator = const_pointer;
 
 		auto constexpr
 		(	get
@@ -180,14 +177,14 @@ export namespace
 		auto constexpr
 		(	end
 		)	()	&
-		->	Sentinel<value_type>
+		->	pointer
 		{	return { nullptr };	}
 
 		[[nodiscard]]
 		auto constexpr
 		(	end
 		)	()	const&
-		->	Sentinel<value_type const>
+		->	const_pointer
 		{	return { nullptr };	}
 
 		auto constexpr

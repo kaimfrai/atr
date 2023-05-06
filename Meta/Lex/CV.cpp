@@ -29,8 +29,9 @@ struct
 				(	nQualifierCount
 				==	2uz
 				)
-			{	::std::array<::Meta::TypeID, nQualifierCount> const
+			{	::Meta::TypeID const
 					vQualifier
+					[]
 				{	::Meta::Type<t_tpQualifier>
 					...
 				};

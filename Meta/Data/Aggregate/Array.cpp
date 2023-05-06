@@ -2,7 +2,6 @@ export module Meta.Data.Aggregate.Array;
 
 import Meta.Data.Aggregate.BoundedArray;
 import Meta.Data.Aggregate.UnboundedArray;
-import Meta.Buffer.Iterator;
 import Meta.Trait.ArrayExtent;
 import Meta.Trait.ArrayElement;
 import Meta.Token.Array;
@@ -13,7 +12,6 @@ import Meta.Size;
 import Std;
 
 using ::Meta::USize;
-using ::Meta::Buffer::Iterator;
 
 export namespace
 	Meta::Data
@@ -27,8 +25,8 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	MakeArrayAggregate
-	)	(	Iterator<t_tSource const>
-				i_aSource
+	)	(	t_tSource const
+			*	i_aSource
 		)
 		noexcept
 	->	Aggregate<t_tTarget>

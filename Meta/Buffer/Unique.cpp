@@ -1,6 +1,5 @@
 export module Meta.Buffer.Unique;
 
-import Meta.Buffer.Iterator;
 import Meta.Size;
 
 import Std;
@@ -35,16 +34,12 @@ export namespace
 
 		using
 			iterator
-		=	Iterator
-			<	value_type
-			>
+		=	pointer
 		;
 
 		using
 			const_iterator
-		=	Iterator
-			<	value_type const
-			>
+		=	const_pointer
 		;
 
 		std::unique_ptr<t_tElement[], t_tDeleter>
@@ -70,8 +65,11 @@ export namespace
 			)
 		->	iterator
 		{	return
-			{	i_rUnique.m_vBuffer.get()
-			};
+			i_rUnique
+			.	m_vBuffer
+			.	get
+				()
+			;
 		}
 
 		friend auto constexpr
@@ -81,8 +79,11 @@ export namespace
 			)
 		->	const_iterator
 		{	return
-			{	i_rUnique.m_vBuffer.get()
-			};
+			i_rUnique
+			.	m_vBuffer
+			.	get
+				()
+			;
 		}
 
 		[[nodiscard]]
@@ -91,11 +92,16 @@ export namespace
 		)	(	Unique
 				&	i_rUnique
 			)
-		->	Sentinel<value_type>
+		->	iterator
 		{	return
-				begin(i_rUnique)
-			+	static_cast<SSize>(i_rUnique.max_size())
-			;
+			::std::next
+			(	begin(i_rUnique)
+			,	static_cast<SSize>
+				(	i_rUnique
+					.	max_size
+						()
+				)
+			);
 		}
 
 		[[nodiscard]]
@@ -104,11 +110,18 @@ export namespace
 		)	(	Unique const
 				&	i_rUnique
 			)
-		->	Sentinel<value_type const>
+		->	const_iterator
 		{	return
-				begin(i_rUnique)
-			+	static_cast<SSize>(i_rUnique.max_size())
-			;
+			::std::next
+			(	begin
+				(	i_rUnique
+				)
+			,	static_cast<SSize>
+				(	i_rUnique
+					.	max_size
+						()
+				)
+			);
 		}
 
 		explicit(true) constexpr

@@ -90,7 +90,7 @@ export namespace
 		)	()	const&
 		{	return
 			{	begin(*this)
-			,	end(*this).base()
+			,	end(*this)
 			};
 		}
 
@@ -142,7 +142,7 @@ export namespace
 			{	return
 				std::transform_reduce
 				(	begin(*this)
-				,	end(*this).base()
+				,	end(*this)
 				,	std::forward<decltype(i_rInitial)>(i_rInitial)
 				,	std::forward<decltype(i_fReduce)>(i_fReduce)
 				,	std::forward<decltype(i_fTransform)>(i_fTransform)
@@ -222,8 +222,12 @@ export namespace
 			}
 			else
 			{
-				::std::array<Clause::IndexType, LiteralLimit.get()>
+				Clause::IndexType
 					vTrimLiteralPermutation
+					[	LiteralLimit
+						.	get
+							()
+					]
 				{};
 
 				for	(	Clause::IndexType
@@ -249,8 +253,14 @@ export namespace
 				return
 				Permutation
 				(	::std::span<Clause::IndexType const>
-					{	vTrimLiteralPermutation.begin()
-					,	static_cast<USize>(nMaxLiteralCount.get())
+					{	::std::begin
+						(	vTrimLiteralPermutation
+						)
+					,	static_cast<USize>
+						(	nMaxLiteralCount
+							.	get
+								()
+						)
 					}
 				);
 			}

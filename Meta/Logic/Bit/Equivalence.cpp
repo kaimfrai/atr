@@ -21,9 +21,9 @@ export namespace
 	{	return
 		::std::equal
 		(	begin(i_rLeft)
-		,	end(i_rLeft).base()
+		,	end(i_rLeft)
 		,	begin(i_rRight)
-		,	end(i_rRight).base()
+		,	end(i_rRight)
 		);
 	}
 

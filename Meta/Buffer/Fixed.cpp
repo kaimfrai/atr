@@ -1,6 +1,5 @@
 export module Meta.Buffer.Fixed;
 
-import Meta.Buffer.Iterator;
 import Meta.Buffer.Proto;
 import Meta.Math.Next;
 import Meta.Size;
@@ -26,44 +25,36 @@ export namespace
 		;
 
 		using
+			value_type
+		=	decltype
+			(	auto
+				(	::std::declval<t_tBuffer>()
+					[	0
+					]
+				)
+			)
+		;
+
+		using
 			pointer
-		=	typename
-				BufferType
-			::	pointer
+		=	value_type
+			*
 		;
 
 		using
 			const_pointer
-		=	typename
-				BufferType
-			::	const_pointer
-		;
-
-		static_assert
-		(	std::is_pointer_v
-			<	pointer
-			>
-		);
-
-		using
-			value_type
-		=	typename
-				BufferType
-			::	value_type
+		=	value_type const
+			*
 		;
 
 		using
 			iterator
-		=	Iterator
-			<	value_type
-			>
+		=	pointer
 		;
 
 		using
 			const_iterator
-		=	Iterator
-			<	value_type const
-			>
+		=	const_pointer
 		;
 
 		BufferType
@@ -393,12 +384,10 @@ export namespace
 		->	iterator
 		{	using ::std::begin;
 			return
-			iterator
-			{	begin
-				(	i_rFixed
+			begin
+			(	i_rFixed
 				.	m_vBuffer
-				)
-			};
+			);
 		}
 
 		[[nodiscard]]
@@ -411,12 +400,10 @@ export namespace
 		->	const_iterator
 		{	using ::std::begin;
 			return
-			const_iterator
-			{	begin
-				(	i_rFixed
+			begin
+			(	i_rFixed
 				.	m_vBuffer
-				)
-			};
+			);
 		}
 
 		[[nodiscard]]
@@ -426,11 +413,15 @@ export namespace
 				&	i_rFixed
 			)
 			noexcept
-		->	Sentinel<value_type>
+		->	iterator
 		{	return
-			Sentinel<value_type>
-			(	begin(i_rFixed)
-			+	i_rFixed.ssize()
+			::std::next
+			(	begin
+				(	i_rFixed
+				)
+			,	i_rFixed
+				.	ssize
+					()
 			);
 		}
 
@@ -441,11 +432,15 @@ export namespace
 				&	i_rFixed
 			)
 			noexcept
-		->	Sentinel<value_type const>
+		->	const_iterator
 		{	return
-			Sentinel<value_type const>
-			(	begin(i_rFixed)
-			+	i_rFixed.ssize()
+			::std::next
+			(	begin
+				(	i_rFixed
+				)
+			,	i_rFixed
+				.	ssize
+					()
 			);
 		}
 
@@ -472,11 +467,9 @@ export namespace
 				&	i_rValue
 			)	const
 		{	return
-			//	TODO ranges::find does not appear to be usable with modules
-			//	find is not usable with a sentinel
-			std::find
+			::std::find
 			(	begin(*this)
-			,	end(*this).base()
+			,	end(*this)
 			,	i_rValue
 			);
 		}
@@ -517,7 +510,7 @@ export namespace
 		{
 			auto const
 				vOldEnd
-			=	end(*this).base()
+			=	end(*this)
 			;
 
 			auto const
@@ -558,10 +551,17 @@ export namespace
 		(	SetUnusedToDefault
 		)	()	&
 		{
-			std::fill
-			(	end(*this).base()
-			,	Sentinel<value_type>{end(m_vBuffer)}.base()
-			,	value_type{}
+			using ::std::end;
+
+			::std::fill
+			(	end
+				(	*this
+				)
+			,	end
+				(	m_vBuffer
+				)
+			,	value_type
+				{}
 			);
 		}
 
@@ -586,10 +586,13 @@ export namespace
 		)	()	&
 		->	Fixed&
 		{
-			//	TODO ranges::sort does not appear to be usable with modules
-			//	sort is not usable with a sentinel
-			std::sort(begin(*this), end(*this).base());
-			return *this;
+			::std::sort
+			(	begin(*this)
+			,	end(*this)
+			);
+			return
+			(	*this
+			);
 		}
 
 		auto constexpr

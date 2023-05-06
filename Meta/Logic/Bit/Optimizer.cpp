@@ -6,7 +6,6 @@ import Meta.Logic.Bit.LiteralIterator;
 import Meta.Buffer.Static;
 import Meta.Buffer.Dynamic;
 import Meta.Size;
-import Meta.Buffer.Iterator;
 import Meta.Bit.Count;
 import Meta.Bit.Count.Access;
 import Meta.Bit.Index.Shift;
@@ -82,7 +81,7 @@ export namespace
 							&	i_rClause
 						)
 					{	return
-							Buffer::Iterator{&i_rClause}
+							&i_rClause
 						!=	end(*this)
 						;
 					}
@@ -101,7 +100,7 @@ export namespace
 							&	i_rClause
 						)
 					{	return
-							Buffer::Iterator{&i_rClause}
+							&i_rClause
 						!=	end(*this)
 						;
 					}
@@ -448,7 +447,12 @@ export namespace
 			if	(	IsAbsorbing()
 				or	i_vInsertClause.IsIdentity()
 				)
-				return end(m_vTerm).base();
+			{
+				return
+				end
+				(	m_vTerm
+				);
+			}
 
 			if	(	IsIdentity()
 				or	i_vInsertClause.IsAbsorbing()
@@ -460,7 +464,9 @@ export namespace
 
 			auto
 				aInsertPosition
-			=	end(m_vTerm).base()
+			=	end
+				(	m_vTerm
+				)
 			;
 			for	(	Clause
 					&	rClause
@@ -469,14 +475,14 @@ export namespace
 			{
 				//	insert clause is redundant
 				if	(i_vInsertClause.Includes(rClause))
-					return end(m_vTerm).base();
+					return end(m_vTerm);
 
 				//	overwrite redundant clause
 				if	(rClause.Includes(i_vInsertClause))
 				{
 					rClause = i_vInsertClause;
 					erase(aInsertPosition);
-					aInsertPosition = iterator{&rClause};
+					aInsertPosition = &rClause;
 				}
 			}
 
