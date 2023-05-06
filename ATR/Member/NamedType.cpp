@@ -31,7 +31,7 @@ export namespace
 
 	using
 		NamedTypeConstView
-	=	NamedTypeBuffer
-		::	ConstViewType
+	=	NamedTypeBuffer const
+		&
 	;
 }

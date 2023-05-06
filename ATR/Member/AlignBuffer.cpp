@@ -58,49 +58,19 @@ export namespace
 		;
 
 		using
-			BufferType
-		=	::std::array
-			<	CountedBuffer
-				<	t_tElement
-				,	ElementsPerAlign
-				>
-			,	BufferSize
+			value_type
+		=	CountedBuffer
+			<	t_tElement
+			,	ElementsPerAlign
 			>
 		;
 
 		using
-			value_type
-		=	BufferType
-			::	value_type
+			BufferType
+		=	value_type
+				[	BufferSize
+				]
 		;
-
-		struct
-			ViewType
-		:	::std::span
-			<	value_type
-			>
-		{
-			using
-				::std::span
-				<	value_type
-				>
-			::	span
-			;
-		};
-
-		struct
-			ConstViewType
-		:	::std::span
-			<	value_type const
-			>
-		{
-			using
-				::std::span
-				<	value_type const
-				>
-			::	span
-			;
-		};
 
 		auto static constexpr
 		(	size
@@ -115,28 +85,6 @@ export namespace
 		BufferType
 			Buffer
 		{};
-
-		[[nodiscard]]
-		auto constexpr
-		(	View
-		)	()	&
-			noexcept
-		->	ViewType
-		{	return
-				Buffer
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	View
-		)	()	const&
-			noexcept
-		->	ConstViewType
-		{	return
-				Buffer
-			;
-		}
 
 		[[nodiscard]]
 		auto constexpr
@@ -174,11 +122,9 @@ export namespace
 		)	()	&
 			noexcept
 		{	return
-				View
-				()
-			.	begin
-				()
-			;
+			::std::begin
+			(	Buffer
+			);
 		}
 
 		[[nodiscard]]
@@ -187,11 +133,9 @@ export namespace
 		)	()	const&
 			noexcept
 		{	return
-				View
-				()
-			.	begin
-				()
-			;
+			::std::begin
+			(	Buffer
+			);
 		}
 
 		[[nodiscard]]
@@ -200,11 +144,9 @@ export namespace
 		)	()	&
 			noexcept
 		{	return
-				View
-				()
-			.	end
-				()
-			;
+			::std::end
+			(	Buffer
+			);
 		}
 
 		[[nodiscard]]
@@ -213,11 +155,9 @@ export namespace
 		)	()	const&
 			noexcept
 		{	return
-				View
-				()
-			.	end
-				()
-			;
+			::std::end
+			(	Buffer
+			);
 		}
 
 		[[nodiscard]]

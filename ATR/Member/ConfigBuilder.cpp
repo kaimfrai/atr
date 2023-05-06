@@ -36,10 +36,8 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			m_vNamedTypes
-			.	View
-				()
-			;
+			(	m_vNamedTypes
+			);
 		}
 
 		[[nodiscard]]
@@ -49,10 +47,8 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			m_vAliasList
-			.	View
-				()
-			;
+			(	m_vAliasList
+			);
 		}
 
 		[[nodiscard]]

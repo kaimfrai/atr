@@ -20,57 +20,27 @@ export namespace
 		CountedBuffer
 	{
 		using
-			BufferType
-		=	::std::array
-			<	t_tElement
-			,	t_vMaxCount
-			>
+			value_type
+		=	t_tElement
 		;
 
 		using
-			value_type
-		=	BufferType
-			::	value_type
+			BufferType
+		=	value_type
+				[	t_vMaxCount
+				]
 		;
-
-		struct
-			ViewType
-		:	::std::span
-			<	value_type
-			>
-		{
-			using
-				::std::span
-				<	value_type
-				>
-			::	span
-			;
-		};
-
-		struct
-			ConstViewType
-		:	::std::span
-			<	value_type const
-			>
-		{
-			using
-				::std::span
-				<	value_type const
-				>
-			::	span
-			;
-		};
 
 		using
 			iterator
-		=	ViewType
-			::	iterator
+		=	value_type
+			*
 		;
 
 		using
 			const_iterator
-		=	ConstViewType
-			::	iterator
+		=	value_type const
+			*
 		;
 
 		BufferType
@@ -118,37 +88,6 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr
-		(	View
-		)	()	&
-			noexcept
-		->	ViewType
-		{	return
-			{	Buffer
-				.	begin
-					()
-			,	size
-				()
-			};
-		}
-
-
-		[[nodiscard]]
-		auto constexpr
-		(	View
-		)	()	const&
-			noexcept
-		->	ConstViewType
-		{	return
-			{	Buffer
-				.	begin
-					()
-			,	size
-				()
-			};
-		}
-
-		[[nodiscard]]
-		auto constexpr
 		(	operator[]
 		)	(	SSize
 					i_vIndex
@@ -188,11 +127,9 @@ export namespace
 			noexcept
 		->	iterator
 		{	return
-				View
-				()
-			.	begin
-				()
-			;
+			::std::begin
+			(	Buffer
+			);
 		}
 
 		[[nodiscard]]
@@ -202,11 +139,9 @@ export namespace
 			noexcept
 		->	const_iterator
 		{	return
-				View
-				()
-			.	begin
-				()
-			;
+			::std::begin
+			(	Buffer
+			);
 		}
 
 		[[nodiscard]]
@@ -216,11 +151,11 @@ export namespace
 			noexcept
 		->	iterator
 		{	return
-				View
+			::std::next
+			(	begin
 				()
-			.	end
-				()
-			;
+			,	Count
+			);
 		}
 
 		[[nodiscard]]
@@ -230,11 +165,11 @@ export namespace
 			noexcept
 		->	const_iterator
 		{	return
-				View
+			::std::next
+			(	begin
 				()
-			.	end
-				()
-			;
+			,	Count
+			);
 		}
 
 		auto constexpr

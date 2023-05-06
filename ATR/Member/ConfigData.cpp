@@ -95,10 +95,8 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			NamedInfoList
-			.	View
-				()
-			;
+			(	NamedInfoList
+			);
 		}
 
 		[[nodiscard]]

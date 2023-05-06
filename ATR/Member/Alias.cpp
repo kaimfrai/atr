@@ -28,7 +28,7 @@ export namespace
 
 	using
 		AliasConstView
-	=	AliasBuffer
-		::	ConstViewType
+	=	AliasBuffer const
+		&
 	;
 }
