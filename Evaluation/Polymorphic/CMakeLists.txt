@@ -5,9 +5,16 @@ set_source_files_properties(
 PROPERTIES
 INCLUDE_DIRECTORIES
 	"${POLYMORPHIC_INCLUDE_PATH}"
-COMPILE_OPTIONS
-	"$<$<CXX_COMPILER_ID:Clang>:-Wno-cast-function-type-strict;-Wno-unsafe-buffer-usage>"
 )
+
+if	(NOT FASTER_BUILD_SPEED)
+	set_source_files_properties(
+		${POLYMORPHIC_INCLUDE_PATH}/polymorphic.hpp
+	PROPERTIES
+	COMPILE_OPTIONS
+		"$<$<CXX_COMPILER_ID:Clang>:-Wno-cast-function-type-strict>"
+	)
+endif()
 
 force_import_std(
 	"${POLYMORPHIC_INCLUDE_PATH}/polymorphic.hpp"

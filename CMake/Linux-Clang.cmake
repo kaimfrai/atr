@@ -49,40 +49,53 @@ if	(BUILD_WITH_SANITIZER)
 
 endif()
 
+if	(FASTER_BUILD_SPEED)
 
-add_compile_options(
-	-Wall
-	-Wextra
-	-Wpedantic
-	-Wconversion
-	-Wdeprecated
-	-Wmissing-variable-declarations
-	-Wctad-maybe-unsupported
-	-Wcomma
-	-Werror
-	-Weverything
-	# Impacts build times negatively by being active alone
-	# Imposes an implementation burden which may incur even more build time
-	# If everything is evaluated at compile time, buffer usage is already checked
-	-Wno-unsafe-buffer-usage
-	# prohibits inline virtual classes
-	-Wno-weak-vtables
-	# not always preventable
-	-Wno-padded
-	# using C++23
-	-Wno-c++98-compat-pedantic
-	# using c++23
-	-Wno-c++20-compat-pedantic
-	# using C++23
-	-Wno-c++20-extensions
-	# more useful as warning
-	-Wno-error=deprecated-declarations
-)
+	add_compile_options(
+		--no-warnings
+	)
+
+else()
+	# Warnings will slow down the build speed
+	add_compile_options(
+		-Wall
+		-Wextra
+		-Wpedantic
+		-Wconversion
+		-Wdeprecated
+		-Wmissing-variable-declarations
+		-Wctad-maybe-unsupported
+		-Wcomma
+		-Werror
+		-Weverything
+		# Impacts build times negatively by being active alone
+		# Imposes an implementation burden which may incur even more build time
+		# If everything is evaluated at compile time, buffer usage is already checked
+		-Wno-unsafe-buffer-usage
+		# prohibits inline virtual classes
+		-Wno-weak-vtables
+		# not always preventable
+		-Wno-padded
+		# using C++23
+		-Wno-c++98-compat-pedantic
+		# using c++23
+		-Wno-c++20-compat-pedantic
+		# using C++23
+		-Wno-c++20-extensions
+		# more useful as warning
+		-Wno-error=deprecated-declarations
+	)
+
+	# Only trace time when not measuring build speed
+	add_compile_options(
+		-ftime-trace
+	)
+
+endif()
 
 add_compile_options(
 	-fconstexpr-backtrace-limit=0
 	-ftemplate-backtrace-limit=0
 	-frelaxed-template-template-args
 	-fconstexpr-steps=4294967295
-	#-ftime-trace
 )

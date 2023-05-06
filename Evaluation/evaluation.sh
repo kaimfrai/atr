@@ -1,7 +1,14 @@
 echo "Binär-Dateien werden generiert..."
 cd ..
 mkdir -p build/Evaluation
-cmake -S ./ -B ./build/Evaluation  --toolchain="CMake/Linux-Clang.cmake" -G "Ninja" -DCMAKE_BUILD_TYPE=Release
+
+cmake -S ./\
+	-B ./build/Evaluation\
+	--toolchain="CMake/Linux-Clang.cmake"\
+	-G "Ninja"\
+	-DCMAKE_BUILD_TYPE=Release\
+	-DFASTER_BUILD_SPEED:BOOL=TRUE
+
 cd ./build/Evaluation/
 
 if [ $# -lt 2 ]

@@ -5,9 +5,16 @@ set_source_files_properties(
 PROPERTIES
 INCLUDE_DIRECTORIES
 	"${DYNO_INCLUDE_PATH}"
-COMPILE_OPTIONS
-	"$<$<CXX_COMPILER_ID:Clang>:-Wno-gnu-string-literal-operator-template;-Wno-shadow-uncaptured-local;-Wno-reserved-identifier;-Wno-implicit-int-conversion;-Wno-missing-variable-declarations>"
 )
+
+if (NOT FASTER_BUILD_SPEED)
+	set_source_files_properties(
+		${DYNO_INCLUDE_PATH}/dyno.hpp
+	PROPERTIES
+	COMPILE_OPTIONS
+		"$<$<CXX_COMPILER_ID:Clang>:-Wno-gnu-string-literal-operator-template;-Wno-shadow-uncaptured-local;-Wno-reserved-identifier;-Wno-implicit-int-conversion;-Wno-missing-variable-declarations>"
+	)
+endif()
 
 force_import_std(
 	"${DYNO_INCLUDE_PATH}/dyno.hpp"
