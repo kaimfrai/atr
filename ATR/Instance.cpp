@@ -28,7 +28,6 @@ export namespace
 		Instance
 	:	CreateLayoutType
 		<	t_tName
-			{}
 		>
 	{
 		t_tName static constexpr
@@ -45,7 +44,7 @@ export namespace
 		using
 			LayoutType
 		=	CreateLayoutType
-			<	TypeName
+			<	t_tName
 			>
 		;
 

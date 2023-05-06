@@ -5,6 +5,7 @@ import ATR.Layout.Empty;
 import ATR.Layout.Fork;
 import ATR.Layout.ValidateOffsets;
 import ATR.Layout.Value;
+import ATR.Member.Config;
 
 import Meta.Memory.Alignment;
 import Meta.Size;
@@ -15,6 +16,77 @@ import Std;
 using ::Meta::Memory::Alignment;
 using ::Meta::RestoreTypeEntity;
 using ::Meta::USize;
+
+using namespace ::Meta::Literals;
+
+namespace
+	ATR::Layout
+{
+	auto constexpr
+	(	operator+
+	)	(	Empty
+		,	Empty
+		)
+		noexcept
+	->	Empty
+	{	return
+		{};
+	}
+
+	auto constexpr
+	(	operator+
+	)	(	auto
+				i_vLayout
+		,	Empty
+		)
+		noexcept
+	->	decltype(i_vLayout)
+	{	return
+		{};
+	}
+
+	auto constexpr
+	(	operator+
+	)	(	Empty
+		,	auto
+				i_vLayout
+		)
+		noexcept
+	->	decltype(i_vLayout)
+	{	return
+		{};
+	}
+
+	auto constexpr
+	(	operator+
+	)	(	auto
+				i_vLayout
+		,	Bit<>
+		)
+		noexcept
+	->	decltype(auto)
+	{	return
+			i_vLayout
+		;
+	}
+
+	template
+		<	typename
+				t_tLeft
+		,	typename
+				t_tRight
+		>
+	auto constexpr
+	(	operator+
+	)	(	t_tLeft
+		,	t_tRight
+		)
+		noexcept
+	->	Fork<t_tLeft, t_tRight>
+	{	return
+		{};
+	}
+}
 
 template
 	<	USize
@@ -62,197 +134,42 @@ export namespace
 {
 	[[nodiscard]]
 	auto constexpr
-	(	DeduceFork
-	)	(	Empty
-		,	Empty
+	(	CreateLayout
+	)	(	auto
+				i_vTypeName
 		)
 		noexcept
-	->	Empty
-	{	return
-		{};
-	}
-
-	template
-		<	typename
-				t_tNorth
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	DeduceFork
-	)	(	t_tNorth const
-			&
-		,	Empty
-		)
-		noexcept
-	->	t_tNorth
-	{	return
-		{};
-	}
-
-	template
-		<	typename
-				t_tSouth
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	DeduceFork
-	)	(	Empty
-		,	t_tSouth const
-			&
-		)
-		noexcept
-	->	t_tSouth
-	{	return
-		{};
-	}
-
-	template
-		<	typename
-				t_tNorth
-		,	typename
-				t_tSouth
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	DeduceFork
-	)	(	t_tNorth const
-			&
-		,	t_tSouth const
-			&
-		)
-		noexcept
-	->	Fork
-		<	t_tNorth
-		,	t_tSouth
-		>
-	{	return
-		{};
-	}
-
-	template
-		<	auto
-				t_vTypeBuffer
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	MakeFork
-	)	()
-		noexcept
-	->	decltype(auto)
 	{
-		auto constexpr
-			vBufferSize
-		=	t_vTypeBuffer
-			.	size
-				()
+		auto static constexpr
+		&	rLayout
+		=	Member::Config_Of
+			<	i_vTypeName
+			>
+			.	Layout
 		;
 
-		if	constexpr
-			(	vBufferSize
-			==	0uz
-			)
-		{	return
-			Empty
-			{};
-		}
-		else
-		if	constexpr
-			(	vBufferSize
-			==	1uz
-			)
-		{	return
-			Value
-			<	RestoreTypeEntity
-				<	t_vTypeBuffer
-						[	0uz
-						]
-				>
-			>{};
-		}
-		else
-		{
-			auto constexpr
-				vSplitIndex
-			=	::std::bit_floor
-				(	vBufferSize
-					-	1uz
-				)
-			;
+		auto static constexpr
+		&	rAlign1Types
+		=	rLayout
+				[	1_align
+				]
+		;
+		auto static constexpr
+		&	rAlign2Types
+		=	rLayout
+				[	2_align
+				]
+		;
+		auto static constexpr
+		&	rAlign3Types
+		=	rLayout
+				[	3_align
+				]
+		;
 
-			auto constexpr
-				vNorth
-			=	::ToArray
-				<	vSplitIndex
-				>(	::std::span
-					{	t_vTypeBuffer
-					}
-				.	first
-					(	vSplitIndex
-					)
-				)
-			;
-
-			auto constexpr
-				vSouth
-			=	::ToArray
-				<	vBufferSize
-				-	vSplitIndex
-				>(	::std::span
-					{	t_vTypeBuffer
-					}
-				.	subspan
-					(	vSplitIndex
-					)
-				)
-			;
-
-			return
-			DeduceFork
-			(	MakeFork
-				<	vNorth
-				>()
-			,	MakeFork
-				<	vSouth
-				>()
-			);
-		}
-	}
-
-	template
-		<	auto
-				t_vAlign3
-		,	auto
-				t_vAlign2
-		,	auto
-				t_vAlign1
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	MakeBit
-	)	()
-		noexcept
-	->	decltype(auto)
-	{
-		if	constexpr
-			(	(	t_vAlign3
-					.	size
-						()
-				+	t_vAlign2
-					.	size
-						()
-				+	t_vAlign1
-					.	size
-						()
-				)
-			<=	0uz
-			)
-		{	return
-			Empty
-			{};
-		}
-		else
-		{	return
-			[]	<	::std::size_t
+		auto static constexpr
+			vBitLayout
+		=	[]	<	::std::size_t
 					...	t_vpAlign3Index
 				,	::std::size_t
 					...	t_vpAlign2Index
@@ -274,114 +191,44 @@ export namespace
 			{	return
 				Bit
 				<	RestoreTypeEntity
-					<	t_vAlign3
+					<	rAlign1Types
 							[	t_vpAlign3Index
 							]
 					>
 					...
 				,	RestoreTypeEntity
-					<	t_vAlign2
+					<	rAlign2Types
 							[	t_vpAlign2Index
 							]
 					>
 					...
 				,	RestoreTypeEntity
-					<	t_vAlign1
+					<	rAlign1Types
 							[	t_vpAlign1Index
 							]
 					>
 					...
 				>{};
 			}(	::std::make_index_sequence
-				<	t_vAlign3
+				<	rAlign3Types
 					.	size
 						()
 				>{}
 			,	::std::make_index_sequence
-				<	t_vAlign2
+				<	rAlign2Types
 					.	size
 						()
 				>{}
 			,	::std::make_index_sequence
-				<	t_vAlign1
+				<	rAlign1Types
 					.	size
 						()
 				>{}
-			);
-		}
-	}
-
-	template
-		<	auto
-				t_vFirst
-		,	auto
-			...	t_vpAlignOther
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	MakeValue
-	)	()
-		noexcept
-	->	decltype(auto)
-	{
-		if	constexpr
-			(	sizeof...
-				(	t_vpAlignOther
-				)
-			==	2uz
 			)
-		{	return
-			MakeBit
-			<	t_vFirst
-			,	t_vpAlignOther
-				...
-			>();
-		}
-		else
-		{
-			auto constexpr
-				vFirst
-			=	MakeFork
-				<	t_vFirst
-				>()
-			;
-			if	constexpr
-				(	sizeof...
-					(	t_vpAlignOther
-					)
-				>	0uz
-				)
-			{	return
-				DeduceFork
-				(	vFirst
-				,	MakeValue
-					<	t_vpAlignOther
-						...
-					>()
-				);
-			}
-			else
-			{
-				return
-					vFirst
-				;
-			}
-		}
-	}
+		;
 
-	template
-		<	auto
-				t_vLayout
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	CreateLayout
-	)	()
-		noexcept
-	->	decltype(auto)
-	{
 		auto static constexpr
-			fGetAlignedArray
+			fGetAlignedLayout
 		=	[]	<	::std::size_t
 						t_vIndex
 				>(	::std::index_sequence
@@ -389,29 +236,47 @@ export namespace
 					>
 				)
 			{
-				Alignment constexpr
+				Alignment static constexpr
 					vAlignment
-				{	t_vLayout
+				{	rLayout
 					.	size
 						()
 				-	t_vIndex
+				-	1uz
 				};
 
-				auto constexpr
+				auto static constexpr
 				&	rAlignBuffer
-				=	t_vLayout
+				=	rLayout
 						[	vAlignment
 						]
 				;
 
 				return
-				::ToArray
-				<	rAlignBuffer
-					.	size
-						()
-				>(	rAlignBuffer
-					.	View
-						()
+				[]	<	::std::size_t
+						...	t_vpIndex
+					>(	::std::index_sequence
+						<	t_vpIndex
+							...
+						>
+					)
+				{	return
+					(	Value
+						<	RestoreTypeEntity
+							<	rAlignBuffer
+									[	t_vpIndex
+									]
+							>
+						>{}
+					+	...
+					+	Empty
+						{}
+					);
+				}(	::std::make_index_sequence
+					<	rAlignBuffer
+						.	size
+							()
+					>{}
 				);
 			}
 		;
@@ -420,23 +285,22 @@ export namespace
 		[]	<	::std::size_t
 				...	t_vpDynamicIndex
 			>(	::std::index_sequence
-				<	// Ignore statics
-					0uz
-				,	t_vpDynamicIndex
+				<	t_vpDynamicIndex
 					...
 				>
 			)
 		{
+
 			auto const
 				vLayout
-			=	MakeValue
-				<	fGetAlignedArray
+			=	(	fGetAlignedLayout
 					(	::std::index_sequence
 						<	t_vpDynamicIndex
 						>{}
 					)
-					...
-				>()
+				+	...
+				+	vBitLayout
+				)
 			;
 
 			ValidateOffsets
@@ -447,9 +311,10 @@ export namespace
 				vLayout
 			;
 		}(	::std::make_index_sequence
-			<	t_vLayout
+			<	rLayout
 				.	size
 					()
+			-	4uz
 			>{}
 		);
 	}
