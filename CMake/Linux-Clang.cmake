@@ -61,6 +61,10 @@ add_compile_options(
 	-Wcomma
 	-Werror
 	-Weverything
+	# Impacts build times negatively by being active alone
+	# Imposes an implementation burden which may incur even more build time
+	# If everything is evaluated at compile time, buffer usage is already checked
+	-Wno-unsafe-buffer-usage
 	# prohibits inline virtual classes
 	-Wno-weak-vtables
 	# not always preventable
