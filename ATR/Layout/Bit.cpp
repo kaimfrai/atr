@@ -39,12 +39,5 @@ export namespace
 			]
 		;
 	};
-
-	template
-		<>
-	struct
-		Bit
-		<>
-	{};
 }
 
