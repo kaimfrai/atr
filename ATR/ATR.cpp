@@ -10,6 +10,7 @@ export import ATR.Layout.Empty;
 export import ATR.Layout.Fork;
 export import ATR.Layout.Type;
 export import ATR.Layout.Value;
+export import ATR.Layout.Group;
 export import ATR.Literals;
 export import ATR.Member.Alias;
 export import ATR.Member.Compare.Name;

@@ -2,8 +2,6 @@ export module ATR.Member.Constants;
 
 import Meta.Memory.Constraint;
 
-import Std;
-
 using ::Meta::Memory::BitAlign_Of;
 
 export namespace
@@ -12,7 +10,7 @@ export namespace
 	auto constexpr inline
 		MaxAlign
 	=	BitAlign_Of
-		<	::std::max_align_t
+		<	double
 		>
 	;
 

@@ -15,7 +15,7 @@ export namespace
 			&	i_rLayout
 		)
 		noexcept
-	->	void
+	->	t_tLayout
 	{
 		if	constexpr
 			(	requires
@@ -125,5 +125,9 @@ export namespace
 			>
 		,	"Layouts are required to be trivially constructible!"
 		);
+
+		return
+			i_rLayout
+		;
 	}
 }

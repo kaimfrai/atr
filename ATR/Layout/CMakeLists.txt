@@ -3,6 +3,7 @@ add_single_file_modules(
 	Value.cpp
 	Bit.cpp
 	Fork.cpp
+	Group.cpp
 	ValidateOffsets.cpp
 	Create.cpp
 	Type.cpp
