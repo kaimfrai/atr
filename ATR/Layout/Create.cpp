@@ -9,7 +9,6 @@ import ATR.Layout.Group;
 import ATR.Member.Config;
 
 import Meta.Memory.Alignment;
-import Meta.Size;
 import Meta.Token.Type;
 
 import Std;
@@ -331,7 +330,7 @@ export namespace
 							(	AlignToken<4_align>
 								{}
 							)
-						,fMakeBit
+						,	fMakeBit
 							()
 						)
 					)

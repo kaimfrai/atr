@@ -52,9 +52,20 @@ namespace
 	[[nodiscard]]
 	auto constexpr
 	(	SplitLayoutType
-	)	(	TypeToken<t_t1Fork<t_tpMember...>>
-		,	::std::index_sequence<t_vpNorthIndex...>
-		,	::std::index_sequence<t_vpSouthIndex...>
+	)	(	TypeToken
+			<	t_t1Fork
+				<	t_tpMember
+					...
+				>
+			>
+		,	::std::index_sequence
+			<	t_vpNorthIndex
+				...
+			>
+		,	::std::index_sequence
+			<	t_vpSouthIndex
+				...
+			>
 		)
 		noexcept
 	{
@@ -85,6 +96,7 @@ namespace
 			>
 		>{};
 	};
+
 	template
 		<	typename
 				t_tFork

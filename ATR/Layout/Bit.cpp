@@ -8,8 +8,6 @@ import Std;
 using ::Meta::ByteSize;
 using ::Meta::Memory::BitSize_Of;
 
-using namespace ::Meta::Literals;
-
 export namespace
 	ATR::Layout
 {
@@ -22,8 +20,7 @@ export namespace
 	{
 		ByteSize static constexpr
 			ByteSize
-		=	(	0_bit
-			+	...
+		=	(	...
 			+	BitSize_Of
 				<	t_tpBit
 				>
