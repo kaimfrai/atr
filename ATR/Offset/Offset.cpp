@@ -1,6 +1,5 @@
 export module ATR.Member.Offset;
 
-import ATR.Offset.Array;
 import ATR.Offset.Bool;
 import ATR.Offset.BoolArray;
 import ATR.Offset.Field;
