@@ -224,19 +224,39 @@ export namespace
 			)
 		->	void
 		{
-			m_vTerm.sort();
-			for	(	Clause
-					&	rClause
-				:	::std::views::reverse(m_vTerm)
+			m_vTerm
+			.	sort
+				()
+			;
+
+			for	(	auto
+						aClause
+					=	end
+						(	m_vTerm
+						)
+					,	aClauseBegin
+					=	begin
+						(	m_vTerm
+						)
+				;	(	aClause
+					!=	aClauseBegin
+					)
+				;
 				)
 			{
-				if	(	i_rRedundancyBuffer.ComputeClauseRedundancy
-						(	rClause
-						,	*this
-						)
+				--	aClause
+				;
+
+				if	(	i_rRedundancyBuffer
+						.	ComputeClauseRedundancy
+							(	*aClause
+							,	*this
+							)
 					)
 				{
-					erase(iterator{&rClause});
+					erase
+					(	aClause
+					);
 				}
 			}
 		}
@@ -444,53 +464,111 @@ export namespace
 			)
 		->	iterator
 		{
-			if	(	IsAbsorbing()
-				or	i_vInsertClause.IsIdentity()
-				)
-			{
-				return
-				end
-				(	m_vTerm
-				);
-			}
-
-			if	(	IsIdentity()
-				or	i_vInsertClause.IsAbsorbing()
-				)
-			{
-				m_vTerm.reset(i_vInsertClause);
-				return begin(m_vTerm);
-			}
-
-			auto
-				aInsertPosition
+			auto const
+				aTermEnd
 			=	end
 				(	m_vTerm
 				)
 			;
-			for	(	Clause
-					&	rClause
-				:	::std::views::reverse(m_vTerm)
+
+			if	(	IsAbsorbing
+					()
+				or	i_vInsertClause
+					.	IsIdentity
+						()
+				)
+			{	return
+					aTermEnd
+				;
+			}
+
+			if	(	IsIdentity
+					()
+				or	i_vInsertClause
+					.	IsAbsorbing
+						()
 				)
 			{
+				m_vTerm
+				.	reset
+					(	i_vInsertClause
+					)
+				;
+
+				return
+				begin
+				(	m_vTerm
+				);
+			}
+
+			auto
+				aInsertPosition
+			=	aTermEnd
+			;
+			for	(	auto
+						aClause
+					=	aTermEnd
+					,	aClauseBegin
+					=	begin
+						(	m_vTerm
+						)
+				;	(	aClause
+					!=	aClauseBegin
+					)
+				;
+				)
+			{
+				--	aClause
+				;
 				//	insert clause is redundant
-				if	(i_vInsertClause.Includes(rClause))
-					return end(m_vTerm);
+				if	(	i_vInsertClause
+						.	Includes
+							(	*
+								aClause
+							)
+					)
+				{	return
+					end
+					(	m_vTerm
+					);
+				}
 
 				//	overwrite redundant clause
-				if	(rClause.Includes(i_vInsertClause))
+				if	(	aClause
+						->	Includes
+							(	i_vInsertClause
+							)
+					)
 				{
-					rClause = i_vInsertClause;
-					erase(aInsertPosition);
-					aInsertPosition = &rClause;
+					*	aClause
+					=	i_vInsertClause
+					;
+
+					erase
+					(	aInsertPosition
+					);
+
+					aInsertPosition
+					=	aClause
+					;
 				}
 			}
 
-			if	(aInsertPosition == end(m_vTerm))
-			{
-				m_vTerm.push_back(i_vInsertClause);
+			if	(	aInsertPosition
+				==	end
+					(	m_vTerm
+					)
+				)
+			{	m_vTerm
+				.	push_back
+					(	i_vInsertClause
+					)
+				;
 			}
-			return aInsertPosition;
+
+			return
+				aInsertPosition
+			;
 		}
 
 		auto constexpr
