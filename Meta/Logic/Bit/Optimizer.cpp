@@ -71,44 +71,6 @@ export namespace
 		{	return end(i_rOptimizer.m_vTerm);	}
 
 		auto constexpr
-		(	ViewDynamicBuffer
-		)	()	&
-		{	return
-				m_vTerm.ViewBuffer()
-			|	std::views::take_while
-				(	[	this
-					]	(	Clause
-							&	i_rClause
-						)
-					{	return
-							&i_rClause
-						!=	end(*this)
-						;
-					}
-				)
-			;
-		}
-
-		auto constexpr
-		(	ViewDynamicBuffer
-		)	()	const&
-		{	return
-				m_vTerm.ViewBuffer()
-			|	std::views::take_while
-				(	[	this
-					]	(	Clause const
-							&	i_rClause
-						)
-					{	return
-							&i_rClause
-						!=	end(*this)
-						;
-					}
-				)
-			;
-		}
-
-		auto constexpr
 		(	AppendLiteralRedundancy
 		)	(	Clause
 					i_vLiteral
@@ -160,45 +122,79 @@ export namespace
 			)
 		->	bool
 		{
-			clear();
+			clear
+			();
 
 			//	literals are only redundant if there exists its negation within the term
-			if	(i_rLiteralClause.LiteralCount() <= 1uz)
+			if	(	i_rLiteralClause
+					.	LiteralCount
+						()
+				<=	1uz
+				)
 			{
 				bool const
 					bNegationContained
-				=	i_rTerm.m_vTerm.contains
-					(	Inverse
-						(	i_rLiteralClause
+				=	i_rTerm
+					.	m_vTerm
+					.	contains
+						(	Inverse
+							(	i_rLiteralClause
+							)
 						)
-					)
 				;
 
-				if	(bNegationContained)
-					insert(Clause::Absorbing());
+				if	(	bNegationContained
+					)
+				{	insert
+					(	Clause::Absorbing
+						()
+					);
+				}
 
-				return bNegationContained;
+				return
+					bNegationContained
+				;
 			}
 
-			for	(	Clause const
-					&	rRedundancyClause
-				:	i_rTerm.ViewDynamicBuffer()
+			for	(	auto
+						aRedundancyClause
+					=	begin
+						(	i_rTerm
+						)
+				;	(	aRedundancyClause
+					!=	// May change every iteration
+						end
+						(	i_rTerm
+						)
+					)
+				;	++	aRedundancyClause
 				)
 			{
 				//	skip containing clause
-				if	(&rRedundancyClause == &i_rLiteralClause)
-					continue;
+				if	(	aRedundancyClause
+					==	&i_rLiteralClause
+					)
+				{	continue
+					;
+				}
 
 				if	(	AppendLiteralRedundancy
 						(	i_vLiteral
 						,	i_rLiteralClause
-						,	rRedundancyClause
+						,	*
+							aRedundancyClause
 						)
 					)
-					return true;
+				{	return
+						true
+					;
+				}
 			}
 
-			return Optimize(false);
+			return
+			Optimize
+			(	false
+			);
 		}
 
 		auto constexpr
@@ -272,7 +268,7 @@ export namespace
 		{
 			for	(	Clause
 						vRedundancyClause
-				:	i_rRedundancyCondition.ViewDynamicBuffer()
+				:	i_rRedundancyCondition
 				)
 			{
 				insert
@@ -297,11 +293,26 @@ export namespace
 			)
 		->	bool
 		{
-			for	(	Clause const
-					&	rClause
-				:	ViewDynamicBuffer()
+			for	(	auto
+						aClause
+					=	begin
+						(	*this
+						)
+				;	(	aClause
+					!=	// May change every iteration
+						end
+						(	*this
+						)
+					)
+				;	++	aClause
 				)
 			{
+				Clause const
+				&	rClause
+				=	*
+					aClause
+				;
+
 				for	(	Clause const
 							vLiteral
 					:	rClause
@@ -329,15 +340,25 @@ export namespace
 								,	i_rRedundancyBuffer
 								)
 							)
-							return true;
+						{	return
+								true
+							;
+						}
 					}
 				}
 			}
 
-			if	(i_bConsiderAlternatives)
-				TrimRedundantClauses(i_rRedundancyBuffer);
+			if	(	i_bConsiderAlternatives
+				)
+			{	TrimRedundantClauses
+				(	i_rRedundancyBuffer
+				);
+			}
 
-			return IsAbsorbing();
+			return
+				IsAbsorbing
+				()
+			;
 		}
 
 		auto constexpr
