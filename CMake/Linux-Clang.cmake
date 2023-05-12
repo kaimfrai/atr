@@ -22,13 +22,8 @@ endif()
 
 add_compile_options(-march=native)
 
-#do not use libc++ for C objects
-add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-stdlib=libc++>)
-add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-fexperimental-library>)
-add_link_options($<$<COMPILE_LANGUAGE:CXX>:-lm>)
-add_link_options($<$<COMPILE_LANGUAGE:CXX>:-lc++>)
-add_link_options($<$<COMPILE_LANGUAGE:CXX>:-lc++abi>)
-add_link_options($<$<COMPILE_LANGUAGE:CXX>:-lc++experimental>)
+add_compile_options(-stdlib=libc++)
+add_link_options(-lc++)
 add_link_options(-fuse-ld=lld)
 
 set(MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS -ffunction-sections)
