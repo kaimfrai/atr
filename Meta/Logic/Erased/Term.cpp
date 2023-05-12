@@ -131,23 +131,107 @@ export namespace
 			noexcept
 		->	Buffer::Static
 			<	TypeID
-			,	Logic::Bit::LiteralLimit.get()
+			,	Logic::Bit::LiteralLimit
+				.	get
+					()
 			>
 		{
 			Buffer::Static
 			<	TypeID
-			,	Logic::Bit::LiteralLimit.get()
-			>	vUnion
+			,	Logic::Bit::LiteralLimit
+				.	get
+					()
+			>
+				vUnion
 			;
-			vUnion.AppendUnique(i_rLeft.LiteralSpan());
-			vUnion.AppendUnique(i_rRight.LiteralSpan());
+
+			vUnion
+			.	m_nElementCount
+			=	0uz
+			;
+
+			auto const
+				vLeftSpan
+			=	i_rLeft
+				.	LiteralSpan
+					()
+			;
+
+			for	(	auto
+						vTypeID
+				:	vLeftSpan
+				)
+			{
+				vUnion
+				.	m_vBuffer
+					[	vUnion
+						.	m_nElementCount
+					]
+				=	vTypeID
+				;
+				++	vUnion
+					.	m_nElementCount
+				;
+			}
+
+			auto const
+				aLeftBegin
+			=	vLeftSpan
+				.	begin
+					()
+			;
+
+			auto const
+				aLeftEnd
+			=	vLeftSpan
+				.	end
+					()
+			;
+
+			for	(	auto
+						vTypeID
+				:	i_rRight
+					.	LiteralSpan
+						()
+				)
+			{
+				if	(	auto
+							aLeftPosition
+						=	::std::find
+							(	aLeftBegin
+							,	aLeftEnd
+							,	vTypeID
+							)
+					;	(	aLeftPosition
+						==	aLeftEnd
+						)
+					)
+				{
+					vUnion
+					.	m_vBuffer
+						[	vUnion
+							.	m_nElementCount
+						]
+					=	vTypeID
+					;
+					++	vUnion
+						.	m_nElementCount
+					;
+				}
+			}
 
 			//	compiler will complain about uninitialized buffer in constant expression otherwise
 			if consteval
 			{
-				vUnion.SetUnusedToDefault();
+				vUnion
+				.	SetUnusedToDefault
+					()
+				;
 			}
-			return vUnion;
+
+			return
+				vUnion
+			;
 		}
 
 		[[nodiscard]]
@@ -159,25 +243,48 @@ export namespace
 			noexcept
 		->	Bit::Term
 		{
-			Buffer::Static
-			<	IndexType
-			,	Logic::Bit::LiteralLimit.get()
-			>	vPermutationArray
+			IndexType
+				vPermutationArray
+				[	Logic::Bit::LiteralLimit
+					.	get
+						()
+				]
 			;
 
-				vPermutationArray
-			.	AppendUnique
-				(	LiteralSpan()
-				|	std::views::transform
-					(	i_fMapIndex
-					)
-				)
+			auto const
+				vLiteralSpan
+			=	LiteralSpan
+				()
 			;
+
+			for	(	IndexType
+					*	aIndex
+					=	+
+						vPermutationArray
+				;	auto
+						vLiteral
+				:	vLiteralSpan
+				)
+			{
+				*	aIndex
+				=	i_fMapIndex
+					(	vLiteral
+					)
+				;
+				++	aIndex
+				;
+			}
 
 			return
-				BitTerm
+			BitTerm
 			.	Permutation
-				(	vPermutationArray
+				(	::std::span
+					{	+
+						vPermutationArray
+					,	vLiteralSpan
+						.	size
+							()
+					}
 				)
 			;
 		}

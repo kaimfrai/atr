@@ -503,51 +503,6 @@ export namespace
 		{	return size() == 0uz;	}
 
 		auto constexpr
-		(	AppendUnique
-		)	(	std::ranges::range auto
-				&&	i_rFrom
-			)	&
-		{
-			auto const
-				vOldEnd
-			=	end(*this)
-			;
-
-			auto const
-			[	_
-			,	vNewEnd
-			]=	empty()
-			?	std::ranges::copy
-				(	std::forward<decltype(i_rFrom)>(i_rFrom)
-				,	vOldEnd
-				)
-			:	std::ranges::copy_if
-				(	std::forward<decltype(i_rFrom)>(i_rFrom)
-				,	vOldEnd
-				,	[	this
-					]	(	auto const
-							&	i_rValue
-						)
-					{	return
-						not
-						contains
-						(	i_rValue
-						);
-					}
-				)
-			;
-
-				m_nElementCount
-			+=	static_cast<USize>
-				(	std::distance
-					(	vOldEnd
-					,	vNewEnd
-					)
-				)
-			;
-		}
-
-		auto constexpr
 		(	SetUnusedToDefault
 		)	()	&
 		{

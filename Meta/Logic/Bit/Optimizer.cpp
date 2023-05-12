@@ -432,9 +432,27 @@ export namespace
 			ClauseBuffer
 				vArray
 			{};
-			vArray.AppendUnique(*this);
 
-			return vArray;
+			for	(	auto const
+					&	rClause
+				:	*this
+				)
+			{
+				vArray
+				.	m_vBuffer
+					[	vArray
+						.	m_nElementCount
+					]
+				=	rClause
+				;
+				++	vArray
+					.	m_nElementCount
+				;
+			}
+
+			return
+				vArray
+			;
 		}
 
 		auto constexpr
