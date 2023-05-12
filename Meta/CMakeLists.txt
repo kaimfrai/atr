@@ -18,7 +18,7 @@ add_subdirectory(Data)
 add_subdirectory(Functional)
 add_subdirectory(Predicate)
 add_subdirectory(ID)
-add_subdirectory(Dispatch)
+# add_subdirectory(Dispatch)
 
 add_single_file_modules(
 	Arithmetic.cpp
@@ -26,7 +26,7 @@ add_single_file_modules(
 	Buffer.cpp
 	Byte.cpp
 	Data.cpp
-	Dispatch.cpp
+	# Dispatch.cpp
 	Functional.cpp
 	ID.cpp
 	Lex.cpp
