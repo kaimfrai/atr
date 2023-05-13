@@ -92,5 +92,5 @@ add_compile_options(
 	-fconstexpr-backtrace-limit=0
 	-ftemplate-backtrace-limit=0
 	-frelaxed-template-template-args
-	-fconstexpr-steps=4294967295
+	-fconstexpr-steps=4194303
 )
