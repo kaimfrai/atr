@@ -1,7 +1,7 @@
 export module Meta.ID.Concept;
 
+import Meta.ID.StringChain;
 import Meta.ID.StringLiteral;
-
 import Meta.Size;
 
 import Std;
@@ -25,6 +25,10 @@ export namespace
 	and	::std::convertible_to
 		<	t_tID
 		,	StringView
+		>
+	and	::std::convertible_to
+		<	t_tID
+		,	StringChain
 		>
 	;
 

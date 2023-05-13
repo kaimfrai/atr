@@ -1,12 +1,12 @@
 export module Meta.ID.Template;
 
-import Meta.ID.UpperCase;
-import Meta.ID.LowerCase;
 import Meta.ID.Decimal;
+import Meta.ID.LowerCase;
+import Meta.ID.StringChain;
 import Meta.ID.StringLiteral;
-
-import Meta.Token.Index;
+import Meta.ID.UpperCase;
 import Meta.Size;
+import Meta.Token.Index;
 
 import Std;
 
@@ -78,6 +78,18 @@ export namespace
 		{	return
 				String
 			;
+		}
+
+		[[nodiscard]]
+		explicit(false) constexpr
+		(	operator
+			StringChain
+		)	()	const
+			noexcept
+		{	return
+			{	String
+				.	Buffer
+			};
 		}
 	};
 }
