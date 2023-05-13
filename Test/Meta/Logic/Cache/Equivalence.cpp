@@ -38,10 +38,10 @@ export
 		if	(	bool const
 					bLiteralsPermutation
 			=	::std::is_permutation
-				(	begin(i_rLeft.Literals)
-				,	end(i_rLeft.Literals)
-				,	begin(i_rRight.Literals)
-				,	end(i_rRight.Literals)
+				(	::std::begin(i_rLeft.Literals)
+				,	::std::end(i_rLeft.Literals)
+				,	::std::begin(i_rRight.Literals)
+				,	::std::end(i_rRight.Literals)
 				)
 			;	not
 				bLiteralsPermutation

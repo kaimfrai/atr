@@ -11,19 +11,22 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	operator not
-	)	(	Term const
-			&	i_rTerm
+	)	(	Term
+				i_vTerm
 		)
 		noexcept
 	->	Term
-	{	return
-		Term
-		{	Negation
-			(	i_rTerm
-			.	BitTerm
+	{
+		i_vTerm
+		.	BitTerm
+		=	Negation
+			(	i_vTerm
+				.	BitTerm
 			)
-		,	i_rTerm
-		.	Literals
-		};
+		;
+
+		return
+			i_vTerm
+		;
 	}
 }

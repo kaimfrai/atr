@@ -24,10 +24,11 @@ export namespace
 	{
 		using
 			LiteralBufferType
-		=	::std::array
-			<	TypeID
-			,	Bit::LiteralLimit.get()
-			>
+		=	TypeID
+				[	Bit::LiteralLimit
+					.	get
+						()
+				]
 		;
 
 		using
@@ -39,10 +40,10 @@ export namespace
 			::	IndexType
 		;
 
-		Bit::Term const
+		Bit::Term
 			BitTerm
 		;
-		LiteralBufferType const
+		LiteralBufferType
 			Literals
 		{};
 
@@ -57,9 +58,15 @@ export namespace
 			noexcept
 		->	Term
 		{
-			LiteralBufferType
-				vLiterals
-			{};
+			Term
+				vTrimmed
+			{	.BitTerm
+				=	i_rResult
+					.	TrimLiterals
+						()
+			,	.Literals
+				{}
+			};
 
 			for	(	auto
 						nArrayIndex
@@ -67,26 +74,30 @@ export namespace
 				;	auto
 						vBitIndex
 				:	::Meta::Bit::OneIndexRange
-					{	i_rResult.LiteralField()
+					{	i_rResult
+						.	LiteralField
+							()
 					}
 				)
 			{
-				(	vLiterals
+				vTrimmed
+				.	Literals
 					[	nArrayIndex
 					]
 				=	i_vUnion
-					[	static_cast<USize>
-						(	vBitIndex.get()
-						)
-					]
-				);
+						[	static_cast<USize>
+							(	vBitIndex
+								.	get
+									()
+							)
+						]
+				;
 				++nArrayIndex;
 			}
 
 			return
-			{	i_rResult.TrimLiterals()
-			,	vLiterals
-			};
+				vTrimmed
+			;
 		}
 
 		[[nodiscard]]
@@ -398,8 +409,10 @@ export namespace
 			noexcept
 		->	::std::span<TypeID const>
 		{	return
-			{	Literals.begin()
-			,	LiteralCount()
+			{	+
+				Literals
+			,	LiteralCount
+				()
 			};
 		}
 

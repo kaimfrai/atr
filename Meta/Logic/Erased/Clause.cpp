@@ -23,10 +23,10 @@ export namespace
 		=	USize
 		;
 
-		Bit::Clause const
+		Bit::Clause
 			BitClause
 		;
-		TypeID const
+		TypeID
 			Literals
 			[	Bit::LiteralLimit
 				.	get

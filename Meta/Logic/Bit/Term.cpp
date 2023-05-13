@@ -32,7 +32,7 @@ export namespace
 			::	IndexType
 		;
 
-		ClauseBuffer const
+		ClauseBuffer
 			Clauses
 		{};
 
