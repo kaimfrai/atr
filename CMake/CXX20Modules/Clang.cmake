@@ -474,3 +474,64 @@ function(
 	)
 
 endfunction()
+
+function(
+	get_module_output_files
+	module_name
+	module_partition_name
+	out_module_interface
+	out_module_object
+)
+
+	string(
+	REPLACE
+		"."
+		"/"
+		module_path
+		"${module_name}"
+	)
+	set(
+		module_path
+		"${PREBUILT_MODULE_PATH}/${module_path}"
+	)
+
+	if (module_partition_name)
+
+		file(
+		MAKE_DIRECTORY
+			"${module_path}"
+		)
+
+		set(
+			module_path
+			"${module_path}/${module_partition_name}"
+		)
+
+	else()
+
+		cmake_path(
+		GET
+			module_path
+		PARENT_PATH
+			module_parent_path
+		)
+
+		file(
+		MAKE_DIRECTORY
+			"${module_parent_path}"
+		)
+
+	endif()
+
+	set(
+		"${out_module_interface}"
+		"${module_path}${MODULE_INTERFACE_EXTENSION}"
+	PARENT_SCOPE
+	)
+	set(
+		"${out_module_object}"
+		"${module_path}${CMAKE_CXX_OUTPUT_EXTENSION}"
+	PARENT_SCOPE
+	)
+
+endfunction()

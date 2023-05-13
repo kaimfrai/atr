@@ -258,9 +258,10 @@ function(read_module_properties
 	TRANSFORM
 		module_dependency_binaries
 	REPLACE
-		":"
-		"-"
+		"[.:]"
+		"/"
 	)
+
 	list(
 	TRANSFORM
 		module_dependency_binaries
@@ -323,6 +324,23 @@ function(read_module_properties
 		${header_dependency_flag_list}
 	)
 
+	if (module_name)
+
+		get_module_output_files(
+			"${module_name}"
+			"${module_partition}"
+			module_interface_file
+			module_object_file
+		)
+
+	else()
+
+		set(module_interface_file "")
+		set(module_object_file "")
+
+	endif()
+
+
 	set_source_files_properties(
 		"${file_path}"
 	PROPERTIES
@@ -330,6 +348,10 @@ function(read_module_properties
 		"${module_name}"
 	MODULE_PARTITION
 		"${module_partition}"
+	MODULE_INTERFACE_FILE
+		"${module_interface_file}"
+	MODULE_OBJECT_FILE
+		"${module_object_file}"
 	MODULE_TYPE
 		"${module_type}"
 	MODULE_IMPORTS

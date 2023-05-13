@@ -16,12 +16,6 @@ ensure_module_variable_set(PREBUILT_MODULE_PATH)
 ensure_module_variable_set(MODULE_INTERFACE_EXTENSION)
 ensure_module_variable_set(STANDARD_LIBRARY_INCLUDE_PATH)
 
-file(
-MAKE_DIRECTORY
-	${PREBUILT_MODULE_PATH}
-)
-
-
 function(add_system_header_unit
 	header_unit_file
 )
@@ -97,9 +91,17 @@ endfunction()
 function(add_module_unit_command
 	module_unit_file
 	module_unit_name
-	module_interface
-	module_object
 )
+	get_source_file_property(
+		module_interface
+		"${module_unit_file}"
+		"MODULE_INTERFACE_FILE"
+	)
+	get_source_file_property(
+		module_object
+		"${module_unit_file}"
+		"MODULE_OBJECT_FILE"
+	)
 
 	get_compile_module_interface_command(
 		"${module_unit_file}"
@@ -211,14 +213,18 @@ function(add_module
 	add_module_unit_command(
 		"${module_interface_file}"
 		"${module_name}"
-		"${PREBUILT_MODULE_PATH}/${module_name}${MODULE_INTERFACE_EXTENSION}"
-		"${PREBUILT_MODULE_PATH}/${module_name}${CMAKE_CXX_OUTPUT_EXTENSION}"
+	)
+
+	get_source_file_property(
+		module_object_file
+		"${module_interface_file}"
+		"MODULE_OBJECT_FILE"
 	)
 
 	add_library(
 		"${module_name}"
 	OBJECT
-		"${PREBUILT_MODULE_PATH}/${module_name}${CMAKE_CXX_OUTPUT_EXTENSION}"
+		"${module_object_file}"
 	)
 
 	set_target_properties("${module_name}" PROPERTIES LINKER_LANGUAGE CXX)
@@ -239,19 +245,26 @@ function(add_module
 		get_source_file_property(file_module_type "${unit_file}" "MODULE_TYPE")
 		if	("${file_module_type}" MATCHES "_PARTITION$")
 
-			get_source_file_property(partition_name "${unit_file}" "MODULE_PARTITION")
+			get_source_file_property(
+				partition_name
+				"${unit_file}"
+				"MODULE_PARTITION"
+			)
+			get_source_file_property(
+				partition_object_file
+				"${unit_file}"
+				"MODULE_OBJECT_FILE"
+			)
 
 			target_sources(
 				"${module_name}"
 			PRIVATE
-				"${PREBUILT_MODULE_PATH}/${module_name}-${partition_name}${CMAKE_CXX_OUTPUT_EXTENSION}"
+				"${partition_object_file}"
 			)
 
 			add_module_unit_command(
 				"${unit_file}"
 				"${module_name}:${partition_name}"
-				"${PREBUILT_MODULE_PATH}/${module_name}-${partition_name}${MODULE_INTERFACE_EXTENSION}"
-				"${PREBUILT_MODULE_PATH}/${module_name}-${partition_name}${CMAKE_CXX_OUTPUT_EXTENSION}"
 			)
 
 		elseif("${file_module_type}" STREQUAL "IMPLEMENTATION")
