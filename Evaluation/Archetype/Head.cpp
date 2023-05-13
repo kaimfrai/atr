@@ -20,7 +20,7 @@ export namespace
 		)
 	{
 		Configure("Sphere"_ID, o_rConfig);
-		Configure("Sphere"_ID, ConfigAffixer{ o_rConfig, "LeftEye"});
-		Configure("Sphere"_ID, ConfigAffixer{ o_rConfig, "RightEye"});
+		Configure("Sphere"_ID, ConfigAffixer{ "LeftEye", o_rConfig });
+		Configure("Sphere"_ID, ConfigAffixer{ "RightEye", o_rConfig });
 	}
 }

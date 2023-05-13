@@ -350,54 +350,53 @@ static_assert
 	}
 );
 
-
 static_assert
 (	Config_Of<"Head">.NamedInfoView()
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 3z>
 		}
-	,	{	"ColorLeftEye"
-		,	OffsetType<RGBAColor, 3z, 1z>
-		}
-	,	{	"ColorRightEye"
-		,	OffsetType<RGBAColor, 3z, 2z>
-		}
 	,	{	"ComputeVolumeMultiplier"
  		,	OffsetType<Pi_6, 3z, 3z>
-		}
-	,	{	"ComputeVolumeMultiplierLeftEye"
-		,	OffsetType<Pi_6, 3z, 3z>
-		}
-	,	{	"ComputeVolumeMultiplierRightEye"
-		,	OffsetType<Pi_6, 3z, 3z>
 		}
 	,	{	"Depth"
 		,	OffsetType<Float>
 		}
-	,	{	"DepthLeftEye"
-		,	OffsetType<Float, 1z>
-		}
-	,	{	"DepthRightEye"
-		,	OffsetType<Float, 2z>
-		}
 	,	{	"Height"
 		,	OffsetType<Float>
 		}
-	,	{	"HeightLeftEye"
+	,	{	"LeftEyeColor"
+		,	OffsetType<RGBAColor, 3z, 1z>
+		}
+	,	{	"LeftEyeComputeVolumeMultiplier"
+		,	OffsetType<Pi_6, 3z, 3z>
+		}
+	,	{	"LeftEyeDepth"
 		,	OffsetType<Float, 1z>
 		}
-	,	{	"HeightRightEye"
+	,	{	"LeftEyeHeight"
+		,	OffsetType<Float, 1z>
+		}
+	,	{	"LeftEyeWidth"
+		,	OffsetType<Float, 1z>
+		}
+	,	{	"RightEyeColor"
+		,	OffsetType<RGBAColor, 3z, 2z>
+		}
+	,	{	"RightEyeComputeVolumeMultiplier"
+		,	OffsetType<Pi_6, 3z, 3z>
+		}
+	,	{	"RightEyeDepth"
+		,	OffsetType<Float, 2z>
+		}
+	,	{	"RightEyeHeight"
+		,	OffsetType<Float, 2z>
+		}
+	,	{	"RightEyeWidth"
 		,	OffsetType<Float, 2z>
 		}
 	,	{	"Width"
 		,	OffsetType<Float>
-		}
-	,	{	"WidthLeftEye"
-		,	OffsetType<Float, 1z>
-		}
-	,	{	"WidthRightEye"
-		,	OffsetType<Float, 2z>
 		}
 	}
 );

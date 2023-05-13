@@ -17,8 +17,8 @@ export namespace
 			&&	o_rConfig
 		)
 	{
-		o_rConfig("Depth", "Width");
-		o_rConfig("Height", "Width");
+		o_rConfig("Depth", "Height");
+		o_rConfig("Width", "Height");
 		Configure("Cuboid"_ID, o_rConfig);
 	}
 }

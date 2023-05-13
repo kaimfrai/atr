@@ -21,10 +21,6 @@ export namespace
 		*	m_aConfig
 		;
 
-		NameView
-			m_rSuffix
-		;
-
 		[[nodiscard]]
 		auto constexpr
 		(	InfixName
@@ -37,7 +33,6 @@ export namespace
 			Name
 			{	m_rPrefix
 			,	i_rName
-			,	m_rSuffix
 			};
 		}
 
@@ -48,9 +43,6 @@ export namespace
 					i_rPrefix
 			,	ConfigBuilder
 				&	i_rConfig
-			,	NameView
-					i_rSuffix
-				=	""
 			)
 			noexcept
 		:	m_rPrefix
@@ -60,24 +52,6 @@ export namespace
 			{	::std::addressof
 				(	i_rConfig
 				)
-			}
-		,	m_rSuffix
-			{	i_rSuffix
-			}
-		{}
-
-		explicit(true) constexpr
-		(	ConfigAffixer
-		)	(	ConfigBuilder
-				&	i_rConfig
-			,	NameView
-					i_rSuffix
-			)
-			noexcept
-		:	ConfigAffixer
-			{	""
-			,	i_rConfig
-			,	i_rSuffix
 			}
 		{}
 
