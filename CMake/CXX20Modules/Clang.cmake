@@ -50,7 +50,7 @@ set(STANDARD_HEADER_UNITS
 	deque
 	exception
 	execution
-	#expected
+	expected
 	filesystem
 	#flat_map
 	#flat_set
