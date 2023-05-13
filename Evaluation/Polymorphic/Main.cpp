@@ -12,7 +12,6 @@ import Evaluation.CRTP.Head;
 import Evaluation.Shared.DataTypes;
 import Evaluation.Shared.MainTemplate;
 import Evaluation.Shared.CopyConstruct;
-import Meta.Size;
 
 import Std;
 
@@ -64,9 +63,11 @@ auto
 	,	&CopyConstruct<Ellipsoid>
 	,	&CopyConstruct<Head>
 	,	fComputeVolume
-	>(	std::span
+	>(	::std::span
 		{	i_aArgValue
-		,	static_cast<Meta::USize>(i_nArgCount)
+		,	static_cast<::std::size_t>
+			(	i_nArgCount
+			)
 		}
 	);
 }

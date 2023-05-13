@@ -15,7 +15,6 @@ import Evaluation.Archetype.Head;
 import Evaluation.Shared.DataTypes;
 import Evaluation.Shared.MainTemplate;
 import Evaluation.Shared.TypeConstruct;
-import Meta.Size;
 
 import Std;
 
@@ -75,7 +74,9 @@ auto
 	,	fComputeVolume
 	>(	::std::span
 		{	i_aArgValue
-		,	static_cast<Meta::USize>(i_nArgCount)
+		,	static_cast<::std::size_t>
+			(	i_nArgCount
+			)
 		}
 	);
 }

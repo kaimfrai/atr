@@ -9,7 +9,6 @@ import Evaluation.Virtual.Ellipsoid;
 import Evaluation.Virtual.Head;
 
 import Evaluation.Shared.MainTemplate;
-import Meta.Size;
 
 import Std;
 
@@ -57,9 +56,11 @@ auto
 	,	&std::make_unique<Ellipsoid>
 	,	&std::make_unique<Head>
 	,	fComputeVolume
-	>(	std::span
+	>(	::std::span
 		{	i_aArgValue
-		,	static_cast<Meta::USize>(i_nArgCount)
+		,	static_cast<::std::size_t>
+			(	i_nArgCount
+			)
 		}
 	);
 }

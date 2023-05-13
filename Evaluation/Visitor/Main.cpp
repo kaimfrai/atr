@@ -9,7 +9,6 @@ import Evaluation.CRTP.Head;
 
 import Evaluation.Shared.MainTemplate;
 import Evaluation.Shared.InPlaceConstruct;
-import Meta.Size;
 
 import Std;
 
@@ -690,7 +689,9 @@ auto
 	,	fComputeVolume
 	>(	::std::span
 		{	i_aArgValue
-		,	static_cast<Meta::USize>(i_nArgCount)
+		,	static_cast<::std::size_t>
+			(	i_nArgCount
+			)
 		}
 	);
 }
