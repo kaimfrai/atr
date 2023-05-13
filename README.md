@@ -9,7 +9,7 @@ Supported OS:
 Required software:
 
 * CMake version 3.20 oder higher
-* Clang 17 (currently not fully released, requires version later than 2023-02-13 with commit https://github.com/llvm/llvm-project/commit/2a06757a200cc8dd4c3aeca98509d50d75bb4a27)
+* Clang 17 (currently not fully released, requires version later than 2023-05-04 with commit https://github.com/llvm/llvm-project/commit/ba15d186e5cef2620d562c6c9d9a6d570382cd0a)
 * perf (package linux-tools-generic under Ubuntu 22.04)
 * valgrind
 * Boost.TypeErasure (tested version 1.74.0)
@@ -88,7 +88,7 @@ Abstraction over arrays of bytes that enable conversion of objects from and to a
 
 Contains classes to store objects, arrays, and references in a uniform manner. Limits the available operations on the stored entities.
 
-### Dispatch
+### Dispatch (temporarily disabled)
 
 Can be used to generate a switch-like dispatch function from a string to any function. For usage examples, refer to Test/Meta/Dispatch.
 
