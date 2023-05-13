@@ -9,11 +9,11 @@ import ATR.Member.OffsetOf;
 import Meta.ID.Alias;
 import Meta.ID.Concept;
 import Meta.ID.StringLiteral;
-import Meta.Token.Type;
-import Meta.Logic.LiteralBase;
-import Meta.Logic.Term;
+import Meta.Logic.Bit.Clause;
 import Meta.Logic.Constraint;
-import Meta.Logic.Conjunction;
+import Meta.Logic.Erased.Term;
+import Meta.Logic.LiteralBase;
+import Meta.Token.Type;
 
 import Std;
 
@@ -96,25 +96,36 @@ export namespace
 	};
 }
 
-using ::Meta::Logic::Literal;
-
 export namespace
 	ATR
 {
+	// Create a term by direct initialization.
+	// This assumes that there are no dublicates in the provided member name pack.
+	// Caches the term independently of concept proto type.
 	template
 		<	::Meta::StringLiteral
 			...	t_vpMemberName
 		>
-	auto constexpr inline
+	::Meta::Logic::Erased::Term constexpr inline
 		HasDataMember
-	=	(	...
-		and	Literal
+	{	.BitTerm
+		{	// TODO Better express the intent of having the bottom bits set
+			::Meta::Logic::Bit::Clause
+			{	(	1uz
+				<<	sizeof...(t_vpMemberName)
+				)
+			-	1uz
+			}
+		}
+	,	.Literals
+		{	::Meta::Type
 			<	Trait::HasDataMember
 				<	t_vpMemberName
 				>
 			>
-		)
-	;
+			...
+		}
+	};
 
 	template
 		<	typename

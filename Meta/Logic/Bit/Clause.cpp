@@ -83,6 +83,18 @@ export namespace
 
 		explicit(true) constexpr
 		(	Clause
+		)	(	UIntMax
+					i_vPositiveFlags
+			)
+		:	Positive
+			{	i_vPositiveFlags
+			}
+		,	Negative
+			{}
+		{}
+
+		explicit(true) constexpr
+		(	Clause
 		)	(	IndexType
 					i_nPositive
 			)
