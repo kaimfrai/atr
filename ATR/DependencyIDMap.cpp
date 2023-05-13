@@ -64,8 +64,8 @@ export namespace
 	ATR::Trait
 {
 	template
-		<	ProtoID
-				t_tDataID
+		<	::Meta::StringLiteral
+				t_vDataID
 		>
 	struct
 		HasDataMember final
@@ -88,8 +88,7 @@ export namespace
 						<	t_tEntity
 						>
 					::	TypeName
-				,	t_tDataID
-					{}
+				,	t_vDataID
 				)
 			!=	Member::EStorage::None
 			;
@@ -97,36 +96,35 @@ export namespace
 	};
 }
 
-using ::Meta::Logic::DeduceTerm;
 using ::Meta::Logic::Literal;
 
 export namespace
 	ATR
 {
 	template
-		<	Meta::StringLiteral
-			...	t_tpMemberName
+		<	::Meta::StringLiteral
+			...	t_vpMemberName
 		>
-	DeduceTerm
-	<(	...
-	and	Literal
-		<	Trait::HasDataMember
-			<	Meta::ID_T<t_tpMemberName>
-			>
-		>
-	)>	inline
+	auto constexpr inline
 		HasDataMember
-	{};
+	=	(	...
+		and	Literal
+			<	Trait::HasDataMember
+				<	t_vpMemberName
+				>
+			>
+		)
+	;
 
 	template
 		<	typename
 				t_tProto
-		,	Meta::StringLiteral
+		,	::Meta::StringLiteral
 			...	t_tpMemberName
 		>
 	concept
 		ProtoMemberInterface
-	=	Meta::ProtoConstraint
+	=	::Meta::ProtoConstraint
 		<	t_tProto
 		,	HasDataMember
 			<	t_tpMemberName
