@@ -41,40 +41,27 @@ export namespace
 	struct
 		ID final
 	{
-		template
-			<	char
-				...	t_vpSuffix
-			>
-		using
-			Append
-		=	ID
-			<	(t_vpString)
-				...
-			,	::FromChar
-				(	Meta::IndexToken
-					<	t_vpSuffix
-					>{}
-				)
-				...
-			>
-		;
-
 		static USize constexpr
 			Length
 		=	sizeof...(t_vpString)
 		;
 
-		static StringLiteral<Length> constexpr
-			String
-		{	::ToChar(t_vpString)
-			...
-		,	'\0'
-		};
+		static StringLiteral<Length> const constexpr
+		&	String
+		=	StringInstance
+			<	StringLiteral<Length>
+				{	::ToChar(t_vpString)
+					...
+				,	'\0'
+				}
+			>
+		;
 
 		[[nodiscard]]
 		explicit(false) constexpr
 		(	operator
-			StringLiteral<Length>
+			StringLiteral<Length> const
+			&
 		)	()	const
 			noexcept
 		{	return
