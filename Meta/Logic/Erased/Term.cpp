@@ -407,20 +407,52 @@ export namespace
 		auto constexpr
 		(	operator []
 		)	(	USize
-					i_nClauseIndex
+					i_vClauseIndex
 			)	const
 			noexcept
 		->	Clause
-		{	auto const
-				vTrimmed
+		{
+			auto const
+				[	rBitTerm
+				,	rLiterals
+				]
 			=	TrimLiterals
-				(	BitTerm[i_nClauseIndex]
+				(	BitTerm
+						[	i_vClauseIndex
+						]
 				,	Literals
 				)
 			;
+
+			static_assert
+			(	Bit::LiteralLimit.get() == 16z
+			,	"The optimization below need to be updated"
+			);
+
 			return
-			{	vTrimmed.BitTerm[0uz]
-			,	vTrimmed.Literals
+			{	.BitClause
+				=	rBitTerm
+						[	0uz
+						]
+			,	.Literals
+				// TODO replace with a pack as soon as structured binding can introduce a pack
+				{	rLiterals[0x0]
+				,	rLiterals[0x1]
+				,	rLiterals[0x2]
+				,	rLiterals[0x3]
+				,	rLiterals[0x4]
+				,	rLiterals[0x5]
+				,	rLiterals[0x6]
+				,	rLiterals[0x7]
+				,	rLiterals[0x8]
+				,	rLiterals[0x9]
+				,	rLiterals[0xA]
+				,	rLiterals[0xB]
+				,	rLiterals[0xC]
+				,	rLiterals[0xD]
+				,	rLiterals[0xE]
+				,	rLiterals[0xF]
+				}
 			};
 		}
 	};

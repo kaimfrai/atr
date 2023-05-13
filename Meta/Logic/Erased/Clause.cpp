@@ -1,11 +1,9 @@
 export module Meta.Logic.Erased.Clause;
 
-import Meta.Token.TypeID;
-
-import Meta.Logic.Erased.Literal;
 import Meta.Logic.Bit.Clause;
-
-import Std;
+import Meta.Logic.Erased.Literal;
+import Meta.Size;
+import Meta.Token.TypeID;
 
 export namespace
 	Meta::Logic::Erased
@@ -21,24 +19,19 @@ export namespace
 			::	IndexType
 		;
 		using
-			LiteralBufferType
-		=	::std::array
-			<	TypeID
-			,	Bit::LiteralLimit.get()
-			>
-		;
-		using
 			size_type
-		=	typename
-				LiteralBufferType
-			::	size_type
+		=	USize
 		;
 
 		Bit::Clause const
 			BitClause
 		;
-		LiteralBufferType const
+		TypeID const
 			Literals
+			[	Bit::LiteralLimit
+				.	get
+					()
+			]
 		{};
 
 		[[nodiscard]]
