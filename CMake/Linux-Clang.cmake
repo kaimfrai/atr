@@ -20,16 +20,33 @@ else()
 	message(FATAL_ERROR "Could not find C++ Compiler at ${CMAKE_CXX_COMPILER}")
 endif()
 
-add_compile_options(-march=native)
+add_compile_options(
+	-stdlib=libc++
+	-march=native
+	-flto=thin
+	-fconstexpr-backtrace-limit=0
+	-ftemplate-backtrace-limit=0
+	-frelaxed-template-template-args
+	-fconstexpr-steps=4194303
+)
 
-add_compile_options(-stdlib=libc++)
-add_link_options(-lc++)
-add_link_options(-fuse-ld=lld)
+add_link_options(
+	-fuse-ld=lld
+	-lc++
+	-flto=thin
+)
 
-set(MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS -ffunction-sections)
-set(MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS -Wl,--icf=all)
+set(
+	MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS
+	-ffunction-sections
+)
+set(
+	MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS
+	-Wl,--icf=all
+)
 
 if	(BUILD_WITH_SANITIZER)
+
 	add_compile_options(
 		-O1
 		-fsanitize=address
@@ -51,6 +68,7 @@ if	(FASTER_BUILD_SPEED)
 	)
 
 else()
+
 	# Warnings will slow down the build speed
 	add_compile_options(
 		-Wall
@@ -87,10 +105,3 @@ else()
 	)
 
 endif()
-
-add_compile_options(
-	-fconstexpr-backtrace-limit=0
-	-ftemplate-backtrace-limit=0
-	-frelaxed-template-template-args
-	-fconstexpr-steps=4194303
-)
