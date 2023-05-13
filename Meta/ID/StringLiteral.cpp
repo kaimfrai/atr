@@ -293,4 +293,13 @@ export namespace
 		-	1uz
 		>
 	;
+
+	template
+		<	StringLiteral
+				t_vString
+		>
+	auto constexpr inline
+	&	StringInstance
+	=	t_vString
+	;
 }

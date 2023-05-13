@@ -1,6 +1,7 @@
 add_single_file_modules(
 	Decimal.cpp
 	StringLiteral.cpp
+	StringChain.cpp
 	LowerCase.cpp
 	UpperCase.cpp
 	Template.cpp
