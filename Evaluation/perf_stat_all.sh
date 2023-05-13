@@ -1,13 +1,13 @@
 if [ $# -lt 4 ]
 then
-	echo "perf_stat_all.sh benötigt hierfür 4 Argumente."
+	echo "perf_stat_all.sh requires 4 arguments!"
 	exit 1
 fi
 
-echo "Durchschnittliche Ausführungszeit über $4 Ausführungen wird gemessen..."
+echo "Measuring average execution time over $4 executions..."
 
-mkdir -p ../build/perf_stat_evaluation/$1_$2_$3/
-cd ../build/perf_stat_evaluation/$1_$2_$3/
+mkdir -p build/perf_stat_evaluation/$1_$2_$3/
+cd build/perf_stat_evaluation/$1_$2_$3/
 
 echo 0 > /proc/sys/kernel/nmi_watchdog
 
@@ -112,6 +112,6 @@ fi
 
 echo 1 > /proc/sys/kernel/nmi_watchdog
 
-cd ../../../Evaluation
+cd ../../../
 
-echo "Ergebnisse in ../build/perf_stat/evaluation/$1_$2_$3/"
+echo "Results in build/perf_stat/evaluation/$1_$2_$3/"

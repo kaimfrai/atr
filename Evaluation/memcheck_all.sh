@@ -1,13 +1,13 @@
 if [ $# -lt 3 ]
 then
-	echo "memcheck_all.sh benötigt hierfür 3 Argumente."
+	echo "memcheck_all.sh requires 3 arguments!"
 	exit 1
 fi
 
-echo "Arbeitsspeicherverbrauch wird gemessen..."
+echo "Measuring memory consumption..."
 
-mkdir -p ../build/memcheck_evaluation/$1_$2_$3/
-cd ../build/memcheck_evaluation/$1_$2_$3/
+mkdir -p build/memcheck_evaluation/$1_$2_$3/
+cd build/memcheck_evaluation/$1_$2_$3/
 
 if [ $# -lt 4 ] || [ $4 == "virtual" ]
 then
@@ -101,4 +101,4 @@ fi
 
 cd ../../
 
-echo "Ergebnisse in ../build/memcheck_evaluation/$1_$2_$3/"
+echo "Results in build/memcheck_evaluation/$1_$2_$3/"

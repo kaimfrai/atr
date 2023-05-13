@@ -46,13 +46,24 @@ Note that the assembly of archetype is nearly identical to the assembly of repli
 
 To run all evaluation scripts do the following:
 ```
-> cd Evaluation
 > bash evaluation.sh assembly
 > bash evaluation.sh cachegrind
 > bash evaluation.sh compile
 > bash evaluation.sh memcheck
 > sudo bash evaluation.sh perf
 ```
+
+You may optionally add exactly one argument out of
+* virtual
+* any
+* dyno
+* polymorphic
+* type_erasure
+* archetype
+* replication
+* variant
+* visitor
+to run the evaluation only on the corresponding implementation.
 
 To make use of perf the script requires elevated rights.
 

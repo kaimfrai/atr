@@ -1,14 +1,14 @@
 if [ $# -lt 3 ]
 then
-	echo "cachegrind_all.sh benötigt hierfür 3 Argumente."
+	echo "cachegrind_all.sh requires 3 arguments!"
 	exit 1
 fi
 
-echo "Cachespeicherverbrauch wird gemessen..."
+echo "Measuring cache usage..."
 
-mkdir -p ../build/cachegrind_evaluation/$1_$2_$3/
+mkdir -p ./build/cachegrind_evaluation/$1_$2_$3/
 
-cd ../build/cachegrind_evaluation/$1_$2_$3/
+cd ./build/cachegrind_evaluation/$1_$2_$3/
 
 if [ $# -lt 4 ] || [ $4 == "virtual" ]
 then
@@ -35,7 +35,7 @@ then
 	echo "dyno"
 	valgrind\
 		--tool=cachegrind\
-		../../clang/Evaluation/Dyno/evaluation_dyno\
+		../../Evaluation/Evaluation/Dyno/evaluation_dyno\
 		$1 $2 $3\
 		2> dyno.txt
 fi
@@ -100,6 +100,6 @@ then
 		2> visitor.txt
 fi
 
-cd ../../../Evaluation
+cd ../../../
 
-echo "Ergebnisse in ../build/cachegrind_evaluation/$1_$2_$3/"
+echo "Results build/cachegrind_evaluation/$1_$2_$3/"

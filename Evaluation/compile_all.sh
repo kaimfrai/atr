@@ -1,4 +1,4 @@
-cd ../build/Evaluation
+cd build/Evaluation
 
 ninja clean > /dev/null
 
@@ -98,4 +98,4 @@ then
 	echo "Time evaluation_replication: $(echo ${evaluation_replication_time} | bc)"
 fi
 
-cd ../../Evaluation
+cd ../../
