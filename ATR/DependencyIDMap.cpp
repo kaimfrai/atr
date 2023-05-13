@@ -11,7 +11,7 @@ import Meta.ID.Concept;
 import Meta.ID.StringLiteral;
 import Meta.Logic.Bit.Clause;
 import Meta.Logic.Constraint;
-import Meta.Logic.Erased.Term;
+import Meta.Logic.Erased.Clause;
 import Meta.Logic.LiteralBase;
 import Meta.Token.Type;
 
@@ -99,23 +99,21 @@ export namespace
 export namespace
 	ATR
 {
-	// Create a term by direct initialization.
+	// Create a clause by direct initialization.
 	// This assumes that there are no dublicates in the provided member name pack.
-	// Caches the term independently of concept proto type.
+	// Caches the clause independently of concept proto type.
 	template
 		<	::Meta::StringLiteral
 			...	t_vpMemberName
 		>
-	::Meta::Logic::Erased::Term constexpr inline
+	::Meta::Logic::Erased::Clause constexpr inline
 		HasDataMember
-	{	.BitTerm
+	{	.BitClause
 		{	// TODO Better express the intent of having the bottom bits set
-			::Meta::Logic::Bit::Clause
-			{	(	1uz
-				<<	sizeof...(t_vpMemberName)
-				)
-			-	1uz
-			}
+			(	1uz
+			<<	sizeof...(t_vpMemberName)
+			)
+		-	1uz
 		}
 	,	.Literals
 		{	::Meta::Type
@@ -135,7 +133,7 @@ export namespace
 		>
 	concept
 		ProtoMemberInterface
-	=	::Meta::ProtoConstraint
+	=	::Meta::ProtoConjunctiveConstraint
 		<	t_tProto
 		,	HasDataMember
 			<	t_tpMemberName

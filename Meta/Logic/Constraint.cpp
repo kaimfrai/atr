@@ -25,7 +25,7 @@ export namespace
 	template
 		<	typename
 				t_tProto
-		,	auto
+		,	Logic::Erased::Clause
 				t_vClause
 		>
 	concept
@@ -53,6 +53,19 @@ export namespace
 export namespace
 	Meta
 {
+	//	Simplified version for cases where conjunction is all that's needed
+	template
+		<	typename
+				t_tProto
+		,	Logic::Erased::Clause
+				t_vClause
+		>
+	concept
+		ProtoConjunctiveConstraint
+	=	Proto::Clause<t_tProto, t_vClause>
+	or	Proto::Literal<t_tProto, Logic::Erased::Contradiction>
+	;
+
 	template
 		<	typename
 				t_tProto
