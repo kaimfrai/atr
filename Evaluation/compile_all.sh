@@ -28,17 +28,14 @@ fi
 
 if [ $# -lt 1 ] || [ $1 == "archetype" ]
 then
-meta_time=$(\time -f "%e" ninja Meta 2>&1  1>/dev/null)
-echo "Time Meta: $(echo ${meta_time} | bc)"
-
-atr_time=$(\time -f "%e" ninja ATR 2>&1  1>/dev/null)
-echo "Time ATR: $(echo ${atr_time} | bc)"
+	atr_time=$(\time -f "%e" ninja ATR 2>&1  1>/dev/null)
+	echo "Time ATR: $(echo ${atr_time} | bc)"
 fi
 
 evaluation_time=$(\time -f "%e" ninja Evaluation.Shared 2>&1  1>/dev/null)
 echo "Time Shared: $(echo ${evaluation_time} | bc)"
 
-if [ $# -lt 1 ] || [ $1 == "any" ] || [ $1 == "polymorphic" ] || [ $1 == "type_erasure" ] || [ $1 == "dyno" ] || [ $1 == "variant" ]
+if [ $# -lt 1 ] || [ $1 == "any" ] || [ $1 == "polymorphic" ] || [ $1 == "type_erasure" ] || [ $1 == "dyno" ] || [ $1 == "variant" ] || [ $1 == "visitor" ]
 then
 	crtp_time=$(\time -f "%e" ninja Evaluation.CRTP 2>&1  1>/dev/null)
 	echo "Time CRTP: $(echo ${crtp_time} | bc)"
