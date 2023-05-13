@@ -180,9 +180,6 @@ function(get_cxx_standard_flag
 )
 	if	(CMAKE_CXX_STANDARD LESS 20)
 		message(FATAL_ERROR "C++ standard required to be at least 20 to use modules!")
-	elseif(CMAKE_CXX_STANDARD EQUAL 23)
-		# should change in the future
-		set(cxx_standard_flag "-std=c++2b")
 	else()
 		set(cxx_standard_flag "-std=c++${CMAKE_CXX_STANDARD}")
 	endif()
