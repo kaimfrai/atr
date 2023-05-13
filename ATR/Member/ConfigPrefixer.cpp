@@ -1,4 +1,4 @@
-export module ATR.Member.ConfigAffixer;
+export module ATR.Member.ConfigPrefixer;
 
 import ATR.Member.ConfigBuilder;
 import ATR.Member.Name;
@@ -11,7 +11,7 @@ export namespace
 	ATR::Member
 {
 	class
-		ConfigAffixer
+		ConfigPrefixer
 	{
 		NameView
 			m_rPrefix
@@ -38,7 +38,7 @@ export namespace
 
 	public:
 		explicit(true) constexpr
-		(	ConfigAffixer
+		(	ConfigPrefixer
 		)	(	NameView
 					i_rPrefix
 			,	ConfigBuilder
@@ -49,9 +49,7 @@ export namespace
 			{	i_rPrefix
 			}
 		,	m_aConfig
-			{	::std::addressof
-				(	i_rConfig
-				)
+			{	&i_rConfig
 			}
 		{}
 

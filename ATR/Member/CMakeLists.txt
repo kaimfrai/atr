@@ -19,7 +19,7 @@ add_single_file_modules(
 	ConfigBuilder.cpp
 	Config.cpp
 	Storage.cpp
-	ConfigAffixer.cpp
+	ConfigPrefixer.cpp
 	Static.cpp
 	ConfigTransformer.cpp
 )
