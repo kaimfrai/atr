@@ -16,8 +16,11 @@ export namespace
 		,	auto
 			&&	o_rConfig
 		)
-	{
-		o_rConfig("Width", "Height");
-		Configure("Rectangle"_ID, o_rConfig);
+	->	auto&&
+	{	return
+		o_rConfig
+			("Width", "Height")
+			("Rectangle"_ID)
+		;
 	}
 }

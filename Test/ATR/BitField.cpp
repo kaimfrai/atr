@@ -26,11 +26,14 @@ namespace
 		,	auto
 			&&	o_rConfig
 		)
-	{
-		o_rConfig("0BoolBit", ::Meta::Type<bool>);
-		o_rConfig("1MutBoolBit", ::Meta::Type<Mut<bool>>);
-		o_rConfig("2BitField31", ::Meta::Type<Field<31_bit>>);
-		o_rConfig("3MutBitField31", ::Meta::Type<Mut<Field<31_bit>>>);
+	->	auto&&
+	{	return
+		o_rConfig
+			("0BoolBit", ::Meta::Type<bool>)
+			("1MutBoolBit", ::Meta::Type<Mut<bool>>)
+			("2BitField31", ::Meta::Type<Field<31_bit>>)
+			("3MutBitField31", ::Meta::Type<Mut<Field<31_bit>>>)
+		;
 	}
 }
 

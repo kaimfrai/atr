@@ -16,9 +16,12 @@ export namespace
 		,	auto
 			&&	o_rConfig
 		)
-	{
-		o_rConfig("Depth", "Height");
-		o_rConfig("Width", "Height");
-		Configure("Cuboid"_ID, o_rConfig);
+	->	auto&&
+	{	return
+		o_rConfig
+			("Depth", "Height")
+			("Width", "Height")
+			("Cuboid"_ID)
+		;
 	}
 }

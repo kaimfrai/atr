@@ -5,41 +5,35 @@ import ATR.Member.ConfigData;
 import ATR.Member.Finalize;
 
 import Meta.ID.Alias;
+import Meta.ID.Concept;
 import Meta.ID.StringLiteral;
 
-using ::Meta::ID_V;
+using ::Meta::ProtoID;
+using ::Meta::ID_T;
 using ::Meta::StringLiteral;
 
 export namespace
 	ATR::Member
 {
 	template
-		<	StringLiteral
-				t_vTypeName
+		<	ProtoID
+				t_tTypeName
 		,	typename
 				t_tConfigBuilder
 		>
 	ConfigBuilder constexpr inline
 		BuiltConfig_Of
-	=	[]{
-			t_tConfigBuilder
-				vConfigBuilder
-			{};
-
-			Configure
-			(	ID_V<t_vTypeName>
-			,	vConfigBuilder
-			);
-
-			return
-				vConfigBuilder
-			;
-		}()
-	;
+	{	Configure
+		(	t_tTypeName
+			{}
+		,	t_tConfigBuilder
+			{}
+		)
+	};
 
 	template
-		<	StringLiteral
-				t_vTypeName
+		<	ProtoID
+				t_tTypeName
 		,	typename
 				t_tConfigBuilder
 		>
@@ -47,7 +41,7 @@ export namespace
 		FinalizedConfig_Of
 	=	Finalize
 		(	BuiltConfig_Of
-			<	t_vTypeName
+			<	t_tTypeName
 			,	t_tConfigBuilder
 			>
 		)
@@ -61,7 +55,7 @@ export namespace
 	ConfigData const constexpr inline
 	&	Config_Of
 	=	FinalizedConfig_Of
-		<	t_vTypeName
+		<	ID_T<t_vTypeName>
 		,	ConfigBuilder
 		>
 	;

@@ -18,9 +18,13 @@ export namespace
 		,	auto
 			&&	o_rConfig
 		)
+	->	auto&&
 	{
-		Configure("Sphere"_ID, o_rConfig);
-		Configure("Sphere"_ID, ConfigPrefixer{ "LeftEye", o_rConfig });
-		Configure("Sphere"_ID, ConfigPrefixer{ "RightEye", o_rConfig });
+		(void)ConfigPrefixer{ "LeftEye", o_rConfig }("Sphere"_ID);
+		(void)ConfigPrefixer{ "RightEye", o_rConfig }("Sphere"_ID);
+		return
+		o_rConfig
+			("Sphere"_ID)
+		;
 	}
 }

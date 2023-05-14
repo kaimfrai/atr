@@ -16,8 +16,11 @@ export namespace
 		,	auto
 			&&	o_rConfig
 		)
-	{
-		o_rConfig("Width", "Height");
-		Configure("Ellipse"_ID, o_rConfig);
+	->	auto&&
+	{	return
+		o_rConfig
+			("Width", "Height")
+			("Ellipse"_ID)
+		;
 	}
 }

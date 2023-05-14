@@ -35,22 +35,25 @@ namespace
 		,	auto
 			&&	o_rConfig
 		)
-	{
-		o_rConfig("Int", ::Meta::Type<int>);
-		o_rConfig("IntConst", ::Meta::Type<int const>);
-		o_rConfig("IntMut", ::Meta::Type<Mut<int>>);
-		o_rConfig("Bool", ::Meta::Type<bool>);
-		o_rConfig("BoolConst", ::Meta::Type<bool const>);
-		o_rConfig("BoolMut", ::Meta::Type<Mut<bool>>);
-		o_rConfig("Field", ::Meta::Type<Field<3_bit>>);
-		o_rConfig("FieldConst", ::Meta::Type<Field<3_bit> const>);
-		o_rConfig("FieldMut", ::Meta::Type<Mut<Field<3_bit>>>);
-		o_rConfig("ArrayBool", ::Meta::Type<bool[5]>);
-		o_rConfig("ArrayBoolConst", ::Meta::Type<bool const[5]>);
-		o_rConfig("ArrayBoolMut", ::Meta::Type<Mut<bool[5]>>);
-		o_rConfig("ArrayField", ::Meta::Type<Field<3_bit>[5]>);
-		o_rConfig("ArrayFieldConst", ::Meta::Type<Field<3_bit> const[5]>);
-		o_rConfig("ArrayFieldMut", ::Meta::Type<Field<3_bit>[5]>);
+	->	auto&&
+	{	return
+		o_rConfig
+			("Int", ::Meta::Type<int>)
+			("IntConst", ::Meta::Type<int const>)
+			("IntMut", ::Meta::Type<Mut<int>>)
+			("Bool", ::Meta::Type<bool>)
+			("BoolConst", ::Meta::Type<bool const>)
+			("BoolMut", ::Meta::Type<Mut<bool>>)
+			("Field", ::Meta::Type<Field<3_bit>>)
+			("FieldConst", ::Meta::Type<Field<3_bit> const>)
+			("FieldMut", ::Meta::Type<Mut<Field<3_bit>>>)
+			("ArrayBool", ::Meta::Type<bool[5]>)
+			("ArrayBoolConst", ::Meta::Type<bool const[5]>)
+			("ArrayBoolMut", ::Meta::Type<Mut<bool[5]>>)
+			("ArrayField", ::Meta::Type<Field<3_bit>[5]>)
+			("ArrayFieldConst", ::Meta::Type<Field<3_bit> const[5]>)
+			("ArrayFieldMut", ::Meta::Type<Field<3_bit>[5]>)
+		;
 	}
 }
 

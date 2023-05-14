@@ -19,8 +19,11 @@ export namespace
 		,	auto
 			&&	o_rConfig
 		)
-	{
-		Configure("BasicShape"_ID, o_rConfig);
-		o_rConfig("ComputeAreaMultiplier", ::Meta::Type<PiFraction<1z, 4z>>);
+	->	auto&&
+	{	return
+		o_rConfig
+			("BasicShape"_ID)
+			("ComputeAreaMultiplier", ::Meta::Type<PiFraction<1z, 4z>>)
+		;
 	}
 }

@@ -5,8 +5,10 @@ import ATR.Member.Name;
 import ATR.Member.NamedType;
 import ATR.Member.Ordered;
 
+import Meta.ID.Concept;
 import Meta.Token.TypeID;
 
+using ::Meta::ProtoID;
 using ::Meta::TypeID;
 
 export namespace
@@ -66,14 +68,16 @@ export namespace
 			);
 		}
 
+		[[nodiscard]]
 		auto constexpr
 		(	operator()
 		)	(	NameView
 					i_rMemberName
 			,	NameView
 					i_rTarget
-			)	&
+			)
 			noexcept
+		->	ConfigBuilder&&
 		{
 			auto
 			&	rAlias
@@ -87,45 +91,73 @@ export namespace
 			.	Target
 			=	i_rTarget
 			;
+
+			return
+			static_cast<ConfigBuilder&&>
+			(	*this
+			);
 		}
 
+		[[nodiscard]]
 		auto constexpr
 		(	operator()
 		)	(	NameView
 					i_rMemberName
 			,	TypeID
 					i_vType
-			)	&
+			)
 			noexcept
+		->	ConfigBuilder&&
 		{
-			if	(	HasAlias
+			if	(	not
+					HasAlias
 					(	i_rMemberName
 					)
 				)
-			{	return
+			{
+				auto
+				&	rNamedTypes
+				=	m_vNamedTypes
+					[	i_vType
+						.	GetAlign
+							()
+					]
+				;
+
+				auto
+				&	rNamedType
+				=	emplace
+					(	rNamedTypes
+					,	i_rMemberName
+					)
+				;
+				rNamedType
+				.	Type
+				=	i_vType
 				;
 			}
 
-			auto
-			&	rNamedTypes
-			=	m_vNamedTypes
-				[	i_vType
-					.	GetAlign
-						()
-				]
-			;
+			return
+			static_cast<ConfigBuilder&&>
+			(	*this
+			);
+		}
 
-			auto
-			&	rNamedType
-			=	emplace
-				(	rNamedTypes
-				,	i_rMemberName
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
+		)	(	ProtoID auto
+					i_vBaseID
+			)
+			noexcept
+		->	ConfigBuilder&&
+		{	return
+			Configure
+			(	i_vBaseID
+			,	static_cast<ConfigBuilder&&>
+				(	*this
 				)
-			;
-			rNamedType
-			.	Type
-			=	i_vType
-			;
+			);
 		}
 	};
 }

@@ -14,9 +14,12 @@ export namespace
 		,	auto
 			&&	o_rConfig
 		)
-	{
-		o_rConfig("Height", ::Meta::Type<Float>);
-		o_rConfig("Width", ::Meta::Type<Float>);
-		o_rConfig("Color", ::Meta::Type<RGBAColor>);
+	->	auto&&
+	{	return
+		o_rConfig
+			("Height", ::Meta::Type<Float>)
+			("Width", ::Meta::Type<Float>)
+			("Color", ::Meta::Type<RGBAColor>)
+		;
 	}
 }

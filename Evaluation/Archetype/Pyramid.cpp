@@ -19,8 +19,11 @@ export namespace
 		,	auto
 			&&	o_rConfig
 		)
-	{
-		Configure("BasicBody"_ID, o_rConfig);
-		o_rConfig("ComputeVolumeMultiplier", ::Meta::Type<Fraction<1z, 3z>>);
+	->	auto&&
+	{	return
+		o_rConfig
+			("BasicBody"_ID)
+			("ComputeVolumeMultiplier", ::Meta::Type<Fraction<1z, 3z>>)
+		;
 	}
 }

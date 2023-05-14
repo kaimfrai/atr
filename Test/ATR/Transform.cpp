@@ -27,10 +27,13 @@ namespace
 		,	auto
 			&&	o_rConfig
 		)
-	{
-		o_rConfig("Int", ::Meta::Type<int>);
-		o_rConfig("Bool", ::Meta::Type<bool>);
-		o_rConfig("Field", ::Meta::Type<Field<3_bit>>);
+	->	auto&&
+	{	return
+		o_rConfig
+			("Int", ::Meta::Type<int>)
+			("Bool", ::Meta::Type<bool>)
+			("Field", ::Meta::Type<Field<3_bit>>)
+		;
 	}
 
 	auto constexpr
@@ -39,10 +42,13 @@ namespace
 		,	auto
 			&&	o_rConfig
 		)
-	{
-		o_rConfig("Int", ::Meta::Type<int const>);
-		o_rConfig("Bool", ::Meta::Type<bool const>);
-		o_rConfig("Field", ::Meta::Type<Field<3_bit> const>);
+	->	auto&&
+	{	return
+		o_rConfig
+			("Int", ::Meta::Type<int const>)
+			("Bool", ::Meta::Type<bool const>)
+			("Field", ::Meta::Type<Field<3_bit> const>)
+		;
 	}
 
 	auto constexpr
@@ -51,8 +57,14 @@ namespace
 		,	auto
 			&&	o_rConfig
 		)
-	{
-		Configure("Single"_ID, ConfigTransformer{ o_rConfig, ::Meta::Const });
+	->	auto&&
+	{	(void)
+		ConfigTransformer{ o_rConfig, ::Meta::Const }
+			("Single"_ID)
+		;
+		return
+			o_rConfig
+		;
 	}
 
 	auto constexpr
@@ -61,10 +73,13 @@ namespace
 		,	auto
 			&&	o_rConfig
 		)
-	{
-		o_rConfig("Int", ::Meta::Type<Mut<int>>);
-		o_rConfig("Bool", ::Meta::Type<Mut<bool>>);
-		o_rConfig("Field", ::Meta::Type<Mut<Field<3_bit>>>);
+	->	auto&&
+	{	return
+		o_rConfig
+			("Int", ::Meta::Type<Mut<int>>)
+			("Bool", ::Meta::Type<Mut<bool>>)
+			("Field", ::Meta::Type<Mut<Field<3_bit>>>)
+		;
 	}
 
 	auto constexpr
@@ -73,8 +88,14 @@ namespace
 		,	auto
 			&&	o_rConfig
 		)
-	{
-		Configure("Single"_ID, ConfigTransformer{ o_rConfig, ::Meta::Mutable });
+	->	auto&&
+	{	(void)
+		ConfigTransformer{ o_rConfig, ::Meta::Mutable }
+			("Single"_ID)
+		;
+		return
+			o_rConfig
+		;
 	}
 
 	auto constexpr
@@ -83,10 +104,13 @@ namespace
 		,	auto
 			&&	o_rConfig
 		)
-	{
-		o_rConfig("Int", ::Meta::Type<int[5]>);
-		o_rConfig("Bool", ::Meta::Type<bool[5]>);
-		o_rConfig("Field", ::Meta::Type<Field<3_bit>[5]>);
+	->	auto&&
+	{	return
+		o_rConfig
+			("Int", ::Meta::Type<int[5]>)
+			("Bool", ::Meta::Type<bool[5]>)
+			("Field", ::Meta::Type<Field<3_bit>[5]>)
+		;
 	}
 
 	auto constexpr
@@ -95,8 +119,14 @@ namespace
 		,	auto
 			&&	o_rConfig
 		)
-	{
-		Configure("Single"_ID, ConfigTransformer{ o_rConfig, ::Meta::Extent<5uz> });
+	->	auto&&
+	{	(void)
+		ConfigTransformer{ o_rConfig, ::Meta::Extent<5uz> }
+			("Single"_ID)
+		;
+		return
+			o_rConfig
+		;
 	}
 }
 
