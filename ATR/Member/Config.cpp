@@ -16,11 +16,13 @@ export namespace
 	template
 		<	StringLiteral
 				t_vTypeName
+		,	typename
+				t_tConfigBuilder
 		>
-	ConfigData constexpr inline
-		Config_Of
+	ConfigBuilder constexpr inline
+		BuiltConfig_Of
 	=	[]{
-			ConfigBuilder
+			t_tConfigBuilder
 				vConfigBuilder
 			{};
 
@@ -30,14 +32,37 @@ export namespace
 			);
 
 			return
-			Finalize
-			(	vConfigBuilder
-				.	NamedTypeView
-					()
-			,	vConfigBuilder
-				.	AliasView
-					()
-			);
+				vConfigBuilder
+			;
 		}()
+	;
+
+	template
+		<	StringLiteral
+				t_vTypeName
+		,	typename
+				t_tConfigBuilder
+		>
+	ConfigData constexpr inline
+		FinalizedConfig_Of
+	=	Finalize
+		(	BuiltConfig_Of
+			<	t_vTypeName
+			,	t_tConfigBuilder
+			>
+		)
+	;
+
+
+	template
+		<	StringLiteral
+				t_vTypeName
+		>
+	ConfigData const constexpr inline
+	&	Config_Of
+	=	FinalizedConfig_Of
+		<	t_vTypeName
+		,	ConfigBuilder
+		>
 	;
 }

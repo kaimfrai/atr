@@ -15,8 +15,8 @@ add_single_file_modules(
 	LayoutBuffer.cpp
 	Ordered.cpp
 	ConfigData.cpp
-	Finalize.cpp
 	ConfigBuilder.cpp
+	Finalize.cpp
 	Config.cpp
 	Storage.cpp
 	ConfigPrefixer.cpp

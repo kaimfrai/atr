@@ -2,6 +2,7 @@ export module ATR.Member.Finalize;
 
 import ATR.Member.Alias;
 import ATR.Member.Compare.Name;
+import ATR.Member.ConfigBuilder;
 import ATR.Member.ConfigData;
 import ATR.Member.LayoutBuffer;
 import ATR.Member.NamedInfo;
@@ -276,10 +277,8 @@ namespace
 
 	export auto constexpr
 	(	Finalize
-	)	(	NamedTypeConstView
-				i_rNamedTypeView
-		,	AliasConstView
-				i_rAliasView
+	)	(	ConfigBuilder const
+			&	i_rConfigBuilder
 		)
 		noexcept
 	->	ConfigData
@@ -290,17 +289,31 @@ namespace
 		;
 
 		auto const
+			rNamedTypeView
+		=	i_rConfigBuilder
+			.	NamedTypeView
+				()
+		;
+
+		auto const
 			vLayout
 		=	MakeLayout
-			(	i_rNamedTypeView
+			(	rNamedTypeView
 			)
+		;
+
+		auto const
+			rAliasView
+		=	i_rConfigBuilder
+			.	AliasView
+				()
 		;
 
 		auto const
 			vNamedInfos
 		=	MakeMembers
-			(	i_rNamedTypeView
-			,	i_rAliasView
+			(	rNamedTypeView
+			,	rAliasView
 			,	vAccumulatedOffset
 			)
 		;
