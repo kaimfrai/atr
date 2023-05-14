@@ -9,28 +9,25 @@ import Meta.Size;
 import Std;
 
 using ::Meta::Memory::Alignment;
+using ::Meta::SSize;
 using ::Meta::USize;
 
 export namespace
 	ATR::Member
 {
-	template
-		<	typename
-				t_tContainer
-		>
 	[[nodiscard]]
 	auto constexpr
 	(	AlignedElement
-	)	(	t_tContainer
-			&&	i_rConainter
+	)	(	auto
+			&&	i_rContainer
 		,	Alignment
 				i_vAlignment
 		)
 		noexcept
 	->	decltype(auto)
 	{	return
-		::std::forward<t_tContainer>
-		(	i_rConainter
+		::std::forward<decltype(i_rContainer)>
+		(	i_rContainer
 		)	[	static_cast<USize>
 				(	MaxAlign
 					.	Value
@@ -88,17 +85,36 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr
+		(	Count
+		)	(	Alignment
+					i_vAlignment
+			)	const
+			noexcept
+		->	USize
+		{	return
+			AlignedElement
+				(	Buffer
+				,	i_vAlignment
+				)
+			.	size
+				()
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr
 		(	operator[]
 		)	(	Alignment
 					i_vAlignment
 			)	&
 			noexcept
-		->	value_type&
+		->	decltype(auto)
 		{	return
 			AlignedElement
-			(	Buffer
-			,	i_vAlignment
-			);
+				(	Buffer
+				,	i_vAlignment
+				)
+			;
 		}
 
 		[[nodiscard]]
@@ -108,12 +124,34 @@ export namespace
 					i_vAlignment
 			)	const&
 			noexcept
-		->	value_type const&
+		->	decltype(auto)
 		{	return
 			AlignedElement
-			(	Buffer
-			,	i_vAlignment
-			);
+				(	Buffer
+				,	i_vAlignment
+				)
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	Alignment
+					i_vAlignment
+			,	USize
+					i_vIndex
+			)	const&
+			noexcept
+		->	decltype(auto)
+		{	return
+			AlignedElement
+				(	Buffer
+				,	i_vAlignment
+				)[	static_cast<SSize>
+					(	i_vIndex
+					)
+				]
+			;
 		}
 
 		[[nodiscard]]
