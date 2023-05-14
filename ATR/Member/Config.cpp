@@ -21,7 +21,7 @@ export namespace
 		,	typename
 				t_tConfigBuilder
 		>
-	ConfigBuilder constexpr inline
+	ConfigBuilder constexpr
 		BuiltConfig_Of
 	{	Configure
 		(	t_tTypeName
@@ -37,7 +37,7 @@ export namespace
 		,	typename
 				t_tConfigBuilder
 		>
-	ConfigData constexpr inline
+	ConfigData constexpr
 		FinalizedConfig_Of
 	=	Finalize
 		(	BuiltConfig_Of
@@ -52,7 +52,7 @@ export namespace
 		<	StringLiteral
 				t_vTypeName
 		>
-	ConfigData const constexpr inline
+	ConfigData const constexpr
 	&	Config_Of
 	=	FinalizedConfig_Of
 		<	ID_T<t_vTypeName>

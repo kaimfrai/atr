@@ -11,7 +11,7 @@ import Std;
 namespace
 	Meta::Memory
 {
-	auto constexpr inline
+	auto constexpr
 		ByteAlign
 	=	::std::countr_zero
 		(	static_cast<::Meta::USize>
@@ -76,7 +76,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	Constraint constexpr inline
+	Constraint constexpr
 		Constraint_Of
 	=	[]{	if	constexpr
 				(	::std::is_const_v
@@ -185,7 +185,7 @@ export namespace
 
 	template
 		<>
-	Constraint constexpr inline
+	Constraint constexpr
 		Constraint_Of
 		<	bool
 		>
@@ -197,7 +197,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	auto constexpr inline
+	auto constexpr
 		BitSize_Of
 	=		Constraint_Of
 			<	t_tEntity
@@ -209,7 +209,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	auto constexpr inline
+	auto constexpr
 		BitAlign_Of
 	=		Constraint_Of
 			<	t_tEntity

@@ -132,7 +132,7 @@ export namespace
 		<	USize
 				t_nExtent
 		>
-	Token::Extent<t_nExtent> constexpr inline
+	Token::Extent<t_nExtent> constexpr
 		Extent
 	{};
 }

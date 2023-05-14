@@ -81,7 +81,7 @@ export namespace
 		,	typename
 			...	t_tpArgument
 		>
-	auto constexpr inline
+	auto constexpr
 	*	Address
 	=	&
 		FunctionType<t_tFuncID, t_tpArgument...>
@@ -114,7 +114,7 @@ export namespace
 		,	typename
 			...	t_tpArgument
 		>
-	bool constexpr inline
+	bool constexpr
 		AddressNoexcept
 	=	FunctionType<t_tFunctionName, t_tpArgument...>
 	::	Noexcept

@@ -147,7 +147,7 @@ export namespace
 		<	auto
 			...	t_npIndex
 		>
-	auto constexpr inline
+	auto constexpr
 		Index
 	=	IndexToken
 		<	t_npIndex

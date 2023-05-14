@@ -28,7 +28,7 @@ static_assert
 	>
 );
 
-::std::byte constexpr inline
+::std::byte constexpr
 	Buffer
 	[	5uz
 	]

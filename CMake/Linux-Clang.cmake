@@ -76,11 +76,12 @@ else()
 		-Wpedantic
 		-Wconversion
 		-Wdeprecated
-		-Wmissing-variable-declarations
 		-Wctad-maybe-unsupported
 		-Wcomma
 		-Werror
 		-Weverything
+		# No good reason to add inline or static to variables inside modules, only in headers
+		-Wno-missing-variable-declarations
 		# Impacts build times negatively by being active alone
 		# Imposes an implementation burden which may incur even more build time
 		# If everything is evaluated at compile time, buffer usage is already checked

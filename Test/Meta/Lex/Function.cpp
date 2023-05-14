@@ -26,7 +26,7 @@ template
 	<	typename
 			t_tEntity
 	>
-auto constexpr inline
+auto constexpr
 	TokenizeType
 =	Type
 	<	::Meta::TokenizeEntity
@@ -39,7 +39,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-Meta::TypeID constexpr inline
+Meta::TypeID constexpr
 	Qualified
 =	Type
 	<	MatchFunction
@@ -190,7 +190,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-Meta::TypeID constexpr inline
+Meta::TypeID constexpr
 	EllipsisQualified
 =	Type
 	<	MatchFunction

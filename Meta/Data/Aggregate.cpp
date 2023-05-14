@@ -25,7 +25,7 @@ export namespace
 		,	typename
 				t_tResult
 		>
-	TypeToken<t_tResult> constexpr inline
+	TypeToken<t_tResult> constexpr
 		WrappedResultType
 	{};
 
@@ -33,7 +33,7 @@ export namespace
 		<	typename
 				t_tData
 		>
-	TypeToken<Aggregate<t_tData>> constexpr inline
+	TypeToken<Aggregate<t_tData>> constexpr
 		WrappedResultType
 		<	Aggregate<t_tData>
 		,	t_tData
@@ -44,7 +44,7 @@ export namespace
 		<	typename
 				t_tData
 		>
-	TypeToken<Aggregate<t_tData>> constexpr inline
+	TypeToken<Aggregate<t_tData>> constexpr
 		WrappedResultType
 		<	Aggregate<t_tData>&
 		,	t_tData
@@ -55,7 +55,7 @@ export namespace
 		<	typename
 				t_tData
 		>
-	TypeToken<Aggregate<t_tData>> constexpr inline
+	TypeToken<Aggregate<t_tData>> constexpr
 		WrappedResultType
 		<	Aggregate<t_tData> const&
 		,	t_tData
@@ -66,7 +66,7 @@ export namespace
 		<	typename
 				t_tData
 		>
-	TypeToken<Aggregate<t_tData>> constexpr inline
+	TypeToken<Aggregate<t_tData>> constexpr
 		WrappedResultType
 		<	Aggregate<t_tData>&&
 		,	t_tData
@@ -77,7 +77,7 @@ export namespace
 		<	typename
 				t_tData
 		>
-	TypeToken<Aggregate<t_tData>> constexpr inline
+	TypeToken<Aggregate<t_tData>> constexpr
 		WrappedResultType
 		<	Aggregate<t_tData> const&&
 		,	t_tData
@@ -88,7 +88,7 @@ export namespace
 		<	typename
 				t_tData
 		>
-	TypeToken<Aggregate<t_tData>> constexpr inline
+	TypeToken<Aggregate<t_tData>> constexpr
 		WrappedResultType
 		<	Aggregate<t_tData const>
 		,	t_tData
@@ -99,7 +99,7 @@ export namespace
 		<	typename
 				t_tData
 		>
-	TypeToken<Aggregate<t_tData>> constexpr inline
+	TypeToken<Aggregate<t_tData>> constexpr
 		WrappedResultType
 		<	Aggregate<t_tData const>&
 		,	t_tData
@@ -110,7 +110,7 @@ export namespace
 		<	typename
 				t_tData
 		>
-	TypeToken<Aggregate<t_tData>> constexpr inline
+	TypeToken<Aggregate<t_tData>> constexpr
 		WrappedResultType
 		<	Aggregate<t_tData const> const&
 		,	t_tData
@@ -121,7 +121,7 @@ export namespace
 		<	typename
 				t_tData
 		>
-	TypeToken<Aggregate<t_tData>> constexpr inline
+	TypeToken<Aggregate<t_tData>> constexpr
 		WrappedResultType
 		<	Aggregate<t_tData const>&&
 		,	t_tData
@@ -132,7 +132,7 @@ export namespace
 		<	typename
 				t_tData
 		>
-	TypeToken<Aggregate<t_tData>> constexpr inline
+	TypeToken<Aggregate<t_tData>> constexpr
 		WrappedResultType
 		<	Aggregate<t_tData const> const&&
 		,	t_tData
@@ -143,7 +143,7 @@ export namespace
 		<	typename
 				t_tData
 		>
-	TypeToken<Aggregate<t_tData>&> constexpr inline
+	TypeToken<Aggregate<t_tData>&> constexpr
 		WrappedResultType
 		<	Aggregate<t_tData>&
 		,	t_tData&
@@ -154,7 +154,7 @@ export namespace
 		<	typename
 				t_tData
 		>
-	TypeToken<Aggregate<t_tData> const&> constexpr inline
+	TypeToken<Aggregate<t_tData> const&> constexpr
 		WrappedResultType
 		<	Aggregate<t_tData> const&
 		,	t_tData const&
@@ -165,7 +165,7 @@ export namespace
 		<	typename
 				t_tData
 		>
-	TypeToken<Aggregate<t_tData>&&> constexpr inline
+	TypeToken<Aggregate<t_tData>&&> constexpr
 		WrappedResultType
 		<	Aggregate<t_tData>&&
 		,	t_tData&&
@@ -176,7 +176,7 @@ export namespace
 		<	typename
 				t_tData
 		>
-	TypeToken<Aggregate<t_tData> const&&> constexpr inline
+	TypeToken<Aggregate<t_tData> const&&> constexpr
 		WrappedResultType
 		<	Aggregate<t_tData> const&&
 		,	t_tData const&&

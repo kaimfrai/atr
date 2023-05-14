@@ -14,7 +14,7 @@ namespace
 				t_nLength
 		>
 	[[nodiscard]]
-	auto constexpr inline
+	auto constexpr
 	(	MakeSequence
 	)	(	IndexToken<t_nLength>
 		)
@@ -50,7 +50,7 @@ export namespace
 		<	auto
 				t_nSize
 		>
-	auto constexpr inline
+	auto constexpr
 		Sequence
 	=	MakeSequence
 		(	Index<t_nSize>
@@ -61,7 +61,7 @@ export namespace
 		<	auto
 				t_nSize
 		>
-	auto constexpr inline
+	auto constexpr
 		ZeroSequence
 	=	(	Sequence<t_nSize>
 		=	Index<decltype(t_nSize){}>

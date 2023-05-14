@@ -20,7 +20,7 @@ template
 	<	typename
 			t_tEntity
 	>
-auto constexpr inline
+auto constexpr
 	TokenizeType
 =	::Meta::Type
 	<	::Meta::TokenizeEntity
@@ -35,7 +35,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-Meta::TypeID constexpr inline
+Meta::TypeID constexpr
 	MemberToQualified
 =	Type
 	<	MatchCVMember
@@ -79,7 +79,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-Meta::TypeID constexpr inline
+Meta::TypeID constexpr
 	QualifiedMember
 =	Type
 	<	MatchCVMember

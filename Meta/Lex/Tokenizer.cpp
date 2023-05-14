@@ -74,7 +74,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	TokenizeEntity<t_tEntity> constexpr inline
+	TokenizeEntity<t_tEntity> constexpr
 		TokenizeType
 	{};
 }

@@ -12,7 +12,7 @@ export namespace
 		<	typename
 				t_tArithmetic
 		>
-	auto constexpr inline
+	auto constexpr
 		MaxExponent
 	=	Unsigned
 		(	::std::numeric_limits
@@ -26,7 +26,7 @@ export namespace
 		<	::std::integral
 				t_tArithmetic
 		>
-	auto constexpr inline
+	auto constexpr
 		MaxExponent
 		<	t_tArithmetic
 		>

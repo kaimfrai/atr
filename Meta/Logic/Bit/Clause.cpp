@@ -21,11 +21,11 @@ using namespace ::Meta::Literals;
 export namespace
 	Meta::Logic::Bit
 {
-	auto constexpr inline
+	auto constexpr
 		LiteralLimit
 	=	16_bit
 	;
-	USize constexpr inline
+	USize constexpr
 		ClauseLimit
 	=	6uz
 	;

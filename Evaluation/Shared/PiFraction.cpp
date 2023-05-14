@@ -6,7 +6,7 @@ import Std;
 
 export
 {
-	Float constexpr inline
+	Float constexpr
 		Pi
 	=	::std::numbers::pi_v
 		<	Float

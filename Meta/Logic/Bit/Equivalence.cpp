@@ -27,7 +27,7 @@ export namespace
 		);
 	}
 
-	BinaryFunction<bool> constexpr inline
+	BinaryFunction<bool> constexpr
 		ComputeEquivalence
 	{	&operator==
 	};

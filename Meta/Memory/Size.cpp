@@ -138,7 +138,7 @@ export namespace
 		<	typename
 				t_tObject
 		>
-	ByteSize constexpr inline
+	ByteSize constexpr
 		SizeOf
 	{	sizeof(t_tObject)
 	};

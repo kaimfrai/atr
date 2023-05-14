@@ -106,7 +106,7 @@ export namespace
 		<	::Meta::StringLiteral
 			...	t_vpMemberName
 		>
-	::Meta::Logic::Erased::Clause constexpr inline
+	::Meta::Logic::Erased::Clause constexpr
 		HasDataMember
 	{	.BitClause
 		{	// TODO Better express the intent of having the bottom bits set

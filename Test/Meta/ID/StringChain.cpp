@@ -6,7 +6,7 @@ import Std;
 using ::Meta::StringChain;
 using ::Meta::StringInstance;
 
-StringChain constexpr inline
+StringChain constexpr
 	Empty
 {};
 
@@ -21,7 +21,7 @@ static_assert
 	)
 );
 
-StringChain constexpr inline
+StringChain constexpr
 	ABC
 {	StringInstance<"ABC">.Buffer
 };
@@ -58,7 +58,7 @@ static_assert
 	)
 );
 
-StringChain constexpr inline
+StringChain constexpr
 	ABCDE
 {	StringInstance<"ABCDE">.Buffer
 };
@@ -116,7 +116,7 @@ static_assert
 	)
 );
 
-StringChain constexpr inline
+StringChain constexpr
 	DE
 {	StringInstance<"DE">.Buffer
 };
@@ -195,7 +195,7 @@ static_assert
 	)
 );
 
-StringChain constexpr inline
+StringChain constexpr
 	ABC_DE
 {	ABC.Value
 ,	&DE
@@ -296,7 +296,7 @@ static_assert
 	)
 );
 
-StringChain constexpr inline
+StringChain constexpr
 	Empty_DE
 {	Empty.Value
 ,	&DE
@@ -418,7 +418,7 @@ static_assert
 	)
 );
 
-StringChain constexpr inline
+StringChain constexpr
 	ABC_Empty_DE
 {	ABC.Value
 ,	&Empty_DE

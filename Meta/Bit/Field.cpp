@@ -209,7 +209,7 @@ export namespace
 		<	BitSize
 				t_nWidth
 		>
-	Constraint constexpr inline
+	Constraint constexpr
 		Constraint_Of
 		<	Bit::Field
 			<	t_nWidth

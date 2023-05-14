@@ -89,7 +89,7 @@ template
 	,	::Meta::StringLiteral
 			t_vMemberName
 	>
-auto constexpr inline
+auto constexpr
 	OffsetType
 =	Type
 	<	decltype
@@ -108,7 +108,7 @@ template
 	,	typename
 			t_tEntity
 	>
-auto constexpr inline
+auto constexpr
 	MemberOffset_For
 =	Type
 	<	::ATR::Member::Offset
@@ -258,7 +258,7 @@ template
 	,	typename
 			t_tEntity
 	>
-auto constexpr inline
+auto constexpr
 	MemberType_For
 =	Type
 	<	decltype

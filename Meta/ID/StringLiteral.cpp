@@ -298,7 +298,7 @@ export namespace
 		<	StringLiteral
 				t_vString
 		>
-	auto constexpr inline
+	auto constexpr
 	&	StringInstance
 	=	t_vString
 	;

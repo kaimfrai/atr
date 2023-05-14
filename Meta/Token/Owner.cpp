@@ -50,7 +50,7 @@ export namespace
 		<	typename
 				t_tOwner
 		>
-	Token::Owner<t_tOwner> constexpr inline
+	Token::Owner<t_tOwner> constexpr
 		Owner
 	{};
 }

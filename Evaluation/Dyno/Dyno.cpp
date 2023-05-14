@@ -33,7 +33,7 @@ export namespace
 		<	typename
 				t_tBody
 		>
-	auto const constexpr inline
+	auto const constexpr
 		default_concept_map
 		<	Bodies3D::VolumeComputer
 		,	t_tBody

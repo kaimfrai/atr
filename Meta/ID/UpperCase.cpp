@@ -4,32 +4,32 @@ import Meta.Token.Index;
 
 export
 {
-	char constexpr inline A = 'A';
-	char constexpr inline B = 'B';
-	char constexpr inline C = 'C';
-	char constexpr inline D = 'D';
-	char constexpr inline E = 'E';
-	char constexpr inline F = 'F';
-	char constexpr inline G = 'G';
-	char constexpr inline H = 'H';
-	char constexpr inline I = 'I';
-	char constexpr inline J = 'J';
-	char constexpr inline K = 'K';
-	char constexpr inline L = 'L';
-	char constexpr inline M = 'M';
-	char constexpr inline N = 'N';
-	char constexpr inline O = 'O';
-	char constexpr inline P = 'P';
-	char constexpr inline Q = 'Q';
-	char constexpr inline R = 'R';
-	char constexpr inline S = 'S';
-	char constexpr inline T = 'T';
-	char constexpr inline U = 'U';
-	char constexpr inline V = 'V';
-	char constexpr inline W = 'W';
-	char constexpr inline X = 'X';
-	char constexpr inline Y = 'Y';
-	char constexpr inline Z = 'Z';
+	char constexpr A = 'A';
+	char constexpr B = 'B';
+	char constexpr C = 'C';
+	char constexpr D = 'D';
+	char constexpr E = 'E';
+	char constexpr F = 'F';
+	char constexpr G = 'G';
+	char constexpr H = 'H';
+	char constexpr I = 'I';
+	char constexpr J = 'J';
+	char constexpr K = 'K';
+	char constexpr L = 'L';
+	char constexpr M = 'M';
+	char constexpr N = 'N';
+	char constexpr O = 'O';
+	char constexpr P = 'P';
+	char constexpr Q = 'Q';
+	char constexpr R = 'R';
+	char constexpr S = 'S';
+	char constexpr T = 'T';
+	char constexpr U = 'U';
+	char constexpr V = 'V';
+	char constexpr W = 'W';
+	char constexpr X = 'X';
+	char constexpr Y = 'Y';
+	char constexpr Z = 'Z';
 
 	auto constexpr
 	(	FromChar
