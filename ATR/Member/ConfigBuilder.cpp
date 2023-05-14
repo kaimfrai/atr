@@ -1,16 +1,17 @@
 export module ATR.Member.ConfigBuilder;
 
 import ATR.Member.Alias;
-import ATR.Member.Name;
 import ATR.Member.NamedType;
 import ATR.Member.Ordered;
 
 import Meta.ID.Concept;
+import Meta.ID.StringChain;
 import Meta.Token.TypeID;
 
 import Std;
 
 using ::Meta::ProtoID;
+using ::Meta::StringChain;
 using ::Meta::TypeID;
 
 export namespace
@@ -74,7 +75,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	HasAlias
-		)	(	NameView
+		)	(	StringChain
 					i_rMemberName
 			)	const
 			noexcept
@@ -89,9 +90,9 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	(	NameView
+		)	(	StringChain
 					i_rMemberName
-			,	NameView
+			,	StringChain
 					i_rTarget
 			)
 			noexcept
@@ -119,7 +120,28 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	(	NameView
+		)	(	char const
+				*	i_aMemberName
+			,	char const
+				*	i_aTarget
+			)
+			noexcept
+		->	ConfigBuilder&&
+		{	return
+			operator()
+			(	StringChain
+				{	i_aMemberName
+				}
+			,	StringChain
+				{	i_aTarget
+				}
+			);
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
+		)	(	StringChain
 					i_rMemberName
 			,	TypeID
 					i_vType
@@ -164,8 +186,27 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	(	NameView
-					i_rPrefix
+		)	(	char const
+				*	i_aMemberName
+			,	TypeID
+					i_vType
+			)
+			noexcept
+		->	ConfigBuilder&&
+		{	return
+			operator()
+			(	StringChain
+				{	i_aMemberName
+				}
+			,	i_vType
+			);
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
+		)	(	char const
+				*	i_aPrefix
 			,	ProtoID auto
 					i_vBaseID
 			)
@@ -192,15 +233,11 @@ export namespace
 							]
 					:	rAliasGroup
 					)
-				{
-					(void)
+				{	(void)
 					operator()
-					(	Name
-						{	::std::initializer_list<NameView>
-							{	i_rPrefix
-							,	NameView(rName)
-							}
-						}
+					(	(	i_aPrefix
+						+	rName
+						)
 					,	rType
 					);
 				}
@@ -215,18 +252,12 @@ export namespace
 				)
 			{	(void)
 				operator()
-				(	Name
-					{	::std::initializer_list<NameView>
-						{	i_rPrefix
-						,	NameView(rName)
-						}
-					}
-				,	Name
-					{	::std::initializer_list<NameView>
-						{	i_rPrefix
-						,	NameView(rTarget)
-						}
-					}
+				(	(	i_aPrefix
+					+	rName
+					)
+				,	(	i_aPrefix
+					+	rTarget
+					)
 				);
 			}
 
@@ -246,7 +277,7 @@ export namespace
 		->	ConfigBuilder&&
 		{	return
 			operator()
-			(	""
+			(	nullptr
 			,	i_vBaseID
 			);
 		}

@@ -1,13 +1,13 @@
 export module ATR.Member.Ordered;
 
-import ATR.Member.Compare.Name;
 import ATR.Member.CountedBuffer;
-import ATR.Member.Name;
 
+import Meta.ID.StringChain;
 import Meta.Size;
 
 import Std;
 
+using ::Meta::StringChain;
 using ::Meta::USize;
 
 export namespace
@@ -24,7 +24,7 @@ export namespace
 				i_aBegin
 		,	t_tIterator
 				i_aEnd
-		,	NameView
+		,	StringChain
 				i_rName
 		)
 		noexcept
@@ -34,8 +34,6 @@ export namespace
 		(	i_aBegin
 		,	i_aEnd
 		,	i_rName
-		,	Compare::Name
-			{}
 		);
 	}
 
@@ -44,7 +42,7 @@ export namespace
 	(	lower_bound
 	)	(	auto
 			&	i_rCountedBuffer
-		,	NameView
+		,	StringChain
 				i_rName
 		)
 		noexcept
@@ -65,7 +63,7 @@ export namespace
 	(	contains
 	)	(	auto const
 			&	i_rBuffer
-		,	NameView
+		,	StringChain
 				i_rName
 		)
 		noexcept
@@ -110,8 +108,8 @@ export namespace
 			,	t_vMaxCount
 			>
 			&	i_rCountedBuffer
-		,	NameView
-				i_rNameView
+		,	StringChain
+				i_rName
 		)
 	->	t_tElement&
 	{
@@ -131,7 +129,7 @@ export namespace
 			aInsertPosition
 		=	::ATR::Member::lower_bound
 			(	i_rCountedBuffer
-			,	i_rNameView
+			,	i_rName
 			)
 		;
 
@@ -149,7 +147,7 @@ export namespace
 
 		aInsertPosition
 		->	Name
-		=	i_rNameView
+		=	i_rName
 		;
 
 		++	i_rCountedBuffer

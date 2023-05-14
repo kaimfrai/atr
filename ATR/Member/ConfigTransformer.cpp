@@ -1,13 +1,14 @@
 export module ATR.Member.ConfigTransformer;
 
-import ATR.Member.Name;
 import ATR.Member.ConfigBuilder;
 
 import Meta.ID.Concept;
+import Meta.ID.StringChain;
 import Meta.Token.Type;
 
 import Std;
 
+using ::Meta::StringChain;
 using ::Meta::ProtoID;
 
 export namespace
@@ -57,9 +58,9 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	(	NameView
+		)	(	StringChain
 					i_rMemberName
-			,	NameView
+			,	StringChain
 					i_rTarget
 			)
 			noexcept
@@ -76,6 +77,28 @@ export namespace
 			);
 		}
 
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
+		)	(	char const
+				*	i_aMemberName
+			,	char const
+				*	i_aTarget
+			)
+			noexcept
+		->	ConfigTransformer&&
+		{
+			(*	m_aConfig
+			)	(	i_aMemberName
+				,	i_aTarget
+				)
+			;
+			return
+			static_cast<ConfigTransformer&&>
+			(	*this
+			);
+		}
+
 		template
 			<	typename
 					t_tEntity
@@ -83,7 +106,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	(	NameView
+		)	(	StringChain
 					i_rMemberName
 			,	::Meta::TypeToken<t_tEntity>
 					i_vType
@@ -104,6 +127,29 @@ export namespace
 			return
 			static_cast<ConfigTransformer&&>
 			(	*this
+			);
+		}
+
+		template
+			<	typename
+					t_tEntity
+			>
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
+		)	(	char const
+				*	i_aMemberName
+			,	::Meta::TypeToken<t_tEntity>
+					i_vType
+			)
+			noexcept
+		->	ConfigTransformer&&
+		{	return
+			operator()
+			(	StringChain
+				{	i_aMemberName
+				}
+			,	i_vType
 			);
 		}
 

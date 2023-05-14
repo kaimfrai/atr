@@ -2,16 +2,17 @@ export module ATR.Member.ConfigData;
 
 import ATR.Member.Info;
 import ATR.Member.LayoutBuffer;
-import ATR.Member.Name;
 import ATR.Member.NamedInfo;
 import ATR.Member.Ordered;
 
+import Meta.ID.StringChain;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size;
 import Meta.Size;
 
 import Std;
 
+using ::Meta::StringChain;
 using ::Meta::BitSize;
 using ::Meta::SSize;
 
@@ -102,7 +103,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	FindMemberInfo
-		)	(	NameView
+		)	(	StringChain
 					i_rMemberName
 			)	const
 			noexcept
@@ -142,7 +143,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	GetMemberOffset
-		)	(	NameView
+		)	(	StringChain
 					i_rMemberName
 			)	const
 			noexcept

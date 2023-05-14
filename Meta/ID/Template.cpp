@@ -50,9 +50,11 @@ export namespace
 		&	String
 		=	StringInstance
 			<	StringLiteral<Length>
-				{	::ToChar(t_vpString)
-					...
-				,	'\0'
+				{	::std::data
+					({	::ToChar(t_vpString)
+						...
+					,	'\0'
+					})
 				}
 			>
 		;
@@ -62,17 +64,6 @@ export namespace
 		(	operator
 			StringLiteral<Length> const
 			&
-		)	()	const
-			noexcept
-		{	return
-				String
-			;
-		}
-
-		[[nodiscard]]
-		explicit(false) constexpr
-		(	operator
-			StringView
 		)	()	const
 			noexcept
 		{	return

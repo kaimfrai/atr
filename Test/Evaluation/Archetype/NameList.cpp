@@ -20,6 +20,7 @@ import ATR.Member.NamedInfo;
 import ATR.Member.Info;
 
 import Meta.ID.StringLiteral;
+import Meta.ID.StringChain;
 import Meta.Memory.Constraint;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
@@ -38,8 +39,8 @@ using namespace ::Meta::Literals;
 struct
 	NamedInfoView
 {
-	::Meta::StringView
-		Name
+	char const
+	*	Name
 	;
 	::ATR::Member::Info
 		Info
@@ -100,7 +101,7 @@ auto constexpr
 			)
 		{	return
 				(	i_rLeft.Name
-				==	i_rRight.Name
+				==	::Meta::StringChain{i_rRight.Name}
 				)
 			and	(	i_rLeft.Info.Type
 				==	i_rRight.Info.Type

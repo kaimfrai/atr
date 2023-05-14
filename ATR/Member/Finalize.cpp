@@ -1,7 +1,6 @@
 export module ATR.Member.Finalize;
 
 import ATR.Member.Alias;
-import ATR.Member.Compare.Name;
 import ATR.Member.ConfigBuilder;
 import ATR.Member.ConfigData;
 import ATR.Member.LayoutBuffer;
@@ -258,8 +257,6 @@ namespace
 		::std::sort
 		(	aNamedInfoBegin
 		,	aAliasEnd
-		,	Compare::Name
-			{}
 		);
 
 		vNamedInfo

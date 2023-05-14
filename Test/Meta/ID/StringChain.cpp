@@ -197,9 +197,10 @@ static_assert
 
 StringChain constexpr
 	ABC_DE
-{	ABC.Value
-,	&DE
-};
+=	(	ABC.Value
+	+	DE
+	)
+;
 
 static_assert
 (	ABC_DE
@@ -298,9 +299,10 @@ static_assert
 
 StringChain constexpr
 	Empty_DE
-{	Empty.Value
-,	&DE
-};
+=	(	Empty.Value
+	+	DE
+	)
+;
 
 static_assert
 (	Empty_DE
@@ -420,9 +422,10 @@ static_assert
 
 StringChain constexpr
 	ABC_Empty_DE
-{	ABC.Value
-,	&Empty_DE
-};
+=	(	ABC.Value
+	+	Empty_DE
+	)
+;
 
 static_assert
 (	ABC_Empty_DE

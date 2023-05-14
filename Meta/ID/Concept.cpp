@@ -24,10 +24,6 @@ export namespace
 		>
 	and	::std::convertible_to
 		<	t_tID
-		,	StringView
-		>
-	and	::std::convertible_to
-		<	t_tID
 		,	StringChain
 		>
 	;

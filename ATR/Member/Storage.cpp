@@ -1,13 +1,14 @@
 export module ATR.Member.Storage;
 
-import ATR.Member.Name;
 import ATR.Member.Config;
 
 import Meta.ID.Concept;
+import Meta.ID.StringChain;
 import Meta.Memory.Size.Compare;
 
 import Std;
 
+using ::Meta::StringChain;
 using ::Meta::ProtoID;
 
 export namespace
@@ -26,7 +27,7 @@ export namespace
 	(	GetStorage
 	)	(	ProtoID auto
 				i_vTypeName
-		,	NameView
+		,	StringChain
 				i_rMemberName
 		)
 		noexcept

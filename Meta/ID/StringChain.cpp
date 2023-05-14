@@ -125,5 +125,29 @@ export namespace
 				}
 			}
 		}
+
+		[[nodiscard]]
+		friend auto constexpr
+		(	operator+
+		)	(	char const
+				*	i_aLeft
+			,	StringChain const
+				&	i_rRight
+			)
+			noexcept
+		->	StringChain
+		{
+			if	(	i_aLeft
+				==	nullptr
+				)
+			{	return
+					i_rRight
+				;
+			}
+			return
+			{	i_aLeft
+			,	&i_rRight
+			};
+		}
 	};
 }

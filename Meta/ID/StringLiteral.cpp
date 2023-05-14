@@ -5,26 +5,6 @@ import Std;
 export namespace
 	Meta
 {
-	struct
-		StringView
-	:	::std::string_view
-	{
-		using
-			::std::string_view
-		::	string_view
-		;
-
-		[[nodiscard]]
-		friend
-		auto constexpr
-		(	operator<=>
-		)	(	StringView
-			,	StringView
-			)
-			noexcept
-		=	default;
-	};
-
 	template
 		<	::std::size_t
 				t_nExtent
@@ -39,18 +19,6 @@ export namespace
 			+	1uz
 			]
 		{};
-
-		[[nodiscard]]
-		explicit(false) constexpr
-		(	operator
-			StringView
-		)	()	const
-		{	return
-			{	::std::data
-				(	Buffer
-				)
-			};
-		}
 
 		[[nodiscard]]
 		auto static constexpr
@@ -115,76 +83,6 @@ export namespace
 					i_aString
 				;
 			}
-		}
-
-		explicit(true) constexpr
-		(	StringLiteral
-		)	(	::std::initializer_list<char>
-					i_rString
-			)
-			noexcept
-		:	StringLiteral
-			{	data
-				(	i_rString
-				)
-			}
-		{}
-
-		explicit(true) constexpr
-		(	StringLiteral
-		)	(	::std::initializer_list<StringView>
-					i_rStringList
-			)
-			noexcept
-		{
-			for	(	auto
-						aPosition
-					=	::std::begin
-						(	Buffer
-						)
-				;	auto
-						rString
-				:	i_rStringList
-				)
-			{
-				aPosition
-				=	::std::copy
-					(	rString
-						.	begin
-							()
-					,	rString
-						.	end
-							()
-					,	aPosition
-					)
-				;
-			}
-		}
-
-		auto constexpr
-		(	operator=
-		)	(	StringView
-					i_rString
-			)	&
-			noexcept
-		{
-			*	::std::copy
-				(	i_rString
-					.	begin
-						()
-				,	i_rString
-					.	end
-						()
-				,	::std::begin
-					(	Buffer
-					)
-				)
-			=	'\0'
-			;
-
-			return
-			*	this
-			;
 		}
 
 		[[nodiscard]]

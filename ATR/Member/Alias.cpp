@@ -1,8 +1,13 @@
 export module ATR.Member.Alias;
 
 import ATR.Member.Constants;
-import ATR.Member.Name;
 import ATR.Member.CountedBuffer;
+
+import Meta.ID.StringChain;
+
+import Std;
+
+using ::Meta::StringChain;
 
 export namespace
 	ATR::Member
@@ -10,12 +15,29 @@ export namespace
 	struct
 		Alias
 	{
-		::ATR::Member::Name
+		StringChain
 			Name
 		;
-		::ATR::Member::Name
+		StringChain
 			Target
 		;
+
+		[[nodiscard]]
+		auto friend constexpr
+		(	operator<=>
+		)	(	Alias const
+				&	i_rAlias
+			,	StringChain
+					i_rName
+			)
+			noexcept
+		->	::std::strong_ordering
+		{	return
+				i_rAlias
+				.	Name
+			<=>	i_rName
+			;
+		}
 	};
 
 	using
