@@ -8,12 +8,30 @@ import ATR.Member.Ordered;
 import Meta.ID.Concept;
 import Meta.Token.TypeID;
 
+import Std;
+
 using ::Meta::ProtoID;
 using ::Meta::TypeID;
 
 export namespace
 	ATR::Member
 {
+	template
+		<	ProtoID
+				t_tTypeName
+		,	typename
+				t_tConfigTransform
+		>
+	auto constexpr
+		BuiltConfig_Of
+	=	Configure
+		(	t_tTypeName
+			{}
+		,	t_tConfigTransform
+			{}
+		)
+	;
+
 	class
 		ConfigBuilder
 	{
@@ -146,17 +164,90 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
+		)	(	NameView
+					i_rPrefix
+			,	ProtoID auto
+					i_vBaseID
+			)
+			noexcept
+		->	ConfigBuilder&&
+		{
+			auto const
+			&	rMerge
+			=	BuiltConfig_Of
+				<	decltype(i_vBaseID)
+				,	ConfigBuilder
+				>
+			;
+
+			for	(	auto const
+					&	rAliasGroup
+				:	rMerge
+					.	m_vNamedTypes
+				)
+			{
+				for	(	auto const
+						&	[	rName
+							,	rType
+							]
+					:	rAliasGroup
+					)
+				{
+					(void)
+					operator()
+					(	Name
+						{	::std::initializer_list<NameView>
+							{	i_rPrefix
+							,	NameView(rName)
+							}
+						}
+					,	rType
+					);
+				}
+			}
+
+			for	(	auto const
+					&	[	rName
+						,	rTarget
+						]
+				:	rMerge
+					.	m_vAliasList
+				)
+			{	(void)
+				operator()
+				(	Name
+					{	::std::initializer_list<NameView>
+						{	i_rPrefix
+						,	NameView(rName)
+						}
+					}
+				,	Name
+					{	::std::initializer_list<NameView>
+						{	i_rPrefix
+						,	NameView(rTarget)
+						}
+					}
+				);
+			}
+
+			return
+			static_cast<ConfigBuilder&&>
+			(	*this
+			);
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
 		)	(	ProtoID auto
 					i_vBaseID
 			)
 			noexcept
 		->	ConfigBuilder&&
 		{	return
-			Configure
-			(	i_vBaseID
-			,	static_cast<ConfigBuilder&&>
-				(	*this
-				)
+			operator()
+			(	""
+			,	i_vBaseID
 			);
 		}
 	};

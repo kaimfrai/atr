@@ -17,7 +17,6 @@ export import ATR.Member.Compare.Name;
 export import ATR.Member.Config;
 export import ATR.Member.ConfigBuilder;
 export import ATR.Member.ConfigData;
-export import ATR.Member.ConfigPrefixer;
 export import ATR.Member.ConfigTransformer;
 export import ATR.Member.Constants;
 export import ATR.Member.CountedBuffer;

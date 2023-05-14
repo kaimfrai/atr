@@ -21,22 +21,6 @@ export namespace
 		,	typename
 				t_tConfigBuilder
 		>
-	ConfigBuilder constexpr
-		BuiltConfig_Of
-	{	Configure
-		(	t_tTypeName
-			{}
-		,	t_tConfigBuilder
-			{}
-		)
-	};
-
-	template
-		<	ProtoID
-				t_tTypeName
-		,	typename
-				t_tConfigBuilder
-		>
 	ConfigData constexpr
 		FinalizedConfig_Of
 	=	Finalize

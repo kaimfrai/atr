@@ -2,8 +2,6 @@ export module Evaluation.Archetype.Head;
 
 import Evaluation.Archetype.Sphere;
 
-import ATR.Member.ConfigPrefixer;
-
 import Meta.ID.Alias;
 import Meta.ID.Literals;
 
@@ -19,11 +17,10 @@ export namespace
 			&&	o_rConfig
 		)
 	->	auto&&
-	{
-		(void)ConfigPrefixer{ "LeftEye", o_rConfig }("Sphere"_ID);
-		(void)ConfigPrefixer{ "RightEye", o_rConfig }("Sphere"_ID);
-		return
+	{	return
 		o_rConfig
+			("LeftEye", "Sphere"_ID)
+			("RightEye", "Sphere"_ID)
 			("Sphere"_ID)
 		;
 	}
