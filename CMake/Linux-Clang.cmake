@@ -80,6 +80,10 @@ else()
 		-Wcomma
 		-Werror
 		-Weverything
+		# Using header units
+		-Wno-experimental-header-units
+		# False positives?
+		-Wno-read-modules-implicitly
 		# No good reason to add inline or static to variables inside modules, only in headers
 		-Wno-missing-variable-declarations
 		# Impacts build times negatively by being active alone

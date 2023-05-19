@@ -374,6 +374,8 @@ function(get_compile_module_command
 		${cmake_cxx_flags}
 		--compile ${module_binary}
 		--output ${module_object}
+		# False positives?
+		-Wno-read-modules-implicitly
 	)
 
 	set(
