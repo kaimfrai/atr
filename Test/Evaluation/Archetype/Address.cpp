@@ -9,7 +9,7 @@ import Meta.ID;
 
 using ::ATR::Address;
 using ::ATR::Type;
-using ::Meta::String::ID_T;
+using ::Meta::ID_T;
 
 static_assert
 (	Address<ID_T<"ComputeVolume">, Type<"Head"> const&>

@@ -34,7 +34,7 @@ namespace
 }
 
 using ::Meta::Dispatch::IsPathBlocked;
-using ::Meta::String::ID_T;
+using ::Meta::ID_T;
 
 static_assert
 (	not

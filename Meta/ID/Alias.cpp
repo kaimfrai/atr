@@ -6,8 +6,10 @@ import Meta.String.Literal;
 
 import Std;
 
+using ::Meta::String::Literal;
+
 export namespace
-	Meta::String
+	Meta
 {
 	/// creates an identifier type
 	template

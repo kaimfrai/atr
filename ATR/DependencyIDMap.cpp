@@ -20,7 +20,7 @@ import Std;
 using ::ATR::Member::OffsetOf;
 using ::Meta::ProtoID;
 using ::Meta::String::Chain;
-using ::Meta::String::ID_T;
+using ::Meta::ID_T;
 using ::Meta::String::Literal;
 
 export namespace

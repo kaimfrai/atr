@@ -7,8 +7,8 @@ import ATR.Member.Finalize;
 import Meta.ID;
 import Meta.String.Literal;
 
+using ::Meta::ID_T;
 using ::Meta::ProtoID;
-using ::Meta::String::ID_T;
 using ::Meta::String::Literal;
 
 export namespace

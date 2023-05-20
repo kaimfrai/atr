@@ -36,7 +36,7 @@ namespace
 using ::Meta::Dispatch::IsPathBlocked;
 using ::Meta::Dispatch::Path;
 using ::Meta::Dispatch::ProtoPath;
-using ::Meta::String::ID_T;
+using ::Meta::ID_T;
 
 static_assert
 (	ProtoPath

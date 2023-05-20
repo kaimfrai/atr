@@ -5,7 +5,7 @@ import Meta.ID;
 export namespace
 	ATR
 {
-	using ::Meta::String::ID_T;
+	using ::Meta::ID_T;
 }
 
 export namespace

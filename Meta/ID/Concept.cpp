@@ -6,6 +6,8 @@ import Meta.Size;
 
 import Std;
 
+using ::Meta::String::Chain;
+
 export namespace
 	Meta
 {
@@ -24,7 +26,7 @@ export namespace
 		>
 	and	::std::convertible_to
 		<	t_tID
-		,	String::Chain
+		,	Chain
 		>
 	;
 }

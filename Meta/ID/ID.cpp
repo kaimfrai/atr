@@ -11,6 +11,10 @@ import Meta.Token.Index;
 
 import Std;
 
+using ::Meta::String::Chain;
+using ::Meta::String::Instance;
+using ::Meta::String::Literal;
+
 auto constexpr
 (	ToChar
 )	(	char
@@ -47,10 +51,10 @@ export namespace
 		=	sizeof...(t_vpString)
 		;
 
-		static String::Literal<Length> const constexpr
+		static Literal<Length> const constexpr
 		&	String
-		=	String::Instance
-			<	String::Literal<Length>
+		=	Instance
+			<	Literal<Length>
 				{	::std::data
 					({	::ToChar(t_vpString)
 						...
@@ -63,7 +67,7 @@ export namespace
 		[[nodiscard]]
 		explicit(false) constexpr
 		(	operator
-			String::Literal<Length> const
+			Literal<Length> const
 			&
 		)	()	const
 			noexcept
@@ -75,7 +79,7 @@ export namespace
 		[[nodiscard]]
 		explicit(false) constexpr
 		(	operator
-			String::Chain
+			Chain
 		)	()	const
 			noexcept
 		{	return

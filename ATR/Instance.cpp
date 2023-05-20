@@ -16,7 +16,7 @@ using ::ATR::Member::ProtoDynamicMember_Of;
 using ::ATR::Member::ProtoStaticMember_Of;
 
 using ::Meta::ProtoID;
-using ::Meta::String::ID_T;
+using ::Meta::ID_T;
 using ::Meta::String::Literal;
 
 export namespace

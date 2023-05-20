@@ -1,13 +1,16 @@
 export module Meta.ID:Literals;
 
 import :Alias;
+
 import Meta.String.Literal;
+
+using ::Meta::String::Literal;
 
 export namespace
 	Meta::inline Literals
 {
 	template
-		<	String::Literal
+		<	Literal
 				t_vString
 		>
 	[[nodiscard]]
@@ -15,7 +18,7 @@ export namespace
 	(	operator
 		""_ID
 	)	()
-	->	String::ID_T
+	->	ID_T
 		<	t_vString
 		>
 	{	return{};	}
