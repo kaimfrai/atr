@@ -23,7 +23,7 @@ auto constexpr
 ->	char
 {	return i_cChar;	}
 
-export template
+template
 	<	char
 			t_nCharacter
 	>
