@@ -1,6 +1,6 @@
-export module Meta.String.Literals;
+export module Meta.ID:Literals;
 
-import Meta.String.Alias;
+import :Alias;
 import Meta.String.Literal;
 
 export namespace

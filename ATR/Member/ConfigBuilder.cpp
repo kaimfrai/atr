@@ -4,7 +4,7 @@ import ATR.Member.Alias;
 import ATR.Member.NamedType;
 import ATR.Member.Ordered;
 
-import Meta.String.Concept;
+import Meta.ID;
 import Meta.String.Chain;
 import Meta.Token.TypeID;
 

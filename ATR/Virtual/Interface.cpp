@@ -1,10 +1,11 @@
 export module ATR.Virtual.Interface;
 
 import ATR.Virtual.Entry;
-import Meta.String.Literal;
-import Meta.String.Alias;
-import Meta.Lex.Match;
+
+import Meta.ID;
 import Meta.Lex.FreeFunctionTokenizer;
+import Meta.Lex.Match;
+import Meta.String.Literal;
 
 using ::Meta::String::ID_T;
 using ::Meta::String::Literal;

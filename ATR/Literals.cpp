@@ -1,7 +1,6 @@
 export module ATR.Literals;
 
-import Meta.String.Alias;
-import Meta.String.Literals;
+import Meta.ID;
 
 export namespace
 	ATR

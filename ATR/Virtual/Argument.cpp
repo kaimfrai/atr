@@ -4,7 +4,7 @@ import ATR.Virtual.Table;
 import ATR.Erase;
 
 import Meta.Token.Type;
-import Meta.String.Concept;
+import Meta.ID;
 
 import Std;
 

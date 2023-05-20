@@ -1,4 +1,4 @@
-export module Meta.String.Concept;
+export module Meta.ID:Concept;
 
 import Meta.String.Chain;
 import Meta.String.Literal;

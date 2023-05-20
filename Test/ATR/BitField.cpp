@@ -8,7 +8,7 @@ import Meta.Bit.Index;
 import Meta.Bit.Reference;
 import Meta.Token.Specifier;
 import Meta.Token.Type;
-import Meta.String.Alias;
+import Meta.ID;
 
 import Std;
 

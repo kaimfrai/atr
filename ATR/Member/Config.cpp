@@ -4,12 +4,11 @@ import ATR.Member.ConfigBuilder;
 import ATR.Member.ConfigData;
 import ATR.Member.Finalize;
 
-import Meta.String.Alias;
-import Meta.String.Concept;
+import Meta.ID;
 import Meta.String.Literal;
 
-using ::Meta::String::ID_T;
 using ::Meta::ProtoID;
+using ::Meta::String::ID_T;
 using ::Meta::String::Literal;
 
 export namespace

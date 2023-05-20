@@ -2,9 +2,8 @@ export module ATR.Dependency;
 
 import ATR.Erase;
 
-import Meta.String.Concept;
+import Meta.ID;
 import Meta.String.Literal;
-import Meta.String.Alias;
 import Meta.Size;
 import Meta.Token.SelectByIndex;
 import Meta.Token.Index;

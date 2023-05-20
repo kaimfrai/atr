@@ -2,10 +2,10 @@ export module ATR.Virtual.Element;
 
 import ATR.Virtual.Table;
 
-import Meta.Predicate.Trivial;
+import Meta.ID;
 import Meta.Logic.Constraint;
+import Meta.Predicate.Trivial;
 import Meta.Token.Type;
-import Meta.String.Concept;
 
 import Std;
 

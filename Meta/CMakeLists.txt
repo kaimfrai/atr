@@ -18,6 +18,20 @@ add_subdirectory(Data)
 add_subdirectory(Functional)
 add_subdirectory(Predicate)
 add_subdirectory(String)
+
+add_module(
+	ID.cpp
+
+	ID/Decimal.cpp
+	ID/LowerCase.cpp
+	ID/UpperCase.cpp
+	ID/ID.cpp
+	ID/Make.cpp
+	ID/Alias.cpp
+	ID/Literals.cpp
+	ID/Concept.cpp
+)
+
 # add_subdirectory(Dispatch)
 
 add_single_file_modules(

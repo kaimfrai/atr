@@ -1,8 +1,6 @@
 export module Meta.Dispatch.Path;
 
-import Meta.String.Concept;
-import Meta.String.Literal;
-import Meta.String.Alias;
+import Meta.ID;
 
 import Std;
 

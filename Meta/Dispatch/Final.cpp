@@ -6,7 +6,7 @@ import Meta.Dispatch.Path;
 import Meta.Lex.Match;
 import Meta.Lex.FreeFunctionTokenizer;
 import Meta.Lex.Function;
-import Meta.String.Concept;
+import Meta.ID;
 
 import Std;
 

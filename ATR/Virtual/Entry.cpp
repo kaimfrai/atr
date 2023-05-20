@@ -2,8 +2,8 @@ export module ATR.Virtual.Entry;
 
 import ATR.Address;
 
+import Meta.ID;
 import Meta.Lex.Function;
-import Meta.String.Concept;
 import Meta.Token.Type;
 
 import Std;

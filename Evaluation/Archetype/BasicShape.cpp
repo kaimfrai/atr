@@ -4,7 +4,7 @@ import Evaluation.Shared.DataTypes;
 
 import ATR.Literals;
 
-import Meta.String.Alias;
+import Meta.ID;
 import Meta.Token.Type;
 
 export namespace

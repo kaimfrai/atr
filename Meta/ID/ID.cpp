@@ -1,11 +1,12 @@
-export module Meta.String.ID;
+export module Meta.ID:ID;
 
-import Meta.String.Decimal;
-import Meta.String.LowerCase;
+import :Decimal;
+import :LowerCase;
+import :UpperCase;
+
+import Meta.Size;
 import Meta.String.Chain;
 import Meta.String.Literal;
-import Meta.String.UpperCase;
-import Meta.Size;
 import Meta.Token.Index;
 
 import Std;

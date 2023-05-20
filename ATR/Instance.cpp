@@ -7,8 +7,7 @@ import ATR.Member.Config;
 import ATR.Member.OffsetOf;
 
 import Meta.Memory.Size.Arithmetic;
-import Meta.String.Alias;
-import Meta.String.Concept;
+import Meta.ID;
 import Meta.String.Literal;
 
 import Std;
