@@ -36,11 +36,6 @@ namespace
 			vLayout
 		{};
 
-		auto
-			vTotalOffset
-		=	0z
-		;
-
 		for	(	auto
 					aAlignmentCounter
 				=	+
@@ -54,25 +49,30 @@ namespace
 		{
 			auto const
 				vNextOffset
-			=	(	vTotalOffset
+			=	(	vLayout
+					.	TotalCounter
 				+	vAlignCount
 				)
 			;
 
 			for	(
-				;	(	vTotalOffset
+				;	(	vLayout
+						.	TotalCounter
 					<	vNextOffset
 					)
-				;	++	vTotalOffset
+				;	++	vLayout
+						.	TotalCounter
 				)
 			{
 				vLayout
 				.	Buffer
-					[	vTotalOffset
+					[	vLayout
+						.	TotalCounter
 					]
 				=	i_rNamedTypeView
 					.	Buffer
-						[	vTotalOffset
+						[	vLayout
+							.	TotalCounter
 						]
 					.	Type
 				;

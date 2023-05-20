@@ -16,6 +16,7 @@ import Evaluation.Shared.Fraction;
 import Evaluation.Shared.PiFraction;
 
 import ATR.Member.Config;
+import ATR.Member.Constants;
 
 import Meta.ID;
 import Meta.Memory.Alignment;
@@ -35,16 +36,58 @@ using ::Meta::TypeID;
 
 using namespace ::Meta::Literals;
 
+
 template
 	<	Literal
 			t_vTypeName
+	,	auto
+			t_vAlignment
 	>
-auto constexpr
-&	TypeList_Of
-=	Config_Of
-	<	ID<t_vTypeName>
-	>
-	.	Layout
+::std::span constexpr
+	TypeList_Of
+=	[]
+	{
+		auto const
+		&	rLayout
+		=	Config_Of
+			<	ID<t_vTypeName>
+			>
+			.	Layout
+		;
+
+		auto
+			aBuffer
+		=	rLayout
+			.	Buffer
+		;
+
+		for	(	auto
+					vAlign
+				=	ATR::Member::MaxAlign
+			;	(	vAlign
+				>	t_vAlignment
+				)
+			;	--	vAlign
+					.	Value
+			)
+		{
+			aBuffer
+			+=	rLayout
+				.	Counter
+					(	vAlign
+					)
+			;
+		}
+
+		return
+		::std::span
+		{	aBuffer
+		,	rLayout
+			.	Counter
+				(	t_vAlignment
+				)
+		};
+	}()
 ;
 
 using One = Fraction<>;
@@ -96,124 +139,124 @@ auto constexpr
 ;
 
 static_assert
-(	TypeList_Of<"Square">[FloatAlign]
+(	TypeList_Of<"Square", FloatAlign>
 ==	TypeList
 	{	Type<Float>
 	}
 );
 static_assert
-(	TypeList_Of<"Square">[ColorAlign]
+(	TypeList_Of<"Square", ColorAlign>
 ==	TypeList
 	{	Type<RGBAColor>
 	}
 );
 static_assert
-(	TypeList_Of<"Square">[0_align]
+(	TypeList_Of<"Square", 0_align>
 ==	TypeList
 	{	Type<One>
 	}
 );
 
 static_assert
-(	TypeList_Of<"Rectangle">[FloatAlign]
+(	TypeList_Of<"Rectangle", FloatAlign>
 ==	TypeList
 	{	Type<Float>
 	,	Type<Float>
 	}
 );
 static_assert
-(	TypeList_Of<"Rectangle">[ColorAlign]
+(	TypeList_Of<"Rectangle", ColorAlign>
 ==	TypeList
 	{	Type<RGBAColor>
 	}
 );
 static_assert
-(	TypeList_Of<"Rectangle">[0_align]
+(	TypeList_Of<"Rectangle", 0_align>
 ==	TypeList
 	{	Type<One>
 	}
 );
 
 static_assert
-(	TypeList_Of<"Triangle">[FloatAlign]
+(	TypeList_Of<"Triangle", FloatAlign>
 ==	TypeList
 	{	Type<Float>
 	,	Type<Float>
 	}
 );
 static_assert
-(	TypeList_Of<"Triangle">[ColorAlign]
+(	TypeList_Of<"Triangle", ColorAlign>
 ==	TypeList
 	{	Type<RGBAColor>
 	}
 );
 static_assert
-(	TypeList_Of<"Triangle">[0_align]
+(	TypeList_Of<"Triangle", 0_align>
 ==	TypeList
 	{	Type<Half>
 	}
 );
 
 static_assert
-(	TypeList_Of<"Circle">[FloatAlign]
+(	TypeList_Of<"Circle", FloatAlign>
 ==	TypeList
 	{	Type<Float>
 	}
 );
 static_assert
-(	TypeList_Of<"Circle">[ColorAlign]
+(	TypeList_Of<"Circle", ColorAlign>
 ==	TypeList
 	{	Type<RGBAColor>
 	}
 );
 static_assert
-(	TypeList_Of<"Circle">[0_align]
+(	TypeList_Of<"Circle", 0_align>
 ==	TypeList
 	{	Type<Pi_4>
 	}
 );
 
 static_assert
-(	TypeList_Of<"Ellipse">[FloatAlign]
+(	TypeList_Of<"Ellipse", FloatAlign>
 ==	TypeList
 	{	Type<Float>
 	,	Type<Float>
 	}
 );
 static_assert
-(	TypeList_Of<"Ellipse">[ColorAlign]
+(	TypeList_Of<"Ellipse", ColorAlign>
 ==	TypeList
 	{	Type<RGBAColor>
 	}
 );
 static_assert
-(	TypeList_Of<"Ellipse">[0_align]
+(	TypeList_Of<"Ellipse", 0_align>
 ==	TypeList
 	{	Type<Pi_4>
 	}
 );
 
 static_assert
-(	TypeList_Of<"Cube">[FloatAlign]
+(	TypeList_Of<"Cube", FloatAlign>
 ==	TypeList
 	{	Type<Float>
 	}
 );
 static_assert
-(	TypeList_Of<"Cube">[ColorAlign]
+(	TypeList_Of<"Cube", ColorAlign>
 ==	TypeList
 	{	Type<RGBAColor>
 	}
 );
 static_assert
-(	TypeList_Of<"Cube">[0_align]
+(	TypeList_Of<"Cube", 0_align>
 ==	TypeList
 	{	Type<One>
 	}
 );
 
 static_assert
-(	TypeList_Of<"Cuboid">[FloatAlign]
+(	TypeList_Of<"Cuboid", FloatAlign>
 ==	TypeList
 	{	Type<Float>
 	,	Type<Float>
@@ -221,20 +264,20 @@ static_assert
 	}
 );
 static_assert
-(	TypeList_Of<"Cuboid">[ColorAlign]
+(	TypeList_Of<"Cuboid", ColorAlign>
 ==	TypeList
 	{	Type<RGBAColor>
 	}
 );
 static_assert
-(	TypeList_Of<"Cuboid">[0_align]
+(	TypeList_Of<"Cuboid", 0_align>
 ==	TypeList
 	{	Type<One>
 	}
 );
 
 static_assert
-(	TypeList_Of<"Pyramid">[FloatAlign]
+(	TypeList_Of<"Pyramid", FloatAlign>
 ==	TypeList
 	{	Type<Float>
 	,	Type<Float>
@@ -242,79 +285,79 @@ static_assert
 	}
 );
 static_assert
-(	TypeList_Of<"Pyramid">[ColorAlign]
+(	TypeList_Of<"Pyramid", ColorAlign>
 ==	TypeList
 	{	Type<RGBAColor>
 	}
 );
 static_assert
-(	TypeList_Of<"Pyramid">[0_align]
+(	TypeList_Of<"Pyramid", 0_align>
 ==	TypeList
 	{	Type<Third>
 	}
 );
 
 static_assert
-(	TypeList_Of<"Sphere">[FloatAlign]
+(	TypeList_Of<"Sphere", FloatAlign>
 ==	TypeList
 	{	Type<Float>
 	}
 );
 static_assert
-(	TypeList_Of<"Sphere">[ColorAlign]
+(	TypeList_Of<"Sphere", ColorAlign>
 ==	TypeList
 	{	Type<RGBAColor>
 	}
 );
 static_assert
-(	TypeList_Of<"Sphere">[0_align]
+(	TypeList_Of<"Sphere", 0_align>
 ==	TypeList
 	{	Type<Pi_6>
 	}
 );
 
 static_assert
-(	TypeList_Of<"Cylinder">[FloatAlign]
+(	TypeList_Of<"Cylinder", FloatAlign>
 ==	TypeList
 	{	Type<Float>
 	,	Type<Float>
 	}
 );
 static_assert
-(	TypeList_Of<"Cylinder">[ColorAlign]
+(	TypeList_Of<"Cylinder", ColorAlign>
 ==	TypeList
 	{	Type<RGBAColor>
 	}
 );
 static_assert
-(	TypeList_Of<"Cylinder">[0_align]
+(	TypeList_Of<"Cylinder", 0_align>
 ==	TypeList
 	{	Type<Pi_4>
 	}
 );
 
 static_assert
-(	TypeList_Of<"Cone">[FloatAlign]
+(	TypeList_Of<"Cone", FloatAlign>
 ==	TypeList
 	{	Type<Float>
 	,	Type<Float>
 	}
 );
 static_assert
-(	TypeList_Of<"Cone">[ColorAlign]
+(	TypeList_Of<"Cone", ColorAlign>
 ==	TypeList
 	{	Type<RGBAColor>
 	}
 );
 static_assert
-(	TypeList_Of<"Cone">[0_align]
+(	TypeList_Of<"Cone", 0_align>
 ==	TypeList
 	{	Type<Pi_12>
 	}
 );
 
 static_assert
-(	TypeList_Of<"Ellipsoid">[FloatAlign]
+(	TypeList_Of<"Ellipsoid", FloatAlign>
 ==	TypeList
 	{	Type<Float>
 	,	Type<Float>
@@ -322,20 +365,20 @@ static_assert
 	}
 );
 static_assert
-(	TypeList_Of<"Ellipsoid">[ColorAlign]
+(	TypeList_Of<"Ellipsoid", ColorAlign>
 ==	TypeList
 	{	Type<RGBAColor>
 	}
 );
 static_assert
-(	TypeList_Of<"Ellipsoid">[0_align]
+(	TypeList_Of<"Ellipsoid", 0_align>
 ==	TypeList
 	{	Type<Pi_6>
 	}
 );
 
 static_assert
-(	TypeList_Of<"Head">[FloatAlign]
+(	TypeList_Of<"Head", FloatAlign>
 ==	TypeList
 	{	Type<Float>
 	,	Type<Float>
@@ -343,7 +386,7 @@ static_assert
 	}
 );
 static_assert
-(	TypeList_Of<"Head">[ColorAlign]
+(	TypeList_Of<"Head", ColorAlign>
 ==	TypeList
 	{	Type<RGBAColor>
 	,	Type<RGBAColor>
@@ -351,7 +394,7 @@ static_assert
 	}
 );
 static_assert
-(	TypeList_Of<"Head">[0_align]
+(	TypeList_Of<"Head", 0_align>
 ==	TypeList
 	{	Type<Pi_6>
 	,	Type<Pi_6>

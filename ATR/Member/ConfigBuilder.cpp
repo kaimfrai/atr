@@ -341,6 +341,10 @@ export namespace
 
 				++	rAlignmentCounter
 				;
+
+				++	NamedTypes
+				.	TotalCounter
+				;
 			}
 
 			return

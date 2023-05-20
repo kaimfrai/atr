@@ -60,6 +60,10 @@ export namespace
 			]
 		{};
 
+		::std::uint8_t
+			TotalCounter
+		{};
+
 		[[nodiscard]]
 		auto constexpr
 		(	Counter
@@ -98,70 +102,13 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr
-		(	Offset
-		)	(	Alignment
-					i_vAlignment
-			)	const
-			noexcept
-		->	USize
-		{
-			if	(	i_vAlignment
-				==	MaxAlign
-				)
-			{
-				return
-					0uz
-				;
-			}
-
-			++	i_vAlignment
-				.	Value
-			;
-
-			auto const
-				vCounter
-			=	Counter
-				(	i_vAlignment
-				)
-			;
-			return
-				vCounter
-			+	Offset
-				(	i_vAlignment
-				)
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	Alignment
-					i_vAlignment
-			)	const&
-			noexcept
-		->	decltype(auto)
-		{	return
-			::std::span
-			{	(	Buffer
-				+	Offset
-					(	i_vAlignment
-					)
-				)
-			,	Counter
-				(	i_vAlignment
-				)
-			};
-		}
-
-		[[nodiscard]]
-		auto constexpr
 		(	begin
 		)	()	&
 			noexcept
 		{	return
-			::std::begin
-			(	Buffer
-			);
+				+
+				Buffer
+			;
 		}
 
 		[[nodiscard]]
@@ -170,9 +117,9 @@ export namespace
 		)	()	const&
 			noexcept
 		{	return
-			::std::begin
-			(	Buffer
-			);
+				+
+				Buffer
+			;
 		}
 
 		[[nodiscard]]
@@ -181,14 +128,8 @@ export namespace
 		)	()	&
 			noexcept
 		{	return
-				begin
-				()
-			+	Offset
-				(	0_align
-				)
-			+	Counter
-				(	0_align
-				)
+				Buffer
+			+	TotalCounter
 			;
 		}
 
@@ -198,14 +139,8 @@ export namespace
 		)	()	const&
 			noexcept
 		{	return
-				begin
-				()
-			+	Offset
-				(	0_align
-				)
-			+	Counter
-				(	0_align
-				)
+				Buffer
+			+	TotalCounter
 			;
 		}
 	};
