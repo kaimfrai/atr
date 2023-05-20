@@ -41,17 +41,4 @@ export namespace
 			;
 		}
 	};
-
-	using
-		NamedTypeBuffer
-	=	AlignBuffer
-		<	NamedType
-		>
-	;
-
-	using
-		NamedTypeConstView
-	=	NamedTypeBuffer const
-		&
-	;
 }

@@ -188,7 +188,29 @@ export namespace
 		auto static constexpr
 			fMakeBit
 		=	[]
-			{	return
+			{
+				auto static constexpr
+					rAlign4Types
+				=	rLayout
+						[	3_align
+						]
+				;
+
+				auto static constexpr
+					rAlign2Types
+				=	rLayout
+						[	2_align
+						]
+				;
+
+				auto static constexpr
+					rAlign1Types
+				=	rLayout
+						[	1_align
+						]
+				;
+
+				return
 				[]	<	::std::size_t
 						...	t_vpAlign4Index
 					,	::std::size_t
@@ -211,44 +233,38 @@ export namespace
 				{	return
 					MakeBit
 					(	RestoreTypeToken
-						<	rLayout
-								[	3_align
-								,	t_vpAlign4Index
+						<	rAlign4Types
+								[	t_vpAlign4Index
 								]
 						>
 						...
 					,	RestoreTypeToken
-						<	rLayout
-								[	2_align
-								,	t_vpAlign2Index
+						<	rAlign2Types
+								[	t_vpAlign2Index
 								]
 						>
 						...
 					,	RestoreTypeToken
-						<	rLayout
-								[	1_align
-								,	t_vpAlign1Index
+						<	rAlign1Types
+								[	t_vpAlign1Index
 								]
 						>
 						...
 					);
 				}(	::std::make_index_sequence
-					<	rLayout
-						.	Count
-							(	3_align
-							)
+					<	rAlign4Types
+						.	size
+							()
 					>{}
 				,	::std::make_index_sequence
-					<	rLayout
-						.	Count
-							(	2_align
-							)
+					<	rAlign2Types
+						.	size
+							()
 					>{}
 				,	::std::make_index_sequence
-					<	rLayout
-						.	Count
-							(	1_align
-							)
+					<	rAlign1Types
+						.	size
+							()
 					>{}
 				);
 			}
@@ -264,7 +280,7 @@ export namespace
 				)
 			{
 				auto static constexpr
-				&	rAlignTypes
+					rAlignTypes
 				=	rLayout
 						[	t_vAlignment
 						]

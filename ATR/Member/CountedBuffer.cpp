@@ -96,9 +96,7 @@ export namespace
 		->	value_type&
 		{	return
 			Buffer
-				[	static_cast<USize>
-					(	i_vIndex
-					)
+				[	i_vIndex
 				]
 			;
 		}
@@ -113,9 +111,7 @@ export namespace
 		->	value_type const&
 		{	return
 			Buffer
-				[	static_cast<USize>
-					(	i_vIndex
-					)
+				[	i_vIndex
 				]
 			;
 		}
@@ -127,9 +123,9 @@ export namespace
 			noexcept
 		->	iterator
 		{	return
-			::std::begin
-			(	Buffer
-			);
+				+
+				Buffer
+			;
 		}
 
 		[[nodiscard]]
@@ -139,9 +135,9 @@ export namespace
 			noexcept
 		->	const_iterator
 		{	return
-			::std::begin
-			(	Buffer
-			);
+				+
+				Buffer
+			;
 		}
 
 		[[nodiscard]]
@@ -151,11 +147,10 @@ export namespace
 			noexcept
 		->	iterator
 		{	return
-			::std::next
-			(	begin
+				begin
 				()
-			,	Count
-			);
+			+	Count
+			;
 		}
 
 		[[nodiscard]]
@@ -165,27 +160,9 @@ export namespace
 			noexcept
 		->	const_iterator
 		{	return
-			::std::next
-			(	begin
+				begin
 				()
-			,	Count
-			);
-		}
-
-		auto constexpr
-		(	push_back
-		)	(	value_type const
-				&	i_rValue
-			)	&
-			noexcept
-		->	void
-		{
-			(*this)
-				[	Count
-				]
-			=	i_rValue
-			;
-			++	Count
+			+	Count
 			;
 		}
 	};

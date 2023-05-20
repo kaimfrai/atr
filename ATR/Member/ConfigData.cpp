@@ -1,9 +1,10 @@
 export module ATR.Member.ConfigData;
 
 import ATR.Member.AlignBuffer;
+import ATR.Member.Constants;
+import ATR.Member.CountedBuffer;
 import ATR.Member.Info;
 import ATR.Member.NamedInfo;
-import ATR.Member.Ordered;
 
 import Meta.Memory.Size;
 import Meta.Size;
@@ -31,7 +32,7 @@ export namespace
 			Layout
 		{};
 
-		NamedInfoBuffer
+		CountedBuffer<NamedInfo, NameBufferSize>
 			NamedInfoList
 		{};
 
@@ -47,31 +48,44 @@ export namespace
 			>
 		{
 			auto const
+				aNameBegin
+			=	NamedInfoList
+				.	begin
+					()
+			;
+
+			auto const
+				aNameEnd
+			=	NamedInfoList
+				.	end
+					()
+			;
+
+			auto const
 				aNamePosition
-			=	::ATR::Member::lower_bound
-				(	NamedInfoList
+			=	::std::lower_bound
+				(	aNameBegin
+				,	aNameEnd
 				,	i_rMemberName
 				)
 			;
 
 			if	(	(	aNamePosition
-					==	NamedInfoList
-						.	end
-							()
+					!=	aNameEnd
 					)
-				or	(	aNamePosition
+				and	(	aNamePosition
 						->	Name
-					!=	i_rMemberName
+					==	i_rMemberName
 					)
 				)
-			{
-				return
-					::std::nullopt
+			{	return
+					aNamePosition
+					->	Info
 				;
 			}
+
 			return
-				aNamePosition
-				->	Info
+				::std::nullopt
 			;
 		}
 

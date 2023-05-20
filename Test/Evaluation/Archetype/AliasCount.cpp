@@ -23,21 +23,6 @@ using ::ATR::Member::Config_Of;
 using ::Meta::ID;
 using ::Meta::String::Literal;
 
-auto constexpr
-	Accumulator
-=	[]	(	::std::ptrdiff_t
-				i_vCurrent
-		,	auto const
-			&	i_rBuffer
-		)
-	{	return
-			i_vCurrent
-		+	i_rBuffer
-			.	Count
-		;
-	}
-;
-
 template
 	<	Literal
 			t_vTypeName
@@ -55,7 +40,7 @@ auto constexpr
 			rConfigure
 			.	NamedInfoList
 			.	Count
-		-	::std::accumulate
+		-	::std::distance
 			(	rConfigure
 				.	Layout
 				.	begin
@@ -64,8 +49,6 @@ auto constexpr
 				.	Layout
 				.	end
 					()
-			,	0z
-			,	Accumulator
 			)
 		;
 	}()

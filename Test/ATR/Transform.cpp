@@ -201,27 +201,6 @@ auto constexpr
 	,	i_rRight
 		.	end
 			()
-	,	[]	(	auto const
-				&	i_rLeftElement
-			,	auto const
-				&	i_rRightElement
-			)
-		{	return
-			::std::equal
-			(	i_rLeftElement
-				.	begin
-					()
-			,	i_rLeftElement
-				.	end
-					()
-			,	i_rRightElement
-				.	begin
-					()
-			,	i_rRightElement
-				.	end
-					()
-			);
-		}
 	);
 }
 

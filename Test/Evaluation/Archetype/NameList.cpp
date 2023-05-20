@@ -99,6 +99,30 @@ template
 [[nodiscard]]
 auto constexpr
 (	operator==
+)	(	NamedInfo const
+		&	i_rLeft
+	,	NamedInfoView const
+		&	i_rRight
+	)
+	noexcept
+->	bool
+{	return
+		(	i_rLeft.Name
+		==	Chain{i_rRight.Name}
+		)
+	and	(	i_rLeft.Info.Type
+		==	i_rRight.Info.Type
+		)
+	and	(	i_rLeft.Info.Offset
+		==	i_rRight.Info.Offset
+		)
+	;
+}
+
+
+[[nodiscard]]
+auto constexpr
+(	operator==
 )	(	::std::span<NamedInfo const>
 			i_rLeftList
 	,	NameList
@@ -112,23 +136,6 @@ auto constexpr
 	,	end(i_rLeftList)
 	,	begin(i_rRightList)
 	,	end(i_rRightList)
-	,	[]	(	NamedInfo const
-				&	i_rLeft
-			,	NamedInfoView const
-				&	i_rRight
-			)
-		{	return
-				(	i_rLeft.Name
-				==	Chain{i_rRight.Name}
-				)
-			and	(	i_rLeft.Info.Type
-				==	i_rRight.Info.Type
-				)
-			and	(	i_rLeft.Info.Offset
-				==	i_rRight.Info.Offset
-				)
-			;
-		}
 	);
 }
 

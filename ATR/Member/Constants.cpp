@@ -15,8 +15,8 @@ export namespace
 	;
 
 	auto constexpr
-		ElementsPerAlign
-	=	12uz
+		TypeBufferSize
+	=	16uz
 	;
 
 	auto constexpr

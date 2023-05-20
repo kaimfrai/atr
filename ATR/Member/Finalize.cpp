@@ -1,99 +1,89 @@
 export module ATR.Member.Finalize;
 
 import ATR.Member.Alias;
+import ATR.Member.AlignBuffer;
 import ATR.Member.ConfigBuilder;
 import ATR.Member.ConfigData;
+import ATR.Member.Constants;
+import ATR.Member.CountedBuffer;
 import ATR.Member.NamedInfo;
 import ATR.Member.NamedType;
-import ATR.Member.Ordered;
 
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size;
+import Meta.Token.TypeID;
 
 import Std;
 
 using ::Meta::BitSize;
+using ::Meta::TypeID;
 
 using namespace ::Meta::Literals;
 
 namespace
 	ATR::Member
 {
-	using
-		LayoutBuffer
-	=	decltype
-		(	ConfigData
-		::	Layout
-		)
-	;
-
-	auto constexpr
-	(	ExtractTypeBuffer
-	)	(	NamedTypeBuffer::value_type const
-			&	i_rAlignedBuffer
-		)
-		noexcept
-	->	LayoutBuffer::value_type
-	{
-		LayoutBuffer::value_type
-			vResult
-		{	.Buffer
-			{}
-		,	.Count
-			=	i_rAlignedBuffer
-				.	Count
-		};
-
-		::std::transform
-		(	i_rAlignedBuffer
-			.	begin
-				()
-		,	i_rAlignedBuffer
-			.	end
-				()
-		,	vResult
-			.	begin
-				()
-		,	[]	(	auto const
-					&	i_rName
-				)
-			{	return
-					i_rName
-					.	Type
-				;
-			}
-		);
-
-		return
-			vResult
-		;
-	}
-
 	[[nodiscard]]
 	auto constexpr
 	(	MakeLayout
-	)	(	NamedTypeConstView
-				i_rNamedTypeView
+	)	(	AlignBuffer<NamedType> const
+			&	i_rNamedTypeView
 		)
 		noexcept
-	->	LayoutBuffer
+	->	AlignBuffer<TypeID>
 	{
-		LayoutBuffer
+		AlignBuffer<TypeID>
 			vLayout
 		{};
 
-		::std::transform
-		(	i_rNamedTypeView
-			.	begin
-				()
-		,	i_rNamedTypeView
-			.	end
-				()
-		,	vLayout
-			.	begin
-				()
-		,	&ExtractTypeBuffer
-		);
+		auto
+			vTotalOffset
+		=	0z
+		;
+
+		for	(	auto
+					aAlignmentCounter
+				=	+
+					vLayout
+					.	AlignmentCounter
+			;	auto
+					vAlignCount
+			:	i_rNamedTypeView
+				.	AlignmentCounter
+			)
+		{
+			auto const
+				vNextOffset
+			=	(	vTotalOffset
+				+	vAlignCount
+				)
+			;
+
+			for	(
+				;	(	vTotalOffset
+					<	vNextOffset
+					)
+				;	++	vTotalOffset
+				)
+			{
+				vLayout
+				.	Buffer
+					[	vTotalOffset
+					]
+				=	i_rNamedTypeView
+					.	Buffer
+						[	vTotalOffset
+						]
+					.	Type
+				;
+			}
+
+			*	aAlignmentCounter
+			=	vAlignCount
+			;
+			++	aAlignmentCounter
+			;
+		}
 
 		return
 			vLayout
@@ -102,62 +92,99 @@ namespace
 
 	auto constexpr
 	(	SortMembers
-	)	(	NamedTypeConstView
-				i_rNamedTypeView
+	)	(	AlignBuffer<NamedType> const
+			&	i_rNamedTypeView
 		,	BitSize
 			&	o_rAccumulatedOffset
 		)
 		noexcept
-	->	NamedInfoBuffer
+	->	CountedBuffer<NamedInfo, NameBufferSize>
 	{
-		NamedInfoBuffer
+		CountedBuffer<NamedInfo, NameBufferSize>
 			vResult
 		{};
 
+		auto const
+			aResultBegin
+		=	vResult
+			.	begin
+				()
+			;
+
+		auto
+			aResultEnd
+		=	aResultBegin
+		;
+
 		for	(	auto const
-				&	rAlignedNames
+				&	[	rName
+					,	rType
+					]
 			:	i_rNamedTypeView
 			)
 		{
-			for	(	auto const
-					&	[	rName
-						,	rType
-						]
-				:	rAlignedNames
+			auto
+				aInsert
+			=	aResultEnd
+				++
+			;
+
+			while(	aInsert
+				!=	aResultBegin
 				)
 			{
-				auto
-				&	rNamedInfo
-				=	::ATR::Member::emplace
-					(	vResult
-					,	rName
+				auto const
+					aPrevious
+				=	(	aInsert
+					-	1z
 					)
 				;
 
-				rNamedInfo
-				.	Info
-				.	Type
-				=	rType
-				;
+				if	(	aPrevious
+						->	Name
+					<	rName
+					)
+				{	break;
+				}
 
-				auto const
-					vSize
-				=	rType
-					.	GetSize
-						()
+				*	aInsert
+				=	*	aPrevious
 				;
-
-				rNamedInfo
-				.	Info
-				.	Offset
-				=	o_rAccumulatedOffset
-				;
-
-				o_rAccumulatedOffset
-				+=	vSize
+				aInsert
+				=	aPrevious
 				;
 			}
+
+			aInsert
+			->	Name
+			=	rName
+			;
+
+			aInsert
+			->	Info
+			.	Type
+			=	rType
+			;
+
+			aInsert
+			->	Info
+			.	Offset
+			=	o_rAccumulatedOffset
+			;
+
+			o_rAccumulatedOffset
+			+=	rType
+				.	GetSize
+					()
+			;
 		}
+
+		vResult
+		.	Count
+		=	(	aResultEnd
+			-	aResultBegin
+			)
+		;
 
 		return
 			vResult
@@ -167,70 +194,82 @@ namespace
 	[[nodiscard]]
 	auto constexpr
 	(	ResolveAliases
-	)	(	NamedInfoBuffer const
-			&	i_rNamedInfos
-		,	NamedInfoBuffer::iterator
-				o_aAliasBegin
-		,	AliasConstView
-				i_rAliasView
+	)	(	CountedBuffer<NamedInfo, NameBufferSize>
+			&	o_rNamedInfos
+		,	CountedBuffer<Alias, NameBufferSize> const
+			&	i_rAliasView
 		)
 		noexcept
-	->	NamedInfoBuffer::iterator
+	->	CountedBuffer<NamedInfo, NameBufferSize>::iterator
 	{
 		auto const
-			fResolveTarget
-		=	[	i_rNamedInfos
-			]	(	Alias const
-					&	i_rAlias
-				)
-			{
-				auto const
-					aMember
-				=	::ATR::Member::lower_bound
-					(	i_rNamedInfos
-					,	i_rAlias
-						.	Target
-					)
-				;
-
-				return
-				NamedInfo
-				{	.Name
-					=	i_rAlias
-						.	Name
-				,	.Info
-					=	aMember
-						->	Info
-				};
-			}
-		;
-
-		return
-		::std::transform
-		(	i_rAliasView
+			aMemberBegin
+		=	o_rNamedInfos
 			.	begin
 				()
-		,	i_rAliasView
+		;
+
+		auto const
+			aMemberEnd
+		=	o_rNamedInfos
 			.	end
 				()
-		,	o_aAliasBegin
-		,	fResolveTarget
-		);
+		;
+
+		auto
+			aInsertAlias
+		=	aMemberEnd
+		;
+
+		for	(	auto const
+				&	[	rName
+					,	rTarget
+					]
+			:	i_rAliasView
+			)
+		{
+			auto const
+				aMember
+			=	::std::lower_bound
+				(	aMemberBegin
+				,	aMemberEnd
+				,	rTarget
+				)
+			;
+
+			aInsertAlias
+			->	Name
+			=	rName
+			;
+
+			aInsertAlias
+			->	Info
+			=	aMember
+				->	Info
+			;
+
+			++	aInsertAlias
+			;
+		}
+
+		return
+			aInsertAlias
+		;
 	}
 
 	auto constexpr
 	(	MakeMembers
-	)	(	NamedTypeConstView
-				i_rNamedTypeView
-		,	AliasConstView
-				i_rAliasView
+	)	(	AlignBuffer<NamedType> const
+			&	i_rNamedTypeView
+		,	CountedBuffer<Alias, NameBufferSize> const
+			&	i_rAliasView
 		,	BitSize
 			&	o_rAccumulatedOffset
 		)
 		noexcept
-	->	NamedInfoBuffer
+	->	CountedBuffer<NamedInfo, NameBufferSize>
 	{
-		NamedInfoBuffer
+		CountedBuffer<NamedInfo, NameBufferSize>
 			vNamedInfo
 		=	SortMembers
 			(	i_rNamedTypeView
@@ -246,17 +285,9 @@ namespace
 		;
 
 		auto const
-			aAliasBegin
-		=	vNamedInfo
-			.	end
-				()
-		;
-
-		auto const
 			aAliasEnd
 		=	ResolveAliases
 			(	vNamedInfo
-			,	aAliasBegin
 			,	i_rAliasView
 			)
 		;
@@ -268,9 +299,8 @@ namespace
 
 		vNamedInfo
 		.	Count
-		=	::std::distance
-			(	aNamedInfoBegin
-			,	aAliasEnd
+		=	(	aAliasEnd
+			-	aNamedInfoBegin
 			)
 		;
 
@@ -293,10 +323,9 @@ namespace
 		;
 
 		auto const
-			rNamedTypeView
+		&	rNamedTypeView
 		=	i_rConfigBuilder
-			.	NamedTypeView
-				()
+			.	NamedTypes
 		;
 
 		auto const
@@ -307,17 +336,11 @@ namespace
 		;
 
 		auto const
-			rAliasView
-		=	i_rConfigBuilder
-			.	AliasView
-				()
-		;
-
-		auto const
 			vNamedInfos
 		=	MakeMembers
 			(	rNamedTypeView
-			,	rAliasView
+			,	i_rConfigBuilder
+				.	AliasList
 			,	vAccumulatedOffset
 			)
 		;

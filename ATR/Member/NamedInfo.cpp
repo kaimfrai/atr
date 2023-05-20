@@ -52,12 +52,4 @@ export namespace
 			;
 		}
 	};
-
-	using
-		NamedInfoBuffer
-	=	CountedBuffer
-		<	NamedInfo
-		,	NameBufferSize
-		>
-	;
 }

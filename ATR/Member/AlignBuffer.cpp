@@ -12,32 +12,11 @@ using ::Meta::Memory::Alignment;
 using ::Meta::SSize;
 using ::Meta::USize;
 
+using namespace ::Meta::Literals;
+
 export namespace
 	ATR::Member
 {
-	[[nodiscard]]
-	auto constexpr
-	(	AlignedElement
-	)	(	auto
-			&&	i_rContainer
-		,	Alignment
-				i_vAlignment
-		)
-		noexcept
-	->	decltype(auto)
-	{	return
-		::std::forward<decltype(i_rContainer)>
-		(	i_rContainer
-		)	[	static_cast<USize>
-				(	MaxAlign
-					.	Value
-				-	i_vAlignment
-					.	Value
-				)
-			]
-		;
-	}
-
 	template
 		<	typename
 				t_tElement
@@ -46,7 +25,7 @@ export namespace
 		AlignBuffer
 	{
 		auto static constexpr
-			BufferSize
+			AlignmentCount
 		=	static_cast<USize>
 			(	MaxAlign
 				.	Value
@@ -54,12 +33,14 @@ export namespace
 		+	1uz
 		;
 
+		auto static constexpr
+			BufferSize
+		=	TypeBufferSize
+		;
+
 		using
 			value_type
-		=	CountedBuffer
-			<	t_tElement
-			,	ElementsPerAlign
-			>
+		=	t_tElement
 		;
 
 		using
@@ -69,93 +50,111 @@ export namespace
 				]
 		;
 
-		auto static constexpr
-		(	size
-		)	()
-			noexcept
-		->	USize
-		{	return
-				BufferSize
-			;
-		}
-
 		BufferType
 			Buffer
 		{};
 
-		[[nodiscard]]
-		auto constexpr
-		(	Count
-		)	(	Alignment
-					i_vAlignment
-			)	const
-			noexcept
-		->	USize
-		{	return
-			AlignedElement
-				(	Buffer
-				,	i_vAlignment
-				)
-			.	size
-				()
-			;
-		}
+		::std::uint8_t
+			AlignmentCounter
+			[	AlignmentCount
+			]
+		{};
 
 		[[nodiscard]]
 		auto constexpr
-		(	operator[]
+		(	Counter
 		)	(	Alignment
 					i_vAlignment
 			)	&
 			noexcept
 		->	decltype(auto)
 		{	return
-			AlignedElement
-				(	Buffer
-				,	i_vAlignment
-				)
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	Alignment
-					i_vAlignment
-			)	const&
-			noexcept
-		->	decltype(auto)
-		{	return
-			AlignedElement
-				(	Buffer
-				,	i_vAlignment
-				)
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	operator[]
-		)	(	Alignment
-					i_vAlignment
-			,	USize
-					i_vIndex
-			)	const&
-			noexcept
-		->	decltype(auto)
-		{	return
-			AlignedElement
-				(	Buffer
-				,	i_vAlignment
-				)[	static_cast<SSize>
-					(	i_vIndex
-					)
+				AlignmentCounter
+				[	MaxAlign
+					.	Value
+				-	i_vAlignment
+					.	Value
 				]
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr
+		(	Counter
+		)	(	Alignment
+					i_vAlignment
+			)	const&
+			noexcept
+		->	USize
+		{	return
+				AlignmentCounter
+				[	MaxAlign
+					.	Value
+				-	i_vAlignment
+					.	Value
+				]
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	Offset
+		)	(	Alignment
+					i_vAlignment
+			)	const
+			noexcept
+		->	USize
+		{
+			if	(	i_vAlignment
+				==	MaxAlign
+				)
+			{
+				return
+					0uz
+				;
+			}
+
+			++	i_vAlignment
+				.	Value
+			;
+
+			auto const
+				vCounter
+			=	Counter
+				(	i_vAlignment
+				)
+			;
+			return
+				vCounter
+			+	Offset
+				(	i_vAlignment
+				)
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator[]
+		)	(	Alignment
+					i_vAlignment
+			)	const&
+			noexcept
+		->	decltype(auto)
+		{	return
+			::std::span
+			{	(	Buffer
+				+	Offset
+					(	i_vAlignment
+					)
+				)
+			,	Counter
+				(	i_vAlignment
+				)
+			};
+		}
+
+		[[nodiscard]]
+		auto constexpr
 		(	begin
 		)	()	&
 			noexcept
@@ -182,9 +181,15 @@ export namespace
 		)	()	&
 			noexcept
 		{	return
-			::std::end
-			(	Buffer
-			);
+				begin
+				()
+			+	Offset
+				(	0_align
+				)
+			+	Counter
+				(	0_align
+				)
+			;
 		}
 
 		[[nodiscard]]
@@ -193,9 +198,15 @@ export namespace
 		)	()	const&
 			noexcept
 		{	return
-			::std::end
-			(	Buffer
-			);
+				begin
+				()
+			+	Offset
+				(	0_align
+				)
+			+	Counter
+				(	0_align
+				)
+			;
 		}
 	};
 }

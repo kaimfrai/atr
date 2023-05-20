@@ -6,7 +6,6 @@ add_single_file_modules(
 	AlignBuffer.cpp
 	NamedInfo.cpp
 	NamedType.cpp
-	Ordered.cpp
 	ConfigData.cpp
 	ConfigBuilder.cpp
 	Finalize.cpp

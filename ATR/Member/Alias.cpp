@@ -39,18 +39,4 @@ export namespace
 			;
 		}
 	};
-
-	using
-		AliasBuffer
-	=	CountedBuffer
-		<	Alias
-		,	NameBufferSize
-		>
-	;
-
-	using
-		AliasConstView
-	=	AliasBuffer const
-		&
-	;
 }

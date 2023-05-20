@@ -1,15 +1,19 @@
 export module ATR.Member.ConfigBuilder;
 
 import ATR.Member.Alias;
+import ATR.Member.AlignBuffer;
+import ATR.Member.Constants;
+import ATR.Member.CountedBuffer;
 import ATR.Member.NamedType;
-import ATR.Member.Ordered;
 
 import Meta.ID;
+import Meta.Memory.Alignment;
 import Meta.String.Chain;
 import Meta.Token.TypeID;
 
 import Std;
 
+using ::Meta::Memory::Alignment;
 using ::Meta::ProtoID;
 using ::Meta::String::Chain;
 using ::Meta::TypeID;
@@ -33,44 +37,16 @@ export namespace
 		)
 	;
 
-	class
+	struct
 		ConfigBuilder
 	{
-		NamedTypeBuffer
-			m_vNamedTypes
+		AlignBuffer<NamedType>
+			NamedTypes
 		{};
 
-		AliasBuffer
-			m_vAliasList
+		CountedBuffer<Alias, NameBufferSize>
+			AliasList
 		{};
-
-	public:
-		explicit(false) constexpr
-		(	ConfigBuilder
-		)	()
-		=	default;
-
-		[[nodiscard]]
-		auto constexpr
-		(	NamedTypeView
-		)	()	const&
-			noexcept
-		->	decltype(auto)
-		{	return
-			(	m_vNamedTypes
-			);
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	AliasView
-		)	()	const&
-			noexcept
-		->	decltype(auto)
-		{	return
-			(	m_vAliasList
-			);
-		}
 
 		[[nodiscard]]
 		auto constexpr
@@ -80,10 +56,38 @@ export namespace
 			)	const
 			noexcept
 		->	bool
-		{	return
-			::ATR::Member::contains
-			(	m_vAliasList
-			,	i_rMemberName
+		{
+			auto const
+				aAliasBegin
+			=	AliasList
+				.	begin
+					()
+			;
+
+			auto const
+				aAliasEnd
+			=	AliasList
+				.	end
+					()
+			;
+
+			auto const
+				aPosition
+			=	::std::lower_bound
+				(	aAliasBegin
+				,	aAliasEnd
+				,	i_rMemberName
+				)
+			;
+
+			return
+			(	(	aPosition
+				!=	aAliasEnd
+				)
+			and	(	aPosition
+					->	Name
+				==	i_rMemberName
+				)
 			);
 		}
 
@@ -98,17 +102,57 @@ export namespace
 			noexcept
 		->	ConfigBuilder&&
 		{
+			auto const
+				aAliasBegin
+			=	AliasList
+				.	begin
+					()
+			;
 			auto
-			&	rAlias
-			=	emplace
-				(	m_vAliasList
-				,	i_rMemberName
-				)
+				aInsert
+			=	AliasList
+				.	end
+					()
 			;
 
-			rAlias
-			.	Target
+			while(	aAliasBegin
+				!=	aInsert
+				)
+			{
+				auto const
+					aPrevious
+				=	(	aInsert
+					-	1z
+					)
+				;
+
+				if	(	aPrevious
+						->	Name
+					<	i_rMemberName
+					)
+				{	break;
+				}
+
+				*	aInsert
+				=	*	aPrevious
+				;
+				aInsert
+				=	aPrevious
+				;
+			}
+
+			aInsert
+			->	Name
+			=	i_rMemberName
+			;
+
+			aInsert
+			->	Target
 			=	i_rTarget
+			;
+
+			++	AliasList
+				.	Count
 			;
 
 			return
@@ -139,6 +183,97 @@ export namespace
 		}
 
 		[[nodiscard]]
+		auto static constexpr
+		(	MoveHigherNames
+		)	(	NamedType const
+				*	i_aBegin
+			,	Chain
+					i_rMemberName
+			,	NamedType
+				*	i_aInsert
+			)
+			noexcept
+		->	NamedType*
+		{
+			while(	i_aInsert
+				!=	i_aBegin
+				)
+			{
+				auto const
+					aPrevious
+				=	i_aInsert
+				-	1z
+				;
+
+				if	(	aPrevious
+						->	Name
+					<	i_rMemberName
+					)
+				{	return
+						i_aInsert
+					;
+				}
+
+				*	i_aInsert
+				=	*	aPrevious
+				;
+				i_aInsert
+				=	aPrevious
+				;
+			}
+
+			return
+				i_aInsert
+			;
+		}
+
+		[[nodiscard]]
+		auto static constexpr
+		(	MoveLowerAlignments
+		)	(	NamedType const
+				*	i_aBegin
+			,	Alignment
+					i_vAlign
+			,	NamedType
+				*	i_aInsert
+			)
+			noexcept
+		->	NamedType*
+		{
+			while(	i_aInsert
+				!=	i_aBegin
+				)
+			{
+				auto const
+					aPrevious
+				=	i_aInsert
+					-	1z
+				;
+
+				if	(	aPrevious
+						->	Type
+						.	GetAlign
+							()
+					>=	i_vAlign
+					)
+				{	return
+						i_aInsert
+					;
+				}
+
+				*	i_aInsert
+				=	*	aPrevious
+				;
+				i_aInsert
+				=	aPrevious
+				;
+			}
+			return
+				i_aInsert
+			;
+		}
+
+		[[nodiscard]]
 		auto constexpr
 		(	operator()
 		)	(	Chain
@@ -155,25 +290,56 @@ export namespace
 					)
 				)
 			{
-				auto
-				&	rNamedTypes
-				=	m_vNamedTypes
-					[	i_vType
-						.	GetAlign
+				auto const
+					vAlign
+				=	i_vType
+					.	GetAlign
+						()
+				;
+
+				auto const
+					aAlignmentEnd
+				=	MoveLowerAlignments
+					(	NamedTypes
+						.	begin
 							()
-					]
+					,	vAlign
+					,	NamedTypes
+						.	end
+							()
+					)
 				;
 
 				auto
-				&	rNamedType
-				=	emplace
-					(	rNamedTypes
+				&	rAlignmentCounter
+				=	NamedTypes
+					.	Counter
+						(	vAlign
+						)
+				;
+
+				auto const
+					aInsertPosition
+				=	MoveHigherNames
+					(	(	aAlignmentEnd
+						-	rAlignmentCounter
+						)
 					,	i_rMemberName
+					,	aAlignmentEnd
 					)
 				;
-				rNamedType
-				.	Type
+
+				aInsertPosition
+				->	Name
+				=	i_rMemberName
+				;
+
+				aInsertPosition
+				->	Type
 				=	i_vType
+				;
+
+				++	rAlignmentCounter
 				;
 			}
 
@@ -222,25 +388,21 @@ export namespace
 			;
 
 			for	(	auto const
-					&	rAliasGroup
+					&	[	rName
+						,	rType
+						]
 				:	rMerge
-					.	m_vNamedTypes
+					.	NamedTypes
 				)
 			{
-				for	(	auto const
-						&	[	rName
-							,	rType
-							]
-					:	rAliasGroup
+
+				(void)
+				operator()
+				(	(	i_aPrefix
+					+	rName
 					)
-				{	(void)
-					operator()
-					(	(	i_aPrefix
-						+	rName
-						)
-					,	rType
-					);
-				}
+				,	rType
+				);
 			}
 
 			for	(	auto const
@@ -248,7 +410,7 @@ export namespace
 						,	rTarget
 						]
 				:	rMerge
-					.	m_vAliasList
+					.	AliasList
 				)
 			{	(void)
 				operator()
