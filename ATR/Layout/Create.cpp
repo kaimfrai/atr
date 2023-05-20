@@ -7,12 +7,15 @@ import ATR.Layout.ValidateOffsets;
 import ATR.Layout.Value;
 import ATR.Layout.Group;
 import ATR.Member.Config;
+import ATR.Member.Constants;
 
+import Meta.ID;
 import Meta.Memory.Alignment;
 import Meta.Token.Type;
 
 import Std;
 
+using ::Meta::ProtoID;
 using ::Meta::Memory::Alignment;
 using ::Meta::RestoreTypeToken;
 using ::Meta::TypeToken;
@@ -169,10 +172,18 @@ namespace
 export namespace
 	ATR::Layout
 {
+	template
+		<	Alignment
+				t_vAlignment
+			=	Member::MaxAlign
+		,	::std::uint8_t
+				t_vOffset
+			=	0u
+		>
 	[[nodiscard]]
 	auto constexpr
 	(	CreateLayout
-	)	(	auto
+	)	(	ProtoID auto
 				i_vTypeName
 		)
 		noexcept
@@ -185,78 +196,65 @@ export namespace
 			.	Layout
 		;
 
-		auto static constexpr
-			fMakeBit
-		=	[]
-			{
-				auto static constexpr
-					vBitOffset
-				=	rLayout
-					.	Offset
+		if	constexpr
+			(	t_vAlignment
+			<=	3_align
+			)
+		{
+			auto static constexpr
+				vBitTypeCount
+			=	(	rLayout
+					.	Counter
+						(	1_align
+						)
+				+	rLayout
+					.	Counter
+						(	2_align
+						)
+				+	rLayout
+					.	Counter
 						(	3_align
 						)
-				;
-				auto static constexpr
-					vBitTypeCount
-				=	(	rLayout
-						.	Counter
-							(	1_align
-							)
-					+	rLayout
-						.	Counter
-							(	2_align
-							)
-					+	rLayout
-						.	Counter
-							(	3_align
-							)
-					)
-				;
+				)
+			;
 
-				return
-				[]	<	::std::size_t
-						...	t_vpBitIndex
-					>(	::std::index_sequence
-						<	t_vpBitIndex
-							...
-						>
-					)
-				{	return
-					MakeBit
-					(	RestoreTypeToken
-						<	rLayout
-							.	Buffer
-								[	vBitOffset
-								+	t_vpBitIndex
-								]
-						>
+			return
+			[]	<	::std::size_t
+					...	t_vpBitIndex
+				>(	::std::index_sequence
+					<	t_vpBitIndex
 						...
-					);
-				}(	::std::make_index_sequence
-					<	vBitTypeCount
-					>{}
-				);
-			}
-		;
-
-		auto static constexpr
-			fMakeFork
-		=	[]	<	Alignment
-						t_vAlignment
-				>(	AlignToken
-					<	t_vAlignment
 					>
 				)
-			{
-				auto static constexpr
-					rAlignTypes
-				=	rLayout
-						[	t_vAlignment
-						]
-				;
+			{	return
+				MakeBit
+				(	RestoreTypeToken
+					<	rLayout
+						.	Buffer
+							[	t_vOffset
+							+	t_vpBitIndex
+							]
+					>
+					...
+				);
+			}(	::std::make_index_sequence
+				<	vBitTypeCount
+				>{}
+			);
+		}
+		else
+		{
+			auto static constexpr
+				vAlignCount
+			=	rLayout
+				.	Counter
+				(	t_vAlignment
+				)
+			;
 
-				return
-				[]	<	::std::size_t
+			auto const
+				vFork
+			=	[]	<	::std::size_t
 						...	t_vpIndex
 					>(	::std::index_sequence
 						<	t_vpIndex
@@ -266,48 +264,34 @@ export namespace
 				{	return
 					MakeFork
 					(	RestoreTypeToken
-						<	rAlignTypes
-								[	t_vpIndex
+						<	rLayout
+							.	Buffer
+								[	t_vOffset
+								+	t_vpIndex
 								]
 						>
 						...
 					);
 				}(	::std::make_index_sequence
-					<	rAlignTypes
-						.	size
-							()
+					<	vAlignCount
 					>{}
-				);
-			}
-		;
-		return
-		ValidateOffsets
-		(	MakeGroup
-			(	fMakeFork
-				(	AlignToken<7_align>
-					{}
 				)
-			,	MakeGroup
-				(	fMakeFork
-					(	AlignToken<6_align>
-						{}
+			;
+			return
+			MakeGroup
+			(	vFork
+			,	CreateLayout
+				<	Alignment
+					{	t_vAlignment
+						.	Value
+					-	1z
+					}
+				,	(	t_vOffset
+					+	vAlignCount
 					)
-				,	MakeGroup
-					(	fMakeFork
-						(	AlignToken<5_align>
-							{}
-						)
-					,	MakeGroup
-						(	fMakeFork
-							(	AlignToken<4_align>
-								{}
-							)
-						,	fMakeBit
-							()
-						)
-					)
+				>(	i_vTypeName
 				)
-			)
-		);
+			);
+		}
 	}
 }
