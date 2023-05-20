@@ -7,7 +7,7 @@ import Meta.Token.TypeID;
 
 import Std;
 
-using ::Meta::StringChain;
+using ::Meta::String::Chain;
 using ::Meta::TypeID;
 
 export namespace
@@ -16,7 +16,7 @@ export namespace
 	struct
 		NamedType
 	{
-		StringChain
+		Chain
 			Name
 		{};
 
@@ -29,7 +29,7 @@ export namespace
 		(	operator<=>
 		)	(	NamedType const
 				&	i_rNamedType
-			,	StringChain
+			,	Chain
 					i_rName
 			)
 			noexcept

@@ -22,6 +22,7 @@ using ::Meta::BitSize;
 using ::Meta::Memory::ByteWidth;
 using ::Meta::Memory::SizeOf;
 using ::Meta::Specifier::Mut;
+using ::Meta::String::Literal;
 using ::Meta::Type;
 
 using namespace ::Meta::Literals;
@@ -86,7 +87,7 @@ static_assert
 template
 	<	typename
 			t_tOwner
-	,	::Meta::StringLiteral
+	,	Literal
 			t_vMemberName
 	>
 auto constexpr

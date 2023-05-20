@@ -32,7 +32,7 @@ export namespace
 	template
 		<	typename
 				t_tFunction
-		,	StringLiteral
+		,	Literal
 				t_vName
 		>
 	using
@@ -48,7 +48,7 @@ export namespace
 				t_tProto
 		,	typename
 				t_tFunction
-		,	StringLiteral
+		,	Literal
 				t_vName
 		>
 	concept

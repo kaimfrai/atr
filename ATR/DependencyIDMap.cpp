@@ -18,8 +18,10 @@ import Meta.Token.Type;
 
 import Std;
 
-using ::Meta::ProtoID;
 using ::ATR::Member::OffsetOf;
+using ::Meta::ProtoID;
+using ::Meta::String::Chain;
+using ::Meta::String::Literal;
 
 export namespace
 	ATR
@@ -65,7 +67,7 @@ export namespace
 	ATR::Trait
 {
 	template
-		<	::Meta::StringLiteral
+		<	Literal
 				t_vDataID
 		>
 	struct
@@ -89,7 +91,7 @@ export namespace
 						<	t_tEntity
 						>
 					::	TypeName
-				,	::Meta::StringChain
+				,	Chain
 					{	t_vDataID
 						.	Buffer
 					}
@@ -107,7 +109,7 @@ export namespace
 	// This assumes that there are no dublicates in the provided member name pack.
 	// Caches the clause independently of concept proto type.
 	template
-		<	::Meta::StringLiteral
+		<	Literal
 			...	t_vpMemberName
 		>
 	::Meta::Logic::Erased::Clause constexpr
@@ -132,7 +134,7 @@ export namespace
 	template
 		<	typename
 				t_tProto
-		,	::Meta::StringLiteral
+		,	Literal
 			...	t_tpMemberName
 		>
 	concept
@@ -199,7 +201,7 @@ export namespace
 	ATR
 {
 	template
-		<	Meta::StringLiteral
+		<	Literal
 				t_vFunctionName
 		>
 	using
@@ -243,7 +245,7 @@ export namespace
 	;
 
 	template
-		<	Meta::StringLiteral
+		<	Literal
 				t_vFunctionName
 		,	auto
 			...	t_vpIDMap

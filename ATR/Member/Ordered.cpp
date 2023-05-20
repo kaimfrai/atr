@@ -7,7 +7,7 @@ import Meta.Size;
 
 import Std;
 
-using ::Meta::StringChain;
+using ::Meta::String::Chain;
 using ::Meta::USize;
 
 export namespace
@@ -24,7 +24,7 @@ export namespace
 				i_aBegin
 		,	t_tIterator
 				i_aEnd
-		,	StringChain
+		,	Chain
 				i_rName
 		)
 		noexcept
@@ -42,7 +42,7 @@ export namespace
 	(	lower_bound
 	)	(	auto
 			&	i_rCountedBuffer
-		,	StringChain
+		,	Chain
 				i_rName
 		)
 		noexcept
@@ -63,7 +63,7 @@ export namespace
 	(	contains
 	)	(	auto const
 			&	i_rBuffer
-		,	StringChain
+		,	Chain
 				i_rName
 		)
 		noexcept
@@ -108,7 +108,7 @@ export namespace
 			,	t_vMaxCount
 			>
 			&	i_rCountedBuffer
-		,	StringChain
+		,	Chain
 				i_rName
 		)
 	->	t_tElement&

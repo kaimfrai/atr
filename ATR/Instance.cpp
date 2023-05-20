@@ -6,16 +6,18 @@ import ATR.Member.Storage;
 import ATR.Member.Config;
 import ATR.Member.OffsetOf;
 
+import Meta.Memory.Size.Arithmetic;
 import Meta.String.Alias;
 import Meta.String.Concept;
 import Meta.String.Literal;
-import Meta.Memory.Size.Arithmetic;
 
 import Std;
 
 using ::ATR::Member::ProtoDynamicMember_Of;
 using ::ATR::Member::ProtoStaticMember_Of;
+
 using ::Meta::ProtoID;
+using ::Meta::String::Literal;
 
 export namespace
 	ATR
@@ -252,7 +254,7 @@ export namespace
 	};
 
 	template
-		<	Meta::StringLiteral
+		<	Literal
 				t_vTypeID
 		>
 	using

@@ -46,10 +46,10 @@ export namespace
 		=	sizeof...(t_vpString)
 		;
 
-		static StringLiteral<Length> const constexpr
+		static String::Literal<Length> const constexpr
 		&	String
-		=	StringInstance
-			<	StringLiteral<Length>
+		=	String::Instance
+			<	String::Literal<Length>
 				{	::std::data
 					({	::ToChar(t_vpString)
 						...
@@ -62,7 +62,7 @@ export namespace
 		[[nodiscard]]
 		explicit(false) constexpr
 		(	operator
-			StringLiteral<Length> const
+			String::Literal<Length> const
 			&
 		)	()	const
 			noexcept
@@ -74,7 +74,7 @@ export namespace
 		[[nodiscard]]
 		explicit(false) constexpr
 		(	operator
-			StringChain
+			String::Chain
 		)	()	const
 			noexcept
 		{	return

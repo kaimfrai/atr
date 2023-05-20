@@ -24,18 +24,22 @@ export namespace
 		>
 	and	::std::convertible_to
 		<	t_tID
-		,	StringChain
+		,	String::Chain
 		>
 	;
+}
 
+export namespace
+	Meta::String
+{
 	template
 		<	ProtoID
 				t_tID
 		>
-	(	StringLiteral
+	(	Literal
 	)	(	t_tID
 		)
-	->	StringLiteral
+	->	Literal
 		<	t_tID
 		::	Length
 		>

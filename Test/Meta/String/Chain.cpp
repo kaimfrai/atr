@@ -3,10 +3,10 @@ import Meta.String.Literal;
 
 import Std;
 
-using ::Meta::StringChain;
-using ::Meta::StringInstance;
+using ::Meta::String::Chain;
+using ::Meta::String::Instance;
 
-StringChain constexpr
+Chain constexpr
 	Empty
 {};
 
@@ -21,9 +21,9 @@ static_assert
 	)
 );
 
-StringChain constexpr
+Chain constexpr
 	ABC
-{	StringInstance<"ABC">.Buffer
+{	Instance<"ABC">.Buffer
 };
 
 static_assert
@@ -58,9 +58,9 @@ static_assert
 	)
 );
 
-StringChain constexpr
+Chain constexpr
 	ABCDE
-{	StringInstance<"ABCDE">.Buffer
+{	Instance<"ABCDE">.Buffer
 };
 
 static_assert
@@ -116,9 +116,9 @@ static_assert
 	)
 );
 
-StringChain constexpr
+Chain constexpr
 	DE
-{	StringInstance<"DE">.Buffer
+{	Instance<"DE">.Buffer
 };
 
 static_assert
@@ -195,7 +195,7 @@ static_assert
 	)
 );
 
-StringChain constexpr
+Chain constexpr
 	ABC_DE
 =	(	ABC.Value
 	+	DE
@@ -297,7 +297,7 @@ static_assert
 	)
 );
 
-StringChain constexpr
+Chain constexpr
 	Empty_DE
 =	(	Empty.Value
 	+	DE
@@ -420,7 +420,7 @@ static_assert
 	)
 );
 
-StringChain constexpr
+Chain constexpr
 	ABC_Empty_DE
 =	(	ABC.Value
 	+	Empty_DE

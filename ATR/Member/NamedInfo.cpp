@@ -8,7 +8,7 @@ import Meta.String.Chain;
 
 import Std;
 
-using ::Meta::StringChain;
+using ::Meta::String::Chain;
 
 export namespace
 	ATR::Member
@@ -16,7 +16,7 @@ export namespace
 	struct
 		NamedInfo
 	{
-		StringChain
+		Chain
 			Name
 		{};
 
@@ -40,7 +40,7 @@ export namespace
 		(	operator<=>
 		)	(	NamedInfo const
 				&	i_rInfo
-			,	StringChain
+			,	Chain
 					i_rName
 			)
 			noexcept

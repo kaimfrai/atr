@@ -5,20 +5,20 @@ import Meta.String.Literal;
 import Std;
 
 export namespace
-	Meta
+	Meta::String
 {
 	struct
-		StringChain
+		Chain
 	{
 		char const
 		*	Value
-		=	StringInstance
+		=	Instance
 			<	""
 			>
 			.	Buffer
 		;
 
-		StringChain const
+		Chain const
 		*	Next
 		=	nullptr
 		;
@@ -26,9 +26,9 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator==
-		)	(	StringChain
+		)	(	Chain
 					i_vLeft
-			,	StringChain
+			,	Chain
 					i_vRight
 			)
 			noexcept
@@ -43,9 +43,9 @@ export namespace
 		[[nodiscard]]
 		friend auto constexpr
 		(	operator<=>
-		)	(	StringChain
+		)	(	Chain
 					i_vLeft
-			,	StringChain
+			,	Chain
 					i_vRight
 			)
 			noexcept
@@ -53,7 +53,7 @@ export namespace
 		{
 			static auto constexpr
 				fNextChar
-			=	[]	(	StringChain
+			=	[]	(	Chain
 						&	i_rChain
 					)
 				{
@@ -131,11 +131,11 @@ export namespace
 		(	operator+
 		)	(	char const
 				*	i_aLeft
-			,	StringChain const
+			,	Chain const
 				&	i_rRight
 			)
 			noexcept
-		->	StringChain
+		->	Chain
 		{
 			if	(	i_aLeft
 				==	nullptr

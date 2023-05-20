@@ -10,16 +10,16 @@ export namespace
 {
 	/// creates an identifier type
 	template
-		<	StringLiteral
-				t_vStringLiteral
+		<	String::Literal
+				t_vLiteral
 		>
 	using
 		ID_T
 	=	decltype
 		(	::Make
-			<	t_vStringLiteral
+			<	t_vLiteral
 			>(	::std::make_index_sequence
-				<	t_vStringLiteral
+				<	t_vLiteral
 					.	max_size
 						()
 				>{}
@@ -29,10 +29,10 @@ export namespace
 
 	/// create an identifier value
 	template
-		<	StringLiteral
-				t_vStringLiteral
+		<	String::Literal
+				t_vLiteral
 		>
-	ID_T<t_vStringLiteral> constexpr
+	ID_T<t_vLiteral> constexpr
 		ID_V
 	{};
 }

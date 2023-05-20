@@ -16,23 +16,25 @@ import Evaluation.Shared.Fraction;
 import Evaluation.Shared.PiFraction;
 
 import ATR.Member.Config;
-import ATR.Member.NamedInfo;
 import ATR.Member.Info;
+import ATR.Member.NamedInfo;
 
-import Meta.String.Literal;
-import Meta.String.Chain;
 import Meta.Memory.Constraint;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Scale;
 import Meta.Memory.Size;
+import Meta.String.Chain;
+import Meta.String.Literal;
 import Meta.Token.Type;
 
 import Std;
 
 using ::ATR::Member::Config_Of;
 using ::ATR::Member::NamedInfo;
+
 using ::Meta::Memory::BitSize_Of;
+using ::Meta::String::Chain;
 
 using namespace ::Meta::Literals;
 
@@ -101,7 +103,7 @@ auto constexpr
 			)
 		{	return
 				(	i_rLeft.Name
-				==	::Meta::StringChain{i_rRight.Name}
+				==	Chain{i_rRight.Name}
 				)
 			and	(	i_rLeft.Info.Type
 				==	i_rRight.Info.Type

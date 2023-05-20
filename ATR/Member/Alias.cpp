@@ -7,7 +7,7 @@ import Meta.String.Chain;
 
 import Std;
 
-using ::Meta::StringChain;
+using ::Meta::String::Chain;
 
 export namespace
 	ATR::Member
@@ -15,10 +15,10 @@ export namespace
 	struct
 		Alias
 	{
-		StringChain
+		Chain
 			Name
 		;
-		StringChain
+		Chain
 			Target
 		;
 
@@ -27,7 +27,7 @@ export namespace
 		(	operator<=>
 		)	(	Alias const
 				&	i_rAlias
-			,	StringChain
+			,	Chain
 					i_rName
 			)
 			noexcept

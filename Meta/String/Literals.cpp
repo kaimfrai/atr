@@ -7,7 +7,7 @@ export namespace
 	Meta::inline Literals
 {
 	template
-		<	StringLiteral
+		<	String::Literal
 				t_vString
 		>
 	[[nodiscard]]

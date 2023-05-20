@@ -11,7 +11,7 @@ import Meta.Token.TypeID;
 import Std;
 
 using ::Meta::ProtoID;
-using ::Meta::StringChain;
+using ::Meta::String::Chain;
 using ::Meta::TypeID;
 
 export namespace
@@ -75,7 +75,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	HasAlias
-		)	(	StringChain
+		)	(	Chain
 					i_rMemberName
 			)	const
 			noexcept
@@ -90,9 +90,9 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	(	StringChain
+		)	(	Chain
 					i_rMemberName
-			,	StringChain
+			,	Chain
 					i_rTarget
 			)
 			noexcept
@@ -129,10 +129,10 @@ export namespace
 		->	ConfigBuilder&&
 		{	return
 			operator()
-			(	StringChain
+			(	Chain
 				{	i_aMemberName
 				}
-			,	StringChain
+			,	Chain
 				{	i_aTarget
 				}
 			);
@@ -141,7 +141,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	(	StringChain
+		)	(	Chain
 					i_rMemberName
 			,	TypeID
 					i_vType
@@ -195,7 +195,7 @@ export namespace
 		->	ConfigBuilder&&
 		{	return
 			operator()
-			(	StringChain
+			(	Chain
 				{	i_aMemberName
 				}
 			,	i_vType

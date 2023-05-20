@@ -12,7 +12,7 @@ import Meta.Size;
 
 import Std;
 
-using ::Meta::StringChain;
+using ::Meta::String::Chain;
 using ::Meta::BitSize;
 using ::Meta::SSize;
 
@@ -103,7 +103,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	FindMemberInfo
-		)	(	StringChain
+		)	(	Chain
 					i_rMemberName
 			)	const
 			noexcept
@@ -143,7 +143,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	GetMemberOffset
-		)	(	StringChain
+		)	(	Chain
 					i_rMemberName
 			)	const
 			noexcept

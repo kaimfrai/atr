@@ -8,7 +8,7 @@ import Meta.Memory.Size.Compare;
 
 import Std;
 
-using ::Meta::StringChain;
+using ::Meta::String::Chain;
 using ::Meta::ProtoID;
 
 export namespace
@@ -27,7 +27,7 @@ export namespace
 	(	GetStorage
 	)	(	ProtoID auto
 				i_vTypeName
-		,	StringChain
+		,	Chain
 				i_rMemberName
 		)
 		noexcept

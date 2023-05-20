@@ -3,14 +3,14 @@ export module Meta.String.Literal;
 import Std;
 
 export namespace
-	Meta
+	Meta::String
 {
 	template
 		<	::std::size_t
 				t_nExtent
 		>
 	struct
-		StringLiteral final
+		Literal final
 	{
 		[[no_unique_address]]
 		char
@@ -50,13 +50,13 @@ export namespace
 		}
 
 		explicit(false) constexpr
-		(	StringLiteral
+		(	Literal
 		)	()
 			noexcept
 		=	default;
 
 		explicit(false) constexpr
-		(	StringLiteral
+		(	Literal
 		)	(	char const
 				*	i_aString
 			)
@@ -114,9 +114,9 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr
 		(	operator==
-		)	(	StringLiteral const
+		)	(	Literal const
 				&
-			,	StringLiteral const
+			,	Literal const
 				&
 			)
 			noexcept
@@ -126,9 +126,9 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr
 		(	operator<=>
-		)	(	StringLiteral const
+		)	(	Literal const
 				&	i_rLeft
-			,	StringLiteral const
+			,	Literal const
 				&	i_rRight
 			)
 			noexcept
@@ -155,12 +155,12 @@ export namespace
 		<	typename
 			...	t_tpChar
 		>
-	(	StringLiteral
+	(	Literal
 	)	(	char
 		,	t_tpChar
 			...
 		)
-	->	StringLiteral
+	->	Literal
 		<	sizeof...(t_tpChar)
 		>
 	;
@@ -169,10 +169,10 @@ export namespace
 		<	::std::size_t
 				t_nExtent
 		>
-	(	StringLiteral
-	)	(	StringLiteral<t_nExtent>
+	(	Literal
+	)	(	Literal<t_nExtent>
 		)
-	->	StringLiteral
+	->	Literal
 		<	t_nExtent
 		>
 	;
@@ -181,23 +181,23 @@ export namespace
 		<	::std::size_t
 				t_nExtent
 		>
-	(	StringLiteral
+	(	Literal
 	)	(	char const
 			(&)	[	t_nExtent
 				]
 		)
-	->	StringLiteral
+	->	Literal
 		<	t_nExtent
 		-	1uz
 		>
 	;
 
 	template
-		<	StringLiteral
+		<	Literal
 				t_vString
 		>
 	auto constexpr
-	&	StringInstance
+	&	Instance
 	=	t_vString
 	;
 }

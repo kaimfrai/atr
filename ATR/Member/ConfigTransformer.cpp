@@ -8,7 +8,7 @@ import Meta.Token.Type;
 
 import Std;
 
-using ::Meta::StringChain;
+using ::Meta::String::Chain;
 using ::Meta::ProtoID;
 
 export namespace
@@ -58,9 +58,9 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	(	StringChain
+		)	(	Chain
 					i_rMemberName
-			,	StringChain
+			,	Chain
 					i_rTarget
 			)
 			noexcept
@@ -106,7 +106,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr
 		(	operator()
-		)	(	StringChain
+		)	(	Chain
 					i_rMemberName
 			,	::Meta::TypeToken<t_tEntity>
 					i_vType
@@ -146,7 +146,7 @@ export namespace
 		->	ConfigTransformer&&
 		{	return
 			operator()
-			(	StringChain
+			(	Chain
 				{	i_aMemberName
 				}
 			,	i_vType

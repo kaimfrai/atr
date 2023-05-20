@@ -8,9 +8,9 @@ import Meta.String.Alias;
 import Meta.String.Concept;
 import Meta.String.Literal;
 
-using ::Meta::ProtoID;
 using ::Meta::ID_T;
-using ::Meta::StringLiteral;
+using ::Meta::ProtoID;
+using ::Meta::String::Literal;
 
 export namespace
 	ATR::Member
@@ -33,7 +33,7 @@ export namespace
 
 
 	template
-		<	StringLiteral
+		<	Literal
 				t_vTypeName
 		>
 	ConfigData const constexpr
