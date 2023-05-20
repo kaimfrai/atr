@@ -2,7 +2,7 @@ export module ATR.Member.NamedType;
 
 import ATR.Member.AlignBuffer;
 
-import Meta.String.StringChain;
+import Meta.String.Chain;
 import Meta.Token.TypeID;
 
 import Std;

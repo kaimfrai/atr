@@ -1,6 +1,6 @@
-export module Meta.String.StringChain;
+export module Meta.String.Chain;
 
-import Meta.String.StringLiteral;
+import Meta.String.Literal;
 
 import Std;
 

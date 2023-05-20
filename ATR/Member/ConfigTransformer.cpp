@@ -3,7 +3,7 @@ export module ATR.Member.ConfigTransformer;
 import ATR.Member.ConfigBuilder;
 
 import Meta.String.Concept;
-import Meta.String.StringChain;
+import Meta.String.Chain;
 import Meta.Token.Type;
 
 import Std;

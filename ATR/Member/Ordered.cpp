@@ -2,7 +2,7 @@ export module ATR.Member.Ordered;
 
 import ATR.Member.CountedBuffer;
 
-import Meta.String.StringChain;
+import Meta.String.Chain;
 import Meta.Size;
 
 import Std;

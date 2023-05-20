@@ -4,7 +4,7 @@ import Meta.String.UpperCase;
 import Meta.String.LowerCase;
 import Meta.String.Decimal;
 import Meta.String.ID;
-import Meta.String.StringLiteral;
+import Meta.String.Literal;
 
 import Meta.Token.Index;
 

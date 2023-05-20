@@ -6,7 +6,7 @@ import ATR.Member.Finalize;
 
 import Meta.String.Alias;
 import Meta.String.Concept;
-import Meta.String.StringLiteral;
+import Meta.String.Literal;
 
 using ::Meta::ProtoID;
 using ::Meta::ID_T;

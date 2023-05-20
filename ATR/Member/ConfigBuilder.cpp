@@ -5,7 +5,7 @@ import ATR.Member.NamedType;
 import ATR.Member.Ordered;
 
 import Meta.String.Concept;
-import Meta.String.StringChain;
+import Meta.String.Chain;
 import Meta.Token.TypeID;
 
 import Std;

@@ -2,8 +2,8 @@ export module Meta.String.ID;
 
 import Meta.String.Decimal;
 import Meta.String.LowerCase;
-import Meta.String.StringChain;
-import Meta.String.StringLiteral;
+import Meta.String.Chain;
+import Meta.String.Literal;
 import Meta.String.UpperCase;
 import Meta.Size;
 import Meta.Token.Index;

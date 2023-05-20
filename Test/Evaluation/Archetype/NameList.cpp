@@ -19,8 +19,8 @@ import ATR.Member.Config;
 import ATR.Member.NamedInfo;
 import ATR.Member.Info;
 
-import Meta.String.StringLiteral;
-import Meta.String.StringChain;
+import Meta.String.Literal;
+import Meta.String.Chain;
 import Meta.Memory.Constraint;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;

@@ -1,7 +1,7 @@
 export module Meta.String.Literals;
 
 import Meta.String.Alias;
-import Meta.String.StringLiteral;
+import Meta.String.Literal;
 
 export namespace
 	Meta::inline Literals

@@ -1,7 +1,7 @@
 export module Meta.String.Concept;
 
-import Meta.String.StringChain;
-import Meta.String.StringLiteral;
+import Meta.String.Chain;
+import Meta.String.Literal;
 import Meta.Size;
 
 import Std;

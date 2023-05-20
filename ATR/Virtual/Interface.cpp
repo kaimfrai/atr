@@ -1,7 +1,7 @@
 export module ATR.Virtual.Interface;
 
 import ATR.Virtual.Entry;
-import Meta.String.StringLiteral;
+import Meta.String.Literal;
 import Meta.String.Alias;
 import Meta.Lex.Match;
 import Meta.Lex.FreeFunctionTokenizer;

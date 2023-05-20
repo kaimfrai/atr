@@ -7,7 +7,7 @@ import Meta.Bit.Field;
 import Meta.Bit.Index;
 import Meta.Bit.Reference;
 import Meta.String.Alias;
-import Meta.String.StringLiteral;
+import Meta.String.Literal;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Scale;

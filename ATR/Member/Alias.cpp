@@ -3,7 +3,7 @@ export module ATR.Member.Alias;
 import ATR.Member.Constants;
 import ATR.Member.CountedBuffer;
 
-import Meta.String.StringChain;
+import Meta.String.Chain;
 
 import Std;
 

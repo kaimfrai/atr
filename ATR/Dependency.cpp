@@ -3,7 +3,7 @@ export module ATR.Dependency;
 import ATR.Erase;
 
 import Meta.String.Concept;
-import Meta.String.StringLiteral;
+import Meta.String.Literal;
 import Meta.String.Alias;
 import Meta.Size;
 import Meta.Token.SelectByIndex;

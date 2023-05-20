@@ -1,7 +1,7 @@
 export module Meta.String.Alias;
 
 import Meta.String.Make;
-import Meta.String.StringLiteral;
+import Meta.String.Literal;
 
 import Std;
 

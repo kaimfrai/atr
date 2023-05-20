@@ -8,8 +8,8 @@ import ATR.Member.OffsetOf;
 
 import Meta.String.Alias;
 import Meta.String.Concept;
-import Meta.String.StringLiteral;
-import Meta.String.StringChain;
+import Meta.String.Literal;
+import Meta.String.Chain;
 import Meta.Logic.Bit.Clause;
 import Meta.Logic.Constraint;
 import Meta.Logic.Erased.Clause;

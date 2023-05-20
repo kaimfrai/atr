@@ -1,4 +1,4 @@
-export module Meta.String.StringLiteral;
+export module Meta.String.Literal;
 
 import Std;
 
