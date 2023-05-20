@@ -2,8 +2,8 @@ export module Evaluation.Archetype.Cube;
 
 import Evaluation.Archetype.Cuboid;
 
-import Meta.ID.Alias;
-import Meta.ID.Literals;
+import Meta.String.Alias;
+import Meta.String.Literals;
 
 using namespace ::Meta::Literals;
 

@@ -4,7 +4,7 @@ import ATR.Member.Constants;
 import ATR.Member.CountedBuffer;
 import ATR.Member.Info;
 
-import Meta.ID.StringChain;
+import Meta.String.StringChain;
 
 import Std;
 

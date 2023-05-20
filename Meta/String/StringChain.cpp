@@ -1,6 +1,6 @@
-export module Meta.ID.StringChain;
+export module Meta.String.StringChain;
 
-import Meta.ID.StringLiteral;
+import Meta.String.StringLiteral;
 
 import Std;
 

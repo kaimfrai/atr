@@ -1,4 +1,4 @@
-export module Meta.ID.Decimal;
+export module Meta.String.Decimal;
 
 import Meta.Token.Index;
 

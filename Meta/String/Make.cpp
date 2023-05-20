@@ -1,10 +1,10 @@
-export module Meta.ID.Make;
+export module Meta.String.Make;
 
-import Meta.ID.UpperCase;
-import Meta.ID.LowerCase;
-import Meta.ID.Decimal;
-import Meta.ID.Template;
-import Meta.ID.StringLiteral;
+import Meta.String.UpperCase;
+import Meta.String.LowerCase;
+import Meta.String.Decimal;
+import Meta.String.Template;
+import Meta.String.StringLiteral;
 
 import Meta.Token.Index;
 

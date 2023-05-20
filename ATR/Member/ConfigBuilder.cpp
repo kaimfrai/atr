@@ -4,8 +4,8 @@ import ATR.Member.Alias;
 import ATR.Member.NamedType;
 import ATR.Member.Ordered;
 
-import Meta.ID.Concept;
-import Meta.ID.StringChain;
+import Meta.String.Concept;
+import Meta.String.StringChain;
 import Meta.Token.TypeID;
 
 import Std;

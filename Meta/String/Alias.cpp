@@ -1,7 +1,7 @@
-export module Meta.ID.Alias;
+export module Meta.String.Alias;
 
-import Meta.ID.Make;
-import Meta.ID.StringLiteral;
+import Meta.String.Make;
+import Meta.String.StringLiteral;
 
 import Std;
 

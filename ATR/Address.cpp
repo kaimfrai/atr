@@ -2,7 +2,7 @@ export module ATR.Address;
 
 import ATR.Dependency;
 
-import Meta.ID.Concept;
+import Meta.String.Concept;
 
 import Std;
 

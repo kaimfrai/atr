@@ -17,7 +17,7 @@ add_subdirectory(Trait)
 add_subdirectory(Data)
 add_subdirectory(Functional)
 add_subdirectory(Predicate)
-add_subdirectory(ID)
+add_subdirectory(String)
 # add_subdirectory(Dispatch)
 
 add_single_file_modules(
@@ -28,7 +28,7 @@ add_single_file_modules(
 	Data.cpp
 	# Dispatch.cpp
 	Functional.cpp
-	ID.cpp
+	String.cpp
 	Lex.cpp
 	Logic.cpp
 	Math.cpp

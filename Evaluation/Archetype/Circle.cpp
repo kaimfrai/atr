@@ -2,8 +2,8 @@ export module Evaluation.Archetype.Circle;
 
 import Evaluation.Archetype.Ellipse;
 
-import Meta.ID.Alias;
-import Meta.ID.Literals;
+import Meta.String.Alias;
+import Meta.String.Literals;
 
 using namespace ::Meta::Literals;
 

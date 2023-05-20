@@ -5,7 +5,7 @@ import Evaluation.Archetype.Sphere;
 import ATR.Address;
 import ATR.Instance;
 
-import Meta.ID.Alias;
+import Meta.String.Alias;
 
 using ::ATR::Address;
 using ::ATR::Type;

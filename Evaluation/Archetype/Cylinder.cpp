@@ -3,8 +3,8 @@ export module Evaluation.Archetype.Cylinder;
 import Evaluation.Archetype.BasicBody;
 import Evaluation.Shared.PiFraction;
 
-import Meta.ID.Alias;
-import Meta.ID.Literals;
+import Meta.String.Alias;
+import Meta.String.Literals;
 import Meta.Token.Type;
 
 using namespace ::Meta::Literals;

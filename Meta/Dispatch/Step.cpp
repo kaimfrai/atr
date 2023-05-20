@@ -5,8 +5,8 @@ import Meta.Dispatch.Final;
 import Meta.Dispatch.StepPair;
 import Meta.Dispatch.Error;
 
-import Meta.ID.Concept;
-import Meta.ID.Alias;
+import Meta.String.Concept;
+import Meta.String.Alias;
 import Meta.Lex.Match;
 import Meta.Lex.FreeFunctionTokenizer;
 import Meta.Lex.Function;

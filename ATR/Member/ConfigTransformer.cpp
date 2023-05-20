@@ -2,8 +2,8 @@ export module ATR.Member.ConfigTransformer;
 
 import ATR.Member.ConfigBuilder;
 
-import Meta.ID.Concept;
-import Meta.ID.StringChain;
+import Meta.String.Concept;
+import Meta.String.StringChain;
 import Meta.Token.Type;
 
 import Std;

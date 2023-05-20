@@ -11,7 +11,7 @@ import Meta.Lex.Match;
 import Meta.Lex.FreeFunctionTokenizer;
 import Meta.Lex.Function;
 import Meta.Size;
-import Meta.ID.Template;
+import Meta.String.Template;
 
 import Std;
 

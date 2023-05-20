@@ -4,7 +4,7 @@ import ATR.Member.Config;
 import ATR.Member.Offset;
 import ATR.Member.Static;
 
-import Meta.ID.Concept;
+import Meta.String.Concept;
 import Meta.Memory.Alignment;
 import Meta.Token.Type;
 

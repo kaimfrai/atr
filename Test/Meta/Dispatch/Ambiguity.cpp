@@ -1,7 +1,7 @@
 import Meta.Dispatch.BlockedPath;
 import Meta.Dispatch.DispatchFor;
 import Meta.Dispatch.Path;
-import Meta.ID.Alias;
+import Meta.String.Alias;
 
 import Std;
 

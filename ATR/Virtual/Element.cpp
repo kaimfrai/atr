@@ -5,7 +5,7 @@ import ATR.Virtual.Table;
 import Meta.Predicate.Trivial;
 import Meta.Logic.Constraint;
 import Meta.Token.Type;
-import Meta.ID.Concept;
+import Meta.String.Concept;
 
 import Std;
 

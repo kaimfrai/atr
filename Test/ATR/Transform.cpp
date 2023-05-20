@@ -2,8 +2,8 @@ import ATR.Member.Config;
 import ATR.Member.ConfigTransformer;
 
 import Meta.Bit.Field;
-import Meta.ID.Alias;
-import Meta.ID.Literals;
+import Meta.String.Alias;
+import Meta.String.Literals;
 import Meta.Memory.Size;
 import Meta.Token.Const;
 import Meta.Token.Extent;

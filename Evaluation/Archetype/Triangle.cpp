@@ -4,8 +4,8 @@ import Evaluation.Archetype.BasicShape;
 
 import Evaluation.Shared.Fraction;
 
-import Meta.ID.Alias;
-import Meta.ID.Literals;
+import Meta.String.Alias;
+import Meta.String.Literals;
 import Meta.Token.Type;
 
 using namespace ::Meta::Literals;

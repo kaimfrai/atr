@@ -6,10 +6,10 @@ import ATR.Erase;
 import ATR.Member.Storage;
 import ATR.Member.OffsetOf;
 
-import Meta.ID.Alias;
-import Meta.ID.Concept;
-import Meta.ID.StringLiteral;
-import Meta.ID.StringChain;
+import Meta.String.Alias;
+import Meta.String.Concept;
+import Meta.String.StringLiteral;
+import Meta.String.StringChain;
 import Meta.Logic.Bit.Clause;
 import Meta.Logic.Constraint;
 import Meta.Logic.Erased.Clause;

@@ -4,9 +4,9 @@ import ATR.Member.ConfigBuilder;
 import ATR.Member.ConfigData;
 import ATR.Member.Finalize;
 
-import Meta.ID.Alias;
-import Meta.ID.Concept;
-import Meta.ID.StringLiteral;
+import Meta.String.Alias;
+import Meta.String.Concept;
+import Meta.String.StringLiteral;
 
 using ::Meta::ProtoID;
 using ::Meta::ID_T;

@@ -1,5 +1,5 @@
-import Meta.ID.StringChain;
-import Meta.ID.StringLiteral;
+import Meta.String.StringChain;
+import Meta.String.StringLiteral;
 
 import Std;
 

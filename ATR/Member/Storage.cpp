@@ -2,8 +2,8 @@ export module ATR.Member.Storage;
 
 import ATR.Member.Config;
 
-import Meta.ID.Concept;
-import Meta.ID.StringChain;
+import Meta.String.Concept;
+import Meta.String.StringChain;
 import Meta.Memory.Size.Compare;
 
 import Std;

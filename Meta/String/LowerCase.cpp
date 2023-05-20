@@ -1,4 +1,4 @@
-export module Meta.ID.LowerCase;
+export module Meta.String.LowerCase;
 
 import Meta.Token.Index;
 

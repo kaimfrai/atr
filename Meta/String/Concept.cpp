@@ -1,7 +1,7 @@
-export module Meta.ID.Concept;
+export module Meta.String.Concept;
 
-import Meta.ID.StringChain;
-import Meta.ID.StringLiteral;
+import Meta.String.StringChain;
+import Meta.String.StringLiteral;
 import Meta.Size;
 
 import Std;

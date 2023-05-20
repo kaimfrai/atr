@@ -1,7 +1,7 @@
 export module Meta.Dispatch.BlockedPath;
 
 import Meta.Dispatch.Path;
-import Meta.ID.Concept;
+import Meta.String.Concept;
 
 import Std;
 

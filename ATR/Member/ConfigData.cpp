@@ -5,7 +5,7 @@ import ATR.Member.LayoutBuffer;
 import ATR.Member.NamedInfo;
 import ATR.Member.Ordered;
 
-import Meta.ID.StringChain;
+import Meta.String.StringChain;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size;
 import Meta.Size;

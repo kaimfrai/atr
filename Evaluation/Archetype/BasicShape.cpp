@@ -2,7 +2,7 @@ export module Evaluation.Archetype.BasicShape;
 
 import Evaluation.Shared.DataTypes;
 
-import Meta.ID.Alias;
+import Meta.String.Alias;
 import Meta.Token.Type;
 
 export namespace

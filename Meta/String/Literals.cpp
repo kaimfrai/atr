@@ -1,7 +1,7 @@
-export module Meta.ID.Literals;
+export module Meta.String.Literals;
 
-import Meta.ID.Alias;
-import Meta.ID.StringLiteral;
+import Meta.String.Alias;
+import Meta.String.StringLiteral;
 
 export namespace
 	Meta::inline Literals

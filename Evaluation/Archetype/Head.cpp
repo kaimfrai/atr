@@ -2,8 +2,8 @@ export module Evaluation.Archetype.Head;
 
 import Evaluation.Archetype.Sphere;
 
-import Meta.ID.Alias;
-import Meta.ID.Literals;
+import Meta.String.Alias;
+import Meta.String.Literals;
 
 using namespace ::Meta::Literals;
 
