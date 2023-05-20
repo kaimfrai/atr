@@ -3,7 +3,7 @@ export module Meta.String.Make;
 import Meta.String.UpperCase;
 import Meta.String.LowerCase;
 import Meta.String.Decimal;
-import Meta.String.Template;
+import Meta.String.ID;
 import Meta.String.StringLiteral;
 
 import Meta.Token.Index;

@@ -4,7 +4,7 @@ add_single_file_modules(
 	StringChain.cpp
 	LowerCase.cpp
 	UpperCase.cpp
-	Template.cpp
+	ID.cpp
 	Make.cpp
 	Alias.cpp
 	Concept.cpp

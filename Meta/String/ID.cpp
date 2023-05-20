@@ -1,4 +1,4 @@
-export module Meta.String.Template;
+export module Meta.String.ID;
 
 import Meta.String.Decimal;
 import Meta.String.LowerCase;
