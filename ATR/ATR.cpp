@@ -21,7 +21,6 @@ export import ATR.Member.Constants;
 export import ATR.Member.CountedBuffer;
 export import ATR.Member.Finalize;
 export import ATR.Member.Info;
-export import ATR.Member.LayoutBuffer;
 export import ATR.Member.NamedInfo;
 export import ATR.Member.NamedType;
 export import ATR.Member.Offset;

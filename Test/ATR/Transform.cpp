@@ -1,21 +1,32 @@
 import ATR.Literals;
+import ATR.Member.AlignBuffer;
+import ATR.Member.CountedBuffer;
 import ATR.Member.Config;
+import ATR.Member.ConfigData;
 import ATR.Member.ConfigTransformer;
 
 import Meta.Bit.Field;
 import Meta.ID;
+import Meta.Memory.Size.Compare;
 import Meta.Memory.Size;
 import Meta.Token.Const;
 import Meta.Token.Extent;
 import Meta.Token.Mutable;
 import Meta.Token.Specifier;
 import Meta.Token.Type;
+import Meta.Token.TypeID;
 
 import Std;
 
-using ::Meta::ID;
+using ::ATR::Member::AlignBuffer;
+using ::ATR::Member::CountedBuffer;
+using ::ATR::Member::ConfigData;
+using ::ATR::Member::Config_Of;
+
 using ::Meta::Bit::Field;
+using ::Meta::ID;
 using ::Meta::Specifier::Mut;
+using ::Meta::TypeID;
 
 using namespace ::Meta::Literals;
 
@@ -139,7 +150,103 @@ namespace
 	}
 }
 
-using ::ATR::Member::Config_Of;
+[[nodiscard]]
+auto constexpr
+(	operator==
+)	(	decltype(ConfigData::NamedInfoList) const
+		&	i_rLeft
+	,	decltype(ConfigData::NamedInfoList) const
+		&	i_rRight
+	)
+	noexcept
+->	bool
+{	return
+	::std::equal
+	(	i_rLeft
+		.	begin
+			()
+	,	i_rLeft
+		.	end
+			()
+	,	i_rRight
+		.	begin
+			()
+	,	i_rRight
+		.	end
+			()
+	);
+}
+
+[[nodiscard]]
+auto constexpr
+(	operator==
+)	(	AlignBuffer<TypeID> const
+		&	i_rLeft
+	,	AlignBuffer<TypeID> const
+		&	i_rRight
+	)
+	noexcept
+->	bool
+{	return
+	::std::equal
+	(	i_rLeft
+		.	begin
+			()
+	,	i_rLeft
+		.	end
+			()
+	,	i_rRight
+		.	begin
+			()
+	,	i_rRight
+		.	end
+			()
+	,	[]	(	auto const
+				&	i_rLeftElement
+			,	auto const
+				&	i_rRightElement
+			)
+		{	return
+			::std::equal
+			(	i_rLeftElement
+				.	begin
+					()
+			,	i_rLeftElement
+				.	end
+					()
+			,	i_rRightElement
+				.	begin
+					()
+			,	i_rRightElement
+				.	end
+					()
+			);
+		}
+	);
+}
+
+[[nodiscard]]
+auto constexpr
+(	operator==
+)	(	ConfigData const
+		&	i_rLeft
+	,	ConfigData const
+		&	i_rRight
+	)
+	noexcept
+->	bool
+{	return
+		(	i_rLeft.Size
+		==	i_rRight.Size
+		)
+	and	(	i_rLeft.Layout
+		==	i_rRight.Layout
+		)
+	and	(	i_rLeft.NamedInfoList
+		==	i_rRight.NamedInfoList
+		)
+	;
+}
 
 static_assert
 (	Config_Of<Single>

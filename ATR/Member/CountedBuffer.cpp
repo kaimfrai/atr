@@ -188,44 +188,5 @@ export namespace
 			++	Count
 			;
 		}
-
-		[[nodiscard]]
-		auto friend constexpr
-		(	operator==
-		)	(	CountedBuffer const
-				&
-			,	CountedBuffer const
-				&
-			)
-			noexcept
-		->	bool
-		=	default;
-
-		[[nodiscard]]
-		auto friend constexpr
-		(	operator<=>
-		)	(	CountedBuffer const
-				&	i_rLeft
-			,	CountedBuffer const
-				&	i_rRight
-			)
-			noexcept
-		->	::std::strong_ordering
-		{	return
-			::std::lexicographical_compare_three_way
-			(	i_rLeft
-				.	begin
-					()
-			,	i_rLeft
-				.	end
-					()
-			,	i_rRight
-				.	begin
-					()
-			,	i_rRight
-				.	end
-					()
-			);
-		}
 	};
 }

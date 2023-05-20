@@ -1,20 +1,21 @@
 export module ATR.Member.ConfigData;
 
+import ATR.Member.AlignBuffer;
 import ATR.Member.Info;
-import ATR.Member.LayoutBuffer;
 import ATR.Member.NamedInfo;
 import ATR.Member.Ordered;
 
-import Meta.String.Chain;
-import Meta.Memory.Size.Compare;
 import Meta.Memory.Size;
 import Meta.Size;
+import Meta.String.Chain;
+import Meta.Token.TypeID;
 
 import Std;
 
-using ::Meta::String::Chain;
 using ::Meta::BitSize;
 using ::Meta::SSize;
+using ::Meta::String::Chain;
+using ::Meta::TypeID;
 
 export namespace
 	ATR::Member
@@ -26,7 +27,7 @@ export namespace
 			Size
 		{};
 
-		LayoutBuffer
+		AlignBuffer<TypeID>
 			Layout
 		{};
 
@@ -104,16 +105,5 @@ export namespace
 			::std::unreachable
 			();
 		}
-
-		[[nodiscard]]
-		auto friend constexpr
-		(	operator<=>
-		)	(	ConfigData const
-				&
-			,	ConfigData const
-				&
-			)
-			noexcept
-		=	default;
 	};
 }

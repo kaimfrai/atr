@@ -3,7 +3,6 @@ export module ATR.Member.Finalize;
 import ATR.Member.Alias;
 import ATR.Member.ConfigBuilder;
 import ATR.Member.ConfigData;
-import ATR.Member.LayoutBuffer;
 import ATR.Member.NamedInfo;
 import ATR.Member.NamedType;
 import ATR.Member.Ordered;
@@ -20,6 +19,14 @@ using namespace ::Meta::Literals;
 namespace
 	ATR::Member
 {
+	using
+		LayoutBuffer
+	=	decltype
+		(	ConfigData
+		::	Layout
+		)
+	;
+
 	auto constexpr
 	(	ExtractTypeBuffer
 	)	(	NamedTypeBuffer::value_type const

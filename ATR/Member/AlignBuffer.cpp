@@ -197,44 +197,5 @@ export namespace
 			(	Buffer
 			);
 		}
-
-		[[nodiscard]]
-		auto friend constexpr
-		(	operator==
-		)	(	AlignBuffer const
-				&
-			,	AlignBuffer const
-				&
-			)
-			noexcept
-		->	bool
-		=	default;
-
-		[[nodiscard]]
-		auto friend constexpr
-		(	operator<=>
-		)	(	AlignBuffer const
-				&	i_rLeft
-			,	AlignBuffer const
-				&	i_rRight
-			)
-			noexcept
-		->	::std::strong_ordering
-		{	return
-			::std::lexicographical_compare_three_way
-			(	i_rLeft
-				.	begin
-					()
-			,	i_rLeft
-				.	end
-					()
-			,	i_rRight
-				.	begin
-					()
-			,	i_rRight
-				.	end
-					()
-			);
-		}
 	};
 }
