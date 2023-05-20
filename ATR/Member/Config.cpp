@@ -5,11 +5,8 @@ import ATR.Member.ConfigData;
 import ATR.Member.Finalize;
 
 import Meta.ID;
-import Meta.String.Literal;
 
-using ::Meta::ID;
 using ::Meta::ProtoID;
-using ::Meta::String::Literal;
 
 export namespace
 	ATR::Member
@@ -17,29 +14,14 @@ export namespace
 	template
 		<	ProtoID
 				t_tTypeName
-		,	typename
-				t_tConfigBuilder
 		>
-	ConfigData constexpr
-		FinalizedConfig_Of
+	ConfigData const constexpr
+		Config_Of
 	=	Finalize
 		(	BuiltConfig_Of
 			<	t_tTypeName
-			,	t_tConfigBuilder
+			,	ConfigBuilder
 			>
 		)
-	;
-
-
-	template
-		<	Literal
-				t_vTypeName
-		>
-	ConfigData const constexpr
-	&	Config_Of
-	=	FinalizedConfig_Of
-		<	ID<t_vTypeName>
-		,	ConfigBuilder
-		>
 	;
 }

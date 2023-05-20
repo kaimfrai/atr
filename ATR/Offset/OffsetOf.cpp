@@ -29,7 +29,7 @@ export namespace
 		auto constexpr
 		&	rConfig
 		=	Config_Of
-			<	i_vOwnerName
+			<	decltype(i_vOwnerName)
 			>
 		;
 

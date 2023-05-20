@@ -36,7 +36,7 @@ export namespace
 		auto constexpr
 		&	rConfig
 		=	Config_Of
-			<	i_vTypeName
+			<	decltype(i_vTypeName)
 			>
 		;
 

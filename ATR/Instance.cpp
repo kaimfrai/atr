@@ -39,7 +39,7 @@ export namespace
 		auto static constexpr
 		&	Config
 		=	Member::Config_Of
-			<	TypeName
+			<	t_tName
 			>
 		;
 

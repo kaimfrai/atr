@@ -21,20 +21,3 @@ export namespace
 		}
 	;
 }
-
-export namespace
-	Meta::String
-{
-	template
-		<	ProtoID
-				t_tID
-		>
-	(	Literal
-	)	(	t_tID
-		)
-	->	Literal
-		<	t_tID
-		::	Length
-		>
-	;
-}

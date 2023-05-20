@@ -14,53 +14,108 @@ import Evaluation.Archetype.Triangle;
 
 import ATR.Member.Config;
 
+import Meta.ID;
+import Meta.String.Literal;
+
+import Std;
+
 using ::ATR::Member::Config_Of;
+using ::Meta::ID;
+using ::Meta::String::Literal;
+
+auto constexpr
+	Accumulator
+=	[]	(	::std::ptrdiff_t
+				i_vCurrent
+		,	auto const
+			&	i_rBuffer
+		)
+	{	return
+			i_vCurrent
+		+	i_rBuffer
+			.	Count
+		;
+	}
+;
+
+template
+	<	Literal
+			t_vTypeName
+	>
+auto constexpr
+	AliasCount
+=	[]
+	{	auto const
+		&	rConfigure
+		=	Config_Of
+			<	ID<t_vTypeName>
+			>
+		;
+		return
+			rConfigure
+			.	NamedInfoList
+			.	Count
+		-	::std::accumulate
+			(	rConfigure
+				.	Layout
+				.	begin
+					()
+			,	rConfigure
+				.	Layout
+				.	end
+					()
+			,	0z
+			,	Accumulator
+			)
+		;
+	}()
+;
 
 static_assert
-(	Config_Of<"Square">.AliasCount()
+(	AliasCount<"Square">
 ==	1z
 );
 static_assert
-(	Config_Of<"Rectangle">.AliasCount()
+(	AliasCount<"Rectangle">
 ==	0z
 );
 static_assert
-(	Config_Of<"Triangle">.AliasCount()
+(	AliasCount<"Triangle">
 ==	0z
 );
 static_assert
-(	Config_Of<"Circle">.AliasCount()
+(	AliasCount<"Circle">
 ==	1z
 );
 static_assert
-(	Config_Of<"Ellipse">.AliasCount()
+(	AliasCount<"Ellipse">
 ==	0z
 );
 static_assert
-(	Config_Of<"Cube">.AliasCount()
+(	AliasCount<"Cube">
 ==	2z
 );
 static_assert
-(	Config_Of<"Cuboid">.AliasCount()
+(	AliasCount<"Cuboid">
 ==	0z
 );
 static_assert
-(	Config_Of<"Sphere">.AliasCount()
+(	AliasCount<"Sphere">
 ==	2z
 );
 static_assert
-(	Config_Of<"Cylinder">.AliasCount()
+(	AliasCount<"Cylinder">
 ==	1z
 );
 static_assert
-(	Config_Of<"Cone">.AliasCount()
+(	AliasCount<"Cone">
 ==	1z
 );
 static_assert
-(	Config_Of<"Ellipsoid">.AliasCount()
+(	AliasCount<"Ellipsoid">
 ==	0z
 );
 static_assert
-(	Config_Of<"Head">.AliasCount()
-==	3z * Config_Of<"Sphere">.AliasCount()
+(	AliasCount<"Head">
+==	3z * AliasCount<"Sphere">
 );

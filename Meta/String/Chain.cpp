@@ -10,12 +10,15 @@ export namespace
 	struct
 		Chain
 	{
+		char static constexpr
+			Empty
+			[]
+		=	""
+		;
+
 		char const
 		*	Value
-		=	Instance
-			<	""
-			>
-			.	Buffer
+		=	Empty
 		;
 
 		Chain const

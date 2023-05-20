@@ -4,7 +4,17 @@ import Meta.String.Literal;
 import Std;
 
 using ::Meta::String::Chain;
-using ::Meta::String::Instance;
+using ::Meta::String::Literal;
+
+template
+	<	Literal
+			t_vString
+	>
+auto constexpr
+&	Instance
+=	t_vString
+	.	Buffer
+;
 
 Chain constexpr
 	Empty
@@ -23,7 +33,7 @@ static_assert
 
 Chain constexpr
 	ABC
-{	Instance<"ABC">.Buffer
+{	Instance<"ABC">
 };
 
 static_assert
@@ -60,7 +70,7 @@ static_assert
 
 Chain constexpr
 	ABCDE
-{	Instance<"ABCDE">.Buffer
+{	Instance<"ABCDE">
 };
 
 static_assert
@@ -118,7 +128,7 @@ static_assert
 
 Chain constexpr
 	DE
-{	Instance<"DE">.Buffer
+{	Instance<"DE">
 };
 
 static_assert

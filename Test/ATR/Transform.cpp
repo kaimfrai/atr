@@ -13,17 +13,26 @@ import Meta.Token.Type;
 
 import Std;
 
+using ::Meta::ID;
 using ::Meta::Bit::Field;
 using ::Meta::Specifier::Mut;
 
 using namespace ::Meta::Literals;
+
+using Single = ID<"Single">;
+using Const = ID<"Const">;
+using TransformedConst = ID<"TransformedConst">;
+using Mutable = ID<"Mutable">;
+using TransformedMutable = ID<"TransformedMutable">;
+using Array = ID<"Array">;
+using TransformedArray = ID<"TransformedArray">;
 
 namespace
 	ATR::Member
 {
 	auto constexpr
 	(	Configure
-	)	(	ID<"Single">
+	)	(	Single
 		,	auto
 			&&	o_rConfig
 		)
@@ -38,7 +47,7 @@ namespace
 
 	auto constexpr
 	(	Configure
-	)	(	ID<"Const">
+	)	(	Const
 		,	auto
 			&&	o_rConfig
 		)
@@ -53,7 +62,7 @@ namespace
 
 	auto constexpr
 	(	Configure
-	)	(	ID<"TransformedConst">
+	)	(	TransformedConst
 		,	auto
 			&&	o_rConfig
 		)
@@ -69,7 +78,7 @@ namespace
 
 	auto constexpr
 	(	Configure
-	)	(	ID<"Mut">
+	)	(	Mutable
 		,	auto
 			&&	o_rConfig
 		)
@@ -84,7 +93,7 @@ namespace
 
 	auto constexpr
 	(	Configure
-	)	(	ID<"TransformedMut">
+	)	(	TransformedMutable
 		,	auto
 			&&	o_rConfig
 		)
@@ -100,7 +109,7 @@ namespace
 
 	auto constexpr
 	(	Configure
-	)	(	ID<"Array">
+	)	(	Array
 		,	auto
 			&&	o_rConfig
 		)
@@ -115,7 +124,7 @@ namespace
 
 	auto constexpr
 	(	Configure
-	)	(	ID<"TransformedArray">
+	)	(	TransformedArray
 		,	auto
 			&&	o_rConfig
 		)
@@ -133,28 +142,28 @@ namespace
 using ::ATR::Member::Config_Of;
 
 static_assert
-(	Config_Of<"Single">
-!=	Config_Of<"TransformedConst">
+(	Config_Of<Single>
+!=	Config_Of<TransformedConst>
 );
 static_assert
-(	Config_Of<"Const">
-==	Config_Of<"TransformedConst">
-);
-
-static_assert
-(	Config_Of<"Single">
-!=	Config_Of<"TransformedMut">
-);
-static_assert
-(	Config_Of<"Mut">
-==	Config_Of<"TransformedMut">
+(	Config_Of<Const>
+==	Config_Of<TransformedConst>
 );
 
 static_assert
-(	Config_Of<"Single">
-!=	Config_Of<"TransformedArray">
+(	Config_Of<Single>
+!=	Config_Of<TransformedMutable>
 );
 static_assert
-(	Config_Of<"Array">
-==	Config_Of<"TransformedArray">
+(	Config_Of<Mutable>
+==	Config_Of<TransformedMutable>
+);
+
+static_assert
+(	Config_Of<Single>
+!=	Config_Of<TransformedArray>
+);
+static_assert
+(	Config_Of<Array>
+==	Config_Of<TransformedArray>
 );

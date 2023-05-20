@@ -14,53 +14,104 @@ import Evaluation.Archetype.Triangle;
 
 import ATR.Member.Config;
 
+import Meta.ID;
+import Meta.String.Literal;
+
+import Std;
+
 using ::ATR::Member::Config_Of;
+using ::Meta::ID;
+using ::Meta::String::Literal;
+
+auto constexpr
+	Accumulator
+=	[]	(	::std::ptrdiff_t
+				i_vCurrent
+		,	auto const
+			&	i_rBuffer
+		)
+	{	return
+			i_vCurrent
+		+	i_rBuffer
+			.	Count
+		;
+	}
+;
+
+template
+	<	Literal
+			t_vTypeName
+	>
+auto constexpr
+	MemberCount
+=	[]
+	{	auto const
+		&	rConfigure
+		=	Config_Of
+			<	ID<t_vTypeName>
+			>
+		;
+		return
+		::std::accumulate
+		(	rConfigure
+			.	Layout
+			.	begin
+				()
+		,	rConfigure
+			.	Layout
+			.	end
+				()
+		,	0z
+		,	Accumulator
+		);
+	}()
+;
 
 static_assert
-(	Config_Of<"Square">.MemberCount()
+(	MemberCount<"Square">
 ==	3z
 );
 static_assert
-(	Config_Of<"Rectangle">.MemberCount()
+(	MemberCount<"Rectangle">
 ==	4z
 );
 static_assert
-(	Config_Of<"Triangle">.MemberCount()
+(	MemberCount<"Triangle">
 ==	4z
 );
 static_assert
-(	Config_Of<"Circle">.MemberCount()
+(	MemberCount<"Circle">
 ==	3z
 );
 static_assert
-(	Config_Of<"Ellipse">.MemberCount()
+(	MemberCount<"Ellipse">
 ==	4z
 );
 static_assert
-(	Config_Of<"Cube">.MemberCount()
+(	MemberCount<"Cube">
 ==	3z
 );
 static_assert
-(	Config_Of<"Cuboid">.MemberCount()
+(	MemberCount<"Cuboid">
 ==	5z
 );
 static_assert
-(	Config_Of<"Sphere">.MemberCount()
+(	MemberCount<"Sphere">
 ==	3z
 );
 static_assert
-(	Config_Of<"Cylinder">.MemberCount()
+(	MemberCount<"Cylinder">
 ==	4z
 );
 static_assert
-(	Config_Of<"Cone">.MemberCount()
+(	MemberCount<"Cone">
 ==	4z
 );
 static_assert
-(	Config_Of<"Ellipsoid">.MemberCount()
+(	MemberCount<"Ellipsoid">
 ==	5z
 );
 static_assert
-(	Config_Of<"Head">.MemberCount()
-==	3z * Config_Of<"Sphere">.MemberCount()
+(	MemberCount<"Head">
+==	3z * MemberCount<"Sphere">
 );

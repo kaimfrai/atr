@@ -180,7 +180,7 @@ export namespace
 		auto static constexpr
 		&	rLayout
 		=	Member::Config_Of
-			<	i_vTypeName
+			<	decltype(i_vTypeName)
 			>
 			.	Layout
 		;

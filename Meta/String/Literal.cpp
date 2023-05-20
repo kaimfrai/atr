@@ -12,7 +12,6 @@ export namespace
 	struct
 		Literal final
 	{
-		[[no_unique_address]]
 		char
 			Buffer
 			[	t_nExtent
@@ -62,25 +61,16 @@ export namespace
 			)
 			noexcept
 		{
-			for	(	auto
-						aBuffer
-					=	::std::begin
-						(	Buffer
-						)
+			for	(	char
+					*	aBuffer
+					=	+Buffer
 				;	*	i_aString
 					!=	'\0'
-				;	i_aString
-					=	::std::next
-						(	i_aString
-						)
-				,	aBuffer
-					=	::std::next
-						(	aBuffer
-						)
+				;	++	i_aString
+				,	++	aBuffer
 				)
 			{	*	aBuffer
-				=	*
-					i_aString
+				=	*	i_aString
 				;
 			}
 		}
@@ -152,20 +142,6 @@ export namespace
 	};
 
 	template
-		<	typename
-			...	t_tpChar
-		>
-	(	Literal
-	)	(	char
-		,	t_tpChar
-			...
-		)
-	->	Literal
-		<	sizeof...(t_tpChar)
-		>
-	;
-
-	template
 		<	::std::size_t
 				t_nExtent
 		>
@@ -190,14 +166,5 @@ export namespace
 		<	t_nExtent
 		-	1uz
 		>
-	;
-
-	template
-		<	Literal
-				t_vString
-		>
-	auto constexpr
-	&	Instance
-	=	t_vString
 	;
 }

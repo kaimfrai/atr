@@ -19,12 +19,14 @@ import ATR.Member.Config;
 import ATR.Member.Info;
 import ATR.Member.NamedInfo;
 
+import Meta.ID;
 import Meta.Memory.Constraint;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Scale;
 import Meta.Memory.Size;
 import Meta.String.Chain;
+import Meta.String.Literal;
 import Meta.String.Literal;
 import Meta.Token.Type;
 
@@ -33,10 +35,24 @@ import Std;
 using ::ATR::Member::Config_Of;
 using ::ATR::Member::NamedInfo;
 
+using ::Meta::ID;
 using ::Meta::Memory::BitSize_Of;
 using ::Meta::String::Chain;
+using ::Meta::String::Literal;
 
 using namespace ::Meta::Literals;
+
+template
+	<	Literal
+			t_vTypeName
+	>
+auto constexpr
+&	NamedInfoList_Of
+=	Config_Of
+	<	ID<t_vTypeName>
+	>
+	.	NamedInfoList
+;
 
 struct
 	NamedInfoView
@@ -117,7 +133,7 @@ auto constexpr
 }
 
 static_assert
-(	Config_Of<"Square">.NamedInfoView()
+(	NamedInfoList_Of<"Square">
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 1z>
@@ -135,7 +151,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Rectangle">.NamedInfoView()
+(	NamedInfoList_Of<"Rectangle">
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 2z>
@@ -153,7 +169,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Triangle">.NamedInfoView()
+(	NamedInfoList_Of<"Triangle">
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 2z>
@@ -171,7 +187,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Circle">.NamedInfoView()
+(	NamedInfoList_Of<"Circle">
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 1z>
@@ -189,7 +205,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Ellipse">.NamedInfoView()
+(	NamedInfoList_Of<"Ellipse">
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 2z>
@@ -207,7 +223,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Cube">.NamedInfoView()
+(	NamedInfoList_Of<"Cube">
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 1z>
@@ -228,7 +244,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Cuboid">.NamedInfoView()
+(	NamedInfoList_Of<"Cuboid">
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 3z>
@@ -249,7 +265,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Pyramid">.NamedInfoView()
+(	NamedInfoList_Of<"Pyramid">
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 3z>
@@ -270,7 +286,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Sphere">.NamedInfoView()
+(	NamedInfoList_Of<"Sphere">
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 1z>
@@ -291,7 +307,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Cylinder">.NamedInfoView()
+(	NamedInfoList_Of<"Cylinder">
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 2z>
@@ -312,7 +328,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Cone">.NamedInfoView()
+(	NamedInfoList_Of<"Cone">
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 2z>
@@ -333,7 +349,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Ellipsoid">.NamedInfoView()
+(	NamedInfoList_Of<"Ellipsoid">
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 3z>
@@ -354,7 +370,7 @@ static_assert
 );
 
 static_assert
-(	Config_Of<"Head">.NamedInfoView()
+(	NamedInfoList_Of<"Head">
 ==	NameList
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 3z>
