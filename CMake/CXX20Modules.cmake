@@ -14,49 +14,6 @@ endfunction()
 
 ensure_module_variable_set(PREBUILT_MODULE_PATH)
 ensure_module_variable_set(MODULE_INTERFACE_EXTENSION)
-ensure_module_variable_set(STANDARD_LIBRARY_INCLUDE_PATH)
-
-function(add_system_header_unit
-	header_unit_file
-)
-	file(REAL_PATH
-		"${header_unit_file}"
-		header_unit_path
-	EXPAND_TILDE
-	BASE_DIRECTORY
-		"${STANDARD_LIBRARY_INCLUDE_PATH}"
-	)
-	read_module_properties("${header_unit_path}")
-	get_source_file_property(module_dependencies "${header_unit_path}" OBJECT_DEPENDS)
-
-	get_compile_system_header_unit_command(
-		"${header_unit_path}"
-		"${PREBUILT_MODULE_PATH}/${header_unit_file}${MODULE_INTERFACE_EXTENSION}"
-		compile_header_unit_command
-	)
-
-	add_custom_command(
-	OUTPUT
-		${PREBUILT_MODULE_PATH}/${header_unit_file}${MODULE_INTERFACE_EXTENSION}
-	COMMAND
-		${compile_header_unit_command}
-	VERBATIM
-	DEPENDS
-		"${header_unit_path}"
-		${module_dependencies}
-	COMMENT
-		"Generating precompiled system header unit ${header_unit_file}"
-	)
-
-endfunction()
-
-function(add_system_header_units
-)
-	foreach(system_header IN LISTS ARGN)
-		add_system_header_unit(${system_header})
-	endforeach()
-
-endfunction()
 
 function(add_user_header_unit
 	header_unit
@@ -346,7 +303,6 @@ function(
 	include_directories(${CXX20_MODULES_PATH}/include/)
 
 	add_module(${CXX20_MODULES_PATH}/Std.cpp)
-
 
 endfunction()
 

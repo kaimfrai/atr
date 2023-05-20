@@ -10,138 +10,6 @@ CACHE STRING
 	"The extension used for prebuilt module files."
 )
 
-set(STANDARD_HEADER_UNITS
-	cassert
-	cctype
-	cerrno
-	cfenv
-	cfloat
-	cinttypes
-	climits
-	clocale
-	cmath
-	csetjmp
-	csignal
-	cstdarg
-	cstddef
-	cstdint
-	cstdio
-	cstdlib
-	cstring
-	ctime
-	cuchar
-	cwchar
-	cwctype
-
-	algorithm
-	any
-	array
-	atomic
-	barrier
-	bit
-	bitset
-	charconv
-	chrono
-	compare
-	complex
-	concepts
-	condition_variable
-	coroutine
-	deque
-	exception
-	execution
-	expected
-	filesystem
-	#flat_map
-	#flat_set
-	format
-	forward_list
-	fstream
-	functional
-	future
-	#generator
-	initializer_list
-	iomanip
-	ios
-	iosfwd
-	iostream
-	istream
-	iterator
-	latch
-	limits
-	list
-	locale
-	map
-	#mdspan
-	memory
-	memory_resource
-	mutex
-	new
-	numbers
-	numeric
-	optional
-	ostream
-	#print
-	queue
-	random
-	ranges
-	ratio
-	regex
-	scoped_allocator
-	semaphore
-	set
-	shared_mutex
-	source_location
-	span
-	#spanstream
-	sstream
-	stack
-	#stacktrace
-	stdexcept
-	#stdfloat
-	#stop_token
-	streambuf
-	string
-	string_view
-	#syncstream
-	system_error
-	thread
-	tuple
-	typeindex
-	typeinfo
-	type_traits
-	unordered_map
-	unordered_set
-	utility
-	valarray
-	variant
-	vector
-	version
-)
-
-if	(COMPILER_SEARCH_PATHS)
-	set(STANDARD_LIBRARY_INCLUDE_PATH ${COMPILER_SEARCH_PATHS}/include/c++/v1 CACHE STRING "Path for standard library includes")
-else()
-	find_path(STANDARD_LIBRARY_INCLUDE_PATH ${STANDARD_HEADER_UNITS} PATH_SUFFIXES include/c++/v1 REQUIRED DOC "Path for standard library includes")
-	file(REAL_PATH "${STANDARD_LIBRARY_INCLUDE_PATH}" STANDARD_LIBRARY_INCLUDE_PATH EXPAND_TILDE)
-endif()
-
-if	(EXISTS "${STANDARD_LIBRARY_INCLUDE_PATH}" AND IS_DIRECTORY "${STANDARD_LIBRARY_INCLUDE_PATH}")
-
-	message("Found standard library at ${STANDARD_LIBRARY_INCLUDE_PATH}")
-
-	foreach(header IN LISTS STANDARD_HEADER_UNITS)
-
-		if	(NOT EXISTS "${STANDARD_LIBRARY_INCLUDE_PATH}/${header}")
-			message(WARNING "Standard library did not contain header <${header}>!")
-		endif()
-
-	endforeach()
-
-else()
-	message(FATAL_ERROR "Could not find standard library at ${STANDARD_LIBRARY_INCLUDE_PATH}")
-endif()
-
 function(get_module_dependency_flag_list
 	module_dependency_names
 	module_dependency_binaries
@@ -372,10 +240,10 @@ function(get_compile_module_command
 	object_command
 		${CMAKE_CXX_COMPILER}
 		${cmake_cxx_flags}
+		# Warnings should be checked when compiling to .pcm
+		--no-warnings
 		--compile ${module_binary}
 		--output ${module_object}
-		# False positives?
-		-Wno-read-modules-implicitly
 	)
 
 	set(
@@ -396,27 +264,6 @@ function(get_compile_user_header_unit_command
 		"${header_unit_binary}"
 		""
 		"-fmodule-header;-xc++-user-header"
-		interface_command
-		object_command
-	)
-	set(
-	${out_command}
-		${interface_command}
-	PARENT_SCOPE
-	)
-
-endfunction()
-
-function(get_compile_system_header_unit_command
-	header_unit_file
-	header_unit_binary
-	out_command
-)
-	get_compile_module_command(
-		"${header_unit_file}"
-		"${header_unit_binary}"
-		""
-		"--no-warnings;-fmodule-header=system;-xc++-system-header"
 		interface_command
 		object_command
 	)
@@ -456,22 +303,33 @@ function(get_compile_module_interface_command
 
 endfunction()
 
+set_property(
+SOURCE
+	"${CXX20_MODULES_PATH}/include/std.hpp"
+APPEND PROPERTY
+COMPILE_OPTIONS
+	"${STANDARD_LIBRARY_FLAG}"
+)
+
 function(
 	force_import_std
 	file
 )
 	set_property(
-	SOURCE "${file}"
+	SOURCE
+		"${file}"
 	APPEND PROPERTY
-		COMPILE_OPTIONS
+	COMPILE_OPTIONS
+		"${STANDARD_LIBRARY_FLAG}"
 		"-fmodule-file=${PREBUILT_MODULE_PATH}/std.hpp${MODULE_INTERFACE_EXTENSION}"
 		"--include${CXX20_MODULES_PATH}/include/import_std.hpp"
 	)
 
 	set_property(
-	SOURCE "${file}"
+	SOURCE
+		"${file}"
 	APPEND PROPERTY
-		OBJECT_DEPENDS
+	OBJECT_DEPENDS
 		"${PREBUILT_MODULE_PATH}/std.hpp${MODULE_INTERFACE_EXTENSION}"
 	)
 

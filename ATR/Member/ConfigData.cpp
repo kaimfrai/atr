@@ -41,7 +41,7 @@ export namespace
 			noexcept
 		->	SSize
 		{	return
-			::std::reduce
+			::std::accumulate
 			(	Layout
 				.	begin
 					()

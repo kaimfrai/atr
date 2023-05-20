@@ -20,8 +20,18 @@ else()
 	message(FATAL_ERROR "Could not find C++ Compiler at ${CMAKE_CXX_COMPILER}")
 endif()
 
+if	(USE_LIBCPP)
+	set(
+	STANDARD_LIBRARY_FLAG
+		"-stdlib=libc++"
+	)
+else()
+	set(
+	STANDARD_LIBRARY_FLAG
+	)
+endif()
+
 add_compile_options(
-	-stdlib=libc++
 	-march=native
 	-flto=thin
 	-fconstexpr-backtrace-limit=0
