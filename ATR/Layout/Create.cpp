@@ -190,81 +190,50 @@ export namespace
 		=	[]
 			{
 				auto static constexpr
-					rAlign4Types
+					vBitOffset
 				=	rLayout
-						[	3_align
-						]
+					.	Offset
+						(	3_align
+						)
 				;
-
 				auto static constexpr
-					rAlign2Types
-				=	rLayout
-						[	2_align
-						]
-				;
-
-				auto static constexpr
-					rAlign1Types
-				=	rLayout
-						[	1_align
-						]
+					vBitTypeCount
+				=	(	rLayout
+						.	Counter
+							(	1_align
+							)
+					+	rLayout
+						.	Counter
+							(	2_align
+							)
+					+	rLayout
+						.	Counter
+							(	3_align
+							)
+					)
 				;
 
 				return
 				[]	<	::std::size_t
-						...	t_vpAlign4Index
-					,	::std::size_t
-						...	t_vpAlign2Index
-					,	::std::size_t
-						...	t_vpAlign1Index
+						...	t_vpBitIndex
 					>(	::std::index_sequence
-						<	t_vpAlign4Index
-							...
-						>
-					,	::std::index_sequence
-						<	t_vpAlign2Index
-							...
-						>
-					,	::std::index_sequence
-						<	t_vpAlign1Index
+						<	t_vpBitIndex
 							...
 						>
 					)
 				{	return
 					MakeBit
 					(	RestoreTypeToken
-						<	rAlign4Types
-								[	t_vpAlign4Index
-								]
-						>
-						...
-					,	RestoreTypeToken
-						<	rAlign2Types
-								[	t_vpAlign2Index
-								]
-						>
-						...
-					,	RestoreTypeToken
-						<	rAlign1Types
-								[	t_vpAlign1Index
+						<	rLayout
+							.	Buffer
+								[	vBitOffset
+								+	t_vpBitIndex
 								]
 						>
 						...
 					);
 				}(	::std::make_index_sequence
-					<	rAlign4Types
-						.	size
-							()
-					>{}
-				,	::std::make_index_sequence
-					<	rAlign2Types
-						.	size
-							()
-					>{}
-				,	::std::make_index_sequence
-					<	rAlign1Types
-						.	size
-							()
+					<	vBitTypeCount
 					>{}
 				);
 			}
