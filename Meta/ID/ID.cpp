@@ -1,38 +1,19 @@
 export module Meta.ID:ID;
 
 import :Decimal;
+import :Default;
 import :LowerCase;
 import :UpperCase;
 
 import Meta.Size;
 import Meta.String.Chain;
 import Meta.String.Literal;
-import Meta.Token.Index;
 
 import Std;
 
 using ::Meta::String::Chain;
 using ::Meta::String::Instance;
 using ::Meta::String::Literal;
-
-auto constexpr
-(	ToChar
-)	(	char
-			i_cChar
-	)
-->	char
-{	return i_cChar;	}
-
-template
-	<	char
-			t_nCharacter
-	>
-auto constexpr
-(	FromChar
-)	(	Meta::IndexToken<t_nCharacter>
-	)
-->	char
-{	return t_nCharacter;	}
 
 export namespace
 	Meta

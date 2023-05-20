@@ -1,6 +1,7 @@
 module Meta.ID:Make;
 
 import :Decimal;
+import :Default;
 import :ID;
 import :LowerCase;
 import :UpperCase;
