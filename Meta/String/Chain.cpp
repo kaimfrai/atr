@@ -140,8 +140,8 @@ export namespace
 			noexcept
 		->	Chain
 		{
-			if	(	i_aLeft
-				==	nullptr
+			if	(	*i_aLeft
+				==	'\0'
 				)
 			{	return
 					i_rRight

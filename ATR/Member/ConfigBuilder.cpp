@@ -277,7 +277,7 @@ export namespace
 		->	ConfigBuilder&&
 		{	return
 			operator()
-			(	nullptr
+			(	Chain::Empty
 			,	i_vBaseID
 			);
 		}
