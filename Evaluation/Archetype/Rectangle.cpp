@@ -5,8 +5,6 @@ import Evaluation.Shared.Fraction;
 
 import ATR.Literals;
 
-import Meta.Token.Type;
-
 export namespace
 	ATR::Member
 {
@@ -20,7 +18,7 @@ export namespace
 	{	return
 		o_rConfig
 			("BasicShape"_id)
-			("ComputeAreaMultiplier", ::Meta::Type<Fraction<>>)
+			("ComputeAreaMultiplier", Type<Fraction<>>)
 		;
 	}
 }

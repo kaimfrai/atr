@@ -41,21 +41,21 @@ namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("Int", ::Meta::Type<int>)
-			("IntConst", ::Meta::Type<int const>)
-			("IntMut", ::Meta::Type<Mut<int>>)
-			("Bool", ::Meta::Type<bool>)
-			("BoolConst", ::Meta::Type<bool const>)
-			("BoolMut", ::Meta::Type<Mut<bool>>)
-			("Field", ::Meta::Type<Field<3_bit>>)
-			("FieldConst", ::Meta::Type<Field<3_bit> const>)
-			("FieldMut", ::Meta::Type<Mut<Field<3_bit>>>)
-			("ArrayBool", ::Meta::Type<bool[5]>)
-			("ArrayBoolConst", ::Meta::Type<bool const[5]>)
-			("ArrayBoolMut", ::Meta::Type<Mut<bool[5]>>)
-			("ArrayField", ::Meta::Type<Field<3_bit>[5]>)
-			("ArrayFieldConst", ::Meta::Type<Field<3_bit> const[5]>)
-			("ArrayFieldMut", ::Meta::Type<Field<3_bit>[5]>)
+			("Int", Type<int>)
+			("IntConst", Type<int const>)
+			("IntMut", Type<Mut<int>>)
+			("Bool", Type<bool>)
+			("BoolConst", Type<bool const>)
+			("BoolMut", Type<Mut<bool>>)
+			("Field", Type<Field<3_bit>>)
+			("FieldConst", Type<Field<3_bit> const>)
+			("FieldMut", Type<Mut<Field<3_bit>>>)
+			("ArrayBool", Type<bool[5]>)
+			("ArrayBoolConst", Type<bool const[5]>)
+			("ArrayBoolMut", Type<Mut<bool[5]>>)
+			("ArrayField", Type<Field<3_bit>[5]>)
+			("ArrayFieldConst", Type<Field<3_bit> const[5]>)
+			("ArrayFieldMut", Type<Field<3_bit>[5]>)
 		;
 	}
 }

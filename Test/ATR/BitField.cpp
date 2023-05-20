@@ -29,10 +29,10 @@ namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("0BoolBit", ::Meta::Type<bool>)
-			("1MutBoolBit", ::Meta::Type<Mut<bool>>)
-			("2BitField31", ::Meta::Type<Field<31_bit>>)
-			("3MutBitField31", ::Meta::Type<Mut<Field<31_bit>>>)
+			("0BoolBit", Type<bool>)
+			("1MutBoolBit", Type<Mut<bool>>)
+			("2BitField31", Type<Field<31_bit>>)
+			("3MutBitField31", Type<Mut<Field<31_bit>>>)
 		;
 	}
 }

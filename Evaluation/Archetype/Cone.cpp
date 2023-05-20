@@ -5,8 +5,6 @@ import Evaluation.Shared.PiFraction;
 
 import ATR.Literals;
 
-import Meta.Token.Type;
-
 export namespace
 	ATR::Member
 {
@@ -21,7 +19,7 @@ export namespace
 		o_rConfig
 			("Width", "Height")
 			("BasicBody"_id)
-			("ComputeVolumeMultiplier", ::Meta::Type<PiFraction<1z, 12z>>)
+			("ComputeVolumeMultiplier", Type<PiFraction<1z, 12z>>)
 		;
 	}
 }

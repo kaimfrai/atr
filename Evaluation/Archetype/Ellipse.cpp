@@ -5,8 +5,6 @@ import Evaluation.Shared.PiFraction;
 
 import ATR.Literals;
 
-import Meta.Token.Type;
-
 export namespace
 	ATR::Member
 {
@@ -20,7 +18,7 @@ export namespace
 	{	return
 		o_rConfig
 			("BasicShape"_id)
-			("ComputeAreaMultiplier", ::Meta::Type<PiFraction<1z, 4z>>)
+			("ComputeAreaMultiplier", Type<PiFraction<1z, 4z>>)
 		;
 	}
 }
