@@ -7,7 +7,7 @@ import Meta.Lex.FreeFunctionTokenizer;
 import Meta.Lex.Match;
 import Meta.String.Literal;
 
-using ::Meta::ID_T;
+using ::Meta::ID;
 using ::Meta::String::Literal;
 
 export namespace
@@ -23,7 +23,7 @@ export namespace
 	using
 		Interface
 	=	Entry
-		<	ID_T
+		<	ID
 			<	t_vFunctionName
 			>
 		,	::Meta::Match_To

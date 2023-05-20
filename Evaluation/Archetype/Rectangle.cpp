@@ -12,7 +12,7 @@ export namespace
 {
 	auto constexpr
 	(	Configure
-	)	(	ID_T<"Rectangle">
+	)	(	ID<"Rectangle">
 		,	auto
 			&&	o_rConfig
 		)

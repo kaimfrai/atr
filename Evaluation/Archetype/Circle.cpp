@@ -9,7 +9,7 @@ export namespace
 {
 	auto constexpr
 	(	Configure
-	)	(	ID_T<"Circle">
+	)	(	ID<"Circle">
 		,	auto
 			&&	o_rConfig
 		)

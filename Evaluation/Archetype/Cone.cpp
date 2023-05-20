@@ -12,7 +12,7 @@ export namespace
 {
 	auto constexpr
 	(	Configure
-	)	(	ID_T<"Cone">
+	)	(	ID<"Cone">
 		,	auto
 			&&	o_rConfig
 		)

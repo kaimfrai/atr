@@ -9,7 +9,7 @@ export namespace
 {
 	auto constexpr
 	(	Configure
-	)	(	ID_T<"Sphere">
+	)	(	ID<"Sphere">
 		,	auto
 			&&	o_rConfig
 		)

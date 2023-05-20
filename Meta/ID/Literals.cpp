@@ -18,7 +18,7 @@ export namespace
 	(	operator
 		""_id
 	)	()
-	->	ID_T
+	->	ID
 		<	t_vString
 		>
 	{	return{};	}

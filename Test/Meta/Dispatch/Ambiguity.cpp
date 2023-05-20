@@ -36,7 +36,7 @@ namespace
 using ::Meta::Dispatch::IsPathBlocked;
 using ::Meta::Dispatch::Path;
 using ::Meta::Dispatch::ProtoPath;
-using ::Meta::ID_T;
+using ::Meta::ID;
 
 static_assert
 (	ProtoPath
@@ -200,47 +200,47 @@ static_assert
 
 static_assert
 (	not
-	IsPathBlocked<int(int), ID_T<"">>
+	IsPathBlocked<int(int), ID<"">>
 );
 static_assert
 (	not
-	IsPathBlocked<int(int), ID_T<"M">>
+	IsPathBlocked<int(int), ID<"M">>
 );
 static_assert
 (	not
-	IsPathBlocked<int(int), ID_T<"Mu">>
+	IsPathBlocked<int(int), ID<"Mu">>
 );
 static_assert
 (	not
-	IsPathBlocked<int(int), ID_T<"Mul">>
+	IsPathBlocked<int(int), ID<"Mul">>
 );
 static_assert
 (	not
-	IsPathBlocked<int(int), ID_T<"Mult">>
+	IsPathBlocked<int(int), ID<"Mult">>
 );
 static_assert
 (	not
-	IsPathBlocked<int(int), ID_T<"Multi">>
+	IsPathBlocked<int(int), ID<"Multi">>
 );
 static_assert
 (	not
-	IsPathBlocked<int(int), ID_T<"Multip">>
+	IsPathBlocked<int(int), ID<"Multip">>
 );
 static_assert
 (	not
-	IsPathBlocked<int(int), ID_T<"Multipl">>
+	IsPathBlocked<int(int), ID<"Multipl">>
 );
 static_assert
 (	not
-	IsPathBlocked<int(int), ID_T<"Multiply">>
+	IsPathBlocked<int(int), ID<"Multiply">>
 );
 static_assert
 (	not
-	IsPathBlocked<int(int), ID_T<"Multiply1">>
+	IsPathBlocked<int(int), ID<"Multiply1">>
 );
 static_assert
 (	not
-	IsPathBlocked<int(int), ID_T<"Multiply2">>
+	IsPathBlocked<int(int), ID<"Multiply2">>
 );
 
 static_assert

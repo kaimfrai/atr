@@ -17,7 +17,7 @@ export namespace
 				t_vLiteral
 		>
 	using
-		ID_T
+		ID
 	=	decltype
 		(	::Make
 			<	t_vLiteral

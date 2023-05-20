@@ -37,7 +37,7 @@ export namespace
 		Path
 	=	PathID
 		<	t_tFunction
-		,	ID_T<t_vName>
+		,	ID<t_vName>
 		>
 	;
 

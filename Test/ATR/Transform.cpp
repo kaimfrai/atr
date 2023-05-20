@@ -23,7 +23,7 @@ namespace
 {
 	auto constexpr
 	(	Configure
-	)	(	ID_T<"Single">
+	)	(	ID<"Single">
 		,	auto
 			&&	o_rConfig
 		)
@@ -38,7 +38,7 @@ namespace
 
 	auto constexpr
 	(	Configure
-	)	(	ID_T<"Const">
+	)	(	ID<"Const">
 		,	auto
 			&&	o_rConfig
 		)
@@ -53,7 +53,7 @@ namespace
 
 	auto constexpr
 	(	Configure
-	)	(	ID_T<"TransformedConst">
+	)	(	ID<"TransformedConst">
 		,	auto
 			&&	o_rConfig
 		)
@@ -69,7 +69,7 @@ namespace
 
 	auto constexpr
 	(	Configure
-	)	(	ID_T<"Mut">
+	)	(	ID<"Mut">
 		,	auto
 			&&	o_rConfig
 		)
@@ -84,7 +84,7 @@ namespace
 
 	auto constexpr
 	(	Configure
-	)	(	ID_T<"TransformedMut">
+	)	(	ID<"TransformedMut">
 		,	auto
 			&&	o_rConfig
 		)
@@ -100,7 +100,7 @@ namespace
 
 	auto constexpr
 	(	Configure
-	)	(	ID_T<"Array">
+	)	(	ID<"Array">
 		,	auto
 			&&	o_rConfig
 		)
@@ -115,7 +115,7 @@ namespace
 
 	auto constexpr
 	(	Configure
-	)	(	ID_T<"TransformedArray">
+	)	(	ID<"TransformedArray">
 		,	auto
 			&&	o_rConfig
 		)

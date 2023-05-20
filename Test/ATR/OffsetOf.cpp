@@ -23,7 +23,7 @@ using ::Meta::BitSize;
 using ::Meta::Memory::ByteWidth;
 using ::Meta::Memory::SizeOf;
 using ::Meta::Specifier::Mut;
-using ::Meta::ID_T;
+using ::Meta::ID;
 using ::Meta::String::Literal;
 using ::Meta::Type;
 
@@ -34,7 +34,7 @@ namespace
 {
 	auto constexpr
 	(	Configure
-	)	(	ID_T<"OffsetOfTest">
+	)	(	ID<"OffsetOfTest">
 		,	auto
 			&&	o_rConfig
 		)
@@ -97,7 +97,7 @@ auto constexpr
 =	Type
 	<	decltype
 		(	::ATR::Member::OffsetOf
-			(	ID_T<t_vMemberName>
+			(	ID<t_vMemberName>
 				{}
 			,	::std::declval<t_tOwner>()
 				.	TypeName

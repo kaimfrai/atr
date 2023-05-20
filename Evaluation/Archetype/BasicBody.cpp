@@ -12,7 +12,7 @@ export namespace
 {
 	auto constexpr
 	(	Configure
-	)	(	ID_T<"BasicBody">
+	)	(	ID<"BasicBody">
 		,	auto
 			&&	o_rConfig
 		)

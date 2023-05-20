@@ -9,9 +9,9 @@ import Meta.ID;
 
 using ::ATR::Address;
 using ::ATR::Type;
-using ::Meta::ID_T;
+using ::Meta::ID;
 
 static_assert
-(	Address<ID_T<"ComputeVolume">, Type<"Head"> const&>
-==	Address<ID_T<"ComputeVolume">, Type<"Sphere"> const&>
+(	Address<ID<"ComputeVolume">, Type<"Head"> const&>
+==	Address<ID<"ComputeVolume">, Type<"Sphere"> const&>
 );

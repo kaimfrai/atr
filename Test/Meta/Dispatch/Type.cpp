@@ -22,7 +22,7 @@ static_assert
 static_assert
 (	std::is_same_v
 	<	decltype
-		(	&Meta::Dispatch::Final<int(int, int), Meta::ID_T<"">>::operator()
+		(	&Meta::Dispatch::Final<int(int, int), Meta::ID<"">>::operator()
 		)
 	,	int(*)(int, int)
 	>
@@ -45,7 +45,7 @@ static_assert
 static_assert
 (	std::is_same_v
 	<	decltype
-		(	&Meta::Dispatch::Final<int(int, int) noexcept, Meta::ID_T<"">>::operator()
+		(	&Meta::Dispatch::Final<int(int, int) noexcept, Meta::ID<"">>::operator()
 		)
 	,	int(*)(int, int) // cannot be noexcept
 	>

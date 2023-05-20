@@ -12,7 +12,7 @@ export namespace
 {
 	auto constexpr
 	(	Configure
-	)	(	ID_T<"Pyramid">
+	)	(	ID<"Pyramid">
 		,	auto
 			&&	o_rConfig
 		)

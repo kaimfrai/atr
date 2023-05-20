@@ -20,7 +20,7 @@ import Std;
 using ::ATR::Member::OffsetOf;
 using ::Meta::ProtoID;
 using ::Meta::String::Chain;
-using ::Meta::ID_T;
+using ::Meta::ID;
 using ::Meta::String::Literal;
 
 export namespace
@@ -207,7 +207,7 @@ export namespace
 	using
 		FunctionName
 	=	Dependency
-		<	ID_T<t_vFunctionName>
+		<	ID<t_vFunctionName>
 		>
 	;
 
@@ -253,7 +253,7 @@ export namespace
 	using
 		StaticDependency
 	=	ArgumentDependency
-		<	ID_T<t_vFunctionName>
+		<	ID<t_vFunctionName>
 		,	t_vpIDMap
 			...
 		>

@@ -22,7 +22,7 @@ namespace
 {
 	auto constexpr
 	(	Configure
-	)	(	ID_T<"BitFieldTest">
+	)	(	ID<"BitFieldTest">
 		,	auto
 			&&	o_rConfig
 		)

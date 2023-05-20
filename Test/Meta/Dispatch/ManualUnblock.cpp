@@ -34,106 +34,106 @@ namespace
 }
 
 using ::Meta::Dispatch::IsPathBlocked;
-using ::Meta::ID_T;
+using ::Meta::ID;
 
 static_assert
 (	not
-	IsPathBlocked<int(int, int), ID_T<"">>
+	IsPathBlocked<int(int, int), ID<"">>
 );
 static_assert
 (	not
-	IsPathBlocked<int(int, int), ID_T<"M">>
+	IsPathBlocked<int(int, int), ID<"M">>
 );
 static_assert
 (	not
-	IsPathBlocked<int(int, int), ID_T<"Mu">>
+	IsPathBlocked<int(int, int), ID<"Mu">>
 );
 static_assert
 (	not
-	IsPathBlocked<int(int, int), ID_T<"Mul">>
+	IsPathBlocked<int(int, int), ID<"Mul">>
 );
 static_assert
 (	not
-	IsPathBlocked<int(int, int), ID_T<"Mult">>
+	IsPathBlocked<int(int, int), ID<"Mult">>
 );
 static_assert
 (	not
-	IsPathBlocked<int(int, int), ID_T<"Multi">>
+	IsPathBlocked<int(int, int), ID<"Multi">>
 );
 static_assert
 (	not
-	IsPathBlocked<int(int, int), ID_T<"Multip">>
+	IsPathBlocked<int(int, int), ID<"Multip">>
 );
 static_assert
 (	not
-	IsPathBlocked<int(int, int), ID_T<"Multipl">>
+	IsPathBlocked<int(int, int), ID<"Multipl">>
 );
 static_assert
 (	not
-	IsPathBlocked<int(int, int), ID_T<"Multiply">>
+	IsPathBlocked<int(int, int), ID<"Multiply">>
 );
 static_assert
 (	not
-	IsPathBlocked<int(int, int), ID_T<"Multiply1">>
+	IsPathBlocked<int(int, int), ID<"Multiply1">>
 );
 
 static_assert
-(	IsPathBlocked<int(int, int), ID_T<"N">>
+(	IsPathBlocked<int(int, int), ID<"N">>
 );
 static_assert
-(	IsPathBlocked<int(int, int), ID_T<"Ma">>
+(	IsPathBlocked<int(int, int), ID<"Ma">>
 );
 static_assert
-(	IsPathBlocked<int(int, int), ID_T<"Muz">>
+(	IsPathBlocked<int(int, int), ID<"Muz">>
 );
 static_assert
-(	IsPathBlocked<int(int, int), ID_T<"Mulq">>
+(	IsPathBlocked<int(int, int), ID<"Mulq">>
 );
 static_assert
-(	IsPathBlocked<int(int, int), ID_T<"Multf">>
+(	IsPathBlocked<int(int, int), ID<"Multf">>
 );
 static_assert
-(	IsPathBlocked<int(int, int), ID_T<"Multia">>
+(	IsPathBlocked<int(int, int), ID<"Multia">>
 );
 static_assert
-(	IsPathBlocked<int(int, int), ID_T<"Multipx">>
+(	IsPathBlocked<int(int, int), ID<"Multipx">>
 );
 static_assert
-(	IsPathBlocked<int(int, int), ID_T<"Multiplh">>
+(	IsPathBlocked<int(int, int), ID<"Multiplh">>
 );
 static_assert
-(	IsPathBlocked<int(int, int), ID_T<"Multiply2">>
+(	IsPathBlocked<int(int, int), ID<"Multiply2">>
 );
 
 static_assert
-(	IsPathBlocked<int(int, int) noexcept, ID_T<"">>
+(	IsPathBlocked<int(int, int) noexcept, ID<"">>
 );
 static_assert
-(	IsPathBlocked<int(double), ID_T<"M">>
+(	IsPathBlocked<int(double), ID<"M">>
 );
 static_assert
-(	IsPathBlocked<void(), ID_T<"Mu">>
+(	IsPathBlocked<void(), ID<"Mu">>
 );
 static_assert
-(	IsPathBlocked<int(), ID_T<"Mul">>
+(	IsPathBlocked<int(), ID<"Mul">>
 );
 static_assert
-(	IsPathBlocked<int(int, int, char), ID_T<"Mult">>
+(	IsPathBlocked<int(int, int, char), ID<"Mult">>
 );
 static_assert
-(	IsPathBlocked<int(int, long), ID_T<"Multi">>
+(	IsPathBlocked<int(int, long), ID<"Multi">>
 );
 static_assert
-(	IsPathBlocked<int(float, int), ID_T<"Multip">>
+(	IsPathBlocked<int(float, int), ID<"Multip">>
 );
 static_assert
-(	IsPathBlocked<void(int, int), ID_T<"Multipl">>
+(	IsPathBlocked<void(int, int), ID<"Multipl">>
 );
 static_assert
-(	IsPathBlocked<int(int, int, int), ID_T<"Multiply">>
+(	IsPathBlocked<int(int, int, int), ID<"Multiply">>
 );
 static_assert
-(	IsPathBlocked<int(int), ID_T<"Multiply1">>
+(	IsPathBlocked<int(int), ID<"Multiply1">>
 );
 
 static_assert
@@ -142,7 +142,7 @@ static_assert
 	>::Dispatch
 	(	""
 	)
-==	&Meta::Dispatch::Final<int(int, int), ID_T<"">>::operator()
+==	&Meta::Dispatch::Final<int(int, int), ID<"">>::operator()
 );
 static_assert
 (	Meta::DispatchFor
@@ -150,7 +150,7 @@ static_assert
 	>::Dispatch
 	(	"M"
 	)
-==	&Meta::Dispatch::Final<int(int, int), ID_T<"M">>::operator()
+==	&Meta::Dispatch::Final<int(int, int), ID<"M">>::operator()
 );
 static_assert
 (	Meta::DispatchFor
@@ -158,7 +158,7 @@ static_assert
 	>::Dispatch
 	(	"Mu"
 	)
-==	&Meta::Dispatch::Final<int(int, int), ID_T<"Mu">>::operator()
+==	&Meta::Dispatch::Final<int(int, int), ID<"Mu">>::operator()
 );
 static_assert
 (	Meta::DispatchFor
@@ -166,7 +166,7 @@ static_assert
 	>::Dispatch
 	(	"Mul"
 	)
-==	&Meta::Dispatch::Final<int(int, int), ID_T<"Mul">>::operator()
+==	&Meta::Dispatch::Final<int(int, int), ID<"Mul">>::operator()
 );
 static_assert
 (	Meta::DispatchFor
@@ -174,7 +174,7 @@ static_assert
 	>::Dispatch
 	(	"Mult"
 	)
-==	&Meta::Dispatch::Final<int(int, int), ID_T<"Mult">>::operator()
+==	&Meta::Dispatch::Final<int(int, int), ID<"Mult">>::operator()
 );
 static_assert
 (	Meta::DispatchFor
@@ -182,7 +182,7 @@ static_assert
 	>::Dispatch
 	(	"Multi"
 	)
-==	&Meta::Dispatch::Final<int(int, int), ID_T<"Multi">>::operator()
+==	&Meta::Dispatch::Final<int(int, int), ID<"Multi">>::operator()
 );
 static_assert
 (	Meta::DispatchFor
@@ -190,7 +190,7 @@ static_assert
 	>::Dispatch
 	(	"Multip"
 	)
-==	&Meta::Dispatch::Final<int(int, int), ID_T<"Multip">>::operator()
+==	&Meta::Dispatch::Final<int(int, int), ID<"Multip">>::operator()
 );
 static_assert
 (	Meta::DispatchFor
@@ -198,7 +198,7 @@ static_assert
 	>::Dispatch
 	(	"Multipl"
 	)
-==	&Meta::Dispatch::Final<int(int, int), ID_T<"Multipl">>::operator()
+==	&Meta::Dispatch::Final<int(int, int), ID<"Multipl">>::operator()
 );
 static_assert
 (	Meta::DispatchFor
@@ -206,7 +206,7 @@ static_assert
 	>::Dispatch
 	(	"Multiply"
 	)
-==	&Meta::Dispatch::Final<int(int, int), ID_T<"Multiply">>::operator()
+==	&Meta::Dispatch::Final<int(int, int), ID<"Multiply">>::operator()
 );
 static_assert
 (	Meta::DispatchFor
@@ -214,7 +214,7 @@ static_assert
 	>::Dispatch
 	(	"Multiply1"
 	)
-==	&Meta::Dispatch::Final<int(int, int), ID_T<"Multiply1">>::operator()
+==	&Meta::Dispatch::Final<int(int, int), ID<"Multiply1">>::operator()
 );
 
 static_assert

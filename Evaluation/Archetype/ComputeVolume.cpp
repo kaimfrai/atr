@@ -13,7 +13,7 @@ export namespace
 
 	auto constexpr
 	(	MapAddress
-	)	(	ID_T<"ComputeVolume">
+	)	(	ID<"ComputeVolume">
 		,	ProtoMemberInterface
 			<	"ComputeVolumeMultiplier"
 			,	"Depth"

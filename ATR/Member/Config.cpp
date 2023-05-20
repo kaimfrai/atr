@@ -7,7 +7,7 @@ import ATR.Member.Finalize;
 import Meta.ID;
 import Meta.String.Literal;
 
-using ::Meta::ID_T;
+using ::Meta::ID;
 using ::Meta::ProtoID;
 using ::Meta::String::Literal;
 
@@ -38,7 +38,7 @@ export namespace
 	ConfigData const constexpr
 	&	Config_Of
 	=	FinalizedConfig_Of
-		<	ID_T<t_vTypeName>
+		<	ID<t_vTypeName>
 		,	ConfigBuilder
 		>
 	;

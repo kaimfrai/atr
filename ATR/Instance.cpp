@@ -16,7 +16,7 @@ using ::ATR::Member::ProtoDynamicMember_Of;
 using ::ATR::Member::ProtoStaticMember_Of;
 
 using ::Meta::ProtoID;
-using ::Meta::ID_T;
+using ::Meta::ID;
 using ::Meta::String::Literal;
 
 export namespace
@@ -260,7 +260,7 @@ export namespace
 	using
 		Type
 	=	::ATR::Instance
-		<	ID_T
+		<	ID
 			<	t_vTypeID
 			>
 		>
