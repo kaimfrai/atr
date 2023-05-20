@@ -29,7 +29,7 @@ auto constexpr
 			...
 		>
 	)
-->	::Meta::ID
+->	::ID
 	<	::FromChar
 		(	IndexToken
 			<	t_vLiteral
