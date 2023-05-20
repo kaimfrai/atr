@@ -3,18 +3,16 @@ export module Evaluation.Archetype.BasicBody;
 import Evaluation.Archetype.BasicShape;
 import Evaluation.Shared.DataTypes;
 
-import Meta.String.Alias;
-import Meta.String.Literals;
-import Meta.Token.Type;
+import ATR.Literals;
 
-using namespace ::Meta::Literals;
+import Meta.Token.Type;
 
 export namespace
 	ATR::Member
 {
 	auto constexpr
 	(	Configure
-	)	(	::Meta::ID_T<"BasicBody">
+	)	(	ID_T<"BasicBody">
 		,	auto
 			&&	o_rConfig
 		)

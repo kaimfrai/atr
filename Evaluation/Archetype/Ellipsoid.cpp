@@ -1,21 +1,18 @@
 export module Evaluation.Archetype.Ellipsoid;
 
 import Evaluation.Archetype.BasicBody;
-
 import Evaluation.Shared.PiFraction;
 
-import Meta.String.Alias;
-import Meta.String.Literals;
-import Meta.Token.Type;
+import ATR.Literals;
 
-using namespace ::Meta::Literals;
+import Meta.Token.Type;
 
 export namespace
 	ATR::Member
 {
 	auto constexpr
 	(	Configure
-	)	(	::Meta::ID_T<"Ellipsoid">
+	)	(	ID_T<"Ellipsoid">
 		,	auto
 			&&	o_rConfig
 		)

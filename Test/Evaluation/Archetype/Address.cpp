@@ -9,7 +9,7 @@ import Meta.String.Alias;
 
 using ::ATR::Address;
 using ::ATR::Type;
-using ::Meta::ID_T;
+using ::Meta::String::ID_T;
 
 static_assert
 (	Address<ID_T<"ComputeVolume">, Type<"Head"> const&>

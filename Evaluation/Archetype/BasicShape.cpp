@@ -2,6 +2,8 @@ export module Evaluation.Archetype.BasicShape;
 
 import Evaluation.Shared.DataTypes;
 
+import ATR.Literals;
+
 import Meta.String.Alias;
 import Meta.Token.Type;
 
@@ -10,7 +12,7 @@ export namespace
 {
 	auto constexpr
 	(	Configure
-	)	(	::Meta::ID_T<"BasicShape">
+	)	(	ID_T<"BasicShape">
 		,	auto
 			&&	o_rConfig
 		)

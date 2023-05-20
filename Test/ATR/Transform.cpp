@@ -1,3 +1,4 @@
+import ATR.Literals;
 import ATR.Member.Config;
 import ATR.Member.ConfigTransformer;
 
@@ -23,7 +24,7 @@ namespace
 {
 	auto constexpr
 	(	Configure
-	)	(	::Meta::ID_T<"Single">
+	)	(	ID_T<"Single">
 		,	auto
 			&&	o_rConfig
 		)
@@ -38,7 +39,7 @@ namespace
 
 	auto constexpr
 	(	Configure
-	)	(	::Meta::ID_T<"Const">
+	)	(	ID_T<"Const">
 		,	auto
 			&&	o_rConfig
 		)
@@ -53,7 +54,7 @@ namespace
 
 	auto constexpr
 	(	Configure
-	)	(	::Meta::ID_T<"TransformedConst">
+	)	(	ID_T<"TransformedConst">
 		,	auto
 			&&	o_rConfig
 		)
@@ -69,7 +70,7 @@ namespace
 
 	auto constexpr
 	(	Configure
-	)	(	::Meta::ID_T<"Mut">
+	)	(	ID_T<"Mut">
 		,	auto
 			&&	o_rConfig
 		)
@@ -84,7 +85,7 @@ namespace
 
 	auto constexpr
 	(	Configure
-	)	(	::Meta::ID_T<"TransformedMut">
+	)	(	ID_T<"TransformedMut">
 		,	auto
 			&&	o_rConfig
 		)
@@ -100,7 +101,7 @@ namespace
 
 	auto constexpr
 	(	Configure
-	)	(	::Meta::ID_T<"Array">
+	)	(	ID_T<"Array">
 		,	auto
 			&&	o_rConfig
 		)
@@ -115,7 +116,7 @@ namespace
 
 	auto constexpr
 	(	Configure
-	)	(	::Meta::ID_T<"TransformedArray">
+	)	(	ID_T<"TransformedArray">
 		,	auto
 			&&	o_rConfig
 		)

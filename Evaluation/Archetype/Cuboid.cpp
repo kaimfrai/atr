@@ -1,21 +1,18 @@
 export module Evaluation.Archetype.Cuboid;
 
 import Evaluation.Archetype.BasicBody;
-
 import Evaluation.Shared.Fraction;
 
-import Meta.String.Alias;
-import Meta.String.Literals;
-import Meta.Token.Type;
+import ATR.Literals;
 
-using namespace ::Meta::Literals;
+import Meta.Token.Type;
 
 export namespace
 	ATR::Member
 {
 	auto constexpr
 	(	Configure
-	)	(	::Meta::ID_T<"Cuboid">
+	)	(	ID_T<"Cuboid">
 		,	auto
 			&&	o_rConfig
 		)

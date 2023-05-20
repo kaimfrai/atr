@@ -6,7 +6,7 @@ import Meta.String.Alias;
 import Meta.Lex.Match;
 import Meta.Lex.FreeFunctionTokenizer;
 
-using ::Meta::ID_T;
+using ::Meta::String::ID_T;
 using ::Meta::String::Literal;
 
 export namespace

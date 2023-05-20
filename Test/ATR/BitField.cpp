@@ -22,7 +22,7 @@ namespace
 {
 	auto constexpr
 	(	Configure
-	)	(	::Meta::ID_T<"BitFieldTest">
+	)	(	ID_T<"BitFieldTest">
 		,	auto
 			&&	o_rConfig
 		)

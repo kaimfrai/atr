@@ -1,4 +1,5 @@
 import ATR.Instance;
+import ATR.Literals;
 import ATR.Member.Offset;
 import ATR.Member.OffsetOf;
 
@@ -6,12 +7,12 @@ import Meta.Bit.Array;
 import Meta.Bit.Field;
 import Meta.Bit.Index;
 import Meta.Bit.Reference;
-import Meta.String.Alias;
-import Meta.String.Literal;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Scale;
 import Meta.Memory.Size;
+import Meta.String.Alias;
+import Meta.String.Literal;
 import Meta.Token.Specifier;
 import Meta.Token.Type;
 
@@ -22,6 +23,7 @@ using ::Meta::BitSize;
 using ::Meta::Memory::ByteWidth;
 using ::Meta::Memory::SizeOf;
 using ::Meta::Specifier::Mut;
+using ::Meta::String::ID_T;
 using ::Meta::String::Literal;
 using ::Meta::Type;
 
@@ -32,7 +34,7 @@ namespace
 {
 	auto constexpr
 	(	Configure
-	)	(	::Meta::ID_T<"OffsetOfTest">
+	)	(	ID_T<"OffsetOfTest">
 		,	auto
 			&&	o_rConfig
 		)
@@ -95,7 +97,8 @@ auto constexpr
 =	Type
 	<	decltype
 		(	::ATR::Member::OffsetOf
-			(	::Meta::ID_V<t_vMemberName>
+			(	ID_T<t_vMemberName>
+				{}
 			,	::std::declval<t_tOwner>()
 				.	TypeName
 			)

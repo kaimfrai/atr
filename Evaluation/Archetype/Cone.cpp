@@ -1,21 +1,18 @@
 export module Evaluation.Archetype.Cone;
 
 import Evaluation.Archetype.BasicBody;
-
 import Evaluation.Shared.PiFraction;
 
-import Meta.String.Alias;
-import Meta.String.Literals;
-import Meta.Token.Type;
+import ATR.Literals;
 
-using namespace ::Meta::Literals;
+import Meta.Token.Type;
 
 export namespace
 	ATR::Member
 {
 	auto constexpr
 	(	Configure
-	)	(	::Meta::ID_T<"Cone">
+	)	(	ID_T<"Cone">
 		,	auto
 			&&	o_rConfig
 		)

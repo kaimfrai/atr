@@ -2,17 +2,14 @@ export module Evaluation.Archetype.Square;
 
 import Evaluation.Archetype.Rectangle;
 
-import Meta.String.Alias;
-import Meta.String.Literals;
-
-using namespace ::Meta::Literals;
+import ATR.Literals;
 
 export namespace
 	ATR::Member
 {
 	auto constexpr
 	(	Configure
-	)	(	::Meta::ID_T<"Square">
+	)	(	ID_T<"Square">
 		,	auto
 			&&	o_rConfig
 		)

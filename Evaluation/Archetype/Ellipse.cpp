@@ -1,21 +1,18 @@
 export module Evaluation.Archetype.Ellipse;
 
 import Evaluation.Archetype.BasicShape;
-
 import Evaluation.Shared.PiFraction;
 
-import Meta.String.Alias;
-import Meta.String.Literals;
-import Meta.Token.Type;
+import ATR.Literals;
 
-using namespace ::Meta::Literals;
+import Meta.Token.Type;
 
 export namespace
 	ATR::Member
 {
 	auto constexpr
 	(	Configure
-	)	(	::Meta::ID_T<"Ellipse">
+	)	(	ID_T<"Ellipse">
 		,	auto
 			&&	o_rConfig
 		)

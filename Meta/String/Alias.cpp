@@ -6,11 +6,11 @@ import Meta.String.Literal;
 import Std;
 
 export namespace
-	Meta
+	Meta::String
 {
 	/// creates an identifier type
 	template
-		<	String::Literal
+		<	Literal
 				t_vLiteral
 		>
 	using
@@ -26,14 +26,5 @@ export namespace
 			)
 		)
 	;
-
-	/// create an identifier value
-	template
-		<	String::Literal
-				t_vLiteral
-		>
-	ID_T<t_vLiteral> constexpr
-		ID_V
-	{};
 }
 

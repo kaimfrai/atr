@@ -8,7 +8,7 @@ import Meta.String.Alias;
 import Meta.String.Concept;
 import Meta.String.Literal;
 
-using ::Meta::ID_T;
+using ::Meta::String::ID_T;
 using ::Meta::ProtoID;
 using ::Meta::String::Literal;
 

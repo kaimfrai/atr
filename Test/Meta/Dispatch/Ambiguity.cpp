@@ -33,10 +33,10 @@ namespace
 	}
 }
 
-using Meta::ID_T;
-using Meta::Dispatch::IsPathBlocked;
-using Meta::Dispatch::Path;
-using Meta::Dispatch::ProtoPath;
+using ::Meta::Dispatch::IsPathBlocked;
+using ::Meta::Dispatch::Path;
+using ::Meta::Dispatch::ProtoPath;
+using ::Meta::String::ID_T;
 
 static_assert
 (	ProtoPath

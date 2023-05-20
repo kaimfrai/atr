@@ -3,18 +3,16 @@ export module Evaluation.Archetype.Cylinder;
 import Evaluation.Archetype.BasicBody;
 import Evaluation.Shared.PiFraction;
 
-import Meta.String.Alias;
-import Meta.String.Literals;
-import Meta.Token.Type;
+import ATR.Literals;
 
-using namespace ::Meta::Literals;
+import Meta.Token.Type;
 
 export namespace
 	ATR::Member
 {
 	auto constexpr
 	(	Configure
-	)	(	::Meta::ID_T<"Cylinder">
+	)	(	ID_T<"Cylinder">
 		,	auto
 			&&	o_rConfig
 		)
