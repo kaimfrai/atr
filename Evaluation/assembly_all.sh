@@ -6,7 +6,7 @@ if [ $# -lt 1 ] || [ $1 == "virtual" ]
 then
 	echo "virtual"
 	clang++-17\
-		-std=c++2b -stdlib=libc++ -O3\
+		-std=c++23 -O3 --no-warnings\
 		-fmodule-file=Evaluation.Virtual=build/Evaluation/modules/Evaluation/Virtual.pcm\
 		-fmodule-file=Evaluation.Virtual.IBody=build/Evaluation/modules/Evaluation/Virtual/IBody.pcm\
 		-fmodule-file=Evaluation.Virtual.Cube=build/Evaluation/modules/Evaluation/Virtual/Cube.pcm\
@@ -30,7 +30,7 @@ if [ $# -lt 1 ] || [ $1 == "any" ]
 then
 	echo "any"
 	clang++-17\
-		-std=c++2b -stdlib=libc++ -O3\
+		-std=c++23 -O3 --no-warnings\
 		-fmodule-file=Evaluation.Any=build/Evaluation/modules/Evaluation/Any.pcm\
 		-fmodule-file=Evaluation.CRTP.Cube=build/Evaluation/modules/Evaluation/CRTP/Cube.pcm\
 		-fmodule-file=Evaluation.CRTP.Cuboid=build/Evaluation/modules/Evaluation/CRTP/Cuboid.pcm\
@@ -54,7 +54,7 @@ if [ $# -lt 1 ] || [ $1 == "dyno" ]
 then
 	echo "dyno"
 	clang++-17\
-		-std=c++2b -stdlib=libc++ -O3\
+		-std=c++23 -O3 --no-warnings\
 		-fmodule-file=Evaluation.Dyno=build/Evaluation/modules/Evaluation/Dyno.pcm\
 		-fmodule-file=Evaluation.Dyno.Library=build/Evaluation/modules/Evaluation/Dyno/Library.pcm\
 		-fmodule-file=Evaluation.CRTP.Cube=build/Evaluation/modules/Evaluation/CRTP/Cube.pcm\
@@ -79,7 +79,7 @@ if [ $# -lt 1 ] || [ $1 == "polymorphic" ]
 then
 	echo "polymorphic"
 	clang++-17\
-		-std=c++2b -stdlib=libc++ -O3\
+		-std=c++23 -O3 --no-warnings\
 		-fmodule-file=Evaluation.Polymorphic=build/Evaluation/modules/Evaluation/Polymorphic.pcm\
 		-fmodule-file=Evaluation.Polymorphic.Library=build/Evaluation/modules/Evaluation/Polymorphic/Library.pcm\
 		-fmodule-file=Evaluation.CRTP.Cube=build/Evaluation/modules/Evaluation/CRTP/Cube.pcm\
@@ -105,7 +105,7 @@ if [ $# -lt 1 ] || [ $1 == "type_erasure" ]
 then
 	echo "type_erasure"
 	clang++-17\
-		-std=c++2b -stdlib=libc++ -O3\
+		-std=c++23 -O3 --no-warnings\
 		-fmodule-file=Evaluation.TypeErasure=build/Evaluation/modules/Evaluation/TypeErasure.pcm\
 		-fmodule-file=Evaluation.TypeErasure.Library=build/Evaluation/modules/Evaluation/TypeErasure/Library.pcm\
 		-fmodule-file=Evaluation.CRTP.Cube=build/Evaluation/modules/Evaluation/CRTP/Cube.pcm\
@@ -131,7 +131,7 @@ if [ $# -lt 1 ] || [ $1 == "archetype" ]
 then
 	echo "archetype"
 	clang++-17\
-		-std=c++2b -stdlib=libc++ -O3\
+		-std=c++23 -O3 --no-warnings\
 		-fmodule-file=ATR.Virtual.Interface=build/Evaluation/modules/ATR/Virtual/Interface.pcm\
 		-fmodule-file=ATR.Virtual.Storage=build/Evaluation/modules/ATR/Virtual/Storage.pcm\
 		-fmodule-file=ATR.Literals=build/Evaluation/modules/ATR/Literals.pcm\
@@ -160,7 +160,7 @@ if [ $# -lt 1 ] || [ $1 == "replication" ]
 then
 	echo "replication"
 	clang++-17\
-		-std=c++2b -stdlib=libc++ -O3\
+		-std=c++23 -O3 --no-warnings\
 		-fmodule-file=Evaluation.Replication.VolumeComputer=build/Evaluation/modules/Evaluation/Replication/VolumeComputer.pcm\
 		-fmodule-file=Evaluation.Replication.Cube=build/Evaluation/modules/Evaluation/Replication/Cube.pcm\
 		-fmodule-file=Evaluation.Replication.Cuboid=build/Evaluation/modules/Evaluation/Replication/Cuboid.pcm\
@@ -184,7 +184,7 @@ if [ $# -lt 1 ] || [ $1 == "variant" ]
 then
 	echo "variant"
 	clang++-17\
-		-std=c++2b -stdlib=libc++ -O3\
+		-std=c++23 -O3 --no-warnings\
 		-fmodule-file=Evaluation.CRTP.Cube=build/Evaluation/modules/Evaluation/CRTP/Cube.pcm\
 		-fmodule-file=Evaluation.CRTP.Cuboid=build/Evaluation/modules/Evaluation/CRTP/Cuboid.pcm\
 		-fmodule-file=Evaluation.CRTP.Pyramid=build/Evaluation/modules/Evaluation/CRTP/Pyramid.pcm\
@@ -207,7 +207,7 @@ if [ $# -lt 1 ] || [ $1 == "visitor" ]
 then
 	echo "visitor"
 	clang++-17\
-		-std=c++2b -stdlib=libc++ -O3\
+		-std=c++23 -O3 --no-warnings\
 		-fmodule-file=Evaluation.CRTP.Cube=build/Evaluation/modules/Evaluation/CRTP/Cube.pcm\
 		-fmodule-file=Evaluation.CRTP.Cuboid=build/Evaluation/modules/Evaluation/CRTP/Cuboid.pcm\
 		-fmodule-file=Evaluation.CRTP.Pyramid=build/Evaluation/modules/Evaluation/CRTP/Pyramid.pcm\
