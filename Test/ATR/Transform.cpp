@@ -60,7 +60,7 @@ namespace
 	->	auto&&
 	{	(void)
 		ConfigTransformer{ o_rConfig, ::Meta::Const }
-			("Single"_ID)
+			("Single"_id)
 		;
 		return
 			o_rConfig
@@ -91,7 +91,7 @@ namespace
 	->	auto&&
 	{	(void)
 		ConfigTransformer{ o_rConfig, ::Meta::Mutable }
-			("Single"_ID)
+			("Single"_id)
 		;
 		return
 			o_rConfig
@@ -122,7 +122,7 @@ namespace
 	->	auto&&
 	{	(void)
 		ConfigTransformer{ o_rConfig, ::Meta::Extent<5uz> }
-			("Single"_ID)
+			("Single"_id)
 		;
 		return
 			o_rConfig

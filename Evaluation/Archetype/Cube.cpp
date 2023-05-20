@@ -18,7 +18,7 @@ export namespace
 		o_rConfig
 			("Depth", "Height")
 			("Width", "Height")
-			("Cuboid"_ID)
+			("Cuboid"_id)
 		;
 	}
 }

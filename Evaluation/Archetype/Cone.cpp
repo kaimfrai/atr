@@ -20,7 +20,7 @@ export namespace
 	{	return
 		o_rConfig
 			("Width", "Height")
-			("BasicBody"_ID)
+			("BasicBody"_id)
 			("ComputeVolumeMultiplier", ::Meta::Type<PiFraction<1z, 12z>>)
 		;
 	}

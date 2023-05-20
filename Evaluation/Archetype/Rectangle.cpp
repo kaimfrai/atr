@@ -19,7 +19,7 @@ export namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("BasicShape"_ID)
+			("BasicShape"_id)
 			("ComputeAreaMultiplier", ::Meta::Type<Fraction<>>)
 		;
 	}

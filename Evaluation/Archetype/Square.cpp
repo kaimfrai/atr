@@ -17,7 +17,7 @@ export namespace
 	{	return
 		o_rConfig
 			("Width", "Height")
-			("Rectangle"_ID)
+			("Rectangle"_id)
 		;
 	}
 }

@@ -18,7 +18,7 @@ export namespace
 		o_rConfig
 			("Depth", "Height")
 			("Width", "Height")
-			("Ellipsoid"_ID)
+			("Ellipsoid"_id)
 		;
 	}
 }

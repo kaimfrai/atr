@@ -19,7 +19,7 @@ export namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("BasicBody"_ID)
+			("BasicBody"_id)
 			("ComputeVolumeMultiplier", ::Meta::Type<Fraction<>>)
 		;
 	}

@@ -17,7 +17,7 @@ export namespace
 	{	return
 		o_rConfig
 			("Width", "Height")
-			("Ellipse"_ID)
+			("Ellipse"_id)
 		;
 	}
 }

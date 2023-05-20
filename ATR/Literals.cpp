@@ -11,5 +11,5 @@ export namespace
 export namespace
 	ATR::inline Literals
 {
-	using ::Meta::Literals::operator""_ID;
+	using ::Meta::Literals::operator""_id;
 }

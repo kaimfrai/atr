@@ -16,7 +16,7 @@ export namespace
 	[[nodiscard]]
 	auto constexpr
 	(	operator
-		""_ID
+		""_id
 	)	()
 	->	ID_T
 		<	t_vString

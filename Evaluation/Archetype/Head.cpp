@@ -16,9 +16,9 @@ export namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("LeftEye", "Sphere"_ID)
-			("RightEye", "Sphere"_ID)
-			("Sphere"_ID)
+			("LeftEye", "Sphere"_id)
+			("RightEye", "Sphere"_id)
+			("Sphere"_id)
 		;
 	}
 }
