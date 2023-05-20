@@ -1,5 +1,6 @@
 export module Meta.ID:ID;
 
+import :Base;
 import :Decimal;
 import :Default;
 import :LowerCase;
@@ -22,6 +23,7 @@ template
 	>
 struct
 	ID final
+:	Base
 {
 	static auto constexpr
 		Length

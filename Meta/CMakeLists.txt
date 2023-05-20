@@ -22,6 +22,7 @@ add_subdirectory(String)
 add_module(
 	ID.cpp
 
+	ID/Base.cpp
 	ID/Decimal.cpp
 	ID/Default.cpp
 	ID/LowerCase.cpp

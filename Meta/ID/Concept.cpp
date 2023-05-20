@@ -1,12 +1,8 @@
 export module Meta.ID:Concept;
 
-import Meta.String.Chain;
+import :Base;
+
 import Meta.String.Literal;
-import Meta.Size;
-
-import Std;
-
-using ::Meta::String::Chain;
 
 export namespace
 	Meta
@@ -17,17 +13,12 @@ export namespace
 		>
 	concept
 		ProtoID
-	=	::std::convertible_to
-		<	t_tID
-		,	decltype
-			(	t_tID
-			::	String
-			)
-		>
-	and	::std::convertible_to
-		<	t_tID
-		,	Chain
-		>
+	=	requires
+		{	Base
+			{	t_tID
+				{}
+			};
+		}
 	;
 }
 
