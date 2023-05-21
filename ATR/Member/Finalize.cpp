@@ -194,8 +194,10 @@ namespace
 	[[nodiscard]]
 	auto constexpr
 	(	ResolveAliases
-	)	(	CountedBuffer<NamedInfo, NameBufferSize>
-			&	o_rNamedInfos
+	)	(	CountedBuffer<NamedInfo, NameBufferSize> const
+			&	i_rNamedInfos
+		,	NamedInfo
+			*	o_aInsertAlias
 		,	CountedBuffer<Alias, NameBufferSize> const
 			&	i_rAliasView
 		)
@@ -204,21 +206,16 @@ namespace
 	{
 		auto const
 			aMemberBegin
-		=	o_rNamedInfos
+		=	i_rNamedInfos
 			.	begin
 				()
 		;
 
 		auto const
 			aMemberEnd
-		=	o_rNamedInfos
+		=	i_rNamedInfos
 			.	end
 				()
-		;
-
-		auto
-			aInsertAlias
-		=	aMemberEnd
 		;
 
 		for	(	auto const
@@ -237,23 +234,23 @@ namespace
 				)
 			;
 
-			aInsertAlias
+			o_aInsertAlias
 			->	Name
 			=	rName
 			;
 
-			aInsertAlias
+			o_aInsertAlias
 			->	Info
 			=	aMember
 				->	Info
 			;
 
-			++	aInsertAlias
+			++	o_aInsertAlias
 			;
 		}
 
 		return
-			aInsertAlias
+			o_aInsertAlias
 		;
 	}
 
@@ -285,27 +282,57 @@ namespace
 		;
 
 		auto const
+			aNamedInfoEnd
+		=	vNamedInfo
+			.	end
+				()
+		;
+
+		auto const
+			aAliasBegin
+		=	aNamedInfoEnd
+		;
+
+		auto const
 			aAliasEnd
 		=	ResolveAliases
 			(	vNamedInfo
+			,	aAliasBegin
 			,	i_rAliasView
 			)
 		;
 
-		::std::sort
-		(	aNamedInfoBegin
-		,	aAliasEnd
-		);
+		CountedBuffer<NamedInfo, NameBufferSize>
+			vMerged
+		{};
 
-		vNamedInfo
+		auto const
+			aMergedBegin
+		=	vMerged
+			.	begin
+				()
+		;
+
+		auto const
+			aMergedEnd
+		=	::std::merge
+			(	aNamedInfoBegin
+			,	aNamedInfoEnd
+			,	aAliasBegin
+			,	aAliasEnd
+			,	aMergedBegin
+			)
+		;
+
+		vMerged
 		.	Count
-		=	(	aAliasEnd
-			-	aNamedInfoBegin
+		=	(	aMergedEnd
+			-	aMergedBegin
 			)
 		;
 
 		return
-			vNamedInfo
+			vMerged
 		;
 	}
 
