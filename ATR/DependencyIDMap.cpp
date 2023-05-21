@@ -1,15 +1,14 @@
 export module ATR.DependencyIDMap;
 
-import ATR.Dependency;
 import ATR.Address;
+import ATR.Dependency;
 import ATR.Erase;
-import ATR.Member.Storage;
+import ATR.Member.ConfigData;
 import ATR.Member.OffsetOf;
 
 import Meta.ID;
 import Meta.String.Literal;
 import Meta.String.Chain;
-import Meta.Logic.Bit.Clause;
 import Meta.Logic.Constraint;
 import Meta.Logic.Erased.Clause;
 import Meta.Logic.LiteralBase;
@@ -85,15 +84,46 @@ export namespace
 			)
 			noexcept
 		->	bool
-		{	return
-				Member::GetStorage
-				(		::std::remove_cvref_t
-						<	t_tEntity
-						>
-					::	TypeName
-				,	t_vDataID
+		{
+			Member::ConfigData const static constexpr
+			&	rConfig
+			=	t_tEntity
+				::	Config
+			;
+
+			for	(	auto const
+					&	rNamedInfo
+				:	rConfig
+					.	NamedInfoList
 				)
-			!=	Member::EStorage::None
+			{
+				auto const
+					vCompare
+				=	(	rNamedInfo
+					<=>	t_vDataID
+					)
+				;
+				if	(	::std::is_eq
+						(	vCompare
+						)
+					)
+				{	return
+						true
+					;
+				}
+
+				if	(	::std::is_gt
+						(	vCompare
+						)
+					)
+				{	return
+						false
+					;
+				}
+			}
+
+			return
+				false
 			;
 		}
 	};
