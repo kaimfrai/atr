@@ -1,6 +1,5 @@
 export module ATR.DependencyIDMap;
 
-import ATR.Address;
 import ATR.Dependency;
 import ATR.Erase;
 import ATR.Member.ConfigData;
@@ -19,48 +18,7 @@ import Std;
 using ::ATR::Member::OffsetOf;
 using ::Meta::ProtoID;
 using ::Meta::String::Chain;
-using ::Meta::ID;
 using ::Meta::String::Literal;
-
-export namespace
-	ATR
-{
-	template
-		<	ProtoID
-				t_tName
-		,	typename
-			...	t_tpArgument
-		>
-	struct
-		IDMap final
-	{
-		explicit(false) constexpr
-		(	IDMap
-		)	(	t_tName
-			,	Meta::TypeToken<t_tpArgument>
-				...
-			)
-		{}
-	};
-
-	template
-		<	ProtoID
-				t_tName
-		,	typename
-			...	t_tpArgument
-		>
-	(	IDMap
-	)	(	t_tName
-		,	Meta::TypeToken<t_tpArgument>
-			...
-		)
-	->	IDMap
-		<	t_tName
-		,	t_tpArgument
-			...
-		>
-	;
-}
 
 export namespace
 	ATR::Trait
@@ -179,30 +137,6 @@ export namespace
 namespace
 	ATR
 {
-	template
-		<	typename
-				t_tName
-		,	typename
-			...	t_tpArgument
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	MapDependency
-	)	(	IDMap<t_tName, t_tpArgument...>
-		,	auto
-			&&	i_rOwner
-		)
-		noexcept
-	->	FunctionType
-		<	t_tName
-		,	decltype(i_rOwner)
-		,	t_tpArgument
-			...
-		>
-	{	return
-		{};
-	}
-
 	[[nodiscard]]
 	auto constexpr
 	(	MapDependency
@@ -243,21 +177,6 @@ export namespace
 				,	::std::declval<t_tOwner>()
 				)
 			)
-			...
-		>
-	;
-
-	template
-		<	Literal
-				t_vFunctionName
-		,	auto
-			...	t_vpIDMap
-		>
-	using
-		StaticDependency
-	=	ArgumentDependency
-		<	ID<t_vFunctionName>
-		,	t_vpIDMap
 			...
 		>
 	;
