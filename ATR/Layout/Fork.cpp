@@ -30,7 +30,7 @@ namespace
 		;
 
 		using
-			SoutType
+			SouthType
 		=	t_tSouth
 		;
 	};
