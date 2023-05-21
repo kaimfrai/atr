@@ -67,7 +67,7 @@ export namespace
 	ATR::Trait
 {
 	template
-		<	Literal
+		<	Chain
 				t_vDataID
 		>
 	struct
@@ -91,10 +91,7 @@ export namespace
 						<	t_tEntity
 						>
 					::	TypeName
-				,	Chain
-					{	t_vDataID
-						.	Buffer
-					}
+				,	t_vDataID
 				)
 			!=	Member::EStorage::None
 			;

@@ -1,5 +1,7 @@
 export module Meta.String.Literal;
 
+import Meta.String.Chain;
+
 import Std;
 
 export namespace
@@ -76,6 +78,18 @@ export namespace
 		}
 
 		[[nodiscard]]
+		explicit(false) constexpr
+		(	operator
+			Chain
+		)	()	const&
+			noexcept
+		{	return
+			{	+
+				Buffer
+			};
+		}
+
+		[[nodiscard]]
 		auto constexpr
 		(	operator[]
 		)	(	::std::size_t
@@ -88,7 +102,6 @@ export namespace
 			[	i_nIndex
 			];
 		}
-
 
 		[[nodiscard]]
 		auto constexpr

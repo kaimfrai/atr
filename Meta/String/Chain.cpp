@@ -1,7 +1,5 @@
 export module Meta.String.Chain;
 
-import Meta.String.Literal;
-
 import Std;
 
 export namespace
