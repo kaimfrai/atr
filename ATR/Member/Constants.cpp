@@ -16,11 +16,11 @@ export namespace
 
 	auto constexpr
 		TypeBufferSize
-	=	16uz
+	=	32uz
 	;
 
 	auto constexpr
 		NameBufferSize
-	=	16uz
+	=	32uz
 	;
 }
