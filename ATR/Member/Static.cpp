@@ -1,5 +1,7 @@
 export module ATR.Member.Static;
 
+import Std;
+
 export namespace
 	ATR::Member
 {
@@ -13,7 +15,10 @@ export namespace
 		[[nodiscard]]
 		auto static constexpr
 		(	operator()
-		)	()
+		)	(	::std::byte const
+				(&
+				)	[]
+			)
 			noexcept
 		->	t_tMember
 		{	return

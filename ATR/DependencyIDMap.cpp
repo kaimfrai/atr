@@ -201,30 +201,6 @@ export namespace
 	ATR
 {
 	template
-		<	Literal
-				t_vFunctionName
-		>
-	using
-		FunctionName
-	=	Dependency
-		<	ID<t_vFunctionName>
-		>
-	;
-
-	template
-		<	typename
-			...	t_tpDependency
-		>
-	using
-		DeduceDependencies
-	=	Dependency
-		<	::std::byte const(&)[]
-		,	t_tpDependency
-			...
-		>
-	;
-
-	template
 		<	typename
 				t_tOwner
 		,	auto

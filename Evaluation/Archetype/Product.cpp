@@ -1,8 +1,7 @@
 export module Evaluation.Archetype.Product;
 
 import Evaluation.Shared.DataTypes;
-import ATR.DependencyIDMap;
-import Meta.Token.Index;
+import ATR.Dependency;
 
 import Std;
 
@@ -17,28 +16,22 @@ export namespace
 	auto inline
 	(	Body
 	)	(	FunctionName<"Product">
-		,	DeduceDependencies<t_tpDependency...>
+		,	Dependency
+			<	::std::byte const(&)[]
+			,	t_tpDependency
+				...
+			>
 				i_vArgument
 		)
 		noexcept
 	->	Float
 	{	return
-		[	&i_vArgument
-		]	<	::std::size_t
-				...	t_npIndex
-			>(	::std::index_sequence
-				<	t_npIndex
-					...
-				>
+		(	...
+		*	t_tpDependency
+			::	operator()
+			(	i_vArgument
+				.	Argument
 			)
-		{	return
-			(	...
-			*	i_vArgument
-				(	::Meta::Index<t_npIndex>
-				)
-			);
-		}(	i_vArgument
-		.	ItemSequence
 		);
 	}
 }

@@ -2,9 +2,10 @@ export module Evaluation.Archetype.ComputeArea;
 
 import Evaluation.Archetype.Product;
 
+import ATR.Address;
+import ATR.Dependency;
 import ATR.DependencyIDMap;
 import ATR.Literals;
-import ATR.Address;
 
 export namespace
 	ATR

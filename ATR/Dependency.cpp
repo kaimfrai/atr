@@ -1,15 +1,10 @@
 export module ATR.Dependency;
 
-import ATR.Erase;
-
 import Meta.ID;
 import Meta.String.Literal;
-import Meta.Size;
-import Meta.Token.SelectByIndex;
-import Meta.Token.Index;
-import Meta.Token.Type;
 
-import Std;
+using ::Meta::ID;
+using ::Meta::String::Literal;
 
 export namespace
 	ATR
@@ -33,82 +28,16 @@ export namespace
 		t_tArgument
 			Argument
 		;
-
-		static auto constexpr
-			ItemSequence
-		=	::std::make_index_sequence
-			<	sizeof...(t_tpItem)
-			>{}
-		;
-
-		template
-			<	Meta::USize
-					t_nIndex
-			,	typename
-				...	t_tpArgument
-			>
-		[[nodiscard]]
-		auto constexpr
-		(	operator()
-		)	(	Meta::IndexToken<t_nIndex>
-			,	t_tpArgument
-				&&
-				...	i_rpArgument
-			)
-		->	decltype(auto)
-		{
-			auto constexpr
-				vItemPtr
-			=	::Meta::Token::SelectByIndex
-				{	::std::make_index_sequence
-					<	t_nIndex
-					>{}
-				}(	static_cast<t_tpItem*>
-					(	nullptr
-					)
-					...
-				)
-			;
-			using
-				tItem
-			=	decltype
-				(	auto
-					(	*
-						vItemPtr
-					)
-				)
-			;
-
-			if	constexpr
-				(	::std::is_invocable_v
-					<	tItem
-					,	decltype(Argument)
-					,	t_tpArgument
-						...
-					>
-				)
-			{	return
-					tItem
-				::	operator()
-				(	Argument
-				,	::std::forward
-					<	t_tpArgument
-					>(	i_rpArgument
-					)
-					...
-				);
-			}
-			else
-			{	return
-					tItem
-				::	operator ()
-				(	::std::forward
-					<	t_tpArgument
-					>(	i_rpArgument
-					)
-					...
-				);
-			}
-		}
 	};
+
+	template
+		<	Literal
+				t_vFunctionName
+		>
+	using
+		FunctionName
+	=	Dependency
+		<	ID<t_vFunctionName>
+		>
+	;
 }
