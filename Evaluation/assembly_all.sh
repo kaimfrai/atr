@@ -132,8 +132,8 @@ then
 	echo "archetype"
 	clang++-17\
 		-std=c++23 -O3 --no-warnings\
-		-fmodule-file=ATR.Virtual.Interface=build/Evaluation/modules/ATR/Virtual/Interface.pcm\
-		-fmodule-file=ATR.Virtual.Storage=build/Evaluation/modules/ATR/Virtual/Storage.pcm\
+		-fmodule-file=ATR.Virtual.Entry=build/Evaluation/modules/ATR/Virtual/Entry.pcm\
+		-fmodule-file=ATR.Virtual.Element=build/Evaluation/modules/ATR/Virtual/Element.pcm\
 		-fmodule-file=ATR.Literals=build/Evaluation/modules/ATR/Literals.pcm\
 		-fmodule-file=ATR.Instance=build/Evaluation/modules/ATR/Instance.pcm\
 		-fmodule-file=Evaluation.Archetype.ComputeVolume=build/Evaluation/modules/Evaluation/Archetype/ComputeVolume.pcm\
