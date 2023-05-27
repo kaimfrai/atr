@@ -20,6 +20,14 @@ export namespace
 	struct
 		Function
 	{
+		explicit(true) constexpr
+		(	Function
+		)	(	auto
+				&&
+				...
+			)
+		{}
+
 		[[nodiscard]]
 		static auto constexpr
 		(	operator ()
@@ -54,7 +62,7 @@ export namespace
 	using
 		FunctionType
 	=	decltype
-		(	MapAddress
+		(	Function
 			(	t_tFuncID{}
 			,	::std::declval<t_tpArgument>()
 				...

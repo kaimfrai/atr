@@ -12,8 +12,7 @@ export namespace
 {
 	using ::ATR::FunctionBody;
 
-	auto constexpr
-	(	MapAddress
+	(	Function
 	)	(	ID<"ComputeArea">
 		,	ProtoMemberInterface
 			<	"ComputeAreaMultiplier"
