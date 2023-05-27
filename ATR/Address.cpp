@@ -22,9 +22,7 @@ export namespace
 	{
 		explicit(true) constexpr
 		(	Function
-		)	(	auto
-				&&
-				...
+		)	(	...
 			)
 		{}
 
