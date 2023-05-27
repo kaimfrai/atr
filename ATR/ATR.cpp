@@ -38,5 +38,4 @@ export import ATR.Offset.Object;
 export import ATR.Virtual.Argument;
 export import ATR.Virtual.Element;
 export import ATR.Virtual.Entry;
-export import ATR.Virtual.Interface;
 export import ATR.Virtual.Table;

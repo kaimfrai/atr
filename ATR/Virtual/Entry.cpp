@@ -3,14 +3,8 @@ export module ATR.Virtual.Entry;
 import ATR.Address;
 
 import Meta.ID;
-import Meta.Lex.Function;
 import Meta.Token.Type;
 
-import Std;
-
-using ::Meta::TypeToken;
-using ::Meta::Lex::MatchFunction;
-using ::Meta::Lex::MatchTypeSignature;
 using ::Meta::TypeToken;
 using ::Meta::ProtoID;
 
@@ -26,7 +20,7 @@ export namespace
 	;
 
 	template
-		<	ProtoID
+		<	typename
 				t_tFuncID
 		,	typename
 				t_tResult
@@ -34,37 +28,26 @@ export namespace
 				t_tInitial
 		,	typename
 			...	t_tpArgument
-		,	typename
-			...	t_tpNoexcept
 		>
 	struct
 		Entry
 		<	t_tFuncID
-		,	MatchFunction
-			<	MatchTypeSignature
-				<	t_tResult
-				,	t_tInitial
+		,	auto
+				(	t_tInitial
 				,	t_tpArgument
 					...
-				>
-			,	t_tpNoexcept
-				...
-			>
+				)
+				noexcept
+			->	t_tResult
 		>
 	{
-		static bool constexpr
-			IsNoexcept
-		=	sizeof...(t_tpNoexcept)
-		>	0uz
-		;
-
 		auto
 		(*	Function
 		)	(	t_tInitial
 			,	t_tpArgument
 				...
 			)
-			noexcept(IsNoexcept)
+			noexcept
 		->	t_tResult
 		{};
 
@@ -105,18 +88,89 @@ export namespace
 				&&
 				...	i_rpArgument
 			)	const
-			noexcept(IsNoexcept)
+			noexcept
 		->	t_tResult
 		{	return
 			Function
-			(	::std::forward
-				<	t_tInitial
-				>(	i_vInitial
+			(	static_cast<t_tInitial>(i_vInitial)
+			,	static_cast<t_tpArgument&&>(i_rpArgument)
+				...
+			);
+		}
+	};
+
+	template
+		<	typename
+				t_tFuncID
+		,	typename
+				t_tResult
+		,	typename
+				t_tInitial
+		,	typename
+			...	t_tpArgument
+		>
+	struct
+		Entry
+		<	t_tFuncID
+		,	auto
+				(	t_tInitial
+				,	t_tpArgument
+					...
 				)
-			,	::std::forward
-				<	t_tpArgument
-				>(	i_rpArgument
-				)
+			->	t_tResult
+		>
+	{
+		auto
+		(*	Function
+		)	(	t_tInitial
+			,	t_tpArgument
+				...
+			)
+		->	t_tResult
+		{};
+
+		template
+			<	typename
+					t_tObject
+			>
+		explicit(true) constexpr
+		(	Entry
+		)	(	TypeToken
+				<	t_tObject
+				>
+			)
+		requires
+			ProtoAddress
+			<	t_tFuncID
+			,	t_tObject
+			,	t_tpArgument
+				...
+			>
+		:	Function
+			{	Address
+				<	t_tFuncID
+				,	t_tObject
+				,	t_tpArgument
+					...
+				>
+			}
+		{}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator()
+		)	(	t_tFuncID
+			,	t_tInitial
+					i_vInitial
+			,	t_tpArgument
+				&&
+				...	i_rpArgument
+			)	const
+		->	t_tResult
+		{	return
+			Function
+			(	static_cast<t_tInitial>(i_vInitial)
+			,	static_cast<t_tpArgument&&>(i_rpArgument)
 				...
 			);
 		}

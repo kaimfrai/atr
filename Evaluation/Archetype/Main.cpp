@@ -1,4 +1,4 @@
-import ATR.Virtual.Interface;
+import ATR.Virtual.Entry;
 import ATR.Virtual.Element;
 import ATR.Literals;
 import ATR.Instance;
@@ -30,14 +30,15 @@ auto
 {
 	using ATR::operator""_id;
 	using ATR::Type;
+	using ATR::ID;
 
 	using
 		Body3D
-	=	ATR::Virtual::Element
+	=	::ATR::Virtual::Element
 		<	sizeof(Type<"Head">)
 		,	alignof(Float)
-		,	ATR::Virtual::Interface
-			<	"ComputeVolume"
+		,	::ATR::Virtual::Entry
+			<	ID<"ComputeVolume">
 			,	auto(	::std::byte const
 						(&
 						)	[]
