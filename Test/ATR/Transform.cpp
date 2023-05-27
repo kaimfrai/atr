@@ -215,10 +215,7 @@ auto constexpr
 	noexcept
 ->	bool
 {	return
-		(	i_rLeft.Size
-		==	i_rRight.Size
-		)
-	and	(	i_rLeft.Layout
+		(	i_rLeft.Layout
 		==	i_rRight.Layout
 		)
 	and	(	i_rLeft.NamedInfoList

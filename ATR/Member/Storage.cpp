@@ -33,7 +33,7 @@ export namespace
 		noexcept
 	->	EStorage
 	{
-		auto constexpr
+		auto const
 		&	rConfig
 		=	Config_Of
 			<	decltype(i_vTypeName)
@@ -41,32 +41,24 @@ export namespace
 		;
 
 		if	(	auto const
-					vOffset
+					vInfo
 				=	rConfig
 					.	FindMemberInfo
 						(	i_rMemberName
 						)
-			;	vOffset
+			;	vInfo
 				.	has_value
 					()
 			)
 		{
-			if	(	vOffset
-					.	value
-						()
-					.	Offset
-				<	rConfig
-					.	Size
-				)
-			{	return
-					EStorage::Dynamic
-				;
-			}
-			else
-			{	return
-					EStorage::Static
-				;
-			}
+			return
+				vInfo
+				->	Type
+				.	IsAligned
+					()
+			?	EStorage::Dynamic
+			:	EStorage::Static
+			;
 		}
 
 		return

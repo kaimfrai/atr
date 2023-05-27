@@ -24,10 +24,6 @@ export namespace
 	struct
 		ConfigData
 	{
-		BitSize
-			Size
-		{};
-
 		AlignBuffer<TypeID>
 			Layout
 		{};

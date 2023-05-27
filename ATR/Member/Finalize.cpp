@@ -94,12 +94,15 @@ namespace
 	(	SortMembers
 	)	(	AlignBuffer<NamedType> const
 			&	i_rNamedTypeView
-		,	BitSize
-			&	o_rAccumulatedOffset
 		)
 		noexcept
 	->	CountedBuffer<NamedInfo, NameBufferSize>
 	{
+		BitSize
+			vAccumulatedOffset
+		=	0_bit
+		;
+
 		CountedBuffer<NamedInfo, NameBufferSize>
 			vResult
 		{};
@@ -169,10 +172,10 @@ namespace
 			aInsert
 			->	Info
 			.	Offset
-			=	o_rAccumulatedOffset
+			=	vAccumulatedOffset
 			;
 
-			o_rAccumulatedOffset
+			vAccumulatedOffset
 			+=	rType
 				.	GetSize
 					()
@@ -260,8 +263,6 @@ namespace
 			&	i_rNamedTypeView
 		,	CountedBuffer<Alias, NameBufferSize> const
 			&	i_rAliasView
-		,	BitSize
-			&	o_rAccumulatedOffset
 		)
 		noexcept
 	->	CountedBuffer<NamedInfo, NameBufferSize>
@@ -270,7 +271,6 @@ namespace
 			vNamedInfo
 		=	SortMembers
 			(	i_rNamedTypeView
-			,	o_rAccumulatedOffset
 			)
 		;
 
@@ -344,11 +344,6 @@ namespace
 		noexcept
 	->	ConfigData
 	{
-		BitSize
-			vAccumulatedOffset
-		=	0_bit
-		;
-
 		auto const
 		&	rNamedTypeView
 		=	i_rConfigBuilder
@@ -368,13 +363,11 @@ namespace
 			(	rNamedTypeView
 			,	i_rConfigBuilder
 				.	AliasList
-			,	vAccumulatedOffset
 			)
 		;
 
 		return
-		{	vAccumulatedOffset
-		,	vLayout
+		{	vLayout
 		,	vNamedInfos
 		};
 	}
