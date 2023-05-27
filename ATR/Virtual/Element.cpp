@@ -1,15 +1,12 @@
 export module ATR.Virtual.Element;
 
 import ATR.Instance;
-import ATR.Virtual.Table;
 
 import Meta.ID;
-import Meta.Token.Type;
 
 import Std;
 
 using ::Meta::ProtoID;
-using ::Meta::TypeToken;
 
 export namespace
 	ATR::Virtual
@@ -24,42 +21,41 @@ export namespace
 		>
 	class
 		Element
+	:	t_tpEntry
+		...
 	{
-		Table
-		<	t_tpEntry
+		using
+			t_tpEntry
+		::	Dispatch
 			...
-		>	VTable
 		;
 
 		alignas(t_vMaxAlign)
 		::std::byte
-			ErasedElement
+			m_vErasedElement
 			[	sizeof(t_vMaxSize)
 			]
 		;
 
 	public:
-		template
-			<	ProtoID
-					t_tTypeName
-			>
 		explicit(false) constexpr
 		(	Element
-		)	(	TypeToken
-				<	Instance<t_tTypeName>
-				>
+		)	(	ProtoID auto
+					i_vTypeName
 			)
 		requires
-			(	sizeof(Instance<t_tTypeName>) <= t_vMaxSize
-			and	alignof(Instance<t_tTypeName>) <= t_vMaxAlign
+			(	sizeof(Instance<decltype(i_vTypeName)>) <= t_vMaxSize
+			and	alignof(Instance<decltype(i_vTypeName)>) <= t_vMaxAlign
 			)
-		:	VTable
-			{	::Meta::Type<Instance<t_tTypeName>&>
+		:	t_tpEntry
+			{	i_vTypeName
 			}
+			...
 		{
-			new (	+ErasedElement
+			new (	+
+					m_vErasedElement
 				)
-			Instance<t_tTypeName>
+			Instance<decltype(i_vTypeName)>
 			{};
 		}
 
@@ -79,12 +75,11 @@ export namespace
 			)	const
 		->	decltype(auto)
 		{	return
-			VTable
+			Dispatch
 			(	i_vFuncName
-			,	ErasedElement
-			,	::std::forward
-				<	t_tpArgument
-				>(	i_rpArgument
+			,	m_vErasedElement
+			,	static_cast<t_tpArgument&&>
+				(	i_rpArgument
 				)
 				...
 			);
@@ -106,12 +101,11 @@ export namespace
 			)
 		->	decltype(auto)
 		{	return
-			VTable
+			Dispatch
 			(	i_vFuncName
-			,	ErasedElement
-			,	::std::forward
-				<	t_tpArgument
-				>(	i_rpArgument
+			,	m_vErasedElement
+			,	static_cast<t_tpArgument&&>
+				(	i_rpArgument
 				)
 				...
 			);

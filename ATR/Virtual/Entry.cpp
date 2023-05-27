@@ -1,11 +1,10 @@
 export module ATR.Virtual.Entry;
 
 import ATR.Address;
+import ATR.Instance;
 
 import Meta.ID;
-import Meta.Token.Type;
 
-using ::Meta::TypeToken;
 using ::Meta::ProtoID;
 
 export namespace
@@ -51,27 +50,22 @@ export namespace
 		->	t_tResult
 		{};
 
-		template
-			<	typename
-					t_tObject
-			>
 		explicit(true) constexpr
 		(	Entry
-		)	(	TypeToken
-				<	t_tObject
-				>
+		)	(	ProtoID auto
+					i_vTypeName
 			)
 		requires
 			ProtoAddress
 			<	t_tFuncID
-			,	t_tObject
+			,	Instance<decltype(i_vTypeName)>&
 			,	t_tpArgument
 				...
 			>
 		:	Function
 			{	Address
 				<	t_tFuncID
-				,	t_tObject
+				,	Instance<decltype(i_vTypeName)>&
 				,	t_tpArgument
 					...
 				>
@@ -80,7 +74,7 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr
-		(	operator()
+		(	Dispatch
 		)	(	t_tFuncID
 			,	t_tInitial
 					i_vInitial
@@ -129,27 +123,22 @@ export namespace
 		->	t_tResult
 		{};
 
-		template
-			<	typename
-					t_tObject
-			>
 		explicit(true) constexpr
 		(	Entry
-		)	(	TypeToken
-				<	t_tObject
-				>
+		)	(	ProtoID auto
+					i_vTypeName
 			)
 		requires
 			ProtoAddress
 			<	t_tFuncID
-			,	t_tObject
+			,	Instance<decltype(i_vTypeName)>&
 			,	t_tpArgument
 				...
 			>
 		:	Function
 			{	Address
 				<	t_tFuncID
-				,	t_tObject
+				,	Instance<decltype(i_vTypeName)>&
 				,	t_tpArgument
 					...
 				>
@@ -158,7 +147,7 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr
-		(	operator()
+		(	Dispatch
 		)	(	t_tFuncID
 			,	t_tInitial
 					i_vInitial

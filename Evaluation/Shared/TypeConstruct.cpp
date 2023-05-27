@@ -1,20 +1,24 @@
 export module Evaluation.Shared.TypeConstruct;
 
-import Meta.Token.Type;
+import Meta.ID;
+import Meta.String.Literal;
+
+using ::Meta::ID;
+using ::Meta::String::Literal;
 
 export
 {
 	template
-		<	typename
-				t_tBody
+		<	Literal
+				t_vTypeName
 		>
 	[[nodiscard]]
 	auto constexpr
 		TypeConstruct
 		()
 		noexcept
-	->	::Meta::TypeToken
-		<	t_tBody
+	->	ID
+		<	t_vTypeName
 		>
 	{	return{};	}
 }

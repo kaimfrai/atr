@@ -64,14 +64,14 @@ auto
 	return
 	MainTemplate
 	<	Body3D
-	,	&TypeConstruct<Type<"Cube">>
-	,	&TypeConstruct<Type<"Cuboid">>
-	,	&TypeConstruct<Type<"Pyramid">>
-	,	&TypeConstruct<Type<"Sphere">>
-	,	&TypeConstruct<Type<"Cylinder">>
-	,	&TypeConstruct<Type<"Cone">>
-	,	&TypeConstruct<Type<"Ellipsoid">>
-	,	&TypeConstruct<Type<"Head">>
+	,	&TypeConstruct<"Cube">
+	,	&TypeConstruct<"Cuboid">
+	,	&TypeConstruct<"Pyramid">
+	,	&TypeConstruct<"Sphere">
+	,	&TypeConstruct<"Cylinder">
+	,	&TypeConstruct<"Cone">
+	,	&TypeConstruct<"Ellipsoid">
+	,	&TypeConstruct<"Head">
 	,	fComputeVolume
 	>(	::std::span
 		{	i_aArgValue
