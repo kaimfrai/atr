@@ -14,7 +14,7 @@ export namespace
 			...	t_tpDependency
 		>
 	auto inline
-	(	Body
+	(	FunctionBody
 	)	(	FunctionName<"Product">
 		,	Dependency
 			<	::std::byte const(&)[]

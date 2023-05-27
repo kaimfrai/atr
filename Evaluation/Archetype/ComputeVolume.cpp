@@ -10,7 +10,7 @@ import ATR.Literals;
 export namespace
 	ATR
 {
-	using ::ATR::Body;
+	using ::ATR::FunctionBody;
 
 	auto constexpr
 	(	MapAddress

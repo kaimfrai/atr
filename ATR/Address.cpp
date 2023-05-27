@@ -34,7 +34,7 @@ export namespace
 			/// the requirements are that the first template argument is the FuncID.
 			/// other template arguments will be deduced.
 			return
-			Body
+			FunctionBody
 			(	t_tFuncID
 				{}
 			,	t_tpDependency
