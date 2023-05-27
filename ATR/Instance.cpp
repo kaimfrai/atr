@@ -135,13 +135,6 @@ export namespace
 				...	i_rpArgument
 			)	&
 			noexcept
-			(	AddressNoexcept
-				<	t_tFunctionName
-				,	Instance&
-				,	t_tpArgument
-					...
-				>
-			)
 		->	decltype(auto)
 		{	return
 			Address
@@ -181,13 +174,6 @@ export namespace
 				...	i_rpArgument
 			)	const&
 			noexcept
-			(	AddressNoexcept
-				<	t_tFunctionName
-				,	Instance const&
-				,	t_tpArgument
-					...
-				>
-			)
 		->	decltype(auto)
 		{	return
 			Address
@@ -228,13 +214,6 @@ export namespace
 				...	i_rpArgument
 			)	&&
 			noexcept
-			(	AddressNoexcept
-				<	t_tFunctionName
-				,	Instance&&
-				,	t_tpArgument
-					...
-				>
-			)
 		->	decltype(auto)
 		{	return
 			Address

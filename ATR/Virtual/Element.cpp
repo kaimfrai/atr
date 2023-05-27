@@ -43,6 +43,7 @@ export namespace
 		)	(	ProtoID auto
 					i_vTypeName
 			)
+			noexcept
 		requires
 			(	sizeof(Instance<decltype(i_vTypeName)>) <= t_vMaxSize
 			and	alignof(Instance<decltype(i_vTypeName)>) <= t_vMaxAlign
@@ -73,6 +74,7 @@ export namespace
 				&&
 				...	i_rpArgument
 			)	const
+			noexcept
 		->	decltype(auto)
 		{	return
 			Dispatch
@@ -99,6 +101,7 @@ export namespace
 				&&
 				...	i_rpArgument
 			)
+			noexcept
 		->	decltype(auto)
 		{	return
 			Dispatch

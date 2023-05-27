@@ -6,6 +6,8 @@ import Meta.ID;
 
 import Std;
 
+using ::Meta::ProtoID;
+
 export namespace
 	ATR
 {
@@ -18,21 +20,6 @@ export namespace
 	struct
 		Function
 	{
-		static bool constexpr
-			Noexcept
-		=	noexcept
-			(	Body
-				(	::std::declval
-					<	t_tFuncID
-					>()
-				,	::std::declval
-					<	t_tpDependency
-					>()
-					...
-				)
-			)
-		;
-
 		[[nodiscard]]
 		static auto constexpr
 		(	operator ()
@@ -41,7 +28,7 @@ export namespace
 				::	ArgumentType
 				...	i_vpArgument
 			)
-			noexcept(Noexcept)
+			noexcept
 		->	decltype(auto)
 		{	/// the body of a function needs to be defined separately and is found here by ADL.
 			/// the requirements are that the first template argument is the FuncID.
@@ -59,7 +46,7 @@ export namespace
 	};
 
 	template
-		<	Meta::ProtoID
+		<	ProtoID
 				t_tFuncID
 		,	typename
 			...	t_tpArgument
@@ -76,7 +63,7 @@ export namespace
 	;
 
 	template
-		<	Meta::ProtoID
+		<	ProtoID
 				t_tFuncID
 		,	typename
 			...	t_tpArgument
@@ -97,7 +84,7 @@ export namespace
 		>
 	concept
 		ProtoAddress
-	=	Meta::ProtoID<t_tFuncID>
+	=	ProtoID<t_tFuncID>
 	and	requires
 		{	typename
 			FunctionType
@@ -106,17 +93,5 @@ export namespace
 				...
 			>;
 		}
-	;
-
-	template
-		<	Meta::ProtoID
-				t_tFunctionName
-		,	typename
-			...	t_tpArgument
-		>
-	bool constexpr
-		AddressNoexcept
-	=	FunctionType<t_tFunctionName, t_tpArgument...>
-	::	Noexcept
 	;
 }
