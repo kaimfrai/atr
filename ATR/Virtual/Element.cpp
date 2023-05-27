@@ -79,7 +79,7 @@ export namespace
 		{	return
 			Dispatch
 			(	i_vFuncName
-			,	m_vErasedElement
+			)(	m_vErasedElement
 			,	static_cast<t_tpArgument&&>
 				(	i_rpArgument
 				)
@@ -106,7 +106,7 @@ export namespace
 		{	return
 			Dispatch
 			(	i_vFuncName
-			,	m_vErasedElement
+			)(	m_vErasedElement
 			,	static_cast<t_tpArgument&&>
 				(	i_rpArgument
 				)

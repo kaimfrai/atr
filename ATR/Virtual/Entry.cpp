@@ -76,20 +76,12 @@ export namespace
 		auto constexpr
 		(	Dispatch
 		)	(	t_tFuncID
-			,	t_tInitial
-					i_vInitial
-			,	t_tpArgument
-				&&
-				...	i_rpArgument
 			)	const
 			noexcept
-		->	t_tResult
+		->	decltype(Function)
 		{	return
-			Function
-			(	static_cast<t_tInitial>(i_vInitial)
-			,	static_cast<t_tpArgument&&>(i_rpArgument)
-				...
-			);
+				Function
+			;
 		}
 	};
 }
