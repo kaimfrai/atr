@@ -25,13 +25,6 @@ using namespace ::Meta::Literals;
 namespace
 	ATR::Layout
 {
-	template
-		<	Alignment
-				t_vAlignment
-		>
-	struct
-		AlignToken
-	{};
 
 	[[nodiscard]]
 	auto constexpr

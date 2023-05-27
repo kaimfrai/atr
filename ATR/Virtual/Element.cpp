@@ -1,26 +1,24 @@
 export module ATR.Virtual.Element;
 
+import ATR.Instance;
 import ATR.Virtual.Table;
 
 import Meta.ID;
-import Meta.Logic.Constraint;
-import Meta.Predicate.Trivial;
 import Meta.Token.Type;
 
 import Std;
 
 using ::Meta::ProtoID;
 using ::Meta::TypeToken;
-using ::Meta::Type;
-using ::Meta::ProtoConstraint;
-using ::Meta::IsTriviallyCopyable;
 
 export namespace
 	ATR::Virtual
 {
 	template
-		<	typename
-				t_tErased
+		<	::std::size_t
+				t_vMaxSize
+		,	::std::size_t
+				t_vMaxAlign
 		,	typename
 			...	t_tpEntry
 		>
@@ -33,54 +31,36 @@ export namespace
 		>	VTable
 		;
 
-		alignas(t_tErased)
-			::std::byte
+		alignas(t_vMaxAlign)
+		::std::byte
 			ErasedElement
-			[	sizeof(t_tErased)
+			[	sizeof(t_vMaxSize)
 			]
 		;
 
 	public:
 		template
-			<	ProtoConstraint<IsTriviallyCopyable>
-					t_tObject
-			,	typename
-				...	t_tpArgument
+			<	ProtoID
+					t_tTypeName
 			>
-		requires
-			::std::constructible_from
-			<	t_tObject
-			,	t_tpArgument
-				...
-			>
-		and	(	sizeof(t_tObject)
-			<=	sizeof(t_tErased)
-			)
-		and	(	alignof(t_tObject)
-			<=	alignof(t_tErased)
-			)
 		explicit(false) constexpr
 		(	Element
 		)	(	TypeToken
-				<	t_tObject
+				<	Instance<t_tTypeName>
 				>
-			,	t_tpArgument
-				&&
-				...	i_rpArgument
+			)
+		requires
+			(	sizeof(Instance<t_tTypeName>) <= t_vMaxSize
+			and	alignof(Instance<t_tTypeName>) <= t_vMaxAlign
 			)
 		:	VTable
-			{	Type<t_tObject&>
+			{	::Meta::Type<Instance<t_tTypeName>&>
 			}
 		{
 			new (	+ErasedElement
 				)
-			t_tObject
-			{	::std::forward
-				<	t_tpArgument
-				>(	i_rpArgument
-				)
-				...
-			};
+			Instance<t_tTypeName>
+			{};
 		}
 
 		template
