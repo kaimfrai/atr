@@ -33,7 +33,7 @@ export namespace
 		alignas(t_vMaxAlign)
 		::std::byte
 			m_vErasedElement
-			[	sizeof(t_vMaxSize)
+			[	t_vMaxSize
 			]
 		;
 
