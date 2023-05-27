@@ -24,4 +24,4 @@ static_assert(SizeMinimal<Bodies3D::Cone, 2, 1>);
 
 static_assert(SizeMinimal<Bodies3D::Ellipsoid, 3, 1>);
 
-static_assert(SizeMinimal<Bodies3D::Head, 3, 3>);
+static_assert(SizeMinimal<Bodies3D::Head, 3, 2>);

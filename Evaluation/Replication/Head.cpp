@@ -21,10 +21,7 @@ export namespace
 			Color
 		;
 		RGBAColor
-			ColorLeftEye
-		;
-		RGBAColor
-			ColorRightEye
+			ColorEye
 		;
 	};
 }
