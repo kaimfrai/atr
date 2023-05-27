@@ -35,7 +35,7 @@ auto
 	using
 		Body3D
 	=	::ATR::Virtual::Element
-		<	sizeof(Type<"Head">)
+		<	5 * sizeof(Float)
 		,	alignof(Float)
 		,	::ATR::Virtual::Entry
 			<	ID<"ComputeVolume">
