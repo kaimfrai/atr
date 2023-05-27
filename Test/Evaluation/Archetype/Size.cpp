@@ -53,5 +53,5 @@ static_assert(SizeMinimal<ATR::Type<"Cone">, 2, 1>);
 static_assert(AdditionalSize<ATR::Type<"Ellipsoid">, 3, 1> == 4);
 static_assert(SizeMinimal<ATR::Type<"Ellipsoid">, 3, 1>);
 
-static_assert(AdditionalSize<ATR::Type<"Head">, 3, 3> == 4);
-static_assert(SizeMinimal<ATR::Type<"Head">, 3, 3>);
+static_assert(AdditionalSize<ATR::Type<"Head">, 3, 2> == 0);
+static_assert(SizeMinimal<ATR::Type<"Head">, 3, 2>);

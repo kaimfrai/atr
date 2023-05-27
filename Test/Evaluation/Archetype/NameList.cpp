@@ -383,7 +383,7 @@ static_assert
 		,	OffsetType<RGBAColor, 3z>
 		}
 	,	{	"ComputeVolumeMultiplier"
- 		,	OffsetType<Pi_6, 3z, 3z>
+ 		,	OffsetType<Pi_6, 3z, 2z>
 		}
 	,	{	"Depth"
 		,	OffsetType<Float>
@@ -395,7 +395,7 @@ static_assert
 		,	OffsetType<RGBAColor, 3z, 1z>
 		}
 	,	{	"LeftEyeComputeVolumeMultiplier"
-		,	OffsetType<Pi_6, 3z, 3z>
+		,	OffsetType<Pi_6, 3z, 2z>
 		}
 	,	{	"LeftEyeDepth"
 		,	OffsetType<Float, 1z>
@@ -407,10 +407,10 @@ static_assert
 		,	OffsetType<Float, 1z>
 		}
 	,	{	"RightEyeColor"
-		,	OffsetType<RGBAColor, 3z, 2z>
+		,	OffsetType<RGBAColor, 3z, 1z>
 		}
 	,	{	"RightEyeComputeVolumeMultiplier"
-		,	OffsetType<Pi_6, 3z, 3z>
+		,	OffsetType<Pi_6, 3z, 2z>
 		}
 	,	{	"RightEyeDepth"
 		,	OffsetType<Float, 2z>

@@ -390,7 +390,6 @@ static_assert
 ==	TypeList
 	{	Type<RGBAColor>
 	,	Type<RGBAColor>
-	,	Type<RGBAColor>
 	}
 );
 static_assert

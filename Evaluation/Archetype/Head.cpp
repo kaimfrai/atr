@@ -17,6 +17,7 @@ export namespace
 	{	return
 		o_rConfig
 			("LeftEye", "Sphere"_id)
+			("RightEyeColor", "LeftEyeColor")
 			("RightEye", "Sphere"_id)
 			("Sphere"_id)
 		;

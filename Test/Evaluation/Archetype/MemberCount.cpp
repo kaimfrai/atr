@@ -96,5 +96,7 @@ static_assert
 );
 static_assert
 (	MemberCount<"Head">
-==	3z * MemberCount<"Sphere">
+==	(	3z * MemberCount<"Sphere">
+	-	1z
+	)
 );
