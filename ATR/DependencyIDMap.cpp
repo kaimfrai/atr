@@ -134,30 +134,6 @@ export namespace
 	;
 }
 
-namespace
-	ATR
-{
-	[[nodiscard]]
-	auto constexpr
-	(	MapDependency
-	)	(	ProtoID auto
-				i_vDataID
-		,	auto
-			&&	i_rOwner
-		)
-		noexcept
-	->	decltype
-		(	OffsetOf
-			(	i_vDataID
-			,	i_rOwner
-				.	TypeName
-			)
-		)
-	{	return
-		{};
-	}
-}
-
 export namespace
 	ATR
 {
@@ -172,9 +148,10 @@ export namespace
 	=	Dependency
 		<	ErasedType<t_tOwner>
 		,	decltype
-			(	::ATR::MapDependency
+			(	OffsetOf
 				(	t_vpIDMap
 				,	::std::declval<t_tOwner>()
+					.	TypeName
 				)
 			)
 			...
