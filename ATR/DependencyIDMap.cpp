@@ -16,6 +16,7 @@ import Meta.Token.Type;
 import Std;
 
 using ::ATR::Member::OffsetOf;
+using ::Meta::ID;
 using ::Meta::ProtoID;
 using ::Meta::String::Chain;
 using ::Meta::String::Literal;
@@ -24,8 +25,8 @@ export namespace
 	ATR::Trait
 {
 	template
-		<	Chain
-				t_vDataID
+		<	ProtoID
+				t_tDataID
 		>
 	struct
 		HasDataMember final
@@ -58,7 +59,8 @@ export namespace
 				auto const
 					vCompare
 				=	(	rNamedInfo
-					<=>	t_vDataID
+					<=>	t_tDataID
+						{}
 					)
 				;
 				if	(	::std::is_eq
@@ -94,22 +96,22 @@ export namespace
 	// This assumes that there are no dublicates in the provided member name pack.
 	// Caches the clause independently of concept proto type.
 	template
-		<	Literal
-			...	t_vpMemberName
+		<	ProtoID
+			...	t_tpMemberName
 		>
 	::Meta::Logic::Erased::Clause constexpr
 		HasDataMember
 	{	.BitClause
 		{	// TODO Better express the intent of having the bottom bits set
 			(	1uz
-			<<	sizeof...(t_vpMemberName)
+			<<	sizeof...(t_tpMemberName)
 			)
 		-	1uz
 		}
 	,	.Literals
 		{	::Meta::Type
 			<	Trait::HasDataMember
-				<	t_vpMemberName
+				<	t_tpMemberName
 				>
 			>
 			...
@@ -119,7 +121,7 @@ export namespace
 	template
 		<	typename
 				t_tProto
-		,	Literal
+		,	typename
 			...	t_tpMemberName
 		>
 	concept
@@ -140,8 +142,8 @@ export namespace
 	template
 		<	typename
 				t_tOwner
-		,	auto
-			...	t_vpIDMap
+		,	ProtoID
+			...	t_tpMemberName
 		>
 	using
 		ArgumentDependency
@@ -149,7 +151,7 @@ export namespace
 		<	ErasedType<t_tOwner>
 		,	decltype
 			(	OffsetOf
-				(	t_vpIDMap
+				(	t_tpMemberName{}
 				,	::std::declval<t_tOwner>()
 					.	TypeName
 				)

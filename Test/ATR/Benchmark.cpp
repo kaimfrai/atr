@@ -2,9 +2,12 @@ import ATR.Instance;
 import ATR.Literals;
 
 import Meta.Bit.Field;
+import Meta.ID;
 import Meta.Memory.Size;
 
+using ::ATR::Instance;
 using ::Meta::Bit::Field;
+using ::Meta::ID;
 
 using namespace ::Meta::Literals;
 
@@ -347,11 +350,11 @@ namespace
 
 auto constexpr ExpectedSize = 2*(8*(sizeof(double) + sizeof(int) + sizeof(short) + sizeof(char)) + 1 + 3);
 
-static_assert(sizeof(::ATR::Type<"Benchmark1">) == ExpectedSize);
-static_assert(sizeof(::ATR::Type<"Benchmark2">) == ExpectedSize);
-static_assert(sizeof(::ATR::Type<"Benchmark3">) == ExpectedSize);
-static_assert(sizeof(::ATR::Type<"Benchmark4">) == ExpectedSize);
-static_assert(sizeof(::ATR::Type<"Benchmark5">) == ExpectedSize);
-static_assert(sizeof(::ATR::Type<"Benchmark6">) == ExpectedSize);
-static_assert(sizeof(::ATR::Type<"Benchmark7">) == ExpectedSize);
-static_assert(sizeof(::ATR::Type<"Benchmark8">) == ExpectedSize);
+static_assert(sizeof(Instance<ID<"Benchmark1">>) == ExpectedSize);
+static_assert(sizeof(Instance<ID<"Benchmark2">>) == ExpectedSize);
+static_assert(sizeof(Instance<ID<"Benchmark3">>) == ExpectedSize);
+static_assert(sizeof(Instance<ID<"Benchmark4">>) == ExpectedSize);
+static_assert(sizeof(Instance<ID<"Benchmark5">>) == ExpectedSize);
+static_assert(sizeof(Instance<ID<"Benchmark6">>) == ExpectedSize);
+static_assert(sizeof(Instance<ID<"Benchmark7">>) == ExpectedSize);
+static_assert(sizeof(Instance<ID<"Benchmark8">>) == ExpectedSize);

@@ -1,7 +1,9 @@
 export module Evaluation.Archetype.Product;
 
 import Evaluation.Shared.DataTypes;
+
 import ATR.Dependency;
+import ATR.Literals;
 
 import Std;
 
@@ -15,7 +17,7 @@ export namespace
 		>
 	auto inline
 	(	FunctionBody
-	)	(	FunctionName<"Product">
+	)	(	Dependency<ID<"Product">>
 		,	Dependency
 			<	::std::byte const(&)[]
 			,	t_tpDependency

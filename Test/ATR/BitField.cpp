@@ -41,7 +41,7 @@ using namespace ::ATR::Literals;
 using ::Meta::Bit::Reference;
 using ::Meta::UInt;
 
-using BitFieldTest = ::ATR::Type<"BitFieldTest">;
+using BitFieldTest = ::ATR::Instance<::Meta::ID<"BitFieldTest">>;
 
 static_assert
 (	alignof(BitFieldTest)

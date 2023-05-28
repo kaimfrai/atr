@@ -4,21 +4,20 @@ import Meta.ID;
 import Meta.String.Literal;
 
 using ::Meta::ID;
+using ::Meta::ProtoID;
 using ::Meta::String::Literal;
 
 export
 {
 	template
-		<	Literal
-				t_vTypeName
+		<	ProtoID
+				t_tTypeName
 		>
 	[[nodiscard]]
 	auto constexpr
 		TypeConstruct
 		()
 		noexcept
-	->	ID
-		<	t_vTypeName
-		>
+	->	t_tTypeName
 	{	return{};	}
 }

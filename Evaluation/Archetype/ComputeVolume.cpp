@@ -15,21 +15,21 @@ export namespace
 	(	Function
 	)	(	ID<"ComputeVolume">
 		,	ProtoMemberInterface
-			<	"ComputeVolumeMultiplier"
-			,	"Depth"
-			,	"Height"
-			,	"Width"
+			<	ID<"ComputeVolumeMultiplier">
+			,	ID<"Depth">
+			,	ID<"Height">
+			,	ID<"Width">
 			>	auto const
 			&	i_rBody
 		)
 	->	Function
-		<	FunctionName<"Product">
+		<	Dependency<ID<"Product">>
 		,	ArgumentDependency
 			<	decltype(i_rBody)
-			,	"ComputeVolumeMultiplier"_id
-			,	"Depth"_id
-			,	"Height"_id
-			,	"Width"_id
+			,	ID<"ComputeVolumeMultiplier">
+			,	ID<"Depth">
+			,	ID<"Height">
+			,	ID<"Width">
 			>
 		>
 	;

@@ -29,7 +29,6 @@ auto
 -> int
 {
 	using ATR::operator""_id;
-	using ATR::Type;
 	using ATR::ID;
 
 	using
@@ -64,14 +63,14 @@ auto
 	return
 	MainTemplate
 	<	Body3D
-	,	&TypeConstruct<"Cube">
-	,	&TypeConstruct<"Cuboid">
-	,	&TypeConstruct<"Pyramid">
-	,	&TypeConstruct<"Sphere">
-	,	&TypeConstruct<"Cylinder">
-	,	&TypeConstruct<"Cone">
-	,	&TypeConstruct<"Ellipsoid">
-	,	&TypeConstruct<"Head">
+	,	&TypeConstruct<ID<"Cube">>
+	,	&TypeConstruct<ID<"Cuboid">>
+	,	&TypeConstruct<ID<"Pyramid">>
+	,	&TypeConstruct<ID<"Sphere">>
+	,	&TypeConstruct<ID<"Cylinder">>
+	,	&TypeConstruct<ID<"Cone">>
+	,	&TypeConstruct<ID<"Ellipsoid">>
+	,	&TypeConstruct<ID<"Head">>
 	,	fComputeVolume
 	>(	::std::span
 		{	i_aArgValue

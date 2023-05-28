@@ -29,15 +29,4 @@ export namespace
 			Argument
 		;
 	};
-
-	template
-		<	Literal
-				t_vFunctionName
-		>
-	using
-		FunctionName
-	=	Dependency
-		<	ID<t_vFunctionName>
-		>
-	;
 }

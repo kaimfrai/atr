@@ -8,10 +8,10 @@ import ATR.Instance;
 import Meta.ID;
 
 using ::ATR::Address;
-using ::ATR::Type;
+using ::ATR::Instance;
 using ::Meta::ID;
 
 static_assert
-(	Address<ID<"ComputeVolume">, Type<"Head"> const&>
-==	Address<ID<"ComputeVolume">, Type<"Sphere"> const&>
+(	Address<ID<"ComputeVolume">, Instance<ID<"Head">> const&>
+==	Address<ID<"ComputeVolume">, Instance<ID<"Sphere">> const&>
 );

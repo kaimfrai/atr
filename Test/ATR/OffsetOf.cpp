@@ -60,7 +60,7 @@ namespace
 	}
 }
 
-using OffsetOfTest = ::ATR::Type<"OffsetOfTest">;
+using OffsetOfTest = ::ATR::Instance<ID<"OffsetOfTest">>;
 
 ::Meta::ByteSize constexpr
 	ExpectedBufferSize

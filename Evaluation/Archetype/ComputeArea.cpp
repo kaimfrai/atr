@@ -15,19 +15,19 @@ export namespace
 	(	Function
 	)	(	ID<"ComputeArea">
 		,	ProtoMemberInterface
-			<	"ComputeAreaMultiplier"
-			,	"Height"
-			,	"Width"
+			<	ID<"ComputeAreaMultiplier">
+			,	ID<"Height">
+			,	ID<"Width">
 			>	auto const
 			&	i_rShape
 		)
 	->	Function
-		<	FunctionName<"Product">
+		<	Dependency<ID<"Product">>
 		,	ArgumentDependency
 			<	decltype(i_rShape)
-			,	"ComputeAreaMultiplier"_id
-			,	"Height"_id
-			,	"Width"_id
+			,	ID<"ComputeAreaMultiplier">
+			,	ID<"Height">
+			,	ID<"Width">
 			>
 		>
 	;

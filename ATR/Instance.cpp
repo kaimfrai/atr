@@ -231,17 +231,4 @@ export namespace
 			);
 		}
 	};
-
-	template
-		<	Literal
-				t_vTypeID
-		>
-	using
-		Type
-	=	::ATR::Instance
-		<	ID
-			<	t_vTypeID
-			>
-		>
-	;
 }
