@@ -9,14 +9,14 @@ export namespace
 	struct
 		Cone
 	{
+		RGBAColor
+			Color
+		;
 		Float
 			Depth
 		;
 		Float
 			Width
-		;
-		RGBAColor
-			Color
 		;
 	};
 

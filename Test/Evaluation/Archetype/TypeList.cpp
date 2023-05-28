@@ -63,11 +63,11 @@ template
 
 		for	(	auto
 					vAlign
-				=	ATR::Member::MaxAlign
+				=	0_align
 			;	(	vAlign
-				>	t_vAlignment
+				<	t_vAlignment
 				)
-			;	--	vAlign
+			;	++	vAlign
 					.	Value
 			)
 		{

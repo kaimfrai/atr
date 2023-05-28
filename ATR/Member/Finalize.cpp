@@ -9,6 +9,7 @@ import ATR.Member.CountedBuffer;
 import ATR.Member.NamedInfo;
 import ATR.Member.NamedType;
 
+import Meta.Memory.Ceil;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size;
 import Meta.Token.TypeID;
@@ -167,6 +168,15 @@ namespace
 			->	Info
 			.	Type
 			=	rType
+			;
+
+			vAccumulatedOffset
+			=	Ceil
+				(	vAccumulatedOffset
+				,	rType
+					.	GetAlign
+						()
+				)
 			;
 
 			aInsert

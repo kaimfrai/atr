@@ -6,19 +6,21 @@ import ATR.Layout.Group;
 import ATR.Layout.Value;
 import ATR.Offset.Member;
 
+import Meta.Memory.Alignment;
 import Meta.Memory.Constraint;
-import Meta.Memory.Size;
 import Meta.Memory.Size.Compare;
+import Meta.Memory.Size;
 import Meta.Token.Specifier;
 
 import Std;
 
 using ::ATR::Layout::Bit;
 using ::ATR::Layout::Fork;
-using ::ATR::Layout::Value;
 using ::ATR::Layout::Group;
+using ::ATR::Layout::Value;
 
 using ::Meta::BitSize;
+using ::Meta::Memory::BitAlign_Of;
 using ::Meta::Memory::BitSize_Of;
 using ::Meta::Specifier::Mut;
 
@@ -88,7 +90,7 @@ export namespace
 		<	typename
 			...	t_tpBit
 		,	BitSize
-				t_nOffset
+				t_vOffset
 		,	typename
 				t_tData
 		>
@@ -97,12 +99,23 @@ export namespace
 	(	operator->*
 	)	(	Bit<t_tpBit...>
 			&	i_rObject
-		,	Member<t_nOffset, t_tData>
+		,	Member<t_vOffset, t_tData>
 				i_vMember
 		)
 		noexcept
 	->	decltype(auto)
-	{	return
+	{
+		static_assert
+		(	(	BitAlign_Of<t_tData>
+			>	0_align
+			)
+		and	(	BitAlign_Of<t_tData>
+			<	4_align
+			)
+		,	"Attempted to access misaligned bit field!"
+		);
+
+		return
 			i_rObject
 			.	Buffer
 		->*	i_vMember
@@ -113,7 +126,7 @@ export namespace
 		<	typename
 			...	t_tpBit
 		,	BitSize
-				t_nOffset
+				t_vOffset
 		,	typename
 				t_tData
 		>
@@ -122,12 +135,23 @@ export namespace
 	(	operator->*
 	)	(	Bit<t_tpBit...> const
 			&	i_rObject
-		,	Member<t_nOffset, t_tData const>
+		,	Member<t_vOffset, t_tData const>
 				i_vMember
 		)
 		noexcept
 	->	decltype(auto)
-	{	return
+	{
+		static_assert
+		(	(	BitAlign_Of<t_tData>
+			>	0_align
+			)
+		and	(	BitAlign_Of<t_tData>
+			<	4_align
+			)
+		,	"Attempted to access misaligned bit field!"
+		);
+
+		return
 			static_cast<::std::byte const(&)[]>
 			(	i_rObject
 				.	Buffer
@@ -140,7 +164,7 @@ export namespace
 		<	typename
 			...	t_tpBit
 		,	BitSize
-				t_nOffset
+				t_vOffset
 		,	typename
 				t_tData
 		>
@@ -149,12 +173,22 @@ export namespace
 	(	operator->*
 	)	(	Bit<t_tpBit...> const
 			&	i_rObject
-		,	Member<t_nOffset, Mut<t_tData>>
+		,	Member<t_vOffset, Mut<t_tData>>
 				i_vMember
 		)
 		noexcept
 	->	decltype(auto)
-	{	return
+	{	static_assert
+		(	(	BitAlign_Of<t_tData>
+			>	0_align
+			)
+		and	(	BitAlign_Of<t_tData>
+			<	4_align
+			)
+		,	"Attempted to access misaligned bit field!"
+		);
+
+		return
 			static_cast<::std::byte const(&)[]>
 			(	i_rObject
 				.	Buffer
@@ -167,7 +201,7 @@ export namespace
 		<	typename
 			...	t_tpData
 		,	BitSize
-				t_nOffset
+				t_vOffset
 		,	typename
 				t_tData
 		>
@@ -176,7 +210,7 @@ export namespace
 	(	operator->*
 	)	(	Fork<t_tpData...>
 			&	i_rObject
-		,	Member<t_nOffset, t_tData>
+		,	Member<t_vOffset, t_tData>
 				i_vMember
 		)
 		noexcept
@@ -192,7 +226,7 @@ export namespace
 		;
 		if	constexpr
 			(	vNorthSize
-			>	t_nOffset
+			>	t_vOffset
 			)
 		{	return
 				i_rObject
@@ -205,7 +239,7 @@ export namespace
 				i_rObject
 				.	SouthArea
 			->*	Member
-				<	t_nOffset
+				<	t_vOffset
 				-	vNorthSize
 				,	t_tData
 				>{}
@@ -217,7 +251,7 @@ export namespace
 		<	typename
 			...	t_tpData
 		,	BitSize
-				t_nOffset
+				t_vOffset
 		,	typename
 				t_tData
 		>
@@ -226,7 +260,7 @@ export namespace
 	(	operator->*
 	)	(	Fork<t_tpData...> const
 			&	i_rObject
-		,	Member<t_nOffset, t_tData const>
+		,	Member<t_vOffset, t_tData const>
 				i_vMember
 		)
 		noexcept
@@ -242,7 +276,7 @@ export namespace
 		;
 		if	constexpr
 			(	vNorthSize
-			>	t_nOffset
+			>	t_vOffset
 			)
 		{	return
 				i_rObject
@@ -255,7 +289,7 @@ export namespace
 				i_rObject
 				.	SouthArea
 			->*	Member
-				<	t_nOffset
+				<	t_vOffset
 				-	vNorthSize
 				,	t_tData const
 				>{}
@@ -267,7 +301,7 @@ export namespace
 		<	typename
 			...	t_tpData
 		,	BitSize
-				t_nOffset
+				t_vOffset
 		,	typename
 				t_tData
 		>
@@ -276,7 +310,7 @@ export namespace
 	(	operator->*
 	)	(	Fork<t_tpData...> const
 			&	i_rObject
-		,	Member<t_nOffset, Mut<t_tData>>
+		,	Member<t_vOffset, Mut<t_tData>>
 				i_vMember
 		)
 		noexcept
@@ -292,7 +326,7 @@ export namespace
 		;
 		if	constexpr
 			(	vNorthSize
-			>	t_nOffset
+			>	t_vOffset
 			)
 		{	return
 				i_rObject
@@ -305,7 +339,7 @@ export namespace
 				i_rObject
 				.	SouthArea
 			->*	Member
-				<	t_nOffset
+				<	t_vOffset
 				-	vNorthSize
 				,	Mut<t_tData>
 				>{}
@@ -317,18 +351,18 @@ export namespace
 		<	typename
 				t_tNorth
 		,	typename
-			...	t_tpSouth
+				t_tSouth
 		,	BitSize
-				t_nOffset
+				t_vOffset
 		,	typename
 				t_tData
 		>
 	[[nodiscard]]
 	auto constexpr
 	(	operator->*
-	)	(	Group<t_tNorth, t_tpSouth...>
+	)	(	Group<t_tNorth, t_tSouth>
 			&	i_rObject
-		,	Member<t_nOffset, t_tData>
+		,	Member<t_vOffset, t_tData>
 				i_vMember
 		)
 		noexcept
@@ -336,13 +370,17 @@ export namespace
 	{
 		auto constexpr
 			vNorthSize
-		=	BitSize_Of
-			<	t_tNorth
-			>
+		=	(	BitSize_Of
+				<	Group<t_tNorth, t_tSouth>
+				>
+			-	BitSize_Of
+				<	t_tSouth
+				>
+			)
 		;
 		if	constexpr
 			(	vNorthSize
-			>	t_nOffset
+			>	t_vOffset
 			)
 		{	return
 				i_rObject
@@ -355,7 +393,7 @@ export namespace
 				i_rObject
 				.	SouthArea
 			->*	Member
-				<	t_nOffset
+				<	t_vOffset
 				-	vNorthSize
 				,	t_tData
 				>{}
@@ -367,18 +405,18 @@ export namespace
 		<	typename
 				t_tNorth
 		,	typename
-			...	t_tpSouth
+				t_tSouth
 		,	BitSize
-				t_nOffset
+				t_vOffset
 		,	typename
 				t_tData
 		>
 	[[nodiscard]]
 	auto constexpr
 	(	operator->*
-	)	(	Group<t_tNorth, t_tpSouth...> const
+	)	(	Group<t_tNorth, t_tSouth> const
 			&	i_rObject
-		,	Member<t_nOffset, t_tData const>
+		,	Member<t_vOffset, t_tData const>
 				i_vMember
 		)
 		noexcept
@@ -386,13 +424,17 @@ export namespace
 	{
 		auto constexpr
 			vNorthSize
-		=	BitSize_Of
-			<	t_tNorth
-			>
+		=	(	BitSize_Of
+				<	Group<t_tNorth, t_tSouth>
+				>
+			-	BitSize_Of
+				<	t_tSouth
+				>
+			)
 		;
 		if	constexpr
 			(	vNorthSize
-			>	t_nOffset
+			>	t_vOffset
 			)
 		{	return
 				i_rObject
@@ -405,7 +447,7 @@ export namespace
 				i_rObject
 				.	SouthArea
 			->*	Member
-				<	t_nOffset
+				<	t_vOffset
 				-	vNorthSize
 				,	t_tData const
 				>{}
@@ -417,18 +459,18 @@ export namespace
 		<	typename
 				t_tNorth
 		,	typename
-			...	t_tpSouth
+				t_tSouth
 		,	BitSize
-				t_nOffset
+				t_vOffset
 		,	typename
 				t_tData
 		>
 	[[nodiscard]]
 	auto constexpr
 	(	operator->*
-	)	(	Group<t_tNorth, t_tpSouth...> const
+	)	(	Group<t_tNorth, t_tSouth> const
 			&	i_rObject
-		,	Member<t_nOffset, Mut<t_tData>>
+		,	Member<t_vOffset, Mut<t_tData>>
 				i_vMember
 		)
 		noexcept
@@ -436,13 +478,17 @@ export namespace
 	{
 		auto constexpr
 			vNorthSize
-		=	BitSize_Of
-			<	t_tNorth
-			>
+		=	(	BitSize_Of
+				<	Group<t_tNorth, t_tSouth>
+				>
+			-	BitSize_Of
+				<	t_tSouth
+				>
+			)
 		;
 		if	constexpr
 			(	vNorthSize
-			>	t_nOffset
+			>	t_vOffset
 			)
 		{	return
 				i_rObject
@@ -455,7 +501,7 @@ export namespace
 				i_rObject
 				.	SouthArea
 			->*	Member
-				<	t_nOffset
+				<	t_vOffset
 				-	vNorthSize
 				,	Mut<t_tData>
 				>{}

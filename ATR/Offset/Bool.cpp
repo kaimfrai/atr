@@ -19,7 +19,7 @@ export namespace
 {
 	template
 		<	BitSize
-				t_nOffset
+				t_vOffset
 		>
 	[[nodiscard]]
 	auto constexpr
@@ -28,7 +28,7 @@ export namespace
 			(&	i_rObject
 			)	[]
 		,	Member
-			<	t_nOffset
+			<	t_vOffset
 			,	bool
 			>
 		)
@@ -38,7 +38,7 @@ export namespace
 		auto constexpr
 			vByteOffset
 		=	IndexCast<ByteIndex>
-			(	t_nOffset
+			(	t_vOffset
 			)
 		;
 		return
@@ -56,7 +56,7 @@ export namespace
 
 	template
 		<	BitSize
-				t_nOffset
+				t_vOffset
 		>
 	[[nodiscard]]
 	auto constexpr
@@ -65,7 +65,7 @@ export namespace
 			(&	i_rObject
 			)	[]
 		,	Member
-			<	t_nOffset
+			<	t_vOffset
 			,	bool const
 			>
 		)
@@ -74,7 +74,7 @@ export namespace
 	{	auto constexpr
 			vByteOffset
 		=	IndexCast<ByteIndex>
-			(	t_nOffset
+			(	t_vOffset
 			)
 		;
 		return

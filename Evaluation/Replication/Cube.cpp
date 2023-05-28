@@ -8,11 +8,11 @@ export namespace
 	struct
 		Cube
 	{
-		Float
-			Width
-		;
 		RGBAColor
 			Color
+		;
+		Float
+			Width
 		;
 	};
 

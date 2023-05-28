@@ -16,7 +16,7 @@ export namespace
 {
 	template
 		<	BitSize
-				t_nOffset
+				t_vOffset
 		,	typename
 				t_tData
 		>
@@ -26,7 +26,7 @@ export namespace
 	)	(	::std::byte
 			(&	i_rObject
 			)	[]
-		,	Member<t_nOffset, t_tData>
+		,	Member<t_vOffset, t_tData>
 		)
 		noexcept
 	->	t_tData&
@@ -37,14 +37,14 @@ export namespace
 		::std::launder
 		(	PointerCast<t_tData>
 			(	i_rObject
-			+	t_nOffset
+			+	t_vOffset
 			)
 		);
 	}
 
 	template
 		<	BitSize
-				t_nOffset
+				t_vOffset
 		,	typename
 				t_tData
 		>
@@ -54,7 +54,7 @@ export namespace
 	)	(	::std::byte const
 			(&	i_rObject
 			)	[]
-		,	Member<t_nOffset, t_tData const>
+		,	Member<t_vOffset, t_tData const>
 		)
 		noexcept
 	->	t_tData const&
@@ -65,7 +65,7 @@ export namespace
 		::std::launder
 		(	PointerCast<t_tData const>
 			(	i_rObject
-			+	t_nOffset
+			+	t_vOffset
 			)
 		);
 	}

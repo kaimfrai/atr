@@ -207,7 +207,7 @@ export namespace
 
 				if	(	aPrevious
 						->	Name
-					<	i_rMemberName
+					<=	i_rMemberName
 					)
 				{	return
 						i_aInsert
@@ -229,7 +229,7 @@ export namespace
 
 		[[nodiscard]]
 		auto static constexpr
-		(	MoveLowerAlignments
+		(	MoveHigherAlignments
 		)	(	NamedType const
 				*	i_aBegin
 			,	Alignment
@@ -254,7 +254,7 @@ export namespace
 						->	Type
 						.	GetAlign
 							()
-					>=	i_vAlign
+					<=	i_vAlign
 					)
 				{	return
 						i_aInsert
@@ -299,7 +299,7 @@ export namespace
 
 				auto const
 					aAlignmentEnd
-				=	MoveLowerAlignments
+				=	MoveHigherAlignments
 					(	NamedTypes
 						.	begin
 							()

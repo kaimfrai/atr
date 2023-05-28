@@ -8,6 +8,12 @@ export namespace
 	struct
 		Head
 	{
+		RGBAColor
+			Color
+		;
+		RGBAColor
+			ColorEye
+		;
 		Float
 			Width
 		;
@@ -16,12 +22,6 @@ export namespace
 		;
 		Float
 			WidthRightEye
-		;
-		RGBAColor
-			Color
-		;
-		RGBAColor
-			ColorEye
 		;
 	};
 }

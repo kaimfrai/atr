@@ -74,9 +74,7 @@ export namespace
 		->	decltype(auto)
 		{	return
 				AlignmentCounter
-				[	MaxAlign
-					.	Value
-				-	i_vAlignment
+				[	i_vAlignment
 					.	Value
 				]
 			;
@@ -92,9 +90,7 @@ export namespace
 		->	USize
 		{	return
 				AlignmentCounter
-				[	MaxAlign
-					.	Value
-				-	i_vAlignment
+				[	i_vAlignment
 					.	Value
 				]
 			;

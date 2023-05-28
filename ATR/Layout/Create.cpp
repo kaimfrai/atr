@@ -25,7 +25,6 @@ using namespace ::Meta::Literals;
 namespace
 	ATR::Layout
 {
-
 	[[nodiscard]]
 	auto constexpr
 	(	MakeBit
@@ -104,7 +103,7 @@ namespace
 		>
 	[[nodiscard]]
 	auto constexpr
-	(	MakeGroup
+	(	operator+
 	)	(	t_tNorth
 		,	t_tSouth
 		)
@@ -123,7 +122,7 @@ namespace
 		>
 	[[nodiscard]]
 	auto constexpr
-	(	MakeGroup
+	(	operator+
 	)	(	t_tNorth
 		,	Empty
 		)
@@ -139,7 +138,7 @@ namespace
 		>
 	[[nodiscard]]
 	auto constexpr
-	(	MakeGroup
+	(	operator+
 	)	(	Empty
 		,	t_tSouth
 		)
@@ -151,7 +150,7 @@ namespace
 
 	[[nodiscard]]
 	auto constexpr
-	(	MakeGroup
+	(	operator+
 	)	(	Empty
 		,	Empty
 		)
@@ -165,14 +164,6 @@ namespace
 export namespace
 	ATR::Layout
 {
-	template
-		<	Alignment
-				t_vAlignment
-			=	Member::MaxAlign
-		,	::std::uint8_t
-				t_vOffset
-			=	0u
-		>
 	[[nodiscard]]
 	auto constexpr
 	(	CreateLayout
@@ -189,30 +180,61 @@ export namespace
 			.	Layout
 		;
 
-		if	constexpr
-			(	t_vAlignment
-			<=	3_align
-			)
-		{
-			auto static constexpr
-				vBitTypeCount
-			=	(	rLayout
-					.	Counter
-						(	1_align
-						)
-				+	rLayout
-					.	Counter
-						(	2_align
-						)
-				+	rLayout
-					.	Counter
-						(	3_align
-						)
+		auto static constexpr
+			vCount0
+		=	rLayout
+			.	Counter
+				(	0_align
 				)
-			;
+		;
+		auto static constexpr
+			vBitTypeCount
+		=	(	rLayout
+				.	Counter
+					(	1_align
+					)
+			+	rLayout
+				.	Counter
+					(	2_align
+					)
+			+	rLayout
+				.	Counter
+					(	3_align
+					)
+			)
+		;
+		auto static constexpr
+			vCount4
+		=	rLayout
+			.	Counter
+				(	4_align
+				)
+		;
+		auto static constexpr
+			vCount5
+		=	rLayout
+			.	Counter
+				(	5_align
+				)
+		;
+		auto static constexpr
+			vCount6
+		=	rLayout
+			.	Counter
+				(	6_align
+				)
+		;
+		auto static constexpr
+			vCount7
+		=	rLayout
+			.	Counter
+				(	7_align
+				)
+		;
 
-			return
-			[]	<	::std::size_t
+		auto const
+			vBit
+		=	[]	<	::std::size_t
 					...	t_vpBitIndex
 				>(	::std::index_sequence
 					<	t_vpBitIndex
@@ -224,7 +246,7 @@ export namespace
 				(	RestoreTypeToken
 					<	rLayout
 						.	Buffer
-							[	t_vOffset
+							[	vCount0
 							+	t_vpBitIndex
 							]
 					>
@@ -233,58 +255,55 @@ export namespace
 			}(	::std::make_index_sequence
 				<	vBitTypeCount
 				>{}
-			);
-		}
-		else
-		{
-			auto static constexpr
-				vAlignCount
-			=	rLayout
-				.	Counter
-				(	t_vAlignment
-				)
-			;
+			)
+		;
 
-			auto const
-				vFork
-			=	[]	<	::std::size_t
-						...	t_vpIndex
-					>(	::std::index_sequence
-						<	t_vpIndex
-							...
-						>
-					)
-				{	return
-					MakeFork
-					(	RestoreTypeToken
-						<	rLayout
-							.	Buffer
-								[	t_vOffset
-								+	t_vpIndex
-								]
-						>
+		auto const
+			fMakeFork
+		=	[]	<	::std::size_t
+						t_vOffset
+				,	::std::size_t
+					...	t_vpIndex
+				>(	::std::index_sequence
+					<	t_vOffset
+					>
+				,	::std::index_sequence
+					<	t_vpIndex
 						...
-					);
-				}(	::std::make_index_sequence
-					<	vAlignCount
-					>{}
+					>
 				)
-			;
-			return
-			MakeGroup
-			(	vFork
-			,	CreateLayout
-				<	Alignment
-					{	t_vAlignment
-						.	Value
-					-	1z
-					}
-				,	(	t_vOffset
-					+	vAlignCount
-					)
-				>(	i_vTypeName
-				)
-			);
-		}
+			{	return
+				MakeFork
+				(	RestoreTypeToken
+					<	rLayout
+						.	Buffer
+							[	t_vOffset
+							+	t_vpIndex
+							]
+					>
+					...
+				);
+			}
+		;
+
+		return
+			vBit
+		+	fMakeFork
+			(	::std::index_sequence<vCount0 + vBitTypeCount>{}
+			,	::std::make_index_sequence<vCount4>{}
+			)
+		+	fMakeFork
+			(	::std::index_sequence<vCount0 + vBitTypeCount + vCount4>{}
+			,	::std::make_index_sequence<vCount5>{}
+			)
+		+	fMakeFork
+			(	::std::index_sequence<vCount0 + vBitTypeCount + vCount4 + vCount5>{}
+			,	::std::make_index_sequence<vCount6>{}
+			)
+		+	fMakeFork
+			(	::std::index_sequence<vCount0 + vBitTypeCount + vCount4 + vCount5 + vCount6>{}
+			,	::std::make_index_sequence<vCount7>{}
+			)
+		;
 	}
 }
