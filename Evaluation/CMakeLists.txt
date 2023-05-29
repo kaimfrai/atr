@@ -4,7 +4,7 @@ add_subdirectory(CRTP)
 add_subdirectory(Any)
 add_module_executable(
 	any
-		Any/Main.cpp
+		Any.cpp
 )
 target_compile_options(
 	any
@@ -20,13 +20,13 @@ PRIVATE
 add_subdirectory(Archetype)
 add_module_executable(
 	archetype
-		Archetype/Main.cpp
+		Archetype.cpp
 )
 
 add_subdirectory(Dyno)
 add_module_executable(
 	dyno
-		Dyno/Main.cpp
+		Dyno.cpp
 )
 target_compile_options(
 	dyno
@@ -42,7 +42,7 @@ PRIVATE
 add_subdirectory(Polymorphic)
 add_module_executable(
 	polymorphic
-		Polymorphic/Main.cpp
+		Polymorphic.cpp
 )
 target_compile_options(
 	polymorphic
@@ -58,13 +58,13 @@ PRIVATE
 add_subdirectory(Replication)
 add_module_executable(
 	replication
-		Replication/Main.cpp
+		Replication.cpp
 )
 
 add_subdirectory(TypeErasure)
 add_module_executable(
 	type_erasure
-		TypeErasure/Main.cpp
+		TypeErasure.cpp
 )
 target_compile_options(
 	type_erasure
@@ -77,11 +77,9 @@ PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )
 
-add_subdirectory(Variant)
-
 add_module_executable(
 	variant
-		Variant/Main.cpp
+		Variant.cpp
 )
 target_compile_options(
 	variant
@@ -97,7 +95,7 @@ PRIVATE
 add_subdirectory(Virtual)
 add_module_executable(
 	virtual
-		Virtual/Main.cpp
+		Virtual.cpp
 )
 target_compile_options(
 	virtual
@@ -110,10 +108,9 @@ PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )
 
-add_subdirectory(Visitor)
 add_module_executable(
 	visitor
-		Visitor/Main.cpp
+		Visitor.cpp
 )
 target_compile_options(
 	visitor
