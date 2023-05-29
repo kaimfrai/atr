@@ -15,7 +15,7 @@ then
 	echo "virtual"
 	valgrind\
 		--tool=cachegrind\
-		../Evaluation/Evaluation/Virtual/virtual\
+		../Evaluation/Evaluation/virtual\
 		$1 $2\
 		2> virtual.txt
 fi
@@ -25,7 +25,7 @@ then
 	echo "any"
 	valgrind\
 		--tool=cachegrind\
-		../Evaluation/Evaluation/Any/any\
+		../Evaluation/Evaluation/any\
 		$1 $2\
 		2> any.txt
 fi
@@ -35,7 +35,7 @@ then
 	echo "dyno"
 	valgrind\
 		--tool=cachegrind\
-		../Evaluation/Evaluation/Dyno/dyno\
+		../Evaluation/Evaluation/dyno\
 		$1 $2\
 		2> dyno.txt
 fi
@@ -45,7 +45,7 @@ then
 	echo "polymorphic"
 	valgrind\
 		--tool=cachegrind\
-		../Evaluation/Evaluation/Polymorphic/polymorphic\
+		../Evaluation/Evaluation/polymorphic\
 		$1 $2\
 		2> polymorphic.txt
 fi
@@ -55,7 +55,7 @@ then
 	echo "type_erasure"
 	valgrind\
 		--tool=cachegrind\
-		../Evaluation/Evaluation/TypeErasure/type_erasure\
+		../Evaluation/Evaluation/type_erasure\
 		$1 $2\
 		2> type_erasure.txt
 fi
@@ -65,7 +65,7 @@ then
 	echo "archetype"
 	valgrind\
 		--tool=cachegrind\
-		../Evaluation/Evaluation/Archetype/archetype\
+		../Evaluation/Evaluation/archetype\
 		$1 $2\
 		2> archetype.txt
 fi
@@ -75,7 +75,7 @@ then
 	echo "replication"
 	valgrind\
 		--tool=cachegrind\
-		../Evaluation/Evaluation/Replication/replication\
+		../Evaluation/Evaluation/replication\
 		$1 $2\
 		2> replication.txt
 fi
@@ -85,7 +85,7 @@ then
 	echo "variant"
 	valgrind\
 		--tool=cachegrind\
-		../Evaluation/Evaluation/Variant/variant\
+		../Evaluation/Evaluation/variant\
 		$1 $2\
 		2> variant.txt
 fi
@@ -95,7 +95,7 @@ then
 	echo "visitor"
 	valgrind\
 		--tool=cachegrind\
-		../Evaluation/Evaluation/Visitor/visitor\
+		../Evaluation/Evaluation/visitor\
 		$1 $2\
 		2> visitor.txt
 fi

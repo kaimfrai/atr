@@ -38,20 +38,3 @@ add_module(
 add_module(
 	Polymorphic.cpp
 )
-
-add_module_executable(
-	polymorphic
-		Main.cpp
-)
-
-target_compile_options(
-	polymorphic
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
-)
-
-target_link_options(
-	polymorphic
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
-)

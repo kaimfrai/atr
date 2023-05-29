@@ -10,8 +10,3 @@ add_single_file_modules(
 
 	VolumeComputer.cpp
 )
-
-add_module_executable(
-	replication
-		Main.cpp
-)

@@ -27,20 +27,3 @@ add_single_file_modules(
 	Head.cpp
 	Pyramid.cpp
 )
-
-add_module_executable(
-	virtual
-		Main.cpp
-)
-
-target_compile_options(
-	virtual
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
-)
-
-target_link_options(
-	virtual
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
-)

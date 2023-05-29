@@ -38,20 +38,3 @@ add_module(
 add_module(
 	Dyno.cpp
 )
-
-add_module_executable(
-	dyno
-		Main.cpp
-)
-
-target_compile_options(
-	dyno
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
-)
-
-target_link_options(
-	dyno
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
-)

@@ -21,8 +21,3 @@ add_single_file_modules(
 	Head.cpp
 	Pyramid.cpp
 )
-
-add_module_executable(
-	archetype
-		Main.cpp
-)

@@ -14,7 +14,7 @@ then
 	echo "virtual"
 	valgrind\
 		--tool=memcheck\
-		../Evaluation/Evaluation/Virtual/virtual\
+		../Evaluation/Evaluation/virtual\
 		$1 $2\
 		2> virtual.txt
 fi
@@ -24,7 +24,7 @@ then
 	echo "any"
 	valgrind\
 		--tool=memcheck\
-		../Evaluation/Evaluation/Any/any\
+		../Evaluation/Evaluation/any\
 		$1 $2\
 		2> any.txt
 fi
@@ -34,7 +34,7 @@ then
 	echo "dyno"
 	valgrind\
 		--tool=memcheck\
-		../Evaluation/Evaluation/Dyno/dyno\
+		../Evaluation/Evaluation/dyno\
 		$1 $2\
 		2> dyno.txt
 fi
@@ -44,7 +44,7 @@ then
 	echo "polymorphic"
 	valgrind\
 		--tool=memcheck\
-		../Evaluation/Evaluation/Polymorphic/polymorphic\
+		../Evaluation/Evaluation/polymorphic\
 		$1 $2\
 		2> polymorphic.txt
 fi
@@ -54,7 +54,7 @@ then
 	echo "type_erasure"
 	valgrind\
 		--tool=memcheck\
-		../Evaluation/Evaluation/TypeErasure/type_erasure\
+		../Evaluation/Evaluation/type_erasure\
 		$1 $2\
 		2> type_erasure.txt
 fi
@@ -64,7 +64,7 @@ then
 	echo "archetype"
 	valgrind\
 		--tool=memcheck\
-		../Evaluation/Evaluation/Archetype/archetype\
+		../Evaluation/Evaluation/archetype\
 		$1 $2\
 		2> archetype.txt
 fi
@@ -74,7 +74,7 @@ then
 	echo "replication"
 	valgrind\
 		--tool=memcheck\
-		../Evaluation/Evaluation/Replication/replication\
+		../Evaluation/Evaluation/replication\
 		$1 $2\
 		2> replication.txt
 fi
@@ -84,7 +84,7 @@ then
 	echo "variant"
 	valgrind\
 		--tool=memcheck\
-		../Evaluation/Evaluation/Variant/variant\
+		../Evaluation/Evaluation/variant\
 		$1 $2\
 		2> variant.txt
 fi
@@ -94,7 +94,7 @@ then
 	echo "visitor"
 	valgrind\
 		--tool=memcheck\
-		../Evaluation/Evaluation/Visitor/visitor\
+		../Evaluation/Evaluation/visitor\
 		$1 $2\
 		2> visitor.txt
 fi

@@ -1,13 +1,127 @@
 add_subdirectory(Shared)
-
 add_subdirectory(CRTP)
 
 add_subdirectory(Any)
+add_module_executable(
+	any
+		Any/Main.cpp
+)
+target_compile_options(
+	any
+PRIVATE
+	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
+)
+target_link_options(
+	any
+PRIVATE
+	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
+)
+
 add_subdirectory(Archetype)
+add_module_executable(
+	archetype
+		Archetype/Main.cpp
+)
+
 add_subdirectory(Dyno)
+add_module_executable(
+	dyno
+		Dyno/Main.cpp
+)
+target_compile_options(
+	dyno
+PRIVATE
+	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
+)
+target_link_options(
+	dyno
+PRIVATE
+	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
+)
+
 add_subdirectory(Polymorphic)
+add_module_executable(
+	polymorphic
+		Polymorphic/Main.cpp
+)
+target_compile_options(
+	polymorphic
+PRIVATE
+	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
+)
+target_link_options(
+	polymorphic
+PRIVATE
+	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
+)
+
 add_subdirectory(Replication)
+add_module_executable(
+	replication
+		Replication/Main.cpp
+)
+
 add_subdirectory(TypeErasure)
+add_module_executable(
+	type_erasure
+		TypeErasure/Main.cpp
+)
+target_compile_options(
+	type_erasure
+PRIVATE
+	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
+)
+target_link_options(
+	type_erasure
+PRIVATE
+	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
+)
+
 add_subdirectory(Variant)
+
+add_module_executable(
+	variant
+		Variant/Main.cpp
+)
+target_compile_options(
+	variant
+PRIVATE
+	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
+)
+target_link_options(
+	variant
+PRIVATE
+	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
+)
+
 add_subdirectory(Virtual)
+add_module_executable(
+	virtual
+		Virtual/Main.cpp
+)
+target_compile_options(
+	virtual
+PRIVATE
+	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
+)
+target_link_options(
+	virtual
+PRIVATE
+	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
+)
+
 add_subdirectory(Visitor)
+add_module_executable(
+	visitor
+		Visitor/Main.cpp
+)
+target_compile_options(
+	visitor
+PRIVATE
+	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
+)
+target_link_options(
+	visitor
+PRIVATE
+	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
+)
