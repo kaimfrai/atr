@@ -17,7 +17,7 @@ then
 	perf\
 		stat\
 		--repeat $3\
-		../Evaluation/Evaluation/virtual\
+		../Evaluation/bin/virtual\
 		$1 $2\
 		2> virtual.txt
 fi
@@ -28,7 +28,7 @@ then
 	perf\
 		stat\
 		--repeat $3\
-		../Evaluation/Evaluation/any\
+		../Evaluation/bin/any\
 		$1 $2\
 		2> any.txt
 fi
@@ -39,7 +39,7 @@ then
 	perf\
 		stat\
 		--repeat $3\
-		../Evaluation/Evaluation/dyno\
+		../Evaluation/bin/dyno\
 		$1 $2\
 		2> dyno.txt
 fi
@@ -50,7 +50,7 @@ then
 	perf\
 		stat\
 		--repeat $3\
-		../Evaluation/Evaluation/polymorphic\
+		../Evaluation/bin/polymorphic\
 		$1 $2\
 		2> polymorphic.txt
 fi
@@ -61,7 +61,7 @@ then
 	perf\
 		stat\
 		--repeat $3\
-		../Evaluation/Evaluation/type_erasure\
+		../Evaluation/bin/type_erasure\
 		$1 $2\
 		2> type_erasure.txt
 fi
@@ -72,7 +72,7 @@ then
 	perf\
 		stat\
 		--repeat $3\
-		../Evaluation/Evaluation/archetype\
+		../Evaluation/bin/archetype\
 		$1 $2\
 		2> archetype.txt
 fi
@@ -83,7 +83,7 @@ then
 	perf\
 		stat\
 		--repeat $3\
-		../Evaluation/Evaluation/replication\
+		../Evaluation/bin/replication\
 		$1 $2\
 		2> replication.txt
 fi
@@ -94,7 +94,7 @@ then
 	perf\
 		stat\
 		--repeat $3\
-		../Evaluation/Evaluation/Variant/variant\
+		../Evaluation/bin/variant\
 		$1 $2\
 		2> variant.txt
 fi
@@ -105,7 +105,7 @@ then
 	perf\
 		stat\
 		--repeat $3\
-		../Evaluation/Evaluation/Visitor/visitor\
+		../Evaluation/bin/visitor\
 		$1 $2\
 		2> visitor.txt
 fi

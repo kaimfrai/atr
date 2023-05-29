@@ -16,23 +16,22 @@ function execute_cachegrind ()
 
 	valgrind\
 		--tool=cachegrind\
-		../Evaluation/Evaluation/$3\
+		../Evaluation/bin/$3\
 		$1 $2\
 		2> $3.txt
 }
 
 if [ $# -lt 3 ]
 then
-	execute_cachegrind $1 $2 "virtual"
 	execute_cachegrind $1 $2 "any"
+	execute_cachegrind $1 $2 "archetype"
 	execute_cachegrind $1 $2 "dyno"
 	execute_cachegrind $1 $2 "polymorphic"
-	execute_cachegrind $1 $2 "type_erasure"
-	execute_cachegrind $1 $2 "archetype"
 	execute_cachegrind $1 $2 "replication"
+	execute_cachegrind $1 $2 "type_erasure"
 	execute_cachegrind $1 $2 "variant"
-	execute_cachegrind $1 $2 "visitor"
 	execute_cachegrind $1 $2 "virtual"
+	execute_cachegrind $1 $2 "visitor"
 else
 	execute_cachegrind $1 $2 $3
 fi

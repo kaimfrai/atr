@@ -1,10 +1,16 @@
 add_subdirectory(Shared)
 add_subdirectory(CRTP)
 
-add_subdirectory(Any)
+add_subdirectory(any)
 add_module_executable(
 	any
-		Any.cpp
+		any.cpp
+)
+set_target_properties(
+	any
+PROPERTIES
+RUNTIME_OUTPUT_DIRECTORY
+	"${CMAKE_BINARY_DIR}/bin/"
 )
 target_compile_options(
 	any
@@ -17,16 +23,28 @@ PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )
 
-add_subdirectory(Archetype)
+add_subdirectory(archetype)
 add_module_executable(
 	archetype
-		Archetype.cpp
+		archetype.cpp
+)
+set_target_properties(
+	archetype
+PROPERTIES
+RUNTIME_OUTPUT_DIRECTORY
+	"${CMAKE_BINARY_DIR}/bin/"
 )
 
-add_subdirectory(Dyno)
+add_subdirectory(dyno)
 add_module_executable(
 	dyno
-		Dyno.cpp
+		dyno.cpp
+)
+set_target_properties(
+	dyno
+PROPERTIES
+RUNTIME_OUTPUT_DIRECTORY
+	"${CMAKE_BINARY_DIR}/bin/"
 )
 target_compile_options(
 	dyno
@@ -39,10 +57,16 @@ PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )
 
-add_subdirectory(Polymorphic)
+add_subdirectory(polymorphic)
 add_module_executable(
 	polymorphic
-		Polymorphic.cpp
+		polymorphic.cpp
+)
+set_target_properties(
+	polymorphic
+PROPERTIES
+RUNTIME_OUTPUT_DIRECTORY
+	"${CMAKE_BINARY_DIR}/bin/"
 )
 target_compile_options(
 	polymorphic
@@ -55,16 +79,28 @@ PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )
 
-add_subdirectory(Replication)
+add_subdirectory(replication)
 add_module_executable(
 	replication
-		Replication.cpp
+		replication.cpp
+)
+set_target_properties(
+	replication
+PROPERTIES
+RUNTIME_OUTPUT_DIRECTORY
+	"${CMAKE_BINARY_DIR}/bin/"
 )
 
-add_subdirectory(TypeErasure)
+add_subdirectory(type_erasure)
 add_module_executable(
 	type_erasure
-		TypeErasure.cpp
+		type_erasure.cpp
+)
+set_target_properties(
+	type_erasure
+PROPERTIES
+RUNTIME_OUTPUT_DIRECTORY
+	"${CMAKE_BINARY_DIR}/bin/"
 )
 target_compile_options(
 	type_erasure
@@ -79,7 +115,13 @@ PRIVATE
 
 add_module_executable(
 	variant
-		Variant.cpp
+		variant.cpp
+)
+set_target_properties(
+	variant
+PROPERTIES
+RUNTIME_OUTPUT_DIRECTORY
+	"${CMAKE_BINARY_DIR}/bin/"
 )
 target_compile_options(
 	variant
@@ -92,10 +134,16 @@ PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )
 
-add_subdirectory(Virtual)
+add_subdirectory(virtual)
 add_module_executable(
 	virtual
-		Virtual.cpp
+		virtual.cpp
+)
+set_target_properties(
+	virtual
+PROPERTIES
+RUNTIME_OUTPUT_DIRECTORY
+	"${CMAKE_BINARY_DIR}/bin/"
 )
 target_compile_options(
 	virtual
@@ -110,7 +158,13 @@ PRIVATE
 
 add_module_executable(
 	visitor
-		Visitor.cpp
+		visitor.cpp
+)
+set_target_properties(
+	visitor
+PROPERTIES
+RUNTIME_OUTPUT_DIRECTORY
+	"${CMAKE_BINARY_DIR}/bin/"
 )
 target_compile_options(
 	visitor
