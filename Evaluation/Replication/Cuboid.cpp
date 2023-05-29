@@ -22,12 +22,13 @@ export namespace
 		;
 	};
 
+	[[nodiscard]]
 	auto constexpr
 		ComputeVolumeCuboid
 		(	void const
 			*	i_aObject
 		)
-	noexcept
+		noexcept
 	->	Float
 	{
 		Cuboid const

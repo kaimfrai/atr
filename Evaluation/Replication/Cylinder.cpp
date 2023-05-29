@@ -20,12 +20,13 @@ export namespace
 		;
 	};
 
+	[[nodiscard]]
 	auto constexpr
 		ComputeVolumeCylinder
 		(	void const
 			*	i_aObject
 		)
-	noexcept
+		noexcept
 	->	Float
 	{
 		Cylinder const

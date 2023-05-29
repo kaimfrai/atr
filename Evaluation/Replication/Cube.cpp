@@ -16,12 +16,13 @@ export namespace
 		;
 	};
 
+	[[nodiscard]]
 	auto constexpr
 		ComputeVolumeCube
 		(	void const
 			*	i_aObject
 		)
-	noexcept
+		noexcept
 	->	Float
 	{
 		Cube const

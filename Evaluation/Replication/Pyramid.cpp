@@ -23,12 +23,13 @@ export namespace
 		;
 	};
 
+	[[nodiscard]]
 	auto constexpr
 		ComputeVolumePyramid
 		(	void const
 			*	i_aObject
 		)
-	noexcept
+		noexcept
 	->	Float
 	{
 		Pyramid const

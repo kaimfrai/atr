@@ -24,7 +24,7 @@ export namespace
 		)	(	void const
 				*
 			)
-		noexcept
+			noexcept
 		->	Float
 		;
 
@@ -58,9 +58,9 @@ export namespace
 			;
 		};
 
-		constexpr
-			VolumeComputer
-			(	std::in_place_type_t
+		explicit(false) constexpr
+		(	VolumeComputer
+		)	(	::std::in_place_type_t
 				<	Cube
 				>
 			)
@@ -71,9 +71,9 @@ export namespace
 			{}
 		{}
 
-		constexpr
-			VolumeComputer
-			(	std::in_place_type_t
+		explicit(false) constexpr
+		(	VolumeComputer
+		)	(	::std::in_place_type_t
 				<	Cuboid
 				>
 			)
@@ -84,9 +84,9 @@ export namespace
 			{}
 		{}
 
-		constexpr
-			VolumeComputer
-			(	std::in_place_type_t
+		explicit(false) constexpr
+		(	VolumeComputer
+		)	(	::std::in_place_type_t
 				<	Pyramid
 				>
 			)
@@ -97,9 +97,9 @@ export namespace
 			{}
 		{}
 
-		constexpr
-			VolumeComputer
-			(	std::in_place_type_t
+		explicit(false) constexpr
+		(	VolumeComputer
+		)	(	::std::in_place_type_t
 				<	Sphere
 				>
 			)
@@ -110,9 +110,9 @@ export namespace
 			{}
 		{}
 
-		constexpr
-			VolumeComputer
-			(	std::in_place_type_t
+		explicit(false) constexpr
+		(	VolumeComputer
+		)	(	::std::in_place_type_t
 				<	Cylinder
 				>
 			)
@@ -123,9 +123,9 @@ export namespace
 			{}
 		{}
 
-		constexpr
-			VolumeComputer
-			(	std::in_place_type_t
+		explicit(false) constexpr
+		(	VolumeComputer
+		)	(	::std::in_place_type_t
 				<	Cone
 				>
 			)
@@ -136,9 +136,9 @@ export namespace
 			{}
 		{}
 
-		constexpr
-			VolumeComputer
-			(	std::in_place_type_t
+		explicit(false) constexpr
+		(	VolumeComputer
+		)	(	::std::in_place_type_t
 				<	Ellipsoid
 				>
 			)
@@ -149,9 +149,9 @@ export namespace
 			{}
 		{}
 
-		constexpr
-			VolumeComputer
-			(	std::in_place_type_t
+		explicit(false) constexpr
+		(	VolumeComputer
+		)	(	::std::in_place_type_t
 				<	Head
 				>
 			)
@@ -162,13 +162,12 @@ export namespace
 			{}
 		{}
 
-		auto
+		auto constexpr
 			ComputeVolume
 			()	const
-		noexcept
+			noexcept
 		->	Float
-		{
-			return
+		{	return
 				m_fComputeVolume
 				(	&m_vAny
 				)

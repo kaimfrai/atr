@@ -14,8 +14,8 @@ import Evaluation.Shared.InPlaceConstruct;
 import Std;
 
 auto
-	main
-	(	int
+(	main
+)	(	int
 			i_vArgCount
 	,	char const
 		*	i_aArgValue
@@ -30,8 +30,7 @@ auto
 		Body3D
 	=	VolumeComputer
 	;
-	constexpr
-	auto
+	auto constexpr
 		fComputeVolume
 	=	+[]	(	Body3D const
 				&	i_rBody3D
@@ -55,7 +54,7 @@ auto
 	,	&InPlaceConstruct<Ellipsoid>
 	,	&InPlaceConstruct<Head>
 	,	fComputeVolume
-	>(	std::span
+	>(	::std::span
 		{	i_aArgValue
 		,	static_cast<::std::size_t>
 			(	i_vArgCount

@@ -3,6 +3,8 @@ export module Evaluation.Replication.Sphere;
 import Evaluation.Shared.DataTypes;
 import Evaluation.Shared.PiFraction;
 
+import Std;
+
 export namespace
 	Bodies3D
 {
@@ -17,21 +19,25 @@ export namespace
 		;
 	};
 
+	[[nodiscard]]
 	auto constexpr
 		ComputeVolumeSphere
 		(	void const
 			*	i_aObject
 		)
-	noexcept
+		noexcept
 	->	Float
 	{
 		Float const
-			nWidth
-		=	*static_cast
-			<	Float const
-				*
-			>(	i_aObject
-			)
+			vWidth
+		=	*	::std::launder
+				(	static_cast
+					<	Float const
+						*
+					>(	i_aObject
+					)
+				+	1z
+				)
 		;
 
 		return
@@ -39,9 +45,9 @@ export namespace
 			<	1z
 			,	6z
 			>{}
-		*	nWidth
-		*	nWidth
-		*	nWidth
+		*	vWidth
+		*	vWidth
+		*	vWidth
 		;
 	}
 }
