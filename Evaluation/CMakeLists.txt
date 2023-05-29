@@ -113,6 +113,7 @@ PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )
 
+add_subdirectory(variant)
 add_module_executable(
 	variant
 		variant.cpp
