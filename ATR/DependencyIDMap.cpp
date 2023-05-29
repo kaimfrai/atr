@@ -132,11 +132,7 @@ export namespace
 			>
 		>
 	;
-}
 
-export namespace
-	ATR
-{
 	template
 		<	typename
 				t_tOwner

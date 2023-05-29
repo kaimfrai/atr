@@ -50,11 +50,11 @@ export namespace
 		using
 			Offset_Of
 		=	Member::Offset_For
-			<	*	Config
-					.	FindMemberInfo
-						(	t_tMemberName
-							{}
-						)
+			<	Config
+				.	FindMemberInfo
+					(	t_tMemberName
+						{}
+					)
 			>
 		;
 

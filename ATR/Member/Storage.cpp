@@ -4,9 +4,6 @@ import ATR.Member.Config;
 
 import Meta.ID;
 import Meta.String.Chain;
-import Meta.Memory.Size.Compare;
-
-import Std;
 
 using ::Meta::String::Chain;
 using ::Meta::ProtoID;
@@ -14,55 +11,26 @@ using ::Meta::ProtoID;
 export namespace
 	ATR::Member
 {
-	enum class
-		EStorage
-	:	::std::uint8_t
-	{	None
-	,	Dynamic
-	,	Static
-	};
-
 	[[nodiscard]]
 	auto constexpr
-	(	GetStorage
+	(	IsDynamicMember
 	)	(	ProtoID auto
 				i_vTypeName
 		,	Chain
 				i_rMemberName
 		)
 		noexcept
-	->	EStorage
-	{
-		auto const
-		&	rConfig
-		=	Config_Of
+	->	bool
+	{	return
+			Config_Of
 			<	decltype(i_vTypeName)
 			>
-		;
-
-		if	(	auto const
-					vInfo
-				=	rConfig
-					.	FindMemberInfo
-						(	i_rMemberName
-						)
-			;	vInfo
-				.	has_value
-					()
-			)
-		{
-			return
-				vInfo
-				->	Type
-				.	IsAligned
-					()
-			?	EStorage::Dynamic
-			:	EStorage::Static
-			;
-		}
-
-		return
-			EStorage::None
+			.	FindMemberInfo
+				(	i_rMemberName
+				)
+			.	Type
+			.	IsAligned
+				()
 		;
 	}
 
@@ -80,13 +48,12 @@ export namespace
 	and	ProtoID
 		<	t_tTypeName
 		>
-	and	(	GetStorage
+	and	(	IsDynamicMember
 			(	t_tTypeName
 				{}
 			,	t_tProto
 				{}
 			)
-		==	EStorage::Dynamic
 		)
 	;
 
@@ -101,16 +68,16 @@ export namespace
 	=	ProtoID
 		<	t_tProto
 		>
-	and	::Meta::ProtoID
+	and	ProtoID
 		<	t_tTypeName
 		>
-	and	(	GetStorage
+	and	(	not
+			IsDynamicMember
 			(	t_tTypeName
 				{}
 			,	t_tProto
 				{}
 			)
-		==	EStorage::Static
 		)
 	;
 }

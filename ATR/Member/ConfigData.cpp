@@ -39,9 +39,7 @@ export namespace
 					i_rMemberName
 			)	const
 			noexcept
-		->	::std::optional
-			<	Info
-			>
+		->	Info
 		{
 			auto const
 				aNameBegin
@@ -67,53 +65,22 @@ export namespace
 			;
 
 			if	(	(	aNamePosition
-					!=	aNameEnd
+					==	aNameEnd
 					)
-				and	(	aNamePosition
+				or	(	aNamePosition
 						->	Name
-					==	i_rMemberName
+					!=	i_rMemberName
 					)
 				)
-			{	return
-					aNamePosition
-					->	Info
-				;
+			{
+				::std::unreachable
+				();
 			}
 
 			return
-				::std::nullopt
+				aNamePosition
+				->	Info
 			;
-		}
-
-		[[nodiscard]]
-		auto constexpr
-		(	GetMemberOffset
-		)	(	Chain
-					i_rMemberName
-			)	const
-			noexcept
-		->	BitSize
-		{
-			if	(	auto
-						vMemberInfo
-					=	FindMemberInfo
-						(	i_rMemberName
-						)
-				;	vMemberInfo
-					.	has_value
-						()
-				)
-			{
-				return
-					vMemberInfo
-					.	value
-						()
-					.	Offset
-				;
-			}
-
-			::std::unreachable
-			();
 		}
 	};
 }
