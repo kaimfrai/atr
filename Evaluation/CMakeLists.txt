@@ -157,6 +157,7 @@ PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )
 
+add_subdirectory(visitor)
 add_module_executable(
 	visitor
 		visitor.cpp

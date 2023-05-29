@@ -50,6 +50,7 @@ function assemble()
 		-fmodule-file=Evaluation.Replication.Sphere=build/Evaluation/modules/Evaluation/Replication/Sphere.pcm\
 		-fmodule-file=Evaluation.Replication.VolumeComputer=build/Evaluation/modules/Evaluation/Replication/VolumeComputer.pcm\
 		-fmodule-file=Evaluation.TypeErasure=build/Evaluation/modules/Evaluation/TypeErasure.pcm\
+		-fmodule-file=Evaluation.Variant=build/Evaluation/modules/Evaluation/Variant.pcm\
 		-fmodule-file=Evaluation.Virtual.Cone=build/Evaluation/modules/Evaluation/Virtual/Cone.pcm\
 		-fmodule-file=Evaluation.Virtual.Cube=build/Evaluation/modules/Evaluation/Virtual/Cube.pcm\
 		-fmodule-file=Evaluation.Virtual.Cuboid=build/Evaluation/modules/Evaluation/Virtual/Cuboid.pcm\
@@ -60,6 +61,7 @@ function assemble()
 		-fmodule-file=Evaluation.Virtual.Pyramid=build/Evaluation/modules/Evaluation/Virtual/Pyramid.pcm\
 		-fmodule-file=Evaluation.Virtual.Sphere=build/Evaluation/modules/Evaluation/Virtual/Sphere.pcm\
 		-fmodule-file=Evaluation.Virtual=build/Evaluation/modules/Evaluation/Virtual.pcm\
+		-fmodule-file=Evaluation.Visitor=build/Evaluation/modules/Evaluation/Visitor.pcm\
 		-fmodule-file=Std=build/Evaluation/modules/Std.pcm\
 		--assemble -masm=intel\
 		Evaluation/$1.cpp\
