@@ -11,7 +11,6 @@ using ::Meta::String::Literal;
 export namespace
 	Meta
 {
-	/// creates an identifier type
 	template
 		<	Literal
 				t_vLiteral

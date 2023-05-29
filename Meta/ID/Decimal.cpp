@@ -2,71 +2,89 @@ module Meta.ID:Decimal;
 
 import Meta.Token.Index;
 
+using ::Meta::IndexToken;
+
 auto constexpr
 (	FromChar
-)	(	Meta::IndexToken<'0'>
+)	(	IndexToken<'0'>
 	)
+	noexcept
 ->	int
 {	return 0; }
 auto constexpr
 (	FromChar
-)	(	Meta::IndexToken<'1'>
+)	(	IndexToken<'1'>
 	)
+	noexcept
 ->	int
 {	return 1; }
 auto constexpr
 (	FromChar
-)	(	Meta::IndexToken<'2'>
+)	(	IndexToken<'2'>
 	)
+	noexcept
 ->	int
 {	return 2; }
 auto constexpr
 (	FromChar
-)	(	Meta::IndexToken<'3'>
+)	(	IndexToken<'3'>
 	)
+	noexcept
 ->	int
 {	return 3; }
 auto constexpr
 (	FromChar
-)	(	Meta::IndexToken<'4'>
+)	(	IndexToken<'4'>
 	)
+	noexcept
 ->	int
 {	return 4; }
 auto constexpr
 (	FromChar
-)	(	Meta::IndexToken<'5'>
+)	(	IndexToken<'5'>
 	)
+	noexcept
 ->	int
 {	return 5; }
 auto constexpr
 (	FromChar
-)	(	Meta::IndexToken<'6'>
+)	(	IndexToken<'6'>
 	)
+	noexcept
 ->	int
 {	return 6; }
 auto constexpr
 (	FromChar
-)	(	Meta::IndexToken<'7'>
+)	(	IndexToken<'7'>
 	)
+	noexcept
 ->	int
 {	return 7; }
 auto constexpr
 (	FromChar
-)	(	Meta::IndexToken<'8'>
+)	(	IndexToken<'8'>
 	)
+	noexcept
 ->	int
 {	return 8; }
 auto constexpr
 (	FromChar
-)	(	Meta::IndexToken<'9'>
+)	(	IndexToken<'9'>
 	)
+	noexcept
 ->	int
 {	return 9; }
 
 auto constexpr
 (	ToChar
 )	(	int
-			i_nChar
+			i_vInteger
 	)
+	noexcept
 ->	char
-{	return static_cast<char>(i_nChar + '0');	}
+{	return
+	static_cast<char>
+	(	i_vInteger
+	+	'0'
+	);
+}

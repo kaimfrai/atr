@@ -104,17 +104,6 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
-		(	begin
-		)	()	&
-			noexcept
-		{	return
-			::std::begin
-			(	Buffer
-			);
-		}
-
-		[[nodiscard]]
 		auto friend constexpr
 		(	operator==
 		)	(	Literal const

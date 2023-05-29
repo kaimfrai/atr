@@ -1,8 +1,10 @@
 export module Meta.ID:Literals;
 
-import :Alias;
+import :Make;
 
 import Meta.String.Literal;
+
+import Std;
 
 using ::Meta::String::Literal;
 
@@ -18,9 +20,19 @@ export namespace
 	(	operator
 		""_id
 	)	()
-	->	ID
-		<	t_vString
-		>
-	{	return{};	}
+		noexcept
+	->	decltype
+		(	::Make
+			<	t_vString
+			>(	::std::make_index_sequence
+				<	t_vString
+					.	max_size
+						()
+				>{}
+			)
+		)
+	{	return
+		{};
+	}
 }
 

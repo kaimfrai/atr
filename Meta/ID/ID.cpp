@@ -10,8 +10,6 @@ import Meta.String.Chain;
 
 using ::Meta::String::Chain;
 
-/// serves as a base class for all identifer types
-/// provides conversions to arrays as well as begin and end functions
 template
 	<	decltype(auto)
 		...	t_vpString
@@ -31,7 +29,7 @@ struct
 			[]
 		{	::ToChar(t_vpString)
 			...
-			,	'\0'
+		,	'\0'
 		};
 
 		return

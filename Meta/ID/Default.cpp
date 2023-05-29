@@ -7,18 +7,20 @@ using ::Meta::IndexToken;
 auto constexpr
 (	ToChar
 )	(	char
-			i_cChar
+			i_vChar
 	)
+	noexcept
 ->	char
-{	return i_cChar;	}
+{	return i_vChar;	}
 
 template
 	<	char
-			t_nCharacter
+			t_vCharacter
 	>
 auto constexpr
 (	FromChar
-)	(	IndexToken<t_nCharacter>
+)	(	IndexToken<t_vCharacter>
 	)
+	noexcept
 ->	char
-{	return t_nCharacter;	}
+{	return t_vCharacter;	}
