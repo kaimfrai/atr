@@ -11,7 +11,7 @@ function time_build()
 		touch ../../Evaluation/$1/*.cpp
 	fi
 
-	if	[ $1 == "any" ] || [ $1 == "polymorphic" ] || [ $1 == "type_erasure" ] || [ $1 == "dyno" ] || [ $1 == "variant" ] || [ $1 == "visitor" ]
+	if	[ $1 == "Any" ] || [ $1 == "Polymorphic" ] || [ $1 == "TypeErasure" ] || [ $1 == "Dyno" ] || [ $1 == "Variant" ] || [ $1 == "Visitor" ]
 	then
 		touch ../../Evaluation/CRTP/*.cpp
 	fi
@@ -22,15 +22,15 @@ function time_build()
 
 if	[ $# -lt 1 ]
 then
-	time_build "any"
-	time_build "archetype"
-	time_build "dyno"
-	time_build "polymorphic"
-	time_build "replication"
-	time_build "type_erasure"
-	time_build "variant"
-	time_build "virtual"
-	time_build "visitor"
+	time_build "Any"
+	time_build "Archetype"
+	time_build "Dyno"
+	time_build "Polymorphic"
+	time_build "Replication"
+	time_build "TypeErasure"
+	time_build "Variant"
+	time_build "Virtual"
+	time_build "Visitor"
 else
 	measure_time $1
 fi

@@ -14,15 +14,15 @@ cd build/Evaluation/
 if [ $# -lt 2 ]
 then
 	ninja\
-		virtual\
-		any\
-		dyno\
-		polymorphic\
-		type_erasure\
-		archetype\
-		replication\
-		variant\
-		visitor
+		Virtual\
+		Any\
+		Dyno\
+		Polymorphic\
+		TypeErasure\
+		Archetype\
+		Replication\
+		Variant\
+		Visitor
 else
 	ninja\
 		"$2"

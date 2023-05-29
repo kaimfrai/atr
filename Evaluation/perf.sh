@@ -25,15 +25,15 @@ function execute_perf()
 
 if	[ $# -lt 4 ]
 then
-	execute_perf $1 $2 $3 "any"
-	execute_perf $1 $2 $3 "archetype"
-	execute_perf $1 $2 $3 "dyno"
-	execute_perf $1 $2 $3 "polymorphic"
-	execute_perf $1 $2 $3 "replication"
-	execute_perf $1 $2 $3 "type_erasure"
-	execute_perf $1 $2 $3 "variant"
-	execute_perf $1 $2 $3 "virtual"
-	execute_perf $1 $2 $3 "visitor"
+	execute_perf $1 $2 $3 "Any"
+	execute_perf $1 $2 $3 "Archetype"
+	execute_perf $1 $2 $3 "Dyno"
+	execute_perf $1 $2 $3 "Polymorphic"
+	execute_perf $1 $2 $3 "Replication"
+	execute_perf $1 $2 $3 "TypeErasure"
+	execute_perf $1 $2 $3 "Variant"
+	execute_perf $1 $2 $3 "Virtual"
+	execute_perf $1 $2 $3 "Visitor"
 else
 	execute_perf $1 $2 $3 $4
 fi

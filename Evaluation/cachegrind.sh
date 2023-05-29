@@ -23,15 +23,15 @@ function execute_cachegrind ()
 
 if [ $# -lt 3 ]
 then
-	execute_cachegrind $1 $2 "any"
-	execute_cachegrind $1 $2 "archetype"
-	execute_cachegrind $1 $2 "dyno"
-	execute_cachegrind $1 $2 "polymorphic"
-	execute_cachegrind $1 $2 "replication"
-	execute_cachegrind $1 $2 "type_erasure"
-	execute_cachegrind $1 $2 "variant"
-	execute_cachegrind $1 $2 "virtual"
-	execute_cachegrind $1 $2 "visitor"
+	execute_cachegrind $1 $2 "Any"
+	execute_cachegrind $1 $2 "Archetype"
+	execute_cachegrind $1 $2 "Dyno"
+	execute_cachegrind $1 $2 "Polymorphic"
+	execute_cachegrind $1 $2 "Replication"
+	execute_cachegrind $1 $2 "TypeErasure"
+	execute_cachegrind $1 $2 "Variant"
+	execute_cachegrind $1 $2 "Virtual"
+	execute_cachegrind $1 $2 "Visitor"
 else
 	execute_cachegrind $1 $2 $3
 fi

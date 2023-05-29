@@ -22,15 +22,15 @@ function execute_memcheck()
 
 if [ $# -lt 3 ]
 then
-	execute_memcheck $1 $2 "any"
-	execute_memcheck $1 $2 "archetype"
-	execute_memcheck $1 $2 "dyno"
-	execute_memcheck $1 $2 "polymorphic"
-	execute_memcheck $1 $2 "replication"
-	execute_memcheck $1 $2 "type_erasure"
-	execute_memcheck $1 $2 "variant"
-	execute_memcheck $1 $2 "virtual"
-	execute_memcheck $1 $2 "visitor"
+	execute_memcheck $1 $2 "Any"
+	execute_memcheck $1 $2 "Archetype"
+	execute_memcheck $1 $2 "Dyno"
+	execute_memcheck $1 $2 "Polymorphic"
+	execute_memcheck $1 $2 "Replication"
+	execute_memcheck $1 $2 "TypeErasure"
+	execute_memcheck $1 $2 "Variant"
+	execute_memcheck $1 $2 "Virtual"
+	execute_memcheck $1 $2 "Visitor"
 else
 	execute_memcheck $1 $2 $3
 fi

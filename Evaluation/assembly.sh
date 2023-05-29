@@ -76,15 +76,15 @@ function assemble()
 
 if [ $# -lt 1 ]
 then
-	assemble "any"
-	assemble "archetype"
-	assemble "dyno"
-	assemble "polymorphic"
-	assemble "replication"
-	assemble "type_erasure"
-	assemble "variant"
-	assemble "virtual"
-	assemble "visitor"
+	assemble "Any"
+	assemble "Archetype"
+	assemble "Dyno"
+	assemble "Polymorphic"
+	assemble "Replication"
+	assemble "TypeErasure"
+	assemble "Variant"
+	assemble "Virtual"
+	assemble "Visitor"
 else
 	assemble $1
 fi

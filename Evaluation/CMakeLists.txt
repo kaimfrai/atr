@@ -1,180 +1,180 @@
 add_subdirectory(Dependency)
 add_subdirectory(CRTP)
 
-add_subdirectory(any)
+add_subdirectory(Any)
 add_module_executable(
-	any
-		any.cpp
+	Any
+		Any.cpp
 )
 set_target_properties(
-	any
+	Any
 PROPERTIES
 RUNTIME_OUTPUT_DIRECTORY
 	"${CMAKE_BINARY_DIR}/bin/"
 )
 target_compile_options(
-	any
+	Any
 PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
 )
 target_link_options(
-	any
+	Any
 PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )
 
-add_subdirectory(archetype)
+add_subdirectory(Archetype)
 add_module_executable(
-	archetype
-		archetype.cpp
+	Archetype
+		Archetype.cpp
 )
 set_target_properties(
-	archetype
+	Archetype
 PROPERTIES
 RUNTIME_OUTPUT_DIRECTORY
 	"${CMAKE_BINARY_DIR}/bin/"
 )
 
-add_subdirectory(dyno)
+add_subdirectory(Dyno)
 add_module_executable(
-	dyno
-		dyno.cpp
+	Dyno
+		Dyno.cpp
 )
 set_target_properties(
-	dyno
+	Dyno
 PROPERTIES
 RUNTIME_OUTPUT_DIRECTORY
 	"${CMAKE_BINARY_DIR}/bin/"
 )
 target_compile_options(
-	dyno
+	Dyno
 PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
 )
 target_link_options(
-	dyno
+	Dyno
 PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )
 
-add_subdirectory(polymorphic)
+add_subdirectory(Polymorphic)
 add_module_executable(
-	polymorphic
-		polymorphic.cpp
+	Polymorphic
+		Polymorphic.cpp
 )
 set_target_properties(
-	polymorphic
+	Polymorphic
 PROPERTIES
 RUNTIME_OUTPUT_DIRECTORY
 	"${CMAKE_BINARY_DIR}/bin/"
 )
 target_compile_options(
-	polymorphic
+	Polymorphic
 PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
 )
 target_link_options(
-	polymorphic
+	Polymorphic
 PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )
 
-add_subdirectory(replication)
+add_subdirectory(Replication)
 add_module_executable(
-	replication
-		replication.cpp
+	Replication
+		Replication.cpp
 )
 set_target_properties(
-	replication
+	Replication
 PROPERTIES
 RUNTIME_OUTPUT_DIRECTORY
 	"${CMAKE_BINARY_DIR}/bin/"
 )
 
-add_subdirectory(type_erasure)
+add_subdirectory(TypeErasure)
 add_module_executable(
-	type_erasure
-		type_erasure.cpp
+	TypeErasure
+		TypeErasure.cpp
 )
 set_target_properties(
-	type_erasure
+	TypeErasure
 PROPERTIES
 RUNTIME_OUTPUT_DIRECTORY
 	"${CMAKE_BINARY_DIR}/bin/"
 )
 target_compile_options(
-	type_erasure
+	TypeErasure
 PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
 )
 target_link_options(
-	type_erasure
+	TypeErasure
 PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )
 
-add_subdirectory(variant)
+add_subdirectory(Variant)
 add_module_executable(
-	variant
-		variant.cpp
+	Variant
+		Variant.cpp
 )
 set_target_properties(
-	variant
+	Variant
 PROPERTIES
 RUNTIME_OUTPUT_DIRECTORY
 	"${CMAKE_BINARY_DIR}/bin/"
 )
 target_compile_options(
-	variant
+	Variant
 PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
 )
 target_link_options(
-	variant
+	Variant
 PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )
 
-add_subdirectory(virtual)
+add_subdirectory(Virtual)
 add_module_executable(
-	virtual
-		virtual.cpp
+	Virtual
+		Virtual.cpp
 )
 set_target_properties(
-	virtual
+	Virtual
 PROPERTIES
 RUNTIME_OUTPUT_DIRECTORY
 	"${CMAKE_BINARY_DIR}/bin/"
 )
 target_compile_options(
-	virtual
+	Virtual
 PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
 )
 target_link_options(
-	virtual
+	Virtual
 PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )
 
-add_subdirectory(visitor)
+add_subdirectory(Visitor)
 add_module_executable(
-	visitor
-		visitor.cpp
+	Visitor
+		Visitor.cpp
 )
 set_target_properties(
-	visitor
+	Visitor
 PROPERTIES
 RUNTIME_OUTPUT_DIRECTORY
 	"${CMAKE_BINARY_DIR}/bin/"
 )
 target_compile_options(
-	visitor
+	Visitor
 PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
 )
 target_link_options(
-	visitor
+	Visitor
 PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )
