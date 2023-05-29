@@ -40,18 +40,18 @@ add_module(
 )
 
 add_module_executable(
-	evaluation_polymorphic
+	polymorphic
 		Main.cpp
 )
 
 target_compile_options(
-	evaluation_polymorphic
+	polymorphic
 PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
 )
 
 target_link_options(
-	evaluation_polymorphic
+	polymorphic
 PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )

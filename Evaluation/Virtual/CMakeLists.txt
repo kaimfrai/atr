@@ -29,18 +29,18 @@ add_single_file_modules(
 )
 
 add_module_executable(
-	evaluation_virtual
+	virtual
 		Main.cpp
 )
 
 target_compile_options(
-	evaluation_virtual
+	virtual
 PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
 )
 
 target_link_options(
-	evaluation_virtual
+	virtual
 PRIVATE
 	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )

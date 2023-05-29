@@ -32,8 +32,8 @@ then
 	echo "Time ATR: $(echo ${atr_time} | bc)"
 fi
 
-evaluation_time=$(\time -f "%e" ninja Evaluation.Shared 2>&1  1>/dev/null)
-echo "Time Shared: $(echo ${evaluation_time} | bc)"
+time=$(\time -f "%e" ninja Evaluation.Shared 2>&1  1>/dev/null)
+echo "Time Shared: $(echo ${time} | bc)"
 
 if [ $# -lt 1 ] || [ $1 == "any" ] || [ $1 == "polymorphic" ] || [ $1 == "type_erasure" ] || [ $1 == "dyno" ] || [ $1 == "variant" ] || [ $1 == "visitor" ]
 then
@@ -46,56 +46,56 @@ echo "Executable Times:"
 
 if [ $# -lt 1 ] || [ $1 == "virtual" ]
 then
-	evaluation_virtual_time=$(\time -f "%e" ninja evaluation_virtual 2>&1  1>/dev/null)
-	echo "Time evaluation_virtual: $(echo ${evaluation_virtual_time} | bc)"
+	virtual_time=$(\time -f "%e" ninja virtual 2>&1  1>/dev/null)
+	echo "Time virtual: $(echo ${virtual_time} | bc)"
 fi
 
 if [ $# -lt 1 ] || [ $1 == "any" ]
 then
-	evaluation_any_time=$(\time -f "%e" ninja evaluation_any 2>&1  1>/dev/null)
-	echo "Time evaluation_any: $(echo ${evaluation_any_time} + ${crtp_time} | bc)"
+	any_time=$(\time -f "%e" ninja any 2>&1  1>/dev/null)
+	echo "Time any: $(echo ${any_time} + ${crtp_time} | bc)"
 fi
 
 if [ $# -lt 1 ] || [ $1 == "polymorphic" ]
 then
-	evaluation_polymorphic_time=$(\time -f "%e" ninja evaluation_polymorphic 2>&1  1>/dev/null)
-	echo "Time evaluation_polymorphic: $(echo ${evaluation_polymorphic_time} + ${crtp_time} | bc)"
+	polymorphic_time=$(\time -f "%e" ninja polymorphic 2>&1  1>/dev/null)
+	echo "Time polymorphic: $(echo ${polymorphic_time} + ${crtp_time} | bc)"
 fi
 
 if [ $# -lt 1 ] || [ $1 == "type_erasure" ]
 then
-	evaluation_type_erasure_time=$(\time -f "%e" ninja evaluation_type_erasure 2>&1  1>/dev/null)
-	echo "Time evaluation_type_erasure: $(echo ${evaluation_type_erasure_time} + ${crtp_time} | bc)"
+	type_erasure_time=$(\time -f "%e" ninja type_erasure 2>&1  1>/dev/null)
+	echo "Time type_erasure: $(echo ${type_erasure_time} + ${crtp_time} | bc)"
 fi
 
 if [ $# -lt 1 ] || [ $1 == "dyno" ]
 then
-	evaluation_dyno_time=$(\time -f "%e" ninja evaluation_dyno 2>&1  1>/dev/null)
-	echo "Time evaluation_dyno: $(echo ${evaluation_dyno_time} + ${crtp_time} | bc)"
+	dyno_time=$(\time -f "%e" ninja dyno 2>&1  1>/dev/null)
+	echo "Time dyno: $(echo ${dyno_time} + ${crtp_time} | bc)"
 fi
 
 if [ $# -lt 1 ] || [ $1 == "variant" ]
 then
-	evaluation_variant_time=$(\time -f "%e" ninja evaluation_variant 2>&1  1>/dev/null)
-	echo "Time evaluation_variant: $(echo ${evaluation_variant_time} + ${crtp_time} | bc)"
+	variant_time=$(\time -f "%e" ninja variant 2>&1  1>/dev/null)
+	echo "Time variant: $(echo ${variant_time} + ${crtp_time} | bc)"
 fi
 
 if [ $# -lt 1 ] || [ $1 == "visitor" ]
 then
-	evaluation_visitor_time=$(\time -f "%e" ninja evaluation_visitor 2>&1  1>/dev/null)
-	echo "Time evaluation_visitor: $(echo ${evaluation_visitor_time} + ${crtp_time} | bc)"
+	visitor_time=$(\time -f "%e" ninja visitor 2>&1  1>/dev/null)
+	echo "Time visitor: $(echo ${visitor_time} + ${crtp_time} | bc)"
 fi
 
 if [ $# -lt 1 ] || [ $1 == "archetype" ]
 then
-	evaluation_archetype_time=$(\time -f "%e" ninja evaluation_archetype 2>&1  1>/dev/null)
-	echo "Time evaluation_archetype: $(echo ${evaluation_archetype_time} | bc)"
+	archetype_time=$(\time -f "%e" ninja archetype 2>&1  1>/dev/null)
+	echo "Time archetype: $(echo ${archetype_time} | bc)"
 fi
 
 if [ $# -lt 1 ] || [ $1 == "replication" ]
 then
-	evaluation_replication_time=$(\time -f "%e" ninja evaluation_replication 2>&1  1>/dev/null)
-	echo "Time evaluation_replication: $(echo ${evaluation_replication_time} | bc)"
+	replication_time=$(\time -f "%e" ninja replication 2>&1  1>/dev/null)
+	echo "Time replication: $(echo ${replication_time} | bc)"
 fi
 
 cd ../../

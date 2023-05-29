@@ -12,6 +12,6 @@ add_single_file_modules(
 )
 
 add_module_executable(
-	evaluation_replication
+	replication
 		Main.cpp
 )
