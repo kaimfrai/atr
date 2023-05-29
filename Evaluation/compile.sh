@@ -4,20 +4,27 @@ echo ""
 
 function time_build()
 {
-	touch ../../Evaluation/$1.cpp
-
-	if	[ -d ../../Evaluation/$1 ]
+	if	[ -d modules/Evaluation/$1 ]
 	then
-		touch ../../Evaluation/$1/*.cpp
+		rm -rf modules/Evaluation/$1
+	else
+		rm -rf modules/Evaluation/CRTP
 	fi
 
-	if	[ $1 == "Any" ] || [ $1 == "Polymorphic" ] || [ $1 == "TypeErasure" ] || [ $1 == "Dyno" ] || [ $1 == "Variant" ] || [ $1 == "Visitor" ]
+	if [ -f modules/Evaluation/$1.o ]
 	then
-		touch ../../Evaluation/CRTP/*.cpp
+		rm modules/Evaluation/$1.o
 	fi
+	if [ -f modules/Evaluation/$1.pcm ]
+	then
+		rm modules/Evaluation/$1.pcm
+	fi
+
+	rm -rf Evaluation/CMakeFiles/$1.dir/
+	rm bin/$1
 
 	time=$(\time -f "%e" ninja $1 2>&1  1>/dev/null)
-	echo "Time to build $1: $(echo ${time} | bc)"
+	echo "$time seconds to build $1 "
 }
 
 if	[ $# -lt 1 ]
