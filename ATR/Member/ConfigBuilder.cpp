@@ -18,6 +18,59 @@ using ::Meta::ProtoID;
 using ::Meta::String::Chain;
 using ::Meta::TypeID;
 
+namespace
+	ATR::Member
+{
+	[[nodiscard]]
+	auto constexpr
+	(	MoveHigher
+	)	(	NamedType const
+			*	i_aBegin
+		,	auto
+				i_vCompare
+		,	NamedType
+			*	i_aInsert
+		,	auto
+				i_fGet
+		)
+		noexcept
+	->	NamedType*
+	{
+		while(	i_aInsert
+			!=	i_aBegin
+			)
+		{
+			auto const
+				aPrevious
+			=	i_aInsert
+			-	1z
+			;
+
+			if	(	i_fGet
+					(	*
+						aPrevious
+					)
+				<=	i_vCompare
+				)
+			{	return
+					i_aInsert
+				;
+			}
+
+			*	i_aInsert
+			=	*	aPrevious
+			;
+			i_aInsert
+			=	aPrevious
+			;
+		}
+
+		return
+			i_aInsert
+		;
+	}
+}
+
 export namespace
 	ATR::Member
 {
@@ -183,97 +236,6 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto static constexpr
-		(	MoveHigherNames
-		)	(	NamedType const
-				*	i_aBegin
-			,	Chain
-					i_rMemberName
-			,	NamedType
-				*	i_aInsert
-			)
-			noexcept
-		->	NamedType*
-		{
-			while(	i_aInsert
-				!=	i_aBegin
-				)
-			{
-				auto const
-					aPrevious
-				=	i_aInsert
-				-	1z
-				;
-
-				if	(	aPrevious
-						->	Name
-					<=	i_rMemberName
-					)
-				{	return
-						i_aInsert
-					;
-				}
-
-				*	i_aInsert
-				=	*	aPrevious
-				;
-				i_aInsert
-				=	aPrevious
-				;
-			}
-
-			return
-				i_aInsert
-			;
-		}
-
-		[[nodiscard]]
-		auto static constexpr
-		(	MoveHigherAlignments
-		)	(	NamedType const
-				*	i_aBegin
-			,	Alignment
-					i_vAlign
-			,	NamedType
-				*	i_aInsert
-			)
-			noexcept
-		->	NamedType*
-		{
-			while(	i_aInsert
-				!=	i_aBegin
-				)
-			{
-				auto const
-					aPrevious
-				=	i_aInsert
-					-	1z
-				;
-
-				if	(	aPrevious
-						->	Type
-						.	GetAlign
-							()
-					<=	i_vAlign
-					)
-				{	return
-						i_aInsert
-					;
-				}
-
-				*	i_aInsert
-				=	*	aPrevious
-				;
-				i_aInsert
-				=	aPrevious
-				;
-			}
-			return
-				i_aInsert
-			;
-		}
-
-		[[nodiscard]]
 		auto constexpr
 		(	operator()
 		)	(	Chain
@@ -299,7 +261,7 @@ export namespace
 
 				auto const
 					aAlignmentEnd
-				=	MoveHigherAlignments
+				=	MoveHigher
 					(	NamedTypes
 						.	begin
 							()
@@ -307,6 +269,16 @@ export namespace
 					,	NamedTypes
 						.	end
 							()
+					,	[]	(	NamedType const
+								&	i_rElement
+							)
+						{	return
+								i_rElement
+								.	Type
+								.	GetAlign
+									()
+							;
+						}
 					)
 				;
 
@@ -320,12 +292,20 @@ export namespace
 
 				auto const
 					aInsertPosition
-				=	MoveHigherNames
+				=	MoveHigher
 					(	(	aAlignmentEnd
 						-	rAlignmentCounter
 						)
 					,	i_rMemberName
 					,	aAlignmentEnd
+					,	[]	(	NamedType const
+								&	i_rElement
+							)
+						{	return
+								i_rElement
+								.	Name
+							;
+						}
 					)
 				;
 
