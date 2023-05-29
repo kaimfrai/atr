@@ -9,7 +9,7 @@ export
 {
 	template
 		<	typename
-				t_tBody3D
+				t_tBodyContainer
 		,	auto
 				t_fMakeCube
 		,	auto
@@ -38,9 +38,8 @@ export
 		)
 	->	Float
 	{
-		::std::vector
-		<	t_tBody3D
-		>	vElements
+		t_tBodyContainer
+			vElements
 		;
 
 			vElements
@@ -162,7 +161,7 @@ export
 
 	template
 		<	typename
-				t_tBody3D
+				t_tBodyContainer
 		,	auto
 				t_fMakeCube
 		,	auto
@@ -234,7 +233,7 @@ export
 			)
 		{	(	TotalSum
 			+=	EvaluateRandomContainer
-				<	t_tBody3D
+				<	t_tBodyContainer
 				,	t_fMakeCube
 				,	t_fMakeCuboid
 				,	t_fMakePyramid

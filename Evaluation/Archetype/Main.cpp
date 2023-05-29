@@ -21,7 +21,7 @@ import Std;
 auto
 	main
 	(	int
-			i_nArgCount
+			i_vArgCount
 	,	char const
 		*	i_aArgValue
 		[]
@@ -62,7 +62,7 @@ auto
 
 	return
 	MainTemplate
-	<	Body3D
+	<	::std::vector<Body3D>
 	,	&TypeConstruct<ID<"Cube">>
 	,	&TypeConstruct<ID<"Cuboid">>
 	,	&TypeConstruct<ID<"Pyramid">>
@@ -75,7 +75,7 @@ auto
 	>(	::std::span
 		{	i_aArgValue
 		,	static_cast<::std::size_t>
-			(	i_nArgCount
+			(	i_vArgCount
 			)
 		}
 	);
