@@ -11,103 +11,30 @@ cd build/perf_$1_$2/
 
 echo 0 > /proc/sys/kernel/nmi_watchdog
 
-if [ $# -lt 4 ] || [ $4 == "virtual" ]
-then
-	echo "virtual"
+function execute_perf()
+{
+	echo $4
 	perf\
 		stat\
 		--repeat $3\
-		../Evaluation/bin/virtual\
+		../Evaluation/bin/$4\
 		$1 $2\
-		2> virtual.txt
-fi
+		2> $4.txt
+}
 
-if [ $# -lt 4 ] || [ $4 == "any" ]
+if	[ $# -lt 4 ]
 then
-	echo "any"
-	perf\
-		stat\
-		--repeat $3\
-		../Evaluation/bin/any\
-		$1 $2\
-		2> any.txt
-fi
-
-if [ $# -lt 4 ] || [ $4 == "dyno" ]
-then
-	echo "dyno"
-	perf\
-		stat\
-		--repeat $3\
-		../Evaluation/bin/dyno\
-		$1 $2\
-		2> dyno.txt
-fi
-
-if [ $# -lt 4 ] || [ $4 == "polymorphic" ]
-then
-	echo "polymorphic"
-	perf\
-		stat\
-		--repeat $3\
-		../Evaluation/bin/polymorphic\
-		$1 $2\
-		2> polymorphic.txt
-fi
-
-if [ $# -lt 4 ] || [ $4 == "type_erasure" ]
-then
-	echo "type_erasure"
-	perf\
-		stat\
-		--repeat $3\
-		../Evaluation/bin/type_erasure\
-		$1 $2\
-		2> type_erasure.txt
-fi
-
-if [ $# -lt 4 ] || [ $4 == "archetype" ]
-then
-	echo "archetype"
-	perf\
-		stat\
-		--repeat $3\
-		../Evaluation/bin/archetype\
-		$1 $2\
-		2> archetype.txt
-fi
-
-if [ $# -lt 4 ] || [ $4 == "replication" ]
-then
-	echo "replication"
-	perf\
-		stat\
-		--repeat $3\
-		../Evaluation/bin/replication\
-		$1 $2\
-		2> replication.txt
-fi
-
-if [ $# -lt 4 ] || [ $4 == "variant" ]
-then
-	echo "variant"
-	perf\
-		stat\
-		--repeat $3\
-		../Evaluation/bin/variant\
-		$1 $2\
-		2> variant.txt
-fi
-
-if [ $# -lt 4 ] || [ $4 == "visitor" ]
-then
-	echo "visitor"
-	perf\
-		stat\
-		--repeat $3\
-		../Evaluation/bin/visitor\
-		$1 $2\
-		2> visitor.txt
+	execute_perf $1 $2 $3 "any"
+	execute_perf $1 $2 $3 "archetype"
+	execute_perf $1 $2 $3 "dyno"
+	execute_perf $1 $2 $3 "polymorphic"
+	execute_perf $1 $2 $3 "replication"
+	execute_perf $1 $2 $3 "type_erasure"
+	execute_perf $1 $2 $3 "variant"
+	execute_perf $1 $2 $3 "virtual"
+	execute_perf $1 $2 $3 "visitor"
+else
+	execute_perf $1 $2 $3 $4
 fi
 
 echo 1 > /proc/sys/kernel/nmi_watchdog
