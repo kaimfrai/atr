@@ -4,7 +4,7 @@ import ATR.Address;
 import ATR.Layout.Type;
 import ATR.Member.Storage;
 import ATR.Member.Config;
-import ATR.Member.OffsetOf;
+import ATR.Member.Offset;
 
 import Meta.Memory.Size.Arithmetic;
 import Meta.ID;
@@ -43,6 +43,21 @@ export namespace
 			>
 		;
 
+		template
+			<	ProtoID
+					t_tMemberName
+			>
+		using
+			Offset_Of
+		=	Member::Offset_For
+			<	*	Config
+					.	FindMemberInfo
+						(	t_tMemberName
+							{}
+						)
+			>
+		;
+
 		using
 			LayoutType
 		=	CreateLayoutType
@@ -59,10 +74,8 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Member::OffsetOf
-			(	i_vMemberID
-			,	TypeName
-			)(	*this
+			Offset_Of<decltype(i_vMemberID)>
+			{}(	*this
 			);
 		}
 
@@ -75,10 +88,9 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Member::OffsetOf
-			(	i_vMemberID
-			,	TypeName
-			)(	*this
+			Offset_Of<decltype(i_vMemberID)>
+			{}
+			(	*this
 			);
 		}
 
@@ -91,10 +103,8 @@ export namespace
 			noexcept
 		->	auto
 		{	return
-			Member::OffsetOf
-			(	i_vMemberID
-			,	TypeName
-			)(	::std::move(*this)
+			Offset_Of<decltype(i_vMemberID)>
+			{}(	::std::move(*this)
 			);
 		}
 
@@ -107,10 +117,8 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Member::OffsetOf
-			(	i_vMemberID
-			,	TypeName
-			)();
+			Offset_Of<decltype(i_vMemberID)>
+			{}();
 		}
 
 		template

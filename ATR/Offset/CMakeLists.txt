@@ -8,5 +8,4 @@ add_single_file_modules(
 	Object.cpp
 	Layout.cpp
 	Offset.cpp
-	OffsetOf.cpp
 )

@@ -1,7 +1,6 @@
 import ATR.Instance;
 import ATR.Literals;
 import ATR.Member.Offset;
-import ATR.Member.OffsetOf;
 
 import Meta.Bit.Array;
 import Meta.Bit.Field;
@@ -95,14 +94,12 @@ template
 auto constexpr
 	OffsetType
 =	Type
-	<	decltype
-		(	::ATR::Member::OffsetOf
-			(	ID<t_vMemberName>
-				{}
-			,	::std::declval<t_tOwner>()
-				.	TypeName
-			)
-		)
+	<	typename
+		decltype(auto(t_tOwner{}))
+		::	template
+			Offset_Of
+			<	ID<t_vMemberName>
+			>
 	>
 ;
 

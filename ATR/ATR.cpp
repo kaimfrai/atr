@@ -24,7 +24,6 @@ export import ATR.Member.Info;
 export import ATR.Member.NamedInfo;
 export import ATR.Member.NamedType;
 export import ATR.Member.Offset;
-export import ATR.Member.OffsetOf;
 export import ATR.Member.Storage;
 export import ATR.Offset.Bool;
 export import ATR.Offset.BoolArray;

@@ -3,7 +3,6 @@ export module ATR.DependencyIDMap;
 import ATR.Dependency;
 import ATR.Erase;
 import ATR.Member.ConfigData;
-import ATR.Member.OffsetOf;
 
 import Meta.ID;
 import Meta.String.Literal;
@@ -15,7 +14,6 @@ import Meta.Token.Type;
 
 import Std;
 
-using ::ATR::Member::OffsetOf;
 using ::Meta::ID;
 using ::Meta::ProtoID;
 using ::Meta::String::Chain;
@@ -149,13 +147,12 @@ export namespace
 		ArgumentDependency
 	=	Dependency
 		<	ErasedType<t_tOwner>
-		,	decltype
-			(	OffsetOf
-				(	t_tpMemberName{}
-				,	::std::declval<t_tOwner>()
-					.	TypeName
-				)
-			)
+		,	typename
+			decltype(auto(t_tOwner{}))
+			::	template
+				Offset_Of
+				<	t_tpMemberName
+				>
 			...
 		>
 	;

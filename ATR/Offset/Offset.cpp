@@ -8,12 +8,15 @@ import ATR.Offset.Layout;
 import ATR.Offset.Member;
 import ATR.Offset.Mutable;
 import ATR.Offset.Object;
+import ATR.Member.Info;
 
 import Meta.Memory.Size;
 import Meta.Token.Specifier;
+import Meta.Token.Type;
 
 using ::Meta::BitSize;
 using ::Meta::Specifier::Mut;
+using ::Meta::RestoreTypeEntity;
 
 export namespace
 	ATR::Member
@@ -116,4 +119,20 @@ export namespace
 			;
 		}
 	};
+
+	template
+		<	Info
+				t_vInfo
+		>
+	using
+		Offset_For
+	=	Offset
+		<	t_vInfo
+			.	Offset
+		,	RestoreTypeEntity
+			<	t_vInfo
+				.	Type
+			>
+		>
+	;
 }
