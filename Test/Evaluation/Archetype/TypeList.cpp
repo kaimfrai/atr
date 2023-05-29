@@ -11,9 +11,9 @@ import Evaluation.Archetype.Rectangle;
 import Evaluation.Archetype.Sphere;
 import Evaluation.Archetype.Square;
 import Evaluation.Archetype.Triangle;
-import Evaluation.Shared.DataTypes;
-import Evaluation.Shared.Fraction;
-import Evaluation.Shared.PiFraction;
+import Evaluation.Dependency.DataTypes;
+import Evaluation.Dependency.Fraction;
+import Evaluation.Dependency.PiFraction;
 
 import ATR.Member.Config;
 import ATR.Member.Constants;

@@ -1,5 +1,4 @@
 import Evaluation.Polymorphic;
-import Evaluation.Polymorphic.Library;
 import Evaluation.CRTP.Cube;
 import Evaluation.CRTP.Cuboid;
 import Evaluation.CRTP.Pyramid;
@@ -9,9 +8,10 @@ import Evaluation.CRTP.Cone;
 import Evaluation.CRTP.Ellipsoid;
 import Evaluation.CRTP.Head;
 
-import Evaluation.Shared.DataTypes;
-import Evaluation.Shared.MainTemplate;
-import Evaluation.Shared.CopyConstruct;
+import Evaluation.Dependency.CopyConstruct;
+import Evaluation.Dependency.DataTypes;
+import Evaluation.Dependency.MainTemplate;
+import Evaluation.Dependency.Polymorphic;
 
 import Std;
 

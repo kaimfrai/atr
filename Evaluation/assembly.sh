@@ -30,9 +30,15 @@ function assemble()
 		-fmodule-file=Evaluation.CRTP.Head=build/Evaluation/modules/Evaluation/CRTP/Head.pcm\
 		-fmodule-file=Evaluation.CRTP.Pyramid=build/Evaluation/modules/Evaluation/CRTP/Pyramid.pcm\
 		-fmodule-file=Evaluation.CRTP.Sphere=build/Evaluation/modules/Evaluation/CRTP/Sphere.pcm\
-		-fmodule-file=Evaluation.Dyno.Library=build/Evaluation/modules/Evaluation/Dyno/Library.pcm\
+		-fmodule-file=Evaluation.Dependency.CopyConstruct=build/Evaluation/modules/Evaluation/Dependency/CopyConstruct.pcm\
+		-fmodule-file=Evaluation.Dependency.DataTypes=build/Evaluation/modules/Evaluation/Dependency/DataTypes.pcm\
+		-fmodule-file=Evaluation.Dependency.Dyno=build/Evaluation/modules/Evaluation/Dependency/Dyno.pcm\
+		-fmodule-file=Evaluation.Dependency.InPlaceConstruct=build/Evaluation/modules/Evaluation/Dependency/InPlaceConstruct.pcm\
+		-fmodule-file=Evaluation.Dependency.MainTemplate=build/Evaluation/modules/Evaluation/Dependency/MainTemplate.pcm\
+		-fmodule-file=Evaluation.Dependency.Polymorphic=build/Evaluation/modules/Evaluation/Dependency/Polymorphic.pcm\
+		-fmodule-file=Evaluation.Dependency.TypeConstruct=build/Evaluation/modules/Evaluation/Dependency/TypeConstruct.pcm\
+		-fmodule-file=Evaluation.Dependency.TypeErasure=build/Evaluation/modules/Evaluation/Dependency/TypeErasure.pcm\
 		-fmodule-file=Evaluation.Dyno=build/Evaluation/modules/Evaluation/Dyno.pcm\
-		-fmodule-file=Evaluation.Polymorphic.Library=build/Evaluation/modules/Evaluation/Polymorphic/Library.pcm\
 		-fmodule-file=Evaluation.Polymorphic=build/Evaluation/modules/Evaluation/Polymorphic.pcm\
 		-fmodule-file=Evaluation.Replication.Cone=build/Evaluation/modules/Evaluation/Replication/Cone.pcm\
 		-fmodule-file=Evaluation.Replication.Cube=build/Evaluation/modules/Evaluation/Replication/Cube.pcm\
@@ -43,12 +49,6 @@ function assemble()
 		-fmodule-file=Evaluation.Replication.Pyramid=build/Evaluation/modules/Evaluation/Replication/Pyramid.pcm\
 		-fmodule-file=Evaluation.Replication.Sphere=build/Evaluation/modules/Evaluation/Replication/Sphere.pcm\
 		-fmodule-file=Evaluation.Replication.VolumeComputer=build/Evaluation/modules/Evaluation/Replication/VolumeComputer.pcm\
-		-fmodule-file=Evaluation.Shared.CopyConstruct=build/Evaluation/modules/Evaluation/Shared/CopyConstruct.pcm\
-		-fmodule-file=Evaluation.Shared.DataTypes=build/Evaluation/modules/Evaluation/Shared/DataTypes.pcm\
-		-fmodule-file=Evaluation.Shared.InPlaceConstruct=build/Evaluation/modules/Evaluation/Shared/InPlaceConstruct.pcm\
-		-fmodule-file=Evaluation.Shared.MainTemplate=build/Evaluation/modules/Evaluation/Shared/MainTemplate.pcm\
-		-fmodule-file=Evaluation.Shared.TypeConstruct=build/Evaluation/modules/Evaluation/Shared/TypeConstruct.pcm\
-		-fmodule-file=Evaluation.TypeErasure.Library=build/Evaluation/modules/Evaluation/TypeErasure/Library.pcm\
 		-fmodule-file=Evaluation.TypeErasure=build/Evaluation/modules/Evaluation/TypeErasure.pcm\
 		-fmodule-file=Evaluation.Virtual.Cone=build/Evaluation/modules/Evaluation/Virtual/Cone.pcm\
 		-fmodule-file=Evaluation.Virtual.Cube=build/Evaluation/modules/Evaluation/Virtual/Cube.pcm\
@@ -62,7 +62,6 @@ function assemble()
 		-fmodule-file=Evaluation.Virtual=build/Evaluation/modules/Evaluation/Virtual.pcm\
 		-fmodule-file=Std=build/Evaluation/modules/Std.pcm\
 		--assemble -masm=intel\
-		-fno-exceptions\
 		Evaluation/$1.cpp\
 		-o build/assembly/$1.s\
 		-frelaxed-template-template-args\

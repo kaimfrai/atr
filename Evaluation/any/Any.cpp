@@ -1,6 +1,6 @@
 export module Evaluation.Any;
 
-import Evaluation.Shared.DataTypes;
+import Evaluation.Dependency.DataTypes;
 
 import Std;
 

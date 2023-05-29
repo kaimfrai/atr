@@ -3,7 +3,7 @@ export module Evaluation.Virtual.Ellipsoid;
 import Evaluation.Virtual.Ellipse;
 import Evaluation.Virtual.SphericBody;
 
-import Evaluation.Shared.DataTypes;
+import Evaluation.Dependency.DataTypes;
 
 export namespace
 	Bodies3D

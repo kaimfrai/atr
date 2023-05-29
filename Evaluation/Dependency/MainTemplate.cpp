@@ -1,7 +1,7 @@
-export module Evaluation.Shared.MainTemplate;
+export module Evaluation.Dependency.MainTemplate;
 
-import Evaluation.Shared.DataTypes;
-import Evaluation.Shared.PseudoRandomSequence;
+import Evaluation.Dependency.DataTypes;
+import Evaluation.Dependency.PseudoRandomSequence;
 
 import Std;
 

@@ -2,8 +2,8 @@ export module Evaluation.Virtual.CubicBody;
 
 import Evaluation.Virtual.ExtendedShape;
 
-import Evaluation.Shared.DataTypes;
-import Evaluation.Shared.Fraction;
+import Evaluation.Dependency.DataTypes;
+import Evaluation.Dependency.Fraction;
 
 export namespace
 	Bodies3D

@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.Cone;
 
 import Evaluation.Archetype.BasicBody;
-import Evaluation.Shared.PiFraction;
+import Evaluation.Dependency.PiFraction;
 
 import ATR.Literals;
 

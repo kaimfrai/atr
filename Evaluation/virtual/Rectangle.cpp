@@ -2,7 +2,7 @@ export module Evaluation.Virtual.Rectangle;
 
 import Evaluation.Virtual.RectangularShape;
 
-import Evaluation.Shared.DataTypes;
+import Evaluation.Dependency.DataTypes;
 
 export namespace
 	Shapes2D

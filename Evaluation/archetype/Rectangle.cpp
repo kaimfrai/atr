@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.Rectangle;
 
 import Evaluation.Archetype.BasicShape;
-import Evaluation.Shared.Fraction;
+import Evaluation.Dependency.Fraction;
 
 import ATR.Literals;
 

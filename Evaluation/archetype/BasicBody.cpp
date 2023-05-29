@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.BasicBody;
 
 import Evaluation.Archetype.BasicShape;
-import Evaluation.Shared.DataTypes;
+import Evaluation.Dependency.DataTypes;
 
 import ATR.Literals;
 

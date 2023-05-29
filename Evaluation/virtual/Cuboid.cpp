@@ -3,7 +3,7 @@ export module Evaluation.Virtual.Cuboid;
 import Evaluation.Virtual.Rectangle;
 import Evaluation.Virtual.CubicBody;
 
-import Evaluation.Shared.DataTypes;
+import Evaluation.Dependency.DataTypes;
 
 export namespace
 	Bodies3D

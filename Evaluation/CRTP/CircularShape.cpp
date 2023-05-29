@@ -1,7 +1,7 @@
 export module Evaluation.CRTP.CircularShape;
 
-import Evaluation.Shared.DataTypes;
-import Evaluation.Shared.PiFraction;
+import Evaluation.Dependency.DataTypes;
+import Evaluation.Dependency.PiFraction;
 import Evaluation.CRTP.BasicShape;
 import Evaluation.CRTP.SeparateWidth;
 

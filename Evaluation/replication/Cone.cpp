@@ -1,7 +1,7 @@
 export module Evaluation.Replication.Cone;
 
-import Evaluation.Shared.DataTypes;
-import Evaluation.Shared.PiFraction;
+import Evaluation.Dependency.DataTypes;
+import Evaluation.Dependency.PiFraction;
 
 export namespace
 	Bodies3D

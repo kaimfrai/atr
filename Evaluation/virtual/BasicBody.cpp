@@ -2,7 +2,7 @@ export module Evaluation.Virtual.BasicBody;
 
 import Evaluation.Virtual.IBody;
 
-import Evaluation.Shared.DataTypes;
+import Evaluation.Dependency.DataTypes;
 
 export namespace
 	Bodies3D

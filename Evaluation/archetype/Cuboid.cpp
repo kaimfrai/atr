@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.Cuboid;
 
 import Evaluation.Archetype.BasicBody;
-import Evaluation.Shared.Fraction;
+import Evaluation.Dependency.Fraction;
 
 import ATR.Literals;
 

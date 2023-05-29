@@ -2,8 +2,8 @@ export module Evaluation.Virtual.TriangularShape;
 
 import Evaluation.Virtual.BasicShape;
 
-import Evaluation.Shared.DataTypes;
-import Evaluation.Shared.Fraction;
+import Evaluation.Dependency.DataTypes;
+import Evaluation.Dependency.Fraction;
 
 export namespace
 	Shapes2D

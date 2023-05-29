@@ -2,7 +2,7 @@ export module Evaluation.CRTP.ExtendedShape;
 
 import Evaluation.CRTP.BasicBody;
 
-import Evaluation.Shared.DataTypes;
+import Evaluation.Dependency.DataTypes;
 
 export namespace
 	Bodies3D

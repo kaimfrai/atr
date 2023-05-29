@@ -1,6 +1,6 @@
 export module Evaluation.Archetype.Product;
 
-import Evaluation.Shared.DataTypes;
+import Evaluation.Dependency.DataTypes;
 
 import ATR.Dependency;
 import ATR.Literals;

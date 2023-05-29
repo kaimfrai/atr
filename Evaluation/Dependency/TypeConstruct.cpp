@@ -1,4 +1,4 @@
-export module Evaluation.Shared.TypeConstruct;
+export module Evaluation.Dependency.TypeConstruct;
 
 import Meta.ID;
 import Meta.String.Literal;

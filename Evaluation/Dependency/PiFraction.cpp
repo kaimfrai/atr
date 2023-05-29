@@ -1,6 +1,6 @@
-export module Evaluation.Shared.PiFraction;
+export module Evaluation.Dependency.PiFraction;
 
-import Evaluation.Shared.DataTypes;
+import Evaluation.Dependency.DataTypes;
 
 import Std;
 

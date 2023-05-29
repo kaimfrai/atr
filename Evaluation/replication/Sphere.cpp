@@ -1,7 +1,7 @@
 export module Evaluation.Replication.Sphere;
 
-import Evaluation.Shared.DataTypes;
-import Evaluation.Shared.PiFraction;
+import Evaluation.Dependency.DataTypes;
+import Evaluation.Dependency.PiFraction;
 
 import Std;
 

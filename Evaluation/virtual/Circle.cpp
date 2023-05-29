@@ -2,7 +2,7 @@ export module Evaluation.Virtual.Circle;
 
 import Evaluation.Virtual.CircularShape;
 
-import Evaluation.Shared.DataTypes;
+import Evaluation.Dependency.DataTypes;
 
 export namespace
 	Shapes2D

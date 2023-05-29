@@ -3,7 +3,7 @@ export module Evaluation.Virtual.Sphere;
 import Evaluation.Virtual.Circle;
 import Evaluation.Virtual.SphericBody;
 
-import Evaluation.Shared.DataTypes;
+import Evaluation.Dependency.DataTypes;
 
 export namespace
 	Bodies3D

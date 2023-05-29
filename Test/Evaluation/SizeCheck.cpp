@@ -1,6 +1,6 @@
 export module Test.Evaluation.SizeCheck;
 
-import Evaluation.Shared.DataTypes;
+import Evaluation.Dependency.DataTypes;
 import Meta.Size;
 
 export

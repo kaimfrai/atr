@@ -3,7 +3,7 @@ export module Evaluation.Virtual.Cube;
 import Evaluation.Virtual.Square;
 import Evaluation.Virtual.CubicBody;
 
-import Evaluation.Shared.DataTypes;
+import Evaluation.Dependency.DataTypes;
 
 export namespace
 	Bodies3D

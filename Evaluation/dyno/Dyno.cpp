@@ -1,7 +1,7 @@
 export module Evaluation.Dyno;
 
-import Evaluation.Shared.DataTypes;
-import Evaluation.Dyno.Library;
+import Evaluation.Dependency.DataTypes;
+import Evaluation.Dependency.Dyno;
 
 using namespace dyno::literals;
 

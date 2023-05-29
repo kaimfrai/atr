@@ -1,4 +1,4 @@
-add_subdirectory(Shared)
+add_subdirectory(Dependency)
 add_subdirectory(CRTP)
 
 add_subdirectory(any)

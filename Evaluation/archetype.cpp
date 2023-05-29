@@ -12,9 +12,9 @@ import Evaluation.Archetype.Cylinder;
 import Evaluation.Archetype.Cone;
 import Evaluation.Archetype.Ellipsoid;
 import Evaluation.Archetype.Head;
-import Evaluation.Shared.DataTypes;
-import Evaluation.Shared.MainTemplate;
-import Evaluation.Shared.TypeConstruct;
+import Evaluation.Dependency.DataTypes;
+import Evaluation.Dependency.MainTemplate;
+import Evaluation.Dependency.TypeConstruct;
 
 import Std;
 

@@ -1,6 +1,8 @@
-force_import_std(boost.hpp)
-add_user_header_unit(boost.hpp)
-
-add_module(Library.cpp)
+set_source_files_properties(
+	TypeErasure.cpp
+PROPERTIES
+INCLUDE_DIRECTORIES
+	"${CMAKE_CURRENT_SOURCE_DIR}/../Dependency/type_erasure/"
+)
 
 add_module(TypeErasure.cpp)

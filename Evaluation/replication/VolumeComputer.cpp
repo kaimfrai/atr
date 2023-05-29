@@ -9,7 +9,7 @@ import Evaluation.Replication.Cone;
 import Evaluation.Replication.Ellipsoid;
 import Evaluation.Replication.Head;
 
-import Evaluation.Shared.DataTypes;
+import Evaluation.Dependency.DataTypes;
 
 import Std;
 

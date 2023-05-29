@@ -1,7 +1,7 @@
 export module Evaluation.Archetype.Ellipse;
 
 import Evaluation.Archetype.BasicShape;
-import Evaluation.Shared.PiFraction;
+import Evaluation.Dependency.PiFraction;
 
 import ATR.Literals;
 

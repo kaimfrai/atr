@@ -1,7 +1,7 @@
 export module Evaluation.CRTP.CubicBody;
 
-import Evaluation.Shared.DataTypes;
-import Evaluation.Shared.Fraction;
+import Evaluation.Dependency.DataTypes;
+import Evaluation.Dependency.Fraction;
 import Evaluation.CRTP.ExtendedShape;
 
 export namespace

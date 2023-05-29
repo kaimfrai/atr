@@ -1,6 +1,6 @@
 export module Evaluation.Virtual.IShape;
 
-import Evaluation.Shared.DataTypes;
+import Evaluation.Dependency.DataTypes;
 
 export namespace
 	Shapes2D
