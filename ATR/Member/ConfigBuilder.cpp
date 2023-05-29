@@ -421,7 +421,28 @@ export namespace
 			)
 			noexcept
 		->	ConfigBuilder&&
-		{	return
+		{
+			if	(	(	NamedTypes
+						.	TotalCounter
+					==	0z
+					)
+				and	(	AliasList
+						.	Count
+					==	0z
+					)
+				)
+			{	return
+				static_cast<ConfigBuilder&&>
+				(	operator=
+					(	BuiltConfig_Of
+						<	decltype(i_vBaseID)
+						,	ConfigBuilder
+						>
+					)
+				);
+			}
+
+			return
 			operator()
 			(	Chain::Empty
 			,	i_vBaseID
