@@ -54,15 +54,15 @@ To run all evaluation scripts do the following:
 ```
 
 You may optionally add exactly one argument out of
-* virtual
-* any
-* dyno
-* polymorphic
-* type_erasure
-* archetype
-* replication
-* variant
-* visitor
+* Virtual
+* Any
+* Dyno
+* Polymorphic
+* TypeErasure
+* Archetype
+* Replication
+* Variant
+* Visitor
 to run the evaluation only on the corresponding implementation.
 
 To make use of perf the script requires elevated rights.
