@@ -5,15 +5,47 @@ import ATR.Offset.Member;
 import Meta.Memory.PointerCast;
 import Meta.Memory.Size.PointerArithmetic;
 import Meta.Memory.Size;
+import Meta.Memory.Constraint;
 
 import Std;
 
 using ::Meta::BitSize;
 using ::Meta::Memory::PointerCast;
+using ::Meta::Memory::Constraint_Of;
+
+using namespace ::Meta::Literals;
 
 export namespace
 	ATR::Offset
 {
+	template
+		<	typename
+				t_tData
+		>
+	requires
+		(	not
+			Constraint_Of
+			<	t_tData
+			>
+			.	IsAligned
+				()
+		)
+	[[nodiscard]]
+	auto constexpr
+	(	operator->*
+	)	(	::std::byte const
+			(&
+			)	[]
+		,	Member<0_bit, t_tData const>
+		)
+		noexcept
+	->	t_tData
+	{	return
+			t_tData
+			{}
+		;
+	}
+
 	template
 		<	BitSize
 				t_vOffset

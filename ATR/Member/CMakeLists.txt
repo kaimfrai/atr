@@ -11,6 +11,5 @@ add_single_file_modules(
 	Finalize.cpp
 	Config.cpp
 	Storage.cpp
-	Static.cpp
 	ConfigTransformer.cpp
 )

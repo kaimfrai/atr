@@ -2,7 +2,6 @@ export module ATR.Member.OffsetOf;
 
 import ATR.Member.Config;
 import ATR.Member.Offset;
-import ATR.Member.Static;
 
 import Meta.ID;
 import Meta.Memory.Alignment;
@@ -40,33 +39,14 @@ export namespace
 				(	i_vMemberName
 				)
 		;
-
-		if	constexpr
-			(	vMemberInfo
-				->	Type
-				.	GetAlign
-					()
-			>	0_align
-			)
-		{
-			return
-			Offset
+		return
+		Offset
+		<	vMemberInfo
+			->	Offset
+		,	RestoreTypeEntity
 			<	vMemberInfo
-				->	Offset
-			,	RestoreTypeEntity
-				<	vMemberInfo
-					->	Type
-				>
-			>{};
-		}
-		else
-		{	return
-			Static
-			<	RestoreTypeEntity
-				<	vMemberInfo
-					->	Type
-				>
-			>{};
-		}
+				->	Type
+			>
+		>{};
 	}
 }
