@@ -12,6 +12,7 @@ cd build/memcheck_$1_$2/
 function execute_memcheck()
 {
 	echo $3
+
 	valgrind\
 		--tool=memcheck\
 		../Evaluation/bin/$3\

@@ -14,6 +14,7 @@ echo 0 > /proc/sys/kernel/nmi_watchdog
 function execute_perf()
 {
 	echo $4
+
 	perf\
 		stat\
 		--repeat $3\
