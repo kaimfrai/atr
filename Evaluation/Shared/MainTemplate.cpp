@@ -189,27 +189,13 @@ export
 		)
 	->	int
 	{
-		Float
-			TotalSum
-		=	0
-		;
-
-		auto const
-			vLoopIterations
-		=	::std::strtoull
-			(	i_vArguments
-				[	i_vArguments.size()
-				-	3uz
-				]
-			,	nullptr
-			,	10
-			)
-		;
 		auto const
 			vRandomSeed
 		=	::std::strtoull
 			(	i_vArguments
-				[	i_vArguments.size()
+				[	i_vArguments
+					.	size
+						()
 				-	2uz
 				]
 			,	nullptr
@@ -220,40 +206,43 @@ export
 			vRandomSequenceLength
 		=	::std::strtoll
 			(	i_vArguments
-			.	back()
+				.	back()
 			,	nullptr
 			,	10
 			)
 		;
-		for (	auto
-					_
-				=	0ull
-			;	_ < vLoopIterations
-			;	++_
+
+		auto static constexpr
+			vExpectedValue
+		=	0
+		;
+
+		auto const
+			vResult
+		=	EvaluateRandomContainer
+			<	t_tBodyContainer
+			,	t_fMakeCube
+			,	t_fMakeCuboid
+			,	t_fMakePyramid
+			,	t_fMakeSphere
+			,	t_fMakeCylinder
+			,	t_fMakeCone
+			,	t_fMakeEllipsoid
+			,	t_fMakeHead
+			,	t_fComputeVolume
+			>(	PseudoRandomSequence
+				{	vRandomSeed
+				,	vRandomSequenceLength
+				}
 			)
-		{	(	TotalSum
-			+=	EvaluateRandomContainer
-				<	t_tBodyContainer
-				,	t_fMakeCube
-				,	t_fMakeCuboid
-				,	t_fMakePyramid
-				,	t_fMakeSphere
-				,	t_fMakeCylinder
-				,	t_fMakeCone
-				,	t_fMakeEllipsoid
-				,	t_fMakeHead
-				,	t_fComputeVolume
-				>(	PseudoRandomSequence
-					{	vRandomSeed
-					,	vRandomSequenceLength
-					}
-				)
-			);
-		}
+		;
+
 		return
-		static_cast<int>
-		(	TotalSum
-		);
+			static_cast<int>
+			(	vResult
+			)
+		-	vExpectedValue
+		;
 	}
 }
 

@@ -32,25 +32,25 @@ cd ../../
 
 if [ $# -lt 1 ] || [ $1 == "compile" ]
 then
-	bash Evaluation/compile_all.sh $2
+	bash Evaluation/compile.sh $2
 fi
 
 if [ $# -lt 1 ] || [ $1 == "assembly" ]
 then
-	bash Evaluation/assembly_all.sh $2
+	bash Evaluation/assembly.sh $2
 fi
 
 if [ $# -lt 1 ] || [ $1 == "memcheck" ]
 then
-	bash Evaluation/memcheck_all.sh 1 42 100000 $2
+	bash Evaluation/memcheck.sh 42 100000 $2
 fi
 
 if [ $# -lt 1 ] || [ $1 == "cachegrind" ]
 then
-	bash Evaluation/cachegrind_all.sh 1 42 100000 $2
+	bash Evaluation/cachegrind.sh 42 100000 $2
 fi
 
 if [ $# -lt 1 ] || [ $1 == "perf" ]
 then
-	bash Evaluation/perf_stat_all.sh 1 42 100000 100 $2
+	bash Evaluation/perf.sh 42 100000 100 $2
 fi
