@@ -1,166 +1,181 @@
 export module Evaluation.Shared.PseudoRandomSequence;
 
+import Meta.Math.Random;
 import Std;
+
+using ::Meta::Math::Splitmix64;
+using ::Meta::Math::Xoroshiro256StarStar;
 
 export
 {
+	struct
+		CountedSentinel
+	{
+		::std::ptrdiff_t
+			EndCount
+		;
+	};
+
+	class
+		CountedXoroshiro
+	{
+		Xoroshiro256StarStar
+			m_vRandom
+		;
+		::std::ptrdiff_t
+			m_vCounter
+		=	0z
+		;
+	public:
+
+		using
+			difference_type
+		=	::std::ptrdiff_t
+		;
+
+		using
+			value_type
+		=	::std::uint64_t
+		;
+
+		explicit(false) constexpr
+		(	CountedXoroshiro
+		)	(	::std::uint64_t
+					i_vSeed
+			)
+		:	m_vRandom
+			{	Splitmix64
+				{	i_vSeed
+				}
+			}
+		{}
+
+		[[nodiscard]]
+		auto constexpr
+		(	operator*
+		)	()	const
+			noexcept
+		->	::std::uint64_t
+		{	return
+			*	m_vRandom
+			;
+		}
+
+		auto constexpr
+		(	operator++
+		)	()	&
+			noexcept
+		->	CountedXoroshiro&
+		{
+			++	m_vRandom
+			;
+			++	m_vCounter
+			;
+
+			return
+			*	this
+			;
+		}
+
+		[[nodiscard("Prefer pre-increment when discarding the result")]]
+		auto constexpr
+		(	operator++
+		)	(int)
+			noexcept
+		->	CountedXoroshiro
+		{
+			auto const
+				vOld
+			=	*this
+			;
+
+			operator++
+			();
+
+			return
+				vOld
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr
+		(	operator==
+		)	(	CountedXoroshiro const
+				&	i_rIterator
+			,	CountedSentinel
+					i_vSentinel
+			)
+			noexcept
+		->	bool
+		{	return
+				i_rIterator
+				.	m_vCounter
+			==	i_vSentinel
+				.	EndCount
+			;
+		}
+	};
+
 	class
 		PseudoRandomSequence
 	{
-		using
-			EngineType
-		=	::std::mt19937_64
+		::std::uint64_t
+			m_vSeed
 		;
 
-		using
-			ResultType
-		=	typename
-			EngineType
-		::	result_type
-		;
-
-		ResultType
-			m_nSeed
-		;
-
-		ResultType
-			m_nIterations
+		::std::ptrdiff_t
+			m_vIterations
 		;
 
 	public:
-		explicit(true) inline
+		explicit(true) constexpr
 		(	PseudoRandomSequence
-		)	(	ResultType
+		)	(	::std::uint64_t
 					i_vSeed
-			,	ResultType
+			,	::std::ptrdiff_t
 					i_vIterations
 			)
-		:	m_nSeed
+		:	m_vSeed
 			{	i_vSeed
 			}
-		,	m_nIterations
+		,	m_vIterations
 			{	i_vIterations
 			}
 		{}
 
-		class
-			Iterator
-		{
-			EngineType
-				m_vEngine
-			;
-
-			ResultType
-				m_nCurrent
-			;
-
-			ResultType
-				m_nCounter
-			;
-
-		public:
-			explicit(true) inline
-			(	Iterator
-			)	(	ResultType
-						i_nSeed
-				,	ResultType
-						i_nIterationCounter
-					=	0
-				)
-			:	m_vEngine
-				{	i_nSeed
-				}
-			,	m_nCurrent
-				{	(	(void)m_vEngine
-						.	discard
-							(	i_nIterationCounter
-							)
-					,	m_vEngine
-						()
-					)
-				}
-			,	m_nCounter
-				{	i_nIterationCounter
-				}
-			{}
-
-			[[nodiscard]]
-			auto inline
-				operator*
-				()	const
-				noexcept
-			->	ResultType
-			{	return
-					m_nCurrent
-				;
-			}
-
-			auto inline
-			(	operator++
-			)	()	&
-			->	Iterator&
-			{
-				(	m_nCurrent
-				=	m_vEngine
-					()
-				);
-				++	m_nCounter
-				;
-				return
-					*this
-				;
-			}
-
-			[[nodiscard]]
-			friend auto inline
-			(	operator==
-			)	(	Iterator const
-					&	i_rLeft
-				,	Iterator const
-					&	i_rRight
-				)
-				noexcept
-			->	bool
-			{	return
-				(	i_rLeft
-					.	m_nCounter
-				==	i_rRight
-					.	m_nCounter
-				);
-			}
-		};
-
 		[[nodiscard]]
-		auto inline
+		auto constexpr
 		(	size
 		)	()	const
 			noexcept
-		->	ResultType
+		->	::std::size_t
 		{	return
-				m_nIterations
-			;
+			static_cast<::std::size_t>
+			(	m_vIterations
+			);
 		}
 
 		[[nodiscard]]
-		auto inline
+		auto constexpr
 		(	begin
 		)	()	const
-		->	Iterator
+			noexcept
+		->	CountedXoroshiro
 		{	return
-			Iterator
-			{	m_nSeed
+			CountedXoroshiro
+			{	m_vSeed
 			};
 		}
 
 		[[nodiscard]]
-		auto inline
+		auto constexpr
 		(	end
 		)	()	const
-		->	Iterator
+			noexcept
+		->	CountedSentinel
 		{	return
-			Iterator
-			{	m_nSeed
-			,	m_nIterations
+			CountedSentinel
+			{	m_vIterations
 			};
 		}
 	};

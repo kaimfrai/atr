@@ -124,7 +124,6 @@ export namespace
 		}
 	};
 
-
 	// Taken and modified from: https://prng.di.unimi.it/xoshiro256starstar.c
 
 	/*  Written in 2018 by David Blackman and Sebastiano Vigna (vigna@acm.org)

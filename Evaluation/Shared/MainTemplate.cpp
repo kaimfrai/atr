@@ -219,7 +219,7 @@ export
 		;
 		auto const
 			vRandomSequenceLength
-		=	::std::strtoull
+		=	::std::strtoll
 			(	i_vArguments
 			.	back()
 			,	nullptr
