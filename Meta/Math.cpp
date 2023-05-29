@@ -7,4 +7,5 @@ export import Meta.Math.Divide;
 export import Meta.Math.Next;
 export import Meta.Math.Power;
 export import Meta.Math.Prev;
+export import Meta.Math.Random;
 export import Meta.Math.Sign;

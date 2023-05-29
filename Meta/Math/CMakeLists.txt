@@ -7,4 +7,5 @@ add_single_file_modules(
 	Power.cpp
 	Congruent.cpp
 	Approximate.cpp
+	Random.cpp
 )
