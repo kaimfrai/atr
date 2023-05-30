@@ -23,10 +23,6 @@ add_module(
 	ID.cpp
 
 	ID/Base.cpp
-	ID/Decimal.cpp
-	ID/Default.cpp
-	ID/LowerCase.cpp
-	ID/UpperCase.cpp
 	ID/ID.cpp
 	ID/Make.cpp
 	ID/Alias.cpp

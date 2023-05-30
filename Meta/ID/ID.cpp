@@ -1,14 +1,33 @@
 export module Meta.ID:ID;
 
 import :Base;
-import :Decimal;
-import :Default;
-import :LowerCase;
-import :UpperCase;
 
 import Meta.String.Chain;
 
 using ::Meta::String::Chain;
+
+auto constexpr
+(	ToChar
+)	(	char
+			i_vChar
+	)
+	noexcept
+->	char
+{	return i_vChar;	}
+
+auto constexpr
+(	ToChar
+)	(	int
+			i_vInteger
+	)
+	noexcept
+->	char
+{	return
+	static_cast<char>
+	(	i_vInteger
+	+	'0'
+	);
+}
 
 template
 	<	decltype(auto)
