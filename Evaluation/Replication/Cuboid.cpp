@@ -24,8 +24,8 @@ export namespace
 
 	[[nodiscard]]
 	auto constexpr
-		ComputeVolumeCuboid
-		(	void const
+	(	ComputeVolumeCuboid
+	)	(	void const
 			*	i_aObject
 		)
 		noexcept

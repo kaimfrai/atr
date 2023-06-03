@@ -162,16 +162,31 @@ export namespace
 			{}
 		{}
 
+		[[nodiscard]]
 		auto constexpr
-			ComputeVolume
-			()	const
+		(	ComputeVolume
+		)	()	const
 			noexcept
 		->	Float
 		{	return
-				m_fComputeVolume
-				(	&m_vAny
-				)
-			;
+			m_fComputeVolume
+			(	&m_vAny
+			);
 		}
 	};
+
+	[[nodiscard]]
+	auto constexpr
+	(	ComputeVolume
+	)	(	VolumeComputer const
+			&	i_rBody3D
+		)
+		noexcept
+	->	Float
+	{	return
+		i_rBody3D
+		.	ComputeVolume
+			()
+		;
+	}
 }

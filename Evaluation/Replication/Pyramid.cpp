@@ -25,8 +25,8 @@ export namespace
 
 	[[nodiscard]]
 	auto constexpr
-		ComputeVolumePyramid
-		(	void const
+	(	ComputeVolumePyramid
+	)	(	void const
 			*	i_aObject
 		)
 		noexcept

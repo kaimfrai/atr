@@ -25,8 +25,8 @@ export namespace
 
 	[[nodiscard]]
 	auto constexpr
-		ComputeVolumeEllipsoid
-		(	void const
+	(	ComputeVolumeEllipsoid
+	)	(	void const
 			*	i_aObject
 		)
 		noexcept
