@@ -17,6 +17,7 @@ export namespace
 		>
 	,	SeparateDepth
 	{
+		[[nodiscard]]
 		auto constexpr
 		(	GetComputeVolumeMultiplier
 		)	()	const

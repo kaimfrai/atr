@@ -12,6 +12,7 @@ export namespace
 			Width
 		;
 
+		[[nodiscard]]
 		auto constexpr
 		(	GetWidth
 		)	()	const

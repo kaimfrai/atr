@@ -23,6 +23,7 @@ export namespace
 			Shapes2D
 		;
 
+		[[nodiscard]]
 		auto constexpr
 		(	GetHeight
 		)	()	const
@@ -36,6 +37,7 @@ export namespace
 			;
 		}
 
+		[[nodiscard]]
 		auto constexpr
 			GetWidth
 			()	const

@@ -12,6 +12,7 @@ export namespace
 			Height
 		;
 
+		[[nodiscard]]
 		auto constexpr
 		(	GetHeight
 		)	()	const

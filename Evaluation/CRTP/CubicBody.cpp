@@ -20,6 +20,7 @@ export namespace
 		,	t_tShape
 		>
 	{
+		[[nodiscard]]
 		auto constexpr
 		(	GetComputeVolumeMultiplier
 		)	()	const

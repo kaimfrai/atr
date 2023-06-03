@@ -12,6 +12,7 @@ export namespace
 	struct
 		BasicBody
 	{
+		[[nodiscard]]
 		auto constexpr
 		(	ComputeVolume
 		)	()	const

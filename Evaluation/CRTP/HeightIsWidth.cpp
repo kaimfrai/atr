@@ -12,6 +12,7 @@ export namespace
 	struct
 		HeightIsWidth
 	{
+		[[nodiscard]]
 		auto constexpr
 		(	GetHeight
 		)	()	const

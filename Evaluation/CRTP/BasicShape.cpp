@@ -16,6 +16,7 @@ export namespace
 			Color
 		;
 
+		[[nodiscard]]
 		auto constexpr
 		(	ComputeArea
 		)	()	const

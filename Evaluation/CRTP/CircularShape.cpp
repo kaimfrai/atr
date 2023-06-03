@@ -19,6 +19,7 @@ export namespace
 		>
 	,	SeparateWidth
 	{
+		[[nodiscard]]
 		auto constexpr
 		(	GetComputeAreaMultiplier
 		)	()	const

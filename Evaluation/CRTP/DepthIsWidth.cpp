@@ -12,6 +12,7 @@ export namespace
 	struct
 		DepthIsWidth
 	{
+		[[nodiscard]]
 		auto constexpr
 		(	GetDepth
 		)	()	const

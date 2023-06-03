@@ -12,6 +12,7 @@ export namespace
 			Depth
 		;
 
+		[[nodiscard]]
 		auto constexpr
 		(	GetDepth
 		)	()	const
