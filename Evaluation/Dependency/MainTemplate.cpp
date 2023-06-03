@@ -182,8 +182,10 @@ export
 	[[nodiscard]]
 	auto inline
 		MainTemplate
-		(	::std::span<char const*>
-				i_vArguments
+		(	char const
+			*	i_aRandomSeed
+		,	char const
+			*	i_aRandomSequenceLength
 		)
 		noexcept
 	->	int
@@ -191,12 +193,7 @@ export
 		auto const
 			vRandomSeed
 		=	::std::strtoull
-			(	i_vArguments
-				[	i_vArguments
-					.	size
-						()
-				-	2uz
-				]
+			(	i_aRandomSeed
 			,	nullptr
 			,	10
 			)
@@ -204,8 +201,7 @@ export
 		auto const
 			vRandomSequenceLength
 		=	::std::strtoll
-			(	i_vArguments
-				.	back()
+			(	i_aRandomSequenceLength
 			,	nullptr
 			,	10
 			)

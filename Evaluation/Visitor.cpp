@@ -2,12 +2,9 @@ import Evaluation.Visitor;
 import Evaluation.Dependency.DynamicArray;
 import Evaluation.Dependency.MainTemplate;
 
-import Std;
-
 auto
 (	main
 )	(	int
-			i_vArgCount
 	,	char const
 		*	i_aArgValue
 		[]
@@ -28,12 +25,12 @@ auto
 	,	&InPlaceConstruct<Ellipsoid>
 	,	&InPlaceConstruct<Head>
 	,	ComputeVolume
-	>(	::std::span
-		{	i_aArgValue
-		,	static_cast<::std::size_t>
-			(	i_vArgCount
-			)
-		}
+	>(	i_aArgValue
+			[	1z
+			]
+	,	i_aArgValue
+			[	2z
+			]
 	);
 }
 
