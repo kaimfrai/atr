@@ -26,8 +26,8 @@ export
 			m_vCounter
 		=	0z
 		;
-	public:
 
+	public:
 		using
 			difference_type
 		=	::std::ptrdiff_t

@@ -8,7 +8,7 @@ import Evaluation.CRTP.Cone;
 import Evaluation.CRTP.Ellipsoid;
 import Evaluation.CRTP.Head;
 
-import Evaluation.Dependency.CopyConstruct;
+import Evaluation.Dependency.DefaultConstruct;
 import Evaluation.Dependency.DynamicArray;
 import Evaluation.Dependency.Dyno;
 import Evaluation.Dependency.MainTemplate;
@@ -57,14 +57,14 @@ auto
 	return
 	MainTemplate
 	<	DynamicArray<Body3D>
-	,	&CopyConstruct<Cube>
-	,	&CopyConstruct<Cuboid>
-	,	&CopyConstruct<Pyramid>
-	,	&CopyConstruct<Sphere>
-	,	&CopyConstruct<Cylinder>
-	,	&CopyConstruct<Cone>
-	,	&CopyConstruct<Ellipsoid>
-	,	&CopyConstruct<Head>
+	,	&DefaultConstruct<Cube>
+	,	&DefaultConstruct<Cuboid>
+	,	&DefaultConstruct<Pyramid>
+	,	&DefaultConstruct<Sphere>
+	,	&DefaultConstruct<Cylinder>
+	,	&DefaultConstruct<Cone>
+	,	&DefaultConstruct<Ellipsoid>
+	,	&DefaultConstruct<Head>
 	,	fComputeVolume
 	>(	::std::span
 		{	i_aArgValue

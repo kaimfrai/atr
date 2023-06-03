@@ -10,8 +10,8 @@ export
 		>
 	[[nodiscard]]
 	auto constexpr
-		InPlaceConstruct
-		()
+	(	InPlaceConstruct
+	)	()
 		noexcept
 	->	::std::in_place_type_t
 		<	t_tBody

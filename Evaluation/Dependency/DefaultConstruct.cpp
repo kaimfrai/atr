@@ -1,4 +1,4 @@
-export module Evaluation.Dependency.CopyConstruct;
+export module Evaluation.Dependency.DefaultConstruct;
 
 export
 {
@@ -8,9 +8,9 @@ export
 		>
 	[[nodiscard]]
 	auto constexpr
-		CopyConstruct
-		()
-	noexcept
+	(	DefaultConstruct
+	)	()
+		noexcept
 	->	t_tBody
 	{	return{};	}
 }

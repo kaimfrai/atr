@@ -8,29 +8,36 @@ export
 {
 	template
 		<	::std::intmax_t
-				t_nNumerator
+				t_vNumerator
 			=	1z
 		,	::std::intmax_t
-				t_nDenominator
+				t_vDenominator
 			=	1z
 		>
 	struct
 		Fraction
 	{
-		auto constexpr
-			operator()
-			()	const
+		[[nodiscard]]
+		auto static constexpr
+		(	operator()
+		)	()
+			noexcept
 		->	Float
 		{	return
-			(	static_cast<Float>(t_nNumerator)
-			/	static_cast<Float>(t_nDenominator)
+			(	static_cast<Float>(t_vNumerator)
+			/	static_cast<Float>(t_vDenominator)
 			);
 		}
 
-		constexpr
-			operator
+		[[nodiscard]]
+		explicit(false) constexpr
+		(	operator
 			Float
-			()	const
-		{	return operator()();	}
+		)	()	const
+			noexcept
+		{	return
+			operator()
+			();
+		}
 	};
 }

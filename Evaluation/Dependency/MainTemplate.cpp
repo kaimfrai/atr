@@ -34,7 +34,6 @@ export
 	(	EvaluateRandomContainer
 	)	(	PseudoRandomSequence const
 			&	i_rRandom
-
 		)
 		noexcept
 	->	Float
@@ -186,6 +185,7 @@ export
 		(	::std::span<char const*>
 				i_vArguments
 		)
+		noexcept
 	->	int
 	{
 		auto const

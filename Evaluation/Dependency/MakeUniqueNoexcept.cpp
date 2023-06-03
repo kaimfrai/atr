@@ -8,6 +8,7 @@ export
 		<	typename
 				t_tElement
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	MakeUniqueNoexcept
 	)	()

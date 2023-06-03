@@ -1,5 +1,5 @@
 add_single_file_modules(
-	CopyConstruct.cpp
+	DefaultConstruct.cpp
 	InPlaceConstruct.cpp
 	TypeConstruct.cpp
 	DynamicArray.cpp

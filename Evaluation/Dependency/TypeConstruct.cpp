@@ -15,8 +15,8 @@ export
 		>
 	[[nodiscard]]
 	auto constexpr
-		TypeConstruct
-		()
+	(	TypeConstruct
+	)	()
 		noexcept
 	->	t_tTypeName
 	{	return{};	}
