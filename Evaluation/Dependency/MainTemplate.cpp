@@ -41,15 +41,10 @@ export
 	{
 		t_tBodyContainer
 			vElements
-		;
-
-		vElements
-		.	reserve
-			(	i_rRandom
-				.	size
-					()
-			)
-		;
+		{	i_rRandom
+			.	size
+				()
+		};
 
 		for	(	auto
 					vRandom

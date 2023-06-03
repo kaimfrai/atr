@@ -8,6 +8,7 @@ import Evaluation.Virtual.Cone;
 import Evaluation.Virtual.Ellipsoid;
 import Evaluation.Virtual.Head;
 
+import Evaluation.Dependency.DynamicArray;
 import Evaluation.Dependency.MainTemplate;
 
 import Std;
@@ -46,7 +47,7 @@ auto
 	;
 	return
 	MainTemplate
-	<	::std::vector<Body3D>
+	<	DynamicArray<Body3D>
 	,	&std::make_unique<Cube>
 	,	&std::make_unique<Cuboid>
 	,	&std::make_unique<Pyramid>

@@ -12,7 +12,9 @@ import Evaluation.Archetype.Cylinder;
 import Evaluation.Archetype.Cone;
 import Evaluation.Archetype.Ellipsoid;
 import Evaluation.Archetype.Head;
+
 import Evaluation.Dependency.DataTypes;
+import Evaluation.Dependency.DynamicArray;
 import Evaluation.Dependency.MainTemplate;
 import Evaluation.Dependency.TypeConstruct;
 
@@ -62,7 +64,7 @@ auto
 
 	return
 	MainTemplate
-	<	::std::vector<Body3D>
+	<	DynamicArray<Body3D>
 	,	&TypeConstruct<ID<"Cube">>
 	,	&TypeConstruct<ID<"Cuboid">>
 	,	&TypeConstruct<ID<"Pyramid">>

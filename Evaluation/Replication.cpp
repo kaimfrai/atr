@@ -8,8 +8,9 @@ import Evaluation.Replication.Cone;
 import Evaluation.Replication.Ellipsoid;
 import Evaluation.Replication.Head;
 
-import Evaluation.Dependency.MainTemplate;
+import Evaluation.Dependency.DynamicArray;
 import Evaluation.Dependency.InPlaceConstruct;
+import Evaluation.Dependency.MainTemplate;
 
 import Std;
 
@@ -44,7 +45,7 @@ auto
 	;
 	return
 	MainTemplate
-	<	::std::vector<Body3D>
+	<	DynamicArray<Body3D>
 	,	&InPlaceConstruct<Cube>
 	,	&InPlaceConstruct<Cuboid>
 	,	&InPlaceConstruct<Pyramid>

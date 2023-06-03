@@ -34,6 +34,7 @@ function assemble()
 		-fmodule-file=Evaluation.CRTP.Sphere=Evaluation/CRTP/Sphere.pcm\
 		-fmodule-file=Evaluation.Dependency.CopyConstruct=Evaluation/Dependency/CopyConstruct.pcm\
 		-fmodule-file=Evaluation.Dependency.DataTypes=Evaluation/Dependency/DataTypes.pcm\
+		-fmodule-file=Evaluation.Dependency.DynamicArray=Evaluation/Dependency/DynamicArray.pcm\
 		-fmodule-file=Evaluation.Dependency.Dyno=Evaluation/Dependency/Dyno.pcm\
 		-fmodule-file=Evaluation.Dependency.InPlaceConstruct=Evaluation/Dependency/InPlaceConstruct.pcm\
 		-fmodule-file=Evaluation.Dependency.MainTemplate=Evaluation/Dependency/MainTemplate.pcm\

@@ -8,8 +8,9 @@ import Evaluation.CRTP.Cone;
 import Evaluation.CRTP.Ellipsoid;
 import Evaluation.CRTP.Head;
 
-import Evaluation.Dependency.MainTemplate;
+import Evaluation.Dependency.DynamicArray;
 import Evaluation.Dependency.InPlaceConstruct;
+import Evaluation.Dependency.MainTemplate;
 
 import Std;
 
@@ -29,7 +30,7 @@ auto
 
 	return
 	MainTemplate
-	<	::std::vector<Body3D>
+	<	DynamicArray<Body3D>
 	,	&InPlaceConstruct<Cube>
 	,	&InPlaceConstruct<Cuboid>
 	,	&InPlaceConstruct<Pyramid>

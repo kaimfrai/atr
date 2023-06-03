@@ -9,6 +9,7 @@ import Evaluation.CRTP.Ellipsoid;
 import Evaluation.CRTP.Head;
 
 import Evaluation.Dependency.CopyConstruct;
+import Evaluation.Dependency.DynamicArray;
 import Evaluation.Dependency.Dyno;
 import Evaluation.Dependency.MainTemplate;
 
@@ -55,7 +56,7 @@ auto
 	;
 	return
 	MainTemplate
-	<	::std::vector<Body3D>
+	<	DynamicArray<Body3D>
 	,	&CopyConstruct<Cube>
 	,	&CopyConstruct<Cuboid>
 	,	&CopyConstruct<Pyramid>

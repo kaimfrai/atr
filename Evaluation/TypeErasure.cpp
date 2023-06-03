@@ -10,6 +10,7 @@ import Evaluation.CRTP.Head;
 
 import Evaluation.Dependency.CopyConstruct;
 import Evaluation.Dependency.DataTypes;
+import Evaluation.Dependency.DynamicArray;
 import Evaluation.Dependency.MainTemplate;
 import Evaluation.Dependency.TypeErasure;
 
@@ -62,7 +63,7 @@ auto
 	;
 	return
 	MainTemplate
-	<	::std::vector<Body3D>
+	<	DynamicArray<Body3D>
 	,	&CopyConstruct<Cube>
 	,	&CopyConstruct<Cuboid>
 	,	&CopyConstruct<Pyramid>
