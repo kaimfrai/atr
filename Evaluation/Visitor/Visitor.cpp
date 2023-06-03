@@ -51,6 +51,7 @@ class
 		<	typename
 				t_tObject
 		>
+	[[nodiscard]]
 	explicit(true) constexpr
 	(	operator
 		t_tObject
@@ -115,6 +116,7 @@ auto constexpr
 )	(	void
 		*	i_aObject
 	)
+	noexcept
 ->	t_tObject*
 {	return
 	::std::launder
@@ -128,6 +130,7 @@ template
 	<	typename
 			t_tObject
 	>
+[[nodiscard]]
 auto constexpr
 (	Invoke
 )	(	t_tObject
@@ -137,6 +140,7 @@ auto constexpr
 	,	::std::invocable<t_tObject> auto const
 		&	i_fOverload
 	)
+	noexcept
 ->	bool
 {	(	o_rResult
 	=	i_fOverload
@@ -205,6 +209,7 @@ class
 		<	typename
 				t_tObject
 		>
+	[[nodiscard]]
 	auto static constexpr
 	(	GetPointerFromBuffer
 	)	(	void
@@ -293,6 +298,7 @@ class
 		<	typename
 				t_tObject
 		>
+	[[nodiscard]]
 	auto static constexpr
 	(	Access
 	)	(	void
@@ -337,6 +343,7 @@ class
 		,	typename
 			...	t_tpArgument
 		>
+	[[nodiscard]]
 	auto static constexpr
 	(	New
 	)	(	t_tpArgument
@@ -466,8 +473,7 @@ public:
 	{}
 
 	auto constexpr
-	(	operator
-		=
+	(	operator=
 	)	(	ObjectValue
 			&&	i_rOther
 		)	&
@@ -494,6 +500,7 @@ public:
 		;
 	}
 
+	[[nodiscard]]
 	explicit(false) constexpr
 	(	operator
 		ObjectReference
@@ -520,6 +527,7 @@ public:
 		<	typename
 				t_tObject
 		>
+	[[nodiscard]]
 	auto static constexpr
 	(	RefersTo
 	)	(	ObjectReference
@@ -542,6 +550,7 @@ public:
 		<	typename
 				t_tCandidate
 		>
+	[[nodiscard]]
 	auto static constexpr
 	(	TryDispatch
 	)	(	ObjectReference
@@ -573,6 +582,7 @@ public:
 		,	typename
 			...	t_tpCandidate
 		>
+	[[nodiscard]]
 	auto static constexpr
 	(	Visit
 	)	(	ObjectReference
@@ -627,6 +637,7 @@ export namespace
 		>
 	;
 
+	[[nodiscard]]
 	auto constexpr
 	(	ComputeVolume
 	)	(	ObjectReference
