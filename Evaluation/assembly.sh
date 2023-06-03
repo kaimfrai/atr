@@ -38,6 +38,7 @@ function assemble()
 		-fmodule-file=Evaluation.Dependency.Dyno=Evaluation/Dependency/Dyno.pcm\
 		-fmodule-file=Evaluation.Dependency.InPlaceConstruct=Evaluation/Dependency/InPlaceConstruct.pcm\
 		-fmodule-file=Evaluation.Dependency.MainTemplate=Evaluation/Dependency/MainTemplate.pcm\
+		-fmodule-file=Evaluation.Dependency.MakeUniqueNoexcept=Evaluation/Dependency/MakeUniqueNoexcept.pcm\
 		-fmodule-file=Evaluation.Dependency.Polymorphic=Evaluation/Dependency/Polymorphic.pcm\
 		-fmodule-file=Evaluation.Dependency.TypeConstruct=Evaluation/Dependency/TypeConstruct.pcm\
 		-fmodule-file=Evaluation.Dependency.TypeErasure=Evaluation/Dependency/TypeErasure.pcm\

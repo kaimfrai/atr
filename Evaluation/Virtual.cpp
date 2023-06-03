@@ -10,6 +10,7 @@ import Evaluation.Virtual.Head;
 
 import Evaluation.Dependency.DynamicArray;
 import Evaluation.Dependency.MainTemplate;
+import Evaluation.Dependency.MakeUniqueNoexcept;
 
 import Std;
 
@@ -28,12 +29,11 @@ auto
 	;
 	using
 		Body3D
-	=	std::unique_ptr
+	=	::std::unique_ptr
 		<	IBody
 		>
 	;
-	constexpr
-	auto
+	auto constexpr
 		fComputeVolume
 	=	+[]	(	Body3D const
 				&	i_rBody3D
@@ -48,14 +48,14 @@ auto
 	return
 	MainTemplate
 	<	DynamicArray<Body3D>
-	,	&std::make_unique<Cube>
-	,	&std::make_unique<Cuboid>
-	,	&std::make_unique<Pyramid>
-	,	&std::make_unique<Sphere>
-	,	&std::make_unique<Cylinder>
-	,	&std::make_unique<Cone>
-	,	&std::make_unique<Ellipsoid>
-	,	&std::make_unique<Head>
+	,	&MakeUniqueNoexcept<Cube>
+	,	&MakeUniqueNoexcept<Cuboid>
+	,	&MakeUniqueNoexcept<Pyramid>
+	,	&MakeUniqueNoexcept<Sphere>
+	,	&MakeUniqueNoexcept<Cylinder>
+	,	&MakeUniqueNoexcept<Cone>
+	,	&MakeUniqueNoexcept<Ellipsoid>
+	,	&MakeUniqueNoexcept<Head>
 	,	fComputeVolume
 	>(	::std::span
 		{	i_aArgValue
