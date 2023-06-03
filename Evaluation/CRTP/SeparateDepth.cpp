@@ -12,14 +12,13 @@ export namespace
 			Depth
 		;
 
-		auto
-			GetDepth
-			()	const
-		noexcept
+		auto constexpr
+		(	GetDepth
+		)	()	const
+			noexcept
 		->	Float const
 			&
-		{
-			return
+		{	return
 				Depth
 			;
 		}

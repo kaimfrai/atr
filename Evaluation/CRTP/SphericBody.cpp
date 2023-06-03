@@ -20,18 +20,16 @@ export namespace
 		,	t_tShape
 		>
 	{
-		auto
-			GetComputeVolumeMultiplier
-			()	const
-		noexcept
+		auto constexpr
+		(	GetComputeVolumeMultiplier
+		)	()	const
+			noexcept
 		->	Float
-		{
-			return
-				PiFraction
-				<	1z
-				,	6z
-				>{}
-			;
+		{	return
+			PiFraction
+			<	1z
+			,	6z
+			>{};
 		}
 	};
 }

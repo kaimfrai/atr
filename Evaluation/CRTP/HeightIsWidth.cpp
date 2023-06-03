@@ -12,19 +12,19 @@ export namespace
 	struct
 		HeightIsWidth
 	{
-		auto
-			GetHeight
-			()	const
-		noexcept
+		auto constexpr
+		(	GetHeight
+		)	()	const
+			noexcept
 		->	Float const
 			&
-		{
-			return
+		{	return
 				static_cast
 				<	t_tShape const
 					*
 				>(	this
-				)->	Width
+				)
+			->	Width
 			;
 		}
 	};

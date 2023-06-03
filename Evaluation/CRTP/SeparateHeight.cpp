@@ -12,14 +12,13 @@ export namespace
 			Height
 		;
 
-		auto
-			GetHeight
-			()	const
-		noexcept
+		auto constexpr
+		(	GetHeight
+		)	()	const
+			noexcept
 		->	Float const
 			&
-		{
-			return
+		{	return
 				Height
 			;
 		}

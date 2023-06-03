@@ -12,20 +12,20 @@ export namespace
 	struct
 		DepthIsWidth
 	{
-		auto
-			GetDepth
-			()	const
-		noexcept
+		auto constexpr
+		(	GetDepth
+		)	()	const
+			noexcept
 		->	Float const
 			&
-		{
-			return
+		{	return
 				static_cast
 				<	t_tBody const
 					*
 				>(	this
-				)->	Shapes2D
-				.	Width
+				)
+			->	Shapes2D
+			.	Width
 			;
 		}
 	};

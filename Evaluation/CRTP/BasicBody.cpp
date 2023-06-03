@@ -12,10 +12,10 @@ export namespace
 	struct
 		BasicBody
 	{
-		auto
-			ComputeVolume
-			()	const
-		noexcept
+		auto constexpr
+		(	ComputeVolume
+		)	()	const
+			noexcept
 		->	Float
 		{
 			t_tBody const

@@ -17,18 +17,16 @@ export namespace
 		>
 	,	SeparateDepth
 	{
-		auto
-			GetComputeVolumeMultiplier
-			()	const
-		noexcept
+		auto constexpr
+		(	GetComputeVolumeMultiplier
+		)	()	const
+			noexcept
 		->	Float
-		{
-			return
-				PiFraction
-				<	1z
-				,	12z
-				>{}
-			;
+		{	return
+			PiFraction
+			<	1z
+			,	12z
+			>{};
 		}
 	};
 }

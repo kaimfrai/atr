@@ -19,18 +19,16 @@ export namespace
 		>
 	,	SeparateWidth
 	{
-		auto
-			GetComputeAreaMultiplier
-			()	const
-		noexcept
+		auto constexpr
+		(	GetComputeAreaMultiplier
+		)	()	const
+			noexcept
 		->	Float
-		{
-			return
-				PiFraction
-				<	1z
-				,	4z
-				>{}
-			;
+		{	return
+			PiFraction
+			<	1z
+			,	4z
+			>{}	;
 		}
 	};
 }

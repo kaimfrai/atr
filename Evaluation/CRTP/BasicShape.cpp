@@ -16,10 +16,10 @@ export namespace
 			Color
 		;
 
-		auto
-			ComputeArea
-			()	const
-		noexcept
+		auto constexpr
+		(	ComputeArea
+		)	()	const
+			noexcept
 		->	Float
 		{
 			t_tShape const

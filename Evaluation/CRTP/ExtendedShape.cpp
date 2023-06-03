@@ -23,31 +23,29 @@ export namespace
 			Shapes2D
 		;
 
-		auto
-			GetHeight
-			()	const
-		noexcept
+		auto constexpr
+		(	GetHeight
+		)	()	const
+			noexcept
 		->	Float const
 			&
-		{
-			return
-				Shapes2D
-				.	GetHeight
-					()
+		{	return
+			Shapes2D
+			.	GetHeight
+				()
 			;
 		}
 
-		auto
+		auto constexpr
 			GetWidth
 			()	const
-		noexcept
+			noexcept
 		->	Float const
 			&
-		{
-			return
-				Shapes2D
-				.	GetWidth
-					()
+		{	return
+			Shapes2D
+			.	GetWidth
+				()
 			;
 		}
 	};

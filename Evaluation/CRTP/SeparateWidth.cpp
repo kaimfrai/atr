@@ -12,14 +12,13 @@ export namespace
 			Width
 		;
 
-		auto
-			GetWidth
-			()	const
-		noexcept
+		auto constexpr
+		(	GetWidth
+		)	()	const
+			noexcept
 		->	Float const
 			&
-		{
-			return
+		{	return
 				Width
 			;
 		}

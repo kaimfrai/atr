@@ -19,16 +19,14 @@ export namespace
 		>
 	,	SeparateWidth
 	{
-		auto
-			GetComputeAreaMultiplier
-			()	const
-		noexcept
+		auto constexpr
+		(	GetComputeAreaMultiplier
+		)	()	const
+			noexcept
 		->	Float
-		{
-			return
-				Fraction
-				<>{}
-			;
+		{	return
+			Fraction<>
+			{};
 		}
 	};
 }
