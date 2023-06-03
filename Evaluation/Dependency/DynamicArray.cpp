@@ -17,7 +17,7 @@ export
 		;
 		::std::ptrdiff_t
 			m_vCount
-		=	0
+		=	0z
 		;
 	public:
 		explicit(false) constexpr
@@ -76,7 +76,9 @@ export
 				<	t_tElement
 					*
 				>(	m_vBuffer
-				+	m_vCount
+				+	(	m_vCount
+					*	sizeof(t_tElement)
+					)
 				)
 			,	::std::forward<decltype(i_rArgument)>
 				(	i_rArgument
@@ -114,7 +116,9 @@ export
 				<	t_tElement
 					*
 				>(	m_vBuffer
-				+	m_vCount
+				+	(	m_vCount
+					*	sizeof(t_tElement)
+					)
 				)
 			);
 		}
