@@ -8,6 +8,7 @@ import Evaluation.CRTP.Cylinder;
 import Evaluation.CRTP.Cone;
 import Evaluation.CRTP.Ellipsoid;
 import Evaluation.CRTP.Head;
+import Evaluation.Dependency.DataTypes;
 
 import Std;
 
@@ -28,21 +29,23 @@ export namespace
 		>
 	;
 
+	[[nodiscard]]
 	auto constexpr
 	(	ComputeVolume
 	)	(	Body3D const
 			&	i_rBody3D
 		)
 		noexcept
+	->	Float
 	{	return
 		::std::visit
 		(	[]	(	auto const
 					&	i_rBody
 				)
 			{	return
-					i_rBody
-					.	ComputeVolume
-						()
+				i_rBody
+				.	ComputeVolume
+					()
 				;
 			}
 			,	i_rBody3D

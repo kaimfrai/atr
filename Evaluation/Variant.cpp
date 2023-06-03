@@ -25,9 +25,7 @@ auto
 	)
 -> int
 {
-	using namespace
-		Bodies3D
-	;
+	using namespace Bodies3D;
 
 	return
 	MainTemplate
