@@ -77,7 +77,6 @@ export namespace
 		}
 	};
 
-
 	struct
 		AnyBody
 	{
