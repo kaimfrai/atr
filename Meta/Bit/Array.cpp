@@ -129,7 +129,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	begin
 		)	()
 			noexcept
@@ -142,7 +142,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	begin
 		)	()	const
 			noexcept
@@ -155,7 +155,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	end
 		)	()
 			noexcept
@@ -167,7 +167,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	end
 		)	()	const
 			noexcept
@@ -179,7 +179,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	difference_type
 					i_nIndex
@@ -189,7 +189,7 @@ export namespace
 		{	return begin()[i_nIndex];	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	difference_type
 					i_nIndex
@@ -199,7 +199,7 @@ export namespace
 		{	return begin()[i_nIndex];	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	difference_type
 					i_nIndex
@@ -209,7 +209,7 @@ export namespace
 		{	return begin()[i_nIndex];	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	const
 			noexcept
@@ -227,7 +227,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	all
 		)	()	const
 			noexcept
@@ -241,7 +241,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	any
 		)	()	const
 			noexcept
@@ -254,7 +254,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	none
 		)	()	const
 			noexcept
@@ -333,7 +333,7 @@ export namespace
 				t_nOffset
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	CopyArray
 	)	(	ArrayConstReference<t_nSize, t_nExtent, t_nOffset>
 				i_vBuffer

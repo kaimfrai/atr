@@ -10,7 +10,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator bitand
 	)	(	Field<t_nWidth>
 				i_nLeft
@@ -33,7 +33,7 @@ export namespace
 		<	auto
 				t_nWidth
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator&=
 	)	(	Field<t_nWidth>
 			&	i_rLeft
@@ -55,7 +55,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator bitor
 	)	(	Field<t_nWidth>
 				i_nLeft
@@ -78,7 +78,7 @@ export namespace
 		<	auto
 				t_nWidth
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator|=
 	)	(	Field<t_nWidth>
 			&	i_rLeft
@@ -100,7 +100,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator xor
 	)	(	Field<t_nWidth>
 				i_nLeft
@@ -121,7 +121,7 @@ export namespace
 		<	auto
 				t_nWidth
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator^=
 	)	(	Field<t_nWidth>
 			&	i_rLeft
@@ -142,7 +142,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator compl
 	)	(	Field<t_nWidth>
 				i_nField

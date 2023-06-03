@@ -109,12 +109,12 @@ export namespace
 	{
 		using ValueType = typename Lex::MatchCV<t_tData, t_tQualifier...>::Entity;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Value
 		)	()
 		=	default;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Value
 		)	(	ValueType const
 				&	i_rValue
@@ -124,7 +124,7 @@ export namespace
 			}
 		{}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Value
 		)	(	ValueType
 				&&	i_rValue
@@ -161,12 +161,12 @@ export namespace
 	{
 		using ValueType = typename Lex::MatchRef<t_tData, t_tCategory>::Entity;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Value
 		)	()
 		=	default;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Value
 		)	(	ValueType
 					i_rValue
@@ -205,13 +205,13 @@ export namespace
 	{
 		using ElementType = typename t_tElement::Entity;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Value
 		)	()
 		=	default
 		;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Value
 		)	(	ElementType const*
 			)
@@ -219,7 +219,7 @@ export namespace
 			{}
 		{}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Value
 		)	(	::std::initializer_list<ElementType const>
 			)
@@ -269,13 +269,13 @@ export namespace
 			::	Entity
 		;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Value
 		)	()
 		=	default
 		;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Value
 		)	(	ElementType const
 				*	i_aValue
@@ -288,7 +288,7 @@ export namespace
 			}
 		{}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Value
 		)	(	::std::initializer_list<ElementType const>
 					i_vList

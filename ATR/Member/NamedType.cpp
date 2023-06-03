@@ -25,7 +25,7 @@ export namespace
 		{};
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator<=>
 		)	(	NamedType const
 				&	i_rNamedType

@@ -18,7 +18,7 @@ export namespace
 		Index
 	{
 		[[nodiscard]]
-		explicit(sizeof...(t_npIndex) != 1uz) constexpr
+		explicit(sizeof...(t_npIndex) != 1uz) constexpr inline
 		(	operator
 			auto
 		)	()	const
@@ -32,7 +32,7 @@ export namespace
 					t_nAssign
 			>
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator=
 		)	(	Index<t_nAssign>
 			)	const
@@ -50,7 +50,7 @@ export namespace
 					t_nAdd
 			>
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator+=
 		)	(	Index<t_nAdd>
 			)	const
@@ -68,7 +68,7 @@ export namespace
 				...	t_npSuffix
 			>
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator|
 		)	(	Index
 			,	Index<t_npSuffix...>
@@ -83,7 +83,7 @@ export namespace
 		{	return {};	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator++
 		)	()	const
 			noexcept
@@ -96,7 +96,7 @@ export namespace
 		{	return	{};	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator--
 		)	()	const
 			noexcept
@@ -113,7 +113,7 @@ export namespace
 					t_tCast
 			>
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	CastAll
 		)	()
 			noexcept
@@ -165,7 +165,7 @@ export namespace
 			...	t_nNumeric
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator""_idx
 	)	()
 		noexcept

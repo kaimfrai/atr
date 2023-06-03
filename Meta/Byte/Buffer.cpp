@@ -24,13 +24,13 @@ export namespace
 			]
 		;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Buffer
 		)	()
 			noexcept
 		=	default;
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Buffer
 		)	(	InSpan
 					i_vBytes
@@ -45,7 +45,7 @@ export namespace
 			);
 		}
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Buffer
 		)	(	auto const
 				&	i_rObject
@@ -65,7 +65,7 @@ export namespace
 			}
 		{}
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Buffer
 		)	(	auto const
 				&	i_rObject
@@ -83,7 +83,7 @@ export namespace
 			}
 		{}
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Buffer
 		)	(	::std::initializer_list<::std::byte>
 					i_vByteList
@@ -97,7 +97,7 @@ export namespace
 		{}
 
 		[[nodiscard]]
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	operator
 			InSpan
 		)	()	const
@@ -114,7 +114,7 @@ export namespace
 					t_tObject
 			>
 		[[nodiscard]]
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	operator
 			t_tObject
 		)	()	const
@@ -150,7 +150,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator+
 		)	(	Buffer
 				&	i_rBuffer
@@ -164,7 +164,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator+
 		)	(	Buffer const
 				&	i_rBuffer
@@ -177,7 +177,7 @@ export namespace
 			;
 		}
 
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator+
 		)	(	Buffer const volatile
 				&&
@@ -232,7 +232,7 @@ export namespace
 				t_tObject
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	ReadObject
 	)	(	InSpan
 				i_vBytes

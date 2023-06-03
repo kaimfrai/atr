@@ -36,12 +36,12 @@ export namespace
 			Clauses
 		{};
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Term
 		)	()
 		=	default;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Term
 		)	(	Clause
 					i_vClause
@@ -55,7 +55,7 @@ export namespace
 			}
 		{}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Term
 		)	(	ClauseBuffer const
 				&	i_rClauses
@@ -66,7 +66,7 @@ export namespace
 		{}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	begin
 		)	(	Term const
 				&	i_rTerm
@@ -75,7 +75,7 @@ export namespace
 		{	return begin(i_rTerm.Clauses);	}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	end
 		)	(	Term const
 				&	i_rTerm
@@ -84,7 +84,7 @@ export namespace
 		{	return end(i_rTerm.Clauses);	}
 
 		[[nodiscard]]
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			::std::span<Clause const>
 		)	()	const&
@@ -95,7 +95,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	Evaluate
 		)	(	FieldType
 					i_vPreset
@@ -114,7 +114,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	transform_reduce
 		)	(	auto
 				&&	i_rInitial
@@ -151,7 +151,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	LiteralField
 		)	()	const
 			noexcept
@@ -165,7 +165,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	Permutation
 		)	(	::std::span<Clause::IndexType const>
 					i_vPermutation
@@ -188,7 +188,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	TrimLiterals
 		)	()	const
 			noexcept
@@ -267,28 +267,28 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	IsAbsorbing
 		)	()	const
 		->	bool
 		{	return Clauses[0uz].IsAbsorbing();	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	IsIdentity
 		)	()	const
 		->	bool
 		{	return Clauses[0uz].IsIdentity();	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	ClauseCount
 		)	()	const
 		->	USize
 		{	return Clauses.size();	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	USize
 					i_nIndex

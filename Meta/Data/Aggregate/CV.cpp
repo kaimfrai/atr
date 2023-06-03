@@ -41,42 +41,42 @@ export namespace
 		using DataType = TypeEntity<Lex::MatchCV<t_tData, t_tQualifier...>{} - Mutable>;
 		using ConstDataType = TypeEntity<Lex::MatchCV<t_tData, t_tQualifier...>{} + Const - Mutable>;
 
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	&
 			noexcept
 		->	DataType&
 		{	return this->Data;	}
 
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	const&
 			noexcept
 		->	ConstDataType&
 		{	return this->Data;	}
 
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	&&
 			noexcept
 		->	::std::remove_cv_t<DataType>
 		{	return ::std::move(this->Data);	}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			decltype(auto)
 		)	()	&
 			noexcept
 		{	return get();	}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			decltype(auto)
 		)	()	const&
 			noexcept
 		{	return get();	}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			decltype(auto)
 		)	()	&&
@@ -87,7 +87,7 @@ export namespace
 			<	typename
 				...	t_tpArgument
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	t_tpArgument&&
 				...	i_rpArgument
@@ -126,7 +126,7 @@ export namespace
 			<	typename
 				...	t_tpArgument
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	t_tpArgument&&
 				...	i_rpArgument
@@ -165,7 +165,7 @@ export namespace
 			<	typename
 				...	t_tpArgument
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	t_tpArgument&&
 				...	i_rpArgument
@@ -200,7 +200,7 @@ export namespace
 			};
 		}
 /*
-		auto constexpr
+		auto constexpr inline
 		(	operator->
 		)	()	&
 			noexcept
@@ -228,7 +228,7 @@ export namespace
 			};
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator->
 		)	()	const&
 			noexcept
@@ -256,7 +256,7 @@ export namespace
 			};
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator->
 		)	()	&&
 			noexcept

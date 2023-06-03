@@ -38,7 +38,7 @@ export
 		=	::std::uint64_t
 		;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	CountedXoroshiro
 		)	(	::std::uint64_t
 					i_vSeed
@@ -51,7 +51,7 @@ export
 		{}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator*
 		)	()	const
 			noexcept
@@ -61,7 +61,7 @@ export
 			;
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator++
 		)	()	&
 			noexcept
@@ -78,7 +78,7 @@ export
 		}
 
 		[[nodiscard("Prefer pre-increment when discarding the result")]]
-		auto constexpr
+		auto constexpr inline
 		(	operator++
 		)	(int)
 			noexcept
@@ -98,7 +98,7 @@ export
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator==
 		)	(	CountedXoroshiro const
 				&	i_rIterator
@@ -128,7 +128,7 @@ export
 		;
 
 	public:
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	PseudoRandomSequence
 		)	(	::std::uint64_t
 					i_vSeed
@@ -144,7 +144,7 @@ export
 		{}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	size
 		)	()	const
 			noexcept
@@ -156,7 +156,7 @@ export
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	begin
 		)	()	const
 			noexcept
@@ -168,7 +168,7 @@ export
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	end
 		)	()	const
 			noexcept

@@ -44,7 +44,7 @@ export namespace
 				t_tCategory
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	MakeRef
 	)	(	t_tEntity
 		,	t_tCategory

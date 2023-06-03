@@ -19,7 +19,7 @@ export namespace
 			Remainder
 		;
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Divide
 		)	(	auto
 					i_nNumerator
@@ -38,7 +38,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	Floor
 		)	()	const
 			noexcept
@@ -53,7 +53,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	Ceil
 		)	()	const
 			noexcept

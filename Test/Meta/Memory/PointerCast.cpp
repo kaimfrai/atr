@@ -32,7 +32,7 @@ template
 	<	typename
 			t_tObject
 	>
-auto constexpr
+auto constexpr inline
 (	ComparePointerCast
 )	(	auto const
 			i_fCast

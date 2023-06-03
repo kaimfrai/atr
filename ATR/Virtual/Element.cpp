@@ -38,7 +38,7 @@ export namespace
 		;
 
 	public:
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Element
 		)	(	ProtoID auto
 					i_vTypeName
@@ -66,7 +66,7 @@ export namespace
 			,	typename
 				...	t_tpArgument
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	t_tFuncID
 					i_vFuncName
@@ -93,7 +93,7 @@ export namespace
 			,	typename
 				...	t_tpArgument
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	t_tFuncID
 					i_vFuncName

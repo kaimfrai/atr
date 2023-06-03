@@ -6,7 +6,7 @@ import Meta.String.Chain;
 
 using ::Meta::String::Chain;
 
-auto constexpr
+auto constexpr inline
 (	ToChar
 )	(	char
 			i_vChar
@@ -15,7 +15,7 @@ auto constexpr
 ->	char
 {	return i_vChar;	}
 
-auto constexpr
+auto constexpr inline
 (	ToChar
 )	(	int
 			i_vInteger
@@ -38,7 +38,7 @@ struct
 :	Base
 {
 	[[nodiscard]]
-	explicit(false) constexpr
+	explicit(false) constexpr inline
 	(	operator
 		Chain
 	)	()	const

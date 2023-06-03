@@ -52,7 +52,7 @@ export namespace
 		{};
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	empty
 		)	()	const
 			noexcept
@@ -64,7 +64,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	size
 		)	()	const
 			noexcept
@@ -76,7 +76,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	capacity
 		)	()
 			noexcept
@@ -87,7 +87,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	SSize
 					i_vIndex
@@ -102,7 +102,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	SSize
 					i_vIndex
@@ -117,7 +117,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	begin
 		)	()	&
 			noexcept
@@ -129,7 +129,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	begin
 		)	()	const&
 			noexcept
@@ -141,7 +141,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	end
 		)	()	&
 			noexcept
@@ -154,7 +154,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	end
 		)	()	const&
 			noexcept

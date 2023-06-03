@@ -41,7 +41,7 @@ export namespace
 		=	::std::uint64_t
 		;
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Splitmix64
 		)	(	::std::uint64_t
 					i_vSeed
@@ -52,7 +52,7 @@ export namespace
 		{}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator*
 		)	()	const
 			noexcept
@@ -89,7 +89,7 @@ export namespace
 			;
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator++
 		)	()	&
 			noexcept
@@ -104,7 +104,7 @@ export namespace
 		}
 
 		[[nodiscard("Prefer pre-increment when discarding the result")]]
-		auto constexpr
+		auto constexpr inline
 		(	operator++
 		)	(int)
 			noexcept
@@ -164,7 +164,7 @@ export namespace
 		=	::std::uint64_t
 		;
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Xoroshiro256StarStar
 		)	(	Splitmix64
 					i_vSeed
@@ -182,7 +182,7 @@ export namespace
 		{}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator*
 		)	()	const
 			noexcept
@@ -198,7 +198,7 @@ export namespace
 			;
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator++
 		)	()	&
 			noexcept
@@ -241,7 +241,7 @@ export namespace
 		}
 
 		[[nodiscard("Prefer pre-increment when discarding the result")]]
-		auto constexpr
+		auto constexpr inline
 		(	operator++
 		)	(int)
 			noexcept

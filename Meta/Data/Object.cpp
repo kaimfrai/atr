@@ -136,7 +136,7 @@ export namespace
 			Data
 		;
 
-		auto constexpr
+		auto constexpr inline
 		(	operator=
 		)	(	Object const&
 			)	&

@@ -20,7 +20,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	GetDepth
 		)	()	const
 			noexcept
@@ -33,7 +33,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	GetComputeVolumeMultiplier
 		)	()	const
 			noexcept

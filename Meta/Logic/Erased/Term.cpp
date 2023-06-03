@@ -48,7 +48,7 @@ export namespace
 		{};
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	TrimLiterals
 		)	(	Bit::Term const
 				&	i_rResult
@@ -101,7 +101,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	ProcessComputation
 		)	(	bool
 					i_bEquivalence
@@ -115,7 +115,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	ProcessComputation
 		)	(	Bit::Term const
 				&	i_rResult
@@ -132,7 +132,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	GetLiteralUnion
 		)	(	Term const
 				&	i_rLeft
@@ -246,7 +246,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	GetBitTermPermutation
 		)	(	auto const
 				&	i_fMapIndex
@@ -305,7 +305,7 @@ export namespace
 					t_tResult
 			>
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	Compute
 		)	(	Term const
 				&	i_rLeft
@@ -376,7 +376,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	LiteralCount
 		)	()	const
 			noexcept
@@ -392,7 +392,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	ClauseCount
 		)	()	const
 			noexcept
@@ -403,7 +403,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	LiteralSpan
 		)	()	const
 			noexcept
@@ -417,7 +417,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	USize
 					i_vClauseIndex

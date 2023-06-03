@@ -22,7 +22,7 @@ namespace
 	ATR::Member
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	MoveHigher
 	)	(	NamedType const
 			*	i_aBegin
@@ -102,7 +102,7 @@ export namespace
 		{};
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	HasAlias
 		)	(	Chain
 					i_rMemberName
@@ -145,7 +145,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	Chain
 					i_rMemberName
@@ -215,7 +215,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	char const
 				*	i_aMemberName
@@ -236,7 +236,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	Chain
 					i_rMemberName
@@ -334,7 +334,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	char const
 				*	i_aMemberName
@@ -353,7 +353,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	char const
 				*	i_aPrefix
@@ -414,7 +414,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	ProtoID auto
 					i_vBaseID

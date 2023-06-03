@@ -35,7 +35,7 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	operator()
 		)	(	::Meta::TypeToken<t_tEntity>
 			)

@@ -12,7 +12,7 @@ export namespace
 				t_tObject
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator+
 	)	(	t_tObject
 			*	i_aObject
@@ -32,7 +32,7 @@ export namespace
 		<	typename
 				t_tObject
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator+=
 	)	(	t_tObject
 			*&	i_aObject
@@ -53,7 +53,7 @@ export namespace
 				t_tObject
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator-
 	)	(	t_tObject
 			*	i_aObject
@@ -73,7 +73,7 @@ export namespace
 		<	typename
 				t_tObject
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator-=
 	)	(	t_tObject
 			*&	i_aObject

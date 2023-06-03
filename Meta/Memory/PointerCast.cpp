@@ -12,7 +12,7 @@ export namespace
 				t_tFrom
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	PointerCast
 	)	(	t_tFrom
 			*	i_aObject

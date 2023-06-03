@@ -13,7 +13,7 @@ export namespace
 		BasicBody
 	{
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	ComputeVolume
 		)	()	const
 			noexcept

@@ -37,7 +37,7 @@ export namespace
 				t_nMaxValue
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Narrow
 	)	(	SIntMax
 				i_nValue
@@ -70,7 +70,7 @@ export namespace
 				t_nMaxValue
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Narrow
 	)	(	UIntMax
 				i_nValue

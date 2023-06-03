@@ -39,7 +39,7 @@ using
 =	long double
 ;
 
-auto constexpr
+auto constexpr inline
 (	operator<=>
 )	(	ParseType
 			i_nParsed
@@ -56,7 +56,7 @@ auto constexpr
 	);
 }
 
-auto constexpr
+auto constexpr inline
 (	operator*=
 )	(	::std::integral auto
 		&	i_rCounter
@@ -77,7 +77,7 @@ struct
 	IgnoreQuote
 {
 	[[nodiscard]]
-	auto friend constexpr
+	auto friend constexpr inline
 	(	operator<<
 	)	(	auto
 				i_vParser
@@ -101,7 +101,7 @@ struct
 	ParseItem
 {
 	[[nodiscard]]
-	auto friend constexpr
+	auto friend constexpr inline
 	(	operator<<
 	)	(	auto
 				i_vParser
@@ -175,7 +175,7 @@ struct
 	=	true
 	;
 
-	auto constexpr
+	auto constexpr inline
 	(	Append
 	)	(	ParseType
 				i_nParsed
@@ -191,7 +191,7 @@ struct
 	}
 
 	[[nodiscard]]
-	auto friend constexpr
+	auto friend constexpr inline
 	(	operator<<
 	)	(	ExponentParser
 				i_vParser
@@ -208,7 +208,7 @@ struct
 	}
 
 	[[nodiscard]]
-	auto friend constexpr
+	auto friend constexpr inline
 	(	operator<<
 	)	(	ExponentParser
 				i_vParser
@@ -225,7 +225,7 @@ struct
 	}
 
 	[[nodiscard]]
-	auto friend constexpr
+	auto friend constexpr inline
 	(	Evaluate
 	)	(	ExponentParser
 				i_vParser
@@ -276,7 +276,7 @@ struct
 	using enum ERadix;
 
 	[[nodiscard]]
-	auto friend constexpr
+	auto friend constexpr inline
 	(	operator<<
 	)	(	auto
 				i_vParser
@@ -320,7 +320,7 @@ struct
 		Denominator
 	;
 
-	auto constexpr
+	auto constexpr inline
 	(	Append
 	)	(	ParseType
 				i_nParsed
@@ -337,7 +337,7 @@ struct
 	}
 
 	[[nodiscard]]
-	auto friend constexpr
+	auto friend constexpr inline
 	(	Evaluate
 	)	(	FloatParser
 				i_vParser
@@ -377,7 +377,7 @@ struct
 	=	1uz
 	;
 
-	auto constexpr
+	auto constexpr inline
 	(	Append
 	)	(	ParseType
 				i_nParsed
@@ -393,7 +393,7 @@ struct
 	}
 
 	[[nodiscard]]
-	auto friend constexpr
+	auto friend constexpr inline
 	(	operator<<
 	)	(	IntegerParser
 				i_vParser
@@ -408,7 +408,7 @@ struct
 	}
 
 	[[nodiscard]]
-	auto friend constexpr
+	auto friend constexpr inline
 	(	Evaluate
 	)	(	IntegerParser
 				i_vParser
@@ -427,7 +427,7 @@ template
 		...	t_npBasicCharacter
 	>
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	ParseNumericLiteral
 )	(	BasicCharacter<t_npBasicCharacter>
 		...	i_vpNumeric
@@ -447,7 +447,7 @@ template
 		...	t_npBasicCharacter
 	>
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
 	,	BasicCharacter<t_npBasicCharacter>
@@ -475,7 +475,7 @@ template
 		...	t_npBasicCharacter
 	>
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
 	,	BasicCharacter<'X'>
@@ -497,7 +497,7 @@ template
 		...	t_npBasicCharacter
 	>
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
 	,	BasicCharacter<'B'>
@@ -515,7 +515,7 @@ auto constexpr
 }
 
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	ToUpper
 )	(	char
 			i_nChar
@@ -548,7 +548,7 @@ export namespace
 			...	t_npBasicCharacter
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	EvaluateNumericLiteral
 	)	()
 		noexcept

@@ -79,7 +79,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	IsAligned
 		)	()	const
 			noexcept
@@ -90,7 +90,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	IsStateful
 		)	()	const
 			noexcept
@@ -101,7 +101,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator
 			<=>
 		)	(	Constraint

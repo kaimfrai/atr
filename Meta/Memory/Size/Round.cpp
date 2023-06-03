@@ -13,7 +13,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	CeilPower2
 	)	(	Size<t_nWidth>
 				i_nSize
@@ -74,7 +74,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	FloorPower2
 	)	(	Size<t_nWidth>
 				i_nSize

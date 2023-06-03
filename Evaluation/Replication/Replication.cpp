@@ -69,7 +69,7 @@ export namespace
 			;
 		};
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	VolumeComputer
 		)	(	::std::in_place_type_t
 				<	Cube
@@ -82,7 +82,7 @@ export namespace
 			{}
 		{}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	VolumeComputer
 		)	(	::std::in_place_type_t
 				<	Cuboid
@@ -95,7 +95,7 @@ export namespace
 			{}
 		{}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	VolumeComputer
 		)	(	::std::in_place_type_t
 				<	Pyramid
@@ -108,7 +108,7 @@ export namespace
 			{}
 		{}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	VolumeComputer
 		)	(	::std::in_place_type_t
 				<	Sphere
@@ -121,7 +121,7 @@ export namespace
 			{}
 		{}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	VolumeComputer
 		)	(	::std::in_place_type_t
 				<	Cylinder
@@ -134,7 +134,7 @@ export namespace
 			{}
 		{}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	VolumeComputer
 		)	(	::std::in_place_type_t
 				<	Cone
@@ -147,7 +147,7 @@ export namespace
 			{}
 		{}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	VolumeComputer
 		)	(	::std::in_place_type_t
 				<	Ellipsoid
@@ -160,7 +160,7 @@ export namespace
 			{}
 		{}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	VolumeComputer
 		)	(	::std::in_place_type_t
 				<	Head
@@ -174,7 +174,7 @@ export namespace
 		{}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	ComputeVolume
 		)	()	const
 			noexcept
@@ -187,7 +187,7 @@ export namespace
 	};
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	ComputeVolume
 	)	(	VolumeComputer const
 			&	i_rBody3D

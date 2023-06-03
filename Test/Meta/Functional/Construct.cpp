@@ -9,7 +9,7 @@ struct
 	int i;
 
 	[[nodiscard]]
-	auto friend constexpr
+	auto friend constexpr inline
 	(	operator==
 	)	(	Test const&
 		,	Test const&
@@ -42,7 +42,7 @@ struct
 	;
 
 	[[nodiscard]]
-	auto friend constexpr
+	auto friend constexpr inline
 	(	operator==
 	)	(	ValuePack const&
 		,	ValuePack const&
@@ -92,7 +92,7 @@ struct
 	;
 
 	[[nodiscard]]
-	auto friend constexpr
+	auto friend constexpr inline
 	(	operator==
 	)	(	TypePack const&
 		,	TypePack const&

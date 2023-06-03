@@ -15,7 +15,7 @@ export namespace
 	Meta::Logic::Bit
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Union
 	)	(	Term const
 			&	i_rLeftTerm

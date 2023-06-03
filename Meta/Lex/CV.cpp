@@ -97,7 +97,7 @@ export namespace
 			...	t_tpQualifier
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	MakeCV
 	)	(	MatchCV<t_tEntity>
 		,	t_tpQualifier

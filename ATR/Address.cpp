@@ -20,14 +20,14 @@ export namespace
 	struct
 		Function
 	{
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Function
 		)	(	...
 			)
 		{}
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	operator()
 		)	(	typename
 					t_tpDependency

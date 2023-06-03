@@ -25,7 +25,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator==
 		)	(	Chain
 					i_vLeft
@@ -42,7 +42,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator<=>
 		)	(	Chain
 					i_vLeft
@@ -128,7 +128,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator+
 		)	(	char const
 				*	i_aLeft

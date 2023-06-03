@@ -19,7 +19,7 @@ export namespace
 		;
 	public:
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	OutSpan
 		)	(	::std::byte
 				*	i_aBegin
@@ -33,7 +33,7 @@ export namespace
 			}
 		{}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	OutSpan
 		)	(	::std::byte
 				*	i_aBegin
@@ -48,7 +48,7 @@ export namespace
 		{}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	size
 		)	()	const
 			noexcept
@@ -62,7 +62,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	begin
 		)	()	const
 			noexcept
@@ -74,7 +74,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	end
 		)	()	const
 			noexcept
@@ -85,7 +85,7 @@ export namespace
 			;
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator=
 		)	(	InSpan
 					i_vFrom

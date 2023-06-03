@@ -35,7 +35,7 @@ export namespace
 		{};
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	IsIdentity
 		)	()	const
 			noexcept
@@ -48,7 +48,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	Positive
 		)	(	size_type
 					i_nIndex
@@ -68,7 +68,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	Negative
 		)	(	size_type
 					i_nIndex
@@ -88,7 +88,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	size_type
 					i_nIndex

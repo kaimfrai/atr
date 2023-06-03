@@ -7,7 +7,7 @@ export namespace
 	Meta::Math
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Congruent
 	)	(	SSize
 				i_nNumerator

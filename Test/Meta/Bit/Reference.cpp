@@ -24,7 +24,7 @@ template
 			t_nSize
 	>
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	SetAndCheck
 )	(	Field<t_nSize>
 			i_vValue

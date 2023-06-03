@@ -26,7 +26,7 @@ export namespace
 			*m_fFinal
 		;
 
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	std::string_view
 					i_sString

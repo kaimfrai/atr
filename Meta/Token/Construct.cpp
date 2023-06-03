@@ -20,7 +20,7 @@ export namespace
 			...
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Construct
 	)	(	TypeToken<t_tEntity>
 		,	t_tpArgument&&

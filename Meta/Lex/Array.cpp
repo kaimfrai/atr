@@ -57,7 +57,7 @@ export namespace
 				t_nExtent
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	MakeArray
 	)	(	MatchCV<t_tElement>
 		,	Token::Extent<t_nExtent>

@@ -10,7 +10,7 @@ export namespace
 				t_tFloat
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Approximate
 	)	(	t_tFloat
 				i_nLeft

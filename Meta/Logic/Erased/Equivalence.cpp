@@ -7,7 +7,7 @@ export namespace
 	Meta::Logic::Erased
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator==
 	)	(	Term const
 			&	i_rLeft

@@ -13,7 +13,7 @@ export namespace
 		ConstructType
 	{
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	operator()
 		)	(	auto&&
 				...	i_rpArgument
@@ -52,7 +52,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	auto constexpr
+	auto constexpr inline
 	(	Construct
 	)	()
 	->	ConstructType<t_tEntity>
@@ -70,7 +70,7 @@ export namespace
 		ConstructValuePack
 	{
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	operator()
 		)	(	auto&&
 				...	i_rpArgument
@@ -113,7 +113,7 @@ export namespace
 			typename
 				t_t1Entity
 		>
-	auto constexpr
+	auto constexpr inline
 	(	Construct
 	)	()
 	->	ConstructValuePack<t_t1Entity>
@@ -131,7 +131,7 @@ export namespace
 		ConstructTypePack
 	{
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	operator()
 		)	(	auto&&
 				...	i_rpArgument
@@ -174,7 +174,7 @@ export namespace
 			typename
 				t_t1Entity
 		>
-	auto constexpr
+	auto constexpr inline
 	(	Construct
 	)	()
 	->	ConstructTypePack<t_t1Entity>

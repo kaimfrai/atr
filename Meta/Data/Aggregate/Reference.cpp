@@ -36,7 +36,7 @@ export namespace
 	{
 		using DataType = typename Lex::MatchRef<t_tData, t_tCategory>::Entity;
 
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	const
 			noexcept
@@ -47,7 +47,7 @@ export namespace
 			<	typename
 				...	t_tpArgument
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	t_tpArgument&&
 				...	i_rpArgument
@@ -82,7 +82,7 @@ export namespace
 			};
 		}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			decltype(auto)
 		)	()	const
@@ -94,7 +94,7 @@ export namespace
 		<	typename
 				t_tData
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator&
 	)	(	Aggregate
 			<	Lex::MatchRef

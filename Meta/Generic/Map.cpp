@@ -24,7 +24,7 @@ export namespace
 		->	decltype(auto)
 		;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Map
 		)	()
 		=	default;
@@ -38,7 +38,7 @@ export namespace
 			Store
 		{
 			[[nodiscard]]
-			auto friend constexpr
+			auto friend constexpr inline
 			(	Get
 			)	(	Map
 				)
@@ -51,7 +51,7 @@ export namespace
 		};
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	Load
 		)	()
 			noexcept
@@ -69,7 +69,7 @@ export namespace
 		,	decltype(auto)
 				t_vValue
 		>
-	auto constexpr
+	auto constexpr inline
 	(	StoreKeyValuePair
 	)	()
 		noexcept

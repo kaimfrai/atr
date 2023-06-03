@@ -22,7 +22,7 @@ export namespace
 		{};
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	max_size
 		)	()
 			noexcept
@@ -33,7 +33,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	size
 		)	()	const
 			noexcept
@@ -50,13 +50,13 @@ export namespace
 			;
 		}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Literal
 		)	()
 			noexcept
 		=	default;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Literal
 		)	(	char const
 				*	i_aString
@@ -78,7 +78,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			Chain
 		)	()	const&
@@ -90,7 +90,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	::std::size_t
 					i_nIndex
@@ -104,7 +104,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator==
 		)	(	Literal const
 				&
@@ -116,7 +116,7 @@ export namespace
 		=	default;
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator<=>
 		)	(	Literal const
 				&	i_rLeft

@@ -25,7 +25,7 @@ export namespace
 		{};
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator<=>
 		)	(	NamedInfo const
 				&
@@ -36,7 +36,7 @@ export namespace
 		=	default;
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator<=>
 		)	(	NamedInfo const
 				&	i_rInfo

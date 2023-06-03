@@ -19,7 +19,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	begin
 		)	()	const
 			noexcept
@@ -31,7 +31,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	end
 		)	()	const
 			noexcept

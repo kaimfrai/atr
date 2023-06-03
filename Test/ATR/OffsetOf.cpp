@@ -31,7 +31,7 @@ using namespace ::Meta::Literals;
 namespace
 	ATR::Member
 {
-	auto constexpr
+	auto constexpr inline
 	(	Configure
 	)	(	ID<"OffsetOfTest">
 		,	auto

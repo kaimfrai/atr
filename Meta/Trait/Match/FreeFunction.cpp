@@ -26,7 +26,7 @@ export namespace
 				)
 			)
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	Evaluate
 		)	(	LiteralBase
 			,	Lex::MatchFunction

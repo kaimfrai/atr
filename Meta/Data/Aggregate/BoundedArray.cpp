@@ -63,42 +63,42 @@ export namespace
 		using iterator = pointer;
 		using const_iterator = const_pointer;
 
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	&
 			noexcept
 		->	::std::array<ElementType, t_nExtent>&
 		{	return this->Data;	}
 
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	const&
 			noexcept
 		->	::std::array<ElementType, t_nExtent> const&
 		{	return this->Data;	}
 
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	&&
 			noexcept
 		->	::std::array<ElementType, t_nExtent>
 		{	return ::std::move(this->Data);	}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			decltype(auto)
 		)	()	&
 			noexcept
 		{	return get();	}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			decltype(auto)
 		)	()	const&
 			noexcept
 		{	return get();	}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			decltype(auto)
 		)	()	&&
@@ -106,7 +106,7 @@ export namespace
 		{	return ::std::move(*this).get();	}
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	size
 		)	()
 			noexcept
@@ -114,7 +114,7 @@ export namespace
 		{	return t_nExtent;	}
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	ssize
 		)	()
 			noexcept
@@ -122,20 +122,20 @@ export namespace
 		{	return static_cast<difference_type>(t_nExtent);	}
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	max_size
 		)	()
 		->	size_type
 		{	return t_nExtent;	}
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	empty
 		)	()
 		->	bool
 		{	return false;	}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	USize
 					i_nIndex
@@ -143,7 +143,7 @@ export namespace
 		->	reference
 		{	return this->Data[i_nIndex];	}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	USize
 					i_nIndex
@@ -151,7 +151,7 @@ export namespace
 		->	const_reference
 		{	return this->Data[i_nIndex];	}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	USize
 					i_nIndex
@@ -159,27 +159,27 @@ export namespace
 		->	value_type
 		{	return ::std::move(this->Data)[i_nIndex];	}
 
-		auto constexpr
+		auto constexpr inline
 		(	data
 		)	()	&
 			noexcept
 		->	pointer
 		{	return this->Data.data();	}
 
-		auto constexpr
+		auto constexpr inline
 		(	data
 		)	()	const&
 			noexcept
 		->	const_pointer
 		{	return this->Data.data();	}
 
-		auto constexpr
+		auto constexpr inline
 		(	data
 		)	()	&&
 		=	delete;
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	begin
 		)	()	&
 			noexcept
@@ -187,7 +187,7 @@ export namespace
 		{	return { data() };	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	begin
 		)	()	const&
 			noexcept
@@ -195,7 +195,7 @@ export namespace
 		{	return { data() };	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	end
 		)	()	&
 			noexcept
@@ -203,7 +203,7 @@ export namespace
 		{	return begin() + ssize();	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	end
 		)	()	const&
 			noexcept

@@ -13,7 +13,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator>>
 	)	(	Field<t_nWidth>
 				i_vField
@@ -34,7 +34,7 @@ export namespace
 		<	auto
 				t_nWidth
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator>>=
 	)	(	Field<t_nWidth>
 			&	i_rField
@@ -65,7 +65,7 @@ export namespace
 				t_nOffset
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator<<
 	)	(	Field<t_nWidth>
 				i_vField
@@ -103,7 +103,7 @@ export namespace
 		<	auto
 				t_nWidth
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator<<=
 	)	(	Field<t_nWidth>
 			&	i_rField

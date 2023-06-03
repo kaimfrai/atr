@@ -24,7 +24,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	GetHeight
 		)	()	const
 			noexcept
@@ -38,7 +38,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 			GetWidth
 			()	const
 			noexcept

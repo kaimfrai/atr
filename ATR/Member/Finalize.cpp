@@ -25,7 +25,7 @@ namespace
 	ATR::Member
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	MakeLayout
 	)	(	AlignBuffer<NamedType> const
 			&	i_rNamedTypeView
@@ -91,7 +91,7 @@ namespace
 		;
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	SortMembers
 	)	(	AlignBuffer<NamedType> const
 			&	i_rNamedTypeView
@@ -205,7 +205,7 @@ namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	ResolveAliases
 	)	(	CountedBuffer<NamedInfo, NameBufferSize> const
 			&	i_rNamedInfos
@@ -267,7 +267,7 @@ namespace
 		;
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	MakeMembers
 	)	(	AlignBuffer<NamedType> const
 			&	i_rNamedTypeView
@@ -346,7 +346,7 @@ namespace
 		;
 	}
 
-	export auto constexpr
+	export auto constexpr inline
 	(	Finalize
 	)	(	ConfigBuilder const
 			&	i_rConfigBuilder

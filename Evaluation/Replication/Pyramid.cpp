@@ -24,7 +24,7 @@ export namespace
 	};
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	ComputeVolumePyramid
 	)	(	void const
 			*	i_aObject

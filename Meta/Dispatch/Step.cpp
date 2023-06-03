@@ -118,7 +118,7 @@ export namespace
 			<	char
 					t_nParsed
 			>
-		auto static constexpr
+		auto static constexpr inline
 		(	GetNextStep
 		)	()
 		->	StepPair<PlainFunctionType>
@@ -136,7 +136,7 @@ export namespace
 			}
 		}
 
-		auto static constexpr
+		auto static constexpr inline
 		(	Advance
 		)	(	std::string_view
 					i_sString

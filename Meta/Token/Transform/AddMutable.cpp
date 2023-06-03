@@ -16,7 +16,7 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)
@@ -33,7 +33,7 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	operator()
 		)	(	TypeToken<Specifier::Mut<t_tEntity>>
 			)
@@ -50,7 +50,7 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	operator()
 		)	(	TypeToken<t_tEntity const>
 			)
@@ -65,7 +65,7 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	operator()
 		)	(	TypeToken<t_tEntity&>
 			)
@@ -81,7 +81,7 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	operator()
 		)	(	TypeToken<t_tEntity&&>
 			)

@@ -9,7 +9,7 @@ export
 				t_tElement
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	MakeUniqueNoexcept
 	)	()
 		noexcept

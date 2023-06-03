@@ -6,7 +6,7 @@ export namespace
 	Meta::Memory
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator+
 	)	(	BitSize
 				i_nSize
@@ -21,7 +21,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator-
 	)	(	BitSize
 				i_nSize
@@ -39,7 +39,7 @@ export namespace
 		<	auto
 				t_nWidth
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator+=
 	)	(	Size<t_nWidth>
 			&	i_rSize
@@ -63,7 +63,7 @@ export namespace
 		<	auto
 				t_nWidth
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator-=
 	)	(	Size<t_nWidth>
 			&	i_rSize
@@ -87,7 +87,7 @@ export namespace
 		<	auto
 				t_nWidth
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator++
 	)	(	Size<t_nWidth>
 			&	i_rSize
@@ -109,7 +109,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard("Use preincrement if you discard the value")]]
-	auto constexpr
+	auto constexpr inline
 	(	operator++
 	)	(	Size<t_nWidth>
 			&	i_rSize
@@ -129,7 +129,7 @@ export namespace
 		<	auto
 				t_nWidth
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator--
 	)	(	Size<t_nWidth>
 			&	i_rSize
@@ -150,7 +150,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard("Use predecrement if you discard the value")]]
-	auto constexpr
+	auto constexpr inline
 	(	operator--
 	)	(	Size<t_nWidth>
 			&	i_rSize
@@ -166,7 +166,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator+
 	)	(	BitSize
 				i_vSize
@@ -182,7 +182,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator-
 	)	(	BitSize
 				i_vSize

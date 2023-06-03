@@ -28,21 +28,21 @@ export namespace
 			Item
 		;
 
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	IndexToken<t_nIndex>
 			)	&
 		->	Aggregate<t_tItem>&
 		{	return Item;	}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	IndexToken<t_nIndex>
 			)	const&
 		->	Aggregate<t_tItem> const&
 		{	return Item;	}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	IndexToken<t_nIndex>
 			)	&&
@@ -65,7 +65,7 @@ export namespace
 			<	USize
 					t_nIndex
 			>
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	&
 		->	decltype(auto)
@@ -75,7 +75,7 @@ export namespace
 			<	USize
 					t_nIndex
 			>
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	const&
 		->	decltype(auto)
@@ -85,7 +85,7 @@ export namespace
 			<	USize
 					t_nIndex
 			>
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	&&
 		->	decltype(auto)
@@ -95,7 +95,7 @@ export namespace
 			];
 		}
 
-		auto friend constexpr
+		auto friend constexpr inline
 		(	Invoke
 		)	(	auto&&
 					i_rInvocable
@@ -123,7 +123,7 @@ export namespace
 		KeyTuple
 		<>
 	{
-		auto friend constexpr
+		auto friend constexpr inline
 		(	Invoke
 		)	(	auto&&
 					i_rInvocable
@@ -155,7 +155,7 @@ export namespace
 		<	typename
 			...	t_tpItem
 		>
-	auto constexpr
+	auto constexpr inline
 	(	MakeIndexedTuple
 	)	(	t_tpItem&&
 			...	i_rpItem
@@ -230,7 +230,7 @@ export namespace
 			...
 		};
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			TypeID const*
 		)	()	const

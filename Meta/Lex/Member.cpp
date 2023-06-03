@@ -52,7 +52,7 @@ export namespace
 			...	t_tpQualifier
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	MakeMember
 	)	(	t_tMember
 		,	Token::Owner<t_tOwner>

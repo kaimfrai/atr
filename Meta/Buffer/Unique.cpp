@@ -50,7 +50,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	max_size
 		)	()	const
 		{
@@ -58,7 +58,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	begin
 		)	(	Unique
 				&	i_rUnique
@@ -72,7 +72,7 @@ export namespace
 			;
 		}
 
-		auto friend constexpr
+		auto friend constexpr inline
 		(	begin
 		)	(	Unique const
 				&	i_rUnique
@@ -87,7 +87,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	end
 		)	(	Unique
 				&	i_rUnique
@@ -105,7 +105,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	end
 		)	(	Unique const
 				&	i_rUnique
@@ -124,7 +124,7 @@ export namespace
 			);
 		}
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Unique
 		)	(	USize
 					i_nCapacity
@@ -139,7 +139,7 @@ export namespace
 			}
 		{}
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Unique
 		)	(	auto
 				&&
@@ -171,7 +171,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	USize
 					i_nIndex
@@ -181,7 +181,7 @@ export namespace
 		{	return m_vBuffer[i_nIndex];	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	USize
 					i_nIndex
@@ -191,7 +191,7 @@ export namespace
 		{	return m_vBuffer[i_nIndex];	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	USize
 					i_nIndex

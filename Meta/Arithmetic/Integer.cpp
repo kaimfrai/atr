@@ -8,25 +8,25 @@ import Std;
 using ::Meta::Memory::SizeOf;
 
 template<::Meta::ByteSize>
-auto MapSInt() = delete;
+auto inline MapSInt() = delete;
 
 template<>
-auto MapSInt
+auto inline MapSInt
 	<SizeOf<::std::int_least8_t>>()
 {	return ::std::int_least8_t{}; }
 
 template<>
-auto MapSInt
+auto inline MapSInt
 	<SizeOf<::std::int_least16_t>>()
 {	return ::std::int_least16_t{}; }
 
 template<>
-auto MapSInt
+auto inline MapSInt
 	<SizeOf<::std::int_least32_t>>()
 {	return ::std::int_least32_t{}; }
 
 template<>
-auto MapSInt
+auto inline MapSInt
 	<SizeOf<::std::int_least64_t>>()
 {	return ::std::int_least64_t{}; }
 

@@ -24,7 +24,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator<=>
 		)	(	Info const
 				&

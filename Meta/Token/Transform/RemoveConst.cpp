@@ -15,7 +15,7 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)

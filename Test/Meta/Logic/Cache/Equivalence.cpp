@@ -11,7 +11,7 @@ import Std;
 export
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator==
 	)	(	::Meta::Logic::Erased::Term const
 			&	i_rLeft

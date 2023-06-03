@@ -9,7 +9,7 @@ export namespace
 		LiteralBase
 	{
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	Evaluate
 		)	(	LiteralBase
 			,	TypeID
@@ -22,7 +22,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	operator()
 		)	(	TypeID
 			)

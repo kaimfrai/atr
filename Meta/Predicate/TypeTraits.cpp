@@ -22,7 +22,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken<t_tEntity const>
 			)	const
@@ -40,7 +40,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken<t_tEntity volatile>
 			)	const
@@ -60,7 +60,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -85,7 +85,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -110,7 +110,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -141,7 +141,7 @@ export namespace
 			<	typename
 				...	t_tpArgument
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken
 				<	t_t1Pack
@@ -157,7 +157,7 @@ export namespace
 			<	typename
 				...	t_tpArgument
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken
 				<	t_t1Pack
@@ -173,7 +173,7 @@ export namespace
 			<	typename
 				...	t_tpArgument
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken
 				<	t_t1Pack
@@ -189,7 +189,7 @@ export namespace
 			<	typename
 				...	t_tpArgument
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken
 				<	t_t1Pack
@@ -220,7 +220,7 @@ export namespace
 			<	auto
 				...	t_vpArgument
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken
 				<	t_t1Pack
@@ -236,7 +236,7 @@ export namespace
 			<	auto
 				...	t_vpArgument
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken
 				<	t_t1Pack
@@ -252,7 +252,7 @@ export namespace
 			<	auto
 				...	t_vpArgument
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken
 				<	t_t1Pack
@@ -268,7 +268,7 @@ export namespace
 			<	auto
 				...	t_vpArgument
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken
 				<	t_t1Pack
@@ -301,7 +301,7 @@ export namespace
 			,	typename
 					t_tSecond
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken
 				<	t_t1Pair
@@ -319,7 +319,7 @@ export namespace
 			,	typename
 					t_tSecond
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken
 				<	t_t1Pair
@@ -337,7 +337,7 @@ export namespace
 			,	typename
 					t_tSecond
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken
 				<	t_t1Pair
@@ -355,7 +355,7 @@ export namespace
 			,	typename
 					t_tSecond
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken
 				<	t_t1Pair

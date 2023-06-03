@@ -18,7 +18,7 @@ struct
 				t_tResult
 		>
 	[[nodiscard]]
-	auto friend constexpr
+	auto friend constexpr inline
 	(	operator+
 	)	(	TypeToken<t_tResult>
 		,	Param
@@ -89,7 +89,7 @@ export namespace
 			...	t_tpParam
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	MakeParam
 	)	(	t_tpParam
 			...
@@ -110,7 +110,7 @@ export namespace
 			...	t_tpEllipsis
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	MakeSig
 	)	(	t_tResult
 		,	t_tParam
@@ -184,7 +184,7 @@ export namespace
 			...	t_tpQualifier
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	MakeFunc
 	)	(	t_tSignature
 		,	t_tpQualifier

@@ -23,7 +23,7 @@ struct
 				t_tElement
 		>
 	[[nodiscard]]
-	auto friend constexpr
+	auto friend constexpr inline
 	(	operator+
 	)	(	TypeToken<t_tElement>
 		,	Extent
@@ -37,7 +37,7 @@ struct
 				t_tElement
 		>
 	[[nodiscard]]
-	auto friend constexpr
+	auto friend constexpr inline
 	(	operator+
 	)	(	TypeToken<Mut<t_tElement>>
 		,	Extent
@@ -51,7 +51,7 @@ struct
 				t_tElement
 		>
 	[[nodiscard]]
-	auto friend constexpr
+	auto friend constexpr inline
 	(	operator-
 	)	(	TypeToken<t_tElement[t_nExtent]>
 		,	Extent
@@ -65,7 +65,7 @@ struct
 				t_tElement
 		>
 	[[nodiscard]]
-	auto friend constexpr
+	auto friend constexpr inline
 	(	operator-
 	)	(	TypeToken<Mut<t_tElement[t_nExtent]>>
 		,	Extent
@@ -86,7 +86,7 @@ struct
 				t_tElement
 		>
 	[[nodiscard]]
-	auto friend constexpr
+	auto friend constexpr inline
 	(	operator+
 	)	(	TypeToken<t_tElement>
 		,	Extent
@@ -100,7 +100,7 @@ struct
 				t_tElement
 		>
 	[[nodiscard]]
-	auto friend constexpr
+	auto friend constexpr inline
 	(	operator-
 	)	(	TypeToken<t_tElement[]>
 		,	Extent
@@ -145,7 +145,7 @@ export namespace
 			...	t_npNumeric
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator""_ext
 	)	()
 		noexcept

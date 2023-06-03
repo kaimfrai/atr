@@ -17,7 +17,7 @@ export namespace
 				t_nHighestValue
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	SanitizeSigned
 	)	(	SIntMax
 				i_nValue
@@ -56,7 +56,7 @@ export namespace
 		<	SIntMax
 				t_nHighestValue
 		>
-	auto constexpr
+	auto constexpr inline
 	(	AssertSanitizedSigned
 	)	(	SIntMax
 				i_nValue
@@ -82,7 +82,7 @@ export namespace
 				t_nHighestValue
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	SanitizeUnsigned
 	)	(	UIntMax
 				i_nValue
@@ -114,7 +114,7 @@ export namespace
 		<	UIntMax
 				t_nHighestValue
 		>
-	auto constexpr
+	auto constexpr inline
 	(	AssertSanitizedUnsigned
 	)	(	UIntMax
 				i_nValue

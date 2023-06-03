@@ -20,7 +20,7 @@ export namespace
 		requires
 			::std::is_union_v<t_tEntity>
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	Evaluate
 		)	(	LiteralBase
 			,	Lex::MatchCVType

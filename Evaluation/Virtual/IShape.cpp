@@ -34,7 +34,7 @@ export namespace
 		->	Float
 		=	0;
 
-		virtual constexpr
+		virtual constexpr inline
 		(	compl
 			IShape
 		)	()

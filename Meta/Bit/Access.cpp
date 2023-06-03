@@ -63,7 +63,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	OffsetMask
 		)	(	ByteIndex
 					i_nOffset
@@ -81,7 +81,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	MaskOffset
 		)	(	BufferFieldType
 					i_nMask
@@ -98,7 +98,7 @@ export namespace
 
 	private:
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	ReadField
 		)	(	::std::byte const
 				*	i_aBuffer
@@ -132,7 +132,7 @@ export namespace
 
 	public:
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	ReadField
 		)	(	::std::byte const
 				*	i_aBuffer
@@ -150,7 +150,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	ReadField
 		)	(	::std::byte const
 				*	i_aBuffer
@@ -170,7 +170,7 @@ export namespace
 		}
 
 	private:
-		auto static constexpr
+		auto static constexpr inline
 		(	WriteField
 		)	(	FieldType
 					i_vValue
@@ -219,7 +219,7 @@ export namespace
 		}
 
 	public:
-		auto static constexpr
+		auto static constexpr inline
 		(	WriteField
 		)	(	FieldType
 					i_vValue
@@ -243,7 +243,7 @@ export namespace
 			);
 		}
 
-		auto static constexpr
+		auto static constexpr inline
 		(	WriteField
 		)	(	FieldType
 					i_vValue

@@ -12,7 +12,7 @@ export namespace
 	:	RectangularShape
 	{
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	GetHeight
 		)	()	const
 			noexcept

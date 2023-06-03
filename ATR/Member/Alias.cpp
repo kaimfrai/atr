@@ -23,7 +23,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator<=>
 		)	(	Alias const
 				&	i_rAlias

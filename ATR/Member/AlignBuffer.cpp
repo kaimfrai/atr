@@ -65,7 +65,7 @@ export namespace
 		{};
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	Counter
 		)	(	Alignment
 					i_vAlignment
@@ -81,7 +81,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	Counter
 		)	(	Alignment
 					i_vAlignment
@@ -97,7 +97,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	begin
 		)	()	&
 			noexcept
@@ -108,7 +108,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	begin
 		)	()	const&
 			noexcept
@@ -119,7 +119,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	end
 		)	()	&
 			noexcept
@@ -130,7 +130,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	end
 		)	()	const&
 			noexcept

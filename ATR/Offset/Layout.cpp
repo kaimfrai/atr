@@ -34,7 +34,7 @@ export namespace
 				t_tMember
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator->*
 	)	(	Value<t_tMember> const
 			&	i_rObject
@@ -53,7 +53,7 @@ export namespace
 				t_tMember
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator->*
 	)	(	Value<Mut<t_tMember>> const
 			&	i_rObject
@@ -72,7 +72,7 @@ export namespace
 				t_tMember
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator->*
 	)	(	Value<t_tMember>
 			&	i_rObject
@@ -95,7 +95,7 @@ export namespace
 				t_tData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator->*
 	)	(	Bit<t_tpBit...>
 			&	i_rObject
@@ -131,7 +131,7 @@ export namespace
 				t_tData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator->*
 	)	(	Bit<t_tpBit...> const
 			&	i_rObject
@@ -169,7 +169,7 @@ export namespace
 				t_tData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator->*
 	)	(	Bit<t_tpBit...> const
 			&	i_rObject
@@ -206,7 +206,7 @@ export namespace
 				t_tData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator->*
 	)	(	Fork<t_tpData...>
 			&	i_rObject
@@ -256,7 +256,7 @@ export namespace
 				t_tData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator->*
 	)	(	Fork<t_tpData...> const
 			&	i_rObject
@@ -306,7 +306,7 @@ export namespace
 				t_tData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator->*
 	)	(	Fork<t_tpData...> const
 			&	i_rObject
@@ -358,7 +358,7 @@ export namespace
 				t_tData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator->*
 	)	(	Group<t_tNorth, t_tSouth>
 			&	i_rObject
@@ -412,7 +412,7 @@ export namespace
 				t_tData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator->*
 	)	(	Group<t_tNorth, t_tSouth> const
 			&	i_rObject
@@ -466,7 +466,7 @@ export namespace
 				t_tData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator->*
 	)	(	Group<t_tNorth, t_tSouth> const
 			&	i_rObject

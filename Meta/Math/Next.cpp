@@ -4,7 +4,7 @@ export namespace
 	Meta::Math
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Next
 	)	(	auto
 				i_nCurrent
@@ -28,7 +28,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Next
 	)	(	auto
 				i_nCurrent

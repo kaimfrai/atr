@@ -15,7 +15,7 @@ export namespace
 				t_tEntity
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	ForwardErased
 	)	(	t_tEntity
 			&&	i_rObject

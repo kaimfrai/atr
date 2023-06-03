@@ -12,7 +12,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	begin
 	)	(	Count<t_nWidth>
 		)
@@ -31,7 +31,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	end
 	)	(	Count<t_nWidth>
 				i_vRange

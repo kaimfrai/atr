@@ -84,13 +84,13 @@ export namespace
 			>
 		;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Field
 		)	()
 			noexcept
 		=	default;
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Field
 		)	(	UIntMax
 					i_nValue
@@ -104,7 +104,7 @@ export namespace
 		{}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	const
 			noexcept
@@ -117,7 +117,7 @@ export namespace
 			);
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator=
 		)	(	UIntMax
 					i_nValue
@@ -137,7 +137,7 @@ export namespace
 					t_nOtherWidth
 			>
 		[[nodiscard]]
-		explicit(t_nOtherWidth < t_nWidth) constexpr
+		explicit(t_nOtherWidth < t_nWidth) constexpr inline
 		(	operator
 			Field<t_nOtherWidth>
 		)	()	const
@@ -149,7 +149,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	operator
 			bool
 		)	()	const
@@ -161,7 +161,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator not
 		)	(	Field
 					i_vField
@@ -175,7 +175,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	IndexType
 					i_nIndex

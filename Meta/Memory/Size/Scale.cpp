@@ -12,7 +12,7 @@ export namespace
 		<	auto
 				t_nWidth
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator*=
 	)	(	Size<t_nWidth>
 			&	i_rSize
@@ -31,7 +31,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator*
 	)	(	BitSize
 				i_vSize
@@ -47,7 +47,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator*
 	)	(	typename BitSize::SizeType
 				i_vScalar
@@ -66,7 +66,7 @@ export namespace
 		<	auto
 				t_nWidth
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator*=
 	)	(	Size<t_nWidth>
 			&	i_rSize
@@ -87,7 +87,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator*
 	)	(	BitSize
 				i_vSize
@@ -103,7 +103,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator*
 	)	(	Bits
 				i_vCount
@@ -122,7 +122,7 @@ export namespace
 		<	auto
 				t_nWidth
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator/=
 	)	(	Size<t_nWidth>
 			&	i_rSize
@@ -141,7 +141,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator/
 	)	(	BitSize
 				i_vSize
@@ -157,7 +157,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator/
 	)	(	BitSize
 				i_vSize
@@ -182,7 +182,7 @@ export namespace
 		<	auto
 				t_nWidth
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator/=
 	)	(	Size<t_nWidth>
 			&	i_rSize
@@ -199,7 +199,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator/
 	)	(	BitSize
 				i_vLeft

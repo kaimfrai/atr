@@ -12,7 +12,7 @@ enum class
 };
 
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	FullTerm
 )	(	ProtoConstraint
 		<	IsArithmetic
@@ -27,7 +27,7 @@ auto constexpr
 }
 
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	FullTerm
 )	(	ProtoConstraint
 		<	IsIntegral
@@ -54,7 +54,7 @@ static_assert
 
 
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	AdHoc
 )	(	ProtoConstraint
 		<	IsIntegral
@@ -70,7 +70,7 @@ auto constexpr
 }
 
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	AdHoc
 )	(	ProtoConstraint
 		<	IsUnsigned

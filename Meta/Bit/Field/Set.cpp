@@ -11,7 +11,7 @@ export namespace
 		<	auto
 				t_nWidth
 		>
-	auto constexpr
+	auto constexpr inline
 	(	Set
 	)	(	Field<t_nWidth>
 			&	i_rField
@@ -35,7 +35,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Set
 	)	(	Field<t_nWidth>
 			&&	i_rField
@@ -55,7 +55,7 @@ export namespace
 		<	auto
 				t_nWidth
 		>
-	auto constexpr
+	auto constexpr inline
 	(	Unset
 	)	(	Field<t_nWidth>
 			&	i_rField
@@ -79,7 +79,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Unset
 	)	(	Field<t_nWidth>
 			&&	i_rField

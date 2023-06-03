@@ -8,7 +8,7 @@ template
 		...	t_npNumeric
 	>
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	operator""_Test
 )	()
 	noexcept

@@ -54,14 +54,14 @@ export namespace
 		,	t_tID
 		>
 	{
-		auto static constexpr
+		auto static constexpr inline
 		(	operator()
 		)	(	typename t_tpArgument::Entity
 				...	i_rpArgument
 			)
 		->	typename t_tResult::Entity
 		{
-			auto static constexpr
+			auto static constexpr inline
 				vPath
 			=	PathID
 				<	typename

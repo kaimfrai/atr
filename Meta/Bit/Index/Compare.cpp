@@ -9,7 +9,7 @@ export namespace
 	Meta::Bit
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator==
 	)	(	Index_For<UIntMax>
 				i_vLeft
@@ -25,7 +25,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator<=>
 	)	(	Index_For<UIntMax>
 				i_vLeft

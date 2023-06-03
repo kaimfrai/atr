@@ -8,7 +8,7 @@ import Std;
 export namespace
 	Meta::Bit
 {
-	auto constexpr
+	auto constexpr inline
 	(	Set
 	)	(	::std::integral auto
 			&	i_rField
@@ -26,7 +26,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Set
 	)	(	::std::integral auto
 			&&	i_rField
@@ -42,7 +42,7 @@ export namespace
 		);
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	Unset
 	)	(	::std::integral auto
 			&	i_rField
@@ -60,7 +60,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Unset
 	)	(	::std::integral auto
 			&&	i_rField

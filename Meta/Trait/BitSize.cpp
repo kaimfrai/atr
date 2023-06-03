@@ -10,7 +10,7 @@ export namespace
 		BitSize_Of
 	{
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	operator()
 		)	(	TypeID
 					i_vType

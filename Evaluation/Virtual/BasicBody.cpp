@@ -20,7 +20,7 @@ export namespace
 		=	0;
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	ComputeVolume
 		)	()	const
 			noexcept

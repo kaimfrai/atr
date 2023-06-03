@@ -11,7 +11,7 @@ export namespace
 	// Compares the types based on identity, alignment, and size.
 	// If only one of the pointers is nullptr the behaviour is undefined.
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator<=>
 	)	(	TypeID
 				i_vLeft

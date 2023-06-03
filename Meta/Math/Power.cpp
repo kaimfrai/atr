@@ -43,7 +43,7 @@ export namespace
 	;
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Power
 	)	(	auto
 				i_nBase

@@ -26,7 +26,7 @@ namespace
 	ATR::Layout
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	MakeBit
 	)	()
 		noexcept
@@ -40,7 +40,7 @@ namespace
 			...	t_tpData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	MakeBit
 	)	(	TypeToken<t_tpData>
 			...
@@ -52,7 +52,7 @@ namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	MakeFork
 	)	()
 		noexcept
@@ -66,7 +66,7 @@ namespace
 				t_tData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	MakeFork
 	)	(	TypeToken<t_tData>
 		)
@@ -81,7 +81,7 @@ namespace
 			...	t_tpData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	MakeFork
 	)	(	TypeToken<t_tpData>
 			...
@@ -102,7 +102,7 @@ namespace
 				t_tSouth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator+
 	)	(	t_tNorth
 		,	t_tSouth
@@ -121,7 +121,7 @@ namespace
 				t_tNorth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator+
 	)	(	t_tNorth
 		,	Empty
@@ -137,7 +137,7 @@ namespace
 				t_tSouth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator+
 	)	(	Empty
 		,	t_tSouth
@@ -149,7 +149,7 @@ namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator+
 	)	(	Empty
 		,	Empty
@@ -165,7 +165,7 @@ export namespace
 	ATR::Layout
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	CreateLayout
 	)	(	ProtoID auto
 				i_vTypeName

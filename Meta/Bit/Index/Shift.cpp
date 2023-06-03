@@ -8,7 +8,7 @@ import Std;
 export namespace
 	Meta::Bit
 {
-	auto constexpr
+	auto constexpr inline
 	(	operator>>=
 	)	(	::std::integral auto
 			&	i_rField
@@ -25,7 +25,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator>>
 	)	(	::std::integral auto
 				i_nField
@@ -40,7 +40,7 @@ export namespace
 		);
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	operator<<=
 	)	(	::std::integral auto
 			&	i_rField
@@ -57,7 +57,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator<<
 	)	(	::std::integral auto
 				i_nField
@@ -77,7 +77,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Power
 	)	(	Index<t_nWidth>
 				i_nIndex
@@ -96,7 +96,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	AntiPower
 	)	(	Index<t_nWidth>
 				i_nIndex

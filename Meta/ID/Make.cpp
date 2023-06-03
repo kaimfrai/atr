@@ -17,7 +17,7 @@ enum class
 };
 
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	ToCharType
 )	(	char
 			i_vChar
@@ -64,7 +64,7 @@ auto constexpr
 template
 	<	ECharType
 	>
-auto constexpr
+auto constexpr inline
 (	FromChar
 )	(	char
 			i_vChar
@@ -74,7 +74,7 @@ auto constexpr
 {	return i_vChar;	}
 
 template<>
-auto constexpr
+auto constexpr inline
 (	FromChar<ECharType::Number>
 )	(	char
 			i_vChar
@@ -111,7 +111,7 @@ char constexpr inline y = 'y';
 char constexpr inline z = 'z';
 
 template<>
-auto constexpr
+auto constexpr inline
 (	FromChar<ECharType::LowerCase>
 )	(	char
 			i_vChar
@@ -185,7 +185,7 @@ char constexpr inline Y = 'Y';
 char constexpr inline Z = 'Z';
 
 template<>
-auto constexpr
+auto constexpr inline
 (	FromChar<ECharType::UpperCase>
 )	(	char
 			i_vChar
@@ -237,7 +237,7 @@ template
 	,	::std::size_t
 		...	t_vpIndex
 	>
-auto constexpr
+auto constexpr inline
 (	Make
 )	(	::std::index_sequence
 		<	t_vpIndex

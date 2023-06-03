@@ -7,7 +7,7 @@ import ATR.Literals;
 export namespace
 	ATR::Member
 {
-	auto constexpr
+	auto constexpr inline
 	(	Configure
 	)	(	ID<"BasicShape">
 		,	auto

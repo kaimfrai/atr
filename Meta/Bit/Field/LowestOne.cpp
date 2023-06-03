@@ -12,7 +12,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	LowestOne
 	)	(	Field<t_nWidth>
 				i_nField
@@ -33,7 +33,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	IndexLowestOne
 	)	(	Field<t_nWidth>
 				i_nField
@@ -53,7 +53,7 @@ export namespace
 		<	auto
 				t_nWidth
 		>
-	auto constexpr
+	auto constexpr inline
 	(	UnsetLowestOne
 	)	(	Field<t_nWidth>
 			&	i_rField
@@ -77,7 +77,7 @@ export namespace
 		<	auto
 				t_nWidth
 		>
-	auto constexpr
+	auto constexpr inline
 	(	UnsetLowestOne
 	)	(	Field<t_nWidth>
 			&	i_rField
@@ -100,7 +100,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	UnsetLowestOne
 	)	(	Field<t_nWidth>
 			&&	i_rField
@@ -121,7 +121,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	UnsetLowestOne
 	)	(	Field<t_nWidth>
 			&&	i_rField

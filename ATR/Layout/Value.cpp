@@ -32,19 +32,19 @@ export namespace
 			Data
 		;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Value
 		)	()
 		=	default;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Value
 		)	(	Value const
 				&
 			)
 		=	default;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Value
 		)	(	Value
 				&&

@@ -87,7 +87,7 @@ export namespace
 	;
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	ComputeVolume
 	)	(	Body3D const
 			&	i_rBody3D

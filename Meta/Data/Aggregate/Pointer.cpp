@@ -44,56 +44,56 @@ export namespace
 		using difference_type = ::std::ptrdiff_t;
 		using iterator_concept = ::std::contiguous_iterator_tag;
 
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	&
 			noexcept
 		->	DataType&
 		{	return this->Data;	}
 
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	const&
 			noexcept
 		->	ConstDataType&
 		{	return this->Data;	}
 
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	&&
 			noexcept
 		->	::std::remove_cv_t<DataType>
 		{	return ::std::move(*this).Data;	}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			decltype(auto)
 		)	()	&
 			noexcept
 		{	return get();	}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			decltype(auto)
 		)	()	const&
 			noexcept
 		{	return get();	}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			decltype(auto)
 		)	()	&&
 			noexcept
 		{	return ::std::move(*this).get();	}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator->
 		)	()	const
 			noexcept
 		->	::std::remove_cv_t<DataType>
 		{	return this->Data;	}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	difference_type
 					i_nDifference

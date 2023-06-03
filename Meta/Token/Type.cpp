@@ -20,7 +20,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			TypeID
 		)	()	const

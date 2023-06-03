@@ -24,7 +24,7 @@ export namespace
 	};
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	ComputeVolumeEllipsoid
 	)	(	void const
 			*	i_aObject

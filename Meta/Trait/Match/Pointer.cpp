@@ -16,7 +16,7 @@ export namespace
 				...	t_tpQualifier
 			>
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	Evaluate
 		)	(	LiteralBase
 			,	Lex::MatchCVPointer

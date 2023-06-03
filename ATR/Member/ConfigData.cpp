@@ -33,7 +33,7 @@ export namespace
 		{};
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	FindMemberInfo
 		)	(	Chain
 					i_rMemberName

@@ -13,7 +13,7 @@ export
 				t_tTypeName
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	TypeConstruct
 	)	()
 		noexcept

@@ -20,7 +20,7 @@ export namespace
 	};
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	ComputeVolumeSphere
 	)	(	void const
 			*	i_aObject

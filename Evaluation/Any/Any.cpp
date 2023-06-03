@@ -44,7 +44,7 @@ export namespace
 			noexcept
 		=	default;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	IBody
 		)	(	IBody const
 				&
@@ -52,7 +52,7 @@ export namespace
 			noexcept
 		=	default;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	IBody
 		)	(	IBody
 				&&
@@ -60,7 +60,7 @@ export namespace
 			noexcept
 		=	default;
 
-		virtual constexpr
+		virtual constexpr inline
 		(	compl
 			IBody
 		)	()
@@ -81,7 +81,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	ComputeVolume
 		)	()	const
 			noexcept
@@ -116,7 +116,7 @@ export namespace
 			<	typename
 					t_tBody
 			>
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	AnyBody
 		)	(	::std::in_place_type_t
 				<	t_tBody
@@ -150,7 +150,7 @@ export namespace
 		{}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator->
 		)	()	const
 			noexcept
@@ -164,7 +164,7 @@ export namespace
 	};
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	ComputeVolume
 	)	(	AnyBody const
 			&	i_rBody3D

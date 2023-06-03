@@ -50,7 +50,7 @@ export namespace
 		->	t_tResult
 		{};
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Entry
 		)	(	ProtoID auto
 					i_vTypeName
@@ -73,7 +73,7 @@ export namespace
 		{}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	Dispatch
 		)	(	t_tFuncID
 			)	const

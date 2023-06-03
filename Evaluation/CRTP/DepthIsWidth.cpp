@@ -13,7 +13,7 @@ export namespace
 		DepthIsWidth
 	{
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	GetDepth
 		)	()	const
 			noexcept

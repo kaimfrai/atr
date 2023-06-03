@@ -27,7 +27,7 @@ template
 			t_nOffset
 		=	0_bdx
 	>
-auto constexpr
+auto constexpr inline
 (	SetAndCheck
 )	(	UInt<t_nSize>
 			v

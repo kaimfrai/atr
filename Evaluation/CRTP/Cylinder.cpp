@@ -18,7 +18,7 @@ export namespace
 	,	SeparateDepth
 	{
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	GetComputeVolumeMultiplier
 		)	()	const
 			noexcept

@@ -22,7 +22,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator==
 		)	(	IndexSentinel
 			,	IndexSentinel
@@ -56,7 +56,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator*
 		)	()	const
 			noexcept
@@ -69,7 +69,7 @@ export namespace
 			};
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator++
 		)	()	&
 			noexcept
@@ -81,7 +81,7 @@ export namespace
 		}
 
 		[[nodiscard("Use preincrement when discarding the result")]]
-		auto constexpr
+		auto constexpr inline
 		(	operator++
 		)	(int)	&
 			noexcept

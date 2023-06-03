@@ -25,7 +25,7 @@ export
 		PiFraction
 	{
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	operator()
 		)	()
 			noexcept
@@ -38,7 +38,7 @@ export
 		}
 
 		[[nodiscard]]
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			Float
 		)	()	const

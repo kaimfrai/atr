@@ -20,7 +20,7 @@ export
 		=	0uz
 		;
 	public:
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	DynamicArray
 		)	(	::std::size_t
 					i_vCapacity
@@ -36,7 +36,7 @@ export
 			}
 		{}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	DynamicArray
 		)	(	DynamicArray const
 				&
@@ -44,7 +44,7 @@ export
 			noexcept
 		=	delete;
 
-		auto constexpr
+		auto constexpr inline
 		(	operator=
 		)	(	DynamicArray const
 				&
@@ -53,7 +53,7 @@ export
 		->	DynamicArray&
 		=	delete;
 
-		constexpr
+		constexpr inline
 		(	compl
 			DynamicArray
 		)	()
@@ -84,7 +84,7 @@ export
 			;
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	emplace_back
 		)	(	auto
 				&&	i_rArgument
@@ -109,7 +109,7 @@ export
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	begin
 		)	()	&
 			noexcept
@@ -125,7 +125,7 @@ export
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	end
 		)	()	&
 			noexcept

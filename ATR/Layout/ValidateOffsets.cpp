@@ -9,7 +9,7 @@ export namespace
 		<	typename
 				t_tLayout
 		>
-	auto constexpr
+	auto constexpr inline
 	(	ValidateOffsets
 	)	(	t_tLayout const
 			&	i_rLayout
@@ -48,7 +48,8 @@ export namespace
 				t_tLayout
 					Layout
 				;
-			}	constexpr vUnion
+			}	constexpr
+				vUnion
 			{};
 
 			static_assert

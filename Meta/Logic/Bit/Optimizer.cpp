@@ -38,7 +38,7 @@ export namespace
 			m_vTerm
 		;
 
-		auto friend constexpr
+		auto friend constexpr inline
 		(	begin
 		)	(	Optimizer
 				&	i_rOptimizer
@@ -46,7 +46,7 @@ export namespace
 		->	decltype(auto)
 		{	return begin(i_rOptimizer.m_vTerm);	}
 
-		auto friend constexpr
+		auto friend constexpr inline
 		(	begin
 		)	(	Optimizer const
 				&	i_rOptimizer
@@ -54,7 +54,7 @@ export namespace
 		->	decltype(auto)
 		{	return begin(i_rOptimizer.m_vTerm);	}
 
-		auto friend constexpr
+		auto friend constexpr inline
 		(	end
 		)	(	Optimizer
 				&	i_rOptimizer
@@ -62,7 +62,7 @@ export namespace
 		->	decltype(auto)
 		{	return end(i_rOptimizer.m_vTerm);	}
 
-		auto friend constexpr
+		auto friend constexpr inline
 		(	end
 		)	(	Optimizer const
 				&	i_rOptimizer
@@ -70,7 +70,7 @@ export namespace
 		->	decltype(auto)
 		{	return end(i_rOptimizer.m_vTerm);	}
 
-		auto constexpr
+		auto constexpr inline
 		(	AppendLiteralRedundancy
 		)	(	Clause
 					i_vLiteral
@@ -111,7 +111,7 @@ export namespace
 			return IsAbsorbing();
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	ComputeLiteralRedundancy
 		)	(	Clause
 					i_vLiteral
@@ -197,7 +197,7 @@ export namespace
 			);
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	ComputeClauseRedundancy
 		)	(	Clause const
 				&	i_rCurrentClause
@@ -213,7 +213,7 @@ export namespace
 			);
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	TrimRedundantClauses
 		)	(	Optimizer
 				&	i_rRedundancyBuffer
@@ -257,7 +257,7 @@ export namespace
 			}
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	SynthesizeClauses
 		)	(	Clause
 					i_vSynthesizedClause
@@ -284,7 +284,7 @@ export namespace
 			return false;
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	TrimRedundantLiterals
 		)	(	Optimizer
 				&	i_rRedundancyBuffer
@@ -361,7 +361,7 @@ export namespace
 			;
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	Optimize
 		)	(	bool
 					i_bConsiderAlternatives
@@ -392,7 +392,7 @@ export namespace
 		}
 
 	public:
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Optimizer
 		)	(	USize
 					i_nClauseCount
@@ -404,7 +404,7 @@ export namespace
 			}
 		{}
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Optimizer
 		)	(	::Meta::Bit::Count<LiteralLimit>
 					i_nLiteralCount
@@ -419,7 +419,7 @@ export namespace
 			}
 		{}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			ClauseBuffer
 		)	()	&&
@@ -455,21 +455,21 @@ export namespace
 			;
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	clear
 		)	()
 		->	void
 		{	m_vTerm.clear();	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	size
 		)	()	const
 		->	USize
 		{	return m_vTerm.size();	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	IsAbsorbing
 		)	()	const
 		->	bool
@@ -480,13 +480,13 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	IsIdentity
 		)	()	const
 		->	bool
 		{	return m_vTerm.empty();	}
 
-		auto constexpr
+		auto constexpr inline
 		(	erase
 		)	(	iterator
 				i_aEraseClause
@@ -496,7 +496,7 @@ export namespace
 			return m_vTerm.erase(i_aEraseClause);
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	insert
 		)	(	Clause
 					i_vInsertClause
@@ -610,7 +610,7 @@ export namespace
 			;
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	insert
 		)	(	::std::span<Clause const>
 					i_vInsertTerm

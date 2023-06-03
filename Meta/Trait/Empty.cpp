@@ -9,7 +9,7 @@ export namespace
 		Empty
 	{
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	operator()
 		)	(	TypeID
 					i_vType

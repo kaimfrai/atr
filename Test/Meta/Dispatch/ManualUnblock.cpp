@@ -19,7 +19,7 @@ namespace
 	auto Block(Path<int(int, int), "Multipl">) = delete;
 	auto Block(Path<int(int, int), "Multiply">) = delete;
 	auto Block(Path<int(int, int), "Multiply1">) = delete;
-	auto constexpr
+	auto constexpr inline
 	(	Call
 	)	(	Path<int(int,int), "Multiply1">
 		,	int

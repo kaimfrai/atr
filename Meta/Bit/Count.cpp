@@ -37,13 +37,13 @@ export namespace
 			m_nValue
 		;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Count
 		)	()
 			noexcept
 		=	default;
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Count
 		)	(	UIntMax
 					i_nValue
@@ -61,7 +61,7 @@ export namespace
 					t_nOtherWidth
 			>
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	ChangeWidth
 		)	(	Count
 					i_nCount
@@ -81,7 +81,7 @@ export namespace
 					t_nOtherWidth
 			>
 		[[nodiscard]]
-		explicit(t_nOtherWidth <= t_nWidth) constexpr
+		explicit(t_nOtherWidth <= t_nWidth) constexpr inline
 		(	operator
 			Count<t_nOtherWidth>
 		)	()	const
@@ -94,7 +94,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	const
 			noexcept

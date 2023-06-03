@@ -6,7 +6,7 @@ export namespace
 	Meta::Math
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Unsigned
 	)	(	::std::integral auto
 				i_nSigned
@@ -23,7 +23,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Signed
 	)	(	::std::integral auto
 				i_nUnsigned

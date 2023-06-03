@@ -9,7 +9,7 @@ export
 				t_tBody
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	InPlaceConstruct
 	)	()
 		noexcept

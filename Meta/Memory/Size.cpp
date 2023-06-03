@@ -33,7 +33,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	&
 			noexcept
@@ -41,7 +41,7 @@ export namespace
 		{	return Value;	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	const&
 			noexcept
@@ -49,7 +49,7 @@ export namespace
 		{	return Value;	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	&&
 			noexcept
@@ -57,7 +57,7 @@ export namespace
 		{	return Value;	}
 
 		[[nodiscard]]
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	operator
 			SizeType
 		)	()	const
@@ -69,7 +69,7 @@ export namespace
 					t_nOtherWidth
 			>
 		[[nodiscard]]
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			Size<t_nOtherWidth>
 		)	()	const
@@ -150,7 +150,7 @@ export namespace
 	Meta::inline Literals
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator""_bit
 	)	(	unsigned long long
 				i_nBits
@@ -165,7 +165,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator""_byte
 	)	(	unsigned long long
 				i_nBytes

@@ -66,7 +66,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	ProtoDynamicMember_Of<t_tName> auto
 					i_vMemberID
@@ -80,7 +80,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	ProtoDynamicMember_Of<t_tName> auto
 					i_vMemberID
@@ -95,7 +95,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	ProtoDynamicMember_Of<t_tName> auto
 					i_vMemberID
@@ -109,7 +109,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	operator[]
 		)	(	ProtoStaticMember_Of<t_tName> auto
 					i_vMemberID
@@ -135,7 +135,7 @@ export namespace
 				...
 			>
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	t_tFunctionName
 			,	t_tpArgument
@@ -174,7 +174,7 @@ export namespace
 				...
 			>
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	t_tFunctionName
 			,	t_tpArgument
@@ -214,7 +214,7 @@ export namespace
 				...
 			>
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	t_tFunctionName
 			,	t_tpArgument

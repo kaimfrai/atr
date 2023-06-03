@@ -10,7 +10,7 @@ namespace
 {
 	auto Block(ProtoPath<int(int), "Multiply1"> auto) = delete;
 	auto Block(ProtoPath<int(int), "Multiply2"> auto) = delete;
-	auto constexpr
+	auto constexpr inline
 	(	Call
 	)	(	Path<int(int), "Multiply1">
 		,	int
@@ -21,7 +21,7 @@ namespace
 		return i_nFirst * 1;
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	Call
 	)	(	Path<int(int), "Multiply2">
 		,	int

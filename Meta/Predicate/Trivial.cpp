@@ -22,7 +22,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -47,7 +47,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -83,7 +83,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -105,7 +105,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -127,7 +127,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const
@@ -149,7 +149,7 @@ export namespace
 			<	typename
 					t_tEntity
 			>
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)	const

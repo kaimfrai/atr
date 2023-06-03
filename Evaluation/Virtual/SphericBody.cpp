@@ -19,7 +19,7 @@ export namespace
 		>
 	{
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	GetComputeVolumeMultiplier
 		)	()	const
 			noexcept

@@ -9,7 +9,7 @@ export namespace
 	Meta::Logic::Bit
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	EvaluateTerm
 	)	(	Term const
 			&	i_rTerm
@@ -32,7 +32,7 @@ export namespace
 			...	t_npIndex
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	EvaluationField
 	)	(	::std::index_sequence
 			<	t_npIndex

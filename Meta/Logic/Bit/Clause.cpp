@@ -57,20 +57,20 @@ export namespace
 		FieldType Negative;
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	Absorbing
 		)	()
 		->	Clause
 		{	return Inverse(Identity());	}
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	Identity
 		)	()
 		->	Clause
 		{	return Clause{};	}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Clause
 		)	()
 		:	Positive
@@ -81,7 +81,7 @@ export namespace
 			}
 		{}
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Clause
 		)	(	UIntMax
 					i_vPositiveFlags
@@ -93,7 +93,7 @@ export namespace
 			{}
 		{}
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Clause
 		)	(	IndexType
 					i_nPositive
@@ -106,7 +106,7 @@ export namespace
 			}
 		{}
 
-		auto constexpr
+		auto constexpr inline
 		(	Evaluate
 		)	(	FieldType
 					i_vPreset
@@ -121,7 +121,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	LiteralField
 		)	()	const
 		->	FieldType
@@ -137,7 +137,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	Permutation
 		)	(	::std::span<IndexType const>
 					i_vPermutation
@@ -187,7 +187,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	IsAbsorbing
 		)	()	const
 		->	bool
@@ -200,7 +200,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	IsIdentity
 		)	()	const
 		->	bool
@@ -213,7 +213,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	LiteralCount
 		)	()	const
 			noexcept
@@ -230,7 +230,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	IndexType
 					i_nIndex
@@ -266,7 +266,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator==
 		)	(	Clause
 			,	Clause
@@ -276,7 +276,7 @@ export namespace
 		=	default;
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator<=>
 		)	(	Clause
 			,	Clause
@@ -286,7 +286,7 @@ export namespace
 		=	default;
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	Intersection
 		)	(	Clause
 					i_vLeft
@@ -305,7 +305,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	Union
 		)	(	Clause
 					i_vLeft
@@ -326,7 +326,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	Difference
 		)	(	Clause
 					i_vLeft
@@ -352,7 +352,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	Inverse
 		)	(	Clause
 					i_vClause
@@ -366,7 +366,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	Includes
 		)	(	Clause
 					i_vContained
@@ -382,7 +382,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	Intersects
 		)	(	Clause
 					i_vIntersection

@@ -7,7 +7,7 @@ import Meta.Functional.Key;
 export namespace
 	Meta::Functional
 {
-	auto constexpr
+	auto constexpr inline
 	(	DoFold
 	)	(	FoldToken<&Key::operator>>=, LeftFold>
 		,	auto&&
@@ -39,7 +39,7 @@ export namespace
 		);
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	DoFold
 	)	(	FoldToken<&Key::operator>>=, RightFold>
 		,	auto&&

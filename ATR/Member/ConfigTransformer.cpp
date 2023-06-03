@@ -28,7 +28,7 @@ export namespace
 		;
 
 	public:
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	ConfigTransformer
 		)	(	t_tConfig
 				&	i_rConfig
@@ -44,7 +44,7 @@ export namespace
 		{}
 
 		[[nodiscard]]
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	operator
 			ConfigBuilder
 		)	()	&&
@@ -56,7 +56,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	Chain
 					i_rMemberName
@@ -78,7 +78,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	char const
 				*	i_aMemberName
@@ -104,7 +104,7 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	Chain
 					i_rMemberName
@@ -135,7 +135,7 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	char const
 				*	i_aMemberName
@@ -154,7 +154,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	(	ProtoID auto
 					i_vBaseID

@@ -14,7 +14,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator==
 		)	(	Alignment
 					i_vLeft
@@ -26,7 +26,7 @@ export namespace
 		=	default;
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator<=>
 		)	(	Alignment
 					i_vLeft
@@ -43,7 +43,7 @@ export namespace
 	Meta::inline Literals
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator""_align
 	)	(	unsigned long long
 				i_nBitExponent

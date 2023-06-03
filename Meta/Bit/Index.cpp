@@ -59,13 +59,13 @@ export namespace
 			m_nValue
 		;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Index
 		)	()
 			noexcept
 		=	default;
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Index
 		)	(	SIntMax
 					i_nValue
@@ -78,7 +78,7 @@ export namespace
 			}
 		{}
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Index
 		)	(	BitSize
 					i_nBitSize
@@ -91,7 +91,7 @@ export namespace
 		{}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	const
 			noexcept
@@ -107,7 +107,7 @@ export namespace
 					t_nOtherWidth
 			>
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	ChangeWidth
 		)	(	Index
 					i_nIndex
@@ -127,7 +127,7 @@ export namespace
 					t_nOtherWidth
 			>
 		[[nodiscard]]
-		explicit(t_nOtherWidth <= t_nWidth) constexpr
+		explicit(t_nOtherWidth <= t_nWidth) constexpr inline
 		(	operator
 			Index<t_nOtherWidth>
 		)	()	const
@@ -140,7 +140,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			BitSize
 		)	()	const
@@ -185,7 +185,7 @@ export namespace
 			...	t_npNumeric
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator""_bdx
 	)	()
 		noexcept

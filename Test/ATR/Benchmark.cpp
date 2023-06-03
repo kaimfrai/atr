@@ -14,7 +14,7 @@ using namespace ::Meta::Literals;
 namespace
 	ATR::Member
 {
-	auto constexpr
+	auto constexpr inline
 	(	Configure
 	)	(	ID<"Benchmark1">
 		,	auto
@@ -59,7 +59,7 @@ namespace
 		;
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	Configure
 	)	(	ID<"Benchmark2">
 		,	auto
@@ -104,7 +104,7 @@ namespace
 		;
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	Configure
 	)	(	ID<"Benchmark3">
 		,	auto
@@ -149,7 +149,7 @@ namespace
 		;
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	Configure
 	)	(	ID<"Benchmark4">
 		,	auto
@@ -194,7 +194,7 @@ namespace
 		;
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	Configure
 	)	(	ID<"Benchmark5">
 		,	auto
@@ -239,7 +239,7 @@ namespace
 		;
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	Configure
 	)	(	ID<"Benchmark6">
 		,	auto
@@ -275,7 +275,7 @@ namespace
 		;
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	Configure
 	)	(	ID<"Benchmark7">
 		,	auto
@@ -311,7 +311,7 @@ namespace
 		;
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	Configure
 	)	(	ID<"Benchmark8">
 		,	auto

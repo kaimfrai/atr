@@ -21,7 +21,7 @@ export namespace
 	};
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	ComputeVolumeCone
 	)	(	void const
 			*	i_aObject

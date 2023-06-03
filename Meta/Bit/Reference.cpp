@@ -46,7 +46,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	Read
 		)	(	::std::byte const
 				*	i_aUnderlyingArray
@@ -62,7 +62,7 @@ export namespace
 			);
 		}
 
-		auto static constexpr
+		auto static constexpr inline
 		(	Write
 		)	(	value_type
 					i_vValue
@@ -91,7 +91,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	const
 			noexcept
@@ -103,7 +103,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			value_type
 		)	()	const
@@ -113,7 +113,7 @@ export namespace
 			();
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator=
 		)	(	value_type
 					i_vValue
@@ -134,7 +134,7 @@ export namespace
 			return *this;
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator=
 		)	(	value_type
 					i_vValue
@@ -155,7 +155,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator==
 		)	(	Reference
 					i_rReference
@@ -173,7 +173,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator<=>
 		)	(	Reference
 					i_rReference

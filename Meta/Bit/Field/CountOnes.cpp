@@ -12,7 +12,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	CountOnes
 	)	(	Field<t_nWidth>
 				i_nField

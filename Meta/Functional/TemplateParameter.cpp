@@ -29,7 +29,7 @@ export namespace
 			<	typename
 				...	t_tpArgument
 			>
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	TemplateParameter
 		)	(	t_tpArgument
 				&&
@@ -51,7 +51,7 @@ export namespace
 		TemplateParameter& operator=(TemplateParameter&&) = delete;
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator()
 		)	()	&&
 		->	t_tResult

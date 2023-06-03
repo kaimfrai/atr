@@ -41,7 +41,7 @@ using TransformedArray = ID<"TransformedArray">;
 namespace
 	ATR::Member
 {
-	auto constexpr
+	auto constexpr inline
 	(	Configure
 	)	(	Single
 		,	auto
@@ -56,7 +56,7 @@ namespace
 		;
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	Configure
 	)	(	Const
 		,	auto
@@ -71,7 +71,7 @@ namespace
 		;
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	Configure
 	)	(	TransformedConst
 		,	auto
@@ -87,7 +87,7 @@ namespace
 		;
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	Configure
 	)	(	Mutable
 		,	auto
@@ -102,7 +102,7 @@ namespace
 		;
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	Configure
 	)	(	TransformedMutable
 		,	auto
@@ -118,7 +118,7 @@ namespace
 		;
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	Configure
 	)	(	Array
 		,	auto
@@ -133,7 +133,7 @@ namespace
 		;
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	Configure
 	)	(	TransformedArray
 		,	auto
@@ -151,7 +151,7 @@ namespace
 }
 
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	operator==
 )	(	decltype(ConfigData::NamedInfoList) const
 		&	i_rLeft
@@ -178,7 +178,7 @@ auto constexpr
 }
 
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	operator==
 )	(	AlignBuffer<TypeID> const
 		&	i_rLeft
@@ -205,7 +205,7 @@ auto constexpr
 }
 
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	operator==
 )	(	ConfigData const
 		&	i_rLeft

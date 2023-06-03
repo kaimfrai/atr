@@ -11,7 +11,7 @@ export namespace
 	Meta::Bit
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	LowestOne
 	)	(	::std::integral auto
 				i_nField
@@ -26,7 +26,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	IndexLowestOne
 	)	(	::std::integral auto
 				i_nField
@@ -45,7 +45,7 @@ export namespace
 		};
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	UnsetLowestOne
 	)	(	::std::integral auto
 			&	i_rField
@@ -62,7 +62,7 @@ export namespace
 		);
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	UnsetLowestOne
 	)	(	::std::integral auto
 			&	i_rField
@@ -77,7 +77,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	UnsetLowestOne
 	)	(	::std::integral auto
 			&&	i_rField
@@ -94,7 +94,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	UnsetLowestOne
 	)	(	::std::integral auto
 			&&	i_rField

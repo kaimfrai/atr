@@ -7,7 +7,7 @@ export namespace
 	Meta::Memory
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Ceil
 	)	(	BitSize
 				i_vSize

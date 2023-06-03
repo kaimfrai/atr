@@ -115,7 +115,7 @@ template
 	,	EFoldDirection
 			t_eDirection
 	>
-auto constexpr
+auto constexpr inline
 (	TestAssign
 )	(	int
 			i_nInitial
@@ -314,7 +314,7 @@ template
 	<	EFoldDirection
 			t_eDirection
 	>
-auto constexpr
+auto constexpr inline
 (	TestPtrToMemPtr
 )	(	int
 			i_nInitial

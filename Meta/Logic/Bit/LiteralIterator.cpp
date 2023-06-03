@@ -11,7 +11,7 @@ export namespace
 	Meta::Logic::Bit
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	FirstLiteral
 	)	(	Clause
 				i_vClause
@@ -41,7 +41,7 @@ export namespace
 		;
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	EraseFirstLiteral
 	)	(	Clause
 			&	i_rClause
@@ -90,7 +90,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator*
 		)	()	const
 			noexcept
@@ -101,7 +101,7 @@ export namespace
 			);
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator++
 		)	()	&
 			noexcept
@@ -116,7 +116,7 @@ export namespace
 		}
 
 		[[nodiscard("Use preincrement when discarding the value!")]]
-		auto constexpr
+		auto constexpr inline
 		(	operator++
 		)	(int)	&
 			noexcept
@@ -131,7 +131,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator==
 		)	(	LiteralIterator
 			,	LiteralIterator
@@ -141,7 +141,7 @@ export namespace
 		=	default;
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator==
 		)	(	LiteralIterator
 					i_vIterator
@@ -157,7 +157,7 @@ export namespace
 	};
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	begin
 	)	(	Clause
 				i_vClause
@@ -170,7 +170,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	end
 	)	(	Clause
 		)

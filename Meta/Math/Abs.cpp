@@ -9,7 +9,7 @@ export namespace
 	Meta::Math
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Abs
 	)	(	auto
 				i_nArithmetic

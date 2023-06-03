@@ -97,7 +97,7 @@ template
 };
 
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	operator==
 )	(	NamedInfo const
 		&	i_rLeft
@@ -121,7 +121,7 @@ auto constexpr
 
 
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	operator==
 )	(	::std::span<NamedInfo const>
 			i_rLeftList

@@ -12,7 +12,7 @@ export namespace
 	:	CircularShape
 	{
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	GetHeight
 		)	()	const
 			noexcept

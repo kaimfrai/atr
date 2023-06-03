@@ -8,7 +8,7 @@ export namespace
 	Meta::Memory
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator==
 	)	(	BitSize
 				i_vLeft
@@ -24,7 +24,7 @@ export namespace
 	}
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator<=>
 	)	(	BitSize
 				i_vLeft

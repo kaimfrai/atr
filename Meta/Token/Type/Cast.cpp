@@ -10,7 +10,7 @@ export namespace
 				t_tTarget
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Cast
 	)	(	TypeToken<t_tTarget>
 		,	auto

@@ -18,7 +18,7 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator+
 		)	(	TypeToken<t_tEntity>
 			,	Owner
@@ -32,7 +32,7 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator-
 		)	(	TypeToken<t_tEntity t_tOwner::*>
 			,	Owner

@@ -13,7 +13,7 @@ export namespace
 		HeightIsWidth
 	{
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	GetHeight
 		)	()	const
 			noexcept

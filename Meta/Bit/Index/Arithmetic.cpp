@@ -17,7 +17,7 @@ export namespace
 				t_nSize
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator+
 	)	(	Index<t_nSize>
 				i_nLeft
@@ -37,7 +37,7 @@ export namespace
 		<	auto
 				t_nSize
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator+=
 	)	(	Index<t_nSize>
 			&	i_rIndex
@@ -57,7 +57,7 @@ export namespace
 		<	auto
 				t_nSize
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator++
 	)	(	Index<t_nSize>
 			&	i_rIndex
@@ -80,7 +80,7 @@ export namespace
 				t_nSize
 		>
 	[[nodiscard("Use preincrement when discarding the result")]]
-	auto constexpr
+	auto constexpr inline
 	(	operator++
 	)	(	Index<t_nSize>
 			&	i_rIndex
@@ -102,7 +102,7 @@ export namespace
 				t_nSize
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator-
 	)	(	Index<t_nSize>
 				i_nLeft
@@ -122,7 +122,7 @@ export namespace
 		<	auto
 				t_nSize
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator-=
 	)	(	Index<t_nSize>
 			&	i_rIndex
@@ -142,7 +142,7 @@ export namespace
 		<	auto
 				t_nSize
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator--
 	)	(	Index<t_nSize>
 			&	i_rIndex
@@ -165,7 +165,7 @@ export namespace
 				t_nSize
 		>
 	[[nodiscard("Use predecrement when discarding the result")]]
-	auto constexpr
+	auto constexpr inline
 	(	operator--
 	)	(	Index<t_nSize>
 			&	i_rIndex

@@ -14,7 +14,7 @@ namespace
 				t_nLength
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	MakeSequence
 	)	(	IndexToken<t_nLength>
 		)

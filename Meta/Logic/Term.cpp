@@ -33,7 +33,7 @@ export namespace
 			}
 		};
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			Erased::Term const&
 		)	()	const
@@ -51,7 +51,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	operator()
 		)	(	auto
 				&&
@@ -97,7 +97,7 @@ template
 	,	::std::size_t
 		...	t_npIndex
 	>
-auto constexpr
+auto constexpr inline
 	MakeTerm
 	(	::std::index_sequence
 		<	t_npIndex
@@ -114,7 +114,9 @@ auto constexpr
 		>
 		...
 	>
-;
+{	return
+	{};
+}
 
 export namespace
 	Meta::Logic

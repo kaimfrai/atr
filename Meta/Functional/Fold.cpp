@@ -64,7 +64,7 @@ export namespace
 			Token
 		{};
 
-		auto static constexpr
+		auto static constexpr inline
 		(	operator()
 		)	(	auto&&
 				...	i_rpArgument
@@ -97,7 +97,7 @@ export namespace
 			<	typename
 					t_tFunction
 			>
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	operator
 			t_tFunction
 		)	()	const

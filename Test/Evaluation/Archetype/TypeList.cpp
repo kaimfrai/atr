@@ -105,7 +105,7 @@ using
 ;
 
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	operator==
 )	(	::std::span<TypeID const>
 			i_rLeft

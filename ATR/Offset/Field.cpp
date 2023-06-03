@@ -26,7 +26,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator->*
 	)	(	::std::byte
 			(&	i_rObject
@@ -64,7 +64,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator->*
 	)	(	::std::byte const
 			(&	i_rObject

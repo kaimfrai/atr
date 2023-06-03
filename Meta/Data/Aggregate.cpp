@@ -204,7 +204,7 @@ export namespace
 				t_tData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator+
 	)	(	Aggregate<t_tData>
 			&	i_rValue
@@ -220,7 +220,7 @@ export namespace
 				t_tData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator+
 	)	(	Aggregate<t_tData> const
 			&	i_rValue
@@ -236,7 +236,7 @@ export namespace
 				t_tData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator*
 	)	(	Aggregate<t_tData> const
 			&	i_rValue
@@ -248,7 +248,7 @@ export namespace
 		<	::std::weakly_incrementable
 				t_tData
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator++
 	)	(	Aggregate<t_tData>
 			&	i_rValue
@@ -262,7 +262,7 @@ export namespace
 		<	::std::incrementable
 				t_tData
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator++
 	)	(	Aggregate<t_tData>
 			&	i_rValue
@@ -278,7 +278,7 @@ export namespace
 		<	::std::bidirectional_iterator
 				t_tData
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator--
 	)	(	Aggregate<t_tData>
 			&	i_rValue
@@ -292,7 +292,7 @@ export namespace
 		<	::std::bidirectional_iterator
 				t_tData
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator--
 	)	(	Aggregate<t_tData>
 			&	i_rValue
@@ -308,7 +308,7 @@ export namespace
 		<	::std::random_access_iterator
 				t_tData
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator+=
 	)	(	Aggregate<t_tData>
 			&	i_rValue
@@ -325,7 +325,7 @@ export namespace
 				t_tData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator+
 	)	(	Aggregate<t_tData> const
 			&	i_rValue
@@ -344,7 +344,7 @@ export namespace
 				t_tData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator+
 	)	(	::std::iter_difference_t<t_tData> const
 			&	i_rChange
@@ -362,7 +362,7 @@ export namespace
 		<	::std::random_access_iterator
 				t_tData
 		>
-	auto constexpr
+	auto constexpr inline
 	(	operator-=
 	)	(	Aggregate<t_tData>
 			&	i_rValue
@@ -380,7 +380,7 @@ export namespace
 				t_tData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator-
 	)	(	Aggregate<t_tData> const
 			&	i_rValue
@@ -399,7 +399,7 @@ export namespace
 				t_tElement
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator==
 	)	(	Aggregate<t_tElement[]>
 		,	Aggregate<t_tElement[]>
@@ -414,7 +414,7 @@ export namespace
 				t_nExtent
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator==
 	)	(	Aggregate<t_tElement[t_nExtent]> const
 			&	i_rLeft
@@ -440,7 +440,7 @@ export namespace
 				t_tRight
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator==
 	)	(	Aggregate<t_tLeft> const
 			&	i_rLeft
@@ -464,7 +464,7 @@ export namespace
 				t_tRight
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator<=>
 	)	(	Aggregate<t_tLeft> const
 			&	i_rLeft
@@ -486,7 +486,7 @@ export namespace
 				t_tData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	data
 	)	(	Aggregate<t_tData>
 			&	i_rArray
@@ -499,7 +499,7 @@ export namespace
 				t_tData
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	data
 	)	(	Aggregate<t_tData> const
 			&	i_rArray

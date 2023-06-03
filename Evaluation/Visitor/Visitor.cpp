@@ -48,7 +48,7 @@ class
 		m_fDeleter
 	;
 
-	explicit(true) constexpr
+	explicit(true) constexpr inline
 	(	ObjectReference
 	)	(	void
 			*	i_aObject
@@ -68,7 +68,7 @@ class
 				t_tObject
 		>
 	[[nodiscard]]
-	explicit(true) constexpr
+	explicit(true) constexpr inline
 	(	operator
 		t_tObject
 	)	()	const
@@ -127,7 +127,7 @@ template
 			t_tObject
 	>
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	LaunderCast
 )	(	void
 		*	i_aObject
@@ -147,7 +147,7 @@ template
 			t_tObject
 	>
 [[nodiscard]]
-auto constexpr
+auto constexpr inline
 (	Invoke
 )	(	t_tObject
 		&&	i_rObject
@@ -226,7 +226,7 @@ class
 				t_tObject
 		>
 	[[nodiscard]]
-	auto static constexpr
+	auto static constexpr inline
 	(	GetPointerFromBuffer
 	)	(	void
 			*	i_aObject
@@ -265,7 +265,7 @@ class
 		<	typename
 				t_tObject
 		>
-	auto static constexpr
+	auto static constexpr inline
 	(	Delete
 	)	(	void
 			*	i_aObject
@@ -315,7 +315,7 @@ class
 				t_tObject
 		>
 	[[nodiscard]]
-	auto static constexpr
+	auto static constexpr inline
 	(	Access
 	)	(	void
 			*	i_aBuffer
@@ -360,7 +360,7 @@ class
 			...	t_tpArgument
 		>
 	[[nodiscard]]
-	auto static constexpr
+	auto static constexpr inline
 	(	New
 	)	(	t_tpArgument
 			&&
@@ -420,7 +420,7 @@ class
 		;
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	Destroy
 	)	()
 		noexcept
@@ -447,7 +447,7 @@ public:
 		,	typename
 			...	t_tpArgument
 		>
-	explicit(true) constexpr
+	explicit(true) constexpr inline
 	(	ObjectValue
 	)	(	::std::in_place_type_t<t_tObject>
 		,	t_tpArgument
@@ -468,7 +468,7 @@ public:
 		}
 	{}
 
-	explicit(false) constexpr
+	explicit(false) constexpr inline
 	(	ObjectValue
 	)	(	ObjectValue
 			&&	i_rOther
@@ -488,7 +488,7 @@ public:
 		}
 	{}
 
-	auto constexpr
+	auto constexpr inline
 	(	operator=
 	)	(	ObjectValue
 			&&	i_rOther
@@ -517,7 +517,7 @@ public:
 	}
 
 	[[nodiscard]]
-	explicit(false) constexpr
+	explicit(false) constexpr inline
 	(	operator
 		ObjectReference
 	)	()	&
@@ -530,7 +530,7 @@ public:
 		);
 	}
 
-	constexpr
+	constexpr inline
 	(	compl
 		ObjectValue
 	)	()
@@ -544,7 +544,7 @@ public:
 				t_tObject
 		>
 	[[nodiscard]]
-	auto static constexpr
+	auto static constexpr inline
 	(	RefersTo
 	)	(	ObjectReference
 				i_rObject
@@ -567,7 +567,7 @@ public:
 				t_tCandidate
 		>
 	[[nodiscard]]
-	auto static constexpr
+	auto static constexpr inline
 	(	TryDispatch
 	)	(	ObjectReference
 				i_rObject
@@ -599,7 +599,7 @@ public:
 			...	t_tpCandidate
 		>
 	[[nodiscard]]
-	auto static constexpr
+	auto static constexpr inline
 	(	Visit
 	)	(	ObjectReference
 				i_rObject
@@ -654,7 +654,7 @@ export namespace
 	;
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	ComputeVolume
 	)	(	ObjectReference
 					i_rObject

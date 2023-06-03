@@ -32,7 +32,7 @@ export namespace
 			Remainder
 		;
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	IndexCastResult
 		)	(	BitSize
 					i_nBitSize
@@ -59,7 +59,7 @@ export namespace
 				t_tIndex
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	IndexCast
 	)	(	BitSize
 				i_nBitSize

@@ -50,7 +50,7 @@ namespace
 			...	t_vpSouthIndex
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	SplitLayoutType
 	)	(	TypeToken
 			<	t_t1Fork

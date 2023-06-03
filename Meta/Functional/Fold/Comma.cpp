@@ -11,7 +11,7 @@ template
 	<	typename
 			t_tArgument
 	>
-auto constexpr
+auto constexpr inline
 (	forward
 )	(	t_tArgument
 		&	i_rArgument
@@ -23,7 +23,7 @@ auto constexpr
 export namespace
 	Meta::Functional
 {
-	auto constexpr
+	auto constexpr inline
 	(	DoFold
 	)	(	FoldToken<&Key::operator,, LeftFold>
 		,	auto&&
@@ -55,7 +55,7 @@ export namespace
 		);
 	}
 
-	auto constexpr
+	auto constexpr inline
 	(	DoFold
 	)	(	FoldToken<&Key::operator,, RightFold>
 		,	auto&&

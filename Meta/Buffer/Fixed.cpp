@@ -64,26 +64,26 @@ export namespace
 			m_nElementCount
 		{};
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Fixed
 		)	()
 		=	default;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Fixed
 		)	(	Fixed const
 				&
 			)
 		=	default;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Fixed
 		)	(	Fixed
 				&&
 			)
 		=	default;
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Fixed
 		)	(	BufferType const
 				&	i_rBuffer
@@ -93,7 +93,7 @@ export namespace
 			}
 		{}
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Fixed
 		)	(	std::remove_cv_t<BufferType>
 				&&	i_rBuffer
@@ -103,7 +103,7 @@ export namespace
 			}
 		{}
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Fixed
 		)	(	auto
 				&&
@@ -125,7 +125,7 @@ export namespace
 		{}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	max_size
 		)	()	const
 			noexcept
@@ -133,7 +133,7 @@ export namespace
 		{	return m_vBuffer.max_size();	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	ViewBuffer
 		)	()	&
 		->	std::span<value_type>
@@ -144,7 +144,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	ViewBuffer
 		)	()	const&
 		->	std::span<value_type const>
@@ -155,7 +155,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	size
 		)	()	const
 			noexcept
@@ -163,14 +163,14 @@ export namespace
 		{	return m_nElementCount;	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	ssize
 		)	()	const
 			noexcept
 		->	SSize
 		{	return static_cast<SSize>(m_nElementCount);	}
 
-		auto constexpr
+		auto constexpr inline
 		(	EnsureNewSizeValid
 		)	(	USize
 					i_nNewSize
@@ -181,7 +181,7 @@ export namespace
 				((void)"To many elements for buffer!", std::unreachable());
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	push_back
 		)	(	std::convertible_to<value_type> auto
 				&&	i_rValue
@@ -201,7 +201,7 @@ export namespace
 			return *this;
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	push_back
 		)	(	std::convertible_to<value_type> auto
 				&&	i_rValue
@@ -218,7 +218,7 @@ export namespace
 			);
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	reset
 		)	(	std::convertible_to<value_type> auto
 				&&
@@ -254,7 +254,7 @@ export namespace
 			return *this;
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	pop_back
 		)	(	USize
 					i_nCount
@@ -271,7 +271,7 @@ export namespace
 			return *this;
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	pop_back
 		)	(	USize
 					i_nCount
@@ -280,21 +280,21 @@ export namespace
 		->	Fixed
 		{	return std::move(pop_back(i_nCount));	}
 
-		auto constexpr
+		auto constexpr inline
 		(	pop_back
 		)	()	&
 			noexcept
 		->	decltype(auto)
 		{	return pop_back(1uz);	}
 
-		auto constexpr
+		auto constexpr inline
 		(	pop_back
 		)	()	&&
 			noexcept
 		->	decltype(auto)
 		{	return pop_back(1uz);	}
 
-		auto constexpr
+		auto constexpr inline
 		(	insert
 		)	(	iterator
 					i_aPosition
@@ -320,7 +320,7 @@ export namespace
 			return i_aPosition;
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	erase
 		)	(	iterator
 					i_aErase
@@ -355,7 +355,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	USize
 					i_nIndex
@@ -365,7 +365,7 @@ export namespace
 		{	return m_vBuffer[i_nIndex];	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	USize
 					i_nIndex
@@ -375,7 +375,7 @@ export namespace
 		{	return m_vBuffer[i_nIndex];	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	USize
 					i_nIndex
@@ -385,7 +385,7 @@ export namespace
 		{	return std::move(*this).m_vBuffer[i_nIndex];	}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	begin
 		)	(	Fixed
 				&	i_rFixed
@@ -401,7 +401,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	begin
 		)	(	Fixed const
 				&	i_rFixed
@@ -417,7 +417,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	end
 		)	(	Fixed
 				&	i_rFixed
@@ -436,7 +436,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	end
 		)	(	Fixed const
 				&	i_rFixed
@@ -454,7 +454,7 @@ export namespace
 			);
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator=
 		)	(	Fixed const
 				&
@@ -463,7 +463,7 @@ export namespace
 		->	Fixed&
 		=	default;
 
-		auto constexpr
+		auto constexpr inline
 		(	operator=
 		)	(	Fixed
 				&&
@@ -473,7 +473,7 @@ export namespace
 		=	default;
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	find
 		)	(	value_type const
 				&	i_rValue
@@ -488,7 +488,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	contains
 		)	(	value_type const
 				&	i_rValue
@@ -501,7 +501,7 @@ export namespace
 			;
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	clear
 		)	()
 			noexcept
@@ -510,14 +510,14 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	empty
 		)	()	const
 			noexcept
 		->	bool
 		{	return size() == 0uz;	}
 
-		auto constexpr
+		auto constexpr inline
 		(	SetUnusedToDefault
 		)	()	&
 			noexcept
@@ -537,7 +537,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	FindIndexOf
 		)	(	value_type const
 				&	i_rValue
@@ -553,7 +553,7 @@ export namespace
 			);
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	sort
 		)	()	&
 			noexcept
@@ -568,7 +568,7 @@ export namespace
 			);
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	sort
 		)	()	&&
 			noexcept

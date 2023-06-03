@@ -61,42 +61,42 @@ export namespace
 		using iterator = pointer;
 		using const_iterator = const_pointer;
 
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	&
 			noexcept
 		->	ElementType(&)[]
 		=	delete;
 
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	const&
 			noexcept
 		->	ConstElementType(&)[]
 		=	delete;
 
-		auto constexpr
+		auto constexpr inline
 		(	get
 		)	()	&&
 			noexcept
 		->	ElementType(&&)[]
 		=	delete;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			decltype(auto)
 		)	()	&
 			noexcept
 		{	return ::std::declval<ElementType(&)[]>();	}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			decltype(auto)
 		)	()	const&
 			noexcept
 		{	return ::std::declval<ConstElementType(&)[]>();	}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			decltype(auto)
 		)	()	&&
@@ -104,28 +104,28 @@ export namespace
 		{	return ::std::declval<ElementType(&&)[]>();	}
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	size
 		)	()
 		->	size_type
 		{	return 0uz;	}
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	max_size
 		)	()
 		->	size_type
 		{	return 0uz;	}
 
 		[[nodiscard]]
-		auto static constexpr
+		auto static constexpr inline
 		(	empty
 		)	()
 		->	bool
 		{	return true;	}
 
 		[[noreturn]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	USize
 			)	&
@@ -133,7 +133,7 @@ export namespace
 		{	((void)"Index out of bounds!", std::unreachable());	}
 
 		[[noreturn]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	USize
 			)	const&
@@ -141,21 +141,21 @@ export namespace
 		{	((void)"Index out of bounds!", std::unreachable());	}
 
 		[[noreturn]]
-		auto constexpr
+		auto constexpr inline
 		(	operator[]
 		)	(	USize
 			)	&&
 		->	value_type
 		{	((void)"Index out of bounds!", std::unreachable());	}
 
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator+
 		)	(	Aggregate&
 			)
 		->	pointer
 		{	return nullptr;	}
 
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator+
 		)	(	Aggregate const&
 			)
@@ -163,40 +163,40 @@ export namespace
 		{	return nullptr;	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	begin
 		)	()	&
 		->	iterator
 		{	return { nullptr };	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	begin
 		)	()	const&
 		->	const_iterator
 		{	return { nullptr };	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	end
 		)	()	&
 		->	pointer
 		{	return { nullptr };	}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	end
 		)	()	const&
 		->	const_pointer
 		{	return { nullptr };	}
 
-		auto constexpr
+		auto constexpr inline
 		(	data
 		)	()	&
 		->	pointer
 		{	return nullptr;	}
 
-		auto constexpr
+		auto constexpr inline
 		(	data
 		)	()	const&
 		->	const_pointer

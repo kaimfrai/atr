@@ -12,7 +12,7 @@ export namespace
 	ATR::Member
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	IsDynamicMember
 	)	(	ProtoID auto
 				i_vTypeName

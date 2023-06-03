@@ -9,7 +9,7 @@ export namespace
 	{
 		User u;
 
-		constexpr
+		constexpr inline
 		(	Def
 		)	()
 		:	u{this}

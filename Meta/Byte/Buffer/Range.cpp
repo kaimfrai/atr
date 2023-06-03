@@ -13,7 +13,7 @@ export namespace
 				t_nSize
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	begin
 	)	(	Buffer<t_nSize>
 			&	i_rBuffer
@@ -31,7 +31,7 @@ export namespace
 				t_nSize
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	begin
 	)	(	Buffer<t_nSize> const
 			&	i_rBuffer
@@ -49,7 +49,7 @@ export namespace
 				t_nSize
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	end
 	)	(	Buffer<t_nSize>
 			&	i_rBuffer
@@ -68,7 +68,7 @@ export namespace
 				t_nSize
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	end
 	)	(	Buffer<t_nSize> const
 			&	i_rBuffer

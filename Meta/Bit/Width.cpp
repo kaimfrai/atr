@@ -9,7 +9,7 @@ export namespace
 	Meta::Bit
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	Width
 	)	(	::std::integral auto
 				i_nField

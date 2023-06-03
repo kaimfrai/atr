@@ -18,7 +18,7 @@ export namespace
 		::	span
 		;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	InSpan
 		)	(	::std::byte const
 				*	i_aBegin
@@ -34,7 +34,7 @@ export namespace
 		{}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	size
 		)	()	const
 			noexcept
@@ -48,7 +48,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr
+		auto constexpr inline
 		(	subspan
 		)	(	ByteSize
 					i_nOffset

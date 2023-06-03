@@ -23,7 +23,7 @@ export namespace
 				::std::is_scoped_enum_v<t_tEntity>
 			)
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	Evaluate
 		)	(	LiteralBase
 			,	Lex::MatchCVType

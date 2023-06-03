@@ -51,7 +51,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	operator
 			FieldType
 		)	()	const
@@ -63,7 +63,7 @@ export namespace
 			);
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator=
 		)	(	FieldType
 					i_vValue
@@ -83,7 +83,7 @@ export namespace
 			return *this;
 		}
 
-		auto constexpr
+		auto constexpr inline
 		(	operator=
 		)	(	FieldType
 					i_vValue
@@ -102,7 +102,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend constexpr
+		auto friend constexpr inline
 		(	operator==
 		)	(	ElementReference
 					i_vLeft

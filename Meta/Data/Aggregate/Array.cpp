@@ -23,7 +23,7 @@ export namespace
 				t_tSource
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	MakeArrayAggregate
 	)	(	t_tSource const
 			*	i_aSource

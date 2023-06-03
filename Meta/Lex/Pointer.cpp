@@ -42,7 +42,7 @@ export namespace
 			...	t_tpQualifier
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	MakePtr
 	)	(	t_tEntity
 		,	t_tpQualifier

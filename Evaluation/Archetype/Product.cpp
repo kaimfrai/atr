@@ -16,7 +16,7 @@ export namespace
 			...	t_tpDependency
 		>
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	FunctionBody
 	)	(	Dependency<ID<"Product">>
 		,	Dependency
