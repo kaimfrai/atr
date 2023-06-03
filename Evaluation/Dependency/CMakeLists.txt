@@ -3,6 +3,7 @@ add_single_file_modules(
 	InPlaceConstruct.cpp
 	TypeConstruct.cpp
 	DynamicArray.cpp
+	MakeUniqueNoexcept.cpp
 
 	DataTypes.cpp
 	Fraction.cpp
