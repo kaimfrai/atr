@@ -2,6 +2,7 @@ add_single_file_modules(
 	CopyConstruct.cpp
 	InPlaceConstruct.cpp
 	TypeConstruct.cpp
+	DynamicArray.cpp
 
 	DataTypes.cpp
 	Fraction.cpp
