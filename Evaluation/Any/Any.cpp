@@ -10,7 +10,8 @@ export namespace
 	struct
 		IBody
 	{
-		auto virtual
+		[[nodiscard]]
+		auto virtual constexpr
 		(	ComputeVolume
 		)	()	const
 			noexcept
@@ -60,6 +61,7 @@ export namespace
 			m_vBody
 		;
 
+		[[nodiscard]]
 		auto constexpr
 		(	ComputeVolume
 		)	()	const
@@ -129,6 +131,7 @@ export namespace
 			}
 		{}
 
+		[[nodiscard]]
 		auto constexpr
 		(	operator->
 		)	()	const
@@ -142,6 +145,7 @@ export namespace
 		}
 	};
 
+	[[nodiscard]]
 	auto constexpr
 	(	ComputeVolume
 	)	(	AnyBody const
