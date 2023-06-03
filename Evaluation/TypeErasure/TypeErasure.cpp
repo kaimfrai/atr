@@ -1,7 +1,7 @@
 export module Evaluation.TypeErasure;
 
+export import Evaluation.Dependency.TypeErasure;
 import Evaluation.Dependency.DataTypes;
-import Evaluation.Dependency.TypeErasure;
 // required for use of macro
 import <boost.hpp>;
 

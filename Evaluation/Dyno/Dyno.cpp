@@ -1,7 +1,7 @@
 export module Evaluation.Dyno;
 
+export import Evaluation.Dependency.Dyno;
 import Evaluation.Dependency.DataTypes;
-import Evaluation.Dependency.Dyno;
 
 using namespace dyno::literals;
 
@@ -61,7 +61,7 @@ export namespace
 	=	dyno::poly
 		<	VolumeComputer
 		,	dyno::local_storage
-			<	5 * sizeof(Float)
+			<	5uz * sizeof(Float)
 			>
 		>
 	;

@@ -10,10 +10,6 @@ function assemble()
 
 	clang++-17\
 		-std=c++23 -O3 --no-warnings\
-		-fmodule-file=ATR.Instance=ATR/Instance.pcm\
-		-fmodule-file=ATR.Literals=ATR/Literals.pcm\
-		-fmodule-file=ATR.Virtual.Element=ATR/Virtual/Element.pcm\
-		-fmodule-file=ATR.Virtual.Entry=ATR/Virtual/Entry.pcm\
 		-fmodule-file=Evaluation.Any=Evaluation/Any.pcm\
 		-fmodule-file=Evaluation.Archetype.ComputeVolume=Evaluation/Archetype/ComputeVolume.pcm\
 		-fmodule-file=Evaluation.Archetype.Cone=Evaluation/Archetype/Cone.pcm\
@@ -33,15 +29,11 @@ function assemble()
 		-fmodule-file=Evaluation.CRTP.Pyramid=Evaluation/CRTP/Pyramid.pcm\
 		-fmodule-file=Evaluation.CRTP.Sphere=Evaluation/CRTP/Sphere.pcm\
 		-fmodule-file=Evaluation.Dependency.DefaultConstruct=Evaluation/Dependency/DefaultConstruct.pcm\
-		-fmodule-file=Evaluation.Dependency.DataTypes=Evaluation/Dependency/DataTypes.pcm\
 		-fmodule-file=Evaluation.Dependency.DynamicArray=Evaluation/Dependency/DynamicArray.pcm\
-		-fmodule-file=Evaluation.Dependency.Dyno=Evaluation/Dependency/Dyno.pcm\
 		-fmodule-file=Evaluation.Dependency.InPlaceConstruct=Evaluation/Dependency/InPlaceConstruct.pcm\
 		-fmodule-file=Evaluation.Dependency.MainTemplate=Evaluation/Dependency/MainTemplate.pcm\
 		-fmodule-file=Evaluation.Dependency.MakeUniqueNoexcept=Evaluation/Dependency/MakeUniqueNoexcept.pcm\
-		-fmodule-file=Evaluation.Dependency.Polymorphic=Evaluation/Dependency/Polymorphic.pcm\
 		-fmodule-file=Evaluation.Dependency.TypeConstruct=Evaluation/Dependency/TypeConstruct.pcm\
-		-fmodule-file=Evaluation.Dependency.TypeErasure=Evaluation/Dependency/TypeErasure.pcm\
 		-fmodule-file=Evaluation.Dyno=Evaluation/Dyno.pcm\
 		-fmodule-file=Evaluation.Polymorphic=Evaluation/Polymorphic.pcm\
 		-fmodule-file=Evaluation.Replication.Cone=Evaluation/Replication/Cone.pcm\

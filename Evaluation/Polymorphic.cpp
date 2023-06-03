@@ -9,10 +9,8 @@ import Evaluation.CRTP.Ellipsoid;
 import Evaluation.CRTP.Head;
 
 import Evaluation.Dependency.DefaultConstruct;
-import Evaluation.Dependency.DataTypes;
 import Evaluation.Dependency.DynamicArray;
 import Evaluation.Dependency.MainTemplate;
-import Evaluation.Dependency.Polymorphic;
 
 import Std;
 

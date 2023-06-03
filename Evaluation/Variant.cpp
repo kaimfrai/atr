@@ -1,5 +1,4 @@
 import Evaluation.Variant;
-
 import Evaluation.CRTP.Cube;
 import Evaluation.CRTP.Cuboid;
 import Evaluation.CRTP.Pyramid;
