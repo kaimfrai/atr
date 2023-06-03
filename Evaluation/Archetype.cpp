@@ -1,8 +1,3 @@
-import ATR.Virtual.Entry;
-import ATR.Virtual.Element;
-import ATR.Literals;
-import ATR.Instance;
-
 import Evaluation.Archetype.ComputeVolume;
 import Evaluation.Archetype.Cube;
 import Evaluation.Archetype.Cuboid;
@@ -13,7 +8,6 @@ import Evaluation.Archetype.Cone;
 import Evaluation.Archetype.Ellipsoid;
 import Evaluation.Archetype.Head;
 
-import Evaluation.Dependency.DataTypes;
 import Evaluation.Dependency.DynamicArray;
 import Evaluation.Dependency.MainTemplate;
 import Evaluation.Dependency.TypeConstruct;
@@ -30,37 +24,7 @@ auto
 	)
 -> int
 {
-	using ATR::operator""_id;
-	using ATR::ID;
-
-	using
-		Body3D
-	=	::ATR::Virtual::Element
-		<	4uz * sizeof(Float)
-		,	alignof(Float)
-		,	::ATR::Virtual::Entry
-			<	ID<"ComputeVolume">
-			,	auto(	::std::byte const
-						(&
-						)	[]
-					)
-					noexcept
-				->	Float
-			>
-		>
-	;
-
-	auto constexpr
-		fComputeVolume
-	=	+[]	(	Body3D const
-				&	i_rBody3D
-			)
-		{	return
-			i_rBody3D
-			(	"ComputeVolume"_id
-			);
-		}
-	;
+	using namespace ATR;
 
 	return
 	MainTemplate
@@ -73,7 +37,7 @@ auto
 	,	&TypeConstruct<ID<"Cone">>
 	,	&TypeConstruct<ID<"Ellipsoid">>
 	,	&TypeConstruct<ID<"Head">>
-	,	fComputeVolume
+	,	&ComputeVolume
 	>(	::std::span
 		{	i_aArgValue
 		,	static_cast<::std::size_t>

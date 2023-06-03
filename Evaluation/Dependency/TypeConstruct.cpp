@@ -1,14 +1,13 @@
 export module Evaluation.Dependency.TypeConstruct;
 
-import Meta.ID;
-import Meta.String.Literal;
+export import Meta.ID;
 
-using ::Meta::ID;
 using ::Meta::ProtoID;
-using ::Meta::String::Literal;
 
 export
 {
+	using ::Meta::ID;
+
 	template
 		<	ProtoID
 				t_tTypeName
