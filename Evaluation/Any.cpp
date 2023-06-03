@@ -27,26 +27,10 @@ auto
 	using namespace
 		Bodies3D
 	;
-	using
-		Body3D
-	=	AnyBody
-	;
-	constexpr
-	auto
-		fComputeVolume
-	=	+[]	(	Body3D const
-				&	i_rBody3D
-			)
-		{	return
-				i_rBody3D
-				->	ComputeVolume
-					()
-			;
-		}
-	;
+
 	return
 	MainTemplate
-	<	DynamicArray<Body3D>
+	<	DynamicArray<AnyBody>
 	,	&InPlaceConstruct<Cube>
 	,	&InPlaceConstruct<Cuboid>
 	,	&InPlaceConstruct<Pyramid>
@@ -55,7 +39,7 @@ auto
 	,	&InPlaceConstruct<Cone>
 	,	&InPlaceConstruct<Ellipsoid>
 	,	&InPlaceConstruct<Head>
-	,	fComputeVolume
+	,	&ComputeVolume
 	>(	::std::span
 		{	i_aArgValue
 		,	static_cast<::std::size_t>

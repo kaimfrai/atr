@@ -10,26 +10,42 @@ export namespace
 	struct
 		IBody
 	{
-		virtual
-		auto
-			ComputeVolume
-			()	const
-		noexcept
+		auto virtual
+		(	ComputeVolume
+		)	()	const
+			noexcept
 		->	Float
 		=	0
 		;
 
-		IBody() = default;
-		IBody(IBody const&) = default;
-		IBody(IBody&&) = default;
-
-		virtual
-			compl
-			IBody
-			()
+		explicit(false) constexpr
+		(	IBody
+		)	()
 			noexcept
-		=	default
-		;
+		=	default;
+
+		explicit(false) constexpr
+		(	IBody
+		)	(	IBody const
+				&
+			)
+			noexcept
+		=	default;
+
+		explicit(false) constexpr
+		(	IBody
+		)	(	IBody
+				&&
+			)
+			noexcept
+		=	default;
+
+		virtual constexpr
+		(	compl
+			IBody
+		)	()
+			noexcept
+		=	default;
 	};
 
 	template
@@ -44,10 +60,10 @@ export namespace
 			m_vBody
 		;
 
-		auto
-			ComputeVolume
-			()	const
-		noexcept
+		auto constexpr
+		(	ComputeVolume
+		)	()	const
+			noexcept
 		->	Float
 		override
 		{
@@ -63,14 +79,15 @@ export namespace
 	struct
 		AnyBody
 	{
-		std::any
+		::std::any
 			m_vAny
 		;
 		auto
 		(*	m_fCast
-		)	(	std::any const
+		)	(	::std::any const
 				&
 			)
+			noexcept
 		->	IBody const
 			&
 		;
@@ -79,48 +96,63 @@ export namespace
 			<	typename
 					t_tBody
 			>
-		constexpr
-			AnyBody
-			(	std::in_place_type_t
+		explicit(false) constexpr
+		(	AnyBody
+		)	(	::std::in_place_type_t
 				<	t_tBody
 				>
 			)
+			noexcept
 		:	m_vAny
-			{	std::in_place_type
+			{	::std::in_place_type
 				<	BodyAdapter
 					<	t_tBody
 					>
 				>
 			}
 		,	m_fCast
-			{	+[]	(	std::any const
+			{	+[]	(	::std::any const
 						&	i_rAny
 					)
-				-> IBody const
+					noexcept
+				->	IBody const
 					&
 				{	return
-						std::any_cast
-						<	BodyAdapter
-							<	t_tBody
-							>	const
-							&
-						>(	i_rAny
-						)
-					;
+					::std::any_cast
+					<	BodyAdapter
+						<	t_tBody
+						>	const
+						&
+					>(	i_rAny
+					);
 				}
 			}
 		{}
 
-		auto
-			operator->
-			()	const
+		auto constexpr
+		(	operator->
+		)	()	const
+			noexcept
 		->	IBody const
 			*
 		{	return
-				&m_fCast
-				(	m_vAny
-				)
-			;
+			&m_fCast
+			(	m_vAny
+			);
 		}
 	};
+
+	auto constexpr
+	(	ComputeVolume
+	)	(	AnyBody const
+			&	i_rBody3D
+		)
+		noexcept
+	->	Float
+	{	return
+			i_rBody3D
+			->	ComputeVolume
+				()
+		;
+	}
 }
