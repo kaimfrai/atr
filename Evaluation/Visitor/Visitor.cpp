@@ -159,14 +159,12 @@ template
 class
 	ObjectValue
 {
-	static
-	auto constexpr
+	auto static constexpr
 		BufferSize
 	=	t_nBufferSize
 	;
 
-	static
-	auto constexpr
+	auto static constexpr
 		BufferAlign
 	=	static_cast<::std::size_t>
 		(	t_nBufferAlign
@@ -182,8 +180,7 @@ class
 		<	typename
 				t_tObject
 		>
-	static
-	auto constexpr
+	auto static constexpr
 		FitsBuffer
 	=	::std::is_trivially_move_constructible_v
 		<	t_tObject
@@ -208,8 +205,7 @@ class
 		<	typename
 				t_tObject
 		>
-	static
-	auto constexpr
+	auto static constexpr
 	(	GetPointerFromBuffer
 	)	(	void
 			*	i_aObject
@@ -248,8 +244,7 @@ class
 		<	typename
 				t_tObject
 		>
-	static
-	auto constexpr
+	auto static constexpr
 	(	Delete
 	)	(	void
 			*	i_aObject
@@ -298,8 +293,7 @@ class
 		<	typename
 				t_tObject
 		>
-	static
-	auto constexpr
+	auto static constexpr
 	(	Access
 	)	(	void
 			*	i_aBuffer
@@ -343,13 +337,13 @@ class
 		,	typename
 			...	t_tpArgument
 		>
-	static
-	auto constexpr
+	auto static constexpr
 	(	New
 	)	(	t_tpArgument
 			&&
 			...	i_rpArgument
 		)
+		noexcept
 	->	Buffer
 	{
 		alignas(BufferAlign)
@@ -387,7 +381,8 @@ class
 			(	::std::bit_cast<t_tObject**>
 				(	vBuffer.data()
 				)
-			,	new
+			,	new	(	::std::nothrow
+					)
 				t_tObject
 				{	::std::forward<t_tpArgument>
 					(	i_rpArgument
@@ -436,6 +431,7 @@ public:
 			&&
 			...	i_rpArgument
 		)
+		noexcept
 	:	m_vBuffer
 		{	New<::std::remove_cvref_t<t_tObject>>
 			(	::std::forward<t_tpArgument>
@@ -524,8 +520,7 @@ public:
 		<	typename
 				t_tObject
 		>
-	static
-	auto constexpr
+	auto static constexpr
 	(	RefersTo
 	)	(	ObjectReference
 				i_rObject
@@ -547,8 +542,7 @@ public:
 		<	typename
 				t_tCandidate
 		>
-	static
-	auto constexpr
+	auto static constexpr
 	(	TryDispatch
 	)	(	ObjectReference
 				i_rObject
@@ -579,8 +573,7 @@ public:
 		,	typename
 			...	t_tpCandidate
 		>
-	static
-	auto constexpr
+	auto static constexpr
 	(	Visit
 	)	(	ObjectReference
 				i_rObject
