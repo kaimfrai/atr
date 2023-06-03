@@ -26,7 +26,7 @@ export
 	and	(	alignof(Float)
 		>=	alignof(RGBAColor)
 		)
-	auto constexpr
+	auto constexpr inline
 		AdditionalSize
 	=	(	sizeof(t_tColoredObject)
 		-	t_nSideCount
@@ -45,7 +45,7 @@ export
 		,	Meta::USize
 				t_nColorCount
 		>
-	auto constexpr
+	auto constexpr inline
 		SizeMinimal
 	=	AdditionalSize
 		<	t_tColoredObject

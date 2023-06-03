@@ -83,32 +83,32 @@ auto constexpr
 ->	decltype(auto)
 {	return i_vChar - '0'; }
 
-char constexpr a = 'a';
-char constexpr b = 'b';
-char constexpr c = 'c';
-char constexpr d = 'd';
-char constexpr e = 'e';
-char constexpr f = 'f';
-char constexpr g = 'g';
-char constexpr h = 'h';
-char constexpr i = 'i';
-char constexpr j = 'j';
-char constexpr k = 'k';
-char constexpr l = 'l';
-char constexpr m = 'm';
-char constexpr n = 'n';
-char constexpr o = 'o';
-char constexpr p = 'p';
-char constexpr q = 'q';
-char constexpr r = 'r';
-char constexpr s = 's';
-char constexpr t = 't';
-char constexpr u = 'u';
-char constexpr v = 'v';
-char constexpr w = 'w';
-char constexpr x = 'x';
-char constexpr y = 'y';
-char constexpr z = 'z';
+char constexpr inline a = 'a';
+char constexpr inline b = 'b';
+char constexpr inline c = 'c';
+char constexpr inline d = 'd';
+char constexpr inline e = 'e';
+char constexpr inline f = 'f';
+char constexpr inline g = 'g';
+char constexpr inline h = 'h';
+char constexpr inline i = 'i';
+char constexpr inline j = 'j';
+char constexpr inline k = 'k';
+char constexpr inline l = 'l';
+char constexpr inline m = 'm';
+char constexpr inline n = 'n';
+char constexpr inline o = 'o';
+char constexpr inline p = 'p';
+char constexpr inline q = 'q';
+char constexpr inline r = 'r';
+char constexpr inline s = 's';
+char constexpr inline t = 't';
+char constexpr inline u = 'u';
+char constexpr inline v = 'v';
+char constexpr inline w = 'w';
+char constexpr inline x = 'x';
+char constexpr inline y = 'y';
+char constexpr inline z = 'z';
 
 template<>
 auto constexpr
@@ -157,32 +157,32 @@ auto constexpr
 	);
 }
 
-char constexpr A = 'A';
-char constexpr B = 'B';
-char constexpr C = 'C';
-char constexpr D = 'D';
-char constexpr E = 'E';
-char constexpr F = 'F';
-char constexpr G = 'G';
-char constexpr H = 'H';
-char constexpr I = 'I';
-char constexpr J = 'J';
-char constexpr K = 'K';
-char constexpr L = 'L';
-char constexpr M = 'M';
-char constexpr N = 'N';
-char constexpr O = 'O';
-char constexpr P = 'P';
-char constexpr Q = 'Q';
-char constexpr R = 'R';
-char constexpr S = 'S';
-char constexpr T = 'T';
-char constexpr U = 'U';
-char constexpr V = 'V';
-char constexpr W = 'W';
-char constexpr X = 'X';
-char constexpr Y = 'Y';
-char constexpr Z = 'Z';
+char constexpr inline A = 'A';
+char constexpr inline B = 'B';
+char constexpr inline C = 'C';
+char constexpr inline D = 'D';
+char constexpr inline E = 'E';
+char constexpr inline F = 'F';
+char constexpr inline G = 'G';
+char constexpr inline H = 'H';
+char constexpr inline I = 'I';
+char constexpr inline J = 'J';
+char constexpr inline K = 'K';
+char constexpr inline L = 'L';
+char constexpr inline M = 'M';
+char constexpr inline N = 'N';
+char constexpr inline O = 'O';
+char constexpr inline P = 'P';
+char constexpr inline Q = 'Q';
+char constexpr inline R = 'R';
+char constexpr inline S = 'S';
+char constexpr inline T = 'T';
+char constexpr inline U = 'U';
+char constexpr inline V = 'V';
+char constexpr inline W = 'W';
+char constexpr inline X = 'X';
+char constexpr inline Y = 'Y';
+char constexpr inline Z = 'Z';
 
 template<>
 auto constexpr

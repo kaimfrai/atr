@@ -9,12 +9,12 @@ export namespace
 	,	Right
 	};
 
-	auto constexpr
+	auto constexpr inline
 		LeftFold
 	=	EFoldDirection::Left
 	;
 
-	auto constexpr
+	auto constexpr inline
 		RightFold
 	=	EFoldDirection::Right
 	;

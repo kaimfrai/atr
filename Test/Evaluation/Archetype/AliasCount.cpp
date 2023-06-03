@@ -27,7 +27,7 @@ template
 	<	Literal
 			t_vTypeName
 	>
-auto constexpr
+auto constexpr inline
 	AliasCount
 =	[]
 	{	auto const

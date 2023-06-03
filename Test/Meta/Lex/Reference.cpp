@@ -20,7 +20,7 @@ template
 	<	typename
 			t_tEntity
 	>
-auto constexpr
+auto constexpr inline
 	TokenizeType
 =	::Meta::Type
 	<	::Meta::TokenizeEntity

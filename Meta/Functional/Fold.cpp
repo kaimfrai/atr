@@ -39,7 +39,7 @@ export namespace
 		,	typename
 			...	t_tpArgument
 		>
-	auto constexpr
+	auto constexpr inline
 		IsNoexceptFold
 	=	noexcept
 		(	DoFold

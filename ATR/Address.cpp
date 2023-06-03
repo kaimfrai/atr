@@ -74,7 +74,7 @@ export namespace
 		,	typename
 			...	t_tpArgument
 		>
-	auto constexpr
+	auto constexpr inline
 	*	Address
 	=	&
 		FunctionType<t_tFuncID, t_tpArgument...>

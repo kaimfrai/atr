@@ -10,13 +10,13 @@ template
 	<	Literal
 			t_vString
 	>
-auto constexpr
+auto constexpr inline
 &	Instance
 =	t_vString
 	.	Buffer
 ;
 
-Chain constexpr
+Chain constexpr inline
 	Empty
 {};
 
@@ -31,7 +31,7 @@ static_assert
 	)
 );
 
-Chain constexpr
+Chain constexpr inline
 	ABC
 {	Instance<"ABC">
 };
@@ -68,7 +68,7 @@ static_assert
 	)
 );
 
-Chain constexpr
+Chain constexpr inline
 	ABCDE
 {	Instance<"ABCDE">
 };
@@ -126,7 +126,7 @@ static_assert
 	)
 );
 
-Chain constexpr
+Chain constexpr inline
 	DE
 {	Instance<"DE">
 };
@@ -205,7 +205,7 @@ static_assert
 	)
 );
 
-Chain constexpr
+Chain constexpr inline
 	ABC_DE
 =	(	ABC.Value
 	+	DE

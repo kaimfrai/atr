@@ -18,13 +18,13 @@ export namespace
 		;
 	};
 
-	Literal constexpr
+	Literal constexpr inline
 		Contradiction
 	{	Type<Trait::LiteralBase>
 	,	true
 	};
 
-	Literal constexpr
+	Literal constexpr inline
 		Tautology
 	{	Type<Trait::LiteralBase>
 	,	false

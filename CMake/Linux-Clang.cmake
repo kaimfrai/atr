@@ -88,14 +88,13 @@ else()
 		-Wdeprecated
 		-Wctad-maybe-unsupported
 		-Wcomma
+		-Wmissing-variable-declarations
 		-Werror
 		-Weverything
 		# Using header units
 		-Wno-experimental-header-units
 		# False positives?
 		-Wno-read-modules-implicitly
-		# No good reason to add inline or static to variables inside modules, only in headers
-		-Wno-missing-variable-declarations
 		# Impacts build times negatively by being active alone
 		# Imposes an implementation burden which may incur even more build time
 		# If everything is evaluated at compile time, buffer usage is already checked

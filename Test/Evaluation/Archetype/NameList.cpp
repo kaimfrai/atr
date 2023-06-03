@@ -46,7 +46,7 @@ template
 	<	Literal
 			t_vTypeName
 	>
-auto constexpr
+auto constexpr inline
 &	NamedInfoList_Of
 =	Config_Of
 	<	ID<t_vTypeName>

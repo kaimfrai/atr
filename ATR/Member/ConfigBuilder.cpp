@@ -80,7 +80,7 @@ export namespace
 		,	typename
 				t_tConfigTransform
 		>
-	auto constexpr
+	auto constexpr inline
 		BuiltConfig_Of
 	=	Configure
 		(	t_tTypeName

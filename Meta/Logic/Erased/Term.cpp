@@ -470,12 +470,12 @@ export namespace
 		}
 	};
 
-	Term constexpr
+	Term constexpr inline
 		True
 	{	Bit::Clause::Absorbing()
 	};
 
-	Term constexpr
+	Term constexpr inline
 		False
 	{	Bit::Clause::Identity()
 	};

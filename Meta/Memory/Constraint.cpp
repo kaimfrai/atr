@@ -11,7 +11,7 @@ import Std;
 namespace
 	Meta::Memory
 {
-	auto constexpr
+	auto constexpr inline
 		ByteAlign
 	=	::std::countr_zero
 		(	static_cast<USize>
@@ -116,7 +116,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 	{	0_align
 	,	0_bit
@@ -124,7 +124,7 @@ export namespace
 
 	template
 		<>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	bool
 		>
@@ -134,7 +134,7 @@ export namespace
 
 	template
 		<>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	decltype(nullptr)
 		>
@@ -146,7 +146,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	t_tEntity
 			*
@@ -161,7 +161,7 @@ export namespace
 		,	typename
 				t_tObject
 		>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	t_tMember
 			t_tObject
@@ -201,7 +201,7 @@ export namespace
 			>
 		)
 	)
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	t_tEntity
 		>
@@ -213,7 +213,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	t_tEntity const
 		>
@@ -226,7 +226,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	t_tEntity volatile
 		>
@@ -239,7 +239,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	t_tEntity const volatile
 		>
@@ -252,7 +252,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	t_tEntity
 				[]
@@ -268,7 +268,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	t_tEntity const
 				[]
@@ -283,7 +283,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	t_tEntity volatile
 				[]
@@ -298,7 +298,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	t_tEntity const volatile
 				[]
@@ -315,7 +315,7 @@ export namespace
 		,	USize
 				t_vExtent
 		>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	t_tEntity
 				[	t_vExtent
@@ -338,7 +338,7 @@ export namespace
 		,	USize
 				t_vExtent
 		>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	t_tEntity const
 				[	t_vExtent
@@ -357,7 +357,7 @@ export namespace
 		,	USize
 				t_vExtent
 		>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	t_tEntity volatile
 				[	t_vExtent
@@ -376,7 +376,7 @@ export namespace
 		,	USize
 				t_vExtent
 		>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	t_tEntity const volatile
 				[	t_vExtent
@@ -393,7 +393,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	t_tEntity
 			&
@@ -408,7 +408,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	t_tEntity
 			&&
@@ -423,7 +423,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	auto constexpr
+	auto constexpr inline
 		BitSize_Of
 	=		Constraint_Of
 			<	t_tEntity
@@ -435,7 +435,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	auto constexpr
+	auto constexpr inline
 		BitAlign_Of
 	=		Constraint_Of
 			<	t_tEntity

@@ -11,7 +11,7 @@ export namespace
 		<	BitSize
 				t_nWidth
 		>
-	auto constexpr
+	auto constexpr inline
 		Mask
 	=	static_cast
 		<	UInt

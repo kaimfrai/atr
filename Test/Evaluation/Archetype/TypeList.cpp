@@ -43,7 +43,7 @@ template
 	,	auto
 			t_vAlignment
 	>
-::std::span constexpr
+::std::span constexpr inline
 	TypeList_Of
 =	[]
 	{

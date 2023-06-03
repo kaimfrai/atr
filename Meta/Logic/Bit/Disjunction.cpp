@@ -56,7 +56,7 @@ export namespace
 		return {::std::move(vOptimizer)};
 	}
 
-	BinaryFunction<Term> constexpr
+	BinaryFunction<Term> constexpr inline
 		ComputeDisjunction
 	=	+[]	(	Term const
 				&	i_rLeft

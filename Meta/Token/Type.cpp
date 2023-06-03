@@ -72,7 +72,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	auto constexpr
+	auto constexpr inline
 		Type
 	=	TypeToken
 		<	t_tEntity
@@ -96,7 +96,7 @@ export namespace
 		<	TypeID
 				t_vTypeID
 		>
-	TypeToken constexpr
+	TypeToken constexpr inline
 		RestoreTypeToken
 	=	Generic
 	::	Map

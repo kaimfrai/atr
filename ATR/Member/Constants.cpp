@@ -7,19 +7,19 @@ using ::Meta::Memory::BitAlign_Of;
 export namespace
 	ATR::Member
 {
-	auto constexpr
+	auto constexpr inline
 		MaxAlign
 	=	BitAlign_Of
 		<	double
 		>
 	;
 
-	auto constexpr
+	auto constexpr inline
 		TypeBufferSize
 	=	32uz
 	;
 
-	auto constexpr
+	auto constexpr inline
 		NameBufferSize
 	=	32uz
 	;
