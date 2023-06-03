@@ -18,7 +18,7 @@ export namespace
 	struct
 		Bit
 	{
-		ByteSize static constexpr
+		ByteSize static constexpr inline
 			ByteSize
 		=	(	...
 			+	BitSize_Of

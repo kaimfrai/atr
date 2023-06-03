@@ -15,7 +15,7 @@ export namespace
 		<	ProtoID
 				t_tTypeName
 		>
-	ConfigData const constexpr
+	ConfigData const constexpr inline
 		Config_Of
 	=	Finalize
 		(	BuiltConfig_Of

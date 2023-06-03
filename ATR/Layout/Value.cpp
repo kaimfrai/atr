@@ -35,8 +35,7 @@ export namespace
 		explicit(false) constexpr
 		(	Value
 		)	()
-		=	default
-		;
+		=	default;
 
 		explicit(false) constexpr
 		(	Value

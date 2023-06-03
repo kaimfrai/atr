@@ -27,7 +27,7 @@ export namespace
 		{}
 
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator ()
 		)	(	typename
 					t_tpDependency

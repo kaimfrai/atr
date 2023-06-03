@@ -32,11 +32,11 @@ export namespace
 		<	t_tName
 		>
 	{
-		t_tName static constexpr
+		t_tName static constexpr inline
 			TypeName
 		{};
 
-		auto static constexpr
+		auto static constexpr inline
 		&	Config
 		=	Member::Config_Of
 			<	t_tName

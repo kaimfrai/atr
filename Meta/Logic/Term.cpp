@@ -147,7 +147,7 @@ export namespace
 		<	typename
 				t_tLiteral
 		>
-	Erased::Term constexpr
+	Erased::Term constexpr inline
 		Literal
 	{	Bit::Clause{0_bdx}
 	,	{	Type<t_tLiteral>

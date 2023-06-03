@@ -97,7 +97,7 @@ export namespace
 		<	ProtoID
 			...	t_tpMemberName
 		>
-	::Meta::Logic::Erased::Clause constexpr
+	::Meta::Logic::Erased::Clause constexpr inline
 		HasDataMember
 	{	.BitClause
 		{	// TODO Better express the intent of having the bottom bits set
