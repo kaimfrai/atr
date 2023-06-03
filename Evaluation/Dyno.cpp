@@ -25,35 +25,8 @@ auto
 	)
 -> int
 {
-	using namespace
-		dyno::literals
-	;
-	using namespace
-		Bodies3D
-	;
-	using
-		Body3D
-	=	dyno::poly
-		<	VolumeComputer
-		,	dyno::local_storage
-			<	sizeof(Head)
-			>
-		>
-	;
-	constexpr
-	auto
-		fComputeVolume
-	=	+[]	(	Body3D const
-				&	i_rBody3D
-			)
-		{	return
-				i_rBody3D
-				.	virtual_
-					(	"ComputeVolume"_s
-					)()
-			;
-		}
-	;
+	using namespace Bodies3D;
+
 	return
 	MainTemplate
 	<	DynamicArray<Body3D>
@@ -65,7 +38,7 @@ auto
 	,	&DefaultConstruct<Cone>
 	,	&DefaultConstruct<Ellipsoid>
 	,	&DefaultConstruct<Head>
-	,	fComputeVolume
+	,	&ComputeVolume
 	>(	::std::span
 		{	i_aArgValue
 		,	static_cast<::std::size_t>

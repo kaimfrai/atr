@@ -10,13 +10,12 @@ export namespace
 {
 	struct
 		VolumeComputer
-	:	decltype(
-			dyno::requires_
+	:	decltype
+		(	dyno::requires_
 			(	"ComputeVolume"_s
 			=	dyno::method
 				<	auto
 						() const
-					//	noexcept
 					->	Float
 				>
 			,	dyno::CopyConstructible
@@ -43,12 +42,42 @@ export namespace
 		=	[]	(	t_tBody const
 					&	i_rSelf
 				)
+				noexcept
 			{	return
-					i_rSelf
-					.	ComputeVolume
-						()
+				i_rSelf
+				.	ComputeVolume
+					()
 				;
 			}
 		)
 	;
+}
+
+export namespace
+	Bodies3D
+{
+	using
+		Body3D
+	=	dyno::poly
+		<	VolumeComputer
+		,	dyno::local_storage
+			<	5 * sizeof(Float)
+			>
+		>
+	;
+
+	auto constexpr
+	(	ComputeVolume
+	)	(	Body3D const
+			&	i_rBody3D
+		)
+		noexcept
+	->	Float
+	{	return
+		i_rBody3D
+		.	virtual_
+			(	"ComputeVolume"_s
+			)()
+		;
+	}
 }
