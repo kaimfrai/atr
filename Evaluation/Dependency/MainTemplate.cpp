@@ -36,124 +36,128 @@ export
 			&	i_rRandom
 
 		)
+		noexcept
 	->	Float
 	{
 		t_tBodyContainer
 			vElements
 		;
 
-			vElements
+		vElements
 		.	reserve
 			(	i_rRandom
-			.	size
-				()
+				.	size
+					()
 			)
 		;
 
 		for	(	auto
-					nRandom
+					vRandom
 				:	i_rRandom
 			)
 		{
 			switch
-				(	nRandom
+				(	vRandom
 				%	8
 				)
 			{	case
 					0
 				:	vElements
-				.	emplace_back
-					(	t_fMakeCube
-						()
-					)
-				;	break
-				;
+					.	emplace_back
+						(	t_fMakeCube
+							()
+						)
+					;
+				break;
 
 				case
 					1
 				:	vElements
-				.	emplace_back
-					(	t_fMakeCuboid
-						()
-					)
-				;	break
-				;
+					.	emplace_back
+						(	t_fMakeCuboid
+							()
+						)
+					;
+				break;
 
 				case
 					2
 				:	vElements
-				.	emplace_back
-					(	t_fMakePyramid
-						()
-					)
-				;	break
-				;
+					.	emplace_back
+						(	t_fMakePyramid
+							()
+						)
+					;
+				break;
 
 				case
 					3
 				:	vElements
-				.	emplace_back
-					(	t_fMakeSphere
-						()
-					)
-				;	break
-				;
+					.	emplace_back
+						(	t_fMakeSphere
+							()
+						)
+					;
+				break;
 
 				case
 					4
 				:	vElements
-				.	emplace_back
-					(	t_fMakeCylinder
-						()
-					)
-				;	break
-				;
+					.	emplace_back
+						(	t_fMakeCylinder
+							()
+						)
+					;
+				break;
 
 				case
 					5
 				:	vElements
-				.	emplace_back
-					(	t_fMakeCone
-						()
-					)
-				;	break
-				;
+					.	emplace_back
+						(	t_fMakeCone
+							()
+						)
+					;
+				break;
 
 				case
 					6
 				:	vElements
-				.	emplace_back
-					(	t_fMakeEllipsoid
-						()
-					)
-				;	break
-				;
+					.	emplace_back
+						(	t_fMakeEllipsoid
+							()
+						)
+					;
+				break;
 
 				case
 					7
 				:	vElements
-				.	emplace_back
-					(	t_fMakeHead
-						()
-					)
-				;	break
-				;
+					.	emplace_back
+						(	t_fMakeHead
+							()
+						)
+					;
+				break;
 			}
 		}
 
 		Float
 			vLoopSum
 		{};
+
 		for	(	auto
 				&	rBody
 				:	vElements
 			)
-		{	(	vLoopSum
+		{
+			vLoopSum
 			+=	t_fComputeVolume
 				(	rBody
 				)
-			);
+			;
 		}
+
 		return
 			vLoopSum
 		;
