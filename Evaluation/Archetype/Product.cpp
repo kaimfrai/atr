@@ -15,6 +15,7 @@ export namespace
 		<	typename
 			...	t_tpDependency
 		>
+	[[nodiscard]]
 	auto constexpr
 	(	FunctionBody
 	)	(	Dependency<ID<"Product">>
