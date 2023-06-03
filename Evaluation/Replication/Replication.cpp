@@ -1,21 +1,32 @@
 export module Evaluation.Replication;
 
-export import Evaluation.Replication.Cube;
-export import Evaluation.Replication.Cuboid;
-export import Evaluation.Replication.Pyramid;
-export import Evaluation.Replication.Sphere;
-export import Evaluation.Replication.Cylinder;
-export import Evaluation.Replication.Cone;
-export import Evaluation.Replication.Ellipsoid;
-export import Evaluation.Replication.Head;
-export import Evaluation.Dependency.InPlaceConstruct;
+import Evaluation.Replication.Cube;
+import Evaluation.Replication.Cuboid;
+import Evaluation.Replication.Pyramid;
+import Evaluation.Replication.Sphere;
+import Evaluation.Replication.Cylinder;
+import Evaluation.Replication.Cone;
+import Evaluation.Replication.Ellipsoid;
+import Evaluation.Replication.Head;
+import Evaluation.Dependency.InPlaceConstruct;
 import Evaluation.Dependency.DataTypes;
 
 import Std;
 
+export using ::InPlaceConstruct;
+
 export namespace
 	Bodies3D
 {
+	using ::Bodies3D::Cube;
+	using ::Bodies3D::Cuboid;
+	using ::Bodies3D::Pyramid;
+	using ::Bodies3D::Sphere;
+	using ::Bodies3D::Cylinder;
+	using ::Bodies3D::Cone;
+	using ::Bodies3D::Ellipsoid;
+	using ::Bodies3D::Head;
+
 	struct
 		VolumeComputer
 	{
