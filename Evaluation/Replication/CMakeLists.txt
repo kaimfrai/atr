@@ -8,5 +8,5 @@ add_single_file_modules(
 	Head.cpp
 	Pyramid.cpp
 
-	VolumeComputer.cpp
+	Replication.cpp
 )

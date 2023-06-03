@@ -26,4 +26,6 @@ add_single_file_modules(
 	Sphere.cpp
 	Head.cpp
 	Pyramid.cpp
+
+	Virtual.cpp
 )

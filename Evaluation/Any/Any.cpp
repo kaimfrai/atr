@@ -1,5 +1,14 @@
 export module Evaluation.Any;
 
+export import Evaluation.CRTP.Cube;
+export import Evaluation.CRTP.Cuboid;
+export import Evaluation.CRTP.Pyramid;
+export import Evaluation.CRTP.Sphere;
+export import Evaluation.CRTP.Cylinder;
+export import Evaluation.CRTP.Cone;
+export import Evaluation.CRTP.Ellipsoid;
+export import Evaluation.CRTP.Head;
+export import Evaluation.Dependency.InPlaceConstruct;
 import Evaluation.Dependency.DataTypes;
 
 import Std;

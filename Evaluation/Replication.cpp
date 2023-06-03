@@ -1,15 +1,5 @@
-import Evaluation.Replication.VolumeComputer;
-import Evaluation.Replication.Cube;
-import Evaluation.Replication.Cuboid;
-import Evaluation.Replication.Pyramid;
-import Evaluation.Replication.Sphere;
-import Evaluation.Replication.Cylinder;
-import Evaluation.Replication.Cone;
-import Evaluation.Replication.Ellipsoid;
-import Evaluation.Replication.Head;
-
+import Evaluation.Replication;
 import Evaluation.Dependency.DynamicArray;
-import Evaluation.Dependency.InPlaceConstruct;
 import Evaluation.Dependency.MainTemplate;
 
 import Std;

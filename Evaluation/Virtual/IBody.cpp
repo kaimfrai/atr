@@ -2,8 +2,6 @@ export module Evaluation.Virtual.IBody;
 
 import Evaluation.Dependency.DataTypes;
 
-import Std;
-
 export namespace
 	Bodies3D
 {
@@ -52,26 +50,4 @@ export namespace
 			noexcept
 		=	default;
 	};
-
-	using
-		Body3D
-	=	::std::unique_ptr
-		<	IBody
-		>
-	;
-
-	[[nodiscard]]
-	auto constexpr
-	(	ComputeVolume
-	)	(	Body3D const
-			&	i_rBody3D
-		)
-		noexcept
-	->	Float
-	{	return
-		i_rBody3D
-		->	ComputeVolume
-			()
-		;
-	}
 }

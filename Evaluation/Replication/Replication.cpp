@@ -1,14 +1,14 @@
-export module Evaluation.Replication.VolumeComputer;
+export module Evaluation.Replication;
 
-import Evaluation.Replication.Cube;
-import Evaluation.Replication.Cuboid;
-import Evaluation.Replication.Pyramid;
-import Evaluation.Replication.Sphere;
-import Evaluation.Replication.Cylinder;
-import Evaluation.Replication.Cone;
-import Evaluation.Replication.Ellipsoid;
-import Evaluation.Replication.Head;
-
+export import Evaluation.Replication.Cube;
+export import Evaluation.Replication.Cuboid;
+export import Evaluation.Replication.Pyramid;
+export import Evaluation.Replication.Sphere;
+export import Evaluation.Replication.Cylinder;
+export import Evaluation.Replication.Cone;
+export import Evaluation.Replication.Ellipsoid;
+export import Evaluation.Replication.Head;
+export import Evaluation.Dependency.InPlaceConstruct;
 import Evaluation.Dependency.DataTypes;
 
 import Std;

@@ -1,13 +1,14 @@
 export module Evaluation.Variant;
 
-import Evaluation.CRTP.Cube;
-import Evaluation.CRTP.Cuboid;
-import Evaluation.CRTP.Pyramid;
-import Evaluation.CRTP.Sphere;
-import Evaluation.CRTP.Cylinder;
-import Evaluation.CRTP.Cone;
-import Evaluation.CRTP.Ellipsoid;
-import Evaluation.CRTP.Head;
+export import Evaluation.CRTP.Cube;
+export import Evaluation.CRTP.Cuboid;
+export import Evaluation.CRTP.Pyramid;
+export import Evaluation.CRTP.Sphere;
+export import Evaluation.CRTP.Cylinder;
+export import Evaluation.CRTP.Cone;
+export import Evaluation.CRTP.Ellipsoid;
+export import Evaluation.CRTP.Head;
+export import Evaluation.Dependency.InPlaceConstruct;
 import Evaluation.Dependency.DataTypes;
 
 import Std;

@@ -1,6 +1,15 @@
 export module Evaluation.Polymorphic;
 
 export import Evaluation.Dependency.Polymorphic;
+export import Evaluation.CRTP.Cube;
+export import Evaluation.CRTP.Cuboid;
+export import Evaluation.CRTP.Pyramid;
+export import Evaluation.CRTP.Sphere;
+export import Evaluation.CRTP.Cylinder;
+export import Evaluation.CRTP.Cone;
+export import Evaluation.CRTP.Ellipsoid;
+export import Evaluation.CRTP.Head;
+export import Evaluation.Dependency.DefaultConstruct;
 import Evaluation.Dependency.DataTypes;
 
 export namespace
