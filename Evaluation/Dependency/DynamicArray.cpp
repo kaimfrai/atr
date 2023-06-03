@@ -15,9 +15,9 @@ export
 		*	m_vBuffer
 		=	nullptr
 		;
-		::std::ptrdiff_t
+		::std::size_t
 			m_vCount
-		=	0z
+		=	0uz
 		;
 	public:
 		explicit(false) constexpr
