@@ -14,18 +14,18 @@ export namespace
 		<	Shapes2D::Square
 		>
 	{
-		auto
-			GetDepth
-			()	const
-		noexcept
+		[[nodiscard]]
+		auto constexpr
+		(	GetDepth
+		)	()	const
+			noexcept
 		->	Float const
 			&
-		override
-		{
-			return
-				this
-				->	Shapes2D
-				.	Width
+			override
+		{	return
+			this
+			->	Shapes2D
+			.	Width
 			;
 		}
 	};

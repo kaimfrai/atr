@@ -19,32 +19,31 @@ export namespace
 			Depth
 		;
 
-		auto
-			GetDepth
-			()	const
-		noexcept
+		[[nodiscard]]
+		auto constexpr
+		(	GetDepth
+		)	()	const
+			noexcept
 		->	Float const
 			&
-		override
-		{
-			return
+			override
+		{	return
 				Depth
 			;
 		}
 
-		auto
-			GetComputeVolumeMultiplier
-			()	const
-		noexcept
+		[[nodiscard]]
+		auto constexpr
+		(	GetComputeVolumeMultiplier
+		)	()	const
+			noexcept
 		->	Float
-		override
-		{
-			return
-				PiFraction
-				<	1z
-				,	12z
-				>{}
-			;
+			override
+		{	return
+			PiFraction
+			<	1z
+			,	12z
+			>{};
 		}
 	};
 }

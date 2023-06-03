@@ -18,19 +18,18 @@ export namespace
 		<	t_tShape
 		>
 	{
-		auto
-			GetComputeVolumeMultiplier
-			()	const
-		noexcept
+		[[nodiscard]]
+		auto constexpr
+		(	GetComputeVolumeMultiplier
+		)	()	const
+			noexcept
 		->	Float
-		override
-		{
-			return
-				PiFraction
-				<	1z
-				,	6z
-				>{}
-			;
+			override
+		{	return
+			PiFraction
+			<	1z
+			,	6z
+			>{};
 		}
 	};
 }

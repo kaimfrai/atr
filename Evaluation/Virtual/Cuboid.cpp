@@ -18,15 +18,15 @@ export namespace
 			Depth
 		;
 
-		auto
-			GetDepth
-			()	const
-		noexcept
+		[[nodiscard]]
+		auto constexpr
+		(	GetDepth
+		)	()	const
+			noexcept
 		->	Float const
 			&
-		override
-		{
-			return
+			override
+		{	return
 				Depth
 			;
 		}

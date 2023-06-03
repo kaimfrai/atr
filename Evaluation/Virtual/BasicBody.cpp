@@ -11,23 +11,23 @@ export namespace
 		BasicBody
 	:	IBody
 	{
-		virtual
-		auto
-			GetComputeVolumeMultiplier
-			()	const
-		noexcept
+		[[nodiscard]]
+		auto virtual constexpr
+		(	GetComputeVolumeMultiplier
+		)	()	const
+			noexcept
 		->	Float
 		=	0
 		;
 
-		auto
-			ComputeVolume
-			()	const
-		noexcept
+		[[nodiscard]]
+		auto constexpr
+		(	ComputeVolume
+		)	()	const
+			noexcept
 		->	Float
-		override
-		{
-			return
+			override
+		{	return
 				GetComputeVolumeMultiplier
 				()
 			*	GetDepth

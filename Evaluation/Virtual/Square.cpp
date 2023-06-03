@@ -11,15 +11,15 @@ export namespace
 		Square
 	:	RectangularShape
 	{
-		auto
-			GetHeight
-			()	const
-		noexcept
+		[[nodiscard]]
+		auto constexpr
+		(	GetHeight
+		)	()	const
+			noexcept
 		->	Float const
 			&
-		override
-		{
-			return
+			override
+		{	return
 				Width
 			;
 		}

@@ -24,27 +24,8 @@ auto
 	)
 -> int
 {
-	using namespace
-		Bodies3D
-	;
-	using
-		Body3D
-	=	::std::unique_ptr
-		<	IBody
-		>
-	;
-	auto constexpr
-		fComputeVolume
-	=	+[]	(	Body3D const
-				&	i_rBody3D
-			)
-		{	return
-				i_rBody3D
-				->	ComputeVolume
-					()
-			;
-		}
-	;
+	using namespace Bodies3D;
+
 	return
 	MainTemplate
 	<	DynamicArray<Body3D>
@@ -56,7 +37,7 @@ auto
 	,	&MakeUniqueNoexcept<Cone>
 	,	&MakeUniqueNoexcept<Ellipsoid>
 	,	&MakeUniqueNoexcept<Head>
-	,	fComputeVolume
+	,	&ComputeVolume
 	>(	::std::span
 		{	i_aArgValue
 		,	static_cast<::std::size_t>

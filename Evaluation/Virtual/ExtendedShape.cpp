@@ -19,33 +19,33 @@ export namespace
 			Shapes2D
 		;
 
-		auto
-			GetHeight
-			()	const
-		noexcept
+		[[nodiscard]]
+		auto constexpr
+		(	GetHeight
+		)	()	const
+			noexcept
 		->	Float const
 			&
-		override
-		{
-			return
-				Shapes2D
-				.	GetHeight
-					()
+			override
+		{	return
+			Shapes2D
+			.	GetHeight
+				()
 			;
 		}
 
-		auto
-			GetWidth
-			()	const
-		noexcept
+		[[nodiscard]]
+		auto constexpr
+		(	GetWidth
+		)	()	const
+			noexcept
 		->	Float const
 			&
-		override
-		{
-			return
-				Shapes2D
-				.	GetWidth
-					()
+			override
+		{	return
+			Shapes2D
+			.	GetWidth
+				()
 			;
 		}
 	};

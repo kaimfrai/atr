@@ -8,41 +8,37 @@ export namespace
 	struct
 		IShape
 	{
-		virtual
-		auto
-			GetHeight
-			()	const
-		noexcept
-		->	Float const
-			&
-		=	0
-		;
-
-		virtual
-		auto
-			GetWidth
-			()	const
-		noexcept
-		->	Float const
-			&
-		=	0
-		;
-
-		virtual
-		auto
-			ComputeArea
-			()	const
-		noexcept
-		->	Float
-		=	0
-		;
-
-		virtual
-			compl
-			IShape
-			()
+		[[nodiscard]]
+		auto virtual constexpr
+		(	GetHeight
+		)	()	const
 			noexcept
-		=	default
-		;
+		->	Float const
+			&
+		=	0;
+
+		[[nodiscard]]
+		auto virtual constexpr
+		(	GetWidth
+		)	()	const
+			noexcept
+		->	Float const
+			&
+		=	0;
+
+		[[nodiscard]]
+		auto virtual constexpr
+		(	ComputeArea
+		)	()	const
+			noexcept
+		->	Float
+		=	0;
+
+		virtual constexpr
+		(	compl
+			IShape
+		)	()
+			noexcept
+		=	default;
 	};
 }

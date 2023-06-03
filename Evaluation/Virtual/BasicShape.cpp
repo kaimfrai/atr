@@ -15,23 +15,23 @@ export namespace
 			Color
 		;
 
-		virtual
-		auto
-			GetComputeAreaMultiplier
-			()	const
-		noexcept
+		[[nodiscard]]
+		auto virtual constexpr
+		(	GetComputeAreaMultiplier
+		)	()	const
+			noexcept
 		->	Float
 		=	0
 		;
 
-		auto
-			ComputeArea
-			()	const
-		noexcept
+		[[nodiscard]]
+		auto constexpr
+		(	ComputeArea
+		)	()	const
+			noexcept
 		->	Float
-		override
-		{
-			return
+			override
+		{	return
 				GetComputeAreaMultiplier
 				()
 			*	GetHeight

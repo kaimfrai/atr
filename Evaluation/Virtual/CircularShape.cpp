@@ -16,32 +16,31 @@ export namespace
 			Width
 		;
 
-		auto
-			GetWidth
-			()	const
-		noexcept
+		[[nodiscard]]
+		auto constexpr
+		(	GetWidth
+		)	()	const
+			noexcept
 		->	Float const
 			&
-		override
-		{
-			return
+			override
+		{	return
 				Width
 			;
 		}
 
-		auto
-			GetComputeAreaMultiplier
-			()	const
-		noexcept
+		[[nodiscard]]
+		auto constexpr
+		(	GetComputeAreaMultiplier
+		)	()	const
+			noexcept
 		->	Float
-		override
-		{
-			return
-				PiFraction
-				<	1z
-				,	4z
-				>{}
-			;
+			override
+		{	return
+			PiFraction
+			<	1z
+			,	4z
+			>{};
 		}
 	};
 }

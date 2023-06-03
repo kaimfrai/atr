@@ -18,17 +18,16 @@ export namespace
 		<	t_tShape
 		>
 	{
-		auto
-			GetComputeVolumeMultiplier
-			()	const
-		noexcept
+		[[nodiscard]]
+		auto constexpr
+		(	GetComputeVolumeMultiplier
+		)	()	const
+			noexcept
 		->	Float
-		override
-		{
-			return
-				Fraction
-				<>{}
-			;
+			override
+		{	return
+			Fraction<>
+			{};
 		}
 	};
 }
