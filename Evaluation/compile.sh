@@ -39,7 +39,7 @@ then
 	time_build "Virtual"
 	time_build "Visitor"
 else
-	measure_time $1
+	time_build $1
 fi
 
 cd ../../
