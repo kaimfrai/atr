@@ -15,7 +15,7 @@ export namespace
 		<	typename
 			...	t_tpDependency
 		>
-	auto inline
+	auto constexpr
 	(	FunctionBody
 	)	(	Dependency<ID<"Product">>
 		,	Dependency
