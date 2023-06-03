@@ -59,6 +59,26 @@ export
 		)	()
 			noexcept
 		{
+			if	constexpr
+				(	not
+					::std::is_trivially_destructible_v
+					<	t_tElement
+					>
+				)
+			{
+				for	(	auto
+						&	rElement
+					:	*this
+					)
+				{
+					rElement
+					.	compl
+						t_tElement
+						()
+					;
+				}
+			}
+
 			delete[]
 				m_vBuffer
 			;
