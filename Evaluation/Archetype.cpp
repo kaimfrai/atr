@@ -21,8 +21,8 @@ import Evaluation.Dependency.TypeConstruct;
 import Std;
 
 auto
-	main
-	(	int
+(	main
+)	(	int
 			i_vArgCount
 	,	char const
 		*	i_aArgValue

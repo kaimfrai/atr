@@ -17,8 +17,8 @@ import Evaluation.Dependency.Polymorphic;
 import Std;
 
 auto
-	main
-	(	int
+(	main
+)	(	int
 			i_vArgCount
 	,	char const
 		*	i_aArgValue
