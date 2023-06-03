@@ -51,9 +51,15 @@ then
 	bash Evaluation/compile.sh $2
 	bash Evaluation/memcheck.sh 42 100000 $2
 	bash Evaluation/perf.sh 42 100000 100 $2
-elif [ $1 == "assembly" ] || [ $1 == "cachegrind" ] || [ $1 == "compile" ]  || [ $1 == "memcheck" ]  || [ $1 == "perf" ]
+elif [ $1 == "assembly" ] || [ $1 == "compile" ]
 then
 	bash Evaluation/$1.sh $2
+elif [ $1 == "cachegrind" ] || [ $1 == "memcheck" ]
+then
+	bash Evaluation/$1.sh 42 100000 $2
+elif [ $1 == "perf" ]
+then
+	bash Evaluation/$1.sh 42 100000 100 $2
 else
 	echo "Invalid evaluation script $1. Must be one of:"
 	echo "assembly"
