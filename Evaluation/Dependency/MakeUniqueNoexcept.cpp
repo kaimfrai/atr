@@ -22,7 +22,7 @@ export
 			{}
 		;
 		return
-		::std::unique_ptr
+		::std::unique_ptr<t_tElement>
 		{	aElement
 		};
 	}
