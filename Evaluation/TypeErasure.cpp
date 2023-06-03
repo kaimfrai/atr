@@ -26,41 +26,8 @@ auto
 	)
 -> int
 {
-	using namespace
-		Bodies3D
-	;
-	using
-		Body3D
-	=	boost::type_erasure::any
-		<	boost::mpl::vector
-			<	has_ComputeVolume
-				<	auto()	const
-					//	noexcept
-					->	Float
-				>
-			,	boost::type_erasure::constructible
-				<	boost::type_erasure::_self
-					(	boost::type_erasure::_self
-						&&
-					)
-				>
-			,	boost::type_erasure::destructible<>
-			>
-		>
-	;
-	constexpr
-	auto
-		fComputeVolume
-	=	+[]	(	Body3D const
-				&	i_rBody3D
-			)
-		{	return
-				i_rBody3D
-				.	ComputeVolume
-					()
-			;
-		}
-	;
+	using namespace Bodies3D;
+
 	return
 	MainTemplate
 	<	DynamicArray<Body3D>
@@ -72,7 +39,7 @@ auto
 	,	&DefaultConstruct<Cone>
 	,	&DefaultConstruct<Ellipsoid>
 	,	&DefaultConstruct<Head>
-	,	fComputeVolume
+	,	&ComputeVolume
 	>(	::std::span
 		{	i_aArgValue
 		,	static_cast<::std::size_t>
