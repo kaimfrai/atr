@@ -21,8 +21,7 @@ export namespace
 		)	()	const
 			noexcept
 		->	Float
-		=	0
-		;
+		=	0;
 
 		[[nodiscard]]
 		auto constexpr

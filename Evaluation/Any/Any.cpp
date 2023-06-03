@@ -16,8 +16,7 @@ export namespace
 		)	()	const
 			noexcept
 		->	Float
-		=	0
-		;
+		=	0;
 
 		explicit(false) constexpr
 		(	IBody
