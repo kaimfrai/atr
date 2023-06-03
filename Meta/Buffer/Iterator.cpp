@@ -30,6 +30,7 @@ export namespace
 		auto constexpr
 		(	base
 		)	()	const
+			noexcept
 		->	Iterator<t_tValue>
 		{	return
 			{	m_aData
@@ -37,7 +38,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	operator==
 		)	(	Iterator<t_tValue const>
 					i_aIterator
@@ -79,7 +80,8 @@ export namespace
 
 		[[nodiscard]]
 		explicit(false) constexpr
-		(	operator decltype(auto)
+		(	operator
+			decltype(auto)
 		)	()	const
 			noexcept
 		{	return
@@ -90,7 +92,8 @@ export namespace
 
 		[[nodiscard]]
 		explicit(false) constexpr
-		(	operator Sentinel<t_tValue>
+		(	operator
+			Sentinel<t_tValue>
 		)	()	const
 			noexcept
 		{	return
@@ -173,7 +176,7 @@ export namespace
 			);
 		}
 
-		friend auto constexpr
+		auto friend constexpr
 		(	operator-
 		)	(	Iterator
 					i_vLeft
@@ -206,7 +209,7 @@ export namespace
 			return *this;
 		}
 
-		friend auto constexpr
+		auto friend constexpr
 		(	operator+
 		)	(	Iterator
 					i_vIterator
@@ -217,7 +220,7 @@ export namespace
 		->	Iterator
 		{	return i_vIterator += i_vOffset;	}
 
-		friend auto constexpr
+		auto friend constexpr
 		(	operator-
 		)	(	Iterator
 					i_vIterator
@@ -228,7 +231,7 @@ export namespace
 		->	Iterator
 		{	return i_vIterator -= i_vOffset;	}
 
-		friend auto constexpr
+		auto friend constexpr
 		(	operator+
 		)	(	SSize
 					i_vOffset
@@ -240,7 +243,7 @@ export namespace
 		{	return i_vIterator += i_vOffset;	}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	operator==
 		)	(	Iterator
 			,	Iterator
@@ -250,7 +253,7 @@ export namespace
 		=	default;
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	operator<=>
 		)	(	Iterator
 			,	Iterator

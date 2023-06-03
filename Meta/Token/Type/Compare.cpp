@@ -12,8 +12,7 @@ export namespace
 	// If only one of the pointers is nullptr the behaviour is undefined.
 	[[nodiscard]]
 	auto constexpr
-	(	operator
-		<=>
+	(	operator<=>
 	)	(	TypeID
 				i_vLeft
 		,	TypeID

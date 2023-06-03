@@ -16,7 +16,7 @@ export namespace
 	class
 		Map
 	{
-		friend auto constexpr
+		auto friend constexpr
 		(	Get
 		)	(	Map
 			)
@@ -38,8 +38,7 @@ export namespace
 			Store
 		{
 			[[nodiscard]]
-			friend
-			auto constexpr
+			auto friend constexpr
 			(	Get
 			)	(	Map
 				)

@@ -89,7 +89,7 @@ template
 			t_vColorCount
 		=	0z
 	>
-::ATR::Member::Info constexpr
+::ATR::Member::Info constexpr inline
 	OffsetType
 {	::Meta::Type<t_tMember>
 ,		t_vFloatCount * BitSize_Of<Float>

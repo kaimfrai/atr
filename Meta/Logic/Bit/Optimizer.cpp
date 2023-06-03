@@ -38,7 +38,7 @@ export namespace
 			m_vTerm
 		;
 
-		friend auto constexpr
+		auto friend constexpr
 		(	begin
 		)	(	Optimizer
 				&	i_rOptimizer
@@ -46,7 +46,7 @@ export namespace
 		->	decltype(auto)
 		{	return begin(i_rOptimizer.m_vTerm);	}
 
-		friend auto constexpr
+		auto friend constexpr
 		(	begin
 		)	(	Optimizer const
 				&	i_rOptimizer
@@ -54,7 +54,7 @@ export namespace
 		->	decltype(auto)
 		{	return begin(i_rOptimizer.m_vTerm);	}
 
-		friend auto constexpr
+		auto friend constexpr
 		(	end
 		)	(	Optimizer
 				&	i_rOptimizer
@@ -62,7 +62,7 @@ export namespace
 		->	decltype(auto)
 		{	return end(i_rOptimizer.m_vTerm);	}
 
-		friend auto constexpr
+		auto friend constexpr
 		(	end
 		)	(	Optimizer const
 				&	i_rOptimizer

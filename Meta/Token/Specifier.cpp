@@ -82,7 +82,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	::Meta::Specifier::Mut
 			<	t_tEntity

@@ -25,7 +25,7 @@ export namespace
 				=	Token::Transform::Identity
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tElement volatile

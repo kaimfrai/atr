@@ -164,12 +164,12 @@ template
 class
 	ObjectValue
 {
-	auto static constexpr
+	auto static constexpr inline
 		BufferSize
 	=	t_nBufferSize
 	;
 
-	auto static constexpr
+	auto static constexpr inline
 		BufferAlign
 	=	static_cast<::std::size_t>
 		(	t_nBufferAlign
@@ -185,7 +185,7 @@ class
 		<	typename
 				t_tObject
 		>
-	auto static constexpr
+	auto static constexpr inline
 		FitsBuffer
 	=	::std::is_trivially_move_constructible_v
 		<	t_tObject

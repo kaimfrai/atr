@@ -307,7 +307,7 @@ static_assert
 	)
 );
 
-Chain constexpr
+Chain constexpr inline
 	Empty_DE
 =	(	Empty.Value
 	+	DE
@@ -430,7 +430,7 @@ static_assert
 	)
 );
 
-Chain constexpr
+Chain constexpr inline
 	ABC_Empty_DE
 =	(	ABC.Value
 	+	Empty_DE

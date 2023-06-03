@@ -216,7 +216,7 @@ export namespace
 		noexcept
 	->	decltype(auto)
 	{
-		auto constexpr
+		auto static constexpr
 			vNorthSize
 		=	BitSize_Of
 			<	typename
@@ -266,7 +266,7 @@ export namespace
 		noexcept
 	->	decltype(auto)
 	{
-		auto constexpr
+		auto static constexpr
 			vNorthSize
 		=	BitSize_Of
 			<	typename
@@ -316,7 +316,7 @@ export namespace
 		noexcept
 	->	decltype(auto)
 	{
-		auto constexpr
+		auto static constexpr
 			vNorthSize
 		=	BitSize_Of
 			<	typename
@@ -368,7 +368,7 @@ export namespace
 		noexcept
 	->	decltype(auto)
 	{
-		auto constexpr
+		auto static constexpr
 			vNorthSize
 		=	(	BitSize_Of
 				<	Group<t_tNorth, t_tSouth>
@@ -422,7 +422,7 @@ export namespace
 		noexcept
 	->	decltype(auto)
 	{
-		auto constexpr
+		auto static constexpr
 			vNorthSize
 		=	(	BitSize_Of
 				<	Group<t_tNorth, t_tSouth>
@@ -476,7 +476,7 @@ export namespace
 		noexcept
 	->	decltype(auto)
 	{
-		auto constexpr
+		auto static constexpr
 			vNorthSize
 		=	(	BitSize_Of
 				<	Group<t_tNorth, t_tSouth>

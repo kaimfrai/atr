@@ -39,7 +39,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-Meta::TypeID constexpr
+Meta::TypeID constexpr inline
 	Qualified
 =	Type
 	<	MatchFunction
@@ -190,7 +190,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-Meta::TypeID constexpr
+Meta::TypeID constexpr inline
 	EllipsisQualified
 =	Type
 	<	MatchFunction

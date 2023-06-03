@@ -9,7 +9,7 @@ export namespace
 		<	typename
 				t_tLayout
 		>
-	auto consteval
+	auto constexpr
 	(	ValidateOffsets
 	)	(	t_tLayout const
 			&	i_rLayout

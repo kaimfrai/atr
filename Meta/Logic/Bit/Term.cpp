@@ -66,7 +66,7 @@ export namespace
 		{}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	begin
 		)	(	Term const
 				&	i_rTerm
@@ -75,7 +75,7 @@ export namespace
 		{	return begin(i_rTerm.Clauses);	}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	end
 		)	(	Term const
 				&	i_rTerm
@@ -289,7 +289,7 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr
-		(	operator []
+		(	operator[]
 		)	(	USize
 					i_nIndex
 			)	const&

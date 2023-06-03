@@ -52,7 +52,8 @@ export namespace
 
 		[[nodiscard]]
 		explicit(false) constexpr
-		(	operator FieldType
+		(	operator
+			FieldType
 		)	()	const
 			noexcept
 		{	return
@@ -63,7 +64,7 @@ export namespace
 		}
 
 		auto constexpr
-		(	operator =
+		(	operator=
 		)	(	FieldType
 					i_vValue
 			)	&
@@ -83,7 +84,7 @@ export namespace
 		}
 
 		auto constexpr
-		(	operator =
+		(	operator=
 		)	(	FieldType
 					i_vValue
 			)	&&
@@ -101,8 +102,8 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
-		(	operator ==
+		auto friend constexpr
+		(	operator==
 		)	(	ElementReference
 					i_vLeft
 			,	FieldType

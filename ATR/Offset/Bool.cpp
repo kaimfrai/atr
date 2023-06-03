@@ -71,7 +71,7 @@ export namespace
 		)
 		noexcept
 	->	bool
-	{	auto constexpr
+	{	auto static constexpr
 			vByteOffset
 		=	IndexCast<ByteIndex>
 			(	t_vOffset

@@ -98,7 +98,8 @@ export namespace
 
 		[[nodiscard]]
 		explicit(true) constexpr
-		(	operator InSpan
+		(	operator
+			InSpan
 		)	()	const
 			noexcept
 		{	return
@@ -114,11 +115,12 @@ export namespace
 			>
 		[[nodiscard]]
 		explicit(true) constexpr
-		(	operator t_tObject
+		(	operator
+			t_tObject
 		)	()	const
 			noexcept
 		{
-			auto constexpr
+			auto static constexpr
 				nByteSize
 			=	Memory::SizeOf
 				<	t_tObject
@@ -148,8 +150,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend
-		auto constexpr
+		auto friend constexpr
 		(	operator+
 		)	(	Buffer
 				&	i_rBuffer
@@ -163,8 +164,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend
-		auto constexpr
+		auto friend constexpr
 		(	operator+
 		)	(	Buffer const
 				&	i_rBuffer
@@ -177,8 +177,7 @@ export namespace
 			;
 		}
 
-		friend
-		auto constexpr
+		auto friend constexpr
 		(	operator+
 		)	(	Buffer const volatile
 				&&

@@ -12,7 +12,7 @@ export
 {
 	[[nodiscard]]
 	auto constexpr
-	(	operator ==
+	(	operator==
 	)	(	::Meta::Logic::Erased::Term const
 			&	i_rLeft
 		,	::Meta::Logic::Erased::Term const
@@ -23,7 +23,7 @@ export
 	{
 		if	(	bool const
 					bEquivalent
-				=	::Meta::Logic::Erased::operator ==
+				=	::Meta::Logic::Erased::operator==
 					(	i_rLeft
 					,	i_rRight
 					)

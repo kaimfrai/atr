@@ -17,8 +17,8 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		friend auto constexpr
-		(	operator -
+		auto friend constexpr
+		(	operator-
 		)	(	TypeToken<t_tEntity>
 					i_vType
 			,	CV

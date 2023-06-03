@@ -18,7 +18,7 @@ export namespace
 	struct
 		Size
 	{
-		static auto constexpr
+		auto static constexpr inline
 			Width
 		=	t_nWidth
 		;
@@ -58,7 +58,8 @@ export namespace
 
 		[[nodiscard]]
 		explicit(true) constexpr
-		(	operator SizeType
+		(	operator
+			SizeType
 		)	()	const
 			noexcept
 		{	return get();	}
@@ -69,7 +70,8 @@ export namespace
 			>
 		[[nodiscard]]
 		explicit(false) constexpr
-		(	operator Size<t_nOtherWidth>
+		(	operator
+			Size<t_nOtherWidth>
 		)	()	const
 			noexcept
 		{	return
@@ -138,7 +140,7 @@ export namespace
 		<	typename
 				t_tObject
 		>
-	ByteSize constexpr
+	ByteSize constexpr inline
 		SizeOf
 	{	sizeof(t_tObject)
 	};

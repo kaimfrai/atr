@@ -33,7 +33,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-::Meta::TypeID constexpr
+::Meta::TypeID constexpr inline
 	LRefToQualified
 =	Type
 	<	MatchLRef
@@ -66,7 +66,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-::Meta::TypeID constexpr
+::Meta::TypeID constexpr inline
 	RRefToQualified
 =	Type
 	<	MatchRRef

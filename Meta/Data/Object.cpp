@@ -137,7 +137,7 @@ export namespace
 		;
 
 		auto constexpr
-		(	operator =
+		(	operator=
 		)	(	Object const&
 			)	&
 		=	delete;

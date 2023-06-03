@@ -32,7 +32,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-Meta::TypeID constexpr
+Meta::TypeID constexpr inline
 	Qualified
 =	Type
 	<	MatchCVType<int, t_tpQualifier...>

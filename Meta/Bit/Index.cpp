@@ -31,13 +31,13 @@ export namespace
 			>
 		;
 
-		static auto constexpr
+		auto static constexpr inline
 			MaximumShift
 		=	t_nWidth
 		-	1_bit
 		;
 
-		static auto constexpr
+		auto static constexpr inline
 			AssertSanitized
 		=	&
 			Arithmetic::AssertSanitizedSigned
@@ -107,7 +107,7 @@ export namespace
 					t_nOtherWidth
 			>
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	ChangeWidth
 		)	(	Index
 					i_nIndex
@@ -128,7 +128,8 @@ export namespace
 			>
 		[[nodiscard]]
 		explicit(t_nOtherWidth <= t_nWidth) constexpr
-		(	operator Index<t_nOtherWidth>
+		(	operator
+			Index<t_nOtherWidth>
 		)	()	const
 			noexcept
 		{	return
@@ -140,7 +141,8 @@ export namespace
 
 		[[nodiscard]]
 		explicit(false) constexpr
-		(	operator BitSize
+		(	operator
+			BitSize
 		)	()	const
 			noexcept
 		{	return
@@ -188,7 +190,7 @@ export namespace
 	)	()
 		noexcept
 	{
-		auto constexpr
+		auto static constexpr
 			nParsed
 		=	Arithmetic::EvaluateNumericLiteral
 			<	t_npNumeric

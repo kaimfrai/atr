@@ -19,10 +19,11 @@ export namespace
 	{
 		[[nodiscard]]
 		explicit(sizeof...(t_npIndex) != 1uz) constexpr
-		(	operator auto
+		(	operator
+			auto
 		)	()	const
 			noexcept
-		{	if constexpr(sizeof...(t_npIndex) == 1uz)
+		{	if	constexpr(sizeof...(t_npIndex) == 1uz)
 				return (..., t_npIndex);
 		}
 
@@ -32,7 +33,7 @@ export namespace
 			>
 		[[nodiscard]]
 		auto constexpr
-		(	operator =
+		(	operator=
 		)	(	Index<t_nAssign>
 			)	const
 			noexcept
@@ -50,7 +51,7 @@ export namespace
 			>
 		[[nodiscard]]
 		auto constexpr
-		(	operator +=
+		(	operator+=
 		)	(	Index<t_nAdd>
 			)	const
 			noexcept
@@ -67,8 +68,8 @@ export namespace
 				...	t_npSuffix
 			>
 		[[nodiscard]]
-		friend auto constexpr
-		(	operator |
+		auto friend constexpr
+		(	operator|
 		)	(	Index
 			,	Index<t_npSuffix...>
 			)
@@ -83,7 +84,7 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr
-		(	operator ++
+		(	operator++
 		)	()	const
 			noexcept
 		->	Index
@@ -96,7 +97,7 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr
-		(	operator --
+		(	operator--
 		)	()	const
 			noexcept
 		->	Index
@@ -112,7 +113,7 @@ export namespace
 					t_tCast
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	CastAll
 		)	()
 			noexcept
@@ -147,7 +148,7 @@ export namespace
 		<	auto
 			...	t_npIndex
 		>
-	auto constexpr
+	auto constexpr inline
 		Index
 	=	IndexToken
 		<	t_npIndex

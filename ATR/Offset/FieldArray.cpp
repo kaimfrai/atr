@@ -46,7 +46,7 @@ export namespace
 		noexcept
 	->	decltype(auto)
 	{
-		auto constexpr
+		auto static constexpr
 			vByteOffset
 		=	IndexCast<ByteIndex>
 			(	t_nOffset
@@ -88,7 +88,7 @@ export namespace
 		noexcept
 	->	decltype(auto)
 	{
-		auto constexpr
+		auto static constexpr
 			vByteOffset
 		=	IndexCast<ByteIndex>
 			(	t_nOffset

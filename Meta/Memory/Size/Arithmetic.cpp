@@ -7,7 +7,7 @@ export namespace
 {
 	[[nodiscard]]
 	auto constexpr
-	(	operator +
+	(	operator+
 	)	(	BitSize
 				i_nSize
 		)
@@ -22,7 +22,7 @@ export namespace
 
 	[[nodiscard]]
 	auto constexpr
-	(	operator -
+	(	operator-
 	)	(	BitSize
 				i_nSize
 		)
@@ -40,7 +40,7 @@ export namespace
 				t_nWidth
 		>
 	auto constexpr
-	(	operator +=
+	(	operator+=
 	)	(	Size<t_nWidth>
 			&	i_rSize
 		,	BitSize
@@ -64,7 +64,7 @@ export namespace
 				t_nWidth
 		>
 	auto constexpr
-	(	operator -=
+	(	operator-=
 	)	(	Size<t_nWidth>
 			&	i_rSize
 		,	BitSize
@@ -88,7 +88,7 @@ export namespace
 				t_nWidth
 		>
 	auto constexpr
-	(	operator ++
+	(	operator++
 	)	(	Size<t_nWidth>
 			&	i_rSize
 		)
@@ -110,7 +110,7 @@ export namespace
 		>
 	[[nodiscard("Use preincrement if you discard the value")]]
 	auto constexpr
-	(	operator ++
+	(	operator++
 	)	(	Size<t_nWidth>
 			&	i_rSize
 		,	int
@@ -130,7 +130,7 @@ export namespace
 				t_nWidth
 		>
 	auto constexpr
-	(	operator --
+	(	operator--
 	)	(	Size<t_nWidth>
 			&	i_rSize
 		)
@@ -151,7 +151,7 @@ export namespace
 		>
 	[[nodiscard("Use predecrement if you discard the value")]]
 	auto constexpr
-	(	operator --
+	(	operator--
 	)	(	Size<t_nWidth>
 			&	i_rSize
 		,	int
@@ -167,7 +167,7 @@ export namespace
 
 	[[nodiscard]]
 	auto constexpr
-	(	operator +
+	(	operator+
 	)	(	BitSize
 				i_vSize
 		,	BitSize
@@ -183,7 +183,7 @@ export namespace
 
 	[[nodiscard]]
 	auto constexpr
-	(	operator -
+	(	operator-
 	)	(	BitSize
 				i_vSize
 		,	BitSize

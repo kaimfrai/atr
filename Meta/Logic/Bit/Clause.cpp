@@ -57,14 +57,14 @@ export namespace
 		FieldType Negative;
 
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	Absorbing
 		)	()
 		->	Clause
 		{	return Inverse(Identity());	}
 
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	Identity
 		)	()
 		->	Clause
@@ -266,8 +266,8 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
-		(	operator ==
+		auto friend constexpr
+		(	operator==
 		)	(	Clause
 			,	Clause
 			)
@@ -276,7 +276,7 @@ export namespace
 		=	default;
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	operator<=>
 		)	(	Clause
 			,	Clause
@@ -286,7 +286,7 @@ export namespace
 		=	default;
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	Intersection
 		)	(	Clause
 					i_vLeft
@@ -305,7 +305,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	Union
 		)	(	Clause
 					i_vLeft
@@ -326,7 +326,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	Difference
 		)	(	Clause
 					i_vLeft
@@ -352,7 +352,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	Inverse
 		)	(	Clause
 					i_vClause

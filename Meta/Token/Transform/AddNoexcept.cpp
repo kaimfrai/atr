@@ -19,7 +19,7 @@ export namespace
 				...	t_tpParameter
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParameter...)
@@ -38,7 +38,7 @@ export namespace
 				...	t_tpParameter
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tResult(t_tpParameter..., ...)

@@ -28,7 +28,7 @@ export namespace
 
 		[[nodiscard]]
 		auto static constexpr
-		(	operator ()
+		(	operator()
 		)	(	typename
 					t_tpDependency
 				::	ArgumentType
@@ -78,7 +78,7 @@ export namespace
 	*	Address
 	=	&
 		FunctionType<t_tFuncID, t_tpArgument...>
-	::	operator ()
+	::	operator()
 	;
 
 	/// checks if the address is mapped

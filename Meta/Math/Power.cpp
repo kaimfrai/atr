@@ -58,15 +58,15 @@ export namespace
 		=	decltype(i_nBase)
 		;
 
-		auto constexpr
-			nMaxExponent
+		auto static constexpr
+		&	rMaxExponent
 		=	MaxExponent
 			<	tResult
 			>
 		;
 
 		if	(	(	i_nExponent
-				>=	nMaxExponent
+				>=	rMaxExponent
 				)
 			and	(	Abs(i_nBase)
 				>=	::std::numeric_limits
@@ -86,7 +86,7 @@ export namespace
 		auto
 			nExponentMask
 		=	::std::bit_ceil
-			(	nMaxExponent
+			(	rMaxExponent
 			)
 		>>	1u
 		;

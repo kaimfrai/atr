@@ -29,7 +29,7 @@ export namespace
 				=	Token::Transform::Identity
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	TypeToken
 				<	Mut<t_tEntity volatile>

@@ -11,8 +11,7 @@ export namespace
 	{
 		[[nodiscard]]
 		auto static constexpr
-		(	operator
-			()
+		(	operator()
 		)	(	TypeID
 					i_vType
 			)

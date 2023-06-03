@@ -43,7 +43,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	auto
 				&	i_rObject
@@ -73,7 +73,7 @@ export namespace
 		>
 	{
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	auto const
 				&	i_rObject
@@ -103,7 +103,7 @@ export namespace
 		>
 	{
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	auto const
 				&	i_rObject

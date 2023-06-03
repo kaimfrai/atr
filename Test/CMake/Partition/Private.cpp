@@ -10,6 +10,6 @@ namespace
 	export struct
 		Secret
 	{
-		static Secret const sec;
+		Secret const static sec;
 	};
 }

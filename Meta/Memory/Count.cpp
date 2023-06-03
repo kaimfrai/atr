@@ -49,7 +49,8 @@ export namespace
 
 		[[nodiscard]]
 		explicit(true) constexpr
-		(	operator CountType
+		(	operator
+			CountType
 		)	()	const
 			noexcept
 		{	return get();	}
@@ -60,7 +61,8 @@ export namespace
 			>
 		[[nodiscard]]
 		explicit(false) constexpr
-		(	operator Count<t_nOtherWidth>
+		(	operator
+			Count<t_nOtherWidth>
 		)	()	const
 			noexcept
 		{	return

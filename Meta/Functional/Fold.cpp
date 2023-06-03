@@ -60,11 +60,11 @@ export namespace
 	struct
 		Fold
 	{
-		static Functional::FoldToken<t_vKey, t_eDirection> constexpr
+		Functional::FoldToken<t_vKey, t_eDirection> static constexpr inline
 			Token
 		{};
 
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	auto&&
 				...	i_rpArgument
@@ -98,7 +98,8 @@ export namespace
 					t_tFunction
 			>
 		explicit(true) constexpr
-		(	operator t_tFunction
+		(	operator
+			t_tFunction
 		)	()	const
 		{	return &operator();	}
 	};

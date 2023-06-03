@@ -86,7 +86,7 @@ export namespace
 		}
 
 		auto constexpr
-		(	operator =
+		(	operator=
 		)	(	InSpan
 					i_vFrom
 			)	const

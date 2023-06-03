@@ -14,7 +14,7 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	Evaluate
 		)	(	LiteralBase
 			,	Lex::MatchRRef

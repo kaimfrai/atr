@@ -18,7 +18,7 @@ export namespace
 		>
 	[[nodiscard]]
 	auto constexpr
-	(	operator +
+	(	operator+
 	)	(	Index<t_nSize>
 				i_nLeft
 		,	decltype(i_nLeft)
@@ -38,7 +38,7 @@ export namespace
 				t_nSize
 		>
 	auto constexpr
-	(	operator +=
+	(	operator+=
 	)	(	Index<t_nSize>
 			&	i_rIndex
 		,	decltype(auto(i_rIndex))
@@ -58,7 +58,7 @@ export namespace
 				t_nSize
 		>
 	auto constexpr
-	(	operator ++
+	(	operator++
 	)	(	Index<t_nSize>
 			&	i_rIndex
 		)
@@ -81,7 +81,7 @@ export namespace
 		>
 	[[nodiscard("Use preincrement when discarding the result")]]
 	auto constexpr
-	(	operator ++
+	(	operator++
 	)	(	Index<t_nSize>
 			&	i_rIndex
 		,	int
@@ -103,7 +103,7 @@ export namespace
 		>
 	[[nodiscard]]
 	auto constexpr
-	(	operator -
+	(	operator-
 	)	(	Index<t_nSize>
 				i_nLeft
 		,	decltype(i_nLeft)
@@ -123,7 +123,7 @@ export namespace
 				t_nSize
 		>
 	auto constexpr
-	(	operator -=
+	(	operator-=
 	)	(	Index<t_nSize>
 			&	i_rIndex
 		,	decltype(auto(i_rIndex))
@@ -143,7 +143,7 @@ export namespace
 				t_nSize
 		>
 	auto constexpr
-	(	operator --
+	(	operator--
 	)	(	Index<t_nSize>
 			&	i_rIndex
 		)
@@ -166,7 +166,7 @@ export namespace
 		>
 	[[nodiscard("Use predecrement when discarding the result")]]
 	auto constexpr
-	(	operator --
+	(	operator--
 	)	(	Index<t_nSize>
 			&	i_rIndex
 		,	int

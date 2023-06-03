@@ -64,7 +64,7 @@ export namespace
 			m_vValue
 		;
 
-		static auto constexpr
+		auto static constexpr inline
 			Sanitize
 		=	&
 			Arithmetic::SanitizeUnsigned
@@ -74,7 +74,7 @@ export namespace
 			>
 		;
 
-		static auto constexpr
+		auto static constexpr inline
 			AssertSanitized
 		=	&
 			Arithmetic::AssertSanitizedUnsigned
@@ -118,7 +118,7 @@ export namespace
 		}
 
 		auto constexpr
-		(	operator =
+		(	operator=
 		)	(	UIntMax
 					i_nValue
 			)	&
@@ -138,7 +138,8 @@ export namespace
 			>
 		[[nodiscard]]
 		explicit(t_nOtherWidth < t_nWidth) constexpr
-		(	operator Field<t_nOtherWidth>
+		(	operator
+			Field<t_nOtherWidth>
 		)	()	const
 			noexcept
 		{	return
@@ -149,7 +150,8 @@ export namespace
 
 		[[nodiscard]]
 		explicit(true) constexpr
-		(	operator bool
+		(	operator
+			bool
 		)	()	const
 			noexcept
 		{	return
@@ -159,7 +161,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	operator not
 		)	(	Field
 					i_vField
@@ -209,7 +211,7 @@ export namespace
 		<	BitSize
 				t_nWidth
 		>
-	Constraint constexpr
+	Constraint constexpr inline
 		Constraint_Of
 		<	Bit::Field
 			<	t_nWidth

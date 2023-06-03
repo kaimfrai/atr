@@ -13,7 +13,7 @@ export namespace
 		>
 	[[nodiscard]]
 	auto constexpr
-	(	operator +
+	(	operator+
 	)	(	t_tObject
 			*	i_aObject
 		,	ByteWidth<t_tObject>
@@ -33,7 +33,7 @@ export namespace
 				t_tObject
 		>
 	auto constexpr
-	(	operator +=
+	(	operator+=
 	)	(	t_tObject
 			*&	i_aObject
 		,	ByteWidth<t_tObject>
@@ -54,7 +54,7 @@ export namespace
 		>
 	[[nodiscard]]
 	auto constexpr
-	(	operator -
+	(	operator-
 	)	(	t_tObject
 			*	i_aObject
 		,	ByteWidth<t_tObject>
@@ -74,7 +74,7 @@ export namespace
 				t_tObject
 		>
 	auto constexpr
-	(	operator -=
+	(	operator-=
 	)	(	t_tObject
 			*&	i_aObject
 		,	ByteWidth<t_tObject>

@@ -82,8 +82,9 @@ export namespace
 			};
 		}
 
-		constexpr
-		(	operator decltype(auto)
+		explicit(false) constexpr
+		(	operator
+			decltype(auto)
 		)	()	const
 			noexcept
 		{	return get();	}
@@ -94,7 +95,7 @@ export namespace
 				t_tData
 		>
 	auto constexpr
-	(	operator &
+	(	operator&
 	)	(	Aggregate
 			<	Lex::MatchRef
 				<	t_tData

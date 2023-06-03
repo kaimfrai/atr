@@ -109,7 +109,8 @@ export namespace
 
 		[[nodiscard]]
 		explicit(false) constexpr
-		(	operator Iterator<t_tBuffer const, t_nSize, t_nMaxOffset>
+		(	operator
+			Iterator<t_tBuffer const, t_nSize, t_nMaxOffset>
 		)	()	const
 			noexcept
 		{	return
@@ -121,7 +122,7 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr
-		(	operator *
+		(	operator*
 		)	()	const
 			noexcept
 		->	reference
@@ -153,7 +154,7 @@ export namespace
 		}
 
 		auto constexpr
-		(	operator +=
+		(	operator+=
 		)	(	difference_type
 					i_nIncrement
 			)	&
@@ -203,7 +204,7 @@ export namespace
 		}
 
 		auto constexpr
-		(	operator -=
+		(	operator-=
 		)	(	difference_type
 					i_nDecrement
 			)	&
@@ -216,8 +217,8 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
-		(	operator +
+		auto friend constexpr
+		(	operator+
 		)	(	Iterator
 					i_vIterator
 			,	difference_type
@@ -232,8 +233,8 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
-		(	operator +
+		auto friend constexpr
+		(	operator+
 		)	(	difference_type
 					i_nIncrement
 			,	Iterator
@@ -248,8 +249,8 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
-		(	operator -
+		auto friend constexpr
+		(	operator-
 		)	(	Iterator
 					i_vIterator
 			,	difference_type
@@ -264,8 +265,8 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
-		(	operator -
+		auto friend constexpr
+		(	operator-
 		)	(	Iterator
 					i_vLeft
 			,	Iterator
@@ -347,8 +348,8 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
-		(	operator <=>
+		auto friend constexpr
+		(	operator<=>
 		)	(	Iterator
 			,	Iterator
 			)

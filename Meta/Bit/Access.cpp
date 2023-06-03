@@ -34,7 +34,7 @@ export namespace
 			>
 		;
 
-		static ByteSize constexpr
+		ByteSize static constexpr inline
 			BufferByteSize
 		=	t_nSize
 		+	t_nMaxOffset
@@ -63,7 +63,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	OffsetMask
 		)	(	ByteIndex
 					i_nOffset
@@ -81,7 +81,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	MaskOffset
 		)	(	BufferFieldType
 					i_nMask
@@ -98,7 +98,7 @@ export namespace
 
 	private:
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	ReadField
 		)	(	::std::byte const
 				*	i_aBuffer
@@ -132,7 +132,7 @@ export namespace
 
 	public:
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	ReadField
 		)	(	::std::byte const
 				*	i_aBuffer
@@ -150,7 +150,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	ReadField
 		)	(	::std::byte const
 				*	i_aBuffer
@@ -170,7 +170,7 @@ export namespace
 		}
 
 	private:
-		static auto constexpr
+		auto static constexpr
 		(	WriteField
 		)	(	FieldType
 					i_vValue
@@ -219,7 +219,7 @@ export namespace
 		}
 
 	public:
-		static auto constexpr
+		auto static constexpr
 		(	WriteField
 		)	(	FieldType
 					i_vValue
@@ -243,7 +243,7 @@ export namespace
 			);
 		}
 
-		static auto constexpr
+		auto static constexpr
 		(	WriteField
 		)	(	FieldType
 					i_vValue

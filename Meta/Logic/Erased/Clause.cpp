@@ -89,7 +89,7 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr
-		(	operator []
+		(	operator[]
 		)	(	size_type
 					i_nIndex
 			)	const

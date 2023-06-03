@@ -18,7 +18,7 @@ static_assert
 	>
 );
 
-Splitmix64 constexpr
+Splitmix64 constexpr inline
 	Seed
 {	0x0123456789ABCDEF
 };
@@ -44,7 +44,7 @@ static_assert
 		)
 );
 
-Xoroshiro256StarStar constexpr
+Xoroshiro256StarStar constexpr inline
 	Rng
 {	Seed
 };

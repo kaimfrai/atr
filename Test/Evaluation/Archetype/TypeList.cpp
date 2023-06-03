@@ -124,14 +124,14 @@ auto constexpr
 	);
 }
 
-auto constexpr
+auto constexpr inline
 	FloatAlign
 =	BitAlign_Of
 	<	Float
 	>
 ;
 
-auto constexpr
+auto constexpr inline
 	ColorAlign
 =	BitAlign_Of
 	<	RGBAColor

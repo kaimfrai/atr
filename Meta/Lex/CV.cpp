@@ -21,7 +21,9 @@ struct
 	))
 {
 	static_assert
-	(	[]{	auto constexpr
+	(	[]
+		{
+			auto static constexpr
 				nQualifierCount
 			=	sizeof...(t_tpQualifier)
 			;

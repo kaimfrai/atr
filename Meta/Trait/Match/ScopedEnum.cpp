@@ -20,7 +20,7 @@ export namespace
 		requires
 			::std::is_scoped_enum_v<t_tEntity>
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	Evaluate
 		)	(	LiteralBase
 			,	Lex::MatchCVType

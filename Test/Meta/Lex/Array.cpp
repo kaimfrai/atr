@@ -36,7 +36,7 @@ template
 	,	typename
 		...	t_tpQualifier
 	>
-Meta::TypeID constexpr
+Meta::TypeID constexpr inline
 	ArrayToQualified
 =	Type
 	<	MatchCVArray

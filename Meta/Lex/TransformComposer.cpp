@@ -27,7 +27,7 @@ export namespace
 				...	t_tpTransform
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	Compose
 		)	(	TypeToken<t_tFundamental>
 			,	Transform<t_tpTransform...>
@@ -45,7 +45,7 @@ export namespace
 				...	t_tpTransform
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	Compose
 		)	(	MatchCV<t_tEntity, t_tpQualifier...>
 			,	Transform<t_tpTransform...>
@@ -104,7 +104,7 @@ export namespace
 				...	t_tpTransform
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	Compose
 		)	(	MatchFunction<t_tEntity, t_tpQualifier...>
 			,	Transform<t_tpTransform...>
@@ -134,7 +134,7 @@ export namespace
 				...	t_tpTransform
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	Compose
 		)	(	MatchCVMember<t_tEntity, t_tOwner, t_tpQualifier...>
 			,	Transform<t_tpTransform...>
@@ -165,7 +165,7 @@ export namespace
 				...	t_tpTransform
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	Compose
 		)	(	MatchCVPointer<t_tEntity, t_tpQualifier...>
 			,	Transform<t_tpTransform...>
@@ -194,7 +194,7 @@ export namespace
 				...	t_tpTransform
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	Compose
 		)	(	MatchRef<t_tEntity, t_tReference>
 			,	Transform<t_tpTransform...>
@@ -217,7 +217,7 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 					i_vEntity

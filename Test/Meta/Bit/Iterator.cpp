@@ -28,21 +28,21 @@ static_assert
 	>
 );
 
-::std::byte constexpr
+::std::byte constexpr inline
 	Buffer
 	[	5uz
 	]
 {};
 
 
-::Meta::Bit::Field<10_bit> constexpr
+::Meta::Bit::Field<10_bit> constexpr inline
 	Mask
 {	::Meta::Bit::Mask
 	<	10_bit
 	>
 };
 
-IteratorType constexpr
+IteratorType constexpr inline
 	First
 {	begin(Buffer)
 ,	Mask
@@ -53,7 +53,7 @@ static_assert
 ==	First
 );
 
-auto constexpr
+auto constexpr inline
 	Second
 =	::std::next
 	(	First
@@ -83,7 +83,7 @@ static_assert
 	}
 );
 
-auto constexpr
+auto constexpr inline
 	Third
 =	::std::next
 	(	Second
@@ -125,7 +125,7 @@ static_assert
 	}
 );
 
-auto constexpr
+auto constexpr inline
 	Forth
 =	::std::next
 	(	Third
@@ -180,7 +180,7 @@ static_assert
 	}
 );
 
-auto constexpr
+auto constexpr inline
 	Fifth
 =	::std::next
 	(	Forth
@@ -247,7 +247,7 @@ static_assert
 	}
 );
 
-::Meta::Bit::ArrayConstReference<10_bit, 4> constexpr
+::Meta::Bit::ArrayConstReference<10_bit, 4> constexpr inline
 	Reference
 {	+Buffer
 };

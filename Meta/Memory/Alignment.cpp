@@ -14,8 +14,8 @@ export namespace
 		;
 
 		[[nodiscard]]
-		friend auto constexpr
-		(	operator ==
+		auto friend constexpr
+		(	operator==
 		)	(	Alignment
 					i_vLeft
 			,	Alignment
@@ -26,8 +26,8 @@ export namespace
 		=	default;
 
 		[[nodiscard]]
-		friend auto constexpr
-		(	operator <=>
+		auto friend constexpr
+		(	operator<=>
 		)	(	Alignment
 					i_vLeft
 			,	Alignment

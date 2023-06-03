@@ -9,7 +9,7 @@ export namespace
 	Meta::Bit
 {
 	auto constexpr
-	(	operator >>=
+	(	operator>>=
 	)	(	::std::integral auto
 			&	i_rField
 		,	Index_For<decltype(i_rField)>
@@ -26,7 +26,7 @@ export namespace
 
 	[[nodiscard]]
 	auto constexpr
-	(	operator >>
+	(	operator>>
 	)	(	::std::integral auto
 				i_nField
 		,	Index_For<decltype(i_nField)>
@@ -41,7 +41,7 @@ export namespace
 	}
 
 	auto constexpr
-	(	operator <<=
+	(	operator<<=
 	)	(	::std::integral auto
 			&	i_rField
 		,	Index_For<decltype(i_rField)>
@@ -58,7 +58,7 @@ export namespace
 
 	[[nodiscard]]
 	auto constexpr
-	(	operator <<
+	(	operator<<
 	)	(	::std::integral auto
 				i_nField
 		,	Index_For<decltype(i_nField)>

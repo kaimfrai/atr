@@ -88,7 +88,7 @@ export namespace
 					t_tCharacterSet
 				=	Dispatch::BasicCharSet
 			>
-		static auto constexpr
+		auto static constexpr
 		(	Dispatch
 		)	(	std::string_view
 					i_sToDispatch

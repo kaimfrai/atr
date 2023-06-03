@@ -26,7 +26,7 @@ export namespace
 		)	()	const
 			noexcept
 		{
-			TypeID constexpr
+			TypeID static constexpr
 				vTypeID
 			{	&Memory::Constraint_Of
 				<	t_tEntity
@@ -44,8 +44,8 @@ export namespace
 			;
 		}
 
-		friend auto constexpr
-		(	operator ==
+		auto friend constexpr
+		(	operator==
 		)	(	TypeID
 			,	TypeID
 			)

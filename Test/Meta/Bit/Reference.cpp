@@ -32,17 +32,17 @@ auto constexpr
 	noexcept
 ->	bool
 {
-	auto constexpr
+	auto static constexpr
 		nOffset
 	=	IndexCast<::Meta::ByteIndex>
 		(	t_nOffset
 		)
 	;
-	auto constexpr
+	auto static constexpr
 		nByteOffset
 	=	nOffset.Quotient
 	;
-	auto constexpr
+	auto static constexpr
 		nBitOffset
 	=	nOffset.Remainder
 	;

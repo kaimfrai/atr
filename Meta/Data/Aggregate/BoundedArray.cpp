@@ -84,26 +84,29 @@ export namespace
 		->	::std::array<ElementType, t_nExtent>
 		{	return ::std::move(this->Data);	}
 
-		constexpr
-		(	operator decltype(auto)
+		explicit(false) constexpr
+		(	operator
+			decltype(auto)
 		)	()	&
 			noexcept
 		{	return get();	}
 
-		constexpr
-		(	operator decltype(auto)
+		explicit(false) constexpr
+		(	operator
+			decltype(auto)
 		)	()	const&
 			noexcept
 		{	return get();	}
 
-		constexpr
-		(	operator decltype(auto)
+		explicit(false) constexpr
+		(	operator
+			decltype(auto)
 		)	()	&&
 			noexcept
 		{	return ::std::move(*this).get();	}
 
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	size
 		)	()
 			noexcept
@@ -111,7 +114,7 @@ export namespace
 		{	return t_nExtent;	}
 
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	ssize
 		)	()
 			noexcept
@@ -119,14 +122,14 @@ export namespace
 		{	return static_cast<difference_type>(t_nExtent);	}
 
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	max_size
 		)	()
 		->	size_type
 		{	return t_nExtent;	}
 
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	empty
 		)	()
 		->	bool

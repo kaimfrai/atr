@@ -17,7 +17,7 @@ export namespace
 	struct
 		FoldTraits
 	{
-		static auto const constexpr& Token = t_tFold::Token;
+		auto const static constexpr inline& Token = t_tFold::Token;
 	};
 
 	/* Satisfied if a specialization of FoldTraits exists that provides both Operator and Direction via a Token member.
@@ -47,7 +47,7 @@ export namespace
 	struct
 		FoldToken final
 	{
-		static auto constexpr Operator = t_vKey;
-		static auto constexpr Direction = t_eDirection;
+		auto static constexpr inline Operator = t_vKey;
+		auto static constexpr inline Direction = t_eDirection;
 	};
 }

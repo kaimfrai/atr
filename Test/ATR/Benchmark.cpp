@@ -348,7 +348,7 @@ namespace
 	}
 }
 
-auto constexpr ExpectedSize = 2*(8*(sizeof(double) + sizeof(int) + sizeof(short) + sizeof(char)) + 1 + 3);
+auto constexpr inline ExpectedSize = 2*(8*(sizeof(double) + sizeof(int) + sizeof(short) + sizeof(char)) + 1 + 3);
 
 static_assert(sizeof(Instance<ID<"Benchmark1">>) == ExpectedSize);
 static_assert(sizeof(Instance<ID<"Benchmark2">>) == ExpectedSize);

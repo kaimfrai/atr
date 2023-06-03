@@ -175,6 +175,7 @@ export namespace
 		)	(	USize
 					i_nNewSize
 			)	const
+			noexcept
 		{
 			if	(i_nNewSize > max_size())
 				((void)"To many elements for buffer!", std::unreachable());
@@ -185,6 +186,7 @@ export namespace
 		)	(	std::convertible_to<value_type> auto
 				&&	i_rValue
 			)	&
+			noexcept
 		->	Fixed&
 		{
 			EnsureNewSizeValid(Next(size()));
@@ -204,6 +206,7 @@ export namespace
 		)	(	std::convertible_to<value_type> auto
 				&&	i_rValue
 			)	&&
+			noexcept
 		->	Fixed
 		{	return
 			std::move
@@ -221,9 +224,10 @@ export namespace
 				&&
 				...	i_rpValue
 			)	&
+			noexcept
 		->	Fixed&
 		{
-			auto constexpr
+			auto static constexpr
 				vNewElementCount
 			=	sizeof...(i_rpValue)
 			;
@@ -255,6 +259,7 @@ export namespace
 		)	(	USize
 					i_nCount
 			)	&
+			noexcept
 		->	Fixed&
 		{	static_assert
 			(	std::is_trivially_destructible_v<value_type>
@@ -271,18 +276,21 @@ export namespace
 		)	(	USize
 					i_nCount
 			)	&&
+			noexcept
 		->	Fixed
 		{	return std::move(pop_back(i_nCount));	}
 
 		auto constexpr
 		(	pop_back
 		)	()	&
+			noexcept
 		->	decltype(auto)
 		{	return pop_back(1uz);	}
 
 		auto constexpr
 		(	pop_back
 		)	()	&&
+			noexcept
 		->	decltype(auto)
 		{	return pop_back(1uz);	}
 
@@ -293,6 +301,7 @@ export namespace
 			,	::std::convertible_to<value_type> auto
 				&&	i_rValue
 			)	&
+			noexcept
 		->	iterator
 		{
 			EnsureNewSizeValid(Next(size()));
@@ -316,6 +325,7 @@ export namespace
 		)	(	iterator
 					i_aErase
 			)	&
+			noexcept
 		->	iterator
 		{
 			auto const
@@ -375,7 +385,7 @@ export namespace
 		{	return std::move(*this).m_vBuffer[i_nIndex];	}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	begin
 		)	(	Fixed
 				&	i_rFixed
@@ -391,7 +401,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	begin
 		)	(	Fixed const
 				&	i_rFixed
@@ -407,7 +417,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	end
 		)	(	Fixed
 				&	i_rFixed
@@ -426,7 +436,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	end
 		)	(	Fixed const
 				&	i_rFixed
@@ -449,6 +459,7 @@ export namespace
 		)	(	Fixed const
 				&
 			)	&
+			noexcept
 		->	Fixed&
 		=	default;
 
@@ -457,6 +468,7 @@ export namespace
 		)	(	Fixed
 				&&
 			)	&
+			noexcept
 		->	Fixed&
 		=	default;
 
@@ -466,6 +478,7 @@ export namespace
 		)	(	value_type const
 				&	i_rValue
 			)	const
+			noexcept
 		{	return
 			::std::find
 			(	begin(*this)
@@ -480,6 +493,7 @@ export namespace
 		)	(	value_type const
 				&	i_rValue
 			)	const
+			noexcept
 		->	bool
 		{	return
 				find(i_rValue)
@@ -490,6 +504,7 @@ export namespace
 		auto constexpr
 		(	clear
 		)	()
+			noexcept
 		{
 			pop_back(size());
 		}
@@ -505,6 +520,7 @@ export namespace
 		auto constexpr
 		(	SetUnusedToDefault
 		)	()	&
+			noexcept
 		{
 			using ::std::end;
 
@@ -526,6 +542,7 @@ export namespace
 		)	(	value_type const
 				&	i_rValue
 			)	const
+			noexcept
 		->	USize
 		{	return
 			static_cast<USize>
@@ -539,6 +556,7 @@ export namespace
 		auto constexpr
 		(	sort
 		)	()	&
+			noexcept
 		->	Fixed&
 		{
 			::std::sort
@@ -553,6 +571,7 @@ export namespace
 		auto constexpr
 		(	sort
 		)	()	&&
+			noexcept
 		->	Fixed
 		{	return std::move(sort());	}
 	};

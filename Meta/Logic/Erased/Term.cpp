@@ -48,7 +48,7 @@ export namespace
 		{};
 
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	TrimLiterals
 		)	(	Bit::Term const
 				&	i_rResult
@@ -101,7 +101,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	ProcessComputation
 		)	(	bool
 					i_bEquivalence
@@ -115,7 +115,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	ProcessComputation
 		)	(	Bit::Term const
 				&	i_rResult
@@ -132,7 +132,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	GetLiteralUnion
 		)	(	Term const
 				&	i_rLeft
@@ -232,7 +232,7 @@ export namespace
 			}
 
 			//	compiler will complain about uninitialized buffer in constant expression otherwise
-			if consteval
+			if	consteval
 			{
 				vUnion
 				.	SetUnusedToDefault
@@ -305,7 +305,7 @@ export namespace
 					t_tResult
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	Compute
 		)	(	Term const
 				&	i_rLeft
@@ -418,7 +418,7 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr
-		(	operator []
+		(	operator[]
 		)	(	USize
 					i_vClauseIndex
 			)	const

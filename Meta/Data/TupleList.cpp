@@ -95,7 +95,7 @@ export namespace
 			];
 		}
 
-		friend auto constexpr
+		auto friend constexpr
 		(	Invoke
 		)	(	auto&&
 					i_rInvocable
@@ -123,7 +123,7 @@ export namespace
 		KeyTuple
 		<>
 	{
-		friend auto constexpr
+		auto friend constexpr
 		(	Invoke
 		)	(	auto&&
 					i_rInvocable
@@ -221,7 +221,7 @@ export namespace
 	{
 		using IndexedTuple = DeduceIndexedTuple<t_tpItem...>;
 
-		static TypeID constexpr
+		TypeID static constexpr inline
 			EraseTypeArray
 			[]
 		{	Type
@@ -230,8 +230,9 @@ export namespace
 			...
 		};
 
-		constexpr
-		(	operator TypeID const*
+		explicit(false) constexpr
+		(	operator
+			TypeID const*
 		)	()	const
 		{	return +EraseTypeArray;	}
 	};

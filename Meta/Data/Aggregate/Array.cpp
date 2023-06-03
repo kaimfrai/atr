@@ -31,13 +31,13 @@ export namespace
 		noexcept
 	->	Aggregate<t_tTarget>
 	{
-		auto constexpr
+		auto static constexpr
 			vExtent
 		=	ArrayExtent_Of
 			(	Type<t_tTarget>
 			)
 		;
-		static auto constexpr
+		auto static constexpr
 			vElementType
 		=	ArrayElement_Of
 			(	Type<t_tTarget>

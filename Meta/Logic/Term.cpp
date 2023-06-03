@@ -25,7 +25,7 @@ export namespace
 		Term final
 	{
 	public:
-		static Erased::Term constexpr
+		Erased::Term static constexpr inline
 			Erased
 		{	t_vTerm
 		,	{	Type<t_tpLiteral>
@@ -34,24 +34,25 @@ export namespace
 		};
 
 		explicit(false) constexpr
-		(	operator Erased::Term const&
+		(	operator
+			Erased::Term const&
 		)	()	const
 			noexcept
 		{	return Erased;	}
 
-		static auto constexpr
+		auto static constexpr inline
 			LiteralCount
 		=	sizeof...(t_tpLiteral)
 		;
 
-		static auto constexpr
+		auto static constexpr inline
 			ClauseCount
 		=	t_vTerm.ClauseCount()
 		;
 
 		[[nodiscard]]
-		static auto constexpr
-		(	operator ()
+		auto static constexpr
+		(	operator()
 		)	(	auto
 				&&
 				...	i_rpArgument

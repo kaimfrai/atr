@@ -74,7 +74,7 @@ export namespace
 				t_nWidth
 		>
 	[[nodiscard]]
-		auto constexpr
+	auto constexpr
 	(	FloorPower2
 	)	(	Size<t_nWidth>
 				i_nSize

@@ -14,7 +14,7 @@ export namespace
 		>
 	[[nodiscard]]
 	auto constexpr
-	(	operator >>
+	(	operator>>
 	)	(	Field<t_nWidth>
 				i_vField
 		,	typename Field<t_nWidth>::IndexType
@@ -35,7 +35,7 @@ export namespace
 				t_nWidth
 		>
 	auto constexpr
-	(	operator >>=
+	(	operator>>=
 	)	(	Field<t_nWidth>
 			&	i_rField
 		,	typename Field<t_nWidth>::IndexType
@@ -66,7 +66,7 @@ export namespace
 		>
 	[[nodiscard]]
 	auto constexpr
-	(	operator <<
+	(	operator<<
 	)	(	Field<t_nWidth>
 				i_vField
 		,	Index<t_nOffset>
@@ -104,7 +104,7 @@ export namespace
 				t_nWidth
 		>
 	auto constexpr
-	(	operator <<=
+	(	operator<<=
 	)	(	Field<t_nWidth>
 			&	i_rField
 		,	typename Field<t_nWidth>::IndexType

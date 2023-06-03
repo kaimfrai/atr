@@ -14,7 +14,7 @@ export namespace
 		,	USize
 				t_nExtent
 		>
-	TypeToken<::std::array<t_tElement, t_nExtent>> constexpr
+	TypeToken<::std::array<t_tElement, t_nExtent>> constexpr inline
 		ArrayType
 	{};
 
@@ -22,7 +22,7 @@ export namespace
 		<	typename
 				t_tElement
 		>
-	TypeToken<t_tElement[]> constexpr
+	TypeToken<t_tElement[]> constexpr inline
 		ArrayType
 		<	t_tElement
 		,	0uz

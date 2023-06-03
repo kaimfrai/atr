@@ -10,7 +10,7 @@ export namespace
 {
 	[[nodiscard]]
 	auto constexpr
-	(	operator ==
+	(	operator==
 	)	(	Index_For<UIntMax>
 				i_vLeft
 		,	Index_For<UIntMax>
@@ -26,7 +26,7 @@ export namespace
 
 	[[nodiscard]]
 	auto constexpr
-	(	operator <=>
+	(	operator<=>
 	)	(	Index_For<UIntMax>
 				i_vLeft
 		,	Index_For<UIntMax>

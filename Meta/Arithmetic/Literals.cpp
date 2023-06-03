@@ -40,7 +40,7 @@ using
 ;
 
 auto constexpr
-(	operator <=>
+(	operator<=>
 )	(	ParseType
 			i_nParsed
 	,	ERadix
@@ -57,7 +57,7 @@ auto constexpr
 }
 
 auto constexpr
-(	operator *=
+(	operator*=
 )	(	::std::integral auto
 		&	i_rCounter
 	,	ERadix
@@ -77,7 +77,7 @@ struct
 	IgnoreQuote
 {
 	[[nodiscard]]
-	friend auto constexpr
+	auto friend constexpr
 	(	operator<<
 	)	(	auto
 				i_vParser
@@ -101,8 +101,8 @@ struct
 	ParseItem
 {
 	[[nodiscard]]
-	friend auto constexpr
-	(	operator <<
+	auto friend constexpr
+	(	operator<<
 	)	(	auto
 				i_vParser
 		,	BasicCharacter<t_nCharacter>
@@ -151,7 +151,7 @@ struct
 	ExponentParser
 :	BaseParser
 {
-	static auto constexpr
+	auto static constexpr inline
 		Radix
 	=	t_eRadix
 	;
@@ -191,8 +191,8 @@ struct
 	}
 
 	[[nodiscard]]
-	friend auto constexpr
-	(	operator <<
+	auto friend constexpr
+	(	operator<<
 	)	(	ExponentParser
 				i_vParser
 		,	BasicCharacter<'+'>
@@ -208,8 +208,8 @@ struct
 	}
 
 	[[nodiscard]]
-	friend auto constexpr
-	(	operator <<
+	auto friend constexpr
+	(	operator<<
 	)	(	ExponentParser
 				i_vParser
 		,	BasicCharacter<'-'>
@@ -225,7 +225,7 @@ struct
 	}
 
 	[[nodiscard]]
-	friend auto constexpr
+	auto friend constexpr
 	(	Evaluate
 	)	(	ExponentParser
 				i_vParser
@@ -276,8 +276,8 @@ struct
 	using enum ERadix;
 
 	[[nodiscard]]
-	friend auto constexpr
-	(	operator <<
+	auto friend constexpr
+	(	operator<<
 	)	(	auto
 				i_vParser
 		,	BasicCharacter
@@ -308,7 +308,7 @@ struct
 	FloatParser
 :	SignificandParser
 {
-	static auto constexpr
+	auto static constexpr inline
 		Radix
 	=	t_eRadix
 	;
@@ -337,7 +337,7 @@ struct
 	}
 
 	[[nodiscard]]
-	friend auto constexpr
+	auto friend constexpr
 	(	Evaluate
 	)	(	FloatParser
 				i_vParser
@@ -363,7 +363,7 @@ struct
 	IntegerParser
 :	SignificandParser
 {
-	static auto constexpr
+	auto static constexpr inline
 		Radix
 	=	t_eRadix
 	;
@@ -372,7 +372,7 @@ struct
 		Numerator
 	;
 
-	static UIntMax constexpr
+	UIntMax static constexpr inline
 		Denominator
 	=	1uz
 	;
@@ -393,8 +393,8 @@ struct
 	}
 
 	[[nodiscard]]
-	friend auto constexpr
-	(	operator <<
+	auto friend constexpr
+	(	operator<<
 	)	(	IntegerParser
 				i_vParser
 		,	BasicCharacter<'.'>
@@ -408,7 +408,7 @@ struct
 	}
 
 	[[nodiscard]]
-	friend auto constexpr
+	auto friend constexpr
 	(	Evaluate
 	)	(	IntegerParser
 				i_vParser

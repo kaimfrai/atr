@@ -58,7 +58,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	begin
 		)	(	Unique
 				&	i_rUnique
@@ -72,7 +72,7 @@ export namespace
 			;
 		}
 
-		friend auto constexpr
+		auto friend constexpr
 		(	begin
 		)	(	Unique const
 				&	i_rUnique
@@ -87,7 +87,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	end
 		)	(	Unique
 				&	i_rUnique
@@ -105,7 +105,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	end
 		)	(	Unique const
 				&	i_rUnique
@@ -176,6 +176,7 @@ export namespace
 		)	(	USize
 					i_nIndex
 			)	&
+			noexcept
 		->	decltype(auto)
 		{	return m_vBuffer[i_nIndex];	}
 
@@ -185,6 +186,7 @@ export namespace
 		)	(	USize
 					i_nIndex
 			)	const&
+			noexcept
 		->	decltype(auto)
 		{	return m_vBuffer[i_nIndex];	}
 
@@ -194,6 +196,7 @@ export namespace
 		)	(	USize
 					i_nIndex
 			)	&&
+			noexcept
 		->	decltype(auto)
 		{	return std::move(*this).m_vBuffer[i_nIndex];	}
 	};

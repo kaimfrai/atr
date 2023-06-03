@@ -8,7 +8,7 @@ export namespace
 	struct
 		Chain
 	{
-		char static constexpr
+		char static constexpr inline
 			Empty
 			[]
 		=	""
@@ -25,7 +25,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	operator==
 		)	(	Chain
 					i_vLeft
@@ -42,7 +42,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	operator<=>
 		)	(	Chain
 					i_vLeft
@@ -52,7 +52,7 @@ export namespace
 			noexcept
 		->	::std::strong_ordering
 		{
-			static auto constexpr
+			auto static constexpr
 				fNextChar
 			=	[]	(	Chain
 						&	i_rChain
@@ -128,7 +128,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	operator+
 		)	(	char const
 				*	i_aLeft

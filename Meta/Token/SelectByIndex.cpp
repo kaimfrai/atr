@@ -43,7 +43,7 @@ export namespace
 					t_tSelection
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator() // NOLINT(cert-dcl50-cpp)
 		)	(	IgnoreIndexedElement<t_npFront>
 				...

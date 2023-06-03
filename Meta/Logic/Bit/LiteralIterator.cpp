@@ -91,7 +91,7 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr
-		(	operator *
+		(	operator*
 		)	()	const
 			noexcept
 		->	value_type
@@ -102,7 +102,7 @@ export namespace
 		}
 
 		auto constexpr
-		(	operator ++
+		(	operator++
 		)	()	&
 			noexcept
 		->	LiteralIterator&
@@ -117,7 +117,7 @@ export namespace
 
 		[[nodiscard("Use preincrement when discarding the value!")]]
 		auto constexpr
-		(	operator ++
+		(	operator++
 		)	(int)	&
 			noexcept
 		->	LiteralIterator
@@ -131,8 +131,8 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend auto constexpr
-		(	operator ==
+		auto friend constexpr
+		(	operator==
 		)	(	LiteralIterator
 			,	LiteralIterator
 			)
@@ -141,8 +141,8 @@ export namespace
 		=	default;
 
 		[[nodiscard]]
-		friend auto constexpr
-		(	operator ==
+		auto friend constexpr
+		(	operator==
 		)	(	LiteralIterator
 					i_vIterator
 			,	LiteralSentinel

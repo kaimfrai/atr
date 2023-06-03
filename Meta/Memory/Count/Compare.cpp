@@ -9,7 +9,7 @@ export namespace
 {
 	[[nodiscard]]
 	auto constexpr
-	(	operator ==
+	(	operator==
 	)	(	Bits
 				i_vLeft
 		,	Bits
@@ -25,7 +25,7 @@ export namespace
 
 	[[nodiscard]]
 	auto constexpr
-	(	operator <=>
+	(	operator<=>
 	)	(	Bits
 				i_vLeft
 		,	Bits

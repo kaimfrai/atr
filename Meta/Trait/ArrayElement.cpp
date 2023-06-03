@@ -11,7 +11,7 @@ export namespace
 		ArrayElement_Of
 	{
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	TypeID
 			)
@@ -24,7 +24,7 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity[]>
 			)
@@ -41,7 +41,7 @@ export namespace
 					t_nExtent
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity[t_nExtent]>
 			)
@@ -56,7 +56,7 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	TypeToken<Specifier::Mut<t_tEntity>>
 			)

@@ -61,7 +61,7 @@ namespace
 
 using OffsetOfTest = ::ATR::Instance<ID<"OffsetOfTest">>;
 
-::Meta::ByteSize constexpr
+::Meta::ByteSize constexpr inline
 	ExpectedBufferSize
 =	(	1_bit
 	+	3_bit

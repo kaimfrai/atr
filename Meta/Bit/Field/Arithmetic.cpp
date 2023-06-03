@@ -34,7 +34,7 @@ export namespace
 				t_nWidth
 		>
 	auto constexpr
-	(	operator &=
+	(	operator&=
 	)	(	Field<t_nWidth>
 			&	i_rLeft
 		,	decltype(auto(i_rLeft))
@@ -79,7 +79,7 @@ export namespace
 				t_nWidth
 		>
 	auto constexpr
-	(	operator |=
+	(	operator|=
 	)	(	Field<t_nWidth>
 			&	i_rLeft
 		,	decltype(auto(i_rLeft))
@@ -122,7 +122,7 @@ export namespace
 				t_nWidth
 		>
 	auto constexpr
-	(	operator ^=
+	(	operator^=
 	)	(	Field<t_nWidth>
 			&	i_rLeft
 		,	decltype(auto(i_rLeft))

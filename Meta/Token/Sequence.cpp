@@ -50,7 +50,7 @@ export namespace
 		<	auto
 				t_nSize
 		>
-	auto constexpr
+	auto constexpr inline
 		Sequence
 	=	MakeSequence
 		(	Index<t_nSize>
@@ -61,7 +61,7 @@ export namespace
 		<	auto
 				t_nSize
 		>
-	auto constexpr
+	auto constexpr inline
 		ZeroSequence
 	=	(	Sequence<t_nSize>
 		=	Index<decltype(t_nSize){}>

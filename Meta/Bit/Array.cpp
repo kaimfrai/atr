@@ -35,26 +35,26 @@ export namespace
 	struct
 		Array
 	{
-		static auto constexpr
+		auto static constexpr inline
 			ElementSize
 		=	t_nSize
 		;
-		static auto constexpr
+		auto static constexpr inline
 			Extent
 		=	t_nExtent
 		;
-		static auto constexpr
+		auto static constexpr inline
 			Offset
 		=	t_nOffset
 		;
 
-		static BitSize constexpr
+		BitSize static constexpr inline
 			BitSize
 		{	ElementSize
 		*	t_nExtent
 		};
 
-		static auto constexpr
+		auto static constexpr inline
 			BufferSize
 		=	ElementSize
 		*	t_nExtent
@@ -72,7 +72,7 @@ export namespace
 			>
 		;
 
-		static auto constexpr
+		auto static constexpr inline
 			MaximumOffset
 		{	[]	<	::std::size_t
 					...	t_npIndex

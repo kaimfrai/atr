@@ -10,7 +10,7 @@ export namespace
 {
 	[[nodiscard]]
 	auto constexpr
-	(	operator ==
+	(	operator==
 	)	(	Field_For<UIntMax>
 				i_nLeft
 		,	Field_For<UIntMax>
@@ -26,7 +26,7 @@ export namespace
 
 	[[nodiscard]]
 	auto constexpr
-	(	operator <=>
+	(	operator<=>
 	)	(	Field_For<UIntMax>
 				i_nLeft
 		,	Field_For<UIntMax>

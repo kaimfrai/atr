@@ -16,7 +16,7 @@ export namespace
 	{
 		using
 			t_tpTokenizer
-		::	operator ()
+		::	operator()
 			...
 		;
 	};
@@ -35,7 +35,7 @@ export namespace
 		Match_To
 	=	decltype
 		(	t_tTokenizer
-		::	operator ()
+		::	operator()
 			(	Type
 				<	t_tEntity
 				>

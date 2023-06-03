@@ -18,8 +18,8 @@ struct
 				t_tResult
 		>
 	[[nodiscard]]
-	friend auto constexpr
-	(	operator +
+	auto friend constexpr
+	(	operator+
 	)	(	TypeToken<t_tResult>
 		,	Param
 		)

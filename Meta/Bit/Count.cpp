@@ -15,7 +15,7 @@ export namespace
 	struct
 		Count
 	{
-		static auto constexpr
+		auto static constexpr inline
 			AssertSanitized
 		=	&
 			Arithmetic::AssertSanitizedUnsigned
@@ -61,7 +61,7 @@ export namespace
 					t_nOtherWidth
 			>
 		[[nodiscard]]
-		friend auto constexpr
+		auto friend constexpr
 		(	ChangeWidth
 		)	(	Count
 					i_nCount
@@ -82,7 +82,8 @@ export namespace
 			>
 		[[nodiscard]]
 		explicit(t_nOtherWidth <= t_nWidth) constexpr
-		(	operator Count<t_nOtherWidth>
+		(	operator
+			Count<t_nOtherWidth>
 		)	()	const
 			noexcept
 		{	return

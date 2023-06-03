@@ -35,7 +35,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-Meta::TypeID constexpr
+Meta::TypeID constexpr inline
 	MemberToQualified
 =	Type
 	<	MatchCVMember
@@ -79,7 +79,7 @@ template
 	<	typename
 		...	t_tpQualifier
 	>
-Meta::TypeID constexpr
+Meta::TypeID constexpr inline
 	QualifiedMember
 =	Type
 	<	MatchCVMember

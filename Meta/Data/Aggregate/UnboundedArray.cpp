@@ -82,40 +82,43 @@ export namespace
 		->	ElementType(&&)[]
 		=	delete;
 
-		constexpr
-		(	operator decltype(auto)
+		explicit(false) constexpr
+		(	operator
+			decltype(auto)
 		)	()	&
 			noexcept
 		{	return ::std::declval<ElementType(&)[]>();	}
 
-		constexpr
-		(	operator decltype(auto)
+		explicit(false) constexpr
+		(	operator
+			decltype(auto)
 		)	()	const&
 			noexcept
 		{	return ::std::declval<ConstElementType(&)[]>();	}
 
-		constexpr
-		(	operator decltype(auto)
+		explicit(false) constexpr
+		(	operator
+			decltype(auto)
 		)	()	&&
 			noexcept
 		{	return ::std::declval<ElementType(&&)[]>();	}
 
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	size
 		)	()
 		->	size_type
 		{	return 0uz;	}
 
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	max_size
 		)	()
 		->	size_type
 		{	return 0uz;	}
 
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	empty
 		)	()
 		->	bool
@@ -145,15 +148,15 @@ export namespace
 		->	value_type
 		{	((void)"Index out of bounds!", std::unreachable());	}
 
-		friend auto constexpr
-		(	operator +
+		auto friend constexpr
+		(	operator+
 		)	(	Aggregate&
 			)
 		->	pointer
 		{	return nullptr;	}
 
-		friend auto constexpr
-		(	operator +
+		auto friend constexpr
+		(	operator+
 		)	(	Aggregate const&
 			)
 		->	const_pointer

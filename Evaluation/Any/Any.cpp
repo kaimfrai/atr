@@ -161,9 +161,9 @@ export namespace
 		noexcept
 	->	Float
 	{	return
-			i_rBody3D
-			->	ComputeVolume
-				()
+		i_rBody3D
+		->	ComputeVolume
+			()
 		;
 	}
 }

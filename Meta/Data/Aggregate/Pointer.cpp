@@ -65,33 +65,36 @@ export namespace
 		->	::std::remove_cv_t<DataType>
 		{	return ::std::move(*this).Data;	}
 
-		constexpr
-		(	operator decltype(auto)
+		explicit(false) constexpr
+		(	operator
+			decltype(auto)
 		)	()	&
 			noexcept
 		{	return get();	}
 
-		constexpr
-		(	operator decltype(auto)
+		explicit(false) constexpr
+		(	operator
+			decltype(auto)
 		)	()	const&
 			noexcept
 		{	return get();	}
 
-		constexpr
-		(	operator decltype(auto)
+		explicit(false) constexpr
+		(	operator
+			decltype(auto)
 		)	()	&&
 			noexcept
 		{	return ::std::move(*this).get();	}
 
 		auto constexpr
-		(	operator ->
+		(	operator->
 		)	()	const
 			noexcept
 		->	::std::remove_cv_t<DataType>
 		{	return this->Data;	}
 
 		auto constexpr
-		(	operator []
+		(	operator[]
 		)	(	difference_type
 					i_nDifference
 			)	const

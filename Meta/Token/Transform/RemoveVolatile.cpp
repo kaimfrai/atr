@@ -16,7 +16,7 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	TypeToken<t_tEntity>
 			)
@@ -33,7 +33,7 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	TypeToken<Specifier::Mut<t_tEntity>>
 			)

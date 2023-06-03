@@ -13,7 +13,7 @@ export namespace
 				t_nWidth
 		>
 	auto constexpr
-	(	operator *=
+	(	operator*=
 	)	(	Size<t_nWidth>
 			&	i_rSize
 		,	typename Size<t_nWidth>::SizeType
@@ -32,7 +32,7 @@ export namespace
 
 	[[nodiscard]]
 	auto constexpr
-	(	operator *
+	(	operator*
 	)	(	BitSize
 				i_vSize
 		,	typename BitSize::SizeType
@@ -48,7 +48,7 @@ export namespace
 
 	[[nodiscard]]
 	auto constexpr
-	(	operator *
+	(	operator*
 	)	(	typename BitSize::SizeType
 				i_vScalar
 		,	BitSize
@@ -67,7 +67,7 @@ export namespace
 				t_nWidth
 		>
 	auto constexpr
-	(	operator *=
+	(	operator*=
 	)	(	Size<t_nWidth>
 			&	i_rSize
 		,	Bits
@@ -88,7 +88,7 @@ export namespace
 
 	[[nodiscard]]
 	auto constexpr
-	(	operator *
+	(	operator*
 	)	(	BitSize
 				i_vSize
 		,	Bits
@@ -104,7 +104,7 @@ export namespace
 
 	[[nodiscard]]
 	auto constexpr
-	(	operator *
+	(	operator*
 	)	(	Bits
 				i_vCount
 		,	BitSize
@@ -123,7 +123,7 @@ export namespace
 				t_nWidth
 		>
 	auto constexpr
-	(	operator /=
+	(	operator/=
 	)	(	Size<t_nWidth>
 			&	i_rSize
 		,	typename Size<t_nWidth>::SizeType
@@ -142,7 +142,7 @@ export namespace
 
 	[[nodiscard]]
 	auto constexpr
-	(	operator /
+	(	operator/
 	)	(	BitSize
 				i_vSize
 		,	typename BitSize::SizeType
@@ -158,7 +158,7 @@ export namespace
 
 	[[nodiscard]]
 	auto constexpr
-	(	operator /
+	(	operator/
 	)	(	BitSize
 				i_vSize
 		,	Bits
@@ -183,7 +183,7 @@ export namespace
 				t_nWidth
 		>
 	auto constexpr
-	(	operator /=
+	(	operator/=
 	)	(	Size<t_nWidth>
 			&	i_rSize
 		,	Bits
@@ -200,7 +200,7 @@ export namespace
 
 	[[nodiscard]]
 	auto constexpr
-	(	operator /
+	(	operator/
 	)	(	BitSize
 				i_vLeft
 		,	BitSize

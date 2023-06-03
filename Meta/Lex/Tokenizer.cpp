@@ -32,7 +32,7 @@ export namespace
 					t_tEntity
 			>
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	TypeToken
 				<	t_tEntity
@@ -74,7 +74,7 @@ export namespace
 		<	typename
 				t_tEntity
 		>
-	TokenizeEntity<t_tEntity> constexpr
+	TokenizeEntity<t_tEntity> constexpr inline
 		TokenizeType
 	{};
 }

@@ -10,7 +10,7 @@ export namespace
 {
 	[[nodiscard]]
 	auto constexpr
-	(	operator ==
+	(	operator==
 	)	(	Term const
 			&	i_rLeft
 		,	Term const

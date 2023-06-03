@@ -40,7 +40,7 @@ namespace
 		<	typename
 				t_tEntity
 		>
-	Alignment constexpr
+	Alignment constexpr inline
 		Align_Of
 	{	::std::countr_zero
 		(	alignof
@@ -55,7 +55,7 @@ namespace
 		<	typename
 				t_tEntity
 		>
-	BitSize constexpr
+	BitSize constexpr inline
 		Size_Of
 	=	ByteSize
 		{	sizeof
@@ -101,8 +101,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend
-		auto constexpr
+		auto friend constexpr
 		(	operator
 			<=>
 		)	(	Constraint

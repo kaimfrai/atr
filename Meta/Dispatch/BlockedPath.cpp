@@ -54,7 +54,7 @@ export namespace
 		,	ProtoID
 				t_tString
 		>
-	auto constexpr
+	auto constexpr inline
 		IsPathBlocked
 	=	BlockedPath
 		<	t_tFunction

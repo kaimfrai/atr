@@ -24,7 +24,7 @@ export namespace
 	struct
 		AlignBuffer
 	{
-		auto static constexpr
+		auto static constexpr inline
 			AlignmentCount
 		=	static_cast<USize>
 			(	MaxAlign
@@ -33,7 +33,7 @@ export namespace
 		+	1uz
 		;
 
-		auto static constexpr
+		auto static constexpr inline
 			BufferSize
 		=	TypeBufferSize
 		;

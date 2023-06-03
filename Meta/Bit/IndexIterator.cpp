@@ -22,8 +22,8 @@ export namespace
 		;
 
 		[[nodiscard]]
-		friend auto constexpr
-		(	operator ==
+		auto friend constexpr
+		(	operator==
 		)	(	IndexSentinel
 			,	IndexSentinel
 			)
@@ -57,7 +57,7 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr
-		(	operator *
+		(	operator*
 		)	()	const
 			noexcept
 		->	value_type
@@ -70,7 +70,7 @@ export namespace
 		}
 
 		auto constexpr
-		(	operator ++
+		(	operator++
 		)	()	&
 			noexcept
 		->	IndexIterator&
@@ -82,7 +82,7 @@ export namespace
 
 		[[nodiscard("Use preincrement when discarding the result")]]
 		auto constexpr
-		(	operator ++
+		(	operator++
 		)	(int)	&
 			noexcept
 		->	IndexIterator

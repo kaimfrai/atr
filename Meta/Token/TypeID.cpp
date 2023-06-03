@@ -60,8 +60,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		friend
-		auto constexpr
+		auto friend constexpr
 		(	operator
 			==
 		)	(	TypeID

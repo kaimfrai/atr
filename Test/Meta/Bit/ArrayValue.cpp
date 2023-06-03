@@ -15,17 +15,17 @@ using namespace ::Meta::Literals;
 
 using Array = ::Meta::Bit::ArrayValue<1_bit, 31>;
 
-auto constexpr
+auto constexpr inline
 	None
 =	::std::bit_cast<Array>(0x00000000)
 ;
 
-auto constexpr
+auto constexpr inline
 	Some
 =	::std::bit_cast<Array>(0xEEEEEEEE)
 ;
 
-auto constexpr
+auto constexpr inline
 	All
 =	::std::bit_cast<Array>(0x7FFFFFFF)
 ;
@@ -42,9 +42,7 @@ static_assert(not Some.all());
 static_assert(All.all());
 
 
-::Meta::Byte::Buffer
-<	16_bit * 8 + 3_bdx
->	constexpr
+::Meta::Byte::Buffer<16_bit * 8 + 3_bdx> constexpr inline
 	Buffer
 {	static_cast<::std::byte>(0x7A << 3)
 ,	static_cast<::std::byte>(0x7A >> 5)

@@ -13,7 +13,7 @@ export namespace
 		ConstructType
 	{
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	auto&&
 				...	i_rpArgument
@@ -70,7 +70,7 @@ export namespace
 		ConstructValuePack
 	{
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	auto&&
 				...	i_rpArgument
@@ -131,7 +131,7 @@ export namespace
 		ConstructTypePack
 	{
 		[[nodiscard]]
-		static auto constexpr
+		auto static constexpr
 		(	operator()
 		)	(	auto&&
 				...	i_rpArgument
