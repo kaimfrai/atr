@@ -1,6 +1,11 @@
 export module Evaluation.Archetype;
 
 import Evaluation.Archetype.ComputeVolume;
+import Evaluation.Archetype.Circle;
+import Evaluation.Archetype.Ellipse;
+import Evaluation.Archetype.Rectangle;
+import Evaluation.Archetype.Square;
+import Evaluation.Archetype.Triangle;
 import Evaluation.Archetype.Cube;
 import Evaluation.Archetype.Cuboid;
 import Evaluation.Archetype.Pyramid;

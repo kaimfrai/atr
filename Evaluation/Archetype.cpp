@@ -16,6 +16,11 @@ auto
 	return
 	MainTemplate
 	<	DynamicArray<Body3D>
+	,	&TypeConstruct<ID<"Circle">>
+	,	&TypeConstruct<ID<"Ellipse">>
+	,	&TypeConstruct<ID<"Rectangle">>
+	,	&TypeConstruct<ID<"Square">>
+	,	&TypeConstruct<ID<"Triangle">>
 	,	&TypeConstruct<ID<"Cube">>
 	,	&TypeConstruct<ID<"Cuboid">>
 	,	&TypeConstruct<ID<"Pyramid">>

@@ -11,6 +11,16 @@ export
 		<	typename
 				t_tBodyContainer
 		,	auto
+				t_fMakeCircle
+		,	auto
+				t_fMakeEllipse
+		,	auto
+				t_fMakeRectangle
+		,	auto
+				t_fMakeSquare
+		,	auto
+				t_fMakeTriangle
+		,	auto
 				t_fMakeCube
 		,	auto
 				t_fMakeCuboid
@@ -52,13 +62,13 @@ export
 		{
 			switch
 				(	vRandom
-				%	8
+				%	13
 				)
 			{	case
 					0
 				:	vElements
 					.	emplace_back
-						(	t_fMakeCube
+						(	t_fMakeCircle
 							()
 						)
 					;
@@ -68,7 +78,7 @@ export
 					1
 				:	vElements
 					.	emplace_back
-						(	t_fMakeCuboid
+						(	t_fMakeEllipse
 							()
 						)
 					;
@@ -78,7 +88,7 @@ export
 					2
 				:	vElements
 					.	emplace_back
-						(	t_fMakePyramid
+						(	t_fMakeRectangle
 							()
 						)
 					;
@@ -88,7 +98,7 @@ export
 					3
 				:	vElements
 					.	emplace_back
-						(	t_fMakeSphere
+						(	t_fMakeSquare
 							()
 						)
 					;
@@ -98,7 +108,7 @@ export
 					4
 				:	vElements
 					.	emplace_back
-						(	t_fMakeCylinder
+						(	t_fMakeTriangle
 							()
 						)
 					;
@@ -108,7 +118,7 @@ export
 					5
 				:	vElements
 					.	emplace_back
-						(	t_fMakeCone
+						(	t_fMakeCube
 							()
 						)
 					;
@@ -118,7 +128,7 @@ export
 					6
 				:	vElements
 					.	emplace_back
-						(	t_fMakeEllipsoid
+						(	t_fMakeCuboid
 							()
 						)
 					;
@@ -126,6 +136,56 @@ export
 
 				case
 					7
+				:	vElements
+					.	emplace_back
+						(	t_fMakePyramid
+							()
+						)
+					;
+				break;
+
+				case
+					8
+				:	vElements
+					.	emplace_back
+						(	t_fMakeSphere
+							()
+						)
+					;
+				break;
+
+				case
+					9
+				:	vElements
+					.	emplace_back
+						(	t_fMakeCylinder
+							()
+						)
+					;
+				break;
+
+				case
+					10
+				:	vElements
+					.	emplace_back
+						(	t_fMakeCone
+							()
+						)
+					;
+				break;
+
+				case
+					11
+				:	vElements
+					.	emplace_back
+						(	t_fMakeEllipsoid
+							()
+						)
+					;
+				break;
+
+				case
+					12
 				:	vElements
 					.	emplace_back
 						(	t_fMakeHead
@@ -160,6 +220,16 @@ export
 	template
 		<	typename
 				t_tBodyContainer
+		,	auto
+				t_fMakeCircle
+		,	auto
+				t_fMakeEllipse
+		,	auto
+				t_fMakeRectangle
+		,	auto
+				t_fMakeSquare
+		,	auto
+				t_fMakeTriangle
 		,	auto
 				t_fMakeCube
 		,	auto
@@ -216,6 +286,11 @@ export
 			vResult
 		=	EvaluateRandomContainer
 			<	t_tBodyContainer
+			,	t_fMakeCircle
+			,	t_fMakeEllipse
+			,	t_fMakeRectangle
+			,	t_fMakeSquare
+			,	t_fMakeTriangle
 			,	t_fMakeCube
 			,	t_fMakeCuboid
 			,	t_fMakePyramid

@@ -1,5 +1,11 @@
 export module Evaluation.Any;
 
+import Evaluation.CRTP.Circle;
+import Evaluation.CRTP.Ellipse;
+import Evaluation.CRTP.Rectangle;
+import Evaluation.CRTP.Square;
+import Evaluation.CRTP.Triangle;
+import Evaluation.CRTP.Shape3D;
 import Evaluation.CRTP.Cube;
 import Evaluation.CRTP.Cuboid;
 import Evaluation.CRTP.Pyramid;
@@ -18,6 +24,12 @@ export using ::InPlaceConstruct;
 export namespace
 	Bodies3D
 {
+	struct Circle : Shape3D<::Shapes2D::Circle>{};
+	struct Ellipse : Shape3D<::Shapes2D::Ellipse>{};
+	struct Rectangle : Shape3D<::Shapes2D::Rectangle>{};
+	struct Square : Shape3D<::Shapes2D::Square>{};
+	struct Triangle : Shape3D<::Shapes2D::Triangle>{};
+
 	using ::Bodies3D::Cube;
 	using ::Bodies3D::Cuboid;
 	using ::Bodies3D::Pyramid;
@@ -74,7 +86,7 @@ export namespace
 		>
 	struct
 		BodyAdapter
-		:	IBody
+	:	IBody
 	{
 		t_tBody
 			m_vBody
@@ -86,12 +98,11 @@ export namespace
 		)	()	const
 			noexcept
 		->	Float
-		override
-		{
-			return
-				m_vBody
-				.	ComputeVolume
-					()
+			override
+		{	return
+			m_vBody
+			.	ComputeVolume
+				()
 			;
 		}
 	};

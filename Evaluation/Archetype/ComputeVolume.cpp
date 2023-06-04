@@ -33,4 +33,24 @@ export namespace
 			>
 		>
 	;
+
+	(	Function
+	)	(	ID<"ComputeVolume">
+		,	ProtoMemberInterface
+			<	ID<"ComputeAreaMultiplier">
+			,	ID<"Height">
+			,	ID<"Width">
+			>	auto const
+			&	i_rShape
+		)
+	->	Function
+		<	Dependency<ID<"Product">>
+		,	ArgumentDependency
+			<	decltype(i_rShape)
+			,	ID<"ComputeAreaMultiplier">
+			,	ID<"Height">
+			,	ID<"Width">
+			>
+		>
+	;
 }

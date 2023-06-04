@@ -1,5 +1,11 @@
 export module Evaluation.Variant;
 
+import Evaluation.CRTP.Circle;
+import Evaluation.CRTP.Ellipse;
+import Evaluation.CRTP.Rectangle;
+import Evaluation.CRTP.Square;
+import Evaluation.CRTP.Triangle;
+import Evaluation.CRTP.Shape3D;
 import Evaluation.CRTP.Cube;
 import Evaluation.CRTP.Cuboid;
 import Evaluation.CRTP.Pyramid;
@@ -18,6 +24,13 @@ export using ::InPlaceConstruct;
 export namespace
 	Bodies3D
 {
+	using Circle = Shape3D<::Shapes2D::Circle>;
+	using Ellipse = Shape3D<::Shapes2D::Ellipse>;
+	using Rectangle = Shape3D<::Shapes2D::Rectangle>;
+	using Square = Shape3D<::Shapes2D::Square>;
+	using Triangle = Shape3D<::Shapes2D::Triangle>;
+
+
 	using ::Bodies3D::Cube;
 	using ::Bodies3D::Cuboid;
 	using ::Bodies3D::Pyramid;
@@ -34,7 +47,12 @@ export namespace
 	using
 		Body3D
 	=	::std::variant
-		<	Cube
+		<	Circle
+		,	Ellipse
+		,	Rectangle
+		,	Square
+		,	Triangle
+		,	Cube
 		,	Cuboid
 		,	Pyramid
 		,	Sphere

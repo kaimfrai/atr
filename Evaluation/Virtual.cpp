@@ -16,6 +16,11 @@ auto
 	return
 	MainTemplate
 	<	DynamicArray<Body3D>
+	,	&MakeUniqueNoexcept<Circle>
+	,	&MakeUniqueNoexcept<Ellipse>
+	,	&MakeUniqueNoexcept<Rectangle>
+	,	&MakeUniqueNoexcept<Square>
+	,	&MakeUniqueNoexcept<Triangle>
 	,	&MakeUniqueNoexcept<Cube>
 	,	&MakeUniqueNoexcept<Cuboid>
 	,	&MakeUniqueNoexcept<Pyramid>

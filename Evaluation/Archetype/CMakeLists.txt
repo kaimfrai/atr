@@ -1,7 +1,6 @@
 add_single_file_modules(
 	Product.cpp
 
-	ComputeArea.cpp
 	ComputeVolume.cpp
 
 	BasicShape.cpp

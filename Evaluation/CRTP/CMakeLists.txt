@@ -18,6 +18,7 @@ add_single_file_modules(
 
 	BasicBody.cpp
 	ExtendedShape.cpp
+	Shape3D.cpp
 	CubicBody.cpp
 	PyramidicBody.cpp
 	SphericBody.cpp

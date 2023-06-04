@@ -1,6 +1,12 @@
 export module Evaluation.TypeErasure;
 
 export import Evaluation.Dependency.TypeErasure;
+import Evaluation.CRTP.Circle;
+import Evaluation.CRTP.Ellipse;
+import Evaluation.CRTP.Rectangle;
+import Evaluation.CRTP.Square;
+import Evaluation.CRTP.Triangle;
+import Evaluation.CRTP.Shape3D;
 import Evaluation.CRTP.Cube;
 import Evaluation.CRTP.Cuboid;
 import Evaluation.CRTP.Pyramid;
@@ -21,6 +27,12 @@ export using ::DefaultConstruct;
 export namespace
 	Bodies3D
 {
+	struct Circle : Shape3D<::Shapes2D::Circle>{};
+	struct Ellipse : Shape3D<::Shapes2D::Ellipse>{};
+	struct Rectangle : Shape3D<::Shapes2D::Rectangle>{};
+	struct Square : Shape3D<::Shapes2D::Square>{};
+	struct Triangle : Shape3D<::Shapes2D::Triangle>{};
+
 	using ::Bodies3D::Cube;
 	using ::Bodies3D::Cuboid;
 	using ::Bodies3D::Pyramid;

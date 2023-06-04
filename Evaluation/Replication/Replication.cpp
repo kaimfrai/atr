@@ -1,5 +1,10 @@
 export module Evaluation.Replication;
 
+import Evaluation.Replication.Circle;
+import Evaluation.Replication.Ellipse;
+import Evaluation.Replication.Rectangle;
+import Evaluation.Replication.Square;
+import Evaluation.Replication.Triangle;
 import Evaluation.Replication.Cube;
 import Evaluation.Replication.Cuboid;
 import Evaluation.Replication.Pyramid;
@@ -18,6 +23,12 @@ export using ::InPlaceConstruct;
 export namespace
 	Bodies3D
 {
+	using ::Bodies3D::Circle;
+	using ::Bodies3D::Ellipse;
+	using ::Bodies3D::Rectangle;
+	using ::Bodies3D::Square;
+	using ::Bodies3D::Triangle;
+
 	using ::Bodies3D::Cube;
 	using ::Bodies3D::Cuboid;
 	using ::Bodies3D::Pyramid;
@@ -42,6 +53,21 @@ export namespace
 		union
 		{	std::byte
 				m_vAny
+			;
+			Circle
+				m_vCircle
+			;
+			Ellipse
+				m_vEllipse
+			;
+			Rectangle
+				m_vRectangle
+			;
+			Square
+				m_vSquare
+			;
+			Triangle
+				m_vTriangle
 			;
 			Cube
 				m_vCube
@@ -68,6 +94,71 @@ export namespace
 				m_vHead
 			;
 		};
+
+		explicit(false) constexpr inline
+		(	VolumeComputer
+		)	(	::std::in_place_type_t
+				<	Circle
+				>
+			)
+		:	m_fComputeVolume
+			{	&ComputeVolumeCircle
+			}
+		,	m_vCircle
+			{}
+		{}
+
+		explicit(false) constexpr inline
+		(	VolumeComputer
+		)	(	::std::in_place_type_t
+				<	Ellipse
+				>
+			)
+		:	m_fComputeVolume
+			{	&ComputeVolumeEllipse
+			}
+		,	m_vEllipse
+			{}
+		{}
+
+		explicit(false) constexpr inline
+		(	VolumeComputer
+		)	(	::std::in_place_type_t
+				<	Rectangle
+				>
+			)
+		:	m_fComputeVolume
+			{	&ComputeVolumeRectangle
+			}
+		,	m_vRectangle
+			{}
+		{}
+
+		explicit(false) constexpr inline
+		(	VolumeComputer
+		)	(	::std::in_place_type_t
+				<	Square
+				>
+			)
+		:	m_fComputeVolume
+			{	&ComputeVolumeSquare
+			}
+		,	m_vSquare
+			{}
+		{}
+
+		explicit(false) constexpr inline
+		(	VolumeComputer
+		)	(	::std::in_place_type_t
+				<	Triangle
+				>
+			)
+		:	m_fComputeVolume
+			{	&ComputeVolumeTriangle
+			}
+		,	m_vTriangle
+			{}
+		{}
 
 		explicit(false) constexpr inline
 		(	VolumeComputer
