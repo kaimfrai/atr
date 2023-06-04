@@ -1,36 +1,25 @@
 export module ATR.Layout.Bit;
 
-import Meta.Memory.Constraint;
 import Meta.Memory.Size;
 
 import Std;
 
 using ::Meta::ByteSize;
-using ::Meta::Memory::BitSize_Of;
 
 export namespace
 	ATR::Layout
 {
 	template
-		<	typename
-			...	t_tpBit
+		<	ByteSize
+				t_vBytes
 		>
 	struct
 		Bit
 	{
-		ByteSize static constexpr inline
-			ByteSize
-		=	(	...
-			+	BitSize_Of
-				<	t_tpBit
-				>
-			)
-		;
-
-		// must be mutable in case one bitfield is mutable
+		// Must be mutable in case one bitfield is mutable
 		::std::byte mutable
 			Buffer
-			[	ByteSize
+			[	t_vBytes
 				.	get
 					()
 			]

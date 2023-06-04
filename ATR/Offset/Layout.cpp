@@ -20,6 +20,7 @@ using ::ATR::Layout::Group;
 using ::ATR::Layout::Value;
 
 using ::Meta::BitSize;
+using ::Meta::ByteSize;
 using ::Meta::Memory::BitAlign_Of;
 using ::Meta::Memory::BitSize_Of;
 using ::Meta::Specifier::Mut;
@@ -87,8 +88,8 @@ export namespace
 	}
 
 	template
-		<	typename
-			...	t_tpBit
+		<	ByteSize
+				t_vBytes
 		,	BitSize
 				t_vOffset
 		,	typename
@@ -97,7 +98,7 @@ export namespace
 	[[nodiscard]]
 	auto constexpr inline
 	(	operator->*
-	)	(	Bit<t_tpBit...>
+	)	(	Bit<t_vBytes>
 			&	i_rObject
 		,	Member<t_vOffset, t_tData>
 				i_vMember
@@ -123,8 +124,8 @@ export namespace
 	}
 
 	template
-		<	typename
-			...	t_tpBit
+		<	ByteSize
+				t_vBytes
 		,	BitSize
 				t_vOffset
 		,	typename
@@ -133,7 +134,7 @@ export namespace
 	[[nodiscard]]
 	auto constexpr inline
 	(	operator->*
-	)	(	Bit<t_tpBit...> const
+	)	(	Bit<t_vBytes> const
 			&	i_rObject
 		,	Member<t_vOffset, t_tData const>
 				i_vMember
@@ -161,8 +162,8 @@ export namespace
 	}
 
 	template
-		<	typename
-			...	t_tpBit
+		<	ByteSize
+				t_vBytes
 		,	BitSize
 				t_vOffset
 		,	typename
@@ -171,7 +172,7 @@ export namespace
 	[[nodiscard]]
 	auto constexpr inline
 	(	operator->*
-	)	(	Bit<t_tpBit...> const
+	)	(	Bit<t_vBytes> const
 			&	i_rObject
 		,	Member<t_vOffset, Mut<t_tData>>
 				i_vMember

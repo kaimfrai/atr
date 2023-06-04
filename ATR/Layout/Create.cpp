@@ -27,32 +27,6 @@ namespace
 {
 	[[nodiscard]]
 	auto constexpr inline
-	(	MakeBit
-	)	()
-		noexcept
-	->	Empty
-	{	return
-		{};
-	}
-
-	template
-		<	typename
-			...	t_tpData
-		>
-	[[nodiscard]]
-	auto constexpr inline
-	(	MakeBit
-	)	(	TypeToken<t_tpData>
-			...
-		)
-		noexcept
-	->	Bit<t_tpData...>
-	{	return
-		{};
-	}
-
-	[[nodiscard]]
-	auto constexpr inline
 	(	MakeFork
 	)	()
 		noexcept
@@ -241,17 +215,31 @@ export namespace
 						...
 					>
 				)
-			{	return
-				MakeBit
-				(	RestoreTypeToken
-					<	rLayout
-						.	Buffer
-							[	vCount0
-							+	t_vpBitIndex
-							]
-					>
-					...
-				);
+			{
+				if	constexpr
+					(	sizeof...
+						(	t_vpBitIndex
+						)
+					>	0uz
+					)
+				{	return
+					Bit
+					<	(	...
+						+	rLayout
+							.	Buffer
+								[	vCount0
+								+	t_vpBitIndex
+								]
+							.	GetSize
+								()
+						)
+					>{};
+				}
+				else
+				{	return
+					Empty
+					{};
+				}
 			}(	::std::make_index_sequence
 				<	vBitTypeCount
 				>{}
