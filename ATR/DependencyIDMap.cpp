@@ -5,132 +5,81 @@ import ATR.Erase;
 import ATR.Member.ConfigData;
 
 import Meta.ID;
-import Meta.String.Literal;
 import Meta.String.Chain;
-import Meta.Logic.Constraint;
-import Meta.Logic.Erased.Clause;
-import Meta.Logic.LiteralBase;
-import Meta.Token.Type;
 
 import Std;
 
-using ::Meta::ID;
 using ::Meta::ProtoID;
 using ::Meta::String::Chain;
-using ::Meta::String::Literal;
 
 export namespace
 	ATR::Trait
 {
-	template
-		<	ProtoID
-				t_tDataID
-		>
-	struct
-		HasDataMember final
-	:	Meta::Trait::LiteralBase
+	[[nodiscard]]
+	auto constexpr inline
+	(	HasDataMember
+	)	(	Member::ConfigData const
+			&	i_rConfig
+		,	Chain
+				i_rMemberName
+		)
+		noexcept
+	->	bool
 	{
-		template
-			<	typename
-					t_tEntity
-			>
-		[[nodiscard]]
-		auto static constexpr inline
-		(	operator()
-		)	(	::Meta::TypeToken<t_tEntity>
+		for	(	auto const
+				&	rNamedInfo
+			:	i_rConfig
+				.	NamedInfoList
 			)
-			noexcept
-		->	bool
 		{
-			Member::ConfigData const static constexpr
-			&	rConfig
-			=	t_tEntity
-				::	Config
-			;
-
-			for	(	auto const
-					&	rNamedInfo
-				:	rConfig
-					.	NamedInfoList
+			auto const
+				vCompare
+			=	(	rNamedInfo
+				<=>	i_rMemberName
 				)
-			{
-				auto const
-					vCompare
-				=	(	rNamedInfo
-					<=>	t_tDataID
-						{}
+			;
+			if	(	::std::is_eq
+					(	vCompare
 					)
+				)
+			{	return
+					true
 				;
-				if	(	::std::is_eq
-						(	vCompare
-						)
-					)
-				{	return
-						true
-					;
-				}
-
-				if	(	::std::is_gt
-						(	vCompare
-						)
-					)
-				{	return
-						false
-					;
-				}
 			}
 
-			return
-				false
-			;
+			if	(	::std::is_gt
+					(	vCompare
+					)
+				)
+			{	return
+					false
+				;
+			}
 		}
-	};
+
+		return
+			false
+		;
+	}
 }
 
 export namespace
 	ATR
 {
-	// Create a clause by direct initialization.
-	// This assumes that there are no dublicates in the provided member name pack.
-	// Caches the clause independently of concept proto type.
-	template
-		<	ProtoID
-			...	t_tpMemberName
-		>
-	::Meta::Logic::Erased::Clause constexpr inline
-		HasDataMember
-	{	.BitClause
-		{	// TODO Better express the intent of having the bottom bits set
-			(	1uz
-			<<	sizeof...(t_tpMemberName)
-			)
-		-	1uz
-		}
-	,	.Literals
-		{	::Meta::Type
-			<	Trait::HasDataMember
-				<	t_tpMemberName
-				>
-			>
-			...
-		}
-	};
-
 	template
 		<	typename
 				t_tProto
 		,	typename
-			...	t_tpMemberName
+				t_tMemberName
 		>
 	concept
 		ProtoMemberInterface
-	=	::Meta::ProtoConjunctiveConstraint
-		<	t_tProto
-		,	HasDataMember
-			<	t_tpMemberName
-				...
-			>
-		>
+	=	::ATR::Trait::HasDataMember
+		(	t_tProto
+			::	Config
+		,	t_tMemberName
+			{}
+		)
 	;
 
 	template
