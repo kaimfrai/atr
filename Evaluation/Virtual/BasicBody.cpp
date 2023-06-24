@@ -2,8 +2,6 @@ export module Evaluation.Virtual.BasicBody;
 
 import Evaluation.Virtual.IBody;
 
-import Evaluation.Dependency.DataTypes;
-
 export namespace
 	Bodies3D
 {
@@ -16,7 +14,7 @@ export namespace
 		(	GetComputeSizeMultiplier
 		)	()	const
 			noexcept
-		->	Float
+		->	float
 		=	0;
 
 		[[nodiscard]]
@@ -24,7 +22,7 @@ export namespace
 		(	ComputeVolume
 		)	()	const
 			noexcept
-		->	Float
+		->	float
 			override
 		{	return
 				GetComputeSizeMultiplier

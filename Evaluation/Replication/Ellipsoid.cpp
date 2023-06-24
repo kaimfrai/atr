@@ -1,6 +1,5 @@
 export module Evaluation.Replication.Ellipsoid;
 
-import Evaluation.Dependency.DataTypes;
 import Evaluation.Dependency.PiFraction;
 
 export namespace
@@ -9,17 +8,26 @@ export namespace
 	struct
 		Ellipsoid
 	{
-		Float
+		float
+			ColorAlpha
+		;
+		float
+			ColorBlue
+		;
+		float
+			ColorGreen
+		;
+		float
+			ColorRed
+		;
+		float
 			Depth
 		;
-		Float
+		float
 			Height
 		;
-		Float
+		float
 			Width
-		;
-		RGBAColor
-			Color
 		;
 	};
 
@@ -30,7 +38,7 @@ export namespace
 			*	i_aObject
 		)
 		noexcept
-	->	Float
+	->	float
 	{
 		Ellipsoid const
 		*	aEllipsoid

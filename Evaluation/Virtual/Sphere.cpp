@@ -3,8 +3,6 @@ export module Evaluation.Virtual.Sphere;
 import Evaluation.Virtual.Circle;
 import Evaluation.Virtual.SphericBody;
 
-import Evaluation.Dependency.DataTypes;
-
 export namespace
 	Bodies3D
 {
@@ -19,7 +17,7 @@ export namespace
 		(	GetDepth
 		)	()	const
 			noexcept
-		->	Float const
+		->	float const
 			&
 			override
 		{	return

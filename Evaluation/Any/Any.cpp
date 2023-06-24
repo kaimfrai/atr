@@ -15,7 +15,6 @@ import Evaluation.CRTP.Cone;
 import Evaluation.CRTP.Ellipsoid;
 import Evaluation.CRTP.Head;
 import Evaluation.Dependency.InPlaceConstruct;
-import Evaluation.Dependency.DataTypes;
 
 import Std;
 
@@ -47,7 +46,7 @@ export namespace
 		(	ComputeVolume
 		)	()	const
 			noexcept
-		->	Float
+		->	float
 		=	0;
 
 		explicit(false) constexpr
@@ -97,7 +96,7 @@ export namespace
 		(	ComputeVolume
 		)	()	const
 			noexcept
-		->	Float
+		->	float
 			override
 		{	return
 			m_vBody
@@ -181,7 +180,7 @@ export namespace
 			&	i_rBody3D
 		)
 		noexcept
-	->	Float
+	->	float
 	{	return
 		i_rBody3D
 		->	ComputeVolume

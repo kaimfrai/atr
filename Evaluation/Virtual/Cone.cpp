@@ -3,7 +3,6 @@ export module Evaluation.Virtual.Cone;
 import Evaluation.Virtual.Circle;
 import Evaluation.Virtual.ExtendedShape;
 
-import Evaluation.Dependency.DataTypes;
 import Evaluation.Dependency.PiFraction;
 
 export namespace
@@ -15,7 +14,7 @@ export namespace
 		<	Shapes2D::Circle
 		>
 	{
-		Float
+		float
 			Depth
 		;
 
@@ -24,7 +23,7 @@ export namespace
 		(	GetDepth
 		)	()	const
 			noexcept
-		->	Float const
+		->	float const
 			&
 			override
 		{	return
@@ -37,7 +36,7 @@ export namespace
 		(	GetComputeSizeMultiplier
 		)	()	const
 			noexcept
-		->	Float
+		->	float
 			override
 		{	return
 			PiFraction

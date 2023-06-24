@@ -2,8 +2,6 @@ export module Evaluation.Virtual.Square;
 
 import Evaluation.Virtual.RectangularShape;
 
-import Evaluation.Dependency.DataTypes;
-
 export namespace
 	Shapes2D
 {
@@ -16,7 +14,7 @@ export namespace
 		(	GetHeight
 		)	()	const
 			noexcept
-		->	Float const
+		->	float const
 			&
 			override
 		{	return

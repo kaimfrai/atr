@@ -1,7 +1,5 @@
 export module Evaluation.CRTP.DepthIsWidth;
 
-import Evaluation.Dependency.DataTypes;
-
 export namespace
 	Bodies3D
 {
@@ -17,7 +15,7 @@ export namespace
 		(	GetDepth
 		)	()	const
 			noexcept
-		->	Float const
+		->	float const
 			&
 		{	return
 				static_cast

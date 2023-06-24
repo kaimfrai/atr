@@ -14,7 +14,6 @@ import Evaluation.Replication.Cone;
 import Evaluation.Replication.Ellipsoid;
 import Evaluation.Replication.Head;
 import Evaluation.Dependency.InPlaceConstruct;
-import Evaluation.Dependency.DataTypes;
 
 import Std;
 
@@ -47,7 +46,7 @@ export namespace
 				*
 			)
 			noexcept
-		->	Float
+		->	float
 		;
 
 		union
@@ -269,7 +268,7 @@ export namespace
 		(	ComputeVolume
 		)	()	const
 			noexcept
-		->	Float
+		->	float
 		{	return
 			m_fComputeVolume
 			(	&m_vAny
@@ -284,7 +283,7 @@ export namespace
 			&	i_rBody3D
 		)
 		noexcept
-	->	Float
+	->	float
 	{	return
 		i_rBody3D
 		.	ComputeVolume

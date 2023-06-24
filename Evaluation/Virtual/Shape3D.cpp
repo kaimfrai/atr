@@ -1,7 +1,6 @@
 export module Evaluation.Virtual.Shape3D;
 
 import Evaluation.Virtual.ExtendedShape;
-import Evaluation.Dependency.DataTypes;
 
 export namespace
 	Bodies3D
@@ -21,11 +20,11 @@ export namespace
 		(	GetDepth
 		)	()	const
 			noexcept
-		->	Float const
+		->	float const
 			&
 			override
 		{
-			Float const static constexpr
+			float const static constexpr
 				vDepth
 			=	1.0
 			;
@@ -39,7 +38,7 @@ export namespace
 		(	GetComputeSizeMultiplier
 		)	()	const
 			noexcept
-		->	Float
+		->	float
 			override
 		{	return
 				this

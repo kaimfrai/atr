@@ -1,7 +1,5 @@
 export module Evaluation.Dependency.Fraction;
 
-import Evaluation.Dependency.DataTypes;
-
 import Std;
 
 export
@@ -22,17 +20,17 @@ export
 		(	operator()
 		)	()
 			noexcept
-		->	Float
+		->	float
 		{	return
-			(	static_cast<Float>(t_vNumerator)
-			/	static_cast<Float>(t_vDenominator)
+			(	static_cast<float>(t_vNumerator)
+			/	static_cast<float>(t_vDenominator)
 			);
 		}
 
 		[[nodiscard]]
 		explicit(false) constexpr inline
 		(	operator
-			Float
+			float
 		)	()	const
 			noexcept
 		{	return

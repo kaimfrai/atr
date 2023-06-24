@@ -1,14 +1,12 @@
 export module Evaluation.CRTP.SeparateHeight;
 
-import Evaluation.Dependency.DataTypes;
-
 export namespace
 	Shapes2D
 {
 	struct
 		SeparateHeight
 	{
-		Float
+		float
 			Height
 		;
 
@@ -17,7 +15,7 @@ export namespace
 		(	GetHeight
 		)	()	const
 			noexcept
-		->	Float const
+		->	float const
 			&
 		{	return
 				Height

@@ -1,18 +1,25 @@
 export module Evaluation.Replication.Cube;
 
-import Evaluation.Dependency.DataTypes;
-
 export namespace
 	Bodies3D
 {
 	struct
 		Cube
 	{
-		Float
-			Width
+		float
+			ColorAlpha
 		;
-		RGBAColor
-			Color
+		float
+			ColorBlue
+		;
+		float
+			ColorGreen
+		;
+		float
+			ColorRed
+		;
+		float
+			Height
 		;
 	};
 
@@ -23,7 +30,7 @@ export namespace
 			*	i_aObject
 		)
 		noexcept
-	->	Float
+	->	float
 	{
 		Cube const
 		*	aCube
@@ -36,11 +43,11 @@ export namespace
 
 		return
 			aCube
-			->	Width
+			->	Height
 		*	aCube
-			->	Width
+			->	Height
 		*	aCube
-			->	Width
+			->	Height
 		;
 	}
 }

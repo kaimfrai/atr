@@ -1,6 +1,5 @@
 export module Evaluation.CRTP.SphericBody;
 
-import Evaluation.Dependency.DataTypes;
 import Evaluation.Dependency.PiFraction;
 import Evaluation.CRTP.ExtendedShape;
 
@@ -25,7 +24,7 @@ export namespace
 		(	GetComputeSizeMultiplier
 		)	()	const
 			noexcept
-		->	Float
+		->	float
 		{	return
 			PiFraction
 			<	1z

@@ -2,8 +2,6 @@ export module Evaluation.Virtual.ExtendedShape;
 
 import Evaluation.Virtual.BasicBody;
 
-import Evaluation.Dependency.DataTypes;
-
 export namespace
 	Bodies3D
 {
@@ -24,7 +22,7 @@ export namespace
 		(	GetHeight
 		)	()	const
 			noexcept
-		->	Float const
+		->	float const
 			&
 			override
 		{	return
@@ -39,7 +37,7 @@ export namespace
 		(	GetWidth
 		)	()	const
 			noexcept
-		->	Float const
+		->	float const
 			&
 			override
 		{	return

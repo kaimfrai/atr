@@ -1,10 +1,25 @@
 export module Evaluation.CRTP.BasicShape;
 
-import Evaluation.Dependency.DataTypes;
-
 export namespace
 	Shapes2D
 {
+	struct
+		RGBAColor
+	{
+		float
+			Red
+		;
+		float
+			Green
+		;
+		float
+			Blue
+		;
+		float
+			Alpha
+		;
+	};
+
 	template
 		<	typename
 				t_tShape
@@ -21,7 +36,7 @@ export namespace
 		(	ComputeArea
 		)	()	const
 			noexcept
-		->	Float
+		->	float
 		{
 			t_tShape const
 			&	rBody

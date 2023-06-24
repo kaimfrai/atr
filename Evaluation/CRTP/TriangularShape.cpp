@@ -1,6 +1,5 @@
 export module Evaluation.CRTP.TriangularShape;
 
-import Evaluation.Dependency.DataTypes;
 import Evaluation.Dependency.Fraction;
 import Evaluation.CRTP.BasicShape;
 import Evaluation.CRTP.SeparateWidth;
@@ -24,7 +23,7 @@ export namespace
 		(	GetComputeSizeMultiplier
 		)	()	const
 			noexcept
-		->	Float
+		->	float
 		{	return
 			Fraction
 			<	1uz

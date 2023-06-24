@@ -17,8 +17,6 @@ import Evaluation.Virtual.Head;
 import Evaluation.Dependency.MakeUniqueNoexcept;
 import Evaluation.Virtual.IBody;
 
-import Evaluation.Dependency.DataTypes;
-
 import Std;
 
 export using ::MakeUniqueNoexcept;
@@ -55,7 +53,7 @@ export namespace
 			&	i_rBody3D
 		)
 		noexcept
-	->	Float
+	->	float
 	{	return
 		i_rBody3D
 		->	ComputeVolume

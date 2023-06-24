@@ -16,7 +16,6 @@ import Evaluation.CRTP.Cone;
 import Evaluation.CRTP.Ellipsoid;
 import Evaluation.CRTP.Head;
 import Evaluation.Dependency.DefaultConstruct;
-import Evaluation.Dependency.DataTypes;
 // required for use of macro
 import <boost.hpp>;
 
@@ -51,7 +50,7 @@ export namespace
 			<	has_ComputeVolume
 				<	auto
 						()	const
-					->	Float
+					->	float
 				>
 			,	boost::type_erasure::constructible
 				<	boost::type_erasure::_self
@@ -71,7 +70,7 @@ export namespace
 			&	i_rBody3D
 		)
 		noexcept
-	->	Float
+	->	float
 	{	return
 			i_rBody3D
 			.	ComputeVolume

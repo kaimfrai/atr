@@ -32,41 +32,41 @@ using
 	>
 ;
 
-static_assert(AdditionalSize<Type<"Square">, 1, 1> == 4);
+static_assert(AdditionalSize<Type<"Square">, 1, 1> == 0);
 static_assert(SizeMinimal<Type<"Square">, 1, 1>);
 
-static_assert(AdditionalSize<Type<"Rectangle">, 2, 1> == 4);
+static_assert(AdditionalSize<Type<"Rectangle">, 2, 1> == 0);
 static_assert(SizeMinimal<Type<"Rectangle">, 2, 1>);
 
-static_assert(AdditionalSize<Type<"Triangle">, 2, 1> == 4);
+static_assert(AdditionalSize<Type<"Triangle">, 2, 1> == 0);
 static_assert(SizeMinimal<Type<"Triangle">, 2, 1>);
 
-static_assert(AdditionalSize<Type<"Circle">, 1, 1> == 4);
+static_assert(AdditionalSize<Type<"Circle">, 1, 1> == 0);
 static_assert(SizeMinimal<Type<"Circle">, 1, 1>);
 
-static_assert(AdditionalSize<Type<"Ellipse">, 2, 1> == 4);
+static_assert(AdditionalSize<Type<"Ellipse">, 2, 1> == 0);
 static_assert(SizeMinimal<Type<"Ellipse">, 2, 1>);
 
 
-static_assert(AdditionalSize<Type<"Cube">, 1, 1> == 4);
+static_assert(AdditionalSize<Type<"Cube">, 1, 1> == 0);
 static_assert(SizeMinimal<Type<"Cube">, 1, 1>);
 
-static_assert(AdditionalSize<Type<"Cuboid">, 3, 1> == 4);
+static_assert(AdditionalSize<Type<"Cuboid">, 3, 1> == 0);
 static_assert(SizeMinimal<Type<"Cuboid">, 3, 1>);
 
-static_assert(AdditionalSize<Type<"Pyramid">, 3, 1> == 4);
+static_assert(AdditionalSize<Type<"Pyramid">, 3, 1> == 0);
 static_assert(SizeMinimal<Type<"Pyramid">, 3, 1>);
 
-static_assert(AdditionalSize<Type<"Sphere">, 1, 1> == 4);
+static_assert(AdditionalSize<Type<"Sphere">, 1, 1> == 0);
 static_assert(SizeMinimal<Type<"Sphere">, 1, 1>);
 
-static_assert(AdditionalSize<Type<"Cylinder">, 2, 1> == 4);
+static_assert(AdditionalSize<Type<"Cylinder">, 2, 1> == 0);
 static_assert(SizeMinimal<Type<"Cylinder">, 2, 1>);
 
-static_assert(AdditionalSize<Type<"Cone">, 2, 1> == 4);
+static_assert(AdditionalSize<Type<"Cone">, 2, 1> == 0);
 static_assert(SizeMinimal<Type<"Cone">, 2, 1>);
 
-static_assert(AdditionalSize<Type<"Ellipsoid">, 3, 1> == 4);
+static_assert(AdditionalSize<Type<"Ellipsoid">, 3, 1> == 0);
 static_assert(SizeMinimal<Type<"Ellipsoid">, 3, 1>);
 
 static_assert(AdditionalSize<Type<"Head">, 3, 2> == 0);

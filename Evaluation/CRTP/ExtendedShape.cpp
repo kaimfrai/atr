@@ -2,8 +2,6 @@ export module Evaluation.CRTP.ExtendedShape;
 
 import Evaluation.CRTP.BasicBody;
 
-import Evaluation.Dependency.DataTypes;
-
 export namespace
 	Bodies3D
 {
@@ -28,7 +26,7 @@ export namespace
 		(	GetHeight
 		)	()	const
 			noexcept
-		->	Float const
+		->	float const
 			&
 		{	return
 			Shapes2D
@@ -42,7 +40,7 @@ export namespace
 			GetWidth
 			()	const
 			noexcept
-		->	Float const
+		->	float const
 			&
 		{	return
 			Shapes2D

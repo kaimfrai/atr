@@ -11,7 +11,6 @@ import Evaluation.Archetype.Rectangle;
 import Evaluation.Archetype.Sphere;
 import Evaluation.Archetype.Square;
 import Evaluation.Archetype.Triangle;
-import Evaluation.Dependency.DataTypes;
 
 import ATR.Member.Config;
 import ATR.Member.CountedType;
@@ -75,208 +74,110 @@ auto constexpr inline
 auto constexpr inline
 	FloatAlign
 =	BitAlign_Of
-	<	Float
-	>
-;
-
-auto constexpr inline
-	ColorAlign
-=	BitAlign_Of
-	<	RGBAColor
+	<	float
 	>
 ;
 
 static_assert
 (	TypeList_Of<"Square", FloatAlign>
 ==	CountedType
-	{	Type<Float>
-	,	1z
-	}
-);
-static_assert
-(	TypeList_Of<"Square", ColorAlign>
-==	CountedType
-	{	Type<RGBAColor>
-	,	1z
+	{	Type<float>
+	,	5z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Rectangle", FloatAlign>
 ==	CountedType
-	{	Type<Float>
-	,	2z
-	}
-);
-static_assert
-(	TypeList_Of<"Rectangle", ColorAlign>
-==	CountedType
-	{	Type<RGBAColor>
-	,	1z
+	{	Type<float>
+	,	6z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Triangle", FloatAlign>
 ==	CountedType
-	{	Type<Float>
-	,	2z
-	}
-);
-static_assert
-(	TypeList_Of<"Triangle", ColorAlign>
-==	CountedType
-	{	Type<RGBAColor>
-	,	1z
+	{	Type<float>
+	,	6z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Circle", FloatAlign>
 ==	CountedType
-	{	Type<Float>
-	,	1z
-	}
-);
-static_assert
-(	TypeList_Of<"Circle", ColorAlign>
-==	CountedType
-	{	Type<RGBAColor>
-	,	1z
+	{	Type<float>
+	,	5z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Ellipse", FloatAlign>
 ==	CountedType
-	{	Type<Float>
-	,	2z
-	}
-);
-static_assert
-(	TypeList_Of<"Ellipse", ColorAlign>
-==	CountedType
-	{	Type<RGBAColor>
-	,	1z
+	{	Type<float>
+	,	6z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Cube", FloatAlign>
 ==	CountedType
-	{	Type<Float>
-	,	1z
-	}
-);
-static_assert
-(	TypeList_Of<"Cube", ColorAlign>
-==	CountedType
-	{	Type<RGBAColor>
-	,	1z
+	{	Type<float>
+	,	5z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Cuboid", FloatAlign>
 ==	CountedType
-	{	Type<Float>
-	,	3z
-	}
-);
-static_assert
-(	TypeList_Of<"Cuboid", ColorAlign>
-==	CountedType
-	{	Type<RGBAColor>
-	,	1z
+	{	Type<float>
+	,	7z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Pyramid", FloatAlign>
 ==	CountedType
-	{	Type<Float>
-	,	3z
-	}
-);
-static_assert
-(	TypeList_Of<"Pyramid", ColorAlign>
-==	CountedType
-	{	Type<RGBAColor>
-	,	1z
+	{	Type<float>
+	,	7z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Sphere", FloatAlign>
 ==	CountedType
-	{	Type<Float>
-	,	1z
-	}
-);
-static_assert
-(	TypeList_Of<"Sphere", ColorAlign>
-==	CountedType
-	{	Type<RGBAColor>
-	,	1z
+	{	Type<float>
+	,	5z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Cylinder", FloatAlign>
 ==	CountedType
-	{	Type<Float>
-	,	2z
-	}
-);
-static_assert
-(	TypeList_Of<"Cylinder", ColorAlign>
-==	CountedType
-	{	Type<RGBAColor>
-	,	1z
+	{	Type<float>
+	,	6z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Cone", FloatAlign>
 ==	CountedType
-	{	Type<Float>
-	,	2z
-	}
-);
-static_assert
-(	TypeList_Of<"Cone", ColorAlign>
-==	CountedType
-	{	Type<RGBAColor>
-	,	1z
+	{	Type<float>
+	,	6z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Ellipsoid", FloatAlign>
 ==	CountedType
-	{	Type<Float>
-	,	3z
-	}
-);
-static_assert
-(	TypeList_Of<"Ellipsoid", ColorAlign>
-==	CountedType
-	{	Type<RGBAColor>
-	,	1z
+	{	Type<float>
+	,	7z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Head", FloatAlign>
 ==	CountedType
-	{	Type<Float>
-	,	3z
-	}
-);
-static_assert
-(	TypeList_Of<"Head", ColorAlign>
-==	CountedType
-	{	Type<RGBAColor>
-	,	2z
+	{	Type<float>
+	,	11z
 	}
 );

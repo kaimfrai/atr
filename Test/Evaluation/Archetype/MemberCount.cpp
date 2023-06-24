@@ -1,3 +1,4 @@
+import Evaluation.Archetype.BasicShape;
 import Evaluation.Archetype.Circle;
 import Evaluation.Archetype.Cone;
 import Evaluation.Archetype.Cube;
@@ -82,51 +83,51 @@ auto constexpr inline
 
 static_assert
 (	MemberCount<"Square">
-==	2z
+==	5z
 );
 static_assert
 (	MemberCount<"Rectangle">
-==	3z
+==	6z
 );
 static_assert
 (	MemberCount<"Triangle">
-==	3z
+==	6z
 );
 static_assert
 (	MemberCount<"Circle">
-==	2z
+==	5z
 );
 static_assert
 (	MemberCount<"Ellipse">
-==	3z
+==	6z
 );
 static_assert
 (	MemberCount<"Cube">
-==	2z
+==	5z
 );
 static_assert
 (	MemberCount<"Cuboid">
-==	4z
+==	7z
 );
 static_assert
 (	MemberCount<"Sphere">
-==	2z
+==	5z
 );
 static_assert
 (	MemberCount<"Cylinder">
-==	3z
+==	6z
 );
 static_assert
 (	MemberCount<"Cone">
-==	3z
+==	6z
 );
 static_assert
 (	MemberCount<"Ellipsoid">
-==	4z
+==	7z
 );
 static_assert
 (	MemberCount<"Head">
 ==	(	3z * MemberCount<"Sphere">
-	-	1z
+	-	MemberCount<"Color">
 	)
 );

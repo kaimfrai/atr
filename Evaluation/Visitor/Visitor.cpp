@@ -658,9 +658,9 @@ export namespace
 	using
 		Body3D
 	=	ObjectValue
-		<	sizeof(Cuboid)
+		<	::std::bit_ceil(sizeof(Cuboid))
 		,	::std::align_val_t
-			{	alignof(Cuboid)
+			{	alignof(void*)
 			}
 		>
 	;

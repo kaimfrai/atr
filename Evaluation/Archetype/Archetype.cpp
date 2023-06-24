@@ -15,7 +15,6 @@ import Evaluation.Archetype.Cone;
 import Evaluation.Archetype.Ellipsoid;
 import Evaluation.Archetype.Head;
 import Evaluation.Dependency.TypeConstruct;
-import Evaluation.Dependency.DataTypes;
 
 import ATR.Literals;
 import ATR.Virtual.Element;
@@ -49,16 +48,17 @@ export namespace
 	using
 		Body3D
 	=	Element
-		<	4uz * sizeof(Float)
-		,	alignof(Float)
+		<	12uz * sizeof(float)
+		,	alignof(float)
 		,	Entry
 			<	ID<"ComputeVolume">
-			,	auto(	::std::byte const
+			,	auto
+					(	::std::byte const
 						(&
 						)	[]
 					)
 					noexcept
-				->	Float
+				->	float
 			>
 		>
 	;
@@ -70,7 +70,7 @@ export namespace
 			&	i_rBody3D
 		)
 		noexcept
-	->	Float
+	->	float
 	{	return
 		i_rBody3D
 		(	"ComputeVolume"_id

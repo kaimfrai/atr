@@ -16,7 +16,6 @@ import Evaluation.CRTP.Cone;
 import Evaluation.CRTP.Ellipsoid;
 import Evaluation.CRTP.Head;
 import Evaluation.Dependency.DefaultConstruct;
-import Evaluation.Dependency.DataTypes;
 
 using namespace dyno::literals;
 
@@ -48,7 +47,7 @@ export namespace
 			=	dyno::method
 				<	auto
 						() const
-					->	Float
+					->	float
 				>
 			,	dyno::CopyConstructible
 				{}
@@ -93,7 +92,7 @@ export namespace
 	=	dyno::poly
 		<	VolumeComputer
 		,	dyno::local_storage
-			<	5uz * sizeof(Float)
+			<	16uz * sizeof(float)
 			>
 		>
 	;
@@ -105,7 +104,7 @@ export namespace
 			&	i_rBody3D
 		)
 		noexcept
-	->	Float
+	->	float
 	{	return
 		i_rBody3D
 		.	virtual_

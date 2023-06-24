@@ -1,6 +1,5 @@
 export module Evaluation.Replication.Triangle;
 
-import Evaluation.Dependency.DataTypes;
 import Evaluation.Dependency.Fraction;
 
 import Std;
@@ -11,14 +10,23 @@ export namespace
 	struct
 		Triangle
 	{
-		Float
+		float
+			ColorAlpha
+		;
+		float
+			ColorBlue
+		;
+		float
+			ColorGreen
+		;
+		float
+			ColorRed
+		;
+		float
 			Height
 		;
-		Float
+		float
 			Width
-		;
-		RGBAColor
-			Color
 		;
 	};
 
@@ -29,7 +37,7 @@ export namespace
 			*	i_aObject
 		)
 		noexcept
-	->	Float
+	->	float
 	{
 		Triangle const
 		*	aTriangle

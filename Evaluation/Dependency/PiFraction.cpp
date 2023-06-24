@@ -1,15 +1,13 @@
 export module Evaluation.Dependency.PiFraction;
 
-import Evaluation.Dependency.DataTypes;
-
 import Std;
 
 export
 {
-	Float constexpr inline
+	float constexpr inline
 		Pi
 	=	::std::numbers::pi_v
-		<	Float
+		<	float
 		>
 	;
 
@@ -29,18 +27,18 @@ export
 		(	operator()
 		)	()
 			noexcept
-		->	Float
+		->	float
 		{	return
 				Pi
-			*	static_cast<Float>(t_vNumerator)
-			/	static_cast<Float>(t_vDenominator)
+			*	static_cast<float>(t_vNumerator)
+			/	static_cast<float>(t_vDenominator)
 			;
 		}
 
 		[[nodiscard]]
 		explicit(false) constexpr inline
 		(	operator
-			Float
+			float
 		)	()	const
 			noexcept
 		{	return

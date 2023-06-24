@@ -2,11 +2,26 @@ export module Evaluation.Virtual.BasicShape;
 
 import Evaluation.Virtual.IShape;
 
-import Evaluation.Dependency.DataTypes;
-
 export namespace
 	Shapes2D
 {
+	struct
+		RGBAColor
+	{
+		float
+			Red
+		;
+		float
+			Green
+		;
+		float
+			Blue
+		;
+		float
+			Alpha
+		;
+	};
+
 	struct
 		BasicShape
 	:	IShape
@@ -20,7 +35,7 @@ export namespace
 		(	GetComputeSizeMultiplier
 		)	()	const
 			noexcept
-		->	Float
+		->	float
 		=	0;
 
 		[[nodiscard]]
@@ -28,7 +43,7 @@ export namespace
 		(	ComputeArea
 		)	()	const
 			noexcept
-		->	Float
+		->	float
 			override
 		{	return
 				GetComputeSizeMultiplier

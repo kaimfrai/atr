@@ -1,7 +1,5 @@
 export module Evaluation.Replication.Rectangle;
 
-import Evaluation.Dependency.DataTypes;
-
 import Std;
 
 export namespace
@@ -10,14 +8,23 @@ export namespace
 	struct
 		Rectangle
 	{
-		Float
+		float
+			ColorAlpha
+		;
+		float
+			ColorBlue
+		;
+		float
+			ColorGreen
+		;
+		float
+			ColorRed
+		;
+		float
 			Height
 		;
-		Float
+		float
 			Width
-		;
-		RGBAColor
-			Color
 		;
 	};
 
@@ -28,7 +35,7 @@ export namespace
 			*	i_aObject
 		)
 		noexcept
-	->	Float
+	->	float
 	{
 		Rectangle const
 		*	aRectangle

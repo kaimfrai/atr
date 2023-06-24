@@ -1,6 +1,5 @@
 export module Evaluation.Dependency.MainTemplate;
 
-import Evaluation.Dependency.DataTypes;
 import Evaluation.Dependency.PseudoRandomSequence;
 
 import Std;
@@ -46,7 +45,7 @@ export
 			&	i_rRandom
 		)
 		noexcept
-	->	Float
+	->	float
 	{
 		t_tBodyContainer
 			vElements
@@ -196,7 +195,7 @@ export
 			}
 		}
 
-		Float
+		float
 			vLoopSum
 		{};
 

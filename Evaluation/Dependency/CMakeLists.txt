@@ -5,7 +5,6 @@ add_single_file_modules(
 	DynamicArray.cpp
 	MakeUniqueNoexcept.cpp
 
-	DataTypes.cpp
 	Fraction.cpp
 	PiFraction.cpp
 

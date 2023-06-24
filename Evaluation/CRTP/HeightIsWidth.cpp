@@ -1,7 +1,5 @@
 export module Evaluation.CRTP.HeightIsWidth;
 
-import Evaluation.Dependency.DataTypes;
-
 export namespace
 	Shapes2D
 {
@@ -17,7 +15,7 @@ export namespace
 		(	GetHeight
 		)	()	const
 			noexcept
-		->	Float const
+		->	float const
 			&
 		{	return
 				static_cast

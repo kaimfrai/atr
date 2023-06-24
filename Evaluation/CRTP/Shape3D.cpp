@@ -1,7 +1,6 @@
 export module Evaluation.CRTP.Shape3D;
 
 import Evaluation.CRTP.ExtendedShape;
-import Evaluation.Dependency.DataTypes;
 
 export namespace
 	Bodies3D
@@ -24,10 +23,10 @@ export namespace
 		(	GetDepth
 		)	()	const
 			noexcept
-		->	Float const
+		->	float const
 			&
 		{
-			Float const static constexpr
+			float const static constexpr
 				vDepth
 			=	1.0
 			;
@@ -41,7 +40,7 @@ export namespace
 		(	GetComputeSizeMultiplier
 		)	()	const
 			noexcept
-		->	Float
+		->	float
 		{	return
 				this
 				->	Shapes2D

@@ -16,7 +16,6 @@ import Evaluation.CRTP.Cone;
 import Evaluation.CRTP.Ellipsoid;
 import Evaluation.CRTP.Head;
 import Evaluation.Dependency.DefaultConstruct;
-import Evaluation.Dependency.DataTypes;
 
 export using ::DefaultConstruct;
 
@@ -50,7 +49,7 @@ export namespace
 			&	i_rBody
 		)
 		noexcept
-	->	Float
+	->	float
 	{	return
 		i_rBody
 		.	ComputeVolume
@@ -65,7 +64,7 @@ export namespace
 		<	auto
 				(	ComputeVolumeTag
 				)	const
-			->	Float
+			->	float
 		>
 	;
 
@@ -76,7 +75,7 @@ export namespace
 			&	i_rBody3D
 		)
 		noexcept
-	->	Float
+	->	float
 	{	return
 		i_rBody3D
 		.	call

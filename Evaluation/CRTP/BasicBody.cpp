@@ -1,7 +1,5 @@
 export module Evaluation.CRTP.BasicBody;
 
-import Evaluation.Dependency.DataTypes;
-
 export namespace
 	Bodies3D
 {
@@ -17,7 +15,7 @@ export namespace
 		(	ComputeVolume
 		)	()	const
 			noexcept
-		->	Float
+		->	float
 		{
 			t_tBody const
 			&	rBody

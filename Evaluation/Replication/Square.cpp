@@ -1,7 +1,5 @@
 export module Evaluation.Replication.Square;
 
-import Evaluation.Dependency.DataTypes;
-
 import Std;
 
 export namespace
@@ -10,11 +8,20 @@ export namespace
 	struct
 		Square
 	{
-		Float
-			Width
+		float
+			ColorAlpha
 		;
-		RGBAColor
-			Color
+		float
+			ColorBlue
+		;
+		float
+			ColorGreen
+		;
+		float
+			ColorRed
+		;
+		float
+			Height
 		;
 	};
 
@@ -25,7 +32,7 @@ export namespace
 			*	i_aObject
 		)
 		noexcept
-	->	Float
+	->	float
 	{
 		Square const
 		*	aSquare
@@ -38,9 +45,9 @@ export namespace
 
 		return
 			aSquare
-			->	Width
+			->	Height
 		*	aSquare
-			->	Width
+			->	Height
 		;
 	}
 }

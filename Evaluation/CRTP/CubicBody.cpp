@@ -1,6 +1,5 @@
 export module Evaluation.CRTP.CubicBody;
 
-import Evaluation.Dependency.DataTypes;
 import Evaluation.Dependency.Fraction;
 import Evaluation.CRTP.ExtendedShape;
 
@@ -25,7 +24,7 @@ export namespace
 		(	GetComputeSizeMultiplier
 		)	()	const
 			noexcept
-		->	Float
+		->	float
 		{	return
 			Fraction<>
 			{};

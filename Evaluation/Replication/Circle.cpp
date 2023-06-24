@@ -1,6 +1,5 @@
 export module Evaluation.Replication.Circle;
 
-import Evaluation.Dependency.DataTypes;
 import Evaluation.Dependency.PiFraction;
 
 import Std;
@@ -11,11 +10,20 @@ export namespace
 	struct
 		Circle
 	{
-		Float
-			Width
+		float
+			ColorAlpha
 		;
-		RGBAColor
-			Color
+		float
+			ColorBlue
+		;
+		float
+			ColorGreen
+		;
+		float
+			ColorRed
+		;
+		float
+			Height
 		;
 	};
 
@@ -26,13 +34,13 @@ export namespace
 			*	i_aObject
 		)
 		noexcept
-	->	Float
+	->	float
 	{
-		Float const
-			vWidth
+		float const
+			vHeight
 		=	*	::std::launder
 				(	static_cast
-					<	Float const
+					<	float const
 						*
 					>(	i_aObject
 					)
@@ -44,8 +52,8 @@ export namespace
 			<	1z
 			,	4z
 			>{}
-		*	vWidth
-		*	vWidth
+		*	vHeight
+		*	vHeight
 		;
 	}
 }

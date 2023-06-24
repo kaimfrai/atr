@@ -11,7 +11,6 @@ import Evaluation.Archetype.Rectangle;
 import Evaluation.Archetype.Sphere;
 import Evaluation.Archetype.Square;
 import Evaluation.Archetype.Triangle;
-import Evaluation.Dependency.DataTypes;
 import Evaluation.Dependency.Fraction;
 import Evaluation.Dependency.PiFraction;
 
@@ -85,15 +84,11 @@ template
 	,	auto
 			t_vFloatCount
 		=	0z
-	,	auto
-			t_vColorCount
-		=	0z
 	>
 ::ATR::Member::Info constexpr inline
 	OffsetType
 {	::Meta::Type<t_tMember>
-,		t_vFloatCount * BitSize_Of<Float>
-	+	t_vColorCount * BitSize_Of<RGBAColor>
+,	t_vFloatCount * BitSize_Of<float>
 };
 
 [[nodiscard]]
@@ -119,6 +114,43 @@ auto constexpr inline
 	;
 }
 
+[[nodiscard]]
+auto constexpr inline
+(	Equals
+)	(	NamedInfo
+			i_vLeft
+	,	NamedInfoView
+			i_vRight
+	)
+	noexcept
+->	bool
+{
+	if	(	i_vLeft.Name
+		!=	Chain{i_vRight.Name}
+		)
+	{	::std::unreachable
+			()
+		;
+	}
+	if	(	i_vLeft.Info.Type
+		!=	i_vRight.Info.Type
+		)
+	{	::std::unreachable
+			()
+		;
+	}
+	if	(	i_vLeft.Info.Offset
+		!=	i_vRight.Info.Offset
+		)
+	{	::std::unreachable
+			()
+		;
+	}
+
+	return
+		true
+	;
+}
 
 [[nodiscard]]
 auto constexpr inline
@@ -142,17 +174,26 @@ auto constexpr inline
 static_assert
 (	NamedInfoList_Of<"Square">
 ==	NameList
-	{	{	"Color"
-		,	OffsetType<RGBAColor, 1z>
+	{	{	"ColorAlpha"
+		,	OffsetType<float, 0z>
+		}
+	,	{	"ColorBlue"
+		,	OffsetType<float, 1z>
+		}
+	,	{	"ColorGreen"
+		,	OffsetType<float, 2z>
+		}
+	,	{	"ColorRed"
+		,	OffsetType<float, 3z>
 		}
 	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<One>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
 	}
 );
@@ -160,17 +201,26 @@ static_assert
 static_assert
 (	NamedInfoList_Of<"Rectangle">
 ==	NameList
-	{	{	"Color"
-		,	OffsetType<RGBAColor, 2z>
+	{	{	"ColorAlpha"
+		,	OffsetType<float, 0z>
+		}
+	,	{	"ColorBlue"
+		,	OffsetType<float, 1z>
+		}
+	,	{	"ColorGreen"
+		,	OffsetType<float, 2z>
+		}
+	,	{	"ColorRed"
+		,	OffsetType<float, 3z>
 		}
 	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<One>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<float, 5z>
 		}
 	}
 );
@@ -178,17 +228,26 @@ static_assert
 static_assert
 (	NamedInfoList_Of<"Triangle">
 ==	NameList
-	{	{	"Color"
-		,	OffsetType<RGBAColor, 2z>
+	{	{	"ColorAlpha"
+		,	OffsetType<float, 0z>
+		}
+	,	{	"ColorBlue"
+		,	OffsetType<float, 1z>
+		}
+	,	{	"ColorGreen"
+		,	OffsetType<float, 2z>
+		}
+	,	{	"ColorRed"
+		,	OffsetType<float, 3z>
 		}
 	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<Half>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<float, 5z>
 		}
 	}
 );
@@ -196,17 +255,26 @@ static_assert
 static_assert
 (	NamedInfoList_Of<"Circle">
 ==	NameList
-	{	{	"Color"
-		,	OffsetType<RGBAColor, 1z>
+	{	{	"ColorAlpha"
+		,	OffsetType<float, 0z>
+		}
+	,	{	"ColorBlue"
+		,	OffsetType<float, 1z>
+		}
+	,	{	"ColorGreen"
+		,	OffsetType<float, 2z>
+		}
+	,	{	"ColorRed"
+		,	OffsetType<float, 3z>
 		}
 	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<Pi_4>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
 	}
 );
@@ -214,17 +282,26 @@ static_assert
 static_assert
 (	NamedInfoList_Of<"Ellipse">
 ==	NameList
-	{	{	"Color"
-		,	OffsetType<RGBAColor, 2z>
+	{	{	"ColorAlpha"
+		,	OffsetType<float, 0z>
+		}
+	,	{	"ColorBlue"
+		,	OffsetType<float, 1z>
+		}
+	,	{	"ColorGreen"
+		,	OffsetType<float, 2z>
+		}
+	,	{	"ColorRed"
+		,	OffsetType<float, 3z>
 		}
 	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<Pi_4>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<float, 5z>
 		}
 	}
 );
@@ -232,20 +309,29 @@ static_assert
 static_assert
 (	NamedInfoList_Of<"Cube">
 ==	NameList
-	{	{	"Color"
-		,	OffsetType<RGBAColor, 1z>
+	{	{	"ColorAlpha"
+		,	OffsetType<float, 0z>
+		}
+	,	{	"ColorBlue"
+		,	OffsetType<float, 1z>
+		}
+	,	{	"ColorGreen"
+		,	OffsetType<float, 2z>
+		}
+	,	{	"ColorRed"
+		,	OffsetType<float, 3z>
 		}
 	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<One>
 		}
 	,	{	"Depth"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
 	}
 );
@@ -253,20 +339,29 @@ static_assert
 static_assert
 (	NamedInfoList_Of<"Cuboid">
 ==	NameList
-	{	{	"Color"
-		,	OffsetType<RGBAColor, 3z>
+	{	{	"ColorAlpha"
+		,	OffsetType<float, 0z>
+		}
+	,	{	"ColorBlue"
+		,	OffsetType<float, 1z>
+		}
+	,	{	"ColorGreen"
+		,	OffsetType<float, 2z>
+		}
+	,	{	"ColorRed"
+		,	OffsetType<float, 3z>
 		}
 	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<One>
 		}
 	,	{	"Depth"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<float, 5z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 2z>
+		,	OffsetType<float, 6z>
 		}
 	}
 );
@@ -274,20 +369,29 @@ static_assert
 static_assert
 (	NamedInfoList_Of<"Pyramid">
 ==	NameList
-	{	{	"Color"
-		,	OffsetType<RGBAColor, 3z>
+	{	{	"ColorAlpha"
+		,	OffsetType<float, 0z>
+		}
+	,	{	"ColorBlue"
+		,	OffsetType<float, 1z>
+		}
+	,	{	"ColorGreen"
+		,	OffsetType<float, 2z>
+		}
+	,	{	"ColorRed"
+		,	OffsetType<float, 3z>
 		}
 	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<Third>
 		}
 	,	{	"Depth"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<float, 5z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 2z>
+		,	OffsetType<float, 6z>
 		}
 	}
 );
@@ -295,20 +399,29 @@ static_assert
 static_assert
 (	NamedInfoList_Of<"Sphere">
 ==	NameList
-	{	{	"Color"
-		,	OffsetType<RGBAColor, 1z>
+	{	{	"ColorAlpha"
+		,	OffsetType<float, 0z>
+		}
+	,	{	"ColorBlue"
+		,	OffsetType<float, 1z>
+		}
+	,	{	"ColorGreen"
+		,	OffsetType<float, 2z>
+		}
+	,	{	"ColorRed"
+		,	OffsetType<float, 3z>
 		}
 	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<Pi_6>
 		}
 	,	{	"Depth"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
 	}
 );
@@ -316,20 +429,29 @@ static_assert
 static_assert
 (	NamedInfoList_Of<"Cylinder">
 ==	NameList
-	{	{	"Color"
-		,	OffsetType<RGBAColor, 2z>
+	{	{	"ColorAlpha"
+		,	OffsetType<float, 0z>
+		}
+	,	{	"ColorBlue"
+		,	OffsetType<float, 1z>
+		}
+	,	{	"ColorGreen"
+		,	OffsetType<float, 2z>
+		}
+	,	{	"ColorRed"
+		,	OffsetType<float, 3z>
 		}
 	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<Pi_4>
 		}
 	,	{	"Depth"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<float, 5z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<float, 5z>
 		}
 	}
 );
@@ -337,20 +459,29 @@ static_assert
 static_assert
 (	NamedInfoList_Of<"Cone">
 ==	NameList
-	{	{	"Color"
-		,	OffsetType<RGBAColor, 2z>
+	{	{	"ColorAlpha"
+		,	OffsetType<float, 0z>
+		}
+	,	{	"ColorBlue"
+		,	OffsetType<float, 1z>
+		}
+	,	{	"ColorGreen"
+		,	OffsetType<float, 2z>
+		}
+	,	{	"ColorRed"
+		,	OffsetType<float, 3z>
 		}
 	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<Pi_12>
 		}
 	,	{	"Depth"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<float, 5z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<float, 5z>
 		}
 	}
 );
@@ -358,71 +489,222 @@ static_assert
 static_assert
 (	NamedInfoList_Of<"Ellipsoid">
 ==	NameList
-	{	{	"Color"
-		,	OffsetType<RGBAColor, 3z>
+	{	{	"ColorAlpha"
+		,	OffsetType<float, 0z>
+		}
+	,	{	"ColorBlue"
+		,	OffsetType<float, 1z>
+		}
+	,	{	"ColorGreen"
+		,	OffsetType<float, 2z>
+		}
+	,	{	"ColorRed"
+		,	OffsetType<float, 3z>
 		}
 	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<Pi_6>
 		}
 	,	{	"Depth"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<float, 5z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 2z>
+		,	OffsetType<float, 6z>
 		}
 	}
 );
 
 static_assert
-(	NamedInfoList_Of<"Head">
-==	NameList
-	{	{	"Color"
-		,	OffsetType<RGBAColor, 3z>
+(	Equals
+	(	NamedInfoList_Of<"Head">[0]
+	,	{	"ColorAlpha"
+		,	OffsetType<float, 0z>
 		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[1]
+	,	{	"ColorBlue"
+		,	OffsetType<float, 1z>
+		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[2]
+	,	{	"ColorGreen"
+		,	OffsetType<float, 2z>
+		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[3]
+	,	{	"ColorRed"
+		,	OffsetType<float, 3z>
+		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[4]
 	,	{	"ComputeSizeMultiplier"
  		,	OffsetType<Pi_6>
 		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[5]
 	,	{	"Depth"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[6]
 	,	{	"Height"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
-	,	{	"LeftEyeColor"
-		,	OffsetType<RGBAColor, 3z, 1z>
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[7]
+	,	{	"LeftEyeColorAlpha"
+		,	OffsetType<float, 5z>
 		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[8]
+	,	{	"LeftEyeColorBlue"
+		,	OffsetType<float, 6z>
+		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[9]
+	,	{	"LeftEyeColorGreen"
+		,	OffsetType<float, 7z>
+		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[10]
+	,	{	"LeftEyeColorRed"
+		,	OffsetType<float, 8z>
+		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[11]
 	,	{	"LeftEyeComputeSizeMultiplier"
 		,	OffsetType<Pi_6>
 		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[12]
 	,	{	"LeftEyeDepth"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<float, 9z>
 		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[13]
 	,	{	"LeftEyeHeight"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<float, 9z>
 		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[14]
 	,	{	"LeftEyeWidth"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<float, 9z>
 		}
-	,	{	"RightEyeColor"
-		,	OffsetType<RGBAColor, 3z, 1z>
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[15]
+	,	{	"RightEyeColorAlpha"
+		,	OffsetType<float, 5z>
 		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[16]
+	,	{	"RightEyeColorBlue"
+		,	OffsetType<float, 6z>
+		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[17]
+	,	{	"RightEyeColorGreen"
+		,	OffsetType<float, 7z>
+		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[18]
+	,	{	"RightEyeColorRed"
+		,	OffsetType<float, 8z>
+		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[19]
 	,	{	"RightEyeComputeSizeMultiplier"
 		,	OffsetType<Pi_6>
 		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[20]
 	,	{	"RightEyeDepth"
-		,	OffsetType<Float, 2z>
+		,	OffsetType<float, 10z>
 		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[21]
 	,	{	"RightEyeHeight"
-		,	OffsetType<Float, 2z>
+		,	OffsetType<float, 10z>
 		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[22]
 	,	{	"RightEyeWidth"
-		,	OffsetType<Float, 2z>
+		,	OffsetType<float, 10z>
 		}
+	)
+);
+static_assert
+(	Equals
+	(	NamedInfoList_Of<"Head">[23]
 	,	{	"Width"
-		,	OffsetType<Float, 0z>
+		,	OffsetType<float, 4z>
 		}
-	}
+	)
 );

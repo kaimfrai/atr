@@ -1,24 +1,31 @@
 export module Evaluation.Replication.Cuboid;
 
-import Evaluation.Dependency.DataTypes;
-
 export namespace
 	Bodies3D
 {
 	struct
 		Cuboid
 	{
-		Float
+		float
+			ColorAlpha
+		;
+		float
+			ColorBlue
+		;
+		float
+			ColorGreen
+		;
+		float
+			ColorRed
+		;
+		float
 			Depth
 		;
-		Float
+		float
 			Height
 		;
-		Float
+		float
 			Width
-		;
-		RGBAColor
-			Color
 		;
 	};
 
@@ -29,7 +36,7 @@ export namespace
 			*	i_aObject
 		)
 		noexcept
-	->	Float
+	->	float
 	{
 		Cuboid const
 		*	aCuboid

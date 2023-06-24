@@ -2,8 +2,6 @@ export module Evaluation.Virtual.Ellipse;
 
 import Evaluation.Virtual.CircularShape;
 
-import Evaluation.Dependency.DataTypes;
-
 export namespace
 	Shapes2D
 {
@@ -11,7 +9,7 @@ export namespace
 		Ellipse
 	:	CircularShape
 	{
-		Float
+		float
 			Height
 		;
 
@@ -20,7 +18,7 @@ export namespace
 		(	GetHeight
 		)	()	const
 			noexcept
-		->	Float const
+		->	float const
 			&
 			override
 		{	return

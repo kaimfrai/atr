@@ -2,7 +2,6 @@ export module Evaluation.Virtual.CubicBody;
 
 import Evaluation.Virtual.ExtendedShape;
 
-import Evaluation.Dependency.DataTypes;
 import Evaluation.Dependency.Fraction;
 
 export namespace
@@ -23,7 +22,7 @@ export namespace
 		(	GetComputeSizeMultiplier
 		)	()	const
 			noexcept
-		->	Float
+		->	float
 			override
 		{	return
 			Fraction<>

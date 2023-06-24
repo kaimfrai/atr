@@ -1,7 +1,23 @@
 export module Test.Evaluation.SizeCheck;
 
-import Evaluation.Dependency.DataTypes;
 import Meta.Size;
+
+struct
+	RGBAColor
+{
+	float
+		Red
+	;
+	float
+		Green
+	;
+	float
+		Blue
+	;
+	float
+		Alpha
+	;
+};
 
 export
 {
@@ -16,21 +32,21 @@ export
 	requires
 		(	sizeof(t_tColoredObject)
 		>=	t_nSideCount
-		*	sizeof(Float)
+		*	sizeof(float)
 		+	t_nColorCount
 		*	sizeof(RGBAColor)
 		)
 	and	(	alignof(t_tColoredObject)
-		>=	alignof(Float)
+		>=	alignof(float)
 		)
-	and	(	alignof(Float)
+	and	(	alignof(float)
 		>=	alignof(RGBAColor)
 		)
 	auto constexpr inline
 		AdditionalSize
 	=	(	sizeof(t_tColoredObject)
 		-	t_nSideCount
-		*	sizeof(Float)
+		*	sizeof(float)
 		-	t_nColorCount
 		*	sizeof(RGBAColor)
 		)

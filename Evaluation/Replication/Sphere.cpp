@@ -1,6 +1,5 @@
 export module Evaluation.Replication.Sphere;
 
-import Evaluation.Dependency.DataTypes;
 import Evaluation.Dependency.PiFraction;
 
 import Std;
@@ -11,11 +10,20 @@ export namespace
 	struct
 		Sphere
 	{
-		Float
-			Width
+		float
+			ColorAlpha
 		;
-		RGBAColor
-			Color
+		float
+			ColorBlue
+		;
+		float
+			ColorGreen
+		;
+		float
+			ColorRed
+		;
+		float
+			Height
 		;
 	};
 
@@ -26,17 +34,17 @@ export namespace
 			*	i_aObject
 		)
 		noexcept
-	->	Float
+	->	float
 	{
-		Float const
-			vWidth
+		float const
+			vHeight
 		=	*	::std::launder
 				(	static_cast
-					<	Float const
+					<	float const
 						*
 					>(	i_aObject
 					)
-				+	1z
+				+	4z
 				)
 		;
 
@@ -45,9 +53,9 @@ export namespace
 			<	1z
 			,	6z
 			>{}
-		*	vWidth
-		*	vWidth
-		*	vWidth
+		*	vHeight
+		*	vHeight
+		*	vHeight
 		;
 	}
 }

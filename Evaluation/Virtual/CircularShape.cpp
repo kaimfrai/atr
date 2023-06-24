@@ -2,7 +2,6 @@ export module Evaluation.Virtual.CircularShape;
 
 import Evaluation.Virtual.BasicShape;
 
-import Evaluation.Dependency.DataTypes;
 import Evaluation.Dependency.PiFraction;
 
 export namespace
@@ -12,7 +11,7 @@ export namespace
 		CircularShape
 	:	BasicShape
 	{
-		Float
+		float
 			Width
 		;
 
@@ -21,7 +20,7 @@ export namespace
 		(	GetWidth
 		)	()	const
 			noexcept
-		->	Float const
+		->	float const
 			&
 			override
 		{	return
@@ -34,7 +33,7 @@ export namespace
 		(	GetComputeSizeMultiplier
 		)	()	const
 			noexcept
-		->	Float
+		->	float
 			override
 		{	return
 			PiFraction

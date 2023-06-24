@@ -1,7 +1,5 @@
 export module Evaluation.Virtual.IBody;
 
-import Evaluation.Dependency.DataTypes;
-
 export namespace
 	Bodies3D
 {
@@ -13,7 +11,7 @@ export namespace
 		(	GetDepth
 		)	()	const
 			noexcept
-		->	Float const
+		->	float const
 			&
 		=	0;
 
@@ -22,7 +20,7 @@ export namespace
 		(	GetHeight
 		)	()	const
 			noexcept
-		->	Float const
+		->	float const
 			&
 		=	0;
 
@@ -31,7 +29,7 @@ export namespace
 		(	GetWidth
 		)	()	const
 			noexcept
-		->	Float const
+		->	float const
 			&
 		=	0;
 
@@ -40,7 +38,7 @@ export namespace
 		(	ComputeVolume
 		)	()	const
 			noexcept
-		->	Float
+		->	float
 		=	0;
 
 		virtual constexpr inline

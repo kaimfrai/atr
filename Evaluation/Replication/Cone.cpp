@@ -1,6 +1,5 @@
 export module Evaluation.Replication.Cone;
 
-import Evaluation.Dependency.DataTypes;
 import Evaluation.Dependency.PiFraction;
 
 export namespace
@@ -9,14 +8,23 @@ export namespace
 	struct
 		Cone
 	{
-		Float
+		float
+			ColorAlpha
+		;
+		float
+			ColorBlue
+		;
+		float
+			ColorGreen
+		;
+		float
+			ColorRed
+		;
+		float
 			Depth
 		;
-		Float
-			Width
-		;
-		RGBAColor
-			Color
+		float
+			Height
 		;
 	};
 
@@ -27,7 +35,7 @@ export namespace
 			*	i_aObject
 		)
 		noexcept
-	->	Float
+	->	float
 	{
 		Cone const
 		*	aCone
@@ -46,9 +54,9 @@ export namespace
 		*	aCone
 			->	Depth
 		*	aCone
-			->	Width
+			->	Height
 		*	aCone
-			->	Width
+			->	Height
 		;
 	}
 }

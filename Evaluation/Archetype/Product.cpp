@@ -1,7 +1,5 @@
 export module Evaluation.Archetype.Product;
 
-import Evaluation.Dependency.DataTypes;
-
 import ATR.Dependency;
 import ATR.Literals;
 
@@ -27,7 +25,7 @@ export namespace
 				i_vArgument
 		)
 		noexcept
-	->	Float
+	->	float
 	{	return
 		(	...
 		*	t_tpDependency

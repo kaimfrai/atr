@@ -15,7 +15,6 @@ import Evaluation.CRTP.Cone;
 import Evaluation.CRTP.Ellipsoid;
 import Evaluation.CRTP.Head;
 import Evaluation.Dependency.InPlaceConstruct;
-import Evaluation.Dependency.DataTypes;
 
 import Std;
 
@@ -70,7 +69,7 @@ export namespace
 			&	i_rBody3D
 		)
 		noexcept
-	->	Float
+	->	float
 	{	return
 		::std::visit
 		(	[]	(	auto const

@@ -1,7 +1,6 @@
 export module Evaluation.Archetype.BasicBody;
 
 import Evaluation.Archetype.BasicShape;
-import Evaluation.Dependency.DataTypes;
 
 import ATR.Literals;
 
@@ -18,7 +17,7 @@ export namespace
 	{	return
 		o_rConfig
 			("BasicShape"_id)
-			("Depth", Type<Float>)
+			("Depth", Type<float>)
 		;
 	}
 }

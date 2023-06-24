@@ -3,8 +3,6 @@ export module Evaluation.Virtual.Pyramid;
 import Evaluation.Virtual.Triangle;
 import Evaluation.Virtual.PyramidicBody;
 
-import Evaluation.Dependency.DataTypes;
-
 export namespace
 	Bodies3D
 {
@@ -14,7 +12,7 @@ export namespace
 		<	Shapes2D::Triangle
 		>
 	{
-		Float
+		float
 			Depth
 		;
 
@@ -23,7 +21,7 @@ export namespace
 		(	GetDepth
 		)	()	const
 			noexcept
-		->	Float const
+		->	float const
 			&
 			override
 		{	return

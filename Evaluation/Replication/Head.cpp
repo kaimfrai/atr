@@ -1,27 +1,43 @@
 export module Evaluation.Replication.Head;
 
-import Evaluation.Dependency.DataTypes;
-
 export namespace
 	Bodies3D
 {
 	struct
 		Head
 	{
-		Float
-			Width
+		float
+			ColorAlpha
 		;
-		Float
-			WidthLeftEye
+		float
+			ColorBlue
 		;
-		Float
-			WidthRightEye
+		float
+			ColorGreen
 		;
-		RGBAColor
-			Color
+		float
+			ColorRed
 		;
-		RGBAColor
-			ColorEye
+		float
+			Height
+		;
+		float
+			LeftEyeHeight
+		;
+		float
+			LeftEyeColorAlpha
+		;
+		float
+			LefEyeColorBlue
+		;
+		float
+			LeftEyeColorGreen
+		;
+		float
+			LeftEyeColorRed
+		;
+		float
+			LeftRightEyeHeight
 		;
 	};
 }
