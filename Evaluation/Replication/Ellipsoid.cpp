@@ -9,9 +9,6 @@ export namespace
 	struct
 		Ellipsoid
 	{
-		RGBAColor
-			Color
-		;
 		Float
 			Depth
 		;
@@ -20,6 +17,9 @@ export namespace
 		;
 		Float
 			Width
+		;
+		RGBAColor
+			Color
 		;
 	};
 

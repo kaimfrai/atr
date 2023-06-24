@@ -9,14 +9,14 @@ export namespace
 	struct
 		Cylinder
 	{
-		RGBAColor
-			Color
-		;
 		Float
 			Depth
 		;
 		Float
 			Width
+		;
+		RGBAColor
+			Color
 		;
 	};
 

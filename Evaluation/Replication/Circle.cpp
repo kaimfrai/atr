@@ -11,11 +11,11 @@ export namespace
 	struct
 		Circle
 	{
-		RGBAColor
-			Color
-		;
 		Float
 			Width
+		;
+		RGBAColor
+			Color
 		;
 	};
 
@@ -36,7 +36,6 @@ export namespace
 						*
 					>(	i_aObject
 					)
-				+	1z
 				)
 		;
 

@@ -10,14 +10,14 @@ export namespace
 	struct
 		Rectangle
 	{
-		RGBAColor
-			Color
-		;
 		Float
 			Height
 		;
 		Float
 			Width
+		;
+		RGBAColor
+			Color
 		;
 	};
 

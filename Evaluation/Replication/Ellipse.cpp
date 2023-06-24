@@ -11,14 +11,14 @@ export namespace
 	struct
 		Ellipse
 	{
-		RGBAColor
-			Color
-		;
 		Float
 			Height
 		;
 		Float
 			Width
+		;
+		RGBAColor
+			Color
 		;
 	};
 

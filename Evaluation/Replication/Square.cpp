@@ -10,11 +10,11 @@ export namespace
 	struct
 		Square
 	{
-		RGBAColor
-			Color
-		;
 		Float
 			Width
+		;
+		RGBAColor
+			Color
 		;
 	};
 

@@ -11,11 +11,11 @@ export namespace
 	struct
 		Sphere
 	{
-		RGBAColor
-			Color
-		;
 		Float
 			Width
+		;
+		RGBAColor
+			Color
 		;
 	};
 

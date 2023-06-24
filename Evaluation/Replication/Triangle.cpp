@@ -11,14 +11,14 @@ export namespace
 	struct
 		Triangle
 	{
-		RGBAColor
-			Color
-		;
 		Float
 			Height
 		;
 		Float
 			Width
+		;
+		RGBAColor
+			Color
 		;
 	};
 

@@ -8,9 +8,6 @@ export namespace
 	struct
 		Cuboid
 	{
-		RGBAColor
-			Color
-		;
 		Float
 			Depth
 		;
@@ -19,6 +16,9 @@ export namespace
 		;
 		Float
 			Width
+		;
+		RGBAColor
+			Color
 		;
 	};
 
