@@ -34,7 +34,7 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	GetComputeVolumeMultiplier
+		(	GetComputeSizeMultiplier
 		)	()	const
 			noexcept
 		->	Float

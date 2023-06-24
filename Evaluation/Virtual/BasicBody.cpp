@@ -13,7 +13,7 @@ export namespace
 	{
 		[[nodiscard]]
 		auto virtual constexpr
-		(	GetComputeVolumeMultiplier
+		(	GetComputeSizeMultiplier
 		)	()	const
 			noexcept
 		->	Float
@@ -27,7 +27,7 @@ export namespace
 		->	Float
 			override
 		{	return
-				GetComputeVolumeMultiplier
+				GetComputeSizeMultiplier
 				()
 			*	GetDepth
 				()

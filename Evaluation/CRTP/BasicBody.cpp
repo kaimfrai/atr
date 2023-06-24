@@ -30,7 +30,7 @@ export namespace
 
 			return
 				rBody
-				.	GetComputeVolumeMultiplier
+				.	GetComputeSizeMultiplier
 					()
 			*	rBody
 				.	GetDepth

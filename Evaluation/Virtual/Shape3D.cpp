@@ -36,7 +36,7 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	GetComputeVolumeMultiplier
+		(	GetComputeSizeMultiplier
 		)	()	const
 			noexcept
 		->	Float
@@ -44,7 +44,7 @@ export namespace
 		{	return
 				this
 				->	Shapes2D
-				.	GetComputeAreaMultiplier
+				.	GetComputeSizeMultiplier
 					()
 			;
 		}

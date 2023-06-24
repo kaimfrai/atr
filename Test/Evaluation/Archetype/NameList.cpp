@@ -145,7 +145,7 @@ static_assert
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 1z>
 		}
-	,	{	"ComputeAreaMultiplier"
+	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<One>
 		}
 	,	{	"Height"
@@ -163,7 +163,7 @@ static_assert
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 2z>
 		}
-	,	{	"ComputeAreaMultiplier"
+	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<One>
 		}
 	,	{	"Height"
@@ -181,7 +181,7 @@ static_assert
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 2z>
 		}
-	,	{	"ComputeAreaMultiplier"
+	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<Half>
 		}
 	,	{	"Height"
@@ -199,7 +199,7 @@ static_assert
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 1z>
 		}
-	,	{	"ComputeAreaMultiplier"
+	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<Pi_4>
 		}
 	,	{	"Height"
@@ -217,7 +217,7 @@ static_assert
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 2z>
 		}
-	,	{	"ComputeAreaMultiplier"
+	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<Pi_4>
 		}
 	,	{	"Height"
@@ -235,7 +235,7 @@ static_assert
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 1z>
 		}
-	,	{	"ComputeVolumeMultiplier"
+	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<One>
 		}
 	,	{	"Depth"
@@ -256,7 +256,7 @@ static_assert
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 3z>
 		}
-	,	{	"ComputeVolumeMultiplier"
+	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<One>
 		}
 	,	{	"Depth"
@@ -277,7 +277,7 @@ static_assert
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 3z>
 		}
-	,	{	"ComputeVolumeMultiplier"
+	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<Third>
 		}
 	,	{	"Depth"
@@ -298,7 +298,7 @@ static_assert
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 1z>
 		}
-	,	{	"ComputeVolumeMultiplier"
+	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<Pi_6>
 		}
 	,	{	"Depth"
@@ -319,7 +319,7 @@ static_assert
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 2z>
 		}
-	,	{	"ComputeVolumeMultiplier"
+	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<Pi_4>
 		}
 	,	{	"Depth"
@@ -340,7 +340,7 @@ static_assert
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 2z>
 		}
-	,	{	"ComputeVolumeMultiplier"
+	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<Pi_12>
 		}
 	,	{	"Depth"
@@ -361,7 +361,7 @@ static_assert
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 3z>
 		}
-	,	{	"ComputeVolumeMultiplier"
+	,	{	"ComputeSizeMultiplier"
 		,	OffsetType<Pi_6>
 		}
 	,	{	"Depth"
@@ -382,7 +382,7 @@ static_assert
 	{	{	"Color"
 		,	OffsetType<RGBAColor, 3z>
 		}
-	,	{	"ComputeVolumeMultiplier"
+	,	{	"ComputeSizeMultiplier"
  		,	OffsetType<Pi_6>
 		}
 	,	{	"Depth"
@@ -394,7 +394,7 @@ static_assert
 	,	{	"LeftEyeColor"
 		,	OffsetType<RGBAColor, 3z, 1z>
 		}
-	,	{	"LeftEyeComputeVolumeMultiplier"
+	,	{	"LeftEyeComputeSizeMultiplier"
 		,	OffsetType<Pi_6>
 		}
 	,	{	"LeftEyeDepth"
@@ -409,7 +409,7 @@ static_assert
 	,	{	"RightEyeColor"
 		,	OffsetType<RGBAColor, 3z, 1z>
 		}
-	,	{	"RightEyeComputeVolumeMultiplier"
+	,	{	"RightEyeComputeSizeMultiplier"
 		,	OffsetType<Pi_6>
 		}
 	,	{	"RightEyeDepth"

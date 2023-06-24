@@ -18,7 +18,7 @@ export namespace
 	{	return
 		o_rConfig
 			("BasicBody"_id)
-			("ComputeVolumeMultiplier", Type<Fraction<>>)
+			("ComputeSizeMultiplier", Type<Fraction<>>)
 		;
 	}
 }

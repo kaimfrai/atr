@@ -21,7 +21,7 @@ export namespace
 	{
 		[[nodiscard]]
 		auto constexpr inline
-		(	GetComputeAreaMultiplier
+		(	GetComputeSizeMultiplier
 		)	()	const
 			noexcept
 		->	Float

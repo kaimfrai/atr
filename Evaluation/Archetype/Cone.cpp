@@ -19,7 +19,7 @@ export namespace
 		o_rConfig
 			("Width", "Height")
 			("BasicBody"_id)
-			("ComputeVolumeMultiplier", Type<PiFraction<1z, 12z>>)
+			("ComputeSizeMultiplier", Type<PiFraction<1z, 12z>>)
 		;
 	}
 }

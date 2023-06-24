@@ -33,7 +33,7 @@ export namespace
 			;
 			return
 				rBody
-				.	GetComputeAreaMultiplier
+				.	GetComputeSizeMultiplier
 					()
 			*	rBody
 				.	GetHeight

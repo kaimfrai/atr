@@ -18,7 +18,7 @@ export namespace
 	{	return
 		o_rConfig
 			("BasicShape"_id)
-			("ComputeAreaMultiplier", Type<PiFraction<1z, 4z>>)
+			("ComputeSizeMultiplier", Type<PiFraction<1z, 4z>>)
 		;
 	}
 }

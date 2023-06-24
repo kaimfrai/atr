@@ -18,7 +18,7 @@ export namespace
 	{	return
 		o_rConfig
 			("BasicShape"_id)
-			("ComputeAreaMultiplier", Type<Fraction<>>)
+			("ComputeSizeMultiplier", Type<Fraction<>>)
 		;
 	}
 }
