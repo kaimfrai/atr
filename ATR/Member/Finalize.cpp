@@ -169,14 +169,13 @@ namespace
 			vAccumulatedOffset
 		{};
 
-		for	(	Alignment
-					vAlignment
-				=	MaxAlign
-			;	(	vAlignment
-				>=	ByteAlign
+		for	(	int
+					vIndex
+				=	0
+			;	(	vIndex
+				<	AlignmentCount
 				)
-			;	--	vAlignment
-					.	Value
+			;	++	vIndex
 			)
 		{
 			auto const
@@ -184,15 +183,17 @@ namespace
 			=	i_rConfigBuilder
 				.	Layout
 				.	AlignTypeCounts
-					[	vAlignment
+				.	Buffer
+					[	vIndex
 					]
 			;
 
 			auto
 			&	rTypeOffsets
 			=	vAlignTypeOffsets
-				[	vAlignment
-				]
+				.	Buffer
+					[	vIndex
+					]
 			;
 
 			for	(	auto const
