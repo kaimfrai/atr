@@ -112,7 +112,7 @@ export namespace
 		}
 	};
 
-	auto constexpr
+	auto constexpr inline
 	(	AddType
 	)	(	AlignBuffer<CountedType>
 			&	i_rAlignBuffer
