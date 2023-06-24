@@ -1,75 +1,17 @@
 export module ATR.Member.ConfigBuilder;
 
-import ATR.Member.Alias;
-import ATR.Member.AlignBuffer;
-import ATR.Member.Constants;
-import ATR.Member.CountedBuffer;
-import ATR.Member.NamedType;
+import ATR.Member.AliasMapList;
+import ATR.Member.LayoutList;
+import ATR.Member.NamedTypeList;
 
 import Meta.ID;
-import Meta.Memory.Alignment;
 import Meta.String.Chain;
 import Meta.Token.TypeID;
 
-import Std;
-
-using ::Meta::Memory::Alignment;
 using ::Meta::ProtoID;
 using ::Meta::String::Chain;
+using ::Meta::String::ImplicitChain;
 using ::Meta::TypeID;
-
-namespace
-	ATR::Member
-{
-	[[nodiscard]]
-	auto constexpr inline
-	(	MoveHigher
-	)	(	NamedType const
-			*	i_aBegin
-		,	auto
-				i_vCompare
-		,	NamedType
-			*	i_aInsert
-		,	auto
-				i_fGet
-		)
-		noexcept
-	->	NamedType*
-	{
-		while(	i_aInsert
-			!=	i_aBegin
-			)
-		{
-			auto const
-				aPrevious
-			=	i_aInsert
-			-	1z
-			;
-
-			if	(	i_fGet
-					(	*
-						aPrevious
-					)
-				<=	i_vCompare
-				)
-			{	return
-					i_aInsert
-				;
-			}
-
-			*	i_aInsert
-			=	*	aPrevious
-			;
-			i_aInsert
-			=	aPrevious
-			;
-		}
-
-		return
-			i_aInsert
-		;
-	}
-}
 
 export namespace
 	ATR::Member
@@ -93,119 +35,34 @@ export namespace
 	struct
 		ConfigBuilder
 	{
-		AlignBuffer<NamedType>
+		LayoutList
+			Layout
+		{};
+
+		NamedTypeList
 			NamedTypes
 		{};
 
-		CountedBuffer<Alias, NameBufferSize>
-			AliasList
+		AliasMapList
+			AliasMaps
 		{};
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	HasAlias
-		)	(	Chain
-					i_rMemberName
-			)	const
-			noexcept
-		->	bool
-		{
-			auto const
-				aAliasBegin
-			=	AliasList
-				.	begin
-					()
-			;
-
-			auto const
-				aAliasEnd
-			=	AliasList
-				.	end
-					()
-			;
-
-			auto const
-				aPosition
-			=	::std::lower_bound
-				(	aAliasBegin
-				,	aAliasEnd
-				,	i_rMemberName
-				)
-			;
-
-			return
-			(	(	aPosition
-				!=	aAliasEnd
-				)
-			and	(	aPosition
-					->	Name
-				==	i_rMemberName
-				)
-			);
-		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator()
-		)	(	Chain
+		)	(	ImplicitChain
 					i_rMemberName
-			,	Chain
+			,	ImplicitChain
 					i_rTarget
 			)
 			noexcept
 		->	ConfigBuilder&&
 		{
-			auto const
-				aAliasBegin
-			=	AliasList
-				.	begin
-					()
-			;
-			auto
-				aInsert
-			=	AliasList
-				.	end
-					()
-			;
-
-			while(	aAliasBegin
-				!=	aInsert
+			AliasMaps
+			.	AddAliasMap
+				(	i_rMemberName
+				,	i_rTarget
 				)
-			{
-				auto const
-					aPrevious
-				=	(	aInsert
-					-	1z
-					)
-				;
-
-				if	(	aPrevious
-						->	Name
-					<	i_rMemberName
-					)
-				{	break;
-				}
-
-				*	aInsert
-				=	*	aPrevious
-				;
-				aInsert
-				=	aPrevious
-				;
-			}
-
-			aInsert
-			->	Name
-			=	i_rMemberName
-			;
-
-			aInsert
-			->	Target
-			=	i_rTarget
-			;
-
-			++	AliasList
-				.	Count
 			;
 
 			return
@@ -217,28 +74,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator()
-		)	(	char const
-				*	i_aMemberName
-			,	char const
-				*	i_aTarget
-			)
-			noexcept
-		->	ConfigBuilder&&
-		{	return
-			operator()
-			(	Chain
-				{	i_aMemberName
-				}
-			,	Chain
-				{	i_aTarget
-				}
-			);
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	operator()
-		)	(	Chain
+		)	(	ImplicitChain
 					i_rMemberName
 			,	TypeID
 					i_vType
@@ -247,108 +83,29 @@ export namespace
 		->	ConfigBuilder&&
 		{
 			if	(	not
-					HasAlias
-					(	i_rMemberName
-					)
+					AliasMaps
+					.	HasAlias
+						(	i_rMemberName
+						)
 				)
 			{
-				auto const
-					vAlign
-				=	i_vType
-					.	GetAlign
-						()
-				;
-
-				auto const
-					aAlignmentEnd
-				=	MoveHigher
-					(	NamedTypes
-						.	begin
-							()
-					,	vAlign
-					,	NamedTypes
-						.	end
-							()
-					,	[]	(	NamedType const
-								&	i_rElement
-							)
-						{	return
-								i_rElement
-								.	Type
-								.	GetAlign
-									()
-							;
-						}
+				NamedTypes
+				.	AddNamedType
+					(	i_rMemberName
+					,	i_vType
 					)
 				;
 
-				auto
-				&	rAlignmentCounter
-				=	NamedTypes
-					.	Counter
-						(	vAlign
-						)
-				;
-
-				auto const
-					aInsertPosition
-				=	MoveHigher
-					(	(	aAlignmentEnd
-						-	rAlignmentCounter
-						)
-					,	i_rMemberName
-					,	aAlignmentEnd
-					,	[]	(	NamedType const
-								&	i_rElement
-							)
-						{	return
-								i_rElement
-								.	Name
-							;
-						}
+				Layout
+				.	AddType
+					(	i_vType
 					)
-				;
-
-				aInsertPosition
-				->	Name
-				=	i_rMemberName
-				;
-
-				aInsertPosition
-				->	Type
-				=	i_vType
-				;
-
-				++	rAlignmentCounter
-				;
-
-				++	NamedTypes
-				.	TotalCounter
 				;
 			}
 
 			return
 			static_cast<ConfigBuilder&&>
 			(	*this
-			);
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	operator()
-		)	(	char const
-				*	i_aMemberName
-			,	TypeID
-					i_vType
-			)
-			noexcept
-		->	ConfigBuilder&&
-		{	return
-			operator()
-			(	Chain
-				{	i_aMemberName
-				}
-			,	i_vType
 			);
 		}
 
@@ -377,6 +134,7 @@ export namespace
 						]
 				:	rMerge
 					.	NamedTypes
+					.	List
 				)
 			{
 
@@ -394,7 +152,8 @@ export namespace
 						,	rTarget
 						]
 				:	rMerge
-					.	AliasList
+					.	AliasMaps
+					.	List
 				)
 			{	(void)
 				operator()
@@ -423,10 +182,12 @@ export namespace
 		->	ConfigBuilder&&
 		{
 			if	(	(	NamedTypes
-						.	TotalCounter
+						.	List
+						.	Count
 					==	0z
 					)
-				and	(	AliasList
+				and	(	AliasMaps
+						.	List
 						.	Count
 					==	0z
 					)

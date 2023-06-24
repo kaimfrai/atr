@@ -13,7 +13,7 @@ export namespace
 	template
 		<	typename
 				t_tElement
-		,	USize
+		,	SSize
 				t_vMaxCount
 		>
 	struct
@@ -82,8 +82,9 @@ export namespace
 			noexcept
 		->	USize
 		{	return
-				t_vMaxCount
-			;
+			static_cast<SSize>
+			(	t_vMaxCount
+			);
 		}
 
 		[[nodiscard]]
@@ -147,8 +148,7 @@ export namespace
 			noexcept
 		->	iterator
 		{	return
-				begin
-				()
+				Buffer
 			+	Count
 			;
 		}
@@ -160,8 +160,7 @@ export namespace
 			noexcept
 		->	const_iterator
 		{	return
-				begin
-				()
+				Buffer
 			+	Count
 			;
 		}

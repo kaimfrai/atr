@@ -3,20 +3,17 @@ export module ATR.Member.ConfigData;
 import ATR.Member.AlignBuffer;
 import ATR.Member.Constants;
 import ATR.Member.CountedBuffer;
+import ATR.Member.CountedType;
 import ATR.Member.Info;
 import ATR.Member.NamedInfo;
 
 import Meta.Memory.Size;
-import Meta.Size;
 import Meta.String.Chain;
-import Meta.Token.TypeID;
 
 import Std;
 
 using ::Meta::BitSize;
-using ::Meta::SSize;
 using ::Meta::String::Chain;
-using ::Meta::TypeID;
 
 export namespace
 	ATR::Member
@@ -24,8 +21,12 @@ export namespace
 	struct
 		ConfigData
 	{
-		AlignBuffer<TypeID>
-			Layout
+		AlignBuffer<CountedType>
+			AlignTypeCounts
+		{};
+
+		BitSize
+			BitCount
 		{};
 
 		CountedBuffer<NamedInfo, NameBufferSize>

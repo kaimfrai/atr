@@ -1,9 +1,10 @@
 import ATR.Literals;
 import ATR.Member.AlignBuffer;
-import ATR.Member.CountedBuffer;
 import ATR.Member.Config;
 import ATR.Member.ConfigData;
 import ATR.Member.ConfigTransformer;
+import ATR.Member.CountedBuffer;
+import ATR.Member.CountedType;
 
 import Meta.Bit.Field;
 import Meta.ID;
@@ -20,6 +21,7 @@ import Std;
 
 using ::ATR::Member::AlignBuffer;
 using ::ATR::Member::CountedBuffer;
+using ::ATR::Member::CountedType;
 using ::ATR::Member::ConfigData;
 using ::ATR::Member::Config_Of;
 
@@ -150,57 +152,47 @@ namespace
 	}
 }
 
-[[nodiscard]]
-auto constexpr inline
-(	operator==
-)	(	decltype(ConfigData::NamedInfoList) const
-		&	i_rLeft
-	,	decltype(ConfigData::NamedInfoList) const
-		&	i_rRight
-	)
-	noexcept
-->	bool
-{	return
-	::std::equal
-	(	i_rLeft
-		.	begin
-			()
-	,	i_rLeft
-		.	end
-			()
-	,	i_rRight
-		.	begin
-			()
-	,	i_rRight
-		.	end
-			()
-	);
+namespace
+	ATR::Member
+{
+	template
+		<	typename
+				t_tElement
+		,	auto
+				t_vBufferSize
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	operator==
+	)	(	CountedBuffer<t_tElement, t_vBufferSize> const
+			&	i_rLeft
+		,	CountedBuffer<t_tElement, t_vBufferSize> const
+			&	i_rRight
+		)
+		noexcept
+	->	bool
+	{	return
+		::std::ranges::equal
+		(	i_rLeft
+		,	i_rRight
+		);
+	}
 }
 
 [[nodiscard]]
 auto constexpr inline
 (	operator==
-)	(	AlignBuffer<TypeID> const
+)	(	AlignBuffer<CountedType> const
 		&	i_rLeft
-	,	AlignBuffer<TypeID> const
+	,	AlignBuffer<CountedType> const
 		&	i_rRight
 	)
 	noexcept
 ->	bool
 {	return
-	::std::equal
+	::std::ranges::equal
 	(	i_rLeft
-		.	begin
-			()
-	,	i_rLeft
-		.	end
-			()
 	,	i_rRight
-		.	begin
-			()
-	,	i_rRight
-		.	end
-			()
 	);
 }
 
@@ -215,11 +207,20 @@ auto constexpr inline
 	noexcept
 ->	bool
 {	return
-		(	i_rLeft.Layout
-		==	i_rRight.Layout
+		(	i_rLeft
+			.	AlignTypeCounts
+		==	i_rRight
+			.	AlignTypeCounts
 		)
-	and	(	i_rLeft.NamedInfoList
-		==	i_rRight.NamedInfoList
+	and	(	i_rLeft
+			.	BitCount
+		==	i_rRight
+			.	BitCount
+		)
+	and	(	i_rLeft
+			.	NamedInfoList
+		==	i_rRight
+			.	NamedInfoList
 		)
 	;
 }

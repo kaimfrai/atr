@@ -6,5 +6,4 @@ add_single_file_modules(
 	Group.cpp
 	ValidateOffsets.cpp
 	Create.cpp
-	Type.cpp
 )

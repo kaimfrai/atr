@@ -1,13 +1,17 @@
 add_single_file_modules(
 	Constants.cpp
+	CountedType.cpp
 	Info.cpp
 	CountedBuffer.cpp
 	Alias.cpp
 	AlignBuffer.cpp
 	NamedInfo.cpp
 	NamedType.cpp
-	ConfigData.cpp
+	AliasMapList.cpp
+	NamedTypeList.cpp
+	LayoutList.cpp
 	ConfigBuilder.cpp
+	ConfigData.cpp
 	Finalize.cpp
 	Config.cpp
 	Storage.cpp

@@ -2,17 +2,17 @@ export module ATR.Member.AlignBuffer;
 
 import ATR.Member.Constants;
 import ATR.Member.CountedBuffer;
+import ATR.Member.CountedType;
 
 import Meta.Memory.Alignment;
 import Meta.Size;
+import Meta.Token.TypeID;
 
 import Std;
 
 using ::Meta::Memory::Alignment;
 using ::Meta::SSize;
-using ::Meta::USize;
-
-using namespace ::Meta::Literals;
+using ::Meta::TypeID;
 
 export namespace
 	ATR::Member
@@ -24,74 +24,66 @@ export namespace
 	struct
 		AlignBuffer
 	{
-		auto static constexpr inline
-			AlignmentCount
-		=	static_cast<USize>
-			(	MaxAlign
-				.	Value
-			)
-		+	1uz
-		;
-
-		auto static constexpr inline
-			BufferSize
-		=	TypeBufferSize
-		;
-
-		using
-			value_type
-		=	t_tElement
-		;
-
 		using
 			BufferType
-		=	value_type
-				[	BufferSize
-				]
+		=	CountedBuffer
+			<	t_tElement
+			,	TypeBufferSize
+			>
 		;
 
 		BufferType
 			Buffer
-		{};
-
-		::std::uint8_t
-			AlignmentCounter
 			[	AlignmentCount
 			]
 		{};
 
-		::std::uint8_t
-			TotalCounter
-		{};
+		[[nodiscard]]
+		auto static constexpr inline
+		(	AlignmentToIndex
+		)	(	Alignment
+					i_vAlignment
+			)
+			noexcept
+		->	SSize
+		{	return
+				MaxAlign
+				.	Value
+			-	i_vAlignment
+				.	Value
+			;
+		}
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	Counter
+		(	operator[]
 		)	(	Alignment
 					i_vAlignment
 			)	&
 			noexcept
-		->	decltype(auto)
+		->	BufferType&
 		{	return
-				AlignmentCounter
-				[	i_vAlignment
-					.	Value
+				Buffer
+				[	AlignmentToIndex
+					(	i_vAlignment
+					)
 				]
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	Counter
+		(	operator[]
 		)	(	Alignment
 					i_vAlignment
 			)	const&
 			noexcept
-		->	USize
+		->	BufferType const&
 		{	return
-				AlignmentCounter
-				[	i_vAlignment
-					.	Value
+				Buffer
+				[	AlignmentToIndex
+					(	i_vAlignment
+					)
 				]
 			;
 		}
@@ -99,33 +91,11 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	begin
-		)	()	&
-			noexcept
-		{	return
-				+
-				Buffer
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	begin
 		)	()	const&
 			noexcept
-		{	return
-				+
-				Buffer
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	end
-		)	()	&
-			noexcept
+		->	BufferType const*
 		{	return
 				Buffer
-			+	TotalCounter
 			;
 		}
 
@@ -134,10 +104,95 @@ export namespace
 		(	end
 		)	()	const&
 			noexcept
+		->	BufferType const*
 		{	return
 				Buffer
-			+	TotalCounter
+			+	AlignmentCount
 			;
 		}
 	};
+
+	auto constexpr
+	(	AddType
+	)	(	AlignBuffer<CountedType>
+			&	i_rAlignBuffer
+		,	TypeID
+				i_vType
+		)
+		noexcept
+	{
+		auto const
+			vAlign
+		=	i_vType
+			.	GetAlign
+				()
+		;
+
+		auto
+		&	rTypeCounts
+		=	i_rAlignBuffer
+			[	vAlign
+			]
+		;
+
+		auto const
+			aTypeCountBegin
+		=	rTypeCounts
+			.	begin
+				()
+		;
+
+		auto const
+			aTypeCountEnd
+		=	rTypeCounts
+			.	end
+				()
+		;
+
+		auto
+			aInsert
+		=	aTypeCountBegin
+		;
+
+		for	(;	(	aInsert
+				!=	aTypeCountEnd
+				)
+			;	++	aInsert
+			)
+		{
+			if	(	aInsert
+					->	Type
+				==	i_vType
+				)
+			{
+				++	aInsert
+					->	Count
+				;
+				return
+				;
+			}
+		}
+
+		::std::move_backward
+		(	aInsert
+		,	aTypeCountEnd
+		,	(	aTypeCountEnd
+			+	1z
+			)
+		);
+
+		++	rTypeCounts
+			.	Count
+		;
+
+		aInsert
+		->	Type
+		=	i_vType
+		;
+
+		aInsert
+		->	Count
+		=	1z
+		;
+	}
 }

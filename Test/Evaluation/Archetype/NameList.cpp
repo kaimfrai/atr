@@ -143,16 +143,16 @@ static_assert
 (	NamedInfoList_Of<"Square">
 ==	NameList
 	{	{	"Color"
-		,	OffsetType<RGBAColor>
+		,	OffsetType<RGBAColor, 1z>
 		}
 	,	{	"ComputeAreaMultiplier"
 		,	OffsetType<One>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	}
 );
@@ -161,16 +161,16 @@ static_assert
 (	NamedInfoList_Of<"Rectangle">
 ==	NameList
 	{	{	"Color"
-		,	OffsetType<RGBAColor>
+		,	OffsetType<RGBAColor, 2z>
 		}
 	,	{	"ComputeAreaMultiplier"
 		,	OffsetType<One>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 2z>
+		,	OffsetType<Float, 1z>
 		}
 	}
 );
@@ -179,16 +179,16 @@ static_assert
 (	NamedInfoList_Of<"Triangle">
 ==	NameList
 	{	{	"Color"
-		,	OffsetType<RGBAColor>
+		,	OffsetType<RGBAColor, 2z>
 		}
 	,	{	"ComputeAreaMultiplier"
 		,	OffsetType<Half>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 2z>
+		,	OffsetType<Float, 1z>
 		}
 	}
 );
@@ -197,16 +197,16 @@ static_assert
 (	NamedInfoList_Of<"Circle">
 ==	NameList
 	{	{	"Color"
-		,	OffsetType<RGBAColor>
+		,	OffsetType<RGBAColor, 1z>
 		}
 	,	{	"ComputeAreaMultiplier"
 		,	OffsetType<Pi_4>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	}
 );
@@ -215,16 +215,16 @@ static_assert
 (	NamedInfoList_Of<"Ellipse">
 ==	NameList
 	{	{	"Color"
-		,	OffsetType<RGBAColor>
+		,	OffsetType<RGBAColor, 2z>
 		}
 	,	{	"ComputeAreaMultiplier"
 		,	OffsetType<Pi_4>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 2z>
+		,	OffsetType<Float, 1z>
 		}
 	}
 );
@@ -233,19 +233,19 @@ static_assert
 (	NamedInfoList_Of<"Cube">
 ==	NameList
 	{	{	"Color"
-		,	OffsetType<RGBAColor>
+		,	OffsetType<RGBAColor, 1z>
 		}
 	,	{	"ComputeVolumeMultiplier"
 		,	OffsetType<One>
 		}
 	,	{	"Depth"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	}
 );
@@ -254,19 +254,19 @@ static_assert
 (	NamedInfoList_Of<"Cuboid">
 ==	NameList
 	{	{	"Color"
-		,	OffsetType<RGBAColor>
+		,	OffsetType<RGBAColor, 3z>
 		}
 	,	{	"ComputeVolumeMultiplier"
 		,	OffsetType<One>
 		}
 	,	{	"Depth"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 2z>
+		,	OffsetType<Float, 1z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 3z>
+		,	OffsetType<Float, 2z>
 		}
 	}
 );
@@ -275,19 +275,19 @@ static_assert
 (	NamedInfoList_Of<"Pyramid">
 ==	NameList
 	{	{	"Color"
-		,	OffsetType<RGBAColor>
+		,	OffsetType<RGBAColor, 3z>
 		}
 	,	{	"ComputeVolumeMultiplier"
 		,	OffsetType<Third>
 		}
 	,	{	"Depth"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 2z>
+		,	OffsetType<Float, 1z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 3z>
+		,	OffsetType<Float, 2z>
 		}
 	}
 );
@@ -296,19 +296,19 @@ static_assert
 (	NamedInfoList_Of<"Sphere">
 ==	NameList
 	{	{	"Color"
-		,	OffsetType<RGBAColor>
+		,	OffsetType<RGBAColor, 1z>
 		}
 	,	{	"ComputeVolumeMultiplier"
 		,	OffsetType<Pi_6>
 		}
 	,	{	"Depth"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	}
 );
@@ -317,19 +317,19 @@ static_assert
 (	NamedInfoList_Of<"Cylinder">
 ==	NameList
 	{	{	"Color"
-		,	OffsetType<RGBAColor>
+		,	OffsetType<RGBAColor, 2z>
 		}
 	,	{	"ComputeVolumeMultiplier"
 		,	OffsetType<Pi_4>
 		}
 	,	{	"Depth"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 2z>
+		,	OffsetType<Float, 1z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 2z>
+		,	OffsetType<Float, 1z>
 		}
 	}
 );
@@ -338,19 +338,19 @@ static_assert
 (	NamedInfoList_Of<"Cone">
 ==	NameList
 	{	{	"Color"
-		,	OffsetType<RGBAColor>
+		,	OffsetType<RGBAColor, 2z>
 		}
 	,	{	"ComputeVolumeMultiplier"
 		,	OffsetType<Pi_12>
 		}
 	,	{	"Depth"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 2z>
+		,	OffsetType<Float, 1z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 2z>
+		,	OffsetType<Float, 1z>
 		}
 	}
 );
@@ -359,19 +359,19 @@ static_assert
 (	NamedInfoList_Of<"Ellipsoid">
 ==	NameList
 	{	{	"Color"
-		,	OffsetType<RGBAColor>
+		,	OffsetType<RGBAColor, 3z>
 		}
 	,	{	"ComputeVolumeMultiplier"
 		,	OffsetType<Pi_6>
 		}
 	,	{	"Depth"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 2z>
+		,	OffsetType<Float, 1z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 3z>
+		,	OffsetType<Float, 2z>
 		}
 	}
 );
@@ -380,49 +380,49 @@ static_assert
 (	NamedInfoList_Of<"Head">
 ==	NameList
 	{	{	"Color"
-		,	OffsetType<RGBAColor>
+		,	OffsetType<RGBAColor, 3z>
 		}
 	,	{	"ComputeVolumeMultiplier"
  		,	OffsetType<Pi_6>
 		}
 	,	{	"Depth"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	,	{	"Height"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	,	{	"LeftEyeColor"
-		,	OffsetType<RGBAColor, 0z, 1z>
+		,	OffsetType<RGBAColor, 3z, 1z>
 		}
 	,	{	"LeftEyeComputeVolumeMultiplier"
 		,	OffsetType<Pi_6>
 		}
 	,	{	"LeftEyeDepth"
-		,	OffsetType<Float, 2z>
+		,	OffsetType<Float, 1z>
 		}
 	,	{	"LeftEyeHeight"
-		,	OffsetType<Float, 2z>
+		,	OffsetType<Float, 1z>
 		}
 	,	{	"LeftEyeWidth"
-		,	OffsetType<Float, 2z>
+		,	OffsetType<Float, 1z>
 		}
 	,	{	"RightEyeColor"
-		,	OffsetType<RGBAColor, 0z, 1z>
+		,	OffsetType<RGBAColor, 3z, 1z>
 		}
 	,	{	"RightEyeComputeVolumeMultiplier"
 		,	OffsetType<Pi_6>
 		}
 	,	{	"RightEyeDepth"
-		,	OffsetType<Float, 3z>
+		,	OffsetType<Float, 2z>
 		}
 	,	{	"RightEyeHeight"
-		,	OffsetType<Float, 3z>
+		,	OffsetType<Float, 2z>
 		}
 	,	{	"RightEyeWidth"
-		,	OffsetType<Float, 3z>
+		,	OffsetType<Float, 2z>
 		}
 	,	{	"Width"
-		,	OffsetType<Float, 1z>
+		,	OffsetType<Float, 0z>
 		}
 	}
 );

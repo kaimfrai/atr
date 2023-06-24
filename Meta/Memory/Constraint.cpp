@@ -11,9 +11,9 @@ import Std;
 namespace
 	Meta::Memory
 {
-	auto constexpr inline
+	export Alignment constexpr inline
 		ByteAlign
-	=	::std::countr_zero
+	{	::std::countr_zero
 		(	static_cast<USize>
 			(	BitSize
 				(	1_byte
@@ -22,7 +22,7 @@ namespace
 			)
 		)
 	+	1
-	;
+	};
 
 	// necessary to check unions
 	template
@@ -47,7 +47,8 @@ namespace
 			(	t_tEntity
 			)
 		)
-		+	ByteAlign
+	+	ByteAlign
+		.	Value
 	};
 
 
@@ -83,6 +84,7 @@ export namespace
 		(	IsAligned
 		)	()	const
 			noexcept
+		->	bool
 		{	return
 				Align
 			>	0_align
@@ -94,6 +96,7 @@ export namespace
 		(	IsStateful
 		)	()	const
 			noexcept
+		->	bool
 		{	return
 				Size
 			>	0_bit
@@ -102,11 +105,11 @@ export namespace
 
 		[[nodiscard]]
 		auto friend constexpr inline
-		(	operator
-			<=>
+		(	operator<=>
 		)	(	Constraint
 			,	Constraint
 			)
+			noexcept
 		=	default;
 	};
 
@@ -135,10 +138,10 @@ export namespace
 		<>
 	Constraint constexpr inline
 		Constraint_Of
-		<	decltype(nullptr)
+		<	::std::nullptr_t
 		>
-	{	Align_Of<decltype(nullptr)>
-	,	Size_Of<decltype(nullptr)>
+	{	Align_Of<::std::nullptr_t>
+	,	Size_Of<::std::nullptr_t>
 	};
 
 	template
@@ -257,8 +260,8 @@ export namespace
 				[]
 		>
 	{	Constraint_Of
-			<	t_tEntity
-			>
+		<	t_tEntity
+		>
 		.	Align
 	,	0_bit
 	};

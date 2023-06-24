@@ -48,11 +48,14 @@ export namespace
 		)
 		noexcept
 	->	Size<t_nWidth>&
-	{	(	i_rSize.get()
+	{	(	i_rSize
+			.	get
+				()
 		+=	static_cast<Size<t_nWidth>>
 			(	i_vOffset
 			)
-		.	get()
+			.	get
+				()
 		);
 		return
 			i_rSize

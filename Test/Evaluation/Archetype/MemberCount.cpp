@@ -31,68 +31,98 @@ auto constexpr inline
 	MemberCount
 =	[]
 	{	auto const
-		&	rConfigure
+		&	rConfig
 		=	Config_Of
 			<	ID<t_vTypeName>
 			>
 		;
 		return
-		::std::distance
-		(	rConfigure
-			.	Layout
-			.	begin
-				()
-		,	rConfigure
-			.	Layout
-			.	end
-				()
-		);
+			::std::accumulate
+			(	rConfig
+				.	AlignTypeCounts
+				.	begin
+					()
+			,	rConfig
+				.	AlignTypeCounts
+				.	end
+					()
+			,	0z
+			,	[]	(	auto
+							i_vCount
+					,	auto const
+						&	i_rCountedTypes
+					)
+				{	return
+						::std::accumulate
+						(	i_rCountedTypes
+							.	begin
+								()
+						,	i_rCountedTypes
+							.	end
+								()
+						,	i_vCount
+						,	[]	(	auto
+										i_vInnerCount
+								,	auto const
+									&	i_rCountedType
+								)
+							{	return
+									i_vInnerCount
+								+	i_rCountedType
+									.	Count
+								;
+							}
+						)
+					;
+				}
+			)
+		;
 	}()
 ;
 
 static_assert
 (	MemberCount<"Square">
-==	3z
+==	2z
 );
 static_assert
 (	MemberCount<"Rectangle">
-==	4z
+==	3z
 );
 static_assert
 (	MemberCount<"Triangle">
-==	4z
+==	3z
 );
 static_assert
 (	MemberCount<"Circle">
-==	3z
+==	2z
 );
 static_assert
 (	MemberCount<"Ellipse">
-==	4z
+==	3z
 );
 static_assert
 (	MemberCount<"Cube">
-==	3z
+==	2z
 );
 static_assert
 (	MemberCount<"Cuboid">
-==	5z
+==	4z
 );
 static_assert
 (	MemberCount<"Sphere">
-==	3z
+==	2z
 );
 static_assert
 (	MemberCount<"Cylinder">
-==	4z
+==	3z
 );
 static_assert
 (	MemberCount<"Cone">
-==	4z
+==	3z
 );
 static_assert
 (	MemberCount<"Ellipsoid">
-==	5z
+==	4z
 );
 static_assert
 (	MemberCount<"Head">

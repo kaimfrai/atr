@@ -1,10 +1,10 @@
 export module ATR.Instance;
 
 import ATR.Address;
-import ATR.Layout.Type;
-import ATR.Member.Storage;
+import ATR.Layout.Create;
 import ATR.Member.Config;
 import ATR.Member.Offset;
+import ATR.Member.Storage;
 
 import Meta.Memory.Size.Arithmetic;
 import Meta.ID;
@@ -28,7 +28,7 @@ export namespace
 		>
 	struct
 		Instance
-	:	CreateLayoutType
+	:	Layout::CreateType
 		<	t_tName
 		>
 	{
@@ -60,7 +60,7 @@ export namespace
 
 		using
 			LayoutType
-		=	CreateLayoutType
+		=	Layout::CreateType
 			<	t_tName
 			>
 		;

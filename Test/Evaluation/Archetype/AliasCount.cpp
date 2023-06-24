@@ -31,24 +31,71 @@ auto constexpr inline
 	AliasCount
 =	[]
 	{	auto const
-		&	rConfigure
+		&	rConfig
 		=	Config_Of
 			<	ID<t_vTypeName>
 			>
 		;
 		return
-			rConfigure
-			.	NamedInfoList
-			.	Count
-		-	::std::distance
-			(	rConfigure
-				.	Layout
+			::std::count_if
+			(	rConfig
+				.	NamedInfoList
 				.	begin
 					()
-			,	rConfigure
-				.	Layout
+			,	rConfig
+				.	NamedInfoList
 				.	end
 					()
+			,	[]	(	auto const
+						&	i_rNamedInfo
+					)
+				{	return
+						i_rNamedInfo
+						.	Info
+						.	Type
+						.	IsAligned
+							()
+					;
+				}
+			)
+		-	::std::accumulate
+			(	rConfig
+				.	AlignTypeCounts
+				.	begin
+					()
+			,	rConfig
+				.	AlignTypeCounts
+				.	end
+					()
+			,	0z
+			,	[]	(	auto
+							i_vCount
+					,	auto const
+						&	i_rCountedTypes
+					)
+				{	return
+						::std::accumulate
+						(	i_rCountedTypes
+							.	begin
+								()
+						,	i_rCountedTypes
+							.	end
+								()
+						,	i_vCount
+						,	[]	(	auto
+										i_vInnerCount
+								,	auto const
+									&	i_rCountedType
+								)
+							{	return
+									i_vInnerCount
+								+	i_rCountedType
+									.	Count
+								;
+							}
+						)
+					;
+				}
 			)
 		;
 	}()

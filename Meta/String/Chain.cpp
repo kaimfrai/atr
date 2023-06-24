@@ -151,4 +151,37 @@ export namespace
 			};
 		}
 	};
+
+	struct
+		ImplicitChain
+	:	Chain
+	{
+		explicit(false) constexpr
+		(	ImplicitChain
+		)	()
+			noexcept
+		=	default;
+
+		explicit(false) constexpr
+		(	ImplicitChain
+		)	(	char const
+				*	i_aString
+			)
+			noexcept
+		:	Chain
+			{	i_aString
+			}
+		{}
+
+		explicit(false) constexpr
+		(	ImplicitChain
+		)	(	Chain
+					i_rChain
+			)
+			noexcept
+		:	Chain
+			{	i_rChain
+			}
+		{}
+	};
 }

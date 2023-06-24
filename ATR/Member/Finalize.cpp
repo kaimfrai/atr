@@ -1,22 +1,24 @@
 export module ATR.Member.Finalize;
 
-import ATR.Member.Alias;
 import ATR.Member.AlignBuffer;
 import ATR.Member.ConfigBuilder;
 import ATR.Member.ConfigData;
 import ATR.Member.Constants;
 import ATR.Member.CountedBuffer;
 import ATR.Member.NamedInfo;
-import ATR.Member.NamedType;
 
-import Meta.Memory.Ceil;
+import Meta.Memory.Alignment;
+import Meta.Memory.Constraint;
 import Meta.Memory.Size.Arithmetic;
+import Meta.Memory.Size.Scale;
 import Meta.Memory.Size;
 import Meta.Token.TypeID;
 
 import Std;
 
 using ::Meta::BitSize;
+using ::Meta::Memory::Alignment;
+using ::Meta::Memory::ByteAlign;
 using ::Meta::TypeID;
 
 using namespace ::Meta::Literals;
@@ -24,325 +26,119 @@ using namespace ::Meta::Literals;
 namespace
 	ATR::Member
 {
-	[[nodiscard]]
-	auto constexpr inline
-	(	MakeLayout
-	)	(	AlignBuffer<NamedType> const
-			&	i_rNamedTypeView
-		)
-		noexcept
-	->	AlignBuffer<TypeID>
+	struct
+		OffsetType
 	{
-		AlignBuffer<TypeID>
-			vLayout
+		TypeID
+			Type
 		{};
 
-		for	(	auto
-					aAlignmentCounter
-				=	+
-					vLayout
-					.	AlignmentCounter
-			;	auto
-					vAlignCount
-			:	i_rNamedTypeView
-				.	AlignmentCounter
+		BitSize
+			Offset
+		{};
+	};
+
+	[[nodiscard]]
+	auto constexpr inline
+	(	GetOffsetForType
+	)	(	TypeID
+				i_vType
+		,	AlignBuffer<OffsetType>
+			&	i_rAlignTypeOffsets
+		,	CountedBuffer<BitSize, ByteAlign.Value - 1>
+			&	i_rBitOffsets
+		)
+		noexcept
+	->	BitSize
+	{
+		auto const
+			vAlign
+		=	i_vType
+			.	GetAlign
+				()
+		;
+
+		if	(	vAlign
+			==	0_align
 			)
 		{
-			auto const
-				vNextOffset
-			=	(	vLayout
-					.	TotalCounter
-				+	vAlignCount
-				)
-			;
-
-			for	(
-				;	(	vLayout
-						.	TotalCounter
-					<	vNextOffset
-					)
-				;	++	vLayout
-						.	TotalCounter
-				)
-			{
-				vLayout
-				.	Buffer
-					[	vLayout
-						.	TotalCounter
-					]
-				=	i_rNamedTypeView
-					.	Buffer
-						[	vLayout
-							.	TotalCounter
-						]
-					.	Type
-				;
-			}
-
-			*	aAlignmentCounter
-			=	vAlignCount
-			;
-			++	aAlignmentCounter
+			return
+				0_bit
 			;
 		}
 
-		return
-			vLayout
-		;
-	}
-
-	auto constexpr inline
-	(	SortMembers
-	)	(	AlignBuffer<NamedType> const
-			&	i_rNamedTypeView
-		)
-		noexcept
-	->	CountedBuffer<NamedInfo, NameBufferSize>
-	{
-		BitSize
-			vAccumulatedOffset
-		=	0_bit
-		;
-
-		CountedBuffer<NamedInfo, NameBufferSize>
-			vResult
-		{};
-
 		auto const
-			aResultBegin
-		=	vResult
-			.	begin
+			vSize
+		=	i_vType
+			.	GetSize
 				()
-			;
-
-		auto
-			aResultEnd
-		=	aResultBegin
 		;
 
-		for	(	auto const
-				&	[	rName
-					,	rType
-					]
-			:	i_rNamedTypeView
+		if	(	vAlign
+			<	ByteAlign
 			)
 		{
 			auto
-				aInsert
-			=	aResultEnd
-				++
+			&	rOffset
+			=	i_rBitOffsets
+					[	ByteAlign
+						.	Value
+					-	vAlign
+						.	Value
+					-	1
+					]
 			;
 
-			while(	aInsert
-				!=	aResultBegin
+			auto const
+				vOffset
+			=	rOffset
+			;
+
+			rOffset
+			+=	vSize
+			;
+
+			return
+				vOffset
+			;
+		}
+
+		auto
+		&	rTypeOffsets
+		=	i_rAlignTypeOffsets
+				[	vAlign
+				]
+		;
+
+		for	(	OffsetType
+				&	rTypeOffset
+			:	rTypeOffsets
+			)
+		{
+			if	(	rTypeOffset
+					.	Type
+				==	i_vType
 				)
 			{
 				auto const
-					aPrevious
-				=	(	aInsert
-					-	1z
-					)
+					vOffset
+				=	rTypeOffset
+					.	Offset
 				;
 
-				if	(	aPrevious
-						->	Name
-					<	rName
-					)
-				{	break;
-				}
-
-				*	aInsert
-				=	*	aPrevious
+				rTypeOffset
+				.	Offset
+				+=	vSize
 				;
-				aInsert
-				=	aPrevious
+
+				return
+					vOffset
 				;
 			}
-
-			aInsert
-			->	Name
-			=	rName
-			;
-
-			aInsert
-			->	Info
-			.	Type
-			=	rType
-			;
-
-			vAccumulatedOffset
-			=	Ceil
-				(	vAccumulatedOffset
-				,	rType
-					.	GetAlign
-						()
-				)
-			;
-
-			aInsert
-			->	Info
-			.	Offset
-			=	vAccumulatedOffset
-			;
-
-			vAccumulatedOffset
-			+=	rType
-				.	GetSize
-					()
-			;
 		}
 
-		vResult
-		.	Count
-		=	(	aResultEnd
-			-	aResultBegin
-			)
-		;
-
-		return
-			vResult
-		;
-	}
-
-	[[nodiscard]]
-	auto constexpr inline
-	(	ResolveAliases
-	)	(	CountedBuffer<NamedInfo, NameBufferSize> const
-			&	i_rNamedInfos
-		,	NamedInfo
-			*	o_aInsertAlias
-		,	CountedBuffer<Alias, NameBufferSize> const
-			&	i_rAliasView
-		)
-		noexcept
-	->	CountedBuffer<NamedInfo, NameBufferSize>::iterator
-	{
-		auto const
-			aMemberBegin
-		=	i_rNamedInfos
-			.	begin
-				()
-		;
-
-		auto const
-			aMemberEnd
-		=	i_rNamedInfos
-			.	end
-				()
-		;
-
-		for	(	auto const
-				&	[	rName
-					,	rTarget
-					]
-			:	i_rAliasView
-			)
-		{
-			auto const
-				aMember
-			=	::std::lower_bound
-				(	aMemberBegin
-				,	aMemberEnd
-				,	rTarget
-				)
-			;
-
-			o_aInsertAlias
-			->	Name
-			=	rName
-			;
-
-			o_aInsertAlias
-			->	Info
-			=	aMember
-				->	Info
-			;
-
-			++	o_aInsertAlias
-			;
-		}
-
-		return
-			o_aInsertAlias
-		;
-	}
-
-	auto constexpr inline
-	(	MakeMembers
-	)	(	AlignBuffer<NamedType> const
-			&	i_rNamedTypeView
-		,	CountedBuffer<Alias, NameBufferSize> const
-			&	i_rAliasView
-		)
-		noexcept
-	->	CountedBuffer<NamedInfo, NameBufferSize>
-	{
-		CountedBuffer<NamedInfo, NameBufferSize>
-			vNamedInfo
-		=	SortMembers
-			(	i_rNamedTypeView
-			)
-		;
-
-		auto const
-			aNamedInfoBegin
-		=	vNamedInfo
-			.	begin
-				()
-		;
-
-		auto const
-			aNamedInfoEnd
-		=	vNamedInfo
-			.	end
-				()
-		;
-
-		auto const
-			aAliasBegin
-		=	aNamedInfoEnd
-		;
-
-		auto const
-			aAliasEnd
-		=	ResolveAliases
-			(	vNamedInfo
-			,	aAliasBegin
-			,	i_rAliasView
-			)
-		;
-
-		CountedBuffer<NamedInfo, NameBufferSize>
-			vMerged
-		{};
-
-		auto const
-			aMergedBegin
-		=	vMerged
-			.	begin
-				()
-		;
-
-		auto const
-			aMergedEnd
-		=	::std::merge
-			(	aNamedInfoBegin
-			,	aNamedInfoEnd
-			,	aAliasBegin
-			,	aAliasEnd
-			,	aMergedBegin
-			)
-		;
-
-		vMerged
-		.	Count
-		=	(	aMergedEnd
-			-	aMergedBegin
-			)
-		;
-
-		return
-			vMerged
+		::std::unreachable
+			()
 		;
 	}
 
@@ -354,31 +150,238 @@ namespace
 		noexcept
 	->	ConfigData
 	{
-		auto const
-		&	rNamedTypeView
+		ConfigData
+			vResult
+		{};
+
+		vResult
+		.	AlignTypeCounts
 		=	i_rConfigBuilder
-			.	NamedTypes
+			.	Layout
+			.	AlignTypeCounts
+		;
+
+		AlignBuffer<OffsetType>
+			vAlignTypeOffsets
+		{};
+
+		BitSize
+			vAccumulatedOffset
+		{};
+
+		for	(	Alignment
+					vAlignment
+				=	MaxAlign
+			;	(	vAlignment
+				>=	ByteAlign
+				)
+			;	--	vAlignment
+					.	Value
+			)
+		{
+			auto const
+			&	rTypeCounts
+			=	i_rConfigBuilder
+				.	Layout
+				.	AlignTypeCounts
+					[	vAlignment
+					]
+			;
+
+			auto
+			&	rTypeOffsets
+			=	vAlignTypeOffsets
+				[	vAlignment
+				]
+			;
+
+			for	(	auto const
+					&	[	rType
+						,	rCount
+						]
+				:	rTypeCounts
+				)
+			{
+				rTypeOffsets
+					[	rTypeOffsets
+						.	Count
+						++
+					]
+				=	OffsetType
+					{	rType
+					,	vAccumulatedOffset
+					}
+				;
+
+				vAccumulatedOffset
+				+=	rType
+					.	GetSize
+						()
+				*	rCount
+				;
+			}
+		}
+
+		CountedBuffer<BitSize, ByteAlign.Value - 1>
+			vBitOffsets
+		{};
+
+		for	(	auto const
+				&	rBitCount
+			:	i_rConfigBuilder
+				.	Layout
+				.	BitCounts
+			)
+		{
+			vBitOffsets
+				[	vBitOffsets
+					.	Count
+					++
+				]
+			=	vAccumulatedOffset
+			;
+
+			vAccumulatedOffset
+			+=	rBitCount
+			;
+
+			vResult
+			.	BitCount
+			+=	rBitCount
+			;
+		}
+
+		NamedInfo
+			vNamedInfoList
+			[	NameBufferSize
+			]
+		{};
+
+		auto const
+			aNamedInfosBegin
+		=	+
+			vNamedInfoList
+		;
+
+		auto
+			aNamedInfosEnd
+		=	aNamedInfosBegin
+		;
+
+		for	(	auto const
+				&	[	rName
+					,	rType
+					]
+			:	i_rConfigBuilder
+				.	NamedTypes
+				.	List
+			)
+		{
+			auto const
+				vOffset
+			=	GetOffsetForType
+				(	rType
+				,	vAlignTypeOffsets
+				,	vBitOffsets
+				)
+			;
+
+			*	aNamedInfosEnd
+				++
+			=	NamedInfo
+				{	rName
+				,	{	rType
+					,	vOffset
+					}
+				}
+			;
+		}
+
+		auto const
+			aAliasInfosBegin
+		=	aNamedInfosEnd
+		;
+
+		auto
+			aAliasInfosEnd
+		=	aAliasInfosBegin
+		;
+
+		for	(	auto const
+				&	[	rName
+					,	rTarget
+					]
+			:	i_rConfigBuilder
+				.	AliasMaps
+				.	List
+			)
+		{
+			for	(	auto
+						aTarget
+					=	aNamedInfosBegin
+				;	(	aTarget
+					!=	aNamedInfosEnd
+					)
+				;	++	aTarget
+				)
+			{
+				if	(	aTarget
+						->	Name
+					==	rTarget
+					)
+				{
+					NamedInfo
+					&	rAliasInfo
+					=	*	aAliasInfosEnd
+							++
+					;
+
+					rAliasInfo
+					.	Name
+					=	rName
+					;
+
+					rAliasInfo
+					.	Info
+					=	aTarget
+						->	Info
+					;
+
+					break
+					;
+				}
+			}
+		}
+
+		auto const
+			aResultInfoBegin
+		=	vResult
+			.	NamedInfoList
+			.	begin
+				()
 		;
 
 		auto const
-			vLayout
-		=	MakeLayout
-			(	rNamedTypeView
+			aResultInfoEnd
+		=	::std::merge
+			(	aNamedInfosBegin
+			,	aNamedInfosEnd
+			,	aAliasInfosBegin
+			,	aAliasInfosEnd
+			,	aResultInfoBegin
 			)
 		;
 
-		auto const
-			vNamedInfos
-		=	MakeMembers
-			(	rNamedTypeView
-			,	i_rConfigBuilder
-				.	AliasList
+		vResult
+		.	NamedInfoList
+		.	Count
+		=	(	aResultInfoEnd
+			-	aResultInfoBegin
 			)
 		;
 
 		return
-		{	vLayout
-		,	vNamedInfos
-		};
+			vResult
+		;
 	}
 }

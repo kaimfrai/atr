@@ -12,116 +12,64 @@ import Evaluation.Archetype.Sphere;
 import Evaluation.Archetype.Square;
 import Evaluation.Archetype.Triangle;
 import Evaluation.Dependency.DataTypes;
-import Evaluation.Dependency.Fraction;
-import Evaluation.Dependency.PiFraction;
 
 import ATR.Member.Config;
-import ATR.Member.Constants;
+import ATR.Member.CountedType;
 
 import Meta.ID;
 import Meta.Memory.Alignment;
 import Meta.Memory.Constraint;
 import Meta.String.Literal;
 import Meta.Token.Type;
-import Meta.Token.TypeID;
 
 import Std;
 
 using ::ATR::Member::Config_Of;
+using ::ATR::Member::CountedType;
 using ::Meta::ID;
+using ::Meta::Memory::Alignment;
 using ::Meta::Memory::BitAlign_Of;
 using ::Meta::String::Literal;
 using ::Meta::Type;
-using ::Meta::TypeID;
-
-using namespace ::Meta::Literals;
-
 
 template
 	<	Literal
 			t_vTypeName
-	,	auto
+	,	Alignment
 			t_vAlignment
 	>
 ::std::span constexpr inline
 	TypeList_Of
-=	[]
-	{
-		auto const
-		&	rLayout
-		=	Config_Of
-			<	ID<t_vTypeName>
-			>
-			.	Layout
-		;
-
-		auto
-			aBuffer
-		=	rLayout
-			.	Buffer
-		;
-
-		for	(	auto
-					vAlign
-				=	0_align
-			;	(	vAlign
-				<	t_vAlignment
-				)
-			;	++	vAlign
-					.	Value
-			)
-		{
-			aBuffer
-			+=	rLayout
-				.	Counter
-					(	vAlign
-					)
-			;
-		}
-
-		return
-		::std::span
-		{	aBuffer
-		,	rLayout
-			.	Counter
-				(	t_vAlignment
-				)
-		};
-	}()
-;
-
-using One = Fraction<>;
-using Half = Fraction<1z, 2z>;
-using Third = Fraction<1z, 3z>;
-using Pi_6 = PiFraction<1z, 6z>;
-using Pi_4 = PiFraction<1z, 4z>;
-using Pi_12 = PiFraction<1z, 12z>;
-
-using
-	TypeList
-=	::std::initializer_list
-	<	TypeID
+=	Config_Of
+	<	ID<t_vTypeName>
 	>
+	.	AlignTypeCounts
+		[	t_vAlignment
+		]
 ;
 
 [[nodiscard]]
 auto constexpr inline
 (	operator==
-)	(	::std::span<TypeID const>
+)	(	::std::span<CountedType const>
 			i_rLeft
-	,	TypeList
-			i_rRight
+	,	CountedType
+			i_vRight
 	)
 	noexcept
 ->	bool
-{
-	return
-	::std::equal
-	(	begin(i_rLeft)
-	,	end(i_rLeft)
-	,	begin(i_rRight)
-	,	end(i_rRight)
-	);
+{	return
+		(	i_rLeft
+			.	size
+				()
+		==	1uz
+		)
+	and	(	i_rLeft
+			[	0uz
+			]
+		==	i_vRight
+		)
+	;
 }
 
 auto constexpr inline
@@ -140,263 +88,195 @@ auto constexpr inline
 
 static_assert
 (	TypeList_Of<"Square", FloatAlign>
-==	TypeList
+==	CountedType
 	{	Type<Float>
+	,	1z
 	}
 );
 static_assert
 (	TypeList_Of<"Square", ColorAlign>
-==	TypeList
+==	CountedType
 	{	Type<RGBAColor>
-	}
-);
-static_assert
-(	TypeList_Of<"Square", 0_align>
-==	TypeList
-	{	Type<One>
+	,	1z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Rectangle", FloatAlign>
-==	TypeList
+==	CountedType
 	{	Type<Float>
-	,	Type<Float>
+	,	2z
 	}
 );
 static_assert
 (	TypeList_Of<"Rectangle", ColorAlign>
-==	TypeList
+==	CountedType
 	{	Type<RGBAColor>
-	}
-);
-static_assert
-(	TypeList_Of<"Rectangle", 0_align>
-==	TypeList
-	{	Type<One>
+	,	1z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Triangle", FloatAlign>
-==	TypeList
+==	CountedType
 	{	Type<Float>
-	,	Type<Float>
+	,	2z
 	}
 );
 static_assert
 (	TypeList_Of<"Triangle", ColorAlign>
-==	TypeList
+==	CountedType
 	{	Type<RGBAColor>
-	}
-);
-static_assert
-(	TypeList_Of<"Triangle", 0_align>
-==	TypeList
-	{	Type<Half>
+	,	1z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Circle", FloatAlign>
-==	TypeList
+==	CountedType
 	{	Type<Float>
+	,	1z
 	}
 );
 static_assert
 (	TypeList_Of<"Circle", ColorAlign>
-==	TypeList
+==	CountedType
 	{	Type<RGBAColor>
-	}
-);
-static_assert
-(	TypeList_Of<"Circle", 0_align>
-==	TypeList
-	{	Type<Pi_4>
+	,	1z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Ellipse", FloatAlign>
-==	TypeList
+==	CountedType
 	{	Type<Float>
-	,	Type<Float>
+	,	2z
 	}
 );
 static_assert
 (	TypeList_Of<"Ellipse", ColorAlign>
-==	TypeList
+==	CountedType
 	{	Type<RGBAColor>
-	}
-);
-static_assert
-(	TypeList_Of<"Ellipse", 0_align>
-==	TypeList
-	{	Type<Pi_4>
+	,	1z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Cube", FloatAlign>
-==	TypeList
+==	CountedType
 	{	Type<Float>
+	,	1z
 	}
 );
 static_assert
 (	TypeList_Of<"Cube", ColorAlign>
-==	TypeList
+==	CountedType
 	{	Type<RGBAColor>
-	}
-);
-static_assert
-(	TypeList_Of<"Cube", 0_align>
-==	TypeList
-	{	Type<One>
+	,	1z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Cuboid", FloatAlign>
-==	TypeList
+==	CountedType
 	{	Type<Float>
-	,	Type<Float>
-	,	Type<Float>
+	,	3z
 	}
 );
 static_assert
 (	TypeList_Of<"Cuboid", ColorAlign>
-==	TypeList
+==	CountedType
 	{	Type<RGBAColor>
-	}
-);
-static_assert
-(	TypeList_Of<"Cuboid", 0_align>
-==	TypeList
-	{	Type<One>
+	,	1z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Pyramid", FloatAlign>
-==	TypeList
+==	CountedType
 	{	Type<Float>
-	,	Type<Float>
-	,	Type<Float>
+	,	3z
 	}
 );
 static_assert
 (	TypeList_Of<"Pyramid", ColorAlign>
-==	TypeList
+==	CountedType
 	{	Type<RGBAColor>
-	}
-);
-static_assert
-(	TypeList_Of<"Pyramid", 0_align>
-==	TypeList
-	{	Type<Third>
+	,	1z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Sphere", FloatAlign>
-==	TypeList
+==	CountedType
 	{	Type<Float>
+	,	1z
 	}
 );
 static_assert
 (	TypeList_Of<"Sphere", ColorAlign>
-==	TypeList
+==	CountedType
 	{	Type<RGBAColor>
-	}
-);
-static_assert
-(	TypeList_Of<"Sphere", 0_align>
-==	TypeList
-	{	Type<Pi_6>
+	,	1z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Cylinder", FloatAlign>
-==	TypeList
+==	CountedType
 	{	Type<Float>
-	,	Type<Float>
+	,	2z
 	}
 );
 static_assert
 (	TypeList_Of<"Cylinder", ColorAlign>
-==	TypeList
+==	CountedType
 	{	Type<RGBAColor>
-	}
-);
-static_assert
-(	TypeList_Of<"Cylinder", 0_align>
-==	TypeList
-	{	Type<Pi_4>
+	,	1z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Cone", FloatAlign>
-==	TypeList
+==	CountedType
 	{	Type<Float>
-	,	Type<Float>
+	,	2z
 	}
 );
 static_assert
 (	TypeList_Of<"Cone", ColorAlign>
-==	TypeList
+==	CountedType
 	{	Type<RGBAColor>
-	}
-);
-static_assert
-(	TypeList_Of<"Cone", 0_align>
-==	TypeList
-	{	Type<Pi_12>
+	,	1z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Ellipsoid", FloatAlign>
-==	TypeList
+==	CountedType
 	{	Type<Float>
-	,	Type<Float>
-	,	Type<Float>
+	,	3z
 	}
 );
 static_assert
 (	TypeList_Of<"Ellipsoid", ColorAlign>
-==	TypeList
+==	CountedType
 	{	Type<RGBAColor>
-	}
-);
-static_assert
-(	TypeList_Of<"Ellipsoid", 0_align>
-==	TypeList
-	{	Type<Pi_6>
+	,	1z
 	}
 );
 
 static_assert
 (	TypeList_Of<"Head", FloatAlign>
-==	TypeList
+==	CountedType
 	{	Type<Float>
-	,	Type<Float>
-	,	Type<Float>
+	,	3z
 	}
 );
 static_assert
 (	TypeList_Of<"Head", ColorAlign>
-==	TypeList
+==	CountedType
 	{	Type<RGBAColor>
-	,	Type<RGBAColor>
-	}
-);
-static_assert
-(	TypeList_Of<"Head", 0_align>
-==	TypeList
-	{	Type<Pi_6>
-	,	Type<Pi_6>
-	,	Type<Pi_6>
+	,	2z
 	}
 );

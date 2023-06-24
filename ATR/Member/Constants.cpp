@@ -3,6 +3,7 @@ export module ATR.Member.Constants;
 import Meta.Memory.Constraint;
 
 using ::Meta::Memory::BitAlign_Of;
+using ::Meta::Memory::ByteAlign;
 
 export namespace
 	ATR::Member
@@ -15,12 +16,22 @@ export namespace
 	;
 
 	auto constexpr inline
+		AlignmentCount
+	=	(	MaxAlign
+			.	Value
+		-	ByteAlign
+			.	Value
+		)
+	+	1z
+	;
+
+	auto constexpr inline
 		TypeBufferSize
-	=	32uz
+	=	4z
 	;
 
 	auto constexpr inline
 		NameBufferSize
-	=	32uz
+	=	32z
 	;
 }

@@ -23,6 +23,7 @@ using ::Meta::BitSize;
 using ::Meta::ByteSize;
 using ::Meta::Memory::BitAlign_Of;
 using ::Meta::Memory::BitSize_Of;
+using ::Meta::Memory::ByteWidth;
 using ::Meta::Specifier::Mut;
 
 using namespace ::Meta::Literals;
@@ -33,57 +34,84 @@ export namespace
 	template
 		<	typename
 				t_tMember
+		,	::std::size_t
+				t_vExtent
+		,	BitSize
+				t_vOffset
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	operator->*
-	)	(	Value<t_tMember> const
+	)	(	Value<t_tMember[t_vExtent]> const
 			&	i_rObject
-		,	Member<0_bit, ::std::add_const_t<t_tMember>>
+		,	Member<t_vOffset, ::std::add_const_t<t_tMember>>
 		)
 		noexcept
 	->	decltype(auto)
 	{	return
 		(	i_rObject
 			.	Data
+				[	static_cast<ByteWidth<t_tMember>>
+					(	t_vOffset
+					)
+					.	Value
+				]
 		);
 	}
 
 	template
 		<	typename
 				t_tMember
+		,	::std::size_t
+				t_vExtent
+		,	BitSize
+				t_vOffset
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	operator->*
-	)	(	Value<Mut<t_tMember>> const
+	)	(	Value<Mut<t_tMember>[t_vExtent]> const
 			&	i_rObject
-		,	Member<0_bit, Mut<t_tMember>>
+		,	Member<t_vOffset, Mut<t_tMember>>
 		)
 		noexcept
 	->	decltype(auto)
 	{	return
 		(	i_rObject
 			.	Data
+				[	static_cast<ByteWidth<t_tMember>>
+					(	t_vOffset
+					)
+					.	Value
+				]
 		);
 	}
 
 	template
 		<	typename
 				t_tMember
+		,	::std::size_t
+				t_vExtent
+		,	BitSize
+				t_vOffset
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	operator->*
-	)	(	Value<t_tMember>
+	)	(	Value<t_tMember[t_vExtent]>
 			&	i_rObject
-		,	Member<0_bit, t_tMember>
+		,	Member<t_vOffset, t_tMember>
 		)
 		noexcept
 	->	decltype(auto)
 	{	return
 		(	i_rObject
 			.	Data
+				[	static_cast<ByteWidth<t_tMember>>
+					(	t_vOffset
+					)
+					.	Value
+				]
 		);
 	}
 
@@ -371,13 +399,11 @@ export namespace
 	{
 		auto static constexpr
 			vNorthSize
-		=	(	BitSize_Of
-				<	Group<t_tNorth, t_tSouth>
-				>
-			-	BitSize_Of
-				<	t_tSouth
-				>
-			)
+		=	BitSize_Of
+			<	typename
+				Group<t_tNorth, t_tSouth>
+				::	NorthType
+			>
 		;
 		if	constexpr
 			(	vNorthSize
@@ -425,13 +451,11 @@ export namespace
 	{
 		auto static constexpr
 			vNorthSize
-		=	(	BitSize_Of
-				<	Group<t_tNorth, t_tSouth>
-				>
-			-	BitSize_Of
-				<	t_tSouth
-				>
-			)
+		=	BitSize_Of
+			<	typename
+				Group<t_tNorth, t_tSouth>
+				::	NorthType
+			>
 		;
 		if	constexpr
 			(	vNorthSize
@@ -479,13 +503,11 @@ export namespace
 	{
 		auto static constexpr
 			vNorthSize
-		=	(	BitSize_Of
-				<	Group<t_tNorth, t_tSouth>
-				>
-			-	BitSize_Of
-				<	t_tSouth
-				>
-			)
+		=	BitSize_Of
+			<	typename
+				Group<t_tNorth, t_tSouth>
+				::	NorthType
+			>
 		;
 		if	constexpr
 			(	vNorthSize
