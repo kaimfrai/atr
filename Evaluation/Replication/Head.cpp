@@ -22,9 +22,6 @@ export namespace
 			Height
 		;
 		float
-			LeftEyeHeight
-		;
-		float
 			LeftEyeColorAlpha
 		;
 		float
@@ -37,7 +34,16 @@ export namespace
 			LeftEyeColorRed
 		;
 		float
-			LeftRightEyeHeight
+			LeftEyeHeight
+		;
+		float
+			LeftEyePointLateral
+		;
+		float
+			LeftEyePointLongitudinal
+		;
+		float
+			LeftEyePointVertical
 		;
 		float
 			PointLateral
@@ -47,6 +53,18 @@ export namespace
 		;
 		float
 			PointVertical
+		;
+		float
+			RightEyeHeight
+		;
+		float
+			RightEyePointLateral
+		;
+		float
+			RightEyePointLongitudal
+		;
+		float
+			RightEyePointVertical
 		;
 	};
 }
