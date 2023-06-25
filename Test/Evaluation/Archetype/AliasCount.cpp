@@ -149,5 +149,6 @@ static_assert
 (	AliasCount<"Head">
 ==	(	3z * AliasCount<"Sphere">
 	+	4uz
+	+	2uz
 	)
 );

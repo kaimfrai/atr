@@ -1375,7 +1375,7 @@ static_assert
 (	Equals
 	(	NamedInfoList_Of<"Head">[29]
 	,	{	"RightEyePointLongitudinal"
-		,	OffsetType<float, 18z>
+		,	OffsetType<float, 11z>
 		}
 	)
 );
@@ -1383,7 +1383,7 @@ static_assert
 (	Equals
 	(	NamedInfoList_Of<"Head">[30]
 	,	{	"RightEyePointVertical"
-		,	OffsetType<float, 19z>
+		,	OffsetType<float, 12z>
 		}
 	)
 );

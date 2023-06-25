@@ -21,6 +21,8 @@ export namespace
 			("RightEyeColorGreen", "LeftEyeColorGreen")
 			("RightEyeColorBlue", "LeftEyeColorBlue")
 			("RightEyeColorAlpha", "LeftEyeColorAlpha")
+			("RightEyePointLongitudinal", "LeftEyePointLongitudinal")
+			("RightEyePointVertical", "LeftEyePointVertical")
 			("RightEye", "Sphere"_id)
 			("Sphere"_id)
 		;

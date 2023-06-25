@@ -129,5 +129,6 @@ static_assert
 (	MemberCount<"Head">
 ==	(	3z * MemberCount<"Sphere">
 	-	MemberCount<"Color">
+	-	2z
 	)
 );

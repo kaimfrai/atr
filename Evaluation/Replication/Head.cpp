@@ -60,12 +60,6 @@ export namespace
 		float
 			RightEyePointLateral
 		;
-		float
-			RightEyePointLongitudal
-		;
-		float
-			RightEyePointVertical
-		;
 	};
 }
 
