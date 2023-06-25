@@ -82,7 +82,7 @@ static_assert
 (	TypeList_Of<"Square", FloatAlign>
 ==	CountedType
 	{	Type<float>
-	,	5z
+	,	8z
 	}
 );
 
@@ -90,7 +90,7 @@ static_assert
 (	TypeList_Of<"Rectangle", FloatAlign>
 ==	CountedType
 	{	Type<float>
-	,	6z
+	,	9z
 	}
 );
 
@@ -98,7 +98,7 @@ static_assert
 (	TypeList_Of<"Triangle", FloatAlign>
 ==	CountedType
 	{	Type<float>
-	,	6z
+	,	9z
 	}
 );
 
@@ -106,7 +106,7 @@ static_assert
 (	TypeList_Of<"Circle", FloatAlign>
 ==	CountedType
 	{	Type<float>
-	,	5z
+	,	8z
 	}
 );
 
@@ -114,7 +114,7 @@ static_assert
 (	TypeList_Of<"Ellipse", FloatAlign>
 ==	CountedType
 	{	Type<float>
-	,	6z
+	,	9z
 	}
 );
 
@@ -122,7 +122,7 @@ static_assert
 (	TypeList_Of<"Cube", FloatAlign>
 ==	CountedType
 	{	Type<float>
-	,	5z
+	,	8z
 	}
 );
 
@@ -130,7 +130,7 @@ static_assert
 (	TypeList_Of<"Cuboid", FloatAlign>
 ==	CountedType
 	{	Type<float>
-	,	7z
+	,	10z
 	}
 );
 
@@ -138,7 +138,7 @@ static_assert
 (	TypeList_Of<"Pyramid", FloatAlign>
 ==	CountedType
 	{	Type<float>
-	,	7z
+	,	10z
 	}
 );
 
@@ -146,7 +146,7 @@ static_assert
 (	TypeList_Of<"Sphere", FloatAlign>
 ==	CountedType
 	{	Type<float>
-	,	5z
+	,	8z
 	}
 );
 
@@ -154,7 +154,7 @@ static_assert
 (	TypeList_Of<"Cylinder", FloatAlign>
 ==	CountedType
 	{	Type<float>
-	,	6z
+	,	9z
 	}
 );
 
@@ -162,7 +162,7 @@ static_assert
 (	TypeList_Of<"Cone", FloatAlign>
 ==	CountedType
 	{	Type<float>
-	,	6z
+	,	9z
 	}
 );
 
@@ -170,7 +170,7 @@ static_assert
 (	TypeList_Of<"Ellipsoid", FloatAlign>
 ==	CountedType
 	{	Type<float>
-	,	7z
+	,	10z
 	}
 );
 
@@ -178,6 +178,6 @@ static_assert
 (	TypeList_Of<"Head", FloatAlign>
 ==	CountedType
 	{	Type<float>
-	,	11z
+	,	20z
 	}
 );

@@ -19,7 +19,8 @@ export namespace
 		{
 			t_tBody const
 			&	rBody
-			=	*static_cast
+			=	*
+				static_cast
 				<	t_tBody const
 					*
 				>(	this

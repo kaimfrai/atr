@@ -91,8 +91,8 @@ export namespace
 		Body3D
 	=	dyno::poly
 		<	VolumeComputer
-		,	dyno::local_storage
-			<	16uz * sizeof(float)
+		,	dyno::sbo_storage
+			<	sizeof(Cuboid)
 			>
 		>
 	;

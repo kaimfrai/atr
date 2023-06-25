@@ -22,7 +22,7 @@ export namespace
 			override
 		{	return
 			this
-			->	Shapes2D
+			->	Shape2D
 			.	Width
 			;
 		}

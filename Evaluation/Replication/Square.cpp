@@ -23,6 +23,15 @@ export namespace
 		float
 			Height
 		;
+		float
+			PointLateral
+		;
+		float
+			PointLongitudinal
+		;
+		float
+			PointVertical
+		;
 	};
 
 	[[nodiscard]]

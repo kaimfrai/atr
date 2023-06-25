@@ -39,6 +39,15 @@ export namespace
 		float
 			LeftRightEyeHeight
 		;
+		float
+			PointLateral
+		;
+		float
+			PointLongitudinal
+		;
+		float
+			PointVertical
+		;
 	};
 }
 

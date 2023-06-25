@@ -23,8 +23,8 @@ export namespace
 					*
 				>(	this
 				)
-			->	Shapes2D
-			.	Width
+				->	Shape2D
+				.	Width
 			;
 		}
 	};

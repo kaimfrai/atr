@@ -43,7 +43,7 @@ export namespace
 		->	float
 		{	return
 				this
-				->	Shapes2D
+				->	Shape2D
 				.	GetComputeSizeMultiplier
 					()
 			;

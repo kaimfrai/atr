@@ -41,10 +41,10 @@ export namespace
 		->	float
 			override
 		{	return
-				this
-				->	Shapes2D
-				.	GetComputeSizeMultiplier
-					()
+			this
+			->	Shape2D
+			.	GetComputeSizeMultiplier
+				()
 			;
 		}
 	};

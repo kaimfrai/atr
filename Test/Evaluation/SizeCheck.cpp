@@ -2,6 +2,22 @@ export module Test.Evaluation.SizeCheck;
 
 import Meta.Size;
 
+using ::Meta::USize;
+
+struct
+	Point
+{
+	float
+		Lateral
+	;
+	float
+		Vertical
+	;
+	float
+		Longitudinal
+	;
+};
+
 struct
 	RGBAColor
 {
@@ -24,31 +40,41 @@ export
 	template
 		<	typename
 				t_tColoredObject
-		,	Meta::USize
-				t_nSideCount
-		,	Meta::USize
-				t_nColorCount
+		,	USize
+				t_vSideCount
+		,	USize
+				t_vColorCount
+		,	USize
+				t_vPointCount
 		>
 	requires
 		(	sizeof(t_tColoredObject)
-		>=	t_nSideCount
-		*	sizeof(float)
-		+	t_nColorCount
-		*	sizeof(RGBAColor)
+		>=	(	(	t_vSideCount
+				*	sizeof(float)
+				)
+			+	(	t_vColorCount
+				*	sizeof(RGBAColor)
+				)
+			+	(	t_vPointCount
+				*	sizeof(Point)
+				)
+			)
 		)
 	and	(	alignof(t_tColoredObject)
 		>=	alignof(float)
 		)
-	and	(	alignof(float)
-		>=	alignof(RGBAColor)
-		)
 	auto constexpr inline
 		AdditionalSize
 	=	(	sizeof(t_tColoredObject)
-		-	t_nSideCount
-		*	sizeof(float)
-		-	t_nColorCount
-		*	sizeof(RGBAColor)
+		-	(	t_vSideCount
+			*	sizeof(float)
+			)
+		-	(	t_vColorCount
+			*	sizeof(RGBAColor)
+			)
+		-	(	t_vPointCount
+			*	sizeof(Point)
+			)
 		)
 	;
 
@@ -56,19 +82,22 @@ export
 	template
 		<	typename
 				t_tColoredObject
-		,	Meta::USize
-				t_nSideCount
-		,	Meta::USize
-				t_nColorCount
+		,	USize
+				t_vSideCount
+		,	USize
+				t_vColorCount
+		,	USize
+				t_vPointCount
 		>
 	auto constexpr inline
 		SizeMinimal
 	=	AdditionalSize
 		<	t_tColoredObject
-		,	t_nSideCount
-		,	t_nColorCount
+		,	t_vSideCount
+		,	t_vColorCount
+		,	t_vPointCount
 		>
-	<	// no more than the alignment can be used as padding
+	<	// No more than the alignment can be used as padding
 		alignof(t_tColoredObject)
 	;
 }

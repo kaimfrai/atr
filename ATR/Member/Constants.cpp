@@ -32,6 +32,6 @@ export namespace
 
 	auto constexpr inline
 		NameBufferSize
-	=	32z
+	=	64z
 	;
 }

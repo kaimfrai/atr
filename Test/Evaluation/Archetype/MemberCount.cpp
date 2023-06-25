@@ -83,47 +83,47 @@ auto constexpr inline
 
 static_assert
 (	MemberCount<"Square">
-==	5z
+==	8z
 );
 static_assert
 (	MemberCount<"Rectangle">
-==	6z
+==	9z
 );
 static_assert
 (	MemberCount<"Triangle">
-==	6z
+==	9z
 );
 static_assert
 (	MemberCount<"Circle">
-==	5z
+==	8z
 );
 static_assert
 (	MemberCount<"Ellipse">
-==	6z
+==	9z
 );
 static_assert
 (	MemberCount<"Cube">
-==	5z
+==	8z
 );
 static_assert
 (	MemberCount<"Cuboid">
-==	7z
+==	10z
 );
 static_assert
 (	MemberCount<"Sphere">
-==	5z
+==	8z
 );
 static_assert
 (	MemberCount<"Cylinder">
-==	6z
+==	9z
 );
 static_assert
 (	MemberCount<"Cone">
-==	6z
+==	9z
 );
 static_assert
 (	MemberCount<"Ellipsoid">
-==	7z
+==	10z
 );
 static_assert
 (	MemberCount<"Head">
