@@ -8,12 +8,17 @@ import ATR.Member.Info;
 import ATR.Member.NamedInfo;
 
 import Meta.Memory.Size;
+import Meta.Memory.Size.Arithmetic;
 import Meta.String.Chain;
+import Meta.Token.Type;
 
 import Std;
 
+using ::Meta::Type;
 using ::Meta::BitSize;
 using ::Meta::String::Chain;
+
+using namespace ::Meta::Literals;
 
 export namespace
 	ATR::Member
@@ -73,9 +78,11 @@ export namespace
 					!=	i_rMemberName
 					)
 				)
-			{
-				::std::unreachable
-				();
+			{	return
+				Info
+				{	Type<void>
+				,	-1_bit
+				};
 			}
 
 			return

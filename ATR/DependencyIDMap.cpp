@@ -5,6 +5,8 @@ import ATR.Erase;
 import ATR.Member.ConfigData;
 
 import Meta.ID;
+import Meta.Memory.Size;
+import Meta.Memory.Size.Compare;
 import Meta.String.Chain;
 
 import Std;
@@ -12,56 +14,7 @@ import Std;
 using ::Meta::ProtoID;
 using ::Meta::String::Chain;
 
-export namespace
-	ATR::Trait
-{
-	[[nodiscard]]
-	auto constexpr inline
-	(	HasDataMember
-	)	(	Member::ConfigData const
-			&	i_rConfig
-		,	Chain
-				i_rMemberName
-		)
-		noexcept
-	->	bool
-	{
-		for	(	auto const
-				&	rNamedInfo
-			:	i_rConfig
-				.	NamedInfoList
-			)
-		{
-			auto const
-				vCompare
-			=	(	rNamedInfo
-				<=>	i_rMemberName
-				)
-			;
-			if	(	::std::is_eq
-					(	vCompare
-					)
-				)
-			{	return
-					true
-				;
-			}
-
-			if	(	::std::is_gt
-					(	vCompare
-					)
-				)
-			{	return
-					false
-				;
-			}
-		}
-
-		return
-			false
-		;
-	}
-}
+using namespace ::Meta::Literals;
 
 export namespace
 	ATR
@@ -74,13 +27,15 @@ export namespace
 		>
 	concept
 		ProtoMemberInterface
-	=	::ATR::Trait::HasDataMember
-		(	t_tProto
-			::	Config
-		,	t_tMemberName
-			{}
-		)
-	;
+	=(	t_tProto
+		::	Config
+		.	FindMemberInfo
+			(	t_tMemberName
+				{}
+			)
+		.	Offset
+	>=	0_bit
+	);
 
 	template
 		<	typename
