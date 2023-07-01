@@ -1,14 +1,14 @@
 export module ATR.Member.NamedTypeList;
 
 import ATR.Member.Constants;
-import ATR.Member.CountedBuffer;
-import ATR.Member.NamedType;
 
-import Meta.Generic.MoveBackward;
+import Meta.Size;
 import Meta.String.Chain;
 import Meta.Token.TypeID;
 
-using ::Meta::Generic::MoveBackward_Until;
+import Std;
+
+using ::Meta::SSize;
 using ::Meta::String::Chain;
 using ::Meta::TypeID;
 
@@ -18,8 +18,20 @@ export namespace
 	struct
 		NamedTypeList
 	{
-		CountedBuffer<NamedType, NameBufferSize>
-			List
+		Chain
+			Names
+			[	NameBufferSize
+			]
+		{};
+
+		TypeID
+			Types
+			[	NameBufferSize
+			]
+		{};
+
+		SSize
+			Count
 		{};
 
 		auto constexpr inline
@@ -32,38 +44,66 @@ export namespace
 			noexcept
 		{
 			auto const
-				aInsert
-			=	MoveBackward_Until
-				(	List
-					.	begin
-						()
-				,	List
-					.	end
-						()
-				,	[	i_rMemberName
-					]	(	NamedType const
-							&	i_rElement
-						)
-					{	return
-							i_rElement
-							.	Name
-						<=	i_rMemberName
-						;
-					}
+				aNamesBegin
+			=	Names
+			;
+			auto const
+				aNamesEnd
+			=	aNamesBegin
+			+	Count
+			;
+
+			auto const
+				aNamesInsert
+			=	::std::lower_bound
+				(	aNamesBegin
+				,	aNamesEnd
+				,	i_rMemberName
 				)
 			;
 
-			aInsert
-			->	Name
-			=	i_rMemberName
-			;
-			aInsert
-			->	Type
-			=	i_vType
+			::std::move_backward
+			(	aNamesInsert
+			,	aNamesEnd
+			,	(	aNamesEnd
+				+	1z
+				)
+			);
+
+			auto const
+				aTypesBegin
+			=	Types
 			;
 
-			++	List
-				.	Count
+			auto const
+				aTypesEnd
+			=	Types
+			+	Count
+			;
+
+			auto const
+				aTypesInsert
+			=	aTypesBegin
+			+	(	aNamesInsert
+				-	aNamesBegin
+				)
+			;
+
+			::std::move_backward
+			(	aTypesInsert
+			,	aTypesEnd
+			,	(	aTypesEnd
+				+	1z
+				)
+			);
+
+			*	aNamesInsert
+			=	i_rMemberName
+			;
+			*	aTypesInsert
+			=	i_vType
+			;
+			++	Count
 			;
 		}
 	};

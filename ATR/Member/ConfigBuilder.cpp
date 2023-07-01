@@ -128,22 +128,31 @@ export namespace
 				>
 			;
 
-			for	(	auto const
-					&	[	rName
-						,	rType
-						]
-				:	rMerge
-					.	NamedTypes
-					.	List
+			for	(	auto
+						vIndex
+					=	0z
+				;	(	vIndex
+					<	rMerge
+						.	NamedTypes
+						.	Count
+					)
+				;	++	vIndex
 				)
 			{
-
 				(void)
 				operator()
 				(	(	i_aPrefix
-					+	rName
+					+	rMerge
+						.	NamedTypes
+						.	Names
+							[	vIndex
+							]
 					)
-				,	rType
+				,	rMerge
+					.	NamedTypes
+					.	Types
+						[	vIndex
+						]
 				);
 			}
 
@@ -182,7 +191,6 @@ export namespace
 		->	ConfigBuilder&&
 		{
 			if	(	(	NamedTypes
-						.	List
 						.	Count
 					==	0z
 					)

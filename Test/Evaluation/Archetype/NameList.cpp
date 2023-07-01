@@ -22,19 +22,25 @@ import Meta.ID;
 import Meta.Memory.Constraint;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Scale;
+import Meta.Memory.Size;
+import Meta.Size;
 import Meta.String.Chain;
 import Meta.String.Literal;
 import Meta.Token.Type;
+import Meta.Token.TypeID;
 
 import Std;
 
 using ::ATR::Member::Config_Of;
 using ::ATR::Member::NamedInfo;
 
+using ::Meta::BitSize;
 using ::Meta::ID;
 using ::Meta::Memory::BitSize_Of;
+using ::Meta::SSize;
 using ::Meta::String::Chain;
 using ::Meta::String::Literal;
+using ::Meta::TypeID;
 
 using One = Fraction<>;
 using Half = Fraction<1z, 2z>;
@@ -43,17 +49,64 @@ using Pi_6 = PiFraction<1z, 6z>;
 using Pi_4 = PiFraction<1z, 4z>;
 using Pi_12 = PiFraction<1z, 12z>;
 
+struct
+	ConfigView
+{
+	Chain const
+	*	Names
+	;
+
+	TypeID const
+	*	Types
+	;
+
+	BitSize const
+	*	Offsets
+	;
+
+	[[nodiscard]]
+	auto constexpr
+	(	operator[]
+	)	(	SSize
+				i_vIndex
+		)	const
+		noexcept
+	->	NamedInfo
+	{	return
+		NamedInfo
+		{	Names
+				[	i_vIndex
+				]
+		,	{	Types
+					[	i_vIndex
+					]
+			,	Offsets
+					[	i_vIndex
+					]
+			}
+		};
+	}
+};
+
 template
 	<	Literal
 			t_vTypeName
 	>
-auto constexpr inline
-&	NamedInfoList_Of
-=	Config_Of
+ConfigView constexpr inline
+	NamedInfoList_Of
+{	Config_Of
 	<	ID<t_vTypeName>
 	>
-	.	NamedInfoList
-;
+	.	Names
+,	Config_Of
+	<	ID<t_vTypeName>
+	>
+	.	Types
+,	Config_Of
+	<	ID<t_vTypeName>
+	>
+	.	Offsets
+};
 
 struct
 	NamedInfoView

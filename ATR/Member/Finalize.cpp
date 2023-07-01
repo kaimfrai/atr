@@ -5,9 +5,7 @@ import ATR.Member.ConfigBuilder;
 import ATR.Member.ConfigData;
 import ATR.Member.Constants;
 import ATR.Member.CountedBuffer;
-import ATR.Member.NamedInfo;
 
-import Meta.Memory.Alignment;
 import Meta.Memory.Constraint;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Scale;
@@ -17,11 +15,8 @@ import Meta.Token.TypeID;
 import Std;
 
 using ::Meta::BitSize;
-using ::Meta::Memory::Alignment;
 using ::Meta::Memory::ByteAlign;
 using ::Meta::TypeID;
-
-using namespace ::Meta::Literals;
 
 namespace
 	ATR::Member
@@ -58,21 +53,23 @@ namespace
 				()
 		;
 
-		if	(	vAlign
-			==	0_align
-			)
-		{
-			return
-				0_bit
-			;
-		}
-
 		auto const
 			vSize
 		=	i_vType
 			.	GetSize
 				()
 		;
+
+		if	(	not
+				i_vType
+				.	IsAligned
+					()
+			)
+		{
+			return
+				vSize
+			;
+		}
 
 		if	(	vAlign
 			<	ByteAlign
@@ -252,134 +249,309 @@ namespace
 			;
 		}
 
-		NamedInfo
-			vNamedInfoList
+		BitSize
+			vNamedOffsets
 			[	NameBufferSize
 			]
 		{};
 
 		auto const
-			aNamedInfosBegin
-		=	+
-			vNamedInfoList
+			vNameCount
+		=	i_rConfigBuilder
+			.	NamedTypes
+			.	Count
 		;
 
-		auto
-			aNamedInfosEnd
-		=	aNamedInfosBegin
+		auto const
+			aNamedTypesBegin
+		=	i_rConfigBuilder
+			.	NamedTypes
+			.	Types
 		;
 
-		for	(	auto const
-				&	[	rName
-					,	rType
-					]
-			:	i_rConfigBuilder
-				.	NamedTypes
-				.	List
+		for	(	auto
+					vNameIndex
+				=	0z
+			;	(	vNameIndex
+				<	vNameCount
+				)
+			;	++	vNameIndex
 			)
 		{
 			auto const
 				vOffset
 			=	GetOffsetForType
-				(	rType
+				(	aNamedTypesBegin
+						[	vNameIndex
+						]
 				,	vAlignTypeOffsets
 				,	vBitOffsets
 				)
 			;
 
-			*	aNamedInfosEnd
-				++
-			=	NamedInfo
-				{	rName
-				,	{	rType
-					,	vOffset
-					}
-				}
+			vNamedOffsets
+				[	vNameIndex
+				]
+			=	vOffset
 			;
 		}
 
 		auto const
-			aAliasInfosBegin
-		=	aNamedInfosEnd
+			aNamesBegin
+		=	i_rConfigBuilder
+			.	NamedTypes
+			.	Names
 		;
 
-		auto
-			aAliasInfosEnd
-		=	aAliasInfosBegin
+		auto const
+			aNamesEnd
+		=	aNamesBegin
+		+	vNameCount
 		;
 
-		for	(	auto const
-				&	[	rName
-					,	rTarget
-					]
-			:	i_rConfigBuilder
-				.	AliasMaps
-				.	List
+		// Put Type and Offset in the back of the result already
+		auto const
+			aAliasTypesBegin
+		=	vResult
+			.	Types
+		+	vNameCount
+		;
+
+		auto const
+			aAliasOffsetsBegin
+		=	vResult
+			.	Offsets
+		+	vNameCount
+		;
+
+		auto const
+			vAliasCount
+		=	i_rConfigBuilder
+			.	AliasMaps
+			.	List
+			.	Count
+		;
+		auto const
+			aAliasBegin
+		=	i_rConfigBuilder
+			.	AliasMaps
+			.	List
+		;
+
+		for	(	auto
+					vAliasIndex
+				=	0z
+			;	(	vAliasIndex
+				<	vAliasCount
+				)
+			;	++	vAliasIndex
 			)
 		{
-			for	(	auto
-						aTarget
-					=	aNamedInfosBegin
-				;	(	aTarget
-					!=	aNamedInfosEnd
-					)
-				;	++	aTarget
+			auto const
+				rTarget
+			=	aAliasBegin
+					[	vAliasIndex
+					]
+				.	Target
+			;
+
+			auto const
+				aTargetName
+			=	::std::lower_bound
+				(	aNamesBegin
+				,	aNamesEnd
+				,	rTarget
 				)
-			{
-				if	(	aTarget
-						->	Name
-					==	rTarget
-					)
-				{
-					NamedInfo
-					&	rAliasInfo
-					=	*	aAliasInfosEnd
-							++
-					;
+			;
 
-					rAliasInfo
-					.	Name
-					=	rName
-					;
+			auto const
+				vTargetIndex
+			=	aTargetName
+			-	aNamesBegin
+			;
 
-					rAliasInfo
-					.	Info
-					=	aTarget
-						->	Info
-					;
+			aAliasTypesBegin
+				[	vAliasIndex
+				]
+			=	aNamedTypesBegin
+					[	vTargetIndex
+					]
+			;
 
-					break
-					;
-				}
-			}
+			aAliasOffsetsBegin
+				[	vAliasIndex
+				]
+			=	vNamedOffsets
+					[	vTargetIndex
+					]
+			;
 		}
 
 		auto const
-			aResultInfoBegin
+			aResultNamesBegin
 		=	vResult
-			.	NamedInfoList
-			.	begin
-				()
+			.	Names
 		;
-
 		auto const
-			aResultInfoEnd
-		=	::std::merge
-			(	aNamedInfosBegin
-			,	aNamedInfosEnd
-			,	aAliasInfosBegin
-			,	aAliasInfosEnd
-			,	aResultInfoBegin
-			)
+			aResultTypesBegin
+		=	vResult
+			.	Types
+		;
+		auto const
+			aResultOffsetsBegin
+		=	vResult
+			.	Offsets
+		;
+		auto
+		&	rResultNameCount
+		=	vResult
+			.	NameCount
 		;
 
-		vResult
-		.	NamedInfoList
-		.	Count
-		=	(	aResultInfoEnd
-			-	aResultInfoBegin
-			)
-		;
+		// Merge
+		{
+			auto
+				vAliasIndex
+				=	0z
+			;
+			for	(	auto
+						vNameIndex
+					=	0z
+				;	(	vNameIndex
+					<	vNameCount
+					)
+				;	++	rResultNameCount
+				)
+			{
+				if	(	vAliasIndex
+					>=	vAliasCount
+					)
+				{
+					for	(;	(	vNameIndex
+							<	vNameCount
+							)
+						;	++	vNameIndex
+						,	++	rResultNameCount
+						)
+					{
+						aResultNamesBegin
+							[	rResultNameCount
+							]
+						=	aNamesBegin
+								[	vNameIndex
+								]
+						;
+
+						aResultTypesBegin
+							[	rResultNameCount
+							]
+						=	aNamedTypesBegin
+								[	vNameIndex
+								]
+						;
+
+						aResultOffsetsBegin
+							[	rResultNameCount
+							]
+						=	vNamedOffsets
+								[	vNameIndex
+								]
+						;
+					}
+					break;
+				}
+
+				auto const
+					vName
+				=	aNamesBegin
+						[	vNameIndex
+						]
+				;
+
+				auto const
+					vAliasName
+				=	aAliasBegin
+						[	vAliasIndex
+						]
+					.	Name
+				;
+				if	(	vName
+					<=	vAliasName
+					)
+				{
+					aResultNamesBegin
+						[	rResultNameCount
+						]
+					=	vName
+					;
+
+					aResultTypesBegin
+						[	rResultNameCount
+						]
+					=	aNamedTypesBegin
+							[	vNameIndex
+							]
+					;
+
+					aResultOffsetsBegin
+						[	rResultNameCount
+						]
+					=	vNamedOffsets
+							[	vNameIndex
+							]
+					;
+
+					++	vNameIndex
+					;
+				}
+				else
+				{
+					aResultNamesBegin
+						[	rResultNameCount
+						]
+					=	vAliasName
+					;
+
+					aResultTypesBegin
+						[	rResultNameCount
+						]
+					=	aAliasTypesBegin
+							[	vAliasIndex
+							]
+					;
+
+					aResultOffsetsBegin
+						[	rResultNameCount
+						]
+					=	aAliasOffsetsBegin
+							[	vAliasIndex
+							]
+					;
+
+					++	vAliasIndex
+					;
+				}
+			}
+
+			for	(;	(	vAliasIndex
+					<	vAliasCount
+					)
+				;	++	vAliasIndex
+				,	++	rResultNameCount
+				)
+			{
+				aResultNamesBegin
+					[	rResultNameCount
+					]
+				=	aAliasBegin
+						[	vAliasIndex
+						]
+					.	Name
+				;
+
+				// Type and Offset already in place
+			}
+		}
 
 		return
 			vResult

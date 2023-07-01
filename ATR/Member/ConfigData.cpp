@@ -2,21 +2,24 @@ export module ATR.Member.ConfigData;
 
 import ATR.Member.AlignBuffer;
 import ATR.Member.Constants;
-import ATR.Member.CountedBuffer;
 import ATR.Member.CountedType;
 import ATR.Member.Info;
 import ATR.Member.NamedInfo;
 
-import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
+import Meta.Memory.Size;
+import Meta.Size;
 import Meta.String.Chain;
 import Meta.Token.Type;
+import Meta.Token.TypeID;
 
 import Std;
 
-using ::Meta::Type;
 using ::Meta::BitSize;
+using ::Meta::SSize;
 using ::Meta::String::Chain;
+using ::Meta::Type;
+using ::Meta::TypeID;
 
 using namespace ::Meta::Literals;
 
@@ -34,8 +37,26 @@ export namespace
 			BitCount
 		{};
 
-		CountedBuffer<NamedInfo, NameBufferSize>
-			NamedInfoList
+		Chain
+			Names
+			[	NameBufferSize
+			]
+		{};
+
+		TypeID
+			Types
+			[	NameBufferSize
+			]
+		{};
+
+		BitSize
+			Offsets
+			[	NameBufferSize
+			]
+		{};
+
+		SSize
+			NameCount
 		{};
 
 		[[nodiscard]]
@@ -49,16 +70,13 @@ export namespace
 		{
 			auto const
 				aNameBegin
-			=	NamedInfoList
-				.	begin
-					()
+			=	Names
 			;
 
 			auto const
 				aNameEnd
-			=	NamedInfoList
-				.	end
-					()
+			=	aNameBegin
+			+	NameCount
 			;
 
 			auto const
@@ -73,8 +91,7 @@ export namespace
 			if	(	(	aNamePosition
 					==	aNameEnd
 					)
-				or	(	aNamePosition
-						->	Name
+				or	(	*	aNamePosition
 					!=	i_rMemberName
 					)
 				)
@@ -85,10 +102,21 @@ export namespace
 				};
 			}
 
-			return
-				aNamePosition
-				->	Info
+			auto const
+				vIndex
+			=	aNamePosition
+			-	aNameBegin
 			;
+
+			return
+			Info
+			{	Types
+					[	vIndex
+					]
+			,	Offsets
+					[	vIndex
+					]
+			};
 		}
 	};
 }

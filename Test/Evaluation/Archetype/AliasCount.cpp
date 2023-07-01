@@ -20,6 +20,7 @@ import Meta.String.Literal;
 import Std;
 
 using ::ATR::Member::Config_Of;
+
 using ::Meta::ID;
 using ::Meta::String::Literal;
 
@@ -39,20 +40,17 @@ auto constexpr inline
 		return
 			::std::count_if
 			(	rConfig
-				.	NamedInfoList
-				.	begin
-					()
-			,	rConfig
-				.	NamedInfoList
-				.	end
-					()
+				.	Types
+			,	(	rConfig
+					.	Types
+				+	rConfig
+					.	NameCount
+				)
 			,	[]	(	auto const
-						&	i_rNamedInfo
+							i_vType
 					)
 				{	return
-						i_rNamedInfo
-						.	Info
-						.	Type
+						i_vType
 						.	IsAligned
 							()
 					;

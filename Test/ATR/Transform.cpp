@@ -218,9 +218,27 @@ auto constexpr inline
 			.	BitCount
 		)
 	and	(	i_rLeft
-			.	NamedInfoList
+			.	NameCount
 		==	i_rRight
-			.	NamedInfoList
+			.	NameCount
+		)
+	and	::std::ranges::equal
+		(	i_rLeft
+			.	Names
+		,	i_rRight
+			.	Names
+		)
+	and	::std::ranges::equal
+		(	i_rLeft
+			.	Types
+		,	i_rRight
+			.	Types
+		)
+	and	::std::ranges::equal
+		(	i_rLeft
+			.	Offsets
+		,	i_rRight
+			.	Offsets
 		)
 	;
 }
