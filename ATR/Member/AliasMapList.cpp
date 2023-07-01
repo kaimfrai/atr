@@ -1,15 +1,13 @@
 export module ATR.Member.AliasMapList;
 
-import ATR.Member.Alias;
 import ATR.Member.Constants;
-import ATR.Member.CountedBuffer;
 
-import Meta.Generic.MoveBackward;
 import Meta.String.Chain;
+import Meta.Size;
 
 import Std;
 
-using ::Meta::Generic::MoveBackward_Until;
+using ::Meta::SSize;
 using ::Meta::String::Chain;
 
 export namespace
@@ -18,8 +16,20 @@ export namespace
 	struct
 		AliasMapList
 	{
-		CountedBuffer<Alias, NameBufferSize>
-			List
+		Chain
+			Names
+			[	NameBufferSize
+			]
+		{};
+
+		Chain
+			Targets
+			[	NameBufferSize
+			]
+		{};
+
+		SSize
+			Count
 		{};
 
 		[[nodiscard]]
@@ -32,34 +42,30 @@ export namespace
 		->	bool
 		{
 			auto const
-				aAliasBegin
-			=	List
-				.	begin
-					()
+				aAliasNamesBegin
+			=	Names
 			;
 
 			auto const
-				aAliasEnd
-			=	List
-				.	end
-					()
+				aAliasNamesEnd
+			=	aAliasNamesBegin
+			+	Count
 			;
 
 			auto const
-				aPosition
+				aMemberPosition
 			=	::std::lower_bound
-				(	aAliasBegin
-				,	aAliasEnd
+				(	aAliasNamesBegin
+				,	aAliasNamesEnd
 				,	i_rMemberName
 				)
 			;
 
 			return
-			(	(	aPosition
-				!=	aAliasEnd
+			(	(	aMemberPosition
+				!=	aAliasNamesEnd
 				)
-			and	(	aPosition
-					->	Name
+			and	(	*	aMemberPosition
 				==	i_rMemberName
 				)
 			);
@@ -75,38 +81,69 @@ export namespace
 			noexcept
 		{
 			auto const
-				aInsert
-			=	MoveBackward_Until
-				(	List
-					.	begin
-						()
-				,	List
-					.	end
-						()
-				,	[	i_rMemberName
-					]	(	Alias const
-							&	i_rAlias
-						)
-					{	return
-							i_rAlias
-							.	Name
-						<=	i_rMemberName
-						;
-					}
+				aAliasNamesBegin
+			=	Names
+			;
+
+			auto const
+				aAliasNamesEnd
+			=	aAliasNamesBegin
+			+	Count
+			;
+
+			auto const
+				aAliasNameInsert
+			=	::std::lower_bound
+				(	aAliasNamesBegin
+				,	aAliasNamesEnd
+				,	i_rMemberName
 				)
 			;
 
-			aInsert
-			->	Name
+			::std::move_backward
+			(	aAliasNameInsert
+			,	aAliasNamesEnd
+			,	(	aAliasNamesEnd
+				+	1z
+				)
+			);
+
+			*	aAliasNameInsert
 			=	i_rMemberName
 			;
-			aInsert
-			->	Target
+
+			auto const
+				aAliasTargetsBegin
+			=	Targets
+			;
+
+			auto const
+				aAliasTargetsEnd
+			=	aAliasTargetsBegin
+			+	Count
+			;
+
+			auto const
+				aAliasTargetInsert
+			=	aAliasTargetsBegin
+			+	(	aAliasNameInsert
+				-	aAliasNamesBegin
+				)
+			;
+
+			::std::move_backward
+			(	aAliasTargetInsert
+			,	aAliasTargetsEnd
+			,	(	aAliasTargetsEnd
+				+	1z
+				)
+			);
+
+			*	aAliasTargetInsert
 			=	i_rTarget
 			;
 
-			++	List
-				.	Count
+			++	Count
 			;
 		}
 	};

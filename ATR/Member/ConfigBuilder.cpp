@@ -129,14 +129,14 @@ export namespace
 			;
 
 			for	(	auto
-						vIndex
+						vNameIndex
 					=	0z
-				;	(	vIndex
+				;	(	vNameIndex
 					<	rMerge
 						.	NamedTypes
 						.	Count
 					)
-				;	++	vIndex
+				;	++	vNameIndex
 				)
 			{
 				(void)
@@ -145,32 +145,42 @@ export namespace
 					+	rMerge
 						.	NamedTypes
 						.	Names
-							[	vIndex
+							[	vNameIndex
 							]
 					)
 				,	rMerge
 					.	NamedTypes
 					.	Types
-						[	vIndex
+						[	vNameIndex
 						]
 				);
 			}
 
-			for	(	auto const
-					&	[	rName
-						,	rTarget
-						]
-				:	rMerge
-					.	AliasMaps
-					.	List
+			for	(	auto
+						vAliasIndex
+					=	0z
+				;	(	vAliasIndex
+					<	rMerge
+						.	AliasMaps
+						.	Count
+					)
+				;	++	vAliasIndex
 				)
 			{	(void)
 				operator()
 				(	(	i_aPrefix
-					+	rName
+					+	rMerge
+						.	AliasMaps
+						.	Names
+							[	vAliasIndex
+							]
 					)
 				,	(	i_aPrefix
-					+	rTarget
+					+	rMerge
+						.	AliasMaps
+						.	Targets
+							[	vAliasIndex
+							]
 					)
 				);
 			}
@@ -195,7 +205,6 @@ export namespace
 					==	0z
 					)
 				and	(	AliasMaps
-						.	List
 						.	Count
 					==	0z
 					)

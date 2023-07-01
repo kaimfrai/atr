@@ -264,7 +264,8 @@ namespace
 
 		auto const
 			aNamedTypesBegin
-		=	i_rConfigBuilder
+		=	+
+			i_rConfigBuilder
 			.	NamedTypes
 			.	Types
 		;
@@ -298,7 +299,8 @@ namespace
 
 		auto const
 			aNamesBegin
-		=	i_rConfigBuilder
+		=	+
+			i_rConfigBuilder
 			.	NamedTypes
 			.	Names
 		;
@@ -328,14 +330,21 @@ namespace
 			vAliasCount
 		=	i_rConfigBuilder
 			.	AliasMaps
-			.	List
 			.	Count
 		;
 		auto const
-			aAliasBegin
-		=	i_rConfigBuilder
+			aAliasNamesBegin
+		=	+
+			i_rConfigBuilder
 			.	AliasMaps
-			.	List
+			.	Names
+		;
+		auto const
+			aAliasTargetsBegin
+		=	+
+			i_rConfigBuilder
+			.	AliasMaps
+			.	Targets
 		;
 
 		for	(	auto
@@ -349,10 +358,9 @@ namespace
 		{
 			auto const
 				rTarget
-			=	aAliasBegin
+			=	aAliasTargetsBegin
 					[	vAliasIndex
 					]
-				.	Target
 			;
 
 			auto const
@@ -389,17 +397,20 @@ namespace
 
 		auto const
 			aResultNamesBegin
-		=	vResult
+		=	+
+			vResult
 			.	Names
 		;
 		auto const
 			aResultTypesBegin
-		=	vResult
+		=	+
+			vResult
 			.	Types
 		;
 		auto const
 			aResultOffsetsBegin
-		=	vResult
+		=	+
+			vResult
 			.	Offsets
 		;
 		auto
@@ -462,27 +473,26 @@ namespace
 				}
 
 				auto const
-					vName
+					rName
 				=	aNamesBegin
 						[	vNameIndex
 						]
 				;
 
 				auto const
-					vAliasName
-				=	aAliasBegin
+					rAliasName
+				=	aAliasNamesBegin
 						[	vAliasIndex
 						]
-					.	Name
 				;
-				if	(	vName
-					<=	vAliasName
+				if	(	rName
+					<=	rAliasName
 					)
 				{
 					aResultNamesBegin
 						[	rResultNameCount
 						]
-					=	vName
+					=	rName
 					;
 
 					aResultTypesBegin
@@ -509,7 +519,7 @@ namespace
 					aResultNamesBegin
 						[	rResultNameCount
 						]
-					=	vAliasName
+					=	rAliasName
 					;
 
 					aResultTypesBegin
@@ -543,10 +553,9 @@ namespace
 				aResultNamesBegin
 					[	rResultNameCount
 					]
-				=	aAliasBegin
+				=	aAliasNamesBegin
 						[	vAliasIndex
 						]
-					.	Name
 				;
 
 				// Type and Offset already in place
