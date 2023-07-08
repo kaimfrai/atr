@@ -8,7 +8,7 @@ export namespace
 	Meta::Generic
 {
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	LowerBoundIndex
 	)	(	auto const
 			*	i_aBegin

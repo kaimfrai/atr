@@ -7,7 +7,7 @@ import Std;
 export namespace
 	Meta::Generic
 {
-	auto constexpr
+	auto constexpr inline
 	(	MoveBackwardIndex
 	)	(	auto
 			*	i_aBegin
