@@ -2,12 +2,14 @@ export module ATR.Member.NamedTypeList;
 
 import ATR.Member.Constants;
 
+import Meta.Generic.LowerBound;
 import Meta.Size;
 import Meta.String.Chain;
 import Meta.Token.TypeID;
 
 import Std;
 
+using ::Meta::Generic::LowerBoundIndex;
 using ::Meta::SSize;
 using ::Meta::String::Chain;
 using ::Meta::TypeID;
@@ -44,63 +46,50 @@ export namespace
 			noexcept
 		{
 			auto const
-				aNamesBegin
-			=	Names
-			;
-			auto const
 				aNamesEnd
-			=	aNamesBegin
+			=	Names
 			+	Count
 			;
 
 			auto const
-				aNamesInsert
-			=	::std::lower_bound
-				(	aNamesBegin
-				,	aNamesEnd
+				vInsertIndex
+			=	LowerBoundIndex
+				(	Names
+				,	Count
 				,	i_rMemberName
 				)
 			;
 
 			::std::move_backward
-			(	aNamesInsert
+			(	(	Names
+				+	vInsertIndex
+				)
 			,	aNamesEnd
 			,	(	aNamesEnd
 				+	1z
 				)
 			);
-
-			auto const
-				aTypesBegin
-			=	Types
-			;
-
-			auto const
-				aTypesEnd
-			=	Types
-			+	Count
-			;
-
-			auto const
-				aTypesInsert
-			=	aTypesBegin
-			+	(	aNamesInsert
-				-	aNamesBegin
-				)
-			;
-
 			::std::move_backward
-			(	aTypesInsert
-			,	aTypesEnd
-			,	(	aTypesEnd
+			(	(	Types
+				+	vInsertIndex
+				)
+			,	(	Types
+				+	Count
+				)
+			,	(	Types
+				+	Count
 				+	1z
 				)
 			);
 
-			*	aNamesInsert
+			Names
+				[	vInsertIndex
+				]
 			=	i_rMemberName
 			;
-			*	aTypesInsert
+			Types
+				[	vInsertIndex
+				]
 			=	i_vType
 			;
 			++	Count

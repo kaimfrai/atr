@@ -2,11 +2,13 @@ export module ATR.Member.AliasMapList;
 
 import ATR.Member.Constants;
 
-import Meta.String.Chain;
+import Meta.Generic.LowerBound;
 import Meta.Size;
+import Meta.String.Chain;
 
 import Std;
 
+using ::Meta::Generic::LowerBoundIndex;
 using ::Meta::SSize;
 using ::Meta::String::Chain;
 
@@ -42,30 +44,21 @@ export namespace
 		->	bool
 		{
 			auto const
-				aAliasNamesBegin
-			=	Names
-			;
-
-			auto const
-				aAliasNamesEnd
-			=	aAliasNamesBegin
-			+	Count
-			;
-
-			auto const
-				aMemberPosition
-			=	::std::lower_bound
-				(	aAliasNamesBegin
-				,	aAliasNamesEnd
+				vMemberIndex
+			=	LowerBoundIndex
+				(	Names
+				,	Count
 				,	i_rMemberName
 				)
 			;
 
 			return
-			(	(	aMemberPosition
-				!=	aAliasNamesEnd
+			(	(	vMemberIndex
+				!=	Count
 				)
-			and	(	*	aMemberPosition
+			and	(	Names
+						[	vMemberIndex
+						]
 				==	i_rMemberName
 				)
 			);
@@ -81,65 +74,48 @@ export namespace
 			noexcept
 		{
 			auto const
-				aAliasNamesBegin
-			=	Names
-			;
-
-			auto const
-				aAliasNamesEnd
-			=	aAliasNamesBegin
-			+	Count
-			;
-
-			auto const
-				aAliasNameInsert
-			=	::std::lower_bound
-				(	aAliasNamesBegin
-				,	aAliasNamesEnd
+				vInsertIndex
+			=	LowerBoundIndex
+				(	Names
+				,	Count
 				,	i_rMemberName
 				)
 			;
 
 			::std::move_backward
-			(	aAliasNameInsert
-			,	aAliasNamesEnd
-			,	(	aAliasNamesEnd
+			(	(	Names
+				+	vInsertIndex
+				)
+			,	(	Names
+				+	Count
+				)
+			,	(	Names
+				+	Count
+				+	1z
+				)
+			);
+			::std::move_backward
+			(	(	Targets
+				+	vInsertIndex
+				)
+			,	(	Targets
+				+	Count
+				)
+			,	(	Targets
+				+	Count
 				+	1z
 				)
 			);
 
-			*	aAliasNameInsert
+			Names
+				[	vInsertIndex
+				]
 			=	i_rMemberName
 			;
 
-			auto const
-				aAliasTargetsBegin
-			=	Targets
-			;
-
-			auto const
-				aAliasTargetsEnd
-			=	aAliasTargetsBegin
-			+	Count
-			;
-
-			auto const
-				aAliasTargetInsert
-			=	aAliasTargetsBegin
-			+	(	aAliasNameInsert
-				-	aAliasNamesBegin
-				)
-			;
-
-			::std::move_backward
-			(	aAliasTargetInsert
-			,	aAliasTargetsEnd
-			,	(	aAliasTargetsEnd
-				+	1z
-				)
-			);
-
-			*	aAliasTargetInsert
+			Targets
+				[	vInsertIndex
+				]
 			=	i_rTarget
 			;
 

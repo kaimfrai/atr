@@ -6,6 +6,7 @@ import ATR.Member.ConfigData;
 import ATR.Member.Constants;
 import ATR.Member.CountedBuffer;
 
+import Meta.Generic.LowerBound;
 import Meta.Memory.Constraint;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Scale;
@@ -15,6 +16,7 @@ import Meta.Token.TypeID;
 import Std;
 
 using ::Meta::BitSize;
+using ::Meta::Generic::LowerBoundIndex;
 using ::Meta::Memory::ByteAlign;
 using ::Meta::TypeID;
 
@@ -305,11 +307,6 @@ namespace
 			.	Names
 		;
 
-		auto const
-			aNamesEnd
-		=	aNamesBegin
-		+	vNameCount
-		;
 
 		// Put Type and Offset in the back of the result already
 		auto const
@@ -364,18 +361,12 @@ namespace
 			;
 
 			auto const
-				aTargetName
-			=	::std::lower_bound
+				vTargetIndex
+			=	LowerBoundIndex
 				(	aNamesBegin
-				,	aNamesEnd
+				,	vNameCount
 				,	rTarget
 				)
-			;
-
-			auto const
-				vTargetIndex
-			=	aTargetName
-			-	aNamesBegin
 			;
 
 			aAliasTypesBegin

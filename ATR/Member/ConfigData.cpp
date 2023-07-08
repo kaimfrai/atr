@@ -6,6 +6,7 @@ import ATR.Member.CountedType;
 import ATR.Member.Info;
 import ATR.Member.NamedInfo;
 
+import Meta.Generic.LowerBound;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size;
 import Meta.Size;
@@ -13,9 +14,8 @@ import Meta.String.Chain;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 
-import Std;
-
 using ::Meta::BitSize;
+using ::Meta::Generic::LowerBoundIndex;
 using ::Meta::SSize;
 using ::Meta::String::Chain;
 using ::Meta::Type;
@@ -69,29 +69,20 @@ export namespace
 		->	Info
 		{
 			auto const
-				aNameBegin
-			=	Names
-			;
-
-			auto const
-				aNameEnd
-			=	aNameBegin
-			+	NameCount
-			;
-
-			auto const
-				aNamePosition
-			=	::std::lower_bound
-				(	aNameBegin
-				,	aNameEnd
+				vIndex
+			=	LowerBoundIndex
+				(	Names
+				,	NameCount
 				,	i_rMemberName
 				)
 			;
 
-			if	(	(	aNamePosition
-					==	aNameEnd
+			if	(	(	vIndex
+					==	NameCount
 					)
-				or	(	*	aNamePosition
+				or	(	Names
+							[	vIndex
+							]
 					!=	i_rMemberName
 					)
 				)
@@ -101,12 +92,6 @@ export namespace
 				,	-1_bit
 				};
 			}
-
-			auto const
-				vIndex
-			=	aNamePosition
-			-	aNameBegin
-			;
 
 			return
 			Info
