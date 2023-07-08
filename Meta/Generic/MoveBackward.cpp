@@ -1,8 +1,42 @@
 export module Meta.Generic.MoveBackward;
 
+import Meta.Size;
+
+import Std;
+
 export namespace
 	Meta::Generic
 {
+	auto constexpr
+	(	MoveBackwardIndex
+	)	(	auto
+			*	i_aBegin
+		,	SSize
+				i_vIndex
+		,	SSize
+				i_vCount
+		,	SSize
+				i_vOffset
+			=	1z
+		)
+		noexcept
+	{
+		auto const
+			aEnd
+		=	i_aBegin
+		+	i_vCount
+		;
+		::std::move_backward
+		(	(	i_aBegin
+			+	i_vIndex
+			)
+		,	aEnd
+		,	(	aEnd
+			+	i_vOffset
+			)
+		);
+	}
+
 	template
 		<	typename
 				t_tElement

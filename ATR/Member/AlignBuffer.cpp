@@ -4,12 +4,12 @@ import ATR.Member.Constants;
 import ATR.Member.CountedBuffer;
 import ATR.Member.CountedType;
 
+import Meta.Generic.MoveBackward;
 import Meta.Memory.Alignment;
 import Meta.Size;
 import Meta.Token.TypeID;
 
-import Std;
-
+using ::Meta::Generic::MoveBackwardIndex;
 using ::Meta::Memory::Alignment;
 using ::Meta::SSize;
 using ::Meta::TypeID;
@@ -129,69 +129,76 @@ export namespace
 		;
 
 		auto
-		&	rTypeCounts
+		&	rAlignedTypeCounts
 		=	i_rAlignBuffer
 			[	vAlign
 			]
 		;
 
-		auto const
-			aTypeCountBegin
-		=	rTypeCounts
-			.	begin
-				()
+		auto
+		&	rTypeCountBuffer
+		=	rAlignedTypeCounts
+			.	Buffer
 		;
 
 		auto const
-			aTypeCountEnd
-		=	rTypeCounts
-			.	end
-				()
+			vTypeCount
+		=	rAlignedTypeCounts
+			.	Count
 		;
 
 		auto
-			aInsert
-		=	aTypeCountBegin
+			vInsertIndex
+		=	0z
 		;
 
-		for	(;	(	aInsert
-				!=	aTypeCountEnd
+		for	(;	(	vInsertIndex
+				!=	vTypeCount
 				)
-			;	++	aInsert
+			;	++	vInsertIndex
 			)
 		{
-			if	(	aInsert
-					->	Type
+			auto
+			&	rTypeCount
+			=	rTypeCountBuffer
+					[	vInsertIndex
+					]
+			;
+
+			if	(	rTypeCount
+					.	Type
 				==	i_vType
 				)
 			{
-				++	aInsert
-					->	Count
+				++	rTypeCount
+					.	Count
 				;
 				return
 				;
 			}
 		}
 
-		::std::move_backward
-		(	aInsert
-		,	aTypeCountEnd
-		,	(	aTypeCountEnd
-			+	1z
-			)
+		MoveBackwardIndex
+		(	rTypeCountBuffer
+		,	vInsertIndex
+		,	vTypeCount
 		);
 
-		++	rTypeCounts
+		++	rAlignedTypeCounts
 			.	Count
 		;
 
-		aInsert
-		->	Type
+		rTypeCountBuffer
+			[	vInsertIndex
+			]
+		.	Type
 		=	i_vType
 		;
 
-		aInsert
-		->	Count
+		rTypeCountBuffer
+			[	vInsertIndex
+			]
+		.	Count
 		=	1z
 		;
 	}

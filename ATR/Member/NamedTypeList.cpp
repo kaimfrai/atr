@@ -3,13 +3,13 @@ export module ATR.Member.NamedTypeList;
 import ATR.Member.Constants;
 
 import Meta.Generic.LowerBound;
+import Meta.Generic.MoveBackward;
 import Meta.Size;
 import Meta.String.Chain;
 import Meta.Token.TypeID;
 
-import Std;
-
 using ::Meta::Generic::LowerBoundIndex;
+using ::Meta::Generic::MoveBackwardIndex;
 using ::Meta::SSize;
 using ::Meta::String::Chain;
 using ::Meta::TypeID;
@@ -46,12 +46,6 @@ export namespace
 			noexcept
 		{
 			auto const
-				aNamesEnd
-			=	Names
-			+	Count
-			;
-
-			auto const
 				vInsertIndex
 			=	LowerBoundIndex
 				(	Names
@@ -60,26 +54,15 @@ export namespace
 				)
 			;
 
-			::std::move_backward
-			(	(	Names
-				+	vInsertIndex
-				)
-			,	aNamesEnd
-			,	(	aNamesEnd
-				+	1z
-				)
+			MoveBackwardIndex
+			(	Names
+			,	vInsertIndex
+			,	Count
 			);
-			::std::move_backward
-			(	(	Types
-				+	vInsertIndex
-				)
-			,	(	Types
-				+	Count
-				)
-			,	(	Types
-				+	Count
-				+	1z
-				)
+			MoveBackwardIndex
+			(	Types
+			,	vInsertIndex
+			,	Count
 			);
 
 			Names

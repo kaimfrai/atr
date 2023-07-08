@@ -3,12 +3,12 @@ export module ATR.Member.AliasMapList;
 import ATR.Member.Constants;
 
 import Meta.Generic.LowerBound;
+import Meta.Generic.MoveBackward;
 import Meta.Size;
 import Meta.String.Chain;
 
-import Std;
-
 using ::Meta::Generic::LowerBoundIndex;
+using ::Meta::Generic::MoveBackwardIndex;
 using ::Meta::SSize;
 using ::Meta::String::Chain;
 
@@ -82,29 +82,15 @@ export namespace
 				)
 			;
 
-			::std::move_backward
-			(	(	Names
-				+	vInsertIndex
-				)
-			,	(	Names
-				+	Count
-				)
-			,	(	Names
-				+	Count
-				+	1z
-				)
+			MoveBackwardIndex
+			(	Names
+			,	vInsertIndex
+			,	Count
 			);
-			::std::move_backward
-			(	(	Targets
-				+	vInsertIndex
-				)
-			,	(	Targets
-				+	Count
-				)
-			,	(	Targets
-				+	Count
-				+	1z
-				)
+			MoveBackwardIndex
+			(	Targets
+			,	vInsertIndex
+			,	Count
 			);
 
 			Names
@@ -112,7 +98,6 @@ export namespace
 				]
 			=	i_rMemberName
 			;
-
 			Targets
 				[	vInsertIndex
 				]
