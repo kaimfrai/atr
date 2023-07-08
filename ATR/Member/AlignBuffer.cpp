@@ -4,12 +4,12 @@ import ATR.Member.Constants;
 import ATR.Member.CountedBuffer;
 import ATR.Member.CountedType;
 
-import Meta.Generic.MoveBackward;
+import Meta.Generic.Insert;
 import Meta.Memory.Alignment;
 import Meta.Size;
 import Meta.Token.TypeID;
 
-using ::Meta::Generic::MoveBackwardIndex;
+using ::Meta::Generic::StructureOfArrays::InsertByIndex;
 using ::Meta::Memory::Alignment;
 using ::Meta::SSize;
 using ::Meta::TypeID;
@@ -129,22 +129,12 @@ export namespace
 		;
 
 		auto
-		&	rAlignedTypeCounts
-		=	i_rAlignBuffer
-			[	vAlign
+		&	[	rBuffer
+			,	rCount
 			]
-		;
-
-		auto
-		&	rTypeCountBuffer
-		=	rAlignedTypeCounts
-			.	Buffer
-		;
-
-		auto const
-			vTypeCount
-		=	rAlignedTypeCounts
-			.	Count
+		=	i_rAlignBuffer
+				[	vAlign
+				]
 		;
 
 		auto
@@ -153,14 +143,14 @@ export namespace
 		;
 
 		for	(;	(	vInsertIndex
-				!=	vTypeCount
+				!=	rCount
 				)
 			;	++	vInsertIndex
 			)
 		{
 			auto
 			&	rTypeCount
-			=	rTypeCountBuffer
+			=	rBuffer
 					[	vInsertIndex
 					]
 			;
@@ -178,28 +168,14 @@ export namespace
 			}
 		}
 
-		MoveBackwardIndex
-		(	rTypeCountBuffer
+		InsertByIndex<CountedType>
+		(	rCount
 		,	vInsertIndex
-		,	vTypeCount
+		,	{	rBuffer
+			,	{	i_vType
+				,	1z
+				}
+			}
 		);
-
-		++	rAlignedTypeCounts
-			.	Count
-		;
-
-		rTypeCountBuffer
-			[	vInsertIndex
-			]
-		.	Type
-		=	i_vType
-		;
-
-		rTypeCountBuffer
-			[	vInsertIndex
-			]
-		.	Count
-		=	1z
-		;
 	}
 }

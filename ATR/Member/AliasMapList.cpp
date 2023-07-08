@@ -2,13 +2,13 @@ export module ATR.Member.AliasMapList;
 
 import ATR.Member.Constants;
 
+import Meta.Generic.Insert;
 import Meta.Generic.LowerBound;
-import Meta.Generic.MoveBackward;
 import Meta.Size;
 import Meta.String.Chain;
 
+using ::Meta::Generic::StructureOfArrays::InsertByKey;
 using ::Meta::Generic::LowerBoundIndex;
-using ::Meta::Generic::MoveBackwardIndex;
 using ::Meta::SSize;
 using ::Meta::String::Chain;
 
@@ -73,39 +73,15 @@ export namespace
 			)
 			noexcept
 		{
-			auto const
-				vInsertIndex
-			=	LowerBoundIndex
-				(	Names
-				,	Count
+			InsertByKey<Chain, Chain>
+			(	Count
+			,	{	Names
 				,	i_rMemberName
-				)
-			;
-
-			MoveBackwardIndex
-			(	Names
-			,	vInsertIndex
-			,	Count
+				}
+			,	{	Targets
+				,	i_rTarget
+				}
 			);
-			MoveBackwardIndex
-			(	Targets
-			,	vInsertIndex
-			,	Count
-			);
-
-			Names
-				[	vInsertIndex
-				]
-			=	i_rMemberName
-			;
-			Targets
-				[	vInsertIndex
-				]
-			=	i_rTarget
-			;
-
-			++	Count
-			;
 		}
 	};
 }

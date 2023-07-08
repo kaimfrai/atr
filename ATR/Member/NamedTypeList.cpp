@@ -2,14 +2,14 @@ export module ATR.Member.NamedTypeList;
 
 import ATR.Member.Constants;
 
+import Meta.Generic.Insert;
 import Meta.Generic.LowerBound;
-import Meta.Generic.MoveBackward;
 import Meta.Size;
 import Meta.String.Chain;
 import Meta.Token.TypeID;
 
+using ::Meta::Generic::StructureOfArrays::InsertByKey;
 using ::Meta::Generic::LowerBoundIndex;
-using ::Meta::Generic::MoveBackwardIndex;
 using ::Meta::SSize;
 using ::Meta::String::Chain;
 using ::Meta::TypeID;
@@ -45,38 +45,15 @@ export namespace
 			)
 			noexcept
 		{
-			auto const
-				vInsertIndex
-			=	LowerBoundIndex
-				(	Names
-				,	Count
+			InsertByKey<Chain, TypeID>
+			(	Count
+			,	{	Names
 				,	i_rMemberName
-				)
-			;
-
-			MoveBackwardIndex
-			(	Names
-			,	vInsertIndex
-			,	Count
+				}
+			,	{	Types
+				,	i_vType
+				}
 			);
-			MoveBackwardIndex
-			(	Types
-			,	vInsertIndex
-			,	Count
-			);
-
-			Names
-				[	vInsertIndex
-				]
-			=	i_rMemberName
-			;
-			Types
-				[	vInsertIndex
-				]
-			=	i_vType
-			;
-			++	Count
-			;
 		}
 	};
 }
