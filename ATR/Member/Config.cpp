@@ -2,7 +2,6 @@ export module ATR.Member.Config;
 
 import ATR.Member.ConfigBuilder;
 import ATR.Member.ConfigData;
-import ATR.Member.Finalize;
 
 import Meta.ID;
 
@@ -16,12 +15,10 @@ export namespace
 				t_tTypeName
 		>
 	ConfigData const constexpr inline
-		Config_Of
-	=	Finalize
-		(	BuiltConfig_Of
-			<	t_tTypeName
-			,	ConfigBuilder
-			>
-		)
+	&	Config_Of
+	=	BuiltConfig_Of
+		<	t_tTypeName
+		,	ConfigBuilder
+		>
 	;
 }

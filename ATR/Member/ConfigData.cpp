@@ -1,10 +1,8 @@
 export module ATR.Member.ConfigData;
 
-import ATR.Member.AlignBuffer;
 import ATR.Member.Constants;
-import ATR.Member.CountedType;
 import ATR.Member.Info;
-import ATR.Member.NamedInfo;
+import ATR.Member.LayoutList;
 
 import Meta.Generic.LowerBound;
 import Meta.Memory.Size.Arithmetic;
@@ -14,7 +12,6 @@ import Meta.String.Chain;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 
-using ::Meta::BitSize;
 using ::Meta::Generic::LowerBoundIndex;
 using ::Meta::SSize;
 using ::Meta::String::Chain;
@@ -29,12 +26,8 @@ export namespace
 	struct
 		ConfigData
 	{
-		AlignBuffer<CountedType>
-			AlignTypeCounts
-		{};
-
-		BitSize
-			BitCount
+		LayoutList
+			Layout
 		{};
 
 		Chain
@@ -49,8 +42,14 @@ export namespace
 			]
 		{};
 
-		BitSize
-			Offsets
+		SSize
+			TypeIndices
+			[	NameBufferSize
+			]
+		{};
+
+		Chain
+			AliasTargets
 			[	NameBufferSize
 			]
 		{};
@@ -93,14 +92,33 @@ export namespace
 				};
 			}
 
+			auto const
+				vType
+			=	Types
+					[	vIndex
+					]
+			;
+
+			auto const
+				vTypeIndex
+			=	TypeIndices
+					[	vIndex
+					]
+			;
+
+			auto const
+				vOffset
+			=	Layout
+				.	MemberOffset
+					(	vType
+					,	vTypeIndex
+					)
+			;
+
 			return
 			Info
-			{	Types
-					[	vIndex
-					]
-			,	Offsets
-					[	vIndex
-					]
+			{	vType
+			,	vOffset
 			};
 		}
 	};

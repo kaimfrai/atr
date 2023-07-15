@@ -16,6 +16,7 @@ export namespace
 	->	auto&&
 	{	return
 		o_rConfig
+			("Sphere"_id)
 			("LeftEye", "Sphere"_id)
 			("RightEyeColorRed", "LeftEyeColorRed")
 			("RightEyeColorGreen", "LeftEyeColorGreen")
@@ -24,7 +25,6 @@ export namespace
 			("RightEyePointLongitudinal", "LeftEyePointLongitudinal")
 			("RightEyePointVertical", "LeftEyePointVertical")
 			("RightEye", "Sphere"_id)
-			("Sphere"_id)
 		;
 	}
 }

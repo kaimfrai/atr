@@ -10,9 +10,8 @@ add_single_file_modules(
 	AliasMapList.cpp
 	NamedTypeList.cpp
 	LayoutList.cpp
-	ConfigBuilder.cpp
 	ConfigData.cpp
-	Finalize.cpp
+	ConfigBuilder.cpp
 	Config.cpp
 	Storage.cpp
 	ConfigTransformer.cpp

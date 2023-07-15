@@ -20,7 +20,6 @@ export import ATR.Member.ConfigTransformer;
 export import ATR.Member.Constants;
 export import ATR.Member.CountedBuffer;
 export import ATR.Member.CountedType;
-export import ATR.Member.Finalize;
 export import ATR.Member.Info;
 export import ATR.Member.LayoutList;
 export import ATR.Member.NamedInfo;

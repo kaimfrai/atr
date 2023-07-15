@@ -4,12 +4,10 @@ import ATR.Member.Constants;
 import ATR.Member.CountedBuffer;
 import ATR.Member.CountedType;
 
-import Meta.Generic.Insert;
 import Meta.Memory.Alignment;
 import Meta.Size;
 import Meta.Token.TypeID;
 
-using ::Meta::Generic::StructureOfArrays::InsertByIndex;
 using ::Meta::Memory::Alignment;
 using ::Meta::SSize;
 using ::Meta::TypeID;
@@ -20,6 +18,8 @@ export namespace
 	template
 		<	typename
 				t_tElement
+		,	SSize
+				t_vBufferSize
 		>
 	struct
 		AlignBuffer
@@ -28,7 +28,7 @@ export namespace
 			BufferType
 		=	CountedBuffer
 			<	t_tElement
-			,	TypeBufferSize
+			,	t_vBufferSize
 			>
 		;
 
@@ -112,14 +112,19 @@ export namespace
 		}
 	};
 
+	[[nodiscard]]
 	auto constexpr inline
 	(	AddType
-	)	(	AlignBuffer<CountedType>
+	)	(	AlignBuffer<CountedType, TypeBufferSize>
 			&	i_rAlignBuffer
 		,	TypeID
 				i_vType
+		,	SSize
+				i_vCount
+			=	1z
 		)
 		noexcept
+	->	SSize
 	{
 		auto const
 			vAlign
@@ -129,53 +134,47 @@ export namespace
 		;
 
 		auto
-		&	[	rBuffer
-			,	rCount
-			]
+		&	rAlignedTypeCounts
 		=	i_rAlignBuffer
 				[	vAlign
 				]
 		;
 
-		auto
-			vInsertIndex
-		=	0z
-		;
-
-		for	(;	(	vInsertIndex
-				!=	rCount
-				)
-			;	++	vInsertIndex
+		for	(	auto
+				&	[	rType
+					,	rCount
+					]
+			:	rAlignedTypeCounts
 			)
 		{
-			auto
-			&	rTypeCount
-			=	rBuffer
-					[	vInsertIndex
-					]
-			;
-
-			if	(	rTypeCount
-					.	Type
+			if	(	rType
 				==	i_vType
 				)
 			{
-				++	rTypeCount
-					.	Count
+				auto const
+					vPreviousCount
+				=	rCount
+				;
+				rCount
+				+=	i_vCount
 				;
 				return
+					vPreviousCount
 				;
 			}
 		}
 
-		InsertByIndex<CountedType>
-		(	rCount
-		,	vInsertIndex
-		,	{	rBuffer
-			,	{	i_vType
-				,	1z
+		rAlignedTypeCounts
+		.	push_back
+			(	CountedType
+				{	i_vType
+				,	i_vCount
 				}
-			}
-		);
+			)
+		;
+
+		return
+			0z
+		;
 	}
 }

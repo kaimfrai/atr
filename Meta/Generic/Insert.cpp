@@ -117,6 +117,7 @@ export namespace
 			...	i_vpValue
 		)
 		noexcept
+	->	SSize
 	{
 		auto const
 			vIndex
@@ -139,5 +140,70 @@ export namespace
 			)
 			...
 		);
+		return
+			vIndex
+		;
+	}
+
+	template
+		<	typename
+				t_tKey
+		,	typename
+			...	t_tpValue
+		>
+	auto constexpr
+	(	TryInsertByKey
+	)	(	SSize
+			&	i_rCount
+		,	ArrayInsertion<t_tKey>
+				i_vKey
+		,	ArrayInsertion<t_tpValue>
+			...	i_vpValue
+		)
+		noexcept
+	->	SSize
+	{
+		auto const
+			vIndex
+		=	LowerBoundIndex
+			(	i_vKey
+				.	Array
+			,	i_rCount
+			,	i_vKey
+				.	Element
+			)
+		;
+
+		if	(	(	vIndex
+				!=	i_rCount
+				)
+			and	(	i_vKey
+					.	Array
+						[	vIndex
+						]
+				==	i_vKey
+					.	Element
+				)
+			)
+		{	return
+				-1z
+			;
+		}
+
+		InsertByIndex
+		(	i_rCount
+		,	vIndex
+		,	static_cast<decltype(i_vKey)&&>
+			(	i_vKey
+			)
+		,	static_cast<decltype(i_vpValue)&&>
+			(	i_vpValue
+			)
+			...
+		);
+
+		return
+			vIndex
+		;
 	}
 }

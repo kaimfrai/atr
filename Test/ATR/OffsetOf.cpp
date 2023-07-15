@@ -1,5 +1,4 @@
 import ATR.Instance;
-import ATR.Literals;
 import ATR.Member.Offset;
 
 import Meta.Bit.Array;
@@ -19,10 +18,10 @@ import Std;
 
 using ::Meta::Bit::Field;
 using ::Meta::BitSize;
+using ::Meta::ID;
 using ::Meta::Memory::ByteWidth;
 using ::Meta::Memory::SizeOf;
 using ::Meta::Specifier::Mut;
-using ::Meta::ID;
 using ::Meta::String::Literal;
 using ::Meta::Type;
 
@@ -43,18 +42,18 @@ namespace
 			("Int", Type<int>)
 			("IntConst", Type<int const>)
 			("IntMut", Type<Mut<int>>)
-			("Bool", Type<bool>)
-			("BoolConst", Type<bool const>)
-			("BoolMut", Type<Mut<bool>>)
-			("Field", Type<Field<3_bit>>)
-			("FieldConst", Type<Field<3_bit> const>)
-			("FieldMut", Type<Mut<Field<3_bit>>>)
 			("ArrayBool", Type<bool[5]>)
 			("ArrayBoolConst", Type<bool const[5]>)
 			("ArrayBoolMut", Type<Mut<bool[5]>>)
 			("ArrayField", Type<Field<3_bit>[5]>)
 			("ArrayFieldConst", Type<Field<3_bit> const[5]>)
 			("ArrayFieldMut", Type<Mut<Field<3_bit>[5]>>)
+			("Bool", Type<bool>)
+			("BoolConst", Type<bool const>)
+			("BoolMut", Type<Mut<bool>>)
+			("Field", Type<Field<3_bit>>)
+			("FieldConst", Type<Field<3_bit> const>)
+			("FieldMut", Type<Mut<Field<3_bit>>>)
 		;
 	}
 }
@@ -152,23 +151,15 @@ static_assert
 	>
 );
 
-template<auto l, auto r>
-auto constexpr compare()
-{
-	static_assert(l == r);
-	return l == r;
-}
-
 static_assert
-(	compare
-	<OffsetType
+(	OffsetType
 	<	OffsetOfTest
 	,	"ArrayBool"
 	>
-	,MemberOffset_For
+==	MemberOffset_For
 	<	96_bit
 	,	bool[5]
-	>>()
+	>
 );
 
 static_assert

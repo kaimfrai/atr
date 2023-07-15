@@ -32,18 +32,19 @@ auto constexpr inline
 	MemberCount
 =	[]
 	{	auto const
-		&	rConfig
+		&	rLayout
 		=	Config_Of
 			<	ID<t_vTypeName>
 			>
+			.	Layout
 		;
 		return
 			::std::accumulate
-			(	rConfig
+			(	rLayout
 				.	AlignTypeCounts
 				.	begin
 					()
-			,	rConfig
+			,	rLayout
 				.	AlignTypeCounts
 				.	end
 					()

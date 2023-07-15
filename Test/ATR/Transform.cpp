@@ -3,6 +3,7 @@ import ATR.Member.AlignBuffer;
 import ATR.Member.Config;
 import ATR.Member.ConfigData;
 import ATR.Member.ConfigTransformer;
+import ATR.Member.Constants;
 import ATR.Member.CountedBuffer;
 import ATR.Member.CountedType;
 
@@ -20,10 +21,11 @@ import Meta.Token.TypeID;
 import Std;
 
 using ::ATR::Member::AlignBuffer;
-using ::ATR::Member::CountedBuffer;
-using ::ATR::Member::CountedType;
 using ::ATR::Member::ConfigData;
 using ::ATR::Member::Config_Of;
+using ::ATR::Member::CountedBuffer;
+using ::ATR::Member::CountedType;
+using ::ATR::Member::TypeBufferSize;
 
 using ::Meta::Bit::Field;
 using ::Meta::ID;
@@ -182,9 +184,9 @@ namespace
 [[nodiscard]]
 auto constexpr inline
 (	operator==
-)	(	AlignBuffer<CountedType> const
+)	(	AlignBuffer<CountedType, TypeBufferSize> const
 		&	i_rLeft
-	,	AlignBuffer<CountedType> const
+	,	AlignBuffer<CountedType, TypeBufferSize> const
 		&	i_rRight
 	)
 	noexcept
@@ -208,14 +210,20 @@ auto constexpr inline
 ->	bool
 {	return
 		(	i_rLeft
+			.	Layout
 			.	AlignTypeCounts
 		==	i_rRight
+			.	Layout
 			.	AlignTypeCounts
 		)
-	and	(	i_rLeft
-			.	BitCount
-		==	i_rRight
-			.	BitCount
+	and	(	::std::ranges::equal
+			(	i_rLeft
+				.	Layout
+				.	BitCounts
+			,	i_rRight
+				.	Layout
+				.	BitCounts
+			)
 		)
 	and	(	i_rLeft
 			.	NameCount
@@ -236,9 +244,9 @@ auto constexpr inline
 		)
 	and	::std::ranges::equal
 		(	i_rLeft
-			.	Offsets
+			.	TypeIndices
 		,	i_rRight
-			.	Offsets
+			.	TypeIndices
 		)
 	;
 }

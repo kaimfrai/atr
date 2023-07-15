@@ -7,21 +7,6 @@ export namespace
 {
 	auto constexpr inline
 	(	Configure
-	)	(	ID<"Point">
-		,	auto
-			&&	o_rConfig
-		)
-	->	auto&&
-	{	return
-		o_rConfig
-			("Lateral", Type<float>)
-			("Longitudinal", Type<float>)
-			("Vertical", Type<float>)
-		;
-	}
-
-	auto constexpr inline
-	(	Configure
 	)	(	ID<"Color">
 		,	auto
 			&&	o_rConfig
@@ -33,6 +18,21 @@ export namespace
 			("Green", Type<float>)
 			("Blue", Type<float>)
 			("Alpha", Type<float>)
+		;
+	}
+
+	auto constexpr inline
+	(	Configure
+	)	(	ID<"Point">
+		,	auto
+			&&	o_rConfig
+		)
+	->	auto&&
+	{	return
+		o_rConfig
+			("Lateral", Type<float>)
+			("Longitudinal", Type<float>)
+			("Vertical", Type<float>)
 		;
 	}
 

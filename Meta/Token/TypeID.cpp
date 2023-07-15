@@ -61,8 +61,7 @@ export namespace
 
 		[[nodiscard]]
 		auto friend constexpr inline
-		(	operator
-			==
+		(	operator==
 		)	(	TypeID
 			,	TypeID
 			)

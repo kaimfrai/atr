@@ -38,64 +38,25 @@ auto constexpr inline
 			>
 		;
 		return
-			::std::count_if
-			(	rConfig
-				.	Types
-			,	(	rConfig
-					.	Types
-				+	rConfig
-					.	NameCount
+		::std::count_if
+		(	rConfig
+			.	AliasTargets
+		,	(	rConfig
+				.	AliasTargets
+			+	rConfig
+				.	NameCount
+			)
+		,	[]	(	auto const
+						i_vTarget
 				)
-			,	[]	(	auto const
-							i_vType
-					)
-				{	return
-						i_vType
-						.	IsAligned
-							()
-					;
-				}
-			)
-		-	::std::accumulate
-			(	rConfig
-				.	AlignTypeCounts
-				.	begin
-					()
-			,	rConfig
-				.	AlignTypeCounts
-				.	end
-					()
-			,	0z
-			,	[]	(	auto
-							i_vCount
-					,	auto const
-						&	i_rCountedTypes
-					)
-				{	return
-						::std::accumulate
-						(	i_rCountedTypes
-							.	begin
-								()
-						,	i_rCountedTypes
-							.	end
-								()
-						,	i_vCount
-						,	[]	(	auto
-										i_vInnerCount
-								,	auto const
-									&	i_rCountedType
-								)
-							{	return
-									i_vInnerCount
-								+	i_rCountedType
-									.	Count
-								;
-							}
-						)
-					;
-				}
-			)
-		;
+			{	return
+					not
+					i_vTarget
+					.	empty
+						()
+				;
+			}
+		);
 	}()
 ;
 

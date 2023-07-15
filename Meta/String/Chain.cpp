@@ -25,6 +25,20 @@ export namespace
 		;
 
 		[[nodiscard]]
+		auto constexpr inline
+		(	empty
+		)	()	const
+			noexcept
+		->	bool
+		{	return
+				Value
+				[	0z
+				]
+			==	'\0'
+			;
+		}
+
+		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator==
 		)	(	Chain

@@ -227,14 +227,15 @@ namespace
 		noexcept
 	{
 		auto static constexpr
-		&	rConfig
+		&	rLayout
 		=	Member::Config_Of
 			<	t_tTypeName
 			>
+			.	Layout
 		;
 		return
 		(	CreateLayout
-			<	rConfig
+			<	rLayout
 				.	AlignTypeCounts
 				.	Buffer
 					[	t_vpIndex
@@ -242,8 +243,9 @@ namespace
 			>()
 		+	...
 		+	CreateBitLayout
-			<	rConfig
+			<	rLayout
 				.	BitCount
+					()
 			>()
 		);
 	}

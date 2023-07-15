@@ -117,6 +117,40 @@ export namespace
 			;
 		}
 
+		auto constexpr inline
+		(	push_back
+		)	(	t_tElement const
+				&	i_rElement
+			)	&
+			noexcept
+		->	t_tElement&
+		{	return
+				Buffer
+					[	Count
+						++
+					]
+				=	i_rElement
+			;
+		}
+
+		auto constexpr inline
+		(	push_back
+		)	(	t_tElement
+				&&	i_rElement
+			)	&
+			noexcept
+		->	t_tElement&
+		{	return
+				Buffer
+					[	Count
+						++
+					]
+				=	static_cast<t_tElement&&>
+					(	i_rElement
+					)
+			;
+		}
+
 		[[nodiscard]]
 		auto constexpr inline
 		(	begin

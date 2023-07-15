@@ -15,32 +15,28 @@ import Evaluation.Dependency.Fraction;
 import Evaluation.Dependency.PiFraction;
 
 import ATR.Member.Config;
+import ATR.Member.ConfigData;
 import ATR.Member.Info;
-import ATR.Member.NamedInfo;
 
 import Meta.ID;
 import Meta.Memory.Constraint;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Scale;
-import Meta.Memory.Size;
-import Meta.Size;
 import Meta.String.Chain;
 import Meta.String.Literal;
 import Meta.Token.Type;
-import Meta.Token.TypeID;
 
 import Std;
 
+using ::ATR::Member::ConfigData;
 using ::ATR::Member::Config_Of;
-using ::ATR::Member::NamedInfo;
+using ::ATR::Member::Info;
 
-using ::Meta::BitSize;
 using ::Meta::ID;
 using ::Meta::Memory::BitSize_Of;
-using ::Meta::SSize;
-using ::Meta::String::Chain;
+using ::Meta::String::ImplicitChain;
 using ::Meta::String::Literal;
-using ::Meta::TypeID;
+using ::Meta::Type;
 
 using One = Fraction<>;
 using Half = Fraction<1z, 2z>;
@@ -50,41 +46,26 @@ using Pi_4 = PiFraction<1z, 4z>;
 using Pi_12 = PiFraction<1z, 12z>;
 
 struct
-	ConfigView
+	MemberInfo
 {
-	Chain const
-	*	Names
-	;
-
-	TypeID const
-	*	Types
-	;
-
-	BitSize const
-	*	Offsets
+	ConfigData const
+	&	Config
 	;
 
 	[[nodiscard]]
-	auto constexpr
+	auto constexpr inline
 	(	operator[]
-	)	(	SSize
-				i_vIndex
+	)	(	ImplicitChain
+				i_rName
 		)	const
 		noexcept
-	->	NamedInfo
+	->	Info
 	{	return
-		NamedInfo
-		{	Names
-				[	i_vIndex
-				]
-		,	{	Types
-					[	i_vIndex
-					]
-			,	Offsets
-					[	i_vIndex
-					]
-			}
-		};
+		Config
+		.	FindMemberInfo
+			(	i_rName
+			)
+		;
 	}
 };
 
@@ -92,31 +73,11 @@ template
 	<	Literal
 			t_vTypeName
 	>
-ConfigView constexpr inline
-	NamedInfoList_Of
+MemberInfo constexpr inline
+	MemberInfo_Of
 {	Config_Of
 	<	ID<t_vTypeName>
 	>
-	.	Names
-,	Config_Of
-	<	ID<t_vTypeName>
-	>
-	.	Types
-,	Config_Of
-	<	ID<t_vTypeName>
-	>
-	.	Offsets
-};
-
-struct
-	NamedInfoView
-{
-	char const
-	*	Name
-	;
-	::ATR::Member::Info
-		Info
-	;
 };
 
 template
@@ -126,35 +87,30 @@ template
 			t_vFloatCount
 		=	0z
 	>
-::ATR::Member::Info constexpr inline
+Info constexpr inline
 	OffsetType
-{	::Meta::Type<t_tMember>
+{	Type<t_tMember>
 ,	t_vFloatCount * BitSize_Of<float>
 };
 
 [[nodiscard]]
 auto constexpr inline
 (	Equals
-)	(	NamedInfo
+)	(	Info
 			i_vLeft
-	,	NamedInfoView
+	,	Info
 			i_vRight
 	)
 	noexcept
 ->	bool
 {
-	if	(	i_vLeft.Name
-		!=	Chain{i_vRight.Name}
-		)
-	{	(void("Name"), ::std::unreachable());
-	}
-	if	(	i_vLeft.Info.Type
-		!=	i_vRight.Info.Type
+	if	(	i_vLeft.Type
+		!=	i_vRight.Type
 		)
 	{	(void("Type"), ::std::unreachable());
 	}
-	if	(	i_vLeft.Info.Offset
-		!=	i_vRight.Info.Offset
+	if	(	i_vLeft.Offset
+		!=	i_vRight.Offset
 		)
 	{	(void("Offset"), ::std::unreachable());
 	}
@@ -166,1293 +122,1293 @@ auto constexpr inline
 
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Square">[0]
-	,	{	"ColorAlpha"
-		,	OffsetType<float, 0z>
-		}
+	(	MemberInfo_Of<"Square">
+			[	"ColorRed"
+			]
+	,	OffsetType<float, 0z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Square">[1]
-	,	{	"ColorBlue"
-		,	OffsetType<float, 1z>
-		}
+	(	MemberInfo_Of<"Square">
+			[	"ColorGreen"
+			]
+	,	OffsetType<float, 1z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Square">[2]
-	,	{	"ColorGreen"
-		,	OffsetType<float, 2z>
-		}
+	(	MemberInfo_Of<"Square">
+			[	"ColorBlue"
+			]
+	,	OffsetType<float, 2z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Square">[3]
-	,	{	"ColorRed"
-		,	OffsetType<float, 3z>
-		}
+	(	MemberInfo_Of<"Square">
+			[	"ColorAlpha"
+			]
+	,	OffsetType<float, 3z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Square">[4]
-	,	{	"ComputeSizeMultiplier"
-		,	OffsetType<One>
-		}
+	(	MemberInfo_Of<"Square">
+			[	"PointLateral"
+			]
+	,	OffsetType<float, 4z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Square">[5]
-	,	{	"Height"
-		,	OffsetType<float, 4z>
-		}
+	(	MemberInfo_Of<"Square">
+			[	"PointLongitudinal"
+			]
+	,	OffsetType<float, 5z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Square">[6]
-	,	{	"PointLateral"
-		,	OffsetType<float, 5z>
-		}
+	(	MemberInfo_Of<"Square">
+			[	"PointVertical"
+			]
+	,	OffsetType<float, 6z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Square">[7]
-	,	{	"PointLongitudinal"
-		,	OffsetType<float, 6z>
-		}
+	(	MemberInfo_Of<"Square">
+			[	"Height"
+			]
+	,	OffsetType<float, 7z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Square">[8]
-	,	{	"PointVertical"
-		,	OffsetType<float, 7z>
-		}
+	(	MemberInfo_Of<"Square">
+			[	"Width"
+			]
+	,	OffsetType<float, 7z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Square">[9]
-	,	{	"Width"
-		,	OffsetType<float, 4z>
-		}
-	)
-);
-
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Rectangle">[0]
-	,	{	"ColorAlpha"
-		,	OffsetType<float, 0z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Rectangle">[1]
-	,	{	"ColorBlue"
-		,	OffsetType<float, 1z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Rectangle">[2]
-	,	{	"ColorGreen"
-		,	OffsetType<float, 2z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Rectangle">[3]
-	,	{	"ColorRed"
-		,	OffsetType<float, 3z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Rectangle">[4]
-	,	{	"ComputeSizeMultiplier"
-		,	OffsetType<One>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Rectangle">[5]
-	,	{	"Height"
-		,	OffsetType<float, 4z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Rectangle">[6]
-	,	{	"PointLateral"
-		,	OffsetType<float, 5z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Rectangle">[7]
-	,	{	"PointLongitudinal"
-		,	OffsetType<float, 6z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Rectangle">[8]
-	,	{	"PointVertical"
-		,	OffsetType<float, 7z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Rectangle">[9]
-	,	{	"Width"
-		,	OffsetType<float, 8z>
-		}
+	(	MemberInfo_Of<"Square">
+			[	"ComputeSizeMultiplier"
+			]
+	,	OffsetType<One>
 	)
 );
 
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Triangle">[0]
-	,	{	"ColorAlpha"
-		,	OffsetType<float, 0z>
-		}
+	(	MemberInfo_Of<"Rectangle">
+			[	"ColorRed"
+			]
+	,	OffsetType<float, 0z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Triangle">[1]
-	,	{	"ColorBlue"
-		,	OffsetType<float, 1z>
-		}
+	(	MemberInfo_Of<"Rectangle">
+			[	"ColorGreen"
+			]
+	,	OffsetType<float, 1z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Triangle">[2]
-	,	{	"ColorGreen"
-		,	OffsetType<float, 2z>
-		}
+	(	MemberInfo_Of<"Rectangle">
+			[	"ColorBlue"
+			]
+	,	OffsetType<float, 2z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Triangle">[3]
-	,	{	"ColorRed"
-		,	OffsetType<float, 3z>
-		}
+	(	MemberInfo_Of<"Rectangle">
+			[	"ColorAlpha"
+			]
+	,	OffsetType<float, 3z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Triangle">[4]
-	,	{	"ComputeSizeMultiplier"
-		,	OffsetType<Half>
-		}
+	(	MemberInfo_Of<"Rectangle">
+			[	"PointLateral"
+			]
+	,	OffsetType<float, 4z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Triangle">[5]
-	,	{	"Height"
-		,	OffsetType<float, 4z>
-		}
+	(	MemberInfo_Of<"Rectangle">
+			[	"PointLongitudinal"
+			]
+	,	OffsetType<float, 5z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Triangle">[6]
-	,	{	"PointLateral"
-		,	OffsetType<float, 5z>
-		}
+	(	MemberInfo_Of<"Rectangle">
+			[	"PointVertical"
+			]
+	,	OffsetType<float, 6z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Triangle">[7]
-	,	{	"PointLongitudinal"
-		,	OffsetType<float, 6z>
-		}
+	(	MemberInfo_Of<"Rectangle">
+			[	"Height"
+			]
+	,	OffsetType<float, 7z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Triangle">[8]
-	,	{	"PointVertical"
-		,	OffsetType<float, 7z>
-		}
+	(	MemberInfo_Of<"Rectangle">
+			[	"Width"
+			]
+	,	OffsetType<float, 8z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Triangle">[9]
-	,	{	"Width"
-		,	OffsetType<float, 8z>
-		}
-	)
-);
-
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Circle">[0]
-	,	{	"ColorAlpha"
-		,	OffsetType<float, 0z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Circle">[1]
-	,	{	"ColorBlue"
-		,	OffsetType<float, 1z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Circle">[2]
-	,	{	"ColorGreen"
-		,	OffsetType<float, 2z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Circle">[3]
-	,	{	"ColorRed"
-		,	OffsetType<float, 3z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Circle">[4]
-	,	{	"ComputeSizeMultiplier"
-		,	OffsetType<Pi_4>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Circle">[5]
-	,	{	"Height"
-		,	OffsetType<float, 4z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Circle">[6]
-	,	{	"PointLateral"
-		,	OffsetType<float, 5z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Circle">[7]
-	,	{	"PointLongitudinal"
-		,	OffsetType<float, 6z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Circle">[8]
-	,	{	"PointVertical"
-		,	OffsetType<float, 7z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Circle">[9]
-	,	{	"Width"
-		,	OffsetType<float, 4z>
-		}
+	(	MemberInfo_Of<"Rectangle">
+			[	"ComputeSizeMultiplier"
+			]
+	,	OffsetType<One>
 	)
 );
 
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Ellipse">[0]
-	,	{	"ColorAlpha"
-		,	OffsetType<float, 0z>
-		}
+	(	MemberInfo_Of<"Triangle">
+			[	"ColorRed"
+			]
+	,	OffsetType<float, 0z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Ellipse">[1]
-	,	{	"ColorBlue"
-		,	OffsetType<float, 1z>
-		}
+	(	MemberInfo_Of<"Triangle">
+			[	"ColorGreen"
+			]
+	,	OffsetType<float, 1z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Ellipse">[2]
-	,	{	"ColorGreen"
-		,	OffsetType<float, 2z>
-		}
+	(	MemberInfo_Of<"Triangle">
+			[	"ColorBlue"
+			]
+	,	OffsetType<float, 2z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Ellipse">[3]
-	,	{	"ColorRed"
-		,	OffsetType<float, 3z>
-		}
+	(	MemberInfo_Of<"Triangle">
+			[	"ColorAlpha"
+			]
+	,	OffsetType<float, 3z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Ellipse">[4]
-	,	{	"ComputeSizeMultiplier"
-		,	OffsetType<Pi_4>
-		}
+	(	MemberInfo_Of<"Triangle">
+			[	"PointLateral"
+			]
+	,	OffsetType<float, 4z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Ellipse">[5]
-	,	{	"Height"
-		,	OffsetType<float, 4z>
-		}
+	(	MemberInfo_Of<"Triangle">
+			[	"PointLongitudinal"
+			]
+	,	OffsetType<float, 5z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Ellipse">[6]
-	,	{	"PointLateral"
-		,	OffsetType<float, 5z>
-		}
+	(	MemberInfo_Of<"Triangle">
+			[	"PointVertical"
+			]
+	,	OffsetType<float, 6z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Ellipse">[7]
-	,	{	"PointLongitudinal"
-		,	OffsetType<float, 6z>
-		}
+	(	MemberInfo_Of<"Triangle">
+			[	"Height"
+			]
+	,	OffsetType<float, 7z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Ellipse">[8]
-	,	{	"PointVertical"
-		,	OffsetType<float, 7z>
-		}
+	(	MemberInfo_Of<"Triangle">
+			[	"Width"
+			]
+	,	OffsetType<float, 8z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Ellipse">[9]
-	,	{	"Width"
-		,	OffsetType<float, 8z>
-		}
-	)
-);
-
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cube">[0]
-	,	{	"ColorAlpha"
-		,	OffsetType<float, 0z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cube">[1]
-	,	{	"ColorBlue"
-		,	OffsetType<float, 1z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cube">[2]
-	,	{	"ColorGreen"
-		,	OffsetType<float, 2z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cube">[3]
-	,	{	"ColorRed"
-		,	OffsetType<float, 3z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cube">[4]
-	,	{	"ComputeSizeMultiplier"
-		,	OffsetType<One>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cube">[5]
-	,	{	"Depth"
-		,	OffsetType<float, 4z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cube">[6]
-	,	{	"Height"
-		,	OffsetType<float, 4z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cube">[7]
-	,	{	"PointLateral"
-		,	OffsetType<float, 5z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cube">[8]
-	,	{	"PointLongitudinal"
-		,	OffsetType<float, 6z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cube">[9]
-	,	{	"PointVertical"
-		,	OffsetType<float, 7z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cube">[10]
-	,	{	"Width"
-		,	OffsetType<float, 4z>
-		}
+	(	MemberInfo_Of<"Triangle">
+			[	"ComputeSizeMultiplier"
+			]
+	,	OffsetType<Half>
 	)
 );
 
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cuboid">[0]
-	,	{	"ColorAlpha"
-		,	OffsetType<float, 0z>
-		}
+	(	MemberInfo_Of<"Circle">
+			[	"ColorRed"
+			]
+	,	OffsetType<float, 0z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cuboid">[1]
-	,	{	"ColorBlue"
-		,	OffsetType<float, 1z>
-		}
+	(	MemberInfo_Of<"Circle">
+			[	"ColorGreen"
+			]
+	,	OffsetType<float, 1z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cuboid">[2]
-	,	{	"ColorGreen"
-		,	OffsetType<float, 2z>
-		}
+	(	MemberInfo_Of<"Circle">
+			[	"ColorBlue"
+			]
+	,	OffsetType<float, 2z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cuboid">[3]
-	,	{	"ColorRed"
-		,	OffsetType<float, 3z>
-		}
+	(	MemberInfo_Of<"Circle">
+			[	"ColorAlpha"
+			]
+	,	OffsetType<float, 3z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cuboid">[4]
-	,	{	"ComputeSizeMultiplier"
-		,	OffsetType<One>
-		}
+	(	MemberInfo_Of<"Circle">
+			[	"PointLateral"
+			]
+	,	OffsetType<float, 4z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cuboid">[5]
-	,	{	"Depth"
-		,	OffsetType<float, 4z>
-		}
+	(	MemberInfo_Of<"Circle">
+			[	"PointLongitudinal"
+			]
+	,	OffsetType<float, 5z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cuboid">[6]
-	,	{	"Height"
-		,	OffsetType<float, 5z>
-		}
+	(	MemberInfo_Of<"Circle">
+			[	"PointVertical"
+			]
+	,	OffsetType<float, 6z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cuboid">[7]
-	,	{	"PointLateral"
-		,	OffsetType<float, 6z>
-		}
+	(	MemberInfo_Of<"Circle">
+			[	"Height"
+			]
+	,	OffsetType<float, 7z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cuboid">[8]
-	,	{	"PointLongitudinal"
-		,	OffsetType<float, 7z>
-		}
+	(	MemberInfo_Of<"Circle">
+			[	"Width"
+			]
+	,	OffsetType<float, 7z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cuboid">[9]
-	,	{	"PointVertical"
-		,	OffsetType<float, 8z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cuboid">[10]
-	,	{	"Width"
-		,	OffsetType<float, 9z>
-		}
+	(	MemberInfo_Of<"Circle">
+			[	"ComputeSizeMultiplier"
+			]
+	,	OffsetType<Pi_4>
 	)
 );
 
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Pyramid">[0]
-	,	{	"ColorAlpha"
-		,	OffsetType<float, 0z>
-		}
+	(	MemberInfo_Of<"Ellipse">
+			[	"ColorRed"
+			]
+	,	OffsetType<float, 0z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Pyramid">[1]
-	,	{	"ColorBlue"
-		,	OffsetType<float, 1z>
-		}
+	(	MemberInfo_Of<"Ellipse">
+			[	"ColorGreen"
+			]
+	,	OffsetType<float, 1z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Pyramid">[2]
-	,	{	"ColorGreen"
-		,	OffsetType<float, 2z>
-		}
+	(	MemberInfo_Of<"Ellipse">
+			[	"ColorBlue"
+			]
+	,	OffsetType<float, 2z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Pyramid">[3]
-	,	{	"ColorRed"
-		,	OffsetType<float, 3z>
-		}
+	(	MemberInfo_Of<"Ellipse">
+			[	"ColorAlpha"
+			]
+	,	OffsetType<float, 3z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Pyramid">[4]
-	,	{	"ComputeSizeMultiplier"
-		,	OffsetType<Third>
-		}
+	(	MemberInfo_Of<"Ellipse">
+			[	"PointLateral"
+			]
+	,	OffsetType<float, 4z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Pyramid">[5]
-	,	{	"Depth"
-		,	OffsetType<float, 4z>
-		}
+	(	MemberInfo_Of<"Ellipse">
+			[	"PointLongitudinal"
+			]
+	,	OffsetType<float, 5z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Pyramid">[6]
-	,	{	"Height"
-		,	OffsetType<float, 5z>
-		}
+	(	MemberInfo_Of<"Ellipse">
+			[	"PointVertical"
+			]
+	,	OffsetType<float, 6z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Pyramid">[7]
-	,	{	"PointLateral"
-		,	OffsetType<float, 6z>
-		}
+	(	MemberInfo_Of<"Ellipse">
+			[	"Height"
+			]
+	,	OffsetType<float, 7z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Pyramid">[8]
-	,	{	"PointLongitudinal"
-		,	OffsetType<float, 7z>
-		}
+	(	MemberInfo_Of<"Ellipse">
+			[	"Width"
+			]
+	,	OffsetType<float, 8z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Pyramid">[9]
-	,	{	"PointVertical"
-		,	OffsetType<float, 8z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Pyramid">[10]
-	,	{	"Width"
-		,	OffsetType<float, 9z>
-		}
+	(	MemberInfo_Of<"Ellipse">
+			[	"ComputeSizeMultiplier"
+			]
+	,	OffsetType<Pi_4>
 	)
 );
 
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Sphere">[0]
-	,	{	"ColorAlpha"
-		,	OffsetType<float, 0z>
-		}
+	(	MemberInfo_Of<"Cube">
+			[	"ColorRed"
+			]
+	,	OffsetType<float, 0z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Sphere">[1]
-	,	{	"ColorBlue"
-		,	OffsetType<float, 1z>
-		}
+	(	MemberInfo_Of<"Cube">
+			[	"ColorGreen"
+			]
+	,	OffsetType<float, 1z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Sphere">[2]
-	,	{	"ColorGreen"
-		,	OffsetType<float, 2z>
-		}
+	(	MemberInfo_Of<"Cube">
+			[	"ColorBlue"
+			]
+	,	OffsetType<float, 2z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Sphere">[3]
-	,	{	"ColorRed"
-		,	OffsetType<float, 3z>
-		}
+	(	MemberInfo_Of<"Cube">
+			[	"ColorAlpha"
+			]
+	,	OffsetType<float, 3z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Sphere">[4]
-	,	{	"ComputeSizeMultiplier"
-		,	OffsetType<Pi_6>
-		}
+	(	MemberInfo_Of<"Cube">
+			[	"PointLateral"
+			]
+	,	OffsetType<float, 4z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Sphere">[5]
-	,	{	"Depth"
-		,	OffsetType<float, 4z>
-		}
+	(	MemberInfo_Of<"Cube">
+			[	"PointLongitudinal"
+			]
+	,	OffsetType<float, 5z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Sphere">[6]
-	,	{	"Height"
-		,	OffsetType<float, 4z>
-		}
+	(	MemberInfo_Of<"Cube">
+			[	"PointVertical"
+			]
+	,	OffsetType<float, 6z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Sphere">[7]
-	,	{	"PointLateral"
-		,	OffsetType<float, 5z>
-		}
+	(	MemberInfo_Of<"Cube">
+			[	"Height"
+			]
+	,	OffsetType<float, 7z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Sphere">[8]
-	,	{	"PointLongitudinal"
-		,	OffsetType<float, 6z>
-		}
+	(	MemberInfo_Of<"Cube">
+			[	"Width"
+			]
+	,	OffsetType<float, 7z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Sphere">[9]
-	,	{	"PointVertical"
-		,	OffsetType<float, 7z>
-		}
+	(	MemberInfo_Of<"Cube">
+			[	"Depth"
+			]
+	,	OffsetType<float, 7z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Sphere">[10]
-	,	{	"Width"
-		,	OffsetType<float, 4z>
-		}
-	)
-);
-
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cylinder">[0]
-	,	{	"ColorAlpha"
-		,	OffsetType<float, 0z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cylinder">[1]
-	,	{	"ColorBlue"
-		,	OffsetType<float, 1z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cylinder">[2]
-	,	{	"ColorGreen"
-		,	OffsetType<float, 2z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cylinder">[3]
-	,	{	"ColorRed"
-		,	OffsetType<float, 3z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cylinder">[4]
-	,	{	"ComputeSizeMultiplier"
-		,	OffsetType<Pi_4>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cylinder">[5]
-	,	{	"Depth"
-		,	OffsetType<float, 4z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cylinder">[6]
-	,	{	"Height"
-		,	OffsetType<float, 5z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cylinder">[7]
-	,	{	"PointLateral"
-		,	OffsetType<float, 6z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cylinder">[8]
-	,	{	"PointLongitudinal"
-		,	OffsetType<float, 7z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cylinder">[9]
-	,	{	"PointVertical"
-		,	OffsetType<float, 8z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Cylinder">[10]
-	,	{	"Width"
-		,	OffsetType<float, 5z>
-		}
+	(	MemberInfo_Of<"Cube">
+			[	"ComputeSizeMultiplier"
+			]
+	,	OffsetType<One>
 	)
 );
 
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cone">[0]
-	,	{	"ColorAlpha"
-		,	OffsetType<float, 0z>
-		}
+	(	MemberInfo_Of<"Cuboid">
+			[	"ColorRed"
+			]
+	,	OffsetType<float, 0z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cone">[1]
-	,	{	"ColorBlue"
-		,	OffsetType<float, 1z>
-		}
+	(	MemberInfo_Of<"Cuboid">
+			[	"ColorGreen"
+			]
+	,	OffsetType<float, 1z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cone">[2]
-	,	{	"ColorGreen"
-		,	OffsetType<float, 2z>
-		}
+	(	MemberInfo_Of<"Cuboid">
+			[	"ColorBlue"
+			]
+	,	OffsetType<float, 2z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cone">[3]
-	,	{	"ColorRed"
-		,	OffsetType<float, 3z>
-		}
+	(	MemberInfo_Of<"Cuboid">
+			[	"ColorAlpha"
+			]
+	,	OffsetType<float, 3z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cone">[4]
-	,	{	"ComputeSizeMultiplier"
-		,	OffsetType<Pi_12>
-		}
+	(	MemberInfo_Of<"Cuboid">
+			[	"PointLateral"
+			]
+	,	OffsetType<float, 4z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cone">[5]
-	,	{	"Depth"
-		,	OffsetType<float, 4z>
-		}
+	(	MemberInfo_Of<"Cuboid">
+			[	"PointLongitudinal"
+			]
+	,	OffsetType<float, 5z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cone">[6]
-	,	{	"Height"
-		,	OffsetType<float, 5z>
-		}
+	(	MemberInfo_Of<"Cuboid">
+			[	"PointVertical"
+			]
+	,	OffsetType<float, 6z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cone">[7]
-	,	{	"PointLateral"
-		,	OffsetType<float, 6z>
-		}
+	(	MemberInfo_Of<"Cuboid">
+			[	"Height"
+			]
+	,	OffsetType<float, 7z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cone">[8]
-	,	{	"PointLongitudinal"
-		,	OffsetType<float, 7z>
-		}
+	(	MemberInfo_Of<"Cuboid">
+			[	"Width"
+			]
+	,	OffsetType<float, 8z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cone">[9]
-	,	{	"PointVertical"
-		,	OffsetType<float, 8z>
-		}
+	(	MemberInfo_Of<"Cuboid">
+			[	"Depth"
+			]
+	,	OffsetType<float, 9z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Cone">[10]
-	,	{	"Width"
-		,	OffsetType<float, 5z>
-		}
-	)
-);
-
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Ellipsoid">[0]
-	,	{	"ColorAlpha"
-		,	OffsetType<float, 0z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Ellipsoid">[1]
-	,	{	"ColorBlue"
-		,	OffsetType<float, 1z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Ellipsoid">[2]
-	,	{	"ColorGreen"
-		,	OffsetType<float, 2z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Ellipsoid">[3]
-	,	{	"ColorRed"
-		,	OffsetType<float, 3z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Ellipsoid">[4]
-	,	{	"ComputeSizeMultiplier"
-		,	OffsetType<Pi_6>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Ellipsoid">[5]
-	,	{	"Depth"
-		,	OffsetType<float, 4z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Ellipsoid">[6]
-	,	{	"Height"
-		,	OffsetType<float, 5z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Ellipsoid">[7]
-	,	{	"PointLateral"
-		,	OffsetType<float, 6z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Ellipsoid">[8]
-	,	{	"PointLongitudinal"
-		,	OffsetType<float, 7z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Ellipsoid">[9]
-	,	{	"PointVertical"
-		,	OffsetType<float, 8z>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	NamedInfoList_Of<"Ellipsoid">[10]
-	,	{	"Width"
-		,	OffsetType<float, 9z>
-		}
+	(	MemberInfo_Of<"Cuboid">
+			[	"ComputeSizeMultiplier"
+			]
+	,	OffsetType<One>
 	)
 );
 
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[0]
-	,	{	"ColorAlpha"
-		,	OffsetType<float, 0z>
-		}
+	(	MemberInfo_Of<"Pyramid">
+			[	"ColorRed"
+			]
+	,	OffsetType<float, 0z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[1]
-	,	{	"ColorBlue"
-		,	OffsetType<float, 1z>
-		}
+	(	MemberInfo_Of<"Pyramid">
+			[	"ColorGreen"
+			]
+	,	OffsetType<float, 1z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[2]
-	,	{	"ColorGreen"
-		,	OffsetType<float, 2z>
-		}
+	(	MemberInfo_Of<"Pyramid">
+			[	"ColorBlue"
+			]
+	,	OffsetType<float, 2z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[3]
-	,	{	"ColorRed"
-		,	OffsetType<float, 3z>
-		}
+	(	MemberInfo_Of<"Pyramid">
+			[	"ColorAlpha"
+			]
+	,	OffsetType<float, 3z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[4]
-	,	{	"ComputeSizeMultiplier"
- 		,	OffsetType<Pi_6>
-		}
+	(	MemberInfo_Of<"Pyramid">
+			[	"PointLateral"
+			]
+	,	OffsetType<float, 4z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[5]
-	,	{	"Depth"
-		,	OffsetType<float, 4z>
-		}
+	(	MemberInfo_Of<"Pyramid">
+			[	"PointLongitudinal"
+			]
+	,	OffsetType<float, 5z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[6]
-	,	{	"Height"
-		,	OffsetType<float, 4z>
-		}
+	(	MemberInfo_Of<"Pyramid">
+			[	"PointVertical"
+			]
+	,	OffsetType<float, 6z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[7]
-	,	{	"LeftEyeColorAlpha"
-		,	OffsetType<float, 5z>
-		}
+	(	MemberInfo_Of<"Pyramid">
+			[	"Height"
+			]
+	,	OffsetType<float, 7z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[8]
-	,	{	"LeftEyeColorBlue"
-		,	OffsetType<float, 6z>
-		}
+	(	MemberInfo_Of<"Pyramid">
+			[	"Width"
+			]
+	,	OffsetType<float, 8z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[9]
-	,	{	"LeftEyeColorGreen"
-		,	OffsetType<float, 7z>
-		}
+	(	MemberInfo_Of<"Pyramid">
+			[	"Depth"
+			]
+	,	OffsetType<float, 9z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[10]
-	,	{	"LeftEyeColorRed"
-		,	OffsetType<float, 8z>
-		}
+	(	MemberInfo_Of<"Pyramid">
+			[	"ComputeSizeMultiplier"
+			]
+	,	OffsetType<Third>
+	)
+);
+
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Sphere">
+			[	"ColorRed"
+			]
+	,	OffsetType<float, 0z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[11]
-	,	{	"LeftEyeComputeSizeMultiplier"
-		,	OffsetType<Pi_6>
-		}
+	(	MemberInfo_Of<"Sphere">
+			[	"ColorGreen"
+			]
+	,	OffsetType<float, 1z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[12]
-	,	{	"LeftEyeDepth"
-		,	OffsetType<float, 9z>
-		}
+	(	MemberInfo_Of<"Sphere">
+			[	"ColorBlue"
+			]
+	,	OffsetType<float, 2z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[13]
-	,	{	"LeftEyeHeight"
-		,	OffsetType<float, 9z>
-		}
+	(	MemberInfo_Of<"Sphere">
+			[	"ColorAlpha"
+			]
+	,	OffsetType<float, 3z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[14]
-	,	{	"LeftEyePointLateral"
-		,	OffsetType<float, 10z>
-		}
+	(	MemberInfo_Of<"Sphere">
+			[	"PointLateral"
+			]
+	,	OffsetType<float, 4z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[15]
-	,	{	"LeftEyePointLongitudinal"
-		,	OffsetType<float, 11z>
-		}
+	(	MemberInfo_Of<"Sphere">
+			[	"PointLongitudinal"
+			]
+	,	OffsetType<float, 5z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[16]
-	,	{	"LeftEyePointVertical"
-		,	OffsetType<float, 12z>
-		}
+	(	MemberInfo_Of<"Sphere">
+			[	"PointVertical"
+			]
+	,	OffsetType<float, 6z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[17]
-	,	{	"LeftEyeWidth"
-		,	OffsetType<float, 9z>
-		}
+	(	MemberInfo_Of<"Sphere">
+			[	"Height"
+			]
+	,	OffsetType<float, 7z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[18]
-	,	{	"PointLateral"
-		,	OffsetType<float, 13z>
-		}
+	(	MemberInfo_Of<"Sphere">
+			[	"Width"
+			]
+	,	OffsetType<float, 7z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[19]
-	,	{	"PointLongitudinal"
-		,	OffsetType<float, 14z>
-		}
+	(	MemberInfo_Of<"Sphere">
+			[	"Depth"
+			]
+	,	OffsetType<float, 7z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[20]
-	,	{	"PointVertical"
-		,	OffsetType<float, 15z>
-		}
+	(	MemberInfo_Of<"Sphere">
+			[	"ComputeSizeMultiplier"
+			]
+	,	OffsetType<Pi_6>
+	)
+);
+
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Cylinder">
+			[	"ColorRed"
+			]
+	,	OffsetType<float, 0z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[21]
-	,	{	"RightEyeColorAlpha"
-		,	OffsetType<float, 5z>
-		}
+	(	MemberInfo_Of<"Cylinder">
+			[	"ColorGreen"
+			]
+	,	OffsetType<float, 1z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[22]
-	,	{	"RightEyeColorBlue"
-		,	OffsetType<float, 6z>
-		}
+	(	MemberInfo_Of<"Cylinder">
+			[	"ColorBlue"
+			]
+	,	OffsetType<float, 2z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[23]
-	,	{	"RightEyeColorGreen"
-		,	OffsetType<float, 7z>
-		}
+	(	MemberInfo_Of<"Cylinder">
+			[	"ColorAlpha"
+			]
+	,	OffsetType<float, 3z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[24]
-	,	{	"RightEyeColorRed"
-		,	OffsetType<float, 8z>
-		}
+	(	MemberInfo_Of<"Cylinder">
+			[	"PointLateral"
+			]
+	,	OffsetType<float, 4z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[25]
-	,	{	"RightEyeComputeSizeMultiplier"
-		,	OffsetType<Pi_6>
-		}
+	(	MemberInfo_Of<"Cylinder">
+			[	"PointLongitudinal"
+			]
+	,	OffsetType<float, 5z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[26]
-	,	{	"RightEyeDepth"
-		,	OffsetType<float, 16z>
-		}
+	(	MemberInfo_Of<"Cylinder">
+			[	"PointVertical"
+			]
+	,	OffsetType<float, 6z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[27]
-	,	{	"RightEyeHeight"
-		,	OffsetType<float, 16z>
-		}
+	(	MemberInfo_Of<"Cylinder">
+			[	"Height"
+			]
+	,	OffsetType<float, 7z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[28]
-	,	{	"RightEyePointLateral"
-		,	OffsetType<float, 17z>
-		}
+	(	MemberInfo_Of<"Cylinder">
+			[	"Width"
+			]
+	,	OffsetType<float, 7z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[29]
-	,	{	"RightEyePointLongitudinal"
-		,	OffsetType<float, 11z>
-		}
+	(	MemberInfo_Of<"Cylinder">
+			[	"Depth"
+			]
+	,	OffsetType<float, 8z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[30]
-	,	{	"RightEyePointVertical"
-		,	OffsetType<float, 12z>
-		}
+	(	MemberInfo_Of<"Cylinder">
+			[	"ComputeSizeMultiplier"
+			]
+	,	OffsetType<Pi_4>
+	)
+);
+
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Cone">
+			[	"ColorRed"
+			]
+	,	OffsetType<float, 0z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[31]
-	,	{	"RightEyeWidth"
-		,	OffsetType<float, 16z>
-		}
+	(	MemberInfo_Of<"Cone">
+			[	"ColorGreen"
+			]
+	,	OffsetType<float, 1z>
 	)
 );
 static_assert
 (	Equals
-	(	NamedInfoList_Of<"Head">[32]
-	,	{	"Width"
-		,	OffsetType<float, 4z>
-		}
+	(	MemberInfo_Of<"Cone">
+			[	"ColorBlue"
+			]
+	,	OffsetType<float, 2z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Cone">
+			[	"ColorAlpha"
+			]
+	,	OffsetType<float, 3z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Cone">
+			[	"PointLateral"
+			]
+	,	OffsetType<float, 4z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Cone">
+			[	"PointLongitudinal"
+			]
+	,	OffsetType<float, 5z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Cone">
+			[	"PointVertical"
+			]
+	,	OffsetType<float, 6z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Cone">
+			[	"Height"
+			]
+	,	OffsetType<float, 7z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Cone">
+			[	"Width"
+			]
+	,	OffsetType<float, 7z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Cone">
+			[	"Depth"
+			]
+	,	OffsetType<float, 8z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Cone">
+			[	"ComputeSizeMultiplier"
+			]
+	,	OffsetType<Pi_12>
+	)
+);
+
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Ellipsoid">
+			[	"ColorRed"
+			]
+	,	OffsetType<float, 0z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Ellipsoid">
+			[	"ColorGreen"
+			]
+	,	OffsetType<float, 1z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Ellipsoid">
+			[	"ColorBlue"
+			]
+	,	OffsetType<float, 2z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Ellipsoid">
+			[	"ColorAlpha"
+			]
+	,	OffsetType<float, 3z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Ellipsoid">
+			[	"PointLateral"
+			]
+	,	OffsetType<float, 4z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Ellipsoid">
+			[	"PointLongitudinal"
+			]
+	,	OffsetType<float, 5z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Ellipsoid">
+			[	"PointVertical"
+			]
+	,	OffsetType<float, 6z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Ellipsoid">
+			[	"Height"
+			]
+	,	OffsetType<float, 7z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Ellipsoid">
+			[	"Width"
+			]
+	,	OffsetType<float, 8z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Ellipsoid">
+			[	"Depth"
+			]
+	,	OffsetType<float, 9z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Ellipsoid">
+			[	"ComputeSizeMultiplier"
+			]
+	,	OffsetType<Pi_6>
+	)
+);
+
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"ColorRed"
+			]
+	,	OffsetType<float, 0z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"ColorGreen"
+			]
+	,	OffsetType<float, 1z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"ColorBlue"
+			]
+	,	OffsetType<float, 2z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"ColorAlpha"
+			]
+	,	OffsetType<float, 3z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"PointLateral"
+			]
+	,	OffsetType<float, 4z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"PointLongitudinal"
+			]
+	,	OffsetType<float, 5z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"PointVertical"
+			]
+	,	OffsetType<float, 6z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"Height"
+			]
+	,	OffsetType<float, 7z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"Width"
+			]
+	,	OffsetType<float, 7z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"Depth"
+			]
+	,	OffsetType<float, 7z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"ComputeSizeMultiplier"
+			]
+	,	OffsetType<Pi_6>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"LeftEyeColorRed"
+			]
+	,	OffsetType<float, 8z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"LeftEyeColorGreen"
+			]
+	,	OffsetType<float, 9z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"LeftEyeColorBlue"
+			]
+	,	OffsetType<float, 10z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"LeftEyeColorAlpha"
+			]
+	,	OffsetType<float, 11z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"LeftEyePointLateral"
+			]
+	,	OffsetType<float, 12z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"LeftEyePointLongitudinal"
+			]
+	,	OffsetType<float, 13z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"LeftEyePointVertical"
+			]
+	,	OffsetType<float, 14z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"LeftEyeHeight"
+			]
+	,	OffsetType<float, 15z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"LeftEyeWidth"
+			]
+	,	OffsetType<float, 15z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"LeftEyeDepth"
+			]
+	,	OffsetType<float, 15z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"LeftEyeComputeSizeMultiplier"
+			]
+	,	OffsetType<Pi_6>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"RightEyeColorRed"
+			]
+	,	OffsetType<float, 8z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"RightEyeColorGreen"
+			]
+	,	OffsetType<float, 9z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"RightEyeColorBlue"
+			]
+	,	OffsetType<float, 10z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"RightEyeColorAlpha"
+			]
+	,	OffsetType<float, 11z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"RightEyePointLateral"
+			]
+	,	OffsetType<float, 16z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"RightEyePointLongitudinal"
+			]
+	,	OffsetType<float, 13z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"RightEyePointVertical"
+			]
+	,	OffsetType<float, 14z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"RightEyeHeight"
+			]
+	,	OffsetType<float, 17z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"RightEyeWidth"
+			]
+	,	OffsetType<float, 17z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"RightEyeDepth"
+			]
+	,	OffsetType<float, 17z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head">
+			[	"RightEyeComputeSizeMultiplier"
+			]
+	,	OffsetType<Pi_6>
 	)
 );
