@@ -6,7 +6,7 @@ using ::Meta::String::Hash;
 
 static_assert
 (	Hash("").Value
-==	0u
+==	Hash::InitialValue
 );
 static_assert
 (	Hash("")
@@ -143,7 +143,7 @@ auto constexpr inline
 	;
 	if	(	rDistributionCount
 		>	// Best observed value so far
-			4125
+			4118
 		)
 	{	return
 			false

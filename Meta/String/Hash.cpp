@@ -8,6 +8,11 @@ export namespace
 	struct
 		Hash
 	{
+		::std::uint64_t static constexpr inline
+			InitialValue
+		=	0x4000'0000'0000'0000
+		;
+
 		::std::uint64_t
 			Value
 		{};
@@ -28,7 +33,9 @@ export namespace
 				*	i_aString
 			)
 			noexcept
-		:	Value{}
+		:	Value
+			{	InitialValue
+			}
 		,	Multiplier
 			{	1u
 			}
@@ -105,6 +112,12 @@ export namespace
 			i_vLeft
 			.	Value
 			*=	i_vRight
+				.	Multiplier
+			;
+			i_vRight
+			.	Value
+			-=	InitialValue
+			*	i_vRight
 				.	Multiplier
 			;
 			i_vLeft
