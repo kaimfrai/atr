@@ -3,12 +3,7 @@ add_single_file_modules(
 	CountedType.cpp
 	Info.cpp
 	CountedBuffer.cpp
-	Alias.cpp
 	AlignBuffer.cpp
-	NamedInfo.cpp
-	NamedType.cpp
-	AliasMapList.cpp
-	NamedTypeList.cpp
 	LayoutList.cpp
 	ConfigData.cpp
 	ConfigBuilder.cpp
