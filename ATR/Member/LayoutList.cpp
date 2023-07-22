@@ -2,7 +2,6 @@ export module ATR.Member.LayoutList;
 
 import ATR.Member.AlignBuffer;
 import ATR.Member.Constants;
-import ATR.Member.CountedBuffer;
 import ATR.Member.CountedType;
 
 import Meta.Memory.Alignment;
@@ -24,18 +23,6 @@ using namespace ::Meta::Literals;
 export namespace
 	ATR::Member
 {
-	struct
-		IndexedType
-	{
-		TypeID
-			Type
-		{};
-
-		SSize
-			TypeIndex
-		{};
-	};
-
 	struct
 		LayoutList
 	{
@@ -318,7 +305,6 @@ export namespace
 			;
 		}
 
-
 		[[nodiscard]]
 		auto constexpr inline
 		(	AlignTypeOffset
@@ -456,153 +442,6 @@ export namespace
 				,	i_vType
 				)
 			;
-		}
-
-		[[nodiscard]]
-		auto static constexpr inline
-		(	SpliceCountedType
-		)	(	CountedBuffer<CountedType, TypeBufferSize>
-				&	i_rDestinationCountedTypes
-			,	CountedType
-					i_vSplice
-			,	CountedBuffer<IndexedType, NameBufferSize> const
-				&	i_rOverriddenMembers
-			)
-			noexcept
-		{
-			for	(	auto const
-					&	[	rOverriddenType
-						,	rOverriddenIndex
-						]
-				:	i_rOverriddenMembers
-				)
-			{
-				if	(	i_vSplice
-						.	Type
-					==	rOverriddenType
-					)
-				{
-					--	i_vSplice
-						.	Count
-					;
-				}
-			}
-
-			if	(	i_vSplice
-					.	Count
-				==	0z
-				)
-			{	return
-				;
-			}
-
-
-			for	(	auto
-					&	[	rDestinationType
-						,	rDestinationCount
-						]
-				:	i_rDestinationCountedTypes
-				)
-			{
-				if	(	i_vSplice
-						.	Type
-					==	rDestinationType
-					)
-				{
-					rDestinationCount
-					+=	i_vSplice
-						.	Count
-					;
-
-					return
-					;
-				}
-			}
-
-			i_rDestinationCountedTypes
-			.	push_back
-				(	i_vSplice
-				)
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	Splice
-		)	(	LayoutList const
-				&	i_rSplice
-			,	AlignBuffer<IndexedType, NameBufferSize> const
-				&	i_rOverridenMembers
-			)
-			noexcept
-		{
-			for	(	auto
-						vIndex
-					=	0z
-				;	(	vIndex
-					<	AlignmentCount
-					)
-				;	++	vIndex
-				)
-			{
-				auto
-				&	rDestinationTypes
-				=	AlignTypeCounts
-					.	Buffer
-						[	vIndex
-						]
-				;
-
-				auto const
-				&	rSpliceTypes
-				=	i_rSplice
-					.	AlignTypeCounts
-					.	Buffer
-						[	vIndex
-						]
-				;
-
-				auto const
-				&	rOverridenMembers
-				=	i_rOverridenMembers
-					.	Buffer
-						[	vIndex
-						]
-				;
-
-				for	(	auto const
-						&	rSplice
-					:	rSpliceTypes
-					)
-				{
-					SpliceCountedType
-					(	rDestinationTypes
-					,	rSplice
-					,	rOverridenMembers
-					);
-				}
-			}
-
-			for	(	auto
-						vIndex
-					=	0z
-				;	(	vIndex
-					<	ByteAlign
-						.	Value
-					-	1
-					)
-				;	++	vIndex
-				)
-			{
-				BitCounts
-					[	vIndex
-					]
-				+=	i_rSplice
-					.	BitCounts
-						[	vIndex
-						]
-				;
-			}
 		}
 	};
 }
