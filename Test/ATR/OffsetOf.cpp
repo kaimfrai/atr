@@ -10,7 +10,7 @@ import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Scale;
 import Meta.Memory.Size;
-import Meta.String.Literal;
+import Meta.String.Hash;
 import Meta.Token.Specifier;
 import Meta.Token.Type;
 
@@ -22,7 +22,7 @@ using ::Meta::ID;
 using ::Meta::Memory::ByteWidth;
 using ::Meta::Memory::SizeOf;
 using ::Meta::Specifier::Mut;
-using ::Meta::String::Literal;
+using ::Meta::String::ImplicitHash;
 using ::Meta::Type;
 
 using namespace ::Meta::Literals;
@@ -87,7 +87,7 @@ static_assert
 template
 	<	typename
 			t_tOwner
-	,	Literal
+	,	ImplicitHash
 			t_vMemberName
 	>
 auto constexpr inline
@@ -97,7 +97,7 @@ auto constexpr inline
 		decltype(auto(t_tOwner{}))
 		::	template
 			Offset_Of
-			<	ID<t_vMemberName>
+			<	t_vMemberName
 			>
 	>
 ;

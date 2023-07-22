@@ -2,17 +2,12 @@ export module ATR.DependencyIDMap;
 
 import ATR.Dependency;
 import ATR.Erase;
-import ATR.Member.ConfigData;
 
-import Meta.ID;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Compare;
-import Meta.String.Chain;
+import Meta.String.Hash;
 
-import Std;
-
-using ::Meta::ProtoID;
-using ::Meta::String::Chain;
+using ::Meta::String::ImplicitHash;
 
 using namespace ::Meta::Literals;
 
@@ -22,16 +17,15 @@ export namespace
 	template
 		<	typename
 				t_tProto
-		,	typename
-				t_tMemberName
+		,	ImplicitHash
+				t_vMemberName
 		>
 	concept
 		ProtoMemberInterface
 	=(	t_tProto
 		::	Config
 		.	FindMemberInfo
-			(	t_tMemberName
-				{}
+			(	t_vMemberName
 			)
 		.	Offset
 	>=	0_bit
@@ -40,8 +34,8 @@ export namespace
 	template
 		<	typename
 				t_tOwner
-		,	ProtoID
-			...	t_tpMemberName
+		,	ImplicitHash
+			...	t_vpMemberName
 		>
 	using
 		ArgumentDependency
@@ -51,7 +45,7 @@ export namespace
 			decltype(auto(t_tOwner{}))
 			::	template
 				Offset_Of
-				<	t_tpMemberName
+				<	t_vpMemberName
 				>
 			...
 		>

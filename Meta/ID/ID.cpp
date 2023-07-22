@@ -4,8 +4,9 @@ import :Base;
 
 import Meta.String.Hash;
 
-using ::Meta::String::Hash;
+using ::Meta::String::ImplicitHash;
 
+[[nodiscard]]
 auto constexpr inline
 (	ToChar
 )	(	char
@@ -15,6 +16,7 @@ auto constexpr inline
 ->	char
 {	return i_vChar;	}
 
+[[nodiscard]]
 auto constexpr inline
 (	ToChar
 )	(	int
@@ -40,7 +42,7 @@ struct
 	[[nodiscard]]
 	explicit(false) constexpr inline
 	(	operator
-		Hash
+		ImplicitHash
 	)	()	const
 		noexcept
 	{	char static constexpr
@@ -52,9 +54,7 @@ struct
 		};
 
 		return
-			Hash
-			{	String
-			}
+			String
 		;
 	}
 };

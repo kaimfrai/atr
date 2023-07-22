@@ -6,18 +6,14 @@ import ATR.Member.Config;
 import ATR.Member.Offset;
 import ATR.Member.Storage;
 
-import Meta.Memory.Size.Arithmetic;
 import Meta.ID;
-import Meta.String.Literal;
-
-import Std;
+import Meta.String.Hash;
 
 using ::ATR::Member::ProtoDynamicMember_Of;
 using ::ATR::Member::ProtoStaticMember_Of;
 
 using ::Meta::ProtoID;
-using ::Meta::ID;
-using ::Meta::String::Literal;
+using ::Meta::String::ImplicitHash;
 
 export namespace
 	ATR
@@ -44,16 +40,15 @@ export namespace
 		;
 
 		template
-			<	ProtoID
-					t_tMemberName
+			<	ImplicitHash
+					t_vMemberName
 			>
 		using
 			Offset_Of
 		=	Member::Offset_For
 			<	Config
 				.	FindMemberInfo
-					(	t_tMemberName
-						{}
+					(	t_vMemberName
 					)
 			>
 		;
@@ -74,7 +69,7 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Offset_Of<decltype(i_vMemberID)>
+			Offset_Of<i_vMemberID>
 			{}(	*this
 			);
 		}
@@ -88,7 +83,7 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Offset_Of<decltype(i_vMemberID)>
+			Offset_Of<i_vMemberID>
 			{}
 			(	*this
 			);
@@ -103,8 +98,10 @@ export namespace
 			noexcept
 		->	auto
 		{	return
-			Offset_Of<decltype(i_vMemberID)>
-			{}(	::std::move(*this)
+			Offset_Of<i_vMemberID>
+			{}(	static_cast<Instance&&>
+				(	*this
+				)
 			);
 		}
 
@@ -117,7 +114,7 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Offset_Of<decltype(i_vMemberID)>
+			Offset_Of<i_vMemberID>
 			{}();
 		}
 

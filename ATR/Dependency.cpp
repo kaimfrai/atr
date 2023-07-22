@@ -1,15 +1,8 @@
 export module ATR.Dependency;
 
-import Meta.ID;
-import Meta.String.Literal;
-
-using ::Meta::ID;
-using ::Meta::String::Literal;
-
 export namespace
 	ATR
 {
-	/// wraps around an object and provides member access via dependency maps
 	template
 		<	typename
 				t_tArgument

@@ -16,9 +16,9 @@ export namespace
 		>
 	concept
 		ProtoShape
-	=	ProtoMemberInterface<t_tProto, ID<"ComputeSizeMultiplier">>
-	and	ProtoMemberInterface<t_tProto, ID<"Height">>
-	and	ProtoMemberInterface<t_tProto, ID<"Width">>
+	=	ProtoMemberInterface<t_tProto, "ComputeSizeMultiplier">
+	and	ProtoMemberInterface<t_tProto, "Height">
+	and	ProtoMemberInterface<t_tProto, "Width">
 	;
 
 	template
@@ -28,7 +28,7 @@ export namespace
 	concept
 		ProtoBody
 	=	ProtoShape<t_tProto>
-	and	ProtoMemberInterface<t_tProto, ID<"Depth">>
+	and	ProtoMemberInterface<t_tProto, "Depth">
 	;
 
 	using ::ATR::FunctionBody;
@@ -42,10 +42,10 @@ export namespace
 		<	Dependency<ID<"Product">>
 		,	ArgumentDependency
 			<	decltype(i_rBody)
-			,	ID<"ComputeSizeMultiplier">
-			,	ID<"Height">
-			,	ID<"Width">
-			,	ID<"Depth">
+			,	"ComputeSizeMultiplier"
+			,	"Height"
+			,	"Width"
+			,	"Depth"
 			>
 		>
 	;
@@ -59,9 +59,9 @@ export namespace
 		<	Dependency<ID<"Product">>
 		,	ArgumentDependency
 			<	decltype(i_rShape)
-			,	ID<"ComputeSizeMultiplier">
-			,	ID<"Height">
-			,	ID<"Width">
+			,	"ComputeSizeMultiplier"
+			,	"Height"
+			,	"Width"
 			>
 		>
 	;
