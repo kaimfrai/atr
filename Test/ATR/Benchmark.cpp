@@ -23,14 +23,14 @@ namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("AAB", "ShortConst")
-			("AAF", "DoubleConst")
-			("AAC", "ArrayBoolMut")
-			("AAA", "Int")
-			("AAG", "Bool")
-			("AAD", "ArrayBoolMut")
-			("AAE", "Int")
-			("AAH", "ArrayBool")
+		.	Alias("AAB", "ShortConst")
+		.	Alias("AAF", "DoubleConst")
+		.	Alias("AAC", "ArrayBoolMut")
+		.	Alias("AAA", "Int")
+		.	Alias("AAG", "Bool")
+		.	Alias("AAD", "ArrayBoolMut")
+		.	Alias("AAE", "Int")
+		.	Alias("AAH", "ArrayBool")
 			// Randomized order
 			("Double", Type<double>)
 			("DoubleConst", Type<double const>)
@@ -68,14 +68,14 @@ namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("AAG", "Bool")
-			("AAD", "ArrayBoolMut")
-			("AAE", "Int")
-			("AAB", "ShortConst")
-			("AAF", "DoubleConst")
-			("AAH", "ArrayBool")
-			("AAC", "ArrayBoolMut")
-			("AAA", "Int")
+		.	Alias("AAG", "Bool")
+		.	Alias("AAD", "ArrayBoolMut")
+		.	Alias("AAE", "Int")
+		.	Alias("AAB", "ShortConst")
+		.	Alias("AAF", "DoubleConst")
+		.	Alias("AAH", "ArrayBool")
+		.	Alias("AAC", "ArrayBoolMut")
+		.	Alias("AAA", "Int")
 			// Randomized order
 			("Char", Type<char>)
 			("ArrayInt", Type<int[7]>)
@@ -113,14 +113,14 @@ namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("AAG", "Bool")
-			("AAD", "ArrayBoolMut")
-			("AAE", "Int")
-			("AAB", "ShortConst")
-			("AAF", "DoubleConst")
-			("AAH", "ArrayBool")
-			("AAC", "ArrayBoolMut")
-			("AAA", "Int")
+		.	Alias("AAG", "Bool")
+		.	Alias("AAD", "ArrayBoolMut")
+		.	Alias("AAE", "Int")
+		.	Alias("AAB", "ShortConst")
+		.	Alias("AAF", "DoubleConst")
+		.	Alias("AAH", "ArrayBool")
+		.	Alias("AAC", "ArrayBoolMut")
+		.	Alias("AAA", "Int")
 			// Randomized order
 			("ArrayBool", Type<bool[7]>)
 			("ArrayDouble", Type<double[7]>)
@@ -158,14 +158,14 @@ namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("AAG", "Bool")
-			("AAD", "ArrayBoolMut")
-			("AAE", "Int")
-			("AAB", "ShortConst")
-			("AAF", "DoubleConst")
-			("AAH", "ArrayBool")
-			("AAC", "ArrayBoolMut")
-			("AAA", "Int")
+		.	Alias("AAG", "Bool")
+		.	Alias("AAD", "ArrayBoolMut")
+		.	Alias("AAE", "Int")
+		.	Alias("AAB", "ShortConst")
+		.	Alias("AAF", "DoubleConst")
+		.	Alias("AAH", "ArrayBool")
+		.	Alias("AAC", "ArrayBoolMut")
+		.	Alias("AAA", "Int")
 			// Randomized order
 			("FieldConst", Type<Field<3_bit> const>)
 			("ArrayCharConst", Type<char const[7]>)
@@ -203,14 +203,14 @@ namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("AAG", "Bool")
-			("AAD", "ArrayBoolMut")
-			("AAE", "Int")
-			("AAB", "ShortConst")
-			("AAF", "DoubleConst")
-			("AAH", "ArrayBool")
-			("AAC", "ArrayBoolMut")
-			("AAA", "Int")
+		.	Alias("AAG", "Bool")
+		.	Alias("AAD", "ArrayBoolMut")
+		.	Alias("AAE", "Int")
+		.	Alias("AAB", "ShortConst")
+		.	Alias("AAF", "DoubleConst")
+		.	Alias("AAH", "ArrayBool")
+		.	Alias("AAC", "ArrayBoolMut")
+		.	Alias("AAA", "Int")
 			// Randomized order
 			("ArrayInt", Type<int[7]>)
 			("Double", Type<double>)

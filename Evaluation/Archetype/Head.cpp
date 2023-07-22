@@ -18,12 +18,12 @@ export namespace
 		o_rConfig
 			("Sphere"_id)
 			("LeftEye", "Sphere"_id)
-			("RightEyeColorRed", "LeftEyeColorRed")
-			("RightEyeColorGreen", "LeftEyeColorGreen")
-			("RightEyeColorBlue", "LeftEyeColorBlue")
-			("RightEyeColorAlpha", "LeftEyeColorAlpha")
-			("RightEyePointLongitudinal", "LeftEyePointLongitudinal")
-			("RightEyePointVertical", "LeftEyePointVertical")
+		.	Alias("RightEyeColorRed", "LeftEyeColorRed")
+		.	Alias("RightEyeColorGreen", "LeftEyeColorGreen")
+		.	Alias("RightEyeColorBlue", "LeftEyeColorBlue")
+		.	Alias("RightEyeColorAlpha", "LeftEyeColorAlpha")
+		.	Alias("RightEyePointLongitudinal", "LeftEyePointLongitudinal")
+		.	Alias("RightEyePointVertical", "LeftEyePointVertical")
 			("RightEye", "Sphere"_id)
 		;
 	}

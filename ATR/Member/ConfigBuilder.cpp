@@ -135,7 +135,7 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	operator()
+		(	Alias
 		)	(	ImplicitHash
 					i_vMemberName
 			,	ImplicitHash

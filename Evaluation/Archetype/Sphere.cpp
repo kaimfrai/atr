@@ -16,8 +16,8 @@ export namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("Depth", "Height")
-			("Width", "Height")
+		.	Alias("Depth", "Height")
+		.	Alias("Width", "Height")
 			("Ellipsoid"_id)
 		;
 	}

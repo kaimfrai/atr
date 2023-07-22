@@ -57,7 +57,7 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	operator()
+		(	Alias
 		)	(	ImplicitHash
 					i_vMemberName
 			,	ImplicitHash
@@ -66,8 +66,9 @@ export namespace
 			noexcept
 		->	ConfigTransformer&&
 		{
-			(*	m_aConfig
-			)	(	i_vMemberName
+			m_aConfig
+			->	Alias
+				(	i_vMemberName
 				,	i_vTargetName
 				)
 			;

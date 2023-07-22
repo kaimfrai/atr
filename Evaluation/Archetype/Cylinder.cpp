@@ -17,7 +17,7 @@ export namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("Width", "Height")
+		.	Alias("Width", "Height")
 			("BasicBody"_id)
 			("ComputeSizeMultiplier", Type<PiFraction<1z, 4z>>)
 		;

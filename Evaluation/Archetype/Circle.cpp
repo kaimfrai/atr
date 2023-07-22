@@ -16,7 +16,7 @@ export namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("Width", "Height")
+		.	Alias("Width", "Height")
 			("Ellipse"_id)
 		;
 	}
