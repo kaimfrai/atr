@@ -281,11 +281,8 @@ export namespace
 			;
 
 			(void)
-			Configure
+			Splice
 			(	i_vBaseID
-			,	static_cast<ConfigBuilder&&>
-				(	*this
-				)
 			);
 
 			Prefix
@@ -307,9 +304,11 @@ export namespace
 			noexcept
 		->	ConfigBuilder&&
 		{	return
-			PrefixSplice
-			(	""
-			,	i_vBaseID
+			Configure
+			(	i_vBaseID
+			,	static_cast<ConfigBuilder&&>
+				(	*this
+				)
 			);
 		}
 	};
