@@ -10,9 +10,9 @@ export namespace
 {
 	auto constexpr inline
 	(	Configure
-	)	(	ID<"Ellipse">
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	ID<"Ellipse">
 		)
 	->	auto&&
 	{	return

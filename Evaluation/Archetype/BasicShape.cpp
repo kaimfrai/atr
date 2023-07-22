@@ -7,9 +7,9 @@ export namespace
 {
 	auto constexpr inline
 	(	Configure
-	)	(	ID<"Color">
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	ID<"Color">
 		)
 	->	auto&&
 	{	return
@@ -23,9 +23,9 @@ export namespace
 
 	auto constexpr inline
 	(	Configure
-	)	(	ID<"Point">
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	ID<"Point">
 		)
 	->	auto&&
 	{	return
@@ -38,9 +38,9 @@ export namespace
 
 	auto constexpr inline
 	(	Configure
-	)	(	ID<"BasicShape">
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	ID<"BasicShape">
 		)
 	->	auto&&
 	{	return

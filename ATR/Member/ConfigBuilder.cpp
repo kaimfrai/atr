@@ -109,9 +109,9 @@ export namespace
 		BuiltConfig_Of
 	=	Finalize
 		(	Configure
-			(	t_tTypeName
+			(	t_tConfigBuilder
 				{}
-			,	t_tConfigBuilder
+			,	t_tTypeName
 				{}
 			)
 		)
@@ -326,10 +326,10 @@ export namespace
 		->	ConfigBuilder&&
 		{	return
 			Configure
-			(	i_vBaseID
-			,	static_cast<ConfigBuilder&&>
+			(	static_cast<ConfigBuilder&&>
 				(	*this
 				)
+			,	i_vBaseID
 			);
 		}
 	};

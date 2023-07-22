@@ -9,9 +9,9 @@ export namespace
 {
 	auto constexpr inline
 	(	Configure
-	)	(	ID<"Sphere">
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	ID<"Sphere">
 		)
 	->	auto&&
 	{	return

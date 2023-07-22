@@ -120,10 +120,10 @@ export namespace
 		->	ConfigTransformer&&
 		{	return
 			Configure
-			(	i_vBaseID
-			,	static_cast<ConfigTransformer&&>
+			(	static_cast<ConfigTransformer&&>
 				(	*this
 				)
+			,	i_vBaseID
 			);
 		}
 	};

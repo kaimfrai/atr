@@ -32,9 +32,9 @@ namespace
 {
 	auto constexpr inline
 	(	Configure
-	)	(	ID<"OffsetOfTest">
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	ID<"OffsetOfTest">
 		)
 	->	auto&&
 	{	return

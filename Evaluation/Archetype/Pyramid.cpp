@@ -10,9 +10,9 @@ export namespace
 {
 	auto constexpr inline
 	(	Configure
-	)	(	ID<"Pyramid">
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	ID<"Pyramid">
 		)
 	->	auto&&
 	{	return

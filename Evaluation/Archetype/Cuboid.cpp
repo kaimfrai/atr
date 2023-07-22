@@ -10,9 +10,9 @@ export namespace
 {
 	auto constexpr inline
 	(	Configure
-	)	(	ID<"Cuboid">
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	ID<"Cuboid">
 		)
 	->	auto&&
 	{	return

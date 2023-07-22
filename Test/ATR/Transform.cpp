@@ -47,9 +47,9 @@ namespace
 {
 	auto constexpr inline
 	(	Configure
-	)	(	Single
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	Single
 		)
 	->	auto&&
 	{	return
@@ -62,9 +62,9 @@ namespace
 
 	auto constexpr inline
 	(	Configure
-	)	(	Const
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	Const
 		)
 	->	auto&&
 	{	return
@@ -77,9 +77,9 @@ namespace
 
 	auto constexpr inline
 	(	Configure
-	)	(	TransformedConst
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	TransformedConst
 		)
 	->	auto&&
 	{	(void)
@@ -93,9 +93,9 @@ namespace
 
 	auto constexpr inline
 	(	Configure
-	)	(	Mutable
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	Mutable
 		)
 	->	auto&&
 	{	return
@@ -108,9 +108,9 @@ namespace
 
 	auto constexpr inline
 	(	Configure
-	)	(	TransformedMutable
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	TransformedMutable
 		)
 	->	auto&&
 	{	(void)
@@ -124,9 +124,9 @@ namespace
 
 	auto constexpr inline
 	(	Configure
-	)	(	Array
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	Array
 		)
 	->	auto&&
 	{	return
@@ -139,9 +139,9 @@ namespace
 
 	auto constexpr inline
 	(	Configure
-	)	(	TransformedArray
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	TransformedArray
 		)
 	->	auto&&
 	{	(void)

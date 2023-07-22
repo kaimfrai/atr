@@ -22,9 +22,9 @@ namespace
 {
 	auto constexpr inline
 	(	Configure
-	)	(	ID<"BitFieldTest">
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	ID<"BitFieldTest">
 		)
 	->	auto&&
 	{	return

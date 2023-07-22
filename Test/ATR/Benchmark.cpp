@@ -16,9 +16,9 @@ namespace
 {
 	auto constexpr inline
 	(	Configure
-	)	(	ID<"Benchmark1">
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	ID<"Benchmark1">
 		)
 	->	auto&&
 	{	return
@@ -61,9 +61,9 @@ namespace
 
 	auto constexpr inline
 	(	Configure
-	)	(	ID<"Benchmark2">
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	ID<"Benchmark2">
 		)
 	->	auto&&
 	{	return
@@ -106,9 +106,9 @@ namespace
 
 	auto constexpr inline
 	(	Configure
-	)	(	ID<"Benchmark3">
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	ID<"Benchmark3">
 		)
 	->	auto&&
 	{	return
@@ -151,9 +151,9 @@ namespace
 
 	auto constexpr inline
 	(	Configure
-	)	(	ID<"Benchmark4">
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	ID<"Benchmark4">
 		)
 	->	auto&&
 	{	return
@@ -196,9 +196,9 @@ namespace
 
 	auto constexpr inline
 	(	Configure
-	)	(	ID<"Benchmark5">
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	ID<"Benchmark5">
 		)
 	->	auto&&
 	{	return
@@ -241,9 +241,9 @@ namespace
 
 	auto constexpr inline
 	(	Configure
-	)	(	ID<"Benchmark6">
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	ID<"Benchmark6">
 		)
 	->	auto&&
 	{	return
@@ -277,9 +277,9 @@ namespace
 
 	auto constexpr inline
 	(	Configure
-	)	(	ID<"Benchmark7">
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	ID<"Benchmark7">
 		)
 	->	auto&&
 	{	return
@@ -313,9 +313,9 @@ namespace
 
 	auto constexpr inline
 	(	Configure
-	)	(	ID<"Benchmark8">
-		,	auto
+	)	(	auto
 			&&	o_rConfig
+		,	ID<"Benchmark8">
 		)
 	->	auto&&
 	{	return
