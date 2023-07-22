@@ -45,8 +45,8 @@ export namespace
 					vIndex
 				=	0z
 			;	(	vIndex
-				<	rData
-					.	NameCount
+				<	i_rBuilder
+					.	AliasCount
 				)
 			;	++	vIndex
 			)
@@ -58,12 +58,6 @@ export namespace
 					[	vIndex
 					]
 			;
-			if	(	not
-					rAliasTarget
-				)
-			{	continue
-				;
-			}
 
 			auto const
 				vAliasTargetIndex
@@ -73,12 +67,14 @@ export namespace
 				,	rData
 					.	BucketSize
 				,	rAliasTarget
+					.	Target
 				)
 			;
 
 			rData
 			.	Types
-				[	vIndex
+				[	rAliasTarget
+					.	NameIndex
 				]
 			=	rData
 				.	Types
@@ -88,7 +84,8 @@ export namespace
 
 			rData
 			.	TypeIndices
-				[	vIndex
+				[	rAliasTarget
+					.	NameIndex
 				]
 			=	rData
 				.	TypeIndices
@@ -127,10 +124,25 @@ export namespace
 			Data
 		{};
 
-		Hash
+		struct
+			AliasTarget
+		{
+			SSize
+				NameIndex
+			{};
+			Hash
+				Target
+			{};
+		};
+
+		AliasTarget
 			AliasTargets
 			[	ConfigData::NameCount
 			]
+		{};
+
+		SSize
+			AliasCount
 		{};
 
 		Hash
@@ -179,10 +191,15 @@ export namespace
 				=	vPrefixedMemberName
 				;
 				AliasTargets
-					[	vIndex
+					[	AliasCount
+						++
 					]
-				=	Prefix
-				+	i_vTargetName
+				=	AliasTarget
+					{	vIndex
+					,	(	Prefix
+						+	i_vTargetName
+						)
+					}
 				;
 			}
 
