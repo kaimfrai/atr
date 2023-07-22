@@ -84,7 +84,7 @@ namespace
 	->	auto&&
 	{	(void)
 		ConfigTransformer{ o_rConfig, ::Meta::Const }
-			("Single"_id)
+		.	Splice("Single"_id)
 		;
 		return
 			o_rConfig
@@ -115,7 +115,7 @@ namespace
 	->	auto&&
 	{	(void)
 		ConfigTransformer{ o_rConfig, ::Meta::Mutable }
-			("Single"_id)
+		.	Splice("Single"_id)
 		;
 		return
 			o_rConfig
@@ -146,7 +146,7 @@ namespace
 	->	auto&&
 	{	(void)
 		ConfigTransformer{ o_rConfig, ::Meta::Extent<5uz> }
-			("Single"_id)
+		.	Splice("Single"_id)
 		;
 		return
 			o_rConfig

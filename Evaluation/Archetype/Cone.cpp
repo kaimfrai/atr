@@ -18,7 +18,7 @@ export namespace
 	{	return
 		o_rConfig
 		.	Alias("Width", "Height")
-			("BasicBody"_id)
+		.	Splice("BasicBody"_id)
 		.	Member("ComputeSizeMultiplier", Type<PiFraction<1z, 12z>>)
 		;
 	}

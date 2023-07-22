@@ -18,7 +18,7 @@ export namespace
 		o_rConfig
 		.	Alias("Depth", "Height")
 		.	Alias("Width", "Height")
-			("Cuboid"_id)
+		.	Splice("Cuboid"_id)
 		;
 	}
 }

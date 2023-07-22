@@ -261,7 +261,7 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	operator()
+		(	PrefixSplice
 		)	(	ImplicitHash
 					i_vPrefix
 			,	ProtoID auto
@@ -300,14 +300,14 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	operator()
+		(	Splice
 		)	(	ProtoID auto
 					i_vBaseID
 			)
 			noexcept
 		->	ConfigBuilder&&
 		{	return
-			operator()
+			PrefixSplice
 			(	""
 			,	i_vBaseID
 			);

@@ -17,7 +17,7 @@ export namespace
 	{	return
 		o_rConfig
 		.	Alias("Width", "Height")
-			("Rectangle"_id)
+		.	Splice("Rectangle"_id)
 		;
 	}
 }

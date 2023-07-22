@@ -16,7 +16,7 @@ export namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("BasicShape"_id)
+		.	Splice("BasicShape"_id)
 		.	Member("Depth", Type<float>)
 		;
 	}

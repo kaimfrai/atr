@@ -112,7 +112,7 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	operator()
+		(	Splice
 		)	(	ProtoID auto
 					i_vBaseID
 			)

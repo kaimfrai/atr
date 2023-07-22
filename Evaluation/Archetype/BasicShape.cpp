@@ -45,8 +45,8 @@ export namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("Color", "Color"_id)
-			("Point", "Point"_id)
+		.	PrefixSplice("Color", "Color"_id)
+		.	PrefixSplice("Point", "Point"_id)
 		.	Member("Height", Type<float>)
 		.	Member("Width", Type<float>)
 		;

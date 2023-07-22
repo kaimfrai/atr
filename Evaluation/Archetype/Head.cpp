@@ -16,15 +16,15 @@ export namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("Sphere"_id)
-			("LeftEye", "Sphere"_id)
+		.	Splice("Sphere"_id)
+		.	PrefixSplice("LeftEye", "Sphere"_id)
 		.	Alias("RightEyeColorRed", "LeftEyeColorRed")
 		.	Alias("RightEyeColorGreen", "LeftEyeColorGreen")
 		.	Alias("RightEyeColorBlue", "LeftEyeColorBlue")
 		.	Alias("RightEyeColorAlpha", "LeftEyeColorAlpha")
 		.	Alias("RightEyePointLongitudinal", "LeftEyePointLongitudinal")
 		.	Alias("RightEyePointVertical", "LeftEyePointVertical")
-			("RightEye", "Sphere"_id)
+		.	PrefixSplice("RightEye", "Sphere"_id)
 		;
 	}
 }

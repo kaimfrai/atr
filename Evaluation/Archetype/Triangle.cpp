@@ -17,7 +17,7 @@ export namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("BasicShape"_id)
+		.	Splice("BasicShape"_id)
 		.	Member("ComputeSizeMultiplier", Type<Fraction<1z, 2z>>)
 		;
 	}

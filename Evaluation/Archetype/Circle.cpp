@@ -17,7 +17,7 @@ export namespace
 	{	return
 		o_rConfig
 		.	Alias("Width", "Height")
-			("Ellipse"_id)
+		.	Splice("Ellipse"_id)
 		;
 	}
 }

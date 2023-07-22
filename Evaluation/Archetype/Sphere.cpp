@@ -18,7 +18,7 @@ export namespace
 		o_rConfig
 		.	Alias("Depth", "Height")
 		.	Alias("Width", "Height")
-			("Ellipsoid"_id)
+		.	Splice("Ellipsoid"_id)
 		;
 	}
 }
