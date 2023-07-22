@@ -37,23 +37,76 @@ auto constexpr inline
 			<	ID<t_vTypeName>
 			>
 		;
+
+		auto const
+		&	rLayout
+		=	rConfig
+			.	Layout
+		;
+
 		return
-		::std::count_if
-		(	rConfig
-			.	AliasTargets
-		,	(	rConfig
-				.	AliasTargets
-			+	rConfig
-				.	NameCount
-			)
-		,	[]	(	auto const
-						i_vTarget
+			::std::count_if
+			(	rConfig
+				.	Types
+			,	(	rConfig
+					.	Types
+				+	rConfig
+					.	NameCount
 				)
-			{	return
-					i_vTarget
-				;
-			}
-		);
+			,	[]	(	auto const
+							i_vType
+					)
+				{	return
+						(	i_vType
+						!=	decltype(i_vType)
+							{}
+						)
+					and	i_vType
+						.	IsAligned
+							()
+					;
+				}
+			)
+		-	::std::accumulate
+			(	rLayout
+				.	AlignTypeCounts
+				.	begin
+					()
+			,	rLayout
+				.	AlignTypeCounts
+				.	end
+					()
+			,	0z
+			,	[]	(	auto
+							i_vCount
+					,	auto const
+						&	i_rCountedTypes
+					)
+				{	return
+						::std::accumulate
+						(	i_rCountedTypes
+							.	begin
+								()
+						,	i_rCountedTypes
+							.	end
+								()
+						,	i_vCount
+						,	[]	(	auto
+										i_vInnerCount
+								,	auto const
+									&	i_rCountedType
+								)
+							{	return
+									i_vInnerCount
+								+	i_rCountedType
+									.	Count
+								;
+							}
+						)
+					;
+				}
+			)
+		;
 	}()
 ;
 

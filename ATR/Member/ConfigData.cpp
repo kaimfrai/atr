@@ -100,12 +100,6 @@ export namespace
 			]
 		{};
 
-		Hash
-			AliasTargets
-			[	NameBufferSize
-			]
-		{};
-
 		[[nodiscard]]
 		auto constexpr inline
 		(	FindMemberInfo

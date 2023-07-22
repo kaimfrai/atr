@@ -54,7 +54,6 @@ export namespace
 			auto const
 			&	rAliasTarget
 			=	i_rBuilder
-				.	Data
 				.	AliasTargets
 					[	vIndex
 					]
@@ -129,6 +128,12 @@ export namespace
 		{};
 
 		Hash
+			AliasTargets
+			[	ConfigData::NameCount
+			]
+		{};
+
+		Hash
 			Prefix
 		{	""
 		};
@@ -173,8 +178,7 @@ export namespace
 					]
 				=	vPrefixedMemberName
 				;
-				Data
-				.	AliasTargets
+				AliasTargets
 					[	vIndex
 					]
 				=	Prefix
