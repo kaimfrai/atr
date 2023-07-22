@@ -2,9 +2,9 @@ export module Meta.ID:ID;
 
 import :Base;
 
-import Meta.String.Chain;
+import Meta.String.Hash;
 
-using ::Meta::String::Chain;
+using ::Meta::String::Hash;
 
 auto constexpr inline
 (	ToChar
@@ -40,7 +40,7 @@ struct
 	[[nodiscard]]
 	explicit(false) constexpr inline
 	(	operator
-		Chain
+		Hash
 	)	()	const
 		noexcept
 	{	char static constexpr
@@ -52,7 +52,9 @@ struct
 		};
 
 		return
-		{	String
-		};
+			Hash
+			{	String
+			}
+		;
 	}
 };

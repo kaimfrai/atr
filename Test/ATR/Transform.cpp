@@ -225,11 +225,6 @@ auto constexpr inline
 				.	BitCounts
 			)
 		)
-	and	(	i_rLeft
-			.	NameCount
-		==	i_rRight
-			.	NameCount
-		)
 	and	::std::ranges::equal
 		(	i_rLeft
 			.	Names

@@ -22,7 +22,7 @@ import Meta.ID;
 import Meta.Memory.Constraint;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Scale;
-import Meta.String.Chain;
+import Meta.String.Hash;
 import Meta.String.Literal;
 import Meta.Token.Type;
 
@@ -34,7 +34,7 @@ using ::ATR::Member::Info;
 
 using ::Meta::ID;
 using ::Meta::Memory::BitSize_Of;
-using ::Meta::String::ImplicitChain;
+using ::Meta::String::ImplicitHash;
 using ::Meta::String::Literal;
 using ::Meta::Type;
 
@@ -55,15 +55,15 @@ struct
 	[[nodiscard]]
 	auto constexpr inline
 	(	operator[]
-	)	(	ImplicitChain
-				i_rName
+	)	(	ImplicitHash
+				i_vName
 		)	const
 		noexcept
 	->	Info
 	{	return
 		Config
 		.	FindMemberInfo
-			(	i_rName
+			(	i_vName
 			)
 		;
 	}

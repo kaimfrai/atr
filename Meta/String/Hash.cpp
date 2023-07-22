@@ -321,4 +321,37 @@ export namespace
 			;
 		}
 	};
+
+	struct
+		ImplicitHash final
+	:	Hash
+	{
+		explicit(false) constexpr
+		(	ImplicitHash
+		)	()
+			noexcept
+		=	default;
+
+		explicit(false) constexpr
+		(	ImplicitHash
+		)	(	char const
+				*	i_aString
+			)
+			noexcept
+		:	Hash
+			{	i_aString
+			}
+		{}
+
+		explicit(false) constexpr
+		(	ImplicitHash
+		)	(	Hash
+					i_vHash
+			)
+			noexcept
+		:	Hash
+			{	i_vHash
+			}
+		{}
+	};
 }

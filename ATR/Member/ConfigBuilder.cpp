@@ -10,7 +10,7 @@ import Meta.Generic.LowerBound;
 import Meta.ID;
 import Meta.Memory.Constraint;
 import Meta.Size;
-import Meta.String.Chain;
+import Meta.String.Hash;
 import Meta.Token.TypeID;
 
 import Std;
@@ -20,8 +20,8 @@ using ::Meta::Generic::StructureOfArrays::TryInsertByKey;
 using ::Meta::Memory::ByteAlign;
 using ::Meta::ProtoID;
 using ::Meta::SSize;
-using ::Meta::String::Chain;
-using ::Meta::String::ImplicitChain;
+using ::Meta::String::Hash;
+using ::Meta::String::ImplicitHash;
 using ::Meta::TypeID;
 
 export namespace
@@ -59,11 +59,8 @@ export namespace
 					[	vIndex
 					]
 			;
-			if	(	rAliasTarget
-					.	Value
-						[	0
-						]
-				==	'\0'
+			if	(	not
+					rAliasTarget
 				)
 			{	continue
 				;
@@ -71,11 +68,11 @@ export namespace
 
 			auto const
 				vAliasTargetIndex
-			=	LowerBoundIndex
+			=	HashFindIndex
 				(	rData
 					.	Names
 				,	rData
-					.	NameCount
+					.	BucketSize
 				,	rAliasTarget
 				)
 			;
@@ -131,38 +128,59 @@ export namespace
 			Data
 		{};
 
+		Hash
+			Prefix
+		{	""
+		};
+
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator()
-		)	(	ImplicitChain
-					i_rMemberName
-			,	ImplicitChain
-					i_rTarget
+		)	(	ImplicitHash
+					i_vMemberName
+			,	ImplicitHash
+					i_vTargetName
 			)
 			noexcept
 		->	ConfigBuilder&&
 		{
-			TryInsertByKey<Chain, TypeID, SSize, Chain>
-			(	Data
-				.	NameCount
-			,	{	Data
+			auto const
+				vPrefixedMemberName
+			=	Prefix
+			+	i_vMemberName
+			;
+
+			auto const
+				vIndex
+			=	HashFindIndex
+				(	Data
 					.	Names
-				,	i_rMemberName
-				}
-			,	{	Data
-					.	Types
-				,	TypeID
-					{}
-				}
-			,	{	Data
-					.	TypeIndices
-				,	-1z
-				}
-			,	{	Data
-					.	AliasTargets
-				,	i_rTarget
-				}
-			);
+				,	Data
+					.	BucketSize
+				,	vPrefixedMemberName
+				)
+			;
+			if	(	not
+					Data
+					.	Names
+						[	vIndex
+						]
+				)
+			{
+				Data
+				.	Names
+					[	vIndex
+					]
+				=	vPrefixedMemberName
+				;
+				Data
+				.	AliasTargets
+					[	vIndex
+					]
+				=	Prefix
+				+	i_vTargetName
+				;
+			}
 
 			return
 			static_cast<ConfigBuilder&&>
@@ -173,8 +191,8 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator()
-		)	(	ImplicitChain
-					i_rMemberName
+		)	(	ImplicitHash
+					i_vMemberName
 			,	TypeID
 					i_vType
 			)
@@ -182,33 +200,42 @@ export namespace
 		->	ConfigBuilder&&
 		{
 			auto const
+				vPrefixedMemberName
+			=	Prefix
+			+	i_vMemberName
+			;
+
+			auto const
 				vInsertIndex
-			=	TryInsertByKey<Chain, TypeID, SSize, Chain>
+			=	HashFindIndex
 				(	Data
-					.	NameCount
-				,	{	Data
-						.	Names
-					,	i_rMemberName
-					}
-				,	{	Data
-						.	Types
-					,	i_vType
-					}
-				,	{	Data
-						.	TypeIndices
-					,	-1z
-					}
-				,	{	Data
-						.	AliasTargets
-					,	Chain
-						{}
-					}
+					.	Names
+				,	Data
+					.	BucketSize
+				,	vPrefixedMemberName
 				)
 			;
-			if	(	vInsertIndex
-				>=	0z
+			if	(	not
+					Data
+					.	Names
+						[	vInsertIndex
+						]
 				)
 			{
+				Data
+				.	Names
+					[	vInsertIndex
+					]
+				=	vPrefixedMemberName
+				;
+
+				Data
+				.	Types
+					[	vInsertIndex
+					]
+				=	i_vType
+				;
+
 				auto const
 					vTypeIndex
 				=	Data
@@ -225,10 +252,6 @@ export namespace
 				=	vTypeIndex
 				;
 			}
-			else
-			{
-				std::unreachable();
-			}
 
 			return
 			static_cast<ConfigBuilder&&>
@@ -239,8 +262,8 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator()
-		)	(	char const
-				*	i_aPrefix
+		)	(	ImplicitHash
+					i_vPrefix
 			,	ProtoID auto
 					i_vBaseID
 			)
@@ -248,277 +271,26 @@ export namespace
 		->	ConfigBuilder&&
 		{
 			auto const
-			&	rSplice
-			=	BuiltConfig_Of
-				<	decltype(i_vBaseID)
-				,	ConfigBuilder
-				>
+				vOldPrefix
+			=	Prefix
+			;
+			Prefix
+			=	vOldPrefix
+			+	//	Nested prefixes are appended
+				i_vPrefix
 			;
 
-			if	(	Data
-					.	NameCount
-				==	0z
+			(void)
+			Configure
+			(	i_vBaseID
+			,	static_cast<ConfigBuilder&&>
+				(	*this
 				)
-			{
-				Data
-				=	rSplice
-				;
+			);
 
-				if	(	i_aPrefix
-							[	0
-							]
-					!=	'\0'
-					)
-				{
-					for	(	auto
-								vIndex
-							=	0z
-						;	(	vIndex
-							<	Data
-								.	NameCount
-							)
-						;	++	vIndex
-						)
-					{
-						auto
-						&	rNewName
-						=	Data
-							.	Names
-								[	vIndex
-								]
-						;
-						auto const
-						&	rOldName
-						=	rSplice
-							.	Names
-								[	vIndex
-								]
-						;
-						rNewName
-						=	i_aPrefix
-						+	rOldName
-						;
-					}
-				}
-			}
-			else
-			{
-				AlignBuffer<IndexedType, NameBufferSize>
-					vOverriddenMembers
-				{};
-
-				for	(	auto
-							vNameIndex
-						=	0z
-					;	(	vNameIndex
-						<	rSplice
-							.	NameCount
-						)
-					;	++	vNameIndex
-					)
-				{
-					auto const
-						rPrefixedName
-					=	i_aPrefix
-					+	rSplice
-						.	Names
-							[	vNameIndex
-							]
-					;
-					auto const
-						vType
-					=	rSplice
-						.	Types
-							[	vNameIndex
-							]
-					;
-
-					auto const
-						vTypeCount
-					=	Data
-						.	Layout
-						.	Count
-							(	vType
-							)
-					;
-
-					auto const
-						vTypeIndex
-					=	vTypeCount
-					+	rSplice
-						.	TypeIndices
-							[	vNameIndex
-							]
-					;
-					auto const
-					&	rAliasTarget
-					=	rSplice
-						.	AliasTargets
-							[	vNameIndex
-							]
-					;
-					auto const
-						rPrefixedAliasTarget
-					=	rAliasTarget
-						.	empty
-							()
-					?	rAliasTarget
-					:	(	i_aPrefix
-						+	rAliasTarget
-						)
-					;
-
-					auto const
-						vInsertIndex
-					=	TryInsertByKey<Chain, TypeID, SSize, Chain>
-						(	Data
-							.	NameCount
-						,	{	Data
-								.	Names
-							,	rPrefixedName
-							}
-						,	{	Data
-								.	Types
-							,	vType
-							}
-						,	{	Data
-								.	TypeIndices
-							,	vTypeIndex
-							}
-						,	{	Data
-								.	AliasTargets
-							,	rPrefixedAliasTarget
-							}
-						)
-					;
-
-					//	Overriden true member
-					if	(	(	vInsertIndex
-							<	0z
-							)
-						and	rAliasTarget
-							.	empty
-								()
-						)
-					{	vOverriddenMembers
-							[	vType
-								.	GetAlign
-									()
-							]
-						.	push_back
-							(	{	vType
-								,	vTypeIndex
-								}
-							)
-						;
-					}
-				}
-
-				// Reduce type indices greater overriden members' indices
-				for	(	auto
-							vNameIndex
-						=	0z
-					;	(	vNameIndex
-						<	Data
-							.	NameCount
-						)
-					;	++	vNameIndex
-					)
-				{
-					auto const
-						rAliasTarget
-					=	Data
-						.	AliasTargets
-							[	vNameIndex
-							]
-					;
-
-					if	(	not
-							rAliasTarget
-							.	empty
-								()
-						)
-					{	continue
-						;
-					}
-
-					auto const
-						vType
-					=	Data
-						.	Types
-							[	vNameIndex
-							]
-					;
-
-					auto const
-						vAlign
-					=	vType
-						.	GetAlign
-							()
-					;
-					if	(	vAlign
-						<	ByteAlign
-						)
-					{	continue
-						;
-					}
-
-					auto
-					&	rTypeIndex
-					=	Data
-						.	TypeIndices
-							[	vNameIndex
-							]
-					;
-
-					auto const
-						vOldTypeIndex
-					=	rTypeIndex
-					;
-
-					auto const
-					&	rAlignedOverriddenMembers
-					=	vOverriddenMembers
-							[	vType
-								.	GetAlign
-									()
-							]
-					;
-
-					for	(	auto const
-							&	[	rOverridenType
-								,	rOverridenTypeIndex
-								]
-						:	rAlignedOverriddenMembers
-						)
-					{
-						if	(	vType
-							!=	rOverridenType
-							)
-						{	continue
-							;
-						}
-
-						if	(	vOldTypeIndex
-							>	rOverridenTypeIndex
-							)
-						{
-							rTypeIndex
-							-=	1z
-							;
-						}
-					}
-				}
-
-				Data
-				.	Layout
-				.	Splice
-					(	rSplice
-						.	Layout
-					,	vOverriddenMembers
-					)
-				;
-			}
+			Prefix
+			=	vOldPrefix
+			;
 
 			return
 			static_cast<ConfigBuilder&&>
@@ -536,7 +308,7 @@ export namespace
 		->	ConfigBuilder&&
 		{	return
 			operator()
-			(	Chain::Empty
+			(	""
 			,	i_vBaseID
 			);
 		}

@@ -3,9 +3,9 @@ export module ATR.Member.Storage;
 import ATR.Member.Config;
 
 import Meta.ID;
-import Meta.String.Chain;
+import Meta.String.Hash;
 
-using ::Meta::String::Chain;
+using ::Meta::String::Hash;
 using ::Meta::ProtoID;
 
 export namespace
@@ -16,8 +16,8 @@ export namespace
 	(	IsDynamicMember
 	)	(	ProtoID auto
 				i_vTypeName
-		,	Chain
-				i_rMemberName
+		,	Hash
+				i_vMemberName
 		)
 		noexcept
 	->	bool
@@ -26,7 +26,7 @@ export namespace
 			<	decltype(i_vTypeName)
 			>
 			.	FindMemberInfo
-				(	i_rMemberName
+				(	i_vMemberName
 				)
 			.	Type
 			.	IsAligned

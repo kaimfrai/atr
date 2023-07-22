@@ -8,13 +8,13 @@ import Meta.Generic.LowerBound;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size;
 import Meta.Size;
-import Meta.String.Chain;
+import Meta.String.Hash;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 
 using ::Meta::Generic::LowerBoundIndex;
 using ::Meta::SSize;
-using ::Meta::String::Chain;
+using ::Meta::String::Hash;
 using ::Meta::Type;
 using ::Meta::TypeID;
 
@@ -23,14 +23,66 @@ using namespace ::Meta::Literals;
 export namespace
 	ATR::Member
 {
+	[[nodiscard]]
+	auto constexpr inline
+	(	HashFindIndex
+	)	(	Hash const
+			*	i_aStorage
+		,	SSize
+				i_vBucketSize
+		,	Hash
+				i_vHash
+		)
+		noexcept
+	->	SSize
+	{
+		for	(	auto
+					vIndex
+				=	i_vHash
+					.	Fold4
+						()
+				*	i_vBucketSize
+			;
+			;	++	vIndex
+			)
+		{
+			auto const
+				vElement
+			=	i_aStorage
+					[	vIndex
+					]
+			;
+			if	(	not
+					vElement
+				or	(	vElement
+					==	i_vHash
+					)
+				)
+			{	return
+					vIndex
+				;
+			}
+		}
+	}
+
 	struct
 		ConfigData
 	{
+		auto static constexpr inline
+			BucketSize
+		=	3z
+		;
+
+		auto static constexpr inline
+			NameCount
+		=	NameBufferSize
+		;
+
 		LayoutList
 			Layout
 		{};
 
-		Chain
+		Hash
 			Names
 			[	NameBufferSize
 			]
@@ -48,48 +100,41 @@ export namespace
 			]
 		{};
 
-		Chain
+		Hash
 			AliasTargets
 			[	NameBufferSize
 			]
 		{};
 
-		SSize
-			NameCount
-		{};
-
 		[[nodiscard]]
 		auto constexpr inline
 		(	FindMemberInfo
-		)	(	Chain
-					i_rMemberName
+		)	(	Hash
+					i_vMemberName
 			)	const
 			noexcept
 		->	Info
 		{
 			auto const
 				vIndex
-			=	LowerBoundIndex
+			=	HashFindIndex
 				(	Names
-				,	NameCount
-				,	i_rMemberName
+				,	BucketSize
+				,	i_vMemberName
 				)
 			;
 
-			if	(	(	vIndex
-					==	NameCount
-					)
-				or	(	Names
-							[	vIndex
-							]
-					!=	i_rMemberName
-					)
+			if	(	not
+					Names
+						[	vIndex
+						]
 				)
 			{	return
-				Info
-				{	Type<void>
-				,	-1_bit
-				};
+					Info
+					{	Type<void>
+					,	-1_bit
+					}
+				;
 			}
 
 			auto const
@@ -116,10 +161,11 @@ export namespace
 			;
 
 			return
-			Info
-			{	vType
-			,	vOffset
-			};
+				Info
+				{	vType
+				,	vOffset
+				}
+			;
 		}
 	};
 }

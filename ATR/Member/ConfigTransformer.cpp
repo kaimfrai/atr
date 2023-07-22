@@ -3,12 +3,12 @@ export module ATR.Member.ConfigTransformer;
 import ATR.Member.ConfigBuilder;
 
 import Meta.ID;
-import Meta.String.Chain;
+import Meta.String.Hash;
 import Meta.Token.Type;
 
 import Std;
 
-using ::Meta::String::Chain;
+using ::Meta::String::ImplicitHash;
 using ::Meta::ProtoID;
 
 export namespace
@@ -58,39 +58,17 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator()
-		)	(	Chain
-					i_rMemberName
-			,	Chain
-					i_rTarget
+		)	(	ImplicitHash
+					i_vMemberName
+			,	ImplicitHash
+					i_vTargetName
 			)
 			noexcept
 		->	ConfigTransformer&&
 		{
 			(*	m_aConfig
-			)	(	i_rMemberName
-				,	i_rTarget
-				)
-			;
-			return
-			static_cast<ConfigTransformer&&>
-			(	*this
-			);
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	operator()
-		)	(	char const
-				*	i_aMemberName
-			,	char const
-				*	i_aTarget
-			)
-			noexcept
-		->	ConfigTransformer&&
-		{
-			(*	m_aConfig
-			)	(	i_aMemberName
-				,	i_aTarget
+			)	(	i_vMemberName
+				,	i_vTargetName
 				)
 			;
 			return
@@ -106,8 +84,8 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator()
-		)	(	Chain
-					i_rMemberName
+		)	(	ImplicitHash
+					i_vMemberName
 			,	::Meta::TypeToken<t_tEntity>
 					i_vType
 			)
@@ -116,7 +94,7 @@ export namespace
 		{
 			(void)
 			(*	m_aConfig
-			)	(	i_rMemberName
+			)	(	i_vMemberName
 				,	(	i_vType
 					+	...
 					+	t_tpTransform
@@ -127,29 +105,6 @@ export namespace
 			return
 			static_cast<ConfigTransformer&&>
 			(	*this
-			);
-		}
-
-		template
-			<	typename
-					t_tEntity
-			>
-		[[nodiscard]]
-		auto constexpr inline
-		(	operator()
-		)	(	char const
-				*	i_aMemberName
-			,	::Meta::TypeToken<t_tEntity>
-					i_vType
-			)
-			noexcept
-		->	ConfigTransformer&&
-		{	return
-			operator()
-			(	Chain
-				{	i_aMemberName
-				}
-			,	i_vType
 			);
 		}
 

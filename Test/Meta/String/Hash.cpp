@@ -15,6 +15,10 @@ static_assert
 (	not
 	Hash()
 );
+static_assert
+(	Hash("")
+!=	Hash()
+);
 
 [[nodiscard]]
 auto constexpr inline
@@ -89,6 +93,20 @@ static_assert
 (	CheckCaseInsensitivity
 	()
 ,	"Case insensitivity violated!"
+);
+
+static_assert
+(	(	Hash("")
+	+	Hash("ABC")
+	)
+==	Hash("ABC")
+);
+
+static_assert
+(	(	Hash("ABC")
+	+	Hash("")
+	)
+==	Hash("ABC")
 );
 
 static_assert

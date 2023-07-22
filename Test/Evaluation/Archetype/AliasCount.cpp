@@ -50,10 +50,7 @@ auto constexpr inline
 						i_vTarget
 				)
 			{	return
-					not
 					i_vTarget
-					.	empty
-						()
 				;
 			}
 		);
