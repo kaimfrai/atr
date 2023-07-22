@@ -11,19 +11,16 @@ export namespace
 		Circle
 	{
 		float
-			ColorAlpha
-		;
-		float
-			ColorBlue
+			ColorRed
 		;
 		float
 			ColorGreen
 		;
 		float
-			ColorRed
+			ColorBlue
 		;
 		float
-			Height
+			ColorAlpha
 		;
 		float
 			PointLateral
@@ -33,6 +30,9 @@ export namespace
 		;
 		float
 			PointVertical
+		;
+		float
+			Height
 		;
 	};
 
@@ -45,16 +45,13 @@ export namespace
 		noexcept
 	->	float
 	{
-		float const
-			vHeight
-		=	*	::std::launder
-				(	static_cast
-					<	float const
-						*
-					>(	i_aObject
-					)
-				+	5z
-				)
+		Circle const
+		*	aCircle
+		=	static_cast
+			<	Circle const
+				*
+			>(	i_aObject
+			)
 		;
 
 		return
@@ -62,8 +59,10 @@ export namespace
 			<	1z
 			,	4z
 			>{}
-		*	vHeight
-		*	vHeight
+		*	aCircle
+			->	Height
+		*	aCircle
+			->	Height
 		;
 	}
 }

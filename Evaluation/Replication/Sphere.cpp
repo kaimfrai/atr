@@ -11,19 +11,16 @@ export namespace
 		Sphere
 	{
 		float
-			ColorAlpha
-		;
-		float
-			ColorBlue
+			ColorRed
 		;
 		float
 			ColorGreen
 		;
 		float
-			ColorRed
+			ColorBlue
 		;
 		float
-			Height
+			ColorAlpha
 		;
 		float
 			PointLateral
@@ -33,6 +30,9 @@ export namespace
 		;
 		float
 			PointVertical
+		;
+		float
+			Height
 		;
 	};
 
@@ -45,16 +45,13 @@ export namespace
 		noexcept
 	->	float
 	{
-		float const
-			vHeight
-		=	*	::std::launder
-				(	static_cast
-					<	float const
-						*
-					>(	i_aObject
-					)
-				+	4z
-				)
+		Sphere const
+		*	aSphere
+		=	static_cast
+			<	Sphere const
+				*
+			>(	i_aObject
+			)
 		;
 
 		return
@@ -62,9 +59,12 @@ export namespace
 			<	1z
 			,	6z
 			>{}
-		*	vHeight
-		*	vHeight
-		*	vHeight
+		*	aSphere
+			->	Height
+		*	aSphere
+			->	Height
+		*	aSphere
+			->	Height
 		;
 	}
 }

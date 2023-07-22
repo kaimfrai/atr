@@ -11,19 +11,16 @@ export namespace
 		Ellipse
 	{
 		float
-			ColorAlpha
-		;
-		float
-			ColorBlue
+			ColorRed
 		;
 		float
 			ColorGreen
 		;
 		float
-			ColorRed
+			ColorBlue
 		;
 		float
-			Height
+			ColorAlpha
 		;
 		float
 			PointLateral
@@ -33,6 +30,9 @@ export namespace
 		;
 		float
 			PointVertical
+		;
+		float
+			Height
 		;
 		float
 			Width

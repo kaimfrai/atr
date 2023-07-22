@@ -1,58 +1,39 @@
 export module Evaluation.Replication.Head;
 
+import Evaluation.Replication.Sphere;
+
 export namespace
 	Bodies3D
 {
 	struct
 		Head
 	{
-		float
-			ColorAlpha
+		Sphere
+			Sphere
 		;
 		float
-			ColorBlue
+			EyeColorRed
 		;
 		float
-			ColorGreen
+			EyeColorGreen
 		;
 		float
-			ColorRed
+			EyeColorBlue
 		;
 		float
-			Height
-		;
-		float
-			LeftEyeColorAlpha
-		;
-		float
-			LefEyeColorBlue
-		;
-		float
-			LeftEyeColorGreen
-		;
-		float
-			LeftEyeColorRed
-		;
-		float
-			LeftEyeHeight
+			EyeColorAlpha
 		;
 		float
 			LeftEyePointLateral
 		;
 		float
-			LeftEyePointLongitudinal
+			EyePointLongitudinal
 		;
 		float
 			LeftEyePointVertical
 		;
 		float
-			PointLateral
-		;
-		float
-			PointLongitudinal
-		;
-		float
-			PointVertical
+			LeftEyeHeight
 		;
 		float
 			RightEyeHeight

@@ -7,22 +7,16 @@ export namespace
 		Cuboid
 	{
 		float
-			ColorAlpha
-		;
-		float
-			ColorBlue
+			ColorRed
 		;
 		float
 			ColorGreen
 		;
 		float
-			ColorRed
+			ColorBlue
 		;
 		float
-			Depth
-		;
-		float
-			Height
+			ColorAlpha
 		;
 		float
 			PointLateral
@@ -34,7 +28,13 @@ export namespace
 			PointVertical
 		;
 		float
+			Height
+		;
+		float
 			Width
+		;
+		float
+			Depth
 		;
 	};
 
@@ -58,11 +58,11 @@ export namespace
 
 		return
 			aCuboid
-			->	Depth
-		*	aCuboid
 			->	Height
 		*	aCuboid
 			->	Width
+		*	aCuboid
+			->	Depth
 		;
 	}
 }

@@ -9,22 +9,16 @@ export namespace
 		Cone
 	{
 		float
-			ColorAlpha
-		;
-		float
-			ColorBlue
+			ColorRed
 		;
 		float
 			ColorGreen
 		;
 		float
-			ColorRed
+			ColorBlue
 		;
 		float
-			Depth
-		;
-		float
-			Height
+			ColorAlpha
 		;
 		float
 			PointLateral
@@ -34,6 +28,12 @@ export namespace
 		;
 		float
 			PointVertical
+		;
+		float
+			Height
+		;
+		float
+			Depth
 		;
 	};
 
@@ -61,11 +61,11 @@ export namespace
 			,	12z
 			>{}
 		*	aCone
+			->	Height
+		*	aCone
+			->	Height
+		*	aCone
 			->	Depth
-		*	aCone
-			->	Height
-		*	aCone
-			->	Height
 		;
 	}
 }

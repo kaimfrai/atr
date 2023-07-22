@@ -43,9 +43,9 @@ export namespace
 		,	ArgumentDependency
 			<	decltype(i_rBody)
 			,	ID<"ComputeSizeMultiplier">
-			,	ID<"Depth">
 			,	ID<"Height">
 			,	ID<"Width">
+			,	ID<"Depth">
 			>
 		>
 	;

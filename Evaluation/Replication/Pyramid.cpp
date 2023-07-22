@@ -9,22 +9,16 @@ export namespace
 		Pyramid
 	{
 		float
-			ColorAlpha
-		;
-		float
-			ColorBlue
+			ColorRed
 		;
 		float
 			ColorGreen
 		;
 		float
-			ColorRed
+			ColorBlue
 		;
 		float
-			Depth
-		;
-		float
-			Height
+			ColorAlpha
 		;
 		float
 			PointLateral
@@ -36,7 +30,13 @@ export namespace
 			PointVertical
 		;
 		float
+			Height
+		;
+		float
 			Width
+		;
+		float
+			Depth
 		;
 	};
 
@@ -64,11 +64,11 @@ export namespace
 			,	3uz
 			>{}
 		*	aPyramid
-			->	Depth
-		*	aPyramid
 			->	Height
 		*	aPyramid
 			->	Width
+		*	aPyramid
+			->	Depth
 		;
 	}
 }
