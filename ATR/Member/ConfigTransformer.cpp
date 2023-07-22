@@ -84,7 +84,7 @@ export namespace
 			>
 		[[nodiscard]]
 		auto constexpr inline
-		(	operator()
+		(	Member
 		)	(	ImplicitHash
 					i_vMemberName
 			,	::Meta::TypeToken<t_tEntity>
@@ -94,8 +94,9 @@ export namespace
 		->	ConfigTransformer&&
 		{
 			(void)
-			(*	m_aConfig
-			)	(	i_vMemberName
+			m_aConfig
+			->	Member
+				(	i_vMemberName
 				,	(	i_vType
 					+	...
 					+	t_tpTransform

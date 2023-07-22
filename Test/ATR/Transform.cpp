@@ -54,9 +54,9 @@ namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("Int", Type<int>)
-			("Bool", Type<bool>)
-			("Field", Type<Field<3_bit>>)
+		.	Member("Int", Type<int>)
+		.	Member("Bool", Type<bool>)
+		.	Member("Field", Type<Field<3_bit>>)
 		;
 	}
 
@@ -69,9 +69,9 @@ namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("Int", Type<int const>)
-			("Bool", Type<bool const>)
-			("Field", Type<Field<3_bit> const>)
+		.	Member("Int", Type<int const>)
+		.	Member("Bool", Type<bool const>)
+		.	Member("Field", Type<Field<3_bit> const>)
 		;
 	}
 
@@ -100,9 +100,9 @@ namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("Int", Type<Mut<int>>)
-			("Bool", Type<Mut<bool>>)
-			("Field", Type<Mut<Field<3_bit>>>)
+		.	Member("Int", Type<Mut<int>>)
+		.	Member("Bool", Type<Mut<bool>>)
+		.	Member("Field", Type<Mut<Field<3_bit>>>)
 		;
 	}
 
@@ -131,9 +131,9 @@ namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("Int", Type<int[5]>)
-			("Bool", Type<bool[5]>)
-			("Field", Type<Field<3_bit>[5]>)
+		.	Member("Int", Type<int[5]>)
+		.	Member("Bool", Type<bool[5]>)
+		.	Member("Field", Type<Field<3_bit>[5]>)
 		;
 	}
 

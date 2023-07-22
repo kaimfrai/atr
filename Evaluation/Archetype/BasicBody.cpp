@@ -17,7 +17,7 @@ export namespace
 	{	return
 		o_rConfig
 			("BasicShape"_id)
-			("Depth", Type<float>)
+		.	Member("Depth", Type<float>)
 		;
 	}
 }

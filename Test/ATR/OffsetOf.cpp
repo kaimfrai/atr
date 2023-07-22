@@ -39,21 +39,21 @@ namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("Int", Type<int>)
-			("IntConst", Type<int const>)
-			("IntMut", Type<Mut<int>>)
-			("ArrayBool", Type<bool[5]>)
-			("ArrayBoolConst", Type<bool const[5]>)
-			("ArrayBoolMut", Type<Mut<bool[5]>>)
-			("ArrayField", Type<Field<3_bit>[5]>)
-			("ArrayFieldConst", Type<Field<3_bit> const[5]>)
-			("ArrayFieldMut", Type<Mut<Field<3_bit>[5]>>)
-			("Bool", Type<bool>)
-			("BoolConst", Type<bool const>)
-			("BoolMut", Type<Mut<bool>>)
-			("Field", Type<Field<3_bit>>)
-			("FieldConst", Type<Field<3_bit> const>)
-			("FieldMut", Type<Mut<Field<3_bit>>>)
+		.	Member("Int", Type<int>)
+		.	Member("IntConst", Type<int const>)
+		.	Member("IntMut", Type<Mut<int>>)
+		.	Member("ArrayBool", Type<bool[5]>)
+		.	Member("ArrayBoolConst", Type<bool const[5]>)
+		.	Member("ArrayBoolMut", Type<Mut<bool[5]>>)
+		.	Member("ArrayField", Type<Field<3_bit>[5]>)
+		.	Member("ArrayFieldConst", Type<Field<3_bit> const[5]>)
+		.	Member("ArrayFieldMut", Type<Mut<Field<3_bit>[5]>>)
+		.	Member("Bool", Type<bool>)
+		.	Member("BoolConst", Type<bool const>)
+		.	Member("BoolMut", Type<Mut<bool>>)
+		.	Member("Field", Type<Field<3_bit>>)
+		.	Member("FieldConst", Type<Field<3_bit> const>)
+		.	Member("FieldMut", Type<Mut<Field<3_bit>>>)
 		;
 	}
 }

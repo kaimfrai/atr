@@ -14,10 +14,10 @@ export namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("Red", Type<float>)
-			("Green", Type<float>)
-			("Blue", Type<float>)
-			("Alpha", Type<float>)
+		.	Member("Red", Type<float>)
+		.	Member("Green", Type<float>)
+		.	Member("Blue", Type<float>)
+		.	Member("Alpha", Type<float>)
 		;
 	}
 
@@ -30,9 +30,9 @@ export namespace
 	->	auto&&
 	{	return
 		o_rConfig
-			("Lateral", Type<float>)
-			("Longitudinal", Type<float>)
-			("Vertical", Type<float>)
+		.	Member("Lateral", Type<float>)
+		.	Member("Longitudinal", Type<float>)
+		.	Member("Vertical", Type<float>)
 		;
 	}
 
@@ -47,8 +47,8 @@ export namespace
 		o_rConfig
 			("Color", "Color"_id)
 			("Point", "Point"_id)
-			("Height", Type<float>)
-			("Width", Type<float>)
+		.	Member("Height", Type<float>)
+		.	Member("Width", Type<float>)
 		;
 	}
 }

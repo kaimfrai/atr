@@ -18,7 +18,7 @@ export namespace
 	{	return
 		o_rConfig
 			("BasicBody"_id)
-			("ComputeSizeMultiplier", Type<PiFraction<1z, 6z>>)
+		.	Member("ComputeSizeMultiplier", Type<PiFraction<1z, 6z>>)
 		;
 	}
 }

@@ -190,7 +190,7 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	operator()
+		(	Member
 		)	(	ImplicitHash
 					i_vMemberName
 			,	TypeID
