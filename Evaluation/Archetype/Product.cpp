@@ -1,14 +1,13 @@
 export module Evaluation.Archetype.Product;
 
 import ATR.Dependency;
-import ATR.Literals;
 
 import Std;
 
 export namespace
 	ATR
 {
-	/// computes the product of all dependent members and a constant
+	/// Computes the product of all dependent members
 	template
 		<	typename
 			...	t_tpDependency
@@ -16,7 +15,7 @@ export namespace
 	[[nodiscard]]
 	auto constexpr inline
 	(	FunctionBody
-	)	(	Dependency<ID<"Product">>
+	)	(	GlobalDependency<"Product">
 		,	Dependency
 			<	::std::byte const(&)[]
 			,	t_tpDependency

@@ -39,7 +39,7 @@ export namespace
 			&	i_rBody
 		)
 	->	Function
-		<	Dependency<ID<"Product">>
+		<	GlobalDependency<"Product">
 		,	ArgumentDependency
 			<	decltype(i_rBody)
 			,	"ComputeSizeMultiplier"
@@ -56,7 +56,7 @@ export namespace
 			&	i_rShape
 		)
 	->	Function
-		<	Dependency<ID<"Product">>
+		<	GlobalDependency<"Product">
 		,	ArgumentDependency
 			<	decltype(i_rShape)
 			,	"ComputeSizeMultiplier"
