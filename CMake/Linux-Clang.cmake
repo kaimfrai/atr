@@ -22,12 +22,12 @@ endif()
 
 if	(USE_LIBCPP)
 	set(
-	STANDARD_LIBRARY_FLAG
+		STANDARD_LIBRARY_FLAG
 		"-stdlib=libc++"
 	)
 else()
 	set(
-	STANDARD_LIBRARY_FLAG
+		STANDARD_LIBRARY_FLAG
 	)
 endif()
 
@@ -38,21 +38,17 @@ add_compile_options(
 	-ftemplate-backtrace-limit=0
 	-frelaxed-template-template-args
 	-fconstexpr-steps=4194303
+	-ffunction-sections
+	-fdata-sections
 )
 
 add_link_options(
 	-fuse-ld=lld
 	-lc++
 	-flto=thin
-)
-
-set(
-	MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS
-	-ffunction-sections
-)
-set(
-	MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS
+	-Wl,--gc-sections
 	-Wl,--icf=all
+	$<$<CONFIG:RELEASE>:-Wl,--strip-all>
 )
 
 if	(BUILD_WITH_SANITIZER)

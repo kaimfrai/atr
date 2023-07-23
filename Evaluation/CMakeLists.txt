@@ -12,16 +12,6 @@ PROPERTIES
 RUNTIME_OUTPUT_DIRECTORY
 	"${CMAKE_BINARY_DIR}/bin/"
 )
-target_compile_options(
-	Any
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
-)
-target_link_options(
-	Any
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
-)
 
 add_subdirectory(Archetype)
 add_module_executable(
@@ -46,16 +36,6 @@ PROPERTIES
 RUNTIME_OUTPUT_DIRECTORY
 	"${CMAKE_BINARY_DIR}/bin/"
 )
-target_compile_options(
-	Dyno
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
-)
-target_link_options(
-	Dyno
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
-)
 
 add_subdirectory(Polymorphic)
 add_module_executable(
@@ -67,16 +47,6 @@ set_target_properties(
 PROPERTIES
 RUNTIME_OUTPUT_DIRECTORY
 	"${CMAKE_BINARY_DIR}/bin/"
-)
-target_compile_options(
-	Polymorphic
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
-)
-target_link_options(
-	Polymorphic
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )
 
 add_subdirectory(Replication)
@@ -102,16 +72,6 @@ PROPERTIES
 RUNTIME_OUTPUT_DIRECTORY
 	"${CMAKE_BINARY_DIR}/bin/"
 )
-target_compile_options(
-	TypeErasure
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
-)
-target_link_options(
-	TypeErasure
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
-)
 
 add_subdirectory(Variant)
 add_module_executable(
@@ -123,16 +83,6 @@ set_target_properties(
 PROPERTIES
 RUNTIME_OUTPUT_DIRECTORY
 	"${CMAKE_BINARY_DIR}/bin/"
-)
-target_compile_options(
-	Variant
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
-)
-target_link_options(
-	Variant
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )
 
 add_subdirectory(Virtual)
@@ -146,16 +96,6 @@ PROPERTIES
 RUNTIME_OUTPUT_DIRECTORY
 	"${CMAKE_BINARY_DIR}/bin/"
 )
-target_compile_options(
-	Virtual
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
-)
-target_link_options(
-	Virtual
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
-)
 
 add_subdirectory(Visitor)
 add_module_executable(
@@ -167,14 +107,4 @@ set_target_properties(
 PROPERTIES
 RUNTIME_OUTPUT_DIRECTORY
 	"${CMAKE_BINARY_DIR}/bin/"
-)
-target_compile_options(
-	Visitor
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_COMPILE_OPTIONS}
-)
-target_link_options(
-	Visitor
-PRIVATE
-	${MERGE_IDENTICAL_FUNCTIONS_LINK_FLAGS}
 )
