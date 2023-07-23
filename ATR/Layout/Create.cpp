@@ -4,6 +4,7 @@ import ATR.Layout.Bit;
 import ATR.Layout.Empty;
 import ATR.Layout.Fork;
 import ATR.Layout.Group;
+import ATR.Layout.ValidateOffsets;
 import ATR.Layout.Value;
 import ATR.Member.Config;
 import ATR.Member.Constants;
@@ -234,7 +235,8 @@ namespace
 			.	Layout
 		;
 		return
-		(	CreateLayout
+		ValidateOffsets
+		((	CreateLayout
 			<	rLayout
 				.	AlignTypeCounts
 				.	Buffer
@@ -247,7 +249,7 @@ namespace
 				.	BitCount
 					()
 			>()
-		);
+		));
 	}
 }
 
