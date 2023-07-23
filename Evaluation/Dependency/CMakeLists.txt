@@ -97,3 +97,7 @@ INCLUDE_DIRECTORIES
 )
 
 add_module(TypeErasure.cpp)
+
+add_subdirectory(
+	Visitor
+)
