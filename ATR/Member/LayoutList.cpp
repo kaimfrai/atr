@@ -80,39 +80,19 @@ export namespace
 				;
 			}
 
-			auto const
-			&	[	rBuffer
-				,	rCount
-				]
-			=	AlignTypeCounts
-					[	vAlign
-					]
-			;
-
-			for	(	auto
-						vTypeIndex
-					=	0z
-				;	(	vTypeIndex
-					!=	rCount
-					)
-				;	++	vTypeIndex
-				)
-			{
-				auto const
-				&	rTypeCount
-				=	rBuffer
-						[	vTypeIndex
+			for	(	auto const
+					&	[	rType
+						,	rCount
 						]
-				;
-
-				if	(	rTypeCount
-						.	Type
+				:	AlignTypeCounts
+						[	vAlign
+						]
+				)
+			{	if	(	rType
 					==	i_vType
 					)
-				{
-					return
-						rTypeCount
-						.	Count
+				{	return
+						rCount
 					;
 				}
 			}
