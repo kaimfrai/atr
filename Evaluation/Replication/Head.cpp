@@ -30,13 +30,10 @@ export namespace
 			EyePointLongitudinal
 		;
 		float
-			LeftEyePointVertical
+			EyePointVertical
 		;
 		float
-			LeftEyeHeight
-		;
-		float
-			RightEyeHeight
+			EyeHeight
 		;
 		float
 			RightEyePointLateral

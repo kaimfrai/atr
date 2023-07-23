@@ -69,5 +69,5 @@ static_assert(SizeMinimal<Type<"Cone">, 2, 1, 1>);
 static_assert(AdditionalSize<Type<"Ellipsoid">, 3, 1, 1> == 0);
 static_assert(SizeMinimal<Type<"Ellipsoid">, 3, 1, 1>);
 
-static_assert(AdditionalSize<Type<"Head">, 1, 2, 3> == 0);
-static_assert(SizeMinimal<Type<"Head">, 1, 2, 3>);
+static_assert(AdditionalSize<Type<"Head">, 3, 2, 2> == 0);
+static_assert(SizeMinimal<Type<"Head">, 3, 2, 2>);

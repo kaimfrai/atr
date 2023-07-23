@@ -48,7 +48,7 @@ export namespace
 	using
 		Body3D
 	=	Element
-		<	18uz * sizeof(float)
+		<	17uz * sizeof(float)
 		,	alignof(float)
 		,	Entry
 			<	ID<"ComputeVolume">

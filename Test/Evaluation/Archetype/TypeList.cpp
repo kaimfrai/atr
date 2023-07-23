@@ -179,6 +179,6 @@ static_assert
 (	TypeList_Of<"Head", FloatAlign>
 ==	CountedType
 	{	Type<float>
-	,	18z
+	,	17z
 	}
 );

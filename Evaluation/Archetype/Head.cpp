@@ -24,6 +24,7 @@ export namespace
 		.	Alias("RightEyeColorAlpha", "LeftEyeColorAlpha")
 		.	Alias("RightEyePointLongitudinal", "LeftEyePointLongitudinal")
 		.	Alias("RightEyePointVertical", "LeftEyePointVertical")
+		.	Alias("RightEyeHeight", "LeftEyeHeight")
 		.	PrefixSplice("RightEye", "Sphere"_id)
 		;
 	}
