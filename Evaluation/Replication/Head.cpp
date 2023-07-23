@@ -21,9 +21,6 @@ export namespace
 			EyeColorBlue
 		;
 		float
-			EyeColorAlpha
-		;
-		float
 			LeftEyePointLateral
 		;
 		float

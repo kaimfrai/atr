@@ -1265,7 +1265,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"LeftEyeColorAlpha"
 			]
-	,	OffsetType<float, 11z>
+	,	OffsetType<float, 3z>
 	)
 );
 static_assert
@@ -1273,7 +1273,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"LeftEyePointLateral"
 			]
-	,	OffsetType<float, 12z>
+	,	OffsetType<float, 11z>
 	)
 );
 static_assert
@@ -1281,7 +1281,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"LeftEyePointLongitudinal"
 			]
-	,	OffsetType<float, 13z>
+	,	OffsetType<float, 12z>
 	)
 );
 static_assert
@@ -1289,7 +1289,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"LeftEyePointVertical"
 			]
-	,	OffsetType<float, 14z>
+	,	OffsetType<float, 13z>
 	)
 );
 static_assert
@@ -1297,7 +1297,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"LeftEyeHeight"
 			]
-	,	OffsetType<float, 15z>
+	,	OffsetType<float, 14z>
 	)
 );
 static_assert
@@ -1305,7 +1305,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"LeftEyeWidth"
 			]
-	,	OffsetType<float, 15z>
+	,	OffsetType<float, 14z>
 	)
 );
 static_assert
@@ -1313,7 +1313,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"LeftEyeDepth"
 			]
-	,	OffsetType<float, 15z>
+	,	OffsetType<float, 14z>
 	)
 );
 static_assert
@@ -1353,7 +1353,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"RightEyeColorAlpha"
 			]
-	,	OffsetType<float, 11z>
+	,	OffsetType<float, 3z>
 	)
 );
 static_assert
@@ -1361,7 +1361,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"RightEyePointLateral"
 			]
-	,	OffsetType<float, 16z>
+	,	OffsetType<float, 15z>
 	)
 );
 static_assert
@@ -1369,7 +1369,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"RightEyePointLongitudinal"
 			]
-	,	OffsetType<float, 13z>
+	,	OffsetType<float, 12z>
 	)
 );
 static_assert
@@ -1377,7 +1377,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"RightEyePointVertical"
 			]
-	,	OffsetType<float, 14z>
+	,	OffsetType<float, 13z>
 	)
 );
 static_assert
@@ -1385,7 +1385,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"RightEyeHeight"
 			]
-	,	OffsetType<float, 15z>
+	,	OffsetType<float, 14z>
 	)
 );
 static_assert
@@ -1393,7 +1393,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"RightEyeWidth"
 			]
-	,	OffsetType<float, 15z>
+	,	OffsetType<float, 14z>
 	)
 );
 static_assert
@@ -1401,7 +1401,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"RightEyeDepth"
 			]
-	,	OffsetType<float, 15z>
+	,	OffsetType<float, 14z>
 	)
 );
 static_assert

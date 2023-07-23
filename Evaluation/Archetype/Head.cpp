@@ -17,6 +17,7 @@ export namespace
 	{	return
 		o_rConfig
 		.	Splice("Sphere"_id)
+		.	Alias("LeftEyeColorAlpha", "ColorAlpha")
 		.	PrefixSplice("LeftEye", "Sphere"_id)
 		.	Alias("RightEyeColorRed", "LeftEyeColorRed")
 		.	Alias("RightEyeColorGreen", "LeftEyeColorGreen")
