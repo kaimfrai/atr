@@ -46,9 +46,7 @@ add_link_options(
 	-fuse-ld=lld
 	-lc++
 	-flto=thin
-	-Wl,--gc-sections
-	-Wl,--icf=all
-	$<$<CONFIG:RELEASE>:-Wl,--strip-all>
+	-Wl,--gc-sections,--icf=all
 )
 
 if	(BUILD_WITH_SANITIZER)
