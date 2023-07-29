@@ -170,13 +170,13 @@ export namespace
 		ImplicitChain
 	:	Chain
 	{
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	ImplicitChain
 		)	()
 			noexcept
 		=	default;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	ImplicitChain
 		)	(	char const
 				*	i_aString
@@ -187,7 +187,7 @@ export namespace
 			}
 		{}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	ImplicitChain
 		)	(	Chain
 					i_rChain

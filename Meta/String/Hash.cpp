@@ -21,13 +21,13 @@ export namespace
 			Multiplier
 		{};
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	Hash
 		)	()
 			noexcept
 		=	default;
 
-		explicit(true) constexpr
+		explicit(true) constexpr inline
 		(	Hash
 		)	(	char const
 				*	i_aString
@@ -326,13 +326,13 @@ export namespace
 		ImplicitHash final
 	:	Hash
 	{
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	ImplicitHash
 		)	()
 			noexcept
 		=	default;
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	ImplicitHash
 		)	(	char const
 				*	i_aString
@@ -343,7 +343,7 @@ export namespace
 			}
 		{}
 
-		explicit(false) constexpr
+		explicit(false) constexpr inline
 		(	ImplicitHash
 		)	(	Hash
 					i_vHash
