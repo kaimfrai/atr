@@ -12,6 +12,4 @@ add_single_file_modules(
 	Square.cpp
 	Triangle.cpp
 	Head.cpp
-
-	Replication.cpp
 )
