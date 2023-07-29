@@ -120,7 +120,7 @@ function(link_module_dependencies
 
 		if (NOT TARGET ${target_dependency})
 			message(
-			SEND_ERROR
+			FATAL_ERROR
 				"${target_name} is configured before its dependency ${target_dependency}"
 			)
 		endif()
