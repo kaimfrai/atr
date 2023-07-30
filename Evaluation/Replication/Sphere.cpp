@@ -2,8 +2,6 @@ export module Evaluation.Replication.Sphere;
 
 import Evaluation.Dependency.PiFraction;
 
-import Std;
-
 export namespace
 	Bodies3D
 {

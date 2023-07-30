@@ -1,7 +1,5 @@
 export module Evaluation.Replication.Rectangle;
 
-import Std;
-
 export namespace
 	Bodies3D
 {

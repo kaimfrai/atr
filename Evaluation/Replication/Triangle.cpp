@@ -2,8 +2,6 @@ export module Evaluation.Replication.Triangle;
 
 import Evaluation.Dependency.Fraction;
 
-import Std;
-
 export namespace
 	Bodies3D
 {

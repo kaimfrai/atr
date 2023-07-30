@@ -1,7 +1,5 @@
 export module Evaluation.Replication.Square;
 
-import Std;
-
 export namespace
 	Bodies3D
 {
