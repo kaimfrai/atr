@@ -28,6 +28,7 @@ then
 	execute_cachegrind $1 $2 "Dyno"
 	execute_cachegrind $1 $2 "Polymorphic"
 	execute_cachegrind $1 $2 "Replication"
+	execute_cachegrind $1 $2 "TagReplication"
 	execute_cachegrind $1 $2 "TypeErasure"
 	execute_cachegrind $1 $2 "Variant"
 	execute_cachegrind $1 $2 "Virtual"

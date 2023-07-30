@@ -21,10 +21,21 @@ then
 		TypeErasure\
 		Archetype\
 		Replication\
+		TagReplication\
 		Variant\
 		Visitor
 elif
-	[ $2 == "Virtual" ] || [ $2 == "Any" ] || [ $2 == "Dyno" ]  || [ $2 == "Polymorphic" ]  || [ $2 == "TypeErasure" ]  || [ $2 == "Archetype" ]  || [ $2 == "Replication" ]  || [ $2 == "Variant" ]  || [ $2 == "Visitor" ]  || [ $2 == "Any" ]
+	[ $2 == "Virtual" ] \
+||	[ $2 == "Any" ] \
+||	[ $2 == "Dyno" ] \
+||	[ $2 == "Polymorphic" ] \
+||	[ $2 == "TypeErasure" ] \
+||	[ $2 == "Archetype" ] \
+||	[ $2 == "Replication" ] \
+||	[ $2 == "TagReplication" ] \
+||	[ $2 == "Variant" ] \
+||	[ $2 == "Visitor" ] \
+||	[ $2 == "Any" ]
 then
 	ninja\
 		"$2"
@@ -37,6 +48,7 @@ else
 	echo "TypeErasure"
 	echo "Archetype"
 	echo "Replication"
+	echo "TagReplication"
 	echo "Variant"
 	echo "Visitor"
 	exit 1

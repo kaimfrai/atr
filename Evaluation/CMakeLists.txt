@@ -141,6 +141,19 @@ RUNTIME_OUTPUT_DIRECTORY
 )
 
 ################################################################################
+add_subdirectory(TagReplication)
+add_module_executable(
+	TagReplication
+		TagReplication.cpp
+)
+set_target_properties(
+	TagReplication
+PROPERTIES
+RUNTIME_OUTPUT_DIRECTORY
+	"${CMAKE_BINARY_DIR}/bin/"
+)
+
+################################################################################
 force_import_std("${CMAKE_CURRENT_SOURCE_DIR}/Dependency/type_erasure/boost.hpp")
 add_user_header_unit("${CMAKE_CURRENT_SOURCE_DIR}/Dependency/type_erasure/boost.hpp")
 
