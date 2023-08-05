@@ -1,5 +1,6 @@
 export module Evaluation.TagReplication.Triangle;
 
+import Evaluation.TagReplication.Tag;
 import Evaluation.Dependency.Fraction;
 
 export namespace
@@ -8,6 +9,11 @@ export namespace
 	struct
 		Triangle
 	{
+		ETag
+			Tag
+		=	ETag::Triangle
+		;
+
 		float
 			ColorRed
 		;

@@ -1,5 +1,6 @@
 export module Evaluation.TagReplication.Sphere;
 
+export import Evaluation.TagReplication.Tag;
 import Evaluation.Dependency.PiFraction;
 
 export namespace
@@ -8,6 +9,11 @@ export namespace
 	struct
 		Sphere
 	{
+		ETag
+			Tag
+		=	ETag::Sphere
+		;
+
 		float
 			ColorRed
 		;

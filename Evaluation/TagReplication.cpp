@@ -1,6 +1,7 @@
 import Evaluation.Dependency.DynamicArray;
 import Evaluation.Dependency.PseudoRandomSequence;
 
+import Evaluation.TagReplication.Tag;
 import Evaluation.TagReplication.Circle;
 import Evaluation.TagReplication.Ellipse;
 import Evaluation.TagReplication.Rectangle;
@@ -38,26 +39,11 @@ namespace
 	struct
 		VolumeComputer
 	{
-		enum class
-			ETag
-		:	unsigned char
-		{	Circle
-		,	Ellipse
-		,	Rectangle
-		,	Square
-		,	Triangle
-		,	Cube
-		,	Cuboid
-		,	Pyramid
-		,	Sphere
-		,	Cylinder
-		,	Cone
-		,	Ellipsoid
-		,	Head
-		};
-
 		union
-		{	Circle
+		{	ETag
+				m_vTag
+			;
+			Circle
 				m_vCircle
 			;
 			Ellipse
@@ -97,10 +83,6 @@ namespace
 				m_vHead
 			;
 		};
-
-		ETag
-			m_vTag
-		;
 
 		constexpr inline
 		(	compl
@@ -165,9 +147,6 @@ namespace
 			)
 		:	m_vCircle
 			{}
-		,	m_vTag
-			{	ETag::Circle
-			}
 		{}
 
 		explicit(false) constexpr inline
@@ -178,9 +157,6 @@ namespace
 			)
 		:	m_vEllipse
 			{}
-		,	m_vTag
-			{	ETag::Ellipse
-			}
 		{}
 
 		explicit(false) constexpr inline
@@ -191,9 +167,6 @@ namespace
 			)
 		:	m_vRectangle
 			{}
-		,	m_vTag
-			{	ETag::Rectangle
-			}
 		{}
 
 		explicit(false) constexpr inline
@@ -204,9 +177,6 @@ namespace
 			)
 		:	m_vSquare
 			{}
-		,	m_vTag
-			{	ETag::Square
-			}
 		{}
 
 		explicit(false) constexpr inline
@@ -217,9 +187,6 @@ namespace
 			)
 		:	m_vTriangle
 			{}
-		,	m_vTag
-			{	ETag::Triangle
-			}
 		{}
 
 		explicit(false) constexpr inline
@@ -230,9 +197,6 @@ namespace
 			)
 		:	m_vCube
 			{}
-		,	m_vTag
-			{	ETag::Cube
-			}
 		{}
 
 		explicit(false) constexpr inline
@@ -243,9 +207,6 @@ namespace
 			)
 		:	m_vCuboid
 			{}
-		,	m_vTag
-			{	ETag::Cuboid
-			}
 		{}
 
 		explicit(false) constexpr inline
@@ -256,9 +217,6 @@ namespace
 			)
 		:	m_vPyramid
 			{}
-		,	m_vTag
-			{	ETag::Pyramid
-			}
 		{}
 
 		explicit(false) constexpr inline
@@ -269,9 +227,6 @@ namespace
 			)
 		:	m_vSphere
 			{}
-		,	m_vTag
-			{	ETag::Sphere
-			}
 		{}
 
 		explicit(false) constexpr inline
@@ -282,9 +237,6 @@ namespace
 			)
 		:	m_vCylinder
 			{}
-		,	m_vTag
-			{	ETag::Cylinder
-			}
 		{}
 
 		explicit(false) constexpr inline
@@ -295,9 +247,6 @@ namespace
 			)
 		:	m_vCone
 			{}
-		,	m_vTag
-			{	ETag::Cone
-			}
 		{}
 
 		explicit(false) constexpr inline
@@ -308,9 +257,6 @@ namespace
 			)
 		:	m_vEllipsoid
 			{}
-		,	m_vTag
-			{	ETag::Ellipsoid
-			}
 		{}
 
 		explicit(false) constexpr inline
@@ -321,9 +267,6 @@ namespace
 			)
 		:	m_vHead
 			{}
-		,	m_vTag
-			{	ETag::Head
-			}
 		{}
 
 		[[nodiscard]]

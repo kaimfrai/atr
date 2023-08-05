@@ -1,11 +1,18 @@
 export module Evaluation.TagReplication.Cuboid;
 
+import Evaluation.TagReplication.Tag;
+
 export namespace
 	Bodies3D
 {
 	struct
 		Cuboid
 	{
+		ETag
+			Tag
+		=	ETag::Cuboid
+		;
+
 		float
 			ColorRed
 		;

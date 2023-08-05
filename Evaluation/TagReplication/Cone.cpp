@@ -1,5 +1,6 @@
 export module Evaluation.TagReplication.Cone;
 
+import Evaluation.TagReplication.Tag;
 import Evaluation.Dependency.PiFraction;
 
 export namespace
@@ -8,6 +9,11 @@ export namespace
 	struct
 		Cone
 	{
+		ETag
+			Tag
+		=	ETag::Cone
+		;
+
 		float
 			ColorRed
 		;

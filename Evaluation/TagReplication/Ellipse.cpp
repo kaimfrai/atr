@@ -1,5 +1,6 @@
 export module Evaluation.TagReplication.Ellipse;
 
+import Evaluation.TagReplication.Tag;
 import Evaluation.Dependency.PiFraction;
 
 export namespace
@@ -8,6 +9,11 @@ export namespace
 	struct
 		Ellipse
 	{
+		ETag
+			Tag
+		=	ETag::Ellipse
+		;
+
 		float
 			ColorRed
 		;

@@ -1,5 +1,6 @@
 export module Evaluation.TagReplication.Pyramid;
 
+import Evaluation.TagReplication.Tag;
 import Evaluation.Dependency.Fraction;
 
 export namespace
@@ -8,6 +9,11 @@ export namespace
 	struct
 		Pyramid
 	{
+		ETag
+			Tag
+		=	ETag::Pyramid
+		;
+
 		float
 			ColorRed
 		;

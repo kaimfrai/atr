@@ -1,6 +1,7 @@
 export module Evaluation.TagReplication.Head;
 
-import Evaluation.Replication.Sphere;
+import Evaluation.TagReplication.Tag;
+import Evaluation.TagReplication.Sphere;
 
 import Std;
 
@@ -41,7 +42,9 @@ export namespace
 	{
 		Sphere
 			Sphere
-		;
+		{	.	Tag
+			=	ETag::Head
+		};
 
 		HeadEyes
 		*	Eyes

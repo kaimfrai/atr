@@ -1,4 +1,5 @@
 add_single_file_modules(
+	Tag.cpp
 	Circle.cpp
 	Cone.cpp
 	Cube.cpp

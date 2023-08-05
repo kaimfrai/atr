@@ -1,11 +1,18 @@
 export module Evaluation.TagReplication.Square;
 
+import Evaluation.TagReplication.Tag;
+
 export namespace
 	Bodies3D
 {
 	struct
 		Square
 	{
+		ETag
+			Tag
+		=	ETag::Square
+		;
+
 		float
 			ColorRed
 		;

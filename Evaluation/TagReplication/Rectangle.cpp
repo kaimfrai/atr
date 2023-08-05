@@ -1,11 +1,18 @@
 export module Evaluation.TagReplication.Rectangle;
 
+import Evaluation.TagReplication.Tag;
+
 export namespace
 	Bodies3D
 {
 	struct
 		Rectangle
 	{
+		ETag
+			Tag
+		=	ETag::Rectangle
+		;
+
 		float
 			ColorRed
 		;
