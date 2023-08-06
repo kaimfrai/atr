@@ -6,14 +6,11 @@ import Meta.Arithmetic.Integer;
 import Meta.Bit.Field;
 import Meta.Bit.Index;
 import Meta.Bit.Reference;
-import Meta.Token.Specifier;
-import Meta.Token.Type;
 import Meta.ID;
 
 import Std;
 
 using ::Meta::Bit::Field;
-using ::Meta::Specifier::Mut;
 
 using namespace ::Meta::Literals;
 
@@ -27,12 +24,13 @@ namespace
 		,	ID<"BitFieldTest">
 		)
 	->	auto&&
-	{	return
+	{	// TODO Rename Mut as it is no longer supported
+		return
 		o_rConfig
 		.	Member("0BoolBit", Type<bool>)
-		.	Member("1MutBoolBit", Type<Mut<bool>>)
+		.	Member("1MutBoolBit", Type<bool>)
 		.	Member("2BitField31", Type<Field<31_bit>>)
-		.	Member("3MutBitField31", Type<Mut<Field<31_bit>>>)
+		.	Member("3MutBitField31", Type<Field<31_bit>>)
 		;
 	}
 }
@@ -105,7 +103,7 @@ static_assert
 			[	"1MutBoolBit"_id
 			]
 		)
-	,	Reference<bool, 1_bdx>
+	,	bool
 	>
 );
 
@@ -116,8 +114,7 @@ static_assert
 			[	"1MutBoolBit"_id
 			]
 		)
-	,	// TODO this should be bool
-		Reference<bool, 1_bdx>
+	,	bool
 	>
 );
 
@@ -172,7 +169,7 @@ static_assert
 			[	"3MutBitField31"_id
 			]
 		)
-	,	Reference<Field<31_bit>, 1_bdx>
+	,	Field<31_bit>
 	>
 );
 
@@ -183,7 +180,6 @@ static_assert
 			[	"3MutBitField31"_id
 			]
 		)
-	,	// TODO this should be a value
-		Reference<Field<31_bit>, 1_bdx>
+	,	Field<31_bit>
 	>
 );

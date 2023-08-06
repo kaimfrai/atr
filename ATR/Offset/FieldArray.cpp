@@ -24,11 +24,11 @@ export namespace
 {
 	template
 		<	BitSize
-				t_nOffset
+				t_vOffset
 		,	BitSize
-				t_nWidth
+				t_vWidth
 		,	USize
-				t_nExtent
+				t_vExtent
 		>
 	[[nodiscard]]
 	auto constexpr inline
@@ -37,9 +37,9 @@ export namespace
 			(&	i_rObject
 			)	[]
 		,	Member
-			<	t_nOffset
-			,	Field<t_nWidth>
-					[	t_nExtent
+			<	t_vOffset
+			,	Field<t_vWidth>
+					[	t_vExtent
 					]
 			>
 		)
@@ -49,13 +49,13 @@ export namespace
 		auto static constexpr
 			vByteOffset
 		=	IndexCast<ByteIndex>
-			(	t_nOffset
+			(	t_vOffset
 			)
 		;
 		return
 		ArrayReference
-		<	t_nWidth
-		,	t_nExtent
+		<	t_vWidth
+		,	t_vExtent
 		,	vByteOffset.Remainder
 		>{	::std::launder
 			(	i_rObject
@@ -66,11 +66,11 @@ export namespace
 
 	template
 		<	BitSize
-				t_nOffset
+				t_vOffset
 		,	BitSize
-				t_nWidth
+				t_vWidth
 		,	USize
-				t_nExtent
+				t_vExtent
 		>
 	[[nodiscard]]
 	auto constexpr inline
@@ -79,9 +79,9 @@ export namespace
 			(&	i_rObject
 			)	[]
 		,	Member
-			<	t_nOffset
-			,	Field<t_nWidth> const
-					[	t_nExtent
+			<	t_vOffset
+			,	Field<t_vWidth>
+					[	t_vExtent
 					]
 			>
 		)
@@ -91,14 +91,14 @@ export namespace
 		auto static constexpr
 			vByteOffset
 		=	IndexCast<ByteIndex>
-			(	t_nOffset
+			(	t_vOffset
 			)
 		;
 		return
 		CopyArray
 		(	ArrayConstReference
-			<	t_nWidth
-			,	t_nExtent
+			<	t_vWidth
+			,	t_vExtent
 			,	vByteOffset.Remainder
 			>{	i_rObject
 			+	vByteOffset.Quotient

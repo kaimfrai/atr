@@ -66,7 +66,7 @@ export namespace
 			)	[]
 		,	Member
 			<	t_vOffset
-			,	bool const
+			,	bool
 			>
 		)
 		noexcept

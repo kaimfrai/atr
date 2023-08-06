@@ -10,7 +10,6 @@ import Meta.Memory.Alignment;
 import Meta.Memory.Constraint;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size;
-import Meta.Token.Specifier;
 
 import Std;
 
@@ -24,7 +23,6 @@ using ::Meta::ByteSize;
 using ::Meta::Memory::BitAlign_Of;
 using ::Meta::Memory::BitSize_Of;
 using ::Meta::Memory::ByteWidth;
-using ::Meta::Specifier::Mut;
 
 using namespace ::Meta::Literals;
 
@@ -44,35 +42,7 @@ export namespace
 	(	operator->*
 	)	(	Value<t_tMember[t_vExtent]> const
 			&	i_rObject
-		,	Member<t_vOffset, ::std::add_const_t<t_tMember>>
-		)
-		noexcept
-	->	decltype(auto)
-	{	return
-		(	i_rObject
-			.	Data
-				[	static_cast<ByteWidth<t_tMember>>
-					(	t_vOffset
-					)
-					.	Value
-				]
-		);
-	}
-
-	template
-		<	typename
-				t_tMember
-		,	::std::size_t
-				t_vExtent
-		,	BitSize
-				t_vOffset
-		>
-	[[nodiscard]]
-	auto constexpr inline
-	(	operator->*
-	)	(	Value<Mut<t_tMember>[t_vExtent]> const
-			&	i_rObject
-		,	Member<t_vOffset, Mut<t_tMember>>
+		,	Member<t_vOffset, t_tMember>
 		)
 		noexcept
 	->	decltype(auto)
@@ -164,50 +134,13 @@ export namespace
 	(	operator->*
 	)	(	Bit<t_vBytes> const
 			&	i_rObject
-		,	Member<t_vOffset, t_tData const>
+		,	Member<t_vOffset, t_tData>
 				i_vMember
 		)
 		noexcept
 	->	decltype(auto)
 	{
 		static_assert
-		(	(	BitAlign_Of<t_tData>
-			>	0_align
-			)
-		and	(	BitAlign_Of<t_tData>
-			<	4_align
-			)
-		,	"Attempted to access misaligned bit field!"
-		);
-
-		return
-			static_cast<::std::byte const(&)[]>
-			(	i_rObject
-				.	Buffer
-			)
-		->*	i_vMember
-		;
-	}
-
-	template
-		<	ByteSize
-				t_vBytes
-		,	BitSize
-				t_vOffset
-		,	typename
-				t_tData
-		>
-	[[nodiscard]]
-	auto constexpr inline
-	(	operator->*
-	)	(	Bit<t_vBytes> const
-			&	i_rObject
-		,	Member<t_vOffset, Mut<t_tData>>
-				i_vMember
-		)
-		noexcept
-	->	decltype(auto)
-	{	static_assert
 		(	(	BitAlign_Of<t_tData>
 			>	0_align
 			)
@@ -289,7 +222,7 @@ export namespace
 	(	operator->*
 	)	(	Fork<t_tpData...> const
 			&	i_rObject
-		,	Member<t_vOffset, t_tData const>
+		,	Member<t_vOffset, t_tData>
 				i_vMember
 		)
 		noexcept
@@ -320,57 +253,7 @@ export namespace
 			->*	Member
 				<	t_vOffset
 				-	vNorthSize
-				,	t_tData const
-				>{}
-			;
-		}
-	}
-
-	template
-		<	typename
-			...	t_tpData
-		,	BitSize
-				t_vOffset
-		,	typename
-				t_tData
-		>
-	[[nodiscard]]
-	auto constexpr inline
-	(	operator->*
-	)	(	Fork<t_tpData...> const
-			&	i_rObject
-		,	Member<t_vOffset, Mut<t_tData>>
-				i_vMember
-		)
-		noexcept
-	->	decltype(auto)
-	{
-		auto static constexpr
-			vNorthSize
-		=	BitSize_Of
-			<	typename
-				Fork<t_tpData...>
-				::	NorthType
-			>
-		;
-		if	constexpr
-			(	vNorthSize
-			>	t_vOffset
-			)
-		{	return
-				i_rObject
-				.	NorthArea
-			->*	i_vMember
-			;
-		}
-		else
-		{	return
-				i_rObject
-				.	SouthArea
-			->*	Member
-				<	t_vOffset
-				-	vNorthSize
-				,	Mut<t_tData>
+				,	t_tData
 				>{}
 			;
 		}
@@ -443,7 +326,7 @@ export namespace
 	(	operator->*
 	)	(	Group<t_tNorth, t_tSouth> const
 			&	i_rObject
-		,	Member<t_vOffset, t_tData const>
+		,	Member<t_vOffset, t_tData>
 				i_vMember
 		)
 		noexcept
@@ -474,59 +357,7 @@ export namespace
 			->*	Member
 				<	t_vOffset
 				-	vNorthSize
-				,	t_tData const
-				>{}
-			;
-		}
-	}
-
-	template
-		<	typename
-				t_tNorth
-		,	typename
-				t_tSouth
-		,	BitSize
-				t_vOffset
-		,	typename
-				t_tData
-		>
-	[[nodiscard]]
-	auto constexpr inline
-	(	operator->*
-	)	(	Group<t_tNorth, t_tSouth> const
-			&	i_rObject
-		,	Member<t_vOffset, Mut<t_tData>>
-				i_vMember
-		)
-		noexcept
-	->	decltype(auto)
-	{
-		auto static constexpr
-			vNorthSize
-		=	BitSize_Of
-			<	typename
-				Group<t_tNorth, t_tSouth>
-				::	NorthType
-			>
-		;
-		if	constexpr
-			(	vNorthSize
-			>	t_vOffset
-			)
-		{	return
-				i_rObject
-				.	NorthArea
-			->*	i_vMember
-			;
-		}
-		else
-		{	return
-				i_rObject
-				.	SouthArea
-			->*	Member
-				<	t_vOffset
-				-	vNorthSize
-				,	Mut<t_tData>
+				,	t_tData
 				>{}
 			;
 		}

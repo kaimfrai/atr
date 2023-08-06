@@ -28,7 +28,6 @@ export import ATR.Offset.Field;
 export import ATR.Offset.FieldArray;
 export import ATR.Offset.Layout;
 export import ATR.Offset.Member;
-export import ATR.Offset.Mutable;
 export import ATR.Offset.Object;
 export import ATR.Virtual.Element;
 export import ATR.Virtual.Entry;

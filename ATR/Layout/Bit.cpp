@@ -16,8 +16,7 @@ export namespace
 	struct
 		Bit
 	{
-		// Must be mutable in case one bitfield is mutable
-		::std::byte mutable
+		::std::byte
 			Buffer
 			[	t_vBytes
 				.	get

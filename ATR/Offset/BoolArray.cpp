@@ -19,9 +19,9 @@ export namespace
 {
 	template
 		<	auto
-				t_nOffset
+				t_vOffset
 		,	USize
-				t_nExtent
+				t_vExtent
 		>
 	[[nodiscard]]
 	auto constexpr inline
@@ -30,8 +30,8 @@ export namespace
 			(&	i_rObject
 			)	[]
 		,	Member
-			<	t_nOffset
-			,	bool[t_nExtent]
+			<	t_vOffset
+			,	bool[t_vExtent]
 			>
 		)
 		noexcept
@@ -39,9 +39,9 @@ export namespace
 	{	return
 			i_rObject
 		->*	Member
-			<	t_nOffset
+			<	t_vOffset
 			,	Field<1_bit>
-					[	t_nExtent
+					[	t_vExtent
 					]
 			>{}
 		;
@@ -49,9 +49,9 @@ export namespace
 
 	template
 		<	auto
-				t_nOffset
+				t_vOffset
 		,	USize
-				t_nExtent
+				t_vExtent
 		>
 	[[nodiscard]]
 	auto constexpr inline
@@ -60,9 +60,9 @@ export namespace
 			(&	i_rObject
 			)	[]
 		,	Member
-			<	t_nOffset
-			,	bool const
-					[	t_nExtent
+			<	t_vOffset
+			,	bool
+					[	t_vExtent
 					]
 			>
 		)
@@ -71,9 +71,9 @@ export namespace
 	{	return
 			i_rObject
 		->*	Member
-			<	t_nOffset
-			,	Field<1_bit> const
-					[	t_nExtent
+			<	t_vOffset
+			,	Field<1_bit>
+					[	t_vExtent
 					]
 			>{}
 		;

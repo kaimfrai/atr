@@ -36,7 +36,7 @@ export namespace
 	)	(	::std::byte const
 			(&
 			)	[]
-		,	Member<0_bit, t_tData const>
+		,	Member<0_bit, t_tData>
 		)
 		noexcept
 	->	t_tData
@@ -86,7 +86,7 @@ export namespace
 	)	(	::std::byte const
 			(&	i_rObject
 			)	[]
-		,	Member<t_vOffset, t_tData const>
+		,	Member<t_vOffset, t_tData>
 		)
 		noexcept
 	->	t_tData const&

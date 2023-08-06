@@ -6,16 +6,13 @@ import ATR.Offset.Field;
 import ATR.Offset.FieldArray;
 import ATR.Offset.Layout;
 import ATR.Offset.Member;
-import ATR.Offset.Mutable;
 import ATR.Offset.Object;
 import ATR.Member.Info;
 
 import Meta.Memory.Size;
-import Meta.Token.Specifier;
 import Meta.Token.Type;
 
 using ::Meta::BitSize;
-using ::Meta::Specifier::Mut;
 using ::Meta::RestoreTypeEntity;
 
 export namespace
@@ -23,98 +20,26 @@ export namespace
 {
 	template
 		<	BitSize
-				t_nOffset
+				t_vOffset
 		,	typename
 				t_tData
 		>
 	struct
 		Offset
-	:	Offset
-		<	t_nOffset
-		,	t_tData const
-		>
 	{
-		using
-			Offset
-			<	t_nOffset
-			,	t_tData const
-			>
-		::	operator()
-		;
-
 		[[nodiscard]]
 		auto static constexpr inline
 		(	operator()
 		)	(	auto
-				&	i_rObject
+				&&	i_rObject
 			)
 			noexcept
 		->	decltype(auto)
 		{	return
-				i_rObject
+				static_cast<decltype(i_rObject)>(i_rObject)
 			->*	::ATR::Offset::Member
-				<	t_nOffset
+				<	t_vOffset
 				,	t_tData
-				>{}
-			;
-		}
-	};
-
-	template
-		<	BitSize
-				t_nOffset
-		,	typename
-				t_tData
-		>
-	struct
-		Offset
-		<	t_nOffset
-		,	t_tData const
-		>
-	{
-		[[nodiscard]]
-		auto static constexpr inline
-		(	operator()
-		)	(	auto const
-				&	i_rObject
-			)
-			noexcept
-		->	decltype(auto)
-		{	return
-				i_rObject
-			->*	::ATR::Offset::Member
-				<	t_nOffset
-				,	t_tData const
-				>{}
-			;
-		}
-	};
-
-	template
-		<	BitSize
-				t_nOffset
-		,	typename
-				t_tData
-		>
-	struct
-		Offset
-		<	t_nOffset
-		,	Mut<t_tData>
-		>
-	{
-		[[nodiscard]]
-		auto static constexpr inline
-		(	operator()
-		)	(	auto const
-				&	i_rObject
-			)
-			noexcept
-		->	decltype(auto)
-		{	return
-				i_rObject
-			->*	::ATR::Offset::Member
-				<	t_nOffset
-				,	Mut<t_tData>
 				>{}
 			;
 		}

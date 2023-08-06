@@ -4,7 +4,6 @@ add_single_file_modules(
 	Bool.cpp
 	FieldArray.cpp
 	BoolArray.cpp
-	Mutable.cpp
 	Object.cpp
 	Layout.cpp
 	Offset.cpp

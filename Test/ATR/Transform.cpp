@@ -11,34 +11,22 @@ import Meta.Bit.Field;
 import Meta.ID;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size;
-import Meta.Token.Const;
 import Meta.Token.Extent;
-import Meta.Token.Mutable;
-import Meta.Token.Specifier;
-import Meta.Token.Type;
-import Meta.Token.TypeID;
 
 import Std;
 
 using ::ATR::Member::AlignBuffer;
 using ::ATR::Member::ConfigData;
 using ::ATR::Member::Config_Of;
-using ::ATR::Member::CountedBuffer;
 using ::ATR::Member::CountedType;
 using ::ATR::Member::TypeBufferSize;
 
 using ::Meta::Bit::Field;
 using ::Meta::ID;
-using ::Meta::Specifier::Mut;
-using ::Meta::TypeID;
 
 using namespace ::Meta::Literals;
 
 using Single = ID<"Single">;
-using Const = ID<"Const">;
-using TransformedConst = ID<"TransformedConst">;
-using Mutable = ID<"Mutable">;
-using TransformedMutable = ID<"TransformedMutable">;
 using Array = ID<"Array">;
 using TransformedArray = ID<"TransformedArray">;
 
@@ -57,68 +45,6 @@ namespace
 		.	Member("Int", Type<int>)
 		.	Member("Bool", Type<bool>)
 		.	Member("Field", Type<Field<3_bit>>)
-		;
-	}
-
-	auto constexpr inline
-	(	Configure
-	)	(	auto
-			&&	o_rConfig
-		,	Const
-		)
-	->	auto&&
-	{	return
-		o_rConfig
-		.	Member("Int", Type<int const>)
-		.	Member("Bool", Type<bool const>)
-		.	Member("Field", Type<Field<3_bit> const>)
-		;
-	}
-
-	auto constexpr inline
-	(	Configure
-	)	(	auto
-			&&	o_rConfig
-		,	TransformedConst
-		)
-	->	auto&&
-	{	(void)
-		ConfigTransformer{ o_rConfig, ::Meta::Const }
-		.	Splice("Single"_id)
-		;
-		return
-			o_rConfig
-		;
-	}
-
-	auto constexpr inline
-	(	Configure
-	)	(	auto
-			&&	o_rConfig
-		,	Mutable
-		)
-	->	auto&&
-	{	return
-		o_rConfig
-		.	Member("Int", Type<Mut<int>>)
-		.	Member("Bool", Type<Mut<bool>>)
-		.	Member("Field", Type<Mut<Field<3_bit>>>)
-		;
-	}
-
-	auto constexpr inline
-	(	Configure
-	)	(	auto
-			&&	o_rConfig
-		,	TransformedMutable
-		)
-	->	auto&&
-	{	(void)
-		ConfigTransformer{ o_rConfig, ::Meta::Mutable }
-		.	Splice("Single"_id)
-		;
-		return
-			o_rConfig
 		;
 	}
 
@@ -245,24 +171,6 @@ auto constexpr inline
 		)
 	;
 }
-
-static_assert
-(	Config_Of<Single>
-!=	Config_Of<TransformedConst>
-);
-static_assert
-(	Config_Of<Const>
-==	Config_Of<TransformedConst>
-);
-
-static_assert
-(	Config_Of<Single>
-!=	Config_Of<TransformedMutable>
-);
-static_assert
-(	Config_Of<Mutable>
-==	Config_Of<TransformedMutable>
-);
 
 static_assert
 (	Config_Of<Single>
