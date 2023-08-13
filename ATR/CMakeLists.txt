@@ -8,7 +8,6 @@ add_single_file_modules(
 
 add_subdirectory(Member)
 add_subdirectory(Layout)
-add_subdirectory(Offset)
 
 add_single_file_modules(
 	DependencyIDMap.cpp

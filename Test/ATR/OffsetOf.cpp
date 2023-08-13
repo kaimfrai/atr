@@ -1,5 +1,5 @@
 import ATR.Instance;
-import ATR.Member.Offset;
+import ATR.Layout.Offset;
 
 import Meta.Bit.Array;
 import Meta.Bit.Field;
@@ -79,7 +79,13 @@ static_assert
 );
 
 static_assert
-(	::Meta::Memory::SizeOf<decltype(OffsetOfTest{}.SouthArea.Buffer)>
+(	::Meta::Memory::SizeOf
+	<	decltype
+		(	OffsetOfTest{}
+			.	Layout
+			.	SouthArea
+		)
+	>
 ==	ExpectedBufferSize
 );
 
@@ -110,7 +116,7 @@ template
 auto constexpr inline
 	MemberOffset_For
 =	Type
-	<	::ATR::Member::Offset
+	<	::ATR::Layout::Offset
 		<	t_vOffset
 		,	t_tEntity
 		>
@@ -284,6 +290,29 @@ static_assert
 
 template
 	<	typename
+			t_tErased
+	,	BitSize
+			t_vOffset
+	,	typename
+			t_tEntity
+	>
+auto constexpr inline
+	ErasureMemberType_For
+=	Type
+	<	decltype
+		(	::ATR::Layout::Offset
+			<	t_vOffset
+			,	t_tEntity
+			>{}
+				(	::std::declval<t_tErased>
+						()
+				)
+		)
+	>
+;
+
+template
+	<	typename
 			t_tOwner
 	,	BitSize
 			t_vOffset
@@ -291,23 +320,22 @@ template
 			t_tEntity
 	>
 auto constexpr inline
-	MemberType_For
+	OwnerMemberType_For
 =	Type
 	<	decltype
-		(	::std::declval
-			<	::ATR::Member::Offset
-				<	t_vOffset
-				,	t_tEntity
-				>
-			>()
-			(	::std::declval<t_tOwner>()
-			)
+		(	::std::declval<t_tOwner>
+				()
+			.	Layout
+		->*	::ATR::Layout::Offset
+			<	t_vOffset
+			,	t_tEntity
+			>{}
 		)
 	>
 ;
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte(&)[]
 	,	0_bit
 	,	int
@@ -316,16 +344,16 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte const(&)[]
 	,	0_bit
 	,	int
 	>
-==	Type<int const&>
+==	Type<int>
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest&
 	,	0_bit
 	,	int
@@ -334,16 +362,16 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
-	<	OffsetOfTest&
+(	OwnerMemberType_For
+	<	OffsetOfTest const&
 	,	0_bit
 	,	int
 	>
-==	Type<int&>
+==	Type<int>
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte(&)[]
 	,	32_bit
 	,	int
@@ -354,18 +382,18 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte const(&)[]
 	,	32_bit
 	,	int
 	>
 ==	Type
-	<	int const&
+	<	int
 	>
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest&
 	,	32_bit
 	,	int
@@ -376,18 +404,18 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest const&
 	,	32_bit
 	,	int
 	>
 ==	Type
-	<	int const&
+	<	int
 	>
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte(&)[]
 	,	64_bit
 	,	int
@@ -398,18 +426,18 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte const(&)[]
 	,	64_bit
 	,	int
 	>
 ==	Type
-	<	int const&
+	<	int
 	>
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest&
 	,	64_bit
 	,	int
@@ -420,18 +448,18 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest const&
 	,	64_bit
 	,	int
 	>
 ==	Type
-	<	int const&
+	<	int
 	>
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte(&)[]
 	,	96_bit
 	,	bool[5]
@@ -446,7 +474,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte const(&)[]
 	,	96_bit
 	,	bool[5]
@@ -460,7 +488,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest&
 	,	96_bit
 	,	bool[5]
@@ -475,7 +503,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest const&
 	,	96_bit
 	,	bool[5]
@@ -489,7 +517,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte(&)[]
 	,	101_bit
 	,	bool[5]
@@ -504,7 +532,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte const(&)[]
 	,	101_bit
 	,	bool[5]
@@ -518,7 +546,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest&
 	,	101_bit
 	,	bool[5]
@@ -533,7 +561,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest const&
 	,	101_bit
 	,	bool[5]
@@ -547,7 +575,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte(&)[]
 	,	106_bit
 	,	bool[5]
@@ -562,7 +590,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte const(&)[]
 	,	106_bit
 	,	bool[5]
@@ -576,7 +604,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest&
 	,	106_bit
 	,	bool[5]
@@ -591,7 +619,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest const&
 	,	106_bit
 	,	bool[5]
@@ -605,7 +633,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte(&)[]
 	,	111_bit
 	,	Field<3_bit>[5]
@@ -620,7 +648,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte const(&)[]
 	,	111_bit
 	,	Field<3_bit>[5]
@@ -634,7 +662,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest&
 	,	111_bit
 	,	Field<3_bit>[5]
@@ -649,7 +677,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest const&
 	,	111_bit
 	,	Field<3_bit>[5]
@@ -663,7 +691,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte(&)[]
 	,	126_bit
 	,	Field<3_bit>[5]
@@ -678,7 +706,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte const(&)[]
 	,	126_bit
 	,	Field<3_bit>[5]
@@ -692,7 +720,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest&
 	,	126_bit
 	,	Field<3_bit>[5]
@@ -707,7 +735,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest const&
 	,	126_bit
 	,	Field<3_bit>[5]
@@ -721,7 +749,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte(&)[]
 	,	141_bit
 	,	Field<3_bit>[5]
@@ -736,7 +764,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte const(&)[]
 	,	141_bit
 	,	Field<3_bit>[5]
@@ -750,7 +778,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest&
 	,	141_bit
 	,	Field<3_bit>[5]
@@ -765,7 +793,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest const&
 	,	141_bit
 	,	Field<3_bit>[5]
@@ -779,7 +807,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte(&)[]
 	,	156_bit
 	,	bool
@@ -793,7 +821,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte const(&)[]
 	,	156_bit
 	,	bool
@@ -804,7 +832,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest&
 	,	156_bit
 	,	bool
@@ -818,7 +846,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest const&
 	,	156_bit
 	,	bool
@@ -829,7 +857,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte(&)[]
 	,	157_bit
 	,	bool
@@ -843,7 +871,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte const(&)[]
 	,	157_bit
 	,	bool
@@ -854,7 +882,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest&
 	,	157_bit
 	,	bool
@@ -868,7 +896,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest const&
 	,	157_bit
 	,	bool
@@ -879,7 +907,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte(&)[]
 	,	158_bit
 	,	bool
@@ -893,7 +921,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte const(&)[]
 	,	158_bit
 	,	bool
@@ -904,7 +932,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest&
 	,	158_bit
 	,	bool
@@ -918,7 +946,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest const&
 	,	158_bit
 	,	bool
@@ -929,7 +957,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte(&)[]
 	,	159_bit
 	,	Field<3_bit>
@@ -943,7 +971,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte const(&)[]
 	,	159_bit
 	,	Field<3_bit>
@@ -954,7 +982,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest&
 	,	159_bit
 	,	Field<3_bit>
@@ -968,7 +996,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest const&
 	,	159_bit
 	,	Field<3_bit>
@@ -979,7 +1007,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte(&)[]
 	,	162_bit
 	,	Field<3_bit>
@@ -993,7 +1021,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte const(&)[]
 	,	162_bit
 	,	Field<3_bit>
@@ -1004,7 +1032,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest&
 	,	162_bit
 	,	Field<3_bit>
@@ -1018,7 +1046,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest const&
 	,	162_bit
 	,	Field<3_bit>
@@ -1029,7 +1057,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte(&)[]
 	,	165_bit
 	,	Field<3_bit>
@@ -1043,7 +1071,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	ErasureMemberType_For
 	<	::std::byte const(&)[]
 	,	165_bit
 	,	Field<3_bit>
@@ -1054,7 +1082,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest&
 	,	165_bit
 	,	Field<3_bit>
@@ -1068,7 +1096,7 @@ static_assert
 );
 
 static_assert
-(	MemberType_For
+(	OwnerMemberType_For
 	<	OffsetOfTest const&
 	,	165_bit
 	,	Field<3_bit>

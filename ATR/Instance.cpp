@@ -2,13 +2,16 @@ export module ATR.Instance;
 
 import ATR.Address;
 import ATR.Layout.Create;
+import ATR.Layout.Offset;
 import ATR.Member.Config;
-import ATR.Member.Offset;
 import ATR.Member.Storage;
 
 import Meta.ID;
 import Meta.String.Hash;
 
+using ::ATR::Layout::CreateType;
+using ::ATR::Layout::Offset_For;
+using ::ATR::Member::Config_Of;
 using ::ATR::Member::ProtoDynamicMember_Of;
 using ::ATR::Member::ProtoStaticMember_Of;
 
@@ -24,17 +27,26 @@ export namespace
 		>
 	struct
 		Instance
-	:	Layout::CreateType
-		<	t_tName
-		>
 	{
+		using
+			LayoutType
+		=	CreateType
+			<	t_tName
+			>
+		;
+
+		[[no_unique_address]]
+		LayoutType
+			Layout
+		;
+
 		t_tName static constexpr inline
 			TypeName
 		{};
 
 		auto static constexpr inline
 		&	Config
-		=	Member::Config_Of
+		=	Config_Of
 			<	t_tName
 			>
 		;
@@ -45,18 +57,11 @@ export namespace
 			>
 		using
 			Offset_Of
-		=	Member::Offset_For
+		=	Offset_For
 			<	Config
 				.	FindMemberInfo
 					(	t_vMemberName
 					)
-			>
-		;
-
-		using
-			LayoutType
-		=	Layout::CreateType
-			<	t_tName
 			>
 		;
 
@@ -69,9 +74,10 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Offset_Of<i_vMemberID>
-			{}(	*this
-			);
+				Layout
+			->*	Offset_Of<i_vMemberID>
+				{}
+			;
 		}
 
 		[[nodiscard]]
@@ -83,10 +89,10 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Offset_Of<i_vMemberID>
-			{}
-			(	*this
-			);
+				Layout
+			->*	Offset_Of<i_vMemberID>
+				{}
+			;
 		}
 
 		[[nodiscard]]
@@ -98,11 +104,12 @@ export namespace
 			noexcept
 		->	auto
 		{	return
-			Offset_Of<i_vMemberID>
-			{}(	static_cast<Instance&&>
-				(	*this
+				static_cast<LayoutType&&>
+				(	Layout
 				)
-			);
+			->*	Offset_Of<i_vMemberID>
+				{}
+			;
 		}
 
 		[[nodiscard]]
@@ -196,7 +203,6 @@ export namespace
 			);
 		}
 
-		/// call non-const member functions
 		template
 			<	ProtoID
 					t_tFunctionName

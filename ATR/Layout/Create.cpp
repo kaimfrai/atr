@@ -1,24 +1,22 @@
 export module ATR.Layout.Create;
 
-import ATR.Layout.Bit;
-import ATR.Layout.Empty;
 import ATR.Layout.Fork;
-import ATR.Layout.Group;
-import ATR.Layout.ValidateOffsets;
-import ATR.Layout.Value;
 import ATR.Member.Config;
 import ATR.Member.Constants;
 
 import Meta.ID;
 import Meta.Memory.Size;
 import Meta.Token.Type;
+import Meta.Token.TypeID;
 
 import Std;
 
-using ::Meta::BitSize;
+using ::Meta::ByteSize;
 using ::Meta::ProtoID;
 using ::Meta::RestoreTypeEntity;
+using ::Meta::RestoreTypeToken;
 using ::Meta::Type;
+using ::Meta::TypeID;
 using ::Meta::TypeToken;
 
 using namespace ::Meta::Literals;
@@ -35,108 +33,357 @@ namespace
 	[[nodiscard]]
 	auto constexpr inline
 	(	operator+
-	)	(	t_tNorth
-		,	t_tSouth
+	)	(	TypeToken<t_tNorth>
+		,	TypeToken<t_tSouth>
 		)
 		noexcept
-	->	Group
-		<	t_tNorth
-		,	t_tSouth
+	->	TypeToken
+		<	Fork
+			<	t_tNorth
+			,	t_tSouth
+			>
 		>
-	{	return
+	{
+		using
+			tLayout
+		=	Fork
+			<	t_tNorth
+			,	t_tSouth
+			>
+		;
+
+		union
+		{	alignas(tLayout)
+			::std::byte
+				Buffer
+				[	sizeof(tLayout)
+				]
+			{};
+
+			tLayout
+				Layout
+			;
+		}	constexpr
+			vUnion
 		{};
+
+		static_assert
+		(	(	static_cast<void const*>
+				(	::std::addressof
+					(	vUnion
+						.	Layout
+						.	NorthArea
+					)
+				)
+			==	static_cast<void const*>
+				(	::std::addressof
+					(	vUnion
+						.	Buffer
+							[	0uz
+							]
+					)
+				)
+			)
+		,	"Unexpected offset in NorthArea!"
+		);
+
+		static_assert
+		(	(	static_cast<void const*>
+				(	::std::addressof
+					(	vUnion
+						.	Layout
+						.	SouthArea
+					)
+				)
+			==	static_cast<void const*>
+				(	::std::addressof
+					(	vUnion
+						.	Buffer
+							[	sizeof
+								(	tLayout
+									::	NorthArea
+								)
+							]
+					)
+				)
+			)
+		,	"Unexpected offset in SouthArea!"
+		);
+
+		static_assert
+		(	::std::is_standard_layout_v
+			<	tLayout
+			>
+		,	"Layouts are required to be standard layout!"
+		);
+		static_assert
+		(	::std::is_trivially_default_constructible_v
+			<	tLayout
+			>
+		,	"Layouts are required to be trivially constructible!"
+		);
+		static_assert
+		(	::std::is_trivially_destructible_v
+			<	tLayout
+			>
+		,	"Layouts are required to be trivially destructible!"
+		);
+		static_assert
+		(	::std::is_trivially_copy_constructible_v
+			<	tLayout
+			>
+		,	"Layouts are required to be trivially constructible!"
+		);
+		static_assert
+		(	::std::is_trivially_move_constructible_v
+			<	tLayout
+			>
+		,	"Layouts are required to be trivially constructible!"
+		);
+
+		return
+			{}
+		;
+	}
+
+	struct
+		Empty
+	{
+		template
+			<	typename
+					t_tNorth
+			>
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator+
+		)	(	TypeToken<t_tNorth>
+			,	TypeToken<Empty>
+			)
+			noexcept
+		->	TypeToken<t_tNorth>
+		{	return
+				{}
+			;
+		}
+		template
+			<	typename
+					t_tSouth
+			>
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator+
+		)	(	TypeToken<Empty>
+			,	TypeToken<t_tSouth>
+			)
+			noexcept
+		->	TypeToken<t_tSouth>
+		{	return
+				{}
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator+
+		)	(	TypeToken<Empty>
+			,	TypeToken<Empty>
+			)
+			noexcept
+		->	TypeToken<Empty>
+		{	return
+				{}
+			;
+		}
+	};
+
+	[[nodiscard]]
+	auto constexpr inline
+	(	MakeFork
+	)	()
+		noexcept
+	->	TypeToken<Empty>
+	{	return
+			{}
+		;
+	}
+
+	template
+		<	typename
+				t_tElement
+		,	::std::size_t
+				t_vExtent
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	MakeFork
+	)	(	TypeToken<t_tElement[t_vExtent]>
+		)
+		noexcept
+	->	TypeToken<t_tElement[t_vExtent]>
+	{
+		static_assert
+		(	::std::is_standard_layout_v
+			<	t_tElement
+			>
+		,	"Elements are required to be standard layout!"
+		);
+		static_assert
+		(	::std::is_trivially_default_constructible_v
+			<	t_tElement
+			>
+		,	"Elements are required to be trivially constructible!"
+		);
+		static_assert
+		(	::std::is_trivially_destructible_v
+			<	t_tElement
+			>
+		,	"Elements are required to be trivially destructible!"
+		);
+		static_assert
+		(	::std::is_trivially_copy_constructible_v
+			<	t_tElement
+			>
+		,	"Elements are required to be trivially constructible!"
+		);
+		static_assert
+		(	::std::is_trivially_move_constructible_v
+			<	t_tElement
+			>
+		,	"Elements are required to be trivially constructible!"
+		);
+
+		return
+			{}
+		;
 	}
 
 	template
 		<	typename
 				t_tNorth
-		>
-	[[nodiscard]]
-	auto constexpr inline
-	(	operator+
-	)	(	t_tNorth
-		,	Empty
-		)
-		noexcept
-	->	t_tNorth
-	{	return
-		{};
-	}
-
-	template
-		<	typename
+		,	typename
 				t_tSouth
 		>
 	[[nodiscard]]
 	auto constexpr inline
-	(	operator+
-	)	(	Empty
-		,	t_tSouth
+	(	MakeFork
+	)	(	TypeToken<t_tNorth>
+				i_vNorth
+		,	TypeToken<t_tSouth>
+				i_vSouth
 		)
 		noexcept
-	->	t_tSouth
+	->	TypeToken
+		<	Fork
+			<	t_tNorth
+			,	t_tSouth
+			>
+		>
 	{	return
-		{};
+			i_vNorth
+		+	i_vSouth
+		;
 	}
 
+	template
+		<	::std::size_t
+			...	t_vpNorthIndex
+		,	::std::size_t
+			...	t_vpSouthIndex
+		,	typename
+			...	t_tpData
+		>
 	[[nodiscard]]
 	auto constexpr inline
-	(	operator+
-	)	(	Empty
-		,	Empty
+	(	SplitFork
+	)	(	::std::index_sequence
+			<	t_vpNorthIndex
+				...
+			>
+		,	::std::index_sequence
+			<	t_vpSouthIndex
+				...
+			>
+		,	TypeToken
+			<	t_tpData
+			>
+			...	i_vpData
 		)
 		noexcept
-	->	Empty
-	{	return
-			{}
-		;
-	}
-
-	[[nodiscard]]
-	auto constexpr
-	(	MakeFork
-	)	()
-		noexcept
-	->	Empty
-	{	return
-			{}
-		;
-	}
-
-	template
-		<	typename
-				t_tEntity
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	MakeFork
-	)	(	TypeToken
-			<	t_tEntity
-			>
-		)
-		noexcept
-	->	Value<t_tEntity>
-	{	return
-			{}
-		;
-	}
-
-	template
-		<	typename
-			...	t_tpEntity
-		>
-	[[nodiscard]]
-	auto constexpr
-	(	MakeFork
-	)	(	TypeToken
-			<	t_tpEntity
-			>
+	->	decltype(auto)
+	{
+		TypeID static constexpr
+			vTypes
+			[]
+		{	i_vpData
 			...
+		};
+
+		auto static constexpr
+			vNorthCount
+		=	sizeof...(t_vpNorthIndex)
+		;
+		return
+			MakeFork
+			(	RestoreTypeToken
+				<	vTypes
+						[	t_vpNorthIndex
+						]
+				>
+				...
+			)
+		+	MakeFork
+			(	RestoreTypeToken
+				<	vTypes
+						[	vNorthCount
+						+	t_vpSouthIndex
+						]
+				>
+				...
+			)
+		;
+	}
+
+	template
+		<	typename
+			...	t_tpData
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	MakeFork
+	)	(	TypeToken
+			<	t_tpData
+			>
+			...	i_vpData
 		)
 		noexcept
-	->	Fork<t_tpEntity...>
-	{	return
-			{}
+	{
+		auto static constexpr
+			vTotalCount
+		=	sizeof...(t_tpData)
+		;
+
+		auto static constexpr
+			vSouthCount
+		=	vTotalCount
+		>>	1uz
+		;
+		auto static constexpr
+			vNorthCount
+		=	vTotalCount
+		-	vSouthCount
+		;
+
+		return
+			SplitFork
+			(	::std::make_index_sequence
+				<	vNorthCount
+				>{}
+			,	::std::make_index_sequence
+				<	vSouthCount
+				>{}
+			,	i_vpData
+				...
+			)
 		;
 	}
 
@@ -149,6 +396,7 @@ namespace
 	(	CreateLayout
 	)	()
 		noexcept
+	->	decltype(auto)
 	{	return
 		[]	<	::std::size_t
 				...	t_vpIndex
@@ -183,8 +431,8 @@ namespace
 	}
 
 	template
-		<	BitSize
-				t_vBitCount
+		<	ByteSize
+				t_vByteCount
 		>
 	[[nodiscard]]
 	auto constexpr inline
@@ -192,9 +440,14 @@ namespace
 	)	()
 		noexcept
 	{	return
-		Bit
-		<	t_vBitCount
-		>{};
+			Type
+			<	::std::byte
+					[	t_vByteCount
+						.	get
+							()
+					]
+			>
+		;
 	}
 
 	template
@@ -202,13 +455,13 @@ namespace
 	[[nodiscard]]
 	auto constexpr inline
 	(	CreateBitLayout
-		<	0_bit
+		<	0_byte
 		>
 	)	()
 		noexcept
 	{	return
-		Empty
-		{};
+			Type<Empty>
+		;
 	}
 
 	template
@@ -235,8 +488,7 @@ namespace
 			.	Layout
 		;
 		return
-		ValidateOffsets
-		((	CreateLayout
+		(	CreateLayout
 			<	rLayout
 				.	AlignTypeCounts
 				.	Buffer
@@ -249,7 +501,7 @@ namespace
 				.	BitCount
 					()
 			>()
-		));
+		);
 	}
 }
 
@@ -264,9 +516,11 @@ export namespace
 		CreateType
 	=	decltype
 		(	CreateLayout_For<t_tTypeName>
-			(	::std::make_index_sequence<Member::AlignmentCount>
-				{}
+			(	::std::make_index_sequence
+				<	Member::AlignmentCount
+				>{}
 			)
 		)
+	::	Entity
 	;
 }
