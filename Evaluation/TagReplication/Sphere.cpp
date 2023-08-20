@@ -9,7 +9,7 @@ export namespace
 	struct
 		Sphere
 	{
-		ETag
+		ETag static constexpr inline
 			Tag
 		=	ETag::Sphere
 		;

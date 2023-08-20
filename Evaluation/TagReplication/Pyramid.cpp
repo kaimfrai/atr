@@ -9,7 +9,7 @@ export namespace
 	struct
 		Pyramid
 	{
-		ETag
+		ETag static constexpr inline
 			Tag
 		=	ETag::Pyramid
 		;

@@ -9,7 +9,7 @@ export namespace
 	struct
 		Triangle
 	{
-		ETag
+		ETag static constexpr inline
 			Tag
 		=	ETag::Triangle
 		;

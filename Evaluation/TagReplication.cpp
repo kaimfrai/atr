@@ -36,238 +36,72 @@ namespace
 	using ::Bodies3D::Ellipsoid;
 	using ::Bodies3D::Head;
 
-	struct
-		VolumeComputer
+	union
+		Body3D
 	{
-		union
-		{	ETag
-				m_vTag
-			;
-			Circle
-				m_vCircle
-			;
-			Ellipse
-				m_vEllipse
-			;
-			Rectangle
-				m_vRectangle
-			;
-			Square
-				m_vSquare
-			;
-			Triangle
-				m_vTriangle
-			;
-			Cube
-				m_vCube
-			;
-			Cuboid
-				m_vCuboid
-			;
-			Pyramid
-				m_vPyramid
-			;
-			Sphere
-				m_vSphere
-			;
-			Cylinder
-				m_vCylinder
-			;
-			Cone
-				m_vCone
-			;
-			Ellipsoid
-				m_vEllipsoid
-			;
-			Head
-				m_vHead
-			;
-		};
+		Circle
+			m_vCircle
+		;
+		Ellipse
+			m_vEllipse
+		;
+		Rectangle
+			m_vRectangle
+		;
+		Square
+			m_vSquare
+		;
+		Triangle
+			m_vTriangle
+		;
+		Cube
+			m_vCube
+		;
+		Cuboid
+			m_vCuboid
+		;
+		Pyramid
+			m_vPyramid
+		;
+		Sphere
+			m_vSphere
+		;
+		Cylinder
+			m_vCylinder
+		;
+		Cone
+			m_vCone
+		;
+		Ellipsoid
+			m_vEllipsoid
+		;
+		Head
+			m_vHead
+		;
+	};
 
-		constexpr inline
-		(	compl
-			VolumeComputer
-		)	()
-			noexcept
-		{	switch
-				(	m_vTag
-				)
-			{	case
-					ETag::Head
-				:	m_vHead
-					.	compl
-						Head
-						()
-					;
-					[[fallthrough]];
-				case
-					ETag::Circle
-				:	[[fallthrough]];
-				case
-					ETag::Ellipse
-				:	[[fallthrough]];
-				case
-					ETag::Rectangle
-				:	[[fallthrough]];
-				case
-					ETag::Square
-				:	[[fallthrough]];
-				case
-					ETag::Triangle
-				:	[[fallthrough]];
-				case
-					ETag::Cube
-				:	[[fallthrough]];
-				case
-					ETag::Cuboid
-				:	[[fallthrough]];
-				case
-					ETag::Pyramid
-				:	[[fallthrough]];
-				case
-					ETag::Sphere
-				:	[[fallthrough]];
-				case
-					ETag::Cylinder
-				:	[[fallthrough]];
-				case
-					ETag::Cone
-				:	[[fallthrough]];
-				case
-					ETag::Ellipsoid
-				:	break;
-			}
-		}
+	auto constexpr inline
+		BodySize
+	=	static_cast<::std::int32_t>
+		(	sizeof(Body3D)
+		)
+	;
+	auto constexpr inline
+		TagSize
+	=	static_cast<::std::int32_t>
+		(	sizeof(ETag)
+		)
+	;
 
-		explicit(false) constexpr inline
-		(	VolumeComputer
-		)	(	::std::in_place_type_t
-				<	Circle
-				>
-			)
-		:	m_vCircle
-			{}
-		{}
-
-		explicit(false) constexpr inline
-		(	VolumeComputer
-		)	(	::std::in_place_type_t
-				<	Ellipse
-				>
-			)
-		:	m_vEllipse
-			{}
-		{}
-
-		explicit(false) constexpr inline
-		(	VolumeComputer
-		)	(	::std::in_place_type_t
-				<	Rectangle
-				>
-			)
-		:	m_vRectangle
-			{}
-		{}
-
-		explicit(false) constexpr inline
-		(	VolumeComputer
-		)	(	::std::in_place_type_t
-				<	Square
-				>
-			)
-		:	m_vSquare
-			{}
-		{}
-
-		explicit(false) constexpr inline
-		(	VolumeComputer
-		)	(	::std::in_place_type_t
-				<	Triangle
-				>
-			)
-		:	m_vTriangle
-			{}
-		{}
-
-		explicit(false) constexpr inline
-		(	VolumeComputer
-		)	(	::std::in_place_type_t
-				<	Cube
-				>
-			)
-		:	m_vCube
-			{}
-		{}
-
-		explicit(false) constexpr inline
-		(	VolumeComputer
-		)	(	::std::in_place_type_t
-				<	Cuboid
-				>
-			)
-		:	m_vCuboid
-			{}
-		{}
-
-		explicit(false) constexpr inline
-		(	VolumeComputer
-		)	(	::std::in_place_type_t
-				<	Pyramid
-				>
-			)
-		:	m_vPyramid
-			{}
-		{}
-
-		explicit(false) constexpr inline
-		(	VolumeComputer
-		)	(	::std::in_place_type_t
-				<	Sphere
-				>
-			)
-		:	m_vSphere
-			{}
-		{}
-
-		explicit(false) constexpr inline
-		(	VolumeComputer
-		)	(	::std::in_place_type_t
-				<	Cylinder
-				>
-			)
-		:	m_vCylinder
-			{}
-		{}
-
-		explicit(false) constexpr inline
-		(	VolumeComputer
-		)	(	::std::in_place_type_t
-				<	Cone
-				>
-			)
-		:	m_vCone
-			{}
-		{}
-
-		explicit(false) constexpr inline
-		(	VolumeComputer
-		)	(	::std::in_place_type_t
-				<	Ellipsoid
-				>
-			)
-		:	m_vEllipsoid
-			{}
-		{}
-
-		explicit(false) constexpr inline
-		(	VolumeComputer
-		)	(	::std::in_place_type_t
-				<	Head
-				>
-			)
-		:	m_vHead
-			{}
-		{}
+	struct
+		Body3DReference
+	{
+		::std::byte
+		*	m_aData
+		;
+		ETag
+			m_vTag
+		;
 
 		[[nodiscard]]
 		auto constexpr inline
@@ -283,107 +117,354 @@ namespace
 					ETag::Circle
 				:	return
 						ComputeVolumeCircle
-						(	&m_vCircle
+						(	m_aData
 						)
 					;
 				case
 					ETag::Ellipse
 				:	return
 						ComputeVolumeEllipse
-						(	&
-							m_vEllipse
+						(	m_aData
 						)
 					;
 				case
 					ETag::Rectangle
 				:	return
 						ComputeVolumeRectangle
-						(	&
-							m_vRectangle
+						(	m_aData
 						)
 					;
 				case
 					ETag::Square
 				:	return
 						ComputeVolumeSquare
-						(	&
-							m_vSquare
+						(	m_aData
 						)
 					;
 				case
 					ETag::Triangle
 				:	return
 						ComputeVolumeTriangle
-						(	&
-							m_vTriangle
+						(	m_aData
 						)
 					;
 				case
 					ETag::Cube
 				:	return
 						ComputeVolumeCube
-						(	&
-							m_vCube
+						(	m_aData
 						)
 					;
 				case
 					ETag::Cuboid
 				:	return
 						ComputeVolumeCuboid
-						(	&
-							m_vCuboid
+						(	m_aData
 						)
 					;
 				case
 					ETag::Pyramid
 				:	return
 						ComputeVolumePyramid
-						(	&
-							m_vPyramid
+						(	m_aData
 						)
 					;
 				case
 					ETag::Sphere
 				:	return
 						ComputeVolumeSphere
-						(	&
-							m_vSphere
+						(	m_aData
 						)
 					;
 				case
 					ETag::Cylinder
 				:	return
 						ComputeVolumeCylinder
-						(	&
-							m_vCylinder
+						(	m_aData
 						)
 					;
 				case
 					ETag::Cone
 				:	return
 						ComputeVolumeCone
-						(	&
-							m_vCone
+						(	m_aData
 						)
 					;
 				case
 					ETag::Ellipsoid
 				:	return
 						ComputeVolumeEllipsoid
-						(	&
-							m_vEllipsoid
+						(	m_aData
 						)
 					;
 				case
 					ETag::Head
 				:	return
 						ComputeVolumeSphere
-						(	&
-							m_vHead
-							.	Sphere
+						(	m_aData
 						)
 					;
 			}
+		}
+	};
+
+	struct
+		Body3DSentinel
+	{
+		::std::byte
+		*	m_aDataEnd
+		;
+	};
+
+	struct
+		Body3DIterator
+	{
+		::std::byte
+		*	m_aData
+		;
+		::std::byte
+		*	m_aTag
+		;
+
+		auto constexpr inline
+		(	operator++
+		)	()	&
+			noexcept
+		->	Body3DIterator
+		{
+			m_aData
+			+=	BodySize
+			;
+			m_aTag
+			+=	TagSize
+			;
+			return
+				*this
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	operator*
+		)	()	&
+			noexcept
+		->	Body3DReference
+		{	return
+			{	m_aData
+			,	*
+				::std::launder
+				(	::std::bit_cast<ETag*>
+					(	m_aTag
+					)
+				)
+			};
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator==
+		)	(	Body3DIterator
+					i_vIterator
+			,	Body3DSentinel
+					i_aSentinel
+			)
+			noexcept
+		->	bool
+		{	return
+				i_vIterator
+				.	m_aData
+			==	i_aSentinel
+				.	m_aDataEnd
+			;
+		}
+	};
+
+
+	struct
+		VolumeComputer
+	{
+		::std::byte
+		*	m_aBuffer
+		;
+
+		::std::int32_t
+			m_vCount
+		;
+
+		::std::int32_t
+			m_vCapacity
+		;
+
+	public:
+		explicit(true) constexpr inline
+		(	VolumeComputer
+		)	(	::std::int32_t
+					i_vCapacity
+			)
+			noexcept
+		:	m_aBuffer
+			{	new	(	::std::nothrow
+					)
+				::std::byte
+					[	static_cast<::std::size_t>
+						(	i_vCapacity
+						*	(	BodySize
+							+	TagSize
+							)
+						)
+					]
+			}
+		,	m_vCount
+			{}
+		,	m_vCapacity
+			{	i_vCapacity
+			}
+		{}
+
+		constexpr inline
+		(	compl
+			VolumeComputer
+		)	()
+			noexcept
+		{
+			auto const
+				vCount
+			=	m_vCount
+			;
+			auto const
+				aBuffer
+			=	m_aBuffer
+			;
+			auto const
+				aTagStart
+			=	aBuffer
+			+	m_vCapacity
+			*	BodySize
+			;
+
+			for	(	auto
+						vIndex
+					=	0z
+				;	(	vIndex
+					<	vCount
+					)
+				;	++	vIndex
+				)
+			{
+				if	(	auto const
+							vTag
+						=	*
+							::std::launder
+							(	::std::bit_cast<ETag*>
+								(	aTagStart
+								+	vIndex
+								*	TagSize
+								)
+							)
+					;	vTag
+					==	ETag::Head
+					)
+				{
+					auto const
+						aHeadStart
+					=	aBuffer
+					+	vIndex
+					*	BodySize
+					;
+					auto const
+						aHead
+					=	::std::launder
+						(	::std::bit_cast<Head*>
+							(	aHeadStart
+							)
+						)
+					;
+					aHead
+					->	compl
+						Head
+						()
+					;
+				}
+			}
+
+			delete[]
+				m_aBuffer
+			;
+		}
+
+		template
+			<	typename
+					t_tBody
+			>
+		auto constexpr inline
+		(	emplace_back
+		)	(	::std::in_place_type_t
+				<	t_tBody
+				>
+			)	&
+			noexcept
+		{
+			auto const
+				vCount
+			=	m_vCount
+				++
+			;
+			auto const
+				aBuffer
+			=	m_aBuffer
+			;
+			auto const
+				aTagStart
+			=	aBuffer
+			+	m_vCapacity
+			*	BodySize
+			;
+
+			::std::construct_at
+			(	::std::bit_cast<t_tBody*>
+				(	aBuffer
+				+	vCount
+				*	BodySize
+				)
+			);
+			::std::construct_at
+			(	::std::bit_cast<ETag*>
+				(	aTagStart
+				+	vCount
+				*	TagSize
+				)
+			,	t_tBody
+				::	Tag
+			);
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	begin
+		)	()	&
+			noexcept
+		->	Body3DIterator
+		{	return
+			{	m_aBuffer
+			,	(	m_aBuffer
+				+	m_vCapacity
+				*	BodySize
+				)
+			};
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	end
+		)	()	&
+			noexcept
+		->	Body3DSentinel
+		{	return
+			{	(	m_aBuffer
+				+	m_vCapacity
+				*	BodySize
+				)
+			};
 		}
 	};
 }
@@ -431,11 +512,13 @@ auto
 	,	vRandomSequenceLength
 	};
 
-	DynamicArray<VolumeComputer>
+	VolumeComputer
 		vElements
-	{	vRandomSequence
-		.	size
-			()
+	{	static_cast<::std::int32_t>
+		(	vRandomSequence
+			.	size
+				()
+		)
 	};
 
 	for	(	auto
@@ -596,8 +679,8 @@ auto
 		vLoopSum
 	{};
 
-	for	(	auto
-			&	rBody
+	for	(	auto const
+				rBody
 			:	vElements
 		)
 	{

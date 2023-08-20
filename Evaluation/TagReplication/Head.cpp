@@ -40,11 +40,14 @@ export namespace
 	struct
 		Head
 	{
+		ETag static constexpr inline
+			Tag
+		=	ETag::Head
+		;
+
 		Sphere
 			Sphere
-		{	.	Tag
-			=	ETag::Head
-		};
+		;
 
 		HeadEyes
 		*	Eyes

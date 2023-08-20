@@ -8,7 +8,7 @@ export namespace
 	struct
 		Cuboid
 	{
-		ETag
+		ETag static constexpr inline
 			Tag
 		=	ETag::Cuboid
 		;

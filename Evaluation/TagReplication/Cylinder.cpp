@@ -9,7 +9,7 @@ export namespace
 	struct
 		Cylinder
 	{
-		ETag
+		ETag static constexpr inline
 			Tag
 		=	ETag::Cylinder
 		;

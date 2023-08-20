@@ -9,7 +9,7 @@ export namespace
 	struct
 		Circle
 	{
-		ETag
+		ETag static constexpr inline
 			Tag
 		=	ETag::Circle
 		;

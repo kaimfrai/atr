@@ -9,7 +9,7 @@ export namespace
 	struct
 		Ellipsoid
 	{
-		ETag
+		ETag static constexpr inline
 			Tag
 		=	ETag::Ellipsoid
 		;

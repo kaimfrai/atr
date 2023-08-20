@@ -8,7 +8,7 @@ export namespace
 	struct
 		Square
 	{
-		ETag
+		ETag static constexpr inline
 			Tag
 		=	ETag::Square
 		;

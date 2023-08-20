@@ -9,7 +9,7 @@ export namespace
 	struct
 		Ellipse
 	{
-		ETag
+		ETag static constexpr inline
 			Tag
 		=	ETag::Ellipse
 		;

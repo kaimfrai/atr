@@ -8,7 +8,7 @@ export namespace
 	struct
 		Rectangle
 	{
-		ETag
+		ETag static constexpr inline
 			Tag
 		=	ETag::Rectangle
 		;

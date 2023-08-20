@@ -9,7 +9,7 @@ export namespace
 	struct
 		Cone
 	{
-		ETag
+		ETag static constexpr inline
 			Tag
 		=	ETag::Cone
 		;
