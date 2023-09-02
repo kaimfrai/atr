@@ -131,8 +131,7 @@ export
 			noexcept
 		->	t_tElement*
 		{	return
-			::std::launder
-			(	::std::bit_cast
+				::std::bit_cast
 				<	t_tElement
 					*
 				>(	m_vBuffer
@@ -140,7 +139,7 @@ export
 					*	sizeof(t_tElement)
 					)
 				)
-			);
+			;
 		}
 	};
 }
