@@ -4,6 +4,12 @@ echo ""
 
 function time_build()
 {
+	if	[	-f modules/Evaluation/Dependency/DynamicArray.o ]
+	then
+		rm modules/Evaluation/Dependency/DynamicArray.o
+		rm modules/Evaluation/Dependency/DynamicArray.pcm
+	fi
+
 	if	[ -d modules/Evaluation/$1 ]
 	then
 		rm -rf modules/Evaluation/$1
