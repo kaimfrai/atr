@@ -198,36 +198,14 @@ auto
 {
 	using namespace Bodies3D;
 
-	auto const
-		vRandomSeed
-	=	::std::strtoull
-		(	i_aArgValue
-				[	1z
-				]
-		,	nullptr
-		,	10
-		)
-	;
-	auto const
-		vRandomSequenceLength
-	=	::std::strtoll
-		(	i_aArgValue
-				[	2z
-				]
-		,	nullptr
-		,	10
-		)
-	;
-
-	auto static constexpr
-		vExpectedValue
-	=	0
-	;
-
 	PseudoRandomSequence
 		vRandomSequence
-	{	vRandomSeed
-	,	vRandomSequenceLength
+	{	i_aArgValue
+		[	1z
+		]
+	,	i_aArgValue
+		[	2z
+		]
 	};
 
 	DynamicArray<AnyBody>
@@ -406,6 +384,11 @@ auto
 			)
 		;
 	}
+
+	auto static constexpr
+		vExpectedValue
+	=	0
+	;
 
 	return
 		static_cast<int>

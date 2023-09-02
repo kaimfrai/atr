@@ -6,12 +6,48 @@ import Std;
 using ::Meta::Math::Splitmix64;
 using ::Meta::Math::Xoroshiro256StarStar;
 
+[[nodiscard]]
+auto constexpr inline
+(	ParseInt
+)	(	char const
+		*	i_aString
+	)
+	noexcept
+->	int
+{
+	for	(	int
+				vResult
+			{}
+		;
+		;	vResult
+			*=	10
+		)
+	{
+		vResult
+		+=	(	*i_aString
+			-	'0'
+			)
+		;
+
+		++	i_aString
+		;
+
+		if	(	*i_aString
+			==	'\0'
+			)
+		{	return
+				vResult
+			;
+		}
+	}
+}
+
 export
 {
 	struct
 		CountedSentinel
 	{
-		::std::ptrdiff_t
+		int
 			EndCount
 		;
 	};
@@ -22,15 +58,15 @@ export
 		Xoroshiro256StarStar
 			m_vRandom
 		;
-		::std::ptrdiff_t
+		int
 			m_vCounter
-		=	0z
+		=	0
 		;
 
 	public:
 		using
 			difference_type
-		=	::std::ptrdiff_t
+		=	int
 		;
 
 		using
@@ -119,27 +155,31 @@ export
 	class
 		PseudoRandomSequence
 	{
-		::std::uint64_t
+		int
 			m_vSeed
 		;
 
-		::std::ptrdiff_t
+		int
 			m_vIterations
 		;
 
 	public:
 		explicit(true) constexpr inline
 		(	PseudoRandomSequence
-		)	(	::std::uint64_t
-					i_vSeed
-			,	::std::ptrdiff_t
-					i_vIterations
+		)	(	char const
+				*	i_aSeed
+			,	char const
+				*	i_aIterations
 			)
 		:	m_vSeed
-			{	i_vSeed
+			{	::ParseInt
+				(	i_aSeed
+				)
 			}
 		,	m_vIterations
-			{	i_vIterations
+			{	::ParseInt
+				(	i_aIterations
+				)
 			}
 		{}
 
@@ -163,7 +203,9 @@ export
 		->	CountedXoroshiro
 		{	return
 			CountedXoroshiro
-			{	m_vSeed
+			{	static_cast<::std::uint64_t>
+				(	m_vSeed
+				)
 			};
 		}
 
