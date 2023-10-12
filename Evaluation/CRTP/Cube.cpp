@@ -10,11 +10,8 @@ export namespace
 	struct
 		Cube
 	:	CubicBody
-		<	Cube
-		,	Shapes2D::Square
+		<	Shapes2D::Square
 		>
 	,	DepthIsWidth
-		<	Cube
-		>
 	{};
 }

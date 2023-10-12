@@ -11,22 +11,22 @@ export namespace
 	struct
 		Cone
 	:	ExtendedShape
-		<	Cone
-		,	Shapes2D::Circle
+		<	Shapes2D::Circle
 		>
 	,	SeparateDepth
 	{
 		[[nodiscard]]
-		auto constexpr inline
+		auto static constexpr inline
 		(	GetComputeSizeMultiplier
-		)	()	const
+		)	()
 			noexcept
 		->	float
 		{	return
-			PiFraction
-			<	1z
-			,	12z
-			>{};
+				PiFraction
+				<	1z
+				,	12z
+				>{}
+			;
 		}
 	};
 }

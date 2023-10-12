@@ -34,10 +34,6 @@ export namespace
 		;
 	};
 
-	template
-		<	typename
-				t_tShape
-		>
 	struct
 		BasicShape
 	{
@@ -51,110 +47,124 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetLateral
-		)	()	const
+		)	(	this BasicShape const
+				&	i_rShape
+			)
 			noexcept
 		->	float
 		{	return
-			Coordinates
-			.	Lateral
+				i_rShape
+				.	Coordinates
+				.	Lateral
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetVertical
-		)	()	const
+		)	(	this BasicShape const
+				&	i_rShape
+			)
 			noexcept
 		->	float
 		{	return
-			Coordinates
-			.	Vertical
+				i_rShape
+				.	Coordinates
+				.	Vertical
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetLongitudinal
-		)	()	const
+		)	(	this BasicShape const
+				&	i_rShape
+			)
 			noexcept
 		->	float
 		{	return
-			Coordinates
-			.	Longitudinal
+				i_rShape
+				.	Coordinates
+				.	Longitudinal
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetRed
-		)	()	const
+		)	(	this BasicShape const
+				&	i_rShape
+			)
 			noexcept
 		->	float
 		{	return
-			Color
-			.	Red
+				i_rShape
+				.	Color
+				.	Red
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetGreen
-		)	()	const
+		)	(	this BasicShape const
+				&	i_rShape
+			)
 			noexcept
 		->	float
 		{	return
-			Color
-			.	Green
+				i_rShape
+				.	Color
+				.	Green
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetBlue
-		)	()	const
+		)	(	this BasicShape const
+				&	i_rShape
+			)
 			noexcept
 		->	float
 		{	return
-			Color
-			.	Blue
+				i_rShape
+				.	Color
+				.	Blue
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetAlpha
-		)	()	const
+		)	(	this BasicShape const
+				&	i_rShape
+			)
 			noexcept
 		->	float
 		{	return
-			Color
-			.	Alpha
+				i_rShape
+				.	Color
+				.	Alpha
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	ComputeArea
-		)	()	const
+		)	(	this auto const
+				&	i_rShape
+			)
 			noexcept
 		->	float
-		{
-			t_tShape const
-			&	rShape
-			=	*static_cast
-				<	t_tShape const
-					*
-				>(	this
-				)
-			;
-			return
-				rShape
+		{	return
+				i_rShape
 				.	GetComputeSizeMultiplier
 					()
-			*	rShape
+			*	i_rShape
 				.	GetHeight
 					()
-			*	rShape
+			*	i_rShape
 				.	GetWidth
 					()
 			;

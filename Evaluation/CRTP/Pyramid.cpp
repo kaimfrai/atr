@@ -10,8 +10,7 @@ export namespace
 	struct
 		Pyramid
 	:	PyramidicBody
-		<	Pyramid
-		,	Shapes2D::Triangle
+		<	Shapes2D::Triangle
 		>
 	,	SeparateDepth
 	{};

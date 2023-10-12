@@ -3,27 +3,20 @@ export module Evaluation.CRTP.DepthIsWidth;
 export namespace
 	Bodies3D
 {
-	template
-		<	typename
-				t_tBody
-		>
 	struct
 		DepthIsWidth
 	{
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetDepth
-		)	()	const
+		)	(	this auto const
+				&	i_rBody
+			)
 			noexcept
-		->	float const
-			&
+		->	float
 		{	return
-				static_cast
-				<	t_tBody const
-					*
-				>(	this
-				)
-				->	Shape2D
+				i_rBody
+				.	Shape2D
 				.	Width
 			;
 		}

@@ -9,8 +9,6 @@ export namespace
 	struct
 		Triangle
 	:	TriangularShape
-		<	Triangle
-		>
 	,	SeparateHeight
 	{};
 }

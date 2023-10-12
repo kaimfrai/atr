@@ -12,38 +12,31 @@ export namespace
 	struct
 		Shape3D
 	:	ExtendedShape
-		<	Shape3D
-			<	t_tShape
-			>
-		,	t_tShape
+		<	t_tShape
 		>
 	{
 		[[nodiscard]]
-		auto constexpr inline
+		auto static constexpr inline
 		(	GetDepth
-		)	()	const
+		)	()
 			noexcept
-		->	float const
-			&
-		{
-			float const static constexpr
-				vDepth
-			=	1.0
-			;
-			return
-				vDepth
+		->	float
+		{	return
+				1.0f
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetComputeSizeMultiplier
-		)	()	const
+		)	(	this Shape3D const
+				&	i_rShape
+			)
 			noexcept
 		->	float
 		{	return
-				this
-				->	Shape2D
+				i_rShape
+				.	Shape2D
 				.	GetComputeSizeMultiplier
 					()
 			;

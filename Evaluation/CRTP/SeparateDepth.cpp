@@ -13,12 +13,14 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetDepth
-		)	()	const
+		)	(	this SeparateDepth const
+				&	i_rThis
+			)
 			noexcept
-		->	float const
-			&
+		->	float
 		{	return
-				Depth
+				i_rThis
+				.	Depth
 			;
 		}
 	};

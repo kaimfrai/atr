@@ -9,10 +9,6 @@ export namespace
 	struct
 		Circle
 	:	CircularShape
-		<	Circle
-		>
 	,	HeightIsWidth
-		<	Circle
-		>
 	{};
 }

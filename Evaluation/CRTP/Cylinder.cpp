@@ -11,22 +11,22 @@ export namespace
 	struct
 		Cylinder
 	:	ExtendedShape
-		<	Cylinder
-		,	Shapes2D::Circle
+		<	Shapes2D::Circle
 		>
 	,	SeparateDepth
 	{
 		[[nodiscard]]
-		auto constexpr inline
+		auto static constexpr inline
 		(	GetComputeSizeMultiplier
-		)	()	const
+		)	()
 			noexcept
 		->	float
 		{	return
-			PiFraction
-			<	1z
-			,	4z
-			>{};
+				PiFraction
+				<	1z
+				,	4z
+				>{}
+			;
 		}
 	};
 }

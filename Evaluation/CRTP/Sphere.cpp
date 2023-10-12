@@ -8,7 +8,5 @@ export namespace
 	struct
 		Sphere
 	:	BasicSphere
-		<	Sphere
-		>
 	{};
 }

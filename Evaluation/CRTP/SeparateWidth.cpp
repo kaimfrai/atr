@@ -13,12 +13,14 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetWidth
-		)	()	const
+		)	(	this SeparateWidth const
+				&	i_rThis
+			)
 			noexcept
-		->	float const
-			&
+		->	float
 		{	return
-				Width
+				i_rThis
+				.	Width
 			;
 		}
 	};

@@ -3,41 +3,28 @@ export module Evaluation.CRTP.BasicBody;
 export namespace
 	Bodies3D
 {
-	template
-		<	typename
-				t_tBody
-		>
 	struct
 		BasicBody
 	{
 		[[nodiscard]]
 		auto constexpr inline
 		(	ComputeVolume
-		)	()	const
+		)	(	this auto const
+				&	i_rBody
+			)
 			noexcept
 		->	float
-		{
-			t_tBody const
-			&	rBody
-			=	*
-				static_cast
-				<	t_tBody const
-					*
-				>(	this
-				)
-			;
-
-			return
-				rBody
+		{	return
+				i_rBody
 				.	GetComputeSizeMultiplier
 					()
-			*	rBody
+			*	i_rBody
 				.	GetDepth
 					()
-			*	rBody
+			*	i_rBody
 				.	GetHeight
 					()
-			*	rBody
+			*	i_rBody
 				.	GetWidth
 					()
 			;

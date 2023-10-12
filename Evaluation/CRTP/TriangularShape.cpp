@@ -7,28 +7,23 @@ import Evaluation.CRTP.SeparateWidth;
 export namespace
 	Shapes2D
 {
-	template
-		<	typename
-				t_tShape
-		>
 	struct
 		TriangularShape
 	:	BasicShape
-		<	t_tShape
-		>
 	,	SeparateWidth
 	{
 		[[nodiscard]]
-		auto constexpr inline
+		auto static constexpr inline
 		(	GetComputeSizeMultiplier
-		)	()	const
+		)	()
 			noexcept
 		->	float
 		{	return
-			Fraction
-			<	1uz
-			,	2uz
-			>{};
+				Fraction
+				<	1uz
+				,	2uz
+				>{}
+			;
 		}
 	};
 }

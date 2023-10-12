@@ -10,8 +10,7 @@ export namespace
 	struct
 		Ellipsoid
 	:	SphericBody
-		<	Ellipsoid
-		,	Shapes2D::Ellipse
+		<	Shapes2D::Ellipse
 		>
 	,	SeparateDepth
 	{};

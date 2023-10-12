@@ -9,8 +9,6 @@ export namespace
 	struct
 		Rectangle
 	:	RectangularShape
-		<	Rectangle
-		>
 	,	SeparateHeight
 	{};
 }

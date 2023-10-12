@@ -10,8 +10,7 @@ export namespace
 	struct
 		Cuboid
 	:	CubicBody
-		<	Cuboid
-		,	Shapes2D::Rectangle
+		<	Shapes2D::Rectangle
 		>
 	,	SeparateDepth
 	{};

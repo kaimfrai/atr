@@ -7,15 +7,11 @@ export namespace
 {
 	template
 		<	typename
-				t_tBody
-		,	typename
 				t_tShape
 		>
 	struct
 		ExtendedShape
 	:	BasicBody
-		<	t_tBody
-		>
 	{
 		t_tShape
 			Shape2D
@@ -24,119 +20,144 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetLateral
-		)	()	const
+		)	(	this ExtendedShape const
+				&	i_rThis
+			)
 			noexcept
 		->	float
 		{	return
-			Shape2D
-			.	GetLateral
-				()
+				i_rThis
+				.	Shape2D
+				.	GetLateral
+					()
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetVertical
-		)	()	const
+		)	(	this ExtendedShape const
+				&	i_rThis
+			)
 			noexcept
 		->	float
 		{	return
-			Shape2D
-			.	GetVertical
-				()
+				i_rThis
+				.	Shape2D
+				.	GetVertical
+					()
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetLongitudinal
-		)	()	const
+		)	(	this ExtendedShape const
+				&	i_rThis
+			)
 			noexcept
 		->	float
 		{	return
-			Shape2D
-			.	GetLongitudinal
-				()
+				i_rThis
+				.	Shape2D
+				.	GetLongitudinal
+					()
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetRed
-		)	()	const
+		)	(	this ExtendedShape const
+				&	i_rThis
+			)
 			noexcept
 		->	float
 		{	return
-			Shape2D
-			.	GetRed
-				()
+				i_rThis
+				.	Shape2D
+				.	GetRed
+					()
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetGreen
-		)	()	const
+		)	(	this ExtendedShape const
+				&	i_rThis
+			)
 			noexcept
 		->	float
 		{	return
-			Shape2D
-			.	GetGreen
-				()
+				i_rThis
+				.	Shape2D
+				.	GetGreen
+					()
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetBlue
-		)	()	const
+		)	(	this ExtendedShape const
+				&	i_rThis
+			)
 			noexcept
 		->	float
 		{	return
-			Shape2D
-			.	GetBlue
-				()
+				i_rThis
+				.	Shape2D
+				.	GetBlue
+					()
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetAlpha
-		)	()	const
+		)	(	this ExtendedShape const
+				&	i_rThis
+			)
 			noexcept
 		->	float
 		{	return
-			Shape2D
-			.	GetAlpha
-				()
+				i_rThis
+				.	Shape2D
+				.	GetAlpha
+					()
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetHeight
-		)	()	const
+		)	(	this ExtendedShape const
+				&	i_rThis
+			)
 			noexcept
-		->	float const
-			&
+		->	float
 		{	return
-			Shape2D
-			.	GetHeight
-				()
+				i_rThis
+				.	Shape2D
+				.	GetHeight
+					()
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
-			GetWidth
-			()	const
+		(	GetWidth
+		)	(	this auto const
+				&	i_rThis
+			)
 			noexcept
-		->	float const
-			&
+		->	float
 		{	return
-			Shape2D
-			.	GetWidth
-				()
+				i_rThis
+				.	Shape2D
+				.	GetWidth
+					()
 			;
 		}
 	};

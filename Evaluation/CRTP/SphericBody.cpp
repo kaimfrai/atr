@@ -8,28 +8,26 @@ export namespace
 {
 	template
 		<	typename
-				t_tBody
-		,	typename
 				t_tShape
 		>
 	struct
 		SphericBody
 	:	ExtendedShape
-		<	t_tBody
-		,	t_tShape
+		<	t_tShape
 		>
 	{
 		[[nodiscard]]
-		auto constexpr inline
+		auto static constexpr inline
 		(	GetComputeSizeMultiplier
-		)	()	const
+		)	()
 			noexcept
 		->	float
 		{	return
-			PiFraction
-			<	1z
-			,	6z
-			>{};
+				PiFraction
+				<	1z
+				,	6z
+				>{}
+			;
 		}
 	};
 }

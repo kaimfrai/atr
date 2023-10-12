@@ -9,10 +9,6 @@ export namespace
 	struct
 		Square
 	:	RectangularShape
-		<	Square
-		>
 	,	HeightIsWidth
-		<	Square
-		>
 	{};
 }

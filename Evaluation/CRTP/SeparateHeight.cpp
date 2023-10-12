@@ -13,12 +13,14 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetHeight
-		)	()	const
+		)	(	this SeparateHeight const
+				&	i_rThis
+			)
 			noexcept
-		->	float const
-			&
+		->	float
 		{	return
-				Height
+				i_rThis
+				.	Height
 			;
 		}
 	};

@@ -9,8 +9,6 @@ export namespace
 	struct
 		Head
 	:	BasicSphere
-		<	Head
-		>
 	{
 		Sphere
 			LeftEye

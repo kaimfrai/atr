@@ -9,8 +9,6 @@ export namespace
 	struct
 		Ellipse
 	:	CircularShape
-		<	Ellipse
-		>
 	,	SeparateHeight
 	{};
 }
