@@ -118,4 +118,135 @@ export namespace
 			>
 		>
 	;
+
+	template
+	struct
+		TypeToken
+		<	void
+		>
+	;
+	template
+	struct
+		TypeToken
+		<	decltype(nullptr)
+		>
+	;
+
+	template
+	struct
+		TypeToken
+		<	bool
+		>
+	;
+
+	template
+	struct
+		TypeToken
+		<	char
+		>
+	;
+	template
+	struct
+		TypeToken
+		<	wchar_t
+		>
+	;
+	template
+	struct
+		TypeToken
+		<	char8_t
+		>
+	;
+	template
+	struct
+		TypeToken
+		<	char16_t
+		>
+	;
+	template
+	struct
+		TypeToken
+		<	char32_t
+		>
+	;
+
+	template
+	struct
+		TypeToken
+		<	unsigned char
+		>
+	;
+	template
+	struct
+		TypeToken
+		<	signed char
+		>
+	;
+	template
+	struct
+		TypeToken
+		<	unsigned short
+		>
+	;
+	template
+	struct
+		TypeToken
+		<	signed short
+		>
+	;
+	template
+	struct
+		TypeToken
+		<	unsigned int
+		>
+	;
+	template
+	struct
+		TypeToken
+		<	signed int
+		>
+	;
+	template
+	struct
+		TypeToken
+		<	unsigned long
+		>
+	;
+	template
+	struct
+		TypeToken
+		<	signed long
+		>
+	;
+	template
+	struct
+		TypeToken
+		<	unsigned long long
+		>
+	;
+	template
+	struct
+		TypeToken
+		<	signed long long
+		>
+	;
+
+	template
+	struct
+		TypeToken
+		<	float
+		>
+	;
+	template
+	struct
+		TypeToken
+		<	double
+		>
+	;
+	template
+	struct
+		TypeToken
+		<	long double
+		>
+	;
 }
