@@ -21,8 +21,7 @@ export namespace
 		(	GetDepth
 		)	()	const
 			noexcept
-		->	float const
-			&
+		->	float
 			override
 		{	return
 				Depth

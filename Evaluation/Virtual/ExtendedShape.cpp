@@ -24,9 +24,9 @@ export namespace
 			noexcept
 		->	float
 		{	return
-			Shape2D
-			.	GetLateral
-				()
+				Shape2D
+				.	GetLateral
+					()
 			;
 		}
 
@@ -37,9 +37,9 @@ export namespace
 			noexcept
 		->	float
 		{	return
-			Shape2D
-			.	GetVertical
-				()
+				Shape2D
+				.	GetVertical
+					()
 			;
 		}
 
@@ -50,9 +50,9 @@ export namespace
 			noexcept
 		->	float
 		{	return
-			Shape2D
-			.	GetLongitudinal
-				()
+				Shape2D
+				.	GetLongitudinal
+					()
 			;
 		}
 
@@ -63,9 +63,9 @@ export namespace
 			noexcept
 		->	float
 		{	return
-			Shape2D
-			.	GetRed
-				()
+				Shape2D
+				.	GetRed
+					()
 			;
 		}
 
@@ -76,9 +76,9 @@ export namespace
 			noexcept
 		->	float
 		{	return
-			Shape2D
-			.	GetGreen
-				()
+				Shape2D
+				.	GetGreen
+					()
 			;
 		}
 
@@ -89,9 +89,9 @@ export namespace
 			noexcept
 		->	float
 		{	return
-			Shape2D
-			.	GetBlue
-				()
+				Shape2D
+				.	GetBlue
+					()
 			;
 		}
 
@@ -102,9 +102,9 @@ export namespace
 			noexcept
 		->	float
 		{	return
-			Shape2D
-			.	GetAlpha
-				()
+				Shape2D
+				.	GetAlpha
+					()
 			;
 		}
 
@@ -113,13 +113,12 @@ export namespace
 		(	GetHeight
 		)	()	const
 			noexcept
-		->	float const
-			&
+		->	float
 			override
 		{	return
-			Shape2D
-			.	GetHeight
-				()
+				Shape2D
+				.	GetHeight
+					()
 			;
 		}
 
@@ -128,13 +127,12 @@ export namespace
 		(	GetWidth
 		)	()	const
 			noexcept
-		->	float const
-			&
+		->	float
 			override
 		{	return
-			Shape2D
-			.	GetWidth
-				()
+				Shape2D
+				.	GetWidth
+					()
 			;
 		}
 	};

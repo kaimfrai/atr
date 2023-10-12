@@ -23,8 +23,7 @@ export namespace
 		(	GetDepth
 		)	()	const
 			noexcept
-		->	float const
-			&
+		->	float
 			override
 		{	return
 				Depth
@@ -39,10 +38,11 @@ export namespace
 		->	float
 			override
 		{	return
-			PiFraction
-			<	1z
-			,	12z
-			>{};
+				PiFraction
+				<	1z
+				,	12z
+				>{}
+			;
 		}
 	};
 }

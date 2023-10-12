@@ -20,16 +20,10 @@ export namespace
 		(	GetDepth
 		)	()	const
 			noexcept
-		->	float const
-			&
+		->	float
 			override
-		{
-			float const static constexpr
-				vDepth
-			=	1.0
-			;
-			return
-				vDepth
+		{	return
+				1.0
 			;
 		}
 
@@ -41,10 +35,10 @@ export namespace
 		->	float
 			override
 		{	return
-			this
-			->	Shape2D
-			.	GetComputeSizeMultiplier
-				()
+				this
+				->	Shape2D
+				.	GetComputeSizeMultiplier
+					()
 			;
 		}
 	};

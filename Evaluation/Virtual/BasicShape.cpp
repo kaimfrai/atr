@@ -55,8 +55,8 @@ export namespace
 			noexcept
 		->	float
 		{	return
-			Coordinates
-			.	Lateral
+				Coordinates
+				.	Lateral
 			;
 		}
 
@@ -67,8 +67,8 @@ export namespace
 			noexcept
 		->	float
 		{	return
-			Coordinates
-			.	Vertical
+				Coordinates
+				.	Vertical
 			;
 		}
 
@@ -79,8 +79,8 @@ export namespace
 			noexcept
 		->	float
 		{	return
-			Coordinates
-			.	Longitudinal
+				Coordinates
+				.	Longitudinal
 			;
 		}
 
@@ -91,8 +91,8 @@ export namespace
 			noexcept
 		->	float
 		{	return
-			Color
-			.	Red
+				Color
+				.	Red
 			;
 		}
 
@@ -103,8 +103,8 @@ export namespace
 			noexcept
 		->	float
 		{	return
-			Color
-			.	Green
+				Color
+				.	Green
 			;
 		}
 
@@ -115,8 +115,8 @@ export namespace
 			noexcept
 		->	float
 		{	return
-			Color
-			.	Blue
+				Color
+				.	Blue
 			;
 		}
 
@@ -127,8 +127,8 @@ export namespace
 			noexcept
 		->	float
 		{	return
-			Color
-			.	Alpha
+				Color
+				.	Alpha
 			;
 		}
 

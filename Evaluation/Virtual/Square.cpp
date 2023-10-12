@@ -14,8 +14,7 @@ export namespace
 		(	GetHeight
 		)	()	const
 			noexcept
-		->	float const
-			&
+		->	float
 			override
 		{	return
 				Width

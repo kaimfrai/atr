@@ -25,10 +25,11 @@ export namespace
 		->	float
 			override
 		{	return
-			PiFraction
-			<	1z
-			,	6z
-			>{};
+				PiFraction
+				<	1z
+				,	6z
+				>{}
+			;
 		}
 	};
 }

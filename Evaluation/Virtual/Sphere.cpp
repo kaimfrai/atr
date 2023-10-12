@@ -17,13 +17,12 @@ export namespace
 		(	GetDepth
 		)	()	const
 			noexcept
-		->	float const
-			&
+		->	float
 			override
 		{	return
-			this
-			->	Shape2D
-			.	Width
+				this
+				->	Shape2D
+				.	Width
 			;
 		}
 	};

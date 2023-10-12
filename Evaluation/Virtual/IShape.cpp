@@ -11,8 +11,7 @@ export namespace
 		(	GetHeight
 		)	()	const
 			noexcept
-		->	float const
-			&
+		->	float
 		=	0;
 
 		[[nodiscard]]
@@ -20,8 +19,7 @@ export namespace
 		(	GetWidth
 		)	()	const
 			noexcept
-		->	float const
-			&
+		->	float
 		=	0;
 
 		[[nodiscard]]

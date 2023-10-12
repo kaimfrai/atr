@@ -20,8 +20,7 @@ export namespace
 		(	GetWidth
 		)	()	const
 			noexcept
-		->	float const
-			&
+		->	float
 			override
 		{	return
 				Width
@@ -36,8 +35,9 @@ export namespace
 		->	float
 			override
 		{	return
-			Fraction<>
-			{};
+				Fraction<>
+				{}
+			;
 		}
 	};
 }

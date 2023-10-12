@@ -25,10 +25,11 @@ export namespace
 		->	float
 			override
 		{	return
-			Fraction
-			<	1uz
-			,	3uz
-			>{};
+				Fraction
+				<	1uz
+				,	3uz
+				>{}
+			;
 		}
 	};
 }
