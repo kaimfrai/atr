@@ -17,7 +17,7 @@ namespace
 	// TODO Rename Const as it is no longer supported
 	auto constexpr inline
 	(	Recompose
-	)	(	auto
+	)	(	ProtoComposer auto
 			&&	o_rComposer
 		,	ID<"Benchmark1">
 		)
@@ -62,7 +62,7 @@ namespace
 
 	auto constexpr inline
 	(	Recompose
-	)	(	auto
+	)	(	ProtoComposer auto
 			&&	o_rComposer
 		,	ID<"Benchmark2">
 		)
@@ -107,7 +107,7 @@ namespace
 
 	auto constexpr inline
 	(	Recompose
-	)	(	auto
+	)	(	ProtoComposer auto
 			&&	o_rComposer
 		,	ID<"Benchmark3">
 		)
@@ -152,7 +152,7 @@ namespace
 
 	auto constexpr inline
 	(	Recompose
-	)	(	auto
+	)	(	ProtoComposer auto
 			&&	o_rComposer
 		,	ID<"Benchmark4">
 		)
@@ -197,7 +197,7 @@ namespace
 
 	auto constexpr inline
 	(	Recompose
-	)	(	auto
+	)	(	ProtoComposer auto
 			&&	o_rComposer
 		,	ID<"Benchmark5">
 		)
@@ -242,7 +242,7 @@ namespace
 
 	auto constexpr inline
 	(	Recompose
-	)	(	auto
+	)	(	ProtoComposer auto
 			&&	o_rComposer
 		,	ID<"Benchmark6">
 		)
@@ -278,7 +278,7 @@ namespace
 
 	auto constexpr inline
 	(	Recompose
-	)	(	auto
+	)	(	ProtoComposer auto
 			&&	o_rComposer
 		,	ID<"Benchmark7">
 		)
@@ -314,7 +314,7 @@ namespace
 
 	auto constexpr inline
 	(	Recompose
-	)	(	auto
+	)	(	ProtoComposer auto
 			&&	o_rComposer
 		,	ID<"Benchmark8">
 		)

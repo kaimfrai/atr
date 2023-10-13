@@ -1,6 +1,7 @@
 export module ATR.Member.FlatComposer;
 
 import ATR.Member.FlatComposition;
+import ATR.Member.PrefixGuard;
 
 import Meta.ID;
 import Meta.Size;
@@ -51,7 +52,6 @@ export namespace
 		{	""
 		};
 
-		[[nodiscard]]
 		auto constexpr inline
 		(	Alias
 		)	(	ImplicitHash
@@ -105,12 +105,12 @@ export namespace
 			}
 
 			return
-			static_cast<FlatComposer&&>
-			(	*this
-			);
+				static_cast<FlatComposer&&>
+				(	*this
+				)
+			;
 		}
 
-		[[nodiscard]]
 		auto constexpr inline
 		(	Member
 		)	(	ImplicitHash
@@ -176,48 +176,12 @@ export namespace
 			}
 
 			return
-			static_cast<FlatComposer&&>
-			(	*this
-			);
+				static_cast<FlatComposer&&>
+				(	*this
+				)
+			;
 		}
 
-		[[nodiscard]]
-		auto constexpr inline
-		(	PrefixSplice
-		)	(	ImplicitHash
-					i_vPrefix
-			,	ProtoID auto
-					i_vBaseID
-			)
-			noexcept
-		->	FlatComposer&&
-		{
-			auto const
-				vOldPrefix
-			=	Prefix
-			;
-			Prefix
-			=	vOldPrefix
-			+	//	Nested prefixes are appended
-				i_vPrefix
-			;
-
-			(void)
-			Splice
-			(	i_vBaseID
-			);
-
-			Prefix
-			=	vOldPrefix
-			;
-
-			return
-			static_cast<FlatComposer&&>
-			(	*this
-			);
-		}
-
-		[[nodiscard]]
 		auto constexpr inline
 		(	Splice
 		)	(	ProtoID auto
@@ -226,12 +190,29 @@ export namespace
 			noexcept
 		->	FlatComposer&&
 		{	return
-			Recompose
-			(	static_cast<FlatComposer&&>
-				(	*this
+				Recompose
+				(	static_cast<FlatComposer&&>
+					(	*this
+					)
+				,	i_vBaseID
 				)
-			,	i_vBaseID
-			);
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	ScopedPrefix
+		)	(	ImplicitHash
+					i_vPrefix
+			)
+			noexcept
+		->	PrefixGuard
+		{	return
+				PrefixGuard
+				{	Prefix
+				,	i_vPrefix
+				}
+			;
 		}
 	};
 }

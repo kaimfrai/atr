@@ -35,7 +35,7 @@ namespace
 {
 	auto constexpr inline
 	(	Recompose
-	)	(	auto
+	)	(	ProtoComposer auto
 			&&	o_rComposer
 		,	Single
 		)
@@ -50,7 +50,7 @@ namespace
 
 	auto constexpr inline
 	(	Recompose
-	)	(	auto
+	)	(	ProtoComposer auto
 			&&	o_rComposer
 		,	Array
 		)
@@ -65,13 +65,12 @@ namespace
 
 	auto constexpr inline
 	(	Recompose
-	)	(	auto
+	)	(	ProtoComposer auto
 			&&	o_rComposer
 		,	TransformedArray
 		)
 	->	auto&&
-	{	(void)
-		CompositionTransformer{ o_rComposer, ::Meta::Extent<5uz> }
+	{	CompositionTransformer{ o_rComposer, ::Meta::Extent<5uz> }
 		.	Splice("Single"_id)
 		;
 		return

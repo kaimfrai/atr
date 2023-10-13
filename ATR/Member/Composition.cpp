@@ -2,6 +2,7 @@ export module ATR.Member.Composition;
 
 import ATR.Member.FlatComposer;
 import ATR.Member.FlatComposition;
+import ATR.Member.ProtoComposer;
 
 import Meta.ID;
 
@@ -10,7 +11,7 @@ using ::Meta::ProtoID;
 [[nodiscard]]
 auto constexpr inline
 (	Finalize
-)	(	auto
+)	(	::ATR::Member::ProtoComposer auto
 			i_vComposer
 	)
 	noexcept
@@ -85,7 +86,7 @@ export namespace
 	template
 		<	ProtoID
 				t_tTypeName
-		,	typename
+		,	ProtoComposer
 				t_tComposer
 			=	FlatComposer
 		>

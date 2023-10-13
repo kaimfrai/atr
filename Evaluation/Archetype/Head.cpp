@@ -9,16 +9,36 @@ export namespace
 {
 	auto constexpr inline
 	(	Recompose
-	)	(	auto
+	)	(	ProtoComposer auto
 			&&	o_rComposer
 		,	ID<"Head">
 		)
 	->	auto&&
-	{	return
+	{
+		o_rComposer
+		.	Splice("Sphere"_id)
+		;
+
+		{
 			o_rComposer
-			.	Splice("Sphere"_id)
 			.	Alias("LeftEyeColorAlpha", "ColorAlpha")
-			.	PrefixSplice("LeftEye", "Sphere"_id)
+			;
+			auto const
+				_
+			=	o_rComposer
+				.	ScopedPrefix
+					(	"LeftEye"
+					)
+			;
+			o_rComposer
+			.	Splice
+				(	"Sphere"_id
+				)
+			;
+		}
+
+		{
+			o_rComposer
 			.	Alias("RightEyeColorRed", "LeftEyeColorRed")
 			.	Alias("RightEyeColorGreen", "LeftEyeColorGreen")
 			.	Alias("RightEyeColorBlue", "LeftEyeColorBlue")
@@ -26,7 +46,18 @@ export namespace
 			.	Alias("RightEyePointLongitudinal", "LeftEyePointLongitudinal")
 			.	Alias("RightEyePointVertical", "LeftEyePointVertical")
 			.	Alias("RightEyeHeight", "LeftEyeHeight")
-			.	PrefixSplice("RightEye", "Sphere"_id)
-		;
+			;
+			auto const
+				_
+			=	o_rComposer
+				.	ScopedPrefix
+					(	"RightEye"
+					)
+			;
+			return
+				o_rComposer
+				.	Splice("Sphere"_id)
+			;
+		}
 	}
 }

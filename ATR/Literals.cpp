@@ -1,5 +1,7 @@
 export module ATR.Literals;
 
+import ATR.Member.ProtoComposer;
+
 import Meta.ID;
 import Meta.Token.Type;
 
@@ -12,6 +14,7 @@ export namespace
 export namespace
 	ATR::Member
 {
+	using ::ATR::Member::ProtoComposer;
 	using ::Meta::Type;
 }
 

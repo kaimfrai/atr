@@ -1,5 +1,8 @@
 export module ATR.Member.CompositionTransformer;
 
+import ATR.Member.PrefixGuard;
+import ATR.Member.ProtoComposer;
+
 import Meta.ID;
 import Meta.String.Hash;
 import Meta.Token.Type;
@@ -14,7 +17,7 @@ export namespace
 	ATR::Member
 {
 	template
-		<	typename
+		<	ProtoComposer
 				t_tComposer
 		,	typename
 			...	t_tpTransform
@@ -40,7 +43,6 @@ export namespace
 			}
 		{}
 
-		[[nodiscard]]
 		auto constexpr inline
 		(	Alias
 		)	(	ImplicitHash
@@ -58,16 +60,16 @@ export namespace
 				)
 			;
 			return
-			static_cast<CompositionTransformer&&>
-			(	*this
-			);
+				static_cast<CompositionTransformer&&>
+				(	*this
+				)
+			;
 		}
 
 		template
 			<	typename
 					t_tEntity
 			>
-		[[nodiscard]]
 		auto constexpr inline
 		(	Member
 		)	(	ImplicitHash
@@ -78,7 +80,6 @@ export namespace
 			noexcept
 		->	CompositionTransformer&&
 		{
-			(void)
 			m_rComposer
 			.	Member
 				(	i_vMemberName
@@ -90,12 +91,12 @@ export namespace
 				)
 			;
 			return
-			static_cast<CompositionTransformer&&>
-			(	*this
-			);
+				static_cast<CompositionTransformer&&>
+				(	*this
+				)
+			;
 		}
 
-		[[nodiscard]]
 		auto constexpr inline
 		(	Splice
 		)	(	ProtoID auto
@@ -104,12 +105,29 @@ export namespace
 			noexcept
 		->	CompositionTransformer&&
 		{	return
-			Recompose
-			(	static_cast<CompositionTransformer&&>
-				(	*this
+				Recompose
+				(	static_cast<CompositionTransformer&&>
+					(	*this
+					)
+				,	i_vBaseID
 				)
-			,	i_vBaseID
-			);
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	ScopedPrefix
+		)	(	ImplicitHash
+					i_vPrefix
+			)
+			noexcept
+		->	PrefixGuard
+		{	return
+				m_rComposer
+				.	ScopedPrefix
+					(	i_vPrefix
+					)
+			;
 		}
 	};
 

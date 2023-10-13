@@ -6,6 +6,8 @@ add_single_file_modules(
 	AlignBuffer.cpp
 	LayoutList.cpp
 	FlatComposition.cpp
+	PrefixGuard.cpp
+	ProtoComposer.cpp
 	FlatComposer.cpp
 	Composition.cpp
 	Storage.cpp

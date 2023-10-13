@@ -3,4 +3,5 @@ add_single_file_modules(
 	MoveBackward.cpp
 	LowerBound.cpp
 	Insert.cpp
+	ValueGuard.cpp
 )

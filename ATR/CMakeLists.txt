@@ -1,6 +1,4 @@
 add_single_file_modules(
-	Literals.cpp
-
 	Erase.cpp
 	Dependency.cpp
 	Address.cpp
@@ -17,5 +15,6 @@ add_single_file_modules(
 add_subdirectory(Virtual)
 
 add_single_file_modules(
+	Literals.cpp
 	ATR.cpp
 )

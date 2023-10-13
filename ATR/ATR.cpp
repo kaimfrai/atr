@@ -18,6 +18,8 @@ export import ATR.Member.FlatComposer;
 export import ATR.Member.FlatComposition;
 export import ATR.Member.Info;
 export import ATR.Member.LayoutList;
+export import ATR.Member.PrefixGuard;
+export import ATR.Member.ProtoComposer;
 export import ATR.Member.Storage;
 export import ATR.Virtual.Element;
 export import ATR.Virtual.Entry;

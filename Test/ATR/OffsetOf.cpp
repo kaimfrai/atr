@@ -1,5 +1,6 @@
 import ATR.Instance;
 import ATR.Layout.Offset;
+import ATR.Member.ProtoComposer;
 
 import Meta.Bit.Array;
 import Meta.Bit.Field;
@@ -31,7 +32,7 @@ namespace
 	// TODO Rename Mut and Const as they are no longer supported
 	auto constexpr inline
 	(	Recompose
-	)	(	auto
+	)	(	ProtoComposer auto
 			&&	o_rComposer
 		,	ID<"OffsetOfTest">
 		)

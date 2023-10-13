@@ -7,7 +7,7 @@ export namespace
 {
 	auto constexpr inline
 	(	Recompose
-	)	(	auto
+	)	(	ProtoComposer auto
 			&&	o_rComposer
 		,	ID<"Color">
 		)
@@ -23,7 +23,7 @@ export namespace
 
 	auto constexpr inline
 	(	Recompose
-	)	(	auto
+	)	(	ProtoComposer auto
 			&&	o_rComposer
 		,	ID<"Point">
 		)
@@ -38,15 +38,40 @@ export namespace
 
 	auto constexpr inline
 	(	Recompose
-	)	(	auto
+	)	(	ProtoComposer auto
 			&&	o_rComposer
 		,	ID<"BasicShape">
 		)
 	->	auto&&
-	{	return
+	{
+		{	auto const
+				_
+			=	o_rComposer
+				.	ScopedPrefix
+					(	"Color"
+					)
+			;
 			o_rComposer
-			.	PrefixSplice("Color", "Color"_id)
-			.	PrefixSplice("Point", "Point"_id)
+			.	Splice
+				(	"Color"_id
+				)
+			;
+		}
+		{	auto const
+				_
+			=	o_rComposer
+				.	ScopedPrefix
+					(	"Point"
+					)
+			;
+			o_rComposer
+			.	Splice
+				(	"Point"_id
+				)
+			;
+		}
+		return
+			o_rComposer
 			.	Member("Height", Type<float>)
 			.	Member("Width", Type<float>)
 		;

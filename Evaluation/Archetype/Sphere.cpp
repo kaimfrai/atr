@@ -9,7 +9,7 @@ export namespace
 {
 	auto constexpr inline
 	(	Recompose
-	)	(	auto
+	)	(	ProtoComposer auto
 			&&	o_rComposer
 		,	ID<"Sphere">
 		)
