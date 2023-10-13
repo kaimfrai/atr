@@ -68,45 +68,18 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator[]
-		)	(	ProtoDynamicMember_Of<t_tName> auto
+		)	(	this auto
+				&&	i_rThis
+			,	ProtoDynamicMember_Of<t_tName> auto
 					i_vMemberID
-			)	&
+			)
 			noexcept
 		->	decltype(auto)
 		{	return
-				Layout
-			->*	Offset_Of<i_vMemberID>
-				{}
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	operator[]
-		)	(	ProtoDynamicMember_Of<t_tName> auto
-					i_vMemberID
-			)	const&
-			noexcept
-		->	decltype(auto)
-		{	return
-				Layout
-			->*	Offset_Of<i_vMemberID>
-				{}
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	operator[]
-		)	(	ProtoDynamicMember_Of<t_tName> auto
-					i_vMemberID
-			)	&&
-			noexcept
-		->	auto
-		{	return
-				static_cast<LayoutType&&>
-				(	Layout
+				static_cast<decltype(i_rThis)>
+				(	i_rThis
 				)
+				.	Layout
 			->*	Offset_Of<i_vMemberID>
 				{}
 			;
@@ -131,109 +104,33 @@ export namespace
 			,	typename
 				...	t_tpArgument
 			>
-		requires
-			ProtoAddress
-			<	t_tFunctionName
-			,	Instance&
-			,	t_tpArgument
-				...
-			>
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator()
-		)	(	t_tFunctionName
+		)	(	this auto
+				&&	i_rThis
+			,	t_tFunctionName
 			,	t_tpArgument
 				&&
 				...	i_rpArgument
-			)	&
+			)
 			noexcept
 		->	decltype(auto)
-		{	return
-			Address
-			<	t_tFunctionName
-			,	Instance&
-			,	t_tpArgument
-				...
-			>(	ForwardErased
-				(	this
-				)
-			,	ForwardErased
-				(	i_rpArgument
-				)
-				...
-			);
-		}
-
-		template
-			<	ProtoID
-					t_tFunctionName
-			,	typename
-				...	t_tpArgument
-			>
 		requires
 			ProtoAddress
 			<	t_tFunctionName
-			,	Instance const&
+			,	decltype(i_rThis)
 			,	t_tpArgument
 				...
 			>
-		[[nodiscard]]
-		auto constexpr inline
-		(	operator()
-		)	(	t_tFunctionName
-			,	t_tpArgument
-				&&
-				...	i_rpArgument
-			)	const&
-			noexcept
-		->	decltype(auto)
 		{	return
 			Address
 			<	t_tFunctionName
-			,	Instance const&
+			,	decltype(i_rThis)
 			,	t_tpArgument
 				...
 			>(	ForwardErased
-				(	this
-				)
-			,	ForwardErased
-				(	i_rpArgument
-				)
-				...
-			);
-		}
-
-		template
-			<	ProtoID
-					t_tFunctionName
-			,	typename
-				...	t_tpArgument
-			>
-		requires
-			ProtoAddress
-			<	t_tFunctionName
-			,	Instance&&
-			,	t_tpArgument
-				...
-			>
-		[[nodiscard]]
-		auto constexpr inline
-		(	operator()
-		)	(	t_tFunctionName
-			,	t_tpArgument
-				&&
-				...	i_rpArgument
-			)	&&
-			noexcept
-		->	decltype(auto)
-		{	return
-			Address
-			<	t_tFunctionName
-			,	Instance const&
-			,	t_tpArgument
-				...
-			>(	ForwardErased
-				(	this
+				(	i_rThis
 				)
 			,	ForwardErased
 				(	i_rpArgument

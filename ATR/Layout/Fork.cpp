@@ -38,7 +38,6 @@ export namespace
 			SouthArea
 		;
 
-		// TODO this needs to use deducing this
 		template
 			<	BitSize
 					t_vOffset
@@ -46,9 +45,9 @@ export namespace
 					t_tData
 			>
 		[[nodiscard]]
-		auto friend constexpr inline
+		auto constexpr inline
 		(	operator->*
-		)	(	auto
+		)	(	this auto
 				&&	i_rFork
 			,	Offset<t_vOffset, t_tData>
 					i_vOffset

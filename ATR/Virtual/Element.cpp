@@ -68,34 +68,9 @@ export namespace
 			>
 		auto constexpr inline
 		(	operator()
-		)	(	t_tFuncID
-					i_vFuncName
-			,	t_tpArgument
-				&&
-				...	i_rpArgument
-			)	const
-			noexcept
-		->	decltype(auto)
-		{	return
-			Dispatch
-			(	i_vFuncName
-			)(	m_vErasedElement
-			,	static_cast<t_tpArgument&&>
-				(	i_rpArgument
-				)
-				...
-			);
-		}
-
-		template
-			<	ProtoID
-					t_tFuncID
-			,	typename
-				...	t_tpArgument
-			>
-		auto constexpr inline
-		(	operator()
-		)	(	t_tFuncID
+		)	(	this auto
+				&&	i_rThis
+			,	t_tFuncID
 					i_vFuncName
 			,	t_tpArgument
 				&&
@@ -104,14 +79,21 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Dispatch
-			(	i_vFuncName
-			)(	m_vErasedElement
-			,	static_cast<t_tpArgument&&>
-				(	i_rpArgument
+				static_cast<decltype(i_rThis)>
+				(	i_rThis
 				)
-				...
-			);
+				.	Dispatch
+					(	i_vFuncName
+					)(	static_cast<decltype(i_rThis)>
+						(	i_rThis
+						)
+						.	m_vErasedElement
+					,	static_cast<t_tpArgument&&>
+						(	i_rpArgument
+						)
+						...
+					)
+			;
 		}
 	};
 }
