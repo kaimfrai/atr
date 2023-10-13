@@ -89,9 +89,9 @@ auto
 )	(	int
 	,	char const
 		*	i_aArgValue
-		[]
+			[]
 	)
--> int
+->	int
 {
 	using namespace Bodies3D;
 
