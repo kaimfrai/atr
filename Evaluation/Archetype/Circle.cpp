@@ -8,16 +8,16 @@ export namespace
 	ATR::Member
 {
 	auto constexpr inline
-	(	Configure
+	(	Recompose
 	)	(	auto
-			&&	o_rConfig
+			&&	o_rComposer
 		,	ID<"Circle">
 		)
 	->	auto&&
 	{	return
-		o_rConfig
-		.	Alias("Width", "Height")
-		.	Splice("Ellipse"_id)
+			o_rComposer
+			.	Alias("Width", "Height")
+			.	Splice("Ellipse"_id)
 		;
 	}
 }

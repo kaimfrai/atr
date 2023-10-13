@@ -1,6 +1,4 @@
-export module ATR.Member.ConfigTransformer;
-
-import ATR.Member.ConfigBuilder;
+export module ATR.Member.CompositionTransformer;
 
 import Meta.ID;
 import Meta.String.Hash;
@@ -8,52 +6,39 @@ import Meta.Token.Type;
 
 import Std;
 
-using ::Meta::String::ImplicitHash;
 using ::Meta::ProtoID;
+using ::Meta::String::ImplicitHash;
+using ::Meta::TypeToken;
 
 export namespace
 	ATR::Member
 {
 	template
 		<	typename
-				t_tConfig
+				t_tComposer
 		,	typename
 			...	t_tpTransform
 		>
 	class
-		ConfigTransformer
+		CompositionTransformer
 	{
-		t_tConfig
-		*	m_aConfig
+		t_tComposer
+		&	m_rComposer
 		;
 
 	public:
 		explicit(true) constexpr inline
-		(	ConfigTransformer
-		)	(	t_tConfig
-				&	i_rConfig
+		(	CompositionTransformer
+		)	(	t_tComposer
+				&	i_rComposer
 			,	t_tpTransform
 				...
 			)
 			noexcept
-		:	m_aConfig
-			{	::std::addressof
-				(	i_rConfig
-				)
+		:	m_rComposer
+			{	i_rComposer
 			}
 		{}
-
-		[[nodiscard]]
-		explicit(true) constexpr inline
-		(	operator
-			ConfigBuilder
-		)	()	&&
-			noexcept
-		{	return
-			static_cast<ConfigBuilder&&>
-			(	*	m_aConfig
-			);
-		}
 
 		[[nodiscard]]
 		auto constexpr inline
@@ -64,16 +49,16 @@ export namespace
 					i_vTargetName
 			)
 			noexcept
-		->	ConfigTransformer&&
+		->	CompositionTransformer&&
 		{
-			m_aConfig
-			->	Alias
+			m_rComposer
+			.	Alias
 				(	i_vMemberName
 				,	i_vTargetName
 				)
 			;
 			return
-			static_cast<ConfigTransformer&&>
+			static_cast<CompositionTransformer&&>
 			(	*this
 			);
 		}
@@ -87,15 +72,15 @@ export namespace
 		(	Member
 		)	(	ImplicitHash
 					i_vMemberName
-			,	::Meta::TypeToken<t_tEntity>
+			,	TypeToken<t_tEntity>
 					i_vType
 			)
 			noexcept
-		->	ConfigTransformer&&
+		->	CompositionTransformer&&
 		{
 			(void)
-			m_aConfig
-			->	Member
+			m_rComposer
+			.	Member
 				(	i_vMemberName
 				,	(	i_vType
 					+	...
@@ -105,7 +90,7 @@ export namespace
 				)
 			;
 			return
-			static_cast<ConfigTransformer&&>
+			static_cast<CompositionTransformer&&>
 			(	*this
 			);
 		}
@@ -117,10 +102,10 @@ export namespace
 					i_vBaseID
 			)
 			noexcept
-		->	ConfigTransformer&&
+		->	CompositionTransformer&&
 		{	return
-			Configure
-			(	static_cast<ConfigTransformer&&>
+			Recompose
+			(	static_cast<CompositionTransformer&&>
 				(	*this
 				)
 			,	i_vBaseID
@@ -130,17 +115,17 @@ export namespace
 
 	template
 		<	typename
-				t_tConfig
+				t_tComposer
 		,	typename
 			...	t_tpTransform
 		>
-	(	ConfigTransformer
-	)	(	t_tConfig
+	(	CompositionTransformer
+	)	(	t_tComposer
 		,	t_tpTransform
 			...
 		)
-	->	ConfigTransformer
-		<	t_tConfig
+	->	CompositionTransformer
+		<	t_tComposer
 		,	t_tpTransform
 			...
 		>

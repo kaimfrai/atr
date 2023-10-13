@@ -3,8 +3,8 @@ export module ATR.DependencyIDMap;
 import ATR.Dependency;
 import ATR.Erase;
 
-import Meta.Memory.Size;
 import Meta.Memory.Size.Compare;
+import Meta.Memory.Size;
 import Meta.String.Hash;
 
 using ::Meta::String::ImplicitHash;
@@ -23,7 +23,7 @@ export namespace
 	concept
 		ProtoMemberInterface
 	=(	t_tProto
-		::	Config
+		::	Composition
 		.	FindMemberInfo
 			(	t_vMemberName
 			)

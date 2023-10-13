@@ -8,16 +8,16 @@ export namespace
 	ATR::Member
 {
 	auto constexpr inline
-	(	Configure
+	(	Recompose
 	)	(	auto
-			&&	o_rConfig
+			&&	o_rComposer
 		,	ID<"BasicBody">
 		)
 	->	auto&&
 	{	return
-		o_rConfig
-		.	Splice("BasicShape"_id)
-		.	Member("Depth", Type<float>)
+			o_rComposer
+			.	Splice("BasicShape"_id)
+			.	Member("Depth", Type<float>)
 		;
 	}
 }

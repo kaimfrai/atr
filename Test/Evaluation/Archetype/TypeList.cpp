@@ -12,7 +12,7 @@ import Evaluation.Archetype.Sphere;
 import Evaluation.Archetype.Square;
 import Evaluation.Archetype.Triangle;
 
-import ATR.Member.Config;
+import ATR.Member.Composition;
 import ATR.Member.CountedType;
 
 import Meta.ID;
@@ -23,7 +23,7 @@ import Meta.Token.Type;
 
 import Std;
 
-using ::ATR::Member::Config_Of;
+using ::ATR::Member::Composition_Of;
 using ::ATR::Member::CountedType;
 using ::Meta::ID;
 using ::Meta::Memory::Alignment;
@@ -39,7 +39,7 @@ template
 	>
 ::std::span constexpr inline
 	TypeList_Of
-=	Config_Of
+=	Composition_Of
 	<	ID<t_vTypeName>
 	>
 	.	Layout

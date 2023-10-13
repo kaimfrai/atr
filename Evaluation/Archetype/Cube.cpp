@@ -8,17 +8,17 @@ export namespace
 	ATR::Member
 {
 	auto constexpr inline
-	(	Configure
+	(	Recompose
 	)	(	auto
-			&&	o_rConfig
+			&&	o_rComposer
 		,	ID<"Cube">
 		)
 	->	auto&&
 	{	return
-		o_rConfig
-		.	Alias("Depth", "Height")
-		.	Alias("Width", "Height")
-		.	Splice("Cuboid"_id)
+			o_rComposer
+			.	Alias("Depth", "Height")
+			.	Alias("Width", "Height")
+			.	Splice("Cuboid"_id)
 		;
 	}
 }

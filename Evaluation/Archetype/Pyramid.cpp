@@ -9,16 +9,16 @@ export namespace
 	ATR::Member
 {
 	auto constexpr inline
-	(	Configure
+	(	Recompose
 	)	(	auto
-			&&	o_rConfig
+			&&	o_rComposer
 		,	ID<"Pyramid">
 		)
 	->	auto&&
 	{	return
-		o_rConfig
-		.	Splice("BasicBody"_id)
-		.	Member("ComputeSizeMultiplier", Type<Fraction<1z, 3z>>)
+			o_rComposer
+			.	Splice("BasicBody"_id)
+			.	Member("ComputeSizeMultiplier", Type<Fraction<1z, 3z>>)
 		;
 	}
 }

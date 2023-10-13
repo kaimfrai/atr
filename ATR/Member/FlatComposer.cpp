@@ -1,23 +1,14 @@
-export module ATR.Member.ConfigBuilder;
+export module ATR.Member.FlatComposer;
 
-import ATR.Member.AlignBuffer;
-import ATR.Member.ConfigData;
-import ATR.Member.Constants;
-import ATR.Member.LayoutList;
+import ATR.Member.FlatComposition;
 
-import Meta.Generic.Insert;
-import Meta.Generic.LowerBound;
 import Meta.ID;
-import Meta.Memory.Constraint;
 import Meta.Size;
 import Meta.String.Hash;
 import Meta.Token.TypeID;
 
 import Std;
 
-using ::Meta::Generic::LowerBoundIndex;
-using ::Meta::Generic::StructureOfArrays::TryInsertByKey;
-using ::Meta::Memory::ByteAlign;
 using ::Meta::ProtoID;
 using ::Meta::SSize;
 using ::Meta::String::Hash;
@@ -27,101 +18,11 @@ using ::Meta::TypeID;
 export namespace
 	ATR::Member
 {
-	[[nodiscard]]
-	auto constexpr inline
-	(	Finalize
-	)	(	auto
-				i_rBuilder
-		)
-		noexcept
-	->	ConfigData
-	{
-		auto
-		&	rData
-		=	i_rBuilder
-			.	Data
-		;
-		for	(	auto
-					vIndex
-				=	0z
-			;	(	vIndex
-				<	i_rBuilder
-					.	AliasCount
-				)
-			;	++	vIndex
-			)
-		{
-			auto const
-			&	rAliasTarget
-			=	i_rBuilder
-				.	AliasTargets
-					[	vIndex
-					]
-			;
-
-			auto const
-				vAliasTargetIndex
-			=	HashFindIndex
-				(	rData
-					.	Names
-				,	rData
-					.	BucketSize
-				,	rAliasTarget
-					.	Target
-				)
-			;
-
-			rData
-			.	Types
-				[	rAliasTarget
-					.	NameIndex
-				]
-			=	rData
-				.	Types
-					[	vAliasTargetIndex
-					]
-			;
-
-			rData
-			.	TypeIndices
-				[	rAliasTarget
-					.	NameIndex
-				]
-			=	rData
-				.	TypeIndices
-					[	vAliasTargetIndex
-					]
-			;
-		}
-
-		return
-			rData
-		;
-	}
-
-	template
-		<	ProtoID
-				t_tTypeName
-		,	typename
-				t_tConfigBuilder
-		>
-	auto constexpr inline
-		BuiltConfig_Of
-	=	Finalize
-		(	Configure
-			(	t_tConfigBuilder
-				{}
-			,	t_tTypeName
-				{}
-			)
-		)
-	;
-
 	struct
-		ConfigBuilder
+		FlatComposer
 	{
-		ConfigData
-			Data
+		FlatComposition
+			Composition
 		{};
 
 		struct
@@ -137,7 +38,7 @@ export namespace
 
 		AliasTarget
 			AliasTargets
-			[	ConfigData::NameCount
+			[	FlatComposition::NameCount
 			]
 		{};
 
@@ -159,7 +60,7 @@ export namespace
 					i_vTargetName
 			)
 			noexcept
-		->	ConfigBuilder&&
+		->	FlatComposer&&
 		{
 			auto const
 				vPrefixedMemberName
@@ -170,21 +71,21 @@ export namespace
 			auto const
 				vIndex
 			=	HashFindIndex
-				(	Data
+				(	Composition
 					.	Names
-				,	Data
+				,	Composition
 					.	BucketSize
 				,	vPrefixedMemberName
 				)
 			;
 			if	(	not
-					Data
+					Composition
 					.	Names
 						[	vIndex
 						]
 				)
 			{
-				Data
+				Composition
 				.	Names
 					[	vIndex
 					]
@@ -204,7 +105,7 @@ export namespace
 			}
 
 			return
-			static_cast<ConfigBuilder&&>
+			static_cast<FlatComposer&&>
 			(	*this
 			);
 		}
@@ -218,7 +119,7 @@ export namespace
 					i_vType
 			)
 			noexcept
-		->	ConfigBuilder&&
+		->	FlatComposer&&
 		{
 			auto const
 				vPrefixedMemberName
@@ -229,28 +130,28 @@ export namespace
 			auto const
 				vInsertIndex
 			=	HashFindIndex
-				(	Data
+				(	Composition
 					.	Names
-				,	Data
+				,	Composition
 					.	BucketSize
 				,	vPrefixedMemberName
 				)
 			;
 			if	(	not
-					Data
+					Composition
 					.	Names
 						[	vInsertIndex
 						]
 				)
 			{
-				Data
+				Composition
 				.	Names
 					[	vInsertIndex
 					]
 				=	vPrefixedMemberName
 				;
 
-				Data
+				Composition
 				.	Types
 					[	vInsertIndex
 					]
@@ -259,14 +160,14 @@ export namespace
 
 				auto const
 					vTypeIndex
-				=	Data
+				=	Composition
 					.	Layout
 					.	AddType
 						(	i_vType
 						)
 				;
 
-				Data
+				Composition
 				.	TypeIndices
 					[	vInsertIndex
 					]
@@ -275,7 +176,7 @@ export namespace
 			}
 
 			return
-			static_cast<ConfigBuilder&&>
+			static_cast<FlatComposer&&>
 			(	*this
 			);
 		}
@@ -289,7 +190,7 @@ export namespace
 					i_vBaseID
 			)
 			noexcept
-		->	ConfigBuilder&&
+		->	FlatComposer&&
 		{
 			auto const
 				vOldPrefix
@@ -311,7 +212,7 @@ export namespace
 			;
 
 			return
-			static_cast<ConfigBuilder&&>
+			static_cast<FlatComposer&&>
 			(	*this
 			);
 		}
@@ -323,10 +224,10 @@ export namespace
 					i_vBaseID
 			)
 			noexcept
-		->	ConfigBuilder&&
+		->	FlatComposer&&
 		{	return
-			Configure
-			(	static_cast<ConfigBuilder&&>
+			Recompose
+			(	static_cast<FlatComposer&&>
 				(	*this
 				)
 			,	i_vBaseID

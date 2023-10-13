@@ -9,17 +9,17 @@ export namespace
 	ATR::Member
 {
 	auto constexpr inline
-	(	Configure
+	(	Recompose
 	)	(	auto
-			&&	o_rConfig
+			&&	o_rComposer
 		,	ID<"Cone">
 		)
 	->	auto&&
 	{	return
-		o_rConfig
-		.	Alias("Width", "Height")
-		.	Splice("BasicBody"_id)
-		.	Member("ComputeSizeMultiplier", Type<PiFraction<1z, 12z>>)
+			o_rComposer
+			.	Alias("Width", "Height")
+			.	Splice("BasicBody"_id)
+			.	Member("ComputeSizeMultiplier", Type<PiFraction<1z, 12z>>)
 		;
 	}
 }

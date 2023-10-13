@@ -1,4 +1,4 @@
-export module ATR.Member.ConfigData;
+export module ATR.Member.FlatComposition;
 
 import ATR.Member.Constants;
 import ATR.Member.Info;
@@ -66,7 +66,7 @@ export namespace
 	}
 
 	struct
-		ConfigData
+		FlatComposition
 	{
 		auto static constexpr inline
 			BucketSize

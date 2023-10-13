@@ -1,11 +1,11 @@
 import ATR.Literals;
 import ATR.Member.AlignBuffer;
-import ATR.Member.Config;
-import ATR.Member.ConfigData;
-import ATR.Member.ConfigTransformer;
+import ATR.Member.Composition;
+import ATR.Member.CompositionTransformer;
 import ATR.Member.Constants;
 import ATR.Member.CountedBuffer;
 import ATR.Member.CountedType;
+import ATR.Member.FlatComposition;
 
 import Meta.Bit.Field;
 import Meta.ID;
@@ -16,9 +16,9 @@ import Meta.Token.Extent;
 import Std;
 
 using ::ATR::Member::AlignBuffer;
-using ::ATR::Member::ConfigData;
-using ::ATR::Member::Config_Of;
+using ::ATR::Member::Composition_Of;
 using ::ATR::Member::CountedType;
+using ::ATR::Member::FlatComposition;
 using ::ATR::Member::TypeBufferSize;
 
 using ::Meta::Bit::Field;
@@ -34,48 +34,48 @@ namespace
 	ATR::Member
 {
 	auto constexpr inline
-	(	Configure
+	(	Recompose
 	)	(	auto
-			&&	o_rConfig
+			&&	o_rComposer
 		,	Single
 		)
 	->	auto&&
 	{	return
-		o_rConfig
-		.	Member("Int", Type<int>)
-		.	Member("Bool", Type<bool>)
-		.	Member("Field", Type<Field<3_bit>>)
+			o_rComposer
+			.	Member("Int", Type<int>)
+			.	Member("Bool", Type<bool>)
+			.	Member("Field", Type<Field<3_bit>>)
 		;
 	}
 
 	auto constexpr inline
-	(	Configure
+	(	Recompose
 	)	(	auto
-			&&	o_rConfig
+			&&	o_rComposer
 		,	Array
 		)
 	->	auto&&
 	{	return
-		o_rConfig
-		.	Member("Int", Type<int[5]>)
-		.	Member("Bool", Type<bool[5]>)
-		.	Member("Field", Type<Field<3_bit>[5]>)
+			o_rComposer
+			.	Member("Int", Type<int[5]>)
+			.	Member("Bool", Type<bool[5]>)
+			.	Member("Field", Type<Field<3_bit>[5]>)
 		;
 	}
 
 	auto constexpr inline
-	(	Configure
+	(	Recompose
 	)	(	auto
-			&&	o_rConfig
+			&&	o_rComposer
 		,	TransformedArray
 		)
 	->	auto&&
 	{	(void)
-		ConfigTransformer{ o_rConfig, ::Meta::Extent<5uz> }
+		CompositionTransformer{ o_rComposer, ::Meta::Extent<5uz> }
 		.	Splice("Single"_id)
 		;
 		return
-			o_rConfig
+			o_rComposer
 		;
 	}
 }
@@ -127,9 +127,9 @@ auto constexpr inline
 [[nodiscard]]
 auto constexpr inline
 (	operator==
-)	(	ConfigData const
+)	(	FlatComposition const
 		&	i_rLeft
-	,	ConfigData const
+	,	FlatComposition const
 		&	i_rRight
 	)
 	noexcept
@@ -173,10 +173,10 @@ auto constexpr inline
 }
 
 static_assert
-(	Config_Of<Single>
-!=	Config_Of<TransformedArray>
+(	Composition_Of<Single>
+!=	Composition_Of<TransformedArray>
 );
 static_assert
-(	Config_Of<Array>
-==	Config_Of<TransformedArray>
+(	Composition_Of<Array>
+==	Composition_Of<TransformedArray>
 );

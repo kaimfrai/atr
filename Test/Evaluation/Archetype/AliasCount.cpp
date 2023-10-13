@@ -12,14 +12,14 @@ import Evaluation.Archetype.Sphere;
 import Evaluation.Archetype.Square;
 import Evaluation.Archetype.Triangle;
 
-import ATR.Member.Config;
+import ATR.Member.Composition;
 
 import Meta.ID;
 import Meta.String.Literal;
 
 import Std;
 
-using ::ATR::Member::Config_Of;
+using ::ATR::Member::Composition_Of;
 
 using ::Meta::ID;
 using ::Meta::String::Literal;
@@ -32,25 +32,25 @@ auto constexpr inline
 	AliasCount
 =	[]
 	{	auto const
-		&	rConfig
-		=	Config_Of
+		&	rComposition
+		=	Composition_Of
 			<	ID<t_vTypeName>
 			>
 		;
 
 		auto const
 		&	rLayout
-		=	rConfig
+		=	rComposition
 			.	Layout
 		;
 
 		return
 			::std::count_if
-			(	rConfig
+			(	rComposition
 				.	Types
-			,	(	rConfig
+			,	(	rComposition
 					.	Types
-				+	rConfig
+				+	rComposition
 					.	NameCount
 				)
 			,	[]	(	auto const
@@ -136,6 +136,10 @@ static_assert
 );
 static_assert
 (	AliasCount<"Cuboid">
+==	0z
+);
+static_assert
+(	AliasCount<"Pyramid">
 ==	0z
 );
 static_assert

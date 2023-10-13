@@ -1,12 +1,12 @@
 export module ATR.Member.Storage;
 
-import ATR.Member.Config;
+import ATR.Member.Composition;
 
 import Meta.ID;
 import Meta.String.Hash;
 
-using ::Meta::String::Hash;
 using ::Meta::ProtoID;
+using ::Meta::String::Hash;
 
 export namespace
 	ATR::Member
@@ -22,7 +22,7 @@ export namespace
 		noexcept
 	->	bool
 	{	return
-			Config_Of
+			Composition_Of
 			<	decltype(i_vTypeName)
 			>
 			.	FindMemberInfo

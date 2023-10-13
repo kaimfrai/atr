@@ -1,7 +1,7 @@
 export module ATR.Layout.Create;
 
 import ATR.Layout.Fork;
-import ATR.Member.Config;
+import ATR.Member.Composition;
 import ATR.Member.Constants;
 
 import Meta.ID;
@@ -482,7 +482,7 @@ namespace
 	{
 		auto static constexpr
 		&	rLayout
-		=	Member::Config_Of
+		=	Member::Composition_Of
 			<	t_tTypeName
 			>
 			.	Layout

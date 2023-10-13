@@ -1,12 +1,12 @@
 import ATR.Instance;
 import ATR.Literals;
 
-import Meta.Memory.Size;
 import Meta.Arithmetic.Integer;
 import Meta.Bit.Field;
 import Meta.Bit.Index;
 import Meta.Bit.Reference;
 import Meta.ID;
+import Meta.Memory.Size;
 
 import Std;
 
@@ -18,19 +18,19 @@ namespace
 	ATR::Member
 {
 	auto constexpr inline
-	(	Configure
+	(	Recompose
 	)	(	auto
-			&&	o_rConfig
+			&&	o_rComposer
 		,	ID<"BitFieldTest">
 		)
 	->	auto&&
 	{	// TODO Rename Mut as it is no longer supported
 		return
-		o_rConfig
-		.	Member("0BoolBit", Type<bool>)
-		.	Member("1MutBoolBit", Type<bool>)
-		.	Member("2BitField31", Type<Field<31_bit>>)
-		.	Member("3MutBitField31", Type<Field<31_bit>>)
+			o_rComposer
+			.	Member("0BoolBit", Type<bool>)
+			.	Member("1MutBoolBit", Type<bool>)
+			.	Member("2BitField31", Type<Field<31_bit>>)
+			.	Member("3MutBitField31", Type<Field<31_bit>>)
 		;
 	}
 }

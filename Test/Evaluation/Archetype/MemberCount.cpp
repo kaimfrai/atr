@@ -13,14 +13,14 @@ import Evaluation.Archetype.Sphere;
 import Evaluation.Archetype.Square;
 import Evaluation.Archetype.Triangle;
 
-import ATR.Member.Config;
+import ATR.Member.Composition;
 
 import Meta.ID;
 import Meta.String.Literal;
 
 import Std;
 
-using ::ATR::Member::Config_Of;
+using ::ATR::Member::Composition_Of;
 using ::Meta::ID;
 using ::Meta::String::Literal;
 
@@ -33,7 +33,7 @@ auto constexpr inline
 =	[]
 	{	auto const
 		&	rLayout
-		=	Config_Of
+		=	Composition_Of
 			<	ID<t_vTypeName>
 			>
 			.	Layout
@@ -108,6 +108,10 @@ static_assert
 );
 static_assert
 (	MemberCount<"Cuboid">
+==	10z
+);
+static_assert
+(	MemberCount<"Pyramid">
 ==	10z
 );
 static_assert

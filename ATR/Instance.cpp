@@ -3,7 +3,7 @@ export module ATR.Instance;
 import ATR.Address;
 import ATR.Layout.Create;
 import ATR.Layout.Offset;
-import ATR.Member.Config;
+import ATR.Member.Composition;
 import ATR.Member.Storage;
 
 import Meta.ID;
@@ -11,7 +11,7 @@ import Meta.String.Hash;
 
 using ::ATR::Layout::CreateType;
 using ::ATR::Layout::Offset_For;
-using ::ATR::Member::Config_Of;
+using ::ATR::Member::Composition_Of;
 using ::ATR::Member::ProtoDynamicMember_Of;
 using ::ATR::Member::ProtoStaticMember_Of;
 
@@ -45,8 +45,8 @@ export namespace
 		{};
 
 		auto static constexpr inline
-		&	Config
-		=	Config_Of
+		&	Composition
+		=	Composition_Of
 			<	t_tName
 			>
 		;
@@ -58,7 +58,7 @@ export namespace
 		using
 			Offset_Of
 		=	Offset_For
-			<	Config
+			<	Composition
 				.	FindMemberInfo
 					(	t_vMemberName
 					)

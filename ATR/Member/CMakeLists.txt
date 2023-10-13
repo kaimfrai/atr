@@ -5,9 +5,9 @@ add_single_file_modules(
 	CountedBuffer.cpp
 	AlignBuffer.cpp
 	LayoutList.cpp
-	ConfigData.cpp
-	ConfigBuilder.cpp
-	Config.cpp
+	FlatComposition.cpp
+	FlatComposer.cpp
+	Composition.cpp
 	Storage.cpp
-	ConfigTransformer.cpp
+	CompositionTransformer.cpp
 )

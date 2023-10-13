@@ -14,8 +14,8 @@ import Evaluation.Archetype.Triangle;
 import Evaluation.Dependency.Fraction;
 import Evaluation.Dependency.PiFraction;
 
-import ATR.Member.Config;
-import ATR.Member.ConfigData;
+import ATR.Member.Composition;
+import ATR.Member.FlatComposition;
 import ATR.Member.Info;
 
 import Meta.ID;
@@ -28,8 +28,8 @@ import Meta.Token.Type;
 
 import Std;
 
-using ::ATR::Member::ConfigData;
-using ::ATR::Member::Config_Of;
+using ::ATR::Member::Composition_Of;
+using ::ATR::Member::FlatComposition;
 using ::ATR::Member::Info;
 
 using ::Meta::ID;
@@ -48,8 +48,8 @@ using Pi_12 = PiFraction<1z, 12z>;
 struct
 	MemberInfo
 {
-	ConfigData const
-	&	Config
+	FlatComposition const
+	&	Composition
 	;
 
 	[[nodiscard]]
@@ -61,10 +61,10 @@ struct
 		noexcept
 	->	Info
 	{	return
-		Config
-		.	FindMemberInfo
-			(	i_vName
-			)
+			Composition
+			.	FindMemberInfo
+				(	i_vName
+				)
 		;
 	}
 };
@@ -75,7 +75,7 @@ template
 	>
 MemberInfo constexpr inline
 	MemberInfo_Of
-{	Config_Of
+{	Composition_Of
 	<	ID<t_vTypeName>
 	>
 };

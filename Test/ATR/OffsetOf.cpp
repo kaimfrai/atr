@@ -30,29 +30,29 @@ namespace
 {
 	// TODO Rename Mut and Const as they are no longer supported
 	auto constexpr inline
-	(	Configure
+	(	Recompose
 	)	(	auto
-			&&	o_rConfig
+			&&	o_rComposer
 		,	ID<"OffsetOfTest">
 		)
 	->	auto&&
 	{	return
-		o_rConfig
-		.	Member("Int", Type<int>)
-		.	Member("IntConst", Type<int>)
-		.	Member("IntMut", Type<int>)
-		.	Member("ArrayBool", Type<bool[5]>)
-		.	Member("ArrayBoolConst", Type<bool[5]>)
-		.	Member("ArrayBoolMut", Type<bool[5]>)
-		.	Member("ArrayField", Type<Field<3_bit>[5]>)
-		.	Member("ArrayFieldConst", Type<Field<3_bit>[5]>)
-		.	Member("ArrayFieldMut", Type<Field<3_bit>[5]>)
-		.	Member("Bool", Type<bool>)
-		.	Member("BoolConst", Type<bool>)
-		.	Member("BoolMut", Type<bool>)
-		.	Member("Field", Type<Field<3_bit>>)
-		.	Member("FieldConst", Type<Field<3_bit>>)
-		.	Member("FieldMut", Type<Field<3_bit>>)
+			o_rComposer
+			.	Member("Int", Type<int>)
+			.	Member("IntConst", Type<int>)
+			.	Member("IntMut", Type<int>)
+			.	Member("ArrayBool", Type<bool[5]>)
+			.	Member("ArrayBoolConst", Type<bool[5]>)
+			.	Member("ArrayBoolMut", Type<bool[5]>)
+			.	Member("ArrayField", Type<Field<3_bit>[5]>)
+			.	Member("ArrayFieldConst", Type<Field<3_bit>[5]>)
+			.	Member("ArrayFieldMut", Type<Field<3_bit>[5]>)
+			.	Member("Bool", Type<bool>)
+			.	Member("BoolConst", Type<bool>)
+			.	Member("BoolMut", Type<bool>)
+			.	Member("Field", Type<Field<3_bit>>)
+			.	Member("FieldConst", Type<Field<3_bit>>)
+			.	Member("FieldMut", Type<Field<3_bit>>)
 		;
 	}
 }
