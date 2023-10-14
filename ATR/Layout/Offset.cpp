@@ -137,6 +137,147 @@ export namespace
 	template
 		<	BitSize
 				t_vOffset
+		,	BitSize
+				t_vNestedOffset
+		,	typename
+				t_tNestedData
+		>
+	struct
+		Offset
+		<	t_vOffset
+		,	Offset
+			<	t_vNestedOffset
+			,	t_tNestedData
+			>
+		>
+	{
+		using
+			DataType
+		=	::std::byte(*)[]
+		;
+
+		auto static constexpr
+			ArrayIndex
+		=		ByteWidth<DataType>
+				(	t_vOffset
+				)
+			.	Value
+		;
+
+		auto static constexpr inline
+			NestedOffset
+		=	Offset
+			<	t_vNestedOffset
+			,	t_tNestedData
+			>{}
+		;
+
+		[[nodiscard]]
+		auto static constexpr inline
+		(	operator()
+		)	(	::std::byte
+				(&	i_rLayout
+				)	[]
+			)
+			noexcept
+		->	decltype(auto)
+		{
+			::std::byte
+			(&	rNestedLayout
+			)	[]
+			=	**
+				//	We don't know where the byte array came from
+				//	so we need to launder it
+				::std::launder
+				(	PointerCast<DataType>
+					(	i_rLayout
+					+	t_vOffset
+					)
+				)
+			;
+
+			return
+				NestedOffset
+				(	rNestedLayout
+				)
+			;
+		}
+
+		[[nodiscard]]
+		auto static constexpr inline
+		(	operator()
+		)	(	::std::byte const
+				(&	i_rLayout
+				)	[]
+			)
+			noexcept
+		->	decltype(auto)
+		{
+			::std::byte const
+			(&	rNestedLayout
+			)	[]
+			=	**
+				//	We don't know where the byte array came from
+				//	so we need to launder it
+				::std::launder
+				(	PointerCast<DataType const>
+					(	i_rLayout
+					+	t_vOffset
+					)
+				)
+			;
+
+			return
+				NestedOffset
+				(	rNestedLayout
+				)
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator->*
+		)	(	DataType
+				(&	i_rArray
+				)	[]
+			,	Offset
+			)
+			noexcept
+		->	decltype(auto)
+		{	return
+				NestedOffset
+				(	*
+					i_rArray
+					[	ArrayIndex
+					]
+				)
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator->*
+		)	(	DataType const
+				(&	i_rArray
+				)	[]
+			,	Offset
+			)
+			noexcept
+		->	decltype(auto)
+		{	return
+				NestedOffset
+				(	*
+					i_rArray
+					[	ArrayIndex
+					]
+				)
+			;
+		}
+	};
+
+	template
+		<	BitSize
+				t_vOffset
 		,	typename
 				t_tData
 		,	USize
