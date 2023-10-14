@@ -10,8 +10,6 @@ import Meta.ID;
 import Meta.String.Hash;
 
 using ::ATR::Layout::CreateType;
-using ::ATR::Layout::Offset_For;
-using ::ATR::Member::Composition_Of;
 using ::ATR::Member::ProtoDynamicMember_Of;
 using ::ATR::Member::ProtoStaticMember_Of;
 
@@ -44,25 +42,24 @@ export namespace
 			TypeName
 		{};
 
-		auto static constexpr inline
-		&	Composition
-		=	Composition_Of
-			<	t_tName
-			>
-		;
-
 		template
 			<	ImplicitHash
 					t_vMemberName
 			>
-		using
+		requires
+			(	Member::Exists
+				(	TypeName
+				,	t_vMemberName
+				)
+			)
+		auto static constexpr inline
 			Offset_Of
-		=	Offset_For
-			<	Composition
-				.	FindMemberInfo
-					(	t_vMemberName
-					)
-			>
+		=	Layout::Offset_For
+			<	Member::GetInfo
+				(	TypeName
+				,	t_vMemberName
+				)
+			>{}
 		;
 
 		[[nodiscard]]
@@ -81,7 +78,6 @@ export namespace
 				)
 				.	Layout
 			->*	Offset_Of<i_vMemberID>
-				{}
 			;
 		}
 
@@ -94,8 +90,9 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-			Offset_Of<i_vMemberID>
-			{}();
+				Offset_Of<i_vMemberID>
+				()
+			;
 		}
 
 		template
@@ -124,19 +121,20 @@ export namespace
 				...
 			>
 		{	return
-			Address
-			<	t_tFunctionName
-			,	decltype(i_rThis)
-			,	t_tpArgument
-				...
-			>(	ForwardErased
-				(	i_rThis
+				Address
+				<	t_tFunctionName
+				,	decltype(i_rThis)
+				,	t_tpArgument
+					...
+				>(	ForwardErased
+					(	i_rThis
+					)
+				,	ForwardErased
+					(	i_rpArgument
+					)
+					...
 				)
-			,	ForwardErased
-				(	i_rpArgument
-				)
-				...
-			);
+			;
 		}
 	};
 }

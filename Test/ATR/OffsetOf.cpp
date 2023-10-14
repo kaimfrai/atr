@@ -1,5 +1,7 @@
 import ATR.Instance;
 import ATR.Layout.Offset;
+import ATR.Member.Composition;
+import ATR.Member.Info;
 import ATR.Member.ProtoComposer;
 
 import Meta.Bit.Array;
@@ -90,6 +92,7 @@ static_assert
 ==	ExpectedBufferSize
 );
 
+
 template
 	<	typename
 			t_tOwner
@@ -97,15 +100,12 @@ template
 			t_vMemberName
 	>
 auto constexpr inline
-	OffsetType
-=	Type
-	<	typename
-		decltype(auto(t_tOwner{}))
-		::	template
-			Offset_Of
-			<	t_vMemberName
-			>
-	>
+	MemberInfo_Of
+=	::ATR::Member::GetInfo
+	(	t_tOwner
+		::	TypeName
+	,	t_vMemberName
+	)
 ;
 
 template
@@ -115,175 +115,173 @@ template
 			t_tEntity
 	>
 auto constexpr inline
-	MemberOffset_For
-=	Type
-	<	::ATR::Layout::Offset
-		<	t_vOffset
-		,	t_tEntity
-		>
-	>
+	MemberInfo_For
+=	::ATR::Member::Info
+	{	Type<t_tEntity>
+	,	t_vOffset
+	}
 ;
 
 static_assert
-(	OffsetType
+(	MemberInfo_Of
 	<	OffsetOfTest
 	,	"Int"
 	>
-==	MemberOffset_For
+==	MemberInfo_For
 	<	0_bit
 	,	int
 	>
 );
 
 static_assert
-(	OffsetType
+(	MemberInfo_Of
 	<	OffsetOfTest
 	,	"IntConst"
 	>
-==	MemberOffset_For
+==	MemberInfo_For
 	<	32_bit
 	,	int
 	>
 );
 
 static_assert
-(	OffsetType
+(	MemberInfo_Of
 	<	OffsetOfTest
 	,	"IntMut"
 	>
-==	MemberOffset_For
+==	MemberInfo_For
 	<	64_bit
 	,	int
 	>
 );
 
 static_assert
-(	OffsetType
+(	MemberInfo_Of
 	<	OffsetOfTest
 	,	"ArrayBool"
 	>
-==	MemberOffset_For
+==	MemberInfo_For
 	<	96_bit
 	,	bool[5]
 	>
 );
 
 static_assert
-(	OffsetType
+(	MemberInfo_Of
 	<	OffsetOfTest
 	,	"ArrayBoolConst"
 	>
-==	MemberOffset_For
+==	MemberInfo_For
 	<	101_bit
 	,	bool[5]
 	>
 );
 
 static_assert
-(	OffsetType
+(	MemberInfo_Of
 	<	OffsetOfTest
 	,	"ArrayBoolMut"
 	>
-==	MemberOffset_For
+==	MemberInfo_For
 	<	106_bit
 	,	bool[5]
 	>
 );
 
 static_assert
-(	OffsetType
+(	MemberInfo_Of
 	<	OffsetOfTest
 	,	"ArrayField"
 	>
-==	MemberOffset_For
+==	MemberInfo_For
 	<	111_bit
 	,	Field<3_bit>[5]
 	>
 );
 
 static_assert
-(	OffsetType
+(	MemberInfo_Of
 	<	OffsetOfTest
 	,	"ArrayFieldConst"
 	>
-==	MemberOffset_For
+==	MemberInfo_For
 	<	126_bit
 	,	Field<3_bit>[5]
 	>
 );
 
 static_assert
-(	OffsetType
+(	MemberInfo_Of
 	<	OffsetOfTest
 	,	"ArrayFieldMut"
 	>
-==	MemberOffset_For
+==	MemberInfo_For
 	<	141_bit
 	,	Field<3_bit>[5]
 	>
 );
 
 static_assert
-(	OffsetType
+(	MemberInfo_Of
 	<	OffsetOfTest
 	,	"Bool"
 	>
-==	MemberOffset_For
+==	MemberInfo_For
 	<	156_bit
 	,	bool
 	>
 );
 
 static_assert
-(	OffsetType
+(	MemberInfo_Of
 	<	OffsetOfTest
 	,	"BoolConst"
 	>
-==	MemberOffset_For
+==	MemberInfo_For
 	<	157_bit
 	,	bool
 	>
 );
 
 static_assert
-(	OffsetType
+(	MemberInfo_Of
 	<	OffsetOfTest
 	,	"BoolMut"
 	>
-==	MemberOffset_For
+==	MemberInfo_For
 	<	158_bit
 	,	bool
 	>
 );
 
 static_assert
-(	OffsetType
+(	MemberInfo_Of
 	<	OffsetOfTest
 	,	"Field"
 	>
-==	MemberOffset_For
+==	MemberInfo_For
 	<	159_bit
 	,	Field<3_bit>
 	>
 );
 
 static_assert
-(	OffsetType
+(	MemberInfo_Of
 	<	OffsetOfTest
 	,	"FieldConst"
 	>
-==	MemberOffset_For
+==	MemberInfo_For
 	<	162_bit
 	,	Field<3_bit>
 	>
 );
 
 static_assert
-(	OffsetType
+(	MemberInfo_Of
 	<	OffsetOfTest
 	,	"FieldMut"
 	>
-==	MemberOffset_For
+==	MemberInfo_For
 	<	165_bit
 	,	Field<3_bit>
 	>

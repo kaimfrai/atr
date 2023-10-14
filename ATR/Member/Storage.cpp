@@ -22,12 +22,10 @@ export namespace
 		noexcept
 	->	bool
 	{	return
-			Composition_Of
-			<	decltype(i_vTypeName)
-			>
-			.	FindMemberInfo
-				(	i_vMemberName
-				)
+			GetInfo
+			(	i_vTypeName
+			,	i_vMemberName
+			)
 			.	Type
 			.	IsAligned
 				()

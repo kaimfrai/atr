@@ -20,8 +20,8 @@ export namespace
 	template
 		<	typename
 				t_tArgument
-		,	typename
-			...	t_tpItem
+		,	auto
+			...	t_vpArgumentDependency
 		>
 	struct
 		Dependency

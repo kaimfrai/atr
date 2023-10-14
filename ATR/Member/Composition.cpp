@@ -5,8 +5,10 @@ import ATR.Member.FlatComposition;
 import ATR.Member.ProtoComposer;
 
 import Meta.ID;
+import Meta.String.Hash;
 
 using ::Meta::ProtoID;
+using ::Meta::String::ImplicitHash;
 
 [[nodiscard]]
 auto constexpr inline
@@ -101,4 +103,53 @@ export namespace
 			)
 		)
 	;
+
+	template
+		<	ProtoComposer
+				t_tComposer
+			=	FlatComposer
+		>
+	auto constexpr inline
+	(	GetInfo
+	)	(	ProtoID auto
+				i_vTypeName
+		,	ImplicitHash
+				i_vMemberName
+		)
+		noexcept
+	{	return
+			Composition_Of
+			<	decltype(i_vTypeName)
+			,	t_tComposer
+			>
+			.	FindMemberInfo
+				(	i_vMemberName
+				)
+		;
+	};
+
+	template
+		<	ProtoComposer
+				t_tComposer
+			=	FlatComposer
+		>
+	auto constexpr inline
+	(	Exists
+	)	(	ProtoID auto
+				i_vTypeName
+		,	ImplicitHash
+				i_vMemberName
+		)
+		noexcept
+	->	bool
+	{	return
+			GetInfo
+			<	t_tComposer
+			>(	i_vTypeName
+			,	i_vMemberName
+			)
+			.	IsValid
+				()
+		;
+	}
 }

@@ -9,8 +9,8 @@ export namespace
 {
 	/// Computes the product of all dependent members
 	template
-		<	typename
-			...	t_tpDependency
+		<	auto
+			...	t_vpDependency
 		>
 	[[nodiscard]]
 	auto constexpr inline
@@ -18,7 +18,7 @@ export namespace
 	)	(	GlobalDependency<"Product">
 		,	Dependency
 			<	::std::byte const(&)[]
-			,	t_tpDependency
+			,	t_vpDependency
 				...
 			>
 				i_vArgument
@@ -27,8 +27,7 @@ export namespace
 	->	float
 	{	return
 		(	...
-		*	t_tpDependency
-			::	operator()
+		*	t_vpDependency
 			(	i_vArgument
 				.	Argument
 			)

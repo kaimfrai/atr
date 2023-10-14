@@ -9,6 +9,7 @@ import Meta.Bit.Reference;
 import Meta.Memory.Constraint;
 import Meta.Memory.PointerCast;
 import Meta.Memory.Size.Cast;
+import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.PointerArithmetic;
 import Meta.Memory.Size;
 import Meta.Size;
@@ -39,6 +40,10 @@ export namespace
 		,	typename
 				t_tData
 		>
+	requires
+		(	t_vOffset
+		>=	0_bit
+		)
 	struct
 		Offset
 	{

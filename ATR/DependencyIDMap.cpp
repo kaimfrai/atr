@@ -2,14 +2,11 @@ export module ATR.DependencyIDMap;
 
 import ATR.Dependency;
 import ATR.Erase;
+import ATR.Member.Composition;
 
-import Meta.Memory.Size.Compare;
-import Meta.Memory.Size;
 import Meta.String.Hash;
 
 using ::Meta::String::ImplicitHash;
-
-using namespace ::Meta::Literals;
 
 export namespace
 	ATR
@@ -22,14 +19,12 @@ export namespace
 		>
 	concept
 		ProtoMemberInterface
-	=(	t_tProto
-		::	Composition
-		.	FindMemberInfo
-			(	t_vMemberName
-			)
-		.	Offset
-	>=	0_bit
-	);
+	=	Member::Exists
+		(	t_tProto
+			::	TypeName
+		,	t_vMemberName
+		)
+	;
 
 	template
 		<	typename
@@ -41,9 +36,8 @@ export namespace
 		ArgumentDependency
 	=	Dependency
 		<	ErasedType<t_tOwner>
-		,	typename
-			decltype(auto(t_tOwner{}))
-			::	template
+		,	t_tOwner{}
+			.	template
 				Offset_Of
 				<	t_vpMemberName
 				>
