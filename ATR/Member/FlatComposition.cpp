@@ -102,6 +102,56 @@ export namespace
 		::std::int16_t
 			MemberCount
 		{};
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	HashIndexFor
+		)	(	Hash
+					i_vName
+			)	const
+			noexcept
+		->	::std::int16_t
+		{	return
+				HashFindIndex
+				(	Names
+				,	BucketSize
+				,	i_vName
+				)
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	AddTypeForHash
+		)	(	::std::int16_t
+					i_vHashIndex
+			,	TypeID
+					i_vType
+			)
+			noexcept
+		->	::std::int16_t
+		{
+			auto const
+				vMemberIndex
+			=	MemberCount
+				++
+			;
+
+			MemberIndices
+				[	i_vHashIndex
+				]
+			=	vMemberIndex
+			;
+			Types
+				[	vMemberIndex
+				]
+			=	i_vType
+			;
+
+			return
+				vMemberIndex
+			;
+		}
 	};
 
 	struct
@@ -137,13 +187,10 @@ export namespace
 		{
 			auto const
 				vHashIndex
-			=	HashFindIndex
-				(	Members
-					.	Names
-				,	Members
-					.	BucketSize
-				,	i_vMemberName
-				)
+			=	Members
+				.	HashIndexFor
+					(	i_vMemberName
+					)
 			;
 
 			if	(	not

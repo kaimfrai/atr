@@ -149,16 +149,12 @@ namespace
 
 			auto const
 				vAliasTargetHashIndex
-			=	HashFindIndex
-				(	o_rComposition
-					.	Members
-					.	Names
-				,	o_rComposition
-					.	Members
-					.	BucketSize
-				,	rAliasTarget
-					.	Target
-				)
+			=	o_rComposition
+				.	Members
+				.	HashIndexFor
+					(	rAliasTarget
+						.	Target
+					)
 			;
 
 			auto const
@@ -171,32 +167,23 @@ namespace
 			;
 
 			auto const
-				vMemberIndex
-			=	o_rComposition
-				.	Members
-				.	MemberCount
-				++
-			;
-
-			o_rComposition
-			.	Members
-			.	MemberIndices
-				[	rAliasTarget
-					.	HashIndex
-				]
-			=	vMemberIndex
-			;
-
-			o_rComposition
-			.	Members
-			.	Types
-				[	vMemberIndex
-				]
+				vAliasedType
 			=	o_rComposition
 				.	Members
 				.	Types
 					[	vAliasTargetMemberIndex
 					]
+			;
+
+			auto const
+				vMemberIndex
+			=	o_rComposition
+				.	Members
+				.	AddTypeForHash
+					(	rAliasTarget
+						.	HashIndex
+					,	vAliasedType
+					)
 			;
 
 			o_rComposition

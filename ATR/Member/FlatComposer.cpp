@@ -87,14 +87,12 @@ export namespace
 
 			auto const
 				vHashIndex
-			=	HashFindIndex
-				(	Members
-					.	Names
-				,	Members
-					.	BucketSize
-				,	vPrefixedMemberName
-				)
+			=	Members
+				.	HashIndexFor
+					(	vPrefixedMemberName
+					)
 			;
+
 			if	(	not
 					Members
 					.	Names
@@ -146,48 +144,33 @@ export namespace
 			;
 
 			auto const
-				vInsertIndex
-			=	HashFindIndex
-				(	Members
-					.	Names
-				,	Members
-					.	BucketSize
-				,	vPrefixedMemberName
-				)
+				vHashIndex
+			=	Members
+				.	HashIndexFor
+					(	vPrefixedMemberName
+					)
 			;
+
 			if	(	not
 					Members
 					.	Names
-						[	vInsertIndex
+						[	vHashIndex
 						]
 				)
 			{
 				Members
 				.	Names
-					[	vInsertIndex
+					[	vHashIndex
 					]
 				=	vPrefixedMemberName
 				;
 
-				auto const
-					vMemberIndex
-				=	Members
-					.	MemberCount
-					++
-				;
-
+				(void)
 				Members
-				.	MemberIndices
-					[	vInsertIndex
-					]
-				=	vMemberIndex
-				;
-
-				Members
-				.	Types
-					[	vMemberIndex
-					]
-				=	i_vType
+				.	AddTypeForHash
+					(	vHashIndex
+					,	i_vType
+					)
 				;
 			}
 
