@@ -19,8 +19,8 @@ namespace
 	[[nodiscard]]
 	auto constexpr inline
 	(	Finalize
-	)	(	FlatComposer const
-			&	i_vComposer
+	)	(	FlatComposer
+			&&	i_rComposer
 		)
 		noexcept
 	->	FlatComposition
@@ -28,7 +28,7 @@ namespace
 		FlatComposition
 			vComposition
 		{	.	Members
-			=	i_vComposer
+			=	i_rComposer
 				.	Members
 		};
 
@@ -42,7 +42,7 @@ namespace
 					vMemberIndex
 				=	0z
 			;	(	vMemberIndex
-				<	i_vComposer
+				<	vComposition
 					.	Members
 					.	MemberCount
 				)
@@ -51,7 +51,7 @@ namespace
 		{
 			auto const
 				vType
-			=	i_vComposer
+			=	vComposition
 				.	Members
 				.	Types
 					[	vMemberIndex
@@ -73,7 +73,7 @@ namespace
 					vMemberIndex
 				=	0z
 			;	(	vMemberIndex
-				<	i_vComposer
+				<	vComposition
 					.	Members
 					.	MemberCount
 				)
@@ -82,7 +82,7 @@ namespace
 		{
 			auto const
 				vType
-			=	i_vComposer
+			=	vComposition
 				.	Members
 				.	Types
 					[	vMemberIndex
@@ -117,7 +117,7 @@ namespace
 					vIndex
 				=	0z
 			;	(	vIndex
-				<	i_vComposer
+				<	i_rComposer
 					.	AliasCount
 				)
 			;	++	vIndex
@@ -125,7 +125,7 @@ namespace
 		{
 			auto const
 			&	rAliasTarget
-			=	i_vComposer
+			=	i_rComposer
 				.	AliasTargets
 					[	vIndex
 					]
