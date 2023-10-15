@@ -57,13 +57,6 @@ namespace
 					]
 			;
 
-			if	(	vType
-				==	decltype(vType)
-					{}
-				)
-			{	continue;
-			}
-
 			TypeIndices
 				[	vMemberIndex
 				]
@@ -93,13 +86,6 @@ namespace
 					[	vMemberIndex
 					]
 			;
-
-			if	(	vType
-				==	decltype(vType)
-					{}
-				)
-			{	continue;
-			}
 
 			auto const
 				vTypeIndex
@@ -172,10 +158,26 @@ namespace
 					]
 			;
 
+			auto const
+				vMemberIndex
+			=	vComposition
+				.	Members
+				.	MemberCount
+				++
+			;
+
+			vComposition
+			.	Members
+			.	MemberIndices
+				[	rAliasTarget
+					.	HashIndex
+				]
+			=	vMemberIndex
+			;
+
 			vComposition
 			.	Types
-				[	rAliasTarget
-					.	MemberIndex
+				[	vMemberIndex
 				]
 			=	vComposition
 				.	Types
@@ -185,8 +187,7 @@ namespace
 
 			vComposition
 			.	Offsets
-				[	rAliasTarget
-					.	MemberIndex
+				[	vMemberIndex
 				]
 			=	vComposition
 				.	Offsets

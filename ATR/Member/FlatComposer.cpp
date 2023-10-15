@@ -53,7 +53,7 @@ export namespace
 			AliasTarget
 		{
 			::std::int16_t
-				MemberIndex
+				HashIndex
 			{};
 			Hash
 				Target
@@ -115,25 +115,12 @@ export namespace
 				=	vPrefixedMemberName
 				;
 
-				auto const
-					vMemberIndex
-				=	Members
-					.	MemberCount
-					++
-				;
-
-				Members
-				.	MemberIndices
-					[	vHashIndex
-					]
-				=	vMemberIndex
-				;
 				AliasTargets
 					[	AliasCount
 						++
 					]
 				=	AliasTarget
-					{	vMemberIndex
+					{	vHashIndex
 					,	(	Prefix
 						+	i_vTargetName
 						)

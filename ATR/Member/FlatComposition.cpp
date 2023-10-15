@@ -31,15 +31,15 @@ export namespace
 	(	HashFindIndex
 	)	(	Hash const
 			*	i_aStorage
-		,	SSize
+		,	::std::int16_t
 				i_vBucketSize
 		,	Hash
 				i_vHash
 		)
 		noexcept
-	->	SSize
+	->	::std::int16_t
 	{
-		for	(	auto
+		for	(	::std::int16_t
 					vIndex
 				=	i_vHash
 					.	Fold4
@@ -71,9 +71,9 @@ export namespace
 	struct
 		MemberNameList
 	{
-		auto static constexpr inline
+		::std::int16_t static constexpr inline
 			BucketSize
-		=	3z
+		=	3
 		;
 
 		auto static constexpr inline
