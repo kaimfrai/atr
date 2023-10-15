@@ -12,6 +12,8 @@ import Meta.String.Hash;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 
+import Std;
+
 using ::Meta::Generic::LowerBoundIndex;
 using ::Meta::SSize;
 using ::Meta::String::Hash;
@@ -78,14 +80,29 @@ export namespace
 		=	NameBufferSize
 		;
 
+		auto static constexpr inline
+			HashBufferSize
+		=	NameBufferSize
+		;
+
 		LayoutList
 			Layout
 		{};
 
 		Hash
 			Names
-			[	NameBufferSize
+			[	HashBufferSize
 			]
+		{};
+
+		::std::int16_t
+			MemberIndices
+			[	HashBufferSize
+			]
+		{};
+
+		::std::int16_t
+			MemberCount
 		{};
 
 		TypeID
@@ -110,7 +127,7 @@ export namespace
 		->	Info
 		{
 			auto const
-				vIndex
+				vHashIndex
 			=	HashFindIndex
 				(	Names
 				,	BucketSize
@@ -120,8 +137,8 @@ export namespace
 
 			if	(	not
 					Names
-						[	vIndex
-						]
+					[	vHashIndex
+					]
 				)
 			{	return
 					Info
@@ -132,17 +149,24 @@ export namespace
 			}
 
 			auto const
+				vMemberIndex
+			=	MemberIndices
+				[	vHashIndex
+				]
+			;
+
+			auto const
 				vType
 			=	Types
-					[	vIndex
-					]
+				[	vMemberIndex
+				]
 			;
 
 			auto const
 				vTypeIndex
 			=	TypeIndices
-					[	vIndex
-					]
+				[	vMemberIndex
+				]
 			;
 
 			auto const

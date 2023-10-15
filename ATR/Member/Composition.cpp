@@ -43,7 +43,7 @@ auto constexpr inline
 		;
 
 		auto const
-			vAliasTargetIndex
+			vAliasTargetHashIndex
 		=	::ATR::Member::HashFindIndex
 			(	rComposition
 				.	Names
@@ -54,25 +54,33 @@ auto constexpr inline
 			)
 		;
 
+		auto const
+			vAliasTargetMemberIndex
+		=	rComposition
+			.	MemberIndices
+				[	vAliasTargetHashIndex
+				]
+		;
+
 		rComposition
 		.	Types
 			[	rAliasTarget
-				.	NameIndex
+				.	MemberIndex
 			]
 		=	rComposition
 			.	Types
-				[	vAliasTargetIndex
+				[	vAliasTargetMemberIndex
 				]
 		;
 
 		rComposition
 		.	TypeIndices
 			[	rAliasTarget
-				.	NameIndex
+				.	MemberIndex
 			]
 		=	rComposition
 			.	TypeIndices
-				[	vAliasTargetIndex
+				[	vAliasTargetMemberIndex
 				]
 		;
 	}

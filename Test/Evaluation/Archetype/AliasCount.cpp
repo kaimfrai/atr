@@ -51,17 +51,13 @@ auto constexpr inline
 			,	(	rComposition
 					.	Types
 				+	rComposition
-					.	NameCount
+					.	MemberCount
 				)
 			,	[]	(	auto const
 							i_vType
 					)
 				{	return
-						(	i_vType
-						!=	decltype(i_vType)
-							{}
-						)
-					and	i_vType
+						i_vType
 						.	IsAligned
 							()
 					;

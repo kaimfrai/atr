@@ -29,8 +29,8 @@ export namespace
 		struct
 			AliasTarget
 		{
-			SSize
-				NameIndex
+			::std::int16_t
+				MemberIndex
 			{};
 			Hash
 				Target
@@ -69,7 +69,7 @@ export namespace
 			;
 
 			auto const
-				vIndex
+				vHashIndex
 			=	HashFindIndex
 				(	Composition
 					.	Names
@@ -81,22 +81,36 @@ export namespace
 			if	(	not
 					Composition
 					.	Names
-						[	vIndex
+						[	vHashIndex
 						]
 				)
 			{
 				Composition
 				.	Names
-					[	vIndex
+					[	vHashIndex
 					]
 				=	vPrefixedMemberName
+				;
+
+				auto const
+					vMemberIndex
+				=	Composition
+					.	MemberCount
+					++
+				;
+
+				Composition
+				.	MemberIndices
+					[	vHashIndex
+					]
+				=	vMemberIndex
 				;
 				AliasTargets
 					[	AliasCount
 						++
 					]
 				=	AliasTarget
-					{	vIndex
+					{	vMemberIndex
 					,	(	Prefix
 						+	i_vTargetName
 						)
@@ -151,9 +165,23 @@ export namespace
 				=	vPrefixedMemberName
 				;
 
+				auto const
+					vMemberIndex
+				=	Composition
+					.	MemberCount
+					++
+				;
+
+				Composition
+				.	MemberIndices
+					[	vInsertIndex
+					]
+				=	vMemberIndex
+				;
+
 				Composition
 				.	Types
-					[	vInsertIndex
+					[	vMemberIndex
 					]
 				=	i_vType
 				;
@@ -169,7 +197,7 @@ export namespace
 
 				Composition
 				.	TypeIndices
-					[	vInsertIndex
+					[	vMemberIndex
 					]
 				=	vTypeIndex
 				;
