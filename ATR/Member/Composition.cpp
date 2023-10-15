@@ -9,6 +9,8 @@ import Meta.ID;
 import Meta.String.Hash;
 import Meta.Size;
 
+import Std;
+
 using ::Meta::SSize;
 using ::Meta::ProtoID;
 using ::Meta::String::ImplicitHash;
@@ -32,15 +34,22 @@ namespace
 				.	Members
 		};
 
-		SSize
-			TypeIndices
-			[	NameBufferSize
-			]
-		{};
+		auto
+		*	const
+			aTypeIndices
+		=	new
+			SSize
+				[	static_cast<::std::size_t>
+					(	vComposition
+						.	Members
+						.	MemberCount
+					)
+				]
+		;
 
-		for	(	auto
+		for	(	::std::int16_t
 					vMemberIndex
-				=	0z
+				=	0
 			;	(	vMemberIndex
 				<	vComposition
 					.	Members
@@ -58,7 +67,7 @@ namespace
 					]
 			;
 
-			TypeIndices
+			aTypeIndices
 				[	vMemberIndex
 				]
 			=	vComposition
@@ -69,9 +78,9 @@ namespace
 			;
 		}
 
-		for	(	auto
+		for	(	::std::int16_t
 					vMemberIndex
-				=	0z
+				=	0
 			;	(	vMemberIndex
 				<	vComposition
 					.	Members
@@ -91,7 +100,7 @@ namespace
 
 			auto const
 				vTypeIndex
-			=	TypeIndices
+			=	aTypeIndices
 					[	vMemberIndex
 					]
 			;
@@ -113,9 +122,13 @@ namespace
 			;
 		}
 
-		for	(	auto
+		delete[]
+			aTypeIndices
+		;
+
+		for	(	::std::int16_t
 					vIndex
-				=	0z
+				=	0
 			;	(	vIndex
 				<	i_rComposer
 					.	AliasCount
