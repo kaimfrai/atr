@@ -51,6 +51,7 @@ auto constexpr inline
 			,	(	rComposition
 					.	Types
 				+	rComposition
+					.	Members
 					.	MemberCount
 				)
 			,	[]	(	auto const

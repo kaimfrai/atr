@@ -14,6 +14,7 @@ import Meta.Token.TypeID;
 
 import Std;
 
+using ::Meta::BitSize;
 using ::Meta::Generic::LowerBoundIndex;
 using ::Meta::SSize;
 using ::Meta::String::Hash;
@@ -68,7 +69,7 @@ export namespace
 	}
 
 	struct
-		FlatComposition
+		MemberNameList
 	{
 		auto static constexpr inline
 			BucketSize
@@ -76,18 +77,9 @@ export namespace
 		;
 
 		auto static constexpr inline
-			NameCount
-		=	NameBufferSize
-		;
-
-		auto static constexpr inline
 			HashBufferSize
 		=	NameBufferSize
 		;
-
-		LayoutList
-			Layout
-		{};
 
 		Hash
 			Names
@@ -104,6 +96,23 @@ export namespace
 		::std::int16_t
 			MemberCount
 		{};
+	};
+
+	struct
+		FlatComposition
+	{
+		auto static constexpr inline
+			NameCount
+		=	NameBufferSize
+		;
+
+		LayoutList
+			Layout
+		{};
+
+		MemberNameList
+			Members
+		{};
 
 		TypeID
 			Types
@@ -111,8 +120,8 @@ export namespace
 			]
 		{};
 
-		SSize
-			TypeIndices
+		BitSize
+			Offsets
 			[	NameBufferSize
 			]
 		{};
@@ -129,16 +138,19 @@ export namespace
 			auto const
 				vHashIndex
 			=	HashFindIndex
-				(	Names
-				,	BucketSize
+				(	Members
+					.	Names
+				,	Members
+					.	BucketSize
 				,	i_vMemberName
 				)
 			;
 
 			if	(	not
-					Names
-					[	vHashIndex
-					]
+					Members
+					.	Names
+						[	vHashIndex
+						]
 				)
 			{	return
 					Info
@@ -150,9 +162,10 @@ export namespace
 
 			auto const
 				vMemberIndex
-			=	MemberIndices
-				[	vHashIndex
-				]
+			=	Members
+				.	MemberIndices
+					[	vHashIndex
+					]
 			;
 
 			auto const
@@ -163,19 +176,10 @@ export namespace
 			;
 
 			auto const
-				vTypeIndex
-			=	TypeIndices
+				vOffset
+			=	Offsets
 				[	vMemberIndex
 				]
-			;
-
-			auto const
-				vOffset
-			=	Layout
-				.	MemberOffset
-					(	vType
-					,	vTypeIndex
-					)
 			;
 
 			return

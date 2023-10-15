@@ -152,8 +152,10 @@ auto constexpr inline
 		)
 	and	::std::ranges::equal
 		(	i_rLeft
+			.	Members
 			.	Names
 		,	i_rRight
+			.	Members
 			.	Names
 		)
 	and	::std::ranges::equal
@@ -164,9 +166,9 @@ auto constexpr inline
 		)
 	and	::std::ranges::equal
 		(	i_rLeft
-			.	TypeIndices
+			.	Offsets
 		,	i_rRight
-			.	TypeIndices
+			.	Offsets
 		)
 	;
 }

@@ -2,6 +2,8 @@ export module ATR.Member.FlatComposer;
 
 import ATR.Member.FlatComposition;
 import ATR.Member.PrefixGuard;
+import ATR.Member.Constants;
+import ATR.Member.LayoutList;
 
 import Meta.ID;
 import Meta.Size;
@@ -22,8 +24,39 @@ export namespace
 	struct
 		FlatComposer
 	{
-		FlatComposition
-			Composition
+		auto static constexpr inline
+			BucketSize
+		=	3z
+		;
+
+		auto static constexpr inline
+			NameCount
+		=	NameBufferSize
+		;
+
+		auto static constexpr inline
+			HashBufferSize
+		=	NameBufferSize
+		;
+
+		LayoutList
+			Layout
+		{};
+
+		MemberNameList
+			Members
+		{};
+
+		TypeID
+			Types
+			[	NameBufferSize
+			]
+		{};
+
+		SSize
+			TypeIndices
+			[	NameBufferSize
+			]
 		{};
 
 		struct
@@ -71,21 +104,21 @@ export namespace
 			auto const
 				vHashIndex
 			=	HashFindIndex
-				(	Composition
+				(	Members
 					.	Names
-				,	Composition
+				,	Members
 					.	BucketSize
 				,	vPrefixedMemberName
 				)
 			;
 			if	(	not
-					Composition
+					Members
 					.	Names
 						[	vHashIndex
 						]
 				)
 			{
-				Composition
+				Members
 				.	Names
 					[	vHashIndex
 					]
@@ -94,12 +127,12 @@ export namespace
 
 				auto const
 					vMemberIndex
-				=	Composition
+				=	Members
 					.	MemberCount
 					++
 				;
 
-				Composition
+				Members
 				.	MemberIndices
 					[	vHashIndex
 					]
@@ -144,21 +177,21 @@ export namespace
 			auto const
 				vInsertIndex
 			=	HashFindIndex
-				(	Composition
+				(	Members
 					.	Names
-				,	Composition
+				,	Members
 					.	BucketSize
 				,	vPrefixedMemberName
 				)
 			;
 			if	(	not
-					Composition
+					Members
 					.	Names
 						[	vInsertIndex
 						]
 				)
 			{
-				Composition
+				Members
 				.	Names
 					[	vInsertIndex
 					]
@@ -167,20 +200,19 @@ export namespace
 
 				auto const
 					vMemberIndex
-				=	Composition
+				=	Members
 					.	MemberCount
 					++
 				;
 
-				Composition
+				Members
 				.	MemberIndices
 					[	vInsertIndex
 					]
 				=	vMemberIndex
 				;
 
-				Composition
-				.	Types
+				Types
 					[	vMemberIndex
 					]
 				=	i_vType
@@ -188,15 +220,13 @@ export namespace
 
 				auto const
 					vTypeIndex
-				=	Composition
-					.	Layout
+				=	Layout
 					.	AddType
 						(	i_vType
 						)
 				;
 
-				Composition
-				.	TypeIndices
+				TypeIndices
 					[	vMemberIndex
 					]
 				=	vTypeIndex

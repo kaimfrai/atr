@@ -19,11 +19,74 @@ auto constexpr inline
 	noexcept
 ->	::ATR::Member::FlatComposition
 {
-	auto
-	&	rComposition
-	=	i_vComposer
-		.	Composition
-	;
+	::ATR::Member::FlatComposition
+		vComposition
+	{	.	Layout
+		=	i_vComposer
+			.	Layout
+	,	.	Members
+		=	i_vComposer
+			.	Members
+	};
+
+	for	(	auto
+				vMemberIndex
+			=	0z
+		;	(	vMemberIndex
+			<	i_vComposer
+				.	Members
+				.	MemberCount
+			)
+		;	++	vMemberIndex
+		)
+	{
+		auto const
+			vType
+		=	i_vComposer
+			.	Types
+				[	vMemberIndex
+				]
+		;
+
+		if	(	vType
+			==	decltype(vType)
+				{}
+			)
+		{	continue;
+		}
+
+		auto const
+			vTypeIndex
+		=	i_vComposer
+			.	TypeIndices
+				[	vMemberIndex
+				]
+		;
+
+		auto const
+			vOffset
+		=	i_vComposer
+			.	Layout
+			.	MemberOffset
+				(	vType
+				,	vTypeIndex
+				)
+		;
+
+		vComposition
+		.	Types
+			[	vMemberIndex
+			]
+		=	vType
+		;
+		vComposition
+		.	Offsets
+			[	vMemberIndex
+			]
+		=	vOffset
+		;
+	}
+
 	for	(	auto
 				vIndex
 			=	0z
@@ -45,9 +108,11 @@ auto constexpr inline
 		auto const
 			vAliasTargetHashIndex
 		=	::ATR::Member::HashFindIndex
-			(	rComposition
+			(	vComposition
+				.	Members
 				.	Names
-			,	rComposition
+			,	vComposition
+				.	Members
 				.	BucketSize
 			,	rAliasTarget
 				.	Target
@@ -56,37 +121,38 @@ auto constexpr inline
 
 		auto const
 			vAliasTargetMemberIndex
-		=	rComposition
+		=	vComposition
+			.	Members
 			.	MemberIndices
 				[	vAliasTargetHashIndex
 				]
 		;
 
-		rComposition
+		vComposition
 		.	Types
 			[	rAliasTarget
 				.	MemberIndex
 			]
-		=	rComposition
+		=	vComposition
 			.	Types
 				[	vAliasTargetMemberIndex
 				]
 		;
 
-		rComposition
-		.	TypeIndices
+		vComposition
+		.	Offsets
 			[	rAliasTarget
 				.	MemberIndex
 			]
-		=	rComposition
-			.	TypeIndices
+		=	vComposition
+			.	Offsets
 				[	vAliasTargetMemberIndex
 				]
 		;
 	}
 
 	return
-		rComposition
+		vComposition
 	;
 }
 
