@@ -300,8 +300,8 @@ auto constexpr inline
 =	Type
 	<	decltype
 		(	::ATR::Layout::Offset
-			<	t_vOffset
-			,	t_tEntity
+			<	t_tEntity
+			,	t_vOffset
 			>{}
 				(	::std::declval<t_tErased>
 						()
@@ -326,8 +326,8 @@ auto constexpr inline
 				()
 			.	Layout
 		->*	::ATR::Layout::Offset
-			<	t_vOffset
-			,	t_tEntity
+			<	t_tEntity
+			,	t_vOffset
 			>{}
 		)
 	>

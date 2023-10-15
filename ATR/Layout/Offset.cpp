@@ -35,10 +35,12 @@ export namespace
 	ATR::Layout
 {
 	template
-		<	BitSize
-				t_vOffset
-		,	typename
+		<	typename
 				t_tData
+		,	BitSize
+				t_vOffset
+		,	BitSize
+			...	t_vpIndirectOffset
 		>
 	requires
 		(	t_vOffset
@@ -135,40 +137,43 @@ export namespace
 	};
 
 	template
-		<	BitSize
+		<	typename
+				t_tIndirectData
+		,	BitSize
 				t_vOffset
 		,	BitSize
-				t_vNestedOffset
-		,	typename
-				t_tNestedData
+				t_vNextOffset
+		,	BitSize
+			...	t_vpNestedOffset
 		>
 	struct
 		Offset
-		<	t_vOffset
-		,	Offset
-			<	t_vNestedOffset
-			,	t_tNestedData
-			>
+		<	t_tIndirectData
+		,	t_vOffset
+		,	t_vNextOffset
+		,	t_vpNestedOffset
+			...
 		>
 	{
-		using
-			DataType
-		=	::std::byte(*)[]
-		;
-
+		template
+			<	typename
+					t_tData
+			>
 		auto static constexpr
 			ArrayIndex
-		=		ByteWidth<DataType>
+		=		ByteWidth<t_tData*[]>
 				(	t_vOffset
 				)
 			.	Value
 		;
 
 		auto static constexpr inline
-			NestedOffset
+			NextOffset
 		=	Offset
-			<	t_vNestedOffset
-			,	t_tNestedData
+			<	t_tIndirectData
+			,	t_vNextOffset
+			,	t_vpNestedOffset
+				...
 			>{}
 		;
 
@@ -183,13 +188,13 @@ export namespace
 		->	decltype(auto)
 		{
 			::std::byte
-			(&	rNestedLayout
+			(&	rNextLayout
 			)	[]
 			=	**
 				//	We don't know where the byte array came from
 				//	so we need to launder it
 				::std::launder
-				(	PointerCast<DataType>
+				(	PointerCast<::std::byte(*)[]>
 					(	i_rLayout
 					+	t_vOffset
 					)
@@ -197,8 +202,8 @@ export namespace
 			;
 
 			return
-				NestedOffset
-				(	rNestedLayout
+				NextOffset
+				(	rNextLayout
 				)
 			;
 		}
@@ -214,13 +219,13 @@ export namespace
 		->	decltype(auto)
 		{
 			::std::byte const
-			(&	rNestedLayout
+			(&	rNextLayout
 			)	[]
 			=	**
 				//	We don't know where the byte array came from
 				//	so we need to launder it
 				::std::launder
-				(	PointerCast<DataType const>
+				(	PointerCast<::std::byte const(* const)[]>
 					(	i_rLayout
 					+	t_vOffset
 					)
@@ -228,16 +233,21 @@ export namespace
 			;
 
 			return
-				NestedOffset
-				(	rNestedLayout
+				NextOffset
+				(	rNextLayout
 				)
 			;
 		}
 
+		template
+			<	typename
+					t_tData
+			>
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	DataType
+		)	(	t_tData
+				*
 				(&	i_rArray
 				)	[]
 			,	Offset
@@ -245,19 +255,26 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-				NestedOffset
+				NextOffset
 				(	*
 					i_rArray
 					[	ArrayIndex
+						<	t_tData
+						>
 					]
 				)
 			;
 		}
 
+		template
+			<	typename
+					t_tData
+			>
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	DataType const
+		)	(	t_tData const
+				*	const
 				(&	i_rArray
 				)	[]
 			,	Offset
@@ -265,10 +282,12 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{	return
-				NestedOffset
+				NextOffset
 				(	*
 					i_rArray
 					[	ArrayIndex
+						<	t_tData
+						>
 					]
 				)
 			;
@@ -285,10 +304,10 @@ export namespace
 		>
 	struct
 		Offset
-		<	t_vOffset
-		,	t_tData
+		<	t_tData
 				[	t_vExtent
 				]
+		,	t_vOffset
 		>
 	{
 		static_assert
@@ -311,8 +330,8 @@ export namespace
 		)
 	struct
 		Offset
-		<	0_bit
-		,	t_tData
+		<	t_tData
+		,	0_bit
 		>
 	{
 		[[nodiscard]]
@@ -352,8 +371,8 @@ export namespace
 		>
 	struct
 		Offset
-		<	t_vOffset
-		,	bool
+		<	bool
+		,	t_vOffset
 		>
 	{
 		auto static constexpr
@@ -450,17 +469,17 @@ export namespace
 	};
 
 	template
-		<	BitSize
-				t_vOffset
-		,	USize
+		<	USize
 				t_vExtent
+		,	BitSize
+				t_vOffset
 		>
 	struct
 		Offset
-		<	t_vOffset
-		,	bool
+		<	bool
 				[	t_vExtent
 				]
+		,	t_vOffset
 		>
 	{
 		auto static constexpr
@@ -559,14 +578,14 @@ export namespace
 
 	template
 		<	BitSize
-				t_vOffset
-		,	BitSize
 				t_vWidth
+		,	BitSize
+				t_vOffset
 		>
 	struct
 		Offset
-		<	t_vOffset
-		,	Field<t_vWidth>
+		<	Field<t_vWidth>
+		,	t_vOffset
 		>
 	{
 		auto static constexpr
@@ -665,18 +684,18 @@ export namespace
 
 	template
 		<	BitSize
-				t_vOffset
-		,	BitSize
 				t_vWidth
 		,	USize
 				t_vExtent
+		,	BitSize
+				t_vOffset
 		>
 	struct
 		Offset
-		<	t_vOffset
-		,	Field<t_vWidth>
+		<	Field<t_vWidth>
 				[	t_vExtent
 				]
+		,	t_vOffset
 		>
 	{
 		auto static constexpr
@@ -782,12 +801,12 @@ export namespace
 	using
 		Offset_For
 	=	Offset
-		<	t_vInfo
-			.	Offset
-		,	RestoreTypeEntity
+		<	RestoreTypeEntity
 			<	t_vInfo
 				.	Type
 			>
+		,	t_vInfo
+			.	Offset
 		>
 	;
 }

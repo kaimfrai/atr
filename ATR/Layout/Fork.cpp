@@ -39,17 +39,17 @@ export namespace
 		;
 
 		template
-			<	BitSize
-					t_vOffset
-			,	typename
+			<	typename
 					t_tData
+			,	BitSize
+					t_vOffset
 			>
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator->*
 		)	(	this auto
 				&&	i_rFork
-			,	Offset<t_vOffset, t_tData>
+			,	Offset<t_tData, t_vOffset>
 					i_vOffset
 			)
 			noexcept
@@ -80,9 +80,9 @@ export namespace
 					)
 					.	SouthArea
 				->*	Offset
-					<		t_vOffset
+					<	t_tData
+					,		t_vOffset
 						-	vNorthSize
-					,	t_tData
 					>{}
 				;
 			}
