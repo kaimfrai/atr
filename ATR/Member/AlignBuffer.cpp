@@ -57,34 +57,20 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator[]
-		)	(	Alignment
+		)	(	this auto
+				&&	i_rThis
+			,	Alignment
 					i_vAlignment
-			)	&
+			)
 			noexcept
-		->	BufferType&
+		->	decltype(auto)
 		{	return
-				Buffer
-				[	AlignmentToIndex
-					(	i_vAlignment
-					)
-				]
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	operator[]
-		)	(	Alignment
-					i_vAlignment
-			)	const&
-			noexcept
-		->	BufferType const&
-		{	return
-				Buffer
-				[	AlignmentToIndex
-					(	i_vAlignment
-					)
-				]
+				i_rThis
+				.	Buffer
+					[	AlignmentToIndex
+						(	i_vAlignment
+						)
+					]
 			;
 		}
 
