@@ -3,157 +3,202 @@ export module ATR.Member.Composition;
 import ATR.Member.FlatComposer;
 import ATR.Member.FlatComposition;
 import ATR.Member.ProtoComposer;
+import ATR.Member.Constants;
 
 import Meta.ID;
 import Meta.String.Hash;
+import Meta.Size;
 
+using ::Meta::SSize;
 using ::Meta::ProtoID;
 using ::Meta::String::ImplicitHash;
 
-[[nodiscard]]
-auto constexpr inline
-(	Finalize
-)	(	::ATR::Member::ProtoComposer auto
-			i_vComposer
-	)
-	noexcept
-->	::ATR::Member::FlatComposition
+namespace
+	ATR::Member
 {
-	::ATR::Member::FlatComposition
-		vComposition
-	{	.	Layout
-		=	i_vComposer
-			.	Layout
-	,	.	Members
-		=	i_vComposer
-			.	Members
-	};
-
-	for	(	auto
-				vMemberIndex
-			=	0z
-		;	(	vMemberIndex
-			<	i_vComposer
-				.	Members
-				.	MemberCount
-			)
-		;	++	vMemberIndex
+	[[nodiscard]]
+	auto constexpr inline
+	(	Finalize
+	)	(	ProtoComposer auto
+				i_vComposer
 		)
+		noexcept
+	->	FlatComposition
 	{
-		auto const
-			vType
-		=	i_vComposer
-			.	Types
+		FlatComposition
+			vComposition
+		{	.	Members
+			=	i_vComposer
+				.	Members
+		};
+
+		SSize
+			TypeIndices
+			[	NameBufferSize
+			]
+		{};
+
+		for	(	auto
+					vMemberIndex
+				=	0z
+			;	(	vMemberIndex
+				<	i_vComposer
+					.	Members
+					.	MemberCount
+				)
+			;	++	vMemberIndex
+			)
+		{
+			auto const
+				vType
+			=	i_vComposer
+				.	Types
+					[	vMemberIndex
+					]
+			;
+
+			if	(	vType
+				==	decltype(vType)
+					{}
+				)
+			{	continue;
+			}
+
+			TypeIndices
 				[	vMemberIndex
 				]
-		;
-
-		if	(	vType
-			==	decltype(vType)
-				{}
-			)
-		{	continue;
+			=	vComposition
+				.	Layout
+				.	AddType
+					(	vType
+					)
+			;
 		}
 
-		auto const
-			vTypeIndex
-		=	i_vComposer
-			.	TypeIndices
+		for	(	auto
+					vMemberIndex
+				=	0z
+			;	(	vMemberIndex
+				<	i_vComposer
+					.	Members
+					.	MemberCount
+				)
+			;	++	vMemberIndex
+			)
+		{
+			auto const
+				vType
+			=	i_vComposer
+				.	Types
+					[	vMemberIndex
+					]
+			;
+
+			if	(	vType
+				==	decltype(vType)
+					{}
+				)
+			{	continue;
+			}
+
+			auto const
+				vTypeIndex
+			=	TypeIndices
+					[	vMemberIndex
+					]
+			;
+
+			auto const
+				vOffset
+			=	vComposition
+				.	Layout
+				.	MemberOffset
+					(	vType
+					,	vTypeIndex
+					)
+			;
+			vComposition
+			.	Types
 				[	vMemberIndex
 				]
-		;
-
-		auto const
-			vOffset
-		=	i_vComposer
-			.	Layout
-			.	MemberOffset
-				(	vType
-				,	vTypeIndex
-				)
-		;
-
-		vComposition
-		.	Types
-			[	vMemberIndex
-			]
-		=	vType
-		;
-		vComposition
-		.	Offsets
-			[	vMemberIndex
-			]
-		=	vOffset
-		;
-	}
-
-	for	(	auto
-				vIndex
-			=	0z
-		;	(	vIndex
-			<	i_vComposer
-				.	AliasCount
-			)
-		;	++	vIndex
-		)
-	{
-		auto const
-		&	rAliasTarget
-		=	i_vComposer
-			.	AliasTargets
-				[	vIndex
-				]
-		;
-
-		auto const
-			vAliasTargetHashIndex
-		=	::ATR::Member::HashFindIndex
-			(	vComposition
-				.	Members
-				.	Names
-			,	vComposition
-				.	Members
-				.	BucketSize
-			,	rAliasTarget
-				.	Target
-			)
-		;
-
-		auto const
-			vAliasTargetMemberIndex
-		=	vComposition
-			.	Members
-			.	MemberIndices
-				[	vAliasTargetHashIndex
-				]
-		;
-
-		vComposition
-		.	Types
-			[	rAliasTarget
-				.	MemberIndex
-			]
-		=	vComposition
-			.	Types
-				[	vAliasTargetMemberIndex
-				]
-		;
-
-		vComposition
-		.	Offsets
-			[	rAliasTarget
-				.	MemberIndex
-			]
-		=	vComposition
+			=	vType
+			;
+			vComposition
 			.	Offsets
-				[	vAliasTargetMemberIndex
+				[	vMemberIndex
 				]
+			=	vOffset
+			;
+		}
+
+		for	(	auto
+					vIndex
+				=	0z
+			;	(	vIndex
+				<	i_vComposer
+					.	AliasCount
+				)
+			;	++	vIndex
+			)
+		{
+			auto const
+			&	rAliasTarget
+			=	i_vComposer
+				.	AliasTargets
+					[	vIndex
+					]
+			;
+
+			auto const
+				vAliasTargetHashIndex
+			=	HashFindIndex
+				(	vComposition
+					.	Members
+					.	Names
+				,	vComposition
+					.	Members
+					.	BucketSize
+				,	rAliasTarget
+					.	Target
+				)
+			;
+
+			auto const
+				vAliasTargetMemberIndex
+			=	vComposition
+				.	Members
+				.	MemberIndices
+					[	vAliasTargetHashIndex
+					]
+			;
+
+			vComposition
+			.	Types
+				[	rAliasTarget
+					.	MemberIndex
+				]
+			=	vComposition
+				.	Types
+					[	vAliasTargetMemberIndex
+					]
+			;
+
+			vComposition
+			.	Offsets
+				[	rAliasTarget
+					.	MemberIndex
+				]
+			=	vComposition
+				.	Offsets
+					[	vAliasTargetMemberIndex
+					]
+			;
+		}
+
+		return
+			vComposition
 		;
 	}
-
-	return
-		vComposition
-	;
 }
 
 export namespace
@@ -168,7 +213,7 @@ export namespace
 		>
 	auto constexpr inline
 		Composition_Of
-	=	::Finalize
+	=	::ATR::Member::Finalize
 		(	Recompose
 			(	t_tComposer
 				{}

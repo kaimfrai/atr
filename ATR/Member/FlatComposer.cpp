@@ -39,22 +39,12 @@ export namespace
 		=	NameBufferSize
 		;
 
-		LayoutList
-			Layout
-		{};
-
 		MemberNameList
 			Members
 		{};
 
 		TypeID
 			Types
-			[	NameBufferSize
-			]
-		{};
-
-		SSize
-			TypeIndices
 			[	NameBufferSize
 			]
 		{};
@@ -216,20 +206,6 @@ export namespace
 					[	vMemberIndex
 					]
 				=	i_vType
-				;
-
-				auto const
-					vTypeIndex
-				=	Layout
-					.	AddType
-						(	i_vType
-						)
-				;
-
-				TypeIndices
-					[	vMemberIndex
-					]
-				=	vTypeIndex
 				;
 			}
 
