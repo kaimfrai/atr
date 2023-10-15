@@ -43,12 +43,6 @@ export namespace
 			Members
 		{};
 
-		TypeID
-			Types
-			[	NameBufferSize
-			]
-		{};
-
 		struct
 			AliasTarget
 		{
@@ -66,7 +60,7 @@ export namespace
 			]
 		{};
 
-		SSize
+		::std::int16_t
 			AliasCount
 		{};
 
@@ -189,7 +183,8 @@ export namespace
 				=	vMemberIndex
 				;
 
-				Types
+				Members
+				.	Types
 					[	vMemberIndex
 					]
 				=	i_vType

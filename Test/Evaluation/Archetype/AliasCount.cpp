@@ -47,8 +47,10 @@ auto constexpr inline
 		return
 			::std::count_if
 			(	rComposition
+				.	Members
 				.	Types
 			,	(	rComposition
+					.	Members
 					.	Types
 				+	rComposition
 					.	Members

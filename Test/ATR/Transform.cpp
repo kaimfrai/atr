@@ -160,8 +160,10 @@ auto constexpr inline
 		)
 	and	::std::ranges::equal
 		(	i_rLeft
+			.	Members
 			.	Types
 		,	i_rRight
+			.	Members
 			.	Types
 		)
 	and	::std::ranges::equal

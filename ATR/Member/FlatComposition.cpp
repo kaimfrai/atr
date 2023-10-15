@@ -93,6 +93,12 @@ export namespace
 			]
 		{};
 
+		TypeID
+			Types
+			[	NameBufferSize
+			]
+		{};
+
 		::std::int16_t
 			MemberCount
 		{};
@@ -112,12 +118,6 @@ export namespace
 
 		MemberNameList
 			Members
-		{};
-
-		TypeID
-			Types
-			[	NameBufferSize
-			]
 		{};
 
 		BitSize
@@ -170,16 +170,17 @@ export namespace
 
 			auto const
 				vType
-			=	Types
-				[	vMemberIndex
-				]
+			=	Members
+				.	Types
+					[	vMemberIndex
+					]
 			;
 
 			auto const
 				vOffset
 			=	Offsets
-				[	vMemberIndex
-				]
+					[	vMemberIndex
+					]
 			;
 
 			return

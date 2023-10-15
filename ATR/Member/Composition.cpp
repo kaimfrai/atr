@@ -19,8 +19,8 @@ namespace
 	[[nodiscard]]
 	auto constexpr inline
 	(	Finalize
-	)	(	ProtoComposer auto
-				i_vComposer
+	)	(	FlatComposer const
+			&	i_vComposer
 		)
 		noexcept
 	->	FlatComposition
@@ -52,6 +52,7 @@ namespace
 			auto const
 				vType
 			=	i_vComposer
+				.	Members
 				.	Types
 					[	vMemberIndex
 					]
@@ -82,6 +83,7 @@ namespace
 			auto const
 				vType
 			=	i_vComposer
+				.	Members
 				.	Types
 					[	vMemberIndex
 					]
@@ -102,12 +104,6 @@ namespace
 					(	vType
 					,	vTypeIndex
 					)
-			;
-			vComposition
-			.	Types
-				[	vMemberIndex
-				]
-			=	vType
 			;
 			vComposition
 			.	Offsets
@@ -176,10 +172,12 @@ namespace
 			;
 
 			vComposition
+			.	Members
 			.	Types
 				[	vMemberIndex
 				]
 			=	vComposition
+				.	Members
 				.	Types
 					[	vAliasTargetMemberIndex
 					]
