@@ -1,13 +1,12 @@
 export module ATR.Member.FlatComposition;
 
 import ATR.Member.Constants;
+import ATR.Member.CountedType;
 import ATR.Member.Info;
-import ATR.Member.LayoutList;
+import ATR.Member.AlignBuffer;
 
-import Meta.Generic.LowerBound;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size;
-import Meta.Size;
 import Meta.String.Hash;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
@@ -15,8 +14,6 @@ import Meta.Token.TypeID;
 import Std;
 
 using ::Meta::BitSize;
-using ::Meta::Generic::LowerBoundIndex;
-using ::Meta::SSize;
 using ::Meta::String::Hash;
 using ::Meta::Type;
 using ::Meta::TypeID;
@@ -162,7 +159,7 @@ export namespace
 		=	NameBufferSize
 		;
 
-		LayoutList
+		AlignBuffer<CountedType, TypeBufferSize>
 			Layout
 		{};
 

@@ -2,18 +2,24 @@ export module ATR.Member.Composition;
 
 import ATR.Member.FlatComposer;
 import ATR.Member.FlatComposition;
+import ATR.Member.LayoutList;
 import ATR.Member.ProtoComposer;
-import ATR.Member.Constants;
 
 import Meta.ID;
-import Meta.String.Hash;
+import Meta.Memory.Constraint;
+import Meta.Memory.Size;
 import Meta.Size;
+import Meta.String.Hash;
+import Meta.Token.Type;
 
 import Std;
 
-using ::Meta::SSize;
+using ::Meta::BitSize;
+using ::Meta::Memory::ByteAlign;
 using ::Meta::ProtoID;
+using ::Meta::SSize;
 using ::Meta::String::ImplicitHash;
+using ::Meta::Type;
 
 namespace
 	ATR::Member
@@ -39,6 +45,14 @@ namespace
 				]
 		;
 
+		BitSize
+			vBitCounts
+			[	ByteAlign
+				.	Value
+			-	1
+			]
+		{};
+
 		for	(	::std::int16_t
 					vMemberIndex
 				=	0
@@ -62,11 +76,12 @@ namespace
 			aTypeIndices
 				[	vMemberIndex
 				]
-			=	o_rComposition
-				.	Layout
-				.	AddType
-					(	vType
-					)
+			=	AddType
+				(	vType
+				,	o_rComposition
+					.	Layout
+				,	vBitCounts
+				)
 			;
 		}
 
@@ -99,12 +114,13 @@ namespace
 
 			auto const
 				vOffset
-			=	o_rComposition
-				.	Layout
-				.	MemberOffset
-					(	vType
-					,	vTypeIndex
-					)
+			=	MemberOffset
+				(	vType
+				,	o_rComposition
+					.	Layout
+				,	vBitCounts
+				,	vTypeIndex
+				)
 			;
 			o_rComposition
 			.	Offsets
@@ -114,7 +130,30 @@ namespace
 			;
 		}
 
-		delete[]
+		if	(	auto const
+					vByteCount
+				=	ByteCount
+					(	vBitCounts
+					)
+				.	get
+					()
+			;	vByteCount
+			>	0
+			)
+		{
+			// TODO this will fail if byte is not the last type
+			(void)
+				AddByteType
+				(	Type<::std::byte>
+				,	o_rComposition
+					.	Layout
+				,	vByteCount
+				)
+			;
+		}
+
+		delete
+			[]
 			aTypeIndices
 		;
 	}

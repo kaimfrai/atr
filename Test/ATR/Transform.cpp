@@ -136,19 +136,8 @@ auto constexpr inline
 {	return
 		(	i_rLeft
 			.	Layout
-			.	AlignTypeCounts
 		==	i_rRight
 			.	Layout
-			.	AlignTypeCounts
-		)
-	and	(	::std::ranges::equal
-			(	i_rLeft
-				.	Layout
-				.	BitCounts
-			,	i_rRight
-				.	Layout
-				.	BitCounts
-			)
 		)
 	and	::std::ranges::equal
 		(	i_rLeft

@@ -2,15 +2,12 @@ export module ATR.Member.AlignBuffer;
 
 import ATR.Member.Constants;
 import ATR.Member.CountedBuffer;
-import ATR.Member.CountedType;
 
 import Meta.Memory.Alignment;
 import Meta.Size;
-import Meta.Token.TypeID;
 
 using ::Meta::Memory::Alignment;
 using ::Meta::SSize;
-using ::Meta::TypeID;
 
 export namespace
 	ATR::Member
@@ -97,70 +94,4 @@ export namespace
 			;
 		}
 	};
-
-	[[nodiscard]]
-	auto constexpr inline
-	(	AddType
-	)	(	AlignBuffer<CountedType, TypeBufferSize>
-			&	i_rAlignBuffer
-		,	TypeID
-				i_vType
-		,	SSize
-				i_vCount
-			=	1z
-		)
-		noexcept
-	->	SSize
-	{
-		auto const
-			vAlign
-		=	i_vType
-			.	GetAlign
-				()
-		;
-
-		auto
-		&	rAlignedTypeCounts
-		=	i_rAlignBuffer
-				[	vAlign
-				]
-		;
-
-		for	(	auto
-				&	[	rType
-					,	rCount
-					]
-			:	rAlignedTypeCounts
-			)
-		{
-			if	(	rType
-				==	i_vType
-				)
-			{
-				auto const
-					vPreviousCount
-				=	rCount
-				;
-				rCount
-				+=	i_vCount
-				;
-				return
-					vPreviousCount
-				;
-			}
-		}
-
-		rAlignedTypeCounts
-		.	push_back
-			(	CountedType
-				{	i_vType
-				,	i_vCount
-				}
-			)
-		;
-
-		return
-			0z
-		;
-	}
 }

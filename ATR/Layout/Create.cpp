@@ -5,19 +5,12 @@ import ATR.Member.Composition;
 import ATR.Member.Constants;
 
 import Meta.ID;
-import Meta.Memory.Size;
 import Meta.Token.Type;
-import Meta.Token.TypeID;
 
 import Std;
 
-using ::Meta::ByteSize;
 using ::Meta::ProtoID;
 using ::Meta::RestoreTypeEntity;
-using ::Meta::Type;
-using ::Meta::TypeID;
-
-using namespace ::Meta::Literals;
 
 namespace
 	ATR::Layout
@@ -433,41 +426,6 @@ namespace
 	}
 
 	template
-		<	ByteSize
-				t_vByteCount
-		>
-	[[nodiscard]]
-	auto constexpr inline
-	(	CreateBitLayout
-	)	()
-		noexcept
-	{	return
-			MakeFork
-			<	::std::byte
-					[	t_vByteCount
-						.	get
-							()
-					]
-			>{}
-		;
-	}
-
-	template
-		<>
-	[[nodiscard]]
-	auto constexpr inline
-	(	CreateBitLayout
-		<	0_byte
-		>
-	)	()
-		noexcept
-	{	return
-			MakeFork<>
-			{}
-		;
-	}
-
-	template
 		<	ProtoID
 				t_tTypeName
 		,	::std::size_t
@@ -493,17 +451,11 @@ namespace
 		return
 		(	CreateLayout
 			<	rLayout
-				.	AlignTypeCounts
 				.	Buffer
 					[	t_vpIndex
 					]
 			>()
 		+	...
-		+	CreateBitLayout
-			<	rLayout
-				.	BitCount
-					()
-			>()
 		);
 	}
 }

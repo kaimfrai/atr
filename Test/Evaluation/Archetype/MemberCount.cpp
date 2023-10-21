@@ -41,11 +41,9 @@ auto constexpr inline
 		return
 			::std::accumulate
 			(	rLayout
-				.	AlignTypeCounts
 				.	begin
 					()
 			,	rLayout
-				.	AlignTypeCounts
 				.	end
 					()
 			,	0z

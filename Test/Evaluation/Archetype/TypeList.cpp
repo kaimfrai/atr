@@ -43,7 +43,6 @@ template
 	<	ID<t_vTypeName>
 	>
 	.	Layout
-	.	AlignTypeCounts
 		[	t_vAlignment
 		]
 ;
