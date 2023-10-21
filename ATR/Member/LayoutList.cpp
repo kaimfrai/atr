@@ -411,7 +411,6 @@ export namespace
 			&	o_rAlignBuffer
 		,	SSize
 				i_vCount
-			=	1z
 		)
 		noexcept
 	->	SSize
@@ -537,6 +536,7 @@ export namespace
 			AddByteType
 			(	i_vType
 			,	o_rAlignTypeCounts
+			,	1z
 			)
 		;
 	}
