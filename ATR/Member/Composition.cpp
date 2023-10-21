@@ -7,19 +7,26 @@ import ATR.Member.ProtoComposer;
 
 import Meta.ID;
 import Meta.Memory.Constraint;
+import Meta.Memory.Size.Arithmetic;
+import Meta.Memory.Size.Compare;
 import Meta.Memory.Size;
 import Meta.Size;
 import Meta.String.Hash;
 import Meta.Token.Type;
+import Meta.Token.TypeID;
 
 import Std;
 
+using ::Meta::ByteSize;
 using ::Meta::BitSize;
 using ::Meta::Memory::ByteAlign;
 using ::Meta::ProtoID;
 using ::Meta::SSize;
 using ::Meta::String::ImplicitHash;
 using ::Meta::Type;
+using ::Meta::TypeID;
+
+using namespace ::Meta::Literals;
 
 namespace
 	ATR::Member
@@ -53,6 +60,10 @@ namespace
 			]
 		{};
 
+		BitSize
+			vTotalBitCount
+		{};
+
 		for	(	::std::int16_t
 					vMemberIndex
 				=	0
@@ -73,14 +84,83 @@ namespace
 					]
 			;
 
+			if	(	not
+					vType
+					.	IsAligned
+					()
+				)
+			{
+				aTypeIndices
+					[	vMemberIndex
+					]
+				=	0
+				;
+				continue
+				;
+			}
+
+			auto const
+				vAlign
+			=	vType
+				.	GetAlign
+					()
+			;
+
+			if	(	vAlign
+				<	ByteAlign
+				)
+			{
+				auto const
+					vSize
+				=	vType
+					.	GetSize
+						()
+				;
+
+				auto
+				&	rBitCount
+				=	vBitCounts
+						[	ByteAlign
+							.	Value
+						-	vAlign
+							.	Value
+						-	1
+						]
+				;
+
+				auto const
+					vPreviousIndex
+				=	rBitCount
+					.	Value
+				;
+
+				rBitCount
+				+=	vSize
+				;
+				vTotalBitCount
+				+=	vSize
+				;
+
+				aTypeIndices
+					[	vMemberIndex
+					]
+				=	vPreviousIndex
+				;
+
+				continue
+				;
+			}
+
 			aTypeIndices
 				[	vMemberIndex
 				]
-			=	AddType
+			=	AddByteType
 				(	vType
 				,	o_rComposition
 					.	Layout
-				,	vBitCounts
+						[	vAlign
+						]
+				,	1z
 				)
 			;
 		}
@@ -130,24 +210,31 @@ namespace
 			;
 		}
 
-		if	(	auto const
-					vByteCount
-				=	ByteCount
-					(	vBitCounts
-					)
-				.	get
-					()
-			;	vByteCount
-			>	0
+		if	(	ByteSize const
+					vTotalByteCount
+				=	vTotalBitCount
+			;	vTotalByteCount
+			>	0_byte
 			)
 		{
+			TypeID const
+				vByte
+			=	Type<::std::byte>
+			;
+
 			// TODO this will fail if byte is not the last type
 			(void)
 				AddByteType
-				(	Type<::std::byte>
+				(	vByte
 				,	o_rComposition
 					.	Layout
-				,	vByteCount
+						[	vByte
+							.	GetAlign
+								()
+						]
+				,	vTotalByteCount
+					.	get
+						()
 				)
 			;
 		}

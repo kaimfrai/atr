@@ -3,6 +3,7 @@ export module ATR.Member.LayoutList;
 import ATR.Member.AlignBuffer;
 import ATR.Member.Constants;
 import ATR.Member.CountedType;
+import ATR.Member.CountedBuffer;
 
 import Meta.Memory.Alignment;
 import Meta.Memory.Constraint;
@@ -93,38 +94,6 @@ export namespace
 
 		return
 			0z
-		;
-	}
-
-	[[nodiscard]]
-	auto constexpr inline
-	(	ByteCount
-	)	(	BitSize const
-			(&	i_rBitCounts
-			)	[	ByteAlign
-					.	Value
-				-	1
-				]
-		)
-		noexcept
-	->	ByteSize
-	{
-		BitSize
-			vSum
-		{};
-
-		for	(	BitSize
-					vBitSize
-			:	i_rBitCounts
-			)
-		{
-			vSum
-			+=	vBitSize
-			;
-		}
-
-		return
-			vSum
 		;
 	}
 
@@ -407,33 +376,19 @@ export namespace
 	(	AddByteType
 	)	(	TypeID
 				i_vType
-		,	AlignBuffer<CountedType, TypeBufferSize>
-			&	o_rAlignBuffer
+		,	CountedBuffer<CountedType, TypeBufferSize>
+			&	o_rCountedBuffer
 		,	SSize
 				i_vCount
 		)
 		noexcept
 	->	SSize
 	{
-		auto const
-			vAlign
-		=	i_vType
-			.	GetAlign
-				()
-		;
-
-		auto
-		&	rAlignedTypeCounts
-		=	o_rAlignBuffer
-				[	vAlign
-				]
-		;
-
 		for	(	auto
 				&	[	rType
 					,	rCount
 					]
-			:	rAlignedTypeCounts
+			:	o_rCountedBuffer
 			)
 		{
 			if	(	rType
@@ -453,7 +408,7 @@ export namespace
 			}
 		}
 
-		rAlignedTypeCounts
+		o_rCountedBuffer
 		.	push_back
 			(	CountedType
 				{	i_vType
@@ -464,80 +419,6 @@ export namespace
 
 		return
 			0z
-		;
-	}
-
-	[[nodiscard]]
-	auto constexpr inline
-	(	AddType
-	)	(	TypeID
-				i_vType
-		,	AlignBuffer<CountedType, TypeBufferSize>
-			&	o_rAlignTypeCounts
-		,	BitSize
-			(&	o_rBitCounts
-			)	[	ByteAlign
-					.	Value
-				-	1
-				]
-		)
-		noexcept
-	->	SSize
-	{
-		if	(	not
-				i_vType
-				.	IsAligned
-					()
-			)
-		{	return
-				0z
-			;
-		}
-
-		auto const
-			vAlign
-		=	i_vType
-			.	GetAlign
-				()
-		;
-
-		if	(	vAlign
-			<	ByteAlign
-			)
-		{
-			auto
-			&	rBitCount
-			=	o_rBitCounts
-					[	ByteAlign
-						.	Value
-					-	vAlign
-						.	Value
-					-	1
-					]
-			;
-
-			auto const
-				vPreviousIndex
-			=	rBitCount
-				.	Value
-			;
-
-			rBitCount
-			+=	i_vType
-				.	GetSize
-					()
-			;
-			return
-				vPreviousIndex
-			;
-		}
-
-		return
-			AddByteType
-			(	i_vType
-			,	o_rAlignTypeCounts
-			,	1z
-			)
 		;
 	}
 }
