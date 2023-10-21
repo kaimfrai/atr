@@ -12,7 +12,6 @@ export import ATR.Literals;
 export import ATR.Member.Composition;
 export import ATR.Member.CompositionTransformer;
 export import ATR.Member.Constants;
-export import ATR.Member.CountedBuffer;
 export import ATR.Member.CountedType;
 export import ATR.Member.FlatComposer;
 export import ATR.Member.FlatComposition;

@@ -38,44 +38,24 @@ auto constexpr inline
 			>
 			.	Layout
 		;
-		return
-			::std::accumulate
-			(	rLayout
-				.	begin
-					()
-			,	rLayout
-				.	end
-					()
-			,	0z
-			,	[]	(	auto
-							i_vCount
-					,	auto const
-						&	i_rCountedTypes
-					)
-				{	return
-						::std::accumulate
-						(	i_rCountedTypes
-							.	begin
-								()
-						,	i_rCountedTypes
-							.	end
-								()
-						,	i_vCount
-						,	[]	(	auto
-										i_vInnerCount
-								,	auto const
-									&	i_rCountedType
-								)
-							{	return
-									i_vInnerCount
-								+	i_rCountedType
-									.	Count
-								;
-							}
-						)
-					;
-				}
+
+		auto
+			vCount
+		=	0z
+		;
+
+		for	(	auto const
+				&	[	rType
+					,	rCount
+					]
+			:	rLayout
 			)
+		{	vCount
+			+=	rCount
+			;
+		}
+		return
+			vCount
 		;
 	}()
 ;

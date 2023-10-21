@@ -1,55 +1,50 @@
 export module ATR.Member.AlignBuffer;
 
+import ATR.Member.AlignBufferView;
+import ATR.Member.AlignBufferIterator;
 import ATR.Member.Constants;
-import ATR.Member.CountedBuffer;
 
 import Meta.Memory.Alignment;
-import Meta.Size;
 
 using ::Meta::Memory::Alignment;
-using ::Meta::SSize;
 
 export namespace
 	ATR::Member
 {
+	[[nodiscard]]
+	auto constexpr inline
+	(	AlignmentToIndex
+	)	(	Alignment
+				i_vAlignment
+		)
+		noexcept
+	->	int
+	{	return
+			MaxAlign
+			.	Value
+		-	i_vAlignment
+			.	Value
+		;
+	}
+
 	template
 		<	typename
 				t_tElement
-		,	SSize
-				t_vBufferSize
 		>
 	struct
 		AlignBuffer
 	{
-		using
-			BufferType
-		=	CountedBuffer
-			<	t_tElement
-			,	t_vBufferSize
-			>
-		;
-
-		BufferType
+		t_tElement
 			Buffer
 			[	AlignmentCount
 			]
 		{};
 
-		[[nodiscard]]
-		auto static constexpr inline
-		(	AlignmentToIndex
-		)	(	Alignment
-					i_vAlignment
-			)
-			noexcept
-		->	SSize
-		{	return
-				MaxAlign
-				.	Value
-			-	i_vAlignment
-				.	Value
-			;
-		}
+		short
+			ElementCounts
+			[	AlignmentCount
+			]
+		{};
 
 		[[nodiscard]]
 		auto constexpr inline
@@ -61,36 +56,57 @@ export namespace
 			)
 			noexcept
 		->	decltype(auto)
-		{	return
-				i_rThis
-				.	Buffer
-					[	AlignmentToIndex
-						(	i_vAlignment
-						)
-					]
+		{
+			auto const
+				vIndex
+			=	AlignmentToIndex
+					(	i_vAlignment
+					)
+			;
+			return
+				AlignBufferView
+				{	i_rThis
+					.	Buffer
+						[	vIndex
+						]
+					.	Buffer
+				,	i_rThis
+					.	ElementCounts
+						[	vIndex
+						]
+				}
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	begin
-		)	()	const&
+		)	(	this auto
+				&&	i_rThis
+			)
 			noexcept
-		->	BufferType const*
+		->	decltype(auto)
 		{	return
-				Buffer
+				AlignBufferIterator
+				{	i_rThis
+					.	Buffer
+				,	i_rThis
+					.	ElementCounts
+				}
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	end
-		)	()	const&
+		)	(	this AlignBuffer const
+				&
+			)
 			noexcept
-		->	BufferType const*
+		->	decltype(auto)
 		{	return
-				Buffer
-			+	AlignmentCount
+				AlignBufferSentinel
+				{}
 			;
 		}
 	};

@@ -44,6 +44,22 @@ auto constexpr inline
 			.	Layout
 		;
 
+		auto
+			vTypeCount
+		=	0z
+		;
+
+		for	(	auto const
+				&	[	rType
+					,	rCount
+					]
+			:	rLayout
+			)
+		{	vTypeCount
+			+=	rCount
+			;
+		}
+
 		return
 			::std::count_if
 			(	rComposition
@@ -66,43 +82,7 @@ auto constexpr inline
 					;
 				}
 			)
-		-	::std::accumulate
-			(	rLayout
-				.	begin
-					()
-			,	rLayout
-				.	end
-					()
-			,	0z
-			,	[]	(	auto
-							i_vCount
-					,	auto const
-						&	i_rCountedTypes
-					)
-				{	return
-						::std::accumulate
-						(	i_rCountedTypes
-							.	begin
-								()
-						,	i_rCountedTypes
-							.	end
-								()
-						,	i_vCount
-						,	[]	(	auto
-										i_vInnerCount
-								,	auto const
-									&	i_rCountedType
-								)
-							{	return
-									i_vInnerCount
-								+	i_rCountedType
-									.	Count
-								;
-							}
-						)
-					;
-				}
-			)
+		-	vTypeCount
 		;
 	}()
 ;

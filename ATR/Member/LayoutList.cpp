@@ -1,9 +1,9 @@
 export module ATR.Member.LayoutList;
 
 import ATR.Member.AlignBuffer;
+import ATR.Member.AlignBufferView;
 import ATR.Member.Constants;
 import ATR.Member.CountedType;
-import ATR.Member.CountedBuffer;
 
 import Meta.Memory.Alignment;
 import Meta.Memory.Constraint;
@@ -30,7 +30,7 @@ export namespace
 	(	Count
 	)	(	TypeID
 				i_vType
-		,	AlignBuffer<CountedType, TypeBufferSize> const
+		,	AlignBuffer<CountedTypeBuffer> const
 			&	i_rAlignTypeCounts
 		,	BitSize const
 			(&	i_rBitCounts
@@ -102,7 +102,7 @@ export namespace
 	(	AlignSize
 	)	(	Alignment
 				i_vAlign
-		,	AlignBuffer<CountedType, TypeBufferSize> const
+		,	AlignBuffer<CountedTypeBuffer> const
 			&	i_rAlignTypeCounts
 		,	BitSize const
 			(&	i_rBitCounts
@@ -163,7 +163,7 @@ export namespace
 	(	AlignOffset
 	)	(	Alignment
 				i_vAlign
-		,	AlignBuffer<CountedType, TypeBufferSize> const
+		,	AlignBuffer<CountedTypeBuffer> const
 			&	i_rAlignTypeCounts
 		,	BitSize const
 			(&	i_rBitCounts
@@ -222,7 +222,7 @@ export namespace
 	(	TypeOffset
 	)	(	TypeID
 				i_vType
-		,	AlignBuffer<CountedType, TypeBufferSize> const
+		,	AlignBuffer<CountedTypeBuffer> const
 			&	i_rAlignTypeCounts
 		)
 		noexcept
@@ -281,7 +281,7 @@ export namespace
 	(	AlignTypeOffset
 	)	(	TypeID
 				i_vType
-		,	AlignBuffer<CountedType, TypeBufferSize> const
+		,	AlignBuffer<CountedTypeBuffer> const
 			&	i_rAlignTypeCounts
 		,	BitSize const
 			(&	i_rBitCounts
@@ -321,7 +321,7 @@ export namespace
 	(	MemberOffset
 	)	(	TypeID
 				i_vType
-		,	AlignBuffer<CountedType, TypeBufferSize> const
+		,	AlignBuffer<CountedTypeBuffer> const
 			&	i_rAlignTypeCounts
 		,	BitSize const
 			(&	i_rBitCounts
@@ -376,8 +376,8 @@ export namespace
 	(	AddByteType
 	)	(	TypeID
 				i_vType
-		,	CountedBuffer<CountedType, TypeBufferSize>
-			&	o_rCountedBuffer
+		,	AlignBufferView<CountedType>
+				o_rCountedBuffer
 		,	SSize
 				i_vCount
 		)
@@ -409,11 +409,9 @@ export namespace
 		}
 
 		o_rCountedBuffer
-		.	push_back
-			(	CountedType
-				{	i_vType
-				,	i_vCount
-				}
+		.	emplace_back
+			(	i_vType
+			,	i_vCount
 			)
 		;
 

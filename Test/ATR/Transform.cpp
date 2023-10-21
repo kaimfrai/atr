@@ -3,7 +3,6 @@ import ATR.Member.AlignBuffer;
 import ATR.Member.Composition;
 import ATR.Member.CompositionTransformer;
 import ATR.Member.Constants;
-import ATR.Member.CountedBuffer;
 import ATR.Member.CountedType;
 import ATR.Member.FlatComposition;
 
@@ -18,6 +17,7 @@ import Std;
 using ::ATR::Member::AlignBuffer;
 using ::ATR::Member::Composition_Of;
 using ::ATR::Member::CountedType;
+using ::ATR::Member::CountedTypeBuffer;
 using ::ATR::Member::FlatComposition;
 using ::ATR::Member::TypeBufferSize;
 
@@ -79,50 +79,6 @@ namespace
 	}
 }
 
-namespace
-	ATR::Member
-{
-	template
-		<	typename
-				t_tElement
-		,	auto
-				t_vBufferSize
-		>
-	[[nodiscard]]
-	auto constexpr inline
-	(	operator==
-	)	(	CountedBuffer<t_tElement, t_vBufferSize> const
-			&	i_rLeft
-		,	CountedBuffer<t_tElement, t_vBufferSize> const
-			&	i_rRight
-		)
-		noexcept
-	->	bool
-	{	return
-		::std::ranges::equal
-		(	i_rLeft
-		,	i_rRight
-		);
-	}
-}
-
-[[nodiscard]]
-auto constexpr inline
-(	operator==
-)	(	AlignBuffer<CountedType, TypeBufferSize> const
-		&	i_rLeft
-	,	AlignBuffer<CountedType, TypeBufferSize> const
-		&	i_rRight
-	)
-	noexcept
-->	bool
-{	return
-	::std::ranges::equal
-	(	i_rLeft
-	,	i_rRight
-	);
-}
-
 [[nodiscard]]
 auto constexpr inline
 (	operator==
@@ -134,9 +90,10 @@ auto constexpr inline
 	noexcept
 ->	bool
 {	return
+		::std::ranges::equal
 		(	i_rLeft
 			.	Layout
-		==	i_rRight
+		,	i_rRight
 			.	Layout
 		)
 	and	::std::ranges::equal

@@ -387,42 +387,37 @@ namespace
 	template
 		<	auto
 				t_vTypeCounts
+		,	::std::size_t
+			...	t_vpIndex
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	CreateLayout
-	)	()
+	)	(	::std::index_sequence
+			<	t_vpIndex
+				...
+			>
+		)
 		noexcept
 	->	decltype(auto)
 	{	return
-		[]	<	::std::size_t
-				...	t_vpIndex
-			>(	::std::index_sequence
-				<	t_vpIndex
-					...
+			MakeFork
+			<	RestoreTypeEntity
+				<	t_vTypeCounts
+					.	Buffer
+						[	t_vpIndex
+						]
+					.	Type
 				>
-			)
-		{	return
-				MakeFork
-				<	RestoreTypeEntity
-					<	t_vTypeCounts
+					[	t_vTypeCounts
+						.	Buffer
 							[	t_vpIndex
 							]
-						.	Type
-					>
-						[	t_vTypeCounts
-								[	t_vpIndex
-								]
-							.	Count
-						]
-					...
-				>{}
-			;
-		}(	::std::make_index_sequence
-			<	t_vTypeCounts
-				.	Count
+						.	Count
+					]
+				...
 			>{}
-		);
+		;
 	}
 
 	template
@@ -454,7 +449,13 @@ namespace
 				.	Buffer
 					[	t_vpIndex
 					]
-			>()
+			>(	::std::make_index_sequence
+				<	rLayout
+					.	ElementCounts
+						[	t_vpIndex
+						]
+				>{}
+			)
 		+	...
 		);
 	}

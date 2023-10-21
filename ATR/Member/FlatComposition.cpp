@@ -159,7 +159,7 @@ export namespace
 		=	NameBufferSize
 		;
 
-		AlignBuffer<CountedType, TypeBufferSize>
+		AlignBuffer<CountedTypeBuffer>
 			Layout
 		{};
 

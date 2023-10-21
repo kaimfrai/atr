@@ -2,7 +2,8 @@ add_single_file_modules(
 	Constants.cpp
 	CountedType.cpp
 	Info.cpp
-	CountedBuffer.cpp
+	AlignBufferView.cpp
+	AlignBufferIterator.cpp
 	AlignBuffer.cpp
 	LayoutList.cpp
 	FlatComposition.cpp
