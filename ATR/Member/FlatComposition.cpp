@@ -64,11 +64,12 @@ export namespace
 		{
 			for	(	::std::int16_t
 						vIndex
-					=	i_vName
-						.	Value
-					bitand
-						0x3E // 64 entries and load factor of 2
-				;
+					=	static_cast<::std::int16_t>
+						(	i_vName
+						bitand
+							0x3E // 64 entries and load factor of 2
+						)
+				;	// Termination by out of bounds
 				;	++	vIndex
 				)
 			{	auto const

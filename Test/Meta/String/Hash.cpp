@@ -155,13 +155,13 @@ auto constexpr inline
 	&	rDistributionCount
 	=	o_rStorage
 		[	Hash(i_rString)
-			.	Fold4
-				()
+		bitand
+			0xF
 		]
 	;
 	if	(	rDistributionCount
 		>	// Best observed value so far
-			4118
+			4105
 		)
 	{	return
 			false

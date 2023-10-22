@@ -146,178 +146,20 @@ export namespace
 		=	default;
 
 		[[nodiscard]]
-		auto constexpr inline
-		(	Fold64
-		)	()	const
+		auto friend constexpr inline
+		(	operator bitand
+		)	(	Hash
+					i_vHash
+			,	::std::uint64_t
+					i_vMask
+			)
 			noexcept
 		->	::std::uint64_t
 		{	return
-				Value
-			xor	Multiplier
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	Fold32
-		)	()	const
-			noexcept
-		->	::std::uint32_t
-		{
-			::std::uint64_t static constexpr
-				vBitMask
-			=	0xFFFF'FFFF
-			;
-
-			::std::uint64_t const
-				vFold64
-			=	Fold64
-				()
-			;
-
-			auto const
-				vLowerBits
-			=		vFold64
-				bitand
-					vBitMask
-			;
-			auto const
-				vUpperBits
-			=	(	vFold64
-				bitand
-					compl
-					vBitMask
-				)
-			>>	32u
-			;
-			return
-				static_cast<::std::uint32_t>
-				(	vLowerBits
-				xor	vUpperBits
-				)
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	Fold16
-		)	()	const
-			noexcept
-		->	::std::uint16_t
-		{
-			::std::uint32_t static constexpr
-				vBitMask
-			=	0xFFFF
-			;
-
-			::std::uint32_t const
-				vFold32
-			=	Fold32
-				()
-			;
-
-			auto const
-				vLowerBits
-			=		vFold32
-				bitand
-					vBitMask
-			;
-			auto const
-				vUpperBits
-			=	(	vFold32
-				bitand
-					compl
-					vBitMask
-				)
-			>>	16u
-			;
-			return
-				static_cast<::std::uint16_t>
-				(	vLowerBits
-				xor	vUpperBits
-				)
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	Fold8
-		)	()	const
-			noexcept
-		->	::std::uint8_t
-		{
-			::std::uint16_t static constexpr
-				vBitMask
-			=	0xFF
-			;
-
-			::std::uint16_t const
-				vFold16
-			=	Fold16
-				()
-			;
-
-			auto const
-				vLowerBits
-			=		vFold16
-				bitand
-					vBitMask
-			;
-			auto const
-				vUpperBits
-			=	(	vFold16
-				bitand
-					compl
-					vBitMask
-				)
-			>>	8u
-			;
-			return
-				static_cast<::std::uint8_t>
-				(	vLowerBits
-				xor	vUpperBits
-				)
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	Fold4
-		)	()	const
-			noexcept
-		->	::std::uint8_t
-		{
-			::std::uint8_t static constexpr
-				vBitMask
-			=	0x0F
-			;
-
-			::std::uint8_t const
-				vFold8
-			=	Fold8
-				()
-			;
-
-			auto const
-				vLowerBits
-			=		vFold8
-				bitand
-					vBitMask
-			;
-			auto const
-				vUpperBits
-			=	(	vFold8
-				bitand
-					compl
-					vBitMask
-				)
-			>>	4u
-			;
-			return
-				static_cast<::std::uint8_t>
-				(	vLowerBits
-				xor	vUpperBits
-				)
+				i_vHash
+				.	Value
+			bitand
+				i_vMask
 			;
 		}
 	};
