@@ -10,7 +10,7 @@ export namespace
 	{
 		::std::uint64_t static constexpr inline
 			InitialValue
-		=	0x4000'0000'0000'0000
+		=	0x4000'0000'0000'0001
 		;
 
 		::std::uint64_t

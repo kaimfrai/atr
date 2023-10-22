@@ -161,7 +161,7 @@ auto constexpr inline
 	;
 	if	(	rDistributionCount
 		>	// Best observed value so far
-			4105
+			4104
 		)
 	{	return
 			false
