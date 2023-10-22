@@ -37,7 +37,7 @@ export namespace
 			]
 		{};
 
-		::std::int16_t
+		short
 			MemberIndices
 			[	HashBufferSize
 			]
@@ -49,7 +49,7 @@ export namespace
 			]
 		{};
 
-		::std::int16_t
+		short
 			MemberCount
 		{};
 
@@ -60,11 +60,11 @@ export namespace
 					i_vName
 			)	const
 			noexcept
-		->	::std::int16_t
+		->	short
 		{
-			for	(	::std::int16_t
+			for	(	short
 						vIndex
-					=	static_cast<::std::int16_t>
+					=	static_cast<short>
 						(	i_vName
 						bitand
 							0x3E // 64 entries and load factor of 2
@@ -94,13 +94,13 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	AddTypeForHash
-		)	(	::std::int16_t
+		)	(	short
 					i_vHashIndex
 			,	TypeID
 					i_vType
 			)
 			noexcept
-		->	::std::int16_t
+		->	short
 		{
 			auto const
 				vMemberIndex

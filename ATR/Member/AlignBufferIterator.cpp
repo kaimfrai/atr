@@ -2,13 +2,11 @@ export module ATR.Member.AlignBufferIterator;
 
 import ATR.Member.Constants;
 
+import Std;
+
 export namespace
 	ATR::Member
 {
-	struct
-		AlignBufferSentinel
-	{};
-
 	template
 		<	typename
 				t_tBuffer
@@ -18,13 +16,13 @@ export namespace
 	{
 		t_tBuffer
 		(*	m_aBuffer
-		)	[	AlignmentCount
+		)	[	ByteAlignCount
 			]
 		;
 
 		short const
 		(*	m_aElementCounts
-		)	[	AlignmentCount
+		)	[	ByteAlignCount
 			]
 		;
 
@@ -37,6 +35,7 @@ export namespace
 		=	0
 		;
 
+		[[nodiscard]]
 		auto constexpr inline
 		(	ElementCount
 		)	()	const
@@ -44,8 +43,8 @@ export namespace
 		->	short
 		{	return
 				(*	m_aElementCounts
-				)	[	m_vAlignmentIndex
-					]
+				)[	m_vAlignmentIndex
+				]
 			;
 		}
 
@@ -57,12 +56,12 @@ export namespace
 		{
 			for	(
 				;		m_vAlignmentIndex
-					<	AlignmentCount
+					<	ByteAlignCount
 				;	++	m_vAlignmentIndex
 				)
 			{
 				if	(	ElementCount
-							()
+						()
 					>	0
 					)
 				{	return;
@@ -85,11 +84,11 @@ export namespace
 		(	AlignBufferIterator
 		)	(	t_tBuffer
 				(&	i_rBuffer
-				)	[	AlignmentCount
+				)	[	ByteAlignCount
 					]
 			,	short const
 				(&	i_rElementCounts
-				)	[	AlignmentCount
+				)	[	ByteAlignCount
 					]
 			)
 			noexcept
@@ -99,10 +98,8 @@ export namespace
 		,	m_aElementCounts
 			{	&i_rElementCounts
 			}
-		{
-			AdvanceAlignmentIndex
-				()
-			;
+		{	AdvanceAlignmentIndex
+			();
 		}
 
 		[[nodiscard]]
@@ -141,8 +138,7 @@ export namespace
 				++	m_vAlignmentIndex
 				;
 				AdvanceAlignmentIndex
-					()
-				;
+				();
 			}
 
 			return
@@ -173,14 +169,14 @@ export namespace
 		(	operator==
 		)	(	AlignBufferIterator const
 				&	i_rIterator
-			,	AlignBufferSentinel
+			,	::std::default_sentinel_t
 			)
 			noexcept
 		->	bool
 		{	return
 				i_rIterator
 				.	m_vAlignmentIndex
-			>=	AlignmentCount
+			>=	ByteAlignCount
 			;
 		}
 	};
@@ -192,11 +188,11 @@ export namespace
 	(	AlignBufferIterator
 	)	(	t_tElement
 				(&	i_rBuffer
-				)	[	AlignmentCount
+				)	[	ByteAlignCount
 					]
 			,	short const
 				(&	i_rElementCounts
-				)	[	AlignmentCount
+				)	[	ByteAlignCount
 					]
 		)
 	->	AlignBufferIterator

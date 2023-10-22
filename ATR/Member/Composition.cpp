@@ -1,32 +1,28 @@
 export module ATR.Member.Composition;
 
+import ATR.Member.BitMemberIndexBuffer;
+import ATR.Member.ByteMemberIndexBuffer;
+import ATR.Member.Constants;
 import ATR.Member.FlatComposer;
 import ATR.Member.FlatComposition;
 import ATR.Member.LayoutList;
 import ATR.Member.ProtoComposer;
 
 import Meta.ID;
-import Meta.Memory.Constraint;
 import Meta.Memory.Size.Arithmetic;
-import Meta.Memory.Size.Compare;
 import Meta.Memory.Size;
-import Meta.Size;
 import Meta.String.Hash;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 
 import Std;
 
-using ::Meta::ByteSize;
 using ::Meta::BitSize;
-using ::Meta::Memory::ByteAlign;
+using ::Meta::ByteSize;
 using ::Meta::ProtoID;
-using ::Meta::SSize;
 using ::Meta::String::ImplicitHash;
 using ::Meta::Type;
 using ::Meta::TypeID;
-
-using namespace ::Meta::Literals;
 
 namespace
 	ATR::Member
@@ -39,32 +35,32 @@ namespace
 		noexcept
 	->	void
 	{
-		auto
-		*	const
-			aTypeIndices
-		=	new
-			SSize
-				[	static_cast<::std::size_t>
-					(	o_rComposition
-						.	Members
-						.	MemberCount
-					)
-				]
+		auto const
+			vMemberCount
+		=	o_rComposition
+			.	Members
+			.	MemberCount
 		;
 
-		BitSize
-			vBitCounts
-			[	ByteAlign
-				.	Value
-			-	1
-			]
-		{};
+		ByteMemberIndexBuffer
+			vMemberIndexBuffer
+		{	vMemberCount
+		,	o_rComposition
+			.	Layout
+			.	ElementCounts
+		};
 
-		BitSize
-			vTotalBitCount
-		{};
+		BitMemberIndexBuffer
+			vBitMemberIndexBuffer
+		{	vMemberCount
+		};
 
-		for	(	::std::int16_t
+		TypeID constexpr static
+			vByteType
+		=	Type<::std::byte>
+		;
+
+		for	(	short
 					vMemberIndex
 				=	0
 			;	(	vMemberIndex
@@ -90,11 +86,6 @@ namespace
 					()
 				)
 			{
-				aTypeIndices
-					[	vMemberIndex
-					]
-				=	0
-				;
 				continue
 				;
 			}
@@ -106,54 +97,26 @@ namespace
 					()
 			;
 
-			if	(	vAlign
-				<	ByteAlign
+			if	(	(	vAlign
+					<	ByteAlign
+					)
+				or	(	vType
+					==	vByteType
+					)
 				)
 			{
-				auto const
-					vSize
-				=	vType
-					.	GetSize
-						()
+				vBitMemberIndexBuffer
+				.	AppendMemberIndex
+					(	vAlign
+					,	vMemberIndex
+					)
 				;
-
-				auto
-				&	rBitCount
-				=	vBitCounts
-						[	ByteAlign
-							.	Value
-						-	vAlign
-							.	Value
-						-	1
-						]
-				;
-
-				auto const
-					vPreviousIndex
-				=	rBitCount
-					.	Value
-				;
-
-				rBitCount
-				+=	vSize
-				;
-				vTotalBitCount
-				+=	vSize
-				;
-
-				aTypeIndices
-					[	vMemberIndex
-					]
-				=	vPreviousIndex
-				;
-
 				continue
 				;
 			}
 
-			aTypeIndices
-				[	vMemberIndex
-				]
+			auto const
+				vTypeIndex
 			=	AddByteType
 				(	vType
 				,	o_rComposition
@@ -163,17 +126,24 @@ namespace
 				,	1z
 				)
 			;
+
+			vMemberIndexBuffer
+			.	AppendMemberIndex
+				(	vAlign
+				,	vTypeIndex
+				,	vMemberIndex
+				)
+			;
 		}
 
-		for	(	::std::int16_t
+
+		BitSize
+			vTotalOffset
+		{};
+
+		for	(	short
 					vMemberIndex
-				=	0
-			;	(	vMemberIndex
-				<	o_rComposition
-					.	Members
-					.	MemberCount
-				)
-			;	++	vMemberIndex
+			:	vMemberIndexBuffer
 			)
 		{
 			auto const
@@ -184,65 +154,79 @@ namespace
 					[	vMemberIndex
 					]
 			;
+			o_rComposition
+			.	Offsets
+				[	vMemberIndex
+				]
+			=	vTotalOffset
+			;
+			vTotalOffset
+			+=	vType
+				.	GetSize
+					()
+			;
+		}
 
+		BitSize
+			vByteCount
+		{};
+
+		for	(	short
+					vMemberIndex
+			:	vBitMemberIndexBuffer
+			)
+		{
 			auto const
-				vTypeIndex
-			=	aTypeIndices
+				vType
+			=	o_rComposition
+				.	Members
+				.	Types
 					[	vMemberIndex
 					]
-			;
-
-			auto const
-				vOffset
-			=	MemberOffset
-				(	vType
-				,	o_rComposition
-					.	Layout
-				,	vBitCounts
-				,	vTypeIndex
-				)
 			;
 			o_rComposition
 			.	Offsets
 				[	vMemberIndex
 				]
-			=	vOffset
+			=	vTotalOffset
+			;
+			vTotalOffset
+			+=	vType
+				.	GetSize
+					()
+			;
+			vByteCount
+			+=	vType
+				.	GetSize
+					()
 			;
 		}
 
-		if	(	ByteSize const
-					vTotalByteCount
-				=	vTotalBitCount
-			;	vTotalByteCount
-			>	0_byte
+		if	(	auto const
+					vBitBytes
+				=	ByteSize
+					(	vByteCount
+					)
+					.	get
+						()
+			;	vBitBytes
+			>	0
 			)
-		{
-			TypeID const
-				vByte
-			=	Type<::std::byte>
-			;
-
-			// TODO this will fail if byte is not the last type
-			(void)
+		{	(void)
 				AddByteType
-				(	vByte
+				(	vByteType
 				,	o_rComposition
 					.	Layout
-						[	vByte
+						[	vByteType
 							.	GetAlign
 								()
 						]
-				,	vTotalByteCount
+				,	ByteSize(vByteCount)
 					.	get
 						()
 				)
 			;
 		}
-
-		delete
-			[]
-			aTypeIndices
-		;
 	}
 
 	auto constexpr inline
@@ -251,13 +235,13 @@ namespace
 			&	o_rComposition
 		,	FlatComposer::AliasTarget const
 			*	i_aAliasTargets
-		,	::std::int16_t
+		,	short
 				i_vAliasCount
 		)
 		noexcept
 	->	void
 	{
-		for	(	::std::int16_t
+		for	(	short
 					vIndex
 				=	0
 			;	(	vIndex
@@ -423,8 +407,7 @@ export namespace
 			<	t_tComposer
 			>(	i_vTypeName
 			,	i_vMemberName
-			)
-			.	IsValid
+			).	IsValid
 				()
 		;
 	}

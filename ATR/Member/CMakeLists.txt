@@ -5,6 +5,10 @@ add_single_file_modules(
 	AlignBufferView.cpp
 	AlignBufferIterator.cpp
 	AlignBuffer.cpp
+	ByteMemberIndexIterator.cpp
+	ByteMemberIndexBuffer.cpp
+	BitMemberIndexIterator.cpp
+	BitMemberIndexBuffer.cpp
 	LayoutList.cpp
 	FlatComposition.cpp
 	PrefixGuard.cpp

@@ -6,6 +6,8 @@ import ATR.Member.Constants;
 
 import Meta.Memory.Alignment;
 
+import Std;
+
 using ::Meta::Memory::Alignment;
 
 export namespace
@@ -36,13 +38,13 @@ export namespace
 	{
 		t_tElement
 			Buffer
-			[	AlignmentCount
+			[	ByteAlignCount
 			]
 		{};
 
 		short
 			ElementCounts
-			[	AlignmentCount
+			[	ByteAlignCount
 			]
 		{};
 
@@ -103,10 +105,8 @@ export namespace
 				&
 			)
 			noexcept
-		->	decltype(auto)
 		{	return
-				AlignBufferSentinel
-				{}
+				::std::default_sentinel
 			;
 		}
 	};

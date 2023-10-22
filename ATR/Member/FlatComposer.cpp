@@ -41,7 +41,7 @@ export namespace
 		struct
 			AliasTarget
 		{
-			::std::int16_t
+			short
 				HashIndex
 			{};
 			Hash
@@ -55,7 +55,7 @@ export namespace
 			]
 		{};
 
-		::std::int16_t
+		short
 			AliasCount
 		{};
 

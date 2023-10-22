@@ -473,7 +473,7 @@ export namespace
 	=	decltype
 		(	CreateLayout_For<t_tTypeName>
 			(	::std::make_index_sequence
-				<	Member::AlignmentCount
+				<	Member::ByteAlignCount
 				>{}
 			)
 		)
