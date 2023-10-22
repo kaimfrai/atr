@@ -25,11 +25,6 @@ export namespace
 		FlatComposer
 	{
 		auto static constexpr inline
-			BucketSize
-		=	3z
-		;
-
-		auto static constexpr inline
 			NameCount
 		=	NameBufferSize
 		;

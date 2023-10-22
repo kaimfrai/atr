@@ -23,56 +23,9 @@ using namespace ::Meta::Literals;
 export namespace
 	ATR::Member
 {
-	[[nodiscard]]
-	auto constexpr inline
-	(	HashFindIndex
-	)	(	Hash const
-			*	i_aStorage
-		,	::std::int16_t
-				i_vBucketSize
-		,	Hash
-				i_vHash
-		)
-		noexcept
-	->	::std::int16_t
-	{
-		for	(	::std::int16_t
-					vIndex
-				=	i_vHash
-					.	Fold4
-						()
-				*	i_vBucketSize
-			;
-			;	++	vIndex
-			)
-		{
-			auto const
-				vElement
-			=	i_aStorage
-					[	vIndex
-					]
-			;
-			if	(	not
-					vElement
-				or	(	vElement
-					==	i_vHash
-					)
-				)
-			{	return
-					vIndex
-				;
-			}
-		}
-	}
-
 	struct
 		MemberNameList
 	{
-		::std::int16_t static constexpr inline
-			BucketSize
-		=	3
-		;
-
 		auto static constexpr inline
 			HashBufferSize
 		=	NameBufferSize
@@ -108,13 +61,33 @@ export namespace
 			)	const
 			noexcept
 		->	::std::int16_t
-		{	return
-				HashFindIndex
-				(	Names
-				,	BucketSize
-				,	i_vName
+		{
+			for	(	::std::int16_t
+						vIndex
+					=	i_vName
+						.	Value
+					bitand
+						0x3E // 64 entries and load factor of 2
+				;
+				;	++	vIndex
 				)
-			;
+			{	auto const
+					vElement
+				=	Names
+						[	vIndex
+						]
+				;
+				if	(	not
+						vElement
+					or	(	vElement
+						==	i_vName
+						)
+					)
+				{	return
+						vIndex
+					;
+				}
+			}
 		}
 
 		[[nodiscard]]
