@@ -1,5 +1,7 @@
 export module ATR.Member.AlignBufferView;
 
+import Std;
+
 export namespace
 	ATR::Member
 {
@@ -37,12 +39,14 @@ export namespace
 				...	i_rElement
 			)	const
 			noexcept
-		{	Elements
-				[	ElementCount
-					++
-				]
-			=	t_tElement
-				(	static_cast<decltype(i_rElement)>
+		->	auto&
+		{	return
+			*	::std::construct_at
+				(	&	Elements
+						[	ElementCount
+							++
+						]
+				,	static_cast<decltype(i_rElement)>
 					(	i_rElement
 					)
 					...
