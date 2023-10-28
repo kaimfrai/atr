@@ -24,16 +24,6 @@ export namespace
 	struct
 		FlatComposer
 	{
-		auto static constexpr inline
-			NameCount
-		=	NameBufferSize
-		;
-
-		auto static constexpr inline
-			HashBufferSize
-		=	NameBufferSize
-		;
-
 		MemberNameList
 			Members
 		{};
@@ -51,7 +41,7 @@ export namespace
 
 		AliasTarget
 			AliasTargets
-			[	FlatComposition::NameCount
+			[	NameBufferSize
 			]
 		{};
 

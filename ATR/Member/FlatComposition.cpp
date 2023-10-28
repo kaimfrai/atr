@@ -26,20 +26,15 @@ export namespace
 	struct
 		MemberNameList
 	{
-		auto static constexpr inline
-			HashBufferSize
-		=	NameBufferSize
-		;
-
 		Hash
 			Names
-			[	HashBufferSize
+			[	NameBufferSize
 			]
 		{};
 
 		short
 			MemberIndices
-			[	HashBufferSize
+			[	NameBufferSize
 			]
 		{};
 
@@ -128,11 +123,6 @@ export namespace
 	struct
 		FlatComposition
 	{
-		auto static constexpr inline
-			NameCount
-		=	NameBufferSize
-		;
-
 		AlignBuffer<CountedTypeBuffer>
 			Layout
 		{};

@@ -64,9 +64,7 @@ namespace
 					vMemberIndex
 				=	0
 			;	(	vMemberIndex
-				<	o_rComposition
-					.	Members
-					.	MemberCount
+				<	vMemberCount
 				)
 			;	++	vMemberIndex
 			)
@@ -217,13 +215,9 @@ namespace
 				(	vByteType
 				,	o_rComposition
 					.	Layout
-						[	vByteType
-							.	GetAlign
-								()
+						[	ByteAlign
 						]
-				,	ByteSize(vByteCount)
-					.	get
-						()
+				,	vBitBytes
 				)
 			;
 		}
