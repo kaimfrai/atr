@@ -141,6 +141,19 @@ RUNTIME_OUTPUT_DIRECTORY
 )
 
 ################################################################################
+add_subdirectory(TagATR)
+add_module_executable(
+	TagATR
+		TagATR.cpp
+)
+set_target_properties(
+	TagATR
+PROPERTIES
+RUNTIME_OUTPUT_DIRECTORY
+	"${CMAKE_BINARY_DIR}/bin/"
+)
+
+################################################################################
 add_subdirectory(TagReplication)
 add_module_executable(
 	TagReplication

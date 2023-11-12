@@ -121,10 +121,13 @@ export namespace
 		explicit(false) constexpr inline
 		(	MoveHeapGuard
 		)	()
+			noexcept
 		{
 			GuardedValue
 			()
 			=	new
+				(	::std::nothrow
+				)
 				HeapLayoutType
 			;
 		}

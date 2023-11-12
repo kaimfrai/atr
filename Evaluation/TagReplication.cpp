@@ -95,7 +95,7 @@ namespace
 	struct
 		Body3DReference
 	{
-		::std::byte
+		::std::byte const
 		*	m_aData
 		;
 		ETag
@@ -210,7 +210,7 @@ namespace
 	struct
 		Body3DSentinel
 	{
-		::std::byte
+		::std::byte const
 		*	m_aDataEnd
 		;
 	};
@@ -218,10 +218,10 @@ namespace
 	struct
 		Body3DIterator
 	{
-		::std::byte
+		::std::byte const
 		*	m_aData
 		;
-		::std::byte
+		::std::byte const
 		*	m_aTag
 		;
 

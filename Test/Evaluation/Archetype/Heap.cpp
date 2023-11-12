@@ -20,11 +20,11 @@ import Meta.ID;
 
 import Std;
 
-using ::Meta::ID;
-using ::Meta::ProtoID;
-
 using ::ATR::District::Info;
 using ::ATR::District::ExcludingHeap;
+
+using ::Meta::ID;
+using ::Meta::ProtoID;
 
 using namespace ::ATR::Literals;
 

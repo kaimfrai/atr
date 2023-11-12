@@ -21,6 +21,7 @@ then
 		TypeErasure\
 		Archetype\
 		Replication\
+		TagATR\
 		TagReplication\
 		Variant\
 		Visitor
@@ -32,6 +33,7 @@ elif
 ||	[ $2 == "TypeErasure" ] \
 ||	[ $2 == "Archetype" ] \
 ||	[ $2 == "Replication" ] \
+||	[ $2 == "TagATR" ] \
 ||	[ $2 == "TagReplication" ] \
 ||	[ $2 == "Variant" ] \
 ||	[ $2 == "Visitor" ] \
@@ -48,6 +50,7 @@ else
 	echo "TypeErasure"
 	echo "Archetype"
 	echo "Replication"
+	echo "TagATR"
 	echo "TagReplication"
 	echo "Variant"
 	echo "Visitor"

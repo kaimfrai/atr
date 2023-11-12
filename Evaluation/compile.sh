@@ -40,6 +40,7 @@ then
 	time_build "Dyno"
 	time_build "Polymorphic"
 	time_build "Replication"
+	time_build "TagATR"
 	time_build "TagReplication"
 	time_build "TypeErasure"
 	time_build "Variant"
