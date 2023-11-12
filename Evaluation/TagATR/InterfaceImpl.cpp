@@ -1,20 +1,20 @@
 module Evaluation.TagATR.Interface;
 
-import Evaluation.Archetype.Circle;
-import Evaluation.Archetype.Cone;
-import Evaluation.Archetype.Cube;
-import Evaluation.Archetype.Cuboid;
-import Evaluation.Archetype.Cylinder;
-import Evaluation.Archetype.Ellipse;
-import Evaluation.Archetype.Ellipsoid;
-import Evaluation.Archetype.Head;
-import Evaluation.Archetype.Pyramid;
-import Evaluation.Archetype.Rectangle;
-import Evaluation.Archetype.Sphere;
-import Evaluation.Archetype.Square;
-import Evaluation.Archetype.Triangle;
+import Evaluation.TagATR.Circle;
+import Evaluation.TagATR.Cone;
+import Evaluation.TagATR.Cube;
+import Evaluation.TagATR.Cuboid;
+import Evaluation.TagATR.Cylinder;
+import Evaluation.TagATR.Ellipse;
+import Evaluation.TagATR.Ellipsoid;
+import Evaluation.TagATR.Head;
+import Evaluation.TagATR.Pyramid;
+import Evaluation.TagATR.Rectangle;
+import Evaluation.TagATR.Sphere;
+import Evaluation.TagATR.Square;
+import Evaluation.TagATR.Triangle;
 
-import Evaluation.Archetype.ComputeVolume;
+import Evaluation.TagATR.ComputeVolume;
 
 import ATR.Instance;
 import ATR.Literals;

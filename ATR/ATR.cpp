@@ -20,5 +20,6 @@ export import ATR.Member.LayoutList;
 export import ATR.Member.PrefixGuard;
 export import ATR.Member.ProtoComposer;
 export import ATR.Member.Storage;
+export import ATR.Virtual.Dispatch;
 export import ATR.Virtual.Element;
 export import ATR.Virtual.Entry;
