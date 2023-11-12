@@ -4,6 +4,7 @@ import ATR.Layout.Offset;
 
 import Meta.Memory.Constraint;
 import Meta.Memory.Size;
+import Meta.Memory.Size.Compare;
 
 using ::Meta::BitSize;
 using ::Meta::Memory::BitSize_Of;
@@ -43,13 +44,15 @@ export namespace
 					t_tData
 			,	BitSize
 					t_vOffset
+			,	typename
+				...	t_tpIndirectOffset
 			>
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator->*
 		)	(	this auto
 				&&	i_rFork
-			,	Offset<t_tData, t_vOffset>
+			,	Offset<t_tData, t_vOffset, t_tpIndirectOffset...>
 					i_vOffset
 			)
 			noexcept

@@ -30,19 +30,25 @@ export namespace
 			Names
 			[	NameBufferSize
 			]
-		{};
+		;
 
 		short
 			MemberIndices
 			[	NameBufferSize
 			]
-		{};
+		;
 
 		TypeID
 			Types
 			[	NameBufferSize
 			]
-		{};
+		;
+
+		short
+			DistrictIndices
+			[	NameBufferSize
+			]
+		;
 
 		short
 			MemberCount
@@ -93,6 +99,8 @@ export namespace
 					i_vHashIndex
 			,	TypeID
 					i_vType
+			,	short
+					i_vDistrictIndex
 			)
 			noexcept
 		->	short
@@ -104,14 +112,16 @@ export namespace
 			;
 
 			MemberIndices
-				[	i_vHashIndex
-				]
-			=	vMemberIndex
+			[	i_vHashIndex
+			]=	vMemberIndex
 			;
 			Types
-				[	vMemberIndex
-				]
-			=	i_vType
+			[	vMemberIndex
+			]=	i_vType
+			;
+			DistrictIndices
+			[	vMemberIndex
+			]=	i_vDistrictIndex
 			;
 
 			return
@@ -120,11 +130,24 @@ export namespace
 		}
 	};
 
+	template
+		<	short
+				t_vDistrictCount
+			=	0
+		>
 	struct
 		FlatComposition
 	{
-		AlignBuffer<CountedTypeBuffer>
+		short static constexpr inline
+			LayoutCount
+		=	t_vDistrictCount
+		+	1
+		;
+
+		AlignBuffer
 			Layout
+			[	LayoutCount
+			]
 		{};
 
 		MemberNameList
@@ -136,6 +159,71 @@ export namespace
 			[	NameBufferSize
 			]
 		{};
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	GetMemberInfo
+		)	(	short
+					i_vMemberIndex
+			)	const
+			noexcept
+		->	Info
+		{
+			auto const
+				vType
+			=	Members
+				.	Types
+					[	i_vMemberIndex
+					]
+			;
+			auto const
+				vOffset
+			=	Offsets
+				[	i_vMemberIndex
+				]
+			;
+			auto const
+				vDistrictIndex
+			=	Members
+				.	DistrictIndices
+					[	i_vMemberIndex
+					]
+			;
+
+			return
+				Info
+				{	vType
+				,	vOffset
+				,	vDistrictIndex
+				}
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	GetDistrictInfo
+		)	(	short
+					i_vDistrictIndex
+			)	const
+			noexcept
+		->	Info
+		{
+			if	(	i_vDistrictIndex
+				<=	0
+				)
+			{	::std::unreachable
+				();
+			}
+
+			return
+				GetMemberInfo
+				(	Members
+					.	MemberCount
+				-	1
+				+	i_vDistrictIndex
+				)
+			;
+		}
 
 		[[nodiscard]]
 		auto constexpr inline
@@ -164,38 +252,18 @@ export namespace
 					Info
 					{	Type<void>
 					,	-1_bit
+					,	-1
 					}
 				;
 			}
 
-			auto const
-				vMemberIndex
-			=	Members
-				.	MemberIndices
-					[	vHashIndex
-					]
-			;
-
-			auto const
-				vType
-			=	Members
-				.	Types
-					[	vMemberIndex
-					]
-			;
-
-			auto const
-				vOffset
-			=	Offsets
-					[	vMemberIndex
-					]
-			;
-
 			return
-				Info
-				{	vType
-				,	vOffset
-				}
+				GetMemberInfo
+				(	Members
+					.	MemberIndices
+						[	vHashIndex
+						]
+				)
 			;
 		}
 	};

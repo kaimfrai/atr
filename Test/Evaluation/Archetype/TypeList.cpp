@@ -43,6 +43,7 @@ template
 	<	ID<t_vTypeName>
 	>
 	.	Layout
+		[0]
 		[	t_vAlignment
 		]
 ;

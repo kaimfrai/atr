@@ -1,34 +1,101 @@
 export module ATR.Member.ByteMemberIndexBuffer;
 
+import ATR.Member.AlignBuffer;
 import ATR.Member.ByteMemberIndexIterator;
 import ATR.Member.Constants;
 
 import Meta.Memory.Alignment;
+import Meta.Token.TypeID;
 
 import Std;
 
+using ::Meta::TypeID;
 using ::Meta::Memory::Alignment;
 
 export namespace
 	ATR::Member
 {
+	struct
+		DistrictByteMemberIndexView
+	{
+		short const
+		*	MemberIndices
+		;
+		short const
+		*	TypeIndicesCounts
+		;
+		short const
+		(*	MemberIndicesCounts
+		)	[	TypeBufferSize
+			]
+		;
+		short
+			MemberCount
+		;
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	begin
+		)	(	this DistrictByteMemberIndexView const
+				&	i_rThis
+			)
+			noexcept
+		->	ByteMemberIndexIterator
+		{	return
+				ByteMemberIndexIterator
+				{	i_rThis
+					.	MemberIndices
+				,	i_rThis
+					.	TypeIndicesCounts
+				,	i_rThis
+					.	MemberIndicesCounts
+				,	i_rThis
+					.	MemberCount
+				}
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	end
+		)	(	this DistrictByteMemberIndexView const
+				&
+			)
+			noexcept
+		{	return
+				::std::default_sentinel
+			;
+		}
+	};
+
+	template
+		<	short
+				t_vDistrictCount
+		>
 	class
 		ByteMemberIndexBuffer
 	{
+		short static constexpr inline
+			LayoutCount
+		=	t_vDistrictCount
+		+	1
+		;
+
 		short
 		*	m_aMemberIndices
-		;
-		short const
-		(&	m_rTypeIndicesCounts
-		)	[	ByteAlignCount
-			]
 		;
 		short
 			m_vMemberCount
 		;
+		AlignBuffer
+		(&	m_rAlignBuffer
+		)	[	LayoutCount
+			]
+		;
 		short
 			m_vMemberIndicesCounts
-			[	ByteAlignCount
+			[	LayoutCount
+			][	ByteAlignCount
 			][	TypeBufferSize
 			]
 		{};
@@ -38,9 +105,9 @@ export namespace
 		(	ByteMemberIndexBuffer
 		)	(	short
 					i_vMemberCount
-			,	short const
-				(&	i_rTypeIndicesCounts
-				)	[	ByteAlignCount
+			,	AlignBuffer
+				(&	i_rAlignBuffer
+				)	[	LayoutCount
 					]
 			)
 			noexcept
@@ -48,17 +115,18 @@ export namespace
 			{	new
 				short
 					[	static_cast<::std::size_t>
-						(	ByteAlignCount
+						(	LayoutCount
+						*	ByteAlignCount
 						*	TypeBufferSize
 						*	i_vMemberCount
 						)
 					]
 			}
-		,	m_rTypeIndicesCounts
-			{	i_rTypeIndicesCounts
-			}
 		,	m_vMemberCount
 			{	i_vMemberCount
+			}
+		,	m_rAlignBuffer
+			{	i_rAlignBuffer
 			}
 		{}
 
@@ -76,16 +144,30 @@ export namespace
 
 		auto constexpr inline
 		(	AppendMemberIndex
-		)	(	Alignment
-					i_vAlignment
+		)	(	TypeID
+					i_vType
 			,	short
-					i_vTypeIndex
+					i_vDistrictIndex
+			,	Alignment
+					i_vAlignment
 			,	short
 					i_vMemberIndex
 			)
 			noexcept
 		->	void
 		{
+			auto const
+				vTypeIndex
+			=	AddByteType
+				(	i_vType
+				,	m_rAlignBuffer
+					[	i_vDistrictIndex
+					][	i_vAlignment
+					]
+				,	1z
+				)
+			;
+
 			auto const
 				vAlignmentIndex
 			=	MaxAlign
@@ -96,9 +178,10 @@ export namespace
 			auto const
 				vInsertIndex
 			=	m_vMemberIndicesCounts
-					[	vAlignmentIndex
-					][	i_vTypeIndex
-					]
+				[	i_vDistrictIndex
+				][	vAlignmentIndex
+				][	vTypeIndex
+				]
 				++
 			;
 
@@ -107,9 +190,13 @@ export namespace
 			=	m_aMemberIndices
 			+	vInsertIndex
 			+	(	m_vMemberCount
-				*	(	i_vTypeIndex
+				*	(	vTypeIndex
 					+	(	TypeBufferSize
-						*	vAlignmentIndex
+						*	(	vAlignmentIndex
+							+	(	ByteAlignCount
+								*	i_vDistrictIndex
+								)
+							)
 						)
 					)
 				)
@@ -121,36 +208,31 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	begin
-		)	(	this ByteMemberIndexBuffer const
-				&	i_rThis
-			)
+		(	operator[]
+		)	(	short
+					i_vDistrictIndex
+			)	const
 			noexcept
-		->	ByteMemberIndexIterator
+		->	DistrictByteMemberIndexView
 		{	return
-				ByteMemberIndexIterator
-				{	i_rThis
-					.	m_aMemberIndices
-				,	i_rThis
-					.	m_rTypeIndicesCounts
-				,	i_rThis
-					.	m_vMemberIndicesCounts
-				,	i_rThis
-					.	m_vMemberCount
-				}
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	end
-		)	(	this ByteMemberIndexBuffer const
-				&
-			)
-			noexcept
-		{	return
-				::std::default_sentinel
-			;
+			{	.	MemberIndices
+				=	m_aMemberIndices
+				+	(	m_vMemberCount
+					*	TypeBufferSize
+					*	ByteAlignCount
+					*	i_vDistrictIndex
+					)
+			,	.	TypeIndicesCounts
+				=	m_rAlignBuffer
+					[	i_vDistrictIndex
+					].	ElementCounts
+			,	.	MemberIndicesCounts
+				=	m_vMemberIndicesCounts
+					[	i_vDistrictIndex
+					]
+			,	.	MemberCount
+				=	m_vMemberCount
+			};
 		}
 	};
 }

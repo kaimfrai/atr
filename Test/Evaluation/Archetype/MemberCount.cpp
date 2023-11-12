@@ -37,6 +37,7 @@ auto constexpr inline
 			<	ID<t_vTypeName>
 			>
 			.	Layout
+				[0]
 		;
 
 		auto

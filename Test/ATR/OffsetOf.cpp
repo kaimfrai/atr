@@ -101,11 +101,11 @@ template
 	>
 auto constexpr inline
 	MemberInfo_Of
-=	::ATR::Member::GetInfo
-	(	t_tOwner
-		::	TypeName
-	,	t_vMemberName
-	)
+=	t_tOwner
+	::	Composition
+	.	FindMemberInfo
+		(	t_vMemberName
+		)
 ;
 
 template
@@ -119,6 +119,7 @@ auto constexpr inline
 =	::ATR::Member::Info
 	{	Type<t_tEntity>
 	,	t_vOffset
+	,	0
 	}
 ;
 

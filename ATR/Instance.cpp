@@ -1,6 +1,7 @@
 export module ATR.Instance;
 
 import ATR.Address;
+import ATR.Base;
 import ATR.Layout.Create;
 import ATR.Layout.Offset;
 import ATR.Member.Composition;
@@ -21,24 +22,41 @@ export namespace
 {
 	template
 		<	ProtoID
-				t_tName
+				t_tTypeName
+		,	typename
+			...	t_tpDistrict
 		>
 	struct
 		Instance
+	:	Base
+		<	CreateType
+			<	0
+			,	t_tTypeName
+			,	t_tpDistrict
+				...
+			>
+		>
+	,	t_tpDistrict
+		::	template
+			Guard
+			<	Instance
+				<	t_tTypeName
+				,	t_tpDistrict
+					...
+				>
+			>
+		...
 	{
-		using
-			LayoutType
-		=	CreateType
-			<	t_tName
+		auto static constexpr inline
+		&	Composition
+		=	Member::Composition_Of
+			<	t_tTypeName
+			,	t_tpDistrict
+				...
 			>
 		;
 
-		[[no_unique_address]]
-		LayoutType
-			Layout
-		;
-
-		t_tName static constexpr inline
+		t_tTypeName static constexpr inline
 			TypeName
 		{};
 
@@ -47,19 +65,26 @@ export namespace
 					t_vMemberName
 			>
 		requires
-			(	Member::Exists
-				(	TypeName
-				,	t_vMemberName
-				)
+			(	Composition
+				.	FindMemberInfo
+					(	t_vMemberName
+					)
+				.	IsValid
+					()
 			)
 		auto static constexpr inline
 			Offset_Of
 		=	Layout::Offset_For
-			<	Member::GetInfo
-				(	TypeName
-				,	t_vMemberName
-				)
-			>{}
+			<	Layout::DistrictType
+				<	t_tTypeName
+				,	t_tpDistrict
+					...
+				>
+			,	Composition
+				.	FindMemberInfo
+					(	t_vMemberName
+					)
+			>
 		;
 
 		[[nodiscard]]
@@ -67,7 +92,7 @@ export namespace
 		(	operator[]
 		)	(	this auto
 				&&	i_rThis
-			,	ProtoDynamicMember_Of<t_tName> auto
+			,	ProtoDynamicMember_Of<t_tTypeName, t_tpDistrict...> auto
 					i_vMemberID
 			)
 			noexcept
@@ -84,7 +109,7 @@ export namespace
 		[[nodiscard]]
 		auto static constexpr inline
 		(	operator[]
-		)	(	ProtoStaticMember_Of<t_tName> auto
+		)	(	ProtoStaticMember_Of<t_tTypeName, t_tpDistrict...> auto
 					i_vMemberID
 			)
 			noexcept

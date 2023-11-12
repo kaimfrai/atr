@@ -32,6 +32,7 @@ else()
 endif()
 
 add_compile_options(
+	-std=c++2c
 	-march=native
 	-flto=thin
 	-fconstexpr-backtrace-limit=0

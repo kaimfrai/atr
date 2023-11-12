@@ -14,14 +14,11 @@ export namespace
 		*	m_aMemberIndices
 		;
 		short const
-		(*	m_aTypeIndicesCounts
-		)	[	ByteAlignCount
-			]
+		*	m_aTypeIndicesCounts
 		;
 		short const
 		(*	m_aMemberIndicesCounts
-		)	[	ByteAlignCount
-			][	TypeBufferSize
+		)	[	TypeBufferSize
 			]
 		;
 		short
@@ -44,8 +41,8 @@ export namespace
 			noexcept
 		->	short
 		{	return
-				(*	m_aMemberIndicesCounts
-				)[	m_vAlignmentIndex
+				m_aMemberIndicesCounts
+				[	m_vAlignmentIndex
 				][	m_vTypeIndexIndex
 				]
 			;
@@ -58,8 +55,8 @@ export namespace
 			noexcept
 		->	short
 		{	return
-				(*	m_aTypeIndicesCounts
-				)[	m_vAlignmentIndex
+				m_aTypeIndicesCounts
+				[	m_vAlignmentIndex
 				]
 			;
 		}
@@ -99,13 +96,10 @@ export namespace
 		)	(	short const
 				*	i_aMemberIndices
 			,	short const
-				(&	i_rTypeIndicesCounts
-				)	[	ByteAlignCount
-					]
+				*	i_aTypeIndicesCounts
 			,	short const
-				(&	i_rMemberIndicesCounts
-				)	[	ByteAlignCount
-					][	TypeBufferSize
+				(*	i_aMemberIndicesCounts
+				)	[	TypeBufferSize
 					]
 			,	short
 					i_vMemberCount
@@ -115,10 +109,10 @@ export namespace
 			{	i_aMemberIndices
 			}
 		,	m_aTypeIndicesCounts
-			{	&	i_rTypeIndicesCounts
+			{	i_aTypeIndicesCounts
 			}
 		,	m_aMemberIndicesCounts
-			{	&	i_rMemberIndicesCounts
+			{	i_aMemberIndicesCounts
 			}
 		,	m_vMemberCount
 			{	i_vMemberCount

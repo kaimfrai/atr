@@ -54,6 +54,14 @@ export namespace
 		{	""
 		};
 
+		auto
+		(*	DistrictIndexOf
+		)	(	Hash
+			)
+			noexcept
+		->	short
+		;
+
 		auto constexpr inline
 		(	Alias
 		)	(	ImplicitHash
@@ -155,6 +163,13 @@ export namespace
 				.	AddTypeForHash
 					(	vHashIndex
 					,	i_vType
+					,	i_vType
+						.	IsAligned
+							()
+						?	DistrictIndexOf
+							(	vPrefixedMemberName
+							)
+						:	-1
 					)
 				;
 			}

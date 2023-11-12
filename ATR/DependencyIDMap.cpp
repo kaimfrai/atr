@@ -19,11 +19,13 @@ export namespace
 		>
 	concept
 		ProtoMemberInterface
-	=	Member::Exists
-		(	t_tProto
-			::	TypeName
-		,	t_vMemberName
-		)
+	=	t_tProto
+		::	Composition
+		.	FindMemberInfo
+			(	t_vMemberName
+			)
+		.	IsValid
+			()
 	;
 
 	template

@@ -11,21 +11,29 @@ using ::Meta::String::Hash;
 export namespace
 	ATR::Member
 {
+	template
+		<	ProtoID
+				t_tTypeName
+		,	typename
+			...	t_tpDecorator
+		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	IsDynamicMember
-	)	(	ProtoID auto
-				i_vTypeName
-		,	Hash
+	)	(	Hash
 				i_vMemberName
 		)
 		noexcept
 	->	bool
 	{	return
-			GetInfo
-			(	i_vTypeName
-			,	i_vMemberName
-			)
+				Composition_Of
+				<	t_tTypeName
+				,	t_tpDecorator
+					...
+				>
+			.	FindMemberInfo
+				(	i_vMemberName
+				)
 			.	Type
 			.	IsAligned
 				()
@@ -37,6 +45,8 @@ export namespace
 				t_tProto
 		,	typename
 				t_tTypeName
+		,	typename
+			...	t_tpDecorator
 		>
 	concept
 		ProtoDynamicMember_Of
@@ -47,9 +57,10 @@ export namespace
 		<	t_tTypeName
 		>
 	and	(	IsDynamicMember
-			(	t_tTypeName
-				{}
-			,	t_tProto
+			<	t_tTypeName
+			,	t_tpDecorator
+				...
+			>(	t_tProto
 				{}
 			)
 		)
@@ -60,6 +71,8 @@ export namespace
 				t_tProto
 		,	typename
 				t_tTypeName
+		,	typename
+			...	t_tpDecorator
 		>
 	concept
 		ProtoStaticMember_Of
@@ -71,9 +84,10 @@ export namespace
 		>
 	and	(	not
 			IsDynamicMember
-			(	t_tTypeName
-				{}
-			,	t_tProto
+			<	t_tTypeName
+			,	t_tpDecorator
+				...
+			>(	t_tProto
 				{}
 			)
 		)

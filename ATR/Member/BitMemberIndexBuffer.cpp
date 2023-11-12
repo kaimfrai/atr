@@ -12,20 +12,79 @@ using ::Meta::Memory::Alignment;
 export namespace
 	ATR::Member
 {
+	struct
+		DistrictBitMemberIndexView
+	{
+		short const
+		*	BitMemberIndices
+		;
+		short const
+		*	BitMemberIndicesCounts
+		;
+		short
+			MemberCount
+		;
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	begin
+		)	(	this DistrictBitMemberIndexView const
+				&	i_rThis
+			)
+			noexcept
+		->	BitMemberIndexIterator
+		{	return
+				BitMemberIndexIterator
+				{	i_rThis
+					.	BitMemberIndices
+				,	i_rThis
+					.	BitMemberIndicesCounts
+				,	i_rThis
+					.	MemberCount
+				}
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	end
+		)	(	this DistrictBitMemberIndexView const
+				&
+			)
+			noexcept
+		->	::std::default_sentinel_t
+		{	return
+				{}
+			;
+		}
+	};
+
+
+	template
+		<	short
+				t_vDistrictCount
+		>
 	class
 		BitMemberIndexBuffer
 	{
+		short static constexpr inline
+			LayoutCount
+		=	t_vDistrictCount
+		+	1
+		;
+
 		short
 		*	m_aBitMemberIndices
 		;
 		short
-			m_vMemberCount
-		;
-		short
 			m_vBitMemberIndicesCounts
-			[	BitAlignCount
+			[	LayoutCount
+			][	BitAlignCount
 			]
 		{};
+		short
+			m_vMemberCount
+		;
 	public:
 		explicit(true) constexpr inline
 		(	BitMemberIndexBuffer
@@ -37,7 +96,8 @@ export namespace
 			{	new
 				short
 					[	static_cast<::std::size_t>
-						(	BitAlignCount
+						(	LayoutCount
+						*	BitAlignCount
 						*	i_vMemberCount
 						)
 					]
@@ -60,7 +120,9 @@ export namespace
 
 		auto constexpr inline
 		(	AppendMemberIndex
-		)	(	Alignment
+		)	(	short
+					i_vDistrictIndex
+			,	Alignment
 					i_vAlignment
 			,	short
 					i_vMemberIndex
@@ -78,8 +140,9 @@ export namespace
 			auto const
 				vInsertIndex
 			=	m_vBitMemberIndicesCounts
-					[	vAlignmentIndex
-					]
+				[	i_vDistrictIndex
+				][	vAlignmentIndex
+				]
 				++
 			;
 
@@ -88,7 +151,11 @@ export namespace
 			=	m_aBitMemberIndices
 			+	vInsertIndex
 			+	(	m_vMemberCount
-				*	vAlignmentIndex
+				*	(	vAlignmentIndex
+					+	(	BitAlignCount
+						*	i_vDistrictIndex
+						)
+					)
 				)
 			;
 			*	aInsert
@@ -98,35 +165,26 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	begin
-		)	(	this BitMemberIndexBuffer const
-				&	i_rThis
-			)
+		(	operator[]
+		)	(	short
+					i_vDistrictIndex
+			)	const
 			noexcept
-		->	BitMemberIndexIterator
+		->	DistrictBitMemberIndexView
 		{	return
-				BitMemberIndexIterator
-				{	i_rThis
-					.	m_aBitMemberIndices
-				,	i_rThis
-					.	m_vBitMemberIndicesCounts
-				,	i_rThis
-					.	m_vMemberCount
-				}
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	end
-		)	(	this BitMemberIndexBuffer const
-				&
-			)
-			noexcept
-		->	auto
-		{	return
-				::std::default_sentinel
-			;
+			{	.	BitMemberIndices
+				=	m_aBitMemberIndices
+				+	(	m_vMemberCount
+					*	BitAlignCount
+					*	i_vDistrictIndex
+					)
+			,	.	BitMemberIndicesCounts
+				=	m_vBitMemberIndicesCounts
+					[	i_vDistrictIndex
+					]
+			,	.	MemberCount
+				=	m_vMemberCount
+			};
 		}
 	};
 }

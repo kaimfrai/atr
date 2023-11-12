@@ -10,14 +10,11 @@ export namespace
 	class
 		BitMemberIndexIterator
 	{
-
 		short const
 		*	m_aMemberIndices
 		;
 		short const
-		(*	m_aMemberIndicesCounts
-		)	[	BitAlignCount
-			]
+		*	m_aMemberIndicesCounts
 		;
 		short
 			m_vMemberCount
@@ -36,8 +33,8 @@ export namespace
 			noexcept
 		->	short
 		{	return
-				(*	m_aMemberIndicesCounts
-				)[	m_vAlignmentIndex
+				m_aMemberIndicesCounts
+				[	m_vAlignmentIndex
 				]
 			;
 		}
@@ -77,9 +74,7 @@ export namespace
 		)	(	short const
 				*	i_aMemberIndices
 			,	short const
-				(&	i_rMemberIndicesCounts
-				)	[	BitAlignCount
-					]
+				*	i_aMemberIndicesCounts
 			,	short
 					i_vMemberCount
 			)
@@ -88,7 +83,7 @@ export namespace
 			{	i_aMemberIndices
 			}
 		,	m_aMemberIndicesCounts
-			{	&	i_rMemberIndicesCounts
+			{	i_aMemberIndicesCounts
 			}
 		,	m_vMemberCount
 			{	i_vMemberCount

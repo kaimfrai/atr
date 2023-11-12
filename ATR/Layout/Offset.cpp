@@ -39,8 +39,8 @@ export namespace
 				t_tData
 		,	BitSize
 				t_vOffset
-		,	BitSize
-			...	t_vpIndirectOffset
+		,	typename
+			...	t_tpIndirectOffsets
 		>
 	requires
 		(	t_vOffset
@@ -105,14 +105,13 @@ export namespace
 		auto friend constexpr inline
 		(	operator->*
 		)	(	t_tData
-				(&	i_rArray
-				)	[]
+				*	i_aArray
 			,	Offset
 			)
 			noexcept
 		->	t_tData&
 		{	return
-				i_rArray
+				i_aArray
 				[	ArrayIndex
 				]
 			;
@@ -122,14 +121,13 @@ export namespace
 		auto friend constexpr inline
 		(	operator->*
 		)	(	t_tData const
-				(&	i_rArray
-				)	[]
+				*	i_aArray
 			,	Offset
 			)
 			noexcept
 		->	t_tData
 		{	return
-				i_rArray
+				i_aArray
 				[	ArrayIndex
 				]
 			;
@@ -138,30 +136,31 @@ export namespace
 
 	template
 		<	typename
-				t_tIndirectData
+				t_tDistrict
+		,	BitSize
+				t_vDistrictOffset
+		,	typename
+				t_tData
 		,	BitSize
 				t_vOffset
-		,	BitSize
-				t_vNextOffset
-		,	BitSize
-			...	t_vpNestedOffset
+		,	typename
+			...	t_tpIndirectOffset
 		>
 	struct
 		Offset
-		<	t_tIndirectData
-		,	t_vOffset
-		,	t_vNextOffset
-		,	t_vpNestedOffset
+		<	t_tDistrict
+		,	t_vDistrictOffset
+		,	Offset
+			<	t_tData
+			,	t_vOffset
+			>
+		,	t_tpIndirectOffset
 			...
 		>
 	{
-		template
-			<	typename
-					t_tData
-			>
-		auto static constexpr
+		auto static constexpr inline
 			ArrayIndex
-		=		ByteWidth<t_tData*[]>
+		=		ByteWidth<void*>
 				(	t_vOffset
 				)
 			.	Value
@@ -170,9 +169,9 @@ export namespace
 		auto static constexpr inline
 			NextOffset
 		=	Offset
-			<	t_tIndirectData
-			,	t_vNextOffset
-			,	t_vpNestedOffset
+			<	t_tData
+			,	t_vOffset
+			,	t_tpIndirectOffset
 				...
 			>{}
 		;
@@ -239,58 +238,98 @@ export namespace
 			;
 		}
 
-		template
-			<	typename
-					t_tData
-			>
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	t_tData
-				*
-				(&	i_rArray
-				)	[]
+		)	(	void
+				**	i_aArray
 			,	Offset
 			)
 			noexcept
 		->	decltype(auto)
-		{	return
-				NextOffset
-				(	*
-					i_rArray
-					[	ArrayIndex
-						<	t_tData
-						>
-					]
-				)
+		{
+			void
+			*	aElement
+			=	i_aArray
+				[	ArrayIndex
+				]
 			;
+			if	(	aElement
+				==	nullptr
+				)
+			{	((void)"Element pointer not initialized", ::std::unreachable());
+			}
+
+			if	constexpr
+				(	::std::is_array_v<t_tDistrict>
+				)
+			{	return
+					static_cast<::std::remove_extent_t<t_tDistrict>*>
+					(	aElement
+					)
+				->*	NextOffset
+				;
+			}
+			else
+			{	return
+					*
+					static_cast<t_tDistrict*>
+					(	i_aArray
+						[	ArrayIndex
+						]
+					)
+				->*	NextOffset
+				;
+			}
 		}
 
-		template
-			<	typename
-					t_tData
-			>
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	t_tData const
+		)	(	void const
 				*	const
-				(&	i_rArray
-				)	[]
+				*	i_aArray
 			,	Offset
 			)
 			noexcept
 		->	decltype(auto)
-		{	return
-				NextOffset
-				(	*
-					i_rArray
-					[	ArrayIndex
-						<	t_tData
-						>
-					]
-				)
+		{
+			void const
+			*	aElement
+			=	i_aArray
+				[	ArrayIndex
+				]
 			;
+
+			if	(	aElement
+				==	nullptr
+				)
+			{	((void)"Element pointer not initialized", ::std::unreachable());
+			}
+
+			if	constexpr
+				(	::std::is_array_v<t_tDistrict>
+				)
+			{	return
+					static_cast<::std::remove_extent_t<t_tDistrict> const*>
+					(	i_aArray
+						[	ArrayIndex
+						]
+					)
+				->*	NextOffset
+				;
+			}
+			else
+			{	return
+					*
+					static_cast<t_tDistrict const*>
+					(	i_aArray
+						[	ArrayIndex
+						]
+					)
+				->*	NextOffset
+				;
+			}
 		}
 	};
 
@@ -795,11 +834,55 @@ export namespace
 	};
 
 	template
-		<	Member::Info
+		<	typename
+				t_tDistrict
+		,	Member::Info
 				t_vInfo
+		,	typename
+			...	t_tpIndirectOffset
 		>
-	using
+	auto constexpr inline
 		Offset_For
+	=	Offset_For
+		<	t_tDistrict
+		,	t_tDistrict
+			::	DistrictInfo
+				(	t_vInfo
+					.	DistrictIndex
+				)
+		,	Offset
+			<	RestoreTypeEntity
+				<	t_vInfo
+					.	Type
+				>
+			,	t_vInfo
+				.	Offset
+			>
+		,	t_tpIndirectOffset
+			...
+		>
+	;
+
+	template
+		<	typename
+				t_tDistrict
+		,	Member::Info
+				t_vInfo
+		,	typename
+			...	t_tpIndirectOffset
+		>
+	requires
+		(	t_vInfo
+			.	DistrictIndex
+		<=	0
+		)
+	auto constexpr inline
+		Offset_For
+		<	t_tDistrict
+		,	t_vInfo
+		,	t_tpIndirectOffset
+			...
+		>
 	=	Offset
 		<	RestoreTypeEntity
 			<	t_vInfo
@@ -807,7 +890,9 @@ export namespace
 			>
 		,	t_vInfo
 			.	Offset
-		>
+		,	t_tpIndirectOffset
+			...
+		>{}
 	;
 }
 

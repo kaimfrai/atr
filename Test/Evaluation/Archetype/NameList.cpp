@@ -14,6 +14,7 @@ import Evaluation.Archetype.Triangle;
 import Evaluation.Dependency.Fraction;
 import Evaluation.Dependency.PiFraction;
 
+import ATR.District.ExcludingHeap;
 import ATR.Member.Composition;
 import ATR.Member.FlatComposition;
 import ATR.Member.Info;
@@ -25,6 +26,7 @@ import Meta.Memory.Size.Scale;
 import Meta.String.Hash;
 import Meta.String.Literal;
 import Meta.Token.Type;
+import Meta.Token.TypeID;
 
 import Std;
 
@@ -37,6 +39,7 @@ using ::Meta::Memory::BitSize_Of;
 using ::Meta::String::ImplicitHash;
 using ::Meta::String::Literal;
 using ::Meta::Type;
+using ::Meta::TypeID;
 
 using One = Fraction<>;
 using Half = Fraction<1z, 2z>;
@@ -45,10 +48,14 @@ using Pi_6 = PiFraction<1z, 6z>;
 using Pi_4 = PiFraction<1z, 4z>;
 using Pi_12 = PiFraction<1z, 12z>;
 
+template
+	<	short
+			t_vDistrictCount
+	>
 struct
 	MemberInfo
 {
-	FlatComposition const
+	FlatComposition<t_vDistrictCount> const
 	&	Composition
 	;
 
@@ -72,11 +79,15 @@ struct
 template
 	<	Literal
 			t_vTypeName
+	,	typename
+		...	t_tpDistrict
 	>
-MemberInfo constexpr inline
+MemberInfo<sizeof...(t_tpDistrict)> constexpr inline
 	MemberInfo_Of
 {	Composition_Of
 	<	ID<t_vTypeName>
+	,	t_tpDistrict
+		...
 	>
 };
 
@@ -85,12 +96,18 @@ template
 			t_tMember
 	,	auto
 			t_vFloatCount
-		=	0z
+		=	0
+	,	auto
+			t_vDistrictIndex
+		=	TypeID(Type<t_tMember>).IsAligned()
+			?	0
+			:	-1
 	>
 Info constexpr inline
 	OffsetType
 {	Type<t_tMember>
 ,	t_vFloatCount * BitSize_Of<float>
+,	t_vDistrictIndex
 };
 
 [[nodiscard]]
@@ -109,8 +126,17 @@ auto constexpr inline
 		)
 	{	(void("Type"), ::std::unreachable());
 	}
-	if	(	i_vLeft.Offset
-		!=	i_vRight.Offset
+	if	(	i_vLeft
+			.	DistrictIndex
+		!=	i_vRight
+			.	DistrictIndex
+		)
+	{	(void("District"), ::std::unreachable());
+	}
+	if	(	i_vLeft
+			.	Offset
+		!=	i_vRight
+			.	Offset
 		)
 	{	(void("Offset"), ::std::unreachable());
 	}
@@ -1409,6 +1435,288 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"RightEyeComputeSizeMultiplier"
 			]
+	,	OffsetType<Pi_6>
+	)
+);
+
+using
+	LocalBody
+=	::ATR::District::ExcludingHeap
+	<	::ATR::District::Info{"Heap"}
+	,	"ColorRed"
+	,	"ColorGreen"
+	,	"ColorBlue"
+	,	"ColorAlpha"
+	,	"PointLateral"
+	,	"PointLongitudinal"
+	,	"PointVertical"
+	,	"Width"
+	,	"Height"
+	,	"Depth"
+	>
+;
+
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"ColorRed"
+		]
+	,	OffsetType<float, 2z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"ColorGreen"
+		]
+	,	OffsetType<float, 3z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"ColorBlue"
+		]
+	,	OffsetType<float, 4z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"ColorAlpha"
+		]
+	,	OffsetType<float, 5z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"PointLateral"
+		]
+	,	OffsetType<float, 6z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"PointLongitudinal"
+		]
+	,	OffsetType<float, 7z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"PointVertical"
+		]
+	,	OffsetType<float, 8z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"Height"
+		]
+	,	OffsetType<float, 9z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"Width"
+		]
+	,	OffsetType<float, 9z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"Depth"
+		]
+	,	OffsetType<float, 9z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"ComputeSizeMultiplier"
+		]
+	,	OffsetType<Pi_6>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"LeftEyeColorRed"
+		]
+	,	OffsetType<float, 0z, 1>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"LeftEyeColorGreen"
+		]
+	,	OffsetType<float, 1z, 1>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"LeftEyeColorBlue"
+		]
+	,	OffsetType<float, 2z, 1>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"LeftEyeColorAlpha"
+		]
+	,	OffsetType<float, 5z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"LeftEyePointLateral"
+		]
+	,	OffsetType<float, 3z, 1>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"LeftEyePointLongitudinal"
+		]
+	,	OffsetType<float, 4z, 1>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"LeftEyePointVertical"
+		]
+	,	OffsetType<float, 5z, 1>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"LeftEyeHeight"
+		]
+	,	OffsetType<float, 6z, 1>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"LeftEyeWidth"
+		]
+	,	OffsetType<float, 6z, 1>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"LeftEyeDepth"
+		]
+	,	OffsetType<float, 6z, 1>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"LeftEyeComputeSizeMultiplier"
+		]
+	,	OffsetType<Pi_6>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"RightEyeColorRed"
+		]
+	,	OffsetType<float, 0z, 1>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"RightEyeColorGreen"
+		]
+	,	OffsetType<float, 1z, 1>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"RightEyeColorBlue"
+		]
+	,	OffsetType<float, 2z, 1>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"RightEyeColorAlpha"
+		]
+	,	OffsetType<float, 5z>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"RightEyePointLateral"
+		]
+	,	OffsetType<float, 7z, 1>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"RightEyePointLongitudinal"
+		]
+	,	OffsetType<float, 4z, 1>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"RightEyePointVertical"
+		]
+	,	OffsetType<float, 5z, 1>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"RightEyeHeight"
+		]
+	,	OffsetType<float, 6z, 1>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"RightEyeWidth"
+		]
+	,	OffsetType<float, 6z, 1>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"RightEyeDepth"
+		]
+	,	OffsetType<float, 6z, 1>
+	)
+);
+static_assert
+(	Equals
+	(	MemberInfo_Of<"Head", LocalBody>
+		[	"RightEyeComputeSizeMultiplier"
+		]
 	,	OffsetType<Pi_6>
 	)
 );

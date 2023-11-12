@@ -42,6 +42,7 @@ auto constexpr inline
 		&	rLayout
 		=	rComposition
 			.	Layout
+				[0]
 		;
 
 		auto

@@ -21,6 +21,9 @@ export namespace
 		BitSize
 			Offset
 		;
+		short
+			DistrictIndex
+		;
 
 		[[nodiscard]]
 		auto constexpr inline

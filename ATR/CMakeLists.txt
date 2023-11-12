@@ -6,9 +6,11 @@ add_single_file_modules(
 
 add_subdirectory(Member)
 add_subdirectory(Layout)
+add_subdirectory(District)
 
 add_single_file_modules(
 	DependencyIDMap.cpp
+	Base.cpp
 	Instance.cpp
 )
 

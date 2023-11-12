@@ -5,4 +5,5 @@ add_module_object_tests(
 	NameList
 	Size
 	Address
+	Heap
 )

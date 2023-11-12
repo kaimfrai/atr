@@ -21,127 +21,48 @@ using ::Meta::BitSize;
 using ::Meta::ByteSize;
 using ::Meta::ProtoID;
 using ::Meta::String::ImplicitHash;
+using ::Meta::String::Hash;
 using ::Meta::Type;
 using ::Meta::TypeID;
 
 namespace
 	ATR::Member
 {
+	TypeID constexpr inline
+		ByteType
+	=	Type<::std::byte>
+	;
+
+	TypeID constexpr inline
+		PointerType
+	=	Type<void*>
+	;
+
+	template
+		<	short
+				t_vDistrictCount
+		>
 	auto constexpr inline
-	(	ComputeOffsets
-	)	(	FlatComposition
+	(	SetOffsets
+	)	(	FlatComposition<t_vDistrictCount>
 			&	o_rComposition
+		,	DistrictByteMemberIndexView
+				i_rByteMemberIndexBuffer
+		,	DistrictBitMemberIndexView
+				i_rBitMemberIndexBuffer
+		,	short
+				i_vDistrictIndex
 		)
 		noexcept
 	->	void
 	{
-		auto const
-			vMemberCount
-		=	o_rComposition
-			.	Members
-			.	MemberCount
-		;
-
-		ByteMemberIndexBuffer
-			vMemberIndexBuffer
-		{	vMemberCount
-		,	o_rComposition
-			.	Layout
-			.	ElementCounts
-		};
-
-		BitMemberIndexBuffer
-			vBitMemberIndexBuffer
-		{	vMemberCount
-		};
-
-		TypeID constexpr static
-			vByteType
-		=	Type<::std::byte>
-		;
-
-		for	(	short
-					vMemberIndex
-				=	0
-			;	(	vMemberIndex
-				<	vMemberCount
-				)
-			;	++	vMemberIndex
-			)
-		{
-			auto const
-				vType
-			=	o_rComposition
-				.	Members
-				.	Types
-					[	vMemberIndex
-					]
-			;
-
-			if	(	not
-					vType
-					.	IsAligned
-					()
-				)
-			{
-				continue
-				;
-			}
-
-			auto const
-				vAlign
-			=	vType
-				.	GetAlign
-					()
-			;
-
-			if	(	(	vAlign
-					<	ByteAlign
-					)
-				or	(	vType
-					==	vByteType
-					)
-				)
-			{
-				vBitMemberIndexBuffer
-				.	AppendMemberIndex
-					(	vAlign
-					,	vMemberIndex
-					)
-				;
-				continue
-				;
-			}
-
-			auto const
-				vTypeIndex
-			=	AddByteType
-				(	vType
-				,	o_rComposition
-					.	Layout
-						[	vAlign
-						]
-				,	1z
-				)
-			;
-
-			vMemberIndexBuffer
-			.	AppendMemberIndex
-				(	vAlign
-				,	vTypeIndex
-				,	vMemberIndex
-				)
-			;
-		}
-
-
 		BitSize
 			vTotalOffset
 		{};
 
 		for	(	short
 					vMemberIndex
-			:	vMemberIndexBuffer
+			:	i_rByteMemberIndexBuffer
 			)
 		{
 			auto const
@@ -171,7 +92,7 @@ namespace
 
 		for	(	short
 					vMemberIndex
-			:	vBitMemberIndexBuffer
+			:	i_rBitMemberIndexBuffer
 			)
 		{
 			auto const
@@ -212,10 +133,11 @@ namespace
 			)
 		{	(void)
 				AddByteType
-				(	vByteType
+				(	ByteType
 				,	o_rComposition
 					.	Layout
-						[	ByteAlign
+						[	i_vDistrictIndex
+						][	ByteAlign
 						]
 				,	vBitBytes
 				)
@@ -223,9 +145,249 @@ namespace
 		}
 	}
 
+	template
+		<	short
+				t_vDistrictCount
+		>
+	auto constexpr inline
+	(	ComputeOffsets
+	)	(	FlatComposition<t_vDistrictCount>
+			&	o_rComposition
+		,	Hash const
+			*	i_aDistrictNames
+		,	Hash const
+			*	i_aHostDistrictNames
+		,	short
+				i_vAliasCount
+		)
+		noexcept
+	->	void
+	{
+		auto const
+			vMemberCount
+		=	o_rComposition
+			.	Members
+			.	MemberCount
+		;
+
+		ByteMemberIndexBuffer<t_vDistrictCount>
+			vMemberIndexBuffer
+		{	static_cast<short>
+			(	vMemberCount
+			+	t_vDistrictCount
+			)
+		,	o_rComposition
+			.	Layout
+		};
+
+		BitMemberIndexBuffer<t_vDistrictCount>
+			vBitMemberIndexBuffer
+		{	static_cast<short>
+			(	vMemberCount
+			+	t_vDistrictCount
+			)
+		};
+
+		short
+			vMemberPerDistrictCount
+			[	t_vDistrictCount
+			+	1
+			]
+		{};
+
+		for	(	short
+					vMemberIndex
+				=	0
+			;	(	vMemberIndex
+				<	vMemberCount
+				)
+			;	++	vMemberIndex
+			)
+		{
+			auto const
+				vType
+			=	o_rComposition
+				.	Members
+				.	Types
+					[	vMemberIndex
+					]
+			;
+
+			if	(	not
+					vType
+					.	IsAligned
+						()
+				)
+			{	continue
+				;
+			}
+
+			auto const
+				vDistrictIndex
+			=	o_rComposition
+				.	Members
+				.	DistrictIndices
+					[	vMemberIndex
+					]
+			;
+
+			++	vMemberPerDistrictCount
+				[	vDistrictIndex
+				]
+			;
+
+			auto const
+				vAlign
+			=	vType
+				.	GetAlign
+					()
+			;
+
+			if	(	(	vAlign
+					<	ByteAlign
+					)
+				or	(	vType
+					==	ByteType
+					)
+				)
+			{
+				vBitMemberIndexBuffer
+				.	AppendMemberIndex
+					(	vDistrictIndex
+					,	vAlign
+					,	vMemberIndex
+					)
+				;
+				continue
+				;
+			}
+
+			vMemberIndexBuffer
+			.	AppendMemberIndex
+				(	vType
+				,	vDistrictIndex
+				,	vAlign
+				,	vMemberIndex
+				)
+			;
+		}
+
+		// Higher districts are allowed to nest in lower districts
+		// but not vice versa
+		for	(	short
+					vDistrictIndex
+				=	t_vDistrictCount
+			;		vDistrictIndex
+				>	0
+			;	--	vDistrictIndex
+			)
+		{
+			if	(	vMemberPerDistrictCount
+					[	vDistrictIndex
+					]
+				<=	0
+				)
+			{	continue
+				;
+			}
+
+			Hash const
+				vHostDistrictName
+			=	i_aHostDistrictNames
+				[	vDistrictIndex
+				]
+			;
+
+			for	(	short
+						vHostDistrictIndex
+					=	vDistrictIndex
+					-	1
+				;		vHostDistrictIndex
+					>=	0
+				;	++	vHostDistrictIndex
+				)
+			{
+				if	(	i_aDistrictNames
+						[	vHostDistrictIndex
+						]
+					!=	vHostDistrictName
+					)
+				{	continue
+					;
+				}
+
+				short const
+					vMemberIndex
+				=	vMemberCount
+				+	i_vAliasCount
+				-	1
+				+	vDistrictIndex
+				;
+
+				vMemberIndexBuffer
+				.	AppendMemberIndex
+					(	PointerType
+					,	vHostDistrictIndex
+					,	PointerType
+						.	GetAlign
+							()
+					,	vMemberIndex
+					)
+				;
+
+				o_rComposition
+				.	Members
+				.	Types
+					[	vMemberIndex
+					]
+				=	PointerType
+				;
+				o_rComposition
+				.	Members
+				.	DistrictIndices
+					[	vMemberIndex
+					]
+				=	vHostDistrictIndex
+				;
+
+				++	vMemberPerDistrictCount
+					[	vHostDistrictIndex
+					]
+				;
+
+				break
+				;
+			}
+		}
+
+		for	(	short
+					vDistrictIndex
+				=	0
+			;		vDistrictIndex
+				<=	t_vDistrictCount
+			;	++	vDistrictIndex
+			)
+		{
+			SetOffsets
+			(	o_rComposition
+			,	vMemberIndexBuffer
+				[	vDistrictIndex
+				]
+			,	vBitMemberIndexBuffer
+				[	vDistrictIndex
+				]
+			,	vDistrictIndex
+			);
+		}
+	}
+
+	template
+		<	short
+				t_vDistrictCount
+		>
 	auto constexpr inline
 	(	ResolveAliases
-	)	(	FlatComposition
+	)	(	FlatComposition<t_vDistrictCount>
 			&	o_rComposition
 		,	FlatComposer::AliasTarget const
 			*	i_aAliasTargets
@@ -280,6 +442,15 @@ namespace
 			;
 
 			auto const
+				vAliasedDistrictIndex
+			=	o_rComposition
+				.	Members
+				.	DistrictIndices
+					[	vAliasTargetMemberIndex
+					]
+			;
+
+			auto const
 				vMemberIndex
 			=	o_rComposition
 				.	Members
@@ -287,6 +458,7 @@ namespace
 					(	rAliasTarget
 						.	HashIndex
 					,	vAliasedType
+					,	vAliasedDistrictIndex
 					)
 			;
 
@@ -302,16 +474,24 @@ namespace
 		}
 	}
 
+	template
+		<	short
+				t_vDistrictCount
+		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	Finalize
 	)	(	FlatComposer
 			&&	i_rComposer
+		,	Hash const
+			*	i_aDistrictNames
+		,	Hash const
+			*	i_aHostDistrictNames
 		)
 		noexcept
-	->	FlatComposition
+	->	FlatComposition<t_vDistrictCount>
 	{
-		FlatComposition
+		FlatComposition<t_vDistrictCount>
 			vComposition
 		{	.	Members
 			=	i_rComposer
@@ -320,6 +500,10 @@ namespace
 
 		ComputeOffsets
 		(	vComposition
+		,	i_aDistrictNames
+		,	i_aHostDistrictNames
+		,	i_rComposer
+			.	AliasCount
 		);
 
 		ResolveAliases
@@ -334,6 +518,115 @@ namespace
 			vComposition
 		;
 	}
+
+	[[nodiscard]]
+	auto constexpr inline
+	(	GetDistrictNames
+	)	(	auto
+			...	i_vpDistrict
+		)
+		noexcept
+	->	Hash const*
+	{
+		Hash static constexpr
+			vDistrictNames
+			[]
+		{	Hash{}
+		,	i_vpDistrict
+			.	DistrictName
+			...
+		};
+
+		return
+			vDistrictNames
+		;
+	}
+
+	[[nodiscard]]
+	auto constexpr inline
+	(	GetHostDistrictNames
+	)	(	auto
+			...	i_vpDistrict
+		)
+		noexcept
+	->	Hash const*
+	{
+		Hash static constexpr
+			vHostDistrictNames
+			[]
+		{	Hash{}
+		,	i_vpDistrict
+			.	HostDistrictName
+			...
+		};
+
+		return
+			vHostDistrictNames
+		;
+	}
+
+	template
+		<	typename
+				t_tDisctrict
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	Hosts
+	)	(	Hash
+				i_vName
+		,	short
+			&	o_rIndex
+		)
+		noexcept
+	->	bool
+	{
+		auto const
+			vHosted
+		=	t_tDisctrict
+			::	Hosts
+				(	i_vName
+				)
+		;
+		o_rIndex
+		-=	not
+			vHosted
+		;
+		return
+			vHosted
+		;
+	}
+
+	template
+		<	typename
+			...	t_tpDistrict
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	DistrictIndexOf
+	)	(	Hash
+				i_vName
+		)
+		noexcept
+	->	short
+	{
+		short
+			vDistrictIndex
+		=	sizeof...(t_tpDistrict)
+		;
+
+		// Right to left: Deepest layout first
+		(void)
+		(	Hosts<t_tpDistrict>
+			(	i_vName
+			,	vDistrictIndex
+			)
+		or	...
+		);
+		// If no layout accepts, this is 0, the default layout
+		return
+			vDistrictIndex
+		;
+	}
 }
 
 export namespace
@@ -342,67 +635,34 @@ export namespace
 	template
 		<	ProtoID
 				t_tTypeName
-		,	ProtoComposer
-				t_tComposer
-			=	FlatComposer
+		,	typename
+			...	t_tpDistrict
 		>
 	auto constexpr inline
 		Composition_Of
 	=	::ATR::Member::Finalize
-		(	Recompose
-			(	t_tComposer
-				{}
+		<	sizeof...(t_tpDistrict)
+		>(	Recompose
+			(	FlatComposer
+				{	.	DistrictIndexOf
+					=	&DistrictIndexOf
+						<	t_tpDistrict
+							...
+						>
+				}
 			,	t_tTypeName
 				{}
 			)
+		,	GetDistrictNames
+			(	t_tpDistrict
+				{}
+				...
+			)
+		,	GetHostDistrictNames
+			(	t_tpDistrict
+				{}
+				...
+			)
 		)
 	;
-
-	template
-		<	ProtoComposer
-				t_tComposer
-			=	FlatComposer
-		>
-	auto constexpr inline
-	(	GetInfo
-	)	(	ProtoID auto
-				i_vTypeName
-		,	ImplicitHash
-				i_vMemberName
-		)
-		noexcept
-	{	return
-			Composition_Of
-			<	decltype(i_vTypeName)
-			,	t_tComposer
-			>
-			.	FindMemberInfo
-				(	i_vMemberName
-				)
-		;
-	};
-
-	template
-		<	ProtoComposer
-				t_tComposer
-			=	FlatComposer
-		>
-	auto constexpr inline
-	(	Exists
-	)	(	ProtoID auto
-				i_vTypeName
-		,	ImplicitHash
-				i_vMemberName
-		)
-		noexcept
-	->	bool
-	{	return
-			GetInfo
-			<	t_tComposer
-			>(	i_vTypeName
-			,	i_vMemberName
-			).	IsValid
-				()
-		;
-	}
 }

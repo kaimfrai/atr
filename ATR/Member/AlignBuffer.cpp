@@ -1,8 +1,9 @@
 export module ATR.Member.AlignBuffer;
 
-import ATR.Member.AlignBufferView;
 import ATR.Member.AlignBufferIterator;
+import ATR.Member.AlignBufferView;
 import ATR.Member.Constants;
+import ATR.Member.CountedType;
 
 import Meta.Memory.Alignment;
 
@@ -29,14 +30,10 @@ export namespace
 		;
 	}
 
-	template
-		<	typename
-				t_tElement
-		>
 	struct
 		AlignBuffer
 	{
-		t_tElement
+		CountedTypeBuffer
 			Buffer
 			[	ByteAlignCount
 			]
@@ -47,6 +44,28 @@ export namespace
 			[	ByteAlignCount
 			]
 		{};
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	HasAny
+		)	()	const
+			noexcept
+		->	bool
+		{	return
+			::std::any_of
+			(	ElementCounts
+			,		ElementCounts
+				+	ByteAlignCount
+			,	[]	(	short
+							i_vCount
+					)
+				{	return
+						i_vCount
+					>	0
+					;
+				}
+			);
+		}
 
 		[[nodiscard]]
 		auto constexpr inline

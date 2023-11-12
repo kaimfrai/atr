@@ -82,9 +82,9 @@ namespace
 [[nodiscard]]
 auto constexpr inline
 (	operator==
-)	(	FlatComposition const
+)	(	FlatComposition<0> const
 		&	i_rLeft
-	,	FlatComposition const
+	,	FlatComposition<0> const
 		&	i_rRight
 	)
 	noexcept
@@ -93,8 +93,12 @@ auto constexpr inline
 		::std::ranges::equal
 		(	i_rLeft
 			.	Layout
+				[	0
+				]
 		,	i_rRight
 			.	Layout
+				[	0
+				]
 		)
 	and	::std::ranges::equal
 		(	i_rLeft
