@@ -4,17 +4,21 @@ import ATR.District.ExcludingHeap;
 import ATR.Instance;
 
 import Meta.ID;
+import Meta.Memory.Size.Arithmetic;
+import Meta.Memory.Size.PointerArithmetic;
+import Meta.Memory.Size.Scale;
+import Meta.Memory.Size;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 
 import Std;
 
-using ::Meta::ProtoID;
-using ::Meta::Type;
-
 using ::ATR::District::ExcludingHeap;
 using ::ATR::District::Info;
 
+using ::Meta::ByteSize;
+using ::Meta::ProtoID;
+using ::Meta::Type;
 using ::Meta::TypeID;
 
 namespace
@@ -45,7 +49,7 @@ namespace
 		(	ElementSize
 		)	()
 			noexcept
-		->	::std::size_t
+		->	ByteSize
 		;
 
 		[[nodiscard]]
@@ -53,7 +57,7 @@ namespace
 		(	ImplementerCount
 		)	()
 			noexcept
-		->	int
+		->	unsigned char
 		;
 
 		[[nodiscard]]
@@ -63,7 +67,7 @@ namespace
 					i_vType
 			)
 			noexcept
-		->	int
+		->	unsigned char
 		;
 
 		[[nodiscard]]
@@ -71,7 +75,7 @@ namespace
 		(	ComputeVolume
 		)	(	::std::byte const
 				*	i_aObject
-			,	int
+			,	unsigned char
 					i_vImplementerIndex
 			)
 			noexcept
@@ -82,7 +86,7 @@ namespace
 		(	Destroy
 		)	(	::std::byte
 				*	i_aObject
-			,	int
+			,	unsigned char
 					i_vImplementerIndex
 			)
 			noexcept
@@ -99,10 +103,10 @@ export namespace
 	:	unsigned char
 	{};
 
-	auto constexpr inline
+	ByteSize constexpr inline
 		TagSize
-	=	sizeof(ETag)
-	;
+	{	sizeof(ETag)
+	};
 
 	struct
 		Body3DReference
@@ -125,7 +129,7 @@ export namespace
 				Interface
 				::	ComputeVolume
 					(	m_aData
-					,	static_cast<int>
+					,	static_cast<unsigned char>
 						(	m_vTag
 						)
 					)
@@ -163,7 +167,7 @@ export namespace
 					()
 			;
 			m_aTag
-			+=	sizeof(ETag)
+			+=	TagSize
 			;
 			return
 				*this
@@ -178,34 +182,32 @@ export namespace
 		->	Body3DReference
 		{	return
 			{	m_aData
-			,	*
-				::std::launder
-				(	::std::bit_cast<ETag*>
-					(	m_aTag
+			,	*	::std::launder
+					(	::std::bit_cast<ETag*>
+						(	m_aTag
+						)
 					)
-				)
 			};
 		}
+
+		[[nodiscard]]
+		auto friend inline
+		(	operator==
+		)	(	Body3DIterator
+					i_aIterator
+			,	Body3DSentinel
+					i_aSentinel
+			)
+			noexcept
+		->	bool
+		{	return
+				i_aIterator
+				.	m_aData
+			==	i_aSentinel
+				.	m_aDataEnd
+			;
+		}
 	};
-
-	[[nodiscard]]
-	auto inline
-	(	operator==
-	)	(	Body3DIterator
-				i_vIterator
-		,	Body3DSentinel
-				i_aSentinel
-		)
-		noexcept
-	->	bool
-	{	return
-			i_vIterator
-			.	m_aData
-		==	i_aSentinel
-			.	m_aDataEnd
-		;
-	}
-
 
 	struct
 		VolumeComputer
@@ -234,12 +236,16 @@ export namespace
 					)
 				::std::byte
 					[	static_cast<::std::size_t>
-						(	i_vCapacity
-						)
-					*	(	Interface
-							::	ElementSize
-								()
-						+	TagSize
+						(	ByteSize
+							(	i_vCapacity
+							*	(	Interface
+									::	ElementSize
+										()
+								+	TagSize
+								)
+							)
+						.	get
+							()
 						)
 					]
 			}
@@ -274,7 +280,7 @@ export namespace
 			auto const
 				aTagStart
 			=	aBuffer
-			+	static_cast<::std::size_t>(m_vCapacity)
+			+	m_vCapacity
 			*	vElementSize
 			;
 
@@ -290,14 +296,14 @@ export namespace
 				Interface
 				::	Destroy
 					(	aBuffer
-						+	static_cast<::std::size_t>(vIndex)
+						+	vIndex
 						*	vElementSize
-					,	static_cast<int>
+					,	static_cast<unsigned char>
 						(	*
 							::std::launder
 							(	::std::bit_cast<ETag*>
 								(	aTagStart
-								+	static_cast<::std::size_t>(vIndex)
+								+	vIndex
 								*	TagSize
 								)
 							)
@@ -306,7 +312,8 @@ export namespace
 				;
 			}
 
-			delete[]
+			delete
+				[]
 				m_aBuffer
 			;
 		}
@@ -318,7 +325,7 @@ export namespace
 			)	&
 			noexcept
 		{
-			::std::size_t const
+			auto const
 				vBodySize
 			=	Interface
 				::	ElementSize
@@ -336,7 +343,7 @@ export namespace
 			auto const
 				aTagStart
 			=	aBuffer
-			+	static_cast<::std::size_t>(m_vCapacity)
+			+	m_vCapacity
 			*	vBodySize
 			;
 
@@ -351,14 +358,14 @@ export namespace
 			::std::construct_at
 			(	::std::bit_cast<tBody*>
 				(	aBuffer
-				+	static_cast<::std::size_t>(vCount)
+				+	vCount
 				*	vBodySize
 				)
 			);
 			::std::construct_at
 			(	::std::bit_cast<ETag*>
 				(	aTagStart
-				+	static_cast<::std::size_t>(vCount)
+				+	vCount
 				*	TagSize
 				)
 			,	static_cast<ETag>
@@ -373,10 +380,10 @@ export namespace
 		[[nodiscard]]
 		auto inline
 		(	begin
-		)	()	&
+		)	()	const&
 			noexcept
 		->	Body3DIterator
-		{	::std::size_t const
+		{	auto const
 				vBodySize
 			=	Interface
 				::	ElementSize
@@ -385,7 +392,7 @@ export namespace
 			return
 			{	m_aBuffer
 			,	(	m_aBuffer
-				+	static_cast<::std::size_t>(m_vCapacity)
+				+	m_vCapacity
 				*	vBodySize
 				)
 			};
@@ -394,20 +401,19 @@ export namespace
 		[[nodiscard]]
 		auto inline
 		(	end
-		)	()	&
+		)	()	const&
 			noexcept
 		->	Body3DSentinel
-		{	::std::size_t const
+		{	auto const
 				vBodySize
 			=	Interface
 				::	ElementSize
 					()
 			;
 			return
-			{	(	m_aBuffer
-				+	static_cast<::std::size_t>(m_vCapacity)
-				*	vBodySize
-				)
+			{	m_aBuffer
+			+	m_vCount
+			*	vBodySize
 			};
 		}
 	};
