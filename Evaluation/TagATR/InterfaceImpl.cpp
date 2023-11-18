@@ -71,7 +71,7 @@ namespace
 		::	ElementSize
 	)	()
 		noexcept
-	->	ByteSize
+	->	::std::size_t
 	{	return
 			Dispatch
 			::	ElementSize
@@ -84,7 +84,7 @@ namespace
 		::	ImplementerCount
 	)	()
 		noexcept
-	->	unsigned char
+	->	int
 	{	return
 			Dispatch
 			::	ImplementerCount
@@ -99,7 +99,7 @@ namespace
 				i_vType
 		)
 		noexcept
-	->	unsigned char
+	->	int
 	{	return
 			Dispatch
 			::	ImplementerIndex
@@ -113,7 +113,7 @@ namespace
 		::	ComputeVolume
 	)	(	::std::byte const
 			*	i_aObject
-		,	unsigned char
+		,	int
 				i_vImplementerIndex
 		)
 		noexcept
@@ -134,7 +134,7 @@ namespace
 		::	Destroy
 	)	(	::std::byte
 			*	i_aObject
-		,	unsigned char
+		,	int
 				i_vImplementerIndex
 		)
 		noexcept

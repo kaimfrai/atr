@@ -1,13 +1,11 @@
 export module ATR.Virtual.Dispatch;
 
 import Meta.ID;
-import Meta.Memory.Size;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 
 import Std;
 
-using ::Meta::ByteSize;
 using ::Meta::ProtoID;
 using ::Meta::Type;
 using ::Meta::TypeID;
@@ -27,13 +25,13 @@ export namespace
 		(	ElementSize
 		)	()
 			noexcept
-		->	ByteSize
+		->	::std::size_t
 		{	return
-			{	::std::max
+				::std::max
 				({	sizeof(t_tpImplementer)
 					...
 				})
-			};
+			;
 		}
 
 		[[nodiscard]]
@@ -41,7 +39,7 @@ export namespace
 		(	ImplementerCount
 		)	()
 			noexcept
-		->	unsigned char
+		->	int
 		{	return
 				sizeof...(t_tpImplementer)
 			;
@@ -54,7 +52,7 @@ export namespace
 					i_vType
 			)
 			noexcept
-		->	unsigned char
+		->	int
 		{
 			TypeID static constexpr
 				vImplementer
@@ -63,9 +61,9 @@ export namespace
 				...
 			};
 
-			for	(	unsigned char
+			for	(	int
 						vIndex
-					=	0u
+					=	0
 				;		vIndex
 					<	ImplementerCount
 						()
@@ -83,10 +81,7 @@ export namespace
 				}
 			}
 
-			return
-				ImplementerCount
-				()
-			;
+			return -1;
 			// TODO: unreachable here affects the assembly in unexpected ways
 			//::std::unreachable
 			//();
@@ -104,7 +99,7 @@ export namespace
 					i_vFunctionName
 			,	::std::byte const
 				*	i_aObject
-			,	unsigned char
+			,	int
 					i_vImplementerIndex
 			,	t_tpArgument
 				&&
@@ -125,7 +120,7 @@ export namespace
 				{};
 				if	(	(	...
 						or	(	(	i_vImplementerIndex
-								==	static_cast<unsigned char>(t_tpIndex)
+								==	static_cast<int>(t_tpIndex)
 								)
 							?	(	(void)
 									(	vResult
@@ -164,7 +159,7 @@ export namespace
 		(	Destroy
 		)	(	::std::byte
 				*	i_aObject
-			,	unsigned char
+			,	int
 					i_vImplementerIndex
 			)
 			noexcept
@@ -178,7 +173,7 @@ export namespace
 				)
 			{	if	((	...
 					or	(	(	i_vImplementerIndex
-							==	static_cast<unsigned char>(t_tpIndex)
+							==	t_tpIndex
 							)
 						?	(	::std::launder
 								(	::std::bit_cast<t_tpImplementer*>
