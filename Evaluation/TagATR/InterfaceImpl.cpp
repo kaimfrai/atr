@@ -84,7 +84,7 @@ namespace
 		::	ImplementerCount
 	)	()
 		noexcept
-	->	int
+	->	unsigned char
 	{	return
 			Dispatch
 			::	ImplementerCount
@@ -99,7 +99,7 @@ namespace
 				i_vType
 		)
 		noexcept
-	->	int
+	->	unsigned char
 	{	return
 			Dispatch
 			::	ImplementerIndex
@@ -113,7 +113,7 @@ namespace
 		::	ComputeVolume
 	)	(	::std::byte const
 			*	i_aObject
-		,	int
+		,	unsigned char
 				i_vImplementerIndex
 		)
 		noexcept
@@ -134,7 +134,7 @@ namespace
 		::	Destroy
 	)	(	::std::byte
 			*	i_aObject
-		,	int
+		,	unsigned char
 				i_vImplementerIndex
 		)
 		noexcept

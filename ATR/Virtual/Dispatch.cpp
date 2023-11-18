@@ -39,7 +39,7 @@ export namespace
 		(	ImplementerCount
 		)	()
 			noexcept
-		->	int
+		->	unsigned char
 		{	return
 				sizeof...(t_tpImplementer)
 			;
@@ -52,7 +52,7 @@ export namespace
 					i_vType
 			)
 			noexcept
-		->	int
+		->	unsigned char
 		{
 			TypeID static constexpr
 				vImplementer
@@ -61,7 +61,7 @@ export namespace
 				...
 			};
 
-			for	(	int
+			for	(	unsigned char
 						vIndex
 					=	0
 				;		vIndex
@@ -81,7 +81,10 @@ export namespace
 				}
 			}
 
-			return -1;
+			return
+				ImplementerCount
+				()
+			;
 			// TODO: unreachable here affects the assembly in unexpected ways
 			//::std::unreachable
 			//();
@@ -99,7 +102,7 @@ export namespace
 					i_vFunctionName
 			,	::std::byte const
 				*	i_aObject
-			,	int
+			,	unsigned char
 					i_vImplementerIndex
 			,	t_tpArgument
 				&&
@@ -120,7 +123,7 @@ export namespace
 				{};
 				if	(	(	...
 						or	(	(	i_vImplementerIndex
-								==	static_cast<int>(t_tpIndex)
+								==	static_cast<unsigned char>(t_tpIndex)
 								)
 							?	(	(void)
 									(	vResult
@@ -159,7 +162,7 @@ export namespace
 		(	Destroy
 		)	(	::std::byte
 				*	i_aObject
-			,	int
+			,	unsigned char
 					i_vImplementerIndex
 			)
 			noexcept
@@ -173,7 +176,7 @@ export namespace
 				)
 			{	if	((	...
 					or	(	(	i_vImplementerIndex
-							==	t_tpIndex
+							==	static_cast<unsigned char>(t_tpIndex)
 							)
 						?	(	::std::launder
 								(	::std::bit_cast<t_tpImplementer*>

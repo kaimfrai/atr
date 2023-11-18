@@ -53,7 +53,7 @@ namespace
 		(	ImplementerCount
 		)	()
 			noexcept
-		->	int
+		->	unsigned char
 		;
 
 		[[nodiscard]]
@@ -63,7 +63,7 @@ namespace
 					i_vType
 			)
 			noexcept
-		->	int
+		->	unsigned char
 		;
 
 		[[nodiscard]]
@@ -71,7 +71,7 @@ namespace
 		(	ComputeVolume
 		)	(	::std::byte const
 				*	i_aObject
-			,	int
+			,	unsigned char
 					i_vImplementerIndex
 			)
 			noexcept
@@ -82,7 +82,7 @@ namespace
 		(	Destroy
 		)	(	::std::byte
 				*	i_aObject
-			,	int
+			,	unsigned char
 					i_vImplementerIndex
 			)
 			noexcept
@@ -125,7 +125,7 @@ export namespace
 				Interface
 				::	ComputeVolume
 					(	m_aData
-					,	static_cast<int>
+					,	static_cast<unsigned char>
 						(	m_vTag
 						)
 					)
@@ -292,7 +292,7 @@ export namespace
 					(	aBuffer
 						+	static_cast<::std::size_t>(vIndex)
 						*	vElementSize
-					,	static_cast<int>
+					,	static_cast<unsigned char>
 						(	*
 							::std::launder
 							(	::std::bit_cast<ETag*>
