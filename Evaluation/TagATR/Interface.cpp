@@ -186,26 +186,25 @@ export namespace
 				)
 			};
 		}
+
+		[[nodiscard]]
+		auto friend inline
+		(	operator==
+		)	(	Body3DIterator
+					i_aIterator
+			,	Body3DSentinel
+					i_aSentinel
+			)
+			noexcept
+		->	bool
+		{	return
+				i_aIterator
+				.	m_aData
+			==	i_aSentinel
+				.	m_aDataEnd
+			;
+		}
 	};
-
-	[[nodiscard]]
-	auto inline
-	(	operator==
-	)	(	Body3DIterator
-				i_vIterator
-		,	Body3DSentinel
-				i_aSentinel
-		)
-		noexcept
-	->	bool
-	{	return
-			i_vIterator
-			.	m_aData
-		==	i_aSentinel
-			.	m_aDataEnd
-		;
-	}
-
 
 	struct
 		VolumeComputer
@@ -306,7 +305,8 @@ export namespace
 				;
 			}
 
-			delete[]
+			delete
+				[]
 				m_aBuffer
 			;
 		}
@@ -373,7 +373,7 @@ export namespace
 		[[nodiscard]]
 		auto inline
 		(	begin
-		)	()	&
+		)	()	const&
 			noexcept
 		->	Body3DIterator
 		{	::std::size_t const
@@ -394,7 +394,7 @@ export namespace
 		[[nodiscard]]
 		auto inline
 		(	end
-		)	()	&
+		)	()	const&
 			noexcept
 		->	Body3DSentinel
 		{	::std::size_t const

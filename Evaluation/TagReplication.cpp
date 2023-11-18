@@ -259,21 +259,20 @@ namespace
 		auto friend constexpr inline
 		(	operator==
 		)	(	Body3DIterator
-					i_vIterator
+					i_aIterator
 			,	Body3DSentinel
 					i_aSentinel
 			)
 			noexcept
 		->	bool
 		{	return
-				i_vIterator
+				i_aIterator
 				.	m_aData
 			==	i_aSentinel
 				.	m_aDataEnd
 			;
 		}
 	};
-
 
 	struct
 		VolumeComputer
@@ -382,7 +381,8 @@ namespace
 				}
 			}
 
-			delete[]
+			delete
+				[]
 				m_aBuffer
 			;
 		}
@@ -437,7 +437,7 @@ namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	begin
-		)	()	&
+		)	()	const&
 			noexcept
 		->	Body3DIterator
 		{	return
@@ -452,7 +452,7 @@ namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	end
-		)	()	&
+		)	()	const&
 			noexcept
 		->	Body3DSentinel
 		{	return
