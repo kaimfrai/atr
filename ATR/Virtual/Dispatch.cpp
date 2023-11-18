@@ -81,8 +81,10 @@ export namespace
 				}
 			}
 
-			::std::unreachable
-			();
+			return -1;
+			// TODO: unreachable here affects the assembly in unexpected ways
+			//::std::unreachable
+			//();
 		}
 
 		template
@@ -141,13 +143,12 @@ export namespace
 							)
 						)
 					)
-				{
-					return
+				{	return
 						vResult
 					;
 				}
 				::std::unreachable
-					();
+				();
 			}(	::std::make_index_sequence
 				<	sizeof...(t_tpImplementer)
 				>()
@@ -170,24 +171,28 @@ export namespace
 						...
 					>
 				)
-			{	(void)
-				(	...
-				or	(	(	i_vImplementerIndex
-						==	t_tpIndex
-						)
-					?	(	::std::launder
-							(	::std::bit_cast<t_tpImplementer*>
-								(	i_aObject
-								)
+			{	if	((	...
+					or	(	(	i_vImplementerIndex
+							==	t_tpIndex
 							)
-							->	compl
-								t_tpImplementer
-								()
-						,	true
+						?	(	::std::launder
+								(	::std::bit_cast<t_tpImplementer*>
+									(	i_aObject
+									)
+								)
+								->	compl
+									t_tpImplementer
+									()
+							,	true
+							)
+						:	false
 						)
-					:	false
-					)
-				);
+					))
+				{	return
+					;
+				}
+				::std::unreachable
+				();
 			}(	::std::make_index_sequence
 				<	sizeof...(t_tpImplementer)
 				>()

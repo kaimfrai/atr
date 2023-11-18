@@ -2,6 +2,7 @@ export module Evaluation.TagReplication.Head;
 
 import Evaluation.TagReplication.Tag;
 import Evaluation.TagReplication.Sphere;
+import Evaluation.Dependency.PiFraction;
 
 import Std;
 
@@ -45,16 +46,15 @@ export namespace
 		=	ETag::Head
 		;
 
-		Sphere
-			Sphere
-		;
-
 		HeadEyes
 		*	Eyes
 		=	new	(	::std::nothrow
 				)
 			HeadEyes
-			{}
+		;
+
+		Sphere
+			Sphere
 		;
 
 		constexpr inline
@@ -67,5 +67,40 @@ export namespace
 			;
 		}
 	};
+
+	[[nodiscard]]
+	auto constexpr inline
+	(	ComputeVolumeHead
+	)	(	void const
+			*	i_aObject
+		)
+		noexcept
+	->	float
+	{
+		Head const
+		*	aHead
+		=	static_cast
+			<	Head const
+				*
+			>(	i_aObject
+			)
+		;
+
+		return
+			PiFraction
+			<	1z
+			,	6z
+			>{}
+		*	aHead
+			->	Sphere
+			.	Height
+		*	aHead
+			->	Sphere
+			.	Height
+		*	aHead
+			->	Sphere
+			.	Height
+		;
+	}
 }
 

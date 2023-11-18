@@ -81,15 +81,11 @@ namespace
 
 	auto constexpr inline
 		BodySize
-	=	static_cast<::std::int32_t>
-		(	sizeof(Body3D)
-		)
+	=	sizeof(Body3D)
 	;
 	auto constexpr inline
 		TagSize
-	=	static_cast<::std::int32_t>
-		(	sizeof(ETag)
-		)
+	=	sizeof(ETag)
 	;
 
 	struct
@@ -199,7 +195,7 @@ namespace
 				case
 					ETag::Head
 				:	return
-						ComputeVolumeSphere
+						ComputeVolumeHead
 						(	m_aData
 						)
 					;
@@ -307,9 +303,9 @@ namespace
 				::std::byte
 					[	static_cast<::std::size_t>
 						(	i_vCapacity
-						*	(	BodySize
-							+	TagSize
-							)
+						)
+					*	(	BodySize
+						+	TagSize
 						)
 					]
 			}
@@ -337,7 +333,7 @@ namespace
 			auto const
 				aTagStart
 			=	aBuffer
-			+	m_vCapacity
+			+	static_cast<::std::size_t>(m_vCapacity)
 			*	BodySize
 			;
 
@@ -356,7 +352,7 @@ namespace
 							::std::launder
 							(	::std::bit_cast<ETag*>
 								(	aTagStart
-								+	vIndex
+								+	static_cast<::std::size_t>(vIndex)
 								*	TagSize
 								)
 							)
@@ -367,7 +363,7 @@ namespace
 					auto const
 						aHeadStart
 					=	aBuffer
-					+	vIndex
+					+	static_cast<::std::size_t>(vIndex)
 					*	BodySize
 					;
 					auto const
@@ -415,21 +411,22 @@ namespace
 			auto const
 				aTagStart
 			=	aBuffer
-			+	m_vCapacity
+			+	static_cast<::std::size_t>(m_vCapacity)
 			*	BodySize
 			;
 
 			::std::construct_at
 			(	::std::bit_cast<t_tBody*>
 				(	aBuffer
-				+	vCount
+				+	static_cast<::std::size_t>(vCount)
 				*	BodySize
 				)
 			);
+
 			::std::construct_at
 			(	::std::bit_cast<ETag*>
 				(	aTagStart
-				+	vCount
+				+	static_cast<::std::size_t>(vCount)
 				*	TagSize
 				)
 			,	t_tBody
@@ -446,7 +443,7 @@ namespace
 		{	return
 			{	m_aBuffer
 			,	(	m_aBuffer
-				+	m_vCapacity
+				+	static_cast<::std::size_t>(m_vCapacity)
 				*	BodySize
 				)
 			};
@@ -460,7 +457,7 @@ namespace
 		->	Body3DSentinel
 		{	return
 			{	(	m_aBuffer
-				+	m_vCapacity
+				+	static_cast<::std::size_t>(m_vCapacity)
 				*	BodySize
 				)
 			};

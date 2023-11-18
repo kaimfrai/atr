@@ -46,7 +46,7 @@ add_compile_options(
 add_link_options(
 	-fuse-ld=lld
 	-lc++
-	-flto=thin
+	-flto=full
 	-Wl,--gc-sections,--icf=all
 )
 
