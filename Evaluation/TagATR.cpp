@@ -45,7 +45,7 @@ auto
 
 	VolumeComputer
 		vElements
-	{	static_cast<::std::int32_t>
+	{	static_cast<::std::uint32_t>
 		(	vRandomSequence
 			.	size
 				()

@@ -1,11 +1,13 @@
 export module ATR.Virtual.Dispatch;
 
 import Meta.ID;
+import Meta.Memory.Size;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 
 import Std;
 
+using ::Meta::ByteSize;
 using ::Meta::ProtoID;
 using ::Meta::Type;
 using ::Meta::TypeID;
@@ -25,13 +27,13 @@ export namespace
 		(	ElementSize
 		)	()
 			noexcept
-		->	::std::size_t
+		->	ByteSize
 		{	return
-				::std::max
+			{	::std::max
 				({	sizeof(t_tpImplementer)
 					...
 				})
-			;
+			};
 		}
 
 		[[nodiscard]]

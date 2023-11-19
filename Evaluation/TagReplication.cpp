@@ -15,7 +15,14 @@ import Evaluation.TagReplication.Cone;
 import Evaluation.TagReplication.Ellipsoid;
 import Evaluation.TagReplication.Head;
 
+import Meta.Memory.Size;
+import Meta.Memory.Size.Arithmetic;
+import Meta.Memory.Size.Scale;
+import Meta.Memory.Size.PointerArithmetic;
+
 import Std;
+
+using ::Meta::ByteSize;
 
 namespace
 	Bodies3D
@@ -79,14 +86,15 @@ namespace
 		;
 	};
 
-	auto constexpr inline
+
+	ByteSize constexpr inline
 		BodySize
-	=	sizeof(Body3D)
-	;
-	auto constexpr inline
+	{	sizeof(Body3D)
+	};
+	ByteSize constexpr inline
 		TagSize
-	=	sizeof(ETag)
-	;
+	{	sizeof(ETag)
+	};
 
 	struct
 		Body3DReference
@@ -281,18 +289,18 @@ namespace
 		*	m_aBuffer
 		;
 
-		::std::int32_t
+		::std::uint32_t
 			m_vCount
 		;
 
-		::std::int32_t
+		::std::uint32_t
 			m_vCapacity
 		;
 
 	public:
 		explicit(true) constexpr inline
 		(	VolumeComputer
-		)	(	::std::int32_t
+		)	(	::std::uint32_t
 					i_vCapacity
 			)
 			noexcept
@@ -301,10 +309,12 @@ namespace
 					)
 				::std::byte
 					[	static_cast<::std::size_t>
-						(	i_vCapacity
-						)
-					*	(	BodySize
-						+	TagSize
+						(	(	i_vCapacity
+							*	(	BodySize
+								+	TagSize
+								)
+							).	get
+								()
 						)
 					]
 			}
@@ -332,7 +342,7 @@ namespace
 			auto const
 				aTagStart
 			=	aBuffer
-			+	static_cast<::std::size_t>(m_vCapacity)
+			+	m_vCapacity
 			*	BodySize
 			;
 
@@ -351,7 +361,7 @@ namespace
 							::std::launder
 							(	::std::bit_cast<ETag*>
 								(	aTagStart
-								+	static_cast<::std::size_t>(vIndex)
+								+	vIndex
 								*	TagSize
 								)
 							)
@@ -362,7 +372,7 @@ namespace
 					auto const
 						aHeadStart
 					=	aBuffer
-					+	static_cast<::std::size_t>(vIndex)
+					+	vIndex
 					*	BodySize
 					;
 					auto const
@@ -411,14 +421,14 @@ namespace
 			auto const
 				aTagStart
 			=	aBuffer
-			+	static_cast<::std::size_t>(m_vCapacity)
+			+	m_vCapacity
 			*	BodySize
 			;
 
 			::std::construct_at
 			(	::std::bit_cast<t_tBody*>
 				(	aBuffer
-				+	static_cast<::std::size_t>(vCount)
+				+	vCount
 				*	BodySize
 				)
 			);
@@ -426,7 +436,7 @@ namespace
 			::std::construct_at
 			(	::std::bit_cast<ETag*>
 				(	aTagStart
-				+	static_cast<::std::size_t>(vCount)
+				+	vCount
 				*	TagSize
 				)
 			,	t_tBody
@@ -443,7 +453,7 @@ namespace
 		{	return
 			{	m_aBuffer
 			,	(	m_aBuffer
-				+	static_cast<::std::size_t>(m_vCapacity)
+				+	m_vCapacity
 				*	BodySize
 				)
 			};
@@ -456,10 +466,9 @@ namespace
 			noexcept
 		->	Body3DSentinel
 		{	return
-			{	(	m_aBuffer
-				+	static_cast<::std::size_t>(m_vCapacity)
-				*	BodySize
-				)
+			{	m_aBuffer
+			+	m_vCapacity
+			*	BodySize
 			};
 		}
 	};
@@ -488,7 +497,7 @@ auto
 
 	VolumeComputer
 		vElements
-	{	static_cast<::std::int32_t>
+	{	static_cast<::std::uint32_t>
 		(	vRandomSequence
 			.	size
 				()

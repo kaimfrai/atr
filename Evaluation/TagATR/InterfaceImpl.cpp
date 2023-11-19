@@ -71,7 +71,7 @@ namespace
 		::	ElementSize
 	)	()
 		noexcept
-	->	::std::size_t
+	->	ByteSize
 	{	return
 			Dispatch
 			::	ElementSize
