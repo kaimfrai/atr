@@ -1,5 +1,7 @@
 export module ATR.Virtual.Dispatch;
 
+import ATR.Address;
+
 import Meta.ID;
 import Meta.Memory.Size;
 import Meta.Token.Type;
@@ -129,14 +131,14 @@ export namespace
 								)
 							?	(	(void)
 									(	vResult
-										=	(	*
-												::std::launder
-												(	::std::bit_cast<t_tpImplementer const*>
-													(	i_aObject
-													)
-												)
-											)(	i_vFunctionName
-											,	::std::forward<t_tpArgument>
+										=	::ATR::FunctionType
+											<	decltype(i_vFunctionName)
+											,	t_tpImplementer const&
+											,	t_tpArgument
+												...
+											>{}
+											(	i_aObject
+											,	ForwardErased
 												(	i_rpArgument
 												)
 												...

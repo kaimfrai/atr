@@ -58,31 +58,14 @@ export namespace
 			}
 		}
 		else
-		{	auto const
-				aByteArray
-			=	PointerCast<::std::byte[]>
+		{	// TODO preserve xvalue
+			return
+				PointerCast<::std::byte>
 				(	::std::addressof
 					(	i_rObject
 					)
 				)
 			;
-
-			if	constexpr
-				(	::std::is_lvalue_reference_v
-					<	t_tEntity
-					>
-				)
-			{
-				return
-				*	aByteArray
-				;
-			}
-			else
-			{	return
-				::std::move
-				(	*	aByteArray
-				);
-			}
 		}
 	}
 

@@ -61,8 +61,7 @@ export namespace
 		auto static constexpr inline
 		(	operator()
 		)	(	::std::byte
-				(&	i_rLayout
-				)	[]
+				*	i_aLayout
 			)
 			noexcept
 		->	t_tData&
@@ -72,7 +71,7 @@ export namespace
 				//	so we need to launder it
 				::std::launder
 				(	PointerCast<t_tData>
-					(	i_rLayout
+					(	i_aLayout
 					+	t_vOffset
 					)
 				)
@@ -83,8 +82,7 @@ export namespace
 		auto static constexpr inline
 		(	operator()
 		)	(	::std::byte const
-				(&	i_rLayout
-				)	[]
+				*	i_aLayout
 			)
 			noexcept
 		->	t_tData
@@ -94,7 +92,7 @@ export namespace
 				//	so we need to launder it
 				::std::launder
 				(	PointerCast<t_tData>
-					(	i_rLayout
+					(	i_aLayout
 					+	t_vOffset
 					)
 				)
@@ -180,21 +178,19 @@ export namespace
 		auto static constexpr inline
 		(	operator()
 		)	(	::std::byte
-				(&	i_rLayout
-				)	[]
+				*	i_aLayout
 			)
 			noexcept
 		->	decltype(auto)
 		{
 			::std::byte
-			(&	rNextLayout
-			)	[]
-			=	**
+			*	aNextLayout
+			=	*
 				//	We don't know where the byte array came from
 				//	so we need to launder it
 				::std::launder
-				(	PointerCast<::std::byte(*)[]>
-					(	i_rLayout
+				(	PointerCast<::std::byte*>
+					(	i_aLayout
 					+	t_vOffset
 					)
 				)
@@ -202,7 +198,7 @@ export namespace
 
 			return
 				NextOffset
-				(	rNextLayout
+				(	aNextLayout
 				)
 			;
 		}
@@ -211,21 +207,19 @@ export namespace
 		auto static constexpr inline
 		(	operator()
 		)	(	::std::byte const
-				(&	i_rLayout
-				)	[]
+				*	i_aLayout
 			)
 			noexcept
 		->	decltype(auto)
 		{
 			::std::byte const
-			(&	rNextLayout
-			)	[]
-			=	**
+			*	aNextLayout
+			=	*
 				//	We don't know where the byte array came from
 				//	so we need to launder it
 				::std::launder
-				(	PointerCast<::std::byte const(* const)[]>
-					(	i_rLayout
+				(	PointerCast<::std::byte const* const>
+					(	i_aLayout
 					+	t_vOffset
 					)
 				)
@@ -233,7 +227,7 @@ export namespace
 
 			return
 				NextOffset
-				(	rNextLayout
+				(	aNextLayout
 				)
 			;
 		}
@@ -377,8 +371,7 @@ export namespace
 		auto static constexpr inline
 		(	operator()
 		)	(	::std::byte const
-				(&
-				)	[]
+				*
 			)
 			noexcept
 		->	t_tData
@@ -425,8 +418,7 @@ export namespace
 		auto static constexpr inline
 		(	operator()
 		)	(	::std::byte
-				(&	i_rLayout
-				)	[]
+				*	i_aLayout
 			)
 			noexcept
 		->	decltype(auto)
@@ -436,7 +428,7 @@ export namespace
 			,	ByteOffset
 				.	Remainder
 			>{	::std::launder
-				(	i_rLayout
+				(	i_aLayout
 				+	ByteOffset
 					.	Quotient
 				)
@@ -447,8 +439,7 @@ export namespace
 		auto static constexpr inline
 		(	operator()
 		)	(	::std::byte const
-				(&	i_rLayout
-				)	[]
+				*	i_aLayout
 			)
 			noexcept
 		->	bool
@@ -459,7 +450,7 @@ export namespace
 					.	Remainder
 				>
 			::	Read
-				(	i_rLayout
+				(	i_aLayout
 				+	ByteOffset
 					.	Quotient
 				)
@@ -479,9 +470,7 @@ export namespace
 		->	decltype(auto)
 		{	return
 				i_vOffset
-				(	static_cast<decltype(i_rLayout)>
-					(	i_rLayout
-					)
+				(	i_rLayout
 				)
 			;
 		}
@@ -499,9 +488,7 @@ export namespace
 		->	decltype(auto)
 		{	return
 				i_vOffset
-				(	static_cast<decltype(i_rLayout)>
-					(	i_rLayout
-					)
+				(	i_rLayout
 				)
 			;
 		}
@@ -532,8 +519,7 @@ export namespace
 		auto static constexpr inline
 		(	operator()
 		)	(	::std::byte
-				(&	i_rLayout
-				)	[]
+				*	i_aLayout
 			)
 			noexcept
 		->	decltype(auto)
@@ -544,7 +530,7 @@ export namespace
 			,	ByteOffset
 				.	Remainder
 			>{	::std::launder
-				(	i_rLayout
+				(	i_aLayout
 				+	ByteOffset
 					.	Quotient
 				)
@@ -555,8 +541,7 @@ export namespace
 		auto static constexpr inline
 		(	operator()
 		)	(	::std::byte const
-				(&	i_rLayout
-				)	[]
+				*	i_aLayout
 			)
 			noexcept
 		->	decltype(auto)
@@ -567,7 +552,7 @@ export namespace
 				,	t_vExtent
 				,	ByteOffset
 					.	Remainder
-				>{	i_rLayout
+				>{	i_aLayout
 				+	ByteOffset
 					.	Quotient
 				}
@@ -587,9 +572,7 @@ export namespace
 		->	decltype(auto)
 		{	return
 				i_vOffset
-				(	static_cast<decltype(i_rLayout)>
-					(	i_rLayout
-					)
+				(	i_rLayout
 				)
 			;
 		}
@@ -607,9 +590,7 @@ export namespace
 		->	decltype(auto)
 		{	return
 				i_vOffset
-				(	static_cast<decltype(i_rLayout)>
-					(	i_rLayout
-					)
+				(	i_rLayout
 				)
 			;
 		}
@@ -638,8 +619,7 @@ export namespace
 		auto static constexpr inline
 		(	operator()
 		)	(	::std::byte
-				(&	i_rLayout
-				)	[]
+				*	i_aLayout
 			)
 			noexcept
 		->	decltype(auto)
@@ -649,7 +629,7 @@ export namespace
 				,	ByteOffset
 					.	Remainder
 				>{	::std::launder
-					(	i_rLayout
+					(	i_aLayout
 					+	ByteOffset
 						.	Quotient
 					)
@@ -661,8 +641,7 @@ export namespace
 		auto static constexpr inline
 		(	operator()
 		)	(	::std::byte const
-				(&	i_rLayout
-				)	[]
+				*	i_aLayout
 			)
 			noexcept
 		->	decltype(auto)
@@ -673,7 +652,7 @@ export namespace
 					.	Remainder
 				>
 			::	Read
-				(	i_rLayout
+				(	i_aLayout
 				+	ByteOffset
 					.	Quotient
 				)
@@ -693,9 +672,7 @@ export namespace
 		->	decltype(auto)
 		{	return
 				i_vOffset
-				(	static_cast<decltype(i_rLayout)>
-					(	i_rLayout
-					)
+				(	i_rLayout
 				)
 			;
 		}
@@ -713,9 +690,7 @@ export namespace
 		->	decltype(auto)
 		{	return
 				i_vOffset
-				(	static_cast<decltype(i_rLayout)>
-					(	i_rLayout
-					)
+				(	i_rLayout
 				)
 			;
 		}
@@ -748,8 +723,7 @@ export namespace
 		auto static constexpr inline
 		(	operator()
 		)	(	::std::byte
-				(&	i_rLayout
-				)	[]
+				*	i_aLayout
 			)
 			noexcept
 		->	decltype(auto)
@@ -760,7 +734,7 @@ export namespace
 				,	ByteOffset
 					.	Remainder
 				>{	::std::launder
-					(	i_rLayout
+					(	i_aLayout
 					+	ByteOffset
 						.	Quotient
 					)
@@ -772,8 +746,7 @@ export namespace
 		auto static constexpr inline
 		(	operator()
 		)	(	::std::byte const
-				(&	i_rLayout
-				)	[]
+				*	i_aLayout
 			)
 			noexcept
 		->	decltype(auto)
@@ -784,7 +757,7 @@ export namespace
 					,	t_vExtent
 					,	ByteOffset
 						.	Remainder
-					>{	i_rLayout
+					>{	i_aLayout
 					+	ByteOffset
 						.	Quotient
 					}
@@ -805,9 +778,7 @@ export namespace
 		->	decltype(auto)
 		{	return
 				i_vOffset
-				(	static_cast<decltype(i_rLayout)>
-					(	i_rLayout
-					)
+				(	i_rLayout
 				)
 			;
 		}
@@ -825,9 +796,7 @@ export namespace
 		->	decltype(auto)
 		{	return
 				i_vOffset
-				(	static_cast<decltype(i_rLayout)>
-					(	i_rLayout
-					)
+				(	i_rLayout
 				)
 			;
 		}

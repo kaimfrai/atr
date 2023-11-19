@@ -17,7 +17,7 @@ export namespace
 	(	FunctionBody
 	)	(	GlobalDependency<"Product">
 		,	Dependency
-			<	::std::byte const(&)[]
+			<	::std::byte const*
 			,	t_vpDependency
 				...
 			>

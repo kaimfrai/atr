@@ -43,8 +43,7 @@ namespace
 			<	ID<"ComputeVolume">
 			,	auto
 					(	::std::byte const
-						(&
-						)	[]
+						*
 					)
 					noexcept
 				->	float
