@@ -208,6 +208,9 @@ namespace
 						)
 					;
 			}
+
+			::std::unreachable
+			();
 		}
 	};
 

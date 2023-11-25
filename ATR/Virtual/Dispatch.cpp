@@ -198,8 +198,6 @@ export namespace
 				{	return
 					;
 				}
-				::std::unreachable
-				();
 			}(	::std::make_index_sequence
 				<	sizeof...(t_tpImplementer)
 				>()
