@@ -4,13 +4,16 @@ import ATR.Address;
 
 import Meta.ID;
 import Meta.Memory.Size;
+import Meta.String.Literal;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 
 import Std;
 
 using ::Meta::ByteSize;
+using ::Meta::ID;
 using ::Meta::ProtoID;
+using ::Meta::String::Literal;
 using ::Meta::Type;
 using ::Meta::TypeID;
 
@@ -97,14 +100,14 @@ export namespace
 		template
 			<	typename
 					t_tResult
+			,	Literal
+					t_vFunctionName
 			,	typename
 				...	t_tpArgument
 			>
 		auto static constexpr inline
 		(	Call
-		)	(	ProtoID auto
-					i_vFunctionName
-			,	::std::byte const
+		)	(	::std::byte const
 				*	i_aObject
 			,	unsigned char
 					i_vImplementerIndex
@@ -132,7 +135,7 @@ export namespace
 							?	(	(void)
 									(	vResult
 										=	::ATR::FunctionType
-											<	decltype(i_vFunctionName)
+											<	ID<t_vFunctionName>
 											,	t_tpImplementer const&
 											,	t_tpArgument
 												...

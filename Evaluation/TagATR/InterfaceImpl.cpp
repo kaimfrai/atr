@@ -66,84 +66,22 @@ namespace
 		>
 	;
 
-	auto
-	(	Interface
-		::	ElementSize
-	)	()
-		noexcept
-	->	ByteSize
-	{	return
-			Dispatch
-			::	ElementSize
-				()
-		;
-	}
-
-	auto
-	(	Interface
-		::	ImplementerCount
-	)	()
-		noexcept
-	->	unsigned char
-	{	return
-			Dispatch
-			::	ImplementerCount
-				()
-		;
-	}
-
-	auto
-	(	Interface
-		::	ImplementerIndex
-	)	(	TypeID
-				i_vType
-		)
-		noexcept
-	->	unsigned char
-	{	return
-			Dispatch
-			::	ImplementerIndex
-				(	i_vType
-				)
-		;
-	}
-
-	auto
-	(	Interface
-		::	ComputeVolume
-	)	(	::std::byte const
-			*	i_aObject
-		,	unsigned char
-				i_vImplementerIndex
-		)
-		noexcept
-	->	float
-	{	return
-			Dispatch
-			::	Call
-				<	float
-				>(	"ComputeVolume"_id
-				,	i_aObject
-				,	i_vImplementerIndex
-				)
-		;
-	}
-
-	auto
-	(	Interface
-		::	Destroy
-	)	(	::std::byte
-			*	i_aObject
-		,	unsigned char
-				i_vImplementerIndex
-		)
-		noexcept
-	->	void
+	struct Interface const constinit
+		Interface
 	{	Dispatch
+		::	ElementSize
+			()
+	,	Dispatch
+		::	ImplementerCount
+			()
+	,	Dispatch
+		::	ImplementerIndex
+	,	Dispatch
 		::	Destroy
-			(	i_aObject
-			,	i_vImplementerIndex
-			)
-		;
-	}
+	,	Dispatch
+		::	Call
+			<	float
+			,	"ComputeVolume"
+			>
+	};
 }
