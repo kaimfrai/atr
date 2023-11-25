@@ -6,9 +6,7 @@ fi
 
 echo "Measuring cache usage..."
 
-mkdir -p ./build/cachegrind_$1_$2/
-
-cd ./build/cachegrind_$1_$2/
+mkdir -p Evaluation/Results/cachegrind_$1_$2/
 
 function execute_cachegrind ()
 {
@@ -16,9 +14,9 @@ function execute_cachegrind ()
 
 	valgrind\
 		--tool=cachegrind\
-		../Evaluation/bin/$3\
+		build/Evaluation/bin/$3\
 		$1 $2\
-		2> $3.txt
+		2> Evaluation/Results/cachegrind_$1_$2/$3.txt
 }
 
 if [ $# -lt 3 ]
@@ -38,6 +36,6 @@ else
 	execute_cachegrind $1 $2 $3
 fi
 
-cd ../../
+rm cachegrind.out.*
 
-echo "Results build/cachegrind_$1_$2/"
+echo "Results in Evaluation/Results/cachegrind_$1_$2/"
