@@ -46,11 +46,13 @@ export namespace
 		=	ETag::Head
 		;
 
-		HeadEyes
+		float
 		*	Eyes
 		=	new	(	::std::nothrow
 				)
-			HeadEyes
+			float
+				[	8
+				]
 		;
 
 		Sphere
@@ -63,6 +65,7 @@ export namespace
 		)	()
 			noexcept
 		{	delete
+				[]
 				Eyes
 			;
 		}
