@@ -236,7 +236,7 @@ namespace
 		(	operator++
 		)	()	&
 			noexcept
-		->	Body3DIterator
+		->	Body3DIterator&
 		{
 			m_aData
 			+=	BodySize
@@ -293,12 +293,12 @@ namespace
 		;
 
 		::std::uint32_t
-			m_vCount
+			m_vCapacity
 		;
 
 		::std::uint32_t
-			m_vCapacity
-		;
+			m_vCount
+		{};
 
 	public:
 		explicit(true) constexpr inline
@@ -312,7 +312,8 @@ namespace
 					)
 				::std::byte
 					[	static_cast<::std::size_t>
-						(	(	i_vCapacity
+						(	ByteSize
+							(	i_vCapacity
 							*	(	BodySize
 								+	TagSize
 								)
@@ -321,8 +322,6 @@ namespace
 						)
 					]
 			}
-		,	m_vCount
-			{}
 		,	m_vCapacity
 			{	i_vCapacity
 			}
@@ -509,7 +508,7 @@ auto
 
 	for	(	auto
 				vRandom
-			:	vRandomSequence
+		:	vRandomSequence
 		)
 	{
 		switch
@@ -667,7 +666,7 @@ auto
 
 	for	(	auto const
 				rBody
-			:	vElements
+		:	vElements
 		)
 	{
 		vLoopSum

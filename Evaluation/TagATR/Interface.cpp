@@ -159,7 +159,7 @@ export namespace
 		(	operator++
 		)	()	&
 			noexcept
-		->	Body3DIterator
+		->	Body3DIterator&
 		{
 			m_aData
 			+=	Interface
@@ -218,12 +218,12 @@ export namespace
 		;
 
 		::std::uint32_t
-			m_vCount
+			m_vCapacity
 		;
 
 		::std::uint32_t
-			m_vCapacity
-		;
+			m_vCount
+		{};
 
 	public:
 		explicit(true) inline
@@ -237,7 +237,8 @@ export namespace
 					)
 				::std::byte
 					[	static_cast<::std::size_t>
-						(	(	i_vCapacity
+						(	ByteSize
+							(	i_vCapacity
 							*	(	Interface
 									::	ElementSize
 										()
@@ -248,8 +249,6 @@ export namespace
 						)
 					]
 			}
-		,	m_vCount
-			{}
 		,	m_vCapacity
 			{	i_vCapacity
 			}

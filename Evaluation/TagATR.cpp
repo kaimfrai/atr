@@ -54,7 +54,7 @@ auto
 
 	for	(	auto
 				vRandom
-			:	vRandomSequence
+		:	vRandomSequence
 		)
 	{
 		switch
@@ -186,7 +186,7 @@ auto
 
 	for	(	auto const
 				rBody
-			:	vElements
+		:	vElements
 		)
 	{
 		vLoopSum
