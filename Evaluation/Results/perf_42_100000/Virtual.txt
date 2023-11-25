@@ -1,0 +1,17 @@
+
+ Performance counter stats for 'build/Evaluation/bin/Virtual 42 100000' (100 runs):
+
+              7,52 msec task-clock                #    0,965 CPUs utilized            ( +-  0,21% )
+                 0      context-switches          #    0,000 /sec                   
+                 0      cpu-migrations            #    0,000 /sec                   
+             2.178      page-faults               #  287,129 K/sec                    ( +-  0,00% )
+        31.536.356      cycles                    #    4,157 GHz                      ( +-  0,21% )
+         1.753.924      stalled-cycles-frontend   #    5,48% frontend cycles idle     ( +-  1,99% )
+         3.649.555      stalled-cycles-backend    #   11,41% backend cycles idle      ( +-  0,86% )
+        54.206.744      instructions              #    1,70  insn per cycle         
+                                                  #    0,07  stalled cycles per insn  ( +-  0,01% )
+        11.382.391      branches                  #    1,501 G/sec                    ( +-  0,01% )
+           274.044      branch-misses             #    2,41% of all branches          ( +-  0,02% )
+
+         0,0077851 +- 0,0000168 seconds time elapsed  ( +-  0,22% )
+

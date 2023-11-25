@@ -1,0 +1,17 @@
+
+ Performance counter stats for 'build/Evaluation/bin/Polymorphic 42 100000' (100 runs):
+
+              7,94 msec task-clock                #    0,957 CPUs utilized            ( +-  0,24% )
+                 0      context-switches          #    0,000 /sec                   
+                 0      cpu-migrations            #    0,000 /sec                   
+             3.196      page-faults               #  395,731 K/sec                    ( +-  0,00% )
+        33.741.272      cycles                    #    4,178 GHz                      ( +-  0,24% )
+         3.083.530      stalled-cycles-frontend   #    8,99% frontend cycles idle     ( +-  1,44% )
+         5.109.082      stalled-cycles-backend    #   14,90% backend cycles idle      ( +-  0,62% )
+        58.481.659      instructions              #    1,71  insn per cycle         
+                                                  #    0,09  stalled cycles per insn  ( +-  0,01% )
+        11.887.046      branches                  #    1,472 G/sec                    ( +-  0,01% )
+           233.313      branch-misses             #    1,96% of all branches          ( +-  0,04% )
+
+         0,0082957 +- 0,0000207 seconds time elapsed  ( +-  0,25% )
+

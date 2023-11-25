@@ -1,0 +1,17 @@
+
+ Performance counter stats for 'build/Evaluation/bin/TypeErasure 42 100000' (100 runs):
+
+              6,43 msec task-clock                #    0,948 CPUs utilized            ( +-  0,28% )
+                 0      context-switches          #    0,000 /sec                   
+                 0      cpu-migrations            #    0,000 /sec                   
+             2.221      page-faults               #  338,517 K/sec                    ( +-  0,01% )
+        27.576.901      cycles                    #    4,203 GHz                      ( +-  0,26% )
+         1.644.826      stalled-cycles-frontend   #    5,88% frontend cycles idle     ( +-  2,57% )
+         3.743.129      stalled-cycles-backend    #   13,38% backend cycles idle      ( +-  0,69% )
+        52.178.169      instructions              #    1,86  insn per cycle         
+                                                  #    0,07  stalled cycles per insn  ( +-  0,01% )
+        10.469.091      branches                  #    1,596 G/sec                    ( +-  0,01% )
+           218.079      branch-misses             #    2,08% of all branches          ( +-  0,04% )
+
+         0,0067793 +- 0,0000205 seconds time elapsed  ( +-  0,30% )
+

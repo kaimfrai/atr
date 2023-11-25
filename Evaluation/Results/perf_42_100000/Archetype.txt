@@ -1,0 +1,17 @@
+
+ Performance counter stats for 'build/Evaluation/bin/Archetype 42 100000' (100 runs):
+
+              3,87 msec task-clock                #    0,936 CPUs utilized            ( +-  0,27% )
+                 0      context-switches          #    0,000 /sec                   
+                 0      cpu-migrations            #    0,000 /sec                   
+             1.906      page-faults               #  483,072 K/sec                    ( +-  0,01% )
+        16.503.867      cycles                    #    4,183 GHz                      ( +-  0,23% )
+         1.279.597      stalled-cycles-frontend   #    7,60% frontend cycles idle     ( +-  1,47% )
+         1.911.738      stalled-cycles-backend    #   11,35% backend cycles idle      ( +-  0,82% )
+        16.466.436      instructions              #    0,98  insn per cycle         
+                                                  #    0,13  stalled cycles per insn  ( +-  0,03% )
+         3.088.565      branches                  #  782,790 M/sec                    ( +-  0,03% )
+           211.045      branch-misses             #    6,82% of all branches          ( +-  0,02% )
+
+         0,0041370 +- 0,0000116 seconds time elapsed  ( +-  0,28% )
+

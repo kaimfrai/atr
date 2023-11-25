@@ -6,8 +6,7 @@ fi
 
 echo "Measuring average execution time over $3 executions..."
 
-mkdir -p build/perf_$1_$2/
-cd build/perf_$1_$2/
+mkdir -p Evaluation/Results/perf_$1_$2/
 
 echo 0 > /proc/sys/kernel/nmi_watchdog
 
@@ -18,9 +17,9 @@ function execute_perf()
 	perf\
 		stat\
 		--repeat $3\
-		../Evaluation/bin/$4\
+		build/Evaluation/bin/$4\
 		$1 $2\
-		2> $4.txt
+		2> Evaluation/Results/perf_$1_$2/$4.txt
 }
 
 if	[ $# -lt 4 ]
@@ -42,6 +41,4 @@ fi
 
 echo 1 > /proc/sys/kernel/nmi_watchdog
 
-cd ../../
-
-echo "Results in build/perf_$1_$2/"
+echo "Results in Evaluation/Results/perf_$1_$2/"
