@@ -1,0 +1,14 @@
+==45174== Memcheck, a memory error detector
+==45174== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==45174== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==45174== Command: build/Evaluation/bin/Polymorphic 42 100000
+==45174== 
+==45174== 
+==45174== HEAP SUMMARY:
+==45174==     in use at exit: 0 bytes in 0 blocks
+==45174==   total heap usage: 100,002 allocs, 100,002 frees, 11,455,864 bytes allocated
+==45174== 
+==45174== All heap blocks were freed -- no leaks are possible
+==45174== 
+==45174== For lists of detected and suppressed errors, rerun with: -s
+==45174== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

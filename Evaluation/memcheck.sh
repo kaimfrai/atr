@@ -6,8 +6,7 @@ fi
 
 echo "Measuring memory consumption..."
 
-mkdir -p build/memcheck_$1_$2/
-cd build/memcheck_$1_$2/
+mkdir -p Evaluation/Results/memcheck_$1_$2/
 
 function execute_memcheck()
 {
@@ -15,9 +14,9 @@ function execute_memcheck()
 
 	valgrind\
 		--tool=memcheck\
-		../Evaluation/bin/$3\
+		build/Evaluation/bin/$3\
 		$1 $2\
-		2> $3.txt
+		2> Evaluation/Results/memcheck_$1_$2/$3.txt
 }
 
 if [ $# -lt 3 ]
@@ -37,6 +36,4 @@ else
 	execute_memcheck $1 $2 $3
 fi
 
-cd ../../
-
-echo "Results in build/memcheck_$1_$2/"
+echo "Results in Evaluation/Results/memcheck_$1_$2/"
