@@ -1,8 +1,6 @@
 echo "Generating assemblies..."
 
-mkdir -p build/assembly/
-
-cd build/assembly
+mkdir -p Evaluation/Results/assembly/
 
 function assemble()
 {
@@ -16,8 +14,8 @@ function assemble()
 		--symbolize-operands\
 		--disassemble-zeroes\
 		--disassembler-options=intel\
-		../Evaluation/bin/$1\
-		> $1.s
+		build/Evaluation/bin/$1\
+		> Evaluation/Results/assembly/$1.s
 }
 
 if [ $# -lt 1 ]
@@ -37,6 +35,4 @@ else
 	assemble $1
 fi
 
-cd ../../
-
-echo "Results in build/assembly/"
+echo "Results in Evaluation/Results/assembly/"
