@@ -97,14 +97,14 @@ static_assert
 
 static_assert
 (	(	Hash("")
-	+	Hash("ABC")
+	+	"ABC"
 	)
 ==	Hash("ABC")
 );
 
 static_assert
 (	(	Hash("ABC")
-	+	Hash("")
+	+	""
 	)
 ==	Hash("ABC")
 );
@@ -119,15 +119,15 @@ static_assert
 );
 static_assert
 (	(	Hash("ABC")
-	+	Hash("DEF")
+	+	"DEF"
 	)
 ==	Hash("ABCDEF")
 );
 
 static_assert
 (	(	Hash("abcdefghi")
-	+	Hash("jklmnopq")
-	+	Hash("rstuvwxyz")
+	+	"jklmnopq"
+	+	"rstuvwxyz"
 	)
 ==	Hash("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 );

@@ -64,10 +64,10 @@ export namespace
 
 		auto constexpr inline
 		(	Alias
-		)	(	ImplicitHash
-					i_vMemberName
-			,	ImplicitHash
-					i_vTargetName
+		)	(	char const
+				*	i_vMemberName
+			,	char const
+				*	i_vTargetName
 			)
 			noexcept
 		->	FlatComposer&&
@@ -122,8 +122,8 @@ export namespace
 
 		auto constexpr inline
 		(	Member
-		)	(	ImplicitHash
-					i_vMemberName
+		)	(	char const
+				*	i_vMemberName
 			,	TypeID
 					i_vType
 			)
@@ -201,8 +201,8 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	ScopedPrefix
-		)	(	ImplicitHash
-					i_vPrefix
+		)	(	char const
+				*	i_vPrefix
 			)
 			noexcept
 		->	PrefixGuard

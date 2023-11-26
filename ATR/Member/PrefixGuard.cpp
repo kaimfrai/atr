@@ -21,8 +21,8 @@ export namespace
 		(	PrefixGuard
 		)	(	Hash
 				&	i_rCurrent
-			,	Hash
-					i_vNewPrefix
+			,	char const
+				*	i_vNewPrefix
 			)
 			noexcept
 		:	ValueGuard

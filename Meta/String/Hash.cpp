@@ -12,6 +12,12 @@ export namespace
 			InitialValue
 		=	0x4000'0000'0000'0001
 		;
+		::std::uint64_t static constexpr inline
+			PerCharMultiplier
+		=	//	Value found by trial and error
+			//	Produces the best distribution for common chars
+			0x2102'C408'1020'4005
+		;
 
 		::std::uint64_t
 			Value
@@ -40,35 +46,9 @@ export namespace
 			{	1u
 			}
 		{
-			::std::uint64_t static constexpr
-				vPerCharMultiplier
-			=	//	Value found by trial and error
-				//	Produces the best distribution for common chars
-				0x2102'C408'1020'4005
+			*this
+			+=	i_aString
 			;
-
-			for	(
-				;	*	i_aString
-				;	++	i_aString
-				)
-			{
-				Value
-				*=	vPerCharMultiplier
-				;
-
-				Value
-				+=	static_cast<::std::uint64_t>
-					(	*	i_aString
-					)
-				bitand
-					//	Ensures case insensitivity
-					0b0101'1111
-				;
-
-				Multiplier
-				*=	vPerCharMultiplier
-				;
-			}
 		}
 
 		[[nodiscard]]
@@ -98,38 +78,57 @@ export namespace
 			;
 		}
 
+		auto constexpr inline
+		(	operator+=
+		)	(	char const
+				*	i_vRight
+			)	&
+			noexcept
+		->	Hash&
+		{	return
+				*this
+			=	*this
+			+	i_vRight
+			;
+		}
+
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator+
 		)	(	Hash
 					i_vLeft
-			,	Hash
-					i_vRight
+			,	char const
+				*	i_vRight
 			)
 			noexcept
 		->	Hash
 		{
-			i_vLeft
-			.	Value
-			*=	i_vRight
-				.	Multiplier
-			;
-			i_vRight
-			.	Value
-			-=	InitialValue
-			*	i_vRight
-				.	Multiplier
-			;
-			i_vLeft
-			.	Value
-			+=	i_vRight
+			for	(
+				;	*	i_vRight
+				;	++	i_vRight
+				)
+			{
+				i_vLeft
 				.	Value
-			;
-			i_vLeft
-			.	Multiplier
-			*=	i_vRight
+				*=	PerCharMultiplier
+				;
+
+				i_vLeft
+				.	Value
+				+=	static_cast<::std::uint64_t>
+					(	*	i_vRight
+					)
+				bitand
+					//	Ensures case insensitivity
+					0b0101'1111
+				;
+
+				i_vLeft
 				.	Multiplier
-			;
+				*=	PerCharMultiplier
+				;
+			}
+
 			return
 				i_vLeft
 			;
