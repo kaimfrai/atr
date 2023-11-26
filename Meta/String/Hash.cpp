@@ -5,18 +5,15 @@ import Std;
 export namespace
 	Meta::String
 {
+	/// FNV-1a implementation which stores the length and is right appendable
+	/// Strings are evaluated case-insensitive
+	/// Source: http://www.isthe.com/chongo/tech/comp/fnv/index.html
 	struct
 		Hash
 	{
 		::std::uint64_t static constexpr inline
 			InitialValue
-		=	0x4000'0000'0000'0001
-		;
-		::std::uint64_t static constexpr inline
-			PerCharMultiplier
-		=	//	Value found by trial and error
-			//	Produces the best distribution for common chars
-			0x2102'C408'1020'4005
+		=	0xcbf2'9ce4'8422'2325
 		;
 
 		::std::uint64_t
@@ -24,7 +21,7 @@ export namespace
 		{};
 
 		::std::uint64_t
-			Multiplier
+			Length
 		{};
 
 		explicit(false) constexpr inline
@@ -42,9 +39,6 @@ export namespace
 		:	Value
 			{	InitialValue
 			}
-		,	Multiplier
-			{	1u
-			}
 		{
 			*this
 			+=	i_aString
@@ -57,8 +51,8 @@ export namespace
 		)	()	const
 			noexcept
 		{	return
-				Multiplier
-			>	0u
+				Value
+			!=	0u
 			;
 		}
 
@@ -103,6 +97,11 @@ export namespace
 			noexcept
 		->	Hash
 		{
+			::std::uint64_t static constexpr
+				vFNVPrime
+			=	0x0000'0100'0000'01b3
+			;
+
 			for	(
 				;	*	i_vRight
 				;	++	i_vRight
@@ -110,12 +109,7 @@ export namespace
 			{
 				i_vLeft
 				.	Value
-				*=	PerCharMultiplier
-				;
-
-				i_vLeft
-				.	Value
-				+=	static_cast<::std::uint64_t>
+				^=	static_cast<::std::uint64_t>
 					(	*	i_vRight
 					)
 				bitand
@@ -124,8 +118,12 @@ export namespace
 				;
 
 				i_vLeft
-				.	Multiplier
-				*=	PerCharMultiplier
+				.	Value
+				*=	vFNVPrime
+				;
+
+				++	i_vLeft
+					.	Length
 				;
 			}
 
