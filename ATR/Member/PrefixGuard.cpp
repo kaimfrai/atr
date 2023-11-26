@@ -9,13 +9,18 @@ using ::Meta::String::Hash;
 export namespace
 	ATR::Member
 {
-	struct
+	class
 		[[nodiscard("Discarding a PrefixGuard equates to doing nothing")]]
 		PrefixGuard
-	:	ValueGuard
-		<	Hash
-		>
 	{
+		ValueGuard<Hash>
+			m_vHashGuard
+		;
+		ValueGuard<short>
+			m_vPrefixIndexGuard
+		;
+
+	public:
 		[[nodiscard("Discarding a PrefixGuard equates to doing nothing")]]
 		explicit(true) constexpr inline
 		(	PrefixGuard
@@ -23,13 +28,21 @@ export namespace
 				&	i_rCurrent
 			,	char const
 				*	i_vNewPrefix
+			,	short
+				&	i_rCurrentIndex
+			,	short
+					i_vNewIndex
 			)
 			noexcept
-		:	ValueGuard
+		:	m_vHashGuard
 			{	i_rCurrent
 			,	//	Nested prefixes are appended
 					i_rCurrent
 				+	i_vNewPrefix
+			}
+		,	m_vPrefixIndexGuard
+			{	i_rCurrentIndex
+			,	static_cast<short&&>(i_vNewIndex)
 			}
 		{}
 	};

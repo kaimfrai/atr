@@ -459,6 +459,8 @@ namespace
 						.	HashIndex
 					,	vAliasedType
 					,	vAliasedDistrictIndex
+					,	rAliasTarget
+						.	Suffix
 					)
 			;
 

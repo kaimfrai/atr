@@ -37,6 +37,9 @@ export namespace
 			Hash
 				Target
 			{};
+			PartialName
+				Suffix
+			{};
 		};
 
 		AliasTarget
@@ -53,6 +56,11 @@ export namespace
 			Prefix
 		{	""
 		};
+
+		short
+			PrefixIndex
+		=	-1
+		;
 
 		auto
 		(*	DistrictIndexOf
@@ -109,6 +117,10 @@ export namespace
 					,	(	Prefix
 						+	i_vTargetName
 						)
+					,	PartialName
+						{	i_vMemberName
+						,	PrefixIndex
+						}
 					}
 				;
 			}
@@ -170,6 +182,10 @@ export namespace
 							(	vPrefixedMemberName
 							)
 						:	-1
+					,	PartialName
+						{	i_vMemberName
+						,	PrefixIndex
+						}
 					)
 				;
 			}
@@ -206,10 +222,24 @@ export namespace
 			)
 			noexcept
 		->	PrefixGuard
-		{	return
+		{
+			auto const
+				vNewPrefixIndex
+			=	Members
+				.	AddPrefix
+					(	PartialName
+						{	i_vPrefix
+						,	PrefixIndex
+						}
+					)
+			;
+
+			return
 				PrefixGuard
 				{	Prefix
 				,	i_vPrefix
+				,	PrefixIndex
+				,	vNewPrefixIndex
 				}
 			;
 		}

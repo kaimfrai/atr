@@ -121,8 +121,10 @@ auto constexpr inline
 	noexcept
 ->	bool
 {
-	if	(	i_vLeft.Type
-		!=	i_vRight.Type
+	if	(	i_vLeft
+			.	Type
+		!=	i_vRight
+			.	Type
 		)
 	{	(void("Type"), ::std::unreachable());
 	}

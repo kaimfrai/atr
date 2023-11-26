@@ -24,6 +24,75 @@ export namespace
 	ATR::Member
 {
 	struct
+		PartialName
+	{
+		char const
+		*	Name
+		=	""
+		;
+		short
+			PrefixIndex
+		=	-1
+		;
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	ToString
+		)	(	PartialName const
+				*	i_aPrefixes
+			,	::std::size_t
+					i_vSuffixLength
+				=	0uz
+			)	const
+			noexcept
+		->	::std::string
+		{
+			auto const
+				vLength
+			=	::std::string::traits_type::length
+				(	Name
+				)
+			;
+			if	(	PrefixIndex
+				<	0
+				)
+			{
+				::std::string
+					vResult
+				{};
+				vResult
+				.	reserve
+					(	vLength
+					+	i_vSuffixLength
+					)
+				;
+				vResult
+				.	append
+					(	Name
+					,	vLength
+					)
+				;
+				return
+					Name
+				;
+			}
+
+			return
+				i_aPrefixes
+				[	PrefixIndex
+				].	ToString
+					(	i_aPrefixes
+					,	vLength
+					)
+				.	append
+					(	Name
+					,	vLength
+					)
+			;
+		}
+	};
+
+	struct
 		MemberNameList
 	{
 		Hash
@@ -49,6 +118,21 @@ export namespace
 			[	NameBufferSize
 			]
 		;
+
+		PartialName
+			Suffixes
+			[	NameBufferSize
+			]
+		;
+		PartialName
+			Prefixes
+			[	PrefixBufferSize
+			]
+		{};
+
+		short
+			PrefixCount
+		{};
 
 		short
 			MemberCount
@@ -101,6 +185,8 @@ export namespace
 					i_vType
 			,	short
 					i_vDistrictIndex
+			,	PartialName
+					i_vSuffix
 			)
 			noexcept
 		->	short
@@ -123,9 +209,50 @@ export namespace
 			[	vMemberIndex
 			]=	i_vDistrictIndex
 			;
+			Suffixes
+			[	vMemberIndex
+			]=	i_vSuffix
+			;
 
 			return
 				vMemberIndex
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	AddPrefix
+		)	(	PartialName
+					i_vPrefix
+			)
+			noexcept
+		->	short
+		{
+			Prefixes
+			[	PrefixCount
+			]=	i_vPrefix
+			;
+			return
+				PrefixCount
+				++
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	ReflectName
+		)	(	short
+					i_vMemberIndex
+			)	const
+			noexcept
+		->	::std::string
+		{	return
+				Suffixes
+				[	i_vMemberIndex
+				].	ToString
+					(	+
+						Prefixes
+					)
 			;
 		}
 	};

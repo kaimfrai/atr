@@ -47,4 +47,10 @@ export namespace
 		NameBufferSize
 	=	64
 	;
+
+	/// How many different prefixes may be used at most
+	auto constexpr inline
+		PrefixBufferSize
+	=	8
+	;
 }
