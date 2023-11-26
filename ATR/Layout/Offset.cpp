@@ -49,7 +49,7 @@ export namespace
 	struct
 		Offset
 	{
-		auto static constexpr
+		auto static constexpr inline
 			ArrayIndex
 		=		ByteWidth<t_tData>
 				(	t_vOffset
