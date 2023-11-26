@@ -798,7 +798,7 @@ Disassembly of section .text:
                	vmovss	xmm1, dword ptr [rsp + 0x8] # xmm1 = mem[0],zero,zero,zero
                	add	r12, 0x40
                	mov	rax, r12
-               	vaddss	xmm1, xmm1, xmm0
+               	vaddss	xmm1, xmm0, xmm1
                	vmovss	dword ptr [rsp + 0x8], xmm1
                	cmp	r12, r15
                	jne	 <L12>
@@ -864,9 +864,9 @@ Disassembly of section .text:
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Head@Evaluation.CRTP.Head, void>::'lambda'(Bodies3D::Head@Evaluation.CRTP.Head const&), float (Bodies3D::Head@Evaluation.CRTP.Head const&)>, float (dyno::T const&), float (Bodies3D::Head@Evaluation.CRTP.Head const&)>::apply(void const*)>:
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Sphere@Evaluation.CRTP.Sphere, void>::'lambda'(Bodies3D::Sphere@Evaluation.CRTP.Sphere const&), float (Bodies3D::Sphere@Evaluation.CRTP.Sphere const&)>, float (dyno::T const&), float (Bodies3D::Sphere@Evaluation.CRTP.Sphere const&)>::apply(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm1, xmm0, dword ptr  <free+0x10dc>
-               	vmulss	xmm1, xmm0, xmm1
-               	vmulss	xmm0, xmm0, xmm1
+               	vmulss	xmm1, xmm0, xmm0
+               	vmulss	xmm1, xmm1, dword ptr  <free+0x10dc>
+               	vmulss	xmm0, xmm1, xmm0
                	ret
                	int3
                	int3
@@ -953,10 +953,10 @@ Disassembly of section .text:
                	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Cone@Evaluation.CRTP.Cone, void>::'lambda'(Bodies3D::Cone@Evaluation.CRTP.Cone const&), float (Bodies3D::Cone@Evaluation.CRTP.Cone const&)>, float (dyno::T const&), float (Bodies3D::Cone@Evaluation.CRTP.Cone const&)>::apply(void const*)>:
-               	vmovss	xmm1, dword ptr [rdi + 0x20] # xmm1 = mem[0],zero,zero,zero
                	vmovss	xmm0, dword ptr [rdi + 0x1c] # xmm0 = mem[0],zero,zero,zero
+               	vmovss	xmm1, dword ptr [rdi + 0x20] # xmm1 = mem[0],zero,zero,zero
                	vmulss	xmm1, xmm1, dword ptr  <free+0x10cc>
-               	vmulss	xmm1, xmm1, xmm0
+               	vmulss	xmm0, xmm0, xmm0
                	vmulss	xmm0, xmm0, xmm1
                	ret
                	int3
@@ -1011,10 +1011,10 @@ Disassembly of section .text:
                	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, void>::'lambda'(Bodies3D::Cylinder@Evaluation.CRTP.Cylinder const&), float (Bodies3D::Cylinder@Evaluation.CRTP.Cylinder const&)>, float (dyno::T const&), float (Bodies3D::Cylinder@Evaluation.CRTP.Cylinder const&)>::apply(void const*)>:
-               	vmovss	xmm1, dword ptr [rdi + 0x20] # xmm1 = mem[0],zero,zero,zero
                	vmovss	xmm0, dword ptr [rdi + 0x1c] # xmm0 = mem[0],zero,zero,zero
+               	vmovss	xmm1, dword ptr [rdi + 0x20] # xmm1 = mem[0],zero,zero,zero
                	vmulss	xmm1, xmm1, dword ptr  <free+0x10d0>
-               	vmulss	xmm1, xmm1, xmm0
+               	vmulss	xmm0, xmm0, xmm0
                	vmulss	xmm0, xmm0, xmm1
                	ret
                	int3
@@ -1069,15 +1069,15 @@ Disassembly of section .text:
                	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, void>::'lambda'(Bodies3D::Cuboid@Evaluation.CRTP.Cuboid const&), float (Bodies3D::Cuboid@Evaluation.CRTP.Cuboid const&)>, float (dyno::T const&), float (Bodies3D::Cuboid@Evaluation.CRTP.Cuboid const&)>::apply(void const*)>:
-               	vmovss	xmm0, dword ptr [rdi + 0x24] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
+               	vmovss	xmm0, dword ptr [rdi + 0x20] # xmm0 = mem[0],zero,zero,zero
+               	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x1c]
                	ret
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Cube@Evaluation.CRTP.Cube, void>::'lambda'(Bodies3D::Cube@Evaluation.CRTP.Cube const&), float (Bodies3D::Cube@Evaluation.CRTP.Cube const&)>, float (dyno::T const&), float (Bodies3D::Cube@Evaluation.CRTP.Cube const&)>::apply(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c] # xmm0 = mem[0],zero,zero,zero
                	vmulss	xmm1, xmm0, xmm0
-               	vmulss	xmm0, xmm0, xmm1
+               	vmulss	xmm0, xmm1, xmm0
                	ret
                	int3
                	int3
@@ -1113,8 +1113,8 @@ Disassembly of section .text:
                	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Rectangle, void>::'lambda'(Bodies3D::Rectangle const&), float (Bodies3D::Rectangle const&)>, float (dyno::T const&), float (Bodies3D::Rectangle const&)>::apply(void const*)>:
-               	vmovss	xmm0, dword ptr [rdi + 0x20] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm0, xmm0, dword ptr [rdi + 0x1c]
+               	vmovss	xmm0, dword ptr [rdi + 0x1c] # xmm0 = mem[0],zero,zero,zero
+               	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
                	int3
@@ -1143,8 +1143,8 @@ Disassembly of section .text:
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Circle, void>::'lambda'(Bodies3D::Circle const&), float (Bodies3D::Circle const&)>, float (dyno::T const&), float (Bodies3D::Circle const&)>::apply(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm1, xmm0, dword ptr  <free+0x10d0>
-               	vmulss	xmm0, xmm0, xmm1
+               	vmulss	xmm0, xmm0, xmm0
+               	vmulss	xmm0, xmm0, dword ptr  <free+0x10d0>
                	ret
 
 Disassembly of section .init:

@@ -602,7 +602,7 @@ Disassembly of section .text:
                	call	qword ptr [r15]
                	vmovss	xmm1, dword ptr [rsp + 0x4] # xmm1 = mem[0],zero,zero,zero
                	add	r15, 0x48
-               	vaddss	xmm1, xmm1, xmm0
+               	vaddss	xmm1, xmm0, xmm1
                	vmovss	dword ptr [rsp + 0x4], xmm1
                	vmovss	xmm0, dword ptr [rsp + 0x4] # xmm0 = mem[0],zero,zero,zero
                	cmp	r15, r14
@@ -633,8 +633,8 @@ Disassembly of section .text:
 
 <Bodies3D::ComputeVolumeCircle@Evaluation.Replication.Circle(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm1, xmm0, dword ptr  <__libc_start_main+0x870>
-               	vmulss	xmm0, xmm0, xmm1
+               	vmulss	xmm0, xmm0, xmm0
+               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0x870>
                	ret
                	int3
                	int3
@@ -671,8 +671,8 @@ Disassembly of section .text:
                	int3
 
 <Bodies3D::ComputeVolumeRectangle@Evaluation.Replication.Rectangle(void const*)>:
-               	vmovss	xmm0, dword ptr [rdi + 0x1c] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
+               	vmovss	xmm0, dword ptr [rdi + 0x20] # xmm0 = mem[0],zero,zero,zero
+               	vmulss	xmm0, xmm0, dword ptr [rdi + 0x1c]
                	ret
                	int3
                	int3
@@ -713,14 +713,14 @@ Disassembly of section .text:
 <Bodies3D::ComputeVolumeCube@Evaluation.Replication.Cube(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c] # xmm0 = mem[0],zero,zero,zero
                	vmulss	xmm1, xmm0, xmm0
-               	vmulss	xmm0, xmm0, xmm1
+               	vmulss	xmm0, xmm1, xmm0
                	ret
                	int3
                	int3
 
 <Bodies3D::ComputeVolumeCuboid@Evaluation.Replication.Cuboid(void const*)>:
-               	vmovss	xmm0, dword ptr [rdi + 0x1c] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
+               	vmovss	xmm0, dword ptr [rdi + 0x20] # xmm0 = mem[0],zero,zero,zero
+               	vmulss	xmm0, xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
                	ret
 
@@ -741,9 +741,9 @@ Disassembly of section .text:
 
 <Bodies3D::ComputeVolumeSphere@Evaluation.Replication.Sphere(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm1, xmm0, dword ptr  <__libc_start_main+0x87c>
-               	vmulss	xmm1, xmm0, xmm1
-               	vmulss	xmm0, xmm0, xmm1
+               	vmulss	xmm1, xmm0, xmm0
+               	vmulss	xmm1, xmm1, dword ptr  <__libc_start_main+0x87c>
+               	vmulss	xmm0, xmm1, xmm0
                	ret
                	int3
                	int3
@@ -758,8 +758,8 @@ Disassembly of section .text:
 
 <Bodies3D::ComputeVolumeCylinder@Evaluation.Replication.Cylinder(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm1, xmm0, dword ptr  <__libc_start_main+0x870>
-               	vmulss	xmm0, xmm0, xmm1
+               	vmulss	xmm0, xmm0, xmm0
+               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0x870>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
@@ -774,8 +774,8 @@ Disassembly of section .text:
 
 <Bodies3D::ComputeVolumeCone@Evaluation.Replication.Cone(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm1, xmm0, dword ptr  <__libc_start_main+0x86c>
-               	vmulss	xmm0, xmm0, xmm1
+               	vmulss	xmm0, xmm0, xmm0
+               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0x86c>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3

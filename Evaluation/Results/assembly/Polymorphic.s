@@ -929,7 +929,7 @@ Disassembly of section .text:
                	call	qword ptr [rax + 8*rcx]
                	vmovss	xmm1, dword ptr [rsp + 0x10] # xmm1 = mem[0],zero,zero,zero
                	add	r15, 0x28
-               	vaddss	xmm1, xmm1, xmm0
+               	vaddss	xmm1, xmm0, xmm1
                	vmovss	dword ptr [rsp + 0x10], xmm1
                	cmp	r15, r14
                	jne	 <L11>
@@ -1233,9 +1233,9 @@ Disassembly of section .text:
 <polymorphic::detail::trampoline<Bodies3D::Head@Evaluation.CRTP.Head, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
 <polymorphic::detail::trampoline<Bodies3D::Sphere@Evaluation.CRTP.Sphere, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm1, xmm0, dword ptr  <strcmp+0x2144>
-               	vmulss	xmm1, xmm0, xmm1
-               	vmulss	xmm0, xmm0, xmm1
+               	vmulss	xmm1, xmm0, xmm0
+               	vmulss	xmm1, xmm1, dword ptr  <strcmp+0x2144>
+               	vmulss	xmm0, xmm1, xmm0
                	ret
                	int3
                	int3
@@ -1328,10 +1328,10 @@ Disassembly of section .text:
                	int3
 
 <polymorphic::detail::trampoline<Bodies3D::Cone@Evaluation.CRTP.Cone, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
-               	vmovss	xmm1, dword ptr [rdi + 0x20] # xmm1 = mem[0],zero,zero,zero
                	vmovss	xmm0, dword ptr [rdi + 0x1c] # xmm0 = mem[0],zero,zero,zero
+               	vmovss	xmm1, dword ptr [rdi + 0x20] # xmm1 = mem[0],zero,zero,zero
                	vmulss	xmm1, xmm1, dword ptr  <strcmp+0x2134>
-               	vmulss	xmm1, xmm1, xmm0
+               	vmulss	xmm0, xmm0, xmm0
                	vmulss	xmm0, xmm0, xmm1
                	ret
                	int3
@@ -1374,10 +1374,10 @@ Disassembly of section .text:
                	int3
 
 <polymorphic::detail::trampoline<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
-               	vmovss	xmm1, dword ptr [rdi + 0x20] # xmm1 = mem[0],zero,zero,zero
                	vmovss	xmm0, dword ptr [rdi + 0x1c] # xmm0 = mem[0],zero,zero,zero
+               	vmovss	xmm1, dword ptr [rdi + 0x20] # xmm1 = mem[0],zero,zero,zero
                	vmulss	xmm1, xmm1, dword ptr  <strcmp+0x2138>
-               	vmulss	xmm1, xmm1, xmm0
+               	vmulss	xmm0, xmm0, xmm0
                	vmulss	xmm0, xmm0, xmm1
                	ret
                	int3
@@ -1501,8 +1501,8 @@ Disassembly of section .text:
                	int3
 
 <polymorphic::detail::trampoline<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
-               	vmovss	xmm0, dword ptr [rdi + 0x24] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
+               	vmovss	xmm0, dword ptr [rdi + 0x20] # xmm0 = mem[0],zero,zero,zero
+               	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x1c]
                	ret
 
@@ -1546,7 +1546,7 @@ Disassembly of section .text:
 <polymorphic::detail::trampoline<Bodies3D::Cube@Evaluation.CRTP.Cube, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c] # xmm0 = mem[0],zero,zero,zero
                	vmulss	xmm1, xmm0, xmm0
-               	vmulss	xmm0, xmm0, xmm1
+               	vmulss	xmm0, xmm1, xmm0
                	ret
                	int3
                	int3
@@ -1685,8 +1685,8 @@ Disassembly of section .text:
                	int3
 
 <polymorphic::detail::trampoline<Bodies3D::Rectangle, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
-               	vmovss	xmm0, dword ptr [rdi + 0x20] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm0, xmm0, dword ptr [rdi + 0x1c]
+               	vmovss	xmm0, dword ptr [rdi + 0x1c] # xmm0 = mem[0],zero,zero,zero
+               	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
                	int3
@@ -1785,8 +1785,8 @@ Disassembly of section .text:
 
 <polymorphic::detail::trampoline<Bodies3D::Circle, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm1, xmm0, dword ptr  <strcmp+0x2138>
-               	vmulss	xmm0, xmm0, xmm1
+               	vmulss	xmm0, xmm0, xmm0
+               	vmulss	xmm0, xmm0, dword ptr  <strcmp+0x2138>
                	ret
 
 Disassembly of section .init:

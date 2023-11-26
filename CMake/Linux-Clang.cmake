@@ -41,6 +41,7 @@ add_compile_options(
 	-fconstexpr-steps=4194303
 	-ffunction-sections
 	-fdata-sections
+	-ffast-math
 )
 
 add_link_options(

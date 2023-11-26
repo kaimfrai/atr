@@ -959,7 +959,7 @@ Disassembly of section .text:
                	vmovss	xmm1, dword ptr [rsp + 0x10] # xmm1 = mem[0],zero,zero,zero
                	add	r14, 0x18
                	add	r15, -0x18
-               	vaddss	xmm1, xmm1, xmm0
+               	vaddss	xmm1, xmm0, xmm1
                	vmovss	dword ptr [rsp + 0x10], xmm1
                	vmovss	xmm0, dword ptr [rsp + 0x10] # xmm0 = mem[0],zero,zero,zero
                	jne	 <L9>
@@ -2783,9 +2783,9 @@ Disassembly of section .text:
 <Bodies3D::BodyAdapter<Bodies3D::Head@Evaluation.CRTP.Head>::ComputeVolume() const>:
 <Bodies3D::BodyAdapter<Bodies3D::Sphere@Evaluation.CRTP.Sphere>::ComputeVolume() const>:
                	vmovss	xmm0, dword ptr [rdi + 0x24] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm1, xmm0, dword ptr  <strcmp+0x1808>
-               	vmulss	xmm1, xmm0, xmm1
-               	vmulss	xmm0, xmm0, xmm1
+               	vmulss	xmm1, xmm0, xmm0
+               	vmulss	xmm1, xmm1, dword ptr  <strcmp+0x1808>
+               	vmulss	xmm0, xmm1, xmm0
                	ret
                	int3
                	int3
@@ -2840,10 +2840,10 @@ Disassembly of section .text:
                	int3
 
 <Bodies3D::BodyAdapter<Bodies3D::Cone@Evaluation.CRTP.Cone>::ComputeVolume() const>:
-               	vmovss	xmm1, dword ptr [rdi + 0x28] # xmm1 = mem[0],zero,zero,zero
                	vmovss	xmm0, dword ptr [rdi + 0x24] # xmm0 = mem[0],zero,zero,zero
+               	vmovss	xmm1, dword ptr [rdi + 0x28] # xmm1 = mem[0],zero,zero,zero
                	vmulss	xmm1, xmm1, dword ptr  <strcmp+0x17f8>
-               	vmulss	xmm1, xmm1, xmm0
+               	vmulss	xmm0, xmm0, xmm0
                	vmulss	xmm0, xmm0, xmm1
                	ret
                	int3
@@ -2853,10 +2853,10 @@ Disassembly of section .text:
                	int3
 
 <Bodies3D::BodyAdapter<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>::ComputeVolume() const>:
-               	vmovss	xmm1, dword ptr [rdi + 0x28] # xmm1 = mem[0],zero,zero,zero
                	vmovss	xmm0, dword ptr [rdi + 0x24] # xmm0 = mem[0],zero,zero,zero
+               	vmovss	xmm1, dword ptr [rdi + 0x28] # xmm1 = mem[0],zero,zero,zero
                	vmulss	xmm1, xmm1, dword ptr  <strcmp+0x17fc>
-               	vmulss	xmm1, xmm1, xmm0
+               	vmulss	xmm0, xmm0, xmm0
                	vmulss	xmm0, xmm0, xmm1
                	ret
                	int3
@@ -2881,15 +2881,15 @@ Disassembly of section .text:
                	int3
 
 <Bodies3D::BodyAdapter<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>::ComputeVolume() const>:
-               	vmovss	xmm0, dword ptr [rdi + 0x2c] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm0, xmm0, dword ptr [rdi + 0x28]
+               	vmovss	xmm0, dword ptr [rdi + 0x28] # xmm0 = mem[0],zero,zero,zero
+               	vmulss	xmm0, xmm0, dword ptr [rdi + 0x2c]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
                	ret
 
 <Bodies3D::BodyAdapter<Bodies3D::Cube@Evaluation.CRTP.Cube>::ComputeVolume() const>:
                	vmovss	xmm0, dword ptr [rdi + 0x24] # xmm0 = mem[0],zero,zero,zero
                	vmulss	xmm1, xmm0, xmm0
-               	vmulss	xmm0, xmm0, xmm1
+               	vmulss	xmm0, xmm1, xmm0
                	ret
                	int3
                	int3
@@ -2925,8 +2925,8 @@ Disassembly of section .text:
                	int3
 
 <Bodies3D::BodyAdapter<Bodies3D::Rectangle>::ComputeVolume() const>:
-               	vmovss	xmm0, dword ptr [rdi + 0x28] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
+               	vmovss	xmm0, dword ptr [rdi + 0x24] # xmm0 = mem[0],zero,zero,zero
+               	vmulss	xmm0, xmm0, dword ptr [rdi + 0x28]
                	ret
                	int3
                	int3
@@ -2955,8 +2955,8 @@ Disassembly of section .text:
 
 <Bodies3D::BodyAdapter<Bodies3D::Circle>::ComputeVolume() const>:
                	vmovss	xmm0, dword ptr [rdi + 0x24] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm1, xmm0, dword ptr  <strcmp+0x17fc>
-               	vmulss	xmm0, xmm0, xmm1
+               	vmulss	xmm0, xmm0, xmm0
+               	vmulss	xmm0, xmm0, dword ptr  <strcmp+0x17fc>
                	ret
 
 Disassembly of section .init:

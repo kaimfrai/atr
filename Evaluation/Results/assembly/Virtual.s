@@ -808,7 +808,7 @@ Disassembly of section .text:
                	call	qword ptr [rax + 0x18]
                	vmovss	xmm1, dword ptr [rsp + 0xc] # xmm1 = mem[0],zero,zero,zero
                	add	rbx, 0x8
-               	vaddss	xmm1, xmm1, xmm0
+               	vaddss	xmm1, xmm0, xmm1
                	vmovss	dword ptr [rsp + 0xc], xmm1
                	vmovss	xmm0, dword ptr [rsp + 0xc] # xmm0 = mem[0],zero,zero,zero
                	cmp	r14, rbx
@@ -969,19 +969,19 @@ Disassembly of section .text:
                	call	qword ptr [rax + 0x30]
                	mov	rax, qword ptr [rbx]
                	mov	rdi, rbx
-               	vmovss	dword ptr [rsp + 0xc], xmm0
+               	vmovss	dword ptr [rsp + 0x8], xmm0
                	call	qword ptr [rax]
-               	vmulss	xmm0, xmm0, dword ptr [rsp + 0xc]
+               	vmulss	xmm0, xmm0, dword ptr [rsp + 0x8]
                	mov	rax, qword ptr [rbx]
                	mov	rdi, rbx
-               	vmovss	dword ptr [rsp + 0xc], xmm0
+               	vmovss	dword ptr [rsp + 0x8], xmm0
                	call	qword ptr [rax + 0x8]
-               	vmulss	xmm0, xmm0, dword ptr [rsp + 0xc]
                	mov	rax, qword ptr [rbx]
                	mov	rdi, rbx
                	vmovss	dword ptr [rsp + 0xc], xmm0
                	call	qword ptr [rax + 0x10]
                	vmulss	xmm0, xmm0, dword ptr [rsp + 0xc]
+               	vmulss	xmm0, xmm0, dword ptr [rsp + 0x8]
                	add	rsp, 0x10
                	pop	rbx
                	ret

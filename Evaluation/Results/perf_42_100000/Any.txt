@@ -1,17 +1,17 @@
 
  Performance counter stats for 'build/Evaluation/bin/Any 42 100000' (100 runs):
 
-              7,85 msec task-clock                #    0,970 CPUs utilized            ( +-  0,17% )
+              7,81 msec task-clock                #    0,972 CPUs utilized            ( +-  0,12% )
                  0      context-switches          #    0,000 /sec                   
                  0      cpu-migrations            #    0,000 /sec                   
-             2.265      page-faults               #  286,878 K/sec                    ( +-  0,01% )
-        33.075.451      cycles                    #    4,189 GHz                      ( +-  0,17% )
-         1.964.557      stalled-cycles-frontend   #    5,89% frontend cycles idle     ( +-  1,16% )
-         2.625.746      stalled-cycles-backend    #    7,88% backend cycles idle      ( +-  0,69% )
-        56.023.317      instructions              #    1,68  insn per cycle         
+             2.267      page-faults               #  289,202 K/sec                    ( +-  0,01% )
+        33.198.654      cycles                    #    4,235 GHz                      ( +-  0,13% )
+         1.875.553      stalled-cycles-frontend   #    5,63% frontend cycles idle     ( +-  1,07% )
+         2.719.127      stalled-cycles-backend    #    8,16% backend cycles idle      ( +-  0,72% )
+        56.048.966      instructions              #    1,68  insn per cycle         
                                                   #    0,05  stalled cycles per insn  ( +-  0,01% )
-        11.353.475      branches                  #    1,438 G/sec                    ( +-  0,01% )
-           382.621      branch-misses             #    3,37% of all branches          ( +-  0,03% )
+        11.358.926      branches                  #    1,449 G/sec                    ( +-  0,01% )
+           384.209      branch-misses             #    3,38% of all branches          ( +-  0,01% )
 
-         0,0080893 +- 0,0000151 seconds time elapsed  ( +-  0,19% )
+         0,0080396 +- 0,0000112 seconds time elapsed  ( +-  0,14% )
 

@@ -18,6 +18,7 @@ add_subdirectory(Data)
 add_subdirectory(Functional)
 add_subdirectory(Predicate)
 add_subdirectory(String)
+add_subdirectory(Auto)
 
 add_module(
 	ID.cpp
@@ -34,6 +35,7 @@ add_module(
 
 add_single_file_modules(
 	Arithmetic.cpp
+	Auto.cpp
 	Bit.cpp
 	Buffer.cpp
 	Byte.cpp

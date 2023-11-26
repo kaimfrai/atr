@@ -844,7 +844,7 @@ Disassembly of section .text:
                	call	qword ptr [rax]
                	vmovss	xmm1, dword ptr [rsp + 0x8] # xmm1 = mem[0],zero,zero,zero
                	add	r14, 0x8
-               	vaddss	xmm0, xmm1, xmm0
+               	vaddss	xmm0, xmm0, xmm1
                	cmp	r14, r12
                	jne	 <L12>
                	vcvttss2si	ebp, xmm0
@@ -975,9 +975,9 @@ Disassembly of section .text:
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Sphere@Evaluation.CRTP.Sphere const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Sphere@Evaluation.CRTP.Sphere const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
                	vmovss	xmm0, dword ptr [rax + 0x1c] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm1, xmm0, dword ptr  <__libc_start_main+0xe6c>
-               	vmulss	xmm1, xmm0, xmm1
-               	vmulss	xmm0, xmm0, xmm1
+               	vmulss	xmm1, xmm0, xmm0
+               	vmulss	xmm1, xmm1, dword ptr  <__libc_start_main+0xe6c>
+               	vmulss	xmm0, xmm1, xmm0
                	ret
                	int3
                	int3
@@ -1089,10 +1089,10 @@ Disassembly of section .text:
 
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Cone@Evaluation.CRTP.Cone const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Cone@Evaluation.CRTP.Cone const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
-               	vmovss	xmm1, dword ptr [rax + 0x20] # xmm1 = mem[0],zero,zero,zero
                	vmovss	xmm0, dword ptr [rax + 0x1c] # xmm0 = mem[0],zero,zero,zero
+               	vmovss	xmm1, dword ptr [rax + 0x20] # xmm1 = mem[0],zero,zero,zero
                	vmulss	xmm1, xmm1, dword ptr  <__libc_start_main+0xe5c>
-               	vmulss	xmm1, xmm1, xmm0
+               	vmulss	xmm0, xmm0, xmm0
                	vmulss	xmm0, xmm0, xmm1
                	ret
                	int3
@@ -1135,10 +1135,10 @@ Disassembly of section .text:
 
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Cylinder@Evaluation.CRTP.Cylinder const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Cylinder@Evaluation.CRTP.Cylinder const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
-               	vmovss	xmm1, dword ptr [rax + 0x20] # xmm1 = mem[0],zero,zero,zero
                	vmovss	xmm0, dword ptr [rax + 0x1c] # xmm0 = mem[0],zero,zero,zero
+               	vmovss	xmm1, dword ptr [rax + 0x20] # xmm1 = mem[0],zero,zero,zero
                	vmulss	xmm1, xmm1, dword ptr  <__libc_start_main+0xe60>
-               	vmulss	xmm1, xmm1, xmm0
+               	vmulss	xmm0, xmm0, xmm0
                	vmulss	xmm0, xmm0, xmm1
                	ret
                	int3
@@ -1182,8 +1182,8 @@ Disassembly of section .text:
 
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Cuboid@Evaluation.CRTP.Cuboid const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Cuboid@Evaluation.CRTP.Cuboid const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
-               	vmovss	xmm0, dword ptr [rax + 0x24] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm0, xmm0, dword ptr [rax + 0x20]
+               	vmovss	xmm0, dword ptr [rax + 0x20] # xmm0 = mem[0],zero,zero,zero
+               	vmulss	xmm0, xmm0, dword ptr [rax + 0x24]
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x1c]
                	ret
                	int3
@@ -1204,7 +1204,7 @@ Disassembly of section .text:
                	mov	rax, qword ptr [rdi]
                	vmovss	xmm0, dword ptr [rax + 0x1c] # xmm0 = mem[0],zero,zero,zero
                	vmulss	xmm1, xmm0, xmm0
-               	vmulss	xmm0, xmm0, xmm1
+               	vmulss	xmm0, xmm1, xmm0
                	ret
                	int3
                	int3
@@ -1250,8 +1250,8 @@ Disassembly of section .text:
 
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Rectangle const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Rectangle const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
-               	vmovss	xmm0, dword ptr [rax + 0x20] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm0, xmm0, dword ptr [rax + 0x1c]
+               	vmovss	xmm0, dword ptr [rax + 0x1c] # xmm0 = mem[0],zero,zero,zero
+               	vmulss	xmm0, xmm0, dword ptr [rax + 0x20]
                	ret
                	int3
                	int3
@@ -1276,8 +1276,8 @@ Disassembly of section .text:
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Circle const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Circle const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
                	vmovss	xmm0, dword ptr [rax + 0x1c] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm1, xmm0, dword ptr  <__libc_start_main+0xe60>
-               	vmulss	xmm0, xmm0, xmm1
+               	vmulss	xmm0, xmm0, xmm0
+               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0xe60>
                	ret
 
 Disassembly of section .init:
