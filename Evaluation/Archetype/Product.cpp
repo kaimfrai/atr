@@ -29,7 +29,6 @@ export namespace
 		(	...
 		*	t_vpDependency
 			(	i_vArgument
-				.	Argument
 			)
 		);
 	}

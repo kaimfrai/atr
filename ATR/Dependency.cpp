@@ -35,5 +35,15 @@ export namespace
 		t_tArgument
 			Argument
 		;
+
+		[[nodiscard]]
+		explicit(false) constexpr inline
+		(	operator t_tArgument
+		)	()	const
+			noexcept
+		{	return
+				Argument
+			;
+		}
 	};
 }
