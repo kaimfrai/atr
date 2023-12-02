@@ -3,6 +3,7 @@ add_module_object_tests(
 )
 
 add_subdirectory(Arithmetic)
+add_subdirectory(Auto)
 add_subdirectory(Bit)
 add_subdirectory(Buffer)
 add_subdirectory(Data)
