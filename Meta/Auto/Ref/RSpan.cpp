@@ -22,11 +22,6 @@ export namespace
 		>
 	{
 		using
-			value_type
-		=	t_tElement
-		;
-
-		using
 			reference
 		=	t_tElement
 			&

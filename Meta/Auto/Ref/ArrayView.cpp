@@ -2,6 +2,8 @@ export module Meta.Auto.Ref.ArrayView;
 
 import Meta.Size;
 
+import Std;
+
 export namespace
 	Meta
 {
@@ -20,6 +22,13 @@ export namespace
 		using
 			size_type
 		=	USize
+		;
+
+		using
+			value_type
+		=	::std::remove_cv_t
+			<	t_tElement
+			>
 		;
 
 		// TODO iterator class with operator* returning &&
