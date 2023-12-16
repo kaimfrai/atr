@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <__libc_start_main+0x6170>
+               	call	qword ptr  <__libc_start_main+0x6160>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <__libc_start_main+0x6180>
+               	mov	rax, qword ptr  <__libc_start_main+0x6170>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <__libc_start_main+0x6188>
+               	mov	rax, qword ptr  <__libc_start_main+0x6178>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <__libc_start_main+0x6190>
+               	cmp	qword ptr , 0x0 <__libc_start_main+0x6180>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -1156,13 +1156,11 @@ Disassembly of section .text:
                	push	rax
                	mov	byte ptr , 0x1 <_ZGIW3ATRW6LayoutW6Offset__in_chrg>
                	call	 <initializer for module ATR.Erase>
-               	call	 <initializer for module ATR.Layout.ErasureView>
                	call	 <initializer for module ATR.Layout.TypeIndex>
                	call	 <initializer for module ATR.Member.Info>
                	call	 <initializer for module Meta.Auto.Ref.DataRange>
                	call	 <initializer for module Meta.Auto.Ref.PledgeCount>
                	call	 <initializer for module Meta.Auto.Ref.RArray>
-               	call	 <initializer for module Meta.Auto.Ref.XArray>
                	call	 <initializer for module Meta.Bit.Array>
                	call	 <initializer for module Meta.Bit.Field>
                	call	 <initializer for module Meta.Bit.Index>
@@ -1187,9 +1185,17 @@ Disassembly of section .text:
                	int3
                	int3
                	int3
-               	int3
-               	int3
-               	int3
+
+<initializer for module ATR.Layout.TypeIndex>:
+               	cmp	byte ptr , 0x0 <_ZGIW3ATRW6LayoutW9TypeIndex__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	push	rax
+               	mov	byte ptr , 0x1 <_ZGIW3ATRW6LayoutW9TypeIndex__in_chrg>
+               	call	 <initializer for module ATR.Layout.ErasureView>
+               	pop	rax
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -1208,20 +1214,6 @@ Disassembly of section .text:
                	int3
                	int3
                	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module ATR.Layout.TypeIndex>:
-               	cmp	byte ptr , 0x0 <_ZGIW3ATRW6LayoutW9TypeIndex__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW3ATRW6LayoutW9TypeIndex__in_chrg>
-               	call	 <initializer for module ATR.Layout.ErasureView>
-               	pop	rax
-               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -2541,7 +2533,7 @@ Disassembly of section .text:
                	test	cl, cl
                	jne	 <L3>
 <L2>:
-               	mov	rsi, qword ptr  <__libc_start_main+0x6198>
+               	mov	rsi, qword ptr  <__libc_start_main+0x6188>
                	mov	ebx, ebp
                	lea	rax, [rbx + 4*rbx]
                	lea	rdi, [rbx + 8*rax]
@@ -2645,7 +2637,7 @@ Disassembly of section .text:
                	mov	dword ptr [rdi + 8*rax + 0x20], 0x0
                	mov	al, 0x4
                	jmp	 <L6>
-               	mov	rsi, qword ptr  <__libc_start_main+0x6198>
+               	mov	rsi, qword ptr  <__libc_start_main+0x6188>
                	mov	ebx, r9d
                	mov	dword ptr [rsp + 0xc], r9d
                	lea	rax, [rbx + 4*rbx]
@@ -2853,7 +2845,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <__libc_start_main+0x6178>
+               	mov	rax, qword ptr  <__libc_start_main+0x6168>
                	test	rax, rax
                	je	 <L0>
                	call	rax
