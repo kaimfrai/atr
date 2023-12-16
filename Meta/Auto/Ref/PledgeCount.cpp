@@ -1,7 +1,6 @@
-export module Meta.Auto.Ref.DynamicCountArray;
+export module Meta.Auto.Ref.PledgeCount;
 
 import Meta.Auto.CPO.Data;
-import Meta.Auto.CPO.SSize;
 import Meta.Auto.Ref.ArrayView;
 import Meta.Auto.Ref.DataRange;
 import Meta.Size;
@@ -14,66 +13,54 @@ export namespace
 	template
 		<	typename
 				t_tElement
+		,	SSize
+				t_vPledgedCount
 		>
 	struct
-		DynamicCountArray
+		CountPledge
 	:	ArrayView
 		<	t_tElement
 		>
 	{
-		SSize
-			m_vCount
-		{};
-
 		explicit(false) constexpr inline
-		(	DynamicCountArray
+		(	CountPledge
 		)	()
 			noexcept
-		=	default;
+		=	default
+		;
 
 		explicit(true) constexpr inline
-		(	DynamicCountArray
-		)	(	DynamicCountArray::pointer
-					i_aData
-			,	SSize
-					i_vCount
+		(	CountPledge
+		)	(	CountPledge::pointer
+					i_aElement
 			)
 			noexcept
 		:	ArrayView<t_tElement>
-			{	i_aData
-			}
-		,	m_vCount
-			{	i_vCount
+			{	i_aElement
 			}
 		{}
 
 		explicit(true) constexpr inline
-		(	DynamicCountArray
+		(	CountPledge
 		)	(	ProtoOwnerContainer_Of<t_tElement> auto
-				&	i_rContainer
+				&&	i_rContainer
 			)
 			noexcept
-		:	DynamicCountArray
+		:	ArrayView<t_tElement>
 			{	::Meta::CPO::Data
 				(	i_rContainer
 				)
-			,	::Meta::CPO::SSize
-				(	i_rContainer
-				)
 			}
 		{}
 
 		explicit(true) constexpr inline
-		(	DynamicCountArray
+		(	CountPledge
 		)	(	ProtoBorrowContainer_Of<t_tElement> auto
 					i_rContainer
 			)
 			noexcept
-		:	DynamicCountArray
+		:	ArrayView<t_tElement>
 			{	::Meta::CPO::Data
-				(	i_rContainer
-				)
-			,	::Meta::CPO::SSize
 				(	i_rContainer
 				)
 			}
@@ -82,15 +69,40 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	ssize
-		)	(	this DynamicCountArray
-					i_rSpan
+		)	(	this CountPledge
 			)
 			noexcept
 		->	SSize
 		{	return
-				i_rSpan
-				.	m_vCount
+				t_vPledgedCount
 			;
 		}
 	};
+
+	template
+		<	SSize
+				t_vPledgeCount
+		,	typename
+				t_tElement
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	PledgeCount
+	)	(	t_tElement
+			*	i_aData
+		)
+		noexcept
+	->	CountPledge
+		<	t_tElement
+			&
+		,	t_vPledgeCount
+		>
+	{	return
+		CountPledge
+		<	t_tElement
+			&
+		,	t_vPledgeCount
+		>{	i_aData
+		};
+	}
 }

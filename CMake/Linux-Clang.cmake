@@ -87,6 +87,11 @@ else()
 		-Wmissing-variable-declarations
 		-Werror
 		-Weverything
+		# Floating point equals has its use to check if a value has changed
+		-Wno-float-equal
+		# Brace elision can be useful for readability
+		# It's also more robust for refactorings
+		-Wno-missing-braces
 		# Using header units
 		-Wno-experimental-header-units
 		# False positives?

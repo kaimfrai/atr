@@ -1,6 +1,7 @@
 export module ATR.Virtual.Dispatch;
 
 import ATR.Address;
+import ATR.Erase;
 
 import Meta.ID;
 import Meta.Memory.Size;
@@ -12,7 +13,6 @@ import Std;
 
 using ::Meta::ByteSize;
 using ::Meta::ID;
-using ::Meta::ProtoID;
 using ::Meta::String::Literal;
 using ::Meta::Type;
 using ::Meta::TypeID;
@@ -107,8 +107,8 @@ export namespace
 			>
 		auto static constexpr inline
 		(	Call
-		)	(	::std::byte const
-				*	i_aObject
+		)	(	CErasure
+					i_rObject
 			,	unsigned char
 					i_vImplementerIndex
 			,	t_tpArgument
@@ -140,7 +140,7 @@ export namespace
 											,	t_tpArgument
 												...
 											>{}
-											(	i_aObject
+											(	i_rObject
 											,	ForwardErased
 												(	i_rpArgument
 												)
@@ -167,8 +167,8 @@ export namespace
 
 		auto static constexpr inline
 		(	Destroy
-		)	(	::std::byte
-				*	i_aObject
+		)	(	RErasure
+					i_rObject
 			,	unsigned char
 					i_vImplementerIndex
 			)
@@ -185,12 +185,10 @@ export namespace
 					or	(	(	i_vImplementerIndex
 							==	static_cast<unsigned char>(t_tpIndex)
 							)
-						?	(	::std::launder
-								(	::std::bit_cast<t_tpImplementer*>
-									(	i_aObject
-									)
-								)
-								->	compl
+						?	(	i_rObject
+								.	As<t_tpImplementer>
+									()
+								.	compl
 									t_tpImplementer
 									()
 							,	true

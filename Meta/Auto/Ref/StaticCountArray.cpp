@@ -1,5 +1,6 @@
 export module Meta.Auto.Ref.StaticCountArray;
 
+import Meta.Auto.CPO.Data;
 import Meta.Auto.Ref.ArrayView;
 import Meta.Auto.Ref.DataRange;
 
@@ -30,24 +31,26 @@ export namespace
 
 		explicit(true) constexpr inline
 		(	StaticCountArray
-		)	(	ProtoDataRange_Of<t_tElement> auto
-				&&	i_rDataRange
+		)	(	ProtoOwnerContainer_Of_AtLeast<t_tElement, t_vCount> auto
+				&	i_rContainer
 			)
 			noexcept
-		requires
-			(	// TODO this works for default initialization of size to 0
-				// Ideally this should be using the argument directly via P2280
-				// however that is not yet supported in Clang 18 as of Dec 23
-				::std::ssize
-				(	::std::remove_reference_t
-					<	decltype(i_rDataRange)
-					>{}
-				)
-			>=	t_vCount
-			)
 		:	ArrayView<t_tElement>
-			{	::std::data
-				(	i_rDataRange
+			{	::Meta::CPO::Data
+				(	i_rContainer
+				)
+			}
+		{}
+
+		explicit(true) constexpr inline
+		(	StaticCountArray
+		)	(	ProtoBorrowContainer_Of_AtLeast<t_tElement, t_vCount> auto
+					i_rContainer
+			)
+			noexcept
+		:	ArrayView<t_tElement>
+			{	::Meta::CPO::Data
+				(	i_rContainer
 				)
 			}
 		{}

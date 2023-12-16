@@ -1,84 +1,281 @@
 export module ATR.Erase;
 
-import Meta.Memory.PointerCast;
+import Meta.Auto.Ref.RArray;
+import Meta.Auto.Ref.XArray;
+
+import Meta.Size;
 
 import Std;
 
-using ::Meta::Memory::PointerCast;
+using ::Meta::CArray;
+using ::Meta::RArray;
+using ::Meta::SSize;
+using ::Meta::XArray;
 
 export namespace
 	ATR
 {
-	/// erases type information from an argument
-	template
-		<	typename
-				t_tEntity
-		>
-	[[nodiscard]]
-	auto constexpr inline
-	(	ForwardErased
-	)	(	t_tEntity
-			&&	i_rObject
-		)
-		noexcept
-	->	decltype(auto)
-	{	if	constexpr
-			(	::std::is_scalar_v
-				<	t_tEntity
-				>
+	struct
+		RErasure
+	{
+		::std::byte
+		*	m_aData
+		;
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	data
+		)	(	this RErasure
+					i_rErasure
 			)
-		{
-			if	constexpr
-				(	::std::is_pointer_v
-					<	t_tEntity
-					>
-				)
-			{	return
-				PointerCast<::std::byte>
-				(	i_rObject
-				);
-			}
-			else
-			if	constexpr
-				(	::std::is_enum_v
-					<	t_tEntity
-					>
-				)
-			{	return
-				::std::to_underlying
-				(	i_rObject
-				);
-			}
-			else
-			{	/// TODO: erase value information:
-				/// decomposition into fundamental types of the same properties
-				return
-					i_rObject
-				;
-			}
+			noexcept
+		->	::std::byte*
+		{	return
+				i_rErasure
+				.	m_aData
+			;
 		}
-		else
-		{	// TODO preserve xvalue
-			return
-				PointerCast<::std::byte>
-				(	::std::addressof
-					(	i_rObject
+
+		template
+			<	typename
+					t_tObject
+			>
+		[[nodiscard]]
+		auto constexpr inline
+		(	As
+		)	(	this RErasure
+					i_rErasure
+			)
+			noexcept
+		->	t_tObject&
+		{	return
+				*
+				::std::launder
+				(	::std::bit_cast<t_tObject*>
+					(	i_rErasure
 					)
 				)
 			;
 		}
+	};
+
+	struct
+		CErasure
+	{
+		::std::byte const
+		*	m_aData
+		;
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	data
+		)	(	this CErasure
+					i_rErasure
+			)
+			noexcept
+		->	::std::byte const*
+		{	return
+				i_rErasure
+				.	m_aData
+			;
+		}
+
+		template
+			<	typename
+					t_tObject
+			>
+		[[nodiscard]]
+		auto constexpr inline
+		(	As
+		)	(	this CErasure
+					i_rErasure
+			)
+			noexcept
+		->	t_tObject const&
+		{	return
+				*
+				::std::launder
+				(	::std::bit_cast<t_tObject const*>
+					(	i_rErasure
+					)
+				)
+			;
+		}
+	};
+
+	struct
+		XErasure
+	{
+		::std::byte
+		*	m_aData
+		;
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	data
+		)	(	this XErasure
+					i_xErasure
+			)
+			noexcept
+		->	::std::byte*
+		{	return
+				i_xErasure
+				.	m_aData
+			;
+		}
+
+		template
+			<	typename
+					t_tObject
+			>
+		[[nodiscard]]
+		auto constexpr inline
+		(	As
+		)	(	this XErasure
+					i_xErasure
+			)
+			noexcept
+		->	t_tObject&&
+		{	return
+			static_cast<t_tObject&&>
+			(	*
+				::std::launder
+				(	::std::bit_cast<t_tObject*>
+					(	i_xErasure
+					)
+				)
+			);
+		}
+	};
+
+	template
+		<	typename
+				t_tObject
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	ForwardErased
+	)	(	t_tObject
+			&	i_rObject
+		)
+		noexcept
+	->	RErasure
+	{	return
+			::std::bit_cast<RErasure>
+			(	::std::addressof
+				(	i_rObject
+				)
+			)
+		;
 	}
 
 	template
 		<	typename
-				t_tEntity
+				t_tObject
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	ForwardErased
+	)	(	t_tObject const
+			&	i_rObject
+		)
+		noexcept
+	->	CErasure
+	{	return
+		{	::std::bit_cast<CErasure>
+			(	::std::addressof
+				(	i_rObject
+				)
+			)
+		};
+	}
+
+	template
+		<	typename
+				t_tObject
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	ForwardErased
+	)	(	t_tObject
+			&&	i_rObject
+		)
+		noexcept
+	->	XErasure
+	{	return
+			::std::bit_cast<XErasure>
+			(	::std::addressof
+				(	i_rObject
+				)
+			)
+		;
+	}
+
+	template
+		<	typename
+				t_tObject
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	ForwardErased
+	)	(	t_tObject const
+			&&
+		)
+		noexcept
+	=	delete;
+
+	[[nodiscard]]
+	auto constexpr inline
+	(	AsErasure
+	)	(	::std::byte
+			(&	i_rBuffer
+			)	[]
+		)
+		noexcept
+	->	RErasure
+	{	return
+		{	i_rBuffer
+		};
+	}
+
+	[[nodiscard]]
+	auto constexpr inline
+	(	AsErasure
+	)	(	::std::byte const
+			(&	i_rBuffer
+			)	[]
+		)
+		noexcept
+	->	CErasure
+	{	return
+		{	i_rBuffer
+		};
+	}
+
+	[[nodiscard]]
+	auto constexpr inline
+	(	AsErasure
+	)	(	::std::byte
+			(&&	i_rBuffer
+			)	[]
+		)
+		noexcept
+	->	XErasure
+	{	return
+		{	i_rBuffer
+		};
+	}
+
+	template
+		<	typename
+				t_tObject
 		>
 	using
 		ErasedType
 	=	decltype
 		(	ForwardErased
 			(	::std::declval
-				<	t_tEntity
+				<	t_tObject
 				>()
 			)
 		)

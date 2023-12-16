@@ -1,5 +1,6 @@
 export module ATR.Virtual.Element;
 
+import ATR.Erase;
 import ATR.Instance;
 
 import Meta.ID;
@@ -84,10 +85,11 @@ export namespace
 				)
 				.	Dispatch
 					(	i_vFuncName
-					)(	static_cast<decltype(i_rThis)>
-						(	i_rThis
+					)(	AsErasure
+						(	static_cast<decltype(i_rThis)>
+							(	i_rThis
+							).	m_vErasedElement
 						)
-						.	m_vErasedElement
 					,	static_cast<t_tpArgument&&>
 						(	i_rpArgument
 						)

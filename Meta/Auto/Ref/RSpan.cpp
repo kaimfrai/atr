@@ -3,8 +3,6 @@ export module Meta.Auto.Ref.RSpan;
 import Meta.Auto.Primary;
 import Meta.Auto.Ref.DynamicCountArray;
 
-import Meta.Size;
-
 export namespace
 	Meta
 {
@@ -19,6 +17,7 @@ export namespace
 		>
 	:	DynamicCountArray
 		<	t_tElement
+			&
 		>
 	{
 		using
@@ -30,9 +29,18 @@ export namespace
 		using
 			DynamicCountArray
 			<	t_tElement
+				&
 			>
 		::	DynamicCountArray
 		;
+
+		explicit(false) constexpr inline
+		(	Auto
+		)	(	Auto const
+				&
+			)
+			noexcept
+		=	default;
 	};
 
 	template

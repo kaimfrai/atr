@@ -17,17 +17,15 @@ import Evaluation.Archetype.Ellipsoid;
 import Evaluation.Archetype.Head;
 
 import ATR.Literals;
+import ATR.Erase;
 import ATR.Virtual.Element;
 import ATR.Virtual.Entry;
 
 import Meta.ID;
 
-import Std;
-
 using ::ATR::Virtual::Element;
 using ::ATR::Virtual::Entry;
 using ::Meta::ID;
-using ::Meta::ProtoID;
 
 using namespace ATR::Literals;
 
@@ -42,8 +40,7 @@ namespace
 		,	Entry
 			<	ID<"ComputeVolume">
 			,	auto
-					(	::std::byte const
-						*
+					(	::ATR::CErasure
 					)
 					noexcept
 				->	float

@@ -1,6 +1,6 @@
+import ATR.Erase;
 import ATR.Instance;
 import ATR.Layout.Offset;
-import ATR.Member.Composition;
 import ATR.Member.Info;
 import ATR.Member.ProtoComposer;
 
@@ -13,6 +13,7 @@ import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.Scale;
 import Meta.Memory.Size;
+import Meta.Size;
 import Meta.String.Hash;
 import Meta.Token.Type;
 
@@ -92,6 +93,54 @@ static_assert
 ==	ExpectedBufferSize
 );
 
+struct
+	RErasure
+:	::ATR::RErasure
+{
+	[[nodiscard]]
+	auto static constexpr inline
+	(	ssize
+	)	()
+		noexcept
+	->	::Meta::SSize
+	{	return
+			sizeof(OffsetOfTest)
+		;
+	}
+};
+
+struct
+	CErasure
+:	::ATR::CErasure
+{
+	[[nodiscard]]
+	auto static constexpr inline
+	(	ssize
+	)	()
+		noexcept
+	->	::Meta::SSize
+	{	return
+			sizeof(OffsetOfTest)
+		;
+	}
+};
+
+
+struct
+	XErasure
+:	::ATR::XErasure
+{
+	[[nodiscard]]
+	auto static constexpr inline
+	(	ssize
+	)	()
+		noexcept
+	->	::Meta::SSize
+	{	return
+			sizeof(OffsetOfTest)
+		;
+	}
+};
 
 template
 	<	typename
@@ -303,9 +352,8 @@ auto constexpr inline
 		(	::ATR::Layout::Offset
 			<	t_tEntity
 			,	t_vOffset
-			>{}
-				(	::std::declval<t_tErased>
-						()
+			>{}	(	::std::declval<t_tErased>
+					()
 				)
 		)
 	>
@@ -336,7 +384,7 @@ auto constexpr inline
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte(&)[]
+	<	RErasure
 	,	0_bit
 	,	int
 	>
@@ -345,7 +393,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte const(&)[]
+	<	CErasure
 	,	0_bit
 	,	int
 	>
@@ -372,7 +420,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte(&)[]
+	<	RErasure
 	,	32_bit
 	,	int
 	>
@@ -383,7 +431,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte const(&)[]
+	<	CErasure
 	,	32_bit
 	,	int
 	>
@@ -416,7 +464,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte(&)[]
+	<	RErasure
 	,	64_bit
 	,	int
 	>
@@ -427,7 +475,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte const(&)[]
+	<	CErasure
 	,	64_bit
 	,	int
 	>
@@ -460,7 +508,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte(&)[]
+	<	RErasure
 	,	96_bit
 	,	bool[5]
 	>
@@ -475,7 +523,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte const(&)[]
+	<	CErasure
 	,	96_bit
 	,	bool[5]
 	>
@@ -518,7 +566,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte(&)[]
+	<	RErasure
 	,	101_bit
 	,	bool[5]
 	>
@@ -533,7 +581,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte const(&)[]
+	<	CErasure
 	,	101_bit
 	,	bool[5]
 	>
@@ -576,7 +624,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte(&)[]
+	<	RErasure
 	,	106_bit
 	,	bool[5]
 	>
@@ -591,7 +639,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte const(&)[]
+	<	CErasure
 	,	106_bit
 	,	bool[5]
 	>
@@ -634,7 +682,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte(&)[]
+	<	RErasure
 	,	111_bit
 	,	Field<3_bit>[5]
 	>
@@ -649,7 +697,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte const(&)[]
+	<	CErasure
 	,	111_bit
 	,	Field<3_bit>[5]
 	>
@@ -692,7 +740,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte(&)[]
+	<	RErasure
 	,	126_bit
 	,	Field<3_bit>[5]
 	>
@@ -707,7 +755,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte const(&)[]
+	<	CErasure
 	,	126_bit
 	,	Field<3_bit>[5]
 	>
@@ -750,7 +798,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte(&)[]
+	<	RErasure
 	,	141_bit
 	,	Field<3_bit>[5]
 	>
@@ -765,7 +813,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte const(&)[]
+	<	CErasure
 	,	141_bit
 	,	Field<3_bit>[5]
 	>
@@ -808,7 +856,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte(&)[]
+	<	RErasure
 	,	156_bit
 	,	bool
 	>
@@ -822,7 +870,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte const(&)[]
+	<	CErasure
 	,	156_bit
 	,	bool
 	>
@@ -858,7 +906,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte(&)[]
+	<	RErasure
 	,	157_bit
 	,	bool
 	>
@@ -872,7 +920,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte const(&)[]
+	<	CErasure
 	,	157_bit
 	,	bool
 	>
@@ -908,7 +956,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte(&)[]
+	<	RErasure
 	,	158_bit
 	,	bool
 	>
@@ -922,7 +970,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte const(&)[]
+	<	CErasure
 	,	158_bit
 	,	bool
 	>
@@ -958,7 +1006,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte(&)[]
+	<	RErasure
 	,	159_bit
 	,	Field<3_bit>
 	>
@@ -972,7 +1020,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte const(&)[]
+	<	CErasure
 	,	159_bit
 	,	Field<3_bit>
 	>
@@ -1008,7 +1056,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte(&)[]
+	<	RErasure
 	,	162_bit
 	,	Field<3_bit>
 	>
@@ -1022,7 +1070,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte const(&)[]
+	<	CErasure
 	,	162_bit
 	,	Field<3_bit>
 	>
@@ -1058,7 +1106,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte(&)[]
+	<	RErasure
 	,	165_bit
 	,	Field<3_bit>
 	>
@@ -1072,7 +1120,7 @@ static_assert
 
 static_assert
 (	ErasureMemberType_For
-	<	::std::byte const(&)[]
+	<	CErasure
 	,	165_bit
 	,	Field<3_bit>
 	>

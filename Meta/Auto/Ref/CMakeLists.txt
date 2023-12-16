@@ -1,4 +1,5 @@
 add_single_file_modules(
+	StaticCount.cpp
 	DataRange.cpp
 	ArrayView.cpp
 
@@ -9,4 +10,6 @@ add_single_file_modules(
 	DynamicCountArray.cpp
 	RSpan.cpp
 	XSpan.cpp
+
+	PledgeCount.cpp
 )

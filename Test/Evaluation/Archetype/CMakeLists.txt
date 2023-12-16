@@ -7,4 +7,5 @@ add_module_object_tests(
 	Address
 	Heap
 	NameReflection
+	ReadWrite
 )

@@ -3,14 +3,15 @@ export module Evaluation.TagATR.Interface;
 import Evaluation.Dependency.TaggedArray;
 
 import ATR.District.ExcludingHeap;
+import ATR.Erase;
 
 import Meta.Memory.Size;
 import Meta.Token.TypeID;
 
-import Std;
-
+using ::ATR::CErasure;
 using ::ATR::District::ExcludingHeap;
 using ::ATR::District::Info;
+using ::ATR::RErasure;
 
 using ::Meta::ByteSize;
 using ::Meta::TypeID;
@@ -54,8 +55,8 @@ namespace
 		;
 		auto
 		(&	Destroy
-		)	(	::std::byte
-				*	i_aObject
+		)	(	RErasure
+					i_rObject
 			,	unsigned char
 					i_vImplementerIndex
 			)
@@ -64,8 +65,8 @@ namespace
 		;
 		auto
 		(&	ComputeVolume
-		)	(	::std::byte const
-				*	i_aObject
+		)	(	CErasure
+					i_rObject
 			,	unsigned char
 					i_vImplementerIndex
 			)

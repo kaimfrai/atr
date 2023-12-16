@@ -9,7 +9,7 @@ export namespace
 {
 	template
 		<	typename
-				t_tElement
+				t_tReference
 		>
 	struct
 		ArrayView
@@ -25,21 +25,34 @@ export namespace
 		;
 
 		using
+			reference
+		=	t_tReference
+		;
+
+		using
 			value_type
 		=	::std::remove_cv_t
-			<	t_tElement
+			<	t_tReference
+			>
+		;
+
+		using
+			pointer
+		=	::std::add_pointer_t
+			<	t_tReference
 			>
 		;
 
 		// TODO iterator class with operator* returning &&
 		using
 			iterator
-		=	t_tElement
-			*
+		=	::std::add_pointer_t
+			<	t_tReference
+			>
 		;
 
-		t_tElement
-		*	m_aData
+		pointer
+			m_aData
 		=	nullptr
 		;
 
@@ -57,9 +70,9 @@ export namespace
 			)
 			noexcept
 			// TODO Optional reference for out of bounds
-		->	t_tArray::reference
+		->	t_tReference
 		{	return
-			t_tArray::reference
+			t_tReference
 			(	i_rArray
 				.	m_aData
 					[	i_vIndex
@@ -74,7 +87,7 @@ export namespace
 					i_rArray
 			)
 			noexcept
-		->	t_tElement*
+		->	pointer
 		{	return
 				i_rArray
 				.	m_aData

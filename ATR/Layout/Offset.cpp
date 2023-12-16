@@ -1,16 +1,24 @@
 export module ATR.Layout.Offset;
 
+import ATR.Erase;
+import ATR.Layout.TypeIndex;
 import ATR.Member.Info;
 
+import Meta.Auto.CPO.Data;
+import Meta.Auto.Ref.DataRange;
+import Meta.Auto.Ref.PledgeCount;
+import Meta.Auto.Ref.RArray;
 import Meta.Bit.Array;
 import Meta.Bit.Field;
 import Meta.Bit.Index;
 import Meta.Bit.Reference;
 import Meta.Memory.Constraint;
 import Meta.Memory.PointerCast;
+import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Cast;
 import Meta.Memory.Size.Compare;
 import Meta.Memory.Size.PointerArithmetic;
+import Meta.Memory.Size.Scale;
 import Meta.Memory.Size;
 import Meta.Size;
 import Meta.Token.Type;
@@ -23,10 +31,16 @@ using ::Meta::Bit::Field;
 using ::Meta::Bit::Reference;
 using ::Meta::BitSize;
 using ::Meta::ByteIndex;
+using ::Meta::ByteSize;
+using ::Meta::CArray;
 using ::Meta::Memory::ByteWidth;
 using ::Meta::Memory::Constraint_Of;
 using ::Meta::Memory::PointerCast;
+using ::Meta::ProtoBorrowContainer_Of_AtLeast;
+using ::Meta::ProtoOwnerContainer_Of_AtLeast;
+using ::Meta::RArray;
 using ::Meta::RestoreTypeEntity;
+using ::Meta::SSize;
 using ::Meta::USize;
 
 using namespace ::Meta::Literals;
@@ -34,6 +48,193 @@ using namespace ::Meta::Literals;
 export namespace
 	ATR::Layout
 {
+	template
+		<	typename
+				t_tData
+		,	SSize
+				t_vExtent
+		,	BitSize
+				t_vOffset
+		>
+	auto constexpr inline
+		TypeIndex_Of
+	=	TypeIndex<t_tData>
+		{	ByteWidth<t_tData>
+			(	t_vOffset
+			)
+		.	Value
+		,	t_vExtent
+		}
+	;
+
+	template
+		<	typename
+				t_tData
+		,	SSize
+				t_vExtent
+		,	BitSize
+				t_vOffset
+		>
+	auto constexpr inline
+		MinByteExtent_Of
+	=	TypeIndex_Of
+		<	t_tData
+		,	t_vExtent
+		,	t_vOffset
+		>
+	.	MinByteExtent
+		()
+	;
+
+	template
+		<	typename
+				t_tProto
+		,	TypeIndex
+				t_vTypeIndex
+		>
+	concept
+		ProtoOwnerDataRange_For
+	=	ProtoOwnerContainer_Of_AtLeast
+		<	t_tProto
+		,	typename
+			decltype(t_vTypeIndex)
+			::	TargetType
+		,	t_vTypeIndex
+			.	MinExtent
+				()
+		>
+	;
+
+	template
+		<	TypeIndex
+				t_vTypeIndex
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	Read
+	)	(	ProtoOwnerDataRange_For<t_vTypeIndex> auto
+			&	i_rDataRange
+		)
+		noexcept
+	->	typename
+		decltype(t_vTypeIndex)
+		::	TargetType
+		&
+	{	return
+		*	t_vTypeIndex
+			[	::Meta::CPO::Data
+				(	i_rDataRange
+				)
+			]
+		;
+	}
+
+	template
+		<	TypeIndex
+				t_vTypeIndex
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	Read
+	)	(	ProtoOwnerDataRange_For<t_vTypeIndex> auto const
+			&	i_rDataRange
+		)
+		noexcept
+	->	typename
+		decltype(t_vTypeIndex)
+		::	TargetType
+	{	return
+		*	t_vTypeIndex
+			[	::Meta::CPO::Data
+				(	i_rDataRange
+				)
+			]
+		;
+	}
+
+	template
+		<	typename
+				t_tProto
+		,	TypeIndex
+				t_vTypeIndex
+		>
+	concept
+		ProtoBorrowDataRange_For
+	=	ProtoBorrowContainer_Of_AtLeast
+		<	t_tProto
+		,	typename
+			decltype(t_vTypeIndex)
+			::	TargetType
+		,	t_vTypeIndex
+			.	MinExtent
+				()
+		>
+	;
+
+	template
+		<	TypeIndex
+				t_vTypeIndex
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	Read
+	)	(	ProtoBorrowDataRange_For<t_vTypeIndex> auto
+				i_rDataRange
+		)
+		noexcept
+	->	decltype(auto)
+	{	return
+		typename
+		decltype(i_rDataRange)
+		::	reference
+		(*	t_vTypeIndex
+			[	::Meta::CPO::Data
+				(	i_rDataRange
+				)
+			]
+		);
+	}
+
+	template
+		<	typename
+				t_tData
+		,	SSize
+				t_vExtent
+		,	BitSize
+				t_vOffset
+		>
+	using
+		RErasure
+	=	RArray
+		<	::std::byte
+		,	MinByteExtent_Of
+			<	t_tData
+			,	t_vExtent
+			,	t_vOffset
+			>
+		>
+	;
+
+	template
+		<	typename
+				t_tData
+		,	SSize
+				t_vExtent
+		,	BitSize
+				t_vOffset
+		>
+	using
+		CErasure
+	=	CArray
+		<	::std::byte
+		,	MinByteExtent_Of
+			<	t_tData
+			,	t_vExtent
+			,	t_vOffset
+			>
+		>
+	;
+
 	template
 		<	typename
 				t_tData
@@ -50,50 +251,67 @@ export namespace
 		Offset
 	{
 		auto static constexpr inline
-			ArrayIndex
-		=		ByteWidth<t_tData>
-				(	t_vOffset
-				)
-			.	Value
+			TypeIndex
+		=	TypeIndex_Of
+			<	t_tData
+			,	1z
+			,	t_vOffset
+			>
 		;
 
 		[[nodiscard]]
 		auto static constexpr inline
 		(	operator()
-		)	(	::std::byte
-				*	i_aLayout
+		)	(	ProtoBorrowContainer_Of_AtLeast<::std::byte, ByteSize(t_vOffset).Value> auto
+					i_rLayout
 			)
 			noexcept
 		->	t_tData&
 		{	return
-				*
-				//	We don't know where the byte array came from
-				//	so we need to launder it
-				::std::launder
-				(	PointerCast<t_tData>
-					(	i_aLayout
-					+	t_vOffset
-					)
-				)
+				TypeIndex
+				[	i_rLayout
+					.	data
+						()
+				]
+			.	operator
+				t_tData
+				&
 			;
 		}
 
 		[[nodiscard]]
 		auto static constexpr inline
 		(	operator()
-		)	(	::std::byte const
-				*	i_aLayout
+		)	(	ProtoBorrowContainer_Of_AtLeast<::std::byte const, ByteSize(t_vOffset).Value> auto
+					i_rLayout
 			)
 			noexcept
 		->	t_tData
 		{	return
-				*
-				//	We don't know where the byte array came from
-				//	so we need to launder it
-				::std::launder
-				(	PointerCast<t_tData>
-					(	i_aLayout
-					+	t_vOffset
+				TypeIndex
+				[	i_rLayout
+					.	data
+						()
+				]
+			.	operator
+				t_tData
+				()
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator->*
+		)	(	ProtoOwnerDataRange_For<TypeIndex> auto
+				&&	i_rArray
+			,	Offset
+			)
+			noexcept
+		->	decltype(auto)
+		{	return
+				Read<TypeIndex>
+				(	static_cast<decltype(i_rArray)>
+					(	i_rArray
 					)
 				)
 			;
@@ -102,32 +320,18 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	t_tData
-				*	i_aArray
+		)	(	ProtoBorrowDataRange_For<TypeIndex> auto
+					i_rArray
 			,	Offset
 			)
 			noexcept
-		->	t_tData&
+		->	decltype(auto)
 		{	return
-				i_aArray
-				[	ArrayIndex
-				]
-			;
-		}
-
-		[[nodiscard]]
-		auto friend constexpr inline
-		(	operator->*
-		)	(	t_tData const
-				*	i_aArray
-			,	Offset
-			)
-			noexcept
-		->	t_tData
-		{	return
-				i_aArray
-				[	ArrayIndex
-				]
+				Read<TypeIndex>
+				(	static_cast<decltype(i_rArray)>
+					(	i_rArray
+					)
+				)
 			;
 		}
 	};
@@ -258,8 +462,10 @@ export namespace
 				(	::std::is_array_v<t_tDistrict>
 				)
 			{	return
-					static_cast<::std::remove_extent_t<t_tDistrict>*>
-					(	aElement
+					::Meta::PledgeCount<::std::extent_v<t_tDistrict>>
+					(	static_cast<::std::remove_extent_t<t_tDistrict>*>
+						(	aElement
+						)
 					)
 				->*	NextOffset
 				;
@@ -305,10 +511,10 @@ export namespace
 				(	::std::is_array_v<t_tDistrict>
 				)
 			{	return
-					static_cast<::std::remove_extent_t<t_tDistrict> const*>
-					(	i_aArray
-						[	ArrayIndex
-						]
+					::Meta::PledgeCount<::std::extent_v<t_tDistrict>>
+					(	static_cast<::std::remove_extent_t<t_tDistrict> const*>
+						(	aElement
+						)
 					)
 				->*	NextOffset
 				;
@@ -317,9 +523,7 @@ export namespace
 			{	return
 					*
 					static_cast<t_tDistrict const*>
-					(	i_aArray
-						[	ArrayIndex
-						]
+					(	aElement
 					)
 				->*	NextOffset
 				;
@@ -370,8 +574,7 @@ export namespace
 		[[nodiscard]]
 		auto static constexpr inline
 		(	operator()
-		)	(	::std::byte const
-				*
+		)	(	::ATR::CErasure
 			)
 			noexcept
 		->	t_tData
@@ -407,18 +610,28 @@ export namespace
 		,	t_vOffset
 		>
 	{
-		auto static constexpr
+		auto static constexpr inline
 			ByteOffset
 		=	IndexCast<ByteIndex>
 			(	t_vOffset
 			)
 		;
 
+		auto static constexpr inline
+			TypeIndex
+		=	TypeIndex_Of
+			<	::std::byte
+			,	1z
+			,	ByteOffset
+				.	Quotient
+			>
+		;
+
 		[[nodiscard]]
 		auto static constexpr inline
 		(	operator()
-		)	(	::std::byte
-				*	i_aLayout
+		)	(	ProtoBorrowContainer_Of_AtLeast<::std::byte, ByteSize(t_vOffset).Value> auto
+					i_rLayout
 			)
 			noexcept
 		->	decltype(auto)
@@ -427,19 +640,19 @@ export namespace
 			<	bool
 			,	ByteOffset
 				.	Remainder
-			>{	::std::launder
-				(	i_aLayout
-				+	ByteOffset
-					.	Quotient
-				)
+			>{	TypeIndex
+				[	i_rLayout
+					.	data
+						()
+				]
 			};
 		}
 
 		[[nodiscard]]
 		auto static constexpr inline
 		(	operator()
-		)	(	::std::byte const
-				*	i_aLayout
+		)	(	ProtoBorrowContainer_Of_AtLeast<::std::byte const, ByteSize(t_vOffset).Value> auto
+					i_rLayout
 			)
 			noexcept
 		->	bool
@@ -450,9 +663,11 @@ export namespace
 					.	Remainder
 				>
 			::	Read
-				(	i_aLayout
-				+	ByteOffset
-					.	Quotient
+				(	TypeIndex
+					[	i_rLayout
+						.	data
+							()
+					]
 				)
 			;
 		}
@@ -460,9 +675,8 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	::std::byte
-				(&	i_rLayout
-				)	[]
+		)	(	ProtoOwnerDataRange_For<TypeIndex> auto
+				&	i_rArray
 			,	Offset
 					i_vOffset
 			)
@@ -470,7 +684,9 @@ export namespace
 		->	decltype(auto)
 		{	return
 				i_vOffset
-				(	i_rLayout
+				(	RErasure<::std::byte, 1z, ByteOffset.Quotient>
+					{	i_rArray
+					}
 				)
 			;
 		}
@@ -478,9 +694,8 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	::std::byte const
-				(&	i_rLayout
-				)	[]
+		)	(	ProtoOwnerDataRange_For<TypeIndex> auto const
+				&	i_rArray
 			,	Offset
 					i_vOffset
 			)
@@ -488,7 +703,28 @@ export namespace
 		->	decltype(auto)
 		{	return
 				i_vOffset
-				(	i_rLayout
+				(	CErasure<::std::byte, 1z, ByteOffset.Quotient>
+					{	i_rArray
+					}
+				)
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator->*
+		)	(	ProtoBorrowDataRange_For<TypeIndex> auto
+					i_rArray
+			,	Offset
+					i_vOffset
+			)
+			noexcept
+		->	decltype(auto)
+		{	return
+				i_vOffset
+				(	CErasure<::std::byte, 1z, ByteOffset.Quotient>
+					{	i_rArray
+					}
 				)
 			;
 		}
@@ -508,18 +744,42 @@ export namespace
 		,	t_vOffset
 		>
 	{
-		auto static constexpr
+		auto static constexpr inline
 			ByteOffset
 		=	IndexCast<ByteIndex>
 			(	t_vOffset
 			)
 		;
 
+		auto static constexpr inline
+			ByteExtent
+		=	ByteSize
+			(	BitSize
+				(	ByteOffset
+					.	Remainder
+					.	get
+						()
+				+	t_vExtent
+				)
+			)
+		.	Value
+		;
+
+		auto static constexpr inline
+			TypeIndex
+		=	TypeIndex_Of
+			<	::std::byte
+			,	ByteExtent
+			,	ByteOffset
+				.	Quotient
+			>
+		;
+
 		[[nodiscard]]
 		auto static constexpr inline
 		(	operator()
-		)	(	::std::byte
-				*	i_aLayout
+		)	(	ProtoBorrowContainer_Of_AtLeast<::std::byte, ByteSize(t_vOffset).Value> auto
+					i_rLayout
 			)
 			noexcept
 		->	decltype(auto)
@@ -529,19 +789,19 @@ export namespace
 			,	t_vExtent
 			,	ByteOffset
 				.	Remainder
-			>{	::std::launder
-				(	i_aLayout
-				+	ByteOffset
-					.	Quotient
-				)
+			>{	TypeIndex
+				[	i_rLayout
+					.	data
+						()
+				]
 			};
 		}
 
 		[[nodiscard]]
 		auto static constexpr inline
 		(	operator()
-		)	(	::std::byte const
-				*	i_aLayout
+		)	(	ProtoBorrowContainer_Of_AtLeast<::std::byte const, ByteSize(t_vOffset).Value> auto
+					i_rLayout
 			)
 			noexcept
 		->	decltype(auto)
@@ -552,9 +812,11 @@ export namespace
 				,	t_vExtent
 				,	ByteOffset
 					.	Remainder
-				>{	i_aLayout
-				+	ByteOffset
-					.	Quotient
+				>{	TypeIndex
+					[	i_rLayout
+						.	data
+							()
+					]
 				}
 			);
 		}
@@ -562,9 +824,8 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	::std::byte
-				(&	i_rLayout
-				)	[]
+		)	(	ProtoOwnerDataRange_For<TypeIndex> auto
+				&	i_rArray
 			,	Offset
 					i_vOffset
 			)
@@ -572,7 +833,9 @@ export namespace
 		->	decltype(auto)
 		{	return
 				i_vOffset
-				(	i_rLayout
+				(	RErasure<::std::byte, ByteExtent, ByteOffset.Quotient>
+					{	i_rArray
+					}
 				)
 			;
 		}
@@ -580,9 +843,8 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	::std::byte const
-				(&	i_rLayout
-				)	[]
+		)	(	ProtoOwnerDataRange_For<TypeIndex> auto const
+				&	i_rArray
 			,	Offset
 					i_vOffset
 			)
@@ -590,7 +852,28 @@ export namespace
 		->	decltype(auto)
 		{	return
 				i_vOffset
-				(	i_rLayout
+				(	CErasure<::std::byte, ByteExtent, ByteOffset.Quotient>
+					{	i_rArray
+					}
+				)
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator->*
+		)	(	ProtoBorrowDataRange_For<TypeIndex> auto
+					i_rArray
+			,	Offset
+					i_vOffset
+			)
+			noexcept
+		->	decltype(auto)
+		{	return
+				i_vOffset
+				(	CErasure<::std::byte, ByteExtent, ByteOffset.Quotient>
+					{	i_rArray
+					}
 				)
 			;
 		}
@@ -615,11 +898,33 @@ export namespace
 			)
 		;
 
+		auto static constexpr inline
+			ByteExtent
+		=	ByteSize
+			(	BitSize
+				(	ByteOffset
+					.	Remainder
+				)
+			+	t_vWidth
+			)
+		.	Value
+		;
+
+		auto static constexpr inline
+			TypeIndex
+		=	TypeIndex_Of
+			<	::std::byte
+			,	ByteExtent
+			,	ByteOffset
+				.	Quotient
+			>
+		;
+
 		[[nodiscard]]
 		auto static constexpr inline
 		(	operator()
-		)	(	::std::byte
-				*	i_aLayout
+		)	(	ProtoBorrowContainer_Of_AtLeast<::std::byte, ByteSize(t_vOffset).Value> auto
+					i_rLayout
 			)
 			noexcept
 		->	decltype(auto)
@@ -628,11 +933,11 @@ export namespace
 				<	Field<t_vWidth>
 				,	ByteOffset
 					.	Remainder
-				>{	::std::launder
-					(	i_aLayout
-					+	ByteOffset
-						.	Quotient
-					)
+				>{	TypeIndex
+					[	i_rLayout
+						.	data
+							()
+					]
 				}
 			;
 		}
@@ -640,8 +945,8 @@ export namespace
 		[[nodiscard]]
 		auto static constexpr inline
 		(	operator()
-		)	(	::std::byte const
-				*	i_aLayout
+		)	(	ProtoBorrowContainer_Of_AtLeast<::std::byte const, ByteSize(t_vOffset).Value> auto
+					i_rLayout
 			)
 			noexcept
 		->	decltype(auto)
@@ -652,9 +957,11 @@ export namespace
 					.	Remainder
 				>
 			::	Read
-				(	i_aLayout
-				+	ByteOffset
-					.	Quotient
+				(	TypeIndex
+					[	i_rLayout
+						.	data
+							()
+					]
 				)
 			;
 		}
@@ -662,9 +969,8 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	::std::byte
-				(&	i_rLayout
-				)	[]
+		)	(	ProtoOwnerDataRange_For<TypeIndex> auto
+				&	i_rArray
 			,	Offset
 					i_vOffset
 			)
@@ -672,7 +978,9 @@ export namespace
 		->	decltype(auto)
 		{	return
 				i_vOffset
-				(	i_rLayout
+				(	RErasure<::std::byte, ByteExtent, ByteOffset.Quotient>
+					{	i_rArray
+					}
 				)
 			;
 		}
@@ -680,9 +988,8 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	::std::byte const
-				(&	i_rLayout
-				)	[]
+		)	(	ProtoOwnerDataRange_For<TypeIndex> auto const
+				&	i_rArray
 			,	Offset
 					i_vOffset
 			)
@@ -690,7 +997,28 @@ export namespace
 		->	decltype(auto)
 		{	return
 				i_vOffset
-				(	i_rLayout
+				(	CErasure<::std::byte, ByteExtent, ByteOffset.Quotient>
+					{	i_rArray
+					}
+				)
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator->*
+		)	(	ProtoBorrowDataRange_For<TypeIndex> auto const
+					i_rArray
+			,	Offset
+					i_vOffset
+			)
+			noexcept
+		->	decltype(auto)
+		{	return
+				i_vOffset
+				(	CErasure<::std::byte, ByteExtent, ByteOffset.Quotient>
+					{	i_rArray
+					}
 				)
 			;
 		}
@@ -719,34 +1047,57 @@ export namespace
 			)
 		;
 
+		auto static constexpr inline
+			ByteExtent
+		=	ByteSize
+			(	BitSize
+				(	ByteOffset
+					.	Remainder
+				)
+			+	(	t_vExtent
+				*	t_vWidth
+				)
+			)
+		.	Value
+		;
+
+		auto static constexpr inline
+			TypeIndex
+		=	TypeIndex_Of
+			<	::std::byte
+			,	ByteExtent
+			,	ByteOffset
+				.	Quotient
+			>
+		;
+
 		[[nodiscard]]
 		auto static constexpr inline
 		(	operator()
-		)	(	::std::byte
-				*	i_aLayout
+		)	(	ProtoBorrowContainer_Of_AtLeast<::std::byte, ByteSize(t_vOffset).Value> auto
+					i_rLayout
 			)
 			noexcept
 		->	decltype(auto)
 		{	return
-				ArrayReference
-				<	t_vWidth
-				,	t_vExtent
-				,	ByteOffset
-					.	Remainder
-				>{	::std::launder
-					(	i_aLayout
-					+	ByteOffset
-						.	Quotient
-					)
-				}
-			;
+			ArrayReference
+			<	t_vWidth
+			,	t_vExtent
+			,	ByteOffset
+				.	Remainder
+			>{	TypeIndex
+				[	i_rLayout
+					.	data
+						()
+				]
+			};
 		}
 
 		[[nodiscard]]
 		auto static constexpr inline
 		(	operator()
-		)	(	::std::byte const
-				*	i_aLayout
+		)	(	ProtoBorrowContainer_Of_AtLeast<::std::byte const, ByteSize(t_vOffset).Value> auto
+					i_rLayout
 			)
 			noexcept
 		->	decltype(auto)
@@ -757,9 +1108,11 @@ export namespace
 					,	t_vExtent
 					,	ByteOffset
 						.	Remainder
-					>{	i_aLayout
-					+	ByteOffset
-						.	Quotient
+					>{	TypeIndex
+						[	i_rLayout
+							.	data
+								()
+						]
 					}
 				)
 			;
@@ -768,9 +1121,8 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	::std::byte
-				(&	i_rLayout
-				)	[]
+		)	(	ProtoOwnerDataRange_For<TypeIndex> auto
+				&	i_rArray
 			,	Offset
 					i_vOffset
 			)
@@ -778,7 +1130,9 @@ export namespace
 		->	decltype(auto)
 		{	return
 				i_vOffset
-				(	i_rLayout
+				(	RErasure<::std::byte, ByteExtent, ByteOffset.Quotient>
+					{	i_rArray
+					}
 				)
 			;
 		}
@@ -786,9 +1140,8 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	::std::byte const
-				(&	i_rLayout
-				)	[]
+		)	(	ProtoOwnerDataRange_For<TypeIndex> auto const
+				&	i_rArray
 			,	Offset
 					i_vOffset
 			)
@@ -796,11 +1149,61 @@ export namespace
 		->	decltype(auto)
 		{	return
 				i_vOffset
-				(	i_rLayout
+				(	CErasure<::std::byte, ByteExtent, ByteOffset.Quotient>
+					{	i_rArray
+					}
+				)
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator->*
+		)	(	ProtoBorrowDataRange_For<TypeIndex> auto
+					i_rArray
+			,	Offset
+					i_vOffset
+			)
+			noexcept
+		->	decltype(auto)
+		{	return
+				i_vOffset
+				(	CErasure<::std::byte, ByteExtent, ByteOffset.Quotient>
+					{	i_rArray
+					}
 				)
 			;
 		}
 	};
+
+	template
+		<	typename
+				t_tData
+		,	BitSize
+				t_vOffset
+		,	typename
+			...	t_tpIndirectOffsets
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	MinByteExtent
+	)	(	Offset
+			<	t_tData
+			,	t_vOffset
+			,	t_tpIndirectOffsets
+				...
+			>
+		)
+		noexcept
+	->	SSize
+	{	return
+			MinByteExtent_Of
+			<	t_tData
+			,	1z
+			,	t_vOffset
+			>
+		;
+	}
 
 	template
 		<	typename

@@ -22,6 +22,7 @@ export namespace
 		>
 	:	StaticCountArray
 		<	t_tElement
+			&&
 		,	t_vCount
 		>
 	{
@@ -34,10 +35,19 @@ export namespace
 		using
 			StaticCountArray
 			<	t_tElement
+				&&
 			,	t_vCount
 			>
 		::	StaticCountArray
 		;
+
+		explicit(false) constexpr inline
+		(	Auto
+		)	(	Auto const
+				&
+			)
+			noexcept
+		=	default;
 	};
 
 	template

@@ -1,7 +1,11 @@
 export module ATR.Dependency;
 
+import Meta.Size;
 import Meta.String.Hash;
 
+import Std;
+
+using ::Meta::SSize;
 using ::Meta::String::ImplicitHash;
 
 export namespace
@@ -25,25 +29,27 @@ export namespace
 		>
 	struct
 		Dependency
+	:	t_tArgument
 	{
 		using
 			ArgumentType
 		=	t_tArgument
 		;
 
-		[[no_unique_address]]
-		t_tArgument
-			Argument
-		;
-
 		[[nodiscard]]
-		explicit(false) constexpr inline
-		(	operator t_tArgument
-		)	()	const
+		auto static constexpr inline
+		(	ssize
+		)	()
 			noexcept
+		->	SSize
 		{	return
-				Argument
-			;
+			::std::max
+			({	0z
+			,	MinByteExtent
+				(	t_vpArgumentDependency
+				)
+				...
+			});
 		}
 	};
 }

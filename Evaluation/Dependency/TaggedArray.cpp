@@ -1,5 +1,6 @@
 export module Evaluation.Dependency.TaggedArray;
 
+import ATR.Erase;
 import ATR.Instance;
 
 import Meta.ID;
@@ -47,7 +48,9 @@ export namespace
 		{	return
 				t_rInterface
 				.	ComputeVolume
-					(	m_aData
+					(	::ATR::CErasure
+						{	m_aData
+						}
 					,	m_vTag
 					)
 			;
@@ -217,9 +220,11 @@ export namespace
 			{
 				t_rInterface
 				.	Destroy
-					(		aBuffer
-						+	vIndex
-						*	vElementSize
+					(	::ATR::RErasure
+						{	aBuffer
+							+	vIndex
+							*	vElementSize
+						}
 					,	*
 						::std::launder
 						(	::std::bit_cast<unsigned char*>

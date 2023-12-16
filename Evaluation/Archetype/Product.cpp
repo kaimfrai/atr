@@ -1,8 +1,7 @@
 export module Evaluation.Archetype.Product;
 
 import ATR.Dependency;
-
-import Std;
+import ATR.Erase;
 
 export namespace
 	ATR
@@ -17,7 +16,7 @@ export namespace
 	(	FunctionBody
 	)	(	GlobalDependency<"Product">
 		,	Dependency
-			<	::std::byte const*
+			<	CErasure
 			,	t_vpDependency
 				...
 			>

@@ -17,6 +17,7 @@ export namespace
 		>
 	:	DynamicCountArray
 		<	t_tElement
+			&&
 		>
 	{
 		using
@@ -28,9 +29,18 @@ export namespace
 		using
 			DynamicCountArray
 			<	t_tElement
+				&&
 			>
 		::	DynamicCountArray
 		;
+
+		explicit(false) constexpr inline
+		(	Auto
+		)	(	Auto const
+				&
+			)
+			noexcept
+		=	default;
 	};
 
 	template
