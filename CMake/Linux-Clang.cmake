@@ -112,6 +112,9 @@ else()
 		-Wno-c++20-extensions
 		# more useful as warning
 		-Wno-error=deprecated-declarations
+
+		# turned off for now as it conflicts with -Wcovered-switch-default
+		-Wno-switch-default
 	)
 
 	# Only trace time when not measuring build speed
