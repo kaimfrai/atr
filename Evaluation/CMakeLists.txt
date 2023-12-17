@@ -141,6 +141,19 @@ RUNTIME_OUTPUT_DIRECTORY
 )
 
 ################################################################################
+add_subdirectory(SOAReplication)
+add_module_executable(
+	SOAReplication
+		SOAReplication.cpp
+)
+set_target_properties(
+	SOAReplication
+PROPERTIES
+RUNTIME_OUTPUT_DIRECTORY
+	"${CMAKE_BINARY_DIR}/bin/"
+)
+
+################################################################################
 add_subdirectory(TagATR)
 add_module_executable(
 	TagATR

@@ -24,7 +24,8 @@ then
 		TagATR\
 		TagReplication\
 		Variant\
-		Visitor
+		Visitor\
+		SOAReplication
 elif
 	[ $2 == "Virtual" ] \
 ||	[ $2 == "Any" ] \
@@ -37,7 +38,8 @@ elif
 ||	[ $2 == "TagReplication" ] \
 ||	[ $2 == "Variant" ] \
 ||	[ $2 == "Visitor" ] \
-||	[ $2 == "Any" ]
+||	[ $2 == "Any" ] \
+||	[ $2 == "SOAReplication" ]
 then
 	ninja\
 		"$2"
@@ -54,6 +56,7 @@ else
 	echo "TagReplication"
 	echo "Variant"
 	echo "Visitor"
+	echo "SOAReplication"
 	exit 1
 fi
 
