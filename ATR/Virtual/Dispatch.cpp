@@ -8,6 +8,7 @@ import Meta.Memory.Size;
 import Meta.String.Literal;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
+import Meta.Unlinkable;
 
 import Std;
 
@@ -88,13 +89,8 @@ export namespace
 				}
 			}
 
-			return
-				ImplementerCount
-				()
-			;
-			// TODO: unreachable here affects the assembly in unexpected ways
-			//::std::unreachable
-			//();
+			::Meta::Unlinkable
+			();
 		}
 
 		template
