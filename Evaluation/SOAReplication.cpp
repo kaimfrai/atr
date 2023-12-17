@@ -99,7 +99,7 @@ namespace
 		;
 
 		[[nodiscard]]
-		auto constexpr inline
+		auto inline
 		(	ComputeVolume
 		)	()	const
 			noexcept
@@ -160,8 +160,9 @@ namespace
 			noexcept
 		->	Body3DIterator&
 		{
-			++	m_vView32
-				.	m_vIndex
+			m_vView32
+			.	m_vIndex
+			+=	::std::experimental::native_simd<float>::size()
 			;
 			return
 				*this
@@ -202,7 +203,7 @@ namespace
 	struct
 		VolumeComputer
 	{
-		::std::byte
+		::std::experimental::native_simd<float>
 		*	m_aBuffer
 		;
 		::std::uint32_t
@@ -211,18 +212,9 @@ namespace
 		::std::uint32_t
 			m_vCount
 		{};
-		::std::byte
-		*	m_aExtraBuffer
-		;
-		::std::uint32_t
-			m_vExtraCapacity
-		;
-		::std::uint32_t
-			m_vExtraCount
-		{};
 
 	public:
-		explicit(true) constexpr inline
+		explicit(true) inline
 		(	VolumeComputer
 		)	(	::std::uint32_t
 					i_vCapacity
@@ -231,7 +223,7 @@ namespace
 		:	m_aBuffer
 			{	new	(	::std::nothrow
 					)
-				::std::byte
+				::std::experimental::native_simd<float>
 					[	static_cast<::std::size_t>
 						(	ByteSize
 							(	i_vCapacity
@@ -239,29 +231,11 @@ namespace
 							).	get
 								()
 						)
+					/	sizeof(::std::experimental::native_simd<float>)
 					]
 			}
 		,	m_vCapacity
 			{	i_vCapacity
-			}
-		,	m_aExtraBuffer
-			{	new	(	::std::nothrow
-					)
-				::std::byte
-					[	static_cast<::std::size_t>
-						(	ByteSize
-							(	(	i_vCapacity
-								/	12u
-								)
-							*	EyesSize
-							).	get
-								()
-						)
-					]
-			}
-		,	m_vExtraCapacity
-			{	i_vCapacity
-			/	12u
 			}
 		{}
 
@@ -271,10 +245,6 @@ namespace
 		)	()
 			noexcept
 		{
-			delete
-				[]
-				m_aExtraBuffer
-			;
 			delete
 				[]
 				m_aBuffer
@@ -388,19 +358,8 @@ namespace
 				break;
 				case
 					ETag::Head
-				:	auto const
-						vExtraCount
-					=	m_vExtraCount
-						++
-					;
-
-					ConstructHead
+				:	ConstructHead
 					(	vView32
-					,	View32
-						{	m_aExtraBuffer
-						,	m_vExtraCapacity
-						,	vExtraCount
-						}
 					);
 				break;
 			}
@@ -618,7 +577,7 @@ auto
 		}
 	}
 
-	float
+	::std::experimental::native_simd<float>
 		vLoopSum
 	{};
 
@@ -641,7 +600,9 @@ auto
 
 	return
 		static_cast<int>
-		(	vLoopSum
+		(	reduce
+			(	vLoopSum
+			)
 		)
 	-	vExpectedValue
 	;

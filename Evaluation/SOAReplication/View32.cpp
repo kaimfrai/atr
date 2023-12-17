@@ -8,7 +8,7 @@ export namespace
 	struct
 		View32
 	{
-		::std::byte
+		::std::experimental::native_simd<float>
 		*	m_aBuffer
 		;
 		::std::uint32_t
@@ -19,66 +19,67 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto constexpr inline
+		auto inline
 		(	operator[]
 		)	(	::std::ptrdiff_t
 					i_vMember
 			)	const
 			noexcept
-		->	float
-		{	return
-			*	::std::launder
-				(	::std::bit_cast<float const*>
-					(	::std::assume_aligned
-						<	alignof(float)
-						>(	m_aBuffer
-						)
-					+	(	m_vCapacity
-						*	i_vMember
-						+	m_vIndex
-						)
-					*	static_cast<::std::ptrdiff_t>
-						(	sizeof(float)
-						)
-					)
+		->	::std::experimental::native_simd<float>
+		{
+			auto const
+				vSimdSize
+			=	static_cast<::std::ptrdiff_t>
+				(	::std::experimental::native_simd<float>::size()
 				)
+			;
+
+			auto const
+				aSimd
+			=	m_aBuffer
+			+	m_vCapacity
+			*	i_vMember
+			/	vSimdSize
+			+	m_vIndex
+			/	vSimdSize
+			;
+			return
+			*	aSimd
 			;
 		}
 
-		template
-			<	typename
-					t_tValue
-			>
-		requires
-			(	sizeof(t_tValue)
-			==	4
-			)
 		auto constexpr inline
 		(	operator[]
 		)	(	::std::ptrdiff_t
 					i_vMember
-			,	t_tValue
+			,	float
 					i_vValue
 			)
 			noexcept
 		->	View32&
 		{
-			::std::construct_at
-			(	::std::bit_cast<t_tValue*>
-				(	::std::assume_aligned
-					<	alignof(t_tValue)
-					>(	m_aBuffer
-					)
-				+	(	m_vCapacity
-					*	i_vMember
-					+	m_vIndex
-					)
-				*	static_cast<::std::ptrdiff_t>
-					(	sizeof(t_tValue)
-					)
+			auto const
+				vSimdSize
+			=	static_cast<::std::ptrdiff_t>
+				(	::std::experimental::native_simd<float>::size()
 				)
-			,	i_vValue
-			);
+			;
+
+			auto const
+				aSimd
+			=	m_aBuffer
+			+	m_vCapacity
+			*	i_vMember
+			/	vSimdSize
+			+	m_vIndex
+			/	vSimdSize
+			;
+
+			(*	aSimd)
+			[	m_vIndex
+			%	vSimdSize
+			]=	i_vValue
+			;
 
 			return
 			*	this

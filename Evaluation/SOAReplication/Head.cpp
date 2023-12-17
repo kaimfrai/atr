@@ -59,24 +59,11 @@ export namespace
 	(	ConstructHead
 	)	(	View32
 				i_vView32
-		,	View32
-				i_vEyesView
 		)
 		noexcept
 	->	void
 	{	ConstructSphere
 		(	i_vView32
 		);
-		i_vEyesView
-			[0z, i_vView32.m_vIndex]
-			[1z, 0.0f]
-			[2z, 0.0f]
-			[3z, 0.0f]
-			[4z, 0.0f]
-			[5z, 0.0f]
-			[6z, 0.0f]
-			[7z, 0.0f]
-			[8z, 0.0f]
-		;
 	}
 }
