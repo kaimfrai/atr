@@ -13,6 +13,9 @@ export namespace
 	struct
 		HeadEyes
 	{
+		::std::uint32_t
+			HeadIndex
+		;
 		float
 			ColorRed
 		;
@@ -50,9 +53,6 @@ export namespace
 		Sphere
 			Sphere
 		;
-		::std::int32_t
-			m_vEyesIndex
-		;
 	};
 
 	auto constexpr inline
@@ -64,19 +64,11 @@ export namespace
 		)
 		noexcept
 	->	void
-	{	i_vView32
-			[0z, 0.0f]
-			[1z, 0.0f]
-			[2z, 0.0f]
-			[3z, 0.0f]
-			[4z, 0.0f]
-			[5z, 0.0f]
-			[6z, 0.0f]
-			[7z, 0.0f]
-			[8z, i_vEyesView.m_vIndex]
-		;
+	{	ConstructSphere
+		(	i_vView32
+		);
 		i_vEyesView
-			[0z, 0.0f]
+			[0z, i_vView32.m_vIndex]
 			[1z, 0.0f]
 			[2z, 0.0f]
 			[3z, 0.0f]
@@ -84,22 +76,7 @@ export namespace
 			[5z, 0.0f]
 			[6z, 0.0f]
 			[7z, 0.0f]
-		;
-	}
-
-	[[nodiscard]]
-	auto constexpr inline
-	(	ComputeVolumeHead
-	)	(	View32
-				i_vView32
-		)
-		noexcept
-	->	float
-	{	return
-			ComputeVolumeSphere
-			(	i_vView32
-			)
+			[8z, 0.0f]
 		;
 	}
 }
-

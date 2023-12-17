@@ -43,47 +43,41 @@ namespace
 	using ::Bodies3D::Ellipsoid;
 	using ::Bodies3D::Head;
 
-	union
+	struct
 		Body3D
 	{
-		Circle
-			m_vCircle
+		float
+			ColorRed
 		;
-		Ellipse
-			m_vEllipse
+		float
+			ColorGreen
 		;
-		Rectangle
-			m_vRectangle
+		float
+			ColorBlue
 		;
-		Square
-			m_vSquare
+		float
+			ColorAlpha
 		;
-		Triangle
-			m_vTriangle
+		float
+			PointLateral
 		;
-		Cube
-			m_vCube
+		float
+			PointLongitudinal
 		;
-		Cuboid
-			m_vCuboid
+		float
+			PointVertical
 		;
-		Pyramid
-			m_vPyramid
+		float
+			Height
 		;
-		Sphere
-			m_vSphere
+		float
+			Width
 		;
-		Cylinder
-			m_vCylinder
+		float
+			Depth
 		;
-		Cone
-			m_vCone
-		;
-		Ellipsoid
-			m_vEllipsoid
-		;
-		Head
-			m_vHead
+		float
+			ComputeVolumeMultiplier
 		;
 	};
 
@@ -96,10 +90,6 @@ namespace
 		EyesSize
 	{	sizeof(HeadEyes)
 	};
-	ByteSize constexpr inline
-		TagSize
-	{	sizeof(ETag)
-	};
 
 	struct
 		Body3DReference
@@ -107,115 +97,45 @@ namespace
 		View32
 			m_vView32
 		;
-		ETag
-			m_vTag
-		;
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	ComputeVolume
 		)	()	const
 			noexcept
-		->	float
+		->	auto
 		{
-			switch
-				(	m_vTag
-				)
-			{	case
-					ETag::Circle
-				:	return
-						ComputeVolumeCircle
-						(	m_vView32
-						)
-					;
-				case
-					ETag::Ellipse
-				:	return
-						ComputeVolumeEllipse
-						(	m_vView32
-						)
-					;
-				case
-					ETag::Rectangle
-				:	return
-						ComputeVolumeRectangle
-						(	m_vView32
-						)
-					;
-				case
-					ETag::Square
-				:	return
-						ComputeVolumeSquare
-						(	m_vView32
-						)
-					;
-				case
-					ETag::Triangle
-				:	return
-						ComputeVolumeTriangle
-						(	m_vView32
-						)
-					;
-				case
-					ETag::Cube
-				:	return
-						ComputeVolumeCube
-						(	m_vView32
-						)
-					;
-				case
-					ETag::Cuboid
-				:	return
-						ComputeVolumeCuboid
-						(	m_vView32
-						)
-					;
-				case
-					ETag::Pyramid
-				:	return
-						ComputeVolumePyramid
-						(	m_vView32
-						)
-					;
-				case
-					ETag::Sphere
-				:	return
-						ComputeVolumeSphere
-						(	m_vView32
-						)
-					;
-				case
-					ETag::Cylinder
-				:	return
-						ComputeVolumeCylinder
-						(	m_vView32
-						)
-					;
-				case
-					ETag::Cone
-				:	return
-						ComputeVolumeCone
-						(	m_vView32
-						)
-					;
-				case
-					ETag::Ellipsoid
-				:	return
-						ComputeVolumeEllipsoid
-						(	m_vView32
-						)
-					;
-				case
-					ETag::Head
-				:	return
-						ComputeVolumeHead
-						(	m_vView32
-						)
-					;
-			}
+			auto const
+				vHeight
+			=	m_vView32
+				[	7z
+				]
+			;
+			auto const
+				vWidth
+			=	m_vView32
+				[	8z
+				]
+			;
+			auto const
+				vDepth
+			=	m_vView32
+				[	9z
+				]
+			;
+			auto const
+				vComputeVolumeMultiplier
+			=	m_vView32
+				[	10z
+				]
+			;
 
-			::std::unreachable
-			();
+			return
+				vHeight
+			*	vWidth
+			*	vDepth
+			*	vComputeVolumeMultiplier
+			;
 		}
 	};
 
@@ -233,9 +153,6 @@ namespace
 		View32
 			m_vView32
 		;
-		::std::byte const
-		*	m_aTag
-		;
 
 		auto constexpr inline
 		(	operator++
@@ -245,9 +162,6 @@ namespace
 		{
 			++	m_vView32
 				.	m_vIndex
-			;
-			m_aTag
-			+=	TagSize
 			;
 			return
 				*this
@@ -262,12 +176,6 @@ namespace
 		->	Body3DReference
 		{	return
 			{	m_vView32
-			,	*
-				::std::launder
-				(	::std::bit_cast<ETag*>
-					(	m_aTag
-					)
-				)
 			};
 		}
 
@@ -327,9 +235,7 @@ namespace
 					[	static_cast<::std::size_t>
 						(	ByteSize
 							(	i_vCapacity
-							*	(	BodySize
-								+	TagSize
-								)
+							*	BodySize
 							).	get
 								()
 						)
@@ -395,12 +301,6 @@ namespace
 			auto const
 				aBuffer
 			=	m_aBuffer
-			;
-			auto const
-				aTagStart
-			=	aBuffer
-			+	m_vCapacity
-			*	BodySize
 			;
 
 			View32
@@ -504,16 +404,6 @@ namespace
 					);
 				break;
 			}
-
-			::std::construct_at
-			(	::std::bit_cast<ETag*>
-				(	aTagStart
-				+	vCount
-				*	TagSize
-				)
-			,	t_tBody
-				::	Tag
-			);
 		}
 
 		[[nodiscard]]
@@ -528,10 +418,6 @@ namespace
 				,	m_vCapacity
 				,	0
 				}
-			,	(	m_aBuffer
-				+	m_vCapacity
-				*	BodySize
-				)
 			};
 		}
 

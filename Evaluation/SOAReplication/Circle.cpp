@@ -57,30 +57,9 @@ export namespace
 			[5z, 0.0f]
 			[6z, 0.0f]
 			[7z, 0.0f]
-		;
-	}
-
-	[[nodiscard]]
-	auto constexpr inline
-	(	ComputeVolumeCircle
-	)	(	View32
-				i_vView32
-		)
-		noexcept
-	->	float
-	{
-		float const
-			vHeight
-		=	i_vView32[7z]
-		;
-
-		return
-			PiFraction
-			<	1z
-			,	4z
-			>{}
-		*	vHeight
-		*	vHeight
+			[8z, 0.0f]
+			[9z, 0.0f]
+			[10z, PiFraction<1z, 4z>{}.operator float()]
 		;
 	}
 }

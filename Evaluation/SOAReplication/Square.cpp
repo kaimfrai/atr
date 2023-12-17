@@ -56,27 +56,9 @@ export namespace
 			[5z, 0.0f]
 			[6z, 0.0f]
 			[7z, 0.0f]
-		;
-	}
-
-	[[nodiscard]]
-	auto constexpr inline
-	(	ComputeVolumeSquare
-	)	(	View32
-				i_vView32
-		)
-		noexcept
-	->	float
-	{
-		float const
-			vHeight
-		=	i_vView32[7z]
-		;
-
-		return
-			vHeight
-		*	vHeight
+			[8z, 0.0f]
+			[9z, 0.0f]
+			[10z, 1.0f]
 		;
 	}
 }
-

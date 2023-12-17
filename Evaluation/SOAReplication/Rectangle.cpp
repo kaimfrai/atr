@@ -60,34 +60,8 @@ export namespace
 			[6z, 0.0f]
 			[7z, 0.0f]
 			[8z, 0.0f]
-		;
-	}
-
-	[[nodiscard]]
-	auto constexpr inline
-	(	ComputeVolumeRectangle
-	)	(	View32
-				i_vView32
-		)
-		noexcept
-	->	float
-	{
-		float const
-			vHeight
-		=	i_vView32
-			[	7z
-			]
-		;
-		float const
-			vWidth
-		=	i_vView32
-			[	8z
-			]
-		;
-
-		return
-			vHeight
-		*	vWidth
+			[9z, 0.0f]
+			[10z, 1.0f]
 		;
 	}
 }
