@@ -1,3 +1,7 @@
+add_subdirectory(
+	Unlinkable
+)
+
 add_single_file_modules(
 	Size.cpp
 )
