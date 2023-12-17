@@ -31,30 +31,33 @@ auto constexpr inline
 	);
 }
 
-template
-	<	decltype(auto)
-		...	t_vpString
-	>
-struct
-	ID final
-:	Base
+export extern "C++"
 {
-	[[nodiscard]]
-	explicit(false) constexpr inline
-	(	operator
-		ImplicitHash
-	)	()	const
-		noexcept
-	{	char static constexpr
-			String
-			[]
-		{	::ToChar(t_vpString)
-			...
-		,	'\0'
-		};
+	template
+		<	decltype(auto)
+			...	t_vpString
+		>
+	struct
+		ID final
+	:	Base
+	{
+		[[nodiscard]]
+		explicit(false) constexpr inline
+		(	operator
+			ImplicitHash
+		)	()	const
+			noexcept
+		{	char static constexpr
+				String
+				[]
+			{	::ToChar(t_vpString)
+				...
+			,	'\0'
+			};
 
-		return
-			String
-		;
-	}
-};
+			return
+				String
+			;
+		}
+	};
+}
