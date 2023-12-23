@@ -20,7 +20,7 @@ static_assert
 
 Splitmix64 constexpr inline
 	Seed
-{	0x0123456789ABCDEF
+{	0x0123'4567'89AB'CDEFuz
 };
 
 static_assert

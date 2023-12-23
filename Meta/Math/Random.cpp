@@ -46,6 +46,7 @@ export namespace
 		)	(	::std::uint64_t
 					i_vSeed
 			)
+			noexcept
 		:	m_vState
 			{	i_vSeed
 			}
@@ -65,25 +66,25 @@ export namespace
 
 			vZ
 			=	(	vZ
-				^	(	vZ
+				xor	(	vZ
 					>>	30
 					)
 				)
-			*	0xbf58476d1ce4e5b9
+			*	0xBF58'476D'1CE4'E5B9uz
 			;
 
 			vZ
 			=	(	vZ
-				^	(	vZ
-						>>
-					27	)
+				xor	(	vZ
+					>>	27
+					)
 				)
-			*	0x94d049bb133111eb
+			*	0x94D0'49BB'1331'11EBuz
 			;
 
 			return
 				vZ
-			^	(	vZ
+			xor	(	vZ
 				>>	31
 				)
 			;
@@ -96,7 +97,7 @@ export namespace
 		->	Splitmix64&
 		{
 			m_vState
-			+=	0x9e3779b97f4a7c15
+			+=	0x9E37'79B9'7F4A'7C15uz
 			;
 			return
 			*	this
@@ -151,7 +152,7 @@ export namespace
 			m_vState
 			[	4
 			]
-		;
+		{};
 
 	public:
 		using
@@ -164,11 +165,18 @@ export namespace
 		=	::std::uint64_t
 		;
 
+		explicit(false) constexpr inline
+		(	Xoroshiro256StarStar
+		)	()
+			noexcept
+		=	default;
+
 		explicit(true) constexpr inline
 		(	Xoroshiro256StarStar
 		)	(	Splitmix64
 					i_vSeed
 			)
+			noexcept
 		:	m_vState
 			{	*	i_vSeed
 					++
@@ -190,11 +198,11 @@ export namespace
 		{	return
 				::std::rotl
 				(	(	m_vState[1]
-					*	5u
+					*	5uz
 					)
 				,	7
 				)
-			*	9u
+			*	9uz
 			;
 		}
 
@@ -207,7 +215,7 @@ export namespace
 			::std::uint64_t const
 				vTemp
 			=	(	m_vState[1]
-				<<	17u
+				<<	17uz
 				)
 			;
 
@@ -257,6 +265,66 @@ export namespace
 
 			return
 				vOld
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	Jump
+		)	(	Xoroshiro256StarStar
+					i_vBase
+			)
+			noexcept
+		->	Xoroshiro256StarStar
+		{
+			Xoroshiro256StarStar
+				vResult
+			{};
+
+			for	(	auto
+						vJump
+				:	{	0x180E'C6D3'3CFD'0ABAuz
+					,	0xD5A6'1266'F0C9'392Cuz
+					,	0xA958'2618'E03F'C9AAuz
+					,	0x39AB'DC45'29B1'661Cuz
+					}
+				)
+			{
+				for	(	int
+							vBit
+						=	0
+					;		vBit
+						<	64
+					; 	++vBit
+					)
+				{
+					if	(	vJump
+						&	(	1uz
+							<<	vBit
+							)
+						)
+					{
+						vResult.m_vState[0]
+						^=	i_vBase.m_vState[0]
+						;
+						vResult.m_vState[1]
+						^=	i_vBase.m_vState[1]
+						;
+						vResult.m_vState[2]
+						^=	i_vBase.m_vState[2]
+						;
+						vResult.m_vState[3]
+						^=	i_vBase.m_vState[3]
+						;
+					}
+
+					++	i_vBase
+					;
+				}
+			}
+
+			return
+				vResult
 			;
 		}
 	};
