@@ -59,11 +59,35 @@ export namespace
 	(	ConstructHead
 	)	(	View32
 				i_vView32
+		,	float
+				i_vRed
+		,	float
+				i_vGreen
+		,	float
+				i_vBlue
+		,	float
+				i_vAlpha
+		,	float
+				i_vLateral
+		,	float
+				i_vLongitudinal
+		,	float
+				i_vVertical
+		,	float
+				i_vHeight
 		)
 		noexcept
 	->	void
 	{	ConstructSphere
 		(	i_vView32
+		,	i_vRed
+		,	i_vGreen
+		,	i_vBlue
+		,	i_vAlpha
+		,	i_vLateral
+		,	i_vLongitudinal
+		,	i_vVertical
+		,	i_vHeight
 		);
 	}
 }

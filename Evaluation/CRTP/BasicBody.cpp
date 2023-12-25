@@ -19,13 +19,13 @@ export namespace
 				.	GetComputeSizeMultiplier
 					()
 			*	i_rBody
-				.	GetDepth
-					()
-			*	i_rBody
 				.	GetHeight
 					()
 			*	i_rBody
 				.	GetWidth
+					()
+			*	i_rBody
+				.	GetDepth
 					()
 			;
 		}

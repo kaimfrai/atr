@@ -22,7 +22,7 @@ export namespace
 		{	return
 				this
 				->	Shape2D
-				.	Width
+				.	Height
 			;
 		}
 	};

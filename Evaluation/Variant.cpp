@@ -1,5 +1,6 @@
 import Evaluation.Dependency.DynamicArray;
 import Evaluation.Dependency.PseudoRandomSequence;
+import Evaluation.Dependency.VerifyLoopSum;
 
 import Evaluation.CRTP.Circle;
 import Evaluation.CRTP.Ellipse;
@@ -84,184 +85,1032 @@ namespace
 	}
 }
 
-auto
-(	main
-)	(	int
-	,	char const
-		*	i_aArgValue
-			[]
+[[nodiscard]]
+auto inline
+(	ComputeVolumeSum
+)	(	PseudoRandomSequence
+			i_vRandomSequence
 	)
-->	int
+	noexcept
+->	float
 {
 	using namespace Bodies3D;
 
-	PseudoRandomSequence
-		vRandomSequence
-	{	i_aArgValue
-		[	1z
-		]
-	,	i_aArgValue
-		[	2z
-		]
-	};
-
 	DynamicArray<Body3D>
 		vElements
-	{	vRandomSequence
+	{	i_vRandomSequence
 		.	size
 			()
 	};
 
 	for	(	auto
-				vRandom
-			:	vRandomSequence
+			[	vType
+			,	vRed
+			,	vGreen
+			,	vBlue
+			,	vAlpha
+			,	vLateral
+			,	vLongitudinal
+			,	vVertical
+			,	vHeight
+			,	vWidth
+			,	vDepth
+			,	vEyeRed
+			,	vEyeGreen
+			,	vEyeBlue
+			,	vLeftEyeLateral
+			,	vEyeLongitudinal
+			,	vEyeVertical
+			,	vEyeHeight
+			,	vRightEyeLateral
+			,	_
+			]
+		:	i_vRandomSequence
 		)
 	{
 		switch
-			(	vRandom
+			(	vType
 			%	13
 			)
 		{	case
 				0
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Circle
-						>
+		:	{	auto
+				&	rCircle
+				=	get<Circle>
+					(	vElements
+					.	emplace_back
+						(	::std::in_place_type
+							<	Circle
+							>
+						)
 					)
 				;
+				rCircle
+				.	Shape2D
+				.	Color
+				.	Red
+				=	vRed
+				;
+				rCircle
+				.	Shape2D
+				.	Color
+				.	Green
+				=	vGreen
+				;
+				rCircle
+				.	Shape2D
+				.	Color
+				.	Blue
+				=	vBlue
+				;
+				rCircle
+				.	Shape2D
+				.	Color
+				.	Alpha
+				=	vAlpha
+				;
+				rCircle
+				.	Shape2D
+				.	Coordinates
+				.	Lateral
+				=	vLateral
+				;
+				rCircle
+				.	Shape2D
+				.	Coordinates
+				.	Longitudinal
+				=	vLongitudinal
+				;
+				rCircle
+				.	Shape2D
+				.	Coordinates
+				.	Vertical
+				=	vVertical
+				;
+				rCircle
+				.	Shape2D
+				.	Height
+				=	vHeight
+				;
+			}
 			break;
 
 			case
 				1
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Ellipse
-						>
+		:	{	auto
+				&	rEllipse
+				=	get<Ellipse>
+					(	vElements
+						.	emplace_back
+							(	::std::in_place_type
+								<	Ellipse
+								>
+							)
 					)
 				;
+				rEllipse
+				.	Shape2D
+				.	Color
+				.	Red
+				=	vRed
+				;
+				rEllipse
+				.	Shape2D
+				.	Color
+				.	Green
+				=	vGreen
+				;
+				rEllipse
+				.	Shape2D
+				.	Color
+				.	Blue
+				=	vBlue
+				;
+				rEllipse
+				.	Shape2D
+				.	Color
+				.	Alpha
+				=	vAlpha
+				;
+				rEllipse
+				.	Shape2D
+				.	Coordinates
+				.	Lateral
+				=	vLateral
+				;
+				rEllipse
+				.	Shape2D
+				.	Coordinates
+				.	Longitudinal
+				=	vLongitudinal
+				;
+				rEllipse
+				.	Shape2D
+				.	Coordinates
+				.	Vertical
+				=	vVertical
+				;
+				rEllipse
+				.	Shape2D
+				.	Height
+				=	vHeight
+				;
+				rEllipse
+				.	Shape2D
+				.	Width
+				=	vWidth
+				;
+			}
 			break;
 
 			case
 				2
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Rectangle
-						>
+		:	{	auto
+				&	rRectangle
+				=	get<Rectangle>
+					(	vElements
+						.	emplace_back
+							(	::std::in_place_type
+								<	Rectangle
+								>
+							)
 					)
 				;
+				rRectangle
+				.	Shape2D
+				.	Color
+				.	Red
+				=	vRed
+				;
+				rRectangle
+				.	Shape2D
+				.	Color
+				.	Green
+				=	vGreen
+				;
+				rRectangle
+				.	Shape2D
+				.	Color
+				.	Blue
+				=	vBlue
+				;
+				rRectangle
+				.	Shape2D
+				.	Color
+				.	Alpha
+				=	vAlpha
+				;
+				rRectangle
+				.	Shape2D
+				.	Coordinates
+				.	Lateral
+				=	vLateral
+				;
+				rRectangle
+				.	Shape2D
+				.	Coordinates
+				.	Longitudinal
+				=	vLongitudinal
+				;
+				rRectangle
+				.	Shape2D
+				.	Coordinates
+				.	Vertical
+				=	vVertical
+				;
+				rRectangle
+				.	Shape2D
+				.	Height
+				=	vHeight
+				;
+				rRectangle
+				.	Shape2D
+				.	Width
+				=	vWidth
+				;
+			}
 			break;
 
 			case
 				3
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Square
-						>
+		:	{	auto
+				&	rSquare
+				=	get<Square>
+					(	vElements
+						.	emplace_back
+							(	::std::in_place_type
+								<	Square
+								>
+							)
 					)
 				;
+				rSquare
+				.	Shape2D
+				.	Color
+				.	Red
+				=	vRed
+				;
+				rSquare
+				.	Shape2D
+				.	Color
+				.	Green
+				=	vGreen
+				;
+				rSquare
+				.	Shape2D
+				.	Color
+				.	Blue
+				=	vBlue
+				;
+				rSquare
+				.	Shape2D
+				.	Color
+				.	Alpha
+				=	vAlpha
+				;
+				rSquare
+				.	Shape2D
+				.	Coordinates
+				.	Lateral
+				=	vLateral
+				;
+				rSquare
+				.	Shape2D
+				.	Coordinates
+				.	Longitudinal
+				=	vLongitudinal
+				;
+				rSquare
+				.	Shape2D
+				.	Coordinates
+				.	Vertical
+				=	vVertical
+				;
+				rSquare
+				.	Shape2D
+				.	Height
+				=	vHeight
+				;
+			}
 			break;
 
 			case
 				4
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Triangle
-						>
+		:	{	auto
+				&	rTriangle
+				=	get<Triangle>
+					(	vElements
+						.	emplace_back
+							(	::std::in_place_type
+								<	Triangle
+								>
+							)
 					)
 				;
+				rTriangle
+				.	Shape2D
+				.	Color
+				.	Red
+				=	vRed
+				;
+				rTriangle
+				.	Shape2D
+				.	Color
+				.	Green
+				=	vGreen
+				;
+				rTriangle
+				.	Shape2D
+				.	Color
+				.	Blue
+				=	vBlue
+				;
+				rTriangle
+				.	Shape2D
+				.	Color
+				.	Alpha
+				=	vAlpha
+				;
+				rTriangle
+				.	Shape2D
+				.	Coordinates
+				.	Lateral
+				=	vLateral
+				;
+				rTriangle
+				.	Shape2D
+				.	Coordinates
+				.	Longitudinal
+				=	vLongitudinal
+				;
+				rTriangle
+				.	Shape2D
+				.	Coordinates
+				.	Vertical
+				=	vVertical
+				;
+				rTriangle
+				.	Shape2D
+				.	Height
+				=	vHeight
+				;
+				rTriangle
+				.	Shape2D
+				.	Width
+				=	vWidth
+				;
+			}
 			break;
 
 			case
 				5
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Cube
-						>
+		:	{	auto
+				&	rCube
+				=	get<Cube>
+					(	vElements
+						.	emplace_back
+							(	::std::in_place_type
+								<	Cube
+								>
+							)
 					)
 				;
+				rCube
+				.	Shape2D
+				.	Color
+				.	Red
+				=	vRed
+				;
+				rCube
+				.	Shape2D
+				.	Color
+				.	Green
+				=	vGreen
+				;
+				rCube
+				.	Shape2D
+				.	Color
+				.	Blue
+				=	vBlue
+				;
+				rCube
+				.	Shape2D
+				.	Color
+				.	Alpha
+				=	vAlpha
+				;
+				rCube
+				.	Shape2D
+				.	Coordinates
+				.	Lateral
+				=	vLateral
+				;
+				rCube
+				.	Shape2D
+				.	Coordinates
+				.	Longitudinal
+				=	vLongitudinal
+				;
+				rCube
+				.	Shape2D
+				.	Coordinates
+				.	Vertical
+				=	vVertical
+				;
+				rCube
+				.	Shape2D
+				.	Height
+				=	vHeight
+				;
+			}
 			break;
 
 			case
 				6
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Cuboid
-						>
+		:	{	auto
+				&	rCuboid
+				=	get<Cuboid>
+					(	vElements
+						.	emplace_back
+							(	::std::in_place_type
+								<	Cuboid
+								>
+							)
 					)
 				;
+				rCuboid
+				.	Shape2D
+				.	Color
+				.	Red
+				=	vRed
+				;
+				rCuboid
+				.	Shape2D
+				.	Color
+				.	Green
+				=	vGreen
+				;
+				rCuboid
+				.	Shape2D
+				.	Color
+				.	Blue
+				=	vBlue
+				;
+				rCuboid
+				.	Shape2D
+				.	Color
+				.	Alpha
+				=	vAlpha
+				;
+				rCuboid
+				.	Shape2D
+				.	Coordinates
+				.	Lateral
+				=	vLateral
+				;
+				rCuboid
+				.	Shape2D
+				.	Coordinates
+				.	Longitudinal
+				=	vLongitudinal
+				;
+				rCuboid
+				.	Shape2D
+				.	Coordinates
+				.	Vertical
+				=	vVertical
+				;
+				rCuboid
+				.	Shape2D
+				.	Height
+				=	vHeight
+				;
+				rCuboid
+				.	Shape2D
+				.	Width
+				=	vWidth
+				;
+				rCuboid
+				.	Depth
+				=	vDepth
+				;
+			}
 			break;
 
 			case
 				7
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Pyramid
-						>
+		:	{	auto
+				&	rPyramid
+				=	get<Pyramid>
+					(	vElements
+						.	emplace_back
+							(	::std::in_place_type
+								<	Pyramid
+								>
+							)
 					)
 				;
+				rPyramid
+				.	Shape2D
+				.	Color
+				.	Red
+				=	vRed
+				;
+				rPyramid
+				.	Shape2D
+				.	Color
+				.	Green
+				=	vGreen
+				;
+				rPyramid
+				.	Shape2D
+				.	Color
+				.	Blue
+				=	vBlue
+				;
+				rPyramid
+				.	Shape2D
+				.	Color
+				.	Alpha
+				=	vAlpha
+				;
+				rPyramid
+				.	Shape2D
+				.	Coordinates
+				.	Lateral
+				=	vLateral
+				;
+				rPyramid
+				.	Shape2D
+				.	Coordinates
+				.	Longitudinal
+				=	vLongitudinal
+				;
+				rPyramid
+				.	Shape2D
+				.	Coordinates
+				.	Vertical
+				=	vVertical
+				;
+				rPyramid
+				.	Shape2D
+				.	Height
+				=	vHeight
+				;
+				rPyramid
+				.	Shape2D
+				.	Width
+				=	vWidth
+				;
+				rPyramid
+				.	Depth
+				=	vDepth
+				;
+			}
 			break;
 
 			case
 				8
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Sphere
-						>
+		:	{	auto
+				&	rSphere
+				=	get<Sphere>
+					(	vElements
+						.	emplace_back
+							(	::std::in_place_type
+								<	Sphere
+								>
+							)
 					)
 				;
+				rSphere
+				.	Shape2D
+				.	Color
+				.	Red
+				=	vRed
+				;
+				rSphere
+				.	Shape2D
+				.	Color
+				.	Green
+				=	vGreen
+				;
+				rSphere
+				.	Shape2D
+				.	Color
+				.	Blue
+				=	vBlue
+				;
+				rSphere
+				.	Shape2D
+				.	Color
+				.	Alpha
+				=	vAlpha
+				;
+				rSphere
+				.	Shape2D
+				.	Coordinates
+				.	Lateral
+				=	vLateral
+				;
+				rSphere
+				.	Shape2D
+				.	Coordinates
+				.	Longitudinal
+				=	vLongitudinal
+				;
+				rSphere
+				.	Shape2D
+				.	Coordinates
+				.	Vertical
+				=	vVertical
+				;
+				rSphere
+				.	Shape2D
+				.	Height
+				=	vHeight
+				;
+			}
 			break;
 
 			case
 				9
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Cylinder
-						>
+		:	{	auto
+				&	rCylinder
+				=	get<Cylinder>
+					(	vElements
+						.	emplace_back
+							(	::std::in_place_type
+								<	Cylinder
+								>
+							)
 					)
 				;
+				rCylinder
+				.	Shape2D
+				.	Color
+				.	Red
+				=	vRed
+				;
+				rCylinder
+				.	Shape2D
+				.	Color
+				.	Green
+				=	vGreen
+				;
+				rCylinder
+				.	Shape2D
+				.	Color
+				.	Blue
+				=	vBlue
+				;
+				rCylinder
+				.	Shape2D
+				.	Color
+				.	Alpha
+				=	vAlpha
+				;
+				rCylinder
+				.	Shape2D
+				.	Coordinates
+				.	Lateral
+				=	vLateral
+				;
+				rCylinder
+				.	Shape2D
+				.	Coordinates
+				.	Longitudinal
+				=	vLongitudinal
+				;
+				rCylinder
+				.	Shape2D
+				.	Coordinates
+				.	Vertical
+				=	vVertical
+				;
+				rCylinder
+				.	Shape2D
+				.	Height
+				=	vHeight
+				;
+				rCylinder
+				.	Depth
+				=	vDepth
+				;
+			}
 			break;
 
 			case
 				10
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Cone
-						>
+		:	{	auto
+				&	rCone
+				=	get<Cone>
+					(	vElements
+						.	emplace_back
+							(	::std::in_place_type
+								<	Cone
+								>
+							)
 					)
 				;
+				rCone
+				.	Shape2D
+				.	Color
+				.	Red
+				=	vRed
+				;
+				rCone
+				.	Shape2D
+				.	Color
+				.	Green
+				=	vGreen
+				;
+				rCone
+				.	Shape2D
+				.	Color
+				.	Blue
+				=	vBlue
+				;
+				rCone
+				.	Shape2D
+				.	Color
+				.	Alpha
+				=	vAlpha
+				;
+				rCone
+				.	Shape2D
+				.	Coordinates
+				.	Lateral
+				=	vLateral
+				;
+				rCone
+				.	Shape2D
+				.	Coordinates
+				.	Longitudinal
+				=	vLongitudinal
+				;
+				rCone
+				.	Shape2D
+				.	Coordinates
+				.	Vertical
+				=	vVertical
+				;
+				rCone
+				.	Shape2D
+				.	Height
+				=	vHeight
+				;
+				rCone
+				.	Depth
+				=	vDepth
+				;
+			}
 			break;
 
 			case
 				11
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Ellipsoid
-						>
+		:	{	auto
+				&	rEllipsoid
+				=	get<Ellipsoid>
+					(	vElements
+						.	emplace_back
+							(	::std::in_place_type
+								<	Ellipsoid
+								>
+							)
 					)
 				;
+				rEllipsoid
+				.	Shape2D
+				.	Color
+				.	Red
+				=	vRed
+				;
+				rEllipsoid
+				.	Shape2D
+				.	Color
+				.	Green
+				=	vGreen
+				;
+				rEllipsoid
+				.	Shape2D
+				.	Color
+				.	Blue
+				=	vBlue
+				;
+				rEllipsoid
+				.	Shape2D
+				.	Color
+				.	Alpha
+				=	vAlpha
+				;
+				rEllipsoid
+				.	Shape2D
+				.	Coordinates
+				.	Lateral
+				=	vLateral
+				;
+				rEllipsoid
+				.	Shape2D
+				.	Coordinates
+				.	Longitudinal
+				=	vLongitudinal
+				;
+				rEllipsoid
+				.	Shape2D
+				.	Coordinates
+				.	Vertical
+				=	vVertical
+				;
+				rEllipsoid
+				.	Shape2D
+				.	Height
+				=	vHeight
+				;
+				rEllipsoid
+				.	Shape2D
+				.	Width
+				=	vWidth
+				;
+				rEllipsoid
+				.	Depth
+				=	vDepth
+				;
+			}
 			break;
 
 			case
 				12
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Head
-						>
+		:	{	auto
+				&	rHead
+				=	get<Head>
+					(	vElements
+						.	emplace_back
+							(	::std::in_place_type
+								<	Head
+								>
+							)
 					)
 				;
+				rHead
+				.	Shape2D
+				.	Color
+				.	Red
+				=	vRed
+				;
+				rHead
+				.	Shape2D
+				.	Color
+				.	Green
+				=	vGreen
+				;
+				rHead
+				.	Shape2D
+				.	Color
+				.	Blue
+				=	vBlue
+				;
+				rHead
+				.	Shape2D
+				.	Color
+				.	Alpha
+				=	vAlpha
+				;
+				rHead
+				.	Shape2D
+				.	Coordinates
+				.	Lateral
+				=	vLateral
+				;
+				rHead
+				.	Shape2D
+				.	Coordinates
+				.	Longitudinal
+				=	vLongitudinal
+				;
+				rHead
+				.	Shape2D
+				.	Coordinates
+				.	Vertical
+				=	vVertical
+				;
+				rHead
+				.	Shape2D
+				.	Height
+				=	vHeight
+				;
+
+				rHead
+				.	LeftEye
+				.	Shape2D
+				.	Color
+				.	Red
+				=	vEyeRed
+				;
+				rHead
+				.	LeftEye
+				.	Shape2D
+				.	Color
+				.	Green
+				=	vEyeGreen
+				;
+				rHead
+				.	LeftEye
+				.	Shape2D
+				.	Color
+				.	Blue
+				=	vEyeBlue
+				;
+				rHead
+				.	LeftEye
+				.	Shape2D
+				.	Color
+				.	Alpha
+				=	vAlpha
+				;
+				rHead
+				.	LeftEye
+				.	Shape2D
+				.	Coordinates
+				.	Lateral
+				=	vLeftEyeLateral
+				;
+				rHead
+				.	LeftEye
+				.	Shape2D
+				.	Coordinates
+				.	Longitudinal
+				=	vEyeLongitudinal
+				;
+				rHead
+				.	LeftEye
+				.	Shape2D
+				.	Coordinates
+				.	Vertical
+				=	vEyeVertical
+				;
+				rHead
+				.	LeftEye
+				.	Shape2D
+				.	Height
+				=	vEyeHeight
+				;
+
+				rHead
+				.	RightEye
+				.	Shape2D
+				.	Color
+				.	Red
+				=	vEyeRed
+				;
+				rHead
+				.	RightEye
+				.	Shape2D
+				.	Color
+				.	Green
+				=	vEyeGreen
+				;
+				rHead
+				.	RightEye
+				.	Shape2D
+				.	Color
+				.	Blue
+				=	vEyeBlue
+				;
+				rHead
+				.	RightEye
+				.	Shape2D
+				.	Color
+				.	Alpha
+				=	vAlpha
+				;
+				rHead
+				.	RightEye
+				.	Shape2D
+				.	Coordinates
+				.	Lateral
+				=	vRightEyeLateral
+				;
+				rHead
+				.	RightEye
+				.	Shape2D
+				.	Coordinates
+				.	Longitudinal
+				=	vEyeLongitudinal
+				;
+				rHead
+				.	RightEye
+				.	Shape2D
+				.	Coordinates
+				.	Vertical
+				=	vEyeVertical
+				;
+				rHead
+				.	RightEye
+				.	Shape2D
+				.	Height
+				=	vEyeHeight
+				;
+			}
 			break;
 		}
 	}
@@ -270,9 +1119,9 @@ auto
 		vLoopSum
 	{};
 
-	for	(	auto
+	for	(	auto const
 			&	rBody
-			:	vElements
+		:	vElements
 		)
 	{
 		vLoopSum
@@ -282,15 +1131,41 @@ auto
 		;
 	}
 
-	auto static constexpr
-		vExpectedValue
-	=	0
+	return
+		vLoopSum
+	;
+}
+
+auto
+(	main
+)	(	int
+	,	char const
+		*	i_aArgValue
+			[]
+	)
+->	int
+{
+	PseudoRandomSequence const
+		vRandomSequence
+	{	i_aArgValue
+		[	1z
+		]
+	,	i_aArgValue
+		[	2z
+		]
+	};
+
+	float const
+		vLoopSum
+	=	::ComputeVolumeSum
+		(	vRandomSequence
+		)
 	;
 
 	return
-		static_cast<int>
+		::VerifyLoopSum
 		(	vLoopSum
+		,	vRandomSequence
 		)
-	-	vExpectedValue
 	;
 }

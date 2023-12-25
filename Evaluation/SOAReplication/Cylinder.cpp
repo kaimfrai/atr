@@ -48,20 +48,38 @@ export namespace
 	(	ConstructCylinder
 	)	(	View32
 				i_vView32
+		,	float
+				i_vRed
+		,	float
+				i_vGreen
+		,	float
+				i_vBlue
+		,	float
+				i_vAlpha
+		,	float
+				i_vLateral
+		,	float
+				i_vLongitudinal
+		,	float
+				i_vVertical
+		,	float
+				i_vHeight
+		,	float
+				i_vDepth
 		)
 		noexcept
 	->	void
 	{	i_vView32
-			[0z, 0.0f]
-			[1z, 0.0f]
-			[2z, 0.0f]
-			[3z, 0.0f]
-			[4z, 0.0f]
-			[5z, 0.0f]
-			[6z, 0.0f]
-			[7z, 0.0f]
-			[8z, 0.0f]
-			[9z, 0.0f]
+			[0z, i_vRed]
+			[1z, i_vGreen]
+			[2z, i_vBlue]
+			[3z, i_vAlpha]
+			[4z, i_vLateral]
+			[5z, i_vLongitudinal]
+			[6z, i_vVertical]
+			[7z, i_vHeight]
+			[8z, i_vHeight]
+			[9z, i_vDepth]
 			[10z, PiFraction<1z, 4z>{}.operator float()]
 		;
 	}

@@ -1,7 +1,7 @@
 export module Evaluation.CRTP.Circle;
 
 import Evaluation.CRTP.CircularShape;
-import Evaluation.CRTP.HeightIsWidth;
+import Evaluation.CRTP.WidthIsHeight;
 
 export namespace
 	Shapes2D
@@ -9,6 +9,6 @@ export namespace
 	struct
 		Circle
 	:	CircularShape
-	,	HeightIsWidth
+	,	WidthIsHeight
 	{};
 }

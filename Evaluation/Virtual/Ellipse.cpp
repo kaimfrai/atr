@@ -10,18 +10,18 @@ export namespace
 	:	CircularShape
 	{
 		float
-			Height
+			Width
 		;
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	GetHeight
+		(	GetWidth
 		)	()	const
 			noexcept
 		->	float
 			override
 		{	return
-				Height
+				Width
 			;
 		}
 	};

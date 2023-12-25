@@ -12,18 +12,18 @@ export namespace
 	:	BasicShape
 	{
 		float
-			Width
+			Height
 		;
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	GetWidth
+		(	GetHeight
 		)	()	const
 			noexcept
 		->	float
 			override
 		{	return
-				Width
+				Height
 			;
 		}
 

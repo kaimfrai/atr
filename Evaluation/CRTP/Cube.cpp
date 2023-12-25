@@ -2,7 +2,7 @@ export module Evaluation.CRTP.Cube;
 
 import Evaluation.CRTP.Square;
 import Evaluation.CRTP.CubicBody;
-import Evaluation.CRTP.DepthIsWidth;
+import Evaluation.CRTP.DepthIsHeight;
 
 export namespace
 	Bodies3D
@@ -12,6 +12,6 @@ export namespace
 	:	CubicBody
 		<	Shapes2D::Square
 		>
-	,	DepthIsWidth
+	,	DepthIsHeight
 	{};
 }

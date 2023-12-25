@@ -4,7 +4,6 @@ import ATR.Address;
 import ATR.Erase;
 
 import Meta.ID;
-import Meta.Memory.Size;
 import Meta.String.Literal;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
@@ -12,7 +11,6 @@ import Meta.Unlinkable;
 
 import Std;
 
-using ::Meta::ByteSize;
 using ::Meta::ID;
 using ::Meta::String::Literal;
 using ::Meta::Type;
@@ -33,13 +31,13 @@ export namespace
 		(	ElementSize
 		)	()
 			noexcept
-		->	ByteSize
+		->	::std::size_t
 		{	return
-			{	::std::max
+				::std::max
 				({	sizeof(t_tpImplementer)
 					...
 				})
-			};
+			;
 		}
 
 		[[nodiscard]]

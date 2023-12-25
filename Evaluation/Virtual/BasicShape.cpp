@@ -40,12 +40,11 @@ export namespace
 		BasicShape
 	:	IShape
 	{
-		Point
-			Coordinates
-		;
-
 		RGBAColor
 			Color
+		;
+		Point
+			Coordinates
 		;
 
 		[[nodiscard]]

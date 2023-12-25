@@ -370,6 +370,28 @@ export namespace
 			);
 		}
 
+		template
+			<	typename
+					t_tObject
+			>
+		[[nodiscard]]
+		explicit(true) constexpr inline
+		(	operator
+			t_tObject&
+		)	()	&
+			noexcept
+		{
+			ObjectReference
+				rObject
+			=	*this
+			;
+			return
+				rObject
+				.	operator t_tObject&
+					()
+			;
+		}
+
 		constexpr inline
 		(	compl
 			ObjectValue

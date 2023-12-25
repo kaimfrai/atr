@@ -4,25 +4,20 @@ import ATR.Erase;
 import ATR.Instance;
 
 import Meta.ID;
-import Meta.Memory.Size.Arithmetic;
-import Meta.Memory.Size.PointerArithmetic;
-import Meta.Memory.Size.Scale;
-import Meta.Memory.Size;
 import Meta.Token.Type;
 
 import Std;
 
-using ::Meta::ByteSize;
 using ::Meta::ProtoID;
 using ::Meta::Type;
 
 export namespace
 	Bodies3D
 {
-	ByteSize constexpr inline
+	auto constexpr inline
 		TagSize
-	{	sizeof(unsigned char)
-	};
+	=	sizeof(unsigned char)
+	;
 
 	template
 		<	auto const
@@ -165,15 +160,10 @@ export namespace
 			{	new	(	::std::nothrow
 					)
 				::std::byte
-					[	static_cast<::std::size_t>
-						(	ByteSize
-							(	i_vCapacity
-							*	(	t_rInterface
-									.	ElementSize
-								+	TagSize
-								)
-							).	get
-								()
+					[	i_vCapacity
+					*	(	t_rInterface
+							.	ElementSize
+						+	TagSize
 						)
 					]
 			}
@@ -211,10 +201,9 @@ export namespace
 
 			for	(	auto
 						vIndex
-					=	0z
-				;	(	vIndex
+					=	0u
+				;		vIndex
 					<	vCount
-					)
 				;	++	vIndex
 				)
 			{
@@ -222,8 +211,8 @@ export namespace
 				.	Destroy
 					(	::ATR::RErasure
 						{	aBuffer
-							+	vIndex
-							*	vElementSize
+						+	vIndex
+						*	vElementSize
 						}
 					,	*
 						::std::launder
@@ -249,6 +238,7 @@ export namespace
 					i_vTypeName
 			)	&
 			noexcept
+		->	decltype(auto)
 		{
 			auto const
 				vBodySize
@@ -280,13 +270,16 @@ export namespace
 				>
 			;
 
-			::std::construct_at
-			(	::std::bit_cast<tBody*>
-				(	aBuffer
-				+	vCount
-				*	vBodySize
+			auto
+			*	aBody
+			=	::std::construct_at
+				(	::std::bit_cast<tBody*>
+					(	aBuffer
+					+	vCount
+					*	vBodySize
+					)
 				)
-			);
+			;
 			::std::construct_at
 			(	::std::bit_cast<unsigned char*>
 				(	aTagStart
@@ -298,6 +291,10 @@ export namespace
 					(	Type<tBody>
 					)
 			);
+
+			return
+			*	aBody
+			;
 		}
 
 		[[nodiscard]]

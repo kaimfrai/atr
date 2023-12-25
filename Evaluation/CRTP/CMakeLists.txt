@@ -2,8 +2,8 @@ add_single_file_modules(
 	SeparateDepth.cpp
 	SeparateHeight.cpp
 	SeparateWidth.cpp
-	DepthIsWidth.cpp
-	HeightIsWidth.cpp
+	DepthIsHeight.cpp
+	WidthIsHeight.cpp
 
 	BasicShape.cpp
 	CircularShape.cpp

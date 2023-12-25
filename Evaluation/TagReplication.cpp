@@ -1,4 +1,5 @@
 import Evaluation.Dependency.PseudoRandomSequence;
+import Evaluation.Dependency.VerifyLoopSum;
 
 import Evaluation.TagReplication.Tag;
 import Evaluation.TagReplication.Circle;
@@ -15,14 +16,7 @@ import Evaluation.TagReplication.Cone;
 import Evaluation.TagReplication.Ellipsoid;
 import Evaluation.TagReplication.Head;
 
-import Meta.Memory.Size;
-import Meta.Memory.Size.Arithmetic;
-import Meta.Memory.Size.Scale;
-import Meta.Memory.Size.PointerArithmetic;
-
 import Std;
-
-using ::Meta::ByteSize;
 
 namespace
 	Bodies3D
@@ -86,15 +80,14 @@ namespace
 		;
 	};
 
-
-	ByteSize constexpr inline
+	auto constexpr inline
 		BodySize
-	{	sizeof(Body3D)
-	};
-	ByteSize constexpr inline
+	=	sizeof(Body3D)
+	;
+	auto constexpr inline
 		TagSize
-	{	sizeof(ETag)
-	};
+	=	sizeof(ETag)
+	;
 
 	struct
 		Body3DReference
@@ -208,7 +201,6 @@ namespace
 						)
 					;
 			}
-
 			::std::unreachable
 			();
 		}
@@ -311,14 +303,9 @@ namespace
 			{	new	(	::std::nothrow
 					)
 				::std::byte
-					[	static_cast<::std::size_t>
-						(	ByteSize
-							(	i_vCapacity
-							*	(	BodySize
-								+	TagSize
-								)
-							).	get
-								()
+					[	i_vCapacity
+					*	(	BodySize
+						+	TagSize
 						)
 					]
 			}
@@ -350,10 +337,9 @@ namespace
 
 			for	(	auto
 						vIndex
-					=	0z
-				;	(	vIndex
+					=	0u
+				;		vIndex
 					<	vCount
-					)
 				;	++	vIndex
 				)
 			{
@@ -410,6 +396,7 @@ namespace
 				>
 			)	&
 			noexcept
+		->	t_tBody&
 		{
 			auto const
 				vCount
@@ -427,13 +414,16 @@ namespace
 			*	BodySize
 			;
 
-			::std::construct_at
-			(	::std::bit_cast<t_tBody*>
-				(	aBuffer
-				+	vCount
-				*	BodySize
+			auto
+			*	aBody
+			=	::std::construct_at
+				(	::std::bit_cast<t_tBody*>
+					(	aBuffer
+					+	vCount
+					*	BodySize
+					)
 				)
-			);
+			;
 
 			::std::construct_at
 			(	::std::bit_cast<ETag*>
@@ -444,6 +434,10 @@ namespace
 			,	t_tBody
 				::	Tag
 			);
+
+			return
+			*	aBody
+			;
 		}
 
 		[[nodiscard]]
@@ -476,186 +470,752 @@ namespace
 	};
 }
 
-auto
-(	main
-)	(	int
-	,	char const
-		*	i_aArgValue
-			[]
+[[nodiscard]]
+auto inline
+(	ComputeVolumeSum
+)	(	PseudoRandomSequence
+			i_vRandomSequence
 	)
-->	int
+	noexcept
+->	float
 {
 	using namespace Bodies3D;
-
-	PseudoRandomSequence
-		vRandomSequence
-	{	i_aArgValue
-		[	1z
-		]
-	,	i_aArgValue
-		[	2z
-		]
-	};
 
 	VolumeComputer
 		vElements
 	{	static_cast<::std::uint32_t>
-		(	vRandomSequence
+		(	i_vRandomSequence
 			.	size
 				()
 		)
 	};
 
 	for	(	auto
-				vRandom
-		:	vRandomSequence
+			[	vType
+			,	vRed
+			,	vGreen
+			,	vBlue
+			,	vAlpha
+			,	vLateral
+			,	vLongitudinal
+			,	vVertical
+			,	vHeight
+			,	vWidth
+			,	vDepth
+			,	vEyeRed
+			,	vEyeGreen
+			,	vEyeBlue
+			,	vLeftEyeLateral
+			,	vEyeLongitudinal
+			,	vEyeVertical
+			,	vEyeHeight
+			,	vRightEyeLateral
+			,	_
+			]
+		:	i_vRandomSequence
 		)
 	{
 		switch
-			(	vRandom
+			(	vType
 			%	13
 			)
 		{	case
 				0
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Circle
-						>
-					)
+		:	{	auto
+				&	rCircle
+				=	vElements
+					.	emplace_back
+						(	::std::in_place_type
+							<	Bodies3D::Circle
+							>
+						)
 				;
+				rCircle
+				.	ColorRed
+				=	vRed
+				;
+				rCircle
+				.	ColorGreen
+				=	vGreen
+				;
+				rCircle
+				.	ColorBlue
+				=	vBlue
+				;
+				rCircle
+				.	ColorAlpha
+				=	vAlpha
+				;
+				rCircle
+				.	PointLateral
+				=	vLateral
+				;
+				rCircle
+				.	PointLongitudinal
+				=	vLongitudinal
+				;
+				rCircle
+				.	PointVertical
+				=	vVertical
+				;
+				rCircle
+				.	Height
+				=	vHeight
+				;
+			}
 			break;
 
 			case
 				1
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Ellipse
-						>
-					)
+		:	{	auto
+				&	rEllipse
+				=	vElements
+					.	emplace_back
+						(	::std::in_place_type
+							<	Bodies3D::Ellipse
+							>
+						)
 				;
+				rEllipse
+				.	ColorRed
+				=	vRed
+				;
+				rEllipse
+				.	ColorGreen
+				=	vGreen
+				;
+				rEllipse
+				.	ColorBlue
+				=	vBlue
+				;
+				rEllipse
+				.	ColorAlpha
+				=	vAlpha
+				;
+				rEllipse
+				.	PointLateral
+				=	vLateral
+				;
+				rEllipse
+				.	PointLongitudinal
+				=	vLongitudinal
+				;
+				rEllipse
+				.	PointVertical
+				=	vVertical
+				;
+				rEllipse
+				.	Height
+				=	vHeight
+				;
+				rEllipse
+				.	Width
+				=	vWidth
+				;
+			}
 			break;
 
 			case
 				2
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Rectangle
-						>
-					)
+		:	{	auto
+				&	rRectangle
+				=	vElements
+					.	emplace_back
+						(	::std::in_place_type
+							<	Rectangle
+							>
+						)
 				;
+				rRectangle
+				.	ColorRed
+				=	vRed
+				;
+				rRectangle
+				.	ColorGreen
+				=	vGreen
+				;
+				rRectangle
+				.	ColorBlue
+				=	vBlue
+				;
+				rRectangle
+				.	ColorAlpha
+				=	vAlpha
+				;
+				rRectangle
+				.	PointLateral
+				=	vLateral
+				;
+				rRectangle
+				.	PointLongitudinal
+				=	vLongitudinal
+				;
+				rRectangle
+				.	PointVertical
+				=	vVertical
+				;
+				rRectangle
+				.	Height
+				=	vHeight
+				;
+				rRectangle
+				.	Width
+				=	vWidth
+				;
+			}
 			break;
 
 			case
 				3
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Square
-						>
-					)
+		:	{	auto
+				&	rSquare
+				=	vElements
+					.	emplace_back
+						(	::std::in_place_type
+							<	Square
+							>
+						)
 				;
+				rSquare
+				.	ColorRed
+				=	vRed
+				;
+				rSquare
+				.	ColorGreen
+				=	vGreen
+				;
+				rSquare
+				.	ColorBlue
+				=	vBlue
+				;
+				rSquare
+				.	ColorAlpha
+				=	vAlpha
+				;
+				rSquare
+				.	PointLateral
+				=	vLateral
+				;
+				rSquare
+				.	PointLongitudinal
+				=	vLongitudinal
+				;
+				rSquare
+				.	PointVertical
+				=	vVertical
+				;
+				rSquare
+				.	Height
+				=	vHeight
+				;
+			}
 			break;
 
 			case
 				4
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Triangle
-						>
-					)
+		:	{	auto
+				&	rTriangle
+				=	vElements
+					.	emplace_back
+						(	::std::in_place_type
+							<	Triangle
+							>
+						)
 				;
+				rTriangle
+				.	ColorRed
+				=	vRed
+				;
+				rTriangle
+				.	ColorGreen
+				=	vGreen
+				;
+				rTriangle
+				.	ColorBlue
+				=	vBlue
+				;
+				rTriangle
+				.	ColorAlpha
+				=	vAlpha
+				;
+				rTriangle
+				.	PointLateral
+				=	vLateral
+				;
+				rTriangle
+				.	PointLongitudinal
+				=	vLongitudinal
+				;
+				rTriangle
+				.	PointVertical
+				=	vVertical
+				;
+				rTriangle
+				.	Height
+				=	vHeight
+				;
+				rTriangle
+				.	Width
+				=	vWidth
+				;
+			}
 			break;
 
 			case
 				5
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Cube
-						>
-					)
+		:	{	auto
+				&	rCube
+				=	vElements
+					.	emplace_back
+						(	::std::in_place_type
+							<	Cube
+							>
+						)
 				;
+				rCube
+				.	ColorRed
+				=	vRed
+				;
+				rCube
+				.	ColorGreen
+				=	vGreen
+				;
+				rCube
+				.	ColorBlue
+				=	vBlue
+				;
+				rCube
+				.	ColorAlpha
+				=	vAlpha
+				;
+				rCube
+				.	PointLateral
+				=	vLateral
+				;
+				rCube
+				.	PointLongitudinal
+				=	vLongitudinal
+				;
+				rCube
+				.	PointVertical
+				=	vVertical
+				;
+				rCube
+				.	Height
+				=	vHeight
+				;
+			}
 			break;
 
 			case
 				6
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Cuboid
-						>
-					)
+		:	{	auto
+				&	rCuboid
+				=	vElements
+					.	emplace_back
+						(	::std::in_place_type
+							<	Cuboid
+							>
+						)
 				;
+				rCuboid
+				.	ColorRed
+				=	vRed
+				;
+				rCuboid
+				.	ColorGreen
+				=	vGreen
+				;
+				rCuboid
+				.	ColorBlue
+				=	vBlue
+				;
+				rCuboid
+				.	ColorAlpha
+				=	vAlpha
+				;
+				rCuboid
+				.	PointLateral
+				=	vLateral
+				;
+				rCuboid
+				.	PointLongitudinal
+				=	vLongitudinal
+				;
+				rCuboid
+				.	PointVertical
+				=	vVertical
+				;
+				rCuboid
+				.	Height
+				=	vHeight
+				;
+				rCuboid
+				.	Width
+				=	vWidth
+				;
+				rCuboid
+				.	Depth
+				=	vDepth
+				;
+			}
 			break;
 
 			case
 				7
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Pyramid
-						>
-					)
+		:	{	auto
+				&	rPyramid
+				=	vElements
+					.	emplace_back
+						(	::std::in_place_type
+							<	Pyramid
+							>
+						)
 				;
+				rPyramid
+				.	ColorRed
+				=	vRed
+				;
+				rPyramid
+				.	ColorGreen
+				=	vGreen
+				;
+				rPyramid
+				.	ColorBlue
+				=	vBlue
+				;
+				rPyramid
+				.	ColorAlpha
+				=	vAlpha
+				;
+				rPyramid
+				.	PointLateral
+				=	vLateral
+				;
+				rPyramid
+				.	PointLongitudinal
+				=	vLongitudinal
+				;
+				rPyramid
+				.	PointVertical
+				=	vVertical
+				;
+				rPyramid
+				.	Height
+				=	vHeight
+				;
+				rPyramid
+				.	Width
+				=	vWidth
+				;
+				rPyramid
+				.	Depth
+				=	vDepth
+				;
+			}
 			break;
 
 			case
 				8
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Sphere
-						>
-					)
+		:	{	auto
+				&	rSphere
+				=	vElements
+					.	emplace_back
+						(	::std::in_place_type
+							<	Sphere
+							>
+						)
 				;
+				rSphere
+				.	ColorRed
+				=	vRed
+				;
+				rSphere
+				.	ColorGreen
+				=	vGreen
+				;
+				rSphere
+				.	ColorBlue
+				=	vBlue
+				;
+				rSphere
+				.	ColorAlpha
+				=	vAlpha
+				;
+				rSphere
+				.	PointLateral
+				=	vLateral
+				;
+				rSphere
+				.	PointLongitudinal
+				=	vLongitudinal
+				;
+				rSphere
+				.	PointVertical
+				=	vVertical
+				;
+				rSphere
+				.	Height
+				=	vHeight
+				;
+			}
 			break;
 
 			case
 				9
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Cylinder
-						>
-					)
+		:	{	auto
+				&	rCylinder
+				=	vElements
+					.	emplace_back
+						(	::std::in_place_type
+							<	Cylinder
+							>
+						)
 				;
+				rCylinder
+				.	ColorRed
+				=	vRed
+				;
+				rCylinder
+				.	ColorGreen
+				=	vGreen
+				;
+				rCylinder
+				.	ColorBlue
+				=	vBlue
+				;
+				rCylinder
+				.	ColorAlpha
+				=	vAlpha
+				;
+				rCylinder
+				.	PointLateral
+				=	vLateral
+				;
+				rCylinder
+				.	PointLongitudinal
+				=	vLongitudinal
+				;
+				rCylinder
+				.	PointVertical
+				=	vVertical
+				;
+				rCylinder
+				.	Height
+				=	vHeight
+				;
+				rCylinder
+				.	Depth
+				=	vDepth
+				;
+			}
 			break;
 
 			case
 				10
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Cone
-						>
-					)
+		:	{	auto
+				&	rCone
+				=	vElements
+					.	emplace_back
+						(	::std::in_place_type
+							<	Cone
+							>
+						)
 				;
+				rCone
+				.	ColorRed
+				=	vRed
+				;
+				rCone
+				.	ColorGreen
+				=	vGreen
+				;
+				rCone
+				.	ColorBlue
+				=	vBlue
+				;
+				rCone
+				.	ColorAlpha
+				=	vAlpha
+				;
+				rCone
+				.	PointLateral
+				=	vLateral
+				;
+				rCone
+				.	PointLongitudinal
+				=	vLongitudinal
+				;
+				rCone
+				.	PointVertical
+				=	vVertical
+				;
+				rCone
+				.	Height
+				=	vHeight
+				;
+				rCone
+				.	Depth
+				=	vDepth
+				;
+			}
 			break;
 
 			case
 				11
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Ellipsoid
-						>
-					)
+		:	{	auto
+				&	rEllipsoid
+				=	vElements
+					.	emplace_back
+						(	::std::in_place_type
+							<	Ellipsoid
+							>
+						)
 				;
+				rEllipsoid
+				.	ColorRed
+				=	vRed
+				;
+				rEllipsoid
+				.	ColorGreen
+				=	vGreen
+				;
+				rEllipsoid
+				.	ColorBlue
+				=	vBlue
+				;
+				rEllipsoid
+				.	ColorAlpha
+				=	vAlpha
+				;
+				rEllipsoid
+				.	PointLateral
+				=	vLateral
+				;
+				rEllipsoid
+				.	PointLongitudinal
+				=	vLongitudinal
+				;
+				rEllipsoid
+				.	PointVertical
+				=	vVertical
+				;
+				rEllipsoid
+				.	Height
+				=	vHeight
+				;
+				rEllipsoid
+				.	Width
+				=	vWidth
+				;
+				rEllipsoid
+				.	Depth
+				=	vDepth
+				;
+			}
 			break;
 
 			case
 				12
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Head
-						>
-					)
+		:	{	auto
+				&	rHead
+				=	vElements
+					.	emplace_back
+						(	::std::in_place_type
+							<	Bodies3D::Head
+							>
+						)
 				;
+				rHead
+				.	Sphere
+				.	ColorRed
+				=	vRed
+				;
+				rHead
+				.	Sphere
+				.	ColorGreen
+				=	vGreen
+				;
+				rHead
+				.	Sphere
+				.	ColorBlue
+				=	vBlue
+				;
+				rHead
+				.	Sphere
+				.	ColorAlpha
+				=	vAlpha
+				;
+				rHead
+				.	Sphere
+				.	PointLateral
+				=	vLateral
+				;
+				rHead
+				.	Sphere
+				.	PointLongitudinal
+				=	vLongitudinal
+				;
+				rHead
+				.	Sphere
+				.	PointVertical
+				=	vVertical
+				;
+				rHead
+				.	Sphere
+				.	Height
+				=	vHeight
+				;
+
+				rHead
+				.	Eyes
+					[	0z
+					]
+				=	vEyeRed
+				;
+				rHead
+				.	Eyes
+					[	1z
+					]
+				=	vEyeGreen
+				;
+				rHead
+				.	Eyes
+					[	2z
+					]
+				=	vEyeBlue
+				;
+				rHead
+				.	Eyes
+					[	3z
+					]
+				=	vLeftEyeLateral
+				;
+				rHead
+				.	Eyes
+					[	4z
+					]
+				=	vEyeLongitudinal
+				;
+				rHead
+				.	Eyes
+					[	5z
+					]
+				=	vEyeVertical
+				;
+				rHead
+				.	Eyes
+					[	6z
+					]
+				=	vEyeHeight
+				;
+				rHead
+				.	Eyes
+					[	7z
+					]
+				=	vRightEyeLateral
+				;
+			}
 			break;
 		}
 	}
@@ -676,15 +1236,41 @@ auto
 		;
 	}
 
-	auto static constexpr
-		vExpectedValue
-	=	0
+	return
+		vLoopSum
+	;
+}
+
+auto
+(	main
+)	(	int
+	,	char const
+		*	i_aArgValue
+			[]
+	)
+->	int
+{
+	PseudoRandomSequence const
+		vRandomSequence
+	{	i_aArgValue
+		[	1z
+		]
+	,	i_aArgValue
+		[	2z
+		]
+	};
+
+	float const
+		vLoopSum
+	=	::ComputeVolumeSum
+		(	vRandomSequence
+		)
 	;
 
 	return
-		static_cast<int>
+		::VerifyLoopSum
 		(	vLoopSum
+		,	vRandomSequence
 		)
-	-	vExpectedValue
 	;
 }

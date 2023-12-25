@@ -363,7 +363,7 @@ export namespace
 		auto static constexpr inline
 			ArrayIndex
 		=		ByteWidth<void*>
-				(	t_vOffset
+				(	t_vDistrictOffset
 				)
 			.	Value
 		;

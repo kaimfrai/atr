@@ -1,14 +1,14 @@
-==45179== Memcheck, a memory error detector
-==45179== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==45179== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==45179== Command: build/Evaluation/bin/TypeErasure 42 100000
-==45179== 
-==45179== 
-==45179== HEAP SUMMARY:
-==45179==     in use at exit: 0 bytes in 0 blocks
-==45179==   total heap usage: 100,002 allocs, 100,002 frees, 7,302,172 bytes allocated
-==45179== 
-==45179== All heap blocks were freed -- no leaks are possible
-==45179== 
-==45179== For lists of detected and suppressed errors, rerun with: -s
-==45179== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==20709== Memcheck, a memory error detector
+==20709== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==20709== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==20709== Command: build/Evaluation/bin/TypeErasure 42 100000
+==20709== 
+==20709== 
+==20709== HEAP SUMMARY:
+==20709==     in use at exit: 0 bytes in 0 blocks
+==20709==   total heap usage: 100,002 allocs, 100,002 frees, 7,278,380 bytes allocated
+==20709== 
+==20709== All heap blocks were freed -- no leaks are possible
+==20709== 
+==20709== For lists of detected and suppressed errors, rerun with: -s
+==20709== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

@@ -3,8 +3,9 @@ export module ATR.Layout.Fork;
 import ATR.Layout.Offset;
 
 import Meta.Memory.Constraint;
-import Meta.Memory.Size;
+import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Compare;
+import Meta.Memory.Size;
 
 using ::Meta::BitSize;
 using ::Meta::Memory::BitSize_Of;

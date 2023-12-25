@@ -2,7 +2,7 @@ export module Evaluation.CRTP.BasicSphere;
 
 import Evaluation.CRTP.Circle;
 import Evaluation.CRTP.SphericBody;
-import Evaluation.CRTP.DepthIsWidth;
+import Evaluation.CRTP.DepthIsHeight;
 
 export namespace
 	Bodies3D
@@ -12,6 +12,6 @@ export namespace
 	:	SphericBody
 		<	Shapes2D::Circle
 		>
-	,	DepthIsWidth
+	,	DepthIsHeight
 	{};
 }

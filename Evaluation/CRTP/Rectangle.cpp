@@ -1,7 +1,7 @@
 export module Evaluation.CRTP.Rectangle;
 
 import Evaluation.CRTP.RectangularShape;
-import Evaluation.CRTP.SeparateHeight;
+import Evaluation.CRTP.SeparateWidth;
 
 export namespace
 	Shapes2D
@@ -9,6 +9,6 @@ export namespace
 	struct
 		Rectangle
 	:	RectangularShape
-	,	SeparateHeight
+	,	SeparateWidth
 	{};
 }

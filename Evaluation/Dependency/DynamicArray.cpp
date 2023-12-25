@@ -90,21 +90,29 @@ export
 				&&	i_rArgument
 			)	&
 			noexcept
+		->	t_tElement
+			&
 		{
-			::std::construct_at
-			(	::std::bit_cast
-				<	t_tElement
-					*
-				>(	m_vBuffer
-				+	(	m_vCount
-					*	sizeof(t_tElement)
+			auto
+			*	aElement
+			=	::std::construct_at
+				(	::std::bit_cast
+					<	t_tElement
+						*
+					>(	m_vBuffer
+					+	(	m_vCount
+						*	sizeof(t_tElement)
+						)
+					)
+				,	::std::forward<decltype(i_rArgument)>
+					(	i_rArgument
 					)
 				)
-			,	::std::forward<decltype(i_rArgument)>
-				(	i_rArgument
-				)
-			);
+			;
 			++	m_vCount
+			;
+			return
+			*	aElement
 			;
 		}
 

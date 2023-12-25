@@ -37,11 +37,11 @@ export namespace
 	struct
 		BasicShape
 	{
-		Point
-			Coordinates
-		;
 		RGBAColor
 			Color
+		;
+		Point
+			Coordinates
 		;
 
 		[[nodiscard]]

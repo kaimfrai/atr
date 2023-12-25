@@ -1,7 +1,7 @@
 export module Evaluation.CRTP.Ellipse;
 
 import Evaluation.CRTP.CircularShape;
-import Evaluation.CRTP.SeparateHeight;
+import Evaluation.CRTP.SeparateWidth;
 
 export namespace
 	Shapes2D
@@ -9,6 +9,6 @@ export namespace
 	struct
 		Ellipse
 	:	CircularShape
-	,	SeparateHeight
+	,	SeparateWidth
 	{};
 }

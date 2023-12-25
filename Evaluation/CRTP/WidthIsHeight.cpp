@@ -1,14 +1,14 @@
-export module Evaluation.CRTP.HeightIsWidth;
+export module Evaluation.CRTP.WidthIsHeight;
 
 export namespace
 	Shapes2D
 {
 	struct
-		HeightIsWidth
+		WidthIsHeight
 	{
 		[[nodiscard]]
 		auto constexpr inline
-		(	GetHeight
+		(	GetWidth
 		)	(	this auto const
 				&	i_rShape
 			)
@@ -16,7 +16,7 @@ export namespace
 		->	float
 		{	return
 				i_rShape
-				.	Width
+				.	Height
 			;
 		}
 	};

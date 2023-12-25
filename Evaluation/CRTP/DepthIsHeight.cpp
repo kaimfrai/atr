@@ -1,10 +1,10 @@
-export module Evaluation.CRTP.DepthIsWidth;
+export module Evaluation.CRTP.DepthIsHeight;
 
 export namespace
 	Bodies3D
 {
 	struct
-		DepthIsWidth
+		DepthIsHeight
 	{
 		[[nodiscard]]
 		auto constexpr inline
@@ -17,7 +17,7 @@ export namespace
 		{	return
 				i_rBody
 				.	Shape2D
-				.	Width
+				.	Height
 			;
 		}
 	};

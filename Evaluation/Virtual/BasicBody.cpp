@@ -27,11 +27,11 @@ export namespace
 		{	return
 				GetComputeSizeMultiplier
 				()
-			*	GetDepth
-				()
 			*	GetHeight
 				()
 			*	GetWidth
+				()
+			*	GetDepth
 				()
 			;
 		}

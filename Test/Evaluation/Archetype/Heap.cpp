@@ -425,11 +425,21 @@ auto constexpr inline
 	[	"LeftEyeColorRed"_id
 	]=	1.0f
 	;
+	vHead
+	[	"LeftEyeColorGreen"_id
+	]=	2.0f
+	;
 	return
-		vHead
-		[	"RightEyeColorRed"_id
-		]
-	==	1.0f
+		(	vHead
+			[	"RightEyeColorRed"_id
+			]
+		==	1.0f
+		)
+	and	(	vHead
+			[	"RightEyeColorGreen"_id
+			]
+		==	2.0f
+		)
 	;
 }
 

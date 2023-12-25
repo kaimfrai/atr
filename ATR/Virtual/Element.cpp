@@ -4,10 +4,13 @@ import ATR.Erase;
 import ATR.Instance;
 
 import Meta.ID;
+import Meta.String.Literal;
 
 import Std;
 
+using ::Meta::ID;
 using ::Meta::ProtoID;
+using ::Meta::String::Literal;
 
 export namespace
 	ATR::Virtual
@@ -59,6 +62,29 @@ export namespace
 				)
 			Instance<decltype(i_vTypeName)>
 			{};
+		}
+
+		template
+			<	Literal
+					t_vLiteral
+			>
+		[[nodiscard]]
+		auto constexpr inline
+		(	As
+		)	(	this auto
+				&&	i_rThis
+			)
+			noexcept
+		->	decltype(auto)
+		{	return
+				AsErasure
+				(	static_cast<decltype(i_rThis)>
+					(	i_rThis
+					).	m_vErasedElement
+				)
+			.	template As<Instance<ID<t_vLiteral>>>
+				()
+			;
 		}
 
 		template

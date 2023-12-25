@@ -11,13 +11,13 @@ export namespace
 	{
 		[[nodiscard]]
 		auto constexpr inline
-		(	GetHeight
+		(	GetWidth
 		)	()	const
 			noexcept
 		->	float
 			override
 		{	return
-				Width
+				Height
 			;
 		}
 	};

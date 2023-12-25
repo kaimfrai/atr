@@ -23,7 +23,7 @@ export namespace
 		->	float
 			override
 		{	return
-				1.0
+				1.0f
 			;
 		}
 

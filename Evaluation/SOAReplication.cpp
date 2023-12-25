@@ -1,4 +1,5 @@
 import Evaluation.Dependency.PseudoRandomSequence;
+import Evaluation.Dependency.VerifyLoopSum;
 
 import Evaluation.SOAReplication.View32;
 import Evaluation.SOAReplication.Tag;
@@ -131,10 +132,10 @@ namespace
 			;
 
 			return
-				vHeight
+				vComputeVolumeMultiplier
+			*	vHeight
 			*	vWidth
 			*	vDepth
-			*	vComputeVolumeMultiplier
 			;
 		}
 	};
@@ -260,6 +261,26 @@ namespace
 		)	(	::std::in_place_type_t
 				<	t_tBody
 				>
+			,	float
+					i_vRed
+			,	float
+					i_vGreen
+			,	float
+					i_vBlue
+			,	float
+					i_vAlpha
+			,	float
+					i_vLateral
+			,	float
+					i_vLongitudinal
+			,	float
+					i_vVertical
+			,	float
+					i_vHeight
+			,	float
+					i_vWidth
+			,	float
+					i_vDepth
 			)	&
 			noexcept
 		{
@@ -288,78 +309,193 @@ namespace
 					ETag::Circle
 				:	ConstructCircle
 					(	vView32
+					,	i_vRed
+					,	i_vGreen
+					,	i_vBlue
+					,	i_vAlpha
+					,	i_vLateral
+					,	i_vLongitudinal
+					,	i_vVertical
+					,	i_vHeight
 					);
 				break;
 				case
 					ETag::Ellipse
 				:	ConstructEllipse
 					(	vView32
+					,	i_vRed
+					,	i_vGreen
+					,	i_vBlue
+					,	i_vAlpha
+					,	i_vLateral
+					,	i_vLongitudinal
+					,	i_vVertical
+					,	i_vHeight
+					,	i_vWidth
 					);
 				break;
 				case
 					ETag::Rectangle
 				:	ConstructRectangle
 					(	vView32
+					,	i_vRed
+					,	i_vGreen
+					,	i_vBlue
+					,	i_vAlpha
+					,	i_vLateral
+					,	i_vLongitudinal
+					,	i_vVertical
+					,	i_vHeight
+					,	i_vWidth
 					);
 				break;
 				case
 					ETag::Square
 				:	ConstructSquare
 					(	vView32
+					,	i_vRed
+					,	i_vGreen
+					,	i_vBlue
+					,	i_vAlpha
+					,	i_vLateral
+					,	i_vLongitudinal
+					,	i_vVertical
+					,	i_vHeight
 					);
 				break;
 				case
 					ETag::Triangle
 				:	ConstructTriangle
 					(	vView32
+					,	i_vRed
+					,	i_vGreen
+					,	i_vBlue
+					,	i_vAlpha
+					,	i_vLateral
+					,	i_vLongitudinal
+					,	i_vVertical
+					,	i_vHeight
+					,	i_vWidth
 					);
 				break;
 				case
 					ETag::Cube
 				:	ConstructCube
 					(	vView32
+					,	i_vRed
+					,	i_vGreen
+					,	i_vBlue
+					,	i_vAlpha
+					,	i_vLateral
+					,	i_vLongitudinal
+					,	i_vVertical
+					,	i_vHeight
 					);
 				break;
 				case
 					ETag::Cuboid
 				:	ConstructCuboid
 					(	vView32
+					,	i_vRed
+					,	i_vGreen
+					,	i_vBlue
+					,	i_vAlpha
+					,	i_vLateral
+					,	i_vLongitudinal
+					,	i_vVertical
+					,	i_vHeight
+					,	i_vWidth
+					,	i_vDepth
 					);
 				break;
 				case
 					ETag::Pyramid
 				:	ConstructPyramid
 					(	vView32
+					,	i_vRed
+					,	i_vGreen
+					,	i_vBlue
+					,	i_vAlpha
+					,	i_vLateral
+					,	i_vLongitudinal
+					,	i_vVertical
+					,	i_vHeight
+					,	i_vWidth
+					,	i_vDepth
 					);
 				break;
 				case
 					ETag::Sphere
 				:	ConstructSphere
 					(	vView32
+					,	i_vRed
+					,	i_vGreen
+					,	i_vBlue
+					,	i_vAlpha
+					,	i_vLateral
+					,	i_vLongitudinal
+					,	i_vVertical
+					,	i_vHeight
 					);
 				break;
 				case
 					ETag::Cylinder
 				:	ConstructCylinder
 					(	vView32
+					,	i_vRed
+					,	i_vGreen
+					,	i_vBlue
+					,	i_vAlpha
+					,	i_vLateral
+					,	i_vLongitudinal
+					,	i_vVertical
+					,	i_vHeight
+					,	i_vDepth
 					);
 				break;
 				case
 					ETag::Cone
 				:	ConstructCone
 					(	vView32
+					,	i_vRed
+					,	i_vGreen
+					,	i_vBlue
+					,	i_vAlpha
+					,	i_vLateral
+					,	i_vLongitudinal
+					,	i_vVertical
+					,	i_vHeight
+					,	i_vDepth
 					);
 				break;
 				case
 					ETag::Ellipsoid
 				:	ConstructEllipsoid
 					(	vView32
+					,	i_vRed
+					,	i_vGreen
+					,	i_vBlue
+					,	i_vAlpha
+					,	i_vLateral
+					,	i_vLongitudinal
+					,	i_vVertical
+					,	i_vHeight
+					,	i_vWidth
+					,	i_vDepth
 					);
 				break;
 				case
 					ETag::Head
 				:	ConstructHead
 					(	vView32
+					,	i_vRed
+					,	i_vGreen
+					,	i_vBlue
+					,	i_vAlpha
+					,	i_vLateral
+					,	i_vLongitudinal
+					,	i_vVertical
+					,	i_vHeight
 					);
 				break;
 			}
@@ -393,43 +529,53 @@ namespace
 	};
 }
 
-auto
-(	main
-)	(	int
-	,	char const
-		*	i_aArgValue
-			[]
+[[nodiscard]]
+auto inline
+(	ComputeVolumeSum
+)	(	PseudoRandomSequence
+			i_vRandomSequence
 	)
-->	int
+	noexcept
+->	float
 {
 	using namespace Bodies3D;
-
-	PseudoRandomSequence
-		vRandomSequence
-	{	i_aArgValue
-		[	1z
-		]
-	,	i_aArgValue
-		[	2z
-		]
-	};
 
 	VolumeComputer
 		vElements
 	{	static_cast<::std::uint32_t>
-		(	vRandomSequence
+		(	i_vRandomSequence
 			.	size
 				()
 		)
 	};
 
 	for	(	auto
-				vRandom
-		:	vRandomSequence
+			[	vType
+			,	vRed
+			,	vGreen
+			,	vBlue
+			,	vAlpha
+			,	vLateral
+			,	vLongitudinal
+			,	vVertical
+			,	vHeight
+			,	vWidth
+			,	vDepth
+			,	vEyeRed
+			,	vEyeGreen
+			,	vEyeBlue
+			,	vLeftEyeLateral
+			,	vEyeLongitudinal
+			,	vEyeVertical
+			,	vEyeHeight
+			,	vRightEyeLateral
+			,	_
+			]
+		:	i_vRandomSequence
 		)
 	{
 		switch
-			(	vRandom
+			(	vType
 			%	13
 			)
 		{	case
@@ -439,6 +585,16 @@ auto
 					(	::std::in_place_type
 						<	Circle
 						>
+					,	vRed
+					,	vGreen
+					,	vBlue
+					,	vAlpha
+					,	vLateral
+					,	vLongitudinal
+					,	vVertical
+					,	vHeight
+					,	vWidth
+					,	vDepth
 					)
 				;
 			break;
@@ -450,6 +606,16 @@ auto
 					(	::std::in_place_type
 						<	Ellipse
 						>
+					,	vRed
+					,	vGreen
+					,	vBlue
+					,	vAlpha
+					,	vLateral
+					,	vLongitudinal
+					,	vVertical
+					,	vHeight
+					,	vWidth
+					,	vDepth
 					)
 				;
 			break;
@@ -461,6 +627,16 @@ auto
 					(	::std::in_place_type
 						<	Rectangle
 						>
+					,	vRed
+					,	vGreen
+					,	vBlue
+					,	vAlpha
+					,	vLateral
+					,	vLongitudinal
+					,	vVertical
+					,	vHeight
+					,	vWidth
+					,	vDepth
 					)
 				;
 			break;
@@ -472,6 +648,16 @@ auto
 					(	::std::in_place_type
 						<	Square
 						>
+					,	vRed
+					,	vGreen
+					,	vBlue
+					,	vAlpha
+					,	vLateral
+					,	vLongitudinal
+					,	vVertical
+					,	vHeight
+					,	vWidth
+					,	vDepth
 					)
 				;
 			break;
@@ -483,6 +669,16 @@ auto
 					(	::std::in_place_type
 						<	Triangle
 						>
+					,	vRed
+					,	vGreen
+					,	vBlue
+					,	vAlpha
+					,	vLateral
+					,	vLongitudinal
+					,	vVertical
+					,	vHeight
+					,	vWidth
+					,	vDepth
 					)
 				;
 			break;
@@ -494,6 +690,16 @@ auto
 					(	::std::in_place_type
 						<	Cube
 						>
+					,	vRed
+					,	vGreen
+					,	vBlue
+					,	vAlpha
+					,	vLateral
+					,	vLongitudinal
+					,	vVertical
+					,	vHeight
+					,	vWidth
+					,	vDepth
 					)
 				;
 			break;
@@ -505,6 +711,16 @@ auto
 					(	::std::in_place_type
 						<	Cuboid
 						>
+					,	vRed
+					,	vGreen
+					,	vBlue
+					,	vAlpha
+					,	vLateral
+					,	vLongitudinal
+					,	vVertical
+					,	vHeight
+					,	vWidth
+					,	vDepth
 					)
 				;
 			break;
@@ -516,6 +732,16 @@ auto
 					(	::std::in_place_type
 						<	Pyramid
 						>
+					,	vRed
+					,	vGreen
+					,	vBlue
+					,	vAlpha
+					,	vLateral
+					,	vLongitudinal
+					,	vVertical
+					,	vHeight
+					,	vWidth
+					,	vDepth
 					)
 				;
 			break;
@@ -527,6 +753,16 @@ auto
 					(	::std::in_place_type
 						<	Sphere
 						>
+					,	vRed
+					,	vGreen
+					,	vBlue
+					,	vAlpha
+					,	vLateral
+					,	vLongitudinal
+					,	vVertical
+					,	vHeight
+					,	vWidth
+					,	vDepth
 					)
 				;
 			break;
@@ -538,6 +774,16 @@ auto
 					(	::std::in_place_type
 						<	Cylinder
 						>
+					,	vRed
+					,	vGreen
+					,	vBlue
+					,	vAlpha
+					,	vLateral
+					,	vLongitudinal
+					,	vVertical
+					,	vHeight
+					,	vWidth
+					,	vDepth
 					)
 				;
 			break;
@@ -549,6 +795,16 @@ auto
 					(	::std::in_place_type
 						<	Cone
 						>
+					,	vRed
+					,	vGreen
+					,	vBlue
+					,	vAlpha
+					,	vLateral
+					,	vLongitudinal
+					,	vVertical
+					,	vHeight
+					,	vWidth
+					,	vDepth
 					)
 				;
 			break;
@@ -560,6 +816,16 @@ auto
 					(	::std::in_place_type
 						<	Ellipsoid
 						>
+					,	vRed
+					,	vGreen
+					,	vBlue
+					,	vAlpha
+					,	vLateral
+					,	vLongitudinal
+					,	vVertical
+					,	vHeight
+					,	vWidth
+					,	vDepth
 					)
 				;
 			break;
@@ -571,6 +837,16 @@ auto
 					(	::std::in_place_type
 						<	Head
 						>
+					,	vRed
+					,	vGreen
+					,	vBlue
+					,	vAlpha
+					,	vLateral
+					,	vLongitudinal
+					,	vVertical
+					,	vHeight
+					,	vWidth
+					,	vDepth
 					)
 				;
 			break;
@@ -593,17 +869,43 @@ auto
 		;
 	}
 
-	auto static constexpr
-		vExpectedValue
-	=	0
+	return
+		reduce
+		(	vLoopSum
+		)
+	;
+}
+
+auto
+(	main
+)	(	int
+	,	char const
+		*	i_aArgValue
+			[]
+	)
+->	int
+{
+	PseudoRandomSequence const
+		vRandomSequence
+	{	i_aArgValue
+		[	1z
+		]
+	,	i_aArgValue
+		[	2z
+		]
+	};
+
+	float const
+		vLoopSum
+	=	::ComputeVolumeSum
+		(	vRandomSequence
+		)
 	;
 
 	return
-		static_cast<int>
-		(	reduce
-			(	vLoopSum
-			)
+		::VerifyLoopSum
+		(	vLoopSum
+		,	vRandomSequence
 		)
-	-	vExpectedValue
 	;
 }

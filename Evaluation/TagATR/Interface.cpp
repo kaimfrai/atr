@@ -5,15 +5,15 @@ import Evaluation.Dependency.TaggedArray;
 import ATR.District.ExcludingHeap;
 import ATR.Erase;
 
-import Meta.Memory.Size;
 import Meta.Token.TypeID;
+
+import Std;
 
 using ::ATR::CErasure;
 using ::ATR::District::ExcludingHeap;
 using ::ATR::District::Info;
 using ::ATR::RErasure;
 
-using ::Meta::ByteSize;
 using ::Meta::TypeID;
 
 namespace
@@ -39,7 +39,7 @@ namespace
 	struct
 		Interface
 	{
-		ByteSize const
+		::std::size_t const
 			ElementSize
 		;
 		unsigned char const

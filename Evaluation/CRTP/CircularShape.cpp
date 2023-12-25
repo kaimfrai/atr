@@ -2,7 +2,7 @@ export module Evaluation.CRTP.CircularShape;
 
 import Evaluation.Dependency.PiFraction;
 import Evaluation.CRTP.BasicShape;
-import Evaluation.CRTP.SeparateWidth;
+import Evaluation.CRTP.SeparateHeight;
 
 export namespace
 	Shapes2D
@@ -10,7 +10,7 @@ export namespace
 	struct
 		CircularShape
 	:	BasicShape
-	,	SeparateWidth
+	,	SeparateHeight
 	{
 		[[nodiscard]]
 		auto static constexpr inline

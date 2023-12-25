@@ -6,6 +6,7 @@ add_single_file_modules(
 	PiFraction.cpp
 
 	PseudoRandomSequence.cpp
+	VerifyLoopSum.cpp
 )
 
 add_subdirectory(
