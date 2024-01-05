@@ -1,17 +1,17 @@
 
  Performance counter stats for 'build/Evaluation/bin/SOAReplication 42 100000' (100 runs):
 
-              3,44 msec task-clock                #    0,939 CPUs utilized            ( +-  0,23% )
+              3,40 msec task-clock                #    0,949 CPUs utilized            ( +-  0,14% )
                  0      context-switches          #    0,000 /sec                   
                  0      cpu-migrations            #    0,000 /sec                   
-             1.222      page-faults               #  350,517 K/sec                    ( +-  0,01% )
-        14.614.001      cycles                    #    4,192 GHz                      ( +-  0,19% )
-           673.911      stalled-cycles-frontend   #    4,56% frontend cycles idle     ( +-  2,15% )
-         5.471.692      stalled-cycles-backend    #   37,05% backend cycles idle      ( +-  0,23% )
-        23.568.896      instructions              #    1,60  insn per cycle         
+             1.219      page-faults               #  356,700 K/sec                    ( +-  0,01% )
+        14.582.985      cycles                    #    4,267 GHz                      ( +-  0,09% )
+           629.498      stalled-cycles-frontend   #    4,30% frontend cycles idle     ( +-  1,16% )
+         5.457.386      stalled-cycles-backend    #   37,30% backend cycles idle      ( +-  0,23% )
+        23.535.910      instructions              #    1,61  insn per cycle         
                                                   #    0,23  stalled cycles per insn  ( +-  0,01% )
-         2.308.984      branches                  #  662,305 M/sec                    ( +-  0,03% )
-           131.116      branch-misses             #    5,67% of all branches          ( +-  0,03% )
+         2.303.933      branches                  #  674,170 M/sec                    ( +-  0,02% )
+           131.508      branch-misses             #    5,69% of all branches          ( +-  0,02% )
 
-        0,00365922 +- 0,00000959 seconds time elapsed  ( +-  0,26% )
+        0,00358517 +- 0,00000575 seconds time elapsed  ( +-  0,16% )
 
