@@ -1,5 +1,6 @@
 import Evaluation.Dependency.PseudoRandomSequence;
 import Evaluation.Dependency.RandomAccessIteratorBase;
+import Evaluation.Dependency.TransformReduce;
 import Evaluation.Dependency.VerifyLoopSum;
 
 import Evaluation.TagReplication.Tag;
@@ -1382,17 +1383,13 @@ auto inline
 	}
 
 	return
-		::std::transform_reduce
-		(	::std::execution::unseq
-		,	vElements
+		TransformReduce
+		(	vElements
 			.	begin
 				()
 		,	vElements
 			.	end
 				()
-		,	0.0f
-		,	::std::plus<float>
-			{}
 		,	[]	(	auto const
 						rBody
 				)

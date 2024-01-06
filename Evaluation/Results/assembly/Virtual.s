@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <__libc_start_main+0x9838>
+               	call	qword ptr  <__libc_start_main+0x98e8>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <__libc_start_main+0x9848>
+               	mov	rax, qword ptr  <__libc_start_main+0x98f8>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <__libc_start_main+0x9850>
+               	mov	rax, qword ptr  <__libc_start_main+0x9900>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <__libc_start_main+0x9858>
+               	cmp	qword ptr , 0x0 <__libc_start_main+0x9908>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -110,6 +110,7 @@ Disassembly of section .text:
                	int3
                	int3
 
+<initializer for module Evaluation.Dependency.TransformReduce>:
 <initializer for module Evaluation.Virtual.IBody>:
 <initializer for module Evaluation.Virtual.Shape3D>:
 <initializer for module Std>:
@@ -537,6 +538,7 @@ Disassembly of section .text:
                	push	rax
                	call	 <initializer for module Evaluation.Dependency.DynamicArray>
                	call	 <initializer for module Evaluation.Dependency.PseudoRandomSequence>
+               	call	 <Shapes2D::IShape@Evaluation.Virtual.IShape::~IShape()>
                	call	 <initializer for module Evaluation.Dependency.VerifyLoopSum>
                	call	 <initializer for module Evaluation.Virtual.Cube>
                	call	 <initializer for module Evaluation.Virtual.Circle>
@@ -555,11 +557,6 @@ Disassembly of section .text:
                	call	 <Shapes2D::IShape@Evaluation.Virtual.IShape::~IShape()>
                	pop	rax
                	jmp	 <Shapes2D::IShape@Evaluation.Virtual.IShape::~IShape()>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
                	int3
                	int3
@@ -622,9 +619,9 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x378], rax
                	mov	qword ptr [rsp + 0x380], rdi
                	sar	rdi, 0x1d
-               	mov	rsi, qword ptr  <__libc_start_main+0x9860>
+               	mov	rsi, qword ptr  <__libc_start_main+0x9910>
                	call	 <_ZnamRKSt9nothrow_t@plt>
-               	mov	qword ptr [rsp + 0x18], rax
+               	mov	qword ptr [rsp + 0x10], rax
                	movsxd	rcx, ebx
                	vmovq	xmm0, rcx
                	vpbroadcastq	ymm0, xmm0
@@ -2178,7 +2175,7 @@ Disassembly of section .text:
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x108], rdi
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0x10], rdi
+               	mov	qword ptr [rsp + 0x18], rdi
                	xor	r11d, r11d
                	mov	rdi, qword ptr [rsp + 0x110]
                	mov	r8, qword ptr [rsp + 0x118]
@@ -2204,7 +2201,7 @@ Disassembly of section .text:
                	xor	qword ptr [rsp + 0x240], r10
                	xor	qword ptr [rsp + 0x98], r9
                	xor	qword ptr [rsp + 0x108], r8
-               	xor	qword ptr [rsp + 0x10], rdi
+               	xor	qword ptr [rsp + 0x18], rdi
                	jmp	 <L174>
 <L173>:
                	xor	r11d, r11d
@@ -2228,7 +2225,7 @@ Disassembly of section .text:
                	xor	qword ptr [rsp + 0x240], r10
                	xor	qword ptr [rsp + 0x98], r9
                	xor	qword ptr [rsp + 0x108], r8
-               	xor	qword ptr [rsp + 0x10], rdi
+               	xor	qword ptr [rsp + 0x18], rdi
                	jmp	 <L177>
 <L176>:
                	xor	r11d, r11d
@@ -2252,7 +2249,7 @@ Disassembly of section .text:
                	xor	qword ptr [rsp + 0x240], r10
                	xor	qword ptr [rsp + 0x98], r9
                	xor	qword ptr [rsp + 0x108], r8
-               	xor	qword ptr [rsp + 0x10], rdi
+               	xor	qword ptr [rsp + 0x18], rdi
                	jmp	 <L180>
 <L179>:
                	xor	r11d, r11d
@@ -2276,7 +2273,7 @@ Disassembly of section .text:
                	xor	qword ptr [rsp + 0x240], r10
                	xor	qword ptr [rsp + 0x98], r9
                	xor	qword ptr [rsp + 0x108], r8
-               	xor	qword ptr [rsp + 0x10], rdi
+               	xor	qword ptr [rsp + 0x18], rdi
                	jmp	 <L183>
 <L182>:
                	xor	edi, edi
@@ -2288,7 +2285,7 @@ Disassembly of section .text:
                	xor	edi, edi
                	mov	qword ptr [rsp + 0xf8], rdi
                	xor	r11d, r11d
-               	mov	rdi, qword ptr [rsp + 0x10]
+               	mov	rdi, qword ptr [rsp + 0x18]
                	mov	r8, qword ptr [rsp + 0x108]
                	mov	r9, qword ptr [rsp + 0x98]
                	mov	r10, qword ptr [rsp + 0x240]
@@ -2885,7 +2882,7 @@ Disassembly of section .text:
                	vpackuswb	xmm0, xmm0, xmm0
                	vmovdqa	xmmword ptr [rsp + 0x70], xmm0
                	movzx	eax, al
-               	lea	rcx,  <__libc_start_main+0x2484>
+               	lea	rcx,  <__libc_start_main+0x2488>
                	movsxd	rax, dword ptr [rcx + 4*rax]
                	add	rax, rcx
                	jmp	rax
@@ -2915,7 +2912,7 @@ Disassembly of section .text:
                	mov	qword ptr [rax], rcx
                	vmovdqa	xmm1, xmmword ptr [rsp + 0x70]
                	vpextrb	ecx, xmm1, 0x7
-               	mov	rdx, qword ptr [rsp + 0x18]
+               	mov	rdx, qword ptr [rsp + 0x10]
                	mov	rsi, qword ptr [rsp + 0x8]
                	mov	qword ptr [rdx + 8*rsi], rax
                	vcvtsi2ss	xmm0, xmm5, ecx
@@ -2937,7 +2934,7 @@ Disassembly of section .text:
                	mov	edi, 0x90
                	vzeroupper
                	call	 <_Znwm@plt>
-               	vpbroadcastw	xmm2, word ptr  <__libc_start_main+0x2480>
+               	vpbroadcastw	xmm2, word ptr  <__libc_start_main+0x2484>
                	vmovdqa	xmm0, xmmword ptr [rsp + 0x360]
                	vpshufb	xmm0, xmm0, xmm2
                	vmovdqa	xmm1, xmmword ptr [rsp + 0x250]
@@ -2954,7 +2951,7 @@ Disassembly of section .text:
                	mov	qword ptr [rax + 0x30], rdx
                	mov	qword ptr [rax + 0x68], rcx
                	mov	qword ptr [rax + 0x60], rdx
-               	mov	rcx, qword ptr [rsp + 0x18]
+               	mov	rcx, qword ptr [rsp + 0x10]
                	mov	rdx, qword ptr [rsp + 0x8]
                	mov	qword ptr [rcx + 8*rdx], rax
                	inc	rdx
@@ -3017,7 +3014,7 @@ Disassembly of section .text:
                	mov	qword ptr [rax + 0x8], rcx
                	lea	rcx,  <vtable for Bodies3D::Pyramid@Evaluation.Virtual.Pyramid+0x10>
                	mov	qword ptr [rax], rcx
-               	mov	rcx, qword ptr [rsp + 0x18]
+               	mov	rcx, qword ptr [rsp + 0x10]
                	mov	rdx, qword ptr [rsp + 0x8]
                	mov	qword ptr [rcx + 8*rdx], rax
                	vmovdqa	xmm1, xmmword ptr [rsp + 0x70]
@@ -3041,7 +3038,7 @@ Disassembly of section .text:
                	lea	rcx,  <vtable for Bodies3D::Ellipse+0x10>
 <L241>:
                	mov	qword ptr [rax], rcx
-               	mov	rcx, qword ptr [rsp + 0x18]
+               	mov	rcx, qword ptr [rsp + 0x10]
                	mov	rdx, qword ptr [rsp + 0x8]
                	mov	qword ptr [rcx + 8*rdx], rax
                	inc	rdx
@@ -3075,7 +3072,7 @@ Disassembly of section .text:
                	vmovups	ymmword ptr [rax + 0x10], ymm0
                	movzx	ecx, byte ptr [rsp + 0x250]
                	vcvtsi2ss	xmm0, xmm5, ecx
-               	mov	rcx, qword ptr [rsp + 0x18]
+               	mov	rcx, qword ptr [rsp + 0x10]
                	mov	rdx, qword ptr [rsp + 0x8]
                	mov	qword ptr [rcx + 8*rdx], rax
                	inc	rdx
@@ -3095,7 +3092,7 @@ Disassembly of section .text:
                	lea	rcx,  <vtable for Bodies3D::Cone@Evaluation.Virtual.Cone+0x10>
 <L240>:
                	mov	qword ptr [rax], rcx
-               	mov	rcx, qword ptr [rsp + 0x18]
+               	mov	rcx, qword ptr [rsp + 0x10]
                	mov	rdx, qword ptr [rsp + 0x8]
                	mov	qword ptr [rcx + 8*rdx], rax
                	inc	rdx
@@ -3117,7 +3114,7 @@ Disassembly of section .text:
                	lea	rcx,  <vtable for Bodies3D::Sphere@Evaluation.Virtual.Sphere+0x10>
 <L236>:
                	mov	qword ptr [rax], rcx
-               	mov	rcx, qword ptr [rsp + 0x18]
+               	mov	rcx, qword ptr [rsp + 0x10]
                	mov	rdx, qword ptr [rsp + 0x8]
                	mov	qword ptr [rcx + 8*rdx], rax
                	inc	rdx
@@ -3376,9 +3373,9 @@ Disassembly of section .text:
                	mov	r11, qword ptr [rsp + 0x240]
                	mov	rcx, qword ptr [rsp + 0x108]
                	xor	rcx, r11
-               	mov	r11, qword ptr [rsp + 0x10]
+               	mov	r11, qword ptr [rsp + 0x18]
                	xor	r11, r12
-               	mov	qword ptr [rsp + 0x10], r11
+               	mov	qword ptr [rsp + 0x18], r11
                	xor	r12, rcx
                	xor	rcx, rax
                	mov	qword ptr [rsp + 0x108], rcx
@@ -3540,10 +3537,10 @@ Disassembly of section .text:
                	lea	rcx, [rcx + 8*rcx]
                	mov	qword ptr [rsp + 0x350], r10
                	mov	qword ptr [rsp + 0x358], rcx
-               	mov	rcx, qword ptr [rsp + 0x10]
+               	mov	rcx, qword ptr [rsp + 0x18]
                	xor	qword ptr [rsp + 0x240], rcx
                	rol	rcx, 0x2d
-               	mov	qword ptr [rsp + 0x10], rcx
+               	mov	qword ptr [rsp + 0x18], rcx
                	vpbroadcastq	ymm1, xmm1
                	xor	qword ptr [rsp + 0xc8], rbp
                	rol	rbp, 0x2d
@@ -3563,71 +3560,56 @@ Disassembly of section .text:
                	rol	r9, 0x2d
                	jmp	 <L245>
 <L234>:
-               	mov	r12, qword ptr [rsp + 0x8]
-               	shl	r12, 0x3
-               	mov	rbx, r12
-               	sar	rbx, 0x3
-               	test	rbx, rbx
-               	mov	r15, qword ptr [rsp + 0x18]
-               	vpxor	xmm0, xmm0, xmm0
-               	jle	 <L246>
-               	xor	r14d, r14d
-               	nop	word ptr cs:[rax + rax]
-<L247>:
-               	vmovd	dword ptr [rsp + 0x10], xmm0
-               	mov	rdi, qword ptr [r15 + 8*r14]
-               	mov	rax, qword ptr [rdi]
+               	mov	r14, qword ptr [rsp + 0x10]
+               	mov	r15, qword ptr [rsp + 0x8]
+               	lea	rsi, [r14 + 8*r15]
+               	shl	r15, 0x3
+               	mov	rdi, r14
                	vzeroupper
-               	call	qword ptr [rax + 0x18]
-               	vmovss	xmm1, dword ptr [rsp + 0x10] # xmm1 = mem[0],zero,zero,zero
-               	vaddss	xmm1, xmm0, xmm1
-               	vmovss	dword ptr [rsp + 0x10], xmm1
-               	vmovss	xmm0, dword ptr [rsp + 0x10] # xmm0 = mem[0],zero,zero,zero
-               	inc	r14
-               	cmp	rbx, r14
-               	jne	 <L247>
-<L246>:
-               	test	r12, r12
-               	je	 <L248>
+               	call	 <auto Bodies3D::TransformReduce@Evaluation.Dependency.TransformReduce<std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>>*, std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>>*, ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>> const&)>(std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>>*, std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>>*, ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>> const&))>
+               	vmovd	dword ptr [rsp + 0x18], xmm0
+               	test	r15, r15
+               	je	 <L246>
                	xor	ebx, ebx
-               	vmovss	dword ptr [rsp + 0x10], xmm0
-               	jmp	 <L249>
-<L250>:
-               	mov	qword ptr [r15 + rbx], 0x0
-               	add	rbx, 0x8
-               	cmp	r12, rbx
-               	je	 <L248>
-<L249>:
-               	mov	rdi, qword ptr [r15 + rbx]
-               	test	rdi, rdi
-               	je	 <L250>
-               	mov	rax, qword ptr [rdi]
-               	vzeroupper
-               	call	qword ptr [rax + 0x28]
-               	vmovss	xmm0, dword ptr [rsp + 0x10] # xmm0 = mem[0],zero,zero,zero
-               	jmp	 <L250>
-<L232>:
-               	vpxor	xmm0, xmm0, xmm0
-               	mov	r15, qword ptr [rsp + 0x18]
+               	jmp	 <L247>
+               	nop
 <L248>:
+               	mov	qword ptr [r14 + rbx], 0x0
+               	add	rbx, 0x8
+               	cmp	r15, rbx
+               	je	 <L246>
+<L247>:
+               	mov	rdi, qword ptr [r14 + rbx]
+               	test	rdi, rdi
+               	je	 <L248>
+               	mov	rax, qword ptr [rdi]
+               	call	qword ptr [rax + 0x28]
+               	jmp	 <L248>
+<L232>:
+               	mov	r14, qword ptr [rsp + 0x10]
+               	mov	rdi, r14
+               	mov	rsi, r14
+               	vzeroupper
+               	call	 <auto Bodies3D::TransformReduce@Evaluation.Dependency.TransformReduce<std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>>*, std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>>*, ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>> const&)>(std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>>*, std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>>*, ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>> const&))>
+               	vmovd	dword ptr [rsp + 0x18], xmm0
+<L246>:
                	mov	rbx, qword ptr [rsp + 0x380]
                	or	rbx, qword ptr [rsp + 0x378]
-               	test	r15, r15
-               	je	 <L251>
-               	mov	rdi, r15
-               	vmovd	dword ptr [rsp + 0x10], xmm0
-               	vzeroupper
+               	test	r14, r14
+               	je	 <L249>
+               	mov	rdi, r14
                	call	 <_ZdaPv@plt>
-               	vmovd	xmm0, dword ptr [rsp + 0x10] # xmm0 = mem[0],zero,zero,zero
-<L251>:
+<L249>:
                	movabs	rax, 0x186a00000002a
                	cmp	rbx, rax
-               	jne	 <L252>
-               	vucomiss	xmm0, dword ptr  <__libc_start_main+0x247c>
-               	jb	 <L253>
-               	vucomiss	xmm0, dword ptr  <__libc_start_main+0x2474>
-               	ja	 <L253>
-<L252>:
+               	jne	 <L250>
+               	vmovss	xmm0, dword ptr [rsp + 0x18] # xmm0 = mem[0],zero,zero,zero
+               	vucomiss	xmm0, dword ptr  <__libc_start_main+0x2478>
+               	jb	 <L251>
+               	vmovss	xmm0, dword ptr [rsp + 0x18] # xmm0 = mem[0],zero,zero,zero
+               	vucomiss	xmm0, dword ptr  <__libc_start_main+0x2480>
+               	ja	 <L251>
+<L250>:
                	xor	eax, eax
                	add	rsp, 0x3f8
                	pop	rbx
@@ -3636,21 +3618,85 @@ Disassembly of section .text:
                	pop	r14
                	pop	r15
                	pop	rbp
-               	vzeroupper
                	ret
-<L253>:
+<L251>:
                	mov	edi, 0x4
-               	vmovss	dword ptr [rsp + 0x10], xmm0
-               	vzeroupper
                	call	 <__cxa_allocate_exception@plt>
-               	vmovss	xmm0, dword ptr [rsp + 0x10] # xmm0 = mem[0],zero,zero,zero
+               	vmovss	xmm0, dword ptr [rsp + 0x18] # xmm0 = mem[0],zero,zero,zero
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <__libc_start_main+0x9868>
+               	mov	rsi, qword ptr  <__libc_start_main+0x9918>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
                	mov	rdi, rax
                	call	 <__clang_call_terminate>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
+<auto Bodies3D::TransformReduce@Evaluation.Dependency.TransformReduce<std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>>*, std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>>*, ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>> const&)>(std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>>*, std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>>*, ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>> const&))>:
+<L2>:
+               	push	r15
+               	push	r14
+               	push	r12
+               	push	rbx
+               	push	rax
+               	mov	r14, rdi
+               	mov	r15, rsi
+               	sub	r15, rdi
+               	cmp	r15, 0x8
+               	jne	 <L0>
+               	vmovss	xmm0, dword ptr  <__libc_start_main+0x2474> # xmm0 = mem[0],zero,zero,zero
+               	vmovss	dword ptr [rsp + 0x4], xmm0
+               	jmp	 <L1>
+<L0>:
+               	mov	rbx, rsi
+               	vmovss	xmm0, dword ptr  <__libc_start_main+0x2474> # xmm0 = mem[0],zero,zero,zero
+               	vmovss	dword ptr [rsp + 0x4], xmm0
+               	mov	rdi, r14
+               	nop	dword ptr [rax + rax]
+<L3>:
+               	mov	rax, r15
+               	sar	rax, 0x3
+               	mov	rcx, r15
+               	shr	rcx, 0x3f
+               	add	rcx, rax
+               	shr	rcx
+               	mov	r12, rcx
+               	neg	r12
+               	shl	r12, 0x3
+               	shl	rcx, 0x3
+               	mov	r14, rbx
+               	sub	r14, rcx
+               	mov	rsi, r14
+               	call	 <auto Bodies3D::TransformReduce@Evaluation.Dependency.TransformReduce<std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>>*, std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>>*, ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>> const&)>(std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>>*, std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>>*, ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::unique_ptr<Bodies3D::IBody@Evaluation.Virtual.IBody, std::default_delete<Bodies3D::IBody@Evaluation.Virtual.IBody>> const&))>
+               	vmovss	xmm1, dword ptr [rsp + 0x4] # xmm1 = mem[0],zero,zero,zero
+               	vaddss	xmm1, xmm0, xmm1
+               	vmovss	dword ptr [rsp + 0x4], xmm1
+               	neg	r12
+               	and	r15, -0x10
+               	mov	rdi, r14
+               	cmp	r15, 0x10
+               	mov	r15, r12
+               	jne	 <L3>
+<L1>:
+               	mov	rdi, qword ptr [r14]
+               	mov	rax, qword ptr [rdi]
+               	call	qword ptr [rax + 0x18]
+               	vaddss	xmm0, xmm0, dword ptr [rsp + 0x4]
+               	add	rsp, 0x8
+               	pop	rbx
+               	pop	r12
+               	pop	r14
+               	pop	r15
+               	ret
+               	int3
+               	int3
 
 <__clang_call_terminate>:
                	push	rax
@@ -3756,7 +3802,7 @@ Disassembly of section .text:
 
 <Bodies3D::SphericBody@Evaluation.Virtual.SphericBody<Shapes2D::Circle@Evaluation.Virtual.Circle>::GetComputeSizeMultiplier() const>:
 <Bodies3D::SphericBody@Evaluation.Virtual.SphericBody<Shapes2D::Ellipse@Evaluation.Virtual.Ellipse>::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <__libc_start_main+0x2478> # xmm0 = mem[0],zero,zero,zero
+               	vmovss	xmm0, dword ptr  <__libc_start_main+0x247c> # xmm0 = mem[0],zero,zero,zero
                	ret
                	int3
                	int3
@@ -3927,7 +3973,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <__libc_start_main+0x9840>
+               	mov	rax, qword ptr  <__libc_start_main+0x98f0>
                	test	rax, rax
                	je	 <L0>
                	call	rax

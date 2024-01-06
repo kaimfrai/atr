@@ -2,6 +2,7 @@ import <polymorphic.hpp>;
 
 import Evaluation.Dependency.DynamicArray;
 import Evaluation.Dependency.PseudoRandomSequence;
+import Evaluation.Dependency.TransformReduce;
 import Evaluation.Dependency.VerifyLoopSum;
 
 import Evaluation.CRTP.Circle;
@@ -1063,17 +1064,13 @@ auto inline
 	}
 
 	return
-		::std::transform_reduce
-		(	::std::execution::unseq
-		,	vElements
+		TransformReduce
+		(	vElements
 			.	begin
 				()
 		,	vElements
 			.	end
 				()
-		,	0.0f
-		,	::std::plus<float>
-			{}
 		,	[]	(	Body3D const
 					&	i_rBody3D
 				)

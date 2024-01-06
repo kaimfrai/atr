@@ -1,5 +1,6 @@
 import Evaluation.Dependency.PseudoRandomSequence;
 import Evaluation.Dependency.RandomAccessIteratorBase;
+import Evaluation.Dependency.TransformReduce;
 import Evaluation.Dependency.VerifyLoopSum;
 
 import Evaluation.SOAReplication.View32;
@@ -1028,18 +1029,13 @@ auto inline
 
 	return
 		reduce
-		(	::std::transform_reduce
-			(	::std::execution::unseq
-			,	vElements
+		(	TransformReduce
+			(	vElements
 				.	begin
 					()
 			,	vElements
 				.	end
 					()
-			,	::std::experimental::native_simd<float>
-				{}
-			,	::std::plus<::std::experimental::native_simd<float>>
-				{}
 			,	[]	(	auto const
 							rBody
 					)

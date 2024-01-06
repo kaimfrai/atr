@@ -1,17 +1,17 @@
 
  Performance counter stats for 'build/Evaluation/bin/Dyno 42 100000' (100 runs):
 
-              5,53 msec task-clock                #    0,955 CPUs utilized            ( +-  0,21% )
+              6,15 msec task-clock                #    0,965 CPUs utilized            ( +-  0,11% )
                  0      context-switches          #    0,000 /sec                   
                  0      cpu-migrations            #    0,000 /sec                   
-             2.302      page-faults               #  411,035 K/sec                    ( +-  0,01% )
-        23.789.863      cycles                    #    4,248 GHz                      ( +-  0,19% )
-         1.648.689      stalled-cycles-frontend   #    6,84% frontend cycles idle     ( +-  1,66% )
-         5.738.127      stalled-cycles-backend    #   23,81% backend cycles idle      ( +-  0,23% )
-        31.194.374      instructions              #    1,29  insn per cycle         
-                                                  #    0,19  stalled cycles per insn  ( +-  0,01% )
-         4.505.173      branches                  #  804,424 M/sec                    ( +-  0,02% )
-           237.841      branch-misses             #    5,27% of all branches          ( +-  0,02% )
+             2.301      page-faults               #  371,303 K/sec                    ( +-  0,00% )
+        26.462.693      cycles                    #    4,270 GHz                      ( +-  0,10% )
+         1.596.433      stalled-cycles-frontend   #    5,99% frontend cycles idle     ( +-  0,73% )
+         5.810.056      stalled-cycles-backend    #   21,81% backend cycles idle      ( +-  0,14% )
+        35.119.355      instructions              #    1,32  insn per cycle         
+                                                  #    0,17  stalled cycles per insn  ( +-  0,01% )
+         4.839.824      branches                  #  780,984 M/sec                    ( +-  0,01% )
+           309.763      branch-misses             #    6,40% of all branches          ( +-  0,11% )
 
-         0,0057883 +- 0,0000126 seconds time elapsed  ( +-  0,22% )
+        0,00637814 +- 0,00000717 seconds time elapsed  ( +-  0,11% )
 

@@ -1,17 +1,17 @@
 
  Performance counter stats for 'build/Evaluation/bin/Variant 42 100000' (100 runs):
 
-              5,46 msec task-clock                #    0,963 CPUs utilized            ( +-  0,10% )
+              6,21 msec task-clock                #    0,966 CPUs utilized            ( +-  0,16% )
                  0      context-switches          #    0,000 /sec                   
                  0      cpu-migrations            #    0,000 /sec                   
-             2.590      page-faults               #  472,640 K/sec                    ( +-  0,01% )
-        23.511.503      cycles                    #    4,291 GHz                      ( +-  0,08% )
-         2.102.592      stalled-cycles-frontend   #    8,92% frontend cycles idle     ( +-  0,44% )
-         6.390.115      stalled-cycles-backend    #   27,12% backend cycles idle      ( +-  0,12% )
-        28.191.926      instructions              #    1,20  insn per cycle         
-                                                  #    0,23  stalled cycles per insn  ( +-  0,01% )
-         3.753.727      branches                  #  685,005 M/sec                    ( +-  0,01% )
-           229.600      branch-misses             #    6,12% of all branches          ( +-  0,02% )
+             2.588      page-faults               #  414,761 K/sec                    ( +-  0,00% )
+        26.714.934      cycles                    #    4,281 GHz                      ( +-  0,15% )
+         2.201.051      stalled-cycles-frontend   #    8,21% frontend cycles idle     ( +-  1,24% )
+         6.242.269      stalled-cycles-backend    #   23,28% backend cycles idle      ( +-  0,24% )
+        32.266.225      instructions              #    1,20  insn per cycle         
+                                                  #    0,20  stalled cycles per insn  ( +-  0,01% )
+         4.082.672      branches                  #  654,302 M/sec                    ( +-  0,01% )
+           298.726      branch-misses             #    7,31% of all branches          ( +-  0,17% )
 
-        0,00567203 +- 0,00000593 seconds time elapsed  ( +-  0,10% )
+         0,0064285 +- 0,0000111 seconds time elapsed  ( +-  0,17% )
 

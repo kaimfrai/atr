@@ -1,5 +1,6 @@
 import Evaluation.Dependency.DynamicArray;
 import Evaluation.Dependency.PseudoRandomSequence;
+import Evaluation.Dependency.TransformReduce;
 import Evaluation.Dependency.VerifyLoopSum;
 
 import Evaluation.Replication.Circle;
@@ -1030,17 +1031,13 @@ auto inline
 	}
 
 	return
-		::std::transform_reduce
-		(	::std::execution::unseq
-		,	vElements
+		TransformReduce
+		(	vElements
 			.	begin
 				()
 		,	vElements
 			.	end
 				()
-		,	0.0f
-		,	::std::plus<float>
-			{}
 		,	[]	(	VolumeComputer const
 					&	i_rBody3D
 				)

@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <__libc_start_main+0x75d0>
+               	call	qword ptr  <__libc_start_main+0x7720>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <__libc_start_main+0x75e0>
+               	mov	rax, qword ptr  <__libc_start_main+0x7730>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <__libc_start_main+0x75e8>
+               	mov	rax, qword ptr  <__libc_start_main+0x7738>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <__libc_start_main+0x75f0>
+               	cmp	qword ptr , 0x0 <__libc_start_main+0x7740>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -110,6 +110,7 @@ Disassembly of section .text:
                	int3
                	int3
 
+<initializer for module Evaluation.Dependency.TransformReduce>:
 <initializer for module Evaluation.CRTP.Shape3D>:
 <initializer for module Std>:
                	ret
@@ -543,6 +544,7 @@ Disassembly of section .text:
                	push	rax
                	call	 <initializer for module Evaluation.Dependency.DynamicArray>
                	call	 <initializer for module Evaluation.Dependency.PseudoRandomSequence>
+               	call	 <initializer for module Std>
                	call	 <initializer for module Evaluation.Dependency.VerifyLoopSum>
                	call	 <initializer for module Evaluation.CRTP.Circle>
                	call	 <initializer for module Evaluation.CRTP.Ellipse>
@@ -571,11 +573,6 @@ Disassembly of section .text:
                	int3
                	int3
                	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
 
 <main>:
                	push	rbp
@@ -584,7 +581,7 @@ Disassembly of section .text:
                	push	r13
                	push	r12
                	push	rbx
-               	sub	rsp, 0x3f8
+               	sub	rsp, 0x3e8
                	mov	rcx, qword ptr [rsi + 0x8]
                	mov	rax, qword ptr [rsi + 0x10]
                	movsx	ebx, byte ptr [rcx]
@@ -604,36 +601,33 @@ Disassembly of section .text:
                	test	dl, dl
                	jne	 <L1>
 <L0>:
-               	movsx	ecx, byte ptr [rax]
-               	add	ecx, -0x30
-               	mov	qword ptr [rsp + 0xb8], rcx
+               	movsx	r15d, byte ptr [rax]
+               	add	r15d, -0x30
                	movzx	ecx, byte ptr [rax + 0x1]
                	test	cl, cl
                	je	 <L2>
                	add	rax, 0x2
+               	nop	word ptr [rax + rax]
 <L3>:
-               	mov	rdx, qword ptr [rsp + 0xb8]
-               	lea	edx, [rdx + 4*rdx]
+               	lea	edx, [r15 + 4*r15]
                	movsx	ecx, cl
-               	lea	ecx, [rcx + 2*rdx]
-               	add	ecx, -0x30
-               	mov	qword ptr [rsp + 0xb8], rcx
+               	lea	r15d, [rcx + 2*rdx]
+               	add	r15d, -0x30
                	movzx	ecx, byte ptr [rax]
                	inc	rax
                	test	cl, cl
                	jne	 <L3>
 <L2>:
-               	mov	rdi, qword ptr [rsp + 0xb8]
-               	shl	rdi, 0x20
+               	mov	qword ptr [rsp], r15
+               	shl	r15, 0x20
                	mov	eax, ebx
-               	mov	qword ptr [rsp + 0x390], rax
-               	mov	qword ptr [rsp + 0x398], rdi
+               	mov	qword ptr [rsp + 0x398], rax
+               	mov	rdi, r15
                	sar	rdi, 0x1b
-               	mov	rsi, qword ptr  <__libc_start_main+0x75f8>
+               	mov	rsi, qword ptr  <__libc_start_main+0x7748>
                	call	 <_ZnamRKSt9nothrow_t@plt>
-               	mov	qword ptr [rsp + 0x238], rax
-               	movsxd	rax, ebx
-               	vmovq	xmm0, rax
+               	movsxd	rcx, ebx
+               	vmovq	xmm0, rcx
                	vpbroadcastq	ymm0, xmm0
                	vpsrlq	xmm1, xmm0, 0x1e
                	vpaddq	ymm2, ymm0, ymmword ptr  <__libc_start_main+0xf00>
@@ -641,11 +635,11 @@ Disassembly of section .text:
                	vextracti128	xmm3, ymm2, 0x1
                	vpermq	ymm2, ymm2, 0xe9        # ymm2 = ymm2[1,2,2,3]
                	vpsrlq	xmm2, xmm2, 0x1e
-               	vpextrq	rax, xmm3, 0x1
-               	shr	rax, 0x1e
+               	vpextrq	rcx, xmm3, 0x1
+               	shr	rcx, 0x1e
                	vpermq	ymm2, ymm2, 0xd0        # ymm2 = ymm2[0,0,1,3]
                	vpblendd	ymm0, ymm2, ymm0, 0x3   # ymm0 = ymm0[0,1],ymm2[2,3,4,5,6,7]
-               	vmovq	xmm2, rax
+               	vmovq	xmm2, rcx
                	vpbroadcastq	ymm2, xmm2
                	vpblendd	ymm0, ymm0, ymm2, 0xc0  # ymm0 = ymm0[0,1,2,3,4,5],ymm2[6,7]
                	vpxor	ymm0, ymm1, ymm0
@@ -673,17 +667,17 @@ Disassembly of section .text:
                	vpxor	ymm0, ymm1, ymm0
                	vmovq	rdi, xmm0
                	vpextrq	r10, xmm0, 0x1
-               	vmovdqu	ymmword ptr [rsp + 0x3b0], ymm0
+               	vmovdqu	ymmword ptr [rsp + 0x3a0], ymm0
                	vextracti128	xmm0, ymm0, 0x1
                	vmovq	r8, xmm0
                	vpextrq	r9, xmm0, 0x1
+               	xor	r14d, r14d
                	xor	r12d, r12d
                	xor	r13d, r13d
                	xor	ebp, ebp
-               	xor	eax, eax
                	xor	ecx, ecx
                	mov	rdx, r10
-               	mov	qword ptr [rsp + 0x240], r10
+               	mov	qword ptr [rsp + 0x250], r10
                	jmp	 <L4>
                	nop	word ptr [rax + rax]
 <L6>:
@@ -702,10 +696,10 @@ Disassembly of section .text:
                	movabs	rdx, 0x180ec6d33cfd0aba
                	bt	rdx, rcx
                	jae	 <L6>
-               	xor	rbp, rdi
-               	xor	r12, r10
-               	xor	r13, r8
-               	xor	rax, r9
+               	xor	r13, rdi
+               	xor	r14, r10
+               	xor	r12, r8
+               	xor	rbp, r9
                	jmp	 <L6>
 <L5>:
                	movabs	rcx, -0x2a59ed990f36c6d4
@@ -727,13 +721,13 @@ Disassembly of section .text:
 <L7>:
                	bt	rcx, rdx
                	jae	 <L9>
-               	xor	rbp, rdi
-               	xor	r12, r10
-               	xor	r13, r8
-               	xor	rax, r9
+               	xor	r13, rdi
+               	xor	r14, r10
+               	xor	r12, r8
+               	xor	rbp, r9
                	jmp	 <L9>
 <L8>:
-               	mov	qword ptr [rsp], rax
+               	mov	qword ptr [rsp + 0x248], rax
                	movabs	rdx, -0x56a7d9e71fc03656
                	xor	esi, esi
                	jmp	 <L10>
@@ -752,19 +746,17 @@ Disassembly of section .text:
                	je	 <L11>
 <L10>:
                	bt	rdx, rsi
-               	mov	rax, qword ptr [rsp]
                	jae	 <L12>
-               	xor	rbp, rdi
-               	xor	r12, r10
-               	xor	r13, r8
-               	xor	rax, r9
-               	mov	qword ptr [rsp], rax
+               	xor	r13, rdi
+               	xor	r14, r10
+               	xor	r12, r8
+               	xor	rbp, r9
                	jmp	 <L12>
 <L11>:
                	movabs	rsi, 0x39abdc4529b1661c
                	xor	r11d, r11d
                	jmp	 <L13>
-               	nop
+               	nop	word ptr cs:[rax + rax]
 <L15>:
                	mov	rbx, r10
                	shl	rbx, 0x11
@@ -780,27 +772,26 @@ Disassembly of section .text:
 <L13>:
                	bt	rsi, r11
                	jae	 <L15>
-               	xor	rbp, rdi
-               	xor	r12, r10
-               	xor	r13, r8
-               	xor	qword ptr [rsp], r9
+               	xor	r13, rdi
+               	xor	r14, r10
+               	xor	r12, r8
+               	xor	rbp, r9
                	jmp	 <L15>
 <L14>:
+               	xor	eax, eax
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0x218], rdi
-               	xor	edi, edi
-               	mov	qword ptr [rsp + 0x50], rdi
+               	mov	qword ptr [rsp + 0x90], rdi
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x210], rdi
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x208], rdi
                	xor	r11d, r11d
-               	mov	rdi, qword ptr [rsp]
-               	mov	r8, r13
-               	mov	r9, r12
-               	mov	r10, rbp
+               	mov	rdi, rbp
+               	mov	r8, r12
+               	mov	r9, r14
+               	mov	r10, r13
                	jmp	 <L16>
-               	nop
+               	nop	dword ptr [rax + rax]
 <L18>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -817,15 +808,15 @@ Disassembly of section .text:
                	movabs	rbx, 0x180ec6d33cfd0aba
                	bt	rbx, r11
                	jae	 <L18>
-               	xor	qword ptr [rsp + 0x218], r10
-               	xor	qword ptr [rsp + 0x50], r9
+               	xor	rax, r10
+               	xor	qword ptr [rsp + 0x90], r9
                	xor	qword ptr [rsp + 0x210], r8
                	xor	qword ptr [rsp + 0x208], rdi
                	jmp	 <L18>
 <L17>:
                	xor	r11d, r11d
                	jmp	 <L19>
-               	nop	word ptr [rax + rax]
+               	nop	word ptr cs:[rax + rax]
 <L21>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -841,15 +832,15 @@ Disassembly of section .text:
 <L19>:
                	bt	rcx, r11
                	jae	 <L21>
-               	xor	qword ptr [rsp + 0x218], r10
-               	xor	qword ptr [rsp + 0x50], r9
+               	xor	rax, r10
+               	xor	qword ptr [rsp + 0x90], r9
                	xor	qword ptr [rsp + 0x210], r8
                	xor	qword ptr [rsp + 0x208], rdi
                	jmp	 <L21>
 <L20>:
                	xor	r11d, r11d
                	jmp	 <L22>
-               	nop	dword ptr [rax]
+               	nop	dword ptr [rax + rax]
 <L24>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -865,15 +856,15 @@ Disassembly of section .text:
 <L22>:
                	bt	rdx, r11
                	jae	 <L24>
-               	xor	qword ptr [rsp + 0x218], r10
-               	xor	qword ptr [rsp + 0x50], r9
+               	xor	rax, r10
+               	xor	qword ptr [rsp + 0x90], r9
                	xor	qword ptr [rsp + 0x210], r8
                	xor	qword ptr [rsp + 0x208], rdi
                	jmp	 <L24>
 <L23>:
                	xor	r11d, r11d
                	jmp	 <L25>
-               	nop	dword ptr [rax]
+               	nop	dword ptr [rax + rax]
 <L27>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -889,8 +880,8 @@ Disassembly of section .text:
 <L25>:
                	bt	rsi, r11
                	jae	 <L27>
-               	xor	qword ptr [rsp + 0x218], r10
-               	xor	qword ptr [rsp + 0x50], r9
+               	xor	rax, r10
+               	xor	qword ptr [rsp + 0x90], r9
                	xor	qword ptr [rsp + 0x210], r8
                	xor	qword ptr [rsp + 0x208], rdi
                	jmp	 <L27>
@@ -906,10 +897,10 @@ Disassembly of section .text:
                	xor	r11d, r11d
                	mov	rdi, qword ptr [rsp + 0x208]
                	mov	r8, qword ptr [rsp + 0x210]
-               	mov	r9, qword ptr [rsp + 0x50]
-               	mov	r10, qword ptr [rsp + 0x218]
+               	mov	r9, qword ptr [rsp + 0x90]
+               	mov	r10, rax
                	jmp	 <L28>
-               	nop	word ptr cs:[rax + rax]
+               	nop
 <L30>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -1005,7 +996,7 @@ Disassembly of section .text:
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x1e8], rdi
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0x48], rdi
+               	mov	qword ptr [rsp + 0x50], rdi
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x1e0], rdi
                	xor	edi, edi
@@ -1034,7 +1025,7 @@ Disassembly of section .text:
                	bt	rbx, r11
                	jae	 <L42>
                	xor	qword ptr [rsp + 0x1e8], r10
-               	xor	qword ptr [rsp + 0x48], r9
+               	xor	qword ptr [rsp + 0x50], r9
                	xor	qword ptr [rsp + 0x1e0], r8
                	xor	qword ptr [rsp + 0x1d8], rdi
                	jmp	 <L42>
@@ -1058,7 +1049,7 @@ Disassembly of section .text:
                	bt	rcx, r11
                	jae	 <L45>
                	xor	qword ptr [rsp + 0x1e8], r10
-               	xor	qword ptr [rsp + 0x48], r9
+               	xor	qword ptr [rsp + 0x50], r9
                	xor	qword ptr [rsp + 0x1e0], r8
                	xor	qword ptr [rsp + 0x1d8], rdi
                	jmp	 <L45>
@@ -1082,7 +1073,7 @@ Disassembly of section .text:
                	bt	rdx, r11
                	jae	 <L48>
                	xor	qword ptr [rsp + 0x1e8], r10
-               	xor	qword ptr [rsp + 0x48], r9
+               	xor	qword ptr [rsp + 0x50], r9
                	xor	qword ptr [rsp + 0x1e0], r8
                	xor	qword ptr [rsp + 0x1d8], rdi
                	jmp	 <L48>
@@ -1106,7 +1097,7 @@ Disassembly of section .text:
                	bt	rsi, r11
                	jae	 <L51>
                	xor	qword ptr [rsp + 0x1e8], r10
-               	xor	qword ptr [rsp + 0x48], r9
+               	xor	qword ptr [rsp + 0x50], r9
                	xor	qword ptr [rsp + 0x1e0], r8
                	xor	qword ptr [rsp + 0x1d8], rdi
                	jmp	 <L51>
@@ -1114,7 +1105,7 @@ Disassembly of section .text:
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x1d0], rdi
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0x40], rdi
+               	mov	qword ptr [rsp + 0x48], rdi
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x1c8], rdi
                	xor	edi, edi
@@ -1122,7 +1113,7 @@ Disassembly of section .text:
                	xor	r11d, r11d
                	mov	rdi, qword ptr [rsp + 0x1d8]
                	mov	r8, qword ptr [rsp + 0x1e0]
-               	mov	r9, qword ptr [rsp + 0x48]
+               	mov	r9, qword ptr [rsp + 0x50]
                	mov	r10, qword ptr [rsp + 0x1e8]
                	jmp	 <L52>
                	nop
@@ -1143,7 +1134,7 @@ Disassembly of section .text:
                	bt	rbx, r11
                	jae	 <L54>
                	xor	qword ptr [rsp + 0x1d0], r10
-               	xor	qword ptr [rsp + 0x40], r9
+               	xor	qword ptr [rsp + 0x48], r9
                	xor	qword ptr [rsp + 0x1c8], r8
                	xor	qword ptr [rsp + 0x1c0], rdi
                	jmp	 <L54>
@@ -1167,7 +1158,7 @@ Disassembly of section .text:
                	bt	rcx, r11
                	jae	 <L57>
                	xor	qword ptr [rsp + 0x1d0], r10
-               	xor	qword ptr [rsp + 0x40], r9
+               	xor	qword ptr [rsp + 0x48], r9
                	xor	qword ptr [rsp + 0x1c8], r8
                	xor	qword ptr [rsp + 0x1c0], rdi
                	jmp	 <L57>
@@ -1191,7 +1182,7 @@ Disassembly of section .text:
                	bt	rdx, r11
                	jae	 <L60>
                	xor	qword ptr [rsp + 0x1d0], r10
-               	xor	qword ptr [rsp + 0x40], r9
+               	xor	qword ptr [rsp + 0x48], r9
                	xor	qword ptr [rsp + 0x1c8], r8
                	xor	qword ptr [rsp + 0x1c0], rdi
                	jmp	 <L60>
@@ -1215,7 +1206,7 @@ Disassembly of section .text:
                	bt	rsi, r11
                	jae	 <L63>
                	xor	qword ptr [rsp + 0x1d0], r10
-               	xor	qword ptr [rsp + 0x40], r9
+               	xor	qword ptr [rsp + 0x48], r9
                	xor	qword ptr [rsp + 0x1c8], r8
                	xor	qword ptr [rsp + 0x1c0], rdi
                	jmp	 <L63>
@@ -1223,7 +1214,7 @@ Disassembly of section .text:
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x1b8], rdi
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0x38], rdi
+               	mov	qword ptr [rsp + 0x40], rdi
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x1b0], rdi
                	xor	edi, edi
@@ -1231,7 +1222,7 @@ Disassembly of section .text:
                	xor	r11d, r11d
                	mov	rdi, qword ptr [rsp + 0x1c0]
                	mov	r8, qword ptr [rsp + 0x1c8]
-               	mov	r9, qword ptr [rsp + 0x40]
+               	mov	r9, qword ptr [rsp + 0x48]
                	mov	r10, qword ptr [rsp + 0x1d0]
                	jmp	 <L64>
                	nop
@@ -1252,7 +1243,7 @@ Disassembly of section .text:
                	bt	rbx, r11
                	jae	 <L66>
                	xor	qword ptr [rsp + 0x1b8], r10
-               	xor	qword ptr [rsp + 0x38], r9
+               	xor	qword ptr [rsp + 0x40], r9
                	xor	qword ptr [rsp + 0x1b0], r8
                	xor	qword ptr [rsp + 0x1a8], rdi
                	jmp	 <L66>
@@ -1276,7 +1267,7 @@ Disassembly of section .text:
                	bt	rcx, r11
                	jae	 <L69>
                	xor	qword ptr [rsp + 0x1b8], r10
-               	xor	qword ptr [rsp + 0x38], r9
+               	xor	qword ptr [rsp + 0x40], r9
                	xor	qword ptr [rsp + 0x1b0], r8
                	xor	qword ptr [rsp + 0x1a8], rdi
                	jmp	 <L69>
@@ -1300,7 +1291,7 @@ Disassembly of section .text:
                	bt	rdx, r11
                	jae	 <L72>
                	xor	qword ptr [rsp + 0x1b8], r10
-               	xor	qword ptr [rsp + 0x38], r9
+               	xor	qword ptr [rsp + 0x40], r9
                	xor	qword ptr [rsp + 0x1b0], r8
                	xor	qword ptr [rsp + 0x1a8], rdi
                	jmp	 <L72>
@@ -1324,7 +1315,7 @@ Disassembly of section .text:
                	bt	rsi, r11
                	jae	 <L75>
                	xor	qword ptr [rsp + 0x1b8], r10
-               	xor	qword ptr [rsp + 0x38], r9
+               	xor	qword ptr [rsp + 0x40], r9
                	xor	qword ptr [rsp + 0x1b0], r8
                	xor	qword ptr [rsp + 0x1a8], rdi
                	jmp	 <L75>
@@ -1332,7 +1323,7 @@ Disassembly of section .text:
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x1a0], rdi
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0x30], rdi
+               	mov	qword ptr [rsp + 0x38], rdi
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x198], rdi
                	xor	edi, edi
@@ -1340,7 +1331,7 @@ Disassembly of section .text:
                	xor	r11d, r11d
                	mov	rdi, qword ptr [rsp + 0x1a8]
                	mov	r8, qword ptr [rsp + 0x1b0]
-               	mov	r9, qword ptr [rsp + 0x38]
+               	mov	r9, qword ptr [rsp + 0x40]
                	mov	r10, qword ptr [rsp + 0x1b8]
                	jmp	 <L76>
                	nop
@@ -1361,7 +1352,7 @@ Disassembly of section .text:
                	bt	rbx, r11
                	jae	 <L78>
                	xor	qword ptr [rsp + 0x1a0], r10
-               	xor	qword ptr [rsp + 0x30], r9
+               	xor	qword ptr [rsp + 0x38], r9
                	xor	qword ptr [rsp + 0x198], r8
                	xor	qword ptr [rsp + 0x190], rdi
                	jmp	 <L78>
@@ -1385,7 +1376,7 @@ Disassembly of section .text:
                	bt	rcx, r11
                	jae	 <L81>
                	xor	qword ptr [rsp + 0x1a0], r10
-               	xor	qword ptr [rsp + 0x30], r9
+               	xor	qword ptr [rsp + 0x38], r9
                	xor	qword ptr [rsp + 0x198], r8
                	xor	qword ptr [rsp + 0x190], rdi
                	jmp	 <L81>
@@ -1409,7 +1400,7 @@ Disassembly of section .text:
                	bt	rdx, r11
                	jae	 <L84>
                	xor	qword ptr [rsp + 0x1a0], r10
-               	xor	qword ptr [rsp + 0x30], r9
+               	xor	qword ptr [rsp + 0x38], r9
                	xor	qword ptr [rsp + 0x198], r8
                	xor	qword ptr [rsp + 0x190], rdi
                	jmp	 <L84>
@@ -1433,7 +1424,7 @@ Disassembly of section .text:
                	bt	rsi, r11
                	jae	 <L87>
                	xor	qword ptr [rsp + 0x1a0], r10
-               	xor	qword ptr [rsp + 0x30], r9
+               	xor	qword ptr [rsp + 0x38], r9
                	xor	qword ptr [rsp + 0x198], r8
                	xor	qword ptr [rsp + 0x190], rdi
                	jmp	 <L87>
@@ -1441,7 +1432,7 @@ Disassembly of section .text:
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x188], rdi
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0x80], rdi
+               	mov	qword ptr [rsp + 0x30], rdi
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x180], rdi
                	xor	edi, edi
@@ -1449,10 +1440,10 @@ Disassembly of section .text:
                	xor	r11d, r11d
                	mov	rdi, qword ptr [rsp + 0x190]
                	mov	r8, qword ptr [rsp + 0x198]
-               	mov	r9, qword ptr [rsp + 0x30]
+               	mov	r9, qword ptr [rsp + 0x38]
                	mov	r10, qword ptr [rsp + 0x1a0]
                	jmp	 <L88>
-               	nop	word ptr cs:[rax + rax]
+               	nop
 <L90>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -1470,7 +1461,7 @@ Disassembly of section .text:
                	bt	rbx, r11
                	jae	 <L90>
                	xor	qword ptr [rsp + 0x188], r10
-               	xor	qword ptr [rsp + 0x80], r9
+               	xor	qword ptr [rsp + 0x30], r9
                	xor	qword ptr [rsp + 0x180], r8
                	xor	qword ptr [rsp + 0x178], rdi
                	jmp	 <L90>
@@ -1494,13 +1485,14 @@ Disassembly of section .text:
                	bt	rcx, r11
                	jae	 <L93>
                	xor	qword ptr [rsp + 0x188], r10
-               	xor	qword ptr [rsp + 0x80], r9
+               	xor	qword ptr [rsp + 0x30], r9
                	xor	qword ptr [rsp + 0x180], r8
                	xor	qword ptr [rsp + 0x178], rdi
                	jmp	 <L93>
 <L92>:
                	xor	r11d, r11d
                	jmp	 <L94>
+               	nop	dword ptr [rax]
 <L96>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -1517,13 +1509,14 @@ Disassembly of section .text:
                	bt	rdx, r11
                	jae	 <L96>
                	xor	qword ptr [rsp + 0x188], r10
-               	xor	qword ptr [rsp + 0x80], r9
+               	xor	qword ptr [rsp + 0x30], r9
                	xor	qword ptr [rsp + 0x180], r8
                	xor	qword ptr [rsp + 0x178], rdi
                	jmp	 <L96>
 <L95>:
                	xor	r11d, r11d
                	jmp	 <L97>
+               	nop	dword ptr [rax]
 <L99>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -1540,7 +1533,7 @@ Disassembly of section .text:
                	bt	rsi, r11
                	jae	 <L99>
                	xor	qword ptr [rsp + 0x188], r10
-               	xor	qword ptr [rsp + 0x80], r9
+               	xor	qword ptr [rsp + 0x30], r9
                	xor	qword ptr [rsp + 0x180], r8
                	xor	qword ptr [rsp + 0x178], rdi
                	jmp	 <L99>
@@ -1556,10 +1549,10 @@ Disassembly of section .text:
                	xor	r11d, r11d
                	mov	rdi, qword ptr [rsp + 0x178]
                	mov	r8, qword ptr [rsp + 0x180]
-               	mov	r9, qword ptr [rsp + 0x80]
+               	mov	r9, qword ptr [rsp + 0x30]
                	mov	r10, qword ptr [rsp + 0x188]
                	jmp	 <L100>
-               	nop	word ptr cs:[rax + rax]
+               	nop
 <L102>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -1655,13 +1648,13 @@ Disassembly of section .text:
                	jmp	 <L111>
 <L110>:
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0x118], rdi
+               	mov	qword ptr [rsp + 0x158], rdi
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x20], rdi
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0x158], rdi
-               	xor	edi, edi
                	mov	qword ptr [rsp + 0x150], rdi
+               	xor	edi, edi
+               	mov	qword ptr [rsp + 0x148], rdi
                	xor	r11d, r11d
                	mov	rdi, qword ptr [rsp + 0x160]
                	mov	r8, qword ptr [rsp + 0x168]
@@ -1685,10 +1678,10 @@ Disassembly of section .text:
                	movabs	rbx, 0x180ec6d33cfd0aba
                	bt	rbx, r11
                	jae	 <L114>
-               	xor	qword ptr [rsp + 0x118], r10
+               	xor	qword ptr [rsp + 0x158], r10
                	xor	qword ptr [rsp + 0x20], r9
-               	xor	qword ptr [rsp + 0x158], r8
-               	xor	qword ptr [rsp + 0x150], rdi
+               	xor	qword ptr [rsp + 0x150], r8
+               	xor	qword ptr [rsp + 0x148], rdi
                	jmp	 <L114>
 <L113>:
                	xor	r11d, r11d
@@ -1709,10 +1702,10 @@ Disassembly of section .text:
 <L115>:
                	bt	rcx, r11
                	jae	 <L117>
-               	xor	qword ptr [rsp + 0x118], r10
+               	xor	qword ptr [rsp + 0x158], r10
                	xor	qword ptr [rsp + 0x20], r9
-               	xor	qword ptr [rsp + 0x158], r8
-               	xor	qword ptr [rsp + 0x150], rdi
+               	xor	qword ptr [rsp + 0x150], r8
+               	xor	qword ptr [rsp + 0x148], rdi
                	jmp	 <L117>
 <L116>:
                	xor	r11d, r11d
@@ -1733,10 +1726,10 @@ Disassembly of section .text:
 <L118>:
                	bt	rdx, r11
                	jae	 <L120>
-               	xor	qword ptr [rsp + 0x118], r10
+               	xor	qword ptr [rsp + 0x158], r10
                	xor	qword ptr [rsp + 0x20], r9
-               	xor	qword ptr [rsp + 0x158], r8
-               	xor	qword ptr [rsp + 0x150], rdi
+               	xor	qword ptr [rsp + 0x150], r8
+               	xor	qword ptr [rsp + 0x148], rdi
                	jmp	 <L120>
 <L119>:
                	xor	r11d, r11d
@@ -1757,25 +1750,25 @@ Disassembly of section .text:
 <L121>:
                	bt	rsi, r11
                	jae	 <L123>
-               	xor	qword ptr [rsp + 0x118], r10
+               	xor	qword ptr [rsp + 0x158], r10
                	xor	qword ptr [rsp + 0x20], r9
-               	xor	qword ptr [rsp + 0x158], r8
-               	xor	qword ptr [rsp + 0x150], rdi
+               	xor	qword ptr [rsp + 0x150], r8
+               	xor	qword ptr [rsp + 0x148], rdi
                	jmp	 <L123>
 <L122>:
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0x148], rdi
+               	mov	qword ptr [rsp + 0x140], rdi
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x18], rdi
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0x140], rdi
-               	xor	edi, edi
                	mov	qword ptr [rsp + 0x138], rdi
+               	xor	edi, edi
+               	mov	qword ptr [rsp + 0x130], rdi
                	xor	r11d, r11d
-               	mov	rdi, qword ptr [rsp + 0x150]
-               	mov	r8, qword ptr [rsp + 0x158]
+               	mov	rdi, qword ptr [rsp + 0x148]
+               	mov	r8, qword ptr [rsp + 0x150]
                	mov	r9, qword ptr [rsp + 0x20]
-               	mov	r10, qword ptr [rsp + 0x118]
+               	mov	r10, qword ptr [rsp + 0x158]
                	jmp	 <L124>
                	nop
 <L126>:
@@ -1794,10 +1787,10 @@ Disassembly of section .text:
                	movabs	rbx, 0x180ec6d33cfd0aba
                	bt	rbx, r11
                	jae	 <L126>
-               	xor	qword ptr [rsp + 0x148], r10
+               	xor	qword ptr [rsp + 0x140], r10
                	xor	qword ptr [rsp + 0x18], r9
-               	xor	qword ptr [rsp + 0x140], r8
-               	xor	qword ptr [rsp + 0x138], rdi
+               	xor	qword ptr [rsp + 0x138], r8
+               	xor	qword ptr [rsp + 0x130], rdi
                	jmp	 <L126>
 <L125>:
                	xor	r11d, r11d
@@ -1818,10 +1811,10 @@ Disassembly of section .text:
 <L127>:
                	bt	rcx, r11
                	jae	 <L129>
-               	xor	qword ptr [rsp + 0x148], r10
+               	xor	qword ptr [rsp + 0x140], r10
                	xor	qword ptr [rsp + 0x18], r9
-               	xor	qword ptr [rsp + 0x140], r8
-               	xor	qword ptr [rsp + 0x138], rdi
+               	xor	qword ptr [rsp + 0x138], r8
+               	xor	qword ptr [rsp + 0x130], rdi
                	jmp	 <L129>
 <L128>:
                	xor	r11d, r11d
@@ -1842,10 +1835,10 @@ Disassembly of section .text:
 <L130>:
                	bt	rdx, r11
                	jae	 <L132>
-               	xor	qword ptr [rsp + 0x148], r10
+               	xor	qword ptr [rsp + 0x140], r10
                	xor	qword ptr [rsp + 0x18], r9
-               	xor	qword ptr [rsp + 0x140], r8
-               	xor	qword ptr [rsp + 0x138], rdi
+               	xor	qword ptr [rsp + 0x138], r8
+               	xor	qword ptr [rsp + 0x130], rdi
                	jmp	 <L132>
 <L131>:
                	xor	r11d, r11d
@@ -1866,25 +1859,25 @@ Disassembly of section .text:
 <L133>:
                	bt	rsi, r11
                	jae	 <L135>
-               	xor	qword ptr [rsp + 0x148], r10
+               	xor	qword ptr [rsp + 0x140], r10
                	xor	qword ptr [rsp + 0x18], r9
-               	xor	qword ptr [rsp + 0x140], r8
-               	xor	qword ptr [rsp + 0x138], rdi
+               	xor	qword ptr [rsp + 0x138], r8
+               	xor	qword ptr [rsp + 0x130], rdi
                	jmp	 <L135>
 <L134>:
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0x130], rdi
+               	mov	qword ptr [rsp + 0x128], rdi
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x10], rdi
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0x128], rdi
-               	xor	edi, edi
                	mov	qword ptr [rsp + 0x120], rdi
+               	xor	edi, edi
+               	mov	qword ptr [rsp + 0x118], rdi
                	xor	r11d, r11d
-               	mov	rdi, qword ptr [rsp + 0x138]
-               	mov	r8, qword ptr [rsp + 0x140]
+               	mov	rdi, qword ptr [rsp + 0x130]
+               	mov	r8, qword ptr [rsp + 0x138]
                	mov	r9, qword ptr [rsp + 0x18]
-               	mov	r10, qword ptr [rsp + 0x148]
+               	mov	r10, qword ptr [rsp + 0x140]
                	jmp	 <L136>
                	nop
 <L138>:
@@ -1903,10 +1896,10 @@ Disassembly of section .text:
                	movabs	rbx, 0x180ec6d33cfd0aba
                	bt	rbx, r11
                	jae	 <L138>
-               	xor	qword ptr [rsp + 0x130], r10
+               	xor	qword ptr [rsp + 0x128], r10
                	xor	qword ptr [rsp + 0x10], r9
-               	xor	qword ptr [rsp + 0x128], r8
-               	xor	qword ptr [rsp + 0x120], rdi
+               	xor	qword ptr [rsp + 0x120], r8
+               	xor	qword ptr [rsp + 0x118], rdi
                	jmp	 <L138>
 <L137>:
                	xor	r11d, r11d
@@ -1927,10 +1920,10 @@ Disassembly of section .text:
 <L139>:
                	bt	rcx, r11
                	jae	 <L141>
-               	xor	qword ptr [rsp + 0x130], r10
+               	xor	qword ptr [rsp + 0x128], r10
                	xor	qword ptr [rsp + 0x10], r9
-               	xor	qword ptr [rsp + 0x128], r8
-               	xor	qword ptr [rsp + 0x120], rdi
+               	xor	qword ptr [rsp + 0x120], r8
+               	xor	qword ptr [rsp + 0x118], rdi
                	jmp	 <L141>
 <L140>:
                	xor	r11d, r11d
@@ -1951,10 +1944,10 @@ Disassembly of section .text:
 <L142>:
                	bt	rdx, r11
                	jae	 <L144>
-               	xor	qword ptr [rsp + 0x130], r10
+               	xor	qword ptr [rsp + 0x128], r10
                	xor	qword ptr [rsp + 0x10], r9
-               	xor	qword ptr [rsp + 0x128], r8
-               	xor	qword ptr [rsp + 0x120], rdi
+               	xor	qword ptr [rsp + 0x120], r8
+               	xor	qword ptr [rsp + 0x118], rdi
                	jmp	 <L144>
 <L143>:
                	xor	r11d, r11d
@@ -1975,26 +1968,27 @@ Disassembly of section .text:
 <L145>:
                	bt	rsi, r11
                	jae	 <L147>
-               	xor	qword ptr [rsp + 0x130], r10
+               	xor	qword ptr [rsp + 0x128], r10
                	xor	qword ptr [rsp + 0x10], r9
-               	xor	qword ptr [rsp + 0x128], r8
-               	xor	qword ptr [rsp + 0x120], rdi
+               	xor	qword ptr [rsp + 0x120], r8
+               	xor	qword ptr [rsp + 0x118], rdi
                	jmp	 <L147>
 <L146>:
-               	xor	r15d, r15d
-               	xor	edi, edi
-               	mov	qword ptr [rsp + 0x8], rdi
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x110], rdi
                	xor	edi, edi
+               	mov	qword ptr [rsp + 0x80], rdi
+               	xor	edi, edi
                	mov	qword ptr [rsp + 0x108], rdi
+               	xor	edi, edi
+               	mov	qword ptr [rsp + 0x100], rdi
                	xor	r11d, r11d
-               	mov	rdi, qword ptr [rsp + 0x120]
-               	mov	r8, qword ptr [rsp + 0x128]
+               	mov	rdi, qword ptr [rsp + 0x118]
+               	mov	r8, qword ptr [rsp + 0x120]
                	mov	r9, qword ptr [rsp + 0x10]
-               	mov	r10, qword ptr [rsp + 0x130]
+               	mov	r10, qword ptr [rsp + 0x128]
                	jmp	 <L148>
-               	nop	dword ptr [rax + rax]
+               	nop	word ptr cs:[rax + rax]
 <L150>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -2011,15 +2005,15 @@ Disassembly of section .text:
                	movabs	rbx, 0x180ec6d33cfd0aba
                	bt	rbx, r11
                	jae	 <L150>
-               	xor	r15, r10
-               	xor	qword ptr [rsp + 0x8], r9
-               	xor	qword ptr [rsp + 0x110], r8
-               	xor	qword ptr [rsp + 0x108], rdi
+               	xor	qword ptr [rsp + 0x110], r10
+               	xor	qword ptr [rsp + 0x80], r9
+               	xor	qword ptr [rsp + 0x108], r8
+               	xor	qword ptr [rsp + 0x100], rdi
                	jmp	 <L150>
 <L149>:
                	xor	r11d, r11d
                	jmp	 <L151>
-               	nop	word ptr cs:[rax + rax]
+               	nop	word ptr [rax + rax]
 <L153>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -2035,15 +2029,14 @@ Disassembly of section .text:
 <L151>:
                	bt	rcx, r11
                	jae	 <L153>
-               	xor	r15, r10
-               	xor	qword ptr [rsp + 0x8], r9
-               	xor	qword ptr [rsp + 0x110], r8
-               	xor	qword ptr [rsp + 0x108], rdi
+               	xor	qword ptr [rsp + 0x110], r10
+               	xor	qword ptr [rsp + 0x80], r9
+               	xor	qword ptr [rsp + 0x108], r8
+               	xor	qword ptr [rsp + 0x100], rdi
                	jmp	 <L153>
 <L152>:
                	xor	r11d, r11d
                	jmp	 <L154>
-               	nop	dword ptr [rax + rax]
 <L156>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -2059,15 +2052,14 @@ Disassembly of section .text:
 <L154>:
                	bt	rdx, r11
                	jae	 <L156>
-               	xor	r15, r10
-               	xor	qword ptr [rsp + 0x8], r9
-               	xor	qword ptr [rsp + 0x110], r8
-               	xor	qword ptr [rsp + 0x108], rdi
+               	xor	qword ptr [rsp + 0x110], r10
+               	xor	qword ptr [rsp + 0x80], r9
+               	xor	qword ptr [rsp + 0x108], r8
+               	xor	qword ptr [rsp + 0x100], rdi
                	jmp	 <L156>
 <L155>:
                	xor	r11d, r11d
                	jmp	 <L157>
-               	nop	dword ptr [rax + rax]
 <L159>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -2083,25 +2075,25 @@ Disassembly of section .text:
 <L157>:
                	bt	rsi, r11
                	jae	 <L159>
-               	xor	r15, r10
-               	xor	qword ptr [rsp + 0x8], r9
-               	xor	qword ptr [rsp + 0x110], r8
-               	xor	qword ptr [rsp + 0x108], rdi
+               	xor	qword ptr [rsp + 0x110], r10
+               	xor	qword ptr [rsp + 0x80], r9
+               	xor	qword ptr [rsp + 0x108], r8
+               	xor	qword ptr [rsp + 0x100], rdi
                	jmp	 <L159>
 <L158>:
-               	xor	r14d, r14d
+               	xor	edi, edi
+               	mov	qword ptr [rsp + 0xf8], rdi
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x78], rdi
-               	mov	r10, r15
-               	xor	eax, eax
-               	mov	qword ptr [rsp + 0xb0], rax
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0x100], rdi
+               	mov	qword ptr [rsp + 0xf0], rdi
+               	xor	edi, edi
+               	mov	qword ptr [rsp + 0xe8], rdi
                	xor	r11d, r11d
-               	mov	rdi, qword ptr [rsp + 0x108]
-               	mov	r8, qword ptr [rsp + 0x110]
-               	mov	r9, qword ptr [rsp + 0x8]
-               	mov	qword ptr [rsp + 0x2d8], r15
+               	mov	rdi, qword ptr [rsp + 0x100]
+               	mov	r8, qword ptr [rsp + 0x108]
+               	mov	r9, qword ptr [rsp + 0x80]
+               	mov	r10, qword ptr [rsp + 0x110]
                	jmp	 <L160>
                	nop	word ptr cs:[rax + rax]
 <L162>:
@@ -2120,15 +2112,15 @@ Disassembly of section .text:
                	movabs	rbx, 0x180ec6d33cfd0aba
                	bt	rbx, r11
                	jae	 <L162>
-               	xor	r14, r10
+               	xor	qword ptr [rsp + 0xf8], r10
                	xor	qword ptr [rsp + 0x78], r9
-               	xor	qword ptr [rsp + 0xb0], r8
-               	xor	qword ptr [rsp + 0x100], rdi
+               	xor	qword ptr [rsp + 0xf0], r8
+               	xor	qword ptr [rsp + 0xe8], rdi
                	jmp	 <L162>
 <L161>:
                	xor	r11d, r11d
                	jmp	 <L163>
-               	nop	word ptr cs:[rax + rax]
+               	nop	word ptr [rax + rax]
 <L165>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -2144,15 +2136,15 @@ Disassembly of section .text:
 <L163>:
                	bt	rcx, r11
                	jae	 <L165>
-               	xor	r14, r10
+               	xor	qword ptr [rsp + 0xf8], r10
                	xor	qword ptr [rsp + 0x78], r9
-               	xor	qword ptr [rsp + 0xb0], r8
-               	xor	qword ptr [rsp + 0x100], rdi
+               	xor	qword ptr [rsp + 0xf0], r8
+               	xor	qword ptr [rsp + 0xe8], rdi
                	jmp	 <L165>
 <L164>:
                	xor	r11d, r11d
                	jmp	 <L166>
-               	nop	dword ptr [rax + rax]
+               	nop	dword ptr [rax]
 <L168>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -2168,15 +2160,15 @@ Disassembly of section .text:
 <L166>:
                	bt	rdx, r11
                	jae	 <L168>
-               	xor	r14, r10
+               	xor	qword ptr [rsp + 0xf8], r10
                	xor	qword ptr [rsp + 0x78], r9
-               	xor	qword ptr [rsp + 0xb0], r8
-               	xor	qword ptr [rsp + 0x100], rdi
+               	xor	qword ptr [rsp + 0xf0], r8
+               	xor	qword ptr [rsp + 0xe8], rdi
                	jmp	 <L168>
 <L167>:
                	xor	r11d, r11d
                	jmp	 <L169>
-               	nop	dword ptr [rax + rax]
+               	nop	dword ptr [rax]
 <L171>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -2192,27 +2184,27 @@ Disassembly of section .text:
 <L169>:
                	bt	rsi, r11
                	jae	 <L171>
-               	xor	r14, r10
+               	xor	qword ptr [rsp + 0xf8], r10
                	xor	qword ptr [rsp + 0x78], r9
-               	xor	qword ptr [rsp + 0xb0], r8
-               	xor	qword ptr [rsp + 0x100], rdi
+               	xor	qword ptr [rsp + 0xf0], r8
+               	xor	qword ptr [rsp + 0xe8], rdi
                	jmp	 <L171>
 <L170>:
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0xa8], rdi
+               	mov	qword ptr [rsp + 0x228], rdi
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x70], rdi
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0xf8], rdi
+               	mov	qword ptr [rsp + 0xe0], rdi
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0x58], rdi
+               	mov	qword ptr [rsp + 0xd8], rdi
                	xor	r11d, r11d
-               	mov	rdi, qword ptr [rsp + 0x100]
-               	mov	r8, qword ptr [rsp + 0xb0]
+               	mov	rdi, qword ptr [rsp + 0xe8]
+               	mov	r8, qword ptr [rsp + 0xf0]
                	mov	r9, qword ptr [rsp + 0x78]
-               	mov	r10, r14
+               	mov	r10, qword ptr [rsp + 0xf8]
                	jmp	 <L172>
-               	nop	word ptr cs:[rax + rax]
+               	nop
 <L174>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -2229,15 +2221,15 @@ Disassembly of section .text:
                	movabs	rbx, 0x180ec6d33cfd0aba
                	bt	rbx, r11
                	jae	 <L174>
-               	xor	qword ptr [rsp + 0xa8], r10
+               	xor	qword ptr [rsp + 0x228], r10
                	xor	qword ptr [rsp + 0x70], r9
-               	xor	qword ptr [rsp + 0xf8], r8
-               	xor	qword ptr [rsp + 0x58], rdi
+               	xor	qword ptr [rsp + 0xe0], r8
+               	xor	qword ptr [rsp + 0xd8], rdi
                	jmp	 <L174>
 <L173>:
                	xor	r11d, r11d
                	jmp	 <L175>
-               	nop	word ptr cs:[rax + rax]
+               	nop	word ptr [rax + rax]
 <L177>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -2253,15 +2245,15 @@ Disassembly of section .text:
 <L175>:
                	bt	rcx, r11
                	jae	 <L177>
-               	xor	qword ptr [rsp + 0xa8], r10
+               	xor	qword ptr [rsp + 0x228], r10
                	xor	qword ptr [rsp + 0x70], r9
-               	xor	qword ptr [rsp + 0xf8], r8
-               	xor	qword ptr [rsp + 0x58], rdi
+               	xor	qword ptr [rsp + 0xe0], r8
+               	xor	qword ptr [rsp + 0xd8], rdi
                	jmp	 <L177>
 <L176>:
                	xor	r11d, r11d
                	jmp	 <L178>
-               	nop	word ptr [rax + rax]
+               	nop	dword ptr [rax]
 <L180>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -2277,15 +2269,15 @@ Disassembly of section .text:
 <L178>:
                	bt	rdx, r11
                	jae	 <L180>
-               	xor	qword ptr [rsp + 0xa8], r10
+               	xor	qword ptr [rsp + 0x228], r10
                	xor	qword ptr [rsp + 0x70], r9
-               	xor	qword ptr [rsp + 0xf8], r8
-               	xor	qword ptr [rsp + 0x58], rdi
+               	xor	qword ptr [rsp + 0xe0], r8
+               	xor	qword ptr [rsp + 0xd8], rdi
                	jmp	 <L180>
 <L179>:
                	xor	r11d, r11d
                	jmp	 <L181>
-               	nop	word ptr [rax + rax]
+               	nop	dword ptr [rax]
 <L183>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -2301,27 +2293,27 @@ Disassembly of section .text:
 <L181>:
                	bt	rsi, r11
                	jae	 <L183>
-               	xor	qword ptr [rsp + 0xa8], r10
+               	xor	qword ptr [rsp + 0x228], r10
                	xor	qword ptr [rsp + 0x70], r9
-               	xor	qword ptr [rsp + 0xf8], r8
-               	xor	qword ptr [rsp + 0x58], rdi
+               	xor	qword ptr [rsp + 0xe0], r8
+               	xor	qword ptr [rsp + 0xd8], rdi
                	jmp	 <L183>
 <L182>:
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0xa0], rdi
+               	mov	qword ptr [rsp + 0x220], rdi
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x68], rdi
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0xf0], rdi
+               	mov	qword ptr [rsp + 0xd0], rdi
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0xe8], rdi
+               	mov	qword ptr [rsp + 0xc8], rdi
                	xor	r11d, r11d
-               	mov	rdi, qword ptr [rsp + 0x58]
-               	mov	r8, qword ptr [rsp + 0xf8]
+               	mov	rdi, qword ptr [rsp + 0xd8]
+               	mov	r8, qword ptr [rsp + 0xe0]
                	mov	r9, qword ptr [rsp + 0x70]
-               	mov	r10, qword ptr [rsp + 0xa8]
+               	mov	r10, qword ptr [rsp + 0x228]
                	jmp	 <L184>
-               	nop	dword ptr [rax]
+               	nop
 <L186>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -2338,10 +2330,10 @@ Disassembly of section .text:
                	movabs	rbx, 0x180ec6d33cfd0aba
                	bt	rbx, r11
                	jae	 <L186>
-               	xor	qword ptr [rsp + 0xa0], r10
+               	xor	qword ptr [rsp + 0x220], r10
                	xor	qword ptr [rsp + 0x68], r9
-               	xor	qword ptr [rsp + 0xf0], r8
-               	xor	qword ptr [rsp + 0xe8], rdi
+               	xor	qword ptr [rsp + 0xd0], r8
+               	xor	qword ptr [rsp + 0xc8], rdi
                	jmp	 <L186>
 <L185>:
                	xor	r11d, r11d
@@ -2362,10 +2354,10 @@ Disassembly of section .text:
 <L187>:
                	bt	rcx, r11
                	jae	 <L189>
-               	xor	qword ptr [rsp + 0xa0], r10
+               	xor	qword ptr [rsp + 0x220], r10
                	xor	qword ptr [rsp + 0x68], r9
-               	xor	qword ptr [rsp + 0xf0], r8
-               	xor	qword ptr [rsp + 0xe8], rdi
+               	xor	qword ptr [rsp + 0xd0], r8
+               	xor	qword ptr [rsp + 0xc8], rdi
                	jmp	 <L189>
 <L188>:
                	xor	r11d, r11d
@@ -2386,10 +2378,10 @@ Disassembly of section .text:
 <L190>:
                	bt	rdx, r11
                	jae	 <L192>
-               	xor	qword ptr [rsp + 0xa0], r10
+               	xor	qword ptr [rsp + 0x220], r10
                	xor	qword ptr [rsp + 0x68], r9
-               	xor	qword ptr [rsp + 0xf0], r8
-               	xor	qword ptr [rsp + 0xe8], rdi
+               	xor	qword ptr [rsp + 0xd0], r8
+               	xor	qword ptr [rsp + 0xc8], rdi
                	jmp	 <L192>
 <L191>:
                	xor	r11d, r11d
@@ -2410,25 +2402,25 @@ Disassembly of section .text:
 <L193>:
                	bt	rsi, r11
                	jae	 <L195>
-               	xor	qword ptr [rsp + 0xa0], r10
+               	xor	qword ptr [rsp + 0x220], r10
                	xor	qword ptr [rsp + 0x68], r9
-               	xor	qword ptr [rsp + 0xf0], r8
-               	xor	qword ptr [rsp + 0xe8], rdi
+               	xor	qword ptr [rsp + 0xd0], r8
+               	xor	qword ptr [rsp + 0xc8], rdi
                	jmp	 <L195>
 <L194>:
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0x98], rdi
+               	mov	qword ptr [rsp + 0x218], rdi
                	xor	edi, edi
                	mov	qword ptr [rsp + 0x60], rdi
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0xe0], rdi
+               	mov	qword ptr [rsp + 0xc0], rdi
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0xd8], rdi
+               	mov	qword ptr [rsp + 0xb8], rdi
                	xor	r11d, r11d
-               	mov	rdi, qword ptr [rsp + 0xe8]
-               	mov	r8, qword ptr [rsp + 0xf0]
+               	mov	rdi, qword ptr [rsp + 0xc8]
+               	mov	r8, qword ptr [rsp + 0xd0]
                	mov	r9, qword ptr [rsp + 0x68]
-               	mov	r10, qword ptr [rsp + 0xa0]
+               	mov	r10, qword ptr [rsp + 0x220]
                	jmp	 <L196>
                	nop
 <L198>:
@@ -2447,10 +2439,10 @@ Disassembly of section .text:
                	movabs	rbx, 0x180ec6d33cfd0aba
                	bt	rbx, r11
                	jae	 <L198>
-               	xor	qword ptr [rsp + 0x98], r10
+               	xor	qword ptr [rsp + 0x218], r10
                	xor	qword ptr [rsp + 0x60], r9
-               	xor	qword ptr [rsp + 0xe0], r8
-               	xor	qword ptr [rsp + 0xd8], rdi
+               	xor	qword ptr [rsp + 0xc0], r8
+               	xor	qword ptr [rsp + 0xb8], rdi
                	jmp	 <L198>
 <L197>:
                	xor	r11d, r11d
@@ -2471,10 +2463,10 @@ Disassembly of section .text:
 <L199>:
                	bt	rcx, r11
                	jae	 <L201>
-               	xor	qword ptr [rsp + 0x98], r10
+               	xor	qword ptr [rsp + 0x218], r10
                	xor	qword ptr [rsp + 0x60], r9
-               	xor	qword ptr [rsp + 0xe0], r8
-               	xor	qword ptr [rsp + 0xd8], rdi
+               	xor	qword ptr [rsp + 0xc0], r8
+               	xor	qword ptr [rsp + 0xb8], rdi
                	jmp	 <L201>
 <L200>:
                	xor	r11d, r11d
@@ -2495,10 +2487,10 @@ Disassembly of section .text:
 <L202>:
                	bt	rdx, r11
                	jae	 <L204>
-               	xor	qword ptr [rsp + 0x98], r10
+               	xor	qword ptr [rsp + 0x218], r10
                	xor	qword ptr [rsp + 0x60], r9
-               	xor	qword ptr [rsp + 0xe0], r8
-               	xor	qword ptr [rsp + 0xd8], rdi
+               	xor	qword ptr [rsp + 0xc0], r8
+               	xor	qword ptr [rsp + 0xb8], rdi
                	jmp	 <L204>
 <L203>:
                	xor	r11d, r11d
@@ -2519,27 +2511,27 @@ Disassembly of section .text:
 <L205>:
                	bt	rsi, r11
                	jae	 <L207>
-               	xor	qword ptr [rsp + 0x98], r10
+               	xor	qword ptr [rsp + 0x218], r10
                	xor	qword ptr [rsp + 0x60], r9
-               	xor	qword ptr [rsp + 0xe0], r8
-               	xor	qword ptr [rsp + 0xd8], rdi
+               	xor	qword ptr [rsp + 0xc0], r8
+               	xor	qword ptr [rsp + 0xb8], rdi
                	jmp	 <L207>
 <L206>:
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0x90], rdi
+               	mov	qword ptr [rsp + 0xb0], rdi
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0xd0], rdi
+               	mov	qword ptr [rsp + 0x58], rdi
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0xc8], rdi
+               	mov	qword ptr [rsp + 0xa8], rdi
                	xor	edi, edi
-               	mov	qword ptr [rsp + 0xc0], rdi
+               	mov	qword ptr [rsp + 0xa0], rdi
                	xor	r11d, r11d
-               	mov	rdi, qword ptr [rsp + 0xd8]
-               	mov	r8, qword ptr [rsp + 0xe0]
+               	mov	rdi, qword ptr [rsp + 0xb8]
+               	mov	r8, qword ptr [rsp + 0xc0]
                	mov	r9, qword ptr [rsp + 0x60]
-               	mov	r10, qword ptr [rsp + 0x98]
+               	mov	r10, qword ptr [rsp + 0x218]
                	jmp	 <L208>
-               	nop	word ptr cs:[rax + rax]
+               	nop
 <L210>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -2556,10 +2548,10 @@ Disassembly of section .text:
                	movabs	rbx, 0x180ec6d33cfd0aba
                	bt	rbx, r11
                	jae	 <L210>
-               	xor	qword ptr [rsp + 0x90], r10
-               	xor	qword ptr [rsp + 0xd0], r9
-               	xor	qword ptr [rsp + 0xc8], r8
-               	xor	qword ptr [rsp + 0xc0], rdi
+               	xor	qword ptr [rsp + 0xb0], r10
+               	xor	qword ptr [rsp + 0x58], r9
+               	xor	qword ptr [rsp + 0xa8], r8
+               	xor	qword ptr [rsp + 0xa0], rdi
                	jmp	 <L210>
 <L209>:
                	xor	r11d, r11d
@@ -2580,14 +2572,15 @@ Disassembly of section .text:
 <L211>:
                	bt	rcx, r11
                	jae	 <L213>
-               	xor	qword ptr [rsp + 0x90], r10
-               	xor	qword ptr [rsp + 0xd0], r9
-               	xor	qword ptr [rsp + 0xc8], r8
-               	xor	qword ptr [rsp + 0xc0], rdi
+               	xor	qword ptr [rsp + 0xb0], r10
+               	xor	qword ptr [rsp + 0x58], r9
+               	xor	qword ptr [rsp + 0xa8], r8
+               	xor	qword ptr [rsp + 0xa0], rdi
                	jmp	 <L213>
 <L212>:
                	xor	r11d, r11d
                	jmp	 <L214>
+               	nop	dword ptr [rax]
 <L216>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -2603,14 +2596,15 @@ Disassembly of section .text:
 <L214>:
                	bt	rdx, r11
                	jae	 <L216>
-               	xor	qword ptr [rsp + 0x90], r10
-               	xor	qword ptr [rsp + 0xd0], r9
-               	xor	qword ptr [rsp + 0xc8], r8
-               	xor	qword ptr [rsp + 0xc0], rdi
+               	xor	qword ptr [rsp + 0xb0], r10
+               	xor	qword ptr [rsp + 0x58], r9
+               	xor	qword ptr [rsp + 0xa8], r8
+               	xor	qword ptr [rsp + 0xa0], rdi
                	jmp	 <L216>
 <L215>:
                	xor	r11d, r11d
                	jmp	 <L217>
+               	nop	dword ptr [rax]
 <L219>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -2626,27 +2620,30 @@ Disassembly of section .text:
 <L217>:
                	bt	rsi, r11
                	jae	 <L219>
-               	xor	qword ptr [rsp + 0x90], r10
-               	xor	qword ptr [rsp + 0xd0], r9
-               	xor	qword ptr [rsp + 0xc8], r8
-               	xor	qword ptr [rsp + 0xc0], rdi
+               	xor	qword ptr [rsp + 0xb0], r10
+               	xor	qword ptr [rsp + 0x58], r9
+               	xor	qword ptr [rsp + 0xa8], r8
+               	xor	qword ptr [rsp + 0xa0], rdi
                	jmp	 <L219>
 <L218>:
                	mov	qword ptr [rsp + 0x2e0], rbp
                	mov	qword ptr [rsp + 0x2e8], r13
-               	mov	qword ptr [rsp + 0x248], r12
-               	xor	r13d, r13d
+               	mov	qword ptr [rsp + 0x2f0], r12
+               	mov	qword ptr [rsp + 0x278], r14
+               	xor	edi, edi
+               	mov	qword ptr [rsp + 0x240], rdi
+               	xor	edi, edi
+               	mov	qword ptr [rsp + 0x8], rdi
+               	xor	edi, edi
+               	mov	qword ptr [rsp + 0x98], rdi
                	xor	ebp, ebp
-               	xor	r12d, r12d
-               	xor	eax, eax
                	xor	r11d, r11d
-               	mov	rdi, qword ptr [rsp + 0xc0]
-               	mov	r8, qword ptr [rsp + 0xc8]
-               	mov	r15, qword ptr [rsp + 0xd0]
-               	mov	r9, r15
-               	mov	r10, qword ptr [rsp + 0x90]
+               	mov	rdi, qword ptr [rsp + 0xa0]
+               	mov	r8, qword ptr [rsp + 0xa8]
+               	mov	r9, qword ptr [rsp + 0x58]
+               	mov	r10, qword ptr [rsp + 0xb0]
                	jmp	 <L220>
-               	nop	word ptr cs:[rax + rax]
+               	nop	word ptr [rax + rax]
 <L222>:
                	mov	rbx, r9
                	shl	rbx, 0x11
@@ -2663,10 +2660,10 @@ Disassembly of section .text:
                	movabs	rbx, 0x180ec6d33cfd0aba
                	bt	rbx, r11
                	jae	 <L222>
-               	xor	r13, r10
-               	xor	rbp, r9
-               	xor	r12, r8
-               	xor	rax, rdi
+               	xor	qword ptr [rsp + 0x240], r10
+               	xor	qword ptr [rsp + 0x8], r9
+               	xor	qword ptr [rsp + 0x98], r8
+               	xor	rbp, rdi
                	jmp	 <L222>
 <L221>:
                	xor	r11d, r11d
@@ -2687,15 +2684,15 @@ Disassembly of section .text:
 <L223>:
                	bt	rcx, r11
                	jae	 <L225>
-               	xor	r13, r10
-               	xor	rbp, r9
-               	xor	r12, r8
-               	xor	rax, rdi
+               	xor	qword ptr [rsp + 0x240], r10
+               	xor	qword ptr [rsp + 0x8], r9
+               	xor	qword ptr [rsp + 0x98], r8
+               	xor	rbp, rdi
                	jmp	 <L225>
 <L224>:
                	xor	ecx, ecx
                	jmp	 <L226>
-               	nop	dword ptr [rax + rax]
+               	nop	word ptr [rax + rax]
 <L228>:
                	mov	r11, r9
                	shl	r11, 0x11
@@ -2711,14 +2708,14 @@ Disassembly of section .text:
 <L226>:
                	bt	rdx, rcx
                	jae	 <L228>
-               	xor	r13, r10
-               	xor	rbp, r9
-               	xor	r12, r8
-               	xor	rax, rdi
+               	xor	qword ptr [rsp + 0x240], r10
+               	xor	qword ptr [rsp + 0x8], r9
+               	xor	qword ptr [rsp + 0x98], r8
+               	xor	rbp, rdi
                	jmp	 <L228>
 <L227>:
                	xor	ecx, ecx
-               	mov	r11, qword ptr [rsp]
+               	mov	rbx, qword ptr [rsp + 0x248]
                	jmp	 <L229>
                	nop
 <L231>:
@@ -2736,64 +2733,63 @@ Disassembly of section .text:
 <L229>:
                	bt	rsi, rcx
                	jae	 <L231>
-               	xor	r13, r10
-               	xor	rbp, r9
-               	xor	r12, r8
-               	xor	rax, rdi
+               	xor	qword ptr [rsp + 0x240], r10
+               	xor	qword ptr [rsp + 0x8], r9
+               	xor	qword ptr [rsp + 0x98], r8
+               	xor	rbp, rdi
                	jmp	 <L231>
 <L230>:
-               	mov	qword ptr [rsp + 0x2c8], rax
-               	mov	qword ptr [rsp + 0x2d0], r12
-               	mov	rax, qword ptr [rsp + 0x240]
+               	mov	qword ptr [rsp + 0x2d8], rax
+               	mov	rax, qword ptr [rsp + 0x250]
                	lea	rax, [rax + 4*rax]
                	rol	rax, 0x7
                	lea	rax, [rax + 8*rax]
-               	mov	qword ptr [rsp + 0x2f0], rax
-               	mov	rcx, qword ptr [rsp + 0x248]
+               	mov	qword ptr [rsp + 0x2f8], rax
+               	mov	rcx, qword ptr [rsp + 0x278]
                	lea	rcx, [rcx + 4*rcx]
                	rol	rcx, 0x7
                	lea	rcx, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x2f8], rcx
-               	mov	rcx, qword ptr [rsp + 0x50]
+               	mov	qword ptr [rsp + 0x300], rcx
+               	mov	rcx, qword ptr [rsp + 0x90]
                	lea	rcx, [rcx + 4*rcx]
                	rol	rcx, 0x7
                	lea	rcx, [rcx + 8*rcx]
                	mov	rdx, qword ptr [rsp + 0x88]
                	lea	rdx, [rdx + 4*rdx]
                	rol	rdx, 0x7
-               	mov	qword ptr [rsp + 0x300], rcx
-               	lea	rcx, [rdx + 8*rdx]
                	mov	qword ptr [rsp + 0x308], rcx
-               	mov	rcx, qword ptr [rsp + 0x48]
-               	lea	rcx, [rcx + 4*rcx]
-               	rol	rcx, 0x7
-               	lea	rcx, [rcx + 8*rcx]
+               	lea	rcx, [rdx + 8*rdx]
                	mov	qword ptr [rsp + 0x310], rcx
-               	mov	rcx, qword ptr [rsp + 0x40]
+               	mov	rcx, qword ptr [rsp + 0x50]
                	lea	rcx, [rcx + 4*rcx]
                	rol	rcx, 0x7
                	lea	rcx, [rcx + 8*rcx]
                	mov	qword ptr [rsp + 0x318], rcx
-               	mov	rcx, qword ptr [rsp + 0x38]
+               	mov	rcx, qword ptr [rsp + 0x48]
                	lea	rcx, [rcx + 4*rcx]
                	rol	rcx, 0x7
                	lea	rcx, [rcx + 8*rcx]
-               	mov	rdx, qword ptr [rsp + 0x30]
+               	mov	qword ptr [rsp + 0x320], rcx
+               	mov	rcx, qword ptr [rsp + 0x40]
+               	lea	rcx, [rcx + 4*rcx]
+               	rol	rcx, 0x7
+               	lea	rcx, [rcx + 8*rcx]
+               	mov	rdx, qword ptr [rsp + 0x38]
                	lea	rdx, [rdx + 4*rdx]
                	rol	rdx, 0x7
-               	mov	qword ptr [rsp + 0x320], rcx
-               	lea	rcx, [rdx + 8*rdx]
                	mov	qword ptr [rsp + 0x328], rcx
-               	mov	rcx, qword ptr [rsp + 0x80]
-               	lea	rcx, [rcx + 4*rcx]
-               	rol	rcx, 0x7
-               	lea	rcx, [rcx + 8*rcx]
+               	lea	rcx, [rdx + 8*rdx]
                	mov	qword ptr [rsp + 0x330], rcx
-               	mov	rcx, qword ptr [rsp + 0x28]
+               	mov	rcx, qword ptr [rsp + 0x30]
                	lea	rcx, [rcx + 4*rcx]
                	rol	rcx, 0x7
                	lea	rcx, [rcx + 8*rcx]
                	mov	qword ptr [rsp + 0x338], rcx
+               	mov	rcx, qword ptr [rsp + 0x28]
+               	lea	rcx, [rcx + 4*rcx]
+               	rol	rcx, 0x7
+               	lea	rcx, [rcx + 8*rcx]
+               	mov	qword ptr [rsp + 0x340], rcx
                	mov	rcx, qword ptr [rsp + 0x20]
                	lea	rcx, [rcx + 4*rcx]
                	rol	rcx, 0x7
@@ -2801,19 +2797,19 @@ Disassembly of section .text:
                	mov	rdx, qword ptr [rsp + 0x18]
                	lea	rdx, [rdx + 4*rdx]
                	rol	rdx, 0x7
-               	mov	qword ptr [rsp + 0x340], rcx
-               	lea	rcx, [rdx + 8*rdx]
                	mov	qword ptr [rsp + 0x348], rcx
+               	lea	rcx, [rdx + 8*rdx]
+               	mov	qword ptr [rsp + 0x350], rcx
                	mov	rcx, qword ptr [rsp + 0x10]
                	lea	rcx, [rcx + 4*rcx]
                	rol	rcx, 0x7
                	lea	rcx, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x350], rcx
-               	mov	rcx, qword ptr [rsp + 0x8]
+               	mov	qword ptr [rsp + 0x358], rcx
+               	mov	rcx, qword ptr [rsp + 0x80]
                	lea	rcx, [rcx + 4*rcx]
                	rol	rcx, 0x7
-               	lea	rdi, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x358], rdi
+               	lea	r13, [rcx + 8*rcx]
+               	mov	qword ptr [rsp + 0x360], r13
                	mov	rcx, qword ptr [rsp + 0x78]
                	lea	rcx, [rcx + 4*rcx]
                	rol	rcx, 0x7
@@ -2821,79 +2817,74 @@ Disassembly of section .text:
                	mov	rdx, qword ptr [rsp + 0x70]
                	lea	rdx, [rdx + 4*rdx]
                	rol	rdx, 0x7
-               	mov	qword ptr [rsp + 0x360], rcx
-               	lea	rcx, [rdx + 8*rdx]
                	mov	qword ptr [rsp + 0x368], rcx
+               	lea	rcx, [rdx + 8*rdx]
+               	mov	qword ptr [rsp + 0x370], rcx
                	mov	rcx, qword ptr [rsp + 0x68]
                	lea	rcx, [rcx + 4*rcx]
                	rol	rcx, 0x7
                	lea	rcx, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x370], rcx
+               	mov	qword ptr [rsp + 0x378], rcx
                	mov	rcx, qword ptr [rsp + 0x60]
                	lea	rcx, [rcx + 4*rcx]
                	rol	rcx, 0x7
                	lea	rcx, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x378], rcx
-               	lea	rcx, [r15 + 4*r15]
+               	mov	qword ptr [rsp + 0x380], rcx
+               	mov	rcx, qword ptr [rsp + 0x58]
+               	lea	rcx, [rcx + 4*rcx]
                	rol	rcx, 0x7
-               	lea	rsi, [rcx + 8*rcx]
-               	lea	rcx, [4*rbp]
-               	add	rcx, rbp
+               	lea	rdi, [rcx + 8*rcx]
+               	mov	rcx, qword ptr [rsp + 0x8]
+               	lea	rcx, [rcx + 4*rcx]
                	rol	rcx, 0x7
-               	mov	qword ptr [rsp + 0x380], rsi
+               	mov	qword ptr [rsp + 0x388], rdi
                	lea	rcx, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x388], rcx
-               	cmp	dword ptr [rsp + 0xb8], 0x0
+               	mov	qword ptr [rsp + 0x390], rcx
+               	mov	rsi, qword ptr [rsp]
+               	test	esi, esi
                	je	 <L232>
-               	mov	rdx, rsi
-               	mov	qword ptr [rsp + 0x2b8], rbp
-               	mov	qword ptr [rsp + 0x2c0], r13
-               	mov	rcx, qword ptr [rsp + 0xb8]
-               	neg	ecx
-               	mov	qword ptr [rsp + 0xb8], rcx
-               	mov	ecx, 0x1
-               	mov	qword ptr [rsp + 0x240], rcx
-               	xor	r13d, r13d
+               	mov	qword ptr [rsp + 0x2d0], r15
+               	neg	esi
+               	mov	r12d, 0x1
+               	xor	r15d, r15d
                	vpbroadcastq	ymm0, qword ptr  <__libc_start_main+0xf40>
-               	vmovdqu	ymmword ptr [rsp + 0x3d0], ymm0
-               	mov	rsi, qword ptr [rsp + 0x238]
-               	mov	r12, r14
-               	mov	rbp, rdx
+               	vmovdqu	ymmword ptr [rsp + 0x3c0], ymm0
+               	mov	r8, rbx
+               	mov	qword ptr [rsp], rsi
                	jmp	 <L233>
-               	nop	dword ptr [rax]
-<L243>:
+               	nop	dword ptr [rax + rax]
+<L244>:
                	vpblendd	ymm0, ymm0, ymm2, 0xc0  # ymm0 = ymm0[0,1,2,3,4,5],ymm2[6,7]
                	vpermq	ymm0, ymm0, 0x93        # ymm0 = ymm0[3,0,1,2]
-               	vmovdqu	ymm1, ymmword ptr [rsp + 0x2f0]
-               	vmovdqu	ymm2, ymmword ptr [rsp + 0x330]
-               	vmovdqu	ymm3, ymmword ptr [rsp + 0x350]
-               	vmovdqu	ymm4, ymmword ptr [rsp + 0x370]
+               	vmovdqu	ymm1, ymmword ptr [rsp + 0x2f8]
+               	vmovdqu	ymm2, ymmword ptr [rsp + 0x338]
+               	vmovdqu	ymm3, ymmword ptr [rsp + 0x358]
+               	vmovdqu	ymm4, ymmword ptr [rsp + 0x378]
                	vpsrlq	ymm1, ymm1, 0x8
-               	vmovdqu	ymmword ptr [rsp + 0x2f0], ymm1
+               	vmovdqu	ymmword ptr [rsp + 0x2f8], ymm1
                	vpsrlq	ymm0, ymm0, 0x8
-               	vmovdqu	ymmword ptr [rsp + 0x310], ymm0
+               	vmovdqu	ymmword ptr [rsp + 0x318], ymm0
                	vpsrlq	ymm0, ymm2, 0x8
-               	vmovdqu	ymmword ptr [rsp + 0x330], ymm0
+               	vmovdqu	ymmword ptr [rsp + 0x338], ymm0
                	vpsrlq	ymm0, ymm3, 0x8
-               	vmovdqu	ymmword ptr [rsp + 0x350], ymm0
+               	vmovdqu	ymmword ptr [rsp + 0x358], ymm0
                	vpsrlq	ymm2, ymm4, 0x8
-               	vmovdqu	ymmword ptr [rsp + 0x370], ymm2
+               	vmovdqu	ymmword ptr [rsp + 0x378], ymm2
                	vmovq	rax, xmm1
                	vextracti128	xmm1, ymm2, 0x1
-               	vmovq	rbp, xmm1
-               	vpextrq	rdi, xmm0, 0x1
-<L244>:
-               	mov	rcx, qword ptr [rsp + 0xb8]
-               	mov	rdx, qword ptr [rsp + 0x240]
-               	add	ecx, edx
+               	vmovq	rdi, xmm1
+               	vpextrq	r13, xmm0, 0x1
+<L245>:
+               	lea	ecx, [rsi + r12]
                	inc	ecx
+               	mov	edx, r12d
                	inc	edx
-               	mov	qword ptr [rsp + 0x240], rdx
+               	mov	r12d, edx
                	cmp	ecx, 0x1
                	je	 <L234>
 <L233>:
-               	vmovdqu	ymm2, ymmword ptr [rsp + 0x2f8]
-               	vmovdqu	ymm0, ymmword ptr [rsp + 0x318]
+               	vmovdqu	ymm2, ymmword ptr [rsp + 0x300]
+               	vmovdqu	ymm0, ymmword ptr [rsp + 0x320]
                	movzx	ecx, al
                	imul	ecx, ecx, 0x4f
                	shr	ecx, 0xa
@@ -2902,105 +2893,111 @@ Disassembly of section .text:
                	sub	al, cl
                	cmp	al, 0xc
                	ja	 <L235>
-               	mov	qword ptr [rsp], r11
-               	vmovdqu	ymm1, ymmword ptr [rsp + 0x3d0]
-               	vmovdqu	ymmword ptr [rsp + 0x290], ymm0
+               	vmovdqu	ymm1, ymmword ptr [rsp + 0x3c0]
+               	vmovdqu	ymmword ptr [rsp + 0x2a0], ymm0
                	vpand	ymm0, ymm0, ymm1
-               	vmovdqu	ymmword ptr [rsp + 0x270], ymm2
+               	vmovdqu	ymmword ptr [rsp + 0x250], ymm2
                	vpand	ymm1, ymm2, ymm1
                	vpackusdw	ymm0, ymm1, ymm0
                	vextracti128	xmm1, ymm0, 0x1
                	vpackusdw	xmm0, xmm0, xmm1
                	vpshufd	xmm0, xmm0, 0xd8        # xmm0 = xmm0[0,2,1,3]
                	vpackuswb	xmm0, xmm0, xmm0
-               	vmovdqa	xmmword ptr [rsp + 0x220], xmm0
-               	vmovdqu	xmm0, xmmword ptr [rsp + 0x338]
+               	vmovdqa	xmmword ptr [rsp + 0x230], xmm0
+               	vmovdqu	xmm0, xmmword ptr [rsp + 0x340]
                	vpshufb	xmm0, xmm0, xmmword ptr  <__libc_start_main+0xfa0>
                	movzx	eax, al
-               	lea	rcx,  <__libc_start_main+0xfdc>
+               	lea	rcx,  <__libc_start_main+0xfe0>
                	movsxd	rax, dword ptr [rcx + 4*rax]
                	add	rax, rcx
                	jmp	rax
-               	mov	rbx, r13
+               	mov	r13, r12
+               	mov	r12, r15
+               	mov	rbx, r15
                	shl	rbx, 0x5
                	vpxor	xmm0, xmm0, xmm0
-               	vmovdqu	xmmword ptr [rsi + rbx + 0x8], xmm0
+               	vmovdqu	xmmword ptr [r8 + rbx + 0x8], xmm0
                	lea	rax,  <boost::type_erasure::detail::vtable_init<boost::type_erasure::detail::vtable_storage<boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), boost::type_erasure::_self const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>>, boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), Bodies3D::Circle const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<Bodies3D::Circle (Bodies3D::Circle&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<Bodies3D::Circle>>::value>
-               	mov	qword ptr [rsi + rbx], rax
-               	mov	r15, rsi
+               	mov	qword ptr [r8 + rbx], rax
                	mov	edi, 0x20
+               	mov	r15, r8
                	vzeroupper
                	call	 <_Znwm@plt>
                	jmp	 <L236>
-               	vmovdqa	xmmword ptr [rsp + 0x250], xmm0
-               	mov	rbx, r13
+               	vmovdqa	xmmword ptr [rsp + 0x280], xmm0
+               	mov	r13, r12
+               	mov	r12, r15
+               	mov	rbx, r15
                	shl	rbx, 0x5
                	vpxor	xmm0, xmm0, xmm0
-               	vmovdqu	xmmword ptr [rsi + rbx + 0x8], xmm0
+               	vmovdqu	xmmword ptr [r8 + rbx + 0x8], xmm0
                	lea	rax,  <boost::type_erasure::detail::vtable_init<boost::type_erasure::detail::vtable_storage<boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), boost::type_erasure::_self const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>>, boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid (Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>>::value>
-               	mov	qword ptr [rsi + rbx], rax
-               	mov	r15, rsi
+               	mov	qword ptr [r8 + rbx], rax
                	mov	edi, 0x28
+               	mov	r15, r8
                	vzeroupper
                	call	 <_Znwm@plt>
                	add	rbx, r15
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x220] # ymm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x230] # ymm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
                	vcvtdq2ps	ymm0, ymm0
                	vpermilps	ymm0, ymm0, ymmword ptr  <__libc_start_main+0xf20>
                	vmovups	ymmword ptr [rax], ymm0
-               	vpmovzxbd	xmm0, dword ptr [rsp + 0x250] # xmm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero
+               	vpmovzxbd	xmm0, dword ptr [rsp + 0x280] # xmm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero
+               	vcvtdq2ps	xmm0, xmm0
                	jmp	 <L237>
-               	vmovdqa	xmmword ptr [rsp + 0x250], xmm0
-               	mov	rbx, r13
+               	vmovdqa	xmmword ptr [rsp + 0x280], xmm0
+               	mov	r13, r12
+               	mov	r12, r15
+               	mov	rbx, r15
                	shl	rbx, 0x5
                	vpxor	xmm0, xmm0, xmm0
-               	vmovdqu	xmmword ptr [rsi + rbx + 0x8], xmm0
+               	vmovdqu	xmmword ptr [r8 + rbx + 0x8], xmm0
                	lea	rax,  <boost::type_erasure::detail::vtable_init<boost::type_erasure::detail::vtable_storage<boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), boost::type_erasure::_self const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>>, boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), Bodies3D::Triangle const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<Bodies3D::Triangle (Bodies3D::Triangle&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<Bodies3D::Triangle>>::value>
-               	mov	qword ptr [rsi + rbx], rax
-               	mov	r15, rsi
+               	mov	qword ptr [r8 + rbx], rax
                	mov	edi, 0x24
+               	mov	r15, r8
                	vzeroupper
                	call	 <_Znwm@plt>
-               	vmovdqa	xmm1, xmmword ptr [rsp + 0x220]
+               	vmovdqa	xmm1, xmmword ptr [rsp + 0x230]
                	vpextrb	ecx, xmm1, 0x7
                	add	rbx, r15
                	vcvtsi2ss	xmm0, xmm6, ecx
-               	vpunpcklbw	xmm1, xmm1, xmmword ptr [rsp + 0x250] # xmm1 = xmm1[0],mem[0],xmm1[1],mem[1],xmm1[2],mem[2],xmm1[3],mem[3],xmm1[4],mem[4],xmm1[5],mem[5],xmm1[6],mem[6],xmm1[7],mem[7]
+               	vpunpcklbw	xmm1, xmm1, xmmword ptr [rsp + 0x280] # xmm1 = xmm1[0],mem[0],xmm1[1],mem[1],xmm1[2],mem[2],xmm1[3],mem[3],xmm1[4],mem[4],xmm1[5],mem[5],xmm1[6],mem[6],xmm1[7],mem[7]
                	vpshufb	xmm1, xmm1, xmmword ptr  <__libc_start_main+0xf80>
                	vpmovzxbd	ymm1, xmm1      # ymm1 = xmm1[0],zero,zero,zero,xmm1[1],zero,zero,zero,xmm1[2],zero,zero,zero,xmm1[3],zero,zero,zero,xmm1[4],zero,zero,zero,xmm1[5],zero,zero,zero,xmm1[6],zero,zero,zero,xmm1[7],zero,zero,zero
                	vcvtdq2ps	ymm1, ymm1
                	jmp	 <L238>
-               	mov	r14, rdi
-               	vmovups	ymm0, ymmword ptr [rsp + 0x360]
-               	vmovups	ymmword ptr [rsp + 0x250], ymm0
-               	vmovups	xmm0, xmmword ptr [rsp + 0x348]
-               	vmovaps	xmmword ptr [rsp + 0x3a0], xmm0
-               	mov	rbx, r13
+               	mov	r14, r13
+               	mov	r13, rdi
+               	vmovups	ymm0, ymmword ptr [rsp + 0x368]
+               	vmovups	ymmword ptr [rsp + 0x280], ymm0
+               	vmovups	xmm0, xmmword ptr [rsp + 0x350]
+               	vmovaps	xmmword ptr [rsp + 0x2c0], xmm0
+               	mov	rbx, r15
                	shl	rbx, 0x5
                	vxorps	xmm0, xmm0, xmm0
-               	vmovups	xmmword ptr [rsi + rbx + 0x8], xmm0
+               	vmovups	xmmword ptr [r8 + rbx + 0x8], xmm0
                	lea	rax,  <boost::type_erasure::detail::vtable_init<boost::type_erasure::detail::vtable_storage<boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), boost::type_erasure::_self const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>>, boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), Bodies3D::Head@Evaluation.CRTP.Head const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<Bodies3D::Head@Evaluation.CRTP.Head (Bodies3D::Head@Evaluation.CRTP.Head&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<Bodies3D::Head@Evaluation.CRTP.Head>>::value>
-               	mov	qword ptr [rsi + rbx], rax
-               	mov	r15, rsi
+               	mov	qword ptr [r8 + rbx], rax
                	mov	edi, 0x60
                	vzeroupper
                	call	 <_Znwm@plt>
-               	movzx	ecx, bpl
+               	movzx	ecx, r13b
                	vcvtsi2ss	xmm0, xmm6, ecx
                	movzx	ecx, r14b
                	vcvtsi2ss	xmm1, xmm6, ecx
-               	vpmovzxbd	ymm2, qword ptr [rsp + 0x220] # ymm2 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm2, qword ptr [rsp + 0x230] # ymm2 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
                	vcvtdq2ps	ymm2, ymm2
                	vpermilps	ymm3, ymm2, ymmword ptr  <__libc_start_main+0xf20>
                	vmovups	ymmword ptr [rax], ymm3
-               	vmovdqa	xmm3, xmmword ptr [rsp + 0x3a0]
+               	vmovdqa	xmm3, xmmword ptr [rsp + 0x2c0]
                	vpshufb	xmm3, xmm3, xmmword ptr  <__libc_start_main+0xf90>
                	vcvtdq2ps	xmm3, xmm3
                	vmovlps	qword ptr [rax + 0x20], xmm3
                	vmovss	dword ptr [rax + 0x28], xmm1
                	vshufps	xmm2, xmm2, xmm2, 0xff  # xmm2 = xmm2[3,3,3,3]
                	vmovss	dword ptr [rax + 0x2c], xmm2
-               	vmovups	ymm5, ymmword ptr [rsp + 0x250]
+               	vmovups	ymm5, ymmword ptr [rsp + 0x280]
                	vextractf128	xmm4, ymm5, 0x1
                	vshufps	xmm4, xmm5, xmm4, 0x88  # xmm4 = xmm5[0,2],xmm4[0,2]
                	vandps	xmm4, xmm4, xmmword ptr  <__libc_start_main+0xfb0>
@@ -3014,57 +3011,69 @@ Disassembly of section .text:
                	vshufps	xmm0, xmm4, xmm4, 0xe6  # xmm0 = xmm4[2,1,2,3]
                	vmovlps	qword ptr [rax + 0x54], xmm0
                	vextractps	dword ptr [rax + 0x5c], xmm4, 0x3
-               	add	rbx, r15
+               	mov	r8, qword ptr [rsp + 0x248]
+               	add	rbx, r8
+               	mov	qword ptr [rbx + 0x18], rax
+               	inc	r15
+               	mov	rsi, qword ptr [rsp]
                	jmp	 <L239>
-               	vmovdqa	xmmword ptr [rsp + 0x250], xmm0
-               	mov	rbx, r13
+               	vmovdqa	xmmword ptr [rsp + 0x280], xmm0
+               	mov	r13, r12
+               	mov	r12, r15
+               	mov	rbx, r15
                	shl	rbx, 0x5
                	vpxor	xmm0, xmm0, xmm0
-               	vmovdqu	xmmword ptr [rsi + rbx + 0x8], xmm0
+               	vmovdqu	xmmword ptr [r8 + rbx + 0x8], xmm0
                	lea	rax,  <boost::type_erasure::detail::vtable_init<boost::type_erasure::detail::vtable_storage<boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), boost::type_erasure::_self const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>>, boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), Bodies3D::Cylinder@Evaluation.CRTP.Cylinder const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder (Bodies3D::Cylinder@Evaluation.CRTP.Cylinder&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>>::value>
-               	mov	qword ptr [rsi + rbx], rax
-               	mov	r15, rsi
+               	mov	qword ptr [r8 + rbx], rax
                	mov	edi, 0x24
+               	mov	r15, r8
                	vzeroupper
                	call	 <_Znwm@plt>
                	jmp	 <L240>
-               	vmovdqa	xmmword ptr [rsp + 0x250], xmm0
-               	mov	rbx, r13
+               	vmovdqa	xmmword ptr [rsp + 0x280], xmm0
+               	mov	r13, r12
+               	mov	r12, r15
+               	mov	rbx, r15
                	shl	rbx, 0x5
                	vpxor	xmm0, xmm0, xmm0
-               	vmovdqu	xmmword ptr [rsi + rbx + 0x8], xmm0
+               	vmovdqu	xmmword ptr [r8 + rbx + 0x8], xmm0
                	lea	rax,  <boost::type_erasure::detail::vtable_init<boost::type_erasure::detail::vtable_storage<boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), boost::type_erasure::_self const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>>, boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), Bodies3D::Rectangle const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<Bodies3D::Rectangle (Bodies3D::Rectangle&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<Bodies3D::Rectangle>>::value>
-               	mov	qword ptr [rsi + rbx], rax
-               	mov	r15, rsi
+               	mov	qword ptr [r8 + rbx], rax
                	mov	edi, 0x24
+               	mov	r15, r8
                	vzeroupper
                	call	 <_Znwm@plt>
                	jmp	 <L241>
-               	mov	rbx, r13
+               	mov	r13, r12
+               	mov	r12, r15
+               	mov	rbx, r15
                	shl	rbx, 0x5
                	vpxor	xmm0, xmm0, xmm0
-               	vmovdqu	xmmword ptr [rsi + rbx + 0x8], xmm0
+               	vmovdqu	xmmword ptr [r8 + rbx + 0x8], xmm0
                	lea	rax,  <boost::type_erasure::detail::vtable_init<boost::type_erasure::detail::vtable_storage<boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), boost::type_erasure::_self const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>>, boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), Bodies3D::Square const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<Bodies3D::Square (Bodies3D::Square&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<Bodies3D::Square>>::value>
-               	mov	qword ptr [rsi + rbx], rax
-               	mov	r15, rsi
+               	mov	qword ptr [r8 + rbx], rax
                	mov	edi, 0x20
+               	mov	r15, r8
                	vzeroupper
                	call	 <_Znwm@plt>
                	jmp	 <L236>
-               	vmovdqa	xmmword ptr [rsp + 0x250], xmm0
-               	mov	rbx, r13
+               	vmovdqa	xmmword ptr [rsp + 0x280], xmm0
+               	mov	qword ptr [rsp + 0x2c0], r12
+               	mov	r12, r15
+               	mov	rbx, r15
                	shl	rbx, 0x5
                	vpxor	xmm0, xmm0, xmm0
-               	vmovdqu	xmmword ptr [rsi + rbx + 0x8], xmm0
+               	vmovdqu	xmmword ptr [r8 + rbx + 0x8], xmm0
                	lea	rax,  <boost::type_erasure::detail::vtable_init<boost::type_erasure::detail::vtable_storage<boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), boost::type_erasure::_self const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>>, boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), Bodies3D::Pyramid@Evaluation.CRTP.Pyramid const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid (Bodies3D::Pyramid@Evaluation.CRTP.Pyramid&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>>::value>
-               	mov	qword ptr [rsi + rbx], rax
-               	mov	r15, rsi
+               	mov	qword ptr [r8 + rbx], rax
                	mov	edi, 0x28
+               	mov	r15, r8
                	vzeroupper
                	call	 <_Znwm@plt>
                	add	rbx, r15
-               	vmovdqa	xmm1, xmmword ptr [rsp + 0x220]
-               	vmovdqa	xmm2, xmmword ptr [rsp + 0x250]
+               	vmovdqa	xmm1, xmmword ptr [rsp + 0x230]
+               	vmovdqa	xmm2, xmmword ptr [rsp + 0x280]
                	vpunpcklbw	xmm0, xmm1, xmm2 # xmm0 = xmm1[0],xmm2[0],xmm1[1],xmm2[1],xmm1[2],xmm2[2],xmm1[3],xmm2[3],xmm1[4],xmm2[4],xmm1[5],xmm2[5],xmm1[6],xmm2[6],xmm1[7],xmm2[7]
                	vpshufb	xmm0, xmm0, xmmword ptr  <__libc_start_main+0xf80>
                	vpmovzxbd	ymm0, xmm0      # ymm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero,xmm0[4],zero,zero,zero,xmm0[5],zero,zero,zero,xmm0[6],zero,zero,zero,xmm0[7],zero,zero,zero
@@ -3074,107 +3083,126 @@ Disassembly of section .text:
                	vmovdqa	xmm1, xmmword ptr  <__libc_start_main+0xf70>
                	vpblendvb	xmm0, xmm2, xmm0, xmm1
                	vpmovzxbd	xmm0, xmm0      # xmm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero
-<L237>:
                	vcvtdq2ps	xmm0, xmm0
                	vmovlps	qword ptr [rax + 0x20], xmm0
+               	mov	qword ptr [rbx + 0x18], rax
+               	inc	r12
+               	mov	r8, r15
+               	mov	rsi, qword ptr [rsp]
+               	mov	r15, r12
+               	mov	r12, qword ptr [rsp + 0x2c0]
                	jmp	 <L239>
-               	vmovdqa	xmmword ptr [rsp + 0x250], xmm0
-               	mov	rbx, r13
+               	vmovdqa	xmmword ptr [rsp + 0x280], xmm0
+               	mov	r13, r12
+               	mov	r12, r15
+               	mov	rbx, r15
                	shl	rbx, 0x5
                	vpxor	xmm0, xmm0, xmm0
-               	vmovdqu	xmmword ptr [rsi + rbx + 0x8], xmm0
+               	vmovdqu	xmmword ptr [r8 + rbx + 0x8], xmm0
                	lea	rax,  <boost::type_erasure::detail::vtable_init<boost::type_erasure::detail::vtable_storage<boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), boost::type_erasure::_self const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>>, boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), Bodies3D::Ellipse const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<Bodies3D::Ellipse (Bodies3D::Ellipse&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<Bodies3D::Ellipse>>::value>
-               	mov	qword ptr [rsi + rbx], rax
-               	mov	r15, rsi
+               	mov	qword ptr [r8 + rbx], rax
                	mov	edi, 0x24
+               	mov	r15, r8
                	vzeroupper
                	call	 <_Znwm@plt>
 <L241>:
-               	vmovdqa	xmm0, xmmword ptr [rsp + 0x250]
+               	vmovdqa	xmm0, xmmword ptr [rsp + 0x280]
                	vpextrb	ecx, xmm0, 0x0
                	jmp	 <L242>
-               	mov	rbx, r13
+               	mov	r13, r12
+               	mov	r12, r15
+               	mov	rbx, r15
                	shl	rbx, 0x5
                	vpxor	xmm0, xmm0, xmm0
-               	vmovdqu	xmmword ptr [rsi + rbx + 0x8], xmm0
+               	vmovdqu	xmmword ptr [r8 + rbx + 0x8], xmm0
                	lea	rax,  <boost::type_erasure::detail::vtable_init<boost::type_erasure::detail::vtable_storage<boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), boost::type_erasure::_self const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>>, boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), Bodies3D::Cube@Evaluation.CRTP.Cube const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<Bodies3D::Cube@Evaluation.CRTP.Cube (Bodies3D::Cube@Evaluation.CRTP.Cube&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<Bodies3D::Cube@Evaluation.CRTP.Cube>>::value>
-               	mov	qword ptr [rsi + rbx], rax
-               	mov	r15, rsi
+               	mov	qword ptr [r8 + rbx], rax
                	mov	edi, 0x20
+               	mov	r15, r8
                	vzeroupper
                	call	 <_Znwm@plt>
                	jmp	 <L236>
-               	vmovdqa	xmmword ptr [rsp + 0x250], xmm0
-               	mov	rbx, r13
+               	vmovdqa	xmmword ptr [rsp + 0x280], xmm0
+               	mov	r13, r12
+               	mov	r12, r15
+               	mov	rbx, r15
                	shl	rbx, 0x5
                	vpxor	xmm0, xmm0, xmm0
-               	vmovdqu	xmmword ptr [rsi + rbx + 0x8], xmm0
+               	vmovdqu	xmmword ptr [r8 + rbx + 0x8], xmm0
                	lea	rax,  <boost::type_erasure::detail::vtable_init<boost::type_erasure::detail::vtable_storage<boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), boost::type_erasure::_self const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>>, boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), Bodies3D::Cuboid@Evaluation.CRTP.Cuboid const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid (Bodies3D::Cuboid@Evaluation.CRTP.Cuboid&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>>::value>
-               	mov	qword ptr [rsi + rbx], rax
-               	mov	r15, rsi
+               	mov	qword ptr [r8 + rbx], rax
                	mov	edi, 0x28
+               	mov	r15, r8
                	vzeroupper
                	call	 <_Znwm@plt>
                	add	rbx, r15
-               	vpmovzxbd	xmm0, dword ptr [rsp + 0x250] # xmm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero
+               	vpmovzxbd	xmm0, dword ptr [rsp + 0x280] # xmm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero
                	vcvtdq2ps	xmm0, xmm0
-               	vpmovzxbd	ymm1, qword ptr [rsp + 0x220] # ymm1 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm1, qword ptr [rsp + 0x230] # ymm1 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
                	vcvtdq2ps	ymm1, ymm1
                	vpermilps	ymm1, ymm1, ymmword ptr  <__libc_start_main+0xf20>
                	vmovups	ymmword ptr [rax], ymm1
+<L237>:
                	vmovlps	qword ptr [rax + 0x20], xmm0
-               	jmp	 <L239>
-               	vmovdqa	xmmword ptr [rsp + 0x250], xmm0
-               	mov	rbx, r13
+               	jmp	 <L243>
+               	vmovdqa	xmmword ptr [rsp + 0x280], xmm0
+               	mov	r13, r12
+               	mov	r12, r15
+               	mov	rbx, r15
                	shl	rbx, 0x5
                	vpxor	xmm0, xmm0, xmm0
-               	vmovdqu	xmmword ptr [rsi + rbx + 0x8], xmm0
+               	vmovdqu	xmmword ptr [r8 + rbx + 0x8], xmm0
                	lea	rax,  <boost::type_erasure::detail::vtable_init<boost::type_erasure::detail::vtable_storage<boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), boost::type_erasure::_self const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>>, boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), Bodies3D::Cone@Evaluation.CRTP.Cone const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<Bodies3D::Cone@Evaluation.CRTP.Cone (Bodies3D::Cone@Evaluation.CRTP.Cone&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<Bodies3D::Cone@Evaluation.CRTP.Cone>>::value>
-               	mov	qword ptr [rsi + rbx], rax
-               	mov	r15, rsi
+               	mov	qword ptr [r8 + rbx], rax
                	mov	edi, 0x24
+               	mov	r15, r8
                	vzeroupper
                	call	 <_Znwm@plt>
 <L240>:
-               	vmovdqa	xmm0, xmmword ptr [rsp + 0x250]
+               	vmovdqa	xmm0, xmmword ptr [rsp + 0x280]
                	vpextrb	ecx, xmm0, 0x1
 <L242>:
                	vcvtsi2ss	xmm0, xmm6, ecx
                	add	rbx, r15
-               	vpmovzxbd	ymm1, qword ptr [rsp + 0x220] # ymm1 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm1, qword ptr [rsp + 0x230] # ymm1 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
                	vcvtdq2ps	ymm1, ymm1
                	vpermilps	ymm1, ymm1, ymmword ptr  <__libc_start_main+0xf20>
 <L238>:
                	vmovups	ymmword ptr [rax], ymm1
                	vmovss	dword ptr [rax + 0x20], xmm0
-               	jmp	 <L239>
-               	mov	rbx, r13
+               	jmp	 <L243>
+               	mov	r13, r12
+               	mov	r12, r15
+               	mov	rbx, r15
                	shl	rbx, 0x5
                	vpxor	xmm0, xmm0, xmm0
-               	vmovdqu	xmmword ptr [rsi + rbx + 0x8], xmm0
+               	vmovdqu	xmmword ptr [r8 + rbx + 0x8], xmm0
                	lea	rax,  <boost::type_erasure::detail::vtable_init<boost::type_erasure::detail::vtable_storage<boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), boost::type_erasure::_self const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>>, boost::type_erasure::detail::vtable_adapter<Bodies3D::has_ComputeVolume<float (), Bodies3D::Sphere@Evaluation.CRTP.Sphere const>, float (boost::type_erasure::detail::storage const&)>, boost::type_erasure::detail::vtable_adapter<boost::type_erasure::constructible<Bodies3D::Sphere@Evaluation.CRTP.Sphere (Bodies3D::Sphere@Evaluation.CRTP.Sphere&&)>, boost::type_erasure::detail::storage (boost::type_erasure::detail::storage&&)>, boost::type_erasure::destructible<Bodies3D::Sphere@Evaluation.CRTP.Sphere>>::value>
-               	mov	qword ptr [rsi + rbx], rax
-               	mov	r15, rsi
+               	mov	qword ptr [r8 + rbx], rax
                	mov	edi, 0x20
+               	mov	r15, r8
                	vzeroupper
                	call	 <_Znwm@plt>
 <L236>:
                	add	rbx, r15
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x220] # ymm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x230] # ymm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
                	vcvtdq2ps	ymm0, ymm0
                	vpermilps	ymm0, ymm0, ymmword ptr  <__libc_start_main+0xf20>
                	vmovups	ymmword ptr [rax], ymm0
-<L239>:
+<L243>:
                	mov	qword ptr [rbx + 0x18], rax
-               	inc	r13
-               	mov	rsi, r15
-               	mov	r11, qword ptr [rsp]
-               	vmovdqu	ymm2, ymmword ptr [rsp + 0x270]
-               	vmovdqu	ymm0, ymmword ptr [rsp + 0x290]
+               	inc	r12
+               	mov	r8, r15
+               	mov	rsi, qword ptr [rsp]
+               	mov	r15, r12
+               	mov	r12, r13
+<L239>:
+               	vmovdqu	ymm2, ymmword ptr [rsp + 0x250]
+               	vmovdqu	ymm0, ymmword ptr [rsp + 0x2a0]
 <L235>:
-               	test	byte ptr [rsp + 0x240], 0x7
-               	jne	 <L243>
-               	vmovdqu	ymm3, ymmword ptr [rsp + 0x3b0]
+               	test	r12b, 0x7
+               	jne	 <L244>
+               	vmovdqu	ymm3, ymmword ptr [rsp + 0x3a0]
                	vpermq	ymm0, ymm3, 0xe3        # ymm0 = ymm3[3,0,2,3]
                	vpermq	ymm1, ymm3, 0xe9        # ymm1 = ymm3[1,2,2,3]
                	vpextrq	rax, xmm3, 0x1
@@ -3187,33 +3215,33 @@ Disassembly of section .text:
                	vmovq	rax, xmm2
                	rol	rax, 0x2d
                	vmovq	xmm2, rax
-               	mov	rdx, qword ptr [rsp + 0x248]
+               	mov	rdx, qword ptr [rsp + 0x278]
                	mov	rax, rdx
                	shl	rax, 0x11
-               	mov	rcx, qword ptr [rsp + 0x2e8]
-               	mov	rsi, qword ptr [rsp + 0x2e0]
+               	mov	rcx, qword ptr [rsp + 0x2f0]
+               	mov	rsi, qword ptr [rsp + 0x2e8]
                	xor	rcx, rsi
-               	xor	r11, rdx
+               	mov	r8, qword ptr [rsp + 0x2e0]
+               	xor	r8, rdx
                	xor	rdx, rcx
-               	mov	qword ptr [rsp + 0x248], rdx
-               	xor	rsi, r11
-               	mov	qword ptr [rsp + 0x2e0], rsi
+               	mov	qword ptr [rsp + 0x278], rdx
+               	xor	rsi, r8
+               	mov	qword ptr [rsp + 0x2e8], rsi
                	xor	rcx, rax
-               	mov	qword ptr [rsp + 0x2e8], rcx
-               	rol	r11, 0x2d
-               	mov	qword ptr [rsp], r11
-               	mov	rdx, qword ptr [rsp + 0x50]
+               	mov	qword ptr [rsp + 0x2f0], rcx
+               	rol	r8, 0x2d
+               	mov	qword ptr [rsp + 0x2e0], r8
+               	mov	rdx, qword ptr [rsp + 0x90]
                	mov	rax, rdx
                	shl	rax, 0x11
-               	mov	rcx, qword ptr [rsp + 0x218]
+               	mov	rcx, qword ptr [rsp + 0x2d8]
                	mov	r8, qword ptr [rsp + 0x210]
                	xor	r8, rcx
                	mov	r9, qword ptr [rsp + 0x208]
                	xor	r9, rdx
                	xor	rdx, r8
-               	mov	qword ptr [rsp + 0x50], rdx
                	xor	rcx, r9
-               	mov	qword ptr [rsp + 0x218], rcx
+               	mov	qword ptr [rsp + 0x2d8], rcx
                	rol	r9, 0x2d
                	mov	qword ptr [rsp + 0x208], r9
                	xor	r8, rax
@@ -3233,248 +3261,247 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x1f8], r9
                	rol	r10, 0x2d
                	mov	qword ptr [rsp + 0x1f0], r10
-               	mov	rdx, qword ptr [rsp + 0x48]
-               	mov	rax, rdx
+               	mov	rdi, qword ptr [rsp + 0x50]
+               	mov	rax, rdi
                	shl	rax, 0x11
                	mov	rcx, qword ptr [rsp + 0x1e8]
                	mov	r10, qword ptr [rsp + 0x1e0]
                	xor	r10, rcx
+               	mov	qword ptr [rsp + 0x2a0], r15
                	mov	rbx, qword ptr [rsp + 0x1d8]
-               	xor	rbx, rdx
-               	xor	rdx, r10
-               	mov	qword ptr [rsp + 0x48], rdx
+               	xor	rbx, rdi
+               	xor	rdi, r10
+               	mov	qword ptr [rsp + 0x50], rdi
                	xor	rcx, rbx
                	mov	qword ptr [rsp + 0x1e8], rcx
                	xor	r10, rax
                	mov	qword ptr [rsp + 0x1e0], r10
                	rol	rbx, 0x2d
                	mov	qword ptr [rsp + 0x1d8], rbx
-               	mov	rdx, qword ptr [rsp + 0x40]
-               	mov	rax, rdx
+               	mov	rdi, qword ptr [rsp + 0x48]
+               	mov	rax, rdi
                	shl	rax, 0x11
                	mov	rcx, qword ptr [rsp + 0x1d0]
                	mov	rbx, qword ptr [rsp + 0x1c8]
                	xor	rbx, rcx
-               	mov	qword ptr [rsp + 0x270], r12
                	mov	r15, qword ptr [rsp + 0x1c0]
-               	xor	r15, rdx
-               	xor	rdx, rbx
-               	mov	qword ptr [rsp + 0x40], rdx
+               	xor	r15, rdi
+               	xor	rdi, rbx
+               	mov	qword ptr [rsp + 0x48], rdi
                	xor	rcx, r15
                	mov	qword ptr [rsp + 0x1d0], rcx
                	xor	rbx, rax
                	mov	qword ptr [rsp + 0x1c8], rbx
                	rol	r15, 0x2d
                	mov	qword ptr [rsp + 0x1c0], r15
-               	mov	rdx, qword ptr [rsp + 0x38]
-               	mov	rax, rdx
+               	mov	rdi, qword ptr [rsp + 0x40]
+               	mov	rax, rdi
                	shl	rax, 0x11
                	mov	rcx, qword ptr [rsp + 0x1b8]
-               	mov	rbx, qword ptr [rsp + 0x1b0]
-               	xor	rbx, rcx
-               	mov	r15, qword ptr [rsp + 0x1a8]
-               	xor	r15, rdx
-               	xor	rdx, rbx
-               	mov	qword ptr [rsp + 0x38], rdx
-               	xor	rcx, r15
+               	mov	r15, qword ptr [rsp + 0x1b0]
+               	xor	r15, rcx
+               	mov	r11, qword ptr [rsp + 0x1a8]
+               	xor	r11, rdi
+               	xor	rdi, r15
+               	mov	qword ptr [rsp + 0x40], rdi
+               	xor	rcx, r11
                	mov	qword ptr [rsp + 0x1b8], rcx
-               	rol	r15, 0x2d
-               	mov	qword ptr [rsp + 0x1a8], r15
-               	mov	rdi, qword ptr [rsp + 0x1a0]
-               	xor	rbx, rax
-               	mov	qword ptr [rsp + 0x1b0], rbx
-               	mov	rdx, qword ptr [rsp + 0x30]
-               	mov	rax, rdx
+               	rol	r11, 0x2d
+               	mov	qword ptr [rsp + 0x1a8], r11
+               	xor	r15, rax
+               	mov	qword ptr [rsp + 0x1b0], r15
+               	mov	r8, qword ptr [rsp + 0x38]
+               	mov	rax, r8
                	shl	rax, 0x11
-               	mov	rcx, qword ptr [rsp + 0x198]
+               	mov	rcx, qword ptr [rsp + 0x1a0]
+               	mov	r15, qword ptr [rsp + 0x198]
+               	xor	r15, rcx
+               	mov	rdi, qword ptr [rsp + 0x190]
+               	xor	rdi, r8
+               	xor	r8, r15
+               	mov	qword ptr [rsp + 0x38], r8
                	xor	rcx, rdi
-               	mov	rbx, qword ptr [rsp + 0x190]
-               	xor	rbx, rdx
-               	xor	rdx, rcx
-               	mov	qword ptr [rsp + 0x30], rdx
-               	xor	rdi, rbx
-               	mov	qword ptr [rsp + 0x1a0], rdi
-               	xor	rcx, rax
-               	mov	qword ptr [rsp + 0x198], rcx
-               	rol	rbx, 0x2d
-               	mov	qword ptr [rsp + 0x190], rbx
-               	mov	rdi, qword ptr [rsp + 0x80]
+               	mov	qword ptr [rsp + 0x1a0], rcx
+               	xor	r15, rax
+               	mov	qword ptr [rsp + 0x198], r15
+               	rol	rdi, 0x2d
+               	mov	qword ptr [rsp + 0x190], rdi
+               	mov	rdi, qword ptr [rsp + 0x30]
                	mov	rax, rdi
                	shl	rax, 0x11
                	mov	rcx, qword ptr [rsp + 0x188]
                	mov	r15, qword ptr [rsp + 0x180]
                	xor	r15, rcx
-               	mov	r14, qword ptr [rsp + 0x178]
-               	xor	r14, rdi
+               	mov	qword ptr [rsp + 0x2c0], r12
+               	mov	r12, qword ptr [rsp + 0x178]
+               	xor	r12, rdi
                	xor	rdi, r15
-               	xor	rcx, r14
+               	mov	qword ptr [rsp + 0x30], rdi
+               	xor	rcx, r12
                	mov	qword ptr [rsp + 0x188], rcx
                	xor	r15, rax
                	mov	qword ptr [rsp + 0x180], r15
-               	rol	r14, 0x2d
-               	mov	qword ptr [rsp + 0x178], r14
-               	mov	rdx, qword ptr [rsp + 0x28]
-               	mov	rax, rdx
+               	rol	r12, 0x2d
+               	mov	qword ptr [rsp + 0x178], r12
+               	mov	rdi, qword ptr [rsp + 0x28]
+               	mov	rax, rdi
                	shl	rax, 0x11
                	mov	rcx, qword ptr [rsp + 0x170]
-               	mov	r14, qword ptr [rsp + 0x168]
-               	xor	r14, rcx
-               	mov	r15, qword ptr [rsp + 0x160]
-               	xor	r15, rdx
-               	xor	rdx, r14
-               	mov	qword ptr [rsp + 0x28], rdx
-               	xor	rcx, r15
+               	mov	r12, qword ptr [rsp + 0x168]
+               	xor	r12, rcx
+               	mov	r14, qword ptr [rsp + 0x160]
+               	xor	r14, rdi
+               	xor	rdi, r12
+               	mov	qword ptr [rsp + 0x28], rdi
+               	xor	rcx, r14
                	mov	qword ptr [rsp + 0x170], rcx
-               	xor	r14, rax
-               	mov	qword ptr [rsp + 0x168], r14
-               	rol	r15, 0x2d
-               	mov	qword ptr [rsp + 0x160], r15
-               	mov	r9, qword ptr [rsp + 0x118]
-               	mov	rdx, qword ptr [rsp + 0x20]
-               	mov	rax, rdx
+               	xor	r12, rax
+               	mov	qword ptr [rsp + 0x168], r12
+               	rol	r14, 0x2d
+               	mov	qword ptr [rsp + 0x160], r14
+               	mov	rdi, qword ptr [rsp + 0x20]
+               	mov	rax, rdi
                	shl	rax, 0x11
                	mov	rcx, qword ptr [rsp + 0x158]
-               	xor	rcx, r9
                	mov	r12, qword ptr [rsp + 0x150]
-               	xor	r12, rdx
-               	xor	rdx, rcx
-               	mov	qword ptr [rsp + 0x20], rdx
-               	xor	r9, r12
-               	mov	qword ptr [rsp + 0x118], r9
-               	rol	r12, 0x2d
-               	mov	qword ptr [rsp + 0x150], r12
-               	xor	rcx, rax
+               	xor	r12, rcx
+               	mov	r13, qword ptr [rsp + 0x148]
+               	xor	r13, rdi
+               	xor	rdi, r12
+               	mov	qword ptr [rsp + 0x20], rdi
+               	xor	rcx, r13
                	mov	qword ptr [rsp + 0x158], rcx
-               	mov	rdx, qword ptr [rsp + 0x18]
-               	mov	rax, rdx
+               	rol	r13, 0x2d
+               	mov	qword ptr [rsp + 0x148], r13
+               	xor	r12, rax
+               	mov	qword ptr [rsp + 0x150], r12
+               	mov	rdi, qword ptr [rsp + 0x18]
+               	mov	rax, rdi
                	shl	rax, 0x11
-               	mov	rcx, qword ptr [rsp + 0x148]
-               	mov	r15, qword ptr [rsp + 0x140]
-               	xor	r15, rcx
-               	mov	r9, qword ptr [rsp + 0x138]
-               	xor	r9, rdx
-               	xor	rdx, r15
-               	mov	qword ptr [rsp + 0x18], rdx
-               	xor	rcx, r9
-               	mov	qword ptr [rsp + 0x148], rcx
-               	xor	r15, rax
-               	mov	qword ptr [rsp + 0x140], r15
-               	rol	r9, 0x2d
-               	mov	qword ptr [rsp + 0x138], r9
-               	mov	rdx, qword ptr [rsp + 0x10]
-               	mov	rax, rdx
-               	shl	rax, 0x11
-               	mov	rcx, qword ptr [rsp + 0x130]
-               	mov	qword ptr [rsp + 0x290], r13
-               	mov	r13, qword ptr [rsp + 0x128]
+               	mov	rcx, qword ptr [rsp + 0x140]
+               	mov	r13, qword ptr [rsp + 0x138]
                	xor	r13, rcx
-               	mov	r15, qword ptr [rsp + 0x120]
-               	xor	r15, rdx
-               	xor	rdx, r13
-               	mov	qword ptr [rsp + 0x10], rdx
-               	xor	rcx, r15
-               	mov	qword ptr [rsp + 0x130], rcx
+               	mov	qword ptr [rsp + 0x250], rbp
+               	mov	rbp, qword ptr [rsp + 0x130]
+               	xor	rbp, rdi
+               	xor	rdi, r13
+               	mov	qword ptr [rsp + 0x18], rdi
+               	xor	rcx, rbp
+               	mov	qword ptr [rsp + 0x140], rcx
                	xor	r13, rax
-               	mov	qword ptr [rsp + 0x128], r13
-               	rol	r15, 0x2d
-               	mov	qword ptr [rsp + 0x120], r15
-               	mov	rax, qword ptr [rsp + 0x2d8]
-               	mov	r8, qword ptr [rsp + 0x8]
-               	mov	rdx, r8
-               	shl	rdx, 0x11
+               	mov	qword ptr [rsp + 0x138], r13
+               	rol	rbp, 0x2d
+               	mov	qword ptr [rsp + 0x130], rbp
+               	mov	rdi, qword ptr [rsp + 0x10]
+               	mov	rax, rdi
+               	shl	rax, 0x11
+               	mov	rcx, qword ptr [rsp + 0x128]
+               	mov	rbp, qword ptr [rsp + 0x120]
+               	xor	rbp, rcx
+               	mov	r9, qword ptr [rsp + 0x118]
+               	xor	r9, rdi
+               	xor	rdi, rbp
+               	mov	qword ptr [rsp + 0x10], rdi
+               	xor	rcx, r9
+               	mov	qword ptr [rsp + 0x128], rcx
+               	xor	rbp, rax
+               	mov	qword ptr [rsp + 0x120], rbp
+               	rol	r9, 0x2d
+               	mov	qword ptr [rsp + 0x118], r9
+               	mov	r13, qword ptr [rsp + 0x80]
+               	mov	rax, r13
+               	shl	rax, 0x11
                	mov	rcx, qword ptr [rsp + 0x110]
-               	xor	rcx, rax
-               	mov	r15, qword ptr [rsp + 0x108]
-               	xor	r15, r8
-               	xor	r8, rcx
-               	mov	qword ptr [rsp + 0x8], r8
-               	xor	rax, r15
-               	mov	qword ptr [rsp + 0x2d8], rax
-               	xor	rcx, rdx
+               	mov	rbp, qword ptr [rsp + 0x108]
+               	xor	rbp, rcx
+               	mov	r10, qword ptr [rsp + 0x100]
+               	xor	r10, r13
+               	xor	r13, rbp
+               	xor	rcx, r10
                	mov	qword ptr [rsp + 0x110], rcx
-               	rol	r15, 0x2d
-               	mov	qword ptr [rsp + 0x108], r15
-               	mov	rdx, qword ptr [rsp + 0x270]
-               	mov	rbp, qword ptr [rsp + 0x78]
+               	xor	rbp, rax
+               	mov	qword ptr [rsp + 0x108], rbp
+               	rol	r10, 0x2d
+               	mov	qword ptr [rsp + 0x100], r10
+               	mov	r15, qword ptr [rsp + 0x78]
+               	mov	rax, r15
+               	shl	rax, 0x11
+               	mov	rcx, qword ptr [rsp + 0xf8]
+               	mov	rbp, qword ptr [rsp + 0xf0]
+               	xor	rbp, rcx
+               	mov	rbx, qword ptr [rsp + 0xe8]
+               	xor	rbx, r15
+               	xor	r15, rbp
+               	xor	rcx, rbx
+               	mov	qword ptr [rsp + 0xf8], rcx
+               	rol	rbx, 0x2d
+               	mov	qword ptr [rsp + 0xe8], rbx
+               	xor	rbp, rax
+               	mov	qword ptr [rsp + 0xf0], rbp
+               	mov	rbp, qword ptr [rsp + 0x70]
                	mov	rax, rbp
                	shl	rax, 0x11
-               	xor	qword ptr [rsp + 0xb0], rdx
-               	mov	rcx, qword ptr [rsp + 0x100]
-               	xor	rcx, rbp
-               	xor	rbp, qword ptr [rsp + 0xb0]
-               	xor	rdx, rcx
-               	mov	qword ptr [rsp + 0x270], rdx
-               	rol	rcx, 0x2d
-               	mov	qword ptr [rsp + 0x100], rcx
-               	xor	qword ptr [rsp + 0xb0], rax
-               	mov	r12, qword ptr [rsp + 0x70]
-               	mov	rax, r12
-               	shl	rax, 0x11
-               	mov	rdx, qword ptr [rsp + 0xa8]
-               	mov	qword ptr [rsp + 0xa8], rdx
-               	mov	rcx, qword ptr [rsp + 0xf8]
-               	xor	rcx, rdx
-               	mov	r8, qword ptr [rsp + 0x58]
-               	xor	r8, r12
-               	mov	qword ptr [rsp + 0x58], r8
-               	xor	r12, rcx
-               	xor	rcx, rax
-               	mov	qword ptr [rsp + 0xf8], rcx
-               	mov	r14, qword ptr [rsp + 0x68]
-               	mov	rax, r14
-               	shl	rax, 0x11
-               	mov	rdx, qword ptr [rsp + 0xa0]
-               	mov	qword ptr [rsp + 0xa0], rdx
-               	mov	rcx, qword ptr [rsp + 0xf0]
-               	xor	rcx, rdx
-               	mov	r13, qword ptr [rsp + 0xe8]
-               	xor	r13, r14
-               	xor	r14, rcx
-               	xor	rcx, rax
-               	mov	qword ptr [rsp + 0xf0], rcx
-               	mov	r11, qword ptr [rsp + 0x60]
-               	mov	rax, r11
-               	shl	rax, 0x11
-               	mov	rdx, qword ptr [rsp + 0x98]
-               	mov	qword ptr [rsp + 0x98], rdx
+               	mov	rbx, qword ptr [rsp + 0x228]
                	mov	rcx, qword ptr [rsp + 0xe0]
-               	xor	rcx, rdx
-               	mov	r15, qword ptr [rsp + 0xd8]
-               	xor	r15, r11
-               	xor	r11, rcx
+               	xor	rcx, rbx
+               	mov	r12, qword ptr [rsp + 0xd8]
+               	xor	r12, rbp
+               	xor	rbp, rcx
                	xor	rcx, rax
                	mov	qword ptr [rsp + 0xe0], rcx
-               	mov	r9, qword ptr [rsp + 0xd0]
+               	mov	r10, qword ptr [rsp + 0x68]
+               	mov	rax, r10
+               	shl	rax, 0x11
+               	mov	rbx, qword ptr [rsp + 0x220]
+               	mov	rcx, qword ptr [rsp + 0xd0]
+               	xor	rcx, rbx
+               	mov	r14, qword ptr [rsp + 0xc8]
+               	xor	r14, r10
+               	xor	r10, rcx
+               	xor	rcx, rax
+               	mov	qword ptr [rsp + 0xd0], rcx
+               	mov	r9, qword ptr [rsp + 0x60]
                	mov	rax, r9
                	shl	rax, 0x11
-               	mov	rdx, qword ptr [rsp + 0x90]
-               	mov	qword ptr [rsp + 0x90], rdx
-               	mov	rcx, qword ptr [rsp + 0xc8]
-               	xor	rcx, rdx
-               	mov	rbx, qword ptr [rsp + 0xc0]
-               	xor	rbx, r9
+               	mov	rbx, qword ptr [rsp + 0x218]
+               	mov	rcx, qword ptr [rsp + 0xc0]
+               	xor	rcx, rbx
+               	mov	r11, qword ptr [rsp + 0xb8]
+               	xor	r11, r9
                	xor	r9, rcx
                	xor	rcx, rax
-               	mov	qword ptr [rsp + 0xc8], rcx
-               	mov	r8, qword ptr [rsp + 0x2b8]
-               	mov	rax, r8
+               	mov	qword ptr [rsp + 0xc0], rcx
+               	mov	rdi, qword ptr [rsp + 0x58]
+               	mov	rax, rdi
                	shl	rax, 0x11
-               	mov	rdx, qword ptr [rsp + 0x2d0]
-               	xor	rdx, qword ptr [rsp + 0x2c0]
-               	mov	r10, qword ptr [rsp + 0x2c8]
-               	xor	r10, r8
-               	xor	r8, rdx
+               	mov	rbx, qword ptr [rsp + 0xb0]
+               	mov	rcx, qword ptr [rsp + 0xa8]
+               	xor	rcx, rbx
+               	mov	r8, qword ptr [rsp + 0xa0]
+               	xor	r8, rdi
+               	xor	rdi, rcx
+               	xor	rcx, rax
+               	mov	qword ptr [rsp + 0xa8], rcx
+               	mov	rax, qword ptr [rsp + 0x8]
+               	shl	rax, 0x11
+               	mov	rcx, qword ptr [rsp + 0x98]
+               	xor	rcx, qword ptr [rsp + 0x240]
+               	mov	qword ptr [rsp + 0x98], rcx
+               	mov	rcx, qword ptr [rsp + 0x250]
+               	xor	rcx, qword ptr [rsp + 0x8]
+               	mov	qword ptr [rsp + 0x250], rcx
+               	mov	rcx, qword ptr [rsp + 0x98]
+               	xor	qword ptr [rsp + 0x8], rcx
                	vpextrq	rcx, xmm0, 0x1
-               	xor	rdx, rax
-               	mov	qword ptr [rsp + 0x2d0], rdx
+               	xor	qword ptr [rsp + 0x98], rax
                	lea	rax, [rcx + 4*rcx]
                	rol	rax, 0x7
                	lea	rax, [rax + 8*rax]
-               	mov	rcx, qword ptr [rsp + 0x248]
+               	mov	rcx, qword ptr [rsp + 0x278]
                	lea	rcx, [rcx + 4*rcx]
                	rol	rcx, 0x7
                	lea	rcx, [rcx + 8*rcx]
-               	mov	rdx, qword ptr [rsp + 0x50]
+               	mov	qword ptr [rsp + 0x90], rdx
                	lea	rdx, [rdx + 4*rdx]
                	rol	rdx, 0x7
                	lea	rdx, [rdx + 8*rdx]
@@ -3482,216 +3509,209 @@ Disassembly of section .text:
                	lea	rsi, [rsi + 4*rsi]
                	rol	rsi, 0x7
                	lea	rsi, [rsi + 8*rsi]
-               	mov	qword ptr [rsp + 0x2f0], rax
-               	mov	qword ptr [rsp + 0x2f8], rcx
-               	mov	rcx, qword ptr [rsp + 0x48]
+               	mov	qword ptr [rsp + 0x2f8], rax
+               	mov	qword ptr [rsp + 0x300], rcx
+               	mov	rcx, qword ptr [rsp + 0x50]
                	lea	rcx, [rcx + 4*rcx]
                	rol	rcx, 0x7
                	lea	rcx, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x300], rdx
-               	mov	rdx, qword ptr [rsp + 0x40]
+               	mov	qword ptr [rsp + 0x308], rdx
+               	mov	rdx, qword ptr [rsp + 0x48]
                	lea	rdx, [rdx + 4*rdx]
                	rol	rdx, 0x7
                	lea	rdx, [rdx + 8*rdx]
-               	mov	qword ptr [rsp + 0x308], rsi
-               	mov	rsi, qword ptr [rsp + 0x38]
+               	mov	qword ptr [rsp + 0x310], rsi
+               	mov	rsi, qword ptr [rsp + 0x40]
                	lea	rsi, [rsi + 4*rsi]
                	rol	rsi, 0x7
-               	mov	qword ptr [rsp + 0x310], rcx
-               	mov	rcx, qword ptr [rsp + 0x30]
+               	mov	qword ptr [rsp + 0x318], rcx
+               	mov	rcx, qword ptr [rsp + 0x38]
                	lea	rcx, [rcx + 4*rcx]
                	rol	rcx, 0x7
                	lea	rsi, [rsi + 8*rsi]
                	lea	rcx, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x318], rdx
-               	mov	qword ptr [rsp + 0x80], rdi
-               	lea	rdx, [rdi + 4*rdi]
+               	mov	qword ptr [rsp + 0x320], rdx
+               	mov	rdx, qword ptr [rsp + 0x30]
+               	lea	rdx, [rdx + 4*rdx]
                	rol	rdx, 0x7
                	lea	rdx, [rdx + 8*rdx]
-               	mov	qword ptr [rsp + 0x320], rsi
+               	mov	qword ptr [rsp + 0x328], rsi
                	mov	rsi, qword ptr [rsp + 0x28]
                	lea	rsi, [rsi + 4*rsi]
                	rol	rsi, 0x7
                	lea	rsi, [rsi + 8*rsi]
-               	mov	qword ptr [rsp + 0x328], rcx
+               	mov	qword ptr [rsp + 0x330], rcx
                	mov	rcx, qword ptr [rsp + 0x20]
                	lea	rcx, [rcx + 4*rcx]
                	rol	rcx, 0x7
-               	mov	qword ptr [rsp + 0x330], rdx
+               	mov	qword ptr [rsp + 0x338], rdx
                	mov	rdx, qword ptr [rsp + 0x18]
                	lea	rdx, [rdx + 4*rdx]
                	rol	rdx, 0x7
                	lea	rcx, [rcx + 8*rcx]
                	lea	rdx, [rdx + 8*rdx]
-               	mov	qword ptr [rsp + 0x338], rsi
+               	mov	qword ptr [rsp + 0x340], rsi
                	mov	rsi, qword ptr [rsp + 0x10]
                	lea	rsi, [rsi + 4*rsi]
                	rol	rsi, 0x7
                	lea	rsi, [rsi + 8*rsi]
-               	mov	qword ptr [rsp + 0x340], rcx
+               	mov	qword ptr [rsp + 0x348], rcx
+               	mov	qword ptr [rsp + 0x80], r13
+               	lea	rcx, [4*r13]
+               	add	rcx, r13
+               	rol	rcx, 0x7
+               	lea	r13, [rcx + 8*rcx]
+               	mov	qword ptr [rsp + 0x350], rdx
+               	mov	qword ptr [rsp + 0x78], r15
+               	lea	rcx, [r15 + 4*r15]
+               	rol	rcx, 0x7
+               	mov	qword ptr [rsp + 0x358], rsi
+               	mov	rsi, qword ptr [rsp]
+               	mov	qword ptr [rsp + 0x70], rbp
+               	lea	rdx, [4*rbp]
+               	add	rdx, rbp
+               	mov	rbp, qword ptr [rsp + 0x250]
+               	rol	rdx, 0x7
+               	lea	rcx, [rcx + 8*rcx]
+               	lea	rdx, [rdx + 8*rdx]
+               	mov	qword ptr [rsp + 0x360], r13
+               	mov	qword ptr [rsp + 0x368], rcx
+               	mov	qword ptr [rsp + 0x68], r10
+               	lea	rcx, [r10 + 4*r10]
+               	rol	rcx, 0x7
+               	lea	rcx, [rcx + 8*rcx]
+               	mov	qword ptr [rsp + 0x370], rdx
+               	mov	qword ptr [rsp + 0x60], r9
+               	lea	rdx, [r9 + 4*r9]
+               	rol	rdx, 0x7
+               	mov	qword ptr [rsp + 0x378], rcx
+               	mov	qword ptr [rsp + 0x58], rdi
+               	lea	rcx, [rdi + 4*rdi]
+               	rol	rcx, 0x7
+               	lea	rdx, [rdx + 8*rdx]
+               	lea	rdi, [rcx + 8*rcx]
+               	mov	qword ptr [rsp + 0x380], rdx
                	mov	rcx, qword ptr [rsp + 0x8]
                	lea	rcx, [rcx + 4*rcx]
                	rol	rcx, 0x7
-               	lea	rdi, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x348], rdx
-               	mov	qword ptr [rsp + 0x78], rbp
-               	lea	rcx, [4*rbp]
-               	add	rcx, rbp
-               	rol	rcx, 0x7
-               	mov	qword ptr [rsp + 0x350], rsi
-               	mov	rsi, qword ptr [rsp + 0x238]
-               	mov	qword ptr [rsp + 0x70], r12
-               	lea	rdx, [r12 + 4*r12]
-               	mov	r12, qword ptr [rsp + 0x270]
-               	rol	rdx, 0x7
                	lea	rcx, [rcx + 8*rcx]
-               	lea	rdx, [rdx + 8*rdx]
-               	mov	qword ptr [rsp + 0x358], rdi
-               	mov	qword ptr [rsp + 0x360], rcx
-               	mov	qword ptr [rsp + 0x68], r14
-               	lea	rcx, [r14 + 4*r14]
-               	rol	rcx, 0x7
-               	lea	rcx, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x368], rdx
-               	mov	qword ptr [rsp + 0x60], r11
-               	lea	rdx, [r11 + 4*r11]
-               	rol	rdx, 0x7
-               	mov	qword ptr [rsp + 0x370], rcx
-               	mov	qword ptr [rsp + 0xd0], r9
-               	lea	rcx, [r9 + 4*r9]
-               	rol	rcx, 0x7
-               	lea	rdx, [rdx + 8*rdx]
-               	lea	rbp, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x378], rdx
-               	mov	qword ptr [rsp + 0x2b8], r8
-               	lea	rcx, [r8 + 4*r8]
-               	rol	rcx, 0x7
-               	lea	rcx, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x380], rbp
-               	mov	qword ptr [rsp + 0x388], rcx
-               	mov	rdx, qword ptr [rsp + 0x58]
-               	xor	qword ptr [rsp + 0xa8], rdx
-               	rol	rdx, 0x2d
-               	mov	qword ptr [rsp + 0x58], rdx
+               	mov	qword ptr [rsp + 0x388], rdi
+               	mov	qword ptr [rsp + 0x390], rcx
+               	xor	qword ptr [rsp + 0x228], r12
+               	rol	r12, 0x2d
+               	mov	qword ptr [rsp + 0xd8], r12
+               	mov	r12, qword ptr [rsp + 0x2c0]
                	vpbroadcastq	ymm1, xmm1
-               	xor	qword ptr [rsp + 0xa0], r13
-               	rol	r13, 0x2d
-               	mov	qword ptr [rsp + 0xe8], r13
-               	mov	r13, qword ptr [rsp + 0x290]
+               	xor	qword ptr [rsp + 0x220], r14
+               	rol	r14, 0x2d
+               	mov	qword ptr [rsp + 0xc8], r14
                	vpblendd	ymm0, ymm0, ymm1, 0x30  # ymm0 = ymm0[0,1,2,3],ymm1[4,5],ymm0[6,7]
-               	xor	qword ptr [rsp + 0x98], r15
-               	rol	r15, 0x2d
-               	mov	qword ptr [rsp + 0xd8], r15
+               	xor	qword ptr [rsp + 0x218], r11
+               	rol	r11, 0x2d
+               	mov	qword ptr [rsp + 0xb8], r11
                	vpbroadcastq	ymm1, xmm2
-               	xor	qword ptr [rsp + 0x90], rbx
-               	rol	rbx, 0x2d
-               	mov	qword ptr [rsp + 0xc0], rbx
-               	mov	r11, qword ptr [rsp]
+               	xor	rbx, r8
+               	mov	qword ptr [rsp + 0xb0], rbx
+               	mov	r15, qword ptr [rsp + 0x2a0]
+               	rol	r8, 0x2d
+               	mov	qword ptr [rsp + 0xa0], r8
+               	mov	r8, qword ptr [rsp + 0x248]
                	vpblendd	ymm0, ymm0, ymm1, 0xc0  # ymm0 = ymm0[0,1,2,3,4,5],ymm1[6,7]
-               	vmovdqu	ymmword ptr [rsp + 0x3b0], ymm0
-               	xor	qword ptr [rsp + 0x2c0], r10
-               	rol	r10, 0x2d
-               	mov	qword ptr [rsp + 0x2c8], r10
-               	jmp	 <L244>
+               	vmovdqu	ymmword ptr [rsp + 0x3a0], ymm0
+               	xor	qword ptr [rsp + 0x240], rbp
+               	rol	rbp, 0x2d
+               	jmp	 <L245>
 <L234>:
-               	shl	r13, 0x5
-               	mov	rbx, r13
-               	sar	rbx, 0x5
-               	test	rbx, rbx
-               	jle	 <L245>
-               	lea	r14, [rsi + 0x18]
-               	vpxor	xmm0, xmm0, xmm0
-               	vmovd	dword ptr [rsp], xmm0
-               	nop	dword ptr [rax]
-<L246>:
-               	mov	rax, qword ptr [r14 - 0x18]
-               	mov	rdi, r14
+               	shl	r15, 0x5
+               	lea	r14, [r8 + r15]
+               	mov	rdi, r8
+               	mov	rsi, r14
+               	mov	rbx, r8
                	vzeroupper
-               	call	qword ptr [rax]
-               	vmovss	xmm1, dword ptr [rsp]   # xmm1 = mem[0],zero,zero,zero
-               	vaddss	xmm1, xmm0, xmm1
-               	vmovss	dword ptr [rsp], xmm1
-               	add	r14, 0x20
-               	dec	rbx
-               	jne	 <L246>
-               	test	r13, r13
-               	jne	 <L247>
-               	jmp	 <L248>
-<L232>:
-               	vpxor	xmm0, xmm0, xmm0
-               	vmovd	dword ptr [rsp], xmm0
-<L248>:
-               	mov	rdi, qword ptr [rsp + 0x238]
-               	mov	rbx, qword ptr [rsp + 0x398]
-               	or	rbx, qword ptr [rsp + 0x390]
-               	test	rdi, rdi
-               	je	 <L249>
-               	vzeroupper
-               	call	 <_ZdaPv@plt>
+               	call	 <auto Bodies3D::TransformReduce@Evaluation.Dependency.TransformReduce<boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self>*, boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self>*, ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self> const&)>(boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self>*, boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self>*, ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self> const&))>
+               	vmovd	dword ptr [rsp + 0x8], xmm0
+               	test	r15, r15
+               	je	 <L246>
+               	mov	r15, rbx
+               	jmp	 <L247>
+               	nop	word ptr cs:[rax + rax]
 <L249>:
-               	movabs	rax, 0x186a00000002a
-               	cmp	rbx, rax
+               	add	r15, 0x8
+               	cmp	r15, r14
+               	je	 <L248>
+<L247>:
+               	mov	rax, qword ptr [r15]
+               	add	r15, 0x18
+               	mov	rdi, r15
+               	call	qword ptr [rax + 0x10]
+               	mov	r12, qword ptr [r15 - 0x8]
+               	test	r12, r12
+               	je	 <L249>
+               	lock
+               	dec	dword ptr [r12 + 0x8]
+               	jne	 <L249>
+               	mov	rax, qword ptr [r12]
+               	mov	rdi, r12
+               	call	qword ptr [rax + 0x10]
+               	lock
+               	dec	dword ptr [r12 + 0xc]
+               	jne	 <L249>
+               	mov	rax, qword ptr [r12]
+               	mov	rdi, r12
+               	call	qword ptr [rax + 0x18]
+               	jmp	 <L249>
+<L248>:
+               	mov	r15, qword ptr [rsp + 0x2d0]
+               	mov	rdi, qword ptr [rsp + 0x248]
+               	or	r15, qword ptr [rsp + 0x398]
+               	test	rdi, rdi
                	jne	 <L250>
-               	vmovss	xmm0, dword ptr [rsp]   # xmm0 = mem[0],zero,zero,zero
-               	vucomiss	xmm0, dword ptr  <__libc_start_main+0xfd8>
-               	jb	 <L251>
-               	vmovss	xmm0, dword ptr [rsp]   # xmm0 = mem[0],zero,zero,zero
-               	vucomiss	xmm0, dword ptr  <__libc_start_main+0xfd0>
-               	ja	 <L251>
+               	jmp	 <L251>
+<L232>:
+               	mov	rdi, rbx
+               	mov	rsi, rbx
+               	vzeroupper
+               	call	 <auto Bodies3D::TransformReduce@Evaluation.Dependency.TransformReduce<boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self>*, boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self>*, ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self> const&)>(boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self>*, boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self>*, ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self> const&))>
+               	mov	rdi, qword ptr [rsp + 0x248]
+               	vmovd	dword ptr [rsp + 0x8], xmm0
+               	or	r15, qword ptr [rsp + 0x398]
+               	test	rdi, rdi
+               	je	 <L251>
 <L250>:
+               	call	 <_ZdaPv@plt>
+<L251>:
+               	movabs	rax, 0x186a00000002a
+               	cmp	r15, rax
+               	jne	 <L252>
+               	vmovss	xmm0, dword ptr [rsp + 0x8] # xmm0 = mem[0],zero,zero,zero
+               	vucomiss	xmm0, dword ptr  <__libc_start_main+0xfd4>
+               	jb	 <L253>
+               	vmovss	xmm0, dword ptr [rsp + 0x8] # xmm0 = mem[0],zero,zero,zero
+               	vucomiss	xmm0, dword ptr  <__libc_start_main+0xfdc>
+               	ja	 <L253>
+<L252>:
                	xor	eax, eax
-               	add	rsp, 0x3f8
+               	add	rsp, 0x3e8
                	pop	rbx
                	pop	r12
                	pop	r13
                	pop	r14
                	pop	r15
                	pop	rbp
-               	vzeroupper
                	ret
-<L245>:
-               	vpxor	xmm0, xmm0, xmm0
-               	vmovd	dword ptr [rsp], xmm0
-               	test	r13, r13
-               	je	 <L248>
-<L247>:
-               	mov	r14, qword ptr [rsp + 0x238]
-               	add	r13, r14
-               	jmp	 <L252>
-               	nop
+<L246>:
+               	mov	r15, qword ptr [rsp + 0x2d0]
+               	mov	rdi, rbx
+               	or	r15, qword ptr [rsp + 0x398]
+               	test	rdi, rdi
+               	jne	 <L250>
+               	jmp	 <L251>
 <L253>:
-               	add	r14, 0x8
-               	cmp	r14, r13
-               	je	 <L248>
-<L252>:
-               	mov	rax, qword ptr [r14]
-               	add	r14, 0x18
-               	mov	rdi, r14
-               	vzeroupper
-               	call	qword ptr [rax + 0x10]
-               	mov	r15, qword ptr [r14 - 0x8]
-               	test	r15, r15
-               	je	 <L253>
-               	lock
-               	dec	dword ptr [r15 + 0x8]
-               	jne	 <L253>
-               	mov	rax, qword ptr [r15]
-               	mov	rdi, r15
-               	call	qword ptr [rax + 0x10]
-               	lock
-               	dec	dword ptr [r15 + 0xc]
-               	jne	 <L253>
-               	mov	rax, qword ptr [r15]
-               	mov	rdi, r15
-               	call	qword ptr [rax + 0x18]
-               	jmp	 <L253>
-<L251>:
                	mov	edi, 0x4
-               	vzeroupper
                	call	 <__cxa_allocate_exception@plt>
-               	vmovss	xmm0, dword ptr [rsp]   # xmm0 = mem[0],zero,zero,zero
+               	vmovss	xmm0, dword ptr [rsp + 0x8] # xmm0 = mem[0],zero,zero,zero
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <__libc_start_main+0x7600>
+               	mov	rsi, qword ptr  <__libc_start_main+0x7750>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
@@ -3717,18 +3737,69 @@ Disassembly of section .text:
                	call	 <__clang_call_terminate>
                	mov	rdi, rax
                	call	 <__clang_call_terminate>
+               	int3
+               	int3
+
+<auto Bodies3D::TransformReduce@Evaluation.Dependency.TransformReduce<boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self>*, boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self>*, ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self> const&)>(boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self>*, boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self>*, ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self> const&))>:
+<L2>:
+               	push	r15
+               	push	r14
+               	push	r12
+               	push	rbx
+               	push	rax
+               	mov	r14, rdi
+               	mov	r15, rsi
+               	sub	r15, rdi
+               	cmp	r15, 0x20
+               	jne	 <L0>
+               	vmovss	xmm0, dword ptr  <__libc_start_main+0xfd0> # xmm0 = mem[0],zero,zero,zero
+               	jmp	 <L1>
+<L0>:
+               	mov	rbx, rsi
+               	vmovss	xmm0, dword ptr  <__libc_start_main+0xfd0> # xmm0 = mem[0],zero,zero,zero
+               	mov	rdi, r14
+               	nop
+<L3>:
+               	vmovss	dword ptr [rsp + 0x4], xmm0
+               	mov	rax, r15
+               	sar	rax, 0x5
+               	mov	rcx, r15
+               	shr	rcx, 0x3f
+               	add	rcx, rax
+               	shr	rcx
+               	mov	r12, rcx
+               	neg	r12
+               	shl	r12, 0x5
+               	shl	rcx, 0x5
+               	mov	r14, rbx
+               	sub	r14, rcx
+               	mov	rsi, r14
+               	call	 <auto Bodies3D::TransformReduce@Evaluation.Dependency.TransformReduce<boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self>*, boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self>*, ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self> const&)>(boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self>*, boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self>*, ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(boost::type_erasure::any<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::constructible<boost::type_erasure::_self (boost::type_erasure::_self&&)>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>, boost::type_erasure::_self> const&))>
+               	vmovss	xmm1, dword ptr [rsp + 0x4] # xmm1 = mem[0],zero,zero,zero
+               	vaddss	xmm1, xmm0, xmm1
+               	vmovss	dword ptr [rsp + 0x4], xmm1
+               	vmovss	xmm0, dword ptr [rsp + 0x4] # xmm0 = mem[0],zero,zero,zero
+               	neg	r12
+               	and	r15, -0x40
+               	mov	rdi, r14
+               	cmp	r15, 0x40
+               	mov	r15, r12
+               	jne	 <L3>
+<L1>:
+               	vmovss	dword ptr [rsp + 0x4], xmm0
+               	mov	rax, qword ptr [r14]
+               	add	r14, 0x18
+               	mov	rdi, r14
+               	call	qword ptr [rax]
+               	vaddss	xmm0, xmm0, dword ptr [rsp + 0x4]
+               	add	rsp, 0x8
+               	pop	rbx
+               	pop	r12
+               	pop	r14
+               	pop	r15
+               	ret
                	mov	rdi, rax
                	call	 <__clang_call_terminate>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
                	int3
                	int3
@@ -3774,7 +3845,7 @@ Disassembly of section .text:
                	mov	rax, qword ptr [rdi]
                	vmovss	xmm0, dword ptr [rax + 0x1c] # xmm0 = mem[0],zero,zero,zero
                	vmulss	xmm1, xmm0, xmm0
-               	vmulss	xmm1, xmm1, dword ptr  <__libc_start_main+0xfd4>
+               	vmulss	xmm1, xmm1, dword ptr  <__libc_start_main+0xfd8>
                	vmulss	xmm0, xmm1, xmm0
                	ret
                	int3
@@ -3843,7 +3914,7 @@ Disassembly of section .text:
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
                	vmovss	xmm0, dword ptr [rax + 0x1c] # xmm0 = mem[0],zero,zero,zero
-               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0xfd4>
+               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0xfd8>
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x24]
                	ret
@@ -4089,7 +4160,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <__libc_start_main+0x75d8>
+               	mov	rax, qword ptr  <__libc_start_main+0x7728>
                	test	rax, rax
                	je	 <L0>
                	call	rax

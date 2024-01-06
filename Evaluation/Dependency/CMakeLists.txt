@@ -7,6 +7,7 @@ add_single_file_modules(
 	PiFraction.cpp
 
 	PseudoRandomSequence.cpp
+	TransformReduce.cpp
 	VerifyLoopSum.cpp
 )
 

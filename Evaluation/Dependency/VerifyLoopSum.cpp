@@ -28,10 +28,10 @@ export
 				)
 			and	not
 				(	(	i_vLoopSum
-					>=	1.16913832e+11f
+					>=	1.16918583e+11f
 					)
 				and	(	i_vLoopSum
-					<=	1.16918657e+11f
+					<=	1.16918596e+11f
 					)
 				)
 			)
