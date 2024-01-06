@@ -193,21 +193,6 @@ namespace
 			;
 		}
 	};
-
-	[[nodiscard]]
-	auto constexpr inline
-	(	ComputeVolume
-	)	(	AnyBody const
-			&	i_rBody3D
-		)
-		noexcept
-	->	float
-	{	return
-		i_rBody3D
-		->	ComputeVolume
-			()
-		;
-	}
 }
 
 [[nodiscard]]
@@ -1240,24 +1225,29 @@ auto inline
 		}
 	}
 
-	float
-		vLoopSum
-	{};
-
-	for	(	auto const
-			&	rBody
-		:	vElements
-		)
-	{
-		vLoopSum
-		+=	ComputeVolume
-			(	rBody
-			)
-		;
-	}
-
 	return
-		vLoopSum
+		::std::transform_reduce
+		(	::std::execution::unseq
+		,	vElements
+			.	begin
+				()
+		,	vElements
+			.	end
+				()
+		,	0.0f
+		,	::std::plus<float>
+			{}
+		,	[]	(	AnyBody const
+					&	i_rBody3D
+				)
+			->	float
+			{	return
+					i_rBody3D
+					->	ComputeVolume
+						()
+				;
+			}
+		)
 	;
 }
 

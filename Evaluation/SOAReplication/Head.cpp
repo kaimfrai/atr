@@ -57,8 +57,8 @@ export namespace
 
 	auto constexpr inline
 	(	ConstructHead
-	)	(	View32
-				i_vView32
+	)	(	View32<float>
+				i_rView32
 		,	float
 				i_vRed
 		,	float
@@ -79,7 +79,7 @@ export namespace
 		noexcept
 	->	void
 	{	ConstructSphere
-		(	i_vView32
+		(	i_rView32
 		,	i_vRed
 		,	i_vGreen
 		,	i_vBlue

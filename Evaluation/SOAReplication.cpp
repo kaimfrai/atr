@@ -1,4 +1,5 @@
 import Evaluation.Dependency.PseudoRandomSequence;
+import Evaluation.Dependency.RandomAccessIteratorBase;
 import Evaluation.Dependency.VerifyLoopSum;
 
 import Evaluation.SOAReplication.View32;
@@ -95,7 +96,7 @@ namespace
 	struct
 		Body3DReference
 	{
-		View32
+		View32<float const>
 			m_vView32
 		;
 
@@ -141,43 +142,137 @@ namespace
 	};
 
 	struct
-		Body3DSentinel
+		Body3DValue
 	{
-		::std::uint32_t
-			m_vCount
+		::std::experimental::native_simd<float>
+			m_vData
+			[	sizeof(Body3D)
+			/	sizeof(float)
+			]
 		;
+
+		[[nodiscard]]
+		explicit(true) constexpr inline
+		(	operator Body3DReference
+		)	()	const&
+			noexcept
+		{	return
+			{	{	.	m_aBuffer
+					=	m_vData
+				,	.	m_vCapacity
+					=	::std::experimental::native_simd<float>
+						::	size
+							()
+				,	.	m_vIndex
+					=	0
+				}
+			};
+		}
+	};
+
+	struct
+		ImplicitBody3DReference
+	:	Body3DReference
+	{
+		explicit(false) constexpr inline
+		(	ImplicitBody3DReference
+		)	(	Body3DReference
+					i_rReference
+			)
+			noexcept
+		:	Body3DReference
+			{	i_rReference
+			}
+		{}
+
+		explicit(false) constexpr inline
+		(	ImplicitBody3DReference
+		)	(	Body3DValue const
+				&	i_rValue
+			)
+			noexcept
+		:	Body3DReference
+			{	i_rValue
+				.	operator
+					Body3DReference
+					()
+			}
+		{}
 	};
 
 	struct
 		Body3DIterator
+	:	RandomAccessIteratorBase
+		<	Body3DReference
+		,	Body3DValue
+		>
 	{
-		View32
+		View32<float const>
 			m_vView32
 		;
 
 		auto constexpr inline
-		(	operator++
-		)	()	&
+		(	operator+=
+		)	(	this Body3DIterator
+				&	i_rThis
+			,	Body3DIterator::difference_type
+					i_vDifference
+			)
 			noexcept
-		->	Body3DIterator&
+		->	decltype(i_rThis)
 		{
-			m_vView32
+			i_rThis
+			.	m_vView32
 			.	m_vIndex
-			+=	::std::experimental::native_simd<float>::size()
+			+=	static_cast<Body3DIterator::difference_type>
+				(	::std::experimental::native_simd<float>
+					::	size
+						()
+				)
+			*	i_vDifference
 			;
 			return
-				*this
+				i_rThis
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator-
+		)	(	Body3DIterator
+					i_aLeft
+			,	Body3DIterator
+					i_aRight
+			)
+			noexcept
+		->	Body3DIterator::difference_type
+		{	return
+				(	i_aLeft
+					.	m_vView32
+					.	m_vIndex
+				-	i_aRight
+					.	m_vView32
+					.	m_vIndex
+				)
+			/	static_cast<Body3DIterator::difference_type>
+				(	::std::experimental::native_simd<float>
+					::	size
+						()
+				)
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator*
-		)	()	&
+		)	(	this Body3DIterator
+					i_aThis
+			)
 			noexcept
-		->	Body3DReference
+		->	Body3DIterator::reference
 		{	return
-			{	m_vView32
+			{	i_aThis
+				.	m_vView32
 			};
 		}
 
@@ -185,18 +280,39 @@ namespace
 		auto friend constexpr inline
 		(	operator==
 		)	(	Body3DIterator
-					i_aIterator
-			,	Body3DSentinel
-					i_aSentinel
+					i_aLeft
+			,	Body3DIterator
+					i_aRight
 			)
 			noexcept
 		->	bool
 		{	return
-				i_aIterator
+				i_aLeft
 				.	m_vView32
 				.	m_vIndex
-			==	i_aSentinel
-				.	m_vCount
+			==	i_aRight
+				.	m_vView32
+				.	m_vIndex
+			;
+		}
+
+		[[nodiscard]]
+		auto friend inline
+		(	operator<=>
+		)	(	Body3DIterator
+					i_aLeft
+			,	Body3DIterator
+					i_aRight
+			)
+			noexcept
+		->	decltype(auto)
+		{	return
+				i_aLeft
+				.	m_vView32
+				.	m_vIndex
+			<=>	i_aRight
+				.	m_vView32
+				.	m_vIndex
 			;
 		}
 	};
@@ -294,11 +410,14 @@ namespace
 			=	m_aBuffer
 			;
 
-			View32
+			View32<float>
 				vView32
-			{	aBuffer
-			,	m_vCapacity
-			,	vCount
+			{	.	m_aBuffer
+				=	aBuffer
+			,	.	m_vCapacity
+				=	m_vCapacity
+			,	.	m_vIndex
+				=	vCount
 			};
 
 			switch
@@ -508,11 +627,15 @@ namespace
 			noexcept
 		->	Body3DIterator
 		{	return
-			{	View32
-				{	m_aBuffer
-				,	m_vCapacity
-				,	0
-				}
+			{	.	m_vView32
+				=	View32<float const>
+					{	.	m_aBuffer
+						=	m_aBuffer
+					,	.	m_vCapacity
+						=	m_vCapacity
+					,	.	m_vIndex
+						=	0
+					}
 			};
 		}
 
@@ -521,13 +644,63 @@ namespace
 		(	end
 		)	()	const&
 			noexcept
-		->	Body3DSentinel
+		->	Body3DIterator
 		{	return
-			{	m_vCount
+			{	.	m_vView32
+				=	View32<float const>
+					{	.	m_aBuffer
+						=	m_aBuffer
+					,	.	m_vCapacity
+						=	m_vCapacity
+					,	.	m_vIndex
+						=	m_vCount
+					}
 			};
 		}
 	};
 }
+
+
+
+template
+	<>
+struct
+	::std::common_type
+	<	::Bodies3D::Body3DValue
+	,	::Bodies3D::Body3DReference
+	>
+:	::std::type_identity
+	<	::Bodies3D::ImplicitBody3DReference
+	>
+{};
+
+template
+	<>
+struct
+	::std::common_type
+	<	::Bodies3D::Body3DReference
+	,	::Bodies3D::Body3DValue
+	>
+:	::std::type_identity
+	<	::Bodies3D::ImplicitBody3DReference
+	>
+{};
+
+static_assert
+(	::std::random_access_iterator
+	<	::Bodies3D::Body3DIterator
+	>
+);
+static_assert
+(	::std::is_same_v
+	<	typename
+		::std::iterator_traits
+		<	::Bodies3D::Body3DIterator
+		>
+		::	iterator_category
+	,	::std::random_access_iterator_tag
+	>
+);
 
 [[nodiscard]]
 auto inline
@@ -853,25 +1026,31 @@ auto inline
 		}
 	}
 
-	::std::experimental::native_simd<float>
-		vLoopSum
-	{};
-
-	for	(	auto const
-				rBody
-		:	vElements
-		)
-	{
-		vLoopSum
-		+=	rBody
-			.	ComputeVolume
-				()
-		;
-	}
-
 	return
 		reduce
-		(	vLoopSum
+		(	::std::transform_reduce
+			(	::std::execution::unseq
+			,	vElements
+				.	begin
+					()
+			,	vElements
+				.	end
+					()
+			,	::std::experimental::native_simd<float>
+				{}
+			,	::std::plus<::std::experimental::native_simd<float>>
+				{}
+			,	[]	(	auto const
+							rBody
+					)
+				->	::std::experimental::native_simd<float>
+				{	return
+						rBody
+						.	ComputeVolume
+							()
+					;
+				}
+			)
 		)
 	;
 }

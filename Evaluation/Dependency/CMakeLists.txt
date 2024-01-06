@@ -1,4 +1,5 @@
 add_single_file_modules(
+	RandomAccessIteratorBase.cpp
 	DynamicArray.cpp
 	TaggedArray.cpp
 

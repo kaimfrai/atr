@@ -1,5 +1,7 @@
 export module Evaluation.Dependency.TaggedArray;
 
+import Evaluation.Dependency.RandomAccessIteratorBase;
+
 import ATR.Erase;
 import ATR.Instance;
 
@@ -17,6 +19,14 @@ export namespace
 	auto constexpr inline
 		TagSize
 	=	sizeof(unsigned char)
+	;
+
+	template
+		<	auto const
+			&	t_rInterface
+		>
+	struct
+		Body3DValue
 	;
 
 	template
@@ -52,12 +62,43 @@ export namespace
 		}
 	};
 
+	template
+		<	auto const
+			&	t_rInterface
+		>
 	struct
-		Body3DSentinel
+		ImplicitBody3DReference
+	:	Body3DReference
+		<	t_rInterface
+		>
 	{
-		::std::byte const
-		*	m_aDataEnd
-		;
+		explicit(false) constexpr inline
+		(	ImplicitBody3DReference
+		)	(	Body3DReference<t_rInterface>
+					i_rReference
+			)
+			noexcept
+		:	Body3DReference
+			<	t_rInterface
+			>{	i_rReference
+			}
+		{}
+
+		explicit(false) constexpr inline
+		(	ImplicitBody3DReference
+		)	(	Body3DValue<t_rInterface> const
+				&	i_rValue
+			)
+			noexcept
+		:	Body3DReference
+			<	t_rInterface
+			>{	i_rValue
+				.	operator
+					Body3DReference
+					<	t_rInterface
+					>()
+			}
+		{}
 	};
 
 	template
@@ -66,6 +107,14 @@ export namespace
 		>
 	struct
 		Body3DIterator
+	:	RandomAccessIteratorBase
+		<	Body3DReference
+			<	t_rInterface
+			>
+		,	Body3DValue
+			<	t_rInterface
+			>
+		>
 	{
 		::std::byte const
 		*	m_aData
@@ -74,36 +123,76 @@ export namespace
 		*	m_aTag
 		;
 
-		auto inline
-		(	operator++
-		)	()	&
+		auto constexpr inline
+		(	operator+=
+		)	(	this Body3DIterator
+				&	i_rThis
+			,	Body3DIterator::difference_type
+					i_vDifference
+			)
 			noexcept
-		->	Body3DIterator&
+		->	decltype(i_rThis)
 		{
-			m_aData
-			+=	t_rInterface
-				.	ElementSize
+			i_rThis
+			.	m_aData
+			+=	static_cast<Body3DIterator::difference_type>
+				(	t_rInterface
+					.	ElementSize
+				)
+			*	i_vDifference
 			;
-			m_aTag
-			+=	TagSize
+			i_rThis
+			.	m_aTag
+			+=	static_cast<Body3DIterator::difference_type>
+				(	TagSize
+				)
+			*	i_vDifference
 			;
+
 			return
-				*this
+				i_rThis
 			;
 		}
 
 		[[nodiscard]]
-		auto inline
-		(	operator*
-		)	()	&
+		auto friend constexpr inline
+		(	operator-
+		)	(	Body3DIterator
+					i_aLeft
+			,	Body3DIterator
+					i_aRight
+			)
 			noexcept
-		->	Body3DReference<t_rInterface>
+		->	Body3DIterator::difference_type
 		{	return
-			{	m_aData
+				(	i_aLeft
+					.	m_aData
+				-	i_aRight
+					.	m_aData
+				)
+			/	static_cast<Body3DIterator::difference_type>
+				(	t_rInterface
+					.	ElementSize
+				)
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	operator*
+		)	(	this Body3DIterator
+					i_aThis
+			)
+			noexcept
+		->	Body3DIterator::reference
+		{	return
+			{	i_aThis
+				.	m_aData
 			,	*
 				::std::launder
 				(	::std::bit_cast<unsigned char*>
-					(	m_aTag
+					(	i_aThis
+						.	m_aTag
 					)
 				)
 			};
@@ -113,17 +202,35 @@ export namespace
 		auto friend inline
 		(	operator==
 		)	(	Body3DIterator
-					i_aIterator
-			,	Body3DSentinel
-					i_aSentinel
+					i_aLeft
+			,	Body3DIterator
+					i_aRight
 			)
 			noexcept
 		->	bool
 		{	return
-				i_aIterator
+				i_aLeft
 				.	m_aData
-			==	i_aSentinel
-				.	m_aDataEnd
+			==	i_aRight
+				.	m_aData
+			;
+		}
+
+		[[nodiscard]]
+		auto friend inline
+		(	operator<=>
+		)	(	Body3DIterator
+					i_aLeft
+			,	Body3DIterator
+					i_aRight
+			)
+			noexcept
+		->	decltype(auto)
+		{	return
+				i_aLeft
+				.	m_aData
+			<=>	i_aRight
+				.	m_aData
 			;
 		}
 	};
@@ -304,12 +411,14 @@ export namespace
 			noexcept
 		->	Body3DIterator<t_rInterface>
 		{	return
-			{	m_aBuffer
-			,	(	m_aBuffer
-				+	m_vCapacity
-				*	t_rInterface
-					.	ElementSize
-				)
+			{	.	m_aData
+				=	m_aBuffer
+			,	.	m_aTag
+				=	(	m_aBuffer
+					+	m_vCapacity
+					*	t_rInterface
+						.	ElementSize
+					)
 			};
 		}
 
@@ -318,13 +427,63 @@ export namespace
 		(	end
 		)	()	const&
 			noexcept
-		->	Body3DSentinel
+		->	Body3DIterator<t_rInterface>
 		{	return
-			{	m_aBuffer
-			+	m_vCapacity
-			*	t_rInterface
-				.	ElementSize
+			{	.	m_aData
+				=	(	m_aBuffer
+					+	m_vCapacity
+					*	t_rInterface
+						.	ElementSize
+					)
+			,	.	m_aTag
+				=	(	m_aBuffer
+					+	m_vCapacity
+					*	(	t_rInterface
+							.	ElementSize
+						+	TagSize
+						)
+					)
 			};
 		}
 	};
 }
+
+export template
+	<	auto const
+		&	t_rInterface
+	>
+struct
+	::std::common_type
+	<	::Bodies3D::Body3DValue
+		<	t_rInterface
+		>
+	,	::Bodies3D::Body3DReference
+		<	t_rInterface
+		>
+	>
+:	::std::type_identity
+	<	::Bodies3D::ImplicitBody3DReference
+		<	t_rInterface
+		>
+	>
+{};
+
+export template
+	<	auto const
+		&	t_rInterface
+	>
+struct
+	::std::common_type
+	<	::Bodies3D::Body3DReference
+		<	t_rInterface
+		>
+	,	::Bodies3D::Body3DValue
+		<	t_rInterface
+		>
+	>
+:	::std::type_identity
+	<	::Bodies3D::ImplicitBody3DReference
+		<	t_rInterface
+		>
+	>
+{};

@@ -723,24 +723,28 @@ auto inline
 		}
 	}
 
-	float
-		vLoopSum
-	{};
-
-	for	(	auto const
-				rBody
-		:	vElements
-		)
-	{
-		vLoopSum
-		+=	rBody
-			.	ComputeVolume
-				()
-		;
-	}
-
 	return
-		vLoopSum
+		::std::transform_reduce
+		(	::std::execution::unseq
+		,	vElements
+			.	begin
+				()
+		,	vElements
+			.	end
+				()
+		,	0.0f
+		,	::std::plus<float>
+			{}
+		,	[]	(	auto const
+						rBody
+				)
+			{	return
+					rBody
+					.	ComputeVolume
+						()
+				;
+			}
+		)
 	;
 }
 

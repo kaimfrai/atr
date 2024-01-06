@@ -1,4 +1,5 @@
 import Evaluation.Dependency.PseudoRandomSequence;
+import Evaluation.Dependency.RandomAccessIteratorBase;
 import Evaluation.Dependency.VerifyLoopSum;
 
 import Evaluation.TagReplication.Tag;
@@ -207,15 +208,67 @@ namespace
 	};
 
 	struct
-		Body3DSentinel
+		Body3DValue
 	{
-		::std::byte const
-		*	m_aDataEnd
+		alignas(Body3D)
+		::std::byte
+			m_vData
+			[	sizeof(Body3D)
+			]
 		;
+		ETag
+			m_vTag
+		;
+
+		[[nodiscard]]
+		explicit(true) constexpr inline
+		(	operator
+			Body3DReference
+		)	()	const
+			noexcept
+		{	return
+			{	m_vData
+			,	m_vTag
+			};
+		}
+	};
+
+	struct
+		ImplicitBody3DReference
+	:	Body3DReference
+	{
+		explicit(false) constexpr inline
+		(	ImplicitBody3DReference
+		)	(	Body3DReference
+					i_rReference
+			)
+			noexcept
+		:	Body3DReference
+			{	i_rReference
+			}
+		{}
+
+		explicit(false) constexpr inline
+		(	ImplicitBody3DReference
+		)	(	Body3DValue const
+				&	i_rValue
+			)
+			noexcept
+		:	Body3DReference
+			{	i_rValue
+				.	operator
+					Body3DReference
+					()
+			}
+		{}
 	};
 
 	struct
 		Body3DIterator
+	:	RandomAccessIteratorBase
+		<	Body3DReference
+		,	Body3DValue
+		>
 	{
 		::std::byte const
 		*	m_aData
@@ -225,34 +278,73 @@ namespace
 		;
 
 		auto constexpr inline
-		(	operator++
-		)	()	&
+		(	operator+=
+		)	(	this Body3DIterator
+				&	i_rThis
+			,	Body3DIterator::difference_type
+					i_vDifference
+			)
 			noexcept
-		->	Body3DIterator&
+		->	decltype(i_rThis)
 		{
-			m_aData
-			+=	BodySize
+			i_rThis
+			.	m_aData
+			+=	static_cast<Body3DIterator::difference_type>
+				(	BodySize
+				)
+			*	i_vDifference
 			;
-			m_aTag
-			+=	TagSize
+			i_rThis
+			.	m_aTag
+			+=	static_cast<Body3DIterator::difference_type>
+				(	TagSize
+				)
+			*	i_vDifference
 			;
 			return
-				*this
+				i_rThis
+			;
+		}
+
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator-
+		)	(	Body3DIterator
+					i_aLeft
+			,	Body3DIterator
+					i_aRight
+			)
+			noexcept
+		->	Body3DIterator::difference_type
+		{	return
+				(	i_aLeft
+					.	m_aData
+				-	i_aRight
+					.	m_aData
+				)
+			/	static_cast<Body3DIterator::difference_type>
+				(	BodySize
+				)
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator*
-		)	()	&
+		)	(	this Body3DIterator
+					i_aThis
+			)
 			noexcept
-		->	Body3DReference
+		->	Body3DIterator::reference
 		{	return
-			{	m_aData
+			{	i_aThis
+				.	m_aData
 			,	*
 				::std::launder
 				(	::std::bit_cast<ETag*>
-					(	m_aTag
+					(	i_aThis
+						.	m_aTag
 					)
 				)
 			};
@@ -262,17 +354,35 @@ namespace
 		auto friend constexpr inline
 		(	operator==
 		)	(	Body3DIterator
-					i_aIterator
-			,	Body3DSentinel
-					i_aSentinel
+					i_aLeft
+			,	Body3DIterator
+					i_aRight
 			)
 			noexcept
 		->	bool
 		{	return
-				i_aIterator
+				i_aLeft
 				.	m_aData
-			==	i_aSentinel
-				.	m_aDataEnd
+			==	i_aRight
+				.	m_aData
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator<=>
+		)	(	Body3DIterator
+					i_aLeft
+			,	Body3DIterator
+					i_aRight
+			)
+			noexcept
+		->	decltype(auto)
+		{	return
+				i_aLeft
+				.	m_aData
+			<=>	i_aRight
+				.	m_aData
 			;
 		}
 	};
@@ -447,11 +557,13 @@ namespace
 			noexcept
 		->	Body3DIterator
 		{	return
-			{	m_aBuffer
-			,	(	m_aBuffer
-				+	m_vCapacity
-				*	BodySize
-				)
+			{	.	m_aData
+				=	m_aBuffer
+			,	.	m_aTag
+				=	(	m_aBuffer
+					+	m_vCapacity
+					*	BodySize
+					)
 			};
 		}
 
@@ -460,15 +572,64 @@ namespace
 		(	end
 		)	()	const&
 			noexcept
-		->	Body3DSentinel
+		->	Body3DIterator
 		{	return
-			{	m_aBuffer
-			+	m_vCapacity
-			*	BodySize
+			{	.	m_aData
+				=	(	m_aBuffer
+					+	m_vCapacity
+					*	BodySize
+					)
+			,	.	m_aTag
+				=	(	m_aBuffer
+					+	m_vCapacity
+					*	(	BodySize
+						+	TagSize
+						)
+					)
 			};
 		}
 	};
 }
+
+template
+	<>
+struct
+	::std::common_type
+	<	::Bodies3D::Body3DValue
+	,	::Bodies3D::Body3DReference
+	>
+:	::std::type_identity
+	<	::Bodies3D::ImplicitBody3DReference
+	>
+{};
+
+template
+	<>
+struct
+	::std::common_type
+	<	::Bodies3D::Body3DReference
+	,	::Bodies3D::Body3DValue
+	>
+:	::std::type_identity
+	<	::Bodies3D::ImplicitBody3DReference
+	>
+{};
+
+static_assert
+(	::std::random_access_iterator
+	<	::Bodies3D::Body3DIterator
+	>
+);
+static_assert
+(	::std::is_same_v
+	<	typename
+		::std::iterator_traits
+		<	::Bodies3D::Body3DIterator
+		>
+		::	iterator_category
+	,	::std::random_access_iterator_tag
+	>
+);
 
 [[nodiscard]]
 auto inline
@@ -1220,24 +1381,29 @@ auto inline
 		}
 	}
 
-	float
-		vLoopSum
-	{};
-
-	for	(	auto const
-				rBody
-		:	vElements
-		)
-	{
-		vLoopSum
-		+=	rBody
-			.	ComputeVolume
-				()
-		;
-	}
-
 	return
-		vLoopSum
+		::std::transform_reduce
+		(	::std::execution::unseq
+		,	vElements
+			.	begin
+				()
+		,	vElements
+			.	end
+				()
+		,	0.0f
+		,	::std::plus<float>
+			{}
+		,	[]	(	auto const
+						rBody
+				)
+			->	float
+			{	return
+					rBody
+					.	ComputeVolume
+						()
+				;
+			}
+		)
 	;
 }
 

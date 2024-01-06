@@ -51,41 +51,6 @@ namespace
 			}
 		>
 	;
-
-	[[nodiscard]]
-	auto constexpr inline
-	(	ComputeVolume
-	)	(	ObjectReference
-					i_rObject
-		)
-		noexcept
-	{	return
-		Body3D::Visit
-		<	[]	(	auto const
-					&	i_rBody
-				)
-			{	return
-				i_rBody
-				.	ComputeVolume
-					()
-				;
-			}
-		,	Circle const&
-		,	Ellipse const&
-		,	Rectangle const&
-		,	Square const&
-		,	Triangle const&
-		,	Cube const&
-		,	Cuboid const&
-		,	Pyramid const&
-		,	Sphere const&
-		,	Cylinder const&
-		,	Cone const&
-		,	Ellipsoid const&
-		,	Head const&
-		>(	i_rObject
-		);
-	}
 }
 
 [[nodiscard]]
@@ -1118,24 +1083,50 @@ auto inline
 		}
 	}
 
-	float
-		vLoopSum
-	{};
-
-	for	(	ObjectReference
-				rBody
-		:	vElements
-		)
-	{
-		vLoopSum
-		+=	ComputeVolume
-			(	rBody
-			)
-		;
-	}
-
 	return
-		vLoopSum
+		::std::transform_reduce
+		(	::std::execution::unseq
+		,	vElements
+			.	begin
+				()
+		,	vElements
+			.	end
+				()
+		,	0.0f
+		,	::std::plus<float>
+			{}
+		,	[]	(	ObjectReference
+							i_rObject
+				)
+			{	return
+					Body3D::Visit
+					<	[]	(	auto const
+								&	i_rBody
+							)
+						{	return
+								i_rBody
+								.	ComputeVolume
+									()
+							;
+						}
+					,	Circle const&
+					,	Ellipse const&
+					,	Rectangle const&
+					,	Square const&
+					,	Triangle const&
+					,	Cube const&
+					,	Cuboid const&
+					,	Pyramid const&
+					,	Sphere const&
+					,	Cylinder const&
+					,	Cone const&
+					,	Ellipsoid const&
+					,	Head const&
+					>(	i_rObject
+					)
+				;
+			}
+		)
 	;
 }
 

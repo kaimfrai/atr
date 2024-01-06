@@ -49,8 +49,8 @@ export namespace
 
 	auto constexpr inline
 	(	ConstructEllipsoid
-	)	(	View32
-				i_vView32
+	)	(	View32<float>
+				i_rView32
 		,	float
 				i_vRed
 		,	float
@@ -74,7 +74,7 @@ export namespace
 		)
 		noexcept
 	->	void
-	{	i_vView32
+	{	i_rView32
 			[0z, i_vRed]
 			[1z, i_vGreen]
 			[2z, i_vBlue]

@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <__libc_start_main+0x9828>
+               	call	qword ptr  <__libc_start_main+0x9838>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <__libc_start_main+0x9838>
+               	mov	rax, qword ptr  <__libc_start_main+0x9848>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <__libc_start_main+0x9840>
+               	mov	rax, qword ptr  <__libc_start_main+0x9850>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <__libc_start_main+0x9848>
+               	cmp	qword ptr , 0x0 <__libc_start_main+0x9858>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -622,7 +622,7 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x378], rax
                	mov	qword ptr [rsp + 0x380], rdi
                	sar	rdi, 0x1d
-               	mov	rsi, qword ptr  <__libc_start_main+0x9850>
+               	mov	rsi, qword ptr  <__libc_start_main+0x9860>
                	call	 <_ZnamRKSt9nothrow_t@plt>
                	mov	qword ptr [rsp + 0x18], rax
                	movsxd	rcx, ebx
@@ -3563,17 +3563,19 @@ Disassembly of section .text:
                	rol	r9, 0x2d
                	jmp	 <L245>
 <L234>:
-               	mov	r15, qword ptr [rsp + 0x8]
-               	shl	r15, 0x3
-               	test	r15, r15
-               	mov	r14, qword ptr [rsp + 0x18]
+               	mov	r12, qword ptr [rsp + 0x8]
+               	shl	r12, 0x3
+               	mov	rbx, r12
+               	sar	rbx, 0x3
+               	test	rbx, rbx
+               	mov	r15, qword ptr [rsp + 0x18]
                	vpxor	xmm0, xmm0, xmm0
-               	je	 <L246>
-               	xor	ebx, ebx
-               	nop	dword ptr [rax]
+               	jle	 <L246>
+               	xor	r14d, r14d
+               	nop	word ptr cs:[rax + rax]
 <L247>:
                	vmovd	dword ptr [rsp + 0x10], xmm0
-               	mov	rdi, qword ptr [r14 + rbx]
+               	mov	rdi, qword ptr [r15 + 8*r14]
                	mov	rax, qword ptr [rdi]
                	vzeroupper
                	call	qword ptr [rax + 0x18]
@@ -3581,47 +3583,51 @@ Disassembly of section .text:
                	vaddss	xmm1, xmm0, xmm1
                	vmovss	dword ptr [rsp + 0x10], xmm1
                	vmovss	xmm0, dword ptr [rsp + 0x10] # xmm0 = mem[0],zero,zero,zero
-               	add	rbx, 0x8
-               	cmp	r15, rbx
+               	inc	r14
+               	cmp	rbx, r14
                	jne	 <L247>
+<L246>:
+               	test	r12, r12
+               	je	 <L248>
                	xor	ebx, ebx
-               	jmp	 <L248>
-               	nop	word ptr cs:[rax + rax]
-<L249>:
-               	mov	qword ptr [r14 + rbx], 0x0
+               	vmovss	dword ptr [rsp + 0x10], xmm0
+               	jmp	 <L249>
+<L250>:
+               	mov	qword ptr [r15 + rbx], 0x0
                	add	rbx, 0x8
-               	cmp	r15, rbx
-               	je	 <L246>
-<L248>:
-               	mov	rdi, qword ptr [r14 + rbx]
+               	cmp	r12, rbx
+               	je	 <L248>
+<L249>:
+               	mov	rdi, qword ptr [r15 + rbx]
                	test	rdi, rdi
-               	je	 <L249>
+               	je	 <L250>
                	mov	rax, qword ptr [rdi]
+               	vzeroupper
                	call	qword ptr [rax + 0x28]
                	vmovss	xmm0, dword ptr [rsp + 0x10] # xmm0 = mem[0],zero,zero,zero
-               	jmp	 <L249>
+               	jmp	 <L250>
 <L232>:
                	vpxor	xmm0, xmm0, xmm0
-               	mov	r14, qword ptr [rsp + 0x18]
-<L246>:
+               	mov	r15, qword ptr [rsp + 0x18]
+<L248>:
                	mov	rbx, qword ptr [rsp + 0x380]
                	or	rbx, qword ptr [rsp + 0x378]
-               	test	r14, r14
-               	je	 <L250>
-               	mov	rdi, r14
+               	test	r15, r15
+               	je	 <L251>
+               	mov	rdi, r15
                	vmovd	dword ptr [rsp + 0x10], xmm0
                	vzeroupper
                	call	 <_ZdaPv@plt>
                	vmovd	xmm0, dword ptr [rsp + 0x10] # xmm0 = mem[0],zero,zero,zero
-<L250>:
+<L251>:
                	movabs	rax, 0x186a00000002a
                	cmp	rbx, rax
-               	jne	 <L251>
+               	jne	 <L252>
                	vucomiss	xmm0, dword ptr  <__libc_start_main+0x247c>
-               	jb	 <L252>
+               	jb	 <L253>
                	vucomiss	xmm0, dword ptr  <__libc_start_main+0x2474>
-               	ja	 <L252>
-<L251>:
+               	ja	 <L253>
+<L252>:
                	xor	eax, eax
                	add	rsp, 0x3f8
                	pop	rbx
@@ -3632,22 +3638,19 @@ Disassembly of section .text:
                	pop	rbp
                	vzeroupper
                	ret
-<L252>:
+<L253>:
                	mov	edi, 0x4
                	vmovss	dword ptr [rsp + 0x10], xmm0
                	vzeroupper
                	call	 <__cxa_allocate_exception@plt>
                	vmovss	xmm0, dword ptr [rsp + 0x10] # xmm0 = mem[0],zero,zero,zero
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <__libc_start_main+0x9858>
+               	mov	rsi, qword ptr  <__libc_start_main+0x9868>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
                	mov	rdi, rax
                	call	 <__clang_call_terminate>
-               	int3
-               	int3
-               	int3
 
 <__clang_call_terminate>:
                	push	rax
@@ -3924,7 +3927,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <__libc_start_main+0x9830>
+               	mov	rax, qword ptr  <__libc_start_main+0x9840>
                	test	rax, rax
                	je	 <L0>
                	call	rax

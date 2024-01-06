@@ -89,3 +89,23 @@ export namespace
 		>
 	;
 }
+
+static_assert
+(	::std::random_access_iterator
+	<	::Bodies3D::Body3DIterator
+		<	::Bodies3D::Interface
+		>
+	>
+);
+static_assert
+(	::std::is_same_v
+	<	typename
+		::std::iterator_traits
+		<	::Bodies3D::Body3DIterator
+			<	::Bodies3D::Interface
+			>
+		>
+		::	iterator_category
+	,	::std::random_access_iterator_tag
+	>
+);

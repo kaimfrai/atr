@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <__libc_start_main+0x6a70>
+               	call	qword ptr  <__libc_start_main+0x6a60>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <__libc_start_main+0x6a80>
+               	mov	rax, qword ptr  <__libc_start_main+0x6a70>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <__libc_start_main+0x6a88>
+               	mov	rax, qword ptr  <__libc_start_main+0x6a78>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <__libc_start_main+0x6a90>
+               	cmp	qword ptr , 0x0 <__libc_start_main+0x6a80>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -720,7 +720,7 @@ Disassembly of section .text:
                	movsxd	rax, edx
                	shl	rax, 0x4
                	lea	rdi, [rax + 2*rax]
-               	mov	rsi, qword ptr  <__libc_start_main+0x6a98>
+               	mov	rsi, qword ptr  <__libc_start_main+0x6a88>
                	call	 <_ZnamRKSt9nothrow_t@plt>
                	mov	qword ptr [rsp + 0xa8], rax
                	movsxd	rax, ebx
@@ -2920,10 +2920,10 @@ Disassembly of section .text:
                	xor	esi, esi
                	vpbroadcastq	ymm6, qword ptr  <__libc_start_main+0xaa0>
                	vpbroadcastw	xmm7, word ptr  <__libc_start_main+0xb14>
-               	lea	rdi,  <__libc_start_main+0xb18>
+               	lea	r11,  <__libc_start_main+0xb18>
                	vmovaps	ymm8, ymmword ptr  <__libc_start_main+0xa80>
                	vpbroadcastq	xmm9, qword ptr  <__libc_start_main+0xab0>
-               	mov	r11, qword ptr [rsp + 0xa8]
+               	mov	rdi, qword ptr [rsp + 0xa8]
                	mov	r13, qword ptr [rsp + 0x270]
                	mov	r10, rdx
                	mov	rbp, qword ptr [rsp + 0x330]
@@ -2982,12 +2982,12 @@ Disassembly of section .text:
                	vmovdqu	xmm0, xmmword ptr [rsp + 0x2d8]
                	vpshufb	xmm0, xmm0, xmm7
                	movzx	eax, al
-               	movsxd	rax, dword ptr [rdi + 4*rax]
-               	add	rax, rdi
+               	movsxd	rax, dword ptr [r11 + 4*rax]
+               	add	rax, r11
                	jmp	rax
                	lea	rax, [rsi + 2*rsi]
                	shl	rax, 0x4
-               	mov	qword ptr [r11 + rax + 0x20], 0x0
+               	mov	qword ptr [rdi + rax + 0x20], 0x0
                	lea	rcx,  <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
                	jmp	 <L236>
                	lea	rax, [rsi + 2*rsi]
@@ -2997,24 +2997,24 @@ Disassembly of section .text:
                	lea	rax, [rsi + 2*rsi]
                	shl	rax, 0x4
                	vpextrb	ecx, xmm2, 0x7
-               	mov	qword ptr [r11 + rax + 0x20], 0x0
+               	mov	qword ptr [rdi + rax + 0x20], 0x0
                	vcvtsi2ss	xmm1, xmm11, ecx
                	lea	rcx,  <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
-               	mov	qword ptr [r11 + rax + 0x28], rcx
+               	mov	qword ptr [rdi + rax + 0x28], rcx
                	inc	rsi
-               	vmovss	dword ptr [r11 + rax + 0x20], xmm1
+               	vmovss	dword ptr [rdi + rax + 0x20], xmm1
                	vpunpcklbw	xmm0, xmm2, xmm0 # xmm0 = xmm2[0],xmm0[0],xmm2[1],xmm0[1],xmm2[2],xmm0[2],xmm2[3],xmm0[3],xmm2[4],xmm0[4],xmm2[5],xmm0[5],xmm2[6],xmm0[6],xmm2[7],xmm0[7]
                	vpshufb	xmm0, xmm0, xmm9
                	vpmovzxbd	ymm0, xmm0      # ymm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero,xmm0[4],zero,zero,zero,xmm0[5],zero,zero,zero,xmm0[6],zero,zero,zero,xmm0[7],zero,zero,zero
                	vcvtdq2ps	ymm0, ymm0
-               	vmovups	ymmword ptr [r11 + rax], ymm0
+               	vmovups	ymmword ptr [rdi + rax], ymm0
                	test	r15b, 0x7
                	jne	 <L238>
                	jmp	 <L239>
                	mov	edi, 0x60
                	mov	qword ptr [rsp + 0x238], r12
                	mov	r12, rsi
-               	mov	rsi, qword ptr  <__libc_start_main+0x6a98>
+               	mov	rsi, qword ptr  <__libc_start_main+0x6a88>
                	mov	qword ptr [rsp + 0x10], rbx
                	mov	rbx, r9
                	vmovdqu	ymmword ptr [rsp + 0x270], ymm5
@@ -3028,7 +3028,7 @@ Disassembly of section .text:
                	vmovdqu	ymm10, ymmword ptr [rsp + 0x330]
                	vpbroadcastq	xmm9, qword ptr  <__libc_start_main+0xab0>
                	vmovaps	ymm8, ymmword ptr  <__libc_start_main+0xa80>
-               	lea	rdi,  <__libc_start_main+0xb18>
+               	lea	r11,  <__libc_start_main+0xb18>
                	vpbroadcastw	xmm7, word ptr  <__libc_start_main+0xb14>
                	vmovdqu	ymm6, ymmword ptr [rsp + 0x380]
                	mov	rsi, r12
@@ -3036,14 +3036,14 @@ Disassembly of section .text:
                	vmovdqu	ymm5, ymmword ptr [rsp + 0x270]
                	mov	r9, rbx
                	mov	rbx, qword ptr [rsp + 0x10]
-               	mov	r11, qword ptr [rsp + 0xa8]
+               	mov	rdi, qword ptr [rsp + 0xa8]
                	lea	rcx, [r12 + 2*r12]
                	shl	rcx, 0x4
-               	mov	qword ptr [r11 + rcx], rax
+               	mov	qword ptr [rdi + rcx], rax
                	vpxor	xmm0, xmm0, xmm0
-               	vmovdqu	ymmword ptr [r11 + rcx + 0x8], ymm0
+               	vmovdqu	ymmword ptr [rdi + rcx + 0x8], ymm0
                	lea	rdx,  <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Head@Evaluation.CRTP.Head>(void*)>
-               	mov	qword ptr [r11 + rcx + 0x28], rdx
+               	mov	qword ptr [rdi + rcx + 0x28], rdx
                	inc	rsi
                	vpmovzxbd	ymm0, qword ptr [rsp + 0x370] # ymm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
                	vcvtdq2ps	ymm0, ymm0
@@ -3079,23 +3079,23 @@ Disassembly of section .text:
                	jmp	 <L239>
                	lea	rax, [rsi + 2*rsi]
                	shl	rax, 0x4
-               	mov	qword ptr [r11 + rax + 0x20], 0x0
+               	mov	qword ptr [rdi + rax + 0x20], 0x0
                	lea	rcx,  <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
                	jmp	 <L240>
                	lea	rax, [rsi + 2*rsi]
                	shl	rax, 0x4
-               	mov	qword ptr [r11 + rax + 0x20], 0x0
+               	mov	qword ptr [rdi + rax + 0x20], 0x0
                	lea	rcx,  <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
                	jmp	 <L241>
                	lea	rax, [rsi + 2*rsi]
                	shl	rax, 0x4
-               	mov	qword ptr [r11 + rax + 0x20], 0x0
+               	mov	qword ptr [rdi + rax + 0x20], 0x0
                	lea	rcx,  <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
                	jmp	 <L236>
                	lea	rax, [rsi + 2*rsi]
                	shl	rax, 0x4
                	lea	rcx,  <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
-               	mov	qword ptr [r11 + rax + 0x28], rcx
+               	mov	qword ptr [rdi + rax + 0x28], rcx
                	inc	rsi
                	vpunpcklbw	xmm1, xmm2, xmm0 # xmm1 = xmm2[0],xmm0[0],xmm2[1],xmm0[1],xmm2[2],xmm0[2],xmm2[3],xmm0[3],xmm2[4],xmm0[4],xmm2[5],xmm0[5],xmm2[6],xmm0[6],xmm2[7],xmm0[7]
                	vpshufb	xmm1, xmm1, xmm9
@@ -3107,69 +3107,69 @@ Disassembly of section .text:
                	jmp	 <L242>
                	lea	rax, [rsi + 2*rsi]
                	shl	rax, 0x4
-               	mov	qword ptr [r11 + rax + 0x20], 0x0
+               	mov	qword ptr [rdi + rax + 0x20], 0x0
                	lea	rcx,  <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
 <L241>:
-               	mov	qword ptr [r11 + rax + 0x28], rcx
+               	mov	qword ptr [rdi + rax + 0x28], rcx
                	inc	rsi
                	vpmovzxbd	ymm1, xmm2      # ymm1 = xmm2[0],zero,zero,zero,xmm2[1],zero,zero,zero,xmm2[2],zero,zero,zero,xmm2[3],zero,zero,zero,xmm2[4],zero,zero,zero,xmm2[5],zero,zero,zero,xmm2[6],zero,zero,zero,xmm2[7],zero,zero,zero
                	vcvtdq2ps	ymm1, ymm1
                	vpermilps	ymm1, ymm1, ymm8
-               	vmovups	ymmword ptr [r11 + rax], ymm1
+               	vmovups	ymmword ptr [rdi + rax], ymm1
                	vpextrb	ecx, xmm0, 0x0
                	jmp	 <L243>
                	lea	rax, [rsi + 2*rsi]
                	shl	rax, 0x4
-               	mov	qword ptr [r11 + rax + 0x20], 0x0
+               	mov	qword ptr [rdi + rax + 0x20], 0x0
                	lea	rcx,  <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
                	jmp	 <L236>
                	lea	rax, [rsi + 2*rsi]
                	shl	rax, 0x4
                	lea	rcx,  <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
 <L237>:
-               	mov	qword ptr [r11 + rax + 0x28], rcx
+               	mov	qword ptr [rdi + rax + 0x28], rcx
                	inc	rsi
                	vpmovzxbd	ymm1, xmm2      # ymm1 = xmm2[0],zero,zero,zero,xmm2[1],zero,zero,zero,xmm2[2],zero,zero,zero,xmm2[3],zero,zero,zero,xmm2[4],zero,zero,zero,xmm2[5],zero,zero,zero,xmm2[6],zero,zero,zero,xmm2[7],zero,zero,zero
                	vcvtdq2ps	ymm1, ymm1
                	vpermilps	ymm1, ymm1, ymm8
 <L242>:
-               	vmovups	ymmword ptr [r11 + rax], ymm1
+               	vmovups	ymmword ptr [rdi + rax], ymm1
                	vpmovzxbd	xmm0, xmm0      # xmm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero
                	vcvtdq2ps	xmm0, xmm0
-               	vmovlps	qword ptr [r11 + rax + 0x20], xmm0
+               	vmovlps	qword ptr [rdi + rax + 0x20], xmm0
                	test	r15b, 0x7
                	jne	 <L238>
                	jmp	 <L239>
                	lea	rax, [rsi + 2*rsi]
                	shl	rax, 0x4
-               	mov	qword ptr [r11 + rax + 0x20], 0x0
+               	mov	qword ptr [rdi + rax + 0x20], 0x0
                	lea	rcx,  <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
 <L240>:
-               	mov	qword ptr [r11 + rax + 0x28], rcx
+               	mov	qword ptr [rdi + rax + 0x28], rcx
                	inc	rsi
                	vpmovzxbd	ymm1, xmm2      # ymm1 = xmm2[0],zero,zero,zero,xmm2[1],zero,zero,zero,xmm2[2],zero,zero,zero,xmm2[3],zero,zero,zero,xmm2[4],zero,zero,zero,xmm2[5],zero,zero,zero,xmm2[6],zero,zero,zero,xmm2[7],zero,zero,zero
                	vcvtdq2ps	ymm1, ymm1
                	vpermilps	ymm1, ymm1, ymm8
-               	vmovups	ymmword ptr [r11 + rax], ymm1
+               	vmovups	ymmword ptr [rdi + rax], ymm1
                	vpextrb	ecx, xmm0, 0x1
 <L243>:
                	vcvtsi2ss	xmm0, xmm11, ecx
-               	vmovss	dword ptr [r11 + rax + 0x20], xmm0
+               	vmovss	dword ptr [rdi + rax + 0x20], xmm0
 <L235>:
                	test	r15b, 0x7
                	jne	 <L238>
                	jmp	 <L239>
                	lea	rax, [rsi + 2*rsi]
                	shl	rax, 0x4
-               	mov	qword ptr [r11 + rax + 0x20], 0x0
+               	mov	qword ptr [rdi + rax + 0x20], 0x0
                	lea	rcx,  <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
 <L236>:
-               	mov	qword ptr [r11 + rax + 0x28], rcx
+               	mov	qword ptr [rdi + rax + 0x28], rcx
                	inc	rsi
                	vpmovzxbd	ymm0, xmm2      # ymm0 = xmm2[0],zero,zero,zero,xmm2[1],zero,zero,zero,xmm2[2],zero,zero,zero,xmm2[3],zero,zero,zero,xmm2[4],zero,zero,zero,xmm2[5],zero,zero,zero,xmm2[6],zero,zero,zero,xmm2[7],zero,zero,zero
                	vcvtdq2ps	ymm0, ymm0
                	vpermilps	ymm0, ymm0, ymm8
-               	vmovups	ymmword ptr [r11 + rax], ymm0
+               	vmovups	ymmword ptr [rdi + rax], ymm0
                	test	r15b, 0x7
                	jne	 <L238>
 <L239>:
@@ -3229,81 +3229,81 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x200], rcx
                	rol	r9, 0x2d
                	mov	qword ptr [rsp + 0x1f8], r9
-               	mov	rdi, qword ptr [rsp + 0x60]
-               	mov	rax, rdi
+               	mov	r8, qword ptr [rsp + 0x60]
+               	mov	rax, r8
                	shl	rax, 0x11
                	mov	rcx, qword ptr [rsp + 0x1f0]
                	mov	qword ptr [rsp + 0x10], rbx
                	mov	rbx, qword ptr [rsp + 0x1e8]
                	xor	rbx, rcx
                	mov	r13, qword ptr [rsp + 0x1e0]
-               	xor	r13, rdi
-               	xor	rdi, rbx
-               	mov	qword ptr [rsp + 0x60], rdi
+               	xor	r13, r8
+               	xor	r8, rbx
+               	mov	qword ptr [rsp + 0x60], r8
                	xor	rcx, r13
                	mov	qword ptr [rsp + 0x1f0], rcx
                	xor	rbx, rax
                	mov	qword ptr [rsp + 0x1e8], rbx
                	rol	r13, 0x2d
                	mov	qword ptr [rsp + 0x1e0], r13
-               	mov	rdi, qword ptr [rsp + 0x58]
-               	mov	rax, rdi
+               	mov	r8, qword ptr [rsp + 0x58]
+               	mov	rax, r8
                	shl	rax, 0x11
                	mov	rcx, qword ptr [rsp + 0x1d8]
                	mov	r13, qword ptr [rsp + 0x1d0]
                	xor	r13, rcx
                	mov	rbp, qword ptr [rsp + 0x1c8]
-               	xor	rbp, rdi
-               	xor	rdi, r13
-               	mov	qword ptr [rsp + 0x58], rdi
+               	xor	rbp, r8
+               	xor	r8, r13
+               	mov	qword ptr [rsp + 0x58], r8
                	xor	rcx, rbp
                	mov	qword ptr [rsp + 0x1d8], rcx
                	xor	r13, rax
                	mov	qword ptr [rsp + 0x1d0], r13
                	rol	rbp, 0x2d
                	mov	qword ptr [rsp + 0x1c8], rbp
-               	mov	rdi, qword ptr [rsp + 0x50]
-               	mov	rax, rdi
+               	mov	r9, qword ptr [rsp + 0x50]
+               	mov	rax, r9
                	shl	rax, 0x11
                	mov	rcx, qword ptr [rsp + 0x1c0]
                	mov	rbp, qword ptr [rsp + 0x1b8]
                	xor	rbp, rcx
                	mov	r8, qword ptr [rsp + 0x1b0]
-               	xor	r8, rdi
-               	xor	rdi, rbp
-               	mov	qword ptr [rsp + 0x50], rdi
+               	xor	r8, r9
+               	xor	r9, rbp
+               	mov	qword ptr [rsp + 0x50], r9
                	xor	rcx, r8
                	mov	qword ptr [rsp + 0x1c0], rcx
                	rol	r8, 0x2d
                	mov	qword ptr [rsp + 0x1b0], r8
                	xor	rbp, rax
                	mov	qword ptr [rsp + 0x1b8], rbp
-               	mov	rdi, qword ptr [rsp + 0x48]
-               	mov	rax, rdi
+               	mov	r8, qword ptr [rsp + 0x48]
+               	mov	rax, r8
                	shl	rax, 0x11
                	mov	rcx, qword ptr [rsp + 0x1a8]
                	mov	rbp, qword ptr [rsp + 0x1a0]
                	xor	rbp, rcx
                	mov	r10, qword ptr [rsp + 0x198]
-               	xor	r10, rdi
-               	xor	rdi, rbp
-               	mov	qword ptr [rsp + 0x48], rdi
+               	xor	r10, r8
+               	xor	r8, rbp
+               	mov	qword ptr [rsp + 0x48], r8
                	xor	rcx, r10
                	mov	qword ptr [rsp + 0x1a8], rcx
                	xor	rbp, rax
                	mov	qword ptr [rsp + 0x1a0], rbp
                	rol	r10, 0x2d
                	mov	qword ptr [rsp + 0x198], r10
-               	mov	rdi, qword ptr [rsp + 0x40]
-               	mov	rax, rdi
+               	mov	r8, qword ptr [rsp + 0x40]
+               	mov	rax, r8
                	shl	rax, 0x11
                	mov	rcx, qword ptr [rsp + 0x190]
                	mov	rbp, qword ptr [rsp + 0x188]
                	xor	rbp, rcx
                	mov	r12, qword ptr [rsp + 0x180]
-               	xor	r12, rdi
-               	xor	rdi, rbp
-               	mov	qword ptr [rsp + 0x40], rdi
+               	xor	r12, r8
+               	xor	r8, rbp
+               	mov	qword ptr [rsp + 0x40], r8
                	xor	rcx, r12
                	mov	qword ptr [rsp + 0x190], rcx
                	xor	rbp, rax
@@ -3326,49 +3326,49 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x170], rbp
                	rol	r15, 0x2d
                	mov	qword ptr [rsp + 0x168], r15
-               	mov	rdi, qword ptr [rsp + 0x38]
-               	mov	rax, rdi
+               	mov	r8, qword ptr [rsp + 0x38]
+               	mov	rax, r8
                	shl	rax, 0x11
                	mov	rcx, qword ptr [rsp + 0x160]
                	mov	rbp, qword ptr [rsp + 0x158]
                	xor	rbp, rcx
                	mov	r11, qword ptr [rsp + 0x150]
-               	xor	r11, rdi
-               	xor	rdi, rbp
-               	mov	qword ptr [rsp + 0x38], rdi
+               	xor	r11, r8
+               	xor	r8, rbp
+               	mov	qword ptr [rsp + 0x38], r8
                	xor	rcx, r11
                	mov	qword ptr [rsp + 0x160], rcx
                	rol	r11, 0x2d
                	mov	qword ptr [rsp + 0x150], r11
                	xor	rbp, rax
                	mov	qword ptr [rsp + 0x158], rbp
-               	mov	rdi, qword ptr [rsp + 0x30]
-               	mov	rax, rdi
+               	mov	r8, qword ptr [rsp + 0x30]
+               	mov	rax, r8
                	shl	rax, 0x11
                	mov	rcx, qword ptr [rsp + 0x148]
                	mov	rbp, qword ptr [rsp + 0x140]
                	xor	rbp, rcx
                	mov	qword ptr [rsp + 0x350], r14
                	mov	r14, qword ptr [rsp + 0x138]
-               	xor	r14, rdi
-               	xor	rdi, rbp
-               	mov	qword ptr [rsp + 0x30], rdi
+               	xor	r14, r8
+               	xor	r8, rbp
+               	mov	qword ptr [rsp + 0x30], r8
                	xor	rcx, r14
                	mov	qword ptr [rsp + 0x148], rcx
                	xor	rbp, rax
                	mov	qword ptr [rsp + 0x140], rbp
                	rol	r14, 0x2d
                	mov	qword ptr [rsp + 0x138], r14
-               	mov	rdi, qword ptr [rsp + 0x28]
-               	mov	rax, rdi
+               	mov	r8, qword ptr [rsp + 0x28]
+               	mov	rax, r8
                	shl	rax, 0x11
                	mov	rcx, qword ptr [rsp + 0x130]
                	mov	rbp, qword ptr [rsp + 0x128]
                	xor	rbp, rcx
                	mov	r9, qword ptr [rsp + 0x120]
-               	xor	r9, rdi
-               	xor	rdi, rbp
-               	mov	qword ptr [rsp + 0x28], rdi
+               	xor	r9, r8
+               	xor	r8, rbp
+               	mov	qword ptr [rsp + 0x28], r8
                	xor	rcx, r9
                	mov	qword ptr [rsp + 0x130], rcx
                	xor	rbp, rax
@@ -3545,7 +3545,7 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x300], rcx
                	mov	qword ptr [rsp + 0x80], r11
                	lea	rcx, [r11 + 4*r11]
-               	mov	r11, qword ptr [rsp + 0xa8]
+               	lea	r11,  <__libc_start_main+0xb18>
                	rol	rcx, 0x7
                	lea	rcx, [rcx + 8*rcx]
                	mov	qword ptr [rsp + 0x308], rdx
@@ -3556,7 +3556,7 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x310], rcx
                	mov	qword ptr [rsp + 0x70], rdi
                	lea	rcx, [rdi + 4*rdi]
-               	lea	rdi,  <__libc_start_main+0xb18>
+               	mov	rdi, qword ptr [rsp + 0xa8]
                	rol	rcx, 0x7
                	lea	rdx, [rdx + 8*rdx]
                	lea	rbp, [rcx + 8*rcx]
@@ -3599,67 +3599,70 @@ Disassembly of section .text:
                	jmp	 <L244>
 <L234>:
                	shl	rsi, 0x4
-               	lea	rbp, [rsi + 2*rsi]
-               	test	rbp, rbp
-               	je	 <L245>
+               	lea	rbx, [rsi + 2*rsi]
+               	test	rbx, rbx
+               	jle	 <L245>
+               	mov	rax, rbx
+               	sar	rax, 0x4
+               	movabs	r15, -0x5555555555555555
+               	imul	r15, rax
                	vpxor	xmm0, xmm0, xmm0
                	vmovd	dword ptr [rsp + 0x8], xmm0
-               	lea	r15,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
                	lea	r12,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
                	lea	r13,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
-               	mov	rbx, rbp
-               	mov	r14, r11
+               	lea	rbp,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
+               	mov	r14, rdi
                	jmp	 <L246>
-               	nop	word ptr cs:[rax + rax]
+               	nop	dword ptr [rax + rax]
 <L248>:
                	vmovss	xmm0, dword ptr [rax + 0x1c] # xmm0 = mem[0],zero,zero,zero
                	vmulss	xmm0, xmm0, xmm0
                	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0xb04>
-               	mov	rcx, qword ptr [rsp + 0xa8]
+               	mov	rdi, qword ptr [rsp + 0xa8]
 <L261>:
                	vmovss	xmm1, dword ptr [rsp + 0x8] # xmm1 = mem[0],zero,zero,zero
                	vaddss	xmm1, xmm0, xmm1
                	vmovss	dword ptr [rsp + 0x8], xmm1
                	add	r14, 0x30
-               	add	rbx, -0x30
+               	dec	r15
                	je	 <L247>
 <L246>:
                	mov	rdi, r14
                	vzeroupper
                	call	qword ptr [r14 + 0x28]
-               	cmp	rdx, r15
-               	je	 <L248>
                	cmp	rdx, r12
-               	mov	rcx, qword ptr [rsp + 0xa8]
-               	je	 <L249>
+               	je	 <L248>
                	cmp	rdx, r13
+               	mov	rdi, qword ptr [rsp + 0xa8]
+               	je	 <L249>
+               	cmp	rdx, rbp
                	je	 <L250>
-               	lea	rsi,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
-               	cmp	rdx, rsi
+               	lea	rcx,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
+               	cmp	rdx, rcx
                	je	 <L251>
-               	lea	rsi,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
-               	cmp	rdx, rsi
+               	lea	rcx,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
+               	cmp	rdx, rcx
                	je	 <L252>
-               	lea	rsi,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
-               	cmp	rdx, rsi
+               	lea	rcx,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
+               	cmp	rdx, rcx
                	je	 <L253>
-               	lea	rsi,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
-               	cmp	rdx, rsi
+               	lea	rcx,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
+               	cmp	rdx, rcx
                	je	 <L254>
-               	lea	rsi,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
-               	cmp	rdx, rsi
+               	lea	rcx,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
+               	cmp	rdx, rcx
                	je	 <L255>
-               	lea	rsi,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
-               	cmp	rdx, rsi
+               	lea	rcx,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
+               	cmp	rdx, rcx
                	je	 <L256>
-               	lea	rsi,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
-               	cmp	rdx, rsi
+               	lea	rcx,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
+               	cmp	rdx, rcx
                	je	 <L257>
-               	lea	rsi,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
-               	cmp	rdx, rsi
+               	lea	rcx,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
+               	cmp	rdx, rcx
                	je	 <L258>
-               	lea	rsi,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
-               	cmp	rdx, rsi
+               	lea	rcx,  <void Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>
+               	cmp	rdx, rcx
                	je	 <L259>
 <L256>:
                	vmovss	xmm0, dword ptr [rax + 0x1c] # xmm0 = mem[0],zero,zero,zero
@@ -3717,33 +3720,36 @@ Disassembly of section .text:
 <L259>:
                	vmovss	xmm0, dword ptr  <__libc_start_main+0xb10> # xmm0 = mem[0],zero,zero,zero
                	jmp	 <L263>
+<L232>:
+               	vpxor	xmm0, xmm0, xmm0
+               	vmovd	dword ptr [rsp + 0x8], xmm0
+               	jmp	 <L264>
+<L245>:
+               	vpxor	xmm0, xmm0, xmm0
+               	vmovd	dword ptr [rsp + 0x8], xmm0
 <L247>:
-               	mov	r14, rcx
-               	nop	word ptr cs:[rax + rax]
-<L264>:
+               	test	rbx, rbx
+               	je	 <L265>
+               	mov	r14, rdi
+               	nop
+<L266>:
                	mov	rdi, r14
+               	vzeroupper
                	call	qword ptr [r14 + 0x28]
                	mov	rdi, rax
                	call	rdx
                	add	r14, 0x30
-               	add	rbp, -0x30
-               	jne	 <L264>
-               	vcvttss2si	ebp, dword ptr [rsp + 0x8]
-               	mov	r11, qword ptr [rsp + 0xa8]
-               	test	r11, r11
-               	jne	 <L265>
-               	jmp	 <L266>
-<L232>:
-               	xor	ebp, ebp
-               	mov	r11, qword ptr [rsp + 0xa8]
-               	test	r11, r11
-               	je	 <L266>
+               	add	rbx, -0x30
+               	jne	 <L266>
+<L264>:
+               	mov	rdi, qword ptr [rsp + 0xa8]
 <L265>:
-               	mov	rdi, r11
+               	test	rdi, rdi
+               	je	 <L267>
                	vzeroupper
                	call	 <_ZdaPv@plt>
-<L266>:
-               	mov	eax, ebp
+<L267>:
+               	vcvttss2si	eax, dword ptr [rsp + 0x8]
                	add	rsp, 0x3a8
                	pop	rbx
                	pop	r12
@@ -3753,15 +3759,6 @@ Disassembly of section .text:
                	pop	rbp
                	vzeroupper
                	ret
-<L245>:
-               	xor	ebp, ebp
-               	test	r11, r11
-               	jne	 <L265>
-               	jmp	 <L266>
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
                	int3
                	int3
@@ -3811,7 +3808,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <__libc_start_main+0x6a78>
+               	mov	rax, qword ptr  <__libc_start_main+0x6a68>
                	test	rax, rax
                	je	 <L0>
                	call	rax
