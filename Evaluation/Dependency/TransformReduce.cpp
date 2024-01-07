@@ -1,5 +1,7 @@
 export module Evaluation.Dependency.TransformReduce;
 
+import Std;
+
 export namespace
 	Bodies3D
 {
@@ -16,42 +18,100 @@ export namespace
 		noexcept
 	->	auto
 	{
-		auto const
-			vCount
-		=	i_aEnd
-		-	i_aBegin
-		;
-
-		if	(	vCount
-			==	1
-			)
-		{	return
-				i_fTransform
+		using
+			value_type
+		=	decltype
+			(	i_fTransform
 				(	*
 					i_aBegin
 				)
-			;
-		}
-
-		auto const
-			aMid
-		=	(	i_aEnd
-			-		vCount
-				/	2
 			)
 		;
 
+		value_type
+			vBuffer
+			[	32
+			]
+		;
+		// UB for empty sequence
+		// UB for size >= 2^31
+
+		int
+			vIndex
+		=	0
+		;
+		unsigned int
+			vIteration
+		=	1u
+		;
+		int
+			vLimit
+		=	::std::popcount
+			(	vIteration
+			)
+		;
+
+		for	(	auto
+					aCurrent
+				=	i_aBegin
+			;		aCurrent
+				!=	i_aEnd
+			;	++	aCurrent
+			,	++	vIteration
+			,		vIndex
+				=	vLimit
+			,		vLimit
+				=	::std::popcount
+					(	vIteration
+					)
+			)
+		{
+				vBuffer
+				[	vIndex
+				]
+			=	i_fTransform
+				(	*
+					aCurrent
+				)
+			;
+
+			for	(
+				;		vIndex
+					>=	vLimit
+				;	--	vIndex
+				)
+			{
+					vBuffer
+					[		vIndex
+						-	1
+					]
+				+=	vBuffer
+					[	vIndex
+					]
+				;
+			}
+		}
+
+		for	(	--	vIndex
+			;		vIndex
+				>=	1
+			;	--	vIndex
+			)
+		{
+				vBuffer
+				[		vIndex
+					-	1
+				]
+			+=	vBuffer
+				[	vIndex
+				]
+			;
+		}
+
 		return
-			TransformReduce
-			(	i_aBegin
-			,	aMid
-			,	i_fTransform
-			)
-		+	TransformReduce
-			(	aMid
-			,	i_aEnd
-			,	i_fTransform
-			)
+			vBuffer
+			[	0
+			]
 		;
 	}
 }
