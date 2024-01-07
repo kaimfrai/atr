@@ -1,17 +1,17 @@
 
  Performance counter stats for 'build/Evaluation/bin/Replication 42 100000' (100 runs):
 
-              4,96 msec task-clock                #    0,960 CPUs utilized            ( +-  0,11% )
+              4,68 msec task-clock                #    0,956 CPUs utilized            ( +-  0,17% )
                  0      context-switches          #    0,000 /sec                   
                  0      cpu-migrations            #    0,000 /sec                   
-             1.906      page-faults               #  381,804 K/sec                    ( +-  0,01% )
-        21.299.477      cycles                    #    4,267 GHz                      ( +-  0,10% )
-         1.348.073      stalled-cycles-frontend   #    6,28% frontend cycles idle     ( +-  0,61% )
-         4.881.632      stalled-cycles-backend    #   22,76% backend cycles idle      ( +-  0,15% )
-        26.196.277      instructions              #    1,22  insn per cycle         
-                                                  #    0,19  stalled cycles per insn  ( +-  0,02% )
-         3.515.387      branches                  #  704,191 M/sec                    ( +-  0,02% )
-           271.302      branch-misses             #    7,70% of all branches          ( +-  0,23% )
+             1.903      page-faults               #  403,479 K/sec                    ( +-  0,01% )
+        20.050.926      cycles                    #    4,251 GHz                      ( +-  0,16% )
+         1.293.058      stalled-cycles-frontend   #    6,41% frontend cycles idle     ( +-  1,44% )
+         4.994.550      stalled-cycles-backend    #   24,77% backend cycles idle      ( +-  0,22% )
+        24.327.307      instructions              #    1,21  insn per cycle         
+                                                  #    0,21  stalled cycles per insn  ( +-  0,02% )
+         3.182.393      branches                  #  674,739 M/sec                    ( +-  0,03% )
+           238.543      branch-misses             #    7,49% of all branches          ( +-  0,01% )
 
-        0,00516495 +- 0,00000582 seconds time elapsed  ( +-  0,11% )
+        0,00489411 +- 0,00000901 seconds time elapsed  ( +-  0,18% )
 

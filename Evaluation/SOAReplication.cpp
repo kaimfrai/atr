@@ -1028,25 +1028,23 @@ auto inline
 	}
 
 	return
-		reduce
-		(	TransformReduce
-			(	vElements
-				.	begin
-					()
-			,	vElements
-				.	end
-					()
-			,	[]	(	auto const
-							rBody
-					)
-				->	::std::experimental::native_simd<float>
-				{	return
+		TransformReduce
+		(	vElements
+			.	begin
+				()
+		,	vElements
+			.	end
+				()
+		,	[]	(	auto const
 						rBody
-						.	ComputeVolume
-							()
-					;
-				}
-			)
+				)
+			->	::std::experimental::native_simd<float>
+			{	return
+					rBody
+					.	ComputeVolume
+						()
+				;
+			}
 		)
 	;
 }
