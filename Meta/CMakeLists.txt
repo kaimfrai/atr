@@ -25,14 +25,14 @@ add_subdirectory(String)
 add_subdirectory(Auto)
 
 add_module(
-	ID.cpp
-
 	ID/Base.cpp
 	ID/ID.cpp
 	ID/Make.cpp
 	ID/Alias.cpp
 	ID/Literals.cpp
 	ID/Concept.cpp
+
+	ID.cpp
 )
 
 # add_subdirectory(Dispatch)

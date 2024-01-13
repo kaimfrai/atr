@@ -168,15 +168,15 @@ function(read_module_properties
 			endif()
 
 		else()
-
+			if	(NOT TARGET "${module_name}")
+				message(
+				SEND_ERROR
+					"${file_path} was listed as the first unit in a module but it is an implementation unit!"
+				)
+			endif()
 			set(
 				module_type
 				"IMPLEMENTATION"
-			)
-			list(
-			APPEND
-				module_imports
-				${module_name}
 			)
 
 		endif()
@@ -197,11 +197,37 @@ function(read_module_properties
 		""
 	)
 
-	list(
-	APPEND
-		module_imports
-		${named_module_imports}
-	)
+	set(import_dependencies ${named_module_imports})
+	if	("${module_type}" STREQUAL "IMPLEMENTATION")
+		list(
+		APPEND
+			import_dependencies
+			${module_name}
+		)
+	endif()
+	foreach(dependency IN LISTS import_dependencies)
+
+		if	(NOT TARGET ${dependency})
+			message(
+			FATAL_ERROR
+				"${module_name} is configured before its dependency ${dependency}"
+			)
+		endif()
+
+		get_target_property(
+			transitive_imports
+			"${dependency}"
+			"MODULE_IMPORTS"
+		)
+
+		list(
+		APPEND
+			module_imports
+			"${dependency}"
+			${transitive_imports}
+		)
+
+	endforeach()
 
 	if	(module_name)
 		string(
@@ -211,20 +237,51 @@ function(read_module_properties
 			"${file_content}"
 		)
 
-		list(
-		TRANSFORM
-			partition_imports
-		REPLACE
-			"${regex_import}"
-			"${module_name}"
-		)
+		if	(partition_imports)
+			if	(NOT TARGET "${module_name}")
+				message(
+				SEND_ERROR
+					"${file_path} was listed as the first unit in a module but depends on a partition!"
+				)
+			endif()
 
-		list(
-		APPEND
-			module_imports
-			${partition_imports}
-		)
+			list(
+			TRANSFORM
+				partition_imports
+			REPLACE
+				"${regex_import}"
+				""
+			)
+
+			foreach(partition_import IN LISTS partition_imports)
+
+				get_target_property(
+					transitive_imports
+					"${module_name}"
+					"MODULE_IMPORTS${partition_import}"
+				)
+				if	(transitive_imports MATCHES "-NOTFOUND$")
+					message(SEND_ERROR
+						"${file_path} was listed before its dependency ${partition_import}!"
+					)
+				endif()
+
+				list(
+				APPEND
+					module_imports
+					"${module_name}${partition_import}"
+					${transitive_imports}
+
+				)
+			endforeach()
+
+		endif()
 	endif()
+
+	list(
+	REMOVE_DUPLICATES
+		module_imports
+	)
 
 	string(
 	REGEX MATCHALL
@@ -339,7 +396,6 @@ function(read_module_properties
 		set(module_object_file "")
 
 	endif()
-
 
 	set_source_files_properties(
 		"${file_path}"

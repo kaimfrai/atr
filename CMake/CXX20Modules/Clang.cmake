@@ -223,7 +223,6 @@ function(get_compile_module_command
 		${cmake_cxx_flags}
 		${compile_options_flags}
 		${compile_definition_flags}
-		${module_dependency_flag_list}
 		${include_dirs}
 		${file_type_flag}
 		--precompile ${real_module_interface_file}

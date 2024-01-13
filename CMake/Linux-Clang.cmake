@@ -94,8 +94,6 @@ else()
 		-Wno-missing-braces
 		# Using header units
 		-Wno-experimental-header-units
-		# False positives?
-		-Wno-read-modules-implicitly
 		# Impacts build times negatively by being active alone
 		# Imposes an implementation burden which may incur even more build time
 		# If everything is evaluated at compile time, buffer usage is already checked

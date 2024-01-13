@@ -1,9 +1,9 @@
 add_module(
-	FooBar.cpp
-
-	Def.cpp
 	User.cpp
+	Def.cpp
 	Private.cpp
+
+	FooBar.cpp
 
 	Bar.cpp
 	Foo.cpp

@@ -101,7 +101,7 @@ function(link_module_dependencies
 	target_name
 )
 	get_source_file_property(
-		module_dependencies
+		file_dependencies
 		"${module_unit_file}"
 		"MODULE_DEPENDENCIES"
 	)
@@ -111,12 +111,11 @@ function(link_module_dependencies
 		"${target_name}"
 		SOURCES
 	)
-
 	if	(NOT target_sources)
 		set(target_sources)
 	endif()
 
-	foreach(target_dependency IN LISTS module_dependencies)
+	foreach(target_dependency IN LISTS file_dependencies)
 
 		if (NOT TARGET ${target_dependency})
 			message(
@@ -142,51 +141,140 @@ function(link_module_dependencies
 
 	endforeach()
 
-	list(REMOVE_DUPLICATES target_sources)
+	list(
+	REMOVE_DUPLICATES
+		target_sources
+	)
+
 	set_target_properties(
 		"${target_name}"
 	PROPERTIES
 		SOURCES
-		"${target_sources}"
+			"${target_sources}"
 	)
 
 endfunction()
 
-
-function(add_module
-	module_interface_file
+function(collect_module_imports
+	module_unit_file
+	target_name
 )
-	read_module_properties("${module_interface_file}")
-
-	get_source_file_property(module_type "${module_interface_file}" "MODULE_TYPE")
-	if	(NOT "${module_type}" STREQUAL "PRIMARY_INTERFACE")
-		message(SEND_ERROR
-			"The file '${module_interface_file}' is of module type '${module_type}'! Expected 'PRIMARY_INTERFACE'!"
-		)
+	get_target_property(
+		target_imports
+		"${target_name}"
+		"MODULE_IMPORTS"
+	)
+	if	(NOT target_imports)
+		set(target_imports)
 	endif()
 
-	get_source_file_property(module_name "${module_interface_file}" "MODULE_NAME")
+	get_source_file_property(
+		file_imports
+		"${module_unit_file}"
+		"MODULE_IMPORTS"
+	)
+	if	(NOT file_imports)
+		set(file_imports)
+	endif()
 
-	add_module_unit_command(
-		"${module_interface_file}"
-		"${module_name}"
+	list(
+	APPEND
+		target_imports
+		${file_imports}
+	)
+	list(
+	REMOVE_DUPLICATES
+		target_imports
+	)
+
+	set_target_properties(
+		"${target_name}"
+	PROPERTIES
+		"MODULE_IMPORTS"
+			"${target_imports}"
 	)
 
 	get_source_file_property(
+		partition_name
+		"${module_unit_file}"
+		"MODULE_PARTITION"
+	)
+
+	if	(partition_name)
+		set_target_properties(
+			"${target_name}"
+		PROPERTIES
+			"MODULE_IMPORTS:${partition_name}"
+				"${file_imports}"
+		)
+	endif()
+
+endfunction()
+
+function(add_module
+	module_root_file
+)
+	read_module_properties("${module_root_file}")
+
+	get_source_file_property(module_name "${module_root_file}" "MODULE_NAME")
+	if	(NOT module_name)
+		message(SEND_ERROR "Could not find a module name in '${module_root_file}'!")
+	endif()
+
+	get_source_file_property(module_type "${module_root_file}" "MODULE_TYPE")
+
+	if	("${module_type}" STREQUAL "PRIMARY_INTERFACE")
+		add_module_unit_command(
+			"${module_root_file}"
+			"${module_name}"
+		)
+	elseif("${module_type}" MATCHES "_PARTITION$")
+
+		get_source_file_property(
+			partition_name
+			"${unit_file}"
+			"MODULE_PARTITION"
+		)
+		add_module_unit_command(
+			"${module_root_file}"
+			"${module_name}:${partition_name}"
+		)
+	else()
+		message(SEND_ERROR
+			"The first file '${module_root_file}' to module '${module_name}' is of module type '${module_type}'! Expected 'INTERFACE_PARTITION', 'IMPLEMENTATION_PARTITION', or 'PRIMARY_INTERFACE'!"
+		)
+	endif()
+
+	get_source_file_property(
 		module_object_file
-		"${module_interface_file}"
+		"${module_root_file}"
 		"MODULE_OBJECT_FILE"
 	)
 
 	add_library(
 		"${module_name}"
 	OBJECT
-		"${module_object_file}"
+	)
+	set_target_properties(
+		"${module_name}"
+	PROPERTIES
+		LINKER_LANGUAGE
+			CXX
 	)
 
-	set_target_properties("${module_name}" PROPERTIES LINKER_LANGUAGE CXX)
-
-	link_module_dependencies("${module_interface_file}" "${module_name}")
+	target_sources(
+		"${module_name}"
+	PRIVATE
+		"${module_object_file}"
+	)
+	collect_module_imports(
+		"${module_root_file}"
+		"${module_name}"
+	)
+	link_module_dependencies(
+		"${module_root_file}"
+		"${module_name}"
+	)
 
 	foreach(unit_file IN LISTS ARGN)
 
@@ -200,33 +288,62 @@ function(add_module
 		endif()
 
 		get_source_file_property(file_module_type "${unit_file}" "MODULE_TYPE")
-		if	("${file_module_type}" MATCHES "_PARTITION$")
+		if	("${file_module_type}" STREQUAL "PRIMARY_INTERFACE")
+
+			add_module_unit_command(
+				"${unit_file}"
+				"${module_name}"
+			)
+
+			get_source_file_property(
+				primary_object_file
+				"${unit_file}"
+				"MODULE_OBJECT_FILE"
+			)
+			target_sources(
+				"${module_name}"
+			PRIVATE
+				"${primary_object_file}"
+			)
+			collect_module_imports(
+				"${unit_file}"
+				"${module_name}"
+			)
+
+		elseif("${file_module_type}" MATCHES "_PARTITION$")
 
 			get_source_file_property(
 				partition_name
 				"${unit_file}"
 				"MODULE_PARTITION"
 			)
-			get_source_file_property(
-				partition_object_file
-				"${unit_file}"
-				"MODULE_OBJECT_FILE"
-			)
-
-			target_sources(
-				"${module_name}"
-			PRIVATE
-				"${partition_object_file}"
-			)
-
 			add_module_unit_command(
 				"${unit_file}"
 				"${module_name}:${partition_name}"
 			)
 
+			get_source_file_property(
+				partition_object_file
+				"${unit_file}"
+				"MODULE_OBJECT_FILE"
+			)
+			target_sources(
+				"${module_name}"
+			PRIVATE
+				"${partition_object_file}"
+			)
+			collect_module_imports(
+				"${unit_file}"
+				"${module_name}"
+			)
+
 		elseif("${file_module_type}" STREQUAL "IMPLEMENTATION")
 
-			target_sources("${module_name}" PRIVATE "${unit_file}")
+			target_sources(
+				"${module_name}"
+			PRIVATE
+				"${unit_file}"
+			)
 
 		else()
 			message(
@@ -235,7 +352,10 @@ function(add_module
 			)
 		endif()
 
-		link_module_dependencies("${unit_file}" "${module_name}")
+		link_module_dependencies(
+			"${unit_file}"
+			"${module_name}"
+		)
 
 	endforeach()
 

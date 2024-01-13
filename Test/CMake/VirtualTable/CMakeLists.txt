@@ -1,7 +1,7 @@
 add_module(
-	Virtual.cpp
-
 	Interface.cpp
+
+	Virtual.cpp
 
 	Impl.cpp
 )
