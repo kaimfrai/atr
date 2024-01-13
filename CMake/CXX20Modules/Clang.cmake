@@ -207,6 +207,9 @@ function(get_compile_module_command
 
 	get_file_and_directory_properties("${module_interface_file}" "COMPILE_OPTIONS" compile_options_flags)
 
+	get_file_and_directory_properties("${module_interface_file}" "MODULE_IMPORT_MODULE_OPTIONS" import_module_flags)
+	get_file_and_directory_properties("${module_interface_file}" "MODULE_IMPORT_HEADER_OPTIONS" import_header_flags)
+
 	get_file_and_directory_properties("${module_interface_file}" "COMPILE_DEFINITIONS" compile_definition_flags)
 	list(TRANSFORM compile_definition_flags PREPEND -D)
 
@@ -222,6 +225,8 @@ function(get_compile_module_command
 		${cxx_standard_flag}
 		${cmake_cxx_flags}
 		${compile_options_flags}
+		${import_module_flags}
+		${import_header_flags}
 		${compile_definition_flags}
 		${include_dirs}
 		${file_type_flag}
@@ -239,8 +244,8 @@ function(get_compile_module_command
 	object_command
 		${CMAKE_CXX_COMPILER}
 		${cmake_cxx_flags}
-		# Warnings should be checked when compiling to .pcm
-		--no-warnings
+		${import_module_flags}
+		${import_header_flags}
 		--compile ${module_binary}
 		--output ${module_object}
 	)

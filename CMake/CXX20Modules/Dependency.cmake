@@ -67,7 +67,7 @@ function(read_module_properties
 		""
 	)
 	set(module_type
-		"NONE"
+		"NOTFOUND"
 	)
 	set(
 		module_imports
@@ -364,7 +364,6 @@ function(read_module_properties
 	if	(NOT compile_options)
 		set(compile_options)
 	endif()
-
 	get_module_dependency_flag_list(
 		"${module_imports}"
 		"${module_dependency_binaries}"
@@ -374,12 +373,17 @@ function(read_module_properties
 		"${header_unit_binaries}"
 		header_dependency_flag_list
 	)
-	list(
-	APPEND
-		compile_options
-		${module_dependency_flag_list}
-		${header_dependency_flag_list}
-	)
+
+	if	(	NOT module_type
+		OR	"${module_type}" STREQUAL "IMPLEMENTATION"
+		)
+		list(
+		APPEND
+			compile_options
+			${module_dependency_flag_list}
+			${header_dependency_flag_list}
+		)
+	endif()
 
 	if (module_name)
 
@@ -414,6 +418,10 @@ function(read_module_properties
 		"${module_imports}"
 	MODULE_DEPENDENCIES
 		"${named_module_imports}"
+	MODULE_IMPORT_MODULE_OPTIONS
+		"${module_dependency_flag_list}"
+	MODULE_IMPORT_HEADER_OPTIONS
+		"${header_dependency_flag_list}"
 	OBJECT_DEPENDS
 		"${object_depends}"
 	COMPILE_OPTIONS
