@@ -55,16 +55,45 @@ if	(BUILD_WITH_SANITIZER)
 
 	add_compile_options(
 		-O1
-		-fsanitize=address
+		-fsanitize=undefined
+		-fsanitize=float-divide-by-zero
+		-fsanitize=implicit-conversion
+		-fsanitize=local-bounds
+		-fsanitize=nullability
 		-fno-omit-frame-pointer
 		-fno-optimize-sibling-calls
-		-fsanitize-address-use-after-return=always
-		-fsanitize-address-use-after-scope
-	)
-	add_link_options(
-		-fsanitize=address
 	)
 
+	if	("${BUILD_WITH_SANITIZER}" STREQUAL "address")
+
+		add_compile_options(
+			-fsanitize=address
+			-fsanitize-address-use-after-return=always
+			-fsanitize-address-use-after-scope
+		)
+		add_link_options(
+			-fsanitize=address
+		)
+
+		message(STATUS "Building with address & undefined behaviour sanitizer")
+
+	elseif("${BUILD_WITH_SANITIZER}" STREQUAL "memory")
+
+		add_compile_options(
+			-fsanitize=memory
+			-fsanitize-memory-track-origins
+		)
+		add_link_options(
+			-fsanitize=memory
+		)
+
+		message(STATUS "Building with memory & undefined behaviour sanitizer")
+
+	else()
+
+		message(FATAL_ERROR "Unknown value ${BUILD_WITH_SANITIZER} specified for BUILD_WITH_SANITIZER!")
+
+	endif()
 endif()
 
 if	(FASTER_BUILD_SPEED)
