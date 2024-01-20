@@ -91,7 +91,7 @@ export namespace
 		auto static constexpr inline
 		(	Dispatch
 		)	(	std::string_view
-					i_sToDispatch
+					i_rToDispatch
 			,	t_tCharacterSet
 				=	t_tCharacterSet{}
 			)
@@ -114,14 +114,14 @@ export namespace
 				};
 				for	(	auto const
 						&	vChar
-					:	std::span{i_sToDispatch}
+					:	std::span{i_rToDispatch}
 					)
 				{
 					vResult
-					(	i_sToDispatch
+					(	i_rToDispatch
 					,	static_cast<USize>
 						(	&vChar
-						-	i_sToDispatch.begin()
+						-	i_rToDispatch.begin()
 						)
 					);
 				}

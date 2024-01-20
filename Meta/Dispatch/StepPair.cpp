@@ -29,13 +29,13 @@ export namespace
 		auto constexpr inline
 		(	operator()
 		)	(	std::string_view
-					i_sString
+					i_rString
 			,	USize
 					i_vOffset
 			)
 		{	(	*this
 			=	m_fNext
-				(	i_sString
+				(	i_rString
 				,	i_vOffset
 				)
 			);

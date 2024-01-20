@@ -139,13 +139,13 @@ export namespace
 		auto static constexpr inline
 		(	Advance
 		)	(	std::string_view
-					i_sString
+					i_rString
 			,	USize
 					i_vOffset
 			)
 		->	StepPair<PlainFunctionType>
 		{
-			auto const vChar = i_sString[i_vOffset];
+			auto const vChar = i_rString[i_vOffset];
 			if	(	StepPair<PlainFunctionType>
 						fParse
 				;	(	...
@@ -168,7 +168,7 @@ export namespace
 			}
 			throw
 			PathBlockedError
-			{	i_sString
+			{	i_rString
 			,	i_vOffset
 			};
 		}
