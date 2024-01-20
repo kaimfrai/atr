@@ -1,8 +1,11 @@
 export module Meta.Dispatch.Path;
 
 import Meta.ID;
+import Meta.String.Literal;
 
 import Std;
+
+using ::Meta::String::Literal;
 
 export namespace
 	Meta::Dispatch
@@ -59,12 +62,12 @@ export namespace
 		>
 	and		::std::string_view
 			{	t_vName
+				.	Buffer
 			}
 		.	starts_with
-			(	typename
-				t_tProto
-			::	ID
-				{}
+			(	t_tProto
+				::	ID
+				::	String
 			)
 	;
 }

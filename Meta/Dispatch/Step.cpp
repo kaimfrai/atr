@@ -9,14 +9,60 @@ import Meta.ID;
 import Meta.Lex.Match;
 import Meta.Lex.FreeFunctionTokenizer;
 import Meta.Lex.Function;
+import Meta.String.Literal;
 import Meta.Token.Index;
 import Meta.Size;
 
 import Std;
 
+using ::Meta::String::Literal;
+
 export namespace
 	Meta::Dispatch
 {
+	template
+		<	char
+				t_vChar
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	Append
+	)	(	ProtoID auto
+				i_vID
+		)
+		noexcept
+	{
+		auto static constexpr
+			vLength
+		=	sizeof
+			(	i_vID
+				.	String
+			)
+		;
+		return
+			ID
+			<	[]{
+					Literal<vLength>
+						vLiteral
+					{	decltype(i_vID)
+						::	String
+					};
+					vLiteral
+					.	Buffer
+						[	vLength
+						-	1uz
+						]
+					=	t_vChar
+					;
+					return
+						vLiteral
+					;
+				}()
+			>
+			{}
+		;
+	};
+
 	template
 		<	typename
 				t_tFunction
@@ -106,12 +152,13 @@ export namespace
 			>
 		using
 			NextID
-		=	typename
-			t_tID
-		::	template
-			Append
-			<	t_vParsed
-			>
+		=	decltype
+			(	Append
+				<	t_vParsed
+				>(	t_tID
+					{}
+				)
+			)
 		;
 
 		template

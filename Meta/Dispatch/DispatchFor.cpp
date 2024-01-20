@@ -11,7 +11,7 @@ import Meta.Lex.Match;
 import Meta.Lex.FreeFunctionTokenizer;
 import Meta.Lex.Function;
 import Meta.Size;
-import Meta.String.ID;
+import Meta.ID;
 
 import Std;
 
@@ -99,18 +99,18 @@ export namespace
 		{	if	constexpr
 				(	Dispatch::IsPathBlocked
 					<	QualifiedFunctionType
-					,	ID<>
+					,	ID<"">
 					>
 				)
 			{	return
-					&Dispatch::Final<QualifiedFunctionType, ID<>>::operator()
+					&Dispatch::Final<QualifiedFunctionType, ID<"">>::operator()
 				;
 			}
 			else
 			{	Dispatch::StepPair<PlainFunctionType>
 					vResult
-				{	&Dispatch::Step<QualifiedFunctionType, t_tCharacterSet, ID<>>::Advance
-				,	&Dispatch::Final<QualifiedFunctionType, ID<>>::operator()
+				{	&Dispatch::Step<QualifiedFunctionType, t_tCharacterSet, ID<"">>::Advance
+				,	&Dispatch::Final<QualifiedFunctionType, ID<"">>::operator()
 				};
 				for	(	auto const
 						&	vChar

@@ -61,7 +61,7 @@ export namespace
 			)
 		->	typename t_tResult::Entity
 		{
-			auto static constexpr inline
+			auto static constexpr
 				vPath
 			=	PathID
 				<	typename
@@ -101,7 +101,7 @@ export namespace
 			else
 			{	throw
 				NoDefinitionError
-				{	t_tID{}
+				{	t_tID::String
 				};
 			}
 		}

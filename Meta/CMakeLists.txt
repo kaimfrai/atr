@@ -44,9 +44,9 @@ add_single_file_modules(
 	Buffer.cpp
 	Byte.cpp
 	Data.cpp
-	# Dispatch.cpp
 	Functional.cpp
 	String.cpp
+	#Dispatch.cpp
 	Lex.cpp
 	Logic.cpp
 	Math.cpp

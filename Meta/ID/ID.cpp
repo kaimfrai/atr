@@ -41,21 +41,23 @@ export extern "C++"
 		ID final
 	:	Base
 	{
+		char static constexpr inline
+			String
+			[	sizeof...(t_vpString)
+			+	1uz
+			]
+		{	::ToChar(t_vpString)
+			...
+		,	'\0'
+		};
+
 		[[nodiscard]]
 		explicit(false) constexpr inline
 		(	operator
 			ImplicitHash
 		)	()	const
 			noexcept
-		{	char static constexpr
-				String
-				[]
-			{	::ToChar(t_vpString)
-				...
-			,	'\0'
-			};
-
-			return
+		{	return
 				String
 			;
 		}
