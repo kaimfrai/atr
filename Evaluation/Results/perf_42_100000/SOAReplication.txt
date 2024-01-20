@@ -1,17 +1,17 @@
 
  Performance counter stats for 'build/Evaluation/bin/SOAReplication 42 100000' (100 runs):
 
-              3,59 msec task-clock                #    0,949 CPUs utilized            ( +-  0,14% )
+              3,68 msec task-clock                #    0,955 CPUs utilized            ( +-  0,21% )
                  0      context-switches          #    0,000 /sec                   
                  0      cpu-migrations            #    0,000 /sec                   
-             1.223      page-faults               #  338,288 K/sec                    ( +-  0,01% )
-        15.377.022      cycles                    #    4,253 GHz                      ( +-  0,11% )
-           639.127      stalled-cycles-frontend   #    4,12% frontend cycles idle     ( +-  1,12% )
-         6.294.817      stalled-cycles-backend    #   40,57% backend cycles idle      ( +-  0,15% )
-        26.942.144      instructions              #    1,74  insn per cycle         
-                                                  #    0,24  stalled cycles per insn  ( +-  0,01% )
-         2.340.165      branches                  #  647,302 M/sec                    ( +-  0,02% )
-           130.403      branch-misses             #    5,55% of all branches          ( +-  0,02% )
+             1.222      page-faults               #  331,015 K/sec                    ( +-  0,01% )
+        15.687.353      cycles                    #    4,249 GHz                      ( +-  0,17% )
+           650.582      stalled-cycles-frontend   #    4,11% frontend cycles idle     ( +-  2,33% )
+         6.748.658      stalled-cycles-backend    #   42,61% backend cycles idle      ( +-  0,14% )
+        27.353.013      instructions              #    1,73  insn per cycle         
+                                                  #    0,25  stalled cycles per insn  ( +-  0,01% )
+         2.223.020      branches                  #  602,171 M/sec                    ( +-  0,03% )
+           130.401      branch-misses             #    5,84% of all branches          ( +-  0,02% )
 
-        0,00377965 +- 0,00000581 seconds time elapsed  ( +-  0,15% )
+        0,00386015 +- 0,00000921 seconds time elapsed  ( +-  0,24% )
 

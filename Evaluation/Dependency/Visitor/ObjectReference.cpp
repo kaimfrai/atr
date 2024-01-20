@@ -12,7 +12,7 @@ export namespace
 				*
 			)
 			noexcept
-		->	void
+		->	::std::source_location
 	;
 
 	class

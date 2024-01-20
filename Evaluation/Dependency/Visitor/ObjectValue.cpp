@@ -111,7 +111,7 @@ export namespace
 				*	i_aObject
 			)
 			noexcept
-		->	void
+		->	::std::source_location
 		{
 			if	constexpr
 				(	::std::is_void_v
@@ -148,6 +148,12 @@ export namespace
 				>(	i_aObject
 				);
 			}
+
+			return
+				::std::source_location
+				::	current
+					()
+			;
 		}
 
 		template

@@ -1153,13 +1153,11 @@ auto
 		)
 	;
 
-	// TODO: this currently fails as function addresses compare equal at runtime due to IFC
 	return
-		static_cast<int>(vLoopSum)
-// 		::VerifyLoopSum
-// 		(	vLoopSum
-// 		,	vRandomSequence
-// 		)
+		::VerifyLoopSum
+		(	vLoopSum
+		,	vRandomSequence
+		)
 	;
 }
 
