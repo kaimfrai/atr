@@ -12,14 +12,14 @@ export namespace
 	auto constexpr inline
 	(	Abs
 	)	(	auto
-				i_nArithmetic
+				i_vArithmetic
 		)
 		noexcept
 	{
 		using
 			tArithmetic
 		=	decltype
-			(	i_nArithmetic
+			(	i_vArithmetic
 			)
 		;
 		if	constexpr
@@ -28,10 +28,10 @@ export namespace
 				>
 			)
 		{	return
-				i_nArithmetic
+				i_vArithmetic
 			>=	tArithmetic{}
-			?	i_nArithmetic
-			:	-i_nArithmetic
+			?	i_vArithmetic
+			:	-i_vArithmetic
 			;
 		}
 		else
@@ -41,22 +41,22 @@ export namespace
 				>
 			)
 		{	return
-				i_nArithmetic
+				i_vArithmetic
 			;
 		}
 		else
 		{	return
-				(	i_nArithmetic
+				(	i_vArithmetic
 				>=	tArithmetic{}
 				)
 			?	Unsigned
-				(	i_nArithmetic
+				(	i_vArithmetic
 				)
 			:	Next
 				(	Unsigned
 					(	-
 						Next
-						(	i_nArithmetic
+						(	i_vArithmetic
 						)
 					)
 				)

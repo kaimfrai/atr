@@ -10,21 +10,21 @@ export namespace
 {
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	CeilPower2
-	)	(	Size<t_nWidth>
-				i_nSize
+	)	(	Size<t_vWidth>
+				i_vSize
 		)
 		noexcept
-	->	Size<t_nWidth>
+	->	Size<t_vWidth>
 	{
 		using
 			tSize
 		=	Size
-			<	t_nWidth
+			<	t_vWidth
 			>
 		;
 		using
@@ -35,12 +35,12 @@ export namespace
 		;
 
 		auto const
-			nValue
-		=	i_nSize
+			vValue
+		=	i_vSize
 		.	get()
 		;
 
-		if	(nValue < 0z)
+		if	(vValue < 0z)
 		{
 			return
 			tSize
@@ -48,7 +48,7 @@ export namespace
 				static_cast<tSizeType>
 				(	::std::bit_floor
 					(	Math::Unsigned
-						(	-nValue
+						(	-vValue
 						)
 					)
 				)
@@ -61,7 +61,7 @@ export namespace
 			{	static_cast<tSizeType>
 				(	::std::bit_ceil
 					(	Math::Unsigned
-						(	nValue
+						(	vValue
 						)
 					)
 				)
@@ -71,21 +71,21 @@ export namespace
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	FloorPower2
-	)	(	Size<t_nWidth>
-				i_nSize
+	)	(	Size<t_vWidth>
+				i_vSize
 		)
 		noexcept
-	->	Size<t_nWidth>
+	->	Size<t_vWidth>
 	{
 		using
 			tSize
 		=	Size
-			<	t_nWidth
+			<	t_vWidth
 			>
 		;
 		using
@@ -95,19 +95,19 @@ export namespace
 			::	SizeType
 		;
 		auto const
-			nValue
-		=	i_nSize
+			vValue
+		=	i_vSize
 		.	get()
 		;
 
-		if	(nValue < 0z)
+		if	(vValue < 0z)
 		{	return
 			tSize
 			{	-
 				static_cast<tSizeType>
 				(	::std::bit_ceil
 					(	Math::Unsigned
-						(	-nValue
+						(	-vValue
 						)
 					)
 				)
@@ -119,7 +119,7 @@ export namespace
 			{	static_cast<tSizeType>
 				(	::std::bit_floor
 					(	Math::Unsigned
-						(	nValue
+						(	vValue
 						)
 					)
 				)

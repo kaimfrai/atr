@@ -19,59 +19,59 @@ using ::Meta::Bit::Field;
 
 template
 	<	::Meta::BitSize
-			t_nOffset
+			t_vOffset
 	,	auto
-			t_nSize
+			t_vSize
 	>
 [[nodiscard]]
 auto constexpr inline
 (	SetAndCheck
-)	(	Field<t_nSize>
+)	(	Field<t_vSize>
 			i_vValue
 	)
 	noexcept
 ->	bool
 {
 	auto static constexpr
-		nOffset
+		vOffset
 	=	IndexCast<::Meta::ByteIndex>
-		(	t_nOffset
+		(	t_vOffset
 		)
 	;
 	auto static constexpr
-		nByteOffset
-	=	nOffset.Quotient
+		vByteOffset
+	=	vOffset.Quotient
 	;
 	auto static constexpr
-		nBitOffset
-	=	nOffset.Remainder
+		vBitOffset
+	=	vOffset.Remainder
 	;
 	using
 		BitReference
 	=	Meta::Bit::Reference
-		<	Field<t_nSize>
-		,	nBitOffset
+		<	Field<t_vSize>
+		,	vBitOffset
 		>
 	;
 
 	::Meta::Byte::Buffer
-	<	t_nSize
-	+	nByteOffset
-	+	nBitOffset
+	<	t_vSize
+	+	vByteOffset
+	+	vBitOffset
 	>	aBuffer
 	{};
 
 	auto const
 		aStart
 	=	begin(aBuffer)
-	+	nByteOffset
+	+	vByteOffset
 	;
 	BitReference
 		rReference
 	{	aStart
 	};
 	auto const
-		nPrevious
+		vPrevious
 	=	rReference
 	.	get()
 	;
@@ -80,8 +80,8 @@ auto constexpr inline
 	);
 
 	return
-		(	(i_vValue != nPrevious)
-		==	(rReference != nPrevious)
+		(	(i_vValue != vPrevious)
+		==	(rReference != vPrevious)
 		)
 	and	(	rReference
 		==	i_vValue

@@ -28,13 +28,13 @@ export namespace
 
 	template
 		<	::std::size_t
-			...	t_npFront
+			...	t_vpFront
 		>
 	struct
 		SelectByIndex final
 	{
 		[[no_unique_address]]
-		::std::index_sequence<t_npFront...>
+		::std::index_sequence<t_vpFront...>
 			FrontSequence
 		;
 
@@ -45,7 +45,7 @@ export namespace
 		[[nodiscard]]
 		auto static constexpr inline
 		(	operator() // NOLINT(cert-dcl50-cpp)
-		)	(	IgnoreIndexedElement<t_npFront>
+		)	(	IgnoreIndexedElement<t_vpFront>
 				...
 			,	t_tSelection
 				*	i_aSeĺection
@@ -61,16 +61,16 @@ export namespace
 
 	template
 		<	::std::size_t
-			...	t_npFront
+			...	t_vpFront
 		>
 	(	SelectByIndex
 	)	(	::std::index_sequence
-			<	t_npFront
+			<	t_vpFront
 				...
 			>
 		)
 	->	SelectByIndex
-		<	t_npFront
+		<	t_vpFront
 			...
 		>
 	;

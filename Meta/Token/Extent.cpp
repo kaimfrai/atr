@@ -12,11 +12,11 @@ using ::Meta::Specifier::Mut;
 
 template
 	<	USize
-			t_nExtent
+			t_vExtent
 	>
 struct
 	Extent
-:	TypeToken<Extent<t_nExtent>>
+:	TypeToken<Extent<t_vExtent>>
 {
 	template
 		<	typename
@@ -29,7 +29,7 @@ struct
 		,	Extent
 		)
 		noexcept
-	->	TypeToken<t_tElement[t_nExtent]>
+	->	TypeToken<t_tElement[t_vExtent]>
 	{	return {};	}
 
 	template
@@ -43,7 +43,7 @@ struct
 		,	Extent
 		)
 		noexcept
-	->	TypeToken<Mut<t_tElement[t_nExtent]>>
+	->	TypeToken<Mut<t_tElement[t_vExtent]>>
 	{	return {};	}
 
 	template
@@ -53,7 +53,7 @@ struct
 	[[nodiscard]]
 	auto friend constexpr inline
 	(	operator-
-	)	(	TypeToken<t_tElement[t_nExtent]>
+	)	(	TypeToken<t_tElement[t_vExtent]>
 		,	Extent
 		)
 		noexcept
@@ -67,7 +67,7 @@ struct
 	[[nodiscard]]
 	auto friend constexpr inline
 	(	operator-
-	)	(	TypeToken<Mut<t_tElement[t_nExtent]>>
+	)	(	TypeToken<Mut<t_tElement[t_vExtent]>>
 		,	Extent
 		)
 		noexcept
@@ -115,12 +115,12 @@ export namespace
 {
 	template
 		<	USize
-				t_nExtent
+				t_vExtent
 		>
 	using
 		Extent
 	=	::Extent
-		<	t_nExtent
+		<	t_vExtent
 		>
 	;
 }
@@ -130,9 +130,9 @@ export namespace
 {
 	template
 		<	USize
-				t_nExtent
+				t_vExtent
 		>
-	Token::Extent<t_nExtent> constexpr inline
+	Token::Extent<t_vExtent> constexpr inline
 		Extent
 	{};
 }
@@ -142,7 +142,7 @@ export namespace
 {
 	template
 		<	char
-			...	t_npNumeric
+			...	t_vpNumeric
 		>
 	[[nodiscard]]
 	auto constexpr inline
@@ -151,7 +151,7 @@ export namespace
 		noexcept
 	->	::Extent
 		<	Arithmetic::EvaluateNumericLiteral
-			<	t_npNumeric
+			<	t_vpNumeric
 				...
 			>()
 		>

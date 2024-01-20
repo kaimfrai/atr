@@ -5,7 +5,7 @@ using ::Meta::Math::Approximate;
 
 template
 	<	char
-		...	t_npNumeric
+		...	t_vpNumeric
 	>
 [[nodiscard]]
 auto constexpr inline
@@ -16,7 +16,7 @@ auto constexpr inline
 {	return
 	static_cast<double>
 	(	::Meta::Arithmetic::EvaluateNumericLiteral
-		<	t_npNumeric
+		<	t_vpNumeric
 			...
 		>()
 	);

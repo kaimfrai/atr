@@ -14,9 +14,9 @@ export namespace
 		<	typename
 				t_tBuffer
 		,	BitSize
-				t_nSize
+				t_vSize
 		,	ByteIndex
-				t_nMaxOffset
+				t_vMaxOffset
 		>
 	struct
 		ElementReference final
@@ -24,8 +24,8 @@ export namespace
 		using
 			BitAccess
 		=	Access
-			<	t_nSize
-			,	t_nMaxOffset
+			<	t_vSize
+			,	t_vMaxOffset
 			>
 		;
 		using

@@ -9,13 +9,13 @@ export namespace
 {
 	template
 		<	BitSize
-				t_nWidth
+				t_vWidth
 		>
 	auto constexpr inline
 		Mask
 	=	static_cast
 		<	UInt
-			<	t_nWidth
+			<	t_vWidth
 			>
 		>(	compl
 			UIntMax
@@ -23,7 +23,7 @@ export namespace
 		>>	(	Memory::SizeOf
 				<	UIntMax
 				>
-			-	t_nWidth
+			-	t_vWidth
 			)
 		.	get()
 		)

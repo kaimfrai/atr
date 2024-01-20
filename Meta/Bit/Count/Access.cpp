@@ -13,58 +13,58 @@ export namespace
 {
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	front
-	)	(	Count<t_nWidth>
+	)	(	Count<t_vWidth>
 				i_vRange
 		)
 		noexcept
-	->	Index<t_nWidth>
+	->	Index<t_vWidth>
 	{
 		if	(not i_vRange.get())
 			::std::unreachable();
 
 		return
 		Index
-		<	t_nWidth
+		<	t_vWidth
 		>{};
 	}
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	back
-	)	(	Count<t_nWidth>
+	)	(	Count<t_vWidth>
 				i_vRange
 		)
 		noexcept
-	->	Index<t_nWidth>
+	->	Index<t_vWidth>
 	{
 		auto const
-			nValue
+			vValue
 		=	i_vRange
 		.	get()
 		;
-		if	(not nValue)
+		if	(not vValue)
 			::std::unreachable();
 
 		using
 			tIndexType
 		=	Index
-			<	t_nWidth
+			<	t_vWidth
 			>
 		;
 		return
 		tIndexType
 		{	static_cast<tIndexType::IndexType>
 			(	Prev
-				(	nValue
+				(	vValue
 				)
 			)
 		};

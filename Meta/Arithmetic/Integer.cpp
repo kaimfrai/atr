@@ -35,14 +35,14 @@ export namespace
 {
 	template
 		<	ByteSize
-				t_nSize
+				t_vSize
 		>
 	using
 		SInt
 	=	decltype
 		(	::MapSInt
 			<	CeilPower2
-				(	t_nSize
+				(	t_vSize
 				)
 			>()
 		)
@@ -55,13 +55,13 @@ export namespace
 
 	template
 		<	ByteSize
-				t_nSize
+				t_vSize
 		>
 	using
 		UInt
 	=	::std::make_unsigned_t
 		<	SInt
-			<	t_nSize
+			<	t_vSize
 			>
 		>
 	;

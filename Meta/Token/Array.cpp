@@ -12,9 +12,9 @@ export namespace
 		<	typename
 				t_tElement
 		,	USize
-				t_nExtent
+				t_vExtent
 		>
-	TypeToken<::std::array<t_tElement, t_nExtent>> constexpr inline
+	TypeToken<::std::array<t_tElement, t_vExtent>> constexpr inline
 		ArrayType
 	{};
 
@@ -33,14 +33,14 @@ export namespace
 		<	typename
 				t_tElement
 		,	USize
-				t_nExtent
+				t_vExtent
 		>
 	using
 		ArrayEntity
 	=	TypeEntity
 		<	ArrayType
 			<	t_tElement
-			,	t_nExtent
+			,	t_vExtent
 			>
 		>
 	;

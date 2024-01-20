@@ -9,14 +9,14 @@ export namespace
 {
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	auto constexpr inline
 	(	Set
-	)	(	Field<t_nWidth>
+	)	(	Field<t_vWidth>
 			&	i_rField
-		,	typename Field<t_nWidth>::IndexType
-				i_nIndex
+		,	typename Field<t_vWidth>::IndexType
+				i_vIndex
 		)
 		noexcept
 	->	decltype(i_rField)
@@ -25,42 +25,42 @@ export namespace
 		=	Set
 			(	i_rField
 			.	get()
-			,	i_nIndex
+			,	i_vIndex
 			)
 		);
 	}
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	Set
-	)	(	Field<t_nWidth>
+	)	(	Field<t_vWidth>
 			&&	i_rField
-		,	typename Field<t_nWidth>::IndexType
-				i_nIndex
+		,	typename Field<t_vWidth>::IndexType
+				i_vIndex
 		)
 		noexcept
-	->	Field<t_nWidth>
+	->	Field<t_vWidth>
 	{	return
 		Set
 		(	i_rField
-		,	i_nIndex
+		,	i_vIndex
 		);
 	}
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	auto constexpr inline
 	(	Unset
-	)	(	Field<t_nWidth>
+	)	(	Field<t_vWidth>
 			&	i_rField
-		,	typename Field<t_nWidth>::IndexType
-				i_nIndex
+		,	typename Field<t_vWidth>::IndexType
+				i_vIndex
 		)
 		noexcept
 	->	decltype(i_rField)
@@ -69,29 +69,29 @@ export namespace
 		=	Unset
 			(	i_rField
 			.	get()
-			,	i_nIndex
+			,	i_vIndex
 			)
 		);
 	}
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	Unset
-	)	(	Field<t_nWidth>
+	)	(	Field<t_vWidth>
 			&&	i_rField
-		,	typename Field<t_nWidth>::IndexType
-				i_nIndex
+		,	typename Field<t_vWidth>::IndexType
+				i_vIndex
 		)
 		noexcept
-	->	Field<t_nWidth>
+	->	Field<t_vWidth>
 	{	return
 		Unset
 		(	i_rField
-		,	i_nIndex
+		,	i_vIndex
 		);
 	}
 }

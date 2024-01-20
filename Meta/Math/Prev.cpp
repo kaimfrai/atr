@@ -7,23 +7,23 @@ export namespace
 	auto constexpr inline
 	(	Prev
 	)	(	auto
-				i_nCurrent
+				i_vCurrent
 		)
 		noexcept
 		(	noexcept
 			(	--
-				i_nCurrent
+				i_vCurrent
 			)
 		)
 	->	decltype
 		(	auto
 			(	--
-				i_nCurrent
+				i_vCurrent
 			)
 		)
 	{	return
 			--
-			i_nCurrent
+			i_vCurrent
 		;
 	}
 
@@ -31,25 +31,25 @@ export namespace
 	auto constexpr inline
 	(	Next
 	)	(	auto
-				i_nCurrent
+				i_vCurrent
 		,	auto
-				i_nIncrement
+				i_vIncrement
 		)
 		noexcept
 		(	noexcept
-			(	i_nCurrent
-			-=	i_nIncrement
+			(	i_vCurrent
+			-=	i_vIncrement
 			)
 		)
 	->	decltype
 		(	auto
-			(	i_nCurrent
-			-=	i_nIncrement
+			(	i_vCurrent
+			-=	i_vIncrement
 			)
 		)
 	{	return
-			i_nCurrent
-		-=	i_nIncrement
+			i_vCurrent
+		-=	i_vIncrement
 		;
 	}
 }

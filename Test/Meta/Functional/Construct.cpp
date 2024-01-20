@@ -30,14 +30,14 @@ static_assert
 
 template
 	<	std::size_t
-			t_nExtent
+			t_vExtent
 	>
 struct
 	ValuePack
 {
 	int
 		Array
-		[	t_nExtent
+		[	t_vExtent
 		]
 	;
 

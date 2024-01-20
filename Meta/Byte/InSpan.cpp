@@ -23,13 +23,13 @@ export namespace
 		)	(	::std::byte const
 				*	i_aBegin
 			,	ByteSize
-					i_nSize
+					i_vSize
 			)
 			noexcept
 		:	InSpan
 			{	i_aBegin
 			,	i_aBegin
-			+	i_nSize
+			+	i_vSize
 			}
 		{}
 
@@ -51,9 +51,9 @@ export namespace
 		auto constexpr inline
 		(	subspan
 		)	(	ByteSize
-					i_nOffset
+					i_vOffset
 			,	Bytes
-					i_nCount
+					i_vCount
 			)	const
 			noexcept
 		->	InSpan
@@ -61,8 +61,8 @@ export namespace
 				vSubSpan
 			=	::std::span<::std::byte const>
 			::	subspan
-				(	static_cast<::std::size_t>(i_nOffset.get())
-				,	static_cast<::std::size_t>(i_nCount.get())
+				(	static_cast<::std::size_t>(i_vOffset.get())
+				,	static_cast<::std::size_t>(i_vCount.get())
 				)
 			;
 			return

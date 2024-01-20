@@ -27,7 +27,7 @@ export namespace
 			return Clause::Absorbing();
 
 		USize const
-			nMaxClauseCount
+			vMaxClauseCount
 		=	i_rTerm.transform_reduce
 			(	1uz
 			,	::std::multiplies<USize>{}
@@ -37,13 +37,13 @@ export namespace
 
 		Optimizer
 			vOptimizer
-		{	nMaxClauseCount
+		{	vMaxClauseCount
 		};
 		vOptimizer.insert(Clause::Absorbing());
 
 		Optimizer
 			vResultBuffer
-		{	nMaxClauseCount
+		{	vMaxClauseCount
 		};
 
 		for	(	Clause const

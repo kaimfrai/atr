@@ -17,14 +17,14 @@ export namespace
 	)	(	t_tObject
 			*	i_aObject
 		,	ByteWidth<t_tObject>
-				i_nOffset
+				i_vOffset
 		)
 		noexcept
 	->	t_tObject*
 	{	return
 		::std::next
 		(	i_aObject
-		,	i_nOffset.get()
+		,	i_vOffset.get()
 		);
 	}
 
@@ -37,14 +37,14 @@ export namespace
 	)	(	t_tObject
 			*&	i_aObject
 		,	ByteWidth<t_tObject>
-				i_nOffset
+				i_vOffset
 		)
 		noexcept
 	->	t_tObject*&
 	{	return
 			i_aObject
 		=	i_aObject
-		+	i_nOffset
+		+	i_vOffset
 		;
 	}
 
@@ -58,14 +58,14 @@ export namespace
 	)	(	t_tObject
 			*	i_aObject
 		,	ByteWidth<t_tObject>
-				i_nOffset
+				i_vOffset
 		)
 		noexcept
 	->	t_tObject*
 	{	return
 		::std::prev
 		(	i_aObject
-		,	i_nOffset.get()
+		,	i_vOffset.get()
 		);
 	}
 
@@ -78,14 +78,14 @@ export namespace
 	)	(	t_tObject
 			*&	i_aObject
 		,	ByteWidth<t_tObject>
-				i_nOffset
+				i_vOffset
 		)
 		noexcept
 	->	t_tObject*&
 	{	return
 			i_aObject
 		=	i_aObject
-		-	i_nOffset
+		-	i_vOffset
 		;
 	}
 }

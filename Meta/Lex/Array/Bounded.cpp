@@ -26,7 +26,7 @@ export namespace
 			<	typename
 					t_tElement
 			,	USize
-					t_nExtent
+					t_vExtent
 			,	typename
 					t_tNestedTokenizer
 				=	Token::Transform::Identity
@@ -36,7 +36,7 @@ export namespace
 		(	operator()
 		)	(	TypeToken
 				<	t_tElement
-						[	t_nExtent
+						[	t_vExtent
 						]
 				>
 			,	t_tNestedTokenizer
@@ -50,7 +50,7 @@ export namespace
 			(	i_fTokenizer
 				(	Type<t_tElement>
 				)
-			,	Extent<t_nExtent>
+			,	Extent<t_vExtent>
 			);
 		}
 	};

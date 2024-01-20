@@ -2,7 +2,7 @@ import Meta.Arithmetic.Literals;
 
 template
 	<	char
-		...	t_npNumeric
+		...	t_vpNumeric
 	>
 [[nodiscard]]
 auto constexpr inline
@@ -12,7 +12,7 @@ auto constexpr inline
 ->	unsigned long long
 {	return
 	::Meta::Arithmetic::EvaluateNumericLiteral
-	<	t_npNumeric
+	<	t_vpNumeric
 		...
 	>();
 }

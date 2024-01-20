@@ -12,15 +12,15 @@ export namespace
 	auto constexpr inline
 	(	operator==
 	)	(	Field_For<UIntMax>
-				i_nLeft
+				i_vLeft
 		,	Field_For<UIntMax>
-				i_nRight
+				i_vRight
 		)
 		noexcept
 	->	bool
 	{	return
-			i_nLeft.get()
-		==	i_nRight.get()
+			i_vLeft.get()
+		==	i_vRight.get()
 		;
 	}
 
@@ -28,15 +28,15 @@ export namespace
 	auto constexpr inline
 	(	operator<=>
 	)	(	Field_For<UIntMax>
-				i_nLeft
+				i_vLeft
 		,	Field_For<UIntMax>
-				i_nRight
+				i_vRight
 		)
 		noexcept
 	->	::std::strong_ordering
 	{	return
-			i_nLeft.get()
-		<=>	i_nRight.get()
+			i_vLeft.get()
+		<=>	i_vRight.get()
 		;
 	}
 }

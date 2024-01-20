@@ -12,22 +12,22 @@ export namespace
 {
 	template
 		<	::std::size_t
-				t_nBufferSize
+				t_vBufferSize
 		,	::std::align_val_t
-				t_nBufferAlign
+				t_vBufferAlign
 		>
 	class
 		ObjectValue
 	{
 		auto static constexpr inline
 			BufferSize
-		=	t_nBufferSize
+		=	t_vBufferSize
 		;
 
 		auto static constexpr inline
 			BufferAlign
 		=	static_cast<::std::size_t>
-			(	t_nBufferAlign
+			(	t_vBufferAlign
 			)
 		;
 

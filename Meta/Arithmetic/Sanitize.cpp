@@ -14,124 +14,124 @@ export namespace
 {
 	template
 		<	SIntMax
-				t_nHighestValue
+				t_vHighestValue
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	SanitizeSigned
 	)	(	SIntMax
-				i_nValue
+				i_vValue
 		)
 		noexcept
-	->	SInt_For<t_nHighestValue>
+	->	SInt_For<t_vHighestValue>
 	{
 		static_assert
-		(	t_nHighestValue
+		(	t_vHighestValue
 		>=	0z
 		,	"Highest value expected to non-negative!"
 		);
 		//	Note: this function will never return (-Highest - 1)
 		if	constexpr
-			(	t_nHighestValue
+			(	t_vHighestValue
 			==	::std::numeric_limits
-				<	SInt_For<t_nHighestValue>
+				<	SInt_For<t_vHighestValue>
 				>
 			::	max()
 			)
 		{	return
-			Narrow<t_nHighestValue>
-			(	i_nValue
+			Narrow<t_vHighestValue>
+			(	i_vValue
 			);
 		}
 		else
 		{	return
-			Narrow<t_nHighestValue>
-			(	i_nValue
-			%	Next(t_nHighestValue)
+			Narrow<t_vHighestValue>
+			(	i_vValue
+			%	Next(t_vHighestValue)
 			);
 		}
 	}
 
 	template
 		<	SIntMax
-				t_nHighestValue
+				t_vHighestValue
 		>
 	auto constexpr inline
 	(	AssertSanitizedSigned
 	)	(	SIntMax
-				i_nValue
+				i_vValue
 		)
 		noexcept
-	->	SInt_For<t_nHighestValue>
+	->	SInt_For<t_vHighestValue>
 	{
 		auto const
-			nSanitized
-		=	SanitizeSigned<t_nHighestValue>
-			(	i_nValue
+			vSanitized
+		=	SanitizeSigned<t_vHighestValue>
+			(	i_vValue
 			)
 		;
-		if	(i_nValue != nSanitized)
+		if	(i_vValue != vSanitized)
 			::std::unreachable();
 		return
-			nSanitized
+			vSanitized
 		;
 	}
 
 	template
 		<	UIntMax
-				t_nHighestValue
+				t_vHighestValue
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	SanitizeUnsigned
 	)	(	UIntMax
-				i_nValue
+				i_vValue
 		)
 		noexcept
-	->	UInt_For<t_nHighestValue>
+	->	UInt_For<t_vHighestValue>
 	{	if	constexpr
-			(	t_nHighestValue
+			(	t_vHighestValue
 			==	::std::numeric_limits
-				<	UInt_For<t_nHighestValue>
+				<	UInt_For<t_vHighestValue>
 				>
 			::	max()
 			)
 		{	return
-			Narrow<t_nHighestValue>
-			(	i_nValue
+			Narrow<t_vHighestValue>
+			(	i_vValue
 			);
 		}
 		else
 		{	return
-			Narrow<t_nHighestValue>
-			(	i_nValue
-			%	Next(t_nHighestValue)
+			Narrow<t_vHighestValue>
+			(	i_vValue
+			%	Next(t_vHighestValue)
 			);
 		}
 	}
 
 	template
 		<	UIntMax
-				t_nHighestValue
+				t_vHighestValue
 		>
 	auto constexpr inline
 	(	AssertSanitizedUnsigned
 	)	(	UIntMax
-				i_nValue
+				i_vValue
 		)
 		noexcept
-	->	UInt_For<t_nHighestValue>
+	->	UInt_For<t_vHighestValue>
 	{
 		auto const
-			nSanitized
-		=	SanitizeUnsigned<t_nHighestValue>
-			(	i_nValue
+			vSanitized
+		=	SanitizeUnsigned<t_vHighestValue>
+			(	i_vValue
 			)
 		;
-		if	(i_nValue != nSanitized)
+		if	(i_vValue != vSanitized)
 			::std::unreachable();
 		return
-			nSanitized
+			vSanitized
 		;
 	}
 }

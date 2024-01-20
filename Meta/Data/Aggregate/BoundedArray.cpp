@@ -21,7 +21,7 @@ export namespace
 		<	typename
 				t_tElement
 		,	USize
-				t_nExtent
+				t_vExtent
 		,	typename
 			...	t_tpQualifier
 		>
@@ -29,7 +29,7 @@ export namespace
 		Aggregate
 		<	Lex::MatchCVArray
 			<	t_tElement
-			,	t_nExtent
+			,	t_vExtent
 			,	t_tpQualifier
 				...
 			>
@@ -38,7 +38,7 @@ export namespace
 		<	typename
 				Lex::MatchCVArray
 				<	t_tElement
-				,	t_nExtent
+				,	t_vExtent
 				,	t_tpQualifier
 					...
 				>
@@ -67,21 +67,21 @@ export namespace
 		(	get
 		)	()	&
 			noexcept
-		->	::std::array<ElementType, t_nExtent>&
+		->	::std::array<ElementType, t_vExtent>&
 		{	return this->Data;	}
 
 		auto constexpr inline
 		(	get
 		)	()	const&
 			noexcept
-		->	::std::array<ElementType, t_nExtent> const&
+		->	::std::array<ElementType, t_vExtent> const&
 		{	return this->Data;	}
 
 		auto constexpr inline
 		(	get
 		)	()	&&
 			noexcept
-		->	::std::array<ElementType, t_nExtent>
+		->	::std::array<ElementType, t_vExtent>
 		{	return ::std::move(this->Data);	}
 
 		explicit(false) constexpr inline
@@ -111,7 +111,7 @@ export namespace
 		)	()
 			noexcept
 		->	size_type
-		{	return t_nExtent;	}
+		{	return t_vExtent;	}
 
 		[[nodiscard]]
 		auto static constexpr inline
@@ -119,14 +119,14 @@ export namespace
 		)	()
 			noexcept
 		->	difference_type
-		{	return static_cast<difference_type>(t_nExtent);	}
+		{	return static_cast<difference_type>(t_vExtent);	}
 
 		[[nodiscard]]
 		auto static constexpr inline
 		(	max_size
 		)	()
 		->	size_type
-		{	return t_nExtent;	}
+		{	return t_vExtent;	}
 
 		[[nodiscard]]
 		auto static constexpr inline
@@ -138,26 +138,26 @@ export namespace
 		auto constexpr inline
 		(	operator[]
 		)	(	USize
-					i_nIndex
+					i_vIndex
 			)	&
 		->	reference
-		{	return this->Data[i_nIndex];	}
+		{	return this->Data[i_vIndex];	}
 
 		auto constexpr inline
 		(	operator[]
 		)	(	USize
-					i_nIndex
+					i_vIndex
 			)	const&
 		->	const_reference
-		{	return this->Data[i_nIndex];	}
+		{	return this->Data[i_vIndex];	}
 
 		auto constexpr inline
 		(	operator[]
 		)	(	USize
-					i_nIndex
+					i_vIndex
 			)	&&
 		->	value_type
-		{	return ::std::move(this->Data)[i_nIndex];	}
+		{	return ::std::move(this->Data)[i_vIndex];	}
 
 		auto constexpr inline
 		(	data

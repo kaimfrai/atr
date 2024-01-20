@@ -20,9 +20,9 @@ export namespace
 {
 	template
 		<	BitSize
-				t_nSize
+				t_vSize
 		,	ByteIndex
-				t_nMaxOffset
+				t_vMaxOffset
 		>
 	struct
 		Access final
@@ -30,14 +30,14 @@ export namespace
 		using
 			FieldType
 		=	Field
-			<	t_nSize
+			<	t_vSize
 			>
 		;
 
 		ByteSize static constexpr inline
 			BufferByteSize
-		=	t_nSize
-		+	t_nMaxOffset
+		=	t_vSize
+		+	t_vMaxOffset
 		;
 
 		static_assert
@@ -57,7 +57,7 @@ export namespace
 			OffsetType
 		=	Index
 			<	BufferByteSize
-			-	t_nSize
+			-	t_vSize
 			+	1_bit
 			>
 		;
@@ -66,7 +66,7 @@ export namespace
 		auto static constexpr inline
 		(	OffsetMask
 		)	(	ByteIndex
-					i_nOffset
+					i_vOffset
 			)
 			noexcept
 		->	BufferFieldType
@@ -75,7 +75,7 @@ export namespace
 				FieldType
 				{}
 			<<	static_cast<OffsetType>
-				(	i_nOffset
+				(	i_vOffset
 				)
 			;
 		}
@@ -84,14 +84,14 @@ export namespace
 		auto static constexpr inline
 		(	MaskOffset
 		)	(	BufferFieldType
-					i_nMask
+					i_vMask
 			)
 			noexcept
 		->	OffsetType
 		{	return
 			static_cast<OffsetType>
 			(	IndexLowestOne
-				(	i_nMask
+				(	i_vMask
 				)
 			);
 		}
@@ -103,9 +103,9 @@ export namespace
 		)	(	::std::byte const
 				*	i_aBuffer
 			,	OffsetType
-					i_nOffset
+					i_vOffset
 			,	BufferFieldType
-					i_nMask
+					i_vMask
 			)
 			noexcept
 		->	FieldType
@@ -115,14 +115,14 @@ export namespace
 			{	ReadObject<BufferFieldType>
 				(	Byte::InSpan
 					{	i_aBuffer
-					,	t_nSize
-					+	i_nOffset
+					,	t_vSize
+					+	i_vOffset
 					}
 				)
 			};
 
-			vBufferField &= i_nMask;
-			vBufferField >>= i_nOffset;
+			vBufferField &= i_vMask;
+			vBufferField >>= i_vOffset;
 
 			return
 			static_cast<FieldType>
@@ -137,15 +137,15 @@ export namespace
 		)	(	::std::byte const
 				*	i_aBuffer
 			,	ByteIndex
-					i_nOffset
+					i_vOffset
 			)
 			noexcept
 		->	FieldType
 		{	return
 			ReadField
 			(	i_aBuffer
-			,	static_cast<OffsetType>(i_nOffset)
-			,	OffsetMask(i_nOffset)
+			,	static_cast<OffsetType>(i_vOffset)
+			,	OffsetMask(i_vOffset)
 			);
 		}
 
@@ -155,7 +155,7 @@ export namespace
 		)	(	::std::byte const
 				*	i_aBuffer
 			,	BufferFieldType
-					i_nMask
+					i_vMask
 			)
 			noexcept
 		->	FieldType
@@ -163,9 +163,9 @@ export namespace
 			ReadField
 			(	i_aBuffer
 			,	MaskOffset
-				(	i_nMask
+				(	i_vMask
 				)
-			,	i_nMask
+			,	i_vMask
 			);
 		}
 
@@ -177,9 +177,9 @@ export namespace
 			,	::std::byte
 				*	i_aBuffer
 			,	OffsetType
-					i_nOffset
+					i_vOffset
 			,	BufferFieldType
-					i_nMask
+					i_vMask
 			)
 			noexcept
 		->	void
@@ -187,8 +187,8 @@ export namespace
 			Byte::OutSpan
 				vBuffer
 			{	i_aBuffer
-			,	t_nSize
-			+	i_nOffset
+			,	t_vSize
+			+	i_vOffset
 			};
 
 			auto const
@@ -200,13 +200,13 @@ export namespace
 				)
 			bitand
 				compl
-				i_nMask
+				i_vMask
 			;
 
 			auto const
 				vSetMask
 			=	i_vValue
-			<<	i_nOffset
+			<<	i_vOffset
 			;
 
 			(	vBuffer
@@ -226,7 +226,7 @@ export namespace
 			,	::std::byte
 				*	i_aBuffer
 			,	ByteIndex
-					i_nOffset
+					i_vOffset
 			)
 			noexcept
 		->	void
@@ -235,10 +235,10 @@ export namespace
 			(	i_vValue
 			,	i_aBuffer
 			,	static_cast<OffsetType>
-				(	i_nOffset
+				(	i_vOffset
 				)
 			,	OffsetMask
-				(	i_nOffset
+				(	i_vOffset
 				)
 			);
 		}
@@ -250,7 +250,7 @@ export namespace
 			,	::std::byte
 				*	i_aBuffer
 			,	BufferFieldType
-					i_nMask
+					i_vMask
 			)
 			noexcept
 		->	void
@@ -259,9 +259,9 @@ export namespace
 			(	i_vValue
 			,	i_aBuffer
 			,	MaskOffset
-				(	i_nMask
+				(	i_vMask
 				)
-			,	i_nMask
+			,	i_vMask
 			);
 		}
 	};

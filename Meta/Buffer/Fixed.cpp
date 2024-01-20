@@ -61,7 +61,7 @@ export namespace
 			m_vBuffer
 		;
 		USize
-			m_nElementCount
+			m_vElementCount
 		{};
 
 		explicit(false) constexpr inline
@@ -119,7 +119,7 @@ export namespace
 				)
 				...
 			}
-		,	m_nElementCount
+		,	m_vElementCount
 			{	sizeof...(i_rpElement)
 			}
 		{}
@@ -160,7 +160,7 @@ export namespace
 		)	()	const
 			noexcept
 		->	USize
-		{	return m_nElementCount;	}
+		{	return m_vElementCount;	}
 
 		[[nodiscard]]
 		auto constexpr inline
@@ -168,16 +168,16 @@ export namespace
 		)	()	const
 			noexcept
 		->	SSize
-		{	return static_cast<SSize>(m_nElementCount);	}
+		{	return static_cast<SSize>(m_vElementCount);	}
 
 		auto constexpr inline
 		(	EnsureNewSizeValid
 		)	(	USize
-					i_nNewSize
+					i_vNewSize
 			)	const
 			noexcept
 		{
-			if	(i_nNewSize > max_size())
+			if	(i_vNewSize > max_size())
 				((void)"To many elements for buffer!", std::unreachable());
 		}
 
@@ -191,12 +191,12 @@ export namespace
 		{
 			EnsureNewSizeValid(Next(size()));
 
-				m_vBuffer[m_nElementCount]
+				m_vBuffer[m_vElementCount]
 			=	std::forward<decltype(i_rValue)>
 				(	i_rValue
 				)
 			;
-			++m_nElementCount;
+			++m_vElementCount;
 
 			return *this;
 		}
@@ -236,12 +236,12 @@ export namespace
 			clear();
 
 			[&]	<	USize
-					...	t_npIndex
-				>(	std::index_sequence<t_npIndex...>
+					...	t_vpIndex
+				>(	std::index_sequence<t_vpIndex...>
 				)
 			{
 				(	...
-				,	(	m_vBuffer[t_npIndex]
+				,	(	m_vBuffer[t_vpIndex]
 					=	std::forward<decltype(i_rpValue)>
 						(	i_rpValue
 						)
@@ -249,7 +249,7 @@ export namespace
 				);
 			}(	std::make_index_sequence<vNewElementCount>{}
 			);
-			m_nElementCount = vNewElementCount;
+			m_vElementCount = vNewElementCount;
 
 			return *this;
 		}
@@ -257,7 +257,7 @@ export namespace
 		auto constexpr inline
 		(	pop_back
 		)	(	USize
-					i_nCount
+					i_vCount
 			)	&
 			noexcept
 		->	Fixed&
@@ -265,8 +265,8 @@ export namespace
 			(	std::is_trivially_destructible_v<value_type>
 			,	"The following optimization is only valid for trivially destructible elements!"
 			);
-				m_nElementCount
-			-=	std::min(m_nElementCount, i_nCount)
+				m_vElementCount
+			-=	std::min(m_vElementCount, i_vCount)
 			;
 			return *this;
 		}
@@ -274,11 +274,11 @@ export namespace
 		auto constexpr inline
 		(	pop_back
 		)	(	USize
-					i_nCount
+					i_vCount
 			)	&&
 			noexcept
 		->	Fixed
-		{	return std::move(pop_back(i_nCount));	}
+		{	return std::move(pop_back(i_vCount));	}
 
 		auto constexpr inline
 		(	pop_back
@@ -315,7 +315,7 @@ export namespace
 			);
 
 			*i_aPosition = ::std::forward<decltype(i_rValue)>(i_rValue);
-			++m_nElementCount;
+			++m_vElementCount;
 
 			return i_aPosition;
 		}
@@ -358,31 +358,31 @@ export namespace
 		auto constexpr inline
 		(	operator[]
 		)	(	USize
-					i_nIndex
+					i_vIndex
 			)	&
 			noexcept
 		->	decltype(auto)
-		{	return m_vBuffer[i_nIndex];	}
+		{	return m_vBuffer[i_vIndex];	}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator[]
 		)	(	USize
-					i_nIndex
+					i_vIndex
 			)	const&
 			noexcept
 		->	decltype(auto)
-		{	return m_vBuffer[i_nIndex];	}
+		{	return m_vBuffer[i_vIndex];	}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator[]
 		)	(	USize
-					i_nIndex
+					i_vIndex
 			)	&&
 			noexcept
 		->	decltype(auto)
-		{	return std::move(*this).m_vBuffer[i_nIndex];	}
+		{	return std::move(*this).m_vBuffer[i_vIndex];	}
 
 		[[nodiscard]]
 		auto friend constexpr inline

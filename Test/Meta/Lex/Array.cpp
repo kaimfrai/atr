@@ -32,7 +32,7 @@ auto constexpr inline
 
 template
 	<	auto
-			t_nExtent
+			t_vExtent
 	,	typename
 		...	t_tpQualifier
 	>
@@ -41,7 +41,7 @@ Meta::TypeID constexpr inline
 =	Type
 	<	MatchCVArray
 		<	TypeToken<int>
-		,	t_nExtent
+		,	t_vExtent
 		,	t_tpQualifier
 			...
 		>

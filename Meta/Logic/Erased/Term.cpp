@@ -69,7 +69,7 @@ export namespace
 			};
 
 			for	(	auto
-						nArrayIndex
+						vArrayIndex
 					=	0uz
 				;	auto
 						vBitIndex
@@ -82,7 +82,7 @@ export namespace
 			{
 				vTrimmed
 				.	Literals
-					[	nArrayIndex
+					[	vArrayIndex
 					]
 				=	i_vUnion
 						[	static_cast<USize>
@@ -92,7 +92,7 @@ export namespace
 							)
 						]
 				;
-				++nArrayIndex;
+				++vArrayIndex;
 			}
 
 			return
@@ -157,7 +157,7 @@ export namespace
 			;
 
 			vUnion
-			.	m_nElementCount
+			.	m_vElementCount
 			=	0uz
 			;
 
@@ -176,12 +176,12 @@ export namespace
 				vUnion
 				.	m_vBuffer
 					[	vUnion
-						.	m_nElementCount
+						.	m_vElementCount
 					]
 				=	vTypeID
 				;
 				++	vUnion
-					.	m_nElementCount
+					.	m_vElementCount
 				;
 			}
 
@@ -221,12 +221,12 @@ export namespace
 					vUnion
 					.	m_vBuffer
 						[	vUnion
-							.	m_nElementCount
+							.	m_vElementCount
 						]
 					=	vTypeID
 					;
 					++	vUnion
-						.	m_nElementCount
+						.	m_vElementCount
 					;
 				}
 			}

@@ -12,7 +12,7 @@ export namespace
 {
 	template
 		<	SIntMax
-				t_nValue
+				t_vValue
 		>
 	using
 		SInt_For
@@ -20,11 +20,11 @@ export namespace
 		<	BitSize
 			{	::std::bit_width
 				(	Math::Unsigned
-					(	(	t_nValue
+					(	(	t_vValue
 						>=	0z
 						)
-					?	t_nValue
-					:	compl t_nValue
+					?	t_vValue
+					:	compl t_vValue
 					)
 				)
 			}
@@ -34,32 +34,32 @@ export namespace
 
 	template
 		<	SIntMax
-				t_nMaxValue
+				t_vMaxValue
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	Narrow
 	)	(	SIntMax
-				i_nValue
+				i_vValue
 		)
 		noexcept
-	->	SInt_For<t_nMaxValue>
+	->	SInt_For<t_vMaxValue>
 	{	return
-		static_cast<SInt_For<t_nMaxValue>>
-		(	i_nValue
+		static_cast<SInt_For<t_vMaxValue>>
+		(	i_vValue
 		);
 	}
 
 	template
 		<	UIntMax
-				t_nValue
+				t_vValue
 		>
 	using
 		UInt_For
 	=	UInt
 		<	BitSize
 			{	::std::bit_width
-				(	t_nValue
+				(	t_vValue
 				)
 			}
 		>
@@ -67,19 +67,19 @@ export namespace
 
 	template
 		<	UIntMax
-				t_nMaxValue
+				t_vMaxValue
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	Narrow
 	)	(	UIntMax
-				i_nValue
+				i_vValue
 		)
 		noexcept
-	->	UInt_For<t_nMaxValue>
+	->	UInt_For<t_vMaxValue>
 	{	return
-		static_cast<UInt_For<t_nMaxValue>>
-		(	i_nValue
+		static_cast<UInt_For<t_vMaxValue>>
+		(	i_vValue
 		);
 	}
 }

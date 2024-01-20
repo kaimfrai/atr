@@ -31,12 +31,12 @@ export namespace
 		)	(	std::string_view
 					i_sString
 			,	USize
-					i_nOffset
+					i_vOffset
 			)
 		{	(	*this
 			=	m_fNext
 				(	i_sString
-				,	i_nOffset
+				,	i_vOffset
 				)
 			);
 		}

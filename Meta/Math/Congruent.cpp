@@ -10,43 +10,43 @@ export namespace
 	auto constexpr inline
 	(	Congruent
 	)	(	SSize
-				i_nNumerator
+				i_vNumerator
 		,	USize
-				i_nRingSize
+				i_vRingSize
 		)
 		noexcept
 	->	USize
 	{
 		bool const
 			bNegative
-		=	(	i_nNumerator
+		=	(	i_vNumerator
 			<	0z
 			)
 		;
 
 		USize const
-			nPositiveIndex
+			vPositiveIndex
 		=	Abs
-			(	i_nNumerator
+			(	i_vNumerator
 			)
 		;
 		USize const
-			nRemainder
-		=	(	nPositiveIndex
-			%	i_nRingSize
+			vRemainder
+		=	(	vPositiveIndex
+			%	i_vRingSize
 			)
 		;
 
 		return
 		(	(	bNegative
-			and (	nRemainder
+			and (	vRemainder
 				!=	0uz
 				)
 			)
-		?	(	i_nRingSize
-			-	nRemainder
+		?	(	i_vRingSize
+			-	vRemainder
 			)
-		:	nRemainder
+		:	vRemainder
 		);
 	}
 }

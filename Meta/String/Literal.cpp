@@ -9,14 +9,14 @@ export namespace
 {
 	template
 		<	::std::size_t
-				t_nExtent
+				t_vExtent
 		>
 	struct
 		Literal final
 	{
 		char
 			Buffer
-			[	t_nExtent
+			[	t_vExtent
 			+	1uz
 			]
 		{};
@@ -28,7 +28,7 @@ export namespace
 			noexcept
 		->	::std::size_t
 		{	return
-				t_nExtent
+				t_vExtent
 			;
 		}
 
@@ -93,13 +93,13 @@ export namespace
 		auto constexpr inline
 		(	operator[]
 		)	(	::std::size_t
-					i_nIndex
+					i_vIndex
 			)	const
 			noexcept
 		->	char
 		{	return
 			Buffer
-			[	i_nIndex
+			[	i_vIndex
 			];
 		}
 
@@ -145,27 +145,27 @@ export namespace
 
 	template
 		<	::std::size_t
-				t_nExtent
+				t_vExtent
 		>
 	(	Literal
-	)	(	Literal<t_nExtent>
+	)	(	Literal<t_vExtent>
 		)
 	->	Literal
-		<	t_nExtent
+		<	t_vExtent
 		>
 	;
 
 	template
 		<	::std::size_t
-				t_nExtent
+				t_vExtent
 		>
 	(	Literal
 	)	(	char const
-			(&)	[	t_nExtent
+			(&)	[	t_vExtent
 				]
 		)
 	->	Literal
-		<	t_nExtent
+		<	t_vExtent
 		-	1uz
 		>
 	;

@@ -16,7 +16,7 @@ export namespace
 
 	template
 		<	BitSize
-				t_nWidth
+				t_vWidth
 		>
 	struct
 		OneIndexIterator
@@ -28,12 +28,12 @@ export namespace
 		using
 			value_type
 		=	Index
-			<	t_nWidth
+			<	t_vWidth
 			>
 		;
 
-		UInt<t_nWidth>
-			m_nField
+		UInt<t_vWidth>
+			m_vField
 		;
 
 		[[nodiscard]]
@@ -43,9 +43,9 @@ export namespace
 			noexcept
 		->	value_type
 		{	return
-			ChangeWidth<t_nWidth>
+			ChangeWidth<t_vWidth>
 			(	IndexLowestOne
-				(	m_nField
+				(	m_vField
 				)
 			);
 		}
@@ -56,7 +56,7 @@ export namespace
 			noexcept
 		->	OneIndexIterator&
 		{	UnsetLowestOne
-			(	m_nField
+			(	m_vField
 			);
 			return
 				*this

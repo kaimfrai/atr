@@ -46,7 +46,7 @@ export namespace
 			m_vBuffer
 		;
 		USize
-			m_nCapacity
+			m_vCapacity
 		;
 
 		[[nodiscard]]
@@ -54,7 +54,7 @@ export namespace
 		(	max_size
 		)	()	const
 		{
-			return m_nCapacity;
+			return m_vCapacity;
 		}
 
 		[[nodiscard]]
@@ -127,15 +127,15 @@ export namespace
 		explicit(true) constexpr inline
 		(	Unique
 		)	(	USize
-					i_nCapacity
+					i_vCapacity
 			)
 		:	m_vBuffer
 			{	::std::make_unique_for_overwrite<t_tElement[]>
-				(	i_nCapacity
+				(	i_vCapacity
 				)
 			}
-		,	m_nCapacity
-			{	i_nCapacity
+		,	m_vCapacity
+			{	i_vCapacity
 			}
 		{}
 
@@ -154,15 +154,15 @@ export namespace
 			}
 		{
 			[&]	<	USize
-					...	t_npIndex
+					...	t_vpIndex
 				>(	std::index_sequence
-					<	t_npIndex
+					<	t_vpIndex
 						...
 					>
 				)
 			{
 				(	...
-				,	(	m_vBuffer[t_npIndex]
+				,	(	m_vBuffer[t_vpIndex]
 					=	std::forward<decltype(i_rpElement)>(i_rpElement)
 					)
 				);
@@ -174,30 +174,30 @@ export namespace
 		auto constexpr inline
 		(	operator[]
 		)	(	USize
-					i_nIndex
+					i_vIndex
 			)	&
 			noexcept
 		->	decltype(auto)
-		{	return m_vBuffer[i_nIndex];	}
+		{	return m_vBuffer[i_vIndex];	}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator[]
 		)	(	USize
-					i_nIndex
+					i_vIndex
 			)	const&
 			noexcept
 		->	decltype(auto)
-		{	return m_vBuffer[i_nIndex];	}
+		{	return m_vBuffer[i_vIndex];	}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator[]
 		)	(	USize
-					i_nIndex
+					i_vIndex
 			)	&&
 			noexcept
 		->	decltype(auto)
-		{	return std::move(*this).m_vBuffer[i_nIndex];	}
+		{	return std::move(*this).m_vBuffer[i_vIndex];	}
 	};
 }

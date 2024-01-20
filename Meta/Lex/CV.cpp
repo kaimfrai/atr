@@ -24,11 +24,11 @@ struct
 	(	[]
 		{
 			auto static constexpr
-				nQualifierCount
+				vQualifierCount
 			=	sizeof...(t_tpQualifier)
 			;
 			if	constexpr
-				(	nQualifierCount
+				(	vQualifierCount
 				==	2uz
 				)
 			{	::Meta::TypeID const
@@ -48,7 +48,7 @@ struct
 			}
 			else
 			{	return
-					nQualifierCount
+					vQualifierCount
 				<	2uz
 				;
 			}

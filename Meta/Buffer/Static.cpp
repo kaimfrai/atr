@@ -12,13 +12,13 @@ export namespace
 		<	typename
 				t_tElement
 		,	USize
-				t_nExtent
+				t_vExtent
 		>
 	using
 		Static
 	=	Fixed
 		<	t_tElement
-				[	t_nExtent
+				[	t_vExtent
 				]
 		>
 	;

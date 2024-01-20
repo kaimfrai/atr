@@ -23,13 +23,13 @@ namespace
 	(	Call
 	)	(	Path<int(int,int), "Multiply1">
 		,	int
-				i_nFirst
+				i_vFirst
 		,	int
-				i_nSecond
+				i_vSecond
 		)
 	->	int
 	{
-		return i_nFirst * i_nSecond;
+		return i_vFirst * i_vSecond;
 	}
 }
 

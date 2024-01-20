@@ -14,22 +14,22 @@ namespace
 	(	Call
 	)	(	Path<int(int), "Multiply1">
 		,	int
-				i_nFirst
+				i_vFirst
 		)
 	->	int
 	{
-		return i_nFirst * 1;
+		return i_vFirst * 1;
 	}
 
 	auto constexpr inline
 	(	Call
 	)	(	Path<int(int), "Multiply2">
 		,	int
-				i_nFirst
+				i_vFirst
 		)
 	->	int
 	{
-		return i_nFirst * 2;
+		return i_vFirst * 2;
 	}
 }
 

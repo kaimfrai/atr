@@ -9,13 +9,13 @@ export namespace
 	auto constexpr inline
 	(	operator+
 	)	(	BitSize
-				i_nSize
+				i_vSize
 		)
 		noexcept
 	->	BitSize
 	{	return
 		{	+
-			i_nSize
+			i_vSize
 		.	get()
 		};
 	}
@@ -24,34 +24,34 @@ export namespace
 	auto constexpr inline
 	(	operator-
 	)	(	BitSize
-				i_nSize
+				i_vSize
 		)
 		noexcept
 	->	BitSize
 	{	return
 		{	-
-			i_nSize
+			i_vSize
 		.	get()
 		};
 	}
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	auto constexpr inline
 	(	operator+=
-	)	(	Size<t_nWidth>
+	)	(	Size<t_vWidth>
 			&	i_rSize
 		,	BitSize
 				i_vOffset
 		)
 		noexcept
-	->	Size<t_nWidth>&
+	->	Size<t_vWidth>&
 	{	(	i_rSize
 			.	get
 				()
-		+=	static_cast<Size<t_nWidth>>
+		+=	static_cast<Size<t_vWidth>>
 			(	i_vOffset
 			)
 			.	get
@@ -64,19 +64,19 @@ export namespace
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	auto constexpr inline
 	(	operator-=
-	)	(	Size<t_nWidth>
+	)	(	Size<t_vWidth>
 			&	i_rSize
 		,	BitSize
 				i_vOffset
 		)
 		noexcept
-	->	Size<t_nWidth>&
+	->	Size<t_vWidth>&
 	{	(	i_rSize.get()
-		-=	static_cast<Size<t_nWidth>>
+		-=	static_cast<Size<t_vWidth>>
 			(	i_vOffset
 			)
 		.	get()
@@ -88,15 +88,15 @@ export namespace
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	auto constexpr inline
 	(	operator++
-	)	(	Size<t_nWidth>
+	)	(	Size<t_vWidth>
 			&	i_rSize
 		)
 		noexcept
-	->	Size<t_nWidth>&
+	->	Size<t_vWidth>&
 	{
 		(	++
 			i_rSize
@@ -109,19 +109,19 @@ export namespace
 	}
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard("Use preincrement if you discard the value")]]
 	auto constexpr inline
 	(	operator++
-	)	(	Size<t_nWidth>
+	)	(	Size<t_vWidth>
 			&	i_rSize
 		,	int
 		)
 		noexcept
-	->	Size<t_nWidth>
+	->	Size<t_vWidth>
 	{	return
-		Size<t_nWidth>
+		Size<t_vWidth>
 		{	i_rSize
 		.	get()
 			++
@@ -130,15 +130,15 @@ export namespace
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	auto constexpr inline
 	(	operator--
-	)	(	Size<t_nWidth>
+	)	(	Size<t_vWidth>
 			&	i_rSize
 		)
 		noexcept
-	->	Size<t_nWidth>&
+	->	Size<t_vWidth>&
 	{	(	--
 			i_rSize
 		.	get()
@@ -150,17 +150,17 @@ export namespace
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard("Use predecrement if you discard the value")]]
 	auto constexpr inline
 	(	operator--
-	)	(	Size<t_nWidth>
+	)	(	Size<t_vWidth>
 			&	i_rSize
 		,	int
 		)
 		noexcept
-	->	Size<t_nWidth>
+	->	Size<t_vWidth>
 	{	return
 		{	i_rSize
 		.	get()

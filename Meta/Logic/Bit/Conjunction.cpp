@@ -37,7 +37,7 @@ export namespace
 			return i_rLeftTerm;
 
 		auto const
-			nCombinedLiteralCount
+			vCombinedLiteralCount
 		=	CountOnes
 			(	i_rLeftTerm.LiteralField()
 			bitor
@@ -47,7 +47,7 @@ export namespace
 
 		Optimizer
 			vOptimizer
-		{	nCombinedLiteralCount
+		{	vCombinedLiteralCount
 		};
 
 		for	(	Clause

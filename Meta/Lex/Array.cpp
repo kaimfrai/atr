@@ -11,14 +11,14 @@ template
 	<	typename
 			t_tElement
 	,	USize
-			t_nExtent
+			t_vExtent
 	>
 struct
 	Array
 :	decltype
 	(	t_tElement{}
 	+	Meta::Extent
-		<	t_nExtent
+		<	t_vExtent
 		>
 	)
 {};
@@ -30,7 +30,7 @@ export namespace
 		<	typename
 				t_tElement
 		,	USize
-				t_nExtent
+				t_vExtent
 		,	typename
 			...	t_tpQualifier
 		>
@@ -41,7 +41,7 @@ export namespace
 		MatchCV
 		<	::Array
 			<	t_tElement
-			,	t_nExtent
+			,	t_vExtent
 			>
 		,	t_tpQualifier
 			...
@@ -54,20 +54,20 @@ export namespace
 		,	typename
 			...	t_tpQualifier
 		,	USize
-				t_nExtent
+				t_vExtent
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	MakeArray
 	)	(	MatchCV<t_tElement>
-		,	Token::Extent<t_nExtent>
+		,	Token::Extent<t_vExtent>
 		,	t_tpQualifier
 			...
 		)
 		noexcept
 	->	MatchCVArray
 		<	t_tElement
-		,	t_nExtent
+		,	t_vExtent
 		,	t_tpQualifier
 			...
 		>

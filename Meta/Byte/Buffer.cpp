@@ -11,14 +11,14 @@ export namespace
 {
 	template
 		<	ByteSize
-				t_nSize
+				t_vSize
 		>
 	struct
 		Buffer final
 	{
 		::std::byte
 			m_vValue
-			[	t_nSize
+			[	t_vSize
 				.	get
 					()
 			]
@@ -39,7 +39,7 @@ export namespace
 		{
 			(	OutSpan
 				{	m_vValue
-				,	t_nSize
+				,	t_vSize
 				}
 			=	i_vBytes
 			);
@@ -55,7 +55,7 @@ export namespace
 			(	Memory::SizeOf
 				<	decltype(i_rObject)
 				>
-			==	t_nSize
+			==	t_vSize
 			)
 		:	Buffer
 			{	::std::bit_cast
@@ -105,7 +105,7 @@ export namespace
 		{	return
 			InSpan
 			{	m_vValue
-			,	t_nSize
+			,	t_vSize
 			};
 		}
 
@@ -121,15 +121,15 @@ export namespace
 			noexcept
 		{
 			auto static constexpr
-				nByteSize
+				vByteSize
 			=	Memory::SizeOf
 				<	t_tObject
 				>
 			;
 
 			if	constexpr
-				(	nByteSize
-				==	t_nSize
+				(	vByteSize
+				==	t_vSize
 				)
 			{	return
 				::std::bit_cast
@@ -140,7 +140,7 @@ export namespace
 			else
 			{	return
 				static_cast<t_tObject>
-				(	Buffer<nByteSize>
+				(	Buffer<vByteSize>
 					{	static_cast<InSpan>
 						(	*this
 						)

@@ -45,7 +45,7 @@ export namespace
 		,	typename
 			...	t_tpQualifier
 		,	char
-			...	t_npChar
+			...	t_vpChar
 		,	ProtoID
 				t_tID
 		>
@@ -60,7 +60,7 @@ export namespace
 			,	t_tpQualifier
 				...
 			>
-		,	IndexToken<t_npChar...>
+		,	IndexToken<t_vpChar...>
 		,	t_tID
 		>
 	{
@@ -102,7 +102,7 @@ export namespace
 
 		template
 			<	char
-					t_nParsed
+					t_vParsed
 			>
 		using
 			NextID
@@ -110,28 +110,28 @@ export namespace
 			t_tID
 		::	template
 			Append
-			<	t_nParsed
+			<	t_vParsed
 			>
 		;
 
 		template
 			<	char
-					t_nParsed
+					t_vParsed
 			>
 		auto static constexpr inline
 		(	GetNextStep
 		)	()
 		->	StepPair<PlainFunctionType>
 		{	if	constexpr
-				(	IsPathBlocked<QualifiedFunctionType, NextID<t_nParsed>>
+				(	IsPathBlocked<QualifiedFunctionType, NextID<t_vParsed>>
 				)
 			{	return
 				{};
 			}
 			else
 			{	return
-				{	&Step<QualifiedFunctionType, IndexToken<t_npChar...>, NextID<t_nParsed>>::Advance
-				,	&Final<QualifiedFunctionType, NextID<t_nParsed>>::operator()
+				{	&Step<QualifiedFunctionType, IndexToken<t_vpChar...>, NextID<t_vParsed>>::Advance
+				,	&Final<QualifiedFunctionType, NextID<t_vParsed>>::operator()
 				};
 			}
 		}
@@ -141,20 +141,20 @@ export namespace
 		)	(	std::string_view
 					i_sString
 			,	USize
-					i_nOffset
+					i_vOffset
 			)
 		->	StepPair<PlainFunctionType>
 		{
-			auto const nChar = i_sString[i_nOffset];
+			auto const vChar = i_sString[i_vOffset];
 			if	(	StepPair<PlainFunctionType>
 						fParse
 				;	(	...
 					or	(	not
-							IsPathBlocked<QualifiedFunctionType, NextID<t_npChar>>
-						and	nChar == t_npChar
+							IsPathBlocked<QualifiedFunctionType, NextID<t_vpChar>>
+						and	vChar == t_vpChar
 						?	(	(void)
 								(	fParse
-								=	GetNextStep<t_npChar>()
+								=	GetNextStep<t_vpChar>()
 								)
 							,	true
 							)
@@ -169,7 +169,7 @@ export namespace
 			throw
 			PathBlockedError
 			{	i_sString
-			,	i_nOffset
+			,	i_vOffset
 			};
 		}
 	};

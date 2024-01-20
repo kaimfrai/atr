@@ -22,17 +22,17 @@ export namespace
 		explicit(true) constexpr inline
 		(	Divide
 		)	(	auto
-					i_nNumerator
+					i_vNumerator
 			,	auto
-					i_nDenominator
+					i_vDenominator
 			)
 		:	Quotient
-			{	i_nNumerator
-			/	i_nDenominator
+			{	i_vNumerator
+			/	i_vDenominator
 			}
 		,	Remainder
-			{	i_nNumerator
-			%	i_nDenominator
+			{	i_vNumerator
+			%	i_vDenominator
 			}
 		{
 		}

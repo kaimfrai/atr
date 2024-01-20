@@ -96,10 +96,10 @@ export namespace
 		explicit(true) constexpr inline
 		(	Clause
 		)	(	IndexType
-					i_nPositive
+					i_vPositive
 			)
 		:	Positive
-			{	Power(i_nPositive)
+			{	Power(i_vPositive)
 			}
 		,	Negative
 			{	Absorbing().Negative
@@ -153,31 +153,31 @@ export namespace
 			;
 
 			for	(	auto
-						nIndex
+						vIndex
 				:	::Meta::Bit::Count<LiteralLimit>
 					{	i_vPermutation.size()
 					}
 				)
 			{
-				if	(Positive[nIndex])
+				if	(Positive[vIndex])
 				{
 					Set
 					(	vResult.Positive
 					,	i_vPermutation
 						[	static_cast<USize>
-							(	nIndex.get()
+							(	vIndex.get()
 							)
 						]
 					);
 				}
 				else
-				if	(Negative[nIndex])
+				if	(Negative[vIndex])
 				{
 					Set
 					(	vResult.Negative
 					,	i_vPermutation
 						[	static_cast<USize>
-							(	nIndex.get()
+							(	vIndex.get()
 							)
 						]
 					);
@@ -233,15 +233,15 @@ export namespace
 		auto constexpr inline
 		(	operator[]
 		)	(	IndexType
-					i_nIndex
+					i_vIndex
 			)	const
 			noexcept
 		->	Clause
 		{
 			FieldType const
-				nIndexField
+				vIndexField
 			{	Power
-				(	i_nIndex
+				(	i_vIndex
 				)
 			};
 
@@ -252,12 +252,12 @@ export namespace
 
 			(	vLiteral
 			.	Positive
-			&=	nIndexField
+			&=	vIndexField
 			);
 
 			(	vLiteral
 			.	Negative
-			&=	nIndexField
+			&=	vIndexField
 			);
 
 			return

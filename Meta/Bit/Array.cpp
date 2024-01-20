@@ -26,39 +26,39 @@ export namespace
 		<	typename
 				t_tArray
 		,	BitSize
-				t_nSize
+				t_vSize
 		,	USize
-				t_nExtent
+				t_vExtent
 		,	ByteIndex
-				t_nOffset
+				t_vOffset
 		>
 	struct
 		Array
 	{
 		auto static constexpr inline
 			ElementSize
-		=	t_nSize
+		=	t_vSize
 		;
 		auto static constexpr inline
 			Extent
-		=	t_nExtent
+		=	t_vExtent
 		;
 		auto static constexpr inline
 			Offset
-		=	t_nOffset
+		=	t_vOffset
 		;
 
 		BitSize static constexpr inline
 			BitSize
 		{	ElementSize
-		*	t_nExtent
+		*	t_vExtent
 		};
 
 		auto static constexpr inline
 			BufferSize
 		=	ElementSize
-		*	t_nExtent
-		+	t_nOffset
+		*	t_vExtent
+		+	t_vOffset
 		;
 
 		t_tArray
@@ -75,14 +75,14 @@ export namespace
 		auto static constexpr inline
 			MaximumOffset
 		{	[]	<	::std::size_t
-					...	t_npIndex
-				>(	::std::index_sequence<t_npIndex...>
+					...	t_vpIndex
+				>(	::std::index_sequence<t_vpIndex...>
 				)
 			{	return
 				::std::max
 				({	IndexCast<ByteIndex>
 					(	ElementSize
-					*	t_npIndex
+					*	t_vpIndex
 					+	Offset
 					)
 				.	Remainder
@@ -162,7 +162,7 @@ export namespace
 		->	iterator
 		{	return
 				begin()
-			+	static_cast<difference_type>(t_nExtent)
+			+	static_cast<difference_type>(t_vExtent)
 			;
 		}
 
@@ -174,7 +174,7 @@ export namespace
 		->	const_iterator
 		{	return
 				begin()
-			+	static_cast<difference_type>(t_nExtent)
+			+	static_cast<difference_type>(t_vExtent)
 			;
 		}
 
@@ -182,31 +182,31 @@ export namespace
 		auto constexpr inline
 		(	operator[]
 		)	(	difference_type
-					i_nIndex
+					i_vIndex
 			)	&
 			noexcept
 		->	reference
-		{	return begin()[i_nIndex];	}
+		{	return begin()[i_vIndex];	}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator[]
 		)	(	difference_type
-					i_nIndex
+					i_vIndex
 			)	const&
 			noexcept
 		->	value_type
-		{	return begin()[i_nIndex];	}
+		{	return begin()[i_vIndex];	}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator[]
 		)	(	difference_type
-					i_nIndex
+					i_vIndex
 			)	&&
 			noexcept
 		->	value_type
-		{	return begin()[i_nIndex];	}
+		{	return begin()[i_vIndex];	}
 
 		[[nodiscard]]
 		auto constexpr inline
@@ -269,77 +269,77 @@ export namespace
 
 	template
 		<	BitSize
-				t_nSize
+				t_vSize
 		,	USize
-				t_nExtent
+				t_vExtent
 		,	ByteIndex
-				t_nOffset
+				t_vOffset
 			=	0_bdx
 		>
 	using
 		ArrayReference
 	=	Array
 		<	::std::byte* const
-		,	t_nSize
-		,	t_nExtent
-		,	t_nOffset
+		,	t_vSize
+		,	t_vExtent
+		,	t_vOffset
 		>
 	;
 
 	template
 		<	BitSize
-				t_nSize
+				t_vSize
 		,	USize
-				t_nExtent
+				t_vExtent
 		,	ByteIndex
-				t_nOffset
+				t_vOffset
 			=	0_bdx
 		>
 	using
 		ArrayConstReference
 	=	Array
 		<	::std::byte const* const
-		,	t_nSize
-		,	t_nExtent
-		,	t_nOffset
+		,	t_vSize
+		,	t_vExtent
+		,	t_vOffset
 		>
 	;
 
 	template
 		<	BitSize
-				t_nSize
+				t_vSize
 		,	USize
-				t_nExtent
+				t_vExtent
 		>
 	using
 		ArrayValue
 	=	Array
 		<	Byte::Buffer
-			<	t_nSize
-			*	t_nExtent
+			<	t_vSize
+			*	t_vExtent
 			>
-		,	t_nSize
-		,	t_nExtent
+		,	t_vSize
+		,	t_vExtent
 		,	0_bdx
 		>
 	;
 
 	template
 		<	BitSize
-				t_nSize
+				t_vSize
 		,	USize
-				t_nExtent
+				t_vExtent
 		,	ByteIndex
-				t_nOffset
+				t_vOffset
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	CopyArray
-	)	(	ArrayConstReference<t_nSize, t_nExtent, t_nOffset>
+	)	(	ArrayConstReference<t_vSize, t_vExtent, t_vOffset>
 				i_vBuffer
 		)
 		noexcept
-	->	ArrayValue<t_nSize, t_nExtent>
+	->	ArrayValue<t_vSize, t_vExtent>
 	{
 		// optimization using bit shift of an integer type
 		if	constexpr
@@ -348,7 +348,7 @@ export namespace
 			)
 		{
 			return
-			ArrayValue<t_nSize, t_nExtent>
+			ArrayValue<t_vSize, t_vExtent>
 			{	Byte::Buffer
 				{	i_vBuffer
 				.	get()
@@ -357,7 +357,7 @@ export namespace
 		}
 		else
 		{
-			ArrayValue<t_nSize, t_nExtent>
+			ArrayValue<t_vSize, t_vExtent>
 				vResult
 			{};
 			::std::copy

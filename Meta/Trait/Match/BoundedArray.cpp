@@ -14,7 +14,7 @@ export namespace
 			<	typename
 					t_tElement
 			,	USize
-					t_nExtent
+					t_vExtent
 			,	typename
 				...	t_tpQualifier
 			>
@@ -24,13 +24,13 @@ export namespace
 		)	(	LiteralBase
 			,	Lex::MatchCVArray
 				<	t_tElement
-				,	t_nExtent
+				,	t_vExtent
 				,	t_tpQualifier
 					...
 				>
 			)
 			noexcept
 		->	bool
-		{	return t_nExtent != 0uz;	}
+		{	return t_vExtent != 0uz;	}
 	};
 }

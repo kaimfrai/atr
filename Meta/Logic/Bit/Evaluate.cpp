@@ -14,14 +14,14 @@ export namespace
 	)	(	Term const
 			&	i_rTerm
 		,	Clause::FieldType
-				i_nPresetMask
+				i_vPresetMask
 		)
 		noexcept
 	->	bool
 	{	return
 			i_rTerm
 		.	Evaluate
-			(	i_nPresetMask
+			(	i_vPresetMask
 			,	true
 			)
 		;
@@ -29,16 +29,16 @@ export namespace
 
 	template
 		<	::std::size_t
-			...	t_npIndex
+			...	t_vpIndex
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	EvaluationField
 	)	(	::std::index_sequence
-			<	t_npIndex
+			<	t_vpIndex
 				...
 			>
-		,	decltype(t_npIndex)
+		,	decltype(t_vpIndex)
 			...	i_vpResult
 		)
 		noexcept
@@ -48,7 +48,7 @@ export namespace
 		{(	...
 		bitor
 			(	i_vpResult
-			<<	t_npIndex
+			<<	t_vpIndex
 			)
 		)};
 	}

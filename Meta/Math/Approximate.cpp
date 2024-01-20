@@ -13,11 +13,11 @@ export namespace
 	auto constexpr inline
 	(	Approximate
 	)	(	t_tFloat
-				i_nLeft
+				i_vLeft
 		,	t_tFloat
-				i_nRight
+				i_vRight
 		,	t_tFloat
-				i_nEpsilon
+				i_vEpsilon
 			=	::std::numeric_limits
 				<	t_tFloat
 				>
@@ -28,33 +28,33 @@ export namespace
 	{
 		auto const
 			fCompare
-		=	[	i_nEpsilon
+		=	[	i_vEpsilon
 			]	(	t_tFloat
-						i_nMax
+						i_vMax
 				,	t_tFloat
-						i_nMin
+						i_vMin
 				)
 			{	auto const
-					nDifference
-				=	i_nMax
-				-	i_nMin
+					vDifference
+				=	i_vMax
+				-	i_vMin
 				;
 
 				// if min is negative, -min will always be greater than max
 				// otherwise min is positive so max is also positive
 				auto const
-					nMaxAbs
-				=	(	-i_nMin
-					>	i_nMax
+					vMaxAbs
+				=	(	-i_vMin
+					>	i_vMax
 					)
-				?	-i_nMin
-				:	i_nMax
+				?	-i_vMin
+				:	i_vMax
 				;
 
 				return
-					nDifference
-				<=	(	nMaxAbs
-					*	i_nEpsilon
+					vDifference
+				<=	(	vMaxAbs
+					*	i_vEpsilon
 					)
 				;
 			}
@@ -62,21 +62,21 @@ export namespace
 
 		auto const
 			vCompare
-		=	i_nLeft
-		<=>	i_nRight
+		=	i_vLeft
+		<=>	i_vRight
 		;
 
 		if	(::std::is_lt(vCompare))
 			return
 			fCompare
-			(	i_nRight
-			,	i_nLeft
+			(	i_vRight
+			,	i_vLeft
 			);
 		if	(::std::is_gt(vCompare))
 			return
 			fCompare
-			(	i_nLeft
-			,	i_nRight
+			(	i_vLeft
+			,	i_vRight
 			);
 
 		return

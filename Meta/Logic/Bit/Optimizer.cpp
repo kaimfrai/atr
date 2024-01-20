@@ -369,19 +369,19 @@ export namespace
 		->	bool
 		{
 			auto const
-				nClauseCount
+				vClauseCount
 			=	size()
 			;
-			if	(nClauseCount <= 1uz)
+			if	(vClauseCount <= 1uz)
 				return IsAbsorbing();
 
 			Optimizer
 				vRedundancyBuffer
 			{	//	#ClauseCount - 1 are needed to evaluate redundancy of a clause or literal
-				nClauseCount -	1uz
+				vClauseCount -	1uz
 			+	//	an additional #ClauseCount are needed to evaluate terms with alternative clauses
 				i_bConsiderAlternatives
-			*	nClauseCount
+			*	vClauseCount
 			};
 
 			return
@@ -395,11 +395,11 @@ export namespace
 		explicit(true) constexpr inline
 		(	Optimizer
 		)	(	USize
-					i_nClauseCount
+					i_vClauseCount
 			)
 		:	m_vTerm
 			{	typename BufferType::BufferType
-				{	i_nClauseCount
+				{	i_vClauseCount
 				}
 			}
 		{}
@@ -407,12 +407,12 @@ export namespace
 		explicit(true) constexpr inline
 		(	Optimizer
 		)	(	::Meta::Bit::Count<LiteralLimit>
-					i_nLiteralCount
+					i_vLiteralCount
 			)
 		:	Optimizer
 			{	//	at most 2^(LiteralCount - 1) clauses are possible
 				Power
-				(	back(i_nLiteralCount)
+				(	back(i_vLiteralCount)
 				)
 			//	TODO use buffer more efficiently, should be possible to use half
 			*	2uz
@@ -441,12 +441,12 @@ export namespace
 				vArray
 				.	m_vBuffer
 					[	vArray
-						.	m_nElementCount
+						.	m_vElementCount
 					]
 				=	rClause
 				;
 				++	vArray
-					.	m_nElementCount
+					.	m_vElementCount
 				;
 			}
 

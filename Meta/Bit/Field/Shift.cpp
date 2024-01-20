@@ -10,79 +10,79 @@ export namespace
 {
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	operator>>
-	)	(	Field<t_nWidth>
+	)	(	Field<t_vWidth>
 				i_vField
-		,	typename Field<t_nWidth>::IndexType
-				i_nIndex
+		,	typename Field<t_vWidth>::IndexType
+				i_vIndex
 		)
 		noexcept
-	->	Field<t_nWidth>
+	->	Field<t_vWidth>
 	{	return
-		Field<t_nWidth>
+		Field<t_vWidth>
 		{	i_vField
 		.	get()
-		>>	i_nIndex
+		>>	i_vIndex
 		};
 	}
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	auto constexpr inline
 	(	operator>>=
-	)	(	Field<t_nWidth>
+	)	(	Field<t_vWidth>
 			&	i_rField
-		,	typename Field<t_nWidth>::IndexType
-				i_nIndex
+		,	typename Field<t_vWidth>::IndexType
+				i_vIndex
 		)
 		noexcept
-	->	Field<t_nWidth>
+	->	Field<t_vWidth>
 	{
 		auto
-			nValue
+			vValue
 		=	i_rField
 		.	get()
 		;
-		(	nValue
-		>>=	i_nIndex
+		(	vValue
+		>>=	i_vIndex
 		);
 		return
 		(	i_rField
-		=	nValue
+		=	vValue
 		);
 	}
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		,	auto
-				t_nOffset
+				t_vOffset
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	operator<<
-	)	(	Field<t_nWidth>
+	)	(	Field<t_vWidth>
 				i_vField
-		,	Index<t_nOffset>
-				i_nIndex
+		,	Index<t_vOffset>
+				i_vIndex
 		)
 		noexcept
 	->	Field
-		<	t_nWidth
-		+	i_nIndex
+		<	t_vWidth
+		+	i_vIndex
 		.	MaximumShift
 		>
 	{	using
 			tLargerField
 		=	Field
-			<	t_nWidth
-			+	i_nIndex
+			<	t_vWidth
+			+	i_vIndex
 			.	MaximumShift
 			>
 		;
@@ -95,35 +95,35 @@ export namespace
 			>(	i_vField
 			.	get()
 			)
-		<<	i_nIndex
+		<<	i_vIndex
 		};
 	}
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	auto constexpr inline
 	(	operator<<=
-	)	(	Field<t_nWidth>
+	)	(	Field<t_vWidth>
 			&	i_rField
-		,	typename Field<t_nWidth>::IndexType
-				i_nIndex
+		,	typename Field<t_vWidth>::IndexType
+				i_vIndex
 		)
 		noexcept
-	->	Field<t_nWidth>&
+	->	Field<t_vWidth>&
 	{
 		auto
-			nValue
+			vValue
 		=	i_rField
 		.	get()
 		;
-		(	nValue
-		<<=	i_nIndex
+		(	vValue
+		<<=	i_vIndex
 		);
 		return
 		(	i_rField
-		=	nValue
+		=	vValue
 		);
 	}
 }

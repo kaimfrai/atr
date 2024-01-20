@@ -9,12 +9,12 @@ export namespace
 {
 	template
 		<	BitSize
-				t_nWidth
+				t_vWidth
 		>
 	struct
 		OneIndexRange
 	{
-		Field<t_nWidth>
+		Field<t_vWidth>
 			m_vField
 		;
 
@@ -23,7 +23,7 @@ export namespace
 		(	begin
 		)	()	const
 			noexcept
-		->	OneIndexIterator<t_nWidth>
+		->	OneIndexIterator<t_vWidth>
 		{	return
 			{	m_vField
 			.	get()
@@ -41,13 +41,13 @@ export namespace
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	(	OneIndexRange
-	)	(	Field<t_nWidth>
+	)	(	Field<t_vWidth>
 		)
 	->	OneIndexRange
-		<	t_nWidth
+		<	t_vWidth
 		>
 	;
 }

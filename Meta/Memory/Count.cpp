@@ -9,18 +9,18 @@ export namespace
 {
 	template
 		<	decltype(0uz)
-				t_nWidth
+				t_vWidth
 		>
 	struct
 		Count
 	{
 		using
 			CountType
-		=	decltype(auto(t_nWidth))
+		=	decltype(auto(t_vWidth))
 		;
 
 		CountType
-			m_nValue
+			m_vValue
 		;
 
 		[[nodiscard]]
@@ -29,7 +29,7 @@ export namespace
 		)	()	&
 			noexcept
 		->	CountType&
-		{	return m_nValue;	}
+		{	return m_vValue;	}
 
 		[[nodiscard]]
 		auto constexpr inline
@@ -37,7 +37,7 @@ export namespace
 		)	()	const&
 			noexcept
 		->	CountType const&
-		{	return m_nValue;	}
+		{	return m_vValue;	}
 
 		[[nodiscard]]
 		auto constexpr inline
@@ -45,7 +45,7 @@ export namespace
 		)	()	&&
 			noexcept
 		->	CountType
-		{	return m_nValue;	}
+		{	return m_vValue;	}
 
 		[[nodiscard]]
 		explicit(true) constexpr inline
@@ -57,19 +57,19 @@ export namespace
 
 		template
 			<	auto
-					t_nOtherWidth
+					t_vOtherWidth
 			>
 		[[nodiscard]]
 		explicit(false) constexpr inline
 		(	operator
-			Count<t_nOtherWidth>
+			Count<t_vOtherWidth>
 		)	()	const
 			noexcept
 		{	return
 			{	Math::Divide
 				(	get()
-				*	t_nWidth
-				,	t_nOtherWidth
+				*	t_vWidth
+				,	t_vOtherWidth
 				)
 			.	Ceil()
 			};
@@ -119,13 +119,13 @@ export namespace
 	auto constexpr inline
 	(	operator""_bits
 	)	(	unsigned long long
-				i_nBits
+				i_vBits
 		)
 		noexcept
 	->	Bits
 	{	return
 		{	static_cast<Bits::CountType>
-			(	i_nBits
+			(	i_vBits
 			)
 		};
 	}
@@ -134,13 +134,13 @@ export namespace
 	auto constexpr inline
 	(	operator""_bytes
 	)	(	unsigned long long
-				i_nBytes
+				i_vBytes
 		)
 		noexcept
 	->	Bytes
 	{	return
 		{	static_cast<Bytes::CountType>
-			(	i_nBytes
+			(	i_vBytes
 			)
 		};
 	}

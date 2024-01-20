@@ -7,154 +7,154 @@ export namespace
 {
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	operator bitand
-	)	(	Field<t_nWidth>
-				i_nLeft
-		,	decltype(i_nLeft)
-				i_nRight
+	)	(	Field<t_vWidth>
+				i_vLeft
+		,	decltype(i_vLeft)
+				i_vRight
 		)
 		noexcept
-	->	Field<t_nWidth>
+	->	Field<t_vWidth>
 	{	return
-		Field<t_nWidth>
-		{	static_cast<Field<t_nWidth>::FieldType>
-			(	i_nLeft.get()
+		Field<t_vWidth>
+		{	static_cast<Field<t_vWidth>::FieldType>
+			(	i_vLeft.get()
 			bitand
-				i_nRight.get()
+				i_vRight.get()
 			)
 		};
 	}
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	auto constexpr inline
 	(	operator&=
-	)	(	Field<t_nWidth>
+	)	(	Field<t_vWidth>
 			&	i_rLeft
 		,	decltype(auto(i_rLeft))
-				i_nRight
+				i_vRight
 		)
 		noexcept
-	->	Field<t_nWidth>&
+	->	Field<t_vWidth>&
 	{	return
 		(	i_rLeft
 		=	i_rLeft
 		bitand
-			i_nRight
+			i_vRight
 		);
 	}
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	operator bitor
-	)	(	Field<t_nWidth>
-				i_nLeft
-		,	decltype(i_nLeft)
-				i_nRight
+	)	(	Field<t_vWidth>
+				i_vLeft
+		,	decltype(i_vLeft)
+				i_vRight
 		)
 		noexcept
-	->	Field<t_nWidth>
+	->	Field<t_vWidth>
 	{	return
-		Field<t_nWidth>
-		{	static_cast<Field<t_nWidth>::FieldType>
-			(	i_nLeft.get()
+		Field<t_vWidth>
+		{	static_cast<Field<t_vWidth>::FieldType>
+			(	i_vLeft.get()
 			bitor
-				i_nRight.get()
+				i_vRight.get()
 			)
 		};
 	}
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	auto constexpr inline
 	(	operator|=
-	)	(	Field<t_nWidth>
+	)	(	Field<t_vWidth>
 			&	i_rLeft
 		,	decltype(auto(i_rLeft))
-				i_nRight
+				i_vRight
 		)
 		noexcept
-	->	Field<t_nWidth>&
+	->	Field<t_vWidth>&
 	{	return
 		(	i_rLeft
 		=	i_rLeft
 		bitor
-			i_nRight
+			i_vRight
 		);
 	}
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	operator xor
-	)	(	Field<t_nWidth>
-				i_nLeft
-		,	decltype(i_nLeft)
-				i_nRight
+	)	(	Field<t_vWidth>
+				i_vLeft
+		,	decltype(i_vLeft)
+				i_vRight
 		)
 		noexcept
-	->	Field<t_nWidth>
+	->	Field<t_vWidth>
 	{	return
-		Field<t_nWidth>
-		{	static_cast<Field<t_nWidth>::FieldType>
-			(	i_nLeft.get()
-			xor	i_nRight.get()
+		Field<t_vWidth>
+		{	static_cast<Field<t_vWidth>::FieldType>
+			(	i_vLeft.get()
+			xor	i_vRight.get()
 			)
 		};
 	}
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	auto constexpr inline
 	(	operator^=
-	)	(	Field<t_nWidth>
+	)	(	Field<t_vWidth>
 			&	i_rLeft
 		,	decltype(auto(i_rLeft))
-				i_nRight
+				i_vRight
 		)
 		noexcept
-	->	Field<t_nWidth>&
+	->	Field<t_vWidth>&
 	{	return
 		(	i_rLeft
 		=	i_rLeft
-		xor	i_nRight
+		xor	i_vRight
 		);
 	}
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	operator compl
-	)	(	Field<t_nWidth>
-				i_nField
+	)	(	Field<t_vWidth>
+				i_vField
 		)
 		noexcept
-	->	Field<t_nWidth>
+	->	Field<t_vWidth>
 	{	return
-		Field<t_nWidth>
-		{	Field<t_nWidth>::Sanitize
-			(	static_cast<Field<t_nWidth>::FieldType>
+		Field<t_vWidth>
+		{	Field<t_vWidth>::Sanitize
+			(	static_cast<Field<t_vWidth>::FieldType>
 				(	compl
-					i_nField.get()
+					i_vField.get()
 				)
 			)
 		};

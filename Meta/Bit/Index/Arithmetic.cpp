@@ -14,59 +14,59 @@ export namespace
 {
 	template
 		<	auto
-				t_nSize
+				t_vSize
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	operator+
-	)	(	Index<t_nSize>
-				i_nLeft
-		,	decltype(i_nLeft)
-				i_nRight
+	)	(	Index<t_vSize>
+				i_vLeft
+		,	decltype(i_vLeft)
+				i_vRight
 		)
 		noexcept
-	->	Index<t_nSize>
+	->	Index<t_vSize>
 	{	return
-		Index<t_nSize>
-		{	i_nLeft.get()
-		+	i_nRight.get()
+		Index<t_vSize>
+		{	i_vLeft.get()
+		+	i_vRight.get()
 		};
 	}
 
 	template
 		<	auto
-				t_nSize
+				t_vSize
 		>
 	auto constexpr inline
 	(	operator+=
-	)	(	Index<t_nSize>
+	)	(	Index<t_vSize>
 			&	i_rIndex
 		,	decltype(auto(i_rIndex))
-				i_nOffset
+				i_vOffset
 		)
 		noexcept
-	->	Index<t_nSize>&
+	->	Index<t_vSize>&
 	{	return
 		(	i_rIndex
 		=	i_rIndex
-		+	i_nOffset
+		+	i_vOffset
 		);
 	}
 
 	template
 		<	auto
-				t_nSize
+				t_vSize
 		>
 	auto constexpr inline
 	(	operator++
-	)	(	Index<t_nSize>
+	)	(	Index<t_vSize>
 			&	i_rIndex
 		)
 		noexcept
-	->	Index<t_nSize>&
+	->	Index<t_vSize>&
 	{	return
 		(	i_rIndex
-		=	Index<t_nSize>
+		=	Index<t_vSize>
 			{	Next
 				(	i_rIndex
 				.	get()
@@ -77,17 +77,17 @@ export namespace
 
 	template
 		<	auto
-				t_nSize
+				t_vSize
 		>
 	[[nodiscard("Use preincrement when discarding the result")]]
 	auto constexpr inline
 	(	operator++
-	)	(	Index<t_nSize>
+	)	(	Index<t_vSize>
 			&	i_rIndex
 		,	int
 		)
 		noexcept
-	->	Index<t_nSize>
+	->	Index<t_vSize>
 	{	return
 		::std::exchange
 		(	i_rIndex
@@ -99,59 +99,59 @@ export namespace
 
 	template
 		<	auto
-				t_nSize
+				t_vSize
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	operator-
-	)	(	Index<t_nSize>
-				i_nLeft
-		,	decltype(i_nLeft)
-				i_nRight
+	)	(	Index<t_vSize>
+				i_vLeft
+		,	decltype(i_vLeft)
+				i_vRight
 		)
 		noexcept
-	->	Index<t_nSize>
+	->	Index<t_vSize>
 	{	return
-		Index<t_nSize>
-		{	i_nLeft.get()
-		-	i_nRight.get()
+		Index<t_vSize>
+		{	i_vLeft.get()
+		-	i_vRight.get()
 		};
 	}
 
 	template
 		<	auto
-				t_nSize
+				t_vSize
 		>
 	auto constexpr inline
 	(	operator-=
-	)	(	Index<t_nSize>
+	)	(	Index<t_vSize>
 			&	i_rIndex
 		,	decltype(auto(i_rIndex))
-				i_nOffset
+				i_vOffset
 		)
 		noexcept
-	->	Index<t_nSize>&
+	->	Index<t_vSize>&
 	{	return
 		(	i_rIndex
 		=	i_rIndex
-		-	i_nOffset
+		-	i_vOffset
 		);
 	}
 
 	template
 		<	auto
-				t_nSize
+				t_vSize
 		>
 	auto constexpr inline
 	(	operator--
-	)	(	Index<t_nSize>
+	)	(	Index<t_vSize>
 			&	i_rIndex
 		)
 		noexcept
-	->	Index<t_nSize>&
+	->	Index<t_vSize>&
 	{	return
 		(	i_rIndex
-		=	Index<t_nSize>
+		=	Index<t_vSize>
 			{	Prev
 				(	i_rIndex
 				.	get()
@@ -162,17 +162,17 @@ export namespace
 
 	template
 		<	auto
-				t_nSize
+				t_vSize
 		>
 	[[nodiscard("Use predecrement when discarding the result")]]
 	auto constexpr inline
 	(	operator--
-	)	(	Index<t_nSize>
+	)	(	Index<t_vSize>
 			&	i_rIndex
 		,	int
 		)
 		noexcept
-	->	Index<t_nSize>
+	->	Index<t_vSize>
 	{	return
 		::std::exchange
 		(	i_rIndex

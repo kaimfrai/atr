@@ -35,11 +35,11 @@ export namespace
 		explicit(true) constexpr inline
 		(	IndexCastResult
 		)	(	BitSize
-					i_nBitSize
+					i_vBitSize
 			)
 		:	Quotient
 			{	Math::Divide
-				(	i_nBitSize
+				(	i_vBitSize
 				.	get()
 				,	SizeType::Width
 				)
@@ -47,7 +47,7 @@ export namespace
 				()
 			}
 		,	Remainder
-			{	i_nBitSize
+			{	i_vBitSize
 			-	Quotient
 			}
 		{}
@@ -62,13 +62,13 @@ export namespace
 	auto constexpr inline
 	(	IndexCast
 	)	(	BitSize
-				i_nBitSize
+				i_vBitSize
 		)
 		noexcept
 	->	IndexCastResult<t_tIndex>
 	{	return
 		IndexCastResult<t_tIndex>
-		{	i_nBitSize
+		{	i_vBitSize
 		};
 	}
 }

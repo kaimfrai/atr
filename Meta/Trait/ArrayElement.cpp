@@ -38,12 +38,12 @@ export namespace
 			<	typename
 					t_tEntity
 			,	auto
-					t_nExtent
+					t_vExtent
 			>
 		[[nodiscard]]
 		auto static constexpr inline
 		(	operator()
-		)	(	TypeToken<t_tEntity[t_nExtent]>
+		)	(	TypeToken<t_tEntity[t_vExtent]>
 			)
 			noexcept
 		->	TypeToken

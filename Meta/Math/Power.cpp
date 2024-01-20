@@ -46,16 +46,16 @@ export namespace
 	auto constexpr inline
 	(	Power
 	)	(	auto
-				i_nBase
+				i_vBase
 		,	unsigned
-				i_nExponent
+				i_vExponent
 		)
 		noexcept
-	->	decltype(i_nBase)
+	->	decltype(i_vBase)
 	{
 		using
 			tResult
-		=	decltype(i_nBase)
+		=	decltype(i_vBase)
 		;
 
 		auto static constexpr
@@ -65,10 +65,10 @@ export namespace
 			>
 		;
 
-		if	(	(	i_nExponent
+		if	(	(	i_vExponent
 				>=	rMaxExponent
 				)
-			and	(	Abs(i_nBase)
+			and	(	Abs(i_vBase)
 				>=	::std::numeric_limits
 					<	tResult
 					>
@@ -80,11 +80,11 @@ export namespace
 		}
 
 		tResult
-			nResult
+			vResult
 		{	1
 		};
 		auto
-			nExponentMask
+			vExponentMask
 		=	::std::bit_ceil
 			(	rMaxExponent
 			)
@@ -93,35 +93,35 @@ export namespace
 		do
 		{
 			bool const
-				nBitSet
-			=	i_nExponent
-			>=	nExponentMask
+				vBitSet
+			=	i_vExponent
+			>=	vExponentMask
 			;
 
-			(	nResult
-			*=	(	nBitSet
-				*	i_nBase
+			(	vResult
+			*=	(	vBitSet
+				*	i_vBase
 				+	not
-					nBitSet
+					vBitSet
 				)
-			*	nResult
+			*	vResult
 			);
 
-			(	i_nExponent
+			(	i_vExponent
 			&=	compl
-				nExponentMask
+				vExponentMask
 			);
 
-			(	nExponentMask
+			(	vExponentMask
 			>>=	1u
 			);
 
 		}	while
-			(	nExponentMask
+			(	vExponentMask
 			)
 		;
 		return
-			nResult
+			vResult
 		;
 	}
 }

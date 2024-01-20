@@ -14,14 +14,14 @@ export namespace
 	auto constexpr inline
 	(	LowestOne
 	)	(	::std::integral auto
-				i_nField
+				i_vField
 		)
 		noexcept
-	->	decltype(i_nField)
+	->	decltype(i_vField)
 	{	return
-		(	i_nField
+		(	i_vField
 		&=	-
-			i_nField
+			i_vField
 		);
 	}
 
@@ -29,18 +29,18 @@ export namespace
 	auto constexpr inline
 	(	IndexLowestOne
 	)	(	::std::integral auto
-				i_nField
+				i_vField
 		)
 		noexcept
-	->	Index_For<decltype(i_nField)>
+	->	Index_For<decltype(i_vField)>
 	{
-		if	(i_nField == 0u)
+		if	(i_vField == 0u)
 			::std::unreachable();
 
 		return
-		Index_For<decltype(i_nField)>
+		Index_For<decltype(i_vField)>
 		{	::std::countr_zero
-			(	i_nField
+			(	i_vField
 			)
 		};
 	}
@@ -50,14 +50,14 @@ export namespace
 	)	(	::std::integral auto
 			&	i_rField
 		,	decltype(auto(i_rField))
-				i_nMask
+				i_vMask
 		)
 		noexcept
 	->	decltype(i_rField)
 	{	return
 		(	i_rField
 		&=	Prev
-			(	i_nMask
+			(	i_vMask
 			)
 		);
 	}
@@ -82,14 +82,14 @@ export namespace
 	)	(	::std::integral auto
 			&&	i_rField
 		,	decltype(auto(i_rField))
-				i_nMask
+				i_vMask
 		)
 		noexcept
 	->	decltype(auto(i_rField))
 	{	return
 		UnsetLowestOne
 		(	i_rField
-		,	i_nMask
+		,	i_vMask
 		);
 	}
 

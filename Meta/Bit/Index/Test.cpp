@@ -9,24 +9,24 @@ export namespace
 {
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	Test
-	)	(	UInt<t_nWidth>
-				i_nField
-		,	Index<t_nWidth>
-				i_nIndex
+	)	(	UInt<t_vWidth>
+				i_vField
+		,	Index<t_vWidth>
+				i_vIndex
 		)
 		noexcept
 	->	bool
 	{	return
-		(	(	i_nField
-			>>	i_nIndex
+		(	(	i_vField
+			>>	i_vIndex
 			)
 		bitand
-			UInt<t_nWidth>
+			UInt<t_vWidth>
 			{	1u
 			}
 		);

@@ -42,14 +42,14 @@ using
 auto constexpr inline
 (	operator<=>
 )	(	ParseType
-			i_nParsed
+			i_vParsed
 	,	ERadix
 			i_eRadix
 	)
 	noexcept
 ->	::std::strong_ordering
 {	return
-	(	i_nParsed
+	(	i_vParsed
 	<=>	::std::to_underlying
 		(	i_eRadix
 		)
@@ -93,9 +93,9 @@ struct
 
 template
 	<	char
-			t_nCharacter
+			t_vCharacter
 	,	ParseType
-			t_nParsed
+			t_vParsed
 	>
 struct
 	ParseItem
@@ -105,18 +105,18 @@ struct
 	(	operator<<
 	)	(	auto
 				i_vParser
-		,	BasicCharacter<t_nCharacter>
+		,	BasicCharacter<t_vCharacter>
 		)
 		noexcept
 	->	decltype(i_vParser)
 		requires
 		(	i_vParser.Radix
-		>	t_nParsed
+		>	t_vParsed
 		)
 	{	return
 			i_vParser
 		.	Append
-			(	t_nParsed
+			(	t_vParsed
 			)
 		;
 	}
@@ -178,13 +178,13 @@ struct
 	auto constexpr inline
 	(	Append
 	)	(	ParseType
-				i_nParsed
+				i_vParsed
 		)	&
 		noexcept
 	->	ExponentParser&
 	{
 		Exponent *= t_eRadix;
-		Exponent += i_nParsed;
+		Exponent += i_vParsed;
 		return
 			*this
 		;
@@ -234,7 +234,7 @@ struct
 	->	FloatMax
 	{
 		auto const
-			nExponent
+			vExponent
 		=	Power
 			(	static_cast<FloatMax>(i_vParser.Base)
 			,	i_vParser.Exponent
@@ -247,7 +247,7 @@ struct
 			(	(	static_cast<FloatMax>
 					(	i_vParser.Numerator
 					)
-				*	nExponent
+				*	vExponent
 				)
 			/	static_cast<FloatMax>
 				(	i_vParser.Denominator
@@ -262,7 +262,7 @@ struct
 			/	(	static_cast<FloatMax>
 					(	i_vParser.Denominator
 					)
-				*	nExponent
+				*	vExponent
 				)
 			);
 		}
@@ -323,13 +323,13 @@ struct
 	auto constexpr inline
 	(	Append
 	)	(	ParseType
-				i_nParsed
+				i_vParsed
 		)	&
 		noexcept
 	->	FloatParser&
 	{
 		Numerator *= t_eRadix;
-		Numerator += i_nParsed;
+		Numerator += i_vParsed;
 		Denominator *= t_eRadix;
 		return
 			*this
@@ -380,13 +380,13 @@ struct
 	auto constexpr inline
 	(	Append
 	)	(	ParseType
-				i_nParsed
+				i_vParsed
 		)	&
 		noexcept
 	->	IntegerParser&
 	{
 		Numerator *= t_eRadix;
-		Numerator += i_nParsed;
+		Numerator += i_vParsed;
 		return
 			*this
 		;
@@ -424,12 +424,12 @@ struct
 
 template
 	<	char
-		...	t_npBasicCharacter
+		...	t_vpBasicCharacter
 	>
 [[nodiscard]]
 auto constexpr inline
 (	ParseNumericLiteral
-)	(	BasicCharacter<t_npBasicCharacter>
+)	(	BasicCharacter<t_vpBasicCharacter>
 		...	i_vpNumeric
 	)
 	noexcept
@@ -444,21 +444,21 @@ auto constexpr inline
 
 template
 	<	char
-		...	t_npBasicCharacter
+		...	t_vpBasicCharacter
 	>
 [[nodiscard]]
 auto constexpr inline
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
-	,	BasicCharacter<t_npBasicCharacter>
+	,	BasicCharacter<t_vpBasicCharacter>
 		...	i_vpNumeric
 	)
 	noexcept
 /// leading 0 indicates octal integral unless there is a separator or exponent
 requires
 	(	...
-	and	(	t_npBasicCharacter != '.'
-		and	t_npBasicCharacter != 'E'
+	and	(	t_vpBasicCharacter != '.'
+		and	t_vpBasicCharacter != 'E'
 		)
 	)
 {	return
@@ -472,14 +472,14 @@ requires
 
 template
 	<	char
-		...	t_npBasicCharacter
+		...	t_vpBasicCharacter
 	>
 [[nodiscard]]
 auto constexpr inline
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
 	,	BasicCharacter<'X'>
-	,	BasicCharacter<t_npBasicCharacter>
+	,	BasicCharacter<t_vpBasicCharacter>
 		...	i_vpNumeric
 	)
 	noexcept
@@ -494,14 +494,14 @@ auto constexpr inline
 
 template
 	<	char
-		...	t_npBasicCharacter
+		...	t_vpBasicCharacter
 	>
 [[nodiscard]]
 auto constexpr inline
 (	ParseNumericLiteral
 )	(	BasicCharacter<'0'>
 	,	BasicCharacter<'B'>
-	,	BasicCharacter<t_npBasicCharacter>
+	,	BasicCharacter<t_vpBasicCharacter>
 		...	i_vpNumeric
 	)
 	noexcept
@@ -518,25 +518,25 @@ auto constexpr inline
 auto constexpr inline
 (	ToUpper
 )	(	char
-			i_nChar
+			i_vChar
 	)
 	noexcept
 ->	char
-{	if	(	i_nChar
+{	if	(	i_vChar
 		>=	'a'
-		and	i_nChar
+		and	i_vChar
 		<=	'z'
 		)
 	{	return
 		static_cast<char>
-		(	i_nChar
+		(	i_vChar
 		-	'a'
 		+	'A'
 		);
 	}
 
 	return
-		i_nChar
+		i_vChar
 	;
 }
 
@@ -545,7 +545,7 @@ export namespace
 {
 	template
 		<	char
-			...	t_npBasicCharacter
+			...	t_vpBasicCharacter
 		>
 	[[nodiscard]]
 	auto constexpr inline
@@ -557,7 +557,7 @@ export namespace
 		(	::ParseNumericLiteral
 			(	::BasicCharacter
 				<	::ToUpper
-					(	t_npBasicCharacter
+					(	t_vpBasicCharacter
 					)
 				>{}
 				...

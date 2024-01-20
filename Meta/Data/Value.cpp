@@ -232,7 +232,7 @@ export namespace
 		<	typename
 				t_tElement
 		,	USize
-				t_nExtent
+				t_vExtent
 		,	typename
 			...	t_tpQualifier
 		>
@@ -240,7 +240,7 @@ export namespace
 		Value
 		<	Lex::MatchCVArray
 			<	t_tElement
-			,	t_nExtent
+			,	t_vExtent
 			,	t_tpQualifier
 				...
 			>
@@ -249,7 +249,7 @@ export namespace
 		<	typename
 				Lex::MatchCVArray
 				<	t_tElement
-				,	t_nExtent
+				,	t_vExtent
 				,	t_tpQualifier
 					...
 				>
@@ -262,7 +262,7 @@ export namespace
 		=	typename
 				Lex::MatchCVArray
 				<	t_tElement
-				,	t_nExtent
+				,	t_vExtent
 				,	t_tpQualifier
 					...
 				>
@@ -332,7 +332,7 @@ export namespace
 		<	typename
 				t_tValue
 		,	USize
-				t_nExtent
+				t_vExtent
 		>
 	using
 		ArrayValue
@@ -340,7 +340,7 @@ export namespace
 		<	TypeEntity
 			<	ArrayType
 				<	t_tValue
-				,	t_nExtent
+				,	t_vExtent
 				>
 			>
 		>

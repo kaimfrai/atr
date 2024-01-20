@@ -46,13 +46,13 @@ export namespace
 	auto constexpr inline
 	(	operator""_align
 	)	(	unsigned long long
-				i_nBitExponent
+				i_vBitExponent
 		)
 		noexcept
 	->	Memory::Alignment
 	{	return
 		{	static_cast<int>
-			(	i_nBitExponent
+			(	i_vBitExponent
 			)
 		};
 	}

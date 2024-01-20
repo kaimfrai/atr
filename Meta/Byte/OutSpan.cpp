@@ -38,12 +38,12 @@ export namespace
 		)	(	::std::byte
 				*	i_aBegin
 			,	ByteSize
-					i_nSize
+					i_vSize
 			)
 		:	OutSpan
 			{	i_aBegin
 			,	i_aBegin
-			+	i_nSize
+			+	i_vSize
 			}
 		{}
 
@@ -100,17 +100,17 @@ export namespace
 			);
 
 			auto const
-				nInSize
+				vInSize
 			=	i_vFrom.size()
 			;
 			auto const
-				nOutSize
+				vOutSize
 			=	size()
 			;
 
-			if	(nInSize > nOutSize)
+			if	(vInSize > vOutSize)
 			{
-				i_vFrom = i_vFrom.subspan(0_byte, nOutSize);
+				i_vFrom = i_vFrom.subspan(0_byte, vOutSize);
 			}
 
 			auto const

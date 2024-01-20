@@ -20,26 +20,26 @@ using namespace ::Meta::Literals;
 
 template
 	<	::Meta::BitSize
-			t_nSize
+			t_vSize
 	,	USize
-			t_nCount
+			t_vCount
 	,	::Meta::ByteIndex
-			t_nOffset
+			t_vOffset
 		=	0_bdx
 	>
 auto constexpr inline
 (	SetAndCheck
-)	(	UInt<t_nSize>
+)	(	UInt<t_vSize>
 			v
 	)
 	noexcept
 ->	bool
 {
-	::Meta::Byte::Buffer<t_nSize * t_nCount + t_nOffset>
+	::Meta::Byte::Buffer<t_vSize * t_vCount + t_vOffset>
 		aBuffer
 	{};
 
-	using ArrayReference = Meta::Bit::ArrayReference<t_nSize, t_nCount, t_nOffset>;
+	using ArrayReference = Meta::Bit::ArrayReference<t_vSize, t_vCount, t_vOffset>;
 
 	ArrayReference
 		arr
@@ -49,7 +49,7 @@ auto constexpr inline
 	using FieldType = typename ArrayReference::value_type;
 
 	for	(	auto i = 0z
-		;	static_cast<USize>(i) < t_nCount
+		;	static_cast<USize>(i) < t_vCount
 		;	++i
 		)
 	{
@@ -74,7 +74,7 @@ auto constexpr inline
 		:	arr
 		)
 	{
-		if	(i >= t_nCount)
+		if	(i >= t_vCount)
 			std::unreachable();
 		FieldType const
 			vExpected

@@ -12,34 +12,34 @@ export namespace
 {
 	template
 		<	auto
-			...	t_npIndex
+			...	t_vpIndex
 		>
 	struct
 		Index
 	{
 		[[nodiscard]]
-		explicit(sizeof...(t_npIndex) != 1uz) constexpr inline
+		explicit(sizeof...(t_vpIndex) != 1uz) constexpr inline
 		(	operator
 			auto
 		)	()	const
 			noexcept
-		{	if	constexpr(sizeof...(t_npIndex) == 1uz)
-				return (..., t_npIndex);
+		{	if	constexpr(sizeof...(t_vpIndex) == 1uz)
+				return (..., t_vpIndex);
 		}
 
 		template
 			<	auto
-					t_nAssign
+					t_vAssign
 			>
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator=
-		)	(	Index<t_nAssign>
+		)	(	Index<t_vAssign>
 			)	const
 			noexcept
 		->	Index
-			<	(	(void)t_npIndex
-				,	t_nAssign
+			<	(	(void)t_vpIndex
+				,	t_vAssign
 				)
 				...
 			>
@@ -47,17 +47,17 @@ export namespace
 
 		template
 			<	auto
-					t_nAdd
+					t_vAdd
 			>
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator+=
-		)	(	Index<t_nAdd>
+		)	(	Index<t_vAdd>
 			)	const
 			noexcept
 		->	Index
-			<	(	t_npIndex
-				+	t_nAdd
+			<	(	t_vpIndex
+				+	t_vAdd
 				)
 				...
 			>
@@ -65,19 +65,19 @@ export namespace
 
 		template
 			<	auto
-				...	t_npSuffix
+				...	t_vpSuffix
 			>
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator|
 		)	(	Index
-			,	Index<t_npSuffix...>
+			,	Index<t_vpSuffix...>
 			)
 			noexcept
 		->	Index
-			<	t_npIndex
+			<	t_vpIndex
 				...
-			,	t_npSuffix
+			,	t_vpSuffix
 				...
 			>
 		{	return {};	}
@@ -89,7 +89,7 @@ export namespace
 			noexcept
 		->	Index
 			<	Next
-				(	t_npIndex
+				(	t_vpIndex
 				)
 				...
 			>
@@ -102,7 +102,7 @@ export namespace
 			noexcept
 		->	Index
 			<	Prev
-				(	t_npIndex
+				(	t_vpIndex
 				)
 				...
 			>
@@ -119,7 +119,7 @@ export namespace
 			noexcept
 		->	Index
 			<	static_cast<t_tCast>
-				(	t_npIndex
+				(	t_vpIndex
 				)
 				...
 			>
@@ -134,24 +134,24 @@ export namespace
 {
 	template
 		<	auto
-			...	t_npIndex
+			...	t_vpIndex
 		>
 	using
 		IndexToken
 	=	Token::Index
-		<	t_npIndex
+		<	t_vpIndex
 			...
 		>
 	;
 
 	template
 		<	auto
-			...	t_npIndex
+			...	t_vpIndex
 		>
 	auto constexpr inline
 		Index
 	=	IndexToken
-		<	t_npIndex
+		<	t_vpIndex
 			...
 		>{}
 	;
@@ -162,7 +162,7 @@ export namespace
 {
 	template
 		<	char
-			...	t_nNumeric
+			...	t_vNumeric
 		>
 	[[nodiscard]]
 	auto constexpr inline
@@ -171,7 +171,7 @@ export namespace
 		noexcept
 	->	IndexToken
 		<	EvaluateNumericLiteral
-			<	t_nNumeric
+			<	t_vNumeric
 				...
 			>()
 		>

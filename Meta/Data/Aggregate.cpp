@@ -411,14 +411,14 @@ export namespace
 		<	typename
 				t_tElement
 		,	USize
-				t_nExtent
+				t_vExtent
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	operator==
-	)	(	Aggregate<t_tElement[t_nExtent]> const
+	)	(	Aggregate<t_tElement[t_vExtent]> const
 			&	i_rLeft
-		,	Aggregate<t_tElement[t_nExtent]> const
+		,	Aggregate<t_tElement[t_vExtent]> const
 			&	i_rRight
 		)
 	->	bool

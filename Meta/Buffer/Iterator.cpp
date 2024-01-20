@@ -122,21 +122,21 @@ export namespace
 		auto constexpr inline
 		(	operator[]
 		)	(	SSize
-					i_nIndex
+					i_vIndex
 			)	const
 			noexcept
 		->	t_tValue&
-		{	return *std::next(m_aData, i_nIndex);	}
+		{	return *std::next(m_aData, i_vIndex);	}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator[]
 		)	(	USize
-					i_nIndex
+					i_vIndex
 			)	const
 			noexcept
 		->	t_tValue&
-		{	return operator[](static_cast<SSize>(i_nIndex));	}
+		{	return operator[](static_cast<SSize>(i_vIndex));	}
 
 		auto constexpr inline
 		(	operator++

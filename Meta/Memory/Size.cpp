@@ -9,10 +9,10 @@ export namespace
 {
 	template
 		<	decltype(0z)
-				t_nWidth
+				t_vWidth
 		>
 	requires
-		(	t_nWidth
+		(	t_vWidth
 		>	0z
 		)
 	struct
@@ -20,12 +20,12 @@ export namespace
 	{
 		auto static constexpr inline
 			Width
-		=	t_nWidth
+		=	t_vWidth
 		;
 
 		using
 			SizeType
-		=	decltype(auto(t_nWidth))
+		=	decltype(auto(t_vWidth))
 		;
 
 		SizeType
@@ -66,19 +66,19 @@ export namespace
 
 		template
 			<	auto
-					t_nOtherWidth
+					t_vOtherWidth
 			>
 		[[nodiscard]]
 		explicit(false) constexpr inline
 		(	operator
-			Size<t_nOtherWidth>
+			Size<t_vOtherWidth>
 		)	()	const
 			noexcept
 		{	return
 			{	Math::Divide
 				(	get()
-				*	t_nWidth
-				,	t_nOtherWidth
+				*	t_vWidth
+				,	t_vOtherWidth
 				)
 			.	Ceil()
 			};
@@ -87,13 +87,13 @@ export namespace
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	(	Size
-	)	(	Size<t_nWidth>
+	)	(	Size<t_vWidth>
 		)
 	->	Size
-		<	t_nWidth
+		<	t_vWidth
 		>
 	;
 
@@ -153,13 +153,13 @@ export namespace
 	auto constexpr inline
 	(	operator""_bit
 	)	(	unsigned long long
-				i_nBits
+				i_vBits
 		)
 		noexcept
 	->	BitSize
 	{	return
 		{	static_cast<BitSize::SizeType>
-			(	i_nBits
+			(	i_vBits
 			)
 		};
 	}
@@ -168,13 +168,13 @@ export namespace
 	auto constexpr inline
 	(	operator""_byte
 	)	(	unsigned long long
-				i_nBytes
+				i_vBytes
 		)
 		noexcept
 	->	ByteSize
 	{	return
 		{	static_cast<ByteSize::SizeType>
-			(	i_nBytes
+			(	i_vBytes
 			)
 		};
 	}

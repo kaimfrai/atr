@@ -13,14 +13,14 @@ export namespace
 	)	(	::std::integral auto
 			&	i_rField
 		,	Index_For<decltype(i_rField)>
-				i_nIndex
+				i_vIndex
 		)
 		noexcept
 	->	decltype(i_rField)
 	{	return
 		(	i_rField
 		|=	Power
-			(	i_nIndex
+			(	i_vIndex
 			)
 		);
 	}
@@ -31,14 +31,14 @@ export namespace
 	)	(	::std::integral auto
 			&&	i_rField
 		,	Index_For<decltype(i_rField)>
-				i_nIndex
+				i_vIndex
 		)
 		noexcept
 	->	decltype(auto(i_rField))
 	{	return
 		Set
 		(	i_rField
-		,	i_nIndex
+		,	i_vIndex
 		);
 	}
 
@@ -47,14 +47,14 @@ export namespace
 	)	(	::std::integral auto
 			&	i_rField
 		,	Index_For<decltype(i_rField)>
-				i_nIndex
+				i_vIndex
 		)
 		noexcept
 	->	decltype(i_rField)
 	{	return
 		(	i_rField
 		&=	AntiPower
-			(	i_nIndex
+			(	i_vIndex
 			)
 		);
 	}
@@ -65,14 +65,14 @@ export namespace
 	)	(	::std::integral auto
 			&&	i_rField
 		,	Index_For<decltype(i_rField)>
-				i_nIndex
+				i_vIndex
 		)
 		noexcept
 	->	decltype(auto(i_rField))
 	{	return
 		Unset
 		(	i_rField
-		,	i_nIndex
+		,	i_vIndex
 		);
 	}
 }

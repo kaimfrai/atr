@@ -10,17 +10,17 @@ export namespace
 {
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	auto constexpr inline
 	(	operator*=
-	)	(	Size<t_nWidth>
+	)	(	Size<t_vWidth>
 			&	i_rSize
-		,	typename Size<t_nWidth>::SizeType
+		,	typename Size<t_vWidth>::SizeType
 				i_vScalar
 		)
 		noexcept
-	->	Size<t_nWidth>&
+	->	Size<t_vWidth>&
 	{
 		(	i_rSize.get()
 		*=	i_vScalar
@@ -64,20 +64,20 @@ export namespace
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	auto constexpr inline
 	(	operator*=
-	)	(	Size<t_nWidth>
+	)	(	Size<t_vWidth>
 			&	i_rSize
 		,	Bits
 				i_vCount
 		)
 		noexcept
-	->	Size<t_nWidth>&
+	->	Size<t_vWidth>&
 	{
 		(	i_rSize.get()
-		*=	static_cast<Size<t_nWidth>::SizeType>
+		*=	static_cast<Size<t_vWidth>::SizeType>
 			(	i_vCount.get()
 			)
 		);
@@ -120,17 +120,17 @@ export namespace
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	auto constexpr inline
 	(	operator/=
-	)	(	Size<t_nWidth>
+	)	(	Size<t_vWidth>
 			&	i_rSize
-		,	typename Size<t_nWidth>::SizeType
+		,	typename Size<t_vWidth>::SizeType
 				i_vScalar
 		)
 		noexcept
-	->	Size<t_nWidth>&
+	->	Size<t_vWidth>&
 	{
 		(	i_rSize.get()
 		/=	i_vScalar
@@ -180,17 +180,17 @@ export namespace
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	auto constexpr inline
 	(	operator/=
-	)	(	Size<t_nWidth>
+	)	(	Size<t_vWidth>
 			&	i_rSize
 		,	Bits
 				i_vCount
 		)
 		noexcept
-	->	Size<t_nWidth>&
+	->	Size<t_vWidth>&
 	{	return
 		(	i_rSize
 		=	i_rSize

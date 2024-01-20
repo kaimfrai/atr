@@ -22,9 +22,9 @@ export namespace
 		<	typename
 				t_tBuffer
 		,	BitSize
-				t_nSize
+				t_vSize
 		,	ByteIndex
-				t_nMaxOffset
+				t_vMaxOffset
 		>
 	struct
 		Iterator final
@@ -32,8 +32,8 @@ export namespace
 		using
 			BitAccess
 		=	Access
-			<	t_nSize
-			,	t_nMaxOffset
+			<	t_vSize
+			,	t_vMaxOffset
 			>
 		;
 
@@ -41,8 +41,8 @@ export namespace
 			reference
 		=	ElementReference
 			<	t_tBuffer
-			,	t_nSize
-			,	t_nMaxOffset
+			,	t_vSize
+			,	t_vMaxOffset
 			>
 		;
 		using
@@ -81,13 +81,13 @@ export namespace
 		)	(	t_tBuffer
 				*	i_aUnderlyingArray
 			,	MaskType
-					i_nMask
+					i_vMask
 			)
 		:	m_aUnderlyingArray
 			{	i_aUnderlyingArray
 			}
 		,	m_vMask
-			{	i_nMask
+			{	i_vMask
 			}
 		{}
 
@@ -96,13 +96,13 @@ export namespace
 		)	(	t_tBuffer
 				*	i_aUnderlyingArray
 			,	ByteIndex
-					i_nOffset
+					i_vOffset
 			)
 		:	Iterator
 			{	i_aUnderlyingArray
 			,	BitAccess
 			::	OffsetMask
-				(	i_nOffset
+				(	i_vOffset
 				)
 			}
 		{}
@@ -110,11 +110,11 @@ export namespace
 		[[nodiscard]]
 		explicit(false) constexpr inline
 		(	operator
-			Iterator<t_tBuffer const, t_nSize, t_nMaxOffset>
+			Iterator<t_tBuffer const, t_vSize, t_vMaxOffset>
 		)	()	const
 			noexcept
 		{	return
-			Iterator<t_tBuffer const, t_nSize, t_nMaxOffset>
+			Iterator<t_tBuffer const, t_vSize, t_vMaxOffset>
 			{	m_aUnderlyingArray
 			,	m_vMask
 			};
@@ -136,7 +136,7 @@ export namespace
 		auto constexpr inline
 		(	operator[]
 		)	(	difference_type
-					i_nIndex
+					i_vIndex
 			)	const
 			noexcept
 		->	reference
@@ -144,7 +144,7 @@ export namespace
 			auto const
 				vOffset
 			=	(	*this
-				+	i_nIndex
+				+	i_vIndex
 				)
 			;
 			return
@@ -156,7 +156,7 @@ export namespace
 		auto constexpr inline
 		(	operator+=
 		)	(	difference_type
-					i_nIncrement
+					i_vIncrement
 			)	&
 			noexcept
 		->	Iterator&
@@ -167,34 +167,34 @@ export namespace
 			;
 
 			auto const
-				nCurrentBitOffset
+				vCurrentBitOffset
 			=	IndexLowestOne
 				(	vMask
 				)
 			;
 
 			auto const
-				nTotalBitOffset
-			=	t_nSize
-			*	i_nIncrement
-			+	nCurrentBitOffset
+				vTotalBitOffset
+			=	t_vSize
+			*	i_vIncrement
+			+	vCurrentBitOffset
 			;
 			auto const
-			[	nByteOffset
-			,	nNewBitOffset
+			[	vByteOffset
+			,	vNewBitOffset
 			]=	IndexCast<::Meta::ByteIndex>
-				(	nTotalBitOffset
+				(	vTotalBitOffset
 				)
 			;
 
 			(	m_aUnderlyingArray
-			+=	nByteOffset
+			+=	vByteOffset
 			);
 
 			(	m_vMask
 			=	BitAccess
 			::	OffsetMask
-				(	nNewBitOffset
+				(	vNewBitOffset
 				)
 			);
 
@@ -206,13 +206,13 @@ export namespace
 		auto constexpr inline
 		(	operator-=
 		)	(	difference_type
-					i_nDecrement
+					i_vDecrement
 			)	&
 			noexcept
 		->	Iterator&
 		{	return
 			(	*this
-			+=	-i_nDecrement
+			+=	-i_vDecrement
 			);
 		}
 
@@ -222,13 +222,13 @@ export namespace
 		)	(	Iterator
 					i_vIterator
 			,	difference_type
-					i_nIncrement
+					i_vIncrement
 			)
 			noexcept
 		->	Iterator
 		{	return
 			(	i_vIterator
-			+=	i_nIncrement
+			+=	i_vIncrement
 			);
 		}
 
@@ -236,7 +236,7 @@ export namespace
 		auto friend constexpr inline
 		(	operator+
 		)	(	difference_type
-					i_nIncrement
+					i_vIncrement
 			,	Iterator
 					i_vIterator
 			)
@@ -244,7 +244,7 @@ export namespace
 		->	Iterator
 		{	return
 			(	i_vIterator
-			+=	i_nIncrement
+			+=	i_vIncrement
 			);
 		}
 
@@ -254,13 +254,13 @@ export namespace
 		)	(	Iterator
 					i_vIterator
 			,	difference_type
-					i_nDecrement
+					i_vDecrement
 			)
 			noexcept
 		->	Iterator
 		{	return
 			(	i_vIterator
-			-=	i_nDecrement
+			-=	i_vDecrement
 			);
 		}
 
@@ -292,7 +292,7 @@ export namespace
 			(	(	vByteDiff
 				+	vBitDiff
 				)
-			/	t_nSize
+			/	t_vSize
 			);
 		}
 

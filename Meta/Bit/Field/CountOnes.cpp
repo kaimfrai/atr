@@ -9,20 +9,20 @@ export namespace
 {
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	CountOnes
-	)	(	Field<t_nWidth>
-				i_nField
+	)	(	Field<t_vWidth>
+				i_vField
 		)
 		noexcept
-	->	Count<t_nWidth>
+	->	Count<t_vWidth>
 	{	return
-		ChangeWidth<t_nWidth>
+		ChangeWidth<t_vWidth>
 		(	CountOnes
-			(	i_nField
+			(	i_vField
 			.	get()
 			)
 		);

@@ -13,13 +13,13 @@ export namespace
 	)	(	::std::integral auto
 			&	i_rField
 		,	Index_For<decltype(i_rField)>
-				i_nIndex
+				i_vIndex
 		)
 		noexcept
 	->	decltype(i_rField)
 	{	return
 		(	i_rField
-		>>=	i_nIndex
+		>>=	i_vIndex
 		.	get()
 		);
 	}
@@ -28,15 +28,15 @@ export namespace
 	auto constexpr inline
 	(	operator>>
 	)	(	::std::integral auto
-				i_nField
-		,	Index_For<decltype(i_nField)>
-				i_nIndex
+				i_vField
+		,	Index_For<decltype(i_vField)>
+				i_vIndex
 		)
 		noexcept
-	->	decltype(i_nField)
+	->	decltype(i_vField)
 	{	return
-		(	i_nField
-		>>=	i_nIndex
+		(	i_vField
+		>>=	i_vIndex
 		);
 	}
 
@@ -45,13 +45,13 @@ export namespace
 	)	(	::std::integral auto
 			&	i_rField
 		,	Index_For<decltype(i_rField)>
-				i_nIndex
+				i_vIndex
 		)
 		noexcept
 	->	decltype(i_rField)
 	{	return
 		(	i_rField
-		<<=	i_nIndex
+		<<=	i_vIndex
 		.	get()
 		);
 	}
@@ -60,54 +60,54 @@ export namespace
 	auto constexpr inline
 	(	operator<<
 	)	(	::std::integral auto
-				i_nField
-		,	Index_For<decltype(i_nField)>
-				i_nIndex
+				i_vField
+		,	Index_For<decltype(i_vField)>
+				i_vIndex
 		)
 		noexcept
-	->	decltype(i_nField)
+	->	decltype(i_vField)
 	{	return
-		(	i_nField
-		<<=	i_nIndex
+		(	i_vField
+		<<=	i_vIndex
 		);
 	}
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	Power
-	)	(	Index<t_nWidth>
-				i_nIndex
+	)	(	Index<t_vWidth>
+				i_vIndex
 		)
 		noexcept
-	->	UInt<t_nWidth>
+	->	UInt<t_vWidth>
 	{	return
-		static_cast<UInt<t_nWidth>>
-		(	UInt<t_nWidth>{1u}
-		<<	i_nIndex
+		static_cast<UInt<t_vWidth>>
+		(	UInt<t_vWidth>{1u}
+		<<	i_vIndex
 		);
 	}
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	AntiPower
-	)	(	Index<t_nWidth>
-				i_nIndex
+	)	(	Index<t_vWidth>
+				i_vIndex
 		)
 		noexcept
-	->	UInt<t_nWidth>
+	->	UInt<t_vWidth>
 	{	return
-		static_cast<UInt<t_nWidth>>
+		static_cast<UInt<t_vWidth>>
 		(	compl
 			Power
-			(	i_nIndex
+			(	i_vIndex
 			)
 		);
 	}

@@ -12,15 +12,15 @@ export namespace
 	auto constexpr inline
 	(	Width
 	)	(	::std::integral auto
-				i_nField
+				i_vField
 		)
 		noexcept
-	->	Count_For<decltype(i_nField)>
+	->	Count_For<decltype(i_vField)>
 	{	return
-		Count_For<decltype(i_nField)>
+		Count_For<decltype(i_vField)>
 		{	Math::Unsigned
 			(	::std::bit_width
-				(	i_nField
+				(	i_vField
 				)
 			)
 		};

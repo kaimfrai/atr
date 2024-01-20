@@ -21,10 +21,10 @@ export namespace
 {
 	template
 		<	BitSize
-				t_nWidth
+				t_vWidth
 		>
 	requires
-		(	t_nWidth
+		(	t_vWidth
 		>	0_bit
 		)
 	struct
@@ -34,14 +34,14 @@ export namespace
 		using
 			IndexType
 		=	Index
-			<	t_nWidth
+			<	t_vWidth
 			>
 		;
 
 		using
 			FieldType
 		=	UInt
-			<	t_nWidth
+			<	t_vWidth
 			>
 		;
 
@@ -49,13 +49,13 @@ export namespace
 			ValueType
 		=	::std::conditional_t
 			<	Memory::SizeOf<FieldType>
-			==	ByteSize(t_nWidth)
+			==	ByteSize(t_vWidth)
 			,	// if no memory is saved, use fast to compile integers
 				FieldType
 			,	// if it's possible to save some memory, we will
 				// may hit compilation time
 				Byte::Buffer
-				<	t_nWidth
+				<	t_vWidth
 				>
 			>
 		;
@@ -69,7 +69,7 @@ export namespace
 		=	&
 			Arithmetic::SanitizeUnsigned
 			<	Mask
-				<	t_nWidth
+				<	t_vWidth
 				>
 			>
 		;
@@ -79,7 +79,7 @@ export namespace
 		=	&
 			Arithmetic::AssertSanitizedUnsigned
 			<	Mask
-				<	t_nWidth
+				<	t_vWidth
 				>
 			>
 		;
@@ -93,12 +93,12 @@ export namespace
 		explicit(true) constexpr inline
 		(	Field
 		)	(	UIntMax
-					i_nValue
+					i_vValue
 			)
 			noexcept
 		:	m_vValue
 			{	AssertSanitized
-				(	i_nValue
+				(	i_vValue
 				)
 			}
 		{}
@@ -120,30 +120,30 @@ export namespace
 		auto constexpr inline
 		(	operator=
 		)	(	UIntMax
-					i_nValue
+					i_vValue
 			)	&
 			noexcept
 		->	Field&
 		{	return
 			(	*this
 			=	Field
-				{	i_nValue
+				{	i_vValue
 				}
 			);
 		}
 
 		template
 			<	auto
-					t_nOtherWidth
+					t_vOtherWidth
 			>
 		[[nodiscard]]
-		explicit(t_nOtherWidth < t_nWidth) constexpr inline
+		explicit(t_vOtherWidth < t_vWidth) constexpr inline
 		(	operator
-			Field<t_nOtherWidth>
+			Field<t_vOtherWidth>
 		)	()	const
 			noexcept
 		{	return
-			Field<t_nOtherWidth>
+			Field<t_vOtherWidth>
 			{	get()
 			};
 		}
@@ -178,14 +178,14 @@ export namespace
 		auto constexpr inline
 		(	operator[]
 		)	(	IndexType
-					i_nIndex
+					i_vIndex
 			)	const
 			noexcept
 		->	bool
 		{	return
 			Test
 			(	get()
-			,	i_nIndex
+			,	i_vIndex
 			);
 		}
 	};
@@ -209,12 +209,12 @@ export namespace
 {
 	template
 		<	BitSize
-				t_nWidth
+				t_vWidth
 		>
 	Constraint constexpr inline
 		Constraint_Of
 		<	Bit::Field
-			<	t_nWidth
+			<	t_vWidth
 			>
 		>
 	=	[]{	return
@@ -222,14 +222,14 @@ export namespace
 			{	.Align
 				=	{	::std::countr_zero
 						(	static_cast<::Meta::USize>
-							(	t_nWidth
+							(	t_vWidth
 								.	Value
 							)
 						)
 					+	1
 					}
 			,	.Size
-				=	t_nWidth
+				=	t_vWidth
 			};
 		}()
 	;

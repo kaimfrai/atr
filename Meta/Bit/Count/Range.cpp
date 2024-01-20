@@ -9,17 +9,17 @@ export namespace
 {
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	begin
-	)	(	Count<t_nWidth>
+	)	(	Count<t_vWidth>
 		)
 		noexcept
 	->	IndexIterator
 		<	Index
-			<	t_nWidth
+			<	t_vWidth
 			>
 		>
 	{	return
@@ -28,19 +28,19 @@ export namespace
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	end
-	)	(	Count<t_nWidth>
+	)	(	Count<t_vWidth>
 				i_vRange
 		)
 		noexcept
 	->	IndexSentinel
 		<	typename
 				Count
-				<	t_nWidth
+				<	t_vWidth
 				>
 			::	CountType
 		>

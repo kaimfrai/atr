@@ -10,12 +10,12 @@ export namespace
 {
 	template
 		<	auto
-				t_nSize
+				t_vSize
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	begin
-	)	(	Buffer<t_nSize>
+	)	(	Buffer<t_vSize>
 			&	i_rBuffer
 		)
 		noexcept
@@ -28,12 +28,12 @@ export namespace
 
 	template
 		<	auto
-				t_nSize
+				t_vSize
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	begin
-	)	(	Buffer<t_nSize> const
+	)	(	Buffer<t_vSize> const
 			&	i_rBuffer
 		)
 		noexcept
@@ -46,12 +46,12 @@ export namespace
 
 	template
 		<	auto
-				t_nSize
+				t_vSize
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	end
-	)	(	Buffer<t_nSize>
+	)	(	Buffer<t_vSize>
 			&	i_rBuffer
 		)
 		noexcept
@@ -59,18 +59,18 @@ export namespace
 	{	return
 			+
 			i_rBuffer
-		+	t_nSize
+		+	t_vSize
 		;
 	}
 
 	template
 		<	auto
-				t_nSize
+				t_vSize
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	end
-	)	(	Buffer<t_nSize> const
+	)	(	Buffer<t_vSize> const
 			&	i_rBuffer
 		)
 		noexcept
@@ -78,7 +78,7 @@ export namespace
 	{	return
 			+
 			i_rBuffer
-		+	t_nSize
+		+	t_vSize
 		;
 	}
 }

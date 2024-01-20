@@ -10,7 +10,7 @@ export namespace
 {
 	template
 		<	BitSize
-				t_nWidth
+				t_vWidth
 		>
 	struct
 		Count
@@ -19,7 +19,7 @@ export namespace
 			AssertSanitized
 		=	&
 			Arithmetic::AssertSanitizedUnsigned
-			<	t_nWidth
+			<	t_vWidth
 			.	get()
 			>
 		;
@@ -34,7 +34,7 @@ export namespace
 		;
 
 		CountType
-			m_nValue
+			m_vValue
 		;
 
 		explicit(false) constexpr inline
@@ -46,49 +46,49 @@ export namespace
 		explicit(true) constexpr inline
 		(	Count
 		)	(	UIntMax
-					i_nValue
+					i_vValue
 			)
 			noexcept
-		:	m_nValue
+		:	m_vValue
 			{	AssertSanitized
-				(	i_nValue
+				(	i_vValue
 				)
 			}
 		{}
 
 		template
 			<	auto
-					t_nOtherWidth
+					t_vOtherWidth
 			>
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	ChangeWidth
 		)	(	Count
-					i_nCount
+					i_vCount
 			)
 			noexcept
-		->	Count<t_nOtherWidth>
+		->	Count<t_vOtherWidth>
 		{	return
 			Count
-			<	t_nOtherWidth
-			>{	i_nCount
+			<	t_vOtherWidth
+			>{	i_vCount
 			.	get()
 			};
 		}
 
 		template
 			<	auto
-					t_nOtherWidth
+					t_vOtherWidth
 			>
 		[[nodiscard]]
-		explicit(t_nOtherWidth <= t_nWidth) constexpr inline
+		explicit(t_vOtherWidth <= t_vWidth) constexpr inline
 		(	operator
-			Count<t_nOtherWidth>
+			Count<t_vOtherWidth>
 		)	()	const
 			noexcept
 		{	return
 			ChangeWidth
-			<	t_nOtherWidth
+			<	t_vOtherWidth
 			>(	*this
 			);
 		}
@@ -101,7 +101,7 @@ export namespace
 		->	CountType
 		{	return
 			AssertSanitized
-			(	m_nValue
+			(	m_vValue
 			);
 		}
 	};

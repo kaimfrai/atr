@@ -14,10 +14,10 @@ export namespace
 {
 	template
 		<	BitSize
-				t_nWidth
+				t_vWidth
 		>
 	requires
-		(	t_nWidth
+		(	t_vWidth
 		>	0_bit
 		)
 	struct
@@ -26,14 +26,14 @@ export namespace
 		using
 			MemorySizeType
 		=	Memory::Size
-			<	t_nWidth
+			<	t_vWidth
 			.	get()
 			>
 		;
 
 		auto static constexpr inline
 			MaximumShift
-		=	t_nWidth
+		=	t_vWidth
 		-	1_bit
 		;
 
@@ -56,7 +56,7 @@ export namespace
 		;
 
 		IndexType
-			m_nValue
+			m_vValue
 		;
 
 		explicit(false) constexpr inline
@@ -68,12 +68,12 @@ export namespace
 		explicit(true) constexpr inline
 		(	Index
 		)	(	SIntMax
-					i_nValue
+					i_vValue
 			)
 			noexcept
-		:	m_nValue
+		:	m_vValue
 			{	AssertSanitized
-				(	i_nValue
+				(	i_vValue
 				)
 			}
 		{}
@@ -81,11 +81,11 @@ export namespace
 		explicit(true) constexpr inline
 		(	Index
 		)	(	BitSize
-					i_nBitSize
+					i_vBitSize
 			)
 			noexcept
 		:	Index
-			{	i_nBitSize
+			{	i_vBitSize
 			.	get()
 			}
 		{}
@@ -98,43 +98,43 @@ export namespace
 		->	IndexType
 		{	return
 			AssertSanitized
-			(	m_nValue
+			(	m_vValue
 			);
 		}
 
 		template
 			<	auto
-					t_nOtherWidth
+					t_vOtherWidth
 			>
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	ChangeWidth
 		)	(	Index
-					i_nIndex
+					i_vIndex
 			)
 			noexcept
-		->	Index<t_nOtherWidth>
+		->	Index<t_vOtherWidth>
 		{	return
 			Index
-			<	t_nOtherWidth
-			>{	i_nIndex
+			<	t_vOtherWidth
+			>{	i_vIndex
 			.	get()
 			};
 		}
 
 		template
 			<	auto
-					t_nOtherWidth
+					t_vOtherWidth
 			>
 		[[nodiscard]]
-		explicit(t_nOtherWidth <= t_nWidth) constexpr inline
+		explicit(t_vOtherWidth <= t_vWidth) constexpr inline
 		(	operator
-			Index<t_nOtherWidth>
+			Index<t_vOtherWidth>
 		)	()	const
 			noexcept
 		{	return
 			ChangeWidth
-			<	t_nOtherWidth
+			<	t_vOtherWidth
 			>(	*this
 			);
 		}
@@ -182,7 +182,7 @@ export namespace
 {
 	template
 		<	char
-			...	t_npNumeric
+			...	t_vpNumeric
 		>
 	[[nodiscard]]
 	auto constexpr inline
@@ -191,9 +191,9 @@ export namespace
 		noexcept
 	{
 		auto static constexpr
-			nParsed
+			vParsed
 		=	Arithmetic::EvaluateNumericLiteral
-			<	t_npNumeric
+			<	t_vpNumeric
 				...
 			>()
 		;
@@ -202,11 +202,11 @@ export namespace
 		Bit::Index
 		<	BitSize
 			{	static_cast<BitSize::SizeType>
-				(	nParsed
+				(	vParsed
 				)
 			}
 		+	1_bit
-		>{	nParsed
+		>{	vParsed
 		};
 	}
 }

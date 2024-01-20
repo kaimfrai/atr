@@ -14,7 +14,7 @@ export namespace
 {
 	template
 		<	USize
-				t_nIndex
+				t_vIndex
 		,	typename
 				t_tItem
 		>
@@ -30,21 +30,21 @@ export namespace
 
 		auto constexpr inline
 		(	operator[]
-		)	(	IndexToken<t_nIndex>
+		)	(	IndexToken<t_vIndex>
 			)	&
 		->	Aggregate<t_tItem>&
 		{	return Item;	}
 
 		auto constexpr inline
 		(	operator[]
-		)	(	IndexToken<t_nIndex>
+		)	(	IndexToken<t_vIndex>
 			)	const&
 		->	Aggregate<t_tItem> const&
 		{	return Item;	}
 
 		auto constexpr inline
 		(	operator[]
-		)	(	IndexToken<t_nIndex>
+		)	(	IndexToken<t_vIndex>
 			)	&&
 		->	Aggregate<t_tItem>
 		{	return ::std::move(Item);	}
@@ -63,27 +63,27 @@ export namespace
 
 		template
 			<	USize
-					t_nIndex
+					t_vIndex
 			>
 		auto constexpr inline
 		(	get
 		)	()	&
 		->	decltype(auto)
-		{	return operator[](Index<t_nIndex>);	}
+		{	return operator[](Index<t_vIndex>);	}
 
 		template
 			<	USize
-					t_nIndex
+					t_vIndex
 			>
 		auto constexpr inline
 		(	get
 		)	()	const&
 		->	decltype(auto)
-		{	return operator[](Index<t_nIndex>);	}
+		{	return operator[](Index<t_vIndex>);	}
 
 		template
 			<	USize
-					t_nIndex
+					t_vIndex
 			>
 		auto constexpr inline
 		(	get
@@ -91,7 +91,7 @@ export namespace
 		->	decltype(auto)
 		{	return
 			::std::move(*this)
-			[	Index<t_nIndex>
+			[	Index<t_vIndex>
 			];
 		}
 
@@ -163,15 +163,15 @@ export namespace
 	->	decltype(auto)
 	{	return
 		[&]	<	::std::size_t
-				...	t_npIndex
+				...	t_vpIndex
 			>(	::std::index_sequence
-				<	t_npIndex
+				<	t_vpIndex
 					...
 				>
 			)
 		->	KeyTuple
 			<	KeyItem
-				<	t_npIndex
+				<	t_vpIndex
 				,	::std::remove_cvref_t<t_tpItem>
 				>
 				...
@@ -179,7 +179,7 @@ export namespace
 		{	return
 			KeyTuple
 			<	KeyItem
-				<	t_npIndex
+				<	t_vpIndex
 				,	::std::remove_cvref_t<t_tpItem>
 				>
 				...
@@ -291,13 +291,13 @@ export namespace
 
 	template
 		<	::std::size_t
-				t_nIndex
+				t_vIndex
 		,	typename
 			...	t_tpItem
 		>
 	struct
 		tuple_element
-		<	t_nIndex
+		<	t_vIndex
 		,	::Meta::TupleList
 			<	t_tpItem
 				...
@@ -311,7 +311,7 @@ export namespace
 						...
 					>
 				>()
-				[	::Meta::Index<t_nIndex>
+				[	::Meta::Index<t_vIndex>
 				]
 			)
 		>

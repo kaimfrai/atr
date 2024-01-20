@@ -9,16 +9,16 @@ export namespace
 	auto constexpr inline
 	(	Unsigned
 	)	(	::std::integral auto
-				i_nSigned
+				i_vSigned
 		)
 		noexcept
 	->	decltype(auto)
 	{	return
 		static_cast
 		<	::std::make_unsigned_t
-			<	decltype(i_nSigned)
+			<	decltype(i_vSigned)
 			>
-		>(	i_nSigned
+		>(	i_vSigned
 		);
 	}
 
@@ -26,16 +26,16 @@ export namespace
 	auto constexpr inline
 	(	Signed
 	)	(	::std::integral auto
-				i_nUnsigned
+				i_vUnsigned
 		)
 		noexcept
 	->	decltype(auto)
 	{	return
 		static_cast
 		<	::std::make_signed_t
-			<	decltype(i_nUnsigned)
+			<	decltype(i_vUnsigned)
 			>
-		>(	i_nUnsigned
+		>(	i_vUnsigned
 		);
 	}
 }

@@ -47,9 +47,9 @@ export namespace
 		return
 		[	i_aSource
 		]	<	::std::size_t
-				...	t_npIndex
+				...	t_vpIndex
 			>(	::std::index_sequence
-				<	t_npIndex
+				<	t_vpIndex
 					...
 				>
 			)
@@ -58,7 +58,7 @@ export namespace
 			{	Cast
 				(	vElementType
 				,	i_aSource
-					[	t_npIndex
+					[	t_vpIndex
 					]
 				)
 				...
@@ -76,14 +76,14 @@ export namespace
 		<	typename
 				t_tValue
 		,	USize
-				t_nExtent
+				t_vExtent
 		>
 	using
 		ArrayAggregate
 	=	Data::Aggregate
 		<	ArrayEntity
 			<	t_tValue
-			,	t_nExtent
+			,	t_vExtent
 			>
 		>
 	;

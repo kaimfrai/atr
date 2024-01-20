@@ -96,13 +96,13 @@ export namespace
 		auto constexpr inline
 		(	operator[]
 		)	(	difference_type
-					i_nDifference
+					i_vDifference
 			)	const
 			noexcept
 		->	::std::iter_reference_t<DataType>
 		{	return
 			this->Data
-			[	i_nDifference
+			[	i_vDifference
 			];
 		}
 	};

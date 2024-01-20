@@ -32,13 +32,13 @@ export namespace
 		)	(	std::string_view
 					i_sString
 			,	USize
-					i_nPosition
+					i_vPosition
 			)
 		:	Error
 			{	std::format
 				(	"Dispatch path for \"{}\" was blocked at \"{}\" !"
 				,	i_sString
-				,	i_sString.substr(0uz, i_nPosition)
+				,	i_sString.substr(0uz, i_vPosition)
 				)
 			}
 		{}

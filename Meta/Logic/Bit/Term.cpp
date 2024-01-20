@@ -200,21 +200,21 @@ export namespace
 				()
 			;
 			auto const
-				nRequiredLiteralCount
+				vRequiredLiteralCount
 			=	CountOnes
 				(	vLiteralField
 				)
 			;
 
 			auto const
-				nMaxLiteralCount
+				vMaxLiteralCount
 			=	Width
 				(	vLiteralField
 				)
 			;
 
-			if	(	nRequiredLiteralCount
-				==	nMaxLiteralCount
+			if	(	vRequiredLiteralCount
+				==	vMaxLiteralCount
 				)
 			{	return
 					*this
@@ -231,23 +231,23 @@ export namespace
 				{};
 
 				for	(	Clause::IndexType
-							nPermutation
+							vPermutation
 						{}
 					;	auto
-							nIndex
-					:	nMaxLiteralCount
+							vIndex
+					:	vMaxLiteralCount
 					)
 				{
 					(	vTrimLiteralPermutation
 						[	static_cast<USize>
-							(	nIndex.get()
+							(	vIndex.get()
 							)
 						]
-					=	nPermutation
+					=	vPermutation
 					);
 
-					if	(vLiteralField[nIndex])
-						++nPermutation;
+					if	(vLiteralField[vIndex])
+						++vPermutation;
 				}
 
 				return
@@ -257,7 +257,7 @@ export namespace
 						(	vTrimLiteralPermutation
 						)
 					,	static_cast<USize>
-						(	nMaxLiteralCount
+						(	vMaxLiteralCount
 							.	get
 								()
 						)
@@ -291,14 +291,14 @@ export namespace
 		auto constexpr inline
 		(	operator[]
 		)	(	USize
-					i_nIndex
+					i_vIndex
 			)	const&
 		->	Clause
 		{
-			if	(i_nIndex >= ClauseLimit)
+			if	(i_vIndex >= ClauseLimit)
 				((void)"Index beyond ClauseLimit!", std::unreachable());
 
-			return Clauses[i_nIndex];
+			return Clauses[i_vIndex];
 		}
 	};
 }

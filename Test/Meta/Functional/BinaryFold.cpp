@@ -118,28 +118,28 @@ template
 auto constexpr inline
 (	TestAssign
 )	(	int
-			i_nInitial
+			i_vInitial
 	,	int
-			i_nAssign
+			i_vAssign
 	,	int
-			i_nExpected
+			i_vExpected
 	)
 ->	bool
 {
 	decltype(auto)
 		rResult
 	=	Fold<t_fKey, t_eDirection>{}
-		(	i_nInitial
-		,	i_nAssign
+		(	i_vInitial
+		,	i_vAssign
 		)
 	;
 
 	return
 	(	(	&rResult
-		==	&i_nInitial
+		==	&i_vInitial
 		)
-	and	(	i_nInitial
-		==	i_nExpected
+	and	(	i_vInitial
+		==	i_vExpected
 		)
 	);
 }
@@ -317,15 +317,15 @@ template
 auto constexpr inline
 (	TestPtrToMemPtr
 )	(	int
-			i_nInitial
+			i_vInitial
 	,	int
-			i_nAssign
+			i_vAssign
 	)
 ->	bool
 {
 	Test
 		t
-	{	i_nInitial
+	{	i_vInitial
 	};
 	decltype(auto)
 		rInt
@@ -334,13 +334,13 @@ auto constexpr inline
 		,	&Test::i
 		)
 	;
-	rInt = i_nAssign;
+	rInt = i_vAssign;
 	return
 	(	(	&t.i
 		==	&rInt
 		)
 	and	(	t.i
-		==	i_nAssign
+		==	i_vAssign
 		)
 	);
 }

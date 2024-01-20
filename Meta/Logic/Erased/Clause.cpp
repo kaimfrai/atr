@@ -51,7 +51,7 @@ export namespace
 		auto constexpr inline
 		(	Positive
 		)	(	size_type
-					i_nIndex
+					i_vIndex
 			)	const
 			noexcept
 		->	bool
@@ -60,7 +60,7 @@ export namespace
 			.	Positive
 				[	IndexType
 					{	static_cast<IndexType::IndexType>
-						(	i_nIndex
+						(	i_vIndex
 						)
 					}
 				]
@@ -71,7 +71,7 @@ export namespace
 		auto constexpr inline
 		(	Negative
 		)	(	size_type
-					i_nIndex
+					i_vIndex
 			)	const
 			noexcept
 		->	bool
@@ -80,7 +80,7 @@ export namespace
 			.	Negative
 				[	IndexType
 					{	static_cast<IndexType::IndexType>
-						(	i_nIndex
+						(	i_vIndex
 						)
 					}
 				]
@@ -91,25 +91,25 @@ export namespace
 		auto constexpr inline
 		(	operator[]
 		)	(	size_type
-					i_nIndex
+					i_vIndex
 			)	const
 			noexcept
 		->	Literal
 		{	if	(IsIdentity())
 				return Contradiction;
 
-			if	(Positive(i_nIndex))
+			if	(Positive(i_vIndex))
 				return
 				{	Literals
-					[	i_nIndex
+					[	i_vIndex
 					]
 				,	true
 				};
 
-			if	(Negative(i_nIndex))
+			if	(Negative(i_vIndex))
 				return
 				{	Literals
-					[	i_nIndex
+					[	i_vIndex
 					]
 				,	false
 				};

@@ -18,7 +18,7 @@ export namespace
 		;
 
 		CountType
-			m_nCount
+			m_vCount
 		;
 
 		[[nodiscard]]
@@ -64,7 +64,7 @@ export namespace
 		{	return
 			value_type
 			{	static_cast<value_type::IndexType>
-				(	this->m_nCount
+				(	this->m_vCount
 				)
 			};
 		}
@@ -74,7 +74,7 @@ export namespace
 		)	()	&
 			noexcept
 		->	IndexIterator&
-		{	++this->m_nCount;
+		{	++this->m_vCount;
 			return
 				*this
 			;

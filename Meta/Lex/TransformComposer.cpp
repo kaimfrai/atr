@@ -68,7 +68,7 @@ export namespace
 			<	typename
 					t_tEntity
 			,	auto
-					t_nExtent
+					t_vExtent
 			,	typename
 				...	t_tpQualifier
 			,	typename
@@ -77,7 +77,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	Compose
-		)	(	MatchCVArray<t_tEntity, t_nExtent, t_tpQualifier...>
+		)	(	MatchCVArray<t_tEntity, t_vExtent, t_tpQualifier...>
 			,	Transform<t_tpTransform...>
 			)
 			noexcept
@@ -86,7 +86,7 @@ export namespace
 			Compose
 			(	t_tEntity{}
 			,	Transform
-				<	Token::Extent<t_nExtent>
+				<	Token::Extent<t_vExtent>
 				,	t_tpQualifier
 					...
 				,	t_tpTransform

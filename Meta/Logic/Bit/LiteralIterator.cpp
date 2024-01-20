@@ -50,18 +50,18 @@ export namespace
 	->	Clause&
 	{
 		auto const
-			nCombined
+			vCombined
 		=	i_rClause.Positive
 		bitor
 			i_rClause.Negative
 		;
 		UnsetLowestOne
 		(	i_rClause.Positive
-		,	nCombined
+		,	vCombined
 		);
 		UnsetLowestOne
 		(	i_rClause.Negative
-		,	nCombined
+		,	vCombined
 		);
 
 		return

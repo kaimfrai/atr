@@ -9,20 +9,20 @@ export namespace
 {
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	LowestOne
-	)	(	Field<t_nWidth>
-				i_nField
+	)	(	Field<t_vWidth>
+				i_vField
 		)
 		noexcept
-	->	Field<t_nWidth>
+	->	Field<t_vWidth>
 	{	return
-		Field<t_nWidth>
+		Field<t_vWidth>
 		{	LowestOne
-			(	i_nField
+			(	i_vField
 			.	get()
 			)
 		};
@@ -30,20 +30,20 @@ export namespace
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	IndexLowestOne
-	)	(	Field<t_nWidth>
-				i_nField
+	)	(	Field<t_vWidth>
+				i_vField
 		)
 		noexcept
-	->	Index<t_nWidth>
+	->	Index<t_vWidth>
 	{	return
-		ChangeWidth<t_nWidth>
+		ChangeWidth<t_vWidth>
 		(	IndexLowestOne
-			(	i_nField
+			(	i_vField
 			.	get()
 			)
 		);
@@ -51,23 +51,23 @@ export namespace
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	auto constexpr inline
 	(	UnsetLowestOne
-	)	(	Field<t_nWidth>
+	)	(	Field<t_vWidth>
 			&	i_rField
 		,	decltype(auto(i_rField))
-				i_nMask
+				i_vMask
 		)
 		noexcept
-	->	Field<t_nWidth>&
+	->	Field<t_vWidth>&
 	{	return
 		(	i_rField
 		=	UnsetLowestOne
 			(	i_rField
 			.	get()
-			,	i_nMask
+			,	i_vMask
 			.	get()
 			)
 		);
@@ -75,15 +75,15 @@ export namespace
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	auto constexpr inline
 	(	UnsetLowestOne
-	)	(	Field<t_nWidth>
+	)	(	Field<t_vWidth>
 			&	i_rField
 		)
 		noexcept
-	->	Field<t_nWidth>&
+	->	Field<t_vWidth>&
 	{	return
 		(	i_rField
 		=	UnsetLowestOne
@@ -97,37 +97,37 @@ export namespace
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	UnsetLowestOne
-	)	(	Field<t_nWidth>
+	)	(	Field<t_vWidth>
 			&&	i_rField
 		,	decltype(auto(i_rField))
-				i_nMask
+				i_vMask
 		)
 		noexcept
-	->	Field<t_nWidth>
+	->	Field<t_vWidth>
 	{	return
 		UnsetLowestOne
 		(	i_rField
-		,	i_nMask
+		,	i_vMask
 		);
 	}
 
 	template
 		<	auto
-				t_nWidth
+				t_vWidth
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	UnsetLowestOne
-	)	(	Field<t_nWidth>
+	)	(	Field<t_vWidth>
 			&&	i_rField
 		)
 		noexcept
-	->	Field<t_nWidth>
+	->	Field<t_vWidth>
 	{	return
 		UnsetLowestOne
 		(	i_rField

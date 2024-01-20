@@ -95,12 +95,12 @@ template
 	<	::Meta::Logic::Erased::Term
 			t_vErased
 	,	::std::size_t
-		...	t_npIndex
+		...	t_vpIndex
 	>
 auto constexpr inline
 	MakeTerm
 	(	::std::index_sequence
-		<	t_npIndex
+		<	t_vpIndex
 			...
 		>
 	)
@@ -109,7 +109,7 @@ auto constexpr inline
 	,	::Meta::RestoreTypeEntity
 		<	t_vErased
 		.	Literals
-			[	t_npIndex
+			[	t_vpIndex
 			]
 		>
 		...

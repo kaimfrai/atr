@@ -11,32 +11,32 @@ namespace
 {
 	template
 		<	auto
-				t_nLength
+				t_vLength
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	MakeSequence
-	)	(	IndexToken<t_nLength>
+	)	(	IndexToken<t_vLength>
 		)
 		noexcept
 	{	return
 		[]	<	USize
-				...	t_npIndex
+				...	t_vpIndex
 			>(	::std::index_sequence
-				<	t_npIndex
+				<	t_vpIndex
 					...
 				>
 			)
 		{	return
 			IndexToken
-			<	static_cast<decltype(t_nLength)>
-				(	t_npIndex
+			<	static_cast<decltype(t_vLength)>
+				(	t_vpIndex
 				)
 				...
 			>{};
 		}(	::std::make_index_sequence
 			<	static_cast<std::size_t>
-				(	t_nLength
+				(	t_vLength
 				)
 			>{}
 		);
@@ -48,23 +48,23 @@ export namespace
 {
 	template
 		<	auto
-				t_nSize
+				t_vSize
 		>
 	auto constexpr inline
 		Sequence
 	=	MakeSequence
-		(	Index<t_nSize>
+		(	Index<t_vSize>
 		)
 	;
 
 	template
 		<	auto
-				t_nSize
+				t_vSize
 		>
 	auto constexpr inline
 		ZeroSequence
-	=	(	Sequence<t_nSize>
-		=	Index<decltype(t_nSize){}>
+	=	(	Sequence<t_vSize>
+		=	Index<decltype(t_vSize){}>
 		)
 	;
 }
