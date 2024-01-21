@@ -107,6 +107,70 @@ export
 			);
 		}
 
+		template
+			<	typename
+					t_tOtherNumber
+			>
+		[[nodiscard]]
+		explicit(true) constexpr inline
+		(	operator
+			GeneratedNumbers
+			<	::std::experimental::fixed_size_simd<t_tOtherNumber, sizeof(t_tNumber) / sizeof(t_tOtherNumber)>
+			,	t_vCount
+			>
+		)	()	const
+			noexcept
+		{
+			auto static constexpr
+				fConvertNumber
+			=	[]	(	t_tNumber
+							i_vNumber
+					)
+				{	return
+					::std::experimental::fixed_size_simd<t_tOtherNumber, sizeof(t_tNumber) / sizeof(t_tOtherNumber)>
+					{	[	i_vNumber
+						]	(	::std::size_t
+									i_vIndex
+							)
+						{	return
+							static_cast<t_tOtherNumber>
+							(	i_vNumber
+							>>	(	8uz
+								*	i_vIndex
+								)
+							);
+						}
+					};
+				}
+			;
+
+			return
+			[	this
+			]	<	::std::size_t
+					...	t_vpIndex
+				>(	::std::index_sequence
+					<	t_vpIndex
+						...
+					>
+				)
+			->	GeneratedNumbers
+				<	::std::experimental::fixed_size_simd<t_tOtherNumber, sizeof(t_tNumber) / sizeof(t_tOtherNumber)>
+				,	t_vCount
+				>
+			{	return
+				{	fConvertNumber
+					(	m_vNumber
+						[	t_vpIndex
+						]
+					)
+					...
+				};
+			}(	::std::make_index_sequence
+				<	t_vCount
+				>{}
+			);
+		}
+
 		auto constexpr inline
 		(	operator>>=
 		)	(	int
@@ -395,6 +459,140 @@ export
 	};
 
 	class
+		SimdCountedXoroshiro
+	{
+		RandomGenerators
+			m_vRandom
+		;
+		int
+			m_vCounter
+		=	0
+		;
+
+	public:
+		explicit(false) constexpr inline
+		(	SimdCountedXoroshiro
+		)	(	::std::uint64_t
+					i_vSeed
+			)
+			noexcept
+		:	m_vRandom
+			{	Splitmix64
+				{	i_vSeed
+				}
+			,	::std::make_index_sequence
+				<	RandomGenerators::GeneratorCount
+				-	1uz
+				>{}
+			}
+		{}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	operator*
+		)	()	const
+			noexcept
+		->	GeneratedNumbers<::std::experimental::fixed_size_simd<unsigned char, sizeof(::std::uint64_t)>, RandomGenerators::GeneratorCount>
+		{	return
+			static_cast<GeneratedNumbers<::std::experimental::fixed_size_simd<unsigned char, sizeof(::std::uint64_t)>, RandomGenerators::GeneratorCount>>
+			(	*	m_vRandom
+			);
+		}
+
+		auto constexpr inline
+		(	operator++
+		)	()	&
+			noexcept
+		->	SimdCountedXoroshiro&
+		{
+			m_vCounter
+			+=	sizeof(::std::uint64_t)
+			;
+			++	m_vRandom
+			;
+
+			return
+			*	this
+			;
+		}
+
+		[[nodiscard("Prefer pre-increment when discarding the result")]]
+		auto constexpr inline
+		(	operator++
+		)	(int)
+			noexcept
+		->	SimdCountedXoroshiro
+		{
+			auto const
+				vOld
+			=	*this
+			;
+
+			operator++
+			();
+
+			return
+				vOld
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator==
+		)	(	SimdCountedXoroshiro const
+				&	i_rIterator
+			,	CountedSentinel
+					i_vSentinel
+			)
+			noexcept
+		->	bool
+		{	return
+				i_rIterator
+				.	m_vCounter
+			==	i_vSentinel
+				.	EndCount
+			;
+		}
+	};
+
+	struct
+		SimdPseudoRandomSequence
+	{
+		int
+			m_vSeed
+		;
+		int
+			m_vIterations
+		;
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	begin
+		)	()	const
+			noexcept
+		->	SimdCountedXoroshiro
+		{	return
+			SimdCountedXoroshiro
+			{	static_cast<::std::uint64_t>
+				(	m_vSeed
+				)
+			};
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	end
+		)	()	const
+			noexcept
+		->	CountedSentinel
+		{	return
+			CountedSentinel
+			{	m_vIterations
+			};
+		}
+	};
+
+	class
 		PseudoRandomSequence
 	{
 		int
@@ -447,6 +645,18 @@ export
 			static_cast<::std::size_t>
 			(	m_vIterations
 			);
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	SimdView
+		)	()	const
+			noexcept
+		->	SimdPseudoRandomSequence
+		{	return
+			{	m_vSeed
+			,	m_vIterations
+			};
 		}
 
 		[[nodiscard]]

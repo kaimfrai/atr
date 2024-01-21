@@ -85,7 +85,7 @@ export namespace
 			[7z, i_vHeight]
 			[8z, i_vWidth]
 			[9z, i_vDepth]
-			[10z, Fraction<1uz,	3uz>{}.operator float()]
+			[10z, Fraction<1z, 3z>{}.operator float()]
 		;
 	}
 }

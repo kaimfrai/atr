@@ -21,12 +21,12 @@ export namespace
 					i_vMember
 			)
 			noexcept
-		->	::std::experimental::native_simd<t_tElement>
+		->	::std::experimental::fixed_size_simd<t_tElement, sizeof(::std::uint64_t)>
 		{
 			auto static constexpr
 				vSimdSize
 			=	static_cast<::std::ptrdiff_t>
-				(	::std::experimental::native_simd<t_tElement>
+				(	::std::experimental::fixed_size_simd<t_tElement, sizeof(::std::uint64_t)>
 					::	size
 						()
 				)
@@ -60,7 +60,7 @@ export namespace
 		<	t_tElement
 		>
 	{
-		::std::experimental::native_simd<t_tElement>
+		::std::experimental::fixed_size_simd<t_tElement, sizeof(::std::uint64_t)>
 		*	m_aBuffer
 		;
 		::std::uint32_t
@@ -83,7 +83,7 @@ export namespace
 			auto static constexpr
 				vSimdSize
 			=	static_cast<::std::ptrdiff_t>
-				(	::std::experimental::native_simd<t_tElement>
+				(	::std::experimental::fixed_size_simd<t_tElement, sizeof(::std::uint64_t)>
 					::	size
 						()
 				)
@@ -111,6 +111,46 @@ export namespace
 			*	this
 			;
 		}
+
+		auto constexpr inline
+		(	operator[]
+		)	(	::std::ptrdiff_t
+					i_vMember
+			,	::std::experimental::fixed_size_simd<t_tElement, sizeof(::std::uint64_t)>
+					i_vValue
+			)
+			noexcept
+		->	View32&
+		{
+			auto static constexpr
+				vSimdSize
+			=	static_cast<::std::ptrdiff_t>
+				(	::std::experimental::fixed_size_simd<t_tElement, sizeof(::std::uint64_t)>
+					::	size
+						()
+				)
+			;
+
+			auto
+			&	rSimd
+			=	*
+				(	m_aBuffer
+				+	m_vCapacity
+				*	i_vMember
+				/	vSimdSize
+				+	m_vIndex
+				/	vSimdSize
+				)
+			;
+
+			rSimd
+			=	i_vValue
+			;
+
+			return
+			*	this
+			;
+		}
 	};
 
 	template
@@ -125,7 +165,7 @@ export namespace
 		<	t_tElement
 		>
 	{
-		::std::experimental::native_simd<t_tElement> const
+		::std::experimental::fixed_size_simd<t_tElement, sizeof(::std::uint64_t)> const
 		*	m_aBuffer
 		;
 		::std::uint32_t

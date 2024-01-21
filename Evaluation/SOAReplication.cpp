@@ -1,3 +1,5 @@
+import Evaluation.Dependency.Fraction;
+import Evaluation.Dependency.PiFraction;
 import Evaluation.Dependency.PseudoRandomSequence;
 import Evaluation.Dependency.RandomAccessIteratorBase;
 import Evaluation.Dependency.TransformReduce;
@@ -145,7 +147,7 @@ namespace
 	struct
 		Body3DValue
 	{
-		::std::experimental::native_simd<float>
+		::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
 			m_vData
 			[	sizeof(Body3D)
 			/	sizeof(float)
@@ -161,7 +163,7 @@ namespace
 			{	{	.	m_aBuffer
 					=	m_vData
 				,	.	m_vCapacity
-					=	::std::experimental::native_simd<float>
+					=	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
 						::	size
 							()
 				,	.	m_vIndex
@@ -226,7 +228,7 @@ namespace
 			.	m_vView32
 			.	m_vIndex
 			+=	static_cast<Body3DIterator::difference_type>
-				(	::std::experimental::native_simd<float>
+				(	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
 					::	size
 						()
 				)
@@ -256,7 +258,7 @@ namespace
 					.	m_vIndex
 				)
 			/	static_cast<Body3DIterator::difference_type>
-				(	::std::experimental::native_simd<float>
+				(	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
 					::	size
 						()
 				)
@@ -321,7 +323,7 @@ namespace
 	struct
 		VolumeComputer
 	{
-		::std::experimental::native_simd<float>
+		::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
 		*	m_aBuffer
 		;
 		::std::uint32_t
@@ -341,7 +343,7 @@ namespace
 		:	m_aBuffer
 			{	new	(	::std::nothrow
 					)
-				::std::experimental::native_simd<float>
+				::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
 					[	static_cast<::std::size_t>
 						(	ByteSize
 							(	i_vCapacity
@@ -349,7 +351,7 @@ namespace
 							).	get
 								()
 						)
-					/	sizeof(::std::experimental::native_simd<float>)
+					/	sizeof(::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>)
 					]
 			}
 		,	m_vCapacity
@@ -369,42 +371,40 @@ namespace
 			;
 		}
 
-		template
-			<	typename
-					t_tBody
-			>
-		auto constexpr inline
+		auto inline
 		(	emplace_back
-		)	(	::std::in_place_type_t
-				<	t_tBody
-				>
-			,	float
+		)	(	::std::experimental::fixed_size_simd<unsigned char, sizeof(::std::uint64_t)>
+					i_vType
+			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
 					i_vRed
-			,	float
+			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
 					i_vGreen
-			,	float
+			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
 					i_vBlue
-			,	float
+			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
 					i_vAlpha
-			,	float
+			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
 					i_vLateral
-			,	float
+			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
 					i_vLongitudinal
-			,	float
+			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
 					i_vVertical
-			,	float
+			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
 					i_vHeight
-			,	float
+			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
 					i_vWidth
-			,	float
+			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
 					i_vDepth
 			)	&
 			noexcept
 		{
 			auto const
 				vCount
-			=	m_vCount
-				++
+			=	::std::exchange
+				(	m_vCount
+				,	m_vCount
+				+	sizeof(::std::uint64_t)
+				)
 			;
 			auto const
 				aBuffer
@@ -421,204 +421,122 @@ namespace
 				=	vCount
 			};
 
-			switch
-				(	t_tBody
-					::	Tag
-				)
-			{	case
-					ETag::Circle
-				:	ConstructCircle
-					(	vView32
-					,	i_vRed
-					,	i_vGreen
-					,	i_vBlue
-					,	i_vAlpha
-					,	i_vLateral
-					,	i_vLongitudinal
-					,	i_vVertical
-					,	i_vHeight
-					);
-				break;
-				case
-					ETag::Ellipse
-				:	ConstructEllipse
-					(	vView32
-					,	i_vRed
-					,	i_vGreen
-					,	i_vBlue
-					,	i_vAlpha
-					,	i_vLateral
-					,	i_vLongitudinal
-					,	i_vVertical
-					,	i_vHeight
-					,	i_vWidth
-					);
-				break;
-				case
-					ETag::Rectangle
-				:	ConstructRectangle
-					(	vView32
-					,	i_vRed
-					,	i_vGreen
-					,	i_vBlue
-					,	i_vAlpha
-					,	i_vLateral
-					,	i_vLongitudinal
-					,	i_vVertical
-					,	i_vHeight
-					,	i_vWidth
-					);
-				break;
-				case
-					ETag::Square
-				:	ConstructSquare
-					(	vView32
-					,	i_vRed
-					,	i_vGreen
-					,	i_vBlue
-					,	i_vAlpha
-					,	i_vLateral
-					,	i_vLongitudinal
-					,	i_vVertical
-					,	i_vHeight
-					);
-				break;
-				case
-					ETag::Triangle
-				:	ConstructTriangle
-					(	vView32
-					,	i_vRed
-					,	i_vGreen
-					,	i_vBlue
-					,	i_vAlpha
-					,	i_vLateral
-					,	i_vLongitudinal
-					,	i_vVertical
-					,	i_vHeight
-					,	i_vWidth
-					);
-				break;
-				case
-					ETag::Cube
-				:	ConstructCube
-					(	vView32
-					,	i_vRed
-					,	i_vGreen
-					,	i_vBlue
-					,	i_vAlpha
-					,	i_vLateral
-					,	i_vLongitudinal
-					,	i_vVertical
-					,	i_vHeight
-					);
-				break;
-				case
-					ETag::Cuboid
-				:	ConstructCuboid
-					(	vView32
-					,	i_vRed
-					,	i_vGreen
-					,	i_vBlue
-					,	i_vAlpha
-					,	i_vLateral
-					,	i_vLongitudinal
-					,	i_vVertical
-					,	i_vHeight
-					,	i_vWidth
-					,	i_vDepth
-					);
-				break;
-				case
-					ETag::Pyramid
-				:	ConstructPyramid
-					(	vView32
-					,	i_vRed
-					,	i_vGreen
-					,	i_vBlue
-					,	i_vAlpha
-					,	i_vLateral
-					,	i_vLongitudinal
-					,	i_vVertical
-					,	i_vHeight
-					,	i_vWidth
-					,	i_vDepth
-					);
-				break;
-				case
-					ETag::Sphere
-				:	ConstructSphere
-					(	vView32
-					,	i_vRed
-					,	i_vGreen
-					,	i_vBlue
-					,	i_vAlpha
-					,	i_vLateral
-					,	i_vLongitudinal
-					,	i_vVertical
-					,	i_vHeight
-					);
-				break;
-				case
-					ETag::Cylinder
-				:	ConstructCylinder
-					(	vView32
-					,	i_vRed
-					,	i_vGreen
-					,	i_vBlue
-					,	i_vAlpha
-					,	i_vLateral
-					,	i_vLongitudinal
-					,	i_vVertical
-					,	i_vHeight
-					,	i_vDepth
-					);
-				break;
-				case
-					ETag::Cone
-				:	ConstructCone
-					(	vView32
-					,	i_vRed
-					,	i_vGreen
-					,	i_vBlue
-					,	i_vAlpha
-					,	i_vLateral
-					,	i_vLongitudinal
-					,	i_vVertical
-					,	i_vHeight
-					,	i_vDepth
-					);
-				break;
-				case
-					ETag::Ellipsoid
-				:	ConstructEllipsoid
-					(	vView32
-					,	i_vRed
-					,	i_vGreen
-					,	i_vBlue
-					,	i_vAlpha
-					,	i_vLateral
-					,	i_vLongitudinal
-					,	i_vVertical
-					,	i_vHeight
-					,	i_vWidth
-					,	i_vDepth
-					);
-				break;
-				case
-					ETag::Head
-				:	ConstructHead
-					(	vView32
-					,	i_vRed
-					,	i_vGreen
-					,	i_vBlue
-					,	i_vAlpha
-					,	i_vLateral
-					,	i_vLongitudinal
-					,	i_vVertical
-					,	i_vHeight
-					);
-				break;
-			}
+			::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)> const
+				vWidth
+			{	[	i_vType
+				,	i_vHeight
+				,	i_vWidth
+				]	(	::std::size_t
+							i_vIndex
+					)
+				{
+					auto const
+						vType
+					=	static_cast<ETag>
+						(	i_vType
+							[	i_vIndex
+							]
+						)
+					;
+					return
+						(vType == ETag::Circle)		* i_vHeight[i_vIndex]
+					+	(vType == ETag::Ellipse)	* i_vWidth[i_vIndex]
+					+	(vType == ETag::Rectangle)	* i_vWidth[i_vIndex]
+					+	(vType == ETag::Square)		* i_vHeight[i_vIndex]
+					+	(vType == ETag::Triangle)	* i_vWidth[i_vIndex]
+					+	(vType == ETag::Cube)		* i_vHeight[i_vIndex]
+					+	(vType == ETag::Cuboid)		* i_vWidth[i_vIndex]
+					+	(vType == ETag::Pyramid)	* i_vWidth[i_vIndex]
+					+	(vType == ETag::Sphere)		* i_vHeight[i_vIndex]
+					+	(vType == ETag::Cylinder)	* i_vHeight[i_vIndex]
+					+	(vType == ETag::Cone)		* i_vHeight[i_vIndex]
+					+	(vType == ETag::Ellipsoid)	* i_vWidth[i_vIndex]
+					+	(vType == ETag::Head)		* i_vHeight[i_vIndex]
+					;
+				}
+			};
+
+			::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)> const
+				vDepth
+			{	[	i_vType
+				,	i_vHeight
+				,	i_vDepth
+				]	(	::std::size_t
+							i_vIndex
+					)
+				{
+					auto const
+						vType
+					=	static_cast<ETag>
+						(	i_vType
+							[	i_vIndex
+							]
+						)
+					;
+					return
+						(vType == ETag::Circle)		* 1.0f
+					+	(vType == ETag::Ellipse)	* 1.0f
+					+	(vType == ETag::Rectangle)	* 1.0f
+					+	(vType == ETag::Square)		* 1.0f
+					+	(vType == ETag::Triangle)	* 1.0f
+					+	(vType == ETag::Cube)		* i_vHeight[i_vIndex]
+					+	(vType == ETag::Cuboid)		* i_vDepth[i_vIndex]
+					+	(vType == ETag::Pyramid)	* i_vDepth[i_vIndex]
+					+	(vType == ETag::Sphere)		* i_vHeight[i_vIndex]
+					+	(vType == ETag::Cylinder)	* i_vDepth[i_vIndex]
+					+	(vType == ETag::Cone)		* i_vDepth[i_vIndex]
+					+	(vType == ETag::Ellipsoid)	* i_vDepth[i_vIndex]
+					+	(vType == ETag::Head)		* i_vHeight[i_vIndex]
+					;
+				}
+			};
+
+			::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)> const
+				vMultiplier
+			{	[	i_vType
+				]	(	::std::size_t
+							i_vIndex
+					)
+				{
+					auto const
+						vType
+					=	static_cast<ETag>
+						(	i_vType
+							[	i_vIndex
+							]
+						)
+					;
+					return
+						(vType == ETag::Circle)		* PiFraction<1z, 4z>{}
+					+	(vType == ETag::Ellipse)	* PiFraction<1z, 4z>{}
+					+	(vType == ETag::Rectangle)	* 1.0f
+					+	(vType == ETag::Square)		* 1.0f
+					+	(vType == ETag::Triangle)	* Fraction<1z, 2z>{}
+					+	(vType == ETag::Cube)		* 1.0f
+					+	(vType == ETag::Cuboid)		* 1.0f
+					+	(vType == ETag::Pyramid)	* Fraction<1z, 3z>{}
+					+	(vType == ETag::Sphere)		* PiFraction<1z, 6z>{}
+					+	(vType == ETag::Cylinder)	* PiFraction<1z, 4z>{}
+					+	(vType == ETag::Cone)		* PiFraction<1z, 12z>{}
+					+	(vType == ETag::Ellipsoid)	* PiFraction<1z, 6z>{}
+					+	(vType == ETag::Head)		* PiFraction<1z, 6z>{}
+					;
+				}
+			};
+
+			vView32
+				[0z, i_vRed]
+				[1z, i_vGreen]
+				[2z, i_vBlue]
+				[3z, i_vAlpha]
+				[4z, i_vLateral]
+				[5z, i_vLongitudinal]
+				[6z, i_vVertical]
+				[7z, i_vHeight]
+				[8z, vWidth]
+				[9z, vDepth]
+				[10z, vMultiplier]
+			;
 		}
 
 		[[nodiscard]]
@@ -746,285 +664,38 @@ auto inline
 			,	_
 			]
 		:	i_vRandomSequence
+			.	SimdView
+				()
 		)
 	{
-		switch
-			(	vType
-			%	13
+		vElements
+		.	emplace_back
+			(	// FIXME operator % not working?
+				::std::experimental::fixed_size_simd<unsigned char, sizeof(::std::uint64_t)>
+				(	[	vType
+					]	(	::std::size_t
+								i_vIndex
+						)
+					{	return
+							vType
+							[	i_vIndex
+							]
+						%	13
+						;
+					}
+				)
+			,	vRed
+			,	vGreen
+			,	vBlue
+			,	vAlpha
+			,	vLateral
+			,	vLongitudinal
+			,	vVertical
+			,	vHeight
+			,	vWidth
+			,	vDepth
 			)
-		{	case
-				0
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Circle
-						>
-					,	vRed
-					,	vGreen
-					,	vBlue
-					,	vAlpha
-					,	vLateral
-					,	vLongitudinal
-					,	vVertical
-					,	vHeight
-					,	vWidth
-					,	vDepth
-					)
-				;
-			break;
-
-			case
-				1
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Ellipse
-						>
-					,	vRed
-					,	vGreen
-					,	vBlue
-					,	vAlpha
-					,	vLateral
-					,	vLongitudinal
-					,	vVertical
-					,	vHeight
-					,	vWidth
-					,	vDepth
-					)
-				;
-			break;
-
-			case
-				2
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Rectangle
-						>
-					,	vRed
-					,	vGreen
-					,	vBlue
-					,	vAlpha
-					,	vLateral
-					,	vLongitudinal
-					,	vVertical
-					,	vHeight
-					,	vWidth
-					,	vDepth
-					)
-				;
-			break;
-
-			case
-				3
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Square
-						>
-					,	vRed
-					,	vGreen
-					,	vBlue
-					,	vAlpha
-					,	vLateral
-					,	vLongitudinal
-					,	vVertical
-					,	vHeight
-					,	vWidth
-					,	vDepth
-					)
-				;
-			break;
-
-			case
-				4
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Triangle
-						>
-					,	vRed
-					,	vGreen
-					,	vBlue
-					,	vAlpha
-					,	vLateral
-					,	vLongitudinal
-					,	vVertical
-					,	vHeight
-					,	vWidth
-					,	vDepth
-					)
-				;
-			break;
-
-			case
-				5
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Cube
-						>
-					,	vRed
-					,	vGreen
-					,	vBlue
-					,	vAlpha
-					,	vLateral
-					,	vLongitudinal
-					,	vVertical
-					,	vHeight
-					,	vWidth
-					,	vDepth
-					)
-				;
-			break;
-
-			case
-				6
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Cuboid
-						>
-					,	vRed
-					,	vGreen
-					,	vBlue
-					,	vAlpha
-					,	vLateral
-					,	vLongitudinal
-					,	vVertical
-					,	vHeight
-					,	vWidth
-					,	vDepth
-					)
-				;
-			break;
-
-			case
-				7
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Pyramid
-						>
-					,	vRed
-					,	vGreen
-					,	vBlue
-					,	vAlpha
-					,	vLateral
-					,	vLongitudinal
-					,	vVertical
-					,	vHeight
-					,	vWidth
-					,	vDepth
-					)
-				;
-			break;
-
-			case
-				8
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Sphere
-						>
-					,	vRed
-					,	vGreen
-					,	vBlue
-					,	vAlpha
-					,	vLateral
-					,	vLongitudinal
-					,	vVertical
-					,	vHeight
-					,	vWidth
-					,	vDepth
-					)
-				;
-			break;
-
-			case
-				9
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Cylinder
-						>
-					,	vRed
-					,	vGreen
-					,	vBlue
-					,	vAlpha
-					,	vLateral
-					,	vLongitudinal
-					,	vVertical
-					,	vHeight
-					,	vWidth
-					,	vDepth
-					)
-				;
-			break;
-
-			case
-				10
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Cone
-						>
-					,	vRed
-					,	vGreen
-					,	vBlue
-					,	vAlpha
-					,	vLateral
-					,	vLongitudinal
-					,	vVertical
-					,	vHeight
-					,	vWidth
-					,	vDepth
-					)
-				;
-			break;
-
-			case
-				11
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Ellipsoid
-						>
-					,	vRed
-					,	vGreen
-					,	vBlue
-					,	vAlpha
-					,	vLateral
-					,	vLongitudinal
-					,	vVertical
-					,	vHeight
-					,	vWidth
-					,	vDepth
-					)
-				;
-			break;
-
-			case
-				12
-			:	vElements
-				.	emplace_back
-					(	::std::in_place_type
-						<	Head
-						>
-					,	vRed
-					,	vGreen
-					,	vBlue
-					,	vAlpha
-					,	vLateral
-					,	vLongitudinal
-					,	vVertical
-					,	vHeight
-					,	vWidth
-					,	vDepth
-					)
-				;
-			break;
-		}
+		;
 	}
 
 	return
@@ -1038,7 +709,7 @@ auto inline
 		,	[]	(	auto const
 						rBody
 				)
-			->	::std::experimental::native_simd<float>
+			->	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
 			{	return
 					rBody
 					.	ComputeVolume
