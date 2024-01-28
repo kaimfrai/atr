@@ -5,102 +5,194 @@ import Evaluation.Dependency.RandomAccessIteratorBase;
 import Evaluation.Dependency.TransformReduce;
 import Evaluation.Dependency.VerifyLoopSum;
 
-import Evaluation.SOAReplication.View32;
+import Evaluation.SOAReplication.SOAView;
 import Evaluation.SOAReplication.Tag;
-import Evaluation.SOAReplication.Circle;
-import Evaluation.SOAReplication.Ellipse;
-import Evaluation.SOAReplication.Rectangle;
-import Evaluation.SOAReplication.Square;
-import Evaluation.SOAReplication.Triangle;
-import Evaluation.SOAReplication.Cube;
-import Evaluation.SOAReplication.Cuboid;
-import Evaluation.SOAReplication.Pyramid;
-import Evaluation.SOAReplication.Sphere;
-import Evaluation.SOAReplication.Cylinder;
-import Evaluation.SOAReplication.Cone;
-import Evaluation.SOAReplication.Ellipsoid;
-import Evaluation.SOAReplication.Head;
-
-import Meta.Memory.Size;
-import Meta.Memory.Size.Arithmetic;
-import Meta.Memory.Size.Scale;
-import Meta.Memory.Size.PointerArithmetic;
 
 import Std;
-
-using ::Meta::ByteSize;
 
 namespace
 	Bodies3D
 {
-	using ::Bodies3D::Circle;
-	using ::Bodies3D::Ellipse;
-	using ::Bodies3D::Rectangle;
-	using ::Bodies3D::Square;
-	using ::Bodies3D::Triangle;
+	unsigned constexpr inline
+		CircleMask
+	=	1u
+	<<	(	31u
+		-	static_cast<unsigned>(ETag::Circle)
+		)
+	;
+	unsigned constexpr inline
+		EllipseMask
+	=	1u
+	<<	(	31u
+		-	static_cast<unsigned>(ETag::Ellipse)
+		)
+	;
+	unsigned constexpr inline
+		RectangleMask
+	=	1u
+	<<	(	31u
+		-	static_cast<unsigned>(ETag::Rectangle)
+		)
+	;
+	unsigned constexpr inline
+		SquareMask
+	=	1u
+	<<	(	31u
+		-	static_cast<unsigned>(ETag::Square)
+		)
+	;
+	unsigned constexpr inline
+		TriangleMask
+	=	1u
+	<<	(	31u
+		-	static_cast<unsigned>(ETag::Triangle)
+		)
+	;
+	unsigned constexpr inline
+		CubeMask
+	=	1u
+	<<	(	31u
+		-	static_cast<unsigned>(ETag::Cube)
+		)
+	;
+	unsigned constexpr inline
+		CuboidMask
+	=	1u
+	<<	(	31u
+		-	static_cast<unsigned>(ETag::Cuboid)
+		)
+	;
+	unsigned constexpr inline
+		PyramidMask
+	=	1u
+	<<	(	31u
+		-	static_cast<unsigned>(ETag::Pyramid)
+		)
+	;
+	unsigned constexpr inline
+		SphereMask
+	=	1u
+	<<	(	31u
+		-	static_cast<unsigned>(ETag::Sphere)
+		)
+	;
+	unsigned constexpr inline
+		CylinderMask
+	=	1u
+	<<	(	31u
+		-	static_cast<unsigned>(ETag::Cylinder)
+		)
+	;
+	unsigned constexpr inline
+		ConeMask
+	=	1u
+	<<	(	31u
+		-	static_cast<unsigned>(ETag::Cone)
+		)
+	;
+	unsigned constexpr inline
+		EllipsoidMask
+	=	1u
+	<<	(	31u
+		-	static_cast<unsigned>(ETag::Ellipsoid)
+		)
+	;
+	unsigned constexpr inline
+		HeadMask
+	=	1u
+	<<	(	31u
+		-	static_cast<unsigned>(ETag::Head)
+		)
+	;
+	unsigned constexpr inline
+		HeightIsWidthMask
+	=	CircleMask
+	bitor
+		SquareMask
+	bitor
+		CubeMask
+	bitor
+		SphereMask
+	bitor
+		CylinderMask
+	bitor
+		ConeMask
+	bitor
+		HeadMask
+	;
+	unsigned constexpr inline
+		OneIsDepthMask
+	=	CircleMask
+	bitor
+		EllipseMask
+	bitor
+		RectangleMask
+	bitor
+		SquareMask
+	bitor
+		TriangleMask
+	;
+	unsigned constexpr inline
+		HeightIsDepthMask
+	=	CubeMask
+	bitor
+		SphereMask
+	bitor
+		HeadMask
+	;
+	unsigned constexpr inline
+		Pi_4_Mask
+	=	CircleMask
+	bitor
+		EllipseMask
+	bitor
+		CylinderMask
+	;
+	unsigned constexpr inline
+		Half_Mask
+	=	TriangleMask
+	;
+	unsigned constexpr inline
+		Third_Mask
+	=	PyramidMask
+	;
+	unsigned constexpr inline
+		Pi_6_Mask
+	=	SphereMask
+	bitor
+		EllipsoidMask
+	bitor
+		HeadMask
+	;
+	unsigned constexpr inline
+		Pi_12_Mask
+	=	ConeMask
+	;
 
-	using ::Bodies3D::Cube;
-	using ::Bodies3D::Cuboid;
-	using ::Bodies3D::Pyramid;
-	using ::Bodies3D::Sphere;
-	using ::Bodies3D::Cylinder;
-	using ::Bodies3D::Cone;
-	using ::Bodies3D::Ellipsoid;
-	using ::Bodies3D::Head;
-
-	struct
-		Body3D
-	{
-		float
-			ColorRed
+	[[nodiscard]]
+	auto inline
+	(	TypeMask
+	)	(	Simd<unsigned>
+				i_vType
+		,	unsigned
+				i_vMask
+		)
+		noexcept
+	->	SimdMask<float>
+	{	return
+			// *HIGHEST* bit must be set
+			::std::bit_cast<SimdMask<float>>
+			(	Simd<unsigned>(i_vMask)
+			<<	i_vType
+			)
 		;
-		float
-			ColorGreen
-		;
-		float
-			ColorBlue
-		;
-		float
-			ColorAlpha
-		;
-		float
-			PointLateral
-		;
-		float
-			PointLongitudinal
-		;
-		float
-			PointVertical
-		;
-		float
-			Height
-		;
-		float
-			Width
-		;
-		float
-			Depth
-		;
-		float
-			ComputeVolumeMultiplier
-		;
-	};
-
-
-	ByteSize constexpr inline
-		BodySize
-	{	sizeof(Body3D)
-	};
-	ByteSize constexpr inline
-		EyesSize
-	{	sizeof(HeadEyes)
-	};
+	}
 
 	struct
 		Body3DReference
 	{
-		View32<float const>
-			m_vView32
+		Body3DConstView
+			m_rView
 		;
 
 		[[nodiscard]]
@@ -111,32 +203,115 @@ namespace
 		->	auto
 		{
 			auto const
+				vType
+			=	to_native
+				(	simd_cast<unsigned>
+					(	m_rView
+						.	get
+							<	10uz
+							,	unsigned char
+							,	Simd<float>::size()
+							>()
+					)
+				)
+			;
+			auto const
 				vHeight
-			=	m_vView32
-				[	7z
-				]
+			=	m_rView
+				.	get
+					<	7uz
+					,	float
+					>()
 			;
-			auto const
+			auto
 				vWidth
-			=	m_vView32
-				[	8z
-				]
+			=	m_rView
+				.	get
+					<	8uz
+					,	float
+					>()
 			;
-			auto const
+			auto
 				vDepth
-			=	m_vView32
-				[	9z
-				]
+			=	m_rView
+				.	get
+					<	9uz
+					,	float
+					>()
 			;
-			auto const
-				vComputeVolumeMultiplier
-			=	m_vView32
-				[	10z
-				]
+				where
+				(	TypeMask
+					(	vType
+					,	HeightIsWidthMask
+					)
+				,	vWidth
+				)
+			=	vHeight
+			;	where
+				(	TypeMask
+					(	vType
+					,	HeightIsDepthMask
+					)
+				,	vDepth
+				)
+			=	vHeight
+			;	where
+				(	TypeMask
+					(	vType
+					,	OneIsDepthMask
+					)
+				,	vDepth
+				)
+			=	1.0f
+			;
+
+			Simd<float>
+				vMultiplier
+			=	1.0f
+			;	where
+				(	TypeMask
+					(	vType
+					,	Pi_4_Mask
+					)
+				,	vMultiplier
+				)
+			=	static_cast<float>(PiFraction<1, 4>{})
+			;	where
+				(	TypeMask
+					(	vType
+					,	Half_Mask
+					)
+				,	vMultiplier
+				)
+			=	static_cast<float>(Fraction<1, 2>{})
+			;	where
+				(	TypeMask
+					(	vType
+					,	Third_Mask
+					)
+				,	vMultiplier
+				)
+			=	static_cast<float>(Fraction<1, 3>{})
+			;	where
+				(	TypeMask
+					(	vType
+					,	Pi_6_Mask
+					)
+				,	vMultiplier
+				)
+			=	static_cast<float>(PiFraction<1, 6>{})
+			;	where
+				(	TypeMask
+					(	vType
+					,	Pi_12_Mask
+					)
+				,	vMultiplier
+				)
+			=	static_cast<float>(PiFraction<1, 12>{})
 			;
 
 			return
-				vComputeVolumeMultiplier
+				vMultiplier
 			*	vHeight
 			*	vWidth
 			*	vDepth
@@ -147,10 +322,14 @@ namespace
 	struct
 		Body3DValue
 	{
-		::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
+		alignas(Simd<float>)
+		::std::byte
 			m_vData
-			[	sizeof(Body3D)
-			/	sizeof(float)
+			[	Simd<float>
+				::	size
+					()
+			*	Body3DView
+				::	TotalSize
 			]
 		;
 
@@ -163,7 +342,7 @@ namespace
 			{	{	.	m_aBuffer
 					=	m_vData
 				,	.	m_vCapacity
-					=	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
+					=	Simd<float>
 						::	size
 							()
 				,	.	m_vIndex
@@ -210,8 +389,8 @@ namespace
 		,	Body3DValue
 		>
 	{
-		View32<float const>
-			m_vView32
+		Body3DConstView
+			m_rSOAView
 		;
 
 		auto constexpr inline
@@ -225,10 +404,10 @@ namespace
 		->	decltype(i_rThis)
 		{
 			i_rThis
-			.	m_vView32
+			.	m_rSOAView
 			.	m_vIndex
 			+=	static_cast<Body3DIterator::difference_type>
-				(	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
+				(	Simd<float>
 					::	size
 						()
 				)
@@ -251,14 +430,14 @@ namespace
 		->	Body3DIterator::difference_type
 		{	return
 				(	i_aLeft
-					.	m_vView32
+					.	m_rSOAView
 					.	m_vIndex
 				-	i_aRight
-					.	m_vView32
+					.	m_rSOAView
 					.	m_vIndex
 				)
 			/	static_cast<Body3DIterator::difference_type>
-				(	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
+				(	Simd<float>
 					::	size
 						()
 				)
@@ -275,7 +454,7 @@ namespace
 		->	Body3DIterator::reference
 		{	return
 			{	i_aThis
-				.	m_vView32
+				.	m_rSOAView
 			};
 		}
 
@@ -291,10 +470,10 @@ namespace
 		->	bool
 		{	return
 				i_aLeft
-				.	m_vView32
+				.	m_rSOAView
 				.	m_vIndex
 			==	i_aRight
-				.	m_vView32
+				.	m_rSOAView
 				.	m_vIndex
 			;
 		}
@@ -311,10 +490,10 @@ namespace
 		->	decltype(auto)
 		{	return
 				i_aLeft
-				.	m_vView32
+				.	m_rSOAView
 				.	m_vIndex
 			<=>	i_aRight
-				.	m_vView32
+				.	m_rSOAView
 				.	m_vIndex
 			;
 		}
@@ -323,14 +502,8 @@ namespace
 	struct
 		VolumeComputer
 	{
-		::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
-		*	m_aBuffer
-		;
-		::std::uint32_t
-			m_vCapacity
-		;
-		::std::uint32_t
-			m_vCount
+		Body3DView
+			m_rView
 		{};
 
 	public:
@@ -340,22 +513,21 @@ namespace
 					i_vCapacity
 			)
 			noexcept
-		:	m_aBuffer
-			{	new	(	::std::nothrow
-					)
-				::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
-					[	static_cast<::std::size_t>
-						(	ByteSize
-							(	i_vCapacity
-							*	BodySize
-							).	get
-								()
+		:	m_rView
+			{	.	m_aBuffer
+				=	static_cast<::std::byte*>
+					(	::std::aligned_alloc
+						(	alignof(Simd<float>)
+						,	(	i_vCapacity
+							*	Body3DView
+								::	TotalSize
+							)
 						)
-					/	sizeof(::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>)
-					]
-			}
-		,	m_vCapacity
-			{	i_vCapacity
+					)
+			,	.	m_vCapacity
+				=	i_vCapacity
+			,	.	m_vIndex
+				=	0u
 			}
 		{}
 
@@ -365,177 +537,99 @@ namespace
 		)	()
 			noexcept
 		{
-			delete
-				[]
-				m_aBuffer
-			;
+			::std::free
+			(	static_cast<void*>
+				(	m_rView
+					.	m_aBuffer
+				)
+			);
 		}
 
 		auto inline
 		(	emplace_back
-		)	(	::std::experimental::fixed_size_simd<unsigned char, sizeof(::std::uint64_t)>
+		)	(	FixedSimd<unsigned char, 8uz>
 					i_vType
-			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
+			,	Simd<float>
 					i_vRed
-			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
+			,	Simd<float>
 					i_vGreen
-			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
+			,	Simd<float>
 					i_vBlue
-			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
+			,	Simd<float>
 					i_vAlpha
-			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
+			,	Simd<float>
 					i_vLateral
-			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
+			,	Simd<float>
 					i_vLongitudinal
-			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
+			,	Simd<float>
 					i_vVertical
-			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
+			,	Simd<float>
 					i_vHeight
-			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
+			,	Simd<float>
 					i_vWidth
-			,	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
+			,	Simd<float>
 					i_vDepth
 			)	&
 			noexcept
 		{
-			auto const
-				vCount
-			=	::std::exchange
-				(	m_vCount
-				,	m_vCount
-				+	sizeof(::std::uint64_t)
+			m_rView
+			.	set<0uz>
+				(	i_vRed
 				)
 			;
-			auto const
-				aBuffer
-			=	m_aBuffer
+			m_rView
+			.	set<1uz>
+				(	i_vGreen
+				)
 			;
-
-			View32<float>
-				vView32
-			{	.	m_aBuffer
-				=	aBuffer
-			,	.	m_vCapacity
-				=	m_vCapacity
-			,	.	m_vIndex
-				=	vCount
-			};
-
-			::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)> const
-				vWidth
-			{	[	i_vType
-				,	i_vHeight
-				,	i_vWidth
-				]	(	::std::size_t
-							i_vIndex
-					)
-				{
-					auto const
-						vType
-					=	static_cast<ETag>
-						(	i_vType
-							[	i_vIndex
-							]
-						)
-					;
-					return
-						(vType == ETag::Circle)		* i_vHeight[i_vIndex]
-					+	(vType == ETag::Ellipse)	* i_vWidth[i_vIndex]
-					+	(vType == ETag::Rectangle)	* i_vWidth[i_vIndex]
-					+	(vType == ETag::Square)		* i_vHeight[i_vIndex]
-					+	(vType == ETag::Triangle)	* i_vWidth[i_vIndex]
-					+	(vType == ETag::Cube)		* i_vHeight[i_vIndex]
-					+	(vType == ETag::Cuboid)		* i_vWidth[i_vIndex]
-					+	(vType == ETag::Pyramid)	* i_vWidth[i_vIndex]
-					+	(vType == ETag::Sphere)		* i_vHeight[i_vIndex]
-					+	(vType == ETag::Cylinder)	* i_vHeight[i_vIndex]
-					+	(vType == ETag::Cone)		* i_vHeight[i_vIndex]
-					+	(vType == ETag::Ellipsoid)	* i_vWidth[i_vIndex]
-					+	(vType == ETag::Head)		* i_vHeight[i_vIndex]
-					;
-				}
-			};
-
-			::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)> const
-				vDepth
-			{	[	i_vType
-				,	i_vHeight
-				,	i_vDepth
-				]	(	::std::size_t
-							i_vIndex
-					)
-				{
-					auto const
-						vType
-					=	static_cast<ETag>
-						(	i_vType
-							[	i_vIndex
-							]
-						)
-					;
-					return
-						(vType == ETag::Circle)		* 1.0f
-					+	(vType == ETag::Ellipse)	* 1.0f
-					+	(vType == ETag::Rectangle)	* 1.0f
-					+	(vType == ETag::Square)		* 1.0f
-					+	(vType == ETag::Triangle)	* 1.0f
-					+	(vType == ETag::Cube)		* i_vHeight[i_vIndex]
-					+	(vType == ETag::Cuboid)		* i_vDepth[i_vIndex]
-					+	(vType == ETag::Pyramid)	* i_vDepth[i_vIndex]
-					+	(vType == ETag::Sphere)		* i_vHeight[i_vIndex]
-					+	(vType == ETag::Cylinder)	* i_vDepth[i_vIndex]
-					+	(vType == ETag::Cone)		* i_vDepth[i_vIndex]
-					+	(vType == ETag::Ellipsoid)	* i_vDepth[i_vIndex]
-					+	(vType == ETag::Head)		* i_vHeight[i_vIndex]
-					;
-				}
-			};
-
-			::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)> const
-				vMultiplier
-			{	[	i_vType
-				]	(	::std::size_t
-							i_vIndex
-					)
-				{
-					auto const
-						vType
-					=	static_cast<ETag>
-						(	i_vType
-							[	i_vIndex
-							]
-						)
-					;
-					return
-						(vType == ETag::Circle)		* PiFraction<1z, 4z>{}
-					+	(vType == ETag::Ellipse)	* PiFraction<1z, 4z>{}
-					+	(vType == ETag::Rectangle)	* 1.0f
-					+	(vType == ETag::Square)		* 1.0f
-					+	(vType == ETag::Triangle)	* Fraction<1z, 2z>{}
-					+	(vType == ETag::Cube)		* 1.0f
-					+	(vType == ETag::Cuboid)		* 1.0f
-					+	(vType == ETag::Pyramid)	* Fraction<1z, 3z>{}
-					+	(vType == ETag::Sphere)		* PiFraction<1z, 6z>{}
-					+	(vType == ETag::Cylinder)	* PiFraction<1z, 4z>{}
-					+	(vType == ETag::Cone)		* PiFraction<1z, 12z>{}
-					+	(vType == ETag::Ellipsoid)	* PiFraction<1z, 6z>{}
-					+	(vType == ETag::Head)		* PiFraction<1z, 6z>{}
-					;
-				}
-			};
-
-			vView32
-				[0z, i_vRed]
-				[1z, i_vGreen]
-				[2z, i_vBlue]
-				[3z, i_vAlpha]
-				[4z, i_vLateral]
-				[5z, i_vLongitudinal]
-				[6z, i_vVertical]
-				[7z, i_vHeight]
-				[8z, vWidth]
-				[9z, vDepth]
-				[10z, vMultiplier]
+			m_rView
+			.	set<2uz>
+				(	i_vBlue
+				)
+			;
+			m_rView
+			.	set<3uz>
+				(	i_vAlpha
+				)
+			;
+			m_rView
+			.	set<4uz>
+				(	i_vLateral
+				)
+			;
+			m_rView
+			.	set<5uz>
+				(	i_vLongitudinal
+				)
+			;
+			m_rView
+			.	set<6uz>
+				(	i_vVertical
+				)
+			;
+			m_rView
+			.	set<7uz>
+				(	i_vHeight
+				)
+			;
+			m_rView
+			.	set<8uz>
+				(	i_vWidth
+				)
+			;
+			m_rView
+			.	set<9uz>
+				(	i_vDepth
+				)
+			;
+			m_rView
+			.	set<10uz>
+				(	i_vType
+				)
+			;
+				m_rView
+				.	m_vIndex
+			+=	sizeof(::std::uint64_t)
 			;
 		}
 
@@ -546,12 +640,14 @@ namespace
 			noexcept
 		->	Body3DIterator
 		{	return
-			{	.	m_vView32
-				=	View32<float const>
+			{	.	m_rSOAView
+				=	Body3DConstView
 					{	.	m_aBuffer
-						=	m_aBuffer
+						=	m_rView
+							.	m_aBuffer
 					,	.	m_vCapacity
-						=	m_vCapacity
+						=	m_rView
+							.	m_vCapacity
 					,	.	m_vIndex
 						=	0
 					}
@@ -565,21 +661,22 @@ namespace
 			noexcept
 		->	Body3DIterator
 		{	return
-			{	.	m_vView32
-				=	View32<float const>
+			{	.	m_rSOAView
+				=	Body3DConstView
 					{	.	m_aBuffer
-						=	m_aBuffer
+						=	m_rView
+							.	m_aBuffer
 					,	.	m_vCapacity
-						=	m_vCapacity
+						=	m_rView
+							.	m_vCapacity
 					,	.	m_vIndex
-						=	m_vCount
+						=	m_rView
+							.	m_vIndex
 					}
 			};
 		}
 	};
 }
-
-
 
 template
 	<>
@@ -671,7 +768,7 @@ auto inline
 		vElements
 		.	emplace_back
 			(	// FIXME operator % not working?
-				::std::experimental::fixed_size_simd<unsigned char, sizeof(::std::uint64_t)>
+				FixedSimd<unsigned char, 8uz>
 				(	[	vType
 					]	(	::std::size_t
 								i_vIndex
@@ -709,7 +806,7 @@ auto inline
 		,	[]	(	auto const
 						rBody
 				)
-			->	::std::experimental::fixed_size_simd<float, sizeof(::std::uint64_t)>
+			->	Simd<float>
 			{	return
 					rBody
 					.	ComputeVolume

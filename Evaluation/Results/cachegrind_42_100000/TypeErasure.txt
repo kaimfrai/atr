@@ -1,22 +1,22 @@
-==47672== Cachegrind, a cache and branch-prediction profiler
-==47672== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
-==47672== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==47672== Command: build/Evaluation/bin/TypeErasure 42 100000
-==47672== 
---47672-- warning: L3 cache found, using its data for the LL simulation.
-==47672== 
-==47672== I   refs:      49,935,638
-==47672== I1  misses:         2,128
-==47672== LLi misses:         1,990
-==47672== I1  miss rate:       0.00%
-==47672== LLi miss rate:       0.00%
-==47672== 
-==47672== D   refs:      19,986,949  (12,155,402 rd   + 7,831,547 wr)
-==47672== D1  misses:       410,890  (   274,668 rd   +   136,222 wr)
-==47672== LLd misses:       145,369  (    10,721 rd   +   134,648 wr)
-==47672== D1  miss rate:        2.1% (       2.3%     +       1.7%  )
-==47672== LLd miss rate:        0.7% (       0.1%     +       1.7%  )
-==47672== 
-==47672== LL refs:          413,018  (   276,796 rd   +   136,222 wr)
-==47672== LL misses:        147,359  (    12,711 rd   +   134,648 wr)
-==47672== LL miss rate:         0.2% (       0.0%     +       1.7%  )
+==40956== Cachegrind, a cache and branch-prediction profiler
+==40956== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==40956== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==40956== Command: build/Evaluation/bin/TypeErasure 42 100000
+==40956== 
+--40956-- warning: L3 cache found, using its data for the LL simulation.
+==40956== 
+==40956== I   refs:      49,936,288
+==40956== I1  misses:         2,128
+==40956== LLi misses:         1,990
+==40956== I1  miss rate:       0.00%
+==40956== LLi miss rate:       0.00%
+==40956== 
+==40956== D   refs:      19,987,044  (12,155,490 rd   + 7,831,554 wr)
+==40956== D1  misses:       410,875  (   274,654 rd   +   136,221 wr)
+==40956== LLd misses:       145,359  (    10,711 rd   +   134,648 wr)
+==40956== D1  miss rate:        2.1% (       2.3%     +       1.7%  )
+==40956== LLd miss rate:        0.7% (       0.1%     +       1.7%  )
+==40956== 
+==40956== LL refs:          413,003  (   276,782 rd   +   136,221 wr)
+==40956== LL misses:        147,349  (    12,701 rd   +   134,648 wr)
+==40956== LL miss rate:         0.2% (       0.0%     +       1.7%  )

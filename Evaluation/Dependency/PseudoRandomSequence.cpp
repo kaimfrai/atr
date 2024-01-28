@@ -54,6 +54,58 @@ export
 
 	template
 		<	typename
+				t_tOther
+		,	::std::size_t
+				t_vCount
+		>
+	struct
+		SimdGeneratedNumbers
+	{
+		::std::experimental::fixed_size_simd<unsigned char, 8uz>
+			m_vFirst
+		;
+
+		::std::experimental::native_simd<t_tOther>
+			m_vNumber
+			[	t_vCount
+			]
+		;
+
+		template
+			<	::std::size_t
+					t_vIndex
+			>
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	get
+		)	(	SimdGeneratedNumbers const
+				&	i_rGeneratedNumbers
+			)
+			noexcept
+		{
+			if	constexpr
+				(	t_vIndex
+				==	0uz
+				)
+			{	return
+					i_rGeneratedNumbers
+					.	m_vFirst
+				;
+			}
+			else
+			{	return
+					i_rGeneratedNumbers
+					.	m_vNumber
+						[	t_vIndex
+						-	1uz
+						]
+				;
+			}
+		}
+	};
+
+	template
+		<	typename
 				t_tNumber
 		,	::std::size_t
 				t_vCount
@@ -114,29 +166,56 @@ export
 		[[nodiscard]]
 		explicit(true) constexpr inline
 		(	operator
-			GeneratedNumbers
-			<	::std::experimental::fixed_size_simd<t_tOtherNumber, sizeof(t_tNumber) / sizeof(t_tOtherNumber)>
+			SimdGeneratedNumbers
+			<	t_tOtherNumber
 			,	t_vCount
+			-	1uz
 			>
 		)	()	const
 			noexcept
 		{
+			auto static constexpr
+				fConvertFirstNumber
+			=	[]	(	t_tNumber
+							i_vNumber
+					)
+				{	return
+					::std::experimental::fixed_size_simd<unsigned char, 8uz>
+					{	[	i_vNumber
+						]	(	::std::size_t
+									i_vIndex
+							)
+						{	return
+							static_cast<unsigned char>
+							(	(	i_vNumber
+								>>	(	8uz
+									*	i_vIndex
+									)
+								)
+							);
+						}
+					};
+				}
+			;
+
 			auto static constexpr
 				fConvertNumber
 			=	[]	(	t_tNumber
 							i_vNumber
 					)
 				{	return
-					::std::experimental::fixed_size_simd<t_tOtherNumber, sizeof(t_tNumber) / sizeof(t_tOtherNumber)>
+					::std::experimental::native_simd<t_tOtherNumber>
 					{	[	i_vNumber
 						]	(	::std::size_t
 									i_vIndex
 							)
 						{	return
 							static_cast<t_tOtherNumber>
-							(	i_vNumber
-							>>	(	8uz
-								*	i_vIndex
+							(	static_cast<unsigned char>
+								(	i_vNumber
+								>>	(	8uz
+									*	i_vIndex
+									)
 								)
 							);
 						}
@@ -149,16 +228,23 @@ export
 			]	<	::std::size_t
 					...	t_vpIndex
 				>(	::std::index_sequence
-					<	t_vpIndex
+					<	0uz
+					,	t_vpIndex
 						...
 					>
 				)
-			->	GeneratedNumbers
-				<	::std::experimental::fixed_size_simd<t_tOtherNumber, sizeof(t_tNumber) / sizeof(t_tOtherNumber)>
+			->	SimdGeneratedNumbers
+				<	t_tOtherNumber
 				,	t_vCount
+				-	1uz
 				>
 			{	return
-				{	fConvertNumber
+				{	fConvertFirstNumber
+					(	m_vNumber
+						[	0uz
+						]
+					)
+				,	fConvertNumber
 					(	m_vNumber
 						[	t_vpIndex
 						]
@@ -492,9 +578,9 @@ export
 		(	operator*
 		)	()	const
 			noexcept
-		->	GeneratedNumbers<::std::experimental::fixed_size_simd<unsigned char, sizeof(::std::uint64_t)>, RandomGenerators::GeneratorCount>
+		->	SimdGeneratedNumbers<float, RandomGenerators::GeneratorCount - 1uz>
 		{	return
-			static_cast<GeneratedNumbers<::std::experimental::fixed_size_simd<unsigned char, sizeof(::std::uint64_t)>, RandomGenerators::GeneratorCount>>
+			static_cast<SimdGeneratedNumbers<float, RandomGenerators::GeneratorCount - 1uz>>
 			(	*	m_vRandom
 			);
 		}
@@ -723,6 +809,66 @@ export
 	:	::std::integral_constant
 		<	::std::size_t
 		,	t_vCount
+		>
+	{};
+
+	template
+		<	::std::size_t
+				t_vIndex
+		,	typename
+				t_tOtherNumber
+		,	::std::size_t
+				t_vCount
+		>
+	struct
+		::std::tuple_element
+		<	t_vIndex
+		,	SimdGeneratedNumbers
+			<	t_tOtherNumber
+			,	t_vCount
+			>
+		>
+	:	::std::type_identity
+		<	::std::experimental::native_simd<t_tOtherNumber>
+		>
+	{};
+
+	template
+		<	typename
+				t_tOtherNumber
+		,	::std::size_t
+				t_vCount
+		>
+	struct
+		::std::tuple_element
+		<	0uz
+		,	SimdGeneratedNumbers
+			<	t_tOtherNumber
+			,	t_vCount
+			>
+		>
+	:	::std::type_identity
+		<	::std::experimental::fixed_size_simd<unsigned char, 8uz>
+		>
+	{};
+
+	template
+		<	typename
+				t_tOtherNumber
+		,	::std::size_t
+				t_vCount
+		>
+	struct
+		::std::tuple_size
+		<	SimdGeneratedNumbers
+			<	t_tOtherNumber
+			,	t_vCount
+			>
+		>
+	:	::std::integral_constant
+		<	::std::size_t
+		,	t_vCount
+		+	1uz
 		>
 	{};
 }

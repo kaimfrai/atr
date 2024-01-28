@@ -1,17 +1,4 @@
 add_single_file_modules(
-	View32.cpp
+	SOAView.cpp
 	Tag.cpp
-	Circle.cpp
-	Cone.cpp
-	Cube.cpp
-	Cuboid.cpp
-	Cylinder.cpp
-	Ellipse.cpp
-	Ellipsoid.cpp
-	Pyramid.cpp
-	Rectangle.cpp
-	Sphere.cpp
-	Square.cpp
-	Triangle.cpp
-	Head.cpp
 )
