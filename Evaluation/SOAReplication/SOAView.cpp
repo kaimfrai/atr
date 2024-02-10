@@ -89,8 +89,6 @@ export namespace
 		template
 			<	::std::size_t
 					t_vIndex
-			,	typename
-					t_tElement
 			>
 		[[nodiscard]]
 		auto constexpr inline
@@ -99,9 +97,9 @@ export namespace
 					i_rView
 			)
 			noexcept
-		->	t_tElement*
+		->	t_tpMember...[t_vIndex]*
 		{	return
-			reinterpret_cast<t_tElement*>
+			reinterpret_cast<t_tpMember...[t_vIndex]*>
 			(	i_rView
 				.	m_aBuffer
 			+	(	i_rView
@@ -122,11 +120,9 @@ export namespace
 		template
 			<	::std::size_t
 					t_vIndex
-			,	typename
-					t_tElement
 			,	::std::size_t
 					t_vCount
-				=	Simd<t_tElement>
+				=	Simd<t_tpMember...[t_vIndex]>
 					::	size
 						()
 			>
@@ -140,25 +136,25 @@ export namespace
 		{
 			if	constexpr
 				(	t_vCount
-				==	Simd<t_tElement>
+				==	Simd<t_tpMember...[t_vIndex]>
 					::	size
 						()
 				)
 			{	return
-				Simd<t_tElement>
+				Simd<::std::remove_cv_t<t_tpMember...[t_vIndex]>>
 				{	i_rView
 					.	template
-						AsPointer<t_vIndex, t_tElement const>
+						AsPointer<t_vIndex>
 						()
 				,	::std::experimental::vector_aligned
 				};
 			}
 			else
 			{	return
-				FixedSimd<t_tElement, t_vCount>
+				FixedSimd<::std::remove_cv_t<t_tpMember...[t_vIndex]>, t_vCount>
 				{	i_rView
 					.	template
-						AsPointer<t_vIndex, t_tElement const>
+						AsPointer<t_vIndex>
 						()
 				,	::std::experimental::vector_aligned
 				};
@@ -190,12 +186,10 @@ export namespace
 		template
 			<	::std::size_t
 					t_vIndex
-			,	typename
-					t_tElement
 			>
 		auto constexpr inline
 		(	set
-		)	(	Simd<t_tElement>
+		)	(	Simd<t_tpMember...[t_vIndex]>
 					i_vValue
 			)	const
 			noexcept
@@ -205,7 +199,7 @@ export namespace
 			.	copy_to
 				(	this
 					->	template
-						AsPointer<t_vIndex, t_tElement>
+						AsPointer<t_vIndex>
 						()
 				,	::std::experimental::vector_aligned
 				)
@@ -219,14 +213,12 @@ export namespace
 		template
 			<	::std::size_t
 					t_vIndex
-			,	typename
-					t_tElement
 			,	auto
 					t_vSize
 			>
 		auto constexpr inline
 		(	set
-		)	(	FixedSimd<t_tElement, t_vSize>
+		)	(	FixedSimd<t_tpMember...[t_vIndex], t_vSize>
 					i_vValue
 			)	const
 			noexcept
@@ -236,7 +228,7 @@ export namespace
 			.	copy_to
 				(	this
 					->	template
-						AsPointer<t_vIndex, t_tElement>
+						AsPointer<t_vIndex>
 						()
 				,	::std::experimental::vector_aligned
 				)
@@ -258,7 +250,7 @@ export namespace
 			...
 		>
 	:	SOAViewBase
-		<	t_tpMember
+		<	t_tpMember const
 			...
 		>
 	{

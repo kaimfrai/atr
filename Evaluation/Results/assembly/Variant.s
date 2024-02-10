@@ -2917,8 +2917,8 @@ Disassembly of section .text:
                	vpbroadcastw	xmm1, word ptr  <__libc_start_main+0xcbc>
                	lea	rbx,  <__libc_start_main+0xcc0>
                	vmovaps	ymm2, ymmword ptr  <__libc_start_main+0xc80>
-               	vpbroadcastq	xmm3, qword ptr  <__libc_start_main+0xc48>
-               	vmovdqa	xmm4, xmmword ptr  <__libc_start_main+0xc50>
+               	vmovq	xmm3, qword ptr  <__libc_start_main+0xc50>
+               	vpmovzxbq	xmm4, word ptr  <__libc_start_main+0xcbe>
                	vmovdqa	xmm5, xmmword ptr  <__libc_start_main+0xc60>
                	vbroadcastss	xmm6, dword ptr  <__libc_start_main+0xca0>
                	mov	r15, rdi

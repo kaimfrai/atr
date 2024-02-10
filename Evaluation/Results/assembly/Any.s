@@ -3307,7 +3307,7 @@ Disassembly of section .text:
                	vpackuswb	xmm0, xmm0, xmm0
                	vmovdqa	xmmword ptr [rsp + 0x10], xmm0
                	vmovdqu	xmm0, xmmword ptr [rsp + 0x3e8]
-               	vpshufb	xmm0, xmm0, xmmword ptr  <strcmp+0x1770>
+               	vpshufb	xmm0, xmm0, xmmword ptr  <strcmp+0x1760>
                	movzx	ecx, al
                	imul	ecx, ecx, 0x4f
                	shr	ecx, 0xa
@@ -3364,7 +3364,7 @@ Disassembly of section .text:
                	mov	qword ptr [r14 + r12], rcx
                	vmovss	dword ptr [rax + 0x28], xmm0
                	vpunpcklbw	xmm0, xmm1, xmmword ptr [rsp + 0x30] # xmm0 = xmm1[0],mem[0],xmm1[1],mem[1],xmm1[2],mem[2],xmm1[3],mem[3],xmm1[4],mem[4],xmm1[5],mem[5],xmm1[6],mem[6],xmm1[7],mem[7]
-               	vpshufb	xmm0, xmm0, xmmword ptr  <strcmp+0x1760>
+               	vpshufb	xmm0, xmm0, xmmword ptr  <strcmp+0x1750>
                	vpmovzxbd	ymm0, xmm0      # ymm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero,xmm0[4],zero,zero,zero,xmm0[5],zero,zero,zero,xmm0[6],zero,zero,zero,xmm0[7],zero,zero,zero
                	vcvtdq2ps	ymm0, ymm0
                	jmp	 <L237>
@@ -3395,7 +3395,7 @@ Disassembly of section .text:
                	mov	qword ptr [r14 + r12 - 0x8], rax
                	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Head@Evaluation.CRTP.Head>(std::in_place_type_t<Bodies3D::Head@Evaluation.CRTP.Head>)::'lambda'(std::any const&)::__invoke(std::any const&)>
                	mov	qword ptr [r14 + r12], rcx
-               	vpmovzxbd	ymm2, qword ptr [rsp + 0x10] # ymm2 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm2, qword ptr [rsp + 0x10]
                	vcvtdq2ps	ymm2, ymm2
                	vpermilps	ymm3, ymm2, ymmword ptr  <strcmp+0x1780>
                	vmovups	ymmword ptr [rax + 0x8], ymm3
@@ -3479,11 +3479,11 @@ Disassembly of section .text:
                	vmovdqa	xmm1, xmmword ptr [rsp + 0x10]
                	vmovdqa	xmm3, xmmword ptr [rsp + 0x30]
                	vpunpcklbw	xmm0, xmm1, xmm3 # xmm0 = xmm1[0],xmm3[0],xmm1[1],xmm3[1],xmm1[2],xmm3[2],xmm1[3],xmm3[3],xmm1[4],xmm3[4],xmm1[5],xmm3[5],xmm1[6],xmm3[6],xmm1[7],xmm3[7]
-               	vpshufb	xmm0, xmm0, xmmword ptr  <strcmp+0x1760>
+               	vpshufb	xmm0, xmm0, xmmword ptr  <strcmp+0x1750>
                	vpmovzxbd	ymm0, xmm0      # ymm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero,xmm0[4],zero,zero,zero,xmm0[5],zero,zero,zero,xmm0[6],zero,zero,zero,xmm0[7],zero,zero,zero
                	vcvtdq2ps	ymm0, ymm0
                	vpsrlq	xmm1, xmm1, 0x38
-               	vmovdqa	xmm2, xmmword ptr  <strcmp+0x1750>
+               	vpmovzxbq	xmm2, word ptr  <strcmp+0x17ba>
                	vpblendvb	xmm1, xmm3, xmm1, xmm2
                	vmovups	ymmword ptr [rax + 0x8], ymm0
                	vpmovzxbd	xmm0, xmm1      # xmm0 = xmm1[0],zero,zero,zero,xmm1[1],zero,zero,zero,xmm1[2],zero,zero,zero,xmm1[3],zero,zero,zero
@@ -3504,7 +3504,7 @@ Disassembly of section .text:
                	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Ellipse>(std::in_place_type_t<Bodies3D::Ellipse>)::'lambda'(std::any const&)::__invoke(std::any const&)>
 <L240>:
                	mov	qword ptr [r14 + r12], rcx
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x10] # ymm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x10]
                	vcvtdq2ps	ymm0, ymm0
                	vpermilps	ymm0, ymm0, ymmword ptr  <strcmp+0x1780>
                	vmovups	ymmword ptr [rax + 0x8], ymm0
@@ -3537,11 +3537,11 @@ Disassembly of section .text:
                	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>(std::in_place_type_t<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>)::'lambda'(std::any const&)::__invoke(std::any const&)>
 <L236>:
                	mov	qword ptr [r14 + r12], rcx
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x10] # ymm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x10]
                	vcvtdq2ps	ymm0, ymm0
                	vpermilps	ymm0, ymm0, ymmword ptr  <strcmp+0x1780>
                	vmovups	ymmword ptr [rax + 0x8], ymm0
-               	vpmovzxbd	xmm0, dword ptr [rsp + 0x30] # xmm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero
+               	vpmovzxbd	xmm0, dword ptr [rsp + 0x30]
 <L241>:
                	vcvtdq2ps	xmm0, xmm0
                	vmovlps	qword ptr [rax + 0x28], xmm0
@@ -3562,7 +3562,7 @@ Disassembly of section .text:
                	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Cone@Evaluation.CRTP.Cone>(std::in_place_type_t<Bodies3D::Cone@Evaluation.CRTP.Cone>)::'lambda'(std::any const&)::__invoke(std::any const&)>
 <L239>:
                	mov	qword ptr [r14 + r12], rcx
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x10] # ymm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x10]
                	vcvtdq2ps	ymm0, ymm0
                	vpermilps	ymm0, ymm0, ymmword ptr  <strcmp+0x1780>
                	vmovups	ymmword ptr [rax + 0x8], ymm0
@@ -3585,7 +3585,7 @@ Disassembly of section .text:
                	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Sphere@Evaluation.CRTP.Sphere>(std::in_place_type_t<Bodies3D::Sphere@Evaluation.CRTP.Sphere>)::'lambda'(std::any const&)::__invoke(std::any const&)>
 <L235>:
                	mov	qword ptr [r14 + r12], rcx
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x10] # ymm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x10]
                	vcvtdq2ps	ymm0, ymm0
                	vpermilps	ymm0, ymm0, ymmword ptr  <strcmp+0x1780>
 <L237>:
@@ -3633,7 +3633,7 @@ Disassembly of section .text:
                	mov	eax, 0x1
                	mov	qword ptr [rsp + 0x28], rcx
                	jmp	 <L244>
-               	nop	word ptr cs:[rax + rax]
+               	nop	word ptr [rax + rax]
 <L246>:
                	add	r14, 0xc0
                	inc	r13d

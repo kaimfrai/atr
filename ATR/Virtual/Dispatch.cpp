@@ -126,7 +126,7 @@ export namespace
 						or	(	(	i_vImplementerIndex
 								==	static_cast<unsigned char>(t_tpIndex)
 								)
-							?	(	(void)
+							and	(	(void)
 									(	vResult
 										=	::ATR::FunctionType
 											<	ID<t_vFunctionName>
@@ -143,7 +143,6 @@ export namespace
 									)
 								,	true
 								)
-							:	false
 							)
 						)
 					)

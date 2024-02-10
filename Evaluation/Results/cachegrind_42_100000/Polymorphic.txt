@@ -1,25 +1,25 @@
-==40951== Cachegrind, a cache and branch-prediction profiler
-==40951== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
-==40951== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==40951== Command: build/Evaluation/bin/Polymorphic 42 100000
-==40951== 
---40951-- warning: L3 cache found, using its data for the LL simulation.
-==40951== brk segment overflow in thread #1: can't grow to 0x485b000
-==40951== (see section Limitations in user manual)
-==40951== NOTE: further instances of this message will not be shown
-==40951== 
-==40951== I   refs:      52,840,575
-==40951== I1  misses:         2,171
-==40951== LLi misses:         2,028
-==40951== I1  miss rate:       0.00%
-==40951== LLi miss rate:       0.00%
-==40951== 
-==40951== D   refs:      22,126,715  (13,415,228 rd   + 8,711,487 wr)
-==40951== D1  misses:       585,543  (   386,474 rd   +   199,069 wr)
-==40951== LLd misses:       208,020  (    10,845 rd   +   197,175 wr)
-==40951== D1  miss rate:        2.6% (       2.9%     +       2.3%  )
-==40951== LLd miss rate:        0.9% (       0.1%     +       2.3%  )
-==40951== 
-==40951== LL refs:          587,714  (   388,645 rd   +   199,069 wr)
-==40951== LL misses:        210,048  (    12,873 rd   +   197,175 wr)
-==40951== LL miss rate:         0.3% (       0.0%     +       2.3%  )
+==13661== Cachegrind, a cache and branch-prediction profiler
+==13661== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==13661== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==13661== Command: build/Evaluation/bin/Polymorphic 42 100000
+==13661== 
+--13661-- warning: L3 cache found, using its data for the LL simulation.
+==13661== brk segment overflow in thread #1: can't grow to 0x485b000
+==13661== (see section Limitations in user manual)
+==13661== NOTE: further instances of this message will not be shown
+==13661== 
+==13661== I   refs:      52,840,355
+==13661== I1  misses:         2,171
+==13661== LLi misses:         2,028
+==13661== I1  miss rate:       0.00%
+==13661== LLi miss rate:       0.00%
+==13661== 
+==13661== D   refs:      22,126,685  (13,415,199 rd   + 8,711,486 wr)
+==13661== D1  misses:       585,546  (   386,477 rd   +   199,069 wr)
+==13661== LLd misses:       208,021  (    10,846 rd   +   197,175 wr)
+==13661== D1  miss rate:        2.6% (       2.9%     +       2.3%  )
+==13661== LLd miss rate:        0.9% (       0.1%     +       2.3%  )
+==13661== 
+==13661== LL refs:          587,717  (   388,648 rd   +   199,069 wr)
+==13661== LL misses:        210,049  (    12,874 rd   +   197,175 wr)
+==13661== LL miss rate:         0.3% (       0.0%     +       2.3%  )

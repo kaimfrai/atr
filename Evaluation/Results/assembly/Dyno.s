@@ -2883,12 +2883,12 @@ Disassembly of section .text:
                	vpbroadcastq	ymm5, qword ptr  <malloc+0x1180>
                	vpbroadcastw	xmm6, word ptr  <malloc+0x11f8>
                	vmovaps	ymm7, ymmword ptr  <malloc+0x11c0>
-               	vpbroadcastq	xmm8, qword ptr  <malloc+0x1188>
+               	vmovq	xmm8, qword ptr  <malloc+0x1190>
                	mov	r8, qword ptr [rsp + 0x20]
                	mov	r9, qword ptr [rsp + 0x28]
                	vmovdqa	ymmword ptr [rsp + 0x720], ymm5
                	jmp	 <L233>
-               	nop
+               	nop	dword ptr [rax]
 <L237>:
                	vpblendd	ymm0, ymm9, ymm4, 0xc0  # ymm0 = ymm9[0,1,2,3,4,5],ymm4[6,7]
                	vpermq	ymm0, ymm0, 0x93        # ymm0 = ymm0[3,0,1,2]
@@ -2992,7 +2992,7 @@ Disassembly of section .text:
                	call	 <malloc@plt>
                	vmovdqa	ymm9, ymmword ptr [rsp + 0x340]
                	vmovdqa	ymm4, ymmword ptr [rsp + 0x320]
-               	vpbroadcastq	xmm8, qword ptr  <malloc+0x1188>
+               	vmovq	xmm8, qword ptr  <malloc+0x1190>
                	vmovaps	ymm7, ymmword ptr  <malloc+0x11c0>
                	vpbroadcastw	xmm6, word ptr  <malloc+0x11f8>
                	vmovdqa	ymm5, ymmword ptr [rsp + 0x720]
@@ -3004,7 +3004,7 @@ Disassembly of section .text:
                	mov	qword ptr [r13 + rbx - 0x30], rax
                	mov	r13, qword ptr [rsp + 0x298]
                	mov	r10, qword ptr [rsp + 0x280]
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x370] # ymm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x370]
                	vcvtdq2ps	ymm0, ymm0
                	vpermilps	ymm1, ymm0, ymm7
                	vmovups	ymmword ptr [rax], ymm1
@@ -3056,7 +3056,7 @@ Disassembly of section .text:
                	vpmovzxbd	ymm1, xmm1      # ymm1 = xmm1[0],zero,zero,zero,xmm1[1],zero,zero,zero,xmm1[2],zero,zero,zero,xmm1[3],zero,zero,zero,xmm1[4],zero,zero,zero,xmm1[5],zero,zero,zero,xmm1[6],zero,zero,zero,xmm1[7],zero,zero,zero
                	vcvtdq2ps	ymm1, ymm1
                	vpsrlq	xmm2, xmm2, 0x38
-               	vmovdqa	xmm3, xmmword ptr  <malloc+0x1190>
+               	vpmovzxbq	xmm3, word ptr  <malloc+0x11fa>
                	vpblendvb	xmm0, xmm0, xmm2, xmm3
 <L236>:
                	vmovups	ymmword ptr [rax + rbx - 0x30], ymm1

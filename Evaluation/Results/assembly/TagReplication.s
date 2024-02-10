@@ -3211,7 +3211,7 @@ Disassembly of section .text:
                	mov	qword ptr [r9], rax
                	mov	rcx, qword ptr [rsp]
                	mov	byte ptr [rcx + rsi], 0xc
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x2f0] # ymm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x2f0]
                	vcvtdq2ps	ymm0, ymm0
                	vmovups	ymmword ptr [r9 + 0x8], ymm0
                	vmovups	ymm0, ymmword ptr [rsp + 0x3b8]

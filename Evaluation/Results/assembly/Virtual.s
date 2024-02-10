@@ -3012,7 +3012,7 @@ Disassembly of section .text:
                	mov	qword ptr [rax + 0x60], rdx
                	mov	rcx, qword ptr [rsp + 0x10]
                	mov	qword ptr [rcx + 8*r13], rax
-               	vpmovzxbd	ymm2, qword ptr [rsp + 0x30] # ymm2 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm2, qword ptr [rsp + 0x30]
                	vcvtdq2ps	ymm2, ymm2
                	vpermilps	ymm3, ymm2, ymmword ptr  <__libc_start_main+0x2420>
                	vmovups	ymmword ptr [rax + 0x10], ymm3
@@ -3097,7 +3097,7 @@ Disassembly of section .text:
                	mov	qword ptr [rax], rcx
                	mov	rcx, qword ptr [rsp + 0x10]
                	mov	qword ptr [rcx + 8*r13], rax
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x30] # ymm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x30]
                	vcvtdq2ps	ymm0, ymm0
                	vpermilps	ymm0, ymm0, ymmword ptr  <__libc_start_main+0x2420>
                	vmovups	ymmword ptr [rax + 0x10], ymm0
@@ -3120,7 +3120,7 @@ Disassembly of section .text:
                	lea	rcx,  <vtable for Bodies3D::Cuboid@Evaluation.Virtual.Cuboid+0x10>
 <L236>:
                	mov	qword ptr [rax], rcx
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x30] # ymm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x30]
                	vcvtdq2ps	ymm0, ymm0
                	vpermilps	ymm0, ymm0, ymmword ptr  <__libc_start_main+0x2420>
                	movzx	ecx, byte ptr [rsp + 0x290]
@@ -3149,7 +3149,7 @@ Disassembly of section .text:
                	mov	qword ptr [rax], rcx
                	mov	rcx, qword ptr [rsp + 0x10]
                	mov	qword ptr [rcx + 8*r13], rax
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x30] # ymm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x30]
                	vcvtdq2ps	ymm0, ymm0
                	vpermilps	ymm0, ymm0, ymmword ptr  <__libc_start_main+0x2420>
                	vmovups	ymmword ptr [rax + 0x10], ymm0
@@ -3172,7 +3172,7 @@ Disassembly of section .text:
                	mov	qword ptr [rax], rcx
                	mov	rcx, qword ptr [rsp + 0x10]
                	mov	qword ptr [rcx + 8*r13], rax
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x30] # ymm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x30]
                	vcvtdq2ps	ymm0, ymm0
                	vpermilps	ymm0, ymm0, ymmword ptr  <__libc_start_main+0x2420>
 <L237>:

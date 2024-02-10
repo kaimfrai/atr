@@ -2,11 +2,11 @@ set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR ${CMAKE_HOST_SYSTEM_PROCESSOR})
 
 if	(COMPILER_SEARCH_PATHS)
-	set(CMAKE_C_COMPILER ${COMPILER_SEARCH_PATHS}/bin/clang-18)
-	set(CMAKE_CXX_COMPILER ${COMPILER_SEARCH_PATHS}/bin/clang++-18)
+	set(CMAKE_C_COMPILER ${COMPILER_SEARCH_PATHS}/bin/clang-19)
+	set(CMAKE_CXX_COMPILER ${COMPILER_SEARCH_PATHS}/bin/clang++-19)
 else()
-	find_program(CMAKE_C_COMPILER clang-18 REQUIRED)
-	find_program(CMAKE_CXX_COMPILER clang++-18 REQUIRED)
+	find_program(CMAKE_C_COMPILER clang-19 REQUIRED)
+	find_program(CMAKE_CXX_COMPILER clang++-19 REQUIRED)
 	#resolve real path for clang-tidy
 	file(REAL_PATH ${CMAKE_C_COMPILER} CMAKE_C_COMPILER EXPAND_TILDE)
 	file(REAL_PATH ${CMAKE_CXX_COMPILER} CMAKE_CXX_COMPILER EXPAND_TILDE)
@@ -131,12 +131,11 @@ else()
 		-Wno-weak-vtables
 		# not always preventable
 		-Wno-padded
-		# using C++23
+		# using C++26
 		-Wno-c++98-compat-pedantic
-		# using c++23
 		-Wno-c++20-compat-pedantic
-		# using C++23
 		-Wno-c++20-extensions
+		-Wno-pre-c++26-compat-pedantic
 		# more useful as warning
 		-Wno-error=deprecated-declarations
 

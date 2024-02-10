@@ -2957,7 +2957,7 @@ Disassembly of section .text:
                	vpbroadcastw	xmm6, word ptr  <__libc_start_main+0xe18>
                	lea	r9,  <__libc_start_main+0xe1c>
                	vmovaps	ymm7, ymmword ptr  <__libc_start_main+0xde0>
-               	vpbroadcastq	xmm8, qword ptr  <__libc_start_main+0xda8>
+               	vmovq	xmm8, qword ptr  <__libc_start_main+0xdb0>
                	mov	rdi, qword ptr [rsp + 0x1f8]
                	mov	r10, qword ptr [rsp + 0x2c0]
                	mov	r8, qword ptr [rsp + 0x2a8]
@@ -3446,7 +3446,7 @@ Disassembly of section .text:
                	vzeroupper
                	call	 <_ZnwmRKSt9nothrow_t@plt>
                	vmovdqa	ymm9, ymmword ptr [rsp + 0x320]
-               	vpbroadcastq	xmm8, qword ptr  <__libc_start_main+0xda8>
+               	vmovq	xmm8, qword ptr  <__libc_start_main+0xdb0>
                	vmovaps	ymm7, ymmword ptr  <__libc_start_main+0xde0>
                	lea	r9,  <__libc_start_main+0xe1c>
                	vpbroadcastw	xmm6, word ptr  <__libc_start_main+0xe18>
@@ -3463,7 +3463,7 @@ Disassembly of section .text:
                	vmovdqu	ymmword ptr [rdi + rsi - 0x20], ymm0
                	lea	rcx,  <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Head@Evaluation.CRTP.Head>(void*)>
                	mov	qword ptr [rdi + rsi], rcx
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x2c0] # ymm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x2c0]
                	vcvtdq2ps	ymm0, ymm0
                	vpermilps	ymm1, ymm0, ymm7
                	vmovups	ymmword ptr [rax], ymm1
@@ -3509,7 +3509,7 @@ Disassembly of section .text:
                	vpmovzxbd	ymm1, xmm1      # ymm1 = xmm1[0],zero,zero,zero,xmm1[1],zero,zero,zero,xmm1[2],zero,zero,zero,xmm1[3],zero,zero,zero,xmm1[4],zero,zero,zero,xmm1[5],zero,zero,zero,xmm1[6],zero,zero,zero,xmm1[7],zero,zero,zero
                	vcvtdq2ps	ymm1, ymm1
                	vpsrlq	xmm2, xmm2, 0x38
-               	vmovdqa	xmm3, xmmword ptr  <__libc_start_main+0xdb0>
+               	vpmovzxbq	xmm3, word ptr  <__libc_start_main+0xe1a>
                	vpblendvb	xmm0, xmm0, xmm2, xmm3
                	jmp	 <L241>
                	mov	qword ptr [rdi + rsi - 0x8], 0x0

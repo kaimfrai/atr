@@ -2907,7 +2907,7 @@ Disassembly of section .text:
                	vpackuswb	xmm0, xmm0, xmm0
                	vmovdqa	xmmword ptr [rsp + 0x10], xmm0
                	vmovdqu	xmm0, xmmword ptr [rsp + 0x3a8]
-               	vpshufb	xmm0, xmm0, xmmword ptr  <__libc_start_main+0xf60>
+               	vpshufb	xmm0, xmm0, xmmword ptr  <__libc_start_main+0xf50>
                	movzx	ecx, al
                	imul	ecx, ecx, 0x4f
                	shr	ecx, 0xa
@@ -2915,7 +2915,7 @@ Disassembly of section .text:
                	lea	ecx, [rcx + 4*rdx]
                	sub	al, cl
                	movzx	eax, al
-               	lea	rcx,  <__libc_start_main+0xfb8>
+               	lea	rcx,  <__libc_start_main+0xfbc>
                	movsxd	rax, dword ptr [rcx + 4*rax]
                	add	rax, rcx
                	jmp	rax
@@ -2937,11 +2937,11 @@ Disassembly of section .text:
                	mov	rbx, rsi
                	vzeroupper
                	call	 <_Znwm@plt>
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x10] # ymm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x10]
                	vcvtdq2ps	ymm0, ymm0
                	vpermilps	ymm0, ymm0, ymmword ptr  <__libc_start_main+0xf80>
                	vmovups	ymmword ptr [rax], ymm0
-               	vpmovzxbd	xmm0, dword ptr [rsp] # xmm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero
+               	vpmovzxbd	xmm0, dword ptr [rsp]
                	jmp	 <L236>
                	vmovdqa	xmmword ptr [rsp], xmm0
                	vpxor	xmm0, xmm0, xmm0
@@ -2956,7 +2956,7 @@ Disassembly of section .text:
                	vpextrb	ecx, xmm1, 0x7
                	vcvtsi2ss	xmm0, xmm6, ecx
                	vpunpcklbw	xmm1, xmm1, xmmword ptr [rsp] # xmm1 = xmm1[0],mem[0],xmm1[1],mem[1],xmm1[2],mem[2],xmm1[3],mem[3],xmm1[4],mem[4],xmm1[5],mem[5],xmm1[6],mem[6],xmm1[7],mem[7]
-               	vpshufb	xmm1, xmm1, xmmword ptr  <__libc_start_main+0xf40>
+               	vpshufb	xmm1, xmm1, xmmword ptr  <__libc_start_main+0xf30>
                	vpmovzxbd	ymm1, xmm1      # ymm1 = xmm1[0],zero,zero,zero,xmm1[1],zero,zero,zero,xmm1[2],zero,zero,zero,xmm1[3],zero,zero,zero,xmm1[4],zero,zero,zero,xmm1[5],zero,zero,zero,xmm1[6],zero,zero,zero,xmm1[7],zero,zero,zero
                	vcvtdq2ps	ymm1, ymm1
                	jmp	 <L237>
@@ -2978,12 +2978,12 @@ Disassembly of section .text:
                	vcvtsi2ss	xmm0, xmm6, ecx
                	movzx	ecx, bl
                	vcvtsi2ss	xmm1, xmm6, ecx
-               	vpmovzxbd	ymm2, qword ptr [rsp + 0x10] # ymm2 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm2, qword ptr [rsp + 0x10]
                	vcvtdq2ps	ymm2, ymm2
                	vpermilps	ymm3, ymm2, ymmword ptr  <__libc_start_main+0xf80>
                	vmovups	ymmword ptr [rax], ymm3
                	vmovdqa	xmm3, xmmword ptr [rsp + 0x350]
-               	vpshufb	xmm3, xmm3, xmmword ptr  <__libc_start_main+0xf50>
+               	vpshufb	xmm3, xmm3, xmmword ptr  <__libc_start_main+0xf40>
                	vcvtdq2ps	xmm3, xmm3
                	vmovlps	qword ptr [rax + 0x20], xmm3
                	vmovss	dword ptr [rax + 0x28], xmm1
@@ -2992,7 +2992,7 @@ Disassembly of section .text:
                	vmovaps	ymm5, ymmword ptr [rsp + 0x700]
                	vextractf128	xmm4, ymm5, 0x1
                	vshufps	xmm4, xmm5, xmm4, 0x88  # xmm4 = xmm5[0,2],xmm4[0,2]
-               	vandps	xmm4, xmm4, xmmword ptr  <__libc_start_main+0xf70>
+               	vandps	xmm4, xmm4, xmmword ptr  <__libc_start_main+0xf60>
                	vcvtdq2ps	xmm4, xmm4
                	vshufps	xmm5, xmm4, xmm4, 0xd8  # xmm5 = xmm4[0,2,1,3]
                	vmovaps	xmmword ptr [rax + 0x30], xmm5
@@ -3051,12 +3051,12 @@ Disassembly of section .text:
                	vmovdqa	xmm1, xmmword ptr [rsp + 0x10]
                	vmovdqa	xmm2, xmmword ptr [rsp]
                	vpunpcklbw	xmm0, xmm1, xmm2 # xmm0 = xmm1[0],xmm2[0],xmm1[1],xmm2[1],xmm1[2],xmm2[2],xmm1[3],xmm2[3],xmm1[4],xmm2[4],xmm1[5],xmm2[5],xmm1[6],xmm2[6],xmm1[7],xmm2[7]
-               	vpshufb	xmm0, xmm0, xmmword ptr  <__libc_start_main+0xf40>
+               	vpshufb	xmm0, xmm0, xmmword ptr  <__libc_start_main+0xf30>
                	vpmovzxbd	ymm0, xmm0      # ymm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero,xmm0[4],zero,zero,zero,xmm0[5],zero,zero,zero,xmm0[6],zero,zero,zero,xmm0[7],zero,zero,zero
                	vcvtdq2ps	ymm0, ymm0
                	vmovups	ymmword ptr [rax], ymm0
                	vpsrlq	xmm0, xmm1, 0x38
-               	vmovdqa	xmm1, xmmword ptr  <__libc_start_main+0xf30>
+               	vpmovzxbq	xmm1, word ptr  <__libc_start_main+0xfb8>
                	vpblendvb	xmm0, xmm2, xmm0, xmm1
                	vpmovzxbd	xmm0, xmm0      # xmm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero
 <L236>:
@@ -3093,9 +3093,9 @@ Disassembly of section .text:
                	mov	rbx, rsi
                	vzeroupper
                	call	 <_Znwm@plt>
-               	vpmovzxbd	xmm0, dword ptr [rsp] # xmm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero
+               	vpmovzxbd	xmm0, dword ptr [rsp]
                	vcvtdq2ps	xmm0, xmm0
-               	vpmovzxbd	ymm1, qword ptr [rsp + 0x10] # ymm1 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm1, qword ptr [rsp + 0x10]
                	vcvtdq2ps	ymm1, ymm1
                	vpermilps	ymm1, ymm1, ymmword ptr  <__libc_start_main+0xf80>
                	vmovups	ymmword ptr [rax], ymm1
@@ -3116,7 +3116,7 @@ Disassembly of section .text:
                	vpextrb	ecx, xmm0, 0x1
 <L243>:
                	vcvtsi2ss	xmm0, xmm6, ecx
-               	vpmovzxbd	ymm1, qword ptr [rsp + 0x10] # ymm1 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm1, qword ptr [rsp + 0x10]
                	vcvtdq2ps	ymm1, ymm1
                	vpermilps	ymm1, ymm1, ymmword ptr  <__libc_start_main+0xf80>
 <L237>:
@@ -3132,7 +3132,7 @@ Disassembly of section .text:
                	vzeroupper
                	call	 <_Znwm@plt>
 <L235>:
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x10] # ymm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x10]
                	vcvtdq2ps	ymm0, ymm0
                	vpermilps	ymm0, ymm0, ymmword ptr  <__libc_start_main+0xf80>
                	vmovups	ymmword ptr [rax], ymm0
@@ -3578,7 +3578,7 @@ Disassembly of section .text:
                	xor	r13d, r13d
                	mov	eax, 0x1
                	jmp	 <L245>
-               	nop	dword ptr [rax + rax]
+               	nop	dword ptr [rax]
 <L247>:
                	add	r12, 0x100
                	inc	r15d

@@ -9,7 +9,7 @@ Supported OS:
 Required software:
 
 * CMake version 3.20 oder higher
-* Clang 18 (currently not fully released, requires deducing this to be supported)
+* Clang 19 (currently not fully released, requires pack indexing to be supported)
 * perf (package linux-tools-generic under Ubuntu 22.04)
 * valgrind
 * Boost.TypeErasure (tested version 1.74.0)

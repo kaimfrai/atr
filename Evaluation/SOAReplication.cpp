@@ -209,7 +209,6 @@ namespace
 					(	m_rView
 						.	get
 							<	10uz
-							,	unsigned char
 							,	Simd<float>::size()
 							>()
 					)
@@ -220,7 +219,6 @@ namespace
 			=	m_rView
 				.	get
 					<	7uz
-					,	float
 					>()
 			;
 			auto
@@ -228,7 +226,6 @@ namespace
 			=	m_rView
 				.	get
 					<	8uz
-					,	float
 					>()
 			;
 			auto
@@ -236,7 +233,6 @@ namespace
 			=	m_rView
 				.	get
 					<	9uz
-					,	float
 					>()
 			;
 				where

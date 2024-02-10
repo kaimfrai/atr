@@ -5402,7 +5402,7 @@ Disassembly of section .text:
                	mov	r10, qword ptr [rsp + 0x278]
                	mov	rdi, qword ptr [rsp + 0x280]
                	mov	qword ptr [r9], rax
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x2f0] # ymm0 = mem[0],zero,zero,zero,mem[1],zero,zero,zero,mem[2],zero,zero,zero,mem[3],zero,zero,zero,mem[4],zero,zero,zero,mem[5],zero,zero,zero,mem[6],zero,zero,zero,mem[7],zero,zero,zero
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x2f0]
                	vmovups	ymm1, ymmword ptr [rsp + 0x3b8]
                	vmovups	ymm2, ymmword ptr [rsp + 0x3c8]
                	vinsertf128	ymm1, ymm1, xmmword ptr [rsp + 0x3d8], 0x1

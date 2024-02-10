@@ -22,7 +22,6 @@ add_single_file_modules(
 	Pointer.cpp
 	Reference.cpp
 	RRef.cpp
-	SelectByIndex.cpp
 	Sequence.cpp
 	Volatile.cpp
 )
