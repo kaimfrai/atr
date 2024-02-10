@@ -7,5 +7,9 @@ add_single_file_modules(
 )
 
 add_subdirectory(
+	Simd
+)
+
+add_subdirectory(
 	Ref
 )

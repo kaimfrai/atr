@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <__libc_start_main+0x67b8>
+               	call	qword ptr  <__libc_start_main+0x6900>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <__libc_start_main+0x67c8>
+               	mov	rax, qword ptr  <__libc_start_main+0x6910>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <__libc_start_main+0x67d0>
+               	mov	rax, qword ptr  <__libc_start_main+0x6918>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <__libc_start_main+0x67d8>
+               	cmp	qword ptr , 0x0 <__libc_start_main+0x6920>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -139,7 +139,73 @@ Disassembly of section .text:
 <L0>:
                	push	rax
                	mov	byte ptr , 0x1 <_ZGIW10EvaluationW10DependencyW20PseudoRandomSequence__in_chrg>
+               	call	 <initializer for module Meta.Auto.Simd.Cast>
+               	call	 <initializer for module Meta.Auto.Simd.UInt8>
                	call	 <initializer for module Meta.Math.Random>
+               	pop	rax
+               	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
+<initializer for module Meta.Auto.Simd.Cast>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW4SimdW4Cast__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	push	rax
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW4Cast__in_chrg>
+               	call	 <initializer for module Meta.Auto.Simd.UInt32>
+               	call	 <initializer for module Meta.Auto.Simd.UInt8>
+               	pop	rax
+               	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
+<initializer for module Meta.Auto.Simd.UInt32>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW4SimdW6UInt32__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW6UInt32__in_chrg>
+               	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
+<initializer for module Meta.Auto.Simd.UInt8>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW4SimdW5UInt8__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	push	rax
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW5UInt8__in_chrg>
+               	call	 <initializer for module Meta.Auto.Simd.UInt32>
                	pop	rax
                	jmp	 <initializer for module Std>
                	int3
@@ -398,6 +464,8 @@ Disassembly of section .text:
                	push	rax
                	call	 <initializer for module Evaluation.Dependency.DynamicArray>
                	call	 <initializer for module Evaluation.Dependency.PseudoRandomSequence>
+               	call	 <initializer for module Meta.Auto.Simd.Cast>
+               	call	 <initializer for module Meta.Auto.Simd.UInt8>
                	call	 <initializer for module Evaluation.Dependency.TransformReduce>
                	call	 <initializer for module Evaluation.Dependency.VerifyLoopSum>
                	call	 <initializer for module Evaluation.Replication.Circle>
@@ -415,6 +483,12 @@ Disassembly of section .text:
                	call	 <initializer for module Evaluation.Replication.Head>
                	pop	rax
                	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
                	int3
                	int3
@@ -470,7 +544,7 @@ Disassembly of section .text:
                	movsxd	rax, edx
                	shl	rax, 0x3
                	lea	rdi, [rax + 8*rax]
-               	mov	rsi, qword ptr  <__libc_start_main+0x67e0>
+               	mov	rsi, qword ptr  <__libc_start_main+0x6928>
                	call	 <_ZnamRKSt9nothrow_t@plt>
                	mov	r9, rax
                	movsxd	rdx, ebx
@@ -2758,9 +2832,9 @@ Disassembly of section .text:
                	mov	esi, esi
                	xor	eax, eax
                	mov	qword ptr [rsp + 0x258], rax
-               	vpbroadcastw	xmm0, word ptr  <__libc_start_main+0x944>
-               	vbroadcastss	ymm1, dword ptr  <__libc_start_main+0x928>
-               	lea	rdi,  <__libc_start_main+0x948>
+               	vpbroadcastw	xmm0, word ptr  <__libc_start_main+0x98c>
+               	vbroadcastss	ymm1, dword ptr  <__libc_start_main+0x970>
+               	lea	rdi,  <__libc_start_main+0x990>
                	mov	r10, qword ptr [rsp + 0x210]
                	mov	qword ptr [rsp + 0x2f0], rsi
                	jmp	 <L233>
@@ -3160,7 +3234,7 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x370], r8
                	mov	qword ptr [rsp + 0x8], rdi
                	lea	r8, [rdi + 4*rdi]
-               	lea	rdi,  <__libc_start_main+0x948>
+               	lea	rdi,  <__libc_start_main+0x990>
                	rol	r8, 0x7
                	lea	r8, [r8 + 8*r8]
                	mov	qword ptr [rsp + 0x378], rax
@@ -3465,7 +3539,7 @@ Disassembly of section .text:
                	vaddps	xmm0, xmm1, xmm0
                	vshufpd	xmm1, xmm0, xmm0, 0x1   # xmm1 = xmm0[1,0]
                	vaddss	xmm0, xmm0, xmm1
-               	vucomiss	xmm0, dword ptr  <__libc_start_main+0x93c>
+               	vucomiss	xmm0, dword ptr  <__libc_start_main+0x984>
                	jne	 <L256>
 <L255>:
                	xor	eax, eax
@@ -3485,7 +3559,7 @@ Disassembly of section .text:
                	call	 <__cxa_allocate_exception@plt>
                	vmovss	xmm0, dword ptr [rsp + 0x260]
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <__libc_start_main+0x67e8>
+               	mov	rsi, qword ptr  <__libc_start_main+0x6930>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
@@ -3503,7 +3577,7 @@ Disassembly of section .text:
 <Bodies3D::ComputeVolumeCircle@Evaluation.Replication.Circle(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0x930>
+               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0x978>
                	ret
                	int3
                	int3
@@ -3522,7 +3596,7 @@ Disassembly of section .text:
 
 <Bodies3D::ComputeVolumeEllipse@Evaluation.Replication.Ellipse(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0x930>
+               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0x978>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
@@ -3562,7 +3636,7 @@ Disassembly of section .text:
 
 <Bodies3D::ComputeVolumeTriangle@Evaluation.Replication.Triangle(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0x938>
+               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0x980>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
@@ -3595,7 +3669,7 @@ Disassembly of section .text:
 
 <Bodies3D::ComputeVolumePyramid@Evaluation.Replication.Pyramid(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0x934>
+               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0x97c>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
                	ret
@@ -3611,7 +3685,7 @@ Disassembly of section .text:
 <Bodies3D::ComputeVolumeSphere@Evaluation.Replication.Sphere(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm1, xmm0, xmm0
-               	vmulss	xmm1, xmm1, dword ptr  <__libc_start_main+0x940>
+               	vmulss	xmm1, xmm1, dword ptr  <__libc_start_main+0x988>
                	vmulss	xmm0, xmm1, xmm0
                	ret
                	int3
@@ -3628,7 +3702,7 @@ Disassembly of section .text:
 <Bodies3D::ComputeVolumeCylinder@Evaluation.Replication.Cylinder(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0x930>
+               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0x978>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
@@ -3644,7 +3718,7 @@ Disassembly of section .text:
 <Bodies3D::ComputeVolumeCone@Evaluation.Replication.Cone(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0x92c>
+               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0x974>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
@@ -3659,7 +3733,7 @@ Disassembly of section .text:
 
 <Bodies3D::ComputeVolumeEllipsoid@Evaluation.Replication.Ellipsoid(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0x940>
+               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0x988>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
                	ret
@@ -3669,7 +3743,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <__libc_start_main+0x67c0>
+               	mov	rax, qword ptr  <__libc_start_main+0x6908>
                	test	rax, rax
                	je	 <L0>
                	call	rax

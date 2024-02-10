@@ -8,7 +8,19 @@ import Evaluation.Dependency.VerifyLoopSum;
 import Evaluation.SOAReplication.SOAView;
 import Evaluation.SOAReplication.Tag;
 
+import Meta.Auto.Simd.Cast;
+import Meta.Auto.Simd.Fill;
+import Meta.Auto.Simd.Float;
+import Meta.Auto.Simd.Tag;
+import Meta.Auto.Simd.UInt8;
+import Meta.Auto.Simd.UInt32;
+
 import Std;
+
+using ::Meta::Simd;
+using ::Meta::SimdCast;
+using ::Meta::SimdFill;
+using ::Meta::SimdMask;
 
 namespace
 	Bodies3D
@@ -172,17 +184,17 @@ namespace
 	[[nodiscard]]
 	auto inline
 	(	TypeMask
-	)	(	Simd<unsigned>
+	)	(	Simd<unsigned[8uz]>
 				i_vType
 		,	unsigned
 				i_vMask
 		)
 		noexcept
-	->	SimdMask<float>
+	->	SimdMask<float[8uz]>
 	{	return
 			// *HIGHEST* bit must be set
-			::std::bit_cast<SimdMask<float>>
-			(	Simd<unsigned>(i_vMask)
+			::std::bit_cast<SimdMask<float[8uz]>>
+			(	SimdFill<unsigned[8uz]>(i_vMask)
 			<<	i_vType
 			)
 		;
@@ -204,14 +216,11 @@ namespace
 		{
 			auto const
 				vType
-			=	to_native
-				(	simd_cast<unsigned>
-					(	m_rView
-						.	get
-							<	10uz
-							,	Simd<float>::size()
-							>()
-					)
+			=	SimdCast<::std::uint32_t>
+				(	m_rView
+					.	get
+						<	10uz
+						>()
 				)
 			;
 			auto const
@@ -235,75 +244,80 @@ namespace
 					<	9uz
 					>()
 			;
-				where
-				(	TypeMask
-					(	vType
-					,	HeightIsWidthMask
-					)
-				,	vWidth
-				)
+				vWidth
 			=	vHeight
-			;	where
-				(	TypeMask
-					(	vType
-					,	HeightIsDepthMask
+				.	where
+					(	TypeMask
+						(	vType
+						,	HeightIsWidthMask
+						)
 					)
-				,	vDepth
-				)
+			;	vDepth
 			=	vHeight
-			;	where
-				(	TypeMask
-					(	vType
-					,	OneIsDepthMask
+				.	where
+					(	TypeMask
+						(	vType
+						,	HeightIsDepthMask
+						)
 					)
-				,	vDepth
-				)
-			=	1.0f
+			;	vDepth
+			=	SimdFill<float[8uz]>(1.0f)
+				.	where
+					(	TypeMask
+						(	vType
+						,	OneIsDepthMask
+						)
+					)
 			;
 
-			Simd<float>
+			Simd<float[8uz]>
 				vMultiplier
-			=	1.0f
-			;	where
-				(	TypeMask
-					(	vType
-					,	Pi_4_Mask
+			=	SimdFill<float[8uz]>(1.0f)
+			;
+				vMultiplier
+			=	SimdFill<float[8uz]>(PiFraction<1, 4>{})
+				.	where
+					(	TypeMask
+						(	vType
+						,	Pi_4_Mask
+						)
 					)
-				,	vMultiplier
-				)
-			=	static_cast<float>(PiFraction<1, 4>{})
-			;	where
-				(	TypeMask
-					(	vType
-					,	Half_Mask
+			;
+				vMultiplier
+			=	SimdFill<float[8uz]>(Fraction<1, 2>{})
+				.	where
+					(	TypeMask
+						(	vType
+						,	Half_Mask
+						)
 					)
-				,	vMultiplier
-				)
-			=	static_cast<float>(Fraction<1, 2>{})
-			;	where
-				(	TypeMask
-					(	vType
-					,	Third_Mask
+			;
+				vMultiplier
+			=	SimdFill<float[8uz]>(Fraction<1, 3>{})
+				.	where
+					(	TypeMask
+						(	vType
+						,	Third_Mask
+						)
 					)
-				,	vMultiplier
-				)
-			=	static_cast<float>(Fraction<1, 3>{})
-			;	where
-				(	TypeMask
-					(	vType
-					,	Pi_6_Mask
+			;
+				vMultiplier
+			=	SimdFill<float[8uz]>(PiFraction<1, 6>{})
+				.	where
+					(	TypeMask
+						(	vType
+						,	Pi_6_Mask
+						)
 					)
-				,	vMultiplier
-				)
-			=	static_cast<float>(PiFraction<1, 6>{})
-			;	where
-				(	TypeMask
-					(	vType
-					,	Pi_12_Mask
+			;
+				vMultiplier
+			=	SimdFill<float[8uz]>(PiFraction<1, 12>{})
+				.	where
+					(	TypeMask
+						(	vType
+						,	Pi_12_Mask
+						)
 					)
-				,	vMultiplier
-				)
-			=	static_cast<float>(PiFraction<1, 12>{})
 			;
 
 			return
@@ -318,12 +332,10 @@ namespace
 	struct
 		Body3DValue
 	{
-		alignas(Simd<float>)
+		alignas(Simd<float[8uz]>)
 		::std::byte
 			m_vData
-			[	Simd<float>
-				::	size
-					()
+			[	8uz
 			*	Body3DView
 				::	TotalSize
 			]
@@ -338,9 +350,7 @@ namespace
 			{	{	.	m_aBuffer
 					=	m_vData
 				,	.	m_vCapacity
-					=	Simd<float>
-						::	size
-							()
+					=	8
 				,	.	m_vIndex
 					=	0
 				}
@@ -402,11 +412,7 @@ namespace
 			i_rThis
 			.	m_rSOAView
 			.	m_vIndex
-			+=	static_cast<Body3DIterator::difference_type>
-				(	Simd<float>
-					::	size
-						()
-				)
+			+=	8z
 			*	i_vDifference
 			;
 			return
@@ -432,11 +438,7 @@ namespace
 					.	m_rSOAView
 					.	m_vIndex
 				)
-			/	static_cast<Body3DIterator::difference_type>
-				(	Simd<float>
-					::	size
-						()
-				)
+			/	8z
 			;
 		}
 
@@ -513,7 +515,7 @@ namespace
 			{	.	m_aBuffer
 				=	static_cast<::std::byte*>
 					(	::std::aligned_alloc
-						(	alignof(Simd<float>)
+						(	alignof(Simd<float[8uz]>)
 						,	(	i_vCapacity
 							*	Body3DView
 								::	TotalSize
@@ -543,27 +545,27 @@ namespace
 
 		auto inline
 		(	emplace_back
-		)	(	FixedSimd<unsigned char, 8uz>
+		)	(	Simd<::std::uint8_t[8uz]>
 					i_vType
-			,	Simd<float>
+			,	Simd<float[8uz]>
 					i_vRed
-			,	Simd<float>
+			,	Simd<float[8uz]>
 					i_vGreen
-			,	Simd<float>
+			,	Simd<float[8uz]>
 					i_vBlue
-			,	Simd<float>
+			,	Simd<float[8uz]>
 					i_vAlpha
-			,	Simd<float>
+			,	Simd<float[8uz]>
 					i_vLateral
-			,	Simd<float>
+			,	Simd<float[8uz]>
 					i_vLongitudinal
-			,	Simd<float>
+			,	Simd<float[8uz]>
 					i_vVertical
-			,	Simd<float>
+			,	Simd<float[8uz]>
 					i_vHeight
-			,	Simd<float>
+			,	Simd<float[8uz]>
 					i_vWidth
-			,	Simd<float>
+			,	Simd<float[8uz]>
 					i_vDepth
 			)	&
 			noexcept
@@ -763,20 +765,8 @@ auto inline
 	{
 		vElements
 		.	emplace_back
-			(	// FIXME operator % not working?
-				FixedSimd<unsigned char, 8uz>
-				(	[	vType
-					]	(	::std::size_t
-								i_vIndex
-						)
-					{	return
-							vType
-							[	i_vIndex
-							]
-						%	13
-						;
-					}
-				)
+			(		vType
+				%	13
 			,	vRed
 			,	vGreen
 			,	vBlue
@@ -802,12 +792,13 @@ auto inline
 		,	[]	(	auto const
 						rBody
 				)
-			->	Simd<float>
+			->	::std::experimental::native_simd<float>
 			{	return
-					rBody
+				::std::bit_cast<::std::experimental::native_simd<float>>
+				(	rBody
 					.	ComputeVolume
 						()
-				;
+				);
 			}
 		)
 	;

@@ -1,8 +1,14 @@
 export module Evaluation.Dependency.PseudoRandomSequence;
 
+import Meta.Auto.Simd.Cast;
+import Meta.Auto.Simd.Float;
+import Meta.Auto.Simd.UInt8;
 import Meta.Math.Random;
+
 import Std;
 
+using ::Meta::Simd;
+using ::Meta::SimdCast;
 using ::Meta::Math::Splitmix64;
 using ::Meta::Math::Xoroshiro256StarStar;
 
@@ -52,22 +58,21 @@ export
 		;
 	};
 
-	template
-		<	typename
-				t_tOther
-		,	::std::size_t
-				t_vCount
-		>
+	auto constexpr inline
+		GeneratorCount
+	=	20uz
+	;
+
 	struct
 		SimdGeneratedNumbers
 	{
-		::std::experimental::fixed_size_simd<unsigned char, 8uz>
+		Simd<::std::uint8_t[8uz]>
 			m_vFirst
 		;
 
-		::std::experimental::native_simd<t_tOther>
+		Simd<float[8uz]>
 			m_vNumber
-			[	t_vCount
+			[	GeneratorCount
 			]
 		;
 
@@ -104,32 +109,49 @@ export
 		}
 	};
 
-	template
-		<	typename
-				t_tNumber
-		,	::std::size_t
-				t_vCount
-		>
 	struct
 		GeneratedNumbers
 	{
-		t_tNumber
+		unsigned char
 			m_vNumber
-			[	t_vCount
+			[	GeneratorCount
 			]
 		;
 
 		template
-			<	typename
-					t_tOtherNumber
+			<	::std::size_t
+					t_vIndex
 			>
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	get
+		)	(	GeneratedNumbers const
+				&	i_rGeneratedNumbers
+			)
+			noexcept
+		->	unsigned char
+		{	return
+				i_rGeneratedNumbers
+				.	m_vNumber
+					[	t_vIndex
+					]
+			;
+		}
+	};
+
+	struct
+		RawGeneratedNumbers
+	{
+		::std::uint64_t
+			m_vNumber
+			[	GeneratorCount
+			]
+		;
+
 		[[nodiscard]]
 		explicit(true) constexpr inline
 		(	operator
 			GeneratedNumbers
-			<	t_tOtherNumber
-			,	t_vCount
-			>
 		)	()	const
 			noexcept
 		{	return
@@ -142,11 +164,8 @@ export
 					>
 				)
 			->	GeneratedNumbers
-				<	t_tOtherNumber
-				,	t_vCount
-				>
 			{	return
-				{	static_cast<t_tOtherNumber>
+				{	static_cast<unsigned char>
 					(	m_vNumber
 						[	t_vpIndex
 						]
@@ -154,76 +173,18 @@ export
 					...
 				};
 			}(	::std::make_index_sequence
-				<	t_vCount
+				<	GeneratorCount
 				>{}
 			);
 		}
 
-		template
-			<	typename
-					t_tOtherNumber
-			>
 		[[nodiscard]]
 		explicit(true) constexpr inline
 		(	operator
 			SimdGeneratedNumbers
-			<	t_tOtherNumber
-			,	t_vCount
-			-	1uz
-			>
 		)	()	const
 			noexcept
-		{
-			auto static constexpr
-				fConvertFirstNumber
-			=	[]	(	t_tNumber
-							i_vNumber
-					)
-				{	return
-					::std::experimental::fixed_size_simd<unsigned char, 8uz>
-					{	[	i_vNumber
-						]	(	::std::size_t
-									i_vIndex
-							)
-						{	return
-							static_cast<unsigned char>
-							(	(	i_vNumber
-								>>	(	8uz
-									*	i_vIndex
-									)
-								)
-							);
-						}
-					};
-				}
-			;
-
-			auto static constexpr
-				fConvertNumber
-			=	[]	(	t_tNumber
-							i_vNumber
-					)
-				{	return
-					::std::experimental::native_simd<t_tOtherNumber>
-					{	[	i_vNumber
-						]	(	::std::size_t
-									i_vIndex
-							)
-						{	return
-							static_cast<t_tOtherNumber>
-							(	static_cast<unsigned char>
-								(	i_vNumber
-								>>	(	8uz
-									*	i_vIndex
-									)
-								)
-							);
-						}
-					};
-				}
-			;
-
-			return
+		{	return
 			[	this
 			]	<	::std::size_t
 					...	t_vpIndex
@@ -234,25 +195,25 @@ export
 					>
 				)
 			->	SimdGeneratedNumbers
-				<	t_tOtherNumber
-				,	t_vCount
-				-	1uz
-				>
 			{	return
-				{	fConvertFirstNumber
-					(	m_vNumber
+				{	Simd<::std::uint8_t[8uz]>
+					{	m_vNumber
 						[	0uz
 						]
-					)
-				,	fConvertNumber
-					(	m_vNumber
-						[	t_vpIndex
-						]
+					}
+				,	SimdCast<float>
+					(	SimdCast<::std::uint32_t>
+						(	Simd<::std::uint8_t[8uz]>
+							{	m_vNumber
+								[	t_vpIndex
+								]
+							}
+						)
 					)
 					...
 				};
 			}(	::std::make_index_sequence
-				<	t_vCount
+				<	GeneratorCount
 				>{}
 			);
 		}
@@ -278,11 +239,11 @@ export
 					(	m_vNumber
 						[	t_vpIndex
 						]
-						>>=	i_vShift
+					>>=	i_vShift
 					)
 				);
 			}(	::std::make_index_sequence
-				<	t_vCount
+				<	GeneratorCount
 				>{}
 			);
 
@@ -290,36 +251,11 @@ export
 			*	this
 			;
 		}
-
-		template
-			<	::std::size_t
-					t_vIndex
-			>
-		[[nodiscard]]
-		auto friend constexpr inline
-		(	get
-		)	(	GeneratedNumbers const
-				&	i_rGeneratedNumbers
-			)
-			noexcept
-		->	t_tNumber
-		{	return
-				i_rGeneratedNumbers
-				.	m_vNumber
-					[	t_vIndex
-					]
-			;
-		}
 	};
 
 	struct
 		RandomGenerators
 	{
-		auto static constexpr inline
-			GeneratorCount
-		=	20uz
-		;
-
 		Xoroshiro256StarStar
 			m_vRandom
 			[	GeneratorCount
@@ -367,7 +303,7 @@ export
 		(	operator*
 		)	()	const
 			noexcept
-		->	GeneratedNumbers<::std::uint64_t, GeneratorCount>
+		->	RawGeneratedNumbers
 		{	return
 			[	this
 			]	<	::std::size_t
@@ -377,7 +313,7 @@ export
 						...
 					>
 				)
-			->	GeneratedNumbers<::std::uint64_t, GeneratorCount>
+			->	RawGeneratedNumbers
 			{	return
 				{	*	m_vRandom
 						[	t_vpIndex
@@ -428,7 +364,7 @@ export
 			m_vCounter
 		=	0
 		;
-		GeneratedNumbers<::std::uint64_t, RandomGenerators::GeneratorCount>
+		RawGeneratedNumbers
 			m_vGeneratedNumbers
 		;
 
@@ -454,7 +390,7 @@ export
 				{	i_vSeed
 				}
 			,	::std::make_index_sequence
-				<	RandomGenerators::GeneratorCount
+				<	GeneratorCount
 				-	1uz
 				>{}
 			}
@@ -468,9 +404,9 @@ export
 		(	operator*
 		)	()	const
 			noexcept
-		->	GeneratedNumbers<unsigned char, RandomGenerators::GeneratorCount>
+		->	GeneratedNumbers
 		{	return
-			static_cast<GeneratedNumbers<unsigned char, RandomGenerators::GeneratorCount>>
+			static_cast<GeneratedNumbers>
 			(	m_vGeneratedNumbers
 			);
 		}
@@ -567,7 +503,7 @@ export
 				{	i_vSeed
 				}
 			,	::std::make_index_sequence
-				<	RandomGenerators::GeneratorCount
+				<	GeneratorCount
 				-	1uz
 				>{}
 			}
@@ -578,9 +514,9 @@ export
 		(	operator*
 		)	()	const
 			noexcept
-		->	SimdGeneratedNumbers<float, RandomGenerators::GeneratorCount - 1uz>
+		->	SimdGeneratedNumbers
 		{	return
-			static_cast<SimdGeneratedNumbers<float, RandomGenerators::GeneratorCount - 1uz>>
+			static_cast<SimdGeneratedNumbers>
 			(	*	m_vRandom
 			);
 		}
@@ -775,100 +711,64 @@ export
 	template
 		<	::std::size_t
 				t_vIndex
-		,	typename
-				t_tNumber
-		,	::std::size_t
-				t_vCount
 		>
 	struct
 		::std::tuple_element
 		<	t_vIndex
 		,	GeneratedNumbers
-			<	t_tNumber
-			,	t_vCount
-			>
 		>
 	:	::std::type_identity
-		<	t_tNumber
+		<	::std::uint8_t
 		>
 	{};
 
 	template
-		<	typename
-				t_tNumber
-		,	::std::size_t
-				t_vCount
-		>
+		<>
 	struct
 		::std::tuple_size
 		<	GeneratedNumbers
-			<	t_tNumber
-			,	t_vCount
-			>
 		>
 	:	::std::integral_constant
 		<	::std::size_t
-		,	t_vCount
+		,	GeneratorCount
 		>
 	{};
 
 	template
 		<	::std::size_t
 				t_vIndex
-		,	typename
-				t_tOtherNumber
-		,	::std::size_t
-				t_vCount
 		>
 	struct
 		::std::tuple_element
 		<	t_vIndex
 		,	SimdGeneratedNumbers
-			<	t_tOtherNumber
-			,	t_vCount
-			>
 		>
 	:	::std::type_identity
-		<	::std::experimental::native_simd<t_tOtherNumber>
+		<	Simd<float[8uz]>
 		>
 	{};
 
 	template
-		<	typename
-				t_tOtherNumber
-		,	::std::size_t
-				t_vCount
-		>
+		<>
 	struct
 		::std::tuple_element
 		<	0uz
 		,	SimdGeneratedNumbers
-			<	t_tOtherNumber
-			,	t_vCount
-			>
 		>
 	:	::std::type_identity
-		<	::std::experimental::fixed_size_simd<unsigned char, 8uz>
+		<	Simd<::std::uint8_t[8uz]>
 		>
 	{};
 
 	template
-		<	typename
-				t_tOtherNumber
-		,	::std::size_t
-				t_vCount
-		>
+		<>
 	struct
 		::std::tuple_size
 		<	SimdGeneratedNumbers
-			<	t_tOtherNumber
-			,	t_vCount
-			>
 		>
 	:	::std::integral_constant
 		<	::std::size_t
-		,	t_vCount
-		+	1uz
+		,	GeneratorCount
 		>
 	{};
 }

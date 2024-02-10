@@ -1,45 +1,18 @@
 export module Evaluation.SOAReplication.SOAView;
 
-export import Std;
+import Meta.Auto.Simd.Tag;
+
+import Std;
+
+using ::Meta::Simd;
 
 export namespace
 	Bodies3D
 {
 	template
-		<	typename
-				t_tMember
-		>
-	using
-		Simd
-	=	::std::experimental::native_simd
-		<	t_tMember
-		>
-	;
-	template
-		<	typename
-				t_tMember
-		,	::std::size_t
-				t_vSize
-		>
-	using
-		FixedSimd
-	=	::std::experimental::fixed_size_simd
-		<	t_tMember
-		,	t_vSize
-		>
-	;
-	template
-		<	typename
-				t_tMember
-		>
-	using
-		SimdMask
-	=	::std::experimental::native_simd_mask
-		<	t_tMember
-		>
-	;
-	template
-		<	typename
+		<	::std::size_t
+				t_vCount
+		,	typename
 			...	t_tpMember
 		>
 	struct
@@ -120,11 +93,6 @@ export namespace
 		template
 			<	::std::size_t
 					t_vIndex
-			,	::std::size_t
-					t_vCount
-				=	Simd<t_tpMember...[t_vIndex]>
-					::	size
-						()
 			>
 		[[nodiscard]]
 		auto constexpr inline
@@ -133,43 +101,34 @@ export namespace
 					i_rView
 			)
 			noexcept
+		->	Simd<::std::remove_cv_t<t_tpMember...[t_vIndex]>[t_vCount]>
 		{
-			if	constexpr
-				(	t_vCount
-				==	Simd<t_tpMember...[t_vIndex]>
-					::	size
-						()
-				)
-			{	return
-				Simd<::std::remove_cv_t<t_tpMember...[t_vIndex]>>
-				{	i_rView
-					.	template
-						AsPointer<t_vIndex>
-						()
-				,	::std::experimental::vector_aligned
-				};
-			}
-			else
-			{	return
-				FixedSimd<::std::remove_cv_t<t_tpMember...[t_vIndex]>, t_vCount>
-				{	i_rView
-					.	template
-						AsPointer<t_vIndex>
-						()
-				,	::std::experimental::vector_aligned
-				};
-			}
+			Simd<t_tpMember...[t_vIndex](&)[t_vCount]> const
+				vReference
+			{	i_rView
+				.	template
+					AsPointer<t_vIndex>
+					()
+			};
+
+			return
+			static_cast<Simd<::std::remove_cv_t<t_tpMember...[t_vIndex]>[t_vCount]>>
+			(	vReference
+			);
 		}
 	};
 
 	template
-		<	typename
+		<	::std::size_t
+				t_vCount
+		,	typename
 			...	t_tpMember
 		>
 	struct
 		SOAView
 	:	SOAViewBase
-		<	t_tpMember
+		<	t_vCount
+		,	t_tpMember
 			...
 		>
 	{
@@ -189,49 +148,22 @@ export namespace
 			>
 		auto constexpr inline
 		(	set
-		)	(	Simd<t_tpMember...[t_vIndex]>
+		)	(	Simd<t_tpMember...[t_vIndex][t_vCount]>
 					i_vValue
 			)	const
 			noexcept
 		->	SOAView const&
 		{
-			i_vValue
-			.	copy_to
-				(	this
-					->	template
-						AsPointer<t_vIndex>
-						()
-				,	::std::experimental::vector_aligned
-				)
-			;
+			Simd<t_tpMember...[t_vIndex](&)[t_vCount]> const
+				vReference
+			{	this
+				->	template
+					AsPointer<t_vIndex>
+					()
+			};
 
-			return
-			*	this
-			;
-		}
-
-		template
-			<	::std::size_t
-					t_vIndex
-			,	auto
-					t_vSize
-			>
-		auto constexpr inline
-		(	set
-		)	(	FixedSimd<t_tpMember...[t_vIndex], t_vSize>
-					i_vValue
-			)	const
-			noexcept
-		->	SOAView const&
-		{
-			i_vValue
-			.	copy_to
-				(	this
-					->	template
-						AsPointer<t_vIndex>
-						()
-				,	::std::experimental::vector_aligned
-				)
+				vReference
+			=	i_vValue
 			;
 
 			return
@@ -241,16 +173,20 @@ export namespace
 	};
 
 	template
-		<	typename
+		<	::std::size_t
+				t_vCount
+		,	typename
 			...	t_tpMember
 		>
 	struct
 		SOAView
-		<	t_tpMember const
+		<	t_vCount
+		,	t_tpMember const
 			...
 		>
 	:	SOAViewBase
-		<	t_tpMember const
+		<	t_vCount
+		,	t_tpMember const
 			...
 		>
 	{
@@ -268,7 +204,8 @@ export namespace
 	using
 		Body3DView
 	=	SOAView
-		<	//	ColorRed
+		<	8uz
+		,	//	ColorRed
 			float
 		,	//	ColorGreen
 			float
@@ -289,14 +226,15 @@ export namespace
 		,	//	Depth
 			float
 		,	// Type Index
-			unsigned char
+			::std::uint8_t
 		>
 	;
 
 	using
 		Body3DConstView
 	=	SOAView
-		<	//	ColorRed
+		<	8uz
+		,	//	ColorRed
 			float const
 		,	//	ColorGreen
 			float const
@@ -317,7 +255,7 @@ export namespace
 		,	//	Depth
 			float const
 		,	// Type Index
-			unsigned char const
+			::std::uint8_t const
 		>
 	;
 }
