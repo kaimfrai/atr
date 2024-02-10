@@ -302,7 +302,7 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	ProtoOwnerDataRange_For<TypeIndex> auto
+		)	(	ProtoOwnerDataRange_For<TypeIndex_Of<t_tData, 1z, t_vOffset>> auto
 				&&	i_rArray
 			,	Offset
 			)
@@ -320,7 +320,7 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	ProtoBorrowDataRange_For<TypeIndex> auto
+		)	(	ProtoBorrowDataRange_For<TypeIndex_Of<t_tData, 1z, t_vOffset>> auto
 					i_rArray
 			,	Offset
 			)
@@ -675,7 +675,7 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	ProtoOwnerDataRange_For<TypeIndex> auto
+		)	(	ProtoOwnerDataRange_For<TypeIndex_Of<::std::byte, 1z, IndexCast<ByteIndex>(t_vOffset).Quotient>> auto
 				&	i_rArray
 			,	Offset
 					i_vOffset
@@ -694,7 +694,7 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	ProtoOwnerDataRange_For<TypeIndex> auto const
+		)	(	ProtoOwnerDataRange_For<TypeIndex_Of<::std::byte, 1z, IndexCast<ByteIndex>(t_vOffset).Quotient>> auto const
 				&	i_rArray
 			,	Offset
 					i_vOffset
@@ -713,7 +713,7 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	ProtoBorrowDataRange_For<TypeIndex> auto
+		)	(	ProtoBorrowDataRange_For<TypeIndex_Of<::std::byte, 1z, IndexCast<ByteIndex>(t_vOffset).Quotient>> auto
 					i_rArray
 			,	Offset
 					i_vOffset
@@ -824,7 +824,7 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	ProtoOwnerDataRange_For<TypeIndex> auto
+		)	(	ProtoOwnerDataRange_For<TypeIndex_Of<::std::byte, ByteSize(BitSize(IndexCast<ByteIndex>(t_vOffset).Remainder.get() + t_vExtent)).Value, IndexCast<ByteIndex>(t_vOffset).Quotient>> auto
 				&	i_rArray
 			,	Offset
 					i_vOffset
@@ -843,7 +843,7 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	ProtoOwnerDataRange_For<TypeIndex> auto const
+		)	(	ProtoOwnerDataRange_For<TypeIndex_Of<::std::byte, ByteSize(BitSize(IndexCast<ByteIndex>(t_vOffset).Remainder.get() + t_vExtent)).Value, IndexCast<ByteIndex>(t_vOffset).Quotient>> auto const
 				&	i_rArray
 			,	Offset
 					i_vOffset
@@ -862,7 +862,7 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	ProtoBorrowDataRange_For<TypeIndex> auto
+		)	(	ProtoBorrowDataRange_For<TypeIndex_Of<::std::byte, ByteSize(BitSize(IndexCast<ByteIndex>(t_vOffset).Remainder.get() + t_vExtent)).Value, IndexCast<ByteIndex>(t_vOffset).Quotient>> auto
 					i_rArray
 			,	Offset
 					i_vOffset
@@ -1121,7 +1121,7 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	ProtoOwnerDataRange_For<TypeIndex> auto
+		)	(	ProtoOwnerDataRange_For<TypeIndex_Of<::std::byte, ByteSize(BitSize(IndexCast<ByteIndex>(t_vOffset).Remainder) + (t_vExtent * t_vWidth)).Value, IndexCast<ByteIndex>(t_vOffset).Quotient>> auto
 				&	i_rArray
 			,	Offset
 					i_vOffset
@@ -1140,7 +1140,7 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	ProtoOwnerDataRange_For<TypeIndex> auto const
+		)	(	ProtoOwnerDataRange_For<TypeIndex_Of<::std::byte, ByteSize(BitSize(IndexCast<ByteIndex>(t_vOffset).Remainder) + (t_vExtent * t_vWidth)).Value, IndexCast<ByteIndex>(t_vOffset).Quotient>> auto const
 				&	i_rArray
 			,	Offset
 					i_vOffset
@@ -1159,7 +1159,7 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	ProtoBorrowDataRange_For<TypeIndex> auto
+		)	(	ProtoBorrowDataRange_For<TypeIndex_Of<::std::byte, ByteSize(BitSize(IndexCast<ByteIndex>(t_vOffset).Remainder) + (t_vExtent * t_vWidth)).Value, IndexCast<ByteIndex>(t_vOffset).Quotient>> auto
 					i_rArray
 			,	Offset
 					i_vOffset
@@ -1267,4 +1267,3 @@ export namespace
 		>{}
 	;
 }
-
