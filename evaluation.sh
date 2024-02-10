@@ -9,58 +9,64 @@ cmake -S ./\
 	-DCMAKE_BUILD_TYPE=Release\
 	-DFASTER_BUILD_SPEED:BOOL=TRUE
 
-cd build/Evaluation/
 
-if [ $# -lt 2 ]
-then
-	ninja\
-		Virtual\
-		Any\
-		Dyno\
-		Polymorphic\
-		TypeErasure\
-		Archetype\
-		Replication\
-		TagATR\
-		TagReplication\
-		Variant\
-		Visitor\
-		SOAReplication
-elif
-	[ $2 == "Virtual" ] \
-||	[ $2 == "Any" ] \
-||	[ $2 == "Dyno" ] \
-||	[ $2 == "Polymorphic" ] \
-||	[ $2 == "TypeErasure" ] \
-||	[ $2 == "Archetype" ] \
-||	[ $2 == "Replication" ] \
-||	[ $2 == "TagATR" ] \
-||	[ $2 == "TagReplication" ] \
-||	[ $2 == "Variant" ] \
-||	[ $2 == "Visitor" ] \
-||	[ $2 == "Any" ] \
-||	[ $2 == "SOAReplication" ]
-then
-	ninja\
-		"$2"
-else
-	echo "Invalid target $2. Must be one of:"
-	echo "Virtual"
-	echo "Any"
-	echo "Dyno"
-	echo "Polymorphic"
-	echo "TypeErasure"
-	echo "Archetype"
-	echo "Replication"
-	echo "TagATR"
-	echo "TagReplication"
-	echo "Variant"
-	echo "Visitor"
-	echo "SOAReplication"
-	exit 1
-fi
+function build_all()
+{
+	cd build/Evaluation/
 
-cd ../../
+	if [ $# -lt 2 ]
+	then
+		ninja\
+			Virtual\
+			Any\
+			Dyno\
+			Polymorphic\
+			TypeErasure\
+			Archetype\
+			Replication\
+			TagATR\
+			TagReplication\
+			Variant\
+			Visitor\
+			SOAReplication
+	elif
+		[ $2 == "Virtual" ] \
+	||	[ $2 == "Any" ] \
+	||	[ $2 == "Dyno" ] \
+	||	[ $2 == "Polymorphic" ] \
+	||	[ $2 == "TypeErasure" ] \
+	||	[ $2 == "Archetype" ] \
+	||	[ $2 == "Replication" ] \
+	||	[ $2 == "TagATR" ] \
+	||	[ $2 == "TagReplication" ] \
+	||	[ $2 == "Variant" ] \
+	||	[ $2 == "Visitor" ] \
+	||	[ $2 == "Any" ] \
+	||	[ $2 == "SOAReplication" ]
+	then
+		ninja\
+			"$2"
+	else
+		echo "Invalid target $2. Must be one of:"
+		echo "Virtual"
+		echo "Any"
+		echo "Dyno"
+		echo "Polymorphic"
+		echo "TypeErasure"
+		echo "Archetype"
+		echo "Replication"
+		echo "TagATR"
+		echo "TagReplication"
+		echo "Variant"
+		echo "Visitor"
+		echo "SOAReplication"
+		exit 1
+	fi
+
+	cd ../../
+}
+
+build_all
 
 if [ $# -lt 1 ]
 then
@@ -87,3 +93,5 @@ else
 	echo "perf (with elevated rights)"
 	exit 1
 fi
+
+build_all
