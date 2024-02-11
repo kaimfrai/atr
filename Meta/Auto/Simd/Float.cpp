@@ -173,9 +173,7 @@ export namespace
 				(	m_vRaw
 					[	1uz
 					]
-				,	(	i_vIndex
-					-	8
-					)
+				,	i_vIndex
 					.	m_vRaw
 				)
 			;

@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <free+0x5138>
+               	call	qword ptr  <free+0x5128>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <free+0x5148>
+               	mov	rax, qword ptr  <free+0x5138>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <free+0x5150>
+               	mov	rax, qword ptr  <free+0x5140>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <free+0x5158>
+               	cmp	qword ptr , 0x0 <free+0x5148>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -2279,91 +2279,90 @@ Disassembly of section .text:
                	mov	rdi, qword ptr [rsp + 0x118]
                	je	 <L168>
                	mov	r8, r10
-               	mov	edx, 0x1
+               	mov	esi, 0x1
                	xor	r9d, r9d
                	vpbroadcastd	ymm0, dword ptr  <free+0x8e4>
                	vpbroadcastd	ymm1, dword ptr  <free+0x8e8>
                	vpbroadcastd	ymm2, dword ptr  <free+0x8f0>
                	vbroadcastss	ymm3, dword ptr  <free+0x8e0>
-               	vpbroadcastd	ymm4, dword ptr  <free+0x8f4>
-               	vmovdqa	ymm5, ymmword ptr  <free+0x900>
-               	vmovdqa	ymm6, ymmword ptr  <free+0x920>
-               	vpbroadcastb	xmm7, byte ptr  <free+0x940>
-               	mov	r10d, 0x1
+               	vmovdqa	ymm4, ymmword ptr  <free+0x900>
+               	vmovdqa	ymm5, ymmword ptr  <free+0x920>
+               	vpbroadcastb	xmm6, byte ptr  <free+0x940>
+               	mov	r11d, 0x1
                	mov	r14, rax
                	jmp	 <L170>
-               	nop	word ptr cs:[rax + rax]
+               	nop	dword ptr [rax + rax]
 <L172>:
                	and	r8, r12
-               	lea	r11, [r8 + rbx]
-               	or	r11, rax
-               	inc	edx
-               	popcnt	r10d, edx
-               	mov	r9d, esi
+               	lea	r10, [r8 + rbx]
+               	or	r10, rax
+               	inc	esi
+               	popcnt	r11d, esi
+               	mov	r9d, ecx
                	cmp	r8, r14
-               	mov	r8, r11
+               	mov	r8, r10
                	je	 <L171>
 <L170>:
-               	mov	rsi, r8
-               	shr	rsi, 0x20
+               	mov	ecx, r11d
+               	mov	r10, r8
+               	shr	r10, 0x20
                	mov	eax, r8d
                	lea	r11, [rax + 4*rax]
                	lea	r11, [rdi + 8*r11]
-               	vmovq	xmm8, qword ptr [rsi + r11]
-               	vpmovzxbd	ymm9, xmm8      # ymm9 = xmm8[0],zero,zero,zero,xmm8[1],zero,zero,zero,xmm8[2],zero,zero,zero,xmm8[3],zero,zero,zero,xmm8[4],zero,zero,zero,xmm8[5],zero,zero,zero,xmm8[6],zero,zero,zero,xmm8[7],zero,zero,zero
-               	lea	rsi, [rax + 8*rax]
-               	lea	r11, [rsi + 2*rsi]
+               	vmovq	xmm7, qword ptr [r10 + r11]
+               	vpmovzxbd	ymm8, xmm7      # ymm8 = xmm7[0],zero,zero,zero,xmm7[1],zero,zero,zero,xmm7[2],zero,zero,zero,xmm7[3],zero,zero,zero,xmm7[4],zero,zero,zero,xmm7[5],zero,zero,zero,xmm7[6],zero,zero,zero,xmm7[7],zero,zero,zero
+               	vpmovsxbd	ymm9, xmm7
+               	lea	r10, [rax + 8*rax]
+               	lea	r11, [r10 + 2*r10]
                	add	r11, rdi
                	add	r11, rax
                	mov	rbx, r8
                	shr	rbx, 0x1e
-               	movabs	rcx, 0x3fffffffc
-               	and	rbx, rcx
+               	movabs	rdx, 0x3fffffffc
+               	and	rbx, rdx
                	vmovaps	ymm10, ymmword ptr [rbx + r11]
                	mov	r11, r8
                	shl	r11, 0x5
                	and	r11, r13
                	add	r11, rdi
                	vmovaps	ymm11, ymmword ptr [rbx + r11]
-               	lea	rsi, [rdi + 4*rsi]
-               	vpsllvd	ymm12, ymm0, ymm9
-               	vblendvps	ymm11, ymm11, ymm10, ymm12
-               	vmovaps	ymm12, ymmword ptr [rbx + rsi]
-               	vpsllvd	ymm13, ymm1, ymm9
+               	lea	r10, [rdi + 4*r10]
+               	vmovaps	ymm12, ymmword ptr [rbx + r10]
+               	vpsllvd	ymm13, ymm0, ymm8
+               	vblendvps	ymm11, ymm11, ymm10, ymm13
+               	vpsllvd	ymm13, ymm1, ymm8
                	vblendvps	ymm12, ymm12, ymm10, ymm13
-               	mov	esi, r10d
-               	vpsllvd	ymm9, ymm2, ymm9
-               	vblendvps	ymm9, ymm12, ymm3, ymm9
-               	vpmovsxbd	ymm12, xmm8
-               	vpermd	ymm13, ymm12, ymm5
-               	vpaddd	ymm12, ymm12, ymm4
-               	vpermd	ymm12, ymm12, ymm6
-               	vpcmpgtb	xmm8, xmm8, xmm7
-               	vpmovsxbd	ymm8, xmm8
-               	vblendvps	ymm8, ymm13, ymm12, ymm8
-               	vmulps	ymm10, ymm11, ymm10
-               	vmulps	ymm9, ymm10, ymm9
+               	vpsllvd	ymm8, ymm2, ymm8
+               	vblendvps	ymm8, ymm12, ymm3, ymm8
+               	vpermd	ymm12, ymm9, ymm4
+               	vpermd	ymm9, ymm9, ymm5
+               	vpcmpgtb	xmm7, xmm7, xmm6
+               	vpmovsxbd	ymm7, xmm7
+               	vblendvps	ymm7, ymm12, ymm9, ymm7
+               	vmulps	ymm9, ymm11, ymm10
                	vmulps	ymm8, ymm9, ymm8
+               	vmulps	ymm7, ymm8, ymm7
                	movsxd	r10, r9d
                	mov	r11, r10
                	shl	r11, 0x5
-               	vmovaps	ymmword ptr [rsp + r11 + 0x1c0], ymm8
-               	sub	r10d, esi
+               	vmovaps	ymmword ptr [rsp + r11 + 0x1c0], ymm7
+               	sub	r10d, ecx
                	mov	rbx, r15
                	jb	 <L172>
                	mov	r9d, r9d
                	mov	r11, r9
                	shl	r11, 0x5
-               	vmovaps	ymm8, ymmword ptr [rsp + r11 + 0x1c0]
+               	vmovaps	ymm7, ymmword ptr [rsp + r11 + 0x1c0]
                	inc	r10d
                	and	r10d, 0x3
                	je	 <L173>
                	lea	rbx, [rsp + 0x1a0]
                	add	r11, rbx
                	xor	ebx, ebx
+               	nop	dword ptr [rax]
 <L174>:
-               	vaddps	ymm8, ymm8, ymmword ptr [r11]
-               	vmovaps	ymmword ptr [r11], ymm8
+               	vaddps	ymm7, ymm7, ymmword ptr [r11]
+               	vmovaps	ymmword ptr [r11], ymm7
                	inc	rbx
                	add	r11, -0x20
                	cmp	r10, rbx
@@ -2371,61 +2370,61 @@ Disassembly of section .text:
                	mov	r10, r9
                	sub	r10, rbx
                	mov	rbx, r15
-               	mov	r11d, esi
+               	mov	r11d, ecx
                	sub	r9, r11
                	cmp	r9, 0x3
                	jb	 <L172>
                	jmp	 <L175>
 <L173>:
                	mov	r10, r9
-               	mov	r11d, esi
+               	mov	r11d, ecx
                	sub	r9, r11
                	cmp	r9, 0x3
                	jb	 <L172>
 <L175>:
                	mov	r9, r10
                	shl	r9, 0x5
-               	lea	rcx, [rsp + 0x1a0]
-               	add	r9, rcx
+               	lea	rdx, [rsp + 0x1a0]
+               	add	r9, rdx
                	inc	r10
                	nop	dword ptr [rax]
 <L176>:
-               	vaddps	ymm8, ymm8, ymmword ptr [r9]
-               	vmovaps	ymmword ptr [r9], ymm8
-               	vaddps	ymm8, ymm8, ymmword ptr [r9 - 0x20]
-               	vmovaps	ymmword ptr [r9 - 0x20], ymm8
-               	vaddps	ymm8, ymm8, ymmword ptr [r9 - 0x40]
-               	vmovaps	ymmword ptr [r9 - 0x40], ymm8
-               	vaddps	ymm8, ymm8, ymmword ptr [r9 - 0x60]
-               	vmovaps	ymmword ptr [r9 - 0x60], ymm8
+               	vaddps	ymm7, ymm7, ymmword ptr [r9]
+               	vmovaps	ymmword ptr [r9], ymm7
+               	vaddps	ymm7, ymm7, ymmword ptr [r9 - 0x20]
+               	vmovaps	ymmword ptr [r9 - 0x20], ymm7
+               	vaddps	ymm7, ymm7, ymmword ptr [r9 - 0x40]
+               	vmovaps	ymmword ptr [r9 - 0x40], ymm7
+               	vaddps	ymm7, ymm7, ymmword ptr [r9 - 0x60]
+               	vmovaps	ymmword ptr [r9 - 0x60], ymm7
                	add	r9, -0x80
                	add	r10, -0x4
                	cmp	r10, r11
                	jg	 <L176>
                	jmp	 <L172>
 <L171>:
-               	cmp	esi, 0x2
+               	cmp	ecx, 0x2
                	mov	r14, qword ptr [rsp + 0x110]
                	jb	 <L168>
-               	mov	eax, esi
-               	mov	rcx, rax
-               	shl	rcx, 0x5
-               	vmovaps	ymm0, ymmword ptr [rsp + rcx + 0x1a0]
-               	test	sil, 0x1
+               	mov	eax, ecx
+               	mov	rdx, rax
+               	shl	rdx, 0x5
+               	vmovaps	ymm0, ymmword ptr [rsp + rdx + 0x1a0]
+               	test	cl, 0x1
                	jne	 <L177>
                	dec	rax
-               	lea	rdx, [rsp + 0x1c0]
-               	vaddps	ymm0, ymm0, ymmword ptr [rcx + rdx - 0x40]
-               	vmovaps	ymmword ptr [rcx + rdx - 0x40], ymm0
+               	lea	rsi, [rsp + 0x1c0]
+               	vaddps	ymm0, ymm0, ymmword ptr [rdx + rsi - 0x40]
+               	vmovaps	ymmword ptr [rdx + rsi - 0x40], ymm0
 <L177>:
-               	cmp	esi, 0x2
+               	cmp	ecx, 0x2
                	je	 <L168>
                	lea	rcx, [rax - 0x2]
                	shl	rax, 0x5
                	lea	rdx, [rsp + 0x1c0]
                	add	rax, rdx
                	add	rax, -0x40
-               	nop	dword ptr [rax + rax]
+               	nop	word ptr [rax + rax]
 <L178>:
                	vaddps	ymm0, ymm0, ymmword ptr [rax]
                	vmovaps	ymmword ptr [rax], ymm0
@@ -2468,7 +2467,7 @@ Disassembly of section .text:
                	call	 <__cxa_allocate_exception@plt>
                	vmovss	xmm0, dword ptr [rsp + 0xc0]
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <free+0x5160>
+               	mov	rsi, qword ptr  <free+0x5150>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
@@ -2478,7 +2477,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <free+0x5140>
+               	mov	rax, qword ptr  <free+0x5130>
                	test	rax, rax
                	je	 <L0>
                	call	rax
