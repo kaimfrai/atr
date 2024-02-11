@@ -1,0 +1,114 @@
+module;
+
+#include <immintrin.h>
+
+export module Meta.Auto.Simd.Int32;
+
+export import Meta.Auto.Simd.Tag;
+
+import Std;
+
+export namespace
+	Meta
+{
+	template
+		<>
+	struct
+		SimdMask
+		<	::std::int32_t
+				[	8uz
+				]
+		>
+	{
+		__m256i
+			m_vRaw
+		;
+	};
+
+	template
+		<>
+	struct
+		Auto
+		<	::std::int32_t
+				[	8uz
+				]
+		,	(SimdTag)
+		>
+	{
+		__m256i
+			m_vRaw
+		;
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator>
+		)	(	Auto
+					i_vLeft
+			,	::std::int32_t
+					i_vRight
+			)
+			noexcept
+		->	SimdMask<::std::int32_t[8uz]>
+		{
+			::std::int32_t const
+				vArray
+				[]
+			{	i_vRight
+			,	i_vRight
+			,	i_vRight
+			,	i_vRight
+			,	i_vRight
+			,	i_vRight
+			,	i_vRight
+			,	i_vRight
+			};
+
+			return
+			{	.	m_vRaw
+				=	_mm256_cmpgt_epi32
+					(	i_vLeft
+						.	m_vRaw
+					,	::std::bit_cast<__m256i>
+						(	vArray
+						)
+					)
+			};
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator-
+		)	(	Auto
+					i_vLeft
+			,	::std::int32_t
+					i_vRight
+			)
+			noexcept
+		->	SimdMask<::std::int32_t[8uz]>
+		{
+			::std::int32_t const
+				vArray
+				[]
+			{	i_vRight
+			,	i_vRight
+			,	i_vRight
+			,	i_vRight
+			,	i_vRight
+			,	i_vRight
+			,	i_vRight
+			,	i_vRight
+			};
+
+			return
+			{	.	m_vRaw
+				=	_mm256_sub_epi32
+					(	i_vLeft
+						.	m_vRaw
+					,	::std::bit_cast<__m256i>
+						(	vArray
+						)
+					)
+			};
+		}
+	};
+}

@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <__libc_start_main+0x80b8>
+               	call	qword ptr  <__libc_start_main+0x8188>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <__libc_start_main+0x80c8>
+               	mov	rax, qword ptr  <__libc_start_main+0x8198>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <__libc_start_main+0x80d0>
+               	mov	rax, qword ptr  <__libc_start_main+0x81a0>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <__libc_start_main+0x80d8>
+               	cmp	qword ptr , 0x0 <__libc_start_main+0x81a8>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -137,15 +137,11 @@ Disassembly of section .text:
                	push	rax
                	mov	byte ptr , 0x1 <_ZGIW10EvaluationW10DependencyW20PseudoRandomSequence__in_chrg>
                	call	 <initializer for module Meta.Auto.Simd.Cast>
+               	call	 <initializer for module Meta.Auto.Simd.Float>
                	call	 <initializer for module Meta.Auto.Simd.UInt8>
                	call	 <initializer for module Meta.Math.Random>
                	pop	rax
                	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
                	int3
                	int3
@@ -158,6 +154,8 @@ Disassembly of section .text:
 <L0>:
                	push	rax
                	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW4Cast__in_chrg>
+               	call	 <initializer for module Meta.Auto.Simd.Float>
+               	call	 <initializer for module Meta.Auto.Simd.Int32>
                	call	 <initializer for module Meta.Auto.Simd.UInt32>
                	call	 <initializer for module Meta.Auto.Simd.UInt8>
                	pop	rax
@@ -166,6 +164,28 @@ Disassembly of section .text:
                	int3
                	int3
                	int3
+
+<initializer for module Meta.Auto.Simd.Float>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW4SimdW5Float__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	push	rax
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW5Float__in_chrg>
+               	call	 <initializer for module Meta.Auto.Simd.Int32>
+               	pop	rax
+               	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+
+<initializer for module Meta.Auto.Simd.Int32>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW4SimdW5Int32__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW5Int32__in_chrg>
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -718,6 +738,7 @@ Disassembly of section .text:
                	call	 <initializer for module Evaluation.Dependency.DynamicArray>
                	call	 <initializer for module Evaluation.Dependency.PseudoRandomSequence>
                	call	 <initializer for module Meta.Auto.Simd.Cast>
+               	call	 <initializer for module Meta.Auto.Simd.Float>
                	call	 <initializer for module Meta.Auto.Simd.UInt8>
                	call	 <initializer for module Evaluation.Dependency.TransformReduce>
                	call	 <initializer for module Evaluation.Dependency.Visitor.ObjectReference>
@@ -740,11 +761,6 @@ Disassembly of section .text:
                	call	 <initializer for module Evaluation.CRTP.Head>
                	pop	rax
                	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
 
 <main>:
@@ -796,7 +812,7 @@ Disassembly of section .text:
                	movsxd	rax, ebx
                	shl	rax, 0x4
                	lea	rdi, [rax + 2*rax]
-               	mov	rsi, qword ptr  <__libc_start_main+0x80e0>
+               	mov	rsi, qword ptr  <__libc_start_main+0x81b0>
                	call	 <_ZnamRKSt9nothrow_t@plt>
                	mov	qword ptr [rsp + 0x1f8], rax
                	mov	qword ptr [rsp + 0x298], r14
@@ -3027,11 +3043,11 @@ Disassembly of section .text:
                	mov	esi, 0x28
                	xor	ecx, ecx
                	mov	qword ptr [rsp + 0x290], rcx
-               	vpbroadcastq	ymm5, qword ptr  <__libc_start_main+0xde0>
-               	vpbroadcastw	xmm6, word ptr  <__libc_start_main+0xe58>
-               	lea	r9,  <__libc_start_main+0xe5c>
-               	vmovaps	ymm7, ymmword ptr  <__libc_start_main+0xe20>
-               	vmovq	xmm8, qword ptr  <__libc_start_main+0xdf0>
+               	vpbroadcastq	ymm5, qword ptr  <__libc_start_main+0xe20>
+               	vpbroadcastw	xmm6, word ptr  <__libc_start_main+0xe98>
+               	lea	r9,  <__libc_start_main+0xe9c>
+               	vmovaps	ymm7, ymmword ptr  <__libc_start_main+0xe60>
+               	vmovq	xmm8, qword ptr  <__libc_start_main+0xe30>
                	mov	rdi, qword ptr [rsp + 0x1f8]
                	mov	r10, qword ptr [rsp + 0x2c0]
                	mov	r8, qword ptr [rsp + 0x2a8]
@@ -3441,7 +3457,7 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x3b0], rcx
                	mov	qword ptr [rsp + 0x28], r9
                	lea	rcx, [r9 + 4*r9]
-               	lea	r9,  <__libc_start_main+0xe5c>
+               	lea	r9,  <__libc_start_main+0xe9c>
                	rol	rcx, 0x7
                	lea	rcx, [rcx + 8*rcx]
                	mov	qword ptr [rsp + 0x3b8], rdx
@@ -3508,7 +3524,7 @@ Disassembly of section .text:
                	jmp	 <L237>
                	mov	edi, 0x60
                	mov	qword ptr [rsp + 0x2b0], rsi
-               	mov	rsi, qword ptr  <__libc_start_main+0x80e0>
+               	mov	rsi, qword ptr  <__libc_start_main+0x81b0>
                	mov	qword ptr [rsp + 0x288], r14
                	mov	r14, r10
                	mov	qword ptr [rsp + 0x278], r13
@@ -3520,10 +3536,10 @@ Disassembly of section .text:
                	vzeroupper
                	call	 <_ZnwmRKSt9nothrow_t@plt>
                	vmovdqa	ymm9, ymmword ptr [rsp + 0x320]
-               	vmovq	xmm8, qword ptr  <__libc_start_main+0xdf0>
-               	vmovaps	ymm7, ymmword ptr  <__libc_start_main+0xe20>
-               	lea	r9,  <__libc_start_main+0xe5c>
-               	vpbroadcastw	xmm6, word ptr  <__libc_start_main+0xe58>
+               	vmovq	xmm8, qword ptr  <__libc_start_main+0xe30>
+               	vmovaps	ymm7, ymmword ptr  <__libc_start_main+0xe60>
+               	lea	r9,  <__libc_start_main+0xe9c>
+               	vpbroadcastw	xmm6, word ptr  <__libc_start_main+0xe98>
                	vmovdqa	ymm5, ymmword ptr [rsp + 0x6e0]
                	mov	r11, qword ptr [rsp + 0x2d8]
                	mov	rsi, qword ptr [rsp + 0x2b0]
@@ -3542,7 +3558,7 @@ Disassembly of section .text:
                	vpermilps	ymm1, ymm0, ymm7
                	vmovups	ymmword ptr [rax], ymm1
                	vmovdqu	xmm1, xmmword ptr [rsp + 0x398]
-               	vpshufb	xmm1, xmm1, xmmword ptr  <__libc_start_main+0xe00>
+               	vpshufb	xmm1, xmm1, xmmword ptr  <__libc_start_main+0xe40>
                	vcvtdq2ps	xmm1, xmm1
                	movzx	ecx, byte ptr [rsp + 0x2b8]
                	vcvtsi2ss	xmm2, xmm10, ecx
@@ -3552,7 +3568,7 @@ Disassembly of section .text:
                	vmovss	dword ptr [rax + 0x2c], xmm0
                	vmovups	xmm3, xmmword ptr [rsp + 0x3b0]
                	vshufps	xmm3, xmm3, xmmword ptr [rsp + 0x3c0], 0x88 # xmm3 = xmm3[0,2],mem[0,2]
-               	vandps	xmm3, xmm3, xmmword ptr  <__libc_start_main+0xe10>
+               	vandps	xmm3, xmm3, xmmword ptr  <__libc_start_main+0xe50>
                	vcvtdq2ps	xmm3, xmm3
                	vshufps	xmm4, xmm3, xmm3, 0xd8  # xmm4 = xmm3[0,2,1,3]
                	vmovups	xmmword ptr [rax + 0x30], xmm4
@@ -3583,7 +3599,7 @@ Disassembly of section .text:
                	vpmovzxbd	ymm1, xmm1      # ymm1 = xmm1[0],zero,zero,zero,xmm1[1],zero,zero,zero,xmm1[2],zero,zero,zero,xmm1[3],zero,zero,zero,xmm1[4],zero,zero,zero,xmm1[5],zero,zero,zero,xmm1[6],zero,zero,zero,xmm1[7],zero,zero,zero
                	vcvtdq2ps	ymm1, ymm1
                	vpsrlq	xmm2, xmm2, 0x38
-               	vpmovzxbq	xmm3, word ptr  <__libc_start_main+0xe5a>
+               	vpmovzxbq	xmm3, word ptr  <__libc_start_main+0xe9a>
                	vpblendvb	xmm0, xmm0, xmm2, xmm3
                	jmp	 <L241>
                	mov	qword ptr [rdi + rsi - 0x8], 0x0
@@ -3883,13 +3899,13 @@ Disassembly of section .text:
                	cmp	ebx, 0x186a0
                	jne	 <L258>
                	vmovss	xmm0, dword ptr [rsp + 0x200]
-               	vucomiss	xmm0, dword ptr  <__libc_start_main+0xe50>
+               	vucomiss	xmm0, dword ptr  <__libc_start_main+0xe90>
                	je	 <L258>
                	mov	edi, 0x4
                	call	 <__cxa_allocate_exception@plt>
                	vmovss	xmm0, dword ptr [rsp + 0x200]
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <__libc_start_main+0x80e8>
+               	mov	rsi, qword ptr  <__libc_start_main+0x81b8>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
@@ -4063,7 +4079,7 @@ Disassembly of section .text:
                	call	 <_ZdlPv@plt>
                	add	rsp, 0x8
 <L0>:
-               	lea	rax,  <__libc_start_main+0x7ea0>
+               	lea	rax,  <__libc_start_main+0x7f70>
                	ret
                	int3
                	int3
@@ -4076,7 +4092,7 @@ Disassembly of section .text:
                	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>:
-               	lea	rax,  <__libc_start_main+0x7e88>
+               	lea	rax,  <__libc_start_main+0x7f58>
                	ret
                	int3
                	int3
@@ -4088,7 +4104,7 @@ Disassembly of section .text:
                	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Cone@Evaluation.CRTP.Cone>(void*)>:
-               	lea	rax,  <__libc_start_main+0x7e70>
+               	lea	rax,  <__libc_start_main+0x7f40>
                	ret
                	int3
                	int3
@@ -4100,7 +4116,7 @@ Disassembly of section .text:
                	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>(void*)>:
-               	lea	rax,  <__libc_start_main+0x7e58>
+               	lea	rax,  <__libc_start_main+0x7f28>
                	ret
                	int3
                	int3
@@ -4112,7 +4128,7 @@ Disassembly of section .text:
                	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Sphere@Evaluation.CRTP.Sphere>(void*)>:
-               	lea	rax,  <__libc_start_main+0x7e40>
+               	lea	rax,  <__libc_start_main+0x7f10>
                	ret
                	int3
                	int3
@@ -4124,7 +4140,7 @@ Disassembly of section .text:
                	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>(void*)>:
-               	lea	rax,  <__libc_start_main+0x7e28>
+               	lea	rax,  <__libc_start_main+0x7ef8>
                	ret
                	int3
                	int3
@@ -4136,7 +4152,7 @@ Disassembly of section .text:
                	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>(void*)>:
-               	lea	rax,  <__libc_start_main+0x7e10>
+               	lea	rax,  <__libc_start_main+0x7ee0>
                	ret
                	int3
                	int3
@@ -4148,7 +4164,7 @@ Disassembly of section .text:
                	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Cube@Evaluation.CRTP.Cube>(void*)>:
-               	lea	rax,  <__libc_start_main+0x7df8>
+               	lea	rax,  <__libc_start_main+0x7ec8>
                	ret
                	int3
                	int3
@@ -4160,7 +4176,7 @@ Disassembly of section .text:
                	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Triangle>(void*)>:
-               	lea	rax,  <__libc_start_main+0x7de0>
+               	lea	rax,  <__libc_start_main+0x7eb0>
                	ret
                	int3
                	int3
@@ -4172,7 +4188,7 @@ Disassembly of section .text:
                	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Square>(void*)>:
-               	lea	rax,  <__libc_start_main+0x7dc8>
+               	lea	rax,  <__libc_start_main+0x7e98>
                	ret
                	int3
                	int3
@@ -4184,7 +4200,7 @@ Disassembly of section .text:
                	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Rectangle>(void*)>:
-               	lea	rax,  <__libc_start_main+0x7db0>
+               	lea	rax,  <__libc_start_main+0x7e80>
                	ret
                	int3
                	int3
@@ -4196,7 +4212,7 @@ Disassembly of section .text:
                	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipse>(void*)>:
-               	lea	rax,  <__libc_start_main+0x7d98>
+               	lea	rax,  <__libc_start_main+0x7e68>
                	ret
                	int3
                	int3
@@ -4208,7 +4224,7 @@ Disassembly of section .text:
                	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Circle>(void*)>:
-               	lea	rax,  <__libc_start_main+0x7d80>
+               	lea	rax,  <__libc_start_main+0x7e50>
                	ret
                	int3
                	int3
@@ -4259,17 +4275,17 @@ Disassembly of section .text:
 <L8>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm1, xmm0, xmm0
-               	vmulss	xmm1, xmm1, dword ptr  <__libc_start_main+0xe54>
+               	vmulss	xmm1, xmm1, dword ptr  <__libc_start_main+0xe94>
                	vmulss	xmm0, xmm1, xmm0
                	ret
 <L0>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0xe44>
+               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0xe84>
                	ret
 <L1>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0xe44>
+               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0xe84>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
 <L2>:
@@ -4282,7 +4298,7 @@ Disassembly of section .text:
                	ret
 <L4>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0xe4c>
+               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0xe8c>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
 <L5>:
@@ -4297,25 +4313,25 @@ Disassembly of section .text:
                	ret
 <L7>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0xe48>
+               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0xe88>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
                	ret
 <L9>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0xe44>
+               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0xe84>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
 <L10>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0xe40>
+               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0xe80>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
 <L11>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0xe54>
+               	vmulss	xmm0, xmm0, dword ptr  <__libc_start_main+0xe94>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
                	ret
@@ -4325,7 +4341,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <__libc_start_main+0x80c0>
+               	mov	rax, qword ptr  <__libc_start_main+0x8190>
                	test	rax, rax
                	je	 <L0>
                	call	rax

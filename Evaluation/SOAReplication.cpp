@@ -11,9 +11,10 @@ import Evaluation.SOAReplication.Tag;
 import Meta.Auto.Simd.Cast;
 import Meta.Auto.Simd.Fill;
 import Meta.Auto.Simd.Float;
+import Meta.Auto.Simd.Int32;
 import Meta.Auto.Simd.Tag;
-import Meta.Auto.Simd.UInt8;
 import Meta.Auto.Simd.UInt32;
+import Meta.Auto.Simd.UInt8;
 
 import Std;
 
@@ -216,11 +217,22 @@ namespace
 		{
 			auto const
 				vType
+			=	m_rView
+				.	get
+					<	10uz
+					>()
+			;
+
+			auto const
+				vTypeUInt32
 			=	SimdCast<::std::uint32_t>
-				(	m_rView
-					.	get
-						<	10uz
-						>()
+				(	vType
+				)
+			;
+			auto const
+				vTypeInt32
+			=	SimdCast<::std::int32_t>
+				(	vType
 				)
 			;
 			auto const
@@ -248,7 +260,7 @@ namespace
 			=	vHeight
 				.	where
 					(	TypeMask
-						(	vType
+						(	vTypeUInt32
 						,	HeightIsWidthMask
 						)
 					)
@@ -256,7 +268,7 @@ namespace
 			=	vHeight
 				.	where
 					(	TypeMask
-						(	vType
+						(	vTypeUInt32
 						,	HeightIsDepthMask
 						)
 					)
@@ -264,60 +276,40 @@ namespace
 			=	SimdFill<float[8uz]>(1.0f)
 				.	where
 					(	TypeMask
-						(	vType
+						(	vTypeUInt32
 						,	OneIsDepthMask
 						)
 					)
 			;
 
-			Simd<float[8uz]>
+			float const
+				vMultiplierArray
+				[	16uz
+				]
+			{	PiFraction<1, 4>{}
+			,	PiFraction<1, 4>{}
+			,	1.0f
+			,	1.0f
+			,	Fraction<1, 2>{}
+			,	1.0f
+			,	1.0f
+			,	Fraction<1, 3>{}
+			,	PiFraction<1, 6>{}
+			,	PiFraction<1, 4>{}
+			,	PiFraction<1, 12>{}
+			,	PiFraction<1, 6>{}
+			,	PiFraction<1, 6>{}
+			,	0.0f
+			,	0.0f
+			,	0.0f
+			};
+
+			Simd<float[8uz]> const
 				vMultiplier
-			=	SimdFill<float[8uz]>(1.0f)
-			;
-				vMultiplier
-			=	SimdFill<float[8uz]>(PiFraction<1, 4>{})
-				.	where
-					(	TypeMask
-						(	vType
-						,	Pi_4_Mask
-						)
-					)
-			;
-				vMultiplier
-			=	SimdFill<float[8uz]>(Fraction<1, 2>{})
-				.	where
-					(	TypeMask
-						(	vType
-						,	Half_Mask
-						)
-					)
-			;
-				vMultiplier
-			=	SimdFill<float[8uz]>(Fraction<1, 3>{})
-				.	where
-					(	TypeMask
-						(	vType
-						,	Third_Mask
-						)
-					)
-			;
-				vMultiplier
-			=	SimdFill<float[8uz]>(PiFraction<1, 6>{})
-				.	where
-					(	TypeMask
-						(	vType
-						,	Pi_6_Mask
-						)
-					)
-			;
-				vMultiplier
-			=	SimdFill<float[8uz]>(PiFraction<1, 12>{})
-				.	where
-					(	TypeMask
-						(	vType
-						,	Pi_12_Mask
-						)
-					)
+			=	::std::bit_cast<Simd<float[16uz]>>
+				(	vMultiplierArray
+				)[	vTypeInt32
+				]
 			;
 
 			return

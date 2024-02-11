@@ -1,17 +1,17 @@
 
  Performance counter stats for 'build/Evaluation/bin/Polymorphic 42 100000' (100 runs):
 
-              8,60 msec task-clock                #    0,963 CPUs utilized            ( +-  0,11% )
+              8,43 msec task-clock                #    0,977 CPUs utilized            ( +-  0,05% )
                  0      context-switches          #    0,000 /sec                   
                  0      cpu-migrations            #    0,000 /sec                   
-             3.190      page-faults               #  365,873 K/sec                    ( +-  0,00% )
-        37.135.702      cycles                    #    4,259 GHz                      ( +-  0,10% )
-         3.000.757      stalled-cycles-frontend   #    8,07% frontend cycles idle     ( +-  0,78% )
-         6.576.578      stalled-cycles-backend    #   17,69% backend cycles idle      ( +-  0,19% )
-        67.212.520      instructions              #    1,81  insn per cycle         
-                                                  #    0,10  stalled cycles per insn  ( +-  0,01% )
-        11.785.396      branches                  #    1,352 G/sec                    ( +-  0,01% )
-           260.065      branch-misses             #    2,20% of all branches          ( +-  0,03% )
+             3.190      page-faults               #  378,311 K/sec                    ( +-  0,00% )
+        35.830.125      cycles                    #    4,249 GHz                      ( +-  0,06% )
+         2.283.336      stalled-cycles-frontend   #    6,36% frontend cycles idle     ( +-  0,32% )
+         6.127.607      stalled-cycles-backend    #   17,08% backend cycles idle      ( +-  0,17% )
+        67.291.001      instructions              #    1,88  insn per cycle         
+                                                  #    0,09  stalled cycles per insn  ( +-  0,00% )
+        11.803.707      branches                  #    1,400 G/sec                    ( +-  0,01% )
+           261.395      branch-misses             #    2,21% of all branches          ( +-  0,02% )
 
-        0,00892380 +- 0,00000989 seconds time elapsed  ( +-  0,11% )
+        0,00863054 +- 0,00000466 seconds time elapsed  ( +-  0,05% )
 

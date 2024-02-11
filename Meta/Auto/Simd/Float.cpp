@@ -4,8 +4,10 @@ module;
 
 export module Meta.Auto.Simd.Float;
 
-export import Meta.Auto.Primary;
+export import Meta.Auto.Simd.Int32;
 export import Meta.Auto.Simd.Tag;
+
+import Std;
 
 export namespace
 	Meta
@@ -135,6 +137,68 @@ export namespace
 	struct
 		Auto
 		<	float
+				[	16uz
+				]
+		,	(SimdTag)
+		>
+	{
+		__m256
+			m_vRaw
+			[	2uz
+			]
+		;
+
+		[[nodiscard]]
+		auto inline
+		(	operator[]
+		)	(	Simd<::std::int32_t[8uz]>
+					i_vIndex
+			)	const
+			noexcept
+		->	Simd<float[8uz]>
+		{
+			auto const
+				vBottom
+			=	_mm256_permutevar8x32_ps
+				(	m_vRaw
+					[	0uz
+					]
+				,	i_vIndex
+					.	m_vRaw
+				)
+			;
+			auto const
+				vTop
+			=	_mm256_permutevar8x32_ps
+				(	m_vRaw
+					[	1uz
+					]
+				,	(	i_vIndex
+					-	8
+					)
+					.	m_vRaw
+				)
+			;
+
+			return
+			{	.	m_vRaw
+				=	_mm256_blendv_ps
+					(	vBottom
+					,	vTop
+					,	(	i_vIndex
+						>	7
+						)
+						.	m_vRaw
+					)
+			};
+		}
+	};
+
+	template
+		<>
+	struct
+		Auto
+		<	float
 			(&)	[	8uz
 				]
 		,	(SimdTag)
@@ -224,6 +288,62 @@ export namespace
 			{	.	m_vRaw
 				=	_mm256_load_ps
 					(	m_aData
+					)
+			};
+		}
+	};
+
+	template
+		<>
+	struct
+		Auto
+		<	float const
+			(&)	[]
+		,	(SimdTag)
+		>
+	{
+		float const
+		*	m_aData
+		;
+		::std::ptrdiff_t
+			m_vCount
+		;
+
+		template
+			<	::std::ptrdiff_t
+					t_vCount
+			>
+		explicit(true) constexpr inline
+		(	Auto
+		)	(	float const
+				(&	i_rArray
+				)	[	t_vCount
+					]
+			)
+			noexcept
+		:	m_aData
+			{	i_rArray
+			}
+		,	m_vCount
+			{	t_vCount
+			}
+		{}
+
+		[[nodiscard]]
+		auto inline
+		(	operator[]
+		)	(	Simd<::std::int32_t[8uz]>
+					i_vIndex
+			)	const
+			noexcept
+		->	Simd<float[8uz]>
+		{	return
+			{	.	m_vRaw
+				=	_mm256_i32gather_ps
+					(	m_aData
+					,	i_vIndex
+						.	m_vRaw
+					,	sizeof(float)
 					)
 			};
 		}

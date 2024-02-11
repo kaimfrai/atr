@@ -5,6 +5,7 @@ module;
 export module Meta.Auto.Simd.Cast;
 
 import Meta.Auto.Simd.Float;
+import Meta.Auto.Simd.Int32;
 import Meta.Auto.Simd.UInt32;
 import Meta.Auto.Simd.UInt8;
 
@@ -41,6 +42,41 @@ export namespace
 				=	_mm256_cvtepi32_ps
 					(	i_vSource
 						.	m_vRaw
+					)
+			};
+		}
+	};
+
+	template
+		<>
+	struct
+		SimdCastFunction
+		<	::std::int32_t
+		>
+	{
+		[[nodiscard]]
+		auto static constexpr inline
+		(	operator()
+		)	(	Simd<::std::uint8_t[8uz]>
+					i_vSource
+			)
+			noexcept
+		->	Simd<::std::int32_t[8uz]>
+		{
+			::std::uint64_t
+				vValue
+				[	2uz
+				]
+			{	i_vSource
+				.	m_vRaw
+			};
+
+			return
+			{	.	m_vRaw
+				=	_mm256_cvtepi8_epi32
+					(	::std::bit_cast<__m128i>
+						(	vValue
+						)
 					)
 			};
 		}
