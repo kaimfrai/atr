@@ -7,6 +7,7 @@ add_single_file_modules(
 )
 
 add_subdirectory(Generic)
+add_subdirectory(Auto)
 add_subdirectory(Math)
 add_subdirectory(Memory)
 add_subdirectory(Arithmetic)
@@ -22,7 +23,6 @@ add_subdirectory(Data)
 add_subdirectory(Functional)
 add_subdirectory(Predicate)
 add_subdirectory(String)
-add_subdirectory(Auto)
 
 add_module(
 	ID/Base.cpp

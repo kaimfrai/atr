@@ -52,6 +52,36 @@ export namespace
 		<>
 	struct
 		SimdFillFunction
+		<	float
+				[	16uz
+				]
+		>
+	{
+		[[nodiscard]]
+		auto static inline
+		(	operator()
+		)	(	float
+					i_vSource
+			)
+			noexcept
+		->	Simd<float[16uz]>
+		{	return
+			{	.	m_vRaw
+				=	{	_mm256_broadcast_ss
+						(	&	i_vSource
+						)
+					,	_mm256_broadcast_ss
+						(	&	i_vSource
+						)
+					}
+			};
+		}
+	};
+
+	template
+		<>
+	struct
+		SimdFillFunction
 		<	::std::int32_t
 				[	8uz
 				]
@@ -88,6 +118,48 @@ export namespace
 		<>
 	struct
 		SimdFillFunction
+		<	::std::int32_t
+				[	16uz
+				]
+		>
+	{
+		[[nodiscard]]
+		auto static inline
+		(	operator()
+		)	(	::std::int32_t
+					i_vSource
+			)
+			noexcept
+		->	Simd<::std::int32_t[16uz]>
+		{
+			::std::int32_t
+				vSource
+				[	4uz
+				]
+			{	i_vSource
+			};
+
+			return
+			{	.	m_vRaw
+				=	{	_mm256_broadcastd_epi32
+						(	::std::bit_cast<__m128i>
+							(	vSource
+							)
+						)
+					,	_mm256_broadcastd_epi32
+						(	::std::bit_cast<__m128i>
+							(	vSource
+							)
+						)
+					}
+			};
+		}
+	};
+
+	template
+		<>
+	struct
+		SimdFillFunction
 		<	::std::uint32_t
 				[	8uz
 				]
@@ -116,6 +188,48 @@ export namespace
 						(	vSource
 						)
 					)
+			};
+		}
+	};
+
+	template
+		<>
+	struct
+		SimdFillFunction
+		<	::std::uint32_t
+				[	16uz
+				]
+		>
+	{
+		[[nodiscard]]
+		auto static inline
+		(	operator()
+		)	(	::std::uint32_t
+					i_vSource
+			)
+			noexcept
+		->	Simd<::std::uint32_t[16uz]>
+		{
+			::std::uint32_t
+				vSource
+				[	4uz
+				]
+			{	i_vSource
+			};
+
+			return
+			{	.	m_vRaw
+				=	{	_mm256_broadcastd_epi32
+						(	::std::bit_cast<__m128i>
+							(	vSource
+							)
+						)
+					,	_mm256_broadcastd_epi32
+						(	::std::bit_cast<__m128i>
+							(	vSource
+							)
+						)
+					}
 			};
 		}
 	};

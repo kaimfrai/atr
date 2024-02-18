@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <__libc_start_main+0x9f78>
+               	call	qword ptr  <__libc_start_main+0xa028>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <__libc_start_main+0x9f88>
+               	mov	rax, qword ptr  <__libc_start_main+0xa038>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <__libc_start_main+0x9f90>
+               	mov	rax, qword ptr  <__libc_start_main+0xa040>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <__libc_start_main+0x9f98>
+               	cmp	qword ptr , 0x0 <__libc_start_main+0xa048>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -242,7 +242,35 @@ Disassembly of section .text:
                	je	 <L0>
                	ret
 <L0>:
+               	push	rax
                	mov	byte ptr , 0x1 <_ZGIW4MetaW4MathW6Random__in_chrg>
+               	call	 <initializer for module Meta.Auto.Simd.UInt64>
+               	pop	rax
+               	jmp	 <Shapes2D::IShape@Evaluation.Virtual.IShape::~IShape()>
+               	int3
+               	int3
+               	int3
+
+<initializer for module Meta.Auto.Simd.UInt64>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW4SimdW6UInt64__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	push	rax
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW6UInt64__in_chrg>
+               	call	 <initializer for module Meta.Auto.Array.Bounded>
+               	pop	rax
+               	jmp	 <Shapes2D::IShape@Evaluation.Virtual.IShape::~IShape()>
+               	int3
+               	int3
+               	int3
+
+<initializer for module Meta.Auto.Array.Bounded>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW5ArrayW7Bounded__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW5ArrayW7Bounded__in_chrg>
                	jmp	 <Shapes2D::IShape@Evaluation.Virtual.IShape::~IShape()>
                	int3
                	int3
@@ -644,6 +672,7 @@ Disassembly of section .text:
                	call	 <initializer for module Meta.Auto.Simd.Cast>
                	call	 <initializer for module Meta.Auto.Simd.Float>
                	call	 <initializer for module Meta.Auto.Simd.UInt8>
+               	call	 <initializer for module Meta.Math.Random>
                	call	 <initializer for module Evaluation.Dependency.TransformReduce>
                	call	 <initializer for module Evaluation.Dependency.VerifyLoopSum>
                	call	 <initializer for module Evaluation.Virtual.Cube>
@@ -663,11 +692,6 @@ Disassembly of section .text:
                	call	 <Shapes2D::IShape@Evaluation.Virtual.IShape::~IShape()>
                	pop	rax
                	jmp	 <Shapes2D::IShape@Evaluation.Virtual.IShape::~IShape()>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
                	int3
                	int3
@@ -724,7 +748,7 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x2f8], rdx
                	movsxd	rdi, edx
                	shl	rdi, 0x3
-               	mov	rsi, qword ptr  <__libc_start_main+0x9fa0>
+               	mov	rsi, qword ptr  <__libc_start_main+0xa050>
                	call	 <_ZnamRKSt9nothrow_t@plt>
                	movsxd	rdx, ebx
                	movabs	rsi, -0x61c8864680b583eb
@@ -2978,7 +3002,7 @@ Disassembly of section .text:
                	mov	eax, ecx
                	mov	qword ptr [rsp + 0x338], rax
                	mov	ecx, 0x8
-               	vbroadcastsd	ymm0, qword ptr  <__libc_start_main+0x2480>
+               	vbroadcastsd	ymm0, qword ptr  <__libc_start_main+0x24a0>
                	vmovaps	ymmword ptr [rsp + 0x740], ymm0
                	xor	eax, eax
                	jmp	 <L233>
@@ -3035,7 +3059,7 @@ Disassembly of section .text:
                	lea	ecx, [rcx + 4*rdx]
                	sub	r9b, cl
                	movzx	eax, r9b
-               	lea	rcx,  <__libc_start_main+0x24e0>
+               	lea	rcx,  <__libc_start_main+0x2500>
                	movsxd	rax, dword ptr [rcx + 4*rax]
                	add	rax, rcx
                	jmp	rax
@@ -3068,7 +3092,7 @@ Disassembly of section .text:
                	vcvtsi2ss	xmm0, xmm5, ecx
                	mov	rcx, qword ptr [rsp + 0x10]
                	mov	qword ptr [rcx + 8*r13], rax
-               	vpshufb	xmm1, xmm1, xmmword ptr  <__libc_start_main+0x2490>
+               	vpshufb	xmm1, xmm1, xmmword ptr  <__libc_start_main+0x24b0>
                	vpinsrb	xmm1, xmm1, byte ptr [rsp + 0x290], 0x7
                	vmovss	dword ptr [rax + 0x30], xmm0
                	vpmovzxbd	ymm0, xmm1      # ymm0 = xmm1[0],zero,zero,zero,xmm1[1],zero,zero,zero,xmm1[2],zero,zero,zero,xmm1[3],zero,zero,zero,xmm1[4],zero,zero,zero,xmm1[5],zero,zero,zero,xmm1[6],zero,zero,zero,xmm1[7],zero,zero,zero
@@ -3083,7 +3107,7 @@ Disassembly of section .text:
                	mov	edi, 0x90
                	vzeroupper
                	call	 <_Znwm@plt>
-               	vpbroadcastw	xmm2, word ptr  <__libc_start_main+0x24dc>
+               	vpbroadcastw	xmm2, word ptr  <__libc_start_main+0x24fc>
                	vmovdqa	xmm0, xmmword ptr [rsp + 0x390]
                	vpshufb	xmm0, xmm0, xmm2
                	vmovdqa	xmm1, xmmword ptr [rsp + 0x290]
@@ -3104,7 +3128,7 @@ Disassembly of section .text:
                	mov	qword ptr [rcx + 8*r13], rax
                	vpmovzxbd	ymm2, qword ptr [rsp + 0x30]
                	vcvtdq2ps	ymm2, ymm2
-               	vpermilps	ymm3, ymm2, ymmword ptr  <__libc_start_main+0x24a0>
+               	vpermilps	ymm3, ymm2, ymmword ptr  <__libc_start_main+0x24c0>
                	vmovups	ymmword ptr [rax + 0x10], ymm3
                	vpmovzxbd	xmm0, xmm0      # xmm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero
                	vcvtdq2ps	xmm0, xmm0
@@ -3170,7 +3194,7 @@ Disassembly of section .text:
                	mov	qword ptr [rdx + 8*r13], rax
                	vcvtsi2ss	xmm0, xmm5, ecx
                	vmovss	dword ptr [rax + 0x30], xmm0
-               	vpshufb	xmm0, xmm1, xmmword ptr  <__libc_start_main+0x2490>
+               	vpshufb	xmm0, xmm1, xmmword ptr  <__libc_start_main+0x24b0>
                	vpinsrb	xmm0, xmm0, byte ptr [rsp + 0x290], 0x7
                	vpmovzxbd	ymm0, xmm0      # ymm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero,xmm0[4],zero,zero,zero,xmm0[5],zero,zero,zero,xmm0[6],zero,zero,zero,xmm0[7],zero,zero,zero
                	vcvtdq2ps	ymm0, ymm0
@@ -3189,7 +3213,7 @@ Disassembly of section .text:
                	mov	qword ptr [rcx + 8*r13], rax
                	vpmovzxbd	ymm0, qword ptr [rsp + 0x30]
                	vcvtdq2ps	ymm0, ymm0
-               	vpermilps	ymm0, ymm0, ymmword ptr  <__libc_start_main+0x24a0>
+               	vpermilps	ymm0, ymm0, ymmword ptr  <__libc_start_main+0x24c0>
                	vmovups	ymmword ptr [rax + 0x10], ymm0
                	movzx	ecx, byte ptr [rsp + 0x290]
                	jmp	 <L243>
@@ -3212,7 +3236,7 @@ Disassembly of section .text:
                	mov	qword ptr [rax], rcx
                	vpmovzxbd	ymm0, qword ptr [rsp + 0x30]
                	vcvtdq2ps	ymm0, ymm0
-               	vpermilps	ymm0, ymm0, ymmword ptr  <__libc_start_main+0x24a0>
+               	vpermilps	ymm0, ymm0, ymmword ptr  <__libc_start_main+0x24c0>
                	movzx	ecx, byte ptr [rsp + 0x290]
                	vcvtsi2ss	xmm1, xmm5, ecx
                	vmovups	ymmword ptr [rax + 0x10], ymm0
@@ -3241,7 +3265,7 @@ Disassembly of section .text:
                	mov	qword ptr [rcx + 8*r13], rax
                	vpmovzxbd	ymm0, qword ptr [rsp + 0x30]
                	vcvtdq2ps	ymm0, ymm0
-               	vpermilps	ymm0, ymm0, ymmword ptr  <__libc_start_main+0x24a0>
+               	vpermilps	ymm0, ymm0, ymmword ptr  <__libc_start_main+0x24c0>
                	vmovups	ymmword ptr [rax + 0x10], ymm0
                	movzx	ecx, byte ptr [rsp + 0x2a0]
 <L243>:
@@ -3264,7 +3288,7 @@ Disassembly of section .text:
                	mov	qword ptr [rcx + 8*r13], rax
                	vpmovzxbd	ymm0, qword ptr [rsp + 0x30]
                	vcvtdq2ps	ymm0, ymm0
-               	vpermilps	ymm0, ymm0, ymmword ptr  <__libc_start_main+0x24a0>
+               	vpermilps	ymm0, ymm0, ymmword ptr  <__libc_start_main+0x24c0>
 <L237>:
                	vmovups	ymmword ptr [rax + 0x10], ymm0
                	inc	r13
@@ -3837,7 +3861,7 @@ Disassembly of section .text:
                	vaddps	xmm0, xmm1, xmm0
                	vshufpd	xmm1, xmm0, xmm0, 0x1   # xmm1 = xmm0[1,0]
                	vaddss	xmm0, xmm0, xmm1
-               	vucomiss	xmm0, dword ptr  <__libc_start_main+0x24d4>
+               	vucomiss	xmm0, dword ptr  <__libc_start_main+0x24f4>
                	jne	 <L253>
 <L252>:
                	xor	eax, eax
@@ -3915,7 +3939,7 @@ Disassembly of section .text:
                	call	 <__cxa_allocate_exception@plt>
                	vmovss	xmm0, dword ptr [rsp + 0x2c0]
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <__libc_start_main+0x9fa8>
+               	mov	rsi, qword ptr  <__libc_start_main+0xa058>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
@@ -4036,7 +4060,7 @@ Disassembly of section .text:
 
 <Bodies3D::SphericBody@Evaluation.Virtual.SphericBody<Shapes2D::Circle@Evaluation.Virtual.Circle>::GetComputeSizeMultiplier() const>:
 <Bodies3D::SphericBody@Evaluation.Virtual.SphericBody<Shapes2D::Ellipse@Evaluation.Virtual.Ellipse>::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <__libc_start_main+0x24d8>
+               	vmovss	xmm0, dword ptr  <__libc_start_main+0x24f8>
                	ret
                	int3
                	int3
@@ -4081,7 +4105,7 @@ Disassembly of section .text:
                	int3
 
 <Bodies3D::Cone@Evaluation.Virtual.Cone::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <__libc_start_main+0x24c0>
+               	vmovss	xmm0, dword ptr  <__libc_start_main+0x24e0>
                	ret
                	int3
                	int3
@@ -4095,7 +4119,7 @@ Disassembly of section .text:
 <Bodies3D::Shape3D@Evaluation.Virtual.Shape3D<Shapes2D::Ellipse@Evaluation.Virtual.Ellipse>::GetComputeSizeMultiplier() const>:
 <Bodies3D::Cylinder@Evaluation.Virtual.Cylinder::GetComputeSizeMultiplier() const>:
 <Shapes2D::CircularShape@Evaluation.Virtual.CircularShape::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <__libc_start_main+0x24c8>
+               	vmovss	xmm0, dword ptr  <__libc_start_main+0x24e8>
                	ret
                	int3
                	int3
@@ -4106,7 +4130,7 @@ Disassembly of section .text:
                	int3
 
 <Bodies3D::PyramidicBody@Evaluation.Virtual.PyramidicBody<Shapes2D::Triangle@Evaluation.Virtual.Triangle>::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <__libc_start_main+0x24cc>
+               	vmovss	xmm0, dword ptr  <__libc_start_main+0x24ec>
                	ret
                	int3
                	int3
@@ -4126,7 +4150,7 @@ Disassembly of section .text:
 <Bodies3D::CubicBody@Evaluation.Virtual.CubicBody<Shapes2D::Square@Evaluation.Virtual.Square>::GetComputeSizeMultiplier() const>:
 <Bodies3D::CubicBody@Evaluation.Virtual.CubicBody<Shapes2D::Rectangle@Evaluation.Virtual.Rectangle>::GetComputeSizeMultiplier() const>:
 <Shapes2D::RectangularShape@Evaluation.Virtual.RectangularShape::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <__libc_start_main+0x24c4>
+               	vmovss	xmm0, dword ptr  <__libc_start_main+0x24e4>
                	ret
                	int3
                	int3
@@ -4138,7 +4162,7 @@ Disassembly of section .text:
 
 <Bodies3D::Shape3D@Evaluation.Virtual.Shape3D<Shapes2D::Triangle@Evaluation.Virtual.Triangle>::GetComputeSizeMultiplier() const>:
 <Shapes2D::TriangularShape@Evaluation.Virtual.TriangularShape::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <__libc_start_main+0x24d0>
+               	vmovss	xmm0, dword ptr  <__libc_start_main+0x24f0>
                	ret
                	int3
                	int3
@@ -4207,7 +4231,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <__libc_start_main+0x9f80>
+               	mov	rax, qword ptr  <__libc_start_main+0xa030>
                	test	rax, rax
                	je	 <L0>
                	call	rax

@@ -1,5 +1,6 @@
 export module Meta.Math.Random;
 
+import Meta.Auto.Simd.UInt64;
 import Std;
 
 export namespace
@@ -23,45 +24,32 @@ export namespace
 	for some reason you absolutely want 64 bits of state. */
 
 	/* The state can be seeded with any value. */
-	class
-		Splitmix64
+	struct
+		Splitmix64Base
 	{
-		::std::uint64_t
-			m_vState
-		;
-
-	public:
 		using
 			difference_type
 		=	::std::ptrdiff_t
 		;
 
-		using
-			value_type
-		=	::std::uint64_t
+		::std::uint64_t const static constexpr inline
+			Increment
+		=	0x9E37'79B9'7F4A'7C15uz
 		;
-
-		explicit(true) constexpr inline
-		(	Splitmix64
-		)	(	::std::uint64_t
-					i_vSeed
-			)
-			noexcept
-		:	m_vState
-			{	i_vSeed
-			}
-		{}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator*
-		)	()	const
+		)	(	this auto
+					i_vThis
+			)
 			noexcept
-		->	::std::uint64_t
+		->	decltype(i_vThis.m_vState)
 		{
-			::std::uint64_t
+			auto
 				vZ
-			=	m_vState
+			=	i_vThis
+				.	m_vState
 			;
 
 			vZ
@@ -92,37 +80,137 @@ export namespace
 
 		auto constexpr inline
 		(	operator++
-		)	()	&
+		)	(	this auto
+				&	i_rThis
+			)
 			noexcept
-		->	Splitmix64&
+		->	decltype(i_rThis)
 		{
-			m_vState
-			+=	0x9E37'79B9'7F4A'7C15uz
+			::std::uint64_t static constexpr
+				vExtent
+			=	sizeof(i_rThis.m_vState)
+			/	sizeof(::std::uint64_t)
+			;
+
+				i_rThis
+				.	m_vState
+			+=	vExtent
+			*	i_rThis
+				.	Increment
 			;
 			return
-			*	this
+				i_rThis
 			;
 		}
 
 		[[nodiscard("Prefer pre-increment when discarding the result")]]
 		auto constexpr inline
 		(	operator++
-		)	(int)
+		)	(	this auto
+				&	i_rThis
+			,	int
+			)
 			noexcept
-		->	Splitmix64
+		->	decltype(auto(i_rThis))
 		{
 			auto const
 				vOld
-			=	*this
+			=	i_rThis
 			;
 
-			operator++
-			();
+			++	i_rThis
+			;
 
 			return
 				vOld
 			;
 		}
+	};
+
+	template
+		<	::std::size_t
+				t_vExtent
+		>
+	requires
+		(	t_vExtent
+		>	0uz
+		)
+	struct
+		Splitmix64
+	:	Splitmix64Base
+	{
+		using
+			value_type
+		=	Simd
+			<	::std::uint64_t
+				[	t_vExtent
+				]
+			>
+		;
+
+		value_type
+			m_vState
+		;
+
+		explicit(true) constexpr inline
+		(	Splitmix64
+		)	(	::std::uint64_t
+					i_vSeed
+			)
+			noexcept
+		:	m_vState
+			{	[	i_vSeed
+				]	<	::std::size_t
+						...	t_tpIndex
+					>(	::std::index_sequence
+						<	t_tpIndex
+							...
+						>
+					)
+				{	return
+					Auto<::std::uint64_t[t_vExtent]>
+					{	(	i_vSeed
+						+	t_tpIndex
+						*	Splitmix64Base
+							::	Increment
+						)
+						...
+					};
+				}(	::std::make_index_sequence
+					<	t_vExtent
+					>{}
+				)
+			}
+		{}
+	};
+
+	template
+		<>
+	struct
+		Splitmix64
+		<	1uz
+		>
+	:	Splitmix64Base
+	{
+		using
+			value_type
+		=	::std::uint64_t
+		;
+
+		value_type
+			m_vState
+		;
+
+		explicit(true) constexpr inline
+		(	Splitmix64
+		)	(	::std::uint64_t
+					i_vSeed
+			)
+			noexcept
+		:	m_vState
+			{	i_vSeed
+			}
+		{}
 	};
 
 	// Taken and modified from: https://prng.di.unimi.it/xoshiro256starstar.c
@@ -145,16 +233,13 @@ export namespace
 	The state must be seeded so that it is not everywhere zero. If you have
 	a 64-bit seed, we suggest to seed a splitmix64 generator and use its
 	output to fill s. */
-	class
+	template
+		<	::std::size_t
+				t_vExtent
+		>
+	struct
 		Xoroshiro256StarStar
 	{
-		::std::uint64_t
-			m_vState
-			[	4
-			]
-		{};
-
-	public:
 		using
 			difference_type
 		=	::std::ptrdiff_t
@@ -162,8 +247,16 @@ export namespace
 
 		using
 			value_type
-		=	::std::uint64_t
+		=	typename
+			Splitmix64<t_vExtent>
+			::	value_type
 		;
+
+		value_type
+			m_vState
+			[	4
+			]
+		{};
 
 		explicit(false) constexpr inline
 		(	Xoroshiro256StarStar
@@ -173,7 +266,7 @@ export namespace
 
 		explicit(true) constexpr inline
 		(	Xoroshiro256StarStar
-		)	(	Splitmix64
+		)	(	Splitmix64<t_vExtent>
 					i_vSeed
 			)
 			noexcept
@@ -194,9 +287,11 @@ export namespace
 		(	operator*
 		)	()	const
 			noexcept
-		->	::std::uint64_t
-		{	return
-				::std::rotl
+		->	value_type
+		{
+			using ::std::rotl;
+			return
+				rotl
 				(	(	m_vState[1]
 					*	5uz
 					)
@@ -212,32 +307,33 @@ export namespace
 			noexcept
 		->	Xoroshiro256StarStar&
 		{
-			::std::uint64_t const
+			value_type const
 				vTemp
 			=	(	m_vState[1]
-				<<	17uz
+				<<	17
 				)
 			;
 
-			m_vState[2]
+				m_vState[2]
 			^=	m_vState[0]
 			;
-			m_vState[3]
+				m_vState[3]
 			^=	m_vState[1]
 			;
-			m_vState[1]
+				m_vState[1]
 			^=	m_vState[2]
 			;
-			m_vState[0]
+				m_vState[0]
 			^=	m_vState[3]
 			;
 
-			m_vState[2]
+				m_vState[2]
 			^=	vTemp
 			;
 
-			m_vState[3]
-			=	::std::rotl
+			using ::std::rotl;
+				m_vState[3]
+			=	rotl
 				(	m_vState[3]
 				,	45
 				)
@@ -295,7 +391,7 @@ export namespace
 						=	0
 					;		vBit
 						<	64
-					; 	++vBit
+					; 	++	vBit
 					)
 				{
 					if	(	vJump
@@ -304,17 +400,25 @@ export namespace
 							)
 						)
 					{
-						vResult.m_vState[0]
-						^=	i_vBase.m_vState[0]
+							vResult
+							.	m_vState[0]
+						^=	i_vBase
+							.	m_vState[0]
 						;
-						vResult.m_vState[1]
-						^=	i_vBase.m_vState[1]
+							vResult
+							.	m_vState[1]
+						^=	i_vBase
+							.	m_vState[1]
 						;
-						vResult.m_vState[2]
-						^=	i_vBase.m_vState[2]
+							vResult
+							.	m_vState[2]
+						^=	i_vBase
+							.	m_vState[2]
 						;
-						vResult.m_vState[3]
-						^=	i_vBase.m_vState[3]
+							vResult
+							.	m_vState[3]
+						^=	i_vBase
+							.	m_vState[3]
 						;
 					}
 

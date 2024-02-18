@@ -7,6 +7,10 @@ add_single_file_modules(
 )
 
 add_subdirectory(
+	Array
+)
+
+add_subdirectory(
 	Simd
 )
 

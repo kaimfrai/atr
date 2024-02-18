@@ -45,6 +45,32 @@ export namespace
 					)
 			};
 		}
+
+		[[nodiscard]]
+		auto static constexpr inline
+		(	operator()
+		)	(	Simd<::std::uint32_t[16uz]>
+					i_vSource
+			)
+			noexcept
+		->	Simd<float[16uz]>
+		{	return
+			{	.	m_vRaw
+				=	{	_mm256_cvtepi32_ps
+						(	i_vSource
+							.	m_vRaw
+								[	0
+								]
+						)
+					,	_mm256_cvtepi32_ps
+						(	i_vSource
+							.	m_vRaw
+								[	1
+								]
+						)
+					}
+			};
+		}
 	};
 
 	template
@@ -80,6 +106,31 @@ export namespace
 					)
 			};
 		}
+
+		[[nodiscard]]
+		auto static inline
+		(	operator()
+		)	(	Simd<::std::uint8_t[16uz]>
+					i_vSource
+			)
+			noexcept
+		->	Simd<::std::int32_t[16uz]>
+		{	return
+			{	.	m_vRaw
+				=	{	_mm256_cvtepi8_epi32
+						(	i_vSource
+							.	m_vRaw
+						)
+					,	_mm256_cvtepi8_epi32
+						(	_mm_srli_si128
+							(	i_vSource
+								.	m_vRaw
+							,	8
+							)
+						)
+					}
+			};
+		}
 	};
 
 	template
@@ -113,6 +164,31 @@ export namespace
 						(	vValue
 						)
 					)
+			};
+		}
+
+		[[nodiscard]]
+		auto static inline
+		(	operator()
+		)	(	Simd<::std::uint8_t[16uz]>
+					i_vSource
+			)
+			noexcept
+		->	Simd<::std::uint32_t[16uz]>
+		{	return
+			{	.	m_vRaw
+				=	{	_mm256_cvtepu8_epi32
+						(	i_vSource
+							.	m_vRaw
+						)
+					,	_mm256_cvtepu8_epi32
+						(	_mm_srli_si128
+							(	i_vSource
+								.	m_vRaw
+							,	8
+							)
+						)
+					}
 			};
 		}
 	};

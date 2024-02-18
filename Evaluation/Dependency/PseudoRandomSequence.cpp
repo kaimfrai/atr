@@ -256,7 +256,7 @@ export
 	struct
 		RandomGenerators
 	{
-		Xoroshiro256StarStar
+		Xoroshiro256StarStar<1uz>
 			m_vRandom
 			[	GeneratorCount
 			]
@@ -275,7 +275,7 @@ export
 			)
 		explicit(true) constexpr inline
 		(	RandomGenerators
-		)	(	Splitmix64
+		)	(	Splitmix64<1uz>
 					i_vSeed
 			,	::std::index_sequence
 				<	t_vpIndex
@@ -284,10 +284,8 @@ export
 			)
 			noexcept
 		:	m_vRandom
-			{	Xoroshiro256StarStar
-				{	Splitmix64
-					{	i_vSeed
-					}
+			{	Xoroshiro256StarStar<1uz>
+				{	i_vSeed
 				}
 			,	Jump
 				(	m_vRandom
@@ -386,7 +384,7 @@ export
 			)
 			noexcept
 		:	m_vRandom
-			{	Splitmix64
+			{	Splitmix64<1uz>
 				{	i_vSeed
 				}
 			,	::std::make_index_sequence
@@ -499,7 +497,7 @@ export
 			)
 			noexcept
 		:	m_vRandom
-			{	Splitmix64
+			{	Splitmix64<1uz>
 				{	i_vSeed
 				}
 			,	::std::make_index_sequence

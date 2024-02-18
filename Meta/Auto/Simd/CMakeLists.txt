@@ -3,6 +3,7 @@ add_single_file_modules(
 
 	Int32.cpp
 	Float.cpp
+	UInt64.cpp
 	UInt32.cpp
 	UInt8.cpp
 

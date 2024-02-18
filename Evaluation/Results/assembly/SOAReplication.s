@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <free+0x4ff8>
+               	call	qword ptr  <free+0x50a8>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <free+0x5008>
+               	mov	rax, qword ptr  <free+0x50b8>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <free+0x5010>
+               	mov	rax, qword ptr  <free+0x50c0>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <free+0x5018>
+               	cmp	qword ptr , 0x0 <free+0x50c8>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -253,7 +253,35 @@ Disassembly of section .text:
                	je	 <L0>
                	ret
 <L0>:
+               	push	rax
                	mov	byte ptr , 0x1 <_ZGIW4MetaW4MathW6Random__in_chrg>
+               	call	 <initializer for module Meta.Auto.Simd.UInt64>
+               	pop	rax
+               	jmp	 <initializer for module Meta.Auto.Simd.Tag>
+               	int3
+               	int3
+               	int3
+
+<initializer for module Meta.Auto.Simd.UInt64>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW4SimdW6UInt64__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	push	rax
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW6UInt64__in_chrg>
+               	call	 <initializer for module Meta.Auto.Array.Bounded>
+               	pop	rax
+               	jmp	 <initializer for module Meta.Auto.Simd.Tag>
+               	int3
+               	int3
+               	int3
+
+<initializer for module Meta.Auto.Array.Bounded>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW5ArrayW7Bounded__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW5ArrayW7Bounded__in_chrg>
                	jmp	 <initializer for module Meta.Auto.Simd.Tag>
                	int3
                	int3
@@ -360,6 +388,7 @@ Disassembly of section .text:
                	call	 <initializer for module Meta.Auto.Simd.Cast>
                	call	 <initializer for module Meta.Auto.Simd.Float>
                	call	 <initializer for module Meta.Auto.Simd.UInt8>
+               	call	 <initializer for module Meta.Math.Random>
                	call	 <initializer for module Evaluation.Dependency.RandomAccessIteratorBase>
                	call	 <initializer for module Evaluation.Dependency.TransformReduce>
                	call	 <initializer for module Evaluation.Dependency.VerifyLoopSum>
@@ -371,11 +400,6 @@ Disassembly of section .text:
                	call	 <initializer for module Meta.Auto.Simd.UInt32>
                	pop	rax
                	jmp	 <initializer for module Meta.Auto.Simd.Tag>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
                	int3
                	int3
@@ -2262,12 +2286,12 @@ Disassembly of section .text:
                	lea	r13, [rsp + 0x180]
                	mov	r9d, 0x1
                	xor	r11d, r11d
-               	vpbroadcastd	ymm0, dword ptr  <free+0x8e4>
-               	vpbroadcastd	ymm1, dword ptr  <free+0x8f0>
-               	vpbroadcastd	ymm2, dword ptr  <free+0x8ec>
-               	vbroadcastss	ymm3, dword ptr  <free+0x8e0>
-               	vmovdqa	ymm4, ymmword ptr  <free+0x900>
-               	vmovdqa	ymm5, ymmword ptr  <free+0x920>
+               	vpbroadcastd	ymm0, dword ptr  <free+0x904>
+               	vpbroadcastd	ymm1, dword ptr  <free+0x910>
+               	vpbroadcastd	ymm2, dword ptr  <free+0x90c>
+               	vbroadcastss	ymm3, dword ptr  <free+0x900>
+               	vmovdqa	ymm4, ymmword ptr  <free+0x920>
+               	vmovdqa	ymm5, ymmword ptr  <free+0x940>
                	xor	ebx, ebx
                	mov	r14d, 0x1
                	jmp	 <L168>
@@ -2407,7 +2431,7 @@ Disassembly of section .text:
                	vaddps	xmm0, xmm0, xmm1
                	vshufpd	xmm1, xmm0, xmm0, 0x1   # xmm1 = xmm0[1,0]
                	vaddss	xmm0, xmm0, xmm1
-               	vucomiss	xmm0, dword ptr  <free+0x8e8>
+               	vucomiss	xmm0, dword ptr  <free+0x908>
                	jne	 <L178>
 <L177>:
                	xor	eax, eax
@@ -2425,7 +2449,7 @@ Disassembly of section .text:
                	call	 <__cxa_allocate_exception@plt>
                	vmovss	xmm0, dword ptr [rsp + 0xc0]
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <free+0x5020>
+               	mov	rsi, qword ptr  <free+0x50d0>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
@@ -2435,7 +2459,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <free+0x5000>
+               	mov	rax, qword ptr  <free+0x50b0>
                	test	rax, rax
                	je	 <L0>
                	call	rax
