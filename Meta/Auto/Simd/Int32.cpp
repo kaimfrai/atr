@@ -41,72 +41,41 @@ export namespace
 
 		[[nodiscard]]
 		auto friend constexpr inline
-		(	operator>
+		(	operator<<
 		)	(	Auto
 					i_vLeft
-			,	::std::int32_t
+			,	Auto
 					i_vRight
 			)
 			noexcept
-		->	SimdMask<::std::int32_t[8uz]>
-		{
-			::std::int32_t const
-				vArray
-				[]
-			{	i_vRight
-			,	i_vRight
-			,	i_vRight
-			,	i_vRight
-			,	i_vRight
-			,	i_vRight
-			,	i_vRight
-			,	i_vRight
-			};
-
-			return
+		->	Auto
+		{	return
 			{	.	m_vRaw
-				=	_mm256_cmpgt_epi32
+				=	_mm256_sllv_epi32
 					(	i_vLeft
 						.	m_vRaw
-					,	::std::bit_cast<__m256i>
-						(	vArray
-						)
+					,	i_vRight
+						.	m_vRaw
 					)
 			};
 		}
 
 		[[nodiscard]]
 		auto friend constexpr inline
-		(	operator-
+		(	operator<<
 		)	(	Auto
 					i_vLeft
-			,	::std::int32_t
+			,	int
 					i_vRight
 			)
 			noexcept
-		->	SimdMask<::std::int32_t[8uz]>
-		{
-			::std::int32_t const
-				vArray
-				[]
-			{	i_vRight
-			,	i_vRight
-			,	i_vRight
-			,	i_vRight
-			,	i_vRight
-			,	i_vRight
-			,	i_vRight
-			,	i_vRight
-			};
-
-			return
+		->	Auto
+		{	return
 			{	.	m_vRaw
-				=	_mm256_sub_epi32
+				=	_mm256_slli_epi32
 					(	i_vLeft
 						.	m_vRaw
-					,	::std::bit_cast<__m256i>
-						(	vArray
-						)
+					,	i_vRight
 					)
 			};
 		}

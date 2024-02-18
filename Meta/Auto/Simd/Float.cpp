@@ -184,7 +184,7 @@ export namespace
 					(	vBottom
 					,	vTop
 					,	(	i_vIndex
-						>	7
+						<<	28
 						)
 						.	m_vRaw
 					)
@@ -296,53 +296,44 @@ export namespace
 	struct
 		Auto
 		<	float const
-			(&)	[]
+			(&)	[	8uz
+				]
 		,	(SimdTag)
+		,	(MaskedTag)
 		>
 	{
+		using
+			value_type
+		=	MaskedSimd
+			<	float
+					[	8uz
+					]
+			>
+		;
+
 		float const
 		*	m_aData
 		;
-		::std::ptrdiff_t
-			m_vCount
+
+		__m256
+			m_vMask
 		;
 
-		template
-			<	::std::ptrdiff_t
-					t_vCount
-			>
-		explicit(true) constexpr inline
-		(	Auto
-		)	(	float const
-				(&	i_rArray
-				)	[	t_vCount
-					]
-			)
-			noexcept
-		:	m_aData
-			{	i_rArray
-			}
-		,	m_vCount
-			{	t_vCount
-			}
-		{}
-
 		[[nodiscard]]
-		auto inline
-		(	operator[]
-		)	(	Simd<::std::int32_t[8uz]>
-					i_vIndex
-			)	const
+		explicit(true) constexpr inline
+		(	operator
+			value_type
+		)	()	const
 			noexcept
-		->	Simd<float[8uz]>
 		{	return
+			value_type
 			{	.	m_vRaw
-				=	_mm256_i32gather_ps
+				=	_mm256_maskload_ps
 					(	m_aData
-					,	i_vIndex
-						.	m_vRaw
-					,	sizeof(float)
+					,	m_vMask
 					)
+			,	.	m_vMask
+				=	m_vMask
 			};
 		}
 	};

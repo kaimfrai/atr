@@ -1,10 +1,14 @@
 export module Evaluation.SOAReplication.SOAView;
 
+import Meta.Auto.Simd.Fill;
 import Meta.Auto.Simd.Tag;
 
 import Std;
 
+using ::Meta::MaskedSimd;
 using ::Meta::Simd;
+using ::Meta::SimdFill;
+using ::Meta::SimdMask;
 
 export namespace
 	Bodies3D
@@ -18,6 +22,86 @@ export namespace
 	struct
 		SOAViewBase
 	{
+		template
+			<	::std::size_t
+					t_vIndex
+			>
+		using
+			Val
+		=	::std::remove_cv_t
+			<	t_tpMember
+				...	[	t_vIndex
+					]
+			>	[	t_vCount
+				]
+		;
+
+		template
+			<	::std::size_t
+					t_vIndex
+			>
+		using
+			Ptr
+		=	t_tpMember
+			...	[	t_vIndex
+				]
+			*
+		;
+
+		template
+			<	::std::size_t
+					t_vIndex
+			>
+		using
+			Ref
+		=	t_tpMember
+			...	[	t_vIndex
+				]
+			(&)	[	t_vCount
+				]
+		;
+
+		auto static constexpr inline
+			Alignment
+		=	t_vCount
+		*	::std::max
+			({	alignof(t_tpMember)
+				...
+			})
+		;
+
+		[[nodiscard]]
+		auto static constexpr inline
+		(	CeilToBlockCapacity
+		)	(	::std::uint32_t
+					i_vCapacity
+			)
+			noexcept
+		->	::std::uint32_t
+		{
+			auto const
+				vAlignment
+			=	static_cast<::std::uint32_t>
+				(	Alignment
+				)
+			;
+			auto const
+				vRemainder
+			=	i_vCapacity
+			%	vAlignment
+			;
+			return
+				i_vCapacity
+			+	(	(	vRemainder
+					>	0u
+					)
+				*	(	vAlignment
+					-	vRemainder
+					)
+				)
+			;
+		}
+
 		auto static constexpr inline
 			MemberSize
 		=	::std::array<::std::ptrdiff_t, sizeof...(t_tpMember)>
@@ -70,19 +154,35 @@ export namespace
 					i_rView
 			)
 			noexcept
-		->	t_tpMember...[t_vIndex]*
-		{	return
-			reinterpret_cast<t_tpMember...[t_vIndex]*>
-			(	i_rView
-				.	m_aBuffer
-			+	(	i_rView
-					.	m_vCapacity
+		->	Ptr<t_vIndex>
+		{
+			auto const
+				vIndex
+			=	i_rView
+				.	m_vIndex
+			;
+			auto const
+				vCapacity
+			=	i_rView
+				.	m_vCapacity
+			;
+			auto const
+				aBuffer
+			=	::std::assume_aligned<Alignment>
+				(	i_rView
+					.	m_aBuffer
+				)
+			;
+
+			return
+			reinterpret_cast<Ptr<t_vIndex>>
+			(	aBuffer
+			+	(	vCapacity
 				*	MemberOffset
 					[	t_vIndex
 					]
 				)
-			+	(	i_rView
-					.	m_vIndex
+			+	(	vIndex
 				*	MemberSize
 					[	t_vIndex
 					]
@@ -101,9 +201,9 @@ export namespace
 					i_rView
 			)
 			noexcept
-		->	Simd<::std::remove_cv_t<t_tpMember...[t_vIndex]>[t_vCount]>
+		->	Simd<Val<t_vIndex>>
 		{
-			Simd<t_tpMember...[t_vIndex](&)[t_vCount]> const
+			Simd<Ref<t_vIndex>> const
 				vReference
 			{	i_rView
 				.	template
@@ -112,7 +212,38 @@ export namespace
 			};
 
 			return
-			static_cast<Simd<::std::remove_cv_t<t_tpMember...[t_vIndex]>[t_vCount]>>
+			static_cast<Simd<Val<t_vIndex>>>
+			(	vReference
+			);
+		}
+
+		template
+			<	::std::size_t
+					t_vIndex
+			>
+		[[nodiscard]]
+		auto constexpr inline
+		(	get
+		)	(	this auto
+					i_rView
+			,	SimdMask<Val<t_vIndex>>
+					i_vMask
+			)
+			noexcept
+		->	MaskedSimd<Val<t_vIndex>>
+		{
+			MaskedSimd<Ref<t_vIndex>> const
+				vReference
+			{	i_rView
+				.	template
+					AsPointer<t_vIndex>
+					()
+			,	i_vMask
+				.	m_vRaw
+			};
+
+			return
+			static_cast<MaskedSimd<Val<t_vIndex>>>
 			(	vReference
 			);
 		}

@@ -26,98 +26,112 @@ using ::Meta::SimdMask;
 namespace
 	Bodies3D
 {
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
 		CircleMask
-	=	1u
-	<<	(	31u
-		-	static_cast<unsigned>(ETag::Circle)
+	=	1
+	<<	(	31
+		-	static_cast<::std::int32_t>(ETag::Circle)
 		)
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
 		EllipseMask
-	=	1u
-	<<	(	31u
-		-	static_cast<unsigned>(ETag::Ellipse)
+	=	1
+	<<	(	31
+		-	static_cast<::std::int32_t>(ETag::Ellipse)
 		)
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
 		RectangleMask
-	=	1u
-	<<	(	31u
-		-	static_cast<unsigned>(ETag::Rectangle)
+	=	1
+	<<	(	31
+		-	static_cast<::std::int32_t>(ETag::Rectangle)
 		)
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
 		SquareMask
-	=	1u
-	<<	(	31u
-		-	static_cast<unsigned>(ETag::Square)
+	=	1
+	<<	(	31
+		-	static_cast<::std::int32_t>(ETag::Square)
 		)
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
 		TriangleMask
-	=	1u
-	<<	(	31u
-		-	static_cast<unsigned>(ETag::Triangle)
+	=	1
+	<<	(	31
+		-	static_cast<::std::int32_t>(ETag::Triangle)
 		)
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
 		CubeMask
-	=	1u
-	<<	(	31u
-		-	static_cast<unsigned>(ETag::Cube)
+	=	1
+	<<	(	31
+		-	static_cast<::std::int32_t>(ETag::Cube)
 		)
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
 		CuboidMask
-	=	1u
-	<<	(	31u
-		-	static_cast<unsigned>(ETag::Cuboid)
+	=	1
+	<<	(	31
+		-	static_cast<::std::int32_t>(ETag::Cuboid)
 		)
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
 		PyramidMask
-	=	1u
-	<<	(	31u
-		-	static_cast<unsigned>(ETag::Pyramid)
+	=	1
+	<<	(	31
+		-	static_cast<::std::int32_t>(ETag::Pyramid)
 		)
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
 		SphereMask
-	=	1u
-	<<	(	31u
-		-	static_cast<unsigned>(ETag::Sphere)
+	=	1
+	<<	(	31
+		-	static_cast<::std::int32_t>(ETag::Sphere)
 		)
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
 		CylinderMask
-	=	1u
-	<<	(	31u
-		-	static_cast<unsigned>(ETag::Cylinder)
+	=	1
+	<<	(	31
+		-	static_cast<::std::int32_t>(ETag::Cylinder)
 		)
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
 		ConeMask
-	=	1u
-	<<	(	31u
-		-	static_cast<unsigned>(ETag::Cone)
+	=	1
+	<<	(	31
+		-	static_cast<::std::int32_t>(ETag::Cone)
 		)
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
 		EllipsoidMask
-	=	1u
-	<<	(	31u
-		-	static_cast<unsigned>(ETag::Ellipsoid)
+	=	1
+	<<	(	31
+		-	static_cast<::std::int32_t>(ETag::Ellipsoid)
 		)
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
 		HeadMask
-	=	1u
-	<<	(	31u
-		-	static_cast<unsigned>(ETag::Head)
+	=	1
+	<<	(	31
+		-	static_cast<::std::int32_t>(ETag::Head)
 		)
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
+		WidthIsWidthMask
+	=	EllipseMask
+	bitor
+		RectangleMask
+	bitor
+		TriangleMask
+	bitor
+		CuboidMask
+	bitor
+		PyramidMask
+	bitor
+		EllipsoidMask
+	;
+	::std::int32_t constexpr inline
 		HeightIsWidthMask
 	=	CircleMask
 	bitor
@@ -133,7 +147,7 @@ namespace
 	bitor
 		HeadMask
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
 		OneIsDepthMask
 	=	CircleMask
 	bitor
@@ -145,7 +159,7 @@ namespace
 	bitor
 		TriangleMask
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
 		HeightIsDepthMask
 	=	CubeMask
 	bitor
@@ -153,7 +167,19 @@ namespace
 	bitor
 		HeadMask
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
+		DepthIsDepthMask
+	=	CuboidMask
+	bitor
+		PyramidMask
+	bitor
+		EllipsoidMask
+	bitor
+		CylinderMask
+	bitor
+		ConeMask
+	;
+	::std::int32_t constexpr inline
 		Pi_4_Mask
 	=	CircleMask
 	bitor
@@ -161,15 +187,15 @@ namespace
 	bitor
 		CylinderMask
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
 		Half_Mask
 	=	TriangleMask
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
 		Third_Mask
 	=	PyramidMask
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
 		Pi_6_Mask
 	=	SphereMask
 	bitor
@@ -177,7 +203,7 @@ namespace
 	bitor
 		HeadMask
 	;
-	unsigned constexpr inline
+	::std::int32_t constexpr inline
 		Pi_12_Mask
 	=	ConeMask
 	;
@@ -185,20 +211,19 @@ namespace
 	[[nodiscard]]
 	auto inline
 	(	TypeMask
-	)	(	Simd<unsigned[8uz]>
+	)	(	Simd<::std::int32_t[8uz]>
 				i_vType
-		,	unsigned
+		,	::std::int32_t
 				i_vMask
 		)
 		noexcept
 	->	SimdMask<float[8uz]>
 	{	return
-			// *HIGHEST* bit must be set
-			::std::bit_cast<SimdMask<float[8uz]>>
-			(	SimdFill<unsigned[8uz]>(i_vMask)
-			<<	i_vType
-			)
-		;
+		// *HIGHEST* bit must be set
+		::std::bit_cast<SimdMask<float[8uz]>>
+		(	SimdFill<::std::int32_t[8uz]>(i_vMask)
+		<<	i_vType
+		);
 	}
 
 	struct
@@ -211,7 +236,9 @@ namespace
 		[[nodiscard]]
 		auto inline
 		(	ComputeVolume
-		)	()	const
+		)	(	Simd<float[16uz]> const
+					i_vMultiplierArray
+			)	const
 			noexcept
 		->	auto
 		{
@@ -223,12 +250,6 @@ namespace
 					>()
 			;
 
-			auto const
-				vTypeUInt32
-			=	SimdCast<::std::uint32_t>
-				(	vType
-				)
-			;
 			auto const
 				vTypeInt32
 			=	SimdCast<::std::int32_t>
@@ -244,71 +265,47 @@ namespace
 			;
 			auto
 				vWidth
+			=	vHeight
+			;
+			vWidth
 			=	m_rView
 				.	get
 					<	8uz
-					>()
+					>(	TypeMask
+						(	vTypeInt32
+						,	WidthIsWidthMask
+						)
+					)
 			;
+
 			auto
+				vDepth
+			=	vHeight
+			;
 				vDepth
 			=	m_rView
 				.	get
 					<	9uz
-					>()
+					>(	TypeMask
+						(	vTypeInt32
+						,	DepthIsDepthMask
+						)
+					)
 			;
-				vWidth
-			=	vHeight
-				.	where
-					(	TypeMask
-						(	vTypeUInt32
-						,	HeightIsWidthMask
-						)
-					)
-			;	vDepth
-			=	vHeight
-				.	where
-					(	TypeMask
-						(	vTypeUInt32
-						,	HeightIsDepthMask
-						)
-					)
-			;	vDepth
+				vDepth
 			=	SimdFill<float[8uz]>(1.0f)
 				.	where
 					(	TypeMask
-						(	vTypeUInt32
+						(	vTypeInt32
 						,	OneIsDepthMask
 						)
 					)
 			;
 
-			float const
-				vMultiplierArray
-				[	16uz
-				]
-			{	PiFraction<1, 4>{}
-			,	PiFraction<1, 4>{}
-			,	1.0f
-			,	1.0f
-			,	Fraction<1, 2>{}
-			,	1.0f
-			,	1.0f
-			,	Fraction<1, 3>{}
-			,	PiFraction<1, 6>{}
-			,	PiFraction<1, 4>{}
-			,	PiFraction<1, 12>{}
-			,	PiFraction<1, 6>{}
-			,	PiFraction<1, 6>{}
-			,	0.0f
-			,	0.0f
-			,	0.0f
-			};
-
 			Simd<float[8uz]> const
 				vMultiplier
-			=	::std::bit_cast<Simd<float[16uz]>>
-				(	vMultiplierArray
-				)[	vTypeInt32
+			=	i_vMultiplierArray
+				[	vTypeInt32
 				]
 			;
 
@@ -507,15 +504,22 @@ namespace
 			{	.	m_aBuffer
 				=	static_cast<::std::byte*>
 					(	::std::aligned_alloc
-						(	alignof(Simd<float[8uz]>)
-						,	(	i_vCapacity
+						(	Body3DView
+							::	Alignment
+						,	(	Body3DView
+								::	CeilToBlockCapacity
+									(	i_vCapacity
+									)
 							*	Body3DView
 								::	TotalSize
 							)
 						)
 					)
 			,	.	m_vCapacity
-				=	i_vCapacity
+				=	Body3DView
+					::	CeilToBlockCapacity
+						(	i_vCapacity
+						)
 			,	.	m_vIndex
 				=	0u
 			}
@@ -773,6 +777,28 @@ auto inline
 		;
 	}
 
+	float const
+		vMultiplierArray
+		[	16uz
+		]
+	{	PiFraction<1, 4>{}
+	,	PiFraction<1, 4>{}
+	,	1.0f
+	,	1.0f
+	,	Fraction<1, 2>{}
+	,	1.0f
+	,	1.0f
+	,	Fraction<1, 3>{}
+	,	PiFraction<1, 6>{}
+	,	PiFraction<1, 4>{}
+	,	PiFraction<1, 12>{}
+	,	PiFraction<1, 6>{}
+	,	PiFraction<1, 6>{}
+	,	0.0f
+	,	0.0f
+	,	0.0f
+	};
+
 	return
 		TransformReduce
 		(	vElements
@@ -781,7 +807,11 @@ auto inline
 		,	vElements
 			.	end
 				()
-		,	[]	(	auto const
+		,	[		vMultiplier
+				=	::std::bit_cast<Simd<float[16uz]>>
+					(	vMultiplierArray
+					)
+			]	(	auto const
 						rBody
 				)
 			->	::std::experimental::native_simd<float>
@@ -789,7 +819,8 @@ auto inline
 				::std::bit_cast<::std::experimental::native_simd<float>>
 				(	rBody
 					.	ComputeVolume
-						()
+						(	vMultiplier
+						)
 				);
 			}
 		)

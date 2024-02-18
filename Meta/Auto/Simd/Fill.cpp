@@ -52,6 +52,42 @@ export namespace
 		<>
 	struct
 		SimdFillFunction
+		<	::std::int32_t
+				[	8uz
+				]
+		>
+	{
+		[[nodiscard]]
+		auto static inline
+		(	operator()
+		)	(	::std::int32_t
+					i_vSource
+			)
+			noexcept
+		->	Simd<::std::int32_t[8uz]>
+		{
+			::std::int32_t
+				vSource
+				[	4uz
+				]
+			{	i_vSource
+			};
+
+			return
+			{	.	m_vRaw
+				=	_mm256_broadcastd_epi32
+					(	::std::bit_cast<__m128i>
+						(	vSource
+						)
+					)
+			};
+		}
+	};
+
+	template
+		<>
+	struct
+		SimdFillFunction
 		<	::std::uint32_t
 				[	8uz
 				]
