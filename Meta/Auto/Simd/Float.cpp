@@ -4,8 +4,8 @@ module;
 
 export module Meta.Auto.Simd.Float;
 
-export import Meta.Auto.Simd.Int32;
 export import Meta.Auto.Simd.Tag;
+import Meta.Auto.Simd.Int32;
 
 import Std;
 
@@ -68,6 +68,26 @@ export namespace
 			m_vRaw
 		;
 
+		[[nodiscard]]
+		auto constexpr inline
+		(	operator=
+		)	(	MaskedType
+					i_vValue
+			)	const&
+			noexcept
+		->	Auto
+		{	return
+			{	.	m_vRaw
+				=	_mm256_blendv_ps
+					(	m_vRaw
+					,	i_vValue
+						.	m_vRaw
+					,	i_vValue
+						.	m_vMask
+					)
+			};
+		}
+
 		auto constexpr inline
 		(	operator=
 		)	(	MaskedType
@@ -75,25 +95,19 @@ export namespace
 			)	&
 			noexcept
 		->	Auto&
-		{
-				m_vRaw
-			=	_mm256_blendv_ps
-				(	m_vRaw
-				,	i_vValue
-					.	m_vRaw
-				,	i_vValue
-					.	m_vMask
-				)
-			;
-
-			return
+		{	return
 			*	this
+			=	(	auto
+					(*	this
+					)
+				=	i_vValue
+				)
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	where
+		(	operator[]
 		)	(	SimdMask<float[8uz]>
 					i_vMask
 			)	const
@@ -197,46 +211,6 @@ export namespace
 			(&)	[	8uz
 				]
 		,	(SimdTag)
-		>
-	{
-		using
-			value_type
-		=	Auto
-			<	float
-					[	8uz
-					]
-			,	(SimdTag)
-			>
-		;
-
-		float const
-		*	m_aData
-		;
-
-		[[nodiscard]]
-		explicit(true) constexpr inline
-		(	operator
-			value_type
-		)	()	const
-			noexcept
-		{	return
-			value_type
-			{	.	m_vRaw
-				=	_mm256_load_ps
-					(	m_aData
-					)
-			};
-		}
-	};
-
-	template
-		<>
-	struct
-		Auto
-		<	float const
-			(&)	[	8uz
-				]
-		,	(SimdTag)
 		,	(MaskedTag)
 		>
 	{
@@ -273,6 +247,122 @@ export namespace
 			,	.	m_vMask
 				=	m_vMask
 			};
+		}
+	};
+
+	template
+		<>
+	struct
+		Auto
+		<	float const
+			(&)	[	8uz
+				]
+		,	(SimdTag)
+		>
+	{
+		using
+			value_type
+		=	Simd
+			<	float
+					[	8uz
+					]
+			>
+		;
+
+		float const
+		*	m_aData
+		;
+
+		[[nodiscard]]
+		explicit(true) constexpr inline
+		(	operator
+			value_type
+		)	()	const
+			noexcept
+		{	return
+			value_type
+			{	.	m_vRaw
+				=	_mm256_load_ps
+					(	m_aData
+					)
+			};
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	operator=
+		)	(	MaskedSimd
+				<	float const
+					(&)	[	8uz
+						]
+				>	i_rRight
+			)	const
+			noexcept
+		->	value_type
+		{	return
+				static_cast<value_type>
+				(	*	this
+				)
+			=	static_cast<decltype(i_rRight)::value_type>
+				(	i_rRight
+				)
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	operator[]
+		)	(	SimdMask
+				<	float
+						[	8uz
+						]
+				>	i_vMask
+			)	const
+			noexcept
+		->	MaskedSimd<float const(&)[8uz]>
+		{	return
+			{	.	m_aData
+				=	m_aData
+			,	.	m_vMask
+				=	i_vMask
+					.	m_vRaw
+			};
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator*
+		)	(	Auto
+					i_rLeft
+			,	value_type
+					i_vRight
+			)
+			noexcept
+		->	value_type
+		{	return
+				static_cast<value_type>
+				(	i_rLeft
+				)
+			*	i_vRight
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator*
+		)	(	value_type
+					i_vLeft
+			,	Auto
+					i_rRight
+			)
+			noexcept
+		->	value_type
+		{	return
+				i_vLeft
+			*	static_cast<value_type>
+				(	i_rRight
+				)
+			;
 		}
 	};
 

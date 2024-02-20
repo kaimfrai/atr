@@ -4,7 +4,7 @@ module;
 
 export module Meta.Auto.Simd.Int32;
 
-export import Meta.Auto.Simd.Tag;
+import Meta.Auto.Simd.Tag;
 
 import Std;
 

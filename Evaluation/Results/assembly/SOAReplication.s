@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <free+0x50a8>
+               	call	qword ptr  <free+0x5088>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <free+0x50b8>
+               	mov	rax, qword ptr  <free+0x5098>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <free+0x50c0>
+               	mov	rax, qword ptr  <free+0x50a0>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <free+0x50c8>
+               	cmp	qword ptr , 0x0 <free+0x50a8>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -98,7 +98,7 @@ Disassembly of section .text:
                	ret
 <L0>:
                	mov	byte ptr , 0x1 <_ZGIW10EvaluationW10DependencyW8Fraction__in_chrg>
-               	jmp	 <initializer for module Meta.Auto.Simd.Tag>
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -112,7 +112,6 @@ Disassembly of section .text:
 
 <initializer for module Evaluation.SOAReplication.Tag>:
 <initializer for module Std>:
-<initializer for module Meta.Auto.Simd.Tag>:
                	ret
                	int3
                	int3
@@ -136,7 +135,7 @@ Disassembly of section .text:
                	ret
 <L0>:
                	mov	byte ptr , 0x1 <_ZGIW10EvaluationW10DependencyW10PiFraction__in_chrg>
-               	jmp	 <initializer for module Meta.Auto.Simd.Tag>
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -160,7 +159,7 @@ Disassembly of section .text:
                	call	 <initializer for module Meta.Auto.Simd.UInt8>
                	call	 <initializer for module Meta.Math.Random>
                	pop	rax
-               	jmp	 <initializer for module Meta.Auto.Simd.Tag>
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -178,7 +177,7 @@ Disassembly of section .text:
                	call	 <initializer for module Meta.Auto.Simd.UInt32>
                	call	 <initializer for module Meta.Auto.Simd.UInt8>
                	pop	rax
-               	jmp	 <initializer for module Meta.Auto.Simd.Tag>
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -193,7 +192,7 @@ Disassembly of section .text:
                	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW5Float__in_chrg>
                	call	 <initializer for module Meta.Auto.Simd.Int32>
                	pop	rax
-               	jmp	 <initializer for module Meta.Auto.Simd.Tag>
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -204,7 +203,7 @@ Disassembly of section .text:
                	ret
 <L0>:
                	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW5Int32__in_chrg>
-               	jmp	 <initializer for module Meta.Auto.Simd.Tag>
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -222,7 +221,7 @@ Disassembly of section .text:
                	ret
 <L0>:
                	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW6UInt32__in_chrg>
-               	jmp	 <initializer for module Meta.Auto.Simd.Tag>
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -243,7 +242,7 @@ Disassembly of section .text:
                	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW5UInt8__in_chrg>
                	call	 <initializer for module Meta.Auto.Simd.UInt32>
                	pop	rax
-               	jmp	 <initializer for module Meta.Auto.Simd.Tag>
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -257,7 +256,7 @@ Disassembly of section .text:
                	mov	byte ptr , 0x1 <_ZGIW4MetaW4MathW6Random__in_chrg>
                	call	 <initializer for module Meta.Auto.Simd.UInt64>
                	pop	rax
-               	jmp	 <initializer for module Meta.Auto.Simd.Tag>
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -271,7 +270,7 @@ Disassembly of section .text:
                	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW6UInt64__in_chrg>
                	call	 <initializer for module Meta.Auto.Array.Bounded>
                	pop	rax
-               	jmp	 <initializer for module Meta.Auto.Simd.Tag>
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -282,7 +281,7 @@ Disassembly of section .text:
                	ret
 <L0>:
                	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW5ArrayW7Bounded__in_chrg>
-               	jmp	 <initializer for module Meta.Auto.Simd.Tag>
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -300,7 +299,7 @@ Disassembly of section .text:
                	ret
 <L0>:
                	mov	byte ptr , 0x1 <_ZGIW10EvaluationW10DependencyW24RandomAccessIteratorBase__in_chrg>
-               	jmp	 <initializer for module Meta.Auto.Simd.Tag>
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -318,7 +317,7 @@ Disassembly of section .text:
                	ret
 <L0>:
                	mov	byte ptr , 0x1 <_ZGIW10EvaluationW10DependencyW15TransformReduce__in_chrg>
-               	jmp	 <initializer for module Meta.Auto.Simd.Tag>
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -339,7 +338,7 @@ Disassembly of section .text:
                	mov	byte ptr , 0x1 <_ZGIW10EvaluationW10DependencyW13VerifyLoopSum__in_chrg>
                	call	 <initializer for module Evaluation.Dependency.PseudoRandomSequence>
                	pop	rax
-               	jmp	 <initializer for module Meta.Auto.Simd.Tag>
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -349,11 +348,15 @@ Disassembly of section .text:
                	je	 <L0>
                	ret
 <L0>:
-               	push	rax
                	mov	byte ptr , 0x1 <_ZGIW10EvaluationW14SOAReplicationW7SOAView__in_chrg>
-               	call	 <initializer for module Meta.Auto.Simd.Fill>
-               	pop	rax
-               	jmp	 <initializer for module Meta.Auto.Simd.Tag>
+               	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
                	int3
                	int3
@@ -369,7 +372,7 @@ Disassembly of section .text:
                	call	 <initializer for module Meta.Auto.Simd.UInt32>
                	call	 <initializer for module Meta.Auto.Simd.UInt8>
                	pop	rax
-               	jmp	 <initializer for module Meta.Auto.Simd.Tag>
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -393,19 +396,11 @@ Disassembly of section .text:
                	call	 <initializer for module Evaluation.Dependency.TransformReduce>
                	call	 <initializer for module Evaluation.Dependency.VerifyLoopSum>
                	call	 <initializer for module Evaluation.SOAReplication.SOAView>
+               	call	 <initializer for module Std>
                	call	 <initializer for module Meta.Auto.Simd.Fill>
-               	call	 <initializer for module Meta.Auto.Simd.Tag>
                	call	 <initializer for module Meta.Auto.Simd.Int32>
-               	call	 <initializer for module Meta.Auto.Simd.Tag>
-               	call	 <initializer for module Meta.Auto.Simd.UInt32>
                	pop	rax
-               	jmp	 <initializer for module Meta.Auto.Simd.Tag>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -2286,11 +2281,11 @@ Disassembly of section .text:
                	lea	rsi, [rsp + 0x180]
                	mov	r13d, 0x1
                	xor	r9d, r9d
-               	vpbroadcastd	ymm0, dword ptr  <free+0x900>
-               	vpbroadcastd	ymm1, dword ptr  <free+0x90c>
-               	vmovdqa	ymm2, ymmword ptr  <free+0x920>
-               	vmovdqa	ymm3, ymmword ptr  <free+0x940>
-               	vpbroadcastd	ymm4, dword ptr  <free+0x908>
+               	vmovdqa	ymm0, ymmword ptr  <free+0x900>
+               	vmovdqa	ymm1, ymmword ptr  <free+0x920>
+               	vpbroadcastd	ymm2, dword ptr  <free+0x940>
+               	vpbroadcastd	ymm3, dword ptr  <free+0x94c>
+               	vpbroadcastd	ymm4, dword ptr  <free+0x948>
                	xor	ebx, ebx
                	mov	r14d, 0x1
                	jmp	 <L168>
@@ -2306,20 +2301,20 @@ Disassembly of section .text:
                	je	 <L169>
 <L168>:
                	vpmovsxbd	ymm5, qword ptr [r10 + r9]
-               	vmovaps	ymm6, ymmword ptr [rax + 4*r9]
-               	vpsllvd	ymm7, ymm0, ymm5
+               	vpermd	ymm6, ymm5, ymm0
+               	vpermd	ymm7, ymm5, ymm1
+               	vpslld	ymm8, ymm5, 0x1c
+               	vblendvps	ymm6, ymm6, ymm7, ymm8
+               	vpsllvd	ymm7, ymm2, ymm5
                	vmaskmovps	ymm8, ymm7, ymmword ptr [rdx + 4*r9]
-               	vblendvps	ymm7, ymm6, ymm8, ymm7
-               	vpsllvd	ymm8, ymm1, ymm5
-               	vmaskmovps	ymm9, ymm8, ymmword ptr [r8 + 4*r9]
-               	vblendvps	ymm8, ymm6, ymm9, ymm8
-               	vpermd	ymm9, ymm5, ymm2
-               	vpermd	ymm10, ymm5, ymm3
-               	vpslld	ymm11, ymm5, 0x1c
-               	vblendvps	ymm9, ymm9, ymm10, ymm11
+               	vmovaps	ymm9, ymmword ptr [rax + 4*r9]
+               	vpsllvd	ymm10, ymm3, ymm5
+               	vmaskmovps	ymm11, ymm10, ymmword ptr [r8 + 4*r9]
+               	vblendvps	ymm7, ymm9, ymm8, ymm7
+               	vblendvps	ymm8, ymm9, ymm11, ymm10
                	mov	r11d, r14d
                	vmulps	ymm6, ymm9, ymm6
-               	vmulps	ymm6, ymm7, ymm6
+               	vmulps	ymm6, ymm6, ymm7
                	vmulps	ymm7, ymm8, ymm6
                	vpsllvd	ymm5, ymm4, ymm5
                	vblendvps	ymm5, ymm7, ymm6, ymm5
@@ -2430,7 +2425,7 @@ Disassembly of section .text:
                	vaddps	xmm0, xmm0, xmm1
                	vshufpd	xmm1, xmm0, xmm0, 0x1   # xmm1 = xmm0[1,0]
                	vaddss	xmm0, xmm0, xmm1
-               	vucomiss	xmm0, dword ptr  <free+0x904>
+               	vucomiss	xmm0, dword ptr  <free+0x944>
                	jne	 <L178>
 <L177>:
                	xor	eax, eax
@@ -2448,7 +2443,7 @@ Disassembly of section .text:
                	call	 <__cxa_allocate_exception@plt>
                	vmovss	xmm0, dword ptr [rsp + 0xc0]
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <free+0x50d0>
+               	mov	rsi, qword ptr  <free+0x50b0>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
@@ -2458,7 +2453,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <free+0x50b0>
+               	mov	rax, qword ptr  <free+0x5090>
                	test	rax, rax
                	je	 <L0>
                	call	rax

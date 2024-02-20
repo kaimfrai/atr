@@ -108,6 +108,44 @@ export namespace
 		}
 
 		[[nodiscard]]
+		auto static constexpr inline
+		(	operator()
+		)	(	Simd<::std::uint8_t const(&)[8uz]>
+					i_vSource
+			)
+			noexcept
+		->	Simd<::std::int32_t[8uz]>
+		{
+			::std::uint8_t
+				vValue
+				[	16uz
+				]
+			{};
+			auto const
+				aData
+			=	::std::assume_aligned<8uz>
+				(	i_vSource
+					.	m_aData
+				)
+			;
+			::std::copy
+			(	aData
+			,		aData
+				+	8uz
+			,	vValue
+			);
+
+			return
+			{	.	m_vRaw
+				=	_mm256_cvtepi8_epi32
+					(	::std::bit_cast<__m128i>
+						(	vValue
+						)
+					)
+			};
+		}
+
+		[[nodiscard]]
 		auto static inline
 		(	operator()
 		)	(	Simd<::std::uint8_t[16uz]>

@@ -12,9 +12,6 @@ import Meta.Auto.Simd.Cast;
 import Meta.Auto.Simd.Fill;
 import Meta.Auto.Simd.Float;
 import Meta.Auto.Simd.Int32;
-import Meta.Auto.Simd.Tag;
-import Meta.Auto.Simd.UInt32;
-import Meta.Auto.Simd.UInt8;
 
 import Std;
 
@@ -118,7 +115,7 @@ namespace
 		)
 	;
 	::std::int32_t constexpr inline
-		WidthIsWidthMask
+		SeparateWidthMask
 	=	EllipseMask
 	bitor
 		RectangleMask
@@ -132,23 +129,7 @@ namespace
 		EllipsoidMask
 	;
 	::std::int32_t constexpr inline
-		HeightIsWidthMask
-	=	CircleMask
-	bitor
-		SquareMask
-	bitor
-		CubeMask
-	bitor
-		SphereMask
-	bitor
-		CylinderMask
-	bitor
-		ConeMask
-	bitor
-		HeadMask
-	;
-	::std::int32_t constexpr inline
-		OneIsDepthMask
+		TwoDimensionalMask
 	=	CircleMask
 	bitor
 		EllipseMask
@@ -160,15 +141,7 @@ namespace
 		TriangleMask
 	;
 	::std::int32_t constexpr inline
-		HeightIsDepthMask
-	=	CubeMask
-	bitor
-		SphereMask
-	bitor
-		HeadMask
-	;
-	::std::int32_t constexpr inline
-		DepthIsDepthMask
+		SeparateDepthMask
 	=	CuboidMask
 	bitor
 		PyramidMask
@@ -178,34 +151,6 @@ namespace
 		CylinderMask
 	bitor
 		ConeMask
-	;
-	::std::int32_t constexpr inline
-		Pi_4_Mask
-	=	CircleMask
-	bitor
-		EllipseMask
-	bitor
-		CylinderMask
-	;
-	::std::int32_t constexpr inline
-		Half_Mask
-	=	TriangleMask
-	;
-	::std::int32_t constexpr inline
-		Third_Mask
-	=	PyramidMask
-	;
-	::std::int32_t constexpr inline
-		Pi_6_Mask
-	=	SphereMask
-	bitor
-		EllipsoidMask
-	bitor
-		HeadMask
-	;
-	::std::int32_t constexpr inline
-		Pi_12_Mask
-	=	ConeMask
 	;
 
 	[[nodiscard]]
@@ -243,70 +188,63 @@ namespace
 		->	auto
 		{
 			auto const
-				vType
-			=	m_rView
-				.	get
-					<	10uz
-					>()
-			;
-
-			auto const
 				vTypeInt32
 			=	SimdCast<::std::int32_t>
-				(	vType
+				(	m_rView
+					.	get
+						<	10uz
+						>()
 				)
 			;
-			auto const
-				vHeight
-			=	m_rView
-				.	get
-					<	7uz
-					>()
-			;
-			auto
-				vWidth
-			=	vHeight
-			;
-			vWidth
-			=	m_rView
-				.	get
-					<	8uz
-					>(	TypeMask
-						(	vTypeInt32
-						,	WidthIsWidthMask
-						)
-					)
-			;
-
-			auto
-				vDepth
-			=	vHeight
-			;
-				vDepth
-			=	m_rView
-				.	get
-					<	9uz
-					>(	TypeMask
-						(	vTypeInt32
-						,	DepthIsDepthMask
-						)
-					)
-			;
-
 			Simd<float[8uz]> const
 				vMultiplier
 			=	i_vMultiplierArray
 				[	vTypeInt32
 				]
 			;
+			auto const
+				rHeight
+			=	m_rView
+				.	get
+					<	7uz
+					>()
+			;
+			auto const
+				vWidth
+			=	(	rHeight
+				=	m_rView
+					.	get
+						<	8uz
+						>()
+					[	TypeMask
+						(	vTypeInt32
+						,	SeparateWidthMask
+						)
+					]
+				)
+			;
+			auto const
+				vDepth
+			=	(	rHeight
+				=	m_rView
+					.	get
+						<	9uz
+						>()
+					[	TypeMask
+						(	vTypeInt32
+						,	SeparateDepthMask
+						)
+					]
+				)
+			;
 
 			auto const
 				v2D
 			=	vMultiplier
-			*	vHeight
+			*	rHeight
 			*	vWidth
 			;
-			auto
+			auto const
 				v3D
 			=	v2D
 			*	vDepth
@@ -315,12 +253,11 @@ namespace
 			return
 				v3D
 			=	v2D
-				.	where
-					(	TypeMask
-						(	vTypeInt32
-						,	OneIsDepthMask
-						)
+				[	TypeMask
+					(	vTypeInt32
+					,	TwoDimensionalMask
 					)
+				]
 			;
 		}
 	};
@@ -573,64 +510,64 @@ namespace
 			)	&
 			noexcept
 		{
-			m_rView
-			.	set<0uz>
-				(	i_vRed
-				)
+				m_rView
+				.	get<0uz>
+					()
+			=	i_vRed
 			;
-			m_rView
-			.	set<1uz>
-				(	i_vGreen
-				)
+				m_rView
+				.	get<1uz>
+					()
+			=	i_vGreen
 			;
-			m_rView
-			.	set<2uz>
-				(	i_vBlue
-				)
+				m_rView
+				.	get<2uz>
+					()
+			=	i_vBlue
 			;
-			m_rView
-			.	set<3uz>
-				(	i_vAlpha
-				)
+				m_rView
+				.	get<3uz>
+					()
+			=	i_vAlpha
 			;
-			m_rView
-			.	set<4uz>
-				(	i_vLateral
-				)
+				m_rView
+				.	get<4uz>
+					()
+			=	i_vLateral
 			;
-			m_rView
-			.	set<5uz>
-				(	i_vLongitudinal
-				)
+				m_rView
+				.	get<5uz>
+					()
+			=	i_vLongitudinal
 			;
-			m_rView
-			.	set<6uz>
-				(	i_vVertical
-				)
+				m_rView
+				.	get<6uz>
+					()
+			=	i_vVertical
 			;
-			m_rView
-			.	set<7uz>
-				(	i_vHeight
-				)
+				m_rView
+				.	get<7uz>
+					()
+			=	i_vHeight
 			;
-			m_rView
-			.	set<8uz>
-				(	i_vWidth
-				)
+				m_rView
+				.	get<8uz>
+					()
+			=	i_vWidth
 			;
-			m_rView
-			.	set<9uz>
-				(	i_vDepth
-				)
+				m_rView
+				.	get<9uz>
+					()
+			=	i_vDepth
 			;
-			m_rView
-			.	set<10uz>
-				(	i_vType
-				)
+				m_rView
+				.	get<10uz>
+					()
+			=	i_vType
 			;
 				m_rView
 				.	m_vIndex
-			+=	sizeof(::std::uint64_t)
+			+=	8uz
 			;
 		}
 

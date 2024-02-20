@@ -1,14 +1,10 @@
 export module Evaluation.SOAReplication.SOAView;
 
-import Meta.Auto.Simd.Fill;
 import Meta.Auto.Simd.Tag;
 
 import Std;
 
-using ::Meta::MaskedSimd;
 using ::Meta::Simd;
-using ::Meta::SimdFill;
-using ::Meta::SimdMask;
 
 export namespace
 	Bodies3D
@@ -27,20 +23,6 @@ export namespace
 					t_vIndex
 			>
 		using
-			Val
-		=	::std::remove_cv_t
-			<	t_tpMember
-				...	[	t_vIndex
-					]
-			>	[	t_vCount
-				]
-		;
-
-		template
-			<	::std::size_t
-					t_vIndex
-			>
-		using
 			Ptr
 		=	t_tpMember
 			...	[	t_vIndex
@@ -54,11 +36,13 @@ export namespace
 			>
 		using
 			Ref
-		=	t_tpMember
-			...	[	t_vIndex
-				]
-			(&)	[	t_vCount
-				]
+		=	Simd
+			<	t_tpMember
+				...	[	t_vIndex
+					]
+				(&)	[	t_vCount
+					]
+			>
 		;
 
 		auto static constexpr inline
@@ -201,51 +185,14 @@ export namespace
 					i_rView
 			)
 			noexcept
-		->	Simd<Val<t_vIndex>>
-		{
-			Simd<Ref<t_vIndex>> const
-				vReference
+		->	Ref<t_vIndex>
+		{	return
+			Ref<t_vIndex>
 			{	i_rView
 				.	template
 					AsPointer<t_vIndex>
 					()
 			};
-
-			return
-			static_cast<Simd<Val<t_vIndex>>>
-			(	vReference
-			);
-		}
-
-		template
-			<	::std::size_t
-					t_vIndex
-			>
-		[[nodiscard]]
-		auto constexpr inline
-		(	get
-		)	(	this auto
-					i_rView
-			,	SimdMask<Val<t_vIndex>>
-					i_vMask
-			)
-			noexcept
-		->	MaskedSimd<Val<t_vIndex>>
-		{
-			MaskedSimd<Ref<t_vIndex>> const
-				vReference
-			{	i_rView
-				.	template
-					AsPointer<t_vIndex>
-					()
-			,	i_vMask
-				.	m_vRaw
-			};
-
-			return
-			static_cast<MaskedSimd<Val<t_vIndex>>>
-			(	vReference
-			);
 		}
 	};
 
@@ -272,35 +219,6 @@ export namespace
 		::std::uint32_t
 			m_vIndex
 		;
-
-		template
-			<	::std::size_t
-					t_vIndex
-			>
-		auto constexpr inline
-		(	set
-		)	(	Simd<t_tpMember...[t_vIndex][t_vCount]>
-					i_vValue
-			)	const
-			noexcept
-		->	SOAView const&
-		{
-			Simd<t_tpMember...[t_vIndex](&)[t_vCount]> const
-				vReference
-			{	this
-				->	template
-					AsPointer<t_vIndex>
-					()
-			};
-
-				vReference
-			=	i_vValue
-			;
-
-			return
-			*	this
-			;
-		}
 	};
 
 	template
