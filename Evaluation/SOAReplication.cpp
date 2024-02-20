@@ -758,14 +758,12 @@ auto inline
 			]	(	auto const
 						rBody
 				)
-			->	::std::experimental::native_simd<float>
 			{	return
-				::std::bit_cast<::std::experimental::native_simd<float>>
-				(	rBody
+					rBody
 					.	ComputeVolume
 						(	vMultiplier
 						)
-				);
+				;
 			}
 		)
 	;

@@ -124,6 +124,44 @@ export namespace
 
 		[[nodiscard]]
 		auto friend constexpr inline
+		(	operator+
+		)	(	Auto
+					i_vLeft
+			,	Auto
+					i_vRight
+			)
+			noexcept
+		->	Auto
+		{	return
+			{	.	m_vRaw
+				=	_mm256_add_ps
+					(	i_vLeft
+						.	m_vRaw
+					,	i_vRight
+						.	m_vRaw
+					)
+			};
+		}
+
+		auto friend constexpr inline
+		(	operator+=
+		)	(	Auto
+				&	i_rLeft
+			,	Auto
+					i_vRight
+			)
+			noexcept
+		->	Auto&
+		{	return
+				i_rLeft
+			=	(	i_rLeft
+				+	i_vRight
+				)
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
 		(	operator*
 		)	(	Auto
 					i_vLeft
@@ -141,6 +179,22 @@ export namespace
 						.	m_vRaw
 					)
 			};
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	reduce
+		)	(	Auto
+					i_vArgument
+			)
+			noexcept
+		->	float
+		{	return
+			reduce
+			(	::std::bit_cast<::std::experimental::native_simd<float>>
+				(	i_vArgument
+				)
+			);
 		}
 	};
 

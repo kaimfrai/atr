@@ -1,11 +1,10 @@
 export module Evaluation.Dependency.TransformReduce;
 
+import Meta.Auto.Simd.Tag;
 import Std;
 
-template
-	<	typename
-			t_tSimdValue
-	>
+using ::Meta::Simd;
+
 [[nodiscard]]
 auto constexpr inline
 (	SimdReduce
@@ -15,15 +14,19 @@ auto constexpr inline
 			i_aEnd
 	)
 	noexcept
-->	t_tSimdValue::value_type
+->	auto
 {
-	t_tSimdValue
+	using
+		tSimdValue
+	=	typename
+		decltype(i_aBegin)
+		::	value_type
+	;
+	tSimdValue
 		vBuffer
 		[	33
 		-	::std::bit_width
-			(	t_tSimdValue
-				::	size
-					()
+			(	8uz
 			)
 		]
 	;
@@ -112,22 +115,28 @@ auto constexpr inline
 }
 
 template
-	<	::std::input_iterator
+	<	::std::random_access_iterator
 			t_tIterator
 	,	typename
 			t_tTransform
+	,	typename
+			t_tElement
+		=	decltype
+			(	::std::declval<t_tTransform>()
+				(	*	::std::declval<t_tIterator>()
+				)
+			)
 	>
 struct
-	TransformIterator
+	SimdTransformIterator
 {
 	using
 		value_type
-	=	decltype
-		(	::std::declval<t_tTransform>()
-			(	*
-				::std::declval<t_tIterator>()
-			)
-		)
+	=	Simd
+		<	t_tElement
+			[	8uz
+			]
+		>
 	;
 
 	t_tIterator
@@ -145,30 +154,50 @@ struct
 		noexcept
 	->	value_type
 	{	return
-			m_fTransform
-			(	*
-				m_aCurrent
+		[	this
+		]	<	::std::size_t
+				...	t_vpIndex
+			>(	::std::index_sequence
+				<	t_vpIndex
+					...
+				>
 			)
-		;
+		{	t_tElement
+				vElements
+				[]
+			{	m_fTransform
+				(	m_aCurrent
+					[	t_vpIndex
+					]
+				)
+				...
+			};
+			return
+			::std::bit_cast<value_type>
+			(	vElements
+			);
+		}(	::std::make_index_sequence<8uz>
+			{}
+		);
 	}
 
 	auto constexpr inline
 	(	operator++
 	)	()	&
 		noexcept
-	->	TransformIterator&
-	{
-		++	m_aCurrent
+	->	SimdTransformIterator&
+	{		m_aCurrent
+		+=	8uz
 		;
 		return
-			*this
+		*	this
 		;
 	}
 
 	[[nodiscard]]
 	auto friend constexpr inline
 	(	operator==
-	)	(	TransformIterator
+	)	(	SimdTransformIterator
 				i_aIterator
 		,	auto
 				i_aSentinel
@@ -188,19 +217,26 @@ template
 			t_tIterator
 	,	typename
 			t_tTransform
+	,	typename
+			t_tElement
 	>
 struct
 	SimdTransformIterator
+	<	t_tIterator
+	,	t_tTransform
+	,	Simd
+		<	t_tElement
+			[	8uz
+			]
+		>
+	>
 {
 	using
 		value_type
-	=	::std::experimental::native_simd
-		<	decltype
-			(	::std::declval<t_tTransform>()
-				(	*
-					::std::declval<t_tIterator>()
-				)
-			)
+	=	Simd
+		<	t_tElement
+			[	8uz
+			]
 		>
 	;
 
@@ -219,20 +255,9 @@ struct
 		noexcept
 	->	value_type
 	{	return
-		value_type
-		{	[	this
-			]	(	auto
-						t_vIndex
-				)
-			{	return
-					m_fTransform
-					(	m_aCurrent
-						[	t_vIndex
-						]
-					)
-				;
-			}
-		};
+		m_fTransform
+		(	*	m_aCurrent
+		);
 	}
 
 	auto constexpr inline
@@ -240,13 +265,11 @@ struct
 	)	()	&
 		noexcept
 	->	SimdTransformIterator&
-	{		m_aCurrent
-		+=	value_type
-			::	size
-				()
+	{
+		++	m_aCurrent
 		;
 		return
-			*this
+		*	this
 		;
 	}
 
@@ -283,46 +306,13 @@ export namespace
 		)
 		noexcept
 	->	auto
-	{
-		using
-			value_type
-		=	decltype
-			(	i_fTransform
-				(	*
-					i_aBegin
-				)
-			)
-		;
-
-		if	constexpr
-			(	::std::experimental::is_simd_v
-				<	value_type
-				>
-			)
-		{	return
-				::SimdReduce
-				<	value_type
-				>(	::TransformIterator
-					{	i_aBegin
-					,	i_fTransform
-					}
-				,	i_aEnd
-				)
-			;
-		}
-		else
-		{	return
-				::SimdReduce
-				<	::std::experimental::native_simd
-					<	value_type
-					>
-				>(	::SimdTransformIterator
-					{	i_aBegin
-					,	i_fTransform
-					}
-				,	i_aEnd
-				)
-			;
-		}
+	{	return
+		::SimdReduce
+		(	::SimdTransformIterator
+			{	i_aBegin
+			,	i_fTransform
+			}
+		,	i_aEnd
+		);
 	}
 }
