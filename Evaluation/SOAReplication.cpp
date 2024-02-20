@@ -292,15 +292,6 @@ namespace
 						)
 					)
 			;
-				vDepth
-			=	SimdFill<float[8uz]>(1.0f)
-				.	where
-					(	TypeMask
-						(	vTypeInt32
-						,	OneIsDepthMask
-						)
-					)
-			;
 
 			Simd<float[8uz]> const
 				vMultiplier
@@ -309,11 +300,27 @@ namespace
 				]
 			;
 
-			return
-				vMultiplier
+			auto const
+				v2D
+			=	vMultiplier
 			*	vHeight
 			*	vWidth
+			;
+			auto
+				v3D
+			=	v2D
 			*	vDepth
+			;
+
+			return
+				v3D
+			=	v2D
+				.	where
+					(	TypeMask
+						(	vTypeInt32
+						,	OneIsDepthMask
+						)
+					)
 			;
 		}
 	};
