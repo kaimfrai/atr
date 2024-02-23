@@ -5,6 +5,7 @@ add_subdirectory(
 )
 
 add_module_object_tests(
+	TransformReduce
 	CRTP
 	Replication
 	Virtual

@@ -1,17 +1,17 @@
 
  Performance counter stats for 'build/Evaluation/bin/Visitor 42 100000' (100 runs):
 
-              6,38 msec task-clock                #    0,972 CPUs utilized            ( +-  0,06% )
+              6,66 msec task-clock                #    0,962 CPUs utilized            ( +-  0,09% )
                  0      context-switches          #    0,000 /sec                   
                  0      cpu-migrations            #    0,000 /sec                   
-             1.520      page-faults               #  237,445 K/sec                    ( +-  0,01% )
-        27.560.389      cycles                    #    4,305 GHz                      ( +-  0,05% )
-         1.266.180      stalled-cycles-frontend   #    4,59% frontend cycles idle     ( +-  0,60% )
-         4.873.403      stalled-cycles-backend    #   17,65% backend cycles idle      ( +-  0,14% )
-        29.489.066      instructions              #    1,07  insn per cycle         
+             1.519      page-faults               #  224,873 K/sec                    ( +-  0,01% )
+        28.599.696      cycles                    #    4,234 GHz                      ( +-  0,08% )
+         1.286.852      stalled-cycles-frontend   #    4,44% frontend cycles idle     ( +-  0,62% )
+         5.026.192      stalled-cycles-backend    #   17,33% backend cycles idle      ( +-  0,10% )
+        30.911.098      instructions              #    1,07  insn per cycle         
                                                   #    0,16  stalled cycles per insn  ( +-  0,01% )
-         4.611.761      branches                  #  720,420 M/sec                    ( +-  0,01% )
-           486.163      branch-misses             #   10,54% of all branches          ( +-  0,11% )
+         4.775.811      branches                  #  707,011 M/sec                    ( +-  0,01% )
+           514.082      branch-misses             #   10,75% of all branches          ( +-  0,21% )
 
-        0,00656710 +- 0,00000396 seconds time elapsed  ( +-  0,06% )
+        0,00692377 +- 0,00000655 seconds time elapsed  ( +-  0,09% )
 

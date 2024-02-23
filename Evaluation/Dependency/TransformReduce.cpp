@@ -1,251 +1,97 @@
 export module Evaluation.Dependency.TransformReduce;
 
-import Meta.Auto.Simd.Tag;
 import Std;
 
-using ::Meta::Simd;
-
-[[nodiscard]]
-auto constexpr inline
-(	SimdReduce
-)	(	auto
-			i_aBegin
-	,	auto
-			i_aEnd
-	)
-	noexcept
-->	auto
-{
-	using
-		tSimdValue
-	=	typename
-		decltype(i_aBegin)
-		::	value_type
-	;
-	tSimdValue
-		vBuffer
-		[	33
-		-	::std::bit_width
-			(	8uz
-			)
-		]
-	;
-
-	// UB for empty sequence
-	// UB for size >= 2^31
-	// UB for size not divisible by simd size
-
-	int
-		vIndex
-	=	0
-	;
-	unsigned int
-		vIteration
-	=	1u
-	;
-	int
-		vLimit
-	=	::std::popcount
-		(	vIteration
-		)
-	;
-
-	for	(	auto
-				aCurrent
-			=	i_aBegin
-		;		aCurrent
-			!=	i_aEnd
-		;	++	aCurrent
-		,	++	vIteration
-		,		vIndex
-			=	vLimit
-		,		vLimit
-			=	::std::popcount
-				(	vIteration
-				)
-		)
-	{
-			vBuffer
-			[	vIndex
-			]
-		=	*
-			aCurrent
-		;
-
-		for	(
-			;		vIndex
-				>=	vLimit
-			;	--	vIndex
-			)
-		{
-				vBuffer
-				[		vIndex
-					-	1
-				]
-			+=	vBuffer
-				[	vIndex
-				]
-			;
-		}
-	}
-
-	for	(	--	vIndex
-		;		vIndex
-			>=	1
-		;	--	vIndex
-		)
-	{
-			vBuffer
-			[		vIndex
-				-	1
-			]
-		+=	vBuffer
-			[	vIndex
-			]
-		;
-	}
-
-	return
-		reduce
-		(	vBuffer
-			[	0
-			]
-		)
-	;
-}
-
 template
-	<	::std::random_access_iterator
-			t_tIterator
-	,	typename
-			t_tTransform
-	,	typename
-			t_tElement
-		=	decltype
-			(	::std::declval<t_tTransform>()
-				(	*	::std::declval<t_tIterator>()
-				)
-			)
+	<	typename
+			t_tValue
 	>
 struct
-	SimdTransformIterator
+	ReductionOutputProxy
 {
-	using
-		value_type
-	=	Simd
-		<	t_tElement
-			[	8uz
-			]
-		>
+	t_tValue
+	*	Buffer
 	;
-
-	t_tIterator
-		m_aCurrent
+	int
+		SumIndex
 	;
-	[[no_unique_address]]
-	t_tTransform
-		m_fTransform
+	int
+		WriteIndex
 	;
-
-	[[nodiscard]]
-	auto constexpr inline
-	(	operator*
-	)	()	const
-		noexcept
-	->	value_type
-	{	return
-		[	this
-		]	<	::std::size_t
-				...	t_vpIndex
-			>(	::std::index_sequence
-				<	t_vpIndex
-					...
-				>
-			)
-		{	t_tElement
-				vElements
-				[]
-			{	m_fTransform
-				(	m_aCurrent
-					[	t_vpIndex
-					]
-				)
-				...
-			};
-			return
-			::std::bit_cast<value_type>
-			(	vElements
-			);
-		}(	::std::make_index_sequence<8uz>
-			{}
-		);
-	}
 
 	auto constexpr inline
-	(	operator++
-	)	()	&
-		noexcept
-	->	SimdTransformIterator&
-	{		m_aCurrent
-		+=	8uz
-		;
-		return
-		*	this
-		;
-	}
-
-	[[nodiscard]]
-	auto friend constexpr inline
-	(	operator==
-	)	(	SimdTransformIterator
-				i_aIterator
-		,	auto
-				i_aSentinel
+	(	operator=
+	)	(	this auto
+			&&	i_rThis
+		,	t_tValue
+				i_vNewValue
 		)
 		noexcept
-	->	bool
-	{	return
-			i_aIterator
-			.	m_aCurrent
-		==	i_aSentinel
+	->	decltype(i_rThis)
+	{
+		auto const
+			vWriteIndex
+		=	i_rThis
+			.	WriteIndex
+		;
+
+		for	(	auto
+					vSumIndex
+				=	i_rThis
+					.	SumIndex
+			;		vSumIndex
+				<=	vWriteIndex
+			;	++	vSumIndex
+			)
+		{
+				i_vNewValue
+			+=	i_rThis
+				.	Buffer
+					[	vSumIndex
+					]
+			;
+		}
+
+			i_rThis
+			.	Buffer
+				[	vWriteIndex
+				]
+		=	i_vNewValue
+		;
+
+		return
+			i_rThis
 		;
 	}
 };
 
 template
-	<	::std::random_access_iterator
-			t_tIterator
-	,	typename
-			t_tTransform
-	,	typename
-			t_tElement
+	<	typename
+			t_tValue
 	>
 struct
-	SimdTransformIterator
-	<	t_tIterator
-	,	t_tTransform
-	,	Simd
-		<	t_tElement
-			[	8uz
-			]
-		>
-	>
+	ReductionOutputIterator
 {
 	using
-		value_type
-	=	Simd
-		<	t_tElement
-			[	8uz
-			]
-		>
+		difference_type
+	=	int
 	;
 
-	t_tIterator
-		m_aCurrent
+	t_tValue
+	*	Buffer
 	;
-	[[no_unique_address]]
-	t_tTransform
-		m_fTransform
+
+	unsigned
+		Iteration
+	=	1u
+	;
+	int
+		SumIndex
+	=	1
+	;
+	int
+		WriteIndex
+	=	0
 	;
 
 	[[nodiscard]]
@@ -253,20 +99,40 @@ struct
 	(	operator*
 	)	()	const
 		noexcept
-	->	value_type
+	->	ReductionOutputProxy<t_tValue>
 	{	return
-		m_fTransform
-		(	*	m_aCurrent
-		);
+		{	Buffer
+		,	SumIndex
+		,	WriteIndex
+		};
 	}
 
 	auto constexpr inline
 	(	operator++
 	)	()	&
 		noexcept
-	->	SimdTransformIterator&
+	->	ReductionOutputIterator&
 	{
-		++	m_aCurrent
+		++	Iteration
+		;
+		if	(	Iteration
+			<=	0u
+			)
+		{	::std::unreachable
+			();
+		}
+			SumIndex
+		=	WriteIndex
+		;
+			WriteIndex
+		=	static_cast<int>
+			(	::std::bit_width
+				(	Iteration
+				)
+			)
+		-	::std::popcount
+			(	Iteration
+			)
 		;
 		return
 		*	this
@@ -274,21 +140,100 @@ struct
 	}
 
 	[[nodiscard]]
-	auto friend constexpr inline
-	(	operator==
-	)	(	SimdTransformIterator
-				i_aIterator
-		,	auto
-				i_aSentinel
-		)
+	auto constexpr inline
+	(	operator++
+	)	(	int
+		)	&
 		noexcept
-	->	bool
-	{	return
-			i_aIterator
-			.	m_aCurrent
-		==	i_aSentinel
+	->	ReductionOutputIterator
+	{
+		auto
+			vCopy
+		=	*	this
+		;
+		++	*	this
+		;
+		return
+			vCopy
 		;
 	}
+
+	auto constexpr inline
+	(	PrepareNextIteration
+	)	()	const
+		noexcept
+	->	void
+	{
+		// Next iteration will be at least 1 longer
+			Buffer
+			[	SumIndex
+			+	1
+			]
+		=	Buffer
+			[	SumIndex
+			]
+		;
+		::std::fill_n
+		(	Buffer
+		,		SumIndex
+			+	1
+		,	t_tValue
+			{}
+		);
+	}
+
+	[[nodiscard]]
+	auto constexpr inline
+	(	GetResult
+	)	()	const
+		noexcept
+	->	t_tValue
+	{	return
+			Buffer
+			[	SumIndex
+			]
+		;
+	}
+};
+
+template
+	<	typename
+			t_tValue
+	>
+struct
+	ReductionBuffer
+{
+	::std::size_t static constexpr inline
+		BufferSize
+	=	32uz
+	;
+
+	t_tValue
+		Buffer
+		[	BufferSize
+		]
+	;
+
+	[[nodiscard]]
+	auto constexpr inline
+	(	begin
+	)	()	&
+		noexcept
+	->	ReductionOutputIterator<t_tValue>
+	{	return
+		{	+	Buffer
+		};
+	}
+
+	static_assert
+	(	::std::output_iterator
+		<	ReductionOutputIterator
+			<	t_tValue
+			>
+		,	t_tValue
+		>
+	,	"Expected a valid output iterator"
+	);
 };
 
 export namespace
@@ -297,22 +242,94 @@ export namespace
 	[[nodiscard]]
 	auto constexpr inline
 	(	TransformReduce
-	)	(	auto
+	)	(	::std::random_access_iterator auto
 				i_aBegin
-		,	auto
+		,	::std::random_access_iterator auto
 				i_aEnd
 		,	auto
 				i_fTransform
 		)
 		noexcept
 	->	auto
-	{	return
-		::SimdReduce
-		(	::SimdTransformIterator
-			{	i_aBegin
-			,	i_fTransform
+	{
+		using
+			tValue
+		=	decltype
+			(	i_fTransform
+				(	*	i_aBegin
+				)
+			)
+		;
+		auto
+			vSize
+		=	static_cast<::std::uint32_t>
+			(	i_aEnd
+			-	i_aBegin
+			)
+		;
+		if	(	vSize
+			<=	0u
+			)
+		{	return
+			tValue
+			{};
+		}
+
+		ReductionBuffer<tValue>
+			vBuffer
+		{};
+
+		for	(;;)
+		{
+			auto const
+				vLowestBit
+			=	compl
+				(	vSize
+				-	1u
+				)
+			bitand
+				vSize
+			;
+
+			auto const
+				aLowestBitEnd
+			=	i_aBegin
+			+	vLowestBit
+			;
+
+			auto const
+				aIterationEnd
+			=	::std::transform
+				(	i_aBegin
+				,	aLowestBitEnd
+				,	vBuffer
+					.	begin
+						()
+				,	i_fTransform
+				)
+			;
+				vSize
+			-=	vLowestBit
+			;
+
+			if	(	vSize
+				>	0u
+				)
+			{	aIterationEnd
+				.	PrepareNextIteration
+					()
+				;
+					i_aBegin
+				=	aLowestBitEnd
+				;
 			}
-		,	i_aEnd
-		);
+			else
+			{	return
+					aIterationEnd
+					.	GetResult
+						()
+				;
+			}
+		}
 	}
 }

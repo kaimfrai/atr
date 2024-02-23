@@ -744,7 +744,8 @@ auto inline
 	};
 
 	return
-		TransformReduce
+	reduce
+	(	TransformReduce
 		(	vElements
 			.	begin
 				()
@@ -766,7 +767,7 @@ auto inline
 				;
 			}
 		)
-	;
+	);
 }
 
 auto
