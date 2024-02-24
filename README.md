@@ -47,24 +47,24 @@ For a struct like
 ```
 struct Color
 {
-	float Red;
-	float Green;
-	float Blue;
-	float Alpha;
+  float Red;
+  float Green;
+  float Blue;
+  float Alpha;
 };
 ```
 the corresponding definition of an archetype may look like this:
 
 ```
-auto constexpr inline Recompose(ProtoComposer auto&& composer, ID<"Color">)
-->	auto&&
-{	return
-	composer
-	.	Member("Red",	Type<float>)
-	.	Member("Green",	Type<float>)
-	.	Member("Blue",	Type<float>)
-	.	Member("Alpha",	Type<float>)
-	;
+auto constexpr inline Recompose(ProtoComposer auto&& composer, ID<"Color">) -> auto&&
+{
+  return
+    composer
+    . Member("Red",	Type<float>)
+    . Member("Green",	Type<float>)
+    . Member("Blue",	Type<float>)
+    . Member("Alpha",	Type<float>)
+  ;
 }
 ```
 More examples of corresponding definitions can be found in Evaluation/Replication and Evaluation/Archetype.
@@ -135,7 +135,7 @@ Contains CMake specific configuration files. In particular custom scripts that e
 Once set up, the standard library can be used with
 
 ```
-> import Std;
+import Std;
 ```
 
 In the future this is supposed to be replaced with standard CMake support for modules and the standardized C++ module std;
@@ -176,19 +176,17 @@ Excerpt:
 ```
 namespace Meta::Dispatch
 {
-	auto Block(ProtoPath<int(int), "Multiply1"> auto) = delete;
-	auto constexpr inline Call(Path<int(int), "Multiply1">,	int	arg)
-	->	int
-	{
-		return arg * 1;
-	}
+  auto Block(ProtoPath<int(int), "Multiply1"> auto) = delete;
+  auto constexpr inline Call(Path<int(int), "Multiply1">, int arg) -> int
+  {
+    return arg * 1;
+  }
 
-	auto Block(ProtoPath<int(int), "Multiply2"> auto) = delete;
-	auto constexpr inline Call(Path<int(int), "Multiply2">,	int arg)
-	->	int
-	{
-		return arg * 2;
-	}
+  auto Block(ProtoPath<int(int), "Multiply2"> auto) = delete;
+  auto constexpr inline Call(Path<int(int), "Multiply2">, int arg) -> int
+  {
+    return arg * 2;
+  }
 }
 
 static_assert(Meta::DispatchFor<int(int)>::Dispatch("Multiply1")(5) == 5);
