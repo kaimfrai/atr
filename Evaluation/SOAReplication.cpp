@@ -467,7 +467,20 @@ namespace
 			,	.	m_vIndex
 				=	0u
 			}
-		{}
+		{
+#ifdef ZERO_INITIALIZE_MEMBERS
+			::std::fill_n
+			(	m_rView
+				.	m_aBuffer
+			,		m_rView
+					.	m_vCapacity
+				*	Body3DView
+					::	TotalSize
+			,	::std::byte
+				{}
+			);
+#endif
+		}
 
 		constexpr inline
 		(	compl
@@ -489,27 +502,38 @@ namespace
 					i_vType
 			,	Simd<float[8uz]>
 					i_vRed
+					[[maybe_unused]]
 			,	Simd<float[8uz]>
 					i_vGreen
+					[[maybe_unused]]
 			,	Simd<float[8uz]>
 					i_vBlue
+					[[maybe_unused]]
 			,	Simd<float[8uz]>
 					i_vAlpha
+					[[maybe_unused]]
 			,	Simd<float[8uz]>
 					i_vLateral
+					[[maybe_unused]]
 			,	Simd<float[8uz]>
 					i_vLongitudinal
+					[[maybe_unused]]
 			,	Simd<float[8uz]>
 					i_vVertical
+					[[maybe_unused]]
 			,	Simd<float[8uz]>
 					i_vHeight
+					[[maybe_unused]]
 			,	Simd<float[8uz]>
 					i_vWidth
+					[[maybe_unused]]
 			,	Simd<float[8uz]>
 					i_vDepth
+					[[maybe_unused]]
 			)	&
 			noexcept
 		{
+#ifndef ZERO_INITIALIZE_MEMBERS
 				m_rView
 				.	get<0uz>
 					()
@@ -560,6 +584,7 @@ namespace
 					()
 			=	i_vDepth
 			;
+#endif
 				m_rView
 				.	get<10uz>
 					()

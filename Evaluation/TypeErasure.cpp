@@ -115,7 +115,9 @@ auto inline
 				0
 		:	{	Circle
 					vCircle
-				;
+				{};
+
+#ifndef ZERO_INITIALIZE_MEMBERS
 				vCircle
 				.	Shape2D
 				.	Color
@@ -163,6 +165,7 @@ auto inline
 				.	Height
 				=	vHeight
 				;
+#endif
 				vElements
 				.	emplace_back
 					(	vCircle
@@ -175,7 +178,9 @@ auto inline
 				1
 		:	{	Ellipse
 					vEllipse
-				;
+				{};
+
+#ifndef ZERO_INITIALIZE_MEMBERS
 				vEllipse
 				.	Shape2D
 				.	Color
@@ -228,6 +233,7 @@ auto inline
 				.	Width
 				=	vWidth
 				;
+#endif
 				vElements
 				.	emplace_back
 					(	vEllipse
@@ -240,7 +246,9 @@ auto inline
 				2
 		:	{	Rectangle
 					vRectangle
-				;
+				{};
+
+#ifndef ZERO_INITIALIZE_MEMBERS
 				vRectangle
 				.	Shape2D
 				.	Color
@@ -293,6 +301,7 @@ auto inline
 				.	Width
 				=	vWidth
 				;
+#endif
 				vElements
 				.	emplace_back
 					(	vRectangle
@@ -305,7 +314,9 @@ auto inline
 				3
 		:	{	Square
 					vSquare
-				;
+				{};
+
+#ifndef ZERO_INITIALIZE_MEMBERS
 				vSquare
 				.	Shape2D
 				.	Color
@@ -353,6 +364,7 @@ auto inline
 				.	Height
 				=	vHeight
 				;
+#endif
 				vElements
 				.	emplace_back
 					(	vSquare
@@ -365,7 +377,9 @@ auto inline
 				4
 		:	{	Triangle
 					vTriangle
-				;
+				{};
+
+#ifndef ZERO_INITIALIZE_MEMBERS
 				vTriangle
 				.	Shape2D
 				.	Color
@@ -418,6 +432,7 @@ auto inline
 				.	Width
 				=	vWidth
 				;
+#endif
 				vElements
 				.	emplace_back
 					(	vTriangle
@@ -430,7 +445,9 @@ auto inline
 				5
 		:	{	Cube
 					vCube
-				;
+				{};
+
+#ifndef ZERO_INITIALIZE_MEMBERS
 				vCube
 				.	Shape2D
 				.	Color
@@ -478,10 +495,11 @@ auto inline
 				.	Height
 				=	vHeight
 				;
+#endif
 				vElements
 				.	emplace_back
-						(	vCube
-						)
+					(	vCube
+					)
 				;
 			}
 			break;
@@ -490,7 +508,9 @@ auto inline
 				6
 		:	{	Cuboid
 					vCuboid
-				;
+				{};
+
+#ifndef ZERO_INITIALIZE_MEMBERS
 				vCuboid
 				.	Shape2D
 				.	Color
@@ -547,6 +567,7 @@ auto inline
 				.	Depth
 				=	vDepth
 				;
+#endif
 				vElements
 				.	emplace_back
 					(	vCuboid
@@ -559,7 +580,9 @@ auto inline
 				7
 		:	{	Pyramid
 					vPyramid
-				;
+				{};
+
+#ifndef ZERO_INITIALIZE_MEMBERS
 				vPyramid
 				.	Shape2D
 				.	Color
@@ -616,6 +639,7 @@ auto inline
 				.	Depth
 				=	vDepth
 				;
+#endif
 				vElements
 				.	emplace_back
 					(	vPyramid
@@ -628,7 +652,9 @@ auto inline
 				8
 		:	{	Sphere
 					vSphere
-				;
+				{};
+
+#ifndef ZERO_INITIALIZE_MEMBERS
 				vSphere
 				.	Shape2D
 				.	Color
@@ -676,6 +702,7 @@ auto inline
 				.	Height
 				=	vHeight
 				;
+#endif
 				vElements
 				.	emplace_back
 					(	vSphere
@@ -688,7 +715,9 @@ auto inline
 				9
 		:	{	Cylinder
 					vCylinder
-				;
+				{};
+
+#ifndef ZERO_INITIALIZE_MEMBERS
 				vCylinder
 				.	Shape2D
 				.	Color
@@ -740,6 +769,7 @@ auto inline
 				.	Depth
 				=	vDepth
 				;
+#endif
 				vElements
 				.	emplace_back
 					(	vCylinder
@@ -752,7 +782,9 @@ auto inline
 				10
 		:	{	Cone
 					vCone
-				;
+				{};
+
+#ifndef ZERO_INITIALIZE_MEMBERS
 				vCone
 				.	Shape2D
 				.	Color
@@ -804,6 +836,7 @@ auto inline
 				.	Depth
 				=	vDepth
 				;
+#endif
 				vElements
 				.	emplace_back
 					(	vCone
@@ -816,7 +849,9 @@ auto inline
 				11
 		:	{	Ellipsoid
 					vEllipsoid
-				;
+				{};
+
+#ifndef ZERO_INITIALIZE_MEMBERS
 				vEllipsoid
 				.	Shape2D
 				.	Color
@@ -873,6 +908,7 @@ auto inline
 				.	Depth
 				=	vDepth
 				;
+#endif
 				vElements
 				.	emplace_back
 					(	vEllipsoid
@@ -885,7 +921,9 @@ auto inline
 				12
 		:	{	Head
 					vHead
-				;
+				{};
+
+#ifndef ZERO_INITIALIZE_MEMBERS
 				vHead
 				.	Shape2D
 				.	Color
@@ -1045,6 +1083,7 @@ auto inline
 				.	Height
 				=	vEyeHeight
 				;
+#endif
 				vElements
 				.	emplace_back
 					(	vHead

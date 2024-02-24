@@ -1,0 +1,17 @@
+
+ Performance counter stats for 'build/ZEvaluation/bin/TagATR 42 100000' (100 runs):
+
+              3,94 msec task-clock                #    0,946 CPUs utilized            ( +-  0,15% )
+                 0      context-switches          #    0,000 /sec                   
+                 0      cpu-migrations            #    0,000 /sec                   
+             1.233      page-faults               #  309,262 K/sec                    ( +-  0,01% )
+        16.865.719      cycles                    #    4,230 GHz                      ( +-  0,12% )
+           858.253      stalled-cycles-frontend   #    5,07% frontend cycles idle     ( +-  1,43% )
+         1.535.385      stalled-cycles-backend    #    9,07% backend cycles idle      ( +-  0,60% )
+        19.091.920      instructions              #    1,13  insn per cycle         
+                                                  #    0,08  stalled cycles per insn  ( +-  0,02% )
+         3.417.043      branches                  #  857,066 M/sec                    ( +-  0,02% )
+           264.774      branch-misses             #    7,74% of all branches          ( +-  0,29% )
+
+        0,00415801 +- 0,00000682 seconds time elapsed  ( +-  0,16% )
+

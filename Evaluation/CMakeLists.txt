@@ -1,3 +1,9 @@
+if	(ZERO_INITIALIZE_MEMBERS)
+	add_compile_definitions(
+		ZERO_INITIALIZE_MEMBERS=1
+	)
+endif()
+
 add_subdirectory(Dependency)
 add_subdirectory(CRTP)
 

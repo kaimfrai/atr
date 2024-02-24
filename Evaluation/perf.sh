@@ -6,7 +6,7 @@ fi
 
 echo "Measuring average execution time over $3 executions..."
 
-mkdir -p Evaluation/Results/perf_$1_$2/
+mkdir -p Evaluation/Results/$5perf_$1_$2/
 
 echo 0 > /proc/sys/kernel/nmi_watchdog
 
@@ -17,29 +17,30 @@ function execute_perf()
 	perf\
 		stat\
 		--repeat $3\
-		build/Evaluation/bin/$4\
+		build/$5Evaluation/bin/$4\
 		$1 $2\
-		2> Evaluation/Results/perf_$1_$2/$4.txt
+		2> Evaluation/Results/$5perf_$1_$2/$4.txt
 }
 
-if	[ $# -lt 4 ]
+if	[ $# -lt 4 ] \
+||	[ $4 == "all" ]
 then
-	execute_perf $1 $2 $3 "Any"
-	execute_perf $1 $2 $3 "Archetype"
-	execute_perf $1 $2 $3 "Dyno"
-	execute_perf $1 $2 $3 "Polymorphic"
-	execute_perf $1 $2 $3 "Replication"
-	execute_perf $1 $2 $3 "SOAReplication"
-	execute_perf $1 $2 $3 "TagATR"
-	execute_perf $1 $2 $3 "TagReplication"
-	execute_perf $1 $2 $3 "TypeErasure"
-	execute_perf $1 $2 $3 "Variant"
-	execute_perf $1 $2 $3 "Virtual"
-	execute_perf $1 $2 $3 "Visitor"
+	execute_perf $1 $2 $3 "Any" $5
+	execute_perf $1 $2 $3 "Archetype" $5
+	execute_perf $1 $2 $3 "Dyno" $5
+	execute_perf $1 $2 $3 "Polymorphic" $5
+	execute_perf $1 $2 $3 "Replication" $5
+	execute_perf $1 $2 $3 "SOAReplication" $5
+	execute_perf $1 $2 $3 "TagATR" $5
+	execute_perf $1 $2 $3 "TagReplication" $5
+	execute_perf $1 $2 $3 "TypeErasure" $5
+	execute_perf $1 $2 $3 "Variant" $5
+	execute_perf $1 $2 $3 "Virtual" $5
+	execute_perf $1 $2 $3 "Visitor" $5
 else
-	execute_perf $1 $2 $3 $4
+	execute_perf $1 $2 $3 $4 $5
 fi
 
 echo 1 > /proc/sys/kernel/nmi_watchdog
 
-echo "Results in Evaluation/Results/perf_$1_$2/"
+echo "Results in Evaluation/Results/$5perf_$1_$2/"

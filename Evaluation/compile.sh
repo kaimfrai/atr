@@ -1,6 +1,6 @@
-mkdir -p Evaluation/Results/compile/
+mkdir -p Evaluation/Results/$2compile/
 
-cd build/Evaluation
+cd build/$2Evaluation
 
 echo ""
 
@@ -33,25 +33,26 @@ function time_build()
 
 	time=$(\time -f "%e" ninja $1 2>&1  1>/dev/null)
 	echo "$time seconds to build $1 "
-	echo "$time" > ../../Evaluation/Results/compile/$1.txt
+	echo "$time" > ../../Evaluation/Results/$2compile/$1.txt
 }
 
-if	[ $# -lt 1 ]
+if	[ $# -lt 1 ] \
+||	[ $1 == "all" ]
 then
-	time_build "Any"
-	time_build "Archetype"
-	time_build "Dyno"
-	time_build "Polymorphic"
-	time_build "Replication"
-	time_build "SOAReplication"
-	time_build "TagATR"
-	time_build "TagReplication"
-	time_build "TypeErasure"
-	time_build "Variant"
-	time_build "Virtual"
-	time_build "Visitor"
+	time_build "Any" $2
+	time_build "Archetype" $2
+	time_build "Dyno" $2
+	time_build "Polymorphic" $2
+	time_build "Replication" $2
+	time_build "SOAReplication" $2
+	time_build "TagATR" $2
+	time_build "TagReplication" $2
+	time_build "TypeErasure" $2
+	time_build "Variant" $2
+	time_build "Virtual" $2
+	time_build "Visitor" $2
 else
-	time_build $1
+	time_build $1 $2
 fi
 
 cd ../../

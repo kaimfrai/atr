@@ -6,7 +6,7 @@ fi
 
 echo "Measuring cache usage..."
 
-mkdir -p Evaluation/Results/cachegrind_$1_$2/
+mkdir -p Evaluation/Results/$4cachegrind_$1_$2/
 
 function execute_cachegrind ()
 {
@@ -14,29 +14,30 @@ function execute_cachegrind ()
 
 	valgrind\
 		--tool=cachegrind\
-		build/Evaluation/bin/$3\
+		build/$4Evaluation/bin/$3\
 		$1 $2\
-		2> Evaluation/Results/cachegrind_$1_$2/$3.txt
+		2> Evaluation/Results/$4cachegrind_$1_$2/$3.txt
 }
 
-if [ $# -lt 3 ]
+if	[ $# -lt 3 ] \
+||	[ $3 == "all" ]
 then
-	execute_cachegrind $1 $2 "Any"
-	execute_cachegrind $1 $2 "Archetype"
-	execute_cachegrind $1 $2 "Dyno"
-	execute_cachegrind $1 $2 "Polymorphic"
-	execute_cachegrind $1 $2 "Replication"
-	execute_cachegrind $1 $2 "SOAReplication"
-	execute_cachegrind $1 $2 "TagATR"
-	execute_cachegrind $1 $2 "TagReplication"
-	execute_cachegrind $1 $2 "TypeErasure"
-	execute_cachegrind $1 $2 "Variant"
-	execute_cachegrind $1 $2 "Virtual"
-	execute_cachegrind $1 $2 "Visitor"
+	execute_cachegrind $1 $2 "Any" $4
+	execute_cachegrind $1 $2 "Archetype" $4
+	execute_cachegrind $1 $2 "Dyno" $4
+	execute_cachegrind $1 $2 "Polymorphic" $4
+	execute_cachegrind $1 $2 "Replication" $4
+	execute_cachegrind $1 $2 "SOAReplication" $4
+	execute_cachegrind $1 $2 "TagATR" $4
+	execute_cachegrind $1 $2 "TagReplication" $4
+	execute_cachegrind $1 $2 "TypeErasure" $4
+	execute_cachegrind $1 $2 "Variant" $4
+	execute_cachegrind $1 $2 "Virtual" $4
+	execute_cachegrind $1 $2 "Visitor" $4
 else
-	execute_cachegrind $1 $2 $3
+	execute_cachegrind $1 $2 $3 $4
 fi
 
 rm cachegrind.out.*
 
-echo "Results in Evaluation/Results/cachegrind_$1_$2/"
+echo "Results in Evaluation/Results/$4cachegrind_$1_$2/"

@@ -1,0 +1,22 @@
+==13234== Cachegrind, a cache and branch-prediction profiler
+==13234== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==13234== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==13234== Command: build/ZEvaluation/bin/TagReplication 42 100000
+==13234== 
+--13234-- warning: L3 cache found, using its data for the LL simulation.
+==13234== 
+==13234== I   refs:      13,639,644
+==13234== I1  misses:         1,959
+==13234== LLi misses:         1,837
+==13234== I1  miss rate:       0.01%
+==13234== LLi miss rate:       0.01%
+==13234== 
+==13234== D   refs:       3,807,339  (2,541,837 rd   + 1,265,502 wr)
+==13234== D1  misses:       170,402  (   97,155 rd   +    73,247 wr)
+==13234== LLd misses:        82,441  (   10,595 rd   +    71,846 wr)
+==13234== D1  miss rate:        4.5% (      3.8%     +       5.8%  )
+==13234== LLd miss rate:        2.2% (      0.4%     +       5.7%  )
+==13234== 
+==13234== LL refs:          172,361  (   99,114 rd   +    73,247 wr)
+==13234== LL misses:         84,278  (   12,432 rd   +    71,846 wr)
+==13234== LL miss rate:         0.5% (      0.1%     +       5.7%  )

@@ -13,9 +13,16 @@ export
 				i_vLoopSum
 		,	PseudoRandomSequence
 				i_vSequence
+				[[maybe_unused]]
 		)
 	->	int
 	{
+#ifdef ZERO_INITIALIZE_MEMBERS
+		return
+			i_vLoopSum
+		!=	0.0f
+		;
+#else
 		if	(	(	i_vSequence
 					.	Seed
 						()
@@ -39,9 +46,9 @@ export
 				i_vLoopSum
 			;
 		}
-
 		return
 			0
 		;
+#endif
 	}
 }

@@ -1,0 +1,17 @@
+
+ Performance counter stats for 'build/ZEvaluation/bin/SOAReplication 42 100000' (100 runs):
+
+              1,52 msec task-clock                #    0,899 CPUs utilized            ( +-  0,23% )
+                 0      context-switches          #    0,000 /sec                   
+                 0      cpu-migrations            #    0,000 /sec                   
+             1.146      page-faults               #  748,319 K/sec                    ( +-  0,01% )
+         6.471.341      cycles                    #    4,226 GHz                      ( +-  0,19% )
+           513.984      stalled-cycles-frontend   #    7,90% frontend cycles idle     ( +-  1,28% )
+         1.710.265      stalled-cycles-backend    #   26,28% backend cycles idle      ( +-  0,26% )
+        11.077.013      instructions              #    1,70  insn per cycle         
+                                                  #    0,16  stalled cycles per insn  ( +-  0,03% )
+         1.792.565      branches                  #    1,171 G/sec                    ( +-  0,04% )
+            24.518      branch-misses             #    1,37% of all branches          ( +-  0,10% )
+
+        0,00169044 +- 0,00000401 seconds time elapsed  ( +-  0,24% )
+

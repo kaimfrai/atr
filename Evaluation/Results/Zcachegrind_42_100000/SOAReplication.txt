@@ -1,0 +1,22 @@
+==13232== Cachegrind, a cache and branch-prediction profiler
+==13232== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==13232== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==13232== Command: build/ZEvaluation/bin/SOAReplication 42 100000
+==13232== 
+--13232-- warning: L3 cache found, using its data for the LL simulation.
+==13232== 
+==13232== I   refs:      9,336,114
+==13232== I1  misses:        1,909
+==13232== LLi misses:        1,810
+==13232== I1  miss rate:      0.02%
+==13232== LLi miss rate:      0.02%
+==13232== 
+==13232== D   refs:      5,376,020  (956,351 rd   + 4,419,669 wr)
+==13232== D1  misses:      108,262  ( 38,950 rd   +    69,312 wr)
+==13232== LLd misses:       76,896  ( 10,560 rd   +    66,336 wr)
+==13232== D1  miss rate:       2.0% (    4.1%     +       1.6%  )
+==13232== LLd miss rate:       1.4% (    1.1%     +       1.5%  )
+==13232== 
+==13232== LL refs:         110,171  ( 40,859 rd   +    69,312 wr)
+==13232== LL misses:        78,706  ( 12,370 rd   +    66,336 wr)
+==13232== LL miss rate:        0.5% (    0.1%     +       1.5%  )

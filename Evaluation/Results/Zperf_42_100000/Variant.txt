@@ -1,0 +1,17 @@
+
+ Performance counter stats for 'build/ZEvaluation/bin/Variant 42 100000' (100 runs):
+
+              5,11 msec task-clock                #    0,958 CPUs utilized            ( +-  0,13% )
+                 0      context-switches          #    0,000 /sec                   
+                 0      cpu-migrations            #    0,000 /sec                   
+             2.587      page-faults               #  503,446 K/sec                    ( +-  0,01% )
+        22.001.074      cycles                    #    4,282 GHz                      ( +-  0,11% )
+         2.239.506      stalled-cycles-frontend   #   10,13% frontend cycles idle     ( +-  0,62% )
+         3.209.374      stalled-cycles-backend    #   14,52% backend cycles idle      ( +-  0,34% )
+        22.645.360      instructions              #    1,02  insn per cycle         
+                                                  #    0,14  stalled cycles per insn  ( +-  0,01% )
+         3.949.954      branches                  #  768,684 M/sec                    ( +-  0,02% )
+           270.630      branch-misses             #    6,87% of all branches          ( +-  0,21% )
+
+        0,00533278 +- 0,00000693 seconds time elapsed  ( +-  0,13% )
+
