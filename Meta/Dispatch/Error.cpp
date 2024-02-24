@@ -35,11 +35,16 @@ export namespace
 					i_vPosition
 			)
 		:	Error
-			{	std::format
-				(	"Dispatch path for \"{}\" was blocked at \"{}\" !"
-				,	i_rString
-				,	i_rString.substr(0uz, i_vPosition)
+			{	(	::std::stringstream
+					{	"Dispatch path for\""
+					}
+				<<	i_rString
+				<<	"\" was blocked at \""
+				<<	i_rString.substr(0uz, i_vPosition)
+				<<	"!"
 				)
+				.	str
+					()
 			}
 		{}
 	};
@@ -54,10 +59,14 @@ export namespace
 					i_rParsed
 			)
 		:	Error
-			{	std::format
-				(	"No dispatch definition found for \"{}\""
-				,	i_rParsed
+			{	(	::std::stringstream
+					{	"No dispatch definition found for \""
+					}
+					<<	i_rParsed
+					<<	"\""
 				)
+				.	str
+					()
 			}
 		{}
 	};

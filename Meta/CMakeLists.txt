@@ -35,7 +35,7 @@ add_module(
 	ID.cpp
 )
 
-# add_subdirectory(Dispatch)
+add_subdirectory(Dispatch)
 
 add_single_file_modules(
 	Arithmetic.cpp
@@ -46,7 +46,7 @@ add_single_file_modules(
 	Data.cpp
 	Functional.cpp
 	String.cpp
-	#Dispatch.cpp
+	Dispatch.cpp
 	Lex.cpp
 	Logic.cpp
 	Math.cpp
