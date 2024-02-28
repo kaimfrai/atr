@@ -44,7 +44,7 @@ A bare bones data-member name reflection is supported that may be used in the fu
 
 For a struct like
 
-```
+```C++
 struct Color
 {
   float Red;
@@ -55,7 +55,7 @@ struct Color
 ```
 the corresponding definition of an archetype may look like this:
 
-```
+```C++
 auto constexpr inline Recompose(ProtoComposer auto&& composer, ID<"Color">) -> auto&&
 {
   return
@@ -134,7 +134,7 @@ Contains CMake specific configuration files. In particular custom scripts that e
 
 Once set up, the standard library can be used with
 
-```
+```C++
 import Std;
 ```
 
@@ -173,7 +173,7 @@ Contains classes to store objects, arrays, and references in a uniform manner. L
 Can be used to generate a switch-like dispatch function from a runtime string to any function. For usage examples, refer to Test/Meta/Dispatch.
 Excerpt:
 
-```
+```C++
 namespace Meta::Dispatch
 {
   auto Block(ProtoPath<int(int), "Multiply1"> auto) = delete;
