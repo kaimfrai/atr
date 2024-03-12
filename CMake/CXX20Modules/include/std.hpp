@@ -104,5 +104,3 @@
 #include <variant>
 #include <vector>
 #include <version>
-
-#include <experimental/simd>

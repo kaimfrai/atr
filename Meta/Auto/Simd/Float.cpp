@@ -1,13 +1,16 @@
-module;
-
-#include <immintrin.h>
-
 export module Meta.Auto.Simd.Float;
 
 export import Meta.Auto.Simd.Tag;
 import Meta.Auto.Simd.Int32;
 
 import Std;
+
+using
+	SimdOp
+=	::Std::SimdOp
+	<	float
+	>
+;
 
 export namespace
 	Meta
@@ -43,6 +46,43 @@ export namespace
 		__m256
 			m_vMask
 		;
+
+		[[nodiscard]]
+		auto static constexpr inline
+		(	LoadAligned
+		)	(	float const
+				*	i_aData
+			,	SimdMask<float[8uz]>
+					i_vMask
+			)
+			noexcept
+		->	Auto
+		{	return
+			{	.	m_vRaw
+				=	::SimdOp::MaskedLoad<alignof(__m256)>
+					(	i_aData
+					,	i_vMask
+						.	m_vRaw
+					)
+			,	.	m_vMask
+				=	i_vMask
+					.	m_vRaw
+			};
+		}
+
+		auto constexpr inline
+		(	StoreAligned
+		)	(	float
+				*	o_aData
+			)	const
+			noexcept
+		->	void
+		{	return
+			::SimdOp::Store<alignof(__m256)>
+			(	o_aData
+			,	m_vRaw
+			);
+		}
 	};
 
 	template
@@ -78,7 +118,7 @@ export namespace
 		->	Auto
 		{	return
 			{	.	m_vRaw
-				=	_mm256_blendv_ps
+				=	::SimdOp::Blend
 					(	m_vRaw
 					,	i_vValue
 						.	m_vRaw
@@ -134,7 +174,7 @@ export namespace
 		->	Auto
 		{	return
 			{	.	m_vRaw
-				=	_mm256_add_ps
+				=	::SimdOp::Add
 					(	i_vLeft
 						.	m_vRaw
 					,	i_vRight
@@ -172,7 +212,7 @@ export namespace
 		->	Auto
 		{	return
 			{	.	m_vRaw
-				=	_mm256_mul_ps
+				=	::SimdOp::Multiply
 					(	i_vLeft
 						.	m_vRaw
 					,	i_vRight
@@ -190,10 +230,42 @@ export namespace
 			noexcept
 		->	float
 		{	return
-			reduce
-			(	::std::bit_cast<::std::experimental::native_simd<float>>
-				(	i_vArgument
-				)
+			::SimdOp::Reduce
+			(	i_vArgument
+				.	m_vRaw
+			);
+		}
+
+		[[nodiscard]]
+		auto static constexpr inline
+		(	LoadAligned
+		)	(	float const
+				*	i_aData
+			)
+			noexcept
+		->	Auto
+		{	return
+			{	.	m_vRaw
+				=	::SimdOp::Load<alignof(__m256)>
+					(	i_aData
+					,	::Std::SimdTarget
+						<	float[8uz]
+						>
+					)
+			};
+		}
+
+		auto constexpr inline
+		(	StoreAligned
+		)	(	float
+				*	o_aData
+			)	const
+			noexcept
+		->	void
+		{	return
+			::SimdOp::Store<alignof(__m256)>
+			(	o_aData
+			,	m_vRaw
 			);
 		}
 	};
@@ -230,11 +302,10 @@ export namespace
 			noexcept
 		{	return
 			value_type
-			{	.	m_vRaw
-				=	_mm256_load_ps
-					(	m_aData
-					)
-			};
+			::	LoadAligned
+				(	m_aData
+				)
+			;
 		}
 
 		auto constexpr inline
@@ -245,11 +316,11 @@ export namespace
 			noexcept
 		->	Auto const&
 		{
-			_mm256_store_ps
-			(	m_aData
-			,	i_vValue
-				.	m_vRaw
-			);
+			i_vValue
+			.	StoreAligned
+				(	m_aData
+				)
+			;
 
 			return
 			*	this
@@ -293,14 +364,14 @@ export namespace
 			noexcept
 		{	return
 			value_type
-			{	.	m_vRaw
-				=	_mm256_maskload_ps
-					(	m_aData
-					,	m_vMask
-					)
-			,	.	m_vMask
-				=	m_vMask
-			};
+			::	LoadAligned
+				(	m_aData
+				,	SimdMask<float[8uz]>
+					{	.	m_vRaw
+						=	m_vMask
+					}
+				)
+			;
 		}
 	};
 
@@ -335,11 +406,10 @@ export namespace
 			noexcept
 		{	return
 			value_type
-			{	.	m_vRaw
-				=	_mm256_load_ps
-					(	m_aData
-					)
-			};
+			::	LoadAligned
+				(	m_aData
+				)
+			;
 		}
 
 		[[nodiscard]]
@@ -457,6 +527,48 @@ export namespace
 			[	2uz
 			]
 		;
+
+		[[nodiscard]]
+		auto static constexpr inline
+		(	LoadAligned
+		)	(	float const
+				*	i_aData
+			,	SimdMask<float[16uz]>
+					i_vMask
+			)
+			noexcept
+		->	Auto
+		{	return
+			{	.	m_vRaw
+				=	{	::SimdOp::MaskedLoad<alignof(__m256)>
+						(	i_aData
+						,	i_vMask
+							.	m_vRaw
+								[	0uz
+								]
+						,	0z
+						)
+					,	::SimdOp::MaskedLoad<alignof(__m256)>
+						(	i_aData
+						,	i_vMask
+							.	m_vRaw
+								[	1uz
+								]
+						,	1z
+						)
+					}
+			,	.	m_vMask
+				=	{	i_vMask
+						.	m_vRaw
+							[	0uz
+							]
+					,	i_vMask
+						.	m_vRaw
+							[	1uz
+							]
+					}
+			};
+		}
 	};
 
 	template
@@ -485,7 +597,7 @@ export namespace
 		;
 
 		[[nodiscard]]
-		auto inline
+		auto constexpr inline
 		(	operator[]
 		)	(	Simd<::std::int32_t[8uz]>
 					i_vIndex
@@ -495,7 +607,7 @@ export namespace
 		{
 			auto const
 				vBottom
-			=	_mm256_permutevar8x32_ps
+			=	::SimdOp::Permute
 				(	m_vRaw
 					[	0uz
 					]
@@ -505,7 +617,7 @@ export namespace
 			;
 			auto const
 				vTop
-			=	_mm256_permutevar8x32_ps
+			=	::SimdOp::Permute
 				(	m_vRaw
 					[	1uz
 					]
@@ -516,7 +628,7 @@ export namespace
 
 			return
 			{	.	m_vRaw
-				=	_mm256_blendv_ps
+				=	::SimdOp::Blend
 					(	vBottom
 					,	vTop
 					,	(	i_vIndex
@@ -528,7 +640,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto inline
+		auto constexpr inline
 		(	operator[]
 		)	(	Simd<::std::int32_t[16uz]>
 					i_vIndex
@@ -538,7 +650,7 @@ export namespace
 		{
 			auto const
 				vBottom0
-			=	_mm256_permutevar8x32_ps
+			=	::SimdOp::Permute
 				(	m_vRaw
 					[	0uz
 					]
@@ -550,7 +662,7 @@ export namespace
 			;
 			auto const
 				vTop0
-			=	_mm256_permutevar8x32_ps
+			=	::SimdOp::Permute
 				(	m_vRaw
 					[	1uz
 					]
@@ -562,7 +674,7 @@ export namespace
 			;
 			auto const
 				vBottom1
-			=	_mm256_permutevar8x32_ps
+			=	::SimdOp::Permute
 				(	m_vRaw
 					[	0uz
 					]
@@ -574,7 +686,7 @@ export namespace
 			;
 			auto const
 				vTop1
-			=	_mm256_permutevar8x32_ps
+			=	::SimdOp::Permute
 				(	m_vRaw
 					[	1uz
 					]
@@ -587,7 +699,7 @@ export namespace
 
 			return
 			{	.	m_vRaw
-				=	{	_mm256_blendv_ps
+				=	{	::SimdOp::Blend
 						(	vBottom0
 						,	vTop0
 						,	(	i_vIndex
@@ -597,7 +709,7 @@ export namespace
 								[	0uz
 								]
 						)
-					,	_mm256_blendv_ps
+					,	::SimdOp::Blend
 						(	vBottom1
 						,	vTop1
 						,	(	i_vIndex
@@ -622,7 +734,7 @@ export namespace
 				m_vRaw
 				[	0uz
 				]
-			=	_mm256_blendv_ps
+			=	::SimdOp::Blend
 				(	m_vRaw
 					[	0uz
 					]
@@ -639,7 +751,7 @@ export namespace
 				m_vRaw
 				[	1uz
 				]
-			=	_mm256_blendv_ps
+			=	::SimdOp::Blend
 				(	m_vRaw
 					[	1uz
 					]
@@ -701,7 +813,7 @@ export namespace
 		->	Auto
 		{	return
 			{	.	m_vRaw
-				=	{	_mm256_mul_ps
+				=	{	::SimdOp::Multiply
 						(	i_vLeft
 							.	m_vRaw
 								[	0uz
@@ -711,7 +823,7 @@ export namespace
 								[	0uz
 								]
 						)
-					,	_mm256_mul_ps
+					,	::SimdOp::Multiply
 						(	i_vLeft
 							.	m_vRaw
 								[	1uz
@@ -723,6 +835,58 @@ export namespace
 						)
 					}
 			};
+		}
+
+		[[nodiscard]]
+		auto static constexpr inline
+		(	LoadAligned
+		)	(	float const
+				*	i_aData
+			)
+			noexcept
+		->	Auto
+		{	return
+			{	.	m_vRaw
+				=	{	::SimdOp::Load<alignof(__m256)>
+						(	i_aData
+						,	::Std::SimdTarget
+							<	float[8uz]
+							>
+						,	0z
+						)
+					,	::SimdOp::Load<alignof(__m256)>
+						(	i_aData
+						,	::Std::SimdTarget
+							<	float[8uz]
+							>
+						,	1z
+						)
+					}
+			};
+		}
+
+		auto constexpr inline
+		(	StoreAligned
+		)	(	float
+				*	o_aData
+			)	const
+			noexcept
+		->	void
+		{
+			::SimdOp::Store<alignof(__m256)>
+			(	o_aData
+			,	m_vRaw
+				[	0uz
+				]
+			,	0z
+			);
+			::SimdOp::Store<alignof(__m256)>
+			(	o_aData
+			,	m_vRaw
+				[	1uz
+				]
+			,	1z
+			);
 		}
 	};
 
@@ -757,16 +921,10 @@ export namespace
 			noexcept
 		{	return
 			value_type
-			{	.	m_vRaw
-				=	{	_mm256_load_ps
-						(	m_aData
-						)
-					,	_mm256_load_ps
-						(		m_aData
-							+	8uz
-						)
-					}
-			};
+			::	LoadAligned
+				(	m_aData
+				)
+			;
 		}
 
 		auto constexpr inline
@@ -777,21 +935,11 @@ export namespace
 			noexcept
 		->	Auto const&
 		{
-			_mm256_store_ps
-			(	m_aData
-			,	i_vValue
-				.	m_vRaw
-					[	0uz
-					]
-			);
-			_mm256_store_ps
-			(		m_aData
-				+	8uz
-			,	i_vValue
-				.	m_vRaw
-					[	1uz
-					]
-			);
+			i_vValue
+			.	StoreAligned
+				(	m_aData
+				)
+			;
 
 			return
 			*	this
@@ -830,16 +978,10 @@ export namespace
 			noexcept
 		{	return
 			value_type
-			{	.	m_vRaw
-				=	{	_mm256_load_ps
-						(	m_aData
-						)
-					,	_mm256_load_ps
-						(		m_aData
-							+	8uz
-						)
-					}
-			};
+			::	LoadAligned
+				(	m_aData
+				)
+			;
 		}
 	};
 
@@ -881,30 +1023,20 @@ export namespace
 			noexcept
 		{	return
 			value_type
-			{	.	m_vRaw
-				=	{	_mm256_maskload_ps
-						(	m_aData
-						,	m_vMask
-							[	0uz
-							]
-						)
-					,	_mm256_maskload_ps
-						(		m_aData
-							+	8uz
-						,	m_vMask
-							[	1uz
-							]
-						)
+			::	LoadAligned
+				(	m_aData
+				,	SimdMask<float[16uz]>
+					{	.	m_vRaw
+						=	{	m_vMask
+								[	0uz
+								]
+							,	m_vMask
+								[	1uz
+								]
+							}
 					}
-			,	.	m_vMask
-				=	{	m_vMask
-						[	0uz
-						]
-					,	m_vMask
-						[	1uz
-						]
-					}
-			};
+				)
+			;
 		}
 	};
 }

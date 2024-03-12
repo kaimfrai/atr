@@ -1,7 +1,3 @@
-module;
-
-#include <immintrin.h>
-
 export module Meta.Auto.Simd.Fill;
 
 import Meta.Auto.Simd.Float;
@@ -9,6 +5,9 @@ import Meta.Auto.Simd.UInt32;
 import Meta.Auto.Simd.UInt8;
 
 import Std;
+
+using ::Std::SimdOp;
+using ::Std::SimdTarget;
 
 export namespace
 	Meta
@@ -41,8 +40,9 @@ export namespace
 		{
 			return
 			{	.	m_vRaw
-				=	_mm256_broadcast_ss
-					(	&	i_vSource
+				=	SimdOp<float>::Broadcast
+					(	i_vSource
+					,	SimdTarget<float[8uz]>
 					)
 			};
 		}
@@ -67,11 +67,13 @@ export namespace
 		->	Simd<float[16uz]>
 		{	return
 			{	.	m_vRaw
-				=	{	_mm256_broadcast_ss
-						(	&	i_vSource
+				=	{	SimdOp<float>::Broadcast
+						(	i_vSource
+						,	SimdTarget<float[8uz]>
 						)
-					,	_mm256_broadcast_ss
-						(	&	i_vSource
+					,	SimdOp<float>::Broadcast
+						(	i_vSource
+						,	SimdTarget<float[8uz]>
 						)
 					}
 			};
@@ -95,20 +97,11 @@ export namespace
 			)
 			noexcept
 		->	Simd<::std::int32_t[8uz]>
-		{
-			::std::int32_t
-				vSource
-				[	4uz
-				]
-			{	i_vSource
-			};
-
-			return
+		{	return
 			{	.	m_vRaw
-				=	_mm256_broadcastd_epi32
-					(	::std::bit_cast<__m128i>
-						(	vSource
-						)
+				=	SimdOp<::std::int32_t>::Broadcast
+					(	i_vSource
+					,	SimdTarget<::std::int32_t[8uz]>
 					)
 			};
 		}
@@ -131,25 +124,15 @@ export namespace
 			)
 			noexcept
 		->	Simd<::std::int32_t[16uz]>
-		{
-			::std::int32_t
-				vSource
-				[	4uz
-				]
-			{	i_vSource
-			};
-
-			return
+		{	return
 			{	.	m_vRaw
-				=	{	_mm256_broadcastd_epi32
-						(	::std::bit_cast<__m128i>
-							(	vSource
-							)
+				=	{	SimdOp<::std::int32_t>::Broadcast
+						(	i_vSource
+						,	SimdTarget<::std::int32_t[8uz]>
 						)
-					,	_mm256_broadcastd_epi32
-						(	::std::bit_cast<__m128i>
-							(	vSource
-							)
+					,	SimdOp<::std::int32_t>::Broadcast
+						(	i_vSource
+						,	SimdTarget<::std::int32_t[8uz]>
 						)
 					}
 			};
@@ -173,20 +156,11 @@ export namespace
 			)
 			noexcept
 		->	Simd<::std::uint32_t[8uz]>
-		{
-			::std::uint32_t
-				vSource
-				[	4uz
-				]
-			{	i_vSource
-			};
-
-			return
+		{	return
 			{	.	m_vRaw
-				=	_mm256_broadcastd_epi32
-					(	::std::bit_cast<__m128i>
-						(	vSource
-						)
+				=	SimdOp<::std::uint32_t>::Broadcast
+					(	i_vSource
+					,	SimdTarget<::std::uint32_t[8uz]>
 					)
 			};
 		}
@@ -209,25 +183,15 @@ export namespace
 			)
 			noexcept
 		->	Simd<::std::uint32_t[16uz]>
-		{
-			::std::uint32_t
-				vSource
-				[	4uz
-				]
-			{	i_vSource
-			};
-
-			return
+		{	return
 			{	.	m_vRaw
-				=	{	_mm256_broadcastd_epi32
-						(	::std::bit_cast<__m128i>
-							(	vSource
-							)
+				=	{	SimdOp<::std::uint32_t>::Broadcast
+						(	i_vSource
+						,	SimdTarget<::std::uint32_t[8uz]>
 						)
-					,	_mm256_broadcastd_epi32
-						(	::std::bit_cast<__m128i>
-							(	vSource
-							)
+					,	SimdOp<::std::uint32_t>::Broadcast
+						(	i_vSource
+						,	SimdTarget<::std::uint32_t[8uz]>
 						)
 					}
 			};

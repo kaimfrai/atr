@@ -2379,7 +2379,7 @@ Disassembly of section .text:
                	cmp	rax, r13
                	je	 <L173>
 <L172>:
-               	vpmovsxbd	ymm0, qword ptr [rsi + rdx]
+               	vpmovzxbd	ymm0, qword ptr [rsi + rdx]
                	vpermd	ymm1, ymm0, ymm6
                	vpermd	ymm2, ymm0, ymm7
                	vpslld	ymm3, ymm0, 0x1c

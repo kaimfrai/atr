@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <strcmp+0xa978>
+               	call	qword ptr  <strcmp+0xa998>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <strcmp+0xa988>
+               	mov	rax, qword ptr  <strcmp+0xa9a8>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <strcmp+0xa990>
+               	mov	rax, qword ptr  <strcmp+0xa9b0>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <strcmp+0xa998>
+               	cmp	qword ptr , 0x0 <strcmp+0xa9b8>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -754,7 +754,7 @@ Disassembly of section .text:
                	movsxd	rax, ebx
                	shl	rax, 0x3
                	lea	rdi, [rax + 4*rax]
-               	mov	rsi, qword ptr  <strcmp+0xa9a0>
+               	mov	rsi, qword ptr  <strcmp+0xa9c0>
                	call	 <_ZnamRKSt9nothrow_t@plt>
                	mov	r13, rax
                	movsxd	rdx, r14d
@@ -3059,7 +3059,6 @@ Disassembly of section .text:
                	vpermilps	ymm0, ymm0, ymmword ptr  <strcmp+0x2340>
                	vmovups	ymmword ptr [rax + 0x20], ymm0
                	lea	rdi,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Circle>+0x10>
-               	mov	qword ptr [rax + 0x10], rdi
                	jmp	 <L235>
                	vmovdqa	xmmword ptr [rsp + 0x10], xmm0
                	lea	rax,  <polymorphic::detail::vtable<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, float (Bodies3D::ComputeVolumeTag) const>>
@@ -3086,8 +3085,8 @@ Disassembly of section .text:
                	vpmovzxbd	xmm0, dword ptr [rsp + 0x10]
                	vcvtdq2ps	xmm0, xmm0
                	vmovlps	qword ptr [rax + 0x40], xmm0
-               	lea	r8,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>+0x10>
-               	jmp	 <L236>
+               	lea	rdi,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>+0x10>
+               	jmp	 <L235>
                	vmovdqa	xmmword ptr [rsp + 0x10], xmm0
                	lea	rax,  <polymorphic::detail::vtable<Bodies3D::Triangle, float (Bodies3D::ComputeVolumeTag) const>>
                	mov	qword ptr [r13 + rsi - 0x10], rax
@@ -3098,9 +3097,9 @@ Disassembly of section .text:
                	call	 <_Znwm@plt>
                	vmovdqa	xmm1, xmmword ptr [rsp + 0x20]
                	vpextrb	ecx, xmm1, 0x7
+               	lea	rdx, [rbx + 4*rbx]
                	vcvtsi2ss	xmm0, xmm6, ecx
-               	lea	rcx, [rbx + 4*rbx]
-               	lea	rcx, [8*rcx]
+               	lea	rcx, [8*rdx]
                	add	rcx, r13
                	movabs	rdx, 0x100000001
                	mov	qword ptr [rax + 0x8], rdx
@@ -3110,13 +3109,14 @@ Disassembly of section .text:
                	mov	rdx, rax
                	add	rdx, 0x20
                	vpunpcklbw	xmm1, xmm1, xmmword ptr [rsp + 0x10] # xmm1 = xmm1[0],mem[0],xmm1[1],mem[1],xmm1[2],mem[2],xmm1[3],mem[3],xmm1[4],mem[4],xmm1[5],mem[5],xmm1[6],mem[6],xmm1[7],mem[7]
-               	vpshufb	xmm1, xmm1, xmmword ptr  <strcmp+0x22f0>
+               	vpshufb	xmm1, xmm1, xmmword ptr  <strcmp+0x2300>
                	vpmovzxbd	ymm1, xmm1      # ymm1 = xmm1[0],zero,zero,zero,xmm1[1],zero,zero,zero,xmm1[2],zero,zero,zero,xmm1[3],zero,zero,zero,xmm1[4],zero,zero,zero,xmm1[5],zero,zero,zero,xmm1[6],zero,zero,zero,xmm1[7],zero,zero,zero
                	vcvtdq2ps	ymm1, ymm1
+               	vpermilps	ymm1, ymm1, ymmword ptr  <strcmp+0x2340>
                	vmovups	ymmword ptr [rax + 0x20], ymm1
                	vmovss	dword ptr [rax + 0x40], xmm0
-               	lea	r8,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Triangle>+0x10>
-               	jmp	 <L236>
+               	lea	rdi,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Triangle>+0x10>
+               	jmp	 <L235>
                	vmovups	ymm0, ymmword ptr [rsp + 0x2f0]
                	vmovups	ymmword ptr [rsp + 0x3b0], ymm0
                	vmovups	xmm0, xmmword ptr [rsp + 0x2d8]
@@ -3146,7 +3146,7 @@ Disassembly of section .text:
                	vpermilps	ymm3, ymm2, ymmword ptr  <strcmp+0x2340>
                	vmovups	ymmword ptr [rax + 0x20], ymm3
                	vmovdqa	xmm3, xmmword ptr [rsp + 0x380]
-               	vpshufb	xmm3, xmm3, xmmword ptr  <strcmp+0x2300>
+               	vpshufb	xmm3, xmm3, xmmword ptr  <strcmp+0x22f0>
                	vcvtdq2ps	xmm3, xmm3
                	vmovlps	qword ptr [rax + 0x40], xmm3
                	vmovss	dword ptr [rax + 0x48], xmm1
@@ -3167,14 +3167,14 @@ Disassembly of section .text:
                	vmovlps	qword ptr [rax + 0x74], xmm0
                	vextractps	dword ptr [rax + 0x7c], xmm4, 0x3
                	add	rdx, 0x20
-               	lea	r8,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Head@Evaluation.CRTP.Head>+0x10>
-               	mov	qword ptr [rax + 0x10], r8
+               	lea	rdi,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Head@Evaluation.CRTP.Head>+0x10>
+               	mov	qword ptr [rax + 0x10], rdi
                	mov	qword ptr [rax + 0x18], rdx
-               	mov	r8, qword ptr [rsp + 0x10]
-               	mov	qword ptr [r13 + r8], rsi
+               	mov	rdi, qword ptr [rsp + 0x10]
+               	mov	qword ptr [r13 + rdi], rsi
                	mov	r11, qword ptr [rsp]
-               	mov	rsi, r8
-               	jmp	 <L237>
+               	mov	rsi, rdi
+               	jmp	 <L236>
                	vmovdqa	xmmword ptr [rsp + 0x10], xmm0
                	lea	rax,  <polymorphic::detail::vtable<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, float (Bodies3D::ComputeVolumeTag) const>>
                	mov	qword ptr [r13 + rsi - 0x10], rax
@@ -3201,8 +3201,8 @@ Disassembly of section .text:
                	vpermilps	ymm1, ymm1, ymmword ptr  <strcmp+0x2340>
                	vmovups	ymmword ptr [rax + 0x20], ymm1
                	vmovss	dword ptr [rax + 0x40], xmm0
-               	lea	r8,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>+0x10>
-               	jmp	 <L236>
+               	lea	rdi,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>+0x10>
+               	jmp	 <L235>
                	vmovaps	xmmword ptr [rsp + 0x10], xmm0
                	lea	rax,  <polymorphic::detail::vtable<Bodies3D::Rectangle, float (Bodies3D::ComputeVolumeTag) const>>
                	mov	qword ptr [r13 + rsi - 0x10], rax
@@ -3229,8 +3229,8 @@ Disassembly of section .text:
                	vpermilps	ymm1, ymm1, ymmword ptr  <strcmp+0x2340>
                	vmovups	ymmword ptr [rax + 0x20], ymm1
                	vmovss	dword ptr [rax + 0x40], xmm0
-               	lea	r8,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Rectangle>+0x10>
-               	jmp	 <L236>
+               	lea	rdi,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Rectangle>+0x10>
+               	jmp	 <L235>
                	lea	rax,  <polymorphic::detail::vtable<Bodies3D::Square, float (Bodies3D::ComputeVolumeTag) const>>
                	mov	qword ptr [r13 + rsi - 0x10], rax
                	mov	byte ptr [r13 + rsi - 0x8], 0x0
@@ -3252,8 +3252,8 @@ Disassembly of section .text:
                	vcvtdq2ps	ymm0, ymm0
                	vpermilps	ymm0, ymm0, ymmword ptr  <strcmp+0x2340>
                	vmovups	ymmword ptr [rax + 0x20], ymm0
-               	lea	r8,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Square>+0x10>
-               	jmp	 <L236>
+               	lea	rdi,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Square>+0x10>
+               	jmp	 <L235>
                	vmovdqa	xmmword ptr [rsp + 0x10], xmm0
                	lea	rax,  <polymorphic::detail::vtable<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, float (Bodies3D::ComputeVolumeTag) const>>
                	mov	qword ptr [r13 + rsi - 0x10], rax
@@ -3265,19 +3265,20 @@ Disassembly of section .text:
                	lea	rcx, [rbx + 4*rbx]
                	lea	rcx, [8*rcx]
                	add	rcx, r13
+               	vmovdqa	xmm2, xmmword ptr [rsp + 0x10]
+               	vmovd	esi, xmm2
                	movabs	rdx, 0x100000001
                	mov	qword ptr [rax + 0x8], rdx
                	lea	rdx,  <vtable for std::_Sp_counted_ptr_inplace<polymorphic::detail::holder_impl<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid> const, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>+0x10>
                	mov	qword ptr [rax], rdx
-               	lea	rsi, [rax + 0x10]
+               	lea	rdi, [rax + 0x10]
                	mov	rdx, rax
                	add	rdx, 0x20
                	vmovdqa	xmm1, xmmword ptr [rsp + 0x20]
-               	vmovdqa	xmm2, xmmword ptr [rsp + 0x10]
-               	vpunpcklbw	xmm0, xmm1, xmm2 # xmm0 = xmm1[0],xmm2[0],xmm1[1],xmm2[1],xmm1[2],xmm2[2],xmm1[3],xmm2[3],xmm1[4],xmm2[4],xmm1[5],xmm2[5],xmm1[6],xmm2[6],xmm1[7],xmm2[7]
-               	vpshufb	xmm0, xmm0, xmmword ptr  <strcmp+0x22f0>
+               	vpinsrb	xmm0, xmm1, esi, 0x7
                	vpmovzxbd	ymm0, xmm0      # ymm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero,xmm0[4],zero,zero,zero,xmm0[5],zero,zero,zero,xmm0[6],zero,zero,zero,xmm0[7],zero,zero,zero
                	vcvtdq2ps	ymm0, ymm0
+               	vpermilps	ymm0, ymm0, ymmword ptr  <strcmp+0x2340>
                	vmovups	ymmword ptr [rax + 0x20], ymm0
                	vpsrlq	xmm0, xmm1, 0x38
                	vpmovzxbq	xmm1, word ptr  <strcmp+0x2378>
@@ -3285,8 +3286,11 @@ Disassembly of section .text:
                	vpmovzxbd	xmm0, xmm0      # xmm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero
                	vcvtdq2ps	xmm0, xmm0
                	vmovlps	qword ptr [rax + 0x40], xmm0
-               	lea	r8,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>+0x10>
-               	jmp	 <L236>
+               	lea	rsi,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>+0x10>
+               	mov	qword ptr [rax + 0x10], rsi
+               	mov	qword ptr [rax + 0x18], rdx
+               	mov	qword ptr [r13 + r14], rdi
+               	jmp	 <L237>
                	vmovaps	xmmword ptr [rsp + 0x10], xmm0
                	lea	rax,  <polymorphic::detail::vtable<Bodies3D::Ellipse, float (Bodies3D::ComputeVolumeTag) const>>
                	mov	qword ptr [r13 + rsi - 0x10], rax
@@ -3313,8 +3317,8 @@ Disassembly of section .text:
                	vpermilps	ymm1, ymm1, ymmword ptr  <strcmp+0x2340>
                	vmovups	ymmword ptr [rax + 0x20], ymm1
                	vmovss	dword ptr [rax + 0x40], xmm0
-               	lea	r8,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Ellipse>+0x10>
-               	jmp	 <L236>
+               	lea	rdi,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Ellipse>+0x10>
+               	jmp	 <L235>
                	lea	rax,  <polymorphic::detail::vtable<Bodies3D::Cube@Evaluation.CRTP.Cube, float (Bodies3D::ComputeVolumeTag) const>>
                	mov	qword ptr [r13 + rsi - 0x10], rax
                	mov	byte ptr [r13 + rsi - 0x8], 0x0
@@ -3336,8 +3340,8 @@ Disassembly of section .text:
                	vcvtdq2ps	ymm0, ymm0
                	vpermilps	ymm0, ymm0, ymmword ptr  <strcmp+0x2340>
                	vmovups	ymmword ptr [rax + 0x20], ymm0
-               	lea	r8,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Cube@Evaluation.CRTP.Cube>+0x10>
-               	jmp	 <L236>
+               	lea	rdi,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Cube@Evaluation.CRTP.Cube>+0x10>
+               	jmp	 <L235>
                	vmovdqa	xmmword ptr [rsp + 0x10], xmm0
                	lea	rax,  <polymorphic::detail::vtable<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, float (Bodies3D::ComputeVolumeTag) const>>
                	mov	qword ptr [r13 + rsi - 0x10], rax
@@ -3363,8 +3367,8 @@ Disassembly of section .text:
                	vpermilps	ymm1, ymm1, ymmword ptr  <strcmp+0x2340>
                	vmovups	ymmword ptr [rax + 0x20], ymm1
                	vmovlps	qword ptr [rax + 0x40], xmm0
-               	lea	r8,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>+0x10>
-               	jmp	 <L236>
+               	lea	rdi,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>+0x10>
+               	jmp	 <L235>
                	vmovdqa	xmmword ptr [rsp + 0x10], xmm0
                	lea	rax,  <polymorphic::detail::vtable<Bodies3D::Cone@Evaluation.CRTP.Cone, float (Bodies3D::ComputeVolumeTag) const>>
                	mov	qword ptr [r13 + rsi - 0x10], rax
@@ -3391,8 +3395,8 @@ Disassembly of section .text:
                	vpermilps	ymm1, ymm1, ymmword ptr  <strcmp+0x2340>
                	vmovups	ymmword ptr [rax + 0x20], ymm1
                	vmovss	dword ptr [rax + 0x40], xmm0
-               	lea	r8,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Cone@Evaluation.CRTP.Cone>+0x10>
-               	jmp	 <L236>
+               	lea	rdi,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Cone@Evaluation.CRTP.Cone>+0x10>
+               	jmp	 <L235>
                	lea	rax,  <polymorphic::detail::vtable<Bodies3D::Sphere@Evaluation.CRTP.Sphere, float (Bodies3D::ComputeVolumeTag) const>>
                	mov	qword ptr [r13 + rsi - 0x10], rax
                	mov	byte ptr [r13 + rsi - 0x8], 0x0
@@ -3414,16 +3418,16 @@ Disassembly of section .text:
                	vcvtdq2ps	ymm0, ymm0
                	vpermilps	ymm0, ymm0, ymmword ptr  <strcmp+0x2340>
                	vmovups	ymmword ptr [rax + 0x20], ymm0
-               	lea	r8,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Sphere@Evaluation.CRTP.Sphere>+0x10>
-               	nop	dword ptr [rax]
-<L236>:
-               	mov	qword ptr [rax + 0x10], r8
+               	lea	rdi,  <vtable for polymorphic::detail::holder_impl<Bodies3D::Sphere@Evaluation.CRTP.Sphere>+0x10>
+               	nop	word ptr cs:[rax + rax]
 <L235>:
+               	mov	qword ptr [rax + 0x10], rdi
                	mov	qword ptr [rax + 0x18], rdx
                	mov	qword ptr [r13 + r14], rsi
+<L237>:
                	mov	r11, qword ptr [rsp]
                	mov	rsi, r14
-<L237>:
+<L236>:
                	mov	qword ptr [rcx + 0x18], rax
                	mov	qword ptr [rcx + 0x20], rdx
                	inc	rbx
@@ -3436,7 +3440,6 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x10], rsi
                	mov	rsi, qword ptr [rsp + 0x348]
                	xor	rsi, rcx
-               	mov	qword ptr [rsp + 0x390], rbx
                	mov	rdi, qword ptr [rsp + 0x340]
                	xor	rdi, rdx
                	xor	rdx, rsi
@@ -3451,6 +3454,7 @@ Disassembly of section .text:
                	mov	rax, rdx
                	shl	rax, 0x11
                	mov	rsi, qword ptr [rsp + 0x330]
+               	mov	qword ptr [rsp + 0x390], rbx
                	mov	r8, qword ptr [rsp + 0x328]
                	xor	rsi, r8
                	mov	rcx, qword ptr [rsp + 0x338]
@@ -3829,11 +3833,11 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x2f8], rdx
                	mov	qword ptr [rsp + 0x70], r8
                	lea	rdx, [r8 + 4*r8]
+               	mov	rbx, qword ptr [rsp + 0x390]
                	rol	rdx, 0x7
                	mov	qword ptr [rsp + 0x300], rcx
                	mov	qword ptr [rsp + 0x68], rdi
                	lea	rcx, [rdi + 4*rdi]
-               	mov	rbx, qword ptr [rsp + 0x390]
                	rol	rcx, 0x7
                	lea	rdx, [rdx + 8*rdx]
                	lea	r12, [rcx + 8*rcx]
@@ -4020,7 +4024,7 @@ Disassembly of section .text:
 <L250>:
                	add	rsi, -0x10
                	lea	rbx, [r13 + 0x18]
-               	mov	r15, qword ptr  <strcmp+0xa9b0>
+               	mov	r15, qword ptr  <strcmp+0xa9d0>
                	vmovaps	xmmword ptr [rsp + 0x50], xmm0
                	jmp	 <L255>
 <L259>:
@@ -4082,7 +4086,7 @@ Disassembly of section .text:
                	call	 <__cxa_allocate_exception@plt>
                	vmovaps	xmm0, xmmword ptr [rsp + 0x50]
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <strcmp+0xa9a8>
+               	mov	rsi, qword ptr  <strcmp+0xa9c8>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
@@ -4140,7 +4144,7 @@ Disassembly of section .text:
                	mov	rbx, rdi
                	mov	rax, qword ptr [rdi]
                	call	qword ptr [rax + 0x10]
-               	mov	rax, qword ptr  <strcmp+0xa9b0>
+               	mov	rax, qword ptr  <strcmp+0xa9d0>
                	cmp	byte ptr [rax], 0x0
                	je	 <L0>
                	mov	eax, dword ptr [rbx + 0xc]
@@ -4894,7 +4898,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <strcmp+0xa980>
+               	mov	rax, qword ptr  <strcmp+0xa9a0>
                	test	rax, rax
                	je	 <L0>
                	call	rax

@@ -2981,6 +2981,351 @@ Disassembly of section .text:
                	jmp	 <L233>
                	nop
 <L243>:
+               	vmovdqu	ymm0, ymmword ptr [rsp + 0x3d0]
+               	vpblendd	ymm0, ymm0, ymmword ptr [rsp + 0x380], 0xc0 # ymm0 = ymm0[0,1,2,3,4,5],mem[6,7]
+               	vpermq	ymm0, ymm0, 0x93        # ymm0 = ymm0[3,0,1,2]
+               	vmovdqu	ymm1, ymmword ptr [rsp + 0x2a0]
+               	vmovdqu	ymm2, ymmword ptr [rsp + 0x2e0]
+               	vmovdqu	ymm3, ymmword ptr [rsp + 0x300]
+               	vmovdqu	ymm4, ymmword ptr [rsp + 0x320]
+               	vpsrlq	ymm1, ymm1, 0x8
+               	vmovdqu	ymmword ptr [rsp + 0x2a0], ymm1
+               	vpsrlq	ymm0, ymm0, 0x8
+               	vmovdqu	ymmword ptr [rsp + 0x2c0], ymm0
+               	vpsrlq	ymm0, ymm2, 0x8
+               	vmovdqu	ymmword ptr [rsp + 0x2e0], ymm0
+               	vpsrlq	ymm0, ymm3, 0x8
+               	vmovdqu	ymmword ptr [rsp + 0x300], ymm0
+               	vpsrlq	ymm2, ymm4, 0x8
+               	vmovdqu	ymmword ptr [rsp + 0x320], ymm2
+               	vmovq	rax, xmm1
+               	vpextrq	r15, xmm0, 0x1
+               	vextracti128	xmm0, ymm2, 0x1
+               	vmovq	rsi, xmm0
+               	add	qword ptr [rsp + 0x10], 0x18
+               	cmp	qword ptr [rsp + 0x378], rcx
+               	je	 <L234>
+<L233>:
+               	mov	qword ptr [rsp + 0x18], rcx
+               	mov	qword ptr [rsp + 0x298], rbx
+               	mov	qword ptr [rsp + 0x20], r10
+               	vmovdqu	ymm2, ymmword ptr [rsp + 0x2a8]
+               	vmovdqu	ymm0, ymmword ptr [rsp + 0x2c8]
+               	vmovdqu	ymm1, ymmword ptr [rsp + 0x3f0]
+               	vmovdqu	ymmword ptr [rsp + 0x3d0], ymm0
+               	vpand	ymm0, ymm0, ymm1
+               	vmovdqu	ymmword ptr [rsp + 0x380], ymm2
+               	vpand	ymm1, ymm2, ymm1
+               	vpackusdw	ymm0, ymm1, ymm0
+               	vextracti128	xmm1, ymm0, 0x1
+               	vpackusdw	xmm0, xmm0, xmm1
+               	vpshufd	xmm0, xmm0, 0xd8        # xmm0 = xmm0[0,2,1,3]
+               	vpackuswb	xmm0, xmm0, xmm0
+               	vmovdqa	xmmword ptr [rsp + 0x40], xmm0
+               	vmovdqu	xmm0, xmmword ptr [rsp + 0x2e8]
+               	vpshufb	xmm0, xmm0, xmmword ptr  <strcmp+0x1850>
+               	movzx	ecx, al
+               	imul	ecx, ecx, 0x4f
+               	shr	ecx, 0xa
+               	lea	edx, [rcx + 2*rcx]
+               	lea	ecx, [rcx + 4*rdx]
+               	sub	al, cl
+               	movzx	eax, al
+               	lea	rcx,  <strcmp+0x189c>
+               	movsxd	rax, dword ptr [rcx + 4*rax]
+               	add	rax, rcx
+               	jmp	rax
+               	mov	rbx, qword ptr [rsp + 0x8]
+               	mov	r14, qword ptr [rsp + 0x10]
+               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Circle>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
+               	mov	qword ptr [rbx + r14 - 0x10], rax
+               	mov	qword ptr [rbx + r14 - 0x8], 0x0
+               	mov	edi, 0x28
+               	vzeroupper
+               	call	 <_Znwm@plt>
+               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Circle>+0x10>
+               	mov	qword ptr [rax], rcx
+               	mov	qword ptr [rbx + r14 - 0x8], rax
+               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Circle>(std::in_place_type_t<Bodies3D::Circle>)::'lambda'(std::any const&)::__invoke(std::any const&)>
+               	jmp	 <L235>
+               	vmovdqa	xmmword ptr [rsp + 0x80], xmm0
+               	mov	rbx, qword ptr [rsp + 0x8]
+               	mov	r14, qword ptr [rsp + 0x10]
+               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
+               	mov	qword ptr [rbx + r14 - 0x10], rax
+               	mov	qword ptr [rbx + r14 - 0x8], 0x0
+               	mov	edi, 0x30
+               	vzeroupper
+               	call	 <_Znwm@plt>
+               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>+0x10>
+               	mov	qword ptr [rax], rcx
+               	mov	qword ptr [rbx + r14 - 0x8], rax
+               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(std::in_place_type_t<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>)::'lambda'(std::any const&)::__invoke(std::any const&)>
+               	jmp	 <L236>
+               	vmovdqa	xmmword ptr [rsp + 0x80], xmm0
+               	mov	rbx, qword ptr [rsp + 0x8]
+               	mov	r14, qword ptr [rsp + 0x10]
+               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Triangle>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
+               	mov	qword ptr [rbx + r14 - 0x10], rax
+               	mov	qword ptr [rbx + r14 - 0x8], 0x0
+               	mov	edi, 0x30
+               	vzeroupper
+               	call	 <_Znwm@plt>
+               	vpxor	xmm0, xmm0, xmm0
+               	vmovdqa	xmmword ptr [rax + 0x20], xmm0
+               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Triangle>+0x10>
+               	mov	qword ptr [rax], rcx
+               	vmovdqa	xmm1, xmmword ptr [rsp + 0x40]
+               	vpextrb	ecx, xmm1, 0x7
+               	mov	qword ptr [rbx + r14 - 0x8], rax
+               	vcvtsi2ss	xmm0, xmm5, ecx
+               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Triangle>(std::in_place_type_t<Bodies3D::Triangle>)::'lambda'(std::any const&)::__invoke(std::any const&)>
+               	mov	qword ptr [rbx + r14], rcx
+               	vmovss	dword ptr [rax + 0x28], xmm0
+               	vpunpcklbw	xmm0, xmm1, xmmword ptr [rsp + 0x80] # xmm0 = xmm1[0],mem[0],xmm1[1],mem[1],xmm1[2],mem[2],xmm1[3],mem[3],xmm1[4],mem[4],xmm1[5],mem[5],xmm1[6],mem[6],xmm1[7],mem[7]
+               	vpshufb	xmm0, xmm0, xmmword ptr  <strcmp+0x1830>
+               	vpmovzxbd	ymm0, xmm0      # ymm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero,xmm0[4],zero,zero,zero,xmm0[5],zero,zero,zero,xmm0[6],zero,zero,zero,xmm0[7],zero,zero,zero
+               	jmp	 <L237>
+               	mov	qword ptr [rsp + 0x80], rsi
+               	vmovups	xmm0, xmmword ptr [rsp + 0x2f8]
+               	vmovaps	xmmword ptr [rsp + 0x3a0], xmm0
+               	vmovups	xmm0, xmmword ptr [rsp + 0x320]
+               	vmovaps	xmmword ptr [rsp + 0x3c0], xmm0
+               	vmovups	xmm0, xmmword ptr [rsp + 0x310]
+               	vmovaps	xmmword ptr [rsp + 0x3b0], xmm0
+               	mov	rbx, qword ptr [rsp + 0x8]
+               	mov	r14, qword ptr [rsp + 0x10]
+               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Head@Evaluation.CRTP.Head>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
+               	mov	qword ptr [rbx + r14 - 0x10], rax
+               	mov	qword ptr [rbx + r14 - 0x8], 0x0
+               	mov	edi, 0x68
+               	vzeroupper
+               	call	 <_Znwm@plt>
+               	vpbroadcastw	xmm2, word ptr  <strcmp+0x1898>
+               	vmovdqa	xmm0, xmmword ptr [rsp + 0x3a0]
+               	vpshufb	xmm0, xmm0, xmm2
+               	vmovdqa	xmm1, xmmword ptr [rsp + 0x3c0]
+               	vpshufb	xmm1, xmm1, xmm2
+               	vmovdqa	xmm3, xmmword ptr [rsp + 0x3b0]
+               	vpshufb	xmm2, xmm3, xmm2
+               	vpunpcklwd	xmm1, xmm2, xmm1 # xmm1 = xmm2[0],xmm1[0],xmm2[1],xmm1[1],xmm2[2],xmm1[2],xmm2[3],xmm1[3]
+               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Head@Evaluation.CRTP.Head>+0x10>
+               	mov	qword ptr [rax], rcx
+               	mov	qword ptr [rbx + r14 - 0x8], rax
+               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Head@Evaluation.CRTP.Head>(std::in_place_type_t<Bodies3D::Head@Evaluation.CRTP.Head>)::'lambda'(std::any const&)::__invoke(std::any const&)>
+               	mov	qword ptr [rbx + r14], rcx
+               	vpmovzxbd	ymm2, qword ptr [rsp + 0x40]
+               	vcvtdq2ps	ymm2, ymm2
+               	vpermilps	ymm3, ymm2, ymmword ptr  <strcmp+0x1860>
+               	vmovups	ymmword ptr [rax + 0x8], ymm3
+               	vpmovzxbd	xmm0, xmm0      # xmm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero
+               	vcvtdq2ps	xmm0, xmm0
+               	vmovlps	qword ptr [rax + 0x28], xmm0
+               	movzx	ecx, r15b
+               	vcvtsi2ss	xmm3, xmm5, ecx
+               	vmovss	dword ptr [rax + 0x30], xmm3
+               	vshufps	xmm2, xmm2, xmm2, 0xff  # xmm2 = xmm2[3,3,3,3]
+               	vmovss	dword ptr [rax + 0x34], xmm2
+               	vpmovzxbd	xmm1, xmm1      # xmm1 = xmm1[0],zero,zero,zero,xmm1[1],zero,zero,zero,xmm1[2],zero,zero,zero,xmm1[3],zero,zero,zero
+               	vcvtdq2ps	xmm1, xmm1
+               	vshufps	xmm4, xmm1, xmm1, 0xd8  # xmm4 = xmm1[0,2,1,3]
+               	vmovups	xmmword ptr [rax + 0x38], xmm4
+               	vmovlps	qword ptr [rax + 0x48], xmm0
+               	movzx	ecx, byte ptr [rsp + 0x80]
+               	vcvtsi2ss	xmm0, xmm5, ecx
+               	vmovss	dword ptr [rax + 0x50], xmm3
+               	vmovss	dword ptr [rax + 0x54], xmm2
+               	vmovss	dword ptr [rax + 0x58], xmm0
+               	vshufps	xmm0, xmm1, xmm1, 0xe6  # xmm0 = xmm1[2,1,2,3]
+               	vmovlps	qword ptr [rax + 0x5c], xmm0
+               	vextractps	dword ptr [rax + 0x64], xmm1, 0x3
+               	jmp	 <L238>
+               	vmovdqa	xmmword ptr [rsp + 0x80], xmm0
+               	mov	rbx, qword ptr [rsp + 0x8]
+               	mov	r14, qword ptr [rsp + 0x10]
+               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
+               	mov	qword ptr [rbx + r14 - 0x10], rax
+               	mov	qword ptr [rbx + r14 - 0x8], 0x0
+               	mov	edi, 0x30
+               	vzeroupper
+               	call	 <_Znwm@plt>
+               	vpxor	xmm0, xmm0, xmm0
+               	vmovdqa	xmmword ptr [rax + 0x20], xmm0
+               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>+0x10>
+               	mov	qword ptr [rax], rcx
+               	mov	qword ptr [rbx + r14 - 0x8], rax
+               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>(std::in_place_type_t<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>)::'lambda'(std::any const&)::__invoke(std::any const&)>
+               	jmp	 <L239>
+               	vmovdqa	xmmword ptr [rsp + 0x80], xmm0
+               	mov	rbx, qword ptr [rsp + 0x8]
+               	mov	r14, qword ptr [rsp + 0x10]
+               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Rectangle>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
+               	mov	qword ptr [rbx + r14 - 0x10], rax
+               	mov	qword ptr [rbx + r14 - 0x8], 0x0
+               	mov	edi, 0x30
+               	vzeroupper
+               	call	 <_Znwm@plt>
+               	vpxor	xmm0, xmm0, xmm0
+               	vmovdqa	xmmword ptr [rax + 0x20], xmm0
+               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Rectangle>+0x10>
+               	mov	qword ptr [rax], rcx
+               	mov	qword ptr [rbx + r14 - 0x8], rax
+               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Rectangle>(std::in_place_type_t<Bodies3D::Rectangle>)::'lambda'(std::any const&)::__invoke(std::any const&)>
+               	jmp	 <L240>
+               	mov	rbx, qword ptr [rsp + 0x8]
+               	mov	r14, qword ptr [rsp + 0x10]
+               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Square>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
+               	mov	qword ptr [rbx + r14 - 0x10], rax
+               	mov	qword ptr [rbx + r14 - 0x8], 0x0
+               	mov	edi, 0x28
+               	vzeroupper
+               	call	 <_Znwm@plt>
+               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Square>+0x10>
+               	mov	qword ptr [rax], rcx
+               	mov	qword ptr [rbx + r14 - 0x8], rax
+               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Square>(std::in_place_type_t<Bodies3D::Square>)::'lambda'(std::any const&)::__invoke(std::any const&)>
+               	jmp	 <L235>
+               	vmovdqa	xmmword ptr [rsp + 0x80], xmm0
+               	mov	rbx, qword ptr [rsp + 0x8]
+               	mov	r14, qword ptr [rsp + 0x10]
+               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
+               	mov	qword ptr [rbx + r14 - 0x10], rax
+               	mov	qword ptr [rbx + r14 - 0x8], 0x0
+               	mov	edi, 0x30
+               	vzeroupper
+               	call	 <_Znwm@plt>
+               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>+0x10>
+               	mov	qword ptr [rax], rcx
+               	mov	qword ptr [rbx + r14 - 0x8], rax
+               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>(std::in_place_type_t<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>)::'lambda'(std::any const&)::__invoke(std::any const&)>
+               	mov	qword ptr [rbx + r14], rcx
+               	vmovdqa	xmm3, xmmword ptr [rsp + 0x80]
+               	vmovd	ecx, xmm3
+               	vmovdqa	xmm1, xmmword ptr [rsp + 0x40]
+               	vpinsrb	xmm0, xmm1, ecx, 0x7
+               	vpmovzxbd	ymm0, xmm0      # ymm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero,xmm0[4],zero,zero,zero,xmm0[5],zero,zero,zero,xmm0[6],zero,zero,zero,xmm0[7],zero,zero,zero
+               	vcvtdq2ps	ymm0, ymm0
+               	vpermilps	ymm0, ymm0, ymmword ptr  <strcmp+0x1860>
+               	vpsrlq	xmm1, xmm1, 0x38
+               	vpmovzxbq	xmm2, word ptr  <strcmp+0x189a>
+               	vpblendvb	xmm1, xmm3, xmm1, xmm2
+               	vmovups	ymmword ptr [rax + 0x8], ymm0
+               	vpmovzxbd	xmm0, xmm1      # xmm0 = xmm1[0],zero,zero,zero,xmm1[1],zero,zero,zero,xmm1[2],zero,zero,zero,xmm1[3],zero,zero,zero
+               	jmp	 <L241>
+               	vmovdqa	xmmword ptr [rsp + 0x80], xmm0
+               	mov	rbx, qword ptr [rsp + 0x8]
+               	mov	r14, qword ptr [rsp + 0x10]
+               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Ellipse>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
+               	mov	qword ptr [rbx + r14 - 0x10], rax
+               	mov	qword ptr [rbx + r14 - 0x8], 0x0
+               	mov	edi, 0x30
+               	vzeroupper
+               	call	 <_Znwm@plt>
+               	vpxor	xmm0, xmm0, xmm0
+               	vmovdqa	xmmword ptr [rax + 0x20], xmm0
+               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Ellipse>+0x10>
+               	mov	qword ptr [rax], rcx
+               	mov	qword ptr [rbx + r14 - 0x8], rax
+               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Ellipse>(std::in_place_type_t<Bodies3D::Ellipse>)::'lambda'(std::any const&)::__invoke(std::any const&)>
+<L240>:
+               	mov	qword ptr [rbx + r14], rcx
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x40]
+               	vcvtdq2ps	ymm0, ymm0
+               	vpermilps	ymm0, ymm0, ymmword ptr  <strcmp+0x1860>
+               	vmovups	ymmword ptr [rax + 0x8], ymm0
+               	vmovdqa	xmm0, xmmword ptr [rsp + 0x80]
+               	vpextrb	ecx, xmm0, 0x0
+               	jmp	 <L242>
+               	mov	rbx, qword ptr [rsp + 0x8]
+               	mov	r14, qword ptr [rsp + 0x10]
+               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Cube@Evaluation.CRTP.Cube>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
+               	mov	qword ptr [rbx + r14 - 0x10], rax
+               	mov	qword ptr [rbx + r14 - 0x8], 0x0
+               	mov	edi, 0x28
+               	vzeroupper
+               	call	 <_Znwm@plt>
+               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Cube@Evaluation.CRTP.Cube>+0x10>
+               	mov	qword ptr [rax], rcx
+               	mov	qword ptr [rbx + r14 - 0x8], rax
+               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Cube@Evaluation.CRTP.Cube>(std::in_place_type_t<Bodies3D::Cube@Evaluation.CRTP.Cube>)::'lambda'(std::any const&)::__invoke(std::any const&)>
+               	jmp	 <L235>
+               	vmovdqa	xmmword ptr [rsp + 0x80], xmm0
+               	mov	rbx, qword ptr [rsp + 0x8]
+               	mov	r14, qword ptr [rsp + 0x10]
+               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
+               	mov	qword ptr [rbx + r14 - 0x10], rax
+               	mov	qword ptr [rbx + r14 - 0x8], 0x0
+               	mov	edi, 0x30
+               	vzeroupper
+               	call	 <_Znwm@plt>
+               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>+0x10>
+               	mov	qword ptr [rax], rcx
+               	mov	qword ptr [rbx + r14 - 0x8], rax
+               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>(std::in_place_type_t<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>)::'lambda'(std::any const&)::__invoke(std::any const&)>
+<L236>:
+               	mov	qword ptr [rbx + r14], rcx
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x40]
+               	vcvtdq2ps	ymm0, ymm0
+               	vpermilps	ymm0, ymm0, ymmword ptr  <strcmp+0x1860>
+               	vmovups	ymmword ptr [rax + 0x8], ymm0
+               	vpmovzxbd	xmm0, dword ptr [rsp + 0x80]
+<L241>:
+               	vcvtdq2ps	xmm0, xmm0
+               	vmovlps	qword ptr [rax + 0x28], xmm0
+               	jmp	 <L238>
+               	vmovdqa	xmmword ptr [rsp + 0x80], xmm0
+               	mov	rbx, qword ptr [rsp + 0x8]
+               	mov	r14, qword ptr [rsp + 0x10]
+               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Cone@Evaluation.CRTP.Cone>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
+               	mov	qword ptr [rbx + r14 - 0x10], rax
+               	mov	qword ptr [rbx + r14 - 0x8], 0x0
+               	mov	edi, 0x30
+               	vzeroupper
+               	call	 <_Znwm@plt>
+               	vpxor	xmm0, xmm0, xmm0
+               	vmovdqa	xmmword ptr [rax + 0x20], xmm0
+               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Cone@Evaluation.CRTP.Cone>+0x10>
+               	mov	qword ptr [rax], rcx
+               	mov	qword ptr [rbx + r14 - 0x8], rax
+               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Cone@Evaluation.CRTP.Cone>(std::in_place_type_t<Bodies3D::Cone@Evaluation.CRTP.Cone>)::'lambda'(std::any const&)::__invoke(std::any const&)>
+<L239>:
+               	mov	qword ptr [rbx + r14], rcx
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x40]
+               	vcvtdq2ps	ymm0, ymm0
+               	vpermilps	ymm0, ymm0, ymmword ptr  <strcmp+0x1860>
+               	vmovups	ymmword ptr [rax + 0x8], ymm0
+               	vmovdqa	xmm0, xmmword ptr [rsp + 0x80]
+               	vpextrb	ecx, xmm0, 0x1
+<L242>:
+               	vcvtsi2ss	xmm0, xmm5, ecx
+               	vmovss	dword ptr [rax + 0x28], xmm0
+               	jmp	 <L238>
+               	mov	rbx, qword ptr [rsp + 0x8]
+               	mov	r14, qword ptr [rsp + 0x10]
+               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Sphere@Evaluation.CRTP.Sphere>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
+               	mov	qword ptr [rbx + r14 - 0x10], rax
+               	mov	qword ptr [rbx + r14 - 0x8], 0x0
+               	mov	edi, 0x28
+               	vzeroupper
+               	call	 <_Znwm@plt>
+               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Sphere@Evaluation.CRTP.Sphere>+0x10>
+               	mov	qword ptr [rax], rcx
+               	mov	qword ptr [rbx + r14 - 0x8], rax
+               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Sphere@Evaluation.CRTP.Sphere>(std::in_place_type_t<Bodies3D::Sphere@Evaluation.CRTP.Sphere>)::'lambda'(std::any const&)::__invoke(std::any const&)>
+<L235>:
+               	mov	qword ptr [rbx + r14], rcx
+               	vpmovzxbd	ymm0, qword ptr [rsp + 0x40]
+<L237>:
+               	vcvtdq2ps	ymm0, ymm0
+               	vpermilps	ymm0, ymm0, ymmword ptr  <strcmp+0x1860>
+               	vmovups	ymmword ptr [rax + 0x8], ymm0
+<L238>:
+               	mov	r10, qword ptr [rsp + 0x20]
+               	mov	rcx, qword ptr [rsp + 0x18]
+               	inc	rcx
+               	test	cl, 0x7
+               	mov	rbx, qword ptr [rsp + 0x298]
+               	jne	 <L243>
                	mov	rdx, qword ptr [rsp + 0x288]
                	mov	rax, rdx
                	shl	rax, 0x11
@@ -3398,351 +3743,6 @@ Disassembly of section .text:
                	rol	r13, 0x2d
                	add	qword ptr [rsp + 0x10], 0x18
                	cmp	qword ptr [rsp + 0x378], rcx
-               	je	 <L234>
-<L233>:
-               	mov	qword ptr [rsp + 0x18], rcx
-               	mov	qword ptr [rsp + 0x298], rbx
-               	mov	qword ptr [rsp + 0x20], r10
-               	vmovdqu	ymm2, ymmword ptr [rsp + 0x2a8]
-               	vmovdqu	ymm0, ymmword ptr [rsp + 0x2c8]
-               	vmovdqu	ymm1, ymmword ptr [rsp + 0x3f0]
-               	vmovdqu	ymmword ptr [rsp + 0x3d0], ymm0
-               	vpand	ymm0, ymm0, ymm1
-               	vmovdqu	ymmword ptr [rsp + 0x380], ymm2
-               	vpand	ymm1, ymm2, ymm1
-               	vpackusdw	ymm0, ymm1, ymm0
-               	vextracti128	xmm1, ymm0, 0x1
-               	vpackusdw	xmm0, xmm0, xmm1
-               	vpshufd	xmm0, xmm0, 0xd8        # xmm0 = xmm0[0,2,1,3]
-               	vpackuswb	xmm0, xmm0, xmm0
-               	vmovdqa	xmmword ptr [rsp + 0x40], xmm0
-               	vmovdqu	xmm0, xmmword ptr [rsp + 0x2e8]
-               	vpshufb	xmm0, xmm0, xmmword ptr  <strcmp+0x1850>
-               	movzx	ecx, al
-               	imul	ecx, ecx, 0x4f
-               	shr	ecx, 0xa
-               	lea	edx, [rcx + 2*rcx]
-               	lea	ecx, [rcx + 4*rdx]
-               	sub	al, cl
-               	movzx	eax, al
-               	lea	rcx,  <strcmp+0x189c>
-               	movsxd	rax, dword ptr [rcx + 4*rax]
-               	add	rax, rcx
-               	jmp	rax
-               	mov	rbx, qword ptr [rsp + 0x8]
-               	mov	r14, qword ptr [rsp + 0x10]
-               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Circle>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
-               	mov	qword ptr [rbx + r14 - 0x10], rax
-               	mov	qword ptr [rbx + r14 - 0x8], 0x0
-               	mov	edi, 0x28
-               	vzeroupper
-               	call	 <_Znwm@plt>
-               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Circle>+0x10>
-               	mov	qword ptr [rax], rcx
-               	mov	qword ptr [rbx + r14 - 0x8], rax
-               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Circle>(std::in_place_type_t<Bodies3D::Circle>)::'lambda'(std::any const&)::__invoke(std::any const&)>
-               	jmp	 <L235>
-               	vmovdqa	xmmword ptr [rsp + 0x80], xmm0
-               	mov	rbx, qword ptr [rsp + 0x8]
-               	mov	r14, qword ptr [rsp + 0x10]
-               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
-               	mov	qword ptr [rbx + r14 - 0x10], rax
-               	mov	qword ptr [rbx + r14 - 0x8], 0x0
-               	mov	edi, 0x30
-               	vzeroupper
-               	call	 <_Znwm@plt>
-               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>+0x10>
-               	mov	qword ptr [rax], rcx
-               	mov	qword ptr [rbx + r14 - 0x8], rax
-               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(std::in_place_type_t<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>)::'lambda'(std::any const&)::__invoke(std::any const&)>
-               	jmp	 <L236>
-               	vmovdqa	xmmword ptr [rsp + 0x80], xmm0
-               	mov	rbx, qword ptr [rsp + 0x8]
-               	mov	r14, qword ptr [rsp + 0x10]
-               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Triangle>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
-               	mov	qword ptr [rbx + r14 - 0x10], rax
-               	mov	qword ptr [rbx + r14 - 0x8], 0x0
-               	mov	edi, 0x30
-               	vzeroupper
-               	call	 <_Znwm@plt>
-               	vpxor	xmm0, xmm0, xmm0
-               	vmovdqa	xmmword ptr [rax + 0x20], xmm0
-               	vmovdqa	xmm1, xmmword ptr [rsp + 0x40]
-               	vpextrb	ecx, xmm1, 0x7
-               	lea	rdx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Triangle>+0x10>
-               	mov	qword ptr [rax], rdx
-               	vcvtsi2ss	xmm0, xmm5, ecx
-               	mov	qword ptr [rbx + r14 - 0x8], rax
-               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Triangle>(std::in_place_type_t<Bodies3D::Triangle>)::'lambda'(std::any const&)::__invoke(std::any const&)>
-               	mov	qword ptr [rbx + r14], rcx
-               	vmovss	dword ptr [rax + 0x28], xmm0
-               	vpunpcklbw	xmm0, xmm1, xmmword ptr [rsp + 0x80] # xmm0 = xmm1[0],mem[0],xmm1[1],mem[1],xmm1[2],mem[2],xmm1[3],mem[3],xmm1[4],mem[4],xmm1[5],mem[5],xmm1[6],mem[6],xmm1[7],mem[7]
-               	vpshufb	xmm0, xmm0, xmmword ptr  <strcmp+0x1830>
-               	vpmovzxbd	ymm0, xmm0      # ymm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero,xmm0[4],zero,zero,zero,xmm0[5],zero,zero,zero,xmm0[6],zero,zero,zero,xmm0[7],zero,zero,zero
-               	vcvtdq2ps	ymm0, ymm0
-               	jmp	 <L237>
-               	mov	qword ptr [rsp + 0x80], rsi
-               	vmovups	xmm0, xmmword ptr [rsp + 0x2f8]
-               	vmovaps	xmmword ptr [rsp + 0x3a0], xmm0
-               	vmovups	xmm0, xmmword ptr [rsp + 0x320]
-               	vmovaps	xmmword ptr [rsp + 0x3c0], xmm0
-               	vmovups	xmm0, xmmword ptr [rsp + 0x310]
-               	vmovaps	xmmword ptr [rsp + 0x3b0], xmm0
-               	mov	rbx, qword ptr [rsp + 0x8]
-               	mov	r14, qword ptr [rsp + 0x10]
-               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Head@Evaluation.CRTP.Head>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
-               	mov	qword ptr [rbx + r14 - 0x10], rax
-               	mov	qword ptr [rbx + r14 - 0x8], 0x0
-               	mov	edi, 0x68
-               	vzeroupper
-               	call	 <_Znwm@plt>
-               	vpbroadcastw	xmm2, word ptr  <strcmp+0x1898>
-               	vmovdqa	xmm0, xmmword ptr [rsp + 0x3a0]
-               	vpshufb	xmm0, xmm0, xmm2
-               	vmovdqa	xmm1, xmmword ptr [rsp + 0x3c0]
-               	vpshufb	xmm1, xmm1, xmm2
-               	vmovdqa	xmm3, xmmword ptr [rsp + 0x3b0]
-               	vpshufb	xmm2, xmm3, xmm2
-               	vpunpcklwd	xmm1, xmm2, xmm1 # xmm1 = xmm2[0],xmm1[0],xmm2[1],xmm1[1],xmm2[2],xmm1[2],xmm2[3],xmm1[3]
-               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Head@Evaluation.CRTP.Head>+0x10>
-               	mov	qword ptr [rax], rcx
-               	mov	qword ptr [rbx + r14 - 0x8], rax
-               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Head@Evaluation.CRTP.Head>(std::in_place_type_t<Bodies3D::Head@Evaluation.CRTP.Head>)::'lambda'(std::any const&)::__invoke(std::any const&)>
-               	mov	qword ptr [rbx + r14], rcx
-               	vpmovzxbd	ymm2, qword ptr [rsp + 0x40]
-               	vcvtdq2ps	ymm2, ymm2
-               	vpermilps	ymm3, ymm2, ymmword ptr  <strcmp+0x1860>
-               	vmovups	ymmword ptr [rax + 0x8], ymm3
-               	vpmovzxbd	xmm0, xmm0      # xmm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero
-               	vcvtdq2ps	xmm0, xmm0
-               	vmovlps	qword ptr [rax + 0x28], xmm0
-               	movzx	ecx, r15b
-               	vcvtsi2ss	xmm3, xmm5, ecx
-               	vmovss	dword ptr [rax + 0x30], xmm3
-               	vshufps	xmm2, xmm2, xmm2, 0xff  # xmm2 = xmm2[3,3,3,3]
-               	vmovss	dword ptr [rax + 0x34], xmm2
-               	vpmovzxbd	xmm1, xmm1      # xmm1 = xmm1[0],zero,zero,zero,xmm1[1],zero,zero,zero,xmm1[2],zero,zero,zero,xmm1[3],zero,zero,zero
-               	vcvtdq2ps	xmm1, xmm1
-               	vshufps	xmm4, xmm1, xmm1, 0xd8  # xmm4 = xmm1[0,2,1,3]
-               	vmovups	xmmword ptr [rax + 0x38], xmm4
-               	vmovlps	qword ptr [rax + 0x48], xmm0
-               	movzx	ecx, byte ptr [rsp + 0x80]
-               	vcvtsi2ss	xmm0, xmm5, ecx
-               	vmovss	dword ptr [rax + 0x50], xmm3
-               	vmovss	dword ptr [rax + 0x54], xmm2
-               	vmovss	dword ptr [rax + 0x58], xmm0
-               	vshufps	xmm0, xmm1, xmm1, 0xe6  # xmm0 = xmm1[2,1,2,3]
-               	vmovlps	qword ptr [rax + 0x5c], xmm0
-               	vextractps	dword ptr [rax + 0x64], xmm1, 0x3
-               	jmp	 <L238>
-               	vmovdqa	xmmword ptr [rsp + 0x80], xmm0
-               	mov	rbx, qword ptr [rsp + 0x8]
-               	mov	r14, qword ptr [rsp + 0x10]
-               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
-               	mov	qword ptr [rbx + r14 - 0x10], rax
-               	mov	qword ptr [rbx + r14 - 0x8], 0x0
-               	mov	edi, 0x30
-               	vzeroupper
-               	call	 <_Znwm@plt>
-               	vpxor	xmm0, xmm0, xmm0
-               	vmovdqa	xmmword ptr [rax + 0x20], xmm0
-               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>+0x10>
-               	mov	qword ptr [rax], rcx
-               	mov	qword ptr [rbx + r14 - 0x8], rax
-               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>(std::in_place_type_t<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>)::'lambda'(std::any const&)::__invoke(std::any const&)>
-               	jmp	 <L239>
-               	vmovdqa	xmmword ptr [rsp + 0x80], xmm0
-               	mov	rbx, qword ptr [rsp + 0x8]
-               	mov	r14, qword ptr [rsp + 0x10]
-               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Rectangle>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
-               	mov	qword ptr [rbx + r14 - 0x10], rax
-               	mov	qword ptr [rbx + r14 - 0x8], 0x0
-               	mov	edi, 0x30
-               	vzeroupper
-               	call	 <_Znwm@plt>
-               	vpxor	xmm0, xmm0, xmm0
-               	vmovdqa	xmmword ptr [rax + 0x20], xmm0
-               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Rectangle>+0x10>
-               	mov	qword ptr [rax], rcx
-               	mov	qword ptr [rbx + r14 - 0x8], rax
-               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Rectangle>(std::in_place_type_t<Bodies3D::Rectangle>)::'lambda'(std::any const&)::__invoke(std::any const&)>
-               	jmp	 <L240>
-               	mov	rbx, qword ptr [rsp + 0x8]
-               	mov	r14, qword ptr [rsp + 0x10]
-               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Square>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
-               	mov	qword ptr [rbx + r14 - 0x10], rax
-               	mov	qword ptr [rbx + r14 - 0x8], 0x0
-               	mov	edi, 0x28
-               	vzeroupper
-               	call	 <_Znwm@plt>
-               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Square>+0x10>
-               	mov	qword ptr [rax], rcx
-               	mov	qword ptr [rbx + r14 - 0x8], rax
-               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Square>(std::in_place_type_t<Bodies3D::Square>)::'lambda'(std::any const&)::__invoke(std::any const&)>
-               	jmp	 <L235>
-               	vmovdqa	xmmword ptr [rsp + 0x80], xmm0
-               	mov	rbx, qword ptr [rsp + 0x8]
-               	mov	r14, qword ptr [rsp + 0x10]
-               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
-               	mov	qword ptr [rbx + r14 - 0x10], rax
-               	mov	qword ptr [rbx + r14 - 0x8], 0x0
-               	mov	edi, 0x30
-               	vzeroupper
-               	call	 <_Znwm@plt>
-               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>+0x10>
-               	mov	qword ptr [rax], rcx
-               	mov	qword ptr [rbx + r14 - 0x8], rax
-               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>(std::in_place_type_t<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>)::'lambda'(std::any const&)::__invoke(std::any const&)>
-               	mov	qword ptr [rbx + r14], rcx
-               	vmovdqa	xmm1, xmmword ptr [rsp + 0x40]
-               	vmovdqa	xmm3, xmmword ptr [rsp + 0x80]
-               	vpunpcklbw	xmm0, xmm1, xmm3 # xmm0 = xmm1[0],xmm3[0],xmm1[1],xmm3[1],xmm1[2],xmm3[2],xmm1[3],xmm3[3],xmm1[4],xmm3[4],xmm1[5],xmm3[5],xmm1[6],xmm3[6],xmm1[7],xmm3[7]
-               	vpshufb	xmm0, xmm0, xmmword ptr  <strcmp+0x1830>
-               	vpmovzxbd	ymm0, xmm0      # ymm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero,xmm0[4],zero,zero,zero,xmm0[5],zero,zero,zero,xmm0[6],zero,zero,zero,xmm0[7],zero,zero,zero
-               	vcvtdq2ps	ymm0, ymm0
-               	vpsrlq	xmm1, xmm1, 0x38
-               	vpmovzxbq	xmm2, word ptr  <strcmp+0x189a>
-               	vpblendvb	xmm1, xmm3, xmm1, xmm2
-               	vmovups	ymmword ptr [rax + 0x8], ymm0
-               	vpmovzxbd	xmm0, xmm1      # xmm0 = xmm1[0],zero,zero,zero,xmm1[1],zero,zero,zero,xmm1[2],zero,zero,zero,xmm1[3],zero,zero,zero
-               	jmp	 <L241>
-               	vmovdqa	xmmword ptr [rsp + 0x80], xmm0
-               	mov	rbx, qword ptr [rsp + 0x8]
-               	mov	r14, qword ptr [rsp + 0x10]
-               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Ellipse>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
-               	mov	qword ptr [rbx + r14 - 0x10], rax
-               	mov	qword ptr [rbx + r14 - 0x8], 0x0
-               	mov	edi, 0x30
-               	vzeroupper
-               	call	 <_Znwm@plt>
-               	vpxor	xmm0, xmm0, xmm0
-               	vmovdqa	xmmword ptr [rax + 0x20], xmm0
-               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Ellipse>+0x10>
-               	mov	qword ptr [rax], rcx
-               	mov	qword ptr [rbx + r14 - 0x8], rax
-               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Ellipse>(std::in_place_type_t<Bodies3D::Ellipse>)::'lambda'(std::any const&)::__invoke(std::any const&)>
-<L240>:
-               	mov	qword ptr [rbx + r14], rcx
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x40]
-               	vcvtdq2ps	ymm0, ymm0
-               	vpermilps	ymm0, ymm0, ymmword ptr  <strcmp+0x1860>
-               	vmovups	ymmword ptr [rax + 0x8], ymm0
-               	vmovdqa	xmm0, xmmword ptr [rsp + 0x80]
-               	vpextrb	ecx, xmm0, 0x0
-               	jmp	 <L242>
-               	mov	rbx, qword ptr [rsp + 0x8]
-               	mov	r14, qword ptr [rsp + 0x10]
-               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Cube@Evaluation.CRTP.Cube>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
-               	mov	qword ptr [rbx + r14 - 0x10], rax
-               	mov	qword ptr [rbx + r14 - 0x8], 0x0
-               	mov	edi, 0x28
-               	vzeroupper
-               	call	 <_Znwm@plt>
-               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Cube@Evaluation.CRTP.Cube>+0x10>
-               	mov	qword ptr [rax], rcx
-               	mov	qword ptr [rbx + r14 - 0x8], rax
-               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Cube@Evaluation.CRTP.Cube>(std::in_place_type_t<Bodies3D::Cube@Evaluation.CRTP.Cube>)::'lambda'(std::any const&)::__invoke(std::any const&)>
-               	jmp	 <L235>
-               	vmovdqa	xmmword ptr [rsp + 0x80], xmm0
-               	mov	rbx, qword ptr [rsp + 0x8]
-               	mov	r14, qword ptr [rsp + 0x10]
-               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
-               	mov	qword ptr [rbx + r14 - 0x10], rax
-               	mov	qword ptr [rbx + r14 - 0x8], 0x0
-               	mov	edi, 0x30
-               	vzeroupper
-               	call	 <_Znwm@plt>
-               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>+0x10>
-               	mov	qword ptr [rax], rcx
-               	mov	qword ptr [rbx + r14 - 0x8], rax
-               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>(std::in_place_type_t<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>)::'lambda'(std::any const&)::__invoke(std::any const&)>
-<L236>:
-               	mov	qword ptr [rbx + r14], rcx
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x40]
-               	vcvtdq2ps	ymm0, ymm0
-               	vpermilps	ymm0, ymm0, ymmword ptr  <strcmp+0x1860>
-               	vmovups	ymmword ptr [rax + 0x8], ymm0
-               	vpmovzxbd	xmm0, dword ptr [rsp + 0x80]
-<L241>:
-               	vcvtdq2ps	xmm0, xmm0
-               	vmovlps	qword ptr [rax + 0x28], xmm0
-               	jmp	 <L238>
-               	vmovdqa	xmmword ptr [rsp + 0x80], xmm0
-               	mov	rbx, qword ptr [rsp + 0x8]
-               	mov	r14, qword ptr [rsp + 0x10]
-               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Cone@Evaluation.CRTP.Cone>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
-               	mov	qword ptr [rbx + r14 - 0x10], rax
-               	mov	qword ptr [rbx + r14 - 0x8], 0x0
-               	mov	edi, 0x30
-               	vzeroupper
-               	call	 <_Znwm@plt>
-               	vpxor	xmm0, xmm0, xmm0
-               	vmovdqa	xmmword ptr [rax + 0x20], xmm0
-               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Cone@Evaluation.CRTP.Cone>+0x10>
-               	mov	qword ptr [rax], rcx
-               	mov	qword ptr [rbx + r14 - 0x8], rax
-               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Cone@Evaluation.CRTP.Cone>(std::in_place_type_t<Bodies3D::Cone@Evaluation.CRTP.Cone>)::'lambda'(std::any const&)::__invoke(std::any const&)>
-<L239>:
-               	mov	qword ptr [rbx + r14], rcx
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x40]
-               	vcvtdq2ps	ymm0, ymm0
-               	vpermilps	ymm0, ymm0, ymmword ptr  <strcmp+0x1860>
-               	vmovups	ymmword ptr [rax + 0x8], ymm0
-               	vmovdqa	xmm0, xmmword ptr [rsp + 0x80]
-               	vpextrb	ecx, xmm0, 0x1
-<L242>:
-               	vcvtsi2ss	xmm0, xmm5, ecx
-               	vmovss	dword ptr [rax + 0x28], xmm0
-               	jmp	 <L238>
-               	mov	rbx, qword ptr [rsp + 0x8]
-               	mov	r14, qword ptr [rsp + 0x10]
-               	lea	rax,  <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Sphere@Evaluation.CRTP.Sphere>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>
-               	mov	qword ptr [rbx + r14 - 0x10], rax
-               	mov	qword ptr [rbx + r14 - 0x8], 0x0
-               	mov	edi, 0x28
-               	vzeroupper
-               	call	 <_Znwm@plt>
-               	lea	rcx,  <vtable for Bodies3D::BodyAdapter<Bodies3D::Sphere@Evaluation.CRTP.Sphere>+0x10>
-               	mov	qword ptr [rax], rcx
-               	mov	qword ptr [rbx + r14 - 0x8], rax
-               	lea	rcx,  <Bodies3D::AnyBody::AnyBody<Bodies3D::Sphere@Evaluation.CRTP.Sphere>(std::in_place_type_t<Bodies3D::Sphere@Evaluation.CRTP.Sphere>)::'lambda'(std::any const&)::__invoke(std::any const&)>
-<L235>:
-               	mov	qword ptr [rbx + r14], rcx
-               	vpmovzxbd	ymm0, qword ptr [rsp + 0x40]
-               	vcvtdq2ps	ymm0, ymm0
-               	vpermilps	ymm0, ymm0, ymmword ptr  <strcmp+0x1860>
-<L237>:
-               	vmovups	ymmword ptr [rax + 0x8], ymm0
-<L238>:
-               	mov	r10, qword ptr [rsp + 0x20]
-               	mov	rcx, qword ptr [rsp + 0x18]
-               	inc	rcx
-               	test	cl, 0x7
-               	mov	rbx, qword ptr [rsp + 0x298]
-               	je	 <L243>
-               	vmovdqu	ymm0, ymmword ptr [rsp + 0x3d0]
-               	vpblendd	ymm0, ymm0, ymmword ptr [rsp + 0x380], 0xc0 # ymm0 = ymm0[0,1,2,3,4,5],mem[6,7]
-               	vpermq	ymm0, ymm0, 0x93        # ymm0 = ymm0[3,0,1,2]
-               	vmovdqu	ymm1, ymmword ptr [rsp + 0x2a0]
-               	vmovdqu	ymm2, ymmword ptr [rsp + 0x2e0]
-               	vmovdqu	ymm3, ymmword ptr [rsp + 0x300]
-               	vmovdqu	ymm4, ymmword ptr [rsp + 0x320]
-               	vpsrlq	ymm1, ymm1, 0x8
-               	vmovdqu	ymmword ptr [rsp + 0x2a0], ymm1
-               	vpsrlq	ymm0, ymm0, 0x8
-               	vmovdqu	ymmword ptr [rsp + 0x2c0], ymm0
-               	vpsrlq	ymm0, ymm2, 0x8
-               	vmovdqu	ymmword ptr [rsp + 0x2e0], ymm0
-               	vpsrlq	ymm0, ymm3, 0x8
-               	vmovdqu	ymmword ptr [rsp + 0x300], ymm0
-               	vpsrlq	ymm2, ymm4, 0x8
-               	vmovdqu	ymmword ptr [rsp + 0x320], ymm2
-               	vmovq	rax, xmm1
-               	vpextrq	r15, xmm0, 0x1
-               	vextracti128	xmm0, ymm2, 0x1
-               	vmovq	rsi, xmm0
-               	add	qword ptr [rsp + 0x10], 0x18
-               	cmp	qword ptr [rsp + 0x378], rcx
                	jne	 <L233>
 <L234>:
                	shl	rcx, 0x3
@@ -3760,7 +3760,7 @@ Disassembly of section .text:
                	vmovups	ymmword ptr [rsp + 0x2a0], ymm0
                	mov	r15, qword ptr [rsp + 0x8]
                	jmp	 <L245>
-               	nop	dword ptr [rax + rax]
+               	nop	word ptr [rax + rax]
 <L246>:
                	vmovss	xmm0, dword ptr [rsp + 0x2a4]
                	vmovss	dword ptr [rsp + 0x2a8], xmm0

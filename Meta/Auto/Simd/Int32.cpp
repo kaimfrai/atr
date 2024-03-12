@@ -1,12 +1,15 @@
-module;
-
-#include <immintrin.h>
-
 export module Meta.Auto.Simd.Int32;
 
 import Meta.Auto.Simd.Tag;
 
 import Std;
+
+using
+	SimdOp
+=	::Std::SimdOp
+	<	::std::int32_t
+	>
+;
 
 export namespace
 	Meta
@@ -51,7 +54,7 @@ export namespace
 		->	Auto
 		{	return
 			{	.	m_vRaw
-				=	_mm256_sllv_epi32
+				=	::SimdOp::BitShiftLeft
 					(	i_vLeft
 						.	m_vRaw
 					,	i_vRight
@@ -72,7 +75,7 @@ export namespace
 		->	Auto
 		{	return
 			{	.	m_vRaw
-				=	_mm256_slli_epi32
+				=	::SimdOp::BitShiftLeft
 					(	i_vLeft
 						.	m_vRaw
 					,	i_vRight
@@ -125,7 +128,7 @@ export namespace
 		->	Auto
 		{	return
 			{	.	m_vRaw
-				=	{	_mm256_sllv_epi32
+				=	{	::SimdOp::BitShiftLeft
 						(	i_vLeft
 							.	m_vRaw
 								[	0uz
@@ -135,7 +138,7 @@ export namespace
 								[	0uz
 								]
 						)
-					,	_mm256_sllv_epi32
+					,	::SimdOp::BitShiftLeft
 						(	i_vLeft
 							.	m_vRaw
 								[	1uz
@@ -161,14 +164,14 @@ export namespace
 		->	Auto
 		{	return
 			{	.	m_vRaw
-				=	{	_mm256_slli_epi32
+				=	{	::SimdOp::BitShiftLeft
 						(	i_vLeft
 							.	m_vRaw
 								[	0uz
 								]
 						,	i_vRight
 						)
-					,	_mm256_slli_epi32
+					,	::SimdOp::BitShiftLeft
 						(	i_vLeft
 							.	m_vRaw
 								[	1uz

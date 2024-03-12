@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <memset+0x7c40>
+               	call	qword ptr  <memset+0x7c50>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x7c50>
+               	mov	rax, qword ptr  <memset+0x7c60>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x7c58>
+               	mov	rax, qword ptr  <memset+0x7c68>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <memset+0x7c60>
+               	cmp	qword ptr , 0x0 <memset+0x7c70>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -765,7 +765,7 @@ Disassembly of section .text:
                	movsxd	rax, ebx
                	shl	rax, 0x4
                	lea	rdi, [rax + 4*rax]
-               	mov	rsi, qword ptr  <memset+0x7c68>
+               	mov	rsi, qword ptr  <memset+0x7c78>
                	call	 <_ZnamRKSt9nothrow_t@plt>
                	movsxd	rdx, r14d
                	movabs	rsi, -0x61c8864680b583eb
@@ -2996,12 +2996,11 @@ Disassembly of section .text:
                	vpbroadcastq	ymm5, qword ptr  <memset+0x1280>
                	vpbroadcastw	xmm6, word ptr  <memset+0x1318>
                	vmovaps	ymm7, ymmword ptr  <memset+0x12e0>
-               	vmovq	xmm8, qword ptr  <memset+0x1290>
                	mov	r8, qword ptr [rsp + 0x20]
                	vmovdqu	ymmword ptr [rsp + 0x3a0], ymm5
                	jmp	 <L233>
-               	nop	word ptr [rax + rax]
-<L238>:
+               	nop
+<L237>:
                	mov	rdi, qword ptr [rsp + 0x250]
                	mov	rax, rdi
                	shl	rax, 0x11
@@ -3430,8 +3429,8 @@ Disassembly of section .text:
                	je	 <L234>
 <L233>:
                	vmovdqu	ymm4, ymmword ptr [rsp + 0x288]
-               	vmovdqu	ymm9, ymmword ptr [rsp + 0x2a8]
-               	vpand	ymm0, ymm9, ymm5
+               	vmovdqu	ymm8, ymmword ptr [rsp + 0x2a8]
+               	vpand	ymm0, ymm8, ymm5
                	vpand	ymm1, ymm4, ymm5
                	vpackusdw	ymm0, ymm1, ymm0
                	vextracti128	xmm1, ymm0, 0x1
@@ -3465,28 +3464,36 @@ Disassembly of section .text:
                	vpmovzxbd	ymm1, xmm2      # ymm1 = xmm2[0],zero,zero,zero,xmm2[1],zero,zero,zero,xmm2[2],zero,zero,zero,xmm2[3],zero,zero,zero,xmm2[4],zero,zero,zero,xmm2[5],zero,zero,zero,xmm2[6],zero,zero,zero,xmm2[7],zero,zero,zero
                	vcvtdq2ps	ymm1, ymm1
                	vpermilps	ymm1, ymm1, ymm7
-               	jmp	 <L236>
+               	vmovups	ymmword ptr [rax + r13 - 0x30], ymm1
+               	vpmovzxbd	xmm0, xmm0      # xmm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero
+               	vcvtdq2ps	xmm0, xmm0
+               	vmovlps	qword ptr [rax + r13 - 0x10], xmm0
+               	inc	r9
+               	test	r9b, 0x7
+               	jne	 <L236>
+               	jmp	 <L237>
                	vpextrb	eax, xmm2, 0x7
-               	vcvtsi2ss	xmm1, xmm11, eax
+               	vcvtsi2ss	xmm1, xmm10, eax
                	mov	rax, qword ptr [rsp + 0x8]
                	lea	rcx,  <dyno::detail::static_vtable<dyno::local_vtable<boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::method_t<float () const>>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T&&)>>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T const&)>>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (dyno::T&)>>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::function_t<dyno::storage_info ()>>>, dyno::concept_map_t<dyno::concept_<Bodies3D::VolumeComputer, dyno::Destructible, dyno::Storable>, Bodies3D::Triangle, boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Triangle, void>::'lambda'(Bodies3D::Triangle const&)>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::CopyConstructible, Bodies3D::Triangle, void>::'lambda'(void*, Bodies3D::Triangle const&)>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::MoveConstructible, Bodies3D::Triangle, void>::'lambda'(void*, Bodies3D::Triangle&&)>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::Destructible, Bodies3D::Triangle, void>::'lambda'(Bodies3D::Triangle&)>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::default_concept_map<dyno::Storable, Bodies3D::Triangle, void>::'lambda'()>>>>
                	mov	qword ptr [rax + r13 - 0x40], rcx
                	mov	byte ptr [rax + r13], 0x0
                	vpunpcklbw	xmm0, xmm2, xmm0 # xmm0 = xmm2[0],xmm0[0],xmm2[1],xmm0[1],xmm2[2],xmm0[2],xmm2[3],xmm0[3],xmm2[4],xmm0[4],xmm2[5],xmm0[5],xmm2[6],xmm0[6],xmm2[7],xmm0[7]
-               	vpshufb	xmm0, xmm0, xmm8
+               	vpshufb	xmm0, xmm0, xmmword ptr  <memset+0x12a0>
                	vpmovzxbd	ymm0, xmm0      # ymm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero,xmm0[4],zero,zero,zero,xmm0[5],zero,zero,zero,xmm0[6],zero,zero,zero,xmm0[7],zero,zero,zero
                	vcvtdq2ps	ymm0, ymm0
+               	vpermilps	ymm0, ymm0, ymm7
                	vmovups	ymmword ptr [rax + r13 - 0x30], ymm0
                	vmovss	dword ptr [rax + r13 - 0x10], xmm1
                	inc	r9
                	test	r9b, 0x7
-               	jne	 <L237>
-               	jmp	 <L238>
+               	jne	 <L236>
+               	jmp	 <L237>
                	movzx	eax, cl
-               	vcvtsi2ss	xmm0, xmm11, eax
+               	vcvtsi2ss	xmm0, xmm10, eax
                	vmovss	dword ptr [rsp + 0x27c], xmm0
                	movzx	eax, dl
-               	vcvtsi2ss	xmm0, xmm11, eax
+               	vcvtsi2ss	xmm0, xmm10, eax
                	vmovss	dword ptr [rsp + 0x268], xmm0
                	mov	qword ptr [rsp + 0x20], r8
                	mov	qword ptr [rsp + 0x18], r11
@@ -3501,13 +3508,12 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x30], r10
                	mov	r12, r9
                	vmovdqu	ymmword ptr [rsp + 0x350], ymm4
-               	vmovdqu	ymmword ptr [rsp + 0x370], ymm9
+               	vmovdqu	ymmword ptr [rsp + 0x370], ymm8
                	vmovdqa	xmmword ptr [rsp + 0x390], xmm2
                	vzeroupper
                	call	 <malloc@plt>
-               	vmovdqu	ymm9, ymmword ptr [rsp + 0x370]
+               	vmovdqu	ymm8, ymmword ptr [rsp + 0x370]
                	vmovdqu	ymm4, ymmword ptr [rsp + 0x350]
-               	vmovq	xmm8, qword ptr  <memset+0x1290>
                	vmovaps	ymm7, ymmword ptr  <memset+0x12e0>
                	vpbroadcastw	xmm6, word ptr  <memset+0x1318>
                	vmovdqu	ymm5, ymmword ptr [rsp + 0x3a0]
@@ -3524,11 +3530,11 @@ Disassembly of section .text:
                	vpermilps	ymm1, ymm0, ymm7
                	vmovups	ymmword ptr [rax], ymm1
                	vmovdqu	xmm1, xmmword ptr [rsp + 0x2d8]
-               	vpshufb	xmm1, xmm1, xmmword ptr  <memset+0x12a0>
+               	vpshufb	xmm1, xmm1, xmmword ptr  <memset+0x1290>
                	vcvtdq2ps	xmm1, xmm1
                	vmovlps	qword ptr [rax + 0x20], xmm1
-               	vmovss	xmm10, dword ptr [rsp + 0x27c]
-               	vmovss	dword ptr [rax + 0x28], xmm10
+               	vmovss	xmm9, dword ptr [rsp + 0x27c]
+               	vmovss	dword ptr [rax + 0x28], xmm9
                	vshufps	xmm0, xmm0, xmm0, 0xff  # xmm0 = xmm0[3,3,3,3]
                	vmovss	dword ptr [rax + 0x2c], xmm0
                	vmovups	xmm2, xmmword ptr [rsp + 0x2f0]
@@ -3538,7 +3544,7 @@ Disassembly of section .text:
                	vshufps	xmm3, xmm2, xmm2, 0xd8  # xmm3 = xmm2[0,2,1,3]
                	vmovups	xmmword ptr [rax + 0x30], xmm3
                	vmovlps	qword ptr [rax + 0x40], xmm1
-               	vmovss	dword ptr [rax + 0x48], xmm10
+               	vmovss	dword ptr [rax + 0x48], xmm9
                	vmovss	dword ptr [rax + 0x4c], xmm0
                	vmovss	xmm0, dword ptr [rsp + 0x268]
                	vmovss	dword ptr [rax + 0x50], xmm0
@@ -3547,49 +3553,49 @@ Disassembly of section .text:
                	vextractps	dword ptr [rax + 0x5c], xmm2, 0x3
                	inc	r9
                	test	r9b, 0x7
-               	jne	 <L237>
-               	jmp	 <L238>
+               	jne	 <L236>
+               	jmp	 <L237>
                	vpextrb	eax, xmm0, 0x1
-               	vcvtsi2ss	xmm0, xmm11, eax
+               	vcvtsi2ss	xmm0, xmm10, eax
                	mov	rax, qword ptr [rsp + 0x8]
                	lea	rcx,  <dyno::detail::static_vtable<dyno::local_vtable<boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::method_t<float () const>>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T&&)>>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T const&)>>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (dyno::T&)>>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::function_t<dyno::storage_info ()>>>, dyno::concept_map_t<dyno::concept_<Bodies3D::VolumeComputer, dyno::Destructible, dyno::Storable>, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, void>::'lambda'(Bodies3D::Cylinder@Evaluation.CRTP.Cylinder const&)>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::CopyConstructible, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, void>::'lambda'(void*, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder const&)>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::MoveConstructible, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, void>::'lambda'(void*, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder&&)>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::Destructible, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, void>::'lambda'(Bodies3D::Cylinder@Evaluation.CRTP.Cylinder&)>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::default_concept_map<dyno::Storable, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, void>::'lambda'()>>>>
-               	jmp	 <L239>
+               	jmp	 <L238>
                	vpextrb	eax, xmm0, 0x0
-               	vcvtsi2ss	xmm0, xmm11, eax
+               	vcvtsi2ss	xmm0, xmm10, eax
                	mov	rax, qword ptr [rsp + 0x8]
                	lea	rcx,  <dyno::detail::static_vtable<dyno::local_vtable<boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::method_t<float () const>>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T&&)>>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T const&)>>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (dyno::T&)>>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::function_t<dyno::storage_info ()>>>, dyno::concept_map_t<dyno::concept_<Bodies3D::VolumeComputer, dyno::Destructible, dyno::Storable>, Bodies3D::Rectangle, boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Rectangle, void>::'lambda'(Bodies3D::Rectangle const&)>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::CopyConstructible, Bodies3D::Rectangle, void>::'lambda'(void*, Bodies3D::Rectangle const&)>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::MoveConstructible, Bodies3D::Rectangle, void>::'lambda'(void*, Bodies3D::Rectangle&&)>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::Destructible, Bodies3D::Rectangle, void>::'lambda'(Bodies3D::Rectangle&)>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::default_concept_map<dyno::Storable, Bodies3D::Rectangle, void>::'lambda'()>>>>
-               	jmp	 <L239>
+               	jmp	 <L238>
                	mov	rax, qword ptr [rsp + 0x8]
                	lea	rcx,  <dyno::detail::static_vtable<dyno::local_vtable<boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::method_t<float () const>>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T&&)>>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T const&)>>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (dyno::T&)>>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::function_t<dyno::storage_info ()>>>, dyno::concept_map_t<dyno::concept_<Bodies3D::VolumeComputer, dyno::Destructible, dyno::Storable>, Bodies3D::Square, boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Square, void>::'lambda'(Bodies3D::Square const&)>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::CopyConstructible, Bodies3D::Square, void>::'lambda'(void*, Bodies3D::Square const&)>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::MoveConstructible, Bodies3D::Square, void>::'lambda'(void*, Bodies3D::Square&&)>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::Destructible, Bodies3D::Square, void>::'lambda'(Bodies3D::Square&)>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::default_concept_map<dyno::Storable, Bodies3D::Square, void>::'lambda'()>>>>
-               	jmp	 <L240>
-               	mov	rax, qword ptr [rsp + 0x8]
-               	lea	rcx,  <dyno::detail::static_vtable<dyno::local_vtable<boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::method_t<float () const>>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T&&)>>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T const&)>>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (dyno::T&)>>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::function_t<dyno::storage_info ()>>>, dyno::concept_map_t<dyno::concept_<Bodies3D::VolumeComputer, dyno::Destructible, dyno::Storable>, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, void>::'lambda'(Bodies3D::Pyramid@Evaluation.CRTP.Pyramid const&)>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::CopyConstructible, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, void>::'lambda'(void*, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid const&)>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::MoveConstructible, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, void>::'lambda'(void*, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid&&)>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::Destructible, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, void>::'lambda'(Bodies3D::Pyramid@Evaluation.CRTP.Pyramid&)>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::default_concept_map<dyno::Storable, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, void>::'lambda'()>>>>
-               	mov	qword ptr [rax + r13 - 0x40], rcx
-               	mov	byte ptr [rax + r13], 0x0
-               	vpunpcklbw	xmm1, xmm2, xmm0 # xmm1 = xmm2[0],xmm0[0],xmm2[1],xmm0[1],xmm2[2],xmm0[2],xmm2[3],xmm0[3],xmm2[4],xmm0[4],xmm2[5],xmm0[5],xmm2[6],xmm0[6],xmm2[7],xmm0[7]
-               	vpshufb	xmm1, xmm1, xmm8
+               	jmp	 <L239>
+               	vmovd	eax, xmm0
+               	mov	rcx, qword ptr [rsp + 0x8]
+               	lea	rdx,  <dyno::detail::static_vtable<dyno::local_vtable<boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::method_t<float () const>>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T&&)>>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T const&)>>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (dyno::T&)>>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::function_t<dyno::storage_info ()>>>, dyno::concept_map_t<dyno::concept_<Bodies3D::VolumeComputer, dyno::Destructible, dyno::Storable>, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, void>::'lambda'(Bodies3D::Pyramid@Evaluation.CRTP.Pyramid const&)>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::CopyConstructible, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, void>::'lambda'(void*, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid const&)>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::MoveConstructible, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, void>::'lambda'(void*, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid&&)>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::Destructible, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, void>::'lambda'(Bodies3D::Pyramid@Evaluation.CRTP.Pyramid&)>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::default_concept_map<dyno::Storable, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, void>::'lambda'()>>>>
+               	mov	qword ptr [rcx + r13 - 0x40], rdx
+               	mov	byte ptr [rcx + r13], 0x0
+               	vpinsrb	xmm1, xmm2, eax, 0x7
                	vpmovzxbd	ymm1, xmm1      # ymm1 = xmm1[0],zero,zero,zero,xmm1[1],zero,zero,zero,xmm1[2],zero,zero,zero,xmm1[3],zero,zero,zero,xmm1[4],zero,zero,zero,xmm1[5],zero,zero,zero,xmm1[6],zero,zero,zero,xmm1[7],zero,zero,zero
                	vcvtdq2ps	ymm1, ymm1
+               	vpermilps	ymm1, ymm1, ymm7
                	vpsrlq	xmm2, xmm2, 0x38
                	vpmovzxbq	xmm3, word ptr  <memset+0x131a>
                	vpblendvb	xmm0, xmm0, xmm2, xmm3
-<L236>:
-               	vmovups	ymmword ptr [rax + r13 - 0x30], ymm1
+               	vmovups	ymmword ptr [rcx + r13 - 0x30], ymm1
                	vpmovzxbd	xmm0, xmm0      # xmm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero
                	vcvtdq2ps	xmm0, xmm0
-               	vmovlps	qword ptr [rax + r13 - 0x10], xmm0
+               	vmovlps	qword ptr [rcx + r13 - 0x10], xmm0
                	inc	r9
                	test	r9b, 0x7
-               	jne	 <L237>
-               	jmp	 <L238>
+               	jne	 <L236>
+               	jmp	 <L237>
                	vpextrb	eax, xmm0, 0x0
-               	vcvtsi2ss	xmm0, xmm11, eax
+               	vcvtsi2ss	xmm0, xmm10, eax
                	mov	rax, qword ptr [rsp + 0x8]
                	lea	rcx,  <dyno::detail::static_vtable<dyno::local_vtable<boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::method_t<float () const>>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T&&)>>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T const&)>>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (dyno::T&)>>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::function_t<dyno::storage_info ()>>>, dyno::concept_map_t<dyno::concept_<Bodies3D::VolumeComputer, dyno::Destructible, dyno::Storable>, Bodies3D::Ellipse, boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Ellipse, void>::'lambda'(Bodies3D::Ellipse const&)>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::CopyConstructible, Bodies3D::Ellipse, void>::'lambda'(void*, Bodies3D::Ellipse const&)>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::MoveConstructible, Bodies3D::Ellipse, void>::'lambda'(void*, Bodies3D::Ellipse&&)>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::Destructible, Bodies3D::Ellipse, void>::'lambda'(Bodies3D::Ellipse&)>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::default_concept_map<dyno::Storable, Bodies3D::Ellipse, void>::'lambda'()>>>>
-               	jmp	 <L239>
+               	jmp	 <L238>
                	mov	rax, qword ptr [rsp + 0x8]
                	lea	rcx,  <dyno::detail::static_vtable<dyno::local_vtable<boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::method_t<float () const>>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T&&)>>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T const&)>>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (dyno::T&)>>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::function_t<dyno::storage_info ()>>>, dyno::concept_map_t<dyno::concept_<Bodies3D::VolumeComputer, dyno::Destructible, dyno::Storable>, Bodies3D::Cube@Evaluation.CRTP.Cube, boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Cube@Evaluation.CRTP.Cube, void>::'lambda'(Bodies3D::Cube@Evaluation.CRTP.Cube const&)>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::CopyConstructible, Bodies3D::Cube@Evaluation.CRTP.Cube, void>::'lambda'(void*, Bodies3D::Cube@Evaluation.CRTP.Cube const&)>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::MoveConstructible, Bodies3D::Cube@Evaluation.CRTP.Cube, void>::'lambda'(void*, Bodies3D::Cube@Evaluation.CRTP.Cube&&)>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::Destructible, Bodies3D::Cube@Evaluation.CRTP.Cube, void>::'lambda'(Bodies3D::Cube@Evaluation.CRTP.Cube&)>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::default_concept_map<dyno::Storable, Bodies3D::Cube@Evaluation.CRTP.Cube, void>::'lambda'()>>>>
-               	jmp	 <L240>
+               	jmp	 <L239>
                	vpmovzxbd	xmm0, xmm0      # xmm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero
                	vcvtdq2ps	xmm0, xmm0
                	mov	rax, qword ptr [rsp + 0x8]
@@ -3603,13 +3609,13 @@ Disassembly of section .text:
                	vmovlps	qword ptr [rax + r13 - 0x10], xmm0
                	inc	r9
                	test	r9b, 0x7
-               	jne	 <L237>
-               	jmp	 <L238>
+               	jne	 <L236>
+               	jmp	 <L237>
                	vpextrb	eax, xmm0, 0x1
-               	vcvtsi2ss	xmm0, xmm11, eax
+               	vcvtsi2ss	xmm0, xmm10, eax
                	mov	rax, qword ptr [rsp + 0x8]
                	lea	rcx,  <dyno::detail::static_vtable<dyno::local_vtable<boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::method_t<float () const>>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T&&)>>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T const&)>>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (dyno::T&)>>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::function_t<dyno::storage_info ()>>>, dyno::concept_map_t<dyno::concept_<Bodies3D::VolumeComputer, dyno::Destructible, dyno::Storable>, Bodies3D::Cone@Evaluation.CRTP.Cone, boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Cone@Evaluation.CRTP.Cone, void>::'lambda'(Bodies3D::Cone@Evaluation.CRTP.Cone const&)>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::CopyConstructible, Bodies3D::Cone@Evaluation.CRTP.Cone, void>::'lambda'(void*, Bodies3D::Cone@Evaluation.CRTP.Cone const&)>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::MoveConstructible, Bodies3D::Cone@Evaluation.CRTP.Cone, void>::'lambda'(void*, Bodies3D::Cone@Evaluation.CRTP.Cone&&)>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::Destructible, Bodies3D::Cone@Evaluation.CRTP.Cone, void>::'lambda'(Bodies3D::Cone@Evaluation.CRTP.Cone&)>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::default_concept_map<dyno::Storable, Bodies3D::Cone@Evaluation.CRTP.Cone, void>::'lambda'()>>>>
-<L239>:
+<L238>:
                	mov	qword ptr [rax + r13 - 0x40], rcx
                	mov	byte ptr [rax + r13], 0x0
                	vpmovzxbd	ymm1, xmm2      # ymm1 = xmm2[0],zero,zero,zero,xmm2[1],zero,zero,zero,xmm2[2],zero,zero,zero,xmm2[3],zero,zero,zero,xmm2[4],zero,zero,zero,xmm2[5],zero,zero,zero,xmm2[6],zero,zero,zero,xmm2[7],zero,zero,zero
@@ -3619,11 +3625,11 @@ Disassembly of section .text:
                	vmovss	dword ptr [rax + r13 - 0x10], xmm0
                	inc	r9
                	test	r9b, 0x7
-               	jne	 <L237>
-               	jmp	 <L238>
+               	jne	 <L236>
+               	jmp	 <L237>
                	mov	rax, qword ptr [rsp + 0x8]
                	lea	rcx,  <dyno::detail::static_vtable<dyno::local_vtable<boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::method_t<float () const>>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T&&)>>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (void*, dyno::T const&)>>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::function_t<void (dyno::T&)>>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::function_t<dyno::storage_info ()>>>, dyno::concept_map_t<dyno::concept_<Bodies3D::VolumeComputer, dyno::Destructible, dyno::Storable>, Bodies3D::Sphere@Evaluation.CRTP.Sphere, boost::hana::pair<dyno::detail::string<(char)67, (char)111, (char)109, (char)112, (char)117, (char)116, (char)101, (char)86, (char)111, (char)108, (char)117, (char)109, (char)101>, dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Sphere@Evaluation.CRTP.Sphere, void>::'lambda'(Bodies3D::Sphere@Evaluation.CRTP.Sphere const&)>, boost::hana::pair<dyno::detail::string<(char)99, (char)111, (char)112, (char)121, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::CopyConstructible, Bodies3D::Sphere@Evaluation.CRTP.Sphere, void>::'lambda'(void*, Bodies3D::Sphere@Evaluation.CRTP.Sphere const&)>, boost::hana::pair<dyno::detail::string<(char)109, (char)111, (char)118, (char)101, (char)45, (char)99, (char)111, (char)110, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::MoveConstructible, Bodies3D::Sphere@Evaluation.CRTP.Sphere, void>::'lambda'(void*, Bodies3D::Sphere@Evaluation.CRTP.Sphere&&)>, boost::hana::pair<dyno::detail::string<(char)100, (char)101, (char)115, (char)116, (char)114, (char)117, (char)99, (char)116>, dyno::default_concept_map<dyno::Destructible, Bodies3D::Sphere@Evaluation.CRTP.Sphere, void>::'lambda'(Bodies3D::Sphere@Evaluation.CRTP.Sphere&)>, boost::hana::pair<dyno::detail::string<(char)115, (char)116, (char)111, (char)114, (char)97, (char)103, (char)101, (char)95, (char)105, (char)110, (char)102, (char)111>, dyno::default_concept_map<dyno::Storable, Bodies3D::Sphere@Evaluation.CRTP.Sphere, void>::'lambda'()>>>>
-<L240>:
+<L239>:
                	mov	qword ptr [rax + r13 - 0x40], rcx
                	mov	byte ptr [rax + r13], 0x0
                	vpmovzxbd	ymm0, xmm2      # ymm0 = xmm2[0],zero,zero,zero,xmm2[1],zero,zero,zero,xmm2[2],zero,zero,zero,xmm2[3],zero,zero,zero,xmm2[4],zero,zero,zero,xmm2[5],zero,zero,zero,xmm2[6],zero,zero,zero,xmm2[7],zero,zero,zero
@@ -3633,9 +3639,9 @@ Disassembly of section .text:
                	vmovups	ymmword ptr [rax + r13 - 0x30], ymm0
                	inc	r9
                	test	r9b, 0x7
-               	je	 <L238>
-<L237>:
-               	vpblendd	ymm0, ymm9, ymm4, 0xc0  # ymm0 = ymm9[0,1,2,3,4,5],ymm4[6,7]
+               	je	 <L237>
+<L236>:
+               	vpblendd	ymm0, ymm8, ymm4, 0xc0  # ymm0 = ymm8[0,1,2,3,4,5],ymm4[6,7]
                	vpermq	ymm0, ymm0, 0x93        # ymm0 = ymm0[3,0,1,2]
                	vmovdqu	ymm1, ymmword ptr [rsp + 0x280]
                	vmovdqu	ymm2, ymmword ptr [rsp + 0x2c0]
@@ -3665,7 +3671,7 @@ Disassembly of section .text:
                	shr	rax, 0x4
                	imul	ebp, eax, 0xcccccccd
                	test	ebp, ebp
-               	je	 <L241>
+               	je	 <L240>
                	mov	qword ptr [rsp + 0x10], rcx
                	mov	qword ptr [rsp + 0x248], r13
                	vpxor	xmm0, xmm0, xmm0
@@ -3674,13 +3680,13 @@ Disassembly of section .text:
                	vmovdqu	ymmword ptr [rsp + 0x2a0], ymm0
                	vmovdqu	ymmword ptr [rsp + 0x280], ymm0
                	mov	r13, qword ptr [rsp + 0x8]
-               	jmp	 <L242>
-               	nop	word ptr cs:[rax + rax]
-<L243>:
+               	jmp	 <L241>
+               	nop
+<L242>:
                	vmovss	xmm0, dword ptr [rsp + 0x284]
                	vmovss	dword ptr [rsp + 0x288], xmm0
                	mov	r15d, 0x1
-<L253>:
+<L252>:
                	mov	eax, r15d
                	lea	rdx, [4*rax + 0x4]
                	lea	rdi, [rsp + 0x280]
@@ -3688,7 +3694,7 @@ Disassembly of section .text:
                	vzeroupper
                	call	 <memset@plt>
                	mov	r13, rbx
-<L242>:
+<L241>:
                	mov	r14d, ebp
                	neg	r14d
                	and	r14d, ebp
@@ -3696,14 +3702,14 @@ Disassembly of section .text:
                	shl	rbx, 0x4
                	add	rbx, r13
                	test	r14d, r14d
-               	je	 <L243>
+               	je	 <L242>
                	mov	dword ptr [rsp + 0x60], ebp
                	xor	ecx, ecx
                	mov	ebp, 0x1
                	mov	r12d, 0x1
-               	jmp	 <L244>
+               	jmp	 <L243>
                	nop	word ptr cs:[rax + rax]
-<L248>:
+<L247>:
                	mov	ebp, r15d
                	movsxd	rax, r15d
                	vmovss	dword ptr [rsp + 4*rax + 0x280], xmm0
@@ -3717,27 +3723,27 @@ Disassembly of section .text:
                	sub	ecx, esi
                	mov	r12d, edx
                	cmp	r13, rbx
-               	je	 <L245>
-<L244>:
+               	je	 <L244>
+<L243>:
                	mov	r15d, ecx
                	mov	rax, qword ptr [r13]
                	mov	rax, qword ptr [rax]
                	cmp	byte ptr [r13 + 0x40], 0x0
-               	je	 <L246>
+               	je	 <L245>
                	mov	rdi, qword ptr [r13 + 0x10]
-               	jmp	 <L247>
+               	jmp	 <L246>
                	nop
-<L246>:
+<L245>:
                	lea	rdi, [r13 + 0x10]
-<L247>:
+<L246>:
                	vzeroupper
                	call	rax
                	mov	ecx, r15d
                	sub	ecx, ebp
-               	jl	 <L248>
+               	jl	 <L247>
                	movsxd	rax, ebp
                	cmp	ecx, 0x1f
-               	jb	 <L249>
+               	jb	 <L248>
                	inc	rcx
                	mov	rdx, rcx
                	and	rdx, -0x20
@@ -3749,14 +3755,14 @@ Disassembly of section .text:
                	vpxor	xmm2, xmm2, xmm2
                	vpxor	xmm3, xmm3, xmm3
                	nop	word ptr [rax + rax]
-<L250>:
+<L249>:
                	vaddps	ymm0, ymm0, ymmword ptr [rsi + 4*rdi - 0x60]
                	vaddps	ymm1, ymm1, ymmword ptr [rsi + 4*rdi - 0x40]
                	vaddps	ymm2, ymm2, ymmword ptr [rsi + 4*rdi - 0x20]
                	vaddps	ymm3, ymm3, ymmword ptr [rsi + 4*rdi]
                	add	rdi, 0x20
                	cmp	rdx, rdi
-               	jne	 <L250>
+               	jne	 <L249>
                	vaddps	ymm0, ymm1, ymm0
                	vaddps	ymm1, ymm3, ymm2
                	vaddps	ymm0, ymm1, ymm0
@@ -3767,9 +3773,9 @@ Disassembly of section .text:
                	vmovshdup	xmm1, xmm0      # xmm1 = xmm0[1,1,3,3]
                	vaddss	xmm0, xmm0, xmm1
                	cmp	rcx, rdx
-               	je	 <L248>
+               	je	 <L247>
                	add	rax, rdx
-<L249>:
+<L248>:
                	mov	ecx, r15d
                	sub	ecx, eax
                	inc	ecx
@@ -3777,88 +3783,88 @@ Disassembly of section .text:
                	add	rax, 0x280
                	xor	edx, edx
                	nop	word ptr cs:[rax + rax]
-<L251>:
+<L250>:
                	vaddss	xmm0, xmm0, dword ptr [rax + 4*rdx]
                	inc	rdx
                	cmp	ecx, edx
-               	jne	 <L251>
-               	jmp	 <L248>
+               	jne	 <L250>
+               	jmp	 <L247>
                	nop	word ptr cs:[rax + rax]
-<L245>:
+<L244>:
                	mov	ebp, dword ptr [rsp + 0x60]
                	sub	ebp, r14d
-               	je	 <L252>
+               	je	 <L251>
                	vmovss	dword ptr [rsp + 4*rax + 0x284], xmm0
                	mov	r13, rbx
                	test	r15d, r15d
-               	jns	 <L253>
-               	jmp	 <L242>
-<L252>:
+               	jns	 <L252>
+               	jmp	 <L241>
+<L251>:
                	mov	r15, qword ptr [rsp + 0x260]
                	mov	r12, qword ptr [rsp + 0x8]
                	mov	r13, qword ptr [rsp + 0x248]
                	mov	rcx, qword ptr [rsp + 0x10]
                	test	rcx, rcx
-               	jne	 <L254>
-               	jmp	 <L255>
+               	jne	 <L253>
+               	jmp	 <L254>
 <L232>:
                	vpxor	xmm0, xmm0, xmm0
                	mov	r12, qword ptr [rsp + 0x8]
                	mov	r15, qword ptr [rsp + 0x260]
-               	jmp	 <L255>
-<L241>:
+               	jmp	 <L254>
+<L240>:
                	vpxor	xmm0, xmm0, xmm0
                	mov	r12, qword ptr [rsp + 0x8]
                	mov	r15, qword ptr [rsp + 0x260]
                	test	rcx, rcx
-               	je	 <L255>
-<L254>:
+               	je	 <L254>
+<L253>:
                	vmovdqa	xmmword ptr [rsp + 0x60], xmm0
                	add	r13, -0x40
                	mov	rbx, r12
-               	jmp	 <L256>
+               	jmp	 <L255>
                	nop
-<L258>:
+<L257>:
                	mov	rax, qword ptr [rbx]
                	mov	rdi, r14
                	vzeroupper
                	call	qword ptr [rax + 0x18]
-<L259>:
+<L258>:
                	add	rbx, 0x50
                	add	r13, -0x50
-               	je	 <L257>
-<L256>:
+               	je	 <L256>
+<L255>:
                	lea	r14, [rbx + 0x10]
                	cmp	byte ptr [rbx + 0x40], 0x0
-               	je	 <L258>
+               	je	 <L257>
                	mov	rdi, qword ptr [r14]
                	test	rdi, rdi
-               	je	 <L259>
+               	je	 <L258>
                	mov	rax, qword ptr [rbx]
                	vzeroupper
                	call	qword ptr [rax + 0x18]
                	mov	rdi, qword ptr [r14]
                	call	 <free@plt>
-               	jmp	 <L259>
-<L257>:
+               	jmp	 <L258>
+<L256>:
                	vmovdqa	xmm0, xmmword ptr [rsp + 0x60]
-<L255>:
+<L254>:
                	test	r12, r12
                	mov	rbx, qword ptr [rsp + 0x320]
-               	je	 <L260>
+               	je	 <L259>
                	mov	rdi, r12
                	vmovdqa	xmmword ptr [rsp + 0x60], xmm0
                	vzeroupper
                	call	 <_ZdaPv@plt>
                	vmovdqa	xmm0, xmmword ptr [rsp + 0x60]
-<L260>:
+<L259>:
                	cmp	r15d, 0x2a
-               	jne	 <L261>
+               	jne	 <L260>
                	cmp	ebx, 0x186a0
-               	jne	 <L261>
+               	jne	 <L260>
                	vucomiss	xmm0, dword ptr  <memset+0x1310>
-               	jne	 <L262>
-<L261>:
+               	jne	 <L261>
+<L260>:
                	xor	eax, eax
                	add	rsp, 0x3c8
                	pop	rbx
@@ -3869,14 +3875,14 @@ Disassembly of section .text:
                	pop	rbp
                	vzeroupper
                	ret
-<L262>:
+<L261>:
                	mov	edi, 0x4
                	vmovaps	xmmword ptr [rsp + 0x60], xmm0
                	vzeroupper
                	call	 <__cxa_allocate_exception@plt>
                	vmovaps	xmm0, xmmword ptr [rsp + 0x60]
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <memset+0x7c70>
+               	mov	rsi, qword ptr  <memset+0x7c80>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
@@ -4206,7 +4212,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <memset+0x7c48>
+               	mov	rax, qword ptr  <memset+0x7c58>
                	test	rax, rax
                	je	 <L0>
                	call	rax

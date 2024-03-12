@@ -1,7 +1,3 @@
-module;
-
-#include <immintrin.h>
-
 export module Meta.Auto.Simd.UInt8;
 
 export import Meta.Auto.Simd.Tag;

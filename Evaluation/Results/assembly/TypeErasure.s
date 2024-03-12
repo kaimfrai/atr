@@ -3076,9 +3076,8 @@ Disassembly of section .text:
                	vpextrb	ecx, xmm1, 0x7
                	vcvtsi2ss	xmm0, xmm6, ecx
                	vpunpcklbw	xmm1, xmm1, xmmword ptr [rsp + 0x250] # xmm1 = xmm1[0],mem[0],xmm1[1],mem[1],xmm1[2],mem[2],xmm1[3],mem[3],xmm1[4],mem[4],xmm1[5],mem[5],xmm1[6],mem[6],xmm1[7],mem[7]
-               	vpshufb	xmm1, xmm1, xmmword ptr  <memset+0x1010>
+               	vpshufb	xmm1, xmm1, xmmword ptr  <memset+0x1020>
                	vpmovzxbd	ymm1, xmm1      # ymm1 = xmm1[0],zero,zero,zero,xmm1[1],zero,zero,zero,xmm1[2],zero,zero,zero,xmm1[3],zero,zero,zero,xmm1[4],zero,zero,zero,xmm1[5],zero,zero,zero,xmm1[6],zero,zero,zero,xmm1[7],zero,zero,zero
-               	vcvtdq2ps	ymm1, ymm1
                	jmp	 <L238>
                	vmovups	ymm0, ymmword ptr [rsp + 0x300]
                	vmovups	ymmword ptr [rsp + 0x250], ymm0
@@ -3101,7 +3100,7 @@ Disassembly of section .text:
                	vpermilps	ymm3, ymm2, ymmword ptr  <memset+0x1060>
                	vmovups	ymmword ptr [rax], ymm3
                	vmovdqa	xmm3, xmmword ptr [rsp + 0x3c0]
-               	vpshufb	xmm3, xmm3, xmmword ptr  <memset+0x1020>
+               	vpshufb	xmm3, xmm3, xmmword ptr  <memset+0x1010>
                	vcvtdq2ps	xmm3, xmm3
                	vmovlps	qword ptr [rax + 0x20], xmm3
                	vmovss	dword ptr [rax + 0x28], xmm1
@@ -3166,12 +3165,13 @@ Disassembly of section .text:
                	mov	r12, rsi
                	vzeroupper
                	call	 <_Znwm@plt>
-               	vmovdqa	xmm1, xmmword ptr [rsp]
                	vmovdqa	xmm2, xmmword ptr [rsp + 0x250]
-               	vpunpcklbw	xmm0, xmm1, xmm2 # xmm0 = xmm1[0],xmm2[0],xmm1[1],xmm2[1],xmm1[2],xmm2[2],xmm1[3],xmm2[3],xmm1[4],xmm2[4],xmm1[5],xmm2[5],xmm1[6],xmm2[6],xmm1[7],xmm2[7]
-               	vpshufb	xmm0, xmm0, xmmword ptr  <memset+0x1010>
+               	vmovd	ecx, xmm2
+               	vmovdqa	xmm1, xmmword ptr [rsp]
+               	vpinsrb	xmm0, xmm1, ecx, 0x7
                	vpmovzxbd	ymm0, xmm0      # ymm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero,xmm0[4],zero,zero,zero,xmm0[5],zero,zero,zero,xmm0[6],zero,zero,zero,xmm0[7],zero,zero,zero
                	vcvtdq2ps	ymm0, ymm0
+               	vpermilps	ymm0, ymm0, ymmword ptr  <memset+0x1060>
                	vmovups	ymmword ptr [rax], ymm0
                	vpsrlq	xmm0, xmm1, 0x38
                	vpmovzxbq	xmm1, word ptr  <memset+0x1098>
@@ -3235,9 +3235,9 @@ Disassembly of section .text:
 <L244>:
                	vcvtsi2ss	xmm0, xmm6, ecx
                	vpmovzxbd	ymm1, qword ptr [rsp]
+<L238>:
                	vcvtdq2ps	ymm1, ymm1
                	vpermilps	ymm1, ymm1, ymmword ptr  <memset+0x1060>
-<L238>:
                	vmovups	ymmword ptr [rax], ymm1
                	vmovss	dword ptr [rax + 0x20], xmm0
                	jmp	 <L245>
@@ -3693,7 +3693,7 @@ Disassembly of section .text:
                	mov	ebp, ebx
                	mov	r12, qword ptr [rsp + 0x248]
                	jmp	 <L247>
-               	nop	dword ptr [rax + rax]
+               	nop	word ptr [rax + rax]
 <L248>:
                	vmovss	xmm0, dword ptr [rsp + 0x294]
                	vmovss	dword ptr [rsp + 0x298], xmm0

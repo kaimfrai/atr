@@ -1,7 +1,3 @@
-module;
-
-#include <immintrin.h>
-
 export module Meta.Auto.Simd.Cast;
 
 import Meta.Auto.Simd.Float;
@@ -10,6 +6,9 @@ import Meta.Auto.Simd.UInt32;
 import Meta.Auto.Simd.UInt8;
 
 import Std;
+
+using ::Std::SimdOp;
+using ::Std::SimdTarget;
 
 export namespace
 	Meta
@@ -39,9 +38,10 @@ export namespace
 		->	Simd<float[8uz]>
 		{	return
 			{	.	m_vRaw
-				=	_mm256_cvtepi32_ps
+				=	SimdOp<::std::uint32_t>::Convert
 					(	i_vSource
 						.	m_vRaw
+					,	SimdTarget<float[8uz]>
 					)
 			};
 		}
@@ -56,17 +56,19 @@ export namespace
 		->	Simd<float[16uz]>
 		{	return
 			{	.	m_vRaw
-				=	{	_mm256_cvtepi32_ps
+				=	{	SimdOp<::std::uint32_t>::Convert
 						(	i_vSource
 							.	m_vRaw
-								[	0
+								[	0z
 								]
+						,	SimdTarget<float[8uz]>
 						)
-					,	_mm256_cvtepi32_ps
+					,	SimdOp<::std::uint32_t>::Convert
 						(	i_vSource
 							.	m_vRaw
-								[	1
+								[	1z
 								]
+						,	SimdTarget<float[8uz]>
 						)
 					}
 			};
@@ -99,10 +101,11 @@ export namespace
 
 			return
 			{	.	m_vRaw
-				=	_mm256_cvtepi8_epi32
+				=	SimdOp<::std::uint8_t>::Convert
 					(	::std::bit_cast<__m128i>
 						(	vValue
 						)
+					,	SimdTarget<::std::int32_t[8uz]>
 					)
 			};
 		}
@@ -137,10 +140,11 @@ export namespace
 
 			return
 			{	.	m_vRaw
-				=	_mm256_cvtepi8_epi32
+				=	SimdOp<::std::uint8_t>::Convert
 					(	::std::bit_cast<__m128i>
 						(	vValue
 						)
+					,	SimdTarget<::std::int32_t[8uz]>
 					)
 			};
 		}
@@ -155,16 +159,17 @@ export namespace
 		->	Simd<::std::int32_t[16uz]>
 		{	return
 			{	.	m_vRaw
-				=	{	_mm256_cvtepi8_epi32
+				=	{	SimdOp<::std::uint8_t>::Convert
 						(	i_vSource
 							.	m_vRaw
+						,	SimdTarget<::std::int32_t[8uz]>
 						)
-					,	_mm256_cvtepi8_epi32
-						(	_mm_srli_si128
+					,	SimdOp<::std::uint8_t>::Convert
+						(	SimdOp<::std::byte>::ByteShiftRight<8>
 							(	i_vSource
 								.	m_vRaw
-							,	8
 							)
+						,	SimdTarget<::std::int32_t[8uz]>
 						)
 					}
 			};
@@ -197,10 +202,11 @@ export namespace
 
 			return
 			{	.	m_vRaw
-				=	_mm256_cvtepu8_epi32
+				=	SimdOp<::std::uint8_t>::Convert
 					(	::std::bit_cast<__m128i>
 						(	vValue
 						)
+					,	SimdTarget<::std::uint32_t[8uz]>
 					)
 			};
 		}
@@ -215,16 +221,17 @@ export namespace
 		->	Simd<::std::uint32_t[16uz]>
 		{	return
 			{	.	m_vRaw
-				=	{	_mm256_cvtepu8_epi32
+				=	{	SimdOp<::std::uint8_t>::Convert
 						(	i_vSource
 							.	m_vRaw
+						,	SimdTarget<::std::uint32_t[8uz]>
 						)
-					,	_mm256_cvtepu8_epi32
-						(	_mm_srli_si128
+					,	SimdOp<::std::uint8_t>::Convert
+						(	SimdOp<::std::byte>::ByteShiftRight<8>
 							(	i_vSource
 								.	m_vRaw
-							,	8
 							)
+						,	SimdTarget<::std::uint32_t[8uz]>
 						)
 					}
 			};

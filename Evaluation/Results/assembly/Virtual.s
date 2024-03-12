@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <memset+0x9e98>
+               	call	qword ptr  <memset+0x9e68>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x9ea8>
+               	mov	rax, qword ptr  <memset+0x9e78>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x9eb0>
+               	mov	rax, qword ptr  <memset+0x9e80>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <memset+0x9eb8>
+               	cmp	qword ptr , 0x0 <memset+0x9e88>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -746,7 +746,7 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x340], rdx
                	movsxd	rdi, edx
                	shl	rdi, 0x3
-               	mov	rsi, qword ptr  <memset+0x9ec0>
+               	mov	rsi, qword ptr  <memset+0x9e90>
                	call	 <_ZnamRKSt9nothrow_t@plt>
                	mov	qword ptr [rsp + 0x10], rax
                	movsxd	rdx, r14d
@@ -2970,10 +2970,10 @@ Disassembly of section .text:
                	mov	eax, ecx
                	mov	qword ptr [rsp + 0x398], rax
                	mov	ecx, 0x8
-               	vpbroadcastq	ymm0, qword ptr  <memset+0x24e0>
-               	vmovdqu	ymmword ptr [rsp + 0x3e0], ymm0
                	xor	eax, eax
                	mov	qword ptr [rsp + 0x8], rax
+               	vpbroadcastq	ymm0, qword ptr  <memset+0x24e0>
+               	vmovdqu	ymmword ptr [rsp + 0x3e0], ymm0
                	jmp	 <L233>
                	nop	word ptr cs:[rax + rax]
 <L238>:
@@ -3029,7 +3029,7 @@ Disassembly of section .text:
                	lea	ecx, [rcx + 4*rdx]
                	sub	sil, cl
                	movzx	eax, sil
-               	lea	rcx,  <memset+0x2560>
+               	lea	rcx,  <memset+0x2540>
                	movsxd	rax, dword ptr [rcx + 4*rax]
                	add	rax, rcx
                	jmp	rax
@@ -3063,11 +3063,9 @@ Disassembly of section .text:
                	mov	rcx, qword ptr [rsp + 0x10]
                	mov	rsi, qword ptr [rsp + 0x8]
                	mov	qword ptr [rcx + 8*rsi], rax
-               	vpshufb	xmm1, xmm1, xmmword ptr  <memset+0x24f0>
-               	vpinsrb	xmm1, xmm1, byte ptr [rsp + 0x250], 0x7
                	vmovss	dword ptr [rax + 0x30], xmm0
-               	vpmovzxbd	ymm0, xmm1      # ymm0 = xmm1[0],zero,zero,zero,xmm1[1],zero,zero,zero,xmm1[2],zero,zero,zero,xmm1[3],zero,zero,zero,xmm1[4],zero,zero,zero,xmm1[5],zero,zero,zero,xmm1[6],zero,zero,zero,xmm1[7],zero,zero,zero
-               	vcvtdq2ps	ymm0, ymm0
+               	vpinsrb	xmm0, xmm1, byte ptr [rsp + 0x250], 0x7
+               	vpmovzxbd	ymm0, xmm0      # ymm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero,xmm0[4],zero,zero,zero,xmm0[5],zero,zero,zero,xmm0[6],zero,zero,zero,xmm0[7],zero,zero,zero
                	jmp	 <L237>
                	vmovups	xmm0, xmmword ptr [rsp + 0x2e8]
                	vmovaps	xmmword ptr [rsp + 0x380], xmm0
@@ -3078,7 +3076,7 @@ Disassembly of section .text:
                	mov	edi, 0x90
                	vzeroupper
                	call	 <_Znwm@plt>
-               	vpbroadcastw	xmm2, word ptr  <memset+0x255c>
+               	vpbroadcastw	xmm2, word ptr  <memset+0x253c>
                	vmovdqa	xmm0, xmmword ptr [rsp + 0x380]
                	vpshufb	xmm0, xmm0, xmm2
                	vmovdqa	xmm1, xmmword ptr [rsp + 0x250]
@@ -3100,7 +3098,7 @@ Disassembly of section .text:
                	mov	qword ptr [rcx + 8*rsi], rax
                	vpmovzxbd	ymm2, qword ptr [rsp + 0x20]
                	vcvtdq2ps	ymm2, ymm2
-               	vpermilps	ymm3, ymm2, ymmword ptr  <memset+0x2520>
+               	vpermilps	ymm3, ymm2, ymmword ptr  <memset+0x2500>
                	vmovups	ymmword ptr [rax + 0x10], ymm3
                	vpmovzxbd	xmm0, xmm0      # xmm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero
                	vcvtdq2ps	xmm0, xmm0
@@ -3167,10 +3165,10 @@ Disassembly of section .text:
                	mov	qword ptr [rdx + 8*rsi], rax
                	vcvtsi2ss	xmm0, xmm5, ecx
                	vmovss	dword ptr [rax + 0x30], xmm0
-               	vpshufb	xmm0, xmm1, xmmword ptr  <memset+0x24f0>
-               	vpinsrb	xmm0, xmm0, byte ptr [rsp + 0x250], 0x7
+               	vpinsrb	xmm0, xmm1, byte ptr [rsp + 0x250], 0x7
                	vpmovzxbd	ymm0, xmm0      # ymm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero,xmm0[4],zero,zero,zero,xmm0[5],zero,zero,zero,xmm0[6],zero,zero,zero,xmm0[7],zero,zero,zero
                	vcvtdq2ps	ymm0, ymm0
+               	vpermilps	ymm0, ymm0, ymmword ptr  <memset+0x2500>
                	vmovups	ymmword ptr [rax + 0x10], ymm0
                	jmp	 <L242>
                	mov	edi, 0x38
@@ -3187,7 +3185,7 @@ Disassembly of section .text:
                	mov	qword ptr [rcx + 8*rsi], rax
                	vpmovzxbd	ymm0, qword ptr [rsp + 0x20]
                	vcvtdq2ps	ymm0, ymm0
-               	vpermilps	ymm0, ymm0, ymmword ptr  <memset+0x2520>
+               	vpermilps	ymm0, ymm0, ymmword ptr  <memset+0x2500>
                	vmovups	ymmword ptr [rax + 0x10], ymm0
                	movzx	ecx, byte ptr [rsp + 0x250]
                	jmp	 <L243>
@@ -3210,7 +3208,7 @@ Disassembly of section .text:
                	mov	qword ptr [rax], rcx
                	vpmovzxbd	ymm0, qword ptr [rsp + 0x20]
                	vcvtdq2ps	ymm0, ymm0
-               	vpermilps	ymm0, ymm0, ymmword ptr  <memset+0x2520>
+               	vpermilps	ymm0, ymm0, ymmword ptr  <memset+0x2500>
                	movzx	ecx, byte ptr [rsp + 0x250]
                	vcvtsi2ss	xmm1, xmm5, ecx
                	vmovups	ymmword ptr [rax + 0x10], ymm0
@@ -3241,7 +3239,7 @@ Disassembly of section .text:
                	mov	qword ptr [rcx + 8*rsi], rax
                	vpmovzxbd	ymm0, qword ptr [rsp + 0x20]
                	vcvtdq2ps	ymm0, ymm0
-               	vpermilps	ymm0, ymm0, ymmword ptr  <memset+0x2520>
+               	vpermilps	ymm0, ymm0, ymmword ptr  <memset+0x2500>
                	vmovups	ymmword ptr [rax + 0x10], ymm0
                	movzx	ecx, byte ptr [rsp + 0x260]
 <L243>:
@@ -3264,9 +3262,9 @@ Disassembly of section .text:
                	mov	rsi, qword ptr [rsp + 0x8]
                	mov	qword ptr [rcx + 8*rsi], rax
                	vpmovzxbd	ymm0, qword ptr [rsp + 0x20]
-               	vcvtdq2ps	ymm0, ymm0
-               	vpermilps	ymm0, ymm0, ymmword ptr  <memset+0x2520>
 <L237>:
+               	vcvtdq2ps	ymm0, ymm0
+               	vpermilps	ymm0, ymm0, ymmword ptr  <memset+0x2500>
                	vmovups	ymmword ptr [rax + 0x10], ymm0
                	inc	rsi
                	mov	qword ptr [rsp + 0x8], rsi
@@ -3705,7 +3703,6 @@ Disassembly of section .text:
                	vmovdqu	ymmword ptr [rsp + 0x290], ymm0
                	mov	rbp, qword ptr [rsp + 0x10]
                	jmp	 <L246>
-               	nop	dword ptr [rax]
 <L247>:
                	vmovss	xmm0, dword ptr [rsp + 0x294]
                	vmovss	dword ptr [rsp + 0x298], xmm0
@@ -3760,7 +3757,7 @@ Disassembly of section .text:
                	inc	rcx
                	mov	rdx, rcx
                	and	rdx, -0x20
-               	vpblendd	xmm0, xmm0, xmmword ptr , 0xe <memset+0x2500> # xmm0 = xmm0[0],mem[1,2,3]
+               	vpblendd	xmm0, xmm0, xmmword ptr , 0xe <memset+0x24f0> # xmm0 = xmm0[0],mem[1,2,3]
                	lea	rsi, [rsp + 0x2f0]
                	lea	rsi, [rsi + 4*rax]
                	vpxor	xmm1, xmm1, xmm1
@@ -3837,7 +3834,7 @@ Disassembly of section .text:
                	jne	 <L259>
                	cmp	r15d, 0x186a0
                	jne	 <L259>
-               	vucomiss	xmm0, dword ptr  <memset+0x2554>
+               	vucomiss	xmm0, dword ptr  <memset+0x2534>
                	jne	 <L260>
 <L259>:
                	xor	eax, eax
@@ -3883,7 +3880,7 @@ Disassembly of section .text:
                	call	 <__cxa_allocate_exception@plt>
                	vmovaps	xmm0, xmmword ptr [rsp + 0x60]
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <memset+0x9ec8>
+               	mov	rsi, qword ptr  <memset+0x9e98>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
@@ -4006,7 +4003,7 @@ Disassembly of section .text:
 
 <Bodies3D::SphericBody@Evaluation.Virtual.SphericBody<Shapes2D::Circle@Evaluation.Virtual.Circle>::GetComputeSizeMultiplier() const>:
 <Bodies3D::SphericBody@Evaluation.Virtual.SphericBody<Shapes2D::Ellipse@Evaluation.Virtual.Ellipse>::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <memset+0x2558>
+               	vmovss	xmm0, dword ptr  <memset+0x2538>
                	ret
                	int3
                	int3
@@ -4051,7 +4048,7 @@ Disassembly of section .text:
                	int3
 
 <Bodies3D::Cone@Evaluation.Virtual.Cone::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <memset+0x2540>
+               	vmovss	xmm0, dword ptr  <memset+0x2520>
                	ret
                	int3
                	int3
@@ -4065,7 +4062,7 @@ Disassembly of section .text:
 <Bodies3D::Shape3D@Evaluation.Virtual.Shape3D<Shapes2D::Ellipse@Evaluation.Virtual.Ellipse>::GetComputeSizeMultiplier() const>:
 <Bodies3D::Cylinder@Evaluation.Virtual.Cylinder::GetComputeSizeMultiplier() const>:
 <Shapes2D::CircularShape@Evaluation.Virtual.CircularShape::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <memset+0x2548>
+               	vmovss	xmm0, dword ptr  <memset+0x2528>
                	ret
                	int3
                	int3
@@ -4076,7 +4073,7 @@ Disassembly of section .text:
                	int3
 
 <Bodies3D::PyramidicBody@Evaluation.Virtual.PyramidicBody<Shapes2D::Triangle@Evaluation.Virtual.Triangle>::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <memset+0x254c>
+               	vmovss	xmm0, dword ptr  <memset+0x252c>
                	ret
                	int3
                	int3
@@ -4096,7 +4093,7 @@ Disassembly of section .text:
 <Bodies3D::CubicBody@Evaluation.Virtual.CubicBody<Shapes2D::Square@Evaluation.Virtual.Square>::GetComputeSizeMultiplier() const>:
 <Bodies3D::CubicBody@Evaluation.Virtual.CubicBody<Shapes2D::Rectangle@Evaluation.Virtual.Rectangle>::GetComputeSizeMultiplier() const>:
 <Shapes2D::RectangularShape@Evaluation.Virtual.RectangularShape::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <memset+0x2544>
+               	vmovss	xmm0, dword ptr  <memset+0x2524>
                	ret
                	int3
                	int3
@@ -4108,7 +4105,7 @@ Disassembly of section .text:
 
 <Bodies3D::Shape3D@Evaluation.Virtual.Shape3D<Shapes2D::Triangle@Evaluation.Virtual.Triangle>::GetComputeSizeMultiplier() const>:
 <Shapes2D::TriangularShape@Evaluation.Virtual.TriangularShape::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <memset+0x2550>
+               	vmovss	xmm0, dword ptr  <memset+0x2530>
                	ret
                	int3
                	int3
@@ -4177,7 +4174,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <memset+0x9ea0>
+               	mov	rax, qword ptr  <memset+0x9e70>
                	test	rax, rax
                	je	 <L0>
                	call	rax

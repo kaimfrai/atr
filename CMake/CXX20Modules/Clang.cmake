@@ -315,6 +315,14 @@ COMPILE_OPTIONS
 	"${STANDARD_LIBRARY_FLAG}"
 )
 
+set_property(
+SOURCE
+	"${CXX20_MODULES_PATH}/Std.cpp"
+APPEND PROPERTY
+COMPILE_OPTIONS
+	-Wno-reserved-identifier
+)
+
 function(
 	force_import_std
 	file
