@@ -335,12 +335,7 @@ export namespace
 			noexcept
 		->	Info
 		{
-			if	(	i_vDistrictIndex
-				<=	0
-				)
-			{	::std::unreachable
-				();
-			}
+			[[assume(i_vDistrictIndex > 0)]];
 
 			return
 				GetMemberInfo

@@ -34,8 +34,7 @@ export namespace
 		noexcept
 	->	Index_For<decltype(i_vField)>
 	{
-		if	(i_vField == 0u)
-			::std::unreachable();
+		[[assume(i_vField != 0u)]];
 
 		return
 		Index_For<decltype(i_vField)>

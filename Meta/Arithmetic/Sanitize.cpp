@@ -70,8 +70,7 @@ export namespace
 			(	i_vValue
 			)
 		;
-		if	(i_vValue != vSanitized)
-			::std::unreachable();
+		[[assume(i_vValue == vSanitized)]];
 		return
 			vSanitized
 		;
@@ -128,8 +127,8 @@ export namespace
 			(	i_vValue
 			)
 		;
-		if	(i_vValue != vSanitized)
-			::std::unreachable();
+		[[assume(i_vValue == vSanitized)]];
+
 		return
 			vSanitized
 		;

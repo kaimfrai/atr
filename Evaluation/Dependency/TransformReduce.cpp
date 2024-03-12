@@ -115,12 +115,8 @@ struct
 	{
 		++	Iteration
 		;
-		if	(	Iteration
-			<=	0u
-			)
-		{	::std::unreachable
-			();
-		}
+		[[assume(Iteration > 0u)]];
+
 			SumIndex
 		=	WriteIndex
 		;

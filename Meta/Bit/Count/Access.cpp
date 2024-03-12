@@ -24,8 +24,7 @@ export namespace
 		noexcept
 	->	Index<t_vWidth>
 	{
-		if	(not i_vRange.get())
-			::std::unreachable();
+		[[assume(i_vRange.get())]];
 
 		return
 		Index
@@ -49,10 +48,11 @@ export namespace
 		auto const
 			vValue
 		=	i_vRange
-		.	get()
+			.	get
+				()
 		;
-		if	(not vValue)
-			::std::unreachable();
+
+		[[assume(vValue)]];
 
 		using
 			tIndexType
