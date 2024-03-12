@@ -44,7 +44,7 @@ A bare bones data-member name reflection is supported that may be used in the fu
 
 For a struct like
 
-```
+```C++
 struct Color
 {
   float Red;
@@ -55,7 +55,7 @@ struct Color
 ```
 the corresponding definition of an archetype may look like this:
 
-```
+```C++
 auto constexpr inline Recompose(ProtoComposer auto&& composer, ID<"Color">) -> auto&&
 {
   return
@@ -128,13 +128,28 @@ You may also run the following:
 ```
 This will run each implementation by only zero-initializing all data members instead of pseudo randomly intializing them. For ATR this has a significant impact on compilation duration, as member access has not yet been optimized in that regard. You may find that despite ATR making heavy use of meta-programming, it's compilation duration without member access is shorter than the implementation using virtual functions!
 
+#### Highlights of Evaluation/Results computing the sum over all volumes of 100'000 pseudo-randomly generated 3D bodies using polymorphism
+
+* -7% Compilation time with zero-initialization of Virtual compared to TagATR:
+  0.91s vs 0.85s
+* +15% Compilation time with pseudo-random initialization of Virtual compared to TagATR:
+  1.09s vs 1.25s
+* -37% Memory consumption of Virtual compared to TagATR:
+  7'049'464 bytes vs 4'407'296 bytes
+* -41% Memory consumption of Virtual compared to SOAReplication:
+  7'049'464 bytes vs 4'172'704 bytes
+* -43% Total program run duration of Virtual compared to TagATR:
+  8.74 ms vs 4.94 ms
+* -81% Total program run duration of Virtual compared to SOAReplication:
+  8.74 ms vs 1.66 ms
+
 ## CMake
 
 Contains CMake specific configuration files. In particular custom scripts that enable the usage of C++20 modules with Clang before CMake officially supported modules.
 
 Once set up, the standard library can be used with
 
-```
+```C++
 import Std;
 ```
 
@@ -173,7 +188,7 @@ Contains classes to store objects, arrays, and references in a uniform manner. L
 Can be used to generate a switch-like dispatch function from a runtime string to any function. For usage examples, refer to Test/Meta/Dispatch.
 Excerpt:
 
-```
+```C++
 namespace Meta::Dispatch
 {
   auto Block(ProtoPath<int(int), "Multiply1"> auto) = delete;
@@ -206,7 +221,7 @@ A major corner stone of ATR. Compile-time identifiers (unique stateless types) a
 
 ### Lex
 
-Function objects that analyse a certain type and separate it into multiple tokens. This is useful for partial template specialization. For example T* const will be result in the tokens T, Pointer and const. Substituting a ... for the const makes a particular specialization apply for T* and T* const without the need for concepts. Or functions types can specialized for in a single template without the infamous 48 specializations for each distinct function type.
+Function objects that analyse a certain type and separate it into multiple tokens. This is useful for partial template specialization. For example `T* const` will be result in the tokens T, Pointer and const. Substituting a `...` for the const makes a particular specialization apply for `T*` and `T* const` without the need for concepts. Or functions types can specialized for in a single template without the infamous 48 specializations for each distinct function type.
 
 ### Logic
 
