@@ -77,14 +77,12 @@ auto inline
 				0
 		:	{	auto
 				&	rCircle
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	"Circle"_id
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rCircle
 				[	"ColorRed"_id
 				]=	vRed
@@ -117,7 +115,6 @@ auto inline
 				[	"Height"_id
 				]=	vHeight
 				;
-#endif
 			}
 			break;
 
@@ -125,14 +122,12 @@ auto inline
 				1
 		:	{	auto
 				&	rEllipse
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	"Ellipse"_id
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rEllipse
 				[	"ColorRed"_id
 				]=	vRed
@@ -169,7 +164,6 @@ auto inline
 				[	"Width"_id
 				]=	vWidth
 				;
-#endif
 			}
 			break;
 
@@ -177,14 +171,12 @@ auto inline
 				2
 		:	{	auto
 				&	rRectangle
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	"Rectangle"_id
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rRectangle
 				[	"ColorRed"_id
 				]=	vRed
@@ -221,7 +213,6 @@ auto inline
 				[	"Width"_id
 				]=	vWidth
 				;
-#endif
 			}
 			break;
 
@@ -229,14 +220,12 @@ auto inline
 				3
 		:	{	auto
 				&	rSquare
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	"Square"_id
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rSquare
 				[	"ColorRed"_id
 				]=	vRed
@@ -269,7 +258,6 @@ auto inline
 				[	"Height"_id
 				]=	vHeight
 				;
-#endif
 			}
 			break;
 
@@ -277,14 +265,12 @@ auto inline
 				4
 		:	{	auto
 				&	rTriangle
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	"Triangle"_id
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rTriangle
 				[	"ColorRed"_id
 				]=	vRed
@@ -321,7 +307,6 @@ auto inline
 				[	"Width"_id
 				]=	vWidth
 				;
-#endif
 			}
 			break;
 
@@ -329,14 +314,12 @@ auto inline
 				5
 		:	{	auto
 				&	rCube
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	"Cube"_id
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rCube
 				[	"ColorRed"_id
 				]=	vRed
@@ -369,7 +352,6 @@ auto inline
 				[	"Height"_id
 				]=	vHeight
 				;
-#endif
 			}
 			break;
 
@@ -377,14 +359,12 @@ auto inline
 				6
 		:	{	auto
 				&	rCuboid
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	"Cuboid"_id
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rCuboid
 				[	"ColorRed"_id
 				]=	vRed
@@ -425,7 +405,6 @@ auto inline
 				[	"Depth"_id
 				]=	vDepth
 				;
-#endif
 			}
 			break;
 
@@ -433,14 +412,12 @@ auto inline
 				7
 		:	{	auto
 				&	rPyramid
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	"Pyramid"_id
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rPyramid
 				[	"ColorRed"_id
 				]=	vRed
@@ -481,7 +458,6 @@ auto inline
 				[	"Depth"_id
 				]=	vDepth
 				;
-#endif
 			}
 			break;
 
@@ -489,14 +465,12 @@ auto inline
 				8
 		:	{	auto
 				&	rSphere
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	"Sphere"_id
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rSphere
 				[	"ColorRed"_id
 				]=	vRed
@@ -529,7 +503,6 @@ auto inline
 				[	"Height"_id
 				]=	vHeight
 				;
-#endif
 			}
 			break;
 
@@ -537,14 +510,12 @@ auto inline
 				9
 		:	{	auto
 				&	rCylinder
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	"Cylinder"_id
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rCylinder
 				[	"ColorRed"_id
 				]=	vRed
@@ -581,7 +552,6 @@ auto inline
 				[	"Depth"_id
 				]=	vDepth
 				;
-#endif
 			}
 			break;
 
@@ -589,14 +559,12 @@ auto inline
 				10
 		:	{	auto
 				&	rCone
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	"Cone"_id
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rCone
 				[	"ColorRed"_id
 				]=	vRed
@@ -633,7 +601,6 @@ auto inline
 				[	"Depth"_id
 				]=	vDepth
 				;
-#endif
 			}
 			break;
 
@@ -641,14 +608,12 @@ auto inline
 				11
 		:	{	auto
 				&	rEllipsoid
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	"Ellipsoid"_id
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rEllipsoid
 				[	"ColorRed"_id
 				]=	vRed
@@ -689,7 +654,6 @@ auto inline
 				[	"Depth"_id
 				]=	vDepth
 				;
-#endif
 			}
 			break;
 
@@ -697,14 +661,12 @@ auto inline
 				12
 		:	{	auto
 				&	rHead
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	"Head"_id
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rHead
 				[	"ColorRed"_id
 				]=	vRed
@@ -770,7 +732,6 @@ auto inline
 				[	"RightEyePointLateral"_id
 				]=	vRightEyeLateral
 				;
-#endif
 			}
 			break;
 		}

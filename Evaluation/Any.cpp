@@ -247,7 +247,6 @@ auto inline
 				0
 		:	{	auto
 				&	rCircle
-					[[maybe_unused]]
 				=	static_cast<Circle&>
 					(	vElements
 					.	emplace_back
@@ -258,7 +257,6 @@ auto inline
 					)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rCircle
 				.	Shape2D
 				.	Color
@@ -306,7 +304,6 @@ auto inline
 				.	Height
 				=	vHeight
 				;
-#endif
 			}
 			break;
 
@@ -314,7 +311,6 @@ auto inline
 				1
 		:	{	auto
 				&	rEllipse
-					[[maybe_unused]]
 				=	static_cast<Ellipse&>
 					(	vElements
 						.	emplace_back
@@ -325,7 +321,6 @@ auto inline
 					)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rEllipse
 				.	Shape2D
 				.	Color
@@ -378,7 +373,6 @@ auto inline
 				.	Width
 				=	vWidth
 				;
-#endif
 			}
 			break;
 
@@ -386,7 +380,6 @@ auto inline
 				2
 		:	{	auto
 				&	rRectangle
-					[[maybe_unused]]
 				=	static_cast<Rectangle&>
 					(	vElements
 						.	emplace_back
@@ -397,7 +390,6 @@ auto inline
 					)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rRectangle
 				.	Shape2D
 				.	Color
@@ -450,7 +442,6 @@ auto inline
 				.	Width
 				=	vWidth
 				;
-#endif
 			}
 			break;
 
@@ -458,7 +449,6 @@ auto inline
 				3
 		:	{	auto
 				&	rSquare
-					[[maybe_unused]]
 				=	static_cast<Square&>
 					(	vElements
 						.	emplace_back
@@ -469,7 +459,6 @@ auto inline
 					)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rSquare
 				.	Shape2D
 				.	Color
@@ -517,7 +506,6 @@ auto inline
 				.	Height
 				=	vHeight
 				;
-#endif
 			}
 			break;
 
@@ -525,7 +513,6 @@ auto inline
 				4
 		:	{	auto
 				&	rTriangle
-					[[maybe_unused]]
 				=	static_cast<Triangle&>
 					(	vElements
 						.	emplace_back
@@ -536,7 +523,6 @@ auto inline
 					)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rTriangle
 				.	Shape2D
 				.	Color
@@ -589,7 +575,6 @@ auto inline
 				.	Width
 				=	vWidth
 				;
-#endif
 			}
 			break;
 
@@ -597,7 +582,6 @@ auto inline
 				5
 		:	{	auto
 				&	rCube
-					[[maybe_unused]]
 				=	static_cast<Cube&>
 					(	vElements
 						.	emplace_back
@@ -608,7 +592,6 @@ auto inline
 					)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rCube
 				.	Shape2D
 				.	Color
@@ -656,7 +639,6 @@ auto inline
 				.	Height
 				=	vHeight
 				;
-#endif
 			}
 			break;
 
@@ -664,7 +646,6 @@ auto inline
 				6
 		:	{	auto
 				&	rCuboid
-					[[maybe_unused]]
 				=	static_cast<Cuboid&>
 					(	vElements
 						.	emplace_back
@@ -675,7 +656,6 @@ auto inline
 					)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rCuboid
 				.	Shape2D
 				.	Color
@@ -732,7 +712,6 @@ auto inline
 				.	Depth
 				=	vDepth
 				;
-#endif
 			}
 			break;
 
@@ -740,7 +719,6 @@ auto inline
 				7
 		:	{	auto
 				&	rPyramid
-					[[maybe_unused]]
 				=	static_cast<Pyramid&>
 					(	vElements
 						.	emplace_back
@@ -751,7 +729,6 @@ auto inline
 					)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rPyramid
 				.	Shape2D
 				.	Color
@@ -808,7 +785,6 @@ auto inline
 				.	Depth
 				=	vDepth
 				;
-#endif
 			}
 			break;
 
@@ -816,7 +792,6 @@ auto inline
 				8
 		:	{	auto
 				&	rSphere
-					[[maybe_unused]]
 				=	static_cast<Sphere&>
 					(	vElements
 						.	emplace_back
@@ -827,7 +802,6 @@ auto inline
 					)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rSphere
 				.	Shape2D
 				.	Color
@@ -875,7 +849,6 @@ auto inline
 				.	Height
 				=	vHeight
 				;
-#endif
 			}
 			break;
 
@@ -883,7 +856,6 @@ auto inline
 				9
 		:	{	auto
 				&	rCylinder
-					[[maybe_unused]]
 				=	static_cast<Cylinder&>
 					(	vElements
 						.	emplace_back
@@ -894,7 +866,6 @@ auto inline
 					)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rCylinder
 				.	Shape2D
 				.	Color
@@ -946,7 +917,6 @@ auto inline
 				.	Depth
 				=	vDepth
 				;
-#endif
 			}
 			break;
 
@@ -954,7 +924,6 @@ auto inline
 				10
 		:	{	auto
 				&	rCone
-					[[maybe_unused]]
 				=	static_cast<Cone&>
 					(	vElements
 						.	emplace_back
@@ -965,7 +934,6 @@ auto inline
 					)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rCone
 				.	Shape2D
 				.	Color
@@ -1017,7 +985,6 @@ auto inline
 				.	Depth
 				=	vDepth
 				;
-#endif
 			}
 			break;
 
@@ -1025,7 +992,6 @@ auto inline
 				11
 		:	{	auto
 				&	rEllipsoid
-					[[maybe_unused]]
 				=	static_cast<Ellipsoid&>
 					(	vElements
 						.	emplace_back
@@ -1036,7 +1002,6 @@ auto inline
 					)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rEllipsoid
 				.	Shape2D
 				.	Color
@@ -1093,7 +1058,6 @@ auto inline
 				.	Depth
 				=	vDepth
 				;
-#endif
 			}
 			break;
 
@@ -1101,7 +1065,6 @@ auto inline
 				12
 		:	{	auto
 				&	rHead
-					[[maybe_unused]]
 				=	static_cast<Head&>
 					(	vElements
 						.	emplace_back
@@ -1112,7 +1075,6 @@ auto inline
 					)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rHead
 				.	Shape2D
 				.	Color
@@ -1272,7 +1234,6 @@ auto inline
 				.	Height
 				=	vEyeHeight
 				;
-#endif
 			}
 			break;
 		}

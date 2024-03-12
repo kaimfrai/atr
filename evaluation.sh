@@ -1,36 +1,17 @@
 echo "Generating binary files..."
 
+mkdir -p build/Evaluation
 
-if [ $# -lt 3 ]
-then
-	mkdir -p build/Evaluation
-
-	cmake -S ./\
-		-B ./build/Evaluation\
-		--toolchain="CMake/Linux-Clang.cmake"\
-		-G "Ninja"\
-		-DCMAKE_BUILD_TYPE=Release\
-		-DFASTER_BUILD_SPEED:BOOL=TRUE
-elif
-	[ $3 == "Z" ]
-then
-	mkdir -p build/$3Evaluation
-
-	cmake -S ./\
-		-B ./build/$3Evaluation\
-		--toolchain="CMake/Linux-Clang.cmake"\
-		-G "Ninja"\
-		-DCMAKE_BUILD_TYPE=Release\
-		-DFASTER_BUILD_SPEED:BOOL=TRUE\
-		-DZERO_INITIALIZE_MEMBERS=1
-else
-	echo "unknown option $3"
-	exit 1
-fi
+cmake -S ./\
+	-B ./build/Evaluation\
+	--toolchain="CMake/Linux-Clang.cmake"\
+	-G "Ninja"\
+	-DCMAKE_BUILD_TYPE=Release\
+	-DFASTER_BUILD_SPEED:BOOL=TRUE
 
 function build_all()
 {
-	cd build/$3Evaluation/
+	cd build/Evaluation/
 
 	if	[ $# -lt 2 ] \
 	||	[ $2 == "all" ]
@@ -85,7 +66,7 @@ function build_all()
 	cd ../../
 }
 
-build_all $1 $2 $3
+build_all $1 $2
 
 if [ $# -lt 1 ]
 then
@@ -96,13 +77,13 @@ then
 	bash Evaluation/perf.sh 42 100000 10 $2
 elif [ $1 == "assembly" ] || [ $1 == "compile" ]
 then
-	bash Evaluation/$1.sh $2 $3
+	bash Evaluation/$1.sh $2
 elif [ $1 == "cachegrind" ] || [ $1 == "memcheck" ]
 then
-	bash Evaluation/$1.sh 42 100000 $2 $3
+	bash Evaluation/$1.sh 42 100000 $2
 elif [ $1 == "perf" ]
 then
-	bash Evaluation/$1.sh 42 100000 10 $2 $3
+	bash Evaluation/$1.sh 42 100000 10 $2
 else
 	echo "Invalid evaluation script $1. Must be one of:"
 	echo "assembly"
@@ -113,4 +94,4 @@ else
 	exit 1
 fi
 
-build_all $1 $2 $3
+build_all $1 $2

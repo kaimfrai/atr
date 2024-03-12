@@ -685,7 +685,6 @@ auto inline
 				0
 		:	{	auto
 				&	rCircle
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	::std::in_place_type
@@ -694,7 +693,6 @@ auto inline
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rCircle
 				.	ColorRed
 				=	vRed
@@ -727,7 +725,6 @@ auto inline
 				.	Height
 				=	vHeight
 				;
-#endif
 			}
 			break;
 
@@ -735,7 +732,6 @@ auto inline
 				1
 		:	{	auto
 				&	rEllipse
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	::std::in_place_type
@@ -744,7 +740,6 @@ auto inline
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rEllipse
 				.	ColorRed
 				=	vRed
@@ -781,7 +776,6 @@ auto inline
 				.	Width
 				=	vWidth
 				;
-#endif
 			}
 			break;
 
@@ -789,7 +783,6 @@ auto inline
 				2
 		:	{	auto
 				&	rRectangle
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	::std::in_place_type
@@ -798,7 +791,6 @@ auto inline
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rRectangle
 				.	ColorRed
 				=	vRed
@@ -835,7 +827,6 @@ auto inline
 				.	Width
 				=	vWidth
 				;
-#endif
 			}
 			break;
 
@@ -843,7 +834,6 @@ auto inline
 				3
 		:	{	auto
 				&	rSquare
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	::std::in_place_type
@@ -852,7 +842,6 @@ auto inline
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rSquare
 				.	ColorRed
 				=	vRed
@@ -885,7 +874,6 @@ auto inline
 				.	Height
 				=	vHeight
 				;
-#endif
 			}
 			break;
 
@@ -893,7 +881,6 @@ auto inline
 				4
 		:	{	auto
 				&	rTriangle
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	::std::in_place_type
@@ -902,7 +889,6 @@ auto inline
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rTriangle
 				.	ColorRed
 				=	vRed
@@ -939,7 +925,6 @@ auto inline
 				.	Width
 				=	vWidth
 				;
-#endif
 			}
 			break;
 
@@ -947,7 +932,6 @@ auto inline
 				5
 		:	{	auto
 				&	rCube
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	::std::in_place_type
@@ -956,7 +940,6 @@ auto inline
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rCube
 				.	ColorRed
 				=	vRed
@@ -989,7 +972,6 @@ auto inline
 				.	Height
 				=	vHeight
 				;
-#endif
 			}
 			break;
 
@@ -997,7 +979,6 @@ auto inline
 				6
 		:	{	auto
 				&	rCuboid
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	::std::in_place_type
@@ -1006,7 +987,6 @@ auto inline
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rCuboid
 				.	ColorRed
 				=	vRed
@@ -1047,7 +1027,6 @@ auto inline
 				.	Depth
 				=	vDepth
 				;
-#endif
 			}
 			break;
 
@@ -1055,7 +1034,6 @@ auto inline
 				7
 		:	{	auto
 				&	rPyramid
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	::std::in_place_type
@@ -1064,7 +1042,6 @@ auto inline
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rPyramid
 				.	ColorRed
 				=	vRed
@@ -1105,7 +1082,6 @@ auto inline
 				.	Depth
 				=	vDepth
 				;
-#endif
 			}
 			break;
 
@@ -1113,7 +1089,6 @@ auto inline
 				8
 		:	{	auto
 				&	rSphere
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	::std::in_place_type
@@ -1122,7 +1097,6 @@ auto inline
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rSphere
 				.	ColorRed
 				=	vRed
@@ -1155,7 +1129,6 @@ auto inline
 				.	Height
 				=	vHeight
 				;
-#endif
 			}
 			break;
 
@@ -1163,7 +1136,6 @@ auto inline
 				9
 		:	{	auto
 				&	rCylinder
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	::std::in_place_type
@@ -1172,7 +1144,6 @@ auto inline
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rCylinder
 				.	ColorRed
 				=	vRed
@@ -1209,7 +1180,6 @@ auto inline
 				.	Depth
 				=	vDepth
 				;
-#endif
 			}
 			break;
 
@@ -1217,7 +1187,6 @@ auto inline
 				10
 		:	{	auto
 				&	rCone
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	::std::in_place_type
@@ -1226,7 +1195,6 @@ auto inline
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rCone
 				.	ColorRed
 				=	vRed
@@ -1263,7 +1231,6 @@ auto inline
 				.	Depth
 				=	vDepth
 				;
-#endif
 			}
 			break;
 
@@ -1271,7 +1238,6 @@ auto inline
 				11
 		:	{	auto
 				&	rEllipsoid
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	::std::in_place_type
@@ -1280,7 +1246,6 @@ auto inline
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rEllipsoid
 				.	ColorRed
 				=	vRed
@@ -1321,7 +1286,6 @@ auto inline
 				.	Depth
 				=	vDepth
 				;
-#endif
 			}
 			break;
 
@@ -1329,7 +1293,6 @@ auto inline
 				12
 		:	{	auto
 				&	rHead
-					[[maybe_unused]]
 				=	vElements
 					.	emplace_back
 						(	::std::in_place_type
@@ -1338,7 +1301,6 @@ auto inline
 						)
 				;
 
-#ifndef ZERO_INITIALIZE_MEMBERS
 				rHead
 				.	Sphere
 				.	ColorRed
@@ -1428,7 +1390,6 @@ auto inline
 					]
 				=	vRightEyeLateral
 				;
-#endif
 			}
 			break;
 		}
