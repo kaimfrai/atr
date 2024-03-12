@@ -1,17 +1,17 @@
 
- Performance counter stats for 'build/Evaluation/bin/Polymorphic 42 100000' (100 runs):
+ Performance counter stats for 'build/Evaluation/bin/Polymorphic 42 100000' (10 runs):
 
-              9,11 msec task-clock                #    0,976 CPUs utilized            ( +-  0,14% )
+              9,15 msec task-clock                #    0,970 CPUs utilized            ( +-  0,54% )
                  0      context-switches          #    0,000 /sec                   
                  0      cpu-migrations            #    0,000 /sec                   
-             3.191      page-faults               #  349,488 K/sec                    ( +-  0,00% )
-        39.295.569      cycles                    #    4,304 GHz                      ( +-  0,14% )
-         2.699.217      stalled-cycles-frontend   #    6,89% frontend cycles idle     ( +-  0,94% )
-         6.736.667      stalled-cycles-backend    #   17,19% backend cycles idle      ( +-  0,47% )
-        69.578.672      instructions              #    1,78  insn per cycle         
-                                                  #    0,10  stalled cycles per insn  ( +-  0,00% )
-        12.148.650      branches                  #    1,331 G/sec                    ( +-  0,01% )
-           318.013      branch-misses             #    2,62% of all branches          ( +-  0,36% )
+             3.192      page-faults               #  345,868 K/sec                    ( +-  0,01% )
+        39.487.865      cycles                    #    4,279 GHz                      ( +-  0,42% )
+         3.080.209      stalled-cycles-frontend   #    7,74% frontend cycles idle     ( +-  2,46% )
+         7.154.521      stalled-cycles-backend    #   17,99% backend cycles idle      ( +-  1,03% )
+        69.541.420      instructions              #    1,75  insn per cycle         
+                                                  #    0,10  stalled cycles per insn  ( +-  0,01% )
+        12.143.436      branches                  #    1,316 G/sec                    ( +-  0,02% )
+           293.475      branch-misses             #    2,42% of all branches          ( +-  0,47% )
 
-         0,0093342 +- 0,0000137 seconds time elapsed  ( +-  0,15% )
+         0,0094346 +- 0,0000519 seconds time elapsed  ( +-  0,55% )
 

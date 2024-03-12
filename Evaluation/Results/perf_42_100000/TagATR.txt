@@ -1,17 +1,17 @@
 
- Performance counter stats for 'build/Evaluation/bin/TagATR 42 100000' (100 runs):
+ Performance counter stats for 'build/Evaluation/bin/TagATR 42 100000' (10 runs):
 
-              4,94 msec task-clock                #    0,953 CPUs utilized            ( +-  0,17% )
+              4,87 msec task-clock                #    0,954 CPUs utilized            ( +-  0,90% )
                  0      context-switches          #    0,000 /sec                   
                  0      cpu-migrations            #    0,000 /sec                   
-             1.232      page-faults               #  245,522 K/sec                    ( +-  0,01% )
-        21.184.738      cycles                    #    4,222 GHz                      ( +-  0,16% )
-           907.956      stalled-cycles-frontend   #    4,22% frontend cycles idle     ( +-  1,52% )
-         4.320.914      stalled-cycles-backend    #   20,10% backend cycles idle      ( +-  0,21% )
-        26.136.975      instructions              #    1,22  insn per cycle         
-                                                  #    0,17  stalled cycles per insn  ( +-  0,01% )
-         3.511.065      branches                  #  699,710 M/sec                    ( +-  0,02% )
-           285.689      branch-misses             #    8,12% of all branches          ( +-  0,40% )
+             1.234      page-faults               #  250,093 K/sec                    ( +-  0,04% )
+        21.058.379      cycles                    #    4,268 GHz                      ( +-  0,50% )
+           865.521      stalled-cycles-frontend   #    4,09% frontend cycles idle     ( +-  8,25% )
+         4.319.183      stalled-cycles-backend    #   20,43% backend cycles idle      ( +-  0,67% )
+        26.181.717      instructions              #    1,24  insn per cycle         
+                                                  #    0,17  stalled cycles per insn  ( +-  0,04% )
+         3.522.763      branches                  #  713,954 M/sec                    ( +-  0,06% )
+           278.901      branch-misses             #    7,94% of all branches          ( +-  0,40% )
 
-        0,00518638 +- 0,00000936 seconds time elapsed  ( +-  0,18% )
+         0,0051078 +- 0,0000492 seconds time elapsed  ( +-  0,96% )
 
