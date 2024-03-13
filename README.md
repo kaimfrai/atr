@@ -1,6 +1,6 @@
 # Archetypal Recomposition
 
-This project provides the ATR library. ATR is an experimental alternative to inheritance with virtual functions. ATR optimizes memory layout and merges identical functions to reduce overall cache use. 2 strategies are implemented so far using ATR, one is in planning:
+This project provides the ATR library, short for Archetypal Recomposition. ATR is an experimental alternative to inheritance with virtual functions. ATR optimizes memory layout and merges identical functions to reduce overall cache use. 2 strategies are implemented so far using ATR, one is in planning:
 
 * Function pointer: Stores a pointer to the function implementation alongside the object.
 * Tag: Stores an 8-bit tag in a separate array that maps to the object type. The tag value is determined at compile time and validated at link time. At runtime with full optimization it is dispatched with a singular jump instruction, similar to how a switch with consecutive cases would.
@@ -9,6 +9,26 @@ This project provides the ATR library. ATR is an experimental alternative to inh
 All 3 strategies define the same archetype definition from which the actual data structures are recomposed.
 
 The entirety of this project is built using C++20 modules.
+
+## Highlights of ATR vs a class hierarchy with virtual functions
+(Measurements from March 13th 2024, details can be found in Evaluation/Results/)
+
+*TagATR (best current implementation):*
+
+* -10% compilation time:
+  1.12s vs 1.24s
+* Fastest compilation time of any technique that uses abstraction
+* -37% memory consumption:
+  4'407'296 bytes vs 7'049'464 bytes
+* -46% total program run duration:
+  4.65 ms vs 8.67 ms
+
+*SOAReplication (draft of a future implementation):*
+
+* -41% Memory consumption:
+  4'172'704 bytes vs 7'049'464 bytes
+* -81% Total program run duration:
+  1.66 ms vs 8.67 ms 
 
 ## Requirements
 Supported OS:
@@ -117,31 +137,7 @@ instead of "all" to run the evaluation only on the corresponding implementation.
 
 To make use of perf the script requires elevated rights.
 
-You may also run the following:
-
-```
-> bash evaluation.sh assembly all Z
-> bash evaluation.sh cachegrind all Z
-> bash evaluation.sh compile all Z
-> bash evaluation.sh memcheck all Z
-> sudo bash evaluation.sh perf all Z
-```
-This will run each implementation by only zero-initializing all data members instead of pseudo randomly intializing them. For ATR this has a significant impact on compilation duration, as member access has not yet been optimized in that regard. You may find that despite ATR making heavy use of meta-programming, it's compilation duration without member access is shorter than the implementation using virtual functions!
-
-#### Highlights of Evaluation/Results computing the sum over all volumes of 100'000 pseudo-randomly generated 3D bodies using polymorphism
-
-* -7% Compilation time with zero-initialization of Virtual compared to TagATR:
-  0.91s vs 0.85s
-* +15% Compilation time with pseudo-random initialization of Virtual compared to TagATR:
-  1.09s vs 1.25s
-* -37% Memory consumption of Virtual compared to TagATR:
-  7'049'464 bytes vs 4'407'296 bytes
-* -41% Memory consumption of Virtual compared to SOAReplication:
-  7'049'464 bytes vs 4'172'704 bytes
-* -43% Total program run duration of Virtual compared to TagATR:
-  8.74 ms vs 4.94 ms
-* -81% Total program run duration of Virtual compared to SOAReplication:
-  8.74 ms vs 1.66 ms
+You may find that despite ATR making heavy use of meta-programming, it's compilation duration without member access is shorter than the implementation using virtual functions!
 
 ## CMake
 
