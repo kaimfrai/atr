@@ -1,48 +1,19 @@
 export module Evaluation.CRTP.BasicShape;
 
+import Evaluation.Dependency.CommonData;
+
 export namespace
 	Shapes2D
 {
-	struct
-		Point
-	{
-		float
-			Lateral
-		;
-		float
-			Vertical
-		;
-		float
-			Longitudinal
-		;
-	};
-
-	struct
-		RGBAColor
-	{
-		float
-			Red
-		;
-		float
-			Green
-		;
-		float
-			Blue
-		;
-		float
-			Alpha
-		;
-	};
-
 	struct
 		BasicShape
 	{
 		RGBAColor
 			Color
-		;
+		{};
 		Point
 			Coordinates
-		;
+		{};
 
 		[[nodiscard]]
 		auto constexpr inline

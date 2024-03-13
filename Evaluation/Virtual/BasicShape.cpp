@@ -1,51 +1,43 @@
 export module Evaluation.Virtual.BasicShape;
 
+import Evaluation.Dependency.CommonData;
 import Evaluation.Virtual.IShape;
 
 export namespace
 	Shapes2D
 {
 	struct
-		Point
-	{
-		float
-			Lateral
-		;
-		float
-			Vertical
-		;
-		float
-			Longitudinal
-		;
-	};
-
-	struct
-		RGBAColor
-	{
-		float
-			Red
-		;
-		float
-			Green
-		;
-		float
-			Blue
-		;
-		float
-			Alpha
-		;
-	};
-
-	struct
 		BasicShape
 	:	IShape
 	{
 		RGBAColor
 			Color
-		;
+		{};
 		Point
 			Coordinates
-		;
+		{};
+
+		explicit(false) constexpr inline
+		(	BasicShape
+		)	()
+			noexcept
+		=	default;
+
+		explicit(true) constexpr inline
+		(	BasicShape
+		)	(	RGBAColor const
+				&	i_rColor
+			,	Point const
+				&	i_rCoordinates
+			)
+			noexcept
+		:	Color
+			{	i_rColor
+			}
+		,	Coordinates
+			{	i_rCoordinates
+			}
+		{}
 
 		[[nodiscard]]
 		auto constexpr inline

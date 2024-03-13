@@ -30,6 +30,46 @@ export namespace
 		->	float
 		=	0;
 
+		explicit(false) constexpr inline
+		(	IShape
+		)	()
+			noexcept
+		=	default;
+
+		explicit(false) constexpr inline
+		(	IShape
+		)	(	IShape const
+				&
+			)
+			noexcept
+		=	default;
+
+		explicit(false) constexpr inline
+		(	IShape
+		)	(	IShape
+				&&
+			)
+			noexcept
+		=	default;
+
+		auto constexpr inline
+		(	operator=
+		)	(	IShape const
+				&
+			)	&
+			noexcept
+		->	IShape&
+		=	default;
+
+		auto constexpr inline
+		(	operator=
+		)	(	IShape
+				&&
+			)	&
+			noexcept
+		->	IShape&
+		=	default;
+
 		virtual constexpr inline
 		(	compl
 			IShape

@@ -8,7 +8,7 @@ export namespace
 	{
 		float
 			Depth
-		;
+		{};
 
 		[[nodiscard]]
 		auto constexpr inline

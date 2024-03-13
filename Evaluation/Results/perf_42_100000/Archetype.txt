@@ -1,17 +1,17 @@
 
  Performance counter stats for 'build/Evaluation/bin/Archetype 42 100000' (10 runs):
 
-              4,97 msec task-clock                #    0,941 CPUs utilized            ( +-  1,20% )
+              4,80 msec task-clock                #    0,956 CPUs utilized            ( +-  1,03% )
                  0      context-switches          #    0,000 /sec                   
                  0      cpu-migrations            #    0,000 /sec                   
-             1.905      page-faults               #  374,464 K/sec                    ( +-  0,02% )
-        21.347.313      cycles                    #    4,196 GHz                      ( +-  1,01% )
-         1.426.388      stalled-cycles-frontend   #    6,56% frontend cycles idle     ( +-  9,38% )
-         4.651.402      stalled-cycles-backend    #   21,39% backend cycles idle      ( +-  1,38% )
-        25.393.025      instructions              #    1,17  insn per cycle         
-                                                  #    0,19  stalled cycles per insn  ( +-  0,09% )
-         3.358.123      branches                  #  660,103 M/sec                    ( +-  0,11% )
-           261.370      branch-misses             #    7,80% of all branches          ( +-  0,44% )
+             1.906      page-faults               #  392,626 K/sec                    ( +-  0,02% )
+        20.398.548      cycles                    #    4,202 GHz                      ( +-  0,78% )
+           902.108      stalled-cycles-frontend   #    4,37% frontend cycles idle     ( +-  9,26% )
+         4.375.996      stalled-cycles-backend    #   21,19% backend cycles idle      ( +-  1,32% )
+        25.180.461      instructions              #    1,22  insn per cycle         
+                                                  #    0,18  stalled cycles per insn  ( +-  0,10% )
+         3.318.666      branches                  #  683,628 M/sec                    ( +-  0,11% )
+           267.954      branch-misses             #    8,04% of all branches          ( +-  0,52% )
 
-         0,0052836 +- 0,0000654 seconds time elapsed  ( +-  1,24% )
+         0,0050215 +- 0,0000551 seconds time elapsed  ( +-  1,10% )
 

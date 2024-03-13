@@ -10,18 +10,19 @@ add_single_file_modules(
 	RectangularShape.cpp
 	TriangularShape.cpp
 
-	Ellipse.cpp
-	Circle.cpp
-	Rectangle.cpp
-	Square.cpp
-	Triangle.cpp
-
 	BasicBody.cpp
 	ExtendedShape.cpp
 	Shape3D.cpp
 	CubicBody.cpp
 	PyramidicBody.cpp
 	SphericBody.cpp
+
+	Ellipse.cpp
+	Circle.cpp
+	Rectangle.cpp
+	Square.cpp
+	Triangle.cpp
+
 	BasicSphere.cpp
 
 	Cone.cpp

@@ -1,22 +1,22 @@
-==73096== Cachegrind, a cache and branch-prediction profiler
-==73096== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
-==73096== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==73096== Command: build/Evaluation/bin/Archetype 42 100000
-==73096== 
---73096-- warning: L3 cache found, using its data for the LL simulation.
-==73096== 
-==73096== I   refs:      16,504,545
-==73096== I1  misses:         2,155
-==73096== LLi misses:         2,029
-==73096== I1  miss rate:       0.01%
-==73096== LLi miss rate:       0.01%
-==73096== 
-==73096== D   refs:       6,113,641  (3,731,763 rd   + 2,381,878 wr)
-==73096== D1  misses:       247,526  (  131,291 rd   +   116,235 wr)
-==73096== LLd misses:       125,428  (   10,628 rd   +   114,800 wr)
-==73096== D1  miss rate:        4.0% (      3.5%     +       4.9%  )
-==73096== LLd miss rate:        2.1% (      0.3%     +       4.8%  )
-==73096== 
-==73096== LL refs:          249,681  (  133,446 rd   +   116,235 wr)
-==73096== LL misses:        127,457  (   12,657 rd   +   114,800 wr)
-==73096== LL miss rate:         0.6% (      0.1%     +       4.8%  )
+==51653== Cachegrind, a cache and branch-prediction profiler
+==51653== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==51653== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==51653== Command: build/Evaluation/bin/Archetype 42 100000
+==51653== 
+--51653-- warning: L3 cache found, using its data for the LL simulation.
+==51653== 
+==51653== I   refs:      16,395,565
+==51653== I1  misses:         2,159
+==51653== LLi misses:         2,033
+==51653== I1  miss rate:       0.01%
+==51653== LLi miss rate:       0.01%
+==51653== 
+==51653== D   refs:       6,163,927  (3,794,535 rd   + 2,369,392 wr)
+==51653== D1  misses:       247,552  (  131,314 rd   +   116,238 wr)
+==51653== LLd misses:       125,428  (   10,628 rd   +   114,800 wr)
+==51653== D1  miss rate:        4.0% (      3.5%     +       4.9%  )
+==51653== LLd miss rate:        2.0% (      0.3%     +       4.8%  )
+==51653== 
+==51653== LL refs:          249,711  (  133,473 rd   +   116,238 wr)
+==51653== LL misses:        127,461  (   12,661 rd   +   114,800 wr)
+==51653== LL miss rate:         0.6% (      0.1%     +       4.8%  )

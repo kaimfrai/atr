@@ -1,5 +1,6 @@
 import <polymorphic.hpp>;
 
+import Evaluation.Dependency.CommonData;
 import Evaluation.Dependency.DynamicArray;
 import Evaluation.Dependency.PseudoRandomSequence;
 import Evaluation.Dependency.TransformReduce;
@@ -25,21 +26,6 @@ import Std;
 namespace
 	Bodies3D
 {
-	struct Circle : Shape3D<::Shapes2D::Circle>{};
-	struct Ellipse : Shape3D<::Shapes2D::Ellipse>{};
-	struct Rectangle : Shape3D<::Shapes2D::Rectangle>{};
-	struct Square : Shape3D<::Shapes2D::Square>{};
-	struct Triangle : Shape3D<::Shapes2D::Triangle>{};
-
-	using ::Bodies3D::Cube;
-	using ::Bodies3D::Cuboid;
-	using ::Bodies3D::Pyramid;
-	using ::Bodies3D::Sphere;
-	using ::Bodies3D::Cylinder;
-	using ::Bodies3D::Cone;
-	using ::Bodies3D::Ellipsoid;
-	using ::Bodies3D::Head;
-
 	struct
 		ComputeVolumeTag
 	{};
@@ -90,7 +76,7 @@ auto inline
 			()
 	};
 
-	for	(	auto
+	for	(	auto const
 			[	vType
 			,	vRed
 			,	vGreen
@@ -115,67 +101,33 @@ auto inline
 		:	i_vRandomSequence
 		)
 	{
+		RGBAColor const
+			vColor
+		{	vRed
+		,	vGreen
+		,	vBlue
+		,	vAlpha
+		};
+		Point const
+			vCoordinates
+		{	vLateral
+		,	vLongitudinal
+		,	vVertical
+		};
+
 		switch
 			(	vType
 			%	13
 			)
 		{	case
 				0
-		:	{	Circle
-					vCircle
-				{};
-
-				vCircle
-				.	Shape2D
-				.	Color
-				.	Red
-				=	vRed
-				;
-				vCircle
-				.	Shape2D
-				.	Color
-				.	Green
-				=	vGreen
-				;
-				vCircle
-				.	Shape2D
-				.	Color
-				.	Blue
-				=	vBlue
-				;
-				vCircle
-				.	Shape2D
-				.	Color
-				.	Alpha
-				=	vAlpha
-				;
-				vCircle
-				.	Shape2D
-				.	Coordinates
-				.	Lateral
-				=	vLateral
-				;
-				vCircle
-				.	Shape2D
-				.	Coordinates
-				.	Longitudinal
-				=	vLongitudinal
-				;
-				vCircle
-				.	Shape2D
-				.	Coordinates
-				.	Vertical
-				=	vVertical
-				;
-				vCircle
-				.	Shape2D
-				.	Height
-				=	vHeight
-				;
-
-				vElements
+		:	{	vElements
 				.	emplace_back
-					(	vCircle
+					(	Circle
+						{	vColor
+						,	vCoordinates
+						,	vHeight
+						}
 					)
 				;
 			}
@@ -183,66 +135,14 @@ auto inline
 
 			case
 				1
-		:	{	Ellipse
-					vEllipse
-				{};
-
-				vEllipse
-				.	Shape2D
-				.	Color
-				.	Red
-				=	vRed
-				;
-				vEllipse
-				.	Shape2D
-				.	Color
-				.	Green
-				=	vGreen
-				;
-				vEllipse
-				.	Shape2D
-				.	Color
-				.	Blue
-				=	vBlue
-				;
-				vEllipse
-				.	Shape2D
-				.	Color
-				.	Alpha
-				=	vAlpha
-				;
-				vEllipse
-				.	Shape2D
-				.	Coordinates
-				.	Lateral
-				=	vLateral
-				;
-				vEllipse
-				.	Shape2D
-				.	Coordinates
-				.	Longitudinal
-				=	vLongitudinal
-				;
-				vEllipse
-				.	Shape2D
-				.	Coordinates
-				.	Vertical
-				=	vVertical
-				;
-				vEllipse
-				.	Shape2D
-				.	Height
-				=	vHeight
-				;
-				vEllipse
-				.	Shape2D
-				.	Width
-				=	vWidth
-				;
-
-				vElements
+		:	{	vElements
 				.	emplace_back
-					(	vEllipse
+					(	Ellipse
+						{	vColor
+						,	vCoordinates
+						,	vHeight
+						,	vWidth
+						}
 					)
 				;
 			}
@@ -250,66 +150,14 @@ auto inline
 
 			case
 				2
-		:	{	Rectangle
-					vRectangle
-				{};
-
-				vRectangle
-				.	Shape2D
-				.	Color
-				.	Red
-				=	vRed
-				;
-				vRectangle
-				.	Shape2D
-				.	Color
-				.	Green
-				=	vGreen
-				;
-				vRectangle
-				.	Shape2D
-				.	Color
-				.	Blue
-				=	vBlue
-				;
-				vRectangle
-				.	Shape2D
-				.	Color
-				.	Alpha
-				=	vAlpha
-				;
-				vRectangle
-				.	Shape2D
-				.	Coordinates
-				.	Lateral
-				=	vLateral
-				;
-				vRectangle
-				.	Shape2D
-				.	Coordinates
-				.	Longitudinal
-				=	vLongitudinal
-				;
-				vRectangle
-				.	Shape2D
-				.	Coordinates
-				.	Vertical
-				=	vVertical
-				;
-				vRectangle
-				.	Shape2D
-				.	Height
-				=	vHeight
-				;
-				vRectangle
-				.	Shape2D
-				.	Width
-				=	vWidth
-				;
-
-				vElements
+		:	{	vElements
 				.	emplace_back
-					(	vRectangle
+					(	Rectangle
+						{	vColor
+						,	vCoordinates
+						,	vHeight
+						,	vWidth
+						}
 					)
 				;
 			}
@@ -317,61 +165,13 @@ auto inline
 
 			case
 				3
-		:	{	Square
-					vSquare
-				{};
-
-				vSquare
-				.	Shape2D
-				.	Color
-				.	Red
-				=	vRed
-				;
-				vSquare
-				.	Shape2D
-				.	Color
-				.	Green
-				=	vGreen
-				;
-				vSquare
-				.	Shape2D
-				.	Color
-				.	Blue
-				=	vBlue
-				;
-				vSquare
-				.	Shape2D
-				.	Color
-				.	Alpha
-				=	vAlpha
-				;
-				vSquare
-				.	Shape2D
-				.	Coordinates
-				.	Lateral
-				=	vLateral
-				;
-				vSquare
-				.	Shape2D
-				.	Coordinates
-				.	Longitudinal
-				=	vLongitudinal
-				;
-				vSquare
-				.	Shape2D
-				.	Coordinates
-				.	Vertical
-				=	vVertical
-				;
-				vSquare
-				.	Shape2D
-				.	Height
-				=	vHeight
-				;
-
-				vElements
+		:	{	vElements
 				.	emplace_back
-					(	vSquare
+					(	Square
+						{	vColor
+						,	vCoordinates
+						,	vHeight
+						}
 					)
 				;
 			}
@@ -379,66 +179,14 @@ auto inline
 
 			case
 				4
-		:	{	Triangle
-					vTriangle
-				{};
-
-				vTriangle
-				.	Shape2D
-				.	Color
-				.	Red
-				=	vRed
-				;
-				vTriangle
-				.	Shape2D
-				.	Color
-				.	Green
-				=	vGreen
-				;
-				vTriangle
-				.	Shape2D
-				.	Color
-				.	Blue
-				=	vBlue
-				;
-				vTriangle
-				.	Shape2D
-				.	Color
-				.	Alpha
-				=	vAlpha
-				;
-				vTriangle
-				.	Shape2D
-				.	Coordinates
-				.	Lateral
-				=	vLateral
-				;
-				vTriangle
-				.	Shape2D
-				.	Coordinates
-				.	Longitudinal
-				=	vLongitudinal
-				;
-				vTriangle
-				.	Shape2D
-				.	Coordinates
-				.	Vertical
-				=	vVertical
-				;
-				vTriangle
-				.	Shape2D
-				.	Height
-				=	vHeight
-				;
-				vTriangle
-				.	Shape2D
-				.	Width
-				=	vWidth
-				;
-
-				vElements
+		:	{	vElements
 				.	emplace_back
-					(	vTriangle
+					(	Triangle
+						{	vColor
+						,	vCoordinates
+						,	vHeight
+						,	vWidth
+						}
 					)
 				;
 			}
@@ -446,132 +194,29 @@ auto inline
 
 			case
 				5
-		:	{	Cube
-					vCube
-				{};
-
-				vCube
-				.	Shape2D
-				.	Color
-				.	Red
-				=	vRed
-				;
-				vCube
-				.	Shape2D
-				.	Color
-				.	Green
-				=	vGreen
-				;
-				vCube
-				.	Shape2D
-				.	Color
-				.	Blue
-				=	vBlue
-				;
-				vCube
-				.	Shape2D
-				.	Color
-				.	Alpha
-				=	vAlpha
-				;
-				vCube
-				.	Shape2D
-				.	Coordinates
-				.	Lateral
-				=	vLateral
-				;
-				vCube
-				.	Shape2D
-				.	Coordinates
-				.	Longitudinal
-				=	vLongitudinal
-				;
-				vCube
-				.	Shape2D
-				.	Coordinates
-				.	Vertical
-				=	vVertical
-				;
-				vCube
-				.	Shape2D
-				.	Height
-				=	vHeight
-				;
-
-				vElements
+		:	{	vElements
 				.	emplace_back
-						(	vCube
-						)
+					(	Cube
+						{	vColor
+						,	vCoordinates
+						,	vHeight
+						}
+					)
 				;
 			}
 			break;
 
 			case
 				6
-		:	{	Cuboid
-					vCuboid
-				{};
-
-				vCuboid
-				.	Shape2D
-				.	Color
-				.	Red
-				=	vRed
-				;
-				vCuboid
-				.	Shape2D
-				.	Color
-				.	Green
-				=	vGreen
-				;
-				vCuboid
-				.	Shape2D
-				.	Color
-				.	Blue
-				=	vBlue
-				;
-				vCuboid
-				.	Shape2D
-				.	Color
-				.	Alpha
-				=	vAlpha
-				;
-				vCuboid
-				.	Shape2D
-				.	Coordinates
-				.	Lateral
-				=	vLateral
-				;
-				vCuboid
-				.	Shape2D
-				.	Coordinates
-				.	Longitudinal
-				=	vLongitudinal
-				;
-				vCuboid
-				.	Shape2D
-				.	Coordinates
-				.	Vertical
-				=	vVertical
-				;
-				vCuboid
-				.	Shape2D
-				.	Height
-				=	vHeight
-				;
-				vCuboid
-				.	Shape2D
-				.	Width
-				=	vWidth
-				;
-				vCuboid
-				.	Depth
-				=	vDepth
-				;
-
-				vElements
+		:	{	vElements
 				.	emplace_back
-					(	vCuboid
+					(	Cuboid
+						{	vColor
+						,	vCoordinates
+						,	vHeight
+						,	vWidth
+						,	vDepth
+						}
 					)
 				;
 			}
@@ -579,70 +224,15 @@ auto inline
 
 			case
 				7
-		:	{	Pyramid
-					vPyramid
-				{};
-
-				vPyramid
-				.	Shape2D
-				.	Color
-				.	Red
-				=	vRed
-				;
-				vPyramid
-				.	Shape2D
-				.	Color
-				.	Green
-				=	vGreen
-				;
-				vPyramid
-				.	Shape2D
-				.	Color
-				.	Blue
-				=	vBlue
-				;
-				vPyramid
-				.	Shape2D
-				.	Color
-				.	Alpha
-				=	vAlpha
-				;
-				vPyramid
-				.	Shape2D
-				.	Coordinates
-				.	Lateral
-				=	vLateral
-				;
-				vPyramid
-				.	Shape2D
-				.	Coordinates
-				.	Longitudinal
-				=	vLongitudinal
-				;
-				vPyramid
-				.	Shape2D
-				.	Coordinates
-				.	Vertical
-				=	vVertical
-				;
-				vPyramid
-				.	Shape2D
-				.	Height
-				=	vHeight
-				;
-				vPyramid
-				.	Shape2D
-				.	Width
-				=	vWidth
-				;
-				vPyramid
-				.	Depth
-				=	vDepth
-				;
-
-				vElements
+		:	{	vElements
 				.	emplace_back
-					(	vPyramid
+					(	Pyramid
+						{	vColor
+						,	vCoordinates
+						,	vHeight
+						,	vWidth
+						,	vDepth
+						}
 					)
 				;
 			}
@@ -650,61 +240,13 @@ auto inline
 
 			case
 				8
-		:	{	Sphere
-					vSphere
-				{};
-
-				vSphere
-				.	Shape2D
-				.	Color
-				.	Red
-				=	vRed
-				;
-				vSphere
-				.	Shape2D
-				.	Color
-				.	Green
-				=	vGreen
-				;
-				vSphere
-				.	Shape2D
-				.	Color
-				.	Blue
-				=	vBlue
-				;
-				vSphere
-				.	Shape2D
-				.	Color
-				.	Alpha
-				=	vAlpha
-				;
-				vSphere
-				.	Shape2D
-				.	Coordinates
-				.	Lateral
-				=	vLateral
-				;
-				vSphere
-				.	Shape2D
-				.	Coordinates
-				.	Longitudinal
-				=	vLongitudinal
-				;
-				vSphere
-				.	Shape2D
-				.	Coordinates
-				.	Vertical
-				=	vVertical
-				;
-				vSphere
-				.	Shape2D
-				.	Height
-				=	vHeight
-				;
-
-				vElements
+		:	{	vElements
 				.	emplace_back
-					(	vSphere
+					(	Sphere
+						{	vColor
+						,	vCoordinates
+						,	vHeight
+						}
 					)
 				;
 			}
@@ -712,65 +254,14 @@ auto inline
 
 			case
 				9
-		:	{	Cylinder
-					vCylinder
-				{};
-
-				vCylinder
-				.	Shape2D
-				.	Color
-				.	Red
-				=	vRed
-				;
-				vCylinder
-				.	Shape2D
-				.	Color
-				.	Green
-				=	vGreen
-				;
-				vCylinder
-				.	Shape2D
-				.	Color
-				.	Blue
-				=	vBlue
-				;
-				vCylinder
-				.	Shape2D
-				.	Color
-				.	Alpha
-				=	vAlpha
-				;
-				vCylinder
-				.	Shape2D
-				.	Coordinates
-				.	Lateral
-				=	vLateral
-				;
-				vCylinder
-				.	Shape2D
-				.	Coordinates
-				.	Longitudinal
-				=	vLongitudinal
-				;
-				vCylinder
-				.	Shape2D
-				.	Coordinates
-				.	Vertical
-				=	vVertical
-				;
-				vCylinder
-				.	Shape2D
-				.	Height
-				=	vHeight
-				;
-				vCylinder
-				.	Depth
-				=	vDepth
-				;
-
-				vElements
+		:	{	vElements
 				.	emplace_back
-					(	vCylinder
+					(	Cylinder
+						{	vColor
+						,	vCoordinates
+						,	vHeight
+						,	vDepth
+						}
 					)
 				;
 			}
@@ -778,65 +269,14 @@ auto inline
 
 			case
 				10
-		:	{	Cone
-					vCone
-				{};
-
-				vCone
-				.	Shape2D
-				.	Color
-				.	Red
-				=	vRed
-				;
-				vCone
-				.	Shape2D
-				.	Color
-				.	Green
-				=	vGreen
-				;
-				vCone
-				.	Shape2D
-				.	Color
-				.	Blue
-				=	vBlue
-				;
-				vCone
-				.	Shape2D
-				.	Color
-				.	Alpha
-				=	vAlpha
-				;
-				vCone
-				.	Shape2D
-				.	Coordinates
-				.	Lateral
-				=	vLateral
-				;
-				vCone
-				.	Shape2D
-				.	Coordinates
-				.	Longitudinal
-				=	vLongitudinal
-				;
-				vCone
-				.	Shape2D
-				.	Coordinates
-				.	Vertical
-				=	vVertical
-				;
-				vCone
-				.	Shape2D
-				.	Height
-				=	vHeight
-				;
-				vCone
-				.	Depth
-				=	vDepth
-				;
-
-				vElements
+		:	{	vElements
 				.	emplace_back
-					(	vCone
+					(	Cone
+						{	vColor
+						,	vCoordinates
+						,	vHeight
+						,	vDepth
+						}
 					)
 				;
 			}
@@ -844,70 +284,15 @@ auto inline
 
 			case
 				11
-		:	{	Ellipsoid
-					vEllipsoid
-				{};
-
-				vEllipsoid
-				.	Shape2D
-				.	Color
-				.	Red
-				=	vRed
-				;
-				vEllipsoid
-				.	Shape2D
-				.	Color
-				.	Green
-				=	vGreen
-				;
-				vEllipsoid
-				.	Shape2D
-				.	Color
-				.	Blue
-				=	vBlue
-				;
-				vEllipsoid
-				.	Shape2D
-				.	Color
-				.	Alpha
-				=	vAlpha
-				;
-				vEllipsoid
-				.	Shape2D
-				.	Coordinates
-				.	Lateral
-				=	vLateral
-				;
-				vEllipsoid
-				.	Shape2D
-				.	Coordinates
-				.	Longitudinal
-				=	vLongitudinal
-				;
-				vEllipsoid
-				.	Shape2D
-				.	Coordinates
-				.	Vertical
-				=	vVertical
-				;
-				vEllipsoid
-				.	Shape2D
-				.	Height
-				=	vHeight
-				;
-				vEllipsoid
-				.	Shape2D
-				.	Width
-				=	vWidth
-				;
-				vEllipsoid
-				.	Depth
-				=	vDepth
-				;
-
-				vElements
+		:	{	vElements
 				.	emplace_back
-					(	vEllipsoid
+					(	Ellipsoid
+						{	vColor
+						,	vCoordinates
+						,	vHeight
+						,	vWidth
+						,	vDepth
+						}
 					)
 				;
 			}
@@ -915,173 +300,41 @@ auto inline
 
 			case
 				12
-		:	{	Head
-					vHead
-				{};
-
-				vHead
-				.	Shape2D
-				.	Color
-				.	Red
-				=	vRed
-				;
-				vHead
-				.	Shape2D
-				.	Color
-				.	Green
-				=	vGreen
-				;
-				vHead
-				.	Shape2D
-				.	Color
-				.	Blue
-				=	vBlue
-				;
-				vHead
-				.	Shape2D
-				.	Color
-				.	Alpha
-				=	vAlpha
-				;
-				vHead
-				.	Shape2D
-				.	Coordinates
-				.	Lateral
-				=	vLateral
-				;
-				vHead
-				.	Shape2D
-				.	Coordinates
-				.	Longitudinal
-				=	vLongitudinal
-				;
-				vHead
-				.	Shape2D
-				.	Coordinates
-				.	Vertical
-				=	vVertical
-				;
-				vHead
-				.	Shape2D
-				.	Height
-				=	vHeight
-				;
-
-				vHead
-				.	LeftEye
-				.	Shape2D
-				.	Color
-				.	Red
-				=	vEyeRed
-				;
-				vHead
-				.	LeftEye
-				.	Shape2D
-				.	Color
-				.	Green
-				=	vEyeGreen
-				;
-				vHead
-				.	LeftEye
-				.	Shape2D
-				.	Color
-				.	Blue
-				=	vEyeBlue
-				;
-				vHead
-				.	LeftEye
-				.	Shape2D
-				.	Color
-				.	Alpha
-				=	vAlpha
-				;
-				vHead
-				.	LeftEye
-				.	Shape2D
-				.	Coordinates
-				.	Lateral
-				=	vLeftEyeLateral
-				;
-				vHead
-				.	LeftEye
-				.	Shape2D
-				.	Coordinates
-				.	Longitudinal
-				=	vEyeLongitudinal
-				;
-				vHead
-				.	LeftEye
-				.	Shape2D
-				.	Coordinates
-				.	Vertical
-				=	vEyeVertical
-				;
-				vHead
-				.	LeftEye
-				.	Shape2D
-				.	Height
-				=	vEyeHeight
-				;
-
-				vHead
-				.	RightEye
-				.	Shape2D
-				.	Color
-				.	Red
-				=	vEyeRed
-				;
-				vHead
-				.	RightEye
-				.	Shape2D
-				.	Color
-				.	Green
-				=	vEyeGreen
-				;
-				vHead
-				.	RightEye
-				.	Shape2D
-				.	Color
-				.	Blue
-				=	vEyeBlue
-				;
-				vHead
-				.	RightEye
-				.	Shape2D
-				.	Color
-				.	Alpha
-				=	vAlpha
-				;
-				vHead
-				.	RightEye
-				.	Shape2D
-				.	Coordinates
-				.	Lateral
-				=	vRightEyeLateral
-				;
-				vHead
-				.	RightEye
-				.	Shape2D
-				.	Coordinates
-				.	Longitudinal
-				=	vEyeLongitudinal
-				;
-				vHead
-				.	RightEye
-				.	Shape2D
-				.	Coordinates
-				.	Vertical
-				=	vEyeVertical
-				;
-				vHead
-				.	RightEye
-				.	Shape2D
-				.	Height
-				=	vEyeHeight
-				;
-
-				vElements
+		:	{	vElements
 				.	emplace_back
-					(	vHead
+					(	Head
+						{	vColor
+						,	vCoordinates
+						,	vHeight
+						,	Sphere
+							{	RGBAColor
+								{	vEyeRed
+								,	vEyeGreen
+								,	vEyeBlue
+								,	vAlpha
+								}
+							,	Point
+								{	vLeftEyeLateral
+								,	vEyeLongitudinal
+								,	vEyeVertical
+								}
+							,	vEyeHeight
+							}
+						,	Sphere
+							{	RGBAColor
+								{	vEyeRed
+								,	vEyeGreen
+								,	vEyeBlue
+								,	vAlpha
+								}
+							,	Point
+								{	vRightEyeLateral
+								,	vEyeLongitudinal
+								,	vEyeVertical
+								}
+							,	vEyeHeight
+							}
+						}
 					)
 				;
 			}

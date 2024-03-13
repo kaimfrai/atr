@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <memset+0x7260>
+               	call	qword ptr  <memset+0x7210>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x7270>
+               	mov	rax, qword ptr  <memset+0x7220>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x7278>
+               	mov	rax, qword ptr  <memset+0x7228>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <memset+0x7280>
+               	cmp	qword ptr , 0x0 <memset+0x7230>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -92,13 +92,14 @@ Disassembly of section .text:
                	int3
                	int3
 
-<initializer for module Evaluation.Dependency.DynamicArray>:
-               	cmp	byte ptr , 0x0 <_ZGIW10EvaluationW10DependencyW12DynamicArray__in_chrg>
-               	je	 <L0>
+<initializer for module Evaluation.Dependency.CommonData>:
+<initializer for module Std>:
                	ret
-<L0>:
-               	mov	byte ptr , 0x1 <_ZGIW10EvaluationW10DependencyW12DynamicArray__in_chrg>
-               	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
                	int3
                	int3
@@ -110,14 +111,13 @@ Disassembly of section .text:
                	int3
                	int3
 
-<initializer for module Evaluation.CRTP.Shape3D>:
-<initializer for module Std>:
+<initializer for module Evaluation.Dependency.DynamicArray>:
+               	cmp	byte ptr , 0x0 <_ZGIW10EvaluationW10DependencyW12DynamicArray__in_chrg>
+               	je	 <L0>
                	ret
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
+<L0>:
+               	mov	byte ptr , 0x1 <_ZGIW10EvaluationW10DependencyW12DynamicArray__in_chrg>
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -312,15 +312,11 @@ Disassembly of section .text:
                	je	 <L0>
                	ret
 <L0>:
+               	push	rax
                	mov	byte ptr , 0x1 <_ZGIW10EvaluationW4CRTPW6Circle__in_chrg>
-               	jmp	 <initializer for module Evaluation.CRTP.CircularShape>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
+               	call	 <initializer for module Evaluation.CRTP.CircularShape>
+               	pop	rax
+               	jmp	 <initializer for module Evaluation.CRTP.Shape3D>
                	int3
                	int3
                	int3
@@ -361,13 +357,13 @@ Disassembly of section .text:
                	int3
                	int3
 
-<initializer for module Evaluation.CRTP.Ellipse>:
-               	cmp	byte ptr , 0x0 <_ZGIW10EvaluationW4CRTPW7Ellipse__in_chrg>
+<initializer for module Evaluation.CRTP.Shape3D>:
+               	cmp	byte ptr , 0x0 <_ZGIW10EvaluationW4CRTPW7Shape3D__in_chrg>
                	je	 <L0>
                	ret
 <L0>:
-               	mov	byte ptr , 0x1 <_ZGIW10EvaluationW4CRTPW7Ellipse__in_chrg>
-               	jmp	 <initializer for module Evaluation.CRTP.CircularShape>
+               	mov	byte ptr , 0x1 <_ZGIW10EvaluationW4CRTPW7Shape3D__in_chrg>
+               	jmp	 <initializer for module Evaluation.CRTP.ExtendedShape>
                	int3
                	int3
                	int3
@@ -379,20 +375,48 @@ Disassembly of section .text:
                	int3
                	int3
 
+<initializer for module Evaluation.CRTP.ExtendedShape>:
+               	cmp	byte ptr , 0x0 <_ZGIW10EvaluationW4CRTPW13ExtendedShape__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	mov	byte ptr , 0x1 <_ZGIW10EvaluationW4CRTPW13ExtendedShape__in_chrg>
+               	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
+<initializer for module Evaluation.CRTP.Ellipse>:
+               	cmp	byte ptr , 0x0 <_ZGIW10EvaluationW4CRTPW7Ellipse__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	push	rax
+               	mov	byte ptr , 0x1 <_ZGIW10EvaluationW4CRTPW7Ellipse__in_chrg>
+               	call	 <initializer for module Evaluation.CRTP.CircularShape>
+               	pop	rax
+               	jmp	 <initializer for module Evaluation.CRTP.Shape3D>
+               	int3
+               	int3
+               	int3
+
 <initializer for module Evaluation.CRTP.Rectangle>:
                	cmp	byte ptr , 0x0 <_ZGIW10EvaluationW4CRTPW9Rectangle__in_chrg>
                	je	 <L0>
                	ret
 <L0>:
+               	push	rax
                	mov	byte ptr , 0x1 <_ZGIW10EvaluationW4CRTPW9Rectangle__in_chrg>
-               	jmp	 <initializer for module Evaluation.CRTP.RectangularShape>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
+               	call	 <initializer for module Evaluation.CRTP.RectangularShape>
+               	pop	rax
+               	jmp	 <initializer for module Evaluation.CRTP.Shape3D>
                	int3
                	int3
                	int3
@@ -438,15 +462,11 @@ Disassembly of section .text:
                	je	 <L0>
                	ret
 <L0>:
+               	push	rax
                	mov	byte ptr , 0x1 <_ZGIW10EvaluationW4CRTPW6Square__in_chrg>
-               	jmp	 <initializer for module Evaluation.CRTP.RectangularShape>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
+               	call	 <initializer for module Evaluation.CRTP.RectangularShape>
+               	pop	rax
+               	jmp	 <initializer for module Evaluation.CRTP.Shape3D>
                	int3
                	int3
                	int3
@@ -456,15 +476,11 @@ Disassembly of section .text:
                	je	 <L0>
                	ret
 <L0>:
+               	push	rax
                	mov	byte ptr , 0x1 <_ZGIW10EvaluationW4CRTPW8Triangle__in_chrg>
-               	jmp	 <initializer for module Evaluation.CRTP.TriangularShape>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
+               	call	 <initializer for module Evaluation.CRTP.TriangularShape>
+               	pop	rax
+               	jmp	 <initializer for module Evaluation.CRTP.Shape3D>
                	int3
                	int3
                	int3
@@ -506,15 +522,11 @@ Disassembly of section .text:
                	je	 <L0>
                	ret
 <L0>:
+               	push	rax
                	mov	byte ptr , 0x1 <_ZGIW10EvaluationW4CRTPW9CubicBody__in_chrg>
-               	jmp	 <initializer for module Evaluation.Dependency.Fraction>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
+               	call	 <initializer for module Evaluation.Dependency.Fraction>
+               	pop	rax
+               	jmp	 <initializer for module Evaluation.CRTP.ExtendedShape>
                	int3
                	int3
                	int3
@@ -552,15 +564,11 @@ Disassembly of section .text:
                	je	 <L0>
                	ret
 <L0>:
+               	push	rax
                	mov	byte ptr , 0x1 <_ZGIW10EvaluationW4CRTPW13PyramidicBody__in_chrg>
-               	jmp	 <initializer for module Evaluation.Dependency.Fraction>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
+               	call	 <initializer for module Evaluation.Dependency.Fraction>
+               	pop	rax
+               	jmp	 <initializer for module Evaluation.CRTP.ExtendedShape>
                	int3
                	int3
                	int3
@@ -602,15 +610,11 @@ Disassembly of section .text:
                	je	 <L0>
                	ret
 <L0>:
+               	push	rax
                	mov	byte ptr , 0x1 <_ZGIW10EvaluationW4CRTPW11SphericBody__in_chrg>
-               	jmp	 <initializer for module Evaluation.Dependency.PiFraction>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
+               	call	 <initializer for module Evaluation.Dependency.PiFraction>
+               	pop	rax
+               	jmp	 <initializer for module Evaluation.CRTP.ExtendedShape>
                	int3
                	int3
                	int3
@@ -623,8 +627,20 @@ Disassembly of section .text:
                	push	rax
                	mov	byte ptr , 0x1 <_ZGIW10EvaluationW4CRTPW8Cylinder__in_chrg>
                	call	 <initializer for module Evaluation.Dependency.PiFraction>
+               	call	 <initializer for module Evaluation.CRTP.Circle>
                	pop	rax
-               	jmp	 <initializer for module Evaluation.CRTP.Circle>
+               	jmp	 <initializer for module Evaluation.CRTP.ExtendedShape>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
                	int3
                	int3
@@ -637,8 +653,20 @@ Disassembly of section .text:
                	push	rax
                	mov	byte ptr , 0x1 <_ZGIW10EvaluationW4CRTPW4Cone__in_chrg>
                	call	 <initializer for module Evaluation.Dependency.PiFraction>
+               	call	 <initializer for module Evaluation.CRTP.Circle>
                	pop	rax
-               	jmp	 <initializer for module Evaluation.CRTP.Circle>
+               	jmp	 <initializer for module Evaluation.CRTP.ExtendedShape>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
                	int3
                	int3
@@ -673,6 +701,7 @@ Disassembly of section .text:
 
 <_GLOBAL__sub_I_Variant.cpp>:
                	push	rax
+               	call	 <initializer for module Std>
                	call	 <initializer for module Evaluation.Dependency.DynamicArray>
                	call	 <initializer for module Evaluation.Dependency.PseudoRandomSequence>
                	call	 <initializer for module Meta.Auto.Simd.Cast>
@@ -686,22 +715,21 @@ Disassembly of section .text:
                	call	 <initializer for module Evaluation.CRTP.Rectangle>
                	call	 <initializer for module Evaluation.CRTP.Square>
                	call	 <initializer for module Evaluation.CRTP.Triangle>
-               	call	 <initializer for module Std>
+               	call	 <initializer for module Evaluation.CRTP.Shape3D>
                	call	 <initializer for module Evaluation.CRTP.Cube>
+               	call	 <initializer for module Evaluation.CRTP.CubicBody>
                	call	 <initializer for module Evaluation.CRTP.Cuboid>
                	call	 <initializer for module Evaluation.CRTP.Pyramid>
+               	call	 <initializer for module Evaluation.CRTP.PyramidicBody>
                	call	 <initializer for module Evaluation.CRTP.Sphere>
                	call	 <initializer for module Evaluation.CRTP.BasicSphere>
                	call	 <initializer for module Evaluation.CRTP.Cylinder>
                	call	 <initializer for module Evaluation.CRTP.Cone>
                	call	 <initializer for module Evaluation.CRTP.Ellipsoid>
+               	call	 <initializer for module Evaluation.CRTP.SphericBody>
                	call	 <initializer for module Evaluation.CRTP.Head>
                	pop	rax
                	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
                	int3
 
@@ -749,12 +777,12 @@ Disassembly of section .text:
                	test	cl, cl
                	jne	 <L3>
 <L2>:
-               	mov	qword ptr [rsp + 0x2d0], rdx
+               	mov	qword ptr [rsp + 0x2e0], rdx
                	movsxd	rax, edx
                	imul	rdi, rax, 0x64
-               	mov	rsi, qword ptr  <memset+0x7288>
+               	mov	rsi, qword ptr  <memset+0x7238>
                	call	 <_ZnamRKSt9nothrow_t@plt>
-               	mov	qword ptr [rsp + 0x1f0], rax
+               	mov	qword ptr [rsp + 0x200], rax
                	movsxd	rdx, ebx
                	movabs	rsi, -0x61c8864680b583eb
                	add	rsi, rdx
@@ -809,16 +837,16 @@ Disassembly of section .text:
                	shr	rcx, 0x1f
                	xor	rcx, rax
                	xor	edi, edi
-               	xor	r11d, r11d
-               	mov	qword ptr [rsp + 0x318], rcx
-               	mov	rax, rcx
                	xor	r14d, r14d
-               	mov	qword ptr [rsp + 0x320], r10
+               	mov	qword ptr [rsp + 0x320], rcx
+               	mov	rax, rcx
+               	xor	r11d, r11d
+               	mov	qword ptr [rsp + 0x328], r10
                	mov	rcx, r10
-               	xor	r15d, r15d
+               	xor	r10d, r10d
                	mov	rdx, r8
-               	mov	qword ptr [rsp + 0x208], r8
-               	mov	qword ptr [rsp + 0x328], r9
+               	mov	qword ptr [rsp + 0x218], r8
+               	mov	qword ptr [rsp + 0x330], r9
                	mov	rsi, r9
                	xor	r9d, r9d
                	jmp	 <L4>
@@ -840,9 +868,9 @@ Disassembly of section .text:
                	bt	r8, rdi
                	jae	 <L6>
                	xor	r9, rsi
-               	xor	r15, rdx
-               	xor	r14, rcx
-               	xor	r11, rax
+               	xor	r10, rdx
+               	xor	r11, rcx
+               	xor	r14, rax
                	jmp	 <L6>
 <L5>:
                	xor	edi, edi
@@ -865,9 +893,9 @@ Disassembly of section .text:
                	bt	r8, rdi
                	jae	 <L9>
                	xor	r9, rsi
-               	xor	r15, rdx
-               	xor	r14, rcx
-               	xor	r11, rax
+               	xor	r10, rdx
+               	xor	r11, rcx
+               	xor	r14, rax
                	jmp	 <L9>
 <L8>:
                	xor	edi, edi
@@ -890,9 +918,9 @@ Disassembly of section .text:
                	bt	r8, rdi
                	jae	 <L12>
                	xor	r9, rsi
-               	xor	r15, rdx
-               	xor	r14, rcx
-               	xor	r11, rax
+               	xor	r10, rdx
+               	xor	r11, rcx
+               	xor	r14, rax
                	jmp	 <L12>
 <L11>:
                	xor	edi, edi
@@ -915,21 +943,21 @@ Disassembly of section .text:
                	bt	r8, rdi
                	jae	 <L15>
                	xor	r9, rsi
-               	xor	r15, rdx
-               	xor	r14, rcx
-               	xor	r11, rax
+               	xor	r10, rdx
+               	xor	r11, rcx
+               	xor	r14, rax
                	jmp	 <L15>
 <L14>:
+               	mov	qword ptr [rsp + 0x2d8], rbx
                	xor	edi, edi
-               	xor	r10d, r10d
-               	mov	rax, r11
-               	xor	r12d, r12d
-               	mov	rcx, r14
-               	xor	r13d, r13d
-               	mov	qword ptr [rsp + 0x200], r15
-               	mov	rdx, r15
-               	mov	rsi, r9
                	xor	r15d, r15d
+               	mov	rax, r14
+               	xor	ebp, ebp
+               	mov	rcx, r11
+               	xor	r13d, r13d
+               	mov	rdx, r10
+               	mov	rsi, r9
+               	xor	ebx, ebx
                	jmp	 <L16>
                	nop	word ptr cs:[rax + rax]
 <L18>:
@@ -948,10 +976,10 @@ Disassembly of section .text:
                	movabs	r8, 0x180ec6d33cfd0aba
                	bt	r8, rdi
                	jae	 <L18>
-               	xor	r15, rsi
+               	xor	rbx, rsi
                	xor	r13, rdx
-               	xor	r12, rcx
-               	xor	r10, rax
+               	xor	rbp, rcx
+               	xor	r15, rax
                	jmp	 <L18>
 <L17>:
                	xor	edi, edi
@@ -973,10 +1001,10 @@ Disassembly of section .text:
                	movabs	r8, -0x2a59ed990f36c6d4
                	bt	r8, rdi
                	jae	 <L21>
-               	xor	r15, rsi
+               	xor	rbx, rsi
                	xor	r13, rdx
-               	xor	r12, rcx
-               	xor	r10, rax
+               	xor	rbp, rcx
+               	xor	r15, rax
                	jmp	 <L21>
 <L20>:
                	xor	edi, edi
@@ -998,10 +1026,10 @@ Disassembly of section .text:
                	movabs	r8, -0x56a7d9e71fc03656
                	bt	r8, rdi
                	jae	 <L24>
-               	xor	r15, rsi
+               	xor	rbx, rsi
                	xor	r13, rdx
-               	xor	r12, rcx
-               	xor	r10, rax
+               	xor	rbp, rcx
+               	xor	r15, rax
                	jmp	 <L24>
 <L23>:
                	xor	edi, edi
@@ -1023,25 +1051,25 @@ Disassembly of section .text:
                	movabs	r8, 0x39abdc4529b1661c
                	bt	r8, rdi
                	jae	 <L27>
-               	xor	r15, rsi
+               	xor	rbx, rsi
                	xor	r13, rdx
-               	xor	r12, rcx
-               	xor	r10, rax
+               	xor	rbp, rcx
+               	xor	r15, rax
                	jmp	 <L27>
 <L26>:
                	xor	edi, edi
                	xor	eax, eax
-               	mov	qword ptr [rsp + 0x1d0], rax
-               	mov	rax, r10
+               	mov	qword ptr [rsp + 0x1e0], rax
+               	mov	rax, r15
                	xor	ecx, ecx
-               	mov	qword ptr [rsp + 0x1c8], rcx
-               	mov	rcx, r12
+               	mov	qword ptr [rsp + 0x1d8], rcx
+               	mov	rcx, rbp
                	xor	edx, edx
                	mov	qword ptr [rsp + 0x68], rdx
                	mov	rdx, r13
-               	mov	rsi, r15
+               	mov	rsi, rbx
                	xor	r8d, r8d
-               	mov	qword ptr [rsp + 0x1c0], r8
+               	mov	qword ptr [rsp + 0x1d0], r8
                	jmp	 <L28>
                	nop	word ptr [rax + rax]
 <L30>:
@@ -1060,10 +1088,10 @@ Disassembly of section .text:
                	movabs	r8, 0x180ec6d33cfd0aba
                	bt	r8, rdi
                	jae	 <L30>
-               	xor	qword ptr [rsp + 0x1c0], rsi
+               	xor	qword ptr [rsp + 0x1d0], rsi
                	xor	qword ptr [rsp + 0x68], rdx
-               	xor	qword ptr [rsp + 0x1c8], rcx
-               	xor	qword ptr [rsp + 0x1d0], rax
+               	xor	qword ptr [rsp + 0x1d8], rcx
+               	xor	qword ptr [rsp + 0x1e0], rax
                	jmp	 <L30>
 <L29>:
                	xor	edi, edi
@@ -1085,10 +1113,10 @@ Disassembly of section .text:
                	movabs	r8, -0x2a59ed990f36c6d4
                	bt	r8, rdi
                	jae	 <L33>
-               	xor	qword ptr [rsp + 0x1c0], rsi
+               	xor	qword ptr [rsp + 0x1d0], rsi
                	xor	qword ptr [rsp + 0x68], rdx
-               	xor	qword ptr [rsp + 0x1c8], rcx
-               	xor	qword ptr [rsp + 0x1d0], rax
+               	xor	qword ptr [rsp + 0x1d8], rcx
+               	xor	qword ptr [rsp + 0x1e0], rax
                	jmp	 <L33>
 <L32>:
                	xor	edi, edi
@@ -1110,10 +1138,10 @@ Disassembly of section .text:
                	movabs	r8, -0x56a7d9e71fc03656
                	bt	r8, rdi
                	jae	 <L36>
-               	xor	qword ptr [rsp + 0x1c0], rsi
+               	xor	qword ptr [rsp + 0x1d0], rsi
                	xor	qword ptr [rsp + 0x68], rdx
-               	xor	qword ptr [rsp + 0x1c8], rcx
-               	xor	qword ptr [rsp + 0x1d0], rax
+               	xor	qword ptr [rsp + 0x1d8], rcx
+               	xor	qword ptr [rsp + 0x1e0], rax
                	jmp	 <L36>
 <L35>:
                	xor	edi, edi
@@ -1135,27 +1163,27 @@ Disassembly of section .text:
                	movabs	r8, 0x39abdc4529b1661c
                	bt	r8, rdi
                	jae	 <L39>
-               	xor	qword ptr [rsp + 0x1c0], rsi
+               	xor	qword ptr [rsp + 0x1d0], rsi
                	xor	qword ptr [rsp + 0x68], rdx
-               	xor	qword ptr [rsp + 0x1c8], rcx
-               	xor	qword ptr [rsp + 0x1d0], rax
+               	xor	qword ptr [rsp + 0x1d8], rcx
+               	xor	qword ptr [rsp + 0x1e0], rax
                	jmp	 <L39>
 <L38>:
                	xor	edi, edi
                	xor	eax, eax
-               	mov	qword ptr [rsp + 0x1b8], rax
-               	mov	rax, qword ptr [rsp + 0x1d0]
+               	mov	qword ptr [rsp + 0x1c8], rax
+               	mov	rax, qword ptr [rsp + 0x1e0]
                	xor	ecx, ecx
-               	mov	qword ptr [rsp + 0x1b0], rcx
-               	mov	rcx, qword ptr [rsp + 0x1c8]
+               	mov	qword ptr [rsp + 0x1c0], rcx
+               	mov	rcx, qword ptr [rsp + 0x1d8]
                	xor	edx, edx
-               	mov	qword ptr [rsp], rdx
+               	mov	qword ptr [rsp + 0x80], rdx
                	mov	rdx, qword ptr [rsp + 0x68]
-               	mov	rsi, qword ptr [rsp + 0x1c0]
+               	mov	rsi, qword ptr [rsp + 0x1d0]
                	xor	r8d, r8d
-               	mov	qword ptr [rsp + 0x1a8], r8
+               	mov	qword ptr [rsp + 0x1b8], r8
                	jmp	 <L40>
-               	nop	dword ptr [rax + rax]
+               	nop	dword ptr [rax]
 <L42>:
                	mov	r8, rdx
                	shl	r8, 0x11
@@ -1172,15 +1200,15 @@ Disassembly of section .text:
                	movabs	r8, 0x180ec6d33cfd0aba
                	bt	r8, rdi
                	jae	 <L42>
-               	xor	qword ptr [rsp + 0x1a8], rsi
-               	xor	qword ptr [rsp], rdx
-               	xor	qword ptr [rsp + 0x1b0], rcx
-               	xor	qword ptr [rsp + 0x1b8], rax
+               	xor	qword ptr [rsp + 0x1b8], rsi
+               	xor	qword ptr [rsp + 0x80], rdx
+               	xor	qword ptr [rsp + 0x1c0], rcx
+               	xor	qword ptr [rsp + 0x1c8], rax
                	jmp	 <L42>
 <L41>:
                	xor	edi, edi
                	jmp	 <L43>
-               	nop	word ptr cs:[rax + rax]
+               	nop	dword ptr [rax]
 <L45>:
                	mov	r8, rdx
                	shl	r8, 0x11
@@ -1197,15 +1225,15 @@ Disassembly of section .text:
                	movabs	r8, -0x2a59ed990f36c6d4
                	bt	r8, rdi
                	jae	 <L45>
-               	xor	qword ptr [rsp + 0x1a8], rsi
-               	xor	qword ptr [rsp], rdx
-               	xor	qword ptr [rsp + 0x1b0], rcx
-               	xor	qword ptr [rsp + 0x1b8], rax
+               	xor	qword ptr [rsp + 0x1b8], rsi
+               	xor	qword ptr [rsp + 0x80], rdx
+               	xor	qword ptr [rsp + 0x1c0], rcx
+               	xor	qword ptr [rsp + 0x1c8], rax
                	jmp	 <L45>
 <L44>:
                	xor	edi, edi
                	jmp	 <L46>
-               	nop	word ptr cs:[rax + rax]
+               	nop	dword ptr [rax]
 <L48>:
                	mov	r8, rdx
                	shl	r8, 0x11
@@ -1222,15 +1250,15 @@ Disassembly of section .text:
                	movabs	r8, -0x56a7d9e71fc03656
                	bt	r8, rdi
                	jae	 <L48>
-               	xor	qword ptr [rsp + 0x1a8], rsi
-               	xor	qword ptr [rsp], rdx
-               	xor	qword ptr [rsp + 0x1b0], rcx
-               	xor	qword ptr [rsp + 0x1b8], rax
+               	xor	qword ptr [rsp + 0x1b8], rsi
+               	xor	qword ptr [rsp + 0x80], rdx
+               	xor	qword ptr [rsp + 0x1c0], rcx
+               	xor	qword ptr [rsp + 0x1c8], rax
                	jmp	 <L48>
 <L47>:
                	xor	edi, edi
                	jmp	 <L49>
-               	nop	word ptr cs:[rax + rax]
+               	nop	dword ptr [rax]
 <L51>:
                	mov	r8, rdx
                	shl	r8, 0x11
@@ -1247,27 +1275,27 @@ Disassembly of section .text:
                	movabs	r8, 0x39abdc4529b1661c
                	bt	r8, rdi
                	jae	 <L51>
-               	xor	qword ptr [rsp + 0x1a8], rsi
-               	xor	qword ptr [rsp], rdx
-               	xor	qword ptr [rsp + 0x1b0], rcx
-               	xor	qword ptr [rsp + 0x1b8], rax
+               	xor	qword ptr [rsp + 0x1b8], rsi
+               	xor	qword ptr [rsp + 0x80], rdx
+               	xor	qword ptr [rsp + 0x1c0], rcx
+               	xor	qword ptr [rsp + 0x1c8], rax
                	jmp	 <L51>
 <L50>:
                	xor	edi, edi
                	xor	eax, eax
-               	mov	qword ptr [rsp + 0x1a0], rax
-               	mov	rax, qword ptr [rsp + 0x1b8]
+               	mov	qword ptr [rsp + 0x1b0], rax
+               	mov	rax, qword ptr [rsp + 0x1c8]
                	xor	ecx, ecx
-               	mov	qword ptr [rsp + 0x198], rcx
-               	mov	rcx, qword ptr [rsp + 0x1b0]
+               	mov	qword ptr [rsp + 0x1a8], rcx
+               	mov	rcx, qword ptr [rsp + 0x1c0]
                	xor	edx, edx
-               	mov	qword ptr [rsp + 0x28], rdx
-               	mov	rdx, qword ptr [rsp]
-               	mov	rsi, qword ptr [rsp + 0x1a8]
+               	mov	qword ptr [rsp], rdx
+               	mov	rdx, qword ptr [rsp + 0x80]
+               	mov	rsi, qword ptr [rsp + 0x1b8]
                	xor	r8d, r8d
-               	mov	qword ptr [rsp + 0x190], r8
+               	mov	qword ptr [rsp + 0x1a0], r8
                	jmp	 <L52>
-               	nop	word ptr [rax + rax]
+               	nop
 <L54>:
                	mov	r8, rdx
                	shl	r8, 0x11
@@ -1284,10 +1312,10 @@ Disassembly of section .text:
                	movabs	r8, 0x180ec6d33cfd0aba
                	bt	r8, rdi
                	jae	 <L54>
-               	xor	qword ptr [rsp + 0x190], rsi
-               	xor	qword ptr [rsp + 0x28], rdx
-               	xor	qword ptr [rsp + 0x198], rcx
-               	xor	qword ptr [rsp + 0x1a0], rax
+               	xor	qword ptr [rsp + 0x1a0], rsi
+               	xor	qword ptr [rsp], rdx
+               	xor	qword ptr [rsp + 0x1a8], rcx
+               	xor	qword ptr [rsp + 0x1b0], rax
                	jmp	 <L54>
 <L53>:
                	xor	edi, edi
@@ -1309,10 +1337,10 @@ Disassembly of section .text:
                	movabs	r8, -0x2a59ed990f36c6d4
                	bt	r8, rdi
                	jae	 <L57>
-               	xor	qword ptr [rsp + 0x190], rsi
-               	xor	qword ptr [rsp + 0x28], rdx
-               	xor	qword ptr [rsp + 0x198], rcx
-               	xor	qword ptr [rsp + 0x1a0], rax
+               	xor	qword ptr [rsp + 0x1a0], rsi
+               	xor	qword ptr [rsp], rdx
+               	xor	qword ptr [rsp + 0x1a8], rcx
+               	xor	qword ptr [rsp + 0x1b0], rax
                	jmp	 <L57>
 <L56>:
                	xor	edi, edi
@@ -1334,10 +1362,10 @@ Disassembly of section .text:
                	movabs	r8, -0x56a7d9e71fc03656
                	bt	r8, rdi
                	jae	 <L60>
-               	xor	qword ptr [rsp + 0x190], rsi
-               	xor	qword ptr [rsp + 0x28], rdx
-               	xor	qword ptr [rsp + 0x198], rcx
-               	xor	qword ptr [rsp + 0x1a0], rax
+               	xor	qword ptr [rsp + 0x1a0], rsi
+               	xor	qword ptr [rsp], rdx
+               	xor	qword ptr [rsp + 0x1a8], rcx
+               	xor	qword ptr [rsp + 0x1b0], rax
                	jmp	 <L60>
 <L59>:
                	xor	edi, edi
@@ -1359,27 +1387,27 @@ Disassembly of section .text:
                	movabs	r8, 0x39abdc4529b1661c
                	bt	r8, rdi
                	jae	 <L63>
-               	xor	qword ptr [rsp + 0x190], rsi
-               	xor	qword ptr [rsp + 0x28], rdx
-               	xor	qword ptr [rsp + 0x198], rcx
-               	xor	qword ptr [rsp + 0x1a0], rax
+               	xor	qword ptr [rsp + 0x1a0], rsi
+               	xor	qword ptr [rsp], rdx
+               	xor	qword ptr [rsp + 0x1a8], rcx
+               	xor	qword ptr [rsp + 0x1b0], rax
                	jmp	 <L63>
 <L62>:
                	xor	edi, edi
                	xor	eax, eax
-               	mov	qword ptr [rsp + 0x188], rax
-               	mov	rax, qword ptr [rsp + 0x1a0]
+               	mov	qword ptr [rsp + 0x198], rax
+               	mov	rax, qword ptr [rsp + 0x1b0]
                	xor	ecx, ecx
-               	mov	qword ptr [rsp + 0x180], rcx
-               	mov	rcx, qword ptr [rsp + 0x198]
+               	mov	qword ptr [rsp + 0x190], rcx
+               	mov	rcx, qword ptr [rsp + 0x1a8]
                	xor	edx, edx
-               	mov	qword ptr [rsp + 0x20], rdx
-               	mov	rdx, qword ptr [rsp + 0x28]
-               	mov	rsi, qword ptr [rsp + 0x190]
+               	mov	qword ptr [rsp + 0x28], rdx
+               	mov	rdx, qword ptr [rsp]
+               	mov	rsi, qword ptr [rsp + 0x1a0]
                	xor	r8d, r8d
-               	mov	qword ptr [rsp + 0x178], r8
+               	mov	qword ptr [rsp + 0x188], r8
                	jmp	 <L64>
-               	nop	dword ptr [rax]
+               	nop	word ptr [rax + rax]
 <L66>:
                	mov	r8, rdx
                	shl	r8, 0x11
@@ -1396,10 +1424,10 @@ Disassembly of section .text:
                	movabs	r8, 0x180ec6d33cfd0aba
                	bt	r8, rdi
                	jae	 <L66>
-               	xor	qword ptr [rsp + 0x178], rsi
-               	xor	qword ptr [rsp + 0x20], rdx
-               	xor	qword ptr [rsp + 0x180], rcx
-               	xor	qword ptr [rsp + 0x188], rax
+               	xor	qword ptr [rsp + 0x188], rsi
+               	xor	qword ptr [rsp + 0x28], rdx
+               	xor	qword ptr [rsp + 0x190], rcx
+               	xor	qword ptr [rsp + 0x198], rax
                	jmp	 <L66>
 <L65>:
                	xor	edi, edi
@@ -1421,10 +1449,10 @@ Disassembly of section .text:
                	movabs	r8, -0x2a59ed990f36c6d4
                	bt	r8, rdi
                	jae	 <L69>
-               	xor	qword ptr [rsp + 0x178], rsi
-               	xor	qword ptr [rsp + 0x20], rdx
-               	xor	qword ptr [rsp + 0x180], rcx
-               	xor	qword ptr [rsp + 0x188], rax
+               	xor	qword ptr [rsp + 0x188], rsi
+               	xor	qword ptr [rsp + 0x28], rdx
+               	xor	qword ptr [rsp + 0x190], rcx
+               	xor	qword ptr [rsp + 0x198], rax
                	jmp	 <L69>
 <L68>:
                	xor	edi, edi
@@ -1446,10 +1474,10 @@ Disassembly of section .text:
                	movabs	r8, -0x56a7d9e71fc03656
                	bt	r8, rdi
                	jae	 <L72>
-               	xor	qword ptr [rsp + 0x178], rsi
-               	xor	qword ptr [rsp + 0x20], rdx
-               	xor	qword ptr [rsp + 0x180], rcx
-               	xor	qword ptr [rsp + 0x188], rax
+               	xor	qword ptr [rsp + 0x188], rsi
+               	xor	qword ptr [rsp + 0x28], rdx
+               	xor	qword ptr [rsp + 0x190], rcx
+               	xor	qword ptr [rsp + 0x198], rax
                	jmp	 <L72>
 <L71>:
                	xor	edi, edi
@@ -1471,25 +1499,25 @@ Disassembly of section .text:
                	movabs	r8, 0x39abdc4529b1661c
                	bt	r8, rdi
                	jae	 <L75>
-               	xor	qword ptr [rsp + 0x178], rsi
-               	xor	qword ptr [rsp + 0x20], rdx
-               	xor	qword ptr [rsp + 0x180], rcx
-               	xor	qword ptr [rsp + 0x188], rax
+               	xor	qword ptr [rsp + 0x188], rsi
+               	xor	qword ptr [rsp + 0x28], rdx
+               	xor	qword ptr [rsp + 0x190], rcx
+               	xor	qword ptr [rsp + 0x198], rax
                	jmp	 <L75>
 <L74>:
                	xor	edi, edi
                	xor	eax, eax
-               	mov	qword ptr [rsp + 0x170], rax
-               	mov	rax, qword ptr [rsp + 0x188]
+               	mov	qword ptr [rsp + 0x180], rax
+               	mov	rax, qword ptr [rsp + 0x198]
                	xor	ecx, ecx
-               	mov	qword ptr [rsp + 0x168], rcx
-               	mov	rcx, qword ptr [rsp + 0x180]
+               	mov	qword ptr [rsp + 0x178], rcx
+               	mov	rcx, qword ptr [rsp + 0x190]
                	xor	edx, edx
-               	mov	qword ptr [rsp + 0x18], rdx
-               	mov	rdx, qword ptr [rsp + 0x20]
-               	mov	rsi, qword ptr [rsp + 0x178]
+               	mov	qword ptr [rsp + 0x20], rdx
+               	mov	rdx, qword ptr [rsp + 0x28]
+               	mov	rsi, qword ptr [rsp + 0x188]
                	xor	r8d, r8d
-               	mov	qword ptr [rsp + 0x160], r8
+               	mov	qword ptr [rsp + 0x170], r8
                	jmp	 <L76>
                	nop	dword ptr [rax]
 <L78>:
@@ -1508,10 +1536,10 @@ Disassembly of section .text:
                	movabs	r8, 0x180ec6d33cfd0aba
                	bt	r8, rdi
                	jae	 <L78>
-               	xor	qword ptr [rsp + 0x160], rsi
-               	xor	qword ptr [rsp + 0x18], rdx
-               	xor	qword ptr [rsp + 0x168], rcx
-               	xor	qword ptr [rsp + 0x170], rax
+               	xor	qword ptr [rsp + 0x170], rsi
+               	xor	qword ptr [rsp + 0x20], rdx
+               	xor	qword ptr [rsp + 0x178], rcx
+               	xor	qword ptr [rsp + 0x180], rax
                	jmp	 <L78>
 <L77>:
                	xor	edi, edi
@@ -1533,10 +1561,10 @@ Disassembly of section .text:
                	movabs	r8, -0x2a59ed990f36c6d4
                	bt	r8, rdi
                	jae	 <L81>
-               	xor	qword ptr [rsp + 0x160], rsi
-               	xor	qword ptr [rsp + 0x18], rdx
-               	xor	qword ptr [rsp + 0x168], rcx
-               	xor	qword ptr [rsp + 0x170], rax
+               	xor	qword ptr [rsp + 0x170], rsi
+               	xor	qword ptr [rsp + 0x20], rdx
+               	xor	qword ptr [rsp + 0x178], rcx
+               	xor	qword ptr [rsp + 0x180], rax
                	jmp	 <L81>
 <L80>:
                	xor	edi, edi
@@ -1558,10 +1586,10 @@ Disassembly of section .text:
                	movabs	r8, -0x56a7d9e71fc03656
                	bt	r8, rdi
                	jae	 <L84>
-               	xor	qword ptr [rsp + 0x160], rsi
-               	xor	qword ptr [rsp + 0x18], rdx
-               	xor	qword ptr [rsp + 0x168], rcx
-               	xor	qword ptr [rsp + 0x170], rax
+               	xor	qword ptr [rsp + 0x170], rsi
+               	xor	qword ptr [rsp + 0x20], rdx
+               	xor	qword ptr [rsp + 0x178], rcx
+               	xor	qword ptr [rsp + 0x180], rax
                	jmp	 <L84>
 <L83>:
                	xor	edi, edi
@@ -1583,25 +1611,25 @@ Disassembly of section .text:
                	movabs	r8, 0x39abdc4529b1661c
                	bt	r8, rdi
                	jae	 <L87>
-               	xor	qword ptr [rsp + 0x160], rsi
-               	xor	qword ptr [rsp + 0x18], rdx
-               	xor	qword ptr [rsp + 0x168], rcx
-               	xor	qword ptr [rsp + 0x170], rax
+               	xor	qword ptr [rsp + 0x170], rsi
+               	xor	qword ptr [rsp + 0x20], rdx
+               	xor	qword ptr [rsp + 0x178], rcx
+               	xor	qword ptr [rsp + 0x180], rax
                	jmp	 <L87>
 <L86>:
                	xor	edi, edi
                	xor	eax, eax
-               	mov	qword ptr [rsp + 0x158], rax
-               	mov	rax, qword ptr [rsp + 0x170]
+               	mov	qword ptr [rsp + 0x168], rax
+               	mov	rax, qword ptr [rsp + 0x180]
                	xor	ecx, ecx
-               	mov	qword ptr [rsp + 0x150], rcx
-               	mov	rcx, qword ptr [rsp + 0x168]
+               	mov	qword ptr [rsp + 0x160], rcx
+               	mov	rcx, qword ptr [rsp + 0x178]
                	xor	edx, edx
-               	mov	qword ptr [rsp + 0x10], rdx
-               	mov	rdx, qword ptr [rsp + 0x18]
-               	mov	rsi, qword ptr [rsp + 0x160]
+               	mov	qword ptr [rsp + 0x18], rdx
+               	mov	rdx, qword ptr [rsp + 0x20]
+               	mov	rsi, qword ptr [rsp + 0x170]
                	xor	r8d, r8d
-               	mov	qword ptr [rsp + 0x148], r8
+               	mov	qword ptr [rsp + 0x158], r8
                	jmp	 <L88>
                	nop	dword ptr [rax]
 <L90>:
@@ -1620,10 +1648,10 @@ Disassembly of section .text:
                	movabs	r8, 0x180ec6d33cfd0aba
                	bt	r8, rdi
                	jae	 <L90>
-               	xor	qword ptr [rsp + 0x148], rsi
-               	xor	qword ptr [rsp + 0x10], rdx
-               	xor	qword ptr [rsp + 0x150], rcx
-               	xor	qword ptr [rsp + 0x158], rax
+               	xor	qword ptr [rsp + 0x158], rsi
+               	xor	qword ptr [rsp + 0x18], rdx
+               	xor	qword ptr [rsp + 0x160], rcx
+               	xor	qword ptr [rsp + 0x168], rax
                	jmp	 <L90>
 <L89>:
                	xor	edi, edi
@@ -1645,10 +1673,10 @@ Disassembly of section .text:
                	movabs	r8, -0x2a59ed990f36c6d4
                	bt	r8, rdi
                	jae	 <L93>
-               	xor	qword ptr [rsp + 0x148], rsi
-               	xor	qword ptr [rsp + 0x10], rdx
-               	xor	qword ptr [rsp + 0x150], rcx
-               	xor	qword ptr [rsp + 0x158], rax
+               	xor	qword ptr [rsp + 0x158], rsi
+               	xor	qword ptr [rsp + 0x18], rdx
+               	xor	qword ptr [rsp + 0x160], rcx
+               	xor	qword ptr [rsp + 0x168], rax
                	jmp	 <L93>
 <L92>:
                	xor	edi, edi
@@ -1670,10 +1698,10 @@ Disassembly of section .text:
                	movabs	r8, -0x56a7d9e71fc03656
                	bt	r8, rdi
                	jae	 <L96>
-               	xor	qword ptr [rsp + 0x148], rsi
-               	xor	qword ptr [rsp + 0x10], rdx
-               	xor	qword ptr [rsp + 0x150], rcx
-               	xor	qword ptr [rsp + 0x158], rax
+               	xor	qword ptr [rsp + 0x158], rsi
+               	xor	qword ptr [rsp + 0x18], rdx
+               	xor	qword ptr [rsp + 0x160], rcx
+               	xor	qword ptr [rsp + 0x168], rax
                	jmp	 <L96>
 <L95>:
                	xor	edi, edi
@@ -1695,25 +1723,25 @@ Disassembly of section .text:
                	movabs	r8, 0x39abdc4529b1661c
                	bt	r8, rdi
                	jae	 <L99>
-               	xor	qword ptr [rsp + 0x148], rsi
-               	xor	qword ptr [rsp + 0x10], rdx
-               	xor	qword ptr [rsp + 0x150], rcx
-               	xor	qword ptr [rsp + 0x158], rax
+               	xor	qword ptr [rsp + 0x158], rsi
+               	xor	qword ptr [rsp + 0x18], rdx
+               	xor	qword ptr [rsp + 0x160], rcx
+               	xor	qword ptr [rsp + 0x168], rax
                	jmp	 <L99>
 <L98>:
                	xor	edi, edi
                	xor	eax, eax
-               	mov	qword ptr [rsp + 0x140], rax
-               	mov	rax, qword ptr [rsp + 0x158]
+               	mov	qword ptr [rsp + 0x150], rax
+               	mov	rax, qword ptr [rsp + 0x168]
                	xor	ecx, ecx
-               	mov	qword ptr [rsp + 0x138], rcx
-               	mov	rcx, qword ptr [rsp + 0x150]
+               	mov	qword ptr [rsp + 0x148], rcx
+               	mov	rcx, qword ptr [rsp + 0x160]
                	xor	edx, edx
-               	mov	qword ptr [rsp + 0x8], rdx
-               	mov	rdx, qword ptr [rsp + 0x10]
-               	mov	rsi, qword ptr [rsp + 0x148]
+               	mov	qword ptr [rsp + 0x10], rdx
+               	mov	rdx, qword ptr [rsp + 0x18]
+               	mov	rsi, qword ptr [rsp + 0x158]
                	xor	r8d, r8d
-               	mov	qword ptr [rsp + 0x130], r8
+               	mov	qword ptr [rsp + 0x140], r8
                	jmp	 <L100>
                	nop	dword ptr [rax]
 <L102>:
@@ -1732,10 +1760,10 @@ Disassembly of section .text:
                	movabs	r8, 0x180ec6d33cfd0aba
                	bt	r8, rdi
                	jae	 <L102>
-               	xor	qword ptr [rsp + 0x130], rsi
-               	xor	qword ptr [rsp + 0x8], rdx
-               	xor	qword ptr [rsp + 0x138], rcx
-               	xor	qword ptr [rsp + 0x140], rax
+               	xor	qword ptr [rsp + 0x140], rsi
+               	xor	qword ptr [rsp + 0x10], rdx
+               	xor	qword ptr [rsp + 0x148], rcx
+               	xor	qword ptr [rsp + 0x150], rax
                	jmp	 <L102>
 <L101>:
                	xor	edi, edi
@@ -1757,10 +1785,10 @@ Disassembly of section .text:
                	movabs	r8, -0x2a59ed990f36c6d4
                	bt	r8, rdi
                	jae	 <L105>
-               	xor	qword ptr [rsp + 0x130], rsi
-               	xor	qword ptr [rsp + 0x8], rdx
-               	xor	qword ptr [rsp + 0x138], rcx
-               	xor	qword ptr [rsp + 0x140], rax
+               	xor	qword ptr [rsp + 0x140], rsi
+               	xor	qword ptr [rsp + 0x10], rdx
+               	xor	qword ptr [rsp + 0x148], rcx
+               	xor	qword ptr [rsp + 0x150], rax
                	jmp	 <L105>
 <L104>:
                	xor	edi, edi
@@ -1782,10 +1810,10 @@ Disassembly of section .text:
                	movabs	r8, -0x56a7d9e71fc03656
                	bt	r8, rdi
                	jae	 <L108>
-               	xor	qword ptr [rsp + 0x130], rsi
-               	xor	qword ptr [rsp + 0x8], rdx
-               	xor	qword ptr [rsp + 0x138], rcx
-               	xor	qword ptr [rsp + 0x140], rax
+               	xor	qword ptr [rsp + 0x140], rsi
+               	xor	qword ptr [rsp + 0x10], rdx
+               	xor	qword ptr [rsp + 0x148], rcx
+               	xor	qword ptr [rsp + 0x150], rax
                	jmp	 <L108>
 <L107>:
                	xor	edi, edi
@@ -1807,25 +1835,25 @@ Disassembly of section .text:
                	movabs	r8, 0x39abdc4529b1661c
                	bt	r8, rdi
                	jae	 <L111>
-               	xor	qword ptr [rsp + 0x130], rsi
-               	xor	qword ptr [rsp + 0x8], rdx
-               	xor	qword ptr [rsp + 0x138], rcx
-               	xor	qword ptr [rsp + 0x140], rax
+               	xor	qword ptr [rsp + 0x140], rsi
+               	xor	qword ptr [rsp + 0x10], rdx
+               	xor	qword ptr [rsp + 0x148], rcx
+               	xor	qword ptr [rsp + 0x150], rax
                	jmp	 <L111>
 <L110>:
                	xor	edi, edi
                	xor	eax, eax
-               	mov	qword ptr [rsp + 0x128], rax
-               	mov	rax, qword ptr [rsp + 0x140]
+               	mov	qword ptr [rsp + 0x138], rax
+               	mov	rax, qword ptr [rsp + 0x150]
                	xor	ecx, ecx
-               	mov	qword ptr [rsp + 0x120], rcx
-               	mov	rcx, qword ptr [rsp + 0x138]
+               	mov	qword ptr [rsp + 0x130], rcx
+               	mov	rcx, qword ptr [rsp + 0x148]
                	xor	edx, edx
-               	mov	qword ptr [rsp + 0x60], rdx
-               	mov	rdx, qword ptr [rsp + 0x8]
-               	mov	rsi, qword ptr [rsp + 0x130]
+               	mov	qword ptr [rsp + 0x8], rdx
+               	mov	rdx, qword ptr [rsp + 0x10]
+               	mov	rsi, qword ptr [rsp + 0x140]
                	xor	r8d, r8d
-               	mov	qword ptr [rsp + 0x118], r8
+               	mov	qword ptr [rsp + 0x128], r8
                	jmp	 <L112>
                	nop	dword ptr [rax]
 <L114>:
@@ -1844,10 +1872,10 @@ Disassembly of section .text:
                	movabs	r8, 0x180ec6d33cfd0aba
                	bt	r8, rdi
                	jae	 <L114>
-               	xor	qword ptr [rsp + 0x118], rsi
-               	xor	qword ptr [rsp + 0x60], rdx
-               	xor	qword ptr [rsp + 0x120], rcx
-               	xor	qword ptr [rsp + 0x128], rax
+               	xor	qword ptr [rsp + 0x128], rsi
+               	xor	qword ptr [rsp + 0x8], rdx
+               	xor	qword ptr [rsp + 0x130], rcx
+               	xor	qword ptr [rsp + 0x138], rax
                	jmp	 <L114>
 <L113>:
                	xor	edi, edi
@@ -1869,10 +1897,10 @@ Disassembly of section .text:
                	movabs	r8, -0x2a59ed990f36c6d4
                	bt	r8, rdi
                	jae	 <L117>
-               	xor	qword ptr [rsp + 0x118], rsi
-               	xor	qword ptr [rsp + 0x60], rdx
-               	xor	qword ptr [rsp + 0x120], rcx
-               	xor	qword ptr [rsp + 0x128], rax
+               	xor	qword ptr [rsp + 0x128], rsi
+               	xor	qword ptr [rsp + 0x8], rdx
+               	xor	qword ptr [rsp + 0x130], rcx
+               	xor	qword ptr [rsp + 0x138], rax
                	jmp	 <L117>
 <L116>:
                	xor	edi, edi
@@ -1894,10 +1922,10 @@ Disassembly of section .text:
                	movabs	r8, -0x56a7d9e71fc03656
                	bt	r8, rdi
                	jae	 <L120>
-               	xor	qword ptr [rsp + 0x118], rsi
-               	xor	qword ptr [rsp + 0x60], rdx
-               	xor	qword ptr [rsp + 0x120], rcx
-               	xor	qword ptr [rsp + 0x128], rax
+               	xor	qword ptr [rsp + 0x128], rsi
+               	xor	qword ptr [rsp + 0x8], rdx
+               	xor	qword ptr [rsp + 0x130], rcx
+               	xor	qword ptr [rsp + 0x138], rax
                	jmp	 <L120>
 <L119>:
                	xor	edi, edi
@@ -1919,25 +1947,25 @@ Disassembly of section .text:
                	movabs	r8, 0x39abdc4529b1661c
                	bt	r8, rdi
                	jae	 <L123>
-               	xor	qword ptr [rsp + 0x118], rsi
-               	xor	qword ptr [rsp + 0x60], rdx
-               	xor	qword ptr [rsp + 0x120], rcx
-               	xor	qword ptr [rsp + 0x128], rax
+               	xor	qword ptr [rsp + 0x128], rsi
+               	xor	qword ptr [rsp + 0x8], rdx
+               	xor	qword ptr [rsp + 0x130], rcx
+               	xor	qword ptr [rsp + 0x138], rax
                	jmp	 <L123>
 <L122>:
                	xor	edi, edi
                	xor	eax, eax
-               	mov	qword ptr [rsp + 0x110], rax
-               	mov	rax, qword ptr [rsp + 0x128]
+               	mov	qword ptr [rsp + 0x120], rax
+               	mov	rax, qword ptr [rsp + 0x138]
                	xor	ecx, ecx
-               	mov	qword ptr [rsp + 0x108], rcx
-               	mov	rcx, qword ptr [rsp + 0x120]
+               	mov	qword ptr [rsp + 0x118], rcx
+               	mov	rcx, qword ptr [rsp + 0x130]
                	xor	edx, edx
-               	mov	qword ptr [rsp + 0x58], rdx
-               	mov	rdx, qword ptr [rsp + 0x60]
-               	mov	rsi, qword ptr [rsp + 0x118]
+               	mov	qword ptr [rsp + 0x60], rdx
+               	mov	rdx, qword ptr [rsp + 0x8]
+               	mov	rsi, qword ptr [rsp + 0x128]
                	xor	r8d, r8d
-               	mov	qword ptr [rsp + 0x100], r8
+               	mov	qword ptr [rsp + 0x110], r8
                	jmp	 <L124>
                	nop	dword ptr [rax]
 <L126>:
@@ -1956,10 +1984,10 @@ Disassembly of section .text:
                	movabs	r8, 0x180ec6d33cfd0aba
                	bt	r8, rdi
                	jae	 <L126>
-               	xor	qword ptr [rsp + 0x100], rsi
-               	xor	qword ptr [rsp + 0x58], rdx
-               	xor	qword ptr [rsp + 0x108], rcx
-               	xor	qword ptr [rsp + 0x110], rax
+               	xor	qword ptr [rsp + 0x110], rsi
+               	xor	qword ptr [rsp + 0x60], rdx
+               	xor	qword ptr [rsp + 0x118], rcx
+               	xor	qword ptr [rsp + 0x120], rax
                	jmp	 <L126>
 <L125>:
                	xor	edi, edi
@@ -1981,10 +2009,10 @@ Disassembly of section .text:
                	movabs	r8, -0x2a59ed990f36c6d4
                	bt	r8, rdi
                	jae	 <L129>
-               	xor	qword ptr [rsp + 0x100], rsi
-               	xor	qword ptr [rsp + 0x58], rdx
-               	xor	qword ptr [rsp + 0x108], rcx
-               	xor	qword ptr [rsp + 0x110], rax
+               	xor	qword ptr [rsp + 0x110], rsi
+               	xor	qword ptr [rsp + 0x60], rdx
+               	xor	qword ptr [rsp + 0x118], rcx
+               	xor	qword ptr [rsp + 0x120], rax
                	jmp	 <L129>
 <L128>:
                	xor	edi, edi
@@ -2006,10 +2034,10 @@ Disassembly of section .text:
                	movabs	r8, -0x56a7d9e71fc03656
                	bt	r8, rdi
                	jae	 <L132>
-               	xor	qword ptr [rsp + 0x100], rsi
-               	xor	qword ptr [rsp + 0x58], rdx
-               	xor	qword ptr [rsp + 0x108], rcx
-               	xor	qword ptr [rsp + 0x110], rax
+               	xor	qword ptr [rsp + 0x110], rsi
+               	xor	qword ptr [rsp + 0x60], rdx
+               	xor	qword ptr [rsp + 0x118], rcx
+               	xor	qword ptr [rsp + 0x120], rax
                	jmp	 <L132>
 <L131>:
                	xor	edi, edi
@@ -2031,25 +2059,25 @@ Disassembly of section .text:
                	movabs	r8, 0x39abdc4529b1661c
                	bt	r8, rdi
                	jae	 <L135>
-               	xor	qword ptr [rsp + 0x100], rsi
-               	xor	qword ptr [rsp + 0x58], rdx
-               	xor	qword ptr [rsp + 0x108], rcx
-               	xor	qword ptr [rsp + 0x110], rax
+               	xor	qword ptr [rsp + 0x110], rsi
+               	xor	qword ptr [rsp + 0x60], rdx
+               	xor	qword ptr [rsp + 0x118], rcx
+               	xor	qword ptr [rsp + 0x120], rax
                	jmp	 <L135>
 <L134>:
                	xor	edi, edi
                	xor	eax, eax
-               	mov	qword ptr [rsp + 0xf8], rax
-               	mov	rax, qword ptr [rsp + 0x110]
+               	mov	qword ptr [rsp + 0x108], rax
+               	mov	rax, qword ptr [rsp + 0x120]
                	xor	ecx, ecx
-               	mov	qword ptr [rsp + 0xf0], rcx
-               	mov	rcx, qword ptr [rsp + 0x108]
+               	mov	qword ptr [rsp + 0x100], rcx
+               	mov	rcx, qword ptr [rsp + 0x118]
                	xor	edx, edx
-               	mov	qword ptr [rsp + 0x50], rdx
-               	mov	rdx, qword ptr [rsp + 0x58]
-               	mov	rsi, qword ptr [rsp + 0x100]
+               	mov	qword ptr [rsp + 0x58], rdx
+               	mov	rdx, qword ptr [rsp + 0x60]
+               	mov	rsi, qword ptr [rsp + 0x110]
                	xor	r8d, r8d
-               	mov	qword ptr [rsp + 0xe8], r8
+               	mov	qword ptr [rsp + 0xf8], r8
                	jmp	 <L136>
                	nop	dword ptr [rax]
 <L138>:
@@ -2068,10 +2096,10 @@ Disassembly of section .text:
                	movabs	r8, 0x180ec6d33cfd0aba
                	bt	r8, rdi
                	jae	 <L138>
-               	xor	qword ptr [rsp + 0xe8], rsi
-               	xor	qword ptr [rsp + 0x50], rdx
-               	xor	qword ptr [rsp + 0xf0], rcx
-               	xor	qword ptr [rsp + 0xf8], rax
+               	xor	qword ptr [rsp + 0xf8], rsi
+               	xor	qword ptr [rsp + 0x58], rdx
+               	xor	qword ptr [rsp + 0x100], rcx
+               	xor	qword ptr [rsp + 0x108], rax
                	jmp	 <L138>
 <L137>:
                	xor	edi, edi
@@ -2093,10 +2121,10 @@ Disassembly of section .text:
                	movabs	r8, -0x2a59ed990f36c6d4
                	bt	r8, rdi
                	jae	 <L141>
-               	xor	qword ptr [rsp + 0xe8], rsi
-               	xor	qword ptr [rsp + 0x50], rdx
-               	xor	qword ptr [rsp + 0xf0], rcx
-               	xor	qword ptr [rsp + 0xf8], rax
+               	xor	qword ptr [rsp + 0xf8], rsi
+               	xor	qword ptr [rsp + 0x58], rdx
+               	xor	qword ptr [rsp + 0x100], rcx
+               	xor	qword ptr [rsp + 0x108], rax
                	jmp	 <L141>
 <L140>:
                	xor	edi, edi
@@ -2118,10 +2146,10 @@ Disassembly of section .text:
                	movabs	r8, -0x56a7d9e71fc03656
                	bt	r8, rdi
                	jae	 <L144>
-               	xor	qword ptr [rsp + 0xe8], rsi
-               	xor	qword ptr [rsp + 0x50], rdx
-               	xor	qword ptr [rsp + 0xf0], rcx
-               	xor	qword ptr [rsp + 0xf8], rax
+               	xor	qword ptr [rsp + 0xf8], rsi
+               	xor	qword ptr [rsp + 0x58], rdx
+               	xor	qword ptr [rsp + 0x100], rcx
+               	xor	qword ptr [rsp + 0x108], rax
                	jmp	 <L144>
 <L143>:
                	xor	edi, edi
@@ -2143,25 +2171,25 @@ Disassembly of section .text:
                	movabs	r8, 0x39abdc4529b1661c
                	bt	r8, rdi
                	jae	 <L147>
-               	xor	qword ptr [rsp + 0xe8], rsi
-               	xor	qword ptr [rsp + 0x50], rdx
-               	xor	qword ptr [rsp + 0xf0], rcx
-               	xor	qword ptr [rsp + 0xf8], rax
+               	xor	qword ptr [rsp + 0xf8], rsi
+               	xor	qword ptr [rsp + 0x58], rdx
+               	xor	qword ptr [rsp + 0x100], rcx
+               	xor	qword ptr [rsp + 0x108], rax
                	jmp	 <L147>
 <L146>:
                	xor	edi, edi
                	xor	eax, eax
-               	mov	qword ptr [rsp + 0xe0], rax
-               	mov	rax, qword ptr [rsp + 0xf8]
+               	mov	qword ptr [rsp + 0xf0], rax
+               	mov	rax, qword ptr [rsp + 0x108]
                	xor	ecx, ecx
-               	mov	qword ptr [rsp + 0xd8], rcx
-               	mov	rcx, qword ptr [rsp + 0xf0]
+               	mov	qword ptr [rsp + 0xe8], rcx
+               	mov	rcx, qword ptr [rsp + 0x100]
                	xor	edx, edx
-               	mov	qword ptr [rsp + 0x48], rdx
-               	mov	rdx, qword ptr [rsp + 0x50]
-               	mov	rsi, qword ptr [rsp + 0xe8]
+               	mov	qword ptr [rsp + 0x50], rdx
+               	mov	rdx, qword ptr [rsp + 0x58]
+               	mov	rsi, qword ptr [rsp + 0xf8]
                	xor	r8d, r8d
-               	mov	qword ptr [rsp + 0xd0], r8
+               	mov	qword ptr [rsp + 0xe0], r8
                	jmp	 <L148>
                	nop	dword ptr [rax]
 <L150>:
@@ -2180,10 +2208,10 @@ Disassembly of section .text:
                	movabs	r8, 0x180ec6d33cfd0aba
                	bt	r8, rdi
                	jae	 <L150>
-               	xor	qword ptr [rsp + 0xd0], rsi
-               	xor	qword ptr [rsp + 0x48], rdx
-               	xor	qword ptr [rsp + 0xd8], rcx
-               	xor	qword ptr [rsp + 0xe0], rax
+               	xor	qword ptr [rsp + 0xe0], rsi
+               	xor	qword ptr [rsp + 0x50], rdx
+               	xor	qword ptr [rsp + 0xe8], rcx
+               	xor	qword ptr [rsp + 0xf0], rax
                	jmp	 <L150>
 <L149>:
                	xor	edi, edi
@@ -2205,10 +2233,10 @@ Disassembly of section .text:
                	movabs	r8, -0x2a59ed990f36c6d4
                	bt	r8, rdi
                	jae	 <L153>
-               	xor	qword ptr [rsp + 0xd0], rsi
-               	xor	qword ptr [rsp + 0x48], rdx
-               	xor	qword ptr [rsp + 0xd8], rcx
-               	xor	qword ptr [rsp + 0xe0], rax
+               	xor	qword ptr [rsp + 0xe0], rsi
+               	xor	qword ptr [rsp + 0x50], rdx
+               	xor	qword ptr [rsp + 0xe8], rcx
+               	xor	qword ptr [rsp + 0xf0], rax
                	jmp	 <L153>
 <L152>:
                	xor	edi, edi
@@ -2230,10 +2258,10 @@ Disassembly of section .text:
                	movabs	r8, -0x56a7d9e71fc03656
                	bt	r8, rdi
                	jae	 <L156>
-               	xor	qword ptr [rsp + 0xd0], rsi
-               	xor	qword ptr [rsp + 0x48], rdx
-               	xor	qword ptr [rsp + 0xd8], rcx
-               	xor	qword ptr [rsp + 0xe0], rax
+               	xor	qword ptr [rsp + 0xe0], rsi
+               	xor	qword ptr [rsp + 0x50], rdx
+               	xor	qword ptr [rsp + 0xe8], rcx
+               	xor	qword ptr [rsp + 0xf0], rax
                	jmp	 <L156>
 <L155>:
                	xor	edi, edi
@@ -2255,25 +2283,25 @@ Disassembly of section .text:
                	movabs	r8, 0x39abdc4529b1661c
                	bt	r8, rdi
                	jae	 <L159>
-               	xor	qword ptr [rsp + 0xd0], rsi
-               	xor	qword ptr [rsp + 0x48], rdx
-               	xor	qword ptr [rsp + 0xd8], rcx
-               	xor	qword ptr [rsp + 0xe0], rax
+               	xor	qword ptr [rsp + 0xe0], rsi
+               	xor	qword ptr [rsp + 0x50], rdx
+               	xor	qword ptr [rsp + 0xe8], rcx
+               	xor	qword ptr [rsp + 0xf0], rax
                	jmp	 <L159>
 <L158>:
                	xor	edi, edi
                	xor	eax, eax
-               	mov	qword ptr [rsp + 0xc8], rax
-               	mov	rax, qword ptr [rsp + 0xe0]
+               	mov	qword ptr [rsp + 0xd8], rax
+               	mov	rax, qword ptr [rsp + 0xf0]
                	xor	ecx, ecx
-               	mov	qword ptr [rsp + 0xc0], rcx
-               	mov	rcx, qword ptr [rsp + 0xd8]
+               	mov	qword ptr [rsp + 0xd0], rcx
+               	mov	rcx, qword ptr [rsp + 0xe8]
                	xor	edx, edx
-               	mov	qword ptr [rsp + 0x40], rdx
-               	mov	rdx, qword ptr [rsp + 0x48]
-               	mov	rsi, qword ptr [rsp + 0xd0]
+               	mov	qword ptr [rsp + 0x48], rdx
+               	mov	rdx, qword ptr [rsp + 0x50]
+               	mov	rsi, qword ptr [rsp + 0xe0]
                	xor	r8d, r8d
-               	mov	qword ptr [rsp + 0xb8], r8
+               	mov	qword ptr [rsp + 0xc8], r8
                	jmp	 <L160>
                	nop	dword ptr [rax]
 <L162>:
@@ -2292,10 +2320,10 @@ Disassembly of section .text:
                	movabs	r8, 0x180ec6d33cfd0aba
                	bt	r8, rdi
                	jae	 <L162>
-               	xor	qword ptr [rsp + 0xb8], rsi
-               	xor	qword ptr [rsp + 0x40], rdx
-               	xor	qword ptr [rsp + 0xc0], rcx
-               	xor	qword ptr [rsp + 0xc8], rax
+               	xor	qword ptr [rsp + 0xc8], rsi
+               	xor	qword ptr [rsp + 0x48], rdx
+               	xor	qword ptr [rsp + 0xd0], rcx
+               	xor	qword ptr [rsp + 0xd8], rax
                	jmp	 <L162>
 <L161>:
                	xor	edi, edi
@@ -2317,10 +2345,10 @@ Disassembly of section .text:
                	movabs	r8, -0x2a59ed990f36c6d4
                	bt	r8, rdi
                	jae	 <L165>
-               	xor	qword ptr [rsp + 0xb8], rsi
-               	xor	qword ptr [rsp + 0x40], rdx
-               	xor	qword ptr [rsp + 0xc0], rcx
-               	xor	qword ptr [rsp + 0xc8], rax
+               	xor	qword ptr [rsp + 0xc8], rsi
+               	xor	qword ptr [rsp + 0x48], rdx
+               	xor	qword ptr [rsp + 0xd0], rcx
+               	xor	qword ptr [rsp + 0xd8], rax
                	jmp	 <L165>
 <L164>:
                	xor	edi, edi
@@ -2342,10 +2370,10 @@ Disassembly of section .text:
                	movabs	r8, -0x56a7d9e71fc03656
                	bt	r8, rdi
                	jae	 <L168>
-               	xor	qword ptr [rsp + 0xb8], rsi
-               	xor	qword ptr [rsp + 0x40], rdx
-               	xor	qword ptr [rsp + 0xc0], rcx
-               	xor	qword ptr [rsp + 0xc8], rax
+               	xor	qword ptr [rsp + 0xc8], rsi
+               	xor	qword ptr [rsp + 0x48], rdx
+               	xor	qword ptr [rsp + 0xd0], rcx
+               	xor	qword ptr [rsp + 0xd8], rax
                	jmp	 <L168>
 <L167>:
                	xor	edi, edi
@@ -2367,25 +2395,25 @@ Disassembly of section .text:
                	movabs	r8, 0x39abdc4529b1661c
                	bt	r8, rdi
                	jae	 <L171>
-               	xor	qword ptr [rsp + 0xb8], rsi
-               	xor	qword ptr [rsp + 0x40], rdx
-               	xor	qword ptr [rsp + 0xc0], rcx
-               	xor	qword ptr [rsp + 0xc8], rax
+               	xor	qword ptr [rsp + 0xc8], rsi
+               	xor	qword ptr [rsp + 0x48], rdx
+               	xor	qword ptr [rsp + 0xd0], rcx
+               	xor	qword ptr [rsp + 0xd8], rax
                	jmp	 <L171>
 <L170>:
                	xor	edi, edi
                	xor	eax, eax
-               	mov	qword ptr [rsp + 0xb0], rax
-               	mov	rax, qword ptr [rsp + 0xc8]
+               	mov	qword ptr [rsp + 0xc0], rax
+               	mov	rax, qword ptr [rsp + 0xd8]
                	xor	ecx, ecx
-               	mov	qword ptr [rsp + 0xa8], rcx
-               	mov	rcx, qword ptr [rsp + 0xc0]
+               	mov	qword ptr [rsp + 0xb8], rcx
+               	mov	rcx, qword ptr [rsp + 0xd0]
                	xor	edx, edx
-               	mov	qword ptr [rsp + 0x38], rdx
-               	mov	rdx, qword ptr [rsp + 0x40]
-               	mov	rsi, qword ptr [rsp + 0xb8]
+               	mov	qword ptr [rsp + 0x40], rdx
+               	mov	rdx, qword ptr [rsp + 0x48]
+               	mov	rsi, qword ptr [rsp + 0xc8]
                	xor	r8d, r8d
-               	mov	qword ptr [rsp + 0xa0], r8
+               	mov	qword ptr [rsp + 0xb0], r8
                	jmp	 <L172>
                	nop	dword ptr [rax]
 <L174>:
@@ -2404,10 +2432,10 @@ Disassembly of section .text:
                	movabs	r8, 0x180ec6d33cfd0aba
                	bt	r8, rdi
                	jae	 <L174>
-               	xor	qword ptr [rsp + 0xa0], rsi
-               	xor	qword ptr [rsp + 0x38], rdx
-               	xor	qword ptr [rsp + 0xa8], rcx
-               	xor	qword ptr [rsp + 0xb0], rax
+               	xor	qword ptr [rsp + 0xb0], rsi
+               	xor	qword ptr [rsp + 0x40], rdx
+               	xor	qword ptr [rsp + 0xb8], rcx
+               	xor	qword ptr [rsp + 0xc0], rax
                	jmp	 <L174>
 <L173>:
                	xor	edi, edi
@@ -2429,10 +2457,10 @@ Disassembly of section .text:
                	movabs	r8, -0x2a59ed990f36c6d4
                	bt	r8, rdi
                	jae	 <L177>
-               	xor	qword ptr [rsp + 0xa0], rsi
-               	xor	qword ptr [rsp + 0x38], rdx
-               	xor	qword ptr [rsp + 0xa8], rcx
-               	xor	qword ptr [rsp + 0xb0], rax
+               	xor	qword ptr [rsp + 0xb0], rsi
+               	xor	qword ptr [rsp + 0x40], rdx
+               	xor	qword ptr [rsp + 0xb8], rcx
+               	xor	qword ptr [rsp + 0xc0], rax
                	jmp	 <L177>
 <L176>:
                	xor	edi, edi
@@ -2454,10 +2482,10 @@ Disassembly of section .text:
                	movabs	r8, -0x56a7d9e71fc03656
                	bt	r8, rdi
                	jae	 <L180>
-               	xor	qword ptr [rsp + 0xa0], rsi
-               	xor	qword ptr [rsp + 0x38], rdx
-               	xor	qword ptr [rsp + 0xa8], rcx
-               	xor	qword ptr [rsp + 0xb0], rax
+               	xor	qword ptr [rsp + 0xb0], rsi
+               	xor	qword ptr [rsp + 0x40], rdx
+               	xor	qword ptr [rsp + 0xb8], rcx
+               	xor	qword ptr [rsp + 0xc0], rax
                	jmp	 <L180>
 <L179>:
                	xor	edi, edi
@@ -2479,25 +2507,25 @@ Disassembly of section .text:
                	movabs	r8, 0x39abdc4529b1661c
                	bt	r8, rdi
                	jae	 <L183>
-               	xor	qword ptr [rsp + 0xa0], rsi
-               	xor	qword ptr [rsp + 0x38], rdx
-               	xor	qword ptr [rsp + 0xa8], rcx
-               	xor	qword ptr [rsp + 0xb0], rax
+               	xor	qword ptr [rsp + 0xb0], rsi
+               	xor	qword ptr [rsp + 0x40], rdx
+               	xor	qword ptr [rsp + 0xb8], rcx
+               	xor	qword ptr [rsp + 0xc0], rax
                	jmp	 <L183>
 <L182>:
                	xor	edi, edi
                	xor	eax, eax
-               	mov	qword ptr [rsp + 0x98], rax
-               	mov	rax, qword ptr [rsp + 0xb0]
+               	mov	qword ptr [rsp + 0xa8], rax
+               	mov	rax, qword ptr [rsp + 0xc0]
                	xor	ecx, ecx
-               	mov	qword ptr [rsp + 0x90], rcx
-               	mov	rcx, qword ptr [rsp + 0xa8]
+               	mov	qword ptr [rsp + 0xa0], rcx
+               	mov	rcx, qword ptr [rsp + 0xb8]
                	xor	edx, edx
-               	mov	qword ptr [rsp + 0x30], rdx
-               	mov	rdx, qword ptr [rsp + 0x38]
-               	mov	rsi, qword ptr [rsp + 0xa0]
+               	mov	qword ptr [rsp + 0x38], rdx
+               	mov	rdx, qword ptr [rsp + 0x40]
+               	mov	rsi, qword ptr [rsp + 0xb0]
                	xor	r8d, r8d
-               	mov	qword ptr [rsp + 0x88], r8
+               	mov	qword ptr [rsp + 0x98], r8
                	jmp	 <L184>
                	nop	dword ptr [rax]
 <L186>:
@@ -2516,10 +2544,10 @@ Disassembly of section .text:
                	movabs	r8, 0x180ec6d33cfd0aba
                	bt	r8, rdi
                	jae	 <L186>
-               	xor	qword ptr [rsp + 0x88], rsi
-               	xor	qword ptr [rsp + 0x30], rdx
-               	xor	qword ptr [rsp + 0x90], rcx
-               	xor	qword ptr [rsp + 0x98], rax
+               	xor	qword ptr [rsp + 0x98], rsi
+               	xor	qword ptr [rsp + 0x38], rdx
+               	xor	qword ptr [rsp + 0xa0], rcx
+               	xor	qword ptr [rsp + 0xa8], rax
                	jmp	 <L186>
 <L185>:
                	xor	edi, edi
@@ -2541,10 +2569,10 @@ Disassembly of section .text:
                	movabs	r8, -0x2a59ed990f36c6d4
                	bt	r8, rdi
                	jae	 <L189>
-               	xor	qword ptr [rsp + 0x88], rsi
-               	xor	qword ptr [rsp + 0x30], rdx
-               	xor	qword ptr [rsp + 0x90], rcx
-               	xor	qword ptr [rsp + 0x98], rax
+               	xor	qword ptr [rsp + 0x98], rsi
+               	xor	qword ptr [rsp + 0x38], rdx
+               	xor	qword ptr [rsp + 0xa0], rcx
+               	xor	qword ptr [rsp + 0xa8], rax
                	jmp	 <L189>
 <L188>:
                	xor	edi, edi
@@ -2566,10 +2594,10 @@ Disassembly of section .text:
                	movabs	r8, -0x56a7d9e71fc03656
                	bt	r8, rdi
                	jae	 <L192>
-               	xor	qword ptr [rsp + 0x88], rsi
-               	xor	qword ptr [rsp + 0x30], rdx
-               	xor	qword ptr [rsp + 0x90], rcx
-               	xor	qword ptr [rsp + 0x98], rax
+               	xor	qword ptr [rsp + 0x98], rsi
+               	xor	qword ptr [rsp + 0x38], rdx
+               	xor	qword ptr [rsp + 0xa0], rcx
+               	xor	qword ptr [rsp + 0xa8], rax
                	jmp	 <L192>
 <L191>:
                	xor	edi, edi
@@ -2591,27 +2619,27 @@ Disassembly of section .text:
                	movabs	r8, 0x39abdc4529b1661c
                	bt	r8, rdi
                	jae	 <L195>
-               	xor	qword ptr [rsp + 0x88], rsi
-               	xor	qword ptr [rsp + 0x30], rdx
-               	xor	qword ptr [rsp + 0x90], rcx
-               	xor	qword ptr [rsp + 0x98], rax
+               	xor	qword ptr [rsp + 0x98], rsi
+               	xor	qword ptr [rsp + 0x38], rdx
+               	xor	qword ptr [rsp + 0xa0], rcx
+               	xor	qword ptr [rsp + 0xa8], rax
                	jmp	 <L195>
 <L194>:
-               	mov	qword ptr [rsp + 0x2c8], rbx
-               	mov	qword ptr [rsp + 0x2f8], r10
-               	mov	qword ptr [rsp + 0x300], r9
+               	mov	qword ptr [rsp + 0x318], r14
+               	mov	qword ptr [rsp + 0x308], r9
+               	mov	qword ptr [rsp + 0x210], r10
                	xor	r10d, r10d
-               	xor	ebp, ebp
-               	mov	rax, qword ptr [rsp + 0x98]
-               	xor	ecx, ecx
-               	mov	qword ptr [rsp + 0x70], rcx
-               	mov	rcx, qword ptr [rsp + 0x90]
-               	xor	ebx, ebx
-               	mov	rdx, qword ptr [rsp + 0x30]
-               	mov	rsi, qword ptr [rsp + 0x88]
+               	xor	eax, eax
+               	mov	qword ptr [rsp + 0x78], rax
+               	mov	rax, qword ptr [rsp + 0xa8]
+               	xor	r8d, r8d
+               	mov	rcx, qword ptr [rsp + 0xa0]
+               	xor	r14d, r14d
+               	mov	rdx, qword ptr [rsp + 0x38]
+               	mov	rsi, qword ptr [rsp + 0x98]
                	xor	r9d, r9d
                	jmp	 <L196>
-               	nop	word ptr [rax + rax]
+               	nop	dword ptr [rax]
 <L198>:
                	mov	rdi, rdx
                	shl	rdi, 0x11
@@ -2629,9 +2657,9 @@ Disassembly of section .text:
                	bt	rdi, r10
                	jae	 <L198>
                	xor	r9, rsi
-               	xor	rbx, rdx
-               	xor	qword ptr [rsp + 0x70], rcx
-               	xor	rbp, rax
+               	xor	r14, rdx
+               	xor	r8, rcx
+               	xor	qword ptr [rsp + 0x78], rax
                	jmp	 <L198>
 <L197>:
                	xor	r10d, r10d
@@ -2654,16 +2682,22 @@ Disassembly of section .text:
                	bt	rdi, r10
                	jae	 <L201>
                	xor	r9, rsi
-               	xor	rbx, rdx
-               	xor	qword ptr [rsp + 0x70], rcx
-               	xor	rbp, rax
+               	xor	r14, rdx
+               	xor	r8, rcx
+               	xor	qword ptr [rsp + 0x78], rax
                	jmp	 <L201>
 <L200>:
-               	mov	qword ptr [rsp + 0x1e8], r9
+               	mov	qword ptr [rsp + 0x1f8], r9
                	xor	edi, edi
                	jmp	 <L202>
                	nop
 <L204>:
+               	xor	qword ptr [rsp + 0x1f8], rsi
+               	xor	r14, rdx
+               	mov	r8, r9
+               	xor	r8, rcx
+               	xor	qword ptr [rsp + 0x78], rax
+<L205>:
                	mov	r10, rdx
                	shl	r10, 0x11
                	xor	rcx, rsi
@@ -2676,22 +2710,23 @@ Disassembly of section .text:
                	cmp	rdi, 0x40
                	je	 <L203>
 <L202>:
-               	mov	r9, qword ptr [rsp + 0x70]
+               	mov	r9, r8
                	movabs	r8, -0x56a7d9e71fc03656
                	bt	r8, rdi
-               	jae	 <L204>
-               	xor	qword ptr [rsp + 0x1e8], rsi
-               	xor	rbx, rdx
+               	jb	 <L204>
                	mov	r8, r9
-               	xor	r8, rcx
-               	mov	qword ptr [rsp + 0x70], r8
-               	xor	rbp, rax
-               	jmp	 <L204>
+               	jmp	 <L205>
 <L203>:
                	xor	edi, edi
-               	jmp	 <L205>
-               	nop	word ptr [rax + rax]
-<L207>:
+               	jmp	 <L206>
+               	nop	word ptr cs:[rax + rax]
+<L208>:
+               	xor	qword ptr [rsp + 0x1f8], rsi
+               	xor	r14, rdx
+               	mov	r8, r9
+               	xor	r8, rcx
+               	xor	qword ptr [rsp + 0x78], rax
+<L209>:
                	mov	r10, rdx
                	shl	r10, 0x11
                	xor	rcx, rsi
@@ -2702,990 +2737,923 @@ Disassembly of section .text:
                	rol	rax, 0x2d
                	inc	rdi
                	cmp	rdi, 0x40
-               	je	 <L206>
-<L205>:
-               	mov	r9, qword ptr [rsp + 0x70]
+               	je	 <L207>
+<L206>:
+               	mov	r9, r8
                	movabs	r8, 0x39abdc4529b1661c
                	bt	r8, rdi
-               	jae	 <L207>
-               	xor	qword ptr [rsp + 0x1e8], rsi
-               	xor	rbx, rdx
+               	jb	 <L208>
                	mov	r8, r9
-               	xor	r8, rcx
-               	mov	qword ptr [rsp + 0x70], r8
-               	xor	rbp, rax
-               	jmp	 <L207>
-<L206>:
-               	mov	qword ptr [rsp + 0x2f0], r12
-               	mov	qword ptr [rsp + 0x308], r14
+               	jmp	 <L209>
+<L207>:
+               	mov	qword ptr [rsp + 0x2f8], rbp
+               	mov	qword ptr [rsp + 0x300], r15
                	mov	qword ptr [rsp + 0x310], r11
-               	xor	r10d, r10d
+               	xor	r11d, r11d
                	xor	edx, edx
-               	mov	rcx, rbp
-               	xor	esi, esi
-               	mov	r11, qword ptr [rsp + 0x70]
-               	xor	r12d, r12d
-               	mov	rax, rbx
-               	mov	qword ptr [rsp + 0x1e0], rbx
-               	mov	r14, rbx
-               	mov	rbx, qword ptr [rsp + 0x1e8]
+               	mov	rcx, qword ptr [rsp + 0x78]
                	xor	eax, eax
-               	mov	qword ptr [rsp + 0x80], rax
+               	mov	qword ptr [rsp + 0x70], rax
+               	mov	rsi, r8
+               	xor	eax, eax
+               	mov	qword ptr [rsp + 0x30], rax
+               	mov	r9, r14
+               	mov	r10, r14
+               	mov	r14, qword ptr [rsp + 0x1f8]
+               	xor	eax, eax
+               	mov	qword ptr [rsp + 0x90], rax
                	movabs	rax, 0x180ec6d33cfd0aba
-               	jmp	 <L208>
-               	nop	dword ptr [rax]
-<L210>:
-               	mov	rdi, r14
-               	shl	rdi, 0x11
-               	xor	r11, rbx
-               	xor	rcx, r14
-               	xor	r14, r11
-               	xor	rbx, rcx
-               	xor	r11, rdi
-               	rol	rcx, 0x2d
-               	inc	r10
-               	cmp	r10, 0x40
-               	je	 <L209>
-<L208>:
-               	bt	rax, r10
-               	jae	 <L210>
-               	xor	qword ptr [rsp + 0x80], rbx
-               	xor	r12, r14
-               	xor	rsi, r11
-               	xor	rdx, rcx
                	jmp	 <L210>
-<L209>:
-               	xor	r10d, r10d
-               	movabs	rax, -0x2a59ed990f36c6d4
-               	jmp	 <L211>
                	nop	dword ptr [rax + rax]
-<L213>:
-               	mov	rdi, r14
-               	shl	rdi, 0x11
-               	xor	r11, rbx
-               	xor	rcx, r14
-               	xor	r14, r11
-               	xor	rbx, rcx
-               	xor	r11, rdi
-               	rol	rcx, 0x2d
-               	inc	r10
-               	cmp	r10, 0x40
-               	je	 <L212>
-<L211>:
-               	bt	rax, r10
-               	jae	 <L213>
-               	xor	qword ptr [rsp + 0x80], rbx
-               	xor	r12, r14
-               	xor	rsi, r11
-               	xor	rdx, rcx
-               	jmp	 <L213>
 <L212>:
+               	mov	rdi, r10
+               	shl	rdi, 0x11
+               	xor	rsi, r14
+               	xor	rcx, r10
+               	xor	r10, rsi
+               	xor	r14, rcx
+               	xor	rsi, rdi
+               	rol	rcx, 0x2d
+               	inc	r11
+               	cmp	r11, 0x40
+               	je	 <L211>
+<L210>:
+               	bt	rax, r11
+               	jae	 <L212>
+               	xor	qword ptr [rsp + 0x90], r14
+               	xor	qword ptr [rsp + 0x30], r10
+               	xor	qword ptr [rsp + 0x70], rsi
+               	xor	rdx, rcx
+               	jmp	 <L212>
+<L211>:
+               	xor	r11d, r11d
+               	movabs	rax, -0x2a59ed990f36c6d4
+               	jmp	 <L213>
+               	nop
+<L215>:
+               	mov	rdi, r10
+               	shl	rdi, 0x11
+               	xor	rsi, r14
+               	xor	rcx, r10
+               	xor	r10, rsi
+               	xor	r14, rcx
+               	xor	rsi, rdi
+               	rol	rcx, 0x2d
+               	inc	r11
+               	cmp	r11, 0x40
+               	je	 <L214>
+<L213>:
+               	bt	rax, r11
+               	jae	 <L215>
+               	xor	qword ptr [rsp + 0x90], r14
+               	xor	qword ptr [rsp + 0x30], r10
+               	xor	qword ptr [rsp + 0x70], rsi
+               	xor	rdx, rcx
+               	jmp	 <L215>
+<L214>:
                	xor	edi, edi
                	movabs	rax, -0x56a7d9e71fc03656
-               	jmp	 <L214>
-               	nop	word ptr [rax + rax]
-<L216>:
-               	mov	r10, r14
-               	shl	r10, 0x11
-               	xor	r11, rbx
-               	xor	rcx, r14
-               	xor	r14, r11
-               	xor	rbx, rcx
-               	xor	r11, r10
+               	jmp	 <L216>
+               	nop
+<L218>:
+               	mov	r11, r10
+               	shl	r11, 0x11
+               	xor	rsi, r14
+               	xor	rcx, r10
+               	xor	r10, rsi
+               	xor	r14, rcx
+               	xor	rsi, r11
                	rol	rcx, 0x2d
                	inc	rdi
                	cmp	rdi, 0x40
-               	je	 <L215>
-<L214>:
+               	je	 <L217>
+<L216>:
                	bt	rax, rdi
-               	jae	 <L216>
-               	xor	qword ptr [rsp + 0x80], rbx
-               	xor	r12, r14
-               	xor	rsi, r11
+               	jae	 <L218>
+               	xor	qword ptr [rsp + 0x90], r14
+               	xor	qword ptr [rsp + 0x30], r10
+               	xor	qword ptr [rsp + 0x70], rsi
                	xor	rdx, rcx
-               	jmp	 <L216>
-<L215>:
+               	jmp	 <L218>
+<L217>:
                	xor	edi, edi
                	movabs	rax, 0x39abdc4529b1661c
-               	jmp	 <L217>
-               	nop	word ptr [rax + rax]
-<L219>:
-               	mov	r10, r14
-               	shl	r10, 0x11
-               	xor	r11, rbx
-               	xor	rcx, r14
-               	xor	r14, r11
-               	xor	rbx, rcx
-               	xor	r11, r10
-               	rol	rcx, 0x2d
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L218>
-<L217>:
-               	bt	rax, rdi
-               	jae	 <L219>
-               	xor	qword ptr [rsp + 0x80], rbx
-               	xor	r12, r14
-               	xor	rsi, r11
-               	xor	rdx, rcx
                	jmp	 <L219>
-<L218>:
-               	mov	qword ptr [rsp + 0x2e8], r15
-               	mov	qword ptr [rsp + 0x1f8], r13
-               	xor	edi, edi
-               	xor	r14d, r14d
-               	mov	qword ptr [rsp + 0x2e0], rdx
-               	mov	rcx, rdx
-               	xor	edx, edx
-               	mov	qword ptr [rsp + 0x2d8], rsi
-               	mov	r11, rsi
-               	xor	r8d, r8d
-               	mov	rsi, r12
-               	mov	r10, qword ptr [rsp + 0x80]
-               	xor	r15d, r15d
-               	movabs	rax, 0x180ec6d33cfd0aba
-               	jmp	 <L220>
-               	nop	word ptr cs:[rax + rax]
-<L222>:
-               	mov	rbx, rsi
-               	shl	rbx, 0x11
-               	xor	r11, r10
-               	xor	rcx, rsi
+               	nop
+<L221>:
+               	mov	r11, r10
+               	shl	r11, 0x11
+               	xor	rsi, r14
+               	xor	rcx, r10
+               	xor	r10, rsi
+               	xor	r14, rcx
                	xor	rsi, r11
-               	xor	r10, rcx
-               	xor	r11, rbx
                	rol	rcx, 0x2d
                	inc	rdi
                	cmp	rdi, 0x40
-               	je	 <L221>
-<L220>:
+               	je	 <L220>
+<L219>:
                	bt	rax, rdi
-               	jae	 <L222>
-               	xor	r15, r10
-               	xor	r8, rsi
-               	xor	rdx, r11
-               	xor	r14, rcx
+               	jae	 <L221>
+               	xor	qword ptr [rsp + 0x90], r14
+               	xor	qword ptr [rsp + 0x30], r10
+               	xor	qword ptr [rsp + 0x70], rsi
+               	xor	rdx, rcx
+               	jmp	 <L221>
+<L220>:
+               	mov	qword ptr [rsp + 0x2f0], rbx
+               	mov	qword ptr [rsp + 0x208], r13
+               	xor	edi, edi
+               	xor	ecx, ecx
+               	mov	rsi, rdx
+               	xor	r14d, r14d
+               	mov	r10, qword ptr [rsp + 0x70]
+               	xor	r13d, r13d
+               	mov	rbx, qword ptr [rsp + 0x30]
+               	mov	r11, qword ptr [rsp + 0x90]
+               	xor	eax, eax
+               	mov	qword ptr [rsp + 0x1f0], rax
+               	movabs	rax, 0x180ec6d33cfd0aba
                	jmp	 <L222>
-<L221>:
+               	nop	word ptr cs:[rax + rax]
+<L224>:
+               	mov	r15, rbx
+               	shl	r15, 0x11
+               	xor	r10, r11
+               	xor	rsi, rbx
+               	xor	rbx, r10
+               	xor	r11, rsi
+               	xor	r10, r15
+               	rol	rsi, 0x2d
+               	inc	rdi
+               	cmp	rdi, 0x40
+               	je	 <L223>
+<L222>:
+               	bt	rax, rdi
+               	jae	 <L224>
+               	xor	qword ptr [rsp + 0x1f0], r11
+               	xor	r13, rbx
+               	xor	r14, r10
+               	xor	rcx, rsi
+               	jmp	 <L224>
+<L223>:
                	xor	edi, edi
                	movabs	rax, -0x2a59ed990f36c6d4
-               	jmp	 <L223>
-               	nop	word ptr cs:[rax + rax]
-<L225>:
-               	mov	rbx, rsi
-               	shl	rbx, 0x11
-               	xor	r11, r10
-               	xor	rcx, rsi
-               	xor	rsi, r11
-               	xor	r10, rcx
-               	xor	r11, rbx
-               	rol	rcx, 0x2d
+               	jmp	 <L225>
+               	nop	word ptr [rax + rax]
+<L227>:
+               	mov	r15, rbx
+               	shl	r15, 0x11
+               	xor	r10, r11
+               	xor	rsi, rbx
+               	xor	rbx, r10
+               	xor	r11, rsi
+               	xor	r10, r15
+               	rol	rsi, 0x2d
                	inc	rdi
                	cmp	rdi, 0x40
-               	je	 <L224>
-<L223>:
+               	je	 <L226>
+<L225>:
                	bt	rax, rdi
-               	jae	 <L225>
-               	xor	r15, r10
-               	xor	r8, rsi
-               	xor	rdx, r11
-               	xor	r14, rcx
-               	jmp	 <L225>
-<L224>:
+               	jae	 <L227>
+               	xor	qword ptr [rsp + 0x1f0], r11
+               	xor	r13, rbx
+               	xor	r14, r10
+               	xor	rcx, rsi
+               	jmp	 <L227>
+<L226>:
                	xor	edi, edi
                	movabs	rax, -0x56a7d9e71fc03656
-               	jmp	 <L226>
-               	nop	word ptr cs:[rax + rax]
-<L228>:
-               	mov	rbx, rsi
-               	shl	rbx, 0x11
-               	xor	r11, r10
-               	xor	rcx, rsi
-               	xor	rsi, r11
-               	xor	r10, rcx
-               	xor	r11, rbx
-               	rol	rcx, 0x2d
+               	jmp	 <L228>
+               	nop	word ptr [rax + rax]
+<L230>:
+               	mov	r15, rbx
+               	shl	r15, 0x11
+               	xor	r10, r11
+               	xor	rsi, rbx
+               	xor	rbx, r10
+               	xor	r11, rsi
+               	xor	r10, r15
+               	rol	rsi, 0x2d
                	inc	rdi
                	cmp	rdi, 0x40
-               	je	 <L227>
-<L226>:
+               	je	 <L229>
+<L228>:
                	bt	rax, rdi
-               	jae	 <L228>
-               	xor	r15, r10
-               	xor	r8, rsi
-               	xor	rdx, r11
-               	xor	r14, rcx
-               	jmp	 <L228>
-<L227>:
+               	jae	 <L230>
+               	xor	qword ptr [rsp + 0x1f0], r11
+               	xor	r13, rbx
+               	xor	r14, r10
+               	xor	rcx, rsi
+               	jmp	 <L230>
+<L229>:
                	xor	edi, edi
                	movabs	rax, 0x39abdc4529b1661c
-               	jmp	 <L229>
-               	nop	word ptr cs:[rax + rax]
-<L231>:
-               	mov	rbx, rsi
-               	shl	rbx, 0x11
-               	xor	r11, r10
-               	xor	rcx, rsi
-               	xor	rsi, r11
-               	xor	r10, rcx
-               	xor	r11, rbx
-               	rol	rcx, 0x2d
+               	jmp	 <L231>
+               	nop	word ptr [rax + rax]
+<L233>:
+               	mov	r15, rbx
+               	shl	r15, 0x11
+               	xor	r10, r11
+               	xor	rsi, rbx
+               	xor	rbx, r10
+               	xor	r11, rsi
+               	xor	r10, r15
+               	rol	rsi, 0x2d
                	inc	rdi
                	cmp	rdi, 0x40
-               	je	 <L230>
-<L229>:
-               	bt	rax, rdi
-               	jae	 <L231>
-               	xor	r15, r10
-               	xor	r8, rsi
-               	xor	rdx, r11
-               	xor	r14, rcx
-               	jmp	 <L231>
-<L230>:
-               	mov	rcx, qword ptr [rsp + 0x208]
-               	lea	rcx, [rcx + 4*rcx]
-               	rol	rcx, 0x7
-               	lea	rbx, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x220], rbx
-               	mov	rcx, qword ptr [rsp + 0x200]
-               	lea	rcx, [rcx + 4*rcx]
-               	rol	rcx, 0x7
-               	lea	rcx, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x228], rcx
-               	mov	rcx, qword ptr [rsp + 0x1f8]
-               	lea	rcx, [rcx + 4*rcx]
-               	rol	rcx, 0x7
-               	lea	rcx, [rcx + 8*rcx]
-               	mov	rax, qword ptr [rsp + 0x68]
-               	lea	rsi, [rax + 4*rax]
-               	rol	rsi, 0x7
-               	mov	qword ptr [rsp + 0x230], rcx
-               	lea	rcx, [rsi + 8*rsi]
-               	mov	qword ptr [rsp + 0x238], rcx
-               	mov	rax, qword ptr [rsp]
-               	lea	rcx, [rax + 4*rax]
-               	rol	rcx, 0x7
-               	lea	rcx, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x240], rcx
-               	mov	rax, qword ptr [rsp + 0x28]
-               	lea	rcx, [rax + 4*rax]
-               	rol	rcx, 0x7
-               	lea	rcx, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x248], rcx
-               	mov	rax, qword ptr [rsp + 0x20]
-               	lea	rcx, [rax + 4*rax]
-               	rol	rcx, 0x7
-               	lea	rcx, [rcx + 8*rcx]
-               	mov	rax, qword ptr [rsp + 0x18]
-               	lea	rsi, [rax + 4*rax]
-               	rol	rsi, 0x7
-               	mov	qword ptr [rsp + 0x250], rcx
-               	lea	rcx, [rsi + 8*rsi]
-               	mov	qword ptr [rsp + 0x258], rcx
-               	mov	rax, qword ptr [rsp + 0x10]
-               	lea	rcx, [rax + 4*rax]
-               	rol	rcx, 0x7
-               	lea	rcx, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x260], rcx
-               	mov	rax, qword ptr [rsp + 0x8]
-               	lea	rcx, [rax + 4*rax]
-               	rol	rcx, 0x7
-               	lea	rcx, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x268], rcx
-               	mov	rax, qword ptr [rsp + 0x60]
-               	lea	rcx, [rax + 4*rax]
-               	rol	rcx, 0x7
-               	lea	rcx, [rcx + 8*rcx]
-               	mov	rax, qword ptr [rsp + 0x58]
-               	lea	rsi, [rax + 4*rax]
-               	rol	rsi, 0x7
-               	mov	qword ptr [rsp + 0x270], rcx
-               	lea	rcx, [rsi + 8*rsi]
-               	mov	qword ptr [rsp + 0x278], rcx
-               	mov	rax, qword ptr [rsp + 0x50]
-               	lea	rcx, [rax + 4*rax]
-               	rol	rcx, 0x7
-               	lea	rcx, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x280], rcx
-               	mov	rax, qword ptr [rsp + 0x48]
-               	lea	rcx, [rax + 4*rax]
-               	rol	rcx, 0x7
-               	lea	r13, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x288], r13
-               	mov	rax, qword ptr [rsp + 0x40]
-               	lea	rcx, [rax + 4*rax]
-               	rol	rcx, 0x7
-               	lea	rcx, [rcx + 8*rcx]
-               	mov	rax, qword ptr [rsp + 0x38]
-               	lea	rsi, [rax + 4*rax]
-               	rol	rsi, 0x7
-               	mov	qword ptr [rsp + 0x290], rcx
-               	lea	rcx, [rsi + 8*rsi]
-               	mov	qword ptr [rsp + 0x298], rcx
-               	mov	rax, qword ptr [rsp + 0x30]
-               	lea	rcx, [rax + 4*rax]
-               	rol	rcx, 0x7
-               	lea	rcx, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x2a0], rcx
-               	mov	rax, qword ptr [rsp + 0x1e0]
-               	lea	rcx, [rax + 4*rax]
-               	rol	rcx, 0x7
-               	lea	rcx, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x2a8], rcx
-               	lea	rcx, [r12 + 4*r12]
-               	rol	rcx, 0x7
-               	lea	r9, [rcx + 8*rcx]
-               	lea	rcx, [r8 + 4*r8]
-               	rol	rcx, 0x7
-               	mov	qword ptr [rsp + 0x2b0], r9
-               	lea	rcx, [rcx + 8*rcx]
-               	mov	qword ptr [rsp + 0x2b8], rcx
-               	mov	rcx, qword ptr [rsp + 0x2d0]
-               	test	ecx, ecx
                	je	 <L232>
-               	mov	eax, ecx
-               	mov	rcx, qword ptr [rsp + 0x1f0]
-               	add	rcx, 0x60
-               	vpbroadcastq	ymm0, qword ptr  <memset+0xd20>
-               	xor	r10d, r10d
-               	vpbroadcastw	xmm1, word ptr  <memset+0xd9c>
-               	lea	r11,  <memset+0xda0>
-               	vmovaps	ymm2, ymmword ptr  <memset+0xd60>
-               	vmovq	xmm3, qword ptr  <memset+0xd40>
-               	vpmovzxbq	xmm4, word ptr  <memset+0xd9e>
-               	vmovdqa	xmm5, xmmword ptr  <memset+0xd30>
-               	vbroadcastss	xmm6, dword ptr  <memset+0xd80>
-               	mov	qword ptr [rsp + 0x340], rax
+<L231>:
+               	bt	rax, rdi
+               	jae	 <L233>
+               	xor	qword ptr [rsp + 0x1f0], r11
+               	xor	r13, rbx
+               	xor	r14, r10
+               	xor	rcx, rsi
                	jmp	 <L233>
-               	nop	dword ptr [rax]
-<L239>:
-               	mov	r9, qword ptr [rsp + 0x208]
-               	mov	rsi, r9
-               	shl	rsi, 0x11
-               	mov	rdi, qword ptr [rsp + 0x328]
-               	mov	r11, qword ptr [rsp + 0x320]
-               	xor	r11, rdi
-               	mov	rbx, qword ptr [rsp + 0x318]
-               	xor	rbx, r9
-               	xor	r9, r11
-               	mov	qword ptr [rsp + 0x208], r9
-               	xor	rdi, rbx
-               	mov	qword ptr [rsp + 0x328], rdi
-               	rol	rbx, 0x2d
-               	mov	qword ptr [rsp + 0x318], rbx
-               	xor	r11, rsi
-               	mov	qword ptr [rsp + 0x320], r11
-               	mov	rbx, qword ptr [rsp + 0x200]
-               	mov	rsi, rbx
-               	shl	rsi, 0x11
-               	mov	r11, qword ptr [rsp + 0x308]
-               	mov	qword ptr [rsp + 0x218], rbp
-               	mov	r9, qword ptr [rsp + 0x300]
-               	xor	r11, r9
-               	mov	rdi, qword ptr [rsp + 0x310]
-               	xor	rdi, rbx
-               	xor	rbx, r11
-               	mov	qword ptr [rsp + 0x200], rbx
-               	xor	r9, rdi
-               	mov	qword ptr [rsp + 0x300], r9
-               	xor	r11, rsi
-               	mov	qword ptr [rsp + 0x308], r11
-               	rol	rdi, 0x2d
-               	mov	qword ptr [rsp + 0x310], rdi
-               	mov	rbx, qword ptr [rsp + 0x1f8]
-               	mov	rsi, rbx
-               	shl	rsi, 0x11
-               	mov	r9, qword ptr [rsp + 0x2f0]
-               	mov	r11, qword ptr [rsp + 0x2e8]
-               	xor	r9, r11
-               	mov	rdi, qword ptr [rsp + 0x2f8]
-               	xor	rdi, rbx
-               	xor	rbx, r9
-               	mov	qword ptr [rsp + 0x1f8], rbx
-               	xor	r11, rdi
-               	mov	qword ptr [rsp + 0x2e8], r11
-               	xor	r9, rsi
-               	mov	qword ptr [rsp + 0x2f0], r9
-               	rol	rdi, 0x2d
-               	mov	qword ptr [rsp + 0x2f8], rdi
-               	mov	rbp, qword ptr [rsp + 0x68]
-               	mov	rsi, rbp
-               	shl	rsi, 0x11
-               	mov	r9, qword ptr [rsp + 0x1c8]
-               	mov	r11, qword ptr [rsp + 0x1c0]
-               	xor	r9, r11
-               	mov	rdi, qword ptr [rsp + 0x1d0]
-               	xor	rdi, rbp
-               	xor	rbp, r9
-               	xor	r11, rdi
-               	mov	qword ptr [rsp + 0x1c0], r11
-               	xor	r9, rsi
-               	mov	qword ptr [rsp + 0x1c8], r9
-               	rol	rdi, 0x2d
-               	mov	qword ptr [rsp + 0x1d0], rdi
-               	mov	rbx, qword ptr [rsp]
-               	mov	rsi, rbx
-               	shl	rsi, 0x11
-               	mov	r9, qword ptr [rsp + 0x1b0]
-               	mov	r11, qword ptr [rsp + 0x1a8]
-               	xor	r9, r11
-               	mov	rdi, qword ptr [rsp + 0x1b8]
-               	xor	rdi, rbx
-               	xor	rbx, r9
-               	mov	qword ptr [rsp], rbx
-               	xor	r11, rdi
-               	mov	qword ptr [rsp + 0x1a8], r11
-               	rol	rdi, 0x2d
-               	mov	qword ptr [rsp + 0x1b8], rdi
-               	xor	r9, rsi
-               	mov	qword ptr [rsp + 0x1b0], r9
-               	mov	rbx, qword ptr [rsp + 0x28]
-               	mov	rsi, rbx
-               	shl	rsi, 0x11
-               	mov	r9, qword ptr [rsp + 0x198]
-               	mov	r11, qword ptr [rsp + 0x190]
-               	xor	r9, r11
-               	mov	rdi, qword ptr [rsp + 0x1a0]
-               	xor	rdi, rbx
-               	xor	rbx, r9
-               	mov	qword ptr [rsp + 0x28], rbx
-               	xor	r11, rdi
-               	mov	qword ptr [rsp + 0x190], r11
-               	xor	r9, rsi
-               	mov	qword ptr [rsp + 0x198], r9
-               	rol	rdi, 0x2d
-               	mov	qword ptr [rsp + 0x1a0], rdi
-               	mov	rbx, qword ptr [rsp + 0x20]
-               	mov	rsi, rbx
-               	shl	rsi, 0x11
-               	mov	r9, qword ptr [rsp + 0x180]
-               	mov	r11, qword ptr [rsp + 0x178]
-               	xor	r9, r11
-               	mov	rdi, qword ptr [rsp + 0x188]
-               	xor	rdi, rbx
-               	xor	rbx, r9
-               	mov	qword ptr [rsp + 0x20], rbx
-               	xor	r11, rdi
-               	mov	qword ptr [rsp + 0x178], r11
-               	xor	r9, rsi
-               	mov	qword ptr [rsp + 0x180], r9
-               	rol	rdi, 0x2d
-               	mov	qword ptr [rsp + 0x188], rdi
-               	mov	rbx, qword ptr [rsp + 0x18]
-               	mov	rsi, rbx
-               	shl	rsi, 0x11
-               	mov	r9, qword ptr [rsp + 0x168]
-               	mov	r11, qword ptr [rsp + 0x160]
-               	xor	r9, r11
-               	mov	rdi, qword ptr [rsp + 0x170]
-               	xor	rdi, rbx
-               	xor	rbx, r9
-               	mov	qword ptr [rsp + 0x18], rbx
-               	xor	r11, rdi
-               	mov	qword ptr [rsp + 0x160], r11
-               	xor	r9, rsi
-               	mov	qword ptr [rsp + 0x168], r9
-               	rol	rdi, 0x2d
-               	mov	qword ptr [rsp + 0x170], rdi
-               	mov	rbx, qword ptr [rsp + 0x10]
-               	mov	rsi, rbx
-               	shl	rsi, 0x11
-               	mov	r9, qword ptr [rsp + 0x150]
-               	mov	r11, qword ptr [rsp + 0x148]
-               	xor	r9, r11
-               	mov	rdi, qword ptr [rsp + 0x158]
-               	xor	rdi, rbx
-               	xor	rbx, r9
-               	mov	qword ptr [rsp + 0x10], rbx
-               	xor	r11, rdi
-               	mov	qword ptr [rsp + 0x148], r11
-               	rol	rdi, 0x2d
-               	mov	qword ptr [rsp + 0x158], rdi
-               	xor	r9, rsi
-               	mov	qword ptr [rsp + 0x150], r9
-               	mov	rbx, qword ptr [rsp + 0x8]
-               	mov	rsi, rbx
-               	shl	rsi, 0x11
-               	mov	r9, qword ptr [rsp + 0x138]
-               	mov	r11, qword ptr [rsp + 0x130]
-               	xor	r9, r11
-               	mov	rdi, qword ptr [rsp + 0x140]
-               	xor	rdi, rbx
-               	xor	rbx, r9
-               	mov	qword ptr [rsp + 0x8], rbx
-               	xor	r11, rdi
-               	mov	qword ptr [rsp + 0x130], r11
-               	xor	r9, rsi
-               	mov	qword ptr [rsp + 0x138], r9
-               	rol	rdi, 0x2d
-               	mov	qword ptr [rsp + 0x140], rdi
-               	mov	qword ptr [rsp + 0x210], r12
-               	mov	r13, qword ptr [rsp + 0x60]
-               	mov	rsi, r13
-               	shl	rsi, 0x11
-               	mov	r9, qword ptr [rsp + 0x120]
-               	mov	rdi, qword ptr [rsp + 0x118]
-               	mov	qword ptr [rsp + 0x350], rcx
-               	mov	rcx, rdi
-               	xor	r9, rdi
-               	mov	rdi, qword ptr [rsp + 0x128]
-               	xor	rdi, r13
-               	xor	r13, r9
-               	xor	rcx, rdi
-               	mov	qword ptr [rsp + 0x118], rcx
-               	xor	r9, rsi
-               	mov	qword ptr [rsp + 0x120], r9
-               	rol	rdi, 0x2d
-               	mov	qword ptr [rsp + 0x128], rdi
-               	mov	r12, qword ptr [rsp + 0x58]
-               	mov	rsi, r12
-               	shl	rsi, 0x11
-               	mov	rdi, qword ptr [rsp + 0x108]
-               	mov	rax, qword ptr [rsp + 0x100]
-               	xor	rdi, rax
-               	mov	rcx, qword ptr [rsp + 0x110]
-               	xor	rcx, r12
-               	xor	r12, rdi
-               	xor	rax, rcx
-               	mov	qword ptr [rsp + 0x100], rax
-               	xor	rdi, rsi
-               	mov	qword ptr [rsp + 0x108], rdi
-               	rol	rcx, 0x2d
-               	mov	qword ptr [rsp + 0x110], rcx
-               	mov	qword ptr [rsp + 0x338], r14
-               	mov	qword ptr [rsp + 0x330], r15
-               	mov	r15, qword ptr [rsp + 0x50]
-               	mov	rsi, r15
-               	shl	rsi, 0x11
-               	mov	rcx, qword ptr [rsp + 0xf0]
-               	mov	rdi, qword ptr [rsp + 0xe8]
-               	xor	rcx, rdi
-               	mov	rax, qword ptr [rsp + 0xf8]
-               	xor	rax, r15
-               	xor	r15, rcx
-               	xor	rdi, rax
-               	mov	qword ptr [rsp + 0xe8], rdi
-               	rol	rax, 0x2d
-               	mov	qword ptr [rsp + 0xf8], rax
-               	xor	rcx, rsi
-               	mov	qword ptr [rsp + 0xf0], rcx
-               	mov	rbx, qword ptr [rsp + 0x48]
-               	mov	rsi, rbx
-               	shl	rsi, 0x11
-               	mov	rcx, qword ptr [rsp + 0xd8]
-               	mov	rdi, qword ptr [rsp + 0xd0]
-               	xor	rcx, rdi
-               	mov	rax, qword ptr [rsp + 0xe0]
-               	xor	rax, rbx
-               	xor	rbx, rcx
-               	xor	rdi, rax
-               	mov	qword ptr [rsp + 0xd0], rdi
-               	xor	rcx, rsi
-               	mov	qword ptr [rsp + 0xd8], rcx
-               	rol	rax, 0x2d
-               	mov	qword ptr [rsp + 0xe0], rax
-               	mov	r11, qword ptr [rsp + 0x40]
-               	mov	rsi, r11
-               	shl	rsi, 0x11
-               	mov	rcx, qword ptr [rsp + 0xc0]
-               	mov	rdi, qword ptr [rsp + 0xb8]
-               	xor	rcx, rdi
-               	mov	rax, qword ptr [rsp + 0xc8]
-               	xor	rax, r11
-               	xor	r11, rcx
-               	xor	rdi, rax
-               	mov	qword ptr [rsp + 0xb8], rdi
-               	xor	rcx, rsi
-               	mov	qword ptr [rsp + 0xc0], rcx
-               	rol	rax, 0x2d
-               	mov	qword ptr [rsp + 0xc8], rax
-               	mov	qword ptr [rsp + 0x348], r10
-               	mov	r10, qword ptr [rsp + 0x70]
-               	mov	r9, qword ptr [rsp + 0x38]
-               	mov	rsi, r9
-               	shl	rsi, 0x11
-               	mov	rcx, qword ptr [rsp + 0xa8]
-               	mov	rdi, qword ptr [rsp + 0xa0]
-               	xor	rcx, rdi
-               	mov	rax, qword ptr [rsp + 0xb0]
-               	xor	rax, r9
-               	xor	r9, rcx
-               	xor	rdi, rax
-               	mov	qword ptr [rsp + 0xa0], rdi
-               	xor	rcx, rsi
-               	mov	qword ptr [rsp + 0xa8], rcx
-               	rol	rax, 0x2d
-               	mov	qword ptr [rsp + 0xb0], rax
-               	mov	r14, r8
-               	mov	r8, rdx
-               	mov	rdx, qword ptr [rsp + 0x30]
-               	mov	rsi, rdx
-               	shl	rsi, 0x11
-               	mov	rcx, qword ptr [rsp + 0x90]
-               	mov	rdi, qword ptr [rsp + 0x88]
-               	xor	rcx, rdi
-               	mov	rax, qword ptr [rsp + 0x98]
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rdi, rax
-               	mov	qword ptr [rsp + 0x88], rdi
-               	rol	rax, 0x2d
-               	mov	qword ptr [rsp + 0x98], rax
-               	xor	rcx, rsi
-               	mov	qword ptr [rsp + 0x90], rcx
-               	mov	rsi, qword ptr [rsp + 0x1e0]
-               	shl	rsi, 0x11
-               	mov	rcx, qword ptr [rsp + 0x1e8]
-               	xor	r10, rcx
-               	mov	rax, qword ptr [rsp + 0x1e0]
-               	xor	qword ptr [rsp + 0x218], rax
-               	xor	qword ptr [rsp + 0x1e0], r10
-               	xor	rcx, qword ptr [rsp + 0x218]
-               	mov	qword ptr [rsp + 0x1e8], rcx
-               	xor	r10, rsi
-               	mov	qword ptr [rsp + 0x70], r10
-               	rol	qword ptr [rsp + 0x218], 0x2d
+<L232>:
+               	mov	qword ptr [rsp + 0x2e8], rdx
+               	mov	rsi, qword ptr [rsp + 0x218]
+               	lea	rsi, [rsi + 4*rsi]
+               	rol	rsi, 0x7
+               	lea	r15, [rsi + 8*rsi]
+               	mov	qword ptr [rsp + 0x230], r15
                	mov	rsi, qword ptr [rsp + 0x210]
-               	shl	rsi, 0x11
-               	mov	rcx, qword ptr [rsp + 0x2d8]
-               	mov	rdi, qword ptr [rsp + 0x80]
-               	xor	rcx, rdi
-               	mov	rax, qword ptr [rsp + 0x2e0]
-               	xor	rax, qword ptr [rsp + 0x210]
-               	xor	qword ptr [rsp + 0x210], rcx
-               	xor	rdi, rax
-               	mov	qword ptr [rsp + 0x80], rdi
-               	xor	rcx, rsi
-               	mov	qword ptr [rsp + 0x2d8], rcx
-               	rol	rax, 0x2d
-               	mov	qword ptr [rsp + 0x2e0], rax
-               	mov	rsi, r14
-               	shl	rsi, 0x11
-               	xor	r8, qword ptr [rsp + 0x330]
-               	xor	qword ptr [rsp + 0x338], r14
-               	xor	r14, r8
-               	xor	r8, rsi
-               	mov	rax, qword ptr [rsp + 0x208]
-               	lea	rsi, [rax + 4*rax]
-               	rol	rsi, 0x7
-               	lea	r10, [rsi + 8*rsi]
-               	mov	rax, qword ptr [rsp + 0x200]
-               	lea	rsi, [rax + 4*rax]
-               	rol	rsi, 0x7
-               	lea	rdi, [rsi + 8*rsi]
-               	mov	rax, qword ptr [rsp + 0x1f8]
-               	lea	rsi, [rax + 4*rax]
-               	rol	rsi, 0x7
-               	lea	rax, [rsi + 8*rsi]
-               	mov	qword ptr [rsp + 0x68], rbp
-               	lea	rsi, [4*rbp]
-               	add	rsi, rbp
-               	rol	rsi, 0x7
-               	lea	rcx, [rsi + 8*rsi]
-               	mov	qword ptr [rsp + 0x220], r10
-               	mov	rbp, r10
-               	mov	qword ptr [rsp + 0x228], rdi
-               	mov	rsi, qword ptr [rsp]
                	lea	rsi, [rsi + 4*rsi]
                	rol	rsi, 0x7
                	lea	rsi, [rsi + 8*rsi]
-               	mov	qword ptr [rsp + 0x230], rax
+               	mov	qword ptr [rsp + 0x238], rsi
+               	mov	rsi, qword ptr [rsp + 0x208]
+               	lea	rsi, [rsi + 4*rsi]
+               	rol	rsi, 0x7
+               	lea	rsi, [rsi + 8*rsi]
+               	mov	rdi, qword ptr [rsp + 0x68]
+               	lea	rdi, [rdi + 4*rdi]
+               	rol	rdi, 0x7
+               	mov	qword ptr [rsp + 0x240], rsi
+               	lea	rsi, [rdi + 8*rdi]
+               	mov	qword ptr [rsp + 0x248], rsi
+               	mov	rax, qword ptr [rsp + 0x80]
+               	lea	rsi, [rax + 4*rax]
+               	rol	rsi, 0x7
+               	lea	rsi, [rsi + 8*rsi]
+               	mov	qword ptr [rsp + 0x250], rsi
+               	mov	rax, qword ptr [rsp]
+               	lea	rsi, [rax + 4*rax]
+               	rol	rsi, 0x7
+               	lea	rsi, [rsi + 8*rsi]
+               	mov	qword ptr [rsp + 0x258], rsi
                	mov	rax, qword ptr [rsp + 0x28]
+               	lea	rsi, [rax + 4*rax]
+               	rol	rsi, 0x7
+               	lea	rsi, [rsi + 8*rsi]
+               	mov	rax, qword ptr [rsp + 0x20]
                	lea	rdi, [rax + 4*rax]
                	rol	rdi, 0x7
-               	lea	rdi, [rdi + 8*rdi]
-               	mov	qword ptr [rsp + 0x238], rcx
-               	mov	rax, qword ptr [rsp + 0x20]
-               	lea	r10, [rax + 4*rax]
-               	rol	r10, 0x7
-               	mov	qword ptr [rsp + 0x240], rsi
+               	mov	qword ptr [rsp + 0x260], rsi
+               	lea	rsi, [rdi + 8*rdi]
+               	mov	qword ptr [rsp + 0x268], rsi
                	mov	rax, qword ptr [rsp + 0x18]
                	lea	rsi, [rax + 4*rax]
                	rol	rsi, 0x7
-               	lea	r10, [r10 + 8*r10]
                	lea	rsi, [rsi + 8*rsi]
-               	mov	qword ptr [rsp + 0x248], rdi
+               	mov	qword ptr [rsp + 0x270], rsi
                	mov	rax, qword ptr [rsp + 0x10]
+               	lea	rsi, [rax + 4*rax]
+               	rol	rsi, 0x7
+               	lea	rsi, [rsi + 8*rsi]
+               	mov	qword ptr [rsp + 0x278], rsi
+               	mov	rax, qword ptr [rsp + 0x8]
+               	lea	rsi, [rax + 4*rax]
+               	rol	rsi, 0x7
+               	lea	rsi, [rsi + 8*rsi]
+               	mov	rax, qword ptr [rsp + 0x60]
                	lea	rdi, [rax + 4*rax]
                	rol	rdi, 0x7
-               	lea	rdi, [rdi + 8*rdi]
-               	mov	qword ptr [rsp + 0x250], r10
-               	mov	rax, qword ptr [rsp + 0x8]
-               	lea	r10, [rax + 4*rax]
-               	rol	r10, 0x7
-               	lea	r10, [r10 + 8*r10]
-               	mov	qword ptr [rsp + 0x258], rsi
-               	mov	qword ptr [rsp + 0x60], r13
-               	lea	rsi, [4*r13]
-               	add	rsi, r13
-               	mov	rcx, qword ptr [rsp + 0x210]
+               	mov	qword ptr [rsp + 0x280], rsi
+               	lea	rsi, [rdi + 8*rdi]
+               	mov	qword ptr [rsp + 0x288], rsi
+               	mov	rax, qword ptr [rsp + 0x58]
+               	lea	rsi, [rax + 4*rax]
                	rol	rsi, 0x7
-               	mov	qword ptr [rsp + 0x260], rdi
-               	mov	qword ptr [rsp + 0x58], r12
-               	lea	rdi, [r12 + 4*r12]
-               	rol	rdi, 0x7
                	lea	rsi, [rsi + 8*rsi]
-               	lea	rdi, [rdi + 8*rdi]
-               	mov	qword ptr [rsp + 0x268], r10
-               	mov	qword ptr [rsp + 0x50], r15
-               	lea	r10, [r15 + 4*r15]
-               	mov	r15, qword ptr [rsp + 0x330]
-               	mov	rax, qword ptr [rsp + 0x338]
-               	rol	r10, 0x7
-               	lea	r10, [r10 + 8*r10]
-               	mov	qword ptr [rsp + 0x270], rsi
-               	mov	qword ptr [rsp + 0x48], rbx
-               	lea	rsi, [rbx + 4*rbx]
-               	mov	rbx, rbp
-               	rol	rsi, 0x7
-               	lea	r13, [rsi + 8*rsi]
-               	mov	qword ptr [rsp + 0x278], rdi
-               	mov	qword ptr [rsp + 0x40], r11
-               	lea	rsi, [r11 + 4*r11]
-               	lea	r11,  <memset+0xda0>
-               	mov	rbp, qword ptr [rsp + 0x218]
-               	rol	rsi, 0x7
-               	mov	qword ptr [rsp + 0x280], r10
-               	mov	r10, qword ptr [rsp + 0x348]
-               	mov	qword ptr [rsp + 0x38], r9
-               	lea	rdi, [r9 + 4*r9]
-               	rol	rdi, 0x7
-               	lea	rsi, [rsi + 8*rsi]
-               	lea	rdi, [rdi + 8*rdi]
-               	mov	qword ptr [rsp + 0x288], r13
                	mov	qword ptr [rsp + 0x290], rsi
-               	mov	qword ptr [rsp + 0x30], rdx
-               	lea	rsi, [rdx + 4*rdx]
-               	mov	rdx, r8
-               	mov	r8, r14
+               	mov	rax, qword ptr [rsp + 0x50]
+               	lea	rsi, [rax + 4*rax]
+               	rol	rsi, 0x7
+               	lea	r11, [rsi + 8*rsi]
+               	mov	qword ptr [rsp + 0x298], r11
+               	mov	rax, qword ptr [rsp + 0x48]
+               	lea	rsi, [rax + 4*rax]
                	rol	rsi, 0x7
                	lea	rsi, [rsi + 8*rsi]
-               	mov	qword ptr [rsp + 0x298], rdi
-               	mov	rdi, qword ptr [rsp + 0x1e0]
-               	lea	rdi, [rdi + 4*rdi]
+               	mov	rax, qword ptr [rsp + 0x40]
+               	lea	rdi, [rax + 4*rax]
                	rol	rdi, 0x7
                	mov	qword ptr [rsp + 0x2a0], rsi
-               	mov	r12, rcx
-               	lea	rsi, [rcx + 4*rcx]
-               	mov	rcx, qword ptr [rsp + 0x350]
-               	rol	rsi, 0x7
-               	lea	rdi, [rdi + 8*rdi]
-               	lea	r14, [rsi + 8*rsi]
-               	mov	qword ptr [rsp + 0x2a8], rdi
-               	lea	rsi, [r8 + 4*r8]
+               	lea	rsi, [rdi + 8*rdi]
+               	mov	qword ptr [rsp + 0x2a8], rsi
+               	mov	rax, qword ptr [rsp + 0x38]
+               	lea	rsi, [rax + 4*rax]
                	rol	rsi, 0x7
                	lea	rsi, [rsi + 8*rsi]
-               	mov	r9, r14
-               	mov	qword ptr [rsp + 0x2b0], r14
+               	mov	qword ptr [rsp + 0x2b0], rsi
+               	lea	rsi, [r9 + 4*r9]
+               	rol	rsi, 0x7
+               	lea	rsi, [rsi + 8*rsi]
                	mov	qword ptr [rsp + 0x2b8], rsi
-               	xor	r15, rax
-               	rol	rax, 0x2d
-               	mov	r14, rax
-               	mov	rax, qword ptr [rsp + 0x340]
-               	add	rcx, 0x64
-               	cmp	rax, r10
+               	mov	rax, qword ptr [rsp + 0x30]
+               	lea	rsi, [rax + 4*rax]
+               	rol	rsi, 0x7
+               	lea	rdi, [rsi + 8*rsi]
+               	lea	rsi, [4*r13]
+               	add	rsi, r13
+               	rol	rsi, 0x7
+               	mov	qword ptr [rsp + 0x2c0], rdi
+               	lea	rsi, [rsi + 8*rsi]
+               	mov	qword ptr [rsp + 0x2c8], rsi
+               	mov	rsi, qword ptr [rsp + 0x2e0]
+               	test	esi, esi
                	je	 <L234>
-<L233>:
-               	vmovdqu	ymm7, ymmword ptr [rsp + 0x228]
-               	vmovdqu	ymm8, ymmword ptr [rsp + 0x248]
-               	vpand	ymm9, ymm8, ymm0
-               	vpand	ymm10, ymm7, ymm0
-               	vpackusdw	ymm9, ymm10, ymm9
-               	vextracti128	xmm10, ymm9, 0x1
-               	vpackusdw	xmm9, xmm9, xmm10
-               	vpshufd	xmm9, xmm9, 0xd8        # xmm9 = xmm9[0,2,1,3]
-               	vpackuswb	xmm10, xmm9, xmm9
-               	vmovdqu	xmm9, xmmword ptr [rsp + 0x268]
-               	vpshufb	xmm9, xmm9, xmm1
-               	movzx	esi, bl
+               	mov	qword ptr [rsp + 0x220], r9
+               	mov	eax, esi
+               	xor	edx, edx
+               	vbroadcastss	ymm0, dword ptr  <memset+0xd70>
+               	vmovdqa	xmm1, xmmword ptr  <memset+0xd50>
+               	lea	r10,  <memset+0xd8c>
+               	vbroadcastss	xmm2, dword ptr  <memset+0xd70>
+               	mov	r12, qword ptr [rsp + 0x200]
+               	mov	rbx, r12
+               	mov	qword ptr [rsp + 0x340], rax
+               	jmp	 <L235>
+               	nop	word ptr cs:[rax + rax]
+<L238>:
+               	mov	r9, qword ptr [rsp + 0x218]
+               	mov	rsi, r9
+               	shl	rsi, 0x11
+               	mov	rdi, qword ptr [rsp + 0x330]
+               	mov	r11, qword ptr [rsp + 0x328]
+               	xor	r11, rdi
+               	mov	qword ptr [rsp + 0x348], rbx
+               	mov	rbx, qword ptr [rsp + 0x320]
+               	xor	rbx, r9
+               	xor	r9, r11
+               	mov	qword ptr [rsp + 0x218], r9
+               	xor	rdi, rbx
+               	mov	qword ptr [rsp + 0x330], rdi
+               	rol	rbx, 0x2d
+               	mov	qword ptr [rsp + 0x320], rbx
+               	xor	r11, rsi
+               	mov	qword ptr [rsp + 0x328], r11
+               	mov	r10, qword ptr [rsp + 0x210]
+               	mov	rsi, r10
+               	shl	rsi, 0x11
+               	mov	r11, qword ptr [rsp + 0x310]
+               	mov	r9, qword ptr [rsp + 0x308]
+               	xor	r11, r9
+               	mov	rdi, qword ptr [rsp + 0x318]
+               	xor	rdi, r10
+               	xor	r10, r11
+               	mov	qword ptr [rsp + 0x210], r10
+               	xor	r9, rdi
+               	mov	qword ptr [rsp + 0x308], r9
+               	xor	r11, rsi
+               	mov	qword ptr [rsp + 0x310], r11
+               	rol	rdi, 0x2d
+               	mov	qword ptr [rsp + 0x318], rdi
+               	mov	r10, qword ptr [rsp + 0x208]
+               	mov	rsi, r10
+               	shl	rsi, 0x11
+               	mov	r9, qword ptr [rsp + 0x2f8]
+               	mov	r12, qword ptr [rsp + 0x2f0]
+               	xor	r9, r12
+               	mov	rdi, qword ptr [rsp + 0x300]
+               	xor	rdi, r10
+               	xor	r10, r9
+               	mov	qword ptr [rsp + 0x208], r10
+               	xor	r12, rdi
+               	mov	qword ptr [rsp + 0x2f0], r12
+               	xor	r9, rsi
+               	mov	qword ptr [rsp + 0x2f8], r9
+               	rol	rdi, 0x2d
+               	mov	qword ptr [rsp + 0x300], rdi
+               	mov	r11, qword ptr [rsp + 0x68]
+               	mov	rsi, r11
+               	shl	rsi, 0x11
+               	mov	r9, qword ptr [rsp + 0x1d8]
+               	mov	rax, qword ptr [rsp + 0x1d0]
+               	xor	r9, rax
+               	mov	rdi, qword ptr [rsp + 0x1e0]
+               	xor	rdi, r11
+               	xor	r11, r9
+               	xor	rax, rdi
+               	mov	qword ptr [rsp + 0x1d0], rax
+               	xor	r9, rsi
+               	mov	qword ptr [rsp + 0x1d8], r9
+               	rol	rdi, 0x2d
+               	mov	qword ptr [rsp + 0x1e0], rdi
+               	mov	r9, qword ptr [rsp + 0x80]
+               	mov	rsi, r9
+               	shl	rsi, 0x11
+               	mov	rdi, qword ptr [rsp + 0x1c0]
+               	mov	rax, qword ptr [rsp + 0x1b8]
+               	mov	qword ptr [rsp + 0x350], rdx
+               	mov	rdx, rax
+               	xor	rdi, rax
+               	mov	rax, qword ptr [rsp + 0x1c8]
+               	xor	rax, r9
+               	xor	r9, rdi
+               	mov	qword ptr [rsp + 0x80], r9
+               	xor	rdx, rax
+               	mov	qword ptr [rsp + 0x1b8], rdx
+               	rol	rax, 0x2d
+               	mov	qword ptr [rsp + 0x1c8], rax
+               	xor	rdi, rsi
+               	mov	qword ptr [rsp + 0x1c0], rdi
+               	mov	r9, qword ptr [rsp]
+               	mov	rsi, r9
+               	shl	rsi, 0x11
+               	mov	rdx, qword ptr [rsp + 0x1a8]
+               	mov	rdi, qword ptr [rsp + 0x1a0]
+               	xor	rdx, rdi
+               	mov	rax, qword ptr [rsp + 0x1b0]
+               	xor	rax, r9
+               	xor	r9, rdx
+               	mov	qword ptr [rsp], r9
+               	xor	rdi, rax
+               	mov	qword ptr [rsp + 0x1a0], rdi
+               	xor	rdx, rsi
+               	mov	qword ptr [rsp + 0x1a8], rdx
+               	rol	rax, 0x2d
+               	mov	qword ptr [rsp + 0x1b0], rax
+               	mov	r9, qword ptr [rsp + 0x28]
+               	mov	rsi, r9
+               	shl	rsi, 0x11
+               	mov	rdx, qword ptr [rsp + 0x190]
+               	mov	rdi, qword ptr [rsp + 0x188]
+               	xor	rdx, rdi
+               	mov	rax, qword ptr [rsp + 0x198]
+               	xor	rax, r9
+               	xor	r9, rdx
+               	mov	qword ptr [rsp + 0x28], r9
+               	xor	rdi, rax
+               	mov	qword ptr [rsp + 0x188], rdi
+               	xor	rdx, rsi
+               	mov	qword ptr [rsp + 0x190], rdx
+               	rol	rax, 0x2d
+               	mov	qword ptr [rsp + 0x198], rax
+               	mov	r9, qword ptr [rsp + 0x20]
+               	mov	rsi, r9
+               	shl	rsi, 0x11
+               	mov	rdx, qword ptr [rsp + 0x178]
+               	mov	rdi, qword ptr [rsp + 0x170]
+               	xor	rdx, rdi
+               	mov	rax, qword ptr [rsp + 0x180]
+               	xor	rax, r9
+               	xor	r9, rdx
+               	mov	qword ptr [rsp + 0x20], r9
+               	xor	rdi, rax
+               	mov	qword ptr [rsp + 0x170], rdi
+               	xor	rdx, rsi
+               	mov	qword ptr [rsp + 0x178], rdx
+               	rol	rax, 0x2d
+               	mov	qword ptr [rsp + 0x180], rax
+               	mov	r9, qword ptr [rsp + 0x18]
+               	mov	rsi, r9
+               	shl	rsi, 0x11
+               	mov	rdx, qword ptr [rsp + 0x160]
+               	mov	rdi, qword ptr [rsp + 0x158]
+               	xor	rdx, rdi
+               	mov	rax, qword ptr [rsp + 0x168]
+               	xor	rax, r9
+               	xor	r9, rdx
+               	mov	qword ptr [rsp + 0x18], r9
+               	xor	rdi, rax
+               	mov	qword ptr [rsp + 0x158], rdi
+               	rol	rax, 0x2d
+               	mov	qword ptr [rsp + 0x168], rax
+               	xor	rdx, rsi
+               	mov	qword ptr [rsp + 0x160], rdx
+               	mov	r9, qword ptr [rsp + 0x10]
+               	mov	rsi, r9
+               	shl	rsi, 0x11
+               	mov	rdx, qword ptr [rsp + 0x148]
+               	mov	rdi, qword ptr [rsp + 0x140]
+               	xor	rdx, rdi
+               	mov	rax, qword ptr [rsp + 0x150]
+               	xor	rax, r9
+               	xor	r9, rdx
+               	mov	qword ptr [rsp + 0x10], r9
+               	xor	rdi, rax
+               	mov	qword ptr [rsp + 0x140], rdi
+               	xor	rdx, rsi
+               	mov	qword ptr [rsp + 0x148], rdx
+               	rol	rax, 0x2d
+               	mov	qword ptr [rsp + 0x150], rax
+               	mov	qword ptr [rsp + 0x228], r13
+               	mov	r9, qword ptr [rsp + 0x8]
+               	mov	rsi, r9
+               	shl	rsi, 0x11
+               	mov	rdx, qword ptr [rsp + 0x130]
+               	mov	rdi, qword ptr [rsp + 0x128]
+               	xor	rdx, rdi
+               	mov	rax, qword ptr [rsp + 0x138]
+               	xor	rax, r9
+               	xor	r9, rdx
+               	mov	qword ptr [rsp + 0x8], r9
+               	xor	rdi, rax
+               	mov	qword ptr [rsp + 0x128], rdi
+               	xor	rdx, rsi
+               	mov	qword ptr [rsp + 0x130], rdx
+               	rol	rax, 0x2d
+               	mov	qword ptr [rsp + 0x138], rax
+               	mov	rbp, qword ptr [rsp + 0x60]
+               	mov	rsi, rbp
+               	shl	rsi, 0x11
+               	mov	rdx, qword ptr [rsp + 0x118]
+               	mov	rdi, qword ptr [rsp + 0x110]
+               	xor	rdx, rdi
+               	mov	rax, qword ptr [rsp + 0x120]
+               	xor	rax, rbp
+               	xor	rbp, rdx
+               	xor	rdi, rax
+               	mov	qword ptr [rsp + 0x110], rdi
+               	xor	rdx, rsi
+               	mov	qword ptr [rsp + 0x118], rdx
+               	rol	rax, 0x2d
+               	mov	qword ptr [rsp + 0x120], rax
+               	mov	r13, r14
+               	mov	r14, qword ptr [rsp + 0x58]
+               	mov	rsi, r14
+               	shl	rsi, 0x11
+               	mov	rdx, qword ptr [rsp + 0x100]
+               	mov	rdi, qword ptr [rsp + 0xf8]
+               	xor	rdx, rdi
+               	mov	rax, qword ptr [rsp + 0x108]
+               	xor	rax, r14
+               	xor	r14, rdx
+               	xor	rdi, rax
+               	mov	qword ptr [rsp + 0xf8], rdi
+               	rol	rax, 0x2d
+               	mov	qword ptr [rsp + 0x108], rax
+               	xor	rdx, rsi
+               	mov	qword ptr [rsp + 0x100], rdx
+               	mov	rbx, qword ptr [rsp + 0x50]
+               	mov	rsi, rbx
+               	shl	rsi, 0x11
+               	mov	rdx, qword ptr [rsp + 0xe8]
+               	mov	rdi, qword ptr [rsp + 0xe0]
+               	xor	rdx, rdi
+               	mov	rax, qword ptr [rsp + 0xf0]
+               	xor	rax, rbx
+               	xor	rbx, rdx
+               	xor	rdi, rax
+               	mov	qword ptr [rsp + 0xe0], rdi
+               	xor	rdx, rsi
+               	mov	qword ptr [rsp + 0xe8], rdx
+               	rol	rax, 0x2d
+               	mov	qword ptr [rsp + 0xf0], rax
+               	mov	r10, qword ptr [rsp + 0x48]
+               	mov	rsi, r10
+               	shl	rsi, 0x11
+               	mov	rdx, qword ptr [rsp + 0xd0]
+               	mov	rdi, qword ptr [rsp + 0xc8]
+               	xor	rdx, rdi
+               	mov	rax, qword ptr [rsp + 0xd8]
+               	xor	rax, r10
+               	xor	r10, rdx
+               	xor	rdi, rax
+               	mov	qword ptr [rsp + 0xc8], rdi
+               	xor	rdx, rsi
+               	mov	qword ptr [rsp + 0xd0], rdx
+               	rol	rax, 0x2d
+               	mov	qword ptr [rsp + 0xd8], rax
+               	mov	r9, r8
+               	mov	r8, qword ptr [rsp + 0x40]
+               	mov	rsi, r8
+               	shl	rsi, 0x11
+               	mov	rdx, qword ptr [rsp + 0xb8]
+               	mov	rdi, qword ptr [rsp + 0xb0]
+               	xor	rdx, rdi
+               	mov	rax, qword ptr [rsp + 0xc0]
+               	xor	rax, r8
+               	xor	r8, rdx
+               	xor	rdi, rax
+               	mov	qword ptr [rsp + 0xb0], rdi
+               	xor	rdx, rsi
+               	mov	qword ptr [rsp + 0xb8], rdx
+               	rol	rax, 0x2d
+               	mov	qword ptr [rsp + 0xc0], rax
+               	mov	qword ptr [rsp + 0x338], rcx
+               	mov	rcx, qword ptr [rsp + 0x38]
+               	mov	rsi, rcx
+               	shl	rsi, 0x11
+               	mov	rdx, qword ptr [rsp + 0xa0]
+               	mov	rdi, qword ptr [rsp + 0x98]
+               	xor	rdx, rdi
+               	mov	rax, qword ptr [rsp + 0xa8]
+               	xor	rax, rcx
+               	xor	rcx, rdx
+               	xor	rdi, rax
+               	mov	qword ptr [rsp + 0x98], rdi
+               	rol	rax, 0x2d
+               	mov	qword ptr [rsp + 0xa8], rax
+               	xor	rdx, rsi
+               	mov	qword ptr [rsp + 0xa0], rdx
+               	mov	rsi, qword ptr [rsp + 0x220]
+               	shl	rsi, 0x11
+               	mov	rdx, qword ptr [rsp + 0x1f8]
+               	xor	r9, rdx
+               	mov	rax, qword ptr [rsp + 0x220]
+               	xor	qword ptr [rsp + 0x78], rax
+               	xor	qword ptr [rsp + 0x220], r9
+               	xor	rdx, qword ptr [rsp + 0x78]
+               	mov	qword ptr [rsp + 0x1f8], rdx
+               	xor	r9, rsi
+               	rol	qword ptr [rsp + 0x78], 0x2d
+               	mov	rdx, qword ptr [rsp + 0x30]
+               	mov	rsi, rdx
+               	shl	rsi, 0x11
+               	mov	rdi, qword ptr [rsp + 0x90]
+               	xor	qword ptr [rsp + 0x70], rdi
+               	mov	rax, qword ptr [rsp + 0x2e8]
+               	xor	rax, rdx
+               	xor	rdx, qword ptr [rsp + 0x70]
+               	xor	rdi, rax
+               	mov	qword ptr [rsp + 0x90], rdi
+               	xor	qword ptr [rsp + 0x70], rsi
+               	rol	rax, 0x2d
+               	mov	qword ptr [rsp + 0x2e8], rax
+               	mov	rsi, qword ptr [rsp + 0x228]
+               	shl	rsi, 0x11
+               	mov	r12, qword ptr [rsp + 0x1f0]
+               	xor	r13, r12
+               	mov	rax, qword ptr [rsp + 0x228]
+               	xor	qword ptr [rsp + 0x338], rax
+               	xor	qword ptr [rsp + 0x228], r13
+               	xor	r13, rsi
+               	mov	rax, qword ptr [rsp + 0x218]
+               	lea	rsi, [rax + 4*rax]
+               	rol	rsi, 0x7
+               	lea	r15, [rsi + 8*rsi]
+               	mov	rax, qword ptr [rsp + 0x210]
+               	lea	rsi, [rax + 4*rax]
+               	rol	rsi, 0x7
+               	lea	rdi, [rsi + 8*rsi]
+               	mov	rax, qword ptr [rsp + 0x208]
+               	lea	rsi, [rax + 4*rax]
+               	rol	rsi, 0x7
+               	lea	rax, [rsi + 8*rsi]
+               	mov	qword ptr [rsp + 0x68], r11
+               	lea	rsi, [r11 + 4*r11]
+               	rol	rsi, 0x7
+               	lea	rsi, [rsi + 8*rsi]
+               	mov	qword ptr [rsp + 0x230], r15
+               	mov	qword ptr [rsp + 0x238], rdi
+               	mov	rdi, qword ptr [rsp + 0x80]
+               	lea	rdi, [rdi + 4*rdi]
+               	rol	rdi, 0x7
+               	lea	rdi, [rdi + 8*rdi]
+               	mov	qword ptr [rsp + 0x240], rax
+               	mov	rax, qword ptr [rsp]
+               	lea	r11, [rax + 4*rax]
+               	rol	r11, 0x7
+               	lea	r11, [r11 + 8*r11]
+               	mov	qword ptr [rsp + 0x248], rsi
+               	mov	rax, qword ptr [rsp + 0x28]
+               	lea	rsi, [rax + 4*rax]
+               	rol	rsi, 0x7
+               	mov	qword ptr [rsp + 0x250], rdi
+               	mov	rax, qword ptr [rsp + 0x20]
+               	lea	rdi, [rax + 4*rax]
+               	rol	rdi, 0x7
+               	lea	rsi, [rsi + 8*rsi]
+               	lea	rdi, [rdi + 8*rdi]
+               	mov	qword ptr [rsp + 0x258], r11
+               	mov	rax, qword ptr [rsp + 0x18]
+               	lea	r11, [rax + 4*rax]
+               	rol	r11, 0x7
+               	lea	r11, [r11 + 8*r11]
+               	mov	qword ptr [rsp + 0x260], rsi
+               	mov	rax, qword ptr [rsp + 0x10]
+               	lea	rsi, [rax + 4*rax]
+               	rol	rsi, 0x7
+               	lea	rsi, [rsi + 8*rsi]
+               	mov	qword ptr [rsp + 0x268], rdi
+               	mov	rax, qword ptr [rsp + 0x8]
+               	lea	rdi, [rax + 4*rax]
+               	mov	rax, qword ptr [rsp + 0x228]
+               	rol	rdi, 0x7
+               	mov	qword ptr [rsp + 0x270], r11
+               	mov	qword ptr [rsp + 0x60], rbp
+               	lea	r11, [4*rbp]
+               	add	r11, rbp
+               	rol	r11, 0x7
+               	lea	rdi, [rdi + 8*rdi]
+               	lea	r11, [r11 + 8*r11]
+               	mov	qword ptr [rsp + 0x278], rsi
+               	mov	qword ptr [rsp + 0x58], r14
+               	lea	rsi, [r14 + 4*r14]
+               	mov	r14, r13
+               	rol	rsi, 0x7
+               	lea	rsi, [rsi + 8*rsi]
+               	mov	qword ptr [rsp + 0x280], rdi
+               	mov	qword ptr [rsp + 0x50], rbx
+               	lea	rdi, [rbx + 4*rbx]
+               	mov	rbx, qword ptr [rsp + 0x348]
+               	rol	rdi, 0x7
+               	lea	rdi, [rdi + 8*rdi]
+               	mov	qword ptr [rsp + 0x288], r11
+               	mov	r11, rdi
+               	mov	qword ptr [rsp + 0x48], r10
+               	lea	rdi, [r10 + 4*r10]
+               	lea	r10,  <memset+0xd8c>
+               	rol	rdi, 0x7
+               	mov	qword ptr [rsp + 0x290], rsi
+               	mov	qword ptr [rsp + 0x40], r8
+               	lea	rsi, [r8 + 4*r8]
+               	mov	r8, r9
+               	rol	rsi, 0x7
+               	lea	rdi, [rdi + 8*rdi]
+               	lea	rsi, [rsi + 8*rsi]
+               	mov	qword ptr [rsp + 0x298], r11
+               	mov	qword ptr [rsp + 0x2a0], rdi
+               	mov	qword ptr [rsp + 0x38], rcx
+               	lea	rdi, [rcx + 4*rcx]
+               	mov	rcx, qword ptr [rsp + 0x338]
+               	rol	rdi, 0x7
+               	lea	rdi, [rdi + 8*rdi]
+               	mov	qword ptr [rsp + 0x2a8], rsi
+               	mov	rsi, qword ptr [rsp + 0x220]
+               	lea	rsi, [rsi + 4*rsi]
+               	rol	rsi, 0x7
+               	mov	qword ptr [rsp + 0x2b0], rdi
+               	mov	qword ptr [rsp + 0x30], rdx
+               	lea	rdi, [rdx + 4*rdx]
+               	mov	rdx, qword ptr [rsp + 0x350]
+               	rol	rdi, 0x7
+               	lea	rsi, [rsi + 8*rsi]
+               	lea	rdi, [rdi + 8*rdi]
+               	mov	qword ptr [rsp + 0x2b8], rsi
+               	mov	r13, rax
+               	lea	rsi, [rax + 4*rax]
+               	mov	rax, qword ptr [rsp + 0x340]
+               	rol	rsi, 0x7
+               	lea	rsi, [rsi + 8*rsi]
+               	mov	qword ptr [rsp + 0x2c0], rdi
+               	mov	qword ptr [rsp + 0x2c8], rsi
+               	xor	r12, rcx
+               	mov	qword ptr [rsp + 0x1f0], r12
+               	mov	r12, qword ptr [rsp + 0x200]
+               	rol	rcx, 0x2d
+               	add	rbx, 0x64
+               	cmp	rax, rdx
+               	je	 <L236>
+<L235>:
+               	mov	r9, rdi
+               	vmovdqu	xmm5, xmmword ptr [rsp + 0x278]
+               	vmovups	ymm4, ymmword ptr [rsp + 0x248]
+               	vmovups	ymm3, ymmword ptr [rsp + 0x258]
+               	vperm2f128	ymm6, ymm3, ymmword ptr [rsp + 0x238], 0x2 # ymm6 = mem[0,1],ymm3[0,1]
+               	vinsertf128	ymm4, ymm4, xmmword ptr [rsp + 0x268], 0x1
+               	vshufps	ymm4, ymm6, ymm4, 0x88  # ymm4 = ymm6[0,2],ymm4[0,2],ymm6[4,6],ymm4[4,6]
+               	vandps	ymm4, ymm4, ymm0
+               	vcvtdq2ps	ymm4, ymm4
+               	vpshufb	xmm5, xmm5, xmm1
+               	vcvtdq2ps	xmm5, xmm5
+               	movzx	esi, r15b
                	imul	esi, esi, 0x4f
                	shr	esi, 0xa
                	lea	edi, [rsi + 2*rsi]
                	lea	esi, [rsi + 4*rdi]
-               	sub	bl, sil
-               	movzx	esi, bl
-               	movsxd	rsi, dword ptr [r11 + 4*rsi]
-               	add	rsi, r11
+               	sub	r15b, sil
+               	movzx	esi, r15b
+               	movsxd	rsi, dword ptr [r10 + 4*rsi]
+               	add	rsi, r10
                	jmp	rsi
-               	mov	byte ptr [rcx], 0x0
-               	jmp	 <L235>
-               	mov	byte ptr [rcx], 0xb
-               	jmp	 <L236>
-               	vpextrb	esi, xmm10, 0x7
-               	vcvtsi2ss	xmm11, xmm14, esi
-               	mov	byte ptr [rcx], 0x4
-               	vmovss	dword ptr [rcx - 0x40], xmm11
-               	vpunpcklbw	xmm9, xmm10, xmm9 # xmm9 = xmm10[0],xmm9[0],xmm10[1],xmm9[1],xmm10[2],xmm9[2],xmm10[3],xmm9[3],xmm10[4],xmm9[4],xmm10[5],xmm9[5],xmm10[6],xmm9[6],xmm10[7],xmm9[7]
-               	vpshufb	xmm9, xmm9, xmm3
-               	vpmovzxbd	ymm9, xmm9      # ymm9 = xmm9[0],zero,zero,zero,xmm9[1],zero,zero,zero,xmm9[2],zero,zero,zero,xmm9[3],zero,zero,zero,xmm9[4],zero,zero,zero,xmm9[5],zero,zero,zero,xmm9[6],zero,zero,zero,xmm9[7],zero,zero,zero
+               	imul	r11, rdx, 0x64
+               	add	r11, r12
+               	vmovups	ymmword ptr [rbx], ymm4
+               	vmovss	dword ptr [rbx + 0x20], xmm5
                	jmp	 <L237>
-               	mov	byte ptr [rcx], 0xc
-               	vpmovzxbd	ymm9, xmm10     # ymm9 = xmm10[0],zero,zero,zero,xmm10[1],zero,zero,zero,xmm10[2],zero,zero,zero,xmm10[3],zero,zero,zero,xmm10[4],zero,zero,zero,xmm10[5],zero,zero,zero,xmm10[6],zero,zero,zero,xmm10[7],zero,zero,zero
-               	vcvtdq2ps	ymm9, ymm9
-               	vpermilps	ymm10, ymm9, ymm2
-               	vmovups	ymmword ptr [rcx - 0x60], ymm10
-               	vmovdqu	xmm10, xmmword ptr [rsp + 0x278]
-               	vpshufb	xmm10, xmm10, xmm5
-               	vcvtdq2ps	xmm10, xmm10
-               	movzx	esi, r13b
-               	vcvtsi2ss	xmm11, xmm14, esi
-               	vmovlps	qword ptr [rcx - 0x40], xmm10
-               	vmovss	dword ptr [rcx - 0x38], xmm11
-               	vshufps	xmm9, xmm9, xmm9, 0xff  # xmm9 = xmm9[3,3,3,3]
-               	vmovss	dword ptr [rcx - 0x34], xmm9
-               	vmovups	xmm12, xmmword ptr [rsp + 0x290]
-               	vshufps	xmm12, xmm12, xmmword ptr [rsp + 0x2a0], 0x88 # xmm12 = xmm12[0,2],mem[0,2]
-               	vandps	xmm12, xmm12, xmm6
-               	vcvtdq2ps	xmm12, xmm12
-               	vshufps	xmm13, xmm12, xmm12, 0xd8 # xmm13 = xmm12[0,2,1,3]
-               	vmovups	xmmword ptr [rcx - 0x30], xmm13
-               	vmovlps	qword ptr [rcx - 0x20], xmm10
+               	nop	dword ptr [rax + rax]
+               	imul	r11, rdx, 0x64
+               	add	r11, r12
+               	vmovups	ymmword ptr [rbx], ymm4
+               	jmp	 <L237>
+               	imul	r11, rdx, 0x64
+               	add	r11, r12
+               	vmovups	ymmword ptr [rbx], ymm4
+               	vmovlps	qword ptr [rbx + 0x20], xmm5
+               	jmp	 <L237>
+               	imul	r11, rdx, 0x64
+               	add	r11, r12
+               	vmovups	ymmword ptr [rbx], ymm4
+               	vextractps	dword ptr [rbx + 0x20], xmm5, 0x1
+               	jmp	 <L237>
                	movzx	esi, r9b
-               	vcvtsi2ss	xmm10, xmm14, esi
-               	vmovss	dword ptr [rcx - 0x18], xmm11
-               	vmovss	dword ptr [rcx - 0x14], xmm9
-               	vmovss	dword ptr [rcx - 0x10], xmm10
-               	vshufps	xmm9, xmm12, xmm12, 0xe6 # xmm9 = xmm12[2,1,2,3]
-               	vmovlps	qword ptr [rcx - 0xc], xmm9
-               	vextractps	dword ptr [rcx - 0x4], xmm12, 0x3
-               	inc	r10
-               	test	r10b, 0x7
-               	jne	 <L238>
-               	jmp	 <L239>
-               	mov	byte ptr [rcx], 0x9
-               	jmp	 <L240>
-               	mov	byte ptr [rcx], 0x2
-               	jmp	 <L241>
-               	mov	byte ptr [rcx], 0x3
-               	jmp	 <L235>
-               	mov	byte ptr [rcx], 0x7
-               	vmovd	esi, xmm9
-               	vpinsrb	xmm11, xmm10, esi, 0x7
-               	vpmovzxbd	ymm11, xmm11    # ymm11 = xmm11[0],zero,zero,zero,xmm11[1],zero,zero,zero,xmm11[2],zero,zero,zero,xmm11[3],zero,zero,zero,xmm11[4],zero,zero,zero,xmm11[5],zero,zero,zero,xmm11[6],zero,zero,zero,xmm11[7],zero,zero,zero
-               	vcvtdq2ps	ymm11, ymm11
-               	vpermilps	ymm11, ymm11, ymm2
-               	vpsrlq	xmm10, xmm10, 0x38
-               	vpblendvb	xmm9, xmm9, xmm10, xmm4
-               	vmovups	ymmword ptr [rcx - 0x60], ymm11
-               	jmp	 <L242>
-               	mov	byte ptr [rcx], 0x1
-<L241>:
-               	vpmovzxbd	ymm10, xmm10    # ymm10 = xmm10[0],zero,zero,zero,xmm10[1],zero,zero,zero,xmm10[2],zero,zero,zero,xmm10[3],zero,zero,zero,xmm10[4],zero,zero,zero,xmm10[5],zero,zero,zero,xmm10[6],zero,zero,zero,xmm10[7],zero,zero,zero
-               	vcvtdq2ps	ymm10, ymm10
-               	vpermilps	ymm10, ymm10, ymm2
-               	vmovups	ymmword ptr [rcx - 0x60], ymm10
-               	vpextrb	esi, xmm9, 0x0
-               	jmp	 <L243>
-               	mov	byte ptr [rcx], 0x5
-               	jmp	 <L235>
-               	mov	byte ptr [rcx], 0x6
-<L236>:
-               	vpmovzxbd	ymm10, xmm10    # ymm10 = xmm10[0],zero,zero,zero,xmm10[1],zero,zero,zero,xmm10[2],zero,zero,zero,xmm10[3],zero,zero,zero,xmm10[4],zero,zero,zero,xmm10[5],zero,zero,zero,xmm10[6],zero,zero,zero,xmm10[7],zero,zero,zero
-               	vcvtdq2ps	ymm10, ymm10
-               	vpermilps	ymm10, ymm10, ymm2
-               	vmovups	ymmword ptr [rcx - 0x60], ymm10
-<L242>:
-               	vpmovzxbd	xmm9, xmm9      # xmm9 = xmm9[0],zero,zero,zero,xmm9[1],zero,zero,zero,xmm9[2],zero,zero,zero,xmm9[3],zero,zero,zero
-               	vcvtdq2ps	xmm9, xmm9
-               	vmovlps	qword ptr [rcx - 0x40], xmm9
-               	inc	r10
-               	test	r10b, 0x7
-               	jne	 <L238>
-               	jmp	 <L239>
-               	mov	byte ptr [rcx], 0xa
-<L240>:
-               	vpmovzxbd	ymm10, xmm10    # ymm10 = xmm10[0],zero,zero,zero,xmm10[1],zero,zero,zero,xmm10[2],zero,zero,zero,xmm10[3],zero,zero,zero,xmm10[4],zero,zero,zero,xmm10[5],zero,zero,zero,xmm10[6],zero,zero,zero,xmm10[7],zero,zero,zero
-               	vcvtdq2ps	ymm10, ymm10
-               	vpermilps	ymm10, ymm10, ymm2
-               	vmovups	ymmword ptr [rcx - 0x60], ymm10
-               	vpextrb	esi, xmm9, 0x1
-<L243>:
-               	vcvtsi2ss	xmm9, xmm14, esi
-               	vmovss	dword ptr [rcx - 0x40], xmm9
-               	inc	r10
-               	test	r10b, 0x7
-               	jne	 <L238>
-               	jmp	 <L239>
-               	mov	byte ptr [rcx], 0x8
-<L235>:
-               	vpmovzxbd	ymm9, xmm10     # ymm9 = xmm10[0],zero,zero,zero,xmm10[1],zero,zero,zero,xmm10[2],zero,zero,zero,xmm10[3],zero,zero,zero,xmm10[4],zero,zero,zero,xmm10[5],zero,zero,zero,xmm10[6],zero,zero,zero,xmm10[7],zero,zero,zero
+               	vcvtsi2ss	xmm5, xmm9, esi
+               	movzx	esi, r11b
+               	vcvtsi2ss	xmm6, xmm9, esi
+               	imul	r11, rdx, 0x64
+               	add	r11, r12
+               	vmovups	ymmword ptr [rbx], ymm4
+               	vmovdqu	xmm7, xmmword ptr [rsp + 0x288]
+               	vpshufb	xmm7, xmm7, xmm1
+               	vcvtdq2ps	xmm7, xmm7
+               	vmovlps	qword ptr [rbx + 0x20], xmm7
+               	vmovss	dword ptr [rbx + 0x28], xmm6
+               	vshufps	xmm4, xmm4, xmm4, 0xff  # xmm4 = xmm4[3,3,3,3]
+               	vmovss	dword ptr [rbx + 0x2c], xmm4
+               	vmovups	xmm8, xmmword ptr [rsp + 0x2a0]
+               	vshufps	xmm8, xmm8, xmmword ptr [rsp + 0x2b0], 0x88 # xmm8 = xmm8[0,2],mem[0,2]
+               	vandps	xmm8, xmm8, xmm2
+               	vcvtdq2ps	xmm8, xmm8
+               	vmovups	xmmword ptr [rbx + 0x30], xmm8
+               	vmovlps	qword ptr [rbx + 0x40], xmm7
+               	vmovss	dword ptr [rbx + 0x48], xmm6
+               	vmovss	dword ptr [rbx + 0x4c], xmm4
+               	vmovss	dword ptr [rbx + 0x50], xmm5
+               	vshufps	xmm4, xmm8, xmm8, 0xe9  # xmm4 = xmm8[1,2,2,3]
+               	vmovlps	qword ptr [rbx + 0x54], xmm4
+               	vextractps	dword ptr [rbx + 0x5c], xmm8, 0x3
+               	jmp	 <L237>
+               	vmovups	ymmword ptr [rbx], ymm4
+               	mov	r11, rbx
+               	nop	dword ptr [rax]
 <L237>:
-               	vcvtdq2ps	ymm9, ymm9
-               	vpermilps	ymm9, ymm9, ymm2
-               	vmovups	ymmword ptr [rcx - 0x60], ymm9
-               	inc	r10
-               	test	r10b, 0x7
-               	je	 <L239>
-<L238>:
-               	vpblendd	ymm7, ymm8, ymm7, 0xc0  # ymm7 = ymm8[0,1,2,3,4,5],ymm7[6,7]
-               	vpermq	ymm7, ymm7, 0x93        # ymm7 = ymm7[3,0,1,2]
-               	vmovdqu	ymm8, ymmword ptr [rsp + 0x220]
-               	vmovdqu	ymm9, ymmword ptr [rsp + 0x260]
-               	vmovdqu	ymm10, ymmword ptr [rsp + 0x280]
-               	vmovdqu	ymm11, ymmword ptr [rsp + 0x2a0]
-               	vpsrlq	ymm8, ymm8, 0x8
-               	vmovdqu	ymmword ptr [rsp + 0x220], ymm8
-               	vpsrlq	ymm7, ymm7, 0x8
-               	vmovdqu	ymmword ptr [rsp + 0x240], ymm7
-               	vpsrlq	ymm7, ymm9, 0x8
-               	vmovdqu	ymmword ptr [rsp + 0x260], ymm7
-               	vpsrlq	ymm7, ymm10, 0x8
-               	vmovdqu	ymmword ptr [rsp + 0x280], ymm7
-               	vpsrlq	ymm9, ymm11, 0x8
-               	vmovdqu	ymmword ptr [rsp + 0x2a0], ymm9
-               	vmovq	rbx, xmm8
-               	vextracti128	xmm8, ymm9, 0x1
-               	vmovq	r9, xmm8
-               	vpextrq	r13, xmm7, 0x1
-               	add	rcx, 0x64
-               	cmp	rax, r10
-               	jne	 <L233>
-<L234>:
-               	imul	rax, r10, 0x64
+               	vblendps	ymm3, ymm3, ymmword ptr [rsp + 0x238], 0xc0 # ymm3 = ymm3[0,1,2,3,4,5],mem[6,7]
+               	mov	byte ptr [r11 + 0x60], r15b
+               	inc	rdx
+               	test	dl, 0x7
+               	je	 <L238>
+               	vpermpd	ymm3, ymm3, 0x93        # ymm3 = ymm3[3,0,1,2]
+               	vmovdqu	ymm4, ymmword ptr [rsp + 0x230]
+               	vmovdqu	ymm5, ymmword ptr [rsp + 0x270]
+               	vmovdqu	ymm6, ymmword ptr [rsp + 0x290]
+               	vmovdqu	ymm7, ymmword ptr [rsp + 0x2b0]
+               	vpsrlq	ymm4, ymm4, 0x8
+               	vmovdqu	ymmword ptr [rsp + 0x230], ymm4
+               	vpsrlq	ymm3, ymm3, 0x8
+               	vmovdqu	ymmword ptr [rsp + 0x250], ymm3
+               	vpsrlq	ymm3, ymm5, 0x8
+               	vmovdqu	ymmword ptr [rsp + 0x270], ymm3
+               	vpsrlq	ymm3, ymm6, 0x8
+               	vmovdqu	ymmword ptr [rsp + 0x290], ymm3
+               	vpsrlq	ymm5, ymm7, 0x8
+               	vmovdqu	ymmword ptr [rsp + 0x2b0], ymm5
+               	vmovq	r15, xmm4
+               	vextracti128	xmm4, ymm5, 0x1
+               	vmovq	rdi, xmm4
+               	vpextrq	r11, xmm3, 0x1
+               	add	rbx, 0x64
+               	cmp	rax, rdx
+               	jne	 <L235>
+<L236>:
+               	imul	rax, rdx, 0x64
                	shr	rax, 0x2
                	imul	ebp, eax, 0xc28f5c29
                	test	ebp, ebp
-               	je	 <L244>
-               	vpxor	xmm0, xmm0, xmm0
-               	vmovdqu	ymmword ptr [rsp + 0x280], ymm0
-               	vmovdqu	ymmword ptr [rsp + 0x260], ymm0
-               	vmovdqu	ymmword ptr [rsp + 0x240], ymm0
-               	vmovdqu	ymmword ptr [rsp + 0x220], ymm0
-               	lea	r15, [rsp + 0x1df]
-               	mov	r12, qword ptr [rsp + 0x1f0]
-               	jmp	 <L245>
+               	je	 <L239>
+               	vxorps	xmm0, xmm0, xmm0
+               	vmovups	ymmword ptr [rsp + 0x290], ymm0
+               	vmovups	ymmword ptr [rsp + 0x270], ymm0
+               	vmovups	ymmword ptr [rsp + 0x250], ymm0
+               	vmovups	ymmword ptr [rsp + 0x230], ymm0
+               	lea	r15, [rsp + 0x1ef]
+               	jmp	 <L240>
                	nop	word ptr cs:[rax + rax]
-<L246>:
-               	vmovss	xmm0, dword ptr [rsp + 0x224]
-               	vmovss	dword ptr [rsp + 0x228], xmm0
+<L241>:
+               	vmovss	xmm0, dword ptr [rsp + 0x234]
+               	vmovss	dword ptr [rsp + 0x238], xmm0
                	mov	ebx, 0x1
-<L254>:
+<L249>:
                	mov	eax, ebx
                	lea	rdx, [4*rax + 0x4]
-               	lea	rdi, [rsp + 0x220]
+               	lea	rdi, [rsp + 0x230]
                	xor	esi, esi
                	vzeroupper
                	call	 <memset@plt>
                	mov	r12, r14
-<L245>:
+<L240>:
                	mov	eax, ebp
                	neg	eax
                	and	eax, ebp
                	imul	r14, rax, 0x64
                	add	r14, r12
                	test	eax, eax
-               	je	 <L246>
+               	je	 <L241>
                	mov	qword ptr [rsp], rax
-               	mov	dword ptr [rsp + 0x70], ebp
+               	mov	dword ptr [rsp + 0x80], ebp
                	mov	r13d, 0x1
                	xor	ecx, ecx
                	mov	ebp, 0x1
-               	jmp	 <L247>
-               	nop
-<L249>:
+               	jmp	 <L242>
+               	nop	word ptr cs:[rax + rax]
+<L244>:
                	mov	ebp, ebx
                	movsxd	rax, ebx
-               	vmovss	dword ptr [rsp + 4*rax + 0x220], xmm0
+               	vmovss	dword ptr [rsp + 4*rax + 0x230], xmm0
                	add	r12, 0x64
                	mov	ecx, 0xfffffffe
                	sub	ecx, r13d
@@ -3696,40 +3664,40 @@ Disassembly of section .text:
                	sub	ecx, esi
                	mov	r13d, edx
                	cmp	r12, r14
-               	je	 <L248>
-<L247>:
+               	je	 <L243>
+<L242>:
                	mov	ebx, ecx
                	movzx	eax, byte ptr [r12 + 0x60]
                	mov	rdi, r15
                	mov	rsi, r12
-               	lea	rcx,  <std::__detail::__variant::__gen_vtable<std::__detail::__variant::__deduce_visit_result<float>, ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&>::_S_vtable>
+               	lea	rcx,  <std::__detail::__variant::__gen_vtable<std::__detail::__variant::__deduce_visit_result<float>, ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&>::_S_vtable>
                	vzeroupper
                	call	qword ptr [rcx + 8*rax]
                	mov	ecx, ebx
                	sub	ecx, ebp
-               	jl	 <L249>
+               	jl	 <L244>
                	movsxd	rax, ebp
                	cmp	ecx, 0x1f
-               	jb	 <L250>
+               	jb	 <L245>
                	inc	rcx
                	mov	rdx, rcx
                	and	rdx, -0x20
-               	vpblendd	xmm0, xmm0, xmmword ptr , 0xe <memset+0xd50> # xmm0 = xmm0[0],mem[1,2,3]
-               	lea	rsi, [rsp + 0x280]
+               	vblendps	xmm0, xmm0, xmmword ptr , 0xe <memset+0xd60> # xmm0 = xmm0[0],mem[1,2,3]
+               	lea	rsi, [rsp + 0x290]
                	lea	rsi, [rsi + 4*rax]
                	vpxor	xmm1, xmm1, xmm1
                	xor	edi, edi
                	vxorps	xmm2, xmm2, xmm2
                	vpxor	xmm3, xmm3, xmm3
                	nop	word ptr cs:[rax + rax]
-<L251>:
+<L246>:
                	vaddps	ymm0, ymm0, ymmword ptr [rsi + 4*rdi - 0x60]
                	vaddps	ymm1, ymm1, ymmword ptr [rsi + 4*rdi - 0x40]
                	vaddps	ymm2, ymm2, ymmword ptr [rsi + 4*rdi - 0x20]
                	vaddps	ymm3, ymm3, ymmword ptr [rsi + 4*rdi]
                	add	rdi, 0x20
                	cmp	rdx, rdi
-               	jne	 <L251>
+               	jne	 <L246>
                	vaddps	ymm0, ymm1, ymm0
                	vaddps	ymm1, ymm3, ymm2
                	vaddps	ymm0, ymm1, ymm0
@@ -3740,59 +3708,59 @@ Disassembly of section .text:
                	vmovshdup	xmm1, xmm0      # xmm1 = xmm0[1,1,3,3]
                	vaddss	xmm0, xmm0, xmm1
                	cmp	rcx, rdx
-               	je	 <L249>
+               	je	 <L244>
                	add	rax, rdx
-<L250>:
+<L245>:
                	mov	ecx, ebx
                	sub	ecx, eax
                	inc	ecx
                	lea	rax, [rsp + 4*rax]
-               	add	rax, 0x220
+               	add	rax, 0x230
                	xor	edx, edx
                	nop	word ptr cs:[rax + rax]
-<L252>:
+<L247>:
                	vaddss	xmm0, xmm0, dword ptr [rax + 4*rdx]
                	inc	rdx
                	cmp	ecx, edx
-               	jne	 <L252>
-               	jmp	 <L249>
+               	jne	 <L247>
+               	jmp	 <L244>
                	nop	word ptr cs:[rax + rax]
-<L248>:
-               	mov	ebp, dword ptr [rsp + 0x70]
+<L243>:
+               	mov	ebp, dword ptr [rsp + 0x80]
                	sub	ebp, dword ptr [rsp]
-               	je	 <L253>
-               	vmovss	dword ptr [rsp + 4*rax + 0x224], xmm0
+               	je	 <L248>
+               	vmovss	dword ptr [rsp + 4*rax + 0x234], xmm0
                	mov	r12, r14
                	test	ebx, ebx
-               	jns	 <L254>
-               	jmp	 <L245>
-<L232>:
-               	vpxor	xmm0, xmm0, xmm0
-<L253>:
-               	mov	rdi, qword ptr [rsp + 0x1f0]
+               	jns	 <L249>
+               	jmp	 <L240>
+<L234>:
+               	vxorps	xmm0, xmm0, xmm0
+<L248>:
+               	mov	rdi, qword ptr [rsp + 0x200]
                	test	rdi, rdi
-               	mov	rbx, qword ptr [rsp + 0x2c8]
-               	jne	 <L255>
+               	mov	rbx, qword ptr [rsp + 0x2d8]
+               	jne	 <L250>
                	cmp	ebx, 0x2a
-               	je	 <L256>
-               	jmp	 <L257>
-<L244>:
-               	vpxor	xmm0, xmm0, xmm0
-               	mov	rbx, qword ptr [rsp + 0x2c8]
-               	mov	rdi, qword ptr [rsp + 0x1f0]
-<L255>:
-               	vmovdqa	xmmword ptr [rsp + 0x70], xmm0
+               	je	 <L251>
+               	jmp	 <L252>
+<L239>:
+               	vxorps	xmm0, xmm0, xmm0
+               	mov	rdi, r12
+               	mov	rbx, qword ptr [rsp + 0x2d8]
+<L250>:
+               	vmovaps	xmmword ptr [rsp + 0x80], xmm0
                	vzeroupper
                	call	 <_ZdaPv@plt>
-               	vmovdqa	xmm0, xmmword ptr [rsp + 0x70]
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x80]
                	cmp	ebx, 0x2a
-               	jne	 <L257>
-<L256>:
-               	cmp	dword ptr [rsp + 0x2d0], 0x186a0
-               	jne	 <L257>
-               	vucomiss	xmm0, dword ptr  <memset+0xd94>
-               	jne	 <L258>
-<L257>:
+               	jne	 <L252>
+<L251>:
+               	cmp	dword ptr [rsp + 0x2e0], 0x186a0
+               	jne	 <L252>
+               	vucomiss	xmm0, dword ptr  <memset+0xd84>
+               	jne	 <L253>
+<L252>:
                	xor	eax, eax
                	add	rsp, 0x358
                	pop	rbx
@@ -3803,29 +3771,19 @@ Disassembly of section .text:
                	pop	rbp
                	vzeroupper
                	ret
-<L258>:
+<L253>:
                	mov	edi, 0x4
-               	vmovaps	xmmword ptr [rsp + 0x70], xmm0
+               	vmovaps	xmmword ptr [rsp + 0x80], xmm0
                	vzeroupper
                	call	 <__cxa_allocate_exception@plt>
-               	vmovaps	xmm0, xmmword ptr [rsp + 0x70]
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x80]
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <memset+0x7290>
+               	mov	rsi, qword ptr  <memset+0x7240>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
                	mov	rdi, rax
                	call	 <__clang_call_terminate>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
                	int3
                	int3
@@ -3840,10 +3798,10 @@ Disassembly of section .text:
                	int3
                	int3
 
-<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 0ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
+<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 0ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
                	vmovss	xmm0, dword ptr [rsi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xd88>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xd78>
                	ret
                	int3
                	int3
@@ -3860,9 +3818,9 @@ Disassembly of section .text:
                	int3
                	int3
 
-<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 1ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
+<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 1ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
                	vmovss	xmm0, dword ptr [rsi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xd88>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xd78>
                	vmulss	xmm0, xmm0, dword ptr [rsi + 0x20]
                	ret
                	int3
@@ -3879,7 +3837,7 @@ Disassembly of section .text:
                	int3
                	int3
 
-<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 2ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
+<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 2ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
                	vmovss	xmm0, dword ptr [rsi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rsi + 0x1c]
                	ret
@@ -3889,7 +3847,7 @@ Disassembly of section .text:
                	int3
                	int3
 
-<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 3ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
+<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 3ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
                	vmovss	xmm0, dword ptr [rsi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
                	ret
@@ -3900,10 +3858,10 @@ Disassembly of section .text:
                	int3
                	int3
 
-<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 4ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
-               	vmovss	xmm0, dword ptr [rsi + 0x20]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xd90>
-               	vmulss	xmm0, xmm0, dword ptr [rsi + 0x1c]
+<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 4ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
+               	vmovss	xmm0, dword ptr [rsi + 0x1c]
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xd80>
+               	vmulss	xmm0, xmm0, dword ptr [rsi + 0x20]
                	ret
                	int3
                	int3
@@ -3919,7 +3877,7 @@ Disassembly of section .text:
                	int3
                	int3
 
-<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 5ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
+<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 5ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
                	vmovss	xmm0, dword ptr [rsi + 0x1c]
                	vmulss	xmm1, xmm0, xmm0
                	vmulss	xmm0, xmm1, xmm0
@@ -3927,16 +3885,16 @@ Disassembly of section .text:
                	int3
                	int3
 
-<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 6ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
+<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 6ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
                	vmovss	xmm0, dword ptr [rsi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rsi + 0x1c]
                	vmulss	xmm0, xmm0, dword ptr [rsi + 0x24]
                	ret
 
-<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 7ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
-               	vmovss	xmm0, dword ptr [rsi + 0x20]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xd8c>
-               	vmulss	xmm0, xmm0, dword ptr [rsi + 0x1c]
+<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 7ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
+               	vmovss	xmm0, dword ptr [rsi + 0x1c]
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xd7c>
+               	vmulss	xmm0, xmm0, dword ptr [rsi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rsi + 0x24]
                	ret
                	int3
@@ -3948,11 +3906,11 @@ Disassembly of section .text:
                	int3
                	int3
 
-<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 12ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
-<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 8ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
+<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 12ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
+<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 8ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
                	vmovss	xmm0, dword ptr [rsi + 0x1c]
                	vmulss	xmm1, xmm0, xmm0
-               	vmulss	xmm1, xmm1, dword ptr  <memset+0xd98>
+               	vmulss	xmm1, xmm1, dword ptr  <memset+0xd88>
                	vmulss	xmm0, xmm1, xmm0
                	ret
                	int3
@@ -3966,41 +3924,41 @@ Disassembly of section .text:
                	int3
                	int3
 
-<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 9ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
+<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 9ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
                	vmovss	xmm0, dword ptr [rsi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xd78>
+               	vmulss	xmm0, xmm0, dword ptr [rsi + 0x20]
+               	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
+<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 10ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
+               	vmovss	xmm0, dword ptr [rsi + 0x1c]
+               	vmulss	xmm0, xmm0, xmm0
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xd74>
+               	vmulss	xmm0, xmm0, dword ptr [rsi + 0x20]
+               	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
+<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 11ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Circle@Evaluation.CRTP.Circle, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, Bodies3D::Square@Evaluation.CRTP.Square, Bodies3D::Triangle@Evaluation.CRTP.Triangle, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
+               	vmovss	xmm0, dword ptr [rsi + 0x1c]
                	vmulss	xmm0, xmm0, dword ptr  <memset+0xd88>
-               	vmulss	xmm0, xmm0, dword ptr [rsi + 0x20]
-               	ret
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 10ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
-               	vmovss	xmm0, dword ptr [rsi + 0x1c]
-               	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xd84>
-               	vmulss	xmm0, xmm0, dword ptr [rsi + 0x20]
-               	ret
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<std::__detail::__variant::__gen_vtable_impl<std::__detail::__variant::_Multi_array<std::__detail::__variant::__deduce_visit_result<float> (*)(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>, std::integer_sequence<unsigned long, 11ul>>::__visit_invoke(ComputeVolumeSum(PseudoRandomSequence@Evaluation.Dependency.PseudoRandomSequence)::'lambda'(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)::operator()(std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&) const::'lambda'(auto const&)&&, std::variant<Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Circle@Evaluation.CRTP.Circle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Ellipse@Evaluation.CRTP.Ellipse>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Rectangle@Evaluation.CRTP.Rectangle>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Square@Evaluation.CRTP.Square>, Bodies3D::Shape3D@Evaluation.CRTP.Shape3D<Shapes2D::Triangle@Evaluation.CRTP.Triangle>, Bodies3D::Cube@Evaluation.CRTP.Cube, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, Bodies3D::Cone@Evaluation.CRTP.Cone, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, Bodies3D::Head@Evaluation.CRTP.Head> const&)>:
-               	vmovss	xmm0, dword ptr [rsi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xd98>
                	vmulss	xmm0, xmm0, dword ptr [rsi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rsi + 0x24]
                	ret
@@ -4010,7 +3968,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <memset+0x7268>
+               	mov	rax, qword ptr  <memset+0x7218>
                	test	rax, rax
                	je	 <L0>
                	call	rax

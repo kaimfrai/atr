@@ -42,26 +42,41 @@ export namespace
 		;
 
 	public:
+		template
+			<	typename
+				...	t_tpArgument
+			>
 		explicit(false) constexpr inline
 		(	Element
 		)	(	ProtoID auto
 					i_vTypeName
+			,	t_tpArgument
+				...	i_vpInitializer
 			)
 			noexcept
+			(	sizeof...(i_vpInitializer)
+			==	0uz
+			)
 		requires
-			(	sizeof(Instance<decltype(i_vTypeName)>) <= t_vMaxSize
-			and	alignof(Instance<decltype(i_vTypeName)>) <= t_vMaxAlign
+			(	(	sizeof(Instance<decltype(i_vTypeName)>)
+				<=	t_vMaxSize
+				)
+			and	(	alignof(Instance<decltype(i_vTypeName)>)
+				<=	t_vMaxAlign
+				)
 			)
 		:	t_tpEntry
 			{	i_vTypeName
 			}
 			...
 		{
-			new (	+
+			new	(	+
 					m_vErasedElement
 				)
 			Instance<decltype(i_vTypeName)>
-			{};
+			{	i_vpInitializer
+				...
+			};
 		}
 
 		template

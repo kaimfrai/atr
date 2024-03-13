@@ -2,6 +2,8 @@ export module Evaluation.Virtual.ExtendedShape;
 
 import Evaluation.Virtual.BasicBody;
 
+import Std;
+
 export namespace
 	Bodies3D
 {
@@ -15,7 +17,28 @@ export namespace
 	{
 		t_tShape
 			Shape2D
-		;
+		{};
+
+		explicit(false) constexpr inline
+		(	ExtendedShape
+		)	()
+			noexcept
+		=	default;
+
+		explicit(true) constexpr inline
+		(	ExtendedShape
+		)	(	auto
+				&&
+				...	i_rpArgument
+			)
+			noexcept
+		:	Shape2D
+			{	::std::forward<decltype(i_rpArgument)>
+				(	i_rpArgument
+				)
+				...
+			}
+		{}
 
 		[[nodiscard]]
 		auto constexpr inline

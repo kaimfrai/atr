@@ -12,6 +12,11 @@ export namespace
 		<	Shapes2D::Circle
 		>
 	{
+		using
+			SphericBody
+		::	SphericBody
+		;
+
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetDepth

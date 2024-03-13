@@ -13,5 +13,10 @@ export namespace
 		<	Shapes2D::Square
 		>
 	,	DepthIsHeight
-	{};
+	{
+		using
+			CubicBody
+		::	CubicBody
+		;
+	};
 }

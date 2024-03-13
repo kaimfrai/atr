@@ -12,6 +12,11 @@ export namespace
 		<	Shapes2D::Square
 		>
 	{
+		using
+			CubicBody
+		::	CubicBody
+		;
+
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetDepth

@@ -57,6 +57,36 @@ export namespace
 			>
 		;
 
+		using
+			BaseDistrict
+		=	Base
+			<	CreateType
+				<	0
+				,	t_tTypeName
+				,	t_tpDistrict
+					...
+				>
+			>
+		;
+
+		template
+			<	typename
+					t_tDistrict
+			>
+		using
+			District
+		=	t_tDistrict
+			::	template
+				Guard
+				<	Instance
+					<	t_tTypeName
+					,	t_tpDistrict
+						...
+					>
+				>
+			::	District
+		;
+
 		t_tTypeName static constexpr inline
 			TypeName
 		{};

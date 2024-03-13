@@ -339,10 +339,25 @@ export namespace
 			;
 		}
 
+		template
+			<	ProtoID
+					t_tTypeName
+			,	typename
+					t_tBody
+				=	::ATR::Instance
+					<	t_tTypeName
+					,	t_tpDistrict
+						...
+					>
+			>
 		auto inline
 		(	emplace_back
-		)	(	ProtoID auto
-					i_vTypeName
+		)	(	t_tTypeName
+			,	typename t_tBody::BaseDistrict
+				&&	i_rBaseDistrict
+			,	typename t_tBody::template District<t_tpDistrict>
+				&&
+				...	i_rpDistrictGuard
 			)	&
 			noexcept
 		->	decltype(auto)
@@ -368,23 +383,21 @@ export namespace
 			*	vBodySize
 			;
 
-			using
-				tBody
-			=	::ATR::Instance
-				<	decltype(i_vTypeName)
-				,	t_tpDistrict
-					...
-				>
-			;
-
 			auto
 			*	aBody
 			=	::std::construct_at
-				(	::std::bit_cast<tBody*>
+				(	::std::bit_cast<t_tBody*>
 					(	aBuffer
 					+	vCount
 					*	vBodySize
 					)
+				,	::std::move
+					(	i_rBaseDistrict
+					)
+				,	::std::move
+					(	i_rpDistrictGuard
+					)
+					...
 				)
 			;
 			::std::construct_at
@@ -395,7 +408,7 @@ export namespace
 				)
 			,	t_rInterface
 				.	ImplementerIndex
-					(	Type<tBody>
+					(	Type<t_tBody>
 					)
 			);
 

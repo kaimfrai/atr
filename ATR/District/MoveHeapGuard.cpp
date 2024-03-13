@@ -26,7 +26,13 @@ export namespace
 		>
 	class
 		MoveHeapGuard
-	{};
+	{
+	public:
+		using
+			District
+		=	MoveHeapGuard
+		;
+	};
 
 	template
 		<	short
@@ -83,16 +89,6 @@ export namespace
 			>
 		;
 
-		using
-			HeapLayoutType
-		=	Layout::CreateType
-			<	t_vDistrictIndex
-			,	t_tTypeName
-			,	t_tpDistrict
-				...
-			>
-		;
-
 		[[nodiscard]]
 		auto constexpr inline
 		(	GuardedValue
@@ -118,18 +114,79 @@ export namespace
 		}
 
 	public:
+		using
+			District
+		=	Layout::CreateType
+			<	t_vDistrictIndex
+			,	t_tTypeName
+			,	t_tpDistrict
+				...
+			>
+		;
+
 		explicit(false) constexpr inline
 		(	MoveHeapGuard
 		)	()
 			noexcept
 		{
-			GuardedValue
-			()
+				GuardedValue
+				()
 			=	new
 				(	::std::nothrow
 				)
-				HeapLayoutType
+				District
 			;
+		}
+
+		explicit(false) constexpr inline
+		(	MoveHeapGuard
+		)	(	District
+				&&	i_rInitial
+			)
+			noexcept
+		{
+			if	constexpr
+				(	::std::is_array_v
+					<	District
+					>
+				)
+			{
+				auto
+				*	aHeapArray
+				=	new
+					(	::std::nothrow
+					)
+					District
+				;
+
+				::std::move
+				(	::std::begin
+					(	i_rInitial
+					)
+				,	::std::end
+					(	i_rInitial
+					)
+				,	aHeapArray
+				);
+					GuardedValue
+					()
+				=	aHeapArray
+				;
+			}
+			else
+			{
+					GuardedValue
+					()
+				=	new
+					(	::std::nothrow
+					)
+					District
+					{	::std::move
+						(	i_rInitial
+						)
+					}
+				;
+			}
 		}
 
 		explicit(false) constexpr inline
@@ -182,12 +239,12 @@ export namespace
 		{
 			if	constexpr
 				(	::std::is_array_v
-					<	HeapLayoutType
+					<	District
 					>
 				)
 			{	delete
 					[]
-					static_cast<::std::remove_extent_t<HeapLayoutType>*>
+					static_cast<::std::remove_extent_t<District>*>
 					(	GuardedValue
 						()
 					)
@@ -195,7 +252,7 @@ export namespace
 			}
 			else
 			{	delete
-					static_cast<HeapLayoutType*>
+					static_cast<District*>
 					(	GuardedValue
 						()
 					)

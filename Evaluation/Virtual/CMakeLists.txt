@@ -5,12 +5,6 @@ add_single_file_modules(
 	RectangularShape.cpp
 	TriangularShape.cpp
 
-	Circle.cpp
-	Ellipse.cpp
-	Rectangle.cpp
-	Square.cpp
-	Triangle.cpp
-
 	IBody.cpp
 	BasicBody.cpp
 	ExtendedShape.cpp
@@ -18,6 +12,12 @@ add_single_file_modules(
 	CubicBody.cpp
 	PyramidicBody.cpp
 	SphericBody.cpp
+
+	Circle.cpp
+	Ellipse.cpp
+	Rectangle.cpp
+	Square.cpp
+	Triangle.cpp
 
 	Cone.cpp
 	Cuboid.cpp

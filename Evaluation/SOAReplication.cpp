@@ -676,7 +676,7 @@ auto inline
 		)
 	};
 
-	for	(	auto
+	for	(	auto const
 			[	vType
 			,	vRed
 			,	vGreen

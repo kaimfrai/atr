@@ -129,13 +129,28 @@ export
 				&	i_rGeneratedNumbers
 			)
 			noexcept
-		->	unsigned char
-		{	return
-				i_rGeneratedNumbers
-				.	m_vNumber
-					[	t_vIndex
-					]
-			;
+		->	auto
+		{
+			if	constexpr
+				(	t_vIndex
+				==	0uz
+				)
+			{	return
+					i_rGeneratedNumbers
+					.	m_vNumber
+						[	t_vIndex
+						]
+				;
+			}
+			else
+			{	return
+				static_cast<float>
+				(	i_rGeneratedNumbers
+					.	m_vNumber
+						[	t_vIndex
+						]
+				);
+			}
 		}
 	};
 
@@ -707,6 +722,18 @@ export
 	};
 
 	template
+		<>
+	struct
+		::std::tuple_element
+		<	0uz
+		,	GeneratedNumbers
+		>
+	:	::std::type_identity
+		<	::std::uint8_t
+		>
+	{};
+
+	template
 		<	::std::size_t
 				t_vIndex
 		>
@@ -716,7 +743,7 @@ export
 		,	GeneratedNumbers
 		>
 	:	::std::type_identity
-		<	::std::uint8_t
+		<	float
 		>
 	{};
 

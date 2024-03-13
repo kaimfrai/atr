@@ -8,7 +8,7 @@ export namespace
 	{
 		float
 			Height
-		;
+		{};
 
 		[[nodiscard]]
 		auto constexpr inline

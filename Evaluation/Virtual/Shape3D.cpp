@@ -15,6 +15,13 @@ export namespace
 		<	t_tShape
 		>
 	{
+		using
+			ExtendedShape
+			<	t_tShape
+			>
+		::	ExtendedShape
+		;
+
 		[[nodiscard]]
 		auto constexpr inline
 		(	GetDepth

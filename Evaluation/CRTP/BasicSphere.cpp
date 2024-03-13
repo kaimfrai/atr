@@ -13,5 +13,10 @@ export namespace
 		<	Shapes2D::Circle
 		>
 	,	DepthIsHeight
-	{};
+	{
+		using
+			SphericBody
+		::	SphericBody
+		;
+	};
 }

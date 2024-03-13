@@ -2,6 +2,7 @@ export module Evaluation.Virtual.CircularShape;
 
 import Evaluation.Virtual.BasicShape;
 
+import Evaluation.Dependency.CommonData;
 import Evaluation.Dependency.PiFraction;
 
 export namespace
@@ -13,7 +14,32 @@ export namespace
 	{
 		float
 			Height
-		;
+		{};
+
+		explicit(false) constexpr inline
+		(	CircularShape
+		)	()
+			noexcept
+		=	default;
+
+		explicit(true) constexpr inline
+		(	CircularShape
+		)	(	RGBAColor const
+				&	i_rColor
+			,	Point const
+				&	i_rCoordinates
+			,	float
+					i_vHeight
+			)
+			noexcept
+		:	BasicShape
+			{	i_rColor
+			,	i_rCoordinates
+			}
+		,	Height
+			{	i_vHeight
+			}
+		{}
 
 		[[nodiscard]]
 		auto constexpr inline

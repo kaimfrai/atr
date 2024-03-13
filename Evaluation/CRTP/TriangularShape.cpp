@@ -2,7 +2,7 @@ export module Evaluation.CRTP.TriangularShape;
 
 import Evaluation.Dependency.Fraction;
 import Evaluation.CRTP.BasicShape;
-import Evaluation.CRTP.SeparateWidth;
+import Evaluation.CRTP.SeparateHeight;
 
 export namespace
 	Shapes2D
@@ -10,7 +10,7 @@ export namespace
 	struct
 		TriangularShape
 	:	BasicShape
-	,	SeparateWidth
+	,	SeparateHeight
 	{
 		[[nodiscard]]
 		auto static constexpr inline

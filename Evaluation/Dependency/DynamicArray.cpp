@@ -87,7 +87,8 @@ export
 		auto constexpr inline
 		(	emplace_back
 		)	(	auto
-				&&	i_rArgument
+				&&
+				...	i_rpArgument
 			)	&
 			noexcept
 		->	t_tElement
@@ -104,9 +105,10 @@ export
 						*	sizeof(t_tElement)
 						)
 					)
-				,	::std::forward<decltype(i_rArgument)>
-					(	i_rArgument
+				,	::std::forward<decltype(i_rpArgument)>
+					(	i_rpArgument
 					)
+					...
 				)
 			;
 			++	m_vCount

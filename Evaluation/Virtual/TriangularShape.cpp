@@ -2,6 +2,7 @@ export module Evaluation.Virtual.TriangularShape;
 
 import Evaluation.Virtual.BasicShape;
 
+import Evaluation.Dependency.CommonData;
 import Evaluation.Dependency.Fraction;
 
 export namespace
@@ -12,18 +13,43 @@ export namespace
 	:	BasicShape
 	{
 		float
-			Width
-		;
+			Height
+		{};
+
+		explicit(false) constexpr inline
+		(	TriangularShape
+		)	()
+			noexcept
+		=	default;
+
+		explicit(true) constexpr inline
+		(	TriangularShape
+		)	(	RGBAColor const
+				&	i_rColor
+			,	Point const
+				&	i_rCoordinates
+			,	float
+					i_vHeight
+			)
+			noexcept
+		:	BasicShape
+			{	i_rColor
+			,	i_rCoordinates
+			}
+		,	Height
+			{	i_vHeight
+			}
+		{}
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	GetWidth
+		(	GetHeight
 		)	()	const
 			noexcept
 		->	float
 			override
 		{	return
-				Width
+				Height
 			;
 		}
 

@@ -1,7 +1,8 @@
 export module Evaluation.CRTP.Triangle;
 
 import Evaluation.CRTP.TriangularShape;
-import Evaluation.CRTP.SeparateHeight;
+import Evaluation.CRTP.SeparateWidth;
+import Evaluation.CRTP.Shape3D;
 
 export namespace
 	Shapes2D
@@ -9,6 +10,21 @@ export namespace
 	struct
 		Triangle
 	:	TriangularShape
-	,	SeparateHeight
+	,	SeparateWidth
 	{};
+}
+
+export namespace
+	Bodies3D
+{
+	struct
+		Triangle
+	:	Shape3D
+		<	::Shapes2D::Triangle
+		>
+	{	using
+			Shape3D
+		::	Shape3D
+		;
+	};
 }
