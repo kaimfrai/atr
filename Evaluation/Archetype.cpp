@@ -20,7 +20,6 @@ import Evaluation.Archetype.Head;
 
 import ATR.Literals;
 import ATR.Erase;
-import ATR.Initialize;
 import ATR.Virtual.Element;
 import ATR.Virtual.Entry;
 
@@ -28,7 +27,6 @@ import Meta.ID;
 
 import Std;
 
-using ::ATR::Initializer;
 using ::ATR::Virtual::Element;
 using ::ATR::Virtual::Entry;
 using ::Meta::ID;
