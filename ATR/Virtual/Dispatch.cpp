@@ -33,11 +33,10 @@ export namespace
 			noexcept
 		->	::std::size_t
 		{	return
-				::std::max
-				({	sizeof(t_tpImplementer)
-					...
-				})
-			;
+			::std::max
+			({	sizeof(t_tpImplementer)
+				...
+			});
 		}
 
 		[[nodiscard]]
@@ -59,36 +58,41 @@ export namespace
 			)
 			noexcept
 		->	unsigned char
-		{
-			TypeID static constexpr
-				vImplementer
-				[]
-			{	Type<t_tpImplementer>
-				...
-			};
-
-			for	(	unsigned char
-						vIndex
-					=	0
-				;		vIndex
-					<	ImplementerCount
-						()
-				;	++	vIndex
+		{	return
+			[&]	<	::std::size_t
+					...	t_vpIndex
+				>(	::std::index_sequence
+					<	t_vpIndex
+						...
+					>
 				)
 			{
-				if	(	vImplementer
-						[	vIndex
-						]
-					==	i_vType
+				unsigned char
+					vResult
+				{};
+				if	(	(	...
+						or	(	(	i_vType
+								==	Type<t_tpImplementer>
+								)
+							and	(	void
+									(	vResult
+									=	t_vpIndex
+									)
+								,	true
+								)
+							)
+						)
 					)
 				{	return
-						vIndex
+						vResult
 					;
 				}
-			}
-
-			::Meta::Unlinkable
-			();
+				::Meta::Unlinkable
+				();
+			}(	::std::make_index_sequence
+				<	sizeof...(t_tpImplementer)
+				>{}
+			);
 		}
 
 		template
@@ -122,30 +126,29 @@ export namespace
 			{	t_tResult
 					vResult
 				{};
-				if	(	(	...
-						or	(	(	i_vImplementerIndex
-								==	static_cast<unsigned char>(t_tpIndex)
-								)
-							and	(	(void)
-									(	vResult
-										=	::ATR::FunctionType
-											<	ID<t_vFunctionName>
-											,	t_tpImplementer const&
-											,	t_tpArgument
-												...
-											>{}
-											(	i_rObject
-											,	ForwardErased
-												(	i_rpArgument
-												)
-												...
-											)
+				if	((	...
+					or	(	(	i_vImplementerIndex
+							==	static_cast<unsigned char>(t_tpIndex)
+							)
+						and	(	(void)
+								(	vResult
+								=	::ATR::FunctionType
+									<	ID<t_vFunctionName>
+									,	t_tpImplementer const&
+									,	t_tpArgument
+										...
+									>{}
+									(	i_rObject
+									,	ForwardErased
+										(	i_rpArgument
+										)
+										...
 									)
-								,	true
 								)
+							,	true
 							)
 						)
-					)
+					))
 				{	return
 						vResult
 					;
@@ -178,7 +181,7 @@ export namespace
 					or	(	(	i_vImplementerIndex
 							==	static_cast<unsigned char>(t_tpIndex)
 							)
-						?	(	i_rObject
+						and	(	i_rObject
 								.	As<t_tpImplementer>
 									()
 								.	compl
@@ -186,7 +189,6 @@ export namespace
 									()
 							,	true
 							)
-						:	false
 						)
 					))
 				{	return
