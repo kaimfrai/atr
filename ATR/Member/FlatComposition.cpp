@@ -289,60 +289,120 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr inline
+		(	GetMemberType
+		)	(	short
+					i_vMemberIndex
+			)	const
+			noexcept
+		->	TypeID
+		{	return
+				Members
+				.	Types
+					[	i_vMemberIndex
+					]
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	GetMemberOffset
+		)	(	short
+					i_vMemberIndex
+			)	const
+			noexcept
+		->	BitSize
+		{	return
+				Offsets
+				[	i_vMemberIndex
+				]
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	GetMemberDistrictIndex
+		)	(	short
+					i_vMemberIndex
+			)	const
+			noexcept
+		->	short
+		{	return
+				Members
+				.	DistrictIndices
+					[	i_vMemberIndex
+					]
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
 		(	GetMemberInfo
 		)	(	short
 					i_vMemberIndex
 			)	const
 			noexcept
 		->	Info
-		{
-			auto const
-				vType
-			=	Members
-				.	Types
-					[	i_vMemberIndex
-					]
-			;
-			auto const
-				vOffset
-			=	Offsets
-				[	i_vMemberIndex
-				]
-			;
-			auto const
-				vDistrictIndex
-			=	Members
-				.	DistrictIndices
-					[	i_vMemberIndex
-					]
-			;
+		{	return
+			{	GetMemberType
+				(	i_vMemberIndex
+				)
+			,	GetMemberOffset
+				(	i_vMemberIndex
+				)
+			,	GetMemberDistrictIndex
+				(	i_vMemberIndex
+				)
+			};
+		}
 
+		[[nodiscard]]
+		auto constexpr inline
+		(	DistrictToMemberIndex
+		)	(	short
+					i_vDistrictIndex
+			)	const
+			noexcept
+		->	short
+		{
+			[[assume(i_vDistrictIndex > 0)]];
 			return
-				Info
-				{	vType
-				,	vOffset
-				,	vDistrictIndex
-				}
+				i_vDistrictIndex
+			-	1
+			+	Members
+				.	MemberCount
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	GetDistrictInfo
+		(	GetDistrictOffset
 		)	(	short
 					i_vDistrictIndex
 			)	const
 			noexcept
-		->	Info
-		{
-			[[assume(i_vDistrictIndex > 0)]];
+		->	BitSize
+		{	return
+				GetMemberOffset
+				(	DistrictToMemberIndex
+					(	i_vDistrictIndex
+					)
+				)
+			;
+		}
 
-			return
-				GetMemberInfo
-				(	Members
-					.	MemberCount
-				-	1
-				+	i_vDistrictIndex
+		[[nodiscard]]
+		auto constexpr inline
+		(	GetDistrictDistrictIndex
+		)	(	short
+					i_vDistrictIndex
+			)	const
+			noexcept
+		->	short
+		{	return
+				GetMemberDistrictIndex
+				(	DistrictToMemberIndex
+					(	i_vDistrictIndex
+					)
 				)
 			;
 		}
@@ -371,12 +431,11 @@ export namespace
 						]
 				)
 			{	return
-					Info
-					{	Type<void>
-					,	-1_bit
-					,	-1
-					}
-				;
+				Info
+				{	Type<void>
+				,	-1_bit
+				,	-1
+				};
 			}
 
 			return

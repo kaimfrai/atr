@@ -1,17 +1,20 @@
 export module ATR.Layout.Create;
 
 import ATR.Layout.Fork;
+import ATR.Layout.Offset;
 import ATR.Member.Composition;
 import ATR.Member.Constants;
 import ATR.Member.Info;
 
 import Meta.ID;
+import Meta.Memory.Size;
 import Meta.String.Hash;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 
 import Std;
 
+using ::Meta::BitSize;
 using ::Meta::ProtoID;
 using ::Meta::RestoreTypeEntity;
 using ::Meta::Type;
@@ -150,8 +153,7 @@ namespace
 			noexcept
 		->	MakeFork<t_tpNorth...>
 		{	return
-				{}
-			;
+			{};
 		}
 
 		template
@@ -167,8 +169,7 @@ namespace
 			noexcept
 		->	MakeFork<t_tpSouth...>
 		{	return
-				{}
-			;
+			{};
 		}
 
 		[[nodiscard]]
@@ -180,8 +181,7 @@ namespace
 			noexcept
 		->	MakeFork<>
 		{	return
-				{}
-			;
+			{};
 		}
 
 	public:
@@ -385,8 +385,7 @@ namespace
 			::	Entity
 		>
 	{	return
-			{}
-		;
+		{};
 	}
 
 	template
@@ -406,32 +405,29 @@ namespace
 		noexcept
 	->	decltype(auto)
 	{	return
-			MakeFork
-			<	RestoreTypeEntity
-				<	t_vTypeCounts
+		MakeFork
+		<	RestoreTypeEntity
+			<	t_vTypeCounts
+				.	Buffer
+					[	t_vpIndex
+					]
+				.	Type
+			>
+				[	t_vTypeCounts
 					.	Buffer
 						[	t_vpIndex
 						]
-					.	Type
-				>
-					[	t_vTypeCounts
-						.	Buffer
-							[	t_vpIndex
-							]
-						.	Count
-					]
-				...
-			>{}
-		;
+					.	Count
+				]
+			...
+		>{};
 	}
 
 	template
-		<	short
+		<	auto const
+			&	t_rComposition
+		,	short
 				t_vDistrictIndex
-		,	ProtoID
-				t_tTypeName
-		,	typename
-			...	t_tpDistrict
 		,	::std::size_t
 			...	t_vpIndex
 		>
@@ -444,47 +440,31 @@ namespace
 			>
 		)
 		noexcept
-	->	TypeID
+	->	decltype(auto)
 	{
 		auto static constexpr
 		&	rDistrict
-		=	Member::Composition_Of
-			<	t_tTypeName
-			,	t_tpDistrict
-				...
-			>
+		=	t_rComposition
 			.	Layout
 				[	t_vDistrictIndex
 				]
 		;
 
-		using
-			tFork
-		=	decltype
-			(	(	CreateLayout
-					<	rDistrict
-						.	Buffer
-							[	t_vpIndex
-							]
-					>(	::std::make_index_sequence
-						<	rDistrict
-							.	ElementCounts
-								[	t_vpIndex
-								]
-						>{}
-					)
-				+	...
-				)
-			)
-		;
-
 		return
-			Type
-			<	typename
-				tFork
-				::	Entity
-			>
-		;
+		(	CreateLayout
+			<	rDistrict
+				.	Buffer
+					[	t_vpIndex
+					]
+			>(	::std::make_index_sequence
+				<	rDistrict
+					.	ElementCounts
+						[	t_vpIndex
+						]
+				>{}
+			)
+		+	...
+		);
 	}
 }
 
@@ -492,130 +472,93 @@ export namespace
 	ATR::Layout
 {
 	template
-		<	ProtoID
-				t_tTypeName
-		,	typename
-			...	t_tpDistrict
-		>
-	class
-		DistrictType
-	{
-		auto static constexpr inline
-		&	Composition
-		=	Member::Composition_Of
-			<	t_tTypeName
-			,	t_tpDistrict
-				...
-			>
-		;
-
-		template
-			<	::std::size_t
-				...	t_tpDistrictIndex
-			>
-		[[nodiscard]]
-		auto static constexpr inline
-		(	Get
-		)	(	short
-					i_vDistrictIndex
-			,	::std::index_sequence
-				<	t_tpDistrictIndex
-					...
-				>
-			)
-			noexcept
-		->	TypeID
-		{
-			TypeID static constexpr
-				vDistrictTypes
-					[]
-			{	CreateLayout_For
-				<	t_tpDistrictIndex
-				,	t_tTypeName
-				,	t_tpDistrict
-					...
-				>(	::std::make_index_sequence
-					<	Member::ByteAlignCount
-					>{}
-				)
-				...
-			};
-
-			return
-				vDistrictTypes
-				[	i_vDistrictIndex
-				]
-			;
-		}
-
-	public:
-		[[nodiscard]]
-		auto static constexpr inline
-		(	operator[]
-		)	(	short
-					i_vDistrictIndex
-			)
-			noexcept
-		->	TypeID
-		{	return
-				Get
-				(	i_vDistrictIndex
-				,	::std::make_index_sequence
-					<	Composition
-						.	LayoutCount
-					>()
-				)
-			;
-		}
-
-		[[nodiscard]]
-		auto static constexpr inline
-		(	DistrictInfo
-		)	(	short
-					i_vDistrictIndex
-			)
-			noexcept
-		->	Member::Info
-		{
-			auto
-				vDistrictInfo
-			=	Composition
-				.	GetDistrictInfo
-					(	i_vDistrictIndex
-					)
-			;
-
-			vDistrictInfo
-			.	Type
-			=	operator[]
-				(	i_vDistrictIndex
-				)
-			;
-
-			return
-				vDistrictInfo
-			;
-		}
-	};
-
-	template
-		<	short
+		<	auto const
+			&	t_rComposition
+		,	short
 				t_vDistrictIndex
-		,	ProtoID
-				t_tTypeName
-		,	typename
-			...	t_tpDistrict
+			=	0
 		>
 	using
 		CreateType
-	=	RestoreTypeEntity
-		<	DistrictType
-			<	t_tTypeName
-			,	t_tpDistrict
-				...
-			>
-			{}[	t_vDistrictIndex
-			]
+	=	decltype
+		(	CreateLayout_For
+			<	t_rComposition
+			,	t_vDistrictIndex
+			>(	::std::make_index_sequence
+				<	Member::ByteAlignCount
+				>{}
+			)
+		)
+	::	Entity
+	;
+
+	template
+		<	auto const
+			&	t_rComposition
+		,	typename
+				t_tMemberType
+		,	BitSize
+				t_vOffset
+		,	short
+				t_vDistrictIndex
+		,	typename
+			...	t_tpIndirectOffset
 		>
+	auto constexpr inline
+		Offset_For
+	=	Offset_For
+		<	t_rComposition
+		,	CreateType
+			<	t_rComposition
+			,	t_vDistrictIndex
+			>
+		,	t_rComposition
+			.	GetDistrictOffset
+				(	t_vDistrictIndex
+				)
+		,	t_rComposition
+			.	GetDistrictDistrictIndex
+				(	t_vDistrictIndex
+				)
+		,	Offset
+			<	t_tMemberType
+			,	t_vOffset
+			>
+		,	t_tpIndirectOffset
+			...
+		>
+	;
+
+	template
+		<	auto const
+			&	t_rComposition
+		,	typename
+				t_tMemberType
+		,	BitSize
+				t_vOffset
+		,	short
+				t_vDistrictIndex
+		,	typename
+			...	t_tpIndirectOffset
+		>
+	requires
+		(	t_vDistrictIndex
+		<=	0
+		)
+	auto constexpr inline
+		Offset_For
+		<	t_rComposition
+		,	t_tMemberType
+		,	t_vOffset
+		,	t_vDistrictIndex
+		,	t_tpIndirectOffset
+			...
+		>
+	=	Offset
+		<	t_tMemberType
+		,	t_vOffset
+		,	t_tpIndirectOffset
+			...
+		>{}
 	;
 }

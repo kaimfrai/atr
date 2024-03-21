@@ -1236,13 +1236,9 @@ Disassembly of section .text:
                	call	 <initializer for module ATR.Member.Composition>
                	call	 <initializer for module ATR.Member.Storage>
                	call	 <initializer for module Meta.ID>
+               	call	 <initializer for module Meta.String.Hash>
                	pop	rax
-               	jmp	 <initializer for module Meta.String.Hash>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
+               	jmp	 <initializer for module Meta.Token.Type>
 
 <initializer for module ATR.Address>:
                	cmp	byte ptr , 0x0 <_ZGIW3ATRW7Address__in_chrg>
@@ -1292,15 +1288,23 @@ Disassembly of section .text:
                	push	rax
                	mov	byte ptr , 0x1 <_ZGIW3ATRW6LayoutW6Create__in_chrg>
                	call	 <initializer for module ATR.Layout.Fork>
+               	call	 <initializer for module ATR.Layout.Offset>
                	call	 <initializer for module ATR.Member.Composition>
                	call	 <initializer for module ATR.Member.Constants>
                	call	 <initializer for module ATR.Member.Info>
                	call	 <initializer for module Meta.ID>
+               	call	 <initializer for module Meta.Memory.Size>
                	call	 <initializer for module Meta.String.Hash>
                	call	 <initializer for module Meta.Token.Type>
                	call	 <initializer for module Meta.Token.TypeID>
                	pop	rax
                	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <initializer for module ATR.Layout.Fork>:
                	cmp	byte ptr , 0x0 <_ZGIW3ATRW6LayoutW4Fork__in_chrg>
@@ -1329,7 +1333,6 @@ Disassembly of section .text:
                	mov	byte ptr , 0x1 <_ZGIW3ATRW6LayoutW6Offset__in_chrg>
                	call	 <initializer for module ATR.Erase>
                	call	 <initializer for module ATR.Layout.TypeIndex>
-               	call	 <initializer for module ATR.Member.Info>
                	call	 <initializer for module Meta.Auto.Ref.DataRange>
                	call	 <initializer for module Meta.Auto.Ref.PledgeCount>
                	call	 <initializer for module Meta.Auto.Ref.RArray>
@@ -1345,15 +1348,8 @@ Disassembly of section .text:
                	call	 <initializer for module Meta.Memory.Size.PointerArithmetic>
                	call	 <initializer for module Meta.Memory.Size.Scale>
                	call	 <initializer for module Meta.Memory.Size>
-               	call	 <initializer for module Meta.Token.Type>
                	pop	rax
                	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
                	int3
                	int3
@@ -1379,32 +1375,6 @@ Disassembly of section .text:
 <L0>:
                	mov	byte ptr , 0x1 <_ZGIW3ATRW6LayoutW11ErasureView__in_chrg>
                	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module ATR.Member.Info>:
-               	cmp	byte ptr , 0x0 <_ZGIW3ATRW6MemberW4Info__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW3ATRW6MemberW4Info__in_chrg>
-               	call	 <initializer for module Meta.Memory.Size.Compare>
-               	call	 <initializer for module Meta.Memory.Size>
-               	pop	rax
-               	jmp	 <initializer for module Meta.Token.TypeID>
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
                	int3
                	int3
@@ -2422,6 +2392,32 @@ Disassembly of section .text:
                	int3
                	int3
 
+<initializer for module ATR.Member.Info>:
+               	cmp	byte ptr , 0x0 <_ZGIW3ATRW6MemberW4Info__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	push	rax
+               	mov	byte ptr , 0x1 <_ZGIW3ATRW6MemberW4Info__in_chrg>
+               	call	 <initializer for module Meta.Memory.Size.Compare>
+               	call	 <initializer for module Meta.Memory.Size>
+               	pop	rax
+               	jmp	 <initializer for module Meta.Token.TypeID>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
 <initializer for module ATR.Member.LayoutList>:
                	cmp	byte ptr , 0x0 <_ZGIW3ATRW6MemberW10LayoutList__in_chrg>
                	je	 <L0>
@@ -2635,10 +2631,10 @@ Disassembly of section .text:
                	call	 <initializer for module ATR.Member.Composition>
                	call	 <initializer for module ATR.Member.Storage>
                	call	 <initializer for module Meta.ID>
+               	call	 <initializer for module Meta.Token.Type>
                	call	 <initializer for module ATR.Virtual.Dispatch>
-               	call	 <initializer for module Meta.String.Literal>
                	pop	rax
-               	jmp	 <initializer for module Meta.Token.Type>
+               	jmp	 <initializer for module Meta.String.Literal>
                	nop	dword ptr [rax]
 
 <_GLOBAL__sub_I_TagATR.cpp>:
@@ -2677,13 +2673,9 @@ Disassembly of section .text:
                	call	 <initializer for module ATR.Member.Composition>
                	call	 <initializer for module ATR.Member.Storage>
                	call	 <initializer for module Meta.ID>
+               	call	 <initializer for module Meta.Token.Type>
                	pop	rax
                	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
                	int3
                	int3

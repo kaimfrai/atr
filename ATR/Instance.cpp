@@ -10,12 +10,14 @@ import ATR.Member.Storage;
 
 import Meta.ID;
 import Meta.String.Hash;
+import Meta.Token.Type;
 
 using ::ATR::Layout::CreateType;
 using ::ATR::Member::ProtoDynamicMember_Of;
 using ::ATR::Member::ProtoStaticMember_Of;
 
 using ::Meta::ProtoID;
+using ::Meta::RestoreTypeEntity;
 using ::Meta::String::ImplicitHash;
 
 export namespace
@@ -31,10 +33,11 @@ export namespace
 		Instance
 	:	Base
 		<	CreateType
-			<	0
-			,	t_tTypeName
-			,	t_tpDistrict
-				...
+			<	Member::Composition_Of
+				<	t_tTypeName
+				,	t_tpDistrict
+					...
+				>
 			>
 		>
 	,	t_tpDistrict
@@ -61,10 +64,7 @@ export namespace
 			BaseDistrict
 		=	Base
 			<	CreateType
-				<	0
-				,	t_tTypeName
-				,	t_tpDistrict
-					...
+				<	Composition
 				>
 			>
 		;
@@ -94,27 +94,30 @@ export namespace
 		template
 			<	ImplicitHash
 					t_vMemberName
+			,	auto
+					t_vInfo
+				=	Composition
+					.	FindMemberInfo
+						(	t_vMemberName
+						)
 			>
 		requires
-			(	Composition
-				.	FindMemberInfo
-					(	t_vMemberName
-					)
+			(	t_vInfo
 				.	IsValid
 					()
 			)
 		auto static constexpr inline
 			Offset_Of
 		=	Layout::Offset_For
-			<	Layout::DistrictType
-				<	t_tTypeName
-				,	t_tpDistrict
-					...
+			<	Composition
+			,	RestoreTypeEntity
+				<	t_vInfo
+					.	Type
 				>
-			,	Composition
-				.	FindMemberInfo
-					(	t_vMemberName
-					)
+			,	t_vInfo
+				.	Offset
+			,	t_vInfo
+				.	DistrictIndex
 			>
 		;
 

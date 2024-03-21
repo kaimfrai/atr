@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <memset+0x93d8>
+               	call	qword ptr  <memset+0x9350>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x93e8>
+               	mov	rax, qword ptr  <memset+0x9360>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x93f0>
+               	mov	rax, qword ptr  <memset+0x9368>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <memset+0x93f8>
+               	cmp	qword ptr , 0x0 <memset+0x9370>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -1594,27 +1594,19 @@ Disassembly of section .text:
                	int3
                	int3
 
-<initializer for module ATR.Initialize>:
-               	cmp	byte ptr , 0x0 <_ZGIW3ATRW10Initialize__in_chrg>
+<initializer for module ATR.Virtual.Element>:
+               	cmp	byte ptr , 0x0 <_ZGIW3ATRW7VirtualW7Element__in_chrg>
                	je	 <L0>
                	ret
 <L0>:
                	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW3ATRW10Initialize__in_chrg>
+               	mov	byte ptr , 0x1 <_ZGIW3ATRW7VirtualW7Element__in_chrg>
+               	call	 <initializer for module ATR.Erase>
                	call	 <initializer for module ATR.Instance>
                	call	 <initializer for module Meta.ID>
-               	call	 <initializer for module Meta.Memory.Size.PointerArithmetic>
-               	call	 <initializer for module Meta.Memory.Size>
-               	call	 <initializer for module Meta.String.Hash>
-               	call	 <initializer for module Meta.Token.Type>
+               	call	 <initializer for module Meta.String.Literal>
                	pop	rax
                	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
                	int3
                	int3
@@ -1634,13 +1626,9 @@ Disassembly of section .text:
                	call	 <initializer for module ATR.Member.Composition>
                	call	 <initializer for module ATR.Member.Storage>
                	call	 <initializer for module Meta.ID>
+               	call	 <initializer for module Meta.String.Hash>
                	pop	rax
-               	jmp	 <initializer for module Meta.String.Hash>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
+               	jmp	 <initializer for module Meta.Token.Type>
 
 <initializer for module ATR.Layout.Create>:
                	cmp	byte ptr , 0x0 <_ZGIW3ATRW6LayoutW6Create__in_chrg>
@@ -1650,15 +1638,23 @@ Disassembly of section .text:
                	push	rax
                	mov	byte ptr , 0x1 <_ZGIW3ATRW6LayoutW6Create__in_chrg>
                	call	 <initializer for module ATR.Layout.Fork>
+               	call	 <initializer for module ATR.Layout.Offset>
                	call	 <initializer for module ATR.Member.Composition>
                	call	 <initializer for module ATR.Member.Constants>
                	call	 <initializer for module ATR.Member.Info>
                	call	 <initializer for module Meta.ID>
+               	call	 <initializer for module Meta.Memory.Size>
                	call	 <initializer for module Meta.String.Hash>
                	call	 <initializer for module Meta.Token.Type>
                	call	 <initializer for module Meta.Token.TypeID>
                	pop	rax
                	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <initializer for module ATR.Layout.Fork>:
                	cmp	byte ptr , 0x0 <_ZGIW3ATRW6LayoutW4Fork__in_chrg>
@@ -1687,7 +1683,6 @@ Disassembly of section .text:
                	mov	byte ptr , 0x1 <_ZGIW3ATRW6LayoutW6Offset__in_chrg>
                	call	 <initializer for module ATR.Erase>
                	call	 <initializer for module ATR.Layout.TypeIndex>
-               	call	 <initializer for module ATR.Member.Info>
                	call	 <initializer for module Meta.Auto.Ref.DataRange>
                	call	 <initializer for module Meta.Auto.Ref.PledgeCount>
                	call	 <initializer for module Meta.Auto.Ref.RArray>
@@ -1703,15 +1698,8 @@ Disassembly of section .text:
                	call	 <initializer for module Meta.Memory.Size.PointerArithmetic>
                	call	 <initializer for module Meta.Memory.Size.Scale>
                	call	 <initializer for module Meta.Memory.Size>
-               	call	 <initializer for module Meta.Token.Type>
                	pop	rax
                	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
                	int3
                	int3
@@ -2506,24 +2494,6 @@ Disassembly of section .text:
                	int3
                	int3
 
-<initializer for module ATR.Virtual.Element>:
-               	cmp	byte ptr , 0x0 <_ZGIW3ATRW7VirtualW7Element__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW3ATRW7VirtualW7Element__in_chrg>
-               	call	 <initializer for module ATR.Erase>
-               	call	 <initializer for module ATR.Instance>
-               	call	 <initializer for module Meta.ID>
-               	call	 <initializer for module Meta.String.Literal>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-
 <initializer for module ATR.Virtual.Entry>:
                	cmp	byte ptr , 0x0 <_ZGIW3ATRW7VirtualW5Entry__in_chrg>
                	je	 <L0>
@@ -2582,17 +2552,13 @@ Disassembly of section .text:
                	call	 <initializer for module Evaluation.Archetype.Head>
                	call	 <initializer for module ATR.Erase>
                	call	 <initializer for module Meta.Auto.Ref.StaticCountArray>
-               	call	 <initializer for module ATR.Initialize>
+               	call	 <initializer for module ATR.Virtual.Element>
                	call	 <initializer for module ATR.Instance>
                	call	 <initializer for module Meta.ID>
-               	call	 <initializer for module Meta.Memory.Size.PointerArithmetic>
-               	call	 <initializer for module Meta.Token.Type>
-               	call	 <initializer for module ATR.Virtual.Element>
                	call	 <initializer for module Meta.String.Literal>
                	call	 <initializer for module ATR.Virtual.Entry>
                	pop	rax
                	jmp	 <initializer for module Std>
-               	int3
                	int3
                	int3
                	int3
@@ -2651,7 +2617,7 @@ Disassembly of section .text:
                	movsxd	rax, r15d
                	shl	rax, 0x3
                	lea	rdi, [rax + 8*rax]
-               	mov	rsi, qword ptr  <memset+0x9400>
+               	mov	rsi, qword ptr  <memset+0x9378>
                	call	 <_ZnamRKSt9nothrow_t@plt>
                	mov	qword ptr [rsp + 0x210], rax
                	movsxd	rdx, ebx
@@ -4941,9 +4907,9 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x2f8], r9
                	mov	r9d, r14d
                	xor	eax, eax
-               	vbroadcastss	ymm0, dword ptr  <memset+0x1310>
-               	vmovdqa	xmm1, xmmword ptr  <memset+0x12f0>
-               	lea	r11,  <memset+0x132c>
+               	vbroadcastss	ymm0, dword ptr  <memset+0x1300>
+               	vmovdqa	xmm1, xmmword ptr  <memset+0x12e0>
+               	lea	r11,  <memset+0x131c>
                	mov	r14, qword ptr [rsp + 0x210]
                	mov	qword ptr [rsp + 0x350], r9
                	jmp	 <L233>
@@ -5425,7 +5391,7 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x2b0], r10
                	mov	qword ptr [rsp + 0x58], r11
                	lea	r10, [r11 + 4*r11]
-               	lea	r11,  <memset+0x132c>
+               	lea	r11,  <memset+0x131c>
                	mov	rbp, qword ptr [rsp + 0x230]
                	rol	r10, 0x7
                	lea	rdi, [rdi + 8*rdi]
@@ -5533,7 +5499,7 @@ Disassembly of section .text:
                	inc	rcx
                	mov	rdx, rcx
                	and	rdx, -0x20
-               	vblendps	xmm0, xmm0, xmmword ptr , 0xe <memset+0x1300> # xmm0 = xmm0[0],mem[1,2,3]
+               	vblendps	xmm0, xmm0, xmmword ptr , 0xe <memset+0x12f0> # xmm0 = xmm0[0],mem[1,2,3]
                	lea	rsi, [rsp + 0x2b0]
                	lea	rsi, [rsi + 4*rax]
                	vpxor	xmm1, xmm1, xmm1
@@ -5617,7 +5583,7 @@ Disassembly of section .text:
 <L253>:
                	cmp	r14d, 0x186a0
                	jne	 <L254>
-               	vucomiss	xmm0, dword ptr  <memset+0x1324>
+               	vucomiss	xmm0, dword ptr  <memset+0x1314>
                	jne	 <L256>
 <L254>:
                	xor	eax, eax
@@ -5637,7 +5603,7 @@ Disassembly of section .text:
                	call	 <__cxa_allocate_exception@plt>
                	vmovaps	xmm0, xmmword ptr [rsp + 0x90]
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <memset+0x9408>
+               	mov	rsi, qword ptr  <memset+0x9380>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
@@ -5648,7 +5614,7 @@ Disassembly of section .text:
 <ATR::Function@ATR.Address<ATR::GlobalDependency@ATR.Dependency<Meta::String::ImplicitHash@Meta.String.Hash{Meta::String::Hash@Meta.String.Hash{11338391626011872844ul, 7ul}}>, ATR::Dependency@ATR.Dependency<ATR::CErasure@ATR.Erase, ATR::Layout::Offset@ATR.Layout.Offset<PiFraction@Evaluation.Dependency.PiFraction<1l, 4l>, Meta::Memory::Size@Meta.Memory.Size<1l>{}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{224l}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{224l}>{}>>::operator()(ATR::CErasure@ATR.Erase)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1318>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1308>
                	ret
                	int3
                	int3
@@ -5667,7 +5633,7 @@ Disassembly of section .text:
 
 <ATR::Function@ATR.Address<ATR::GlobalDependency@ATR.Dependency<Meta::String::ImplicitHash@Meta.String.Hash{Meta::String::Hash@Meta.String.Hash{11338391626011872844ul, 7ul}}>, ATR::Dependency@ATR.Dependency<ATR::CErasure@ATR.Erase, ATR::Layout::Offset@ATR.Layout.Offset<PiFraction@Evaluation.Dependency.PiFraction<1l, 4l>, Meta::Memory::Size@Meta.Memory.Size<1l>{}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{224l}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{256l}>{}>>::operator()(ATR::CErasure@ATR.Erase)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1318>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1308>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
@@ -5707,7 +5673,7 @@ Disassembly of section .text:
 
 <ATR::Function@ATR.Address<ATR::GlobalDependency@ATR.Dependency<Meta::String::ImplicitHash@Meta.String.Hash{Meta::String::Hash@Meta.String.Hash{11338391626011872844ul, 7ul}}>, ATR::Dependency@ATR.Dependency<ATR::CErasure@ATR.Erase, ATR::Layout::Offset@ATR.Layout.Offset<Fraction@Evaluation.Dependency.Fraction<1l, 2l>, Meta::Memory::Size@Meta.Memory.Size<1l>{}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{224l}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{256l}>{}>>::operator()(ATR::CErasure@ATR.Erase)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1320>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1310>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
@@ -5740,7 +5706,7 @@ Disassembly of section .text:
 
 <ATR::Function@ATR.Address<ATR::GlobalDependency@ATR.Dependency<Meta::String::ImplicitHash@Meta.String.Hash{Meta::String::Hash@Meta.String.Hash{11338391626011872844ul, 7ul}}>, ATR::Dependency@ATR.Dependency<ATR::CErasure@ATR.Erase, ATR::Layout::Offset@ATR.Layout.Offset<Fraction@Evaluation.Dependency.Fraction<1l, 3l>, Meta::Memory::Size@Meta.Memory.Size<1l>{}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{224l}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{256l}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{288l}>{}>>::operator()(ATR::CErasure@ATR.Erase)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0x131c>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0x130c>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
                	ret
@@ -5756,7 +5722,7 @@ Disassembly of section .text:
 <ATR::Function@ATR.Address<ATR::GlobalDependency@ATR.Dependency<Meta::String::ImplicitHash@Meta.String.Hash{Meta::String::Hash@Meta.String.Hash{11338391626011872844ul, 7ul}}>, ATR::Dependency@ATR.Dependency<ATR::CErasure@ATR.Erase, ATR::Layout::Offset@ATR.Layout.Offset<PiFraction@Evaluation.Dependency.PiFraction<1l, 6l>, Meta::Memory::Size@Meta.Memory.Size<1l>{}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{224l}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{224l}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{224l}>{}>>::operator()(ATR::CErasure@ATR.Erase)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm1, xmm0, xmm0
-               	vmulss	xmm1, xmm1, dword ptr  <memset+0x1328>
+               	vmulss	xmm1, xmm1, dword ptr  <memset+0x1318>
                	vmulss	xmm0, xmm1, xmm0
                	ret
                	int3
@@ -5773,7 +5739,7 @@ Disassembly of section .text:
 <ATR::Function@ATR.Address<ATR::GlobalDependency@ATR.Dependency<Meta::String::ImplicitHash@Meta.String.Hash{Meta::String::Hash@Meta.String.Hash{11338391626011872844ul, 7ul}}>, ATR::Dependency@ATR.Dependency<ATR::CErasure@ATR.Erase, ATR::Layout::Offset@ATR.Layout.Offset<PiFraction@Evaluation.Dependency.PiFraction<1l, 4l>, Meta::Memory::Size@Meta.Memory.Size<1l>{}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{224l}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{224l}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{256l}>{}>>::operator()(ATR::CErasure@ATR.Erase)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1318>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1308>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
@@ -5789,7 +5755,7 @@ Disassembly of section .text:
 <ATR::Function@ATR.Address<ATR::GlobalDependency@ATR.Dependency<Meta::String::ImplicitHash@Meta.String.Hash{Meta::String::Hash@Meta.String.Hash{11338391626011872844ul, 7ul}}>, ATR::Dependency@ATR.Dependency<ATR::CErasure@ATR.Erase, ATR::Layout::Offset@ATR.Layout.Offset<PiFraction@Evaluation.Dependency.PiFraction<1l, 12l>, Meta::Memory::Size@Meta.Memory.Size<1l>{}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{224l}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{224l}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{256l}>{}>>::operator()(ATR::CErasure@ATR.Erase)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1314>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1304>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
@@ -5804,7 +5770,7 @@ Disassembly of section .text:
 
 <ATR::Function@ATR.Address<ATR::GlobalDependency@ATR.Dependency<Meta::String::ImplicitHash@Meta.String.Hash{Meta::String::Hash@Meta.String.Hash{11338391626011872844ul, 7ul}}>, ATR::Dependency@ATR.Dependency<ATR::CErasure@ATR.Erase, ATR::Layout::Offset@ATR.Layout.Offset<PiFraction@Evaluation.Dependency.PiFraction<1l, 6l>, Meta::Memory::Size@Meta.Memory.Size<1l>{}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{224l}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{256l}>{}, ATR::Layout::Offset@ATR.Layout.Offset<float, Meta::Memory::Size@Meta.Memory.Size<1l>{288l}>{}>>::operator()(ATR::CErasure@ATR.Erase)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1328>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1318>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
                	ret
@@ -5814,7 +5780,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <memset+0x93e0>
+               	mov	rax, qword ptr  <memset+0x9358>
                	test	rax, rax
                	je	 <L0>
                	call	rax

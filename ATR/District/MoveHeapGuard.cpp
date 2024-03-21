@@ -12,6 +12,7 @@ import Meta.Token.Type;
 import Std;
 
 using ::Meta::ProtoID;
+using ::Meta::RestoreTypeEntity;
 using ::Meta::String::Hash;
 using ::Meta::Type;
 
@@ -100,13 +101,14 @@ export namespace
 				(	*this
 				).	Layout
 			->*	Layout::Offset_For
-				<	Layout::DistrictType
-					<	t_tTypeName
-					,	t_tpDistrict
-						...
-					>
+				<	Composition
+				,	void*
 				,	Composition
-					.	GetDistrictInfo
+					.	GetDistrictOffset
+						(	t_vDistrictIndex
+						)
+				,	Composition
+					.	GetDistrictDistrictIndex
 						(	t_vDistrictIndex
 						)
 				>
@@ -117,10 +119,8 @@ export namespace
 		using
 			District
 		=	Layout::CreateType
-			<	t_vDistrictIndex
-			,	t_tTypeName
-			,	t_tpDistrict
-				...
+			<	Composition
+			,	t_vDistrictIndex
 			>
 		;
 

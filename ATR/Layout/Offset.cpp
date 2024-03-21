@@ -2,7 +2,6 @@ export module ATR.Layout.Offset;
 
 import ATR.Erase;
 import ATR.Layout.TypeIndex;
-import ATR.Member.Info;
 
 import Meta.Auto.CPO.Data;
 import Meta.Auto.Ref.DataRange;
@@ -21,7 +20,6 @@ import Meta.Memory.Size.PointerArithmetic;
 import Meta.Memory.Size.Scale;
 import Meta.Memory.Size;
 import Meta.Size;
-import Meta.Token.Type;
 
 import Std;
 
@@ -39,7 +37,6 @@ using ::Meta::Memory::PointerCast;
 using ::Meta::ProtoBorrowContainer_Of_AtLeast;
 using ::Meta::ProtoOwnerContainer_Of_AtLeast;
 using ::Meta::RArray;
-using ::Meta::RestoreTypeEntity;
 using ::Meta::SSize;
 using ::Meta::USize;
 
@@ -1204,66 +1201,4 @@ export namespace
 			>
 		;
 	}
-
-	template
-		<	typename
-				t_tDistrict
-		,	Member::Info
-				t_vInfo
-		,	typename
-			...	t_tpIndirectOffset
-		>
-	auto constexpr inline
-		Offset_For
-	=	Offset_For
-		<	t_tDistrict
-		,	t_tDistrict
-			::	DistrictInfo
-				(	t_vInfo
-					.	DistrictIndex
-				)
-		,	Offset
-			<	RestoreTypeEntity
-				<	t_vInfo
-					.	Type
-				>
-			,	t_vInfo
-				.	Offset
-			>
-		,	t_tpIndirectOffset
-			...
-		>
-	;
-
-	template
-		<	typename
-				t_tDistrict
-		,	Member::Info
-				t_vInfo
-		,	typename
-			...	t_tpIndirectOffset
-		>
-	requires
-		(	t_vInfo
-			.	DistrictIndex
-		<=	0
-		)
-	auto constexpr inline
-		Offset_For
-		<	t_tDistrict
-		,	t_vInfo
-		,	t_tpIndirectOffset
-			...
-		>
-	=	Offset
-		<	RestoreTypeEntity
-			<	t_vInfo
-				.	Type
-			>
-		,	t_vInfo
-			.	Offset
-		,	t_tpIndirectOffset
-			...
-		>{}
-	;
 }
