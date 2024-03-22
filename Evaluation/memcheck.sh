@@ -27,6 +27,7 @@ then
 	execute_memcheck $1 $2 "Dyno"
 	execute_memcheck $1 $2 "Polymorphic"
 	execute_memcheck $1 $2 "Replication"
+	execute_memcheck $1 $2 "SOAATR"
 	execute_memcheck $1 $2 "SOAReplication"
 	execute_memcheck $1 $2 "TagATR"
 	execute_memcheck $1 $2 "TagReplication"

@@ -141,6 +141,19 @@ RUNTIME_OUTPUT_DIRECTORY
 )
 
 ################################################################################
+add_subdirectory(SOAATR)
+add_module_executable(
+	SOAATR
+		SOAATR.cpp
+)
+set_target_properties(
+	SOAATR
+PROPERTIES
+RUNTIME_OUTPUT_DIRECTORY
+	"${CMAKE_BINARY_DIR}/bin/"
+)
+
+################################################################################
 add_subdirectory(SOAReplication)
 add_module_executable(
 	SOAReplication

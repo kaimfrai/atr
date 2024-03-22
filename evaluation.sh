@@ -42,7 +42,8 @@ function build_all()
 	||	[ $2 == "Variant" ] \
 	||	[ $2 == "Visitor" ] \
 	||	[ $2 == "Any" ] \
-	||	[ $2 == "SOAReplication" ]
+	||	[ $2 == "SOAReplication" ] \
+	||	[ $2 == "SOAATR" ]
 	then
 		ninja\
 			"$2"
@@ -60,6 +61,7 @@ function build_all()
 		echo "Variant"
 		echo "Visitor"
 		echo "SOAReplication"
+		echo "SOAATR"
 		exit 1
 	fi
 

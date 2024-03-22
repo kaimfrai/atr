@@ -30,6 +30,7 @@ then
 	execute_perf $1 $2 $3 "Dyno"
 	execute_perf $1 $2 $3 "Polymorphic"
 	execute_perf $1 $2 $3 "Replication"
+	execute_perf $1 $2 $3 "SOAATR"
 	execute_perf $1 $2 $3 "SOAReplication"
 	execute_perf $1 $2 $3 "TagATR"
 	execute_perf $1 $2 $3 "TagReplication"

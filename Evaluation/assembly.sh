@@ -26,6 +26,7 @@ then
 	assemble "Dyno"
 	assemble "Polymorphic"
 	assemble "Replication"
+	assemble "SOAATR"
 	assemble "SOAReplication"
 	assemble "TagATR"
 	assemble "TagReplication"
