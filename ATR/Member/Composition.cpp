@@ -73,13 +73,28 @@ namespace
 					[	vMemberIndex
 					]
 			;
-			o_rComposition
-			.	Offsets
-				[	vMemberIndex
-				]
-			=	vTotalOffset
-			;
-			vTotalOffset
+
+			for	(	int
+						vUnionIndex
+					=	0
+				;	(	vUnionIndex
+					<	o_rComposition
+						.	Members
+						.	UnionCount
+					)
+				;	++	vUnionIndex
+				)
+			{
+					o_rComposition
+					.	Offsets
+					[	vMemberIndex
+					][	vUnionIndex
+					]
+				=	vTotalOffset
+				;
+			}
+
+				vTotalOffset
 			+=	vType
 				.	GetSize
 					()
@@ -106,6 +121,7 @@ namespace
 			o_rComposition
 			.	Offsets
 				[	vMemberIndex
+				][	0
 				]
 			=	vTotalOffset
 			;
@@ -432,6 +448,8 @@ namespace
 					]
 			;
 
+			[[assume("Alias targets non-existent member" && vAliasTargetMemberIndex >= 0)]];
+
 			auto const
 				vAliasedType
 			=	o_rComposition
@@ -450,28 +468,41 @@ namespace
 					]
 			;
 
-			auto const
-				vMemberIndex
+			auto
+			&	rMemberIndex
 			=	o_rComposition
 				.	Members
-				.	AddTypeForHash
-					(	rAliasTarget
+				.	MemberIndices
+				[	rAliasTarget
 						.	HashIndex
-					,	vAliasedType
-					,	vAliasedDistrictIndex
-					,	rAliasTarget
-						.	Suffix
-					)
+				]
 			;
 
+			[[assume("Alias already registered" && rMemberIndex < 0)]];
+
 			o_rComposition
-			.	Offsets
-				[	vMemberIndex
+			.	Members
+			.	AddNewMember
+				(	rMemberIndex
+				,	vAliasedType
+				,	vAliasedDistrictIndex
+				,	rAliasTarget
+					.	Suffix
+				)
+			;
+
+				o_rComposition
+				.	Offsets
+				[	rMemberIndex
+				][	rAliasTarget
+					.	UnionIndex
 				]
 			=	o_rComposition
 				.	Offsets
-					[	vAliasTargetMemberIndex
-					]
+				[	vAliasTargetMemberIndex
+				][	rAliasTarget
+					.	UnionIndex
+				]
 			;
 		}
 	}
@@ -636,6 +667,63 @@ export namespace
 {
 	template
 		<	ProtoID
+			...	t_tpTypeName
+		>
+	struct
+		Union
+	{};
+
+	[[nodiscard]]
+	auto constexpr inline
+	(	MakeCompleteType
+	)	(	ProtoComposer auto
+			&&	i_rComposer
+		,	ProtoID auto
+				i_vTypeName
+		)
+	->	auto&&
+	{	return
+			Recompose
+			(	static_cast<decltype(i_rComposer)>
+				(	i_rComposer
+				)
+			,	i_vTypeName
+			)
+		.	CompleteType
+			()
+		;
+	}
+
+	template
+		<	ProtoID
+			...	t_tpTypeName
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	MakeCompleteType
+	)	(	ProtoComposer auto
+			&&	i_rComposer
+		,	Union
+			<	t_tpTypeName
+				...
+			>
+		)
+		noexcept
+	->	auto&&
+	{	return
+		(	...
+		,		Recompose
+				(	i_rComposer
+				,	t_tpTypeName
+					{}
+				)
+			.	CompleteType
+				()
+		);
+	}
+
+	template
+		<	typename
 				t_tTypeName
 		,	typename
 			...	t_tpDistrict
@@ -644,7 +732,7 @@ export namespace
 		Composition_Of
 	=	::ATR::Member::Finalize
 		<	sizeof...(t_tpDistrict)
-		>(	Recompose
+		>(	MakeCompleteType
 			(	FlatComposer
 				{	.	DistrictIndexOf
 					=	&DistrictIndexOf

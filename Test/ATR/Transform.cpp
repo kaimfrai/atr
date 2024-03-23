@@ -119,8 +119,12 @@ auto constexpr inline
 	and	::std::ranges::equal
 		(	i_rLeft
 			.	Offsets
+				[	0
+				]
 		,	i_rRight
 			.	Offsets
+				[	0
+				]
 		)
 	;
 }

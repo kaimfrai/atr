@@ -5,6 +5,7 @@ import ATR.Member.CountedType;
 import ATR.Member.Info;
 import ATR.Member.AlignBuffer;
 
+import Meta.Auto.Array.Bounded;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size;
 import Meta.String.Hash;
@@ -13,6 +14,7 @@ import Meta.Token.TypeID;
 
 import Std;
 
+using ::Meta::Auto;
 using ::Meta::BitSize;
 using ::Meta::String::Hash;
 using ::Meta::Type;
@@ -99,7 +101,7 @@ export namespace
 			Names
 			[	NameBufferSize
 			]
-		;
+		{};
 
 		short
 			MemberIndices
@@ -111,13 +113,13 @@ export namespace
 			Types
 			[	NameBufferSize
 			]
-		;
+		{};
 
 		short
 			DistrictIndices
 			[	NameBufferSize
 			]
-		;
+		{};
 
 		PartialName
 			Suffixes
@@ -130,6 +132,12 @@ export namespace
 			]
 		{};
 
+		Auto<bool[UnionBufferSize]>
+			HasMember
+			[	NameBufferSize
+			]
+		{};
+
 		short
 			PrefixCount
 		{};
@@ -137,6 +145,21 @@ export namespace
 		short
 			MemberCount
 		{};
+
+		short
+			UnionCount
+		{};
+
+		explicit(false) constexpr inline
+		(	MemberNameList
+		)	()
+			noexcept
+		{	::std::fill_n
+			(	MemberIndices
+			,	NameBufferSize
+			,	-1
+			);
+		}
 
 		[[nodiscard]]
 		auto constexpr inline
@@ -176,11 +199,10 @@ export namespace
 			}
 		}
 
-		[[nodiscard]]
 		auto constexpr inline
-		(	AddTypeForHash
+		(	AddNewMember
 		)	(	short
-					i_vHashIndex
+				&	i_rMemberIndex
 			,	TypeID
 					i_vType
 			,	short
@@ -189,7 +211,7 @@ export namespace
 					i_vSuffix
 			)
 			noexcept
-		->	short
+		->	void
 		{
 			auto const
 				vMemberIndex
@@ -197,25 +219,23 @@ export namespace
 				++
 			;
 
-			MemberIndices
-			[	i_vHashIndex
-			]=	vMemberIndex
+				i_rMemberIndex
+			=	vMemberIndex
 			;
-			Types
-			[	vMemberIndex
-			]=	i_vType
+				Types
+				[	vMemberIndex
+				]
+			=	i_vType
 			;
-			DistrictIndices
-			[	vMemberIndex
-			]=	i_vDistrictIndex
+				DistrictIndices
+				[	vMemberIndex
+				]
+			=	i_vDistrictIndex
 			;
-			Suffixes
-			[	vMemberIndex
-			]=	i_vSuffix
-			;
-
-			return
-				vMemberIndex
+				Suffixes
+				[	vMemberIndex
+				]
+			=	i_vSuffix
 			;
 		}
 
@@ -284,6 +304,7 @@ export namespace
 		BitSize
 			Offsets
 			[	NameBufferSize
+			][	UnionBufferSize
 			]
 		{};
 
@@ -308,12 +329,16 @@ export namespace
 		(	GetMemberOffset
 		)	(	short
 					i_vMemberIndex
+			,	short
+					i_vUnionIndex
+				=	0
 			)	const
 			noexcept
 		->	BitSize
 		{	return
 				Offsets
 				[	i_vMemberIndex
+				][	i_vUnionIndex
 				]
 			;
 		}
@@ -339,6 +364,9 @@ export namespace
 		(	GetMemberInfo
 		)	(	short
 					i_vMemberIndex
+			,	short
+					i_vUnionIndex
+				=	0
 			)	const
 			noexcept
 		->	Info
@@ -348,6 +376,7 @@ export namespace
 				)
 			,	GetMemberOffset
 				(	i_vMemberIndex
+				,	i_vUnionIndex
 				)
 			,	GetMemberDistrictIndex
 				(	i_vMemberIndex
@@ -412,6 +441,9 @@ export namespace
 		(	FindMemberInfo
 		)	(	Hash
 					i_vMemberName
+			,	short
+					i_vUnionIndex
+				=	0
 			)	const
 			noexcept
 		->	Info
@@ -426,8 +458,9 @@ export namespace
 
 			if	(	not
 					Members
-					.	Names
+					.	HasMember
 						[	vHashIndex
+						][	i_vUnionIndex
 						]
 				)
 			{	return
@@ -444,6 +477,7 @@ export namespace
 					.	MemberIndices
 						[	vHashIndex
 						]
+				,	i_vUnionIndex
 				)
 			;
 		}

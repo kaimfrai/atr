@@ -53,4 +53,10 @@ export namespace
 		PrefixBufferSize
 	=	8
 	;
+
+	/// How many different types a union may hold
+	auto constexpr inline
+		UnionBufferSize
+	=	16uz
+	;
 }

@@ -26,10 +26,10 @@ namespace
 			o_rComposer
 			.	Alias("AAB", "ShortConst")
 			.	Alias("AAF", "DoubleConst")
-			.	Alias("AAC", "ArrayBoolMut")
+			.	Alias("AAC", "ArrayBool")
 			.	Alias("AAA", "Int")
 			.	Alias("AAG", "Bool")
-			.	Alias("AAD", "ArrayBoolMut")
+			.	Alias("AAD", "ArrayBool")
 			.	Alias("AAE", "Int")
 			.	Alias("AAH", "ArrayBool")
 				// Randomized order
@@ -70,12 +70,12 @@ namespace
 	{	return
 			o_rComposer
 			.	Alias("AAG", "Bool")
-			.	Alias("AAD", "ArrayBoolMut")
+			.	Alias("AAD", "ArrayBool")
 			.	Alias("AAE", "Int")
 			.	Alias("AAB", "ShortConst")
 			.	Alias("AAF", "DoubleConst")
 			.	Alias("AAH", "ArrayBool")
-			.	Alias("AAC", "ArrayBoolMut")
+			.	Alias("AAC", "ArrayBool")
 			.	Alias("AAA", "Int")
 				// Randomized order
 			.	Member("Char", Type<char>)
@@ -115,12 +115,12 @@ namespace
 	{	return
 			o_rComposer
 			.	Alias("AAG", "Bool")
-			.	Alias("AAD", "ArrayBoolMut")
+			.	Alias("AAD", "ArrayBool")
 			.	Alias("AAE", "Int")
 			.	Alias("AAB", "ShortConst")
 			.	Alias("AAF", "DoubleConst")
 			.	Alias("AAH", "ArrayBool")
-			.	Alias("AAC", "ArrayBoolMut")
+			.	Alias("AAC", "ArrayBool")
 			.	Alias("AAA", "Int")
 				// Randomized order
 			.	Member("ArrayBool", Type<bool[7]>)
@@ -160,12 +160,12 @@ namespace
 	{	return
 			o_rComposer
 			.	Alias("AAG", "Bool")
-			.	Alias("AAD", "ArrayBoolMut")
+			.	Alias("AAD", "ArrayBool")
 			.	Alias("AAE", "Int")
 			.	Alias("AAB", "ShortConst")
 			.	Alias("AAF", "DoubleConst")
 			.	Alias("AAH", "ArrayBool")
-			.	Alias("AAC", "ArrayBoolMut")
+			.	Alias("AAC", "ArrayBool")
 			.	Alias("AAA", "Int")
 				// Randomized order
 			.	Member("FieldConst", Type<Field<3_bit>>)
@@ -205,12 +205,12 @@ namespace
 	{	return
 			o_rComposer
 			.	Alias("AAG", "Bool")
-			.	Alias("AAD", "ArrayBoolMut")
+			.	Alias("AAD", "ArrayBool")
 			.	Alias("AAE", "Int")
 			.	Alias("AAB", "ShortConst")
 			.	Alias("AAF", "DoubleConst")
 			.	Alias("AAH", "ArrayBool")
-			.	Alias("AAC", "ArrayBoolMut")
+			.	Alias("AAC", "ArrayBool")
 			.	Alias("AAA", "Int")
 				// Randomized order
 			.	Member("ArrayInt", Type<int[7]>)
