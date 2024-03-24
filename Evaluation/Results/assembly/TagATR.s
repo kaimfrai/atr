@@ -2347,20 +2347,16 @@ Disassembly of section .text:
 <L0>:
                	push	rax
                	mov	byte ptr , 0x1 <_ZGIW3ATRW6MemberW12FlatComposer__in_chrg>
-               	call	 <initializer for module ATR.Member.FlatComposition>
-               	call	 <initializer for module ATR.Member.PrefixGuard>
                	call	 <initializer for module ATR.Member.Constants>
+               	call	 <initializer for module ATR.Member.FlatComposition>
                	call	 <initializer for module ATR.Member.LayoutList>
+               	call	 <initializer for module ATR.Member.PrefixGuard>
                	call	 <initializer for module Meta.ID>
                	call	 <initializer for module Meta.String.Hash>
+               	call	 <initializer for module Meta.Token.Type>
                	call	 <initializer for module Meta.Token.TypeID>
                	pop	rax
                	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
 
 <initializer for module ATR.Member.FlatComposition>:
                	cmp	byte ptr , 0x0 <_ZGIW3ATRW6MemberW15FlatComposition__in_chrg>
@@ -2373,6 +2369,7 @@ Disassembly of section .text:
                	call	 <initializer for module ATR.Member.CountedType>
                	call	 <initializer for module ATR.Member.Info>
                	call	 <initializer for module ATR.Member.AlignBuffer>
+               	call	 <initializer for module Meta.Auto.Array.Bounded>
                	call	 <initializer for module Meta.Memory.Size.Arithmetic>
                	call	 <initializer for module Meta.Memory.Size>
                	call	 <initializer for module Meta.String.Hash>
@@ -2380,11 +2377,6 @@ Disassembly of section .text:
                	call	 <initializer for module Meta.Token.TypeID>
                	pop	rax
                	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
                	int3
                	int3

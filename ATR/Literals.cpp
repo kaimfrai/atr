@@ -1,5 +1,6 @@
 export module ATR.Literals;
 
+import ATR.Member.Constant;
 import ATR.Member.ProtoComposer;
 
 import Meta.ID;
@@ -14,6 +15,7 @@ export namespace
 export namespace
 	ATR::Member
 {
+	using ::ATR::Member::Constant;
 	using ::ATR::Member::ProtoComposer;
 	using ::Meta::Type;
 }

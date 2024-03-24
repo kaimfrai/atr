@@ -19,8 +19,8 @@ export namespace
 			noexcept
 		->	float
 		{	return
-				Fraction<>
-				{}
+				Fraction
+				<>
 			;
 		}
 	};

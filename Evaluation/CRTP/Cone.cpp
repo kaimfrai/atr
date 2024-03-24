@@ -54,7 +54,7 @@ export namespace
 				PiFraction
 				<	1z
 				,	12z
-				>{}
+				>
 			;
 		}
 	};

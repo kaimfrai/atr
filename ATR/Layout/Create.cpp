@@ -3,6 +3,7 @@ export module ATR.Layout.Create;
 import ATR.Layout.Fork;
 import ATR.Layout.Offset;
 import ATR.Member.Composition;
+import ATR.Member.Constant;
 import ATR.Member.Constants;
 import ATR.Member.Info;
 
@@ -501,6 +502,8 @@ export namespace
 				t_vOffset
 		,	short
 				t_vDistrictIndex
+		,	void const
+			*	t_aInitializer
 		,	typename
 			...	t_tpIndirectOffset
 		>
@@ -520,6 +523,7 @@ export namespace
 			.	GetDistrictDistrictIndex
 				(	t_vDistrictIndex
 				)
+		,	t_aInitializer
 		,	Offset
 			<	t_tMemberType
 			,	t_vOffset
@@ -536,21 +540,16 @@ export namespace
 				t_tMemberType
 		,	BitSize
 				t_vOffset
-		,	short
-				t_vDistrictIndex
 		,	typename
 			...	t_tpIndirectOffset
 		>
-	requires
-		(	t_vDistrictIndex
-		<=	0
-		)
 	auto constexpr inline
 		Offset_For
 		<	t_rComposition
 		,	t_tMemberType
 		,	t_vOffset
-		,	t_vDistrictIndex
+		,	0
+		,	nullptr
 		,	t_tpIndirectOffset
 			...
 		>
@@ -559,6 +558,58 @@ export namespace
 		,	t_vOffset
 		,	t_tpIndirectOffset
 			...
+		>{}
+	;
+
+	template
+		<	auto const
+			&	t_rComposition
+		,	typename
+				t_tMemberType
+		,	BitSize
+				t_vOffset
+		>
+	auto constexpr inline
+		Offset_For
+		<	t_rComposition
+		,	t_tMemberType
+		,	t_vOffset
+		,	-1
+		,	nullptr
+		>
+	=	Offset
+		<	t_tMemberType
+		,	t_vOffset
+		>{}
+	;
+
+	template
+		<	auto const
+			&	t_rComposition
+		,	typename
+				t_tMemberType
+		,	BitSize
+				t_vOffset
+		,	void const
+			*	t_aInitializer
+		>
+	auto constexpr inline
+		Offset_For
+		<	t_rComposition
+		,	Member::ConstantType
+			<	t_tMemberType
+			>
+		,	t_vOffset
+		,	-1
+		,	t_aInitializer
+		>
+	=	Offset
+		<	Member::ConstantValue
+			<	*	static_cast<t_tMemberType const*>
+					(	t_aInitializer
+					)
+			>
+		,	t_vOffset
 		>{}
 	;
 }

@@ -118,13 +118,25 @@ namespace
 					[	vMemberIndex
 					]
 			;
-			o_rComposition
-			.	Offsets
-				[	vMemberIndex
-				][	0
-				]
-			=	vTotalOffset
-			;
+			for	(	int
+						vUnionIndex
+					=	0
+				;	(	vUnionIndex
+					<	o_rComposition
+						.	Members
+						.	UnionCount
+					)
+				;	++	vUnionIndex
+				)
+			{
+					o_rComposition
+					.	Offsets
+					[	vMemberIndex
+					][	vUnionIndex
+					]
+				=	vTotalOffset
+				;
+			}
 			vTotalOffset
 			+=	vType
 				.	GetSize
@@ -478,18 +490,20 @@ namespace
 				]
 			;
 
-			[[assume("Alias already registered" && rMemberIndex < 0)]];
-
-			o_rComposition
-			.	Members
-			.	AddNewMember
-				(	rMemberIndex
-				,	vAliasedType
-				,	vAliasedDistrictIndex
-				,	rAliasTarget
-					.	Suffix
+			if	(	rMemberIndex
+				<	0
 				)
-			;
+			{	o_rComposition
+				.	Members
+				.	AddNewMember
+					(	rMemberIndex
+					,	vAliasedType
+					,	vAliasedDistrictIndex
+					,	rAliasTarget
+						.	Suffix
+					)
+				;
+			}
 
 				o_rComposition
 				.	Offsets
@@ -671,7 +685,40 @@ export namespace
 		>
 	struct
 		Union
-	{};
+	{
+		[[nodiscard]]
+		auto static constexpr inline
+		(	IndexOf
+		)	(	ImplicitHash
+					i_vHash
+			)
+			noexcept
+		->	::std::size_t
+		{
+			::std::size_t
+				vIndex
+			{};
+			if	((	...
+				or	(	(	t_tpTypeName
+							{}
+						==	i_vHash
+						)
+					or	(	void
+							(	++	vIndex
+							)
+						,	false
+						)
+					)
+				))
+			{	return
+					vIndex
+				;
+			}
+			::std::unreachable
+			();
+		}
+
+	};
 
 	[[nodiscard]]
 	auto constexpr inline
@@ -710,16 +757,38 @@ export namespace
 		)
 		noexcept
 	->	auto&&
-	{	return
-		(	...
-		,		Recompose
-				(	i_rComposer
+	{	(	...
+		,	void
+			(	Recompose
+				(	static_cast<decltype(i_rComposer)>
+					(	i_rComposer
+					)
 				,	t_tpTypeName
 					{}
 				)
 			.	CompleteType
 				()
+			)
 		);
+
+		if	constexpr
+			(	sizeof...(t_tpTypeName)
+			>	1
+			)
+		{	return
+			i_rComposer
+			.	Member
+				(	"UnionTag"
+				,	Type<unsigned char>
+				)
+			;
+		}
+		else
+		{	return
+			static_cast<decltype(i_rComposer)>
+			(	i_rComposer
+			);
+		}
 	}
 
 	template

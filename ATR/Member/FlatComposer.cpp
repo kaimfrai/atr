@@ -1,13 +1,15 @@
 export module ATR.Member.FlatComposer;
 
-import ATR.Member.FlatComposition;
-import ATR.Member.PrefixGuard;
+import ATR.Member.Constant;
 import ATR.Member.Constants;
+import ATR.Member.FlatComposition;
 import ATR.Member.LayoutList;
+import ATR.Member.PrefixGuard;
 
 import Meta.ID;
 import Meta.Size;
 import Meta.String.Hash;
+import Meta.Token.Type;
 import Meta.Token.TypeID;
 
 import Std;
@@ -16,6 +18,7 @@ using ::Meta::ProtoID;
 using ::Meta::SSize;
 using ::Meta::String::Hash;
 using ::Meta::String::ImplicitHash;
+using ::Meta::Type;
 using ::Meta::TypeID;
 
 export namespace
@@ -74,11 +77,11 @@ export namespace
 		;
 
 		auto constexpr inline
-		(	Alias
+		(	AddNewMember
 		)	(	char const
 				*	i_vMemberName
-			,	char const
-				*	i_vTargetName
+			,	auto
+					i_fAdd
 			)
 			noexcept
 		->	FlatComposer&&
@@ -120,28 +123,53 @@ export namespace
 				=	vPrefixedMemberName
 				;
 
-					AliasTargets
-					[	AliasCount
-						++
-					]
-				=	AliasTarget
-					{	vHashIndex
-					,	(	Prefix
-						+	i_vTargetName
-						)
-					,	PartialName
-						{	i_vMemberName
-						,	PrefixIndex
-						}
-					,	Members
-						.	UnionCount
-					}
-				;
+				i_fAdd
+				(	vHashIndex
+				,	vPrefixedMemberName
+				);
 			}
 
 			return
 			static_cast<FlatComposer&&>
 			(	*	this
+			);
+		}
+
+		auto constexpr inline
+		(	Alias
+		)	(	char const
+				*	i_vMemberName
+			,	char const
+				*	i_vTargetName
+			)
+			noexcept
+		->	FlatComposer&&
+		{	return
+			AddNewMember
+			(	i_vMemberName
+			,	[&]	(	short
+							i_vHashIndex
+					,	Hash
+					)
+				{
+						AliasTargets
+						[	AliasCount
+							++
+						]
+					=	AliasTarget
+						{	i_vHashIndex
+						,	(	Prefix
+							+	i_vTargetName
+							)
+						,	PartialName
+							{	i_vMemberName
+							,	PrefixIndex
+							}
+						,	Members
+							.	UnionCount
+						}
+					;
+				}
 			);
 		}
 
@@ -154,86 +182,131 @@ export namespace
 			)
 			noexcept
 		->	FlatComposer&&
-		{
-			auto const
-				vPrefixedMemberName
-			=	Prefix
-			+	i_vMemberName
-			;
-
-			auto const
-				vHashIndex
-			=	Members
-				.	HashIndexFor
-					(	vPrefixedMemberName
+		{	return
+			AddNewMember
+			(	i_vMemberName
+			,	[&]	(	short
+							i_vHashIndex
+					,	Hash
+							i_vPrefixedMemberName
 					)
-			;
-
-			if	(	auto
-						rHasMember
+				{
+					auto
+					&	rMemberIndex
 					=	Members
-						.	HasMember
-						[	vHashIndex
+						.	MemberIndices
+						[	i_vHashIndex
+						]
+					;
+
+					if	(	rMemberIndex
+						<	0
+						)
+					{	Members
+						.	AddNewMember
+							(	rMemberIndex
+							,	i_vType
+							,	i_vType
+								.	IsAligned
+									()
+								?	DistrictIndexOf
+									(	i_vPrefixedMemberName
+									)
+								:	-1
+							,	PartialName
+								{	i_vMemberName
+								,	PrefixIndex
+								}
+							)
+						;
+					}
+					else
+					if	(	i_vType
+						!=	Members
+							.	Types
+							[	rMemberIndex
+							]
+						)
+					{	(void("Cannot register member with same name but different types!"), ::std::unreachable());
+					}
+				}
+			);
+		}
+
+		template
+			<	auto
+					t_vValue
+			>
+		auto constexpr inline
+		(	Static
+		)	(	char const
+				*	i_vMemberName
+			,	ConstantValue<t_vValue>
+					i_vValue
+			)
+			noexcept
+		->	FlatComposer&&
+		{	return
+			AddNewMember
+			(	i_vMemberName
+			,	[&]	(	short
+							i_vHashIndex
+					,	Hash
+					)
+				{
+					auto
+					&	rMemberIndex
+					=	Members
+						.	MemberIndices
+						[	i_vHashIndex
+						]
+					;
+
+					TypeID const
+						vType
+					=	::Meta::Type
+						<	ConstantType
+							<	decltype
+								(	t_vValue
+								)
+							>
+						>
+					;
+
+					if	(	rMemberIndex
+						<	0
+						)
+					{	Members
+						.	AddNewMember
+							(	rMemberIndex
+							,	vType
+							,	-1
+							,	PartialName
+								{	i_vMemberName
+								,	PrefixIndex
+								}
+							)
+						;
+					}
+					else
+					if	(	vType
+						!=	Members
+							.	Types
+							[	rMemberIndex
+							]
+						)
+					{	(void("Cannot register member with same name but different types!"), ::std::unreachable());
+					}
+
+					Members
+					.	Initializer
+						[	rMemberIndex
 						][	Members
 							.	UnionCount
 						]
-				;	not
-					rHasMember
-				)
-			{
-					rHasMember
-				=	true
-				;
-					Members
-					.	Names
-					[	vHashIndex
-					]
-				=	vPrefixedMemberName
-				;
-
-				auto
-				&	rMemberIndex
-				=	Members
-					.	MemberIndices
-					[	vHashIndex
-					]
-				;
-
-				if	(	rMemberIndex
-					<	0
-					)
-				{	Members
-					.	AddNewMember
-						(	rMemberIndex
-						,	i_vType
-						,	i_vType
-							.	IsAligned
-								()
-							?	DistrictIndexOf
-								(	vPrefixedMemberName
-								)
-							:	-1
-						,	PartialName
-							{	i_vMemberName
-							,	PrefixIndex
-							}
-						)
+					=	i_vValue
 					;
 				}
-				else
-				if	(	i_vType
-					!=	Members
-						.	Types
-						[	rMemberIndex
-						]
-					)
-				{	(void("Cannot register member with same name but different types!"), ::std::unreachable());
-				}
-			}
-
-			return
-			static_cast<FlatComposer&&>
-			(	*	this
 			);
 		}
 

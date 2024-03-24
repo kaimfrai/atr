@@ -164,7 +164,7 @@ export namespace
 			PiFraction
 			<	1z
 			,	6z
-			>{}
+			>
 		*	aHead
 			->	Sphere
 			.	Height

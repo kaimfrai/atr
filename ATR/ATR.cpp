@@ -11,6 +11,7 @@ export import ATR.Layout.Fork;
 export import ATR.Layout.Offset;
 export import ATR.Layout.TypeIndex;
 export import ATR.Literals;
+export import ATR.Member.Constant;
 export import ATR.Member.Composition;
 export import ATR.Member.CompositionTransformer;
 export import ATR.Member.Constants;

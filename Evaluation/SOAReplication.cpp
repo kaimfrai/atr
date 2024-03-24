@@ -725,19 +725,19 @@ auto inline
 		vMultiplierArray
 		[	16uz
 		]
-	{	PiFraction<1, 4>{}
-	,	PiFraction<1, 4>{}
+	{	PiFraction<1, 4>
+	,	PiFraction<1, 4>
 	,	1.0f
 	,	1.0f
-	,	Fraction<1, 2>{}
+	,	Fraction<1, 2>
 	,	1.0f
 	,	1.0f
-	,	Fraction<1, 3>{}
-	,	PiFraction<1, 6>{}
-	,	PiFraction<1, 4>{}
-	,	PiFraction<1, 12>{}
-	,	PiFraction<1, 6>{}
-	,	PiFraction<1, 6>{}
+	,	Fraction<1, 3>
+	,	PiFraction<1, 6>
+	,	PiFraction<1, 4>
+	,	PiFraction<1, 12>
+	,	PiFraction<1, 6>
+	,	PiFraction<1, 6>
 	,	0.0f
 	,	0.0f
 	,	0.0f

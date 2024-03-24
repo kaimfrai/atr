@@ -12,30 +12,15 @@ export
 				t_vDenominator
 			=	1z
 		>
-	struct
+	float constexpr inline
 		Fraction
-	{
-		[[nodiscard]]
-		auto static constexpr inline
-		(	operator()
-		)	()
-			noexcept
-		->	float
-		{	return
-			(	static_cast<float>(t_vNumerator)
-			/	static_cast<float>(t_vDenominator)
-			);
-		}
-
-		[[nodiscard]]
-		explicit(false) constexpr inline
-		(	operator
-			float
-		)	()	const
-			noexcept
-		{	return
-			operator()
-			();
-		}
-	};
+	=	static_cast<float>
+		(	static_cast<double>
+			(	t_vNumerator
+			)
+		/	static_cast<double>
+			(	t_vDenominator
+			)
+		)
+	;
 }

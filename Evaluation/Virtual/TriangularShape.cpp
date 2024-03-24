@@ -64,7 +64,7 @@ export namespace
 				Fraction
 				<	1uz
 				,	2uz
-				>{}
+				>
 			;
 		}
 	};

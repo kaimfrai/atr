@@ -1,5 +1,6 @@
 add_single_file_modules(
 	Constants.cpp
+	Constant.cpp
 	CountedType.cpp
 	Info.cpp
 	AlignBufferView.cpp

@@ -19,7 +19,7 @@ export namespace
 			o_rComposer
 			.	Alias("Width", "Height")
 			.	Splice("BasicBody"_id)
-			.	Member("ComputeSizeMultiplier", Type<PiFraction<1z, 4z>>)
+			.	Static("ComputeSizeMultiplier", Constant<PiFraction<1z, 4z>>)
 		;
 	}
 }

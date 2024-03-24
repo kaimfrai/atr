@@ -4,46 +4,20 @@ import Std;
 
 export
 {
-	float constexpr inline
-		Pi
-	=	::std::numbers::pi_v
-		<	float
-		>
-	;
-
 	template
-		<	::std::ptrdiff_t
+		<	::std::intmax_t
 				t_vNumerator
 			=	1z
-		,	::std::ptrdiff_t
+		,	::std::intmax_t
 				t_vDenominator
 			=	1z
 		>
-	struct
+	float constexpr inline
 		PiFraction
-	{
-		[[nodiscard]]
-		auto static constexpr inline
-		(	operator()
-		)	()
-			noexcept
-		->	float
-		{	return
-				Pi
-			*	static_cast<float>(t_vNumerator)
-			/	static_cast<float>(t_vDenominator)
-			;
-		}
-
-		[[nodiscard]]
-		explicit(false) constexpr inline
-		(	operator
-			float
-		)	()	const
-			noexcept
-		{	return
-			operator()
-			();
-		}
-	};
+	=	static_cast<float>
+		(	::std::numbers::pi
+		*	t_vNumerator
+		/	t_vDenominator
+		)
+	;
 }

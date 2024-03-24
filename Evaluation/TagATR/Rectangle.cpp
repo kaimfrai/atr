@@ -18,7 +18,7 @@ export namespace
 	{	return
 			o_rComposer
 			.	Splice("BasicShape"_id)
-			.	Member("ComputeSizeMultiplier", Type<Fraction<>>)
+			.	Static("ComputeSizeMultiplier", Constant<Fraction<>>)
 		;
 	}
 }

@@ -70,7 +70,7 @@ export namespace
 				PiFraction
 				<	1z
 				,	4z
-				>{}
+				>
 			;
 		}
 	};

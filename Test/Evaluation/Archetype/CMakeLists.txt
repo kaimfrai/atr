@@ -8,4 +8,5 @@ add_module_object_tests(
 	Heap
 	NameReflection
 	ReadWrite
+	Union
 )

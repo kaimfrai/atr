@@ -53,6 +53,24 @@ using Pi_6 = ConstantValue<PiFraction<1z, 6z>>;
 using Pi_4 = ConstantValue<PiFraction<1z, 4z>>;
 using Pi_12 = ConstantValue<PiFraction<1z, 12z>>;
 
+using
+	BodyUnion
+=	Union
+	<	ID<"Circle">
+	,	ID<"Ellipse">
+ 	,	ID<"Rectangle">
+	,	ID<"Square">
+	,	ID<"Triangle">
+	,	ID<"Cube">
+	,	ID<"Cuboid">
+	,	ID<"Pyramid">
+	,	ID<"Sphere">
+	,	ID<"Cylinder">
+	,	ID<"Cone">
+	,	ID<"Ellipsoid">
+ 	,	ID<"Head">
+	>
+;
 template
 	<	short
 			t_vDistrictCount
@@ -62,6 +80,10 @@ struct
 {
 	FlatComposition<t_vDistrictCount> const
 	&	Composition
+	;
+
+	short
+		UnionIndex
 	;
 
 	[[nodiscard]]
@@ -76,6 +98,7 @@ struct
 			Composition
 			.	FindMemberInfo
 				(	i_vName
+				,	UnionIndex
 				)
 		;
 	}
@@ -90,10 +113,16 @@ template
 MemberInfo<sizeof...(t_tpDistrict)> constexpr inline
 	MemberInfo_Of
 {	Composition_Of
-	<	ID<t_vTypeName>
+	<	BodyUnion
 	,	t_tpDistrict
 		...
 	>
+,	static_cast<short>
+	(	BodyUnion::IndexOf
+		(	t_vTypeName
+			.	Buffer
+		)
+	)
 };
 
 template
@@ -1047,7 +1076,7 @@ static_assert
 	(	MemberInfo_Of<"Cylinder">
 			[	"Depth"
 			]
-	,	OffsetType<float, 8z>
+	,	OffsetType<float, 9z>
 	)
 );
 static_assert
@@ -1136,7 +1165,7 @@ static_assert
 	(	MemberInfo_Of<"Cone">
 			[	"Depth"
 			]
-	,	OffsetType<float, 8z>
+	,	OffsetType<float, 9z>
 	)
 );
 static_assert
@@ -1330,7 +1359,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"LeftEyeColorRed"
 			]
-	,	OffsetType<float, 8z>
+	,	OffsetType<float, 10z>
 	)
 );
 static_assert
@@ -1338,7 +1367,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"LeftEyeColorGreen"
 			]
-	,	OffsetType<float, 9z>
+	,	OffsetType<float, 11z>
 	)
 );
 static_assert
@@ -1346,7 +1375,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"LeftEyeColorBlue"
 			]
-	,	OffsetType<float, 10z>
+	,	OffsetType<float, 12z>
 	)
 );
 static_assert
@@ -1362,7 +1391,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"LeftEyePointLateral"
 			]
-	,	OffsetType<float, 11z>
+	,	OffsetType<float, 13z>
 	)
 );
 static_assert
@@ -1370,7 +1399,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"LeftEyePointLongitudinal"
 			]
-	,	OffsetType<float, 12z>
+	,	OffsetType<float, 14z>
 	)
 );
 static_assert
@@ -1378,7 +1407,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"LeftEyePointVertical"
 			]
-	,	OffsetType<float, 13z>
+	,	OffsetType<float, 15z>
 	)
 );
 static_assert
@@ -1386,7 +1415,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"LeftEyeHeight"
 			]
-	,	OffsetType<float, 14z>
+	,	OffsetType<float, 16z>
 	)
 );
 static_assert
@@ -1394,7 +1423,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"LeftEyeWidth"
 			]
-	,	OffsetType<float, 14z>
+	,	OffsetType<float, 16z>
 	)
 );
 static_assert
@@ -1402,7 +1431,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"LeftEyeDepth"
 			]
-	,	OffsetType<float, 14z>
+	,	OffsetType<float, 16z>
 	)
 );
 static_assert
@@ -1418,7 +1447,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"RightEyeColorRed"
 			]
-	,	OffsetType<float, 8z>
+	,	OffsetType<float, 10z>
 	)
 );
 static_assert
@@ -1426,7 +1455,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"RightEyeColorGreen"
 			]
-	,	OffsetType<float, 9z>
+	,	OffsetType<float, 11z>
 	)
 );
 static_assert
@@ -1434,7 +1463,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"RightEyeColorBlue"
 			]
-	,	OffsetType<float, 10z>
+	,	OffsetType<float, 12z>
 	)
 );
 static_assert
@@ -1450,7 +1479,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"RightEyePointLateral"
 			]
-	,	OffsetType<float, 15z>
+	,	OffsetType<float, 17z>
 	)
 );
 static_assert
@@ -1458,7 +1487,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"RightEyePointLongitudinal"
 			]
-	,	OffsetType<float, 12z>
+	,	OffsetType<float, 14z>
 	)
 );
 static_assert
@@ -1466,7 +1495,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"RightEyePointVertical"
 			]
-	,	OffsetType<float, 13z>
+	,	OffsetType<float, 15z>
 	)
 );
 static_assert
@@ -1474,7 +1503,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"RightEyeHeight"
 			]
-	,	OffsetType<float, 14z>
+	,	OffsetType<float, 16z>
 	)
 );
 static_assert
@@ -1482,7 +1511,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"RightEyeWidth"
 			]
-	,	OffsetType<float, 14z>
+	,	OffsetType<float, 16z>
 	)
 );
 static_assert
@@ -1490,7 +1519,7 @@ static_assert
 	(	MemberInfo_Of<"Head">
 			[	"RightEyeDepth"
 			]
-	,	OffsetType<float, 14z>
+	,	OffsetType<float, 16z>
 	)
 );
 static_assert

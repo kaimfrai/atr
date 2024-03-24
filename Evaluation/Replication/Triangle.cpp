@@ -59,7 +59,7 @@ export namespace
 			Fraction
 			<	1z
 			,	2z
-			>{}
+			>
 		*	aTriangle
 			->	Height
 		*	aTriangle

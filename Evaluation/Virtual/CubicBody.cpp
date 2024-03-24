@@ -32,8 +32,8 @@ export namespace
 		->	float
 			override
 		{	return
-				Fraction<>
-				{}
+				Fraction
+				<>
 			;
 		}
 	};

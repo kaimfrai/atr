@@ -92,6 +92,38 @@ export namespace
 					)
 			;
 		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator==
+		)	(	PartialName
+					i_vLeft
+			,	PartialName
+					i_vRight
+			)
+			noexcept
+		->	bool
+		{	if	(	i_vLeft
+					.	PrefixIndex
+				!=	i_vRight
+					.	PrefixIndex
+				)
+			{	return
+					false
+				;
+			}
+
+			return
+				::std::string_view
+				{	i_vLeft
+					.	Name
+				}
+			==	::std::string_view
+				{	i_vRight
+					.	Name
+				}
+			;
+		}
 	};
 
 	struct
@@ -135,6 +167,13 @@ export namespace
 		Auto<bool[UnionBufferSize]>
 			HasMember
 			[	NameBufferSize
+			]
+		{};
+
+		void const
+		*	Initializer
+			[	NameBufferSize
+			][	UnionBufferSize
 			]
 		{};
 
@@ -248,9 +287,30 @@ export namespace
 			noexcept
 		->	short
 		{
-			Prefixes
-			[	PrefixCount
-			]=	i_vPrefix
+			for	(	short
+						vPrefixIndex
+					=	0
+				;	(	vPrefixIndex
+					<	PrefixCount
+					)
+				;	++	vPrefixIndex
+				)
+			{
+				if	(	Prefixes
+						[	vPrefixIndex
+						]
+					==	i_vPrefix
+					)
+				{	return
+						vPrefixIndex
+					;
+				}
+			}
+
+				Prefixes
+				[	PrefixCount
+				]
+			=	i_vPrefix
 			;
 			return
 				PrefixCount
@@ -361,6 +421,26 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr inline
+		(	GetMemberInitializer
+		)	(	short
+					i_vMemberIndex
+			,	short
+					i_vUnionIndex
+				=	0
+			)	const
+			noexcept
+		->	void const*
+		{	return
+				Members
+				.	Initializer
+				[	i_vMemberIndex
+				][	i_vUnionIndex
+				]
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
 		(	GetMemberInfo
 		)	(	short
 					i_vMemberIndex
@@ -380,6 +460,10 @@ export namespace
 				)
 			,	GetMemberDistrictIndex
 				(	i_vMemberIndex
+				)
+			,	GetMemberInitializer
+				(	i_vMemberIndex
+				,	i_vUnionIndex
 				)
 			};
 		}
@@ -468,6 +552,7 @@ export namespace
 				{	Type<void>
 				,	-1_bit
 				,	-1
+				,	nullptr
 				};
 			}
 

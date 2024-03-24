@@ -59,7 +59,7 @@ export namespace
 			PiFraction
 			<	1z
 			,	4z
-			>{}
+			>
 		*	aEllipse
 			->	Height
 		*	aEllipse

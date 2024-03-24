@@ -35,7 +35,7 @@ export namespace
 				Fraction
 				<	1uz
 				,	3uz
-				>{}
+				>
 			;
 		}
 	};

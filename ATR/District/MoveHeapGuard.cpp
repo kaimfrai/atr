@@ -111,6 +111,7 @@ export namespace
 					.	GetDistrictDistrictIndex
 						(	t_vDistrictIndex
 						)
+				,	nullptr
 				>
 			;
 		}

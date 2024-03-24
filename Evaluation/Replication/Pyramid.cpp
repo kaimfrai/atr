@@ -62,7 +62,7 @@ export namespace
 			Fraction
 			<	1uz
 			,	3uz
-			>{}
+			>
 		*	aPyramid
 			->	Height
 		*	aPyramid

@@ -65,7 +65,7 @@ export namespace
 			PiFraction
 			<	1z
 			,	4z
-			>{}
+			>
 		*	aCylinder
 			->	Height
 		*	aCylinder

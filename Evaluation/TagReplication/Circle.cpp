@@ -62,7 +62,7 @@ export namespace
 			PiFraction
 			<	1z
 			,	4z
-			>{}
+			>
 		*	aCircle
 			->	Height
 		*	aCircle

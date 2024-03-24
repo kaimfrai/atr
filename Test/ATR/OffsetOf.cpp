@@ -169,6 +169,7 @@ auto constexpr inline
 	{	Type<t_tEntity>
 	,	t_vOffset
 	,	0
+	,	nullptr
 	}
 ;
 

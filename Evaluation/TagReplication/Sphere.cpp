@@ -62,7 +62,7 @@ export namespace
 			PiFraction
 			<	1z
 			,	6z
-			>{}
+			>
 		*	aSphere
 			->	Height
 		*	aSphere

@@ -118,6 +118,8 @@ export namespace
 				.	Offset
 			,	t_vInfo
 				.	DistrictIndex
+			,	t_vInfo
+				.	Initializer
 			>
 		;
 

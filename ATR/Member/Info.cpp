@@ -24,6 +24,9 @@ export namespace
 		short
 			DistrictIndex
 		;
+		void const
+		*	Initializer
+		;
 
 		[[nodiscard]]
 		auto constexpr inline
