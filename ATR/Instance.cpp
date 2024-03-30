@@ -2,9 +2,7 @@ export module ATR.Instance;
 
 import ATR.Address;
 import ATR.Base;
-import ATR.Erase;
 import ATR.Layout.Create;
-import ATR.Layout.Offset;
 import ATR.Member.Composition;
 import ATR.Member.Storage;
 
@@ -24,7 +22,7 @@ export namespace
 	ATR
 {
 	template
-		<	ProtoID
+		<	typename
 				t_tTypeName
 		,	typename
 			...	t_tpDistrict

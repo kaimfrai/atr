@@ -9,4 +9,5 @@ add_module_object_tests(
 	NameReflection
 	ReadWrite
 	Union
+	InstructionBuffer
 )

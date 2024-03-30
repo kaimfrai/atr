@@ -1,14 +1,15 @@
 export module Evaluation.Archetype.Product;
 
 import ATR.Dependency;
-import ATR.Erase;
 
 export namespace
 	ATR
 {
 	/// Computes the product of all dependent members
 	template
-		<	auto
+		<	typename
+				t_tErasure
+		,	auto
 			...	t_vpDependency
 		>
 	[[nodiscard]]
@@ -16,14 +17,14 @@ export namespace
 	(	FunctionBody
 	)	(	GlobalDependency<"Product">
 		,	Dependency
-			<	CErasure
+			<	t_tErasure
 			,	t_vpDependency
 				...
 			>
 				i_vArgument
 		)
 		noexcept
-	->	float
+	->	decltype(auto)
 	{	return
 		(	...
 		*	t_vpDependency

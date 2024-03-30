@@ -2,7 +2,6 @@ export module ATR.DependencyIDMap;
 
 import ATR.Dependency;
 import ATR.Erase;
-import ATR.Member.Composition;
 
 import Meta.String.Hash;
 
@@ -19,13 +18,14 @@ export namespace
 		>
 	concept
 		ProtoMemberInterface
-	=	t_tProto
-		::	Composition
-		.	FindMemberInfo
-			(	t_vMemberName
-			)
-		.	IsValid
-			()
+	=	requires
+		{	t_tProto
+			::	template
+				Offset_Of
+				<	t_vMemberName
+				>
+			;
+		}
 	;
 
 	template

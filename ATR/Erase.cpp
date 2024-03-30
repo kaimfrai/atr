@@ -1,16 +1,6 @@
 export module ATR.Erase;
 
-import Meta.Auto.Ref.RArray;
-import Meta.Auto.Ref.XArray;
-
-import Meta.Size;
-
 import Std;
-
-using ::Meta::CArray;
-using ::Meta::RArray;
-using ::Meta::SSize;
-using ::Meta::XArray;
 
 export namespace
 	ATR
@@ -161,12 +151,11 @@ export namespace
 		noexcept
 	->	RErasure
 	{	return
-			::std::bit_cast<RErasure>
-			(	::std::addressof
-				(	i_rObject
-				)
+		::std::bit_cast<RErasure>
+		(	::std::addressof
+			(	i_rObject
 			)
-		;
+		);
 	}
 
 	template
@@ -182,12 +171,11 @@ export namespace
 		noexcept
 	->	CErasure
 	{	return
-		{	::std::bit_cast<CErasure>
-			(	::std::addressof
-				(	i_rObject
-				)
+		::std::bit_cast<CErasure>
+		(	::std::addressof
+			(	i_rObject
 			)
-		};
+		);
 	}
 
 	template
@@ -203,12 +191,11 @@ export namespace
 		noexcept
 	->	XErasure
 	{	return
-			::std::bit_cast<XErasure>
-			(	::std::addressof
-				(	i_rObject
-				)
+		::std::bit_cast<XErasure>
+		(	::std::addressof
+			(	i_rObject
 			)
-		;
+		);
 	}
 
 	template
