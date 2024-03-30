@@ -17,34 +17,26 @@ import Evaluation.Dependency.PiFraction;
 
 import ATR.District.ExcludingHeap;
 import ATR.Instance;
+import ATR.Layout.Create;
 import ATR.Member.Composition;
-import ATR.Member.Constant;
 import ATR.Virtual.InstructionBuffer;
 
 import Meta.ID;
+import Meta.String.Hash;
 import Meta.Token.Type;
-import Meta.Memory.Size;
-import Meta.Memory.Size.Compare;
 
 import Std;
 
 using ::ATR::Instance;
-using ::ATR::Member::ConstantValue;
 using ::ATR::Member::Union;
 using ::ATR::Virtual::InstructionBuffer_Of;
 using ::ATR::Virtual::Variable;
 using ::Meta::ID;
+using ::Meta::RestoreTypeEntity;
+using ::Meta::String::ImplicitHash;
 using ::Meta::Type;
 
-using namespace ::Meta::Literals;
 using enum ::ATR::Virtual::EInstruction;
-
-void const constexpr inline* One = ConstantValue<Fraction<>>{};
-void const constexpr inline* Half = ConstantValue<Fraction<1z, 2z>>{};
-void const constexpr inline* Third = ConstantValue<Fraction<1z, 3z>>{};
-void const constexpr inline* Pi_6 = ConstantValue<PiFraction<1z, 6z>>{};
-void const constexpr inline* Pi_4 = ConstantValue<PiFraction<1z, 4z>>{};
-void const constexpr inline* Pi_12 = ConstantValue<PiFraction<1z, 12z>>{};
 
 using
 	LocalBody
@@ -63,28 +55,93 @@ using
 	>
 ;
 
+using
+	BodyUnion
+=	Union
+	<	ID<"Circle">
+	,	ID<"Ellipse">
+	,	ID<"Rectangle">
+	,	ID<"Square">
+	,	ID<"Triangle">
+	,	ID<"Cube">
+	,	ID<"Cuboid">
+	,	ID<"Pyramid">
+	,	ID<"Sphere">
+	,	ID<"Cylinder">
+	,	ID<"Cone">
+	,	ID<"Ellipsoid">
+	,	ID<"Head">
+	>
+;
+
+using
+	Body3D
+=	Instance
+	<	BodyUnion
+	,	LocalBody
+	>
+;
+
+template
+	<	ImplicitHash
+			t_vTypeName
+	>
+auto constexpr inline
+	Index
+=	BodyUnion
+	::	IndexOf
+		(	t_vTypeName
+		)
+;
+
+template
+	<	ImplicitHash
+			t_vTypeName
+	,	ImplicitHash
+			t_vMemberName
+	,	auto
+			t_vInfo
+		=	Body3D
+			::	Composition
+			.	FindMemberInfo
+				(	t_vMemberName
+				,	Index<t_vTypeName>
+				)
+	>
+requires
+	(	t_vInfo
+		.	IsValid
+			()
+	)
+auto static constexpr inline
+	Offset_Of
+=	Type
+	<	decltype
+		(	auto
+			(	::ATR::Layout::Offset_For
+				<	Body3D
+					::	Composition
+				,	RestoreTypeEntity
+					<	t_vInfo
+						.	Type
+					>
+				,	t_vInfo
+					.	Offset
+				,	t_vInfo
+					.	DistrictIndex
+				,	t_vInfo
+					.	Initializer
+				>
+			)
+		)
+	>
+;
+
 auto constexpr inline
 &	InstructionBuffer
 =	InstructionBuffer_Of
 	<	ID<"ComputeVolume">
-	,	Instance
-		<	Union
-			<	ID<"Circle">
-			,	ID<"Ellipse">
-			,	ID<"Rectangle">
-			,	ID<"Square">
-			,	ID<"Triangle">
-			,	ID<"Cube">
-			,	ID<"Cuboid">
-			,	ID<"Pyramid">
-			,	ID<"Sphere">
-			,	ID<"Cylinder">
-			,	ID<"Cone">
-			,	ID<"Ellipsoid">
-			,	ID<"Head">
-			>
-// 		,	LocalBody
-		>	const
+	,	Body3D const
 		&
 	>
 ;
@@ -109,14 +166,6 @@ auto constexpr inline
 	}
 
 	if	(	i_rLeft
-			.	Type
-		!=	i_rRight
-			.	Type
-		)
-	{	(void("Type mismatch"), std::unreachable());
-	}
-
-	if	(	i_rLeft
 			.	Offset
 		!=	i_rRight
 			.	Offset
@@ -124,26 +173,44 @@ auto constexpr inline
 	{	(void("Offset mismatch"), std::unreachable());
 	}
 
-	if	(	i_rLeft
-			.	District
-		!=	i_rRight
-			.	District
-		)
-	{	(void("District mismatch"), std::unreachable());
-	}
-
-	if	(	i_rLeft
-			.	Initializer
-		!=	i_rRight
-			.	Initializer
-		)
-	{	(void("Initializer mismatch"), std::unreachable());
-	}
-
 	return
 		true
 	;
 }
+
+template
+	<	auto
+			t_vInstructionIndex
+	,	ImplicitHash
+			t_vTypeName
+	>
+auto constexpr inline
+&	FirstVariable
+=	InstructionBuffer
+	.	Instructions
+		[	t_vInstructionIndex
+		]
+	.	FirstVariable
+		[	Index<t_vTypeName>
+		]
+;
+
+template
+	<	auto
+			t_vInstructionIndex
+	,	ImplicitHash
+			t_vTypeName
+	>
+auto constexpr inline
+&	SecondVariable
+=	InstructionBuffer
+	.	Instructions
+		[	t_vInstructionIndex
+		]
+	.	SecondVariable
+		[	Index<t_vTypeName>
+		]
+;
 
 static_assert
 (	InstructionBuffer
@@ -159,610 +226,394 @@ static_assert
 	.	Type
 ==	Multiply
 );
-static_assert
-(	InstructionBuffer
-	.	Instructions
-		[	0
-		]
-	.	ReturnType
-==	Type<float>
-);
 
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	FirstVariable
-			[	0
-			]
+	(	FirstVariable
+		<	0
+		,	"Circle"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	-1
-		,	.	Initializer
-			=	Pi_4
+		{	0
+		,	Offset_Of
+			<	"Circle"
+			,	"ComputeSizeMultiplier"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	FirstVariable
-			[	1
-			]
+	(	FirstVariable
+		<	0
+		,	"Ellipse"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	-1
-		,	.	Initializer
-			=	Pi_4
+		{	0
+		,	Offset_Of
+			<	"Ellipse"
+			,	"ComputeSizeMultiplier"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	FirstVariable
-			[	2
-			]
+	(	FirstVariable
+		<	0
+		,	"Rectangle"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	-1
-		,	.	Initializer
-			=	One
+		{	0
+		,	Offset_Of
+			<	"Rectangle"
+			,	"ComputeSizeMultiplier"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	FirstVariable
-			[	3
-			]
+	(	FirstVariable
+		<	0
+		,	"Square"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	-1
-		,	.	Initializer
-			=	One
+		{	0
+		,	Offset_Of
+			<	"Square"
+			,	"ComputeSizeMultiplier"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	FirstVariable
-			[	4
-			]
+	(	FirstVariable
+		<	0
+		,	"Triangle"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	-1
-		,	.	Initializer
-			=	Half
+		{	0
+		,	Offset_Of
+			<	"Triangle"
+			,	"ComputeSizeMultiplier"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	FirstVariable
-			[	5
-			]
+	(	FirstVariable
+		<	0
+		,	"Cube"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	-1
-		,	.	Initializer
-			=	One
+		{	0
+		,	Offset_Of
+			<	"Cube"
+			,	"ComputeSizeMultiplier"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	FirstVariable
-			[	6
-			]
+	(	FirstVariable
+		<	0
+		,	"Cuboid"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	-1
-		,	.	Initializer
-			=	One
+		{	0
+		,	Offset_Of
+			<	"Cuboid"
+			,	"ComputeSizeMultiplier"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	FirstVariable
-			[	7
-			]
+	(	FirstVariable
+		<	0
+		,	"Pyramid"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	-1
-		,	.	Initializer
-			=	Third
+		{	0
+		,	Offset_Of
+			<	"Pyramid"
+			,	"ComputeSizeMultiplier"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	FirstVariable
-			[	8
-			]
+	(	FirstVariable
+		<	0
+		,	"Sphere"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	-1
-		,	.	Initializer
-			=	Pi_6
+		{	0
+		,	Offset_Of
+			<	"Sphere"
+			,	"ComputeSizeMultiplier"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	FirstVariable
-			[	9
-			]
+	(	FirstVariable
+		<	0
+		,	"Cylinder"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	-1
-		,	.	Initializer
-			=	Pi_4
+		{	0
+		,	Offset_Of
+			<	"Cylinder"
+			,	"ComputeSizeMultiplier"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	FirstVariable
-			[	10
-			]
+	(	FirstVariable
+		<	0
+		,	"Cone"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	-1
-		,	.	Initializer
-			=	Pi_12
+		{	0
+		,	Offset_Of
+			<	"Cone"
+			,	"ComputeSizeMultiplier"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	FirstVariable
-			[	11
-			]
+	(	FirstVariable
+		<	0
+		,	"Ellipsoid"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	-1
-		,	.	Initializer
-			=	Pi_6
+		{	0
+		,	Offset_Of
+			<	"Ellipsoid"
+			,	"ComputeSizeMultiplier"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	FirstVariable
-			[	12
-			]
+	(	FirstVariable
+		<	0
+		,	"Head"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	-1
-		,	.	Initializer
-			=	Pi_6
+		{	0
+		,	Offset_Of
+			<	"Head"
+			,	"ComputeSizeMultiplier"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	SecondVariable
-			[	0
-			]
+	(	SecondVariable
+		<	0
+		,	"Circle"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Circle"
+			,	"Height"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	SecondVariable
-			[	1
-			]
+	(	SecondVariable
+		<	0
+		,	"Ellipse"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Ellipse"
+			,	"Height"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	SecondVariable
-			[	2
-			]
+	(	SecondVariable
+		<	0
+		,	"Rectangle"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Rectangle"
+			,	"Height"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	SecondVariable
-			[	3
-			]
+	(	SecondVariable
+		<	0
+		,	"Square"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Square"
+			,	"Height"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	SecondVariable
-			[	4
-			]
+	(	SecondVariable
+		<	0
+		,	"Triangle"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Triangle"
+			,	"Height"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	SecondVariable
-			[	5
-			]
+	(	SecondVariable
+		<	0
+		,	"Cube"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Cube"
+			,	"Height"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	SecondVariable
-			[	6
-			]
+	(	SecondVariable
+		<	0
+		,	"Cuboid"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Cuboid"
+			,	"Height"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	SecondVariable
-			[	7
-			]
+	(	SecondVariable
+		<	0
+		,	"Pyramid"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Pyramid"
+			,	"Height"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	SecondVariable
-			[	8
-			]
+	(	SecondVariable
+		<	0
+		,	"Sphere"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Sphere"
+			,	"Height"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	SecondVariable
-			[	9
-			]
+	(	SecondVariable
+		<	0
+		,	"Cylinder"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Cylinder"
+			,	"Height"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	SecondVariable
-			[	10
-			]
+	(	SecondVariable
+		<	0
+		,	"Cone"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Cone"
+			,	"Height"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	SecondVariable
-			[	11
-			]
+	(	SecondVariable
+		<	0
+		,	"Ellipsoid"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Ellipsoid"
+			,	"Height"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	0
-			]
-		.	SecondVariable
-			[	12
-			]
+	(	SecondVariable
+		<	0
+		,	"Head"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Head"
+			,	"Height"
+			>
 		}
 	)
 );
@@ -775,610 +626,342 @@ static_assert
 	.	Type
 ==	Multiply
 );
-static_assert
-(	InstructionBuffer
-	.	Instructions
-		[	1
-		]
-	.	ReturnType
-==	Type<float>
-);
 
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	FirstVariable
-			[	0
-			]
+	(	FirstVariable
+		<	1
+		,	"Circle"
+		>
 	,	Variable
-		{	.	ID
-			=	1
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	1
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	FirstVariable
-			[	1
-			]
+	(	FirstVariable
+		<	1
+		,	"Ellipse"
+		>
 	,	Variable
-		{	.	ID
-			=	1
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	1
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	FirstVariable
-			[	2
-			]
+	(	FirstVariable
+		<	1
+		,	"Rectangle"
+		>
 	,	Variable
-		{	.	ID
-			=	1
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	1
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	FirstVariable
-			[	3
-			]
+	(	FirstVariable
+		<	1
+		,	"Square"
+		>
 	,	Variable
-		{	.	ID
-			=	1
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	1
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	FirstVariable
-			[	4
-			]
+	(	FirstVariable
+		<	1
+		,	"Square"
+		>
 	,	Variable
-		{	.	ID
-			=	1
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	1
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	FirstVariable
-			[	5
-			]
+	(	FirstVariable
+		<	1
+		,	"Cube"
+		>
 	,	Variable
-		{	.	ID
-			=	1
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	1
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	FirstVariable
-			[	6
-			]
+	(	FirstVariable
+		<	1
+		,	"Cuboid"
+		>
 	,	Variable
-		{	.	ID
-			=	1
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	1
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	FirstVariable
-			[	7
-			]
+	(	FirstVariable
+		<	1
+		,	"Pyramid"
+		>
 	,	Variable
-		{	.	ID
-			=	1
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	1
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	FirstVariable
-			[	8
-			]
+	(	FirstVariable
+		<	1
+		,	"Sphere"
+		>
 	,	Variable
-		{	.	ID
-			=	1
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	1
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	FirstVariable
-			[	9
-			]
+	(	FirstVariable
+		<	1
+		,	"Cylinder"
+		>
 	,	Variable
-		{	.	ID
-			=	1
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	1
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	FirstVariable
-			[	10
-			]
+	(	FirstVariable
+		<	1
+		,	"Cone"
+		>
 	,	Variable
-		{	.	ID
-			=	1
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	1
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	FirstVariable
-			[	11
-			]
+	(	FirstVariable
+		<	1
+		,	"Ellipsoid"
+		>
 	,	Variable
-		{	.	ID
-			=	1
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	1
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	FirstVariable
-			[	12
-			]
+	(	FirstVariable
+		<	1
+		,	"Head"
+		>
 	,	Variable
-		{	.	ID
-			=	1
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	1
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	SecondVariable
-			[	0
-			]
+	(	SecondVariable
+		<	1
+		,	"Circle"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Circle"
+			,	"Width"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	SecondVariable
-			[	1
-			]
+	(	SecondVariable
+		<	1
+		,	"Ellipse"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	256_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{		0
+		,	Offset_Of
+			<	"Ellipse"
+			,	"Width"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	SecondVariable
-			[	2
-			]
+	(	SecondVariable
+		<	1
+		,	"Rectangle"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	256_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Rectangle"
+			,	"Width"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	SecondVariable
-			[	3
-			]
+	(	SecondVariable
+		<	1
+		,	"Square"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Square"
+			,	"Width"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	SecondVariable
-			[	4
-			]
+	(	SecondVariable
+		<	1
+		,	"Triangle"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	256_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Triangle"
+			,	"Width"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	SecondVariable
-			[	5
-			]
+	(	SecondVariable
+		<	1
+		,	"Cube"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Cube"
+			,	"Width"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	SecondVariable
-			[	6
-			]
+	(	SecondVariable
+		<	1
+		,	"Cuboid"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	256_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Cuboid"
+			,	"Width"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	SecondVariable
-			[	7
-			]
+	(	SecondVariable
+		<	1
+		,	"Pyramid"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	256_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Pyramid"
+			,	"Width"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	SecondVariable
-			[	8
-			]
+	(	SecondVariable
+		<	1
+		,	"Sphere"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Sphere"
+			,	"Width"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	SecondVariable
-			[	9
-			]
+	(	SecondVariable
+		<	1
+		,	"Cylinder"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Cylinder"
+			,	"Width"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	SecondVariable
-			[	10
-			]
+	(	SecondVariable
+		<	1
+		,	"Cone"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Cone"
+			,	"Width"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	SecondVariable
-			[	11
-			]
+	(	SecondVariable
+		<	1
+		,	"Ellipsoid"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	256_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Ellipsoid"
+			,	"Width"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	1
-			]
-		.	SecondVariable
-			[	12
-			]
+	(	SecondVariable
+		<	1
+		,	"Head"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Head"
+			,	"Width"
+			>
 		}
 	)
 );
@@ -1391,510 +974,312 @@ static_assert
 	.	Type
 ==	Multiply
 );
-static_assert
-(	InstructionBuffer
-	.	Instructions
-		[	2
-		]
-	.	ReturnType
-==	Type<float>
-);
 
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	FirstVariable
-			[	0
-			]
+	(	FirstVariable
+		<	2
+		,	"Circle"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	FirstVariable
-			[	1
-			]
+	(	FirstVariable
+		<	2
+		,	"Ellipse"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	FirstVariable
-			[	2
-			]
+	(	FirstVariable
+		<	2
+		,	"Rectangle"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	FirstVariable
-			[	3
-			]
+	(	FirstVariable
+		<	2
+		,	"Square"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	FirstVariable
-			[	4
-			]
+	(	FirstVariable
+		<	2
+		,	"Triangle"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	FirstVariable
-			[	5
-			]
+	(	FirstVariable
+		<	2
+		,	"Cube"
+		>
 	,	Variable
-		{	.	ID
-			=	2
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	FirstVariable
-			[	6
-			]
+	(	FirstVariable
+		<	2
+		,	"Cuboid"
+		>
 	,	Variable
-		{	.	ID
-			=	2
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	FirstVariable
-			[	7
-			]
+	(	FirstVariable
+		<	2
+		,	"Pyramid"
+		>
 	,	Variable
-		{	.	ID
-			=	2
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	FirstVariable
-			[	8
-			]
+	(	FirstVariable
+		<	2
+		,	"Sphere"
+		>
 	,	Variable
-		{	.	ID
-			=	2
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	FirstVariable
-			[	9
-			]
+	(	FirstVariable
+		<	2
+		,	"Cylinder"
+		>
 	,	Variable
-		{	.	ID
-			=	2
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	FirstVariable
-			[	10
-			]
+	(	FirstVariable
+		<	2
+		,	"Cone"
+		>
 	,	Variable
-		{	.	ID
-			=	2
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	FirstVariable
-			[	11
-			]
+	(	FirstVariable
+		<	2
+		,	"Ellipsoid"
+		>
 	,	Variable
-		{	.	ID
-			=	2
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	FirstVariable
-			[	12
-			]
+	(	FirstVariable
+		<	2
+		,	"Head"
+		>
 	,	Variable
-		{	.	ID
-			=	2
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	SecondVariable
-			[	0
-			]
+	(	SecondVariable
+		<	2
+		,	"Circle"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	SecondVariable
-			[	1
-			]
+	(	SecondVariable
+		<	2
+		,	"Ellipse"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	SecondVariable
-			[	2
-			]
+	(	SecondVariable
+		<	2
+		,	"Rectangle"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	SecondVariable
-			[	3
-			]
+	(	SecondVariable
+		<	2
+		,	"Square"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	SecondVariable
-			[	4
-			]
+	(	SecondVariable
+		<	2
+		,	"Triangle"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	SecondVariable
-			[	5
-			]
+	(	SecondVariable
+		<	2
+		,	"Cube"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Cube"
+			,	"Depth"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	SecondVariable
-			[	6
-			]
+	(	SecondVariable
+		<	2
+		,	"Cuboid"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	288_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Cuboid"
+			,	"Depth"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	SecondVariable
-			[	7
-			]
+	(	SecondVariable
+		<	2
+		,	"Pyramid"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	288_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Pyramid"
+			,	"Depth"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	SecondVariable
-			[	8
-			]
+	(	SecondVariable
+		<	2
+		,	"Sphere"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Sphere"
+			,	"Depth"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	SecondVariable
-			[	9
-			]
+	(	SecondVariable
+		<	2
+		,	"Cylinder"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	288_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Cylinder"
+			,	"Depth"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	SecondVariable
-			[	10
-			]
+	(	SecondVariable
+		<	2
+		,	"Cone"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	288_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Cone"
+			,	"Depth"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	SecondVariable
-			[	11
-			]
+	(	SecondVariable
+		<	2
+		,	"Ellipsoid"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	288_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{		0
+		,	Offset_Of
+			<	"Ellipsoid"
+			,	"Depth"
+			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	2
-			]
-		.	SecondVariable
-			[	12
-			]
+	(	SecondVariable
+		<	2
+		,	"Head"
+		>
 	,	Variable
-		{	.	ID
-			=	0
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	224_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	0
+		,	Offset_Of
+			<	"Head"
+			,	"Depth"
+			>
 		}
 	)
 );
@@ -1907,479 +1292,276 @@ static_assert
 	.	Type
 ==	Return
 );
-static_assert
-(	InstructionBuffer
-	.	Instructions
-		[	3
-		]
-	.	ReturnType
-==	Type<float>
-);
 
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	FirstVariable
-			[	0
-			]
+	(	FirstVariable
+		<	3
+		,	"Circle"
+		>
 	,	Variable
-		{	.	ID
-			=	2
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	FirstVariable
-			[	1
-			]
+	(	FirstVariable
+		<	3
+		,	"Ellipse"
+		>
 	,	Variable
-		{	.	ID
-			=	2
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	FirstVariable
-			[	2
-			]
+	(	FirstVariable
+		<	3
+		,	"Rectangle"
+		>
 	,	Variable
-		{	.	ID
-			=	2
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	FirstVariable
-			[	3
-			]
+	(	FirstVariable
+		<	3
+		,	"Square"
+		>
 	,	Variable
-		{	.	ID
-			=	2
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	FirstVariable
-			[	4
-			]
+	(	FirstVariable
+		<	3
+		,	"Triangle"
+		>
 	,	Variable
-		{	.	ID
-			=	2
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	FirstVariable
-			[	5
-			]
+	(	FirstVariable
+		<	3
+		,	"Cube"
+		>
 	,	Variable
-		{	.	ID
-			=	3
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	3
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	FirstVariable
-			[	6
-			]
+	(	FirstVariable
+		<	3
+		,	"Cuboid"
+		>
 	,	Variable
-		{	.	ID
-			=	3
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	3
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	FirstVariable
-			[	7
-			]
+	(	FirstVariable
+		<	3
+		,	"Pyramid"
+		>
 	,	Variable
-		{	.	ID
-			=	3
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	3
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	FirstVariable
-			[	8
-			]
+	(	FirstVariable
+		<	3
+		,	"Sphere"
+		>
 	,	Variable
-		{	.	ID
-			=	3
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	3
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	FirstVariable
-			[	9
-			]
+	(	FirstVariable
+		<	3
+		,	"Cylinder"
+		>
 	,	Variable
-		{	.	ID
-			=	3
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	3
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	FirstVariable
-			[	10
-			]
+	(	FirstVariable
+		<	3
+		,	"Cone"
+		>
 	,	Variable
-		{	.	ID
-			=	3
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	3
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	FirstVariable
-			[	11
-			]
+	(	FirstVariable
+		<	3
+		,	"Ellipsoid"
+		>
 	,	Variable
-		{	.	ID
-			=	3
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	3
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	FirstVariable
-			[	12
-			]
+	(	FirstVariable
+		<	3
+		,	"Head"
+		>
 	,	Variable
-		{	.	ID
-			=	3
-		,	.	Type
-			=	Type<float>
-		,	.	Offset
-			=	0_bit
-		,	.	District
-			=	0
-		,	.	Initializer
-			=	nullptr
+		{	3
 		}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	SecondVariable
-			[	0
-			]
+	(	SecondVariable
+		<	3
+		,	"Circle"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	SecondVariable
-			[	1
-			]
+	(	SecondVariable
+		<	3
+		,	"Ellipse"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	SecondVariable
-			[	2
-			]
+	(	SecondVariable
+		<	3
+		,	"Rectangle"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	SecondVariable
-			[	3
-			]
+	(	SecondVariable
+		<	3
+		,	"Square"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	SecondVariable
-			[	4
-			]
+	(	SecondVariable
+		<	3
+		,	"Triangle"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	SecondVariable
-			[	5
-			]
+	(	SecondVariable
+		<	3
+		,	"Cube"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	SecondVariable
-			[	6
-			]
+	(	SecondVariable
+		<	3
+		,	"Cuboid"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	SecondVariable
-			[	7
-			]
+	(	SecondVariable
+		<	3
+		,	"Pyramid"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	SecondVariable
-			[	8
-			]
+	(	SecondVariable
+		<	3
+		,	"Sphere"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	SecondVariable
-			[	9
-			]
+	(	SecondVariable
+		<	3
+		,	"Cylinder"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	SecondVariable
-			[	10
-			]
+	(	SecondVariable
+		<	3
+		,	"Cone"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	SecondVariable
-			[	11
-			]
+	(	SecondVariable
+		<	3
+		,	"Ellipsoid"
+		>
 	,	Variable
 		{}
 	)
 );
 static_assert
 (	Equals
-	(	InstructionBuffer
-		.	Instructions
-			[	3
-			]
-		.	SecondVariable
-			[	12
-			]
+	(	SecondVariable
+		<	3
+		,	"Head"
+		>
 	,	Variable
 		{}
 	)

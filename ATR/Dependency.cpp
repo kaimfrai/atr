@@ -36,6 +36,11 @@ export namespace
 		=	t_tArgument
 		;
 
+		using
+			t_tArgument
+		::	operator[]
+		;
+
 		[[nodiscard]]
 		auto static constexpr inline
 		(	ssize

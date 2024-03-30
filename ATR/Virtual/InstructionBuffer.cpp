@@ -2,6 +2,8 @@ export module ATR.Virtual.InstructionBuffer;
 
 import ATR.Address;
 import ATR.Erase;
+import ATR.Layout.Create;
+import ATR.Layout.Offset;
 import ATR.Member.Composition;
 import ATR.Member.Constant;
 
@@ -13,9 +15,10 @@ import Meta.Token.TypeID;
 
 import Std;
 
-using ::ATR::Member::ConstantType;
+using ::ATR::Member::ConstantValue;
 using ::ATR::Member::Union;
 
+using ::ATR::Layout::Offset;
 using ::Meta::BitSize;
 using ::Meta::ProtoID;
 using ::Meta::RestoreTypeEntity;
@@ -58,16 +61,7 @@ export namespace
 			ID
 		;
 		TypeID
-			Type
-		;
-		BitSize
 			Offset
-		{};
-		short
-			District
-		{};
-		void const
-		*	Initializer
 		{};
 	};
 
@@ -90,9 +84,6 @@ export namespace
 			SecondVariable
 			[	t_vParallelCount
 			]
-		;
-		TypeID
-			ReturnType
 		;
 	};
 
@@ -175,9 +166,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	Insert
-		)	(	TypeID
-					i_vReturnType
-			,	EInstruction
+		)	(	EInstruction
 					i_vInstruction
 			,	Variable const
 				&	i_rFirst
@@ -202,10 +191,6 @@ export namespace
 							(	rParallelInstruction
 								.	Type
 							==	i_vInstruction
-							)
-						and	(	rParallelInstruction
-								.	ReturnType
-							==	i_vReturnType
 							)
 						;
 					}
@@ -261,11 +246,6 @@ export namespace
 					[	i_vParallelIndex
 					]
 				=	i_rSecond
-				);
-
-				(	rInstruction
-					.	ReturnType
-				=	i_vReturnType
 				);
 
 				return
@@ -361,9 +341,7 @@ export namespace
 			(	m_vInstructionIndex
 			=	m_aBuffer
 				->	Insert
-					(	i_rFirst
-						.	Type
-					,	EInstruction
+					(	EInstruction
 						::	Return
 					,	i_rFirst
 					,	{}
@@ -376,9 +354,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	Insert
-		)	(	TypeID
-					i_vReturnType
-			,	EInstruction
+		)	(	EInstruction
 					i_vInstruction
 			,	Variable const
 				&	i_rFirst
@@ -392,8 +368,7 @@ export namespace
 			(	m_vInstructionIndex
 			=	m_aBuffer
 				->	Insert
-					(	i_vReturnType
-					,	i_vInstruction
+					(	i_vInstruction
 					,	i_rFirst
 					,	i_rSecond
 					,	m_vInstructionIndex
@@ -406,8 +381,6 @@ export namespace
 			{	.	ID
 				=	NewVariableID
 					()
-			,	.	Type
-				=	i_vReturnType
 			};
 		}
 	};
@@ -473,8 +446,6 @@ export namespace
 					=	i_rInstructionView
 						.	NewVariableID
 							()
-				,	.	Type
-					=	Type<t_tVariable>
 				}
 			,	i_rInstructionView
 			}
@@ -483,63 +454,57 @@ export namespace
 		template
 			<	typename
 					t_tData
+			,	BitSize
+					t_vOffset
+			,	typename
+				...	t_tpIndirectOffsets
 			>
 		[[nodiscard]]
 		auto constexpr inline
-		(	AccessMember
-		)	(	TypeToken<t_tData>
-			,	BitSize
+		(	operator[]
+		)	(	Offset<t_tData, t_vOffset, t_tpIndirectOffsets...>
 					i_vOffset
-			,	short
-					i_vDistrict
-			,	void const
-				*	i_aInitializer
 			)	const
 			noexcept
-		->	ParallelVariable<t_tData, t_vParallelCount>
+		->	decltype(auto)
 		{	return
 			ParallelVariable<t_tData, t_vParallelCount>
 			{	Variable
 				{	.	ID
 					=	m_vVariable
 						.	ID
-				,	.	Type
-					=	Type<t_tData>
 				,	.	Offset
-					=	i_vOffset
-				,	.	District
-					=	i_vDistrict
-				,	.	Initializer
-					=	i_aInitializer
+					=	Type<decltype(i_vOffset)>
 				}
 			,	*	m_aInstructionView
 			};
 		}
 
 		template
-			<	typename
-					t_tData
+			<	auto
+					t_vData
+			,	BitSize
+					t_vOffset
 			>
 		[[nodiscard]]
 		auto constexpr inline
-		(	AccessMember
-		)	(	TypeToken<ConstantType<t_tData>>
-			,	BitSize
+		(	operator[]
+		)	(	Offset<ConstantValue<t_vData>, t_vOffset>
 					i_vOffset
-			,	short
-					i_vDistrict
-			,	void const
-				*	i_aInitializer
 			)	const
 			noexcept
-		->	ParallelVariable<t_tData, t_vParallelCount>
+		->	decltype(auto)
 		{	return
-			AccessMember
-			(	Type<t_tData>
-			,	i_vOffset
-			,	i_vDistrict
-			,	i_aInitializer
-			);
+			ParallelVariable<decltype(t_vData), t_vParallelCount>
+			{	Variable
+				{	.	ID
+					=	m_vVariable
+						.	ID
+				,	.	Offset
+					=	Type<decltype(i_vOffset)>
+				}
+			,	*	m_aInstructionView
+			};
 		}
 
 		auto constexpr inline
@@ -569,26 +534,19 @@ export namespace
 			)
 			noexcept
 		->	decltype(auto)
-		{
-			using
-				tResult
-			=	decltype
+		{	return
+			ParallelVariable
+			<	decltype
 				(	::std::declval<t_tVariable>
 					()
 				*	::std::declval<t_tOtherVariable>
 					()
 				)
-			;
-
-			return
-			ParallelVariable
-			<	tResult
 			,	t_vParallelCount
 			>{	i_rLeft
 				.	m_aInstructionView
 				->	Insert
-					(	Type<tResult>
-					,	EInstruction
+					(	EInstruction
 						::	Multiply
 					,	i_rLeft
 						.	m_vVariable
@@ -617,45 +575,6 @@ export namespace
 		,	t_vParallelCount
 		>
 	;
-
-	template
-		<	typename
-				t_tData
-		,	BitSize
-				t_vOffset
-		,	short
-				t_vDistrict
-		,	void const
-			*	t_aInitializer
-		>
-	struct
-		ParallelOffset
-	{
-		template
-			<	typename
-					t_tType
-			,	::std::size_t
-					t_vParallelCount
-			>
-		[[nodiscard]]
-		auto static constexpr inline
-		(	operator()
-		)	(	ParallelVariable<t_tType, t_vParallelCount>
-					i_vVariable
-			)
-			noexcept
-		->	decltype(auto)
-		{	return
-				i_vVariable
-			.	AccessMember
-				(	Type<t_tData>
-				,	t_vOffset
-				,	t_vDistrict
-				,	t_aInitializer
-				)
-			;
-		}
-	};
 
 	[[nodiscard]]
 	auto constexpr inline
@@ -718,8 +637,10 @@ export namespace
 			)
 		auto static constexpr inline
 			Offset_Of
-		=	ParallelOffset
-			<	RestoreTypeEntity
+		=	Layout::Offset_For
+			<	t_tUnion
+				::	Composition
+			,	RestoreTypeEntity
 				<	t_vInfo
 					.	Type
 				>
@@ -729,7 +650,7 @@ export namespace
 				.	DistrictIndex
 			,	t_vInfo
 				.	Initializer
-			>{}
+			>
 		;
 	};
 

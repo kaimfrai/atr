@@ -1,9 +1,8 @@
+add_subdirectory(Member)
+add_subdirectory(Layout)
 add_single_file_modules(
 	Erase.cpp
 )
-
-add_subdirectory(Member)
-add_subdirectory(Layout)
 add_subdirectory(District)
 
 add_single_file_modules(

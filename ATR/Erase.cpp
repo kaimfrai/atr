@@ -1,30 +1,66 @@
 export module ATR.Erase;
 
+import ATR.Layout.Offset;
+
+import Meta.Memory.Size;
+
 import Std;
+
+using ::Meta::BitSize;
+using ::ATR::Layout::Offset;
 
 export namespace
 	ATR
 {
 	struct
-		RErasure
+		ErasureBase
 	{
-		::std::byte
-		*	m_aData
-		;
+		template
+			<	typename
+					t_tData
+			,	BitSize
+					t_vOffset
+			,	typename
+				...	t_tpIndirectOffsets
+			>
+		[[nodiscard]]
+		auto constexpr inline
+		(	operator[]
+		)	(	this auto
+					i_rErasure
+			,	Offset<t_tData, t_vOffset, t_tpIndirectOffsets...>
+					i_vOffset
+			)
+			noexcept
+		->	decltype(auto)
+		{	return
+			i_vOffset
+			(	i_rErasure
+			);
+		}
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	data
-		)	(	this RErasure
+		)	(	this auto
 					i_rErasure
 			)
 			noexcept
-		->	::std::byte*
+		->	auto
 		{	return
 				i_rErasure
 				.	m_aData
 			;
 		}
+	};
+
+	struct
+		RErasure
+	:	ErasureBase
+	{
+		::std::byte
+		*	m_aData
+		;
 
 		template
 			<	typename
@@ -51,24 +87,11 @@ export namespace
 
 	struct
 		CErasure
+	:	ErasureBase
 	{
 		::std::byte const
 		*	m_aData
 		;
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	data
-		)	(	this CErasure
-					i_rErasure
-			)
-			noexcept
-		->	::std::byte const*
-		{	return
-				i_rErasure
-				.	m_aData
-			;
-		}
 
 		template
 			<	typename
@@ -83,8 +106,7 @@ export namespace
 			noexcept
 		->	t_tObject const&
 		{	return
-				*
-				::std::launder
+			*	::std::launder
 				(	::std::bit_cast<t_tObject const*>
 					(	i_rErasure
 					)
@@ -95,24 +117,11 @@ export namespace
 
 	struct
 		XErasure
+	:	ErasureBase
 	{
 		::std::byte
 		*	m_aData
 		;
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	data
-		)	(	this XErasure
-					i_xErasure
-			)
-			noexcept
-		->	::std::byte*
-		{	return
-				i_xErasure
-				.	m_aData
-			;
-		}
 
 		template
 			<	typename
@@ -128,8 +137,7 @@ export namespace
 		->	t_tObject&&
 		{	return
 			static_cast<t_tObject&&>
-			(	*
-				::std::launder
+			(*	::std::launder
 				(	::std::bit_cast<t_tObject*>
 					(	i_xErasure
 					)
@@ -221,7 +229,8 @@ export namespace
 		noexcept
 	->	RErasure
 	{	return
-		{	i_rBuffer
+		{	.	m_aData
+			=	i_rBuffer
 		};
 	}
 
@@ -235,7 +244,8 @@ export namespace
 		noexcept
 	->	CErasure
 	{	return
-		{	i_rBuffer
+		{	.	m_aData
+			=	i_rBuffer
 		};
 	}
 
@@ -249,7 +259,8 @@ export namespace
 		noexcept
 	->	XErasure
 	{	return
-		{	i_rBuffer
+		{	.	m_aData
+			=	i_rBuffer
 		};
 	}
 

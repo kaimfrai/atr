@@ -1,6 +1,5 @@
 export module ATR.Layout.Offset;
 
-import ATR.Erase;
 import ATR.Layout.TypeIndex;
 
 import Meta.Auto.CPO.Data;
@@ -571,7 +570,7 @@ export namespace
 		[[nodiscard]]
 		auto static constexpr inline
 		(	operator()
-		)	(	::ATR::CErasure
+		)	(	auto
 			)
 			noexcept
 		->	t_tData

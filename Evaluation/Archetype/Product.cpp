@@ -27,11 +27,9 @@ export namespace
 	->	decltype(auto)
 	{	return
 		(	...
-		*	t_vpDependency
-			(	i_vArgument
-			)
+		*	i_vArgument
+			[	t_vpDependency
+			]
 		);
 	}
 }
-
-

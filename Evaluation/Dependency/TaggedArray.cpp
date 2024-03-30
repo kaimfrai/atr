@@ -54,7 +54,8 @@ export namespace
 				t_rInterface
 				.	ComputeVolume
 					(	::ATR::CErasure
-						{	m_aData
+						{	.	m_aData
+							=	m_aData
 						}
 					,	m_vTag
 					)
@@ -317,9 +318,10 @@ export namespace
 				t_rInterface
 				.	Destroy
 					(	::ATR::RErasure
-						{	aBuffer
-						+	vIndex
-						*	vElementSize
+						{	.	m_aData
+						=		aBuffer
+							+	vIndex
+							*	vElementSize
 						}
 					,	*
 						::std::launder
