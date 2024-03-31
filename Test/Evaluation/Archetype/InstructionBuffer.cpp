@@ -24,17 +24,19 @@ import ATR.Virtual.InstructionBuffer;
 import Meta.ID;
 import Meta.String.Hash;
 import Meta.Token.Type;
+import Meta.Token.TypeID;
 
 import Std;
 
 using ::ATR::Instance;
 using ::ATR::Member::Union;
 using ::ATR::Virtual::InstructionBuffer_Of;
-using ::ATR::Virtual::Variable;
+using ::ATR::Virtual::Operand;
 using ::Meta::ID;
 using ::Meta::RestoreTypeEntity;
 using ::Meta::String::ImplicitHash;
 using ::Meta::Type;
+using ::Meta::TypeID;
 
 using enum ::ATR::Virtual::EInstruction;
 
@@ -146,76 +148,173 @@ auto constexpr inline
 	>
 ;
 
-[[nodiscard]]
-auto constexpr inline
-(	Equals
-)	(	Variable const
-		&	i_rLeft
-	,	Variable const
-		&	i_rRight
-	)
-	noexcept
-->	bool
+template
+	<	::ATR::Virtual::EInstruction
+			t_vInstruction
+	>
+struct
+	OperandPair
 {
-	if	(	i_rLeft
-			.	ID
-		!=	i_rRight
-			.	ID
-		)
-	{	(void("ID mismatch"), std::unreachable());
-	}
-
-	if	(	i_rLeft
-			.	Offset
-		!=	i_rRight
-			.	Offset
-		)
-	{	(void("Offset mismatch"), std::unreachable());
-	}
-
-	return
-		true
+	::std::ptrdiff_t
+		First
+	=	-1z
 	;
-}
+	::std::ptrdiff_t
+		Second
+	=	-1z
+	;
+
+	[[nodiscard]]
+	auto friend constexpr inline
+	(	Equals
+	)	(	OperandPair
+				i_vLeft
+		,	OperandPair
+				i_vRight
+		)
+		noexcept
+	->	bool
+	{
+		if	(	i_vLeft
+				.	First
+			!=	i_vRight
+				.	First
+			)
+		{	(void("ID mismatch first operand"), std::unreachable());
+		}
+
+		if	(	i_vLeft
+				.	Second
+			!=	i_vRight
+				.	Second
+			)
+		{	(void("ID mismatch second operand"), std::unreachable());
+		}
+
+		return
+			true
+		;
+	}
+
+	[[nodiscard]]
+	auto static constexpr inline
+	(	Read
+	)	(	Operand
+				i_vFirst
+		,	Operand
+				i_vSecond
+		)
+		noexcept
+	->	OperandPair
+	{	return
+		{	i_vFirst
+			.	ID
+		,	i_vSecond
+			.	ID
+		};
+	}
+};
+
+template
+	<>
+struct
+	OperandPair
+	<	Load
+	>
+{
+	::std::ptrdiff_t
+		First
+	=	-1
+	;
+	TypeID
+		Second
+	{};
+
+	[[nodiscard]]
+	auto friend constexpr inline
+	(	Equals
+	)	(	OperandPair
+				i_vLeft
+		,	OperandPair
+				i_vRight
+		)
+		noexcept
+	->	bool
+	{
+		if	(	i_vLeft
+				.	First
+			!=	i_vRight
+				.	First
+			)
+		{	(void("ID mismatch first operand"), std::unreachable());
+		}
+
+		if	(	i_vLeft
+				.	Second
+			!=	i_vRight
+				.	Second
+			)
+		{	(void("Offset mismatch second operand"), std::unreachable());
+		}
+
+		return
+			true
+		;
+	}
+
+	[[nodiscard]]
+	auto static constexpr inline
+	(	Read
+	)	(	Operand
+				i_vFirst
+		,	Operand
+				i_vSecond
+		)
+		noexcept
+	->	OperandPair
+	{	return
+		{	i_vFirst
+			.	ID
+		,	i_vSecond
+			.	Offset
+		};
+	}
+};
 
 template
 	<	auto
 			t_vInstructionIndex
 	,	ImplicitHash
 			t_vTypeName
+	,	auto const
+		&	t_rInstructions
+		=	InstructionBuffer
+			.	Instructions
+				[	t_vInstructionIndex
+				]
 	>
 auto constexpr inline
-&	FirstVariable
-=	InstructionBuffer
-	.	Instructions
-		[	t_vInstructionIndex
-		]
-	.	FirstVariable
-		[	Index<t_vTypeName>
-		]
-;
-
-template
-	<	auto
-			t_vInstructionIndex
-	,	ImplicitHash
-			t_vTypeName
+	Operands
+=	OperandPair
+	<	t_rInstructions
+		.	Type
 	>
-auto constexpr inline
-&	SecondVariable
-=	InstructionBuffer
-	.	Instructions
-		[	t_vInstructionIndex
-		]
-	.	SecondVariable
-		[	Index<t_vTypeName>
-		]
+::	Read
+	(	t_rInstructions
+		.	FirstOperand
+			[	Index<t_vTypeName>
+			]
+	,	t_rInstructions
+		.	SecondOperand
+			[	Index<t_vTypeName>
+			]
+	)
 ;
 
 static_assert
 (	InstructionBuffer
 	.	InstructionCount
-==	4
+==	8
 );
 
 static_assert
@@ -224,17 +323,16 @@ static_assert
 		[	0
 		]
 	.	Type
-==	Multiply
+==	Load
 );
 
 static_assert
 (	Equals
-	(	FirstVariable
+	(	Operands
 		<	0
 		,	"Circle"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Circle"
 			,	"ComputeSizeMultiplier"
@@ -244,12 +342,11 @@ static_assert
 );
 static_assert
 (	Equals
-	(	FirstVariable
+	(	Operands
 		<	0
 		,	"Ellipse"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Ellipse"
 			,	"ComputeSizeMultiplier"
@@ -259,12 +356,11 @@ static_assert
 );
 static_assert
 (	Equals
-	(	FirstVariable
+	(	Operands
 		<	0
 		,	"Rectangle"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Rectangle"
 			,	"ComputeSizeMultiplier"
@@ -274,12 +370,11 @@ static_assert
 );
 static_assert
 (	Equals
-	(	FirstVariable
+	(	Operands
 		<	0
 		,	"Square"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Square"
 			,	"ComputeSizeMultiplier"
@@ -289,12 +384,11 @@ static_assert
 );
 static_assert
 (	Equals
-	(	FirstVariable
+	(	Operands
 		<	0
 		,	"Triangle"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Triangle"
 			,	"ComputeSizeMultiplier"
@@ -304,12 +398,11 @@ static_assert
 );
 static_assert
 (	Equals
-	(	FirstVariable
+	(	Operands
 		<	0
 		,	"Cube"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Cube"
 			,	"ComputeSizeMultiplier"
@@ -319,12 +412,11 @@ static_assert
 );
 static_assert
 (	Equals
-	(	FirstVariable
+	(	Operands
 		<	0
 		,	"Cuboid"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Cuboid"
 			,	"ComputeSizeMultiplier"
@@ -334,12 +426,11 @@ static_assert
 );
 static_assert
 (	Equals
-	(	FirstVariable
+	(	Operands
 		<	0
 		,	"Pyramid"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Pyramid"
 			,	"ComputeSizeMultiplier"
@@ -349,12 +440,11 @@ static_assert
 );
 static_assert
 (	Equals
-	(	FirstVariable
+	(	Operands
 		<	0
 		,	"Sphere"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Sphere"
 			,	"ComputeSizeMultiplier"
@@ -364,12 +454,11 @@ static_assert
 );
 static_assert
 (	Equals
-	(	FirstVariable
+	(	Operands
 		<	0
 		,	"Cylinder"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Cylinder"
 			,	"ComputeSizeMultiplier"
@@ -379,12 +468,11 @@ static_assert
 );
 static_assert
 (	Equals
-	(	FirstVariable
+	(	Operands
 		<	0
 		,	"Cone"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Cone"
 			,	"ComputeSizeMultiplier"
@@ -394,12 +482,11 @@ static_assert
 );
 static_assert
 (	Equals
-	(	FirstVariable
+	(	Operands
 		<	0
 		,	"Ellipsoid"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Ellipsoid"
 			,	"ComputeSizeMultiplier"
@@ -409,210 +496,14 @@ static_assert
 );
 static_assert
 (	Equals
-	(	FirstVariable
+	(	Operands
 		<	0
 		,	"Head"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Head"
 			,	"ComputeSizeMultiplier"
-			>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	SecondVariable
-		<	0
-		,	"Circle"
-		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Circle"
-			,	"Height"
-			>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	SecondVariable
-		<	0
-		,	"Ellipse"
-		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Ellipse"
-			,	"Height"
-			>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	SecondVariable
-		<	0
-		,	"Rectangle"
-		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Rectangle"
-			,	"Height"
-			>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	SecondVariable
-		<	0
-		,	"Square"
-		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Square"
-			,	"Height"
-			>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	SecondVariable
-		<	0
-		,	"Triangle"
-		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Triangle"
-			,	"Height"
-			>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	SecondVariable
-		<	0
-		,	"Cube"
-		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Cube"
-			,	"Height"
-			>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	SecondVariable
-		<	0
-		,	"Cuboid"
-		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Cuboid"
-			,	"Height"
-			>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	SecondVariable
-		<	0
-		,	"Pyramid"
-		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Pyramid"
-			,	"Height"
-			>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	SecondVariable
-		<	0
-		,	"Sphere"
-		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Sphere"
-			,	"Height"
-			>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	SecondVariable
-		<	0
-		,	"Cylinder"
-		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Cylinder"
-			,	"Height"
-			>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	SecondVariable
-		<	0
-		,	"Cone"
-		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Cone"
-			,	"Height"
-			>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	SecondVariable
-		<	0
-		,	"Ellipsoid"
-		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Ellipsoid"
-			,	"Height"
-			>
-		}
-	)
-);
-static_assert
-(	Equals
-	(	SecondVariable
-		<	0
-		,	"Head"
-		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Head"
-			,	"Height"
 			>
 		}
 	)
@@ -624,343 +515,186 @@ static_assert
 		[	1
 		]
 	.	Type
-==	Multiply
+==	Load
 );
-
 static_assert
 (	Equals
-	(	FirstVariable
+	(	Operands
 		<	1
 		,	"Circle"
 		>
-	,	Variable
-		{	1
-		}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	1
-		,	"Ellipse"
-		>
-	,	Variable
-		{	1
-		}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	1
-		,	"Rectangle"
-		>
-	,	Variable
-		{	1
-		}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	1
-		,	"Square"
-		>
-	,	Variable
-		{	1
-		}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	1
-		,	"Square"
-		>
-	,	Variable
-		{	1
-		}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	1
-		,	"Cube"
-		>
-	,	Variable
-		{	1
-		}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	1
-		,	"Cuboid"
-		>
-	,	Variable
-		{	1
-		}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	1
-		,	"Pyramid"
-		>
-	,	Variable
-		{	1
-		}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	1
-		,	"Sphere"
-		>
-	,	Variable
-		{	1
-		}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	1
-		,	"Cylinder"
-		>
-	,	Variable
-		{	1
-		}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	1
-		,	"Cone"
-		>
-	,	Variable
-		{	1
-		}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	1
-		,	"Ellipsoid"
-		>
-	,	Variable
-		{	1
-		}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	1
-		,	"Head"
-		>
-	,	Variable
-		{	1
-		}
-	)
-);
-static_assert
-(	Equals
-	(	SecondVariable
-		<	1
-		,	"Circle"
-		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Circle"
-			,	"Width"
+			,	"Height"
 			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
+	(	Operands
 		<	1
 		,	"Ellipse"
 		>
-	,	Variable
-		{		0
+	,	{	0
 		,	Offset_Of
 			<	"Ellipse"
-			,	"Width"
+			,	"Height"
 			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
+	(	Operands
 		<	1
 		,	"Rectangle"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Rectangle"
-			,	"Width"
+			,	"Height"
 			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
+	(	Operands
 		<	1
 		,	"Square"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Square"
-			,	"Width"
+			,	"Height"
 			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
+	(	Operands
 		<	1
 		,	"Triangle"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Triangle"
-			,	"Width"
+			,	"Height"
 			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
+	(	Operands
 		<	1
 		,	"Cube"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Cube"
-			,	"Width"
+			,	"Height"
 			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
+	(	Operands
 		<	1
 		,	"Cuboid"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Cuboid"
-			,	"Width"
+			,	"Height"
 			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
+	(	Operands
 		<	1
 		,	"Pyramid"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Pyramid"
-			,	"Width"
+			,	"Height"
 			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
+	(	Operands
 		<	1
 		,	"Sphere"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Sphere"
-			,	"Width"
+			,	"Height"
 			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
+	(	Operands
 		<	1
 		,	"Cylinder"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Cylinder"
-			,	"Width"
+			,	"Height"
 			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
+	(	Operands
 		<	1
 		,	"Cone"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Cone"
-			,	"Width"
+			,	"Height"
 			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
+	(	Operands
 		<	1
 		,	"Ellipsoid"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Ellipsoid"
-			,	"Width"
+			,	"Height"
 			>
 		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
+	(	Operands
 		<	1
 		,	"Head"
 		>
-	,	Variable
-		{	0
+	,	{	0
 		,	Offset_Of
 			<	"Head"
-			,	"Width"
+			,	"Height"
 			>
 		}
 	)
@@ -974,312 +708,146 @@ static_assert
 	.	Type
 ==	Multiply
 );
-
 static_assert
 (	Equals
-	(	FirstVariable
+	(	Operands
 		<	2
 		,	"Circle"
 		>
-	,	Variable
-		{}
+	,	{	1
+		,	2
+		}
 	)
 );
 static_assert
 (	Equals
-	(	FirstVariable
+	(	Operands
 		<	2
 		,	"Ellipse"
 		>
-	,	Variable
-		{}
+	,	{	1
+		,	2
+		}
 	)
 );
 static_assert
 (	Equals
-	(	FirstVariable
+	(	Operands
 		<	2
 		,	"Rectangle"
 		>
-	,	Variable
-		{}
+	,	{	1
+		,	2
+		}
 	)
 );
 static_assert
 (	Equals
-	(	FirstVariable
+	(	Operands
 		<	2
 		,	"Square"
 		>
-	,	Variable
-		{}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	2
-		,	"Triangle"
-		>
-	,	Variable
-		{}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	2
-		,	"Cube"
-		>
-	,	Variable
-		{	2
+	,	{	1
+		,	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	FirstVariable
-		<	2
-		,	"Cuboid"
-		>
-	,	Variable
-		{	2
-		}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	2
-		,	"Pyramid"
-		>
-	,	Variable
-		{	2
-		}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	2
-		,	"Sphere"
-		>
-	,	Variable
-		{	2
-		}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	2
-		,	"Cylinder"
-		>
-	,	Variable
-		{	2
-		}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	2
-		,	"Cone"
-		>
-	,	Variable
-		{	2
-		}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	2
-		,	"Ellipsoid"
-		>
-	,	Variable
-		{	2
-		}
-	)
-);
-static_assert
-(	Equals
-	(	FirstVariable
-		<	2
-		,	"Head"
-		>
-	,	Variable
-		{	2
-		}
-	)
-);
-static_assert
-(	Equals
-	(	SecondVariable
-		<	2
-		,	"Circle"
-		>
-	,	Variable
-		{}
-	)
-);
-static_assert
-(	Equals
-	(	SecondVariable
-		<	2
-		,	"Ellipse"
-		>
-	,	Variable
-		{}
-	)
-);
-static_assert
-(	Equals
-	(	SecondVariable
-		<	2
-		,	"Rectangle"
-		>
-	,	Variable
-		{}
-	)
-);
-static_assert
-(	Equals
-	(	SecondVariable
+	(	Operands
 		<	2
 		,	"Square"
 		>
-	,	Variable
-		{}
+	,	{	1
+		,	2
+		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
-		<	2
-		,	"Triangle"
-		>
-	,	Variable
-		{}
-	)
-);
-static_assert
-(	Equals
-	(	SecondVariable
+	(	Operands
 		<	2
 		,	"Cube"
 		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Cube"
-			,	"Depth"
-			>
+	,	{	1
+		,	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
+	(	Operands
 		<	2
 		,	"Cuboid"
 		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Cuboid"
-			,	"Depth"
-			>
+	,	{	1
+		,	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
+	(	Operands
 		<	2
 		,	"Pyramid"
 		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Pyramid"
-			,	"Depth"
-			>
+	,	{	1
+		,	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
+	(	Operands
 		<	2
 		,	"Sphere"
 		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Sphere"
-			,	"Depth"
-			>
+	,	{	1
+		,	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
+	(	Operands
 		<	2
 		,	"Cylinder"
 		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Cylinder"
-			,	"Depth"
-			>
+	,	{	1
+		,	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
+	(	Operands
 		<	2
 		,	"Cone"
 		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Cone"
-			,	"Depth"
-			>
+	,	{	1
+		,	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
+	(	Operands
 		<	2
 		,	"Ellipsoid"
 		>
-	,	Variable
-		{		0
-		,	Offset_Of
-			<	"Ellipsoid"
-			,	"Depth"
-			>
+	,	{	1
+		,	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
+	(	Operands
 		<	2
 		,	"Head"
 		>
-	,	Variable
-		{	0
-		,	Offset_Of
-			<	"Head"
-			,	"Depth"
-			>
+	,	{	1
+		,	2
 		}
 	)
 );
@@ -1290,279 +858,736 @@ static_assert
 		[	3
 		]
 	.	Type
-==	Return
+==	Load
+);
+static_assert
+(	Equals
+	(	Operands
+		<	3
+		,	"Circle"
+		>
+	,	{}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	3
+		,	"Ellipse"
+		>
+	,	{	0
+		,	Offset_Of
+			<	"Ellipse"
+			,	"Width"
+			>
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	3
+		,	"Rectangle"
+		>
+	,	{	0
+		,	Offset_Of
+			<	"Rectangle"
+			,	"Width"
+			>
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	3
+		,	"Square"
+		>
+	,	{}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	3
+		,	"Triangle"
+		>
+	,	{	0
+		,	Offset_Of
+			<	"Triangle"
+			,	"Width"
+			>
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	3
+		,	"Cube"
+		>
+	,	{}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	3
+		,	"Cuboid"
+		>
+	,	{	0
+		,	Offset_Of
+			<	"Cuboid"
+			,	"Width"
+			>
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	3
+		,	"Pyramid"
+		>
+	,	{	0
+		,	Offset_Of
+			<	"Pyramid"
+			,	"Width"
+			>
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	3
+		,	"Sphere"
+		>
+	,	{}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	3
+		,	"Cylinder"
+		>
+	,	{}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	3
+		,	"Cone"
+		>
+	,	{}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	3
+		,	"Ellipsoid"
+		>
+	,	{	0
+		,	Offset_Of
+			<	"Ellipsoid"
+			,	"Width"
+			>
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	3
+		,	"Head"
+		>
+	,	{}
+	)
 );
 
 static_assert
+(	InstructionBuffer
+	.	Instructions
+		[	4
+		]
+	.	Type
+==	Multiply
+);
+static_assert
 (	Equals
-	(	FirstVariable
-		<	3
+	(	Operands
+		<	4
 		,	"Circle"
 		>
-	,	Variable
-		{	2
+	,	{	3
+		,	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	FirstVariable
-		<	3
+	(	Operands
+		<	4
 		,	"Ellipse"
 		>
-	,	Variable
-		{	2
+	,	{	3
+		,	4
 		}
 	)
 );
 static_assert
 (	Equals
-	(	FirstVariable
-		<	3
+	(	Operands
+		<	4
 		,	"Rectangle"
 		>
-	,	Variable
-		{	2
+	,	{	3
+		,	4
 		}
 	)
 );
 static_assert
 (	Equals
-	(	FirstVariable
-		<	3
+	(	Operands
+		<	4
 		,	"Square"
 		>
-	,	Variable
-		{	2
+	,	{	3
+		,	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	FirstVariable
-		<	3
+	(	Operands
+		<	4
 		,	"Triangle"
 		>
-	,	Variable
-		{	2
+	,	{	3
+		,	4
 		}
 	)
 );
 static_assert
 (	Equals
-	(	FirstVariable
-		<	3
+	(	Operands
+		<	4
 		,	"Cube"
 		>
-	,	Variable
-		{	3
+	,	{	3
+		,	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	FirstVariable
-		<	3
+	(	Operands
+		<	4
 		,	"Cuboid"
 		>
-	,	Variable
-		{	3
+	,	{	3
+		,	4
 		}
 	)
 );
 static_assert
 (	Equals
-	(	FirstVariable
-		<	3
+	(	Operands
+		<	4
 		,	"Pyramid"
 		>
-	,	Variable
-		{	3
+	,	{	3
+		,	4
 		}
 	)
 );
 static_assert
 (	Equals
-	(	FirstVariable
-		<	3
+	(	Operands
+		<	4
 		,	"Sphere"
 		>
-	,	Variable
-		{	3
+	,	{	3
+		,	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	FirstVariable
-		<	3
+	(	Operands
+		<	4
 		,	"Cylinder"
 		>
-	,	Variable
-		{	3
+	,	{	3
+		,	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	FirstVariable
-		<	3
+	(	Operands
+		<	4
 		,	"Cone"
 		>
-	,	Variable
-		{	3
+	,	{	3
+		,	2
 		}
 	)
 );
 static_assert
 (	Equals
-	(	FirstVariable
-		<	3
+	(	Operands
+		<	4
 		,	"Ellipsoid"
 		>
-	,	Variable
-		{	3
+	,	{	3
+		,	4
 		}
 	)
 );
 static_assert
 (	Equals
-	(	FirstVariable
-		<	3
+	(	Operands
+		<	4
 		,	"Head"
 		>
-	,	Variable
-		{	3
+	,	{	3
+		,	2
 		}
 	)
 );
+
+static_assert
+(	InstructionBuffer
+	.	Instructions
+		[	5
+		]
+	.	Type
+==	Load
+);
 static_assert
 (	Equals
-	(	SecondVariable
-		<	3
+	(	Operands
+		<	5
 		,	"Circle"
 		>
-	,	Variable
-		{}
+	,	{}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
-		<	3
+	(	Operands
+		<	5
 		,	"Ellipse"
 		>
-	,	Variable
-		{}
+	,	{}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
-		<	3
+	(	Operands
+		<	5
 		,	"Rectangle"
 		>
-	,	Variable
-		{}
+	,	{}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
-		<	3
+	(	Operands
+		<	5
 		,	"Square"
 		>
-	,	Variable
-		{}
+	,	{}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
-		<	3
+	(	Operands
+		<	5
 		,	"Triangle"
 		>
-	,	Variable
-		{}
+	,	{}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
-		<	3
+	(	Operands
+		<	5
 		,	"Cube"
 		>
-	,	Variable
-		{}
+	,	{}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
-		<	3
+	(	Operands
+		<	5
 		,	"Cuboid"
 		>
-	,	Variable
-		{}
+	,	{	0
+		,	Offset_Of
+			<	"Cuboid"
+			,	"Depth"
+			>
+		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
-		<	3
+	(	Operands
+		<	5
 		,	"Pyramid"
 		>
-	,	Variable
-		{}
+	,	{	0
+		,	Offset_Of
+			<	"Pyramid"
+			,	"Depth"
+			>
+		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
-		<	3
+	(	Operands
+		<	5
 		,	"Sphere"
 		>
-	,	Variable
-		{}
+	,	{}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
-		<	3
+	(	Operands
+		<	5
 		,	"Cylinder"
 		>
-	,	Variable
-		{}
+	,	{	0
+		,	Offset_Of
+			<	"Cylinder"
+			,	"Depth"
+			>
+		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
-		<	3
+	(	Operands
+		<	5
 		,	"Cone"
 		>
-	,	Variable
-		{}
+	,	{	0
+		,	Offset_Of
+			<	"Cone"
+			,	"Depth"
+			>
+		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
-		<	3
+	(	Operands
+		<	5
 		,	"Ellipsoid"
 		>
-	,	Variable
-		{}
+	,	{	0
+		,	Offset_Of
+			<	"Ellipsoid"
+			,	"Depth"
+			>
+		}
 	)
 );
 static_assert
 (	Equals
-	(	SecondVariable
-		<	3
+	(	Operands
+		<	5
 		,	"Head"
 		>
-	,	Variable
-		{}
+	,	{}
+	)
+);
+
+static_assert
+(	InstructionBuffer
+	.	Instructions
+		[	6
+		]
+	.	Type
+==	Multiply
+);
+static_assert
+(	Equals
+	(	Operands
+		<	6
+		,	"Circle"
+		>
+	,	{}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	6
+		,	"Ellipse"
+		>
+	,	{}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	6
+		,	"Rectangle"
+		>
+	,	{}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	6
+		,	"Square"
+		>
+	,	{}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	6
+		,	"Triangle"
+		>
+	,	{}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	6
+		,	"Cube"
+		>
+	,	{	5
+		,	2
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	6
+		,	"Cuboid"
+		>
+	,	{	5
+		,	6
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	6
+		,	"Pyramid"
+		>
+	,	{	5
+		,	6
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	6
+		,	"Sphere"
+		>
+	,	{	5
+		,	2
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	6
+		,	"Cylinder"
+		>
+	,	{	5
+		,	6
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	6
+		,	"Cone"
+		>
+	,	{	5
+		,	6
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	6
+		,	"Ellipsoid"
+		>
+	,	{	5
+		,	6
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	6
+		,	"Head"
+		>
+	,	{	5
+		,	2
+		}
+	)
+);
+
+static_assert
+(	InstructionBuffer
+	.	Instructions
+		[	7
+		]
+	.	Type
+==	Return
+);
+static_assert
+(	Equals
+	(	Operands
+		<	7
+		,	"Circle"
+		>
+	,	{	5
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	7
+		,	"Ellipse"
+		>
+	,	{	5
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	7
+		,	"Rectangle"
+		>
+	,	{	5
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	7
+		,	"Square"
+		>
+	,	{	5
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	7
+		,	"Triangle"
+		>
+	,	{	5
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	7
+		,	"Cube"
+		>
+	,	{	7
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	7
+		,	"Cuboid"
+		>
+	,	{	7
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	7
+		,	"Pyramid"
+		>
+	,	{	7
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	7
+		,	"Sphere"
+		>
+	,	{	7
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	7
+		,	"Cylinder"
+		>
+	,	{	7
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	7
+		,	"Cone"
+		>
+	,	{	7
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	7
+		,	"Ellipsoid"
+		>
+	,	{	7
+		}
+	)
+);
+static_assert
+(	Equals
+	(	Operands
+		<	7
+		,	"Head"
+		>
+	,	{	7
+		}
 	)
 );

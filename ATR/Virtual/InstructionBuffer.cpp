@@ -40,6 +40,8 @@ export namespace
 	:	unsigned char
 	{	Noop
 	,	Return
+	,	Load
+	,	Store
 	,	Add
 	,	Subtract
 	,	Multiply
@@ -55,14 +57,19 @@ export namespace
 	};
 
 	struct
-		Variable
+		Operand
 	{
-		short
+		::std::ptrdiff_t
 			ID
+		=	-1
 		;
 		TypeID
 			Offset
 		{};
+		bool
+			IsConstant
+		=	false
+		;
 	};
 
 	template
@@ -75,16 +82,39 @@ export namespace
 		EInstruction
 			Type
 		;
-		Variable
-			FirstVariable
+		Operand
+			FirstOperand
 			[	t_vParallelCount
 			]
 		;
-		Variable
-			SecondVariable
+		Operand
+			SecondOperand
 			[	t_vParallelCount
 			]
 		;
+
+		auto constexpr inline
+		(	SetOperands
+		)	(	::std::ptrdiff_t
+					i_vParallelIndex
+			,	Operand
+					i_vFirst
+			,	Operand
+					i_vSecond
+			)
+			noexcept
+		->	void
+		{	(	FirstOperand
+				[	i_vParallelIndex
+				]
+			=	i_vFirst
+			);
+			(	SecondOperand
+				[	i_vParallelIndex
+				]
+			=	i_vSecond
+			);
+		}
 	};
 
 	template
@@ -102,116 +132,102 @@ export namespace
 		::std::ptrdiff_t
 			InstructionCount
 		{};
+		::std::ptrdiff_t
+			ArgumentCount
+		{};
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	FindMatchingInstructionIndex
+		(	InsertGeneric
 		)	(	::std::ptrdiff_t
-					i_vInstructionIndex
+					i_vSearchStart
 			,	auto
 					i_fMatchInstruction
-			)	const
-			noexcept
-		->	::std::ptrdiff_t
-		{
-			for	(
-				;		i_vInstructionIndex
-					<	InstructionCount
-				;	++	i_vInstructionIndex
-				)
-			{
-				if	(	i_fMatchInstruction
-						(	Instructions
-							[	i_vInstructionIndex
-							]
-						)
-					)
-				{	return
-						i_vInstructionIndex
-					;
-				}
-			}
-			return
-			-	1
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	EmplaceUninitialized
-		)	(	::std::ptrdiff_t
-					i_vInstructionIndex
-			)
-			noexcept
-		->	Instruction<t_vParallelCount>&
-		{
-			::std::move_backward
-			(		Instructions
-				+	i_vInstructionIndex
-			,		Instructions
-				+	InstructionCount
-			,		Instructions
-				+	InstructionCount
-				+	1
-			);
-			++	InstructionCount
-			;
-			return
-				Instructions
-				[	i_vInstructionIndex
-				]
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	Insert
-		)	(	EInstruction
-					i_vInstruction
-			,	Variable const
-				&	i_rFirst
-			,	Variable const
-				&	i_rSecond
-			,	::std::ptrdiff_t
-					i_vInstructionIndex
+			,	auto
+					i_fMatched
+			,	auto
+					i_fNewInstruction
+			,	Operand
+					i_vLastOperand
 			,	::std::ptrdiff_t
 					i_vParallelIndex
 			)
 			noexcept
-		->	::std::ptrdiff_t
+		->	Operand
 		{
-			auto const
-				vInsertionIndex
-			=	FindMatchingInstructionIndex
-				(	i_vInstructionIndex
-				,	[&]	(	Instruction<t_vParallelCount> const
-							&	rParallelInstruction
-						)
-					{	return
-							(	rParallelInstruction
-								.	Type
-							==	i_vInstruction
-							)
-						;
-					}
-				)
-			;
-
-			if	(	vInsertionIndex
-				<	i_vInstructionIndex
+			//	Merge same instructions if possible
+			for	(	auto
+						vInstructionIndex
+					=	i_vSearchStart
+				;		vInstructionIndex
+					<	InstructionCount
+				;	++	vInstructionIndex
 				)
 			{
 				auto
 				&	rInstruction
-				=	EmplaceUninitialized
-					(	i_vInstructionIndex
-					)
+				=	Instructions
+					[	vInstructionIndex
+					]
 				;
-				(	rInstruction
+
+				if	(	i_fMatchInstruction
+						(	rInstruction
+						)
+					)
+				{
+					i_fMatched
+					(	rInstruction
+					);
+
+					return
+					Operand
+					{	.	ID
+						=	vInstructionIndex
+						+	ArgumentCount
+					};
+				}
+			}
+
+			//	Insert instruction after last
+			auto const
+				vInsertIndex
+			=	i_vLastOperand
+				.	ID
+			-	ArgumentCount
+			+	1
+			;
+
+			//	Move backward
+			for	(	auto
+						vInstructionIndex
+					=	InstructionCount
+				;		vInstructionIndex
+					>	vInsertIndex
+				;	--	vInstructionIndex
+				)
+			{
+				auto
+				&	rNextInstruction
+				=	Instructions
+					[	vInstructionIndex
+					]
+				;
+				auto const
+				&	rPreviousInstruction
+				=	Instructions
+					[	vInstructionIndex
+					-	1
+					]
+				;
+
+				(	rNextInstruction
 					.	Type
-				=	i_vInstruction
+				=	rPreviousInstruction
+					.	Type
 				);
 
+				//	Increment references to previous results
 				for	(	auto
 							vParallelIndex
 						=	0z
@@ -220,65 +236,289 @@ export namespace
 					;	++	vParallelIndex
 					)
 				{
-					(	rInstruction
-						.	FirstVariable
-						[	vParallelIndex
-						]
-					=	Variable
-						{}
+					auto
+					&	rNextFirstOperand
+					=	rNextInstruction
+						.	FirstOperand
+							[	vParallelIndex
+							]
+					;
+					(	rNextFirstOperand
+					=	rPreviousInstruction
+						.	FirstOperand
+							[	vParallelIndex
+							]
 					);
-					(	rInstruction
-						.	SecondVariable
-						[	vParallelIndex
-						]
-					=	Variable
-						{}
+
+					(	rNextFirstOperand
+						.	ID
+					+=	(	rNextFirstOperand
+							.	ID
+						>	i_vLastOperand
+							.	ID
+						)
+					);
+
+					auto
+					&	rNextSecondOperand
+					=	rNextInstruction
+						.	SecondOperand
+							[	vParallelIndex
+							]
+					;
+					(	rNextSecondOperand
+					=	rPreviousInstruction
+						.	SecondOperand
+							[	vParallelIndex
+							]
+					);
+
+					(	rNextSecondOperand
+						.	ID
+					+=	(	rNextSecondOperand
+							.	ID
+						>	i_vLastOperand
+							.	ID
+						)
 					);
 				}
-				(	rInstruction
-					.	FirstVariable
-					[	i_vParallelIndex
-					]
-				=	i_rFirst
-				);
-				(	rInstruction
-					.	SecondVariable
-					[	i_vParallelIndex
-					]
-				=	i_rSecond
-				);
+			}
 
-				return
-					i_vInstructionIndex
-				+	1
+			++	InstructionCount
+			;
+			auto
+			&	rInstruction
+			=	Instructions
+				[	vInsertIndex
+				]
+			;
+
+			//	Reset operands
+			for	(	auto
+						vParallelIndex
+					=	0z
+				;		vParallelIndex
+					<	i_vParallelIndex
+				;	++	vParallelIndex
+				)
+			{	rInstruction
+				.	SetOperands
+					(	vParallelIndex
+					,	Operand
+						{}
+					,	Operand
+						{}
+					)
 				;
 			}
-			else
-			{
-				auto
-				&	rInstruction
-				=	Instructions
-					[	vInsertionIndex
-					]
-				;
-				(	rInstruction
-					.	FirstVariable
-					[	i_vParallelIndex
-					]
-				=	i_rFirst
-				);
-				(	rInstruction
-					.	SecondVariable
-					[	i_vParallelIndex
-					]
-				=	i_rSecond
-				);
 
-				return
-					vInsertionIndex
-				+	1
-				;
-			}
+			i_fNewInstruction
+			(	rInstruction
+			);
+
+			return
+			Operand
+			{	.	ID
+				=	i_vLastOperand
+					.	ID
+				+	1z
+			};
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	Insert
+		)	(	EInstruction
+					i_vInstruction
+			,	Operand
+					i_vFirst
+			,	Operand
+					i_vSecond
+			,	Operand
+					i_vLastOperand
+			,	::std::ptrdiff_t
+					i_vParallelIndex
+			)
+			noexcept
+		->	Operand
+		{
+			auto const
+				vSearchStart
+			=	i_vLastOperand
+				.	ID
+			-	ArgumentCount
+			+	1
+			;
+
+			return
+			InsertGeneric
+			(	vSearchStart
+			,	[&]	(	Instruction<t_vParallelCount> const
+						&	rInstruction
+					)
+				{	return
+						rInstruction
+						.	Type
+					==	i_vInstruction
+					;
+				}
+			,	[&]	(	Instruction<t_vParallelCount>
+						&	rInstruction
+					)
+				{	rInstruction
+					.	SetOperands
+						(	i_vParallelIndex
+						,	i_vFirst
+						,	i_vSecond
+						)
+					;
+				}
+			,	[&]	(	Instruction<t_vParallelCount>
+						&	rInstruction
+					)
+				{
+					rInstruction
+					.	Type
+					=	i_vInstruction
+					;
+					rInstruction
+					.	SetOperands
+						(	i_vParallelIndex
+						,	i_vFirst
+						,	i_vSecond
+						)
+					;
+				}
+			,	i_vLastOperand
+			,	i_vParallelIndex
+			);
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	LoadMember
+		)	(	Operand
+					i_vBase
+			,	TypeID
+					i_vBaseOffset
+			,	bool
+					i_vIsConstant
+			,	Operand
+					i_vLastOperand
+			,	::std::ptrdiff_t
+					i_vParallelIndex
+			)
+			noexcept
+		->	Operand
+		{
+			auto const
+				vSearchStart
+			=	::std::max
+				(	i_vBase
+					.	ID
+				-	ArgumentCount
+				+	1z
+				,	0z
+				)
+			;
+
+			return
+			InsertGeneric
+			(	vSearchStart
+			,	[&]	(	Instruction<t_vParallelCount> const
+						&	rInstruction
+					)
+				{	if	(	rInstruction
+							.	Type
+						!=	EInstruction
+							::	Load
+						)
+					{	return
+							false
+						;
+					}
+
+					for	(	auto
+								vParallelIndex
+							=	i_vParallelIndex
+						;		vParallelIndex
+							>=	0z
+						;	--	vParallelIndex
+						)
+					{
+						if	(		rInstruction
+									.	FirstOperand
+										[	vParallelIndex
+										]
+									.	ID
+								==	i_vBase
+									.	ID
+							and	(		rInstruction
+										.	SecondOperand
+											[	vParallelIndex
+											]
+										.	Offset
+									==	i_vBaseOffset
+								or	//	Constants may have different offsets
+									(	i_vIsConstant
+									and	rInstruction
+										.	SecondOperand
+											[	vParallelIndex
+											]
+										.	IsConstant
+									)
+								)
+							)
+						{	return
+								true
+							;
+						}
+					}
+					return
+						false
+					;
+				}
+			,	[&]	(	Instruction<t_vParallelCount>
+						&	rInstruction
+					)
+				{	rInstruction
+					.	SetOperands
+						(	i_vParallelIndex
+						,	i_vBase
+						,	Operand
+							{	.	Offset
+								=	i_vBaseOffset
+							,	.	IsConstant
+								=	i_vIsConstant
+							}
+						)
+					;
+				}
+			,	[&]	(	Instruction<t_vParallelCount>
+						&	rInstruction
+					)
+				{
+					rInstruction
+					.	Type
+					=	EInstruction
+						::	Load
+					;
+					rInstruction
+					.	SetOperands
+						(	i_vParallelIndex
+						,	i_vBase
+						,	Operand
+							{	.	Offset
+								=	i_vBaseOffset
+							,	.	IsConstant
+								=	i_vIsConstant
+							}
+						)
+					;
+				}
+			,	i_vLastOperand
+			,	i_vParallelIndex
+			);
 		}
 	};
 
@@ -292,15 +532,12 @@ export namespace
 		InstructionBuffer<t_vParallelCount>
 		*	m_aBuffer
 		;
-		::std::ptrdiff_t
-			m_vInstructionIndex
+		Operand
+			m_vLastOperand
 		{};
 		::std::ptrdiff_t
 			m_vParallelIndex
 		;
-		short
-			m_vVariableID
-		{};
 	public:
 		explicit(true) constexpr inline
 		(	InstructionView
@@ -313,6 +550,8 @@ export namespace
 		:	m_aBuffer
 			{	&	i_rBuffer
 			}
+		,	m_vLastOperand
+			{}
 		,	m_vParallelIndex
 			{	i_vParallelIndex
 			}
@@ -320,34 +559,91 @@ export namespace
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	NewVariableID
-		)	()
+		(	UpdateLastOperand
+		)	(	Operand
+					i_vNewOperand
+			)
 			noexcept
-		->	short
-		{	return
-				m_vVariableID
-				++
+		->	Operand
+		{
+			if	(	i_vNewOperand
+					.	ID
+				>	m_vLastOperand
+					.	ID
+				)
+			{	(	m_vLastOperand
+				=	i_vNewOperand
+				);
+			}
+			return
+				i_vNewOperand
 			;
 		}
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	Return
-		)	(	Variable const
-				&	i_rFirst
+		(	AddArgument
+		)	()
+			noexcept
+		->	Operand
+		{
+			++	m_vLastOperand
+				.	ID
+			;
+			return
+				m_vLastOperand
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	LoadMember
+		)	(	Operand
+					i_vBase
+			,	TypeID
+					i_vBaseOffset
+			,	bool
+					i_vIsConstant
 			)
 			noexcept
+		->	Operand
 		{
-			(	m_vInstructionIndex
+			auto const
+				vLoadedOperand
 			=	m_aBuffer
-				->	Insert
-					(	EInstruction
-						::	Return
-					,	i_rFirst
-					,	{}
-					,	m_vInstructionIndex
-					,	m_vParallelIndex
-					)
+			->	LoadMember
+				(	i_vBase
+				,	i_vBaseOffset
+				,	i_vIsConstant
+				,	m_vLastOperand
+				,	m_vParallelIndex
+				)
+			;
+			return
+			UpdateLastOperand
+			(	vLoadedOperand
+			);
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	Return
+		)	(	Operand
+					i_vFirst
+			)
+			noexcept
+		->	Operand
+		{	return
+			UpdateLastOperand
+			(	m_aBuffer
+			->	Insert
+				(	EInstruction
+					::	Return
+				,	i_vFirst
+				,	{}
+				,	m_vLastOperand
+				,	m_vParallelIndex
+				)
 			);
 		}
 
@@ -356,32 +652,25 @@ export namespace
 		(	Insert
 		)	(	EInstruction
 					i_vInstruction
-			,	Variable const
-				&	i_rFirst
-			,	Variable const
-				&	i_rSecond
+			,	Operand
+					i_vFirst
+			,	Operand
+					i_vSecond
 				=	{}
 			)
 			noexcept
-		->	Variable
-		{
-			(	m_vInstructionIndex
-			=	m_aBuffer
-				->	Insert
-					(	i_vInstruction
-					,	i_rFirst
-					,	i_rSecond
-					,	m_vInstructionIndex
-					,	m_vParallelIndex
-					)
+		->	Operand
+		{	return
+			UpdateLastOperand
+			(	m_aBuffer
+			->	Insert
+				(	i_vInstruction
+				,	i_vFirst
+				,	i_vSecond
+				,	m_vLastOperand
+				,	m_vParallelIndex
+				)
 			);
-
-			return
-			Variable
-			{	.	ID
-				=	NewVariableID
-					()
-			};
 		}
 	};
 
@@ -391,11 +680,9 @@ export namespace
 		>
 	(	InstructionView
 	)	(	InstructionBuffer<t_vParallelCount>
-			&	i_rBuffer
+			&
+		,	Operand
 		,	::std::ptrdiff_t
-				i_vParallelIndex
-		,	short
-				i_vArgumentCount
 		)
 	->	InstructionView
 		<	t_vParallelCount
@@ -411,8 +698,8 @@ export namespace
 	class
 		ParallelVariable
 	{
-		Variable
-			m_vVariable
+		Operand
+			m_vOperand
 		;
 		InstructionView<t_vParallelCount>
 		*	m_aInstructionView
@@ -420,14 +707,14 @@ export namespace
 	public:
 		explicit(true) constexpr inline
 		(	ParallelVariable
-		)	(	Variable const
-				&	i_rVariable
+		)	(	Operand
+					i_vOperand
 			,	InstructionView<t_vParallelCount>
 				&	i_rInstructionView
 			)
 			noexcept
-		:	m_vVariable
-			{	i_rVariable
+		:	m_vOperand
+			{	i_vOperand
 			}
 		,	m_aInstructionView
 			{	&	i_rInstructionView
@@ -440,14 +727,13 @@ export namespace
 				&	i_rInstructionView
 			)
 			noexcept
-		:	ParallelVariable
-			{	Variable
-				{	.	ID
-					=	i_rInstructionView
-						.	NewVariableID
-							()
-				}
-			,	i_rInstructionView
+		:	m_vOperand
+			{	i_rInstructionView
+				.	AddArgument
+					()
+			}
+		,	m_aInstructionView
+			{	&	i_rInstructionView
 			}
 		{}
 
@@ -469,13 +755,12 @@ export namespace
 		->	decltype(auto)
 		{	return
 			ParallelVariable<t_tData, t_vParallelCount>
-			{	Variable
-				{	.	ID
-					=	m_vVariable
-						.	ID
-				,	.	Offset
-					=	Type<decltype(i_vOffset)>
-				}
+			{	m_aInstructionView
+				->	LoadMember
+					(	m_vOperand
+					,	Type<decltype(i_vOffset)>
+					,	false
+					)
 			,	*	m_aInstructionView
 			};
 		}
@@ -496,13 +781,12 @@ export namespace
 		->	decltype(auto)
 		{	return
 			ParallelVariable<decltype(t_vData), t_vParallelCount>
-			{	Variable
-				{	.	ID
-					=	m_vVariable
-						.	ID
-				,	.	Offset
-					=	Type<decltype(i_vOffset)>
-				}
+			{	m_aInstructionView
+				->	LoadMember
+					(	m_vOperand
+					,	Type<decltype(i_vOffset)>
+					,	true
+					)
 			,	*	m_aInstructionView
 			};
 		}
@@ -515,7 +799,7 @@ export namespace
 		{	return
 			m_aInstructionView
 			->	Return
-				(	m_vVariable
+				(	m_vOperand
 				)
 			;
 		}
@@ -549,32 +833,15 @@ export namespace
 					(	EInstruction
 						::	Multiply
 					,	i_rLeft
-						.	m_vVariable
+						.	m_vOperand
 					,	i_rRight
-						.	m_vVariable
+						.	m_vOperand
 					)
 			,	*	i_rLeft
-				.	m_aInstructionView
+					.	m_aInstructionView
 			};
 		}
 	};
-
-	template
-		<	typename
-				t_tVariable
-		,	::std::size_t
-				t_vParallelCount
-		>
-	(	ParallelVariable
-	)	(	TypeToken<t_tVariable>
-		,	InstructionView<t_vParallelCount>
-			&
-		)
-	->	ParallelVariable
-		<	t_tVariable
-		,	t_vParallelCount
-		>
-	;
 
 	[[nodiscard]]
 	auto constexpr inline
@@ -881,7 +1148,10 @@ export namespace
 	{
 		InstructionBuffer<sizeof...(t_tpUnionIndex)>
 			vInstructionBuffer
-		{};
+		{	.	ArgumentCount
+			=	1z
+			+	sizeof...(t_tpArgument)
+		};
 
 		(	...
 		,	FillInstructionBuffer
