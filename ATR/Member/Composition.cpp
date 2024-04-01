@@ -329,7 +329,7 @@ namespace
 					-	1
 				;		vHostDistrictIndex
 					>=	0
-				;	++	vHostDistrictIndex
+				;	--	vHostDistrictIndex
 				)
 			{
 				if	(	i_aDistrictNames
