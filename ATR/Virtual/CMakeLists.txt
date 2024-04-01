@@ -3,4 +3,5 @@ add_single_file_modules(
 	Entry.cpp
 	Dispatch.cpp
 	InstructionBuffer.cpp
+	UnionCall.cpp
 )

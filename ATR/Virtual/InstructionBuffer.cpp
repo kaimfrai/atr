@@ -40,7 +40,8 @@ export namespace
 	:	unsigned char
 	{	Noop
 	,	Return
-	,	Load
+	,	LoadMember
+	,	LoadConstant
 	,	Store
 	,	Add
 	,	Subtract
@@ -66,10 +67,6 @@ export namespace
 		TypeID
 			Offset
 		{};
-		bool
-			IsConstant
-		=	false
-		;
 	};
 
 	template
@@ -81,6 +78,9 @@ export namespace
 	{
 		EInstruction
 			Type
+		;
+		TypeID
+			Result
 		;
 		Operand
 			FirstOperand
@@ -124,6 +124,13 @@ export namespace
 	struct
 		InstructionBuffer
 	{
+		auto static constexpr inline
+			ParallelIndices
+		=	::std::make_index_sequence
+			<	t_vParallelCount
+			>{}
+		;
+
 		Instruction<t_vParallelCount>
 			Instructions
 			[	InstructionBufferSize
@@ -225,6 +232,11 @@ export namespace
 					.	Type
 				=	rPreviousInstruction
 					.	Type
+				);
+				(	rNextInstruction
+					.	Result
+				=	rPreviousInstruction
+					.	Result
 				);
 
 				//	Increment references to previous results
@@ -330,6 +342,8 @@ export namespace
 		(	Insert
 		)	(	EInstruction
 					i_vInstruction
+			,	TypeID
+					i_vResult
 			,	Operand
 					i_vFirst
 			,	Operand
@@ -357,15 +371,21 @@ export namespace
 						&	rInstruction
 					)
 				{	return
-						rInstruction
-						.	Type
-					==	i_vInstruction
+						(	rInstruction
+							.	Type
+						==	i_vInstruction
+						)
+					and	(	rInstruction
+							.	Result
+						==	i_vResult
+						)
 					;
 				}
 			,	[&]	(	Instruction<t_vParallelCount>
 						&	rInstruction
 					)
-				{	rInstruction
+				{
+					rInstruction
 					.	SetOperands
 						(	i_vParallelIndex
 						,	i_vFirst
@@ -380,6 +400,10 @@ export namespace
 					rInstruction
 					.	Type
 					=	i_vInstruction
+					;
+					rInstruction
+					.	Result
+					=	i_vResult
 					;
 					rInstruction
 					.	SetOperands
@@ -397,12 +421,14 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	LoadMember
-		)	(	Operand
+		)	(	EInstruction
+					i_vLoadType
+			,	TypeID
+					i_vResult
+			,	Operand
 					i_vBase
 			,	TypeID
 					i_vBaseOffset
-			,	bool
-					i_vIsConstant
 			,	Operand
 					i_vLastOperand
 			,	::std::ptrdiff_t
@@ -411,6 +437,7 @@ export namespace
 			noexcept
 		->	Operand
 		{
+			[[assume(i_vLoadType == EInstruction::LoadMember || i_vLoadType == EInstruction::LoadConstant)]];
 			auto const
 				vSearchStart
 			=	::std::max
@@ -428,10 +455,12 @@ export namespace
 			,	[&]	(	Instruction<t_vParallelCount> const
 						&	rInstruction
 					)
-				{	if	(	rInstruction
-							.	Type
-						!=	EInstruction
-							::	Load
+				{	if	(		rInstruction
+								.	Type
+							!=	i_vLoadType
+						or		rInstruction
+								.	Result
+							!=	i_vResult
 						)
 					{	return
 							false
@@ -453,19 +482,17 @@ export namespace
 									.	ID
 								==	i_vBase
 									.	ID
-							and	(		rInstruction
+							and	(	//	Constants may have different offsets
+									(	i_vLoadType
+									==	EInstruction
+										::	LoadConstant
+									)
+								or	(	rInstruction
 										.	SecondOperand
 											[	vParallelIndex
 											]
 										.	Offset
 									==	i_vBaseOffset
-								or	//	Constants may have different offsets
-									(	i_vIsConstant
-									and	rInstruction
-										.	SecondOperand
-											[	vParallelIndex
-											]
-										.	IsConstant
 									)
 								)
 							)
@@ -488,8 +515,6 @@ export namespace
 						,	Operand
 							{	.	Offset
 								=	i_vBaseOffset
-							,	.	IsConstant
-								=	i_vIsConstant
 							}
 						)
 					;
@@ -500,8 +525,11 @@ export namespace
 				{
 					rInstruction
 					.	Type
-					=	EInstruction
-						::	Load
+					=	i_vLoadType
+					;
+					rInstruction
+					.	Result
+					=	i_vResult
 					;
 					rInstruction
 					.	SetOperands
@@ -510,8 +538,6 @@ export namespace
 						,	Operand
 							{	.	Offset
 								=	i_vBaseOffset
-							,	.	IsConstant
-								=	i_vIsConstant
 							}
 						)
 					;
@@ -598,12 +624,14 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	LoadMember
-		)	(	Operand
+		)	(	EInstruction
+					i_vLoadType
+			,	TypeID
+					i_vResult
+			,	Operand
 					i_vBase
 			,	TypeID
 					i_vBaseOffset
-			,	bool
-					i_vIsConstant
 			)
 			noexcept
 		->	Operand
@@ -612,9 +640,10 @@ export namespace
 				vLoadedOperand
 			=	m_aBuffer
 			->	LoadMember
-				(	i_vBase
+				(	i_vLoadType
+				,	i_vResult
+				,	i_vBase
 				,	i_vBaseOffset
-				,	i_vIsConstant
 				,	m_vLastOperand
 				,	m_vParallelIndex
 				)
@@ -628,7 +657,9 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	Return
-		)	(	Operand
+		)	(	TypeID
+					i_vResult
+			,	Operand
 					i_vFirst
 			)
 			noexcept
@@ -639,6 +670,7 @@ export namespace
 			->	Insert
 				(	EInstruction
 					::	Return
+				,	i_vResult
 				,	i_vFirst
 				,	{}
 				,	m_vLastOperand
@@ -652,6 +684,8 @@ export namespace
 		(	Insert
 		)	(	EInstruction
 					i_vInstruction
+			,	TypeID
+					i_vResult
 			,	Operand
 					i_vFirst
 			,	Operand
@@ -665,6 +699,7 @@ export namespace
 			(	m_aBuffer
 			->	Insert
 				(	i_vInstruction
+				,	i_vResult
 				,	i_vFirst
 				,	i_vSecond
 				,	m_vLastOperand
@@ -757,9 +792,11 @@ export namespace
 			ParallelVariable<t_tData, t_vParallelCount>
 			{	m_aInstructionView
 				->	LoadMember
-					(	m_vOperand
+					(	EInstruction
+						::	LoadMember
+					,	Type<t_tData>
+					,	m_vOperand
 					,	Type<decltype(i_vOffset)>
-					,	false
 					)
 			,	*	m_aInstructionView
 			};
@@ -768,14 +805,11 @@ export namespace
 		template
 			<	auto
 					t_vData
-			,	BitSize
-					t_vOffset
 			>
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator[]
-		)	(	Offset<ConstantValue<t_vData>, t_vOffset>
-					i_vOffset
+		)	(	Offset<ConstantValue<t_vData>, {}>
 			)	const
 			noexcept
 		->	decltype(auto)
@@ -783,9 +817,11 @@ export namespace
 			ParallelVariable<decltype(t_vData), t_vParallelCount>
 			{	m_aInstructionView
 				->	LoadMember
-					(	m_vOperand
-					,	Type<decltype(i_vOffset)>
-					,	true
+					(	EInstruction
+						::	LoadConstant
+					,	Type<decltype(t_vData)>
+					,	m_vOperand
+					,	Type<ConstantValue<t_vData>>
 					)
 			,	*	m_aInstructionView
 			};
@@ -799,7 +835,8 @@ export namespace
 		{	return
 			m_aInstructionView
 			->	Return
-				(	m_vOperand
+				(	Type<t_tVariable>
+				,	m_vOperand
 				)
 			;
 		}
@@ -818,20 +855,26 @@ export namespace
 			)
 			noexcept
 		->	decltype(auto)
-		{	return
-			ParallelVariable
-			<	decltype
+		{	using
+				tResult
+			=	decltype
 				(	::std::declval<t_tVariable>
 					()
 				*	::std::declval<t_tOtherVariable>
 					()
 				)
+			;
+
+			return
+			ParallelVariable
+			<	tResult
 			,	t_vParallelCount
 			>{	i_rLeft
 				.	m_aInstructionView
 				->	Insert
 					(	EInstruction
 						::	Multiply
+					,	Type<tResult>
 					,	i_rLeft
 						.	m_vOperand
 					,	i_rRight

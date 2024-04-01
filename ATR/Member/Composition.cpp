@@ -778,7 +778,7 @@ export namespace
 		{	return
 			i_rComposer
 			.	Member
-				(	"UnionTag"
+				(	"_UnionTag"
 				,	Type<unsigned char>
 				)
 			;

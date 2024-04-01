@@ -9,4 +9,5 @@ add_single_file_modules(
 
 	Cast.cpp
 	Fill.cpp
+	ArrayCeil.cpp
 )

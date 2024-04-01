@@ -18,7 +18,9 @@ import Evaluation.Dependency.PiFraction;
 import ATR.District.ExcludingHeap;
 import ATR.Instance;
 import ATR.Layout.Create;
+import ATR.Layout.Offset;
 import ATR.Member.Composition;
+import ATR.Member.Constant;
 import ATR.Virtual.InstructionBuffer;
 
 import Meta.ID;
@@ -29,6 +31,7 @@ import Meta.Token.TypeID;
 import Std;
 
 using ::ATR::Instance;
+using ::ATR::Member::ConstantValue;
 using ::ATR::Member::Union;
 using ::ATR::Virtual::InstructionBuffer_Of;
 using ::ATR::Virtual::Operand;
@@ -97,6 +100,55 @@ auto constexpr inline
 ;
 
 template
+	<	typename
+			t_tData
+	,	auto
+			t_vOffset
+	,	typename
+		...	t_tpIndirectOffsets
+	>
+[[nodiscard]]
+auto constexpr inline
+(	MakeOffsetType
+)	(	::ATR::Layout::Offset
+		<	t_tData
+		,	t_vOffset
+		,	t_tpIndirectOffsets
+			...
+		>
+			i_vOffset
+	)
+->	auto
+{	return
+	Type
+	<	decltype
+		(	i_vOffset
+		)
+	>;
+}
+
+template
+	<	auto
+			t_vData
+	>
+[[nodiscard]]
+auto constexpr inline
+(	MakeOffsetType
+)	(	::ATR::Layout::Offset
+		<	ConstantValue<t_vData>
+		,	{}
+		>
+	)
+->	auto
+{	return
+	Type
+	<	ConstantValue
+		<	t_vData
+		>
+	>;
+}
+
+template
 	<	ImplicitHash
 			t_vTypeName
 	,	ImplicitHash
@@ -117,26 +169,22 @@ requires
 	)
 auto static constexpr inline
 	Offset_Of
-=	Type
-	<	decltype
-		(	auto
-			(	::ATR::Layout::Offset_For
-				<	Body3D
-					::	Composition
-				,	RestoreTypeEntity
-					<	t_vInfo
-						.	Type
-					>
-				,	t_vInfo
-					.	Offset
-				,	t_vInfo
-					.	DistrictIndex
-				,	t_vInfo
-					.	Initializer
-				>
-			)
-		)
-	>
+=	MakeOffsetType
+	(	::ATR::Layout::Offset_For
+		<	Body3D
+			::	Composition
+		,	RestoreTypeEntity
+			<	t_vInfo
+				.	Type
+			>
+		,	t_vInfo
+			.	Offset
+		,	t_vInfo
+			.	DistrictIndex
+		,	t_vInfo
+			.	Initializer
+		>
+	)
 ;
 
 auto constexpr inline
@@ -216,10 +264,20 @@ struct
 };
 
 template
-	<>
+	<	::ATR::Virtual::EInstruction
+			t_vInstruction
+	>
+requires
+	(	(	t_vInstruction
+		==	LoadMember
+		)
+	or	(	t_vInstruction
+		==	LoadConstant
+		)
+	)
 struct
 	OperandPair
-	<	Load
+	<	t_vInstruction
 	>
 {
 	::std::ptrdiff_t
@@ -323,7 +381,15 @@ static_assert
 		[	0
 		]
 	.	Type
-==	Load
+==	LoadConstant
+);
+static_assert
+(	InstructionBuffer
+	.	Instructions
+		[	0
+		]
+	.	Result
+==	Type<float>
 );
 
 static_assert
@@ -515,7 +581,15 @@ static_assert
 		[	1
 		]
 	.	Type
-==	Load
+==	LoadMember
+);
+static_assert
+(	InstructionBuffer
+	.	Instructions
+		[	1
+		]
+	.	Result
+==	Type<float>
 );
 static_assert
 (	Equals
@@ -709,6 +783,14 @@ static_assert
 ==	Multiply
 );
 static_assert
+(	InstructionBuffer
+	.	Instructions
+		[	2
+		]
+	.	Result
+==	Type<float>
+);
+static_assert
 (	Equals
 	(	Operands
 		<	2
@@ -858,7 +940,15 @@ static_assert
 		[	3
 		]
 	.	Type
-==	Load
+==	LoadMember
+);
+static_assert
+(	InstructionBuffer
+	.	Instructions
+		[	3
+		]
+	.	Result
+==	Type<float>
 );
 static_assert
 (	Equals
@@ -1017,6 +1107,14 @@ static_assert
 ==	Multiply
 );
 static_assert
+(	InstructionBuffer
+	.	Instructions
+		[	4
+		]
+	.	Result
+==	Type<float>
+);
+static_assert
 (	Equals
 	(	Operands
 		<	4
@@ -1166,7 +1264,15 @@ static_assert
 		[	5
 		]
 	.	Type
-==	Load
+==	LoadMember
+);
+static_assert
+(	InstructionBuffer
+	.	Instructions
+		[	5
+		]
+	.	Result
+==	Type<float>
 );
 static_assert
 (	Equals
@@ -1320,6 +1426,14 @@ static_assert
 ==	Multiply
 );
 static_assert
+(	InstructionBuffer
+	.	Instructions
+		[	6
+		]
+	.	Result
+==	Type<float>
+);
+static_assert
 (	Equals
 	(	Operands
 		<	6
@@ -1460,6 +1574,14 @@ static_assert
 		]
 	.	Type
 ==	Return
+);
+static_assert
+(	InstructionBuffer
+	.	Instructions
+		[	7
+		]
+	.	Result
+==	Type<float>
 );
 static_assert
 (	Equals
