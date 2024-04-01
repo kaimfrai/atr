@@ -116,6 +116,47 @@ export namespace
 			;
 		}
 
+		auto constexpr inline
+		(	Delete
+		)	()
+			noexcept
+		->	void
+		{
+			auto
+			&	rGuardedValue
+			=	GuardedValue
+				()
+			;
+			if	(	rGuardedValue
+				!=	nullptr
+				)
+			{
+				if	constexpr
+					(	::std::is_array_v
+						<	District
+						>
+					)
+				{	delete
+						[]
+						static_cast<::std::remove_extent_t<District>*>
+						(	rGuardedValue
+						)
+					;
+				}
+				else
+				{	delete
+						static_cast<District*>
+						(	rGuardedValue
+						)
+					;
+				}
+
+				(	rGuardedValue
+				=	nullptr
+				);
+			}
+		}
+
 	public:
 		using
 			District
@@ -197,15 +238,15 @@ export namespace
 			)
 			noexcept
 		{
-			GuardedValue
-			()
+			(	GuardedValue
+				()
 			=	::std::exchange
 				(	i_rOther
 					.	GuardedValue
 						()
 				,	nullptr
 				)
-			;
+			);
 		}
 
 		auto constexpr inline
@@ -217,18 +258,21 @@ export namespace
 		->	MoveHeapGuard
 			&
 		{
-			GuardedValue
-			()
+			Delete
+			();
+
+			(	GuardedValue
+				()
 			=	::std::exchange
 				(	i_rOther
 					.	GuardedValue
 						()
 				,	nullptr
 				)
-			;
+			);
 
 			return
-				*this
+			*	this
 			;
 		}
 
@@ -237,28 +281,8 @@ export namespace
 			MoveHeapGuard
 		)	()
 			noexcept
-		{
-			if	constexpr
-				(	::std::is_array_v
-					<	District
-					>
-				)
-			{	delete
-					[]
-					static_cast<::std::remove_extent_t<District>*>
-					(	GuardedValue
-						()
-					)
-				;
-			}
-			else
-			{	delete
-					static_cast<District*>
-					(	GuardedValue
-						()
-					)
-				;
-			}
+		{	Delete
+			();
 		}
 	};
 }
