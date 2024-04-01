@@ -33,11 +33,6 @@ namespace
 	=	Type<::std::byte>
 	;
 
-	TypeID constexpr inline
-		PointerType
-	=	Type<void*>
-	;
-
 	template
 		<	short
 				t_vDistrictCount
@@ -185,6 +180,8 @@ namespace
 			*	i_aDistrictNames
 		,	Hash const
 			*	i_aHostDistrictNames
+		,	TypeID const
+			*	i_aNestedTypes
 		,	short
 				i_vAliasCount
 		)
@@ -352,11 +349,18 @@ namespace
 				+	vDistrictIndex
 				;
 
+				auto const
+					vNestedType
+				=	i_aNestedTypes
+					[	vDistrictIndex
+					]
+				;
+
 				vMemberIndexBuffer
 				.	AppendMemberIndex
-					(	PointerType
+					(	vNestedType
 					,	vHostDistrictIndex
-					,	PointerType
+					,	vNestedType
 						.	GetAlign
 							()
 					,	vMemberIndex
@@ -368,7 +372,7 @@ namespace
 				.	Types
 					[	vMemberIndex
 					]
-				=	PointerType
+				=	vNestedType
 				;
 				o_rComposition
 				.	Members
@@ -534,6 +538,8 @@ namespace
 			*	i_aDistrictNames
 		,	Hash const
 			*	i_aHostDistrictNames
+		,	TypeID const
+			*	i_aNestedTypes
 		)
 		noexcept
 	->	FlatComposition<t_vDistrictCount>
@@ -549,6 +555,7 @@ namespace
 		(	vComposition
 		,	i_aDistrictNames
 		,	i_aHostDistrictNames
+		,	i_aNestedTypes
 		,	i_rComposer
 			.	AliasCount
 		);
@@ -609,6 +616,30 @@ namespace
 
 		return
 			vHostDistrictNames
+		;
+	}
+
+	[[nodiscard]]
+	auto constexpr inline
+	(	GetDistrictNestedTypes
+	)	(	auto
+			...	i_vpDistrict
+		)
+		noexcept
+	->	TypeID const*
+	{
+		TypeID static constexpr
+			vDistrictNestedTypes
+			[]
+		{	TypeID
+			{}
+		,	i_vpDistrict
+			.	NestedType
+			...
+		};
+
+		return
+			vDistrictNestedTypes
 		;
 	}
 
@@ -818,6 +849,11 @@ export namespace
 				...
 			)
 		,	GetHostDistrictNames
+			(	t_tpDistrict
+				{}
+				...
+			)
+		,	GetDistrictNestedTypes
 			(	t_tpDistrict
 				{}
 				...

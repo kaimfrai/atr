@@ -101,6 +101,11 @@ export namespace
 			.	Host
 		;
 
+		TypeID static constexpr inline
+			NestedType
+		=	Type<void*>
+		;
+
 		template
 			<	typename
 					t_tInstance
