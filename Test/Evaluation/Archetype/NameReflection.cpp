@@ -401,7 +401,7 @@ static_assert
 using
 	LocalBody
 =	::ATR::District::ExcludingHeap
-	<	::ATR::District::Info{"Heap"}
+	<	{"Heap"}
 	,	"ColorRed"
 	,	"ColorGreen"
 	,	"ColorBlue"

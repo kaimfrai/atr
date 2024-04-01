@@ -20,7 +20,6 @@ import Meta.ID;
 
 import Std;
 
-using ::ATR::District::Info;
 using ::ATR::District::ExcludingHeap;
 
 using ::Meta::ID;
@@ -31,7 +30,7 @@ using namespace ::ATR::Literals;
 using
 	LocalBody
 =	ExcludingHeap
-	<	Info{"Heap"}
+	<	{"Heap"}
 	,	"ColorRed"
 	,	"ColorGreen"
 	,	"ColorBlue"

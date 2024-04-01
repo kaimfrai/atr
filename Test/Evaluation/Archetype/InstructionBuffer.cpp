@@ -12,8 +12,6 @@ import Evaluation.Archetype.Rectangle;
 import Evaluation.Archetype.Sphere;
 import Evaluation.Archetype.Square;
 import Evaluation.Archetype.Triangle;
-import Evaluation.Dependency.Fraction;
-import Evaluation.Dependency.PiFraction;
 
 import ATR.District.ExcludingHeap;
 import ATR.Instance;
@@ -46,7 +44,7 @@ using enum ::ATR::Virtual::EInstruction;
 using
 	LocalBody
 =	::ATR::District::ExcludingHeap
-	<	::ATR::District::Info{"Heap"}
+	<	{"Heap"}
 	,	"ColorRed"
 	,	"ColorGreen"
 	,	"ColorBlue"

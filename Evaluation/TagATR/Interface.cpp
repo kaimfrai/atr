@@ -11,7 +11,6 @@ import Std;
 
 using ::ATR::CErasure;
 using ::ATR::District::ExcludingHeap;
-using ::ATR::District::Info;
 using ::ATR::RErasure;
 
 using ::Meta::TypeID;
@@ -22,7 +21,7 @@ namespace
 	using
 		LocalBody
 	=	ExcludingHeap
-		<	Info{"Heap"}
+		<	{"Heap"}
 		,	"ColorRed"
 		,	"ColorGreen"
 		,	"ColorBlue"

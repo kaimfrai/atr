@@ -1,5 +1,6 @@
 export module ATR.District.ExcludingHeap;
 
+import ATR.District.Info;
 import ATR.District.MoveHeapGuard;
 
 import ATR.Member.AlignBuffer;
@@ -19,17 +20,6 @@ using ::Meta::TypeToken;
 export namespace
 	ATR::District
 {
-	struct
-		Info
-	{
-		ImplicitHash
-			Name
-		;
-		ImplicitHash
-			Host
-		{};
-	};
-
 	template
 		<	template
 				<	typename

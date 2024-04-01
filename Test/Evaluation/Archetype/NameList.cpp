@@ -36,7 +36,6 @@ using ::ATR::Member::ConstantType;
 using ::ATR::Member::ConstantValue;
 using ::ATR::Member::FlatComposition;
 using ::ATR::Member::Info;
-using ::ATR::Member::Union;
 
 using ::Meta::ID;
 using ::Meta::Memory::BitSize_Of;
@@ -1505,7 +1504,7 @@ static_assert
 using
 	LocalBody
 =	::ATR::District::ExcludingHeap
-	<	::ATR::District::Info{"Heap"}
+	<	{"Heap"}
 	,	"ColorRed"
 	,	"ColorGreen"
 	,	"ColorBlue"
