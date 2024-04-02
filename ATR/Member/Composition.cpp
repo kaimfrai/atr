@@ -645,37 +645,6 @@ namespace
 
 	template
 		<	typename
-				t_tDisctrict
-		>
-	[[nodiscard]]
-	auto constexpr inline
-	(	Hosts
-	)	(	Hash
-				i_vName
-		,	short
-			&	o_rIndex
-		)
-		noexcept
-	->	bool
-	{
-		auto const
-			vHosted
-		=	t_tDisctrict
-			::	Hosts
-				(	i_vName
-				)
-		;
-		o_rIndex
-		-=	not
-			vHosted
-		;
-		return
-			vHosted
-		;
-	}
-
-	template
-		<	typename
 			...	t_tpDistrict
 		>
 	[[nodiscard]]
@@ -687,22 +656,39 @@ namespace
 		noexcept
 	->	short
 	{
-		short
-			vDistrictIndex
-		=	sizeof...(t_tpDistrict)
-		;
-
-		// Right to left: Deepest layout first
-		(void)
-		(	Hosts<t_tpDistrict>
-			(	i_vName
-			,	vDistrictIndex
+		auto static constexpr
+		(*	fHosts
+			[]
+		)	(	Hash
 			)
-		or	...
-		);
-		// If no layout accepts, this is 0, the default layout
+			noexcept
+		->	bool
+		{	nullptr
+		,	&	t_tpDistrict
+			::	Hosts
+			...
+		};
+
+		for	(	short
+					vDistrictIndex
+				=	sizeof...(t_tpDistrict)
+			;		vDistrictIndex
+				>	0
+			;	--	vDistrictIndex
+			)
+		{
+			if	(	fHosts
+					[	vDistrictIndex
+					](	i_vName
+					)
+				)
+			{	return
+					vDistrictIndex
+				;
+			}
+		}
 		return
-			vDistrictIndex
+			0
 		;
 	}
 }
