@@ -11,7 +11,7 @@ All 3 strategies define the same archetype definition from which the actual data
 The entirety of this project is built using C++20 modules.
 
 ## Highlights of ATR vs a class hierarchy with virtual functions
-(Measurements from March 13th 2024, details can be found in Evaluation/Results/)
+(Measurements from April 7th 2024, details can be found in Evaluation/Results/)
 
 *TagATR:*
 
