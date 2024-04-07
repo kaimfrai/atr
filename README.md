@@ -4,7 +4,7 @@ This project provides the ATR library, short for Archetypal Recomposition. ATR i
 
 * Function pointer: Stores a pointer to the function implementation alongside the object.
 * Tag: Stores an 8-bit tag in a separate array that maps to the object type. The tag value is determined at compile time and validated at link time. At runtime with full optimization it is dispatched with a singular jump instruction, similar to how a switch with consecutive cases would.
-* SOA: A structure of array implemenation leveraging SIMD instructions to process multiple elements at one. For dispatching a tag is stored. Not yet implemented an exists only on paper.
+* SOA: A structure of array implemenation leveraging SIMD instructions to process multiple elements at one. For dispatching a tag is stored. Individual functions are merged on the instruction level to leverage both masked SIMD and instruction level parallelism.
 
 All 3 strategies define the same archetype definition from which the actual data structures are recomposed.
 
@@ -13,22 +13,23 @@ The entirety of this project is built using C++20 modules.
 ## Highlights of ATR vs a class hierarchy with virtual functions
 (Measurements from March 13th 2024, details can be found in Evaluation/Results/)
 
-*TagATR (best current implementation):*
+*TagATR:*
 
 * -10% compilation time:
-  1.12s vs 1.24s
-* Fastest compilation time of any technique that uses abstraction
+  1.01s vs 1.12s
 * -37% memory consumption:
   4'407'296 bytes vs 7'049'464 bytes
-* -46% total program run duration:
-  4.65 ms vs 8.67 ms
+* -47% total program run duration:
+  4.64 ms vs 8.71 ms
 
-*SOAReplication (draft of a future implementation):*
+*SOAATR:*
 
-* -41% Memory consumption:
-  4'172'704 bytes vs 7'049'464 bytes
+* -7% compilation time:
+  1.04s vs 1.12s
+* -37% Memory consumption:
+  4'439'360 bytes vs 7'049'464 bytes
 * -81% Total program run duration:
-  1.66 ms vs 8.67 ms 
+  1.68 ms vs 8.71 ms
 
 ## Requirements
 Supported OS:
@@ -98,6 +99,7 @@ This directory provides multiple implementations of a volume computation of diff
 * Dyno: An implementation using the dyno library and CRTP.
 * Polymorphic: An implementation using the polymorphic library and CRTP.
 * Replication: A hand-optimized implementation which resembles closely the result of ATR.
+* SOAATR: An implementation using ATR and arranging types in a structure of arrays way. Function overloads are merged on the instruction level into SIMD instructions to execute 8 elements at once. This could be called SIMD-polymorphism.
 * SOAReplication: A hand-optimized implementation using a structure of arrays approach and SIMD intrinsics. This is intended to be a reference point for the future SOA-ATR
 * TagATR: An implementation using ATR with a separate array of tags.
 * TagReplication: A hand-optimized implementation which resembles closely the result of TagATR.
@@ -106,7 +108,7 @@ This directory provides multiple implementations of a volume computation of diff
 * Virtual: An implementation using interfaces, inheritance, virtual functions, and std::unique_ptr.
 * Visitor: An experimental alternative that is not using ATR. When calling a function of a type-erased stored object, all possibly stored types need to be explicitly mentioned. This works similar to std::variant but does not require the types to be specified until later.
 
-Note that the assembly of archetype is nearly identical to the assembly of replication.
+Note that the assembly of Archetype is nearly identical to the assembly of Replication. More effort will be put into assimilating the other ATR samples to their replicated counterpart.
 
 To run all evaluation scripts do the following:
 
@@ -132,12 +134,13 @@ You may optionally specify exactly one argument out of
 * Variant
 * Visitor
 * SOAReplication
+* SOAATR
 
 instead of "all" to run the evaluation only on the corresponding implementation.
 
 To make use of perf the script requires elevated rights.
 
-You may find that despite ATR making heavy use of meta-programming, it's compilation duration without member access is shorter than the implementation using virtual functions!
+You may find that despite ATR making heavy use of meta-programming, it's compilation duration is shorter than the implementation using virtual functions!
 
 ## CMake
 
