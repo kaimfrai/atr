@@ -261,24 +261,6 @@ Disassembly of section .text:
                	int3
                	int3
 
-<initializer for module Evaluation.Dependency.RandomAccessIteratorBase>:
-               	cmp	byte ptr , 0x0 <_ZGIW10EvaluationW10DependencyW24RandomAccessIteratorBase__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	mov	byte ptr , 0x1 <_ZGIW10EvaluationW10DependencyW24RandomAccessIteratorBase__in_chrg>
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
 <initializer for module Evaluation.Dependency.TransformReduce>:
                	cmp	byte ptr , 0x0 <_ZGIW10EvaluationW10DependencyW15TransformReduce__in_chrg>
                	je	 <L0>
@@ -517,6 +499,24 @@ Disassembly of section .text:
                	int3
                	int3
 
+<initializer for module Meta.Generic.RandomAccessIteratorBase>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW7GenericW24RandomAccessIteratorBase__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW7GenericW24RandomAccessIteratorBase__in_chrg>
+               	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
 <_GLOBAL__sub_I_TagReplication.cpp>:
                	push	rax
                	call	 <initializer for module Evaluation.Dependency.PseudoRandomSequence>
@@ -524,7 +524,6 @@ Disassembly of section .text:
                	call	 <initializer for module Meta.Auto.Simd.Float>
                	call	 <initializer for module Meta.Auto.Simd.UInt8>
                	call	 <initializer for module Meta.Math.Random>
-               	call	 <initializer for module Evaluation.Dependency.RandomAccessIteratorBase>
                	call	 <initializer for module Evaluation.Dependency.TransformReduce>
                	call	 <initializer for module Evaluation.Dependency.VerifyLoopSum>
                	call	 <initializer for module Std>
@@ -541,6 +540,7 @@ Disassembly of section .text:
                	call	 <initializer for module Evaluation.TagReplication.Cone>
                	call	 <initializer for module Evaluation.TagReplication.Ellipsoid>
                	call	 <initializer for module Evaluation.TagReplication.Head>
+               	call	 <initializer for module Meta.Generic.RandomAccessIteratorBase>
                	pop	rax
                	jmp	 <initializer for module Std>
                	int3

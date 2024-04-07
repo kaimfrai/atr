@@ -1,25 +1,15 @@
 export module ATR.Virtual.UnionCall;
 
-import ATR.Layout.Offset;
 import ATR.Virtual.InstructionBuffer;
 
 import Meta.Auto.Simd.ArrayCeil;
 import Meta.Auto.Simd.Fill;
-import Meta.Auto.Simd.Int32;
 import Meta.Auto.Simd.Tag;
-import Meta.ID;
-import Meta.Memory.Size.PointerArithmetic;
-import Meta.Memory.Size.Scale;
-import Meta.Memory.Size;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 
 import Std;
 
-using ::ATR::Layout::Offset;
-using ::Meta::BitSize;
-using ::Meta::MaskedSimd;
-using ::Meta::ProtoID;
 using ::Meta::RestoreTypeEntity;
 using ::Meta::Simd;
 using ::Meta::SimdFill;
@@ -87,7 +77,9 @@ export namespace
 	{	return
 			::Meta::SimdArrayCeil
 			(	LoadSingleConstant
-				<	t_tResult
+				<	typename
+						t_tResult
+					::	ElementType
 				,	t_rOperand
 					[	t_vpParallelIndex
 					]
@@ -165,35 +157,65 @@ export namespace
 	}
 
 	template
-		<	typename
-				t_tElement
-		,	::std::size_t
+		<	::std::size_t
 				t_vCount
 		>
-	[[nodiscard]]
-	auto constexpr inline
-	(	MakeSimdMask
-	)	(	::std::int32_t
-				i_vMask
-		,	Simd<::std::int32_t[t_vCount]>
-				i_vParallelIndex
-		)
-		noexcept
-	->	SimdMask<t_tElement[t_vCount]>
-	{	return
-		// *HIGHEST* bit must be set
-		::std::bit_cast<SimdMask<t_tElement[t_vCount]>>
-		(	SimdFill<::std::int32_t[t_vCount]>
-			(	i_vMask
+	struct
+		GenericSimdMask
+	{
+		Simd<::std::int32_t[t_vCount]>
+			m_vMask
+		;
+
+		explicit(true) constexpr inline
+		(	GenericSimdMask
+		)	(	::std::int32_t
+					i_vMask
+			,	Simd<::std::int32_t[t_vCount]>
+					i_vParallelIndex
 			)
-		<<	i_vParallelIndex
-		);
-	}
+			noexcept
+		:	m_vMask
+			{	// *HIGHEST* bit must be set
+				SimdFill<::std::int32_t[t_vCount]>
+				(	i_vMask
+				)
+			<<	i_vParallelIndex
+			}
+		{}
+
+		template
+			<	typename
+					t_tElement
+			>
+		[[nodiscard]]
+		explicit(false) constexpr inline
+		(	operator
+			SimdMask<t_tElement[t_vCount]>
+		)	()	const
+			noexcept
+		{	return
+			::std::bit_cast<SimdMask<t_tElement[t_vCount]>>
+			(	m_vMask
+			);
+		}
+	};
 
 	template
-		<	typename
-				t_tElement
-		,	auto const
+		<	::std::size_t
+				t_vCount
+		>
+	(	GenericSimdMask
+	)	(	::std::int32_t
+		,	Simd<::std::int32_t[t_vCount]>
+		)
+	->	GenericSimdMask
+		<	t_vCount
+		>
+	;
+
+	template
+		<	auto const
 			&	t_rFirstOperand
 		,	auto const
 			&	t_rSecondOperand
@@ -248,23 +270,20 @@ export namespace
 			)
 		;
 
-		auto const
-			vSimdMask
-		=	MakeSimdMask<t_tElement>
-			(	vMask
-			,	i_vParallelIndex
-			)
-		;
-
 		return
-		(	i_rpVariables
-		...	[	vVariableID
+		Unmask
+		(	(	i_rpVariables
+			...	[	vVariableID
+				]
+			)[	GenericSimdMask
+				(	vMask
+				,	i_vParallelIndex
+				)
 			]
-		)[	vMask
-		][	RestoreTypeEntity
+		->*	RestoreTypeEntity
 			<	vOffset
 			>{}
-		];
+		);
 	}
 
 	struct
@@ -279,7 +298,7 @@ export namespace
 	};
 
 	template
-		<	::std::size_t
+		<	::std::int32_t
 				t_vParallelCount
 		>
 	struct
@@ -291,7 +310,7 @@ export namespace
 			]
 		{};
 
-		::std::size_t
+		::std::int32_t
 			Count
 		{};
 
@@ -397,18 +416,109 @@ export namespace
 	};
 
 	template
+		<	::std::int32_t
+				t_vParallelCount
+		>
+	(	CompactOperands
+	)	(	Operand const
+			(&)	[	t_vParallelCount
+				]
+		)
+	->	CompactOperands
+		<	t_vParallelCount
+		>
+	;
+
+
+	[[nodiscard]]
+	auto constexpr inline
+	(	MaskByType
+	)	(	auto const
+			&	i_rBase
+		,	::std::int32_t
+				i_vMask
+		,	auto
+				i_vParallelIndex
+		)
+		noexcept
+	->	decltype(auto)
+	{	return
+			i_rBase
+			[	GenericSimdMask
+				(	i_vMask
+				,	i_vParallelIndex
+				)
+			]
+		;
+	}
+
+	[[nodiscard]]
+	auto constexpr inline
+	(	BlendFold
+	)	(	auto
+				i_vFirst
+		,	auto
+			...	i_vpBlend
+		)
+		noexcept
+	->	auto
+	{	return
+		(	i_vFirst
+		=	...
+		=	i_vpBlend
+		);
+	}
+
+	template
+		<	::std::size_t
+			...	t_vpTypeIndex
+		,	::std::size_t
+			...	t_vpMask
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	SelectByOperand
+	)	(	::std::index_sequence
+			<	t_vpTypeIndex
+				...
+			>
+		,	::std::index_sequence
+			<	t_vpMask
+				...
+			>
+		,	auto
+				i_vParallelIndex
+		,	auto
+				i_vFirstVariable
+		,	auto
+			&
+			...	i_rpVariables
+		)
+		noexcept
+	->	decltype(auto)
+	{	return
+		BlendFold
+		(	i_vFirstVariable
+		,	MaskByType
+			(	(	i_rpVariables
+				...	[	t_vpTypeIndex
+					]
+				)
+			,	t_vpMask
+			,	i_vParallelIndex
+			)
+			...
+		);
+	}
+
+	template
 		<	auto const
 			&	t_rOperands
-		,	::std::size_t
-			...	t_vpParallelIndex
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	BlendMultiple
-	)	(	::std::index_sequence
-			<	t_vpParallelIndex
-				...
-			>
+	)	(	auto
 		,	auto
 				i_vParallelIndex
 		,	auto
@@ -416,53 +526,80 @@ export namespace
 			...	i_rpVariables
 		)
 		noexcept
-	->	decltype(auto)
+	->	auto
 	{
 		CompactOperands static constexpr
 			vCompactOperands
 		{	t_rOperands
 		};
 
-		return
-		[&]	<	::std::size_t
-				...	t_vpIndex
-			>(	::std::index_sequence
-				<	0uz
-				,	t_vpIndex
-					...
-				>
-			)
-		{	return
-			(	(	i_rpVariables
-				...	[	vCompactOperands
-						.	Operands
-							[	0uz
-							]
-						.	VariableID
-					]
+		auto static constexpr
+			vVariableIDs
+		=	[]	<	::std::size_t
+					...	t_vpIndex
+				>(	::std::index_sequence
+					<	0uz
+					,	t_vpIndex
+						...
+					>
 				)
-			=	...
-			=	(	i_rpVariables
-				...	[	vCompactOperands
-						.	Operands
-							[	t_vpIndex
-							]
-						.	VariableID
-					]
-				)[	MakeSimdMask
-					(	vCompactOperands
-						.	Operands
-							[	t_vpIndex
-							]
-						.	Mask
-					,	i_vParallelIndex
-					)
+			{	return
+				::std::index_sequence
+				<	vCompactOperands
+					.	Operands
+						[	t_vpIndex
+						]
+					.	VariableID
+					...
+				>{};
+			}(	::std::make_index_sequence
+				<	vCompactOperands
+					.	Count
+				>{}
+			)
+		;
+
+		auto static constexpr
+			vMasks
+		=	[]	<	::std::size_t
+					...	t_vpIndex
+				>(	::std::index_sequence
+					<	0uz
+					,	t_vpIndex
+						...
+					>
+				)
+			{	return
+				::std::index_sequence
+				<	vCompactOperands
+					.	Operands
+						[	t_vpIndex
+						]
+					.	Mask
+					...
+				>{};
+			}(	::std::make_index_sequence
+				<	vCompactOperands
+					.	Count
+				>{}
+			)
+		;
+
+		return
+		SelectByOperand
+		(	vVariableIDs
+		,	vMasks
+		,	i_vParallelIndex
+		,	(	i_rpVariables
+			...	[	vCompactOperands
+					.	Operands
+						[	0uz
+						]
+					.	VariableID
 				]
-			);
-		}(	::std::make_index_sequence
-			<	vCompactOperands
-				.	Count
-			>{}
+			)
+		,	i_rpVariables
+			...
 		);
 	}
 
@@ -563,7 +700,6 @@ export namespace
 		:	Value
 			{	LoadMultipleConstants
 				<	t_tResult
-				,	t_rFirstOperand
 				,	t_rSecondOperand
 				>(	i_vParallelIndices
 				,	i_vTypeIndices
@@ -602,8 +738,7 @@ export namespace
 			noexcept
 		:	Value
 			{	LoadMultipleMembers
-				<	t_tResult
-				,	t_rFirstOperand
+				<	t_rFirstOperand
 				,	t_rSecondOperand
 				>(	i_rpVariables
 					...
@@ -642,13 +777,26 @@ export namespace
 			noexcept
 		:	Value
 			{	BlendMultiple
-				<	t_tResult
-				,	t_rFirstOperand
+				<	t_rFirstOperand
 				>(	i_rpVariables
 					...
 				)
 			}
 		{}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	Return
+		)	(	Evaluator
+				&&	i_rEvaluator
+			)
+			noexcept
+		->	t_tResult
+		{	return
+				i_rEvaluator
+				.	Value
+			;
+		}
 	};
 
 	template
@@ -683,213 +831,4 @@ export namespace
 			...
 		{}
 	};
-
-	template
-		<	typename
-				t_tElement
-		,	::std::size_t
-				t_vCount
-		>
-	struct
-		MaskedErasedContainer
-	{
-		::std::byte const
-		*	m_aData
-		;
-		::std::uint32_t
-			m_vCapacity
-		;
-		::std::uint32_t
-			m_vIndex
-		;
-		SimdMask<t_tElement[t_vCount]>
-			m_vMask
-		;
-
-		template
-			<	BitSize
-					t_vOffset
-			>
-		[[nodiscard]]
-		auto constexpr inline
-		(	operator[]
-		)	(	Offset<t_tElement, t_vOffset>
-			)
-			noexcept
-		->	decltype(auto)
-		{
-			auto const
-				aDataStart
-			=	::std::launder
-				(	::std::bit_cast<t_tElement const*>
-					(	m_aData
-					+	m_vCapacity
-					*	t_vOffset
-					)
-				)
-			+	m_vIndex
-			;
-			return
-			static_cast<MaskedSimd<t_tElement[t_vCount]>>
-			(	MaskedSimd<t_tElement const(&)[t_vCount]>
-				{	aDataStart
-				,	m_vMask
-					.	m_vRaw
-				}
-			);
-		}
-	};
-
-	template
-		<	::std::size_t
-				t_vCount
-		>
-	struct
-		ErasedContainer
-	{
-		::std::byte const
-		*	m_aData
-		;
-		::std::uint32_t
-			m_vCapacity
-		;
-		::std::uint32_t
-			m_vIndex
-		;
-
-		template
-			<	typename
-					t_tElement
-			>
-		[[nodiscard]]
-		auto constexpr inline
-		(	operator[]
-		)	(	SimdMask<t_tElement[t_vCount]>
-					i_vMask
-			)
-			noexcept
-		->	MaskedErasedContainer
-			<	t_tElement
-			,	t_vCount
-			>
-		{	return
-			{	m_aData
-			,	m_vCapacity
-			,	m_vIndex
-			,	i_vMask
-			};
-		}
-
-
-		template
-			<	typename
-					t_tElement
-			,	BitSize
-					t_vOffset
-			>
-		[[nodiscard]]
-		auto constexpr inline
-		(	operator[]
-		)	(	Offset<t_tElement, t_vOffset>
-			)
-			noexcept
-		->	decltype(auto)
-		{
-			auto const
-				aDataStart
-			=	::std::launder
-				(	::std::bit_cast<t_tElement const*>
-					(	m_aData
-					+	m_vCapacity
-					*	t_vOffset
-					)
-				)
-			+	m_vIndex
-			;
-			return
-			static_cast<Simd<t_tElement[t_vCount]>>
-			(	Simd<t_tElement const(&)[t_vCount]>
-				{	aDataStart
-				}
-			);
-		}
-	};
-
-
-	[[nodiscard]]
-	auto constexpr inline
-	(	UnionCall
-	)	(	ProtoID auto
-				i_vFunction
-		,	auto const
-			&	i_rUnion
-		,	auto
-			...	i_vpArgument
-		)
-		noexcept
-	->	decltype(auto)
-	{
-		auto static constexpr
-		&	rInstructions
-		=	InstructionBuffer_Of
-			<	decltype(i_vFunction)
-			,	decltype(i_rUnion)
-			>
-		;
-
-		auto const
-			vTypeIndices
-		=	i_rUnion
-			[	"_UnionTag"
-			]
-		;
-
-		return
-		[&]	<	::std::size_t
-				...	t_vpIndex
-			>(	::std::index_sequence
-				<	t_vpIndex
-					...
-				>
-			)
-		{	return
-			EvaluatorGroup
-			<	Evaluator
-				<	rInstructions
-					.	Instructions
-						[	t_vpIndex
-						]
-					.	Type
-				,	RestoreTypeEntity
-					<	rInstructions
-						.	Instructions
-							[	t_vpIndex
-							]
-						.	Result
-					>
-				,	rInstructions
-					.	Instructions
-						[	t_vpIndex
-						]
-					.	FirstOperand
-				,	rInstructions
-					.	Instructions
-						[	t_vpIndex
-						]
-					.	SecondOperand
-				>
-				...
-			>{	rInstructions
-				.	ParallelIndices
-			,	vTypeIndices
-			,	i_rUnion
-			,	i_vpArgument
-				...
-			};
-		}(	::std::make_index_sequence
-			<	rInstructions
-				.	InstructionCount
-			>{}
-		);
-	}
 }

@@ -293,24 +293,6 @@ Disassembly of section .text:
                	int3
                	int3
 
-<initializer for module Evaluation.Dependency.RandomAccessIteratorBase>:
-               	cmp	byte ptr , 0x0 <_ZGIW10EvaluationW10DependencyW24RandomAccessIteratorBase__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	mov	byte ptr , 0x1 <_ZGIW10EvaluationW10DependencyW24RandomAccessIteratorBase__in_chrg>
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
 <initializer for module Evaluation.Dependency.TransformReduce>:
                	cmp	byte ptr , 0x0 <_ZGIW10EvaluationW10DependencyW15TransformReduce__in_chrg>
                	je	 <L0>
@@ -383,6 +365,24 @@ Disassembly of section .text:
                	int3
                	int3
 
+<initializer for module Meta.Generic.RandomAccessIteratorBase>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW7GenericW24RandomAccessIteratorBase__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW7GenericW24RandomAccessIteratorBase__in_chrg>
+               	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
 <_GLOBAL__sub_I_SOAReplication.cpp>:
                	push	rax
                	call	 <initializer for module Evaluation.Dependency.Fraction>
@@ -392,15 +392,19 @@ Disassembly of section .text:
                	call	 <initializer for module Meta.Auto.Simd.Float>
                	call	 <initializer for module Meta.Auto.Simd.UInt8>
                	call	 <initializer for module Meta.Math.Random>
-               	call	 <initializer for module Evaluation.Dependency.RandomAccessIteratorBase>
                	call	 <initializer for module Evaluation.Dependency.TransformReduce>
                	call	 <initializer for module Evaluation.Dependency.VerifyLoopSum>
                	call	 <initializer for module Evaluation.SOAReplication.SOAView>
                	call	 <initializer for module Std>
                	call	 <initializer for module Meta.Auto.Simd.Fill>
-               	call	 <initializer for module Meta.Auto.Simd.Int32>
+               	call	 <initializer for module Meta.Generic.RandomAccessIteratorBase>
                	pop	rax
                	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
                	int3
                	int3
@@ -1083,7 +1087,6 @@ Disassembly of section .text:
 <L62>:
                	xor	edi, edi
                	mov	r13, r9
-               	mov	r9, r10
                	movabs	r14, -0x2a59ed990f36c6d4
                	movabs	r9, 0x39abdc4529b1661c
                	jmp	 <L65>

@@ -420,21 +420,31 @@ auto constexpr inline
 	LocalHead
 		vHead
 	{};
-	vHead
-	[	"LeftEyeColorRed"_id
-	]=	1.0f
-	;
-	vHead
-	[	"LeftEyeColorGreen"_id
-	]=	2.0f
-	;
-	return
+	(	vHead
+		[	"LeftEyeColorRed"_id
+		]
+	=	1.0f
+	);
+	(	vHead
+		[	"LeftEyeColorGreen"_id
+		]
+	=	2.0f
+	);
+
+	LocalHead
+		vMoveConstruct
+	{	::std::move
 		(	vHead
+		)
+	};
+
+	return
+		(	vMoveConstruct
 			[	"RightEyeColorRed"_id
 			]
 		==	1.0f
 		)
-	and	(	vHead
+	and	(	vMoveConstruct
 			[	"RightEyeColorGreen"_id
 			]
 		==	2.0f

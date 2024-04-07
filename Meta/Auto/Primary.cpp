@@ -5,7 +5,7 @@ export namespace
 {
 	template
 		<	typename
-		,	decltype(auto)
+		,	typename
 			...
 		>
 	struct

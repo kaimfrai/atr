@@ -7,6 +7,8 @@ add_single_file_modules(
 	UInt32.cpp
 	UInt8.cpp
 
+	Array.cpp
+
 	Cast.cpp
 	Fill.cpp
 	ArrayCeil.cpp

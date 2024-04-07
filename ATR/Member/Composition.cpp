@@ -20,8 +20,8 @@ import Std;
 using ::Meta::BitSize;
 using ::Meta::ByteSize;
 using ::Meta::ProtoID;
-using ::Meta::String::ImplicitHash;
 using ::Meta::String::Hash;
+using ::Meta::String::ImplicitHash;
 using ::Meta::Type;
 using ::Meta::TypeID;
 
@@ -52,8 +52,13 @@ namespace
 	->	void
 	{
 		BitSize
-			vTotalOffset
-		{};
+		&	rTotalOffset
+		=	o_rComposition
+			.	Layout
+				[	i_vDistrictIndex
+				]
+			.	Size
+		;
 
 		for	(	short
 					vMemberIndex
@@ -80,20 +85,20 @@ namespace
 				;	++	vUnionIndex
 				)
 			{
-					o_rComposition
-					.	Offsets
+				o_rComposition
+				.	Offsets
 					[	vMemberIndex
 					][	vUnionIndex
 					]
-				=	vTotalOffset
+				=	rTotalOffset
 				;
 			}
 
-				vTotalOffset
+			(	rTotalOffset
 			+=	vType
 				.	GetSize
 					()
-			;
+			);
 		}
 
 		BitSize
@@ -124,24 +129,24 @@ namespace
 				;	++	vUnionIndex
 				)
 			{
-					o_rComposition
-					.	Offsets
+				o_rComposition
+				.	Offsets
 					[	vMemberIndex
 					][	vUnionIndex
 					]
-				=	vTotalOffset
+				=	rTotalOffset
 				;
 			}
-			vTotalOffset
+			(	rTotalOffset
 			+=	vType
 				.	GetSize
 					()
-			;
-			vByteCount
+			);
+			(	vByteCount
 			+=	vType
 				.	GetSize
 					()
-			;
+			);
 		}
 
 		if	(	auto const
@@ -182,8 +187,6 @@ namespace
 			*	i_aHostDistrictNames
 		,	TypeID const
 			*	i_aNestedTypes
-		,	short
-				i_vAliasCount
 		)
 		noexcept
 	->	void
@@ -343,10 +346,8 @@ namespace
 
 				short const
 					vMemberIndex
-				=	vMemberCount
-				+	i_vAliasCount
-				-	1
-				+	vDistrictIndex
+				=	NameBufferSize
+				-	vDistrictIndex
 				;
 
 				auto const
@@ -489,9 +490,9 @@ namespace
 			=	o_rComposition
 				.	Members
 				.	MemberIndices
-				[	rAliasTarget
+					[	rAliasTarget
 						.	HashIndex
-				]
+					]
 			;
 
 			if	(	rMemberIndex
@@ -501,6 +502,8 @@ namespace
 				.	Members
 				.	AddNewMember
 					(	rMemberIndex
+					,	rAliasTarget
+						.	HashIndex
 					,	vAliasedType
 					,	vAliasedDistrictIndex
 					,	rAliasTarget
@@ -556,8 +559,6 @@ namespace
 		,	i_aDistrictNames
 		,	i_aHostDistrictNames
 		,	i_aNestedTypes
-		,	i_rComposer
-			.	AliasCount
 		);
 
 		ResolveAliases
@@ -792,20 +793,77 @@ export namespace
 			(	sizeof...(t_tpTypeName)
 			>	1
 			)
-		{	return
+		{
+			auto const
+				vMemberName
+			=	Hash
+				{	"_UnionTag"
+				}
+			;
+
+			auto const
+				vHashIndex
+			=	i_rComposer
+				.	Members
+				.	HashIndexFor
+					(	vMemberName
+					)
+			;
+			auto
+			&	rHasMember
+			=	i_rComposer
+				.	Members
+				.	HasMember
+					[	vHashIndex
+					]
+			;
+			(	rHasMember
+			=	compl
+				(	compl
+					rHasMember
+				<<	sizeof...(t_tpTypeName)
+				)
+			);
+
+			(	i_rComposer
+				.	Members
+				.	Names
+					[	vHashIndex
+					]
+			=	vMemberName
+			);
+
+			auto
+			&	rMemberIndex
+			=	i_rComposer
+				.	Members
+				.	MemberIndices
+					[	vHashIndex
+					]
+			;
+			[[assume(rMemberIndex < 0)]];
 			i_rComposer
-			.	Member
-				(	"_UnionTag"
+			.	Members
+			.	AddNewMember
+				(	rMemberIndex
+				,	vHashIndex
 				,	Type<unsigned char>
+				,	i_rComposer
+					.	DistrictIndexOf
+						(	vMemberName
+						)
+				,	PartialName
+					{	"_UnionTag"
+					,	-1
+					}
 				)
 			;
 		}
-		else
-		{	return
-			static_cast<decltype(i_rComposer)>
-			(	i_rComposer
-			);
-		}
+
+		return
+		static_cast<decltype(i_rComposer)>
+		(	i_rComposer
+		);
 	}
 
 	template

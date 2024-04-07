@@ -1,24 +1,131 @@
 export module ATR.District.MoveHeapGuard;
 
 import ATR.Layout.Create;
-import ATR.Layout.Offset;
 import ATR.Member.Composition;
-import ATR.Member.Info;
 
-import Meta.ID;
-import Meta.String.Hash;
-import Meta.Token.Type;
+import Meta.Auto.Ref.PledgeCount;
 
 import Std;
-
-using ::Meta::ProtoID;
-using ::Meta::RestoreTypeEntity;
-using ::Meta::String::Hash;
-using ::Meta::Type;
 
 export namespace
 	ATR::District
 {
+	template
+		<	typename
+		>
+	struct
+		Heap
+	;
+
+	template
+		<>
+	struct
+		Heap
+		<	void
+		>
+	{
+		template
+			<	typename
+					t_tData
+			>
+		using
+			Rebind
+		=	Heap
+			<	t_tData
+			>
+		;
+
+		void
+		*	Data
+		;
+	};
+
+	template
+		<	typename
+				t_tDistrict
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	ReadErasedHeap
+	)	(	Heap<void>
+				i_aData
+		)
+		noexcept
+	->	decltype(auto)
+	{
+		if	(	i_aData
+				.	Data
+			==	nullptr
+			)
+		{	((void)"Element pointer not initialized", ::std::unreachable());
+		}
+
+		if	constexpr
+			(	::std::is_array_v
+				<	t_tDistrict
+				>
+			)
+		{	return
+			::Meta::PledgeCount<::std::extent_v<t_tDistrict>>
+			(	static_cast<::std::remove_extent_t<t_tDistrict>*>
+				(	i_aData
+					.	Data
+				)
+			);
+		}
+		else
+		{	return
+			*	static_cast<t_tDistrict*>
+				(	i_aData
+					.	Data
+				)
+			;
+		}
+	};
+
+	template
+		<	typename
+				t_tDistrict
+		>
+	struct
+		Heap
+	{
+		using
+			Erased
+		=	Heap
+			<	void
+			>
+		;
+
+		[[nodiscard]]
+		auto static constexpr inline
+		(	Read
+		)	(	Erased
+				&	i_rErased
+			)
+			noexcept
+		->	decltype(auto)
+		{	return
+			ReadErasedHeap<t_tDistrict>
+			(	i_rErased
+			);
+		}
+
+		[[nodiscard]]
+		auto static constexpr inline
+		(	Read
+		)	(	Erased const
+				&	i_rErased
+			)
+			noexcept
+		->	decltype(auto)
+		{	return
+			ReadErasedHeap<t_tDistrict const>
+			(	i_rErased
+			);
+		}
+	};
+
 	template
 		<	short
 				t_vDistrictIndex
@@ -45,7 +152,7 @@ export namespace
 				>
 			typename
 				t_t1Instance
-		,	ProtoID
+		,	typename
 				t_tTypeName
 		,	typename
 			...	t_tpDistrict
@@ -97,12 +204,12 @@ export namespace
 			noexcept
 		->	void*&
 		{	return
-				static_cast<InstanceType&>
+			(	static_cast<InstanceType&>
 				(	*this
 				).	Layout
 			->*	Layout::Offset_For
 				<	Composition
-				,	void*
+				,	Heap<void>
 				,	Composition
 					.	GetDistrictOffset
 						(	t_vDistrictIndex
@@ -113,6 +220,8 @@ export namespace
 						)
 				,	nullptr
 				>
+			)
+			.	Data
 			;
 		}
 
@@ -171,13 +280,13 @@ export namespace
 		)	()
 			noexcept
 		{
-				GuardedValue
+			(	GuardedValue
 				()
 			=	new
 				(	::std::nothrow
 				)
 				District
-			;
+			);
 		}
 
 		explicit(false) constexpr inline
@@ -192,8 +301,7 @@ export namespace
 					<	District
 					>
 				)
-			{
-				auto
+			{	auto
 				*	aHeapArray
 				=	new
 					(	::std::nothrow
@@ -210,14 +318,14 @@ export namespace
 					)
 				,	aHeapArray
 				);
-					GuardedValue
+
+				(	GuardedValue
 					()
 				=	aHeapArray
-				;
+				);
 			}
 			else
-			{
-					GuardedValue
+			{	(	GuardedValue
 					()
 				=	new
 					(	::std::nothrow
@@ -227,7 +335,7 @@ export namespace
 						(	i_rInitial
 						)
 					}
-				;
+				);
 			}
 		}
 
@@ -237,8 +345,7 @@ export namespace
 				&&	i_rOther
 			)
 			noexcept
-		{
-			(	GuardedValue
+		{	(	GuardedValue
 				()
 			=	::std::exchange
 				(	i_rOther
@@ -257,8 +364,7 @@ export namespace
 			noexcept
 		->	MoveHeapGuard
 			&
-		{
-			Delete
+		{	Delete
 			();
 
 			(	GuardedValue

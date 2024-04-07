@@ -1,6 +1,6 @@
 export module Meta.Auto.Ref.RSpan;
 
-import Meta.Auto.Primary;
+export import Meta.Auto.Primary;
 import Meta.Auto.Ref.DynamicCountArray;
 
 export namespace

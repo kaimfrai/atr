@@ -941,13 +941,12 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x368], r8
                	mov	rdi, r8
                	xor	ebp, ebp
-               	mov	rcx, r11
                	mov	qword ptr [rsp + 0x250], r11
                	mov	r8, r11
                	mov	qword ptr [rsp + 0x330], r9
                	xor	edx, edx
                	jmp	 <L4>
-               	nop	dword ptr [rax]
+               	nop	word ptr [rax + rax]
 <L6>:
                	mov	rcx, r8
                	shl	rcx, 0x11
@@ -3552,7 +3551,6 @@ Disassembly of section .text:
                	rol	rdx, 0x7
                	lea	rcx, [rcx + 8*rcx]
                	lea	rdx, [rdx + 8*rdx]
-               	mov	r11, r14
                	mov	qword ptr [rsp + 0x270], r14
                	mov	qword ptr [rsp + 0x2e8], r14
                	mov	r14, rbp

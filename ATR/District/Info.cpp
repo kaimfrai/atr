@@ -4,6 +4,8 @@ import Meta.String.Hash;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 
+import Std;
+
 using ::Meta::String::ImplicitHash;
 using ::Meta::Type;
 using ::Meta::TypeID;
@@ -17,6 +19,10 @@ export namespace
 	{
 		ImplicitHash
 			Name
+		;
+		::std::size_t
+			Multiplier
+		=	1uz
 		;
 		ImplicitHash
 			Host

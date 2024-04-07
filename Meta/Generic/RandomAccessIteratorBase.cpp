@@ -1,15 +1,27 @@
-export module Evaluation.Dependency.RandomAccessIteratorBase;
+export module Meta.Generic.RandomAccessIteratorBase;
 
 import Std;
 
 export namespace
-	Bodies3D
+	Meta::Generic
 {
 	template
 		<	typename
+				t_tProto
+		>
+	concept
+		ProtoReferenceProxy
+	=	requires
+		{	typename
+				t_tProto
+			::	ReferencedValue
+			;
+		}
+	;
+
+	template
+		<	ProtoReferenceProxy
 				t_tReference
-		,	typename
-				t_tValue
 		,	typename
 				t_tDifference
 			=	::std::ptrdiff_t
@@ -28,7 +40,8 @@ export namespace
 		;
 		using
 			value_type
-		=	t_tValue
+		=	t_tReference
+			::	ReferencedValue
 		;
 		using
 			difference_type
@@ -47,7 +60,7 @@ export namespace
 		->	decltype(i_aIterator)
 		{	return
 				i_aIterator
-				+=	i_vDifference
+			+=	i_vDifference
 			;
 		}
 
@@ -63,7 +76,7 @@ export namespace
 		->	decltype(i_aIterator)
 		{	return
 				i_aIterator
-				+=	i_vDifference
+			+=	i_vDifference
 			;
 		}
 
@@ -76,9 +89,9 @@ export namespace
 		->	decltype(i_rThis)
 		{	return
 				i_rThis
-				+=	difference_type
-					{	1
-					}
+			+=	difference_type
+				{	1
+				}
 			;
 		}
 
@@ -92,14 +105,13 @@ export namespace
 			noexcept
 		->	decltype(auto(i_rThis))
 		{	return
-				::std::exchange
-				(	i_rThis
-				,		i_rThis
-					+	difference_type
-						{	1
-						}
-				)
-			;
+			::std::exchange
+			(	i_rThis
+			,		i_rThis
+				+	difference_type
+					{	1
+					}
+			);
 		}
 
 		auto constexpr inline
@@ -113,8 +125,7 @@ export namespace
 		->	decltype(i_rThis)
 		{	return
 				i_rThis
-				+=	-
-					i_vDifference
+			+=	-	i_vDifference
 			;
 		}
 
@@ -130,7 +141,7 @@ export namespace
 		->	decltype(i_aIterator)
 		{	return
 				i_aIterator
-				-=	i_vDifference
+			-=	i_vDifference
 			;
 		}
 
@@ -143,9 +154,9 @@ export namespace
 		->	decltype(i_rThis)
 		{	return
 				i_rThis
-				-=	difference_type
-					{	1
-					}
+			-=	difference_type
+				{	1
+				}
 			;
 		}
 
@@ -159,14 +170,13 @@ export namespace
 			noexcept
 		->	decltype(auto(i_rThis))
 		{	return
-				::std::exchange
-				(	i_rThis
-				,	i_rThis
-					-	difference_type
-						{	1
-						}
-				)
-			;
+			::std::exchange
+			(	i_rThis
+			,		i_rThis
+				-	difference_type
+					{	1
+					}
+			);
 		}
 
 		[[nodiscard]]
@@ -180,11 +190,80 @@ export namespace
 			noexcept
 		->	reference
 		{	return
-				*
-				(	i_rThis
+			*	(	i_rThis
 				+	i_vIndex
 				)
 			;
 		}
 	};
+
+	template
+		<	ProtoReferenceProxy
+				t_tReference
+		>
+	struct
+		ImplicitReference
+	:	t_tReference
+	{
+		explicit(false) constexpr inline
+		(	ImplicitReference
+		)	(	t_tReference
+					i_rReference
+			)
+			noexcept
+		:	t_tReference
+			{	i_rReference
+			}
+		{}
+
+		explicit(false) constexpr inline
+		(	ImplicitReference
+		)	(	typename t_tReference::ReferencedValue const
+				&	i_rValue
+			)
+			noexcept
+		:	t_tReference
+			{	i_rValue
+				.	operator
+					t_tReference
+					()
+			}
+		{}
+	};
 }
+
+export template
+	<	::Meta::Generic::ProtoReferenceProxy
+			t_tReference
+	>
+struct
+	::std::common_type
+	<	typename
+			t_tReference
+		::	ReferencedValue
+	,	t_tReference
+	>
+:	::std::type_identity
+	<	::Meta::Generic::ImplicitReference
+		<	t_tReference
+		>
+	>
+{};
+
+export template
+	<	::Meta::Generic::ProtoReferenceProxy
+			t_tReference
+	>
+struct
+	::std::common_type
+	<	t_tReference
+	,	typename
+			t_tReference
+		::	ReferencedValue
+	>
+:	::std::type_identity
+	<	::Meta::Generic::ImplicitReference
+		<	t_tReference
+		>
+	>
+{};

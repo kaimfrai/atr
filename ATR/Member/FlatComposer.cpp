@@ -3,11 +3,9 @@ export module ATR.Member.FlatComposer;
 import ATR.Member.Constant;
 import ATR.Member.Constants;
 import ATR.Member.FlatComposition;
-import ATR.Member.LayoutList;
 import ATR.Member.PrefixGuard;
 
 import Meta.ID;
-import Meta.Size;
 import Meta.String.Hash;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
@@ -15,10 +13,7 @@ import Meta.Token.TypeID;
 import Std;
 
 using ::Meta::ProtoID;
-using ::Meta::SSize;
 using ::Meta::String::Hash;
-using ::Meta::String::ImplicitHash;
-using ::Meta::Type;
 using ::Meta::TypeID;
 
 export namespace
@@ -104,24 +99,24 @@ export namespace
 						rHasMember
 					=	Members
 						.	HasMember
-						[	vHashIndex
-						][	Members
-							.	UnionCount
-						]
+							[	vHashIndex
+							][	Members
+								.	UnionCount
+							]
 				;	not
 					rHasMember
 				)
 			{
-					rHasMember
+				(	rHasMember
 				=	true
-				;
+				);
 
-					Members
+				(	Members
 					.	Names
 					[	vHashIndex
 					]
 				=	vPrefixedMemberName
-				;
+				);
 
 				i_fAdd
 				(	vHashIndex
@@ -152,7 +147,7 @@ export namespace
 					,	Hash
 					)
 				{
-						AliasTargets
+					(	AliasTargets
 						[	AliasCount
 							++
 						]
@@ -168,7 +163,7 @@ export namespace
 						,	Members
 							.	UnionCount
 						}
-					;
+					);
 				}
 			);
 		}
@@ -205,6 +200,7 @@ export namespace
 					{	Members
 						.	AddNewMember
 							(	rMemberIndex
+							,	i_vHashIndex
 							,	i_vType
 							,	i_vType
 								.	IsAligned
@@ -258,8 +254,8 @@ export namespace
 					&	rMemberIndex
 					=	Members
 						.	MemberIndices
-						[	i_vHashIndex
-						]
+							[	i_vHashIndex
+							]
 					;
 
 					TypeID const
@@ -279,6 +275,7 @@ export namespace
 					{	Members
 						.	AddNewMember
 							(	rMemberIndex
+							,	i_vHashIndex
 							,	vType
 							,	-1
 							,	PartialName

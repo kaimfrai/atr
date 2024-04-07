@@ -848,12 +848,11 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x360], r11
                	mov	rdi, r11
                	xor	ebp, ebp
-               	mov	rcx, r8
                	mov	qword ptr [rsp + 0x288], r8
                	mov	r9, r10
                	xor	r11d, r11d
                	jmp	 <L4>
-               	nop	dword ptr [rax]
+               	nop	word ptr cs:[rax + rax]
 <L6>:
                	mov	rcx, r8
                	shl	rcx, 0x11

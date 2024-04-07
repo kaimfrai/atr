@@ -54,6 +54,14 @@ export namespace
 		}
 	};
 
+	template
+		<	::std::size_t
+				t_vBitCount
+		>
+	struct
+		Bits
+	{};
+
 
 	template
 		<>
@@ -61,7 +69,9 @@ export namespace
 		Auto
 		<	bool
 			&
-		,	16uz
+		,	Bits
+			<	16uz
+			>
 		>
 	{
 		::std::uint16_t
@@ -138,7 +148,7 @@ export namespace
 					i_vIndex
 			)	&
 			noexcept
-		->	Auto<bool&, 16uz>
+		->	Auto<bool&, Bits<16uz>>
 		{	return
 			{	&	m_vRaw
 			,	static_cast<::std::uint16_t>
@@ -165,5 +175,101 @@ export namespace
 				1
 			);
 		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator compl
+		)	(	Auto
+					i_vArray
+			)
+			noexcept
+		->	Auto
+		{	return
+			{	static_cast<::std::uint16_t>
+				(	compl
+					i_vArray
+					.	m_vRaw
+				)
+			};
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator <<
+		)	(	Auto
+					i_vArray
+			,	::std::uint16_t
+					i_vShift
+			)
+			noexcept
+		->	Auto
+		{	return
+			{	static_cast<::std::uint16_t>
+				(	i_vArray
+					.	m_vRaw
+				<<	i_vShift
+				)
+			};
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator bitor
+		)	(	Auto
+					i_vLeft
+			,	Auto
+					i_vRight
+			)
+			noexcept
+		->	Auto
+		{	(	i_vLeft
+				.	m_vRaw
+			|=	i_vRight
+				.	m_vRaw
+			);
+			return
+				i_vLeft
+			;
+		}
+
+		auto constexpr inline
+		(	operator|=
+		)	(	Auto
+					i_vRight
+			)	&
+			noexcept
+		->	Auto&
+		{	return
+			*	this
+			=	*	this
+			bitor
+				i_vRight
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	Count
+		)	(	Auto
+					i_vArray
+			)
+			noexcept
+		->	auto
+		{	return
+			::std::popcount
+			(	i_vArray
+				.	m_vRaw
+			);
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator==
+		)	(	Auto
+			,	Auto
+			)
+			noexcept
+		->	bool
+		=	default;
 	};
 }

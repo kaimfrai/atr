@@ -15,17 +15,16 @@ import Meta.Token.TypeID;
 
 import Std;
 
+using ::ATR::Layout::Offset;
 using ::ATR::Member::ConstantValue;
 using ::ATR::Member::Union;
 
-using ::ATR::Layout::Offset;
 using ::Meta::BitSize;
 using ::Meta::ProtoID;
 using ::Meta::RestoreTypeEntity;
 using ::Meta::String::ImplicitHash;
 using ::Meta::Type;
 using ::Meta::TypeID;
-using ::Meta::TypeToken;
 
 export namespace
 	ATR::Virtual
@@ -788,13 +787,22 @@ export namespace
 			)	const
 			noexcept
 		->	decltype(auto)
-		{	return
-			ParallelVariable<t_tData, t_vParallelCount>
+		{
+			using
+				tData
+			=	typename
+					decltype(i_vOffset)
+				::
+				DataType
+			;
+
+			return
+			ParallelVariable<tData, t_vParallelCount>
 			{	m_aInstructionView
 				->	LoadMember
 					(	EInstruction
 						::	LoadMember
-					,	Type<t_tData>
+					,	Type<tData>
 					,	m_vOperand
 					,	Type<decltype(i_vOffset)>
 					)

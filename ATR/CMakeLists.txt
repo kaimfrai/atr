@@ -3,7 +3,6 @@ add_subdirectory(Layout)
 add_single_file_modules(
 	Erase.cpp
 )
-add_subdirectory(District)
 
 add_single_file_modules(
 	Dependency.cpp
@@ -14,6 +13,7 @@ add_single_file_modules(
 )
 
 add_subdirectory(Virtual)
+add_subdirectory(District)
 
 add_single_file_modules(
 	Literals.cpp

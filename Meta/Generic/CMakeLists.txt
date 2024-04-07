@@ -4,4 +4,5 @@ add_single_file_modules(
 	LowerBound.cpp
 	Insert.cpp
 	ValueGuard.cpp
+	RandomAccessIteratorBase.cpp
 )

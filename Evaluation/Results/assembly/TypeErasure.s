@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <memset+0x7a30>
+               	call	qword ptr  <memset+0x7a20>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x7a40>
+               	mov	rax, qword ptr  <memset+0x7a30>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x7a48>
+               	mov	rax, qword ptr  <memset+0x7a38>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <memset+0x7a50>
+               	cmp	qword ptr , 0x0 <memset+0x7a40>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -780,7 +780,7 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x338], rdx
                	movsxd	rdi, edx
                	shl	rdi, 0x5
-               	mov	rsi, qword ptr  <memset+0x7a58>
+               	mov	rsi, qword ptr  <memset+0x7a48>
                	call	 <_ZnamRKSt9nothrow_t@plt>
                	movsxd	rdx, r13d
                	movabs	rsi, -0x61c8864680b583eb
@@ -843,13 +843,12 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x360], r11
                	mov	rdi, r11
                	xor	r12d, r12d
-               	mov	rcx, r8
                	mov	qword ptr [rsp + 0x278], r8
                	mov	qword ptr [rsp + 0x368], r10
                	mov	r9, r10
                	xor	ebp, ebp
                	jmp	 <L4>
-               	nop	word ptr cs:[rax + rax]
+               	nop
 <L6>:
                	mov	rcx, r8
                	shl	rcx, 0x11
@@ -3846,7 +3845,7 @@ Disassembly of section .text:
                	call	 <__cxa_allocate_exception@plt>
                	vmovaps	xmm0, xmmword ptr [rsp + 0x10]
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <memset+0x7a60>
+               	mov	rsi, qword ptr  <memset+0x7a50>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
@@ -4236,7 +4235,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <memset+0x7a38>
+               	mov	rax, qword ptr  <memset+0x7a28>
                	test	rax, rax
                	je	 <L0>
                	call	rax

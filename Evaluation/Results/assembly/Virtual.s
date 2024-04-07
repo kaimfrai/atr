@@ -841,7 +841,6 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x360], r10
                	mov	rdi, r10
                	xor	r13d, r13d
-               	mov	rcx, r8
                	mov	qword ptr [rsp + 0x278], r8
                	mov	qword ptr [rsp + 0x368], r9
                	xor	ebx, ebx
@@ -2966,7 +2965,6 @@ Disassembly of section .text:
                	lea	rsi, [rsi + 4*rsi]
                	rol	rsi, 0x7
                	lea	rsi, [rsi + 8*rsi]
-               	mov	rax, rsi
                	mov	qword ptr [rsp + 0x288], rsi
                	mov	qword ptr [rsp + 0x2f8], rsi
                	mov	rsi, qword ptr [rsp + 0x70]
@@ -3097,7 +3095,7 @@ Disassembly of section .text:
                	lea	rcx,  <vtable for Bodies3D::Circle@Evaluation.Virtual.Circle+0x10>
                	mov	qword ptr [rax], rcx
                	jmp	 <L236>
-               	nop	word ptr [rax + rax]
+               	nop	word ptr cs:[rax + rax]
 <L234>:
                	mov	rdx, qword ptr [rsp + 0x278]
                	mov	rax, rdx
@@ -3485,7 +3483,6 @@ Disassembly of section .text:
                	rol	rdi, 0x7
                	lea	rsi, [rsi + 8*rsi]
                	lea	rdi, [rdi + 8*rdi]
-               	mov	rax, r9
                	mov	qword ptr [rsp + 0x288], r9
                	mov	qword ptr [rsp + 0x2f8], r9
                	mov	qword ptr [rsp + 0x300], rsi
@@ -3509,7 +3506,6 @@ Disassembly of section .text:
                	lea	rsi, [r12 + 4*r12]
                	rol	rsi, 0x7
                	lea	rsi, [rsi + 8*rsi]
-               	mov	rax, r9
                	mov	qword ptr [rsp + 0x280], r9
                	mov	qword ptr [rsp + 0x320], r9
                	mov	qword ptr [rsp + 0x328], rsi
@@ -3690,7 +3686,7 @@ Disassembly of section .text:
                	vmovdqu	ymmword ptr [rsp + 0x290], ymm0
                	mov	rbp, qword ptr [rsp + 0x268]
                	jmp	 <L241>
-               	nop	dword ptr [rax + rax]
+               	nop	word ptr cs:[rax + rax]
 <L242>:
                	vmovss	xmm0, dword ptr [rsp + 0x294]
                	vmovss	dword ptr [rsp + 0x298], xmm0

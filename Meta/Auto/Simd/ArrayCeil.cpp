@@ -9,12 +9,16 @@ export namespace
 {
 	template
 		<	typename
+				t_tFirst
+		,	typename
 			...	t_tpElement
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	SimdArrayCeil
-	)	(	t_tpElement const
+	)	(	t_tFirst const
+			&	i_rFirst
+		,	t_tpElement const
 			&
 			...	i_rpElement
 		)
@@ -24,25 +28,21 @@ export namespace
 		auto static constexpr
 			vTargetSize
 		=	::std::bit_ceil
-			(	sizeof...(i_rpElement)
+			(	1uz
+			+	sizeof...(i_rpElement)
 			)
 		;
-		using
-			tElement
-		=	t_tpElement
-			...	[	0
-				]
-		;
-		tElement const
+		t_tFirst const
 			vArray
 			[	vTargetSize
 			]
-		{	i_rpElement
+		{	i_rFirst
+		,	i_rpElement
 			...
 		};
 
 		return
-		::std::bit_cast<Simd<tElement[vTargetSize]>>
+		::std::bit_cast<Simd<t_tFirst[vTargetSize]>>
 		(	vArray
 		);
 	}

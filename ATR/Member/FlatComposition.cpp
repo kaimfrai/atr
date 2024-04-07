@@ -1,9 +1,8 @@
 export module ATR.Member.FlatComposition;
 
-import ATR.Member.Constants;
-import ATR.Member.CountedType;
-import ATR.Member.Info;
 import ATR.Member.AlignBuffer;
+import ATR.Member.Constants;
+import ATR.Member.Info;
 
 import Meta.Auto.Array.Bounded;
 import Meta.Memory.Size.Arithmetic;
@@ -82,14 +81,15 @@ export namespace
 			return
 				i_aPrefixes
 				[	PrefixIndex
-				].	ToString
-					(	i_aPrefixes
-					,	vLength
-					)
-				.	append
-					(	Name
-					,	vLength
-					)
+				]
+			.	ToString
+				(	i_aPrefixes
+				,	vLength
+				)
+			.	append
+				(	Name
+				,	vLength
+				)
 			;
 		}
 
@@ -139,7 +139,13 @@ export namespace
 			MemberIndices
 			[	NameBufferSize
 			]
-		;
+		{};
+
+		short
+			HashIndices
+			[	NameBufferSize
+			]
+		{};
 
 		TypeID
 			Types
@@ -242,6 +248,8 @@ export namespace
 		(	AddNewMember
 		)	(	short
 				&	i_rMemberIndex
+			,	short
+					i_vHashIndex
 			,	TypeID
 					i_vType
 			,	short
@@ -258,24 +266,29 @@ export namespace
 				++
 			;
 
-				i_rMemberIndex
+			(	i_rMemberIndex
 			=	vMemberIndex
-			;
-				Types
+			);
+			(	HashIndices
+				[	vMemberIndex
+				]
+			=	i_vHashIndex
+			);
+			(	Types
 				[	vMemberIndex
 				]
 			=	i_vType
-			;
-				DistrictIndices
+			);
+			(	DistrictIndices
 				[	vMemberIndex
 				]
 			=	i_vDistrictIndex
-			;
-				Suffixes
+			);
+			(	Suffixes
 				[	vMemberIndex
 				]
 			=	i_vSuffix
-			;
+			);
 		}
 
 		[[nodiscard]]
@@ -479,11 +492,25 @@ export namespace
 		{
 			[[assume(i_vDistrictIndex > 0)]];
 			return
-				i_vDistrictIndex
-			-	1
-			+	Members
-				.	MemberCount
+				NameBufferSize
+			-	i_vDistrictIndex
 			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	GetDistrictType
+		)	(	short
+					i_vDistrictIndex
+			)	const
+			noexcept
+		->	TypeID
+		{	return
+			GetMemberType
+			(	DistrictToMemberIndex
+				(	i_vDistrictIndex
+				)
+			);
 		}
 
 		[[nodiscard]]
@@ -495,12 +522,11 @@ export namespace
 			noexcept
 		->	BitSize
 		{	return
-				GetMemberOffset
-				(	DistrictToMemberIndex
-					(	i_vDistrictIndex
-					)
+			GetMemberOffset
+			(	DistrictToMemberIndex
+				(	i_vDistrictIndex
 				)
-			;
+			);
 		}
 
 		[[nodiscard]]
@@ -512,12 +538,11 @@ export namespace
 			noexcept
 		->	short
 		{	return
-				GetMemberDistrictIndex
-				(	DistrictToMemberIndex
-					(	i_vDistrictIndex
-					)
+			GetMemberDistrictIndex
+			(	DistrictToMemberIndex
+				(	i_vDistrictIndex
 				)
-			;
+			);
 		}
 
 		[[nodiscard]]
@@ -557,13 +582,76 @@ export namespace
 			}
 
 			return
-				GetMemberInfo
-				(	Members
-					.	MemberIndices
+			GetMemberInfo
+			(	Members
+				.	MemberIndices
+					[	vHashIndex
+					]
+			,	i_vUnionIndex
+			);
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	DistrictMask
+		)	(	short
+					i_vDistrictIndex
+			)	const
+			noexcept
+		->	Auto<bool[UnionBufferSize]>
+		{
+			Auto<bool[UnionBufferSize]>
+				vMask
+			{};
+
+			for	(	short
+						vMemberIndex
+					=	0
+				;		vMemberIndex
+					<	Members
+						.	MemberCount
+				;	++	vMemberIndex
+				)
+			{
+				if	(	Members
+						.	DistrictIndices
+							[	vMemberIndex
+							]
+					!=	i_vDistrictIndex
+					)
+				{	continue
+					;
+				}
+
+				auto const
+					vHashIndex
+				=	Members
+					.	HashIndices
+						[	vMemberIndex
+						]
+				;
+
+				(	vMask
+				|=	Members
+					.	HasMember
 						[	vHashIndex
 						]
-				,	i_vUnionIndex
-				)
+				);
+
+				if	(	Count
+						(	vMask
+						)
+					==	Members
+						.	UnionCount
+					)
+				{	return
+						vMask
+					;
+				}
+			}
+
+			return
+				vMask
 			;
 		}
 	};

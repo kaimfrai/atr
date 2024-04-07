@@ -4,14 +4,12 @@ import ATR.Layout.TypeIndex;
 
 import Meta.Auto.CPO.Data;
 import Meta.Auto.Ref.DataRange;
-import Meta.Auto.Ref.PledgeCount;
 import Meta.Auto.Ref.RArray;
 import Meta.Bit.Array;
 import Meta.Bit.Field;
 import Meta.Bit.Index;
 import Meta.Bit.Reference;
 import Meta.Memory.Constraint;
-import Meta.Memory.PointerCast;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size.Cast;
 import Meta.Memory.Size.Compare;
@@ -32,7 +30,6 @@ using ::Meta::ByteSize;
 using ::Meta::CArray;
 using ::Meta::Memory::ByteWidth;
 using ::Meta::Memory::Constraint_Of;
-using ::Meta::Memory::PointerCast;
 using ::Meta::ProtoBorrowContainer_Of_AtLeast;
 using ::Meta::ProtoOwnerContainer_Of_AtLeast;
 using ::Meta::RArray;
@@ -246,6 +243,11 @@ export namespace
 	struct
 		Offset
 	{
+		using
+			DataType
+		=	t_tData
+		;
+
 		auto static constexpr inline
 			TypeIndex
 		=	TypeIndex_Of
@@ -356,9 +358,16 @@ export namespace
 			...
 		>
 	{
+		using
+			Erased
+		=	typename
+				t_tDistrict
+			::	Erased
+		;
+
 		auto static constexpr inline
 			ArrayIndex
-		=		ByteWidth<void*>
+		=		ByteWidth<Erased>
 				(	t_vDistrictOffset
 				)
 			.	Value
@@ -374,6 +383,18 @@ export namespace
 			>{}
 		;
 
+		using
+			DataType
+		=	typename
+				Offset
+				<	t_tData
+				,	t_vOffset
+				,	t_tpIndirectOffset
+					...
+				>
+			::	DataType
+		;
+
 		[[nodiscard]]
 		auto static constexpr inline
 		(	operator()
@@ -383,23 +404,23 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{
-			::std::byte
-			*	aNextLayout
-			=	*
-				//	We don't know where the byte array came from
-				//	so we need to launder it
-				::std::launder
-				(	PointerCast<::std::byte*>
-					(	i_aLayout
-					+	t_vOffset
+			auto
+			&	aErased
+			=	*	//	We don't know where the byte array came from
+					//	so we need to launder it
+					::std::launder
+					(	PointerCast<Erased*>
+						(	i_aLayout
+						+	t_vOffset
+						)
 					)
-				)
 			;
-
 			return
-				NextOffset
-				(	aNextLayout
+			t_tDistrict
+			::	Read
+				(	aErased
 				)
+			->*	NextOffset
 			;
 		}
 
@@ -412,118 +433,64 @@ export namespace
 			noexcept
 		->	decltype(auto)
 		{
-			::std::byte const
-			*	aNextLayout
-			=	*
-				//	We don't know where the byte array came from
-				//	so we need to launder it
-				::std::launder
-				(	PointerCast<::std::byte const* const>
-					(	i_aLayout
-					+	t_vOffset
-					)
-				)
-			;
-
-			return
-				NextOffset
-				(	aNextLayout
-				)
-			;
-		}
-
-		[[nodiscard]]
-		auto friend constexpr inline
-		(	operator->*
-		)	(	void
-				**	i_aArray
-			,	Offset
-			)
-			noexcept
-		->	decltype(auto)
-		{
-			void
-			*	aElement
-			=	i_aArray
-				[	ArrayIndex
-				]
-			;
-			if	(	aElement
-				==	nullptr
-				)
-			{	((void)"Element pointer not initialized", ::std::unreachable());
-			}
-
-			if	constexpr
-				(	::std::is_array_v<t_tDistrict>
-				)
-			{	return
-					::Meta::PledgeCount<::std::extent_v<t_tDistrict>>
-					(	static_cast<::std::remove_extent_t<t_tDistrict>*>
-						(	aElement
+			auto
+			&	aErased
+			=	*	//	We don't know where the byte array came from
+					//	so we need to launder it
+					::std::launder
+					(	PointerCast<typename t_tDistrict::Erased const*>
+						(	i_aLayout
+						+	t_vOffset
 						)
 					)
-				->*	NextOffset
-				;
-			}
-			else
-			{	return
-					*
-					static_cast<t_tDistrict*>
-					(	i_aArray
-						[	ArrayIndex
-						]
-					)
-				->*	NextOffset
-				;
-			}
+			;
+			return
+			t_tDistrict
+			::	Read
+				(	aErased
+				)
+			->*	NextOffset
+			;
 		}
 
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator->*
-		)	(	void const
-				*	const
+		)	(	Erased
 				*	i_aArray
 			,	Offset
 			)
 			noexcept
 		->	decltype(auto)
-		{
-			void const
-			*	aElement
-			=	i_aArray
-				[	ArrayIndex
-				]
+		{	return
+				t_tDistrict
+				::	Read
+					(	i_aArray
+						[	ArrayIndex
+						]
+					)
+			->*	NextOffset
 			;
+		}
 
-			if	(	aElement
-				==	nullptr
-				)
-			{	((void)"Element pointer not initialized", ::std::unreachable());
-			}
-
-			if	constexpr
-				(	::std::is_array_v<t_tDistrict>
-				)
-			{	return
-					::Meta::PledgeCount<::std::extent_v<t_tDistrict>>
-					(	static_cast<::std::remove_extent_t<t_tDistrict> const*>
-						(	aElement
-						)
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator->*
+		)	(	Erased const
+				*	i_aArray
+			,	Offset
+			)
+			noexcept
+		->	decltype(auto)
+		{	return
+				t_tDistrict
+				::	Read
+					(	i_aArray
+						[	ArrayIndex
+						]
 					)
-				->*	NextOffset
-				;
-			}
-			else
-			{	return
-					*
-					static_cast<t_tDistrict const*>
-					(	aElement
-					)
-				->*	NextOffset
-				;
-			}
+			->*	NextOffset
+			;
 		}
 	};
 
@@ -567,6 +534,11 @@ export namespace
 		,	0_bit
 		>
 	{
+		using
+			DataType
+		=	t_tData
+		;
+
 		[[nodiscard]]
 		auto static constexpr inline
 		(	operator()
@@ -606,6 +578,10 @@ export namespace
 		,	t_vOffset
 		>
 	{
+		using
+			DataType
+		=	bool
+		;
 		auto static constexpr inline
 			ByteOffset
 		=	IndexCast<ByteIndex>
@@ -740,6 +716,12 @@ export namespace
 		,	t_vOffset
 		>
 	{
+		using
+			DataType
+		=	bool
+				[	t_vExtent
+				]
+		;
 		auto static constexpr inline
 			ByteOffset
 		=	IndexCast<ByteIndex>
@@ -887,6 +869,10 @@ export namespace
 		,	t_vOffset
 		>
 	{
+		using
+			DataType
+		=	Field<t_vWidth>
+		;
 		auto static constexpr
 			ByteOffset
 		=	IndexCast<ByteIndex>
@@ -1036,6 +1022,12 @@ export namespace
 		,	t_vOffset
 		>
 	{
+		using
+			DataType
+		=	Field<t_vWidth>
+				[	t_vExtent
+				]
+		;
 		auto static constexpr
 			ByteOffset
 		=	IndexCast<ByteIndex>

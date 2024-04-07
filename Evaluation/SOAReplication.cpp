@@ -1,7 +1,6 @@
 import Evaluation.Dependency.Fraction;
 import Evaluation.Dependency.PiFraction;
 import Evaluation.Dependency.PseudoRandomSequence;
-import Evaluation.Dependency.RandomAccessIteratorBase;
 import Evaluation.Dependency.TransformReduce;
 import Evaluation.Dependency.VerifyLoopSum;
 
@@ -11,10 +10,11 @@ import Evaluation.SOAReplication.Tag;
 import Meta.Auto.Simd.Cast;
 import Meta.Auto.Simd.Fill;
 import Meta.Auto.Simd.Float;
-import Meta.Auto.Simd.Int32;
+import Meta.Generic.RandomAccessIteratorBase;
 
 import Std;
 
+using ::Meta::Generic::RandomAccessIteratorBase;
 using ::Meta::Simd;
 using ::Meta::SimdCast;
 using ::Meta::SimdFill;
@@ -172,8 +172,17 @@ namespace
 	}
 
 	struct
+		Body3DValue
+	;
+
+	struct
 		Body3DReference
 	{
+		using
+			ReferencedValue
+		=	Body3DValue
+		;
+
 		Body3DConstView
 			m_rView
 		;
@@ -181,12 +190,33 @@ namespace
 		[[nodiscard]]
 		auto inline
 		(	ComputeVolume
-		)	(	Simd<float[16uz]> const
-					i_vMultiplierArray
-			)	const
+		)	()	const
 			noexcept
 		->	auto
 		{
+			auto static constexpr
+				vMultiplierArray
+			=	::std::bit_cast<Simd<float[16uz]>, float const[16uz]>
+				(	{	PiFraction<1, 4>
+					,	PiFraction<1, 4>
+					,	1.0f
+					,	1.0f
+					,	Fraction<1, 2>
+					,	1.0f
+					,	1.0f
+					,	Fraction<1, 3>
+					,	PiFraction<1, 6>
+					,	PiFraction<1, 4>
+					,	PiFraction<1, 12>
+					,	PiFraction<1, 6>
+					,	PiFraction<1, 6>
+					,	0.0f
+					,	0.0f
+					,	0.0f
+					}
+				)
+			;
+
 			auto const
 				vTypeInt32
 			=	SimdCast<::std::int32_t>
@@ -198,7 +228,7 @@ namespace
 			;
 			Simd<float[8uz]> const
 				vMultiplier
-			=	i_vMultiplierArray
+			=	vMultiplierArray
 				[	vTypeInt32
 				]
 			;
@@ -292,40 +322,9 @@ namespace
 	};
 
 	struct
-		ImplicitBody3DReference
-	:	Body3DReference
-	{
-		explicit(false) constexpr inline
-		(	ImplicitBody3DReference
-		)	(	Body3DReference
-					i_rReference
-			)
-			noexcept
-		:	Body3DReference
-			{	i_rReference
-			}
-		{}
-
-		explicit(false) constexpr inline
-		(	ImplicitBody3DReference
-		)	(	Body3DValue const
-				&	i_rValue
-			)
-			noexcept
-		:	Body3DReference
-			{	i_rValue
-				.	operator
-					Body3DReference
-					()
-			}
-		{}
-	};
-
-	struct
 		Body3DIterator
 	:	RandomAccessIteratorBase
 		<	Body3DReference
-		,	Body3DValue
 		>
 	{
 		Body3DConstView
@@ -616,30 +615,6 @@ namespace
 	};
 }
 
-template
-	<>
-struct
-	::std::common_type
-	<	::Bodies3D::Body3DValue
-	,	::Bodies3D::Body3DReference
-	>
-:	::std::type_identity
-	<	::Bodies3D::ImplicitBody3DReference
-	>
-{};
-
-template
-	<>
-struct
-	::std::common_type
-	<	::Bodies3D::Body3DReference
-	,	::Bodies3D::Body3DValue
-	>
-:	::std::type_identity
-	<	::Bodies3D::ImplicitBody3DReference
-	>
-{};
-
 static_assert
 (	::std::random_access_iterator
 	<	::Bodies3D::Body3DIterator
@@ -721,28 +696,6 @@ auto inline
 		;
 	}
 
-	float const
-		vMultiplierArray
-		[	16uz
-		]
-	{	PiFraction<1, 4>
-	,	PiFraction<1, 4>
-	,	1.0f
-	,	1.0f
-	,	Fraction<1, 2>
-	,	1.0f
-	,	1.0f
-	,	Fraction<1, 3>
-	,	PiFraction<1, 6>
-	,	PiFraction<1, 4>
-	,	PiFraction<1, 12>
-	,	PiFraction<1, 6>
-	,	PiFraction<1, 6>
-	,	0.0f
-	,	0.0f
-	,	0.0f
-	};
-
 	return
 	reduce
 	(	TransformReduce
@@ -752,18 +705,13 @@ auto inline
 		,	vElements
 			.	end
 				()
-		,	[		vMultiplier
-				=	::std::bit_cast<Simd<float[16uz]>>
-					(	vMultiplierArray
-					)
-			]	(	auto const
+		,	[]	(	auto const
 						rBody
 				)
 			{	return
 					rBody
 					.	ComputeVolume
-						(	vMultiplier
-						)
+						()
 				;
 			}
 		)

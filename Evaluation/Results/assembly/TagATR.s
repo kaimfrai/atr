@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <memset+0x93b0>
+               	call	qword ptr  <memset+0x9318>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x93c0>
+               	mov	rax, qword ptr  <memset+0x9328>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x93c8>
+               	mov	rax, qword ptr  <memset+0x9330>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <memset+0x93d0>
+               	cmp	qword ptr , 0x0 <memset+0x9338>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -1043,9 +1043,9 @@ Disassembly of section .text:
 <L0>:
                	push	rax
                	mov	byte ptr , 0x1 <_ZGIW10EvaluationW10DependencyW11TaggedArray__in_chrg>
-               	call	 <initializer for module Evaluation.Dependency.RandomAccessIteratorBase>
                	call	 <initializer for module ATR.Erase>
                	call	 <initializer for module ATR.Instance>
+               	call	 <initializer for module Meta.Generic.RandomAccessIteratorBase>
                	call	 <initializer for module Meta.ID>
                	call	 <initializer for module Meta.Token.Type>
                	pop	rax
@@ -1066,12 +1066,78 @@ Disassembly of section .text:
                	int3
                	int3
 
-<initializer for module Evaluation.Dependency.RandomAccessIteratorBase>:
-               	cmp	byte ptr , 0x0 <_ZGIW10EvaluationW10DependencyW24RandomAccessIteratorBase__in_chrg>
+<initializer for module ATR.Erase>:
+               	cmp	byte ptr , 0x0 <_ZGIW3ATRW5Erase__in_chrg>
                	je	 <L0>
                	ret
 <L0>:
-               	mov	byte ptr , 0x1 <_ZGIW10EvaluationW10DependencyW24RandomAccessIteratorBase__in_chrg>
+               	push	rax
+               	mov	byte ptr , 0x1 <_ZGIW3ATRW5Erase__in_chrg>
+               	call	 <initializer for module ATR.Layout.Offset>
+               	call	 <initializer for module Meta.Memory.Size>
+               	pop	rax
+               	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
+<initializer for module ATR.Layout.Offset>:
+               	cmp	byte ptr , 0x0 <_ZGIW3ATRW6LayoutW6Offset__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	push	rax
+               	mov	byte ptr , 0x1 <_ZGIW3ATRW6LayoutW6Offset__in_chrg>
+               	call	 <initializer for module ATR.Layout.TypeIndex>
+               	call	 <initializer for module Meta.Auto.Ref.DataRange>
+               	call	 <initializer for module Meta.Auto.Ref.RArray>
+               	call	 <initializer for module Meta.Bit.Array>
+               	call	 <initializer for module Meta.Bit.Field>
+               	call	 <initializer for module Meta.Bit.Index>
+               	call	 <initializer for module Meta.Bit.Reference>
+               	call	 <initializer for module Meta.Memory.Constraint>
+               	call	 <initializer for module Meta.Memory.Size.Arithmetic>
+               	call	 <initializer for module Meta.Memory.Size.Cast>
+               	call	 <initializer for module Meta.Memory.Size.Compare>
+               	call	 <initializer for module Meta.Memory.Size.PointerArithmetic>
+               	call	 <initializer for module Meta.Memory.Size.Scale>
+               	call	 <initializer for module Meta.Memory.Size>
+               	pop	rax
+               	jmp	 <initializer for module Std>
+               	int3
+               	int3
+
+<initializer for module ATR.Layout.TypeIndex>:
+               	cmp	byte ptr , 0x0 <_ZGIW3ATRW6LayoutW9TypeIndex__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	push	rax
+               	mov	byte ptr , 0x1 <_ZGIW3ATRW6LayoutW9TypeIndex__in_chrg>
+               	call	 <initializer for module ATR.Layout.ErasureView>
+               	pop	rax
+               	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+
+<initializer for module ATR.Layout.ErasureView>:
+               	cmp	byte ptr , 0x0 <_ZGIW3ATRW6LayoutW11ErasureView__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	mov	byte ptr , 0x1 <_ZGIW3ATRW6LayoutW11ErasureView__in_chrg>
                	jmp	 <initializer for module Std>
                	int3
                	int3
@@ -1084,21 +1150,27 @@ Disassembly of section .text:
                	int3
                	int3
 
-<initializer for module ATR.Erase>:
-               	cmp	byte ptr , 0x0 <_ZGIW3ATRW5Erase__in_chrg>
+<initializer for module Meta.Auto.Ref.DataRange>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW3RefW9DataRange__in_chrg>
                	je	 <L0>
                	ret
 <L0>:
                	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW3ATRW5Erase__in_chrg>
-               	call	 <initializer for module Meta.Auto.Ref.RArray>
-               	call	 <initializer for module Meta.Auto.Ref.XArray>
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW3RefW9DataRange__in_chrg>
+               	call	 <initializer for module Meta.Auto.Ref.StaticCount>
                	pop	rax
                	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
-               	int3
+
+<initializer for module Meta.Auto.Ref.StaticCount>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW3RefW11StaticCount__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW3RefW11StaticCount__in_chrg>
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -1161,246 +1233,6 @@ Disassembly of section .text:
 <L0>:
                	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW3RefW9ArrayView__in_chrg>
                	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Auto.Ref.DataRange>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW3RefW9DataRange__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW3RefW9DataRange__in_chrg>
-               	call	 <initializer for module Meta.Auto.Ref.StaticCount>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Auto.Ref.StaticCount>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW3RefW11StaticCount__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW3RefW11StaticCount__in_chrg>
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Auto.Ref.XArray>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW3RefW6XArray__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW3RefW6XArray__in_chrg>
-               	jmp	 <initializer for module Meta.Auto.Ref.StaticCountArray>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module ATR.Instance>:
-               	cmp	byte ptr , 0x0 <_ZGIW3ATRW8Instance__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW3ATRW8Instance__in_chrg>
-               	call	 <initializer for module ATR.Address>
-               	call	 <initializer for module ATR.Erase>
-               	call	 <initializer for module ATR.Layout.Create>
-               	call	 <initializer for module ATR.Layout.Offset>
-               	call	 <initializer for module ATR.Member.Composition>
-               	call	 <initializer for module ATR.Member.Storage>
-               	call	 <initializer for module Meta.ID>
-               	call	 <initializer for module Meta.String.Hash>
-               	pop	rax
-               	jmp	 <initializer for module Meta.Token.Type>
-
-<initializer for module ATR.Address>:
-               	cmp	byte ptr , 0x0 <_ZGIW3ATRW7Address__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW3ATRW7Address__in_chrg>
-               	call	 <initializer for module ATR.Dependency>
-               	call	 <initializer for module Meta.ID>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module ATR.Dependency>:
-               	cmp	byte ptr , 0x0 <_ZGIW3ATRW10Dependency__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW3ATRW10Dependency__in_chrg>
-               	call	 <initializer for module Meta.String.Hash>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-
-<initializer for module ATR.Layout.Create>:
-               	cmp	byte ptr , 0x0 <_ZGIW3ATRW6LayoutW6Create__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW3ATRW6LayoutW6Create__in_chrg>
-               	call	 <initializer for module ATR.Layout.Fork>
-               	call	 <initializer for module ATR.Layout.Offset>
-               	call	 <initializer for module ATR.Member.Composition>
-               	call	 <initializer for module ATR.Member.Constants>
-               	call	 <initializer for module ATR.Member.Info>
-               	call	 <initializer for module Meta.ID>
-               	call	 <initializer for module Meta.Memory.Size>
-               	call	 <initializer for module Meta.String.Hash>
-               	call	 <initializer for module Meta.Token.Type>
-               	call	 <initializer for module Meta.Token.TypeID>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module ATR.Layout.Fork>:
-               	cmp	byte ptr , 0x0 <_ZGIW3ATRW6LayoutW4Fork__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW3ATRW6LayoutW4Fork__in_chrg>
-               	call	 <initializer for module ATR.Layout.Offset>
-               	call	 <initializer for module Meta.Memory.Constraint>
-               	call	 <initializer for module Meta.Memory.Size.Arithmetic>
-               	call	 <initializer for module Meta.Memory.Size.Compare>
-               	pop	rax
-               	jmp	 <initializer for module Meta.Memory.Size>
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module ATR.Layout.Offset>:
-               	cmp	byte ptr , 0x0 <_ZGIW3ATRW6LayoutW6Offset__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW3ATRW6LayoutW6Offset__in_chrg>
-               	call	 <initializer for module ATR.Erase>
-               	call	 <initializer for module ATR.Layout.TypeIndex>
-               	call	 <initializer for module Meta.Auto.Ref.DataRange>
-               	call	 <initializer for module Meta.Auto.Ref.PledgeCount>
-               	call	 <initializer for module Meta.Auto.Ref.RArray>
-               	call	 <initializer for module Meta.Bit.Array>
-               	call	 <initializer for module Meta.Bit.Field>
-               	call	 <initializer for module Meta.Bit.Index>
-               	call	 <initializer for module Meta.Bit.Reference>
-               	call	 <initializer for module Meta.Memory.Constraint>
-               	call	 <initializer for module Meta.Memory.PointerCast>
-               	call	 <initializer for module Meta.Memory.Size.Arithmetic>
-               	call	 <initializer for module Meta.Memory.Size.Cast>
-               	call	 <initializer for module Meta.Memory.Size.Compare>
-               	call	 <initializer for module Meta.Memory.Size.PointerArithmetic>
-               	call	 <initializer for module Meta.Memory.Size.Scale>
-               	call	 <initializer for module Meta.Memory.Size>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-
-<initializer for module ATR.Layout.TypeIndex>:
-               	cmp	byte ptr , 0x0 <_ZGIW3ATRW6LayoutW9TypeIndex__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW3ATRW6LayoutW9TypeIndex__in_chrg>
-               	call	 <initializer for module ATR.Layout.ErasureView>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-
-<initializer for module ATR.Layout.ErasureView>:
-               	cmp	byte ptr , 0x0 <_ZGIW3ATRW6LayoutW11ErasureView__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	mov	byte ptr , 0x1 <_ZGIW3ATRW6LayoutW11ErasureView__in_chrg>
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Auto.Ref.PledgeCount>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW3RefW11PledgeCount__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW3RefW11PledgeCount__in_chrg>
-               	call	 <initializer for module Meta.Auto.Ref.ArrayView>
-               	call	 <initializer for module Meta.Auto.Ref.DataRange>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
                	int3
                	int3
@@ -2118,13 +1950,127 @@ Disassembly of section .text:
                	int3
                	int3
 
-<initializer for module Meta.Memory.PointerCast>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW6MemoryW11PointerCast__in_chrg>
+<initializer for module ATR.Instance>:
+               	cmp	byte ptr , 0x0 <_ZGIW3ATRW8Instance__in_chrg>
                	je	 <L0>
                	ret
 <L0>:
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW6MemoryW11PointerCast__in_chrg>
+               	push	rax
+               	mov	byte ptr , 0x1 <_ZGIW3ATRW8Instance__in_chrg>
+               	call	 <initializer for module ATR.Address>
+               	call	 <initializer for module ATR.Layout.Create>
+               	call	 <initializer for module ATR.Member.Composition>
+               	call	 <initializer for module ATR.Member.Storage>
+               	call	 <initializer for module Meta.ID>
+               	call	 <initializer for module Meta.String.Hash>
+               	pop	rax
+               	jmp	 <initializer for module Meta.Token.Type>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
+<initializer for module ATR.Address>:
+               	cmp	byte ptr , 0x0 <_ZGIW3ATRW7Address__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	push	rax
+               	mov	byte ptr , 0x1 <_ZGIW3ATRW7Address__in_chrg>
+               	call	 <initializer for module ATR.Dependency>
+               	call	 <initializer for module Meta.ID>
+               	pop	rax
                	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
+<initializer for module ATR.Dependency>:
+               	cmp	byte ptr , 0x0 <_ZGIW3ATRW10Dependency__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	push	rax
+               	mov	byte ptr , 0x1 <_ZGIW3ATRW10Dependency__in_chrg>
+               	call	 <initializer for module Meta.String.Hash>
+               	pop	rax
+               	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+
+<initializer for module ATR.Layout.Create>:
+               	cmp	byte ptr , 0x0 <_ZGIW3ATRW6LayoutW6Create__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	push	rax
+               	mov	byte ptr , 0x1 <_ZGIW3ATRW6LayoutW6Create__in_chrg>
+               	call	 <initializer for module ATR.Layout.Fork>
+               	call	 <initializer for module ATR.Layout.Offset>
+               	call	 <initializer for module ATR.Member.Constants>
+               	call	 <initializer for module Meta.Memory.Size>
+               	call	 <initializer for module Meta.Token.Type>
+               	pop	rax
+               	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
+<initializer for module ATR.Layout.Fork>:
+               	cmp	byte ptr , 0x0 <_ZGIW3ATRW6LayoutW4Fork__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	push	rax
+               	mov	byte ptr , 0x1 <_ZGIW3ATRW6LayoutW4Fork__in_chrg>
+               	call	 <initializer for module ATR.Layout.Offset>
+               	call	 <initializer for module Meta.Memory.Constraint>
+               	call	 <initializer for module Meta.Memory.Size.Arithmetic>
+               	call	 <initializer for module Meta.Memory.Size.Compare>
+               	pop	rax
+               	jmp	 <initializer for module Meta.Memory.Size>
+               	int3
+               	int3
+               	int3
+               	int3
+
+<initializer for module ATR.Member.Constants>:
+               	cmp	byte ptr , 0x0 <_ZGIW3ATRW6MemberW9Constants__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	mov	byte ptr , 0x1 <_ZGIW3ATRW6MemberW9Constants__in_chrg>
+               	jmp	 <initializer for module Meta.Memory.Constraint>
                	int3
                	int3
                	int3
@@ -2202,24 +2148,6 @@ Disassembly of section .text:
                	int3
                	int3
 
-<initializer for module ATR.Member.Constants>:
-               	cmp	byte ptr , 0x0 <_ZGIW3ATRW6MemberW9Constants__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	mov	byte ptr , 0x1 <_ZGIW3ATRW6MemberW9Constants__in_chrg>
-               	jmp	 <initializer for module Meta.Memory.Constraint>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
 <initializer for module ATR.Member.ByteMemberIndexBuffer>:
                	cmp	byte ptr , 0x0 <_ZGIW3ATRW6MemberW21ByteMemberIndexBuffer__in_chrg>
                	je	 <L0>
@@ -2262,13 +2190,9 @@ Disassembly of section .text:
                	call	 <initializer for module ATR.Member.Constants>
                	call	 <initializer for module ATR.Member.CountedType>
                	call	 <initializer for module Meta.Memory.Alignment>
+               	call	 <initializer for module Meta.Memory.Size>
                	pop	rax
                	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
                	int3
                	int3
@@ -2349,7 +2273,6 @@ Disassembly of section .text:
                	mov	byte ptr , 0x1 <_ZGIW3ATRW6MemberW12FlatComposer__in_chrg>
                	call	 <initializer for module ATR.Member.Constants>
                	call	 <initializer for module ATR.Member.FlatComposition>
-               	call	 <initializer for module ATR.Member.LayoutList>
                	call	 <initializer for module ATR.Member.PrefixGuard>
                	call	 <initializer for module Meta.ID>
                	call	 <initializer for module Meta.String.Hash>
@@ -2357,6 +2280,11 @@ Disassembly of section .text:
                	call	 <initializer for module Meta.Token.TypeID>
                	pop	rax
                	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <initializer for module ATR.Member.FlatComposition>:
                	cmp	byte ptr , 0x0 <_ZGIW3ATRW6MemberW15FlatComposition__in_chrg>
@@ -2365,10 +2293,9 @@ Disassembly of section .text:
 <L0>:
                	push	rax
                	mov	byte ptr , 0x1 <_ZGIW3ATRW6MemberW15FlatComposition__in_chrg>
-               	call	 <initializer for module ATR.Member.Constants>
-               	call	 <initializer for module ATR.Member.CountedType>
-               	call	 <initializer for module ATR.Member.Info>
                	call	 <initializer for module ATR.Member.AlignBuffer>
+               	call	 <initializer for module ATR.Member.Constants>
+               	call	 <initializer for module ATR.Member.Info>
                	call	 <initializer for module Meta.Auto.Array.Bounded>
                	call	 <initializer for module Meta.Memory.Size.Arithmetic>
                	call	 <initializer for module Meta.Memory.Size>
@@ -2377,6 +2304,11 @@ Disassembly of section .text:
                	call	 <initializer for module Meta.Token.TypeID>
                	pop	rax
                	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
                	int3
                	int3
@@ -2462,6 +2394,24 @@ Disassembly of section .text:
                	int3
                	int3
 
+<initializer for module Meta.Generic.RandomAccessIteratorBase>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW7GenericW24RandomAccessIteratorBase__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW7GenericW24RandomAccessIteratorBase__in_chrg>
+               	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
 <initializer for module ATR.District.ExcludingHeap>:
                	cmp	byte ptr , 0x0 <_ZGIW3ATRW8DistrictW13ExcludingHeap__in_chrg>
                	je	 <L0>
@@ -2469,15 +2419,29 @@ Disassembly of section .text:
 <L0>:
                	push	rax
                	mov	byte ptr , 0x1 <_ZGIW3ATRW8DistrictW13ExcludingHeap__in_chrg>
+               	call	 <initializer for module ATR.District.Info>
                	call	 <initializer for module ATR.District.MoveHeapGuard>
-               	call	 <initializer for module ATR.Member.AlignBuffer>
-               	call	 <initializer for module ATR.Member.CountedType>
-               	call	 <initializer for module ATR.Member.LayoutList>
                	call	 <initializer for module Meta.String.Hash>
                	call	 <initializer for module Meta.Token.Type>
                	pop	rax
                	jmp	 <initializer for module Meta.Token.TypeID>
                	int3
+               	int3
+               	int3
+               	int3
+
+<initializer for module ATR.District.Info>:
+               	cmp	byte ptr , 0x0 <_ZGIW3ATRW8DistrictW4Info__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	push	rax
+               	mov	byte ptr , 0x1 <_ZGIW3ATRW8DistrictW4Info__in_chrg>
+               	call	 <initializer for module Meta.String.Hash>
+               	call	 <initializer for module Meta.Token.Type>
+               	call	 <initializer for module Meta.Token.TypeID>
+               	pop	rax
+               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -2496,14 +2460,40 @@ Disassembly of section .text:
                	push	rax
                	mov	byte ptr , 0x1 <_ZGIW3ATRW8DistrictW13MoveHeapGuard__in_chrg>
                	call	 <initializer for module ATR.Layout.Create>
-               	call	 <initializer for module ATR.Layout.Offset>
                	call	 <initializer for module ATR.Member.Composition>
-               	call	 <initializer for module ATR.Member.Info>
-               	call	 <initializer for module Meta.ID>
-               	call	 <initializer for module Meta.String.Hash>
-               	call	 <initializer for module Meta.Token.Type>
+               	call	 <initializer for module Meta.Auto.Ref.PledgeCount>
                	pop	rax
                	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
+<initializer for module Meta.Auto.Ref.PledgeCount>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW3RefW11PledgeCount__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	push	rax
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW3RefW11PledgeCount__in_chrg>
+               	call	 <initializer for module Meta.Auto.Ref.ArrayView>
+               	call	 <initializer for module Meta.Auto.Ref.DataRange>
+               	pop	rax
+               	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
                	int3
                	int3
@@ -2533,11 +2523,15 @@ Disassembly of section .text:
                	je	 <L0>
                	ret
 <L0>:
-               	push	rax
                	mov	byte ptr , 0x1 <_ZGIW10EvaluationW6TagATRW7Product__in_chrg>
-               	call	 <initializer for module ATR.Dependency>
-               	pop	rax
-               	jmp	 <initializer for module ATR.Erase>
+               	jmp	 <initializer for module ATR.Dependency>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
                	int3
                	int3
@@ -2551,9 +2545,13 @@ Disassembly of section .text:
                	mov	byte ptr , 0x1 <_ZGIW3ATRW15DependencyIDMap__in_chrg>
                	call	 <initializer for module ATR.Dependency>
                	call	 <initializer for module ATR.Erase>
-               	call	 <initializer for module ATR.Member.Composition>
                	pop	rax
                	jmp	 <initializer for module Meta.String.Hash>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
                	int3
                	int3
@@ -2613,13 +2611,11 @@ Disassembly of section .text:
                	call	 <initializer for module Evaluation.TagATR.Square>
                	call	 <initializer for module Evaluation.TagATR.Triangle>
                	call	 <initializer for module Evaluation.TagATR.ComputeVolume>
-               	call	 <initializer for module Evaluation.TagATR.Product>
-               	call	 <initializer for module ATR.Address>
                	call	 <initializer for module ATR.Dependency>
+               	call	 <initializer for module ATR.Address>
                	call	 <initializer for module ATR.DependencyIDMap>
                	call	 <initializer for module ATR.Instance>
                	call	 <initializer for module ATR.Layout.Create>
-               	call	 <initializer for module ATR.Layout.Offset>
                	call	 <initializer for module ATR.Member.Composition>
                	call	 <initializer for module ATR.Member.Storage>
                	call	 <initializer for module Meta.ID>
@@ -2627,7 +2623,7 @@ Disassembly of section .text:
                	call	 <initializer for module ATR.Virtual.Dispatch>
                	pop	rax
                	jmp	 <initializer for module Meta.String.Literal>
-               	nop	dword ptr [rax]
+               	nop	word ptr cs:[rax + rax]
 
 <_GLOBAL__sub_I_TagATR.cpp>:
                	push	rax
@@ -2661,13 +2657,17 @@ Disassembly of section .text:
                	call	 <initializer for module ATR.Instance>
                	call	 <initializer for module ATR.Address>
                	call	 <initializer for module ATR.Layout.Create>
-               	call	 <initializer for module ATR.Layout.Offset>
                	call	 <initializer for module ATR.Member.Composition>
                	call	 <initializer for module ATR.Member.Storage>
                	call	 <initializer for module Meta.ID>
                	call	 <initializer for module Meta.Token.Type>
                	pop	rax
                	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
                	int3
                	int3
@@ -2727,7 +2727,7 @@ Disassembly of section .text:
                	lea	rax, [rcx + 4*rcx]
                	mov	qword ptr [rsp + 0x270], rcx
                	lea	rdi, [rcx + 8*rax]
-               	mov	rsi, qword ptr  <memset+0x93d8>
+               	mov	rsi, qword ptr  <memset+0x9340>
                	call	 <_ZnamRKSt9nothrow_t@plt>
                	movsxd	rdx, ebx
                	movabs	rsi, -0x61c8864680b583eb
@@ -4963,9 +4963,9 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x358], rax
                	add	r13, rax
                	xor	edx, edx
-               	vbroadcastss	ymm5, dword ptr  <memset+0x1350>
-               	vmovdqa	xmm6, xmmword ptr  <memset+0x1340>
-               	lea	rdi,  <memset+0x136c>
+               	vbroadcastss	ymm5, dword ptr  <memset+0x1330>
+               	vmovdqa	xmm6, xmmword ptr  <memset+0x1320>
+               	lea	rdi,  <memset+0x134c>
                	mov	r9, r12
                	mov	r12, qword ptr [rsp + 0x248]
                	mov	r14, qword ptr [rsp + 0x240]
@@ -5384,7 +5384,7 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x318], rax
                	mov	qword ptr [rsp + 0x48], rdi
                	lea	rax, [rdi + 4*rdi]
-               	lea	rdi,  <memset+0x136c>
+               	lea	rdi,  <memset+0x134c>
                	rol	rax, 0x7
                	lea	rax, [rax + 8*rax]
                	mov	qword ptr [rsp + 0x320], rax
@@ -5455,7 +5455,7 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x248], r12
                	mov	qword ptr [rsp + 0x240], r14
                	mov	edi, 0x20
-               	mov	rsi, qword ptr  <memset+0x93d8>
+               	mov	rsi, qword ptr  <memset+0x9340>
                	mov	qword ptr [rsp + 0x238], r10
                	mov	r14, r11
                	mov	r12, rdx
@@ -5467,9 +5467,9 @@ Disassembly of section .text:
                	vmovups	ymm2, ymmword ptr [rsp + 0x360]
                	mov	rcx, qword ptr [rsp + 0x40]
                	mov	r9, qword ptr [rsp + 0x280]
-               	lea	rdi,  <memset+0x136c>
-               	vmovdqa	xmm6, xmmword ptr  <memset+0x1340>
-               	vbroadcastss	ymm5, dword ptr  <memset+0x1350>
+               	lea	rdi,  <memset+0x134c>
+               	vmovdqa	xmm6, xmmword ptr  <memset+0x1320>
+               	vbroadcastss	ymm5, dword ptr  <memset+0x1330>
                	mov	rdx, r12
                	mov	r11, r14
                	mov	r10, qword ptr [rsp + 0x238]
@@ -5521,13 +5521,13 @@ Disassembly of section .text:
                	vmovups	ymmword ptr [rsp + 0x2b0], ymm0
                	vmovups	ymmword ptr [rsp + 0x290], ymm0
                	lea	rbx, [rsp + 0x2f0]
-               	lea	r15,  <memset+0x13a0>
-               	vmovss	xmm4, dword ptr  <memset+0x1358>
+               	lea	r15,  <memset+0x1380>
+               	vmovss	xmm4, dword ptr  <memset+0x1338>
                	vxorps	xmm5, xmm5, xmm5
-               	vmovss	xmm6, dword ptr  <memset+0x1360>
-               	vmovss	xmm7, dword ptr  <memset+0x135c>
-               	vmovss	xmm8, dword ptr  <memset+0x1368>
-               	vmovss	xmm9, dword ptr  <memset+0x1354>
+               	vmovss	xmm6, dword ptr  <memset+0x1340>
+               	vmovss	xmm7, dword ptr  <memset+0x133c>
+               	vmovss	xmm8, dword ptr  <memset+0x1348>
+               	vmovss	xmm9, dword ptr  <memset+0x1334>
                	mov	ebp, r12d
                	mov	rax, qword ptr [rsp + 0x260]
                	jmp	 <L238>
@@ -5543,12 +5543,12 @@ Disassembly of section .text:
                	xor	esi, esi
                	vzeroupper
                	call	 <memset@plt>
-               	vmovss	xmm9, dword ptr  <memset+0x1354>
-               	vmovss	xmm8, dword ptr  <memset+0x1368>
-               	vmovss	xmm7, dword ptr  <memset+0x135c>
-               	vmovss	xmm6, dword ptr  <memset+0x1360>
+               	vmovss	xmm9, dword ptr  <memset+0x1334>
+               	vmovss	xmm8, dword ptr  <memset+0x1348>
+               	vmovss	xmm7, dword ptr  <memset+0x133c>
+               	vmovss	xmm6, dword ptr  <memset+0x1340>
                	vxorps	xmm5, xmm5, xmm5
-               	vmovss	xmm4, dword ptr  <memset+0x1358>
+               	vmovss	xmm4, dword ptr  <memset+0x1338>
                	mov	rax, r12
                	mov	r13, r14
 <L238>:
@@ -5745,6 +5745,7 @@ Disassembly of section .text:
                	call	 <_ZdaPv@plt>
                	vmovaps	xmm0, xmmword ptr [rsp + 0x90]
                	mov	rdx, rbp
+               	mov	qword ptr [r15], 0x0
                	jmp	 <L260>
 <L259>:
                	mov	rbx, qword ptr [rsp + 0x338]
@@ -5759,7 +5760,7 @@ Disassembly of section .text:
 <L255>:
                	cmp	r12d, 0x186a0
                	jne	 <L256>
-               	vucomiss	xmm0, dword ptr  <memset+0x1364>
+               	vucomiss	xmm0, dword ptr  <memset+0x1344>
                	jne	 <L261>
 <L256>:
                	xor	eax, eax
@@ -5779,7 +5780,7 @@ Disassembly of section .text:
                	call	 <__cxa_allocate_exception@plt>
                	vmovaps	xmm0, xmmword ptr [rsp + 0x90]
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <memset+0x93e0>
+               	mov	rsi, qword ptr  <memset+0x9348>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
@@ -5789,7 +5790,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <memset+0x93b8>
+               	mov	rax, qword ptr  <memset+0x9320>
                	test	rax, rax
                	je	 <L0>
                	call	rax

@@ -7,8 +7,6 @@ export namespace
 {
 	struct
 		SimdTag
-	{}	constexpr inline
-		SimdTag
 	{};
 
 	template
@@ -19,13 +17,11 @@ export namespace
 		Simd
 	=	Auto
 		<	t_tElement
-		,	(SimdTag)
+		,	SimdTag
 		>
 	;
 
 	struct
-		MaskedTag
-	{}	constexpr inline
 		MaskedTag
 	{};
 
@@ -37,10 +33,29 @@ export namespace
 		MaskedSimd
 	=	Auto
 		<	t_tElement
-		,	(SimdTag)
-		,	(MaskedTag)
+		,	SimdTag
+		,	MaskedTag
 		>
 	;
+
+	template
+		<	typename
+				t_tElement
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	Unmask
+	)	(	MaskedSimd<t_tElement>
+				i_vMasked
+		)
+		noexcept
+	->	Simd<t_tElement>
+	{	return
+		{	.	m_vRaw
+			=	i_vMasked
+				.	m_vRaw
+		};
+	}
 
 	template
 		<	typename

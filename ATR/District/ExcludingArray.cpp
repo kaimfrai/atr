@@ -1,11 +1,13 @@
-export module ATR.District.ExcludingHeap;
+export module ATR.District.ExcludingArray;
 
 import ATR.District.Info;
-import ATR.District.MoveHeapGuard;
+import ATR.District.MoveArrayGuard;
 
 import Meta.String.Hash;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
+
+import Std;
 
 using ::Meta::String::Hash;
 using ::Meta::String::ImplicitHash;
@@ -22,13 +24,14 @@ export namespace
 			...	t_vpExcluded
 		>
 	struct
-		ExcludingHeap
+		ExcludingArray
 	{
 		static_assert
-		(	t_vInfo
-			.	Multiplier
-		==	1uz
-		,	"Overalignment not yet supported for MoveHeapGuard"
+		(	::std::has_single_bit
+			(	t_vInfo
+				.	Multiplier
+			)
+		,	"Multiplier required to be a power of 2"
 		);
 
 		Hash static constexpr inline
@@ -46,8 +49,10 @@ export namespace
 		TypeID static constexpr inline
 			NestedType
 		=	Type
-			<	Heap
+			<	DynamicArray
 				<	void
+				,	t_vInfo
+					.	Multiplier
 				>
 			>
 		;
@@ -58,10 +63,12 @@ export namespace
 			>
 		using
 			Guard
-		=	MoveHeapGuard
-			<	DistrictIndexOf
+		=	MoveArrayGuard
+			<	t_vInfo
+				.	Multiplier
+			,	DistrictIndexOf
 				(	Type<t_tInstance>
-				,	Type<ExcludingHeap>
+				,	Type<ExcludingArray>
 				)
 			,	t_tInstance
 			>

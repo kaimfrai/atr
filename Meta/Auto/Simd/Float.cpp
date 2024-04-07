@@ -36,8 +36,8 @@ export namespace
 		<	float
 				[	8uz
 				]
-		,	(SimdTag)
-		,	(MaskedTag)
+		,	SimdTag
+		,	MaskedTag
 		>
 	{
 		__m256
@@ -92,9 +92,14 @@ export namespace
 		<	float
 				[	8uz
 				]
-		,	(SimdTag)
+		,	SimdTag
 		>
 	{
+		using
+			ElementType
+		=	float
+		;
+
 		using
 			MaskedType
 		=	MaskedSimd
@@ -255,6 +260,25 @@ export namespace
 			};
 		}
 
+		[[nodiscard]]
+		auto static constexpr inline
+		(	LoadUnaligned
+		)	(	float const
+				*	i_aData
+			)
+			noexcept
+		->	Auto
+		{	return
+			{	.	m_vRaw
+				=	::SimdOp::Load<alignof(float)>
+					(	i_aData
+					,	::Std::SimdTarget
+						<	float[8uz]
+						>
+					)
+			};
+		}
+
 		auto constexpr inline
 		(	StoreAligned
 		)	(	float
@@ -277,7 +301,7 @@ export namespace
 		<	float
 			(&)	[	8uz
 				]
-		,	(SimdTag)
+		,	SimdTag
 		>
 	{
 		using
@@ -286,7 +310,7 @@ export namespace
 			<	float
 					[	8uz
 					]
-			,	(SimdTag)
+			,	SimdTag
 			>
 		;
 
@@ -335,8 +359,8 @@ export namespace
 		<	float const
 			(&)	[	8uz
 				]
-		,	(SimdTag)
-		,	(MaskedTag)
+		,	SimdTag
+		,	MaskedTag
 		>
 	{
 		using
@@ -382,7 +406,7 @@ export namespace
 		<	float const
 			(&)	[	8uz
 				]
-		,	(SimdTag)
+		,	SimdTag
 		>
 	{
 		using
@@ -513,8 +537,8 @@ export namespace
 		<	float
 				[	16uz
 				]
-		,	(SimdTag)
-		,	(MaskedTag)
+		,	SimdTag
+		,	MaskedTag
 		>
 	{
 		__m256
@@ -578,7 +602,7 @@ export namespace
 		<	float
 				[	16uz
 				]
-		,	(SimdTag)
+		,	SimdTag
 		>
 	{
 		using
@@ -897,7 +921,7 @@ export namespace
 		<	float
 			(&)	[	16uz
 				]
-		,	(SimdTag)
+		,	SimdTag
 		>
 	{
 		using
@@ -954,7 +978,7 @@ export namespace
 		<	float const
 			(&)	[	16uz
 				]
-		,	(SimdTag)
+		,	SimdTag
 		>
 	{
 		using
@@ -992,8 +1016,8 @@ export namespace
 		<	float const
 			(&)	[	16uz
 				]
-		,	(SimdTag)
-		,	(MaskedTag)
+		,	SimdTag
+		,	MaskedTag
 		>
 	{
 		using

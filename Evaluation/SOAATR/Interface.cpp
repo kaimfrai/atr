@@ -1,27 +1,47 @@
 export module Evaluation.SOAATR.Interface;
 
-import Evaluation.Dependency.TaggedArray;
+import Evaluation.SOAATR.Circle;
+import Evaluation.SOAATR.Cone;
+import Evaluation.SOAATR.Cube;
+import Evaluation.SOAATR.Cuboid;
+import Evaluation.SOAATR.Cylinder;
+import Evaluation.SOAATR.Ellipse;
+import Evaluation.SOAATR.Ellipsoid;
+import Evaluation.SOAATR.Head;
+import Evaluation.SOAATR.Pyramid;
+import Evaluation.SOAATR.Rectangle;
+import Evaluation.SOAATR.Sphere;
+import Evaluation.SOAATR.Square;
+import Evaluation.SOAATR.Triangle;
 
-import ATR.District.ExcludingHeap;
-import ATR.Erase;
+import ATR.District.ExcludingArray;
+import ATR.Instance;
+import ATR.Member.Composition;
 
-import Meta.Token.TypeID;
+import Meta.ID;
 
-import Std;
+using ::ATR::District::ExcludingArray;
 
-using ::ATR::CErasure;
-using ::ATR::District::ExcludingHeap;
-using ::ATR::RErasure;
+using ::Meta::ID;
 
-using ::Meta::TypeID;
-
-namespace
+export namespace
 	Bodies3D
 {
 	using
-		LocalBody
-	=	ExcludingHeap
-		<	{"Heap"}
+		MainDistrict
+	=	ExcludingArray
+		<	{	"Main"
+			,	8uz
+			}
+		>
+	;
+
+	using
+		OtherDistrict
+	=	ExcludingArray
+		<	{	"Other"
+			,	8uz
+			}
 		,	"ColorRed"
 		,	"ColorGreen"
 		,	"ColorBlue"
@@ -32,48 +52,8 @@ namespace
 		,	"Width"
 		,	"Height"
 		,	"Depth"
+		,	"_UnionTag"
 		>
-	;
-
-	struct
-		Interface
-	{
-		::std::size_t const
-			ElementSize
-		;
-		unsigned char const
-			ImplementerCount
-		;
-		auto
-		(&	ImplementerIndex
-		)	(	TypeID
-					i_vType
-			)
-			noexcept
-		->	unsigned char
-		;
-		auto
-		(&	Destroy
-		)	(	RErasure
-					i_rObject
-			,	unsigned char
-					i_vImplementerIndex
-			)
-			noexcept
-		->	void
-		;
-		auto
-		(&	ComputeVolume
-		)	(	CErasure
-					i_rObject
-			,	unsigned char
-					i_vImplementerIndex
-			)
-			noexcept
-		->	float
-		;
-	}	const constinit extern
-		Interface
 	;
 }
 
@@ -82,29 +62,24 @@ export namespace
 {
 	using
 		VolumeComputer
-	=	TaggedArray
-		<	Interface
-		,	LocalBody
+	=	::ATR::Instance
+		<	::ATR::Member::Union
+			<	ID<"Circle">
+			,	ID<"Ellipse">
+			,	ID<"Rectangle">
+			,	ID<"Square">
+			,	ID<"Triangle">
+			,	ID<"Cube">
+			,	ID<"Cuboid">
+			,	ID<"Pyramid">
+			,	ID<"Sphere">
+			,	ID<"Cylinder">
+			,	ID<"Cone">
+			,	ID<"Ellipsoid">
+			,	ID<"Head">
+			>
+		,	MainDistrict
+		,	OtherDistrict
 		>
 	;
 }
-
-static_assert
-(	::std::random_access_iterator
-	<	::Bodies3D::Body3DIterator
-		<	::Bodies3D::Interface
-		>
-	>
-);
-static_assert
-(	::std::is_same_v
-	<	typename
-		::std::iterator_traits
-		<	::Bodies3D::Body3DIterator
-			<	::Bodies3D::Interface
-			>
-		>
-		::	iterator_category
-	,	::std::random_access_iterator_tag
-	>
-);

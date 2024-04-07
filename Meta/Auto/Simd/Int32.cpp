@@ -35,7 +35,7 @@ export namespace
 		<	::std::int32_t
 				[	8uz
 				]
-		,	(SimdTag)
+		,	SimdTag
 		>
 	{
 		__m256i
@@ -107,7 +107,7 @@ export namespace
 		<	::std::int32_t
 				[	16uz
 				]
-		,	(SimdTag)
+		,	SimdTag
 		>
 	{
 		__m256i

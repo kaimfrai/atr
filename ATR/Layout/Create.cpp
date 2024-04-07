@@ -2,24 +2,16 @@ export module ATR.Layout.Create;
 
 import ATR.Layout.Fork;
 import ATR.Layout.Offset;
-import ATR.Member.Composition;
 import ATR.Member.Constant;
 import ATR.Member.Constants;
-import ATR.Member.Info;
 
-import Meta.ID;
 import Meta.Memory.Size;
-import Meta.String.Hash;
 import Meta.Token.Type;
-import Meta.Token.TypeID;
 
 import Std;
 
 using ::Meta::BitSize;
-using ::Meta::ProtoID;
 using ::Meta::RestoreTypeEntity;
-using ::Meta::Type;
-using ::Meta::TypeID;
 
 namespace
 	ATR::Layout
@@ -392,6 +384,12 @@ namespace
 	template
 		<	auto
 				t_vTypeCounts
+		,	template
+				<	typename
+				,	::std::size_t
+				>
+			typename
+				t_t1Transform
 		,	::std::size_t
 			...	t_vpIndex
 		>
@@ -407,19 +405,20 @@ namespace
 	->	decltype(auto)
 	{	return
 		MakeFork
-		<	RestoreTypeEntity
-			<	t_vTypeCounts
-				.	Buffer
-					[	t_vpIndex
-					]
-				.	Type
-			>
-				[	t_vTypeCounts
+		<	t_t1Transform
+			<	RestoreTypeEntity
+				<	t_vTypeCounts
 					.	Buffer
 						[	t_vpIndex
 						]
-					.	Count
-				]
+					.	Type
+				>
+			,	t_vTypeCounts
+				.	Buffer
+					[	t_vpIndex
+					]
+				.	Count
+			>
 			...
 		>{};
 	}
@@ -429,6 +428,12 @@ namespace
 			&	t_rComposition
 		,	short
 				t_vDistrictIndex
+		,	template
+				<	typename
+				,	::std::size_t
+				>
+			typename
+				t_t1Transform
 		,	::std::size_t
 			...	t_vpIndex
 		>
@@ -457,6 +462,7 @@ namespace
 				.	Buffer
 					[	t_vpIndex
 					]
+			,	t_t1Transform
 			>(	::std::make_index_sequence
 				<	rDistrict
 					.	ElementCounts
@@ -473,11 +479,31 @@ export namespace
 	ATR::Layout
 {
 	template
+		<	typename
+				t_tElement
+		,	::std::size_t
+				t_vExtent
+		>
+	using
+		ArrayTransform
+	=	t_tElement
+			[	t_vExtent
+			]
+	;
+
+	template
 		<	auto const
 			&	t_rComposition
 		,	short
 				t_vDistrictIndex
 			=	0
+		,	template
+				<	typename
+				,	::std::size_t
+				>
+			typename
+				t_t1Transform
+			=	ArrayTransform
 		>
 	using
 		CreateType
@@ -485,6 +511,7 @@ export namespace
 		(	CreateLayout_For
 			<	t_rComposition
 			,	t_vDistrictIndex
+			,	t_t1Transform
 			>(	::std::make_index_sequence
 				<	Member::ByteAlignCount
 				>{}
@@ -511,10 +538,20 @@ export namespace
 		Offset_For
 	=	Offset_For
 		<	t_rComposition
-		,	CreateType
-			<	t_rComposition
-			,	t_vDistrictIndex
-			>
+		,	typename
+				RestoreTypeEntity
+				<	t_rComposition
+					.	GetDistrictType
+						(	t_vDistrictIndex
+						)
+				>
+			::	template
+				Rebind
+				<	CreateType
+					<	t_rComposition
+					,	t_vDistrictIndex
+					>
+				>
 		,	t_rComposition
 			.	GetDistrictOffset
 				(	t_vDistrictIndex

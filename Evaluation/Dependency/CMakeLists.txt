@@ -1,6 +1,5 @@
 add_single_file_modules(
 	CommonData.cpp
-	RandomAccessIteratorBase.cpp
 	DynamicArray.cpp
 	TaggedArray.cpp
 

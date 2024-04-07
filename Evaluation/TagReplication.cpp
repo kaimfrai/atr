@@ -1,5 +1,4 @@
 import Evaluation.Dependency.PseudoRandomSequence;
-import Evaluation.Dependency.RandomAccessIteratorBase;
 import Evaluation.Dependency.TransformReduce;
 import Evaluation.Dependency.VerifyLoopSum;
 
@@ -18,7 +17,11 @@ import Evaluation.TagReplication.Cone;
 import Evaluation.TagReplication.Ellipsoid;
 import Evaluation.TagReplication.Head;
 
+import Meta.Generic.RandomAccessIteratorBase;
+
 import Std;
+
+using ::Meta::Generic::RandomAccessIteratorBase;
 
 namespace
 	Bodies3D
@@ -79,6 +82,12 @@ namespace
 	struct
 		Body3DReference
 	{
+		using
+			ReferencedValue
+		=	struct
+				Body3DValue
+		;
+
 		::std::byte const
 		*	m_aData
 		;
@@ -220,40 +229,9 @@ namespace
 	};
 
 	struct
-		ImplicitBody3DReference
-	:	Body3DReference
-	{
-		explicit(false) constexpr inline
-		(	ImplicitBody3DReference
-		)	(	Body3DReference
-					i_rReference
-			)
-			noexcept
-		:	Body3DReference
-			{	i_rReference
-			}
-		{}
-
-		explicit(false) constexpr inline
-		(	ImplicitBody3DReference
-		)	(	Body3DValue const
-				&	i_rValue
-			)
-			noexcept
-		:	Body3DReference
-			{	i_rValue
-				.	operator
-					Body3DReference
-					()
-			}
-		{}
-	};
-
-	struct
 		Body3DIterator
 	:	RandomAccessIteratorBase
 		<	Body3DReference
-		,	Body3DValue
 		>
 	{
 		::std::byte const
@@ -583,30 +561,6 @@ namespace
 		}
 	};
 }
-
-template
-	<>
-struct
-	::std::common_type
-	<	::Bodies3D::Body3DValue
-	,	::Bodies3D::Body3DReference
-	>
-:	::std::type_identity
-	<	::Bodies3D::ImplicitBody3DReference
-	>
-{};
-
-template
-	<>
-struct
-	::std::common_type
-	<	::Bodies3D::Body3DReference
-	,	::Bodies3D::Body3DValue
-	>
-:	::std::type_identity
-	<	::Bodies3D::ImplicitBody3DReference
-	>
-{};
 
 static_assert
 (	::std::random_access_iterator

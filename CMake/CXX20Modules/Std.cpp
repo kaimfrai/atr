@@ -158,23 +158,12 @@ export namespace
 		)	(	::std::int32_t
 					i_vSource
 			,	SimdTargetTag256<::std::int32_t>
-					i_vTarget
 			)
 			noexcept
 		->	__m256i
-		{
-			::std::int32_t
-				vSource
-				[	4uz
-				]
-			{	i_vSource
-			};
-			return
-			Broadcast
-			(	::std::bit_cast<__m128i>
-				(	vSource
-				)
-			,	i_vTarget
+		{	return
+			_mm256_set1_epi32
+			(	i_vSource
 			);
 		}
 	};
@@ -270,24 +259,19 @@ export namespace
 		)	(	::std::uint32_t
 					i_vSource
 			,	SimdTargetTag256<::std::uint32_t>
-					i_vTarget
 			)
 			noexcept
 		->	__m256i
-		{
-			::std::uint32_t
-				vSource
-				[	4uz
-				]
-			{	i_vSource
-			};
-			return
-			Broadcast
-			(	::std::bit_cast<__m128i>
-				(	vSource
+		{	return
+			SimdOp<::std::int32_t>
+			::	Broadcast
+				(	static_cast<::std::int32_t>
+					(	i_vSource
+					)
+				,	SimdTargetTag256<::std::int32_t>
+					{}
 				)
-			,	i_vTarget
-			);
+			;
 		}
 	};
 
@@ -430,24 +414,12 @@ export namespace
 		)	(	float
 					i_vSource
 			,	SimdTargetTag256<float>
-					i_vTarget
 			)
 			noexcept
 		->	__m256
-		{
-			float
-				vValue
-				[	4uz
-				]
-			{	i_vSource
-			};
-
-			return
-			Broadcast
-			(	::std::bit_cast<__m128>
-				(	vValue
-				)
-			,	i_vTarget
+		{	return
+			_mm256_set1_ps
+			(	i_vSource
 			);
 		}
 

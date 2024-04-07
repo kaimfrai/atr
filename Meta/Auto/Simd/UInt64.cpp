@@ -29,7 +29,7 @@ export namespace
 		<	::std::uint64_t
 				[	2uz
 				]
-		,	(SimdTag)
+		,	SimdTag
 		>
 	{
 		__m128i

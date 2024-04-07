@@ -15,7 +15,7 @@ export namespace
 		<	::std::uint8_t
 				[	8uz
 				]
-		,	(SimdTag)
+		,	SimdTag
 		>
 	{
 		::std::uint64_t
@@ -52,6 +52,97 @@ export namespace
 			(	vArray
 			);
 		}
+
+		[[nodiscard]]
+		auto static constexpr inline
+		(	LoadAligned
+		)	(	::std::uint8_t const
+				*	i_aData
+			)
+			noexcept
+		->	Auto
+		{
+			::std::uint8_t
+				vValue
+				[	8uz
+				]
+			{};
+			auto const
+				aData
+			=	::std::assume_aligned<8uz>
+				(	i_aData
+				)
+			;
+			::std::copy
+			(	aData
+			,		aData
+				+	8uz
+			,	vValue
+			);
+
+			return
+			{	.	m_vRaw
+				=	::std::bit_cast<::std::uint64_t>
+					(	vValue
+					)
+			};
+		}
+
+		[[nodiscard]]
+		auto static constexpr inline
+		(	LoadUnaligned
+		)	(	::std::uint8_t const
+				*	i_aData
+			)
+			noexcept
+		->	Auto
+		{
+			::std::uint8_t
+				vValue
+				[	8uz
+				]
+			{};
+			::std::copy
+			(	i_aData
+			,		i_aData
+				+	8uz
+			,	vValue
+			);
+
+			return
+			{	.	m_vRaw
+				=	::std::bit_cast<::std::uint64_t>
+					(	vValue
+					)
+			};
+		}
+
+		auto constexpr inline
+		(	StoreAligned
+		)	(	::std::uint8_t
+				*	o_aData
+			)	const
+			noexcept
+		->	void
+		{
+			auto const
+				vValue
+			=	::std::bit_cast<::std::array<::std::uint8_t, 8uz>>
+				(	m_vRaw
+				)
+			;
+			::std::copy
+			(	vValue
+				.	begin
+					()
+			,	vValue
+				.	end
+					()
+			,	::std::assume_aligned<8uz>
+				(	o_aData
+				)
+			);
+		}
 	};
 
 	template
@@ -61,7 +152,7 @@ export namespace
 		<	::std::uint8_t
 			(&)	[	8uz
 				]
-		,	(SimdTag)
+		,	SimdTag
 		>
 	{
 		using
@@ -152,7 +243,7 @@ export namespace
 		<	::std::uint8_t const
 			(&)	[	8uz
 				]
-		,	(SimdTag)
+		,	SimdTag
 		>
 	{
 		using
@@ -207,7 +298,7 @@ export namespace
 		<	::std::uint8_t
 				[	16uz
 				]
-		,	(SimdTag)
+		,	SimdTag
 		>
 	{
 		__m128i
@@ -253,7 +344,7 @@ export namespace
 		<	::std::uint8_t
 			(&)	[	16uz
 				]
-		,	(SimdTag)
+		,	SimdTag
 		>
 	{
 		using
@@ -344,7 +435,7 @@ export namespace
 		<	::std::uint8_t const
 			(&)	[	16uz
 				]
-		,	(SimdTag)
+		,	SimdTag
 		>
 	{
 		using

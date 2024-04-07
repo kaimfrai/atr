@@ -6,9 +6,11 @@ import ATR.Member.Constants;
 import ATR.Member.CountedType;
 
 import Meta.Memory.Alignment;
+import Meta.Memory.Size;
 
 import Std;
 
+using ::Meta::BitSize;
 using ::Meta::Memory::Alignment;
 
 export namespace
@@ -43,6 +45,10 @@ export namespace
 			ElementCounts
 			[	ByteAlignCount
 			]
+		{};
+
+		BitSize
+			Size
 		{};
 
 		[[nodiscard]]

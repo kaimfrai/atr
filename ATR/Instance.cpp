@@ -72,7 +72,7 @@ export namespace
 					t_tDistrict
 			>
 		using
-			District
+			DistrictGuard
 		=	t_tDistrict
 			::	template
 				Guard
@@ -81,6 +81,18 @@ export namespace
 					,	t_tpDistrict
 						...
 					>
+				>
+		;
+
+		template
+			<	typename
+					t_tDistrict
+			>
+		using
+			District
+		=	typename
+				DistrictGuard
+				<	t_tDistrict
 				>
 			::	District
 		;

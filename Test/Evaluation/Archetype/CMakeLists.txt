@@ -6,6 +6,7 @@ add_module_object_tests(
 	Size
 	Address
 	Heap
+	Array
 	NameReflection
 	ReadWrite
 	Union

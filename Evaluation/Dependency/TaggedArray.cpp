@@ -1,15 +1,15 @@
 export module Evaluation.Dependency.TaggedArray;
 
-import Evaluation.Dependency.RandomAccessIteratorBase;
-
 import ATR.Erase;
 import ATR.Instance;
 
+import Meta.Generic.RandomAccessIteratorBase;
 import Meta.ID;
 import Meta.Token.Type;
 
 import Std;
 
+using ::Meta::Generic::RandomAccessIteratorBase;
 using ::Meta::ProtoID;
 using ::Meta::Type;
 
@@ -36,6 +36,13 @@ export namespace
 	struct
 		Body3DReference
 	{
+		using
+			ReferencedValue
+		=	Body3DValue
+			<	t_rInterface
+			>
+		;
+
 		::std::byte const
 		*	m_aData
 		;
@@ -68,51 +75,9 @@ export namespace
 			&	t_rInterface
 		>
 	struct
-		ImplicitBody3DReference
-	:	Body3DReference
-		<	t_rInterface
-		>
-	{
-		explicit(false) constexpr inline
-		(	ImplicitBody3DReference
-		)	(	Body3DReference<t_rInterface>
-					i_rReference
-			)
-			noexcept
-		:	Body3DReference
-			<	t_rInterface
-			>{	i_rReference
-			}
-		{}
-
-		explicit(false) constexpr inline
-		(	ImplicitBody3DReference
-		)	(	Body3DValue<t_rInterface> const
-				&	i_rValue
-			)
-			noexcept
-		:	Body3DReference
-			<	t_rInterface
-			>{	i_rValue
-				.	operator
-					Body3DReference
-					<	t_rInterface
-					>()
-			}
-		{}
-	};
-
-	template
-		<	auto const
-			&	t_rInterface
-		>
-	struct
 		Body3DIterator
 	:	RandomAccessIteratorBase
 		<	Body3DReference
-			<	t_rInterface
-			>
-		,	Body3DValue
 			<	t_rInterface
 			>
 		>
@@ -462,43 +427,3 @@ export namespace
 		}
 	};
 }
-
-export template
-	<	auto const
-		&	t_rInterface
-	>
-struct
-	::std::common_type
-	<	::Bodies3D::Body3DValue
-		<	t_rInterface
-		>
-	,	::Bodies3D::Body3DReference
-		<	t_rInterface
-		>
-	>
-:	::std::type_identity
-	<	::Bodies3D::ImplicitBody3DReference
-		<	t_rInterface
-		>
-	>
-{};
-
-export template
-	<	auto const
-		&	t_rInterface
-	>
-struct
-	::std::common_type
-	<	::Bodies3D::Body3DReference
-		<	t_rInterface
-		>
-	,	::Bodies3D::Body3DValue
-		<	t_rInterface
-		>
-	>
-:	::std::type_identity
-	<	::Bodies3D::ImplicitBody3DReference
-		<	t_rInterface
-		>
-	>
-{};

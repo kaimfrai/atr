@@ -28,7 +28,8 @@ function build_all()
 			TagReplication\
 			Variant\
 			Visitor\
-			SOAReplication
+			SOAReplication\
+			SOAATR
 	elif
 		[ $2 == "Virtual" ] \
 	||	[ $2 == "Any" ] \
