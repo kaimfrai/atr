@@ -1,7 +1,6 @@
-import <dyno.hpp>;
-
 import Evaluation.Dependency.CommonData;
 import Evaluation.Dependency.DynamicArray;
+import Evaluation.Dependency.Dyno;
 import Evaluation.Dependency.PseudoRandomSequence;
 import Evaluation.Dependency.TransformReduce;
 import Evaluation.Dependency.VerifyLoopSum;
@@ -37,8 +36,6 @@ namespace
 						() const
 					->	float
 				>
-			,	dyno::CopyConstructible
-				{}
 			)
 		)
 	{};

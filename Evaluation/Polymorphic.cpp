@@ -1,7 +1,6 @@
-import <polymorphic.hpp>;
-
 import Evaluation.Dependency.CommonData;
 import Evaluation.Dependency.DynamicArray;
+import Evaluation.Dependency.Polymorphic;
 import Evaluation.Dependency.PseudoRandomSequence;
 import Evaluation.Dependency.TransformReduce;
 import Evaluation.Dependency.VerifyLoopSum;

@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <strcmp+0xa968>
+               	call	qword ptr  <strcmp+0xa978>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <strcmp+0xa978>
+               	mov	rax, qword ptr  <strcmp+0xa988>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <strcmp+0xa980>
+               	mov	rax, qword ptr  <strcmp+0xa990>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <strcmp+0xa988>
+               	cmp	qword ptr , 0x0 <strcmp+0xa998>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -93,6 +93,7 @@ Disassembly of section .text:
                	int3
 
 <initializer for module Evaluation.Dependency.CommonData>:
+<initializer for module Evaluation.Dependency.Polymorphic>:
 <initializer for module Std>:
 <polymorphic::detail::holder_interface::~holder_interface()>:
 <std::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::~_Sp_counted_base()>:
@@ -705,6 +706,7 @@ Disassembly of section .text:
                	push	rax
                	call	 <std::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::~_Sp_counted_base()>
                	call	 <initializer for module Evaluation.Dependency.DynamicArray>
+               	call	 <std::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::~_Sp_counted_base()>
                	call	 <initializer for module Evaluation.Dependency.PseudoRandomSequence>
                	call	 <initializer for module Meta.Auto.Simd.Cast>
                	call	 <initializer for module Meta.Auto.Simd.Float>
@@ -732,6 +734,17 @@ Disassembly of section .text:
                	call	 <initializer for module Evaluation.CRTP.Head>
                	pop	rax
                	jmp	 <std::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::~_Sp_counted_base()>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
                	int3
 
@@ -782,7 +795,7 @@ Disassembly of section .text:
                	movsxd	rax, ebx
                	shl	rax, 0x3
                	lea	rdi, [rax + 4*rax]
-               	mov	rsi, qword ptr  <strcmp+0xa990>
+               	mov	rsi, qword ptr  <strcmp+0xa9a0>
                	call	 <_ZnamRKSt9nothrow_t@plt>
                	mov	r13, rax
                	movsxd	rdx, r14d
@@ -3954,7 +3967,7 @@ Disassembly of section .text:
 <L249>:
                	add	rsi, -0x20
                	lea	rbx, [r13 + 0x18]
-               	mov	r15, qword ptr  <strcmp+0xa9a0>
+               	mov	r15, qword ptr  <strcmp+0xa9b0>
                	vmovaps	xmmword ptr [rsp + 0x60], xmm0
                	jmp	 <L254>
 <L258>:
@@ -4016,7 +4029,7 @@ Disassembly of section .text:
                	call	 <__cxa_allocate_exception@plt>
                	vmovaps	xmm0, xmmword ptr [rsp + 0x60]
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <strcmp+0xa998>
+               	mov	rsi, qword ptr  <strcmp+0xa9a8>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
@@ -4074,7 +4087,7 @@ Disassembly of section .text:
                	mov	rbx, rdi
                	mov	rax, qword ptr [rdi]
                	call	qword ptr [rax + 0x10]
-               	mov	rax, qword ptr  <strcmp+0xa9a0>
+               	mov	rax, qword ptr  <strcmp+0xa9b0>
                	cmp	byte ptr [rax], 0x0
                	je	 <L0>
                	mov	eax, dword ptr [rbx + 0xc]
@@ -4828,7 +4841,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <strcmp+0xa970>
+               	mov	rax, qword ptr  <strcmp+0xa980>
                	test	rax, rax
                	je	 <L0>
                	call	rax

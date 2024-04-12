@@ -1,10 +1,8 @@
-// Required to be a header unit for use of macro
-import <boost.hpp>;
-
 import Evaluation.Dependency.CommonData;
 import Evaluation.Dependency.DynamicArray;
 import Evaluation.Dependency.PseudoRandomSequence;
 import Evaluation.Dependency.TransformReduce;
+import Evaluation.Dependency.TypeErasure;
 import Evaluation.Dependency.VerifyLoopSum;
 
 import Evaluation.CRTP.Circle;
@@ -27,24 +25,176 @@ import Std;
 namespace
 	Bodies3D
 {
-	BOOST_TYPE_ERASURE_MEMBER(ComputeVolume, )
+	template
+		<	typename
+				Sig
+		,	typename
+				T
+			=	::boost::type_erasure::_self
+		>
+	struct
+		has_ComputeVolume
+	;
+
+	namespace
+		boost_type_erasure_impl
+	{
+		template
+			<	typename
+					Sig
+			,	typename
+					T
+			>
+		using
+			has_ComputeVolumeself
+		=	has_ComputeVolume
+			<	Sig
+			,	T
+			>
+		;
+
+		template
+			<	typename
+					Sig
+			,	typename
+					Concept
+			,	typename
+					Base
+			,	typename
+					ID
+			,	typename
+					Enable
+				=	void
+			>
+		struct
+			has_ComputeVolume_member_interface
+		;
+
+		template
+			<	class
+					Concept
+			,	class
+					Base
+			,	class
+					ID
+			,	class
+					V
+			>
+		struct
+			has_ComputeVolume_member_interface
+			<	auto
+					()
+				->	float
+			,	Concept
+			,	Base
+			,	ID const
+			,	V
+			>
+		:	Base
+		{
+			using
+				_boost_type_erasure_has_memberComputeVolume
+			=	void
+			;
+
+			auto
+			(	ComputeVolume
+			)	()	const
+			->	float
+			{	return
+				::boost::type_erasure::call
+				(	Concept
+					()
+				,	*	this
+				);
+			}
+		};
+
+		template
+			<	typename
+					Sig
+			>
+		struct
+			has_ComputeVolumemember
+		;
+
+		template
+			<	typename
+					T0
+			>
+		struct
+			has_ComputeVolumemember
+			<	auto(	T0
+					)
+				->	float
+			>
+		{
+			auto static
+			(	apply
+			)	(	T0
+						t0
+				)
+			->	float
+			{	return
+				t0
+				.	ComputeVolume
+					()
+				;
+			}
+		};
+	}
+
+	template
+		<	typename
+				Sig
+		,	typename
+				T
+		>
+	struct
+		has_ComputeVolume
+	:	::boost::type_erasure::detail::choose_member_impl_t
+		<	Sig
+		,	T
+		,	boost_type_erasure_impl
+			::	has_ComputeVolumemember
+		,	boost_type_erasure_impl
+			::	has_ComputeVolumeself
+		>
+	{};
+
+	template
+		<	typename
+				Sig
+		,	typename
+				T
+		>
+	auto
+	(	boost_type_erasure_find_interface
+	)	(	has_ComputeVolume
+			<	Sig
+			,	T
+			>
+		)
+	->	::boost::type_erasure::detail::member_choose_interface
+		<	Sig
+		,	T
+		,	has_ComputeVolume
+		,	boost_type_erasure_impl
+			::	has_ComputeVolume_member_interface
+		>
+	;
 
 	using
 		Body3D
-	=	boost::type_erasure::any
-		<	boost::mpl::vector
+	=	::boost::type_erasure::any
+		<	::boost::mpl::vector
 			<	has_ComputeVolume
 				<	auto
 						()	const
 					->	float
 				>
-			,	boost::type_erasure::constructible
-				<	boost::type_erasure::_self
-					(	boost::type_erasure::_self
-						&&
-					)
-				>
-			,	boost::type_erasure::destructible<>
+			,	::boost::type_erasure::destructible
+				<>
 			>
 		>
 	;
