@@ -1,5 +1,6 @@
 export module ATR.District.MoveArrayGuard;
 
+import ATR.District.Info;
 import ATR.Layout.Create;
 import ATR.Layout.Fork;
 import ATR.Layout.Offset;
@@ -754,7 +755,9 @@ export namespace
 	};
 
 	template
-		<	::std::size_t
+		<	ERole
+				t_vRole
+		,	::std::size_t
 				t_vMultiplier
 		,	short
 				t_vDistrictIndex
@@ -797,7 +800,9 @@ export namespace
 	};
 
 	template
-		<	::std::size_t
+		<	ERole
+				t_vRole
+		,	::std::size_t
 				t_vMultiplier
 		,	short
 				t_vDistrictIndex
@@ -827,7 +832,8 @@ export namespace
 		)
 	class
 		MoveArrayGuard
-		<	t_vMultiplier
+		<	t_vRole
+		,	t_vMultiplier
 		,	t_vDistrictIndex
 		,	t_t1Instance
 			<	t_tTypeName
@@ -943,6 +949,17 @@ export namespace
 		(	MoveArrayGuard
 		)	()
 			noexcept
+		=	default;
+
+		explicit(false) constexpr inline
+		(	MoveArrayGuard
+		)	()
+			noexcept
+		requires
+			(	t_vRole
+			==	ERole
+				::	Rearguard
+			)
 		{
 			(	GuardedValue
 				()
@@ -956,6 +973,11 @@ export namespace
 					i_vCapacity
 			)
 			noexcept
+		requires
+			(	t_vRole
+			==	ERole
+				::	Rearguard
+			)
 		{
 			auto static constexpr
 			&	rLayout
@@ -980,9 +1002,22 @@ export namespace
 		explicit(false) constexpr inline
 		(	MoveArrayGuard
 		)	(	MoveArrayGuard
+				&&
+			)
+			noexcept
+		=	default;
+
+		explicit(false) constexpr inline
+		(	MoveArrayGuard
+		)	(	MoveArrayGuard
 				&&	i_rOther
 			)
 			noexcept
+		requires
+			(	t_vRole
+			==	ERole
+				::	Rearguard
+			)
 		{
 			(	GuardedValue
 				()
@@ -1004,23 +1039,30 @@ export namespace
 		->	MoveArrayGuard
 			&
 		{
-			auto
-			&	rGuardedValue
-			=	GuardedValue
-				()
-			;
-
-			rGuardedValue
-			.	deallocate
-				()
-			;
-
-			::std::swap
-			(	rGuardedValue
-			,	i_rOther
-				.	GuardedValue
+			if	constexpr
+				(	t_vRole
+				==	ERole
+					::	Vanguard
+				)
+			{
+				auto
+				&	rGuardedValue
+				=	GuardedValue
 					()
-			);
+				;
+
+				rGuardedValue
+				.	deallocate
+					()
+				;
+			}
+			else
+			{	(	i_rOther
+					.	GuardedValue
+						()
+				=	{}
+				);
+			}
 
 			return
 			*	this
@@ -1032,6 +1074,18 @@ export namespace
 			MoveArrayGuard
 		)	()
 			noexcept
+		=	default;
+
+		constexpr inline
+		(	compl
+			MoveArrayGuard
+		)	()
+			noexcept
+		requires
+			(	t_vRole
+			==	ERole
+				::	Rearguard
+			)
 		{
 			auto
 			&	rGuardedValue
@@ -1053,6 +1107,11 @@ export namespace
 			)
 			noexcept
 		->	void
+		requires
+			(	t_vRole
+			==	ERole
+				::	Rearguard
+			)
 		{
 			auto
 			&	rGuardedValue
@@ -1089,6 +1148,11 @@ export namespace
 			)
 			noexcept
 		->	decltype(auto)
+		requires
+			(	t_vRole
+			==	ERole
+				::	Rearguard
+			)
 		{	auto
 				rGuardedValue
 			=	i_rInstance
@@ -1105,7 +1169,6 @@ export namespace
 			};
 		}
 	};
-
 
 	template
 		<	template
@@ -1146,7 +1209,7 @@ export namespace
 		=	t_t1Instance<t_tTypeName, t_tpDistrict...>
 		;
 		(	...
-		,	static_cast<typename tInstance::template DistrictGuard<t_tpDistrict>&>
+		,	static_cast<typename tInstance::template DistrictRearguard<t_tpDistrict>&>
 			(	rInstance
 			)
 			.	push_back

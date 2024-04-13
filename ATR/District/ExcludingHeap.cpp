@@ -57,9 +57,28 @@ export namespace
 					t_tInstance
 			>
 		using
-			Guard
+			Vanguard
 		=	MoveHeapGuard
-			<	DistrictIndexOf
+			<	ERole
+				::	Vanguard
+			,	DistrictIndexOf
+				(	Type<t_tInstance>
+				,	Type<ExcludingHeap>
+				)
+			,	t_tInstance
+			>
+		;
+
+		template
+			<	typename
+					t_tInstance
+			>
+		using
+			Rearguard
+		=	MoveHeapGuard
+			<	ERole
+				::	Rearguard
+			,	DistrictIndexOf
 				(	Type<t_tInstance>
 				,	Type<ExcludingHeap>
 				)

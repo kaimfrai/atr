@@ -40,6 +40,8 @@ auto inline
 	VolumeComputer
 		vElements
 	{	{}
+	,	{}
+	,	{}
 	,	static_cast<::std::uint32_t>
 		(	i_vRandomSequence
 			.	size
@@ -118,7 +120,7 @@ auto inline
 	=	View
 		(	static_cast
 			<	VolumeComputer
-				::	DistrictGuard
+				::	DistrictRearguard
 					<	MainDistrict
 					>
 				const

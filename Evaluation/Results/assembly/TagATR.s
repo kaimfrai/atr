@@ -2459,16 +2459,12 @@ Disassembly of section .text:
 <L0>:
                	push	rax
                	mov	byte ptr , 0x1 <_ZGIW3ATRW8DistrictW13MoveHeapGuard__in_chrg>
+               	call	 <initializer for module ATR.District.Info>
                	call	 <initializer for module ATR.Layout.Create>
                	call	 <initializer for module ATR.Member.Composition>
                	call	 <initializer for module Meta.Auto.Ref.PledgeCount>
                	pop	rax
                	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
                	int3
                	int3

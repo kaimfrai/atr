@@ -438,13 +438,23 @@ auto constexpr inline
 		)
 	};
 
-	return
+	LocalHead
+		vMoveAssign
+	{};
+
+	(	vMoveAssign
+	=	::std::move
 		(	vMoveConstruct
+		)
+	);
+
+	return
+		(	vMoveAssign
 			[	"RightEyeColorRed"_id
 			]
 		==	1.0f
 		)
-	and	(	vMoveConstruct
+	and	(	vMoveAssign
 			[	"RightEyeColorGreen"_id
 			]
 		==	2.0f

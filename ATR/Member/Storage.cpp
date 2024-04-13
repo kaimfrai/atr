@@ -12,31 +12,73 @@ export namespace
 	ATR::Member
 {
 	template
-		<	ProtoID
+		<	typename
 				t_tTypeName
 		,	typename
-			...	t_tpDecorator
+			...	t_tpDistrict
 		>
 	[[nodiscard]]
 	auto constexpr inline
-	(	IsDynamicMember
+	(	IsAlignedMember
 	)	(	Hash
 				i_vMemberName
+		,	bool
+				i_vIsAligned
 		)
 		noexcept
 	->	bool
-	{	return
-				Composition_Of
-				<	t_tTypeName
-				,	t_tpDecorator
-					...
-				>
-			.	FindMemberInfo
+	{
+		auto const
+		&	rComposition
+		=	Composition_Of
+			<	t_tTypeName
+			,	t_tpDistrict
+				...
+			>
+		;
+		auto const
+			vHashIndex
+		=	rComposition
+			.	Members
+			.	HashIndexFor
 				(	i_vMemberName
 				)
-			.	Type
+		;
+		if	(	not
+				rComposition
+				.	Members
+				.	HasMember
+					[	vHashIndex
+					][	0u
+					]
+			)
+		{	return
+				false
+			;
+		}
+
+		auto const
+			vMemberIndex
+		=	rComposition
+			.	Members
+			.	MemberIndices
+				[	vHashIndex
+				]
+		;
+
+		auto const
+			vType
+		=	rComposition
+			.	GetMemberType
+				(	vMemberIndex
+				)
+		;
+
+		return
+			vType
 			.	IsAligned
 				()
+		==	i_vIsAligned
 		;
 	}
 
@@ -53,15 +95,13 @@ export namespace
 	=	ProtoID
 		<	t_tProto
 		>
-	and	ProtoID
-		<	t_tTypeName
-		>
-	and	(	IsDynamicMember
+	and	(	IsAlignedMember
 			<	t_tTypeName
 			,	t_tpDecorator
 				...
 			>(	t_tProto
 				{}
+			,	true
 			)
 		)
 	;
@@ -79,16 +119,13 @@ export namespace
 	=	ProtoID
 		<	t_tProto
 		>
-	and	ProtoID
-		<	t_tTypeName
-		>
-	and	(	not
-			IsDynamicMember
+	and	(	IsAlignedMember
 			<	t_tTypeName
 			,	t_tpDecorator
 				...
 			>(	t_tProto
 				{}
+			,	false
 			)
 		)
 	;

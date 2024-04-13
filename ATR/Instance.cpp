@@ -29,7 +29,17 @@ export namespace
 		>
 	struct
 		Instance
-	:	Base
+	:	t_tpDistrict
+		::	template
+			Vanguard
+			<	Instance
+				<	t_tTypeName
+				,	t_tpDistrict
+					...
+				>
+			>
+		...
+	,	Base
 		<	CreateType
 			<	Member::Composition_Of
 				<	t_tTypeName
@@ -40,7 +50,7 @@ export namespace
 		>
 	,	t_tpDistrict
 		::	template
-			Guard
+			Rearguard
 			<	Instance
 				<	t_tTypeName
 				,	t_tpDistrict
@@ -72,10 +82,28 @@ export namespace
 					t_tDistrict
 			>
 		using
-			DistrictGuard
+			DistrictVanguard
 		=	t_tDistrict
 			::	template
-				Guard
+				Vanguard
+				<	Instance
+					<	t_tTypeName
+					,	t_tpDistrict
+						...
+					>
+				>
+		;
+
+
+		template
+			<	typename
+					t_tDistrict
+			>
+		using
+			DistrictRearguard
+		=	t_tDistrict
+			::	template
+				Rearguard
 				<	Instance
 					<	t_tTypeName
 					,	t_tpDistrict
@@ -91,7 +119,7 @@ export namespace
 		using
 			District
 		=	typename
-				DistrictGuard
+				DistrictRearguard
 				<	t_tDistrict
 				>
 			::	District

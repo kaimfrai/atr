@@ -1,5 +1,6 @@
 export module ATR.District.MoveHeapGuard;
 
+import ATR.District.Info;
 import ATR.Layout.Create;
 import ATR.Member.Composition;
 
@@ -127,7 +128,9 @@ export namespace
 	};
 
 	template
-		<	short
+		<	ERole
+				t_vRole
+		,	short
 				t_vDistrictIndex
 		,	typename
 				t_tInstance
@@ -143,7 +146,9 @@ export namespace
 	};
 
 	template
-		<	short
+		<	ERole
+				t_vRole
+		,	short
 				t_vDistrictIndex
 		,	template
 				<	typename
@@ -171,7 +176,8 @@ export namespace
 		)
 	class
 		MoveHeapGuard
-		<	t_vDistrictIndex
+		<	t_vRole
+		,	t_vDistrictIndex
 		,	t_t1Instance
 			<	t_tTypeName
 			,	t_tpDistrict
@@ -279,6 +285,17 @@ export namespace
 		(	MoveHeapGuard
 		)	()
 			noexcept
+		=	default;
+
+		explicit(false) constexpr inline
+		(	MoveHeapGuard
+		)	()
+			noexcept
+		requires
+			(	t_vRole
+			==	ERole
+				::	Rearguard
+			)
 		{
 			(	GuardedValue
 				()
@@ -291,10 +308,23 @@ export namespace
 
 		explicit(false) constexpr inline
 		(	MoveHeapGuard
+		)	(	MoveHeapGuard
+				&&
+			)
+			noexcept
+		=	default;
+
+		explicit(false) constexpr inline
+		(	MoveHeapGuard
 		)	(	District
 				&&	i_rInitial
 			)
 			noexcept
+		requires
+			(	t_vRole
+			==	ERole
+				::	Rearguard
+			)
 		{
 			if	constexpr
 				(	::std::is_array_v
@@ -345,6 +375,11 @@ export namespace
 				&&	i_rOther
 			)
 			noexcept
+		requires
+			(	t_vRole
+			==	ERole
+				::	Rearguard
+			)
 		{	(	GuardedValue
 				()
 			=	::std::exchange
@@ -364,18 +399,23 @@ export namespace
 			noexcept
 		->	MoveHeapGuard
 			&
-		{	Delete
-			();
-
-			(	GuardedValue
-				()
-			=	::std::exchange
-				(	i_rOther
+		{
+			if	constexpr
+				(	t_vRole
+				==	ERole
+					::	Vanguard
+				)
+			{
+				Delete
+				();
+			}
+			else
+			{	(	i_rOther
 					.	GuardedValue
 						()
-				,	nullptr
-				)
-			);
+				=	nullptr
+				);
+			}
 
 			return
 			*	this
@@ -387,6 +427,18 @@ export namespace
 			MoveHeapGuard
 		)	()
 			noexcept
+		=	default;
+
+		constexpr inline
+		(	compl
+			MoveHeapGuard
+		)	()
+			noexcept
+		requires
+			(	t_vRole
+			==	ERole
+				::	Rearguard
+			)
 		{	Delete
 			();
 		}

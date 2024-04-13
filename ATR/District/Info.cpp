@@ -29,6 +29,12 @@ export namespace
 		{};
 	};
 
+	enum class
+		ERole
+	{	Vanguard
+	,	Rearguard
+	};
+
 	template
 		<	template
 				<	typename

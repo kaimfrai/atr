@@ -62,9 +62,30 @@ export namespace
 					t_tInstance
 			>
 		using
-			Guard
+			Vanguard
 		=	MoveArrayGuard
-			<	t_vInfo
+			<	ERole
+				::	Vanguard
+			,	t_vInfo
+				.	Multiplier
+			,	DistrictIndexOf
+				(	Type<t_tInstance>
+				,	Type<ExcludingArray>
+				)
+			,	t_tInstance
+			>
+		;
+
+		template
+			<	typename
+					t_tInstance
+			>
+		using
+			Rearguard
+		=	MoveArrayGuard
+			<	ERole
+				::	Rearguard
+			,	t_vInfo
 				.	Multiplier
 			,	DistrictIndexOf
 				(	Type<t_tInstance>

@@ -2097,6 +2097,7 @@ Disassembly of section .text:
 <L0>:
                	push	rax
                	mov	byte ptr , 0x1 <_ZGIW3ATRW8DistrictW14MoveArrayGuard__in_chrg>
+               	call	 <initializer for module ATR.District.Info>
                	call	 <initializer for module ATR.Layout.Create>
                	call	 <initializer for module ATR.Layout.Fork>
                	call	 <initializer for module ATR.Layout.Offset>
@@ -2112,11 +2113,6 @@ Disassembly of section .text:
                	call	 <initializer for module Meta.Token.Type>
                	pop	rax
                	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
                	int3
 
@@ -2713,6 +2709,7 @@ Disassembly of section .text:
                	call	 <initializer for module ATR.Member.Composition>
                	call	 <initializer for module Meta.ID>
                	call	 <initializer for module ATR.District.MoveArrayGuard>
+               	call	 <initializer for module ATR.District.Info>
                	call	 <initializer for module ATR.Layout.Create>
                	call	 <initializer for module ATR.Layout.Fork>
                	call	 <initializer for module ATR.Layout.Offset>
@@ -2722,11 +2719,6 @@ Disassembly of section .text:
                	call	 <initializer for module Meta.Token.Type>
                	pop	rax
                	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
 
 <main>:

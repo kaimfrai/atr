@@ -358,6 +358,9 @@ export namespace
 					+	vCount
 					*	vBodySize
 					)
+				,	typename t_tBody::template DistrictVanguard<t_tpDistrict>
+					{}
+					...
 				,	::std::move
 					(	i_rBaseDistrict
 					)

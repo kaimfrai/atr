@@ -144,3 +144,46 @@ static_assert
 			]
 	>
 );
+
+[[nodiscard]]
+auto constexpr inline
+(	Lifetime
+)	()
+	noexcept
+->	bool
+{
+	UnionArray
+		vHead
+	{	{}
+	,	{}
+	,	{}
+	,	10u
+	,	10u
+	};
+
+	UnionArray
+		vMoveConstruct
+	{	::std::move
+		(	vHead
+		)
+	};
+
+	UnionArray
+		vMoveAssign
+	{};
+
+	(	vMoveAssign
+	=	::std::move
+		(	vMoveConstruct
+		)
+	);
+
+	return
+		true
+	;
+}
+
+static_assert
+(	Lifetime
+	()
+);
