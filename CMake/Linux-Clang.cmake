@@ -37,7 +37,6 @@ add_compile_options(
 	-flto=full
 	-fconstexpr-backtrace-limit=0
 	-ftemplate-backtrace-limit=0
-	-frelaxed-template-template-args
 	-fconstexpr-steps=4194303
 	-ffunction-sections
 	-fdata-sections

@@ -114,33 +114,6 @@ export namespace
 			noexcept
 		->	bool
 		=	default;
-
-		[[nodiscard]]
-		auto friend constexpr inline
-		(	operator<=>
-		)	(	Literal const
-				&	i_rLeft
-			,	Literal const
-				&	i_rRight
-			)
-			noexcept
-		->	::std::strong_ordering
-		{	return
-			::std::lexicographical_compare_three_way
-			(	i_rLeft
-				.	begin
-					()
-			,	i_rLeft
-				.	end
-					()
-			,	i_rRight
-				.	begin
-					()
-			,	i_rRight
-				.	end
-					()
-			);
-		}
 	};
 
 	template

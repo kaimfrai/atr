@@ -278,15 +278,23 @@ export namespace
 			ByteSize const
 				vByteDiff
 			{	::std::distance
-				(	i_vLeft.m_vUnderlyingArray
-				,	i_vRight.m_vUnderlyingArray
+				(	i_vLeft
+					.	m_aUnderlyingArray
+				,	i_vRight
+					.	m_aUnderlyingArray
 				)
 			};
 
 			BitSize const
 				vBitDiff
-			{	IndexLowestOne(i_vLeft.m_vMask)
-			-	IndexLowestOne(i_vRight.m_vMask)
+			{	IndexLowestOne
+				(	i_vLeft
+					.	m_vMask
+				)
+			-	IndexLowestOne
+				(	i_vRight
+					.	m_vMask
+				)
 			};
 			return
 			(	(	vByteDiff

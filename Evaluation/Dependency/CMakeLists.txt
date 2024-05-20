@@ -19,7 +19,7 @@ if (NOT FASTER_BUILD_SPEED)
 		Dyno.cpp
 	PROPERTIES
 	COMPILE_OPTIONS
-		"$<$<CXX_COMPILER_ID:Clang>:-Wno-gnu-string-literal-operator-template;-Wno-shadow-uncaptured-local;-Wno-reserved-identifier>"
+		"$<$<CXX_COMPILER_ID:Clang>:-Wno-gnu-string-literal-operator-template;-Wno-shadow-uncaptured-local;-Wno-reserved-identifier;-Wno-implicit-int-conversion;-Wno-missing-variable-declarations>"
 	)
 endif()
 
@@ -45,6 +45,15 @@ PROPERTIES
 INCLUDE_DIRECTORIES
 	"${POLYMORPHIC_INCLUDE_PATH}"
 )
+
+if	(NOT FASTER_BUILD_SPEED)
+	set_source_files_properties(
+		Polymorphic.cpp
+	PROPERTIES
+	COMPILE_OPTIONS
+		"$<$<CXX_COMPILER_ID:Clang>:-Wno-cast-function-type-strict>"
+	)
+endif()
 
 set_source_files_properties(
 	Polymorphic.cpp

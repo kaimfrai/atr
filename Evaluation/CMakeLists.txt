@@ -27,14 +27,6 @@ RUNTIME_OUTPUT_DIRECTORY
 )
 
 ################################################################################
-if (NOT FASTER_BUILD_SPEED)
-	set_source_files_properties(
-		Dyno.cpp
-	PROPERTIES
-	COMPILE_OPTIONS
-		"$<$<CXX_COMPILER_ID:Clang>:-Wno-implicit-int-conversion;-Wno-missing-variable-declarations>"
-	)
-endif()
 add_module_executable(
 	Dyno
 		Dyno.cpp
@@ -47,14 +39,6 @@ RUNTIME_OUTPUT_DIRECTORY
 )
 
 ################################################################################
-if	(NOT FASTER_BUILD_SPEED)
-	set_source_files_properties(
-		Polymorphic.cpp
-	PROPERTIES
-	COMPILE_OPTIONS
-		"$<$<CXX_COMPILER_ID:Clang>:-Wno-cast-function-type-strict>"
-	)
-endif()
 add_module_executable(
 	Polymorphic
 		Polymorphic.cpp
