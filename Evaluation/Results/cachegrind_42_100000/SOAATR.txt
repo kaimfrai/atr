@@ -1,22 +1,22 @@
-==52367== Cachegrind, a cache and branch-prediction profiler
-==52367== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
-==52367== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==52367== Command: build/Evaluation/bin/SOAATR 42 100000
-==52367== 
---52367-- warning: L3 cache found, using its data for the LL simulation.
-==52367== 
-==52367== I   refs:      8,374,889
-==52367== I1  misses:        2,083
-==52367== LLi misses:        1,969
-==52367== I1  miss rate:      0.02%
-==52367== LLi miss rate:      0.02%
-==52367== 
-==52367== D   refs:      2,818,383  (1,832,082 rd   + 986,301 wr)
-==52367== D1  misses:      106,909  (   39,107 rd   +  67,802 wr)
-==52367== LLd misses:       76,960  (   10,608 rd   +  66,352 wr)
-==52367== D1  miss rate:       3.8% (      2.1%     +     6.9%  )
-==52367== LLd miss rate:       2.7% (      0.6%     +     6.7%  )
-==52367== 
-==52367== LL refs:         108,992  (   41,190 rd   +  67,802 wr)
-==52367== LL misses:        78,929  (   12,577 rd   +  66,352 wr)
-==52367== LL miss rate:        0.7% (      0.1%     +     6.7%  )
+==21583== Cachegrind, a cache and branch-prediction profiler
+==21583== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
+==21583== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==21583== Command: build/Evaluation/bin/SOAATR 42 100000
+==21583== 
+--21583-- warning: L3 cache found, using its data for the LL simulation.
+==21583== 
+==21583== I   refs:      8,374,346
+==21583== I1  misses:        2,083
+==21583== LLi misses:        1,969
+==21583== I1  miss rate:      0.02%
+==21583== LLi miss rate:      0.02%
+==21583== 
+==21583== D   refs:      2,818,314  (1,832,011 rd   + 986,303 wr)
+==21583== D1  misses:      106,917  (   39,115 rd   +  67,802 wr)
+==21583== LLd misses:       76,962  (   10,610 rd   +  66,352 wr)
+==21583== D1  miss rate:       3.8% (      2.1%     +     6.9%  )
+==21583== LLd miss rate:       2.7% (      0.6%     +     6.7%  )
+==21583== 
+==21583== LL refs:         109,000  (   41,198 rd   +  67,802 wr)
+==21583== LL misses:        78,931  (   12,579 rd   +  66,352 wr)
+==21583== LL miss rate:        0.7% (      0.1%     +     6.7%  )
