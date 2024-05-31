@@ -54,14 +54,6 @@ export namespace
 		}
 	};
 
-	template
-		<	::std::size_t
-				t_vBitCount
-		>
-	struct
-		Bits
-	{};
-
 
 	template
 		<>
@@ -69,15 +61,12 @@ export namespace
 		Var
 		<	bool
 			&
-		,	Bits
-			<	16uz
-			>
 		>
 	{
-		::std::uint16_t
+		::std::byte
 		*	m_aRaw
 		;
-		::std::uint16_t
+		::std::byte
 			m_vMask
 		;
 
@@ -91,7 +80,8 @@ export namespace
 				bitand
 					m_vMask
 				)
-			!=	0u
+			!=	::std::byte
+				{}
 			;
 		}
 
@@ -112,10 +102,12 @@ export namespace
 				m_vMask
 			;
 				vRaw
-			|=	static_cast<::std::uint16_t>
+			|=	static_cast<::std::byte>
 				(	i_vValue
+				*	static_cast<int>
+					(	m_vMask
+					)
 				)
-			*	m_vMask
 			;
 
 			*	m_aRaw
@@ -137,8 +129,11 @@ export namespace
 				]
 		>
 	{
-		::std::uint16_t
+		alignas(::std::uint16_t)
+		::std::byte
 			m_vRaw
+			[	sizeof(::std::uint16_t)
+			]
 		;
 
 		[[nodiscard]]
@@ -148,12 +143,18 @@ export namespace
 					i_vIndex
 			)	&
 			noexcept
-		->	Var<bool&, Bits<16uz>>
+		->	Var<bool&>
 		{	return
-			{	&	m_vRaw
-			,	static_cast<::std::uint16_t>
-				(	1uz
-				<<	i_vIndex
+			{	(	m_vRaw
+				+	(	i_vIndex
+					/	8z
+					)
+				)
+			,	static_cast<::std::byte>
+				(	1z
+				<<	(	i_vIndex
+					%	8z
+					)
 				)
 			};
 		}
@@ -168,7 +169,9 @@ export namespace
 		->	bool
 		{	return
 			static_cast<bool>
-			(	(	m_vRaw
+			(	(	::std::bit_cast<::std::uint16_t>
+					(	m_vRaw
+					)
 				>>	i_vIndex
 				)
 			bitand
@@ -185,12 +188,15 @@ export namespace
 			noexcept
 		->	Var
 		{	return
-			{	static_cast<::std::uint16_t>
+			::std::bit_cast<Var>
+			(	static_cast<::std::uint16_t>
 				(	compl
-					i_vArray
-					.	m_vRaw
+					::std::bit_cast<::std::uint16_t>
+					(	i_vArray
+						.	m_vRaw
+					)
 				)
-			};
+			);
 		}
 
 		[[nodiscard]]
@@ -204,12 +210,15 @@ export namespace
 			noexcept
 		->	Var
 		{	return
-			{	static_cast<::std::uint16_t>
-				(	i_vArray
-					.	m_vRaw
+			::std::bit_cast<Var>
+			(	static_cast<::std::uint16_t>
+				(	::std::bit_cast<::std::uint16_t>
+					(	i_vArray
+						.	m_vRaw
+					)
 				<<	i_vShift
 				)
-			};
+			);
 		}
 
 		[[nodiscard]]
@@ -222,14 +231,18 @@ export namespace
 			)
 			noexcept
 		->	Var
-		{	(	i_vLeft
-				.	m_vRaw
-			|=	i_vRight
-				.	m_vRaw
+		{	return
+			::std::bit_cast<Var>
+			(	static_cast<::std::uint16_t>
+				(	::std::bit_cast<::std::uint16_t>
+					(	i_vLeft
+					)
+				bitor
+					::std::bit_cast<::std::uint16_t>
+					(	i_vRight
+					)
+				)
 			);
-			return
-				i_vLeft
-			;
 		}
 
 		auto constexpr inline
@@ -257,8 +270,10 @@ export namespace
 		->	auto
 		{	return
 			::std::popcount
-			(	i_vArray
-				.	m_vRaw
+			(	::std::bit_cast<::std::uint16_t>
+				(	i_vArray
+					.	m_vRaw
+				)
 			);
 		}
 
