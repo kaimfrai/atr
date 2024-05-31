@@ -4,7 +4,7 @@ import ATR.Member.AlignBuffer;
 import ATR.Member.Constants;
 import ATR.Member.Info;
 
-import Meta.Auto.Array.Bounded;
+import Meta.Auto.Bit.Field;
 import Meta.Memory.Size.Arithmetic;
 import Meta.Memory.Size;
 import Meta.String.Hash;
