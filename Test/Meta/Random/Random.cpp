@@ -1,10 +1,12 @@
-import Meta.Math.Random;
 import Meta.Math.Next;
+import Meta.Random.Splitmix;
+import Meta.Random.Xoroshiro;
 
 import Std;
 
-using ::Meta::Math::Splitmix64;
-using ::Meta::Math::Xoroshiro256StarStar;
+using ::Meta::Math::Next;
+using ::Meta::Random::Splitmix64;
+using ::Meta::Random::Xoroshiro256StarStar;
 
 static_assert
 (	::std::input_iterator

@@ -3,14 +3,15 @@ export module Evaluation.Dependency.PseudoRandomSequence;
 import Meta.Auto.Simd.Cast;
 import Meta.Auto.Simd.Float;
 import Meta.Auto.Simd.UInt8;
-import Meta.Math.Random;
+import Meta.Random.Splitmix;
+import Meta.Random.Xoroshiro;
 
 import Std;
 
 using ::Meta::Auto::Simd;
 using ::Meta::Auto::SimdCast;
-using ::Meta::Math::Splitmix64;
-using ::Meta::Math::Xoroshiro256StarStar;
+using ::Meta::Random::Splitmix64;
+using ::Meta::Random::Xoroshiro256StarStar;
 
 [[nodiscard]]
 auto constexpr inline
