@@ -72,5 +72,15 @@ export namespace
 			*	this
 			;
 		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator==
+		)	(	Var
+			,	Var
+			)
+			noexcept
+		->	bool
+		=	default;
 	};
 }

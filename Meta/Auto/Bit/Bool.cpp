@@ -56,6 +56,16 @@ export namespace
 				)
 			};
 		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator==
+		)	(	Var
+			,	Var
+			)
+			noexcept
+		->	bool
+		=	default;
 	};
 
 	Var<bool> constexpr inline
