@@ -1,6 +1,6 @@
 export module Meta.Auto.Simd.Tag;
 
-export import Meta.Auto.Primary;
+export import Meta.Auto.Var;
 
 export namespace
 	Meta::Auto

@@ -1,6 +1,6 @@
 export module Meta.Auto.Array.Bounded;
 
-export import Meta.Auto.Primary;
+export import Meta.Auto.Var;
 
 import Std;
 

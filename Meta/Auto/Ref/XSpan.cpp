@@ -1,6 +1,6 @@
 export module Meta.Auto.Ref.XSpan;
 
-import Meta.Auto.Primary;
+import Meta.Auto.Var;
 import Meta.Auto.Ref.DynamicCountArray;
 
 export namespace

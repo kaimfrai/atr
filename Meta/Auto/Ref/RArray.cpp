@@ -1,6 +1,6 @@
 export module Meta.Auto.Ref.RArray;
 
-import Meta.Auto.Primary;
+import Meta.Auto.Var;
 import Meta.Auto.Ref.StaticCountArray;
 
 import Meta.Size;

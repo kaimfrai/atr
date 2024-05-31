@@ -1,4 +1,4 @@
-export module Meta.Auto.Primary;
+export module Meta.Auto.Var;
 
 export namespace
 	Meta::Auto

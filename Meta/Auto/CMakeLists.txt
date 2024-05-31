@@ -3,7 +3,7 @@ add_subdirectory(
 )
 
 add_single_file_modules(
-	Primary.cpp
+	Var.cpp
 )
 
 add_subdirectory(
