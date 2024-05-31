@@ -21,13 +21,13 @@ import Std;
 using ::ATR::Layout::Fork;
 using ::ATR::Layout::Offset;
 using ::ATR::Virtual::GenericSimdMask;
+using ::Meta::Auto::Simd;
+using ::Meta::Auto::SimdCast;
 using ::Meta::BitSize;
 using ::Meta::ByteSize;
 using ::Meta::Generic::RandomAccessIteratorBase;
 using ::Meta::ProtoID;
 using ::Meta::RestoreTypeEntity;
-using ::Meta::Simd;
-using ::Meta::SimdCast;
 
 export namespace
 	ATR::District
@@ -394,7 +394,7 @@ export namespace
 		*	m_aUnion
 		;
 
-		::Meta::Multiple<t_vBatch>
+		::Meta::Auto::Multiple<t_vBatch>
 			m_vIndex
 		;
 		GenericSimdMask<t_vBatch>
@@ -450,7 +450,7 @@ export namespace
 		*	m_aUnion
 		;
 
-		::Meta::Multiple<t_vBatch>
+		::Meta::Auto::Multiple<t_vBatch>
 			m_vIndex
 		;
 
@@ -601,7 +601,7 @@ export namespace
 		*	m_aUnion
 		;
 
-		::Meta::Multiple<t_vBatch>
+		::Meta::Auto::Multiple<t_vBatch>
 			m_vIndex
 		{};
 
@@ -617,7 +617,7 @@ export namespace
 		{
 			(	i_rThis
 				.	m_vIndex
-			+=	::Meta::Multiple<t_vBatch>
+			+=	::Meta::Auto::Multiple<t_vBatch>
 				{	i_vDifference
 				}
 			);
@@ -789,7 +789,7 @@ export namespace
 			>
 		using
 			Type
-		=	::Meta::Simd
+		=	::Meta::Auto::Simd
 			<	t_tElement
 				[	t_vExtent
 				]

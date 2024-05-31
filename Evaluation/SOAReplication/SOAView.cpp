@@ -4,7 +4,7 @@ import Meta.Auto.Simd.Tag;
 
 import Std;
 
-using ::Meta::Simd;
+using ::Meta::Auto::Simd;
 
 export namespace
 	Bodies3D

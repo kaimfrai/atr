@@ -12,7 +12,7 @@ using
 ;
 
 export namespace
-	Meta
+	Meta::Auto
 {
 	template
 		<>
@@ -31,7 +31,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	::std::uint32_t
 				[	8uz
 				]
@@ -45,13 +45,13 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator<<
-		)	(	Auto
+		)	(	Var
 					i_vLeft
-			,	Auto
+			,	Var
 					i_vRight
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{	return
 			{	.	m_vRaw
 				=	::SimdOp::BitShiftLeft
@@ -83,7 +83,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	::std::uint32_t
 				[	16uz
 				]
@@ -99,13 +99,13 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator<<
-		)	(	Auto
+		)	(	Var
 					i_vLeft
-			,	Auto
+			,	Var
 					i_vRight
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{	return
 			{	.	m_vRaw
 				=	{	::SimdOp::BitShiftLeft

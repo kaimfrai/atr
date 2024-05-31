@@ -10,7 +10,7 @@ using ::Std::SimdOp;
 using ::Std::SimdTarget;
 
 export namespace
-	Meta
+	Meta::Auto
 {
 	template
 		<	typename

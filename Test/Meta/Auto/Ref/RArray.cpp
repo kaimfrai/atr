@@ -3,7 +3,8 @@ import Meta.Auto.Ref.XArray;
 
 import Std;
 
-using ::Meta::RArray;
+using ::Meta::Auto::RArray;
+using ::Meta::Auto::XArray;
 
 static_assert
 (	not
@@ -51,14 +52,14 @@ static_assert
 static_assert
 (	not
 	::std::is_nothrow_convertible_v
-	<	::Meta::XArray<int, 4>
+	<	XArray<int, 4>
 	,	RArray<int, 4>
 	>
 );
 static_assert
 (	::std::is_nothrow_constructible_v
 	<	RArray<int, 4>
-	,	::Meta::XArray<int, 4>
+	,	XArray<int, 4>
 	>
 );
 

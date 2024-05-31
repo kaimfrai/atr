@@ -4,14 +4,14 @@ export import Meta.Auto.Primary;
 import Meta.Auto.Ref.DynamicCountArray;
 
 export namespace
-	Meta
+	Meta::Auto
 {
 	template
 		<	typename
 				t_tElement
 		>
 	struct
-		Auto
+		Var
 		<	t_tElement
 			(&)	[]
 		>
@@ -35,8 +35,8 @@ export namespace
 		;
 
 		explicit(false) constexpr inline
-		(	Auto
-		)	(	Auto const
+		(	Var
+		)	(	Var const
 				&
 			)
 			noexcept
@@ -49,7 +49,7 @@ export namespace
 		>
 	using
 		RSpan
-	=	Auto
+	=	Var
 		<	t_tElement
 			(&)	[]
 		>

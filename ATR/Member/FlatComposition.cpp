@@ -13,7 +13,7 @@ import Meta.Token.TypeID;
 
 import Std;
 
-using ::Meta::Auto;
+using ::Meta::Auto::Var;
 using ::Meta::BitSize;
 using ::Meta::String::Hash;
 using ::Meta::Type;
@@ -170,7 +170,7 @@ export namespace
 			]
 		{};
 
-		Auto<bool[UnionBufferSize]>
+		Var<bool[UnionBufferSize]>
 			HasMember
 			[	NameBufferSize
 			]
@@ -598,9 +598,9 @@ export namespace
 					i_vDistrictIndex
 			)	const
 			noexcept
-		->	Auto<bool[UnionBufferSize]>
+		->	Var<bool[UnionBufferSize]>
 		{
-			Auto<bool[UnionBufferSize]>
+			Var<bool[UnionBufferSize]>
 				vMask
 			{};
 

@@ -5,7 +5,7 @@ export import Meta.Auto.Primary;
 import Std;
 
 export namespace
-	Meta
+	Meta::Auto
 {
 	///	Empty array
 	template
@@ -13,7 +13,7 @@ export namespace
 				t_tElement
 		>
 	struct
-		Auto
+		Var
 		<	t_tElement
 				[]
 		>
@@ -26,7 +26,7 @@ export namespace
 				t_vExtent
 		>
 	struct
-		Auto
+		Var
 		<	t_tElement
 				[	t_vExtent
 				]
@@ -66,7 +66,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	bool
 			&
 		,	Bits
@@ -101,7 +101,7 @@ export namespace
 					i_vValue
 			)	&
 			noexcept
-		->	Auto&
+		->	Var&
 		{
 			auto
 				vRaw
@@ -131,7 +131,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	bool
 				[	16uz
 				]
@@ -148,7 +148,7 @@ export namespace
 					i_vIndex
 			)	&
 			noexcept
-		->	Auto<bool&, Bits<16uz>>
+		->	Var<bool&, Bits<16uz>>
 		{	return
 			{	&	m_vRaw
 			,	static_cast<::std::uint16_t>
@@ -179,11 +179,11 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator compl
-		)	(	Auto
+		)	(	Var
 					i_vArray
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{	return
 			{	static_cast<::std::uint16_t>
 				(	compl
@@ -196,13 +196,13 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator <<
-		)	(	Auto
+		)	(	Var
 					i_vArray
 			,	::std::uint16_t
 					i_vShift
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{	return
 			{	static_cast<::std::uint16_t>
 				(	i_vArray
@@ -215,13 +215,13 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator bitor
-		)	(	Auto
+		)	(	Var
 					i_vLeft
-			,	Auto
+			,	Var
 					i_vRight
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{	(	i_vLeft
 				.	m_vRaw
 			|=	i_vRight
@@ -234,11 +234,11 @@ export namespace
 
 		auto constexpr inline
 		(	operator|=
-		)	(	Auto
+		)	(	Var
 					i_vRight
 			)	&
 			noexcept
-		->	Auto&
+		->	Var&
 		{	return
 			*	this
 			=	*	this
@@ -250,7 +250,7 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	Count
-		)	(	Auto
+		)	(	Var
 					i_vArray
 			)
 			noexcept
@@ -265,8 +265,8 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator==
-		)	(	Auto
-			,	Auto
+		)	(	Var
+			,	Var
 			)
 			noexcept
 		->	bool

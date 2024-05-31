@@ -5,7 +5,10 @@ import Meta.Auto.Ref.XSpan;
 
 import Std;
 
-using ::Meta::XSpan;
+using ::Meta::Auto::RArray;
+using ::Meta::Auto::RSpan;
+using ::Meta::Auto::XArray;
+using ::Meta::Auto::XSpan;
 
 static_assert
 (	not
@@ -25,13 +28,13 @@ static_assert
 (	not
 	::std::is_convertible_v
 	<	XSpan<int>
-	,	::Meta::RArray<int, 4>
+	,	RArray<int, 4>
 	>
 );
 static_assert
 (	::std::is_nothrow_constructible_v
 	<	XSpan<int>
-	,	::Meta::RArray<int, 4>
+	,	RArray<int, 4>
 	>
 );
 
@@ -39,13 +42,13 @@ static_assert
 (	not
 	::std::is_convertible_v
 	<	XSpan<int>
-	,	::Meta::XArray<int, 4>
+	,	XArray<int, 4>
 	>
 );
 static_assert
 (	::std::is_nothrow_constructible_v
 	<	XSpan<int>
-	,	::Meta::XArray<int, 4>
+	,	XArray<int, 4>
 	>
 );
 
@@ -53,13 +56,13 @@ static_assert
 (	not
 	::std::is_convertible_v
 	<	XSpan<int>
-	,	::Meta::RSpan<int>
+	,	RSpan<int>
 	>
 );
 static_assert
 (	::std::is_nothrow_constructible_v
 	<	XSpan<int>
-	,	::Meta::RSpan<int>
+	,	RSpan<int>
 	>
 );
 

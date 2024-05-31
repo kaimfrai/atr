@@ -3,6 +3,9 @@ export module Meta.Math.Random;
 import Meta.Auto.Simd.UInt64;
 import Std;
 
+using ::Meta::Auto::Var;
+using ::Meta::Auto::Simd;
+
 export namespace
 	Meta::Math
 {
@@ -168,7 +171,7 @@ export namespace
 						>
 					)
 				{	return
-					Auto<::std::uint64_t[t_vExtent]>
+					Var<::std::uint64_t[t_vExtent]>
 					{	(	i_vSeed
 						+	t_tpIndex
 						*	Splitmix64Base

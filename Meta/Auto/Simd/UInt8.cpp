@@ -6,12 +6,12 @@ import Meta.Auto.Simd.UInt32;
 import Std;
 
 export namespace
-	Meta
+	Meta::Auto
 {
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	::std::uint8_t
 				[	8uz
 				]
@@ -25,13 +25,13 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator%
-		)	(	Auto
+		)	(	Var
 					i_vLeft
 			,	::std::uint8_t
 					i_vRight
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{
 			auto
 				vArray
@@ -48,7 +48,7 @@ export namespace
 				;
 			}
 			return
-			::std::bit_cast<Auto>
+			::std::bit_cast<Var>
 			(	vArray
 			);
 		}
@@ -60,7 +60,7 @@ export namespace
 				*	i_aData
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{
 			::std::uint8_t
 				vValue
@@ -95,7 +95,7 @@ export namespace
 				*	i_aData
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{
 			::std::uint8_t
 				vValue
@@ -148,7 +148,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	::std::uint8_t
 			(&)	[	8uz
 				]
@@ -205,7 +205,7 @@ export namespace
 					i_vValue
 			)	const&
 			noexcept
-		->	Auto const&
+		->	Var const&
 		{
 			auto const
 				vValue
@@ -239,7 +239,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	::std::uint8_t const
 			(&)	[	8uz
 				]
@@ -294,7 +294,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	::std::uint8_t
 				[	16uz
 				]
@@ -308,13 +308,13 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator%
-		)	(	Auto
+		)	(	Var
 					i_vLeft
 			,	::std::uint8_t
 					i_vRight
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{
 			auto
 				vArray
@@ -331,7 +331,7 @@ export namespace
 				;
 			}
 			return
-			::std::bit_cast<Auto>
+			::std::bit_cast<Var>
 			(	vArray
 			);
 		}
@@ -340,7 +340,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	::std::uint8_t
 			(&)	[	16uz
 				]
@@ -397,7 +397,7 @@ export namespace
 					i_vValue
 			)	const&
 			noexcept
-		->	Auto const&
+		->	Var const&
 		{
 			auto const
 				vValue
@@ -431,7 +431,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	::std::uint8_t const
 			(&)	[	16uz
 				]

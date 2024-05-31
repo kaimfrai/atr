@@ -5,7 +5,7 @@ import Meta.Auto.Simd.Tag;
 import Std;
 
 export namespace
-	Meta
+	Meta::Auto
 {
 	template
 		<	typename

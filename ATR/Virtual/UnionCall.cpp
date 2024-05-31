@@ -10,10 +10,10 @@ import Meta.Token.TypeID;
 
 import Std;
 
+using ::Meta::Auto::Simd;
+using ::Meta::Auto::SimdFill;
+using ::Meta::Auto::SimdMask;
 using ::Meta::RestoreTypeEntity;
-using ::Meta::Simd;
-using ::Meta::SimdFill;
-using ::Meta::SimdMask;
 using ::Meta::TypeID;
 
 export namespace
@@ -75,7 +75,7 @@ export namespace
 		noexcept
 	->	decltype(auto)
 	{	return
-			::Meta::SimdArrayCeil
+			::Meta::Auto::SimdArrayCeil
 			(	LoadSingleConstant
 				<	typename
 						t_tResult

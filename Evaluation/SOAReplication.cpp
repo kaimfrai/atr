@@ -14,11 +14,11 @@ import Meta.Generic.RandomAccessIteratorBase;
 
 import Std;
 
+using ::Meta::Auto::Simd;
+using ::Meta::Auto::SimdCast;
+using ::Meta::Auto::SimdFill;
+using ::Meta::Auto::SimdMask;
 using ::Meta::Generic::RandomAccessIteratorBase;
-using ::Meta::Simd;
-using ::Meta::SimdCast;
-using ::Meta::SimdFill;
-using ::Meta::SimdMask;
 
 namespace
 	Bodies3D

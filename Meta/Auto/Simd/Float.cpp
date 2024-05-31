@@ -13,7 +13,7 @@ using
 ;
 
 export namespace
-	Meta
+	Meta::Auto
 {
 	template
 		<>
@@ -32,7 +32,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	float
 				[	8uz
 				]
@@ -56,7 +56,7 @@ export namespace
 					i_vMask
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{	return
 			{	.	m_vRaw
 				=	::SimdOp::MaskedLoad<alignof(__m256)>
@@ -88,7 +88,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	float
 				[	8uz
 				]
@@ -120,7 +120,7 @@ export namespace
 					i_vValue
 			)	const&
 			noexcept
-		->	Auto
+		->	Var
 		{	return
 			{	.	m_vRaw
 				=	::SimdOp::Blend
@@ -139,7 +139,7 @@ export namespace
 					i_vValue
 			)	&
 			noexcept
-		->	Auto&
+		->	Var&
 		{	return
 			*	this
 			=	(	auto
@@ -170,13 +170,13 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator+
-		)	(	Auto
+		)	(	Var
 					i_vLeft
-			,	Auto
+			,	Var
 					i_vRight
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{	return
 			{	.	m_vRaw
 				=	::SimdOp::Add
@@ -190,13 +190,13 @@ export namespace
 
 		auto friend constexpr inline
 		(	operator+=
-		)	(	Auto
+		)	(	Var
 				&	i_rLeft
-			,	Auto
+			,	Var
 					i_vRight
 			)
 			noexcept
-		->	Auto&
+		->	Var&
 		{	return
 				i_rLeft
 			=	(	i_rLeft
@@ -208,13 +208,13 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator*
-		)	(	Auto
+		)	(	Var
 					i_vLeft
-			,	Auto
+			,	Var
 					i_vRight
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{	return
 			{	.	m_vRaw
 				=	::SimdOp::Multiply
@@ -229,7 +229,7 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	reduce
-		)	(	Auto
+		)	(	Var
 					i_vArgument
 			)
 			noexcept
@@ -248,7 +248,7 @@ export namespace
 				*	i_aData
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{	return
 			{	.	m_vRaw
 				=	::SimdOp::Load<alignof(__m256)>
@@ -267,7 +267,7 @@ export namespace
 				*	i_aData
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{	return
 			{	.	m_vRaw
 				=	::SimdOp::Load<alignof(float)>
@@ -297,7 +297,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	float
 			(&)	[	8uz
 				]
@@ -306,7 +306,7 @@ export namespace
 	{
 		using
 			value_type
-		=	Auto
+		=	Var
 			<	float
 					[	8uz
 					]
@@ -338,7 +338,7 @@ export namespace
 					i_vValue
 			)	const&
 			noexcept
-		->	Auto const&
+		->	Var const&
 		{
 			i_vValue
 			.	StoreAligned
@@ -355,7 +355,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	float const
 			(&)	[	8uz
 				]
@@ -402,7 +402,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	float const
 			(&)	[	8uz
 				]
@@ -480,7 +480,7 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator*
-		)	(	Auto
+		)	(	Var
 					i_rLeft
 			,	value_type
 					i_vRight
@@ -500,7 +500,7 @@ export namespace
 		(	operator*
 		)	(	value_type
 					i_vLeft
-			,	Auto
+			,	Var
 					i_rRight
 			)
 			noexcept
@@ -533,7 +533,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	float
 				[	16uz
 				]
@@ -561,7 +561,7 @@ export namespace
 					i_vMask
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{	return
 			{	.	m_vRaw
 				=	{	::SimdOp::MaskedLoad<alignof(__m256)>
@@ -598,7 +598,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	float
 				[	16uz
 				]
@@ -753,7 +753,7 @@ export namespace
 					i_vValue
 			)	&
 			noexcept
-		->	Auto&
+		->	Var&
 		{
 				m_vRaw
 				[	0uz
@@ -828,13 +828,13 @@ export namespace
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator*
-		)	(	Auto
+		)	(	Var
 					i_vLeft
-			,	Auto
+			,	Var
 					i_vRight
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{	return
 			{	.	m_vRaw
 				=	{	::SimdOp::Multiply
@@ -868,7 +868,7 @@ export namespace
 				*	i_aData
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{	return
 			{	.	m_vRaw
 				=	{	::SimdOp::Load<alignof(__m256)>
@@ -917,7 +917,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	float
 			(&)	[	16uz
 				]
@@ -957,7 +957,7 @@ export namespace
 					i_vValue
 			)	const&
 			noexcept
-		->	Auto const&
+		->	Var const&
 		{
 			i_vValue
 			.	StoreAligned
@@ -974,7 +974,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	float const
 			(&)	[	16uz
 				]
@@ -1012,7 +1012,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	float const
 			(&)	[	16uz
 				]

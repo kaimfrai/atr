@@ -23,7 +23,7 @@ import Std;
 using namespace ::Meta::Literals;
 
 using ::ATR::Instance;
-using ::Meta::CArray;
+using ::Meta::Auto::CArray;
 using ::Meta::ID;
 using ::Meta::String::Literal;
 

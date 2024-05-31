@@ -3,7 +3,7 @@ export module Meta.Auto.Simd.Tag;
 export import Meta.Auto.Primary;
 
 export namespace
-	Meta
+	Meta::Auto
 {
 	struct
 		SimdTag
@@ -15,7 +15,7 @@ export namespace
 		>
 	using
 		Simd
-	=	Auto
+	=	Var
 		<	t_tElement
 		,	SimdTag
 		>
@@ -31,7 +31,7 @@ export namespace
 		>
 	using
 		MaskedSimd
-	=	Auto
+	=	Var
 		<	t_tElement
 		,	SimdTag
 		,	MaskedTag

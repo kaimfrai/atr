@@ -7,8 +7,8 @@ import Meta.Math.Random;
 
 import Std;
 
-using ::Meta::Simd;
-using ::Meta::SimdCast;
+using ::Meta::Auto::Simd;
+using ::Meta::Auto::SimdCast;
 using ::Meta::Math::Splitmix64;
 using ::Meta::Math::Xoroshiro256StarStar;
 

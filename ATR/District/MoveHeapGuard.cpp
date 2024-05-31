@@ -67,7 +67,7 @@ export namespace
 				>
 			)
 		{	return
-			::Meta::PledgeCount<::std::extent_v<t_tDistrict>>
+			::Meta::Auto::PledgeCount<::std::extent_v<t_tDistrict>>
 			(	static_cast<::std::remove_extent_t<t_tDistrict>*>
 				(	i_aData
 					.	Data

@@ -114,10 +114,10 @@ static_assert
 			<	MainDistrict
 			>
 	,	::ATR::Layout::Fork
-		<	::Meta::Simd<float[8uz]>
+		<	::Meta::Auto::Simd<float[8uz]>
 				[	10uz
 				]
-		,	::Meta::Simd<unsigned char[8uz]>
+		,	::Meta::Auto::Simd<unsigned char[8uz]>
 				[	1uz
 				]
 		>
@@ -139,7 +139,7 @@ static_assert
 		::	District
 			<	OtherDistrict
 			>
-	,	::Meta::Simd<float[8uz]>
+	,	::Meta::Auto::Simd<float[8uz]>
 			[	8uz
 			]
 	>

@@ -1,7 +1,7 @@
 export module Meta.Auto.Primary;
 
 export namespace
-	Meta
+	Meta::Auto
 {
 	template
 		<	typename
@@ -9,6 +9,6 @@ export namespace
 			...
 		>
 	struct
-		Auto
+		Var
 	;
 }

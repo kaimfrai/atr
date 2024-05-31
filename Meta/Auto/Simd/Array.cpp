@@ -7,7 +7,7 @@ import Meta.Size;
 import Std;
 
 export namespace
-	Meta
+	Meta::Auto
 {
 	template
 		<	SSize
@@ -105,7 +105,7 @@ export namespace
 				t_vCount
 		>
 	struct
-		Auto
+		Var
 		<	t_tElement
 			(&)	[]
 				[	t_vCount
@@ -194,7 +194,7 @@ export namespace
 				t_vCount
 		>
 	struct
-		Auto
+		Var
 		<	t_tElement
 			(&)	[]
 				[	t_vCount

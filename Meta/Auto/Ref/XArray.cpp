@@ -6,7 +6,7 @@ import Meta.Auto.Ref.StaticCountArray;
 import Meta.Size;
 
 export namespace
-	Meta
+	Meta::Auto
 {
 	template
 		<	typename
@@ -15,7 +15,7 @@ export namespace
 				t_vCount
 		>
 	struct
-		Auto
+		Var
 		<	t_tElement
 			(&&)[	t_vCount
 				]
@@ -42,8 +42,8 @@ export namespace
 		;
 
 		explicit(false) constexpr inline
-		(	Auto
-		)	(	Auto const
+		(	Var
+		)	(	Var const
 				&
 			)
 			noexcept
@@ -58,7 +58,7 @@ export namespace
 		>
 	using
 		XArray
-	=	Auto
+	=	Var
 		<	t_tElement
 			(&&)[	t_vExtent
 				]

@@ -6,7 +6,7 @@ import Meta.Auto.Array.Bounded;
 import Std;
 
 export namespace
-	Meta
+	Meta::Auto
 {
 	template
 		<>
@@ -25,7 +25,7 @@ export namespace
 	template
 		<>
 	struct
-		Auto
+		Var
 		<	::std::uint64_t
 				[	2uz
 				]
@@ -37,14 +37,14 @@ export namespace
 		;
 
 		explicit(false) constexpr inline
-		(	Auto
+		(	Var
 		)	()
 			noexcept
 		=	default
 		;
 
 		explicit(false) inline
-		(	Auto
+		(	Var
 		)	(	__m128i
 					i_vInit
 			)
@@ -55,8 +55,8 @@ export namespace
 		{}
 
 		explicit(true) inline
-		(	Auto
-		)	(	Auto<::std::uint64_t[2uz]>
+		(	Var
+		)	(	Var<::std::uint64_t[2uz]>
 					i_vInit
 			)
 			noexcept
@@ -68,13 +68,13 @@ export namespace
 		{}
 
 		explicit(true) inline
-		(	Auto
+		(	Var
 		)	(	::std::uint64_t
 					i_vInit
 			)
 			noexcept
-		:	Auto
-			{	Auto<::std::uint64_t[2uz]>
+		:	Var
+			{	Var<::std::uint64_t[2uz]>
 				{	i_vInit
 				,	i_vInit
 				}
@@ -83,11 +83,11 @@ export namespace
 
 		auto inline
 		(	operator+=
-		)	(	Auto
+		)	(	Var
 					i_vIncrement
 			)	&
 			noexcept
-		->	Auto&
+		->	Var&
 		{
 				m_vRaw
 			=	_mm_add_epi64
@@ -107,10 +107,10 @@ export namespace
 					i_vIncrement
 			)	&
 			noexcept
-		->	Auto&
+		->	Var&
 		{	return
 			*	this
-			+=	Auto
+			+=	Var
 				{	i_vIncrement
 				}
 			;
@@ -119,15 +119,15 @@ export namespace
 		[[nodiscard]]
 		auto friend inline
 		(	operator>>
-		)	(	Auto
+		)	(	Var
 					i_vLeft
 			,	int
 					i_vRight
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{	return
-			Auto
+			Var
 			{	_mm_srli_epi64
 				(	i_vLeft
 					.	m_vRaw
@@ -139,15 +139,15 @@ export namespace
 		[[nodiscard]]
 		auto friend inline
 		(	operator<<
-		)	(	Auto
+		)	(	Var
 					i_vLeft
 			,	int
 					i_vRight
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{	return
-			Auto
+			Var
 			{	_mm_slli_epi64
 				(	i_vLeft
 					.	m_vRaw
@@ -159,15 +159,15 @@ export namespace
 		[[nodiscard]]
 		auto friend inline
 		(	operator xor
-		)	(	Auto
+		)	(	Var
 					i_vLeft
-			,	Auto
+			,	Var
 					i_vRight
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{	return
-			Auto
+			Var
 			{	_mm_xor_si128
 				(	i_vLeft
 					.	m_vRaw
@@ -179,11 +179,11 @@ export namespace
 
 		auto inline
 		(	operator^=
-		)	(	Auto
+		)	(	Var
 					i_vRight
 			)	&
 			noexcept
-		->	Auto&
+		->	Var&
 		{	return
 			*	this
 			=	*	this
@@ -194,15 +194,15 @@ export namespace
 		[[nodiscard]]
 		auto friend inline
 		(	operator*
-		)	(	Auto
+		)	(	Var
 					i_vLeft
-			,	Auto
+			,	Var
 					i_vRight
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{	return
-			Auto
+			Var
 			{	i_vLeft
 				.	m_vRaw
 			*	i_vRight
@@ -213,16 +213,16 @@ export namespace
 		[[nodiscard]]
 		auto friend inline
 		(	operator*
-		)	(	Auto
+		)	(	Var
 					i_vLeft
 			,	::std::uint64_t
 					i_vRight
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{	return
 				i_vLeft
-			*	Auto
+			*	Var
 				{	i_vRight
 				}
 			;
@@ -231,17 +231,17 @@ export namespace
 		[[nodiscard]]
 		auto friend inline
 		(	rotl
-		)	(	Auto
+		)	(	Var
 					i_vLeft
 			,	int
 					i_vRight
 			)
 			noexcept
-		->	Auto
+		->	Var
 		{
 			auto
 				vArray
-			=	::std::bit_cast<Auto<::std::uint64_t[2uz]>>
+			=	::std::bit_cast<Var<::std::uint64_t[2uz]>>
 				(	i_vLeft
 				)
 			;
@@ -266,7 +266,7 @@ export namespace
 			;
 
 			return
-			Auto
+			Var
 			{	vArray
 			};
 		}

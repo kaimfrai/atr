@@ -20,6 +20,10 @@ import Meta.Size;
 
 import Std;
 
+using ::Meta::Auto::CArray;
+using ::Meta::Auto::ProtoBorrowContainer_Of_AtLeast;
+using ::Meta::Auto::ProtoOwnerContainer_Of_AtLeast;
+using ::Meta::Auto::RArray;
 using ::Meta::Bit::ArrayConstReference;
 using ::Meta::Bit::ArrayReference;
 using ::Meta::Bit::Field;
@@ -27,12 +31,8 @@ using ::Meta::Bit::Reference;
 using ::Meta::BitSize;
 using ::Meta::ByteIndex;
 using ::Meta::ByteSize;
-using ::Meta::CArray;
 using ::Meta::Memory::ByteWidth;
 using ::Meta::Memory::Constraint_Of;
-using ::Meta::ProtoBorrowContainer_Of_AtLeast;
-using ::Meta::ProtoOwnerContainer_Of_AtLeast;
-using ::Meta::RArray;
 using ::Meta::SSize;
 using ::Meta::USize;
 
