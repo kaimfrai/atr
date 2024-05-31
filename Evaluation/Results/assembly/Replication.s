@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <memset+0x6a60>
+               	call	qword ptr  <memset+0x6ab8>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x6a70>
+               	mov	rax, qword ptr  <memset+0x6ac8>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x6a78>
+               	mov	rax, qword ptr  <memset+0x6ad0>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <memset+0x6a80>
+               	cmp	qword ptr , 0x0 <memset+0x6ad8>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -266,7 +266,21 @@ Disassembly of section .text:
                	je	 <L0>
                	ret
 <L0>:
+               	push	rax
                	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW5ArrayW7Bounded__in_chrg>
+               	call	 <initializer for module Meta.Auto.Bit.Field>
+               	pop	rax
+               	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+
+<initializer for module Meta.Auto.Bit.Field>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW3BitW5Field__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW3BitW5Field__in_chrg>
                	jmp	 <initializer for module Std>
                	int3
                	int3
@@ -594,7 +608,7 @@ Disassembly of section .text:
                	movsxd	rax, r15d
                	shl	rax, 0x3
                	lea	rdi, [rax + 8*rax]
-               	mov	rsi, qword ptr  <memset+0x6a88>
+               	mov	rsi, qword ptr  <memset+0x6ae0>
                	call	 <_ZnamRKSt9nothrow_t@plt>
                	mov	qword ptr [rsp + 0x210], rax
                	movsxd	rdx, ebx
@@ -2884,9 +2898,9 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x2f8], r9
                	mov	r9d, r14d
                	xor	eax, eax
-               	vbroadcastss	ymm0, dword ptr  <memset+0xa30>
-               	vmovdqa	xmm1, xmmword ptr  <memset+0xa10>
-               	lea	r11,  <memset+0xa4c>
+               	vbroadcastss	ymm0, dword ptr  <memset+0xa40>
+               	vmovdqa	xmm1, xmmword ptr  <memset+0xa20>
+               	lea	r11,  <memset+0xa5c>
                	mov	r14, qword ptr [rsp + 0x210]
                	mov	qword ptr [rsp + 0x350], r9
                	jmp	 <L233>
@@ -3368,7 +3382,7 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x2b0], r10
                	mov	qword ptr [rsp + 0x58], r11
                	lea	r10, [r11 + 4*r11]
-               	lea	r11,  <memset+0xa4c>
+               	lea	r11,  <memset+0xa5c>
                	mov	rbp, qword ptr [rsp + 0x230]
                	rol	r10, 0x7
                	lea	rdi, [rdi + 8*rdi]
@@ -3476,7 +3490,7 @@ Disassembly of section .text:
                	inc	rcx
                	mov	rdx, rcx
                	and	rdx, -0x20
-               	vblendps	xmm0, xmm0, xmmword ptr , 0xe <memset+0xa20> # xmm0 = xmm0[0],mem[1,2,3]
+               	vblendps	xmm0, xmm0, xmmword ptr , 0xe <memset+0xa30> # xmm0 = xmm0[0],mem[1,2,3]
                	lea	rsi, [rsp + 0x2b0]
                	lea	rsi, [rsi + 4*rax]
                	vpxor	xmm1, xmm1, xmm1
@@ -3560,7 +3574,7 @@ Disassembly of section .text:
 <L253>:
                	cmp	r14d, 0x186a0
                	jne	 <L254>
-               	vucomiss	xmm0, dword ptr  <memset+0xa44>
+               	vucomiss	xmm0, dword ptr  <memset+0xa54>
                	jne	 <L256>
 <L254>:
                	xor	eax, eax
@@ -3580,7 +3594,7 @@ Disassembly of section .text:
                	call	 <__cxa_allocate_exception@plt>
                	vmovaps	xmm0, xmmword ptr [rsp + 0x90]
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <memset+0x6a90>
+               	mov	rsi, qword ptr  <memset+0x6ae8>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
@@ -3591,7 +3605,7 @@ Disassembly of section .text:
 <Bodies3D::ComputeVolumeCircle@Evaluation.Replication.Circle(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xa38>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xa48>
                	ret
                	int3
                	int3
@@ -3610,7 +3624,7 @@ Disassembly of section .text:
 
 <Bodies3D::ComputeVolumeEllipse@Evaluation.Replication.Ellipse(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xa38>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xa48>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
@@ -3650,7 +3664,7 @@ Disassembly of section .text:
 
 <Bodies3D::ComputeVolumeTriangle@Evaluation.Replication.Triangle(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xa40>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xa50>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
@@ -3683,7 +3697,7 @@ Disassembly of section .text:
 
 <Bodies3D::ComputeVolumePyramid@Evaluation.Replication.Pyramid(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xa3c>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xa4c>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
                	ret
@@ -3699,7 +3713,7 @@ Disassembly of section .text:
 <Bodies3D::ComputeVolumeSphere@Evaluation.Replication.Sphere(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm1, xmm0, xmm0
-               	vmulss	xmm1, xmm1, dword ptr  <memset+0xa48>
+               	vmulss	xmm1, xmm1, dword ptr  <memset+0xa58>
                	vmulss	xmm0, xmm1, xmm0
                	ret
                	int3
@@ -3716,7 +3730,7 @@ Disassembly of section .text:
 <Bodies3D::ComputeVolumeCylinder@Evaluation.Replication.Cylinder(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xa38>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xa48>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
@@ -3732,7 +3746,7 @@ Disassembly of section .text:
 <Bodies3D::ComputeVolumeCone@Evaluation.Replication.Cone(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xa34>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xa44>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
@@ -3747,7 +3761,7 @@ Disassembly of section .text:
 
 <Bodies3D::ComputeVolumeEllipsoid@Evaluation.Replication.Ellipsoid(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xa48>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xa58>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
                	ret
@@ -3757,7 +3771,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <memset+0x6a68>
+               	mov	rax, qword ptr  <memset+0x6ac0>
                	test	rax, rax
                	je	 <L0>
                	call	rax

@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <memset+0x76a0>
+               	call	qword ptr  <memset+0x76f8>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x76b0>
+               	mov	rax, qword ptr  <memset+0x7708>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x76b8>
+               	mov	rax, qword ptr  <memset+0x7710>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <memset+0x76c0>
+               	cmp	qword ptr , 0x0 <memset+0x7718>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -276,7 +276,21 @@ Disassembly of section .text:
                	je	 <L0>
                	ret
 <L0>:
+               	push	rax
                	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW5ArrayW7Bounded__in_chrg>
+               	call	 <initializer for module Meta.Auto.Bit.Field>
+               	pop	rax
+               	jmp	 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<dyno::Destructible, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, void>::'lambda'(Bodies3D::Rectangle@Evaluation.CRTP.Rectangle&), void (Bodies3D::Rectangle@Evaluation.CRTP.Rectangle&)>, void (dyno::T&), void (Bodies3D::Rectangle@Evaluation.CRTP.Rectangle&)>::apply(void*)>
+               	int3
+               	int3
+               	int3
+
+<initializer for module Meta.Auto.Bit.Field>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW3BitW5Field__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW3BitW5Field__in_chrg>
                	jmp	 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<dyno::Destructible, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, void>::'lambda'(Bodies3D::Rectangle@Evaluation.CRTP.Rectangle&), void (Bodies3D::Rectangle@Evaluation.CRTP.Rectangle&)>, void (dyno::T&), void (Bodies3D::Rectangle@Evaluation.CRTP.Rectangle&)>::apply(void*)>
                	int3
                	int3
@@ -795,7 +809,7 @@ Disassembly of section .text:
                	movsxd	rax, edx
                	shl	rax, 0x4
                	lea	rdi, [rax + 4*rax]
-               	mov	rsi, qword ptr  <memset+0x76c8>
+               	mov	rsi, qword ptr  <memset+0x7720>
                	call	 <_ZnamRKSt9nothrow_t@plt>
                	mov	qword ptr [rsp], rax
                	movsxd	rdx, ebx
@@ -3023,8 +3037,8 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x358], rsi
                	mov	r13d, 0x40
                	xor	r11d, r11d
-               	vbroadcastss	ymm5, dword ptr  <memset+0x1060>
-               	vmovdqa	xmm6, xmmword ptr  <memset+0x1030>
+               	vbroadcastss	ymm5, dword ptr  <memset+0x1070>
+               	vmovdqa	xmm6, xmmword ptr  <memset+0x1040>
                	mov	r8, qword ptr [rsp + 0x220]
                	mov	r9, qword ptr [rsp + 0x10]
                	jmp	 <L233>
@@ -3472,7 +3486,7 @@ Disassembly of section .text:
                	vblendps	ymm1, ymm2, ymmword ptr [rsp + 0x278], 0xc0 # ymm1 = ymm2[0,1,2,3,4,5],mem[6,7]
                	sub	al, sil
                	movzx	eax, al
-               	lea	rsi,  <memset+0x107c>
+               	lea	rsi,  <memset+0x108c>
                	movsxd	rax, dword ptr [rsi + 4*rax]
                	add	rax, rsi
                	jmp	rax
@@ -3508,8 +3522,8 @@ Disassembly of section .text:
                	vmovups	ymmword ptr [rsp + 0x380], ymm3
                	vzeroupper
                	call	 <malloc@plt>
-               	vmovdqa	xmm6, xmmword ptr  <memset+0x1030>
-               	vbroadcastss	ymm5, dword ptr  <memset+0x1060>
+               	vmovdqa	xmm6, xmmword ptr  <memset+0x1040>
+               	vbroadcastss	ymm5, dword ptr  <memset+0x1070>
                	mov	r11, rbx
                	mov	r10, qword ptr [rsp + 0x228]
                	mov	r8, qword ptr [rsp + 0x220]
@@ -3531,7 +3545,7 @@ Disassembly of section .text:
                	vmovss	dword ptr [rax + 0x2c], xmm1
                	vmovups	xmm2, xmmword ptr [rsp + 0x2e0]
                	vshufps	xmm2, xmm2, xmmword ptr [rsp + 0x2f0], 0x88 # xmm2 = xmm2[0,2],mem[0,2]
-               	vandps	xmm2, xmm2, xmmword ptr  <memset+0x1050>
+               	vandps	xmm2, xmm2, xmmword ptr  <memset+0x1060>
                	vcvtdq2ps	xmm2, xmm2
                	vmovups	xmmword ptr [rax + 0x30], xmm2
                	vmovlps	qword ptr [rax + 0x40], xmm0
@@ -3697,7 +3711,7 @@ Disassembly of section .text:
                	inc	rcx
                	mov	rdx, rcx
                	and	rdx, -0x20
-               	vpblendd	xmm0, xmm0, xmmword ptr , 0xe <memset+0x1040> # xmm0 = xmm0[0],mem[1,2,3]
+               	vpblendd	xmm0, xmm0, xmmword ptr , 0xe <memset+0x1050> # xmm0 = xmm0[0],mem[1,2,3]
                	lea	rsi, [rsp + 0x2d0]
                	lea	rsi, [rsi + 4*rax]
                	vpxor	xmm1, xmm1, xmm1
@@ -3812,7 +3826,7 @@ Disassembly of section .text:
                	jne	 <L261>
                	cmp	ebx, 0x186a0
                	jne	 <L261>
-               	vucomiss	xmm0, dword ptr  <memset+0x1074>
+               	vucomiss	xmm0, dword ptr  <memset+0x1084>
                	jne	 <L262>
 <L261>:
                	xor	eax, eax
@@ -3832,7 +3846,7 @@ Disassembly of section .text:
                	call	 <__cxa_allocate_exception@plt>
                	vmovaps	xmm0, xmmword ptr [rsp + 0x40]
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <memset+0x76d0>
+               	mov	rsi, qword ptr  <memset+0x7728>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
@@ -3869,7 +3883,7 @@ Disassembly of section .text:
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Sphere@Evaluation.CRTP.Sphere, void>::'lambda'(Bodies3D::Sphere@Evaluation.CRTP.Sphere const&), float (Bodies3D::Sphere@Evaluation.CRTP.Sphere const&)>, float (dyno::T const&), float (Bodies3D::Sphere@Evaluation.CRTP.Sphere const&)>::apply(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm1, xmm0, xmm0
-               	vmulss	xmm1, xmm1, dword ptr  <memset+0x1078>
+               	vmulss	xmm1, xmm1, dword ptr  <memset+0x1088>
                	vmulss	xmm0, xmm1, xmm0
                	ret
                	int3
@@ -3895,7 +3909,7 @@ Disassembly of section .text:
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, void>::'lambda'(Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid const&), float (Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid const&)>, float (dyno::T const&), float (Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid const&)>::apply(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1078>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1088>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
                	ret
@@ -3923,7 +3937,7 @@ Disassembly of section .text:
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Cone@Evaluation.CRTP.Cone, void>::'lambda'(Bodies3D::Cone@Evaluation.CRTP.Cone const&), float (Bodies3D::Cone@Evaluation.CRTP.Cone const&)>, float (dyno::T const&), float (Bodies3D::Cone@Evaluation.CRTP.Cone const&)>::apply(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1064>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1074>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
@@ -3953,7 +3967,7 @@ Disassembly of section .text:
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, void>::'lambda'(Bodies3D::Cylinder@Evaluation.CRTP.Cylinder const&), float (Bodies3D::Cylinder@Evaluation.CRTP.Cylinder const&)>, float (dyno::T const&), float (Bodies3D::Cylinder@Evaluation.CRTP.Cylinder const&)>::apply(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1068>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1078>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
@@ -3981,7 +3995,7 @@ Disassembly of section .text:
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, void>::'lambda'(Bodies3D::Pyramid@Evaluation.CRTP.Pyramid const&), float (Bodies3D::Pyramid@Evaluation.CRTP.Pyramid const&)>, float (dyno::T const&), float (Bodies3D::Pyramid@Evaluation.CRTP.Pyramid const&)>::apply(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0x106c>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0x107c>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
                	ret
@@ -4010,7 +4024,7 @@ Disassembly of section .text:
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Triangle@Evaluation.CRTP.Triangle, void>::'lambda'(Bodies3D::Triangle@Evaluation.CRTP.Triangle const&), float (Bodies3D::Triangle@Evaluation.CRTP.Triangle const&)>, float (dyno::T const&), float (Bodies3D::Triangle@Evaluation.CRTP.Triangle const&)>::apply(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1070>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1080>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
@@ -4050,7 +4064,7 @@ Disassembly of section .text:
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, void>::'lambda'(Bodies3D::Ellipse@Evaluation.CRTP.Ellipse const&), float (Bodies3D::Ellipse@Evaluation.CRTP.Ellipse const&)>, float (dyno::T const&), float (Bodies3D::Ellipse@Evaluation.CRTP.Ellipse const&)>::apply(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1068>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1078>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
@@ -4070,7 +4084,7 @@ Disassembly of section .text:
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Circle@Evaluation.CRTP.Circle, void>::'lambda'(Bodies3D::Circle@Evaluation.CRTP.Circle const&), float (Bodies3D::Circle@Evaluation.CRTP.Circle const&)>, float (dyno::T const&), float (Bodies3D::Circle@Evaluation.CRTP.Circle const&)>::apply(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1068>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0x1078>
                	ret
 
 Disassembly of section .init:
@@ -4078,7 +4092,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <memset+0x76a8>
+               	mov	rax, qword ptr  <memset+0x7700>
                	test	rax, rax
                	je	 <L0>
                	call	rax

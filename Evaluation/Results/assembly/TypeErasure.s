@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <memset+0x76c8>
+               	call	qword ptr  <memset+0x77f0>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x76d8>
+               	mov	rax, qword ptr  <memset+0x7800>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x76e0>
+               	mov	rax, qword ptr  <memset+0x7808>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <memset+0x76e8>
+               	cmp	qword ptr , 0x0 <memset+0x7810>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -263,7 +263,21 @@ Disassembly of section .text:
                	je	 <L0>
                	ret
 <L0>:
+               	push	rax
                	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW5ArrayW7Bounded__in_chrg>
+               	call	 <initializer for module Meta.Auto.Bit.Field>
+               	pop	rax
+               	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+
+<initializer for module Meta.Auto.Bit.Field>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW3BitW5Field__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW3BitW5Field__in_chrg>
                	jmp	 <initializer for module Std>
                	int3
                	int3
@@ -793,7 +807,7 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x338], rdx
                	movsxd	rdi, edx
                	shl	rdi, 0x5
-               	mov	rsi, qword ptr  <memset+0x76f0>
+               	mov	rsi, qword ptr  <memset+0x7818>
                	call	 <_ZnamRKSt9nothrow_t@plt>
                	movsxd	rdx, r13d
                	movabs	rsi, -0x61c8864680b583eb
@@ -3062,10 +3076,10 @@ Disassembly of section .text:
                	vinsertf128	ymm2, ymm2, xmmword ptr [rsp + 0x2c8], 0x1
                	vinsertf128	ymm1, ymm1, xmmword ptr [rsp + 0x2b8], 0x1
                	vshufps	ymm1, ymm1, ymm2, 0x88  # ymm1 = ymm1[0,2],ymm2[0,2],ymm1[4,6],ymm2[4,6]
-               	vandps	ymm1, ymm1, ymmword ptr  <memset+0xf00>
+               	vandps	ymm1, ymm1, ymmword ptr  <memset+0xf20>
                	vcvtdq2ps	ymm1, ymm1
                	vmovups	ymmword ptr [rsp + 0x250], ymm1
-               	vpshufb	xmm0, xmm0, xmmword ptr  <memset+0xf20>
+               	vpshufb	xmm0, xmm0, xmmword ptr  <memset+0xf40>
                	vcvtdq2ps	xmm1, xmm0
                	vmovups	xmm0, xmmword ptr [rsp + 0x300]
                	vshufps	xmm2, xmm0, xmmword ptr [rsp + 0x310], 0x88 # xmm2 = xmm0[0,2],mem[0,2]
@@ -3080,7 +3094,7 @@ Disassembly of section .text:
                	vxorps	xmm0, xmm0, xmm0
                	vmovups	xmmword ptr [r14 + 0x8], xmm0
                	movzx	eax, al
-               	lea	rcx,  <memset+0xf5c>
+               	lea	rcx,  <memset+0xf7c>
                	movsxd	rax, dword ptr [rcx + 4*rax]
                	add	rax, rcx
                	jmp	rax
@@ -3114,9 +3128,9 @@ Disassembly of section .text:
                	movzx	ecx, r13b
                	vcvtsi2ss	xmm0, xmm5, ecx
                	vmovdqa	xmm1, xmmword ptr [rsp]
-               	vpshufb	xmm1, xmm1, xmmword ptr  <memset+0xf20>
+               	vpshufb	xmm1, xmm1, xmmword ptr  <memset+0xf40>
                	vcvtdq2ps	xmm1, xmm1
-               	vbroadcastss	ymm2, dword ptr  <memset+0xf40>
+               	vbroadcastss	ymm2, dword ptr  <memset+0xf60>
                	vandps	xmm2, xmm2, xmmword ptr [rsp + 0x370]
                	vcvtdq2ps	xmm2, xmm2
                	movzx	ecx, bl
@@ -3725,7 +3739,7 @@ Disassembly of section .text:
                	inc	rcx
                	mov	rdx, rcx
                	and	rdx, -0x20
-               	vblendps	xmm0, xmm0, xmmword ptr , 0xe <memset+0xf30> # xmm0 = xmm0[0],mem[1,2,3]
+               	vblendps	xmm0, xmm0, xmmword ptr , 0xe <memset+0xf50> # xmm0 = xmm0[0],mem[1,2,3]
                	lea	rsi, [rsp + 0x2f0]
                	lea	rsi, [rsi + 4*rax]
                	vxorps	xmm1, xmm1, xmm1
@@ -3838,7 +3852,7 @@ Disassembly of section .text:
                	jne	 <L257>
                	cmp	ebx, 0x186a0
                	jne	 <L257>
-               	vucomiss	xmm0, dword ptr  <memset+0xf54>
+               	vucomiss	xmm0, dword ptr  <memset+0xf74>
                	jne	 <L258>
 <L257>:
                	xor	eax, eax
@@ -3858,7 +3872,7 @@ Disassembly of section .text:
                	call	 <__cxa_allocate_exception@plt>
                	vmovaps	xmm0, xmmword ptr [rsp + 0x10]
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <memset+0x76f8>
+               	mov	rsi, qword ptr  <memset+0x7820>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
@@ -3933,7 +3947,7 @@ Disassembly of section .text:
                	mov	rax, qword ptr [rdi]
                	vmovss	xmm0, dword ptr [rax + 0x1c]
                	vmulss	xmm1, xmm0, xmm0
-               	vmulss	xmm1, xmm1, dword ptr  <memset+0xf58>
+               	vmulss	xmm1, xmm1, dword ptr  <memset+0xf78>
                	vmulss	xmm0, xmm1, xmm0
                	ret
                	int3
@@ -3944,23 +3958,24 @@ Disassembly of section .text:
                	int3
                	int3
 
-<boost::type_erasure::destructible<Bodies3D::Cone@Evaluation.CRTP.Cone>::value(boost::type_erasure::detail::storage&)>:
-<boost::type_erasure::destructible<Bodies3D::Cube@Evaluation.CRTP.Cube>::value(boost::type_erasure::detail::storage&)>:
 <boost::type_erasure::destructible<Bodies3D::Head@Evaluation.CRTP.Head>::value(boost::type_erasure::detail::storage&)>:
-<boost::type_erasure::destructible<Bodies3D::Circle@Evaluation.CRTP.Circle>::value(boost::type_erasure::detail::storage&)>:
-<boost::type_erasure::destructible<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>::value(boost::type_erasure::detail::storage&)>:
-<boost::type_erasure::destructible<Bodies3D::Sphere@Evaluation.CRTP.Sphere>::value(boost::type_erasure::detail::storage&)>:
-<boost::type_erasure::destructible<Bodies3D::Square@Evaluation.CRTP.Square>::value(boost::type_erasure::detail::storage&)>:
-<boost::type_erasure::destructible<Bodies3D::Ellipse@Evaluation.CRTP.Ellipse>::value(boost::type_erasure::detail::storage&)>:
-<boost::type_erasure::destructible<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>::value(boost::type_erasure::detail::storage&)>:
-<boost::type_erasure::destructible<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>::value(boost::type_erasure::detail::storage&)>:
-<boost::type_erasure::destructible<Bodies3D::Triangle@Evaluation.CRTP.Triangle>::value(boost::type_erasure::detail::storage&)>:
-<boost::type_erasure::destructible<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>::value(boost::type_erasure::detail::storage&)>:
-<boost::type_erasure::destructible<Bodies3D::Rectangle@Evaluation.CRTP.Rectangle>::value(boost::type_erasure::detail::storage&)>:
                	mov	rdi, qword ptr [rdi]
                	test	rdi, rdi
-               	jne	 <_ZdlPv@plt>
+               	je	 <L0>
+               	mov	esi, 0x60
+               	jmp	 <_ZdlPvm@plt>
+<L0>:
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
                	int3
                	int3
@@ -3968,10 +3983,34 @@ Disassembly of section .text:
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
                	vmovss	xmm0, dword ptr [rax + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xf58>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xf78>
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x24]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
+<boost::type_erasure::destructible<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>::value(boost::type_erasure::detail::storage&)>:
+<boost::type_erasure::destructible<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>::value(boost::type_erasure::detail::storage&)>:
+<boost::type_erasure::destructible<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>::value(boost::type_erasure::detail::storage&)>:
+               	mov	rdi, qword ptr [rdi]
+               	test	rdi, rdi
+               	je	 <L0>
+               	mov	esi, 0x28
+               	jmp	 <_ZdlPvm@plt>
+<L0>:
+               	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
                	int3
                	int3
@@ -3982,9 +4021,35 @@ Disassembly of section .text:
                	mov	rax, qword ptr [rdi]
                	vmovss	xmm0, dword ptr [rax + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xf44>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xf64>
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x20]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
+<boost::type_erasure::destructible<Bodies3D::Cone@Evaluation.CRTP.Cone>::value(boost::type_erasure::detail::storage&)>:
+<boost::type_erasure::destructible<Bodies3D::Ellipse@Evaluation.CRTP.Ellipse>::value(boost::type_erasure::detail::storage&)>:
+<boost::type_erasure::destructible<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>::value(boost::type_erasure::detail::storage&)>:
+<boost::type_erasure::destructible<Bodies3D::Triangle@Evaluation.CRTP.Triangle>::value(boost::type_erasure::detail::storage&)>:
+<boost::type_erasure::destructible<Bodies3D::Rectangle@Evaluation.CRTP.Rectangle>::value(boost::type_erasure::detail::storage&)>:
+               	mov	rdi, qword ptr [rdi]
+               	test	rdi, rdi
+               	je	 <L0>
+               	mov	esi, 0x24
+               	jmp	 <_ZdlPvm@plt>
+<L0>:
+               	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
                	int3
                	int3
@@ -3996,9 +4061,34 @@ Disassembly of section .text:
                	mov	rax, qword ptr [rdi]
                	vmovss	xmm0, dword ptr [rax + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xf48>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xf68>
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x20]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
+<boost::type_erasure::destructible<Bodies3D::Cube@Evaluation.CRTP.Cube>::value(boost::type_erasure::detail::storage&)>:
+<boost::type_erasure::destructible<Bodies3D::Circle@Evaluation.CRTP.Circle>::value(boost::type_erasure::detail::storage&)>:
+<boost::type_erasure::destructible<Bodies3D::Sphere@Evaluation.CRTP.Sphere>::value(boost::type_erasure::detail::storage&)>:
+<boost::type_erasure::destructible<Bodies3D::Square@Evaluation.CRTP.Square>::value(boost::type_erasure::detail::storage&)>:
+               	mov	rdi, qword ptr [rdi]
+               	test	rdi, rdi
+               	je	 <L0>
+               	mov	esi, 0x20
+               	jmp	 <_ZdlPvm@plt>
+<L0>:
+               	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
                	int3
                	int3
@@ -4009,7 +4099,7 @@ Disassembly of section .text:
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Pyramid@Evaluation.CRTP.Pyramid const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Pyramid@Evaluation.CRTP.Pyramid const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
                	vmovss	xmm0, dword ptr [rax + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xf4c>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xf6c>
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x24]
                	ret
@@ -4064,7 +4154,7 @@ Disassembly of section .text:
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Triangle@Evaluation.CRTP.Triangle const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Triangle@Evaluation.CRTP.Triangle const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
                	vmovss	xmm0, dword ptr [rax + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xf50>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xf70>
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x20]
                	ret
                	int3
@@ -4098,7 +4188,7 @@ Disassembly of section .text:
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Ellipse@Evaluation.CRTP.Ellipse const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Ellipse@Evaluation.CRTP.Ellipse const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
                	vmovss	xmm0, dword ptr [rax + 0x1c]
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xf48>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xf68>
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x20]
                	ret
                	int3
@@ -4116,7 +4206,7 @@ Disassembly of section .text:
                	mov	rax, qword ptr [rdi]
                	vmovss	xmm0, dword ptr [rax + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
-               	vmulss	xmm0, xmm0, dword ptr  <memset+0xf48>
+               	vmulss	xmm0, xmm0, dword ptr  <memset+0xf68>
                	ret
 
 Disassembly of section .init:
@@ -4124,7 +4214,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <memset+0x76d0>
+               	mov	rax, qword ptr  <memset+0x77f8>
                	test	rax, rax
                	je	 <L0>
                	call	rax
@@ -4182,7 +4272,7 @@ Disassembly of section .plt:
                	push	0x6
                	jmp	 <.plt>
 
-<_ZdlPv@plt>:
+<_ZdlPvm@plt>:
                	jmp	qword ptr  <_GLOBAL_OFFSET_TABLE_+0x50>
                	push	0x7
                	jmp	 <.plt>

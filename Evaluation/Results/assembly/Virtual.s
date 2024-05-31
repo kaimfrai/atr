@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <memset+0x9ee8>
+               	call	qword ptr  <memset+0xa000>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x9ef8>
+               	mov	rax, qword ptr  <memset+0xa010>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x9f00>
+               	mov	rax, qword ptr  <memset+0xa018>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <memset+0x9f08>
+               	cmp	qword ptr , 0x0 <memset+0xa020>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -270,7 +270,21 @@ Disassembly of section .text:
                	je	 <L0>
                	ret
 <L0>:
+               	push	rax
                	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW5ArrayW7Bounded__in_chrg>
+               	call	 <initializer for module Meta.Auto.Bit.Field>
+               	pop	rax
+               	jmp	 <Shapes2D::IShape@Evaluation.Virtual.IShape::~IShape()>
+               	int3
+               	int3
+               	int3
+
+<initializer for module Meta.Auto.Bit.Field>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW3BitW5Field__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW3BitW5Field__in_chrg>
                	jmp	 <Shapes2D::IShape@Evaluation.Virtual.IShape::~IShape()>
                	int3
                	int3
@@ -778,7 +792,7 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x338], rdx
                	movsxd	rdi, edx
                	shl	rdi, 0x3
-               	mov	rsi, qword ptr  <memset+0x9f10>
+               	mov	rsi, qword ptr  <memset+0xa028>
                	call	 <_ZnamRKSt9nothrow_t@plt>
                	mov	qword ptr [rsp + 0x268], rax
                	movsxd	rdx, r14d
@@ -3065,7 +3079,7 @@ Disassembly of section .text:
                	vperm2f128	ymm2, ymm1, ymmword ptr [rsp + 0x298], 0x2 # ymm2 = mem[0,1],ymm1[0,1]
                	vinsertf128	ymm0, ymm0, xmmword ptr [rsp + 0x2c8], 0x1
                	vshufps	ymm0, ymm2, ymm0, 0x88  # ymm0 = ymm2[0,2],ymm0[0,2],ymm2[4,6],ymm0[4,6]
-               	vandps	ymm0, ymm0, ymmword ptr  <memset+0x2500>
+               	vandps	ymm0, ymm0, ymmword ptr  <memset+0x2520>
                	movzx	ecx, cl
                	vcvtsi2ss	xmm2, xmm5, ecx
                	movzx	ecx, dl
@@ -3081,7 +3095,7 @@ Disassembly of section .text:
                	vmovups	ymmword ptr [rsp + 0x390], ymm0
                	sub	r8b, cl
                	movzx	eax, r8b
-               	lea	rcx,  <memset+0x2560>
+               	lea	rcx,  <memset+0x2580>
                	movsxd	rax, dword ptr [rcx + 4*rax]
                	add	rax, rcx
                	jmp	rax
@@ -3547,11 +3561,11 @@ Disassembly of section .text:
                	vzeroupper
                	call	 <_Znwm@plt>
                	vmovdqa	xmm0, xmmword ptr [rsp + 0xa0]
-               	vpshufb	xmm0, xmm0, xmmword ptr  <memset+0x2520>
+               	vpshufb	xmm0, xmm0, xmmword ptr  <memset+0x2540>
                	vcvtdq2ps	xmm0, xmm0
                	movzx	ecx, byte ptr [rsp + 0x288]
                	vcvtsi2ss	xmm1, xmm5, ecx
-               	vbroadcastss	ymm2, dword ptr  <memset+0x2540>
+               	vbroadcastss	ymm2, dword ptr  <memset+0x2560>
                	vandps	xmm2, xmm2, xmmword ptr [rsp + 0x30]
                	movzx	ecx, byte ptr [rsp + 0x280]
                	vcvtsi2ss	xmm3, xmm5, ecx
@@ -3741,7 +3755,7 @@ Disassembly of section .text:
                	inc	rcx
                	mov	rdx, rcx
                	and	rdx, -0x20
-               	vpblendd	xmm0, xmm0, xmmword ptr , 0xe <memset+0x2530> # xmm0 = xmm0[0],mem[1,2,3]
+               	vpblendd	xmm0, xmm0, xmmword ptr , 0xe <memset+0x2550> # xmm0 = xmm0[0],mem[1,2,3]
                	lea	rsi, [rsp + 0x2f0]
                	lea	rsi, [rsi + 4*rax]
                	vpxor	xmm1, xmm1, xmm1
@@ -3818,7 +3832,7 @@ Disassembly of section .text:
                	jne	 <L254>
                	cmp	r15d, 0x186a0
                	jne	 <L254>
-               	vucomiss	xmm0, dword ptr  <memset+0x2558>
+               	vucomiss	xmm0, dword ptr  <memset+0x2578>
                	jne	 <L255>
 <L254>:
                	xor	eax, eax
@@ -3865,7 +3879,7 @@ Disassembly of section .text:
                	call	 <__cxa_allocate_exception@plt>
                	vmovaps	xmm0, xmmword ptr [rsp + 0x40]
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <memset+0x9f18>
+               	mov	rsi, qword ptr  <memset+0xa030>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
@@ -3949,30 +3963,9 @@ Disassembly of section .text:
                	int3
                	int3
 
-<Bodies3D::Cone@Evaluation.Virtual.Cone::~Cone()>:
-<Bodies3D::Cube@Evaluation.Virtual.Cube::~Cube()>:
 <Bodies3D::Head@Evaluation.Virtual.Head::~Head()>:
-<Bodies3D::Circle@Evaluation.Virtual.Circle::~Circle()>:
-<Bodies3D::Cuboid@Evaluation.Virtual.Cuboid::~Cuboid()>:
-<Bodies3D::Sphere@Evaluation.Virtual.Sphere::~Sphere()>:
-<Bodies3D::Square@Evaluation.Virtual.Square::~Square()>:
-<Bodies3D::Ellipse@Evaluation.Virtual.Ellipse::~Ellipse()>:
-<Bodies3D::Pyramid@Evaluation.Virtual.Pyramid::~Pyramid()>:
-<Bodies3D::Cylinder@Evaluation.Virtual.Cylinder::~Cylinder()>:
-<Bodies3D::Triangle@Evaluation.Virtual.Triangle::~Triangle()>:
-<Bodies3D::Ellipsoid@Evaluation.Virtual.Ellipsoid::~Ellipsoid()>:
-<Bodies3D::Rectangle@Evaluation.Virtual.Rectangle::~Rectangle()>:
-<Shapes2D::Circle@Evaluation.Virtual.Circle::~Circle()>:
-<Shapes2D::Square@Evaluation.Virtual.Square::~Square()>:
-<Shapes2D::Ellipse@Evaluation.Virtual.Ellipse::~Ellipse()>:
-<Shapes2D::Triangle@Evaluation.Virtual.Triangle::~Triangle()>:
-<Shapes2D::Rectangle@Evaluation.Virtual.Rectangle::~Rectangle()>:
-               	jmp	 <_ZdlPv@plt>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
+               	mov	esi, 0x90
+               	jmp	 <_ZdlPvm@plt>
                	int3
                	int3
                	int3
@@ -3982,7 +3975,7 @@ Disassembly of section .text:
 
 <Bodies3D::SphericBody@Evaluation.Virtual.SphericBody<Shapes2D::Circle@Evaluation.Virtual.Circle>::GetComputeSizeMultiplier() const>:
 <Bodies3D::SphericBody@Evaluation.Virtual.SphericBody<Shapes2D::Ellipse@Evaluation.Virtual.Ellipse>::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <memset+0x255c>
+               	vmovss	xmm0, dword ptr  <memset+0x257c>
                	ret
                	int3
                	int3
@@ -4026,8 +4019,34 @@ Disassembly of section .text:
                	int3
                	int3
 
+<Bodies3D::Cuboid@Evaluation.Virtual.Cuboid::~Cuboid()>:
+<Bodies3D::Pyramid@Evaluation.Virtual.Pyramid::~Pyramid()>:
+<Bodies3D::Ellipsoid@Evaluation.Virtual.Ellipsoid::~Ellipsoid()>:
+               	mov	esi, 0x40
+               	jmp	 <_ZdlPvm@plt>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
+<Bodies3D::Cone@Evaluation.Virtual.Cone::~Cone()>:
+<Bodies3D::Ellipse@Evaluation.Virtual.Ellipse::~Ellipse()>:
+<Bodies3D::Cylinder@Evaluation.Virtual.Cylinder::~Cylinder()>:
+<Bodies3D::Triangle@Evaluation.Virtual.Triangle::~Triangle()>:
+<Bodies3D::Rectangle@Evaluation.Virtual.Rectangle::~Rectangle()>:
+               	mov	esi, 0x38
+               	jmp	 <_ZdlPvm@plt>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
 <Bodies3D::Cone@Evaluation.Virtual.Cone::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <memset+0x2544>
+               	vmovss	xmm0, dword ptr  <memset+0x2564>
                	ret
                	int3
                	int3
@@ -4041,7 +4060,7 @@ Disassembly of section .text:
 <Bodies3D::Shape3D@Evaluation.Virtual.Shape3D<Shapes2D::Ellipse@Evaluation.Virtual.Ellipse>::GetComputeSizeMultiplier() const>:
 <Bodies3D::Cylinder@Evaluation.Virtual.Cylinder::GetComputeSizeMultiplier() const>:
 <Shapes2D::CircularShape@Evaluation.Virtual.CircularShape::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <memset+0x254c>
+               	vmovss	xmm0, dword ptr  <memset+0x256c>
                	ret
                	int3
                	int3
@@ -4051,8 +4070,24 @@ Disassembly of section .text:
                	int3
                	int3
 
+<Bodies3D::Cube@Evaluation.Virtual.Cube::~Cube()>:
+<Bodies3D::Circle@Evaluation.Virtual.Circle::~Circle()>:
+<Bodies3D::Sphere@Evaluation.Virtual.Sphere::~Sphere()>:
+<Bodies3D::Square@Evaluation.Virtual.Square::~Square()>:
+<Shapes2D::Ellipse@Evaluation.Virtual.Ellipse::~Ellipse()>:
+<Shapes2D::Triangle@Evaluation.Virtual.Triangle::~Triangle()>:
+<Shapes2D::Rectangle@Evaluation.Virtual.Rectangle::~Rectangle()>:
+               	mov	esi, 0x30
+               	jmp	 <_ZdlPvm@plt>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
 <Bodies3D::PyramidicBody@Evaluation.Virtual.PyramidicBody<Shapes2D::Triangle@Evaluation.Virtual.Triangle>::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <memset+0x2550>
+               	vmovss	xmm0, dword ptr  <memset+0x2570>
                	ret
                	int3
                	int3
@@ -4072,7 +4107,7 @@ Disassembly of section .text:
 <Bodies3D::CubicBody@Evaluation.Virtual.CubicBody<Shapes2D::Square@Evaluation.Virtual.Square>::GetComputeSizeMultiplier() const>:
 <Bodies3D::CubicBody@Evaluation.Virtual.CubicBody<Shapes2D::Rectangle@Evaluation.Virtual.Rectangle>::GetComputeSizeMultiplier() const>:
 <Shapes2D::RectangularShape@Evaluation.Virtual.RectangularShape::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <memset+0x2548>
+               	vmovss	xmm0, dword ptr  <memset+0x2568>
                	ret
                	int3
                	int3
@@ -4084,7 +4119,7 @@ Disassembly of section .text:
 
 <Bodies3D::Shape3D@Evaluation.Virtual.Shape3D<Shapes2D::Triangle@Evaluation.Virtual.Triangle>::GetComputeSizeMultiplier() const>:
 <Shapes2D::TriangularShape@Evaluation.Virtual.TriangularShape::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <memset+0x2554>
+               	vmovss	xmm0, dword ptr  <memset+0x2574>
                	ret
                	int3
                	int3
@@ -4147,13 +4182,21 @@ Disassembly of section .text:
                	add	rsp, 0x10
                	pop	rbx
                	ret
+               	int3
+               	int3
+               	int3
+
+<Shapes2D::Circle@Evaluation.Virtual.Circle::~Circle()>:
+<Shapes2D::Square@Evaluation.Virtual.Square::~Square()>:
+               	mov	esi, 0x28
+               	jmp	 <_ZdlPvm@plt>
 
 Disassembly of section .init:
 
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <memset+0x9ef0>
+               	mov	rax, qword ptr  <memset+0xa008>
                	test	rax, rax
                	je	 <L0>
                	call	rax
@@ -4211,7 +4254,7 @@ Disassembly of section .plt:
                	push	0x6
                	jmp	 <.plt>
 
-<_ZdlPv@plt>:
+<_ZdlPvm@plt>:
                	jmp	qword ptr  <_GLOBAL_OFFSET_TABLE_+0x50>
                	push	0x7
                	jmp	 <.plt>
