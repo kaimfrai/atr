@@ -13,7 +13,7 @@ static_assert
 ,	"Big endian not supported!"
 );
 
-export namespace
+namespace
 	Meta::Auto
 {
 	auto constexpr inline
@@ -87,7 +87,11 @@ export namespace
 		(	i_rBytes
 		);
 	}
+}
 
+export namespace
+	Meta::Auto
+{
 	template
 		<	::std::size_t
 				t_vExtent
