@@ -4,6 +4,7 @@ export import Meta.Auto.Var;
 
 import Meta.Auto.Bit.Bool;
 import Meta.Auto.Bit.RBool;
+import Meta.Memory.Constraint;
 
 import Std;
 
@@ -127,10 +128,19 @@ export namespace
 			)
 		;
 
+		using
+			ArithmeticType
+		=	decltype
+			(	+
+				IntegerType
+				{}
+			)
+		;
+
 		[[nodiscard]]
 		auto static constexpr inline
 		(	FromInteger
-		)	(	::std::integral auto
+		)	(	ArithmeticType
 					i_vInteger
 			)
 			noexcept
@@ -141,6 +151,38 @@ export namespace
 				(	i_vInteger
 				)
 			);
+		}
+
+		auto constexpr inline
+		(	operator=
+		)	(	ArithmeticType
+					i_vInteger
+			)	&
+			noexcept
+		->	Var&
+		{	return
+			*	this
+			=	FromInteger
+				(	i_vInteger
+				)
+			;
+		}
+
+		[[nodiscard]]
+		explicit(true) constexpr inline
+		(	operator bool
+		)	(	this Var
+					i_vThis
+			)
+			noexcept
+		{	return
+				ToInteger
+				(	i_vThis
+					.	m_vRaw
+				)
+			!=	IntegerType
+				{}
+			;
 		}
 
 		[[nodiscard]]
@@ -192,24 +234,6 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr inline
-		(	operator compl
-		)	(	this Var
-					i_vThis
-			)
-			noexcept
-		->	Var
-		{	return
-			FromInteger
-			(	compl
-				ToInteger
-				(	i_vThis
-					.	m_vRaw
-				)
-			);
-		}
-
-		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator<<
 		)	(	Var
@@ -226,6 +250,78 @@ export namespace
 					.	m_vRaw
 				)
 			<<	i_vShift
+			);
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	operator<<=
+		)	(	this Var
+				&	i_rLeft
+			,	int
+					i_vShift
+			)
+			noexcept
+		->	Var
+		{	return
+				i_rLeft
+			=	i_rLeft
+			<<	i_vShift
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator>>
+		)	(	Var
+					i_vLeft
+			,	int
+					i_vShift
+			)
+			noexcept
+		->	Var
+		{	return
+			FromInteger
+			(	ToInteger
+				(	i_vLeft
+					.	m_vRaw
+				)
+			>>	i_vShift
+			);
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	operator>>=
+		)	(	this Var
+				&	i_rLeft
+			,	int
+					i_vShift
+			)
+			noexcept
+		->	Var
+		{	return
+				i_rLeft
+			=	i_rLeft
+			>>	i_vShift
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	operator compl
+		)	(	this Var
+					i_vThis
+			)
+			noexcept
+		->	Var
+		{	return
+			FromInteger
+			(	compl
+				ToInteger
+				(	i_vThis
+					.	m_vRaw
+				)
 			);
 		}
 
@@ -255,16 +351,99 @@ export namespace
 
 		auto constexpr inline
 		(	operator|=
-		)	(	Var
+		)	(	this Var
+				&	i_rLeft
+			,	Var
 					i_vRight
-			)	&
+			)
 			noexcept
 		->	Var&
 		{	return
-			*	this
-			=	*	this
+				i_rLeft
+			=	i_rLeft
 			bitor
 				i_vRight
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator bitand
+		)	(	Var
+					i_vLeft
+			,	Var
+					i_vRight
+			)
+			noexcept
+		->	Var
+		{	return
+			FromInteger
+			(	ToInteger
+				(	i_vLeft
+					.	m_vRaw
+				)
+			bitand
+				ToInteger
+				(	i_vRight
+					.	m_vRaw
+				)
+			);
+		}
+
+		auto constexpr inline
+		(	operator&=
+		)	(	this Var
+				&	i_rLeft
+			,	Var
+					i_vRight
+			)
+			noexcept
+		->	Var&
+		{	return
+				i_rLeft
+			=	i_rLeft
+			bitand
+				i_vRight
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator xor
+		)	(	Var
+					i_vLeft
+			,	Var
+					i_vRight
+			)
+			noexcept
+		->	Var
+		{	return
+			FromInteger
+			(	ToInteger
+				(	i_vLeft
+					.	m_vRaw
+				)
+			xor
+				ToInteger
+				(	i_vRight
+					.	m_vRaw
+				)
+			);
+		}
+
+		auto constexpr inline
+		(	operator^=
+		)	(	this Var
+				&	i_rLeft
+			,	Var
+					i_vRight
+			)
+			noexcept
+		->	Var&
+		{	return
+				i_rLeft
+			=	i_rLeft
+			xor	i_vRight
 			;
 		}
 
@@ -287,6 +466,23 @@ export namespace
 
 		[[nodiscard]]
 		auto friend constexpr inline
+		(	Width
+		)	(	Var
+					i_vArray
+			)
+			noexcept
+		->	auto
+		{	return
+			::std::bit_width
+			(	ToInteger
+				(	i_vArray
+					.	m_vRaw
+				)
+			);
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
 		(	operator==
 		)	(	Var
 			,	Var
@@ -294,5 +490,43 @@ export namespace
 			noexcept
 		->	bool
 		=	default;
+	};
+
+	template
+		<	::std::size_t
+				t_vExtent
+		>
+	using
+		Field
+	=	Var
+		<	bool
+				[	t_vExtent
+				]
+		>
+	;
+}
+
+export namespace
+	Meta::Memory
+{
+	template
+		<	::std::size_t
+				t_vExtent
+		>
+	Constraint constexpr inline
+		Constraint_Of
+		<	::Meta::Auto::Field
+			<	t_vExtent
+			>
+		>
+	{	.	Align
+		=	{	::std::countr_zero
+				(	t_vExtent
+				)
+			+	1
+			}
+	,	.	Size
+		=	{	t_vExtent
+			}
 	};
 }
