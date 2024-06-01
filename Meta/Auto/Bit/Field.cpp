@@ -153,6 +153,21 @@ export namespace
 			);
 		}
 
+		[[nodiscard]]
+		auto constexpr inline
+		(	ToInteger
+		)	(	this Var
+					i_vThis
+			)
+			noexcept
+		->	IntegerType
+		{	return
+			::Meta::Auto::ToInteger
+			(	i_vThis
+				.	m_vRaw
+			);
+		}
+
 		auto constexpr inline
 		(	operator=
 		)	(	ArithmeticType
@@ -176,10 +191,9 @@ export namespace
 			)
 			noexcept
 		{	return
-				ToInteger
-				(	i_vThis
-					.	m_vRaw
-				)
+				i_vThis
+				.	ToInteger
+					()
 			!=	IntegerType
 				{}
 			;
@@ -222,10 +236,9 @@ export namespace
 		->	bool
 		{	return
 			static_cast<bool>
-			(	(	ToInteger
-					(	i_rThis
-						.	m_vRaw
-					)
+			(	(	i_rThis
+					.	ToInteger
+						()
 				>>	i_vIndex
 				)
 			bitand
@@ -244,10 +257,9 @@ export namespace
 		{	return
 			FromInteger
 			(	compl
-				ToInteger
-				(	i_vThis
-					.	m_vRaw
-				)
+				i_vThis
+				.	ToInteger
+					()
 			);
 		}
 
@@ -263,15 +275,13 @@ export namespace
 		->	Var
 		{	return
 			FromInteger
-			(	ToInteger
-				(	i_vLeft
-					.	m_vRaw
-				)
+			(	i_vLeft
+				.	ToInteger
+					()
 			bitor
-				ToInteger
-				(	i_vRight
-					.	m_vRaw
-				)
+				i_vRight
+				.	ToInteger
+					()
 			);
 		}
 
@@ -304,15 +314,13 @@ export namespace
 		->	Var
 		{	return
 			FromInteger
-			(	ToInteger
-				(	i_vLeft
-					.	m_vRaw
-				)
+			(	i_vLeft
+				.	ToInteger
+					()
 			bitand
-				ToInteger
-				(	i_vRight
-					.	m_vRaw
-				)
+				i_vRight
+				.	ToInteger
+					()
 			);
 		}
 
@@ -345,15 +353,12 @@ export namespace
 		->	Var
 		{	return
 			FromInteger
-			(	ToInteger
-				(	i_vLeft
-					.	m_vRaw
-				)
-			xor
-				ToInteger
-				(	i_vRight
-					.	m_vRaw
-				)
+			(	i_vLeft
+				.	ToInteger
+					()
+			xor	i_vRight
+				.	ToInteger
+					()
 			);
 		}
 
@@ -383,10 +388,9 @@ export namespace
 		->	auto
 		{	return
 			::std::popcount
-			(	ToInteger
-				(	i_vArray
-					.	m_vRaw
-				)
+			(	i_vArray
+				.	ToInteger
+					()
 			);
 		}
 
@@ -400,10 +404,9 @@ export namespace
 		->	auto
 		{	return
 			::std::bit_width
-			(	ToInteger
-				(	i_vArray
-					.	m_vRaw
-				)
+			(	i_vArray
+				.	ToInteger
+					()
 			);
 		}
 
