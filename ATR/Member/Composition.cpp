@@ -809,18 +809,15 @@ export namespace
 					(	vMemberName
 					)
 			;
-			auto
-			&	rHasMember
-			=	i_rComposer
+
+			(	i_rComposer
 				.	Members
 				.	HasMember
 					[	vHashIndex
 					]
-			;
-			(	rHasMember
 			=	compl
 				(	compl
-					rHasMember
+					0uz
 				<<	sizeof...(t_tpTypeName)
 				)
 			);
