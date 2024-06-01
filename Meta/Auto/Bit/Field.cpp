@@ -233,17 +233,18 @@ export namespace
 					i_vIndex
 			)
 			noexcept
-		->	bool
+		->	Var<bool>
 		{	return
-			static_cast<bool>
-			(	(	i_rThis
-					.	ToInteger
-						()
-				>>	i_vIndex
+			{	static_cast<BoolRaw>
+				(	(	i_rThis
+						.	ToInteger
+							()
+					>>	i_vIndex
+					)
+				bitand
+					1
 				)
-			bitand
-				1
-			);
+			};
 		}
 
 		[[nodiscard]]
