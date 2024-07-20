@@ -26,7 +26,6 @@ add_subdirectory(Predicate)
 add_subdirectory(String)
 
 add_module(
-	ID/Base.cpp
 	ID/ID.cpp
 	ID/Make.cpp
 	ID/Alias.cpp

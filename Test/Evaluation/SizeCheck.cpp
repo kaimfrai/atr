@@ -1,39 +1,9 @@
 export module Test.Evaluation.SizeCheck;
 
+import Evaluation.Dependency.CommonData;
 import Meta.Size;
 
 using ::Meta::USize;
-
-struct
-	Point
-{
-	float
-		Lateral
-	;
-	float
-		Vertical
-	;
-	float
-		Longitudinal
-	;
-};
-
-struct
-	RGBAColor
-{
-	float
-		Red
-	;
-	float
-		Green
-	;
-	float
-		Blue
-	;
-	float
-		Alpha
-	;
-};
 
 export
 {

@@ -1,21 +1,9 @@
 export module Meta.ID:Concept;
 
-import :Base;
+import :ID;
 
 export namespace
 	Meta
 {
-	template
-		<	typename
-				t_tProto
-		>
-	concept
-		ProtoID
-	=	requires
-		{	Base
-			{	t_tProto
-				{}
-			};
-		}
-	;
+	using ::Meta::ProtoID;
 }

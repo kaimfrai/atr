@@ -1,7 +1,5 @@
 export module Meta.ID:ID;
 
-import :Base;
-
 import Meta.String.Hash;
 
 using ::Meta::String::ImplicitHash;
@@ -30,6 +28,10 @@ auto constexpr inline
 	+	'0'
 	);
 }
+
+struct
+	Base
+{};
 
 export extern "C++"
 {
@@ -62,4 +64,22 @@ export extern "C++"
 			;
 		}
 	};
+}
+
+export namespace
+	Meta
+{
+	template
+		<	typename
+				t_tProto
+		>
+	concept
+		ProtoID
+	=	requires
+		{	Base
+			{	t_tProto
+				{}
+			};
+		}
+	;
 }

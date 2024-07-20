@@ -196,7 +196,7 @@ export namespace
 		and	IsTriviallyDestructible
 		and	IsConstructible_From<>
 	or	IsScalar
-	>	extern
+	>	inline
 		IsTriviallyConstructible_From<>
 	;
 

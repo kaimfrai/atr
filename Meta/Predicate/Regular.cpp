@@ -221,7 +221,7 @@ export namespace
 	<		Literal<Trait::Constructible_From<>>
 		and	IsDestructible
 	or	IsScalar
-	>	extern
+	>	inline
 		IsConstructible_From<>
 	;
 
