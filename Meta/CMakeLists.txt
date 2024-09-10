@@ -45,6 +45,7 @@ add_single_file_modules(
 	Byte.cpp
 	Data.cpp
 	Functional.cpp
+	Generic.cpp
 	String.cpp
 	Dispatch.cpp
 	Lex.cpp

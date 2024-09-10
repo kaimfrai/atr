@@ -1,0 +1,24 @@
+{	"name": "ATR"
+,	"files": [ { "git": 1 } ]
+,	"build":
+	{	"directory": "build"
+	,	"targets":
+		[	{	"name": "config Clang-Release"
+			,	"build_cmd": "cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Release -G Ninja --toolchain=CMake/Linux-Clang.cmake -S ../ -B Clang-Release && ln -sfv Clang-Release/compile_commands.json compile_commands.json"
+			}
+		,	{	"name": "build Clang-Release"
+			,	"build_cmd": "ninja -C Clang-Release"
+			}
+		,	{	"name": "clean Clang-Release"
+			,	"build_cmd": "ninja -C Clang-Release clean"
+			}
+		,	{	"name": "purge Clang-Release"
+			,	"build_cmd": "rm -rfv Clang-Release"
+			}
+		,	{	"name": "atr"
+			,	"build_cmd": "ninja -C Clang-Release Archetype"
+			,	"run_cmd": "Clang-Release/bin/Archetype 42 100000"
+			}
+		]
+	}
+}

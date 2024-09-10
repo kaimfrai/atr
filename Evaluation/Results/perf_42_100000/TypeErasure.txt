@@ -1,17 +1,17 @@
 
  Performance counter stats for 'build/Evaluation/bin/TypeErasure 42 100000' (10 runs):
 
-              7,65 msec task-clock                #    0,970 CPUs utilized            ( +-  0,47% )
+              4,67 msec task-clock                #    0,945 CPUs utilized            ( +-  1,78% )
                  0      context-switches          #    0,000 /sec                   
                  0      cpu-migrations            #    0,000 /sec                   
-             2.217      page-faults               #  287,605 K/sec                    ( +-  0,02% )
-        32.994.451      cycles                    #    4,280 GHz                      ( +-  0,41% )
-         1.824.476      stalled-cycles-frontend   #    5,51% frontend cycles idle     ( +-  3,91% )
-         5.727.957      stalled-cycles-backend    #   17,30% backend cycles idle      ( +-  1,00% )
-        61.696.433      instructions              #    1,86  insn per cycle         
-                                                  #    0,09  stalled cycles per insn  ( +-  0,03% )
-        10.715.676      branches                  #    1,390 G/sec                    ( +-  0,03% )
-           275.365      branch-misses             #    2,57% of all branches          ( +-  0,52% )
+             2.216      page-faults               #  459,649 K/sec                    ( +-  0,01% )
+        25.736.195      cycles                    #    5,338 GHz                      ( +-  0,96% )
+         1.234.882      stalled-cycles-frontend   #    4,68% frontend cycles idle     ( +-  0,40% )
+           615.007      stalled-cycles-backend    #    2,33% backend cycles idle      ( +-  9,28% )
+        62.483.546      instructions              #    2,37  insn per cycle         
+                                                  #    0,02  stalled cycles per insn  ( +-  0,02% )
+        10.688.841      branches                  #    2,217 G/sec                    ( +-  0,02% )
+           333.455      branch-misses             #    3,12% of all branches          ( +-  0,27% )
 
-         0,0078910 +- 0,0000357 seconds time elapsed  ( +-  0,45% )
+         0,0049447 +- 0,0000932 seconds time elapsed  ( +-  1,89% )
 
