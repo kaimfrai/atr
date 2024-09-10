@@ -1,17 +1,17 @@
 
  Performance counter stats for 'build/Evaluation/bin/SOAATR 42 100000' (10 runs):
 
-              0,86 msec task-clock                #    0,835 CPUs utilized            ( +-  5,14% )
+              0,87 msec task-clock                #    0,815 CPUs utilized            ( +-  7,20% )
                  0      context-switches          #    0,000 /sec                   
                  0      cpu-migrations            #    0,000 /sec                   
-             1.151      page-faults               #    1,260 M/sec                    ( +-  0,04% )
-         4.827.448      cycles                    #    5,286 GHz                      ( +-  3,79% )
-            90.071      stalled-cycles-frontend   #    1,78% frontend cycles idle     ( +-  2,61% )
-           766.729      stalled-cycles-backend    #   15,14% backend cycles idle      ( +-  5,11% )
-        13.836.838      instructions              #    2,73  insn per cycle         
-                                                  #    0,06  stalled cycles per insn  ( +-  0,04% )
-         1.604.730      branches                  #    1,757 G/sec                    ( +-  0,06% )
-            22.817      branch-misses             #    1,43% of all branches          ( +-  0,92% )
+             1.148      page-faults               #    1,208 M/sec                    ( +-  0,04% )
+         4.858.802      cycles                    #    5,111 GHz                      ( +-  1,44% )
+            91.192      stalled-cycles-frontend   #    1,82% frontend cycles idle     ( +-  2,10% )
+           787.553      stalled-cycles-backend    #   15,74% backend cycles idle      ( +-  1,86% )
+        13.396.758      instructions              #    2,68  insn per cycle         
+                                                  #    0,06  stalled cycles per insn  ( +-  0,11% )
+         1.588.804      branches                  #    1,671 G/sec                    ( +-  0,14% )
+            23.365      branch-misses             #    1,46% of all branches          ( +-  1,50% )
 
-         0,0010290 +- 0,0000508 seconds time elapsed  ( +-  4,94% )
+         0,0010687 +- 0,0000742 seconds time elapsed  ( +-  6,94% )
 

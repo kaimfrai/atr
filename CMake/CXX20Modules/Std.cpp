@@ -1,7 +1,6 @@
 module;
 
 #include <immintrin.h>
-#include <experimental/simd>
 
 export module Std;
 
@@ -565,11 +564,15 @@ export namespace
 			noexcept
 		->	float
 		{	return
-			reduce
-			(	::std::bit_cast<::std::experimental::native_simd<float>>
-				(	i_vSource
-				)
-			);
+				i_vSource[0]
+			+	i_vSource[1]
+			+	i_vSource[2]
+			+	i_vSource[3]
+			+	i_vSource[4]
+			+	i_vSource[5]
+			+	i_vSource[6]
+			+	i_vSource[7]
+			;
 		}
 	};
 }

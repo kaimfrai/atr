@@ -33,7 +33,7 @@ endif()
 
 add_compile_options(
 	-std=c++2c
-	-mavx2
+	-march=native
 	-flto=full
 	-fconstexpr-backtrace-limit=0
 	-ftemplate-backtrace-limit=0
