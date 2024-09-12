@@ -11,20 +11,6 @@ export namespace
 	template
 		<>
 	struct
-		SimdMask
-		<	::std::uint64_t
-				[	2uz
-				]
-		>
-	{
-		__m128i
-			m_vRaw
-		;
-	};
-
-	template
-		<>
-	struct
 		Var
 		<	::std::uint64_t
 				[	2uz

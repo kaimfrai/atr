@@ -1,6 +1,7 @@
 export module Meta.Auto.Simd.Tag;
 
 export import Meta.Auto.Var;
+import Std;
 
 export namespace
 	Meta::Auto
@@ -58,10 +59,43 @@ export namespace
 	}
 
 	template
-		<	typename
-				t_tElement
+		<	::std::size_t
 		>
 	struct
 		SimdMask
-	{};
+	{
+		__mmask8
+			m_vRaw
+		;
+	};
+
+	template
+		<>
+	struct
+		SimdMask<16uz>
+	{
+		__mmask16
+			m_vRaw
+		;
+	};
+
+	template
+		<>
+	struct
+		SimdMask<32uz>
+	{
+		__mmask32
+			m_vRaw
+		;
+	};
+
+	template
+		<>
+	struct
+		SimdMask<64uz>
+	{
+		__mmask64
+			m_vRaw
+		;
+	};
 }

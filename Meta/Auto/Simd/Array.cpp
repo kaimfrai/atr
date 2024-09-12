@@ -129,7 +129,7 @@ export namespace
 			m_vCount
 		;
 
-		__m256
+		SimdMask<t_vCount>
 			m_vMask
 		;
 
@@ -157,10 +157,7 @@ export namespace
 				+	static_cast<SSize>
 					(	i_vIndex
 					)
-				,	SimdMask<ElementType[8uz]>
-					{	.	m_vRaw
-						=	m_vMask
-					}
+				,	m_vMask
 				)
 			;
 		}
@@ -178,10 +175,7 @@ export namespace
 			::	LoadUnaligned
 				(	m_aData
 				+	i_vIndex
-				,	SimdMask<ElementType[8uz]>
-					{	.	m_vRaw
-						=	m_vMask
-					}
+				,	m_vMask
 				)
 			;
 		}
@@ -229,7 +223,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator[]
-		)	(	SimdMask<ElementType[t_vCount]>
+		)	(	SimdMask<t_vCount>
 					i_vMask
 			)	const
 			noexcept
@@ -246,7 +240,6 @@ export namespace
 				=	m_vCount
 			,	.	m_vMask
 				=	i_vMask
-					.	m_vRaw
 			};
 		}
 

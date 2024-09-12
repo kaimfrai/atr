@@ -15,7 +15,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <memset+0x94f0>
+               	call	qword ptr  <memset+0x95a8>
                	hlt
                	int3
                	int3
@@ -33,7 +33,7 @@ Disassembly of section .text:
                	lea	rax,  <__dso_handle>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x9500>
+               	mov	rax, qword ptr  <memset+0x95b8>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -52,7 +52,7 @@ Disassembly of section .text:
                	add	rsi, rax
                	sar	rsi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x9508>
+               	mov	rax, qword ptr  <memset+0x95c0>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -66,7 +66,7 @@ Disassembly of section .text:
                	cmp	byte ptr , 0x0 <completed.0>
                	jne	 <L0>
                	push	rbp
-               	cmp	qword ptr , 0x0 <memset+0x9510>
+               	cmp	qword ptr , 0x0 <memset+0x95c8>
                	mov	rbp, rsp
                	je	 <L1>
                	mov	rdi, qword ptr  <__dso_handle>
@@ -147,19 +147,31 @@ Disassembly of section .text:
 <L0>:
                	push	rax
                	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW5Float__in_chrg>
+               	call	 <initializer for module Meta.Auto.Simd.Tag>
                	call	 <initializer for module Meta.Auto.Simd.Int32>
                	pop	rax
                	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
-<initializer for module Meta.Auto.Simd.Int32>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW4SimdW5Int32__in_chrg>
+<initializer for module Meta.Auto.Simd.Tag>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW4SimdW3Tag__in_chrg>
                	je	 <L0>
                	ret
 <L0>:
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW5Int32__in_chrg>
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW3Tag__in_chrg>
                	jmp	 <initializer for module Std>
                	int3
                	int3
@@ -190,20 +202,30 @@ Disassembly of section .text:
                	int3
                	int3
 
+<initializer for module Meta.Auto.Simd.Int32>:
+               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW4SimdW5Int32__in_chrg>
+               	je	 <L0>
+               	ret
+<L0>:
+               	push	rax
+               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW5Int32__in_chrg>
+               	call	 <initializer for module Meta.Auto.Simd.Tag>
+               	pop	rax
+               	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+
 <initializer for module Meta.Auto.Simd.UInt32>:
                	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW4SimdW6UInt32__in_chrg>
                	je	 <L0>
                	ret
 <L0>:
+               	push	rax
                	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW6UInt32__in_chrg>
+               	call	 <initializer for module Meta.Auto.Simd.Tag>
+               	pop	rax
                	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
                	int3
                	int3
                	int3
@@ -215,9 +237,21 @@ Disassembly of section .text:
 <L0>:
                	push	rax
                	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW5UInt8__in_chrg>
+               	call	 <initializer for module Meta.Auto.Simd.Tag>
                	call	 <initializer for module Meta.Auto.Simd.UInt32>
                	pop	rax
                	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
                	int3
                	int3
@@ -243,9 +277,21 @@ Disassembly of section .text:
 <L0>:
                	push	rax
                	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW6UInt64__in_chrg>
+               	call	 <initializer for module Meta.Auto.Simd.Tag>
                	call	 <initializer for module Meta.Auto.Array.Bounded>
                	pop	rax
                	jmp	 <initializer for module Std>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
                	int3
                	int3
@@ -2786,13 +2832,13 @@ Disassembly of section .text:
                	lea	rax, [rcx + 4*rcx]
                	mov	qword ptr [rsp + 0x150], rcx
                	lea	rdi, [rcx + 8*rax]
-               	mov	rsi, qword ptr  <memset+0x9518>
+               	mov	rsi, qword ptr  <memset+0x95d0>
                	call	 <_ZnamRKSt9nothrow_t@plt>
                	mov	qword ptr [rsp + 0x5a8], rbx
                	movsxd	rcx, ebx
                	vpbroadcastq	ymm0, rcx
                	vpsrlq	xmm1, xmm0, 0x1e
-               	vpaddq	ymm2, ymm0, ymmword ptr  <memset+0x1380>
+               	vpaddq	ymm2, ymm0, ymmword ptr  <memset+0x13c0>
                	vpblendd	ymm1, ymm2, ymm1, 0x3   # ymm1 = ymm1[0,1],ymm2[2,3,4,5,6,7]
                	movabs	rdx, -0x61c8864680b583eb
                	add	rdx, rcx
@@ -2802,10 +2848,10 @@ Disassembly of section .text:
                	vpinsrq	xmm0, xmm0, rdx, 0x1
                	vinserti128	ymm0, ymm0, xmm2, 0x1
                	vpxor	ymm0, ymm1, ymm0
-               	vpmullq	ymm0, ymm0, qword ptr {1to4} <memset+0x13a0>
+               	vpmullq	ymm0, ymm0, qword ptr {1to4} <memset+0x13e0>
                	vpsrlq	ymm1, ymm0, 0x1b
                	vpxor	ymm0, ymm1, ymm0
-               	vpmullq	ymm0, ymm0, qword ptr {1to4} <memset+0x13a8>
+               	vpmullq	ymm0, ymm0, qword ptr {1to4} <memset+0x13e8>
                	mov	qword ptr [rsp + 0x140], rax
                	vpsrlq	ymm1, ymm0, 0x1f
                	vpxor	ymm0, ymm1, ymm0
@@ -4844,7 +4890,7 @@ Disassembly of section .text:
                	mov	dword ptr [rsp + 0x500], 0x0
                	lea	rax, [rsp + 0x280]
                	kxnorw	k1, k0, k0
-               	vpmovzxbd	ymm0, qword ptr  <memset+0x13b0>
+               	vpmovzxbd	ymm0, qword ptr  <memset+0x13f0>
                	vpxor	xmm1, xmm1, xmm1
                	vpxor	xmm2, xmm2, xmm2
                	kxnorw	k2, k0, k0
@@ -4855,7 +4901,7 @@ Disassembly of section .text:
                	vpsllq	zmm2, zmm0, 0x3
                	vpaddq	zmm7, zmm2, zmm0
                	vmovdqu64	zmmword ptr [rsp + 0x508], zmm7
-               	vpmovsxwd	ymm0, xmmword ptr  <memset+0x1450>
+               	vpmovsxwd	ymm0, xmmword ptr  <memset+0x1490>
                	vpgatherdq	zmm1 {k1}, zmmword ptr [rax + ymm0]
                	vpsllq	zmm0, zmm1, 0x2
                	vpaddq	zmm0, zmm0, zmm1
@@ -4881,8 +4927,8 @@ Disassembly of section .text:
                	mov	qword ptr [rsp + 0x248], rbx
                	mov	qword ptr [rsp + 0x250], r15
                	vpbroadcastq	zmm0, rax
-               	vpaddq	zmm3, zmm0, zmmword ptr  <memset+0x13c0>
-               	vpaddq	zmm4, zmm0, zmmword ptr  <memset+0x1400>
+               	vpaddq	zmm3, zmm0, zmmword ptr  <memset+0x1400>
+               	vpaddq	zmm4, zmm0, zmmword ptr  <memset+0x1440>
                	vpextrq	rax, xmm2, 0x1
                	vextracti128	xmm0, ymm2, 0x1
                	vmovq	rcx, xmm0
@@ -4914,8 +4960,8 @@ Disassembly of section .text:
                	mov	rdx, qword ptr [rsp + 0x2c0]
                	mov	qword ptr [rsp + 0x1f8], rdx
                	neg	r8
-               	vpbroadcastd	ymm5, dword ptr  <memset+0x1460>
-               	vmovdqa	xmm6, xmmword ptr  <memset+0x1440>
+               	vpbroadcastd	ymm5, dword ptr  <memset+0x14a0>
+               	vmovdqa	xmm6, xmmword ptr  <memset+0x1480>
                	mov	rdx, qword ptr [rsp + 0x2d0]
                	mov	qword ptr [rsp + 0x1f0], rdx
                	mov	rdx, qword ptr [rsp + 0x2d8]
@@ -4995,7 +5041,7 @@ Disassembly of section .text:
                	lea	eax, [rax + 4*rcx]
                	sub	bl, al
                	movzx	eax, bl
-               	lea	rcx,  <memset+0x147c>
+               	lea	rcx,  <memset+0x14bc>
                	movsxd	rax, dword ptr [rcx + 4*rax]
                	add	rax, rcx
                	jmp	rax
@@ -5017,7 +5063,7 @@ Disassembly of section .text:
                	mov	rbp, rdi
                	mov	edi, 0x20
                	mov	qword ptr [rsp + 0x148], rsi
-               	mov	rsi, qword ptr  <memset+0x9518>
+               	mov	rsi, qword ptr  <memset+0x95d0>
                	mov	qword ptr [rsp + 0x8], r10
                	mov	qword ptr [rsp + 0x10], rax
                	vmovdqu64	zmmword ptr [rsp + 0x690], zmm7
@@ -5029,8 +5075,8 @@ Disassembly of section .text:
                	vmovdqu64	zmm2, zmmword ptr [rsp + 0x650]
                	vmovdqu64	zmm7, zmmword ptr [rsp + 0x690]
                	mov	rdi, rbp
-               	vmovdqa	xmm6, xmmword ptr  <memset+0x1440>
-               	vpbroadcastd	ymm5, dword ptr  <memset+0x1460>
+               	vmovdqa	xmm6, xmmword ptr  <memset+0x1480>
+               	vpbroadcastd	ymm5, dword ptr  <memset+0x14a0>
                	vmovdqu64	zmm4, zmmword ptr [rsp + 0x5d0]
                	vmovdqu64	zmm3, zmmword ptr [rsp + 0x610]
                	mov	rsi, qword ptr [rsp + 0x148]
@@ -5483,13 +5529,13 @@ Disassembly of section .text:
                	vpxor	xmm0, xmm0, xmm0
                	vmovdqu64	zmmword ptr [rsp + 0x2c0], zmm0
                	vmovdqu64	zmmword ptr [rsp + 0x280], zmm0
-               	lea	r13,  <memset+0x14b0>
-               	vmovss	xmm4, dword ptr  <memset+0x1468>
+               	lea	r13,  <memset+0x14f0>
+               	vmovss	xmm4, dword ptr  <memset+0x14a8>
                	vpxor	xmm5, xmm5, xmm5
-               	vmovss	xmm6, dword ptr  <memset+0x1470>
-               	vmovss	xmm7, dword ptr  <memset+0x146c>
-               	vmovss	xmm8, dword ptr  <memset+0x1478>
-               	vmovss	xmm9, dword ptr  <memset+0x1464>
+               	vmovss	xmm6, dword ptr  <memset+0x14b0>
+               	vmovss	xmm7, dword ptr  <memset+0x14ac>
+               	vmovss	xmm8, dword ptr  <memset+0x14b8>
+               	vmovss	xmm9, dword ptr  <memset+0x14a4>
                	mov	rax, qword ptr [rsp + 0x140]
                	jmp	 <L239>
                	nop	word ptr cs:[rax + rax]
@@ -5504,12 +5550,12 @@ Disassembly of section .text:
                	xor	esi, esi
                	vzeroupper
                	call	 <memset@plt>
-               	vmovss	xmm9, dword ptr  <memset+0x1464>
-               	vmovss	xmm8, dword ptr  <memset+0x1478>
-               	vmovss	xmm7, dword ptr  <memset+0x146c>
-               	vmovss	xmm6, dword ptr  <memset+0x1470>
+               	vmovss	xmm9, dword ptr  <memset+0x14a4>
+               	vmovss	xmm8, dword ptr  <memset+0x14b8>
+               	vmovss	xmm7, dword ptr  <memset+0x14ac>
+               	vmovss	xmm6, dword ptr  <memset+0x14b0>
                	vpxor	xmm5, xmm5, xmm5
-               	vmovss	xmm4, dword ptr  <memset+0x1468>
+               	vmovss	xmm4, dword ptr  <memset+0x14a8>
                	mov	rax, r14
                	mov	r15, r12
 <L239>:
@@ -5707,7 +5753,7 @@ Disassembly of section .text:
                	jne	 <L259>
                	cmp	ebp, 0x186a0
                	jne	 <L259>
-               	vucomiss	xmm0, dword ptr  <memset+0x1474>
+               	vucomiss	xmm0, dword ptr  <memset+0x14b4>
                	jne	 <L260>
 <L259>:
                	xor	eax, eax
@@ -5756,7 +5802,7 @@ Disassembly of section .text:
                	call	 <__cxa_allocate_exception@plt>
                	vmovaps	xmm0, xmmword ptr [rsp + 0x130]
                	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <memset+0x9520>
+               	mov	rsi, qword ptr  <memset+0x95d8>
                	mov	rdi, rax
                	xor	edx, edx
                	call	 <__cxa_throw@plt>
@@ -5766,7 +5812,7 @@ Disassembly of section .init:
 <_init>:
                	endbr64
                	sub	rsp, 0x8
-               	mov	rax, qword ptr  <memset+0x94f8>
+               	mov	rax, qword ptr  <memset+0x95b0>
                	test	rax, rax
                	je	 <L0>
                	call	rax

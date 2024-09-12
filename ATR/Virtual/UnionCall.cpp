@@ -160,59 +160,22 @@ export namespace
 		<	::std::size_t
 				t_vCount
 		>
-	struct
-		GenericSimdMask
-	{
-		Simd<::std::int32_t[t_vCount]>
-			m_vMask
-		;
-
-		explicit(true) constexpr inline
-		(	GenericSimdMask
-		)	(	::std::int32_t
-					i_vMask
-			,	Simd<::std::int32_t[t_vCount]>
-					i_vParallelIndex
-			)
-			noexcept
-		:	m_vMask
-			{	// *HIGHEST* bit must be set
-				SimdFill<::std::int32_t[t_vCount]>
-				(	i_vMask
-				)
-			<<	i_vParallelIndex
-			}
-		{}
-
-		template
-			<	typename
-					t_tElement
-			>
-		[[nodiscard]]
-		explicit(false) constexpr inline
-		(	operator
-			SimdMask<t_tElement[t_vCount]>
-		)	()	const
-			noexcept
-		{	return
-			::std::bit_cast<SimdMask<t_tElement[t_vCount]>>
-			(	m_vMask
-			);
-		}
-	};
-
-	template
-		<	::std::size_t
-				t_vCount
-		>
+	[[nodiscard]]
+	auto constexpr inline
 	(	GenericSimdMask
 	)	(	::std::int32_t
+				i_vMask
 		,	Simd<::std::int32_t[t_vCount]>
+				i_vParallelIndex
 		)
-	->	GenericSimdMask
-		<	t_vCount
-		>
-	;
+		noexcept
+	->	SimdMask<t_vCount>
+	{	return
+		HighestBit
+		(	SimdFill<::std::int32_t[t_vCount]>(i_vMask)
+		<<	i_vParallelIndex
+		);
+	}
 
 	template
 		<	auto const

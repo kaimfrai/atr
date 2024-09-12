@@ -162,10 +162,9 @@ namespace
 				i_vMask
 		)
 		noexcept
-	->	SimdMask<float[8uz]>
+	->	SimdMask<8uz>
 	{	return
-		// *HIGHEST* bit must be set
-		::std::bit_cast<SimdMask<float[8uz]>>
+		HighestBit
 		(	SimdFill<::std::int32_t[8uz]>(i_vMask)
 		<<	i_vType
 		);

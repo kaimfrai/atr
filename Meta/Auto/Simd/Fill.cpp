@@ -67,15 +67,10 @@ export namespace
 		->	Simd<float[16uz]>
 		{	return
 			{	.	m_vRaw
-				=	{	SimdOp<float>::Broadcast
-						(	i_vSource
-						,	SimdTarget<float[8uz]>
-						)
-					,	SimdOp<float>::Broadcast
-						(	i_vSource
-						,	SimdTarget<float[8uz]>
-						)
-					}
+				=	SimdOp<float>::Broadcast
+					(	i_vSource
+					,	SimdTarget<float[16uz]>
+					)
 			};
 		}
 	};
@@ -126,15 +121,10 @@ export namespace
 		->	Simd<::std::int32_t[16uz]>
 		{	return
 			{	.	m_vRaw
-				=	{	SimdOp<::std::int32_t>::Broadcast
-						(	i_vSource
-						,	SimdTarget<::std::int32_t[8uz]>
-						)
-					,	SimdOp<::std::int32_t>::Broadcast
-						(	i_vSource
-						,	SimdTarget<::std::int32_t[8uz]>
-						)
-					}
+				=	SimdOp<::std::int32_t>::Broadcast
+					(	i_vSource
+					,	SimdTarget<::std::int32_t[16uz]>
+					)
 			};
 		}
 	};
@@ -185,15 +175,10 @@ export namespace
 		->	Simd<::std::uint32_t[16uz]>
 		{	return
 			{	.	m_vRaw
-				=	{	SimdOp<::std::uint32_t>::Broadcast
-						(	i_vSource
-						,	SimdTarget<::std::uint32_t[8uz]>
-						)
-					,	SimdOp<::std::uint32_t>::Broadcast
-						(	i_vSource
-						,	SimdTarget<::std::uint32_t[8uz]>
-						)
-					}
+				=	SimdOp<::std::uint32_t>::Broadcast
+					(	i_vSource
+					,	SimdTarget<::std::uint32_t[16uz]>
+					)
 			};
 		}
 	};

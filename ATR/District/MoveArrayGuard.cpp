@@ -20,7 +20,6 @@ import Std;
 
 using ::ATR::Layout::Fork;
 using ::ATR::Layout::Offset;
-using ::ATR::Virtual::GenericSimdMask;
 using ::Meta::Auto::Simd;
 using ::Meta::Auto::SimdCast;
 using ::Meta::BitSize;
@@ -397,7 +396,7 @@ export namespace
 		::Meta::Auto::Multiple<t_vBatch>
 			m_vIndex
 		;
-		GenericSimdMask<t_vBatch>
+		::Meta::Auto::SimdMask<t_vBatch>
 			m_vMask
 		;
 
@@ -457,7 +456,7 @@ export namespace
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator[]
-		)	(	GenericSimdMask<t_vBatch>
+		)	(	::Meta::Auto::SimdMask<t_vBatch>
 					i_vMask
 			)	const
 			noexcept

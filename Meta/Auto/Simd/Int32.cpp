@@ -17,20 +17,6 @@ export namespace
 	template
 		<>
 	struct
-		SimdMask
-		<	::std::int32_t
-				[	8uz
-				]
-		>
-	{
-		__m256i
-			m_vRaw
-		;
-	};
-
-	template
-		<>
-	struct
 		Var
 		<	::std::int32_t
 				[	8uz
@@ -82,22 +68,43 @@ export namespace
 					)
 			};
 		}
-	};
 
-	template
-		<>
-	struct
-		SimdMask
-		<	::std::int32_t
-				[	16uz
-				]
-		>
-	{
-		__m256i
-			m_vRaw
-			[	2uz
-			]
-		;
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator==
+		)	(	Var
+					i_vLeft
+			,	Var
+					i_vRight
+			)
+			noexcept
+		->	SimdMask<8uz>
+		{	return
+			{	.	m_vRaw
+				=	::SimdOp::Equal
+					(	i_vLeft
+						.	m_vRaw
+					,	i_vRight
+						.	m_vRaw
+					)
+			};
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	HighestBit
+		)	(	Var
+					i_vSource
+			)
+			noexcept
+		->	SimdMask<8>
+		{	return
+			{	::SimdOp::HighestBit
+				(	i_vSource
+					.	m_vRaw
+				)
+			};
+		}
 	};
 
 	template
@@ -110,10 +117,8 @@ export namespace
 		,	SimdTag
 		>
 	{
-		__m256i
+		__m512i
 			m_vRaw
-			[	2uz
-			]
 		;
 
 		[[nodiscard]]
@@ -128,27 +133,12 @@ export namespace
 		->	Var
 		{	return
 			{	.	m_vRaw
-				=	{	::SimdOp::BitShiftLeft
-						(	i_vLeft
-							.	m_vRaw
-								[	0uz
-								]
-						,	i_vRight
-							.	m_vRaw
-								[	0uz
-								]
-						)
-					,	::SimdOp::BitShiftLeft
-						(	i_vLeft
-							.	m_vRaw
-								[	1uz
-								]
-						,	i_vRight
-							.	m_vRaw
-								[	1uz
-								]
-						)
-					}
+				=	::SimdOp::BitShiftLeft
+					(	i_vLeft
+						.	m_vRaw
+					,	i_vRight
+						.	m_vRaw
+					)
 			};
 		}
 
@@ -157,28 +147,18 @@ export namespace
 		(	operator<<
 		)	(	Var
 					i_vLeft
-			,	int
+			,	unsigned
 					i_vRight
 			)
 			noexcept
 		->	Var
 		{	return
 			{	.	m_vRaw
-				=	{	::SimdOp::BitShiftLeft
-						(	i_vLeft
-							.	m_vRaw
-								[	0uz
-								]
-						,	i_vRight
-						)
-					,	::SimdOp::BitShiftLeft
-						(	i_vLeft
-							.	m_vRaw
-								[	1uz
-								]
-						,	i_vRight
-						)
-					}
+				=	::SimdOp::BitShiftLeft
+					(	i_vLeft
+						.	m_vRaw
+					,	i_vRight
+					)
 			};
 		}
 	};

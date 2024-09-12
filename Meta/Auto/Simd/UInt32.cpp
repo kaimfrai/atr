@@ -17,20 +17,6 @@ export namespace
 	template
 		<>
 	struct
-		SimdMask
-		<	::std::uint32_t
-				[	8uz
-				]
-		>
-	{
-		__m256i
-			m_vRaw
-		;
-	};
-
-	template
-		<>
-	struct
 		Var
 		<	::std::uint32_t
 				[	8uz
@@ -67,22 +53,6 @@ export namespace
 	template
 		<>
 	struct
-		SimdMask
-		<	::std::uint32_t
-				[	16uz
-				]
-		>
-	{
-		__m256i
-			m_vRaw
-			[	2uz
-			]
-		;
-	};
-
-	template
-		<>
-	struct
 		Var
 		<	::std::uint32_t
 				[	16uz
@@ -90,10 +60,8 @@ export namespace
 		,	SimdTag
 		>
 	{
-		__m256i
+		__m512i
 			m_vRaw
-			[	2uz
-			]
 		;
 
 		[[nodiscard]]
@@ -108,27 +76,12 @@ export namespace
 		->	Var
 		{	return
 			{	.	m_vRaw
-				=	{	::SimdOp::BitShiftLeft
-						(	i_vLeft
-							.	m_vRaw
-								[	0uz
-								]
+				=	::SimdOp::BitShiftLeft
+					(	i_vLeft
+						.	m_vRaw
 						,	i_vRight
 							.	m_vRaw
-								[	0uz
-								]
-						)
-					,	::SimdOp::BitShiftLeft
-						(	i_vLeft
-							.	m_vRaw
-								[	1uz
-								]
-						,	i_vRight
-							.	m_vRaw
-								[	1uz
-								]
-						)
-					}
+					)
 			};
 		}
 	};
