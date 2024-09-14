@@ -1,17 +1,17 @@
 
- Performance counter stats for 'build/Evaluation/bin/SOAReplication 42 100000' (10 runs):
+ Performance counter stats for 'build/Evaluation/bin/SOAReplication 42 12500' (10 runs):
 
-              0,87 msec task-clock                #    0,836 CPUs utilized            ( +-  4,14% )
+              0,85 msec task-clock                #    0,816 CPUs utilized            ( +-  7,53% )
                  0      context-switches          #    0,000 /sec                   
                  0      cpu-migrations            #    0,000 /sec                   
-             1.148      page-faults               #    1,241 M/sec                    ( +-  0,04% )
-         4.871.959      cycles                    #    5,265 GHz                      ( +-  2,50% )
-            87.705      stalled-cycles-frontend   #    1,72% frontend cycles idle     ( +-  2,60% )
-           792.015      stalled-cycles-backend    #   15,51% backend cycles idle      ( +-  3,06% )
-        13.785.571      instructions              #    2,70  insn per cycle         
-                                                  #    0,06  stalled cycles per insn  ( +-  0,08% )
-         1.594.462      branches                  #    1,723 G/sec                    ( +-  0,12% )
-            22.987      branch-misses             #    1,44% of all branches          ( +-  1,24% )
+             1.147      page-faults               #    1,230 M/sec                    ( +-  0,04% )
+         4.768.920      cycles                    #    5,113 GHz                      ( +-  1,55% )
+            92.342      stalled-cycles-frontend   #    1,88% frontend cycles idle     ( +-  1,55% )
+           786.199      stalled-cycles-backend    #   15,98% backend cycles idle      ( +-  1,11% )
+        13.778.501      instructions              #    2,80  insn per cycle         
+                                                  #    0,06  stalled cycles per insn  ( +-  0,07% )
+         1.586.453      branches                  #    1,701 G/sec                    ( +-  0,12% )
+            22.393      branch-misses             #    1,40% of all branches          ( +-  1,26% )
 
-         0,0010411 +- 0,0000444 seconds time elapsed  ( +-  4,27% )
+         0,0010459 +- 0,0000717 seconds time elapsed  ( +-  6,86% )
 
