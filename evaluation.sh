@@ -74,19 +74,19 @@ build_all $1 $2
 if [ $# -lt 1 ]
 then
 	bash Evaluation/assembly.sh $2
-	bash Evaluation/cachegrind.sh 42 100000 $2
+	bash Evaluation/cachegrind.sh 42 12500 $2
 	bash Evaluation/compile.sh $2
-	bash Evaluation/memcheck.sh 42 100000 $2
-	bash Evaluation/perf.sh 42 100000 10 $2
+	bash Evaluation/memcheck.sh 42 12500 $2
+	bash Evaluation/perf.sh 42 12500 10 $2
 elif [ $1 == "assembly" ] || [ $1 == "compile" ]
 then
 	bash Evaluation/$1.sh $2
 elif [ $1 == "cachegrind" ] || [ $1 == "memcheck" ]
 then
-	bash Evaluation/$1.sh 42 100000 $2
+	bash Evaluation/$1.sh 42 12500 $2
 elif [ $1 == "perf" ]
 then
-	bash Evaluation/$1.sh 42 100000 10 $2
+	bash Evaluation/$1.sh 42 12500 10 $2
 else
 	echo "Invalid evaluation script $1. Must be one of:"
 	echo "assembly"
