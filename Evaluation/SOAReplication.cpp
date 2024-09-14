@@ -343,7 +343,9 @@ namespace
 			i_rThis
 			.	m_rSOAView
 			.	m_vIndex
-			+=	Parallel
+			+=	static_cast<Body3DIterator::difference_type>
+				(	Parallel
+				)
 			*	i_vDifference
 			;
 			return
