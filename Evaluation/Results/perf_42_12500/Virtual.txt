@@ -1,17 +1,17 @@
 
  Performance counter stats for 'build/Evaluation/bin/Virtual 42 12500' (10 runs):
 
-              5,64 msec task-clock                #    0,976 CPUs utilized            ( +-  0,23% )
+             11,26 msec task-clock                #    0,972 CPUs utilized            ( +-  0,66% )
                  0      context-switches          #    0,000 /sec                   
                  0      cpu-migrations            #    0,000 /sec                   
-             2.168      page-faults               #  382,517 K/sec                    ( +-  0,01% )
-        30.945.743      cycles                    #    5,460 GHz                      ( +-  0,26% )
-         1.496.076      stalled-cycles-frontend   #    4,79% frontend cycles idle     ( +-  0,50% )
-           389.172      stalled-cycles-backend    #    1,25% backend cycles idle      ( +-  6,68% )
-        63.818.097      instructions              #    2,05  insn per cycle         
+             4.188      page-faults               #  365,820 K/sec                    ( +-  0,01% )
+        62.257.787      cycles                    #    5,438 GHz                      ( +-  0,49% )
+         2.911.063      stalled-cycles-frontend   #    4,63% frontend cycles idle     ( +-  0,59% )
+           858.628      stalled-cycles-backend    #    1,37% backend cycles idle      ( +-  8,17% )
+       130.756.081      instructions              #    2,08  insn per cycle         
                                                   #    0,02  stalled cycles per insn  ( +-  0,01% )
-        11.604.371      branches                  #    2,047 G/sec                    ( +-  0,01% )
-           393.040      branch-misses             #    3,39% of all branches          ( +-  0,59% )
+        22.389.302      branches                  #    1,956 G/sec                    ( +-  0,01% )
+           748.571      branch-misses             #    3,34% of all branches          ( +-  0,61% )
 
-         0,0057793 +- 0,0000134 seconds time elapsed  ( +-  0,23% )
+         0,0115894 +- 0,0000764 seconds time elapsed  ( +-  0,66% )
 

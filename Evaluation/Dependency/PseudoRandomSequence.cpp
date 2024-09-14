@@ -53,7 +53,7 @@ auto constexpr inline
 
 export
 {
-	auto constexpr inline Parallel = 8uz;
+	auto constexpr inline Parallel = 16uz;
 	auto constexpr inline RNG = Parallel / sizeof(std::uint64_t);
 
 	struct
