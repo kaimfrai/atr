@@ -562,6 +562,11 @@ export namespace
 		>
 	{
 		using
+			ElementType
+		=	float
+		;
+
+		using
 			MaskedType
 		=	MaskedSimd
 			<	float
@@ -573,6 +578,23 @@ export namespace
 		__m512
 			m_vRaw
 		;
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	operator[]
+		)	(	SimdMask<16uz>
+					i_vMask
+			)	const
+			noexcept
+		->	MaskedType
+		{	return
+			{	.	m_vRaw
+				=	m_vRaw
+			,	.	m_vMask
+				=	i_vMask
+					.	m_vRaw
+			};
+		}
 
 		[[nodiscard]]
 		auto constexpr inline
@@ -634,6 +656,26 @@ export namespace
 			};
 		}
 
+		[[nodiscard]]
+		auto constexpr inline
+		(	operator=
+		)	(	MaskedType
+					i_vValue
+			)	const&
+			noexcept
+		->	Var
+		{	return
+			{	.	m_vRaw
+				=	::SimdOp::Blend
+					(	i_vValue
+						.	m_vMask
+					,	m_vRaw
+					,	i_vValue
+						.	m_vRaw
+					)
+			};
+		}
+
 		auto constexpr inline
 		(	operator=
 		)	(	MaskedType
@@ -676,6 +718,44 @@ export namespace
 
 		[[nodiscard]]
 		auto friend constexpr inline
+		(	operator+
+		)	(	Var
+					i_vLeft
+			,	Var
+					i_vRight
+			)
+			noexcept
+		->	Var
+		{	return
+			{	.	m_vRaw
+				=	::SimdOp::Add
+					(	i_vLeft
+						.	m_vRaw
+					,	i_vRight
+						.	m_vRaw
+					)
+			};
+		}
+
+		auto friend constexpr inline
+		(	operator+=
+		)	(	Var
+				&	i_rLeft
+			,	Var
+					i_vRight
+			)
+			noexcept
+		->	Var&
+		{	return
+				i_rLeft
+			=	(	i_rLeft
+				+	i_vRight
+				)
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
 		(	operator*
 		)	(	Var
 					i_vLeft
@@ -693,6 +773,21 @@ export namespace
 						.	m_vRaw
 					)
 			};
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	reduce
+		)	(	Var
+					i_vArgument
+			)
+			noexcept
+		->	float
+		{	return
+			::SimdOp::Reduce
+			(	i_vArgument
+				.	m_vRaw
+			);
 		}
 
 		[[nodiscard]]
@@ -798,44 +893,6 @@ export namespace
 			(&)	[	16uz
 				]
 		,	SimdTag
-		>
-	{
-		using
-			value_type
-		=	Simd
-			<	float
-					[	16uz
-					]
-			>
-		;
-
-		float const
-		*	m_aData
-		;
-
-		[[nodiscard]]
-		explicit(true) constexpr inline
-		(	operator
-			value_type
-		)	()	const
-			noexcept
-		{	return
-			value_type
-			::	LoadAligned
-				(	m_aData
-				)
-			;
-		}
-	};
-
-	template
-		<>
-	struct
-		Var
-		<	float const
-			(&)	[	16uz
-				]
-		,	SimdTag
 		,	MaskedTag
 		>
 	{
@@ -870,6 +927,118 @@ export namespace
 					{	.	m_vRaw
 						=	m_vMask
 					}
+				)
+			;
+		}
+	};
+
+	template
+		<>
+	struct
+		Var
+		<	float const
+			(&)	[	16uz
+				]
+		,	SimdTag
+		>
+	{
+		using
+			value_type
+		=	Simd
+			<	float
+					[	16uz
+					]
+			>
+		;
+
+		float const
+		*	m_aData
+		;
+
+		[[nodiscard]]
+		explicit(true) constexpr inline
+		(	operator
+			value_type
+		)	()	const
+			noexcept
+		{	return
+			value_type
+			::	LoadAligned
+				(	m_aData
+				)
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	operator=
+		)	(	MaskedSimd
+				<	float const
+					(&)	[	16uz
+						]
+				>	i_rRight
+			)	const
+			noexcept
+		->	value_type
+		{	return
+				static_cast<value_type>
+				(	*	this
+				)
+			=	static_cast<decltype(i_rRight)::value_type>
+				(	i_rRight
+				)
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	operator[]
+		)	(	SimdMask<16uz>
+					i_vMask
+			)	const
+			noexcept
+		->	MaskedSimd<float const(&)[16uz]>
+		{	return
+			{	.	m_aData
+				=	m_aData
+			,	.	m_vMask
+				=	i_vMask
+					.	m_vRaw
+			};
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator*
+		)	(	Var
+					i_rLeft
+			,	value_type
+					i_vRight
+			)
+			noexcept
+		->	value_type
+		{	return
+				static_cast<value_type>
+				(	i_rLeft
+				)
+			*	i_vRight
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator*
+		)	(	value_type
+					i_vLeft
+			,	Var
+					i_rRight
+			)
+			noexcept
+		->	value_type
+		{	return
+				i_vLeft
+			*	static_cast<value_type>
+				(	i_rRight
 				)
 			;
 		}

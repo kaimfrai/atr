@@ -23,6 +23,28 @@ export namespace
 		;
 
 		[[nodiscard]]
+		auto constexpr inline
+		(	operator[]
+		)	(	::std::size_t
+					i_vIndex
+			)	const
+			noexcept
+		->	::std::uint8_t
+		{
+			auto
+				vArray
+			=	::std::bit_cast<::std::array<::std::uint8_t, 8uz>>
+				(	m_vRaw
+				)
+			;
+			return
+				vArray
+				[	i_vIndex
+				]
+			;
+		}
+
+		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator%
 		)	(	Var
@@ -51,6 +73,24 @@ export namespace
 			::std::bit_cast<Var>
 			(	vArray
 			);
+		}
+
+		template
+			<	int
+					t_vShift
+			>
+		auto constexpr inline
+		(	ByteShiftRight
+		)	()	&
+			noexcept
+		->	Var&
+		{
+				m_vRaw
+			>>=	::std::numeric_limits<::std::uint8_t>::digits
+			;
+			return
+			*	this
+			;
 		}
 
 		[[nodiscard]]
@@ -306,6 +346,48 @@ export namespace
 		;
 
 		[[nodiscard]]
+		auto constexpr inline
+		(	operator[]
+		)	(	::std::size_t
+					i_vIndex
+			)	const
+			noexcept
+		->	::std::uint8_t
+		{
+			auto const
+				vArray
+			=	::std::bit_cast<::std::array<::std::uint8_t, 16uz>>
+				(	m_vRaw
+				)
+			;
+			return
+				vArray
+				[	i_vIndex
+				]
+			;
+		}
+
+		template
+			<	int
+					t_vShift
+			>
+		auto constexpr inline
+		(	ByteShiftRight
+		)	()	&
+			noexcept
+		->	Var&
+		{
+				m_vRaw
+			=	::Std::SimdOp<::std::byte>::ByteShiftRight<t_vShift>
+				(	m_vRaw
+				)
+			;
+			return
+			*	this
+			;
+		}
+
+		[[nodiscard]]
 		auto friend constexpr inline
 		(	operator%
 		)	(	Var
@@ -333,6 +415,97 @@ export namespace
 			return
 			::std::bit_cast<Var>
 			(	vArray
+			);
+		}
+
+		[[nodiscard]]
+		auto static constexpr inline
+		(	LoadAligned
+		)	(	::std::uint8_t const
+				*	i_aData
+			)
+			noexcept
+		->	Var
+		{
+			::std::uint8_t
+				vValue
+				[	16uz
+				]
+			{};
+			auto const
+				aData
+			=	::std::assume_aligned<16uz>
+				(	i_aData
+				)
+			;
+			::std::copy
+			(	aData
+			,		aData
+				+	16uz
+			,	vValue
+			);
+
+			return
+			{	.	m_vRaw
+				=	::std::bit_cast<__m128i>
+					(	vValue
+					)
+			};
+		}
+
+		[[nodiscard]]
+		auto static constexpr inline
+		(	LoadUnaligned
+		)	(	::std::uint8_t const
+				*	i_aData
+			)
+			noexcept
+		->	Var
+		{
+			::std::uint8_t
+				vValue
+				[	16uz
+				]
+			{};
+			::std::copy
+			(	i_aData
+			,		i_aData
+				+	16uz
+			,	vValue
+			);
+
+			return
+			{	.	m_vRaw
+				=	::std::bit_cast<__m128i>
+					(	vValue
+					)
+			};
+		}
+
+		auto constexpr inline
+		(	StoreAligned
+		)	(	::std::uint8_t
+				*	o_aData
+			)	const
+			noexcept
+		->	void
+		{
+			auto const
+				vValue
+			=	::std::bit_cast<::std::array<::std::uint8_t, 16uz>>
+				(	m_vRaw
+				)
+			;
+			::std::copy
+			(	vValue
+				.	begin
+					()
+			,	vValue
+				.	end
+					()
+			,	::std::assume_aligned<16uz>
+				(	o_aData
+				)
 			);
 		}
 	};

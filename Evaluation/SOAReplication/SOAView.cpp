@@ -250,10 +250,14 @@ export namespace
 		;
 	};
 
+	template
+		<	::std::size_t
+				t_vCount
+		>
 	using
 		Body3DView
 	=	SOAView
-		<	8uz
+		<	t_vCount
 		,	//	ColorRed
 			float
 		,	//	ColorGreen
@@ -279,10 +283,14 @@ export namespace
 		>
 	;
 
+	template
+		<	::std::size_t
+				t_vCount
+		>
 	using
 		Body3DConstView
 	=	SOAView
-		<	8uz
+		<	t_vCount
 		,	//	ColorRed
 			float const
 		,	//	ColorGreen

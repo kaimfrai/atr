@@ -156,16 +156,16 @@ namespace
 	[[nodiscard]]
 	auto inline
 	(	TypeMask
-	)	(	Simd<::std::int32_t[8uz]>
+	)	(	Simd<::std::int32_t[Parallel]>
 				i_vType
 		,	::std::int32_t
 				i_vMask
 		)
 		noexcept
-	->	SimdMask<8uz>
+	->	SimdMask<Parallel>
 	{	return
 		HighestBit
-		(	SimdFill<::std::int32_t[8uz]>(i_vMask)
+		(	SimdFill<::std::int32_t[Parallel]>(i_vMask)
 		<<	i_vType
 		);
 	}
@@ -182,7 +182,7 @@ namespace
 		=	Body3DValue
 		;
 
-		Body3DConstView
+		Body3DConstView<Parallel>
 			m_rView
 		;
 
@@ -195,7 +195,7 @@ namespace
 		{
 			auto static constexpr
 				vMultiplierArray
-			=	::std::bit_cast<Simd<float[16uz]>, float const[16uz]>
+			=	::std::bit_cast<Simd<float[16]>, float const[16]>
 				(	{	PiFraction<1, 4>
 					,	PiFraction<1, 4>
 					,	1.0f
@@ -225,7 +225,7 @@ namespace
 						>()
 				)
 			;
-			Simd<float[8uz]> const
+			Simd<float[Parallel]> const
 				vMultiplier
 			=	vMultiplierArray
 				[	vTypeInt32
@@ -294,11 +294,11 @@ namespace
 	struct
 		Body3DValue
 	{
-		alignas(Simd<float[8uz]>)
+		alignas(Simd<float[Parallel]>)
 		::std::byte
 			m_vData
-			[	8uz
-			*	Body3DView
+			[	Parallel
+			*	Body3DView<Parallel>
 				::	TotalSize
 			]
 		;
@@ -312,7 +312,7 @@ namespace
 			{	{	.	m_aBuffer
 					=	m_vData
 				,	.	m_vCapacity
-					=	8
+					=	Parallel
 				,	.	m_vIndex
 					=	0
 				}
@@ -326,7 +326,7 @@ namespace
 		<	Body3DReference
 		>
 	{
-		Body3DConstView
+		Body3DConstView<Parallel>
 			m_rSOAView
 		;
 
@@ -343,7 +343,7 @@ namespace
 			i_rThis
 			.	m_rSOAView
 			.	m_vIndex
-			+=	8z
+			+=	Parallel
 			*	i_vDifference
 			;
 			return
@@ -369,7 +369,7 @@ namespace
 					.	m_rSOAView
 					.	m_vIndex
 				)
-			/	8z
+			/	Parallel
 			;
 		}
 
@@ -431,7 +431,7 @@ namespace
 	struct
 		VolumeComputer
 	{
-		Body3DView
+		Body3DView<Parallel>
 			m_rView
 		{};
 
@@ -446,26 +446,27 @@ namespace
 			{	.	m_aBuffer
 				=	static_cast<::std::byte*>
 					(	::std::aligned_alloc
-						(	Body3DView
+						(	Body3DView<Parallel>
 							::	Alignment
-						,	(	Body3DView
+						,	(	Body3DView<Parallel>
 								::	CeilToBlockCapacity
 									(	i_vCapacity
 									)
-							*	Body3DView
+							*	Body3DView<Parallel>
 								::	TotalSize
 							)
 						)
 					)
 			,	.	m_vCapacity
-				=	Body3DView
+				=	Body3DView<Parallel>
 					::	CeilToBlockCapacity
 						(	i_vCapacity
 						)
 			,	.	m_vIndex
 				=	0u
 			}
-		{}
+		{
+		}
 
 		constexpr inline
 		(	compl
@@ -483,27 +484,27 @@ namespace
 
 		auto inline
 		(	emplace_back
-		)	(	Simd<::std::uint8_t[8uz]>
+		)	(	Simd<::std::uint8_t[Parallel]>
 					i_vType
-			,	Simd<float[8uz]>
+			,	Simd<float[Parallel]>
 					i_vRed
-			,	Simd<float[8uz]>
+			,	Simd<float[Parallel]>
 					i_vGreen
-			,	Simd<float[8uz]>
+			,	Simd<float[Parallel]>
 					i_vBlue
-			,	Simd<float[8uz]>
+			,	Simd<float[Parallel]>
 					i_vAlpha
-			,	Simd<float[8uz]>
+			,	Simd<float[Parallel]>
 					i_vLateral
-			,	Simd<float[8uz]>
+			,	Simd<float[Parallel]>
 					i_vLongitudinal
-			,	Simd<float[8uz]>
+			,	Simd<float[Parallel]>
 					i_vVertical
-			,	Simd<float[8uz]>
+			,	Simd<float[Parallel]>
 					i_vHeight
-			,	Simd<float[8uz]>
+			,	Simd<float[Parallel]>
 					i_vWidth
-			,	Simd<float[8uz]>
+			,	Simd<float[Parallel]>
 					i_vDepth
 			)	&
 			noexcept
@@ -565,7 +566,7 @@ namespace
 			;
 				m_rView
 				.	m_vIndex
-			+=	8uz
+			+=	Parallel
 			;
 		}
 
@@ -577,7 +578,7 @@ namespace
 		->	Body3DIterator
 		{	return
 			{	.	m_rSOAView
-				=	Body3DConstView
+				=	Body3DConstView<Parallel>
 					{	.	m_aBuffer
 						=	m_rView
 							.	m_aBuffer
@@ -598,7 +599,7 @@ namespace
 		->	Body3DIterator
 		{	return
 			{	.	m_rSOAView
-				=	Body3DConstView
+				=	Body3DConstView<Parallel>
 					{	.	m_aBuffer
 						=	m_rView
 							.	m_aBuffer

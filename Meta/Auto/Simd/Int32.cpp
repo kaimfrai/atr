@@ -161,5 +161,21 @@ export namespace
 					)
 			};
 		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	HighestBit
+		)	(	Var
+					i_vSource
+			)
+			noexcept
+		->	SimdMask<16>
+		{	return
+			{	::SimdOp::HighestBit
+				(	i_vSource
+					.	m_vRaw
+				)
+			};
+		}
 	};
 }

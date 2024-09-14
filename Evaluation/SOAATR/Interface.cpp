@@ -19,6 +19,7 @@ import ATR.Instance;
 import ATR.Member.Composition;
 
 import Meta.ID;
+import Std;
 
 using ::ATR::District::ExcludingArray;
 
@@ -27,20 +28,28 @@ using ::Meta::ID;
 export namespace
 	Bodies3D
 {
+	template
+		<	::std::size_t
+				t_vCount
+		>
 	using
 		MainDistrict
 	=	ExcludingArray
 		<	{	"Main"
-			,	8uz
+			,	t_vCount
 			}
 		>
 	;
 
+	template
+		<	::std::size_t
+				t_vCount
+		>
 	using
 		OtherDistrict
 	=	ExcludingArray
 		<	{	"Other"
-			,	8uz
+			,	t_vCount
 			}
 		,	"ColorRed"
 		,	"ColorGreen"
@@ -60,6 +69,10 @@ export namespace
 export namespace
 	Bodies3D
 {
+	template
+		<	::std::size_t
+				t_vCount
+		>
 	using
 		VolumeComputer
 	=	::ATR::Instance
@@ -78,8 +91,8 @@ export namespace
 			,	ID<"Ellipsoid">
 			,	ID<"Head">
 			>
-		,	MainDistrict
-		,	OtherDistrict
+		,	MainDistrict<t_vCount>
+		,	OtherDistrict<t_vCount>
 		>
 	;
 }

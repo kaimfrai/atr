@@ -156,6 +156,22 @@ export namespace
 					)
 			};
 		}
+
+		[[nodiscard]]
+		auto static constexpr inline
+		(	operator()
+		)	(	Simd<::std::uint8_t const(&)[16uz]>
+					i_vSource
+			)
+			noexcept
+		->	Simd<::std::int32_t[16uz]>
+		{	return
+			operator()
+			(	static_cast<Simd<::std::uint8_t[16uz]>>
+				(	i_vSource
+				)
+			);
+		}
 	};
 
 	template

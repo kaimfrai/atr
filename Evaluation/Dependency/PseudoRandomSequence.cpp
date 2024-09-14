@@ -13,6 +13,7 @@ using ::Meta::Auto::SimdCast;
 using ::Meta::Random::Splitmix64;
 using ::Meta::Random::Xoroshiro256StarStar;
 
+
 [[nodiscard]]
 auto constexpr inline
 (	ParseInt
@@ -20,18 +21,19 @@ auto constexpr inline
 		*	i_aString
 	)
 	noexcept
-->	int
+->	::std::size_t
 {
-	for	(	int
+	for	(	::std::size_t
 				vResult
 			{}
 		;
 		;	vResult
-			*=	10
+			*=	10uz
 		)
 	{
 		vResult
-		+=	(	*i_aString
+		+=	static_cast<::std::size_t>
+			(	*i_aString
 			-	'0'
 			)
 		;
@@ -51,10 +53,13 @@ auto constexpr inline
 
 export
 {
+	auto constexpr inline Parallel = 8uz;
+	auto constexpr inline RNG = Parallel / sizeof(std::uint64_t);
+
 	struct
 		CountedSentinel
 	{
-		int
+		::std::size_t
 			EndCount
 		;
 	};
@@ -67,11 +72,11 @@ export
 	struct
 		SimdGeneratedNumbers
 	{
-		Simd<::std::uint8_t[8uz]>
+		Simd<::std::uint8_t[Parallel]>
 			m_vFirst
 		;
 
-		Simd<float[8uz]>
+		Simd<float[Parallel]>
 			m_vNumber
 			[	GeneratorCount
 			]
@@ -113,7 +118,7 @@ export
 	struct
 		GeneratedNumbers
 	{
-		unsigned char
+		::std::uint8_t
 			m_vNumber
 			[	GeneratorCount
 			]
@@ -158,7 +163,7 @@ export
 	struct
 		RawGeneratedNumbers
 	{
-		::std::uint64_t
+		Simd<::std::uint8_t[Parallel]>
 			m_vNumber
 			[	GeneratorCount
 			]
@@ -181,11 +186,10 @@ export
 				)
 			->	GeneratedNumbers
 			{	return
-				{	static_cast<unsigned char>
-					(	m_vNumber
-						[	t_vpIndex
-						]
-					)
+				{	m_vNumber
+					[	t_vpIndex
+					][	0
+					]
 					...
 				};
 			}(	::std::make_index_sequence
@@ -212,18 +216,14 @@ export
 				)
 			->	SimdGeneratedNumbers
 			{	return
-				{	Simd<::std::uint8_t[8uz]>
-					{	m_vNumber
-						[	0uz
-						]
-					}
+				{	m_vNumber
+					[	0uz
+					]
 				,	SimdCast<float>
 					(	SimdCast<::std::uint32_t>
-						(	Simd<::std::uint8_t[8uz]>
-							{	m_vNumber
-								[	t_vpIndex
-								]
-							}
+						(	m_vNumber
+							[	t_vpIndex
+							]
 						)
 					)
 					...
@@ -234,15 +234,13 @@ export
 			);
 		}
 
+
 		auto constexpr inline
-		(	operator>>=
-		)	(	int
-					i_vShift
-			)	&
+		(	ByteShiftRight
+		)	()	&
 			noexcept
 		{
 			[	this
-			,	i_vShift
 			]	<	::std::size_t
 					...	t_vpIndex
 				>(	::std::index_sequence
@@ -255,7 +253,8 @@ export
 					(	m_vNumber
 						[	t_vpIndex
 						]
-					>>=	i_vShift
+						.	ByteShiftRight<1>
+							()
 					)
 				);
 			}(	::std::make_index_sequence
@@ -272,7 +271,7 @@ export
 	struct
 		RandomGenerators
 	{
-		Xoroshiro256StarStar<1uz>
+		Xoroshiro256StarStar<RNG>
 			m_vRandom
 			[	GeneratorCount
 			]
@@ -291,7 +290,7 @@ export
 			)
 		explicit(true) constexpr inline
 		(	RandomGenerators
-		)	(	Splitmix64<1uz>
+		)	(	Splitmix64<RNG>
 					i_vSeed
 			,	::std::index_sequence
 				<	t_vpIndex
@@ -300,7 +299,7 @@ export
 			)
 			noexcept
 		:	m_vRandom
-			{	Xoroshiro256StarStar<1uz>
+			{	Xoroshiro256StarStar<RNG>
 				{	i_vSeed
 				}
 			,	Jump
@@ -329,9 +328,12 @@ export
 				)
 			->	RawGeneratedNumbers
 			{	return
-				{	*	m_vRandom
+				{	::std::bit_cast<Simd<::std::uint8_t[Parallel]>>
+					(	*
+						m_vRandom
 						[	t_vpIndex
 						]
+					)
 					...
 				};
 			}(	::std::make_index_sequence<GeneratorCount>
@@ -374,7 +376,7 @@ export
 		RandomGenerators
 			m_vRandom
 		;
-		int
+		::std::size_t
 			m_vCounter
 		=	0
 		;
@@ -400,7 +402,7 @@ export
 			)
 			noexcept
 		:	m_vRandom
-			{	Splitmix64<1uz>
+			{	Splitmix64<RNG>
 				{	i_vSeed
 				}
 			,	::std::make_index_sequence
@@ -434,7 +436,7 @@ export
 			++	m_vCounter
 			;
 			if	(	(	m_vCounter
-					%	8
+					%	Parallel
 					)
 				==	0
 				)
@@ -446,7 +448,8 @@ export
 			}
 			else
 			{	m_vGeneratedNumbers
-				>>=	8
+				.	ByteShiftRight
+					()
 				;
 			}
 
@@ -500,7 +503,7 @@ export
 		RandomGenerators
 			m_vRandom
 		;
-		int
+		::std::size_t
 			m_vCounter
 		=	0
 		;
@@ -513,7 +516,7 @@ export
 			)
 			noexcept
 		:	m_vRandom
-			{	Splitmix64<1uz>
+			{	Splitmix64<RNG>
 				{	i_vSeed
 				}
 			,	::std::make_index_sequence
@@ -542,7 +545,7 @@ export
 		->	SimdCountedXoroshiro&
 		{
 			m_vCounter
-			+=	sizeof(::std::uint64_t)
+			+=	Parallel
 			;
 			++	m_vRandom
 			;
@@ -594,10 +597,10 @@ export
 	struct
 		SimdPseudoRandomSequence
 	{
-		int
+		::std::size_t
 			m_vSeed
 		;
-		int
+		::std::size_t
 			m_vIterations
 		;
 
@@ -631,11 +634,11 @@ export
 	class
 		PseudoRandomSequence
 	{
-		int
+		::std::size_t
 			m_vSeed
 		;
 
-		int
+		::std::size_t
 			m_vIterations
 		;
 
@@ -656,6 +659,7 @@ export
 			{	::ParseInt
 				(	i_aIterations
 				)
+			*	Parallel
 			}
 		{}
 
@@ -666,9 +670,8 @@ export
 			noexcept
 		->	::std::size_t
 		{	return
-			static_cast<::std::size_t>
-			(	m_vSeed
-			);
+				m_vSeed
+			;
 		}
 
 		[[nodiscard]]
@@ -678,9 +681,8 @@ export
 			noexcept
 		->	::std::size_t
 		{	return
-			static_cast<::std::size_t>
-			(	m_vIterations
-			);
+				m_vIterations
+			;
 		}
 
 		[[nodiscard]]
@@ -703,9 +705,7 @@ export
 		->	CountedXoroshiro
 		{	return
 			CountedXoroshiro
-			{	static_cast<::std::uint64_t>
-				(	m_vSeed
-				)
+			{	m_vSeed
 			};
 		}
 
@@ -770,7 +770,7 @@ export
 		,	SimdGeneratedNumbers
 		>
 	:	::std::type_identity
-		<	Simd<float[8uz]>
+		<	Simd<float[Parallel]>
 		>
 	{};
 
@@ -782,7 +782,7 @@ export
 		,	SimdGeneratedNumbers
 		>
 	:	::std::type_identity
-		<	Simd<::std::uint8_t[8uz]>
+		<	Simd<::std::uint8_t[Parallel]>
 		>
 	{};
 

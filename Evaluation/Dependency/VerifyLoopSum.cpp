@@ -16,28 +16,58 @@ export
 		)
 	->	int
 	{
-		if	(	(	i_vSequence
-					.	Seed
-						()
-				==	42uz
-				)
-			and	(	i_vSequence
-					.	size
-						()
-				==	100'000uz
-				)
-			and	not
-				(	(	i_vLoopSum
-					>=	1.16918583e+11f
-					)
-				and	(	i_vLoopSum
-					<=	1.16918583e+11f
-					)
-				)
+		if	(	i_vSequence
+				.	Seed
+					()
+			!=	42uz
 			)
-		{	throw
-				i_vLoopSum
+		{	return
+				0
 			;
+		}
+
+		auto const
+			fExpect
+		=	[&]	(	float
+						i_vExpected
+				)
+			{
+				if	(	(	i_vLoopSum
+						>=	i_vExpected
+						)
+					and	(	i_vLoopSum
+						<=	i_vExpected
+						)
+					)
+				{	return
+						0
+					;
+				}
+				throw
+					i_vLoopSum
+				;
+			}
+		;
+
+		switch
+			(	i_vSequence
+				.	size
+					()
+			)
+		{
+			case
+				100'000uz
+		:	return
+			fExpect
+			(	1.16918583e+11f
+			);
+
+			case
+				200'000uz
+		:	return
+			fExpect
+			(	2.35098194e+11f
+			);
 		}
 		return
 			0

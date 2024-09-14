@@ -37,7 +37,7 @@ auto inline
 {
 	using namespace Bodies3D;
 
-	VolumeComputer
+	VolumeComputer<Parallel>
 		vElements
 	{	{}
 	,	{}
@@ -119,9 +119,9 @@ auto inline
 		vMainDistrictView
 	=	View
 		(	static_cast
-			<	VolumeComputer
+			<	VolumeComputer<Parallel>
 				::	DistrictRearguard
-					<	MainDistrict
+					<	MainDistrict<Parallel>
 					>
 				const
 				&
