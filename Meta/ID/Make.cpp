@@ -1,4 +1,4 @@
-module Meta.ID:Make;
+export module Meta.ID:Make;
 
 import :ID;
 

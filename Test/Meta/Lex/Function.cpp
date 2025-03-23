@@ -220,121 +220,121 @@ Meta::TypeID constexpr inline
 ;
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...)>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...)>
 ==	EllipsisQualified<>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) const>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) const>
 ==	EllipsisQualified<Const>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) volatile>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) volatile>
 ==	EllipsisQualified<Volatile>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) const volatile>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) const volatile>
 ==	EllipsisQualified<Const, Volatile>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) &>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) &>
 ==	EllipsisQualified<LRef>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) const&>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) const&>
 ==	EllipsisQualified<Const, LRef>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) volatile&>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) volatile&>
 ==	EllipsisQualified<Volatile, LRef>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) const volatile&>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) const volatile&>
 ==	EllipsisQualified<Const, Volatile, LRef>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) &&>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) &&>
 ==	EllipsisQualified<RRef>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) const&&>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) const&&>
 ==	EllipsisQualified<Const, RRef>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) volatile&&>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) volatile&&>
 ==	EllipsisQualified<Volatile, RRef>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) const volatile&&>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) const volatile&&>
 ==	EllipsisQualified<Const, Volatile, RRef>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) noexcept>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) noexcept>
 ==	EllipsisQualified<Noexcept>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) const noexcept>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) const noexcept>
 ==	EllipsisQualified<Const, Noexcept>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) volatile noexcept>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) volatile noexcept>
 ==	EllipsisQualified<Volatile, Noexcept>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) const volatile noexcept>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) const volatile noexcept>
 ==	EllipsisQualified<Const, Volatile, Noexcept>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) & noexcept>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) & noexcept>
 ==	EllipsisQualified<LRef, Noexcept>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) const& noexcept>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) const& noexcept>
 ==	EllipsisQualified<Const, LRef, Noexcept>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) volatile& noexcept>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) volatile& noexcept>
 ==	EllipsisQualified<Volatile, LRef, Noexcept>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) const volatile& noexcept>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) const volatile& noexcept>
 ==	EllipsisQualified<Const, Volatile, LRef, Noexcept>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) && noexcept>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) && noexcept>
 ==	EllipsisQualified<RRef, Noexcept>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) const&& noexcept>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) const&& noexcept>
 ==	EllipsisQualified<Const, RRef, Noexcept>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) volatile&& noexcept>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) volatile&& noexcept>
 ==	EllipsisQualified<Volatile, RRef, Noexcept>
 );
 
 static_assert
-(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*...) noexcept, ...) const volatile&& noexcept>
+(	TokenizeType<int(int*, int*, int(&)[], int(&)(int*, ...) noexcept, ...) const volatile&& noexcept>
 ==	EllipsisQualified<Const, Volatile, RRef, Noexcept>
 );
