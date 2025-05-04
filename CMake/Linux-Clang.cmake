@@ -35,8 +35,7 @@ add_compile_options(
 )
 
 add_link_options(
-	-fuse-ld=lld
-	-lc++
+	-fuse-ld=mold
 	-flto=full
 	-Wl,--gc-sections,--icf=all
 )
