@@ -135,11 +135,10 @@ else()
 		-Wno-c++20-compat-pedantic
 		-Wno-c++20-extensions
 		-Wno-pre-c++26-compat-pedantic
+		# conflicts with -Wswitch-default
+		-Wno-covered-switch-default
 		# more useful as warning
 		-Wno-error=deprecated-declarations
-
-		# turned off for now as it conflicts with -Wcovered-switch-default
-		-Wno-switch-default
 	)
 
 	# Only trace time when not measuring build speed

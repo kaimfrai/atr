@@ -68,9 +68,11 @@ export
 			fExpect
 			(	2.35098194e+11f
 			);
+
+			default
+		:	return
+				0
+			;
 		}
-		return
-			0
-		;
 	}
 }

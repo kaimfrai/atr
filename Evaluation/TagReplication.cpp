@@ -196,9 +196,11 @@ namespace
 					(	m_aData
 					)
 				;
+
+				default
+			:	::std::unreachable
+				();
 			}
-			::std::unreachable
-			();
 		}
 	};
 
@@ -905,6 +907,10 @@ auto inline
 				;
 			}
 			break;
+
+			default
+		:	::std::unreachable
+			();
 		}
 	}
 

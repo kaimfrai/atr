@@ -338,6 +338,10 @@ auto inline
 				;
 			}
 			break;
+
+			default
+		:	::std::unreachable
+			();
 		}
 	}
 
