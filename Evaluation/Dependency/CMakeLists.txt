@@ -19,7 +19,7 @@ if (NOT FASTER_BUILD_SPEED)
 		Dyno.cpp
 	PROPERTIES
 	COMPILE_OPTIONS
-		"$<$<CXX_COMPILER_ID:Clang>:-Wno-gnu-string-literal-operator-template;-Wno-shadow-uncaptured-local;-Wno-reserved-identifier;-Wno-implicit-int-conversion;-Wno-missing-variable-declarations>"
+		"$<$<CXX_COMPILER_ID:Clang>:-Wno-gnu-string-literal-operator-template;-Wno-shadow-uncaptured-local;-Wno-reserved-identifier;-Wno-implicit-int-conversion;-Wno-missing-variable-declarations;-Wno-deprecated-declarations>"
 	)
 endif()
 
