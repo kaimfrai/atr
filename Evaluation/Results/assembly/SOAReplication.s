@@ -1,6 +1,109 @@
 
 build/Evaluation/bin/SOAReplication:	file format elf64-x86-64
 
+Disassembly of section .fini:
+
+<_fini>:
+               	endbr64
+               	sub	rsp, 0x8
+               	add	rsp, 0x8
+               	ret
+
+Disassembly of section .init:
+
+<_init>:
+               	endbr64
+               	sub	rsp, 0x8
+               	mov	rax, qword ptr  <__gmon_start__$got>
+               	test	rax, rax
+               	je	 <L0>
+               	call	rax
+<L0>:
+               	add	rsp, 0x8
+               	ret
+
+Disassembly of section .plt:
+
+<_PROCEDURE_LINKAGE_TABLE_>:
+               	endbr64
+               	push	r11
+               	push	qword ptr  <_GLOBAL_OFFSET_TABLE_+0x8>
+               	jmp	qword ptr  <_GLOBAL_OFFSET_TABLE_+0x10>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+
+<__cxa_throw$plt>:
+               	mov	r11d, 0x0
+
+<__cxa_throw@plt>:
+               	jmp	qword ptr  <_GLOBAL_OFFSET_TABLE_+0x18>
+               	int3
+               	int3
+               	int3
+               	int3
+
+<__cxa_allocate_exception$plt>:
+               	mov	r11d, 0x1
+
+<__cxa_allocate_exception@plt>:
+               	jmp	qword ptr  <_GLOBAL_OFFSET_TABLE_+0x20>
+               	int3
+               	int3
+               	int3
+               	int3
+
+<__stack_chk_fail$plt>:
+               	mov	r11d, 0x2
+
+<__stack_chk_fail@plt>:
+               	jmp	qword ptr  <_GLOBAL_OFFSET_TABLE_+0x28>
+               	int3
+               	int3
+               	int3
+               	int3
+
+<free$plt>:
+               	mov	r11d, 0x3
+
+<free@plt>:
+               	jmp	qword ptr  <_GLOBAL_OFFSET_TABLE_+0x30>
+               	int3
+               	int3
+               	int3
+               	int3
+
+<aligned_alloc$plt>:
+               	mov	r11d, 0x4
+
+<aligned_alloc@plt>:
+               	jmp	qword ptr  <_GLOBAL_OFFSET_TABLE_+0x38>
+               	int3
+               	int3
+               	int3
+               	int3
+
+<memset$plt>:
+               	mov	r11d, 0x5
+
+<memset@plt>:
+               	jmp	qword ptr  <_GLOBAL_OFFSET_TABLE_+0x40>
+               	int3
+               	int3
+               	int3
+               	int3
+
 Disassembly of section .text:
 
 <_start>:
@@ -15,7 +118,7 @@ Disassembly of section .text:
                	xor	r8d, r8d
                	xor	ecx, ecx
                	lea	rdi,  <main>
-               	call	qword ptr  <memset+0x5790>
+               	call	qword ptr  <__libc_start_main$got>
                	hlt
                	int3
                	int3
@@ -27,13 +130,12 @@ Disassembly of section .text:
                	int3
                	int3
                	int3
-
-<deregister_tm_clones>:
-               	lea	rdi,  <__dso_handle>
-               	lea	rax,  <__dso_handle>
+<L4>:
+               	lea	rdi,  <__bss_start>
+               	lea	rax,  <__bss_start>
                	cmp	rax, rdi
                	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x57a0>
+               	mov	rax, qword ptr  <_ITM_deregisterTMCloneTable$got>
                	test	rax, rax
                	je	 <L0>
                	jmp	rax
@@ -41,555 +143,49 @@ Disassembly of section .text:
 <L0>:
                	ret
                	nop	dword ptr [rax]
-
-<register_tm_clones>:
-               	lea	rdi,  <__dso_handle>
-               	lea	rsi,  <__dso_handle>
+<L5>:
+               	lea	rdi,  <__bss_start>
+               	lea	rsi,  <__bss_start>
                	sub	rsi, rdi
                	mov	rax, rsi
                	shr	rsi, 0x3f
                	sar	rax, 0x3
                	add	rsi, rax
                	sar	rsi
-               	je	 <L0>
-               	mov	rax, qword ptr  <memset+0x57a8>
+               	je	 <L1>
+               	mov	rax, qword ptr  <_ITM_registerTMCloneTable$got>
                	test	rax, rax
-               	je	 <L0>
+               	je	 <L1>
                	jmp	rax
                	nop	word ptr [rax + rax]
-<L0>:
+<L1>:
                	ret
                	nop	dword ptr [rax]
-
-<__do_global_dtors_aux>:
                	endbr64
-               	cmp	byte ptr , 0x0 <completed.0>
-               	jne	 <L0>
+               	cmp	byte ptr , 0x0 <__bss_start>
+               	jne	 <L2>
                	push	rbp
-               	cmp	qword ptr , 0x0 <memset+0x57b0>
+               	cmp	qword ptr , 0x0 <__cxa_finalize$got>
                	mov	rbp, rsp
-               	je	 <L1>
+               	je	 <L3>
                	mov	rdi, qword ptr  <__dso_handle>
-               	call	 <__cxa_finalize@plt>
-<L1>:
-               	call	 <deregister_tm_clones>
-               	mov	byte ptr , 0x1 <completed.0>
+               	call	qword ptr  <__cxa_finalize$got>
+<L3>:
+               	call	 <L4>
+               	mov	byte ptr , 0x1 <__bss_start>
                	pop	rbp
                	ret
-               	nop	dword ptr [rax]
-<L0>:
+               	nop	word ptr cs:[rax + rax]
+<L2>:
                	ret
+               	nop	word ptr cs:[rax + rax]
                	nop	dword ptr [rax]
-
-<frame_dummy>:
                	endbr64
-               	jmp	 <register_tm_clones>
+               	jmp	 <L5>
                	int3
                	int3
                	int3
                	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Evaluation.Dependency.Fraction>:
-               	cmp	byte ptr , 0x0 <_ZGIW10EvaluationW10DependencyW8Fraction__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	mov	byte ptr , 0x1 <_ZGIW10EvaluationW10DependencyW8Fraction__in_chrg>
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Std>:
-               	ret
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Evaluation.Dependency.PiFraction>:
-               	cmp	byte ptr , 0x0 <_ZGIW10EvaluationW10DependencyW10PiFraction__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	mov	byte ptr , 0x1 <_ZGIW10EvaluationW10DependencyW10PiFraction__in_chrg>
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Evaluation.Dependency.PseudoRandomSequence>:
-               	cmp	byte ptr , 0x0 <_ZGIW10EvaluationW10DependencyW20PseudoRandomSequence__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW10EvaluationW10DependencyW20PseudoRandomSequence__in_chrg>
-               	call	 <initializer for module Meta.Auto.Simd.Cast>
-               	call	 <initializer for module Meta.Auto.Simd.Float>
-               	call	 <initializer for module Meta.Auto.Simd.UInt8>
-               	call	 <initializer for module Meta.Random.Splitmix>
-               	call	 <initializer for module Meta.Random.Xoroshiro>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Auto.Simd.Cast>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW4SimdW4Cast__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW4Cast__in_chrg>
-               	call	 <initializer for module Meta.Auto.Simd.Float>
-               	call	 <initializer for module Meta.Auto.Simd.Int32>
-               	call	 <initializer for module Meta.Auto.Simd.UInt32>
-               	call	 <initializer for module Meta.Auto.Simd.UInt8>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Auto.Simd.Float>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW4SimdW5Float__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW5Float__in_chrg>
-               	call	 <initializer for module Meta.Auto.Simd.Tag>
-               	call	 <initializer for module Meta.Auto.Simd.Int32>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Auto.Simd.Tag>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW4SimdW3Tag__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW3Tag__in_chrg>
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Auto.Simd.Int32>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW4SimdW5Int32__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW5Int32__in_chrg>
-               	call	 <initializer for module Meta.Auto.Simd.Tag>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Auto.Simd.UInt32>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW4SimdW6UInt32__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW6UInt32__in_chrg>
-               	call	 <initializer for module Meta.Auto.Simd.Tag>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Auto.Simd.UInt8>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW4SimdW5UInt8__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW5UInt8__in_chrg>
-               	call	 <initializer for module Meta.Auto.Simd.Tag>
-               	call	 <initializer for module Meta.Auto.Simd.UInt32>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Random.Splitmix>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW6RandomW8Splitmix__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW6RandomW8Splitmix__in_chrg>
-               	call	 <initializer for module Meta.Auto.Simd.UInt64>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Auto.Simd.UInt64>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW4SimdW6UInt64__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW6UInt64__in_chrg>
-               	call	 <initializer for module Meta.Auto.Simd.Tag>
-               	call	 <initializer for module Meta.Auto.Array.Bounded>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Auto.Array.Bounded>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW5ArrayW7Bounded__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW5ArrayW7Bounded__in_chrg>
-               	call	 <initializer for module Meta.Auto.Bit.Field>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Auto.Bit.Field>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW3BitW5Field__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW3BitW5Field__in_chrg>
-               	call	 <initializer for module Meta.Memory.Constraint>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Memory.Constraint>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW6MemoryW10Constraint__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW6MemoryW10Constraint__in_chrg>
-               	call	 <initializer for module Meta.Memory.Size>
-               	call	 <initializer for module Meta.Memory.Size.Compare>
-               	call	 <initializer for module Meta.Memory.Size.Scale>
-               	call	 <initializer for module Meta.Memory.Alignment>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Memory.Size>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW6MemoryW4Size__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW6MemoryW4Size__in_chrg>
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Memory.Size.Compare>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW6MemoryW4SizeW7Compare__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW6MemoryW4SizeW7Compare__in_chrg>
-               	call	 <initializer for module Meta.Memory.Size>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Memory.Size.Scale>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW6MemoryW4SizeW5Scale__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW6MemoryW4SizeW5Scale__in_chrg>
-               	call	 <initializer for module Meta.Memory.Size>
-               	call	 <initializer for module Meta.Memory.Count>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Memory.Count>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW6MemoryW5Count__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW6MemoryW5Count__in_chrg>
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Memory.Alignment>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW6MemoryW9Alignment__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW6MemoryW9Alignment__in_chrg>
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Random.Xoroshiro>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW6RandomW9Xoroshiro__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW6RandomW9Xoroshiro__in_chrg>
-               	call	 <initializer for module Meta.Random.Splitmix>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-
-<initializer for module Evaluation.Dependency.TransformReduce>:
-               	cmp	byte ptr , 0x0 <_ZGIW10EvaluationW10DependencyW15TransformReduce__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	mov	byte ptr , 0x1 <_ZGIW10EvaluationW10DependencyW15TransformReduce__in_chrg>
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Evaluation.Dependency.VerifyLoopSum>:
-               	cmp	byte ptr , 0x0 <_ZGIW10EvaluationW10DependencyW13VerifyLoopSum__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW10EvaluationW10DependencyW13VerifyLoopSum__in_chrg>
-               	call	 <initializer for module Evaluation.Dependency.PseudoRandomSequence>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-
-<initializer for module Evaluation.SOAReplication.SOAView>:
-               	cmp	byte ptr , 0x0 <_ZGIW10EvaluationW14SOAReplicationW7SOAView__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW10EvaluationW14SOAReplicationW7SOAView__in_chrg>
-               	call	 <initializer for module Meta.Auto.Simd.Tag>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Auto.Simd.Fill>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW4AutoW4SimdW4Fill__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	push	rax
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW4AutoW4SimdW4Fill__in_chrg>
-               	call	 <initializer for module Meta.Auto.Simd.Float>
-               	call	 <initializer for module Meta.Auto.Simd.UInt32>
-               	call	 <initializer for module Meta.Auto.Simd.UInt8>
-               	pop	rax
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<initializer for module Meta.Generic.RandomAccessIteratorBase>:
-               	cmp	byte ptr , 0x0 <_ZGIW4MetaW7GenericW24RandomAccessIteratorBase__in_chrg>
-               	je	 <L0>
-               	ret
-<L0>:
-               	mov	byte ptr , 0x1 <_ZGIW4MetaW7GenericW24RandomAccessIteratorBase__in_chrg>
-               	jmp	 <initializer for module Std>
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<_GLOBAL__sub_I_SOAReplication.cpp>:
-               	push	rax
-               	call	 <initializer for module Evaluation.Dependency.Fraction>
-               	call	 <initializer for module Evaluation.Dependency.PiFraction>
-               	call	 <initializer for module Evaluation.Dependency.PseudoRandomSequence>
-               	call	 <initializer for module Meta.Auto.Simd.Cast>
-               	call	 <initializer for module Meta.Auto.Simd.Float>
-               	call	 <initializer for module Meta.Auto.Simd.UInt8>
-               	call	 <initializer for module Meta.Random.Splitmix>
-               	call	 <initializer for module Meta.Random.Xoroshiro>
-               	call	 <initializer for module Evaluation.Dependency.TransformReduce>
-               	call	 <initializer for module Evaluation.Dependency.VerifyLoopSum>
-               	call	 <initializer for module Evaluation.SOAReplication.SOAView>
-               	call	 <initializer for module Meta.Auto.Simd.Fill>
-               	call	 <initializer for module Meta.Auto.Simd.UInt32>
-               	call	 <initializer for module Meta.Generic.RandomAccessIteratorBase>
-               	pop	rax
-               	jmp	 <initializer for module Std>
                	int3
                	int3
                	int3
@@ -603,12 +199,14 @@ Disassembly of section .text:
                	push	r12
                	push	rbx
                	and	rsp, -0x40
-               	sub	rsp, 0x600
+               	sub	rsp, 0xac0
+               	mov	rax, qword ptr fs:[0x28]
+               	mov	qword ptr [rsp + 0xa80], rax
                	mov	rcx, qword ptr [rsi + 0x8]
                	mov	rax, qword ptr [rsi + 0x10]
                	movsx	rbx, byte ptr [rcx]
-               	add	rbx, -0x30
                	movzx	edx, byte ptr [rcx + 0x1]
+               	add	rbx, -0x30
                	test	dl, dl
                	je	 <L0>
                	add	rcx, 0x2
@@ -616,1988 +214,585 @@ Disassembly of section .text:
 <L1>:
                	lea	rsi, [rbx + 4*rbx]
                	movsx	rdx, dl
-               	lea	rbx, [rdx + 2*rsi]
-               	add	rbx, -0x30
+               	lea	rbx, [rdx + 2*rsi - 0x30]
                	movzx	edx, byte ptr [rcx]
                	inc	rcx
                	test	dl, dl
                	jne	 <L1>
 <L0>:
-               	movsx	rdx, byte ptr [rax]
-               	add	rdx, -0x30
+               	movsx	r15, byte ptr [rax]
                	movzx	ecx, byte ptr [rax + 0x1]
+               	add	r15, -0x30
                	test	cl, cl
                	je	 <L2>
                	add	rax, 0x2
-               	nop
+               	nop	dword ptr [rax + rax]
 <L3>:
-               	lea	rdx, [rdx + 4*rdx]
+               	lea	rdx, [r15 + 4*r15]
                	movsx	rcx, cl
-               	lea	rdx, [rcx + 2*rdx]
-               	add	rdx, -0x30
+               	lea	r15, [rcx + 2*rdx - 0x30]
                	movzx	ecx, byte ptr [rax]
                	inc	rax
                	test	cl, cl
                	jne	 <L3>
 <L2>:
-               	shl	rdx, 0x3
-               	mov	eax, edx
-               	and	eax, 0x18
-               	mov	ecx, 0x20
-               	sub	ecx, eax
+               	shl	r15, 0x4
+               	mov	r13d, 0x40
+               	mov	edi, 0x40
+               	mov	eax, r15d
+               	and	eax, 0x30
+               	sub	r13d, eax
                	test	eax, eax
-               	cmove	ecx, eax
-               	movabs	r14, 0x180ec6d33cfd0aba
-               	mov	qword ptr [rsp + 0x150], rdx
-               	add	ecx, edx
-               	lea	rax, [rcx + 4*rcx]
-               	mov	qword ptr [rsp + 0x100], rcx
-               	lea	rsi, [rcx + 8*rax]
-               	mov	edi, 0x20
-               	call	 <aligned_alloc@plt>
-               	mov	r10, r14
-               	mov	qword ptr [rsp + 0x158], rax
-               	vpbroadcastq	ymm0, rbx
-               	vpsrlq	xmm1, xmm0, 0x1e
-               	vpaddq	ymm2, ymm0, ymmword ptr  <memset+0xa20>
-               	vpblendd	ymm1, ymm2, ymm1, 0x3   # ymm1 = ymm1[0,1],ymm2[2,3,4,5,6,7]
-               	movabs	rax, -0x61c8864680b583eb
-               	mov	qword ptr [rsp + 0x148], rbx
-               	add	rax, rbx
-               	shr	rax, 0x1e
-               	vextracti128	xmm2, ymm2, 0x1
-               	vpsrlq	xmm2, xmm2, 0x1e
-               	vpinsrq	xmm0, xmm0, rax, 0x1
-               	vinserti128	ymm0, ymm0, xmm2, 0x1
-               	vpxor	ymm0, ymm1, ymm0
-               	vpmullq	ymm0, ymm0, qword ptr {1to4} <memset+0xa80>
-               	vpsrlq	ymm1, ymm0, 0x1b
-               	vpxor	ymm0, ymm1, ymm0
-               	vpmullq	ymm0, ymm0, qword ptr {1to4} <memset+0xa90>
-               	vpsrlq	ymm1, ymm0, 0x1f
-               	vpxor	ymm0, ymm1, ymm0
-               	vmovq	rax, xmm0
-               	vpextrq	rcx, xmm0, 0x1
-               	vextracti128	xmm1, ymm0, 0x1
-               	vmovq	rdx, xmm1
-               	vpextrq	rsi, xmm1, 0x1
-               	xor	edi, edi
-               	mov	qword ptr [rsp + 0x60], 0x0
-               	mov	qword ptr [rsp + 0xc8], 0x0
-               	xor	r11d, r11d
-               	xor	r15d, r15d
-               	jmp	 <L4>
-               	nop	word ptr cs:[rax + rax]
-<L6>:
-               	mov	r8, rcx
-               	shl	r8, 0x11
-               	xor	rdx, rax
-               	xor	rsi, rcx
-               	xor	rcx, rdx
-               	xor	rax, rsi
-               	xor	rdx, r8
-               	rorx	rsi, rsi, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L5>
-<L4>:
-               	bt	r10, rdi
-               	jae	 <L6>
-               	xor	r15, rax
-               	xor	r11, rcx
-               	xor	qword ptr [rsp + 0xc8], rdx
-               	xor	qword ptr [rsp + 0x60], rsi
-               	jmp	 <L6>
-<L5>:
-               	movabs	r9, -0x2a59ed990f36c6d4
-               	xor	edi, edi
-               	jmp	 <L7>
-               	nop
-<L9>:
-               	mov	r8, rcx
-               	shl	r8, 0x11
-               	xor	rdx, rax
-               	xor	rsi, rcx
-               	xor	rcx, rdx
-               	xor	rax, rsi
-               	xor	rdx, r8
-               	rorx	rsi, rsi, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L8>
-<L7>:
-               	bt	r9, rdi
-               	jae	 <L9>
-               	xor	r15, rax
-               	xor	r11, rcx
-               	xor	qword ptr [rsp + 0xc8], rdx
-               	xor	qword ptr [rsp + 0x60], rsi
-               	jmp	 <L9>
-<L8>:
-               	xor	edi, edi
-               	jmp	 <L10>
-               	nop	word ptr cs:[rax + rax]
-<L12>:
-               	mov	r8, rcx
-               	shl	r8, 0x11
-               	xor	rdx, rax
-               	xor	rsi, rcx
-               	xor	rcx, rdx
-               	xor	rax, rsi
-               	xor	rdx, r8
-               	rorx	rsi, rsi, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L11>
-<L10>:
-               	movabs	r8, -0x56a7d9e71fc03656
-               	bt	r8, rdi
-               	jae	 <L12>
-               	xor	r15, rax
-               	xor	r11, rcx
-               	xor	qword ptr [rsp + 0xc8], rdx
-               	xor	qword ptr [rsp + 0x60], rsi
-               	jmp	 <L12>
-<L11>:
-               	xor	edi, edi
-               	jmp	 <L13>
-               	nop
-<L15>:
-               	mov	r8, rcx
-               	shl	r8, 0x11
-               	xor	rdx, rax
-               	xor	rsi, rcx
-               	xor	rcx, rdx
-               	xor	rax, rsi
-               	xor	rdx, r8
-               	rorx	rsi, rsi, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L14>
-<L13>:
-               	movabs	r8, 0x39abdc4529b1661c
-               	bt	r8, rdi
-               	jae	 <L15>
-               	xor	r15, rax
-               	xor	r11, rcx
-               	xor	qword ptr [rsp + 0xc8], rdx
-               	xor	qword ptr [rsp + 0x60], rsi
-               	jmp	 <L15>
-<L14>:
-               	xor	edi, edi
-               	xor	r14d, r14d
-               	mov	rax, qword ptr [rsp + 0x60]
-               	xor	r8d, r8d
-               	mov	rcx, qword ptr [rsp + 0xc8]
-               	mov	qword ptr [rsp + 0x58], 0x0
-               	mov	rdx, r11
-               	mov	rsi, r15
-               	xor	r9d, r9d
-               	jmp	 <L16>
-               	nop	word ptr cs:[rax + rax]
-<L18>:
-               	xor	r9, rsi
-               	mov	r12, r9
-               	xor	qword ptr [rsp + 0x58], rdx
-               	xor	r8, rcx
-               	mov	r9, r8
-               	xor	r14, rax
-<L19>:
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	mov	r8, r9
-               	mov	r9, r12
-               	je	 <L17>
-<L16>:
-               	bt	r10, rdi
-               	jb	 <L18>
-               	mov	r12, r9
-               	mov	r9, r8
-               	jmp	 <L19>
-<L17>:
-               	mov	qword ptr [rsp + 0x170], r11
-               	xor	edi, edi
-               	movabs	r11, -0x2a59ed990f36c6d4
-               	jmp	 <L20>
-               	nop	word ptr cs:[rax + rax]
-<L22>:
-               	xor	r9, rsi
-               	mov	r12, r9
-               	xor	qword ptr [rsp + 0x58], rdx
-               	xor	r8, rcx
-               	mov	r9, r8
-               	xor	r14, rax
-<L23>:
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	mov	r8, r9
-               	mov	r9, r12
-               	je	 <L21>
-<L20>:
-               	bt	r11, rdi
-               	jb	 <L22>
-               	mov	r12, r9
-               	mov	r9, r8
-               	jmp	 <L23>
-<L21>:
-               	xor	edi, edi
-               	movabs	r11, -0x56a7d9e71fc03656
-               	jmp	 <L24>
-               	nop	dword ptr [rax + rax]
-<L26>:
-               	xor	r9, rsi
-               	mov	r12, r9
-               	xor	qword ptr [rsp + 0x58], rdx
-               	xor	r8, rcx
-               	mov	r9, r8
-               	xor	r14, rax
-<L27>:
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	mov	r8, r9
-               	mov	r9, r12
-               	je	 <L25>
-<L24>:
-               	bt	r11, rdi
-               	jb	 <L26>
-               	mov	r12, r9
-               	mov	r9, r8
-               	jmp	 <L27>
-<L25>:
-               	xor	edi, edi
-               	movabs	r11, -0x2a59ed990f36c6d4
-               	movabs	rbx, 0x39abdc4529b1661c
-               	jmp	 <L28>
-               	nop	word ptr cs:[rax + rax]
-<L30>:
-               	xor	r9, rsi
-               	xor	qword ptr [rsp + 0x58], rdx
-               	xor	r8, rcx
-               	mov	qword ptr [rsp + 0x118], r8
-               	xor	r14, rax
-<L31>:
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	mov	r8, qword ptr [rsp + 0x118]
-               	je	 <L29>
-<L28>:
-               	bt	rbx, rdi
-               	jb	 <L30>
-               	mov	qword ptr [rsp + 0x118], r8
-               	jmp	 <L31>
-<L29>:
-               	mov	qword ptr [rsp + 0x1a8], r15
-               	xor	edi, edi
-               	mov	qword ptr [rsp + 0x50], 0x0
-               	mov	qword ptr [rsp + 0x168], r14
-               	mov	rax, r14
-               	xor	r14d, r14d
-               	mov	rcx, r8
-               	xor	r15d, r15d
-               	mov	rdx, qword ptr [rsp + 0x58]
-               	mov	rsi, r9
-               	mov	qword ptr [rsp + 0xc0], 0x0
-               	jmp	 <L32>
-<L34>:
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L33>
-<L32>:
-               	bt	r10, rdi
-               	jae	 <L34>
-               	xor	qword ptr [rsp + 0xc0], rsi
-               	xor	r15, rdx
-               	xor	r14, rcx
-               	xor	qword ptr [rsp + 0x50], rax
-               	jmp	 <L34>
-<L33>:
-               	xor	edi, edi
-               	jmp	 <L35>
-               	nop	word ptr cs:[rax + rax]
-<L37>:
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L36>
-<L35>:
-               	bt	r11, rdi
-               	jae	 <L37>
-               	mov	r8, r14
-               	xor	qword ptr [rsp + 0xc0], rsi
-               	xor	r15, rdx
-               	xor	r8, rcx
-               	mov	r14, r8
-               	xor	qword ptr [rsp + 0x50], rax
-               	jmp	 <L37>
-<L36>:
-               	xor	edi, edi
-               	jmp	 <L38>
-               	nop	word ptr [rax + rax]
-<L40>:
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L39>
-<L38>:
-               	movabs	r8, -0x56a7d9e71fc03656
-               	bt	r8, rdi
-               	jae	 <L40>
-               	xor	qword ptr [rsp + 0xc0], rsi
-               	xor	r15, rdx
-               	xor	r14, rcx
-               	xor	qword ptr [rsp + 0x50], rax
-               	jmp	 <L40>
-<L39>:
-               	xor	edi, edi
-               	jmp	 <L41>
-               	nop
-<L43>:
-               	xor	qword ptr [rsp + 0xc0], rsi
-               	xor	r15, rdx
-               	xor	r14, rcx
-               	mov	qword ptr [rsp + 0x110], r14
-               	xor	qword ptr [rsp + 0x50], rax
-<L44>:
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	mov	r14, qword ptr [rsp + 0x110]
-               	je	 <L42>
-<L41>:
-               	movabs	r8, 0x39abdc4529b1661c
-               	bt	r8, rdi
-               	jb	 <L43>
-               	mov	qword ptr [rsp + 0x110], r14
-               	jmp	 <L44>
-<L42>:
-               	mov	r12, r10
-               	xor	edi, edi
-               	xor	r11d, r11d
-               	mov	rax, qword ptr [rsp + 0x50]
-               	xor	r13d, r13d
-               	mov	rcx, r14
-               	xor	ebx, ebx
-               	mov	r14, r15
-               	mov	rdx, r15
-               	mov	rsi, qword ptr [rsp + 0xc0]
-               	xor	r10d, r10d
-               	jmp	 <L45>
-               	nop	word ptr [rax + rax]
-<L47>:
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L46>
-<L45>:
-               	bt	r12, rdi
-               	jae	 <L47>
-               	xor	r10, rsi
-               	xor	rbx, rdx
-               	xor	r13, rcx
-               	xor	r11, rax
-               	jmp	 <L47>
-<L46>:
-               	xor	edi, edi
-               	mov	r15, r11
-               	jmp	 <L48>
-<L50>:
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L49>
-<L48>:
-               	movabs	r8, -0x2a59ed990f36c6d4
-               	bt	r8, rdi
-               	jae	 <L50>
-               	xor	r10, rsi
-               	xor	rbx, rdx
-               	xor	r13, rcx
-               	xor	r15, rax
-               	jmp	 <L50>
-<L49>:
-               	xor	edi, edi
-               	jmp	 <L51>
-               	nop	word ptr [rax + rax]
-<L53>:
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L52>
-<L51>:
-               	movabs	r8, -0x56a7d9e71fc03656
-               	bt	r8, rdi
-               	jae	 <L53>
-               	xor	r10, rsi
-               	xor	rbx, rdx
-               	xor	r13, rcx
-               	xor	r15, rax
-               	jmp	 <L53>
-<L52>:
-               	xor	edi, edi
-               	jmp	 <L54>
-               	nop	word ptr [rax + rax]
-<L56>:
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L55>
-<L54>:
-               	movabs	r8, 0x39abdc4529b1661c
-               	bt	r8, rdi
-               	jae	 <L56>
-               	xor	r10, rsi
-               	xor	rbx, rdx
-               	xor	r13, rcx
-               	xor	r15, rax
-               	jmp	 <L56>
-<L55>:
-               	xor	edi, edi
-               	xor	r8d, r8d
-               	mov	rax, r15
-               	mov	qword ptr [rsp + 0xb8], 0x0
-               	mov	rcx, r13
-               	mov	qword ptr [rsp + 0x28], 0x0
-               	mov	rdx, rbx
-               	mov	rsi, r10
-               	mov	qword ptr [rsp + 0xb0], 0x0
-               	movabs	r11, 0x180ec6d33cfd0aba
-               	jmp	 <L57>
-               	nop	word ptr cs:[rax + rax]
-<L59>:
-               	mov	qword ptr [rsp + 0x30], r8
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	mov	r8, qword ptr [rsp + 0x30]
-               	je	 <L58>
-<L57>:
-               	bt	r11, rdi
-               	jae	 <L59>
-               	xor	qword ptr [rsp + 0xb0], rsi
-               	xor	qword ptr [rsp + 0x28], rdx
-               	xor	qword ptr [rsp + 0xb8], rcx
-               	xor	r8, rax
-               	jmp	 <L59>
-<L58>:
-               	xor	edi, edi
-               	jmp	 <L60>
-               	nop	word ptr cs:[rax + rax]
-<L62>:
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L61>
-<L60>:
-               	movabs	r8, -0x2a59ed990f36c6d4
-               	bt	r8, rdi
-               	mov	r8, qword ptr [rsp + 0x30]
-               	jae	 <L62>
-               	xor	qword ptr [rsp + 0xb0], rsi
-               	xor	qword ptr [rsp + 0x28], rdx
-               	xor	qword ptr [rsp + 0xb8], rcx
-               	xor	r8, rax
-               	mov	qword ptr [rsp + 0x30], r8
-               	jmp	 <L62>
-<L61>:
-               	xor	edi, edi
-               	jmp	 <L63>
-               	nop	dword ptr [rax]
-<L65>:
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L64>
-<L63>:
-               	movabs	r8, -0x56a7d9e71fc03656
-               	bt	r8, rdi
-               	jae	 <L65>
-               	xor	qword ptr [rsp + 0xb0], rsi
-               	xor	qword ptr [rsp + 0x28], rdx
-               	xor	qword ptr [rsp + 0xb8], rcx
-               	xor	qword ptr [rsp + 0x30], rax
-               	jmp	 <L65>
-<L64>:
-               	xor	edi, edi
-               	jmp	 <L66>
-               	nop	word ptr cs:[rax + rax]
-<L68>:
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L67>
-<L66>:
-               	movabs	r8, 0x39abdc4529b1661c
-               	bt	r8, rdi
-               	jae	 <L68>
-               	xor	qword ptr [rsp + 0xb0], rsi
-               	xor	qword ptr [rsp + 0x28], rdx
-               	xor	qword ptr [rsp + 0xb8], rcx
-               	xor	qword ptr [rsp + 0x30], rax
-               	jmp	 <L68>
-<L67>:
-               	xor	edi, edi
-               	xor	r8d, r8d
-               	mov	rax, qword ptr [rsp + 0x30]
-               	mov	qword ptr [rsp + 0xa8], 0x0
-               	mov	rcx, qword ptr [rsp + 0xb8]
-               	mov	qword ptr [rsp + 0x38], 0x0
-               	mov	rdx, qword ptr [rsp + 0x28]
-               	mov	rsi, qword ptr [rsp + 0xb0]
-               	mov	qword ptr [rsp + 0xa0], 0x0
-               	movabs	r12, 0x180ec6d33cfd0aba
-               	jmp	 <L69>
-               	nop	dword ptr [rax]
-<L71>:
-               	mov	qword ptr [rsp + 0x120], r8
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	mov	r8, qword ptr [rsp + 0x120]
-               	je	 <L70>
-<L69>:
-               	bt	r12, rdi
-               	jae	 <L71>
-               	xor	qword ptr [rsp + 0xa0], rsi
-               	xor	qword ptr [rsp + 0x38], rdx
-               	xor	qword ptr [rsp + 0xa8], rcx
-               	xor	r8, rax
-               	jmp	 <L71>
-<L70>:
-               	xor	edi, edi
-               	jmp	 <L72>
-               	nop	dword ptr [rax]
-<L74>:
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L73>
-<L72>:
-               	movabs	r8, -0x2a59ed990f36c6d4
-               	bt	r8, rdi
-               	mov	r8, qword ptr [rsp + 0x120]
-               	jae	 <L74>
-               	xor	qword ptr [rsp + 0xa0], rsi
-               	xor	qword ptr [rsp + 0x38], rdx
-               	xor	qword ptr [rsp + 0xa8], rcx
-               	xor	r8, rax
-               	mov	qword ptr [rsp + 0x120], r8
-               	jmp	 <L74>
-<L73>:
-               	xor	edi, edi
-               	jmp	 <L75>
-               	nop	word ptr cs:[rax + rax]
-<L77>:
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L76>
-<L75>:
-               	movabs	r8, -0x56a7d9e71fc03656
-               	bt	r8, rdi
-               	jae	 <L77>
-               	xor	qword ptr [rsp + 0xa0], rsi
-               	xor	qword ptr [rsp + 0x38], rdx
-               	xor	qword ptr [rsp + 0xa8], rcx
-               	xor	qword ptr [rsp + 0x120], rax
-               	jmp	 <L77>
-<L76>:
-               	xor	edi, edi
-               	jmp	 <L78>
-               	nop	dword ptr [rax + rax]
-<L80>:
-               	mov	r8, rdx
-               	shl	r8, 0x11
-               	xor	rcx, rsi
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	rsi, rax
-               	xor	rcx, r8
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L79>
-<L78>:
-               	movabs	r8, 0x39abdc4529b1661c
-               	bt	r8, rdi
-               	jae	 <L80>
-               	xor	qword ptr [rsp + 0xa0], rsi
-               	xor	qword ptr [rsp + 0x38], rdx
-               	xor	qword ptr [rsp + 0xa8], rcx
-               	xor	qword ptr [rsp + 0x120], rax
-               	jmp	 <L80>
-<L79>:
-               	mov	qword ptr [rsp + 0xe0], r14
-               	xor	esi, esi
-               	xor	edi, edi
-               	mov	rax, qword ptr [rsp + 0x120]
-               	mov	qword ptr [rsp + 0x98], 0x0
-               	mov	rcx, qword ptr [rsp + 0xa8]
-               	mov	qword ptr [rsp + 0x48], 0x0
-               	mov	rdx, qword ptr [rsp + 0x38]
-               	mov	r8, qword ptr [rsp + 0xa0]
-               	mov	qword ptr [rsp + 0x90], 0x0
-               	movabs	r14, 0x180ec6d33cfd0aba
-               	jmp	 <L81>
-               	nop	word ptr [rax + rax]
-<L83>:
-               	mov	r11, rdi
-               	mov	rdi, rdx
-               	shl	rdi, 0x11
-               	xor	rcx, r8
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	r8, rax
-               	xor	rcx, rdi
-               	rorx	rax, rax, 0x13
-               	inc	rsi
-               	cmp	rsi, 0x40
-               	mov	rdi, r11
-               	je	 <L82>
-<L81>:
-               	bt	r14, rsi
-               	jae	 <L83>
-               	xor	qword ptr [rsp + 0x90], r8
-               	xor	qword ptr [rsp + 0x48], rdx
-               	xor	qword ptr [rsp + 0x98], rcx
-               	xor	rdi, rax
-               	jmp	 <L83>
-<L82>:
-               	xor	esi, esi
-               	jmp	 <L84>
-               	nop
-<L86>:
-               	mov	rdi, rdx
-               	shl	rdi, 0x11
-               	xor	rcx, r8
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	r8, rax
-               	xor	rcx, rdi
-               	rorx	rax, rax, 0x13
-               	inc	rsi
-               	cmp	rsi, 0x40
-               	je	 <L85>
-<L84>:
-               	movabs	rdi, -0x2a59ed990f36c6d4
-               	bt	rdi, rsi
-               	jae	 <L86>
-               	mov	rdi, r11
-               	xor	qword ptr [rsp + 0x90], r8
-               	xor	qword ptr [rsp + 0x48], rdx
-               	xor	qword ptr [rsp + 0x98], rcx
-               	xor	rdi, rax
-               	mov	r11, rdi
-               	jmp	 <L86>
-<L85>:
-               	xor	esi, esi
-               	jmp	 <L87>
-               	nop	dword ptr [rax]
-<L89>:
-               	mov	rdi, rdx
-               	shl	rdi, 0x11
-               	xor	rcx, r8
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	r8, rax
-               	xor	rcx, rdi
-               	rorx	rax, rax, 0x13
-               	inc	rsi
-               	cmp	rsi, 0x40
-               	je	 <L88>
-<L87>:
-               	movabs	rdi, -0x56a7d9e71fc03656
-               	bt	rdi, rsi
-               	jae	 <L89>
-               	xor	qword ptr [rsp + 0x90], r8
-               	xor	qword ptr [rsp + 0x48], rdx
-               	xor	qword ptr [rsp + 0x98], rcx
-               	xor	r11, rax
-               	jmp	 <L89>
-<L88>:
-               	xor	esi, esi
-               	jmp	 <L90>
-               	nop	word ptr cs:[rax + rax]
-<L92>:
-               	mov	rdi, rdx
-               	shl	rdi, 0x11
-               	xor	rcx, r8
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	r8, rax
-               	xor	rcx, rdi
-               	rorx	rax, rax, 0x13
-               	inc	rsi
-               	cmp	rsi, 0x40
-               	je	 <L91>
-<L90>:
-               	movabs	rdi, 0x39abdc4529b1661c
-               	bt	rdi, rsi
-               	jae	 <L92>
-               	xor	qword ptr [rsp + 0x90], r8
-               	xor	qword ptr [rsp + 0x48], rdx
-               	xor	qword ptr [rsp + 0x98], rcx
-               	xor	r11, rax
-               	jmp	 <L92>
-<L91>:
-               	xor	esi, esi
-               	mov	qword ptr [rsp + 0x88], 0x0
-               	mov	rax, r11
-               	mov	qword ptr [rsp + 0x80], 0x0
-               	mov	rcx, qword ptr [rsp + 0x98]
-               	mov	qword ptr [rsp + 0x40], 0x0
-               	mov	rdx, qword ptr [rsp + 0x48]
-               	mov	r8, qword ptr [rsp + 0x90]
-               	mov	qword ptr [rsp + 0x78], 0x0
-               	jmp	 <L93>
-               	nop	word ptr cs:[rax + rax]
-<L95>:
-               	mov	rdi, rdx
-               	shl	rdi, 0x11
-               	xor	rcx, r8
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	r8, rax
-               	xor	rcx, rdi
-               	rorx	rax, rax, 0x13
-               	inc	rsi
-               	cmp	rsi, 0x40
-               	je	 <L94>
-<L93>:
-               	movabs	rdi, 0x180ec6d33cfd0aba
-               	bt	rdi, rsi
-               	jae	 <L95>
-               	xor	qword ptr [rsp + 0x78], r8
-               	xor	qword ptr [rsp + 0x40], rdx
-               	xor	qword ptr [rsp + 0x80], rcx
-               	xor	qword ptr [rsp + 0x88], rax
-               	jmp	 <L95>
-<L94>:
-               	xor	esi, esi
-               	jmp	 <L96>
-               	nop	word ptr cs:[rax + rax]
-<L98>:
-               	mov	rdi, rdx
-               	shl	rdi, 0x11
-               	xor	rcx, r8
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	r8, rax
-               	xor	rcx, rdi
-               	rorx	rax, rax, 0x13
-               	inc	rsi
-               	cmp	rsi, 0x40
-               	je	 <L97>
-<L96>:
-               	movabs	rdi, -0x2a59ed990f36c6d4
-               	bt	rdi, rsi
-               	jae	 <L98>
-               	xor	qword ptr [rsp + 0x78], r8
-               	xor	qword ptr [rsp + 0x40], rdx
-               	xor	qword ptr [rsp + 0x80], rcx
-               	xor	qword ptr [rsp + 0x88], rax
-               	jmp	 <L98>
-<L97>:
-               	xor	esi, esi
-               	jmp	 <L99>
-               	nop	word ptr cs:[rax + rax]
-<L101>:
-               	mov	rdi, rdx
-               	shl	rdi, 0x11
-               	xor	rcx, r8
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	r8, rax
-               	xor	rcx, rdi
-               	rorx	rax, rax, 0x13
-               	inc	rsi
-               	cmp	rsi, 0x40
-               	je	 <L100>
-<L99>:
-               	movabs	rdi, -0x56a7d9e71fc03656
-               	bt	rdi, rsi
-               	jae	 <L101>
-               	xor	qword ptr [rsp + 0x78], r8
-               	xor	qword ptr [rsp + 0x40], rdx
-               	xor	qword ptr [rsp + 0x80], rcx
-               	xor	qword ptr [rsp + 0x88], rax
-               	jmp	 <L101>
-<L100>:
-               	xor	esi, esi
-               	jmp	 <L102>
-               	nop	word ptr cs:[rax + rax]
-<L104>:
-               	mov	rdi, rdx
-               	shl	rdi, 0x11
-               	xor	rcx, r8
-               	xor	rax, rdx
-               	xor	rdx, rcx
-               	xor	r8, rax
-               	xor	rcx, rdi
-               	rorx	rax, rax, 0x13
-               	inc	rsi
-               	cmp	rsi, 0x40
-               	je	 <L103>
-<L102>:
-               	movabs	rdi, 0x39abdc4529b1661c
-               	bt	rdi, rsi
-               	jae	 <L104>
-               	xor	qword ptr [rsp + 0x78], r8
-               	xor	qword ptr [rsp + 0x40], rdx
-               	xor	qword ptr [rsp + 0x80], rcx
-               	xor	qword ptr [rsp + 0x88], rax
-               	jmp	 <L104>
-<L103>:
-               	mov	qword ptr [rsp + 0x108], r10
-               	mov	qword ptr [rsp + 0xf8], rbx
-               	xor	esi, esi
-               	xor	r12d, r12d
-               	mov	rax, qword ptr [rsp + 0x88]
-               	xor	r10d, r10d
-               	mov	rdx, qword ptr [rsp + 0x80]
-               	xor	ecx, ecx
-               	mov	r8, qword ptr [rsp + 0x40]
-               	mov	rbx, qword ptr [rsp + 0x78]
-               	mov	qword ptr [rsp + 0x70], 0x0
-               	jmp	 <L105>
-<L107>:
-               	xor	qword ptr [rsp + 0x70], rbx
-               	mov	rcx, rdi
-               	xor	rcx, r8
-               	xor	r10, rdx
-               	xor	r12, rax
-<L108>:
-               	mov	rdi, r8
-               	shl	rdi, 0x11
-               	xor	rdx, rbx
-               	xor	rax, r8
-               	xor	r8, rdx
-               	xor	rbx, rax
-               	xor	rdx, rdi
-               	rorx	rax, rax, 0x13
-               	inc	rsi
-               	cmp	rsi, 0x40
-               	je	 <L106>
-<L105>:
-               	mov	rdi, rcx
-               	movabs	rcx, 0x180ec6d33cfd0aba
-               	bt	rcx, rsi
-               	jb	 <L107>
-               	mov	rcx, rdi
-               	jmp	 <L108>
-<L106>:
-               	xor	esi, esi
-               	jmp	 <L109>
-               	nop	word ptr cs:[rax + rax]
-<L111>:
-               	xor	qword ptr [rsp + 0x70], rbx
-               	mov	rcx, rdi
-               	xor	rcx, r8
-               	xor	r10, rdx
-               	xor	r12, rax
-<L112>:
-               	mov	rdi, r8
-               	shl	rdi, 0x11
-               	xor	rdx, rbx
-               	xor	rax, r8
-               	xor	r8, rdx
-               	xor	rbx, rax
-               	xor	rdx, rdi
-               	rorx	rax, rax, 0x13
-               	inc	rsi
-               	cmp	rsi, 0x40
-               	je	 <L110>
-<L109>:
-               	mov	rdi, rcx
-               	movabs	rcx, -0x2a59ed990f36c6d4
-               	bt	rcx, rsi
-               	jb	 <L111>
-               	mov	rcx, rdi
-               	jmp	 <L112>
-<L110>:
-               	mov	qword ptr [rsp + 0x68], rcx
-               	mov	qword ptr [rsp + 0xd0], r10
-               	mov	qword ptr [rsp + 0xd8], r12
-               	xor	esi, esi
-               	jmp	 <L113>
-               	nop	word ptr [rax + rax]
-<L115>:
-               	xor	rcx, rbx
-               	mov	qword ptr [rsp + 0x70], rcx
-               	mov	rcx, qword ptr [rsp + 0x68]
-               	xor	rcx, r8
-               	mov	r10, qword ptr [rsp + 0xd0]
-               	xor	r10, rdx
-               	mov	rdi, qword ptr [rsp + 0xd8]
-               	xor	rdi, rax
-<L116>:
-               	mov	qword ptr [rsp + 0xd0], r10
-               	mov	qword ptr [rsp + 0xd8], rdi
-               	mov	qword ptr [rsp + 0x68], rcx
-               	mov	rdi, r8
-               	shl	rdi, 0x11
-               	xor	rdx, rbx
-               	xor	rax, r8
-               	xor	r8, rdx
-               	xor	rbx, rax
-               	xor	rdx, rdi
-               	rorx	rax, rax, 0x13
-               	inc	rsi
-               	cmp	rsi, 0x40
-               	je	 <L114>
-<L113>:
-               	movabs	rcx, -0x56a7d9e71fc03656
-               	bt	rcx, rsi
-               	mov	rcx, qword ptr [rsp + 0x70]
-               	jb	 <L115>
-               	mov	rdi, qword ptr [rsp + 0xd8]
-               	mov	r10, qword ptr [rsp + 0xd0]
-               	mov	rcx, qword ptr [rsp + 0x68]
-               	jmp	 <L116>
-<L114>:
-               	xor	esi, esi
-               	movabs	rcx, 0x39abdc4529b1661c
-               	jmp	 <L117>
-               	nop	word ptr [rax + rax]
-<L119>:
-               	mov	rdi, r8
-               	shl	rdi, 0x11
-               	xor	rdx, rbx
-               	xor	rax, r8
-               	xor	r8, rdx
-               	xor	rbx, rax
-               	xor	rdx, rdi
-               	rorx	rax, rax, 0x13
-               	inc	rsi
-               	cmp	rsi, 0x40
-               	je	 <L118>
-<L117>:
-               	bt	rcx, rsi
-               	jae	 <L119>
-               	xor	qword ptr [rsp + 0x70], rbx
-               	xor	qword ptr [rsp + 0x68], r8
-               	xor	qword ptr [rsp + 0xd0], rdx
-               	xor	qword ptr [rsp + 0xd8], rax
-               	jmp	 <L119>
-<L118>:
-               	mov	qword ptr [rsp + 0x198], r13
-               	mov	r8, r15
-               	xor	edi, edi
-               	mov	qword ptr [rsp + 0xf0], 0x0
-               	mov	rax, qword ptr [rsp + 0xd8]
-               	mov	qword ptr [rsp + 0xe8], 0x0
-               	mov	rdx, qword ptr [rsp + 0xd0]
-               	xor	ebx, ebx
-               	mov	r13, qword ptr [rsp + 0x68]
-               	mov	rsi, qword ptr [rsp + 0x70]
-               	xor	ecx, ecx
-               	mov	r15, r9
-               	jmp	 <L120>
-               	nop
-<L122>:
-               	mov	r9, r13
-               	shl	r9, 0x11
-               	xor	rdx, rsi
-               	xor	rax, r13
-               	xor	r13, rdx
-               	xor	rsi, rax
-               	xor	rdx, r9
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L121>
-<L120>:
-               	movabs	r9, 0x180ec6d33cfd0aba
-               	bt	r9, rdi
-               	jae	 <L122>
-               	xor	rcx, rsi
-               	xor	rbx, r13
-               	xor	qword ptr [rsp + 0xe8], rdx
-               	xor	qword ptr [rsp + 0xf0], rax
-               	jmp	 <L122>
-<L121>:
-               	xor	edi, edi
-               	jmp	 <L123>
-               	nop	word ptr cs:[rax + rax]
-<L125>:
-               	mov	r9, r13
-               	shl	r9, 0x11
-               	xor	rdx, rsi
-               	xor	rax, r13
-               	xor	r13, rdx
-               	xor	rsi, rax
-               	xor	rdx, r9
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L124>
-<L123>:
-               	movabs	r9, -0x2a59ed990f36c6d4
-               	bt	r9, rdi
-               	jae	 <L125>
-               	xor	rcx, rsi
-               	xor	rbx, r13
-               	xor	qword ptr [rsp + 0xe8], rdx
-               	xor	qword ptr [rsp + 0xf0], rax
-               	jmp	 <L125>
-<L124>:
-               	xor	edi, edi
-               	jmp	 <L126>
-               	nop	word ptr cs:[rax + rax]
-<L128>:
-               	mov	r9, r13
-               	shl	r9, 0x11
-               	xor	rdx, rsi
-               	xor	rax, r13
-               	xor	r13, rdx
-               	xor	rsi, rax
-               	xor	rdx, r9
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L127>
-<L126>:
-               	movabs	r9, -0x56a7d9e71fc03656
-               	bt	r9, rdi
-               	jae	 <L128>
-               	xor	rcx, rsi
-               	xor	rbx, r13
-               	xor	qword ptr [rsp + 0xe8], rdx
-               	xor	qword ptr [rsp + 0xf0], rax
-               	jmp	 <L128>
-<L127>:
-               	xor	edi, edi
-               	mov	qword ptr [rsp + 0x1a0], r15
-               	jmp	 <L129>
-               	nop	dword ptr [rax]
-<L131>:
-               	mov	r9, r13
-               	shl	r9, 0x11
-               	xor	rdx, rsi
-               	xor	rax, r13
-               	xor	r13, rdx
-               	xor	rsi, rax
-               	xor	rdx, r9
-               	rorx	rax, rax, 0x13
-               	inc	rdi
-               	cmp	rdi, 0x40
-               	je	 <L130>
-<L129>:
-               	movabs	r9, 0x39abdc4529b1661c
-               	bt	r9, rdi
-               	jae	 <L131>
-               	xor	rcx, rsi
-               	xor	rbx, r13
-               	xor	qword ptr [rsp + 0xe8], rdx
-               	xor	qword ptr [rsp + 0xf0], rax
-               	jmp	 <L131>
-<L130>:
-               	mov	eax, 0x40
-               	nop	word ptr cs:[rax + rax]
-<L132>:
-               	dec	rax
-               	jne	 <L132>
-               	mov	eax, 0x40
-               	mov	r15, qword ptr [rsp + 0x150]
-               	nop	word ptr cs:[rax + rax]
-<L133>:
-               	dec	rax
-               	jne	 <L133>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L134>:
-               	dec	rax
-               	jne	 <L134>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L135>:
-               	dec	rax
-               	jne	 <L135>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L136>:
-               	dec	rax
-               	jne	 <L136>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L137>:
-               	dec	rax
-               	jne	 <L137>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L138>:
-               	dec	rax
-               	jne	 <L138>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L139>:
-               	dec	rax
-               	jne	 <L139>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L140>:
-               	dec	rax
-               	jne	 <L140>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L141>:
-               	dec	rax
-               	jne	 <L141>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L142>:
-               	dec	rax
-               	jne	 <L142>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L143>:
-               	dec	rax
-               	jne	 <L143>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L144>:
-               	dec	rax
-               	jne	 <L144>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L145>:
-               	dec	rax
-               	jne	 <L145>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L146>:
-               	dec	rax
-               	jne	 <L146>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L147>:
-               	dec	rax
-               	jne	 <L147>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L148>:
-               	dec	rax
-               	jne	 <L148>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L149>:
-               	dec	rax
-               	jne	 <L149>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L150>:
-               	dec	rax
-               	jne	 <L150>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L151>:
-               	dec	rax
-               	jne	 <L151>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L152>:
-               	dec	rax
-               	jne	 <L152>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L153>:
-               	dec	rax
-               	jne	 <L153>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L154>:
-               	dec	rax
-               	jne	 <L154>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L155>:
-               	dec	rax
-               	jne	 <L155>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L156>:
-               	dec	rax
-               	jne	 <L156>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L157>:
-               	dec	rax
-               	jne	 <L157>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L158>:
-               	dec	rax
-               	jne	 <L158>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L159>:
-               	dec	rax
-               	jne	 <L159>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L160>:
-               	dec	rax
-               	jne	 <L160>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L161>:
-               	dec	rax
-               	jne	 <L161>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L162>:
-               	dec	rax
-               	jne	 <L162>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L163>:
-               	dec	rax
-               	jne	 <L163>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L164>:
-               	dec	rax
-               	jne	 <L164>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L165>:
-               	dec	rax
-               	jne	 <L165>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L166>:
-               	dec	rax
-               	jne	 <L166>
-               	mov	eax, 0x40
-               	nop	word ptr [rax + rax]
-<L167>:
-               	dec	rax
-               	jne	 <L167>
-               	vxorps	xmm15, xmm15, xmm15
+               	cmove	r13d, eax
+               	add	r13d, r15d
+               	lea	rax, [r13 + 4*r13]
+               	lea	rsi, [r13 + 8*rax]
+               	call	 <aligned_alloc$plt>
+               	movabs	rcx, -0x61c8864680b583eb
+               	vmovq	xmm1, rbx
+               	lea	rdi, [rsp + 0x280]
+               	mov	r12, rax
+               	add	rcx, rbx
+               	vmovq	xmm0, rcx
+               	vpunpcklqdq	xmm0, xmm1, xmm0 # xmm0 = xmm1[0],xmm0[0]
+               	call	 <RandomGenerators@Evaluation.Dependency.PseudoRandomSequence::RandomGenerators<0ul, 1ul, 2ul, 3ul, 4ul, 5ul, 6ul, 7ul, 8ul, 9ul, 10ul, 11ul, 12ul, 13ul, 14ul, 15ul, 16ul, 17ul, 18ul>(Meta::Random::Splitmix64@Meta.Random.Splitmix<2ul>, std::integer_sequence<unsigned long, 0ul, 1ul, 2ul, 3ul, 4ul, 5ul, 6ul, 7ul, 8ul, 9ul, 10ul, 11ul, 12ul, 13ul, 14ul, 15ul, 16ul, 17ul, 18ul>)>
                	test	r15, r15
-               	je	 <L168>
-               	vpmovsxbq	ymm1, dword ptr  <memset+0xaa0>
-               	vpbroadcastw	ymm2, word ptr  <memset+0xab4>
-               	vpbroadcastq	xmm3, qword ptr  <memset+0xa88>
-               	vpbroadcastw	ymm4, word ptr  <memset+0xab6>
-               	mov	qword ptr [rsp + 0x1b8], r15
-               	mov	rdx, qword ptr [rsp + 0x100]
-               	mov	qword ptr [rsp + 0x190], r8
-               	mov	r15, qword ptr [rsp + 0xf8]
-               	mov	r8, qword ptr [rsp + 0x28]
-               	mov	r10, qword ptr [rsp + 0x38]
-               	mov	qword ptr [rsp + 0x188], r11
-               	mov	r9, qword ptr [rsp + 0xe0]
-               	mov	rdi, qword ptr [rsp + 0x108]
-               	mov	qword ptr [rsp + 0x160], rbx
-               	mov	qword ptr [rsp + 0x180], rcx
-               	nop	dword ptr [rax]
-<L169>:
-               	mov	qword ptr [rsp + 0x28], r8
-               	mov	qword ptr [rsp + 0x38], r10
-               	mov	qword ptr [rsp + 0x108], rdi
-               	mov	qword ptr [rsp + 0xe0], r9
-               	vpextrq	rcx, xmm0, 0x1
-               	mov	qword ptr [rsp + 0xf8], rcx
-               	mov	rsi, rdx
-               	lea	rax, [rcx + 4*rcx]
-               	rorx	rax, rax, 0x39
-               	lea	rdi, [rax + 8*rax]
-               	mov	rax, qword ptr [rsp + 0x170]
-               	lea	rax, [rax + 4*rax]
-               	rorx	rax, rax, 0x39
-               	lea	rcx, [rax + 8*rax]
-               	mov	rax, qword ptr [rsp + 0x58]
-               	lea	rax, [rax + 4*rax]
-               	rorx	rax, rax, 0x39
-               	lea	r13, [rax + 8*rax]
-               	mov	rax, qword ptr [rsp + 0xe0]
-               	lea	rax, [rax + 4*rax]
-               	rorx	rax, rax, 0x39
-               	lea	rbx, [rax + 8*rax]
-               	lea	rax, [r15 + 4*r15]
-               	rorx	rax, rax, 0x39
-               	lea	rax, [rax + 8*rax]
-               	lea	r9, [r8 + 4*r8]
-               	rorx	r9, r9, 0x39
-               	lea	r9, [r9 + 8*r9]
-               	lea	r10, [r10 + 4*r10]
-               	rorx	r10, r10, 0x39
-               	lea	r10, [r10 + 8*r10]
-               	mov	rdx, qword ptr [rsp + 0x48]
-               	lea	r11, [rdx + 4*rdx]
-               	rorx	r11, r11, 0x39
-               	lea	r11, [r11 + 8*r11]
-               	vmovq	xmm5, rcx
-               	mov	rcx, qword ptr [rsp + 0x40]
-               	lea	r14, [rcx + 4*rcx]
-               	rorx	r14, r14, 0x39
-               	lea	r14, [r14 + 8*r14]
-               	vmovq	xmm6, r13
-               	mov	rcx, qword ptr [rsp + 0x68]
-               	lea	r13, [rcx + 4*rcx]
-               	rorx	r13, r13, 0x39
-               	lea	r13, [r13 + 8*r13]
-               	vmovq	xmm7, rbx
-               	mov	rcx, qword ptr [rsp + 0x160]
-               	lea	rbx, [rcx + 4*rcx]
-               	rorx	rbx, rbx, 0x39
-               	lea	rbx, [rbx + 8*rbx]
-               	vpmovzxbd	ymm5, xmm5      # ymm5 = xmm5[0],zero,zero,zero,xmm5[1],zero,zero,zero,xmm5[2],zero,zero,zero,xmm5[3],zero,zero,zero,xmm5[4],zero,zero,zero,xmm5[5],zero,zero,zero,xmm5[6],zero,zero,zero,xmm5[7],zero,zero,zero
-               	vcvtdq2ps	ymm14, ymm5
-               	vpmovzxbd	ymm5, xmm6      # ymm5 = xmm6[0],zero,zero,zero,xmm6[1],zero,zero,zero,xmm6[2],zero,zero,zero,xmm6[3],zero,zero,zero,xmm6[4],zero,zero,zero,xmm6[5],zero,zero,zero,xmm6[6],zero,zero,zero,xmm6[7],zero,zero,zero
-               	vcvtdq2ps	ymm13, ymm5
-               	vpmovzxbd	ymm5, xmm7      # ymm5 = xmm7[0],zero,zero,zero,xmm7[1],zero,zero,zero,xmm7[2],zero,zero,zero,xmm7[3],zero,zero,zero,xmm7[4],zero,zero,zero,xmm7[5],zero,zero,zero,xmm7[6],zero,zero,zero,xmm7[7],zero,zero,zero
-               	vcvtdq2ps	ymm11, ymm5
-               	vmovq	xmm5, rax
-               	vpmovzxbd	ymm5, xmm5      # ymm5 = xmm5[0],zero,zero,zero,xmm5[1],zero,zero,zero,xmm5[2],zero,zero,zero,xmm5[3],zero,zero,zero,xmm5[4],zero,zero,zero,xmm5[5],zero,zero,zero,xmm5[6],zero,zero,zero,xmm5[7],zero,zero,zero
-               	vcvtdq2ps	ymm7, ymm5
-               	vmovq	xmm5, r9
-               	vpmovzxbd	ymm5, xmm5      # ymm5 = xmm5[0],zero,zero,zero,xmm5[1],zero,zero,zero,xmm5[2],zero,zero,zero,xmm5[3],zero,zero,zero,xmm5[4],zero,zero,zero,xmm5[5],zero,zero,zero,xmm5[6],zero,zero,zero,xmm5[7],zero,zero,zero
-               	vcvtdq2ps	ymm8, ymm5
-               	vmovq	xmm5, r10
-               	vpmovzxbd	ymm5, xmm5      # ymm5 = xmm5[0],zero,zero,zero,xmm5[1],zero,zero,zero,xmm5[2],zero,zero,zero,xmm5[3],zero,zero,zero,xmm5[4],zero,zero,zero,xmm5[5],zero,zero,zero,xmm5[6],zero,zero,zero,xmm5[7],zero,zero,zero
-               	vcvtdq2ps	ymm9, ymm5
-               	vmovq	xmm5, r11
-               	vpmovzxbd	ymm5, xmm5      # ymm5 = xmm5[0],zero,zero,zero,xmm5[1],zero,zero,zero,xmm5[2],zero,zero,zero,xmm5[3],zero,zero,zero,xmm5[4],zero,zero,zero,xmm5[5],zero,zero,zero,xmm5[6],zero,zero,zero,xmm5[7],zero,zero,zero
-               	vcvtdq2ps	ymm12, ymm5
-               	vmovq	xmm5, r14
-               	vpmovzxbd	ymm5, xmm5      # ymm5 = xmm5[0],zero,zero,zero,xmm5[1],zero,zero,zero,xmm5[2],zero,zero,zero,xmm5[3],zero,zero,zero,xmm5[4],zero,zero,zero,xmm5[5],zero,zero,zero,xmm5[6],zero,zero,zero,xmm5[7],zero,zero,zero
-               	vcvtdq2ps	ymm10, ymm5
-               	vmovq	xmm5, r13
-               	vpmovzxbd	ymm5, xmm5      # ymm5 = xmm5[0],zero,zero,zero,xmm5[1],zero,zero,zero,xmm5[2],zero,zero,zero,xmm5[3],zero,zero,zero,xmm5[4],zero,zero,zero,xmm5[5],zero,zero,zero,xmm5[6],zero,zero,zero,xmm5[7],zero,zero,zero
-               	vcvtdq2ps	ymm6, ymm5
-               	vmovq	xmm5, rbx
-               	mov	r9d, edi
-               	movzx	r10d, dil
-               	mov	eax, edi
-               	mov	r11d, edi
-               	shr	r11d, 0x8
-               	shr	r9d, 0x10
-               	imul	r10d, r10d, 0x4f
-               	shr	r10d, 0xa
-               	lea	ebx, [r10 + 2*r10]
-               	lea	r10d, [r10 + 4*rbx]
-               	sub	al, r10b
-               	movzx	ecx, r11b
-               	imul	r11d, ecx, 0x4f
-               	shr	r11d, 0xa
-               	lea	ebx, [r11 + 2*r11]
-               	lea	r11d, [r11 + 4*rbx]
-               	sub	cl, r11b
-               	movzx	r9d, r9b
-               	imul	r11d, r9d, 0x4f
-               	shr	r11d, 0xa
-               	lea	ebx, [r11 + 2*r11]
-               	lea	r11d, [r11 + 4*rbx]
-               	sub	r9b, r11b
-               	mov	r11, rsi
-               	shr	r11, 0x1e
-               	movabs	r8, 0x3fffffffc
-               	and	r11, r8
-               	mov	rdx, qword ptr [rsp + 0x158]
-               	lea	rbx, [rdx + r11]
-               	vmovaps	ymmword ptr [rdx + r11], ymm14
-               	lea	r11, [4*rsi]
-               	and	r11, r8
-               	vmovaps	ymmword ptr [r11 + rbx], ymm13
-               	lea	r11, [8*rsi]
-               	movabs	r8, 0x7fffffff8
-               	and	r11, r8
-               	vmovaps	ymmword ptr [r11 + rbx], ymm11
-               	mov	r8d, esi
-               	mov	qword ptr [rsp + 0x100], r8
-               	lea	r14, [r8 + 2*r8]
-               	vmovaps	ymmword ptr [rbx + 4*r14], ymm7
-               	mov	r11, r8
-               	shl	r11, 0x4
-               	vmovdqa	ymmword ptr [r11 + rbx], ymm8
-               	lea	r11, [r8 + 4*r8]
-               	vmovdqa	ymmword ptr [rbx + 4*r11], ymm9
-               	vmovaps	ymmword ptr [rbx + 8*r14], ymm12
-               	lea	r14, [r8 + 8*r8]
-               	lea	r12, [r14 + 2*r14]
-               	add	r12, r8
-               	vmovdqa	ymmword ptr [rbx + r12], ymm10
-               	mov	r12, rsi
-               	shl	r12, 0x5
-               	movabs	r8, 0x1fffffffe0
-               	and	r12, r8
-               	vmovaps	ymmword ptr [r12 + rbx], ymm6
-               	vpbroadcastq	ymm6, rdi
-               	mov	r12d, edi
-               	vpmovzxbd	ymm5, xmm5      # ymm5 = xmm5[0],zero,zero,zero,xmm5[1],zero,zero,zero,xmm5[2],zero,zero,zero,xmm5[3],zero,zero,zero,xmm5[4],zero,zero,zero,xmm5[5],zero,zero,zero,xmm5[6],zero,zero,zero,xmm5[7],zero,zero,zero
-               	vcvtdq2ps	ymm5, ymm5
-               	shr	r12d, 0x18
-               	vmovaps	ymmword ptr [rbx + 4*r14], ymm5
-               	mov	r14, qword ptr [rsp + 0xe0]
-               	imul	edi, r12d, 0x4f
-               	shr	edi, 0xa
-               	lea	ebx, [rdi + 2*rdi]
-               	lea	edi, [rdi + 4*rbx]
-               	mov	r13, qword ptr [rsp + 0x58]
-               	sub	r12b, dil
-               	movzx	r9d, r9b
-               	shl	r9d, 0x10
-               	movzx	edi, cl
-               	shl	edi, 0x8
-               	or	edi, r9d
-               	movzx	r9d, r12b
-               	shl	r9d, 0x18
-               	or	rdi, r9
-               	vpsrlvq	ymm5, ymm6, ymm1
-               	vpmovqb	xmm5, ymm5
-               	vpmovzxbw	ymm6, xmm5      # ymm6 = xmm5[0],zero,xmm5[1],zero,xmm5[2],zero,xmm5[3],zero,xmm5[4],zero,xmm5[5],zero,xmm5[6],zero,xmm5[7],zero,xmm5[8],zero,xmm5[9],zero,xmm5[10],zero,xmm5[11],zero,xmm5[12],zero,xmm5[13],zero,xmm5[14],zero,xmm5[15],zero
-               	vpmullw	ymm6, ymm6, ymm2
-               	vpsrlw	ymm6, ymm6, 0x8
-               	vpmovwb	xmm6, ymm6
-               	vgf2p8affineqb	xmm6, xmm6, xmm3, 0x0
-               	vpmovzxbw	ymm6, xmm6      # ymm6 = xmm6[0],zero,xmm6[1],zero,xmm6[2],zero,xmm6[3],zero,xmm6[4],zero,xmm6[5],zero,xmm6[6],zero,xmm6[7],zero,xmm6[8],zero,xmm6[9],zero,xmm6[10],zero,xmm6[11],zero,xmm6[12],zero,xmm6[13],zero,xmm6[14],zero,xmm6[15],zero
-               	vpmullw	ymm6, ymm6, ymm4
-               	vpmovwb	xmm6, ymm6
-               	vpsubb	xmm5, xmm5, xmm6
-               	vpmovzxbq	ymm5, xmm5      # ymm5 = xmm5[0],zero,zero,zero,zero,zero,zero,zero,xmm5[1],zero,zero,zero,zero,zero,zero,zero,xmm5[2],zero,zero,zero,zero,zero,zero,zero,xmm5[3],zero,zero,zero,zero,zero,zero,zero
-               	vpsllvq	ymm5, ymm5, ymm1
-               	movzx	eax, al
-               	vextracti128	xmm6, ymm5, 0x1
-               	vpor	xmm5, xmm5, xmm6
-               	vpshufd	xmm6, xmm5, 0xee        # xmm6 = xmm5[2,3,2,3]
-               	vpor	xmm5, xmm5, xmm6
-               	or	rdi, rax
-               	vmovq	rax, xmm5
-               	or	rdi, rax
-               	mov	rax, rsi
-               	shr	rax, 0x20
-               	lea	r9, [rdx + 8*r11]
-               	mov	rcx, qword ptr [rsp + 0x110]
-               	mov	r11, qword ptr [rsp + 0x28]
-               	mov	r8, qword ptr [rsp + 0xc8]
-               	mov	qword ptr [rax + r9], rdi
-               	vpermq	ymm5, ymm0, 0xe3        # ymm5 = ymm0[3,0,2,3]
-               	vpermq	ymm6, ymm0, 0xe9        # ymm6 = ymm0[1,2,2,3]
-               	mov	rdx, qword ptr [rsp + 0xf8]
-               	shl	rdx, 0x11
-               	vpxor	xmm5, xmm6, xmm5
-               	vpextrq	rax, xmm5, 0x1
-               	xor	rax, rdx
-               	mov	qword ptr [rsp + 0x1b0], rsi
-               	movabs	rdi, -0x100000000
-               	and	rsi, rdi
-               	mov	qword ptr [rsp + 0x178], rsi
-               	vpxor	xmm0, xmm5, xmm0
-               	vpbroadcastq	ymm6, rax
-               	vpblendd	ymm0, ymm0, ymm6, 0x30  # ymm0 = ymm0[0,1,2,3],ymm6[4,5],ymm0[6,7]
-               	vmovq	rax, xmm5
-               	rorx	rax, rax, 0x13
-               	vpbroadcastq	ymm5, rax
-               	mov	rdx, qword ptr [rsp + 0x170]
-               	mov	rax, rdx
-               	shl	rax, 0x11
-               	xor	r8, qword ptr [rsp + 0x1a8]
-               	xor	qword ptr [rsp + 0x60], rdx
-               	xor	rdx, r8
-               	mov	qword ptr [rsp + 0x170], rdx
-               	xor	r8, rax
-               	mov	qword ptr [rsp + 0xc8], r8
-               	mov	rsi, qword ptr [rsp + 0x38]
-               	mov	rax, r13
-               	shl	rax, 0x11
-               	mov	rdi, qword ptr [rsp + 0x118]
-               	xor	rdi, qword ptr [rsp + 0x1a0]
-               	xor	qword ptr [rsp + 0x168], r13
-               	xor	r13, rdi
-               	mov	qword ptr [rsp + 0x58], r13
-               	xor	rdi, rax
-               	mov	qword ptr [rsp + 0x118], rdi
-               	mov	rax, r14
-               	shl	rax, 0x11
-               	xor	rcx, qword ptr [rsp + 0xc0]
-               	xor	qword ptr [rsp + 0x50], r14
-               	xor	r14, rcx
-               	mov	qword ptr [rsp + 0xe0], r14
-               	xor	rcx, rax
-               	mov	qword ptr [rsp + 0x110], rcx
-               	mov	rax, r15
-               	shl	rax, 0x11
-               	mov	rdi, qword ptr [rsp + 0x198]
-               	xor	rdi, qword ptr [rsp + 0x108]
-               	mov	rbx, qword ptr [rsp + 0x190]
-               	xor	rbx, r15
-               	xor	r15, rdi
-               	mov	qword ptr [rsp + 0xf8], r15
-               	xor	rdi, rax
-               	mov	qword ptr [rsp + 0x198], rdi
-               	mov	rax, r11
-               	shl	rax, 0x11
-               	mov	rdi, qword ptr [rsp + 0xb8]
-               	xor	rdi, qword ptr [rsp + 0xb0]
-               	mov	r15, qword ptr [rsp + 0x30]
-               	xor	r15, r11
-               	xor	r11, rdi
-               	mov	qword ptr [rsp + 0x28], r11
-               	xor	rdi, rax
-               	mov	qword ptr [rsp + 0xb8], rdi
-               	mov	rax, rsi
-               	shl	rax, 0x11
-               	mov	rdi, qword ptr [rsp + 0xa8]
-               	xor	rdi, qword ptr [rsp + 0xa0]
-               	mov	r12, qword ptr [rsp + 0x120]
-               	xor	r12, rsi
-               	xor	rsi, rdi
-               	mov	qword ptr [rsp + 0x38], rsi
-               	xor	rdi, rax
-               	mov	qword ptr [rsp + 0xa8], rdi
-               	mov	rcx, qword ptr [rsp + 0x48]
-               	mov	rax, rcx
-               	shl	rax, 0x11
-               	mov	rdi, qword ptr [rsp + 0x98]
-               	mov	r13, qword ptr [rsp + 0x90]
-               	xor	rdi, r13
-               	mov	r9, qword ptr [rsp + 0x188]
-               	xor	r9, rcx
-               	xor	rcx, rdi
-               	mov	qword ptr [rsp + 0x48], rcx
-               	xor	rdi, rax
-               	mov	qword ptr [rsp + 0x98], rdi
-               	mov	rcx, qword ptr [rsp + 0x40]
-               	mov	rax, rcx
-               	shl	rax, 0x11
-               	mov	rdi, qword ptr [rsp + 0x80]
-               	mov	r10, qword ptr [rsp + 0x78]
-               	xor	rdi, r10
-               	mov	r8, qword ptr [rsp + 0x88]
-               	xor	r8, rcx
-               	xor	rcx, rdi
-               	mov	qword ptr [rsp + 0x40], rcx
-               	xor	rdi, rax
-               	mov	qword ptr [rsp + 0x80], rdi
-               	mov	rcx, qword ptr [rsp + 0x68]
-               	mov	rax, rcx
-               	shl	rax, 0x11
-               	mov	rdi, qword ptr [rsp + 0xd0]
-               	mov	r11, qword ptr [rsp + 0x70]
-               	xor	rdi, r11
-               	mov	r14, qword ptr [rsp + 0xd8]
-               	xor	r14, rcx
-               	xor	rcx, rdi
-               	mov	qword ptr [rsp + 0x68], rcx
-               	xor	rdi, rax
-               	mov	qword ptr [rsp + 0xd0], rdi
-               	mov	rax, qword ptr [rsp + 0x160]
-               	mov	rdx, rax
-               	shl	rdx, 0x11
-               	mov	rdi, qword ptr [rsp + 0xe8]
-               	mov	rsi, qword ptr [rsp + 0x180]
-               	xor	rdi, rsi
-               	mov	rcx, qword ptr [rsp + 0xf0]
-               	xor	rcx, rax
-               	xor	rax, rdi
-               	mov	qword ptr [rsp + 0x160], rax
-               	xor	rdi, rdx
-               	mov	qword ptr [rsp + 0xe8], rdi
-               	movabs	rax, 0x7fffffff8
-               	mov	rdi, qword ptr [rsp + 0x178]
-               	add	rax, rdi
-               	mov	rdi, qword ptr [rsp + 0x100]
-               	lea	rdx, [rdi + rax]
-               	add	rdx, 0x8
-               	vpblendd	ymm0, ymm0, ymm5, 0xc0  # ymm0 = ymm0[0,1,2,3,4,5],ymm5[6,7]
-               	mov	rax, qword ptr [rsp + 0x60]
-               	xor	qword ptr [rsp + 0x1a8], rax
-               	rorx	rax, rax, 0x13
-               	mov	qword ptr [rsp + 0x60], rax
-               	mov	rdi, qword ptr [rsp + 0x108]
-               	mov	rax, qword ptr [rsp + 0x168]
-               	xor	qword ptr [rsp + 0x1a0], rax
-               	rorx	rax, rax, 0x13
-               	mov	qword ptr [rsp + 0x168], rax
-               	mov	rax, qword ptr [rsp + 0x50]
-               	xor	qword ptr [rsp + 0xc0], rax
-               	rorx	rax, rax, 0x13
-               	mov	qword ptr [rsp + 0x50], rax
-               	xor	rdi, rbx
-               	rorx	rbx, rbx, 0x13
-               	mov	qword ptr [rsp + 0x190], rbx
-               	xor	qword ptr [rsp + 0xb0], r15
-               	rorx	r15, r15, 0x13
-               	mov	qword ptr [rsp + 0x30], r15
-               	mov	r15, qword ptr [rsp + 0xf8]
-               	xor	qword ptr [rsp + 0xa0], r12
-               	rorx	r12, r12, 0x13
-               	mov	qword ptr [rsp + 0x120], r12
-               	xor	r13, r9
-               	mov	qword ptr [rsp + 0x90], r13
-               	rorx	r9, r9, 0x13
-               	mov	qword ptr [rsp + 0x188], r9
-               	xor	r10, r8
-               	mov	qword ptr [rsp + 0x78], r10
-               	mov	r10, qword ptr [rsp + 0x38]
-               	rorx	r8, r8, 0x13
-               	mov	qword ptr [rsp + 0x88], r8
-               	mov	r8, qword ptr [rsp + 0x28]
-               	xor	r11, r14
-               	mov	qword ptr [rsp + 0x70], r11
-               	rorx	r14, r14, 0x13
-               	mov	qword ptr [rsp + 0xd8], r14
-               	mov	r9, qword ptr [rsp + 0xe0]
-               	xor	rsi, rcx
-               	mov	qword ptr [rsp + 0x180], rsi
-               	rorx	rcx, rcx, 0x13
-               	mov	qword ptr [rsp + 0xf0], rcx
-               	add	qword ptr [rsp + 0x1b8], -0x8
-               	jne	 <L169>
-               	mov	rdx, qword ptr [rsp + 0x178]
-               	mov	r13, qword ptr [rsp + 0x100]
-               	movabs	rax, 0x7fffffff8
-               	mov	rcx, qword ptr [rsp + 0x1b0]
-               	shr	rcx, 0x23
-               	cmp	ecx, 0x1ffffffe
-               	mov	rbx, qword ptr [rsp + 0x148]
-               	mov	r15, qword ptr [rsp + 0x150]
-               	ja	 <L170>
-               	lea	r14, [rax + rdx]
-               	add	r14, 0x8
-               	shr	r14, 0x23
+               	je	 <L4>
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x280]
+               	vmovdqa64	xmm30, xmmword ptr [rsp + 0x290]
+               	vmovdqa	xmm6, xmmword ptr [rsp + 0x2a0]
+               	vmovdqa	xmm7, xmmword ptr [rsp + 0x2b0]
+               	vmovdqa64	xmm28, xmmword ptr [rsp + 0x2d0]
+               	vmovdqa	xmm3, xmmword ptr [rsp + 0x310]
+               	vmovdqa	xmm5, xmmword ptr [rsp + 0x350]
+               	vmovdqa64	xmm18, xmmword ptr [rsp + 0x390]
+               	vmovdqa64	xmm22, xmmword ptr [rsp + 0x2e0]
+               	vmovdqa64	xmm20, xmmword ptr [rsp + 0x2f0]
+               	vmovdqa64	xmm26, xmmword ptr [rsp + 0x320]
+               	vmovdqa64	xmm16, xmmword ptr [rsp + 0x330]
+               	vmovdqa	xmm15, xmmword ptr [rsp + 0x370]
+               	vmovdqa	xmm13, xmmword ptr [rsp + 0x3b0]
+               	vmovdqa	xmm4, xmmword ptr [rsp + 0x3f0]
+               	vmovdqa	xmm1, xmmword ptr [rsp + 0x430]
+               	vmovdqa	xmm10, xmmword ptr [rsp + 0x470]
+               	vmovdqa	xmm9, xmmword ptr [rsp + 0x4b0]
+               	vmovdqa	xmm8, xmmword ptr [rsp + 0x4f0]
+               	vmovdqa	xmm12, xmmword ptr [rsp + 0x500]
+               	vmovdqa	xmm2, xmmword ptr [rsp + 0x530]
+               	movabs	r11, 0x1fffffffe0
+               	movabs	rax, 0xffffffff0
+               	movabs	rcx, 0x3fffffffc
+               	mov	rdx, r15
+               	vmovaps	xmmword ptr [rsp + 0x80], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x3d0]
+               	vmovaps	xmmword ptr [rsp + 0x1e0], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x410]
+               	vmovaps	xmmword ptr [rsp + 0x1d0], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x450]
+               	vmovaps	xmmword ptr [rsp + 0x1b0], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x490]
+               	vmovaps	xmmword ptr [rsp + 0x170], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x4d0]
+               	vmovaps	xmmword ptr [rsp + 0x150], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x510]
+               	vmovaps	xmmword ptr [rsp + 0x140], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x2c0]
+               	vmovaps	xmmword ptr [rsp + 0x70], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x300]
+               	vmovaps	xmmword ptr [rsp + 0x60], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x340]
+               	vmovaps	xmmword ptr [rsp + 0x30], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x360]
+               	vmovaps	xmmword ptr [rsp + 0x130], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x380]
+               	vmovaps	xmmword ptr [rsp + 0x50], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x3a0]
+               	vmovaps	xmmword ptr [rsp + 0x110], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x3c0]
+               	vmovaps	xmmword ptr [rsp + 0x40], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x3e0]
+               	vmovaps	xmmword ptr [rsp + 0x1a0], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x400]
+               	vmovaps	xmmword ptr [rsp + 0x1c0], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x420]
+               	vmovaps	xmmword ptr [rsp + 0x190], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x440]
+               	vmovaps	xmmword ptr [rsp + 0x180], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x460]
+               	vmovaps	xmmword ptr [rsp + 0xe0], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x480]
+               	vmovaps	xmmword ptr [rsp + 0x160], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x4a0]
+               	vmovaps	xmmword ptr [rsp + 0xf0], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x4c0]
+               	vmovaps	xmmword ptr [rsp + 0x120], xmm0
+               	vmovaps	xmm0, xmmword ptr [rsp + 0x4e0]
+               	vmovaps	xmmword ptr [rsp + 0x100], xmm0
+               	vmovdqa	xmm0, xmmword ptr [rsp + 0x520]
+               	nop	word ptr cs:[rax + rax]
+<L5>:
+               	vmovdqa	xmmword ptr [rsp + 0x220], xmm4
+               	vpsllq	xmm4, xmm30, 0x2
+               	vmovdqa64	xmm25, xmm15
+               	vmovdqa	xmmword ptr [rsp + 0x250], xmm0
+               	vmovdqa	xmmword ptr [rsp + 0x230], xmm9
+               	vmovdqa	xmm14, xmmword ptr [rsp + 0x1e0]
+               	vmovdqa	xmmword ptr [rsp + 0x240], xmm8
+               	vmovdqa64	xmm27, xmmword ptr [rsp + 0x1d0]
+               	vmovdqa64	xmm29, xmmword ptr [rsp + 0x1b0]
+               	vmovdqa	xmmword ptr [rsp + 0x200], xmm10
+               	vmovdqa64	xmm31, xmmword ptr [rsp + 0x170]
+               	vmovdqa	xmmword ptr [rsp + 0x260], xmm12
+               	vmovdqa	xmm12, xmmword ptr [rsp + 0x150]
+               	mov	rdi, r13
+               	shr	rdi, 0x1e
+               	vmovdqa	xmmword ptr [rsp + 0x210], xmm2
+               	vmovdqa	xmm2, xmm1
+               	vmovdqa	xmm1, xmmword ptr [rsp + 0x140]
+               	lea	r8, [4*r13]
+               	vmovdqa	xmm11, xmm13
+               	mov	rsi, r13
+               	mov	r14d, esi
+               	lea	r9, [r14 + 2*r14]
+               	vpxorq	xmm7, xmm7, xmm30
+               	vpaddq	xmm4, xmm4, xmm30
+               	and	rdi, rcx
+               	vprolq	xmm4, xmm4, 0x7
+               	and	r8, rcx
+               	vpsllq	xmm15, xmm4, 0x3
+               	vpaddq	xmm17, xmm15, xmm4
+               	vpsllq	xmm4, xmm28, 0x2
+               	vpaddq	xmm4, xmm4, xmm28
+               	vprolq	xmm4, xmm4, 0x7
+               	vpsllq	xmm15, xmm4, 0x3
+               	vpaddq	xmm0, xmm15, xmm4
+               	vpsllq	xmm4, xmm3, 0x2
+               	vpaddq	xmm4, xmm4, xmm3
+               	vpmovzxbd	zmm0, xmm0      # zmm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero,xmm0[4],zero,zero,zero,xmm0[5],zero,zero,zero,xmm0[6],zero,zero,zero,xmm0[7],zero,zero,zero,xmm0[8],zero,zero,zero,xmm0[9],zero,zero,zero,xmm0[10],zero,zero,zero,xmm0[11],zero,zero,zero,xmm0[12],zero,zero,zero,xmm0[13],zero,zero,zero,xmm0[14],zero,zero,zero,xmm0[15],zero,zero,zero
+               	vprolq	xmm4, xmm4, 0x7
+               	vpsllq	xmm15, xmm4, 0x3
+               	vpaddq	xmm9, xmm15, xmm4
+               	vpsllq	xmm4, xmm5, 0x2
+               	vcvtdq2ps	zmm0, zmm0
+               	vpaddq	xmm4, xmm4, xmm5
+               	vprolq	xmm4, xmm4, 0x7
+               	vmovaps	zmmword ptr [r12 + rdi], zmm0
+               	vpmovzxbd	zmm0, xmm9      # zmm0 = xmm9[0],zero,zero,zero,xmm9[1],zero,zero,zero,xmm9[2],zero,zero,zero,xmm9[3],zero,zero,zero,xmm9[4],zero,zero,zero,xmm9[5],zero,zero,zero,xmm9[6],zero,zero,zero,xmm9[7],zero,zero,zero,xmm9[8],zero,zero,zero,xmm9[9],zero,zero,zero,xmm9[10],zero,zero,zero,xmm9[11],zero,zero,zero,xmm9[12],zero,zero,zero,xmm9[13],zero,zero,zero,xmm9[14],zero,zero,zero,xmm9[15],zero,zero,zero
+               	lea	rdi, [r12 + rdi]
+               	vmovdqa	xmm9, xmmword ptr [rsp + 0x1c0]
+               	vpsllq	xmm15, xmm4, 0x3
+               	vpaddq	xmm8, xmm15, xmm4
+               	vpsllq	xmm4, xmm18, 0x2
+               	vpaddq	xmm4, xmm4, xmm18
+               	vprolq	xmm4, xmm4, 0x7
+               	vcvtdq2ps	zmm0, zmm0
+               	vpsllq	xmm15, xmm4, 0x3
+               	vpaddq	xmm15, xmm15, xmm4
+               	vpsllq	xmm4, xmm14, 0x2
+               	vmovaps	zmmword ptr [r8 + rdi], zmm0
+               	vpmovzxbd	zmm0, xmm8      # zmm0 = xmm8[0],zero,zero,zero,xmm8[1],zero,zero,zero,xmm8[2],zero,zero,zero,xmm8[3],zero,zero,zero,xmm8[4],zero,zero,zero,xmm8[5],zero,zero,zero,xmm8[6],zero,zero,zero,xmm8[7],zero,zero,zero,xmm8[8],zero,zero,zero,xmm8[9],zero,zero,zero,xmm8[10],zero,zero,zero,xmm8[11],zero,zero,zero,xmm8[12],zero,zero,zero,xmm8[13],zero,zero,zero,xmm8[14],zero,zero,zero,xmm8[15],zero,zero,zero
+               	mov	r8, r13
+               	shl	r8, 0x4
+               	vpaddq	xmm4, xmm14, xmm4
+               	and	r8, rax
+               	vprolq	xmm4, xmm4, 0x7
+               	vpsllq	xmm19, xmm4, 0x3
+               	vcvtdq2ps	zmm0, zmm0
+               	vpaddq	xmm10, xmm19, xmm4
+               	vpsllq	xmm4, xmm27, 0x2
+               	vpaddq	xmm4, xmm4, xmm27
+               	vprolq	xmm4, xmm4, 0x7
+               	vmovaps	zmmword ptr [rdi + 8*r14], zmm0
+               	vpmovzxbd	zmm0, xmm10     # zmm0 = xmm10[0],zero,zero,zero,xmm10[1],zero,zero,zero,xmm10[2],zero,zero,zero,xmm10[3],zero,zero,zero,xmm10[4],zero,zero,zero,xmm10[5],zero,zero,zero,xmm10[6],zero,zero,zero,xmm10[7],zero,zero,zero,xmm10[8],zero,zero,zero,xmm10[9],zero,zero,zero,xmm10[10],zero,zero,zero,xmm10[11],zero,zero,zero,xmm10[12],zero,zero,zero,xmm10[13],zero,zero,zero,xmm10[14],zero,zero,zero,xmm10[15],zero,zero,zero
+               	vmovdqa	xmm10, xmmword ptr [rsp + 0x180]
+               	vpsllq	xmm19, xmm4, 0x3
+               	vpaddq	xmm23, xmm19, xmm4
+               	vpsllq	xmm4, xmm29, 0x2
+               	vpaddq	xmm4, xmm4, xmm29
+               	vcvtdq2ps	zmm0, zmm0
+               	vprolq	xmm4, xmm4, 0x7
+               	vpsllq	xmm19, xmm4, 0x3
+               	vpaddq	xmm24, xmm19, xmm4
+               	vpsllq	xmm4, xmm31, 0x2
+               	vpaddq	xmm4, xmm4, xmm31
+               	vprolq	xmm4, xmm4, 0x7
+               	vpsllq	xmm19, xmm4, 0x3
+               	vpaddq	xmm4, xmm19, xmm4
+               	vpsllq	xmm19, xmm12, 0x2
+               	vpaddq	xmm19, xmm19, xmm12
+               	vpmovzxbd	zmm4, xmm4      # zmm4 = xmm4[0],zero,zero,zero,xmm4[1],zero,zero,zero,xmm4[2],zero,zero,zero,xmm4[3],zero,zero,zero,xmm4[4],zero,zero,zero,xmm4[5],zero,zero,zero,xmm4[6],zero,zero,zero,xmm4[7],zero,zero,zero,xmm4[8],zero,zero,zero,xmm4[9],zero,zero,zero,xmm4[10],zero,zero,zero,xmm4[11],zero,zero,zero,xmm4[12],zero,zero,zero,xmm4[13],zero,zero,zero,xmm4[14],zero,zero,zero,xmm4[15],zero,zero,zero
+               	vprolq	xmm19, xmm19, 0x7
+               	vpsllq	xmm21, xmm19, 0x3
+               	vpaddq	xmm19, xmm21, xmm19
+               	vpsllq	xmm21, xmm1, 0x2
+               	vcvtdq2ps	zmm4, zmm4
+               	vpaddq	xmm21, xmm21, xmm1
+               	vprolq	xmm21, xmm21, 0x7
+               	vpsllq	xmm13, xmm21, 0x3
+               	vpaddq	xmm21, xmm13, xmm21
+               	vpmovzxbd	zmm13, xmm15    # zmm13 = xmm15[0],zero,zero,zero,xmm15[1],zero,zero,zero,xmm15[2],zero,zero,zero,xmm15[3],zero,zero,zero,xmm15[4],zero,zero,zero,xmm15[5],zero,zero,zero,xmm15[6],zero,zero,zero,xmm15[7],zero,zero,zero,xmm15[8],zero,zero,zero,xmm15[9],zero,zero,zero,xmm15[10],zero,zero,zero,xmm15[11],zero,zero,zero,xmm15[12],zero,zero,zero,xmm15[13],zero,zero,zero,xmm15[14],zero,zero,zero,xmm15[15],zero,zero,zero
+               	vcvtdq2ps	zmm13, zmm13
+               	vmovaps	zmmword ptr [rdi + 4*r9], zmm13
+               	vmovaps	zmmword ptr [r8 + rdi], zmm0
+               	vpmovzxbd	zmm0, xmm23     # zmm0 = xmm23[0],zero,zero,zero,xmm23[1],zero,zero,zero,xmm23[2],zero,zero,zero,xmm23[3],zero,zero,zero,xmm23[4],zero,zero,zero,xmm23[5],zero,zero,zero,xmm23[6],zero,zero,zero,xmm23[7],zero,zero,zero,xmm23[8],zero,zero,zero,xmm23[9],zero,zero,zero,xmm23[10],zero,zero,zero,xmm23[11],zero,zero,zero,xmm23[12],zero,zero,zero,xmm23[13],zero,zero,zero,xmm23[14],zero,zero,zero,xmm23[15],zero,zero,zero
+               	vpmovzxbd	zmm13, xmm24    # zmm13 = xmm24[0],zero,zero,zero,xmm24[1],zero,zero,zero,xmm24[2],zero,zero,zero,xmm24[3],zero,zero,zero,xmm24[4],zero,zero,zero,xmm24[5],zero,zero,zero,xmm24[6],zero,zero,zero,xmm24[7],zero,zero,zero,xmm24[8],zero,zero,zero,xmm24[9],zero,zero,zero,xmm24[10],zero,zero,zero,xmm24[11],zero,zero,zero,xmm24[12],zero,zero,zero,xmm24[13],zero,zero,zero,xmm24[14],zero,zero,zero,xmm24[15],zero,zero,zero
+               	lea	r8, [r14 + 4*r14]
+               	vpxorq	xmm23, xmm14, xmmword ptr [rsp + 0x220]
+               	vpxorq	xmm24, xmm2, xmm27
+               	vmovdqa	xmm2, xmmword ptr [rsp + 0x120]
+               	vcvtdq2ps	zmm0, zmm0
+               	vmovaps	zmmword ptr [rdi + 4*r8], zmm0
+               	vcvtdq2ps	zmm0, zmm13
+               	vpmovzxbd	zmm13, xmm21    # zmm13 = xmm21[0],zero,zero,zero,xmm21[1],zero,zero,zero,xmm21[2],zero,zero,zero,xmm21[3],zero,zero,zero,xmm21[4],zero,zero,zero,xmm21[5],zero,zero,zero,xmm21[6],zero,zero,zero,xmm21[7],zero,zero,zero,xmm21[8],zero,zero,zero,xmm21[9],zero,zero,zero,xmm21[10],zero,zero,zero,xmm21[11],zero,zero,zero,xmm21[12],zero,zero,zero,xmm21[13],zero,zero,zero,xmm21[14],zero,zero,zero,xmm21[15],zero,zero,zero
+               	lea	r8, [r12 + 8*r8]
+               	vpxorq	xmm21, xmm11, xmm18
+               	vmovdqa	xmm11, xmmword ptr [rsp + 0x160]
+               	vmovaps	zmmword ptr [rdi + 8*r9], zmm0
+               	vpmovzxbw	ymm0, xmm17     # ymm0 = xmm17[0],zero,xmm17[1],zero,xmm17[2],zero,xmm17[3],zero,xmm17[4],zero,xmm17[5],zero,xmm17[6],zero,xmm17[7],zero,xmm17[8],zero,xmm17[9],zero,xmm17[10],zero,xmm17[11],zero,xmm17[12],zero,xmm17[13],zero,xmm17[14],zero,xmm17[15],zero
+               	vpmullw	ymm0, ymm0, ymmword ptr  <.LCPI0_0>
+               	lea	r9, [r14 + 8*r14]
+               	vcvtdq2ps	zmm13, zmm13
+               	lea	r10, [r9 + 2*r9]
+               	add	r10, r14
+               	vmovaps	zmmword ptr [rdi + r10], zmm4
+               	vpmovzxbd	zmm4, xmm19     # zmm4 = xmm19[0],zero,zero,zero,xmm19[1],zero,zero,zero,xmm19[2],zero,zero,zero,xmm19[3],zero,zero,zero,xmm19[4],zero,zero,zero,xmm19[5],zero,zero,zero,xmm19[6],zero,zero,zero,xmm19[7],zero,zero,zero,xmm19[8],zero,zero,zero,xmm19[9],zero,zero,zero,xmm19[10],zero,zero,zero,xmm19[11],zero,zero,zero,xmm19[12],zero,zero,zero,xmm19[13],zero,zero,zero,xmm19[14],zero,zero,zero,xmm19[15],zero,zero,zero
+               	mov	r10, r13
+               	shl	r10, 0x5
+               	vpxorq	xmm19, xmm25, xmm5
+               	and	r10, r11
+               	vcvtdq2ps	zmm4, zmm4
+               	vpsrlw	ymm0, ymm0, 0x8
+               	vpmovwb	xmm0, ymm0
+               	vgf2p8affineqb	xmm0, xmm0, qword ptr {1to2}, 0x0 <.LCPI0_9>
+               	vmovaps	zmmword ptr [r10 + rdi], zmm4
+               	vmovdqa64	xmm4, xmm16
+               	vmovdqa64	xmm16, xmmword ptr [rsp + 0x80]
+               	vmovaps	zmmword ptr [rdi + 4*r9], zmm13
+               	mov	rdi, r13
+               	shr	rdi, 0x20
+               	vpxorq	xmm13, xmm6, xmm16
+               	vmovdqa64	xmm6, xmm20
+               	vmovdqa64	xmm20, xmmword ptr [rsp + 0x70]
+               	vpxorq	xmm15, xmm6, xmm28
+               	vpxorq	xmm16, xmm7, xmm16
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpmovzxbw	ymm0, xmm0      # ymm0 = xmm0[0],zero,xmm0[1],zero,xmm0[2],zero,xmm0[3],zero,xmm0[4],zero,xmm0[5],zero,xmm0[6],zero,xmm0[7],zero,xmm0[8],zero,xmm0[9],zero,xmm0[10],zero,xmm0[11],zero,xmm0[12],zero,xmm0[13],zero,xmm0[14],zero,xmm0[15],zero
+               	vpmullw	ymm0, ymm0, ymmword ptr  <.LCPI0_2>
+               	vmovdqa64	xmmword ptr [rsp + 0x80], xmm16
+               	vpmovwb	xmm0, ymm0
+               	vpsubb	xmm0, xmm17, xmm0
+               	vpxorq	xmm17, xmm4, xmm3
+               	vmovdqa	xmmword ptr [rdi + r8], xmm0
+               	vpsllq	xmm0, xmm30, 0x11
+               	vpxorq	xmm30, xmm13, xmm30
+               	movabs	r8, -0x100000000
+               	mov	rdi, r13
+               	vprolq	xmm16, xmm17, 0x2d
+               	vpxor	xmm0, xmm13, xmm0
+               	vpxorq	xmm13, xmm22, xmm20
+               	vmovdqa64	xmm22, xmmword ptr [rsp + 0x60]
+               	and	rdi, r8
+               	vpxorq	xmm20, xmm15, xmm20
+               	add	rdx, -0x10
+               	vmovdqa	xmmword ptr [rsp + 0x1f0], xmm0
+               	vpsllq	xmm0, xmm28, 0x11
+               	vpxorq	xmm28, xmm13, xmm28
+               	lea	r8, [rax + rdi]
+               	vmovdqa64	xmmword ptr [rsp + 0x70], xmm20
+               	vprolq	xmm20, xmm15, 0x2d
+               	vprolq	xmm15, xmm19, 0x2d
+               	vpxor	xmm6, xmm13, xmm0
+               	vpsllq	xmm0, xmm3, 0x11
+               	lea	r13, [r14 + r8 + 0x10]
+               	vpxorq	xmm13, xmm26, xmm22
+               	vmovdqa64	xmm26, xmmword ptr [rsp + 0x30]
+               	vpxorq	xmm22, xmm17, xmm22
+               	vpxor	xmm3, xmm13, xmm3
+               	vpxor	xmm4, xmm13, xmm0
+               	vpxorq	xmm13, xmm26, xmmword ptr [rsp + 0x130]
+               	vpsllq	xmm0, xmm5, 0x11
+               	vmovdqa64	xmmword ptr [rsp + 0x60], xmm22
+               	vmovdqa64	xmm22, xmm6
+               	vmovdqa	xmm6, xmmword ptr [rsp + 0x1f0]
+               	vmovdqa64	xmm25, xmm3
+               	vmovdqa64	xmm3, xmm30
+               	vmovdqa64	xmm30, xmmword ptr [rsp + 0x50]
+               	vpxorq	xmm26, xmm19, xmm26
+               	vpxor	xmm5, xmm13, xmm5
+               	vpxor	xmm0, xmm13, xmm0
+               	vpxorq	xmm13, xmm30, xmmword ptr [rsp + 0x110]
+               	vmovdqa64	xmmword ptr [rsp + 0x30], xmm26
+               	vmovdqa64	xmm26, xmm4
+               	vprolq	xmm4, xmm23, 0x2d
+               	vmovdqa	xmmword ptr [rsp + 0x130], xmm0
+               	vpsllq	xmm0, xmm18, 0x11
+               	vmovdqa	xmmword ptr [rsp + 0x270], xmm5
+               	vpxorq	xmm30, xmm21, xmm30
+               	vmovdqa	xmm5, xmmword ptr [rsp + 0x270]
+               	vmovdqa64	xmmword ptr [rsp + 0x50], xmm30
+               	vmovdqa64	xmm30, xmm3
+               	vmovdqa64	xmm3, xmm25
+               	vpxorq	xmm8, xmm13, xmm18
+               	vmovdqa64	xmm18, xmmword ptr [rsp + 0x40]
+               	vpxor	xmm0, xmm13, xmm0
+               	vpxorq	xmm13, xmm18, xmmword ptr [rsp + 0x1a0]
+               	vmovdqa	xmmword ptr [rsp + 0x110], xmm0
+               	vpsllq	xmm0, xmm14, 0x11
+               	vpxorq	xmm18, xmm23, xmm18
+               	vpxor	xmm14, xmm13, xmm14
+               	vpxor	xmm0, xmm13, xmm0
+               	vpxor	xmm13, xmm9, xmmword ptr [rsp + 0x190]
+               	vpxorq	xmm9, xmm24, xmm9
+               	vmovdqa64	xmmword ptr [rsp + 0x40], xmm18
+               	vmovdqa64	xmm18, xmm8
+               	vmovdqa	xmmword ptr [rsp + 0x1a0], xmm0
+               	vpsllq	xmm0, xmm27, 0x11
+               	vmovdqa	xmmword ptr [rsp + 0x1e0], xmm14
+               	vpxor	xmm14, xmm1, xmmword ptr [rsp + 0x210]
+               	vmovdqa	xmmword ptr [rsp + 0x1c0], xmm9
+               	vpxorq	xmm27, xmm13, xmm27
+               	vpxor	xmm0, xmm13, xmm0
+               	vpxor	xmm13, xmm10, xmmword ptr [rsp + 0xe0]
+               	vmovdqa	xmmword ptr [rsp + 0x190], xmm0
+               	vpsllq	xmm0, xmm29, 0x11
+               	vmovdqa64	xmmword ptr [rsp + 0x1d0], xmm27
+               	vpxorq	xmm27, xmm29, xmmword ptr [rsp + 0x200]
+               	vpxorq	xmm29, xmm13, xmm29
+               	vpxor	xmm0, xmm13, xmm0
+               	vpxor	xmm13, xmm11, xmmword ptr [rsp + 0xf0]
+               	vmovdqa	xmmword ptr [rsp + 0xe0], xmm0
+               	vpsllq	xmm0, xmm31, 0x11
+               	vmovdqa64	xmmword ptr [rsp + 0x1b0], xmm29
+               	vpxorq	xmm29, xmm31, xmmword ptr [rsp + 0x230]
+               	vpxorq	xmm10, xmm27, xmm10
+               	vmovdqa	xmmword ptr [rsp + 0x180], xmm10
+               	vprolq	xmm10, xmm27, 0x2d
+               	vpxorq	xmm31, xmm13, xmm31
+               	vpxor	xmm0, xmm13, xmm0
+               	vpxor	xmm13, xmm2, xmmword ptr [rsp + 0x100]
+               	vmovdqa64	xmmword ptr [rsp + 0x170], xmm31
+               	vpxorq	xmm31, xmm12, xmmword ptr [rsp + 0x240]
+               	vmovdqa	xmmword ptr [rsp + 0xf0], xmm0
+               	vpsllq	xmm0, xmm12, 0x11
+               	vprolq	xmm9, xmm29, 0x2d
+               	vpxorq	xmm11, xmm29, xmm11
+               	vmovdqa	xmmword ptr [rsp + 0x160], xmm11
+               	vpxor	xmm12, xmm13, xmm12
+               	vpxor	xmm0, xmm13, xmm0
+               	vmovdqa	xmmword ptr [rsp + 0x150], xmm12
+               	vmovdqa	xmm12, xmmword ptr [rsp + 0x260]
+               	vmovdqa	xmmword ptr [rsp + 0x100], xmm0
+               	vpxorq	xmm2, xmm31, xmm2
+               	vpsllq	xmm0, xmm1, 0x11
+               	vprolq	xmm8, xmm31, 0x2d
+               	vpxor	xmm13, xmm12, xmmword ptr [rsp + 0x250]
+               	vmovdqa	xmmword ptr [rsp + 0x120], xmm2
+               	vprolq	xmm2, xmm14, 0x2d
+               	vpxor	xmm12, xmm14, xmm12
+               	vpxor	xmm1, xmm13, xmm1
+               	vpxor	xmm0, xmm13, xmm0
+               	vprolq	xmm13, xmm21, 0x2d
+               	vmovdqa	xmmword ptr [rsp + 0x140], xmm1
+               	vprolq	xmm1, xmm24, 0x2d
+               	jne	 <L5>
+               	shr	rsi, 0x24
                	vpxor	xmm0, xmm0, xmm0
-               	vmovdqa64	zmmword ptr [rsp + 0x580], zmm0
-               	vmovdqa64	zmmword ptr [rsp + 0x540], zmm0
-               	vmovdqa64	zmmword ptr [rsp + 0x500], zmm0
-               	vmovdqa64	zmmword ptr [rsp + 0x4c0], zmm0
-               	vmovdqa64	zmmword ptr [rsp + 0x480], zmm0
-               	vmovdqa64	zmmword ptr [rsp + 0x440], zmm0
-               	vmovdqa64	zmmword ptr [rsp + 0x400], zmm0
-               	vmovdqa64	zmmword ptr [rsp + 0x3c0], zmm0
-               	vmovdqa64	zmmword ptr [rsp + 0x380], zmm0
-               	vmovdqa64	zmmword ptr [rsp + 0x340], zmm0
-               	vmovdqa64	zmmword ptr [rsp + 0x300], zmm0
-               	vmovdqa64	zmmword ptr [rsp + 0x2c0], zmm0
-               	vmovdqa64	zmmword ptr [rsp + 0x280], zmm0
-               	vmovdqa64	zmmword ptr [rsp + 0x240], zmm0
-               	vmovdqa64	zmmword ptr [rsp + 0x200], zmm0
-               	vmovdqa64	zmmword ptr [rsp + 0x1c0], zmm0
-               	vpbroadcastd	ymm5, dword ptr  <memset+0xaac>
-               	vmovdqa	ymm6, ymmword ptr  <memset+0xa60>
-               	vmovaps	ymm7, ymmword ptr  <memset+0xa40>
-               	vpbroadcastd	ymm8, dword ptr  <memset+0xa9c>
-               	vpbroadcastd	ymm9, dword ptr  <memset+0xab0>
-               	vpbroadcastd	ymm10, dword ptr  <memset+0xaa8>
-               	movabs	rbx, -0x100000000
-<L173>:
-               	mov	qword ptr [rsp + 0x30], r14
-               	blsi	r12d, r14d
-               	mov	rax, r13
-               	and	rax, rbx
-               	mov	qword ptr [rsp + 0x28], r12
-               	shl	r12, 0x23
-               	add	r12, rax
-               	mov	eax, r13d
-               	mov	qword ptr [rsp + 0x120], rax
-               	mov	rax, r12
-               	xor	rax, r13
-               	shr	rax, 0x20
-               	mov	esi, 0x1
-               	jne	 <L171>
-<L175>:
-               	movsxd	rax, esi
-               	shl	rax, 0x5
-               	add	rax, rsp
-               	add	rax, 0x1c0
-               	mov	r14, qword ptr [rsp + 0x30]
-               	sub	r14d, dword ptr [rsp + 0x28]
-               	je	 <L172>
-               	or	r12, qword ptr [rsp + 0x120]
-               	vmovdqa	ymm0, ymmword ptr [rax]
-               	vmovdqa	ymmword ptr [rax + 0x20], ymm0
-               	mov	r13, r12
-               	test	esi, esi
-               	js	 <L173>
-               	mov	edx, esi
-               	shl	rdx, 0x5
-               	add	rdx, 0x20
-               	lea	rdi, [rsp + 0x1c0]
+               	cmp	esi, 0xffffffe
+               	ja	 <L6>
+               	mov	qword ptr [rsp + 0x50], rbx
+               	lea	rbx, [rax + rdi + 0x10]
+               	mov	edx, 0x800
+               	lea	rdi, [rsp + 0x280]
+               	movabs	r13, 0x1fffffffe0
+               	mov	qword ptr [rsp + 0x30], r12
+               	mov	qword ptr [rsp + 0x40], r15
+               	shr	rbx, 0x24
+               	jmp	 <L7>
+               	nop	word ptr cs:[rax + rax]
+<L11>:
+               	mov	edx, edi
+               	shl	rdx, 0x6
+               	lea	rdi, [rsp + 0x280]
+               	add	rdx, 0x40
+<L7>:
                	xor	esi, esi
                	vzeroupper
-               	call	 <memset@plt>
-               	vpbroadcastd	ymm10, dword ptr  <memset+0xaa8>
-               	vpbroadcastd	ymm9, dword ptr  <memset+0xab0>
-               	vpbroadcastd	ymm8, dword ptr  <memset+0xa9c>
-               	vmovaps	ymm7, ymmword ptr  <memset+0xa40>
-               	vmovdqa	ymm6, ymmword ptr  <memset+0xa60>
-               	vpbroadcastd	ymm5, dword ptr  <memset+0xaac>
-               	mov	r13, r12
-               	jmp	 <L173>
-               	nop	dword ptr [rax]
-<L171>:
-               	mov	rdx, r13
-               	shr	rdx, 0x20
-               	mov	rcx, qword ptr [rsp + 0x120]
-               	lea	rax, [rcx + 4*rcx]
-               	mov	rsi, qword ptr [rsp + 0x158]
-               	lea	rdi, [rsi + 8*rax]
-               	lea	rax, [rcx + 8*rcx]
-               	lea	r8, [rax + 2*rax]
-               	add	rcx, rsi
-               	add	r8, rcx
-               	shl	r13, 0x5
-               	movabs	rcx, 0x1fffffffe0
-               	and	r13, rcx
-               	add	r13, rsi
-               	lea	r9, [rsi + 4*rax]
-               	mov	r10d, 0x1
-               	xor	eax, eax
-               	mov	r14d, 0x1
-               	jmp	 <L174>
-               	nop	word ptr cs:[rax + rax]
-<L176>:
-               	mov	r14d, esi
-               	movsxd	rax, esi
+               	call	 <memset$plt>
+               	vmovdqa64	zmm5, zmmword ptr  <memset+0x800>
+               	vpbroadcastd	zmm6, dword ptr  <.LCPI0_4>
+               	vpbroadcastd	zmm7, dword ptr  <.LCPI0_5>
+               	vpbroadcastd	zmm8, dword ptr  <.LCPI0_6>
+               	mov	rax, r14
+               	nop	word ptr [rax + rax]
+<L10>:
+               	blsi	r14d, ebx
+               	movabs	rdx, -0x100000000
+               	mov	rcx, rax
+               	mov	edi, 0x1
+               	mov	qword ptr [rsp + 0x70], rbx
+               	mov	qword ptr [rsp + 0x60], r14
+               	and	rcx, rdx
+               	shl	r14, 0x24
+               	add	r14, rcx
+               	mov	ecx, eax
+               	mov	qword ptr [rsp + 0x80], rcx
+               	mov	rcx, r14
+               	xor	rcx, rax
+               	shr	rcx, 0x20
+               	jne	 <L8>
+<L13>:
+               	movsxd	rax, edi
+               	mov	rbx, qword ptr [rsp + 0x70]
+               	shl	rax, 0x6
+               	sub	ebx, dword ptr [rsp + 0x60]
+               	lea	rax, [rsp + rax + 0x280]
+               	je	 <L9>
+               	vmovdqa64	zmm0, zmmword ptr [rax]
+               	or	r14, qword ptr [rsp + 0x80]
+               	vmovdqa64	zmmword ptr [rax + 0x40], zmm0
+               	mov	rax, r14
+               	test	edi, edi
+               	js	 <L10>
+               	jmp	 <L11>
+<L8>:
+               	mov	rdx, qword ptr [rsp + 0x80]
+               	mov	rdi, qword ptr [rsp + 0x30]
+               	mov	rsi, rax
                	shl	rax, 0x5
-               	vmovaps	ymmword ptr [rsp + rax + 0x1c0], ymm0
-               	add	edx, 0x8
-               	mov	eax, 0xfffffffe
-               	sub	eax, r10d
-               	lea	ecx, [r10 + 0x1]
-               	lzcnt	r10d, ecx
-               	popcnt	eax, eax
-               	sub	eax, r10d
-               	mov	r11, rdx
-               	shl	r11, 0x20
-               	mov	r10d, ecx
-               	cmp	r11, r12
-               	je	 <L175>
-<L174>:
-               	mov	esi, eax
-               	vpmovzxbd	ymm0, qword ptr [rdi + rdx]
-               	vpermd	ymm1, ymm0, ymm6
-               	vptestnmd	k1, ymm0, ymm5
-               	vpermps	ymm1 {k1}, ymm0, ymm7
-               	vpsllvd	ymm2, ymm8, ymm0
-               	vpmovd2m	k1, ymm2
-               	vmovaps	ymm2 {k1} {z}, ymmword ptr [r13 + 4*rdx]
-               	vmovaps	ymm3, ymmword ptr [r8 + 4*rdx]
-               	vblendmps	ymm2 {k1}, ymm3, ymm2
-               	vpsllvd	ymm4, ymm9, ymm0
-               	vpmovd2m	k1, ymm4
-               	vmovaps	ymm4 {k1} {z}, ymmword ptr [r9 + 4*rdx]
-               	vmulps	ymm1, ymm3, ymm1
-               	vmovaps	ymm3 {k1}, ymm4
-               	vmulps	ymm1, ymm1, ymm2
-               	vpsllvd	ymm0, ymm10, ymm0
-               	vpmovd2m	k1, ymm0
-               	vmulps	ymm0, ymm1, ymm3
-               	vmovaps	ymm0 {k1}, ymm1
-               	mov	r15d, eax
-               	sub	r15d, r14d
-               	jl	 <L176>
-               	movsxd	r11, r14d
-               	lea	eax, [r15 + 0x1]
-               	and	eax, 0x3
-               	je	 <L177>
-               	dec	eax
-               	mov	rcx, r11
-               	shl	rcx, 0x5
-               	add	rcx, rsp
-               	add	rcx, 0x1c0
-               	mov	ebx, esi
-               	sub	bl, r14b
-               	inc	bl
-               	movzx	r14d, bl
-               	and	r14d, 0x3
-               	shl	r14d, 0x5
-               	xor	ebx, ebx
+               	shr	rsi, 0x20
+               	mov	r11d, 0x1
+               	mov	r12d, 0x1
+               	and	rax, r13
+               	lea	rcx, [rdx + 4*rdx]
+               	add	rax, rdi
+               	lea	r8, [rdi + 8*rcx]
+               	lea	rcx, [rdx + 8*rdx]
+               	add	rdx, rdi
+               	lea	r9, [rcx + 2*rcx]
+               	lea	r10, [rdi + 4*rcx]
+               	xor	ecx, ecx
+               	add	r9, rdx
+               	jmp	 <L12>
+               	nop	dword ptr [rax + rax]
+<L14>:
+               	movsxd	rcx, edi
+               	lea	edx, [r11 + 0x1]
+               	add	esi, 0x10
+               	mov	r12d, edi
+               	shl	rcx, 0x6
+               	mov	rbx, rsi
+               	shl	rbx, 0x20
+               	vmovaps	zmmword ptr [rsp + rcx + 0x280], zmm0
+               	mov	ecx, 0xfffffffe
+               	sub	ecx, r11d
+               	lzcnt	r11d, edx
+               	popcnt	ecx, ecx
+               	sub	ecx, r11d
+               	mov	r11d, edx
+               	cmp	rbx, r14
+               	je	 <L13>
+<L12>:
+               	vpmovzxbd	zmm0, xmmword ptr [r8 + rsi]
+               	vmovaps	zmm3, zmmword ptr [r9 + 4*rsi]
+               	mov	ebx, ecx
+               	sub	ebx, r12d
+               	mov	edi, ecx
+               	vpsllvd	zmm2, zmm6, zmm0
+               	vpermd	zmm1, zmm0, zmm5
+               	vpsllvd	zmm4, zmm7, zmm0
+               	vpsllvd	zmm0, zmm8, zmm0
+               	vpmovd2m	k1, zmm2
+               	vmovaps	zmm2 {k1} {z}, zmmword ptr [rax + 4*rsi]
+               	vmulps	zmm1, zmm3, zmm1
+               	vblendmps	zmm2 {k1}, zmm3, zmm2
+               	vpmovd2m	k1, zmm4
+               	vmovaps	zmm4 {k1} {z}, zmmword ptr [r10 + 4*rsi]
+               	vmulps	zmm1, zmm1, zmm2
+               	vmovaps	zmm3 {k1}, zmm4
+               	vpmovd2m	k1, zmm0
+               	vmulps	zmm0, zmm1, zmm3
+               	vmovaps	zmm0 {k1}, zmm1
+               	jl	 <L14>
+               	lea	ecx, [rbx + 0x1]
+               	movsxd	r15, r12d
+               	and	ecx, 0x7
+               	je	 <L15>
+               	mov	r13d, edi
+               	mov	rdx, r15
+               	shl	rdx, 0x6
+               	dec	ecx
+               	sub	r13b, r12b
+               	lea	rdx, [rsp + rdx + 0x280]
+               	inc	r13b
+               	movzx	r12d, r13b
+               	xor	r13d, r13d
+               	and	r12d, 0x7
+               	shl	r12d, 0x6
+               	nop	dword ptr [rax + rax]
+<L16>:
+               	vaddps	zmm0, zmm0, zmmword ptr [rdx + r13]
+               	add	r13, 0x40
+               	cmp	r12d, r13d
+               	jne	 <L16>
+               	lea	r15, [r15 + rcx + 0x1]
+               	movabs	r13, 0x1fffffffe0
+<L15>:
+               	cmp	ebx, 0x7
+               	jb	 <L14>
+               	mov	ecx, edi
+               	sub	ecx, r15d
+               	shl	r15, 0x6
+               	lea	rdx, [rsp + 0x440]
+               	inc	ecx
+               	add	r15, rdx
                	nop
-<L178>:
-               	vaddps	ymm0, ymm0, ymmword ptr [rcx + rbx]
-               	add	rbx, 0x20
-               	cmp	r14d, ebx
-               	jne	 <L178>
-               	add	r11, rax
-               	inc	r11
-               	movabs	rbx, -0x100000000
-<L177>:
-               	cmp	r15d, 0x3
-               	jb	 <L176>
-               	mov	eax, esi
-               	sub	eax, r11d
-               	inc	eax
-               	shl	r11, 0x5
-               	lea	rcx, [rsp + 0x220]
-               	add	r11, rcx
-               	nop
-<L179>:
-               	vaddps	ymm0, ymm0, ymmword ptr [r11 - 0x60]
-               	vaddps	ymm0, ymm0, ymmword ptr [r11 - 0x40]
-               	vaddps	ymm0, ymm0, ymmword ptr [r11 - 0x20]
-               	vaddps	ymm0, ymm0, ymmword ptr [r11]
-               	sub	r11, -0x80
-               	add	eax, -0x4
-               	jne	 <L179>
-               	jmp	 <L176>
-<L168>:
-               	mov	rbx, qword ptr [rsp + 0x148]
-               	jmp	 <L170>
-<L172>:
-               	vmovaps	ymm15, ymmword ptr [rax]
-               	mov	rbx, qword ptr [rsp + 0x148]
-               	mov	r15, qword ptr [rsp + 0x150]
-<L170>:
-               	vmovaps	ymmword ptr [rsp + 0x120], ymm15
-               	mov	rdi, qword ptr [rsp + 0x158]
+<L17>:
+               	vaddps	zmm0, zmm0, zmmword ptr [r15 - 0x1c0]
+               	vaddps	zmm0, zmm0, zmmword ptr [r15 - 0x180]
+               	vaddps	zmm0, zmm0, zmmword ptr [r15 - 0x140]
+               	vaddps	zmm0, zmm0, zmmword ptr [r15 - 0x100]
+               	vaddps	zmm0, zmm0, zmmword ptr [r15 - 0xc0]
+               	vaddps	zmm0, zmm0, zmmword ptr [r15 - 0x80]
+               	vaddps	zmm0, zmm0, zmmword ptr [r15 - 0x40]
+               	vaddps	zmm0, zmm0, zmmword ptr [r15]
+               	add	r15, 0x200
+               	add	ecx, -0x8
+               	jne	 <L17>
+               	jmp	 <L14>
+<L4>:
+               	vpxor	xmm0, xmm0, xmm0
+               	jmp	 <L6>
+<L9>:
+               	vmovdqa64	zmm0, zmmword ptr [rax]
+               	mov	rbx, qword ptr [rsp + 0x50]
+               	mov	r15, qword ptr [rsp + 0x40]
+               	mov	r12, qword ptr [rsp + 0x30]
+<L6>:
+               	mov	rdi, r12
+               	vmovdqa64	zmmword ptr [rsp + 0x80], zmm0
                	vzeroupper
-               	call	 <free@plt>
+               	call	 <free$plt>
                	cmp	rbx, 0x2a
-               	jne	 <L180>
-               	vmovaps	ymm1, ymmword ptr [rsp + 0x120]
-               	vextractf128	xmm0, ymm1, 0x1
-               	vaddps	xmm0, xmm0, xmm1
+               	jne	 <L18>
+               	vmovaps	zmm1, zmmword ptr [rsp + 0x80]
+               	vextractf64x4	ymm0, zmm1, 0x1
+               	vaddps	ymm0, ymm0, ymm1
+               	vextractf128	xmm1, ymm0, 0x1
+               	vaddps	xmm0, xmm1, xmm0
                	vshufpd	xmm1, xmm0, xmm0, 0x1   # xmm1 = xmm0[1,0]
                	vaddps	xmm0, xmm0, xmm1
                	vmovshdup	xmm1, xmm0      # xmm1 = xmm0[1,1,3,3]
                	vaddss	xmm0, xmm0, xmm1
                	cmp	r15, 0x30d40
-               	je	 <L181>
+               	je	 <L19>
                	cmp	r15, 0x186a0
-               	jne	 <L180>
-               	vucomiss	xmm0, dword ptr  <memset+0xaa4>
-               	jne	 <L182>
-<L180>:
+               	jne	 <L18>
+               	vucomiss	xmm0, dword ptr  <.LCPI0_8>
+               	jne	 <L20>
+<L18>:
+               	mov	rax, qword ptr fs:[0x28]
+               	cmp	rax, qword ptr [rsp + 0xa80]
+               	jne	 <L21>
                	xor	eax, eax
                	lea	rsp, [rbp - 0x28]
                	pop	rbx
@@ -2608,75 +803,5499 @@ Disassembly of section .text:
                	pop	rbp
                	vzeroupper
                	ret
-<L181>:
-               	vucomiss	xmm0, dword ptr  <memset+0xa98>
-               	je	 <L180>
-<L182>:
+<L19>:
+               	vucomiss	xmm0, dword ptr  <.LCPI0_7>
+               	je	 <L18>
+<L20>:
+               	vmovss	dword ptr [rsp + 0x80], xmm0
+               	mov	rax, qword ptr fs:[0x28]
+               	cmp	rax, qword ptr [rsp + 0xa80]
+               	jne	 <L21>
                	mov	edi, 0x4
-               	vmovss	dword ptr [rsp + 0x120], xmm0
                	vzeroupper
-               	call	 <__cxa_allocate_exception@plt>
-               	vmovss	xmm0, dword ptr [rsp + 0x120]
-               	vmovss	dword ptr [rax], xmm0
-               	mov	rsi, qword ptr  <memset+0x57b8>
+               	call	 <__cxa_allocate_exception$plt>
+               	vmovss	xmm0, dword ptr [rsp + 0x80]
+               	mov	rsi, qword ptr  <_ZTIf$got>
                	mov	rdi, rax
                	xor	edx, edx
-               	call	 <__cxa_throw@plt>
+               	vmovss	dword ptr [rax], xmm0
+               	call	 <__cxa_throw$plt>
+<L21>:
+               	vzeroupper
+               	call	 <__stack_chk_fail$plt>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
-Disassembly of section .init:
-
-<_init>:
-               	endbr64
-               	sub	rsp, 0x8
-               	mov	rax, qword ptr  <memset+0x5798>
-               	test	rax, rax
-               	je	 <L0>
-               	call	rax
-<L0>:
-               	add	rsp, 0x8
-               	ret
-
-Disassembly of section .fini:
-
-<_fini>:
-               	endbr64
-               	sub	rsp, 0x8
-               	add	rsp, 0x8
-               	ret
-
-Disassembly of section .plt:
-
-<.plt>:
-               	push	qword ptr  <_GLOBAL_OFFSET_TABLE_+0x8>
-               	jmp	qword ptr  <_GLOBAL_OFFSET_TABLE_+0x10>
+<RandomGenerators@Evaluation.Dependency.PseudoRandomSequence::RandomGenerators<0ul, 1ul, 2ul, 3ul, 4ul, 5ul, 6ul, 7ul, 8ul, 9ul, 10ul, 11ul, 12ul, 13ul, 14ul, 15ul, 16ul, 17ul, 18ul>(Meta::Random::Splitmix64@Meta.Random.Splitmix<2ul>, std::integer_sequence<unsigned long, 0ul, 1ul, 2ul, 3ul, 4ul, 5ul, 6ul, 7ul, 8ul, 9ul, 10ul, 11ul, 12ul, 13ul, 14ul, 15ul, 16ul, 17ul, 18ul>)>:
+               	push	rbp
+               	push	r15
+               	push	r14
+               	push	r13
+               	push	r12
+               	push	rbx
+               	vpbroadcastq	xmm4, qword ptr  <.LCPI1_1>
+               	vpbroadcastq	xmm7, qword ptr  <.LCPI1_2>
+               	vpsrlq	xmm2, xmm0, 0x1e
+               	vpaddq	xmm1, xmm0, qword ptr {1to2} <.LCPI1_0>
+               	movabs	rsi, 0x2020220200222
+               	mov	qword ptr [rsp - 0x8], rdi
+               	xor	eax, eax
+               	vpxor	xmm2, xmm2, xmm0
+               	vpmullq	xmm2, xmm2, xmm4
+               	vpsrlq	xmm5, xmm1, 0x1e
+               	vpxor	xmm1, xmm5, xmm1
+               	vpmullq	xmm1, xmm1, xmm4
+               	vpsrlq	xmm3, xmm2, 0x1b
+               	vpxor	xmm2, xmm3, xmm2
+               	vpmullq	xmm2, xmm2, xmm7
+               	vpsrlq	xmm5, xmm1, 0x1b
+               	vpxor	xmm1, xmm5, xmm1
+               	vpmullq	xmm1, xmm1, xmm7
+               	vpsrlq	xmm3, xmm2, 0x1f
+               	vpxor	xmm3, xmm3, xmm2
+               	vpaddq	xmm2, xmm0, qword ptr {1to2} <.LCPI1_3>
+               	vpaddq	xmm0, xmm0, qword ptr {1to2} <.LCPI1_4>
+               	vpsrlq	xmm5, xmm1, 0x1f
+               	vmovdqa	xmmword ptr [rdi], xmm3
+               	vpxor	xmm5, xmm5, xmm1
+               	vmovdqa	xmmword ptr [rdi + 0x10], xmm5
+               	vpsrlq	xmm1, xmm2, 0x1e
+               	vpxor	xmm1, xmm1, xmm2
+               	vpmullq	xmm1, xmm1, xmm4
+               	vpsrlq	xmm2, xmm1, 0x1b
+               	vpxor	xmm1, xmm2, xmm1
+               	vpmullq	xmm1, xmm1, xmm7
+               	vpsrlq	xmm2, xmm1, 0x1f
+               	vpxor	xmm6, xmm2, xmm1
+               	vpsrlq	xmm1, xmm0, 0x1e
+               	vpxor	xmm2, xmm2, xmm2
+               	vpxor	xmm0, xmm1, xmm0
+               	vmovdqa	xmmword ptr [rdi + 0x20], xmm6
+               	vpmullq	xmm0, xmm0, xmm4
+               	vpxor	xmm4, xmm4, xmm4
+               	vpsrlq	xmm1, xmm0, 0x1b
+               	vpxor	xmm0, xmm1, xmm0
+               	vpmullq	xmm0, xmm0, xmm7
+               	vpsrlq	xmm1, xmm0, 0x1f
+               	vpxor	xmm7, xmm1, xmm0
+               	vpxor	xmm0, xmm0, xmm0
+               	vpxor	xmm1, xmm1, xmm1
+               	vmovdqa	xmmword ptr [rdi + 0x30], xmm7
+               	jmp	 <L0>
                	nop	dword ptr [rax]
-
-<__cxa_finalize@plt>:
-               	jmp	qword ptr  <_GLOBAL_OFFSET_TABLE_+0x18>
-               	push	0x0
-               	jmp	 <.plt>
-
-<__cxa_throw@plt>:
-               	jmp	qword ptr  <_GLOBAL_OFFSET_TABLE_+0x20>
-               	push	0x1
-               	jmp	 <.plt>
-
-<__cxa_allocate_exception@plt>:
-               	jmp	qword ptr  <_GLOBAL_OFFSET_TABLE_+0x28>
-               	push	0x2
-               	jmp	 <.plt>
-
-<aligned_alloc@plt>:
-               	jmp	qword ptr  <_GLOBAL_OFFSET_TABLE_+0x30>
-               	push	0x3
-               	jmp	 <.plt>
-
-<free@plt>:
-               	jmp	qword ptr  <_GLOBAL_OFFSET_TABLE_+0x38>
-               	push	0x4
-               	jmp	 <.plt>
-
-<memset@plt>:
-               	jmp	qword ptr  <_GLOBAL_OFFSET_TABLE_+0x40>
-               	push	0x5
-               	jmp	 <.plt>
+<L5>:
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm8, xmm5, 0x11
+               	add	rax, 0x4
+               	vpxor	xmm3, xmm7, xmm3
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm5, xmm6, xmm5
+               	vpxor	xmm6, xmm8, xmm6
+               	cmp	rax, 0x40
+               	je	 <L1>
+<L0>:
+               	movabs	rcx, 0x1000001110110010
+               	bt	rcx, rax
+               	jae	 <L2>
+               	vpxor	xmm1, xmm1, xmm3
+               	vpxor	xmm0, xmm5, xmm0
+               	vpxor	xmm4, xmm6, xmm4
+               	vpxor	xmm2, xmm7, xmm2
+<L2>:
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm8, xmm5, 0x11
+               	shrx	rcx, rsi, rax
+               	vpxor	xmm3, xmm7, xmm3
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm5, xmm6, xmm5
+               	vpxor	xmm6, xmm8, xmm6
+               	test	cl, 0x2
+               	je	 <L3>
+               	vpxor	xmm1, xmm1, xmm3
+               	vpxor	xmm0, xmm5, xmm0
+               	vpxor	xmm4, xmm6, xmm4
+               	vpxor	xmm2, xmm7, xmm2
+<L3>:
+               	vpxor	xmm7, xmm5, xmm7
+               	movabs	rcx, 0x4444004440000
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm8, xmm5, 0x11
+               	vpxor	xmm3, xmm7, xmm3
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm5, xmm6, xmm5
+               	vpxor	xmm6, xmm8, xmm6
+               	shrx	rcx, rcx, rax
+               	test	cl, 0x4
+               	je	 <L4>
+               	vpxor	xmm1, xmm1, xmm3
+               	vpxor	xmm0, xmm5, xmm0
+               	vpxor	xmm4, xmm6, xmm4
+               	vpxor	xmm2, xmm7, xmm2
+<L4>:
+               	vpxor	xmm7, xmm5, xmm7
+               	movabs	rcx, 0x808808008880888
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm8, xmm5, 0x11
+               	vpxor	xmm3, xmm7, xmm3
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm5, xmm6, xmm5
+               	vpxor	xmm6, xmm8, xmm6
+               	shrx	rcx, rcx, rax
+               	test	cl, 0x8
+               	je	 <L5>
+               	vpxor	xmm1, xmm1, xmm3
+               	vpxor	xmm0, xmm5, xmm0
+               	vpxor	xmm4, xmm6, xmm4
+               	vpxor	xmm2, xmm7, xmm2
+               	jmp	 <L5>
+<L1>:
+               	movabs	r8, -0x7f7fffff7f77f7f8
+               	movabs	r9, 0x4404004440400004
+               	movabs	r10, 0x1100100010011100
+               	movabs	r11, 0x22022220002020
+               	xor	eax, eax
+               	jmp	 <L6>
+               	nop	word ptr cs:[rax + rax]
+<L11>:
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm8, xmm5, 0x11
+               	add	rax, 0x4
+               	vpxor	xmm3, xmm7, xmm3
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm5, xmm6, xmm5
+               	vpxor	xmm6, xmm8, xmm6
+               	cmp	rax, 0x40
+               	je	 <L7>
+<L6>:
+               	bt	r10, rax
+               	jae	 <L8>
+               	vpxor	xmm1, xmm1, xmm3
+               	vpxor	xmm0, xmm5, xmm0
+               	vpxor	xmm4, xmm6, xmm4
+               	vpxor	xmm2, xmm7, xmm2
+<L8>:
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm8, xmm5, 0x11
+               	shrx	rcx, r11, rax
+               	vpxor	xmm3, xmm7, xmm3
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm5, xmm6, xmm5
+               	vpxor	xmm6, xmm8, xmm6
+               	test	cl, 0x2
+               	je	 <L9>
+               	vpxor	xmm1, xmm1, xmm3
+               	vpxor	xmm0, xmm5, xmm0
+               	vpxor	xmm4, xmm6, xmm4
+               	vpxor	xmm2, xmm7, xmm2
+<L9>:
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm8, xmm5, 0x11
+               	shrx	rcx, r9, rax
+               	vpxor	xmm3, xmm7, xmm3
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm5, xmm6, xmm5
+               	vpxor	xmm6, xmm8, xmm6
+               	test	cl, 0x4
+               	je	 <L10>
+               	vpxor	xmm1, xmm1, xmm3
+               	vpxor	xmm0, xmm5, xmm0
+               	vpxor	xmm4, xmm6, xmm4
+               	vpxor	xmm2, xmm7, xmm2
+<L10>:
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm8, xmm5, 0x11
+               	shrx	rcx, r8, rax
+               	vpxor	xmm3, xmm7, xmm3
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm5, xmm6, xmm5
+               	vpxor	xmm6, xmm8, xmm6
+               	test	cl, 0x8
+               	je	 <L11>
+               	vpxor	xmm1, xmm1, xmm3
+               	vpxor	xmm0, xmm5, xmm0
+               	vpxor	xmm4, xmm6, xmm4
+               	vpxor	xmm2, xmm7, xmm2
+               	jmp	 <L11>
+<L7>:
+               	movabs	rbx, -0x77f7fff77ff77778
+               	movabs	r14, 0x2000220020220022
+               	movabs	r15, 0x110001000110100
+               	movabs	r12, 0x40040040044000
+               	xor	eax, eax
+               	jmp	 <L12>
+               	nop	word ptr [rax + rax]
+<L17>:
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm8, xmm5, 0x11
+               	add	rax, 0x4
+               	vpxor	xmm3, xmm7, xmm3
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm5, xmm6, xmm5
+               	vpxor	xmm6, xmm8, xmm6
+               	cmp	rax, 0x40
+               	je	 <L13>
+<L12>:
+               	bt	r15, rax
+               	jae	 <L14>
+               	vpxor	xmm1, xmm1, xmm3
+               	vpxor	xmm0, xmm5, xmm0
+               	vpxor	xmm4, xmm6, xmm4
+               	vpxor	xmm2, xmm7, xmm2
+<L14>:
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm8, xmm5, 0x11
+               	shrx	rcx, r14, rax
+               	vpxor	xmm3, xmm7, xmm3
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm5, xmm6, xmm5
+               	vpxor	xmm6, xmm8, xmm6
+               	test	cl, 0x2
+               	je	 <L15>
+               	vpxor	xmm1, xmm1, xmm3
+               	vpxor	xmm0, xmm5, xmm0
+               	vpxor	xmm4, xmm6, xmm4
+               	vpxor	xmm2, xmm7, xmm2
+<L15>:
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm8, xmm5, 0x11
+               	shrx	rcx, r12, rax
+               	vpxor	xmm3, xmm7, xmm3
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm5, xmm6, xmm5
+               	vpxor	xmm6, xmm8, xmm6
+               	test	cl, 0x4
+               	je	 <L16>
+               	vpxor	xmm1, xmm1, xmm3
+               	vpxor	xmm0, xmm5, xmm0
+               	vpxor	xmm4, xmm6, xmm4
+               	vpxor	xmm2, xmm7, xmm2
+<L16>:
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm8, xmm5, 0x11
+               	shrx	rcx, rbx, rax
+               	vpxor	xmm3, xmm7, xmm3
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm5, xmm6, xmm5
+               	vpxor	xmm6, xmm8, xmm6
+               	test	cl, 0x8
+               	je	 <L17>
+               	vpxor	xmm1, xmm1, xmm3
+               	vpxor	xmm0, xmm5, xmm0
+               	vpxor	xmm4, xmm6, xmm4
+               	vpxor	xmm2, xmm7, xmm2
+               	jmp	 <L17>
+<L13>:
+               	movabs	r13, 0x2022000020202200
+               	movabs	rbp, 0x1101100101110010
+               	movabs	rax, 0x888880008800008
+               	movabs	rdi, 0x444400004404
+               	xor	ecx, ecx
+               	jmp	 <L18>
+               	nop	word ptr [rax + rax]
+<L23>:
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm8, xmm5, 0x11
+               	add	rcx, 0x4
+               	vpxor	xmm3, xmm7, xmm3
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm5, xmm6, xmm5
+               	vpxor	xmm6, xmm8, xmm6
+               	cmp	rcx, 0x40
+               	je	 <L19>
+<L18>:
+               	bt	rbp, rcx
+               	jae	 <L20>
+               	vpxor	xmm1, xmm1, xmm3
+               	vpxor	xmm0, xmm5, xmm0
+               	vpxor	xmm4, xmm6, xmm4
+               	vpxor	xmm2, xmm7, xmm2
+<L20>:
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm8, xmm5, 0x11
+               	shrx	rdx, r13, rcx
+               	vpxor	xmm3, xmm7, xmm3
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm5, xmm6, xmm5
+               	vpxor	xmm6, xmm8, xmm6
+               	test	dl, 0x2
+               	je	 <L21>
+               	vpxor	xmm1, xmm1, xmm3
+               	vpxor	xmm0, xmm5, xmm0
+               	vpxor	xmm4, xmm6, xmm4
+               	vpxor	xmm2, xmm7, xmm2
+<L21>:
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm8, xmm5, 0x11
+               	shrx	rdx, rdi, rcx
+               	vpxor	xmm3, xmm7, xmm3
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm5, xmm6, xmm5
+               	vpxor	xmm6, xmm8, xmm6
+               	test	dl, 0x4
+               	je	 <L22>
+               	vpxor	xmm1, xmm1, xmm3
+               	vpxor	xmm0, xmm5, xmm0
+               	vpxor	xmm4, xmm6, xmm4
+               	vpxor	xmm2, xmm7, xmm2
+<L22>:
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm8, xmm5, 0x11
+               	shrx	rdx, rax, rcx
+               	vpxor	xmm3, xmm7, xmm3
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm5, xmm6, xmm5
+               	vpxor	xmm6, xmm8, xmm6
+               	test	dl, 0x8
+               	je	 <L23>
+               	vpxor	xmm1, xmm1, xmm3
+               	vpxor	xmm0, xmm5, xmm0
+               	vpxor	xmm4, xmm6, xmm4
+               	vpxor	xmm2, xmm7, xmm2
+               	jmp	 <L23>
+<L19>:
+               	mov	rcx, qword ptr [rsp - 0x8]
+               	vpxor	xmm6, xmm6, xmm6
+               	vpxor	xmm7, xmm7, xmm7
+               	vpxor	xmm3, xmm3, xmm3
+               	vpxor	xmm5, xmm5, xmm5
+               	vmovdqa	xmmword ptr [rcx + 0x40], xmm1
+               	vmovdqa	xmmword ptr [rcx + 0x50], xmm0
+               	vmovdqa	xmmword ptr [rcx + 0x60], xmm4
+               	vmovdqa	xmmword ptr [rcx + 0x70], xmm2
+               	xor	ecx, ecx
+               	jmp	 <L24>
+               	nop	dword ptr [rax + rax]
+<L29>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm1, xmm2
+               	vpxor	xmm9, xmm0, xmm4
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm2, xmm0
+               	vpxor	xmm4, xmm8, xmm2
+               	vprolq	xmm2, xmm9, 0x2d
+               	vpxor	xmm1, xmm9, xmm1
+               	cmp	rcx, 0x40
+               	je	 <L25>
+<L24>:
+               	movabs	rdx, 0x1000001110110010
+               	bt	rdx, rcx
+               	jae	 <L26>
+               	vpxor	xmm5, xmm5, xmm1
+               	vpxor	xmm3, xmm0, xmm3
+               	vpxor	xmm7, xmm4, xmm7
+               	vpxor	xmm6, xmm2, xmm6
+<L26>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm9, xmm0, xmm2
+               	shrx	rdx, rsi, rcx
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm2, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm1, xmm9, xmm1
+               	test	dl, 0x2
+               	je	 <L27>
+               	vpxor	xmm5, xmm5, xmm1
+               	vpxor	xmm3, xmm0, xmm3
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm6, xmm4, xmm6
+<L27>:
+               	vpxor	xmm4, xmm0, xmm4
+               	movabs	rdx, 0x4444004440000
+               	vpxor	xmm2, xmm1, xmm2
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm1, xmm4, xmm1
+               	vprolq	xmm4, xmm4, 0x2d
+               	vpxor	xmm0, xmm2, xmm0
+               	vpxor	xmm2, xmm8, xmm2
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x4
+               	je	 <L28>
+               	vpxor	xmm5, xmm5, xmm1
+               	vpxor	xmm3, xmm0, xmm3
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm6, xmm4, xmm6
+<L28>:
+               	vpxor	xmm4, xmm0, xmm4
+               	movabs	rdx, 0x808808008880888
+               	vpxor	xmm2, xmm1, xmm2
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm1, xmm4, xmm1
+               	vprolq	xmm4, xmm4, 0x2d
+               	vpxor	xmm0, xmm2, xmm0
+               	vpxor	xmm2, xmm8, xmm2
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x8
+               	je	 <L29>
+               	vpxor	xmm5, xmm5, xmm1
+               	vpxor	xmm3, xmm0, xmm3
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm6, xmm4, xmm6
+               	jmp	 <L29>
+<L25>:
+               	xor	ecx, ecx
+               	jmp	 <L30>
+               	nop	dword ptr [rax]
+<L35>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm1, xmm2
+               	vpxor	xmm9, xmm0, xmm4
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm2, xmm0
+               	vpxor	xmm4, xmm8, xmm2
+               	vprolq	xmm2, xmm9, 0x2d
+               	vpxor	xmm1, xmm9, xmm1
+               	cmp	rcx, 0x40
+               	je	 <L31>
+<L30>:
+               	bt	r10, rcx
+               	jae	 <L32>
+               	vpxor	xmm5, xmm5, xmm1
+               	vpxor	xmm3, xmm0, xmm3
+               	vpxor	xmm7, xmm4, xmm7
+               	vpxor	xmm6, xmm2, xmm6
+<L32>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm9, xmm0, xmm2
+               	shrx	rdx, r11, rcx
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm2, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm1, xmm9, xmm1
+               	test	dl, 0x2
+               	je	 <L33>
+               	vpxor	xmm5, xmm5, xmm1
+               	vpxor	xmm3, xmm0, xmm3
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm6, xmm4, xmm6
+<L33>:
+               	vpxor	xmm4, xmm0, xmm4
+               	vpxor	xmm2, xmm1, xmm2
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r9, rcx
+               	vpxor	xmm1, xmm4, xmm1
+               	vprolq	xmm4, xmm4, 0x2d
+               	vpxor	xmm0, xmm2, xmm0
+               	vpxor	xmm2, xmm8, xmm2
+               	test	dl, 0x4
+               	je	 <L34>
+               	vpxor	xmm5, xmm5, xmm1
+               	vpxor	xmm3, xmm0, xmm3
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm6, xmm4, xmm6
+<L34>:
+               	vpxor	xmm4, xmm0, xmm4
+               	vpxor	xmm2, xmm1, xmm2
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r8, rcx
+               	vpxor	xmm1, xmm4, xmm1
+               	vprolq	xmm4, xmm4, 0x2d
+               	vpxor	xmm0, xmm2, xmm0
+               	vpxor	xmm2, xmm8, xmm2
+               	test	dl, 0x8
+               	je	 <L35>
+               	vpxor	xmm5, xmm5, xmm1
+               	vpxor	xmm3, xmm0, xmm3
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm6, xmm4, xmm6
+               	jmp	 <L35>
+<L31>:
+               	xor	ecx, ecx
+               	jmp	 <L36>
+               	nop
+<L41>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm1, xmm2
+               	vpxor	xmm9, xmm0, xmm4
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm2, xmm0
+               	vpxor	xmm4, xmm8, xmm2
+               	vprolq	xmm2, xmm9, 0x2d
+               	vpxor	xmm1, xmm9, xmm1
+               	cmp	rcx, 0x40
+               	je	 <L37>
+<L36>:
+               	bt	r15, rcx
+               	jae	 <L38>
+               	vpxor	xmm5, xmm5, xmm1
+               	vpxor	xmm3, xmm0, xmm3
+               	vpxor	xmm7, xmm4, xmm7
+               	vpxor	xmm6, xmm2, xmm6
+<L38>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm9, xmm0, xmm2
+               	shrx	rdx, r14, rcx
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm2, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm1, xmm9, xmm1
+               	test	dl, 0x2
+               	je	 <L39>
+               	vpxor	xmm5, xmm5, xmm1
+               	vpxor	xmm3, xmm0, xmm3
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm6, xmm4, xmm6
+<L39>:
+               	vpxor	xmm4, xmm0, xmm4
+               	vpxor	xmm2, xmm1, xmm2
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r12, rcx
+               	vpxor	xmm1, xmm4, xmm1
+               	vprolq	xmm4, xmm4, 0x2d
+               	vpxor	xmm0, xmm2, xmm0
+               	vpxor	xmm2, xmm8, xmm2
+               	test	dl, 0x4
+               	je	 <L40>
+               	vpxor	xmm5, xmm5, xmm1
+               	vpxor	xmm3, xmm0, xmm3
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm6, xmm4, xmm6
+<L40>:
+               	vpxor	xmm4, xmm0, xmm4
+               	vpxor	xmm2, xmm1, xmm2
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rbx, rcx
+               	vpxor	xmm1, xmm4, xmm1
+               	vprolq	xmm4, xmm4, 0x2d
+               	vpxor	xmm0, xmm2, xmm0
+               	vpxor	xmm2, xmm8, xmm2
+               	test	dl, 0x8
+               	je	 <L41>
+               	vpxor	xmm5, xmm5, xmm1
+               	vpxor	xmm3, xmm0, xmm3
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm6, xmm4, xmm6
+               	jmp	 <L41>
+<L37>:
+               	xor	ecx, ecx
+               	jmp	 <L42>
+               	nop
+<L47>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm1, xmm2
+               	vpxor	xmm9, xmm0, xmm4
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm2, xmm0
+               	vpxor	xmm4, xmm8, xmm2
+               	vprolq	xmm2, xmm9, 0x2d
+               	vpxor	xmm1, xmm9, xmm1
+               	cmp	rcx, 0x40
+               	je	 <L43>
+<L42>:
+               	bt	rbp, rcx
+               	jae	 <L44>
+               	vpxor	xmm5, xmm5, xmm1
+               	vpxor	xmm3, xmm0, xmm3
+               	vpxor	xmm7, xmm4, xmm7
+               	vpxor	xmm6, xmm2, xmm6
+<L44>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm9, xmm0, xmm2
+               	shrx	rdx, r13, rcx
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm2, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm1, xmm9, xmm1
+               	test	dl, 0x2
+               	je	 <L45>
+               	vpxor	xmm5, xmm5, xmm1
+               	vpxor	xmm3, xmm0, xmm3
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm6, xmm4, xmm6
+<L45>:
+               	vpxor	xmm4, xmm0, xmm4
+               	vpxor	xmm2, xmm1, xmm2
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rdi, rcx
+               	vpxor	xmm1, xmm4, xmm1
+               	vprolq	xmm4, xmm4, 0x2d
+               	vpxor	xmm0, xmm2, xmm0
+               	vpxor	xmm2, xmm8, xmm2
+               	test	dl, 0x4
+               	je	 <L46>
+               	vpxor	xmm5, xmm5, xmm1
+               	vpxor	xmm3, xmm0, xmm3
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm6, xmm4, xmm6
+<L46>:
+               	vpxor	xmm4, xmm0, xmm4
+               	vpxor	xmm2, xmm1, xmm2
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rax, rcx
+               	vpxor	xmm1, xmm4, xmm1
+               	vprolq	xmm4, xmm4, 0x2d
+               	vpxor	xmm0, xmm2, xmm0
+               	vpxor	xmm2, xmm8, xmm2
+               	test	dl, 0x8
+               	je	 <L47>
+               	vpxor	xmm5, xmm5, xmm1
+               	vpxor	xmm3, xmm0, xmm3
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm6, xmm4, xmm6
+               	jmp	 <L47>
+<L43>:
+               	mov	rcx, qword ptr [rsp - 0x8]
+               	vpxor	xmm4, xmm4, xmm4
+               	vpxor	xmm8, xmm8, xmm8
+               	vpxor	xmm0, xmm0, xmm0
+               	vpxor	xmm2, xmm2, xmm2
+               	vmovdqa	xmmword ptr [rcx + 0x80], xmm5
+               	vmovdqa	xmmword ptr [rcx + 0x90], xmm3
+               	vmovdqa	xmmword ptr [rcx + 0xa0], xmm7
+               	vmovdqa	xmmword ptr [rcx + 0xb0], xmm6
+               	xor	ecx, ecx
+               	jmp	 <L48>
+               	nop	word ptr cs:[rax + rax]
+<L53>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm9, xmm5, xmm3
+               	vpsllq	xmm7, xmm1, 0x11
+               	add	rcx, 0x4
+               	vpxor	xmm5, xmm6, xmm5
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm3, xmm9, xmm1
+               	vpxor	xmm7, xmm9, xmm7
+               	cmp	rcx, 0x40
+               	je	 <L49>
+<L48>:
+               	movabs	rdx, 0x1000001110110010
+               	bt	rdx, rcx
+               	jae	 <L50>
+               	vpxor	xmm2, xmm2, xmm5
+               	vpxor	xmm0, xmm3, xmm0
+               	vpxor	xmm8, xmm8, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L50>:
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm9, xmm3, 0x11
+               	shrx	rdx, rsi, rcx
+               	vpxor	xmm1, xmm7, xmm3
+               	vpxor	xmm3, xmm6, xmm5
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm5, xmm9, xmm7
+               	test	dl, 0x2
+               	je	 <L51>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm8, xmm8, xmm5
+               	vpxor	xmm4, xmm6, xmm4
+<L51>:
+               	vpxor	xmm6, xmm1, xmm6
+               	movabs	rdx, 0x4444004440000
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm7, xmm1, 0x11
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm5, xmm7
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x4
+               	je	 <L52>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm8, xmm8, xmm5
+               	vpxor	xmm4, xmm6, xmm4
+<L52>:
+               	vpxor	xmm6, xmm1, xmm6
+               	movabs	rdx, 0x808808008880888
+               	vpxor	xmm9, xmm3, xmm5
+               	vpsllq	xmm7, xmm1, 0x11
+               	vpxor	xmm5, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm9, xmm1
+               	vpxor	xmm3, xmm9, xmm7
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x8
+               	je	 <L53>
+               	vpxor	xmm2, xmm2, xmm5
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm8, xmm8, xmm3
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L53>
+<L49>:
+               	xor	ecx, ecx
+               	jmp	 <L54>
+               	nop	dword ptr [rax]
+<L59>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm9, xmm5, xmm3
+               	vpsllq	xmm7, xmm1, 0x11
+               	add	rcx, 0x4
+               	vpxor	xmm5, xmm6, xmm5
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm3, xmm9, xmm1
+               	vpxor	xmm7, xmm9, xmm7
+               	cmp	rcx, 0x40
+               	je	 <L55>
+<L54>:
+               	bt	r10, rcx
+               	jae	 <L56>
+               	vpxor	xmm2, xmm2, xmm5
+               	vpxor	xmm0, xmm3, xmm0
+               	vpxor	xmm8, xmm8, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L56>:
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm9, xmm3, 0x11
+               	shrx	rdx, r11, rcx
+               	vpxor	xmm1, xmm7, xmm3
+               	vpxor	xmm3, xmm6, xmm5
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm5, xmm9, xmm7
+               	test	dl, 0x2
+               	je	 <L57>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm8, xmm8, xmm5
+               	vpxor	xmm4, xmm6, xmm4
+<L57>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm7, xmm1, 0x11
+               	shrx	rdx, r9, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm5, xmm7
+               	test	dl, 0x4
+               	je	 <L58>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm8, xmm8, xmm5
+               	vpxor	xmm4, xmm6, xmm4
+<L58>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm9, xmm3, xmm5
+               	vpsllq	xmm7, xmm1, 0x11
+               	shrx	rdx, r8, rcx
+               	vpxor	xmm5, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm9, xmm1
+               	vpxor	xmm3, xmm9, xmm7
+               	test	dl, 0x8
+               	je	 <L59>
+               	vpxor	xmm2, xmm2, xmm5
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm8, xmm8, xmm3
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L59>
+<L55>:
+               	xor	ecx, ecx
+               	jmp	 <L60>
+               	nop
+<L65>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm9, xmm5, xmm3
+               	vpsllq	xmm7, xmm1, 0x11
+               	add	rcx, 0x4
+               	vpxor	xmm5, xmm6, xmm5
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm3, xmm9, xmm1
+               	vpxor	xmm7, xmm9, xmm7
+               	cmp	rcx, 0x40
+               	je	 <L61>
+<L60>:
+               	bt	r15, rcx
+               	jae	 <L62>
+               	vpxor	xmm2, xmm2, xmm5
+               	vpxor	xmm0, xmm3, xmm0
+               	vpxor	xmm8, xmm8, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L62>:
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm9, xmm3, 0x11
+               	shrx	rdx, r14, rcx
+               	vpxor	xmm1, xmm7, xmm3
+               	vpxor	xmm3, xmm6, xmm5
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm5, xmm9, xmm7
+               	test	dl, 0x2
+               	je	 <L63>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm8, xmm8, xmm5
+               	vpxor	xmm4, xmm6, xmm4
+<L63>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm7, xmm1, 0x11
+               	shrx	rdx, r12, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm5, xmm7
+               	test	dl, 0x4
+               	je	 <L64>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm8, xmm8, xmm5
+               	vpxor	xmm4, xmm6, xmm4
+<L64>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm9, xmm3, xmm5
+               	vpsllq	xmm7, xmm1, 0x11
+               	shrx	rdx, rbx, rcx
+               	vpxor	xmm5, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm9, xmm1
+               	vpxor	xmm3, xmm9, xmm7
+               	test	dl, 0x8
+               	je	 <L65>
+               	vpxor	xmm2, xmm2, xmm5
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm8, xmm8, xmm3
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L65>
+<L61>:
+               	xor	ecx, ecx
+               	jmp	 <L66>
+               	nop
+<L71>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm9, xmm5, xmm3
+               	vpsllq	xmm7, xmm1, 0x11
+               	add	rcx, 0x4
+               	vpxor	xmm5, xmm6, xmm5
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm3, xmm9, xmm1
+               	vpxor	xmm7, xmm9, xmm7
+               	cmp	rcx, 0x40
+               	je	 <L67>
+<L66>:
+               	bt	rbp, rcx
+               	jae	 <L68>
+               	vpxor	xmm2, xmm2, xmm5
+               	vpxor	xmm0, xmm3, xmm0
+               	vpxor	xmm8, xmm8, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L68>:
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm6, xmm3, xmm6
+               	vpsllq	xmm9, xmm3, 0x11
+               	shrx	rdx, r13, rcx
+               	vpxor	xmm1, xmm7, xmm3
+               	vpxor	xmm3, xmm6, xmm5
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm5, xmm9, xmm7
+               	test	dl, 0x2
+               	je	 <L69>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm8, xmm8, xmm5
+               	vpxor	xmm4, xmm6, xmm4
+<L69>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm7, xmm1, 0x11
+               	shrx	rdx, rdi, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm5, xmm7
+               	test	dl, 0x4
+               	je	 <L70>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm8, xmm8, xmm5
+               	vpxor	xmm4, xmm6, xmm4
+<L70>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm9, xmm3, xmm5
+               	vpsllq	xmm7, xmm1, 0x11
+               	shrx	rdx, rax, rcx
+               	vpxor	xmm5, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm9, xmm1
+               	vpxor	xmm3, xmm9, xmm7
+               	test	dl, 0x8
+               	je	 <L71>
+               	vpxor	xmm2, xmm2, xmm5
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm8, xmm8, xmm3
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L71>
+<L67>:
+               	mov	rcx, qword ptr [rsp - 0x8]
+               	vpxor	xmm5, xmm5, xmm5
+               	vpxor	xmm6, xmm6, xmm6
+               	vpxor	xmm1, xmm1, xmm1
+               	vpxor	xmm3, xmm3, xmm3
+               	vmovdqa	xmmword ptr [rcx + 0xc0], xmm2
+               	vmovdqa	xmmword ptr [rcx + 0xd0], xmm0
+               	vmovdqa	xmmword ptr [rcx + 0xe0], xmm8
+               	vmovdqa	xmmword ptr [rcx + 0xf0], xmm4
+               	xor	ecx, ecx
+               	jmp	 <L72>
+               	nop	word ptr cs:[rax + rax]
+<L77>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm7, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm8, xmm8, xmm4
+               	vprolq	xmm4, xmm7, 0x2d
+               	vpxor	xmm2, xmm7, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L73>
+<L72>:
+               	movabs	rdx, 0x1000001110110010
+               	bt	rdx, rcx
+               	jae	 <L74>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm8, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L74>:
+               	vpsllq	xmm7, xmm0, 0x11
+               	vpxor	xmm8, xmm8, xmm2
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, rsi, rcx
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm0, xmm8, xmm0
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L75>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L75>:
+               	vpxor	xmm7, xmm0, xmm7
+               	movabs	rdx, 0x4444004440000
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x4
+               	je	 <L76>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L76>:
+               	vpxor	xmm7, xmm0, xmm7
+               	movabs	rdx, 0x808808008880888
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x8
+               	je	 <L77>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L77>
+<L73>:
+               	xor	ecx, ecx
+               	jmp	 <L78>
+               	nop	dword ptr [rax]
+<L83>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm7, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm8, xmm8, xmm4
+               	vprolq	xmm4, xmm7, 0x2d
+               	vpxor	xmm2, xmm7, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L79>
+<L78>:
+               	bt	r10, rcx
+               	jae	 <L80>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm8, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L80>:
+               	vpsllq	xmm7, xmm0, 0x11
+               	vpxor	xmm8, xmm8, xmm2
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r11, rcx
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm0, xmm8, xmm0
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L81>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L81>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r9, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L82>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L82>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r8, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L83>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L83>
+<L79>:
+               	xor	ecx, ecx
+               	jmp	 <L84>
+               	nop
+<L89>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm7, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm8, xmm8, xmm4
+               	vprolq	xmm4, xmm7, 0x2d
+               	vpxor	xmm2, xmm7, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L85>
+<L84>:
+               	bt	r15, rcx
+               	jae	 <L86>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm8, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L86>:
+               	vpsllq	xmm7, xmm0, 0x11
+               	vpxor	xmm8, xmm8, xmm2
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r14, rcx
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm0, xmm8, xmm0
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L87>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L87>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r12, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L88>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L88>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rbx, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L89>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L89>
+<L85>:
+               	xor	ecx, ecx
+               	jmp	 <L90>
+               	nop
+<L95>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm7, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm8, xmm8, xmm4
+               	vprolq	xmm4, xmm7, 0x2d
+               	vpxor	xmm2, xmm7, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L91>
+<L90>:
+               	bt	rbp, rcx
+               	jae	 <L92>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm8, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L92>:
+               	vpsllq	xmm7, xmm0, 0x11
+               	vpxor	xmm8, xmm8, xmm2
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r13, rcx
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm0, xmm8, xmm0
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L93>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L93>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rdi, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L94>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L94>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rax, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L95>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L95>
+<L91>:
+               	mov	rcx, qword ptr [rsp - 0x8]
+               	vpxor	xmm4, xmm4, xmm4
+               	vpxor	xmm7, xmm7, xmm7
+               	vpxor	xmm0, xmm0, xmm0
+               	vpxor	xmm2, xmm2, xmm2
+               	vmovdqa	xmmword ptr [rcx + 0x100], xmm3
+               	vmovdqa	xmmword ptr [rcx + 0x110], xmm1
+               	vmovdqa	xmmword ptr [rcx + 0x120], xmm6
+               	vmovdqa	xmmword ptr [rcx + 0x130], xmm5
+               	xor	ecx, ecx
+               	jmp	 <L96>
+               	nop	word ptr cs:[rax + rax]
+<L101>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L97>
+<L96>:
+               	movabs	rdx, 0x1000001110110010
+               	bt	rdx, rcx
+               	jae	 <L98>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L98>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, rsi, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L99>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L99>:
+               	vpxor	xmm6, xmm1, xmm6
+               	movabs	rdx, 0x4444004440000
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x4
+               	je	 <L100>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L100>:
+               	vpxor	xmm6, xmm1, xmm6
+               	movabs	rdx, 0x808808008880888
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x8
+               	je	 <L101>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L101>
+<L97>:
+               	xor	ecx, ecx
+               	jmp	 <L102>
+               	nop	dword ptr [rax]
+<L107>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L103>
+<L102>:
+               	bt	r10, rcx
+               	jae	 <L104>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L104>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r11, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L105>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L105>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r9, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L106>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L106>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r8, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L107>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L107>
+<L103>:
+               	xor	ecx, ecx
+               	jmp	 <L108>
+               	nop
+<L113>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L109>
+<L108>:
+               	bt	r15, rcx
+               	jae	 <L110>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L110>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r14, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L111>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L111>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r12, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L112>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L112>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rbx, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L113>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L113>
+<L109>:
+               	xor	ecx, ecx
+               	jmp	 <L114>
+               	nop
+<L119>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L115>
+<L114>:
+               	bt	rbp, rcx
+               	jae	 <L116>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L116>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r13, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L117>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L117>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rdi, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L118>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L118>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rax, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L119>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L119>
+<L115>:
+               	mov	rcx, qword ptr [rsp - 0x8]
+               	vpxor	xmm5, xmm5, xmm5
+               	vpxor	xmm6, xmm6, xmm6
+               	vpxor	xmm1, xmm1, xmm1
+               	vpxor	xmm3, xmm3, xmm3
+               	vmovdqa	xmmword ptr [rcx + 0x140], xmm2
+               	vmovdqa	xmmword ptr [rcx + 0x150], xmm0
+               	vmovdqa	xmmword ptr [rcx + 0x160], xmm7
+               	vmovdqa	xmmword ptr [rcx + 0x170], xmm4
+               	xor	ecx, ecx
+               	jmp	 <L120>
+               	nop	word ptr cs:[rax + rax]
+<L125>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L121>
+<L120>:
+               	movabs	rdx, 0x1000001110110010
+               	bt	rdx, rcx
+               	jae	 <L122>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L122>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, rsi, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L123>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L123>:
+               	vpxor	xmm7, xmm0, xmm7
+               	movabs	rdx, 0x4444004440000
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x4
+               	je	 <L124>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L124>:
+               	vpxor	xmm7, xmm0, xmm7
+               	movabs	rdx, 0x808808008880888
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x8
+               	je	 <L125>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L125>
+<L121>:
+               	xor	ecx, ecx
+               	jmp	 <L126>
+               	nop	dword ptr [rax]
+<L131>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L127>
+<L126>:
+               	bt	r10, rcx
+               	jae	 <L128>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L128>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r11, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L129>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L129>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r9, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L130>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L130>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r8, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L131>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L131>
+<L127>:
+               	xor	ecx, ecx
+               	jmp	 <L132>
+               	nop
+<L137>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L133>
+<L132>:
+               	bt	r15, rcx
+               	jae	 <L134>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L134>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r14, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L135>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L135>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r12, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L136>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L136>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rbx, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L137>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L137>
+<L133>:
+               	xor	ecx, ecx
+               	jmp	 <L138>
+               	nop
+<L143>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L139>
+<L138>:
+               	bt	rbp, rcx
+               	jae	 <L140>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L140>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r13, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L141>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L141>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rdi, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L142>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L142>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rax, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L143>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L143>
+<L139>:
+               	mov	rcx, qword ptr [rsp - 0x8]
+               	vpxor	xmm4, xmm4, xmm4
+               	vpxor	xmm7, xmm7, xmm7
+               	vpxor	xmm0, xmm0, xmm0
+               	vpxor	xmm2, xmm2, xmm2
+               	vmovdqa	xmmword ptr [rcx + 0x180], xmm3
+               	vmovdqa	xmmword ptr [rcx + 0x190], xmm1
+               	vmovdqa	xmmword ptr [rcx + 0x1a0], xmm6
+               	vmovdqa	xmmword ptr [rcx + 0x1b0], xmm5
+               	xor	ecx, ecx
+               	jmp	 <L144>
+               	nop	word ptr cs:[rax + rax]
+<L149>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L145>
+<L144>:
+               	movabs	rdx, 0x1000001110110010
+               	bt	rdx, rcx
+               	jae	 <L146>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L146>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, rsi, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L147>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L147>:
+               	vpxor	xmm6, xmm1, xmm6
+               	movabs	rdx, 0x4444004440000
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x4
+               	je	 <L148>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L148>:
+               	vpxor	xmm6, xmm1, xmm6
+               	movabs	rdx, 0x808808008880888
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x8
+               	je	 <L149>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L149>
+<L145>:
+               	xor	ecx, ecx
+               	jmp	 <L150>
+               	nop	dword ptr [rax]
+<L155>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L151>
+<L150>:
+               	bt	r10, rcx
+               	jae	 <L152>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L152>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r11, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L153>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L153>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r9, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L154>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L154>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r8, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L155>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L155>
+<L151>:
+               	xor	ecx, ecx
+               	jmp	 <L156>
+               	nop
+<L161>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L157>
+<L156>:
+               	bt	r15, rcx
+               	jae	 <L158>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L158>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r14, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L159>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L159>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r12, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L160>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L160>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rbx, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L161>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L161>
+<L157>:
+               	xor	ecx, ecx
+               	jmp	 <L162>
+               	nop
+<L167>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L163>
+<L162>:
+               	bt	rbp, rcx
+               	jae	 <L164>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L164>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r13, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L165>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L165>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rdi, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L166>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L166>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rax, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L167>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L167>
+<L163>:
+               	mov	rcx, qword ptr [rsp - 0x8]
+               	vpxor	xmm5, xmm5, xmm5
+               	vpxor	xmm6, xmm6, xmm6
+               	vpxor	xmm1, xmm1, xmm1
+               	vpxor	xmm3, xmm3, xmm3
+               	vmovdqa	xmmword ptr [rcx + 0x1c0], xmm2
+               	vmovdqa	xmmword ptr [rcx + 0x1d0], xmm0
+               	vmovdqa	xmmword ptr [rcx + 0x1e0], xmm7
+               	vmovdqa	xmmword ptr [rcx + 0x1f0], xmm4
+               	xor	ecx, ecx
+               	jmp	 <L168>
+               	nop	word ptr cs:[rax + rax]
+<L173>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L169>
+<L168>:
+               	movabs	rdx, 0x1000001110110010
+               	bt	rdx, rcx
+               	jae	 <L170>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L170>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, rsi, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L171>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L171>:
+               	vpxor	xmm7, xmm0, xmm7
+               	movabs	rdx, 0x4444004440000
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x4
+               	je	 <L172>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L172>:
+               	vpxor	xmm7, xmm0, xmm7
+               	movabs	rdx, 0x808808008880888
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x8
+               	je	 <L173>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L173>
+<L169>:
+               	xor	ecx, ecx
+               	jmp	 <L174>
+               	nop	dword ptr [rax]
+<L179>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L175>
+<L174>:
+               	bt	r10, rcx
+               	jae	 <L176>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L176>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r11, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L177>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L177>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r9, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L178>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L178>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r8, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L179>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L179>
+<L175>:
+               	xor	ecx, ecx
+               	jmp	 <L180>
+               	nop
+<L185>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L181>
+<L180>:
+               	bt	r15, rcx
+               	jae	 <L182>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L182>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r14, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L183>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L183>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r12, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L184>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L184>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rbx, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L185>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L185>
+<L181>:
+               	xor	ecx, ecx
+               	jmp	 <L186>
+               	nop
+<L191>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L187>
+<L186>:
+               	bt	rbp, rcx
+               	jae	 <L188>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L188>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r13, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L189>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L189>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rdi, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L190>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L190>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rax, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L191>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L191>
+<L187>:
+               	mov	rcx, qword ptr [rsp - 0x8]
+               	vpxor	xmm4, xmm4, xmm4
+               	vpxor	xmm7, xmm7, xmm7
+               	vpxor	xmm0, xmm0, xmm0
+               	vpxor	xmm2, xmm2, xmm2
+               	vmovdqa	xmmword ptr [rcx + 0x200], xmm3
+               	vmovdqa	xmmword ptr [rcx + 0x210], xmm1
+               	vmovdqa	xmmword ptr [rcx + 0x220], xmm6
+               	vmovdqa	xmmword ptr [rcx + 0x230], xmm5
+               	xor	ecx, ecx
+               	jmp	 <L192>
+               	nop	word ptr cs:[rax + rax]
+<L197>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L193>
+<L192>:
+               	movabs	rdx, 0x1000001110110010
+               	bt	rdx, rcx
+               	jae	 <L194>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L194>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, rsi, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L195>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L195>:
+               	vpxor	xmm6, xmm1, xmm6
+               	movabs	rdx, 0x4444004440000
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x4
+               	je	 <L196>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L196>:
+               	vpxor	xmm6, xmm1, xmm6
+               	movabs	rdx, 0x808808008880888
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x8
+               	je	 <L197>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L197>
+<L193>:
+               	xor	ecx, ecx
+               	jmp	 <L198>
+               	nop	dword ptr [rax]
+<L203>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L199>
+<L198>:
+               	bt	r10, rcx
+               	jae	 <L200>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L200>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r11, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L201>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L201>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r9, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L202>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L202>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r8, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L203>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L203>
+<L199>:
+               	xor	ecx, ecx
+               	jmp	 <L204>
+               	nop
+<L209>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L205>
+<L204>:
+               	bt	r15, rcx
+               	jae	 <L206>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L206>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r14, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L207>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L207>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r12, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L208>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L208>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rbx, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L209>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L209>
+<L205>:
+               	xor	ecx, ecx
+               	jmp	 <L210>
+               	nop
+<L215>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L211>
+<L210>:
+               	bt	rbp, rcx
+               	jae	 <L212>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L212>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r13, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L213>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L213>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rdi, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L214>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L214>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rax, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L215>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L215>
+<L211>:
+               	mov	rcx, qword ptr [rsp - 0x8]
+               	vpxor	xmm5, xmm5, xmm5
+               	vpxor	xmm6, xmm6, xmm6
+               	vpxor	xmm1, xmm1, xmm1
+               	vpxor	xmm3, xmm3, xmm3
+               	vmovdqa	xmmword ptr [rcx + 0x240], xmm2
+               	vmovdqa	xmmword ptr [rcx + 0x250], xmm0
+               	vmovdqa	xmmword ptr [rcx + 0x260], xmm7
+               	vmovdqa	xmmword ptr [rcx + 0x270], xmm4
+               	xor	ecx, ecx
+               	jmp	 <L216>
+               	nop	word ptr cs:[rax + rax]
+<L221>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L217>
+<L216>:
+               	movabs	rdx, 0x1000001110110010
+               	bt	rdx, rcx
+               	jae	 <L218>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L218>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, rsi, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L219>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L219>:
+               	vpxor	xmm7, xmm0, xmm7
+               	movabs	rdx, 0x4444004440000
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x4
+               	je	 <L220>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L220>:
+               	vpxor	xmm7, xmm0, xmm7
+               	movabs	rdx, 0x808808008880888
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x8
+               	je	 <L221>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L221>
+<L217>:
+               	xor	ecx, ecx
+               	jmp	 <L222>
+               	nop	dword ptr [rax]
+<L227>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L223>
+<L222>:
+               	bt	r10, rcx
+               	jae	 <L224>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L224>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r11, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L225>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L225>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r9, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L226>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L226>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r8, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L227>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L227>
+<L223>:
+               	xor	ecx, ecx
+               	jmp	 <L228>
+               	nop
+<L233>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L229>
+<L228>:
+               	bt	r15, rcx
+               	jae	 <L230>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L230>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r14, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L231>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L231>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r12, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L232>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L232>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rbx, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L233>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L233>
+<L229>:
+               	xor	ecx, ecx
+               	jmp	 <L234>
+               	nop
+<L239>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L235>
+<L234>:
+               	bt	rbp, rcx
+               	jae	 <L236>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L236>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r13, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L237>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L237>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rdi, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L238>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L238>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rax, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L239>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L239>
+<L235>:
+               	mov	rcx, qword ptr [rsp - 0x8]
+               	vpxor	xmm4, xmm4, xmm4
+               	vpxor	xmm7, xmm7, xmm7
+               	vpxor	xmm0, xmm0, xmm0
+               	vpxor	xmm2, xmm2, xmm2
+               	vmovdqa	xmmword ptr [rcx + 0x280], xmm3
+               	vmovdqa	xmmword ptr [rcx + 0x290], xmm1
+               	vmovdqa	xmmword ptr [rcx + 0x2a0], xmm6
+               	vmovdqa	xmmword ptr [rcx + 0x2b0], xmm5
+               	xor	ecx, ecx
+               	jmp	 <L240>
+               	nop	word ptr cs:[rax + rax]
+<L245>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L241>
+<L240>:
+               	movabs	rdx, 0x1000001110110010
+               	bt	rdx, rcx
+               	jae	 <L242>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L242>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, rsi, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L243>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L243>:
+               	vpxor	xmm6, xmm1, xmm6
+               	movabs	rdx, 0x4444004440000
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x4
+               	je	 <L244>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L244>:
+               	vpxor	xmm6, xmm1, xmm6
+               	movabs	rdx, 0x808808008880888
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x8
+               	je	 <L245>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L245>
+<L241>:
+               	xor	ecx, ecx
+               	jmp	 <L246>
+               	nop	dword ptr [rax]
+<L251>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L247>
+<L246>:
+               	bt	r10, rcx
+               	jae	 <L248>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L248>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r11, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L249>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L249>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r9, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L250>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L250>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r8, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L251>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L251>
+<L247>:
+               	xor	ecx, ecx
+               	jmp	 <L252>
+               	nop
+<L257>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L253>
+<L252>:
+               	bt	r15, rcx
+               	jae	 <L254>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L254>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r14, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L255>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L255>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r12, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L256>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L256>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rbx, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L257>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L257>
+<L253>:
+               	xor	ecx, ecx
+               	jmp	 <L258>
+               	nop
+<L263>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L259>
+<L258>:
+               	bt	rbp, rcx
+               	jae	 <L260>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L260>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r13, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L261>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L261>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rdi, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L262>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L262>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rax, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L263>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L263>
+<L259>:
+               	mov	rcx, qword ptr [rsp - 0x8]
+               	vpxor	xmm5, xmm5, xmm5
+               	vpxor	xmm6, xmm6, xmm6
+               	vpxor	xmm1, xmm1, xmm1
+               	vpxor	xmm3, xmm3, xmm3
+               	vmovdqa	xmmword ptr [rcx + 0x2c0], xmm2
+               	vmovdqa	xmmword ptr [rcx + 0x2d0], xmm0
+               	vmovdqa	xmmword ptr [rcx + 0x2e0], xmm7
+               	vmovdqa	xmmword ptr [rcx + 0x2f0], xmm4
+               	xor	ecx, ecx
+               	jmp	 <L264>
+               	nop	word ptr cs:[rax + rax]
+<L269>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L265>
+<L264>:
+               	movabs	rdx, 0x1000001110110010
+               	bt	rdx, rcx
+               	jae	 <L266>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L266>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, rsi, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L267>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L267>:
+               	vpxor	xmm7, xmm0, xmm7
+               	movabs	rdx, 0x4444004440000
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x4
+               	je	 <L268>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L268>:
+               	vpxor	xmm7, xmm0, xmm7
+               	movabs	rdx, 0x808808008880888
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x8
+               	je	 <L269>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L269>
+<L265>:
+               	xor	ecx, ecx
+               	jmp	 <L270>
+               	nop	dword ptr [rax]
+<L275>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L271>
+<L270>:
+               	bt	r10, rcx
+               	jae	 <L272>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L272>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r11, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L273>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L273>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r9, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L274>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L274>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r8, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L275>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L275>
+<L271>:
+               	xor	ecx, ecx
+               	jmp	 <L276>
+               	nop
+<L281>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L277>
+<L276>:
+               	bt	r15, rcx
+               	jae	 <L278>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L278>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r14, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L279>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L279>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r12, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L280>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L280>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rbx, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L281>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L281>
+<L277>:
+               	xor	ecx, ecx
+               	jmp	 <L282>
+               	nop
+<L287>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L283>
+<L282>:
+               	bt	rbp, rcx
+               	jae	 <L284>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L284>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r13, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L285>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L285>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rdi, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L286>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L286>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rax, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L287>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L287>
+<L283>:
+               	mov	rcx, qword ptr [rsp - 0x8]
+               	vpxor	xmm4, xmm4, xmm4
+               	vpxor	xmm7, xmm7, xmm7
+               	vpxor	xmm0, xmm0, xmm0
+               	vpxor	xmm2, xmm2, xmm2
+               	vmovdqa	xmmword ptr [rcx + 0x300], xmm3
+               	vmovdqa	xmmword ptr [rcx + 0x310], xmm1
+               	vmovdqa	xmmword ptr [rcx + 0x320], xmm6
+               	vmovdqa	xmmword ptr [rcx + 0x330], xmm5
+               	xor	ecx, ecx
+               	jmp	 <L288>
+               	nop	word ptr cs:[rax + rax]
+<L293>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L289>
+<L288>:
+               	movabs	rdx, 0x1000001110110010
+               	bt	rdx, rcx
+               	jae	 <L290>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L290>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, rsi, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L291>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L291>:
+               	vpxor	xmm6, xmm1, xmm6
+               	movabs	rdx, 0x4444004440000
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x4
+               	je	 <L292>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L292>:
+               	vpxor	xmm6, xmm1, xmm6
+               	movabs	rdx, 0x808808008880888
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x8
+               	je	 <L293>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L293>
+<L289>:
+               	xor	ecx, ecx
+               	jmp	 <L294>
+               	nop	dword ptr [rax]
+<L299>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L295>
+<L294>:
+               	bt	r10, rcx
+               	jae	 <L296>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L296>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r11, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L297>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L297>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r9, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L298>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L298>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r8, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L299>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L299>
+<L295>:
+               	xor	ecx, ecx
+               	jmp	 <L300>
+               	nop
+<L305>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L301>
+<L300>:
+               	bt	r15, rcx
+               	jae	 <L302>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L302>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r14, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L303>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L303>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r12, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L304>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L304>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rbx, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L305>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L305>
+<L301>:
+               	xor	ecx, ecx
+               	jmp	 <L306>
+               	nop
+<L311>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L307>
+<L306>:
+               	bt	rbp, rcx
+               	jae	 <L308>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L308>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r13, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L309>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L309>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rdi, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L310>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L310>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rax, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L311>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L311>
+<L307>:
+               	mov	rcx, qword ptr [rsp - 0x8]
+               	vpxor	xmm5, xmm5, xmm5
+               	vpxor	xmm6, xmm6, xmm6
+               	vpxor	xmm1, xmm1, xmm1
+               	vpxor	xmm3, xmm3, xmm3
+               	vmovdqa	xmmword ptr [rcx + 0x340], xmm2
+               	vmovdqa	xmmword ptr [rcx + 0x350], xmm0
+               	vmovdqa	xmmword ptr [rcx + 0x360], xmm7
+               	vmovdqa	xmmword ptr [rcx + 0x370], xmm4
+               	xor	ecx, ecx
+               	jmp	 <L312>
+               	nop	word ptr cs:[rax + rax]
+<L317>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L313>
+<L312>:
+               	movabs	rdx, 0x1000001110110010
+               	bt	rdx, rcx
+               	jae	 <L314>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L314>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, rsi, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L315>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L315>:
+               	vpxor	xmm7, xmm0, xmm7
+               	movabs	rdx, 0x4444004440000
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x4
+               	je	 <L316>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L316>:
+               	vpxor	xmm7, xmm0, xmm7
+               	movabs	rdx, 0x808808008880888
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x8
+               	je	 <L317>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L317>
+<L313>:
+               	xor	ecx, ecx
+               	jmp	 <L318>
+               	nop	dword ptr [rax]
+<L323>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L319>
+<L318>:
+               	bt	r10, rcx
+               	jae	 <L320>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L320>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r11, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L321>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L321>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r9, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L322>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L322>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r8, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L323>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L323>
+<L319>:
+               	xor	ecx, ecx
+               	jmp	 <L324>
+               	nop
+<L329>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L325>
+<L324>:
+               	bt	r15, rcx
+               	jae	 <L326>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L326>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r14, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L327>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L327>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r12, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L328>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L328>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rbx, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L329>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L329>
+<L325>:
+               	xor	ecx, ecx
+               	jmp	 <L330>
+               	nop
+<L335>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L331>
+<L330>:
+               	bt	rbp, rcx
+               	jae	 <L332>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L332>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r13, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L333>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L333>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rdi, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L334>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L334>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rax, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L335>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L335>
+<L331>:
+               	mov	rcx, qword ptr [rsp - 0x8]
+               	vpxor	xmm4, xmm4, xmm4
+               	vpxor	xmm7, xmm7, xmm7
+               	vpxor	xmm0, xmm0, xmm0
+               	vpxor	xmm2, xmm2, xmm2
+               	vmovdqa	xmmword ptr [rcx + 0x380], xmm3
+               	vmovdqa	xmmword ptr [rcx + 0x390], xmm1
+               	vmovdqa	xmmword ptr [rcx + 0x3a0], xmm6
+               	vmovdqa	xmmword ptr [rcx + 0x3b0], xmm5
+               	xor	ecx, ecx
+               	jmp	 <L336>
+               	nop	word ptr cs:[rax + rax]
+<L341>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L337>
+<L336>:
+               	movabs	rdx, 0x1000001110110010
+               	bt	rdx, rcx
+               	jae	 <L338>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L338>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, rsi, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L339>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L339>:
+               	vpxor	xmm6, xmm1, xmm6
+               	movabs	rdx, 0x4444004440000
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x4
+               	je	 <L340>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L340>:
+               	vpxor	xmm6, xmm1, xmm6
+               	movabs	rdx, 0x808808008880888
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x8
+               	je	 <L341>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L341>
+<L337>:
+               	xor	ecx, ecx
+               	jmp	 <L342>
+               	nop	dword ptr [rax]
+<L347>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L343>
+<L342>:
+               	bt	r10, rcx
+               	jae	 <L344>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L344>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r11, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L345>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L345>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r9, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L346>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L346>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r8, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L347>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L347>
+<L343>:
+               	xor	ecx, ecx
+               	jmp	 <L348>
+               	nop
+<L353>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L349>
+<L348>:
+               	bt	r15, rcx
+               	jae	 <L350>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L350>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r14, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L351>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L351>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r12, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L352>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L352>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rbx, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L353>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L353>
+<L349>:
+               	xor	ecx, ecx
+               	jmp	 <L354>
+               	nop
+<L359>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L355>
+<L354>:
+               	bt	rbp, rcx
+               	jae	 <L356>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L356>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r13, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L357>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L357>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rdi, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L358>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L358>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rax, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L359>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L359>
+<L355>:
+               	mov	rcx, qword ptr [rsp - 0x8]
+               	vpxor	xmm5, xmm5, xmm5
+               	vpxor	xmm6, xmm6, xmm6
+               	vpxor	xmm1, xmm1, xmm1
+               	vpxor	xmm3, xmm3, xmm3
+               	vmovdqa	xmmword ptr [rcx + 0x3c0], xmm2
+               	vmovdqa	xmmword ptr [rcx + 0x3d0], xmm0
+               	vmovdqa	xmmword ptr [rcx + 0x3e0], xmm7
+               	vmovdqa	xmmword ptr [rcx + 0x3f0], xmm4
+               	xor	ecx, ecx
+               	jmp	 <L360>
+               	nop	word ptr cs:[rax + rax]
+<L365>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L361>
+<L360>:
+               	movabs	rdx, 0x1000001110110010
+               	bt	rdx, rcx
+               	jae	 <L362>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L362>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, rsi, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L363>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L363>:
+               	vpxor	xmm7, xmm0, xmm7
+               	movabs	rdx, 0x4444004440000
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x4
+               	je	 <L364>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L364>:
+               	vpxor	xmm7, xmm0, xmm7
+               	movabs	rdx, 0x808808008880888
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x8
+               	je	 <L365>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L365>
+<L361>:
+               	xor	ecx, ecx
+               	jmp	 <L366>
+               	nop	dword ptr [rax]
+<L371>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L367>
+<L366>:
+               	bt	r10, rcx
+               	jae	 <L368>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L368>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r11, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L369>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L369>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r9, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L370>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L370>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r8, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L371>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L371>
+<L367>:
+               	xor	ecx, ecx
+               	jmp	 <L372>
+               	nop
+<L377>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L373>
+<L372>:
+               	bt	r15, rcx
+               	jae	 <L374>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L374>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r14, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L375>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L375>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r12, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L376>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L376>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rbx, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L377>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L377>
+<L373>:
+               	xor	ecx, ecx
+               	jmp	 <L378>
+               	nop
+<L383>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L379>
+<L378>:
+               	bt	rbp, rcx
+               	jae	 <L380>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L380>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r13, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L381>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L381>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rdi, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L382>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L382>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rax, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L383>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L383>
+<L379>:
+               	mov	rcx, qword ptr [rsp - 0x8]
+               	vpxor	xmm4, xmm4, xmm4
+               	vpxor	xmm7, xmm7, xmm7
+               	vpxor	xmm0, xmm0, xmm0
+               	vpxor	xmm2, xmm2, xmm2
+               	vmovdqa	xmmword ptr [rcx + 0x400], xmm3
+               	vmovdqa	xmmword ptr [rcx + 0x410], xmm1
+               	vmovdqa	xmmword ptr [rcx + 0x420], xmm6
+               	vmovdqa	xmmword ptr [rcx + 0x430], xmm5
+               	xor	ecx, ecx
+               	jmp	 <L384>
+               	nop	word ptr cs:[rax + rax]
+<L389>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L385>
+<L384>:
+               	movabs	rdx, 0x1000001110110010
+               	bt	rdx, rcx
+               	jae	 <L386>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L386>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, rsi, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L387>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L387>:
+               	vpxor	xmm6, xmm1, xmm6
+               	movabs	rdx, 0x4444004440000
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x4
+               	je	 <L388>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L388>:
+               	vpxor	xmm6, xmm1, xmm6
+               	movabs	rdx, 0x808808008880888
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x8
+               	je	 <L389>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L389>
+<L385>:
+               	xor	ecx, ecx
+               	jmp	 <L390>
+               	nop	dword ptr [rax]
+<L395>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L391>
+<L390>:
+               	bt	r10, rcx
+               	jae	 <L392>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L392>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r11, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L393>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L393>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r9, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L394>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L394>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r8, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L395>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L395>
+<L391>:
+               	xor	ecx, ecx
+               	jmp	 <L396>
+               	nop
+<L401>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L397>
+<L396>:
+               	bt	r15, rcx
+               	jae	 <L398>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L398>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r14, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L399>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L399>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r12, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L400>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L400>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rbx, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L401>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L401>
+<L397>:
+               	xor	ecx, ecx
+               	jmp	 <L402>
+               	nop
+<L407>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L403>
+<L402>:
+               	bt	rbp, rcx
+               	jae	 <L404>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm6, xmm7
+               	vpxor	xmm4, xmm5, xmm4
+<L404>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r13, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L405>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L405>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rdi, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L406>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+<L406>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rax, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L407>
+               	vpxor	xmm2, xmm2, xmm3
+               	vpxor	xmm0, xmm1, xmm0
+               	vpxor	xmm7, xmm5, xmm7
+               	vpxor	xmm4, xmm6, xmm4
+               	jmp	 <L407>
+<L403>:
+               	mov	rcx, qword ptr [rsp - 0x8]
+               	vpxor	xmm5, xmm5, xmm5
+               	vpxor	xmm6, xmm6, xmm6
+               	vpxor	xmm1, xmm1, xmm1
+               	vpxor	xmm3, xmm3, xmm3
+               	vmovdqa	xmmword ptr [rcx + 0x440], xmm2
+               	vmovdqa	xmmword ptr [rcx + 0x450], xmm0
+               	vmovdqa	xmmword ptr [rcx + 0x460], xmm7
+               	vmovdqa	xmmword ptr [rcx + 0x470], xmm4
+               	xor	ecx, ecx
+               	jmp	 <L408>
+               	nop	word ptr cs:[rax + rax]
+<L413>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L409>
+<L408>:
+               	movabs	rdx, 0x1000001110110010
+               	bt	rdx, rcx
+               	jae	 <L410>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L410>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, rsi, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L411>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L411>:
+               	vpxor	xmm7, xmm0, xmm7
+               	movabs	rdx, 0x4444004440000
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x4
+               	je	 <L412>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L412>:
+               	vpxor	xmm7, xmm0, xmm7
+               	movabs	rdx, 0x808808008880888
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x8
+               	je	 <L413>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L413>
+<L409>:
+               	xor	ecx, ecx
+               	jmp	 <L414>
+               	nop	dword ptr [rax]
+<L419>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L415>
+<L414>:
+               	bt	r10, rcx
+               	jae	 <L416>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L416>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r11, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L417>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L417>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r9, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L418>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L418>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r8, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L419>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L419>
+<L415>:
+               	xor	ecx, ecx
+               	jmp	 <L420>
+               	nop
+<L425>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L421>
+<L420>:
+               	bt	r15, rcx
+               	jae	 <L422>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L422>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r14, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L423>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L423>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, r12, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L424>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L424>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rbx, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L425>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L425>
+<L421>:
+               	xor	ecx, ecx
+               	jmp	 <L426>
+               	nop
+<L431>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm4, xmm2, xmm4
+               	vpxor	xmm9, xmm0, xmm7
+               	add	rcx, 0x4
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm7, xmm8, xmm4
+               	vprolq	xmm4, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	cmp	rcx, 0x40
+               	je	 <L427>
+<L426>:
+               	bt	rbp, rcx
+               	jae	 <L428>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm7, xmm6
+               	vpxor	xmm5, xmm4, xmm5
+<L428>:
+               	vpsllq	xmm8, xmm0, 0x11
+               	vpxor	xmm7, xmm2, xmm7
+               	vpxor	xmm9, xmm0, xmm4
+               	shrx	rdx, r13, rcx
+               	vpxor	xmm0, xmm7, xmm0
+               	vpxor	xmm4, xmm8, xmm7
+               	vprolq	xmm7, xmm9, 0x2d
+               	vpxor	xmm2, xmm9, xmm2
+               	test	dl, 0x2
+               	je	 <L429>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L429>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rdi, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x4
+               	je	 <L430>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+<L430>:
+               	vpxor	xmm7, xmm0, xmm7
+               	vpxor	xmm4, xmm2, xmm4
+               	vpsllq	xmm8, xmm0, 0x11
+               	shrx	rdx, rax, rcx
+               	vpxor	xmm2, xmm7, xmm2
+               	vprolq	xmm7, xmm7, 0x2d
+               	vpxor	xmm0, xmm4, xmm0
+               	vpxor	xmm4, xmm8, xmm4
+               	test	dl, 0x8
+               	je	 <L431>
+               	vpxor	xmm3, xmm3, xmm2
+               	vpxor	xmm1, xmm0, xmm1
+               	vpxor	xmm6, xmm4, xmm6
+               	vpxor	xmm5, xmm7, xmm5
+               	jmp	 <L431>
+<L427>:
+               	mov	rcx, qword ptr [rsp - 0x8]
+               	vpxor	xmm0, xmm0, xmm0
+               	vpxor	xmm2, xmm2, xmm2
+               	vpxor	xmm4, xmm4, xmm4
+               	vpxor	xmm7, xmm7, xmm7
+               	vmovdqa	xmmword ptr [rcx + 0x480], xmm3
+               	vmovdqa	xmmword ptr [rcx + 0x490], xmm1
+               	vmovdqa	xmmword ptr [rcx + 0x4a0], xmm6
+               	vmovdqa	xmmword ptr [rcx + 0x4b0], xmm5
+               	xor	ecx, ecx
+               	jmp	 <L432>
+               	nop	word ptr cs:[rax + rax]
+<L437>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L433>
+<L432>:
+               	movabs	rdx, 0x1000001110110010
+               	bt	rdx, rcx
+               	jae	 <L434>
+               	vpxor	xmm7, xmm7, xmm3
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm2, xmm6, xmm2
+               	vpxor	xmm0, xmm5, xmm0
+<L434>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, rsi, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L435>
+               	vpxor	xmm7, xmm7, xmm3
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm2, xmm5, xmm2
+               	vpxor	xmm0, xmm6, xmm0
+<L435>:
+               	vpxor	xmm6, xmm1, xmm6
+               	movabs	rdx, 0x4444004440000
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x4
+               	je	 <L436>
+               	vpxor	xmm7, xmm7, xmm3
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm2, xmm5, xmm2
+               	vpxor	xmm0, xmm6, xmm0
+<L436>:
+               	vpxor	xmm6, xmm1, xmm6
+               	movabs	rdx, 0x808808008880888
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	shrx	rdx, rdx, rcx
+               	test	dl, 0x8
+               	je	 <L437>
+               	vpxor	xmm7, xmm7, xmm3
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm2, xmm5, xmm2
+               	vpxor	xmm0, xmm6, xmm0
+               	jmp	 <L437>
+<L433>:
+               	xor	ecx, ecx
+               	jmp	 <L438>
+               	nop	dword ptr [rax]
+<L443>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L439>
+<L438>:
+               	bt	r10, rcx
+               	jae	 <L440>
+               	vpxor	xmm7, xmm7, xmm3
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm2, xmm6, xmm2
+               	vpxor	xmm0, xmm5, xmm0
+<L440>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r11, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L441>
+               	vpxor	xmm7, xmm7, xmm3
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm2, xmm5, xmm2
+               	vpxor	xmm0, xmm6, xmm0
+<L441>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r9, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L442>
+               	vpxor	xmm7, xmm7, xmm3
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm2, xmm5, xmm2
+               	vpxor	xmm0, xmm6, xmm0
+<L442>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r8, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L443>
+               	vpxor	xmm7, xmm7, xmm3
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm2, xmm5, xmm2
+               	vpxor	xmm0, xmm6, xmm0
+               	jmp	 <L443>
+<L439>:
+               	xor	ecx, ecx
+               	jmp	 <L444>
+               	nop
+<L449>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L445>
+<L444>:
+               	bt	r15, rcx
+               	jae	 <L446>
+               	vpxor	xmm7, xmm7, xmm3
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm2, xmm6, xmm2
+               	vpxor	xmm0, xmm5, xmm0
+<L446>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r14, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L447>
+               	vpxor	xmm7, xmm7, xmm3
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm2, xmm5, xmm2
+               	vpxor	xmm0, xmm6, xmm0
+<L447>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, r12, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L448>
+               	vpxor	xmm7, xmm7, xmm3
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm2, xmm5, xmm2
+               	vpxor	xmm0, xmm6, xmm0
+<L448>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rbx, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L449>
+               	vpxor	xmm7, xmm7, xmm3
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm2, xmm5, xmm2
+               	vpxor	xmm0, xmm6, xmm0
+               	jmp	 <L449>
+<L445>:
+               	xor	ecx, ecx
+               	jmp	 <L450>
+               	nop
+<L455>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm5, xmm3, xmm5
+               	vpxor	xmm9, xmm1, xmm6
+               	add	rcx, 0x4
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm6, xmm8, xmm5
+               	vprolq	xmm5, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	cmp	rcx, 0x40
+               	je	 <L451>
+<L450>:
+               	bt	rbp, rcx
+               	jae	 <L452>
+               	vpxor	xmm7, xmm7, xmm3
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm2, xmm6, xmm2
+               	vpxor	xmm0, xmm5, xmm0
+<L452>:
+               	vpsllq	xmm8, xmm1, 0x11
+               	vpxor	xmm6, xmm3, xmm6
+               	vpxor	xmm9, xmm1, xmm5
+               	shrx	rdx, r13, rcx
+               	vpxor	xmm1, xmm6, xmm1
+               	vpxor	xmm5, xmm8, xmm6
+               	vprolq	xmm6, xmm9, 0x2d
+               	vpxor	xmm3, xmm9, xmm3
+               	test	dl, 0x2
+               	je	 <L453>
+               	vpxor	xmm7, xmm7, xmm3
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm2, xmm5, xmm2
+               	vpxor	xmm0, xmm6, xmm0
+<L453>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rdi, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x4
+               	je	 <L454>
+               	vpxor	xmm7, xmm7, xmm3
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm2, xmm5, xmm2
+               	vpxor	xmm0, xmm6, xmm0
+<L454>:
+               	vpxor	xmm6, xmm1, xmm6
+               	vpxor	xmm5, xmm3, xmm5
+               	vpsllq	xmm8, xmm1, 0x11
+               	shrx	rdx, rax, rcx
+               	vpxor	xmm3, xmm6, xmm3
+               	vprolq	xmm6, xmm6, 0x2d
+               	vpxor	xmm1, xmm5, xmm1
+               	vpxor	xmm5, xmm8, xmm5
+               	test	dl, 0x8
+               	je	 <L455>
+               	vpxor	xmm7, xmm7, xmm3
+               	vpxor	xmm4, xmm1, xmm4
+               	vpxor	xmm2, xmm5, xmm2
+               	vpxor	xmm0, xmm6, xmm0
+               	jmp	 <L455>
+<L451>:
+               	mov	rax, qword ptr [rsp - 0x8]
+               	vmovdqa	xmmword ptr [rax + 0x4c0], xmm7
+               	vmovdqa	xmmword ptr [rax + 0x4d0], xmm4
+               	vmovdqa	xmmword ptr [rax + 0x4e0], xmm2
+               	vmovdqa	xmmword ptr [rax + 0x4f0], xmm0
+               	pop	rbx
+               	pop	r12
+               	pop	r13
+               	pop	r14
+               	pop	r15
+               	pop	rbp
+               	ret
