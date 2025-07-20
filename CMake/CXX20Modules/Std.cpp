@@ -4,10 +4,19 @@ module;
 
 export module Std;
 
-export import <std.hpp>;
+export import std;
+
+export namespace mm
+{
+	auto constexpr inline add_epi64 = ::_mm_add_epi64;
+	auto constexpr inline srli_epi64 = ::_mm_srli_epi64;
+	auto constexpr inline slli_epi64 = ::_mm_slli_epi64;
+	auto constexpr inline xor_si128 = ::_mm_xor_si128;
+}
 
 export
 {
+	using ::__m128i;
 	using ::__m256i;
 	using ::__m256;
 	using ::__m512i;

@@ -148,12 +148,20 @@ auto constexpr inline
 	)
 	noexcept
 ->	bool
-{	return
-		::std::is_trivial_v
-		<	::ATR::Instance
-			<	decltype(i_vName)
-			,	LocalBody
-			>
+{
+	using
+		tType
+	=	::ATR::Instance
+		<	decltype(i_vName)
+		,	LocalBody
+		>
+	;
+	return
+		::std::is_trivially_default_constructible_v
+		<	tType
+		>
+	and	::std::is_trivially_copyable_v
+		<	tType
 		>
 	;
 }

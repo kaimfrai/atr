@@ -18,9 +18,15 @@ export namespace
 				...	t_tpQualifier
 			>
 		requires
-			(	::std::is_enum_v<t_tEntity>
-			and not
-				::std::is_scoped_enum_v<t_tEntity>
+			(	::std::is_enum_v
+				<	t_tEntity
+				>
+			and ::std::is_convertible_v
+				<	t_tEntity
+				,	::std::underlying_type_t
+					<	t_tEntity
+					>
+				>
 			)
 		[[nodiscard]]
 		auto friend constexpr inline

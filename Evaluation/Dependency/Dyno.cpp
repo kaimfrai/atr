@@ -1,7 +1,5 @@
 module;
 
-import <std.hpp>;
-
 #include <dyno.hpp>
 
 export module Evaluation.Dependency.Dyno;

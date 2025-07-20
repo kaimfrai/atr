@@ -76,7 +76,7 @@ export namespace
 		->	Var&
 		{
 				m_vRaw
-			=	_mm_add_epi64
+			=	mm::add_epi64
 				(	m_vRaw
 				,	i_vIncrement
 					.	m_vRaw
@@ -114,7 +114,7 @@ export namespace
 		->	Var
 		{	return
 			Var
-			{	_mm_srli_epi64
+			{	mm::srli_epi64
 				(	i_vLeft
 					.	m_vRaw
 				,	i_vRight
@@ -134,7 +134,7 @@ export namespace
 		->	Var
 		{	return
 			Var
-			{	_mm_slli_epi64
+			{	mm::slli_epi64
 				(	i_vLeft
 					.	m_vRaw
 				,	i_vRight
@@ -154,7 +154,7 @@ export namespace
 		->	Var
 		{	return
 			Var
-			{	_mm_xor_si128
+			{	mm::xor_si128
 				(	i_vLeft
 					.	m_vRaw
 				,	i_vRight

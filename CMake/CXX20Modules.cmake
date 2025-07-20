@@ -413,17 +413,11 @@ function(add_module_executable
 
 endfunction()
 
-function(
-	add_standard_module
-)
-	add_user_header_unit(
-		${CXX20_MODULES_PATH}/include/std.hpp
+	set_source_files_properties(
+		/usr/include/c++/15.1.1/bits/std.cc
+	PROPERTIES
+	COMPILE_OPTIONS
+		"$<$<CXX_COMPILER_ID:Clang>:-Wno-error;--no-warnings>"
 	)
-
-	include_directories(${CXX20_MODULES_PATH}/include/)
-
-	add_module(${CXX20_MODULES_PATH}/Std.cpp)
-
-endfunction()
-
-add_standard_module()
+add_module(/usr/include/c++/15.1.1/bits/std.cc)
+add_module(${CXX20_MODULES_PATH}/Std.cpp)
