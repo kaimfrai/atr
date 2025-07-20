@@ -3,3 +3,4 @@ build/*
 *.kdev4
 .directory
 .cache/*
+compile_commands.json
