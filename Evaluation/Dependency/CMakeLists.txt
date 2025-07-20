@@ -7,13 +7,6 @@ REQUIRED
 DOC	"Path for dyno includes"
 )
 
-set_source_files_properties(
-	${DYNO_INCLUDE_PATH}/dyno.hpp
-PROPERTIES
-INCLUDE_DIRECTORIES
-	"${DYNO_INCLUDE_PATH}"
-)
-
 if (NOT FASTER_BUILD_SPEED)
 	set_source_files_properties(
 		Dyno.cpp
@@ -37,13 +30,6 @@ PATHS
 	"${PROJECT_SOURCE_DIR}/../cpp-from-the-sky-down/metaprogrammed_polymorphism/"
 REQUIRED
 DOC	"Path for polymorphic includes"
-)
-
-set_source_files_properties(
-	${POLYMORPHIC_INCLUDE_PATH}/polymorphic.hpp
-PROPERTIES
-INCLUDE_DIRECTORIES
-	"${POLYMORPHIC_INCLUDE_PATH}"
 )
 
 if	(NOT FASTER_BUILD_SPEED)
