@@ -1,17 +1,16 @@
 
  Performance counter stats for 'build/Evaluation/bin/TypeErasure 42 12500' (10 runs):
 
-              9,31 msec task-clock                #    0,973 CPUs utilized            ( +-  0,98% )
-                 0      context-switches          #    0,000 /sec                   
-                 0      cpu-migrations            #    0,000 /sec                   
-             4.284      page-faults               #  453,853 K/sec                    ( +-  0,01% )
-        51.245.974      cycles                    #    5,429 GHz                      ( +-  0,80% )
-         2.459.829      stalled-cycles-frontend   #    4,73% frontend cycles idle     ( +-  0,18% )
-         1.100.488      stalled-cycles-backend    #    2,12% backend cycles idle      ( +- 10,11% )
-       123.964.869      instructions              #    2,39  insn per cycle         
-                                                  #    0,02  stalled cycles per insn  ( +-  0,01% )
-        20.562.805      branches                  #    2,178 G/sec                    ( +-  0,02% )
-           642.842      branch-misses             #    3,13% of all branches          ( +-  0,06% )
+             11,47 msec task-clock                       #    0,968 CPUs utilized               ( +-  0,71% )
+                 1      context-switches                 #   87,154 /sec                        ( +- 47,61% )
+                 1      cpu-migrations                   #   87,154 /sec                        ( +- 36,51% )
+             2.885      page-faults                      #  251,439 K/sec                       ( +-  2,70% )
+       112.834.076      instructions                     #    2,27  insn per cycle            
+                                                  #    0,14  stalled cycles per insn     ( +-  0,33% )
+        49.791.717      cycles                           #    4,340 GHz                         ( +-  0,71% )
+        16.057.833      stalled-cycles-frontend          #   32,25% frontend cycles idle        ( +-  0,38% )
+        19.838.106      branches                         #    1,729 G/sec                       ( +-  0,38% )
+           621.725      branch-misses                    #    3,13% of all branches             ( +-  0,23% )
 
-         0,0095654 +- 0,0000989 seconds time elapsed  ( +-  1,03% )
+         0,0118571 +- 0,0000840 seconds time elapsed  ( +-  0,71% )
 

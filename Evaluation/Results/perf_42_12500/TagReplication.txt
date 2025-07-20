@@ -1,17 +1,16 @@
 
  Performance counter stats for 'build/Evaluation/bin/TagReplication 42 12500' (10 runs):
 
-              5,42 msec task-clock                #    0,952 CPUs utilized            ( +-  0,98% )
-                 0      context-switches          #    0,000 /sec                   
-                 0      cpu-migrations            #    0,000 /sec                   
-             2.320      page-faults               #  416,351 K/sec                    ( +-  0,02% )
-        29.969.548      cycles                    #    5,378 GHz                      ( +-  0,54% )
-         1.845.166      stalled-cycles-frontend   #    6,02% frontend cycles idle     ( +-  0,81% )
-           710.699      stalled-cycles-backend    #    2,32% backend cycles idle      ( +-  3,25% )
-        49.276.891      instructions              #    1,61  insn per cycle         
-                                                  #    0,04  stalled cycles per insn  ( +-  0,02% )
-         5.910.965      branches                  #    1,061 G/sec                    ( +-  0,02% )
-           470.637      branch-misses             #    7,96% of all branches          ( +-  0,45% )
+              5,97 msec task-clock                       #    0,968 CPUs utilized               ( +-  0,98% )
+                 0      context-switches                 #    0,000 /sec                      
+                 0      cpu-migrations                   #    0,000 /sec                      
+               770      page-faults                      #  128,976 K/sec                       ( +-  0,09% )
+        39.366.405      instructions                     #    1,52  insn per cycle            
+                                                  #    0,19  stalled cycles per insn     ( +-  0,03% )
+        25.905.345      cycles                           #    4,339 GHz                         ( +-  0,96% )
+         7.660.469      stalled-cycles-frontend          #   29,57% frontend cycles idle        ( +-  0,70% )
+         4.794.068      branches                         #  803,010 M/sec                       ( +-  0,05% )
+           481.124      branch-misses                    #   10,04% of all branches             ( +-  0,67% )
 
-         0,0056964 +- 0,0000608 seconds time elapsed  ( +-  1,07% )
+         0,0061687 +- 0,0000635 seconds time elapsed  ( +-  1,03% )
 

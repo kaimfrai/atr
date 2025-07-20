@@ -1,17 +1,16 @@
 
  Performance counter stats for 'build/Evaluation/bin/SOAATR 42 12500' (10 runs):
 
-              1,17 msec task-clock                #    0,871 CPUs utilized            ( +-  4,15% )
-                 0      context-switches          #    0,000 /sec                   
-                 0      cpu-migrations            #    0,000 /sec                   
-             2.152      page-faults               #    1,744 M/sec                    ( +-  0,01% )
-         6.548.922      cycles                    #    5,308 GHz                      ( +-  2,61% )
-           123.978      stalled-cycles-frontend   #    1,82% frontend cycles idle     ( +-  2,76% )
-         1.023.782      stalled-cycles-backend    #   15,04% backend cycles idle      ( +-  3,06% )
-        16.469.171      instructions              #    2,42  insn per cycle         
-                                                  #    0,07  stalled cycles per insn  ( +-  0,04% )
-         2.362.436      branches                  #    1,915 G/sec                    ( +-  0,05% )
-            26.767      branch-misses             #    1,14% of all branches          ( +-  0,94% )
+              1,01 msec task-clock                       #    0,844 CPUs utilized               ( +-  3,16% )
+                 0      context-switches                 #    0,000 /sec                      
+                 0      cpu-migrations                   #    0,000 /sec                      
+               651      page-faults                      #  645,792 K/sec                       ( +-  7,82% )
+         9.895.814      instructions                     #    2,27  insn per cycle            
+                                                  #    0,10  stalled cycles per insn     ( +-  2,28% )
+         4.365.072      cycles                           #    4,330 GHz                         ( +-  3,17% )
+         1.020.152      stalled-cycles-frontend          #   23,37% frontend cycles idle        ( +-  2,36% )
+         1.253.115      branches                         #    1,243 G/sec                       ( +-  3,67% )
+            22.448      branch-misses                    #    1,79% of all branches             ( +-  1,28% )
 
-         0,0013465 +- 0,0000573 seconds time elapsed  ( +-  4,26% )
+         0,0011948 +- 0,0000317 seconds time elapsed  ( +-  2,65% )
 

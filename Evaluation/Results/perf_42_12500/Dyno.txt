@@ -1,17 +1,16 @@
 
  Performance counter stats for 'build/Evaluation/bin/Dyno 42 12500' (10 runs):
 
-              6,64 msec task-clock                #    0,967 CPUs utilized            ( +-  1,22% )
-                 0      context-switches          #    0,000 /sec                   
-                 0      cpu-migrations            #    0,000 /sec                   
-             4.457      page-faults               #  661,278 K/sec                    ( +-  0,01% )
-        37.074.058      cycles                    #    5,501 GHz                      ( +-  0,81% )
-         2.081.621      stalled-cycles-frontend   #    5,55% frontend cycles idle     ( +-  0,69% )
-         1.468.544      stalled-cycles-backend    #    3,91% backend cycles idle      ( +-  3,84% )
-        57.989.878      instructions              #    1,55  insn per cycle         
-                                                  #    0,04  stalled cycles per insn  ( +-  0,02% )
-         7.883.846      branches                  #    1,170 G/sec                    ( +-  0,03% )
-           551.832      branch-misses             #    7,00% of all branches          ( +-  0,27% )
+              7,08 msec task-clock                       #    0,970 CPUs utilized               ( +-  1,28% )
+                 1      context-switches                 #  141,215 /sec                        ( +- 45,83% )
+                 0      cpu-migrations                   #    0,000 /sec                      
+               860      page-faults                      #  121,444 K/sec                       ( +-  0,05% )
+        41.929.304      instructions                     #    1,36  insn per cycle            
+                                                  #    0,25  stalled cycles per insn     ( +-  0,04% )
+        30.725.132      cycles                           #    4,339 GHz                         ( +-  1,25% )
+        10.665.191      stalled-cycles-frontend          #   34,71% frontend cycles idle        ( +-  0,57% )
+         5.324.135      branches                         #  751,845 M/sec                       ( +-  0,06% )
+           564.947      branch-misses                    #   10,61% of all branches             ( +-  0,67% )
 
-         0,0068719 +- 0,0000892 seconds time elapsed  ( +-  1,30% )
+         0,0072985 +- 0,0000947 seconds time elapsed  ( +-  1,30% )
 
