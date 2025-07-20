@@ -19,7 +19,7 @@ import ATR.Instance;
 import ATR.Member.Composition;
 
 import Meta.ID;
-import Std;
+import std;
 
 using ::ATR::District::ExcludingArray;
 

@@ -6,7 +6,7 @@ import Meta.Logic.Bit.Clause;
 import Meta.Logic.Bit.Optimizer;
 import Meta.Size;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Logic::Bit

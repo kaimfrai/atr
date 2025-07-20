@@ -4,7 +4,7 @@ import Meta.Memory.Size;
 import Meta.Memory.Size.PointerArithmetic;
 import Meta.Memory.Count;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Byte

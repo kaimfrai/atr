@@ -3,7 +3,7 @@ export module Meta.Token.Type.Compare;
 import Meta.Token.TypeID;
 import Meta.Memory.Size.Compare;
 
-import Std;
+import std;
 
 export namespace
 	Meta

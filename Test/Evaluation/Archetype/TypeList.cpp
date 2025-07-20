@@ -21,7 +21,7 @@ import Meta.Memory.Constraint;
 import Meta.String.Literal;
 import Meta.Token.Type;
 
-import Std;
+import std;
 
 using ::ATR::Member::Composition_Of;
 using ::ATR::Member::CountedType;

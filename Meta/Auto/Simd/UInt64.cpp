@@ -3,6 +3,7 @@ export module Meta.Auto.Simd.UInt64;
 export import Meta.Auto.Simd.Tag;
 import Meta.Auto.Array.Bounded;
 
+import std;
 import Std;
 
 export namespace

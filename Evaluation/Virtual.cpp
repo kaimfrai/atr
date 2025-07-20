@@ -19,7 +19,7 @@ import Evaluation.Virtual.Ellipsoid;
 import Evaluation.Virtual.Head;
 import Evaluation.Virtual.IBody;
 
-import Std;
+import std;
 
 namespace
 	Bodies3D

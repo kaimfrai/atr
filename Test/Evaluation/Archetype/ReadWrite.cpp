@@ -18,7 +18,7 @@ import Meta.Auto.Ref.RArray;
 import Meta.ID;
 import Meta.String.Literal;
 
-import Std;
+import std;
 
 using namespace ::Meta::Literals;
 

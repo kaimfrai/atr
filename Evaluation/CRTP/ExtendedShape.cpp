@@ -2,7 +2,7 @@ export module Evaluation.CRTP.ExtendedShape;
 
 import Evaluation.CRTP.BasicBody;
 
-import Std;
+import std;
 
 export namespace
 	Bodies3D

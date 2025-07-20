@@ -8,7 +8,7 @@ import ATR.Member.CountedType;
 import Meta.Memory.Alignment;
 import Meta.Memory.Size;
 
-import Std;
+import std;
 
 using ::Meta::BitSize;
 using ::Meta::Memory::Alignment;

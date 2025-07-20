@@ -2,7 +2,7 @@ export module Meta.Generic.LowerBound;
 
 import Meta.Size;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Generic

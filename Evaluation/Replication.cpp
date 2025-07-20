@@ -18,7 +18,7 @@ import Evaluation.Replication.Cone;
 import Evaluation.Replication.Ellipsoid;
 import Evaluation.Replication.Head;
 
-import Std;
+import std;
 
 namespace
 	Bodies3D

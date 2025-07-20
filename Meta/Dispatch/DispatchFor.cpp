@@ -13,7 +13,7 @@ import Meta.Lex.Function;
 import Meta.Size;
 import Meta.ID;
 
-import Std;
+import std;
 
 export namespace
 	Meta

@@ -3,7 +3,7 @@ export module Meta.Math.Power;
 import Meta.Math.Sign;
 import Meta.Math.Abs;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Math

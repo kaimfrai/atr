@@ -18,7 +18,7 @@ import Meta.Memory.Size.Scale;
 import Meta.Memory.Size;
 import Meta.Size;
 
-import Std;
+import std;
 
 using ::Meta::Auto::CArray;
 using ::Meta::Auto::ProtoBorrowContainer_Of_AtLeast;

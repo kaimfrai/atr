@@ -3,7 +3,7 @@ export module Meta.Token.Transform.RemoveCV;
 import Meta.Token.Type;
 import Meta.Token.Specifier;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Token::Transform

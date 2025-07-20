@@ -9,7 +9,7 @@ import Meta.Token.Type;
 import Meta.Token.Type.Cast;
 import Meta.Size;
 
-import Std;
+import std;
 
 using ::Meta::USize;
 

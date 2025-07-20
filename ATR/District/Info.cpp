@@ -4,7 +4,7 @@ import Meta.String.Hash;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 
-import Std;
+import std;
 
 using ::Meta::String::ImplicitHash;
 using ::Meta::Type;

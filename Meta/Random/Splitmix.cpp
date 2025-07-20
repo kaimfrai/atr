@@ -1,7 +1,7 @@
 export module Meta.Random.Splitmix;
 
 import Meta.Auto.Simd.UInt64;
-import Std;
+import std;
 
 using ::Meta::Auto::Var;
 using ::Meta::Auto::Simd;

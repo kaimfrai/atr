@@ -7,7 +7,7 @@ import ATR.Erase;
 
 import Meta.Token.TypeID;
 
-import Std;
+import std;
 
 using ::ATR::CErasure;
 using ::ATR::District::ExcludingHeap;

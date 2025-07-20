@@ -1,6 +1,6 @@
 export module Meta.Memory.Alignment;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Memory

@@ -9,7 +9,7 @@ import Meta.Token.Type;
 import Meta.Token.TypeID;
 import Meta.Unlinkable;
 
-import Std;
+import std;
 
 using ::Meta::ID;
 using ::Meta::String::Literal;

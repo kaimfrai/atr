@@ -25,7 +25,7 @@ import ATR.Virtual.Entry;
 
 import Meta.ID;
 
-import Std;
+import std;
 
 using ::ATR::Virtual::Element;
 using ::ATR::Virtual::Entry;

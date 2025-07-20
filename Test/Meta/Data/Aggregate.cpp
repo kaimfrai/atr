@@ -2,7 +2,7 @@ import Meta.Token.Specifier;
 import Meta.Token.Type;
 import Meta.Data.Aggregate;
 
-import Std;
+import std;
 
 using namespace Meta;
 using ::Meta::Specifier::Mut;

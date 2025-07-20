@@ -7,7 +7,7 @@ import Meta.Generic.RandomAccessIteratorBase;
 import Meta.ID;
 import Meta.Token.Type;
 
-import Std;
+import std;
 
 using ::Meta::Generic::RandomAccessIteratorBase;
 using ::Meta::ProtoID;

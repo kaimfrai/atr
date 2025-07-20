@@ -17,7 +17,7 @@ import Meta.Size;
 import Meta.Arithmetic.Integer;
 import Meta.Byte.Buffer;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Bit

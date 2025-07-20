@@ -3,6 +3,7 @@ export module Meta.Auto.Simd.UInt8;
 export import Meta.Auto.Simd.Tag;
 import Meta.Auto.Simd.UInt32;
 
+import std;
 import Std;
 
 export namespace

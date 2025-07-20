@@ -5,7 +5,7 @@ import Meta.Bit.Index;
 import Meta.Bit.Field.Compare;
 import Meta.Memory.Size;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Bit

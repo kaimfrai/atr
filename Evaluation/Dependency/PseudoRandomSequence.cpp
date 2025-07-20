@@ -6,7 +6,7 @@ import Meta.Auto.Simd.UInt8;
 import Meta.Random.Splitmix;
 import Meta.Random.Xoroshiro;
 
-import Std;
+import std;
 
 using ::Meta::Auto::Simd;
 using ::Meta::Auto::SimdCast;

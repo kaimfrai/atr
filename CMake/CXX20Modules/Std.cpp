@@ -4,7 +4,7 @@ module;
 
 export module Std;
 
-export import std;
+import std;
 
 export namespace mm
 {

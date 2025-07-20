@@ -3,7 +3,7 @@ export module Meta.Auto.Ref.StaticCount;
 import Meta.Auto.CPO.SSize;
 import Meta.Size;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Auto

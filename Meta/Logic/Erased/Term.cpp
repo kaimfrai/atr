@@ -14,7 +14,7 @@ import Meta.Bit.Index;
 import Meta.Bit.Index.Compare;
 import Meta.Size;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Logic::Erased

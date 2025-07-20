@@ -13,7 +13,7 @@ import Meta.Byte.InSpan;
 import Meta.Byte.Buffer;
 import Meta.Bit.Index;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Bit

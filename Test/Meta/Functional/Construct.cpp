@@ -1,5 +1,5 @@
 import Meta.Functional.Construct;
-import Std;
+import std;
 
 using namespace Meta;
 

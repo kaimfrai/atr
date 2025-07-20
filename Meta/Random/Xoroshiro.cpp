@@ -2,7 +2,7 @@ export module Meta.Random.Xoroshiro;
 
 import Meta.Random.Splitmix;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Random

@@ -21,7 +21,7 @@ import Evaluation.TagATR.Interface;
 import ATR.Literals;
 import ATR.Instance;
 
-import Std;
+import std;
 
 using namespace ::ATR::Literals;
 

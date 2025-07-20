@@ -2,7 +2,7 @@ export module Meta.Memory.Size.Compare;
 
 import Meta.Memory.Size;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Memory

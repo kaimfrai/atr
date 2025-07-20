@@ -1,6 +1,6 @@
 import Meta.Auto.CPO.SSize;
 
-import Std;
+import std;
 
 using ::Meta::CPO::SSize;
 

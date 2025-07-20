@@ -3,7 +3,7 @@ import Meta.Dispatch.DispatchFor;
 import Meta.Dispatch.Path;
 import Meta.ID;
 
-import Std;
+import std;
 
 namespace
 	Meta::Dispatch

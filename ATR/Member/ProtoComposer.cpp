@@ -5,7 +5,7 @@ import ATR.Member.PrefixGuard;
 import Meta.ID;
 import Meta.Token.Type;
 
-import Std;
+import std;
 
 using ::Meta::Type;
 

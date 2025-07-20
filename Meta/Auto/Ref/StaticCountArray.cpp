@@ -6,7 +6,7 @@ import Meta.Auto.Ref.DataRange;
 
 import Meta.Size;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Auto

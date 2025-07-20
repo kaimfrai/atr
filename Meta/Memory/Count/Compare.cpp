@@ -2,7 +2,7 @@ export module Meta.Memory.Count.Compare;
 
 import Meta.Memory.Count;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Memory

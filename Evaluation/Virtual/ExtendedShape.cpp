@@ -2,7 +2,7 @@ export module Evaluation.Virtual.ExtendedShape;
 
 import Evaluation.Virtual.BasicBody;
 
-import Std;
+import std;
 
 export namespace
 	Bodies3D

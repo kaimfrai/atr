@@ -1,6 +1,6 @@
 export module Meta.String.Hash;
 
-import Std;
+import std;
 
 export namespace
 	Meta::String

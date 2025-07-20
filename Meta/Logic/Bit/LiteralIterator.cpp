@@ -5,7 +5,7 @@ import Meta.Bit.Field.Arithmetic;
 import Meta.Bit.Field.Compare;
 import Meta.Bit.Field.LowestOne;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Logic::Bit

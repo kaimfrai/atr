@@ -17,7 +17,7 @@ import Meta.Size;
 import Meta.String.Hash;
 import Meta.Token.Type;
 
-import Std;
+import std;
 
 using ::Meta::Bit::Field;
 using ::Meta::BitSize;

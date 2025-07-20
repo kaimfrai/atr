@@ -16,7 +16,7 @@ import Meta.Memory.Size.Scale;
 import Meta.Memory.Size;
 import Meta.Token.Type;
 
-import Std;
+import std;
 
 using ::ATR::Layout::Fork;
 using ::ATR::Layout::Offset;

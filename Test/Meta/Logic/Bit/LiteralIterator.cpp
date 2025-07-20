@@ -1,6 +1,6 @@
 import Meta.Logic.Bit.LiteralIterator;
 
-import Std;
+import std;
 
 static_assert
 (	::std::forward_iterator

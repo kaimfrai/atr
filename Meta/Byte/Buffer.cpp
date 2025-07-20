@@ -4,7 +4,7 @@ import Meta.Byte.OutSpan;
 import Meta.Byte.InSpan;
 import Meta.Memory.Size;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Byte

@@ -2,7 +2,7 @@ export module Meta.Auto.Simd.ArrayCeil;
 
 import Meta.Auto.Simd.Tag;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Auto

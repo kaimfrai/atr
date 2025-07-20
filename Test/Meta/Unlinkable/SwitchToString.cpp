@@ -1,6 +1,6 @@
 export module Test.Link.SwitchToString;
 
-import Std;
+import std;
 
 export
 auto

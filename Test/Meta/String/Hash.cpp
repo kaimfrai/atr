@@ -1,6 +1,6 @@
 import Meta.String.Hash;
 
-import Std;
+import std;
 
 using ::Meta::String::Hash;
 

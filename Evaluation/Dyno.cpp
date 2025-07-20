@@ -19,7 +19,7 @@ import Evaluation.CRTP.Cone;
 import Evaluation.CRTP.Ellipsoid;
 import Evaluation.CRTP.Head;
 
-import Std;
+import std;
 
 using namespace dyno::literals;
 

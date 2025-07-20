@@ -6,7 +6,7 @@ import Meta.Logic.Bit.Clause;
 //	provide custom Equivalence
 import Meta.Logic.Erased.Equivalence;
 
-import Std;
+import std;
 
 export
 {

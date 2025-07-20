@@ -7,7 +7,7 @@ import Meta.Token.Type;
 import Meta.Token.TypeID;
 import Meta.Size;
 
-import Std;
+import std;
 
 export namespace
 	Meta

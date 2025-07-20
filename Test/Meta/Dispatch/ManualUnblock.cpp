@@ -4,7 +4,7 @@ import Meta.Dispatch.Path;
 import Meta.Dispatch.Final;
 import Meta.ID;
 
-import Std;
+import std;
 
 namespace
 	Meta::Dispatch

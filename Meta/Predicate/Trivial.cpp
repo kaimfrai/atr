@@ -9,7 +9,7 @@ import Meta.Logic.Conjunction;
 import Meta.Logic.Disjunction;
 import Meta.Logic.Term;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Trait

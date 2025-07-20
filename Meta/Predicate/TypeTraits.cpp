@@ -7,7 +7,7 @@ import Meta.Logic.Term;
 import Meta.Token.Type;
 import Meta.Logic.Conjunction;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Trait

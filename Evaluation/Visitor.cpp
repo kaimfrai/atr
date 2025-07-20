@@ -21,7 +21,7 @@ import Evaluation.CRTP.Cone;
 import Evaluation.CRTP.Ellipsoid;
 import Evaluation.CRTP.Head;
 
-import Std;
+import std;
 
 using ::Visitor::ObjectReference;
 using ::Visitor::ObjectValue;

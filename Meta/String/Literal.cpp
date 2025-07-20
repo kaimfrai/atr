@@ -2,7 +2,7 @@ export module Meta.String.Literal;
 
 import Meta.String.Chain;
 
-import Std;
+import std;
 
 export namespace
 	Meta::String

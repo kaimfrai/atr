@@ -11,7 +11,7 @@ import Meta.Bit.Field.Arithmetic;
 import Meta.Bit.Field.CountOnes;
 import Meta.Bit.Field.Width;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Logic::Bit

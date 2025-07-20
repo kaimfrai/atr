@@ -4,7 +4,7 @@ import Meta.Bit.Access;
 import Meta.Bit.Index;
 import Meta.Memory.Constraint;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Bit

@@ -6,7 +6,7 @@ import Meta.Memory.Size.Scale;
 import Meta.Memory.Alignment;
 import Meta.Size;
 
-import Std;
+import std;
 
 namespace
 	Meta::Memory

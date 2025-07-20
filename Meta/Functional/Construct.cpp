@@ -1,6 +1,6 @@
 export module Meta.Functional.Construct;
 
-import Std;
+import std;
 
 export namespace
 	Meta

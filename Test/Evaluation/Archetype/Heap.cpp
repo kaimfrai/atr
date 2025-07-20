@@ -18,7 +18,7 @@ import ATR.Literals;
 
 import Meta.ID;
 
-import Std;
+import std;
 
 using ::ATR::District::ExcludingHeap;
 

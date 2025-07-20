@@ -3,7 +3,7 @@ export module Meta.Logic.Bit.Equivalence;
 import Meta.Logic.Bit.Term;
 import Meta.Logic.Bit.BinaryFunction;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Logic::Bit

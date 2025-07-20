@@ -1,6 +1,6 @@
 import Test.Link.SwitchToString;
 
-import Std;
+import std;
 
 auto
 (	main

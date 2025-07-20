@@ -1,7 +1,7 @@
 import Meta.String.Chain;
 import Meta.String.Literal;
 
-import Std;
+import std;
 
 using ::Meta::String::Chain;
 using ::Meta::String::Literal;

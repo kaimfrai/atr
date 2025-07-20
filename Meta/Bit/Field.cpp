@@ -12,7 +12,7 @@ import Meta.Memory.Size.Compare;
 import Meta.Memory.Size;
 import Meta.Size;
 
-import Std;
+import std;
 
 using namespace ::Meta::Literals;
 

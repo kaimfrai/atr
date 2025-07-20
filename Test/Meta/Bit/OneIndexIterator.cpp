@@ -4,7 +4,7 @@ import Meta.Bit.Index.Compare;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Scale;
 
-import Std;
+import std;
 
 using namespace ::Meta::Literals;
 

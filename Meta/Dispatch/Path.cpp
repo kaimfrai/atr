@@ -3,7 +3,7 @@ export module Meta.Dispatch.Path;
 import Meta.ID;
 import Meta.String.Literal;
 
-import Std;
+import std;
 
 using ::Meta::String::Literal;
 

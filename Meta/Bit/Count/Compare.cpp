@@ -3,7 +3,7 @@ export module Meta.Bit.Count.Compare;
 import Meta.Bit.Count;
 import Meta.Arithmetic.Integer;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Bit

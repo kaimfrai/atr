@@ -3,7 +3,7 @@ export module Meta.Trait.Match.ScopedEnum;
 import Meta.Lex.CV;
 import Meta.Logic.LiteralBase;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Trait::Match

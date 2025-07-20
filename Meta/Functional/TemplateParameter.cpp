@@ -1,6 +1,6 @@
 export module Meta.Functional.TemplateParameter;
 
-import Std;
+import std;
 
 export namespace
 	Meta

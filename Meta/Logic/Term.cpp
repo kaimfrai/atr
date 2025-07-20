@@ -8,7 +8,7 @@ import Meta.Bit.Index;
 import Meta.Token.Type;
 import Meta.Token.Index;
 
-import Std;
+import std;
 
 using namespace ::Meta::Literals;
 

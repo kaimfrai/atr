@@ -3,7 +3,7 @@ export module Meta.Bit.Width;
 import Meta.Bit.Count;
 import Meta.Math.Sign;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Bit

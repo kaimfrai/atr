@@ -5,7 +5,7 @@ import Meta.Data.Object;
 import Meta.Lex.Reference;
 import Meta.Token.LRef;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Data

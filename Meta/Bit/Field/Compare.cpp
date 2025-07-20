@@ -3,7 +3,7 @@ export module Meta.Bit.Field.Compare;
 import Meta.Arithmetic.Integer;
 import Meta.Bit.Field;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Bit

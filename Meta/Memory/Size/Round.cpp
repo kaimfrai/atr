@@ -3,7 +3,7 @@ export module Meta.Memory.Size.Round;
 import Meta.Memory.Size;
 import Meta.Math.Sign;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Memory

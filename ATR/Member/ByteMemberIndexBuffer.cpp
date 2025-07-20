@@ -7,7 +7,7 @@ import ATR.Member.Constants;
 import Meta.Memory.Alignment;
 import Meta.Token.TypeID;
 
-import Std;
+import std;
 
 using ::Meta::TypeID;
 using ::Meta::Memory::Alignment;

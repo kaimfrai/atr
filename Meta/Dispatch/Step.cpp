@@ -13,7 +13,7 @@ import Meta.String.Literal;
 import Meta.Token.Index;
 import Meta.Size;
 
-import Std;
+import std;
 
 using ::Meta::String::Literal;
 

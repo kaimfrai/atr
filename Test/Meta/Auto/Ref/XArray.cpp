@@ -1,7 +1,7 @@
 import Meta.Auto.Ref.RArray;
 import Meta.Auto.Ref.XArray;
 
-import Std;
+import std;
 
 using ::Meta::Auto::RArray;
 using ::Meta::Auto::XArray;

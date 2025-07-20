@@ -9,7 +9,7 @@ import Meta.Token.Type;
 import Meta.Token.Const;
 import Meta.Size;
 
-import Std;
+import std;
 
 
 export namespace

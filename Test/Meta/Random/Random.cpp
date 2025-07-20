@@ -2,7 +2,7 @@ import Meta.Math.Next;
 import Meta.Random.Splitmix;
 import Meta.Random.Xoroshiro;
 
-import Std;
+import std;
 
 using ::Meta::Math::Next;
 using ::Meta::Random::Splitmix64;

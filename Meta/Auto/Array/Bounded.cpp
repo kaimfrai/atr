@@ -3,7 +3,7 @@ export module Meta.Auto.Array.Bounded;
 export import Meta.Auto.Bit.Field;
 export import Meta.Auto.Var;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Auto

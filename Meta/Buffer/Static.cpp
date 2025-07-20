@@ -3,7 +3,7 @@ export module Meta.Buffer.Static;
 import Meta.Buffer.Fixed;
 import Meta.Size;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Buffer

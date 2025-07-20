@@ -2,7 +2,7 @@ export module Meta.Trait.Match.SignedIntegral;
 
 import Meta.Trait.Match.CV;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Trait::Match

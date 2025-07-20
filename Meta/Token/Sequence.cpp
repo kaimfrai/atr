@@ -4,7 +4,7 @@ import Meta.Token.Index;
 
 import Meta.Size;
 
-import Std;
+import std;
 
 namespace
 	Meta

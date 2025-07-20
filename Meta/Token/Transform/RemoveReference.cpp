@@ -2,7 +2,7 @@ export module Meta.Token.Transform.RemoveReference;
 
 import Meta.Token.Type;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Token::Transform

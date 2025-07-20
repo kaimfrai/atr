@@ -4,7 +4,7 @@ import Meta.Functional.FoldDirection;
 import Meta.Functional.Key;
 import Meta.Functional.FoldTraits;
 
-import Std;
+import std;
 
 export namespace
 	Meta

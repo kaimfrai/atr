@@ -18,7 +18,7 @@ import ATR.Member.Composition;
 import Meta.ID;
 import Meta.String.Literal;
 
-import Std;
+import std;
 
 using ::ATR::Member::Composition_Of;
 using ::Meta::ID;

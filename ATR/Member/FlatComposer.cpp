@@ -10,7 +10,7 @@ import Meta.String.Hash;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 
-import Std;
+import std;
 
 using ::Meta::ProtoID;
 using ::Meta::String::Hash;

@@ -2,7 +2,7 @@ export module ATR.Member.BitMemberIndexIterator;
 
 import ATR.Member.Constants;
 
-import Std;
+import std;
 
 export namespace
 	ATR::Member

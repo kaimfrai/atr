@@ -3,7 +3,7 @@ export module Meta.Token.Array;
 import Meta.Token.Type;
 import Meta.Size;
 
-import Std;
+import std;
 
 export namespace
 	Meta

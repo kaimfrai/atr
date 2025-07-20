@@ -6,7 +6,7 @@ import Meta.Auto.Bit.Bool;
 import Meta.Auto.Bit.RBool;
 import Meta.Memory.Constraint;
 
-import Std;
+import std;
 
 static_assert
 (	::std::endian::native

@@ -3,7 +3,7 @@ export module ATR.Dependency;
 import Meta.Size;
 import Meta.String.Hash;
 
-import Std;
+import std;
 
 using ::Meta::SSize;
 using ::Meta::String::ImplicitHash;

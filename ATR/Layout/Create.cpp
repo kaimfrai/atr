@@ -8,7 +8,7 @@ import ATR.Member.Constants;
 import Meta.Memory.Size;
 import Meta.Token.Type;
 
-import Std;
+import std;
 
 using ::Meta::BitSize;
 using ::Meta::RestoreTypeEntity;

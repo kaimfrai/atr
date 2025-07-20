@@ -12,7 +12,7 @@ import Meta.Auto.Simd.Fill;
 import Meta.Auto.Simd.Float;
 import Meta.Generic.RandomAccessIteratorBase;
 
-import Std;
+import std;
 
 using ::Meta::Auto::Simd;
 using ::Meta::Auto::SimdCast;

@@ -1,6 +1,6 @@
 import Meta.Auto.CPO.Data;
 
-import Std;
+import std;
 
 using ::Meta::CPO::Data;
 

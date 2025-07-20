@@ -4,7 +4,7 @@ import ATR.Dependency;
 
 import Meta.ID;
 
-import Std;
+import std;
 
 using ::Meta::ProtoID;
 

@@ -4,7 +4,7 @@ import ATR.Layout.ErasureView;
 
 import Meta.Size;
 
-import Std;
+import std;
 
 using ::Meta::SSize;
 

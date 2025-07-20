@@ -5,7 +5,7 @@ import ATR.Member.Constants;
 
 import Meta.Memory.Alignment;
 
-import Std;
+import std;
 
 using ::Meta::Memory::Alignment;
 

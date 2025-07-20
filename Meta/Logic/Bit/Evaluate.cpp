@@ -3,7 +3,7 @@ export module Meta.Logic.Bit.Evaluate;
 import Meta.Logic.Bit.Term;
 import Meta.Logic.Bit.Clause;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Logic::Bit

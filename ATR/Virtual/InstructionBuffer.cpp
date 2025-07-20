@@ -13,7 +13,7 @@ import Meta.String.Hash;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 
-import Std;
+import std;
 
 using ::ATR::Layout::Offset;
 using ::ATR::Member::ConstantValue;

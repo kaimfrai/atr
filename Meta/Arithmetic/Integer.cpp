@@ -3,7 +3,7 @@ export module Meta.Arithmetic.Integer;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Round;
 
-import Std;
+import std;
 
 using ::Meta::Memory::SizeOf;
 

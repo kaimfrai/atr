@@ -3,7 +3,7 @@ import Meta.Auto.Ref.RSpan;
 import Meta.Auto.Ref.XArray;
 import Meta.Auto.Ref.XSpan;
 
-import Std;
+import std;
 
 using ::Meta::Auto::RArray;
 using ::Meta::Auto::RSpan;

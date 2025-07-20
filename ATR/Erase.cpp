@@ -4,7 +4,7 @@ import ATR.Layout.Offset;
 
 import Meta.Memory.Size;
 
-import Std;
+import std;
 
 using ::Meta::BitSize;
 using ::ATR::Layout::Offset;

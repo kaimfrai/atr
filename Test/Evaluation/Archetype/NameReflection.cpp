@@ -20,7 +20,7 @@ import ATR.Member.FlatComposition;
 import Meta.ID;
 import Meta.String.Literal;
 
-import Std;
+import std;
 
 using ::ATR::Member::Composition_Of;
 using ::ATR::Member::MemberNameList;

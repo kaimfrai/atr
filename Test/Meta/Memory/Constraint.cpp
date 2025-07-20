@@ -4,7 +4,7 @@ import Meta.Memory.Size.Compare;
 import Meta.Memory.Alignment;
 import Meta.Bit.Field;
 
-import Std;
+import std;
 
 using ::Meta::Memory::BitSize_Of;
 using ::Meta::Memory::BitAlign_Of;

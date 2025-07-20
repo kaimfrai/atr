@@ -8,7 +8,7 @@ import Meta.Lex.FreeFunctionTokenizer;
 import Meta.Lex.Function;
 import Meta.ID;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Dispatch

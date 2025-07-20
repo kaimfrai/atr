@@ -1,6 +1,6 @@
 export module Meta.Bit.IndexIterator;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Bit

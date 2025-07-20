@@ -1,6 +1,6 @@
 export module Meta.Math.Approximate;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Math

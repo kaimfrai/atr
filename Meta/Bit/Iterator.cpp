@@ -13,7 +13,7 @@ import Meta.Memory.Size.Scale;
 import Meta.Math.Divide;
 import Meta.Size;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Bit

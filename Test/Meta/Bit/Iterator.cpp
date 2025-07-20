@@ -7,7 +7,7 @@ import Meta.Bit.Mask;
 import Meta.Bit.Field;
 import Meta.Memory.Size;
 
-import Std;
+import std;
 
 using namespace ::Meta::Literals;
 using ::std::begin;

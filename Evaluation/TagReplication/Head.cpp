@@ -4,7 +4,7 @@ import Evaluation.TagReplication.Tag;
 import Evaluation.TagReplication.Sphere;
 import Evaluation.Dependency.PiFraction;
 
-import Std;
+import std;
 
 export namespace
 	Bodies3D

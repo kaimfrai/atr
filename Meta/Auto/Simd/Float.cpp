@@ -3,6 +3,7 @@ export module Meta.Auto.Simd.Float;
 export import Meta.Auto.Simd.Tag;
 import Meta.Auto.Simd.Int32;
 
+import std;
 import Std;
 
 using

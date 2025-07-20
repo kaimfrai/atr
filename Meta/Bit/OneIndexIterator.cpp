@@ -5,7 +5,7 @@ import Meta.Bit.LowestOne;
 import Meta.Arithmetic.Integer;
 import Meta.Memory.Size;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Bit

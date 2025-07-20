@@ -5,7 +5,7 @@ import Evaluation.Dependency.Visitor.Invoke;
 import Evaluation.Dependency.Visitor.LaunderCast;
 import Evaluation.Dependency.Visitor.ObjectReference;
 
-import Std;
+import std;
 
 export namespace
 	Visitor

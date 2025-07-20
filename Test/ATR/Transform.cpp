@@ -12,7 +12,7 @@ import Meta.Memory.Size.Compare;
 import Meta.Memory.Size;
 import Meta.Token.Extent;
 
-import Std;
+import std;
 
 using ::ATR::Member::AlignBuffer;
 using ::ATR::Member::Composition_Of;

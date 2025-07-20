@@ -2,7 +2,7 @@ export module Evaluation.Dependency.VerifyLoopSum;
 
 import Evaluation.Dependency.PseudoRandomSequence;
 
-import Std;
+import std;
 
 export
 {

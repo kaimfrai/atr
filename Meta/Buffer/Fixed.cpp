@@ -4,7 +4,7 @@ import Meta.Buffer.Proto;
 import Meta.Math.Next;
 import Meta.Size;
 
-import Std;
+import std;
 
 using ::Meta::Math::Next;
 

@@ -9,7 +9,7 @@ import Meta.Logic.Bit.Equivalence;
 import Meta.Bit.Field.Arithmetic;
 import Meta.Bit.Field.CountOnes;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Logic::Bit

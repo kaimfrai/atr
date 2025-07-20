@@ -4,6 +4,7 @@ import Meta.Auto.Simd.Float;
 import Meta.Auto.Simd.UInt32;
 import Meta.Auto.Simd.UInt8;
 
+import std;
 import Std;
 
 using ::Std::SimdOp;

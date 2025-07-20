@@ -3,7 +3,7 @@ export module Meta.Byte.Buffer.Range;
 import Meta.Memory.Size.PointerArithmetic;
 import Meta.Byte.Buffer;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Byte

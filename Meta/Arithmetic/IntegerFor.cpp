@@ -5,7 +5,7 @@ import Meta.Math.Sign;
 import Meta.Memory.Size;
 import Meta.Memory.Size.Arithmetic;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Arithmetic

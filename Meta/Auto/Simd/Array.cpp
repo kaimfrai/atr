@@ -4,7 +4,7 @@ export import Meta.Auto.Simd.Tag;
 
 import Meta.Size;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Auto

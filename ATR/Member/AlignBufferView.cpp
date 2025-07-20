@@ -1,6 +1,6 @@
 export module ATR.Member.AlignBufferView;
 
-import Std;
+import std;
 
 export namespace
 	ATR::Member

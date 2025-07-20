@@ -26,7 +26,7 @@ import Meta.String.Hash;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 
-import Std;
+import std;
 
 using ::ATR::Instance;
 using ::ATR::Member::ConstantValue;

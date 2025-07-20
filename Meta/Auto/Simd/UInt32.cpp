@@ -2,6 +2,7 @@ export module Meta.Auto.Simd.UInt32;
 
 export import Meta.Auto.Simd.Tag;
 
+import std;
 import Std;
 
 using

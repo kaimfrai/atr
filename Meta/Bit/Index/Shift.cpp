@@ -3,7 +3,7 @@ export module Meta.Bit.Index.Shift;
 import Meta.Bit.Index;
 import Meta.Arithmetic.Integer;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Bit

@@ -4,7 +4,7 @@ import Meta.Auto.CPO.Data;
 import Meta.Auto.Ref.StaticCount;
 import Meta.Size;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Auto

@@ -2,7 +2,7 @@ export module Meta.Memory.Count;
 
 import Meta.Math.Divide;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Memory

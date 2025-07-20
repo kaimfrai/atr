@@ -2,7 +2,7 @@ export module Meta.Dispatch.StepPair;
 
 import Meta.Size;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Dispatch

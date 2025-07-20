@@ -9,7 +9,7 @@ import Meta.Memory.Size.Scale;
 import Meta.Byte.Buffer;
 import Meta.Byte.Buffer.Range;
 
-import Std;
+import std;
 
 using namespace ::Meta::Literals;
 

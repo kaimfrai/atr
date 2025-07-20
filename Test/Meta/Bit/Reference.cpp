@@ -11,7 +11,7 @@ import Meta.Arithmetic.Integer;
 import Meta.Byte.Buffer;
 import Meta.Byte.Buffer.Range;
 
-import Std;
+import std;
 
 using namespace ::Meta::Literals;
 

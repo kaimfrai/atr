@@ -10,7 +10,7 @@ import Meta.Bit.Count;
 import Meta.Bit.Count.Access;
 import Meta.Bit.Index.Shift;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Logic::Bit

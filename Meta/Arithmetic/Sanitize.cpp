@@ -4,7 +4,7 @@ import Meta.Math.Next;
 import Meta.Arithmetic.Integer;
 import Meta.Arithmetic.IntegerFor;
 
-import Std;
+import std;
 
 using ::Meta::Arithmetic::Narrow;
 using ::Meta::Math::Next;

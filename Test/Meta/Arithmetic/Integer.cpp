@@ -1,7 +1,7 @@
 import Meta.Arithmetic.Integer;
 import Meta.Memory.Size;
 
-import Std;
+import std;
 
 using ::Meta::UInt;
 using ::Meta::SInt;

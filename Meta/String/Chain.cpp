@@ -1,6 +1,6 @@
 export module Meta.String.Chain;
 
-import Std;
+import std;
 
 export namespace
 	Meta::String

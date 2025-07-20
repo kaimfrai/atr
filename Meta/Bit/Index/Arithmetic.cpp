@@ -4,7 +4,7 @@ import Meta.Math.Next;
 import Meta.Math.Prev;
 import Meta.Bit.Index;
 
-import Std;
+import std;
 
 using ::Meta::Math::Next;
 using ::Meta::Math::Prev;

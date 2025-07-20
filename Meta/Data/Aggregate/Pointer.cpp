@@ -7,7 +7,7 @@ import Meta.Token.Const;
 import Meta.Token.Mutable;
 import Meta.Token.Type;
 
-import Std;
+import std;
 
 export namespace
 	Meta::Data

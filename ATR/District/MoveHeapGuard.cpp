@@ -6,7 +6,7 @@ import ATR.Member.Composition;
 
 import Meta.Auto.Ref.PledgeCount;
 
-import Std;
+import std;
 
 export namespace
 	ATR::District

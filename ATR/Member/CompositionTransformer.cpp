@@ -7,7 +7,7 @@ import Meta.ID;
 import Meta.String.Hash;
 import Meta.Token.Type;
 
-import Std;
+import std;
 
 using ::Meta::ProtoID;
 using ::Meta::String::ImplicitHash;

@@ -8,7 +8,7 @@ import Meta.Auto.Simd.Tag;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 
-import Std;
+import std;
 
 using ::Meta::Auto::Simd;
 using ::Meta::Auto::SimdFill;

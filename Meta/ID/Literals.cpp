@@ -4,7 +4,7 @@ import :Make;
 
 import Meta.String.Literal;
 
-import Std;
+import std;
 
 using ::Meta::String::Literal;
 

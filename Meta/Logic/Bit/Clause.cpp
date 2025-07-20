@@ -14,7 +14,7 @@ import Meta.Bit.Count;
 import Meta.Bit.Count.Range;
 import Meta.Bit.Index.Shift;
 
-import Std;
+import std;
 
 using namespace ::Meta::Literals;
 

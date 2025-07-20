@@ -2,7 +2,7 @@ export module Evaluation.SOAReplication.SOAView;
 
 import Meta.Auto.Simd.Tag;
 
-import Std;
+import std;
 
 using ::Meta::Auto::Simd;
 
