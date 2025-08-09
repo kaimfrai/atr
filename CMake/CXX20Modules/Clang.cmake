@@ -309,14 +309,6 @@ endfunction()
 
 set_property(
 SOURCE
-	"${CXX20_MODULES_PATH}/include/std.hpp"
-APPEND PROPERTY
-COMPILE_OPTIONS
-	"${STANDARD_LIBRARY_FLAG}"
-)
-
-set_property(
-SOURCE
 	"${CXX20_MODULES_PATH}/Std.cpp"
 APPEND PROPERTY
 COMPILE_OPTIONS
