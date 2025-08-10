@@ -1,3 +1,3 @@
-export module Test.CMake.CXXModule.DoubleImport;
+export module Test.CMake.PCM.DoubleImport;
 
 export inline int doubleValue(int i) { return i * 2; }

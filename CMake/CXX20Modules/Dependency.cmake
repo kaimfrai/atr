@@ -77,7 +77,7 @@ function(cxx_module_set_file_properties
 		"${file_name}"
 	PROPERTIES
 		LANGUAGE
-			CXXModule
+			PCM
 		OBJECT_DEPENDS
 			"${target_depends}"
 	)
@@ -88,7 +88,7 @@ function(cxx_module_set_file_properties
 			"${file_name}"
 		PROPERTIES
 			OBJECT_OUTPUTS
-				"$<LIST:TRANSFORM,$<TARGET_OBJECTS:${target_name}>,APPEND,${CMAKE_CXXModule_IMPORT_EXTENSION}>"
+				"$<LIST:TRANSFORM,$<TARGET_OBJECTS:${target_name}>,APPEND,${CMAKE_PCM_IMPORT_EXTENSION}>"
 		)
 	endif()
 

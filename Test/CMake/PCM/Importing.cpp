@@ -1,6 +1,6 @@
-import Test.CMake.CXXModule.Imported;
+import Test.CMake.PCM.Imported;
 
-import Test.CMake.CXXModule.DoubleImport;
+import Test.CMake.PCM.DoubleImport;
 
 auto
 (	main

@@ -1,4 +1,4 @@
-add_subdirectory(CXXModule)
+add_subdirectory(PCM)
 add_subdirectory(Partition)
 add_subdirectory(Pimpl)
 add_subdirectory(VirtualTable)

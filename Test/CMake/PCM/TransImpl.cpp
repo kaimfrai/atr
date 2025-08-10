@@ -1,4 +1,4 @@
-module Test.CMake.CXXModule.TransImported;
+module Test.CMake.PCM.TransImported;
 
 int GetTransInt() { return 4; }
 

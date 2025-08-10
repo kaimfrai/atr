@@ -1,4 +1,4 @@
-export module Test.CMake.CXXModule.TransImported;
+export module Test.CMake.PCM.TransImported;
 
 export int GetTransInt();
 

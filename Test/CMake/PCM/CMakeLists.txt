@@ -9,6 +9,6 @@ add_module(
 	Imported.cpp
 )
 add_module_executable(
-Test.CMake.CXXModule
+Test.CMake.PCM
 	Importing.cpp
 )
