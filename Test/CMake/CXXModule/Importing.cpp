@@ -1,16 +1,16 @@
 import Test.CMake.CXXModule.Imported;
 
-import std;
+import Test.CMake.CXXModule.DoubleImport;
 
 auto
 (	main
 )	()
 ->	int
 {
-	std::cout << "Hello World!\n";
+	Virt v;
 	return
 		GetInt
 		()
-	-	static_cast<int>(sizeof(std::size_t))
+	-	doubleValue(4)
 	;
 }

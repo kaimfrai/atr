@@ -5,13 +5,13 @@ function(cxx_module_link_imports
 	target_depends
 )
 	foreach(
-		dep
+		dependency
 	IN LISTS
 		target_depends
 	)
 		get_target_property(
 		interface_link_libraries
-			"${dep}"
+			"${dependency}"
 		INTERFACE_LINK_LIBRARIES
 		)
 
@@ -54,28 +54,24 @@ function(cxx_module_provide_import_flags
 	INTERFACE
 		"${module_import_flag}"
 	)
-	target_link_options(
-		"${target_name}"
-	INTERFACE
-		"${module_import_flag}"
+
+	if(
+	NOT	FASTER_BUILD_SPEED
 	)
+		target_link_options(
+			"${target_name}"
+		INTERFACE
+			"${module_import_flag}"
+		)
+	endif()
 
 endfunction()
 
-function(cxx_module_primary
+function(cxx_module_set_file_properties
 	file_name
-	module_name
+	target_name
+	target_depends
 )
-	add_library(
-		"${module_name}"
-	OBJECT
-		"${file_name}"
-	)
-
-	cxx_module_provide_import_flags(
-		"${module_name}"
-		"${module_name}"
-	)
 
 	set_source_files_properties(
 		"${file_name}"
@@ -83,11 +79,48 @@ function(cxx_module_primary
 		LANGUAGE
 			CXXModule
 		OBJECT_DEPENDS
-			"${ARGN}"
+			"${target_depends}"
+	)
+
+	if( FASTER_BUILD_SPEED
+	)
+		set_source_files_properties(
+			"${file_name}"
+		PROPERTIES
+			OBJECT_OUTPUTS
+				"$<LIST:TRANSFORM,$<TARGET_OBJECTS:${target_name}>,APPEND,${CMAKE_CXXModule_IMPORT_EXTENSION}>"
+		)
+	endif()
+
+endfunction()
+
+function(cxx_module_primary
+	file_name
+	module_name
+)
+	set(target_name
+		"${module_name}"
+	)
+
+	add_library(
+		"${target_name}"
+	OBJECT
+		"${file_name}"
+	)
+
+	cxx_module_provide_import_flags(
+		"${target_name}"
+		"${module_name}"
+	)
+
+	cxx_module_set_file_properties(
+		"${file_name}"
+		"${target_name}"
+		"${ARGN}"
 	)
 
 	cxx_module_link_imports(
-		"${module_name}"
+		"${target_name}"
 		"${ARGN}"
 	)
 
@@ -98,28 +131,29 @@ function(cxx_module_partition
 	module_name
 	partition_name
 )
-	add_library(
+	set(target_name
 		"${module_name}-${partition_name}"
+	)
+
+	add_library(
+		"${target_name}"
 	OBJECT
 		"${file_name}"
 	)
 
 	cxx_module_provide_import_flags(
-		"${module_name}-${partition_name}"
+		"${target_name}"
 		"${module_name}:${partition_name}"
 	)
 
-	set_source_files_properties(
+	cxx_module_set_file_properties(
 		"${file_name}"
-	PROPERTIES
-		LANGUAGE
-			CXXModule
-		OBJECT_DEPENDS
-			"${ARGN}"
+		"${target_name}"
+		"${ARGN}"
 	)
 
 	cxx_module_link_imports(
-		"${module_name}-${partition_name}"
+		"${target_name}"
 		"${ARGN}"
 	)
 
@@ -129,19 +163,23 @@ function(cxx_module_implementation
 	file_name
 	module_name
 )
-	if(
-	NOT TARGET
+	set(target_name
 		"${module_name}+"
 	)
+
+	if(
+	NOT TARGET
+		"${target_name}"
+	)
 		add_library(
-			"${module_name}+"
+			"${target_name}"
 		OBJECT
 		)
 
 	endif()
 
 	target_sources(
-		"${module_name}+"
+		"${target_name}"
 	PUBLIC
 		"${file_name}"
 	)
@@ -156,7 +194,7 @@ function(cxx_module_implementation
 	)
 
 	cxx_module_link_imports(
-		"${module_name}+"
+		"${target_name}"
 		"${ARGN}"
 	)
 
@@ -187,18 +225,18 @@ function(cxx_module_global
 	)
 
 	foreach(
-		dep
+		dependency
 	IN LISTS
 		interface_link_libraries
 	)
 		if(
 		TARGET
-			"${dep}+"
+			"${dependency}+"
 		)
 			target_sources(
 				"${target_name}"
 			PUBLIC
-				$<TARGET_OBJECTS:${dep}+>
+				$<TARGET_OBJECTS:${dependency}+>
 			)
 
 		endif()

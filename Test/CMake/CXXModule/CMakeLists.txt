@@ -3,6 +3,9 @@ add_module(
 	TransImpl.cpp
 )
 add_module(
+	DoubleImport.cpp
+)
+add_module(
 	Imported.cpp
 )
 add_module_executable(

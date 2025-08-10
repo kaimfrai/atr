@@ -1,6 +1,6 @@
 export module Test.CMake.CXXModule.Imported;
 
-import Test.CMake.CXXModule.TransImported;
-import std;
+export import Test.CMake.CXXModule.TransImported;
+import Test.CMake.CXXModule.DoubleImport;
 
-export inline int GetInt() { return 12 - GetTransInt(); }
+export inline int GetInt() { return doubleValue(12) - GetTransInt(); }
