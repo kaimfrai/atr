@@ -322,7 +322,7 @@ Disassembly of section .text:
                	int3
                	int3
 
-<Shapes2D::RectangularShape@Evaluation.Virtual.RectangularShape::GetHeight() const>:
+<Shapes2D::CircularShape@Evaluation.Virtual.CircularShape::GetHeight() const>:
                	vmovss	xmm0, dword ptr [rdi + 0x24]
                	ret
                	int3
@@ -359,7 +359,7 @@ Disassembly of section .text:
                	int3
                	int3
 
-<Shapes2D::Square@Evaluation.Virtual.Square::~Square()>:
+<Shapes2D::Circle@Evaluation.Virtual.Circle::~Circle()>:
                	mov	esi, 0x28
                	jmp	 <_ZdlPvm$plt>
                	int3
@@ -369,47 +369,8 @@ Disassembly of section .text:
                	int3
                	int3
 
-<Bodies3D::Shape3D@Evaluation.Virtual.Shape3D<Shapes2D::Square@Evaluation.Virtual.Square>::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <.LCPI6_0>
-               	ret
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<Shapes2D::RectangularShape@Evaluation.Virtual.RectangularShape::~RectangularShape()>:
-               	ud2
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
 <Shapes2D::CircularShape@Evaluation.Virtual.CircularShape::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <.LCPI6_0>
-               	ret
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<Bodies3D::Shape3D@Evaluation.Virtual.Shape3D<Shapes2D::Circle@Evaluation.Virtual.Circle>::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <.LCPI6_0>
+               	vmovss	xmm0, dword ptr  <.LCPI63_0>
                	ret
                	int3
                	int3
@@ -458,18 +419,7 @@ Disassembly of section .text:
                	int3
 
 <Shapes2D::TriangularShape@Evaluation.Virtual.TriangularShape::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <.LCPI5_0>
-               	ret
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-               	int3
-
-<Bodies3D::Shape3D@Evaluation.Virtual.Shape3D<Shapes2D::Triangle@Evaluation.Virtual.Triangle>::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <.LCPI5_0>
+               	vmovss	xmm0, dword ptr  <.LCPI51_0>
                	ret
                	int3
                	int3
@@ -504,7 +454,7 @@ Disassembly of section .text:
                	int3
 
 <Bodies3D::PyramidicBody@Evaluation.Virtual.PyramidicBody<Shapes2D::Triangle@Evaluation.Virtual.Triangle>::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <.LCPI6_0>
+               	vmovss	xmm0, dword ptr  <.LCPI57_0>
                	ret
                	int3
                	int3
@@ -515,7 +465,7 @@ Disassembly of section .text:
                	int3
 
 <Bodies3D::SphericBody@Evaluation.Virtual.SphericBody<Shapes2D::Circle@Evaluation.Virtual.Circle>::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <.LCPI6_0>
+               	vmovss	xmm0, dword ptr  <.LCPI69_0>
                	ret
                	int3
                	int3
@@ -526,7 +476,7 @@ Disassembly of section .text:
                	int3
 
 <Bodies3D::Cone@Evaluation.Virtual.Cone::GetComputeSizeMultiplier() const>:
-               	vmovss	xmm0, dword ptr  <.LCPI6_0>
+               	vmovss	xmm0, dword ptr  <.LCPI66_0>
                	ret
                	int3
                	int3
@@ -765,7 +715,7 @@ Disassembly of section .text:
                	je	 <L7>
                	cmp	r14, 0x186a0
                	jne	 <L6>
-               	vucomiss	xmm0, dword ptr  <.LCPI0_4>
+               	vucomiss	xmm0, dword ptr  <.LCPI72_4>
                	jne	 <L8>
 <L6>:
                	mov	rax, qword ptr fs:[0x28]
@@ -784,7 +734,7 @@ Disassembly of section .text:
 <L4>:
                	vmovdqa	xmmword ptr [rsp + 0xc0], xmm0
                	vpbroadcastq	zmm0, r13
-               	vpaddq	zmm0, zmm0, zmmword ptr  <typeinfo name for Bodies3D::Head@Evaluation.Virtual.Head+0x62>
+               	vpaddq	zmm0, zmm0, zmmword ptr  <memset+0x2500>
                	mov	rax, qword ptr [rsp + 0x680]
                	mov	r13, qword ptr [rsp + 0x60]
                	mov	qword ptr [rsp + 0x68], r14
@@ -1252,7 +1202,7 @@ Disassembly of section .text:
                	movzx	edx, dl
                	vpgatherqq	zmm0 {k1}, qword ptr [1*zmm1]
                	vpmovqd	ymm0, zmm0
-               	vpandd	ymm0, ymm0, dword ptr {1to8} <.LCPI0_5>
+               	vpandd	ymm0, ymm0, dword ptr {1to8} <.LCPI72_5>
                	vcvtsi2ss	xmm2, xmm22, ecx
                	movzx	ecx, al
                	vcvtsi2ss	xmm1, xmm22, edx
@@ -1263,7 +1213,7 @@ Disassembly of section .text:
                	lea	edx, [rcx + 2*rcx]
                	lea	ecx, [rcx + 4*rdx]
                	sub	al, cl
-               	lea	rcx,  <typeinfo name for Bodies3D::Head@Evaluation.Virtual.Head+0xa2>
+               	lea	rcx,  <memset+0x2540>
                	movzx	eax, al
                	movsxd	rax, dword ptr [rcx + 4*rax]
                	add	rax, rcx
@@ -1305,7 +1255,7 @@ Disassembly of section .text:
                	vzeroupper
                	call	 <_Znwm$plt>
                	vmovups	ymm0, ymmword ptr [rsp + 0x20]
-               	vpbroadcastd	ymm3, dword ptr  <.LCPI0_5>
+               	vpbroadcastd	ymm3, dword ptr  <.LCPI72_5>
                	vmovdqa	xmm1, xmmword ptr [rsp + 0x90]
                	vmovdqu	ymm5, ymmword ptr [rsp + 0x40]
                	movzx	ecx, r14b
@@ -1313,7 +1263,7 @@ Disassembly of section .text:
                	lea	rdx,  <vtable for Bodies3D::Head@Evaluation.Virtual.Head+0x10>
                	lea	rsi,  <vtable for Bodies3D::Sphere@Evaluation.Virtual.Sphere+0x10>
                	vinsertf128	ymm0, ymm0, xmmword ptr [rsp], 0x1
-               	vpshufb	xmm1, xmm1, xmmword ptr  <.LCPI0_2>
+               	vpshufb	xmm1, xmm1, xmmword ptr  <.LCPI72_2>
                	vpshufd	xmm4, xmm5, 0xff        # xmm4 = xmm5[3,3,3,3]
                	vmovdqu	ymmword ptr [rax + 0x10], ymm5
                	mov	qword ptr [rax + 0x8], rdi
@@ -1700,7 +1650,7 @@ Disassembly of section .text:
                	vmovdqa	xmm0, xmmword ptr [rsp + 0x10]
                	jmp	 <L36>
 <L7>:
-               	vucomiss	xmm0, dword ptr  <.LCPI0_3>
+               	vucomiss	xmm0, dword ptr  <.LCPI72_3>
                	je	 <L6>
 <L8>:
                	vmovaps	xmmword ptr [rsp + 0x10], xmm0
@@ -1742,10 +1692,10 @@ Disassembly of section .text:
                	push	r13
                	push	r12
                	push	rbx
-               	vpbroadcastq	xmm4, qword ptr  <.LCPI2_1>
-               	vpbroadcastq	xmm7, qword ptr  <.LCPI2_2>
+               	vpbroadcastq	xmm4, qword ptr  <.LCPI74_1>
+               	vpbroadcastq	xmm7, qword ptr  <.LCPI74_2>
                	vpsrlq	xmm2, xmm0, 0x1e
-               	vpaddq	xmm1, xmm0, qword ptr {1to2} <.LCPI2_0>
+               	vpaddq	xmm1, xmm0, qword ptr {1to2} <.LCPI74_0>
                	movabs	rsi, 0x2020220200222
                	mov	qword ptr [rsp - 0x8], rdi
                	xor	eax, eax
@@ -1762,8 +1712,8 @@ Disassembly of section .text:
                	vpmullq	xmm1, xmm1, xmm7
                	vpsrlq	xmm3, xmm2, 0x1f
                	vpxor	xmm3, xmm3, xmm2
-               	vpaddq	xmm2, xmm0, qword ptr {1to2} <.LCPI2_3>
-               	vpaddq	xmm0, xmm0, qword ptr {1to2} <.LCPI2_4>
+               	vpaddq	xmm2, xmm0, qword ptr {1to2} <.LCPI74_3>
+               	vpaddq	xmm0, xmm0, qword ptr {1to2} <.LCPI74_4>
                	vpsrlq	xmm5, xmm1, 0x1f
                	vmovdqa	xmmword ptr [rdi], xmm3
                	vpxor	xmm5, xmm5, xmm1
