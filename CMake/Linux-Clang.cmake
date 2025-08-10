@@ -1,26 +1,51 @@
-set(CMAKE_SYSTEM_NAME Linux)
-set(CMAKE_SYSTEM_PROCESSOR ${CMAKE_HOST_SYSTEM_PROCESSOR})
+set(CMAKE_SYSTEM_NAME
+	Linux
+)
+set(CMAKE_SYSTEM_PROCESSOR
+	${CMAKE_HOST_SYSTEM_PROCESSOR}
+)
 
-if	(COMPILER_INSTALL_DIR)
-	find_program(CMAKE_C_COMPILER clang REQUIRED PATHS ${COMPILER_INSTALL_DIR}/bin NO_DEFAULT_PATH)
-	find_program(CMAKE_CXX_COMPILER clang++ REQUIRED PATHS ${COMPILER_INSTALL_DIR}/bin NO_DEFAULT_PATH)
-else()
-	find_program(CMAKE_C_COMPILER clang REQUIRED)
-	find_program(CMAKE_CXX_COMPILER clang++ REQUIRED)
+if(	COMPILER_INSTALL_DIR
+)
+	find_program(
+		CMAKE_C_COMPILER
+	NAMES
+		clang
+	REQUIRED
+	PATHS
+		"${COMPILER_INSTALL_DIR}/bin"
+	NO_DEFAULT_PATH
+	)
+	find_program(
+		CMAKE_CXX_COMPILER
+	NAMES
+		clang++
+	REQUIRED
+	PATHS
+		"${COMPILER_INSTALL_DIR}/bin"
+	NO_DEFAULT_PATH
+	)
+
+else(
+)
+	find_program(
+		CMAKE_C_COMPILER
+	NAMES
+		clang
+	REQUIRED
+	)
+	find_program(
+		CMAKE_CXX_COMPILER
+	NAMES
+		clang++
+	REQUIRED
+	)
+
 endif()
 
-message("Found clang++ at ${CMAKE_CXX_COMPILER}.")
-
-if	(USE_LIBCPP)
-	set(
-		STANDARD_LIBRARY_FLAG
-		"-stdlib=libc++"
-	)
-else()
-	set(
-		STANDARD_LIBRARY_FLAG
-	)
-endif()
+message(
+	"Found clang++ at ${CMAKE_CXX_COMPILER}."
+)
 
 add_compile_options(
 	-march=native
@@ -39,8 +64,8 @@ add_link_options(
 	-Wl,--gc-sections,--icf=all
 )
 
-if	(BUILD_WITH_SANITIZER)
-
+if(	BUILD_WITH_SANITIZER
+)
 	add_compile_options(
 		-O1
 		-fsanitize=undefined
@@ -52,8 +77,10 @@ if	(BUILD_WITH_SANITIZER)
 		-fno-optimize-sibling-calls
 	)
 
-	if	("${BUILD_WITH_SANITIZER}" STREQUAL "address")
-
+	if(	"${BUILD_WITH_SANITIZER}"
+	STREQUAL
+		"address"
+	)
 		add_compile_options(
 			-fsanitize=address
 			-fsanitize-address-use-after-return=always
@@ -63,9 +90,16 @@ if	(BUILD_WITH_SANITIZER)
 			-fsanitize=address
 		)
 
-		message(STATUS "Building with address & undefined behaviour sanitizer")
+		message(
+		STATUS
+			"Building with address & undefined behaviour sanitizer"
+		)
 
-	elseif("${BUILD_WITH_SANITIZER}" STREQUAL "memory")
+	elseif(
+		"${BUILD_WITH_SANITIZER}"
+	STREQUAL
+		"memory"
+	)
 
 		add_compile_options(
 			-fsanitize=memory
@@ -75,17 +109,23 @@ if	(BUILD_WITH_SANITIZER)
 			-fsanitize=memory
 		)
 
-		message(STATUS "Building with memory & undefined behaviour sanitizer")
+		message(
+		STATUS
+			"Building with memory & undefined behaviour sanitizer"
+		)
 
-	else()
-
-		message(FATAL_ERROR "Unknown value ${BUILD_WITH_SANITIZER} specified for BUILD_WITH_SANITIZER!")
+	else(
+	)
+		message(
+		FATAL_ERROR
+			"Unknown value ${BUILD_WITH_SANITIZER} specified for BUILD_WITH_SANITIZER!"
+		)
 
 	endif()
 endif()
 
-if	(FASTER_BUILD_SPEED)
-
+if(	FASTER_BUILD_SPEED
+)
 	add_compile_options(
 		--no-warnings
 	)

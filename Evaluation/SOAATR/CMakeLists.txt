@@ -23,6 +23,5 @@ add_single_file_modules(
 
 add_module(
 	Interface.cpp
-	InterfaceImpl.cpp
 )
 

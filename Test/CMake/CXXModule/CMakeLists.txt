@@ -1,0 +1,11 @@
+add_module(
+	TransImported.cpp
+	TransImpl.cpp
+)
+add_module(
+	Imported.cpp
+)
+add_module_executable(
+Test.CMake.CXXModule
+	Importing.cpp
+)

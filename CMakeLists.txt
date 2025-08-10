@@ -4,11 +4,7 @@ VERSION
 	#required for CXX_STANDARD 26
 )
 
-project(
-	archetype
-LANGUAGES
-	CXX
-)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 
 set(CMAKE_CXX_STANDARD
 	26
@@ -18,6 +14,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED
 )
 set(CMAKE_CXX_EXTENSIONS
 	OFF
+)
+
+project(
+	archetype
+LANGUAGES
+	CXX
+	CXXModule
 )
 
 include(CMake/CXX20Modules.cmake)
