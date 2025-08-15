@@ -20,7 +20,6 @@ project(
 	archetype
 LANGUAGES
 	CXX
-	PCM
 )
 
 include(CMake/CXX20Modules.cmake)

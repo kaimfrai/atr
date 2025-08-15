@@ -39,13 +39,45 @@ function(cxx_module_link_imports
 
 endfunction()
 
+function(cxx_module_output_paths
+	module_names
+	out_path
+)
+	list(
+	TRANSFORM
+		module_names
+	REPLACE
+		"\\.|-|:"
+		"/"
+	)
+	list(
+	TRANSFORM
+		module_names
+	PREPEND
+		"${CMAKE_BINARY_DIR}/"
+	)
+	list(
+	TRANSFORM
+		module_names
+	APPEND
+		"${CXX_MODULE_PCM_EXTENSION}"
+	)
+
+	set("${out_path}"
+		"${module_names}"
+	PARENT_SCOPE
+	)
+
+endfunction()
+
 function(cxx_module_provide_import_flags
 	target_name
 	module_name
+	module_path
 )
 	cxx_module_import_flag(
-		"${target_name}"
 		"${module_name}"
+		"${module_path}"
 	module_import_flag
 	)
 
@@ -55,68 +87,118 @@ function(cxx_module_provide_import_flags
 		"${module_import_flag}"
 	)
 
-	if(
-	NOT	FASTER_BUILD_SPEED
-	)
-		target_link_options(
-			"${target_name}"
-		INTERFACE
-			"${module_import_flag}"
-		)
-	endif()
-
 endfunction()
 
-function(cxx_module_set_file_properties
+function(cxx_module_set_common_file_properties
 	file_name
-	target_name
 	target_depends
+	language_flag
+	# ARGN other flags
 )
+	cxx_module_output_paths(
+		"${target_depends}"
+	object_depends
+	)
+
+	get_source_file_property(
+		compile_options
+		"${file_name}"
+	COMPILE_OPTIONS
+	)
+	if(
+	NOT	compile_options
+	)
+		set(compile_options
+		)
+	endif()
+	list(
+	PREPEND
+		compile_options
+		"${language_flag}"
+	)
+	list(
+	APPEND
+		compile_options
+		${ARGN}
+	)
 
 	set_source_files_properties(
 		"${file_name}"
 	PROPERTIES
 		LANGUAGE
-			PCM
+			CXX
 		OBJECT_DEPENDS
-			"${target_depends}"
+			"${object_depends}"
+		COMPILE_OPTIONS
+			"${compile_options}"
 	)
-
-	if( FASTER_BUILD_SPEED
-	)
-		set_source_files_properties(
-			"${file_name}"
-		PROPERTIES
-			OBJECT_OUTPUTS
-				"$<LIST:TRANSFORM,$<TARGET_OBJECTS:${target_name}>,APPEND,${CMAKE_PCM_IMPORT_EXTENSION}>"
-		)
-	endif()
 
 endfunction()
 
-function(cxx_module_primary
+function(cxx_module_set_interface_file_properties
 	file_name
-	module_name
+	target_name
+	target_depends
+	module_path
 )
-	set(target_name
-		"${module_name}"
+	cmake_path(
+	GET
+		module_path
+	PARENT_PATH
+		module_path_parent
+	)
+	file(
+	MAKE_DIRECTORY
+		"${module_path_parent}"
 	)
 
+	cxx_module_output_flag(
+		"${module_path}"
+	module_output_flag
+	)
+	cxx_module_set_common_file_properties(
+		"${file_name}"
+		"${target_depends}"
+		"${CXX_MODULE_EXPLICIT_PCM_FLAG}"
+		"${module_output_flag}"
+	)
+
+	set_source_files_properties(
+		"${file_name}"
+	PROPERTIES
+		OBJECT_OUTPUTS
+			"${module_path}"
+	)
+
+endfunction()
+
+function(cxx_module_interface
+	file_name
+	target_name
+	module_name
+)
 	add_library(
 		"${target_name}"
 	OBJECT
 		"${file_name}"
 	)
 
+	cxx_module_output_paths(
+		"${module_name}"
+	module_path
+	)
+
 	cxx_module_provide_import_flags(
 		"${target_name}"
 		"${module_name}"
+		"${module_path}"
 	)
 
-	cxx_module_set_file_properties(
+	cxx_module_set_interface_file_properties(
 		"${file_name}"
 		"${target_name}"
 		"${ARGN}"
+		"${module_path}"
 	)
 
 	cxx_module_link_imports(
@@ -126,35 +208,20 @@ function(cxx_module_primary
 
 endfunction()
 
-function(cxx_module_partition
+function(cxx_module_cxx_file
 	file_name
-	module_name
-	partition_name
+	target_name
+	target_depends
 )
-	set(target_name
-		"${module_name}-${partition_name}"
-	)
-
-	add_library(
-		"${target_name}"
-	OBJECT
+	cxx_module_set_common_file_properties(
 		"${file_name}"
-	)
-
-	cxx_module_provide_import_flags(
-		"${target_name}"
-		"${module_name}:${partition_name}"
-	)
-
-	cxx_module_set_file_properties(
-		"${file_name}"
-		"${target_name}"
-		"${ARGN}"
+		"${target_depends}"
+		"${CXX_MODULE_EXPLICIT_CXX_FLAG}"
 	)
 
 	cxx_module_link_imports(
 		"${target_name}"
-		"${ARGN}"
+		"${target_depends}"
 	)
 
 endfunction()
@@ -184,16 +251,8 @@ function(cxx_module_implementation
 		"${file_name}"
 	)
 
-	set_source_files_properties(
+	cxx_module_cxx_file(
 		"${file_name}"
-	PROPERTIES
-		LANGUAGE
-			CXX
-		OBJECT_DEPENDS
-			"${ARGN}"
-	)
-
-	cxx_module_link_imports(
 		"${target_name}"
 		"${ARGN}"
 	)
@@ -204,16 +263,8 @@ function(cxx_module_global
 	file_name
 	target_name
 )
-	set_source_files_properties(
+	cxx_module_cxx_file(
 		"${file_name}"
-	PROPERTIES
-		LANGUAGE
-			CXX
-		OBJECT_DEPENDS
-			"${ARGN}"
-	)
-
-	cxx_module_link_imports(
 		"${target_name}"
 		"${ARGN}"
 	)
@@ -245,7 +296,7 @@ function(cxx_module_global
 
 endfunction()
 
-function(read_module_properties
+function(setup_module_properties
 	file_name
 	target_name
 	out_module_name
@@ -393,10 +444,10 @@ function(read_module_properties
 
 			endif()
 
-			cxx_module_partition(
+			cxx_module_interface(
 				"${file_name}"
-				"${module_name}"
-				"${module_partition}"
+				"${module_name}-${module_partition}"
+				"${module_name}:${module_partition}"
 				${named_module_imports}
 			)
 
@@ -418,8 +469,9 @@ function(read_module_properties
 
 			endif()
 
-			cxx_module_primary(
+			cxx_module_interface(
 				"${file_name}"
+				"${module_name}"
 				"${module_name}"
 				${named_module_imports}
 			)

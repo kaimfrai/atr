@@ -5,7 +5,7 @@ include(${CXX20_MODULES_PATH}/Dependency.cmake)
 function(add_module
 	module_root_file
 )
-	read_module_properties(
+	setup_module_properties(
 		"${module_root_file}"
 		""
 	root_module_name
@@ -26,7 +26,7 @@ function(add_module
 	IN LISTS
 		ARGN
 	)
-		read_module_properties(
+		setup_module_properties(
 			"${file}"
 			"${root_module_name}"
 		module_name
@@ -71,7 +71,7 @@ function(add_module_dependencies
 	IN LISTS
 		ARGN
 	)
-		read_module_properties(
+		setup_module_properties(
 			"${source_file}"
 			"${target_name}"
 		module_name
