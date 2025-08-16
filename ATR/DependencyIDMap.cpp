@@ -19,9 +19,11 @@ export namespace
 	concept
 		ProtoMemberInterface
 	=	requires
-		{	t_tProto
+		{
+			requires
+				t_tProto
 			::	template
-				Offset_Of
+				HasMember
 				<	t_vMemberName
 				>
 			;

@@ -68,6 +68,20 @@ export namespace
 			>
 		;
 
+		template
+			<	ImplicitHash
+					t_vMemberName
+			>
+		bool static constexpr inline
+			HasMember
+		=	Composition
+			.	FindMemberInfo
+				(	t_vMemberName
+				)
+			.	IsValid
+				()
+		;
+
 		using
 			BaseDistrict
 		=	Base

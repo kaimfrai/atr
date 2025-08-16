@@ -939,6 +939,22 @@ export namespace
 		template
 			<	ImplicitHash
 					t_vMemberName
+			>
+		bool static constexpr inline
+			HasMember
+		=	t_tUnion
+			::	Composition
+			.	FindMemberInfo
+				(	t_vMemberName
+				,	t_vUnionIndex
+				)
+			.	IsValid
+				()
+		;
+
+		template
+ 			<	ImplicitHash
+ 					t_vMemberName
 			,	auto
 					t_vInfo
 				=	t_tUnion

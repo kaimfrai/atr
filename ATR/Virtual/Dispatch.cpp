@@ -182,10 +182,10 @@ export namespace
 							==	static_cast<unsigned char>(t_tpIndex)
 							)
 						and	(	i_rObject
-								.	As<t_tpImplementer>
+								.	As<t_tpImplementer...[t_tpIndex]>
 									()
 								.	compl
-									t_tpImplementer
+									t_tpImplementer...[t_tpIndex]
 									()
 							,	true
 							)
