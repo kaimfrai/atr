@@ -6,30 +6,20 @@ echo ""
 
 function time_build()
 {
-	if	[	-f modules/Evaluation/Dependency/DynamicArray.o ]
-	then
-		rm modules/Evaluation/Dependency/DynamicArray.o
-		rm modules/Evaluation/Dependency/DynamicArray.pcm
-	fi
+	touch Evaluation/Dependency/CMakeFiles/Evaluation.Dependency.DynamicArray.dir/*.o
+	touch Evaluation/Dependency/DynamicArray.pcm
 
-	if	[ -d modules/Evaluation/$1 ]
+	if	[ -d Evaluation/$1 ]
 	then
-		rm -rf modules/Evaluation/$1
+		touch Evaluation/$1/*.pcm
+		touch Evaluation/$1/CMakeFiles/Evaluation.$1.*.dir/*.o
 	else
-		rm -rf modules/Evaluation/CRTP
+		touch Evaluation/CRTP/*.pcm
+		touch Evaluation/CRTP/CMakeFiles/Evaluation.CRTP.*.dir/*.o
 	fi
 
-	if [ -f modules/Evaluation/$1.o ]
-	then
-		rm modules/Evaluation/$1.o
-	fi
-	if [ -f modules/Evaluation/$1.pcm ]
-	then
-		rm modules/Evaluation/$1.pcm
-	fi
-
-	rm -rf Evaluation/CMakeFiles/$1.dir/
-	rm bin/$1
+	touch Evaluation/CMakeFiles/$1.dir/*.o
+	touch bin/$1
 
 	time=$(\time -f "%e" ninja $1 2>&1  1>/dev/null)
 	echo "$time seconds to build $1 "
