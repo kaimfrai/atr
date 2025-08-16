@@ -1,3 +1,15 @@
+set_source_files_properties(
+	Less.cpp
+	LessEquals.cpp
+	Greater.cpp
+	GreaterEquals.cpp
+	Equals.cpp
+	NotEquals.cpp
+PROPERTIES
+	COMPILE_OPTIONS
+	"$<$<CXX_COMPILER_ID:Clang>:-Wno-parentheses>"
+)
+
 add_single_file_modules(
 	And.cpp
 	Assign.cpp
