@@ -4,6 +4,7 @@ import ATR.Address;
 import ATR.Erase;
 
 import Meta.ID;
+import Meta.IndexPack;
 import Meta.String.Literal;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
@@ -12,6 +13,7 @@ import Meta.Unlinkable;
 import std;
 
 using ::Meta::ID;
+using ::Meta::IndexPack;
 using ::Meta::String::Literal;
 using ::Meta::Type;
 using ::Meta::TypeID;
@@ -58,41 +60,37 @@ export namespace
 			)
 			noexcept
 		->	unsigned char
-		{	return
-			[&]	<	::std::size_t
-					...	t_vpIndex
-				>(	::std::index_sequence
-					<	t_vpIndex
-						...
-					>
-				)
-			{
-				unsigned char
-					vResult
-				{};
-				if	(	(	...
-						or	(	(	i_vType
-								==	Type<t_tpImplementer>
+		{
+			auto const
+			&	[	...
+					vpIndex
+				]
+			=	IndexPack
+				<	sizeof...(t_tpImplementer)
+				>
+			;
+			unsigned char
+				vResult
+			{};
+			if	(	(	...
+					or	(	(	i_vType
+							==	Type<t_tpImplementer>
+							)
+						and	(	static_cast<void>
+								(	vResult
+								=	vpIndex
 								)
-							and	(	void
-									(	vResult
-									=	t_vpIndex
-									)
-								,	true
-								)
+							,	true
 							)
 						)
 					)
-				{	return
-						vResult
-					;
-				}
-				::Meta::Unlinkable
-				();
-			}(	::std::make_index_sequence
-				<	sizeof...(t_tpImplementer)
-				>{}
-			);
+				)
+			{	return
+					vResult
+				;
+			}
+			::Meta::Unlinkable
+			();
 		}
 
 		template
@@ -115,50 +113,47 @@ export namespace
 			)
 			noexcept
 		->	t_tResult
-		{	return
-			[&]	<	::std::size_t
-					...	t_tpIndex
-				>(	::std::index_sequence
-					<	t_tpIndex
-						...
-					>
-				)
-			{	t_tResult
-					vResult
-				{};
-				if	((	...
-					or	(	(	i_vImplementerIndex
-							==	static_cast<unsigned char>(t_tpIndex)
-							)
-						and	(	(void)
-								(	vResult
-								=	::ATR::FunctionType
-									<	ID<t_vFunctionName>
-									,	t_tpImplementer const&
-									,	t_tpArgument
-										...
-									>{}
-									(	i_rObject
-									,	ForwardErased
-										(	i_rpArgument
-										)
-										...
-									)
-								)
-							,	true
-							)
-						)
-					))
-				{	return
-						vResult
-					;
-				}
-				::std::unreachable
-				();
-			}(	::std::make_index_sequence
+		{
+			auto const
+			&	[	...
+					vpIndex
+				]
+			=	IndexPack
 				<	sizeof...(t_tpImplementer)
-				>()
-			);
+				>
+			;
+			t_tResult
+				vResult
+			{};
+			if	((	...
+				or	(	(	i_vImplementerIndex
+						==	static_cast<unsigned char>(vpIndex)
+						)
+					and	(	(void)
+							(	vResult
+							=	::ATR::FunctionType
+								<	ID<t_vFunctionName>
+								,	t_tpImplementer const&
+								,	t_tpArgument
+									...
+								>{}
+								(	i_rObject
+								,	ForwardErased
+									(	i_rpArgument
+									)
+									...
+								)
+							)
+						,	true
+						)
+					)
+				))
+			{	return
+					vResult
+				;
+			}
+			::std::unreachable
+			();
 		}
 
 		auto static constexpr inline
@@ -170,34 +165,32 @@ export namespace
 			)
 			noexcept
 		->	void
-		{	[&]	<	::std::size_t
-					...	t_tpIndex
-				>(	::std::index_sequence
-					<	t_tpIndex
-						...
-					>
-				)
-			{	if	((	...
-					or	(	(	i_vImplementerIndex
-							==	static_cast<unsigned char>(t_tpIndex)
-							)
-						and	(	i_rObject
-								.	As<t_tpImplementer...[t_tpIndex]>
-									()
-								.	compl
-									t_tpImplementer...[t_tpIndex]
-									()
-							,	true
-							)
-						)
-					))
-				{	return
-					;
-				}
-			}(	::std::make_index_sequence
+		{
+			auto const
+			&	[	...
+					vpIndex
+				]
+			=	IndexPack
 				<	sizeof...(t_tpImplementer)
-				>()
-			);
+				>
+			;
+			if	((	...
+				or	(	(	i_vImplementerIndex
+						==	static_cast<unsigned char>(vpIndex)
+						)
+					and	(	i_rObject
+							.	As<t_tpImplementer...[vpIndex]>
+								()
+							.	compl
+								t_tpImplementer...[vpIndex]
+								()
+						,	true
+						)
+					)
+				))
+			{	return
+				;
+			}
 		}
 	};
 }

@@ -17,4 +17,5 @@ export import Meta.Predicate;
 export import Meta.Token;
 export import Meta.Trait;
 
+export import Meta.IndexPack;
 export import Meta.Size;

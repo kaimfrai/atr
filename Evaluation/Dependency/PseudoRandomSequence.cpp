@@ -3,6 +3,7 @@ export module Evaluation.Dependency.PseudoRandomSequence;
 import Meta.Auto.Simd.Cast;
 import Meta.Auto.Simd.Float;
 import Meta.Auto.Simd.UInt8;
+import Meta.IndexPack;
 import Meta.Random.Splitmix;
 import Meta.Random.Xoroshiro;
 
@@ -10,6 +11,7 @@ import std;
 
 using ::Meta::Auto::Simd;
 using ::Meta::Auto::SimdCast;
+using ::Meta::IndexPack;
 using ::Meta::Random::Splitmix64;
 using ::Meta::Random::Xoroshiro256StarStar;
 
@@ -160,12 +162,16 @@ export
 		}
 	};
 
+	template
+		<	::std::size_t
+				t_vGeneratorCount
+		>
 	struct
 		RawGeneratedNumbers
 	{
 		Simd<::std::uint8_t[Parallel]>
 			m_vNumber
-			[	GeneratorCount
+			[	t_vGeneratorCount
 			]
 		;
 
@@ -175,27 +181,19 @@ export
 			GeneratedNumbers
 		)	()	const
 			noexcept
-		{	return
-			[	this
-			]	<	::std::size_t
-					...	t_vpIndex
-				>(	::std::index_sequence
-					<	t_vpIndex
-						...
-					>
-				)
-			->	GeneratedNumbers
-			{	return
-				{	m_vNumber
-					[	t_vpIndex
-					][	0
-					]
-					...
-				};
-			}(	::std::make_index_sequence
-				<	GeneratorCount
-				>{}
-			);
+		{
+			auto const
+			&	[	...
+					rNumber
+				]
+			=	m_vNumber
+			;
+			return
+			{	rNumber
+				[	0
+				]
+				...
+			};
 		}
 
 		[[nodiscard]]
@@ -204,34 +202,24 @@ export
 			SimdGeneratedNumbers
 		)	()	const
 			noexcept
-		{	return
-			[	this
-			]	<	::std::size_t
-					...	t_vpIndex
-				>(	::std::index_sequence
-					<	0uz
-					,	t_vpIndex
-						...
-					>
-				)
-			->	SimdGeneratedNumbers
-			{	return
-				{	m_vNumber
-					[	0uz
-					]
-				,	SimdCast<float>
-					(	SimdCast<::std::uint32_t>
-						(	m_vNumber
-							[	t_vpIndex
-							]
-						)
+		{
+			auto const
+			&	[	...
+					rNumber
+				]
+			=	m_vNumber
+			;
+			return
+			{	m_vNumber
+				[	0uz
+				]
+			,	SimdCast<float>
+				(	SimdCast<::std::uint32_t>
+					(	rNumber
 					)
-					...
-				};
-			}(	::std::make_index_sequence
-				<	GeneratorCount
-				>{}
-			);
+				)
+				...
+			};
 		}
 
 
@@ -239,27 +227,22 @@ export
 		(	ByteShiftRight
 		)	()	&
 			noexcept
+		->	RawGeneratedNumbers
+			&
 		{
-			[	this
-			]	<	::std::size_t
-					...	t_vpIndex
-				>(	::std::index_sequence
-					<	t_vpIndex
-						...
-					>
+			auto
+			&	[	...
+					rNumber
+				]
+			=	m_vNumber
+			;
+			(	...
+			,	void
+				(	rNumber
+					.	template
+						ByteShiftRight<1>
+						()
 				)
-			{	(	...
-				,	void
-					(	m_vNumber
-						[	t_vpIndex
-						]
-						.	ByteShiftRight<1>
-							()
-					)
-				);
-			}(	::std::make_index_sequence
-				<	GeneratorCount
-				>{}
 			);
 
 			return
@@ -268,12 +251,16 @@ export
 		}
 	};
 
+	template
+		<	::std::size_t
+				t_vGeneratorCount
+		>
 	struct
 		RandomGenerators
 	{
 		Xoroshiro256StarStar<RNG>
 			m_vRandom
-			[	GeneratorCount
+			[	t_vGeneratorCount
 			]
 		;
 
@@ -285,7 +272,7 @@ export
 			(	sizeof...
 				(	t_vpIndex
 				)
-			==		GeneratorCount
+			==		t_vGeneratorCount
 				-	1uz
 			)
 		explicit(true) constexpr inline
@@ -317,28 +304,23 @@ export
 		)	()	const
 			noexcept
 		->	RawGeneratedNumbers
-		{	return
-			[	this
-			]	<	::std::size_t
-					...	t_vpIndex
-				>(	::std::index_sequence
-					<	t_vpIndex
-						...
-					>
+			<	t_vGeneratorCount
+			>
+		{
+			auto const
+			&	[	...
+					rRandom
+				]
+			=	m_vRandom
+			;
+
+			return
+			{	::std::bit_cast<Simd<::std::uint8_t[Parallel]>>
+				(	*
+					rRandom
 				)
-			->	RawGeneratedNumbers
-			{	return
-				{	::std::bit_cast<Simd<::std::uint8_t[Parallel]>>
-					(	*
-						m_vRandom
-						[	t_vpIndex
-						]
-					)
-					...
-				};
-			}(	::std::make_index_sequence<GeneratorCount>
-				{}
-			);
+				...
+			};
 		}
 
 		auto constexpr inline
@@ -347,21 +329,15 @@ export
 			noexcept
 		->	RandomGenerators&
 		{
-			[	this
-			]	<	::std::size_t
-					...	t_vpIndex
-				>(	::std::index_sequence
-					<	t_vpIndex
-						...
-					>
-				)
-			{	(	...
-				,	++	m_vRandom
-						[	t_vpIndex
-						]
-				);
-			}(	::std::make_index_sequence<GeneratorCount>
-				{}
+			auto
+			&	[	...
+					rRandom
+				]
+			=	m_vRandom
+			;
+
+			(	...
+			,	++	rRandom
 			);
 
 			return
@@ -373,14 +349,14 @@ export
 	class
 		CountedXoroshiro
 	{
-		RandomGenerators
+		RandomGenerators<GeneratorCount>
 			m_vRandom
 		;
 		::std::size_t
 			m_vCounter
 		=	0
 		;
-		RawGeneratedNumbers
+		RawGeneratedNumbers<GeneratorCount>
 			m_vGeneratedNumbers
 		;
 
@@ -500,7 +476,7 @@ export
 	class
 		SimdCountedXoroshiro
 	{
-		RandomGenerators
+		RandomGenerators<GeneratorCount>
 			m_vRandom
 		;
 		::std::size_t

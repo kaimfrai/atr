@@ -1,12 +1,14 @@
 export module Meta.Buffer.Fixed;
 
 import Meta.Buffer.Proto;
+import Meta.IndexPack;
 import Meta.Math.Next;
 import Meta.Size;
 
 import std;
 
 using ::Meta::Math::Next;
+using ::Meta::IndexPack;
 
 export namespace
 	Meta::Buffer
@@ -235,19 +237,20 @@ export namespace
 
 			clear();
 
-			[&]	<	USize
-					...	t_vpIndex
-				>(	std::index_sequence<t_vpIndex...>
-				)
-			{
-				(	...
-				,	(	m_vBuffer[t_vpIndex]
-					=	std::forward<decltype(i_rpValue)>
-						(	i_rpValue
-						)
+			auto const
+			&	[	...
+					vpIndex
+				]
+			=	IndexPack
+				<	vNewElementCount
+				>
+			;
+			(	...
+			,	(	m_vBuffer[vpIndex]
+				=	::std::forward<decltype(i_rpValue)>
+					(	i_rpValue
 					)
-				);
-			}(	std::make_index_sequence<vNewElementCount>{}
+				)
 			);
 			m_vElementCount = vNewElementCount;
 

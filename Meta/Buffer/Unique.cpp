@@ -1,8 +1,11 @@
 export module Meta.Buffer.Unique;
 
+import Meta.IndexPack;
 import Meta.Size;
 
 import std;
+
+using ::Meta::IndexPack;
 
 export namespace
 	Meta::Buffer
@@ -153,20 +156,22 @@ export namespace
 			{	sizeof...(i_rpElement)
 			}
 		{
-			[&]	<	USize
-					...	t_vpIndex
-				>(	std::index_sequence
-					<	t_vpIndex
-						...
-					>
-				)
-			{
-				(	...
-				,	(	m_vBuffer[t_vpIndex]
-					=	std::forward<decltype(i_rpElement)>(i_rpElement)
+			auto const
+			&	[	...
+					vpIndex
+				]
+			=	IndexPack
+				<	sizeof...(i_rpElement)
+				>
+			;
+			(	...
+			,	(	m_vBuffer
+					[	vpIndex
+					]
+				=	::std::forward<decltype(i_rpElement)>
+					(	i_rpElement
 					)
-				);
-			}(	std::make_index_sequence<sizeof...(i_rpElement)>{}
+				)
 			);
 		}
 

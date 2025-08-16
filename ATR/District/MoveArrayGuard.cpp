@@ -12,6 +12,7 @@ import Meta.Auto.Simd.Array;
 import Meta.Auto.Simd.Cast;
 import Meta.Generic.RandomAccessIteratorBase;
 import Meta.ID;
+import Meta.IndexPack;
 import Meta.Memory.Size.Scale;
 import Meta.Memory.Size;
 import Meta.Token.Type;
@@ -25,6 +26,7 @@ using ::Meta::Auto::SimdCast;
 using ::Meta::BitSize;
 using ::Meta::ByteSize;
 using ::Meta::Generic::RandomAccessIteratorBase;
+using ::Meta::IndexPack;
 using ::Meta::ProtoID;
 using ::Meta::RestoreTypeEntity;
 
@@ -526,57 +528,53 @@ export namespace
 				)
 			;
 
-			return
-			[&]	<	::std::size_t
-					...	t_vpIndex
-				>(	::std::index_sequence
-					<	t_vpIndex
-						...
-					>
-				)
-			{	return
-				Return
-				(	::ATR::Virtual::EvaluatorGroup
-					<	::ATR::Virtual::Evaluator
-						<	rInstructions
-							.	Instructions
-								[	t_vpIndex
-								]
-							.	Type
-						,	Simd
-							<	RestoreTypeEntity
-								<	rInstructions
-									.	Instructions
-										[	t_vpIndex
-										]
-									.	Result
-								>	[	t_vBatch
-									]
-							>
-						,	rInstructions
-							.	Instructions
-								[	t_vpIndex
-								]
-							.	FirstOperand
-						,	rInstructions
-							.	Instructions
-								[	t_vpIndex
-								]
-							.	SecondOperand
-						>
-						...
-					>{	rInstructions
-						.	ParallelIndices
-					,	vTypeIndices
-					,	*	this
-					,	i_vpArgument
-						...
-					}
-				);
-			}(	::std::make_index_sequence
+			auto const
+			&	[	...
+					vpIndex
+				]
+			=	IndexPack
 				<	rInstructions
 					.	InstructionCount
-				>{}
+				>
+			;
+			return
+			Return
+			(	::ATR::Virtual::EvaluatorGroup
+				<	::ATR::Virtual::Evaluator
+					<	rInstructions
+						.	Instructions
+							[	vpIndex
+							]
+						.	Type
+					,	Simd
+						<	RestoreTypeEntity
+							<	rInstructions
+								.	Instructions
+									[	vpIndex
+									]
+								.	Result
+							>	[	t_vBatch
+								]
+						>
+					,	rInstructions
+						.	Instructions
+							[	vpIndex
+							]
+						.	FirstOperand
+					,	rInstructions
+						.	Instructions
+							[	vpIndex
+							]
+						.	SecondOperand
+					>
+					...
+				>{	rInstructions
+					.	ParallelIndices
+				,	vTypeIndices
+				,	*	this
+				,	i_vpArgument
+					...
+				}
 			);
 		}
 	};

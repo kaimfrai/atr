@@ -2,12 +2,15 @@ export module Meta.Data.TupleList;
 
 import Meta.Data.Aggregate;
 
+import Meta.IndexPack;
+import Meta.Size;
 import Meta.Token.Index;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
-import Meta.Size;
 
 import std;
+
+using ::Meta::IndexPack;
 
 export namespace
 	Meta
@@ -110,9 +113,9 @@ export namespace
 			(	static_cast<t_tpKeyItem const&>
 				(	i_rTuple
 				)
-			.	Item
-			.	get()
-				...
+				.	Item
+				.	get()
+					...
 			);
 		}
 	};
@@ -161,37 +164,27 @@ export namespace
 			...	i_rpItem
 		)
 	->	decltype(auto)
-	{	return
-		[&]	<	::std::size_t
-				...	t_vpIndex
-			>(	::std::index_sequence
-				<	t_vpIndex
-					...
-				>
-			)
-		->	KeyTuple
-			<	KeyItem
-				<	t_vpIndex
-				,	::std::remove_cvref_t<t_tpItem>
-				>
-				...
-			>
-		{	return
-			KeyTuple
-			<	KeyItem
-				<	t_vpIndex
-				,	::std::remove_cvref_t<t_tpItem>
-				>
-				...
-			>{	::std::forward<t_tpItem>
-				(	i_rpItem
-				)
-				...
-			};
-		}(	::std::make_index_sequence
+	{
+		auto const
+		&	[	...
+				vpIndex
+			]
+		=	IndexPack
 			<	sizeof...(t_tpItem)
-			>{}
-		);
+			>
+		;
+		return
+		KeyTuple
+		<	KeyItem
+			<	vpIndex
+			,	::std::remove_cvref_t<t_tpItem>
+			>
+			...
+		>{	::std::forward<t_tpItem>
+			(	i_rpItem
+			)
+			...
+		};
 	}
 
 	template

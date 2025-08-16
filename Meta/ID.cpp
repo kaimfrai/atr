@@ -1,10 +1,10 @@
 export module Meta.ID;
 
-import Meta.String.Literal;
 import Meta.String.Hash;
+import Meta.String.Literal;
 
-using ::Meta::String::Literal;
 using ::Meta::String::ImplicitHash;
+using ::Meta::String::Literal;
 
 [[nodiscard]]
 auto constexpr inline

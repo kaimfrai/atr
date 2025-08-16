@@ -2,9 +2,9 @@ export module Meta.Token.Sequence;
 
 import Meta.Token.Index;
 
-import Meta.Size;
+import Meta.IndexPack;
 
-import std;
+using ::Meta::IndexPack;
 
 namespace
 	Meta
@@ -19,27 +19,20 @@ namespace
 	)	(	IndexToken<t_vLength>
 		)
 		noexcept
-	{	return
-		[]	<	USize
-				...	t_vpIndex
-			>(	::std::index_sequence
-				<	t_vpIndex
-					...
-				>
-			)
-		{	return
-			IndexToken
-			<	static_cast<decltype(t_vLength)>
-				(	t_vpIndex
-				)
-				...
-			>{};
-		}(	::std::make_index_sequence
-			<	static_cast<std::size_t>
-				(	t_vLength
-				)
-			>{}
-		);
+	{
+		auto const
+		&	[	...
+				vpIndex
+			]
+		=	IndexPack
+			<	t_vLength
+			>
+		;
+		return
+		IndexToken
+		<	vpIndex
+			...
+		>{};
 	}
 }
 
@@ -54,17 +47,6 @@ export namespace
 		Sequence
 	=	MakeSequence
 		(	Index<t_vSize>
-		)
-	;
-
-	template
-		<	auto
-				t_vSize
-		>
-	auto constexpr inline
-		ZeroSequence
-	=	(	Sequence<t_vSize>
-		=	Index<decltype(t_vSize){}>
 		)
 	;
 }

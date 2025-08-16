@@ -5,6 +5,7 @@ import ATR.Virtual.InstructionBuffer;
 import Meta.Auto.Simd.ArrayCeil;
 import Meta.Auto.Simd.Fill;
 import Meta.Auto.Simd.Tag;
+import Meta.IndexPack;
 import Meta.Token.Type;
 import Meta.Token.TypeID;
 
@@ -13,6 +14,7 @@ import std;
 using ::Meta::Auto::Simd;
 using ::Meta::Auto::SimdFill;
 using ::Meta::Auto::SimdMask;
+using ::Meta::IndexPack;
 using ::Meta::RestoreTypeEntity;
 using ::Meta::TypeID;
 
@@ -495,57 +497,39 @@ export namespace
 			vCompactOperands
 		{	t_rOperands
 		};
+		auto const
+		&	[	_
+			,	...
+				vpIndex
+			]
+		=	IndexPack
+			<	vCompactOperands
+				.	Count
+			>
+		;
 
 		auto static constexpr
 			vVariableIDs
-		=	[]	<	::std::size_t
-					...	t_vpIndex
-				>(	::std::index_sequence
-					<	0uz
-					,	t_vpIndex
-						...
-					>
-				)
-			{	return
-				::std::index_sequence
-				<	vCompactOperands
-					.	Operands
-						[	t_vpIndex
-						]
-					.	VariableID
-					...
-				>{};
-			}(	::std::make_index_sequence
-				<	vCompactOperands
-					.	Count
-				>{}
-			)
+		=	::std::index_sequence
+			<	vCompactOperands
+				.	Operands
+					[	vpIndex
+					]
+				.	VariableID
+				...
+			>{}
 		;
 
 		auto static constexpr
 			vMasks
-		=	[]	<	::std::size_t
-					...	t_vpIndex
-				>(	::std::index_sequence
-					<	0uz
-					,	t_vpIndex
-						...
-					>
-				)
-			{	return
-				::std::index_sequence
-				<	vCompactOperands
-					.	Operands
-						[	t_vpIndex
-						]
-					.	Mask
-					...
-				>{};
-			}(	::std::make_index_sequence
-				<	vCompactOperands
-					.	Count
-				>{}
-			)
+		=	::std::index_sequence
+			<	vCompactOperands
+				.	Operands
+					[	vpIndex
+					]
+				.	Mask
+				...
+			>{}
 		;
 
 		return

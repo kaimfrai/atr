@@ -5,12 +5,14 @@ import ATR.Layout.Offset;
 import ATR.Member.Constant;
 import ATR.Member.Constants;
 
+import Meta.IndexPack;
 import Meta.Memory.Size;
 import Meta.Token.Type;
 
 import std;
 
 using ::Meta::BitSize;
+using ::Meta::IndexPack;
 using ::Meta::RestoreTypeEntity;
 
 namespace
@@ -22,107 +24,78 @@ namespace
 
 	template
 		<	typename
-		,	int
-		>
-	concept
-		ProtoAny
-	=	true
-	;
-
-	template
-		<	typename
 			...	t_tpData
 		>
 	class
 		MakeFork
-	;
-
-	template
-		<	::std::size_t
-			...	t_tpIndex
-		>
-	struct
-		Split
 	{
-		::std::index_sequence
-		<	t_tpIndex
-			...
-		>	Indices
-		;
-
-		template
-			<	ProtoAny
-				<	(	(void)t_tpIndex
-					,	0
-					)
-				>
-				...	t_tpNorth
-			,	typename
-				...	t_tpSouth
-			>
-		auto static
-		(	operator()
-		)	(	t_tpNorth
-				*
-				...
-			,	t_tpSouth
-				*
-				...
-			)
+		[[nodiscard]]
+		auto static constexpr
+		(	Split
+		)	()
 			noexcept
-		->	Fork
+		{
+			auto static constexpr
+				vTotalCount
+			=	sizeof...(t_tpData)
+			;
+
+			auto static constexpr
+				vSouthCount
+			=	vTotalCount
+			>>	1uz
+			;
+			auto static constexpr
+				vNorthCount
+			=	vTotalCount
+			-	vSouthCount
+			;
+
+			auto const
+			&	[	...
+					vpNorthIndex
+				]
+			=	IndexPack
+				<	vNorthCount
+				>
+			;
+			auto const
+			&	[	...
+					vpSouthIndex
+				]
+			=	IndexPack
+				<	vSouthCount
+				>
+			;
+
+			return
+			Fork
 			<	typename
 					MakeFork
-					<	t_tpNorth
+					<	t_tpData
+					...	[	vpNorthIndex
+						]
 						...
 					>
 				::	Entity
 			,	typename
 					MakeFork
-					<	t_tpSouth
+					<	t_tpData
+					...	[	vNorthCount
+						+	vpSouthIndex
+						]
 						...
 					>
 				::	Entity
-			>
-		;
-	};
-
-	template
-		<	typename
-			...	t_tpData
-		>
-	class
-		MakeFork
-	{
-		auto static constexpr inline
-			vTotalCount
-		=	sizeof...(t_tpData)
-		;
-
-		auto static constexpr inline
-			vSouthCount
-		=	vTotalCount
-		>>	1uz
-		;
-		auto static constexpr inline
-			vNorthCount
-		=	vTotalCount
-		-	vSouthCount
-		;
+			>{};
+		}
 
 	public:
 		using
 			Entity
 		=	decltype
 			(	Split
-				{	::std::make_index_sequence
-					<	vNorthCount
-					>{}
-				}(	static_cast<t_tpData*>
-					(	nullptr
-					)
-					...
-				)
+				()
 			)
 		;
 	};
@@ -391,31 +364,37 @@ namespace
 			typename
 				t_t1Transform
 		,	::std::size_t
-			...	t_vpIndex
+				t_vElementCount
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	CreateLayout
-	)	(	::std::index_sequence
-			<	t_vpIndex
-				...
-			>
-		)
+	)	()
 		noexcept
 	->	decltype(auto)
-	{	return
+	{
+		auto const
+		&	[	...
+				vpIndex
+			]
+		=	IndexPack
+			<	t_vElementCount
+			>
+		;
+
+		return
 		MakeFork
 		<	t_t1Transform
 			<	RestoreTypeEntity
 				<	t_vTypeCounts
 					.	Buffer
-						[	t_vpIndex
+						[	vpIndex
 						]
 					.	Type
 				>
 			,	t_vTypeCounts
 				.	Buffer
-					[	t_vpIndex
+					[	vpIndex
 					]
 				.	Count
 			>
@@ -434,17 +413,11 @@ namespace
 				>
 			typename
 				t_t1Transform
-		,	::std::size_t
-			...	t_vpIndex
 		>
 	[[nodiscard]]
 	auto constexpr inline
 	(	CreateLayout_For
-	)	(	::std::index_sequence
-			<	t_vpIndex
-				...
-			>
-		)
+	)	()
 		noexcept
 	->	decltype(auto)
 	{
@@ -455,21 +428,27 @@ namespace
 				[	t_vDistrictIndex
 				]
 		;
+		auto const
+		&	[	...
+				vpIndex
+			]
+		=	IndexPack
+			<	Member::ByteAlignCount
+			>
+		;
 
 		return
 		(	CreateLayout
 			<	rDistrict
 				.	Buffer
-					[	t_vpIndex
+					[	vpIndex
 					]
 			,	t_t1Transform
-			>(	::std::make_index_sequence
-				<	rDistrict
-					.	ElementCounts
-						[	t_vpIndex
-						]
-				>{}
-			)
+			,	rDistrict
+				.	ElementCounts
+					[	vpIndex
+					]
+			>()
 		+	...
 		);
 	}
@@ -512,10 +491,7 @@ export namespace
 			<	t_rComposition
 			,	t_vDistrictIndex
 			,	t_t1Transform
-			>(	::std::make_index_sequence
-				<	Member::ByteAlignCount
-				>{}
-			)
+			>()
 		)
 	::	Entity
 	;

@@ -4,6 +4,7 @@ add_subdirectory(
 
 add_single_file_modules(
 	Size.cpp
+	IndexPack.cpp
 )
 
 add_subdirectory(Generic)

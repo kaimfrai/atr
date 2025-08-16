@@ -2,15 +2,15 @@ export module Meta.Data.Aggregate.Array;
 
 import Meta.Data.Aggregate.BoundedArray;
 import Meta.Data.Aggregate.UnboundedArray;
-import Meta.Trait.ArrayExtent;
-import Meta.Trait.ArrayElement;
-import Meta.Token.Array;
-import Meta.Token.Type;
-import Meta.Token.Type.Cast;
+import Meta.IndexPack;
 import Meta.Size;
+import Meta.Token.Array;
+import Meta.Token.Type.Cast;
+import Meta.Token.Type;
+import Meta.Trait.ArrayElement;
+import Meta.Trait.ArrayExtent;
 
-import std;
-
+using ::Meta::IndexPack;
 using ::Meta::USize;
 
 export namespace
@@ -44,29 +44,24 @@ export namespace
 			)
 		;
 
-		return
-		[	i_aSource
-		]	<	::std::size_t
-				...	t_vpIndex
-			>(	::std::index_sequence
-				<	t_vpIndex
-					...
-				>
-			)
-		->	Aggregate<t_tTarget>
-		{	return
-			{	Cast
-				(	vElementType
-				,	i_aSource
-					[	t_vpIndex
-					]
-				)
-				...
-			};
-		}(	::std::make_index_sequence
+		auto const
+		&	[	...
+				vpIndex
+			]
+		=	IndexPack
 			<	vExtent
-			>{}
-		);
+			>
+		;
+
+		return
+		{	Cast
+			(	vElementType
+			,	i_aSource
+				[	vpIndex
+				]
+			)
+			...
+		};
 	}
 }
 export namespace
