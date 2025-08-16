@@ -77,6 +77,21 @@ export namespace
 			}
 		}
 
+		explicit(false) constexpr inline
+		(	Literal
+		)	(	::std::initializer_list
+				<	char
+				>
+					i_vString
+			)
+			noexcept
+		:	Literal
+			{	data
+				(	i_vString
+				)
+			}
+		{}
+
 		[[nodiscard]]
 		explicit(false) constexpr inline
 		(	operator
@@ -139,6 +154,20 @@ export namespace
 		)
 	->	Literal
 		<	t_vExtent
+		-	1uz
+		>
+	;
+
+	template
+		<	typename
+			...	t_tChar
+		>
+	(	Literal
+	)	(	t_tChar
+			...
+		)
+	->	Literal
+		<	sizeof...(t_tChar)
 		-	1uz
 		>
 	;

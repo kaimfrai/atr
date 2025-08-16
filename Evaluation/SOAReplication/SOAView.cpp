@@ -86,36 +86,30 @@ export namespace
 			;
 		}
 
-		auto static constexpr inline
-			MemberSize
-		=	::std::array<::std::ptrdiff_t, sizeof...(t_tpMember)>
-			{	sizeof(t_tpMember)
-				...
-			}
-		;
-
+		template
+			<	::std::size_t
+					t_vIndex
+			>
 		auto static constexpr inline
 			MemberOffset
-		=	[]{	::std::array<::std::ptrdiff_t, sizeof...(t_tpMember)>
-					vOffsets
-				{};
-
-				::std::exclusive_scan
-				(	MemberSize
-					.	begin
-						()
-				,	MemberSize
-					.	end
-						()
-				,	vOffsets
-					.	begin
-						()
-				,	0z
-				);
-
-				return
-					vOffsets
-				;
+		=	[]{
+				if constexpr
+					(	t_vIndex
+					==	0uz
+					)
+				{	return
+						0uz
+					;
+				}
+				else
+				{	return
+						MemberOffset
+						<	t_vIndex
+						-	1uz
+						>
+					+	sizeof(t_tpMember...[t_vIndex - 1uz])
+					;
+				}
 			}()
 		;
 
@@ -163,13 +157,11 @@ export namespace
 			(	aBuffer
 			+	(	vCapacity
 				*	MemberOffset
-					[	t_vIndex
-					]
+					<	t_vIndex
+					>
 				)
 			+	(	vIndex
-				*	MemberSize
-					[	t_vIndex
-					]
+				*	sizeof(t_tpMember...[t_vIndex])
 				)
 			);
 		}

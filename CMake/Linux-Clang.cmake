@@ -5,45 +5,21 @@ set(CMAKE_SYSTEM_PROCESSOR
 	${CMAKE_HOST_SYSTEM_PROCESSOR}
 )
 
-if(	COMPILER_INSTALL_DIR
+find_program(
+	CMAKE_C_COMPILER
+NAMES
+	clang
+REQUIRED
 )
-	find_program(
-		CMAKE_C_COMPILER
-	NAMES
-		clang
-	REQUIRED
-	PATHS
-		"${COMPILER_INSTALL_DIR}/bin"
-	NO_DEFAULT_PATH
-	)
-	find_program(
-		CMAKE_CXX_COMPILER
-	NAMES
-		clang++
-	REQUIRED
-	PATHS
-		"${COMPILER_INSTALL_DIR}/bin"
-	NO_DEFAULT_PATH
-	)
-
-else(
+find_program(
+	CMAKE_CXX_COMPILER
+NAMES
+	clang++
+REQUIRED
 )
-	find_program(
-		CMAKE_C_COMPILER
-	NAMES
-		clang
-	REQUIRED
-	)
-	find_program(
-		CMAKE_CXX_COMPILER
-	NAMES
-		clang++
-	REQUIRED
-	)
-
-endif()
 
 message(
+STATUS
 	"Found clang++ at ${CMAKE_CXX_COMPILER}."
 )
 
@@ -56,6 +32,7 @@ add_compile_options(
 	-ffunction-sections
 	-fdata-sections
 	-ffast-math
+	-fcolor-diagnostics
 )
 
 add_link_options(

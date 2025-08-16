@@ -1,21 +1,19 @@
 export module Meta.Dispatch.Step;
 
 import Meta.Dispatch.BlockedPath;
+import Meta.Dispatch.Error;
 import Meta.Dispatch.Final;
 import Meta.Dispatch.StepPair;
-import Meta.Dispatch.Error;
 
 import Meta.ID;
-import Meta.Lex.Match;
 import Meta.Lex.FreeFunctionTokenizer;
 import Meta.Lex.Function;
+import Meta.Lex.Match;
+import Meta.Size;
 import Meta.String.Literal;
 import Meta.Token.Index;
-import Meta.Size;
 
 import std;
-
-using ::Meta::String::Literal;
 
 export namespace
 	Meta::Dispatch
@@ -28,39 +26,26 @@ export namespace
 	auto constexpr inline
 	(	Append
 	)	(	ProtoID auto
-				i_vID
+				i_vId
 		)
 		noexcept
 	{
-		auto static constexpr
-			vLength
-		=	sizeof
-			(	i_vID
-				.	String
-			)
+		auto const
+		&	[	...
+				vChars
+			,	vZero
+			]
+		=	i_vId
+			.	String
 		;
 		return
-			ID
-			<	[]{
-					Literal<vLength>
-						vLiteral
-					{	decltype(i_vID)
-						::	String
-					};
-					vLiteral
-					.	Buffer
-						[	vLength
-						-	1uz
-						]
-					=	t_vChar
-					;
-					return
-						vLiteral
-					;
-				}()
-			>
-			{}
-		;
+		ID
+		<	{	vChars
+				...
+			,	t_vChar
+			,	vZero
+			}
+		>{};
 	};
 
 	template
@@ -169,7 +154,8 @@ export namespace
 		(	GetNextStep
 		)	()
 		->	StepPair<PlainFunctionType>
-		{	if	constexpr
+		{
+			if	constexpr
 				(	IsPathBlocked<QualifiedFunctionType, NextID<t_vParsed>>
 				)
 			{	return
