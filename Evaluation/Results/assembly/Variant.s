@@ -198,8 +198,8 @@ Disassembly of section .text:
                	nop	word ptr cs:[rax + rax]
 <L2>:
                	ret
-               	nop	word ptr cs:[rax + rax]
                	nop	dword ptr [rax]
+               	nop	word ptr cs:[rax + rax]
                	endbr64
                	jmp	 <L5>
                	int3
