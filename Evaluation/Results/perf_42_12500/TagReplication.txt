@@ -1,16 +1,16 @@
 
  Performance counter stats for 'build/Evaluation/bin/TagReplication 42 12500' (10 runs):
 
-              5,97 msec task-clock                       #    0,968 CPUs utilized               ( +-  0,98% )
+              7,23 msec task-clock                       #    0,966 CPUs utilized               ( +-  0,42% )
                  0      context-switches                 #    0,000 /sec                      
                  0      cpu-migrations                   #    0,000 /sec                      
-               770      page-faults                      #  128,976 K/sec                       ( +-  0,09% )
-        39.366.405      instructions                     #    1,52  insn per cycle            
-                                                  #    0,19  stalled cycles per insn     ( +-  0,03% )
-        25.905.345      cycles                           #    4,339 GHz                         ( +-  0,96% )
-         7.660.469      stalled-cycles-frontend          #   29,57% frontend cycles idle        ( +-  0,70% )
-         4.794.068      branches                         #  803,010 M/sec                       ( +-  0,05% )
-           481.124      branch-misses                    #   10,04% of all branches             ( +-  0,67% )
+               770      page-faults                      #  106,502 K/sec                       ( +-  0,04% )
+        44.800.885      instructions                     #    1,43  insn per cycle            
+                                                  #    0,23  stalled cycles per insn     ( +-  0,01% )
+        31.302.466      cycles                           #    4,330 GHz                         ( +-  0,41% )
+        10.113.922      stalled-cycles-frontend          #   32,31% frontend cycles idle        ( +-  0,19% )
+         4.745.123      branches                         #  656,317 M/sec                       ( +-  0,03% )
+           500.369      branch-misses                    #   10,54% of all branches             ( +-  0,09% )
 
-         0,0061687 +- 0,0000635 seconds time elapsed  ( +-  1,03% )
+         0,0074808 +- 0,0000481 seconds time elapsed  ( +-  0,64% )
 

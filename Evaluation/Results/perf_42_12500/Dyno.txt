@@ -1,16 +1,16 @@
 
  Performance counter stats for 'build/Evaluation/bin/Dyno 42 12500' (10 runs):
 
-              7,08 msec task-clock                       #    0,970 CPUs utilized               ( +-  1,28% )
-                 1      context-switches                 #  141,215 /sec                        ( +- 45,83% )
-                 0      cpu-migrations                   #    0,000 /sec                      
-               860      page-faults                      #  121,444 K/sec                       ( +-  0,05% )
-        41.929.304      instructions                     #    1,36  insn per cycle            
-                                                  #    0,25  stalled cycles per insn     ( +-  0,04% )
-        30.725.132      cycles                           #    4,339 GHz                         ( +-  1,25% )
-        10.665.191      stalled-cycles-frontend          #   34,71% frontend cycles idle        ( +-  0,57% )
-         5.324.135      branches                         #  751,845 M/sec                       ( +-  0,06% )
-           564.947      branch-misses                    #   10,61% of all branches             ( +-  0,67% )
+              7,48 msec task-clock                       #    0,970 CPUs utilized               ( +-  0,66% )
+                 4      context-switches                 #  534,489 /sec                        ( +- 18,28% )
+                 1      cpu-migrations                   #  133,622 /sec                        ( +- 22,11% )
+               859      page-faults                      #  114,781 K/sec                       ( +-  0,05% )
+        43.399.622      instructions                     #    1,34  insn per cycle            
+                                                  #    0,25  stalled cycles per insn     ( +-  0,03% )
+        32.371.621      cycles                           #    4,326 GHz                         ( +-  0,66% )
+        10.786.321      stalled-cycles-frontend          #   33,32% frontend cycles idle        ( +-  0,49% )
+         5.290.182      branches                         #  706,886 M/sec                       ( +-  0,04% )
+           578.226      branch-misses                    #   10,93% of all branches             ( +-  0,69% )
 
-         0,0072985 +- 0,0000947 seconds time elapsed  ( +-  1,30% )
+         0,0077178 +- 0,0000520 seconds time elapsed  ( +-  0,67% )
 

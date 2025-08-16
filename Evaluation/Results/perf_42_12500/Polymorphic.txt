@@ -1,16 +1,16 @@
 
  Performance counter stats for 'build/Evaluation/bin/Polymorphic 42 12500' (10 runs):
 
-             13,00 msec task-clock                       #    0,958 CPUs utilized               ( +-  1,03% )
-                 2      context-switches                 #  153,867 /sec                        ( +- 37,86% )
-                 1      cpu-migrations                   #   76,933 /sec                        ( +- 38,87% )
-             4.686      page-faults                      #  360,510 K/sec                       ( +-  0,01% )
-       125.012.959      instructions                     #    2,22  insn per cycle            
-                                                  #    0,15  stalled cycles per insn     ( +-  0,04% )
-        56.394.720      cycles                           #    4,339 GHz                         ( +-  1,02% )
-        18.702.150      stalled-cycles-frontend          #   33,16% frontend cycles idle        ( +-  0,67% )
-        21.959.942      branches                         #    1,689 G/sec                       ( +-  0,05% )
-           588.655      branch-misses                    #    2,68% of all branches             ( +-  0,18% )
+             12,81 msec task-clock                       #    0,954 CPUs utilized               ( +-  0,69% )
+                 8      context-switches                 #  624,509 /sec                        ( +-  9,76% )
+                 1      cpu-migrations                   #   78,064 /sec                        ( +- 32,66% )
+             4.686      page-faults                      #  365,806 K/sec                       ( +-  0,01% )
+       125.817.446      instructions                     #    2,27  insn per cycle            
+                                                  #    0,15  stalled cycles per insn     ( +-  0,05% )
+        55.388.669      cycles                           #    4,324 GHz                         ( +-  0,69% )
+        19.061.452      stalled-cycles-frontend          #   34,41% frontend cycles idle        ( +-  0,58% )
+        21.398.976      branches                         #    1,670 G/sec                       ( +-  0,06% )
+           602.331      branch-misses                    #    2,81% of all branches             ( +-  0,09% )
 
-          0,013572 +- 0,000157 seconds time elapsed  ( +-  1,15% )
+          0,013428 +- 0,000111 seconds time elapsed  ( +-  0,83% )
 

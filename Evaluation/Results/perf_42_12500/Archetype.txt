@@ -1,16 +1,16 @@
 
  Performance counter stats for 'build/Evaluation/bin/Archetype 42 12500' (10 runs):
 
-              6,29 msec task-clock                       #    0,970 CPUs utilized               ( +-  1,23% )
-                 1      context-switches                 #  159,024 /sec                        ( +- 32,66% )
+              6,50 msec task-clock                       #    0,970 CPUs utilized               ( +-  0,76% )
+                 1      context-switches                 #  153,733 /sec                        ( +- 48,19% )
                  0      cpu-migrations                   #    0,000 /sec                      
-               632      page-faults                      #  100,503 K/sec                       ( +-  8,09% )
-        32.034.750      instructions                     #    1,17  insn per cycle            
-                                                  #    0,35  stalled cycles per insn     ( +-  0,72% )
-        27.279.301      cycles                           #    4,338 GHz                         ( +-  1,22% )
-        11.061.368      stalled-cycles-frontend          #   40,55% frontend cycles idle        ( +-  1,00% )
-         3.281.873      branches                         #  521,897 M/sec                       ( +-  1,42% )
-           506.059      branch-misses                    #   15,42% of all branches             ( +-  0,70% )
+               579      page-faults                      #   89,012 K/sec                       ( +-  0,07% )
+        33.724.809      instructions                     #    1,20  insn per cycle            
+                                                  #    0,32  stalled cycles per insn     ( +-  0,03% )
+        28.150.002      cycles                           #    4,328 GHz                         ( +-  0,74% )
+        10.800.934      stalled-cycles-frontend          #   38,37% frontend cycles idle        ( +-  0,80% )
+         3.231.131      branches                         #  496,732 M/sec                       ( +-  0,07% )
+           503.832      branch-misses                    #   15,59% of all branches             ( +-  0,88% )
 
-         0,0064839 +- 0,0000794 seconds time elapsed  ( +-  1,23% )
+         0,0067027 +- 0,0000527 seconds time elapsed  ( +-  0,79% )
 
