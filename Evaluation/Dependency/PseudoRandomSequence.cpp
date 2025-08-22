@@ -81,6 +81,7 @@ export
 		Simd<float[Parallel]>
 			m_vNumber
 			[	GeneratorCount
+			-	1uz
 			]
 		;
 
@@ -204,15 +205,14 @@ export
 			noexcept
 		{
 			auto const
-			&	[	...
+			&	[	rFirst
+				,	...
 					rNumber
 				]
 			=	m_vNumber
 			;
 			return
-			{	m_vNumber
-				[	0uz
-				]
+			{	rFirst
 			,	SimdCast<float>
 				(	SimdCast<::std::uint32_t>
 					(	rNumber
