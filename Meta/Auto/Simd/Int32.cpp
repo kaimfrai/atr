@@ -73,33 +73,25 @@ export namespace
 			noexcept
 		->	SimdMask<t_vSize>
 		{
-			if constexpr
-				(	t_vSize
-				==	8uz
-				)
-			{	return
-				{	__builtin_ia32_cvtd2mask256
-					(	i_vSource
-						.	m_vRaw
+			auto const
+			&	[	...
+					rpElement
+				]
+			=	i_vSource
+				.	m_vRaw
+			;
+			return
+			::std::bit_cast<SimdMask<t_vSize>>
+			(	vec<bool, t_vSize>
+				{
+					static_cast<bool>
+					(	(	rpElement
+						>>	31
+						)
 					)
-				};
-			}
-			else
-			if constexpr
-				(	t_vSize
-				==	16uz
-				)
-			{	return
-				{	__builtin_ia32_cvtd2mask512
-					(	i_vSource
-						.	m_vRaw
-					)
-				};
-			}
-			else
-			{
-				static_assert(false, "Unimplemented");
-			}
+					...
+				}
+			);
 		}
 
 		[[nodiscard]]
