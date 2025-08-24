@@ -134,58 +134,22 @@ export namespace
 			noexcept
 		->	Var
 		{
-			::std::uint8_t
-				vValue
-				[	t_vSize
-				]
-			{};
 			auto const
-				aData
-			=	::std::assume_aligned<t_vSize>
-				(	i_aData
-				)
-			;
-			::std::copy
-			(	aData
-			,		aData
-				+	t_vSize
-			,	vValue
-			);
-
-			return
-			{	.	m_vRaw
-				=	::std::bit_cast<decltype(m_vRaw)>
-					(	vValue
-					)
-			};
-		}
-
-		[[nodiscard]]
-		auto static constexpr inline
-		(	LoadUnaligned
-		)	(	::std::uint8_t const
-				*	i_aData
-			)
-			noexcept
-		->	Var
-		{
-			::std::uint8_t
-				vValue
-				[	t_vSize
+			&	[	...
+					rpIndex
 				]
-			{};
-			::std::copy
-			(	i_aData
-			,		i_aData
-				+	t_vSize
-			,	vValue
-			);
-
+			=	IndexPack
+				<	t_vSize
+				>
+			;
 			return
 			{	.	m_vRaw
-				=	::std::bit_cast<decltype(m_vRaw)>
-					(	vValue
-					)
+				{	::std::assume_aligned<t_vBatch * alignof(::std::uint8_t)>
+					(	i_aData
+					)[	rpIndex
+					]
+					...
+				}
 			};
 		}
 
