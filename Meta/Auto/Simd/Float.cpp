@@ -37,6 +37,10 @@ export namespace
 			m_vMask
 		;
 
+		template
+			<	::std::size_t
+					t_vBatch
+			>
 		[[nodiscard]]
 		auto static constexpr inline
 		(	LoadAligned
@@ -52,7 +56,7 @@ export namespace
 				=	::SimdOp::MaskedLoad
 					(	i_vMask
 						.	m_vRaw
-					,	::Std::AlignedPointer<void const, alignof(vec<float, 8>)>
+					,	::Std::AlignedPointer<void const, t_vBatch * alignof(float)>
 						{	i_aData
 						}
 					)
@@ -426,7 +430,8 @@ export namespace
 			noexcept
 		{	return
 			value_type
-			::	LoadAligned
+			::	template
+				LoadAligned<8uz>
 				(	m_aData
 				,	SimdMask<8uz>
 					{	.	m_vRaw
@@ -567,6 +572,10 @@ export namespace
 			m_vMask
 		;
 
+		template
+			<	::std::size_t
+					t_vBatch
+			>
 		[[nodiscard]]
 		auto static constexpr inline
 		(	LoadAligned
@@ -582,7 +591,7 @@ export namespace
 				=	::SimdOp::MaskedLoad
 					(	i_vMask
 						.	m_vRaw
-					,	::Std::AlignedPointer<void const, alignof(vec<float, 16>)>
+					,	::Std::AlignedPointer<void const, t_vBatch * alignof(float)>
 						{	i_aData
 						}
 					)
@@ -927,7 +936,8 @@ export namespace
 			noexcept
 		{	return
 			value_type
-			::	LoadAligned
+			::	template
+				LoadAligned<16uz>
 				(	m_aData
 				,	SimdMask<16uz>
 					{	.	m_vRaw

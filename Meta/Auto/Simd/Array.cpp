@@ -152,29 +152,12 @@ export namespace
 		->	value_type
 		{	return
 			value_type
-			::	LoadAligned
+			::	template
+				LoadAligned<t_vCount>
 				(	m_aData
 				+	static_cast<SSize>
 					(	i_vIndex
 					)
-				,	m_vMask
-				)
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	operator[]
-		)	(	SSize
-					i_vIndex
-			)
-			noexcept
-		->	value_type
-		{	return
-			value_type
-			::	LoadUnaligned
-				(	m_aData
-				+	i_vIndex
 				,	m_vMask
 				)
 			;
@@ -253,28 +236,12 @@ export namespace
 		->	value_type
 		{	return
 			value_type
-			::	LoadAligned
+			::	template
+				LoadAligned<t_vCount>
 				(	m_aData
 				+	static_cast<SSize>
 					(	i_vIndex
 					)
-				)
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	operator[]
-		)	(	SSize
-					i_vIndex
-			)
-			noexcept
-		->	value_type
-		{	return
-			value_type
-			::	LoadUnaligned
-				(	m_aData
-				+	i_vIndex
 				)
 			;
 		}

@@ -121,6 +121,10 @@ export namespace
 			};
 		}
 
+		template
+			<	::std::size_t
+					t_vBatch
+			>
 		[[nodiscard]]
 		auto static constexpr inline
 		(	LoadAligned
