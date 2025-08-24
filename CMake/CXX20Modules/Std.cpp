@@ -137,40 +137,6 @@ export namespace
 		<	float
 		>
 	{
-		[[nodiscard]]
-		auto static constexpr inline
-		(	Permute
-		)	(	vec<int, 8>
-					i_vOffsets
-			,	vec<float, 8>
-					i_vSource
-			)
-			noexcept
-		->	vec<float, 8>
-		{	return
-			__builtin_ia32_permvarsf256
-			(	i_vSource
-			,	i_vOffsets
-			);
-		}
-
-		[[nodiscard]]
-		auto static constexpr inline
-		(	Permute
-		)	(	vec<int, 16>
-					i_vOffsets
-			,	vec<float, 16>
-					i_vSource
-			)
-			noexcept
-		->	vec<float, 16>
-		{	return
-			__builtin_ia32_permvarsf512
-			(	i_vSource
-			,	i_vOffsets
-			);
-		}
-
 		template
 			<	::std::size_t
 					t_vAlign

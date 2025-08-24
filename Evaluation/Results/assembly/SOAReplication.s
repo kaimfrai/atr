@@ -696,7 +696,7 @@ Disassembly of section .text:
                	vpsllvd	zmm0, zmm8, zmm0
                	vpmovd2m	k1, zmm2
                	vmovaps	zmm2 {k1} {z}, zmmword ptr [rax + r15]
-               	vmulps	zmm1, zmm3, zmm1
+               	vmulps	zmm1, zmm1, zmm3
                	vblendmps	zmm2 {k1}, zmm3, zmm2
                	vpmovd2m	k1, zmm4
                	vmovaps	zmm4 {k1} {z}, zmmword ptr [r10 + r15]

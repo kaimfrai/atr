@@ -650,35 +650,17 @@ export namespace
 
 		template
 			<	::std::size_t
-					t_vReducedSize
+					t_vSelectSize
 			>
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator[]
-		)	(	Simd<::std::int32_t[t_vReducedSize]>
+		)	(	Simd<::std::int32_t[t_vSelectSize]>
 					i_vIndex
 			)	const
 			noexcept
-		->	Simd<float[t_vReducedSize]>
+		->	Simd<float[t_vSelectSize]>
 		{
-			struct M256_2 { vec<float, t_vReducedSize> f[16uz / t_vReducedSize]; };
-			auto [vBottomRaw, vTopRaw] = ::std::bit_cast<M256_2>(m_vRaw).f;
-			auto const
-				vBottom
-			=	::SimdOp::Permute
-				(	i_vIndex
-					.	m_vRaw
-				,	vBottomRaw
-				)
-			;
-			auto const
-				vTop
-			=	::SimdOp::Permute
-				(	i_vIndex
-					.	m_vRaw
-				,	vTopRaw
-				)
-			;
 			auto const
 			&	[	...
 					rpIndex
@@ -686,37 +668,13 @@ export namespace
 			=	i_vIndex
 				.	m_vRaw
 			;
-			vec<bool, t_vReducedSize>
-				vSelect
-			{	(	rpIndex
-				>=	t_vReducedSize
-				)
-				...
-			};
-
 			return
 			{	.	m_vRaw
-				=	vSelect
-				?	vTop
-				:	vBottom
-			};
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	operator[]
-		)	(	Simd<::std::int32_t[16uz]>
-					i_vIndex
-			)	const
-			noexcept
-		->	Simd<float[16uz]>
-		{	return
-			{	.	m_vRaw
-				=	::SimdOp::Permute
-					(	i_vIndex
-						.	m_vRaw
-					,	m_vRaw
-					)
+				{	m_vRaw
+					[	rpIndex
+					]
+					...
+				}
 			};
 		}
 
