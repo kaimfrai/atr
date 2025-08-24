@@ -19,7 +19,12 @@ export namespace
 		,	SimdTag
 		>
 	{
-		__m128i
+		using
+			RawType
+		=	vec<::std::uint64_t, 2>
+		;
+
+		RawType
 			m_vRaw
 		;
 
@@ -32,7 +37,7 @@ export namespace
 
 		explicit(false) inline
 		(	Var
-		)	(	__m128i
+		)	(	RawType
 					i_vInit
 			)
 			noexcept
@@ -48,7 +53,7 @@ export namespace
 			)
 			noexcept
 		:	m_vRaw
-			{	::std::bit_cast<__m128i>
+			{	::std::bit_cast<RawType>
 				(	i_vInit
 				)
 			}
@@ -77,11 +82,9 @@ export namespace
 		->	Var&
 		{
 				m_vRaw
-			=	mm::add_epi64
-				(	m_vRaw
-				,	i_vIncrement
-					.	m_vRaw
-				)
+			=	m_vRaw
+			+	i_vIncrement
+				.	m_vRaw
 			;
 			return
 			*	this
@@ -115,11 +118,9 @@ export namespace
 		->	Var
 		{	return
 			Var
-			{	mm::srli_epi64
-				(	i_vLeft
-					.	m_vRaw
-				,	i_vRight
-				)
+			{	i_vLeft
+				.	m_vRaw
+			>> i_vRight
 			};
 		}
 
@@ -135,11 +136,9 @@ export namespace
 		->	Var
 		{	return
 			Var
-			{	mm::slli_epi64
-				(	i_vLeft
-					.	m_vRaw
-				,	i_vRight
-				)
+			{	i_vLeft
+				.	m_vRaw
+			<<	i_vRight
 			};
 		}
 
@@ -155,12 +154,10 @@ export namespace
 		->	Var
 		{	return
 			Var
-			{	mm::xor_si128
-				(	i_vLeft
-					.	m_vRaw
-				,	i_vRight
-					.	m_vRaw
-				)
+			{	i_vLeft
+				.	m_vRaw
+			xor	i_vRight
+				.	m_vRaw
 			};
 		}
 

@@ -2,24 +2,29 @@ export module Meta.Auto.Simd.UInt8;
 
 export import Meta.Auto.Simd.Tag;
 import Meta.Auto.Simd.UInt32;
+import Meta.IndexPack;
 
 import std;
 import Std;
+
+using ::Meta::IndexPack;
 
 export namespace
 	Meta::Auto
 {
 	template
-		<>
+		<	::std::size_t
+				t_vSize
+		>
 	struct
 		Var
 		<	::std::uint8_t
-				[	8uz
+				[	t_vSize
 				]
 		,	SimdTag
 		>
 	{
-		::std::uint64_t
+		vec<::std::uint8_t, t_vSize>
 			m_vRaw
 		;
 
@@ -31,10 +36,9 @@ export namespace
 			)	const
 			noexcept
 		->	::std::uint8_t
-		{
-			auto
+		{	auto
 				vArray
-			=	::std::bit_cast<::std::array<::std::uint8_t, 8uz>>
+			=	::std::bit_cast<::std::array<::std::uint8_t, t_vSize>>
 				(	m_vRaw
 				)
 			;
@@ -57,41 +61,64 @@ export namespace
 		->	Var
 		{
 			auto
-				vArray
-			=	::std::bit_cast<::std::array<::std::uint8_t, 8uz>>
-				(	i_vLeft
-				)
+			&	[	...
+					rpElements
+				]
+			=	i_vLeft
+				.	m_vRaw
 			;
-			for	(	auto
-					&	rElement
-				:	vArray
+			(	...
+			,	(	rpElements
+				%= i_vRight
 				)
-			{		rElement
-				%=	i_vRight
-				;
-			}
-			return
-			::std::bit_cast<Var>
-			(	vArray
 			);
+			return
+			Var
+			{	.	m_vRaw
+				{	rpElements
+					...
+				}
+			};
 		}
 
 		template
 			<	int
 					t_vShift
 			>
-		auto constexpr inline
+		[[nodiscard]]
+		auto friend constexpr inline
 		(	ByteShiftRight
-		)	()	&
+		)	(	Var
+					i_vValue
+			)
 			noexcept
-		->	Var&
+		->	Var
 		{
-				m_vRaw
-			>>=	::std::numeric_limits<::std::uint8_t>::digits
+			auto const
+			&	[	...
+					rpElement
+				]
+			=	i_vValue
+				.	m_vRaw
+			;
+			auto const
+			&	[	...
+					rpBackIndex
+				]
+			=	IndexPack
+				<	sizeof(m_vRaw)
+				-	t_vShift
+				>
 			;
 			return
-			*	this
-			;
+			{	.	m_vRaw
+				{	rpElement
+				...	[	rpBackIndex
+					+	t_vShift
+					]
+					...
+				}
+			};
 		}
 
 		[[nodiscard]]
@@ -105,25 +132,25 @@ export namespace
 		{
 			::std::uint8_t
 				vValue
-				[	8uz
+				[	t_vSize
 				]
 			{};
 			auto const
 				aData
-			=	::std::assume_aligned<8uz>
+			=	::std::assume_aligned<t_vSize>
 				(	i_aData
 				)
 			;
 			::std::copy
 			(	aData
 			,		aData
-				+	8uz
+				+	t_vSize
 			,	vValue
 			);
 
 			return
 			{	.	m_vRaw
-				=	::std::bit_cast<::std::uint64_t>
+				=	::std::bit_cast<decltype(m_vRaw)>
 					(	vValue
 					)
 			};
@@ -140,19 +167,19 @@ export namespace
 		{
 			::std::uint8_t
 				vValue
-				[	8uz
+				[	t_vSize
 				]
 			{};
 			::std::copy
 			(	i_aData
 			,		i_aData
-				+	8uz
+				+	t_vSize
 			,	vValue
 			);
 
 			return
 			{	.	m_vRaw
-				=	::std::bit_cast<::std::uint64_t>
+				=	::std::bit_cast<decltype(m_vRaw)>
 					(	vValue
 					)
 			};
@@ -168,7 +195,7 @@ export namespace
 		{
 			auto const
 				vValue
-			=	::std::bit_cast<::std::array<::std::uint8_t, 8uz>>
+			=	::std::bit_cast<::std::array<::std::uint8_t, t_vSize>>
 				(	m_vRaw
 				)
 			;
@@ -179,7 +206,7 @@ export namespace
 			,	vValue
 				.	end
 					()
-			,	::std::assume_aligned<8uz>
+			,	::std::assume_aligned<t_vSize>
 				(	o_aData
 				)
 			);
@@ -332,184 +359,6 @@ export namespace
 		}
 	};
 
-	template
-		<>
-	struct
-		Var
-		<	::std::uint8_t
-				[	16uz
-				]
-		,	SimdTag
-		>
-	{
-		__m128i
-			m_vRaw
-		;
-
-		[[nodiscard]]
-		auto constexpr inline
-		(	operator[]
-		)	(	::std::size_t
-					i_vIndex
-			)	const
-			noexcept
-		->	::std::uint8_t
-		{
-			auto const
-				vArray
-			=	::std::bit_cast<::std::array<::std::uint8_t, 16uz>>
-				(	m_vRaw
-				)
-			;
-			return
-				vArray
-				[	i_vIndex
-				]
-			;
-		}
-
-		template
-			<	int
-					t_vShift
-			>
-		auto constexpr inline
-		(	ByteShiftRight
-		)	()	&
-			noexcept
-		->	Var&
-		{
-				m_vRaw
-			=	::Std::SimdOp<::std::byte>::ByteShiftRight<t_vShift>
-				(	m_vRaw
-				)
-			;
-			return
-			*	this
-			;
-		}
-
-		[[nodiscard]]
-		auto friend constexpr inline
-		(	operator%
-		)	(	Var
-					i_vLeft
-			,	::std::uint8_t
-					i_vRight
-			)
-			noexcept
-		->	Var
-		{
-			auto
-				vArray
-			=	::std::bit_cast<::std::array<::std::uint8_t, 16uz>>
-				(	i_vLeft
-				)
-			;
-			for	(	auto
-					&	rElement
-				:	vArray
-				)
-			{		rElement
-				%=	i_vRight
-				;
-			}
-			return
-			::std::bit_cast<Var>
-			(	vArray
-			);
-		}
-
-		[[nodiscard]]
-		auto static constexpr inline
-		(	LoadAligned
-		)	(	::std::uint8_t const
-				*	i_aData
-			)
-			noexcept
-		->	Var
-		{
-			::std::uint8_t
-				vValue
-				[	16uz
-				]
-			{};
-			auto const
-				aData
-			=	::std::assume_aligned<16uz>
-				(	i_aData
-				)
-			;
-			::std::copy
-			(	aData
-			,		aData
-				+	16uz
-			,	vValue
-			);
-
-			return
-			{	.	m_vRaw
-				=	::std::bit_cast<__m128i>
-					(	vValue
-					)
-			};
-		}
-
-		[[nodiscard]]
-		auto static constexpr inline
-		(	LoadUnaligned
-		)	(	::std::uint8_t const
-				*	i_aData
-			)
-			noexcept
-		->	Var
-		{
-			::std::uint8_t
-				vValue
-				[	16uz
-				]
-			{};
-			::std::copy
-			(	i_aData
-			,		i_aData
-				+	16uz
-			,	vValue
-			);
-
-			return
-			{	.	m_vRaw
-				=	::std::bit_cast<__m128i>
-					(	vValue
-					)
-			};
-		}
-
-		auto constexpr inline
-		(	StoreAligned
-		)	(	::std::uint8_t
-				*	o_aData
-			)	const
-			noexcept
-		->	void
-		{
-			auto const
-				vValue
-			=	::std::bit_cast<::std::array<::std::uint8_t, 16uz>>
-				(	m_vRaw
-				)
-			;
-			::std::copy
-			(	vValue
-				.	begin
-					()
-			,	vValue
-				.	end
-					()
-			,	::std::assume_aligned<16uz>
-				(	o_aData
-				)
-			);
-		}
-	};
 
 	template
 		<>

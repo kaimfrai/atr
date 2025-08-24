@@ -222,7 +222,6 @@ export
 			};
 		}
 
-
 		auto constexpr inline
 		(	ByteShiftRight
 		)	()	&
@@ -237,11 +236,10 @@ export
 			=	m_vNumber
 			;
 			(	...
-			,	void
-				(	rNumber
-					.	template
-						ByteShiftRight<1>
-						()
+			,	(	rNumber
+				=	ByteShiftRight<1>
+					(	rNumber
+					)
 				)
 			);
 

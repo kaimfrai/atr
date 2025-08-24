@@ -2,30 +2,27 @@ export module Meta.Auto.Simd.UInt32;
 
 export import Meta.Auto.Simd.Tag;
 
+import Meta.Auto.Simd.Int32;
+
 import std;
 import Std;
-
-using
-	SimdOp
-=	::Std::SimdOp
-	<	::std::uint32_t
-	>
-;
 
 export namespace
 	Meta::Auto
 {
 	template
-		<>
+		<	::std::size_t
+				t_vSize
+		>
 	struct
 		Var
 		<	::std::uint32_t
-				[	8uz
+				[	t_vSize
 				]
 		,	SimdTag
 		>
 	{
-		__m256i
+		vec<::std::uint32_t, t_vSize>
 			m_vRaw
 		;
 
@@ -34,55 +31,17 @@ export namespace
 		(	operator<<
 		)	(	Var
 					i_vLeft
-			,	Var
+			,	Simd<int[t_vSize]>
 					i_vRight
 			)
 			noexcept
 		->	Var
 		{	return
 			{	.	m_vRaw
-				=	::SimdOp::BitShiftLeft
-					(	i_vLeft
-						.	m_vRaw
-					,	i_vRight
-						.	m_vRaw
-					)
-			};
-		}
-	};
-
-	template
-		<>
-	struct
-		Var
-		<	::std::uint32_t
-				[	16uz
-				]
-		,	SimdTag
-		>
-	{
-		__m512i
-			m_vRaw
-		;
-
-		[[nodiscard]]
-		auto friend constexpr inline
-		(	operator<<
-		)	(	Var
-					i_vLeft
-			,	Var
-					i_vRight
-			)
-			noexcept
-		->	Var
-		{	return
-			{	.	m_vRaw
-				=	::SimdOp::BitShiftLeft
-					(	i_vLeft
-						.	m_vRaw
-						,	i_vRight
-							.	m_vRaw
-					)
+				=	i_vLeft
+					.	m_vRaw
+				<<	i_vRight
+					.	m_vRaw
 			};
 		}
 	};

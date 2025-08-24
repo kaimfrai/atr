@@ -1,14 +1,11 @@
 export module Meta.Auto.Simd.Fill;
 
-import Meta.Auto.Simd.Float;
-import Meta.Auto.Simd.UInt32;
-import Meta.Auto.Simd.UInt8;
+import Meta.Auto.Simd.Tag;
+import Meta.IndexPack;
 
 import std;
-import Std;
 
-using ::Std::SimdOp;
-using ::Std::SimdTarget;
+using ::Meta::IndexPack;
 
 export namespace
 	Meta::Auto
@@ -19,167 +16,33 @@ export namespace
 		>
 	struct
 		SimdFillFunction
-	{};
-
-	template
-		<>
-	struct
-		SimdFillFunction
-		<	float
-				[	8uz
-				]
-		>
 	{
 		[[nodiscard]]
 		auto static inline
 		(	operator()
-		)	(	float
+		)	(	::std::remove_extent_t<t_tTarget>
 					i_vSource
 			)
 			noexcept
-		->	Simd<float[8uz]>
+		->	Simd<t_tTarget>
 		{
+			auto const
+			&	[	...
+					rpDublicate
+				]
+			=	IndexPack
+				<	::std::extent_v
+					<	t_tTarget
+					>
+				>
+			;
 			return
 			{	.	m_vRaw
-				=	SimdOp<float>::Broadcast
-					(	i_vSource
-					,	SimdTarget<float[8uz]>
+				{	(	(void)rpDublicate
+					,	i_vSource
 					)
-			};
-		}
-	};
-
-	template
-		<>
-	struct
-		SimdFillFunction
-		<	float
-				[	16uz
-				]
-		>
-	{
-		[[nodiscard]]
-		auto static inline
-		(	operator()
-		)	(	float
-					i_vSource
-			)
-			noexcept
-		->	Simd<float[16uz]>
-		{	return
-			{	.	m_vRaw
-				=	SimdOp<float>::Broadcast
-					(	i_vSource
-					,	SimdTarget<float[16uz]>
-					)
-			};
-		}
-	};
-
-	template
-		<>
-	struct
-		SimdFillFunction
-		<	::std::int32_t
-				[	8uz
-				]
-		>
-	{
-		[[nodiscard]]
-		auto static inline
-		(	operator()
-		)	(	::std::int32_t
-					i_vSource
-			)
-			noexcept
-		->	Simd<::std::int32_t[8uz]>
-		{	return
-			{	.	m_vRaw
-				=	SimdOp<::std::int32_t>::Broadcast
-					(	i_vSource
-					,	SimdTarget<::std::int32_t[8uz]>
-					)
-			};
-		}
-	};
-
-	template
-		<>
-	struct
-		SimdFillFunction
-		<	::std::int32_t
-				[	16uz
-				]
-		>
-	{
-		[[nodiscard]]
-		auto static inline
-		(	operator()
-		)	(	::std::int32_t
-					i_vSource
-			)
-			noexcept
-		->	Simd<::std::int32_t[16uz]>
-		{	return
-			{	.	m_vRaw
-				=	SimdOp<::std::int32_t>::Broadcast
-					(	i_vSource
-					,	SimdTarget<::std::int32_t[16uz]>
-					)
-			};
-		}
-	};
-
-	template
-		<>
-	struct
-		SimdFillFunction
-		<	::std::uint32_t
-				[	8uz
-				]
-		>
-	{
-		[[nodiscard]]
-		auto static inline
-		(	operator()
-		)	(	::std::uint32_t
-					i_vSource
-			)
-			noexcept
-		->	Simd<::std::uint32_t[8uz]>
-		{	return
-			{	.	m_vRaw
-				=	SimdOp<::std::uint32_t>::Broadcast
-					(	i_vSource
-					,	SimdTarget<::std::uint32_t[8uz]>
-					)
-			};
-		}
-	};
-
-	template
-		<>
-	struct
-		SimdFillFunction
-		<	::std::uint32_t
-				[	16uz
-				]
-		>
-	{
-		[[nodiscard]]
-		auto static inline
-		(	operator()
-		)	(	::std::uint32_t
-					i_vSource
-			)
-			noexcept
-		->	Simd<::std::uint32_t[16uz]>
-		{	return
-			{	.	m_vRaw
-				=	SimdOp<::std::uint32_t>::Broadcast
-					(	i_vSource
-					,	SimdTarget<::std::uint32_t[16uz]>
-					)
+					...
+				}
 			};
 		}
 	};

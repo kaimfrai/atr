@@ -31,9 +31,15 @@ add_subdirectory(Evaluation)
 
 add_subdirectory(Test)
 
-file(
-CREATE_LINK
-	"${CMAKE_BINARY_DIR}/compile_commands.json"
-	"${CMAKE_SOURCE_DIR}/compile_commands.json"
-SYMBOLIC
+if(
+NOT CMAKE_BINARY_DIR
+MATCHES
+	"Evaluation"
 )
+	file(
+	CREATE_LINK
+		"${CMAKE_BINARY_DIR}/compile_commands.json"
+		"${CMAKE_SOURCE_DIR}/compile_commands.json"
+	SYMBOLIC
+	)
+endif()

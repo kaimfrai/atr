@@ -2,9 +2,12 @@ export module Meta.Auto.Simd.Float;
 
 export import Meta.Auto.Simd.Tag;
 import Meta.Auto.Simd.Int32;
+import Meta.IndexPack;
 
 import std;
 import Std;
+
+using ::Meta::IndexPack;
 
 using
 	SimdOp
@@ -27,7 +30,7 @@ export namespace
 		,	MaskedTag
 		>
 	{
-		__m256
+		vec<float, 8>
 			m_vRaw
 		;
 		__mmask8
@@ -49,7 +52,7 @@ export namespace
 				=	::SimdOp::MaskedLoad
 					(	i_vMask
 						.	m_vRaw
-					,	::Std::AlignedPointer<void const, alignof(__m256)>
+					,	::Std::AlignedPointer<void const, alignof(vec<float, 8>)>
 						{	i_aData
 						}
 					)
@@ -68,11 +71,78 @@ export namespace
 		->	void
 		{	return
 			::SimdOp::Store
-			(	::Std::AlignedPointer<void, alignof(__m256)>
+			(	::Std::AlignedPointer<void, alignof(vec<float, 8>)>
 				{	o_aData
 				}
 			,	m_vRaw
 			);
+		}
+	};
+
+	template
+		<	::std::size_t
+				t_vSize
+		>
+	struct
+		Var
+		<	float
+				[	t_vSize
+				]
+		,	SimdTag
+		>
+	{
+		using
+			ElementType
+		=	float
+		;
+
+		using
+			MaskedType
+		=	MaskedSimd
+			<	float
+					[	t_vSize
+					]
+			>
+		;
+
+		float
+			m_vRaw
+			[[clang::ext_vector_type(t_vSize)]]
+		;
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator+
+		)	(	Var
+					i_vLeft
+			,	Var
+					i_vRight
+			)
+			noexcept
+		->	Var
+		{	return
+			{	i_vLeft
+				.	m_vRaw
+			+	i_vRight
+				.	m_vRaw
+			};
+		}
+
+		auto friend constexpr inline
+		(	operator+=
+		)	(	Var
+				&	i_rLeft
+			,	Var
+					i_vRight
+			)
+			noexcept
+		->	Var&
+		{	return
+				i_rLeft
+			=	(	i_rLeft
+				+	i_vRight
+				)
+			;
 		}
 	};
 
@@ -100,7 +170,7 @@ export namespace
 			>
 		;
 
-		__m256
+		vec<float, 8>
 			m_vRaw
 		;
 
@@ -170,12 +240,10 @@ export namespace
 		->	Var
 		{	return
 			{	.	m_vRaw
-				=	::SimdOp::Add
-					(	i_vLeft
+				=	i_vLeft
+					.	m_vRaw
+				+	i_vRight
 						.	m_vRaw
-					,	i_vRight
-						.	m_vRaw
-					)
 			};
 		}
 
@@ -208,28 +276,11 @@ export namespace
 		->	Var
 		{	return
 			{	.	m_vRaw
-				=	::SimdOp::Multiply
-					(	i_vLeft
+				=	i_vLeft
+					.	m_vRaw
+				*	i_vRight
 						.	m_vRaw
-					,	i_vRight
-						.	m_vRaw
-					)
 			};
-		}
-
-		[[nodiscard]]
-		auto friend constexpr inline
-		(	reduce
-		)	(	Var
-					i_vArgument
-			)
-			noexcept
-		->	float
-		{	return
-			::SimdOp::Reduce
-			(	i_vArgument
-				.	m_vRaw
-			);
 		}
 
 		[[nodiscard]]
@@ -243,7 +294,7 @@ export namespace
 		{	return
 			{	.	m_vRaw
 				=	::SimdOp::Load
-					(	::Std::AlignedPointer<void const, alignof(__m256)>
+					(	::Std::AlignedPointer<void const, alignof(vec<float, 8>)>
 						{	i_aData
 						}
 					,	::Std::SimdTarget
@@ -283,7 +334,7 @@ export namespace
 		->	void
 		{	return
 			::SimdOp::Store
-			(	::Std::AlignedPointer<void, alignof(__m256)>
+			(	::Std::AlignedPointer<void, alignof(vec<float, 8>)>
 				{	o_aData
 				}
 			,	m_vRaw
@@ -519,7 +570,7 @@ export namespace
 		,	MaskedTag
 		>
 	{
-		__m512
+		vec<float, 16>
 			m_vRaw
 		;
 		__mmask16
@@ -541,7 +592,7 @@ export namespace
 				=	::SimdOp::MaskedLoad
 					(	i_vMask
 						.	m_vRaw
-					,	::Std::AlignedPointer<void const, alignof(__m512)>
+					,	::Std::AlignedPointer<void const, alignof(vec<float, 16>)>
 						{	i_aData
 						}
 					)
@@ -576,7 +627,7 @@ export namespace
 			>
 		;
 
-		__m512
+		vec<float, 16>
 			m_vRaw
 		;
 
@@ -606,7 +657,7 @@ export namespace
 			noexcept
 		->	Simd<float[8uz]>
 		{
-			struct M256_2 { __m256 f[2]; };
+			struct M256_2 { vec<float, 8> f[2]; };
 			auto [vBottomRaw, vTopRaw] = ::std::bit_cast<M256_2>(m_vRaw).f;
 			auto const
 				vBottom
@@ -729,12 +780,10 @@ export namespace
 		->	Var
 		{	return
 			{	.	m_vRaw
-				=	::SimdOp::Add
-					(	i_vLeft
-						.	m_vRaw
-					,	i_vRight
-						.	m_vRaw
-					)
+				=	i_vLeft
+					.	m_vRaw
+				+	i_vRight
+					.	m_vRaw
 			};
 		}
 
@@ -767,28 +816,11 @@ export namespace
 		->	Var
 		{	return
 			{	.	m_vRaw
-				=	::SimdOp::Multiply
-					(	i_vLeft
-						.	m_vRaw
-					,	i_vRight
-						.	m_vRaw
-					)
+				=	i_vLeft
+					.	m_vRaw
+				*	i_vRight
+					.	m_vRaw
 			};
-		}
-
-		[[nodiscard]]
-		auto friend constexpr inline
-		(	reduce
-		)	(	Var
-					i_vArgument
-			)
-			noexcept
-		->	float
-		{	return
-			::SimdOp::Reduce
-			(	i_vArgument
-				.	m_vRaw
-			);
 		}
 
 		[[nodiscard]]
@@ -802,7 +834,7 @@ export namespace
 		{	return
 			{	.	m_vRaw
 				=	::SimdOp::Load
-					(	::Std::AlignedPointer<void const, alignof(__m512)>
+					(	::Std::AlignedPointer<void const, alignof(vec<float, 16>)>
 						{	i_aData
 						}
 					,	::Std::SimdTarget
@@ -821,7 +853,7 @@ export namespace
 		->	void
 		{
 			::SimdOp::Store
-			(	::Std::AlignedPointer<void, alignof(__m512)>
+			(	::Std::AlignedPointer<void, alignof(vec<float, 16>)>
 				{	o_aData
 				}
 			,	m_vRaw
@@ -1044,4 +1076,72 @@ export namespace
 			;
 		}
 	};
+
+	template
+		<	typename
+				t_tElement
+		,	::std::size_t
+				t_vSize
+		>
+	[[nodiscard]]
+	auto constexpr inline
+	(	reduce
+	)	(	Simd<t_tElement[t_vSize]>
+				i_vArgument
+		)
+		noexcept
+	->	t_tElement
+	{
+		auto const
+		&	[	...
+				rpElement
+			]
+		=	i_vArgument
+			.	m_vRaw
+		;
+		if constexpr
+			(	sizeof(i_vArgument)
+			<=		2uz
+				*	sizeof(::std::size_t)
+			)
+		{	return
+			(	...
+			+	rpElement
+			);
+		}
+		else
+		{
+			auto static constexpr
+				vHalfSize
+			=	t_vSize
+			/	2uz
+			;
+			auto const
+			&	[	...
+					vpIndex
+				]
+			=	IndexPack
+				<	vHalfSize
+				>
+			;
+			return
+			reduce
+			(	Simd<t_tElement[vHalfSize]>
+				{	{	rpElement
+					...	[	vpIndex
+						]
+					...
+					}
+				}
+			+	Simd<t_tElement[vHalfSize]>
+				{	{	rpElement
+					...	[	vpIndex
+						+	vHalfSize
+						]
+						...
+					}
+				}
+			);
+		}
+	}
 }
