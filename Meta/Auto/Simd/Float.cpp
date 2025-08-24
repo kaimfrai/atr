@@ -184,13 +184,13 @@ export namespace
 		->	Var
 		{	return
 			{	.	m_vRaw
-				=	::SimdOp::Blend
+				=	::std::bit_cast<vec<bool, 8>>
 					(	i_vValue
 						.	m_vMask
-					,	m_vRaw
-					,	i_vValue
-						.	m_vRaw
 					)
+				?	i_vValue
+					.	m_vRaw
+				:	m_vRaw
 			};
 		}
 
@@ -648,16 +648,20 @@ export namespace
 			};
 		}
 
+		template
+			<	::std::size_t
+					t_vReducedSize
+			>
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator[]
-		)	(	Simd<::std::int32_t[8uz]>
+		)	(	Simd<::std::int32_t[t_vReducedSize]>
 					i_vIndex
 			)	const
 			noexcept
-		->	Simd<float[8uz]>
+		->	Simd<float[t_vReducedSize]>
 		{
-			struct M256_2 { vec<float, 8> f[2]; };
+			struct M256_2 { vec<float, t_vReducedSize> f[16uz / t_vReducedSize]; };
 			auto [vBottomRaw, vTopRaw] = ::std::bit_cast<M256_2>(m_vRaw).f;
 			auto const
 				vBottom
@@ -675,18 +679,26 @@ export namespace
 				,	vTopRaw
 				)
 			;
+			auto const
+			&	[	...
+					rpIndex
+				]
+			=	i_vIndex
+				.	m_vRaw
+			;
+			vec<bool, t_vReducedSize>
+				vSelect
+			{	(	rpIndex
+				>=	t_vReducedSize
+				)
+				...
+			};
 
 			return
 			{	.	m_vRaw
-				=	::SimdOp::Blend
-					(	HighestBit
-						(	i_vIndex
-						<<	28
-						)
-						.	m_vRaw
-					,	vBottom
-					,	vTop
-					)
+				=	vSelect
+				?	vTop
+				:	vBottom
 			};
 		}
 
@@ -718,13 +730,13 @@ export namespace
 		->	Var
 		{	return
 			{	.	m_vRaw
-				=	::SimdOp::Blend
+				=	::std::bit_cast<vec<bool, 16>>
 					(	i_vValue
 						.	m_vMask
-					,	m_vRaw
-					,	i_vValue
-						.	m_vRaw
 					)
+				?	i_vValue
+					.	m_vRaw
+				:	m_vRaw
 			};
 		}
 
@@ -737,13 +749,13 @@ export namespace
 		->	Var&
 		{
 				m_vRaw
-			=	::SimdOp::Blend
+			=	::std::bit_cast<vec<bool, 16>>
 				(	i_vValue
 					.	m_vMask
-				,	m_vRaw
-				,	i_vValue
-					.	m_vRaw
 				)
+			?	i_vValue
+				.	m_vRaw
+			:	m_vRaw
 			;
 
 			return

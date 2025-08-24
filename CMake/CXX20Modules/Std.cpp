@@ -139,46 +139,6 @@ export namespace
 	{
 		[[nodiscard]]
 		auto static constexpr inline
-		(	Blend
-		)	(	__mmask8
-					i_vMask
-			,	vec<float, 8>
-					i_vLeft
-			,	vec<float, 8>
-					i_vRight
-			)
-			noexcept
-		->	vec<float, 8>
-		{	return
-			__builtin_ia32_selectps_256
-			(	::std::bit_cast<unsigned char>(i_vMask)
-			, 	i_vRight
-			,	i_vLeft
-			);
-		}
-
-		[[nodiscard]]
-		auto static constexpr inline
-		(	Blend
-		)	(	__mmask16
-					i_vMask
-			,	vec<float, 16>
-					i_vLeft
-			,	vec<float, 16>
-					i_vRight
-			)
-			noexcept
-		->	vec<float, 16>
-		{	return
-			__builtin_ia32_selectps_512
-			(	i_vMask
-			,   i_vRight
-			,	i_vLeft
-			);
-		}
-
-		[[nodiscard]]
-		auto static constexpr inline
 		(	Permute
 		)	(	vec<int, 8>
 					i_vOffsets
