@@ -3,25 +3,24 @@ export module Meta.Auto.Simd.UInt32;
 export import Meta.Auto.Simd.Tag;
 
 import Meta.Auto.Simd.Int32;
-
-import std;
+import Meta.Size;
 
 export namespace
 	Meta::Auto
 {
 	template
-		<	::std::size_t
+		<	USize
 				t_vSize
 		>
 	struct
 		Var
-		<	::std::uint32_t
+		<	unsigned
 				[	t_vSize
 				]
 		,	SimdTag
 		>
 	{
-		vec<::std::uint32_t, t_vSize>
+		vec<unsigned, t_vSize>
 			m_vRaw
 		;
 

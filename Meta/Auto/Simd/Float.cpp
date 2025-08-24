@@ -3,6 +3,7 @@ export module Meta.Auto.Simd.Float;
 export import Meta.Auto.Simd.Tag;
 import Meta.Auto.Simd.Int32;
 import Meta.IndexPack;
+import Meta.Size;
 
 import std;
 
@@ -30,7 +31,7 @@ export namespace
 		;
 
 		template
-			<	::std::size_t
+			<	USize
 					t_vBatch
 			>
 		[[nodiscard]]
@@ -57,7 +58,7 @@ export namespace
 		}
 
 		template
-			<	::std::size_t
+			<	USize
 					t_vBatch
 			>
 		auto constexpr inline
@@ -90,7 +91,7 @@ export namespace
 	};
 
 	template
-		<	::std::size_t
+		<	USize
 				t_vSize
 		>
 	struct
@@ -292,7 +293,7 @@ export namespace
 		}
 
 		template
-			<	::std::size_t
+			<	USize
 					t_vBatch
 			>
 		[[nodiscard]]
@@ -324,7 +325,7 @@ export namespace
 		}
 
 		template
-			<	::std::size_t
+			<	USize
 					t_vBatch
 			>
 		auto constexpr inline
@@ -590,7 +591,7 @@ export namespace
 		;
 
 		template
-			<	::std::size_t
+			<	USize
 					t_vBatch
 			>
 		[[nodiscard]]
@@ -663,7 +664,7 @@ export namespace
 		}
 
 		template
-			<	::std::size_t
+			<	USize
 					t_vSelectSize
 			>
 		[[nodiscard]]
@@ -807,7 +808,7 @@ export namespace
 		}
 
 		template
-			<	::std::size_t
+			<	USize
 					t_vBatch
 			>
 		[[nodiscard]]
@@ -841,7 +842,7 @@ export namespace
 		}
 
 		template
-			<	::std::size_t
+			<	USize
 					t_vBatch
 			>
 		auto constexpr inline
@@ -1090,7 +1091,7 @@ export namespace
 	template
 		<	typename
 				t_tElement
-		,	::std::size_t
+		,	USize
 				t_vSize
 		>
 	[[nodiscard]]
@@ -1112,7 +1113,7 @@ export namespace
 		if constexpr
 			(	sizeof(i_vArgument)
 			<=		2uz
-				*	sizeof(::std::size_t)
+				*	sizeof(USize)
 			)
 		{	return
 			(	...

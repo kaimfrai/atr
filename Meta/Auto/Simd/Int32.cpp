@@ -2,8 +2,7 @@ export module Meta.Auto.Simd.Int32;
 
 import Meta.Auto.Simd.Tag;
 import Meta.IndexPack;
-
-import std;
+import Meta.Size;
 
 using ::Meta::IndexPack;
 
@@ -11,18 +10,18 @@ export namespace
 	Meta::Auto
 {
 	template
-		<	::std::size_t
+		<	USize
 				t_vSize
 		>
 	struct
 		Var
-		<	::std::int32_t
+		<	int
 				[	t_vSize
 				]
 		,	SimdTag
 		>
 	{
-		vec<::std::int32_t, t_vSize>
+		vec<int, t_vSize>
 			m_vRaw
 		;
 
@@ -80,17 +79,14 @@ export namespace
 				.	m_vRaw
 			;
 			return
-			::std::bit_cast<SimdMask<t_vSize>>
-			(	vec<bool, t_vSize>
-				{
-					static_cast<bool>
-					(	(	rpElement
-						>>	31
-						)
+			{
+				static_cast<bool>
+				(	(	rpElement
+					>>	31
 					)
-					...
-				}
-			);
+				)
+				...
+			};
 		}
 
 		[[nodiscard]]

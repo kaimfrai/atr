@@ -3,6 +3,7 @@ export module Meta.Auto.Simd.UInt8;
 export import Meta.Auto.Simd.Tag;
 import Meta.Auto.Simd.UInt32;
 import Meta.IndexPack;
+import Meta.Size;
 
 import std;
 
@@ -12,32 +13,32 @@ export namespace
 	Meta::Auto
 {
 	template
-		<	::std::size_t
+		<	USize
 				t_vSize
 		>
 	struct
 		Var
-		<	::std::uint8_t
+		<	unsigned char
 				[	t_vSize
 				]
 		,	SimdTag
 		>
 	{
-		vec<::std::uint8_t, t_vSize>
+		vec<unsigned char, t_vSize>
 			m_vRaw
 		;
 
 		[[nodiscard]]
 		auto constexpr inline
 		(	operator[]
-		)	(	::std::size_t
+		)	(	USize
 					i_vIndex
 			)	const
 			noexcept
-		->	::std::uint8_t
+		->	unsigned char
 		{	auto
 				vArray
-			=	::std::bit_cast<::std::array<::std::uint8_t, t_vSize>>
+			=	::std::bit_cast<::std::array<unsigned char, t_vSize>>
 				(	m_vRaw
 				)
 			;
@@ -53,7 +54,7 @@ export namespace
 		(	operator%
 		)	(	Var
 					i_vLeft
-			,	::std::uint8_t
+			,	unsigned char
 					i_vRight
 			)
 			noexcept
@@ -121,13 +122,13 @@ export namespace
 		}
 
 		template
-			<	::std::size_t
+			<	USize
 					t_vBatch
 			>
 		[[nodiscard]]
 		auto static constexpr inline
 		(	LoadAligned
-		)	(	::std::uint8_t const
+		)	(	unsigned char const
 				*	i_aData
 			)
 			noexcept
@@ -143,7 +144,7 @@ export namespace
 			;
 			return
 			{	.	m_vRaw
-				{	::std::assume_aligned<t_vBatch * alignof(::std::uint8_t)>
+				{	::std::assume_aligned<t_vBatch * alignof(unsigned char)>
 					(	i_aData
 					)[	rpIndex
 					]
@@ -152,14 +153,13 @@ export namespace
 			};
 		}
 
-
 		template
-			<	::std::size_t
+			<	USize
 					t_vBatch
 			>
 		auto constexpr inline
 		(	StoreAligned
-		)	(	::std::uint8_t
+		)	(	unsigned char
 				*	o_aData
 			)	const
 			noexcept
@@ -174,7 +174,7 @@ export namespace
 				>
 			;
 			(	...
-			,	(	::std::assume_aligned<t_vBatch * alignof(::std::uint8_t)>
+			,	(	::std::assume_aligned<t_vBatch * alignof(unsigned char)>
 					(	o_aData
 					)[	rpIndex
 					]
@@ -190,7 +190,7 @@ export namespace
 		<>
 	struct
 		Var
-		<	::std::uint8_t
+		<	unsigned char
 			(&)	[	8uz
 				]
 		,	SimdTag
@@ -199,13 +199,13 @@ export namespace
 		using
 			value_type
 		=	Simd
-			<	::std::uint8_t
+			<	unsigned char
 					[	8uz
 					]
 			>
 		;
 
-		::std::uint8_t
+		unsigned char
 		*	m_aData
 		;
 
@@ -216,7 +216,7 @@ export namespace
 		)	()	const
 			noexcept
 		{
-			::std::uint8_t
+			unsigned char
 				vValue
 				[	8uz
 				]
@@ -250,7 +250,7 @@ export namespace
 		{
 			auto const
 				vValue
-			=	::std::bit_cast<::std::array<::std::uint8_t, 8uz>>
+			=	::std::bit_cast<::std::array<unsigned char, 8uz>>
 				(	i_vValue
 				)
 			;
@@ -281,7 +281,7 @@ export namespace
 		<>
 	struct
 		Var
-		<	::std::uint8_t const
+		<	unsigned char const
 			(&)	[	8uz
 				]
 		,	SimdTag
@@ -290,13 +290,13 @@ export namespace
 		using
 			value_type
 		=	Simd
-			<	::std::uint8_t
+			<	unsigned char
 					[	8uz
 					]
 			>
 		;
 
-		::std::uint8_t const
+		unsigned char const
 		*	m_aData
 		;
 
@@ -307,7 +307,7 @@ export namespace
 		)	()	const
 			noexcept
 		{
-			::std::uint8_t
+			unsigned char
 				vValue
 				[	8uz
 				]
@@ -337,7 +337,7 @@ export namespace
 		<>
 	struct
 		Var
-		<	::std::uint8_t
+		<	unsigned char
 			(&)	[	16uz
 				]
 		,	SimdTag
@@ -346,13 +346,13 @@ export namespace
 		using
 			value_type
 		=	Simd
-			<	::std::uint8_t
+			<	unsigned char
 					[	16uz
 					]
 			>
 		;
 
-		::std::uint8_t
+		unsigned char
 		*	m_aData
 		;
 
@@ -363,7 +363,7 @@ export namespace
 		)	()	const
 			noexcept
 		{
-			::std::uint8_t
+			unsigned char
 				vValue
 				[	16uz
 				]
@@ -397,7 +397,7 @@ export namespace
 		{
 			auto const
 				vValue
-			=	::std::bit_cast<::std::array<::std::uint8_t, 16uz>>
+			=	::std::bit_cast<::std::array<unsigned char, 16uz>>
 				(	i_vValue
 				)
 			;
@@ -428,7 +428,7 @@ export namespace
 		<>
 	struct
 		Var
-		<	::std::uint8_t const
+		<	unsigned char const
 			(&)	[	16uz
 				]
 		,	SimdTag
@@ -437,13 +437,13 @@ export namespace
 		using
 			value_type
 		=	Simd
-			<	::std::uint8_t
+			<	unsigned char
 					[	16uz
 					]
 			>
 		;
 
-		::std::uint8_t const
+		unsigned char const
 		*	m_aData
 		;
 
@@ -454,7 +454,7 @@ export namespace
 		)	()	const
 			noexcept
 		{
-			::std::uint8_t
+			unsigned char
 				vValue
 				[	16uz
 				]
