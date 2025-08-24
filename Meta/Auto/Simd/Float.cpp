@@ -282,45 +282,36 @@ export namespace
 			};
 		}
 
+		template
+			<	::std::size_t
+					t_vAligned
+			>
 		[[nodiscard]]
 		auto static constexpr inline
-		(	LoadAligned
+		(	Load
 		)	(	float const
 				*	i_aData
 			)
 			noexcept
 		->	Var
-		{	return
+		{
+			auto const
+			&	[	...
+					rpIndex
+				]
+			=	IndexPack
+				<	8uz
+				>
+			;
+			return
 			{	.	m_vRaw
-				=	::SimdOp::Load
-					(	::Std::AlignedPointer<void const, alignof(vec<float, 8>)>
-						{	i_aData
-						}
-					,	::Std::SimdTarget
-						<	float[8uz]
-						>
+				{	::std::assume_aligned<t_vAligned>
+					(	i_aData
 					)
-			};
-		}
-
-		[[nodiscard]]
-		auto static constexpr inline
-		(	LoadUnaligned
-		)	(	float const
-				*	i_aData
-			)
-			noexcept
-		->	Var
-		{	return
-			{	.	m_vRaw
-				=	::SimdOp::Load<alignof(float)>
-					(	::Std::AlignedPointer<void const, alignof(float)>
-						{	i_aData
-						}
-					,	::Std::SimdTarget
-						<	float[8uz]
-						>
-					)
+					[	rpIndex
+					]
+					...
+				}
 			};
 		}
 
@@ -373,7 +364,7 @@ export namespace
 			noexcept
 		{	return
 			value_type
-			::	LoadAligned
+			::	Load<alignof(value_type)>
 				(	m_aData
 				)
 			;
@@ -477,7 +468,7 @@ export namespace
 			noexcept
 		{	return
 			value_type
-			::	LoadAligned
+			::	Load<alignof(value_type)>
 				(	m_aData
 				)
 			;
@@ -792,24 +783,37 @@ export namespace
 			};
 		}
 
+		template
+			<	::std::size_t
+					t_vAlign
+			>
 		[[nodiscard]]
 		auto static constexpr inline
-		(	LoadAligned
+		(	Load
 		)	(	float const
 				*	i_aData
 			)
 			noexcept
 		->	Var
-		{	return
+		{
+			auto const
+			&	[	...
+					rpIndex
+				]
+			=	IndexPack
+				<	16uz
+				>
+			;
+
+			return
 			{	.	m_vRaw
-				=	::SimdOp::Load
-					(	::Std::AlignedPointer<void const, alignof(vec<float, 16>)>
-						{	i_aData
-						}
-					,	::Std::SimdTarget
-						<	float[16uz]
-						>
+				{	::std::assume_aligned<t_vAlign>
+					(	i_aData
 					)
+					[	rpIndex
+					]
+					...
+				}
 			};
 		}
 
@@ -861,7 +865,7 @@ export namespace
 			noexcept
 		{	return
 			value_type
-			::	LoadAligned
+			::	Load<alignof(value_type)>
 				(	m_aData
 				)
 			;
@@ -965,7 +969,7 @@ export namespace
 			noexcept
 		{	return
 			value_type
-			::	LoadAligned
+			::	Load<alignof(value_type)>
 				(	m_aData
 				)
 			;
