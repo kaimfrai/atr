@@ -1,16 +1,16 @@
 
  Performance counter stats for 'build/Evaluation/bin/Visitor 42 12500' (10 runs):
 
-              9,68 msec task-clock                       #    0,973 CPUs utilized               ( +-  1,16% )
-                 1      context-switches                 #  103,352 /sec                        ( +- 30,73% )
-                 1      cpu-migrations                   #  103,352 /sec                        ( +- 26,03% )
-               829      page-faults                      #   85,679 K/sec                       ( +-  0,04% )
-        48.599.877      instructions                     #    1,16  insn per cycle            
-                                                  #    0,40  stalled cycles per insn     ( +-  0,07% )
-        41.831.217      cycles                           #    4,323 GHz                         ( +-  1,18% )
-        19.390.280      stalled-cycles-frontend          #   46,35% frontend cycles idle        ( +-  1,20% )
-         6.880.346      branches                         #  711,100 M/sec                       ( +-  0,08% )
-           764.299      branch-misses                    #   11,11% of all branches             ( +-  1,82% )
+              9,66 msec task-clock                       #    0,977 CPUs utilized               ( +-  0,74% )
+                 1      context-switches                 #  103,472 /sec                        ( +- 37,86% )
+                 1      cpu-migrations                   #  103,472 /sec                        ( +- 26,67% )
+               829      page-faults                      #   85,779 K/sec                       ( +-  0,03% )
+        48.637.531      instructions                     #    1,16  insn per cycle            
+                                                  #    0,41  stalled cycles per insn     ( +-  0,09% )
+        41.928.112      cycles                           #    4,338 GHz                         ( +-  0,75% )
+        19.985.494      stalled-cycles-frontend          #   47,67% frontend cycles idle        ( +-  1,08% )
+         6.885.801      branches                         #  712,490 M/sec                       ( +-  0,11% )
+           800.596      branch-misses                    #   11,63% of all branches             ( +-  1,74% )
 
-          0,009940 +- 0,000121 seconds time elapsed  ( +-  1,22% )
+         0,0098957 +- 0,0000686 seconds time elapsed  ( +-  0,69% )
 
