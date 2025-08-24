@@ -5,7 +5,6 @@ import Meta.Auto.Simd.Int32;
 import Meta.IndexPack;
 
 import std;
-import Std;
 
 using ::Meta::IndexPack;
 
@@ -26,7 +25,7 @@ export namespace
 		vec<float, 8>
 			m_vRaw
 		;
-		__mmask8
+		SimdMask<8uz>
 			m_vMask
 		;
 
@@ -46,7 +45,7 @@ export namespace
 		->	Var
 		{	return
 			{	.	m_vRaw
-				{	::std::bit_cast<vec<bool, 8>>(i_vMask)
+				{	i_vMask
 				?	*::std::bit_cast<vec<float, 8> const*>
 					(	i_aData
 					)
@@ -54,7 +53,6 @@ export namespace
 				}
 			,	.	m_vMask
 				=	i_vMask
-					.	m_vRaw
 			};
 		}
 
@@ -235,7 +233,6 @@ export namespace
 				=	m_vRaw
 			,	.	m_vMask
 				=	i_vMask
-					.	m_vRaw
 			};
 		}
 
@@ -442,7 +439,7 @@ export namespace
 		*	m_aData
 		;
 
-		__mmask8
+		SimdMask<8uz>
 			m_vMask
 		;
 
@@ -457,10 +454,7 @@ export namespace
 			::	template
 				LoadAligned<8uz>
 				(	m_aData
-				,	SimdMask<8uz>
-					{	.	m_vRaw
-						=	m_vMask
-					}
+				,	m_vMask
 				)
 			;
 		}
@@ -537,7 +531,6 @@ export namespace
 				=	m_aData
 			,	.	m_vMask
 				=	i_vMask
-					.	m_vRaw
 			};
 		}
 
@@ -592,7 +585,7 @@ export namespace
 		vec<float, 16>
 			m_vRaw
 		;
-		__mmask16
+		SimdMask<16uz>
 			m_vMask
 		;
 
@@ -612,15 +605,15 @@ export namespace
 		->	Var
 		{	return
 			{	.	m_vRaw
-				{	::std::bit_cast<vec<bool, 16>>(i_vMask)
-				?	*::std::bit_cast<vec<float, 16> const*>
+				{	i_vMask
+				?	*
+					::std::bit_cast<vec<float, 16> const*>
 					(	i_aData
 					)
 				:	vec<float, 16>{}
 				}
 			,	.	m_vMask
 				=	i_vMask
-					.	m_vRaw
 			};
 		}
 	};
@@ -666,7 +659,6 @@ export namespace
 				=	m_vRaw
 			,	.	m_vMask
 				=	i_vMask
-					.	m_vRaw
 			};
 		}
 
@@ -756,7 +748,6 @@ export namespace
 				=	m_vRaw
 			,	.	m_vMask
 				=	i_vMask
-					.	m_vRaw
 			};
 		}
 
@@ -964,7 +955,7 @@ export namespace
 		*	m_aData
 		;
 
-		__mmask16
+		SimdMask<16uz>
 			m_vMask
 		;
 
@@ -979,10 +970,7 @@ export namespace
 			::	template
 				LoadAligned<16uz>
 				(	m_aData
-				,	SimdMask<16uz>
-					{	.	m_vRaw
-						=	m_vMask
-					}
+				,	m_vMask
 				)
 			;
 		}
@@ -1059,7 +1047,6 @@ export namespace
 				=	m_aData
 			,	.	m_vMask
 				=	i_vMask
-					.	m_vRaw
 			};
 		}
 

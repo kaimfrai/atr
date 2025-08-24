@@ -5,7 +5,6 @@ export import Meta.Auto.Simd.Tag;
 import Meta.Auto.Simd.Int32;
 
 import std;
-import Std;
 
 export namespace
 	Meta::Auto

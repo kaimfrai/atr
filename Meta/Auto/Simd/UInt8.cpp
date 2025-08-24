@@ -5,7 +5,6 @@ import Meta.Auto.Simd.UInt32;
 import Meta.IndexPack;
 
 import std;
-import Std;
 
 using ::Meta::IndexPack;
 

@@ -143,14 +143,3 @@ COMPILE_OPTIONS
 add_module(
 	"${std_module_file}"
 )
-
-set_source_files_properties(
-	"${CXX20_MODULES_PATH}/Std.cpp"
-PROPERTIES
-COMPILE_OPTIONS
-	"$<$<CXX_COMPILER_ID:Clang>:-Wno-reserved-identifier>"
-)
-
-add_module(
-	"${CXX20_MODULES_PATH}/Std.cpp"
-)

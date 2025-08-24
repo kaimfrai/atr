@@ -4,7 +4,6 @@ import Meta.Auto.Simd.Tag;
 import Meta.IndexPack;
 
 import std;
-import Std;
 
 using ::Meta::IndexPack;
 

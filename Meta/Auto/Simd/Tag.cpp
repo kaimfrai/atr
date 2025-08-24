@@ -2,11 +2,22 @@ export module Meta.Auto.Simd.Tag;
 
 export import Meta.Auto.Var;
 import std;
-import Std;
 
 export namespace
 	Meta::Auto
 {
+	template
+		<	typename
+				t_tElement
+		,	::std::size_t
+				t_vVectorSize
+		>
+	using
+		vec
+		[[clang::ext_vector_type(t_vVectorSize)]]
+	=	t_tElement
+	;
+
 	struct
 		SimdTag
 	{};
@@ -61,42 +72,13 @@ export namespace
 
 	template
 		<	::std::size_t
+				t_vSize
 		>
-	struct
+	using
 		SimdMask
-	{
-		__mmask8
-			m_vRaw
-		;
-	};
-
-	template
-		<>
-	struct
-		SimdMask<16uz>
-	{
-		__mmask16
-			m_vRaw
-		;
-	};
-
-	template
-		<>
-	struct
-		SimdMask<32uz>
-	{
-		__mmask32
-			m_vRaw
-		;
-	};
-
-	template
-		<>
-	struct
-		SimdMask<64uz>
-	{
-		__mmask64
-			m_vRaw
-		;
-	};
+	=	vec
+		<	bool
+		,	t_vSize
+		>
+	;
 }
