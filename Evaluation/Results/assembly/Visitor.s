@@ -1412,11 +1412,29 @@ Disassembly of section .text:
                	xor	edx, edx
                	vmovss	dword ptr [rax], xmm0
                	call	 <__cxa_throw$plt>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Head@Evaluation.CRTP.Head>(void*)>:
                	mov	rax, qword ptr [rdi]
                	lea	rdx,  <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Head@Evaluation.CRTP.Head>(void*)>
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>:
@@ -1424,11 +1442,19 @@ Disassembly of section .text:
                	mov	rax, rdi
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Cone@Evaluation.CRTP.Cone>(void*)>:
                	lea	rdx,  <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Cone@Evaluation.CRTP.Cone>(void*)>
                	mov	rax, rdi
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>(void*)>:
@@ -1436,11 +1462,19 @@ Disassembly of section .text:
                	mov	rax, rdi
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Sphere@Evaluation.CRTP.Sphere>(void*)>:
                	lea	rdx,  <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Sphere@Evaluation.CRTP.Sphere>(void*)>
                	mov	rax, rdi
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>(void*)>:
@@ -1448,11 +1482,19 @@ Disassembly of section .text:
                	mov	rax, rdi
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>(void*)>:
                	lea	rdx,  <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>(void*)>
                	mov	rax, rdi
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Cube@Evaluation.CRTP.Cube>(void*)>:
@@ -1460,11 +1502,19 @@ Disassembly of section .text:
                	mov	rax, rdi
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Triangle@Evaluation.CRTP.Triangle>(void*)>:
                	lea	rdx,  <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Triangle@Evaluation.CRTP.Triangle>(void*)>
                	mov	rax, rdi
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Square@Evaluation.CRTP.Square>(void*)>:
@@ -1472,11 +1522,19 @@ Disassembly of section .text:
                	mov	rax, rdi
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Rectangle@Evaluation.CRTP.Rectangle>(void*)>:
                	lea	rdx,  <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Rectangle@Evaluation.CRTP.Rectangle>(void*)>
                	mov	rax, rdi
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Ellipse@Evaluation.CRTP.Ellipse>(void*)>:
@@ -1484,60 +1542,164 @@ Disassembly of section .text:
                	mov	rax, rdi
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Visitor::ObjectReference@Evaluation.Dependency.Visitor.ObjectReference Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Access<Bodies3D::Circle@Evaluation.CRTP.Circle>(void*)>:
                	lea	rdx,  <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Circle@Evaluation.CRTP.Circle>(void*)>
                	mov	rax, rdi
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Circle@Evaluation.CRTP.Circle>(void*)>:
-               	lea	rax,  <memset+0xa890>
+               	lea	rax,  <memset+0xa930>
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipse@Evaluation.CRTP.Ellipse>(void*)>:
-               	lea	rax,  <memset+0xa8a8>
+               	lea	rax,  <memset+0xa948>
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Rectangle@Evaluation.CRTP.Rectangle>(void*)>:
-               	lea	rax,  <memset+0xa8c0>
+               	lea	rax,  <memset+0xa960>
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Square@Evaluation.CRTP.Square>(void*)>:
-               	lea	rax,  <memset+0xa8d8>
+               	lea	rax,  <memset+0xa978>
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Triangle@Evaluation.CRTP.Triangle>(void*)>:
-               	lea	rax,  <memset+0xa8f0>
+               	lea	rax,  <memset+0xa990>
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Cube@Evaluation.CRTP.Cube>(void*)>:
-               	lea	rax,  <memset+0xa908>
+               	lea	rax,  <memset+0xa9a8>
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>(void*)>:
-               	lea	rax,  <memset+0xa920>
+               	lea	rax,  <memset+0xa9c0>
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>(void*)>:
-               	lea	rax,  <memset+0xa938>
+               	lea	rax,  <memset+0xa9d8>
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Sphere@Evaluation.CRTP.Sphere>(void*)>:
-               	lea	rax,  <memset+0xa950>
+               	lea	rax,  <memset+0xa9f0>
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>(void*)>:
-               	lea	rax,  <memset+0xa968>
+               	lea	rax,  <memset+0xaa08>
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Cone@Evaluation.CRTP.Cone>(void*)>:
-               	lea	rax,  <memset+0xa980>
+               	lea	rax,  <memset+0xaa20>
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>(void*)>:
-               	lea	rax,  <memset+0xa998>
+               	lea	rax,  <memset+0xaa38>
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::source_location Visitor::ObjectValue@Evaluation.Dependency.Visitor.ObjectValue<40ul, (std::align_val_t)8>::Delete<Bodies3D::Head@Evaluation.CRTP.Head>(void*)>:
                	test	rdi, rdi
@@ -1547,10 +1709,8 @@ Disassembly of section .text:
                	call	 <_ZdlPvm$plt>
                	add	rsp, 0x8
 <L0>:
-               	lea	rax,  <memset+0xa9b0>
+               	lea	rax,  <memset+0xaa50>
                	ret
-               	int3
-               	int3
                	int3
                	int3
                	int3

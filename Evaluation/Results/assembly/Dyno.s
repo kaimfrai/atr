@@ -1351,6 +1351,10 @@ Disassembly of section .text:
                	call	 <__cxa_begin_catch$plt>
                	call	 <_ZSt9terminatev$plt>
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Head@Evaluation.CRTP.Head, void>::'lambda'(Bodies3D::Head@Evaluation.CRTP.Head const&), float (Bodies3D::Head@Evaluation.CRTP.Head const&)>, float (dyno::T const&), float (Bodies3D::Head@Evaluation.CRTP.Head const&)>::apply(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
@@ -1358,15 +1362,43 @@ Disassembly of section .text:
                	vmulss	xmm1, xmm1, dword ptr  <.LCPI5_0>
                	vmulss	xmm0, xmm1, xmm0
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<dyno::Destructible, Bodies3D::Head@Evaluation.CRTP.Head, void>::'lambda'(Bodies3D::Head@Evaluation.CRTP.Head&), void (Bodies3D::Head@Evaluation.CRTP.Head&)>, void (dyno::T&), void (Bodies3D::Head@Evaluation.CRTP.Head&)>::apply(void*)>:
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<dyno::Storable, Bodies3D::Head@Evaluation.CRTP.Head, void>::'lambda'(), dyno::storage_info ()>, dyno::storage_info (), dyno::storage_info ()>::apply()>:
                	mov	eax, 0x60
                	mov	edx, 0x4
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, void>::'lambda'(Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid const&), float (Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid const&)>, float (dyno::T const&), float (Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid const&)>::apply(void const*)>:
@@ -1375,11 +1407,23 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<dyno::Storable, Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, void>::'lambda'(), dyno::storage_info ()>, dyno::storage_info (), dyno::storage_info ()>::apply()>:
                	mov	eax, 0x28
                	mov	edx, 0x4
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Cone@Evaluation.CRTP.Cone, void>::'lambda'(Bodies3D::Cone@Evaluation.CRTP.Cone const&), float (Bodies3D::Cone@Evaluation.CRTP.Cone const&)>, float (dyno::T const&), float (Bodies3D::Cone@Evaluation.CRTP.Cone const&)>::apply(void const*)>:
@@ -1389,11 +1433,23 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<dyno::Storable, Bodies3D::Cone@Evaluation.CRTP.Cone, void>::'lambda'(), dyno::storage_info ()>, dyno::storage_info (), dyno::storage_info ()>::apply()>:
                	mov	eax, 0x24
                	mov	edx, 0x4
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, void>::'lambda'(Bodies3D::Cylinder@Evaluation.CRTP.Cylinder const&), float (Bodies3D::Cylinder@Evaluation.CRTP.Cylinder const&)>, float (dyno::T const&), float (Bodies3D::Cylinder@Evaluation.CRTP.Cylinder const&)>::apply(void const*)>:
@@ -1403,11 +1459,23 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<dyno::Storable, Bodies3D::Sphere@Evaluation.CRTP.Sphere, void>::'lambda'(), dyno::storage_info ()>, dyno::storage_info (), dyno::storage_info ()>::apply()>:
                	mov	eax, 0x20
                	mov	edx, 0x4
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, void>::'lambda'(Bodies3D::Pyramid@Evaluation.CRTP.Pyramid const&), float (Bodies3D::Pyramid@Evaluation.CRTP.Pyramid const&)>, float (dyno::T const&), float (Bodies3D::Pyramid@Evaluation.CRTP.Pyramid const&)>::apply(void const*)>:
@@ -1416,6 +1484,14 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, void>::'lambda'(Bodies3D::Cuboid@Evaluation.CRTP.Cuboid const&), float (Bodies3D::Cuboid@Evaluation.CRTP.Cuboid const&)>, float (dyno::T const&), float (Bodies3D::Cuboid@Evaluation.CRTP.Cuboid const&)>::apply(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x20]
@@ -1428,6 +1504,8 @@ Disassembly of section .text:
                	vmulss	xmm1, xmm0, xmm0
                	vmulss	xmm0, xmm1, xmm0
                	ret
+               	int3
+               	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Triangle@Evaluation.CRTP.Triangle, void>::'lambda'(Bodies3D::Triangle@Evaluation.CRTP.Triangle const&), float (Bodies3D::Triangle@Evaluation.CRTP.Triangle const&)>, float (dyno::T const&), float (Bodies3D::Triangle@Evaluation.CRTP.Triangle const&)>::apply(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
@@ -1435,16 +1513,38 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Square@Evaluation.CRTP.Square, void>::'lambda'(Bodies3D::Square@Evaluation.CRTP.Square const&), float (Bodies3D::Square@Evaluation.CRTP.Square const&)>, float (dyno::T const&), float (Bodies3D::Square@Evaluation.CRTP.Square const&)>::apply(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, void>::'lambda'(Bodies3D::Rectangle@Evaluation.CRTP.Rectangle const&), float (Bodies3D::Rectangle@Evaluation.CRTP.Rectangle const&)>, float (dyno::T const&), float (Bodies3D::Rectangle@Evaluation.CRTP.Rectangle const&)>::apply(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x1c]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, void>::'lambda'(Bodies3D::Ellipse@Evaluation.CRTP.Ellipse const&), float (Bodies3D::Ellipse@Evaluation.CRTP.Ellipse const&)>, float (dyno::T const&), float (Bodies3D::Ellipse@Evaluation.CRTP.Ellipse const&)>::apply(void const*)>:
@@ -1452,6 +1552,18 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr  <.LCPI38_0>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <dyno::detail::thunk<void, dyno::detail::default_constructible_lambda<dyno::default_concept_map<Bodies3D::VolumeComputer, Bodies3D::Circle@Evaluation.CRTP.Circle, void>::'lambda'(Bodies3D::Circle@Evaluation.CRTP.Circle const&), float (Bodies3D::Circle@Evaluation.CRTP.Circle const&)>, float (dyno::T const&), float (Bodies3D::Circle@Evaluation.CRTP.Circle const&)>::apply(void const*)>:

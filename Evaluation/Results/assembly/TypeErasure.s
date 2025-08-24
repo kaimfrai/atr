@@ -1360,6 +1360,10 @@ Disassembly of section .text:
                	call	 <__cxa_begin_catch$plt>
                	call	 <_ZSt9terminatev$plt>
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <boost::type_erasure::binding<boost::mpl::vector<Bodies3D::has_ComputeVolume<float () const, boost::type_erasure::_self>, boost::type_erasure::destructible<boost::type_erasure::_self>, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na, mpl_::na>>::~binding()>:
                	push	rbx
@@ -1382,6 +1386,8 @@ Disassembly of section .text:
                	ret
                	mov	rdi, rax
                	call	 <__clang_call_terminate>
+               	int3
+               	int3
 
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Head@Evaluation.CRTP.Head const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Head@Evaluation.CRTP.Head const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
@@ -1390,6 +1396,12 @@ Disassembly of section .text:
                	vmulss	xmm1, xmm1, dword ptr  <.LCPI5_0>
                	vmulss	xmm0, xmm1, xmm0
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <boost::type_erasure::destructible<Bodies3D::Head@Evaluation.CRTP.Head>::value(boost::type_erasure::detail::storage&)>:
@@ -1401,6 +1413,18 @@ Disassembly of section .text:
 <L0>:
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
@@ -1409,6 +1433,10 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x24]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <boost::type_erasure::destructible<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>::value(boost::type_erasure::detail::storage&)>:
@@ -1420,6 +1448,18 @@ Disassembly of section .text:
 <L0>:
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Cone@Evaluation.CRTP.Cone const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Cone@Evaluation.CRTP.Cone const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
@@ -1428,6 +1468,12 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr  <.LCPI7_0>
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x20]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <boost::type_erasure::destructible<Bodies3D::Cone@Evaluation.CRTP.Cone>::value(boost::type_erasure::detail::storage&)>:
                	mov	rdi, qword ptr [rdi]
@@ -1438,6 +1484,18 @@ Disassembly of section .text:
 <L0>:
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Cylinder@Evaluation.CRTP.Cylinder const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Cylinder@Evaluation.CRTP.Cylinder const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
@@ -1446,6 +1504,12 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr  <.LCPI9_0>
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x20]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <boost::type_erasure::destructible<Bodies3D::Sphere@Evaluation.CRTP.Sphere>::value(boost::type_erasure::detail::storage&)>:
                	mov	rdi, qword ptr [rdi]
@@ -1456,6 +1520,18 @@ Disassembly of section .text:
 <L0>:
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Pyramid@Evaluation.CRTP.Pyramid const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Pyramid@Evaluation.CRTP.Pyramid const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
@@ -1465,6 +1541,10 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x24]
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Cuboid@Evaluation.CRTP.Cuboid const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Cuboid@Evaluation.CRTP.Cuboid const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
@@ -1472,6 +1552,18 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x1c]
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x24]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Cube@Evaluation.CRTP.Cube const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Cube@Evaluation.CRTP.Cube const&)>::value(boost::type_erasure::detail::storage const&)>:
@@ -1481,6 +1573,20 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm1, xmm0
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Triangle@Evaluation.CRTP.Triangle const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Triangle@Evaluation.CRTP.Triangle const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
@@ -1488,6 +1594,16 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr  <.LCPI19_0>
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x20]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Square@Evaluation.CRTP.Square const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Square@Evaluation.CRTP.Square const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
@@ -1495,12 +1611,16 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, xmm0
                	ret
                	int3
+               	int3
+               	int3
 
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Rectangle@Evaluation.CRTP.Rectangle const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Rectangle@Evaluation.CRTP.Rectangle const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
                	vmovss	xmm0, dword ptr [rax + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x1c]
                	ret
+               	int3
+               	int3
 
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Ellipse@Evaluation.CRTP.Ellipse const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Ellipse@Evaluation.CRTP.Ellipse const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
@@ -1508,6 +1628,16 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr  <.LCPI9_0>
                	vmulss	xmm0, xmm0, dword ptr [rax + 0x20]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <boost::type_erasure::detail::vtable_adapter_impl<Bodies3D::has_ComputeVolume<float (), Bodies3D::Circle@Evaluation.CRTP.Circle const>, float (boost::type_erasure::detail::storage const&), float (Bodies3D::Circle@Evaluation.CRTP.Circle const&)>::value(boost::type_erasure::detail::storage const&)>:
                	mov	rax, qword ptr [rdi]
@@ -1515,8 +1645,6 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, xmm0
                	vmulss	xmm0, xmm0, dword ptr  <.LCPI9_0>
                	ret
-               	int3
-               	int3
                	int3
                	int3
                	int3

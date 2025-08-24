@@ -1460,6 +1460,10 @@ Disassembly of section .text:
                	call	 <__cxa_begin_catch$plt>
                	call	 <_ZSt9terminatev$plt>
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Circle@Evaluation.CRTP.Circle>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>:
                	push	r15
@@ -1521,6 +1525,16 @@ Disassembly of section .text:
                	pop	r14
                	pop	r15
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Ellipse@Evaluation.CRTP.Ellipse>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>:
                	push	r15
@@ -1584,6 +1598,10 @@ Disassembly of section .text:
                	pop	r14
                	pop	r15
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Rectangle@Evaluation.CRTP.Rectangle>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>:
                	push	r15
@@ -1647,6 +1665,10 @@ Disassembly of section .text:
                	pop	r14
                	pop	r15
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Square@Evaluation.CRTP.Square>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>:
                	push	r15
@@ -1708,6 +1730,16 @@ Disassembly of section .text:
                	pop	r14
                	pop	r15
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Triangle@Evaluation.CRTP.Triangle>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>:
                	push	r15
@@ -1771,6 +1803,10 @@ Disassembly of section .text:
                	pop	r14
                	pop	r15
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Cube@Evaluation.CRTP.Cube>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>:
                	push	r15
@@ -1832,6 +1868,16 @@ Disassembly of section .text:
                	pop	r14
                	pop	r15
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>:
                	push	r15
@@ -1895,6 +1941,8 @@ Disassembly of section .text:
                	pop	r14
                	pop	r15
                	ret
+               	int3
+               	int3
 
 <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>:
                	push	r15
@@ -1958,6 +2006,8 @@ Disassembly of section .text:
                	pop	r14
                	pop	r15
                	ret
+               	int3
+               	int3
 
 <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Sphere@Evaluation.CRTP.Sphere>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>:
                	push	r15
@@ -2019,6 +2069,16 @@ Disassembly of section .text:
                	pop	r14
                	pop	r15
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>:
                	push	r15
@@ -2082,6 +2142,10 @@ Disassembly of section .text:
                	pop	r14
                	pop	r15
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Cone@Evaluation.CRTP.Cone>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>:
                	push	r15
@@ -2145,6 +2209,10 @@ Disassembly of section .text:
                	pop	r14
                	pop	r15
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>:
                	push	r15
@@ -2208,6 +2276,8 @@ Disassembly of section .text:
                	pop	r14
                	pop	r15
                	ret
+               	int3
+               	int3
 
 <std::any::_Manager_external<Bodies3D::BodyAdapter<Bodies3D::Head@Evaluation.CRTP.Head>>::_S_manage(std::any::_Op, std::any const*, std::any::_Arg*)>:
                	push	r15
@@ -2271,6 +2341,14 @@ Disassembly of section .text:
                	pop	r14
                	pop	r15
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::AnyBody::AnyBody<Bodies3D::Head@Evaluation.CRTP.Head, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&, Bodies3D::Sphere@Evaluation.CRTP.Sphere, Bodies3D::Sphere@Evaluation.CRTP.Sphere>(std::in_place_type_t<Bodies3D::Head@Evaluation.CRTP.Head>, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&, Bodies3D::Sphere@Evaluation.CRTP.Sphere&&, Bodies3D::Sphere@Evaluation.CRTP.Sphere&&)::'lambda'(std::any const&)::__invoke(std::any const&)>:
                	push	rbx
@@ -2318,6 +2396,20 @@ Disassembly of section .text:
                	call	 <__clang_call_terminate>
                	mov	rdi, rax
                	call	 <__clang_call_terminate>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::AnyBody::AnyBody<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&, float const&, float const&>(std::in_place_type_t<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&, float const&, float const&)::'lambda'(std::any const&)::__invoke(std::any const&)>:
                	push	rbx
@@ -2365,6 +2457,20 @@ Disassembly of section .text:
                	call	 <__clang_call_terminate>
                	mov	rdi, rax
                	call	 <__clang_call_terminate>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::AnyBody::AnyBody<Bodies3D::Cone@Evaluation.CRTP.Cone, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&, float const&>(std::in_place_type_t<Bodies3D::Cone@Evaluation.CRTP.Cone>, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&, float const&)::'lambda'(std::any const&)::__invoke(std::any const&)>:
                	push	rbx
@@ -2412,6 +2518,20 @@ Disassembly of section .text:
                	call	 <__clang_call_terminate>
                	mov	rdi, rax
                	call	 <__clang_call_terminate>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::AnyBody::AnyBody<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&, float const&>(std::in_place_type_t<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&, float const&)::'lambda'(std::any const&)::__invoke(std::any const&)>:
                	push	rbx
@@ -2459,6 +2579,20 @@ Disassembly of section .text:
                	call	 <__clang_call_terminate>
                	mov	rdi, rax
                	call	 <__clang_call_terminate>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::AnyBody::AnyBody<Bodies3D::Sphere@Evaluation.CRTP.Sphere, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&>(std::in_place_type_t<Bodies3D::Sphere@Evaluation.CRTP.Sphere>, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&)::'lambda'(std::any const&)::__invoke(std::any const&)>:
                	push	rbx
@@ -2506,6 +2640,20 @@ Disassembly of section .text:
                	call	 <__clang_call_terminate>
                	mov	rdi, rax
                	call	 <__clang_call_terminate>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::AnyBody::AnyBody<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&, float const&, float const&>(std::in_place_type_t<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&, float const&, float const&)::'lambda'(std::any const&)::__invoke(std::any const&)>:
                	push	rbx
@@ -2553,6 +2701,20 @@ Disassembly of section .text:
                	call	 <__clang_call_terminate>
                	mov	rdi, rax
                	call	 <__clang_call_terminate>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::AnyBody::AnyBody<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&, float const&, float const&>(std::in_place_type_t<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&, float const&, float const&)::'lambda'(std::any const&)::__invoke(std::any const&)>:
                	push	rbx
@@ -2600,6 +2762,20 @@ Disassembly of section .text:
                	call	 <__clang_call_terminate>
                	mov	rdi, rax
                	call	 <__clang_call_terminate>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::AnyBody::AnyBody<Bodies3D::Cube@Evaluation.CRTP.Cube, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&>(std::in_place_type_t<Bodies3D::Cube@Evaluation.CRTP.Cube>, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&)::'lambda'(std::any const&)::__invoke(std::any const&)>:
                	push	rbx
@@ -2647,6 +2823,20 @@ Disassembly of section .text:
                	call	 <__clang_call_terminate>
                	mov	rdi, rax
                	call	 <__clang_call_terminate>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::AnyBody::AnyBody<Bodies3D::Triangle@Evaluation.CRTP.Triangle, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&, float const&>(std::in_place_type_t<Bodies3D::Triangle@Evaluation.CRTP.Triangle>, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&, float const&)::'lambda'(std::any const&)::__invoke(std::any const&)>:
                	push	rbx
@@ -2694,6 +2884,20 @@ Disassembly of section .text:
                	call	 <__clang_call_terminate>
                	mov	rdi, rax
                	call	 <__clang_call_terminate>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::AnyBody::AnyBody<Bodies3D::Square@Evaluation.CRTP.Square, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&>(std::in_place_type_t<Bodies3D::Square@Evaluation.CRTP.Square>, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&)::'lambda'(std::any const&)::__invoke(std::any const&)>:
                	push	rbx
@@ -2741,6 +2945,20 @@ Disassembly of section .text:
                	call	 <__clang_call_terminate>
                	mov	rdi, rax
                	call	 <__clang_call_terminate>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::AnyBody::AnyBody<Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&, float const&>(std::in_place_type_t<Bodies3D::Rectangle@Evaluation.CRTP.Rectangle>, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&, float const&)::'lambda'(std::any const&)::__invoke(std::any const&)>:
                	push	rbx
@@ -2788,6 +3006,20 @@ Disassembly of section .text:
                	call	 <__clang_call_terminate>
                	mov	rdi, rax
                	call	 <__clang_call_terminate>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::AnyBody::AnyBody<Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&, float const&>(std::in_place_type_t<Bodies3D::Ellipse@Evaluation.CRTP.Ellipse>, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&, float const&)::'lambda'(std::any const&)::__invoke(std::any const&)>:
                	push	rbx
@@ -2835,6 +3067,20 @@ Disassembly of section .text:
                	call	 <__clang_call_terminate>
                	mov	rdi, rax
                	call	 <__clang_call_terminate>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::AnyBody::AnyBody<Bodies3D::Circle@Evaluation.CRTP.Circle, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&>(std::in_place_type_t<Bodies3D::Circle@Evaluation.CRTP.Circle>, RGBAColor@Evaluation.Dependency.CommonData const&, Point@Evaluation.Dependency.CommonData const&, float const&)::'lambda'(std::any const&)::__invoke(std::any const&)>:
                	push	rbx
@@ -2886,6 +3132,16 @@ Disassembly of section .text:
                	int3
                	int3
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::__throw_bad_any_cast()>:
                	push	rax
@@ -2898,6 +3154,10 @@ Disassembly of section .text:
                	mov	qword ptr [rax], rcx
                	call	 <__cxa_throw$plt>
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::bad_any_cast::~bad_any_cast()>:
                	push	rbx
@@ -2908,10 +3168,26 @@ Disassembly of section .text:
                	pop	rbx
                	jmp	 <_ZdlPvm$plt>
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::bad_any_cast::what() const>:
                	lea	rax,  <.L.str>
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::BodyAdapter<Bodies3D::Head@Evaluation.CRTP.Head>::ComputeVolume() const>:
                	vmovss	xmm0, dword ptr [rdi + 0x24]
@@ -2919,14 +3195,44 @@ Disassembly of section .text:
                	vmulss	xmm1, xmm1, dword ptr  <.LCPI40_0>
                	vmulss	xmm0, xmm1, xmm0
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::IBody::~IBody()>:
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <Bodies3D::BodyAdapter<Bodies3D::Head@Evaluation.CRTP.Head>::~BodyAdapter()>:
                	mov	esi, 0x68
                	jmp	 <_ZdlPvm$plt>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::BodyAdapter<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>::ComputeVolume() const>:
                	vmovss	xmm0, dword ptr [rdi + 0x24]
@@ -2934,10 +3240,24 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x28]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x2c]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::BodyAdapter<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>::~BodyAdapter()>:
                	mov	esi, 0x30
                	jmp	 <_ZdlPvm$plt>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::BodyAdapter<Bodies3D::Cone@Evaluation.CRTP.Cone>::ComputeVolume() const>:
                	vmovss	xmm0, dword ptr [rdi + 0x24]
@@ -2945,6 +3265,14 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr  <.LCPI36_0>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x28]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <Bodies3D::BodyAdapter<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>::ComputeVolume() const>:
@@ -2954,10 +3282,24 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x28]
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::BodyAdapter<Bodies3D::Sphere@Evaluation.CRTP.Sphere>::~BodyAdapter()>:
                	mov	esi, 0x28
                	jmp	 <_ZdlPvm$plt>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::BodyAdapter<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>::ComputeVolume() const>:
                	vmovss	xmm0, dword ptr [rdi + 0x24]
@@ -2965,6 +3307,14 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x28]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x2c]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::BodyAdapter<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>::ComputeVolume() const>:
                	vmovss	xmm0, dword ptr [rdi + 0x28]
@@ -2977,6 +3327,8 @@ Disassembly of section .text:
                	vmulss	xmm1, xmm0, xmm0
                	vmulss	xmm0, xmm1, xmm0
                	ret
+               	int3
+               	int3
 
 <Bodies3D::BodyAdapter<Bodies3D::Triangle@Evaluation.CRTP.Triangle>::ComputeVolume() const>:
                	vmovss	xmm0, dword ptr [rdi + 0x24]
@@ -2984,16 +3336,38 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x28]
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::BodyAdapter<Bodies3D::Square@Evaluation.CRTP.Square>::ComputeVolume() const>:
                	vmovss	xmm0, dword ptr [rdi + 0x24]
                	vmulss	xmm0, xmm0, xmm0
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::BodyAdapter<Bodies3D::Rectangle@Evaluation.CRTP.Rectangle>::ComputeVolume() const>:
                	vmovss	xmm0, dword ptr [rdi + 0x28]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <Bodies3D::BodyAdapter<Bodies3D::Ellipse@Evaluation.CRTP.Ellipse>::ComputeVolume() const>:
@@ -3002,12 +3376,38 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x28]
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::BodyAdapter<Bodies3D::Circle@Evaluation.CRTP.Circle>::ComputeVolume() const>:
                	vmovss	xmm0, dword ptr [rdi + 0x24]
                	vmulss	xmm0, xmm0, xmm0
                	vmulss	xmm0, xmm0, dword ptr  <.LCPI56_0>
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <RandomGenerators@Evaluation.Dependency.PseudoRandomSequence<20ul>::RandomGenerators<0ul, 1ul, 2ul, 3ul, 4ul, 5ul, 6ul, 7ul, 8ul, 9ul, 10ul, 11ul, 12ul, 13ul, 14ul, 15ul, 16ul, 17ul, 18ul>(Meta::Random::Splitmix64@Meta.Random.Splitmix<2ul>, std::integer_sequence<unsigned long, 0ul, 1ul, 2ul, 3ul, 4ul, 5ul, 6ul, 7ul, 8ul, 9ul, 10ul, 11ul, 12ul, 13ul, 14ul, 15ul, 16ul, 17ul, 18ul>)>:
                	push	rbp

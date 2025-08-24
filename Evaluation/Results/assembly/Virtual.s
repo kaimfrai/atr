@@ -213,10 +213,26 @@ Disassembly of section .text:
                	endbr64
                	jmp	 <L2>
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::Cube@Evaluation.Virtual.Cube::GetDepth() const>:
                	vmovss	xmm0, dword ptr [rdi + 0x2c]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::BasicBody@Evaluation.Virtual.BasicBody::ComputeVolume() const>:
                	push	rbx
@@ -242,23 +258,73 @@ Disassembly of section .text:
                	add	rsp, 0x10
                	pop	rbx
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::ExtendedShape@Evaluation.Virtual.ExtendedShape<Shapes2D::Square@Evaluation.Virtual.Square>::~ExtendedShape()>:
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <Bodies3D::Cube@Evaluation.Virtual.Cube::~Cube()>:
                	mov	esi, 0x30
                	jmp	 <_ZdlPvm$plt>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::CubicBody@Evaluation.Virtual.CubicBody<Shapes2D::Square@Evaluation.Virtual.Square>::GetComputeSizeMultiplier() const>:
                	vmovss	xmm0, dword ptr  <.LCPI6_0>
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Shapes2D::CircularShape@Evaluation.Virtual.CircularShape::GetHeight() const>:
                	vmovss	xmm0, dword ptr [rdi + 0x24]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Shapes2D::BasicShape@Evaluation.Virtual.BasicShape::ComputeArea() const>:
                	push	rbx
@@ -280,61 +346,139 @@ Disassembly of section .text:
                	pop	rbx
                	ret
                	int3
+               	int3
+               	int3
 
 <Shapes2D::Circle@Evaluation.Virtual.Circle::~Circle()>:
                	mov	esi, 0x28
                	jmp	 <_ZdlPvm$plt>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Shapes2D::CircularShape@Evaluation.Virtual.CircularShape::GetComputeSizeMultiplier() const>:
                	vmovss	xmm0, dword ptr  <.LCPI63_0>
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Shapes2D::Ellipse@Evaluation.Virtual.Ellipse::GetWidth() const>:
                	vmovss	xmm0, dword ptr [rdi + 0x28]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::ExtendedShape@Evaluation.Virtual.ExtendedShape<Shapes2D::Ellipse@Evaluation.Virtual.Ellipse>::GetWidth() const>:
                	vmovss	xmm0, dword ptr [rdi + 0x30]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::Ellipse@Evaluation.Virtual.Ellipse::~Ellipse()>:
                	mov	esi, 0x38
                	jmp	 <_ZdlPvm$plt>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Shapes2D::TriangularShape@Evaluation.Virtual.TriangularShape::GetComputeSizeMultiplier() const>:
                	vmovss	xmm0, dword ptr  <.LCPI51_0>
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::Cuboid@Evaluation.Virtual.Cuboid::GetDepth() const>:
                	vmovss	xmm0, dword ptr [rdi + 0x38]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::Cuboid@Evaluation.Virtual.Cuboid::~Cuboid()>:
                	mov	esi, 0x40
                	jmp	 <_ZdlPvm$plt>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::PyramidicBody@Evaluation.Virtual.PyramidicBody<Shapes2D::Triangle@Evaluation.Virtual.Triangle>::GetComputeSizeMultiplier() const>:
                	vmovss	xmm0, dword ptr  <.LCPI57_0>
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <Bodies3D::SphericBody@Evaluation.Virtual.SphericBody<Shapes2D::Circle@Evaluation.Virtual.Circle>::GetComputeSizeMultiplier() const>:
                	vmovss	xmm0, dword ptr  <.LCPI69_0>
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::Cone@Evaluation.Virtual.Cone::GetComputeSizeMultiplier() const>:
                	vmovss	xmm0, dword ptr  <.LCPI66_0>
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <Bodies3D::Head@Evaluation.Virtual.Head::~Head()>:
                	mov	esi, 0x90
                	jmp	 <_ZdlPvm$plt>
-               	int3
-               	int3
                	int3
                	int3
                	int3

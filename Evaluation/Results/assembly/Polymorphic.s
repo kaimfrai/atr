@@ -1531,6 +1531,10 @@ Disassembly of section .text:
                	call	 <__cxa_begin_catch$plt>
                	call	 <_ZSt9terminatev$plt>
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::_M_release_last_use_cold()>:
                	push	rbx
@@ -1589,19 +1593,49 @@ Disassembly of section .text:
 <polymorphic::detail::holder_interface::~holder_interface()>:
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <polymorphic::detail::holder_impl<Bodies3D::Head@Evaluation.CRTP.Head>::~holder_impl()>:
                	mov	esi, 0x70
                	jmp	 <_ZdlPvm$plt>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::_Sp_counted_ptr_inplace<polymorphic::detail::holder_impl<Bodies3D::Head@Evaluation.CRTP.Head>, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::~_Sp_counted_ptr_inplace()>:
                	mov	esi, 0x80
                	jmp	 <_ZdlPvm$plt>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::_Sp_counted_ptr_inplace<polymorphic::detail::holder_impl<Bodies3D::Head@Evaluation.CRTP.Head>, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()>:
                	mov	rax, qword ptr [rdi + 0x10]
                	add	rdi, 0x10
                	jmp	qword ptr [rax + 0x8]
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <std::_Sp_counted_ptr_inplace<polymorphic::detail::holder_impl<Bodies3D::Head@Evaluation.CRTP.Head>, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_M_get_deleter(std::type_info const&)>:
@@ -1633,6 +1667,12 @@ Disassembly of section .text:
                	add	rax, 0x10
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <polymorphic::detail::trampoline<Bodies3D::Head@Evaluation.CRTP.Head, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
@@ -1640,6 +1680,16 @@ Disassembly of section .text:
                	vmulss	xmm1, xmm1, dword ptr  <.LCPI39_0>
                	vmulss	xmm0, xmm1, xmm0
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <polymorphic::detail::holder_impl<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>::clone() const>:
                	push	r14
@@ -1665,14 +1715,32 @@ Disassembly of section .text:
                	vzeroupper
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <polymorphic::detail::holder_impl<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>::~holder_impl()>:
                	mov	esi, 0x38
                	jmp	 <_ZdlPvm$plt>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::_Sp_counted_ptr_inplace<polymorphic::detail::holder_impl<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid>, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::~_Sp_counted_ptr_inplace()>:
                	mov	esi, 0x48
                	jmp	 <_ZdlPvm$plt>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <polymorphic::detail::trampoline<Bodies3D::Ellipsoid@Evaluation.CRTP.Ellipsoid, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
@@ -1680,6 +1748,14 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <polymorphic::detail::holder_impl<Bodies3D::Cone@Evaluation.CRTP.Cone>::clone() const>:
                	push	r14
@@ -1705,6 +1781,14 @@ Disassembly of section .text:
                	vzeroupper
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <polymorphic::detail::trampoline<Bodies3D::Cone@Evaluation.CRTP.Cone, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
@@ -1712,6 +1796,14 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr  <.LCPI25_0>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <polymorphic::detail::holder_impl<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder>::clone() const>:
@@ -1738,6 +1830,14 @@ Disassembly of section .text:
                	vzeroupper
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <polymorphic::detail::trampoline<Bodies3D::Cylinder@Evaluation.CRTP.Cylinder, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
@@ -1745,6 +1845,14 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr  <.LCPI95_0>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <polymorphic::detail::holder_impl<Bodies3D::Sphere@Evaluation.CRTP.Sphere>::clone() const>:
@@ -1769,14 +1877,40 @@ Disassembly of section .text:
                	vzeroupper
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <polymorphic::detail::holder_impl<Bodies3D::Sphere@Evaluation.CRTP.Sphere>::~holder_impl()>:
                	mov	esi, 0x30
                	jmp	 <_ZdlPvm$plt>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <std::_Sp_counted_ptr_inplace<polymorphic::detail::holder_impl<Bodies3D::Sphere@Evaluation.CRTP.Sphere>, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::~_Sp_counted_ptr_inplace()>:
                	mov	esi, 0x40
                	jmp	 <_ZdlPvm$plt>
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <polymorphic::detail::holder_impl<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid>::clone() const>:
                	push	r14
@@ -1802,6 +1936,12 @@ Disassembly of section .text:
                	vzeroupper
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <polymorphic::detail::trampoline<Bodies3D::Pyramid@Evaluation.CRTP.Pyramid, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
@@ -1809,6 +1949,14 @@ Disassembly of section .text:
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x24]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <polymorphic::detail::holder_impl<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid>::clone() const>:
                	push	r14
@@ -1833,6 +1981,12 @@ Disassembly of section .text:
                	pop	r14
                	vzeroupper
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <polymorphic::detail::trampoline<Bodies3D::Cuboid@Evaluation.CRTP.Cuboid, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
@@ -1863,12 +2017,28 @@ Disassembly of section .text:
                	vzeroupper
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <polymorphic::detail::trampoline<Bodies3D::Cube@Evaluation.CRTP.Cube, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm1, xmm0, xmm0
                	vmulss	xmm0, xmm1, xmm0
                	ret
+               	int3
+               	int3
 
 <polymorphic::detail::holder_impl<Bodies3D::Triangle@Evaluation.CRTP.Triangle>::clone() const>:
                	push	r14
@@ -1894,12 +2064,32 @@ Disassembly of section .text:
                	vzeroupper
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <polymorphic::detail::trampoline<Bodies3D::Triangle@Evaluation.CRTP.Triangle, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, dword ptr  <.LCPI67_0>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <polymorphic::detail::holder_impl<Bodies3D::Square@Evaluation.CRTP.Square>::clone() const>:
@@ -1924,11 +2114,31 @@ Disassembly of section .text:
                	vzeroupper
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <polymorphic::detail::trampoline<Bodies3D::Square@Evaluation.CRTP.Square, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, xmm0
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <polymorphic::detail::holder_impl<Bodies3D::Rectangle@Evaluation.CRTP.Rectangle>::clone() const>:
                	push	r14
@@ -1954,11 +2164,23 @@ Disassembly of section .text:
                	vzeroupper
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <polymorphic::detail::trampoline<Bodies3D::Rectangle@Evaluation.CRTP.Rectangle, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x20]
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x1c]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <polymorphic::detail::holder_impl<Bodies3D::Ellipse@Evaluation.CRTP.Ellipse>::clone() const>:
@@ -1985,12 +2207,32 @@ Disassembly of section .text:
                	vzeroupper
                	ret
                	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
 
 <polymorphic::detail::trampoline<Bodies3D::Ellipse@Evaluation.CRTP.Ellipse, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
                	vmovss	xmm0, dword ptr [rdi + 0x1c]
                	vmulss	xmm0, xmm0, dword ptr  <.LCPI95_0>
                	vmulss	xmm0, xmm0, dword ptr [rdi + 0x20]
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <polymorphic::detail::holder_impl<Bodies3D::Circle@Evaluation.CRTP.Circle>::clone() const>:
@@ -2014,6 +2256,20 @@ Disassembly of section .text:
                	pop	r14
                	vzeroupper
                	ret
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
+               	int3
                	int3
 
 <polymorphic::detail::trampoline<Bodies3D::Circle@Evaluation.CRTP.Circle, float (Bodies3D::ComputeVolumeTag) const>::jump(void const*)>:
