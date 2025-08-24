@@ -105,9 +105,8 @@ export namespace
 			>
 		;
 
-		float
+		vec<float, t_vSize>
 			m_vRaw
-			[[clang::ext_vector_type(t_vSize)]]
 		;
 
 		[[nodiscard]]
