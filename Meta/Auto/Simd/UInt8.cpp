@@ -153,6 +153,11 @@ export namespace
 			};
 		}
 
+
+		template
+			<	::std::size_t
+					t_vBatch
+			>
 		auto constexpr inline
 		(	StoreAligned
 		)	(	::std::uint8_t
@@ -162,20 +167,21 @@ export namespace
 		->	void
 		{
 			auto const
-				vValue
-			=	::std::bit_cast<::std::array<::std::uint8_t, t_vSize>>
-				(	m_vRaw
-				)
+			&	[	...
+					rpIndex
+				]
+			=	IndexPack
+				<	t_vSize
+				>
 			;
-			::std::copy
-			(	vValue
-				.	begin
-					()
-			,	vValue
-				.	end
-					()
-			,	::std::assume_aligned<t_vSize>
-				(	o_aData
+			(	...
+			,	(	::std::assume_aligned<t_vBatch * alignof(::std::uint8_t)>
+					(	o_aData
+					)[	rpIndex
+					]
+				=	m_vRaw
+					[	rpIndex
+					]
 				)
 			);
 		}

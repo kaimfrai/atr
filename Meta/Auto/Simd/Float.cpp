@@ -66,6 +66,10 @@ export namespace
 			};
 		}
 
+		template
+			<	::std::size_t
+					t_vBatch
+			>
 		auto constexpr inline
 		(	StoreAligned
 		)	(	float
@@ -73,12 +77,24 @@ export namespace
 			)	const
 			noexcept
 		->	void
-		{	return
-			::SimdOp::Store
-			(	::Std::AlignedPointer<void, alignof(vec<float, 8>)>
-				{	o_aData
-				}
-			,	m_vRaw
+		{
+			auto const
+			&	[	...
+					rpIndex
+				]
+			=	IndexPack
+				<	8uz
+				>
+			;
+			(	...
+			,	(	::std::assume_aligned<t_vBatch * alignof(float)>
+					(	o_aData
+					)[	rpIndex
+					]
+				=	m_vRaw
+					[	rpIndex
+					]
+				)
 			);
 		}
 	};
@@ -288,11 +304,11 @@ export namespace
 
 		template
 			<	::std::size_t
-					t_vAligned
+					t_vBatch
 			>
 		[[nodiscard]]
 		auto static constexpr inline
-		(	Load
+		(	LoadAligned
 		)	(	float const
 				*	i_aData
 			)
@@ -309,16 +325,19 @@ export namespace
 			;
 			return
 			{	.	m_vRaw
-				{	::std::assume_aligned<t_vAligned>
+				{	::std::assume_aligned<t_vBatch * alignof(float)>
 					(	i_aData
-					)
-					[	rpIndex
+					)[	rpIndex
 					]
 					...
 				}
 			};
 		}
 
+		template
+			<	::std::size_t
+					t_vBatch
+			>
 		auto constexpr inline
 		(	StoreAligned
 		)	(	float
@@ -326,12 +345,24 @@ export namespace
 			)	const
 			noexcept
 		->	void
-		{	return
-			::SimdOp::Store
-			(	::Std::AlignedPointer<void, alignof(vec<float, 8>)>
-				{	o_aData
-				}
-			,	m_vRaw
+		{
+			auto const
+			&	[	...
+					rpIndex
+				]
+			=	IndexPack
+				<	8uz
+				>
+			;
+			(	...
+			,	(	::std::assume_aligned<t_vBatch * alignof(float)>
+					(	o_aData
+					)[	rpIndex
+					]
+				=	m_vRaw
+					[	rpIndex
+					]
+				)
 			);
 		}
 	};
@@ -368,7 +399,7 @@ export namespace
 			noexcept
 		{	return
 			value_type
-			::	Load<alignof(value_type)>
+			::	LoadAligned<8uz>
 				(	m_aData
 				)
 			;
@@ -383,7 +414,8 @@ export namespace
 		->	Var const&
 		{
 			i_vValue
-			.	StoreAligned
+			.	template
+				StoreAligned<8uz>
 				(	m_aData
 				)
 			;
@@ -473,7 +505,7 @@ export namespace
 			noexcept
 		{	return
 			value_type
-			::	Load<alignof(value_type)>
+			::	LoadAligned<8uz>
 				(	m_aData
 				)
 			;
@@ -794,11 +826,11 @@ export namespace
 
 		template
 			<	::std::size_t
-					t_vAlign
+					t_vBatch
 			>
 		[[nodiscard]]
 		auto static constexpr inline
-		(	Load
+		(	LoadAligned
 		)	(	float const
 				*	i_aData
 			)
@@ -816,7 +848,7 @@ export namespace
 
 			return
 			{	.	m_vRaw
-				{	::std::assume_aligned<t_vAlign>
+				{	::std::assume_aligned<t_vBatch * alignof(float)>
 					(	i_aData
 					)
 					[	rpIndex
@@ -826,6 +858,10 @@ export namespace
 			};
 		}
 
+		template
+			<	::std::size_t
+					t_vBatch
+			>
 		auto constexpr inline
 		(	StoreAligned
 		)	(	float
@@ -834,11 +870,23 @@ export namespace
 			noexcept
 		->	void
 		{
-			::SimdOp::Store
-			(	::Std::AlignedPointer<void, alignof(vec<float, 16>)>
-				{	o_aData
-				}
-			,	m_vRaw
+			auto const
+			&	[	...
+					rpIndex
+				]
+			=	IndexPack
+				<	16uz
+				>
+			;
+			(	...
+			,	(	::std::assume_aligned<t_vBatch * alignof(float)>
+					(	o_aData
+					)[	rpIndex
+					]
+				=	m_vRaw
+					[	rpIndex
+					]
+				)
 			);
 		}
 	};
@@ -874,7 +922,7 @@ export namespace
 			noexcept
 		{	return
 			value_type
-			::	Load<alignof(value_type)>
+			::	LoadAligned<16uz>
 				(	m_aData
 				)
 			;
@@ -889,7 +937,8 @@ export namespace
 		->	Var const&
 		{
 			i_vValue
-			.	StoreAligned
+			.	template
+				StoreAligned<16uz>
 				(	m_aData
 				)
 			;
@@ -979,7 +1028,7 @@ export namespace
 			noexcept
 		{	return
 			value_type
-			::	Load<alignof(value_type)>
+			::	LoadAligned<16uz>
 				(	m_aData
 				)
 			;

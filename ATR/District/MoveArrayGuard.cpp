@@ -265,7 +265,8 @@ export namespace
 				)
 			{
 				rElement
-				.	StoreAligned
+				.	template
+					StoreAligned<t_vBatch>
 					(	::std::launder
 						(	::std::bit_cast<t_tElement*>
 							(	aData
