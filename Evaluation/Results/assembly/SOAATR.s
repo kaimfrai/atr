@@ -705,21 +705,19 @@ Disassembly of section .text:
                	shl	rsi, 0x6
                	sub	r8d, edi
                	vpsllvd	zmm2, zmm5, zmm1
-               	vpsllvd	zmm3, zmm6, zmm1
                	vpermd	zmm0, zmm1, zmm4
+               	vpsllvd	zmm3, zmm6, zmm1
                	vpsllvd	zmm9, zmm7, zmm1
                	vpsllvd	zmm1, zmm8, zmm1
                	vpmovd2m	k1, zmm2
                	vmovaps	zmm2 {k1} {z}, zmmword ptr [r13 + rsi]
                	vpmovd2m	k1, zmm3
-               	vmovaps	zmm3 {k1} {z}, zmmword ptr [r10 + rsi]
-               	vmulps	zmm0, zmm0, zmm2
-               	vblendmps	zmm3 {k1}, zmm2, zmm3
+               	vblendmps	zmm3 {k1}, zmm2, zmmword ptr [r10 + rsi]
+               	vmulps	zmm0, zmm2, zmm0
                	vpmovd2m	k1, zmm9
-               	vmulps	zmm0, zmm3, zmm0
-               	vmovaps	zmm3 {k1} {z}, zmmword ptr [rbx + rsi]
-               	vmovaps	zmm2 {k1}, zmm3
+               	vblendmps	zmm2 {k1}, zmm2, zmmword ptr [rbx + rsi]
                	vpmovd2m	k1, zmm1
+               	vmulps	zmm0, zmm3, zmm0
                	vmulps	zmm0 {k1}, zmm0, zmm2
                	jl	 <L6>
                	lea	r9d, [r8 + 0x1]

@@ -9,13 +9,6 @@ import Std;
 
 using ::Meta::IndexPack;
 
-using
-	SimdOp
-=	::Std::SimdOp
-	<	float
-	>
-;
-
 export namespace
 	Meta::Auto
 {
@@ -53,13 +46,12 @@ export namespace
 		->	Var
 		{	return
 			{	.	m_vRaw
-				=	::SimdOp::MaskedLoad
-					(	i_vMask
-						.	m_vRaw
-					,	::Std::AlignedPointer<void const, t_vBatch * alignof(float)>
-						{	i_aData
-						}
+				{	::std::bit_cast<vec<bool, 8>>(i_vMask)
+				?	*::std::bit_cast<vec<float, 8> const*>
+					(	i_aData
 					)
+				:	vec<float, 8>{}
+				}
 			,	.	m_vMask
 				=	i_vMask
 					.	m_vRaw
@@ -620,13 +612,12 @@ export namespace
 		->	Var
 		{	return
 			{	.	m_vRaw
-				=	::SimdOp::MaskedLoad
-					(	i_vMask
-						.	m_vRaw
-					,	::Std::AlignedPointer<void const, t_vBatch * alignof(float)>
-						{	i_aData
-						}
+				{	::std::bit_cast<vec<bool, 16>>(i_vMask)
+				?	*::std::bit_cast<vec<float, 16> const*>
+					(	i_aData
 					)
+				:	vec<float, 16>{}
+				}
 			,	.	m_vMask
 				=	i_vMask
 					.	m_vRaw

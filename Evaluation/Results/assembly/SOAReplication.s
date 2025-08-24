@@ -610,12 +610,12 @@ Disassembly of section .text:
                	xor	esi, esi
                	vzeroupper
                	call	 <memset$plt>
-               	vmovdqa64	zmm7, zmmword ptr  <memset+0x780>
-               	vpbroadcastd	zmm8, dword ptr  <.LCPI0_4>
-               	vmovapd	zmm9, zmmword ptr  <memset+0x7c0>
-               	vmovapd	zmm10, zmmword ptr  <memset+0x800>
-               	vpbroadcastd	zmm11, dword ptr  <.LCPI0_7>
-               	vpbroadcastd	zmm12, dword ptr  <.LCPI0_8>
+               	vmovdqa64	zmm6, zmmword ptr  <memset+0x780>
+               	vpbroadcastd	zmm7, dword ptr  <.LCPI0_4>
+               	vmovapd	zmm8, zmmword ptr  <memset+0x7c0>
+               	vmovapd	zmm9, zmmword ptr  <memset+0x800>
+               	vpbroadcastd	zmm10, dword ptr  <.LCPI0_7>
+               	vpbroadcastd	zmm11, dword ptr  <.LCPI0_8>
                	mov	r14, r12
                	nop	dword ptr [rax + rax]
 <L7>:
@@ -690,39 +690,37 @@ Disassembly of section .text:
 <L11>:
                	mov	edi, ecx
                	mov	rcx, rsi
-               	shr	rsi, 0x1e
                	shr	rcx, 0x20
+               	shr	rsi, 0x1e
                	mov	ebx, edi
                	sub	ebx, r15d
-               	vmovsd	xmm3, qword ptr [r9 + rsi]
-               	vmovsd	xmm5, qword ptr [r9 + rsi + 0x10]
-               	vmovsd	xmm4, qword ptr [r9 + rsi + 0x8]
-               	vmovsd	xmm6, qword ptr [r9 + rsi + 0x20]
                	vpmovzxbd	zmm0, xmmword ptr [r8 + rcx]
-               	vinsertf128	ymm3, ymm3, xmm5, 0x1
-               	vbroadcastsd	ymm5, qword ptr [r9 + rsi + 0x18]
-               	vunpcklpd	ymm3, ymm3, ymm4 # ymm3 = ymm3[0],ymm4[0],ymm3[2],ymm4[2]
-               	vmovsd	xmm4, qword ptr [r9 + rsi + 0x28]
-               	vpsllvd	zmm2, zmm8, zmm0
-               	vpermd	zmm1, zmm0, zmm7
+               	vmovsd	xmm4, qword ptr [r9 + rsi + 0x10]
+               	vmovsd	xmm3, qword ptr [r9 + rsi + 0x8]
+               	vmovsd	xmm5, qword ptr [r9 + rsi + 0x20]
+               	vpsllvd	zmm2, zmm7, zmm0
+               	vpermd	zmm1, zmm0, zmm6
                	vpmovd2m	k1, zmm2
-               	vmovaps	zmm2 {k1} {z}, zmmword ptr [r14 + rsi]
-               	vblendpd	ymm3, ymm3, ymm5, 0x8   # ymm3 = ymm3[0,1,2],ymm5[3]
-               	vmovsd	xmm5, qword ptr [r9 + rsi + 0x30]
-               	vinsertf32x4	zmm3, zmm3, xmm6, 0x2
-               	vpermt2pd	zmm3, zmm9, zmm4
-               	vmovsd	xmm4, qword ptr [r9 + rsi + 0x38]
-               	vinsertf32x4	zmm3, zmm3, xmm5, 0x3
-               	vpermt2pd	zmm3, zmm10, zmm4
-               	vpsllvd	zmm4, zmm11, zmm0
-               	vpsllvd	zmm0, zmm12, zmm0
-               	vblendmps	zmm2 {k1}, zmm3, zmm2
-               	vpmovd2m	k1, zmm4
-               	vmulps	zmm1, zmm3, zmm1
-               	vmovaps	zmm4 {k1} {z}, zmmword ptr [r10 + rsi]
-               	vmulps	zmm1, zmm1, zmm2
-               	vmovaps	zmm3 {k1}, zmm4
+               	vmovsd	xmm2, qword ptr [r9 + rsi]
+               	vinsertf128	ymm2, ymm2, xmm4, 0x1
+               	vbroadcastsd	ymm4, qword ptr [r9 + rsi + 0x18]
+               	vunpcklpd	ymm2, ymm2, ymm3 # ymm2 = ymm2[0],ymm3[0],ymm2[2],ymm3[2]
+               	vmovsd	xmm3, qword ptr [r9 + rsi + 0x28]
+               	vblendpd	ymm2, ymm2, ymm4, 0x8   # ymm2 = ymm2[0,1,2],ymm4[3]
+               	vmovsd	xmm4, qword ptr [r9 + rsi + 0x30]
+               	vinsertf32x4	zmm2, zmm2, xmm5, 0x2
+               	vpermt2pd	zmm2, zmm8, zmm3
+               	vmovsd	xmm3, qword ptr [r9 + rsi + 0x38]
+               	vinsertf32x4	zmm2, zmm2, xmm4, 0x3
+               	vpermt2pd	zmm2, zmm9, zmm3
+               	vpsllvd	zmm3, zmm10, zmm0
+               	vpsllvd	zmm0, zmm11, zmm0
+               	vblendmps	zmm4 {k1}, zmm2, zmmword ptr [r14 + rsi]
+               	vpmovd2m	k1, zmm3
+               	vblendmps	zmm3 {k1}, zmm2, zmmword ptr [r10 + rsi]
+               	vmulps	zmm1, zmm2, zmm1
                	vpmovd2m	k1, zmm0
+               	vmulps	zmm1, zmm1, zmm4
                	vmulps	zmm0, zmm1, zmm3
                	vmovaps	zmm0 {k1}, zmm1
                	jl	 <L10>
@@ -744,7 +742,7 @@ Disassembly of section .text:
                	xor	r13d, r13d
                	and	r15d, 0x7
                	shl	r15d, 0x6
-               	nop	dword ptr [rax + rax]
+               	nop	dword ptr [rax]
 <L12>:
                	vaddps	zmm0, zmm0, zmmword ptr [rdx + r13]
                	add	r13, 0x40
