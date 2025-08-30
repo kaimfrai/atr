@@ -5,6 +5,7 @@ mkdir -p Evaluation/Results/assembly/
 function assemble()
 {
 	echo $1
+	assembly_file=Evaluation/Results/assembly/$1.s
 	llvm-objdump\
 		--demangle\
 		--disassemble\
@@ -15,7 +16,23 @@ function assemble()
 		--disassemble-zeroes\
 		--disassembler-options=intel\
 		build/Evaluation/Speed/bin/$1\
-		> Evaluation/Results/assembly/$1.s
+		> $assembly_file
+
+	# remove padding instructions
+	sed -i '/[ \t]*int3/d' $assembly_file
+
+	# trim multiple spaces
+	sed -i 's/  \+/ /g' $assembly_file
+	# shorten leading whitespace to a tab
+	sed -i 's/ \t/\t/g' $assembly_file
+	# line break and tab between instruction and arguments
+	sed -i 's/\t\([a-zA-Z0-9]\+\)\t/\t\1\n\t\t/g' $assembly_file
+	# trim tab space to tab
+	sed -i 's/\t /\t/g' $assembly_file
+	# trim space before comma
+	sed -i 's/ ,/,/g' $assembly_file
+	# trim module names from symbols
+	sed -i 's/@[a-zA-Z0-9_.]\+\([< >{,)][^:]\)/\1/g' $assembly_file
 }
 
 if	[ $# -lt 1 ] \
