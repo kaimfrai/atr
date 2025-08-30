@@ -136,11 +136,18 @@ export namespace
 				<	t_vSize
 				>
 			;
+			auto const
+				aAlignedData
+			=	::std::assume_aligned
+				<	t_vBatch
+				*	alignof(unsigned char)
+				>(	i_aData
+				)
+			;
 			return
 			{	.	m_vRaw
-				{	::std::assume_aligned<t_vBatch * alignof(unsigned char)>
-					(	i_aData
-					)[	rpIndex
+				{	aAlignedData
+					[	rpIndex
 					]
 					...
 				}
@@ -167,10 +174,17 @@ export namespace
 				<	t_vSize
 				>
 			;
+			auto const
+				aAlignedData
+			=	::std::assume_aligned
+				<	t_vBatch
+				*	alignof(unsigned char)
+				>(	o_aData
+				)
+			;
 			(	...
-			,	(	::std::assume_aligned<t_vBatch * alignof(unsigned char)>
-					(	o_aData
-					)[	rpIndex
+			,	(	aAlignedData
+					[	rpIndex
 					]
 				=	m_vRaw
 					[	rpIndex

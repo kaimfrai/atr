@@ -46,30 +46,6 @@ export namespace
 			)
 			noexcept
 		->	Var
-		{	return
-			{	.	m_vRaw
-				{	i_vMask
-				?	*::std::bit_cast<vec<float, t_vSize> const*>
-					(	i_aData
-					)
-				:	vec<float, t_vSize>{}
-				}
-			,	.	m_vMask
-				=	i_vMask
-			};
-		}
-
-		template
-			<	USize
-					t_vBatch
-			>
-		auto constexpr inline
-		(	StoreAligned
-		)	(	float
-				*	o_aData
-			)	const
-			noexcept
-		->	void
 		{
 			auto const
 			&	[	...
@@ -79,16 +55,28 @@ export namespace
 				<	t_vSize
 				>
 			;
-			(	...
-			,	(	::std::assume_aligned<t_vBatch * alignof(float)>
-					(	o_aData
-					)[	rpIndex
-					]
-				=	m_vRaw
-					[	rpIndex
-					]
+			auto const
+				aAlignedData
+			=	::std::assume_aligned
+				<	t_vBatch
+				*	alignof(float)
+				>(	i_aData
 				)
-			);
+			;
+			return
+			{	.	m_vRaw
+				{	i_vMask
+				?	vec<float, t_vSize>
+					{	aAlignedData
+						[	rpIndex
+						]
+						...
+					}
+				:	vec<float, t_vSize>{}
+				}
+			,	.	m_vMask
+				=	i_vMask
+			};
 		}
 	};
 
@@ -279,11 +267,18 @@ export namespace
 				<	t_vSize
 				>
 			;
+			auto const
+				aAlignedData
+			=	::std::assume_aligned
+				<	t_vBatch
+				*	alignof(float)
+				>(	i_aData
+				)
+			;
 			return
 			{	.	m_vRaw
-				{	::std::assume_aligned<t_vBatch * alignof(float)>
-					(	i_aData
-					)[	rpIndex
+				{	aAlignedData
+					[	rpIndex
 					]
 					...
 				}
@@ -310,10 +305,17 @@ export namespace
 				<	t_vSize
 				>
 			;
+			auto const
+				aAlignedData
+			=	::std::assume_aligned
+				<	t_vBatch
+				*	alignof(float)
+				>(	o_aData
+				)
+			;
 			(	...
-			,	(	::std::assume_aligned<t_vBatch * alignof(float)>
-					(	o_aData
-					)[	rpIndex
+			,	(	aAlignedData
+					[	rpIndex
 					]
 				=	m_vRaw
 					[	rpIndex

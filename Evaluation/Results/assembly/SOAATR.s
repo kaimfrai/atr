@@ -332,48 +332,44 @@ Disassembly of section .text:
 		<L13>
 	vmovaps
 		xmm0, xmmword ptr [rsp + 0x280]
-	vmovaps
-		xmm4, xmmword ptr [rsp + 0x390]
 	vmovdqa64
 		xmm30, xmmword ptr [rsp + 0x290]
 	vmovdqa
-		xmm10, xmmword ptr [rsp + 0x2a0]
-	vmovdqa64
-		xmm17, xmmword ptr [rsp + 0x2b0]
+		xmm6, xmmword ptr [rsp + 0x2a0]
 	vmovdqa
-		xmm6, xmmword ptr [rsp + 0x2d0]
+		xmm13, xmmword ptr [rsp + 0x2b0]
+	vmovdqa
+		xmm2, xmmword ptr [rsp + 0x2d0]
 	vmovdqa
 		xmm3, xmmword ptr [rsp + 0x310]
 	vmovdqa
 		xmm5, xmmword ptr [rsp + 0x350]
+	vmovdqa64
+		xmm18, xmmword ptr [rsp + 0x390]
+	vmovdqa64
+		xmm22, xmmword ptr [rsp + 0x2e0]
+	vmovdqa64
+		xmm20, xmmword ptr [rsp + 0x2f0]
+	vmovdqa64
+		xmm26, xmmword ptr [rsp + 0x320]
+	vmovdqa64
+		xmm17, xmmword ptr [rsp + 0x330]
+	vmovdqa64
+		xmm16, xmmword ptr [rsp + 0x370]
 	vmovdqa
-		xmm2, xmmword ptr [rsp + 0x2e0]
-	vmovdqa64
-		xmm22, xmmword ptr [rsp + 0x2f0]
+		xmm15, xmmword ptr [rsp + 0x3b0]
 	vmovdqa
-		xmm9, xmmword ptr [rsp + 0x320]
-	vmovdqa64
-		xmm21, xmmword ptr [rsp + 0x330]
-	vmovdqa64
-		xmm20, xmmword ptr [rsp + 0x370]
+		xmm7, xmmword ptr [rsp + 0x3f0]
 	vmovdqa
-		xmm7, xmmword ptr [rsp + 0x3a0]
-	vmovdqa64
-		xmm19, xmmword ptr [rsp + 0x3b0]
-	vmovdqa
-		xmm8, xmmword ptr [rsp + 0x3e0]
-	vmovdqa64
-		xmm16, xmmword ptr [rsp + 0x3f0]
+		xmm4, xmmword ptr [rsp + 0x430]
 	vmovdqa
 		xmm11, xmmword ptr [rsp + 0x460]
-	vmovdqa64
-		xmm18, xmmword ptr [rsp + 0x470]
-	vmovdqa64
-		xmm25, xmmword ptr [rsp + 0x4a0]
 	vmovdqa
-		xmm15, xmmword ptr [rsp + 0x4b0]
+		xmm10, xmmword ptr [rsp + 0x470]
 	vmovdqa
-		xmm13, xmmword ptr [rsp + 0x4f0]
+		xmm9, xmmword ptr [rsp + 0x4b0]
+	vmovdqa
+		xmm8, xmmword ptr [rsp + 0x4f0]
 	vmovdqa
 		xmm12, xmmword ptr [rsp + 0x500]
 	vmovdqa
@@ -387,724 +383,646 @@ Disassembly of section .text:
 	vmovaps
 		xmmword ptr [rsp + 0x80], xmm0
 	vmovaps
+		xmm0, xmmword ptr [rsp + 0x3d0]
+	vmovaps
+		xmmword ptr [rsp + 0x1c0], xmm0
+	vmovaps
 		xmm0, xmmword ptr [rsp + 0x410]
 	vmovaps
-		xmmword ptr [rsp + 0x40], xmm4
-	vmovaps
-		xmm4, xmmword ptr [rsp + 0x3d0]
-	vmovaps
-		xmmword ptr [rsp + 0x180], xmm0
+		xmmword ptr [rsp + 0x1b0], xmm0
 	vmovaps
 		xmm0, xmmword ptr [rsp + 0x450]
 	vmovaps
-		xmmword ptr [rsp + 0x1a0], xmm4
-	vmovaps
-		xmm4, xmmword ptr [rsp + 0x2c0]
-	vmovaps
-		xmmword ptr [rsp + 0x170], xmm0
+		xmmword ptr [rsp + 0x190], xmm0
 	vmovaps
 		xmm0, xmmword ptr [rsp + 0x490]
 	vmovaps
-		xmmword ptr [rsp + 0x30], xmm4
-	vmovaps
-		xmm4, xmmword ptr [rsp + 0x300]
-	vmovaps
-		xmmword ptr [rsp + 0x140], xmm0
+		xmmword ptr [rsp + 0x150], xmm0
 	vmovaps
 		xmm0, xmmword ptr [rsp + 0x4d0]
 	vmovaps
-		xmmword ptr [rsp + 0x70], xmm4
-	vmovaps
-		xmm4, xmmword ptr [rsp + 0x340]
-	vmovaps
-		xmmword ptr [rsp + 0x120], xmm0
+		xmmword ptr [rsp + 0x130], xmm0
 	vmovaps
 		xmm0, xmmword ptr [rsp + 0x510]
 	vmovaps
-		xmmword ptr [rsp + 0x60], xmm4
+		xmmword ptr [rsp + 0x120], xmm0
 	vmovaps
-		xmm4, xmmword ptr [rsp + 0x380]
+		xmm0, xmmword ptr [rsp + 0x2c0]
 	vmovaps
-		xmmword ptr [rsp + 0x110], xmm0
+		xmmword ptr [rsp + 0x30], xmm0
+	vmovaps
+		xmm0, xmmword ptr [rsp + 0x300]
+	vmovaps
+		xmmword ptr [rsp + 0x70], xmm0
+	vmovaps
+		xmm0, xmmword ptr [rsp + 0x340]
+	vmovaps
+		xmmword ptr [rsp + 0x60], xmm0
 	vmovaps
 		xmm0, xmmword ptr [rsp + 0x360]
 	vmovaps
-		xmmword ptr [rsp + 0x50], xmm4
+		xmmword ptr [rsp + 0x110], xmm0
 	vmovaps
-		xmm4, xmmword ptr [rsp + 0x3c0]
+		xmm0, xmmword ptr [rsp + 0x380]
 	vmovaps
-		xmmword ptr [rsp + 0x100], xmm0
+		xmmword ptr [rsp + 0x50], xmm0
 	vmovaps
-		xmm0, xmmword ptr [rsp + 0x420]
-	vmovaps
-		xmmword ptr [rsp + 0x1b0], xmm4
-	vmovaps
-		xmm4, xmmword ptr [rsp + 0x400]
-	vmovaps
-		xmmword ptr [rsp + 0x160], xmm0
-	vmovaps
-		xmm0, xmmword ptr [rsp + 0x440]
-	vmovaps
-		xmmword ptr [rsp + 0x190], xmm4
-	vmovdqa
-		xmm4, xmmword ptr [rsp + 0x430]
-	vmovaps
-		xmmword ptr [rsp + 0x150], xmm0
-	vmovaps
-		xmm0, xmmword ptr [rsp + 0x480]
-	vmovaps
-		xmmword ptr [rsp + 0x130], xmm0
-	vmovaps
-		xmm0, xmmword ptr [rsp + 0x4c0]
+		xmm0, xmmword ptr [rsp + 0x3a0]
 	vmovaps
 		xmmword ptr [rsp + 0xf0], xmm0
 	vmovaps
-		xmm0, xmmword ptr [rsp + 0x4e0]
+		xmm0, xmmword ptr [rsp + 0x3c0]
+	vmovaps
+		xmmword ptr [rsp + 0x40], xmm0
+	vmovaps
+		xmm0, xmmword ptr [rsp + 0x3e0]
+	vmovaps
+		xmmword ptr [rsp + 0x180], xmm0
+	vmovaps
+		xmm0, xmmword ptr [rsp + 0x400]
+	vmovaps
+		xmmword ptr [rsp + 0x1a0], xmm0
+	vmovaps
+		xmm0, xmmword ptr [rsp + 0x420]
+	vmovaps
+		xmmword ptr [rsp + 0x170], xmm0
+	vmovaps
+		xmm0, xmmword ptr [rsp + 0x440]
+	vmovaps
+		xmmword ptr [rsp + 0x160], xmm0
+	vmovaps
+		xmm0, xmmword ptr [rsp + 0x480]
+	vmovaps
+		xmmword ptr [rsp + 0x140], xmm0
+	vmovaps
+		xmm0, xmmword ptr [rsp + 0x4a0]
 	vmovaps
 		xmmword ptr [rsp + 0xe0], xmm0
+	vmovaps
+		xmm0, xmmword ptr [rsp + 0x4c0]
+	vmovaps
+		xmmword ptr [rsp + 0x100], xmm0
+	vmovaps
+		xmm0, xmmword ptr [rsp + 0x4e0]
+	vmovaps
+		xmmword ptr [rsp + 0xd0], xmm0
 	vmovdqa
 		xmm0, xmmword ptr [rsp + 0x530]
 	nop
 		word ptr cs:[rax + rax]
 <L4>:
-	vmovdqa64
-		xmmword ptr [rsp + 0x240], xmm18
-	vmovdqa64
-		xmm18, xmm17
-	vpsllq
-		xmm17, xmm30, 0x2
-	vmovdqa64
-		xmmword ptr [rsp + 0x210], xmm19
-	vmovdqa64
-		xmm26, xmm21
-	vmovdqa64
-		xmm28, xmm4
 	vmovdqa
-		xmm4, xmmword ptr [rsp + 0x40]
+		xmmword ptr [rsp + 0x260], xmm0
+	vpsllq
+		xmm0, xmm30, 0x2
+	vmovdqa
+		xmmword ptr [rsp + 0x250], xmm4
 	vmovdqa
 		xmmword ptr [rsp + 0x220], xmm15
+	vmovdqa64
+		xmm25, xmm17
 	vmovdqa
-		xmm15, xmmword ptr [rsp + 0x1a0]
+		xmm14, xmmword ptr [rsp + 0x1c0]
 	vmovdqa
-		xmmword ptr [rsp + 0x230], xmm0
+		xmmword ptr [rsp + 0x230], xmm9
+	vmovdqa64
+		xmm27, xmmword ptr [rsp + 0x1b0]
 	vmovdqa
-		xmm0, xmmword ptr [rsp + 0x180]
+		xmmword ptr [rsp + 0x240], xmm8
+	vmovdqa64
+		xmm29, xmmword ptr [rsp + 0x190]
 	vmovdqa
-		xmm14, xmmword ptr [rsp + 0x170]
+		xmmword ptr [rsp + 0x210], xmm10
+	vmovdqa64
+		xmm31, xmmword ptr [rsp + 0x150]
+	vmovdqa
+		xmmword ptr [rsp + 0x270], xmm12
+	vmovdqa
+		xmm12, xmmword ptr [rsp + 0x130]
+	vmovdqa
+		xmmword ptr [rsp + 0x200], xmm1
+	vmovdqa
+		xmm1, xmmword ptr [rsp + 0x120]
+	vmovdqa64
+		xmm28, xmm20
+	vmovdqa64
+		xmm20, xmm13
 	mov
 		rdi, r14
 	shr
 		rdi, 0x20
 	mov
 		esi, r14d
-	vmovdqa
-		xmmword ptr [rsp + 0x200], xmm13
-	vmovdqa
-		xmm13, xmmword ptr [rsp + 0x140]
-	vmovdqa
-		xmmword ptr [rsp + 0x250], xmm12
-	vmovdqa
-		xmm12, xmmword ptr [rsp + 0x120]
-	vmovdqa
-		xmmword ptr [rsp + 0x1f0], xmm1
-	vmovdqa
-		xmm1, xmmword ptr [rsp + 0x110]
 	and
 		r14, rcx
 	vpaddq
-		xmm17, xmm17, xmm30
+		xmm0, xmm0, xmm30
 	lea
 		r8, [r12 + 4*rdi]
 	add
 		r14, rax
 	vprolq
-		xmm17, xmm17, 0x7
+		xmm0, xmm0, 0x7
 	or
 		r14, rsi
 	add
 		rdx, -0x10
 	vpsllq
+		xmm4, xmm0, 0x3
+	vpaddq
+		xmm4, xmm4, xmm0
+	vpsllq
+		xmm0, xmm2, 0x2
+	vpaddq
+		xmm0, xmm0, xmm2
+	vprolq
+		xmm0, xmm0, 0x7
+	vpsllq
+		xmm15, xmm0, 0x3
+	vpaddq
+		xmm0, xmm15, xmm0
+	vpsllq
+		xmm15, xmm3, 0x2
+	vpaddq
+		xmm15, xmm15, xmm3
+	vpmovzxbd
+		zmm0, xmm0 # zmm0 = xmm0[0],zero,zero,zero,xmm0[1],zero,zero,zero,xmm0[2],zero,zero,zero,xmm0[3],zero,zero,zero,xmm0[4],zero,zero,zero,xmm0[5],zero,zero,zero,xmm0[6],zero,zero,zero,xmm0[7],zero,zero,zero,xmm0[8],zero,zero,zero,xmm0[9],zero,zero,zero,xmm0[10],zero,zero,zero,xmm0[11],zero,zero,zero,xmm0[12],zero,zero,zero,xmm0[13],zero,zero,zero,xmm0[14],zero,zero,zero,xmm0[15],zero,zero,zero
+	vprolq
+		xmm15, xmm15, 0x7
+	vpsllq
+		xmm17, xmm15, 0x3
+	vpaddq
+		xmm15, xmm17, xmm15
+	vpsllq
+		xmm17, xmm5, 0x2
+	vcvtdq2ps
+		zmm0, zmm0
+	vpaddq
+		xmm17, xmm17, xmm5
+	vprolq
+		xmm17, xmm17, 0x7
+	vmovaps
+		ymmword ptr [r12 + 4*rdi], ymm0
+	vextractf32x4
+		xmmword ptr [r12 + 4*rdi + 0x20], zmm0, 0x2
+	vextractf32x4
+		xmmword ptr [r12 + 4*rdi + 0x30], zmm0, 0x3
+	vpmovzxbd
+		zmm0, xmm15 # zmm0 = xmm15[0],zero,zero,zero,xmm15[1],zero,zero,zero,xmm15[2],zero,zero,zero,xmm15[3],zero,zero,zero,xmm15[4],zero,zero,zero,xmm15[5],zero,zero,zero,xmm15[6],zero,zero,zero,xmm15[7],zero,zero,zero,xmm15[8],zero,zero,zero,xmm15[9],zero,zero,zero,xmm15[10],zero,zero,zero,xmm15[11],zero,zero,zero,xmm15[12],zero,zero,zero,xmm15[13],zero,zero,zero,xmm15[14],zero,zero,zero,xmm15[15],zero,zero,zero
+	vpsllq
+		xmm19, xmm17, 0x3
+	vpaddq
+		xmm9, xmm19, xmm17
+	vpsllq
+		xmm17, xmm18, 0x2
+	vpaddq
+		xmm17, xmm17, xmm18
+	vprolq
+		xmm17, xmm17, 0x7
+	vcvtdq2ps
+		zmm0, zmm0
+	vpsllq
+		xmm19, xmm17, 0x3
+	vpaddq
+		xmm8, xmm19, xmm17
+	vpsllq
+		xmm17, xmm14, 0x2
+	vmovaps
+		ymmword ptr [r8 + 4*rsi], ymm0
+	vextractf32x4
+		xmmword ptr [r8 + 4*rsi + 0x20], zmm0, 0x2
+	vextractf32x4
+		xmmword ptr [r8 + 4*rsi + 0x30], zmm0, 0x3
+	vpmovzxbd
+		zmm0, xmm9 # zmm0 = xmm9[0],zero,zero,zero,xmm9[1],zero,zero,zero,xmm9[2],zero,zero,zero,xmm9[3],zero,zero,zero,xmm9[4],zero,zero,zero,xmm9[5],zero,zero,zero,xmm9[6],zero,zero,zero,xmm9[7],zero,zero,zero,xmm9[8],zero,zero,zero,xmm9[9],zero,zero,zero,xmm9[10],zero,zero,zero,xmm9[11],zero,zero,zero,xmm9[12],zero,zero,zero,xmm9[13],zero,zero,zero,xmm9[14],zero,zero,zero,xmm9[15],zero,zero,zero
+	lea
+		r8, [r8 + 4*rsi]
+	vpaddq
+		xmm17, xmm17, xmm14
+	vprolq
+		xmm17, xmm17, 0x7
+	vpsllq
+		xmm19, xmm17, 0x3
+	vcvtdq2ps
+		zmm0, zmm0
+	vpaddq
+		xmm10, xmm19, xmm17
+	vpsllq
+		xmm17, xmm27, 0x2
+	vpaddq
+		xmm17, xmm17, xmm27
+	vprolq
+		xmm17, xmm17, 0x7
+	vmovaps
+		ymmword ptr [r8 + 4*rsi], ymm0
+	vextractf32x4
+		xmmword ptr [r8 + 4*rsi + 0x20], zmm0, 0x2
+	vextractf32x4
+		xmmword ptr [r8 + 4*rsi + 0x30], zmm0, 0x3
+	vpmovzxbd
+		zmm0, xmm8 # zmm0 = xmm8[0],zero,zero,zero,xmm8[1],zero,zero,zero,xmm8[2],zero,zero,zero,xmm8[3],zero,zero,zero,xmm8[4],zero,zero,zero,xmm8[5],zero,zero,zero,xmm8[6],zero,zero,zero,xmm8[7],zero,zero,zero,xmm8[8],zero,zero,zero,xmm8[9],zero,zero,zero,xmm8[10],zero,zero,zero,xmm8[11],zero,zero,zero,xmm8[12],zero,zero,zero,xmm8[13],zero,zero,zero,xmm8[14],zero,zero,zero,xmm8[15],zero,zero,zero
+	lea
+		r8, [r8 + 4*rsi]
+	vpsllq
+		xmm19, xmm17, 0x3
+	vpaddq
+		xmm23, xmm19, xmm17
+	vpsllq
+		xmm17, xmm29, 0x2
+	vpaddq
+		xmm17, xmm17, xmm29
+	vcvtdq2ps
+		zmm0, zmm0
+	vprolq
+		xmm17, xmm17, 0x7
+	vpsllq
+		xmm19, xmm17, 0x3
+	vmovaps
+		ymmword ptr [r8 + 4*rsi], ymm0
+	vextractf32x4
+		xmmword ptr [r8 + 4*rsi + 0x20], zmm0, 0x2
+	vextractf32x4
+		xmmword ptr [r8 + 4*rsi + 0x30], zmm0, 0x3
+	vpmovzxbd
+		zmm0, xmm23 # zmm0 = xmm23[0],zero,zero,zero,xmm23[1],zero,zero,zero,xmm23[2],zero,zero,zero,xmm23[3],zero,zero,zero,xmm23[4],zero,zero,zero,xmm23[5],zero,zero,zero,xmm23[6],zero,zero,zero,xmm23[7],zero,zero,zero,xmm23[8],zero,zero,zero,xmm23[9],zero,zero,zero,xmm23[10],zero,zero,zero,xmm23[11],zero,zero,zero,xmm23[12],zero,zero,zero,xmm23[13],zero,zero,zero,xmm23[14],zero,zero,zero,xmm23[15],zero,zero,zero
+	lea
+		r8, [r8 + 4*rsi]
+	vpaddq
+		xmm21, xmm19, xmm17
+	vpsllq
+		xmm17, xmm31, 0x2
+	vpaddq
+		xmm17, xmm17, xmm31
+	vprolq
+		xmm17, xmm17, 0x7
+	vcvtdq2ps
+		zmm0, zmm0
+	vpsllq
+		xmm19, xmm17, 0x3
+	vpaddq
+		xmm24, xmm19, xmm17
+	vpsllq
+		xmm17, xmm12, 0x2
+	vpaddq
+		xmm17, xmm17, xmm12
+	vprolq
+		xmm17, xmm17, 0x7
+	vpsllq
 		xmm19, xmm17, 0x3
 	vpaddq
 		xmm17, xmm19, xmm17
 	vpsllq
-		xmm19, xmm6, 0x2
+		xmm19, xmm1, 0x2
 	vpaddq
-		xmm19, xmm19, xmm6
+		xmm19, xmm19, xmm1
 	vprolq
 		xmm19, xmm19, 0x7
 	vpsllq
-		xmm21, xmm19, 0x3
+		xmm13, xmm19, 0x3
 	vpaddq
-		xmm29, xmm21, xmm19
-	vpsllq
-		xmm19, xmm3, 0x2
-	vpaddq
-		xmm19, xmm19, xmm3
+		xmm19, xmm13, xmm19
+	vpmovzxbw
+		ymm13, xmm4 # ymm13 = xmm4[0],zero,xmm4[1],zero,xmm4[2],zero,xmm4[3],zero,xmm4[4],zero,xmm4[5],zero,xmm4[6],zero,xmm4[7],zero,xmm4[8],zero,xmm4[9],zero,xmm4[10],zero,xmm4[11],zero,xmm4[12],zero,xmm4[13],zero,xmm4[14],zero,xmm4[15],zero
+	vpmullw
+		ymm13, ymm13, ymmword ptr <.LCPI0_0>
+	vpsrlw
+		ymm13, ymm13, 0x8
+	vpmovwb
+		xmm13, ymm13
+	vgf2p8affineqb
+		xmm13, xmm13, qword ptr {1to2}, 0x0 <.LCPI0_10>
+	vpmovzxbw
+		ymm13, xmm13 # ymm13 = xmm13[0],zero,xmm13[1],zero,xmm13[2],zero,xmm13[3],zero,xmm13[4],zero,xmm13[5],zero,xmm13[6],zero,xmm13[7],zero,xmm13[8],zero,xmm13[9],zero,xmm13[10],zero,xmm13[11],zero,xmm13[12],zero,xmm13[13],zero,xmm13[14],zero,xmm13[15],zero
+	vpmullw
+		ymm13, ymm13, ymmword ptr <.LCPI0_2>
+	vpmovwb
+		xmm13, ymm13
+	vpsubb
+		xmm4, xmm4, xmm13
 	vpmovzxbd
-		zmm29, xmm29 # zmm29 = xmm29[0],zero,zero,zero,xmm29[1],zero,zero,zero,xmm29[2],zero,zero,zero,xmm29[3],zero,zero,zero,xmm29[4],zero,zero,zero,xmm29[5],zero,zero,zero,xmm29[6],zero,zero,zero,xmm29[7],zero,zero,zero,xmm29[8],zero,zero,zero,xmm29[9],zero,zero,zero,xmm29[10],zero,zero,zero,xmm29[11],zero,zero,zero,xmm29[12],zero,zero,zero,xmm29[13],zero,zero,zero,xmm29[14],zero,zero,zero,xmm29[15],zero,zero,zero
-	vprolq
-		xmm19, xmm19, 0x7
-	vpsllq
-		xmm21, xmm19, 0x3
-	vpaddq
-		xmm27, xmm21, xmm19
-	vpsllq
-		xmm19, xmm5, 0x2
+		zmm13, xmm10 # zmm13 = xmm10[0],zero,zero,zero,xmm10[1],zero,zero,zero,xmm10[2],zero,zero,zero,xmm10[3],zero,zero,zero,xmm10[4],zero,zero,zero,xmm10[5],zero,zero,zero,xmm10[6],zero,zero,zero,xmm10[7],zero,zero,zero,xmm10[8],zero,zero,zero,xmm10[9],zero,zero,zero,xmm10[10],zero,zero,zero,xmm10[11],zero,zero,zero,xmm10[12],zero,zero,zero,xmm10[13],zero,zero,zero,xmm10[14],zero,zero,zero,xmm10[15],zero,zero,zero
+	vmovdqa
+		xmm10, xmmword ptr [rsp + 0x160]
 	vcvtdq2ps
-		zmm29, zmm29
-	vpaddq
-		xmm19, xmm19, xmm5
+		zmm13, zmm13
+	vmovaps
+		ymmword ptr [r8 + 4*rsi], ymm13
+	vextractf32x4
+		xmmword ptr [r8 + 4*rsi + 0x20], zmm13, 0x2
+	vextractf32x4
+		xmmword ptr [r8 + 4*rsi + 0x30], zmm13, 0x3
+	lea
+		r8, [r8 + 4*rsi]
 	vpmovzxbd
-		zmm27, xmm27 # zmm27 = xmm27[0],zero,zero,zero,xmm27[1],zero,zero,zero,xmm27[2],zero,zero,zero,xmm27[3],zero,zero,zero,xmm27[4],zero,zero,zero,xmm27[5],zero,zero,zero,xmm27[6],zero,zero,zero,xmm27[7],zero,zero,zero,xmm27[8],zero,zero,zero,xmm27[9],zero,zero,zero,xmm27[10],zero,zero,zero,xmm27[11],zero,zero,zero,xmm27[12],zero,zero,zero,xmm27[13],zero,zero,zero,xmm27[14],zero,zero,zero,xmm27[15],zero,zero,zero
-	vprolq
-		xmm19, xmm19, 0x7
+		zmm13, xmm24 # zmm13 = xmm24[0],zero,zero,zero,xmm24[1],zero,zero,zero,xmm24[2],zero,zero,zero,xmm24[3],zero,zero,zero,xmm24[4],zero,zero,zero,xmm24[5],zero,zero,zero,xmm24[6],zero,zero,zero,xmm24[7],zero,zero,zero,xmm24[8],zero,zero,zero,xmm24[9],zero,zero,zero,xmm24[10],zero,zero,zero,xmm24[11],zero,zero,zero,xmm24[12],zero,zero,zero,xmm24[13],zero,zero,zero,xmm24[14],zero,zero,zero,xmm24[15],zero,zero,zero
+	vpxorq
+		xmm24, xmm27, xmmword ptr [rsp + 0x250]
+	vmovaps
+		ymmword ptr [r8 + 4*rsi], ymm0
+	vextractf32x4
+		xmmword ptr [r8 + 4*rsi + 0x20], zmm0, 0x2
+	vextractf32x4
+		xmmword ptr [r8 + 4*rsi + 0x30], zmm0, 0x3
+	vpmovzxbd
+		zmm0, xmm21 # zmm0 = xmm21[0],zero,zero,zero,xmm21[1],zero,zero,zero,xmm21[2],zero,zero,zero,xmm21[3],zero,zero,zero,xmm21[4],zero,zero,zero,xmm21[5],zero,zero,zero,xmm21[6],zero,zero,zero,xmm21[7],zero,zero,zero,xmm21[8],zero,zero,zero,xmm21[9],zero,zero,zero,xmm21[10],zero,zero,zero,xmm21[11],zero,zero,zero,xmm21[12],zero,zero,zero,xmm21[13],zero,zero,zero,xmm21[14],zero,zero,zero,xmm21[15],zero,zero,zero
+	lea
+		r8, [r8 + 4*rsi]
+	vpxorq
+		xmm21, xmm18, xmmword ptr [rsp + 0x220]
+	vcvtdq2ps
+		zmm13, zmm13
+	vcvtdq2ps
+		zmm0, zmm0
+	vmovaps
+		ymmword ptr [r8 + 4*rsi], ymm0
+	vextractf32x4
+		xmmword ptr [r8 + 4*rsi + 0x20], zmm0, 0x2
+	vextractf32x4
+		xmmword ptr [r8 + 4*rsi + 0x30], zmm0, 0x3
+	lea
+		r8, [r8 + 4*rsi]
+	vmovaps
+		ymmword ptr [r8 + 4*rsi], ymm13
+	vextractf32x4
+		xmmword ptr [r8 + 4*rsi + 0x20], zmm13, 0x2
+	vextractf32x4
+		xmmword ptr [r8 + 4*rsi + 0x30], zmm13, 0x3
+	vpmovzxbd
+		zmm13, xmm17 # zmm13 = xmm17[0],zero,zero,zero,xmm17[1],zero,zero,zero,xmm17[2],zero,zero,zero,xmm17[3],zero,zero,zero,xmm17[4],zero,zero,zero,xmm17[5],zero,zero,zero,xmm17[6],zero,zero,zero,xmm17[7],zero,zero,zero,xmm17[8],zero,zero,zero,xmm17[9],zero,zero,zero,xmm17[10],zero,zero,zero,xmm17[11],zero,zero,zero,xmm17[12],zero,zero,zero,xmm17[13],zero,zero,zero,xmm17[14],zero,zero,zero,xmm17[15],zero,zero,zero
+	lea
+		r8, [r8 + 4*rsi]
+	lea
+		r9, [r8 + 4*rsi]
+	vcvtdq2ps
+		zmm0, zmm13
+	vpmovzxbd
+		zmm13, xmm19 # zmm13 = xmm19[0],zero,zero,zero,xmm19[1],zero,zero,zero,xmm19[2],zero,zero,zero,xmm19[3],zero,zero,zero,xmm19[4],zero,zero,zero,xmm19[5],zero,zero,zero,xmm19[6],zero,zero,zero,xmm19[7],zero,zero,zero,xmm19[8],zero,zero,zero,xmm19[9],zero,zero,zero,xmm19[10],zero,zero,zero,xmm19[11],zero,zero,zero,xmm19[12],zero,zero,zero,xmm19[13],zero,zero,zero,xmm19[14],zero,zero,zero,xmm19[15],zero,zero,zero
+	vmovaps
+		ymmword ptr [r8 + 4*rsi], ymm0
+	vextractf32x4
+		xmmword ptr [r8 + 4*rsi + 0x20], zmm0, 0x2
+	vextractf32x4
+		xmmword ptr [r8 + 4*rsi + 0x30], zmm0, 0x3
 	vmovdqa64
-		ymmword ptr [r12 + 4*rdi], ymm29
-	vextracti32x4
-		xmmword ptr [r12 + 4*rdi + 0x20], zmm29, 0x2
-	vextracti32x4
-		xmm29, zmm29, 0x3
-	vpsllq
-		xmm21, xmm19, 0x3
-	vpaddq
-		xmm24, xmm21, xmm19
-	vpsllq
-		xmm19, xmm4, 0x2
-	vcvtdq2ps
-		zmm27, zmm27
-	vmovd
-		dword ptr [r12 + 4*rdi + 0x30], xmm29
-	vpaddq
-		xmm19, xmm19, xmm4
-	vpmovzxbd
-		zmm24, xmm24 # zmm24 = xmm24[0],zero,zero,zero,xmm24[1],zero,zero,zero,xmm24[2],zero,zero,zero,xmm24[3],zero,zero,zero,xmm24[4],zero,zero,zero,xmm24[5],zero,zero,zero,xmm24[6],zero,zero,zero,xmm24[7],zero,zero,zero,xmm24[8],zero,zero,zero,xmm24[9],zero,zero,zero,xmm24[10],zero,zero,zero,xmm24[11],zero,zero,zero,xmm24[12],zero,zero,zero,xmm24[13],zero,zero,zero,xmm24[14],zero,zero,zero,xmm24[15],zero,zero,zero
-	vprolq
-		xmm19, xmm19, 0x7
-	vpsllq
-		xmm21, xmm19, 0x3
-	vpaddq
-		xmm23, xmm21, xmm19
-	vpsllq
-		xmm19, xmm15, 0x2
-	vcvtdq2ps
-		zmm24, zmm24
-	vpaddq
-		xmm19, xmm19, xmm15
-	vpmovzxbd
-		zmm23, xmm23 # zmm23 = xmm23[0],zero,zero,zero,xmm23[1],zero,zero,zero,xmm23[2],zero,zero,zero,xmm23[3],zero,zero,zero,xmm23[4],zero,zero,zero,xmm23[5],zero,zero,zero,xmm23[6],zero,zero,zero,xmm23[7],zero,zero,zero,xmm23[8],zero,zero,zero,xmm23[9],zero,zero,zero,xmm23[10],zero,zero,zero,xmm23[11],zero,zero,zero,xmm23[12],zero,zero,zero,xmm23[13],zero,zero,zero,xmm23[14],zero,zero,zero,xmm23[15],zero,zero,zero
-	vprolq
-		xmm19, xmm19, 0x7
-	vpsllq
-		xmm21, xmm19, 0x3
-	vpaddq
-		xmm21, xmm21, xmm19
-	vpsllq
-		xmm19, xmm0, 0x2
-	vcvtdq2ps
-		zmm23, zmm23
-	vpaddq
-		xmm19, xmm19, xmm0
-	vpmovzxbd
-		zmm21, xmm21 # zmm21 = xmm21[0],zero,zero,zero,xmm21[1],zero,zero,zero,xmm21[2],zero,zero,zero,xmm21[3],zero,zero,zero,xmm21[4],zero,zero,zero,xmm21[5],zero,zero,zero,xmm21[6],zero,zero,zero,xmm21[7],zero,zero,zero,xmm21[8],zero,zero,zero,xmm21[9],zero,zero,zero,xmm21[10],zero,zero,zero,xmm21[11],zero,zero,zero,xmm21[12],zero,zero,zero,xmm21[13],zero,zero,zero,xmm21[14],zero,zero,zero,xmm21[15],zero,zero,zero
-	vprolq
-		xmm19, xmm19, 0x7
-	vpsllq
-		xmm31, xmm19, 0x3
-	vpaddq
-		xmm19, xmm31, xmm19
-	vpshufd
-		xmm31, xmm29, 0xe9 # xmm31 = xmm29[1,2,2,3]
-	vcvtdq2ps
-		zmm21, zmm21
-	vmovq
-		qword ptr [r12 + 4*rdi + 0x34], xmm31
-	vextractps
-		dword ptr [r12 + 4*rdi + 0x3c], xmm29, 0x3
-	vmovdqa64
-		ymmword ptr [r8 + 4*rsi], ymm27
-	vextracti32x4
-		xmmword ptr [r8 + 4*rsi + 0x20], zmm27, 0x2
-	vextracti32x4
-		xmm27, zmm27, 0x3
-	vpmovzxbd
-		zmm19, xmm19 # zmm19 = xmm19[0],zero,zero,zero,xmm19[1],zero,zero,zero,xmm19[2],zero,zero,zero,xmm19[3],zero,zero,zero,xmm19[4],zero,zero,zero,xmm19[5],zero,zero,zero,xmm19[6],zero,zero,zero,xmm19[7],zero,zero,zero,xmm19[8],zero,zero,zero,xmm19[9],zero,zero,zero,xmm19[10],zero,zero,zero,xmm19[11],zero,zero,zero,xmm19[12],zero,zero,zero,xmm19[13],zero,zero,zero,xmm19[14],zero,zero,zero,xmm19[15],zero,zero,zero
-	vmovdqa64
-		xmm31, xmm16
+		xmm0, xmm16
 	vmovdqa64
 		xmm16, xmmword ptr [rsp + 0x80]
-	vpxorq
-		xmm31, xmm31, xmm15
-	vpshufd
-		xmm29, xmm27, 0xe9 # xmm29 = xmm27[1,2,2,3]
-	vmovd
-		dword ptr [r8 + 4*rsi + 0x30], xmm27
-	vmovq
-		qword ptr [r8 + 4*rsi + 0x34], xmm29
-	vpsllq
-		xmm29, xmm14, 0x2
-	vextractps
-		dword ptr [r8 + 4*rsi + 0x3c], xmm27, 0x3
-	lea
-		r8, [r8 + 4*rsi]
-	vpaddq
-		xmm29, xmm29, xmm14
-	vcvtdq2ps
-		zmm19, zmm19
-	vprolq
-		xmm29, xmm29, 0x7
-	vmovdqa64
-		ymmword ptr [r8 + 4*rsi], ymm24
-	vextracti32x4
-		xmmword ptr [r8 + 4*rsi + 0x20], zmm24, 0x2
-	vextracti32x4
-		xmm24, zmm24, 0x3
-	vpsllq
-		xmm27, xmm29, 0x3
-	vmovd
-		dword ptr [r8 + 4*rsi + 0x30], xmm24
-	vpaddq
-		xmm27, xmm27, xmm29
-	vpshufd
-		xmm29, xmm24, 0xe9 # xmm29 = xmm24[1,2,2,3]
-	vmovq
-		qword ptr [r8 + 4*rsi + 0x34], xmm29
-	vpsllq
-		xmm29, xmm13, 0x2
-	vextractps
-		dword ptr [r8 + 4*rsi + 0x3c], xmm24, 0x3
-	lea
-		r8, [r8 + 4*rsi]
-	vpmovzxbd
-		zmm27, xmm27 # zmm27 = xmm27[0],zero,zero,zero,xmm27[1],zero,zero,zero,xmm27[2],zero,zero,zero,xmm27[3],zero,zero,zero,xmm27[4],zero,zero,zero,xmm27[5],zero,zero,zero,xmm27[6],zero,zero,zero,xmm27[7],zero,zero,zero,xmm27[8],zero,zero,zero,xmm27[9],zero,zero,zero,xmm27[10],zero,zero,zero,xmm27[11],zero,zero,zero,xmm27[12],zero,zero,zero,xmm27[13],zero,zero,zero,xmm27[14],zero,zero,zero,xmm27[15],zero,zero,zero
-	vpaddq
-		xmm29, xmm29, xmm13
-	vprolq
-		xmm29, xmm29, 0x7
-	vmovdqa64
-		ymmword ptr [r8 + 4*rsi], ymm23
-	vextracti32x4
-		xmmword ptr [r8 + 4*rsi + 0x20], zmm23, 0x2
-	vextracti32x4
-		xmm23, zmm23, 0x3
-	vpsllq
-		xmm24, xmm29, 0x3
-	vmovd
-		dword ptr [r8 + 4*rsi + 0x30], xmm23
-	vcvtdq2ps
-		zmm27, zmm27
-	vpaddq
-		xmm24, xmm24, xmm29
-	vpshufd
-		xmm29, xmm23, 0xe9 # xmm29 = xmm23[1,2,2,3]
-	vmovq
-		qword ptr [r8 + 4*rsi + 0x34], xmm29
-	vpsllq
-		xmm29, xmm12, 0x2
-	vextractps
-		dword ptr [r8 + 4*rsi + 0x3c], xmm23, 0x3
-	lea
-		r8, [r8 + 4*rsi]
-	vpmovzxbd
-		zmm24, xmm24 # zmm24 = xmm24[0],zero,zero,zero,xmm24[1],zero,zero,zero,xmm24[2],zero,zero,zero,xmm24[3],zero,zero,zero,xmm24[4],zero,zero,zero,xmm24[5],zero,zero,zero,xmm24[6],zero,zero,zero,xmm24[7],zero,zero,zero,xmm24[8],zero,zero,zero,xmm24[9],zero,zero,zero,xmm24[10],zero,zero,zero,xmm24[11],zero,zero,zero,xmm24[12],zero,zero,zero,xmm24[13],zero,zero,zero,xmm24[14],zero,zero,zero,xmm24[15],zero,zero,zero
-	vpaddq
-		xmm29, xmm29, xmm12
-	vprolq
-		xmm29, xmm29, 0x7
-	vmovdqa64
-		ymmword ptr [r8 + 4*rsi], ymm21
-	vextracti32x4
-		xmmword ptr [r8 + 4*rsi + 0x20], zmm21, 0x2
-	vextracti32x4
-		xmm21, zmm21, 0x3
-	lea
-		r9, [r8 + 4*rsi]
-	vpsllq
-		xmm23, xmm29, 0x3
-	vmovd
-		dword ptr [r8 + 4*rsi + 0x30], xmm21
-	vcvtdq2ps
-		zmm24, zmm24
-	vpaddq
-		xmm23, xmm23, xmm29
-	vpshufd
-		xmm29, xmm21, 0xe9 # xmm29 = xmm21[1,2,2,3]
-	vmovq
-		qword ptr [r8 + 4*rsi + 0x34], xmm29
-	vextractps
-		dword ptr [r8 + 4*rsi + 0x3c], xmm21, 0x3
-	vmovdqa64
-		ymmword ptr [r9 + 4*rsi], ymm19
-	vextracti32x4
-		xmmword ptr [r9 + 4*rsi + 0x20], zmm19, 0x2
-	vextracti32x4
-		xmm19, zmm19, 0x3
-	vpmovzxbd
-		zmm23, xmm23 # zmm23 = xmm23[0],zero,zero,zero,xmm23[1],zero,zero,zero,xmm23[2],zero,zero,zero,xmm23[3],zero,zero,zero,xmm23[4],zero,zero,zero,xmm23[5],zero,zero,zero,xmm23[6],zero,zero,zero,xmm23[7],zero,zero,zero,xmm23[8],zero,zero,zero,xmm23[9],zero,zero,zero,xmm23[10],zero,zero,zero,xmm23[11],zero,zero,zero,xmm23[12],zero,zero,zero,xmm23[13],zero,zero,zero,xmm23[14],zero,zero,zero,xmm23[15],zero,zero,zero
-	vpxorq
-		xmm29, xmm4, xmmword ptr [rsp + 0x210]
-	vpshufd
-		xmm21, xmm19, 0xe9 # xmm21 = xmm19[1,2,2,3]
-	vmovd
-		dword ptr [r9 + 4*rsi + 0x30], xmm19
-	vmovq
-		qword ptr [r9 + 4*rsi + 0x34], xmm21
-	vpsllq
-		xmm21, xmm1, 0x2
-	vextractps
-		dword ptr [r9 + 4*rsi + 0x3c], xmm19, 0x3
-	lea
-		r9, [r9 + 4*rsi]
-	vpaddq
-		xmm21, xmm21, xmm1
-	vcvtdq2ps
-		zmm23, zmm23
-	vprolq
-		xmm19, xmm21, 0x7
-	vmovdqa64
-		ymmword ptr [r9 + 4*rsi], ymm27
-	vextracti32x4
-		xmmword ptr [r9 + 4*rsi + 0x20], zmm27, 0x2
-	lea
-		r8, [r9 + 4*rsi]
-	vpsllq
-		xmm21, xmm19, 0x3
-	vpaddq
-		xmm19, xmm21, xmm19
-	vextracti32x4
-		xmm21, zmm27, 0x3
-	vpmovzxbd
-		zmm19, xmm19 # zmm19 = xmm19[0],zero,zero,zero,xmm19[1],zero,zero,zero,xmm19[2],zero,zero,zero,xmm19[3],zero,zero,zero,xmm19[4],zero,zero,zero,xmm19[5],zero,zero,zero,xmm19[6],zero,zero,zero,xmm19[7],zero,zero,zero,xmm19[8],zero,zero,zero,xmm19[9],zero,zero,zero,xmm19[10],zero,zero,zero,xmm19[11],zero,zero,zero,xmm19[12],zero,zero,zero,xmm19[13],zero,zero,zero,xmm19[14],zero,zero,zero,xmm19[15],zero,zero,zero
-	vpshufd
-		xmm27, xmm21, 0xe9 # xmm27 = xmm21[1,2,2,3]
-	vmovd
-		dword ptr [r9 + 4*rsi + 0x30], xmm21
-	vmovq
-		qword ptr [r9 + 4*rsi + 0x34], xmm27
-	vextractps
-		dword ptr [r9 + 4*rsi + 0x3c], xmm21, 0x3
-	vextracti32x4
-		xmm21, zmm24, 0x3
-	vmovdqa64
-		ymmword ptr [r8 + 4*rsi], ymm24
-	vextracti32x4
-		xmmword ptr [r8 + 4*rsi + 0x20], zmm24, 0x2
-	vpshufd
-		xmm24, xmm21, 0xe9 # xmm24 = xmm21[1,2,2,3]
-	vmovd
-		dword ptr [r8 + 4*rsi + 0x30], xmm21
-	vcvtdq2ps
-		zmm19, zmm19
-	vmovq
-		qword ptr [r8 + 4*rsi + 0x34], xmm24
-	vextractps
-		dword ptr [r8 + 4*rsi + 0x3c], xmm21, 0x3
-	vpmovzxbw
-		ymm21, xmm17 # ymm21 = xmm17[0],zero,xmm17[1],zero,xmm17[2],zero,xmm17[3],zero,xmm17[4],zero,xmm17[5],zero,xmm17[6],zero,xmm17[7],zero,xmm17[8],zero,xmm17[9],zero,xmm17[10],zero,xmm17[11],zero,xmm17[12],zero,xmm17[13],zero,xmm17[14],zero,xmm17[15],zero
-	vpmullw
-		ymm21, ymm21, ymmword ptr <.LCPI0_0>
-	lea
-		r8, [r8 + 4*rsi]
-	lea
-		r9, [r8 + 4*rsi]
-	vmovdqa64
-		ymmword ptr [r8 + 4*rsi], ymm23
-	vextracti32x4
-		xmmword ptr [r8 + 4*rsi + 0x20], zmm23, 0x2
-	vpsrlw
-		ymm21, ymm21, 0x8
-	vpmovwb
-		xmm21, ymm21
-	vgf2p8affineqb
-		xmm21, xmm21, qword ptr {1to2}, 0x0 <.LCPI0_10>
-	vpmovzxbw
-		ymm21, xmm21 # ymm21 = xmm21[0],zero,xmm21[1],zero,xmm21[2],zero,xmm21[3],zero,xmm21[4],zero,xmm21[5],zero,xmm21[6],zero,xmm21[7],zero,xmm21[8],zero,xmm21[9],zero,xmm21[10],zero,xmm21[11],zero,xmm21[12],zero,xmm21[13],zero,xmm21[14],zero,xmm21[15],zero
-	vpmullw
-		ymm21, ymm21, ymmword ptr <.LCPI0_2>
-	vpmovwb
-		xmm21, ymm21
-	vpsubb
-		xmm17, xmm17, xmm21
-	vextracti32x4
-		xmm21, zmm23, 0x3
-	vpshufd
-		xmm23, xmm21, 0xe9 # xmm23 = xmm21[1,2,2,3]
-	vmovd
-		dword ptr [r8 + 4*rsi + 0x30], xmm21
-	vmovq
-		qword ptr [r8 + 4*rsi + 0x34], xmm23
-	vextractps
-		dword ptr [r8 + 4*rsi + 0x3c], xmm21, 0x3
-	vmovdqa64
-		ymmword ptr [r9 + 4*rsi], ymm19
-	vextracti32x4
-		xmmword ptr [r9 + 4*rsi + 0x20], zmm19, 0x2
-	vextracti32x4
-		xmm19, zmm19, 0x3
 	lea
 		r8, [rsi + 4*rsi]
-	vpshufd
-		xmm21, xmm19, 0xe9 # xmm21 = xmm19[1,2,2,3]
-	vmovd
-		dword ptr [r9 + 4*rsi + 0x30], xmm19
+	vpxorq
+		xmm19, xmm0, xmm5
+	vcvtdq2ps
+		zmm13, zmm13
 	lea
 		r8, [r12 + 8*r8]
-	vmovq
-		qword ptr [r9 + 4*rsi + 0x34], xmm21
-	vextractps
-		dword ptr [r9 + 4*rsi + 0x3c], xmm19, 0x3
-	vpsllq
-		xmm19, xmm30, 0x11
-	vpxorq
-		xmm21, xmm10, xmm16
-	vpxorq
-		xmm10, xmm21, xmm19
-	vpxorq
-		xmm19, xmm22, xmm6
-	vmovdqa64
-		xmm22, xmmword ptr [rsp + 0x70]
-	vmovdqa64
-		xmmword ptr [rdi + r8], xmm17
-	vpxorq
-		xmm17, xmm18, xmm30
-	vpxorq
-		xmm30, xmm21, xmm30
-	vpsllq
-		xmm21, xmm6, 0x11
+	vmovaps
+		ymmword ptr [r9 + 4*rsi], ymm13
+	vextractf32x4
+		xmmword ptr [r9 + 4*rsi + 0x20], zmm13, 0x2
+	vextractf32x4
+		xmmword ptr [r9 + 4*rsi + 0x30], zmm13, 0x3
 	vmovdqa
-		xmmword ptr [rsp + 0x1e0], xmm10
-	vmovdqa64
-		xmm10, xmm20
+		xmmword ptr [rdi + r8], xmm4
+	vpsllq
+		xmm4, xmm30, 0x11
+	vpxorq
+		xmm13, xmm6, xmm16
+	vmovdqa
+		xmm6, xmm7
+	vpxorq
+		xmm7, xmm20, xmm30
 	vmovdqa64
 		xmm20, xmmword ptr [rsp + 0x30]
 	vpxorq
-		xmm27, xmm10, xmm5
-	vmovdqa
-		xmm10, xmmword ptr [rsp + 0x150]
+		xmm23, xmm6, xmm14
+	vpxor
+		xmm4, xmm13, xmm4
 	vpxorq
-		xmm16, xmm17, xmm16
-	vprolq
-		xmm17, xmm17, 0x2d
+		xmm30, xmm13, xmm30
+	vpsllq
+		xmm13, xmm2, 0x11
+	vpxorq
+		xmm16, xmm7, xmm16
+	vmovdqa
+		xmmword ptr [rsp + 0x1f0], xmm4
+	vpxorq
+		xmm4, xmm28, xmm2
 	vmovdqa64
 		xmmword ptr [rsp + 0x80], xmm16
 	vprolq
-		xmm16, xmm31, 0x2d
+		xmm16, xmm19, 0x2d
 	vpxorq
-		xmm24, xmm9, xmm22
-	vpxorq
-		xmm23, xmm2, xmm20
-	vpxorq
-		xmm20, xmm19, xmm20
-	vpxorq
-		xmm2, xmm23, xmm21
-	vpxorq
-		xmm21, xmm26, xmm3
-	vpxorq
-		xmm6, xmm23, xmm6
-	vpsllq
-		xmm23, xmm3, 0x11
-	vpxorq
-		xmm3, xmm24, xmm3
+		xmm15, xmm22, xmm20
 	vmovdqa64
-		xmm26, xmmword ptr [rsp + 0x60]
+		xmm22, xmmword ptr [rsp + 0x70]
+	vpxorq
+		xmm20, xmm4, xmm20
+	vpxor
+		xmm8, xmm15, xmm13
+	vpsllq
+		xmm13, xmm3, 0x11
+	vpxor
+		xmm2, xmm15, xmm2
+	vpxorq
+		xmm15, xmm25, xmm3
 	vmovdqa64
 		xmmword ptr [rsp + 0x30], xmm20
 	vprolq
-		xmm20, xmm27, 0x2d
+		xmm20, xmm4, 0x2d
+	vprolq
+		xmm4, xmm24, 0x2d
 	vmovdqa
-		xmmword ptr [rsp + 0x1d0], xmm2
+		xmmword ptr [rsp + 0x1e0], xmm8
 	vpxorq
-		xmm2, xmm24, xmm23
-	vmovdqa
-		xmmword ptr [rsp + 0x260], xmm3
+		xmm17, xmm26, xmm22
+	vmovdqa64
+		xmm26, xmmword ptr [rsp + 0x60]
 	vpxorq
-		xmm24, xmm26, xmmword ptr [rsp + 0x100]
+		xmm22, xmm15, xmm22
+	vpxorq
+		xmm8, xmm17, xmm13
+	vpxorq
+		xmm25, xmm17, xmm3
+	vpxorq
+		xmm17, xmm26, xmmword ptr [rsp + 0x110]
 	vmovdqa64
 		xmm3, xmm30
+	vpsllq
+		xmm13, xmm5, 0x11
 	vmovdqa64
 		xmm30, xmmword ptr [rsp + 0x50]
-	vpsllq
-		xmm23, xmm5, 0x11
-	vpxorq
-		xmm22, xmm21, xmm22
-	vprolq
-		xmm21, xmm21, 0x2d
-	vmovdqa
-		xmmword ptr [rsp + 0x1c0], xmm2
 	vmovdqa64
 		xmmword ptr [rsp + 0x70], xmm22
-	vpxorq
-		xmm26, xmm27, xmm26
-	vpxorq
-		xmm2, xmm24, xmm23
-	vpxorq
-		xmm5, xmm24, xmm5
-	vpxorq
-		xmm24, xmm7, xmm30
+	vmovdqa64
+		xmm22, xmmword ptr [rsp + 0x1e0]
 	vmovdqa
-		xmm7, xmmword ptr [rsp + 0x1b0]
-	vpsllq
-		xmm23, xmm4, 0x11
+		xmmword ptr [rsp + 0x1d0], xmm8
 	vpxorq
-		xmm30, xmm29, xmm30
+		xmm26, xmm19, xmm26
+	vpxorq
+		xmm28, xmm17, xmm5
+	vmovdqa
+		xmm5, xmm2
+	vpxorq
+		xmm2, xmm17, xmm13
+	vpxorq
+		xmm17, xmm30, xmmword ptr [rsp + 0xf0]
+	vpsllq
+		xmm13, xmm18, 0x11
 	vmovdqa64
 		xmmword ptr [rsp + 0x60], xmm26
+	vmovdqa64
+		xmm26, xmmword ptr [rsp + 0x1d0]
 	vpxorq
-		xmm4, xmm24, xmm4
-	vpxorq
-		xmm18, xmm24, xmm23
-	vpsllq
-		xmm23, xmm15, 0x11
+		xmm30, xmm21, xmm30
 	vmovdqa
-		xmmword ptr [rsp + 0x100], xmm2
-	vmovdqa
-		xmmword ptr [rsp + 0x270], xmm5
-	vmovdqa
-		xmm5, xmm6
+		xmmword ptr [rsp + 0x110], xmm2
 	vmovdqa64
 		xmmword ptr [rsp + 0x50], xmm30
 	vmovdqa64
 		xmm30, xmm3
-	vmovdqa
-		xmm3, xmmword ptr [rsp + 0x260]
-	vmovdqa
-		xmmword ptr [rsp + 0x40], xmm4
-	vpxorq
-		xmm4, xmm28, xmm0
-	vpxorq
-		xmm24, xmm8, xmm7
-	vmovdqa
-		xmm8, xmmword ptr [rsp + 0x190]
-	vpxorq
-		xmm7, xmm31, xmm7
-	vpxorq
-		xmm15, xmm24, xmm15
-	vpxorq
-		xmm9, xmm24, xmm23
-	vpxorq
-		xmm24, xmm8, xmmword ptr [rsp + 0x160]
-	vpsllq
-		xmm23, xmm0, 0x11
-	vmovdqa
-		xmmword ptr [rsp + 0x1b0], xmm7
 	vmovdqa64
-		xmm7, xmm18
-	vmovdqa
-		xmmword ptr [rsp + 0x1a0], xmm15
-	vpxor
-		xmm15, xmm14, xmmword ptr [rsp + 0x240]
-	vpxor
-		xmm8, xmm8, xmm4
-	vprolq
-		xmm4, xmm4, 0x2d
+		xmm3, xmm25
 	vpxorq
-		xmm0, xmm24, xmm0
-	vmovdqa
-		xmmword ptr [rsp + 0x190], xmm8
-	vmovdqa
-		xmm8, xmm9
-	vmovdqa
-		xmm9, xmmword ptr [rsp + 0x1c0]
-	vmovdqa
-		xmmword ptr [rsp + 0x180], xmm0
-	vpxorq
-		xmm0, xmm24, xmm23
-	vpxorq
-		xmm24, xmm11, xmm10
-	vmovdqa
-		xmm11, xmmword ptr [rsp + 0x130]
-	vpsllq
-		xmm23, xmm14, 0x11
-	vpxor
-		xmm10, xmm15, xmm10
-	vprolq
-		xmm18, xmm15, 0x2d
-	vpxorq
-		xmm14, xmm24, xmm14
-	vpxorq
-		xmm2, xmm24, xmm23
-	vpsllq
-		xmm23, xmm13, 0x11
-	vmovdqa
-		xmmword ptr [rsp + 0x160], xmm0
-	vpxor
-		xmm0, xmm13, xmmword ptr [rsp + 0x220]
-	vmovdqa
-		xmmword ptr [rsp + 0x150], xmm10
-	vmovdqa
-		xmm10, xmmword ptr [rsp + 0x1e0]
-	vmovdqa
-		xmmword ptr [rsp + 0x170], xmm14
-	vpxor
-		xmm14, xmm1, xmmword ptr [rsp + 0x230]
-	vpxorq
-		xmm24, xmm25, xmm11
+		xmm8, xmm17, xmm18
 	vmovdqa64
-		xmm25, xmmword ptr [rsp + 0xf0]
+		xmm18, xmmword ptr [rsp + 0x40]
 	vpxorq
-		xmm13, xmm24, xmm13
-	vpxorq
-		xmm28, xmm24, xmm23
-	vpxorq
-		xmm24, xmm25, xmmword ptr [rsp + 0xe0]
+		xmm0, xmm17, xmm13
 	vpsllq
-		xmm23, xmm12, 0x11
+		xmm13, xmm14, 0x11
+	vpxorq
+		xmm17, xmm18, xmmword ptr [rsp + 0x180]
+	vmovdqa
+		xmmword ptr [rsp + 0xf0], xmm0
+	vpxorq
+		xmm18, xmm23, xmm18
+	vpxorq
+		xmm9, xmm17, xmm13
+	vpxorq
+		xmm14, xmm17, xmm14
+	vpsllq
+		xmm13, xmm27, 0x11
+	vmovdqa64
+		xmmword ptr [rsp + 0x40], xmm18
+	vmovdqa64
+		xmm18, xmm8
+	vmovdqa
+		xmmword ptr [rsp + 0x180], xmm9
+	vmovdqa
+		xmm9, xmmword ptr [rsp + 0x1a0]
+	vmovdqa
+		xmmword ptr [rsp + 0x1c0], xmm14
 	vpxor
-		xmm11, xmm11, xmm0
+		xmm14, xmm1, xmmword ptr [rsp + 0x260]
+	vpxorq
+		xmm17, xmm9, xmmword ptr [rsp + 0x170]
+	vpxorq
+		xmm9, xmm24, xmm9
+	vpxorq
+		xmm13, xmm17, xmm13
+	vpxorq
+		xmm27, xmm17, xmm27
+	vpxorq
+		xmm17, xmm11, xmm10
+	vmovdqa
+		xmm11, xmmword ptr [rsp + 0x140]
+	vmovdqa
+		xmmword ptr [rsp + 0x1a0], xmm9
+	vmovdqa
+		xmmword ptr [rsp + 0x170], xmm13
+	vpsllq
+		xmm13, xmm29, 0x11
+	vmovdqa64
+		xmmword ptr [rsp + 0x1b0], xmm27
+	vpxorq
+		xmm27, xmm29, xmmword ptr [rsp + 0x210]
+	vpxorq
+		xmm29, xmm17, xmm29
+	vpxorq
+		xmm6, xmm17, xmm13
+	vpxorq
+		xmm17, xmm11, xmmword ptr [rsp + 0xe0]
+	vpsllq
+		xmm13, xmm31, 0x11
+	vmovdqa64
+		xmmword ptr [rsp + 0x190], xmm29
+	vpxorq
+		xmm29, xmm31, xmmword ptr [rsp + 0x230]
+	vpxorq
+		xmm10, xmm27, xmm10
+	vpxorq
+		xmm0, xmm17, xmm13
+	vpxorq
+		xmm31, xmm17, xmm31
+	vpsllq
+		xmm13, xmm12, 0x11
+	vpxorq
+		xmm11, xmm29, xmm11
+	vmovdqa
+		xmmword ptr [rsp + 0x160], xmm10
 	vprolq
-		xmm15, xmm0, 0x2d
+		xmm10, xmm27, 0x2d
+	vprolq
+		xmm9, xmm29, 0x2d
 	vmovdqa
-		xmmword ptr [rsp + 0x140], xmm13
-	vpxor
-		xmm13, xmm12, xmmword ptr [rsp + 0x200]
+		xmmword ptr [rsp + 0xe0], xmm0
 	vmovdqa
-		xmmword ptr [rsp + 0x130], xmm11
+		xmm0, xmmword ptr [rsp + 0x100]
+	vmovdqa64
+		xmmword ptr [rsp + 0x150], xmm31
+	vpxorq
+		xmm31, xmm12, xmmword ptr [rsp + 0x240]
 	vmovdqa
-		xmm11, xmm2
+		xmmword ptr [rsp + 0x140], xmm11
 	vmovdqa
-		xmm2, xmmword ptr [rsp + 0x1d0]
+		xmm11, xmm6
+	vmovdqa
+		xmm6, xmmword ptr [rsp + 0x1f0]
+	vpxorq
+		xmm17, xmm0, xmmword ptr [rsp + 0xd0]
+	vpxorq
+		xmm0, xmm31, xmm0
+	vprolq
+		xmm8, xmm31, 0x2d
+	vpxorq
+		xmm12, xmm17, xmm12
+	vpxorq
+		xmm2, xmm17, xmm13
+	vpsllq
+		xmm13, xmm1, 0x11
+	vmovdqa
+		xmmword ptr [rsp + 0x100], xmm0
 	vprolq
 		xmm0, xmm14, 0x2d
-	vpxorq
-		xmm12, xmm24, xmm12
-	vpxorq
-		xmm6, xmm24, xmm23
-	vpsllq
-		xmm23, xmm1, 0x11
 	vmovdqa
-		xmmword ptr [rsp + 0x120], xmm12
+		xmmword ptr [rsp + 0x130], xmm12
 	vmovdqa
-		xmm12, xmmword ptr [rsp + 0x250]
+		xmm12, xmmword ptr [rsp + 0x270]
 	vmovdqa
-		xmmword ptr [rsp + 0xe0], xmm6
-	vprolq
-		xmm6, xmm19, 0x2d
-	vpxorq
-		xmm25, xmm13, xmm25
-	vprolq
-		xmm19, xmm29, 0x2d
-	vprolq
-		xmm13, xmm13, 0x2d
-	vpxorq
-		xmm24, xmm12, xmmword ptr [rsp + 0x1f0]
+		xmmword ptr [rsp + 0xd0], xmm2
+	vmovdqa
+		xmm2, xmm5
 	vmovdqa64
-		xmmword ptr [rsp + 0xf0], xmm25
-	vmovdqa64
-		xmm25, xmm28
-	vmovdqa64
-		xmm22, xmm6
-	vmovdqa
-		xmm6, xmm5
-	vmovdqa
-		xmm5, xmmword ptr [rsp + 0x270]
+		xmm5, xmm28
+	vpxorq
+		xmm17, xmm12, xmmword ptr [rsp + 0x200]
 	vpxor
 		xmm12, xmm14, xmm12
 	vpxorq
-		xmm1, xmm24, xmm1
+		xmm1, xmm17, xmm1
 	vmovdqa
-		xmmword ptr [rsp + 0x110], xmm1
+		xmmword ptr [rsp + 0x120], xmm1
 	vpxorq
-		xmm1, xmm24, xmm23
+		xmm1, xmm17, xmm13
+	vprolq
+		xmm13, xmm7, 0x2d
+	vprolq
+		xmm17, xmm15, 0x2d
+	vprolq
+		xmm15, xmm21, 0x2d
+	vprolq
+		xmm7, xmm23, 0x2d
 	jne
 		<L4>
 	vpxor
@@ -1175,7 +1093,7 @@ Disassembly of section .text:
 	add
 		r13, rcx
 	nop
-		dword ptr [rax + rax]
+		dword ptr [rax]
 <L5>:
 	blsi
 		eax, dword ptr [rsp + 0x30]
