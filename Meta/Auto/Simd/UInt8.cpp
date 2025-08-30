@@ -36,14 +36,8 @@ export namespace
 			)	const
 			noexcept
 		->	unsigned char
-		{	auto
-				vArray
-			=	::std::bit_cast<::std::array<unsigned char, t_vSize>>
-				(	m_vRaw
-				)
-			;
-			return
-				vArray
+		{	return
+				m_vRaw
 				[	i_vIndex
 				]
 			;
