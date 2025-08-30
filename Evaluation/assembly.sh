@@ -14,7 +14,7 @@ function assemble()
 		--symbolize-operands\
 		--disassemble-zeroes\
 		--disassembler-options=intel\
-		build/Evaluation/bin/$1\
+		build/Evaluation/Speed/bin/$1\
 		> Evaluation/Results/assembly/$1.s
 }
 

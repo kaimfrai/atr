@@ -1,5 +1,5 @@
 
-build/Evaluation/bin/TagATR:	file format elf64-x86-64
+build/Evaluation/Speed/bin/TagATR:	file format elf64-x86-64
 
 Disassembly of section .fini:
 

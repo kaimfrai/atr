@@ -17,7 +17,7 @@ function execute_perf()
 	perf\
 		stat\
 		--repeat $3\
-		build/Evaluation/bin/$4\
+		build/Evaluation/Speed/bin/$4\
 		$1 $2\
 		2> Evaluation/Results/perf_$1_$2/$4.txt
 }

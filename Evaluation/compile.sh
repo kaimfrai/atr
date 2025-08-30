@@ -1,6 +1,6 @@
 mkdir -p Evaluation/Results/compile/
 
-cd build/Evaluation
+cd build/Evaluation/Speed
 
 echo ""
 
@@ -23,7 +23,7 @@ function time_build()
 
 	time=$(\time -f "%e" ninja $1 2>&1  1>/dev/null)
 	echo "$time seconds to build $1 "
-	echo "$time" > ../../Evaluation/Results/compile/$1.txt
+	echo "$time" > ../../../Evaluation/Results/compile/$1.txt
 }
 
 if	[ $# -lt 1 ] \
@@ -46,4 +46,4 @@ else
 	time_build $1
 fi
 
-cd ../../
+cd ../../../

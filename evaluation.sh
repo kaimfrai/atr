@@ -1,17 +1,21 @@
 echo "Generating binary files..."
 
-mkdir -p build/Evaluation
 
-cmake -S ./\
-	-B ./build/Evaluation\
-	--toolchain="CMake/Linux-Clang.cmake"\
-	-G "Ninja"\
-	-DCMAKE_BUILD_TYPE=Release\
-	-DFASTER_BUILD_SPEED:BOOL=TRUE
+function configure()
+{
+	mkdir -p build/Evaluation/$1
+	cmake -S ./\
+		-B ./build/Evaluation/$1\
+		--toolchain="CMake/Linux-Clang.cmake"\
+		-G "Ninja"\
+		-DCMAKE_BUILD_TYPE=Release\
+		-DEVALUATE_PROJECT:STRING=$1
+}
+
 
 function build_all()
 {
-	cd build/Evaluation/
+	cd build/Evaluation/$1
 
 	if	[ $# -lt 2 ] \
 	||	[ $2 == "all" ]
@@ -66,27 +70,46 @@ function build_all()
 		exit 1
 	fi
 
-	cd ../../
+	cd ../../../
 }
 
-build_all $1 $2
 
 if [ $# -lt 1 ]
 then
+	configure Speed
+	build_all Speed $2
 	bash Evaluation/assembly.sh $2
-	bash Evaluation/cachegrind.sh 42 12500 $2
 	bash Evaluation/compile.sh $2
-	bash Evaluation/memcheck.sh 42 12500 $2
 	bash Evaluation/perf.sh 42 12500 10 $2
+	build_all Speed $2
+
+	configure valgrind
+	build_all valgrind $2
+	bash Evaluation/cachegrind.sh 42 12500 $2
+	bash Evaluation/memcheck.sh 42 12500 $2
+	build_all valgrind $2
+
 elif [ $1 == "assembly" ] || [ $1 == "compile" ]
 then
+	configure Speed
+	build_all Speed $2
 	bash Evaluation/$1.sh $2
+	build_all Speed $2
+
 elif [ $1 == "cachegrind" ] || [ $1 == "memcheck" ]
 then
+	configure valgrind
+	build_all valgrind $2
 	bash Evaluation/$1.sh 42 12500 $2
+	build_all valgrind $2
+
 elif [ $1 == "perf" ]
 then
+	configure Speed
+	build_all Speed $2
 	bash Evaluation/$1.sh 42 12500 10 $2
+	build_all Speed $2
+
 else
 	echo "Invalid evaluation script $1. Must be one of:"
 	echo "assembly"
@@ -96,5 +119,3 @@ else
 	echo "perf (with elevated rights)"
 	exit 1
 fi
-
-build_all $1 $2

@@ -1,25 +1,29 @@
-==22682== Cachegrind, a cache and branch-prediction profiler
-==22682== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
-==22682== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==22682== Command: build/Evaluation/bin/Polymorphic 42 100000
-==22682== 
---22682-- warning: L3 cache found, using its data for the LL simulation.
-==22682== brk segment overflow in thread #1: can't grow to 0x485b000
-==22682== (see section Limitations in user manual)
-==22682== NOTE: further instances of this message will not be shown
-==22682== 
-==22682== I   refs:      54,497,424
-==22682== I1  misses:         2,182
-==22682== LLi misses:         2,032
-==22682== I1  miss rate:       0.00%
-==22682== LLi miss rate:       0.00%
-==22682== 
-==22682== D   refs:      21,844,752  (13,332,959 rd   + 8,511,793 wr)
-==22682== D1  misses:       583,221  (   384,641 rd   +   198,580 wr)
-==22682== LLd misses:       207,918  (    10,817 rd   +   197,101 wr)
-==22682== D1  miss rate:        2.7% (       2.9%     +       2.3%  )
-==22682== LLd miss rate:        1.0% (       0.1%     +       2.3%  )
-==22682== 
-==22682== LL refs:          585,403  (   386,823 rd   +   198,580 wr)
-==22682== LL misses:        209,950  (    12,849 rd   +   197,101 wr)
-==22682== LL miss rate:         0.3% (       0.0%     +       2.3%  )
+Cachegrind, a high-precision tracing profiler
+Copyright (C) 2002-2024, and GNU GPL'd, by Nicholas Nethercote et al.
+Using Valgrind-3.25.1 and LibVEX; rerun with -h for copyright info
+Command: build/Evaluation/valgrind/bin/Polymorphic 42 12500
+
+warning: L3 cache found, using its data for the LL simulation.
+brk segment overflow in thread #1: can't grow to 0x485a000
+(see section Limitations in user manual)
+NOTE: further instances of this message will not be shown
+
+I refs:        114,945,259
+I1  misses:          2,274
+LLi misses:          2,162
+I1  miss rate:        0.00%
+LLi miss rate:        0.00%
+
+D refs:         45,841,427  (27,996,120 rd   + 17,845,307 wr)
+D1  misses:      1,145,541  (   753,402 rd   +    392,139 wr)
+LLd misses:        400,290  (     9,360 rd   +    390,930 wr)
+D1  miss rate:         2.5% (       2.7%     +        2.2%  )
+LLd miss rate:         0.9% (       0.0%     +        2.2%  )
+
+LL refs:         1,147,815  (   755,676 rd   +    392,139 wr)
+LL misses:         402,452  (    11,522 rd   +    390,930 wr)
+LL miss rate:          0.3% (       0.0%     +        2.2%  )
+
+Branches:       13,539,764  (11,533,265 cond +  2,006,499 ind)
+Mispredicts:       682,030  (   209,373 cond +    472,657 ind)
+Mispred rate:          5.0% (       1.8%     +       23.6%   )

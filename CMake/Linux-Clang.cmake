@@ -23,15 +23,27 @@ STATUS
 	"Found clang++ at ${CMAKE_CXX_COMPILER}."
 )
 
+if(	EVALUATE_PROJECT
+MATCHES
+	"valgrind"
+)
+	add_compile_options(
+		-mavx2
+	)
+else()
+	add_compile_options(
+		-march=native
+		-ffast-math
+	)
+endif()
+
 add_compile_options(
-	-march=native
 	-flto=full
 	-fconstexpr-backtrace-limit=0
 	-ftemplate-backtrace-limit=0
 	-fconstexpr-steps=4194303
 	-ffunction-sections
 	-fdata-sections
-	-ffast-math
 	-fcolor-diagnostics
 )
 
@@ -101,7 +113,9 @@ if(	BUILD_WITH_SANITIZER
 	endif()
 endif()
 
-if(	FASTER_BUILD_SPEED
+if(	EVALUATE_PROJECT
+MATCHES
+	"Speed"
 )
 	add_compile_options(
 		--no-warnings

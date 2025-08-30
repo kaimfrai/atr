@@ -1,22 +1,26 @@
-==22689== Cachegrind, a cache and branch-prediction profiler
-==22689== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
-==22689== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==22689== Command: build/Evaluation/bin/TagReplication 42 100000
-==22689== 
---22689-- warning: L3 cache found, using its data for the LL simulation.
-==22689== 
-==22689== I   refs:      20,264,945
-==22689== I1  misses:         2,117
-==22689== LLi misses:         1,977
-==22689== I1  miss rate:       0.01%
-==22689== LLi miss rate:       0.01%
-==22689== 
-==22689== D   refs:       7,237,030  (4,548,204 rd   + 2,688,826 wr)
-==22689== D1  misses:       168,260  (   95,291 rd   +    72,969 wr)
-==22689== LLd misses:        82,359  (   10,565 rd   +    71,794 wr)
-==22689== D1  miss rate:        2.3% (      2.1%     +       2.7%  )
-==22689== LLd miss rate:        1.1% (      0.2%     +       2.7%  )
-==22689== 
-==22689== LL refs:          170,377  (   97,408 rd   +    72,969 wr)
-==22689== LL misses:         84,336  (   12,542 rd   +    71,794 wr)
-==22689== LL miss rate:         0.3% (      0.1%     +       2.7%  )
+Cachegrind, a high-precision tracing profiler
+Copyright (C) 2002-2024, and GNU GPL'd, by Nicholas Nethercote et al.
+Using Valgrind-3.25.1 and LibVEX; rerun with -h for copyright info
+Command: build/Evaluation/valgrind/bin/TagReplication 42 12500
+
+warning: L3 cache found, using its data for the LL simulation.
+
+I refs:        48,588,838
+I1  misses:         2,206
+LLi misses:         2,095
+I1  miss rate:       0.00%
+LLi miss rate:       0.00%
+
+D refs:        21,872,591  (12,600,545 rd   + 9,272,046 wr)
+D1  misses:       315,688  (   174,357 rd   +   141,331 wr)
+LLd misses:       149,614  (     9,265 rd   +   140,349 wr)
+D1  miss rate:        1.4% (       1.4%     +       1.5%  )
+LLd miss rate:        0.7% (       0.1%     +       1.5%  )
+
+LL refs:          317,894  (   176,563 rd   +   141,331 wr)
+LL misses:        151,709  (    11,360 rd   +   140,349 wr)
+LL miss rate:         0.2% (       0.0%     +       1.5%  )
+
+Branches:       3,233,598  ( 2,724,567 cond +   509,031 ind)
+Mispredicts:      532,155  (   192,507 cond +   339,648 ind)
+Mispred rate:        16.5% (       7.1%     +      66.7%   )

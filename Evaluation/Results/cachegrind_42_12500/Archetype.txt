@@ -1,22 +1,26 @@
-==22680== Cachegrind, a cache and branch-prediction profiler
-==22680== Copyright (C) 2002-2017, and GNU GPL'd, by Nicholas Nethercote et al.
-==22680== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==22680== Command: build/Evaluation/bin/Archetype 42 100000
-==22680== 
---22680-- warning: L3 cache found, using its data for the LL simulation.
-==22680== 
-==22680== I   refs:      16,576,957
-==22680== I1  misses:         2,155
-==22680== LLi misses:         2,030
-==22680== I1  miss rate:       0.01%
-==22680== LLi miss rate:       0.01%
-==22680== 
-==22680== D   refs:       6,037,063  (3,705,201 rd   + 2,331,862 wr)
-==22680== D1  misses:       245,351  (  129,458 rd   +   115,893 wr)
-==22680== LLd misses:       125,341  (   10,597 rd   +   114,744 wr)
-==22680== D1  miss rate:        4.1% (      3.5%     +       5.0%  )
-==22680== LLd miss rate:        2.1% (      0.3%     +       4.9%  )
-==22680== 
-==22680== LL refs:          247,506  (  131,613 rd   +   115,893 wr)
-==22680== LL misses:        127,371  (   12,627 rd   +   114,744 wr)
-==22680== LL miss rate:         0.6% (      0.1%     +       4.9%  )
+Cachegrind, a high-precision tracing profiler
+Copyright (C) 2002-2024, and GNU GPL'd, by Nicholas Nethercote et al.
+Using Valgrind-3.25.1 and LibVEX; rerun with -h for copyright info
+Command: build/Evaluation/valgrind/bin/Archetype 42 12500
+
+warning: L3 cache found, using its data for the LL simulation.
+
+I refs:        35,223,699
+I1  misses:         2,174
+LLi misses:         2,073
+I1  miss rate:       0.01%
+LLi miss rate:       0.01%
+
+D refs:        13,453,774  (7,974,182 rd   + 5,479,592 wr)
+D1  misses:       470,013  (  242,833 rd   +   227,180 wr)
+LLd misses:       235,487  (    9,264 rd   +   226,223 wr)
+D1  miss rate:        3.5% (      3.0%     +       4.1%  )
+LLd miss rate:        1.8% (      0.1%     +       4.1%  )
+
+LL refs:          472,187  (  245,007 rd   +   227,180 wr)
+LL misses:        237,560  (   11,337 rd   +   226,223 wr)
+LL miss rate:         0.5% (      0.0%     +       4.1%  )
+
+Branches:       2,027,488  (1,621,029 cond +   406,459 ind)
+Mispredicts:      544,909  (  176,456 cond +   368,453 ind)
+Mispred rate:        26.9% (     10.9%     +      90.6%   )
