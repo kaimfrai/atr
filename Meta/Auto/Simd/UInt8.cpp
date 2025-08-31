@@ -195,11 +195,13 @@ export namespace
 	};
 
 	template
-		<>
+		<	USize
+				t_vSize
+		>
 	struct
 		Var
 		<	unsigned char
-			(&)	[	8uz
+			(&)	[	t_vSize
 				]
 		,	SimdTag
 		>
@@ -208,7 +210,7 @@ export namespace
 			value_type
 		=	Simd
 			<	unsigned char
-					[	8uz
+					[	t_vSize
 					]
 			>
 		;
@@ -218,37 +220,38 @@ export namespace
 		;
 
 		[[nodiscard]]
-		explicit(true) inline
+		explicit(true) constexpr inline
 		(	operator
 			value_type
 		)	()	const
 			noexcept
 		{
-			unsigned char
-				vValue
-				[	8uz
+			auto const
+			&	[	...
+					rpIndex
 				]
+			=	IndexPack
+				<	t_vSize
+				>
 			;
 			auto const
 				aData
 			=	::std::assume_aligned
-				<	8uz
+				<	t_vSize
 				>(	m_aData
 				)
 			;
-			::std::copy
-			(	aData
-			,		aData
-				+	8uz
-			,	vValue
-			);
 			return
-			::std::bit_cast<value_type>
-			(	vValue
-			);
+			{	.	m_vRaw
+				{	aData
+					[	rpIndex
+					]
+					...
+				}
+			};
 		}
 
-		auto inline
+		auto constexpr inline
 		(	operator=
 		)	(	value_type
 					i_vValue
@@ -257,28 +260,29 @@ export namespace
 		->	Var const&
 		{
 			auto const
-				vValue
-			=	::std::bit_cast<::std::array<unsigned char, 8uz>>
-				(	i_vValue
-				)
+			&	[	...
+					rpIndex
+				]
+			=	IndexPack
+				<	t_vSize
+				>
 			;
 			auto const
 				aData
 			=	::std::assume_aligned
-				<	8uz
+				<	t_vSize
 				>(	m_aData
 				)
 			;
-			::std::copy
-			(	vValue
-				.	begin
-					()
-			,	vValue
-				.	end
-					()
-			,	aData
+			(	...
+			,	(	aData
+					[	rpIndex
+					]
+				=	i_vValue
+					[	rpIndex
+					]
+				)
 			);
-
 			return
 			*	this
 			;
@@ -286,11 +290,13 @@ export namespace
 	};
 
 	template
-		<>
+		<	USize
+				t_vSize
+		>
 	struct
 		Var
 		<	unsigned char const
-			(&)	[	8uz
+			(&)	[	t_vSize
 				]
 		,	SimdTag
 		>
@@ -299,7 +305,7 @@ export namespace
 			value_type
 		=	Simd
 			<	unsigned char
-					[	8uz
+					[	t_vSize
 					]
 			>
 		;
@@ -309,181 +315,35 @@ export namespace
 		;
 
 		[[nodiscard]]
-		explicit(true) inline
+		explicit(true) constexpr inline
 		(	operator
 			value_type
 		)	()	const
 			noexcept
 		{
-			unsigned char
-				vValue
-				[	8uz
+			auto const
+			&	[	...
+					rpIndex
 				]
+			=	IndexPack
+				<	t_vSize
+				>
 			;
 			auto const
 				aData
 			=	::std::assume_aligned
-				<	8uz
+				<	t_vSize
 				>(	m_aData
 				)
 			;
-			::std::copy
-			(	aData
-			,		aData
-				+	8uz
-			,	vValue
-			);
 			return
-			::std::bit_cast<value_type>
-			(	vValue
-			);
-		}
-	};
-
-
-	template
-		<>
-	struct
-		Var
-		<	unsigned char
-			(&)	[	16uz
-				]
-		,	SimdTag
-		>
-	{
-		using
-			value_type
-		=	Simd
-			<	unsigned char
-					[	16uz
+			{	.	m_vRaw
+				{	aData
+					[	rpIndex
 					]
-			>
-		;
-
-		unsigned char
-		*	m_aData
-		;
-
-		[[nodiscard]]
-		explicit(true) inline
-		(	operator
-			value_type
-		)	()	const
-			noexcept
-		{
-			unsigned char
-				vValue
-				[	16uz
-				]
-			;
-			auto const
-				aData
-			=	::std::assume_aligned
-				<	16uz
-				>(	m_aData
-				)
-			;
-			::std::copy
-			(	aData
-			,		aData
-				+	16uz
-			,	vValue
-			);
-			return
-			::std::bit_cast<value_type>
-			(	vValue
-			);
-		}
-
-		auto inline
-		(	operator=
-		)	(	value_type
-					i_vValue
-			)	const&
-			noexcept
-		->	Var const&
-		{
-			auto const
-				vValue
-			=	::std::bit_cast<::std::array<unsigned char, 16uz>>
-				(	i_vValue
-				)
-			;
-			auto const
-				aData
-			=	::std::assume_aligned
-				<	16uz
-				>(	m_aData
-				)
-			;
-			::std::copy
-			(	vValue
-				.	begin
-					()
-			,	vValue
-				.	end
-					()
-			,	aData
-			);
-
-			return
-			*	this
-			;
-		}
-	};
-
-	template
-		<>
-	struct
-		Var
-		<	unsigned char const
-			(&)	[	16uz
-				]
-		,	SimdTag
-		>
-	{
-		using
-			value_type
-		=	Simd
-			<	unsigned char
-					[	16uz
-					]
-			>
-		;
-
-		unsigned char const
-		*	m_aData
-		;
-
-		[[nodiscard]]
-		explicit(true) inline
-		(	operator
-			value_type
-		)	()	const
-			noexcept
-		{
-			unsigned char
-				vValue
-				[	16uz
-				]
-			;
-			auto const
-				aData
-			=	::std::assume_aligned
-				<	16uz
-				>(	m_aData
-				)
-			;
-			::std::copy
-			(	aData
-			,		aData
-				+	16uz
-			,	vValue
-			);
-			return
-			::std::bit_cast<value_type>
-			(	vValue
-			);
+					...
+				}
+			};
 		}
 	};
 }
