@@ -1,26 +1,26 @@
 Cachegrind, a high-precision tracing profiler
 Copyright (C) 2002-2024, and GNU GPL'd, by Nicholas Nethercote et al.
 Using Valgrind-3.25.1 and LibVEX; rerun with -h for copyright info
-Command: build/Evaluation/valgrind/bin/TagReplication 42 12500
+Command: build/Evaluation/valgrind/bin/TagReplication 0 12500
 
 warning: L3 cache found, using its data for the LL simulation.
 
-I refs:        48,588,838
-I1  misses:         2,206
-LLi misses:         2,095
+I refs:        47,412,810
+I1  misses:         1,965
+LLi misses:         1,869
 I1  miss rate:       0.00%
 LLi miss rate:       0.00%
 
-D refs:        21,872,591  (12,600,545 rd   + 9,272,046 wr)
-D1  misses:       315,688  (   174,357 rd   +   141,331 wr)
-LLd misses:       149,614  (     9,265 rd   +   140,349 wr)
-D1  miss rate:        1.4% (       1.4%     +       1.5%  )
-LLd miss rate:        0.7% (       0.1%     +       1.5%  )
+D refs:        19,727,391  (11,295,587 rd   + 8,431,804 wr)
+D1  misses:       315,816  (   174,459 rd   +   141,357 wr)
+LLd misses:       149,650  (     9,300 rd   +   140,350 wr)
+D1  miss rate:        1.6% (       1.5%     +       1.7%  )
+LLd miss rate:        0.8% (       0.1%     +       1.7%  )
 
-LL refs:          317,894  (   176,563 rd   +   141,331 wr)
-LL misses:        151,709  (    11,360 rd   +   140,349 wr)
-LL miss rate:         0.2% (       0.0%     +       1.5%  )
+LL refs:          317,781  (   176,424 rd   +   141,357 wr)
+LL misses:        151,519  (    11,169 rd   +   140,350 wr)
+LL miss rate:         0.2% (       0.0%     +       1.7%  )
 
-Branches:       3,233,598  ( 2,724,567 cond +   509,031 ind)
-Mispredicts:      532,155  (   192,507 cond +   339,648 ind)
-Mispred rate:        16.5% (       7.1%     +      66.7%   )
+Branches:       3,224,600  ( 2,715,577 cond +   509,023 ind)
+Mispredicts:      541,331  (   201,685 cond +   339,646 ind)
+Mispred rate:        16.8% (       7.4%     +      66.7%   )

@@ -1,29 +1,29 @@
 Cachegrind, a high-precision tracing profiler
 Copyright (C) 2002-2024, and GNU GPL'd, by Nicholas Nethercote et al.
 Using Valgrind-3.25.1 and LibVEX; rerun with -h for copyright info
-Command: build/Evaluation/valgrind/bin/Virtual 42 12500
+Command: build/Evaluation/valgrind/bin/Virtual 0 12500
 
 warning: L3 cache found, using its data for the LL simulation.
-brk segment overflow in thread #1: can't grow to 0x485a000
+brk segment overflow in thread #1: can't grow to 0x4857000
 (see section Limitations in user manual)
 NOTE: further instances of this message will not be shown
 
-I refs:        112,001,232
-I1  misses:          2,266
-LLi misses:          2,155
+I refs:        115,883,708
+I1  misses:          2,021
+LLi misses:          1,926
 I1  miss rate:        0.00%
 LLi miss rate:        0.00%
 
-D refs:         43,762,306  (27,764,475 rd   + 15,997,831 wr)
-D1  misses:        763,832  (   502,820 rd   +    261,012 wr)
-LLd misses:        269,179  (     9,368 rd   +    259,811 wr)
-D1  miss rate:         1.7% (       1.8%     +        1.6%  )
-LLd miss rate:         0.6% (       0.0%     +        1.6%  )
+D refs:         47,076,557  (29,139,282 rd   + 17,937,275 wr)
+D1  misses:        763,898  (   502,914 rd   +    260,984 wr)
+LLd misses:        269,217  (     9,402 rd   +    259,815 wr)
+D1  miss rate:         1.6% (       1.7%     +        1.5%  )
+LLd miss rate:         0.6% (       0.0%     +        1.4%  )
 
-LL refs:           766,098  (   505,086 rd   +    261,012 wr)
-LL misses:         271,334  (    11,523 rd   +    259,811 wr)
-LL miss rate:          0.2% (       0.0%     +        1.6%  )
+LL refs:           765,919  (   504,935 rd   +    260,984 wr)
+LL misses:         271,143  (    11,328 rd   +    259,815 wr)
+LL miss rate:          0.2% (       0.0%     +        1.4%  )
 
-Branches:       13,739,783  (11,333,278 cond +  2,406,505 ind)
-Mispredicts:       934,179  (   209,318 cond +    724,861 ind)
+Branches:       13,730,859  (11,324,350 cond +  2,406,509 ind)
+Mispredicts:       931,837  (   206,974 cond +    724,863 ind)
 Mispred rate:          6.8% (       1.8%     +       30.1%   )
