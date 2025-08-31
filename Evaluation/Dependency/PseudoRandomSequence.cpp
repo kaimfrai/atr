@@ -22,9 +22,9 @@ auto constexpr inline
 		*	i_aString
 	)
 	noexcept
-->	::std::size_t
+->	int
 {
-	for	(	::std::size_t
+	for	(	int
 				vResult
 			{}
 		;
@@ -33,7 +33,7 @@ auto constexpr inline
 		)
 	{
 		vResult
-		+=	static_cast<::std::size_t>
+		+=	static_cast<int>
 			(	*i_aString
 			-	'0'
 			)
@@ -54,13 +54,13 @@ auto constexpr inline
 
 export
 {
-	auto constexpr inline Parallel = 16uz;
+	auto constexpr inline Parallel = 16;
 	auto constexpr inline RNG = Parallel / sizeof(std::uint64_t);
 
 	struct
 		CountedSentinel
 	{
-		::std::size_t
+		int
 			EndCount
 		;
 	};
@@ -349,7 +349,7 @@ export
 		RandomGenerators<GeneratorCount>
 			m_vRandom
 		;
-		::std::size_t
+		int
 			m_vCounter
 		=	0
 		;
@@ -358,16 +358,6 @@ export
 		;
 
 	public:
-		using
-			difference_type
-		=	int
-		;
-
-		using
-			value_type
-		=	::std::uint64_t
-		;
-
 		explicit(false) constexpr inline
 		(	CountedXoroshiro
 		)	(	::std::uint64_t
@@ -470,13 +460,33 @@ export
 		}
 	};
 
+	template<>
+	struct
+		::std::iterator_traits
+		<	CountedXoroshiro
+		>
+	{
+		using
+			difference_type
+		=	int
+		;
+		using
+			value_type
+		=	::std::uint64_t
+		;
+		using
+			iterator_category
+		=	::std::input_iterator_tag
+		;
+	};
+
 	class
 		SimdCountedXoroshiro
 	{
 		RandomGenerators<GeneratorCount>
 			m_vRandom
 		;
-		::std::size_t
+		int
 			m_vCounter
 		=	0
 		;
@@ -567,13 +577,33 @@ export
 		}
 	};
 
+	template<>
+	struct
+		::std::iterator_traits
+		<	SimdCountedXoroshiro
+		>
+	{
+		using
+			difference_type
+		=	int
+		;
+		using
+			value_type
+		=	::std::uint64_t
+		;
+		using
+			iterator_category
+		=	::std::input_iterator_tag
+		;
+	};
+
 	struct
 		SimdPseudoRandomSequence
 	{
-		::std::size_t
+		int
 			m_vSeed
 		;
-		::std::size_t
+		int
 			m_vIterations
 		;
 
@@ -583,12 +613,16 @@ export
 		)	()	const
 			noexcept
 		->	SimdCountedXoroshiro
-		{	return
-			SimdCountedXoroshiro
-			{	static_cast<::std::uint64_t>
-				(	m_vSeed
-				)
+		{
+			SimdCountedXoroshiro static constexpr
+				vStart
+			{	42uz
 			};
+			return
+			::std::next
+			(	vStart
+			,	m_vSeed
+			);
 		}
 
 		[[nodiscard]]
@@ -604,18 +638,17 @@ export
 		}
 	};
 
-	class
+	struct
 		PseudoRandomSequence
 	{
-		::std::size_t
+		int
 			m_vSeed
 		;
 
-		::std::size_t
+		int
 			m_vIterations
 		;
 
-	public:
 		explicit(true) constexpr inline
 		(	PseudoRandomSequence
 		)	(	char const
@@ -638,24 +671,14 @@ export
 
 		[[nodiscard]]
 		auto constexpr inline
-		(	Seed
-		)	()	const
-			noexcept
-		->	::std::size_t
-		{	return
-				m_vSeed
-			;
-		}
-
-		[[nodiscard]]
-		auto constexpr inline
 		(	size
 		)	()	const
 			noexcept
 		->	::std::size_t
 		{	return
-				m_vIterations
-			;
+			static_cast<::std::size_t>
+			(	m_vIterations
+			);
 		}
 
 		[[nodiscard]]
@@ -676,10 +699,16 @@ export
 		)	()	const
 			noexcept
 		->	CountedXoroshiro
-		{	return
-			CountedXoroshiro
-			{	m_vSeed
+		{
+			CountedXoroshiro static constexpr
+				vStart
+			{	42uz
 			};
+			return
+			::std::next
+			(	vStart
+			,	m_vSeed
+			);
 		}
 
 		[[nodiscard]]

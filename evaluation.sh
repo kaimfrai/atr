@@ -80,13 +80,13 @@ then
 	build_all Speed $2
 	bash Evaluation/assembly.sh $2
 	bash Evaluation/compile.sh $2
-	bash Evaluation/perf.sh 42 12500 10 $2
+	bash Evaluation/perf.sh 12500 10 $2
 	build_all Speed $2
 
 	configure valgrind
 	build_all valgrind $2
-	bash Evaluation/cachegrind.sh 42 12500 $2
-	bash Evaluation/memcheck.sh 42 12500 $2
+	bash Evaluation/cachegrind.sh 12500 $2
+	bash Evaluation/memcheck.sh 12500 $2
 	build_all valgrind $2
 
 elif [ $1 == "assembly" ] || [ $1 == "compile" ]
@@ -100,14 +100,14 @@ elif [ $1 == "cachegrind" ] || [ $1 == "memcheck" ]
 then
 	configure valgrind
 	build_all valgrind $2
-	bash Evaluation/$1.sh 42 12500 $2
+	bash Evaluation/$1.sh 12500 $2
 	build_all valgrind $2
 
 elif [ $1 == "perf" ]
 then
 	configure Speed
 	build_all Speed $2
-	bash Evaluation/$1.sh 42 12500 10 $2
+	bash Evaluation/$1.sh 12500 10 $2
 	build_all Speed $2
 
 else

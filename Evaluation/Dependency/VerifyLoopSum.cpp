@@ -17,12 +17,12 @@ export
 	->	int
 	{
 		if	(	i_vSequence
-				.	Seed
-					()
-			!=	42uz
+				.	m_vSeed
+			!=	0
 			)
-		{	return
-				0
+		{	throw
+				i_vSequence
+				.	m_vSeed
 			;
 		}
 
@@ -51,19 +51,18 @@ export
 
 		switch
 			(	i_vSequence
-				.	size
-					()
+				.	m_vIterations
 			)
 		{
 			case
-				100'000uz
+				100'000
 		:	return
 			fExpect
 			(	1.16918583e+11f
 			);
 
 			case
-				200'000uz
+				200'000
 		:	return
 			fExpect
 			(	2.35098194e+11f

@@ -1,45 +1,45 @@
-if [ $# -lt 2 ]
+if [ $# -lt 1 ]
 then
-	echo "memcheck.sh requires 2 arguments!"
+	echo "memcheck.sh requires 1 argument!"
 	exit 1
 fi
 
 echo "Measuring memory consumption..."
 
-mkdir -p build/Evaluation/valgrind/memcheck_$1_$2/
-mkdir -p Evaluation/Results/memcheck_$1_$2/
+mkdir -p build/Evaluation/valgrind/memcheck_$1/
+mkdir -p Evaluation/Results/memcheck_$1/
 
 function execute_memcheck()
 {
-	echo $3
+	echo $2
 
 	valgrind\
 		--tool=memcheck\
-		build/Evaluation/valgrind/bin/$3\
-		$1 $2\
-		2> build/Evaluation/valgrind/memcheck_$1_$2/$3.txt
+		build/Evaluation/valgrind/bin/$2\
+		0 $1\
+		2> build/Evaluation/valgrind/memcheck_$1/$2.txt
 
-	cut --complement -d' ' -f1 build/Evaluation/valgrind/memcheck_$1_$2/$3.txt > Evaluation/Results/memcheck_$1_$2/$3.txt
+	cut --complement -d' ' -f1 build/Evaluation/valgrind/memcheck_$1/$2.txt > Evaluation/Results/memcheck_$1/$2.txt
 }
 
-if	[ $# -lt 3 ] \
-||	[ $3 == "all" ]
+if	[ $# -lt 2 ] \
+||	[ $2 == "all" ]
 then
-	execute_memcheck $1 $2 "Any"
-	execute_memcheck $1 $2 "Archetype"
-	execute_memcheck $1 $2 "Dyno"
-	execute_memcheck $1 $2 "Polymorphic"
-	execute_memcheck $1 $2 "Replication"
-	execute_memcheck $1 $2 "SOAATR"
-	execute_memcheck $1 $2 "SOAReplication"
-	execute_memcheck $1 $2 "TagATR"
-	execute_memcheck $1 $2 "TagReplication"
-	execute_memcheck $1 $2 "TypeErasure"
-	execute_memcheck $1 $2 "Variant"
-	execute_memcheck $1 $2 "Virtual"
-	execute_memcheck $1 $2 "Visitor"
+	execute_memcheck $1 "Any"
+	execute_memcheck $1 "Archetype"
+	execute_memcheck $1 "Dyno"
+	execute_memcheck $1 "Polymorphic"
+	execute_memcheck $1 "Replication"
+	execute_memcheck $1 "SOAATR"
+	execute_memcheck $1 "SOAReplication"
+	execute_memcheck $1 "TagATR"
+	execute_memcheck $1 "TagReplication"
+	execute_memcheck $1 "TypeErasure"
+	execute_memcheck $1 "Variant"
+	execute_memcheck $1 "Virtual"
+	execute_memcheck $1 "Visitor"
 else
-	execute_memcheck $1 $2 $3
+	execute_memcheck $1 $2
 fi
 
-echo "Results in Evaluation/Results/memcheck_$1_$2/"
+echo "Results in Evaluation/Results/memcheck_$1/"
