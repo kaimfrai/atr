@@ -1,16 +1,16 @@
 
- Performance counter stats for 'build/Evaluation/bin/Visitor 42 12500' (10 runs):
+ Performance counter stats for 'build/Evaluation/Speed/bin/Visitor 0 12500' (10 runs):
 
-              9,66 msec task-clock                       #    0,977 CPUs utilized               ( +-  0,74% )
-                 1      context-switches                 #  103,472 /sec                        ( +- 37,86% )
-                 1      cpu-migrations                   #  103,472 /sec                        ( +- 26,67% )
-               829      page-faults                      #   85,779 K/sec                       ( +-  0,03% )
-        48.637.531      instructions                     #    1,16  insn per cycle            
-                                                  #    0,41  stalled cycles per insn     ( +-  0,09% )
-        41.928.112      cycles                           #    4,338 GHz                         ( +-  0,75% )
-        19.985.494      stalled-cycles-frontend          #   47,67% frontend cycles idle        ( +-  1,08% )
-         6.885.801      branches                         #  712,490 M/sec                       ( +-  0,11% )
-           800.596      branch-misses                    #   11,63% of all branches             ( +-  1,74% )
+              9,98 msec task-clock                       #    0,978 CPUs utilized               ( +-  0,64% )
+                 1      context-switches                 #  100,158 /sec                        ( +- 34,80% )
+                 1      cpu-migrations                   #  100,158 /sec                        ( +- 32,66% )
+               831      page-faults                      #   83,231 K/sec                       ( +-  0,03% )
+        47.161.255      instructions                     #    1,09  insn per cycle            
+                                                  #    0,43  stalled cycles per insn     ( +-  0,03% )
+        43.236.752      cycles                           #    4,331 GHz                         ( +-  0,65% )
+        20.468.976      stalled-cycles-frontend          #   47,34% frontend cycles idle        ( +-  1,30% )
+         7.257.672      branches                         #  726,913 M/sec                       ( +-  0,04% )
+           828.547      branch-misses                    #   11,42% of all branches             ( +-  1,76% )
 
-         0,0098957 +- 0,0000686 seconds time elapsed  ( +-  0,69% )
+         0,0102042 +- 0,0000633 seconds time elapsed  ( +-  0,62% )
 

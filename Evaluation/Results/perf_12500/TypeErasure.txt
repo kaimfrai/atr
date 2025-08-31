@@ -1,16 +1,16 @@
 
- Performance counter stats for 'build/Evaluation/bin/TypeErasure 42 12500' (10 runs):
+ Performance counter stats for 'build/Evaluation/Speed/bin/TypeErasure 0 12500' (10 runs):
 
-             11,34 msec task-clock                       #    0,962 CPUs utilized               ( +-  0,63% )
-                 2      context-switches                 #  176,320 /sec                        ( +- 15,72% )
-                 1      cpu-migrations                   #   88,160 /sec                        ( +- 22,11% )
-             2.731      page-faults                      #  240,765 K/sec                       ( +-  0,01% )
-       113.583.515      instructions                     #    2,31  insn per cycle            
-                                                  #    0,15  stalled cycles per insn     ( +-  0,05% )
-        49.188.737      cycles                           #    4,336 GHz                         ( +-  0,62% )
-        16.677.429      stalled-cycles-frontend          #   33,90% frontend cycles idle        ( +-  0,86% )
-        19.090.880      branches                         #    1,683 G/sec                       ( +-  0,06% )
-           628.792      branch-misses                    #    3,29% of all branches             ( +-  0,36% )
+             11,16 msec task-clock                       #    0,966 CPUs utilized               ( +-  0,65% )
+                 1      context-switches                 #   89,571 /sec                        ( +- 40,69% )
+                 0      cpu-migrations                   #    0,000 /sec                      
+             2.734      page-faults                      #  244,887 K/sec                       ( +-  0,01% )
+       107.685.478      instructions                     #    2,23  insn per cycle            
+                                                  #    0,16  stalled cycles per insn     ( +-  0,01% )
+        48.380.658      cycles                           #    4,333 GHz                         ( +-  0,65% )
+        17.296.751      stalled-cycles-frontend          #   35,75% frontend cycles idle        ( +-  0,37% )
+        19.441.348      branches                         #    1,741 G/sec                       ( +-  0,01% )
+           624.124      branch-misses                    #    3,21% of all branches             ( +-  0,24% )
 
-         0,0117915 +- 0,0000975 seconds time elapsed  ( +-  0,83% )
+         0,0115571 +- 0,0000989 seconds time elapsed  ( +-  0,86% )
 

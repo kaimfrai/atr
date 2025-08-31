@@ -1,16 +1,16 @@
 
- Performance counter stats for 'build/Evaluation/bin/TagATR 42 12500' (10 runs):
+ Performance counter stats for 'build/Evaluation/Speed/bin/TagATR 0 12500' (10 runs):
 
-              6,63 msec task-clock                       #    0,969 CPUs utilized               ( +-  0,83% )
-                 1      context-switches                 #  150,885 /sec                        ( +- 31,45% )
-                 0      cpu-migrations                   #    0,000 /sec                      
-               769      page-faults                      #  116,031 K/sec                       ( +-  0,06% )
-        40.771.049      instructions                     #    1,42  insn per cycle            
-                                                  #    0,25  stalled cycles per insn     ( +-  0,02% )
-        28.754.434      cycles                           #    4,339 GHz                         ( +-  0,82% )
-        10.081.911      stalled-cycles-frontend          #   35,06% frontend cycles idle        ( +-  0,45% )
-         4.732.101      branches                         #  714,004 M/sec                       ( +-  0,03% )
-           487.425      branch-misses                    #   10,30% of all branches             ( +-  0,46% )
+              6,55 msec task-clock                       #    0,970 CPUs utilized               ( +-  0,68% )
+                 1      context-switches                 #  152,738 /sec                        ( +- 42,69% )
+                 1      cpu-migrations                   #  152,738 /sec                        ( +- 42,82% )
+               771      page-faults                      #  117,761 K/sec                       ( +-  0,04% )
+        40.486.930      instructions                     #    1,43  insn per cycle            
+                                                  #    0,20  stalled cycles per insn     ( +-  0,02% )
+        28.372.890      cycles                           #    4,334 GHz                         ( +-  0,70% )
+         7.992.421      stalled-cycles-frontend          #   28,17% frontend cycles idle        ( +-  0,40% )
+         5.079.328      branches                         #  775,808 M/sec                       ( +-  0,03% )
+           479.924      branch-misses                    #    9,45% of all branches             ( +-  0,11% )
 
-         0,0068401 +- 0,0000547 seconds time elapsed  ( +-  0,80% )
+         0,0067476 +- 0,0000460 seconds time elapsed  ( +-  0,68% )
 

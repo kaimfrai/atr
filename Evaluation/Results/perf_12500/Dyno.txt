@@ -1,16 +1,16 @@
 
- Performance counter stats for 'build/Evaluation/bin/Dyno 42 12500' (10 runs):
+ Performance counter stats for 'build/Evaluation/Speed/bin/Dyno 0 12500' (10 runs):
 
-              7,20 msec task-clock                       #    0,972 CPUs utilized               ( +-  0,74% )
-                 0      context-switches                 #    0,000 /sec                      
-                 0      cpu-migrations                   #    0,000 /sec                      
-               859      page-faults                      #  119,276 K/sec                       ( +-  0,04% )
-        43.305.929      instructions                     #    1,39  insn per cycle            
-                                                  #    0,25  stalled cycles per insn     ( +-  0,02% )
-        31.261.156      cycles                           #    4,341 GHz                         ( +-  0,74% )
-        10.682.607      stalled-cycles-frontend          #   34,17% frontend cycles idle        ( +-  0,42% )
-         5.271.403      branches                         #  731,957 M/sec                       ( +-  0,03% )
-           566.279      branch-misses                    #   10,74% of all branches             ( +-  0,29% )
+              7,36 msec task-clock                       #    0,971 CPUs utilized               ( +-  0,96% )
+                 1      context-switches                 #  135,791 /sec                        ( +- 36,67% )
+                 1      cpu-migrations                   #  135,791 /sec                        ( +- 33,33% )
+               863      page-faults                      #  117,187 K/sec                       ( +-  0,03% )
+        42.689.230      instructions                     #    1,34  insn per cycle            
+                                                  #    0,25  stalled cycles per insn     ( +-  0,05% )
+        31.890.217      cycles                           #    4,330 GHz                         ( +-  0,95% )
+        10.578.080      stalled-cycles-frontend          #   33,17% frontend cycles idle        ( +-  0,60% )
+         5.791.826      branches                         #  786,476 M/sec                       ( +-  0,07% )
+           516.989      branch-misses                    #    8,93% of all branches             ( +-  0,42% )
 
-         0,0074059 +- 0,0000562 seconds time elapsed  ( +-  0,76% )
+         0,0075836 +- 0,0000751 seconds time elapsed  ( +-  0,99% )
 

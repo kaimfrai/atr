@@ -1,16 +1,16 @@
 
- Performance counter stats for 'build/Evaluation/bin/Variant 42 12500' (10 runs):
+ Performance counter stats for 'build/Evaluation/Speed/bin/Variant 0 12500' (10 runs):
 
-              6,18 msec task-clock                       #    0,970 CPUs utilized               ( +-  0,90% )
-                 1      context-switches                 #  161,804 /sec                        ( +- 37,86% )
-                 0      cpu-migrations                   #    0,000 /sec                      
-               413      page-faults                      #   66,825 K/sec                       ( +-  0,08% )
-        34.421.643      instructions                     #    1,28  insn per cycle            
-                                                  #    0,28  stalled cycles per insn     ( +-  0,01% )
-        26.809.029      cycles                           #    4,338 GHz                         ( +-  0,90% )
-         9.699.249      stalled-cycles-frontend          #   36,18% frontend cycles idle        ( +-  0,54% )
-         3.042.380      branches                         #  492,271 M/sec                       ( +-  0,04% )
-           476.478      branch-misses                    #   15,66% of all branches             ( +-  0,88% )
+              6,69 msec task-clock                       #    0,971 CPUs utilized               ( +-  1,28% )
+                 1      context-switches                 #  149,545 /sec                        ( +- 42,82% )
+                 1      cpu-migrations                   #  149,545 /sec                        ( +- 29,81% )
+               415      page-faults                      #   62,061 K/sec                       ( +-  0,06% )
+        34.062.808      instructions                     #    1,18  insn per cycle            
+                                                  #    0,29  stalled cycles per insn     ( +-  0,05% )
+        28.947.453      cycles                           #    4,329 GHz                         ( +-  1,27% )
+         9.813.403      stalled-cycles-frontend          #   33,90% frontend cycles idle        ( +-  0,73% )
+         3.410.538      branches                         #  510,029 M/sec                       ( +-  0,10% )
+           461.962      branch-misses                    #   13,55% of all branches             ( +-  0,96% )
 
-         0,0063747 +- 0,0000582 seconds time elapsed  ( +-  0,91% )
+         0,0068886 +- 0,0000900 seconds time elapsed  ( +-  1,31% )
 

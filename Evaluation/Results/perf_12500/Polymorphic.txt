@@ -1,16 +1,16 @@
 
- Performance counter stats for 'build/Evaluation/bin/Polymorphic 42 12500' (10 runs):
+ Performance counter stats for 'build/Evaluation/Speed/bin/Polymorphic 0 12500' (10 runs):
 
-             12,63 msec task-clock                       #    0,957 CPUs utilized               ( +-  0,46% )
-                 1      context-switches                 #   79,191 /sec                        ( +- 40,14% )
-                 0      cpu-migrations                   #    0,000 /sec                      
-             4.686      page-faults                      #  371,089 K/sec                       ( +-  0,01% )
-       125.614.116      instructions                     #    2,29  insn per cycle            
-                                                  #    0,15  stalled cycles per insn     ( +-  0,02% )
-        54.791.481      cycles                           #    4,339 GHz                         ( +-  0,45% )
-        19.239.151      stalled-cycles-frontend          #   35,11% frontend cycles idle        ( +-  0,38% )
-        21.357.166      branches                         #    1,691 G/sec                       ( +-  0,02% )
-           611.394      branch-misses                    #    2,86% of all branches             ( +-  0,13% )
+             12,79 msec task-clock                       #    0,953 CPUs utilized               ( +-  0,79% )
+                 3      context-switches                 #  234,503 /sec                        ( +- 13,19% )
+                 2      cpu-migrations                   #  156,335 /sec                        ( +- 28,33% )
+             4.688      page-faults                      #  366,450 K/sec                       ( +-  0,01% )
+       117.701.092      instructions                     #    2,12  insn per cycle            
+                                                  #    0,16  stalled cycles per insn     ( +-  0,06% )
+        55.394.837      cycles                           #    4,330 GHz                         ( +-  0,79% )
+        18.583.433      stalled-cycles-frontend          #   33,55% frontend cycles idle        ( +-  0,57% )
+        21.999.061      branches                         #    1,720 G/sec                       ( +-  0,07% )
+           577.449      branch-misses                    #    2,62% of all branches             ( +-  0,39% )
 
-         0,0131957 +- 0,0000977 seconds time elapsed  ( +-  0,74% )
+          0,013426 +- 0,000121 seconds time elapsed  ( +-  0,90% )
 
