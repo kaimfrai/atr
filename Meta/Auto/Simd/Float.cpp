@@ -22,74 +22,6 @@ export namespace
 				[	t_vSize
 				]
 		,	SimdTag
-		,	MaskedTag
-		>
-	{
-		vec<float, t_vSize>
-			m_vRaw
-		;
-		SimdMask<t_vSize>
-			m_vMask
-		;
-
-		template
-			<	USize
-					t_vBatch
-			>
-		[[nodiscard]]
-		auto static constexpr inline
-		(	LoadAligned
-		)	(	float const
-				*	i_aData
-			,	SimdMask<t_vSize>
-					i_vMask
-			)
-			noexcept
-		->	Var
-		{
-			auto const
-			&	[	...
-					rpIndex
-				]
-			=	IndexPack
-				<	t_vSize
-				>
-			;
-			auto const
-				aAlignedData
-			=	::std::assume_aligned
-				<	t_vBatch
-				*	alignof(float)
-				>(	i_aData
-				)
-			;
-			return
-			{	.	m_vRaw
-				{	i_vMask
-				?	vec<float, t_vSize>
-					{	aAlignedData
-						[	rpIndex
-						]
-						...
-					}
-				:	vec<float, t_vSize>{}
-				}
-			,	.	m_vMask
-				=	i_vMask
-			};
-		}
-	};
-
-	template
-		<	USize
-				t_vSize
-		>
-	struct
-		Var
-		<	float
-				[	t_vSize
-				]
-		,	SimdTag
 		>
 	{
 		using
@@ -382,53 +314,6 @@ export namespace
 
 			return
 			*	this
-			;
-		}
-	};
-
-	template
-		<	USize
-				t_vSize
-		>
-	struct
-		Var
-		<	float const
-			(&)	[	t_vSize
-				]
-		,	SimdTag
-		,	MaskedTag
-		>
-	{
-		using
-			value_type
-		=	MaskedSimd
-			<	float
-					[	t_vSize
-					]
-			>
-		;
-
-		float const
-		*	m_aData
-		;
-
-		SimdMask<t_vSize>
-			m_vMask
-		;
-
-		[[nodiscard]]
-		explicit(true) constexpr inline
-		(	operator
-			value_type
-		)	()	const
-			noexcept
-		{	return
-			value_type
-			::	template
-				LoadAligned<t_vSize>
-				(	m_aData
-				,	m_vMask
-				)
 			;
 		}
 	};
