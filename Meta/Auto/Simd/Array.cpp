@@ -151,16 +151,15 @@ export namespace
 			noexcept
 		->	value_type
 		{	return
-			value_type
-			::	template
-				LoadAligned<t_vCount>
-				(	m_aData
-				+	static_cast<SSize>
-					(	i_vIndex
-					)
-				,	m_vMask
-				)
-			;
+			static_cast<value_type>
+			(	MaskedSimd<t_tElement(&)[t_vCount]>
+				{	m_aData
+					+	static_cast<SSize>
+						(	i_vIndex
+						)
+					,	m_vMask
+				}
+			);
 		}
 	};
 
@@ -235,15 +234,14 @@ export namespace
 			noexcept
 		->	value_type
 		{	return
-			value_type
-			::	template
-				LoadAligned<t_vCount>
-				(	m_aData
+			static_cast<value_type>
+			(	Simd<t_tElement(&)[t_vCount]>
+				{	m_aData
 				+	static_cast<SSize>
 					(	i_vIndex
 					)
-				)
-			;
+				}
+			);
 		}
 	};
 }

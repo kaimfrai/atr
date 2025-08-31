@@ -139,54 +139,6 @@ export namespace
 		SimdMask<t_vSize>
 			m_vMask
 		;
-
-		template
-			<	USize
-					t_vBatch
-			>
-		[[nodiscard]]
-		auto static constexpr inline
-		(	LoadAligned
-		)	(	t_tElement const
-				*	i_aData
-			,	SimdMask<t_vSize>
-					i_vMask
-			)
-			noexcept
-		->	Var
-		{
-			auto const
-			&	[	...
-					rpIndex
-				]
-			=	IndexPack
-				<	t_vSize
-				>
-			;
-			auto const
-				aAlignedData
-			=	::std::assume_aligned
-				<	t_vBatch
-				*	alignof(t_tElement)
-				>(	i_aData
-				)
-			;
-			return
-			{	.	m_vRaw
-				{	i_vMask
-				?	decltype(m_vRaw)
-					{	aAlignedData
-						[	rpIndex
-						]
-						...
-					}
-				:	decltype(m_vRaw)
-					{}
-				}
-			,	.	m_vMask
-				=	i_vMask
-			};
-		}
 	};
 
 	template
@@ -227,14 +179,38 @@ export namespace
 			value_type
 		)	()	const
 			noexcept
-		{	return
-			value_type
-			::	template
-				LoadAligned<t_vSize>
-				(	m_aData
-				,	m_vMask
+		{
+			auto const
+			&	[	...
+					rpIndex
+				]
+			=	IndexPack
+				<	t_vSize
+				>
+			;
+			auto const
+				aAlignedData
+			=	::std::assume_aligned
+				<	t_vSize
+				*	alignof(t_tElement)
+				>(	m_aData
 				)
 			;
+			return
+			{	.	m_vRaw
+				{	m_vMask
+				?	decltype(value_type::m_vRaw)
+					{	aAlignedData
+						[	rpIndex
+						]
+						...
+					}
+				:	decltype(value_type::m_vRaw)
+					{}
+				}
+			,	.	m_vMask
+				=	m_vMask
+			};
 		}
 	};
 
@@ -708,45 +684,6 @@ export namespace
 			<	USize
 					t_vBatch
 			>
-		[[nodiscard]]
-		auto static constexpr inline
-		(	LoadAligned
-		)	(	t_tElement const
-				*	i_aData
-			)
-			noexcept
-		->	Var
-		{
-			auto const
-			&	[	...
-					rpIndex
-				]
-			=	IndexPack
-				<	t_vSize
-				>
-			;
-			auto const
-				aAlignedData
-			=	::std::assume_aligned
-				<	t_vBatch
-				*	alignof(t_tElement)
-				>(	i_aData
-				)
-			;
-			return
-			{	.	m_vRaw
-				{	aAlignedData
-					[	rpIndex
-					]
-					...
-				}
-			};
-		}
-
-		template
-			<	USize
-					t_vBatch
-			>
 		auto constexpr inline
 		(	StoreAligned
 		)	(	t_tElement
@@ -873,13 +810,31 @@ export namespace
 			value_type
 		)	()	const
 			noexcept
-		{	return
-			value_type
-			::	template
-				LoadAligned<t_vSize>
-				(	m_aData
+		{
+			auto const
+			&	[	...
+					rpIndex
+				]
+			=	IndexPack
+				<	t_vSize
+				>
+			;
+			auto const
+				aAlignedData
+			=	::std::assume_aligned
+				<	t_vSize
+				*	alignof(t_tElement)
+				>(	m_aData
 				)
 			;
+			return
+			{	.	m_vRaw
+				{	aAlignedData
+					[	rpIndex
+					]
+					...
+				}
+			};
 		}
 
 		auto constexpr inline
