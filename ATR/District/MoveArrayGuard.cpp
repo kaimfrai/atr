@@ -255,31 +255,28 @@ export namespace
 			)
 			noexcept
 		{
-			auto const
-			*	aData
-			=	Data
-			;
+			Simd<t_tElement(&)[t_vBatch]>
+				rData
+			{	::std::launder
+				(	::std::bit_cast<t_tElement*>
+					(	Data
+					)
+				)
+			+	Count
+			};
 			for	(	auto const
 					&	rElement
 				:	i_rArray
 				)
 			{
-				rElement
-				.	template
-					StoreAligned<t_vBatch>
-					(	::std::launder
-						(	::std::bit_cast<t_tElement*>
-							(	aData
-							)
-						)
-					+	Count
-					)
+					rData
+				=	rElement
 				;
 
-				(	aData
-				+=	sizeof(t_tElement)
-				*	Capacity
-				);
+					rData
+					.	m_aData
+				+=	Capacity
+				;
 			}
 
 			return

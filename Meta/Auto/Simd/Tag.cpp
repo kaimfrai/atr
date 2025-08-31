@@ -680,45 +680,6 @@ export namespace
 			};
 		}
 
-		template
-			<	USize
-					t_vBatch
-			>
-		auto constexpr inline
-		(	StoreAligned
-		)	(	t_tElement
-				*	o_aData
-			)	const
-			noexcept
-		->	void
-		{
-			auto const
-			&	[	...
-					rpIndex
-				]
-			=	IndexPack
-				<	t_vSize
-				>
-			;
-			auto const
-				aAlignedData
-			=	::std::assume_aligned
-				<	t_vBatch
-				*	alignof(t_tElement)
-				>(	o_aData
-				)
-			;
-			(	...
-			,	(	aAlignedData
-					[	rpIndex
-					]
-				=	m_vRaw
-					[	rpIndex
-					]
-				)
-			);
-		}
-
 		[[nodiscard]]
 		auto friend constexpr inline
 		(	HighestBit
@@ -845,12 +806,31 @@ export namespace
 			noexcept
 		->	Var const&
 		{
-			i_vValue
-			.	template
-				StoreAligned<t_vSize>
-				(	m_aData
+			auto const
+			&	[	...
+					rpIndex
+				]
+			=	IndexPack
+				<	t_vSize
+				>
+			;
+			auto const
+				aAlignedData
+			=	::std::assume_aligned
+				<	t_vSize
+				*	alignof(t_tElement)
+				>(	m_aData
 				)
 			;
+			(	...
+			,	(	aAlignedData
+					[	rpIndex
+					]
+				=	i_vValue
+					[	rpIndex
+					]
+				)
+			);
 
 			return
 			*	this
