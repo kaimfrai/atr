@@ -4,7 +4,7 @@ cd build/Evaluation/Speed
 
 echo ""
 
-function time_build()
+function time_build_single()
 {
 	touch Evaluation/Dependency/CMakeFiles/Evaluation.Dependency.DynamicArray.dir/*.o
 	touch Evaluation/Dependency/DynamicArray.pcm
@@ -22,7 +22,24 @@ function time_build()
 	touch bin/$1
 
 	time=$(\time -f "%e" ninja $1 2>&1  1>/dev/null)
-	echo "$time seconds to build $1 "
+	echo $time
+}
+
+function time_build()
+{
+	time=$(time_build_single $1)
+	echo "$time seconds to build $1"
+	for	(( i=0; i<10; i++ ))
+	do
+		new_time=$(time_build_single $1)
+		if (( $(echo "$new_time < $time" | bc -l) ));
+		then
+			time=$new_time
+			echo "$time seconds to build $1"
+			i=0
+		fi
+	done
+
 	echo "$time" > ../../../Evaluation/Results/compile/$1.txt
 }
 
