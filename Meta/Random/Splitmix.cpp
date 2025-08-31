@@ -171,13 +171,15 @@ export namespace
 						>
 					)
 				{	return
-					Var<::std::uint64_t[t_vExtent]>
-					{	(	i_vSeed
-						+	t_tpIndex
-						*	Splitmix64Base
-							::	Increment
-						)
-						...
+					value_type
+					{	.	m_vRaw
+						{	(	i_vSeed
+							+	t_tpIndex
+							*	Splitmix64Base
+								::	Increment
+							)
+							...
+						}
 					};
 				}(	::std::make_index_sequence
 					<	t_vExtent

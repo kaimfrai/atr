@@ -2,77 +2,39 @@ export module Meta.Auto.Simd.UInt64;
 
 export import Meta.Auto.Simd.Tag;
 import Meta.Auto.Array.Bounded;
+import Meta.Auto.Simd.Fill;
+import Meta.IndexPack;
+import Meta.Size;
 
 import std;
+
+using ::Meta::IndexPack;
 
 export namespace
 	Meta::Auto
 {
 	template
-		<>
+		<	USize
+				t_vSize
+		>
 	struct
 		Var
 		<	::std::uint64_t
-				[	2uz
+				[	t_vSize
 				]
 		,	SimdTag
 		>
 	{
 		using
 			RawType
-		=	vec<::std::uint64_t, 2>
+		=	vec<::std::uint64_t, t_vSize>
 		;
 
 		RawType
 			m_vRaw
 		;
 
-		explicit(false) constexpr inline
-		(	Var
-		)	()
-			noexcept
-		=	default
-		;
-
-		explicit(false) inline
-		(	Var
-		)	(	RawType
-					i_vInit
-			)
-			noexcept
-		:	m_vRaw
-			{	i_vInit
-			}
-		{}
-
-		explicit(true) inline
-		(	Var
-		)	(	Var<::std::uint64_t[2uz]>
-					i_vInit
-			)
-			noexcept
-		:	m_vRaw
-			{	::std::bit_cast<RawType>
-				(	i_vInit
-				)
-			}
-		{}
-
-		explicit(true) inline
-		(	Var
-		)	(	::std::uint64_t
-					i_vInit
-			)
-			noexcept
-		:	Var
-			{	Var<::std::uint64_t[2uz]>
-				{	i_vInit
-				,	i_vInit
-				}
-			}
-		{}
-
-		auto inline
+		auto constexpr inline
 		(	operator+=
 		)	(	Var
 					i_vIncrement
@@ -81,8 +43,7 @@ export namespace
 		->	Var&
 		{
 				m_vRaw
-			=	m_vRaw
-			+	i_vIncrement
+			+=	i_vIncrement
 				.	m_vRaw
 			;
 			return
@@ -90,7 +51,7 @@ export namespace
 			;
 		}
 
-		auto inline
+		auto constexpr inline
 		(	operator+=
 		)	(	::std::uint64_t
 					i_vIncrement
@@ -99,14 +60,14 @@ export namespace
 		->	Var&
 		{	return
 			*	this
-			+=	Var
-				{	i_vIncrement
-				}
+			+=	SimdFill<::std::uint64_t[t_vSize]>
+				(	i_vIncrement
+				)
 			;
 		}
 
 		[[nodiscard]]
-		auto friend inline
+		auto constexpr friend inline
 		(	operator>>
 		)	(	Var
 					i_vLeft
@@ -116,7 +77,6 @@ export namespace
 			noexcept
 		->	Var
 		{	return
-			Var
 			{	i_vLeft
 				.	m_vRaw
 			>> i_vRight
@@ -124,7 +84,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend inline
+		auto constexpr friend inline
 		(	operator<<
 		)	(	Var
 					i_vLeft
@@ -134,7 +94,6 @@ export namespace
 			noexcept
 		->	Var
 		{	return
-			Var
 			{	i_vLeft
 				.	m_vRaw
 			<<	i_vRight
@@ -152,7 +111,6 @@ export namespace
 			noexcept
 		->	Var
 		{	return
-			Var
 			{	i_vLeft
 				.	m_vRaw
 			xor	i_vRight
@@ -160,7 +118,7 @@ export namespace
 			};
 		}
 
-		auto inline
+		auto constexpr inline
 		(	operator^=
 		)	(	Var
 					i_vRight
@@ -175,7 +133,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend inline
+		auto constexpr friend inline
 		(	operator*
 		)	(	Var
 					i_vLeft
@@ -194,7 +152,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto friend inline
+		auto constexpr friend inline
 		(	operator*
 		)	(	Var
 					i_vLeft
@@ -205,14 +163,14 @@ export namespace
 		->	Var
 		{	return
 				i_vLeft
-			*	Var
-				{	i_vRight
-				}
+			*	SimdFill<::std::uint64_t[t_vSize]>
+				(	i_vRight
+				)
 			;
 		}
 
 		[[nodiscard]]
-		auto friend inline
+		auto friend constexpr inline
 		(	rotl
 		)	(	Var
 					i_vLeft
@@ -222,35 +180,21 @@ export namespace
 			noexcept
 		->	Var
 		{
-			auto
-				vArray
-			=	::std::bit_cast<Var<::std::uint64_t[2uz]>>
-				(	i_vLeft
-				)
-			;
-				vArray
-				[	0uz
+			auto const
+			&	[	...
+					rpElement
 				]
-			=	::std::rotl
-				(	vArray
-					[	0uz
-					]
-				,	i_vRight
-				)
-			;	vArray
-				[	1uz
-				]
-			=	::std::rotl
-				(	vArray
-					[	1uz
-					]
-				,	i_vRight
-				)
+			=	i_vLeft
+				.	m_vRaw
 			;
-
 			return
-			Var
-			{	vArray
+			{	.	m_vRaw
+				{	::std::rotl
+					(	rpElement
+					,	i_vRight
+					)
+					...
+				}
 			};
 		}
 	};
