@@ -1,16 +1,45 @@
 
  Performance counter stats for 'build/Evaluation/Speed/bin/Visitor 0 12500' (10 runs):
 
-              9,98 msec task-clock                       #    0,978 CPUs utilized               ( +-  0,64% )
-                 1      context-switches                 #  100,158 /sec                        ( +- 34,80% )
-                 1      cpu-migrations                   #  100,158 /sec                        ( +- 32,66% )
-               831      page-faults                      #   83,231 K/sec                       ( +-  0,03% )
-        47.161.255      instructions                     #    1,09  insn per cycle            
-                                                  #    0,43  stalled cycles per insn     ( +-  0,03% )
-        43.236.752      cycles                           #    4,331 GHz                         ( +-  0,65% )
-        20.468.976      stalled-cycles-frontend          #   47,34% frontend cycles idle        ( +-  1,30% )
-         7.257.672      branches                         #  726,913 M/sec                       ( +-  0,04% )
-           828.547      branch-misses                    #   11,42% of all branches             ( +-  1,76% )
+task-clock
+	9,98 msec
+	0,978 CPUs utilized
+	+- 0,64%
+context-switches
+	1
+	100,158 /sec	( +- 34,80% )
+cpu-migrations
+	1
+	100,158 /sec	( +- 32,66% )
+page-faults
+	831
+	83,231 K/sec
+	+- 0,03%
+instructions
+	47.161.255
+insn per cycle
+	1,09
 
-         0,0102042 +- 0,0000633 seconds time elapsed  ( +-  0,62% )
+stalled cycles per insn
+	0,43
+	+- 0,03%
+cycles
+	43.236.752
+	4,331 GHz
+	+- 0,65%
+stalled-cycles-frontend
+	20.468.976
+	47,34% frontend cycles idle
+	+- 1,30%
+branches
+	7.257.672
+	726,913 M/sec
+	+- 0,04%
+branch-misses
+	828.547
+	11,42% of all branches
+	+- 1,76%
+
+	0,0102042 +- 0,0000633 seconds time elapsed
+	+- 0,62%
 

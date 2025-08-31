@@ -1,16 +1,45 @@
 
  Performance counter stats for 'build/Evaluation/Speed/bin/TagReplication 0 12500' (10 runs):
 
-              6,42 msec task-clock                       #    0,967 CPUs utilized               ( +-  1,04% )
-                 0      context-switches                 #    0,000 /sec                      
-                 0      cpu-migrations                   #    0,000 /sec                      
-               771      page-faults                      #  120,147 K/sec                       ( +-  0,03% )
-        40.857.995      instructions                     #    1,47  insn per cycle            
-                                                  #    0,20  stalled cycles per insn     ( +-  0,08% )
-        27.795.387      cycles                           #    4,331 GHz                         ( +-  1,03% )
-         8.049.406      stalled-cycles-frontend          #   28,96% frontend cycles idle        ( +-  0,47% )
-         5.102.889      branches                         #  795,197 M/sec                       ( +-  0,10% )
-           456.635      branch-misses                    #    8,95% of all branches             ( +-  0,53% )
+task-clock
+	6,42 msec
+	0,967 CPUs utilized
+	+- 1,04%
+context-switches
+	0
+	0,000 /sec
+cpu-migrations
+	0
+	0,000 /sec
+page-faults
+	771
+	120,147 K/sec
+	+- 0,03%
+instructions
+	40.857.995
+insn per cycle
+	1,47
 
-         0,0066344 +- 0,0000743 seconds time elapsed  ( +-  1,12% )
+stalled cycles per insn
+	0,20
+	+- 0,08%
+cycles
+	27.795.387
+	4,331 GHz
+	+- 1,03%
+stalled-cycles-frontend
+	8.049.406
+	28,96% frontend cycles idle
+	+- 0,47%
+branches
+	5.102.889
+	795,197 M/sec
+	+- 0,10%
+branch-misses
+	456.635
+	8,95% of all branches
+	+- 0,53%
+
+	0,0066344 +- 0,0000743 seconds time elapsed
+	+- 1,12%
 

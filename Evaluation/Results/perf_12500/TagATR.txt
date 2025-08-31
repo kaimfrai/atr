@@ -1,16 +1,45 @@
 
  Performance counter stats for 'build/Evaluation/Speed/bin/TagATR 0 12500' (10 runs):
 
-              6,55 msec task-clock                       #    0,970 CPUs utilized               ( +-  0,68% )
-                 1      context-switches                 #  152,738 /sec                        ( +- 42,69% )
-                 1      cpu-migrations                   #  152,738 /sec                        ( +- 42,82% )
-               771      page-faults                      #  117,761 K/sec                       ( +-  0,04% )
-        40.486.930      instructions                     #    1,43  insn per cycle            
-                                                  #    0,20  stalled cycles per insn     ( +-  0,02% )
-        28.372.890      cycles                           #    4,334 GHz                         ( +-  0,70% )
-         7.992.421      stalled-cycles-frontend          #   28,17% frontend cycles idle        ( +-  0,40% )
-         5.079.328      branches                         #  775,808 M/sec                       ( +-  0,03% )
-           479.924      branch-misses                    #    9,45% of all branches             ( +-  0,11% )
+task-clock
+	6,55 msec
+	0,970 CPUs utilized
+	+- 0,68%
+context-switches
+	1
+	152,738 /sec	( +- 42,69% )
+cpu-migrations
+	1
+	152,738 /sec	( +- 42,82% )
+page-faults
+	771
+	117,761 K/sec
+	+- 0,04%
+instructions
+	40.486.930
+insn per cycle
+	1,43
 
-         0,0067476 +- 0,0000460 seconds time elapsed  ( +-  0,68% )
+stalled cycles per insn
+	0,20
+	+- 0,02%
+cycles
+	28.372.890
+	4,334 GHz
+	+- 0,70%
+stalled-cycles-frontend
+	7.992.421
+	28,17% frontend cycles idle
+	+- 0,40%
+branches
+	5.079.328
+	775,808 M/sec
+	+- 0,03%
+branch-misses
+	479.924
+	9,45% of all branches
+	+- 0,11%
+
+	0,0067476 +- 0,0000460 seconds time elapsed
+	+- 0,68%
 
