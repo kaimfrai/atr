@@ -237,7 +237,7 @@ export
 			;
 			(	...
 			,	(	rNumber
-				=	ByteShiftRight<1>
+				=	ElementShiftRight<1>
 					(	rNumber
 					)
 				)
