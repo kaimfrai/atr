@@ -9,7 +9,7 @@ import Evaluation.SOAReplication.Tag;
 
 import Meta.Auto.Simd.Cast;
 import Meta.Auto.Simd.Fill;
-import Meta.Auto.Simd.Float;
+import Meta.Auto.Simd.Tag;
 import Meta.Generic.RandomAccessIteratorBase;
 
 import std;

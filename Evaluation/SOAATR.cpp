@@ -22,8 +22,6 @@ import Evaluation.SOAATR.Interface;
 import ATR.District.MoveArrayGuard;
 import ATR.Literals;
 
-import Meta.Auto.Simd.Float;
-
 import std;
 
 using namespace ::ATR::Literals;

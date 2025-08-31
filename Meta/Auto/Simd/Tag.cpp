@@ -849,4 +849,143 @@ export namespace
 			);
 		}
 	};
+
+	template
+		<	typename
+				t_tElement
+		,	USize
+				t_vSize
+		>
+	struct
+		Var
+		<	t_tElement
+			(&)	[	t_vSize
+				]
+		,	SimdTag
+		>
+	{
+		using
+			value_type
+		=	Var
+			<	::std::remove_cv_t<t_tElement>
+					[	t_vSize
+					]
+			,	SimdTag
+			>
+		;
+
+		t_tElement
+		*	m_aData
+		;
+
+		[[nodiscard]]
+		explicit(true) constexpr inline
+		(	operator
+			value_type
+		)	()	const
+			noexcept
+		{	return
+			value_type
+			::	template
+				LoadAligned<t_vSize>
+				(	m_aData
+				)
+			;
+		}
+
+		auto constexpr inline
+		(	operator=
+		)	(	value_type
+					i_vValue
+			)	const&
+			noexcept
+		->	Var const&
+		{
+			i_vValue
+			.	template
+				StoreAligned<t_vSize>
+				(	m_aData
+				)
+			;
+
+			return
+			*	this
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	operator=
+		)	(	MaskedSimd
+				<	t_tElement
+					(&)	[	t_vSize
+						]
+				>	i_rRight
+			)	const
+			noexcept
+		->	value_type
+		requires
+			::std::is_const_v<t_tElement>
+		{	return
+				static_cast<value_type>
+				(	*	this
+				)
+			=	static_cast<decltype(i_rRight)::value_type>
+				(	i_rRight
+				)
+			;
+		}
+
+		[[nodiscard]]
+		auto constexpr inline
+		(	operator[]
+		)	(	SimdMask<t_vSize>
+					i_vMask
+			)	const
+			noexcept
+		->	MaskedSimd<t_tElement(&)[t_vSize]>
+		{	return
+			{	.	m_aData
+				=	m_aData
+			,	.	m_vMask
+				=	i_vMask
+			};
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator*
+		)	(	Var
+					i_rLeft
+			,	value_type
+					i_vRight
+			)
+			noexcept
+		->	value_type
+		{	return
+				static_cast<value_type>
+				(	i_rLeft
+				)
+			*	i_vRight
+			;
+		}
+
+		[[nodiscard]]
+		auto friend constexpr inline
+		(	operator*
+		)	(	value_type
+					i_vLeft
+			,	Var
+					i_rRight
+			)
+			noexcept
+		->	value_type
+		{	return
+				i_vLeft
+			*	static_cast<value_type>
+				(	i_rRight
+				)
+			;
+		}
+	};
 }

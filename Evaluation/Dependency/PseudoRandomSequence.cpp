@@ -1,8 +1,7 @@
 export module Evaluation.Dependency.PseudoRandomSequence;
 
 import Meta.Auto.Simd.Cast;
-import Meta.Auto.Simd.Float;
-import Meta.Auto.Simd.UInt8;
+import Meta.Auto.Simd.Tag;
 import Meta.IndexPack;
 import Meta.Random.Splitmix;
 import Meta.Random.Xoroshiro;

@@ -18,8 +18,7 @@ import ATR.Instance;
 import ATR.Layout.Fork;
 import ATR.Member.Composition;
 
-import Meta.Auto.Simd.Float;
-import Meta.Auto.Simd.UInt8;
+import Meta.Auto.Simd.Tag;
 import Meta.ID;
 
 import std;
