@@ -10,18 +10,6 @@ using ::Meta::IndexPack;
 export namespace
 	Meta::Auto
 {
-	template
-		<	typename
-				t_tElement
-		,	USize
-				t_vVectorSize
-		>
-	using
-		vec
-		[[clang::ext_vector_type(t_vVectorSize)]]
-	=	t_tElement
-	;
-
 	struct
 		SimdTag
 	{};
@@ -125,10 +113,8 @@ export namespace
 		>
 	using
 		SimdMask
-	=	vec
-		<	bool
-		,	t_vSize
-		>
+		[[clang::ext_vector_type(t_vSize)]]
+	=	bool
 	;
 
 	template
@@ -146,8 +132,9 @@ export namespace
 		,	MaskedTag
 		>
 	{
-		vec<t_tElement, t_vSize>
+		t_tElement
 			m_vRaw
+			[[clang::ext_vector_type(t_vSize)]]
 		;
 		SimdMask<t_vSize>
 			m_vMask
@@ -187,13 +174,14 @@ export namespace
 			return
 			{	.	m_vRaw
 				{	i_vMask
-				?	vec<t_tElement, t_vSize>
+				?	decltype(m_vRaw)
 					{	aAlignedData
 						[	rpIndex
 						]
 						...
 					}
-				:	vec<t_tElement, t_vSize>{}
+				:	decltype(m_vRaw)
+					{}
 				}
 			,	.	m_vMask
 				=	i_vMask
@@ -278,8 +266,9 @@ export namespace
 			>
 		;
 
-		vec<t_tElement, t_vSize>
+		t_tElement
 			m_vRaw
+			[[clang::ext_vector_type(t_vSize)]]
 		;
 
 		[[nodiscard]]
