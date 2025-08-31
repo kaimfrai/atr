@@ -1,7 +1,7 @@
 Memcheck, a memory error detector
 Copyright (C) 2002-2024, and GNU GPL'd, by Julian Seward et al.
 Using Valgrind-3.25.1 and LibVEX; rerun with -h for copyright info
-Command: build/Evaluation/valgrind/bin/Virtual 42 12500
+Command: build/Evaluation/valgrind/bin/Virtual 0 12500
 
 
 HEAP SUMMARY:
