@@ -23,7 +23,7 @@ export namespace
 	{
 		using
 			difference_type
-		= 	int
+		=	int
 		;
 		using
 			value_type

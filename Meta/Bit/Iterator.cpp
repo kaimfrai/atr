@@ -324,7 +324,7 @@ export namespace
 		{	return
 			::std::exchange
 			(	*this
-			, 	::std::next
+			,	::std::next
 				(	*this
 				)
 			);
@@ -349,7 +349,7 @@ export namespace
 		{	return
 			::std::exchange
 			(	*this
-			, 	::std::prev
+			,	::std::prev
 				(	*this
 				)
 			);

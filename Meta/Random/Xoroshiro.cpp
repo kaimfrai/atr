@@ -185,7 +185,7 @@ export namespace
 						=	0
 					;		vBit
 						<	64
-					; 	++	vBit
+					;	++	vBit
 					)
 				{
 					if	(	vJump

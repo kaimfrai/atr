@@ -58,7 +58,7 @@ using
 =	Union
 	<	ID<"Circle">
 	,	ID<"Ellipse">
- 	,	ID<"Rectangle">
+	,	ID<"Rectangle">
 	,	ID<"Square">
 	,	ID<"Triangle">
 	,	ID<"Cube">
@@ -68,7 +68,7 @@ using
 	,	ID<"Cylinder">
 	,	ID<"Cone">
 	,	ID<"Ellipsoid">
- 	,	ID<"Head">
+	,	ID<"Head">
 	>
 ;
 template

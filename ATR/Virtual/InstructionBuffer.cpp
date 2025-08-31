@@ -953,8 +953,8 @@ export namespace
 		;
 
 		template
- 			<	ImplicitHash
- 					t_vMemberName
+			<	ImplicitHash
+					t_vMemberName
 			,	auto
 					t_vInfo
 				=	t_tUnion
