@@ -1,45 +1,41 @@
 
- Performance counter stats for 'build/Evaluation/Speed/bin/Virtual 0 12500' (10 runs):
+ Performance counter stats for 'build/Evaluation/Speed/bin/Virtual 0 12500':
 
 task-clock
-	14,29 msec
+	13,80 msec
 	0,962 CPUs utilized
-	+- 0,82%
 context-switches
-	2
-	139,911 /sec	( +- 13,84% )
+	0
+	0,000 /sec
 cpu-migrations
-	1
-	69,956 /sec	( +- 21,34% )
+	0
+	0,000 /sec
 page-faults
-	4.172
-	291,855 K/sec
-	+- 0,00%
+	4.169
+	302,120 K/sec
 instructions
-	117.827.718
+	102.089.034
 insn per cycle
-	1,90
+	1,97
 
 stalled cycles per insn
-	0,20
-	+- 0,06%
+	0,21
 cycles
-	61.914.012
-	4,331 GHz
-	+- 0,82%
+	51.719.181
+	3,748 GHz
 stalled-cycles-frontend
-	23.252.137
-	37,56% frontend cycles idle
-	+- 0,86%
+	21.590.085
+	41,74% frontend cycles idle
 branches
-	22.298.171
-	1,560 G/sec
-	+- 0,07%
+	19.064.499
+	1,382 G/sec
 branch-misses
-	716.146
-	3,21% of all branches
-	+- 0,69%
+	692.122
+	3,63% of all branches
 
-	0,014852 +- 0,000161 seconds time elapsed
-	+- 1,08%
+	0,014348911 seconds time elapsed
+
+	0,010737000 seconds user
+	0,003579000 seconds sys
+
 

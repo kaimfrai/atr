@@ -1,45 +1,41 @@
 
- Performance counter stats for 'build/Evaluation/Speed/bin/Archetype 0 12500' (10 runs):
+ Performance counter stats for 'build/Evaluation/Speed/bin/Archetype 0 12500':
 
 task-clock
-	6,94 msec
-	0,973 CPUs utilized
-	+- 0,95%
+	6,58 msec
+	0,970 CPUs utilized
 context-switches
-	1
-	144,023 /sec	( +- 31,45% )
+	0
+	0,000 /sec
 cpu-migrations
 	0
 	0,000 /sec
 page-faults
-	581
-	83,677 K/sec
-	+- 0,06%
+	577
+	87,668 K/sec
 instructions
-	33.793.661
+	30.225.437
 insn per cycle
-	1,12
+	1,17
 
 stalled cycles per insn
-	0,33
-	+- 0,07%
+	0,32
 cycles
-	30.069.332
-	4,331 GHz
-	+- 0,95%
+	25.731.673
+	3,910 GHz
 stalled-cycles-frontend
-	11.274.686
-	37,50% frontend cycles idle
-	+- 1,32%
+	9.748.265
+	37,88% frontend cycles idle
 branches
-	3.636.057
-	523,675 M/sec
-	+- 0,11%
+	2.903.780
+	441,192 M/sec
 branch-misses
-	527.915
-	14,52% of all branches
-	+- 1,07%
+	492.535
+	16,96% of all branches
 
-	0,0071345 +- 0,0000660 seconds time elapsed
-	+- 0,93%
+	0,006785448 seconds time elapsed
+
+	0,006813000 seconds user
+	0,000000000 seconds sys
+
 

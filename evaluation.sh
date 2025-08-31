@@ -80,7 +80,7 @@ then
 	build_all Speed $2
 	bash Evaluation/assembly.sh $2
 	bash Evaluation/compile.sh $2
-	bash Evaluation/perf.sh 12500 10 $2
+	bash Evaluation/perf.sh 12500 $2
 	build_all Speed $2
 
 	configure valgrind
@@ -107,7 +107,7 @@ elif [ $1 == "perf" ]
 then
 	configure Speed
 	build_all Speed $2
-	bash Evaluation/$1.sh 12500 10 $2
+	bash Evaluation/$1.sh 12500 $2
 	build_all Speed $2
 
 else

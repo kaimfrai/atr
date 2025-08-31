@@ -1,45 +1,41 @@
 
- Performance counter stats for 'build/Evaluation/Speed/bin/Polymorphic 0 12500' (10 runs):
+ Performance counter stats for 'build/Evaluation/Speed/bin/Polymorphic 0 12500':
 
 task-clock
-	12,79 msec
-	0,953 CPUs utilized
-	+- 0,79%
+	12,35 msec
+	0,940 CPUs utilized
 context-switches
-	3
-	234,503 /sec	( +- 13,19% )
+	0
+	0,000 /sec
 cpu-migrations
-	2
-	156,335 /sec	( +- 28,33% )
+	0
+	0,000 /sec
 page-faults
-	4.688
-	366,450 K/sec
-	+- 0,01%
+	4.684
+	379,265 K/sec
 instructions
-	117.701.092
+	99.929.555
 insn per cycle
-	2,12
+	2,29
 
 stalled cycles per insn
 	0,16
-	+- 0,06%
 cycles
-	55.394.837
-	4,330 GHz
-	+- 0,79%
+	43.608.524
+	3,531 GHz
 stalled-cycles-frontend
-	18.583.433
-	33,55% frontend cycles idle
-	+- 0,57%
+	16.026.256
+	36,75% frontend cycles idle
 branches
-	21.999.061
-	1,720 G/sec
-	+- 0,07%
+	18.342.989
+	1,485 G/sec
 branch-misses
-	577.449
-	2,62% of all branches
-	+- 0,39%
+	559.994
+	3,05% of all branches
 
-	0,013426 +- 0,000121 seconds time elapsed
-	+- 0,90%
+	0,013139223 seconds time elapsed
+
+	0,006575000 seconds user
+	0,006554000 seconds sys
+
 

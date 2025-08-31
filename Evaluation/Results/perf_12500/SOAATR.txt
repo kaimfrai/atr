@@ -1,10 +1,9 @@
 
- Performance counter stats for 'build/Evaluation/Speed/bin/SOAATR 0 12500' (10 runs):
+ Performance counter stats for 'build/Evaluation/Speed/bin/SOAATR 0 12500':
 
 task-clock
-	1,02 msec
-	0,851 CPUs utilized
-	+- 3,29%
+	0,99 msec
+	0,839 CPUs utilized
 context-switches
 	0
 	0,000 /sec
@@ -12,34 +11,31 @@ cpu-migrations
 	0
 	0,000 /sec
 page-faults
-	600
-	585,704 K/sec
-	+- 0,03%
+	596
+	603,771 K/sec
 instructions
-	9.818.928
+	6.414.505
 insn per cycle
-	2,22
+	2,99
 
 stalled cycles per insn
-	0,10
-	+- 0,22%
+	0,08
 cycles
-	4.427.076
-	4,322 GHz
-	+- 3,29%
+	2.144.326
+	2,172 GHz
 stalled-cycles-frontend
-	988.435
-	22,33% frontend cycles idle
-	+- 1,60%
+	495.927
+	23,13% frontend cycles idle
 branches
-	1.204.663
-	1,176 G/sec
-	+- 0,32%
+	508.052
+	514,676 M/sec
 branch-misses
-	19.865
-	1,65% of all branches
-	+- 1,56%
+	15.096
+	2,97% of all branches
 
-	0,0012034 +- 0,0000359 seconds time elapsed
-	+- 2,98%
+	0,001176550 seconds time elapsed
+
+	0,000000000 seconds user
+	0,001215000 seconds sys
+
 

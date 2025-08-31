@@ -1,45 +1,41 @@
 
- Performance counter stats for 'build/Evaluation/Speed/bin/Replication 0 12500' (10 runs):
+ Performance counter stats for 'build/Evaluation/Speed/bin/Replication 0 12500':
 
 task-clock
-	6,98 msec
-	0,972 CPUs utilized
-	+- 0,89%
+	6,56 msec
+	0,971 CPUs utilized
 context-switches
-	1
-	143,242 /sec	( +- 45,22% )
+	0
+	0,000 /sec
 cpu-migrations
-	1
-	143,242 /sec	( +- 37,12% )
+	0
+	0,000 /sec
 page-faults
-	581
-	83,224 K/sec
-	+- 0,05%
+	578
+	88,078 K/sec
 instructions
-	33.750.548
+	30.225.428
 insn per cycle
-	1,12
+	1,18
 
 stalled cycles per insn
-	0,33
-	+- 0,06%
+	0,32
 cycles
-	30.226.566
-	4,330 GHz
-	+- 0,88%
+	25.696.999
+	3,916 GHz
 stalled-cycles-frontend
-	11.113.682
-	36,77% frontend cycles idle
-	+- 1,02%
+	9.793.870
+	38,11% frontend cycles idle
 branches
-	3.629.363
-	519,877 M/sec
-	+- 0,10%
+	2.903.779
+	442,491 M/sec
 branch-misses
-	536.231
-	14,77% of all branches
-	+- 1,20%
+	495.991
+	17,08% of all branches
 
-	0,0071846 +- 0,0000633 seconds time elapsed
-	+- 0,88%
+	0,006756337 seconds time elapsed
+
+	0,006789000 seconds user
+	0,000000000 seconds sys
+
 

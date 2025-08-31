@@ -1,10 +1,9 @@
 
- Performance counter stats for 'build/Evaluation/Speed/bin/SOAReplication 0 12500' (10 runs):
+ Performance counter stats for 'build/Evaluation/Speed/bin/SOAReplication 0 12500':
 
 task-clock
 	0,99 msec
-	0,850 CPUs utilized
-	+- 3,91%
+	0,851 CPUs utilized
 context-switches
 	0
 	0,000 /sec
@@ -12,34 +11,31 @@ cpu-migrations
 	0
 	0,000 /sec
 page-faults
-	600
-	604,478 K/sec
-	+- 0,05%
+	597
+	601,614 K/sec
 instructions
-	9.881.464
+	6.526.378
 insn per cycle
-	2,30
+	3,04
 
 stalled cycles per insn
-	0,10
-	+- 0,03%
+	0,07
 cycles
-	4.287.289
-	4,319 GHz
-	+- 3,89%
+	2.148.364
+	2,165 GHz
 stalled-cycles-frontend
-	947.337
-	22,10% frontend cycles idle
-	+- 0,95%
+	471.143
+	21,93% frontend cycles idle
 branches
-	1.195.246
-	1,204 G/sec
-	+- 0,05%
+	507.948
+	511,874 M/sec
 branch-misses
-	19.191
-	1,61% of all branches
-	+- 1,26%
+	15.211
+	2,99% of all branches
 
-	0,0011678 +- 0,0000405 seconds time elapsed
-	+- 3,47%
+	0,001165439 seconds time elapsed
+
+	0,001218000 seconds user
+	0,000000000 seconds sys
+
 

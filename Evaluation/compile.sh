@@ -28,14 +28,17 @@ function time_build_single()
 function time_build()
 {
 	time=$(time_build_single $1)
-	echo "$time seconds to build $1"
-	for	(( i=0; i<10; i++ ))
+	echo "$time secs to build $1"
+
+	for	(( i=0; i<16; i++ ))
 	do
 		new_time=$(time_build_single $1)
+
 		if (( $(echo "$new_time < $time" | bc -l) ));
 		then
 			time=$new_time
-			echo "$time seconds to build $1"
+			echo -e "\e[1A\e[K$time secs to build $1"
+
 			i=0
 		fi
 	done
