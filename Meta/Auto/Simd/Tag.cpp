@@ -34,7 +34,7 @@ export namespace
 		SimdFillFunction
 	{
 		[[nodiscard]]
-		auto static inline
+		auto static constexpr inline
 		(	operator()
 		)	(	::std::remove_extent_t<t_tTarget>
 					i_vSource
@@ -480,7 +480,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr friend inline
+		auto friend constexpr inline
 		(	operator<<
 		)	(	Var
 					i_vLeft
@@ -497,7 +497,7 @@ export namespace
 		}
 
 		[[nodiscard]]
-		auto constexpr friend inline
+		auto friend constexpr inline
 		(	operator<<
 		)	(	Var
 					i_vLeft
